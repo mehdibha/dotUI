@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { useSelectedLayoutSegments } from "next/navigation";
 import { motion, useAnimate } from "framer-motion";
@@ -59,13 +58,6 @@ export const Header = () => {
             )}
             suppressHydrationWarning
           >
-            {/* <Image
-              src={siteConfig.global.logo}
-              alt={siteConfig.global.name}
-              loading="lazy"
-              width={20}
-              height={20}
-            /> */}
             <CopyIcon size={18} />
             <span className="inline-block font-bold">{siteConfig.global.name}</span>
           </Link>
@@ -91,14 +83,6 @@ export const Header = () => {
                 initial={{ x: -90, y: 4, opacity: 0 }}
               >
                 <Link href="/">
-                  {/* <Image
-                    src={siteConfig.global.logo}
-                    alt={siteConfig.global.name}
-                    loading="lazy"
-                    width={20}
-                    height={20}
-                    className="aspect-[auto 30 / 30] object-cover"
-                  /> */}
                   <CopyIcon size={18} />
                 </Link>
               </motion.div>
@@ -216,17 +200,11 @@ const MobileNav = () => {
           <div className="flex flex-col space-y-8">
             <Link
               href="/"
-              className="flex justify-center transition-all hover:opacity-80"
+              className="flex items-center justify-center space-x-2 transition-all hover:opacity-80"
               onClick={handleClose}
             >
-              <Image
-                src={siteConfig.global.logo}
-                alt={siteConfig.global.name}
-                loading="lazy"
-                width={30}
-                height={30}
-                className="aspect-[auto 30 / 30] object-cover"
-              />
+              <CopyIcon size={18} />
+              <span>rCopy</span>
             </Link>
             <Nav
               items={config.nav.links}
@@ -234,7 +212,7 @@ const MobileNav = () => {
               onNavItemClick={handleClose}
             />
             <Button color="primary" size="sm">
-              {config.cta.primary.label}
+              Search
             </Button>
           </div>
         </SheetContent>

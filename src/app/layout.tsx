@@ -1,7 +1,7 @@
 import React from "react";
 import type { Metadata, Viewport } from "next";
-import { Footer } from "@/components/marketing/footer";
-import { Header } from "@/components/marketing/header";
+import { Footer } from "@/components/footer";
+import { Header } from "@/components/header";
 import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/utils/classes";
 import { truncateOnWord } from "@/utils/text";
@@ -67,7 +67,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="relative">
             <Background />
             <Header />
-            <div className="min-h-[calc(100vh-64px)] pt-10">{children}</div>
+            <div className="container min-h-[calc(100vh-64px)] max-w-6xl pt-10">
+              {children}
+            </div>
             <Footer />
           </div>
         </Providers>

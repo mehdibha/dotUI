@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRightIcon, ChevronRightIcon, SearchIcon } from "lucide-react";
-import { Mdx } from "@/components/mdx-remote";
+import { Mdx } from "@/components/mdx/mdx-remote";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/utils/classes";
 import { type Item, getDocFromSlug } from "@/lib/docs";
@@ -84,13 +84,27 @@ const DataGrid = ({ type, items }: { type: string; items: Item[] }) => {
           className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 transform text-muted-foreground"
         />
       </div>
-      <div className="mt-8 grid grid-cols-4 gap-4">
+      <div
+        className={cn("mt-8 grid gap-4", {
+          "grid-cols-3": type === "components" || type === "hooks",
+          "grid-cols-4": type === "templates" || type === "pages",
+          "grid-cols-8": type === "icons",
+        })}
+      >
         {items.map((item, index) => (
           <div
             key={index}
             className="cursor-pointer rounded-md bg-card p-2 transition-colors duration-100 hover:bg-card/70"
           >
-            <div className="aspect-[9/11] rounded-sm bg-background"></div>
+            {type !== "hooks" && (
+              <div
+                className={cn("rounded-sm bg-background", {
+                  "aspect-video": type === "components",
+                  "aspect-[9/11]": type === "templates" || type === "pages",
+                  "aspect-square": type === "icons",
+                })}
+              ></div>
+            )}
             <div className="p-3">
               <p className="mt- text-lg font-semibold">{item.title}</p>
               <p className="mt-1 text-sm text-muted-foreground">{item.description}</p>

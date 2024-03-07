@@ -4,7 +4,6 @@ import React from "react";
 import * as SwitchPrimitives from "@radix-ui/react-switch";
 import { MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/utils/classes";
 
 export const ThemeToggle = () => {
@@ -36,16 +35,5 @@ export const ThemeToggle = () => {
         <MoonIcon size={18} className="hidden text-muted-foreground dark:block" />
       </SwitchPrimitives.Thumb>
     </SwitchPrimitives.Root>
-  );
-  return (
-    <Button
-      size="icon"
-      variant="ghost"
-      className="h-8 w-8"
-      onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-    >
-      <SunIcon size={18} className="block dark:hidden" />
-      <MoonIcon size={18} className="hidden dark:block" />
-    </Button>
   );
 };

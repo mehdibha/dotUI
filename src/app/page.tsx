@@ -4,9 +4,9 @@ import { Hero } from "@/components/marketing/hero";
 
 export default function HomePage() {
   return (
-    <div className="pb-28">
+    <main>
       <Hero />
       <CallToAction logo={false} className="mt-40" />
-    </div>
+    </main>
   );
 }
