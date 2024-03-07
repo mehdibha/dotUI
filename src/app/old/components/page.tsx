@@ -5,7 +5,9 @@ export default function Page() {
   return (
     <div>
       <h1 className="text-4xl font-bold ">Components</h1>
-      <p className="mt-2 text-muted-foreground">Copy and paste components for your React app</p>
+      <p className="mt-2 text-muted-foreground">
+        Copy and paste components for your React app
+      </p>
       <div className="mt-6 flex gap-4">
         {[
           { label: "Marketing", value: "marketing" },
@@ -44,11 +46,16 @@ export default function Page() {
               "A dotted grid of glowing stars with a featured animated element.A dotted grid of glowing stars with a featured animated element.A dotted grid of glowing stars with a featured animated element.A dotted grid of glowing stars with a featured animated element.",
           },
         ].map((component, index) => (
-          <div key={index} className="rounded-md bg-card p-2 hover:bg-card/70 transition-colors duration-100 cursor-pointer">
+          <div
+            key={index}
+            className="cursor-pointer rounded-md bg-card p-2 transition-colors duration-100 hover:bg-card/70"
+          >
             <div className="aspect-video rounded-sm bg-background"></div>
             <div className="p-3">
               <p className="mt- text-lg font-semibold">{component.label}</p>
-              <p className="text-muted-foreground text-sm mt-1">{component.description}</p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                {component.description}
+              </p>
             </div>
           </div>
         ))}

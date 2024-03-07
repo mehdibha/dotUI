@@ -1,5 +1,4 @@
 import React from "react";
-import { CircleIcon, FileIcon } from "lucide-react";
 import {
   CommandDialog,
   CommandEmpty,
@@ -29,7 +28,12 @@ export const SearchDialog = (props: SearchDialogProps) => {
           </CommandItem>
         </CommandGroup>
         <CommandGroup heading="Hooks">
-          <CommandItem value="hey" onSelect={() => {console.log('yay')}}>
+          <CommandItem
+            value="hey"
+            onSelect={() => {
+              console.log("yay");
+            }}
+          >
             {/* <div className="mr-2 flex h-4 w-4 items-center justify-center">
               <CircleIcon className="h-3 w-3" />
             </div> */}

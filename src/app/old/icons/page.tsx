@@ -44,7 +44,7 @@ export default function Page() {
             className="cursor-pointer rounded-md bg-card p-2 transition-colors duration-100 hover:bg-card/70"
           >
             <div className="aspect-square rounded-sm bg-background"></div>
-            <div className="p-1 mt-1">
+            <div className="mt-1 p-1">
               <p className="font-semibold">{component.label}</p>
               {/* <p className="mt-1 text-sm text-muted-foreground">
                 {component.description}

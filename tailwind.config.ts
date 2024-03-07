@@ -66,8 +66,8 @@ const config = {
       },
       fontFamily: {
         geistsans: ["var(--font-geist-sans)"],
-        geistmono: ['var(--font-geist-mono)'],
-        inter: ['var(--font-inter)'],
+        geistmono: ["var(--font-geist-mono)"],
+        inter: ["var(--font-inter)"],
       },
       transitionDelay: {
         "400": "400ms",

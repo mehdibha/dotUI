@@ -8,7 +8,7 @@ export default function Page() {
       <p className="mt-2 text-muted-foreground">
         Copy and paste pages for your React app
       </p>
-      <div className="mt-6 gap-4 flex">
+      <div className="mt-6 flex gap-4">
         {[
           { label: "Marketing", value: "marketing" },
           { label: "Application", value: "application-ui" },
@@ -16,7 +16,7 @@ export default function Page() {
         ].map((category) => (
           <div
             key={category.value}
-            className="flex cursor-pointer items-center justify-center rounded bg-card px-4 py-1 duration-150 hover:bg-card/50 focus-ring"
+            className="focus-ring flex cursor-pointer items-center justify-center rounded bg-card px-4 py-1 duration-150 hover:bg-card/50"
           >
             <p>{category.label}</p>
           </div>

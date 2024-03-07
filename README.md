@@ -75,7 +75,6 @@
 
 - [x] Site structure
 
-
 <!-- CONTRIBUTING -->
 
 ## Contributing

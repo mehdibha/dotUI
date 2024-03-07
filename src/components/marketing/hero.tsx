@@ -26,7 +26,8 @@ export const Hero = () => {
         )}
       >
         Copy and paste <span className="text-primary">components</span>
-        <br />for you React App
+        <br />
+        for you React App
       </h1>
       <h2
         className={cn(
@@ -36,7 +37,7 @@ export const Hero = () => {
       >
         Copy the code, paste it, customize it, own it. Done.
       </h2>
-      <div className="flex space-x-4 mt-10 animate-element-in opacity-0 delay-500 duration-700">
+      <div className="mt-10 flex animate-element-in space-x-4 opacity-0 delay-500 duration-700">
         <Button size="lg" variant="default">
           Explore components
         </Button>

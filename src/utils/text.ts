@@ -30,8 +30,7 @@ export const shouldTruncate = (text: string, maxLength: number) => {
   return text.length + text.split("\n").length * (LINE_BREAK_LENGTH - 1) > maxLength;
 };
 
-export const upperFirst = (str : string) => {
-  
+export const upperFirst = (str: string) => {
   if (typeof str !== "string" || str.length === 0) {
     return str;
   }

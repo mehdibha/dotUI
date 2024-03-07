@@ -1,20 +1,8 @@
 import React from "react";
-import Image from "next/image";
 import NavLink from "next/link";
-import {
-  CopyIcon,
-  FacebookIcon,
-  GithubIcon,
-  LinkedinIcon,
-  MailIcon,
-  TwitterIcon,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { CopyIcon, GithubIcon, LinkedinIcon, TwitterIcon } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { siteConfig } from "@/config";
-import { ThemeToggle } from "../theme-toggle";
-
-// const links = siteConfig.global.externalLinks;
 
 const links = [
   {

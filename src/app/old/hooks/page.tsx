@@ -1,6 +1,3 @@
-import Link from "next/link";
-import { ArrowRightIcon } from "lucide-react";
-
 export default function Page() {
   return (
     <div>
