@@ -6,20 +6,20 @@
 
 <br/>
 <div align="center">
-  <a href="https://github.com/mehdibha/vapi.tn">
-    <img src="https://vapi.tn/images/logo.png" alt="Logo" width="160" height="80">
+  <a href="https://github.com/mehdibha/rcopy">
+    <img src="https://rcopy.dev/images/logo.png" alt="Logo" width="160" height="80">
   </a>
-  <h1 align="center">vapi.tn</h1>
+  <h1 align="center">rCopy</h1>
   <p align="center">
-    A marketplace for vape products
+    React copy paste components, hooks, pages, icons and more
   </p>
   <p>
     
-   <a href="https://vapi.tn">Visit site</a>
+   <a href="https://rcopy.dev">Visit site</a>
     ·
-    <a href="https://github.com/mehdibha/vapi.tn/issues">Report Bug</a>
+    <a href="https://github.com/mehdibha/rcopy.dev/issues">Report Bug</a>
     ·
-    <a href="https://github.com/mehdibha/vapi.tn/issues">Request Feature</a>
+    <a href="https://github.com/mehdibha/rcopy.dev/issues">Request Feature</a>
   </p>
 </div>
 
@@ -74,13 +74,13 @@
 ## Roadmap
 
 - [x] Site structure
-- [ ] Home page
+
 
 <!-- CONTRIBUTING -->
 
 ## Contributing
 
-See the [contribution guide](CONTRIBUTING.md) and join our amazing list of [contributors](https://github.com/mehdibha/vapi/graphs/contributors)!
+See the [contribution guide](CONTRIBUTING.md) and join our amazing list of [contributors](https://github.com/mehdibha/rcopy/graphs/contributors)!
 
 <!-- LICENSE -->
 
@@ -94,13 +94,13 @@ Distributed under the MIT License. See `LICENSE` for more information.
   <td align="center"><a href="https://github.com/mehdibha"><img src="https://github.com/mehdibha.png" width="64px;"alt="Mehdi BHA"/><br/><sub><b>Mehdi BHA</b></sub></a></td>
 </tr></table>
 
-[contributors-shield]: https://img.shields.io/github/contributors/mehdibha/vapi.tn.svg?style=for-the-badge
-[contributors-url]: https://github.com/mehdibha/vapi.tn/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/mehdibha/vapi.tn.svg?style=for-the-badge
-[forks-url]: https://github.com/mehdibha/vapi.tn.svg/network/members
-[stars-shield]: https://img.shields.io/github/stars/mehdibha/vapi.tn.svg?style=for-the-badge
-[stars-url]: https://github.com/mehdibha/vapi.tn.svg/stargazers
-[issues-shield]: https://img.shields.io/github/issues/mehdibha/vapi.tn.svg?style=for-the-badge
-[issues-url]: https://github.com/mehdibha/vapi.tn.svg/issues
-[license-shield]: https://img.shields.io/github/license/mehdibha/vapi.tn.svg?style=for-the-badge
-[license-url]: https://github.com/mehdibha/vapi.tn.svg/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/mehdibha/rcopy.svg?style=for-the-badge
+[contributors-url]: https://github.com/mehdibha/rcopy/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/mehdibha/rcopy.svg?style=for-the-badge
+[forks-url]: https://github.com/mehdibha/rcopy.svg/network/members
+[stars-shield]: https://img.shields.io/github/stars/mehdibha/rcopy.svg?style=for-the-badge
+[stars-url]: https://github.com/mehdibha/rcopy.svg/stargazers
+[issues-shield]: https://img.shields.io/github/issues/mehdibha/rcopy.svg?style=for-the-badge
+[issues-url]: https://github.com/mehdibha/rcopy.svg/issues
+[license-shield]: https://img.shields.io/github/license/mehdibha/rcopy.svg?style=for-the-badge
+[license-url]: https://github.com/mehdibha/rcopy.svg/blob/master/LICENSE.txt
