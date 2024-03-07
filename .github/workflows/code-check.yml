@@ -1,0 +1,73 @@
+name: code check
+on:
+  push:
+    branches: [dev, main]
+
+jobs:
+  lint:
+    env:
+      POSTGRES_PRISMA_URL: postgres://default.postgres-storage.com/
+      POSTGRES_URL_NON_POOLING: postgres://default.postgres-storage.com/verceldb
+      NEXTAUTH_SECRET: secret
+      NEXTAUTH_URL: http://localhost:3000
+      AUTH_GOOGLE_CLIENT_ID: clientid
+      AUTH_GOOGLE_CLIENT_SECRET: secret
+      NEXT_PUBLIC_ROOT_DOMAIN: vapi.tn
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+
+      - name: Install dependencies
+        run: pnpm i
+
+      - name: Check linting
+        run: pnpm lint
+
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+
+      - name: Install dependencies
+        run: pnpm i
+
+      - name: Check format
+        run: pnpm format:check
+
+  tsc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+
+      - name: Install dependencies
+        run: pnpm i
+
+      - name: Check types
+        run: pnpm typecheck
