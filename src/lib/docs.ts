@@ -147,3 +147,18 @@ export const getDocFromSlug = (slug: string[]): Doc | null => {
 
   return null;
 };
+
+export const getAllDocs = () => {
+  const directoryPath = path.join(process.cwd(), "content");
+  return getAllMdxFiles(directoryPath, directoryPath, [], true).map(
+    ({ fullPath, relativePath }) => {
+      const itemRawContent = fs.readFileSync(fullPath, "utf-8");
+      const { frontmatter: itemFrontmatter } =
+        parseMDXFile<DocFrontmatter>(itemRawContent);
+      return {
+        ...itemFrontmatter,
+        href: `/${relativePath.join("/").replace("/index", "")}`,
+      };
+    }
+  );
+};

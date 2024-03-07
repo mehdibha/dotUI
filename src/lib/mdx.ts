@@ -19,7 +19,8 @@ interface MdxFile {
 export const getAllMdxFiles = (
   directory: string,
   rootDirectory: string,
-  filesArray: MdxFile[] = []
+  filesArray: MdxFile[] = [],
+  includeIndexMdx = false
 ): MdxFile[] => {
   const files = fs.readdirSync(directory);
 
@@ -28,8 +29,11 @@ export const getAllMdxFiles = (
     const fileStat = fs.statSync(filePath);
 
     if (fileStat.isDirectory()) {
-      getAllMdxFiles(filePath, rootDirectory, filesArray);
-    } else if (path.extname(file) === ".mdx" && file !== "index.mdx") {
+      getAllMdxFiles(filePath, rootDirectory, filesArray, includeIndexMdx);
+    } else if (
+      path.extname(file) === ".mdx" &&
+      (includeIndexMdx || file !== "index.mdx")
+    ) {
       const relativePath = path
         .relative(rootDirectory, filePath)
         .split(path.sep)
