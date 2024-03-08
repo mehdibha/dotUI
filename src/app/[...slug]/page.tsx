@@ -132,8 +132,9 @@ const DataGrid = ({ type, items }: { type: string; items: Item[] }) => {
         })}
       >
         {items.map((item, index) => (
-          <div
+          <Link
             key={index}
+            href={item.href}
             className="cursor-pointer rounded-md bg-card p-2 transition-colors duration-100 hover:bg-card/70"
           >
             {type !== "hooks" && (
@@ -149,7 +150,7 @@ const DataGrid = ({ type, items }: { type: string; items: Item[] }) => {
               <p className="mt- text-lg font-semibold">{item.title}</p>
               <p className="mt-1 text-sm text-muted-foreground">{item.description}</p>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

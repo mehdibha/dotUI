@@ -1,4 +1,5 @@
 import type { ComponentProps } from "react";
+import { ComponentPreview } from "@/components/component-preview";
 import Link from "next/link";
 import { cn } from "@/utils/classes";
 
@@ -144,4 +145,5 @@ export const components = {
       {...props}
     />
   ),
+  ComponentPreview
 };
