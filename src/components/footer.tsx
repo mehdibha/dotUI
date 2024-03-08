@@ -63,7 +63,7 @@ const links = [
 ];
 
 const socialLinks = [
-  { icon: GithubIcon, url: "https://github.com/quack-ai" },
+  { icon: GithubIcon, url: "https://github.com/mehdibha/rcopy" },
   { icon: TwitterIcon, url: "#" },
   { icon: LinkedinIcon, url: "#" },
 ];

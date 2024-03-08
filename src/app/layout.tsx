@@ -13,7 +13,7 @@ import { Providers } from "./providers";
 const config = siteConfig.global;
 
 export const metadata: Metadata = {
-  title: { default: config.title, template: `${config.name} - %s` },
+  title: { default: config.title, template: `%s -${config.name}` },
   description: truncateOnWord(config.description, 148, true),
   keywords: config.keywords,
   authors: config.authors,
