@@ -7,7 +7,7 @@
 <br/>
 <div align="center">
   <a href="https://github.com/mehdibha/rcopy">
-    <img src="https://rcopy.dev/images/logo.png" alt="Logo" width="160" height="80">
+    <img src="https://rcopy.dev/images/logo.png" alt="Logo" width="60" height="70">
   </a>
   <h1 align="center">rCopy</h1>
   <p align="center">
