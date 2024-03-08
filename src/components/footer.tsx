@@ -1,6 +1,7 @@
 import React from "react";
+import Image from "next/image";
 import NavLink from "next/link";
-import { CopyIcon, GithubIcon, LinkedinIcon, TwitterIcon } from "lucide-react";
+import { GithubIcon, LinkedinIcon, TwitterIcon } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { siteConfig } from "@/config";
 
@@ -77,14 +78,13 @@ export const Footer = () => {
             href="/"
             className="mr-8 flex items-center space-x-2 transition-all duration-300 hover:opacity-80"
           >
-            {/* <Image
+            <Image
               src={siteConfig.global.logo}
               alt={siteConfig.global.name}
               loading="lazy"
               width={20}
               height={20}
-            /> */}
-            <CopyIcon size={20} />
+            />
             <span className="inline-block font-bold">{siteConfig.global.name}</span>
           </NavLink>
           <p className="text-md mt-4 text-muted-foreground">

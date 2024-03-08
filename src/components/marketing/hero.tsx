@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 export const Hero = () => {
   return (
-    <section className="pt-14">
+    <section className="pt-14 min-h-[calc(100vh-64px)]">
       <Badge
         size="md"
         variant="outline"

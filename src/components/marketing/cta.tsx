@@ -1,8 +1,9 @@
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { CopyIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/utils/classes";
+import { siteConfig } from "@/config";
 
 interface CallToActionProps {
   logo?: boolean;
@@ -16,12 +17,17 @@ export const CallToAction = (props: CallToActionProps) => {
       <Link
         href="/"
         className={cn(
-          "mr-8 inline-flex items-center space-x-3 transition-all duration-300 hover:opacity-80"
+          "inline-flex items-center space-x-3 transition-all duration-300 hover:opacity-80"
         )}
         suppressHydrationWarning
       >
-        <CopyIcon size={25} />
-        <span className="inline-block text-lg font-bold">rCopy</span>
+        <Image
+          src={siteConfig.global.logo}
+          alt={siteConfig.global.name}
+          loading="lazy"
+          width={60}
+          height={60}
+        />
       </Link>
       <h2 className="mx-auto max-w-2xl text-5xl font-bold leading-[75px]">
         Proudly open-source

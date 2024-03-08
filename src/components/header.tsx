@@ -1,10 +1,11 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useSelectedLayoutSegments } from "next/navigation";
 import { motion, useAnimate } from "framer-motion";
-import { CopyIcon, MenuIcon, SearchIcon } from "lucide-react";
+import { MenuIcon, SearchIcon } from "lucide-react";
 import { SearchDialog } from "@/components/search-dialog";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -58,7 +59,13 @@ export const Header = () => {
             )}
             suppressHydrationWarning
           >
-            <CopyIcon size={18} />
+            <Image
+              src={siteConfig.global.logo}
+              alt={siteConfig.global.name}
+              loading="lazy"
+              width={25}
+              height={25}
+            />
             <span className="inline-block font-bold">{siteConfig.global.name}</span>
           </Link>
         </div>
@@ -83,7 +90,13 @@ export const Header = () => {
                 initial={{ x: -90, y: 4, opacity: 0 }}
               >
                 <Link href="/">
-                  <CopyIcon size={18} />
+                  <Image
+                    src={siteConfig.global.logo}
+                    alt={siteConfig.global.name}
+                    loading="lazy"
+                    width={20}
+                    height={20}
+                  />
                 </Link>
               </motion.div>
               <Nav items={config.nav.links} />
@@ -203,7 +216,13 @@ const MobileNav = () => {
               className="flex items-center justify-center space-x-2 transition-all hover:opacity-80"
               onClick={handleClose}
             >
-              <CopyIcon size={18} />
+              <Image
+                src={siteConfig.global.logo}
+                alt={siteConfig.global.name}
+                loading="lazy"
+                width={20}
+                height={20}
+              />
               <span>rCopy</span>
             </Link>
             <Nav

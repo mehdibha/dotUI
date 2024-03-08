@@ -5,7 +5,7 @@ import { Hero } from "@/components/marketing/hero";
 export default function HomePage() {
   return (
     <main>
-      <Hero />
+      <Hero/>
       <CallToAction logo={false} className="mt-40" />
     </main>
   );
