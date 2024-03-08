@@ -43,25 +43,7 @@
 
 ## About The Project
 
-<details open>
-  <summary>Screenshots</summary>
-  <br>
-  <div align="center">
-    <figure>
-      <img src="/images/home-page.jpg" alt="Home page" width="600">
-      <div>
-        <figcaption>Home page - Light mode</figcaption>
-      </div>
-    </figure>
-    <br>
-    <figure>
-      <img src="/images/home-page-dark.jpg" alt="Home page" width="600">
-      <div>
-        <figcaption>Home page- Dark mode</figcaption>
-      </div>
-    </figure>
-  </div>
-</details>
+
 
 ### Built with
 
