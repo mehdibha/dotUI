@@ -7,7 +7,7 @@
 <br/>
 <div align="center">
   <a href="https://github.com/mehdibha/rcopy">
-    <img src="https://rcopy.dev/images/logo.png" alt="Logo" width="160" height="80">
+    <img src="https://rcopy.dev/images/logo.png" alt="Logo" width="60" height="70">
   </a>
   <h1 align="center">rCopy</h1>
   <p align="center">
@@ -42,6 +42,11 @@
 <!-- ABOUT THE PROJECT -->
 
 ## About The Project
+
+in 2024, shadcn/ui popularized the copy paste method instead of installing multiple dependencies that you can not control only via props. 
+rCopy wants to extend this not only for core components but for any kind of components, hooks, icons, pages and more.
+
+If you want to join this journey, <a href="https://discord.gg/DXpj5V2fU8">join our discord community</a>
 
 
 
