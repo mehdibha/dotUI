@@ -1,6 +1,6 @@
 import type { ComponentProps } from "react";
-import { ComponentPreview } from "@/components/component-preview";
 import Link from "next/link";
+import { ComponentPreview } from "@/components/component-preview";
 import { cn } from "@/utils/classes";
 
 // This file was created to be used in src/components/remote-mdx.tsx
@@ -145,5 +145,5 @@ export const components = {
       {...props}
     />
   ),
-  ComponentPreview
+  ComponentPreview,
 };

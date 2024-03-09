@@ -11,7 +11,7 @@ export default function UseDebounceDemo() {
   const debouncedValue = useDebounce<string>(searchInput, 1000);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsLoading(false)
+    setIsLoading(false);
     setSearchInput(e.target.value);
   };
 
@@ -30,7 +30,7 @@ export default function UseDebounceDemo() {
   return (
     <div className="relative w-52">
       {isLoading ? (
-        <div className="absolute left-2 h-full flex items-center">
+        <div className="absolute left-2 flex h-full items-center">
           <Loader2Icon
             size={18}
             className="pointer-events-none animate-spin text-muted-foreground"
