@@ -24,27 +24,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: doc.metadata.title,
     description: doc.metadata.description,
-    // openGraph: {
-    //   title: doc.title,
-    //   description: doc.description,
-    //   type: "article",
-    //   url: absoluteUrl(doc.slug),
-    //   images: [
-    //     {
-    //       url: siteConfig.ogImage,
-    //       width: 1200,
-    //       height: 630,
-    //       alt: siteConfig.name,
-    //     },
-    //   ],
-    // },
-    // twitter: {
-    //   card: "summary_large_image",
-    //   title: doc.title,
-    //   description: doc.description,
-    //   images: [siteConfig.ogImage],
-    //   creator: "@shadcn",
-    // },
+    // TODO add openGraph and twitter
   };
 }
 export async function generateStaticParams(): Promise<PageProps["params"][]> {
@@ -85,14 +65,14 @@ export default async function Page({ params }: PageProps) {
       )}
       <h1 className="mt-2 text-4xl font-bold">{metadata.title}</h1>
       <p className="mt-2 text-muted-foreground">{metadata.description}</p>
-      {categories && (
-        <div>
-          <div className="mt-6 flex gap-4">
+      {categories && categories.length > 0 && (
+        <div className="mt-6">
+          <div className="flex gap-4">
             {categories.map((category, index) => (
               <Link
                 key={index}
                 href={category.href}
-                className="focus-ring flex cursor-pointer items-center justify-center rounded bg-card px-4 py-1 duration-150 hover:bg-card/50"
+                className="focus-ring flex cursor-pointer items-center justify-center rounded bg-secondary px-4 py-1 duration-150 hover:bg-secondary/50"
               >
                 <p>{category.label}</p>
               </Link>
@@ -108,15 +88,17 @@ export default async function Page({ params }: PageProps) {
           )}
         </div>
       )}
-      <Mdx source={rawContent} />
-      {items && <DataGrid items={items} type={metadata.type} />}
+      <div className="mt-10">
+        <Mdx source={rawContent} />
+        {items && <DataGrid items={items} type={metadata.type} />}
+      </div>
     </main>
   );
 }
 
 const DataGrid = ({ type, items }: { type: string; items: Item[] }) => {
   return (
-    <div className="mt-16">
+    <div className="mt-6">
       <div className="relative">
         <Input className="full-w pl-12" placeholder={`Search ${items.length} ${type}`} />
         <SearchIcon
@@ -125,7 +107,7 @@ const DataGrid = ({ type, items }: { type: string; items: Item[] }) => {
         />
       </div>
       <div
-        className={cn("mt-8 grid gap-4", {
+        className={cn("mt-4 grid gap-4", {
           "grid-cols-3": type === "components" || type === "hooks",
           "grid-cols-4": type === "templates" || type === "pages",
           "grid-cols-8": type === "icons",

@@ -1,21 +1,26 @@
 import React from "react";
+import Link from "next/link";
 import { ArrowRightIcon, SearchIcon, SparklesIcon } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { badgeVariants } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/utils/classes";
 
 export const Hero = () => {
   return (
-    <section className="pt-14 min-h-[calc(100vh-64px)]">
-      <Badge
-        size="md"
-        variant="outline"
-        className="cursor-pointer space-x-2 font-mono delay-75 duration-200 hover:bg-secondary"
+    <section className="min-h-[calc(100vh-64px)] pt-14">
+      <Link
+        href="https://github.com/mehdibha/rcopy"
+        target="_blank"
+        className={cn(
+          badgeVariants({ variant: "outline", size: "md" }),
+          "cursor-pointer space-x-2 font-mono delay-75 duration-200 hover:bg-secondary"
+        )}
       >
         <SparklesIcon size={18} />
         <span>Star us on GitHub</span> <ArrowRightIcon size={15} />
-      </Badge>
+      </Link>
       <h1 className="font-display mt-4 text-5xl font-bold leading-tight">
-        Copy and paste <span className="text-primary">components</span>
+        Copy and paste components
         <br />
         for you React App
       </h1>

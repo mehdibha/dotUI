@@ -107,7 +107,6 @@ export const Header = () => {
               >
                 <Button
                   size="sm"
-                  variant="secondary"
                   onClick={() => {
                     setSearchOpen(true);
                   }}
@@ -130,7 +129,6 @@ export const Header = () => {
         >
           <div className="flex items-center space-x-2">
             <Button
-              variant="secondary"
               size="sm"
               onClick={() => {
                 setSearchOpen(true);
