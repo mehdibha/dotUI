@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Loader2Icon } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -34,9 +36,8 @@ export const ComponentPreview = ({ name }: { name: AllPreviewsKeys }) => {
         <TabsContent value="preview" className="rounded-md border">
           <React.Suspense
             fallback={
-              <div className="flex items-center text-sm text-muted-foreground">
-                <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />
-                <span>Loading...</span>
+              <div className="full-w flex min-h-[350px] items-center justify-center text-muted-foreground">
+                <Loader2Icon size={20} className="mr-2 animate-spin" />
               </div>
             }
           >

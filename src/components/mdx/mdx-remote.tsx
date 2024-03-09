@@ -1,17 +1,18 @@
-import { MDXRemote } from "next-mdx-remote/rsc";
-import rehypeHighlight from "rehype-highlight";
-import remarkCodeImport from "remark-code-import";
+"use client";
+
+import { MDXRemote, type MDXRemoteSerializeResult } from "next-mdx-remote";
 import { components } from "@/components/mdx/mdx-components";
+// import rehypeHighlight from "rehype-highlight";
+// import remarkCodeImport from "remark-code-import";
 
-export async function Mdx(props: { source: string }) {
-  const options = {
-    parseFrontmatter: true,
-    mdxOptions: {
-      rehypePlugins: [rehypeHighlight],
-      remarkPlugins: [remarkCodeImport],
-    },
-  };
+export function Mdx({ source }: { source: MDXRemoteSerializeResult }) {
+  // const options = {
+  //   parseFrontmatter: true,
+  //   mdxOptions: {
+  //     rehypePlugins: [rehypeHighlight],
+  //     remarkPlugins: [remarkCodeImport],
+  //   },
+  // };
 
-  // @ts-expect-error TODO fix this later
-  return <MDXRemote source={props.source} components={components} options={options} />;
+  return <MDXRemote {...source} components={components} />;
 }

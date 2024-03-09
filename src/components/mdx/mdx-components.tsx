@@ -1,3 +1,5 @@
+"use client"
+
 import type { ComponentProps } from "react";
 import Link from "next/link";
 import { ComponentPreview } from "@/components/component-preview";
