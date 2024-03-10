@@ -167,9 +167,9 @@ export default function UseDebounceDemo() {
 }
 `,
   },
-  "hooks/use-prefeerred-language": {
+  "hooks/use-preferred-language": {
     component: React.lazy<React.FC>(
-      () => import("~/content/hooks/use-prefeerred-language")
+      () => import("~/content/hooks/use-preferred-language")
     ),
     code: `export default function Demo() {
   return <div>demo</div>;
