@@ -1,18 +1,10 @@
-"use client";
-
-import { MDXRemote, type MDXRemoteSerializeResult } from "next-mdx-remote";
+import { MDXRemote } from "next-mdx-remote/rsc";
 import { components } from "@/components/mdx/mdx-components";
-// import rehypeHighlight from "rehype-highlight";
-// import remarkCodeImport from "remark-code-import";
 
-export function Mdx({ source }: { source: MDXRemoteSerializeResult }) {
-  // const options = {
-  //   parseFrontmatter: true,
-  //   mdxOptions: {
-  //     rehypePlugins: [rehypeHighlight],
-  //     remarkPlugins: [remarkCodeImport],
-  //   },
-  // };
+export async function Mdx(props: { source: string }) {
+  const options = {
+    parseFrontmatter: false,
+  };
 
-  return <MDXRemote {...source} components={components} />;
+  return <MDXRemote source={props.source} components={components} options={options} />;
 }

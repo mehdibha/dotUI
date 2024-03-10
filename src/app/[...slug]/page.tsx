@@ -45,7 +45,7 @@ export default async function Page({ params }: PageProps) {
   return (
     <main>
       {/* breadcrumbs  */}
-      {metadata.breadcrumbs.length > 1 && (
+      {metadata.breadcrumbs.length > 0 && (
         <p className="flex items-center text-muted-foreground">
           {metadata.breadcrumbs.map((breadcrumb, index) => (
             <React.Fragment key={index}>

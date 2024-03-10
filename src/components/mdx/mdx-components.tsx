@@ -1,7 +1,6 @@
-"use client"
-
 import type { ComponentProps } from "react";
 import Link from "next/link";
+import { Code } from "bright";
 import { ComponentPreview } from "@/components/component-preview";
 import { cn } from "@/utils/classes";
 
@@ -135,17 +134,20 @@ export const components = {
       {...props}
     />
   ),
-  pre: ({ className, ...props }: ComponentProps<"pre">) => (
-    <pre className={cn("mb-4 mt-6 overflow-x-auto", className)} {...props} />
-  ),
-  code: ({ className, ...props }: ComponentProps<"code">) => (
-    <code
-      className={cn(
-        "relative rounded border px-[0.3rem] py-[0.2rem] font-mono text-sm",
-        className
-      )}
-      {...props}
-    />
-  ),
+  pre: (props: ComponentProps<"pre">) => {
+    return props.children;
+  },
+  code: ({ className, ...props }: ComponentProps<"code">) => {
+    const language = className?.replace(/language-/, "");
+    return (
+      <Code
+        lang={language}
+        style={{ marginTop: 0, marginBottom: 0 }}
+        theme="github-dark"
+        className={cn("relative rounded border p-1 font-mono text-sm", className)}
+        {...props}
+      />
+    );
+  },
   ComponentPreview,
 };

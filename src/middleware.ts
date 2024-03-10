@@ -12,7 +12,6 @@ export default withAuth(
 
     if (isAuthPage) {
       if (isAuth) {
-        console.log("auth");
         return NextResponse.redirect(new URL("/", req.url));
       }
       return null;

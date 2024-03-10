@@ -27,13 +27,17 @@ export const getAllMdxFiles = (
   files.forEach((file) => {
     const filePath = path.join(directory, file);
     const fileStat = fs.statSync(filePath);
-
+    
     if (fileStat.isDirectory()) {
       getAllMdxFiles(filePath, rootDirectory, filesArray, includeIndexMdx);
     } else if (
       path.extname(file) === ".mdx" &&
       (includeIndexMdx || file !== "index.mdx")
     ) {
+      // console.log("rootDirectory", rootDirectory);
+      // console.log(path
+      //   .relative(rootDirectory, filePath));
+      // console.log("filePath", filePath);
       const relativePath = path
         .relative(rootDirectory, filePath)
         .split(path.sep)
@@ -41,6 +45,5 @@ export const getAllMdxFiles = (
       filesArray.push({ fullPath: filePath, relativePath });
     }
   });
-
   return filesArray;
 };

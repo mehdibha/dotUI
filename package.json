@@ -35,6 +35,7 @@
     "@radix-ui/react-tooltip": "^1.0.7",
     "@vercel/analytics": "^1.1.1",
     "@vercel/blob": "^0.19.0",
+    "bright": "^0.8.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "cmdk": "^0.2.0",

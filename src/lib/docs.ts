@@ -35,6 +35,7 @@ export interface Doc {
 const getBreadcrumbs = (slug: string[]): { label: string; href: string }[] => {
   const result = slug.map((slugPart, index) => {
     const partPath = path.join(process.cwd(), "content", ...slug.slice(0, index + 1));
+    // console.log("🥲partPath",partPath);
     if (fs.existsSync(partPath) && fs.lstatSync(partPath).isDirectory()) {
       // get title from index.mdx
       const indexPath = path.join(partPath, "index.mdx");
@@ -52,7 +53,7 @@ const getBreadcrumbs = (slug: string[]): { label: string; href: string }[] => {
       const filePath = path.join(
         process.cwd(),
         "content",
-        ...slug.slice(0, index + 1),
+        ...slug.slice(0, index),
         `${slugPart}.mdx`
       );
       if (fs.existsSync(filePath)) {
@@ -65,10 +66,8 @@ const getBreadcrumbs = (slug: string[]): { label: string; href: string }[] => {
       }
     }
   });
-  if (result.some((item) => !item)) {
-    return [];
-  }
-  return result as { label: string; href: string }[];
+
+  return result.filter((elem) => !!elem) as { label: string; href: string }[];
 };
 
 export const getDocFromSlug = (slug: string[]): Doc | null => {

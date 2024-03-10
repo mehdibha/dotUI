@@ -31,7 +31,7 @@ export const SearchDialog = (props: SearchDialogProps) => {
           <CommandItem
             value="hey"
             onSelect={() => {
-              console.log("yay");
+              console.log("cc");
             }}
           >
             {/* <div className="mr-2 flex h-4 w-4 items-center justify-center">
