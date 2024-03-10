@@ -121,12 +121,25 @@ const DataGrid = ({ type, items }: { type: string; items: Item[] }) => {
           >
             {type !== "hooks" && (
               <div
-                className={cn("rounded-sm bg-background", {
-                  "aspect-video": type === "components",
-                  "aspect-[9/11]": type === "templates" || type === "pages",
-                  "aspect-square": type === "icons",
-                })}
-              ></div>
+                className={cn(
+                  "flex items-center justify-center rounded-sm bg-background",
+                  {
+                    "aspect-video": type === "components",
+                    "aspect-[9/11]": type === "templates" || type === "pages",
+                    "aspect-square": type === "icons",
+                  }
+                )}
+              >
+                {item.thumbnail ? (
+                  item.thumbnail.includes("mp4") ? (
+                    <video src={item.thumbnail} muted loop autoPlay/>
+                  ) : (
+                    <img src={item.thumbnail} alt={item.title} />
+                  )
+                ) : (
+                  <p className="text-muted-foreground">No thumbnail</p>
+                )}
+              </div>
             )}
             <div className="p-3">
               <p className="mt- text-lg font-semibold">{item.title}</p>
