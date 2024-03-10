@@ -42,7 +42,7 @@ export const ComponentPreview = ({ name }: { name: AllPreviewsKeys }) => {
         </TabsContent>
         <TabsContent value="code" className="rounded border">
           <div className=" p-1">
-            <ScrollArea className="h-[350px] relative">
+            <ScrollArea className="relative h-[350px]">
               {typeof code === "string" && (
                 <CopyButton code={code} className="absolute right-4 top-2 z-30" />
               )}

@@ -2,8 +2,8 @@ import type { ComponentProps } from "react";
 import Link from "next/link";
 import { Code } from "bright";
 import { ComponentPreview } from "@/components/component-preview";
-import { cn } from "@/utils/classes";
 import { CopyButton } from "@/components/copy-button";
+import { cn } from "@/utils/classes";
 
 // This file was created to be used in src/components/remote-mdx.tsx
 // TODO: It can be simplified, refactored, and/or removed.
@@ -142,7 +142,10 @@ export const components = {
     const language = className?.replace(/language-/, "");
     return (
       <div className="relative">
-        <CopyButton code={props.children?.toString() ?? ""} className="absolute top-2 right-2 z-30" />
+        <CopyButton
+          code={props.children?.toString() ?? ""}
+          className="absolute right-2 top-2 z-30"
+        />
         <Code
           lang={language}
           style={{ marginTop: 0, marginBottom: 0 }}

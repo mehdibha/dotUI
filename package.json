@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "next build",
-    "build:preview-imports": "tsx ./scripts/build-preview-imports.ts",
+    "build:previews": "tsx ./scripts/build-previews.ts",
     "start": "next start",
     "dev": "next dev",
     "typecheck": "tsc --noEmit",

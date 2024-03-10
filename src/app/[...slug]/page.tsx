@@ -132,7 +132,7 @@ const DataGrid = ({ type, items }: { type: string; items: Item[] }) => {
               >
                 {item.thumbnail ? (
                   item.thumbnail.includes("mp4") ? (
-                    <video src={item.thumbnail} muted loop autoPlay/>
+                    <video src={item.thumbnail} muted loop autoPlay />
                   ) : (
                     <img src={item.thumbnail} alt={item.title} />
                   )
