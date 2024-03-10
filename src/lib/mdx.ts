@@ -27,7 +27,7 @@ export const getAllMdxFiles = (
   files.forEach((file) => {
     const filePath = path.join(directory, file);
     const fileStat = fs.statSync(filePath);
-    
+
     if (fileStat.isDirectory()) {
       getAllMdxFiles(filePath, rootDirectory, filesArray, includeIndexMdx);
     } else if (

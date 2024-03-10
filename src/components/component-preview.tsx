@@ -50,7 +50,9 @@ export const ComponentPreview = ({ name }: { name: AllPreviewsKeys }) => {
           <TabsTrigger value="code">Code</TabsTrigger>
         </TabsList>
         <TabsContent value="preview" className="rounded-md border">
-          <div className="flex w-full min-h-[350px] items-center justify-center p-8">{preview}</div>
+          <div className="flex min-h-[350px] w-full items-center justify-center p-8">
+            {preview}
+          </div>
         </TabsContent>
         <TabsContent value="code" className="rounded border">
           <div className=" p-1">
