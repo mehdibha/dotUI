@@ -3,7 +3,7 @@
 import * as React from "react";
 import { Loader2Icon, SearchIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { useDebounce } from "@/hooks/use-debounce";
+import { useDebounce } from "@/modules/hooks/use-debounce";
 
 export default function UseDebounceDemo() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);

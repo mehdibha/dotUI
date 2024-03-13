@@ -59,15 +59,18 @@ const config = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
+      backgroundImage: {
+        gradient: "linear-gradient(120deg, rgb(81, 112, 255), rgb(255, 102, 196))",
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        geistsans: ["var(--font-geist-sans)"],
-        geistmono: ["var(--font-geist-mono)"],
-        inter: ["var(--font-inter)"],
+        sans: ["var(--font-geist-sans)", ...fontFamily.sans],
+        mono: ["var(--font-geist-mono)", ...fontFamily.mono],
+        display: ["var(--font-display)", ...fontFamily.sans],
       },
       transitionDelay: {
         "400": "400ms",
@@ -85,41 +88,70 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-        "appear-3d": {
-          "0%": {
-            transform: "perspective(400px) rotateX(10deg) scale(1)",
+        "gradient-foreground-1": {
+          "from, 16.667%, to": {
+            opacity: "1",
           },
-          "100%": {
-            transform: "perspective(400px) rotateX(0deg) scale(1)",
-          },
-        },
-        "element-in": {
-          from: { opacity: "0", transform: "translateY(-16px)" },
-          to: { opacity: "1" },
-        },
-        "fade-in": {
-          from: { opacity: "0" },
-          to: { opacity: "1" },
-        },
-        flip: {
-          to: {
-            transform: "rotate(360deg)",
+          "33.333%, 83.333%": {
+            opacity: "0",
           },
         },
-        rotate: {
-          to: {
-            transform: "rotate(90deg)",
+        "gradient-background-1": {
+          "from, 16.667%, to": {
+            opacity: "0",
+          },
+          "25%, 91.667%": {
+            opacity: "1",
+          },
+        },
+        "gradient-foreground-2": {
+          "from, to": {
+            opacity: "0",
+          },
+          "33.333%, 50%": {
+            opacity: "1",
+          },
+          "16.667%, 66.667%": {
+            opacity: "0",
+          },
+        },
+        "gradient-background-2": {
+          "from, to": {
+            opacity: "1",
+          },
+          "33.333%, 50%": {
+            opacity: "0",
+          },
+          "25%, 58.333%": {
+            opacity: "1",
+          },
+        },
+        "gradient-foreground-3": {
+          "from, 50%, to": {
+            opacity: "0",
+          },
+          "66.667%, 83.333%": {
+            opacity: "1",
+          },
+        },
+        "gradient-background-3": {
+          "from, 58.333%, 91.667%, to": {
+            opacity: "1",
+          },
+          "66.667%, 83.333%": {
+            opacity: "0",
           },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "appear-3d": "appear-3d 1s forwards",
-        "element-in": "element-in 0.7s ease-out forwards",
-        "fade-in": "fade-in 0.7s ease-out forwards",
-        flip: "flip 6s infinite steps(2, end)",
-        rotate: "rotate 3s linear infinite both",
+        "gradient-background-1": "gradient-background-1 8s infinite",
+        "gradient-foreground-1": "gradient-foreground-1 8s infinite",
+        "gradient-background-2": "gradient-background-2 8s infinite",
+        "gradient-foreground-2": "gradient-foreground-2 8s infinite",
+        "gradient-background-3": "gradient-background-3 8s infinite",
+        "gradient-foreground-3": "gradient-foreground-3 8s infinite",
       },
     },
   },

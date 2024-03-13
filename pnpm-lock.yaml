@@ -116,6 +116,9 @@ dependencies:
   react-hook-form:
     specifier: ^7.49.3
     version: 7.49.3(react@18.2.0)
+  react-icons:
+    specifier: ^5.0.1
+    version: 5.0.1(react@18.2.0)
   react-resizable-panels:
     specifier: ^2.0.3
     version: 2.0.3(react-dom@18.2.0)(react@18.2.0)
@@ -125,6 +128,9 @@ dependencies:
   react-syntax-highlighter:
     specifier: ^15.5.0
     version: 15.5.0(react@18.2.0)
+  react-wrap-balancer:
+    specifier: ^1.1.0
+    version: 1.1.0(react@18.2.0)
   rehype-highlight:
     specifier: ^7.0.0
     version: 7.0.0
@@ -5751,6 +5757,14 @@ packages:
       react: 18.2.0
     dev: false
 
+  /react-icons@5.0.1(react@18.2.0):
+    resolution: {integrity: sha512-WqLZJ4bLzlhmsvme6iFdgO8gfZP17rfjYEJ2m9RsZjZ+cc4k1hTzknEz63YS1MeT50kVzoa1Nz36f4BEx+Wigw==}
+    peerDependencies:
+      react: '*'
+    dependencies:
+      react: 18.2.0
+    dev: false
+
   /react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: true
@@ -5852,6 +5866,14 @@ packages:
       prismjs: 1.29.0
       react: 18.2.0
       refractor: 3.6.0
+    dev: false
+
+  /react-wrap-balancer@1.1.0(react@18.2.0):
+    resolution: {integrity: sha512-EhF3jOZm5Fjx+Cx41e423qOv2c2aOvXAtym2OHqrGeMUnwERIyNsRBgnfT3plB170JmuYvts8K2KSPEIerKr5A==}
+    peerDependencies:
+      react: '>=16.8.0 || ^17.0.0 || ^18'
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /react@18.2.0:

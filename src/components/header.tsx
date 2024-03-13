@@ -73,7 +73,7 @@ export const Header = () => {
           className={cn(
             "pointer-events-auto absolute left-1/2 top-1/2 mr-8 hidden translate-x-[-50%] translate-y-[-50%] rounded-md bg-gray-300/0 px-3 py-[6px] backdrop-blur-md transition-all duration-300 lg:block",
             {
-              "bg-gray-300/50 shadow-sm dark:bg-gray-800/70": scrolled,
+              "bg-card/70 shadow-sm": scrolled,
             }
           )}
         >
@@ -107,6 +107,7 @@ export const Header = () => {
               >
                 <Button
                   size="sm"
+                  variant="secondary"
                   onClick={() => {
                     setSearchOpen(true);
                   }}
@@ -130,6 +131,7 @@ export const Header = () => {
           <div className="flex items-center space-x-2">
             <Button
               size="sm"
+              variant="secondary"
               onClick={() => {
                 setSearchOpen(true);
               }}
@@ -228,7 +230,8 @@ const MobileNav = () => {
               direction="column"
               onNavItemClick={handleClose}
             />
-            <Button color="primary" size="sm">
+            {/* TODO: add searchdialog */}
+            <Button variant="secondary" size="sm">
               Search
             </Button>
           </div>

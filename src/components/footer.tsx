@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import NavLink from "next/link";
+import Link from "next/link";
 import { GithubIcon, LinkedinIcon, TwitterIcon } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { siteConfig } from "@/config";
@@ -10,41 +11,33 @@ const links = [
     label: "Product",
     links: [
       {
-        label: "VSCode extension",
-        url: "#",
+        label: "components",
+        href: "/components",
       },
       {
-        label: "Features",
-        url: "#",
+        label: "Hooks",
+        href: "/hooks",
       },
       {
-        label: "Pricing",
-        url: "#",
+        label: "Icons",
+        href: "/icons",
       },
       {
-        label: "Ressources",
-        url: "#",
+        label: "Pages",
+        href: "/pages",
       },
       {
-        label: "GitHub",
-        url: "#",
+        label: "Templates",
+        href: "/templates",
       },
     ],
   },
   {
-    label: "Company",
+    label: "Community",
     links: [
       {
-        label: "About",
-        url: "#",
-      },
-      {
-        label: "Careers",
-        url: "#",
-      },
-      {
-        label: "Contact us",
-        url: "#",
+        label: "Discord",
+        href: "https://discord.gg/DXpj5V2fU8",
       },
     ],
   },
@@ -52,21 +45,17 @@ const links = [
     label: "Support",
     links: [
       {
-        label: "Docs",
-        url: "#",
-      },
-      {
-        label: "Status",
-        url: "#",
+        label: "Open an issue",
+        href: "https://github.com/mehdibha/rcopy/issues/new",
       },
     ],
   },
 ];
 
 const socialLinks = [
-  { icon: GithubIcon, url: "https://github.com/mehdibha/rcopy" },
-  { icon: TwitterIcon, url: "#" },
-  { icon: LinkedinIcon, url: "#" },
+  { icon: GithubIcon, href: "https://github.com/mehdibha/rcopy" },
+  { icon: TwitterIcon, href: "#" },
+  { icon: LinkedinIcon, href: "#" },
 ];
 
 export const Footer = () => {
@@ -88,13 +77,12 @@ export const Footer = () => {
             <span className="inline-block font-bold">{siteConfig.global.name}</span>
           </NavLink>
           <p className="text-md mt-4 text-muted-foreground">
-            Build you React app fast and easy with rCopy. Copy and paste components,
-            hooks, and more.
+            Ship your React app in days, not weeks
           </p>
           <div className="mt-4 flex items-center space-x-4">
             {socialLinks.map((Link, index) => (
               <NavLink
-                href={Link.url}
+                href={Link.href}
                 key={index}
                 target="_blank"
                 className="text-muted-foreground transition-colors duration-200 hover:text-foreground"
@@ -112,8 +100,9 @@ export const Footer = () => {
                 {group.links.map((link, index) => (
                   <li key={index}>
                     <NavLink
-                      href={link.url}
+                      href={link.href}
                       className="text-muted-foreground transition-colors duration-200 hover:text-foreground"
+                      target={link.href.startsWith("http") ? "_blank" : undefined}
                     >
                       {link.label}
                     </NavLink>
@@ -126,7 +115,14 @@ export const Footer = () => {
       </div>
       <Separator className="mb-4 mt-12" />
       <p className="text-sm text-muted-foreground">
-        Copyright © 2024 rCopy - All rights reserved.
+        Built by{" "}
+        <Link href="https://github.com/mehdibha" target="_blank" className="underline">
+          mehdibha
+        </Link>
+        . The source code is available on{" "}
+        <Link href="https://github.com/mehdibha" target="_blank" className="underline">
+          GitHub.
+        </Link>
       </p>
     </div>
   );
