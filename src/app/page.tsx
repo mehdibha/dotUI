@@ -9,7 +9,7 @@ export default function HomePage() {
     <main className="py-14">
       <Hero />
       <Brands className="mt-24"/>
-      <Features className="mt-24"/>
+      <Features className="mt-32"/>
       <CallToAction className="mt-40" />
     </main>
   );

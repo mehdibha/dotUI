@@ -31,7 +31,7 @@ import { cn } from "@/utils/classes";
 
 export const Hero = ({ className }: { className?: string }) => {
   return (
-    <section className={cn("flex items-start", className)}>
+    <section className={cn("flex items-start justify-between space-x-8", className)}>
       <div>
         <Link
           href="https://github.com/mehdibha/rcopy"
@@ -85,7 +85,7 @@ const Animation = () => {
   };
 
   return (
-    <div className="relative w-[500px]">
+    <div className="relative w-[300px]">
       <LayoutGroup>
         {selectedTab === 0 && (
           <motion.div key={0} {...animationProps} className="h-96 w-full">

@@ -71,13 +71,13 @@ export const Header = () => {
         </div>
         <div
           className={cn(
-            "pointer-events-auto absolute left-1/2 top-1/2 mr-8 hidden translate-x-[-50%] translate-y-[-50%] rounded-md bg-gray-300/0 px-3 py-[6px] backdrop-blur-md transition-all duration-300 lg:block",
+            "pointer-events-auto absolute left-1/2 top-1/2 mr-8 hidden translate-x-[-50%] translate-y-[-50%] rounded-md bg-gray-300/0 px-3 backdrop-blur-md transition-all duration-300 lg:block",
             {
-              "bg-card/70 shadow-sm": scrolled,
+              "bg-card/90 shadow-sm": scrolled,
             }
           )}
         >
-          <div className="overflow-hidden">
+          <div className="overflow-hidden py-[6px]">
             <div
               suppressHydrationWarning
               className={cn("relative transition-all duration-300", {
