@@ -153,7 +153,8 @@ const DataGrid = ({ type, items }: { type: string; items: Item[] }) => {
             )}
             <div
               className={cn("flex flex-1 flex-col px-2 pb-1 pt-3", {
-                "pt-1": !item.metadata.thumbnail,
+                "pt-1": type === "hooks",
+                "pb-3": !item.metadata.keywords,
               })}
             >
               <div className="flex-1">

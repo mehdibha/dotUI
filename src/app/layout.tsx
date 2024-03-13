@@ -81,13 +81,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 const Background = () => {
   return (
     <div className="pointer-events-none">
-      <div
-        className="absolute z-[-1] h-screen w-full duration-300 animate-in fade-in"
-        style={{
-          background:
-            "radial-gradient(ellipse 80% 80% at 50% 0%,rgba(35,35,35,1),rgba(0,0,0,0))",
-        }}
-      />
+      <div className="bg-bgGradientLight dark:bg-bgGradient absolute z-[-1] h-screen w-full duration-300 animate-in fade-in" />
     </div>
   );
 };

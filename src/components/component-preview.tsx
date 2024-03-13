@@ -36,9 +36,11 @@ export const ComponentPreview = ({ name }: { name: AllPreviewsKeys }) => {
           <TabsTrigger value="code">Code</TabsTrigger>
         </TabsList>
         <TabsContent value="preview" className="rounded-md border">
-          <div className="flex min-h-[350px] w-full items-center justify-center px-8 py-20">
-            {preview}
-          </div>
+          <ScrollArea className="h-[500px]">
+            <div className="flex min-h-[350px] w-full items-center justify-center px-8 py-20">
+              {preview}
+            </div>
+          </ScrollArea>
         </TabsContent>
         <TabsContent value="code" className="rounded border">
           <div className=" p-1">

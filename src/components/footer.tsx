@@ -5,6 +5,7 @@ import Link from "next/link";
 import { GithubIcon, LinkedinIcon, TwitterIcon } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { siteConfig } from "@/config";
+import { ThemeToggle } from "./theme-toggle";
 
 const links = [
   {
@@ -35,6 +36,10 @@ const links = [
   {
     label: "Community",
     links: [
+      {
+        label: "GitHub",
+        href: "https://github.com/mehdibha/rcopy",
+      },
       {
         label: "Discord",
         href: "https://discord.gg/DXpj5V2fU8",
@@ -91,6 +96,7 @@ export const Footer = () => {
               </NavLink>
             ))}
           </div>
+          <ThemeToggle className="mt-8" />
         </div>
         <div className="grid grid-cols-3 gap-16">
           {links.map((group, index) => (

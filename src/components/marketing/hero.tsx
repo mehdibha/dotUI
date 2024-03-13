@@ -31,7 +31,7 @@ import { cn } from "@/utils/classes";
 
 export const Hero = ({ className }: { className?: string }) => {
   return (
-    <section className={cn("flex items-start justify-between space-x-8", className)}>
+    <section className={cn("flex items-start justify-between", className)}>
       <div>
         <Link
           href="https://github.com/mehdibha/rcopy"
@@ -85,10 +85,10 @@ const Animation = () => {
   };
 
   return (
-    <div className="relative w-[300px]">
+    <div >
       <LayoutGroup>
         {selectedTab === 0 && (
-          <motion.div key={0} {...animationProps} className="h-96 w-full">
+          <motion.div key={0} {...animationProps} className="h-96 w-[300px]">
             <h2 className="text-3xl font-bold">Components.</h2>
             <div className="mt-4 grid grid-cols-3 gap-4">
               {Array.from({ length: 9 }).map((_, i) => (
@@ -98,7 +98,7 @@ const Animation = () => {
           </motion.div>
         )}
         {selectedTab === 1 && (
-          <motion.div key={1} {...animationProps} className="h-96 w-full">
+          <motion.div key={1} {...animationProps} className="h-96 w-[300px]">
             <h2 className="text-3xl font-bold">hooks.</h2>
             <div className="mt-4 grid grid-cols-1 gap-4">
               {["useDebounce", "useWindowSize", "useScroll"].map((hookName, i) => (
@@ -113,7 +113,7 @@ const Animation = () => {
           </motion.div>
         )}
         {selectedTab === 2 && (
-          <motion.div key={2} {...animationProps} className="h-96 w-full">
+          <motion.div key={2} {...animationProps} className="h-96 w-[300px]">
             <h2 className="text-3xl font-bold">Icons.</h2>
             <div className="mt-4 grid grid-cols-4 gap-4">
               {[
