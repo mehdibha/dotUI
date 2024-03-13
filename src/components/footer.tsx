@@ -11,7 +11,7 @@ const links = [
     label: "Product",
     links: [
       {
-        label: "components",
+        label: "Components",
         href: "/components",
       },
       {

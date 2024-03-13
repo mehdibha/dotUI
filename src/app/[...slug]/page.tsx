@@ -4,8 +4,17 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRightIcon, ChevronRightIcon, SearchIcon } from "lucide-react";
 import { Mdx } from "@/components/mdx/mdx-remote";
+import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { cn } from "@/utils/classes";
+import { truncateOnWord } from "@/utils/text";
 import { type Item, getDocFromSlug, getAllDocs } from "@/lib/docs";
 
 interface PageProps {
@@ -116,11 +125,12 @@ const DataGrid = ({ type, items }: { type: string; items: Item[] }) => {
         {items.map((item, index) => (
           <Link
             key={index}
-            href={item.href}
-            className="cursor-pointer rounded-md bg-card p-2 transition-colors duration-100 hover:bg-card/70"
+            href={item.metadata.externalLink ?? item.href}
+            target={item.metadata.externalLink ? "_blank" : undefined}
+            className="flex cursor-pointer flex-col rounded-md bg-card p-2 transition-colors duration-100 hover:bg-card/70"
           >
             {type !== "hooks" && (
-              <div
+              <ScrollArea
                 className={cn(
                   "flex items-center justify-center rounded-sm bg-background",
                   {
@@ -130,20 +140,59 @@ const DataGrid = ({ type, items }: { type: string; items: Item[] }) => {
                   }
                 )}
               >
-                {item.thumbnail ? (
-                  item.thumbnail.includes("mp4") ? (
-                    <video src={item.thumbnail} muted loop autoPlay />
+                {item.metadata.thumbnail ? (
+                  item.metadata.thumbnail.includes("mp4") ? (
+                    <video src={item.metadata.thumbnail} muted loop autoPlay />
                   ) : (
-                    <img src={item.thumbnail} alt={item.title} />
+                    <img src={item.metadata.thumbnail} alt={item.metadata.title} />
                   )
                 ) : (
                   <p className="text-muted-foreground">No thumbnail</p>
                 )}
-              </div>
+              </ScrollArea>
             )}
-            <div className="p-3">
-              <p className="mt- text-lg font-semibold">{item.title}</p>
-              <p className="mt-1 text-sm text-muted-foreground">{item.description}</p>
+            <div
+              className={cn("flex flex-1 flex-col px-2 pb-1 pt-3", {
+                "pt-1": !item.metadata.thumbnail,
+              })}
+            >
+              <div className="flex-1">
+                <p className="text-lg font-semibold">{item.metadata.title}</p>
+                {item.metadata.description && (
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    {truncateOnWord(item.metadata.description, 70)}
+                  </p>
+                )}
+              </div>
+              {item.metadata.keywords && (
+                <div className="mt-3 flex flex-wrap gap-1">
+                  {item.metadata.keywords
+                    .slice(0, item.metadata.keywords.length > 3 ? 2 : 3)
+                    .map((keyword, index) => (
+                      <Badge key={index} variant="outline">
+                        {keyword}
+                      </Badge>
+                    ))}
+                  {item.metadata.keywords.length > 3 && (
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Badge variant="outline" className="text-muted-foreground">
+                            +{item.metadata.keywords.length - 2} more
+                          </Badge>
+                        </TooltipTrigger>
+                        <TooltipContent side="bottom" className="pl-6">
+                          <ul className="list-disc">
+                            {item.metadata.keywords.slice(2).map((keyword, index) => (
+                              <li key={index}>{keyword}</li>
+                            ))}
+                          </ul>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  )}
+                </div>
+              )}
             </div>
           </Link>
         ))}

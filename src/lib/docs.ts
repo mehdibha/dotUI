@@ -4,12 +4,14 @@ import { getAllMdxFiles, parseMDXFile } from "./mdx";
 
 export type Type = "components" | "pages" | "templates" | "icons" | "hooks";
 
-export type Item = DocFrontmatter & { href: string; type: Type };
+export type Item = { href: string; type: Type; metadata: DocFrontmatter };
 
 export interface DocFrontmatter {
   title: string;
   description?: string;
   thumbnail?: string;
+  keywords?: string[];
+  externalLink?: string;
 }
 
 export interface DocMetadata {
@@ -105,7 +107,11 @@ export const getDocFromSlug = (slug: string[]): Doc | null => {
           const itemRawContent = fs.readFileSync(fullPath, "utf-8");
           const { frontmatter: itemFrontmatter } =
             parseMDXFile<DocFrontmatter>(itemRawContent);
-          return { ...itemFrontmatter, type, href: `/${type}/${relativePath.join("/")}` };
+          return {
+            metadata: itemFrontmatter,
+            type,
+            href: `/${type}/${relativePath.join("/")}`,
+          };
         }
       );
 
