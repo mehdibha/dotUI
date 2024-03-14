@@ -11,7 +11,6 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { cn } from "@/utils/classes";
 import { truncateOnWord } from "@/utils/text";
 import { type Item, getDocFromSlug, getAllDocs } from "@/lib/docs";
-import { IconsList } from "@/components/icons-list";
 
 interface PageProps {
   params: {

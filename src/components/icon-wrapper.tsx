@@ -26,10 +26,7 @@ const IconWrapper = (props: IconWrapperProps) => {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <div
-          className={cn("relative overflow-hidden", className)}
-          onClick={handleCopy}
-        >
+        <div className={cn("relative overflow-hidden", className)} onClick={handleCopy}>
           {children}
           <AnimatePresence>
             {copied && (

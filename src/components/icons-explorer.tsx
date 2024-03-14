@@ -23,7 +23,9 @@ export const IconsExplorer = () => {
         />
       </div>
       <div className="h-full min-h-[100px]">
-        <IconsList icons={Object.entries(icons).map(([key, value]) => ({ key, value }))} />
+        <IconsList
+          icons={Object.entries(icons).map(([key, value]) => ({ key, value }))}
+        />
       </div>
     </div>
   );
