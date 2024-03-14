@@ -19,7 +19,7 @@ export default function Demo() {
         <SparklesIcon size={18} />
         <span>Star us on GitHub</span> <ArrowRightIcon size={15} />
       </Link>
-      <h1 className="font-display mt-4 max-w-2xl text-5xl font-bold leading-tight">
+      <h1 className="mt-4 max-w-2xl font-display text-5xl font-bold leading-tight">
         Copy and paste components for you React App
       </h1>
       <h2 className="text-md mt-6 text-muted-foreground md:text-lg lg:text-xl">

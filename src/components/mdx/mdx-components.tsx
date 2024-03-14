@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Code } from "bright";
 import { ComponentPreview } from "@/components/component-preview";
 import { CopyButton } from "@/components/copy-button";
+import { IconsExplorer } from "@/components/icons-explorer";
 import { cn } from "@/utils/classes";
 
 // This file was created to be used in src/components/remote-mdx.tsx
@@ -157,4 +158,5 @@ export const components = {
     );
   },
   ComponentPreview,
+  IconsExplorer,
 };

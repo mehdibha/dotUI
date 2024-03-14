@@ -7,12 +7,7 @@ import { Mdx } from "@/components/mdx/mdx-remote";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/utils/classes";
 import { truncateOnWord } from "@/utils/text";
 import { type Item, getDocFromSlug, getAllDocs } from "@/lib/docs";
@@ -99,7 +94,7 @@ export default async function Page({ params }: PageProps) {
       )}
       <div className="mt-10">
         <Mdx source={rawContent} />
-        {items && <DataGrid items={items} type={metadata.type} />}
+        {items && items.length > 0 && <DataGrid items={items} type={metadata.type} />}
       </div>
     </main>
   );
@@ -175,22 +170,20 @@ const DataGrid = ({ type, items }: { type: string; items: Item[] }) => {
                       </Badge>
                     ))}
                   {item.metadata.keywords.length > 3 && (
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Badge variant="outline" className="text-muted-foreground">
-                            +{item.metadata.keywords.length - 2} more
-                          </Badge>
-                        </TooltipTrigger>
-                        <TooltipContent side="bottom" className="pl-6">
-                          <ul className="list-disc">
-                            {item.metadata.keywords.slice(2).map((keyword, index) => (
-                              <li key={index}>{keyword}</li>
-                            ))}
-                          </ul>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Badge variant="outline" className="text-muted-foreground">
+                          +{item.metadata.keywords.length - 2} more
+                        </Badge>
+                      </TooltipTrigger>
+                      <TooltipContent side="bottom" className="pl-6">
+                        <ul className="list-disc">
+                          {item.metadata.keywords.slice(2).map((keyword, index) => (
+                            <li key={index}>{keyword}</li>
+                          ))}
+                        </ul>
+                      </TooltipContent>
+                    </Tooltip>
                   )}
                 </div>
               )}

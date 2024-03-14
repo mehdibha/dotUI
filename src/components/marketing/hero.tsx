@@ -85,7 +85,7 @@ const Animation = () => {
   };
 
   return (
-    <div >
+    <div>
       <LayoutGroup>
         {selectedTab === 0 && (
           <motion.div key={0} {...animationProps} className="h-96 w-[300px]">

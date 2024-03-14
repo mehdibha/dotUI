@@ -205,6 +205,9 @@ devDependencies:
   husky:
     specifier: ^8.0.3
     version: 8.0.3
+  lucide-static:
+    specifier: ^0.357.0
+    version: 0.357.0
   postcss:
     specifier: ^8.4.31
     version: 8.4.33
@@ -4645,6 +4648,10 @@ packages:
     dependencies:
       react: 18.2.0
     dev: false
+
+  /lucide-static@0.357.0:
+    resolution: {integrity: sha512-4Cua1ACX4XnLgIjm7AP6D60ihNya+EXyTVWVu37cePQwEO6rcdEcoTWyleHlVYje/cDuQphnuq6LHVYNgijGjg==}
+    dev: true
 
   /map-obj@1.0.1:
     resolution: {integrity: sha512-7N/q3lyZ+LVCp7PzuxrJr4KMbBE2hW7BT7YNia330OFxIf4d3r5zVpicP2650l7CPN6RM9zOJRl3NGpqSiw3Eg==}
