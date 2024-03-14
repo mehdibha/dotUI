@@ -2,11 +2,12 @@ import React from "react";
 // import { transform } from "@svgr/core";
 import { SearchIcon } from "lucide-react";
 import * as icons from "lucide-static";
-import { IconWrapper } from "./icon-wrapper";
+// import { FixedSizeList as List } from "react-window";
+// import { IconWrapper } from "./icon-wrapper";
+import { IconsList } from "./icons-list";
 import { Input } from "./ui/input";
-import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
-export const IconsExplorer = async () => {
+export const IconsExplorer = () => {
   // const jsCode = await transform(
   //   svgCode,
   //   { icon: true },
@@ -15,30 +16,14 @@ export const IconsExplorer = async () => {
   return (
     <div>
       <div className="relative">
-        <Input className="full-w pl-12" placeholder={`Search icons`} />
+        <Input className="w-full pl-12" placeholder={`Search icons`} />
         <SearchIcon
           size={18}
           className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 transform text-muted-foreground"
         />
       </div>
-      <div className="mt-6 grid grid-cols-16 gap-3">
-        {Object.keys(icons).map((name, index) => {
-          const svgStr = icons[name as keyof typeof icons];
-          return (
-            <Tooltip key={index}>
-              <TooltipTrigger asChild>
-                {/* TODO: add code from transform svgr */}
-                <IconWrapper code="">
-                  <div
-                    className="flex aspect-square cursor-pointer items-center justify-center rounded-md bg-card hover:bg-card/60"
-                    dangerouslySetInnerHTML={{ __html: svgStr }}
-                  />
-                </IconWrapper>
-              </TooltipTrigger>
-              <TooltipContent>{name}</TooltipContent>
-            </Tooltip>
-          );
-        })}
+      <div className="h-full min-h-[100px]">
+        <IconsList icons={Object.entries(icons).map(([key, value]) => ({ key, value }))} />
       </div>
     </div>
   );

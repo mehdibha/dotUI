@@ -11,6 +11,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { cn } from "@/utils/classes";
 import { truncateOnWord } from "@/utils/text";
 import { type Item, getDocFromSlug, getAllDocs } from "@/lib/docs";
+import { IconsList } from "@/components/icons-list";
 
 interface PageProps {
   params: {
@@ -122,12 +123,12 @@ const DataGrid = ({ type, items }: { type: string; items: Item[] }) => {
             key={index}
             href={item.metadata.externalLink ?? item.href}
             target={item.metadata.externalLink ? "_blank" : undefined}
-            className="flex cursor-pointer flex-col rounded-md bg-card p-2 transition-colors duration-100 hover:bg-card/70"
+            className="group flex cursor-pointer flex-col rounded-md border border-border/20 bg-card/70 p-2 transition-colors duration-150 hover:border-border hover:bg-card"
           >
             {type !== "hooks" && (
               <ScrollArea
                 className={cn(
-                  "flex items-center justify-center rounded-sm bg-background",
+                  "flex items-center justify-center rounded-sm border border-border/20 bg-background duration-150 group-hover:border-border/50",
                   {
                     "aspect-video": type === "components",
                     "aspect-[9/11]": type === "templates" || type === "pages",
@@ -137,9 +138,19 @@ const DataGrid = ({ type, items }: { type: string; items: Item[] }) => {
               >
                 {item.metadata.thumbnail ? (
                   item.metadata.thumbnail.includes("mp4") ? (
-                    <video src={item.metadata.thumbnail} muted loop autoPlay />
+                    <video
+                      src={item.metadata.thumbnail}
+                      muted
+                      loop
+                      autoPlay
+                      className="opacity-90 duration-150 group-hover:opacity-100"
+                    />
                   ) : (
-                    <img src={item.metadata.thumbnail} alt={item.metadata.title} />
+                    <img
+                      src={item.metadata.thumbnail}
+                      alt={item.metadata.title}
+                      className="opacity-90 duration-150 group-hover:opacity-100"
+                    />
                   )
                 ) : (
                   <p className="text-muted-foreground">No thumbnail</p>
