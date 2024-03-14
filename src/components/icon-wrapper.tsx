@@ -28,7 +28,7 @@ export const IconWrapper = ({
             initial={{ y: 3, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 3, opacity: 0 }}
-            className="text-xs shadow-sm absolute bottom-0 w-full rounded-t-sm bg-card py-0.5 text-center text-muted-foreground"
+            className="absolute bottom-0 w-full rounded-t-sm bg-card py-0.5 text-center text-xs text-muted-foreground shadow-sm"
           >
             copied
           </motion.span>

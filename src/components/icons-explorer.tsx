@@ -21,7 +21,7 @@ export const IconsExplorer = async () => {
           className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 transform text-muted-foreground"
         />
       </div>
-      <div className="grid-cols-16 mt-6 grid gap-3">
+      <div className="mt-6 grid grid-cols-16 gap-3">
         {Object.keys(icons).map((name, index) => {
           const svgStr = icons[name as keyof typeof icons];
           return (
