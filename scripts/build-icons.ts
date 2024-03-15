@@ -11,6 +11,8 @@ type TransformedNode = [string, Record<string, string>];
 // TODO: change this script to download all svg icons from github, optimize them with svgo and then generate the data icons, then format the generated code,
 // This way we can have a more dynamic way to add new icons libraries (by just adding a new object with metadata and the path to the icons)
 
+// TODO: Fix simpleIcons viewbox + fill
+
 function transformSVG(svgString: string): TransformedNode[] {
   const parsedSVG = parse(svgString);
   function attrsToObject(attrs: Record<string, string | number>): Record<string, string> {
