@@ -3,10 +3,12 @@
 import React from "react";
 import { useWindowVirtualizer } from "@tanstack/react-virtual";
 import { cn } from "@/utils/classes";
+import { createIcon } from "@/utils/icon";
+import type { IconNode } from "@/types/icons";
 import { IconWrapper } from "./icon-wrapper";
 
 interface IconsListProps extends React.HTMLAttributes<HTMLDivElement> {
-  icons: { name: string; icon: string; code: string }[];
+  icons: { name: string; icon: IconNode }[];
 }
 
 export const IconsList = (props: IconsListProps) => {
@@ -86,13 +88,10 @@ export const IconsList = (props: IconsListProps) => {
                 {icons
                   .slice(item.index * itemsPerRow, (item.index + 1) * itemsPerRow)
                   .map((icon, index) => {
+                    const Icon = createIcon(icon.name, icon.icon);
                     return (
-                      <IconWrapper key={index} name={icon.name} code={icon.code}>
-                        {/* TODO: Dom purify */}
-                        <div
-                          className="group flex h-14 cursor-pointer items-center justify-center rounded-md border border-border/20 bg-card/70 duration-150 hover:border-border hover:bg-card"
-                          dangerouslySetInnerHTML={{ __html: icon.icon }}
-                        />
+                      <IconWrapper key={index} name={icon.name} code={""}>
+                        <Icon />
                       </IconWrapper>
                     );
                   })}

@@ -27,7 +27,9 @@ const IconWrapper = (props: IconWrapperProps) => {
     <Tooltip>
       <TooltipTrigger asChild>
         <div className={cn("relative overflow-hidden", className)} onClick={handleCopy}>
-          {children}
+          <div className="group flex h-14 cursor-pointer items-center justify-center rounded-md border border-border/20 bg-card/70 duration-150 hover:border-border hover:bg-card">
+            {children}
+          </div>
           <AnimatePresence>
             {copied && (
               <motion.span
