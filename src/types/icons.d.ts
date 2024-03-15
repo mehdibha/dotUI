@@ -10,3 +10,5 @@ export interface IconProps extends ComponentAttributes {
 }
 
 export type Icon = ForwardRefExoticComponent<IconProps>;
+
+export type Library = "lucide-icons" | "simple-icons";
