@@ -32,7 +32,7 @@ async function processLucideIcons() {
         },`;
     } catch (error) {
       console.log(`Error processing ${name}`);
-      console.log(lucideIcons[name as keyof typeof lucideIcons])
+      console.log(lucideIcons[name as keyof typeof lucideIcons]);
     }
   });
   await Promise.all(promises);

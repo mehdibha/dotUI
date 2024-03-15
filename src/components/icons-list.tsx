@@ -6,7 +6,7 @@ import { cn } from "@/utils/classes";
 import { IconWrapper } from "./icon-wrapper";
 
 interface IconsListProps extends React.HTMLAttributes<HTMLDivElement> {
-  icons: { name: string; icon: string, code:string }[];
+  icons: { name: string; icon: string; code: string }[];
 }
 
 export const IconsList = (props: IconsListProps) => {
@@ -16,7 +16,7 @@ export const IconsList = (props: IconsListProps) => {
   const [itemsPerRow, setItemsPerRow] = React.useState<number>(calculateItemsPerRow());
 
   function calculateItemsPerRow() {
-    if (typeof window === "undefined") return 16
+    if (typeof window === "undefined") return 16;
     const screenWidth = window.innerWidth;
     // Calculate items per row based on screen width
     if (screenWidth >= 1024) {
