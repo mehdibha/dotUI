@@ -13,7 +13,7 @@ type TransformedNode = [string, Record<string, string>];
 
 // TODO: Fix simpleIcons viewbox + fill
 
-// TODO: add some metadata such as keywords for 
+// TODO: add some metadata such as keywords for
 
 function transformSVG(svgString: string): TransformedNode[] {
   const parsedSVG = parse(svgString);
