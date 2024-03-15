@@ -220,6 +220,9 @@ devDependencies:
   rimraf:
     specifier: ^5.0.5
     version: 5.0.5
+  simple-icons:
+    specifier: ^11.8.0
+    version: 11.8.0
   tailwindcss:
     specifier: ^3.3.5
     version: 3.4.1
@@ -6548,6 +6551,11 @@ packages:
   /signal-exit@4.1.0:
     resolution: {integrity: sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==}
     engines: {node: '>=14'}
+
+  /simple-icons@11.8.0:
+    resolution: {integrity: sha512-PlbTchVVDyVccqT+M1HvfiB1gjzi6ewnpsj9QCFLsX9lZiJJIMrCY+bSELRMl0GUM0+wgH9mr8ZAj4XJdaMJvg==}
+    engines: {node: '>=0.12.18'}
+    dev: true
 
   /simple-swizzle@0.2.2:
     resolution: {integrity: sha512-JA//kQgZtbuY83m+xT+tXJkmJncGMTFT+C+g2h2R9uxkYIrE2yy9sgmcLhCnw57/WSD+Eh3J97FPEDFnbXnDUg==}
