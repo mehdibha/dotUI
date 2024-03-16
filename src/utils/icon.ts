@@ -1,31 +1,23 @@
 import { forwardRef, createElement } from "react";
 import type { IconNode, IconProps } from "@/types/icons";
 
-export const createIcon = (iconName: string, iconNode: IconNode) => {
+// TODO: add keys for icons
+export const createIcon = (
+  iconName: string,
+  iconNode: IconNode,
+  colorType: "stroke" | "fill" = "stroke"
+) => {
   const Component = forwardRef<SVGSVGElement, IconProps>(
-    (
-      {
-        color = "currentColor",
-        size = 24,
-        strokeWidth = 2,
-        absoluteStrokeWidth,
-        children,
-        ...rest
-      },
-      ref
-    ) => {
+    ({ color = "currentColor", size = 24, strokeWidth = 2, children, ...rest }, ref) => {
       return createElement(
         "svg",
         {
           ref,
-          // ...defaultAttributes,
           width: size,
           height: size,
-          stroke: color,
-          strokeWidth: absoluteStrokeWidth
-            ? (Number(strokeWidth) * 24) / Number(size)
-            : strokeWidth,
-          // className: ["lucide", `lucide-${toKebabCase(iconName)}`, className].join(" "),
+          stroke: colorType === "stroke" ? color : undefined,
+          fill: colorType === "fill" ? color : undefined,
+          strokeWidth: strokeWidth,
           ...rest,
         },
         [
