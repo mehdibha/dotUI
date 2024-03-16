@@ -1,4 +1,3 @@
-// import { transform } from "@svgr/core";
 import fs from "fs";
 import lucideIcons from "lucide-static";
 import path from "path";
@@ -8,11 +7,10 @@ import { parse, type Node as SVGNode, type RootNode } from "svg-parser";
 
 type TransformedNode = [string, Record<string, string>];
 
+// TODO: add keys to the icons
 // TODO: change this script to download all svg icons from github, optimize them with svgo and then generate the data icons, then format the generated code,
 // This way we can have a more dynamic way to add new icons libraries (by just adding a new object with metadata and the path to the icons)
-
-// TODO: Fix simpleIcons viewbox + fill
-
+// TODO: add defaultAttributes to the icons for each library
 // TODO: add some metadata such as keywords for
 
 function transformSVG(svgString: string): TransformedNode[] {
