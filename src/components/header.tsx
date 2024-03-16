@@ -176,13 +176,16 @@ const Nav = (props: NavProps) => {
           item.href && (
             <Link
               key={index}
-              href={item.href}
+              href={item.disabled ? "#" : item.href}
               className={cn(
-                "w-full rounded px-4 py-1 text-center text-sm font-medium transition-all hover:text-foreground",
-                item.disabled && "cursor-not-allowed opacity-80",
-                segments[0]?.split("/")?.includes(item.href.slice(1, item.href.length))
-                  ? "bg-foreground/10 text-foreground"
-                  : "text-foreground/60"
+                "w-full rounded px-4 py-1 text-center text-sm font-medium text-foreground/60 transition-all hover:text-foreground",
+                {
+                  "cursor-default text-foreground/30 hover:text-foreground/30":
+                    item.disabled,
+                  "bg-foreground/10 text-foreground": segments[0]
+                    ?.split("/")
+                    ?.includes(item.href.slice(1, item.href.length)),
+                }
               )}
               onClick={onNavItemClick}
             >

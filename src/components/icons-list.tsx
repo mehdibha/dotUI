@@ -97,7 +97,7 @@ export default function IconsList(props: IconsListProps) {
       <div className="relative">
         <Input
           className="w-full pl-12"
-          placeholder={`Search ${icons.length ? `${icons.length} ` : ""}icons...`}
+          placeholder={`Search ${allIcons.length ? `${allIcons.length} ` : ""}icons...`}
           value={searchTerm}
           onChange={(e) => {
             setSearchTerm(e.target.value);
