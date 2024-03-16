@@ -96,7 +96,7 @@
     "typescript": "^5.1.6"
   },
   "lint-staged": {
-    "(apps|packages)/**/*.{js,ts,jsx,tsx}": [
+    "**/*.{js,ts,jsx,tsx}": [
       "prettier --write",
       "eslint --fix"
     ],

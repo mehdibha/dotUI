@@ -55,8 +55,8 @@
   }
   body {
     @apply bg-background text-foreground;
-    white-space: pre-wrap;
-    word-wrap: break-word;
+    /* white-space: pre-wrap; */
+    /* word-wrap: break-word; */
   }
 }
 
