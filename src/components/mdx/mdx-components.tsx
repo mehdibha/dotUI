@@ -2,12 +2,135 @@ import type { ComponentProps } from "react";
 import Link from "next/link";
 import { Code } from "bright";
 import { ComponentPreview } from "@/components/component-preview";
-import { CopyButton } from "@/components/copy-button";
 import { IconsExplorer } from "@/components/icons-explorer";
 import { cn } from "@/utils/classes";
+import { CodeTabs } from "./code-tabs";
 
 // This file was created to be used in src/components/remote-mdx.tsx
 // TODO: It can be simplified, refactored, and/or removed.
+
+Code.theme = "github-dark-dimmed"
+
+Code.codeClassName = "text-xs"
+// Code.titleClassName = font.className
+// Code.lineNumbers = true
+
+Code.extensions = [
+  {
+    name: "lineNumbers",
+    beforeHighlight: (props, annotations) => {
+      if (annotations.length > 0) {
+        return { ...props, lineNumbers: true }
+      }
+    },
+  },
+  {
+    name: "mark",
+    InlineAnnotation: ({ children, query }) => (
+      <mark style={{ background: query }}>{children}</mark>
+    ),
+    MultilineAnnotation: ({ children, query }) => (
+      <div style={{ background: query }}>{children}</div>
+    ),
+  },
+  {
+    name: "focus",
+    MultilineAnnotation: ({ children }) => (
+      <div style={{ filter: "contrast(0.3)" }}>{children}</div>
+    ),
+    beforeHighlight: (props, focusAnnotations) => {
+      if (focusAnnotations.length === 0) return props
+
+      const lineCount = props.code.split("\n").length
+
+      const ranges = focusAnnotations.flatMap((a) => a.ranges)
+
+      let newRanges = [{ fromLineNumber: 1, toLineNumber: lineCount }]
+
+      for (const range of ranges) {
+        if (!("fromLineNumber" in range)) continue
+
+        const { fromLineNumber, toLineNumber } = range
+        newRanges = newRanges.flatMap((r) => {
+          if (
+            r.fromLineNumber > toLineNumber ||
+            r.toLineNumber < fromLineNumber
+          )
+            return [r]
+          if (
+            r.fromLineNumber >= fromLineNumber &&
+            r.toLineNumber <= toLineNumber
+          )
+            return []
+          if (
+            r.fromLineNumber < fromLineNumber &&
+            r.toLineNumber > toLineNumber
+          )
+            return [
+              {
+                fromLineNumber: r.fromLineNumber,
+                toLineNumber: fromLineNumber - 1,
+              },
+              {
+                fromLineNumber: toLineNumber + 1,
+                toLineNumber: r.toLineNumber,
+              },
+            ]
+          if (r.fromLineNumber < fromLineNumber)
+            return [
+              {
+                fromLineNumber: r.fromLineNumber,
+                toLineNumber: fromLineNumber - 1,
+              },
+            ]
+          if (r.toLineNumber > toLineNumber)
+            return [
+              {
+                fromLineNumber: toLineNumber + 1,
+                toLineNumber: r.toLineNumber,
+              },
+            ]
+          return []
+        })
+      }
+
+      const newAnnotations = props.annotations.filter((a) => a.name !== "focus")
+      newAnnotations.push({
+        name: "focus",
+        ranges: newRanges,
+      })
+      return { ...props, annotations: newAnnotations }
+    },
+  },
+  // number: {
+  //   InlineAnnotation: ({ children, content }) => (
+  //     <input defaultValue={content} type="number" min={0} max={99} />
+  //   ),
+  // },
+  // offset: {
+  //   // change line numbers
+  // },
+  {
+    name: "title",
+    beforeHighlight: (props, annotations) => {
+      if (annotations.length > 0) {
+        return { ...props, title: annotations[0].query }
+      }
+    },
+  },
+  // twoSlash: {
+  //   beforeHighlight: (props, query) => {
+  //     const annotations = []
+  //     const newCode = ""
+  //     return {
+  //       ...props,
+  //       annotations: [...props.annotations, ...annotations],
+  //       code: newCode,
+  //     }
+  //   },
+  //   AnnotationComponent: ({ children, query }) => {},
+  // },
+]
 
 export const H1 = ({ className, ...props }: ComponentProps<"h1">) => (
   <h1
@@ -136,27 +259,31 @@ export const components = {
       {...props}
     />
   ),
-  pre: (props: ComponentProps<"pre">) => {
-    return props.children;
-  },
-  code: ({ className, ...props }: ComponentProps<"code">) => {
-    const language = className?.replace(/language-/, "");
-    return (
-      <div className="relative">
-        <CopyButton
-          code={props.children?.toString() ?? ""}
-          className="absolute right-2 top-2 z-30"
-        />
-        <Code
-          lang={language}
-          style={{ marginTop: 0, marginBottom: 0 }}
-          theme="github-dark"
-          className={cn("relative rounded border p-1 font-mono text-sm", className)}
-          {...props}
-        />
-      </div>
-    );
-  },
+  // pre: (props: ComponentProps<"pre">) => {
+  //   return props.children;
+  // },
+  // code: ({ className, ...props }: ComponentProps<"code">) => {
+  //   const language = className?.replace(/language-/, "");
+  //   return (
+  //     <div className="relative">
+  //       <CopyButton
+  //         code={props.children?.toString() ?? ""}
+  //         className="absolute right-2 top-2 z-30"
+  //       />
+  //       <Code
+  //         lang={language}
+  //         style={{ marginTop: 0, marginBottom: 0 }}
+  //         theme="github-dark"
+  //         extensions={[titleBar]}
+  //         title="hello.ts"
+  //         className={cn("relative rounded border p-1 font-mono text-sm", className)}
+  //         {...props}
+  //       />
+  //     </div>
+  //   );
+  // },
+  pre: Code,
   ComponentPreview,
   IconsExplorer,
+  CodeTabs,
 };

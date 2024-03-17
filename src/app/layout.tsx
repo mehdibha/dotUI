@@ -4,7 +4,7 @@ import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/utils/classes";
-import { truncateOnWord } from "@/utils/text";
+import { truncateOnWord } from "@/utils/string";
 import { fontDisplay, geistMono, geistSans } from "@/styles/fonts";
 import "@/styles/globals.css";
 import { siteConfig } from "@/config";

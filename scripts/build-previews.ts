@@ -2,16 +2,15 @@ import fs from "fs";
 import path from "path";
 import { rimraf } from "rimraf";
 
-interface TsxFile {
-  fullPath: string;
-  relativePath: string[];
+interface Preview {
+  relativePath: string;
 }
 
-export const getAllTsxFiles = (
+export const parseMDXFiles = (
   directory: string,
   rootDirectory: string,
-  filesArray: TsxFile[] = []
-): TsxFile[] => {
+  filesArray: Preview[] = []
+): Preview[] => {
   const files = fs.readdirSync(directory);
 
   files.forEach((file) => {
@@ -19,13 +18,14 @@ export const getAllTsxFiles = (
     const fileStat = fs.statSync(filePath);
 
     if (fileStat.isDirectory()) {
-      getAllTsxFiles(filePath, rootDirectory, filesArray);
-    } else if (path.extname(file) === ".tsx") {
-      const relativePath = path
-        .relative(rootDirectory, filePath)
-        .split(path.sep)
-        .map((segment) => segment.replace(".tsx", ""));
-      filesArray.push({ fullPath: filePath, relativePath });
+      parseMDXFiles(filePath, rootDirectory, filesArray);
+    } else if (path.extname(file) === ".mdx") {
+      // search with regex the compoonent ComponentPreview and get name from its prop
+      const fileContent = fs.readFileSync(filePath, "utf-8");
+      const componentName = fileContent.match(/<ComponentPreview name="([^"]+)" /)?.[1];
+      if (componentName) {
+        filesArray.push({ relativePath: componentName });
+      }
     }
   });
 
@@ -34,7 +34,7 @@ export const getAllTsxFiles = (
 
 const getAllPreviews = () => {
   const directoryPath = path.join(process.cwd(), "content");
-  return getAllTsxFiles(directoryPath, directoryPath);
+  return parseMDXFiles(directoryPath, directoryPath);
 };
 
 const allPreviews = getAllPreviews();
@@ -46,13 +46,37 @@ import React from "react";
 
 export const previews = {
 `;
-allPreviews.forEach((preview) => {
-  const codeString = fs.readFileSync(preview.fullPath, "utf-8");
-  index += `  "${preview.relativePath.join("/")}": {
-    component: React.lazy<React.FC>(() => import("~/content/${preview.relativePath.join("/")}")),
-    code : \`${codeString}\`
-  }${allPreviews[allPreviews.length - 1] === preview ? "" : ","}
-`;
+
+allPreviews.forEach(({ relativePath }) => {
+  const fullPath = path.join(process.cwd(), "src", "lib", relativePath);
+  let code: { title: string; code: string }[] = [];
+
+  // if directory, get all files
+  if (fs.existsSync(fullPath) && fs.lstatSync(fullPath).isDirectory()) {
+    const files = fs.readdirSync(fullPath);
+    code = files.map((file) => {
+      const filePath = path.join(fullPath, file);
+      const ext = path.extname(file);
+      const fileContent = fs.readFileSync(filePath, "utf-8");
+      return { title: `${file}.${ext}`, code: fileContent };
+    });
+  } else {
+    // if file, get file content and name
+    if (!fs.existsSync(`${fullPath}.tsx`)) {
+      console.log(`${fullPath}.tsx does not exist`);
+      return;
+    }
+    const fileContent = fs.readFileSync(`${fullPath}.tsx`, "utf-8");
+    const fileName = path.basename(fullPath);
+    code = [{ title: `${fileName}.tsx`, code: fileContent }];
+  }
+
+  // component: import("@/lib/${relativePath}"),
+  index += `  "${relativePath}": {
+      component: React.lazy<React.FC>(() => import("@/lib/${relativePath}")),
+      code : ${JSON.stringify(code)}
+    },
+  `;
 });
 
 index += `}`;

@@ -6,7 +6,7 @@ import { SearchIcon } from "lucide-react";
 import { cn } from "@/utils/classes";
 import { createIcon, createIconComponentString } from "@/utils/icon";
 import type { IconNode, Library } from "@/types/icons";
-import { useDebounce } from "@/modules/hooks/use-debounce";
+import { useDebounce } from "@/lib/hooks/use-debounce";
 import { IconWrapper } from "./icon-wrapper";
 import { Input } from "./ui/input";
 import { Skeleton } from "./ui/skeleton";
