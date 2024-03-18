@@ -1,29 +1,39 @@
-"use client"
+"use client";
 
-import * as Tabs from "@radix-ui/react-tabs"
-import React from "react"
+import React from "react";
+import * as TabsPrimitive from "@radix-ui/react-tabs";
 
-export function TabsRoot({ children, defaultValue }) {
-  return (
-    <Tabs.Root defaultValue={defaultValue}>
-      {children}
-    </Tabs.Root>
-  )
+export function TabsRoot({
+  children,
+  defaultValue,
+}: {
+  children: React.ReactNode;
+  defaultValue: string;
+}) {
+  return <TabsPrimitive.Root defaultValue={defaultValue}>{children}</TabsPrimitive.Root>;
 }
 
-export function TabsList({ titles, children }) {
-  const tabs = React.Children.toArray(children)
+export function TabsList({
+  titles,
+  children,
+}: {
+  titles: string[];
+  children: React.ReactNode;
+}) {
+  const tabs = React.Children.toArray(children);
   return (
-    <Tabs.List style={{ display: "flex" }}>
+    <TabsPrimitive.List style={{ display: "flex" }}>
       {titles.map((title, i) => (
-        <Tabs.Trigger asChild key={title} value={title}>
+        <TabsPrimitive.Trigger asChild key={title} value={title}>
           {tabs[i]}
-        </Tabs.Trigger>
+        </TabsPrimitive.Trigger>
       ))}
-    </Tabs.List>
-  )
+    </TabsPrimitive.List>
+  );
 }
+export const TabsContent = React.forwardRef<
+  React.ElementRef<typeof TabsPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
+>((props, ref) => <TabsPrimitive.Content ref={ref} {...props} />);
 
-export function TabsContent(props) {
-  return <Tabs.Content {...props} />
-}
+TabsContent.displayName = TabsPrimitive.Content.displayName;

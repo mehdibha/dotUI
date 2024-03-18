@@ -64,7 +64,7 @@ const config = {
         bgGradient:
           "radial-gradient(ellipse 80% 80% at 50% 0%,rgba(35,35,35,1),rgba(0,0,0,0))",
         bgGradientLight:
-          "radial-gradient(ellipse 80% 80% at 50% 0%,rgba(35,35,35,0.3),rgba(0,0,0,0))",
+          "radial-gradient(ellipse 80% 80% at 50% 0%,rgba(190,190,190,0.7),rgba(0,0,0,0))",
       },
       borderRadius: {
         lg: "var(--radius)",

@@ -17,8 +17,8 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/utils/classes";
-import { truncateOnWord } from "@/utils/string";
 import { type Item, getDocFromSlug, getAllDocs } from "@/utils/docs";
+import { truncateOnWord } from "@/utils/string";
 
 interface PageProps {
   params: {

@@ -5,8 +5,8 @@ import { useWindowVirtualizer } from "@tanstack/react-virtual";
 import { SearchIcon } from "lucide-react";
 import { cn } from "@/utils/classes";
 import { createIcon, createIconComponentString } from "@/utils/icon";
-import type { IconNode, Library } from "@/types/icons";
 import { useDebounce } from "@/lib/hooks/use-debounce";
+import type { IconNode, Library } from "@/types/icons";
 import { IconWrapper } from "./icon-wrapper";
 import { Input } from "./ui/input";
 import { Skeleton } from "./ui/skeleton";
@@ -93,7 +93,7 @@ export default function IconsList(props: IconsListProps) {
   });
 
   return (
-    <div>
+    <div className="mt-6">
       <div className="relative">
         <Input
           className="w-full pl-12"
