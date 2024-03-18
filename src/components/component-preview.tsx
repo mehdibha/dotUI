@@ -48,7 +48,7 @@ export const ComponentPreview = ({ name }: { name: PreviewsKeys }) => {
           <ScrollArea className="relative h-[350px]">
             <Code
               subProps={code.map((file) => ({
-                title: file.title,
+                title: code.length > 1 ? file.title : undefined,
                 code: file.code,
                 lang: "tsx",
               }))}

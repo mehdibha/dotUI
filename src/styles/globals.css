@@ -64,4 +64,13 @@
   .focus-ring {
     @apply ring-ring ring-offset-2 ring-offset-background transition duration-300 focus-within:outline-none focus-within:ring-2 focus-within:ring-ring hover:ring-[3px] hover:ring-ring/50 focus:outline-none focus:ring-[3px] focus:ring-ring disabled:ring-0 group-hover:ring-2 group-hover:ring-ring group-focus:ring-2 group-focus:ring-ring dark:ring-offset-background;
   }
+  .step {
+    counter-increment: step;
+  }
+  
+  .step:before {
+    @apply absolute w-9 h-9 bg-muted rounded-full font-mono font-medium text-center text-base inline-flex items-center justify-center -indent-px border-4 border-background;
+    @apply ml-[-50px] mt-[-4px];
+    content: counter(step);
+  }
 }

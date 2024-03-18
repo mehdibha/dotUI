@@ -18,7 +18,7 @@ export function CodeTabs({ children }: { children: React.ReactNode }) {
   );
 }
 
-function TitleBarComponent(brightProps: BrightProps) {
+export function TitleBarComponent(brightProps: BrightProps) {
   const { subProps, title, Tab } = brightProps;
   const titles = (
     subProps?.length ? subProps.map((subProp) => subProp.title) : [title]
@@ -35,7 +35,7 @@ function TitleBarComponent(brightProps: BrightProps) {
   );
 }
 
-function Root(brightProps: BrightProps) {
+export function Root(brightProps: BrightProps) {
   const { subProps, title } = brightProps;
 
   const titles = subProps?.length ? subProps.map((subProp) => subProp.title) : [title];
@@ -59,7 +59,7 @@ function Root(brightProps: BrightProps) {
   );
 }
 
-function Content(brightProps: BrightProps) {
+export function Content(brightProps: BrightProps) {
   const { subProps } = brightProps;
   const propsList = subProps?.length ? subProps : [brightProps];
   return (

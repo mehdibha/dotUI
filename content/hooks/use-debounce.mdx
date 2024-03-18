@@ -3,9 +3,14 @@ title: useDebounce
 description: Delay the execution of function or state update with useDebounce.
 ---
 
+<ComponentPreview name="hooks/use-debounce/demo" />
+
 ## Installation
 
-Copy and paste the following code into your project.
+<Steps>
+<Step>
+  Copy and paste the following code into your project.
+</Step>
 
 ```ts
 // title hooks/use-debounce.ts
@@ -28,23 +33,34 @@ export function useDebounce<T>(value: T, delay: number): T {
 }
 ```
 
-<CodeTabs>
-```ts
-// title demo1.ts
-import React from "react";
+<Step>
+  Update the import paths to match your project setup.
+</Step>
+</Steps>
 
-export function Demo1{
-return debouncedValue;
+## Arguments
+
+| Name    | Type     | Description                                                                          |
+| ------- | -------- | ------------------------------------------------------------------------------------ |
+| `value` | `any`    | The value that you want to debounce. This can be of any type.                        |
+| `delay` | `number` | The delay time in milliseconds. After this amount of time, the latest value is used. |
+
+## Return value
+
+| Name             | Type  | Description                                                                                                                |
+| ---------------- | ----- | -------------------------------------------------------------------------------------------------------------------------- |
+| `debouncedValue` | `any` | The debounced value. After the delay time has passed without the value changing, this will be updated to the latest value. |
+
+## Usage
+
+```ts
+import { useDebounce } from "@/hooks/use-debounce";
+
+export function Component() {
+  const [search, setSearchTerm] = React.useState("");
+  const debouncedSearch = useDebounce(search, 500);
+  return (
+    // rest of the component
+  )
 }
 ```
-
-```ts
-// title demo2.ts
-import React from "react";
-
-export function Demo2{
-return debouncedValue;
-}
-```
-
-</CodeTabs>

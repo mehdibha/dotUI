@@ -41,7 +41,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 export async function generateStaticParams(): Promise<PageProps["params"][]> {
   const allDocs = getAllDocs();
-
   return allDocs.map((doc) => ({ slug: doc.href.split("/").slice(1) }));
 }
 
