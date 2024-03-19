@@ -9,10 +9,6 @@ export default function Demo() {
   const [searchInput, setSearchInput] = React.useState("");
   const debouncedValue = useDebounce(searchInput, 1000);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(e.target.value);
-  };
-
   return (
     <div className="w-full max-w-sm">
       <div className="relative">
@@ -22,7 +18,9 @@ export default function Demo() {
         />
         <Input
           value={searchInput}
-          onChange={handleChange}
+          onChange={(e) => {
+            setSearchInput(e.target.value);
+          }}
           placeholder="Search"
           className="full-w pl-8"
         />

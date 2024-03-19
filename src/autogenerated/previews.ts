@@ -21,12 +21,21 @@ export const previews = {
       },
     ],
   },
+  "hooks/use-battery/demo": {
+    component: React.lazy<React.FC>(() => import("@/lib/hooks/use-battery/demo")),
+    code: [
+      {
+        title: "demo.tsx",
+        code: 'import { useBattery } from "@/lib/hooks/use-battery";\r\n\r\nexport default function App() {\r\n  const { isLoading, level } = useBattery();\r\n  return (\r\n    <>\r\n      <div className="wrapper">\r\n        <h1>useBattery</h1>\r\n        {!isLoading ? level * 100 : "Loading..."}\r\n      </div>\r\n    </>\r\n  );\r\n}\r\n',
+      },
+    ],
+  },
   "hooks/use-debounce/demo": {
     component: React.lazy<React.FC>(() => import("@/lib/hooks/use-debounce/demo")),
     code: [
       {
         title: "demo.tsx",
-        code: '"use client";\r\n\r\nimport * as React from "react";\r\nimport { Loader2Icon, SearchIcon } from "lucide-react";\r\nimport { Input } from "@/components/ui/input";\r\nimport { useDebounce } from "@/lib/hooks/use-debounce";\r\n\r\nexport default function UseDebounceDemo() {\r\n  const [isLoading, setIsLoading] = React.useState(false);\r\n  const [searchInput, setSearchInput] = React.useState("");\r\n  const debouncedValue = useDebounce(searchInput, 1000);\r\n\r\n  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {\r\n    setIsLoading(false);\r\n    setSearchInput(e.target.value);\r\n  };\r\n\r\n  const handleSubmit = () => {\r\n    setIsLoading(true);\r\n    // fetch here\r\n    setTimeout(() => {\r\n      setIsLoading(false);\r\n    }, 1000);\r\n  };\r\n\r\n  React.useEffect(() => {\r\n    handleSubmit();\r\n  }, [debouncedValue]);\r\n\r\n  return (\r\n    <div className="relative w-52">\r\n      {isLoading ? (\r\n        <div className="absolute left-2 flex h-full items-center">\r\n          <Loader2Icon\r\n            size={18}\r\n            className="pointer-events-none animate-spin text-muted-foreground"\r\n          />\r\n        </div>\r\n      ) : (\r\n        <SearchIcon\r\n          size={18}\r\n          className="pointer-events-none absolute left-2 top-1/2 -translate-y-1/2 transform text-muted-foreground"\r\n        />\r\n      )}\r\n      <Input\r\n        value={searchInput}\r\n        onChange={handleChange}\r\n        placeholder="Search items"\r\n        className="full-w pl-8"\r\n      />\r\n    </div>\r\n  );\r\n}\r\n',
+        code: '"use client";\r\n\r\nimport * as React from "react";\r\nimport { SearchIcon } from "lucide-react";\r\nimport { Input } from "@/components/ui/input";\r\nimport { useDebounce } from "@/lib/hooks/use-debounce";\r\n\r\nexport default function Demo() {\r\n  const [searchInput, setSearchInput] = React.useState("");\r\n  const debouncedValue = useDebounce(searchInput, 1000);\r\n\r\n  return (\r\n    <div className="w-full max-w-sm">\r\n      <div className="relative">\r\n        <SearchIcon\r\n          size={18}\r\n          className="pointer-events-none absolute left-2 top-1/2 -translate-y-1/2 transform text-muted-foreground"\r\n        />\r\n        <Input\r\n          value={searchInput}\r\n          onChange={(e) => {\r\n            setSearchInput(e.target.value);\r\n          }}\r\n          placeholder="Search"\r\n          className="full-w pl-8"\r\n        />\r\n      </div>\r\n      <div className="mt-10 text-center">\r\n        {debouncedValue ? (\r\n          <p>Results for &quot;{debouncedValue}&quot;</p>\r\n        ) : (\r\n          <p className="text-muted-foreground">Start searching</p>\r\n        )}\r\n      </div>\r\n    </div>\r\n  );\r\n}\r\n',
       },
     ],
   },
