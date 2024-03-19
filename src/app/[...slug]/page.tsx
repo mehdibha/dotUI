@@ -105,7 +105,7 @@ export default async function Page({ params }: PageProps) {
           )}
         </div>
       )}
-      <div className="mt-10">
+      <div className="mt-10 text-sm md:text-base">
         <Mdx source={rawContent} />
         {items && items.length > 0 && <DataGrid items={items} type={metadata.type} />}
       </div>

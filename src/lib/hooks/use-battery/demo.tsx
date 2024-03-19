@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { useBattery } from "@/lib/hooks/use-battery";
 
-export default function App() {
+export default function Demo() {
   const { isLoading, isSupported, isCharging, level } = useBattery();
 
   const size = 120;

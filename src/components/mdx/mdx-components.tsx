@@ -5,6 +5,7 @@ import { ComponentPreview } from "@/components/component-preview";
 import { IconsExplorer } from "@/components/icons-explorer";
 import { cn } from "@/utils/classes";
 import { CodeTabs } from "./code-tabs";
+import { preWrapper } from "./pre-wrapper-extension";
 
 export const Link = ({
   className,
@@ -46,7 +47,7 @@ export const components = {
   h2: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h2
       className={cn(
-        "font-heading mt-12 scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight first:mt-0",
+        "font-heading mt-12 scroll-m-20 border-b pb-2 text-xl font-semibold tracking-tight first:mt-0",
         className
       )}
       {...props}
@@ -119,6 +120,7 @@ export const components = {
             }
           },
         },
+        preWrapper,
       ]}
     />
   ),
@@ -157,7 +159,7 @@ export const components = {
   th: ({ className, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
     <th
       className={cn(
-        "border px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right",
+        "border px-2 py-2 text-left font-bold sm:px-4 [&[align=center]]:text-center [&[align=right]]:text-right",
         className
       )}
       {...props}
@@ -166,7 +168,7 @@ export const components = {
   td: ({ className, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
     <td
       className={cn(
-        "border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right",
+        "border px-2 py-2 text-left sm:px-4 [&[align=center]]:text-center [&[align=right]]:text-right",
         className
       )}
       {...props}

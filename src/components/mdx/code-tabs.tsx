@@ -1,4 +1,5 @@
 import { Code, type Extension, type BrightProps } from "bright";
+import { CopyButton } from "../copy-button";
 import { TabsRoot, TabsContent, TabsList } from "./client";
 
 const title: Extension = {
@@ -12,7 +13,7 @@ const title: Extension = {
 
 export function CodeTabs({ children }: { children: React.ReactNode }) {
   return (
-    <Code theme="github-dark-dimmed" extensions={[title, tabs]}>
+    <Code theme="github-dark-dimmed" codeClassName="text-xs" extensions={[title, tabs]}>
       {children}
     </Code>
   );
@@ -60,14 +61,26 @@ export function Root(brightProps: BrightProps) {
 }
 
 export function Content(brightProps: BrightProps) {
-  const { subProps } = brightProps;
+  const { subProps, code } = brightProps;
   const propsList = subProps?.length ? subProps : [brightProps];
+
+  const getCode = (title: string): string => {
+    if (!subProps?.length) return code;
+    const currentCode = subProps.find((subProp) => subProp.title === title)?.code;
+
+    return currentCode!;
+  };
+
   return (
     <>
       {propsList.map((props) => (
-        <TabsContent key={props.title} value={props.title!}>
+        <TabsContent key={props.title} value={props.title!} className="relative">
+          <CopyButton
+            code={getCode(props.title!)}
+            className="absolute right-4 top-2 z-50"
+          />
           {/* @ts-expect-error - - */}
-          <Code.Pre {...props} />
+          <Code.Pre {...props} test="this is a test" />
         </TabsContent>
       ))}
     </>

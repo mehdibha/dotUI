@@ -34,6 +34,6 @@ export function TabsList({
 export const TabsContent = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
->((props, ref) => <TabsPrimitive.Content ref={ref} {...props} />);
+>((props, ref) => <TabsPrimitive.Content ref={ref} className="border-3" {...props} />);
 
 TabsContent.displayName = TabsPrimitive.Content.displayName;
