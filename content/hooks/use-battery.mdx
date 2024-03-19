@@ -8,12 +8,11 @@ description: Track the battery status of a user’s device with useBattery.
 ## Installation
 
 <Steps>
-<Step>
-  Copy and paste the following code into your project.
-</Step>
+
+<Step>Copy and paste the following code into your project.</Step>
 
 ```ts
-// title hooks/use-debounce.ts
+// title hooks/use-battery.ts
 import React from "react";
 
 interface BatteryManager extends EventTarget {
@@ -90,7 +89,6 @@ export function useBattery() {
 
   return state;
 }
-
 ```
 
 <Step>
@@ -100,11 +98,11 @@ export function useBattery() {
 
 ## Return values
 
-| Name            | Type    | Description                                                                                                                                                  |
-| --------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| supported       | boolean | Indicates whether the Battery Status API is supported in the user’s browser.                                                                                 |
-| loading         | boolean | Indicates if the battery information is still loading.                                                                                                       |
-| level           | number  | Represents the level of the system’s battery. 0.0 means that the system’s battery is completely discharged, and 1.0 means the battery is completely charged. |
-| charging        | boolean | Represents whether the system’s battery is charging. `true` means the battery is charging, `false` means it’s not.                                           |
-| chargingTime    | number  | Represents the time remaining in seconds until the system’s battery is fully charged.                                                                        |
-| dischargingTime | number  | Represents the time remaining in seconds until the system’s battery is completely discharged and the system is about to be suspended.                        |
+| Name              | Type      | Description                                                                                                                                                  |
+| ----------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `isSupported`     | `boolean` | Indicates whether the Battery Status API is supported in the user’s browser.                                                                                 |
+| `isLoading`       | `boolean` | Indicates if the battery information is still loading.                                                                                                       |
+| `isCharging`      | `boolean` | Represents whether the system’s battery is charging. `true` means the battery is charging, `false` means it’s not.                                           |
+| `level`           | `number`  | Represents the level of the system’s battery. 0.0 means that the system’s battery is completely discharged, and 1.0 means the battery is completely charged. |
+| `chargingTime`    | `number`  | Represents the time remaining in seconds until the system’s battery is fully charged.                                                                        |
+| `dischargingTime` | `number`  | Represents the time remaining in seconds until the system’s battery is completely discharged and the system is about to be suspended.                        |

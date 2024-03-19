@@ -29,11 +29,11 @@ export function useBattery() {
   });
 
   React.useEffect(() => {
-    if (!(navigator as NavigatorWithBattery)) {
+    if (!(navigator as NavigatorWithBattery).getBattery) {
       setState((s) => ({
         ...s,
-        supported: false,
-        loading: false,
+        isSupported: false,
+        isLoading: false,
       }));
       return;
     }
