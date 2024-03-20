@@ -26,7 +26,7 @@ export const previews = {
     code: [
       {
         title: "demo.tsx",
-        code: '"use client";\r\n\r\nimport {\r\n  BatteryChargingIcon,\r\n  BatteryFullIcon,\r\n  BatteryLowIcon,\r\n  BatteryMediumIcon,\r\n  BatteryWarning,\r\n  Loader2Icon,\r\n} from "lucide-react";\r\nimport { useBattery } from "@/lib/hooks/use-battery";\r\n\r\nexport default function Demo() {\r\n  const { isLoading, isSupported, isCharging, level } = useBattery();\r\n\r\n  const size = 120;\r\n\r\n  return (\r\n    <div className="text-center">\r\n      <h2 className="text-xl font-semibold">Battery status</h2>\r\n      <div className="mt-4 flex items-center justify-center space-x-4">\r\n        {isLoading ? (\r\n          <Loader2Icon className="animate-spin" />\r\n        ) : !isSupported ? (\r\n          <p className="text-muted-foreground">\r\n            Battery status API is not supported in your browser.\r\n          </p>\r\n        ) : (\r\n          <>\r\n            <span className="text-5xl font-bold">{level * 100}%</span>\r\n            {isCharging ? (\r\n              <BatteryChargingIcon size={size} />\r\n            ) : level === 1 ? (\r\n              <BatteryFullIcon size={size} />\r\n            ) : level > 0.5 ? (\r\n              <BatteryMediumIcon size={size} />\r\n            ) : level > 0.2 ? (\r\n              <BatteryLowIcon size={size} />\r\n            ) : (\r\n              <BatteryWarning size={size} />\r\n            )}{" "}\r\n          </>\r\n        )}\r\n      </div>\r\n    </div>\r\n  );\r\n}\r\n',
+        code: '"use client";\r\n\r\nimport {\r\n  BatteryChargingIcon,\r\n  BatteryFullIcon,\r\n  BatteryLowIcon,\r\n  BatteryMediumIcon,\r\n  BatteryWarning,\r\n  Loader2Icon,\r\n} from "lucide-react";\r\nimport { useBattery } from "@/lib/hooks/use-battery";\r\n\r\nexport default function Demo() {\r\n  const { isLoading, isSupported, isCharging, level } = useBattery();\r\n\r\n  const size = 120;\r\n\r\n  return (\r\n    <div className="text-center">\r\n      <h2 className="text-xl font-semibold">Battery status</h2>\r\n      <div className="mt-4 flex items-center justify-center space-x-4">\r\n        {isLoading ? (\r\n          <Loader2Icon className="animate-spin" />\r\n        ) : !isSupported ? (\r\n          <p className="text-muted-foreground">\r\n            Battery status API is not supported in your browser.\r\n          </p>\r\n        ) : (\r\n          <>\r\n            <span className="text-5xl font-bold">{level * 100}%</span>\r\n            {isCharging ? (\r\n              <BatteryChargingIcon size={size} />\r\n            ) : level === 1 ? (\r\n              <BatteryFullIcon size={size} />\r\n            ) : level > 0.5 ? (\r\n              <BatteryMediumIcon size={size} />\r\n            ) : level > 0.2 ? (\r\n              <BatteryLowIcon size={size} />\r\n            ) : (\r\n              <BatteryWarning size={size} />\r\n            )}\r\n          </>\r\n        )}\r\n      </div>\r\n    </div>\r\n  );\r\n}\r\n',
       },
     ],
   },
@@ -39,57 +39,16 @@ export const previews = {
       },
     ],
   },
-  "pages/about": {
-    component: React.lazy<React.FC>(() => import("@/lib/pages/about")),
-    code: [
-      {
-        title: "about.tsx",
-        code: 'export default function About() {\r\n  return (\r\n    <div className="min-h-screen">\r\n      <h1>About</h1>\r\n      <p>\r\n        This is a simple example of a Next.js app with a custom routing solution that uses\r\n        the file system to define routes.\r\n      </p>\r\n    </div>\r\n  );\r\n}\r\n',
-      },
-    ],
-  },
-  "pages/account": {
-    component: React.lazy<React.FC>(() => import("@/lib/pages/account")),
-    code: [
-      {
-        title: "account.tsx",
-        code: 'export default function Account() {\r\n  return (\r\n    <div className="min-h-screen">\r\n      <h1>Account</h1>\r\n      <p>\r\n        This is a simple example of a Next.js app with a custom routing solution that uses\r\n        the file system to define routes.\r\n      </p>\r\n    </div>\r\n  );\r\n}\r\n',
-      },
-    ],
-  },
-  "pages/landing": {
-    component: React.lazy<React.FC>(() => import("@/lib/pages/landing")),
-    code: [
-      {
-        title: "landing.tsx",
-        code: 'export default function Landing() {\r\n  return (\r\n    <div className="min-h-screen">\r\n      <h1>Landing</h1>\r\n      <p>\r\n        This is a simple example of a Next.js app with a custom routing solution that uses\r\n        the file system to define routes.\r\n      </p>\r\n    </div>\r\n  );\r\n}\r\n',
-      },
-    ],
-  },
-  "pages/login": {
-    component: React.lazy<React.FC>(() => import("@/lib/pages/login")),
-    code: [
-      {
-        title: "login.tsx",
-        code: 'export default function Login() {\r\n  return (\r\n    <div className="min-h-screen">\r\n      <h1>Login</h1>\r\n      <p>\r\n        This is a simple example of a Next.js app with a custom routing solution that uses\r\n        the file system to define routes.\r\n      </p>\r\n    </div>\r\n  );\r\n}\r\n',
-      },
-    ],
-  },
   "pages/pricing": {
     component: React.lazy<React.FC>(() => import("@/lib/pages/pricing")),
     code: [
       {
         title: "pricing.tsx",
-        code: 'export default function Pricing() {\r\n  return (\r\n    <div className="min-h-screen">\r\n      <h1>Pricing</h1>\r\n      <p>\r\n        This is a simple example of a Next.js app with a custom routing solution that uses\r\n        the file system to define routes.\r\n      </p>\r\n    </div>\r\n  );\r\n}\r\n',
+        code: 'import { PricingPlan } from "./pricing-plan";\r\n\r\nexport default function Pricing() {\r\n  return (\r\n    <div className="min-h-screen">\r\n      <h1>Pricing</h1>\r\n      <p>\r\n        This is a simple example of a Next.js app with a custom routing solution that uses\r\n        the file system to define routes.\r\n      </p>\r\n      <PricingPlan />\r\n    </div>\r\n  );\r\n}\r\n',
       },
-    ],
-  },
-  "pages/register": {
-    component: React.lazy<React.FC>(() => import("@/lib/pages/register")),
-    code: [
       {
-        title: "register.tsx",
-        code: 'export default function Register() {\r\n  return (\r\n    <div className="min-h-screen">\r\n      <h1>Register</h1>\r\n      <p>\r\n        This is a simple example of a Next.js app with a custom routing solution that uses\r\n        the file system to define routes.\r\n      </p>\r\n    </div>\r\n  );\r\n}\r\n',
+        title: "pricing-plan.tsx",
+        code: "export const PricingPlan = () => {\r\n  return <div>pricing plan</div>;\r\n};\r\n",
       },
     ],
   },

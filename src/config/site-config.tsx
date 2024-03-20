@@ -29,10 +29,10 @@ export const siteConfig = {
   header: {
     nav: {
       links: [
-        { href: "/components", label: "Components", disabled: true },
+        { href: "/components", label: "Components" },
         { href: "/hooks", label: "Hooks" },
         { href: "/icons", label: "Icons" },
-        { href: "/pages", label: "Pages", disabled: true },
+        { href: "/pages", label: "Pages" },
         { href: "/templates", label: "Templates" },
       ],
     },

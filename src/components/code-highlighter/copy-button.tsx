@@ -14,6 +14,7 @@ export const CopyButton = ({ code, className }: { code: string; className?: stri
       setCopied(false);
     }, 2000);
   };
+
   return (
     <Button
       variant="secondary"

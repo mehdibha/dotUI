@@ -1,11 +1,11 @@
 import type { ComponentProps } from "react";
 import NavLink from "next/link";
 import { Code } from "bright";
+import { CodeTabs } from "@/components/code-highlighter/code-tabs";
+import { preWrapper } from "@/components/code-highlighter/pre-wrapper-extension";
 import { ComponentPreview } from "@/components/component-preview";
 import { IconsExplorer } from "@/components/icons-explorer";
 import { cn } from "@/utils/classes";
-import { CodeTabs } from "./code-tabs";
-import { preWrapper } from "./pre-wrapper-extension";
 
 export const Link = ({
   className,

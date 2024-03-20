@@ -1,8 +1,8 @@
 import { Code, type Extension, type BrightProps } from "bright";
-import { CopyButton } from "../copy-button";
 import { TabsRoot, TabsContent, TabsList } from "./client";
+import { CopyButton } from "./copy-button";
 
-const title: Extension = {
+export const title: Extension = {
   name: "title",
   beforeHighlight: (props, annotations) => {
     if (annotations.length > 0) {

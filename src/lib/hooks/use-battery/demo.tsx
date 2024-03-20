@@ -38,7 +38,7 @@ export default function Demo() {
               <BatteryLowIcon size={size} />
             ) : (
               <BatteryWarning size={size} />
-            )}{" "}
+            )}
           </>
         )}
       </div>

@@ -1,6 +1,6 @@
 import { Code, type BrightProps, type Extension } from "bright";
-import { CopyButton } from "../copy-button";
-import { ScrollArea } from "../ui/scroll-area";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { CopyButton } from "./copy-button";
 
 export const preWrapper: Extension = {
   name: "preWrapper",

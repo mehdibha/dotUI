@@ -56,9 +56,11 @@ allPreviews.forEach(({ relativePath }) => {
     const files = fs.readdirSync(fullPath);
     code = files.map((file) => {
       const filePath = path.join(fullPath, file);
-      const ext = path.extname(file);
       const fileContent = fs.readFileSync(filePath, "utf-8");
-      return { title: `${file}.${ext}`, code: fileContent };
+      return {
+        title: file === "index.tsx" ? `${path.basename(fullPath)}.tsx` : file,
+        code: fileContent,
+      };
     });
   } else {
     // if file, get file content and name
