@@ -8,16 +8,7 @@ export const previews = {
     code: [
       {
         title: "demo.tsx",
-        code: 'import { Button } from "@/lib/components/sparkle-button";\r\n\r\nexport default function SparkleButton() {\r\n  return <Button variant="sparkle">Get started</Button>;\r\n}\r\n',
-      },
-    ],
-  },
-  "components/hero-section": {
-    component: React.lazy<React.FC>(() => import("@/lib/components/hero-section")),
-    code: [
-      {
-        title: "hero-section.tsx",
-        code: 'import React from "react";\r\nimport Link from "next/link";\r\nimport { ArrowRightIcon, SearchIcon, SparklesIcon } from "lucide-react";\r\nimport { badgeVariants } from "@/components/ui/badge";\r\nimport { Button } from "@/components/ui/button";\r\nimport { cn } from "@/utils/classes";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <section>\r\n      <Link\r\n        href="https://github.com/mehdibha/rcopy"\r\n        target="_blank"\r\n        className={cn(\r\n          badgeVariants({ variant: "outline", size: "md" }),\r\n          "cursor-pointer space-x-2 font-mono delay-75 duration-200 hover:bg-secondary"\r\n        )}\r\n      >\r\n        <SparklesIcon size={18} />\r\n        <span>Star us on GitHub</span> <ArrowRightIcon size={15} />\r\n      </Link>\r\n      <h1 className="mt-4 max-w-2xl font-display text-5xl font-bold leading-tight">\r\n        Copy and paste components for you React App\r\n      </h1>\r\n      <h2 className="text-md mt-6 text-muted-foreground md:text-lg lg:text-xl">\r\n        Copy the code, paste it, customize it, own it. Done.\r\n      </h2>\r\n      <div className="mt-10 flex space-x-4">\r\n        <Button size="lg" variant="default">\r\n          Explore components\r\n        </Button>\r\n        <Button size="lg" variant="outline">\r\n          <SearchIcon size={20} className="mr-2" />\r\n          Quick search\r\n        </Button>\r\n      </div>\r\n    </section>\r\n  );\r\n}\r\n',
+        code: 'import { SparkleButton } from "@/lib/components/sparkle-button";\r\n\r\nexport default function Demo() {\r\n  return <SparkleButton size="lg">Get started</SparkleButton>;\r\n}\r\n',
       },
     ],
   },
@@ -48,7 +39,7 @@ export const previews = {
       },
       {
         title: "cta.tsx",
-        code: 'import React from "react";\r\nimport Link from "next/link";\r\nimport { Button } from "@/components/ui/button";\r\nimport { cn } from "@/utils/classes";\r\n\r\ninterface CallToActionProps {\r\n  headline: string;\r\n  subheadline: string;\r\n  cta: {\r\n    label: string;\r\n    href: string;\r\n  };\r\n  className?: string;\r\n}\r\n\r\nexport const CallToAction = (props: CallToActionProps) => {\r\n  const { headline, subheadline, cta, className } = props;\r\n  return (\r\n    <section className={cn("mx-auto max-w-xl text-center", className)}>\r\n      <h2 className="font-display text-4xl font-semibold tracking-tighter sm:text-5xl">{headline}</h2>\r\n      <p className="mt-4 text-muted-foreground">{subheadline}</p>\r\n      <Button asChild size="lg" className="mt-8">\r\n        <Link href={cta.href}>{cta.label}</Link>\r\n      </Button>\r\n    </section>\r\n  );\r\n};\r\n',
+        code: 'import React from "react";\r\nimport Link from "next/link";\r\nimport { Button } from "@/components/ui/button";\r\nimport { cn } from "@/utils/classes";\r\n\r\ninterface CallToActionProps {\r\n  headline: string;\r\n  subheadline: string;\r\n  cta: {\r\n    label: string;\r\n    href: string;\r\n  };\r\n  className?: string;\r\n}\r\n\r\nexport const CallToAction = (props: CallToActionProps) => {\r\n  const { headline, subheadline, cta, className } = props;\r\n  return (\r\n    <section className={cn("mx-auto max-w-xl text-center", className)}>\r\n      <h2 className="font-display text-4xl font-semibold tracking-tighter sm:text-5xl">\r\n        {headline}\r\n      </h2>\r\n      <p className="mt-4 text-muted-foreground">{subheadline}</p>\r\n      <Button asChild size="lg" className="mt-8">\r\n        <Link href={cta.href}>{cta.label}</Link>\r\n      </Button>\r\n    </section>\r\n  );\r\n};\r\n',
       },
       {
         title: "faq.tsx",

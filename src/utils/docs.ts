@@ -10,6 +10,7 @@ export interface DocFrontmatter {
   title: string;
   description?: string;
   thumbnail?: string;
+  video?: string;
   keywords?: string[];
   externalLink?: string;
 }
@@ -20,6 +21,7 @@ export interface DocMetadata {
   breadcrumbs: { label: string; href: string }[];
   description?: string;
   thumbnail?: string;
+  video?: string;
 }
 
 export interface Category {

@@ -151,6 +151,16 @@ const config = {
             opacity: "0",
           },
         },
+        flip: {
+          to: {
+            transform: "rotate(360deg)",
+          },
+        },
+        rotate: {
+          to: {
+            transform: "rotate(90deg)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -161,6 +171,8 @@ const config = {
         "gradient-foreground-2": "gradient-foreground-2 8s infinite",
         "gradient-background-3": "gradient-background-3 8s infinite",
         "gradient-foreground-3": "gradient-foreground-3 8s infinite",
+        flip: "flip 6s infinite steps(2, end)",
+        rotate: "rotate 3s linear infinite both",
       },
     },
   },

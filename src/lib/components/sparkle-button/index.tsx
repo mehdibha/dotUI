@@ -3,12 +3,9 @@ import { Slot } from "@radix-ui/react-slot";
 import { type VariantProps, cva, cn } from "@/utils/classes";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-80",
+  "group relative grid overflow-hidden duration-300 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-80 ",
   {
     variants: {
-      variant: {
-        sparkle: "",
-      },
       size: {
         default: "h-10 px-4 py-2",
         sm: "h-9 rounded-md px-3",
@@ -17,7 +14,6 @@ const buttonVariants = cva(
       },
     },
     defaultVariants: {
-      variant: "sparkle",
       size: "default",
     },
   }
@@ -29,44 +25,24 @@ export interface ButtonProps
   asChild?: boolean;
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+const SparkleButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button";
-    if (variant === "sparkle") {
-      return (
-        <button
-          className={cn(
-            "group relative grid overflow-hidden rounded-full duration-300",
-            buttonVariants({ size, className })
-          )}
-        >
-          <span>
-            <span
-              className={cn(
-                "spark mask-gradient animate-flip before:animate-rotate absolute inset-0 h-[100%] w-[100%] overflow-hidden rounded-lg [mask:linear-gradient(white,_transparent_50%)] before:absolute before:aspect-square before:w-[200%] before:rotate-[-90deg] before:bg-[conic-gradient(from_0deg,transparent_0_340deg,white_360deg)] before:content-[''] before:[inset:0_auto_auto_50%] before:[translate:-50%_-15%]",
-                { "rounded-full": size === "sm" }
-              )}
-            />
-          </span>
+    return (
+      <Comp ref={ref} className={cn(buttonVariants({ size }), className)}>
+        <span>
           <span
             className={cn(
-              "backdrop absolute inset-[1px] rounded-md bg-secondary transition-colors duration-200 group-hover:bg-primary",
-              { "rounded-full": size === "sm" }
+              "absolute inset-0 h-[100%] w-[100%] animate-flip overflow-hidden rounded-lg [mask:linear-gradient(white,_transparent_50%)] before:absolute before:aspect-square before:w-[200%] before:rotate-[-90deg] before:animate-rotate before:bg-[conic-gradient(from_0deg,transparent_0_340deg,white_360deg)] before:content-[''] before:[inset:0_auto_auto_50%] before:[translate:-50%_-15%]"
             )}
           />
-          <span className="z-10">{props.children}</span>
-        </button>
-      );
-    }
-    return (
-      <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
-        ref={ref}
-        {...props}
-      />
+        </span>
+        <span className="backdrop absolute inset-[1px] rounded-md bg-secondary transition-colors duration-200" />
+        <span className="z-10">{props.children}</span>
+      </Comp>
     );
   }
 );
-Button.displayName = "Button";
+SparkleButton.displayName = "Button";
 
-export { Button, buttonVariants };
+export { SparkleButton };

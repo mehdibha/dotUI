@@ -148,22 +148,20 @@ const DataGrid = ({ type, items }: { type: string; items: Item[] }) => {
                   }
                 )}
               >
-                {item.metadata.thumbnail ? (
-                  item.metadata.thumbnail.includes("mp4") ? (
-                    <video
-                      src={item.metadata.thumbnail}
-                      muted
-                      loop
-                      autoPlay
-                      className="opacity-90 duration-150 group-hover:opacity-100"
-                    />
-                  ) : (
-                    <img
-                      src={item.metadata.thumbnail}
-                      alt={item.metadata.title}
-                      className="opacity-90 duration-150 group-hover:opacity-100"
-                    />
-                  )
+                {item.metadata.video ? (
+                  <video
+                    src={item.metadata.video}
+                    muted
+                    loop
+                    autoPlay
+                    className="opacity-90 duration-150 group-hover:opacity-100"
+                  />
+                ) : item.metadata.thumbnail ? (
+                  <img
+                    src={item.metadata.thumbnail}
+                    alt={item.metadata.title}
+                    className="opacity-90 duration-150 group-hover:opacity-100"
+                  />
                 ) : (
                   <p className="text-muted-foreground">No thumbnail</p>
                 )}
