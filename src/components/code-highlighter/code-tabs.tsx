@@ -1,4 +1,5 @@
 import { Code, type Extension, type BrightProps } from "bright";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { TabsRoot, TabsContent, TabsList } from "./client";
 import { CopyButton } from "./copy-button";
 
@@ -79,8 +80,10 @@ export function Content(brightProps: BrightProps) {
             code={getCode(props.title!)}
             className="absolute right-4 top-2 z-50"
           />
-          {/* @ts-expect-error - - */}
-          <Code.Pre {...props} test="this is a test" />
+          <ScrollArea viewportProps={{ className: "max-h-[350px]" }}>
+            {/* @ts-expect-error - - */}
+            <Code.Pre {...props} test="this is a test" />
+          </ScrollArea>
         </TabsContent>
       ))}
     </>

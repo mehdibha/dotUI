@@ -54,14 +54,16 @@ allPreviews.forEach(({ relativePath }) => {
   // if directory, get all files
   if (fs.existsSync(fullPath) && fs.lstatSync(fullPath).isDirectory()) {
     const files = fs.readdirSync(fullPath);
-    code = files.map((file) => {
-      const filePath = path.join(fullPath, file);
-      const fileContent = fs.readFileSync(filePath, "utf-8");
-      return {
-        title: file === "index.tsx" ? `${path.basename(fullPath)}.tsx` : file,
-        code: fileContent,
-      };
-    });
+    code = files
+      .map((file) => {
+        const filePath = path.join(fullPath, file);
+        const fileContent = fs.readFileSync(filePath, "utf-8");
+        return {
+          title: file === "index.tsx" ? `${path.basename(fullPath)}.tsx` : file,
+          code: fileContent,
+        };
+      })
+      .sort((a) => (a.title === `${path.basename(fullPath)}.tsx` ? -1 : 1));
   } else {
     // if file, get file content and name
     if (!fs.existsSync(`${fullPath}.tsx`)) {
