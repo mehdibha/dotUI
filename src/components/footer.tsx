@@ -66,7 +66,7 @@ const socialLinks = [
 export const Footer = () => {
   return (
     <div className="container mt-36 pb-8">
-      <div className="flex items-start justify-between">
+      <div className="flex flex-col items-start justify-between gap-10 lg:flex-row">
         <div className="max-w-sm">
           <NavLink
             href="/"
@@ -98,7 +98,7 @@ export const Footer = () => {
           </div>
           <ThemeToggle className="mt-8" />
         </div>
-        <div className="grid grid-cols-3 gap-16">
+        <div className="grid grid-cols-3 gap-4 sm:gap-16">
           {links.map((group, index) => (
             <div key={index}>
               <h4 className="font-bold">{group.label}</h4>

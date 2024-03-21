@@ -67,9 +67,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="relative">
             <Background />
             <Header />
-            <div className="container min-h-[calc(100vh-64px)] max-w-6xl pt-10">
-              {children}
-            </div>
+            <div className="container min-h-[calc(100vh-64px)] pt-10">{children}</div>
             <Footer />
           </div>
         </Providers>

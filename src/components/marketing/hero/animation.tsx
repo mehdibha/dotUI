@@ -1,71 +1,23 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
 import { LayoutGroup, motion } from "framer-motion";
 import {
   AlignCenterIcon,
-  ArrowRightIcon,
   AtSignIcon,
   BarChart4Icon,
   BellIcon,
   BluetoothIcon,
   BoldIcon,
-  BriefcaseIcon,
-  Clock2Icon,
-  CloudIcon,
   CodeIcon,
   InboxIcon,
   LinkIcon,
   MailIcon,
   MoonIcon,
-  SearchIcon,
-  SparklesIcon,
-  ThumbsUpIcon,
   UserRoundIcon,
 } from "lucide-react";
-import Balancer from "react-wrap-balancer";
-import { badgeVariants } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/utils/classes";
 
-export const Hero = ({ className }: { className?: string }) => {
-  return (
-    <section className={cn("flex items-start justify-between", className)}>
-      <div>
-        <Link
-          href="https://github.com/mehdibha/rcopy"
-          target="_blank"
-          className={cn(
-            badgeVariants({ variant: "outline", size: "md" }),
-            "cursor-pointer space-x-2 font-mono delay-75 duration-200 hover:bg-secondary"
-          )}
-        >
-          <SparklesIcon size={18} />
-          <span>Star us on GitHub</span> <ArrowRightIcon size={15} />
-        </Link>
-        <h1 className="mt-4 font-display text-6xl font-bold leading-tight tracking-tight">
-          <Balancer>Everything you need to build your React app</Balancer>
-        </h1>
-        <h2 className="text-md mt-6 text-muted-foreground md:text-lg lg:text-xl">
-          Copy the code, paste it, customize it, own it. Done.
-        </h2>
-        <div className="mt-10 flex space-x-4">
-          <Button size="lg" variant="default">
-            Explore components
-          </Button>
-          <Button size="lg" variant="outline">
-            <SearchIcon size={20} className="mr-2" />
-            Quick search
-          </Button>
-        </div>
-      </div>
-      <Animation />
-    </section>
-  );
-};
-
-const Animation = () => {
+export const Animation = () => {
   const [selectedTab, setSelectedTab] = React.useState(2);
 
   React.useEffect(() => {
@@ -126,13 +78,9 @@ const Animation = () => {
                 LinkIcon,
                 AlignCenterIcon,
                 BoldIcon,
+                UserRoundIcon,
                 BarChart4Icon,
                 BluetoothIcon,
-                BriefcaseIcon,
-                Clock2Icon,
-                CloudIcon,
-                UserRoundIcon,
-                ThumbsUpIcon,
               ].map((Icon, i) => (
                 <div
                   key={i}

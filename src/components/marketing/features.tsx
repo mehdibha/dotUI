@@ -4,12 +4,12 @@ import { cn } from "@/utils/classes";
 export const Features = ({ className }: { className?: string }) => {
   return (
     <div className={className}>
-      <h2 className="pb-1 text-center font-display text-6xl font-bold tracking-tighter">
+      <h2 className="pb-1 text-center font-display text-4xl font-bold tracking-tighter md:text-5xl lg:text-6xl">
         <AnimatedWord word="Copy." index={1} />
         <AnimatedWord word="Paste." index={2} />
         <AnimatedWord word="Own it." index={3} />
       </h2>
-      <p className="mt-8 text-xl font-semibold text-muted-foreground">
+      <p className="mt-4 text-base text-muted-foreground md:mt-8 md:text-lg lg:text-xl">
         rCopy is not another package that you need to install. We strongly believe that
         you should own your code. It&apos;s a collection of re-usable components, hooks,
         icons, pages and more that you can copy and paste into your apps, modify it as you

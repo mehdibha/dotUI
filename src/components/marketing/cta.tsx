@@ -10,7 +10,7 @@ export const CallToAction = (props: CallToActionProps) => {
   const { className } = props;
   return (
     <section className={cn("px-6 text-center", className)}>
-      <h2 className="mx-auto mt-8 max-w-2xl text-5xl font-bold tracking-tight">
+      <h2 className="mx-auto mt-8 max-w-2xl text-4xl font-bold tracking-tight lg:text-5xl">
         Proudly open source
       </h2>
       <p className="mt-4 text-lg text-muted-foreground">
