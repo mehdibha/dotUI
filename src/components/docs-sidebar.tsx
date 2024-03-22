@@ -44,24 +44,15 @@ export function DocsSidebarNavItems({ items, pathname }: DocsSidebarNavItemsProp
             {item.items.length > 0 &&
               item.href &&
               pathname &&
-              pathname.includes(item.href) && (
-                <div
-                  className="duration animate-in fade-in slide-in-from-top-2"
-                  // initial={{ opacity: 0, y: -5 }}
-                  // animate={{ opacity: 1, y: 0 }}
-                  // exit={{ opacity: 0, y: -5 }}
-                  // transition={{ duration: 0.1 }}
-                >
-                  {item.items.map((subItem, subItemIndex) => (
-                    <Item
-                      key={subItemIndex}
-                      item={{ ...subItem }}
-                      pathname={pathname}
-                      className="ml-2"
-                    />
-                  ))}
-                </div>
-              )}
+              pathname.includes(item.href) &&
+              item.items.map((subItem, subItemIndex) => (
+                <Item
+                  key={subItemIndex}
+                  item={{ ...subItem }}
+                  pathname={pathname}
+                  className="ml-2"
+                />
+              ))}
           </div>
         </React.Fragment>
       ))}
@@ -118,8 +109,6 @@ const Item = ({
           )}
         </span>
       )}
-      {/* {item.items.length > 0 && } */}
-      {/* <DocsSidebarNavItems items={item.items} pathname={item.href} /> */}
     </React.Fragment>
   );
 };
