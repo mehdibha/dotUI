@@ -34,10 +34,6 @@ export const getAllMdxFiles = (
       path.extname(file) === ".mdx" &&
       (includeIndexMdx || file !== "index.mdx")
     ) {
-      // console.log("rootDirectory", rootDirectory);
-      // console.log(path
-      //   .relative(rootDirectory, filePath));
-      // console.log("filePath", filePath);
       const relativePath = path
         .relative(rootDirectory, filePath)
         .split(path.sep)

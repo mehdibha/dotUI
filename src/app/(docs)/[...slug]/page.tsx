@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRightIcon, ChevronRightIcon, SearchIcon } from "lucide-react";
 import { Mdx } from "@/components/mdx/mdx-remote";
+import { TableOfContents } from "@/components/toc";
 import { Badge } from "@/components/ui/badge";
 import {
   Breadcrumb,
@@ -27,7 +28,7 @@ interface PageProps {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const doc = getDocFromSlug(params.slug);
+  const doc = await getDocFromSlug(params.slug);
 
   if (!doc) {
     return {};
@@ -45,7 +46,7 @@ export async function generateStaticParams(): Promise<PageProps["params"][]> {
 }
 
 export default async function Page({ params }: PageProps) {
-  const doc = getDocFromSlug(params.slug);
+  const doc = await getDocFromSlug(params.slug);
 
   if (!doc) {
     notFound();
@@ -54,61 +55,77 @@ export default async function Page({ params }: PageProps) {
   const { rawContent, metadata, categories, items } = doc;
 
   return (
-    <main>
-      {/* breadcrumbs  */}
-      {metadata.breadcrumbs.length > 1 && (
-        <Breadcrumb>
-          <BreadcrumbList>
-            {metadata.breadcrumbs.map((breadcrumb, index) => (
-              <React.Fragment key={index}>
-                {index === metadata.breadcrumbs.length - 1 ? (
-                  <BreadcrumbPage>{breadcrumb.label}</BreadcrumbPage>
-                ) : (
-                  <BreadcrumbItem>
-                    <BreadcrumbLink href={breadcrumb.href}>
-                      {breadcrumb.label}
-                    </BreadcrumbLink>
-                  </BreadcrumbItem>
-                )}
-                {index < metadata.breadcrumbs.length - 1 && (
-                  <BreadcrumbSeparator>
-                    <ChevronRightIcon />
-                  </BreadcrumbSeparator>
-                )}
-              </React.Fragment>
-            ))}
-          </BreadcrumbList>
-        </Breadcrumb>
-      )}
-      <h1 className="mt-2 text-4xl font-bold">{metadata.title}</h1>
-      <p className="mt-2 text-muted-foreground">{metadata.description}</p>
-      {categories && categories.length > 0 && (
-        <div className="mt-6">
-          <div className="flex gap-4">
-            {categories.map((category, index) => (
-              <Link
-                key={index}
-                href={category.href}
-                className="focus-ring flex cursor-pointer items-center justify-center rounded bg-secondary px-4 py-1 duration-150 hover:bg-secondary/50"
-              >
-                <p>{category.label}</p>
-              </Link>
-            ))}
-          </div>
-          {categories.length > 7 && (
-            <div className="flex justify-end">
-              <Link href="#" className="inline-flex items-center hover:underline">
-                <ArrowRightIcon size={18} className="mr-2" />
-                See all categories
-              </Link>
+    <main
+      className={cn("relative pb-20 lg:gap-10", {
+        "xl:grid xl:grid-cols-[1fr_220px]": !!doc.toc.items, // !!doc.toc
+      })}
+    >
+      <div className="mx-auto w-full min-w-0  pt-6">
+        {metadata.breadcrumbs.length > 1 && (
+          <Breadcrumb>
+            <BreadcrumbList>
+              {metadata.breadcrumbs.map((breadcrumb, index) => (
+                <React.Fragment key={index}>
+                  {index === metadata.breadcrumbs.length - 1 ? (
+                    <BreadcrumbPage>{breadcrumb.label}</BreadcrumbPage>
+                  ) : (
+                    <BreadcrumbItem>
+                      <BreadcrumbLink href={breadcrumb.href}>
+                        {breadcrumb.label}
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
+                  )}
+                  {index < metadata.breadcrumbs.length - 1 && (
+                    <BreadcrumbSeparator>
+                      <ChevronRightIcon />
+                    </BreadcrumbSeparator>
+                  )}
+                </React.Fragment>
+              ))}
+            </BreadcrumbList>
+          </Breadcrumb>
+        )}
+        <h1 className="mt-2 text-4xl font-bold">{metadata.title}</h1>
+        <p className="mt-2 text-muted-foreground">{metadata.description}</p>
+        {categories && categories.length > 0 && (
+          <div className="mt-6">
+            <div className="flex gap-4">
+              {categories.map((category, index) => (
+                <Link
+                  key={index}
+                  href={category.href}
+                  className="focus-ring flex cursor-pointer items-center justify-center rounded bg-secondary px-4 py-1 duration-150 hover:bg-secondary/50"
+                >
+                  <p>{category.label}</p>
+                </Link>
+              ))}
             </div>
-          )}
+            {categories.length > 7 && (
+              <div className="flex justify-end">
+                <Link href="#" className="inline-flex items-center hover:underline">
+                  <ArrowRightIcon size={18} className="mr-2" />
+                  See all categories
+                </Link>
+              </div>
+            )}
+          </div>
+        )}
+        <div className="mt-10 text-sm md:text-base">
+          <Mdx source={rawContent} />
+          {items && items.length > 0 && <DataGrid items={items} type={metadata.type} />}
+        </div>
+      </div>
+      {doc.toc.items && ( // doc.toc
+        <div className="hidden text-sm xl:block">
+          <div className="sticky top-0">
+            <ScrollArea className="h-screen pb-8">
+              <div className="pb-16 pt-6">
+                <TableOfContents toc={doc.toc} />
+              </div>
+            </ScrollArea>
+          </div>
         </div>
       )}
-      <div className="mt-10 text-sm md:text-base">
-        <Mdx source={rawContent} />
-        {items && items.length > 0 && <DataGrid items={items} type={metadata.type} />}
-      </div>
     </main>
   );
 }

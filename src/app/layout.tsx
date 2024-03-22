@@ -55,7 +55,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          "font-sans",
+          "min-h-screen font-sans",
           geistMono.variable,
           geistSans.variable,
           fontDisplay.variable
@@ -65,9 +65,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Providers>
           <Toaster />
           <div className="relative">
-            <Background />
             <Header />
-            <div className="container min-h-[calc(100vh-64px)] pt-10">{children}</div>
+            <main>{children}</main>
             <Footer />
           </div>
         </Providers>
@@ -75,11 +74,3 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     </html>
   );
 }
-
-const Background = () => {
-  return (
-    <div className="pointer-events-none">
-      <div className="absolute z-[-1] h-screen w-full bg-bgGradientLight duration-300 animate-in fade-in dark:bg-bgGradient" />
-    </div>
-  );
-};

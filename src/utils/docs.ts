@@ -1,6 +1,8 @@
 import fs from "fs";
 import path from "path";
+import type { SidebarNavItem } from "@/types/nav";
 import { getAllMdxFiles, parseMDXFile } from "./mdx";
+import { type TableOfContents, getTableOfContents } from "./toc";
 
 export type Type = "components" | "pages" | "templates" | "icons" | "hooks";
 
@@ -33,6 +35,7 @@ export interface Doc {
   rawContent: string;
   metadata: DocMetadata;
   categories?: Category[];
+  toc: TableOfContents;
   items?: Item[];
 }
 
@@ -74,7 +77,7 @@ const getBreadcrumbs = (slug: string[]): { label: string; href: string }[] => {
   return result.filter((elem) => !!elem) as { label: string; href: string }[];
 };
 
-export const getDocFromSlug = (slug: string[]): Doc | null => {
+export const getDocFromSlug = async (slug: string[]): Promise<Doc | null> => {
   // 1st scenario: if it's a directory
   const breadcrumbs = getBreadcrumbs(slug);
   const type = slug[0] as Type;
@@ -116,6 +119,7 @@ export const getDocFromSlug = (slug: string[]): Doc | null => {
           };
         }
       );
+      const toc = await getTableOfContents(content);
 
       return {
         metadata: {
@@ -126,6 +130,7 @@ export const getDocFromSlug = (slug: string[]): Doc | null => {
         },
         rawContent: content,
         categories,
+        toc,
         items,
       };
     }
@@ -141,6 +146,7 @@ export const getDocFromSlug = (slug: string[]): Doc | null => {
   if (fs.existsSync(filePath)) {
     const fileRawContent = fs.readFileSync(filePath, "utf-8");
     const { content, frontmatter } = parseMDXFile<DocFrontmatter>(fileRawContent);
+    const toc = await getTableOfContents(content);
     return {
       metadata: {
         title: frontmatter.title,
@@ -149,6 +155,7 @@ export const getDocFromSlug = (slug: string[]): Doc | null => {
         breadcrumbs,
       },
       rawContent: content,
+      toc,
     };
   }
 
@@ -168,4 +175,48 @@ export const getAllDocs = () => {
       };
     }
   );
+};
+
+export const getDocsNavItems = (): {
+  items: SidebarNavItem[];
+} => {
+  // nested files will be in items field
+  //{ items: { title: "test", href: "#", items: [{ title: "test2", href: "#" }] }
+  const directoryPath = path.join(process.cwd(), "content");
+
+  // recursive function to get all nested files
+  const getItems = (directory: string): SidebarNavItem[] => {
+    const files = fs.readdirSync(directory);
+    // console.log(files)
+    return files.reduce<SidebarNavItem[]>((acc, file) => {
+      const filePath = path.join(directory, file);
+      const fileStat = fs.statSync(filePath);
+      if (fileStat.isDirectory()) {
+        const items = getItems(filePath);
+        const indexPath = path.join(filePath, "index.mdx");
+        if (fs.existsSync(indexPath)) {
+          const fileRawContent = fs.readFileSync(indexPath, "utf-8");
+          const { frontmatter } = parseMDXFile<DocFrontmatter>(fileRawContent);
+          acc.push({
+            title: frontmatter.title,
+            href: `/${path.relative(directoryPath, filePath).replace(/\\/g, "/")}`,
+            items,
+          });
+        }
+      }
+      if (path.extname(file) === ".mdx" && file !== "index.mdx") {
+        const { frontmatter } = parseMDXFile<DocFrontmatter>(
+          fs.readFileSync(filePath, "utf-8")
+        );
+        acc.push({
+          title: frontmatter.title,
+          href: `/${path.relative(directoryPath, filePath).replace(/\\/g, "/").replace(".mdx", "")}`,
+          items: [],
+        });
+      }
+      return acc;
+    }, []);
+  };
+
+  return { items: getItems(directoryPath) };
 };

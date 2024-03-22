@@ -9,7 +9,9 @@ import { Animation } from "./animation";
 
 export const Hero = ({ className }: { className?: string }) => {
   return (
-    <section className={cn("flex items-start justify-between", className)}>
+    <section
+      className={cn("mx-auto flex max-w-7xl items-start justify-between", className)}
+    >
       <div>
         <Link
           href="https://github.com/mehdibha/rcopy"

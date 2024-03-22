@@ -60,12 +60,7 @@ const config = {
         },
       },
       backgroundImage: {
-        gradient: "linear-gradient(120deg, rgb(81, 112, 255), rgb(255, 102, 196))",
-        bgGradient:
-          "radial-gradient(ellipse 80% 80% at 50% 0%,hsl(0, 0%, 19%) 0%,hsla(0, 0%, 19%, 0.987) 8.1%,hsla(0, 0%, 19%, 0.951) 15.5%,hsla(0, 0%, 19%, 0.896) 22.5%,hsla(0, 0%, 19%, 0.825) 29%,hsla(0, 0%, 19%, 0.741) 35.3%,hsla(0, 0%, 19%, 0.648) 41.2%,hsla(0, 0%, 19%, 0.55) 47.1%,hsla(0, 0%, 19%, 0.45) 52.9%,hsla(0, 0%, 19%, 0.352) 58.8%,hsla(0, 0%, 19%, 0.259) 64.7%,hsla(0, 0%, 19%, 0.175) 71%,hsla(0, 0%, 19%, 0.104) 77.5%,hsla(0, 0%, 19%, 0.049) 84.5%,hsla(0, 0%, 19%, 0.013) 91.9%,hsla(0, 0%, 19%, 0) 100%)",
-
-        bgGradientLight:
-          "radial-gradient(ellipse 80% 80% at 50% 0%,rgba(190,190,190,0.7),rgba(0,0,0,0))",
+        gradient: "linear-gradient(10deg, rgb(81, 112, 255), rgb(255, 102, 196))",
       },
       borderRadius: {
         lg: "var(--radius)",

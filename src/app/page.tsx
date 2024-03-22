@@ -5,7 +5,7 @@ import { Hero } from "@/components/marketing/hero";
 
 export default function HomePage() {
   return (
-    <main className="py-14">
+    <main className="container pb-36 pt-24">
       <Hero />
       <Brands className="mt-24" />
       <Features className="mt-32" />

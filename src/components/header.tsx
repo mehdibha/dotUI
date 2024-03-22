@@ -43,7 +43,7 @@ export const Header = () => {
 
   return (
     <header className="pointer-events-none sticky top-0 z-50 w-full duration-500 animate-in fade-in slide-in-from-top-2">
-      <div className="container relative flex h-16 items-center justify-between px-4 sm:px-8 ">
+      <div className="container relative flex h-16 max-w-screen-2xl items-center justify-between px-4 sm:px-8 ">
         <div
           className={cn("pointer-events-auto", {
             "pointer-events-none": scrolled,
