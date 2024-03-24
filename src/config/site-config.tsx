@@ -31,9 +31,9 @@ export const siteConfig = {
       links: [
         { href: "/getting-started", label: "Docs" },
         { href: "/components", label: "Components" },
+        { href: "/components", label: "Blocks" },
         { href: "/hooks", label: "Hooks" },
         { href: "/icons", label: "Icons" },
-        { href: "/pages", label: "Pages" },
         { href: "/templates", label: "Templates" },
       ],
     },
