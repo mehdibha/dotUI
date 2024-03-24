@@ -14,6 +14,7 @@ interface DocFrontmatter {
   video?: string;
   keywords?: string[];
   externalLink?: string;
+  label?: string;
 }
 
 interface DocMetadata {

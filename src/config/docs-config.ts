@@ -6,10 +6,12 @@ export const docsConfig: DocsConfig = {
   sidebarNav: [
     {
       title: "Getting Started",
-      items: [{ title: "Introduction", href: "/getting-started" }],
+      slug: "getting-started",
+      items: [{ title: "Introduction", href: "/getting-started/introduction" }],
     },
     {
       title: "Components",
+      slug: "components",
       items: [
         { title: "All components", href: "/components" },
         {
@@ -66,13 +68,18 @@ export const docsConfig: DocsConfig = {
         {
           title: "Animations",
           items: [
-            { title: "Sparkle button", href: "/components/animations/sparkle-button" },
+            {
+              title: "Sparkle button",
+              href: "/components/animations/sparkle-button",
+              label: "New",
+            },
           ],
         },
       ],
     },
     {
       title: "Blocks",
+      slug: "blocks",
       items: [
         { title: "All blocks", href: "/blocks" },
         {
@@ -85,13 +92,18 @@ export const docsConfig: DocsConfig = {
     },
     {
       title: "Hooks",
+      slug: "hooks",
       items: [
         { title: "All hooks", href: "/hooks" },
         { title: "useBattery", href: "/hooks/use-battery" },
         { title: "useDebounce", href: "/hooks/use-debounce" },
       ],
     },
-    { title: "Icons", items: [{ title: "All icons", href: "/icons" }] },
-    { title: "Templates", items: [{ title: "All templates", href: "/templates" }] },
+    { title: "Icons", slug: "icons", items: [{ title: "All icons", href: "/icons" }] },
+    {
+      title: "Templates",
+      slug: "templates",
+      items: [{ title: "All templates", href: "/templates" }],
+    },
   ],
 };

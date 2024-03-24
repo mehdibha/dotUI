@@ -27,7 +27,7 @@
   }
 
   .dark {
-    --background: 240 10% 8%;
+    --background: 240 10% 10%;
     --foreground: 0 0% 80%;
     --card: 240 10% 15%;
     --card-foreground: 0 0% 98%;
@@ -80,11 +80,11 @@
   }
 
   .category:before {
-    @apply absolute top-0 left-0 h-2 w-2 rounded-full bg-muted content-[''] -ml-1 mt-1;
+    @apply absolute left-0 top-0 -ml-1 mt-1 h-2 w-2 rounded-full bg-muted content-[''];
   }
 
   .category:after {
-    @apply absolute top-3 left-0 h-2 w-[1px] bg-muted content-[''];
+    @apply absolute left-0 top-3 h-2 w-[1px] bg-muted content-[''];
   }
 
   @media (max-width: 640px) {

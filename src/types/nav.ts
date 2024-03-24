@@ -13,6 +13,7 @@ interface SubCategory {
 
 export interface Category {
   title: string;
+  slug: string;
   items: (Item | SubCategory)[];
 }
 

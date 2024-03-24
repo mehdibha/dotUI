@@ -61,9 +61,9 @@ export default async function Page({ params }: PageProps) {
         "xl:grid xl:grid-cols-[1fr_220px]": !!doc.toc.items, // !!doc.toc
       })}
     >
-      <div className="mx-auto w-full min-w-0  pt-6">
+      <div className="mx-auto w-full min-w-0 pt-6">
         {metadata.breadcrumbs.length > 1 && (
-          <Breadcrumb>
+          <Breadcrumb className="mb-2">
             <BreadcrumbList>
               {metadata.breadcrumbs.map((breadcrumb, index) => (
                 <React.Fragment key={index}>
@@ -86,7 +86,7 @@ export default async function Page({ params }: PageProps) {
             </BreadcrumbList>
           </Breadcrumb>
         )}
-        <h1 className="mt-2 text-4xl font-bold">{metadata.title}</h1>
+        <h1 className="text-4xl font-bold">{metadata.title}</h1>
         <p className="mt-2 text-muted-foreground">{metadata.description}</p>
         {categories && categories.length > 0 && (
           <div className="mt-6 flex flex-wrap gap-4">
@@ -165,7 +165,9 @@ const DataGrid = ({ type, items }: { type: string; items: Item[] }) => {
                     />
                   </ScrollArea>
                 ) : (
-                  <p className="text-muted-foreground">No thumbnail</p>
+                  <div className="flex aspect-video w-full items-center justify-center bg-card/50">
+                    <p className="text-muted-foreground">No thumbnail</p>
+                  </div>
                 )}
               </div>
             )}

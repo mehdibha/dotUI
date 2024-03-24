@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useSelectedLayoutSegments } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { motion, useAnimate } from "framer-motion";
 import { MenuIcon, SearchIcon } from "lucide-react";
 import { SearchDialog } from "@/components/search-dialog";
@@ -163,7 +163,7 @@ interface NavProps {
 
 const Nav = (props: NavProps) => {
   const { items, direction = "row", onNavItemClick } = props;
-  const segments = useSelectedLayoutSegments();
+  const pathname = usePathname();
 
   return (
     <nav
@@ -182,9 +182,7 @@ const Nav = (props: NavProps) => {
                 {
                   "cursor-default text-foreground/30 hover:text-foreground/30":
                     item.disabled,
-                  "bg-foreground/10 text-foreground": segments[0]
-                    ?.split("/")
-                    ?.includes(item.href.slice(1, item.href.length)),
+                  "bg-foreground/10 text-foreground": pathname.startsWith(item.href),
                 }
               )}
               onClick={onNavItemClick}

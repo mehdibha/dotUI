@@ -22,7 +22,13 @@ export function DocsSidebar({ items }: DocsSidebarProps) {
   return items.length > 0 ? (
     <div className="w-full space-y-4 pb-10 pt-6 text-sm">
       {items.map((item, index) => (
-        <Category key={index} title={item.title} items={item.items} pathname={pathname} />
+        <Category
+          key={index}
+          title={item.title}
+          items={item.items}
+          slug={item.slug}
+          pathname={pathname}
+        />
       ))}
     </div>
   ) : null;
@@ -32,8 +38,8 @@ interface CategoryProps extends TCategory {
   pathname: string;
 }
 
-const Category = ({ title, items, pathname }: CategoryProps) => {
-  const [open, setOpen] = React.useState(true);
+const Category = ({ title, slug, items, pathname }: CategoryProps) => {
+  const [open, setOpen] = React.useState(pathname.startsWith(`/${slug}`));
 
   return (
     <Collapsible open={open} onOpenChange={setOpen}>
@@ -57,7 +63,7 @@ const Category = ({ title, items, pathname }: CategoryProps) => {
                       }
                     )}
                   >
-                    <span className="block duration-100 group-hover:translate-x-1">
+                    <span className="block duration-100 group-hover:translate-x-0.5">
                       {item.title}
                     </span>
                   </Link>
@@ -83,10 +89,10 @@ const Category = ({ title, items, pathname }: CategoryProps) => {
                             }
                           )}
                         >
-                          <span className="block transition-transform duration-100 group-hover:translate-x-1">
+                          <span className="block transition-transform duration-100 group-hover:translate-x-0.5">
                             {subItem.title}
                             {subItem.label && (
-                              <span className="ml-2 rounded-md bg-[#adfa1d] px-1.5 py-0.5 text-xs leading-none text-black no-underline group-hover:no-underline">
+                              <span className="ml-2 rounded-md bg-gradient px-1.5 py-0.5 text-xs leading-none text-black ">
                                 {subItem.label}
                               </span>
                             )}

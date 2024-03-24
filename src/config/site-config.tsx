@@ -29,9 +29,9 @@ export const siteConfig = {
   header: {
     nav: {
       links: [
-        { href: "/getting-started", label: "Docs" },
+        { href: "/getting-started/introduction", label: "Docs" },
         { href: "/components", label: "Components" },
-        { href: "/components", label: "Blocks" },
+        { href: "/blocks", label: "Blocks" },
         { href: "/hooks", label: "Hooks" },
         { href: "/icons", label: "Icons" },
         { href: "/templates", label: "Templates" },

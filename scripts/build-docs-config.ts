@@ -8,6 +8,7 @@ const getCategoryItems = (category: string) => {
   return getAllCategoryDocs(category).map((category) => ({
     title: category.title,
     href: category.href,
+    label: category.label,
   }));
 };
 
@@ -15,15 +16,12 @@ const docsConfig: DocsConfig = {
   sidebarNav: [
     {
       title: "Getting Started",
-      items: [
-        {
-          title: "Introduction",
-          href: "/getting-started",
-        },
-      ],
+      slug: "getting-started",
+      items: getCategoryItems("getting-started"),
     },
     {
       title: "Components",
+      slug: "components",
       items: [
         {
           title: "All components",
@@ -41,6 +39,7 @@ const docsConfig: DocsConfig = {
     },
     {
       title: "Blocks",
+      slug: "blocks",
       items: [
         {
           title: "All blocks",
@@ -62,6 +61,7 @@ const docsConfig: DocsConfig = {
     },
     {
       title: "Hooks",
+      slug: "hooks",
       items: [
         {
           title: "All hooks",
@@ -72,6 +72,7 @@ const docsConfig: DocsConfig = {
     },
     {
       title: "Icons",
+      slug: "icons",
       items: [
         {
           title: "All icons",
@@ -82,6 +83,7 @@ const docsConfig: DocsConfig = {
     },
     {
       title: "Templates",
+      slug: "templates",
       items: [
         {
           title: "All templates",
