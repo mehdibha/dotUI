@@ -3,39 +3,12 @@
 import React from "react";
 
 export const previews = {
-  "components/sparkle-button/demo": {
-    component: React.lazy<React.FC>(() => import("@/lib/components/sparkle-button/demo")),
-    code: [
-      {
-        title: "demo.tsx",
-        code: 'import { SparkleButton } from "@/lib/components/sparkle-button";\r\n\r\nexport default function Demo() {\r\n  return <SparkleButton size="lg">Get started</SparkleButton>;\r\n}\r\n',
-      },
-    ],
-  },
-  "hooks/use-battery/demo": {
-    component: React.lazy<React.FC>(() => import("@/lib/hooks/use-battery/demo")),
-    code: [
-      {
-        title: "demo.tsx",
-        code: '"use client";\r\n\r\nimport {\r\n  BatteryChargingIcon,\r\n  BatteryFullIcon,\r\n  BatteryLowIcon,\r\n  BatteryMediumIcon,\r\n  BatteryWarning,\r\n  Loader2Icon,\r\n} from "lucide-react";\r\nimport { useBattery } from "@/lib/hooks/use-battery";\r\n\r\nexport default function Demo() {\r\n  const { isLoading, isSupported, isCharging, level } = useBattery();\r\n\r\n  const size = 120;\r\n\r\n  return (\r\n    <div className="text-center">\r\n      <h2 className="text-xl font-semibold">Battery status</h2>\r\n      <div className="mt-4 flex items-center justify-center space-x-4">\r\n        {isLoading ? (\r\n          <Loader2Icon className="animate-spin" />\r\n        ) : !isSupported ? (\r\n          <p className="text-muted-foreground">\r\n            Battery status API is not supported in your browser.\r\n          </p>\r\n        ) : (\r\n          <>\r\n            <span className="text-5xl font-bold">{level * 100}%</span>\r\n            {isCharging ? (\r\n              <BatteryChargingIcon size={size} />\r\n            ) : level === 1 ? (\r\n              <BatteryFullIcon size={size} />\r\n            ) : level > 0.5 ? (\r\n              <BatteryMediumIcon size={size} />\r\n            ) : level > 0.2 ? (\r\n              <BatteryLowIcon size={size} />\r\n            ) : (\r\n              <BatteryWarning size={size} />\r\n            )}\r\n          </>\r\n        )}\r\n      </div>\r\n    </div>\r\n  );\r\n}\r\n',
-      },
-    ],
-  },
-  "hooks/use-debounce/demo": {
-    component: React.lazy<React.FC>(() => import("@/lib/hooks/use-debounce/demo")),
-    code: [
-      {
-        title: "demo.tsx",
-        code: '"use client";\r\n\r\nimport * as React from "react";\r\nimport { SearchIcon } from "lucide-react";\r\nimport { Input } from "@/components/ui/input";\r\nimport { useDebounce } from "@/lib/hooks/use-debounce";\r\n\r\nexport default function Demo() {\r\n  const [searchInput, setSearchInput] = React.useState("");\r\n  const debouncedValue = useDebounce(searchInput, 1000);\r\n\r\n  return (\r\n    <div className="w-full max-w-sm">\r\n      <div className="relative">\r\n        <SearchIcon\r\n          size={18}\r\n          className="pointer-events-none absolute left-2 top-1/2 -translate-y-1/2 transform text-muted-foreground"\r\n        />\r\n        <Input\r\n          value={searchInput}\r\n          onChange={(e) => {\r\n            setSearchInput(e.target.value);\r\n          }}\r\n          placeholder="Search"\r\n          className="full-w pl-8"\r\n        />\r\n      </div>\r\n      <div className="mt-10 text-center">\r\n        {debouncedValue ? (\r\n          <p>Results for &quot;{debouncedValue}&quot;</p>\r\n        ) : (\r\n          <p className="text-muted-foreground">Start searching</p>\r\n        )}\r\n      </div>\r\n    </div>\r\n  );\r\n}\r\n',
-      },
-    ],
-  },
-  "pages/pricing": {
-    component: React.lazy<React.FC>(() => import("@/lib/pages/pricing")),
+  "blocks/marketing/pages/pricing": {
+    component: React.lazy<React.FC>(() => import("@/lib/blocks/marketing/pages/pricing")),
     code: [
       {
         title: "pricing.tsx",
-        code: '"use client";\r\n\r\nimport React from "react";\r\nimport { CallToAction } from "./cta";\r\nimport { FAQ } from "./faq";\r\nimport { PricingComparaison } from "./pricing-comparaison";\r\nimport type { Plan } from "./types";\r\n\r\nconst headline = "Simple pricing";\r\nconst subheadline = "Use rCopy for free. Upgrade to enable to access premium templates.";\r\nconst pricingPlans: Plan[] = [\r\n  {\r\n    name: "Free",\r\n    description: "Use rCopy for free",\r\n    featured: false,\r\n    price: {\r\n      monthly: "$0",\r\n      yearly: "$0",\r\n    },\r\n    features: [\r\n      "Free hosting on \'turbocharger.cc\'",\r\n      "Optimized SEO",\r\n      "Has \'Built with Turbocharger\' branding",\r\n    ],\r\n    cta: {\r\n      label: "Get started",\r\n      href: "#",\r\n    },\r\n  },\r\n  {\r\n    name: "Pro",\r\n    featured: true,\r\n    price: { monthly: "$19", yearly: "$190" },\r\n    description: "Perfect for small / medium sized businesses.",\r\n    features: [\r\n      "Everything in Free.",\r\n      "Basic analytics",\r\n      "Remove \'Built with Turbocharger\' branding",\r\n    ],\r\n    cta: {\r\n      label: "Get started",\r\n      href: "#",\r\n    },\r\n  },\r\n  {\r\n    name: "Entreprise",\r\n    price: { monthly: "$39", yearly: "$390" },\r\n    description: "For even the biggest enterprise companies.",\r\n    featured: false,\r\n    features: ["Everything in Personal site.", "Advanced analytics", "Priority support"],\r\n    cta: {\r\n      label: "Get started",\r\n      href: "#",\r\n    },\r\n  },\r\n];\r\nconst questions = [\r\n  {\r\n    question: "How does turbocharger works?",\r\n    answer:\r\n      "Turbocharger is a monorepo starter that comes with Next.js, Tailwind CSS, Shadcn-ui, Server components, and more. It\'s a great way to start your next project.",\r\n  },\r\n  {\r\n    question: "How do I create a website with turbocharger?",\r\n    answer: "You can create a website with turbocharger by following the documentation.",\r\n  },\r\n  {\r\n    question: "How much does turbocharger cost?",\r\n    answer: "It\'s free to use turbocharger",\r\n  },\r\n  {\r\n    question: "Can I use turbocharger for free?",\r\n    answer: "Yes, you can use turbocharger for free.",\r\n  },\r\n];\r\nconst cta = {\r\n  headline: "Get started today",\r\n  subheadline: "Start creating your own react project today.",\r\n  cta: {\r\n    label: "Get started",\r\n    href: "#",\r\n  },\r\n};\r\n\r\nexport default function PricingPage() {\r\n  return (\r\n    <div className="container py-24">\r\n      <h2 className="text-center font-display text-5xl font-bold tracking-tight">\r\n        {headline}\r\n      </h2>\r\n      <p className="mt-2 text-center text-lg text-muted-foreground">{subheadline}</p>\r\n      <PricingComparaison plans={pricingPlans} className="mt-8" />\r\n      <FAQ questions={questions} className="mt-32" />\r\n      <CallToAction\r\n        headline={cta.headline}\r\n        subheadline={cta.subheadline}\r\n        cta={cta.cta}\r\n        className="mt-32"\r\n      />\r\n    </div>\r\n  );\r\n}\r\n',
+        code: 'import React from "react";\r\nimport { CallToAction } from "./cta";\r\nimport { FAQ } from "./faq";\r\nimport { PricingComparaison } from "./pricing-comparaison";\r\nimport type { Plan } from "./types";\r\n\r\nconst headline = "Simple pricing";\r\nconst subheadline = "Use rCopy for free. Upgrade to enable to access premium templates.";\r\nconst pricingPlans: Plan[] = [\r\n  {\r\n    name: "Free",\r\n    description: "Use rCopy for free",\r\n    featured: false,\r\n    price: {\r\n      monthly: "$0",\r\n      yearly: "$0",\r\n    },\r\n    features: [\r\n      "Free hosting on \'turbocharger.cc\'",\r\n      "Optimized SEO",\r\n      "Has \'Built with Turbocharger\' branding",\r\n    ],\r\n    cta: {\r\n      label: "Get started",\r\n      href: "#",\r\n    },\r\n  },\r\n  {\r\n    name: "Pro",\r\n    featured: true,\r\n    price: { monthly: "$19", yearly: "$190" },\r\n    description: "Perfect for small / medium sized businesses.",\r\n    features: [\r\n      "Everything in Free.",\r\n      "Basic analytics",\r\n      "Remove \'Built with Turbocharger\' branding",\r\n    ],\r\n    cta: {\r\n      label: "Get started",\r\n      href: "#",\r\n    },\r\n  },\r\n  {\r\n    name: "Entreprise",\r\n    price: { monthly: "$39", yearly: "$390" },\r\n    description: "For even the biggest enterprise companies.",\r\n    featured: false,\r\n    features: ["Everything in Personal site.", "Advanced analytics", "Priority support"],\r\n    cta: {\r\n      label: "Get started",\r\n      href: "#",\r\n    },\r\n  },\r\n];\r\nconst questions = [\r\n  {\r\n    question: "How does turbocharger works?",\r\n    answer:\r\n      "Turbocharger is a monorepo starter that comes with Next.js, Tailwind CSS, Shadcn-ui, Server components, and more. It\'s a great way to start your next project.",\r\n  },\r\n  {\r\n    question: "How do I create a website with turbocharger?",\r\n    answer: "You can create a website with turbocharger by following the documentation.",\r\n  },\r\n  {\r\n    question: "How much does turbocharger cost?",\r\n    answer: "It\'s free to use turbocharger",\r\n  },\r\n  {\r\n    question: "Can I use turbocharger for free?",\r\n    answer: "Yes, you can use turbocharger for free.",\r\n  },\r\n];\r\nconst cta = {\r\n  headline: "Get started today",\r\n  subheadline: "Start creating your own react project today.",\r\n  cta: {\r\n    label: "Get started",\r\n    href: "#",\r\n  },\r\n};\r\n\r\nexport default function PricingPage() {\r\n  return (\r\n    <div className="container py-24">\r\n      <h2 className="text-center font-display text-5xl font-bold tracking-tight">\r\n        {headline}\r\n      </h2>\r\n      <p className="mt-2 text-center text-lg text-muted-foreground">{subheadline}</p>\r\n      <PricingComparaison plans={pricingPlans} className="mt-8" />\r\n      <FAQ questions={questions} className="mt-32" />\r\n      <CallToAction\r\n        headline={cta.headline}\r\n        subheadline={cta.subheadline}\r\n        cta={cta.cta}\r\n        className="mt-32"\r\n      />\r\n    </div>\r\n  );\r\n}\r\n',
       },
       {
         title: "cta.tsx",
@@ -56,6 +29,35 @@ export const previews = {
       {
         title: "types.ts",
         code: "export interface Plan {\r\n  name: string;\r\n  description: string;\r\n  features: string[];\r\n  featured: boolean;\r\n  price: {\r\n    monthly: string;\r\n    yearly: string;\r\n  };\r\n  cta: {\r\n    label: string;\r\n    href: string;\r\n  };\r\n}\r\n",
+      },
+    ],
+  },
+  "demos/components/animations/sparkle-button": {
+    component: React.lazy<React.FC>(
+      () => import("@/lib/demos/components/animations/sparkle-button")
+    ),
+    code: [
+      {
+        title: "sparkle-button.tsx",
+        code: 'import { SparkleButton } from "@/lib/components/animations/sparkle-button";\r\n\r\nexport default function Demo() {\r\n  return <SparkleButton size="lg">Get started</SparkleButton>;\r\n}\r\n',
+      },
+    ],
+  },
+  "demos/hooks/use-battery": {
+    component: React.lazy<React.FC>(() => import("@/lib/demos/hooks/use-battery")),
+    code: [
+      {
+        title: "use-battery.tsx",
+        code: '"use client";\r\n\r\nimport {\r\n  BatteryChargingIcon,\r\n  BatteryFullIcon,\r\n  BatteryLowIcon,\r\n  BatteryMediumIcon,\r\n  BatteryWarning,\r\n  Loader2Icon,\r\n} from "lucide-react";\r\nimport { useBattery } from "@/lib/hooks/use-battery";\r\n\r\nexport default function Demo() {\r\n  const { isLoading, isSupported, isCharging, level } = useBattery();\r\n\r\n  const size = 120;\r\n\r\n  return (\r\n    <div className="text-center">\r\n      <h2 className="text-xl font-semibold">Battery status</h2>\r\n      <div className="mt-4 flex items-center justify-center space-x-4">\r\n        {isLoading ? (\r\n          <Loader2Icon className="animate-spin" />\r\n        ) : !isSupported ? (\r\n          <p className="text-muted-foreground">\r\n            Battery status API is not supported in your browser.\r\n          </p>\r\n        ) : (\r\n          <>\r\n            <span className="text-5xl font-bold">{Math.round(level * 100)}%</span>\r\n            {isCharging ? (\r\n              <BatteryChargingIcon size={size} />\r\n            ) : level === 1 ? (\r\n              <BatteryFullIcon size={size} />\r\n            ) : level > 0.5 ? (\r\n              <BatteryMediumIcon size={size} />\r\n            ) : level > 0.2 ? (\r\n              <BatteryLowIcon size={size} />\r\n            ) : (\r\n              <BatteryWarning size={size} />\r\n            )}\r\n          </>\r\n        )}\r\n      </div>\r\n    </div>\r\n  );\r\n}\r\n',
+      },
+    ],
+  },
+  "demos/hooks/use-debounce": {
+    component: React.lazy<React.FC>(() => import("@/lib/demos/hooks/use-debounce")),
+    code: [
+      {
+        title: "use-debounce.tsx",
+        code: '"use client";\r\n\r\nimport * as React from "react";\r\nimport { SearchIcon } from "lucide-react";\r\nimport { Input } from "@/components/ui/input";\r\nimport { useDebounce } from "@/lib/hooks/use-debounce";\r\n\r\nexport default function Demo() {\r\n  const [searchInput, setSearchInput] = React.useState("");\r\n  const debouncedValue = useDebounce(searchInput, 1000);\r\n\r\n  return (\r\n    <div className="w-full max-w-sm">\r\n      <div className="relative">\r\n        <SearchIcon\r\n          size={18}\r\n          className="pointer-events-none absolute left-2 top-1/2 -translate-y-1/2 transform text-muted-foreground"\r\n        />\r\n        <Input\r\n          value={searchInput}\r\n          onChange={(e) => {\r\n            setSearchInput(e.target.value);\r\n          }}\r\n          placeholder="Search"\r\n          className="full-w pl-8"\r\n        />\r\n      </div>\r\n      <div className="mt-10 text-center">\r\n        {debouncedValue ? (\r\n          <p>Results for &quot;{debouncedValue}&quot;</p>\r\n        ) : (\r\n          <p className="text-muted-foreground">Start searching</p>\r\n        )}\r\n      </div>\r\n    </div>\r\n  );\r\n}\r\n',
       },
     ],
   },

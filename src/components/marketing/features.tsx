@@ -9,12 +9,17 @@ export const Features = ({ className }: { className?: string }) => {
         <AnimatedWord word="Paste." index={2} />
         <AnimatedWord word="Own it." index={3} />
       </h2>
-      <p className="mt-4 text-base text-muted-foreground md:mt-8 md:text-lg lg:text-xl">
+      <p className="mt-2 text-base text-muted-foreground md:mt-8 md:text-lg">
         rCopy is not another package that you need to install. We strongly believe that
         you should own your code. It&apos;s a collection of re-usable components, hooks,
         icons, pages and more that you can copy and paste into your apps, modify it as you
         like and make it yours.
       </p>
+      <div className="mt-12 grid grid-cols-3 gap-8 px-20">
+        {["", "", ""].map((feature, index) => (
+          <div key={index} className="h-44 rounded bg-card shadow"></div>
+        ))}
+      </div>
     </div>
   );
 };

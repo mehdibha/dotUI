@@ -28,6 +28,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/hooks/use-mounted.ts",
+    "content/components/core/alert.mdx",
+    "content/components/core/accordion.mdx",
   ],
   "exclude": ["node_modules"],
 }

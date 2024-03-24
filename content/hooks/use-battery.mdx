@@ -3,7 +3,7 @@ title: useBattery
 description: Track the battery status of a user’s device with useBattery.
 ---
 
-<ComponentPreview name="hooks/use-battery/demo" />
+<ComponentPreview name="demos/hooks/use-battery" />
 
 ## Installation
 
@@ -11,85 +11,7 @@ description: Track the battery status of a user’s device with useBattery.
 
 <Step>Copy and paste the following code into your project.</Step>
 
-```ts
-// title hooks/use-battery.ts
-import React from "react";
-
-interface BatteryManager extends EventTarget {
-  charging: boolean;
-  chargingTime: number;
-  dischargingTime: number;
-  level: number;
-}
-
-type NavigatorWithBattery = Navigator & {
-  getBattery: () => Promise<BatteryManager>;
-};
-
-export function useBattery() {
-  const [state, setState] = React.useState<{
-    supported: boolean;
-    loading: boolean;
-    level: number | null;
-    charging: boolean | null;
-    chargingTime: number | null;
-    dischargingTime: number | null;
-  }>({
-    supported: false,
-    loading: true,
-    level: null,
-    charging: null,
-    chargingTime: null,
-    dischargingTime: null,
-  });
-
-  React.useEffect(() => {
-    if (!(navigator as NavigatorWithBattery)) {
-      setState((s) => ({
-        ...s,
-        supported: false,
-        loading: false,
-      }));
-      return;
-    }
-
-    let battery: BatteryManager | null;
-
-    const handleChange = () => {
-      if (!battery) return;
-      setState({
-        supported: true,
-        loading: false,
-        level: battery.level,
-        charging: battery.charging,
-        chargingTime: battery.chargingTime,
-        dischargingTime: battery.dischargingTime,
-      });
-    };
-
-    void (navigator as NavigatorWithBattery).getBattery().then((b) => {
-      battery = b;
-      handleChange();
-
-      b.addEventListener("levelchange", handleChange);
-      b.addEventListener("chargingchange", handleChange);
-      b.addEventListener("chargingtimechange", handleChange);
-      b.addEventListener("dischargingtimechange", handleChange);
-    });
-
-    return () => {
-      if (battery) {
-        battery.removeEventListener("levelchange", handleChange);
-        battery.removeEventListener("chargingchange", handleChange);
-        battery.removeEventListener("chargingtimechange", handleChange);
-        battery.removeEventListener("dischargingtimechange", handleChange);
-      }
-    };
-  }, []);
-
-  return state;
-}
-```
+<ComponentSource name="hooks/use-battery" />
 
 <Step>
   Update the import paths to match your project setup.

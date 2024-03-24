@@ -92,6 +92,14 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "collapsible-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-collapsible-content-height)" },
+        },
+        "collapsible-up": {
+          from: { height: "var(--radix-collapsible-content-height)" },
+          to: { height: "0" },
+        },
         "gradient-foreground-1": {
           "from, 16.667%, to": {
             opacity: "1",
@@ -160,6 +168,8 @@ const config = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "collapsible-down": "collapsible-down 0.2s ease-out",
+        "collapsible-up": "collapsible-up 0.2s ease-out",
         "gradient-background-1": "gradient-background-1 8s infinite",
         "gradient-foreground-1": "gradient-foreground-1 8s infinite",
         "gradient-background-2": "gradient-background-2 8s infinite",

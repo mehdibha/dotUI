@@ -3,9 +3,10 @@ import NavLink from "next/link";
 import { Code } from "bright";
 import { CodeTabs } from "@/components/code-highlighter/code-tabs";
 import { preWrapper } from "@/components/code-highlighter/pre-wrapper-extension";
-import { ComponentPreview } from "@/components/component-preview";
-import { IconsExplorer } from "@/components/icons-explorer";
 import { cn } from "@/utils/classes";
+import { ComponentPreview } from "./component-preview";
+import { ComponentSource } from "./component-source";
+import { IconsExplorer } from "./icons-explorer";
 
 export const Link = ({
   className,
@@ -127,9 +128,6 @@ export const components = {
   code: (props: ComponentProps<"code">) => (
     <code className="rounded border bg-muted px-1 py-0.5" {...props} />
   ),
-  ComponentPreview,
-  IconsExplorer,
-  CodeTabs,
   Step: ({ className, ...props }: React.ComponentProps<"h3">) => (
     <h3
       className={cn(
@@ -141,7 +139,7 @@ export const components = {
   ),
   Steps: ({ ...props }) => (
     <div
-      className="[&>h3]:step steps mb-12 ml-4 border-l pl-8 [counter-reset:step]"
+      className="[&>h3]:step mb-12 ml-4 border-l pl-8 [counter-reset:step]"
       {...props}
     />
   ),
@@ -174,4 +172,10 @@ export const components = {
       {...props}
     />
   ),
+  ComponentSource: ({ name, ...rest }: { name: string }) => (
+    <ComponentSource name={name} className="my-2" {...rest} />
+  ),
+  ComponentPreview,
+  IconsExplorer,
+  CodeTabs,
 };

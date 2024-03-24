@@ -2,7 +2,7 @@ import React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowRightIcon, ChevronRightIcon, SearchIcon } from "lucide-react";
+import { ChevronRightIcon, SearchIcon } from "lucide-react";
 import { Mdx } from "@/components/mdx/mdx-remote";
 import { TableOfContents } from "@/components/toc";
 import { Badge } from "@/components/ui/badge";
@@ -14,6 +14,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
@@ -70,8 +71,8 @@ export default async function Page({ params }: PageProps) {
                     <BreadcrumbPage>{breadcrumb.label}</BreadcrumbPage>
                   ) : (
                     <BreadcrumbItem>
-                      <BreadcrumbLink href={breadcrumb.href}>
-                        {breadcrumb.label}
+                      <BreadcrumbLink asChild>
+                        <Link href={breadcrumb.href}>{breadcrumb.label}</Link>
                       </BreadcrumbLink>
                     </BreadcrumbItem>
                   )}
@@ -88,26 +89,12 @@ export default async function Page({ params }: PageProps) {
         <h1 className="mt-2 text-4xl font-bold">{metadata.title}</h1>
         <p className="mt-2 text-muted-foreground">{metadata.description}</p>
         {categories && categories.length > 0 && (
-          <div className="mt-6">
-            <div className="flex gap-4">
-              {categories.map((category, index) => (
-                <Link
-                  key={index}
-                  href={category.href}
-                  className="focus-ring flex cursor-pointer items-center justify-center rounded bg-secondary px-4 py-1 duration-150 hover:bg-secondary/50"
-                >
-                  <p>{category.label}</p>
-                </Link>
-              ))}
-            </div>
-            {categories.length > 7 && (
-              <div className="flex justify-end">
-                <Link href="#" className="inline-flex items-center hover:underline">
-                  <ArrowRightIcon size={18} className="mr-2" />
-                  See all categories
-                </Link>
-              </div>
-            )}
+          <div className="mt-6 flex flex-wrap gap-4">
+            {categories.map((category, index) => (
+              <Button key={index} size="sm" variant="secondary" asChild>
+                <Link href={category.href}>{category.label}</Link>
+              </Button>
+            ))}
           </div>
         )}
         <div className="mt-10 text-sm md:text-base">
@@ -152,19 +139,10 @@ const DataGrid = ({ type, items }: { type: string; items: Item[] }) => {
             key={index}
             href={item.metadata.externalLink ?? item.href}
             target={item.metadata.externalLink ? "_blank" : undefined}
-            className="group flex cursor-pointer flex-col rounded-md border border-border/20 bg-card/70 p-2 transition-colors duration-150 hover:border-border hover:bg-card"
+            className="group flex cursor-pointer flex-col rounded-md border border-border/20 bg-card/70 transition-colors duration-150 hover:border-border hover:bg-card"
           >
             {type !== "hooks" && (
-              <ScrollArea
-                className={cn(
-                  "flex items-center justify-center rounded-sm border border-border/20 bg-background duration-150 group-hover:border-border/50",
-                  {
-                    "aspect-video": type === "components",
-                    "aspect-[9/11]": type === "templates" || type === "pages",
-                    "aspect-square": type === "icons",
-                  }
-                )}
-              >
+              <div className="flex items-center justify-center rounded-sm border border-border/20 bg-background duration-150 group-hover:border-border/50">
                 {item.metadata.video ? (
                   <video
                     src={item.metadata.video}
@@ -174,22 +152,24 @@ const DataGrid = ({ type, items }: { type: string; items: Item[] }) => {
                     className="opacity-90 duration-150 group-hover:opacity-100"
                   />
                 ) : item.metadata.thumbnail ? (
-                  <img
-                    src={item.metadata.thumbnail}
-                    alt={item.metadata.title}
-                    className="opacity-90 duration-150 group-hover:opacity-100"
-                  />
+                  <ScrollArea
+                    className={cn({
+                      "aspect-video": type === "components",
+                      "aspect-[9/11]": type === "templates" || type === "pages",
+                    })}
+                  >
+                    <img
+                      src={item.metadata.thumbnail}
+                      alt={item.metadata.title}
+                      className="opacity-90 duration-150 group-hover:opacity-100"
+                    />
+                  </ScrollArea>
                 ) : (
                   <p className="text-muted-foreground">No thumbnail</p>
                 )}
-              </ScrollArea>
+              </div>
             )}
-            <div
-              className={cn("flex flex-1 flex-col px-2 pb-1 pt-3", {
-                "pt-1": type === "hooks",
-                "pb-3": !item.metadata.keywords,
-              })}
-            >
+            <div className={cn("flex flex-1 flex-col p-4", {})}>
               <div className="flex-1">
                 <p className="text-lg font-semibold">{item.metadata.title}</p>
                 {item.metadata.description && (
