@@ -92,7 +92,7 @@ const Category = ({ title, slug, items, pathname }: CategoryProps) => {
                           <span className="block transition-transform duration-100 group-hover:translate-x-0.5">
                             {subItem.title}
                             {subItem.label && (
-                              <span className="ml-2 rounded-md bg-gradient px-1.5 py-0.5 text-xs leading-none text-black ">
+                              <span className="ml-2 rounded-md bg-gradient px-1.5 py-0.5 text-xs leading-none text-black">
                                 {subItem.label}
                               </span>
                             )}
@@ -110,86 +110,3 @@ const Category = ({ title, slug, items, pathname }: CategoryProps) => {
     </Collapsible>
   );
 };
-
-// interface DocsSidebarNavItemsProps {
-//   items: SidebarNavItem[];
-//   pathname: string | null;
-// }
-
-// export function DocsSidebarNavItems({ items, pathname }: DocsSidebarNavItemsProps) {
-//   return ? (
-//     <div className="mt-1.5 grid grid-flow-row auto-rows-max space-y-0.5 text-sm">
-//       {items.map((item, index) => (
-//         <React.Fragment key={index}>
-//           <Item key={index} item={item} pathname={pathname} className="ml-6" />
-//           <div className="overflow-hidden">
-//             {item.items &&
-//               item.items.length > 0 &&
-//               item.href &&
-//               item.items.map((subItem, subItemIndex) => (
-//                 <Item
-//                   key={subItemIndex}
-//                   item={{ ...subItem }}
-//                   pathname={pathname}
-//                   className="ml-8"
-//                 />
-//               ))}
-//           </div>
-//         </React.Fragment>
-//       ))}
-//     </div>
-//   ) : null;
-// }
-
-// const Item = ({
-//   item,
-//   pathname,
-//   className,
-// }: {
-//   item: SidebarNavItem;
-//   pathname: string | null;
-//   className?: string;
-// }) => {
-//   return (
-//     <React.Fragment>
-//       {item.href && !item.disabled ? (
-//         <Link
-//           href={item.href}
-//           className={cn(
-//             "group flex w-full items-center rounded-md border border-transparent hover:text-foreground",
-//             item.disabled && "cursor-not-allowed opacity-60",
-//             pathname === item.href
-//               ? "font-medium text-foreground"
-//               : "text-muted-foreground",
-//             item.items && item.items.length > 0 && "font-semibold text-foreground",
-//             className
-//           )}
-//           target={item.external ? "_blank" : ""}
-//           rel={item.external ? "noreferrer" : ""}
-//         >
-//           {item.title}
-//           {item.label && (
-//             <span className="ml-2 rounded-md bg-[#adfa1d] px-1.5 py-0.5 text-xs leading-none text-[#000000] no-underline group-hover:no-underline">
-//               {item.label}
-//             </span>
-//           )}
-//         </Link>
-//       ) : (
-//         <span
-//           className={cn(
-//             "flex w-full cursor-not-allowed items-center rounded-md text-muted-foreground hover:underline",
-//             item.disabled && "cursor-not-allowed opacity-60",
-//             className
-//           )}
-//         >
-//           {item.title}
-//           {item.label && (
-//             <span className="ml-2 rounded-md bg-muted px-1.5 py-0.5 text-xs leading-none text-muted-foreground no-underline group-hover:no-underline">
-//               {item.label}
-//             </span>
-//           )}
-//         </span>
-//       )}
-//     </React.Fragment>
-//   );
-// };

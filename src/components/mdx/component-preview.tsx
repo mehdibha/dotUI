@@ -51,19 +51,18 @@ export const ComponentPreview = ({
         </TabsList>
         <TabsContent value="preview" className="rounded-md border">
           <ScrollArea
-            className={cn({ "h-[350px]": aspect === "default" })}
-            // viewportProps={{ className: cn({ "max-h-[800px]": aspect === "page" }) }}
+            viewportProps={{
+              className: cn({ "min-h-[350px] max-h-[800px]": aspect === "default" }),
+            }}
           >
             <div
-              className={cn(
-                "min-h-[350px] w-full bg-card/50",
-                {
-                  "flex items-center justify-center px-8 py-20": centered,
-                },
-                className
-              )}
+              className={cn("min-h-[350px] w-full bg-card/50", {
+                "flex items-center justify-center px-8 py-20": centered,
+              })}
             >
-              {preview}
+              <div className={cn("flex w-full items-center justify-center", className)}>
+                {preview}
+              </div>
             </div>
           </ScrollArea>
         </TabsContent>

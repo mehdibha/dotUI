@@ -74,8 +74,8 @@ export function Content(brightProps: BrightProps) {
 
   return (
     <>
-      {propsList.map((props) => (
-        <TabsContent key={props.title} value={props.title!} className="relative">
+      {propsList.map((props, index) => (
+        <TabsContent key={index} value={props.title!} className="relative">
           <CopyButton
             code={getCode(props.title!)}
             className="absolute right-4 top-2 z-50"
