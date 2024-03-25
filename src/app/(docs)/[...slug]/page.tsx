@@ -130,7 +130,7 @@ const DataGrid = ({ type, items }: { type: string; items: Item[] }) => {
       <div
         className={cn("mt-4 grid gap-4", {
           "grid-cols-3": type === "components" || type === "hooks",
-          "grid-cols-4": type === "templates" || type === "pages",
+          "grid-cols-4": type === "templates" || type === "blocks",
           "grid-cols-8": type === "icons",
         })}
       >
@@ -155,7 +155,7 @@ const DataGrid = ({ type, items }: { type: string; items: Item[] }) => {
                   <ScrollArea
                     className={cn({
                       "aspect-video": type === "components",
-                      "aspect-[9/11]": type === "templates" || type === "pages",
+                      "aspect-[9/11]": type === "templates" || type === "blocks",
                     })}
                   >
                     <img

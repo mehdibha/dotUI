@@ -41,7 +41,7 @@ export const Animation = () => {
       <LayoutGroup>
         {selectedTab === 0 && (
           <motion.div key={0} {...animationProps} className="h-96 w-[300px]">
-            <h2 className="text-3xl font-bold">Components.</h2>
+            <h2 className="text-3xl font-bold">components.</h2>
             <div className="mt-4 grid grid-cols-3 gap-4">
               {Array.from({ length: 9 }).map((_, i) => (
                 <div key={i} className="h-16 rounded-md bg-card shadow"></div>
@@ -66,7 +66,7 @@ export const Animation = () => {
         )}
         {selectedTab === 2 && (
           <motion.div key={2} {...animationProps} className="h-96 w-[300px]">
-            <h2 className="text-3xl font-bold">Icons.</h2>
+            <h2 className="text-3xl font-bold">icons.</h2>
             <div className="mt-4 grid grid-cols-4 gap-4">
               {[
                 CodeIcon,
