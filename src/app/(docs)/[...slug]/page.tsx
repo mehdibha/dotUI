@@ -161,7 +161,7 @@ const DataGrid = ({ type, items }: { type: string; items: Item[] }) => {
                     <img
                       src={item.metadata.thumbnail}
                       alt={item.metadata.title}
-                      className="opacity-90 duration-150 group-hover:opacity-100"
+                      className="aspect-video w-full object-cover opacity-90 duration-150 group-hover:opacity-100"
                     />
                   </ScrollArea>
                 ) : (

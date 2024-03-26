@@ -120,7 +120,7 @@
   "lint-staged": {
     "**/*.{js,ts,jsx,tsx}": [
       "prettier --write",
-      "next lint --fix"
+      "eslint --fix"
     ],
     "*.json": [
       "prettier --write"
