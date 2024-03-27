@@ -10,7 +10,10 @@ export type Item = { href: string; type: Type; metadata: DocFrontmatter };
 interface DocFrontmatter {
   title: string;
   description?: string;
-  thumbnail?: string;
+  thumbnail?: {
+    image: string;
+    video?: string;
+  };
   video?: string;
   keywords?: string[];
   externalLink?: string;
