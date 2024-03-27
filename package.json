@@ -72,6 +72,7 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.49.3",
     "react-resizable-panels": "^2.0.3",
+    "react-virtuoso": "^4.7.5",
     "react-wrap-balancer": "^1.1.0",
     "recharts": "^2.12.3",
     "remark": "^15.0.1",
