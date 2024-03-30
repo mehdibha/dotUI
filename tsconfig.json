@@ -30,6 +30,7 @@
     "src/hooks/use-mounted.ts",
     "content/components/core/alert.mdx",
     "content/components/core/accordion.mdx",
+    "content/components/utils/client-only.mdx",
   ],
   "exclude": ["node_modules"],
 }

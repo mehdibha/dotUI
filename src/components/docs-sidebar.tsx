@@ -41,6 +41,10 @@ interface CategoryProps extends TCategory {
 const Category = ({ title, slug, items, pathname }: CategoryProps) => {
   const [open, setOpen] = React.useState(pathname.startsWith(`/${slug}`));
 
+  React.useEffect(() => {
+    setOpen(pathname.startsWith(`/${slug}`));
+  }, [pathname, slug]);
+
   return (
     <Collapsible open={open} onOpenChange={setOpen}>
       <CollapsibleTrigger className="flex items-center space-x-2 [&[data-state=open]>svg]:rotate-90">

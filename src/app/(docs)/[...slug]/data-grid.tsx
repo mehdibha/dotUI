@@ -24,7 +24,10 @@ export const DataGrid = ({
   return (
     <div className={className}>
       <div className="relative">
-        <Input className="full-w pl-12" placeholder={`Search ${items.length} ${type}`} />
+        <Input
+          className="full-w max-w-sm pl-12"
+          placeholder={`Search ${items.length} ${type}...`}
+        />
         <SearchIcon
           size={18}
           className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 transform text-muted-foreground"
@@ -44,11 +47,13 @@ export const DataGrid = ({
             target={item.metadata.externalLink ? "_blank" : undefined}
             className="group flex cursor-pointer flex-col overflow-hidden rounded-md border border-border/20 bg-card/70 transition-colors duration-150 hover:border-border hover:bg-card"
           >
-            <Thumbnail
-              thumbnail={item.metadata.thumbnail}
-              title={item.metadata.title}
-              aspect="component"
-            />
+            {type !== "hooks" && (
+              <Thumbnail
+                thumbnail={item.metadata.thumbnail}
+                title={item.metadata.title}
+                aspect="component"
+              />
+            )}
             <div className={cn("flex flex-1 flex-col p-4", {})}>
               <div className="flex-1">
                 <p className="text-lg font-semibold">{item.metadata.title}</p>

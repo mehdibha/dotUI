@@ -67,7 +67,26 @@ const docsConfig: DocsConfig = {
           title: "All hooks",
           href: "/hooks",
         },
-        ...getCategoryItems("hooks"),
+        {
+          title: "Browser",
+          items: getCategoryItems("hooks/browser"),
+        },
+        {
+          title: "Elements",
+          items: getCategoryItems("hooks/elements"),
+        },
+        {
+          title: "Sensors",
+          items: getCategoryItems("hooks/sensors"),
+        },
+        {
+          title: "State",
+          items: getCategoryItems("hooks/state"),
+        },
+        {
+          title: "Utilities",
+          items: getCategoryItems("hooks/utils"),
+        },
       ],
     },
     {

@@ -96,7 +96,9 @@ export default async function Page({ params }: PageProps) {
         )}
         <div className="mt-10 text-sm md:text-base">
           <Mdx source={rawContent} />
-          {items && items.length > 0 && <DataGrid items={items} type={metadata.type} />}
+          {items && items.length > 0 && (
+            <DataGrid items={items} type={metadata.type} className="mt-8" />
+          )}
         </div>
       </div>
       {doc.toc.items && ( // doc.toc

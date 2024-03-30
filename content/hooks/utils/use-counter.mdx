@@ -1,0 +1,46 @@
+---
+title: useCounter
+description: Manage a counter value with minimum and maximum limits with useCounter.
+---
+
+<ComponentPreview name="demos/hooks/use-counter" />
+
+## Installation
+
+<Steps>
+  <Step>Copy and paste the following code into your project.</Step>
+  <ComponentSource name="hooks/use-counter" />
+  <Step>Update the import paths to match your project setup.</Step>
+</Steps>
+
+## Parameters
+
+| Name            | Type     | Description                                      |
+| --------------- | -------- | ------------------------------------------------ |
+| `startingValue` | `number` | The initial value for the counter. Default is 0. |
+| `options`       | `object` | Additional options for the counter.              |
+
+The `options` object has the following properties:
+
+| Name          | Type     | Description                                |
+| ------------- | -------- | ------------------------------------------ |
+| `options.min` | `number` | The minimum value allowed for the counter. |
+| `options.max` | `number` | The maximum value allowed for the counter. |
+
+## Return values
+
+The `useCounter` hook returns an array with two elements:
+
+| Name            | Type       | Params                | Description                                          |
+| --------------- | ---------- | --------------------- | ---------------------------------------------------- |
+| `[0]`           | `number`   |                       | The current value of the counter.                    |
+| `[1].increment` | `function` |                       | Increments the counter by 1.                         |
+| `[1].decrement` | `function` |                       | Decrements the counter by 1.                         |
+| `[1].set`       | `function` | `nextCount`: `number` | Sets the counter to the specified `nextCount` value. |
+| `[1].reset`     | `function` |                       | Resets the counter to the initial startingValue.     |
+
+## Usage
+
+```tsx
+const [count, { increment, decrement, set, reset }] = useCounter(0, { min: 0, max: 10 });
+```

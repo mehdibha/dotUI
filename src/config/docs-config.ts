@@ -95,8 +95,43 @@ export const docsConfig: DocsConfig = {
       slug: "hooks",
       items: [
         { title: "All hooks", href: "/hooks" },
-        { title: "useBattery", href: "/hooks/use-battery" },
-        { title: "useDebounce", href: "/hooks/use-debounce" },
+        {
+          title: "Browser",
+          items: [{ title: "useMediaQuery", href: "/hooks/browser/use-media-query" }],
+        },
+        {
+          title: "Elements",
+          items: [
+            { title: "useInView", href: "/hooks/elements/use-in-view" },
+            {
+              title: "useIntersectionObserver",
+              href: "/hooks/elements/use-intersection-observer",
+            },
+            { title: "useWindowSize", href: "/hooks/elements/use-window-size" },
+          ],
+        },
+        {
+          title: "Sensors",
+          items: [
+            { title: "useBattery", href: "/hooks/sensors/use-battery" },
+            { title: "useMouse", href: "/hooks/sensors/use-mouse" },
+            { title: "useOrientation", href: "/hooks/sensors/use-orientation" },
+          ],
+        },
+        {
+          title: "State",
+          items: [{ title: "useLocalStorage", href: "/hooks/state/use-local-storage" }],
+        },
+        {
+          title: "Utilities",
+          items: [
+            { title: "useCounter", href: "/hooks/utils/use-counter" },
+            { title: "useDebounce", href: "/hooks/utils/use-debounce" },
+            { title: "useIsClient", href: "/hooks/utils/use-is-client" },
+            { title: "useMounted", href: "/hooks/utils/use-mounted" },
+            { title: "usePrevious", href: "/hooks/utils/use-previous" },
+          ],
+        },
       ],
     },
     { title: "Icons", slug: "icons", items: [{ title: "All icons", href: "/icons" }] },

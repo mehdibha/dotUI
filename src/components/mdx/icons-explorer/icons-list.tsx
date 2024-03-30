@@ -3,12 +3,12 @@
 import React from "react";
 import { useWindowVirtualizer } from "@tanstack/react-virtual";
 import { SearchIcon } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/utils/classes";
 import { createIcon, createIconComponentString } from "@/utils/icon";
 import { useDebounce } from "@/lib/hooks/use-debounce";
 import type { IconNode, Library } from "@/types/icons";
-import { Input } from "../../ui/input";
-import { Skeleton } from "../../ui/skeleton";
 import { IconWrapper } from "./icon-wrapper";
 
 // TODO: Add copy code (make an util function)
