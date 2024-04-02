@@ -57,7 +57,7 @@ export const ComponentPreview = ({
           >
             <div
               className={cn("min-h-[350px] w-full bg-card/50", {
-                "flex items-center justify-center px-8 py-20": centered,
+                "flex items-center justify-center px-8 py-8": centered,
               })}
             >
               <div className={cn("flex w-full items-center justify-center", className)}>

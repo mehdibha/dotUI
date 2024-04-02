@@ -3,9 +3,10 @@
 import * as React from "react";
 import { Button } from "@/lib/components/core/default/button";
 import { Textarea } from "@/lib/components/core/default/textarea";
+import { ClientOnly } from "@/lib/components/utils/client-only";
 import { useLocalStorage } from "@/lib/hooks/use-local-storage";
 
-export default function Demo() {
+function Demo() {
   const [writing, saveWriting] = useLocalStorage<string | null>("writing", null);
   const [input, setInput] = React.useState(writing ?? "");
 
@@ -41,5 +42,13 @@ export default function Demo() {
         </Button>
       </div>
     </div>
+  );
+}
+
+export default function ClientOnlyDemo() {
+  return (
+    <ClientOnly>
+      <Demo />
+    </ClientOnly>
   );
 }

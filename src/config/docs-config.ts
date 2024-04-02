@@ -128,6 +128,7 @@ export const docsConfig: DocsConfig = {
             { title: "useCounter", href: "/hooks/utils/use-counter" },
             { title: "useDebounce", href: "/hooks/utils/use-debounce" },
             { title: "useIsClient", href: "/hooks/utils/use-is-client" },
+            { title: "useList", href: "/hooks/utils/use-list" },
             { title: "useMounted", href: "/hooks/utils/use-mounted" },
             { title: "usePrevious", href: "/hooks/utils/use-previous" },
           ],
