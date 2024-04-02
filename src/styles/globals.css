@@ -87,6 +87,18 @@
     @apply absolute left-0 top-3 h-2 w-[1px] bg-muted content-[''];
   }
 
+  .category-xl {
+    position: relative;
+  }
+
+  .category-xl:before {
+    @apply absolute left-0 top-0 -ml-[7px] mt-[7px] h-4 w-4 rounded-full bg-muted content-[''];
+  }
+
+  .category-xl:after {
+    @apply absolute left-0 top-3 h-4 w-[1px] bg-muted content-[''];
+  }
+
   @media (max-width: 640px) {
     .container {
       @apply px-4;

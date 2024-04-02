@@ -1,5 +1,3 @@
-import { FacebookIcon, GithubIcon, MailIcon } from "lucide-react";
-
 export const siteConfig = {
   global: {
     url: "https://rCopy.com",
@@ -20,11 +18,10 @@ export const siteConfig = {
     twitter: {
       creator: "@mehdibha_",
     },
-    externalLinks: [
-      { icon: FacebookIcon, url: "https://www.facebook.com/groups/160143328137207" },
-      { icon: MailIcon, url: "mailto:hello@mehdibha.com" },
-      { icon: GithubIcon, url: "https://github.com/mehdibha/vapi.tn" },
-    ],
+  },
+  links: {
+    github: "https://github.com/mehdibha/rcopy",
+    twitter: "https://twitter.com/mehdibha_",
   },
   header: {
     nav: {

@@ -4,9 +4,9 @@ import { Code } from "bright";
 import { CodeTabs } from "@/components/code-highlighter/code-tabs";
 import { preWrapper } from "@/components/code-highlighter/pre-wrapper-extension";
 import { cn } from "@/utils/classes";
-import { ComponentPreview } from "./component-preview";
-import { ComponentSource } from "./component-source";
-import { IconsExplorer } from "./icons-explorer";
+import { IconsExplorer } from ".";
+import { ComponentPreview } from "../component-preview";
+import { ComponentSource } from "../component-source";
 
 export const Link = ({
   className,

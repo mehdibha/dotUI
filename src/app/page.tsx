@@ -1,14 +1,14 @@
 import { Brands } from "@/components/marketing/brands";
 import { CallToAction } from "@/components/marketing/cta";
-import { Features } from "@/components/marketing/features";
+import { Explore } from "@/components/marketing/explore";
 import { Hero } from "@/components/marketing/hero";
 
 export default function HomePage() {
   return (
-    <main className="container pb-36 pt-24">
+    <main className="container pb-36 pt-16">
       <Hero />
       <Brands className="mt-24" />
-      <Features className="mt-32" />
+      <Explore className="mx-auto mt-24 max-w-6xl" />
       <CallToAction className="mt-40" />
     </main>
   );

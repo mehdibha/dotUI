@@ -5,8 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, useAnimate } from "framer-motion";
-import { MenuIcon, SearchIcon } from "lucide-react";
-import { SearchDialog } from "@/components/search-command";
+import { MenuIcon } from "lucide-react";
+import { GitHubIcon, TwitterIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useScroll } from "@/hooks/use-scroll";
@@ -17,23 +17,13 @@ const config = siteConfig.header;
 
 export const Header = () => {
   const { scrolled } = useScroll();
-  const [searchOpen, setSearchOpen] = React.useState(false);
   const [refLogo, animate] = useAnimate();
-  const [refCTA] = useAnimate();
 
   React.useEffect(() => {
     void animate(
       refLogo.current,
       {
         x: scrolled ? -35 : -100,
-        opacity: scrolled ? 1 : 0,
-      },
-      { duration: 0.3 }
-    );
-    void animate(
-      refCTA.current,
-      {
-        x: scrolled ? 120 : 180,
         opacity: scrolled ? 1 : 0,
       },
       { duration: 0.3 }
@@ -81,7 +71,7 @@ export const Header = () => {
             <div
               suppressHydrationWarning
               className={cn("relative transition-all duration-300", {
-                "ml-[38px] mr-[120px]": scrolled,
+                "ml-[38px]": scrolled,
               })}
             >
               <motion.div
@@ -100,22 +90,6 @@ export const Header = () => {
                 </Link>
               </motion.div>
               <Nav items={config.nav.links} />
-              <motion.div
-                ref={refCTA}
-                className="absolute right-0"
-                initial={{ x: 0, y: -28, opacity: 0 }}
-              >
-                <Button
-                  size="sm"
-                  variant="secondary"
-                  onClick={() => {
-                    setSearchOpen(true);
-                  }}
-                >
-                  <SearchIcon size={18} className="mr-2" />
-                  <span>Search</span>
-                </Button>
-              </motion.div>
             </div>
           </div>
         </div>
@@ -129,21 +103,20 @@ export const Header = () => {
           )}
         >
           <div className="flex items-center space-x-2">
-            <Button
-              size="sm"
-              variant="secondary"
-              onClick={() => {
-                setSearchOpen(true);
-              }}
-            >
-              <SearchIcon size={18} className="mr-2" />
-              <span>Search</span>
+            <Button asChild size="icon" variant="ghost" className="h-8 w-8">
+              <Link href={siteConfig.links.github} target="_blank">
+                <GitHubIcon size={18} />
+              </Link>
+            </Button>
+            <Button asChild size="icon" variant="ghost" className="h-8 w-8">
+              <Link href={siteConfig.links.twitter} target="_blank">
+                <TwitterIcon size={18} />
+              </Link>
             </Button>
           </div>
         </div>
         <MobileNav />
       </div>
-      <SearchDialog open={searchOpen} onOpenChange={setSearchOpen} />
     </header>
   );
 };

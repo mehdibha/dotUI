@@ -1,7 +1,8 @@
 import React from "react";
 import Link from "next/link";
-import { ArrowRightIcon, SearchIcon, SparklesIcon } from "lucide-react";
+import { ArrowRightIcon, SparklesIcon } from "lucide-react";
 import Balancer from "react-wrap-balancer";
+import { SearchCommand } from "@/components/search-command";
 import { badgeVariants } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/utils/classes";
@@ -12,7 +13,7 @@ export const Hero = ({ className }: { className?: string }) => {
     <section
       className={cn("mx-auto flex max-w-7xl items-start justify-between", className)}
     >
-      <div>
+      <div className="pt-4">
         <Link
           href="https://github.com/mehdibha/rcopy"
           target="_blank"
@@ -25,19 +26,19 @@ export const Hero = ({ className }: { className?: string }) => {
           <span>Star us on GitHub</span> <ArrowRightIcon size={15} />
         </Link>
         <h1 className="mt-4 font-display text-4xl font-bold leading-tight tracking-tight md:text-5xl lg:text-6xl">
-          <Balancer>Everything you need to build your React app</Balancer>
+          <Balancer>
+            Everything you need to build your{" "}
+            <span className="bg-gradient bg-clip-text text-transparent">React app</span>{" "}
+          </Balancer>
         </h1>
         <h2 className="text-md mt-6 text-muted-foreground md:text-lg lg:text-xl">
           Copy the code, paste it, customize it, own it. Done.
         </h2>
         <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-          <Button size="lg" variant="default">
-            Explore components
+          <Button size="lg" variant="default" asChild>
+            <Link href="/getting-started/introduction">Read the docs</Link>
           </Button>
-          <Button size="lg" variant="outline">
-            <SearchIcon size={20} className="mr-2" />
-            Quick search
-          </Button>
+          <SearchCommand className="w-auto" size="lg" />
         </div>
       </div>
       <div className="hidden px-10 lg:block xl:px-20">

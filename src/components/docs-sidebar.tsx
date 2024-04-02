@@ -20,7 +20,7 @@ export function DocsSidebar({ items }: DocsSidebarProps) {
   const pathname = usePathname();
 
   return items.length > 0 ? (
-    <div className="w-full space-y-4 pb-10 pt-6 text-sm">
+    <div className="w-full space-y-4 pb-10 pr-4 pt-4 text-sm">
       {items.map((item, index) => (
         <Category
           key={index}
