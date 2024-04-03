@@ -1,6 +1,6 @@
-import { DocsSidebar } from "@/components/docs-sidebar";
-import { SearchCommand } from "@/components/search-command";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { DocsSidebar } from "@/components/docs/docs-sidebar";
+import { SearchDocs } from "@/components/docs/search-docs";
+import { ScrollArea } from "@/lib/components/core/default/scroll-area";
 import { docsConfig } from "@/config/docs-config";
 
 interface DocsLayoutProps {
@@ -12,9 +12,9 @@ export default function DocsLayout({ children }: DocsLayoutProps) {
     <div className="border-b">
       <div className="container items-start md:grid md:grid-cols-[220px_minmax(0,1fr)] md:gap-6 ">
         <aside className="z-30 hidden pt-6 md:sticky md:top-0 md:block">
-          <SearchCommand />
+          <SearchDocs />
           <ScrollArea className="mt-1 h-screen pb-8 pr-2">
-            <DocsSidebar items={docsConfig.sidebarNav} />
+            <DocsSidebar items={docsConfig.nav} />
           </ScrollArea>
         </aside>
         {children}

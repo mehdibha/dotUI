@@ -1,11 +1,11 @@
 import fs from "fs";
 import path from "path";
 import { rimraf } from "rimraf";
-import { getAllCategoryDocs } from "@/utils/docs";
 import type { DocsConfig } from "@/types/docs";
+import { getDocs } from "@/server/docs";
 
 const getCategoryItems = (category: string) => {
-  return getAllCategoryDocs(category).map((category) => ({
+  return getDocs(category).map((category) => ({
     title: category.title,
     href: category.href,
     label: category.label,
@@ -13,23 +13,64 @@ const getCategoryItems = (category: string) => {
 };
 
 const docsConfig: DocsConfig = {
-  sidebarNav: [
+  nav: [
     {
       title: "Getting Started",
-      slug: "getting-started",
-      items: getCategoryItems("getting-started"),
+      slug: "docs",
+      items: [
+        {
+          title: "Introduction",
+          href: "/docs",
+        },
+        {
+          title: "Installation",
+          href: "/docs/installation",
+        },
+        {
+          title: "Theming",
+          href: "/docs/theming",
+        },
+        {
+          title: "Changelog",
+          href: "/docs/changelog",
+        },
+      ],
     },
     {
       title: "Components",
       slug: "components",
       items: [
         {
-          title: "All components",
+          title: "Overview",
           href: "/components",
         },
         {
-          title: "Core",
-          items: getCategoryItems("components/core"),
+          title: "Inputs",
+          items: getCategoryItems("components/inputs"),
+        },
+        {
+          title: "Feedback",
+          items: getCategoryItems("components/feedback"),
+        },
+        {
+          title: "Layout",
+          items: getCategoryItems("components/layout"),
+        },
+        {
+          title: "Data display",
+          items: getCategoryItems("components/data-display"),
+        },
+        {
+          title: "Navigation",
+          items: getCategoryItems("components/navigation"),
+        },
+        {
+          title: "Overlay",
+          items: getCategoryItems("components/overlay"),
+        },
+        {
+          title: "Utils",
+          items: getCategoryItems("components/utils"),
         },
         {
           title: "Animations",

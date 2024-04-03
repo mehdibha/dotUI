@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { cn } from "@/utils/classes";
+import { cn } from "@/lib/utils/classes";
 import { siteConfig } from "@/config";
 import { GitHubIcon } from "../icons";
 

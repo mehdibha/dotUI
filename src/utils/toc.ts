@@ -12,6 +12,7 @@
 import { toc } from "mdast-util-toc";
 import { remark } from "remark";
 import { visit } from "unist-util-visit";
+import type { TableOfContents } from "@/types/toc";
 
 const textTypes = ["text", "emphasis", "strong", "inlineCode"];
 
@@ -24,17 +25,7 @@ function flattenNode(node) {
   return p.join(``);
 }
 
-interface Item {
-  title: string;
-  url: string;
-  items?: Item[];
-}
-
-interface Items {
-  items?: Item[];
-}
-
-function getItems(node, current): Items {
+function getItems(node, current): TableOfContents {
   if (!node) {
     return {};
   }
@@ -77,8 +68,6 @@ const getToc = () => (node, file) => {
 
   file.data = items;
 };
-
-export type TableOfContents = Items;
 
 export async function getTableOfContents(content: string): Promise<TableOfContents> {
   const result = await remark().use(getToc).process(content);

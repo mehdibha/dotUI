@@ -12,19 +12,19 @@ export const previews = {
       },
       {
         title: "cta.tsx",
-        code: 'import React from "react";\r\nimport Link from "next/link";\r\nimport { Button } from "@/components/ui/button";\r\nimport { cn } from "@/utils/classes";\r\n\r\ninterface CallToActionProps {\r\n  headline: string;\r\n  subheadline: string;\r\n  cta: {\r\n    label: string;\r\n    href: string;\r\n  };\r\n  className?: string;\r\n}\r\n\r\nexport const CallToAction = (props: CallToActionProps) => {\r\n  const { headline, subheadline, cta, className } = props;\r\n  return (\r\n    <section className={cn("mx-auto max-w-xl text-center", className)}>\r\n      <h2 className="font-display text-4xl font-semibold tracking-tighter sm:text-5xl">\r\n        {headline}\r\n      </h2>\r\n      <p className="mt-4 text-muted-foreground">{subheadline}</p>\r\n      <Button asChild size="lg" className="mt-8">\r\n        <Link href={cta.href}>{cta.label}</Link>\r\n      </Button>\r\n    </section>\r\n  );\r\n};\r\n',
+        code: 'import React from "react";\r\nimport Link from "next/link";\r\nimport { Button } from "@/lib/components/core/default/button";\r\nimport { cn } from "@/lib/utils/classes";\r\n\r\ninterface CallToActionProps {\r\n  headline: string;\r\n  subheadline: string;\r\n  cta: {\r\n    label: string;\r\n    href: string;\r\n  };\r\n  className?: string;\r\n}\r\n\r\nexport const CallToAction = (props: CallToActionProps) => {\r\n  const { headline, subheadline, cta, className } = props;\r\n  return (\r\n    <section className={cn("mx-auto max-w-xl text-center", className)}>\r\n      <h2 className="font-display text-4xl font-semibold tracking-tighter sm:text-5xl">\r\n        {headline}\r\n      </h2>\r\n      <p className="mt-4 text-muted-foreground">{subheadline}</p>\r\n      <Button asChild size="lg" className="mt-8">\r\n        <Link href={cta.href}>{cta.label}</Link>\r\n      </Button>\r\n    </section>\r\n  );\r\n};\r\n',
       },
       {
         title: "faq.tsx",
-        code: 'import React from "react";\r\nimport {\r\n  Accordion,\r\n  AccordionContent,\r\n  AccordionItem,\r\n  AccordionTrigger,\r\n} from "@/components/ui/accordion";\r\n\r\ninterface FAQProps {\r\n  questions: { question: string; answer: string }[];\r\n  className?: string;\r\n}\r\n\r\nexport const FAQ = (props: FAQProps) => {\r\n  const { questions, className } = props;\r\n\r\n  return (\r\n    <section className={className}>\r\n      <h2 className="text-center text-3xl font-semibold tracking-tight sm:text-4xl">\r\n        Frequently asked questions\r\n      </h2>\r\n      <div className="container mt-8 max-w-3xl">\r\n        <Accordion type="single" collapsible className="w-full">\r\n          {questions.map((elem, index) => (\r\n            <AccordionItem key={index} value={index.toString()}>\r\n              <AccordionTrigger className="text-lg font-semibold">\r\n                {elem.question}\r\n              </AccordionTrigger>\r\n              <AccordionContent className="text-md pb-8">{elem.answer}</AccordionContent>\r\n            </AccordionItem>\r\n          ))}\r\n        </Accordion>\r\n      </div>\r\n    </section>\r\n  );\r\n};\r\n',
+        code: 'import React from "react";\r\nimport {\r\n  Accordion,\r\n  AccordionContent,\r\n  AccordionItem,\r\n  AccordionTrigger,\r\n} from "@/lib/components/core/default/accordion";\r\n\r\ninterface FAQProps {\r\n  questions: { question: string; answer: string }[];\r\n  className?: string;\r\n}\r\n\r\nexport const FAQ = (props: FAQProps) => {\r\n  const { questions, className } = props;\r\n\r\n  return (\r\n    <section className={className}>\r\n      <h2 className="text-center text-3xl font-semibold tracking-tight sm:text-4xl">\r\n        Frequently asked questions\r\n      </h2>\r\n      <div className="container mt-8 max-w-3xl">\r\n        <Accordion type="single" collapsible className="w-full">\r\n          {questions.map((elem, index) => (\r\n            <AccordionItem key={index} value={index.toString()}>\r\n              <AccordionTrigger className="text-lg font-semibold">\r\n                {elem.question}\r\n              </AccordionTrigger>\r\n              <AccordionContent className="text-md pb-8">{elem.answer}</AccordionContent>\r\n            </AccordionItem>\r\n          ))}\r\n        </Accordion>\r\n      </div>\r\n    </section>\r\n  );\r\n};\r\n',
       },
       {
         title: "pricing-comparaison.tsx",
-        code: '"use client";\r\n\r\nimport React from "react";\r\nimport { Label } from "@/components/ui/label";\r\nimport { Switch } from "@/components/ui/switch";\r\nimport { cn } from "@/utils/classes";\r\nimport { PricingPlan } from "./pricing-plan";\r\nimport type { Plan } from "./types";\r\n\r\ninterface PricingProps {\r\n  plans: Plan[];\r\n  className?: string;\r\n}\r\n\r\nexport const PricingComparaison = (props: PricingProps) => {\r\n  const { plans, className } = props;\r\n  const [billing, setBilling] = React.useState<"monthly" | "yearly">("monthly");\r\n\r\n  return (\r\n    <div className={className}>\r\n      <div className="flex items-center justify-center space-x-4">\r\n        <Label htmlFor="subscription" className="text-xl">\r\n          Monthly\r\n        </Label>\r\n        <Switch\r\n          checked={!(billing === "monthly")}\r\n          onCheckedChange={(checked) => setBilling(checked ? "yearly" : "monthly")}\r\n          id="subscription"\r\n        />\r\n        <Label htmlFor="subscription" className="text-xl">\r\n          Yearly\r\n        </Label>\r\n      </div>\r\n      <div\r\n        className={cn("mt-16 grid grid-cols-3 items-center", {\r\n          "mx-auto max-w-3xl grid-cols-2": plans.length === 2,\r\n        })}\r\n      >\r\n        {plans.map((plan, index) => (\r\n          <PricingPlan\r\n            key={plan.name}\r\n            {...plan}\r\n            billing={billing}\r\n            className={\r\n              index === 0\r\n                ? "rounded-l-3xl"\r\n                : index === 1\r\n                  ? "rounded-3xl"\r\n                  : index === 2\r\n                    ? "rounded-r-3xl"\r\n                    : "rounded-3xl"\r\n            }\r\n          />\r\n        ))}\r\n      </div>\r\n    </div>\r\n  );\r\n};\r\n',
+        code: '"use client";\r\n\r\nimport React from "react";\r\nimport { Label } from "@/lib/components/core/default/label";\r\nimport { Switch } from "@/lib/components/core/default/switch";\r\nimport { cn } from "@/lib/utils/classes";\r\nimport { PricingPlan } from "./pricing-plan";\r\nimport type { Plan } from "./types";\r\n\r\ninterface PricingProps {\r\n  plans: Plan[];\r\n  className?: string;\r\n}\r\n\r\nexport const PricingComparaison = (props: PricingProps) => {\r\n  const { plans, className } = props;\r\n  const [billing, setBilling] = React.useState<"monthly" | "yearly">("monthly");\r\n\r\n  return (\r\n    <div className={className}>\r\n      <div className="flex items-center justify-center space-x-4">\r\n        <Label htmlFor="subscription" className="text-xl">\r\n          Monthly\r\n        </Label>\r\n        <Switch\r\n          checked={!(billing === "monthly")}\r\n          onCheckedChange={(checked) => setBilling(checked ? "yearly" : "monthly")}\r\n          id="subscription"\r\n        />\r\n        <Label htmlFor="subscription" className="text-xl">\r\n          Yearly\r\n        </Label>\r\n      </div>\r\n      <div\r\n        className={cn("mt-16 grid grid-cols-3 items-center", {\r\n          "mx-auto max-w-3xl grid-cols-2": plans.length === 2,\r\n        })}\r\n      >\r\n        {plans.map((plan, index) => (\r\n          <PricingPlan\r\n            key={plan.name}\r\n            {...plan}\r\n            billing={billing}\r\n            className={\r\n              index === 0\r\n                ? "rounded-l-3xl"\r\n                : index === 1\r\n                  ? "rounded-3xl"\r\n                  : index === 2\r\n                    ? "rounded-r-3xl"\r\n                    : "rounded-3xl"\r\n            }\r\n          />\r\n        ))}\r\n      </div>\r\n    </div>\r\n  );\r\n};\r\n',
       },
       {
         title: "pricing-plan.tsx",
-        code: 'import { CheckCircleIcon } from "lucide-react";\r\nimport { Button } from "@/components/ui/button";\r\nimport { cn } from "@/utils/classes";\r\nimport type { Plan } from "./types";\r\n\r\ninterface PlanProps extends Plan {\r\n  billing: "monthly" | "yearly";\r\n  className?: string;\r\n}\r\nexport const PricingPlan = (props: PlanProps) => {\r\n  const {\r\n    name,\r\n    price,\r\n    description,\r\n    features,\r\n    featured = false,\r\n    billing,\r\n    className,\r\n  } = props;\r\n\r\n  return (\r\n    <section\r\n      className={cn(\r\n        "relative flex min-h-[530px] flex-col border border-gray-400 bg-card px-6 py-16 shadow-2xl dark:border-gray-800 sm:px-8",\r\n        featured && "z-10 border-none ring-4 ring-ring/80",\r\n        className\r\n      )}\r\n    >\r\n      {featured && (\r\n        <div className="absolute right-8 top-[-4px] z-[-1] translate-y-[-100%] rounded-t-lg bg-ring/80 px-4 py-1 text-white shadow-lg">\r\n          Most popular\r\n        </div>\r\n      )}\r\n      <h3 className="mt-5 text-xl font-bold">{name}</h3>\r\n      <p className={cn("mt-2 text-base")}>{description}</p>\r\n      <p className="order-first text-5xl font-light tracking-tight">\r\n        {billing === "monthly" ? price.monthly : price.yearly}\r\n        <span className="ml-2 text-base font-normal text-muted-foreground">\r\n          billed {billing}\r\n        </span>\r\n      </p>\r\n      <ul\r\n        role="list"\r\n        className={cn("order-last mt-10 flex min-h-[100px] flex-col gap-y-3 text-sm", {\r\n          "min-h-[220px]": featured,\r\n        })}\r\n      >\r\n        {features.map((feature) => (\r\n          <li key={feature} className="flex">\r\n            <CheckCircleIcon />\r\n            <span className="ml-4">{feature}</span>\r\n          </li>\r\n        ))}\r\n      </ul>\r\n      <Button\r\n        variant={featured ? "default" : "outline"}\r\n        className="mt-8"\r\n        aria-label={`Get started with the ${name} plan for ${billing === "monthly" ? price.monthly : price.yearly}`}\r\n      >\r\n        Get started\r\n      </Button>\r\n    </section>\r\n  );\r\n};\r\n',
+        code: 'import { CheckCircleIcon } from "lucide-react";\r\nimport { Button } from "@/lib/components/core/default/button";\r\nimport { cn } from "@/lib/utils/classes";\r\nimport type { Plan } from "./types";\r\n\r\ninterface PlanProps extends Plan {\r\n  billing: "monthly" | "yearly";\r\n  className?: string;\r\n}\r\nexport const PricingPlan = (props: PlanProps) => {\r\n  const {\r\n    name,\r\n    price,\r\n    description,\r\n    features,\r\n    featured = false,\r\n    billing,\r\n    className,\r\n  } = props;\r\n\r\n  return (\r\n    <section\r\n      className={cn(\r\n        "relative flex min-h-[530px] flex-col border border-gray-400 bg-card px-6 py-16 shadow-2xl dark:border-gray-800 sm:px-8",\r\n        featured && "z-10 border-none ring-4 ring-ring/80",\r\n        className\r\n      )}\r\n    >\r\n      {featured && (\r\n        <div className="absolute right-8 top-[-4px] z-[-1] translate-y-[-100%] rounded-t-lg bg-ring/80 px-4 py-1 text-white shadow-lg">\r\n          Most popular\r\n        </div>\r\n      )}\r\n      <h3 className="mt-5 text-xl font-bold">{name}</h3>\r\n      <p className={cn("mt-2 text-base")}>{description}</p>\r\n      <p className="order-first text-5xl font-light tracking-tight">\r\n        {billing === "monthly" ? price.monthly : price.yearly}\r\n        <span className="ml-2 text-base font-normal text-muted-foreground">\r\n          billed {billing}\r\n        </span>\r\n      </p>\r\n      <ul\r\n        role="list"\r\n        className={cn("order-last mt-10 flex min-h-[100px] flex-col gap-y-3 text-sm", {\r\n          "min-h-[220px]": featured,\r\n        })}\r\n      >\r\n        {features.map((feature) => (\r\n          <li key={feature} className="flex">\r\n            <CheckCircleIcon />\r\n            <span className="ml-4">{feature}</span>\r\n          </li>\r\n        ))}\r\n      </ul>\r\n      <Button\r\n        variant={featured ? "default" : "outline"}\r\n        className="mt-8"\r\n        aria-label={`Get started with the ${name} plan for ${billing === "monthly" ? price.monthly : price.yearly}`}\r\n      >\r\n        Get started\r\n      </Button>\r\n    </section>\r\n  );\r\n};\r\n',
       },
       {
         title: "types.ts",
@@ -54,37 +54,6 @@ export const previews = {
       },
     ],
   },
-  "demos/components/core/alert-dialog": {
-    component: React.lazy<React.FC>(
-      () => import("@/lib/demos/components/core/alert-dialog")
-    ),
-    code: [
-      {
-        title: "alert-dialog.tsx",
-        code: 'import {\r\n  AlertDialog,\r\n  AlertDialogAction,\r\n  AlertDialogCancel,\r\n  AlertDialogContent,\r\n  AlertDialogDescription,\r\n  AlertDialogFooter,\r\n  AlertDialogHeader,\r\n  AlertDialogTitle,\r\n  AlertDialogTrigger,\r\n} from "@/lib/components/core/default/alert-dialog";\r\nimport { Button } from "@/lib/components/core/default/button";\r\n\r\nexport default function AlertDialogDemo() {\r\n  return (\r\n    <AlertDialog>\r\n      <AlertDialogTrigger asChild>\r\n        <Button variant="outline">Show Dialog</Button>\r\n      </AlertDialogTrigger>\r\n      <AlertDialogContent>\r\n        <AlertDialogHeader>\r\n          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>\r\n          <AlertDialogDescription>\r\n            This action cannot be undone. This will permanently delete your account and\r\n            remove your data from our servers.\r\n          </AlertDialogDescription>\r\n        </AlertDialogHeader>\r\n        <AlertDialogFooter>\r\n          <AlertDialogCancel>Cancel</AlertDialogCancel>\r\n          <AlertDialogAction>Continue</AlertDialogAction>\r\n        </AlertDialogFooter>\r\n      </AlertDialogContent>\r\n    </AlertDialog>\r\n  );\r\n}\r\n',
-      },
-    ],
-  },
-  "demos/components/core/alert": {
-    component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/alert")),
-    code: [
-      {
-        title: "alert.tsx",
-        code: 'import { Terminal } from "lucide-react";\r\nimport { Alert, AlertDescription, AlertTitle } from "@/lib/components/core/default/alert";\r\n\r\nexport default function AlertDemo() {\r\n  return (\r\n    <Alert>\r\n      <Terminal className="h-4 w-4" />\r\n      <AlertTitle>Heads up!</AlertTitle>\r\n      <AlertDescription>\r\n        You can add components to your app using the cli.\r\n      </AlertDescription>\r\n    </Alert>\r\n  );\r\n}\r\n',
-      },
-    ],
-  },
-  "demos/components/core/aspect-ratio": {
-    component: React.lazy<React.FC>(
-      () => import("@/lib/demos/components/core/aspect-ratio")
-    ),
-    code: [
-      {
-        title: "aspect-ratio.tsx",
-        code: 'import Image from "next/image";\r\nimport { AspectRatio } from "@/lib/components/core/default/aspect-ratio";\r\n\r\nexport default function AspectRatioDemo() {\r\n  return (\r\n    <AspectRatio ratio={16 / 9} className="bg-muted">\r\n      <Image\r\n        src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"\r\n        alt="Photo by Drew Beamer"\r\n        fill\r\n        className="rounded-md object-cover"\r\n      />\r\n    </AspectRatio>\r\n  );\r\n}\r\n',
-      },
-    ],
-  },
   "demos/components/core/avatar": {
     component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/avatar")),
     code: [
@@ -100,15 +69,6 @@ export const previews = {
       {
         title: "badge.tsx",
         code: 'import { Badge } from "@/lib/components/core/default/badge";\r\n\r\nexport default function BadgeDemo() {\r\n  return <Badge>Badge</Badge>;\r\n}\r\n',
-      },
-    ],
-  },
-  "demos/components/core/button": {
-    component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/button")),
-    code: [
-      {
-        title: "button.tsx",
-        code: 'import { Button } from "@/lib/components/core/default/button";\r\n\r\nexport default function ButtonDemo() {\r\n  return <Button>Button</Button>;\r\n}\r\n',
       },
     ],
   },
@@ -139,12 +99,253 @@ export const previews = {
       },
     ],
   },
+  "demos/components/core/data-table": {
+    component: React.lazy<React.FC>(
+      () => import("@/lib/demos/components/core/data-table")
+    ),
+    code: [
+      {
+        title: "data-table.tsx",
+        code: '"use client";\r\n\r\nimport * as React from "react";\r\nimport {\r\n  type ColumnDef,\r\n  type ColumnFiltersState,\r\n  type SortingState,\r\n  type VisibilityState,\r\n  flexRender,\r\n  getCoreRowModel,\r\n  getFilteredRowModel,\r\n  getPaginationRowModel,\r\n  getSortedRowModel,\r\n  useReactTable,\r\n} from "@tanstack/react-table";\r\nimport { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";\r\nimport { Button } from "@/lib/components/core/default/button";\r\nimport { Checkbox } from "@/lib/components/core/default/checkbox";\r\nimport {\r\n  DropdownMenu,\r\n  DropdownMenuCheckboxItem,\r\n  DropdownMenuContent,\r\n  DropdownMenuItem,\r\n  DropdownMenuLabel,\r\n  DropdownMenuSeparator,\r\n  DropdownMenuTrigger,\r\n} from "@/lib/components/core/default/dropdown-menu";\r\nimport { Input } from "@/lib/components/core/default/input";\r\nimport {\r\n  Table,\r\n  TableBody,\r\n  TableCell,\r\n  TableHead,\r\n  TableHeader,\r\n  TableRow,\r\n} from "@/lib/components/core/default/table";\r\n\r\nconst data: Payment[] = [\r\n  {\r\n    id: "m5gr84i9",\r\n    amount: 316,\r\n    status: "success",\r\n    email: "ken99@yahoo.com",\r\n  },\r\n  {\r\n    id: "3u1reuv4",\r\n    amount: 242,\r\n    status: "success",\r\n    email: "Abe45@gmail.com",\r\n  },\r\n  {\r\n    id: "derv1ws0",\r\n    amount: 837,\r\n    status: "processing",\r\n    email: "Monserrat44@gmail.com",\r\n  },\r\n  {\r\n    id: "5kma53ae",\r\n    amount: 874,\r\n    status: "success",\r\n    email: "Silas22@gmail.com",\r\n  },\r\n];\r\n\r\nexport type Payment = {\r\n  id: string;\r\n  amount: number;\r\n  status: "pending" | "processing" | "success" | "failed";\r\n  email: string;\r\n};\r\n\r\nexport const columns: ColumnDef<Payment>[] = [\r\n  {\r\n    id: "select",\r\n    header: ({ table }) => (\r\n      <Checkbox\r\n        checked={\r\n          table.getIsAllPageRowsSelected() ||\r\n          (table.getIsSomePageRowsSelected() && "indeterminate")\r\n        }\r\n        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}\r\n        aria-label="Select all"\r\n      />\r\n    ),\r\n    cell: ({ row }) => (\r\n      <Checkbox\r\n        checked={row.getIsSelected()}\r\n        onCheckedChange={(value) => row.toggleSelected(!!value)}\r\n        aria-label="Select row"\r\n      />\r\n    ),\r\n    enableSorting: false,\r\n    enableHiding: false,\r\n  },\r\n  {\r\n    accessorKey: "status",\r\n    header: "Status",\r\n    cell: ({ row }) => <div className="capitalize">{row.getValue("status")}</div>,\r\n  },\r\n  {\r\n    accessorKey: "email",\r\n    header: ({ column }) => {\r\n      return (\r\n        <Button\r\n          variant="ghost"\r\n          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}\r\n        >\r\n          Email\r\n          <ArrowUpDown className="ml-2 h-4 w-4" />\r\n        </Button>\r\n      );\r\n    },\r\n    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,\r\n  },\r\n  {\r\n    accessorKey: "amount",\r\n    header: () => <div className="text-right">Amount</div>,\r\n    cell: ({ row }) => {\r\n      const amount = parseFloat(row.getValue("amount"));\r\n\r\n      // Format the amount as a dollar amount\r\n      const formatted = new Intl.NumberFormat("en-US", {\r\n        style: "currency",\r\n        currency: "USD",\r\n      }).format(amount);\r\n\r\n      return <div className="text-right font-medium">{formatted}</div>;\r\n    },\r\n  },\r\n  {\r\n    id: "actions",\r\n    enableHiding: false,\r\n    cell: ({ row }) => {\r\n      const payment = row.original;\r\n\r\n      return (\r\n        <DropdownMenu>\r\n          <DropdownMenuTrigger asChild>\r\n            <Button variant="ghost" className="h-8 w-8 p-0">\r\n              <span className="sr-only">Open menu</span>\r\n              <MoreHorizontal className="h-4 w-4" />\r\n            </Button>\r\n          </DropdownMenuTrigger>\r\n          <DropdownMenuContent align="end">\r\n            <DropdownMenuLabel>Actions</DropdownMenuLabel>\r\n            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(payment.id)}>\r\n              Copy payment ID\r\n            </DropdownMenuItem>\r\n            <DropdownMenuSeparator />\r\n            <DropdownMenuItem>View customer</DropdownMenuItem>\r\n            <DropdownMenuItem>View payment details</DropdownMenuItem>\r\n          </DropdownMenuContent>\r\n        </DropdownMenu>\r\n      );\r\n    },\r\n  },\r\n];\r\n\r\nexport default function DataTableDemo() {\r\n  const [sorting, setSorting] = React.useState<SortingState>([]);\r\n  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);\r\n  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});\r\n  const [rowSelection, setRowSelection] = React.useState({});\r\n\r\n  const table = useReactTable({\r\n    data,\r\n    columns,\r\n    onSortingChange: setSorting,\r\n    onColumnFiltersChange: setColumnFilters,\r\n    getCoreRowModel: getCoreRowModel(),\r\n    getPaginationRowModel: getPaginationRowModel(),\r\n    getSortedRowModel: getSortedRowModel(),\r\n    getFilteredRowModel: getFilteredRowModel(),\r\n    onColumnVisibilityChange: setColumnVisibility,\r\n    onRowSelectionChange: setRowSelection,\r\n    state: {\r\n      sorting,\r\n      columnFilters,\r\n      columnVisibility,\r\n      rowSelection,\r\n    },\r\n  });\r\n\r\n  return (\r\n    <div className="w-full">\r\n      <div className="flex items-center pb-4">\r\n        <Input\r\n          placeholder="Filter emails..."\r\n          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}\r\n          onChange={(event) =>\r\n            table.getColumn("email")?.setFilterValue(event.target.value)\r\n          }\r\n          className="max-w-sm"\r\n        />\r\n        <DropdownMenu>\r\n          <DropdownMenuTrigger asChild>\r\n            <Button variant="outline" className="ml-auto">\r\n              Columns <ChevronDown className="ml-2 h-4 w-4" />\r\n            </Button>\r\n          </DropdownMenuTrigger>\r\n          <DropdownMenuContent align="end">\r\n            {table\r\n              .getAllColumns()\r\n              .filter((column) => column.getCanHide())\r\n              .map((column) => {\r\n                return (\r\n                  <DropdownMenuCheckboxItem\r\n                    key={column.id}\r\n                    className="capitalize"\r\n                    checked={column.getIsVisible()}\r\n                    onCheckedChange={(value) => column.toggleVisibility(!!value)}\r\n                  >\r\n                    {column.id}\r\n                  </DropdownMenuCheckboxItem>\r\n                );\r\n              })}\r\n          </DropdownMenuContent>\r\n        </DropdownMenu>\r\n      </div>\r\n      <div className="rounded-md border">\r\n        <Table>\r\n          <TableHeader>\r\n            {table.getHeaderGroups().map((headerGroup) => (\r\n              <TableRow key={headerGroup.id}>\r\n                {headerGroup.headers.map((header) => {\r\n                  return (\r\n                    <TableHead key={header.id}>\r\n                      {header.isPlaceholder\r\n                        ? null\r\n                        : flexRender(header.column.columnDef.header, header.getContext())}\r\n                    </TableHead>\r\n                  );\r\n                })}\r\n              </TableRow>\r\n            ))}\r\n          </TableHeader>\r\n          <TableBody>\r\n            {table.getRowModel().rows?.length ? (\r\n              table.getRowModel().rows.map((row) => (\r\n                <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>\r\n                  {row.getVisibleCells().map((cell) => (\r\n                    <TableCell key={cell.id}>\r\n                      {flexRender(cell.column.columnDef.cell, cell.getContext())}\r\n                    </TableCell>\r\n                  ))}\r\n                </TableRow>\r\n              ))\r\n            ) : (\r\n              <TableRow>\r\n                <TableCell colSpan={columns.length} className="h-24 text-center">\r\n                  No results.\r\n                </TableCell>\r\n              </TableRow>\r\n            )}\r\n          </TableBody>\r\n        </Table>\r\n      </div>\r\n      <div className="flex items-center justify-end space-x-2 pt-4">\r\n        <div className="flex-1 text-sm text-muted-foreground">\r\n          {table.getFilteredSelectedRowModel().rows.length} of{" "}\r\n          {table.getFilteredRowModel().rows.length} row(s) selected.\r\n        </div>\r\n        <div className="space-x-2">\r\n          <Button\r\n            variant="outline"\r\n            size="sm"\r\n            onClick={() => table.previousPage()}\r\n            disabled={!table.getCanPreviousPage()}\r\n          >\r\n            Previous\r\n          </Button>\r\n          <Button\r\n            variant="outline"\r\n            size="sm"\r\n            onClick={() => table.nextPage()}\r\n            disabled={!table.getCanNextPage()}\r\n          >\r\n            Next\r\n          </Button>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  );\r\n}\r\n',
+      },
+    ],
+  },
+  "demos/components/core/seperator": {
+    component: React.lazy<React.FC>(
+      () => import("@/lib/demos/components/core/seperator")
+    ),
+    code: [
+      {
+        title: "seperator.tsx",
+        code: 'import { Separator } from "@/lib/components/core/default/separator";\r\n\r\nexport default function SeparatorDemo() {\r\n  return (\r\n    <div>\r\n      <div className="space-y-1">\r\n        <h4 className="text-sm font-medium leading-none">Radix Primitives</h4>\r\n        <p className="text-sm text-muted-foreground">\r\n          An open-source UI component library.\r\n        </p>\r\n      </div>\r\n      <Separator className="my-4" />\r\n      <div className="flex h-5 items-center space-x-4 text-sm">\r\n        <div>Blog</div>\r\n        <Separator orientation="vertical" />\r\n        <div>Docs</div>\r\n        <Separator orientation="vertical" />\r\n        <div>Source</div>\r\n      </div>\r\n    </div>\r\n  );\r\n}\r\n',
+      },
+    ],
+  },
+  "demos/components/core/table": {
+    component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/table")),
+    code: [
+      {
+        title: "table.tsx",
+        code: 'import {\r\n  Table,\r\n  TableBody,\r\n  TableCaption,\r\n  TableCell,\r\n  TableFooter,\r\n  TableHead,\r\n  TableHeader,\r\n  TableRow,\r\n} from "@/lib/components/core/default/table";\r\n\r\nconst invoices = [\r\n  {\r\n    invoice: "INV001",\r\n    paymentStatus: "Paid",\r\n    totalAmount: "$250.00",\r\n    paymentMethod: "Credit Card",\r\n  },\r\n  {\r\n    invoice: "INV002",\r\n    paymentStatus: "Pending",\r\n    totalAmount: "$150.00",\r\n    paymentMethod: "PayPal",\r\n  },\r\n  {\r\n    invoice: "INV003",\r\n    paymentStatus: "Unpaid",\r\n    totalAmount: "$350.00",\r\n    paymentMethod: "Bank Transfer",\r\n  },\r\n  {\r\n    invoice: "INV004",\r\n    paymentStatus: "Paid",\r\n    totalAmount: "$450.00",\r\n    paymentMethod: "Credit Card",\r\n  },\r\n  {\r\n    invoice: "INV005",\r\n    paymentStatus: "Paid",\r\n    totalAmount: "$550.00",\r\n    paymentMethod: "PayPal",\r\n  },\r\n  {\r\n    invoice: "INV006",\r\n    paymentStatus: "Pending",\r\n    totalAmount: "$200.00",\r\n    paymentMethod: "Bank Transfer",\r\n  },\r\n  {\r\n    invoice: "INV007",\r\n    paymentStatus: "Unpaid",\r\n    totalAmount: "$300.00",\r\n    paymentMethod: "Credit Card",\r\n  },\r\n];\r\n\r\nexport default function TableDemo() {\r\n  return (\r\n    <Table>\r\n      <TableCaption>A list of your recent invoices.</TableCaption>\r\n      <TableHeader>\r\n        <TableRow>\r\n          <TableHead className="w-[100px]">Invoice</TableHead>\r\n          <TableHead>Status</TableHead>\r\n          <TableHead>Method</TableHead>\r\n          <TableHead className="text-right">Amount</TableHead>\r\n        </TableRow>\r\n      </TableHeader>\r\n      <TableBody>\r\n        {invoices.map((invoice) => (\r\n          <TableRow key={invoice.invoice}>\r\n            <TableCell className="font-medium">{invoice.invoice}</TableCell>\r\n            <TableCell>{invoice.paymentStatus}</TableCell>\r\n            <TableCell>{invoice.paymentMethod}</TableCell>\r\n            <TableCell className="text-right">{invoice.totalAmount}</TableCell>\r\n          </TableRow>\r\n        ))}\r\n      </TableBody>\r\n      <TableFooter>\r\n        <TableRow>\r\n          <TableCell colSpan={3}>Total</TableCell>\r\n          <TableCell className="text-right">$2,500.00</TableCell>\r\n        </TableRow>\r\n      </TableFooter>\r\n    </Table>\r\n  );\r\n}\r\n',
+      },
+    ],
+  },
+  "demos/components/core/alert": {
+    component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/alert")),
+    code: [
+      {
+        title: "alert.tsx",
+        code: 'import { Terminal } from "lucide-react";\r\nimport { Alert, AlertDescription, AlertTitle } from "@/lib/components/core/default/alert";\r\n\r\nexport default function AlertDemo() {\r\n  return (\r\n    <Alert>\r\n      <Terminal className="h-4 w-4" />\r\n      <AlertTitle>Heads up!</AlertTitle>\r\n      <AlertDescription>\r\n        You can add components to your app using the cli.\r\n      </AlertDescription>\r\n    </Alert>\r\n  );\r\n}\r\n',
+      },
+    ],
+  },
+  "demos/components/core/progress": {
+    component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/progress")),
+    code: [
+      {
+        title: "progress.tsx",
+        code: '"use client";\r\n\r\nimport * as React from "react";\r\nimport { Progress } from "@/lib/components/core/default/progress";\r\n\r\nexport default function ProgressDemo() {\r\n  const [progress, setProgress] = React.useState(0);\r\n\r\n  React.useEffect(() => {\r\n    const timer1 = setTimeout(() => setProgress(13), 800);\r\n    const timer2 = setTimeout(() => setProgress(66), 1700);\r\n    const timer3 = setTimeout(() => setProgress(100), 2500);\r\n    return () => {\r\n      clearTimeout(timer1);\r\n      clearTimeout(timer2);\r\n      clearTimeout(timer3);\r\n    };\r\n  }, []);\r\n\r\n  return <Progress value={progress} className="w-[60%]" />;\r\n}\r\n',
+      },
+    ],
+  },
+  "demos/components/core/skeleton": {
+    component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/skeleton")),
+    code: [
+      {
+        title: "skeleton.tsx",
+        code: 'import { Skeleton } from "@/lib/components/core/default/skeleton";\r\n\r\nexport default function SkeletonDemo() {\r\n  return (\r\n    <div className="flex items-center space-x-4">\r\n      <Skeleton className="h-12 w-12 rounded-full" />\r\n      <div className="space-y-2">\r\n        <Skeleton className="h-4 w-[250px]" />\r\n        <Skeleton className="h-4 w-[200px]" />\r\n      </div>\r\n    </div>\r\n  );\r\n}\r\n',
+      },
+    ],
+  },
+  "demos/components/core/sonner": {
+    component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/sonner")),
+    code: [
+      {
+        title: "sonner.tsx",
+        code: '"use client";\r\n\r\nimport { toast } from "sonner";\r\nimport { Button } from "@/lib/components/core/default/button";\r\n\r\nexport default function SonnerDemo() {\r\n  return (\r\n    <Button\r\n      variant="outline"\r\n      onClick={() =>\r\n        toast("Event has been created", {\r\n          description: "Sunday, December 03, 2023 at 9:00 AM",\r\n          action: {\r\n            label: "Undo",\r\n            onClick: () => console.log("Undo"),\r\n          },\r\n        })\r\n      }\r\n    >\r\n      Show Toast\r\n    </Button>\r\n  );\r\n}\r\n',
+      },
+    ],
+  },
+  "demos/components/core/toast": {
+    component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/toast")),
+    code: [
+      {
+        title: "toast.tsx",
+        code: '"use client";\r\n\r\nimport { Button } from "@/lib/components/core/default/button";\r\nimport { ToastAction } from "@/lib/components/core/default/toast";\r\nimport { useToast } from "@/lib/components/core/default/use-toast";\r\n\r\nexport default function ToastDemo() {\r\n  const { toast } = useToast();\r\n\r\n  return (\r\n    <Button\r\n      variant="outline"\r\n      onClick={() => {\r\n        toast({\r\n          title: "Scheduled: Catch up ",\r\n          description: "Friday, February 10, 2023 at 5:57 PM",\r\n          action: <ToastAction altText="Goto schedule to undo">Undo</ToastAction>,\r\n        });\r\n      }}\r\n    >\r\n      Add to calendar\r\n    </Button>\r\n  );\r\n}\r\n',
+      },
+    ],
+  },
+  "demos/components/core/button": {
+    component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/button")),
+    code: [
+      {
+        title: "button.tsx",
+        code: 'import { Button } from "@/lib/components/core/default/button";\r\n\r\nexport default function ButtonDemo() {\r\n  return <Button>Button</Button>;\r\n}\r\n',
+      },
+    ],
+  },
   "demos/components/core/checkbox": {
     component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/checkbox")),
     code: [
       {
         title: "checkbox.tsx",
         code: '"use client";\r\n\r\nimport { Checkbox } from "@/lib/components/core/default/checkbox";\r\n\r\nexport default function CheckboxDemo() {\r\n  return (\r\n    <div className="flex items-center space-x-2">\r\n      <Checkbox id="terms" />\r\n      <label\r\n        htmlFor="terms"\r\n        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"\r\n      >\r\n        Accept terms and conditions\r\n      </label>\r\n    </div>\r\n  );\r\n}\r\n',
+      },
+    ],
+  },
+  "demos/components/core/combobox": {
+    component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/combobox")),
+    code: [
+      {
+        title: "combobox.tsx",
+        code: '"use client";\r\n\r\nimport * as React from "react";\r\nimport { Check, ChevronsUpDown } from "lucide-react";\r\nimport { Button } from "@/lib/components/core/default/button";\r\nimport {\r\n  Command,\r\n  CommandEmpty,\r\n  CommandGroup,\r\n  CommandInput,\r\n  CommandItem,\r\n} from "@/lib/components/core/default/command";\r\nimport {\r\n  Popover,\r\n  PopoverContent,\r\n  PopoverTrigger,\r\n} from "@/lib/components/core/default/popover";\r\nimport { cn } from "@/lib/utils/classes";\r\n\r\nconst frameworks = [\r\n  {\r\n    value: "next.js",\r\n    label: "Next.js",\r\n  },\r\n  {\r\n    value: "sveltekit",\r\n    label: "SvelteKit",\r\n  },\r\n  {\r\n    value: "nuxt.js",\r\n    label: "Nuxt.js",\r\n  },\r\n  {\r\n    value: "remix",\r\n    label: "Remix",\r\n  },\r\n  {\r\n    value: "astro",\r\n    label: "Astro",\r\n  },\r\n];\r\n\r\nexport default function ComboboxDemo() {\r\n  const [open, setOpen] = React.useState(false);\r\n  const [value, setValue] = React.useState("");\r\n\r\n  return (\r\n    <Popover open={open} onOpenChange={setOpen}>\r\n      <PopoverTrigger asChild>\r\n        <Button\r\n          variant="outline"\r\n          role="combobox"\r\n          aria-expanded={open}\r\n          className="w-[200px] justify-between"\r\n        >\r\n          {value\r\n            ? frameworks.find((framework) => framework.value === value)?.label\r\n            : "Select framework..."}\r\n          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />\r\n        </Button>\r\n      </PopoverTrigger>\r\n      <PopoverContent className="w-[200px] p-0">\r\n        <Command>\r\n          <CommandInput placeholder="Search framework..." />\r\n          <CommandEmpty>No framework found.</CommandEmpty>\r\n          <CommandGroup>\r\n            {frameworks.map((framework) => (\r\n              <CommandItem\r\n                key={framework.value}\r\n                value={framework.value}\r\n                onSelect={(currentValue) => {\r\n                  setValue(currentValue === value ? "" : currentValue);\r\n                  setOpen(false);\r\n                }}\r\n              >\r\n                <Check\r\n                  className={cn(\r\n                    "mr-2 h-4 w-4",\r\n                    value === framework.value ? "opacity-100" : "opacity-0"\r\n                  )}\r\n                />\r\n                {framework.label}\r\n              </CommandItem>\r\n            ))}\r\n          </CommandGroup>\r\n        </Command>\r\n      </PopoverContent>\r\n    </Popover>\r\n  );\r\n}\r\n',
+      },
+    ],
+  },
+  "demos/components/core/date-picker": {
+    component: React.lazy<React.FC>(
+      () => import("@/lib/demos/components/core/date-picker")
+    ),
+    code: [
+      {
+        title: "date-picker.tsx",
+        code: '"use client";\r\n\r\nimport * as React from "react";\r\nimport { format } from "date-fns";\r\nimport { Calendar as CalendarIcon } from "lucide-react";\r\nimport { Button } from "@/lib/components/core/default/button";\r\nimport { Calendar } from "@/lib/components/core/default/calendar";\r\nimport {\r\n  Popover,\r\n  PopoverContent,\r\n  PopoverTrigger,\r\n} from "@/lib/components/core/default/popover";\r\nimport { cn } from "@/lib/utils/classes";\r\n\r\nexport default function DatePickerDemo() {\r\n  const [date, setDate] = React.useState<Date>();\r\n\r\n  return (\r\n    <Popover>\r\n      <PopoverTrigger asChild>\r\n        <Button\r\n          variant={"outline"}\r\n          className={cn(\r\n            "w-[280px] justify-start text-left font-normal",\r\n            !date && "text-muted-foreground"\r\n          )}\r\n        >\r\n          <CalendarIcon className="mr-2 h-4 w-4" />\r\n          {date ? format(date, "PPP") : <span>Pick a date</span>}\r\n        </Button>\r\n      </PopoverTrigger>\r\n      <PopoverContent className="w-auto p-0">\r\n        <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />\r\n      </PopoverContent>\r\n    </Popover>\r\n  );\r\n}\r\n',
+      },
+    ],
+  },
+  "demos/components/core/input": {
+    component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/input")),
+    code: [
+      {
+        title: "input.tsx",
+        code: 'import { Input } from "@/lib/components/core/default/input";\r\n\r\nexport default function InputDemo() {\r\n  return <Input type="email" placeholder="Email" />;\r\n}\r\n',
+      },
+    ],
+  },
+  "demos/components/core/label": {
+    component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/label")),
+    code: [
+      {
+        title: "label.tsx",
+        code: 'import { Input } from "@/lib/components/core/default/input";\r\nimport { Label } from "@/lib/components/core/default/label";\r\n\r\nexport default function LabelDemo() {\r\n  return (\r\n    <div>\r\n      <div className="flex items-center space-x-4">\r\n        <Label htmlFor="name">Name</Label>\r\n        <Input id="name" />\r\n      </div>\r\n    </div>\r\n  );\r\n}\r\n',
+      },
+    ],
+  },
+  "demos/components/core/menu-bar": {
+    component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/menu-bar")),
+    code: [
+      {
+        title: "menu-bar.tsx",
+        code: 'import {\r\n  Menubar,\r\n  MenubarCheckboxItem,\r\n  MenubarContent,\r\n  MenubarItem,\r\n  MenubarMenu,\r\n  MenubarRadioGroup,\r\n  MenubarRadioItem,\r\n  MenubarSeparator,\r\n  MenubarShortcut,\r\n  MenubarSub,\r\n  MenubarSubContent,\r\n  MenubarSubTrigger,\r\n  MenubarTrigger,\r\n} from "@/lib/components/core/default/menubar";\r\n\r\nexport default function MenubarDemo() {\r\n  return (\r\n    <Menubar>\r\n      <MenubarMenu>\r\n        <MenubarTrigger>File</MenubarTrigger>\r\n        <MenubarContent>\r\n          <MenubarItem>\r\n            New Tab <MenubarShortcut>⌘T</MenubarShortcut>\r\n          </MenubarItem>\r\n          <MenubarItem>\r\n            New Window <MenubarShortcut>⌘N</MenubarShortcut>\r\n          </MenubarItem>\r\n          <MenubarItem disabled>New Incognito Window</MenubarItem>\r\n          <MenubarSeparator />\r\n          <MenubarSub>\r\n            <MenubarSubTrigger>Share</MenubarSubTrigger>\r\n            <MenubarSubContent>\r\n              <MenubarItem>Email link</MenubarItem>\r\n              <MenubarItem>Messages</MenubarItem>\r\n              <MenubarItem>Notes</MenubarItem>\r\n            </MenubarSubContent>\r\n          </MenubarSub>\r\n          <MenubarSeparator />\r\n          <MenubarItem>\r\n            Print... <MenubarShortcut>⌘P</MenubarShortcut>\r\n          </MenubarItem>\r\n        </MenubarContent>\r\n      </MenubarMenu>\r\n      <MenubarMenu>\r\n        <MenubarTrigger>Edit</MenubarTrigger>\r\n        <MenubarContent>\r\n          <MenubarItem>\r\n            Undo <MenubarShortcut>⌘Z</MenubarShortcut>\r\n          </MenubarItem>\r\n          <MenubarItem>\r\n            Redo <MenubarShortcut>⇧⌘Z</MenubarShortcut>\r\n          </MenubarItem>\r\n          <MenubarSeparator />\r\n          <MenubarSub>\r\n            <MenubarSubTrigger>Find</MenubarSubTrigger>\r\n            <MenubarSubContent>\r\n              <MenubarItem>Search the web</MenubarItem>\r\n              <MenubarSeparator />\r\n              <MenubarItem>Find...</MenubarItem>\r\n              <MenubarItem>Find Next</MenubarItem>\r\n              <MenubarItem>Find Previous</MenubarItem>\r\n            </MenubarSubContent>\r\n          </MenubarSub>\r\n          <MenubarSeparator />\r\n          <MenubarItem>Cut</MenubarItem>\r\n          <MenubarItem>Copy</MenubarItem>\r\n          <MenubarItem>Paste</MenubarItem>\r\n        </MenubarContent>\r\n      </MenubarMenu>\r\n      <MenubarMenu>\r\n        <MenubarTrigger>View</MenubarTrigger>\r\n        <MenubarContent>\r\n          <MenubarCheckboxItem>Always Show Bookmarks Bar</MenubarCheckboxItem>\r\n          <MenubarCheckboxItem checked>Always Show Full URLs</MenubarCheckboxItem>\r\n          <MenubarSeparator />\r\n          <MenubarItem inset>\r\n            Reload <MenubarShortcut>⌘R</MenubarShortcut>\r\n          </MenubarItem>\r\n          <MenubarItem disabled inset>\r\n            Force Reload <MenubarShortcut>⇧⌘R</MenubarShortcut>\r\n          </MenubarItem>\r\n          <MenubarSeparator />\r\n          <MenubarItem inset>Toggle Fullscreen</MenubarItem>\r\n          <MenubarSeparator />\r\n          <MenubarItem inset>Hide Sidebar</MenubarItem>\r\n        </MenubarContent>\r\n      </MenubarMenu>\r\n      <MenubarMenu>\r\n        <MenubarTrigger>Profiles</MenubarTrigger>\r\n        <MenubarContent>\r\n          <MenubarRadioGroup value="benoit">\r\n            <MenubarRadioItem value="andy">Andy</MenubarRadioItem>\r\n            <MenubarRadioItem value="benoit">Benoit</MenubarRadioItem>\r\n            <MenubarRadioItem value="Luis">Luis</MenubarRadioItem>\r\n          </MenubarRadioGroup>\r\n          <MenubarSeparator />\r\n          <MenubarItem inset>Edit...</MenubarItem>\r\n          <MenubarSeparator />\r\n          <MenubarItem inset>Add Profile...</MenubarItem>\r\n        </MenubarContent>\r\n      </MenubarMenu>\r\n    </Menubar>\r\n  );\r\n}\r\n',
+      },
+    ],
+  },
+  "demos/components/core/radio-group": {
+    component: React.lazy<React.FC>(
+      () => import("@/lib/demos/components/core/radio-group")
+    ),
+    code: [
+      {
+        title: "radio-group.tsx",
+        code: 'import { Label } from "@/lib/components/core/default/label";\r\nimport { RadioGroup, RadioGroupItem } from "@/lib/components/core/default/radio-group";\r\n\r\nexport default function RadioGroupDemo() {\r\n  return (\r\n    <RadioGroup defaultValue="comfortable">\r\n      <div className="flex items-center space-x-3">\r\n        <RadioGroupItem value="default" id="r1" />\r\n        <Label htmlFor="r1" className="text-lg">\r\n          Default\r\n        </Label>\r\n      </div>\r\n      <div className="flex items-center space-x-3">\r\n        <RadioGroupItem value="comfortable" id="r2" />\r\n        <Label htmlFor="r2" className="text-lg">\r\n          Comfortable\r\n        </Label>\r\n      </div>\r\n      <div className="flex items-center space-x-3">\r\n        <RadioGroupItem value="compact" id="r3" />\r\n        <Label htmlFor="r3" className="text-lg">\r\n          Compact\r\n        </Label>\r\n      </div>\r\n    </RadioGroup>\r\n  );\r\n}\r\n',
+      },
+    ],
+  },
+  "demos/components/core/select": {
+    component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/select")),
+    code: [
+      {
+        title: "select.tsx",
+        code: 'import * as React from "react";\r\nimport {\r\n  Select,\r\n  SelectContent,\r\n  SelectGroup,\r\n  SelectItem,\r\n  SelectLabel,\r\n  SelectTrigger,\r\n  SelectValue,\r\n} from "@/lib/components/core/default/select";\r\n\r\nexport default function SelectDemo() {\r\n  return (\r\n    <Select>\r\n      <SelectTrigger className="w-[180px]">\r\n        <SelectValue placeholder="Select a fruit" />\r\n      </SelectTrigger>\r\n      <SelectContent>\r\n        <SelectGroup>\r\n          <SelectLabel>Fruits</SelectLabel>\r\n          <SelectItem value="apple">Apple</SelectItem>\r\n          <SelectItem value="banana">Banana</SelectItem>\r\n          <SelectItem value="blueberry">Blueberry</SelectItem>\r\n          <SelectItem value="grapes">Grapes</SelectItem>\r\n          <SelectItem value="pineapple">Pineapple</SelectItem>\r\n        </SelectGroup>\r\n      </SelectContent>\r\n    </Select>\r\n  );\r\n}\r\n',
+      },
+    ],
+  },
+  "demos/components/core/slider": {
+    component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/slider")),
+    code: [
+      {
+        title: "slider.tsx",
+        code: 'import { Slider } from "@/lib/components/core/default/slider";\r\nimport { cn } from "@/lib/utils/classes";\r\n\r\ntype SliderProps = React.ComponentProps<typeof Slider>;\r\n\r\nexport default function SliderDemo({ className, ...props }: SliderProps) {\r\n  return (\r\n    <Slider\r\n      defaultValue={[50]}\r\n      max={100}\r\n      step={1}\r\n      className={cn("w-[60%]", className)}\r\n      {...props}\r\n    />\r\n  );\r\n}\r\n',
+      },
+    ],
+  },
+  "demos/components/core/switch": {
+    component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/switch")),
+    code: [
+      {
+        title: "switch.tsx",
+        code: 'import { Label } from "@/lib/components/core/default/label";\r\nimport { Switch } from "@/lib/components/core/default/switch";\r\n\r\nexport default function SwitchDemo() {\r\n  return (\r\n    <div className="flex items-center space-x-2">\r\n      <Switch id="airplane-mode" />\r\n      <Label htmlFor="airplane-mode">Airplane Mode</Label>\r\n    </div>\r\n  );\r\n}\r\n',
+      },
+    ],
+  },
+  "demos/components/core/tabs": {
+    component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/tabs")),
+    code: [
+      {
+        title: "tabs.tsx",
+        code: 'import { Button } from "@/lib/components/core/default/button";\r\nimport {\r\n  Card,\r\n  CardContent,\r\n  CardDescription,\r\n  CardFooter,\r\n  CardHeader,\r\n  CardTitle,\r\n} from "@/lib/components/core/default/card";\r\nimport { Input } from "@/lib/components/core/default/input";\r\nimport { Label } from "@/lib/components/core/default/label";\r\nimport {\r\n  Tabs,\r\n  TabsContent,\r\n  TabsList,\r\n  TabsTrigger,\r\n} from "@/lib/components/core/default/tabs";\r\n\r\nexport default function TabsDemo() {\r\n  return (\r\n    <Tabs defaultValue="account" className="w-[400px]">\r\n      <TabsList className="grid w-full grid-cols-2">\r\n        <TabsTrigger value="account">Account</TabsTrigger>\r\n        <TabsTrigger value="password">Password</TabsTrigger>\r\n      </TabsList>\r\n      <TabsContent value="account">\r\n        <Card>\r\n          <CardHeader>\r\n            <CardTitle>Account</CardTitle>\r\n            <CardDescription>\r\n              Make changes to your account here. Click save when you&apos;re done.\r\n            </CardDescription>\r\n          </CardHeader>\r\n          <CardContent className="space-y-2">\r\n            <div className="space-y-1">\r\n              <Label htmlFor="name">Name</Label>\r\n              <Input id="name" defaultValue="Pedro Duarte" />\r\n            </div>\r\n            <div className="space-y-1">\r\n              <Label htmlFor="username">Username</Label>\r\n              <Input id="username" defaultValue="@peduarte" />\r\n            </div>\r\n          </CardContent>\r\n          <CardFooter>\r\n            <Button>Save changes</Button>\r\n          </CardFooter>\r\n        </Card>\r\n      </TabsContent>\r\n      <TabsContent value="password">\r\n        <Card>\r\n          <CardHeader>\r\n            <CardTitle>Password</CardTitle>\r\n            <CardDescription>\r\n              Change your password here. After saving, you&apos;ll be logged out.\r\n            </CardDescription>\r\n          </CardHeader>\r\n          <CardContent className="space-y-2">\r\n            <div className="space-y-1">\r\n              <Label htmlFor="current">Current password</Label>\r\n              <Input id="current" type="password" />\r\n            </div>\r\n            <div className="space-y-1">\r\n              <Label htmlFor="new">New password</Label>\r\n              <Input id="new" type="password" />\r\n            </div>\r\n          </CardContent>\r\n          <CardFooter>\r\n            <Button>Save password</Button>\r\n          </CardFooter>\r\n        </Card>\r\n      </TabsContent>\r\n    </Tabs>\r\n  );\r\n}\r\n',
+      },
+    ],
+  },
+  "demos/components/core/textarea": {
+    component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/textarea")),
+    code: [
+      {
+        title: "textarea.tsx",
+        code: 'import { Textarea } from "@/lib/components/core/default/textarea";\r\n\r\nexport default function TextareaDemo() {\r\n  return <Textarea placeholder="Type your message here." />;\r\n}\r\n',
+      },
+    ],
+  },
+  "demos/components/core/toggle-group": {
+    component: React.lazy<React.FC>(
+      () => import("@/lib/demos/components/core/toggle-group")
+    ),
+    code: [
+      {
+        title: "toggle-group.tsx",
+        code: 'import { Bold, Italic, Underline } from "lucide-react";\r\nimport { ToggleGroup, ToggleGroupItem } from "@/lib/components/core/default/toggle-group";\r\n\r\nexport default function ToggleGroupDemo() {\r\n  return (\r\n    <ToggleGroup type="multiple">\r\n      <ToggleGroupItem value="bold" aria-label="Toggle bold">\r\n        <Bold className="h-4 w-4" />\r\n      </ToggleGroupItem>\r\n      <ToggleGroupItem value="italic" aria-label="Toggle italic">\r\n        <Italic className="h-4 w-4" />\r\n      </ToggleGroupItem>\r\n      <ToggleGroupItem value="underline" aria-label="Toggle underline">\r\n        <Underline className="h-4 w-4" />\r\n      </ToggleGroupItem>\r\n    </ToggleGroup>\r\n  );\r\n}\r\n',
+      },
+    ],
+  },
+  "demos/components/core/toggle": {
+    component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/toggle")),
+    code: [
+      {
+        title: "toggle.tsx",
+        code: 'import { Bold } from "lucide-react";\r\nimport { Toggle } from "@/lib/components/core/default/toggle";\r\n\r\nexport default function ToggleDemo() {\r\n  return (\r\n    <Toggle aria-label="Toggle bold">\r\n      <Bold className="h-4 w-4" />\r\n    </Toggle>\r\n  );\r\n}\r\n',
+      },
+    ],
+  },
+  "demos/components/core/aspect-ratio": {
+    component: React.lazy<React.FC>(
+      () => import("@/lib/demos/components/core/aspect-ratio")
+    ),
+    code: [
+      {
+        title: "aspect-ratio.tsx",
+        code: 'import Image from "next/image";\r\nimport { AspectRatio } from "@/lib/components/core/default/aspect-ratio";\r\n\r\nexport default function AspectRatioDemo() {\r\n  return (\r\n    <AspectRatio ratio={16 / 9} className="bg-muted">\r\n      <Image\r\n        src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"\r\n        alt="Photo by Drew Beamer"\r\n        fill\r\n        className="rounded-md object-cover"\r\n      />\r\n    </AspectRatio>\r\n  );\r\n}\r\n',
+      },
+    ],
+  },
+  "demos/components/core/resizable": {
+    component: React.lazy<React.FC>(
+      () => import("@/lib/demos/components/core/resizable")
+    ),
+    code: [
+      {
+        title: "resizable.tsx",
+        code: 'import {\r\n  ResizableHandle,\r\n  ResizablePanel,\r\n  ResizablePanelGroup,\r\n} from "@/lib/components/core/default/resizable";\r\n\r\nexport default function ResizableDemo() {\r\n  return (\r\n    <ResizablePanelGroup direction="horizontal" className="max-w-md rounded-lg border">\r\n      <ResizablePanel defaultSize={50}>\r\n        <div className="flex h-[200px] items-center justify-center p-6">\r\n          <span className="font-semibold">One</span>\r\n        </div>\r\n      </ResizablePanel>\r\n      <ResizableHandle withHandle />\r\n      <ResizablePanel defaultSize={50}>\r\n        <ResizablePanelGroup direction="vertical">\r\n          <ResizablePanel defaultSize={25}>\r\n            <div className="flex h-full items-center justify-center p-6">\r\n              <span className="font-semibold">Two</span>\r\n            </div>\r\n          </ResizablePanel>\r\n          <ResizableHandle withHandle />\r\n          <ResizablePanel defaultSize={75}>\r\n            <div className="flex h-full items-center justify-center p-6">\r\n              <span className="font-semibold">Three</span>\r\n            </div>\r\n          </ResizablePanel>\r\n        </ResizablePanelGroup>\r\n      </ResizablePanel>\r\n    </ResizablePanelGroup>\r\n  );\r\n}\r\n',
+      },
+    ],
+  },
+  "demos/components/core/scroll-area": {
+    component: React.lazy<React.FC>(
+      () => import("@/lib/demos/components/core/scroll-area")
+    ),
+    code: [
+      {
+        title: "scroll-area.tsx",
+        code: 'import * as React from "react";\r\nimport { ScrollArea } from "@/lib/components/core/default/scroll-area";\r\nimport { Separator } from "@/lib/components/core/default/separator";\r\n\r\nconst tags = Array.from({ length: 50 }).map((_, i, a) => `v1.2.0-beta.${a.length - i}`);\r\n\r\nexport default function ScrollAreaDemo() {\r\n  return (\r\n    <ScrollArea className="h-72 w-48 rounded-md border">\r\n      <div className="p-4">\r\n        <h4 className="mb-4 text-sm font-medium leading-none">Tags</h4>\r\n        {tags.map((tag) => (\r\n          <>\r\n            <div key={tag} className="text-sm">\r\n              {tag}\r\n            </div>\r\n            <Separator className="my-2" />\r\n          </>\r\n        ))}\r\n      </div>\r\n    </ScrollArea>\r\n  );\r\n}\r\n',
       },
     ],
   },
@@ -159,21 +360,45 @@ export const previews = {
       },
     ],
   },
-  "demos/components/core/combobox": {
-    component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/combobox")),
-    code: [
-      {
-        title: "combobox.tsx",
-        code: '"use client";\r\n\r\nimport * as React from "react";\r\nimport { Check, ChevronsUpDown } from "lucide-react";\r\nimport { Button } from "@/lib/components/core/default/button";\r\nimport {\r\n  Command,\r\n  CommandEmpty,\r\n  CommandGroup,\r\n  CommandInput,\r\n  CommandItem,\r\n} from "@/lib/components/core/default/command";\r\nimport {\r\n  Popover,\r\n  PopoverContent,\r\n  PopoverTrigger,\r\n} from "@/lib/components/core/default/popover";\r\nimport { cn } from "@/lib/utils";\r\n\r\nconst frameworks = [\r\n  {\r\n    value: "next.js",\r\n    label: "Next.js",\r\n  },\r\n  {\r\n    value: "sveltekit",\r\n    label: "SvelteKit",\r\n  },\r\n  {\r\n    value: "nuxt.js",\r\n    label: "Nuxt.js",\r\n  },\r\n  {\r\n    value: "remix",\r\n    label: "Remix",\r\n  },\r\n  {\r\n    value: "astro",\r\n    label: "Astro",\r\n  },\r\n];\r\n\r\nexport default function ComboboxDemo() {\r\n  const [open, setOpen] = React.useState(false);\r\n  const [value, setValue] = React.useState("");\r\n\r\n  return (\r\n    <Popover open={open} onOpenChange={setOpen}>\r\n      <PopoverTrigger asChild>\r\n        <Button\r\n          variant="outline"\r\n          role="combobox"\r\n          aria-expanded={open}\r\n          className="w-[200px] justify-between"\r\n        >\r\n          {value\r\n            ? frameworks.find((framework) => framework.value === value)?.label\r\n            : "Select framework..."}\r\n          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />\r\n        </Button>\r\n      </PopoverTrigger>\r\n      <PopoverContent className="w-[200px] p-0">\r\n        <Command>\r\n          <CommandInput placeholder="Search framework..." />\r\n          <CommandEmpty>No framework found.</CommandEmpty>\r\n          <CommandGroup>\r\n            {frameworks.map((framework) => (\r\n              <CommandItem\r\n                key={framework.value}\r\n                value={framework.value}\r\n                onSelect={(currentValue) => {\r\n                  setValue(currentValue === value ? "" : currentValue);\r\n                  setOpen(false);\r\n                }}\r\n              >\r\n                <Check\r\n                  className={cn(\r\n                    "mr-2 h-4 w-4",\r\n                    value === framework.value ? "opacity-100" : "opacity-0"\r\n                  )}\r\n                />\r\n                {framework.label}\r\n              </CommandItem>\r\n            ))}\r\n          </CommandGroup>\r\n        </Command>\r\n      </PopoverContent>\r\n    </Popover>\r\n  );\r\n}\r\n',
-      },
-    ],
-  },
   "demos/components/core/command": {
     component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/command")),
     code: [
       {
         title: "command.tsx",
         code: 'import { Calculator, Calendar, CreditCard, Settings, Smile, User } from "lucide-react";\r\nimport {\r\n  Command,\r\n  CommandEmpty,\r\n  CommandGroup,\r\n  CommandInput,\r\n  CommandItem,\r\n  CommandList,\r\n  CommandSeparator,\r\n  CommandShortcut,\r\n} from "@/lib/components/core/default/command";\r\n\r\nexport default function CommandDemo() {\r\n  return (\r\n    <Command className="rounded-lg border shadow-md">\r\n      <CommandInput placeholder="Type a command or search..." />\r\n      <CommandList>\r\n        <CommandEmpty>No results found.</CommandEmpty>\r\n        <CommandGroup heading="Suggestions">\r\n          <CommandItem>\r\n            <Calendar className="mr-2 h-4 w-4" />\r\n            <span>Calendar</span>\r\n          </CommandItem>\r\n          <CommandItem>\r\n            <Smile className="mr-2 h-4 w-4" />\r\n            <span>Search Emoji</span>\r\n          </CommandItem>\r\n          <CommandItem>\r\n            <Calculator className="mr-2 h-4 w-4" />\r\n            <span>Calculator</span>\r\n          </CommandItem>\r\n        </CommandGroup>\r\n        <CommandSeparator />\r\n        <CommandGroup heading="Settings">\r\n          <CommandItem>\r\n            <User className="mr-2 h-4 w-4" />\r\n            <span>Profile</span>\r\n            <CommandShortcut>⌘P</CommandShortcut>\r\n          </CommandItem>\r\n          <CommandItem>\r\n            <CreditCard className="mr-2 h-4 w-4" />\r\n            <span>Billing</span>\r\n            <CommandShortcut>⌘B</CommandShortcut>\r\n          </CommandItem>\r\n          <CommandItem>\r\n            <Settings className="mr-2 h-4 w-4" />\r\n            <span>Settings</span>\r\n            <CommandShortcut>⌘S</CommandShortcut>\r\n          </CommandItem>\r\n        </CommandGroup>\r\n      </CommandList>\r\n    </Command>\r\n  );\r\n}\r\n',
+      },
+    ],
+  },
+  "demos/components/core/navigation-menu": {
+    component: React.lazy<React.FC>(
+      () => import("@/lib/demos/components/core/navigation-menu")
+    ),
+    code: [
+      {
+        title: "navigation-menu.tsx",
+        code: '"use client";\r\n\r\nimport * as React from "react";\r\nimport Link from "next/link";\r\nimport {\r\n  NavigationMenu,\r\n  NavigationMenuContent,\r\n  NavigationMenuItem,\r\n  NavigationMenuLink,\r\n  NavigationMenuList,\r\n  NavigationMenuTrigger,\r\n  navigationMenuTriggerStyle,\r\n} from "@/lib/components/core/default/navigation-menu";\r\nimport { cn } from "@/lib/utils/classes";\r\n\r\nconst components: { title: string; href: string; description: string }[] = [\r\n  {\r\n    title: "Alert Dialog",\r\n    href: "/docs/primitives/alert-dialog",\r\n    description:\r\n      "A modal dialog that interrupts the user with important content and expects a response.",\r\n  },\r\n  {\r\n    title: "Hover Card",\r\n    href: "/docs/primitives/hover-card",\r\n    description: "For sighted users to preview content available behind a link.",\r\n  },\r\n  {\r\n    title: "Progress",\r\n    href: "/docs/primitives/progress",\r\n    description:\r\n      "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",\r\n  },\r\n  {\r\n    title: "Scroll-area",\r\n    href: "/docs/primitives/scroll-area",\r\n    description: "Visually or semantically separates content.",\r\n  },\r\n  {\r\n    title: "Tabs",\r\n    href: "/docs/primitives/tabs",\r\n    description:\r\n      "A set of layered sections of content—known as tab panels—that are displayed one at a time.",\r\n  },\r\n  {\r\n    title: "Tooltip",\r\n    href: "/docs/primitives/tooltip",\r\n    description:\r\n      "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",\r\n  },\r\n];\r\n\r\nexport default function NavigationMenuDemo() {\r\n  return (\r\n    <NavigationMenu>\r\n      <NavigationMenuList>\r\n        <NavigationMenuItem>\r\n          <NavigationMenuTrigger>Getting started</NavigationMenuTrigger>\r\n          <NavigationMenuContent>\r\n            <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">\r\n              <li className="row-span-3">\r\n                <NavigationMenuLink asChild>\r\n                  <a\r\n                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"\r\n                    href="/"\r\n                  >\r\n                    {/* <Icons.logo className="h-6 w-6" /> */}\r\n                    <div className="mb-2 mt-4 text-lg font-medium">shadcn/ui</div>\r\n                    <p className="text-sm leading-tight text-muted-foreground">\r\n                      Beautifully designed components that you can copy and paste into\r\n                      your apps. Accessible. Customizable. Open Source.\r\n                    </p>\r\n                  </a>\r\n                </NavigationMenuLink>\r\n              </li>\r\n              <ListItem href="/docs" title="Introduction">\r\n                Re-usable components built using Radix UI and Tailwind CSS.\r\n              </ListItem>\r\n              <ListItem href="/docs/installation" title="Installation">\r\n                How to install dependencies and structure your app.\r\n              </ListItem>\r\n              <ListItem href="/docs/primitives/typography" title="Typography">\r\n                Styles for headings, paragraphs, lists...etc\r\n              </ListItem>\r\n            </ul>\r\n          </NavigationMenuContent>\r\n        </NavigationMenuItem>\r\n        <NavigationMenuItem>\r\n          <NavigationMenuTrigger>Components</NavigationMenuTrigger>\r\n          <NavigationMenuContent>\r\n            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">\r\n              {components.map((component) => (\r\n                <ListItem\r\n                  key={component.title}\r\n                  title={component.title}\r\n                  href={component.href}\r\n                >\r\n                  {component.description}\r\n                </ListItem>\r\n              ))}\r\n            </ul>\r\n          </NavigationMenuContent>\r\n        </NavigationMenuItem>\r\n        <NavigationMenuItem>\r\n          <Link href="/docs" legacyBehavior passHref>\r\n            <NavigationMenuLink className={navigationMenuTriggerStyle()}>\r\n              Documentation\r\n            </NavigationMenuLink>\r\n          </Link>\r\n        </NavigationMenuItem>\r\n      </NavigationMenuList>\r\n    </NavigationMenu>\r\n  );\r\n}\r\n\r\nconst ListItem = React.forwardRef<\r\n  React.ElementRef<"a">,\r\n  React.ComponentPropsWithoutRef<"a">\r\n>(({ className, title, children, ...props }, ref) => {\r\n  return (\r\n    <li>\r\n      <NavigationMenuLink asChild>\r\n        <a\r\n          ref={ref}\r\n          className={cn(\r\n            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",\r\n            className\r\n          )}\r\n          {...props}\r\n        >\r\n          <div className="text-sm font-medium leading-none">{title}</div>\r\n          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">\r\n            {children}\r\n          </p>\r\n        </a>\r\n      </NavigationMenuLink>\r\n    </li>\r\n  );\r\n});\r\nListItem.displayName = "ListItem";\r\n',
+      },
+    ],
+  },
+  "demos/components/core/pagination": {
+    component: React.lazy<React.FC>(
+      () => import("@/lib/demos/components/core/pagination")
+    ),
+    code: [
+      {
+        title: "pagination.tsx",
+        code: 'import {\r\n  Pagination,\r\n  PaginationContent,\r\n  PaginationEllipsis,\r\n  PaginationItem,\r\n  PaginationLink,\r\n  PaginationNext,\r\n  PaginationPrevious,\r\n} from "@/lib/components/core/default/pagination";\r\n\r\nexport default function PaginationDemo() {\r\n  return (\r\n    <Pagination>\r\n      <PaginationContent>\r\n        <PaginationItem>\r\n          <PaginationPrevious href="#" />\r\n        </PaginationItem>\r\n        <PaginationItem>\r\n          <PaginationLink href="#">1</PaginationLink>\r\n        </PaginationItem>\r\n        <PaginationItem>\r\n          <PaginationLink href="#" isActive>\r\n            2\r\n          </PaginationLink>\r\n        </PaginationItem>\r\n        <PaginationItem>\r\n          <PaginationLink href="#">3</PaginationLink>\r\n        </PaginationItem>\r\n        <PaginationItem>\r\n          <PaginationEllipsis />\r\n        </PaginationItem>\r\n        <PaginationItem>\r\n          <PaginationNext href="#" />\r\n        </PaginationItem>\r\n      </PaginationContent>\r\n    </Pagination>\r\n  );\r\n}\r\n',
+      },
+    ],
+  },
+  "demos/components/core/alert-dialog": {
+    component: React.lazy<React.FC>(
+      () => import("@/lib/demos/components/core/alert-dialog")
+    ),
+    code: [
+      {
+        title: "alert-dialog.tsx",
+        code: 'import {\r\n  AlertDialog,\r\n  AlertDialogAction,\r\n  AlertDialogCancel,\r\n  AlertDialogContent,\r\n  AlertDialogDescription,\r\n  AlertDialogFooter,\r\n  AlertDialogHeader,\r\n  AlertDialogTitle,\r\n  AlertDialogTrigger,\r\n} from "@/lib/components/core/default/alert-dialog";\r\nimport { Button } from "@/lib/components/core/default/button";\r\n\r\nexport default function AlertDialogDemo() {\r\n  return (\r\n    <AlertDialog>\r\n      <AlertDialogTrigger asChild>\r\n        <Button variant="outline">Show Dialog</Button>\r\n      </AlertDialogTrigger>\r\n      <AlertDialogContent>\r\n        <AlertDialogHeader>\r\n          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>\r\n          <AlertDialogDescription>\r\n            This action cannot be undone. This will permanently delete your account and\r\n            remove your data from our servers.\r\n          </AlertDialogDescription>\r\n        </AlertDialogHeader>\r\n        <AlertDialogFooter>\r\n          <AlertDialogCancel>Cancel</AlertDialogCancel>\r\n          <AlertDialogAction>Continue</AlertDialogAction>\r\n        </AlertDialogFooter>\r\n      </AlertDialogContent>\r\n    </AlertDialog>\r\n  );\r\n}\r\n',
       },
     ],
   },
@@ -185,28 +410,6 @@ export const previews = {
       {
         title: "context-menu.tsx",
         code: 'import {\r\n  ContextMenu,\r\n  ContextMenuCheckboxItem,\r\n  ContextMenuContent,\r\n  ContextMenuItem,\r\n  ContextMenuLabel,\r\n  ContextMenuRadioGroup,\r\n  ContextMenuRadioItem,\r\n  ContextMenuSeparator,\r\n  ContextMenuShortcut,\r\n  ContextMenuSub,\r\n  ContextMenuSubContent,\r\n  ContextMenuSubTrigger,\r\n  ContextMenuTrigger,\r\n} from "@/lib/components/core/default/context-menu";\r\n\r\nexport default function ContextMenuDemo() {\r\n  return (\r\n    <ContextMenu>\r\n      <ContextMenuTrigger className="flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed text-sm">\r\n        Right click here\r\n      </ContextMenuTrigger>\r\n      <ContextMenuContent className="w-64">\r\n        <ContextMenuItem inset>\r\n          Back\r\n          <ContextMenuShortcut>⌘[</ContextMenuShortcut>\r\n        </ContextMenuItem>\r\n        <ContextMenuItem inset disabled>\r\n          Forward\r\n          <ContextMenuShortcut>⌘]</ContextMenuShortcut>\r\n        </ContextMenuItem>\r\n        <ContextMenuItem inset>\r\n          Reload\r\n          <ContextMenuShortcut>⌘R</ContextMenuShortcut>\r\n        </ContextMenuItem>\r\n        <ContextMenuSub>\r\n          <ContextMenuSubTrigger inset>More Tools</ContextMenuSubTrigger>\r\n          <ContextMenuSubContent className="w-48">\r\n            <ContextMenuItem>\r\n              Save Page As...\r\n              <ContextMenuShortcut>⇧⌘S</ContextMenuShortcut>\r\n            </ContextMenuItem>\r\n            <ContextMenuItem>Create Shortcut...</ContextMenuItem>\r\n            <ContextMenuItem>Name Window...</ContextMenuItem>\r\n            <ContextMenuSeparator />\r\n            <ContextMenuItem>Developer Tools</ContextMenuItem>\r\n          </ContextMenuSubContent>\r\n        </ContextMenuSub>\r\n        <ContextMenuSeparator />\r\n        <ContextMenuCheckboxItem checked>\r\n          Show Bookmarks Bar\r\n          <ContextMenuShortcut>⌘⇧B</ContextMenuShortcut>\r\n        </ContextMenuCheckboxItem>\r\n        <ContextMenuCheckboxItem>Show Full URLs</ContextMenuCheckboxItem>\r\n        <ContextMenuSeparator />\r\n        <ContextMenuRadioGroup value="pedro">\r\n          <ContextMenuLabel inset>People</ContextMenuLabel>\r\n          <ContextMenuSeparator />\r\n          <ContextMenuRadioItem value="pedro">Pedro Duarte</ContextMenuRadioItem>\r\n          <ContextMenuRadioItem value="colm">Colm Tuite</ContextMenuRadioItem>\r\n        </ContextMenuRadioGroup>\r\n      </ContextMenuContent>\r\n    </ContextMenu>\r\n  );\r\n}\r\n',
-      },
-    ],
-  },
-  "demos/components/core/data-table": {
-    component: React.lazy<React.FC>(
-      () => import("@/lib/demos/components/core/data-table")
-    ),
-    code: [
-      {
-        title: "data-table.tsx",
-        code: '"use client";\r\n\r\nimport * as React from "react";\r\nimport {\r\n  type ColumnDef,\r\n  type ColumnFiltersState,\r\n  type SortingState,\r\n  type VisibilityState,\r\n  flexRender,\r\n  getCoreRowModel,\r\n  getFilteredRowModel,\r\n  getPaginationRowModel,\r\n  getSortedRowModel,\r\n  useReactTable,\r\n} from "@tanstack/react-table";\r\nimport { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";\r\nimport { Button } from "@/lib/components/core/default/button";\r\nimport { Checkbox } from "@/lib/components/core/default/checkbox";\r\nimport {\r\n  DropdownMenu,\r\n  DropdownMenuCheckboxItem,\r\n  DropdownMenuContent,\r\n  DropdownMenuItem,\r\n  DropdownMenuLabel,\r\n  DropdownMenuSeparator,\r\n  DropdownMenuTrigger,\r\n} from "@/lib/components/core/default/dropdown-menu";\r\nimport { Input } from "@/lib/components/core/default/input";\r\nimport {\r\n  Table,\r\n  TableBody,\r\n  TableCell,\r\n  TableHead,\r\n  TableHeader,\r\n  TableRow,\r\n} from "@/lib/components/core/default/table";\r\n\r\nconst data: Payment[] = [\r\n  {\r\n    id: "m5gr84i9",\r\n    amount: 316,\r\n    status: "success",\r\n    email: "ken99@yahoo.com",\r\n  },\r\n  {\r\n    id: "3u1reuv4",\r\n    amount: 242,\r\n    status: "success",\r\n    email: "Abe45@gmail.com",\r\n  },\r\n  {\r\n    id: "derv1ws0",\r\n    amount: 837,\r\n    status: "processing",\r\n    email: "Monserrat44@gmail.com",\r\n  },\r\n  {\r\n    id: "5kma53ae",\r\n    amount: 874,\r\n    status: "success",\r\n    email: "Silas22@gmail.com",\r\n  },\r\n];\r\n\r\nexport type Payment = {\r\n  id: string;\r\n  amount: number;\r\n  status: "pending" | "processing" | "success" | "failed";\r\n  email: string;\r\n};\r\n\r\nexport const columns: ColumnDef<Payment>[] = [\r\n  {\r\n    id: "select",\r\n    header: ({ table }) => (\r\n      <Checkbox\r\n        checked={\r\n          table.getIsAllPageRowsSelected() ||\r\n          (table.getIsSomePageRowsSelected() && "indeterminate")\r\n        }\r\n        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}\r\n        aria-label="Select all"\r\n      />\r\n    ),\r\n    cell: ({ row }) => (\r\n      <Checkbox\r\n        checked={row.getIsSelected()}\r\n        onCheckedChange={(value) => row.toggleSelected(!!value)}\r\n        aria-label="Select row"\r\n      />\r\n    ),\r\n    enableSorting: false,\r\n    enableHiding: false,\r\n  },\r\n  {\r\n    accessorKey: "status",\r\n    header: "Status",\r\n    cell: ({ row }) => <div className="capitalize">{row.getValue("status")}</div>,\r\n  },\r\n  {\r\n    accessorKey: "email",\r\n    header: ({ column }) => {\r\n      return (\r\n        <Button\r\n          variant="ghost"\r\n          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}\r\n        >\r\n          Email\r\n          <ArrowUpDown className="ml-2 h-4 w-4" />\r\n        </Button>\r\n      );\r\n    },\r\n    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,\r\n  },\r\n  {\r\n    accessorKey: "amount",\r\n    header: () => <div className="text-right">Amount</div>,\r\n    cell: ({ row }) => {\r\n      const amount = parseFloat(row.getValue("amount"));\r\n\r\n      // Format the amount as a dollar amount\r\n      const formatted = new Intl.NumberFormat("en-US", {\r\n        style: "currency",\r\n        currency: "USD",\r\n      }).format(amount);\r\n\r\n      return <div className="text-right font-medium">{formatted}</div>;\r\n    },\r\n  },\r\n  {\r\n    id: "actions",\r\n    enableHiding: false,\r\n    cell: ({ row }) => {\r\n      const payment = row.original;\r\n\r\n      return (\r\n        <DropdownMenu>\r\n          <DropdownMenuTrigger asChild>\r\n            <Button variant="ghost" className="h-8 w-8 p-0">\r\n              <span className="sr-only">Open menu</span>\r\n              <MoreHorizontal className="h-4 w-4" />\r\n            </Button>\r\n          </DropdownMenuTrigger>\r\n          <DropdownMenuContent align="end">\r\n            <DropdownMenuLabel>Actions</DropdownMenuLabel>\r\n            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(payment.id)}>\r\n              Copy payment ID\r\n            </DropdownMenuItem>\r\n            <DropdownMenuSeparator />\r\n            <DropdownMenuItem>View customer</DropdownMenuItem>\r\n            <DropdownMenuItem>View payment details</DropdownMenuItem>\r\n          </DropdownMenuContent>\r\n        </DropdownMenu>\r\n      );\r\n    },\r\n  },\r\n];\r\n\r\nexport default function DataTableDemo() {\r\n  const [sorting, setSorting] = React.useState<SortingState>([]);\r\n  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);\r\n  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});\r\n  const [rowSelection, setRowSelection] = React.useState({});\r\n\r\n  const table = useReactTable({\r\n    data,\r\n    columns,\r\n    onSortingChange: setSorting,\r\n    onColumnFiltersChange: setColumnFilters,\r\n    getCoreRowModel: getCoreRowModel(),\r\n    getPaginationRowModel: getPaginationRowModel(),\r\n    getSortedRowModel: getSortedRowModel(),\r\n    getFilteredRowModel: getFilteredRowModel(),\r\n    onColumnVisibilityChange: setColumnVisibility,\r\n    onRowSelectionChange: setRowSelection,\r\n    state: {\r\n      sorting,\r\n      columnFilters,\r\n      columnVisibility,\r\n      rowSelection,\r\n    },\r\n  });\r\n\r\n  return (\r\n    <div className="w-full">\r\n      <div className="flex items-center py-4">\r\n        <Input\r\n          placeholder="Filter emails..."\r\n          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}\r\n          onChange={(event) =>\r\n            table.getColumn("email")?.setFilterValue(event.target.value)\r\n          }\r\n          className="max-w-sm"\r\n        />\r\n        <DropdownMenu>\r\n          <DropdownMenuTrigger asChild>\r\n            <Button variant="outline" className="ml-auto">\r\n              Columns <ChevronDown className="ml-2 h-4 w-4" />\r\n            </Button>\r\n          </DropdownMenuTrigger>\r\n          <DropdownMenuContent align="end">\r\n            {table\r\n              .getAllColumns()\r\n              .filter((column) => column.getCanHide())\r\n              .map((column) => {\r\n                return (\r\n                  <DropdownMenuCheckboxItem\r\n                    key={column.id}\r\n                    className="capitalize"\r\n                    checked={column.getIsVisible()}\r\n                    onCheckedChange={(value) => column.toggleVisibility(!!value)}\r\n                  >\r\n                    {column.id}\r\n                  </DropdownMenuCheckboxItem>\r\n                );\r\n              })}\r\n          </DropdownMenuContent>\r\n        </DropdownMenu>\r\n      </div>\r\n      <div className="rounded-md border">\r\n        <Table>\r\n          <TableHeader>\r\n            {table.getHeaderGroups().map((headerGroup) => (\r\n              <TableRow key={headerGroup.id}>\r\n                {headerGroup.headers.map((header) => {\r\n                  return (\r\n                    <TableHead key={header.id}>\r\n                      {header.isPlaceholder\r\n                        ? null\r\n                        : flexRender(header.column.columnDef.header, header.getContext())}\r\n                    </TableHead>\r\n                  );\r\n                })}\r\n              </TableRow>\r\n            ))}\r\n          </TableHeader>\r\n          <TableBody>\r\n            {table.getRowModel().rows?.length ? (\r\n              table.getRowModel().rows.map((row) => (\r\n                <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>\r\n                  {row.getVisibleCells().map((cell) => (\r\n                    <TableCell key={cell.id}>\r\n                      {flexRender(cell.column.columnDef.cell, cell.getContext())}\r\n                    </TableCell>\r\n                  ))}\r\n                </TableRow>\r\n              ))\r\n            ) : (\r\n              <TableRow>\r\n                <TableCell colSpan={columns.length} className="h-24 text-center">\r\n                  No results.\r\n                </TableCell>\r\n              </TableRow>\r\n            )}\r\n          </TableBody>\r\n        </Table>\r\n      </div>\r\n      <div className="flex items-center justify-end space-x-2 py-4">\r\n        <div className="flex-1 text-sm text-muted-foreground">\r\n          {table.getFilteredSelectedRowModel().rows.length} of{" "}\r\n          {table.getFilteredRowModel().rows.length} row(s) selected.\r\n        </div>\r\n        <div className="space-x-2">\r\n          <Button\r\n            variant="outline"\r\n            size="sm"\r\n            onClick={() => table.previousPage()}\r\n            disabled={!table.getCanPreviousPage()}\r\n          >\r\n            Previous\r\n          </Button>\r\n          <Button\r\n            variant="outline"\r\n            size="sm"\r\n            onClick={() => table.nextPage()}\r\n            disabled={!table.getCanNextPage()}\r\n          >\r\n            Next\r\n          </Button>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  );\r\n}\r\n',
-      },
-    ],
-  },
-  "demos/components/core/date-picker": {
-    component: React.lazy<React.FC>(
-      () => import("@/lib/demos/components/core/date-picker")
-    ),
-    code: [
-      {
-        title: "date-picker.tsx",
-        code: '"use client";\r\n\r\nimport * as React from "react";\r\nimport { format } from "date-fns";\r\nimport { Calendar as CalendarIcon } from "lucide-react";\r\nimport { Button } from "@/lib/components/core/default/button";\r\nimport { Calendar } from "@/lib/components/core/default/calendar";\r\nimport {\r\n  Popover,\r\n  PopoverContent,\r\n  PopoverTrigger,\r\n} from "@/lib/components/core/default/popover";\r\nimport { cn } from "@/lib/utils";\r\n\r\nexport default function DatePickerDemo() {\r\n  const [date, setDate] = React.useState<Date>();\r\n\r\n  return (\r\n    <Popover>\r\n      <PopoverTrigger asChild>\r\n        <Button\r\n          variant={"outline"}\r\n          className={cn(\r\n            "w-[280px] justify-start text-left font-normal",\r\n            !date && "text-muted-foreground"\r\n          )}\r\n        >\r\n          <CalendarIcon className="mr-2 h-4 w-4" />\r\n          {date ? format(date, "PPP") : <span>Pick a date</span>}\r\n        </Button>\r\n      </PopoverTrigger>\r\n      <PopoverContent className="w-auto p-0">\r\n        <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />\r\n      </PopoverContent>\r\n    </Popover>\r\n  );\r\n}\r\n',
       },
     ],
   },
@@ -250,55 +453,6 @@ export const previews = {
       },
     ],
   },
-  "demos/components/core/input": {
-    component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/input")),
-    code: [
-      {
-        title: "input.tsx",
-        code: 'import { Input } from "@/lib/components/core/default/input";\r\n\r\nexport default function InputDemo() {\r\n  return <Input type="email" placeholder="Email" />;\r\n}\r\n',
-      },
-    ],
-  },
-  "demos/components/core/label": {
-    component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/label")),
-    code: [
-      {
-        title: "label.tsx",
-        code: 'import { Input } from "@/lib/components/core/default/input";\r\nimport { Label } from "@/lib/components/core/default/label";\r\n\r\nexport default function LabelDemo() {\r\n  return (\r\n    <div>\r\n      <div className="flex items-center space-x-4">\r\n        <Label htmlFor="name">Name</Label>\r\n        <Input id="name" />\r\n      </div>\r\n    </div>\r\n  );\r\n}\r\n',
-      },
-    ],
-  },
-  "demos/components/core/menu-bar": {
-    component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/menu-bar")),
-    code: [
-      {
-        title: "menu-bar.tsx",
-        code: 'import {\r\n  Menubar,\r\n  MenubarCheckboxItem,\r\n  MenubarContent,\r\n  MenubarItem,\r\n  MenubarMenu,\r\n  MenubarRadioGroup,\r\n  MenubarRadioItem,\r\n  MenubarSeparator,\r\n  MenubarShortcut,\r\n  MenubarSub,\r\n  MenubarSubContent,\r\n  MenubarSubTrigger,\r\n  MenubarTrigger,\r\n} from "@/lib/components/core/default/menubar";\r\n\r\nexport default function MenubarDemo() {\r\n  return (\r\n    <Menubar>\r\n      <MenubarMenu>\r\n        <MenubarTrigger>File</MenubarTrigger>\r\n        <MenubarContent>\r\n          <MenubarItem>\r\n            New Tab <MenubarShortcut>⌘T</MenubarShortcut>\r\n          </MenubarItem>\r\n          <MenubarItem>\r\n            New Window <MenubarShortcut>⌘N</MenubarShortcut>\r\n          </MenubarItem>\r\n          <MenubarItem disabled>New Incognito Window</MenubarItem>\r\n          <MenubarSeparator />\r\n          <MenubarSub>\r\n            <MenubarSubTrigger>Share</MenubarSubTrigger>\r\n            <MenubarSubContent>\r\n              <MenubarItem>Email link</MenubarItem>\r\n              <MenubarItem>Messages</MenubarItem>\r\n              <MenubarItem>Notes</MenubarItem>\r\n            </MenubarSubContent>\r\n          </MenubarSub>\r\n          <MenubarSeparator />\r\n          <MenubarItem>\r\n            Print... <MenubarShortcut>⌘P</MenubarShortcut>\r\n          </MenubarItem>\r\n        </MenubarContent>\r\n      </MenubarMenu>\r\n      <MenubarMenu>\r\n        <MenubarTrigger>Edit</MenubarTrigger>\r\n        <MenubarContent>\r\n          <MenubarItem>\r\n            Undo <MenubarShortcut>⌘Z</MenubarShortcut>\r\n          </MenubarItem>\r\n          <MenubarItem>\r\n            Redo <MenubarShortcut>⇧⌘Z</MenubarShortcut>\r\n          </MenubarItem>\r\n          <MenubarSeparator />\r\n          <MenubarSub>\r\n            <MenubarSubTrigger>Find</MenubarSubTrigger>\r\n            <MenubarSubContent>\r\n              <MenubarItem>Search the web</MenubarItem>\r\n              <MenubarSeparator />\r\n              <MenubarItem>Find...</MenubarItem>\r\n              <MenubarItem>Find Next</MenubarItem>\r\n              <MenubarItem>Find Previous</MenubarItem>\r\n            </MenubarSubContent>\r\n          </MenubarSub>\r\n          <MenubarSeparator />\r\n          <MenubarItem>Cut</MenubarItem>\r\n          <MenubarItem>Copy</MenubarItem>\r\n          <MenubarItem>Paste</MenubarItem>\r\n        </MenubarContent>\r\n      </MenubarMenu>\r\n      <MenubarMenu>\r\n        <MenubarTrigger>View</MenubarTrigger>\r\n        <MenubarContent>\r\n          <MenubarCheckboxItem>Always Show Bookmarks Bar</MenubarCheckboxItem>\r\n          <MenubarCheckboxItem checked>Always Show Full URLs</MenubarCheckboxItem>\r\n          <MenubarSeparator />\r\n          <MenubarItem inset>\r\n            Reload <MenubarShortcut>⌘R</MenubarShortcut>\r\n          </MenubarItem>\r\n          <MenubarItem disabled inset>\r\n            Force Reload <MenubarShortcut>⇧⌘R</MenubarShortcut>\r\n          </MenubarItem>\r\n          <MenubarSeparator />\r\n          <MenubarItem inset>Toggle Fullscreen</MenubarItem>\r\n          <MenubarSeparator />\r\n          <MenubarItem inset>Hide Sidebar</MenubarItem>\r\n        </MenubarContent>\r\n      </MenubarMenu>\r\n      <MenubarMenu>\r\n        <MenubarTrigger>Profiles</MenubarTrigger>\r\n        <MenubarContent>\r\n          <MenubarRadioGroup value="benoit">\r\n            <MenubarRadioItem value="andy">Andy</MenubarRadioItem>\r\n            <MenubarRadioItem value="benoit">Benoit</MenubarRadioItem>\r\n            <MenubarRadioItem value="Luis">Luis</MenubarRadioItem>\r\n          </MenubarRadioGroup>\r\n          <MenubarSeparator />\r\n          <MenubarItem inset>Edit...</MenubarItem>\r\n          <MenubarSeparator />\r\n          <MenubarItem inset>Add Profile...</MenubarItem>\r\n        </MenubarContent>\r\n      </MenubarMenu>\r\n    </Menubar>\r\n  );\r\n}\r\n',
-      },
-    ],
-  },
-  "demos/components/core/navigation-menu": {
-    component: React.lazy<React.FC>(
-      () => import("@/lib/demos/components/core/navigation-menu")
-    ),
-    code: [
-      {
-        title: "navigation-menu.tsx",
-        code: '"use client";\r\n\r\nimport * as React from "react";\r\nimport Link from "next/link";\r\nimport {\r\n  NavigationMenu,\r\n  NavigationMenuContent,\r\n  NavigationMenuItem,\r\n  NavigationMenuLink,\r\n  NavigationMenuList,\r\n  NavigationMenuTrigger,\r\n  navigationMenuTriggerStyle,\r\n} from "@/lib/components/core/default/navigation-menu";\r\nimport { cn } from "@/lib/utils";\r\n\r\nconst components: { title: string; href: string; description: string }[] = [\r\n  {\r\n    title: "Alert Dialog",\r\n    href: "/docs/primitives/alert-dialog",\r\n    description:\r\n      "A modal dialog that interrupts the user with important content and expects a response.",\r\n  },\r\n  {\r\n    title: "Hover Card",\r\n    href: "/docs/primitives/hover-card",\r\n    description: "For sighted users to preview content available behind a link.",\r\n  },\r\n  {\r\n    title: "Progress",\r\n    href: "/docs/primitives/progress",\r\n    description:\r\n      "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",\r\n  },\r\n  {\r\n    title: "Scroll-area",\r\n    href: "/docs/primitives/scroll-area",\r\n    description: "Visually or semantically separates content.",\r\n  },\r\n  {\r\n    title: "Tabs",\r\n    href: "/docs/primitives/tabs",\r\n    description:\r\n      "A set of layered sections of content—known as tab panels—that are displayed one at a time.",\r\n  },\r\n  {\r\n    title: "Tooltip",\r\n    href: "/docs/primitives/tooltip",\r\n    description:\r\n      "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",\r\n  },\r\n];\r\n\r\nexport default function NavigationMenuDemo() {\r\n  return (\r\n    <NavigationMenu>\r\n      <NavigationMenuList>\r\n        <NavigationMenuItem>\r\n          <NavigationMenuTrigger>Getting started</NavigationMenuTrigger>\r\n          <NavigationMenuContent>\r\n            <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">\r\n              <li className="row-span-3">\r\n                <NavigationMenuLink asChild>\r\n                  <a\r\n                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"\r\n                    href="/"\r\n                  >\r\n                    {/* <Icons.logo className="h-6 w-6" /> */}\r\n                    <div className="mb-2 mt-4 text-lg font-medium">shadcn/ui</div>\r\n                    <p className="text-sm leading-tight text-muted-foreground">\r\n                      Beautifully designed components that you can copy and paste into\r\n                      your apps. Accessible. Customizable. Open Source.\r\n                    </p>\r\n                  </a>\r\n                </NavigationMenuLink>\r\n              </li>\r\n              <ListItem href="/docs" title="Introduction">\r\n                Re-usable components built using Radix UI and Tailwind CSS.\r\n              </ListItem>\r\n              <ListItem href="/docs/installation" title="Installation">\r\n                How to install dependencies and structure your app.\r\n              </ListItem>\r\n              <ListItem href="/docs/primitives/typography" title="Typography">\r\n                Styles for headings, paragraphs, lists...etc\r\n              </ListItem>\r\n            </ul>\r\n          </NavigationMenuContent>\r\n        </NavigationMenuItem>\r\n        <NavigationMenuItem>\r\n          <NavigationMenuTrigger>Components</NavigationMenuTrigger>\r\n          <NavigationMenuContent>\r\n            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">\r\n              {components.map((component) => (\r\n                <ListItem\r\n                  key={component.title}\r\n                  title={component.title}\r\n                  href={component.href}\r\n                >\r\n                  {component.description}\r\n                </ListItem>\r\n              ))}\r\n            </ul>\r\n          </NavigationMenuContent>\r\n        </NavigationMenuItem>\r\n        <NavigationMenuItem>\r\n          <Link href="/docs" legacyBehavior passHref>\r\n            <NavigationMenuLink className={navigationMenuTriggerStyle()}>\r\n              Documentation\r\n            </NavigationMenuLink>\r\n          </Link>\r\n        </NavigationMenuItem>\r\n      </NavigationMenuList>\r\n    </NavigationMenu>\r\n  );\r\n}\r\n\r\nconst ListItem = React.forwardRef<\r\n  React.ElementRef<"a">,\r\n  React.ComponentPropsWithoutRef<"a">\r\n>(({ className, title, children, ...props }, ref) => {\r\n  return (\r\n    <li>\r\n      <NavigationMenuLink asChild>\r\n        <a\r\n          ref={ref}\r\n          className={cn(\r\n            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",\r\n            className\r\n          )}\r\n          {...props}\r\n        >\r\n          <div className="text-sm font-medium leading-none">{title}</div>\r\n          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">\r\n            {children}\r\n          </p>\r\n        </a>\r\n      </NavigationMenuLink>\r\n    </li>\r\n  );\r\n});\r\nListItem.displayName = "ListItem";\r\n',
-      },
-    ],
-  },
-  "demos/components/core/pagination": {
-    component: React.lazy<React.FC>(
-      () => import("@/lib/demos/components/core/pagination")
-    ),
-    code: [
-      {
-        title: "pagination.tsx",
-        code: 'import {\r\n  Pagination,\r\n  PaginationContent,\r\n  PaginationEllipsis,\r\n  PaginationItem,\r\n  PaginationLink,\r\n  PaginationNext,\r\n  PaginationPrevious,\r\n} from "@/lib/components/core/default/pagination";\r\n\r\nexport default function PaginationDemo() {\r\n  return (\r\n    <Pagination>\r\n      <PaginationContent>\r\n        <PaginationItem>\r\n          <PaginationPrevious href="#" />\r\n        </PaginationItem>\r\n        <PaginationItem>\r\n          <PaginationLink href="#">1</PaginationLink>\r\n        </PaginationItem>\r\n        <PaginationItem>\r\n          <PaginationLink href="#" isActive>\r\n            2\r\n          </PaginationLink>\r\n        </PaginationItem>\r\n        <PaginationItem>\r\n          <PaginationLink href="#">3</PaginationLink>\r\n        </PaginationItem>\r\n        <PaginationItem>\r\n          <PaginationEllipsis />\r\n        </PaginationItem>\r\n        <PaginationItem>\r\n          <PaginationNext href="#" />\r\n        </PaginationItem>\r\n      </PaginationContent>\r\n    </Pagination>\r\n  );\r\n}\r\n',
-      },
-    ],
-  },
   "demos/components/core/popover": {
     component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/popover")),
     code: [
@@ -308,166 +462,12 @@ export const previews = {
       },
     ],
   },
-  "demos/components/core/progress": {
-    component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/progress")),
-    code: [
-      {
-        title: "progress.tsx",
-        code: '"use client";\r\n\r\nimport * as React from "react";\r\nimport { Progress } from "@/lib/components/core/default/progress";\r\n\r\nexport default function ProgressDemo() {\r\n  const [progress, setProgress] = React.useState(0);\r\n\r\n  React.useEffect(() => {\r\n    const timer1 = setTimeout(() => setProgress(13), 800);\r\n    const timer2 = setTimeout(() => setProgress(66), 1700);\r\n    const timer3 = setTimeout(() => setProgress(100), 2500);\r\n    return () => {\r\n      clearTimeout(timer1);\r\n      clearTimeout(timer2);\r\n      clearTimeout(timer3);\r\n    };\r\n  }, []);\r\n\r\n  return <Progress value={progress} className="w-[60%]" />;\r\n}\r\n',
-      },
-    ],
-  },
-  "demos/components/core/radio-group": {
-    component: React.lazy<React.FC>(
-      () => import("@/lib/demos/components/core/radio-group")
-    ),
-    code: [
-      {
-        title: "radio-group.tsx",
-        code: 'import { Label } from "@/lib/components/core/default/label";\r\nimport { RadioGroup, RadioGroupItem } from "@/lib/components/core/default/radio-group";\r\n\r\nexport default function RadioGroupDemo() {\r\n  return (\r\n    <RadioGroup defaultValue="comfortable">\r\n      <div className="flex items-center space-x-3">\r\n        <RadioGroupItem value="default" id="r1" />\r\n        <Label htmlFor="r1" className="text-lg">\r\n          Default\r\n        </Label>\r\n      </div>\r\n      <div className="flex items-center space-x-3">\r\n        <RadioGroupItem value="comfortable" id="r2" />\r\n        <Label htmlFor="r2" className="text-lg">\r\n          Comfortable\r\n        </Label>\r\n      </div>\r\n      <div className="flex items-center space-x-3">\r\n        <RadioGroupItem value="compact" id="r3" />\r\n        <Label htmlFor="r3" className="text-lg">\r\n          Compact\r\n        </Label>\r\n      </div>\r\n    </RadioGroup>\r\n  );\r\n}\r\n',
-      },
-    ],
-  },
-  "demos/components/core/resizable": {
-    component: React.lazy<React.FC>(
-      () => import("@/lib/demos/components/core/resizable")
-    ),
-    code: [
-      {
-        title: "resizable.tsx",
-        code: 'import {\r\n  ResizableHandle,\r\n  ResizablePanel,\r\n  ResizablePanelGroup,\r\n} from "@/lib/components/core/default/resizable";\r\n\r\nexport default function ResizableDemo() {\r\n  return (\r\n    <ResizablePanelGroup direction="horizontal" className="max-w-md rounded-lg border">\r\n      <ResizablePanel defaultSize={50}>\r\n        <div className="flex h-[200px] items-center justify-center p-6">\r\n          <span className="font-semibold">One</span>\r\n        </div>\r\n      </ResizablePanel>\r\n      <ResizableHandle withHandle />\r\n      <ResizablePanel defaultSize={50}>\r\n        <ResizablePanelGroup direction="vertical">\r\n          <ResizablePanel defaultSize={25}>\r\n            <div className="flex h-full items-center justify-center p-6">\r\n              <span className="font-semibold">Two</span>\r\n            </div>\r\n          </ResizablePanel>\r\n          <ResizableHandle withHandle />\r\n          <ResizablePanel defaultSize={75}>\r\n            <div className="flex h-full items-center justify-center p-6">\r\n              <span className="font-semibold">Three</span>\r\n            </div>\r\n          </ResizablePanel>\r\n        </ResizablePanelGroup>\r\n      </ResizablePanel>\r\n    </ResizablePanelGroup>\r\n  );\r\n}\r\n',
-      },
-    ],
-  },
-  "demos/components/core/scroll-area": {
-    component: React.lazy<React.FC>(
-      () => import("@/lib/demos/components/core/scroll-area")
-    ),
-    code: [
-      {
-        title: "scroll-area.tsx",
-        code: 'import * as React from "react";\r\nimport { ScrollArea } from "@/lib/components/core/default/scroll-area";\r\nimport { Separator } from "@/lib/components/core/default/separator";\r\n\r\nconst tags = Array.from({ length: 50 }).map((_, i, a) => `v1.2.0-beta.${a.length - i}`);\r\n\r\nexport default function ScrollAreaDemo() {\r\n  return (\r\n    <ScrollArea className="h-72 w-48 rounded-md border">\r\n      <div className="p-4">\r\n        <h4 className="mb-4 text-sm font-medium leading-none">Tags</h4>\r\n        {tags.map((tag) => (\r\n          <>\r\n            <div key={tag} className="text-sm">\r\n              {tag}\r\n            </div>\r\n            <Separator className="my-2" />\r\n          </>\r\n        ))}\r\n      </div>\r\n    </ScrollArea>\r\n  );\r\n}\r\n',
-      },
-    ],
-  },
-  "demos/components/core/select": {
-    component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/select")),
-    code: [
-      {
-        title: "select.tsx",
-        code: 'import * as React from "react";\r\nimport {\r\n  Select,\r\n  SelectContent,\r\n  SelectGroup,\r\n  SelectItem,\r\n  SelectLabel,\r\n  SelectTrigger,\r\n  SelectValue,\r\n} from "@/lib/components/core/default/select";\r\n\r\nexport default function SelectDemo() {\r\n  return (\r\n    <Select>\r\n      <SelectTrigger className="w-[180px]">\r\n        <SelectValue placeholder="Select a fruit" />\r\n      </SelectTrigger>\r\n      <SelectContent>\r\n        <SelectGroup>\r\n          <SelectLabel>Fruits</SelectLabel>\r\n          <SelectItem value="apple">Apple</SelectItem>\r\n          <SelectItem value="banana">Banana</SelectItem>\r\n          <SelectItem value="blueberry">Blueberry</SelectItem>\r\n          <SelectItem value="grapes">Grapes</SelectItem>\r\n          <SelectItem value="pineapple">Pineapple</SelectItem>\r\n        </SelectGroup>\r\n      </SelectContent>\r\n    </Select>\r\n  );\r\n}\r\n',
-      },
-    ],
-  },
-  "demos/components/core/seperator": {
-    component: React.lazy<React.FC>(
-      () => import("@/lib/demos/components/core/seperator")
-    ),
-    code: [
-      {
-        title: "seperator.tsx",
-        code: 'import { Separator } from "@/lib/components/core/default/separator";\r\n\r\nexport default function SeparatorDemo() {\r\n  return (\r\n    <div>\r\n      <div className="space-y-1">\r\n        <h4 className="text-sm font-medium leading-none">Radix Primitives</h4>\r\n        <p className="text-sm text-muted-foreground">\r\n          An open-source UI component library.\r\n        </p>\r\n      </div>\r\n      <Separator className="my-4" />\r\n      <div className="flex h-5 items-center space-x-4 text-sm">\r\n        <div>Blog</div>\r\n        <Separator orientation="vertical" />\r\n        <div>Docs</div>\r\n        <Separator orientation="vertical" />\r\n        <div>Source</div>\r\n      </div>\r\n    </div>\r\n  );\r\n}\r\n',
-      },
-    ],
-  },
   "demos/components/core/sheet": {
     component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/sheet")),
     code: [
       {
         title: "sheet.tsx",
         code: 'import { Button } from "@/lib/components/core/default/button";\r\nimport { Input } from "@/lib/components/core/default/input";\r\nimport { Label } from "@/lib/components/core/default/label";\r\nimport {\r\n  Sheet,\r\n  SheetClose,\r\n  SheetContent,\r\n  SheetDescription,\r\n  SheetFooter,\r\n  SheetHeader,\r\n  SheetTitle,\r\n  SheetTrigger,\r\n} from "@/lib/components/core/default/sheet";\r\n\r\nexport default function SheetDemo() {\r\n  return (\r\n    <Sheet>\r\n      <SheetTrigger asChild>\r\n        <Button variant="outline">Open</Button>\r\n      </SheetTrigger>\r\n      <SheetContent>\r\n        <SheetHeader>\r\n          <SheetTitle>Edit profile</SheetTitle>\r\n          <SheetDescription>\r\n            Make changes to your profile here. Click save when you&apos;re done.\r\n          </SheetDescription>\r\n        </SheetHeader>\r\n        <div className="grid gap-4 py-4">\r\n          <div className="grid grid-cols-4 items-center gap-4">\r\n            <Label htmlFor="name" className="text-right">\r\n              Name\r\n            </Label>\r\n            <Input id="name" value="Pedro Duarte" className="col-span-3" />\r\n          </div>\r\n          <div className="grid grid-cols-4 items-center gap-4">\r\n            <Label htmlFor="username" className="text-right">\r\n              Username\r\n            </Label>\r\n            <Input id="username" value="@peduarte" className="col-span-3" />\r\n          </div>\r\n        </div>\r\n        <SheetFooter>\r\n          <SheetClose asChild>\r\n            <Button type="submit">Save changes</Button>\r\n          </SheetClose>\r\n        </SheetFooter>\r\n      </SheetContent>\r\n    </Sheet>\r\n  );\r\n}\r\n',
-      },
-    ],
-  },
-  "demos/components/core/skeleton": {
-    component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/skeleton")),
-    code: [
-      {
-        title: "skeleton.tsx",
-        code: 'import { Skeleton } from "@/lib/components/core/default/skeleton";\r\n\r\nexport default function SkeletonDemo() {\r\n  return (\r\n    <div className="flex items-center space-x-4">\r\n      <Skeleton className="h-12 w-12 rounded-full" />\r\n      <div className="space-y-2">\r\n        <Skeleton className="h-4 w-[250px]" />\r\n        <Skeleton className="h-4 w-[200px]" />\r\n      </div>\r\n    </div>\r\n  );\r\n}\r\n',
-      },
-    ],
-  },
-  "demos/components/core/slider": {
-    component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/slider")),
-    code: [
-      {
-        title: "slider.tsx",
-        code: 'import { Slider } from "@/lib/components/core/default/slider";\r\nimport { cn } from "@/lib/utils";\r\n\r\ntype SliderProps = React.ComponentProps<typeof Slider>;\r\n\r\nexport default function SliderDemo({ className, ...props }: SliderProps) {\r\n  return (\r\n    <Slider\r\n      defaultValue={[50]}\r\n      max={100}\r\n      step={1}\r\n      className={cn("w-[60%]", className)}\r\n      {...props}\r\n    />\r\n  );\r\n}\r\n',
-      },
-    ],
-  },
-  "demos/components/core/sonner": {
-    component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/sonner")),
-    code: [
-      {
-        title: "sonner.tsx",
-        code: '"use client";\r\n\r\nimport { toast } from "sonner";\r\nimport { Button } from "@/lib/components/core/default/button";\r\n\r\nexport default function SonnerDemo() {\r\n  return (\r\n    <Button\r\n      variant="outline"\r\n      onClick={() =>\r\n        toast("Event has been created", {\r\n          description: "Sunday, December 03, 2023 at 9:00 AM",\r\n          action: {\r\n            label: "Undo",\r\n            onClick: () => console.log("Undo"),\r\n          },\r\n        })\r\n      }\r\n    >\r\n      Show Toast\r\n    </Button>\r\n  );\r\n}\r\n',
-      },
-    ],
-  },
-  "demos/components/core/switch": {
-    component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/switch")),
-    code: [
-      {
-        title: "switch.tsx",
-        code: 'import { Label } from "@/lib/components/core/default/label";\r\nimport { Switch } from "@/lib/components/core/default/switch";\r\n\r\nexport default function SwitchDemo() {\r\n  return (\r\n    <div className="flex items-center space-x-2">\r\n      <Switch id="airplane-mode" />\r\n      <Label htmlFor="airplane-mode">Airplane Mode</Label>\r\n    </div>\r\n  );\r\n}\r\n',
-      },
-    ],
-  },
-  "demos/components/core/table": {
-    component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/table")),
-    code: [
-      {
-        title: "table.tsx",
-        code: 'import {\r\n  Table,\r\n  TableBody,\r\n  TableCaption,\r\n  TableCell,\r\n  TableFooter,\r\n  TableHead,\r\n  TableHeader,\r\n  TableRow,\r\n} from "@/lib/components/core/default/table";\r\n\r\nconst invoices = [\r\n  {\r\n    invoice: "INV001",\r\n    paymentStatus: "Paid",\r\n    totalAmount: "$250.00",\r\n    paymentMethod: "Credit Card",\r\n  },\r\n  {\r\n    invoice: "INV002",\r\n    paymentStatus: "Pending",\r\n    totalAmount: "$150.00",\r\n    paymentMethod: "PayPal",\r\n  },\r\n  {\r\n    invoice: "INV003",\r\n    paymentStatus: "Unpaid",\r\n    totalAmount: "$350.00",\r\n    paymentMethod: "Bank Transfer",\r\n  },\r\n  {\r\n    invoice: "INV004",\r\n    paymentStatus: "Paid",\r\n    totalAmount: "$450.00",\r\n    paymentMethod: "Credit Card",\r\n  },\r\n  {\r\n    invoice: "INV005",\r\n    paymentStatus: "Paid",\r\n    totalAmount: "$550.00",\r\n    paymentMethod: "PayPal",\r\n  },\r\n  {\r\n    invoice: "INV006",\r\n    paymentStatus: "Pending",\r\n    totalAmount: "$200.00",\r\n    paymentMethod: "Bank Transfer",\r\n  },\r\n  {\r\n    invoice: "INV007",\r\n    paymentStatus: "Unpaid",\r\n    totalAmount: "$300.00",\r\n    paymentMethod: "Credit Card",\r\n  },\r\n];\r\n\r\nexport default function TableDemo() {\r\n  return (\r\n    <Table>\r\n      <TableCaption>A list of your recent invoices.</TableCaption>\r\n      <TableHeader>\r\n        <TableRow>\r\n          <TableHead className="w-[100px]">Invoice</TableHead>\r\n          <TableHead>Status</TableHead>\r\n          <TableHead>Method</TableHead>\r\n          <TableHead className="text-right">Amount</TableHead>\r\n        </TableRow>\r\n      </TableHeader>\r\n      <TableBody>\r\n        {invoices.map((invoice) => (\r\n          <TableRow key={invoice.invoice}>\r\n            <TableCell className="font-medium">{invoice.invoice}</TableCell>\r\n            <TableCell>{invoice.paymentStatus}</TableCell>\r\n            <TableCell>{invoice.paymentMethod}</TableCell>\r\n            <TableCell className="text-right">{invoice.totalAmount}</TableCell>\r\n          </TableRow>\r\n        ))}\r\n      </TableBody>\r\n      <TableFooter>\r\n        <TableRow>\r\n          <TableCell colSpan={3}>Total</TableCell>\r\n          <TableCell className="text-right">$2,500.00</TableCell>\r\n        </TableRow>\r\n      </TableFooter>\r\n    </Table>\r\n  );\r\n}\r\n',
-      },
-    ],
-  },
-  "demos/components/core/tabs": {
-    component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/tabs")),
-    code: [
-      {
-        title: "tabs.tsx",
-        code: 'import { Button } from "@/lib/components/core/default/button";\r\nimport {\r\n  Card,\r\n  CardContent,\r\n  CardDescription,\r\n  CardFooter,\r\n  CardHeader,\r\n  CardTitle,\r\n} from "@/lib/components/core/default/card";\r\nimport { Input } from "@/lib/components/core/default/input";\r\nimport { Label } from "@/lib/components/core/default/label";\r\nimport {\r\n  Tabs,\r\n  TabsContent,\r\n  TabsList,\r\n  TabsTrigger,\r\n} from "@/lib/components/core/default/tabs";\r\n\r\nexport default function TabsDemo() {\r\n  return (\r\n    <Tabs defaultValue="account" className="w-[400px]">\r\n      <TabsList className="grid w-full grid-cols-2">\r\n        <TabsTrigger value="account">Account</TabsTrigger>\r\n        <TabsTrigger value="password">Password</TabsTrigger>\r\n      </TabsList>\r\n      <TabsContent value="account">\r\n        <Card>\r\n          <CardHeader>\r\n            <CardTitle>Account</CardTitle>\r\n            <CardDescription>\r\n              Make changes to your account here. Click save when you&apos;re done.\r\n            </CardDescription>\r\n          </CardHeader>\r\n          <CardContent className="space-y-2">\r\n            <div className="space-y-1">\r\n              <Label htmlFor="name">Name</Label>\r\n              <Input id="name" defaultValue="Pedro Duarte" />\r\n            </div>\r\n            <div className="space-y-1">\r\n              <Label htmlFor="username">Username</Label>\r\n              <Input id="username" defaultValue="@peduarte" />\r\n            </div>\r\n          </CardContent>\r\n          <CardFooter>\r\n            <Button>Save changes</Button>\r\n          </CardFooter>\r\n        </Card>\r\n      </TabsContent>\r\n      <TabsContent value="password">\r\n        <Card>\r\n          <CardHeader>\r\n            <CardTitle>Password</CardTitle>\r\n            <CardDescription>\r\n              Change your password here. After saving, you&apos;ll be logged out.\r\n            </CardDescription>\r\n          </CardHeader>\r\n          <CardContent className="space-y-2">\r\n            <div className="space-y-1">\r\n              <Label htmlFor="current">Current password</Label>\r\n              <Input id="current" type="password" />\r\n            </div>\r\n            <div className="space-y-1">\r\n              <Label htmlFor="new">New password</Label>\r\n              <Input id="new" type="password" />\r\n            </div>\r\n          </CardContent>\r\n          <CardFooter>\r\n            <Button>Save password</Button>\r\n          </CardFooter>\r\n        </Card>\r\n      </TabsContent>\r\n    </Tabs>\r\n  );\r\n}\r\n',
-      },
-    ],
-  },
-  "demos/components/core/textarea": {
-    component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/textarea")),
-    code: [
-      {
-        title: "textarea.tsx",
-        code: 'import { Textarea } from "@/lib/components/core/default/textarea";\r\n\r\nexport default function TextareaDemo() {\r\n  return <Textarea placeholder="Type your message here." />;\r\n}\r\n',
-      },
-    ],
-  },
-  "demos/components/core/toast": {
-    component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/toast")),
-    code: [
-      {
-        title: "toast.tsx",
-        code: '"use client";\r\n\r\nimport { Button } from "@/lib/components/core/default/button";\r\nimport { ToastAction } from "@/lib/components/core/default/toast";\r\nimport { useToast } from "@/lib/components/core/default/use-toast";\r\n\r\nexport default function ToastDemo() {\r\n  const { toast } = useToast();\r\n\r\n  return (\r\n    <Button\r\n      variant="outline"\r\n      onClick={() => {\r\n        toast({\r\n          title: "Scheduled: Catch up ",\r\n          description: "Friday, February 10, 2023 at 5:57 PM",\r\n          action: <ToastAction altText="Goto schedule to undo">Undo</ToastAction>,\r\n        });\r\n      }}\r\n    >\r\n      Add to calendar\r\n    </Button>\r\n  );\r\n}\r\n',
-      },
-    ],
-  },
-  "demos/components/core/toggle-group": {
-    component: React.lazy<React.FC>(
-      () => import("@/lib/demos/components/core/toggle-group")
-    ),
-    code: [
-      {
-        title: "toggle-group.tsx",
-        code: 'import { Bold, Italic, Underline } from "lucide-react";\r\nimport { ToggleGroup, ToggleGroupItem } from "@/lib/components/core/default/toggle-group";\r\n\r\nexport default function ToggleGroupDemo() {\r\n  return (\r\n    <ToggleGroup type="multiple">\r\n      <ToggleGroupItem value="bold" aria-label="Toggle bold">\r\n        <Bold className="h-4 w-4" />\r\n      </ToggleGroupItem>\r\n      <ToggleGroupItem value="italic" aria-label="Toggle italic">\r\n        <Italic className="h-4 w-4" />\r\n      </ToggleGroupItem>\r\n      <ToggleGroupItem value="underline" aria-label="Toggle underline">\r\n        <Underline className="h-4 w-4" />\r\n      </ToggleGroupItem>\r\n    </ToggleGroup>\r\n  );\r\n}\r\n',
-      },
-    ],
-  },
-  "demos/components/core/toggle": {
-    component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/toggle")),
-    code: [
-      {
-        title: "toggle.tsx",
-        code: 'import { Bold } from "lucide-react";\r\nimport { Toggle } from "@/lib/components/core/default/toggle";\r\n\r\nexport default function ToggleDemo() {\r\n  return (\r\n    <Toggle aria-label="Toggle bold">\r\n      <Bold className="h-4 w-4" />\r\n    </Toggle>\r\n  );\r\n}\r\n',
       },
     ],
   },
@@ -485,7 +485,7 @@ export const previews = {
     code: [
       {
         title: "use-media-query.tsx",
-        code: '"use client";\r\n\r\nimport React from "react";\r\nimport { LaptopIcon, MonitorIcon, PhoneIcon, TabletIcon } from "lucide-react";\r\nimport { useMediaQuery } from "@/lib/hooks/use-media-query";\r\nimport { cn } from "@/lib/utils";\r\n\r\nexport default function Demo() {\r\n  const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");\r\n  const isMediumDevice = useMediaQuery(\r\n    "only screen and (min-width : 769px) and (max-width : 992px)"\r\n  );\r\n  const isLargeDevice = useMediaQuery(\r\n    "only screen and (min-width : 993px) and (max-width : 1200px)"\r\n  );\r\n  const isExtraLargeDevice = useMediaQuery("only screen and (min-width : 1201px)");\r\n\r\n  return (\r\n    <div className="text-center">\r\n      <p>Resize your browser window to see changes.</p>\r\n      <div className="mt-8 grid grid-cols-4 gap-4">\r\n        {[\r\n          {\r\n            name: "Small",\r\n            isMatched: isSmallDevice,\r\n            icon: <PhoneIcon size={20} />,\r\n          },\r\n          {\r\n            name: "Medium",\r\n            isMatched: isMediumDevice,\r\n            icon: <TabletIcon size={20} />,\r\n          },\r\n          {\r\n            name: "Large",\r\n            isMatched: isLargeDevice,\r\n            icon: <LaptopIcon size={20} />,\r\n          },\r\n          {\r\n            name: "Extra Large",\r\n            isMatched: isExtraLargeDevice,\r\n            icon: <MonitorIcon size={20} />,\r\n          },\r\n        ].map(({ name, icon, isMatched }) => (\r\n          <div\r\n            key={name}\r\n            className={cn(\r\n              "flex flex-col items-center gap-2 rounded border-2 p-4",\r\n              isMatched && "border-green-800 text-green-200"\r\n            )}\r\n          >\r\n            {icon}\r\n            <p>{name}</p>\r\n          </div>\r\n        ))}\r\n      </div>\r\n    </div>\r\n  );\r\n}\r\n',
+        code: '"use client";\r\n\r\nimport React from "react";\r\nimport { LaptopIcon, MonitorIcon, PhoneIcon, TabletIcon } from "lucide-react";\r\nimport { ClientOnly } from "@/lib/components/utils/client-only";\r\nimport { useMediaQuery } from "@/lib/hooks/use-media-query";\r\nimport { cn } from "@/lib/utils/classes";\r\n\r\nfunction Demo() {\r\n  const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");\r\n  const isMediumDevice = useMediaQuery(\r\n    "only screen and (min-width : 769px) and (max-width : 992px)"\r\n  );\r\n  const isLargeDevice = useMediaQuery(\r\n    "only screen and (min-width : 993px) and (max-width : 1200px)"\r\n  );\r\n  const isExtraLargeDevice = useMediaQuery("only screen and (min-width : 1201px)");\r\n\r\n  return (\r\n    <ClientOnly>\r\n      <div className="text-center">\r\n        <p>Resize your browser window to see changes.</p>\r\n        <div className="mt-8 grid grid-cols-4 gap-4">\r\n          {[\r\n            {\r\n              name: "Small",\r\n              isMatched: isSmallDevice,\r\n              icon: <PhoneIcon size={20} />,\r\n            },\r\n            {\r\n              name: "Medium",\r\n              isMatched: isMediumDevice,\r\n              icon: <TabletIcon size={20} />,\r\n            },\r\n            {\r\n              name: "Large",\r\n              isMatched: isLargeDevice,\r\n              icon: <LaptopIcon size={20} />,\r\n            },\r\n            {\r\n              name: "Extra Large",\r\n              isMatched: isExtraLargeDevice,\r\n              icon: <MonitorIcon size={20} />,\r\n            },\r\n          ].map(({ name, icon, isMatched }) => (\r\n            <div\r\n              key={name}\r\n              className={cn(\r\n                "flex flex-col items-center gap-2 rounded border-2 p-4",\r\n                isMatched && "border-green-800 text-green-200"\r\n              )}\r\n            >\r\n              {icon}\r\n              <p>{name}</p>\r\n            </div>\r\n          ))}\r\n        </div>\r\n      </div>\r\n    </ClientOnly>\r\n  );\r\n}\r\n\r\nexport default function ClientOnlyDemo() {\r\n  return (\r\n    <ClientOnly>\r\n      <Demo />\r\n    </ClientOnly>\r\n  );\r\n}\r\n',
       },
     ],
   },
@@ -496,7 +496,7 @@ export const previews = {
     code: [
       {
         title: "use-intersection-observer.tsx",
-        code: '"use client";\r\n\r\nimport * as React from "react";\r\nimport { ScrollArea } from "@/lib/components/core/default/scroll-area";\r\nimport { useIntersectionObserver } from "@/lib/hooks/use-intersection-observer";\r\nimport { cn } from "@/lib/utils";\r\n\r\nexport default function Demo() {\r\n  const [ref, entry] = useIntersectionObserver({\r\n    threshold: 0,\r\n    root: null,\r\n    rootMargin: "0px",\r\n  });\r\n\r\n  return (\r\n    <div className="w-full max-w-sm">\r\n      <p>\r\n        Element{" "}\r\n        <span\r\n          className={cn(entry?.isIntersecting ? "text-green-700" : "text-yellow-600")}\r\n        >\r\n          {entry?.isIntersecting ? "inside" : "outside"}\r\n        </span>{" "}\r\n        the viewport\r\n      </p>\r\n      <ScrollArea type="always" className="mt-4 h-32 border">\r\n        <div className="flex h-96 flex-col items-center justify-between py-8">\r\n          <p className="text-muted-foreground">Scroll me down!</p>\r\n          <p ref={ref} className="border-4 border-dashed p-4">\r\n            Hello world!\r\n          </p>\r\n        </div>\r\n      </ScrollArea>\r\n    </div>\r\n  );\r\n}\r\n',
+        code: '"use client";\r\n\r\nimport * as React from "react";\r\nimport { ScrollArea } from "@/lib/components/core/default/scroll-area";\r\nimport { useIntersectionObserver } from "@/lib/hooks/use-intersection-observer";\r\nimport { cn } from "@/lib/utils/classes";\r\n\r\nexport default function Demo() {\r\n  const [ref, entry] = useIntersectionObserver({\r\n    threshold: 0,\r\n    root: null,\r\n    rootMargin: "0px",\r\n  });\r\n\r\n  return (\r\n    <div className="w-full max-w-sm">\r\n      <p>\r\n        Element{" "}\r\n        <span\r\n          className={cn(entry?.isIntersecting ? "text-green-700" : "text-yellow-600")}\r\n        >\r\n          {entry?.isIntersecting ? "inside" : "outside"}\r\n        </span>{" "}\r\n        the viewport\r\n      </p>\r\n      <ScrollArea type="always" className="mt-4 h-32 border">\r\n        <div className="flex h-96 flex-col items-center justify-between py-8">\r\n          <p className="text-muted-foreground">Scroll me down!</p>\r\n          <p ref={ref} className="border-4 border-dashed p-4">\r\n            Hello world!\r\n          </p>\r\n        </div>\r\n      </ScrollArea>\r\n    </div>\r\n  );\r\n}\r\n',
       },
     ],
   },
@@ -523,7 +523,7 @@ export const previews = {
     code: [
       {
         title: "use-mouse.tsx",
-        code: '"use client";\r\n\r\nimport {\r\n  Table,\r\n  TableBody,\r\n  TableCaption,\r\n  TableCell,\r\n  TableHead,\r\n  TableHeader,\r\n  TableRow,\r\n} from "@/lib/components/core/default/table";\r\nimport { useMouse } from "@/lib/hooks/use-mouse";\r\nimport { cn } from "@/lib/utils";\r\n\r\nexport default function Demo() {\r\n  const [mouse, ref] = useMouse<HTMLDivElement>();\r\n\r\n  const xIntersecting = mouse.elementX > 0 && mouse.elementX < 300;\r\n  const yIntersecting = mouse.elementY > 0 && mouse.elementY < 300;\r\n  const isIntersecting = xIntersecting && yIntersecting;\r\n\r\n  return (\r\n    <div>\r\n      <div className="mx-auto flex rounded-lg border bg-card py-4">\r\n        {[\r\n          {\r\n            caption: "Mouse Position",\r\n            headers: ["X", "Y"],\r\n            rows: [[mouse.x, mouse.y]],\r\n          },\r\n          {\r\n            caption: "Relative to ref",\r\n            headers: ["ElementX", "ElementY"],\r\n            rows: [[mouse.elementX, mouse.elementY]],\r\n          },\r\n        ].map(({ caption, headers, rows }) => (\r\n          <Table key={caption} className="mx-auto">\r\n            <TableCaption>{caption}</TableCaption>\r\n            <TableHeader>\r\n              <TableRow>\r\n                {headers.map((header, i) => (\r\n                  <TableHead key={i} className="w-[100px]">\r\n                    {header}\r\n                  </TableHead>\r\n                ))}\r\n              </TableRow>\r\n            </TableHeader>\r\n            <TableBody>\r\n              {rows.map((row, i) => (\r\n                <TableRow key={i}>\r\n                  {row.map((cell, j) => (\r\n                    <TableCell key={j} className="max-w-[50px] truncate">\r\n                      {cell}\r\n                    </TableCell>\r\n                  ))}\r\n                </TableRow>\r\n              ))}\r\n            </TableBody>\r\n          </Table>\r\n        ))}\r\n      </div>\r\n      <div\r\n        ref={ref}\r\n        className={cn(\r\n          "mx-auto mt-4 flex h-[200px] w-full max-w-sm items-center justify-center rounded-lg border bg-background p-4 transition-colors",\r\n          isIntersecting && "bg-green-900"\r\n        )}\r\n      >\r\n        <span>Use a ref to add coords relative to the element</span>\r\n      </div>\r\n    </div>\r\n  );\r\n}\r\n',
+        code: '"use client";\r\n\r\nimport {\r\n  Table,\r\n  TableBody,\r\n  TableCaption,\r\n  TableCell,\r\n  TableHead,\r\n  TableHeader,\r\n  TableRow,\r\n} from "@/lib/components/core/default/table";\r\nimport { useMouse } from "@/lib/hooks/use-mouse";\r\nimport { cn } from "@/lib/utils/classes";\r\n\r\nexport default function Demo() {\r\n  const [mouse, ref] = useMouse<HTMLDivElement>();\r\n\r\n  const xIntersecting = mouse.elementX > 0 && mouse.elementX < 300;\r\n  const yIntersecting = mouse.elementY > 0 && mouse.elementY < 300;\r\n  const isIntersecting = xIntersecting && yIntersecting;\r\n\r\n  return (\r\n    <div>\r\n      <div className="mx-auto flex rounded-lg border bg-card py-4">\r\n        {[\r\n          {\r\n            caption: "Mouse Position",\r\n            headers: ["X", "Y"],\r\n            rows: [[mouse.x, mouse.y]],\r\n          },\r\n          {\r\n            caption: "Relative to ref",\r\n            headers: ["ElementX", "ElementY"],\r\n            rows: [[mouse.elementX, mouse.elementY]],\r\n          },\r\n        ].map(({ caption, headers, rows }) => (\r\n          <Table key={caption} className="mx-auto">\r\n            <TableCaption>{caption}</TableCaption>\r\n            <TableHeader>\r\n              <TableRow>\r\n                {headers.map((header, i) => (\r\n                  <TableHead key={i} className="w-[100px]">\r\n                    {header}\r\n                  </TableHead>\r\n                ))}\r\n              </TableRow>\r\n            </TableHeader>\r\n            <TableBody>\r\n              {rows.map((row, i) => (\r\n                <TableRow key={i}>\r\n                  {row.map((cell, j) => (\r\n                    <TableCell key={j} className="max-w-[50px] truncate">\r\n                      {cell}\r\n                    </TableCell>\r\n                  ))}\r\n                </TableRow>\r\n              ))}\r\n            </TableBody>\r\n          </Table>\r\n        ))}\r\n      </div>\r\n      <div\r\n        ref={ref}\r\n        className={cn(\r\n          "mx-auto mt-4 flex h-[200px] w-full max-w-sm items-center justify-center rounded-lg border bg-background p-4 transition-colors",\r\n          isIntersecting && "bg-green-900"\r\n        )}\r\n      >\r\n        <span>Use a ref to add coords relative to the element</span>\r\n      </div>\r\n    </div>\r\n  );\r\n}\r\n',
       },
     ],
   },
@@ -541,7 +541,7 @@ export const previews = {
     code: [
       {
         title: "use-local-storage.tsx",
-        code: '"use client";\r\n\r\nimport * as React from "react";\r\nimport { Button } from "@/lib/components/core/default/button";\r\nimport { Textarea } from "@/lib/components/core/default/textarea";\r\nimport { useLocalStorage } from "@/lib/hooks/use-local-storage";\r\n\r\nexport default function Demo() {\r\n  const [writing, saveWriting] = useLocalStorage<string | null>("writing", null);\r\n  const [input, setInput] = React.useState(writing ?? "");\r\n\r\n  return (\r\n    <div className="w-full max-w-sm">\r\n      <Textarea\r\n        value={input}\r\n        onChange={(e) => {\r\n          setInput(e.target.value);\r\n        }}\r\n        placeholder="Start your writing here, save it and refresh the page to see it persist."\r\n      />\r\n      <div className="mt-4 flex items-center justify-end space-x-2">\r\n        <Button\r\n          variant="secondary"\r\n          size="sm"\r\n          onClick={() => {\r\n            setInput("");\r\n            saveWriting(null);\r\n          }}\r\n        >\r\n          Clear\r\n        </Button>\r\n        <Button\r\n          variant="default"\r\n          size="sm"\r\n          onClick={() => {\r\n            saveWriting(input);\r\n            // TODO: toast notification\r\n          }}\r\n        >\r\n          Save\r\n        </Button>\r\n      </div>\r\n    </div>\r\n  );\r\n}\r\n',
+        code: '"use client";\r\n\r\nimport * as React from "react";\r\nimport { Button } from "@/lib/components/core/default/button";\r\nimport { Textarea } from "@/lib/components/core/default/textarea";\r\nimport { ClientOnly } from "@/lib/components/utils/client-only";\r\nimport { useLocalStorage } from "@/lib/hooks/use-local-storage";\r\n\r\nfunction Demo() {\r\n  const [writing, saveWriting] = useLocalStorage<string | null>("writing", null);\r\n  const [input, setInput] = React.useState(writing ?? "");\r\n\r\n  return (\r\n    <div className="w-full max-w-sm">\r\n      <Textarea\r\n        value={input}\r\n        onChange={(e) => {\r\n          setInput(e.target.value);\r\n        }}\r\n        placeholder="Start your writing here, save it and refresh the page to see it persist."\r\n      />\r\n      <div className="mt-4 flex items-center justify-end space-x-2">\r\n        <Button\r\n          variant="secondary"\r\n          size="sm"\r\n          onClick={() => {\r\n            setInput("");\r\n            saveWriting(null);\r\n          }}\r\n        >\r\n          Clear\r\n        </Button>\r\n        <Button\r\n          variant="default"\r\n          size="sm"\r\n          onClick={() => {\r\n            saveWriting(input);\r\n            // TODO: toast notification\r\n          }}\r\n        >\r\n          Save\r\n        </Button>\r\n      </div>\r\n    </div>\r\n  );\r\n}\r\n\r\nexport default function ClientOnlyDemo() {\r\n  return (\r\n    <ClientOnly>\r\n      <Demo />\r\n    </ClientOnly>\r\n  );\r\n}\r\n',
       },
     ],
   },
@@ -559,7 +559,7 @@ export const previews = {
     code: [
       {
         title: "use-debounce.tsx",
-        code: '"use client";\r\n\r\nimport * as React from "react";\r\nimport { SearchIcon } from "lucide-react";\r\nimport { Input } from "@/components/ui/input";\r\nimport { useDebounce } from "@/lib/hooks/use-debounce";\r\n\r\nexport default function Demo() {\r\n  const [searchInput, setSearchInput] = React.useState("");\r\n  const debouncedValue = useDebounce(searchInput, 1000);\r\n\r\n  return (\r\n    <div className="w-full max-w-sm">\r\n      <div className="relative">\r\n        <SearchIcon\r\n          size={18}\r\n          className="pointer-events-none absolute left-2 top-1/2 -translate-y-1/2 transform text-muted-foreground"\r\n        />\r\n        <Input\r\n          value={searchInput}\r\n          onChange={(e) => {\r\n            setSearchInput(e.target.value);\r\n          }}\r\n          placeholder="Search"\r\n          className="full-w pl-8"\r\n        />\r\n      </div>\r\n      <div className="mt-10 text-center">\r\n        {debouncedValue ? (\r\n          <p>Results for &quot;{debouncedValue}&quot;</p>\r\n        ) : (\r\n          <p className="text-muted-foreground">Start searching</p>\r\n        )}\r\n      </div>\r\n    </div>\r\n  );\r\n}\r\n',
+        code: '"use client";\r\n\r\nimport * as React from "react";\r\nimport { SearchIcon } from "lucide-react";\r\nimport { Input } from "@/lib/components/core/default/input";\r\nimport { useDebounce } from "@/lib/hooks/use-debounce";\r\n\r\nexport default function Demo() {\r\n  const [searchInput, setSearchInput] = React.useState("");\r\n  const debouncedValue = useDebounce(searchInput, 1000);\r\n\r\n  return (\r\n    <div className="w-full max-w-sm">\r\n      <div className="relative">\r\n        <SearchIcon\r\n          size={18}\r\n          className="pointer-events-none absolute left-2 top-1/2 -translate-y-1/2 transform text-muted-foreground"\r\n        />\r\n        <Input\r\n          value={searchInput}\r\n          onChange={(e) => {\r\n            setSearchInput(e.target.value);\r\n          }}\r\n          placeholder="Search"\r\n          className="full-w pl-8"\r\n        />\r\n      </div>\r\n      <div className="mt-10 text-center">\r\n        {debouncedValue ? (\r\n          <p>Results for &quot;{debouncedValue}&quot;</p>\r\n        ) : (\r\n          <p className="text-muted-foreground">Start searching</p>\r\n        )}\r\n      </div>\r\n    </div>\r\n  );\r\n}\r\n',
       },
     ],
   },

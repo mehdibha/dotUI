@@ -2,10 +2,10 @@ import React from "react";
 import Image from "next/image";
 import NavLink from "next/link";
 import Link from "next/link";
-import { GithubIcon, LinkedinIcon, TwitterIcon } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
+import { GitHubIcon, TwitterIcon } from "@/components/icons";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { Separator } from "@/lib/components/core/default/separator";
 import { siteConfig } from "@/config";
-import { ThemeToggle } from "./theme-toggle";
 
 const links = [
   {
@@ -24,8 +24,8 @@ const links = [
         href: "/icons",
       },
       {
-        label: "Pages",
-        href: "/pages",
+        label: "Blocks",
+        href: "/blocks",
       },
       {
         label: "Templates",
@@ -38,11 +38,11 @@ const links = [
     links: [
       {
         label: "GitHub",
-        href: "https://github.com/mehdibha/rcopy",
+        href: siteConfig.links.github,
       },
       {
         label: "Discord",
-        href: "https://discord.gg/DXpj5V2fU8",
+        href: siteConfig.links.discord,
       },
     ],
   },
@@ -53,14 +53,17 @@ const links = [
         label: "Open an issue",
         href: "https://github.com/mehdibha/rcopy/issues/new",
       },
+      {
+        label: "Request a feature",
+        href: "https://github.com/mehdibha/rcopy/issues/new",
+      },
     ],
   },
 ];
 
 const socialLinks = [
-  { icon: GithubIcon, href: "https://github.com/mehdibha/rcopy" },
-  { icon: TwitterIcon, href: "#" },
-  { icon: LinkedinIcon, href: "#" },
+  { icon: TwitterIcon, href: siteConfig.links.twitter },
+  { icon: GitHubIcon, href: siteConfig.links.github },
 ];
 
 export const Footer = () => {

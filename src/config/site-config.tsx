@@ -22,11 +22,12 @@ export const siteConfig = {
   links: {
     github: "https://github.com/mehdibha/rcopy",
     twitter: "https://twitter.com/mehdibha_",
+    discord: "https://discord.gg/DXpj5V2fU8",
   },
   header: {
     nav: {
       links: [
-        { href: "/getting-started/introduction", label: "Docs" },
+        { href: "/docs", label: "Docs" },
         { href: "/components", label: "Components" },
         { href: "/blocks", label: "Blocks" },
         { href: "/hooks", label: "Hooks" },

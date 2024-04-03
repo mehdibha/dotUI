@@ -2,8 +2,8 @@
 
 import React from "react";
 import { CheckIcon, CopyIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/utils/classes";
+import { Button } from "@/lib/components/core/default/button";
+import { cn } from "@/lib/utils/classes";
 
 export const CopyButton = ({ code, className }: { code: string; className?: string }) => {
   const [copied, setCopied] = React.useState(false);

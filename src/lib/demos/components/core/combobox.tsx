@@ -15,7 +15,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/lib/components/core/default/popover";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/classes";
 
 const frameworks = [
   {

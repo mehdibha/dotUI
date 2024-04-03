@@ -4,7 +4,7 @@ import React from "react";
 import * as SwitchPrimitives from "@radix-ui/react-switch";
 import { MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
-import { cn } from "@/utils/classes";
+import { cn } from "@/lib/utils/classes";
 
 export const ThemeToggle = ({ className }: { className?: string }) => {
   const { theme, setTheme } = useTheme();

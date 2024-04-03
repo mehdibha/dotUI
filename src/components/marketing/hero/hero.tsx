@@ -2,10 +2,10 @@ import React from "react";
 import Link from "next/link";
 import { ArrowRightIcon, SparklesIcon } from "lucide-react";
 import Balancer from "react-wrap-balancer";
-import { SearchCommand } from "@/components/search-command";
-import { badgeVariants } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/utils/classes";
+import { SearchDocs } from "@/components/docs/search-docs";
+import { badgeVariants } from "@/lib/components/core/default/badge";
+import { Button } from "@/lib/components/core/default/button";
+import { cn } from "@/lib/utils/classes";
 import { Animation } from "./animation";
 
 export const Hero = ({ className }: { className?: string }) => {
@@ -18,7 +18,7 @@ export const Hero = ({ className }: { className?: string }) => {
           href="https://github.com/mehdibha/rcopy"
           target="_blank"
           className={cn(
-            badgeVariants({ variant: "outline", size: "md" }),
+            badgeVariants({ variant: "outline" }),
             "cursor-pointer space-x-2 font-mono delay-75 duration-200 hover:bg-secondary"
           )}
         >
@@ -38,7 +38,7 @@ export const Hero = ({ className }: { className?: string }) => {
           <Button size="lg" variant="default" asChild>
             <Link href="/getting-started/introduction">Read the docs</Link>
           </Button>
-          <SearchCommand className="w-auto" size="lg" />
+          <SearchDocs className="w-auto" size="lg" />
         </div>
       </div>
       <div className="hidden px-10 lg:block xl:px-20">

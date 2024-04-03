@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
-import { cn } from "@/utils/classes";
+import { Label } from "@/lib/components/core/default/label";
+import { Switch } from "@/lib/components/core/default/switch";
+import { cn } from "@/lib/utils/classes";
 import { PricingPlan } from "./pricing-plan";
 import type { Plan } from "./types";
 

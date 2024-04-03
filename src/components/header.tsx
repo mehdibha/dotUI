@@ -7,16 +7,16 @@ import { usePathname } from "next/navigation";
 import { motion, useAnimate } from "framer-motion";
 import { MenuIcon } from "lucide-react";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
-import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { useScroll } from "@/hooks/use-scroll";
-import { cn } from "@/utils/classes";
+import { Button } from "@/lib/components/core/default/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/lib/components/core/default/sheet";
+import { useScrolled } from "@/lib/hooks/use-scrolled";
+import { cn } from "@/lib/utils/classes";
 import { siteConfig } from "@/config";
 
 const config = siteConfig.header;
 
 export const Header = () => {
-  const { scrolled } = useScroll();
+  const { scrolled } = useScrolled();
   const [refLogo, animate] = useAnimate();
 
   React.useEffect(() => {

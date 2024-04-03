@@ -1,5 +1,5 @@
 import React from "react";
-import { cn } from "@/utils/classes";
+import { cn } from "@/lib/utils/classes";
 
 export const Features = ({ className }: { className?: string }) => {
   return (

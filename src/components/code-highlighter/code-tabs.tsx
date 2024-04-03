@@ -1,5 +1,5 @@
 import { Code, type Extension, type BrightProps } from "bright";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { ScrollArea } from "@/lib/components/core/default/scroll-area";
 import { TabsRoot, TabsContent, TabsList } from "./client";
 import { CopyButton } from "./copy-button";
 

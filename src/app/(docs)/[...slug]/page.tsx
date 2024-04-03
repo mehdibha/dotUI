@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ChevronRightIcon } from "lucide-react";
+import { TableOfContents } from "@/components/docs/toc";
 import { Mdx } from "@/components/mdx/mdx-remote";
-import { TableOfContents } from "@/components/toc";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -12,12 +12,11 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { cn } from "@/utils/classes";
-import { getDocFromSlug, getAllDocs } from "@/utils/docs";
-import { DataGrid } from "./data-grid";
+} from "@/lib/components/core/default/breadcrumb";
+import { Button } from "@/lib/components/core/default/button";
+import { ScrollArea } from "@/lib/components/core/default/scroll-area";
+import { cn } from "@/lib/utils/classes";
+import { getDocFromSlug, getDocs } from "@/server/docs";
 
 interface PageProps {
   params: {
@@ -39,7 +38,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 export async function generateStaticParams(): Promise<PageProps["params"][]> {
-  const allDocs = getAllDocs();
+  const allDocs = getDocs(undefined, true);
   return allDocs.map((doc) => ({ slug: doc.href.split("/").slice(1) }));
 }
 
@@ -50,7 +49,7 @@ export default async function Page({ params }: PageProps) {
     notFound();
   }
 
-  const { rawContent, metadata, categories, items } = doc;
+  const { rawContent, metadata, categories } = doc;
 
   return (
     <main
@@ -61,7 +60,7 @@ export default async function Page({ params }: PageProps) {
       <div className="mx-auto w-full min-w-0 pt-6">
         {metadata.breadcrumbs.length > 1 && (
           <Breadcrumb className="mb-2">
-            <BreadcrumbList>
+            <BreadcrumbList className="sm:gap-1.5">
               {metadata.breadcrumbs.map((breadcrumb, index) => (
                 <React.Fragment key={index}>
                   {index === metadata.breadcrumbs.length - 1 ? (
@@ -88,7 +87,7 @@ export default async function Page({ params }: PageProps) {
         {categories && categories.length > 0 && (
           <div className="mt-6 flex flex-wrap gap-4">
             {categories.map((category, index) => (
-              <Button key={index} size="sm" variant="secondary" asChild>
+              <Button key={index} size="sm" variant="secondary" asChild className="h-7">
                 <Link href={category.href}>{category.label}</Link>
               </Button>
             ))}
@@ -96,9 +95,6 @@ export default async function Page({ params }: PageProps) {
         )}
         <div className="mt-10 text-sm md:text-base">
           <Mdx source={rawContent} />
-          {items && items.length > 0 && (
-            <DataGrid items={items} type={metadata.type} className="mt-8" />
-          )}
         </div>
       </div>
       {doc.toc.items && ( // doc.toc

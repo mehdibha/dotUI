@@ -1,7 +1,7 @@
 import React from "react";
 import { Code } from "bright";
 import { tabs } from "@/components/code-highlighter/code-tabs";
-import { getComponentSource } from "@/utils/component-source";
+import { getComponentSource } from "@/server/component-source";
 
 export const ComponentSource = ({
   name,

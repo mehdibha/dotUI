@@ -3,7 +3,7 @@
 import * as React from "react";
 import { ScrollArea } from "@/lib/components/core/default/scroll-area";
 import { useIntersectionObserver } from "@/lib/hooks/use-intersection-observer";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/classes";
 
 export default function Demo() {
   const [ref, entry] = useIntersectionObserver({

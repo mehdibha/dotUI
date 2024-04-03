@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/utils/classes";
+import { Button } from "@/lib/components/core/default/button";
+import { cn } from "@/lib/utils/classes";
 
 interface CallToActionProps {
   headline: string;

@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { SearchIcon } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/lib/components/core/default/input";
 import { useDebounce } from "@/lib/hooks/use-debounce";
 
 export default function Demo() {

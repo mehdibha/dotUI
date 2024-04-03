@@ -1,5 +1,5 @@
 import React from "react";
-import { cn } from "@/utils/classes";
+import { cn } from "@/lib/utils/classes";
 import { FramerLogo } from "@/assets/images/brands/framer";
 import { NextjsLogo } from "@/assets/images/brands/nextjs";
 import { ShadcnLogo } from "@/assets/images/brands/shadcn";

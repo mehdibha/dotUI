@@ -23,7 +23,6 @@ import {
   Volume2Icon,
   ZapIcon,
 } from "lucide-react";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import Filter from "@/lib/blocks/application-ui/filter";
 import {
   Avatar,
@@ -37,7 +36,7 @@ import CalendarDemo from "@/lib/demos/components/core/calendar";
 import ComboboxDemo from "@/lib/demos/components/core/combobox";
 
 export const Animation = () => {
-  const [selectedTab, setSelectedTab] = React.useState(4);
+  const [selectedTab, setSelectedTab] = React.useState(0);
 
   React.useEffect(() => {
     const interval = setInterval(() => {
@@ -148,9 +147,32 @@ export const Animation = () => {
         {selectedTab === 4 && (
           <motion.div key={4} {...animationProps} className="h-[450px] w-[350px]">
             <h2 className="text-3xl font-bold">templates.</h2>
-            <ScrollArea className="mt-4 h-96 rounded-md" type="always">
-              <img src="/previews/templates/taxonomy.png" alt="turbocharger" />
-            </ScrollArea>
+            <div className="mt-4 flex gap-2">
+              <div className="flex flex-1 flex-col gap-2">
+                <img
+                  src="/previews/templates/taxonomy.png"
+                  alt="turbocharger"
+                  className="max-h-[100px] rounded-md object-cover object-bottom shadow"
+                />
+                <img
+                  src="/previews/templates/turbocharger.png"
+                  alt="turbocharger"
+                  className="max-h-[250px] rounded-md object-cover object-top shadow"
+                />
+              </div>
+              <div className="flex flex-1 flex-col gap-2">
+                <img
+                  src="/previews/templates/turbocharger.png"
+                  alt="turbocharger"
+                  className="max-h-[250px] rounded-md object-cover object-bottom shadow"
+                />
+                <img
+                  src="/previews/templates/taxonomy.png"
+                  alt="turbocharger"
+                  className="max-h-[100px] rounded-md object-cover object-top shadow"
+                />
+              </div>
+            </div>
           </motion.div>
         )}
       </LayoutGroup>

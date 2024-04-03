@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/lib/components/core/default/button";
 
 export default function NotFound() {
   return (

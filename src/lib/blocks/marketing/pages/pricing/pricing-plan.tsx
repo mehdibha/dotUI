@@ -1,6 +1,6 @@
 import { CheckCircleIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/utils/classes";
+import { Button } from "@/lib/components/core/default/button";
+import { cn } from "@/lib/utils/classes";
 import type { Plan } from "./types";
 
 interface PlanProps extends Plan {
