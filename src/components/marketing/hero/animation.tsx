@@ -138,7 +138,7 @@ export const Animation = () => {
                   key={i}
                   className="flex h-16 items-center justify-center rounded-md bg-card shadow"
                 >
-                  <Icon size={30} />
+                  <Icon size={22} />
                 </div>
               ))}
             </div>
