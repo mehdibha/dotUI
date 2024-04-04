@@ -5,9 +5,9 @@ import { CodeTabs } from "@/components/code-highlighter/code-tabs";
 import { preWrapper } from "@/components/code-highlighter/pre-wrapper-extension";
 import { DocsList, type DocsListProps } from "@/components/docs/docs-list";
 import { cn } from "@/lib/utils/classes";
+import { ComponentPreview } from "../component-preview";
+import { ComponentSource } from "../component-source";
 import { IconsExplorer } from "../icons-explorer";
-import { ComponentPreview } from "./component-preview";
-import { ComponentSource } from "./component-source";
 
 export const Link = ({
   className,
