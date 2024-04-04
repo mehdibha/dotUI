@@ -63,6 +63,11 @@ export const docsConfig: DocsConfig = {
           title: "Data display",
           items: [
             { title: "Accordion", href: "/components/data-display/accordion" },
+            {
+              title: "AvatarGroup",
+              href: "/components/data-display/avatar-group",
+              label: "New",
+            },
             { title: "Avatar", href: "/components/data-display/avatar" },
             { title: "Badge", href: "/components/data-display/badge" },
             { title: "Calendar", href: "/components/data-display/calendar" },

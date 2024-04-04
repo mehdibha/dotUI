@@ -54,6 +54,17 @@ export const previews = {
       },
     ],
   },
+  "demos/components/core/avatar-group": {
+    component: React.lazy<React.FC>(
+      () => import("@/lib/demos/components/core/avatar-group")
+    ),
+    code: [
+      {
+        title: "avatar-group.tsx",
+        code: 'import {\r\n  Avatar,\r\n  AvatarFallback,\r\n  AvatarImage,\r\n} from "@/lib/components/core/default/avatar";\r\nimport { AvatarGroup } from "@/lib/components/core/default/avatar-group";\r\n\r\nexport default function AvatarDemo() {\r\n  return (\r\n    <AvatarGroup>\r\n    {[\r\n      { name: "@mehdibha", src: "https://github.com/mehdibha.png" },\r\n      { name: "@shadcn", src: "https://github.com/shadcn.png" },\r\n      { name: "@leerob", src: "https://github.com/leerob.png" },\r\n      { name: "@t3dotgg", src: "https://github.com/t3dotgg.png" },\r\n      { name: "@joshwcomeau", src: "https://github.com/joshwcomeau.png" },\r\n    ].map((user) => (\r\n      <Avatar key={user.name}>\r\n        <AvatarImage src={user.src} alt={user.name} />\r\n        <AvatarFallback>{user.name[1]}</AvatarFallback>\r\n      </Avatar>\r\n    ))}\r\n  </AvatarGroup>\r\n  );\r\n}\r\n',
+      },
+    ],
+  },
   "demos/components/core/avatar": {
     component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/avatar")),
     code: [
@@ -199,17 +210,6 @@ export const previews = {
       {
         title: "combobox.tsx",
         code: '"use client";\r\n\r\nimport * as React from "react";\r\nimport { Check, ChevronsUpDown } from "lucide-react";\r\nimport { Button } from "@/lib/components/core/default/button";\r\nimport {\r\n  Command,\r\n  CommandEmpty,\r\n  CommandGroup,\r\n  CommandInput,\r\n  CommandItem,\r\n} from "@/lib/components/core/default/command";\r\nimport {\r\n  Popover,\r\n  PopoverContent,\r\n  PopoverTrigger,\r\n} from "@/lib/components/core/default/popover";\r\nimport { cn } from "@/lib/utils/classes";\r\n\r\nconst frameworks = [\r\n  {\r\n    value: "next.js",\r\n    label: "Next.js",\r\n  },\r\n  {\r\n    value: "sveltekit",\r\n    label: "SvelteKit",\r\n  },\r\n  {\r\n    value: "nuxt.js",\r\n    label: "Nuxt.js",\r\n  },\r\n  {\r\n    value: "remix",\r\n    label: "Remix",\r\n  },\r\n  {\r\n    value: "astro",\r\n    label: "Astro",\r\n  },\r\n];\r\n\r\nexport default function ComboboxDemo() {\r\n  const [open, setOpen] = React.useState(false);\r\n  const [value, setValue] = React.useState("");\r\n\r\n  return (\r\n    <Popover open={open} onOpenChange={setOpen}>\r\n      <PopoverTrigger asChild>\r\n        <Button\r\n          variant="outline"\r\n          role="combobox"\r\n          aria-expanded={open}\r\n          className="w-[200px] justify-between"\r\n        >\r\n          {value\r\n            ? frameworks.find((framework) => framework.value === value)?.label\r\n            : "Select framework..."}\r\n          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />\r\n        </Button>\r\n      </PopoverTrigger>\r\n      <PopoverContent className="w-[200px] p-0">\r\n        <Command>\r\n          <CommandInput placeholder="Search framework..." />\r\n          <CommandEmpty>No framework found.</CommandEmpty>\r\n          <CommandGroup>\r\n            {frameworks.map((framework) => (\r\n              <CommandItem\r\n                key={framework.value}\r\n                value={framework.value}\r\n                onSelect={(currentValue) => {\r\n                  setValue(currentValue === value ? "" : currentValue);\r\n                  setOpen(false);\r\n                }}\r\n              >\r\n                <Check\r\n                  className={cn(\r\n                    "mr-2 h-4 w-4",\r\n                    value === framework.value ? "opacity-100" : "opacity-0"\r\n                  )}\r\n                />\r\n                {framework.label}\r\n              </CommandItem>\r\n            ))}\r\n          </CommandGroup>\r\n        </Command>\r\n      </PopoverContent>\r\n    </Popover>\r\n  );\r\n}\r\n',
-      },
-    ],
-  },
-  "demos/components/core/date-picker": {
-    component: React.lazy<React.FC>(
-      () => import("@/lib/demos/components/core/date-picker")
-    ),
-    code: [
-      {
-        title: "date-picker.tsx",
-        code: '"use client";\r\n\r\nimport * as React from "react";\r\nimport { format } from "date-fns";\r\nimport { Calendar as CalendarIcon } from "lucide-react";\r\nimport { Button } from "@/lib/components/core/default/button";\r\nimport { Calendar } from "@/lib/components/core/default/calendar";\r\nimport {\r\n  Popover,\r\n  PopoverContent,\r\n  PopoverTrigger,\r\n} from "@/lib/components/core/default/popover";\r\nimport { cn } from "@/lib/utils/classes";\r\n\r\nexport default function DatePickerDemo() {\r\n  const [date, setDate] = React.useState<Date>();\r\n\r\n  return (\r\n    <Popover>\r\n      <PopoverTrigger asChild>\r\n        <Button\r\n          variant={"outline"}\r\n          className={cn(\r\n            "w-[280px] justify-start text-left font-normal",\r\n            !date && "text-muted-foreground"\r\n          )}\r\n        >\r\n          <CalendarIcon className="mr-2 h-4 w-4" />\r\n          {date ? format(date, "PPP") : <span>Pick a date</span>}\r\n        </Button>\r\n      </PopoverTrigger>\r\n      <PopoverContent className="w-auto p-0">\r\n        <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />\r\n      </PopoverContent>\r\n    </Popover>\r\n  );\r\n}\r\n',
       },
     ],
   },

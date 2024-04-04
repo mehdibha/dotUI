@@ -87,12 +87,7 @@ const Thumbnail = ({
   const isInView = useInView(ref);
   const debouncedInView = useDebounce(isInView, 1500);
 
-  if (!thumbnail)
-    return (
-      <div className="flex aspect-video w-full items-center justify-center">
-        No thumbnail
-      </div>
-    );
+  if (!thumbnail) return <div className="aspect-video w-full" />;
 
   if (thumbnail?.video) {
     return (
