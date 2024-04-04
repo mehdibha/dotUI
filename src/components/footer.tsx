@@ -58,7 +58,7 @@ const links = [
         href: "https://github.com/mehdibha/rcopy/discussions/new?category=ideas",
       },
       {
-        label: "Request a component, a block...",
+        label: "Request an element",
         href: "https://github.com/mehdibha/rcopy/discussions/new?category=requests",
       },
     ],
@@ -72,9 +72,9 @@ const socialLinks = [
 
 export const Footer = () => {
   return (
-    <div className="">
+    <div>
       <div className="container py-8">
-        <div className="flex flex-col items-start justify-between gap-10 lg:flex-row">
+        <div className="flex items-start justify-between gap-10 lg:flex-row">
           <div className="max-w-sm">
             <NavLink
               href="/"
@@ -106,7 +106,7 @@ export const Footer = () => {
             </div>
             <ThemeToggle className="mt-8" />
           </div>
-          <div className="grid grid-cols-3 gap-4 sm:gap-16">
+          <div className="flex gap-4 sm:gap-16">
             {links.map((group, index) => (
               <div key={index}>
                 <h4 className="font-bold">{group.label}</h4>
