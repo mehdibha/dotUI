@@ -87,7 +87,7 @@ export const components = {
   ),
   a: Link,
   p: ({ className, ...props }: ComponentProps<"p">) => (
-    <p className={cn("leading-7 [&:not(:first-child)]:mt-6", className)} {...props} />
+    <p className={cn("leading-7 [&:not(:first-child)]:mt-4", className)} {...props} />
   ),
   ul: ({ className, ...props }: ComponentProps<"ul">) => (
     <ul className={cn("my-6 ml-6 list-disc", className)} {...props} />

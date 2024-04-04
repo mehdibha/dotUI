@@ -121,7 +121,7 @@ export const docsConfig: DocsConfig = {
       title: "Blocks",
       slug: "blocks",
       items: [
-        { title: "All blocks", href: "/blocks" },
+        { title: "Overview", href: "/blocks" },
         {
           title: "Marketing",
           items: [{ title: "Pricing page", href: "/blocks/marketing/pages/pricing" }],
@@ -134,7 +134,7 @@ export const docsConfig: DocsConfig = {
       title: "Hooks",
       slug: "hooks",
       items: [
-        { title: "All hooks", href: "/hooks" },
+        { title: "Overview", href: "/hooks" },
         {
           title: "Browser",
           items: [{ title: "useMediaQuery", href: "/hooks/browser/use-media-query" }],
@@ -175,11 +175,11 @@ export const docsConfig: DocsConfig = {
         },
       ],
     },
-    { title: "Icons", slug: "icons", items: [{ title: "All icons", href: "/icons" }] },
+    { title: "Icons", slug: "icons", items: [{ title: "Overview", href: "/icons" }] },
     {
       title: "Templates",
       slug: "templates",
-      items: [{ title: "All templates", href: "/templates" }],
+      items: [{ title: "Overview", href: "/templates" }],
     },
   ],
 };

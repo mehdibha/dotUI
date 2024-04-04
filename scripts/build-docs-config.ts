@@ -79,7 +79,7 @@ const docsConfig: DocsConfig = {
       slug: "blocks",
       items: [
         {
-          title: "All blocks",
+          title: "Overview",
           href: "/blocks",
         },
         {
@@ -101,7 +101,7 @@ const docsConfig: DocsConfig = {
       slug: "hooks",
       items: [
         {
-          title: "All hooks",
+          title: "Overview",
           href: "/hooks",
         },
         {
@@ -131,7 +131,7 @@ const docsConfig: DocsConfig = {
       slug: "icons",
       items: [
         {
-          title: "All icons",
+          title: "Overview",
           href: "/icons",
         },
         ...getCategoryItems("icons"),
@@ -142,7 +142,7 @@ const docsConfig: DocsConfig = {
       slug: "templates",
       items: [
         {
-          title: "All templates",
+          title: "Overview",
           href: "/templates",
         },
       ],
