@@ -73,7 +73,10 @@ export const docsConfig: DocsConfig = {
             { title: "Calendar", href: "/components/data-display/calendar" },
             { title: "Card", href: "/components/data-display/card" },
             { title: "Carousel", href: "/components/data-display/carousel" },
-            { title: "Data Table", href: "/components/data-display/data-table" },
+            {
+              title: "Data Table",
+              href: "/components/data-display/data-table",
+            },
             { title: "Separator", href: "/components/data-display/separator" },
             { title: "Table", href: "/components/data-display/table" },
           ],
@@ -81,10 +84,19 @@ export const docsConfig: DocsConfig = {
         {
           title: "Navigation",
           items: [
-            { title: "Breadcrumbs", href: "/components/navigation/breadcrumbs" },
-            { title: "Collapsible", href: "/components/navigation/collapsible" },
+            {
+              title: "Breadcrumbs",
+              href: "/components/navigation/breadcrumbs",
+            },
+            {
+              title: "Collapsible",
+              href: "/components/navigation/collapsible",
+            },
             { title: "Command", href: "/components/navigation/command" },
-            { title: "Navigation Menu", href: "/components/navigation/navigation-menu" },
+            {
+              title: "Navigation Menu",
+              href: "/components/navigation/navigation-menu",
+            },
             { title: "Pagination", href: "/components/navigation/pagination" },
           ],
         },
@@ -95,7 +107,10 @@ export const docsConfig: DocsConfig = {
             { title: "Context Menu", href: "/components/overlay/context-menu" },
             { title: "Dialog", href: "/components/overlay/dialog" },
             { title: "Drawer", href: "/components/overlay/drawer" },
-            { title: "Dropdown Menu", href: "/components/overlay/dropdown-menu" },
+            {
+              title: "Dropdown Menu",
+              href: "/components/overlay/dropdown-menu",
+            },
             { title: "Hover Card", href: "/components/overlay/hover-card" },
             { title: "Popover", href: "/components/overlay/popover" },
             { title: "Sheet", href: "/components/overlay/sheet" },
@@ -161,7 +176,12 @@ export const docsConfig: DocsConfig = {
         },
         {
           title: "State",
-          items: [{ title: "useLocalStorage", href: "/hooks/state/use-local-storage" }],
+          items: [
+            {
+              title: "useLocalStorage",
+              href: "/hooks/state/use-local-storage",
+            },
+          ],
         },
         {
           title: "Utilities",
@@ -176,7 +196,11 @@ export const docsConfig: DocsConfig = {
         },
       ],
     },
-    { title: "Icons", slug: "icons", items: [{ title: "All icons", href: "/icons" }] },
+    {
+      title: "Icons",
+      slug: "icons",
+      items: [{ title: "All icons", href: "/icons" }],
+    },
     {
       title: "Templates",
       slug: "templates",

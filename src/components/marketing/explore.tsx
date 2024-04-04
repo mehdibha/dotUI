@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { DocsList } from "@/components/docs/docs-list";
 import { Button } from "@/lib/components/core/default/button";
-import { IconsList } from "./icons-list";
+import { IconExemples } from "./icon-exemples";
 
 export const Explore = ({ className }: { className: string }) => {
   const categories = [
@@ -36,7 +36,7 @@ export const Explore = ({ className }: { className: string }) => {
               "grid grid-cols-4 gap-2 border-l border-muted pb-1 pl-6 pt-4 sm:grid-cols-8 lg:grid-cols-16"
             }
           >
-            <IconsList limit={32} />
+            <IconExemples limit={32} />
           </div>
           <div className="flex justify-end">
             <Button size="sm" variant="link" className="mt-4 block">

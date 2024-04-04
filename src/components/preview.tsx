@@ -24,7 +24,9 @@ export const Preview = ({
       </div>
       <ScrollArea
         viewportProps={{
-          className: cn({ "min-h-[350px] max-h-[800px]": aspect === "default" }),
+          className: cn({
+            "min-h-[350px] max-h-[800px]": aspect === "default",
+          }),
         }}
       >
         <ThemeWrapper fallback={<Skeleton className="h-[350px]" />}>

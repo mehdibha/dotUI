@@ -2,6 +2,7 @@
 
 import React from "react";
 import { LayoutGroup, motion } from "framer-motion";
+import { IconExemples } from "@/components/marketing/icon-exemples";
 import Filter from "@/lib/blocks/application-ui/filter";
 import {
   Avatar,
@@ -13,7 +14,6 @@ import { Button } from "@/lib/components/core/default/button";
 import { Switch } from "@/lib/components/core/default/switch";
 import CalendarDemo from "@/lib/demos/components/core/calendar";
 import ComboboxDemo from "@/lib/demos/components/core/combobox";
-import { IconsList } from "../icons-list";
 
 export const Animation = () => {
   const [selectedTab, setSelectedTab] = React.useState(0);
@@ -46,7 +46,10 @@ export const Animation = () => {
                   { name: "@shadcn", src: "https://github.com/shadcn.png" },
                   { name: "@leerob", src: "https://github.com/leerob.png" },
                   { name: "@t3dotgg", src: "https://github.com/t3dotgg.png" },
-                  { name: "@joshwcomeau", src: "https://github.com/joshwcomeau.png" },
+                  {
+                    name: "@joshwcomeau",
+                    src: "https://github.com/joshwcomeau.png",
+                  },
                 ].map((user) => (
                   <Avatar key={user.name}>
                     <AvatarImage src={user.src} alt={user.name} />
@@ -92,7 +95,7 @@ export const Animation = () => {
           <motion.div key={3} {...animationProps} className="h-[450px] w-[350px]">
             <h2 className="text-3xl font-bold">icons.</h2>
             <div className="mt-4 grid grid-cols-5 gap-2">
-              <IconsList limit={20} />
+              <IconExemples limit={20} />
             </div>
           </motion.div>
         )}
