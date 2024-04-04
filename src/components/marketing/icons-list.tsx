@@ -6,16 +6,27 @@ import {
   BellIcon,
   BluetoothIcon,
   BoldIcon,
+  BoxIcon,
+  BriefcaseIcon,
+  CheckIcon,
   CodeIcon,
+  HandIcon,
   InboxIcon,
+  Layers3Icon,
   LinkIcon,
+  ListIcon,
+  LockIcon,
   MailIcon,
+  MessageCircleIcon,
   MoonIcon,
   PhoneIcon,
   ScreenShareIcon,
+  SearchIcon,
   SmileIcon,
   SparkleIcon,
+  StretchVerticalIcon,
   SunIcon,
+  ThumbsUpIcon,
   UserRoundIcon,
   Volume2Icon,
   ZapIcon,
@@ -25,7 +36,6 @@ const icons = [
   CodeIcon,
   BellIcon,
   InboxIcon,
-  MoonIcon,
   MailIcon,
   AtSignIcon,
   LinkIcon,
@@ -42,6 +52,19 @@ const icons = [
   SmileIcon,
   ScreenShareIcon,
   PhoneIcon,
+  HandIcon,
+  Layers3Icon,
+  InboxIcon,
+  ListIcon,
+  LockIcon,
+  MessageCircleIcon,
+  SearchIcon,
+  StretchVerticalIcon,
+  ThumbsUpIcon,
+  AtSignIcon,
+  BoxIcon,
+  BriefcaseIcon,
+  CheckIcon,
 ];
 
 export const IconsList = ({ limit }: { limit?: number }) => {
@@ -52,7 +75,7 @@ export const IconsList = ({ limit }: { limit?: number }) => {
           key={i}
           className="flex h-16 items-center justify-center rounded-md bg-card shadow"
         >
-          <Icon size={18} />
+          <Icon size={20} />
         </div>
       ))}
     </>
