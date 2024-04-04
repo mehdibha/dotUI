@@ -55,7 +55,11 @@ const links = [
       },
       {
         label: "Request a feature",
-        href: "https://github.com/mehdibha/rcopy/issues/new",
+        href: "https://github.com/mehdibha/rcopy/discussions/new?category=ideas",
+      },
+      {
+        label: "Request a component, a block...",
+        href: "https://github.com/mehdibha/rcopy/discussions/new?category=requests",
       },
     ],
   },
