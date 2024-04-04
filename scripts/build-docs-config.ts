@@ -27,10 +27,6 @@ const docsConfig: DocsConfig = {
           href: "/docs/installation",
         },
         {
-          title: "Theming",
-          href: "/docs/theming",
-        },
-        {
           title: "Changelog",
           href: "/docs/changelog",
         },

@@ -127,12 +127,12 @@ export const components = {
     />
   ),
   code: (props: ComponentProps<"code">) => (
-    <code className="rounded border bg-muted px-1 py-0.5" {...props} />
+    <code className="rounded border bg-muted px-1 py-0.5 font-mono text-sm" {...props} />
   ),
   Step: ({ className, ...props }: React.ComponentProps<"h3">) => (
     <h3
       className={cn(
-        "font-heading mt-8 scroll-m-20 text-xl font-semibold tracking-tight",
+        "font-heading mt-8 scroll-m-20 text-base font-semibold tracking-tight",
         className
       )}
       {...props}
