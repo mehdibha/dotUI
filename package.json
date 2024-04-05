@@ -122,6 +122,9 @@
       "prettier --write",
       "eslint --fix"
     ],
+    "**/*.{mdx}": [
+      "prettier --write"
+    ],
     "*.json": [
       "prettier --write"
     ]

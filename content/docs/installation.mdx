@@ -16,7 +16,7 @@ npx create-next-app@latest my-app --typescript --tailwind --eslint
 <Step>Update `tailwind.config.ts`</Step>
 
 ```ts
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
 
 const config = {
   darkMode: ["class"],
@@ -93,9 +93,9 @@ const config = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-} satisfies Config
+} satisfies Config;
 
-export default config
+export default config;
 ```
 
 <Step>Update `globals.css`</Step>
@@ -171,14 +171,14 @@ npm i clsx class-variance-authority tailwind-merge
 <Step>Add `utils/classes.ts`</Step>
 
 ```ts
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
-export { cva, type VariantProps } from "class-variance-authority"
+export { cva, type VariantProps } from "class-variance-authority";
 ```
 
 <Step>You're done.</Step>
@@ -229,9 +229,9 @@ npm i -D @types/node
 ```
 
 ```ts
-import react from "@vitejs/plugin-react"
-import path from "path"
-import { defineConfig } from "vite"
+import react from "@vitejs/plugin-react";
+import path from "path";
+import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [react()],
@@ -240,13 +240,13 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-})
+});
 ```
 
 <Step>Update `tailwind.config.ts`</Step>
 
 ```ts
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
 
 const config = {
   darkMode: ["class"],
@@ -323,9 +323,9 @@ const config = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-} satisfies Config
+} satisfies Config;
 
-export default config
+export default config;
 ```
 
 <Step>Update `globals.css`</Step>
@@ -401,14 +401,14 @@ npm i clsx class-variance-authority tailwind-merge
 <Step>Add `utils/classes.ts`</Step>
 
 ```ts
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
-export { cva, type VariantProps } from "class-variance-authority"
+export { cva, type VariantProps } from "class-variance-authority";
 ```
 
 <Step>You're done.</Step>
