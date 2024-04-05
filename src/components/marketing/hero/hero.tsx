@@ -28,7 +28,7 @@ export const Hero = ({ className }: { className?: string }) => {
         <h1 className="mt-4 font-display text-4xl font-bold leading-tight tracking-tight md:text-5xl lg:text-6xl">
           <Balancer>
             Everything you need to build your{" "}
-            <span className="bg-gradient bg-clip-text text-transparent">React app</span>{" "}
+            <span className="bg-gradient bg-clip-text text-transparent">React app</span>
           </Balancer>
         </h1>
         <h2 className="text-md mt-6 text-muted-foreground md:text-lg lg:text-xl">

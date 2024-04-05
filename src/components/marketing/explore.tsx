@@ -18,7 +18,7 @@ export const Explore = ({ className }: { className: string }) => {
             <h3 className="category-xl pl-6 font-mono text-xl tracking-widest text-muted-foreground">
               {category.title}
             </h3>
-            <div className="border-l border-muted pb-8 pl-6 pt-4">
+            <div className="border-l border-muted px-6 pb-8 pt-4">
               <DocsList
                 name={category.slug}
                 limit={4}
@@ -33,7 +33,7 @@ export const Explore = ({ className }: { className: string }) => {
           </h3>
           <div
             className={
-              "grid grid-cols-4 gap-2 border-l border-muted pb-1 pl-6 pt-4 sm:grid-cols-8 lg:grid-cols-16"
+              "grid grid-cols-4 gap-2 border-l border-muted px-6 pb-1 pt-4 sm:grid-cols-8 lg:grid-cols-16"
             }
           >
             <IconExemples limit={32} />
