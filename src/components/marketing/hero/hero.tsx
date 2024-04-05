@@ -36,7 +36,7 @@ export const Hero = ({ className }: { className?: string }) => {
         </h2>
         <div className="mt-10 flex flex-col gap-4 sm:flex-row">
           <Button size="lg" variant="default" asChild>
-            <Link href="/getting-started/introduction">Read the docs</Link>
+            <Link href="/docs">Read the docs</Link>
           </Button>
           <SearchDocs className="w-auto" size="lg" />
         </div>
