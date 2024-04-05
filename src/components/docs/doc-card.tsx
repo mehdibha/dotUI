@@ -100,6 +100,7 @@ const Thumbnail = ({
               muted
               loop
               autoPlay
+              playsInline
               preload="none"
               className="aspect-video object-cover opacity-90 duration-150 group-hover:opacity-100"
             />
