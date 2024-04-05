@@ -1,4 +1,5 @@
 import type { ComponentProps } from "react";
+import React from "react";
 import NavLink from "next/link";
 import { Code } from "bright";
 import { CodeTabs } from "@/components/code-highlighter/code-tabs";
@@ -10,6 +11,7 @@ import {
 import { ComponentSource } from "@/components/component-source";
 import { DocsList, type DocsListProps } from "@/components/docs/docs-list";
 import { IconsExplorer } from "@/components/icons-explorer";
+import { slugify } from "@/utils/string";
 import { cn } from "@/lib/utils/classes";
 
 export const Link = ({
@@ -42,52 +44,45 @@ export const Link = ({
   );
 };
 
+function createHeading(level: number, className?: string) {
+  const Component = ({
+    children,
+    ...props
+  }: React.HTMLAttributes<HTMLHeadingElement>) => {
+    const slug = slugify(children as string);
+    return React.createElement(
+      `h${level}`,
+      { id: slug, className, ...props },
+      [
+        React.createElement("a", {
+          href: `#${slug}`,
+          key: `link-${slug}`,
+        }),
+      ],
+      children
+    );
+  };
+
+  Component.displayName = `Heading${level}`;
+  return Component;
+}
+
 export const components = {
-  h1: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h1
-      className={cn("font-heading mt-2 scroll-m-20 text-4xl font-bold", className)}
-      {...props}
-    />
+  h1: createHeading(1, "font-heading mt-2 scroll-m-20 text-4xl font-bold"),
+  h2: createHeading(
+    2,
+    "font-heading mt-12 scroll-m-20 border-b pb-2 text-xl font-semibold tracking-tight first:mt-0"
   ),
-  h2: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h2
-      className={cn(
-        "font-heading mt-12 scroll-m-20 border-b pb-2 text-xl font-semibold tracking-tight first:mt-0",
-        className
-      )}
-      {...props}
-    />
+  h3: createHeading(
+    3,
+    "font-heading mt-8 scroll-m-20 text-xl font-semibold tracking-tight"
   ),
-  h3: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h3
-      className={cn(
-        "font-heading mt-8 scroll-m-20 text-xl font-semibold tracking-tight",
-        className
-      )}
-      {...props}
-    />
+  h4: createHeading(
+    4,
+    "font-heading mt-8 scroll-m-20 text-lg font-semibold tracking-tight"
   ),
-  h4: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h4
-      className={cn(
-        "font-heading mt-8 scroll-m-20 text-lg font-semibold tracking-tight",
-        className
-      )}
-      {...props}
-    />
-  ),
-  h5: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h5
-      className={cn("mt-8 scroll-m-20 text-lg font-semibold tracking-tight", className)}
-      {...props}
-    />
-  ),
-  h6: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h6
-      className={cn("mt-8 scroll-m-20 text-base font-semibold tracking-tight", className)}
-      {...props}
-    />
-  ),
+  h5: createHeading(5, "mt-8 scroll-m-20 text-lg font-semibold tracking-tight"),
+  h6: createHeading(6, "mt-8 scroll-m-20 text-base font-semibold tracking-tight"),
   a: Link,
   p: ({ className, ...props }: ComponentProps<"p">) => (
     <p className={cn("leading-7 [&:not(:first-child)]:mt-4", className)} {...props} />
