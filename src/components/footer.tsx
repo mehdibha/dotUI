@@ -74,7 +74,7 @@ export const Footer = () => {
   return (
     <div>
       <div className="container py-8">
-        <div className="flex items-start justify-between gap-10 lg:flex-row">
+        <div className="flex flex-col items-start justify-between gap-10 lg:flex-row">
           <div className="max-w-sm">
             <NavLink
               href="/"
