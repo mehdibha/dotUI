@@ -12,17 +12,21 @@ import { Preview } from "./preview";
 
 type PreviewsKeys = keyof typeof previews;
 
+export interface ComponentPreviewProps {
+  name: PreviewsKeys;
+  centered?: boolean;
+  className?: string;
+  containerClassName?: string;
+  aspect?: "default" | "page";
+}
+
 export const ComponentPreview = ({
   name,
   centered = true,
   className,
+  containerClassName,
   aspect = "default",
-}: {
-  name: PreviewsKeys;
-  centered?: boolean;
-  className?: string;
-  aspect?: "default" | "page";
-}) => {
+}: ComponentPreviewProps) => {
   const component = React.useMemo(() => {
     const Component = previews[name]?.component;
 
@@ -47,31 +51,29 @@ export const ComponentPreview = ({
   }, [name]);
 
   return (
-    <div>
-      <Tabs defaultValue="preview">
-        <TabsList className="grid w-[200px] grid-cols-2 lg:w-[400px]">
-          <TabsTrigger value="preview">Preview</TabsTrigger>
-          <TabsTrigger value="code">Code</TabsTrigger>
-        </TabsList>
-        <TabsContent value="preview" className="rounded-md border">
-          <Preview aspect={aspect} centered={centered} className={className}>
-            {component}
-          </Preview>
-        </TabsContent>
-        <TabsContent value="code" className="rounded border">
-          <Code
-            subProps={code.map((file) => ({
-              title: code.length > 1 ? file.title : undefined,
-              code: file.code,
-              lang: "tsx",
-            }))}
-            style={{ marginTop: 0, marginBottom: 0 }}
-            theme="github-dark-dimmed"
-            codeClassName="text-xs min-h-[318px]"
-            extensions={[tabs]}
-          />
-        </TabsContent>
-      </Tabs>
-    </div>
+    <Tabs defaultValue="preview" className={containerClassName}>
+      <TabsList className="grid w-[200px] grid-cols-2 lg:w-[400px]">
+        <TabsTrigger value="preview">Preview</TabsTrigger>
+        <TabsTrigger value="code">Code</TabsTrigger>
+      </TabsList>
+      <TabsContent value="preview" className="rounded-md border">
+        <Preview aspect={aspect} centered={centered} className={className}>
+          {component}
+        </Preview>
+      </TabsContent>
+      <TabsContent value="code" className="rounded border">
+        <Code
+          subProps={code.map((file) => ({
+            title: code.length > 1 ? file.title : undefined,
+            code: file.code,
+            lang: "tsx",
+          }))}
+          style={{ marginTop: 0, marginBottom: 0 }}
+          theme="github-dark-dimmed"
+          codeClassName="text-xs min-h-[318px]"
+          extensions={[tabs]}
+        />
+      </TabsContent>
+    </Tabs>
   );
 };

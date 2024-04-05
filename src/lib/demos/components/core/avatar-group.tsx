@@ -5,7 +5,7 @@ import {
 } from "@/lib/components/core/default/avatar";
 import { AvatarGroup } from "@/lib/components/core/default/avatar-group";
 
-export default function AvatarDemo() {
+export default function AvatarGroupDemo() {
   return (
     <AvatarGroup>
       {[

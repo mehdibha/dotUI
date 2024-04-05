@@ -27,6 +27,10 @@ const docsConfig: DocsConfig = {
           href: "/docs/installation",
         },
         {
+          title: "Styles",
+          href: "/docs/styles",
+        },
+        {
           title: "Changelog",
           href: "/docs/changelog",
         },

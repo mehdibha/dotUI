@@ -9,6 +9,8 @@ description: How to install dependencies and structure your app.
 
 <Step>Create a project</Step>
 
+Start by creating a new Next.js project using `create-next-app`:
+
 ```bash
 npx create-next-app@latest my-app --typescript --tailwind --eslint
 ```
@@ -100,6 +102,8 @@ export default config;
 
 <Step>Update `globals.css`</Step>
 
+Add the following code to the `globals.css` file:
+
 ```css
 @tailwind base;
 @tailwind components;
@@ -170,6 +174,8 @@ npm i clsx class-variance-authority tailwind-merge
 
 <Step>Add `utils/classes.ts`</Step>
 
+Add utilities for classnames:
+
 ```ts
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -183,6 +189,8 @@ export { cva, type VariantProps } from "class-variance-authority";
 
 <Step>You're done.</Step>
 
+You can now start adding components of your choice
+
 </Steps>
 
 ## Vite
@@ -191,11 +199,15 @@ export { cva, type VariantProps } from "class-variance-authority";
 
 <Step>Create project</Step>
 
+Start by creating a new Vite project using the following command:
+
 ```bash
 npm create vite@latest
 ```
 
 <Step>Add Tailwind and its configuration</Step>
+
+Install `tailwindcss` and its peer dependencies, then generate your `tailwind.config.js` and `postcss.config.js` files:
 
 ```bash
 npm install -D tailwindcss postcss autoprefixer
@@ -206,6 +218,8 @@ npx tailwindcss init -p
 ```
 
 <Step>Edit tsconfig.json file</Step>
+
+Add the following code to the `tsconfig.json` file so your app can resolve paths without error
 
 ```json
 {
@@ -222,7 +236,7 @@ npx tailwindcss init -p
 
 <Step>Update vite.config.ts</Step>
 
-Add the following code to the vite.config.ts so your app can resolve paths without error
+Add the following code to the `vite.config.ts`:
 
 ```bash
 npm i -D @types/node

@@ -8,9 +8,9 @@ import {
   PaginationPrevious,
 } from "@/lib/components/core/default/pagination";
 
-export default function PaginationDemo() {
+export default function PaginationDemo({ className }: { className?: string }) {
   return (
-    <Pagination>
+    <Pagination className={className}>
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious href="#" />

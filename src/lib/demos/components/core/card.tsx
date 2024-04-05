@@ -18,7 +18,7 @@ import {
   SelectValue,
 } from "@/lib/components/core/default/select";
 
-export default function CardWithForm() {
+export default function CardDemo() {
   return (
     <Card className="w-[350px]">
       <CardHeader>

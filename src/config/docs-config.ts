@@ -10,6 +10,7 @@ export const docsConfig: DocsConfig = {
       items: [
         { title: "Introduction", href: "/docs" },
         { title: "Installation", href: "/docs/installation" },
+        { title: "Styles", href: "/docs/styles" },
         { title: "Changelog", href: "/docs/changelog" },
       ],
     },

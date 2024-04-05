@@ -3,11 +3,14 @@ import NavLink from "next/link";
 import { Code } from "bright";
 import { CodeTabs } from "@/components/code-highlighter/code-tabs";
 import { preWrapper } from "@/components/code-highlighter/pre-wrapper-extension";
+import {
+  ComponentPreview,
+  type ComponentPreviewProps,
+} from "@/components/component-preview";
+import { ComponentSource } from "@/components/component-source";
 import { DocsList, type DocsListProps } from "@/components/docs/docs-list";
+import { IconsExplorer } from "@/components/icons-explorer";
 import { cn } from "@/lib/utils/classes";
-import { ComponentPreview } from "../component-preview";
-import { ComponentSource } from "../component-source";
-import { IconsExplorer } from "../icons-explorer";
 
 export const Link = ({
   className,
@@ -176,7 +179,9 @@ export const components = {
   ComponentSource: ({ name, ...rest }: { name: string }) => (
     <ComponentSource name={name} className="my-2" {...rest} />
   ),
-  ComponentPreview,
+  ComponentPreview: (props: ComponentPreviewProps) => (
+    <ComponentPreview containerClassName="[&:not(:first-child)]:mt-4" {...props} />
+  ),
   IconsExplorer,
   CodeTabs,
   DocsList: (props: DocsListProps) => <DocsList {...props} className="mt-4" />,
