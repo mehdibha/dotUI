@@ -2,7 +2,7 @@
 
 import React from "react";
 import { LayoutGroup, motion } from "framer-motion";
-import { IconExemples } from "@/components/marketing/icon-exemples";
+import { IconExamples } from "@/components/marketing/icon-examples";
 import Filter from "@/lib/blocks/application-ui/filter";
 import {
   Avatar,
@@ -14,17 +14,21 @@ import { Button } from "@/lib/components/core/default/button";
 import { Switch } from "@/lib/components/core/default/switch";
 import CalendarDemo from "@/lib/demos/components/core/calendar";
 import ComboboxDemo from "@/lib/demos/components/core/combobox";
+import { cn } from "@/lib/utils/classes";
 
 export const Animation = () => {
   const [selectedTab, setSelectedTab] = React.useState(0);
+  const [animationStarted, setAnimationStarted] = React.useState(false);
 
   React.useEffect(() => {
     const interval = setInterval(() => {
       setSelectedTab((prevTab) => (prevTab + 1) % 5); // Modulo 5 to cycle through tabs
+      // start animation
+      if (!animationStarted) setAnimationStarted(true);
     }, 1500);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [animationStarted]);
 
   const animationProps = {
     initial: { y: 10, opacity: 0 },
@@ -37,7 +41,15 @@ export const Animation = () => {
     <div>
       <LayoutGroup>
         {selectedTab === 0 && (
-          <motion.div key={0} {...animationProps} className="h-[450px] w-[350px]">
+          <motion.div
+            key={0}
+            {...(animationStarted ? animationProps : { layoutId: "underline" })}
+            className={cn(
+              "h-[450px] w-[350px]",
+              !animationStarted &&
+                "duration-500 animate-in fade-in slide-in-from-bottom-3"
+            )}
+          >
             <h2 className="text-3xl font-bold">components.</h2>
             <div className="mt-4 space-y-4">
               <AvatarGroup>
@@ -95,7 +107,7 @@ export const Animation = () => {
           <motion.div key={3} {...animationProps} className="h-[450px] w-[350px]">
             <h2 className="text-3xl font-bold">icons.</h2>
             <div className="mt-4 grid grid-cols-5 gap-2">
-              <IconExemples limit={20} />
+              <IconExamples limit={20} />
             </div>
           </motion.div>
         )}
