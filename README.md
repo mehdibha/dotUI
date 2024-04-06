@@ -48,20 +48,6 @@ rCopy wants to extend this not only for core components but for any kind of comp
 
 If you want to join this journey, <a href="https://discord.gg/DXpj5V2fU8">join our discord community</a>
 
-### Built with
-
-- Next.js (v14 with app dir) and React
-- Typescript
-- Tailwind CSS
-- Shadcn-ui
-- Prisma
-
-## Roadmap
-
-- [x] Site structure
-
-<!-- CONTRIBUTING -->
-
 ## Contributing
 
 See the [contribution guide](CONTRIBUTING.md) and join our amazing list of [contributors](https://github.com/mehdibha/rcopy/graphs/contributors)!
