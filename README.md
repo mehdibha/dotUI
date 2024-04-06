@@ -11,7 +11,7 @@
   </a>
   <h1 align="center">rCopy</h1>
   <p align="center">
-    React copy paste components, hooks, pages, icons and more
+    React copy paste components, hooks, blocks, icons and more
   </p>
   <p>
     
@@ -44,7 +44,7 @@
 ## About The Project
 
 in 2024, shadcn/ui popularized the copy paste method instead of installing multiple dependencies that you can not control only via props.
-rCopy wants to extend this not only for core components but for any kind of components, hooks, icons, pages and more.
+rCopy wants to extend this not only for core components but for any kind of components, hooks, icons, blocks and more.
 
 If you want to join this journey, <a href="https://discord.gg/DXpj5V2fU8">join our discord community</a>
 
