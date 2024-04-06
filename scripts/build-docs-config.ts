@@ -4,7 +4,7 @@ import { rimraf } from "rimraf";
 import type { DocsConfig } from "@/types/docs";
 import { getDocs } from "@/server/docs";
 
-const getCategoryItems = (category: string) => {
+const getCategoryDocs = (category: string) => {
   return getDocs(category).map((category) => ({
     title: category.title,
     href: category.href,
@@ -46,35 +46,43 @@ const docsConfig: DocsConfig = {
         },
         {
           title: "Inputs",
-          items: getCategoryItems("components/inputs"),
+          items: getCategoryDocs("components/inputs"),
         },
         {
           title: "Feedback",
-          items: getCategoryItems("components/feedback"),
+          items: getCategoryDocs("components/feedback"),
         },
         {
           title: "Layout",
-          items: getCategoryItems("components/layout"),
+          items: getCategoryDocs("components/layout"),
         },
         {
           title: "Data display",
-          items: getCategoryItems("components/data-display"),
+          items: getCategoryDocs("components/data-display"),
         },
         {
           title: "Navigation",
-          items: getCategoryItems("components/navigation"),
+          items: getCategoryDocs("components/navigation"),
         },
         {
           title: "Overlay",
-          items: getCategoryItems("components/overlay"),
+          items: getCategoryDocs("components/overlay"),
+        },
+        {
+          title: "Charts",
+          items: getCategoryDocs("components/charts"),
+        },
+        {
+          title: "Backgrounds",
+          items: getCategoryDocs("components/backgrounds"),
         },
         {
           title: "Utils",
-          items: getCategoryItems("components/utils"),
+          items: getCategoryDocs("components/utils"),
         },
         {
           title: "Animations",
-          items: getCategoryItems("components/animations"),
+          items: getCategoryDocs("components/animations"),
         },
       ],
     },
@@ -88,15 +96,15 @@ const docsConfig: DocsConfig = {
         },
         {
           title: "Marketing",
-          items: getCategoryItems("blocks/marketing"),
+          items: getCategoryDocs("blocks/marketing"),
         },
         {
           title: "Application UI",
-          items: getCategoryItems("blocks/application-ui"),
+          items: getCategoryDocs("blocks/application-ui"),
         },
         {
           title: "E-commerce",
-          items: getCategoryItems("blocks/e-commerce"),
+          items: getCategoryDocs("blocks/e-commerce"),
         },
       ],
     },
@@ -110,23 +118,23 @@ const docsConfig: DocsConfig = {
         },
         {
           title: "Browser",
-          items: getCategoryItems("hooks/browser"),
+          items: getCategoryDocs("hooks/browser"),
         },
         {
           title: "Elements",
-          items: getCategoryItems("hooks/elements"),
+          items: getCategoryDocs("hooks/elements"),
         },
         {
           title: "Sensors",
-          items: getCategoryItems("hooks/sensors"),
+          items: getCategoryDocs("hooks/sensors"),
         },
         {
           title: "State",
-          items: getCategoryItems("hooks/state"),
+          items: getCategoryDocs("hooks/state"),
         },
         {
           title: "Utilities",
-          items: getCategoryItems("hooks/utils"),
+          items: getCategoryDocs("hooks/utils"),
         },
       ],
     },
@@ -138,7 +146,14 @@ const docsConfig: DocsConfig = {
           title: "Overview",
           href: "/icons",
         },
-        ...getCategoryItems("icons"),
+        {
+          title: "Lucide icons",
+          href: "/icons/lucide-icons",
+        },
+        {
+          title: "Brands icons",
+          href: "/icons/brands",
+        },
       ],
     },
     {
