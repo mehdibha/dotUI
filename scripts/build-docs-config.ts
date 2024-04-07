@@ -164,3 +164,5 @@ export const docsConfig: DocsConfig = ${JSON.stringify(docsConfig)};
 
 rimraf.sync(path.join(process.cwd(), "src", "config", "docs-config.ts"));
 fs.writeFileSync(path.join(process.cwd(), "src", "config", "docs-config.ts"), index);
+
+console.log("\x1b[32m✓\x1b[0m Created docs-config file.");

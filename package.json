@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "next build",
+    "build": "pnpm build:docs-config && pnpm build:previews && next build",
     "build:previews": "tsx ./scripts/build-previews.ts",
     "build:icons": "tsx ./scripts/build-icons.ts",
     "build:docs-config": "tsx ./scripts/build-docs-config.ts",
