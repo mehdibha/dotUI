@@ -4,6 +4,7 @@ import React from "react";
 import * as SwitchPrimitives from "@radix-ui/react-switch";
 import { MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
+import { Label } from "@/lib/components/core/default/label";
 import { useMounted } from "@/lib/hooks/use-mounted";
 import { cn } from "@/lib/utils/classes";
 
@@ -25,8 +26,11 @@ export const ThemeToggle = ({ className }: { className?: string }) => {
         className
       )}
       role="button"
-      aria-label={`Toggle ${theme === "dark" ? "light" : "dark"} mode`}
+      id="dark-mode"
     >
+      <Label htmlFor="dark-mode" className="sr-only">
+        Dark mode
+      </Label>
       <SwitchPrimitives.Thumb
         className={cn(
           "pointer-events-none block h-6 w-6 rounded-full bg-background shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0",
