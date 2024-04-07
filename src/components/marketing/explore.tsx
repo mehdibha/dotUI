@@ -5,7 +5,7 @@ import { IconExamples } from "./icon-examples";
 
 export const Explore = ({ className }: { className: string }) => {
   const categories = [
-    { title: "components", slug: "components" },
+    { title: "components", slug: "components/inputs", href: "/components" },
     { title: "hooks", slug: "hooks" },
     { title: "blocks", slug: "blocks" },
   ];
@@ -21,6 +21,7 @@ export const Explore = ({ className }: { className: string }) => {
             <div className="border-l border-muted px-6 pb-8 pt-4">
               <DocsList
                 name={category.slug}
+                href={category.href}
                 limit={4}
                 className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
               />
@@ -31,17 +32,19 @@ export const Explore = ({ className }: { className: string }) => {
           <h3 className="category-xl pl-6 font-mono text-xl tracking-widest text-muted-foreground">
             Icons
           </h3>
-          <div
-            className={
-              "grid grid-cols-4 gap-2 border-l border-muted px-6 pb-1 pt-4 sm:grid-cols-8 lg:grid-cols-16"
-            }
-          >
-            <IconExamples limit={32} />
-          </div>
-          <div className="flex justify-end">
-            <Button size="sm" variant="link" className="mt-4 block">
-              <Link href="/icons">Explore more</Link>
-            </Button>
+          <div className="px-6">
+            <div
+              className={
+                "grid grid-cols-4 gap-2 border-l border-muted pb-1 pt-4 sm:grid-cols-8 lg:grid-cols-16"
+              }
+            >
+              <IconExamples limit={32} />
+            </div>
+            <div className="flex justify-end">
+              <Button size="sm" variant="link" className="mt-4 block">
+                <Link href="/icons">Explore more</Link>
+              </Button>
+            </div>
           </div>
         </div>
       </div>
