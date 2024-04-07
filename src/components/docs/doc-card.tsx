@@ -112,7 +112,7 @@ const Thumbnail = ({
           <div className="aspect-video w-full bg-card">
             <img
               src={thumbnail.image}
-              alt="Thumbnail"
+              alt={title}
               className="aspect-video object-cover opacity-90 duration-150 group-hover:opacity-100"
             />
           </div>

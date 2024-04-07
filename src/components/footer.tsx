@@ -66,8 +66,8 @@ const links = [
 ];
 
 const socialLinks = [
-  { icon: TwitterIcon, href: siteConfig.links.twitter },
-  { icon: GitHubIcon, href: siteConfig.links.github },
+  { icon: TwitterIcon, href: siteConfig.links.twitter, label: "Twitter" },
+  { icon: GitHubIcon, href: siteConfig.links.github, label: "GitHub" },
 ];
 
 export const Footer = () => {
@@ -101,6 +101,7 @@ export const Footer = () => {
                   className="text-muted-foreground transition-colors duration-200 hover:text-foreground"
                 >
                   <Link.icon size={20} />
+                  <span className="sr-only">{Link.label}</span>
                 </NavLink>
               ))}
             </div>
@@ -109,7 +110,7 @@ export const Footer = () => {
           <div className="flex gap-4 sm:gap-16">
             {links.map((group, index) => (
               <div key={index}>
-                <h4 className="font-bold">{group.label}</h4>
+                <h2 className="font-bold">{group.label}</h2>
                 <ul className="mt-2 space-y-2">
                   {group.links.map((link, index) => (
                     <li key={index}>

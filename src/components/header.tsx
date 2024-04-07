@@ -106,11 +106,13 @@ export const Header = () => {
             <Button asChild size="icon" variant="ghost" className="h-8 w-8">
               <Link href={siteConfig.links.github} target="_blank">
                 <GitHubIcon size={18} />
+                <span className="sr-only">GitHub</span>
               </Link>
             </Button>
             <Button asChild size="icon" variant="ghost" className="h-8 w-8">
               <Link href={siteConfig.links.twitter} target="_blank">
                 <TwitterIcon size={18} />
+                <span className="sr-only">Twitter</span>
               </Link>
             </Button>
           </div>

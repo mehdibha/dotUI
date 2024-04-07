@@ -118,7 +118,7 @@ export const Animation = () => {
               <div className="flex flex-1 flex-col gap-2">
                 <img
                   src="/previews/templates/taxonomy.png"
-                  alt="turbocharger"
+                  alt="taxonomy"
                   className="max-h-[100px] rounded-md object-cover object-bottom shadow"
                 />
                 <img
@@ -130,12 +130,12 @@ export const Animation = () => {
               <div className="flex flex-1 flex-col gap-2">
                 <img
                   src="/previews/templates/turbocharger.png"
-                  alt="turbocharger"
+                  alt="turbo"
                   className="max-h-[250px] rounded-md object-cover object-bottom shadow"
                 />
                 <img
                   src="/previews/templates/taxonomy.png"
-                  alt="turbocharger"
+                  alt="taxo"
                   className="max-h-[100px] rounded-md object-cover object-top shadow"
                 />
               </div>

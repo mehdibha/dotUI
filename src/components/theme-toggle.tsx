@@ -4,13 +4,12 @@ import React from "react";
 import * as SwitchPrimitives from "@radix-ui/react-switch";
 import { MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
+import { useMounted } from "@/lib/hooks/use-mounted";
 import { cn } from "@/lib/utils/classes";
 
 export const ThemeToggle = ({ className }: { className?: string }) => {
   const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = React.useState(false);
-
-  React.useEffect(() => setMounted(true), []);
+  const mounted = useMounted();
 
   if (!mounted) return null;
 
@@ -25,6 +24,8 @@ export const ThemeToggle = ({ className }: { className?: string }) => {
         "h-7 w-12",
         className
       )}
+      role="button"
+      aria-label={`Toggle ${theme === "dark" ? "light" : "dark"} mode`}
     >
       <SwitchPrimitives.Thumb
         className={cn(
