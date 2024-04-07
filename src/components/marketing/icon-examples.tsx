@@ -67,7 +67,7 @@ const icons = [
   CheckIcon,
 ];
 
-export const IconExemples = ({ limit }: { limit?: number }) => {
+export const IconExamples = ({ limit }: { limit?: number }) => {
   return (
     <>
       {icons.slice(0, limit ?? icons.length).map((Icon, i) => (

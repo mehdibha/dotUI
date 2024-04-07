@@ -8,10 +8,11 @@ import { DocCard } from "./doc-card";
 export interface DocsListProps {
   name: string;
   limit?: number;
+  href?: string;
   className?: string;
 }
 
-export const DocsList = ({ name, limit, className }: DocsListProps) => {
+export const DocsList = ({ name, href, limit, className }: DocsListProps) => {
   const docs = getDocs(name);
 
   const type = getDocTypeFromSlug(name);
@@ -36,7 +37,7 @@ export const DocsList = ({ name, limit, className }: DocsListProps) => {
       {hasMore && (
         <div className="flex justify-end">
           <Button size="sm" variant="link" className="mt-4 block">
-            <Link href={`/${name}`}>Explore more</Link>
+            <Link href={href ?? `/${name}`}>Explore more</Link>
           </Button>
         </div>
       )}
