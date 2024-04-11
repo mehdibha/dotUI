@@ -54,6 +54,10 @@ const config = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
+      // add duration 3000
+      transitionDuration: {
+        "3000": "3000ms",
+      },
       backgroundImage: {
         gradient: "linear-gradient(10deg, rgb(81, 112, 255), rgb(255, 102, 196))",
       },

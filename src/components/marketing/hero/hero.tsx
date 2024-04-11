@@ -31,9 +31,9 @@ export const Hero = ({ className }: { className?: string }) => {
             <span className="bg-gradient bg-clip-text text-transparent">React app</span>
           </Balancer>
         </h1>
-        <h2 className="text-md mt-6 text-muted-foreground md:text-lg lg:text-xl">
+        <p className="text-md mt-6 text-muted-foreground md:text-lg lg:text-xl">
           Copy the code, paste it, customize it, own it. Done.
-        </h2>
+        </p>
         <div className="mt-10 flex flex-col gap-4 sm:flex-row">
           <Button size="lg" variant="default" asChild>
             <Link href="/docs">Read the docs</Link>

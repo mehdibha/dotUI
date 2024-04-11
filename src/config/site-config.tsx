@@ -32,6 +32,7 @@ export const siteConfig = {
         { href: "/blocks", label: "Blocks" },
         { href: "/hooks", label: "Hooks" },
         { href: "/icons", label: "Icons" },
+        { href: "/themes", label: "Themes" },
         { href: "/templates", label: "Templates" },
       ],
     },

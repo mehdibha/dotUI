@@ -25,7 +25,7 @@ export const Preview = ({
       <ThemeWrapper fallback={<Skeleton className="h-[350px]" />}>
         <ScrollArea
           viewportProps={{
-            className: cn("bg-background", {
+            className: cn("bg-background text-foreground", {
               "min-h-[350px] max-h-[800px]": aspect === "default",
             }),
           }}
