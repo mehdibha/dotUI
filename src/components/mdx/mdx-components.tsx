@@ -2,6 +2,7 @@ import type { ComponentProps } from "react";
 import React from "react";
 import NavLink from "next/link";
 import { Code } from "bright";
+import { InfoIcon } from "lucide-react";
 import { CodeTabs } from "@/components/code-highlighter/code-tabs";
 import { preWrapper } from "@/components/code-highlighter/pre-wrapper-extension";
 import {
@@ -75,7 +76,7 @@ export const components = {
   ),
   h3: createHeading(
     3,
-    "font-heading mt-8 scroll-m-20 text-xl font-semibold tracking-tight"
+    "font-heading mt-8 scroll-m-20 text-lg font-semibold tracking-tight"
   ),
   h4: createHeading(
     4,
@@ -143,7 +144,7 @@ export const components = {
     />
   ),
   table: ({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
-    <div className="my-6 w-full overflow-y-auto">
+    <div className="my-6 w-full overflow-y-auto rounded-md">
       <table className={cn("w-full", className)} {...props} />
     </div>
   ),
@@ -180,4 +181,14 @@ export const components = {
   IconsExplorer,
   CodeTabs,
   DocsList: (props: DocsListProps) => <DocsList {...props} className="mt-4" />,
+  ColorBadge: ({ className, children, ...props }: ComponentProps<"div">) => (
+    <div
+      className="inline-flex items-center space-x-1.5 rounded border bg-muted px-2 py-0.5 font-mono text-sm"
+      {...props}
+    >
+      <div className={cn("h-3.5 w-3.5 rounded-full border", className)} />
+      <span>{children}</span>
+      <InfoIcon size={15} />
+    </div>
+  ),
 };

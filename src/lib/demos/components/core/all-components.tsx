@@ -5,7 +5,7 @@ import AspectRatioDemo from "./aspect-ratio";
 import AvatarDemo from "./avatar";
 import AvatarGroupDemo from "./avatar-group";
 import BreadcrumbDemo from "./breadcrumb";
-import ButtonDemo from "./button";
+import ButtonDemo from "./button/default";
 import CalendarDemo from "./calendar";
 import CardDemo from "./card";
 import CarouselDemo from "./carousel";

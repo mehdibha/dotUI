@@ -16,12 +16,7 @@ export const CopyButton = ({ code, className }: { code: string; className?: stri
   };
 
   return (
-    <Button
-      variant="secondary"
-      size="icon"
-      onClick={handleCopy}
-      className={cn("h-8 w-8", className)}
-    >
+    <Button shape="square" onClick={handleCopy} className={cn("h-8 w-8", className)}>
       {copied ? (
         <CheckIcon size={15} className="animate-in fade-in" />
       ) : (

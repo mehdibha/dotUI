@@ -27,16 +27,25 @@ const docsConfig: DocsConfig = {
           href: "/docs/installation",
         },
         {
-          title: "Styles",
-          href: "/docs/styles",
-        },
-        {
           title: "Changelog",
           href: "/docs/changelog",
         },
         {
           title: "Design",
-          items: getCategoryDocs("docs/design"),
+          items: [
+            {
+              title: "Overview",
+              href: "/docs/design/overview",
+            },
+            {
+              title: "Colors",
+              href: "/docs/design/colors",
+            },
+            {
+              title: "Tokens",
+              href: "/docs/design/tokens",
+            },
+          ],
         },
       ],
     },

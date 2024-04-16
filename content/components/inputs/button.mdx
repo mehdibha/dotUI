@@ -6,7 +6,7 @@ thumbnail:
   video: /previews/components/core/button.mp4
 ---
 
-<ComponentPreview name="demos/components/core/button" />
+<ComponentPreview name="demos/components/core/button/default" />
 
 ## Installation
 
@@ -15,3 +15,51 @@ thumbnail:
   <ComponentSource name="components/core/default/button" />
   <Step>Update the import paths to match your project setup.</Step>
 </Steps>
+
+## API Reference
+
+| Prop      | Type                                                                                             | Default   |
+| --------- | ------------------------------------------------------------------------------------------------ | --------- |
+| `asChild` | `boolean`                                                                                        | -         |
+| `variant` | `"primary" \| "neutral" \| "link" \| "ghost" \| "outline" \| "danger" \| "success" \| "warning"` | `neutral` |
+| `size`    | `"sm" \| "md" \| "lg"`                                                                           | `md`      |
+| `shape`   | `"default" \| "square" \| "circle"`                                                              | `default` |
+| `loading` | `boolean`                                                                                        | -         |
+| `prefix`  | `React.ReactNode`                                                                                | -         |
+| `suffix`  | `React.ReactNode`                                                                                | -         |
+
+## Exemples
+
+### Sizes
+
+The default size is `md`.
+
+<ComponentPreview name="demos/components/core/button/sizes" />
+
+### Variants
+
+The default variant is `neutral`.
+
+<ComponentPreview name="demos/components/core/button/variants" />
+
+### Shapes
+
+Icon-only buttons should include an aria-label.
+
+<ComponentPreview name="demos/components/core/button/shapes" />
+
+### Prefix and suffix
+
+<ComponentPreview name="demos/components/core/button/prefix-and-suffix" />
+
+### Loading
+
+<ComponentPreview name="demos/components/core/button/loading" />
+
+### Disabled
+
+<ComponentPreview name="demos/components/core/button/disabled" />
+
+### As child
+
+<ComponentPreview name="demos/components/core/button/as-child" />

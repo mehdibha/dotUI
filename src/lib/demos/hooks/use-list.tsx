@@ -16,26 +16,14 @@ export default function Demo() {
   return (
     <div>
       <div className="flex gap-2">
-        <Button
-          variant="secondary"
-          disabled={list.length < 1}
-          onClick={() => insertAt(1, "woo")}
-        >
+        <Button disabled={list.length < 1} onClick={() => insertAt(1, "woo")}>
           Insert After First
         </Button>
-        <Button
-          variant="secondary"
-          disabled={list.length < 2}
-          onClick={() => removeAt(1)}
-        >
+        <Button disabled={list.length < 2} onClick={() => removeAt(1)}>
           Remove Second Item
         </Button>
-        <Button variant="secondary" onClick={() => set([1, 2, 3])}>
-          Reset
-        </Button>
-        <Button variant="secondary" onClick={() => clear()}>
-          Clear
-        </Button>
+        <Button onClick={() => set([1, 2, 3])}>Reset</Button>
+        <Button onClick={() => clear()}>Clear</Button>
       </div>
       <div className="mt-4 space-y-2">
         <div className="flex items-center space-x-2">
@@ -45,9 +33,7 @@ export default function Demo() {
               setInputValue(e.target.value);
             }}
           />
-          <Button variant="secondary" onClick={() => push(inputValue)}>
-            Add
-          </Button>
+          <Button onClick={() => push(inputValue)}>Add</Button>
         </div>
         {list.map((item, index) => (
           <div
@@ -56,13 +42,13 @@ export default function Demo() {
           >
             <div className="mr-2">{item}</div>
             <div className="absolute right-3 top-[50%] flex translate-y-[-50%] items-center space-x-2 opacity-0 duration-100 group-hover:opacity-100">
-              <Button variant="ghost" size="icon" className="h-7 w-7">
+              <Button variant="ghost" size="sm" shape="square">
                 <EditIcon size={15} />
               </Button>
               <Button
                 variant="ghost"
-                size="icon"
-                className="h-7 w-7"
+                size="sm"
+                shape="square"
                 onClick={() => {
                   removeAt(index);
                 }}

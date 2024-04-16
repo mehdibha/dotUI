@@ -20,7 +20,7 @@ const config = {
     },
     extend: {
       colors: {
-        border: "hsl(var(--border))",
+        // old (shadcn)
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
@@ -53,8 +53,93 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // new (extended rcopy)
+        bg: {
+          DEFAULT: "hsl(var(--color-bg))",
+          inverse: "hsl(var(--color-bg-inverse))",
+          surface: "hsl(var(--color-bg-surface))",
+          disabled: "hsl(var(--color-bg-disabled))",
+          neutral: {
+            DEFAULT: "hsl(var(--color-bg-neutral))",
+            hover: "hsl(var(--color-bg-neutral-hover))",
+            active: "hsl(var(--color-bg-neutral-active))",
+          },
+          primary: {
+            DEFAULT: "hsl(var(--color-bg-primary))",
+            hover: "hsl(var(--color-bg-primary-hover))",
+            active: "hsl(var(--color-bg-primary-active))",
+          },
+          success: {
+            DEFAULT: "hsl(var(--color-bg-success))",
+            hover: "hsl(var(--color-bg-success-hover))",
+            active: "hsl(var(--color-bg-success-active))",
+            muted: {
+              DEFAULT: "hsl(var(--color-bg-success-muted))",
+              hover: "hsl(var(--color-bg-success-muted-hover))",
+              active: "hsl(var(--color-bg-success-muted-active))",
+            },
+          },
+          danger: {
+            DEFAULT: "hsl(var(--color-bg-danger))",
+            hover: "hsl(var(--color-bg-danger-hover))",
+            active: "hsl(var(--color-bg-danger-active))",
+            muted: {
+              DEFAULT: "hsl(var(--color-bg-danger-muted))",
+              hover: "hsl(var(--color-bg-danger-muted-hover))",
+              active: "hsl(var(--color-bg-danger-muted-active))",
+            },
+          },
+          warning: {
+            DEFAULT: "hsl(var(--color-bg-warning))",
+            hover: "hsl(var(--color-bg-warning-hover))",
+            active: "hsl(var(--color-bg-warning-active))",
+            muted: {
+              DEFAULT: "hsl(var(--color-bg-warning-muted))",
+              hover: "hsl(var(--color-bg-warning-muted-hover))",
+              active: "hsl(var(--color-bg-warning-muted-active))",
+            },
+          },
+          info: {
+            DEFAULT: "hsl(var(--color-bg-info))",
+            hover: "hsl(var(--color-bg-info-hover))",
+            active: "hsl(var(--color-bg-info-active))",
+            muted: {
+              DEFAULT: "hsl(var(--color-bg-info-muted))",
+              hover: "hsl(var(--color-bg-info-muted-hover))",
+              active: "hsl(var(--color-bg-info-muted-active))",
+            },
+          },
+        },
+        fg: {
+          DEFAULT: "hsl(var(--color-fg))",
+          secondary: "hsl(var(--color-fg-secondary))",
+          inverse: "hsl(var(--color-fg-inverse))",
+          disabled: "hsl(var(--color-fg-disabled))",
+          link: {
+            DEFAULT: "hsl(var(--color-fg-link))",
+            hover: "hsl(var(--color-fg-link-hover))",
+            active: "hsl(var(--color-fg-link-active))",
+            visited: "hsl(var(--color-fg-link-visited))",
+          },
+          onNeutral: "hsl(var(--color-fg-onNeutral))",
+          onPrimary: "hsl(var(--color-fg-onPrimary))",
+          onSuccess: "hsl(var(--color-fg-onSuccess))",
+          onMutedSuccess: "hsl(var(--color-fg-onMutedSuccess))",
+          onDanger: "hsl(var(--color-fg-onDanger))",
+          onMutedDanger: "hsl(var(--color-fg-onMutedDanger))",
+          onWarning: "hsl(var(--color-fg-onWarning))",
+          onMutedWarning: "hsl(var(--color-fg-onMutedWarning))",
+        },
+        border: {
+          DEFAULT: "hsl(var(--color-border))",
+          hover: "hsl(var(--color-border-hover))",
+          active: "hsl(var(--color-border-active))",
+          disabled: "hsl(var(--color-border-disabled))",
+          secondary: "hsl(var(--color-border-secondary))",
+          focus: "hsl(var(--color-border-focus))",
+          inverse: "hsl(var(--color-border-inverse))",
+        },
       },
-      // add duration 3000
       transitionDuration: {
         "3000": "3000ms",
       },

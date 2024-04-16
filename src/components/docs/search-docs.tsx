@@ -49,13 +49,13 @@ export const SearchDocs = (props: ButtonProps) => {
     <>
       <Button
         variant="outline"
+        prefix={<SearchIcon />}
+        suffix={<span className="rounded-md bg-card px-1 py-0.5 text-xs">Ctrl K</span>}
         onClick={() => setIsOpen(true)}
         {...props}
         className={cn("w-full px-2 text-sm text-muted-foreground", props.className)}
       >
-        <SearchIcon size={18} className="mr-1.5" />
         <span className="mr-4 flex-1 text-left">Quick Search...</span>
-        <span className="rounded-md bg-card px-1 py-0.5 text-xs">Ctrl K</span>
       </Button>
       <CommandDialog open={isOpen} onOpenChange={setIsOpen}>
         <CommandInput placeholder="Search a component, a block, a hook..." />

@@ -142,7 +142,7 @@ function Customizer() {
         </div>
         <Button
           variant="ghost"
-          size="icon"
+          shape="square"
           onClick={reset}
           className="ml-auto rounded-[0.5rem]"
         >

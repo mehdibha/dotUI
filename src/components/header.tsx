@@ -103,16 +103,14 @@ export const Header = () => {
           )}
         >
           <div className="flex items-center space-x-2">
-            <Button asChild size="icon" variant="ghost" className="h-8 w-8">
+            <Button asChild size="sm" shape="square" variant="ghost" aria-label="github">
               <Link href={siteConfig.links.github} target="_blank">
                 <GitHubIcon size={18} />
-                <span className="sr-only">GitHub</span>
               </Link>
             </Button>
-            <Button asChild size="icon" variant="ghost" className="h-8 w-8">
+            <Button asChild size="sm" shape="square" variant="ghost" aria-label="twitter">
               <Link href={siteConfig.links.twitter} target="_blank">
                 <TwitterIcon size={18} />
-                <span className="sr-only">Twitter</span>
               </Link>
             </Button>
           </div>
@@ -180,9 +178,8 @@ const MobileNav = () => {
     <div className="pointer-events-auto lg:hidden">
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
-          <Button variant="ghost" color="neutral" size="icon">
+          <Button variant="ghost" size="sm" shape="square" aria-label="toggle menu">
             <MenuIcon />
-            <span className="sr-only">Toggle Menu</span>
           </Button>
         </SheetTrigger>
         <SheetContent side="right" className=" w-56 bg-card pt-12 ">
@@ -207,9 +204,7 @@ const MobileNav = () => {
               onNavItemClick={handleClose}
             />
             {/* TODO: add searchdialog */}
-            <Button variant="secondary" size="sm">
-              Search
-            </Button>
+            <Button size="sm">Search</Button>
           </div>
         </SheetContent>
       </Sheet>

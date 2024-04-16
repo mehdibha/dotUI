@@ -87,7 +87,7 @@ export default async function Page({ params }: PageProps) {
         {categories && categories.length > 0 && (
           <div className="mt-6 flex flex-wrap gap-2">
             {categories.map((category, index) => (
-              <Button key={index} size="sm" variant="secondary" asChild className="h-7">
+              <Button key={index} size="sm" asChild className="h-7">
                 <Link href={category.href}>{category.label}</Link>
               </Button>
             ))}

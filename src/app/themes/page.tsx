@@ -39,7 +39,7 @@ export default function ThemesPage() {
   return (
     <div className="container">
       <div className="mx-auto mt-14 max-w-4xl text-center">
-        <h1 className="leading-tighter mt-4 font-display text-4xl font-bold tracking-tight md:text-5xl lg:text-5xl">
+        <h1 className="leading-tighter mt-4 font-display text-4xl font-bold tracking-tighter md:text-5xl lg:text-5xl">
           <Balancer>Everything starts with identity</Balancer>
         </h1>
         <p className="text-md mt-4 text-muted-foreground md:text-lg lg:text-xl">

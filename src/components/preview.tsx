@@ -22,27 +22,16 @@ export const Preview = ({
       <div className="absolute left-4 top-4 z-50 flex items-center space-x-2">
         <CustomizeTheme />
       </div>
-      <ThemeWrapper fallback={<Skeleton className="h-[350px]" />}>
+      <ThemeWrapper fallback={<Skeleton className="h-[200px]" />}>
         <ScrollArea
           viewportProps={{
-            className: cn("bg-background text-foreground", {
-              "min-h-[350px] max-h-[800px]": aspect === "default",
+            className: cn("bg-bg text-fg", {
+              "max-h-[800px]": aspect === "default",
             }),
           }}
         >
-          <div
-            className={cn("min-h-[350px] w-full", {
-              "flex items-center justify-center px-8 py-8": centered,
-            })}
-          >
-            <div
-              className={cn(
-                "flex w-full items-center justify-center" && centered,
-                className
-              )}
-            >
-              {children}
-            </div>
+          <div className="flex min-h-[200px] items-center justify-center px-4 py-16">
+            {children}
           </div>
         </ScrollArea>
       </ThemeWrapper>

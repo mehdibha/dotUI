@@ -53,7 +53,7 @@ export const PricingPlan = (props: PlanProps) => {
         ))}
       </ul>
       <Button
-        variant={featured ? "default" : "outline"}
+        variant={featured ? "primary" : "outline"}
         className="mt-8"
         aria-label={`Get started with the ${name} plan for ${billing === "monthly" ? price.monthly : price.yearly}`}
       >

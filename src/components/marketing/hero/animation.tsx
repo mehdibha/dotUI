@@ -71,7 +71,7 @@ export const Animation = () => {
               </AvatarGroup>
               <div className="flex items-center space-x-4">
                 <Switch />
-                <Button variant="secondary">Button</Button>
+                <Button>Button</Button>
                 <ComboboxDemo />
               </div>
               <div className="flex justify-start">

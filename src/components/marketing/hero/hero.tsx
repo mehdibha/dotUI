@@ -35,7 +35,7 @@ export const Hero = ({ className }: { className?: string }) => {
           Copy the code, paste it, customize it, own it. Done.
         </p>
         <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-          <Button size="lg" variant="default" asChild>
+          <Button size="lg" variant="primary" asChild>
             <Link href="/docs">Read the docs</Link>
           </Button>
           <SearchDocs className="w-auto" size="lg" />

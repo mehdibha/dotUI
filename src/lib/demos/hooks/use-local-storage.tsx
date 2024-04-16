@@ -21,7 +21,7 @@ function Demo() {
       />
       <div className="mt-4 flex items-center justify-end space-x-2">
         <Button
-          variant="secondary"
+          variant="neutral"
           size="sm"
           onClick={() => {
             setInput("");
@@ -31,7 +31,7 @@ function Demo() {
           Clear
         </Button>
         <Button
-          variant="default"
+          variant="primary"
           size="sm"
           onClick={() => {
             saveWriting(input);

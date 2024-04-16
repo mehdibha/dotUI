@@ -3,14 +3,41 @@ title: Colors
 description: Learn how to use our color system
 ---
 
-## Naming convention
+## Overview
 
-état francais
+### Color has purpose
 
-COULEUR- NOM - VARIANTE - INDICE - ÉTAT
+The purpose of using color has to be clear. Color needs to support a message or status that needs to be easily identifiable by the user.
+
+Each usage of color within your product is purposefully tied to a specific meaning. For instance, red signifies critical errors, green represents success messages, and blue is used to draw attention to tips and informations. Using color as decoration is exclusive to illustration.
+{/* This deliberate color coding facilitates users in identifying which parts of the user interface require focus and distinguishes them from the default features provided by your product. */}
+
+### Color has impact
+
+Your product interface should adopts a black and white color scheme, intentionally creating a neutral backdrop. By employing this monochromatic design, elements that incorporate color gain heightened visual impact and prominence.
+
+### Color is accessible
+
+rcopy offers consistent color palettes for each color role. This means that each color is assigned a specific relationship within the overall palette.
+
+These color relationships ensure that color contrasts remain consistent across every application of color and ensure proper legibility and understanding when it comes to combining texts with color and interactive shapes with various backgrounds.
 
 ## Color roles
 
-### Primary
+| Name                                                         | Description                                                                                            |
+| ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| <ColorBadge className="bg-gray-700">Neutral</ColorBadge>     | Use for default text and secondary UI elements, such as secondary buttons or navigation elements.      |
+| <ColorBadge className="bg-blue-700">Brand</ColorBadge>       | Use for primary actions or elements that communicate your product brand.                               |
+| <ColorBadge className="bg-blue-500">Information</ColorBadge> | Use for informative UI, such as an information icon, or UI that communicates something is in progress. |
+| <ColorBadge className="bg-teal-700">Success</ColorBadge>     | Use to communicate a favorable outcome, such as a success message.                                     |
+| <ColorBadge className="bg-amber-700">Warning</ColorBadge>    | Use for UI that communicates caution to prevent a mistake or error from occurring.                     |
+| <ColorBadge className="bg-red-700">Critical</ColorBadge>     | Use for UI that communicates danger or serious error states.                                           |
+| <ColorBadge className="bg-white">Inverse</ColorBadge>        | Use for UI elements that sit on bold emphasis backgrounds.                                             |
 
-Typically the color of your brand
+These are the main color roles available by default. Feel free to add other roles (e.g., discovery, emphasis).
+
+## Color tokens
+
+rCopy delivers colors in the form of design tokens. Design tokens are a layer of abstraction that allows for better maintainability, consistency and theming. These design tokens are represented as CSS variables for code.
+
+{/* explain more here and give exemples for all categories */}

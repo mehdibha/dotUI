@@ -22,7 +22,7 @@ export const ComponentSource = ({
     <Code
       subProps={code.map((file, index) => ({
         title: file.title,
-        code: file.code,
+        code: file.code.replace(/[\r\n]+$/, ""),
         lang: "tsx",
         ...(titles?.[index] && { title: titles[index] }),
       }))}

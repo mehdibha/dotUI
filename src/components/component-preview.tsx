@@ -65,12 +65,12 @@ export const ComponentPreview = ({
         <Code
           subProps={code.map((file) => ({
             title: code.length > 1 ? file.title : undefined,
-            code: file.code,
+            code: file.code.replace(/[\r\n]+$/, ""),
             lang: "tsx",
           }))}
           style={{ marginTop: 0, marginBottom: 0 }}
           theme="github-dark-dimmed"
-          codeClassName="text-xs min-h-[318px]"
+          codeClassName="text-xs"
           extensions={[tabs]}
         />
       </TabsContent>
