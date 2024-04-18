@@ -20,12 +20,6 @@ export default function InputSearchDemo() {
       onChange={(e) => {
         setSearchInput(e.target.value);
       }}
-      onFocus={() => {
-        console.log("focus");
-      }}
-      onBlur={() => {
-        console.log("blur");
-      }}
       suffix={
         searchInput && (
           <Tooltip>
@@ -42,7 +36,9 @@ export default function InputSearchDemo() {
                 <XCircleIcon />
               </Button>
             </TooltipTrigger>
-            <TooltipContent side="bottom">Clear search</TooltipContent>
+            <TooltipContent side="bottom" className="text-xs">
+              Clear search
+            </TooltipContent>
           </Tooltip>
         )
       }

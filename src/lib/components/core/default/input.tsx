@@ -50,7 +50,7 @@ const InnerVisual = ({
     );
   }
   if (children) {
-    return <span className={cn("flex", className)}>{children}</span>;
+    return <span className={cn("flex text-fg-muted", className)}>{children}</span>;
   }
   return null;
 };
@@ -91,7 +91,12 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           type={type}
           disabled={disabled}
           className={cn(
-            "font-inherit h-full w-full appearance-none border-none bg-transparent px-3 py-1 placeholder:text-fg-muted focus:outline-none disabled:cursor-not-allowed disabled:text-fg-disabled"
+            "font-inherit flex h-full w-full appearance-none items-center border-none bg-transparent px-3 placeholder:text-fg-muted focus:outline-none disabled:cursor-not-allowed disabled:text-fg-disabled",
+            "file:mt-[5px] file:cursor-pointer file:rounded-md file:border-none file:bg-bg-neutral file:px-2 file:py-0.5 file:text-fg-onNeutral file:outline-none file:transition-colors file:hover:bg-bg-neutral-hover",
+            {
+              "file:mt-[3px]": size === "sm",
+              "file:mt-[7px]": size === "lg",
+            }
           )}
           {...inputProps}
         />
