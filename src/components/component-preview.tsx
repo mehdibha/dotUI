@@ -57,7 +57,7 @@ export const ComponentPreview = ({
         <TabsTrigger value="code">Code</TabsTrigger>
       </TabsList>
       <TabsContent value="preview" className="rounded-md border">
-        <Preview aspect={aspect} centered={centered} className={className}>
+        <Preview aspect={aspect} className={className}>
           {component}
         </Preview>
       </TabsContent>

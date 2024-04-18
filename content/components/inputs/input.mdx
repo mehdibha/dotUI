@@ -1,12 +1,12 @@
 ---
 title: Input
-description: Displays a form input field or a component that looks like an input field.
+description: The Input component is a complete form control including a label, input, and help text.
 thumbnail:
   image: /previews/components/core/input.jpeg
   video: /previews/components/core/input.mp4
 ---
 
-<ComponentPreview name="demos/components/core/input" className="max-w-sm" />
+<ComponentPreview name="demos/components/core/input/default" className="max-w-xs" />
 
 ## Installation
 
@@ -15,3 +15,75 @@ thumbnail:
   <ComponentSource name="components/core/default/input" />
   <Step>Update the import paths to match your project setup.</Step>
 </Steps>
+
+## Usage
+
+```jsx
+import { Input } from "@/components/core/input";
+```
+
+```jsx
+<Input placeholder="email" />
+```
+
+## API Reference
+
+| Prop             | Type                   | Default |
+| ---------------- | ---------------------- | ------- |
+| `size`           | `"sm" \| "md" \| "lg"` | `md`    |
+| `disabled`       | `boolean`              | -       |
+| `prefix`         | `React.ReactNode`      | -       |
+| `suffix`         | `React.ReactNode`      | -       |
+| `loading`        | `boolean`              | -       |
+| `loaderPosition` | `"prefix" \| "suffix"` | -       |
+| `status`         | `"error" \| "success"` | -       |
+
+## Exemples
+
+### Sizes
+
+The default size is `md`.
+
+<ComponentPreview name="demos/components/core/input/sizes" className="max-w-xs" />
+
+### Prefix and suffix
+
+<ComponentPreview
+  name="demos/components/core/input/prefix-and-suffix"
+  className="max-w-xs"
+/>
+
+### Disabled
+
+<ComponentPreview name="demos/components/core/input/disabled" className="max-w-xs" />
+
+### Controlled
+
+<ComponentPreview name="demos/components/core/input/controlled" className="max-w-xs" />
+
+### With label
+
+<ComponentPreview name="demos/components/core/input/with-label" className="max-w-xs" />
+
+### Error and success status
+
+<ComponentPreview name="demos/components/core/input/status" className="max-w-xs" />
+
+### Loading
+
+<ComponentPreview name="demos/components/core/input/loading" className="max-w-xs" />
+
+### File input
+
+<ComponentPreview name="demos/components/core/input/file-input" className="max-w-xs" />
+
+### Password input
+
+<ComponentPreview
+  name="demos/components/core/input/password-input"
+  className="max-w-xs"
+/>
+
+### Search input
+
+<ComponentPreview name="demos/components/core/input/search-input" className="max-w-xs" />

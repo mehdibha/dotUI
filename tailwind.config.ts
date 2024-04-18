@@ -112,7 +112,7 @@ const config = {
         },
         fg: {
           DEFAULT: "hsl(var(--color-fg))",
-          secondary: "hsl(var(--color-fg-secondary))",
+          muted: "hsl(var(--color-fg-muted))",
           inverse: "hsl(var(--color-fg-inverse))",
           disabled: "hsl(var(--color-fg-disabled))",
           link: {
@@ -135,6 +135,8 @@ const config = {
           hover: "hsl(var(--color-border-hover))",
           active: "hsl(var(--color-border-active))",
           disabled: "hsl(var(--color-border-disabled))",
+          danger: "hsl(var(--color-border-danger))",
+          success: "hsl(var(--color-border-success))",
           secondary: "hsl(var(--color-border-secondary))",
           focus: "hsl(var(--color-border-focus))",
           inverse: "hsl(var(--color-border-inverse))",

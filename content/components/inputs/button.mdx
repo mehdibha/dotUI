@@ -11,10 +11,26 @@ thumbnail:
 ## Installation
 
 <Steps>
+  <Step>Install the following dependencies:</Step>
+
+```bash
+npm install @radix-ui/react-slot
+```
+
   <Step>Copy and paste the following code into your project.</Step>
   <ComponentSource name="components/core/default/button" />
   <Step>Update the import paths to match your project setup.</Step>
 </Steps>
+
+## Usage
+
+```jsx
+import { Button } from "@/components/core/button";
+```
+
+```jsx
+<Button variant="primary">Button</Button>
+```
 
 ## API Reference
 
@@ -44,7 +60,7 @@ The default variant is `neutral`.
 
 ### Shapes
 
-Icon-only buttons should include an aria-label.
+Icon-only buttons should include an `aria-label`.
 
 <ComponentPreview name="demos/components/core/button/shapes" />
 

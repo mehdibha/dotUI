@@ -9,12 +9,10 @@ import { CustomizeTheme } from "./customize-theme";
 export const Preview = ({
   className,
   children,
-  centered,
   aspect,
 }: {
   className?: string;
   children: React.ReactNode;
-  centered?: boolean;
   aspect: "default" | "page";
 }) => {
   return (
@@ -25,13 +23,15 @@ export const Preview = ({
       <ThemeWrapper fallback={<Skeleton className="h-[200px]" />}>
         <ScrollArea
           viewportProps={{
-            className: cn("bg-bg text-fg", {
+            className: cn("bg-bg text-fg flex items-center justify-center", {
               "max-h-[800px]": aspect === "default",
             }),
           }}
         >
           <div className="flex min-h-[200px] items-center justify-center px-4 py-16">
-            {children}
+            <div className={cn("flex w-full items-center justify-center", className)}>
+              {children}
+            </div>
           </div>
         </ScrollArea>
       </ThemeWrapper>

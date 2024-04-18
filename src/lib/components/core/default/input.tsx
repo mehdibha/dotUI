@@ -1,23 +1,108 @@
 import * as React from "react";
-import { cn } from "@/lib/utils/classes";
+import { Loader2Icon } from "lucide-react";
+import { cn, cva, type VariantProps } from "@/lib/utils/classes";
 
-export type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
+const inputVariants = cva(
+  [
+    "flex items-center w-full transition-colors rounded-md overflow-hidden border bg-transparent text-sm shadow-sm focus-within:ring-1 focus-within:ring-border-focus",
+  ],
+  {
+    variants: {
+      size: {
+        sm: "h-8 [&_svg]:size-4",
+        md: "h-9 [&_svg]:size-4",
+        lg: "h-10 [&_svg]:size-5",
+      },
+      status: {
+        error: "ring-1 ring-border-danger",
+        success: "ring-1 ring-border-success",
+      },
+    },
+    defaultVariants: {
+      size: "md",
+    },
+  }
+);
+
+export interface InputProps
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size" | "prefix">,
+    VariantProps<typeof inputVariants> {
+  prefix?: React.ReactNode;
+  suffix?: React.ReactNode;
+  loading?: boolean;
+  loaderPosition?: "prefix" | "suffix";
+}
+
+const InnerVisual = ({
+  loading,
+  className,
+  children,
+}: {
+  loading?: boolean;
+  className?: string;
+  children?: React.ReactNode;
+}) => {
+  if (loading) {
+    return (
+      <span className={cn("flex", className)}>
+        <Loader2Icon className="animate-spin" />
+      </span>
+    );
+  }
+  if (children) {
+    return <span className={cn("flex", className)}>{children}</span>;
+  }
+  return null;
+};
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, ...props }, ref) => {
+  (
+    {
+      style,
+      className,
+      type,
+      size,
+      status,
+      prefix,
+      suffix,
+      disabled,
+      loading,
+      loaderPosition = "suffix",
+      ...inputProps
+    },
+    ref
+  ) => {
+    const showPrefixLoading = loading && loaderPosition === "prefix";
+    const showSuffixLoading = loading && loaderPosition === "suffix";
+
     return (
-      <input
-        type={type}
+      <span
+        style={style}
         className={cn(
-          "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
-          className
+          inputVariants({ size, status, className }),
+          disabled && "cursor-not-allowed border-border-disabled bg-bg-disabled"
         )}
-        ref={ref}
-        {...props}
-      />
+      >
+        <InnerVisual className="ml-3" loading={showPrefixLoading}>
+          {prefix}
+        </InnerVisual>
+        <input
+          ref={ref}
+          type={type}
+          disabled={disabled}
+          className={cn(
+            "font-inherit h-full w-full appearance-none border-none bg-transparent px-3 py-1 placeholder:text-fg-muted focus:outline-none disabled:cursor-not-allowed disabled:text-fg-disabled"
+          )}
+          {...inputProps}
+        />
+        <InnerVisual className="ml-1 mr-3" loading={showSuffixLoading}>
+          {suffix}
+        </InnerVisual>
+      </span>
     );
   }
 );
+
 Input.displayName = "Input";
 
-export { Input };
+export { Input, inputVariants };
