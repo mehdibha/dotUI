@@ -1,10 +1,9 @@
 import type { ComponentProps } from "react";
 import React from "react";
 import NavLink from "next/link";
-import { Code } from "bright";
+import { type BrightProps, Code } from "bright";
 import { InfoIcon } from "lucide-react";
 import { CodeTabs } from "@/components/code-highlighter/code-tabs";
-import { preWrapper } from "@/components/code-highlighter/pre-wrapper-extension";
 import {
   ComponentPreview,
   type ComponentPreviewProps,
@@ -14,6 +13,7 @@ import { DocsList, type DocsListProps } from "@/components/docs/docs-list";
 import { IconsExplorer } from "@/components/icons-explorer";
 import { slugify } from "@/utils/string";
 import { cn } from "@/lib/utils/classes";
+import { Info } from "./info";
 
 export const Link = ({
   className,
@@ -68,6 +68,8 @@ function createHeading(level: number, className?: string) {
   return Component;
 }
 
+const Pre = (props: BrightProps) => <Code.Pre {...props} />;
+
 export const components = {
   h1: createHeading(1, "font-heading mt-2 scroll-m-20 text-4xl font-bold"),
   h2: createHeading(
@@ -108,25 +110,51 @@ export const components = {
   ),
   hr: ({ ...props }: ComponentProps<"hr">) => <hr className="my-4 md:my-8" {...props} />,
   pre: (props: ComponentProps<"pre">) => (
+    <Code {...props} theme="github-dark-dimmed" codeClassName="text-xs" />
+  ),
+  Code: (props: ComponentProps<"pre">) => (
     <Code
       {...props}
       theme="github-dark-dimmed"
       codeClassName="text-xs"
+      lang="tsx"
+      style={{ marginTop: 0, marginBottom: 0 }}
+      className="inline-flex mx-0.5"
       extensions={[
         {
-          name: "title",
-          beforeHighlight: (props, annotations) => {
-            if (annotations.length > 0) {
-              return { ...props, title: annotations[0].query };
-            }
-          },
+          name: "pre",
+          Pre: (props: BrightProps) => (
+            <span className="[&>pre]:!py-1">
+              <Code.Pre
+                {...props}
+              />
+            </span>
+          ),
         },
-        preWrapper,
       ]}
     />
   ),
-  code: (props: ComponentProps<"code">) => (
-    <code className="rounded border bg-muted px-1 py-0.5 font-mono text-sm" {...props} />
+  code: (props: ComponentProps<"pre">) => (
+    <Code
+      {...props}
+      theme="github-dark-dimmed"
+      lang="tsx"
+      codeClassName="text-xs py-0"
+      className="inline-flex mx-0.5"
+      style={{ marginTop: 0, marginBottom: 0 }}
+      extensions={[
+        {
+          name: "pre",
+          Pre: (props: BrightProps) => (
+            <span className="[&>pre]:!py-1">
+              <Code.Pre
+                {...props}
+              />
+            </span>
+          ),
+        },
+      ]}
+    />
   ),
   Step: ({ className, ...props }: React.ComponentProps<"h3">) => (
     <h3
@@ -163,14 +191,16 @@ export const components = {
       {...props}
     />
   ),
-  td: ({ className, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
+  td: ({ className, children, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
     <td
       className={cn(
         "border px-2 py-2 text-left sm:px-4 [&[align=center]]:text-center [&[align=right]]:text-right",
         className
       )}
       {...props}
-    />
+    >
+      <div className="flex flex-wrap items-center gap-2">{children}</div>
+    </td>
   ),
   ComponentSource: ({ name, ...rest }: { name: string }) => (
     <ComponentSource name={name} className="my-2" {...rest} />
@@ -191,4 +221,5 @@ export const components = {
       <InfoIcon size={15} />
     </div>
   ),
+  Info,
 };

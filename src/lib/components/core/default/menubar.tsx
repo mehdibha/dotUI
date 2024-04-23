@@ -15,20 +15,20 @@ const MenubarSub = MenubarPrimitive.Sub;
 
 const MenubarRadioGroup = MenubarPrimitive.RadioGroup;
 
-const Menubar = React.forwardRef<
+const MenubarRoot = React.forwardRef<
   React.ElementRef<typeof MenubarPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Root>
 >(({ className, ...props }, ref) => (
   <MenubarPrimitive.Root
     ref={ref}
     className={cn(
-      "flex h-10 items-center space-x-1 rounded-md border bg-background p-1",
+      "flex h-10 items-center space-x-1 rounded-md border bg-bg p-1",
       className
     )}
     {...props}
   />
 ));
-Menubar.displayName = MenubarPrimitive.Root.displayName;
+MenubarRoot.displayName = MenubarPrimitive.Root.displayName;
 
 const MenubarTrigger = React.forwardRef<
   React.ElementRef<typeof MenubarPrimitive.Trigger>,
@@ -37,7 +37,7 @@ const MenubarTrigger = React.forwardRef<
   <MenubarPrimitive.Trigger
     ref={ref}
     className={cn(
-      "flex cursor-default select-none items-center rounded-sm px-3 py-1.5 text-sm font-medium outline-none focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground",
+      "flex cursor-default select-none items-center rounded-sm px-3 py-1.5 text-sm font-medium outline-none transition-colors focus:bg-bg-neutral-active focus:text-fg-onNeutral data-[state=open]:bg-bg-neutral-active data-[state=open]:text-fg-onNeutral",
       className
     )}
     {...props}
@@ -204,7 +204,7 @@ const MenubarShortcut = ({
 MenubarShortcut.displayname = "MenubarShortcut";
 
 export {
-  Menubar,
+  MenubarRoot,
   MenubarMenu,
   MenubarTrigger,
   MenubarContent,

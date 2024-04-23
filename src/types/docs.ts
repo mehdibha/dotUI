@@ -41,6 +41,7 @@ export interface DocMetadata {
   keywords?: string[];
   links?: DocLinks;
   label?: string;
+  disabled?: boolean;
 }
 
 export interface Doc {

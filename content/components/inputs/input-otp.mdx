@@ -6,6 +6,8 @@ description: Accessible one-time password component with copy paste functionalit
 # video: /previews/components/core/accordion.mp4
 ---
 
+<ComponentPreview name="demos/components/core/input-otp/default" />
+
 ## Installation
 
 <Steps>
@@ -19,3 +21,76 @@ npm install input-otp
   <ComponentSource name="components/core/default/input-otp" />
   <Step>Update the import paths to match your project setup.</Step>
 </Steps>
+
+## Usage
+
+```jsx
+import { InputOTP } from "@/components/ui/input-otp";
+```
+
+```jsx
+<InputOTP maxLength={6} />
+```
+
+## API Reference
+
+### InputOTP
+
+| Prop         | Type                                | Default     |
+| ------------ | ----------------------------------- | ----------- |
+| `length*`    | `number`                            | -           |
+| `value`      | `number`                            | -           |
+| `onChange`   | `func: (value: string) => void`     | -           |
+| `onComplete` | `func: (value: string) => void`     | -           |
+| `size`       | `"sm" \| "md" \| "lg"`              | `"md"`      |
+| `variant`    | `"default" \| "success" \| "error"` | `"default"` |
+| `disabled`   | `boolean`                           | `"default"` |
+
+### InputOTPRoot
+
+| Prop         | Type                            | Default     |
+| ------------ | ------------------------------- | ----------- |
+| `length`     | `number`                        | -           |
+| `value`      | `number`                        | -           |
+| `onChange`   | `func: (value: string) => void` | -           |
+| `onComplete` | `func: (value: string) => void` | -           |
+| `disabled`   | `boolean`                       | `"default"` |
+
+### InputOTPSlot
+
+| Prop       | Type                                | Default     |
+| ---------- | ----------------------------------- | ----------- |
+| `length`   | `number`                            | -           |
+| `size`     | `"sm" \| "md" \| "lg"`              | `"md"`      |
+| `variant`  | `"default" \| "success" \| "error"` | `"default"` |
+| `disabled` | `boolean`                           | `"default"` |
+
+## Exemples
+
+### Sizes
+
+<ComponentPreview name="demos/components/core/input-otp/sizes" />
+
+### Variants
+
+<ComponentPreview name="demos/components/core/input-otp/variants" />
+
+### Disabled
+
+<ComponentPreview name="demos/components/core/input-otp/disabled" />
+
+### Customize (via composition)
+
+<ComponentPreview name="demos/components/core/input-otp/customize-via-composition" />
+
+### Controlled
+
+<ComponentPreview name="demos/components/core/input-otp/controlled" />
+
+### Custom pattern
+
+<ComponentPreview name="demos/components/core/input-otp/custom-pattern" />
+
+### Form (2FA)
+
+<ComponentPreview name="demos/components/core/input-otp/2FA" />

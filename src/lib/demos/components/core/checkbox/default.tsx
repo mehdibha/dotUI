@@ -8,9 +8,12 @@ export default function CheckboxDemo() {
       <Checkbox id="terms" />
       <label
         htmlFor="terms"
-        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:text-fg-disabled"
       >
-        Accept terms and conditions
+        I accept the{" "}
+        <a href="#" className="text-fg-link underline underline-offset-2">
+          terms and conditions
+        </a>
       </label>
     </div>
   );

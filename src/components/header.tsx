@@ -8,7 +8,7 @@ import { motion, useAnimate } from "framer-motion";
 import { MenuIcon } from "lucide-react";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
 import { Button } from "@/lib/components/core/default/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/lib/components/core/default/sheet";
+// import { Sheet, SheetContent, SheetTrigger } from "@/lib/components/core/default/sheet";
 import { useScrolled } from "@/lib/hooks/use-scrolled";
 import { cn } from "@/lib/utils/classes";
 import { siteConfig } from "@/config";
@@ -115,7 +115,7 @@ export const Header = () => {
             </Button>
           </div>
         </div>
-        <MobileNav />
+        {/* <MobileNav /> */}
       </div>
     </header>
   );
@@ -168,46 +168,46 @@ const Nav = (props: NavProps) => {
   );
 };
 
-const MobileNav = () => {
-  const [open, setOpen] = React.useState<boolean>(false);
-  const handleClose = () => {
-    setOpen(false);
-  };
+// const MobileNav = () => {
+//   const [open, setOpen] = React.useState<boolean>(false);
+//   const handleClose = () => {
+//     setOpen(false);
+//   };
 
-  return (
-    <div className="pointer-events-auto lg:hidden">
-      <Sheet open={open} onOpenChange={setOpen}>
-        <SheetTrigger asChild>
-          <Button variant="ghost" size="sm" shape="square" aria-label="toggle menu">
-            <MenuIcon />
-          </Button>
-        </SheetTrigger>
-        <SheetContent side="right" className=" w-56 bg-card pt-12 ">
-          <div className="flex flex-col space-y-8">
-            <Link
-              href="/"
-              className="flex items-center justify-center space-x-2 transition-all hover:opacity-80"
-              onClick={handleClose}
-            >
-              <Image
-                src={siteConfig.global.logo}
-                alt={siteConfig.global.name}
-                loading="lazy"
-                width={20}
-                height={20}
-              />
-              <span>rCopy</span>
-            </Link>
-            <Nav
-              items={config.nav.links}
-              direction="column"
-              onNavItemClick={handleClose}
-            />
-            {/* TODO: add searchdialog */}
-            <Button size="sm">Search</Button>
-          </div>
-        </SheetContent>
-      </Sheet>
-    </div>
-  );
-};
+//   return (
+//     <div className="pointer-events-auto lg:hidden">
+//       <Sheet open={open} onOpenChange={setOpen}>
+//         <SheetTrigger asChild>
+//           <Button variant="ghost" size="sm" shape="square" aria-label="toggle menu">
+//             <MenuIcon />
+//           </Button>
+//         </SheetTrigger>
+//         <SheetContent side="right" className=" w-56 bg-card pt-12 ">
+//           <div className="flex flex-col space-y-8">
+//             <Link
+//               href="/"
+//               className="flex items-center justify-center space-x-2 transition-all hover:opacity-80"
+//               onClick={handleClose}
+//             >
+//               <Image
+//                 src={siteConfig.global.logo}
+//                 alt={siteConfig.global.name}
+//                 loading="lazy"
+//                 width={20}
+//                 height={20}
+//               />
+//               <span>rCopy</span>
+//             </Link>
+//             <Nav
+//               items={config.nav.links}
+//               direction="column"
+//               onNavItemClick={handleClose}
+//             />
+//             {/* TODO: add searchdialog */}
+//             <Button size="sm">Search</Button>
+//           </div>
+//         </SheetContent>
+//       </Sheet>
+//     </div>
+//   );
+// };

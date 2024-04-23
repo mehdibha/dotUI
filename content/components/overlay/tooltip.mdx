@@ -6,7 +6,7 @@ thumbnail:
   video: /previews/components/core/tooltip.mp4
 ---
 
-<ComponentPreview name="demos/components/core/tooltip" />
+<ComponentPreview name="demos/components/core/tooltip/default" />
 
 ## Installation
 
@@ -15,3 +15,114 @@ thumbnail:
   <ComponentSource name="components/core/default/tooltip" />
   <Step>Update the import paths to match your project setup.</Step>
 </Steps>
+
+## Usage
+
+```jsx
+// wrap your app with TooltipProvider
+
+<TooltipProvider>
+  <App />
+</TooltipProvider>
+```
+
+```jsx
+import { Tooltip } from "@/components/core/tooltip";
+```
+
+```jsx
+<Tooltip content="Add to library">
+  <Button>
+    Button
+  </Button>
+</Tooltip>
+```
+
+## Exemples
+
+### Variants
+
+<ComponentPreview name="demos/components/core/tooltip/variants" />
+
+### No delay
+
+<ComponentPreview name="demos/components/core/tooltip/no-delay" />
+
+### Custom content
+
+<ComponentPreview name="demos/components/core/tooltip/custom-content" />
+
+### Composition
+
+For more flexibility, you can use the composition pattern to create a custom tooltip.
+
+<ComponentPreview name="demos/components/core/tooltip/composition" />
+
+## API Reference
+
+### Tooltip
+
+This component inherits and merges props from TooltipRoot, TooltipPortal and TooltipContent parts.
+
+| Prop                                                            | Type                                                        | Default    |
+| --------------------------------------------------------------- | ----------------------------------------------------------- | ---------- |
+| `content*`<Info>The content associated with the tooltip.</Info> | `React.ReactNode`                                                   | -          |
+| `variant`                                                       | `"default" \| "success" \| "danger" \| "warning" \| "info"` | `"default` |
+
+### TooltipProvider
+
+Wraps your app to provide global functionality to your tooltips.
+
+| Prop                                                                                                                                                         | Type      | Default |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------- | ------- |
+| `delayDuration`<Info>The duration from when the mouse enters a tooltip trigger until the tooltip opens.</Info>                                               | `number`  | `700`   |
+| `skipDelayDuration`<Info>How much time a user has to enter another trigger without incurring a delay again.</Info>                                           | `number`  | `300`   |
+| `disableHoverableContent`<Info>Prevents <Code>TooltipContent</Code> from remaining open when hovering. Disabling this has accessibility consequences.</Info> | `boolean` | -       |
+
+### TooltipRoot
+
+Contains all the parts of a tooltip.
+
+| Prop                                                                                                                                                                                                     | Type                            | Default |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------- | ------- |
+| `defaultOpen`<Info>The open state of the tooltip when it is initially rendered. Use when you do not need to control its open state.</Info>                                                               | `boolean`                       | -       |
+| `open`<Info>The controlled open state of the tooltip. Must be used in conjunction with <Code>onOpenChange</Code>.</Info>                                                                                 | `boolean`                       | -       |
+| `onOpenChange`<Info>Event handler called when the open state of the tooltip changes.</Info>                                                                                                              | `func: (open: boolean) => void` | -       |
+| `delayDuration`<Info>Override the duration given to the <Code>TooltipProvider</Code> to customise the open delay for a specific tooltip.</Info>                                                          | `number`                        | `700`   |
+| `disableHoverableContent`<Info>Prevents <Code>TooltipContent</Code> from remaining open when hovering. Disabling this has accessibility consequences. Inherits from <Code>TooltipProvider</Code>.</Info> | `boolean`                       | -       |
+
+### TooltipTrigger
+
+The button that toggles the tooltip. By default, the `Tooltip.Content` will position itself against the trigger.
+
+| Prop                                                                                                                       | Type      | Default |
+| -------------------------------------------------------------------------------------------------------------------------- | --------- | ------- |
+| `asChild`<Info>Change the default rendered element for the one passed as a child, merging their props and behavior.</Info> | `boolean` | `false` |
+
+| Data attribute | Values                                         |
+| -------------- | ---------------------------------------------- |
+| `[data-state]` | `"closed" \| "delayed-open" \| "instant-open"` |
+
+### TooltipContent
+
+The component that pops out when the tooltip is open.
+
+| Prop                                                                                                                                                                                                                                                                 | Type                                                                                    | Default     |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | ----------- |
+| `variant`                                                                                                                                                                                                                                                            | `"default" \| "success" \| "danger" \| "warning" \| "info"`                             | `"default`  |
+| `asChild`<Info>Change the default rendered element for the one passed as a child, merging their props and behavior.</Info>                                                                                                                                           | `boolean`                                                                               | `false`     |
+| `aria-label`<Info>By default, screenreaders will announce the content inside the component. If this is not descriptive enough, or you have content that cannot be announced, use <Code>aria-label</Code> as a more descriptive label.</Info>                         | `string`                                                                                | -           |
+| `onEscapeKeyDown`<Info>Event handler called when the escape key is down. It can be prevented by calling <Code>event.preventDefault</Code>.</Info>                                                                                                                    | `func: (event: KeyboardEvent) => void`                                                  | -           |
+| `onPointerDownOutside`<Info>Event handler called when a pointer event occurs outside the bounds of the component. It can be prevented by calling <Code>event.preventDefault</Code>.</Info>                                                                           | `func: (event: PointerDownOutsideEvent) => void`                                        | -           |
+| `forceMount`<Info>Used to force mounting when more control is needed. Useful when controlling animation with React animation libraries. It inherits from <Code>TooltipPortal</Code>.</Info>                                                                          | `boolean`                                                                               | -           |
+| `side`<Info>The preferred side of the trigger to render against when open. Will be reversed when collisions occur and <Code>avoidCollisions</Code> is enabled.</Info>                                                                                                | `"top" \| "right" \| "bottom" \| "left"`                                                | `"top"`     |
+| `sideOffset`<Info>The distance in pixels from the trigger.</Info>                                                                                                                                                                                                    | `number`                                                                                | `0`         |
+| `align`<Info>The preferred alignment against the trigger. May change when collisions occur.</Info>                                                                                                                                                                   | `"start" \| "center" \| "end"`                                                          | `"center"`  |
+| `alignOffset`<Info>An offset in pixels from the <Code>"start"</Code> or <Code>"end"</Code> alignment options.</Info>                                                                                                                                                 | `number`                                                                                | `0`         |
+| `avoidCollisions`<Info>When <Code>true</Code>, overrides the <Code>side</Code> and <Code>align</Code> preferences to prevent collisions with boundary edges.</Info>                                                                                                  | `boolean`                                                                               | `true`      |
+| `collisionBoundary` <Info>The element used as the collision boundary. By default this is the viewport, though you can provide additional element(s) to be included in this check.</Info>                                                                             | `Boundary` <Info><Code>Element \| null \| Array\<Element \| null></Code></Info>         | `[]`        |
+| `collisionPadding`<Info>The distance in pixels from the boundary edges where collision detection should occur. Accepts a number (same for all sides), or a partial padding object, for example: <Code>\{ top: 20, left: 20 }</Code>.</Info>                          | `number \| Padding` <Info><Code>number \| Partial\<Record\<Side, number>></Code></Info> | `0`         |
+| `arrowPadding`<Info>The padding between the arrow and the edges of the content. If your content has <Code>border-radius</Code>, this will prevent it from overflowing the corners.</Info>                                                                            | `number`                                                                                | `0`         |
+| `sticky`<Info>The sticky behavior on the align axis. <Code>"partial"</Code> will keep the content in the boundary as long as the trigger is at least partially in the boundary whilst <Code>"always"</Code> will keep the content in the boundary regardless.</Info> | `"partial" \| "always"`                                                                 | `"partial"` |
+| `hideWhenDetached`<Info>Whether to hide the content when the trigger becomes fully occluded.</Info>                                                                                                                                                                  | `boolean`                                                                               | `false`     |
+

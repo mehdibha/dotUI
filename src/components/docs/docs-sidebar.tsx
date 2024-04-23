@@ -60,7 +60,7 @@ const Category = ({ title, slug, items, pathname }: CategoryProps) => {
                   <Link
                     href={item.href}
                     className={cn(
-                      "group ml-2 block border-l border-muted pl-4 text-muted-foreground",
+                      "group ml-2 block border-l border-muted pl-4 text-fg-muted transition-colors hover:text-foreground",
                       {
                         "border-foreground font-medium text-foreground":
                           pathname === item.href,
@@ -81,29 +81,49 @@ const Category = ({ title, slug, items, pathname }: CategoryProps) => {
                     {item.title}
                   </h3>
                   <ul className="list-none">
-                    {item.items.map((subItem, subIndex) => (
-                      <li key={subIndex}>
-                        <Link
-                          href={subItem.href}
-                          className={cn(
-                            "group block border-l border-muted py-1 pl-4 text-muted-foreground transition-colors hover:text-foreground",
-                            {
-                              "border-foreground font-medium text-foreground":
-                                pathname === subItem.href,
-                            }
-                          )}
-                        >
-                          <span className="block transition-transform duration-100 group-hover:translate-x-0.5">
-                            {subItem.title}
-                            {subItem.label && (
-                              <span className="ml-2 rounded-md bg-gradient px-1.5 py-0.5 text-xs leading-none text-black">
-                                {subItem.label}
-                              </span>
+                    {item.items.map((subItem, subIndex) => {
+                      if (subItem.disabled) {
+                        return (
+                          <li key={subIndex}>
+                            <span
+                              className={cn(
+                                "block cursor-not-allowed border-l border-muted py-1 pl-4 text-fg-disabled"
+                              )}
+                            >
+                              {subItem.title}
+                              {subItem.label && (
+                                <span className="ml-2 rounded-md bg-bg-disabled px-1.5 py-0.5 text-xs leading-none text-fg-disabled">
+                                  {subItem.label}
+                                </span>
+                              )}
+                            </span>
+                          </li>
+                        );
+                      }
+                      return (
+                        <li key={subIndex}>
+                          <Link
+                            href={subItem.href}
+                            className={cn(
+                              "group block border-l border-muted py-1 pl-4 text-muted-foreground transition-colors hover:text-foreground",
+                              {
+                                "border-foreground font-medium text-foreground":
+                                  pathname === subItem.href,
+                              }
                             )}
-                          </span>
-                        </Link>
-                      </li>
-                    ))}
+                          >
+                            <span className="block transition-transform duration-100 group-hover:translate-x-0.5">
+                              {subItem.title}
+                              {subItem.label && (
+                                <span className="ml-2 rounded-md bg-gradient px-1.5 py-0.5 text-xs leading-none text-black">
+                                  {subItem.label}
+                                </span>
+                              )}
+                            </span>
+                          </Link>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </li>
               );

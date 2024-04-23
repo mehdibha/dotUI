@@ -4,14 +4,40 @@ description: A set of checkable buttons—known as radio buttons—where no more
 thumbnail:
   image: /previews/components/core/radio-group.jpeg
   video: /previews/components/core/radio-group.mp4
+disabled: true
 ---
 
-<ComponentPreview name="demos/components/core/radio-group" />
+<ComponentPreview name="demos/components/core/radio-group/default" />
 
 ## Installation
 
 <Steps>
+  <Step>Install the following components</Step>
+  
+  [Label](/components/inputs/label)
+
   <Step>Copy and paste the following code into your project.</Step>
   <ComponentSource name="components/core/default/radio-group" />
   <Step>Update the import paths to match your project setup.</Step>
 </Steps>
+
+## Usage
+
+```jsx
+import { RadioGroup, RadioGroupITem } from "@/components/core/radio-group";
+```
+
+```jsx
+<RadioGroup defaultValue="option-one">
+  <RadioGroupItem value="option-one">Option One</>
+  <RadioGroupItem value="option-two">Option Two</>
+</RadioGroup>
+```
+
+## API Reference
+
+| Prop                                                                                                                       | Type      | Default |
+| -------------------------------------------------------------------------------------------------------------------------- | --------- | ------- |
+| `asChild`<Info>Change the default rendered element for the one passed as a child, merging their props and behavior.</Info> | `boolean` | false   |
+
+## Examples

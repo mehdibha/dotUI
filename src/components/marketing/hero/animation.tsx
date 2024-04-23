@@ -13,7 +13,7 @@ import { AvatarGroup } from "@/lib/components/core/default/avatar-group";
 import { Button } from "@/lib/components/core/default/button";
 import { Switch } from "@/lib/components/core/default/switch";
 import CalendarDemo from "@/lib/demos/components/core/calendar";
-import ComboboxDemo from "@/lib/demos/components/core/combobox";
+// import ComboboxDemo from "@/lib/demos/components/core/combobox";
 import { cn } from "@/lib/utils/classes";
 
 export const Animation = () => {
@@ -72,7 +72,7 @@ export const Animation = () => {
               <div className="flex items-center space-x-4">
                 <Switch />
                 <Button>Button</Button>
-                <ComboboxDemo />
+                {/* <ComboboxDemo /> */}
               </div>
               <div className="flex justify-start">
                 <CalendarDemo />

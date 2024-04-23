@@ -68,17 +68,19 @@
     --color-bg-info-muted-hover: 0 0% 100%;
     --color-bg-info-muted-active: 0 0% 100%;
 
+    --color-bg-tooltip: 0 0% 100%;
+
     --color-fg: 240 10% 3.9%;
-    --color-fg-secondary: 240 3.8% 46.1%;
+    --color-fg-secondary: 240 3.8% 40%;
     --color-fg-inverse: 0 0% 100%;
-    --color-fg-disabled: 0 0% 56%;
+    --color-fg-disabled: 0 0% 70%;
 
     --color-fg-link: 0 0% 100%;
     --color-fg-link-hover: 0 0% 100%;
     --color-fg-link-active: 0 0% 100%;
     --color-fg-link-visited: 0 0% 100%;
 
-    --color-fg-onNeutral: 0 0% 100%;
+    --color-fg-onNeutral: 0 0% 0%;
 
     --color-fg-onPrimary: 0 0% 100%;
 
@@ -90,6 +92,8 @@
 
     --color-fg-onWarning: 0 0% 100%;
     --color-fg-onMutedWarning: 0 0% 100%;
+
+    --color-fg-onTooltip: 0 0% 100%;
 
     --color-border: 240 5.9% 90%;
     --color-border-hover: 0 0% 100%;
@@ -124,6 +128,7 @@
 
     /* new */
     --color-bg: 240 10% 10%;
+    --color-bg-muted: 240 6% 13%;
     --color-bg-inverse: 0 0% 100%;
     --color-bg-surface: 0 0% 100%;
 
@@ -138,16 +143,16 @@
     --color-bg-success: 131 41% 46%;
     --color-bg-success-hover: 131 41% 41%;
     --color-bg-success-active: 131 41% 36%;
-    --color-bg-success-muted: 0 0% 100%;
-    --color-bg-success-muted-hover: 0 0% 100%;
-    --color-bg-success-muted-active: 0 0% 100%;
+    --color-bg-success-muted: 131 41% 10%;
+    --color-bg-success-muted-hover: 131 41% 46%;
+    --color-bg-success-muted-active: 131 41% 46%;
 
     --color-bg-danger: 358 69% 52%;
     --color-bg-danger-hover: 358 69% 57%;
     --color-bg-danger-active: 358 69% 62%;
-    --color-bg-danger-muted: 0 0% 100%;
-    --color-bg-danger-muted-hover: 0 0% 100%;
-    --color-bg-danger-muted-active: 0 0% 100%;
+    --color-bg-danger-muted: 358 69% 12%;
+    --color-bg-danger-muted-hover: 358 69% 52%;
+    --color-bg-danger-muted-active: 358 69% 52%;
 
     --color-bg-warning: 35 100% 52%;
     --color-bg-warning-hover: 35 100% 47%;
@@ -156,16 +161,19 @@
     --color-bg-warning-muted-hover: 0 0% 100%;
     --color-bg-warning-muted-active: 0 0% 100%;
 
-    --color-bg-info: 0 0% 100%;
+    --color-bg-info: 212 100% 48%;
     --color-bg-info-hover: 0 0% 100%;
     --color-bg-info-active: 0 0% 100%;
     --color-bg-info-muted: 0 0% 100%;
     --color-bg-info-muted-hover: 0 0% 100%;
     --color-bg-info-muted-active: 0 0% 100%;
 
+    --color-bg-tooltip: 0 0% 20%;
+
     --color-fg: 0 0% 98%;
     --color-fg-muted: 240 5% 64.9%;
     --color-fg-inverse: 0 0% 100%;
+    --color-fg-disabled: 0 0% 45%;
 
     --color-fg-link: 213 100% 67%;
     --color-fg-link-hover: 213 100% 62%;
@@ -185,11 +193,13 @@
     --color-fg-onWarning: 0 0% 0%;
     --color-fg-onMutedWarning: 0 0% 100%;
 
-    --color-border: 240 3.7% 20%;
-    --color-border-hover: 240 3.7% 25%;
-    --color-border-active: 240 3.7% 30%;
+    --color-fg-onTooltip: 0 0% 100%;
+
+    --color-border: 240 3.7% 22%;
+    --color-border-hover: 240 3.7% 27%;
+    --color-border-active: 240 3.7% 32%;
     --color-border-disabled: 0 0% 25%;
-    --color-border-disabled: 0 0% 25%;
+    --color-border-muted: 0 0% 25%;
     --color-border-danger: 358 69% 52%;
     --color-border-success: 131 41% 46%;
 

@@ -2,15 +2,45 @@
 
 import * as React from "react";
 import { Drawer as DrawerPrimitive } from "vaul";
-import { cn } from "@/lib/utils/classes";
+import { cn, cva } from "@/lib/utils/classes";
 
-const Drawer = ({
-  shouldScaleBackground = true,
-  ...props
-}: React.ComponentProps<typeof DrawerPrimitive.Root>) => (
-  <DrawerPrimitive.Root shouldScaleBackground={shouldScaleBackground} {...props} />
-);
-Drawer.displayName = "Drawer";
+type DrawerContext = {
+  direction: "top" | "bottom" | "left" | "right";
+  showSwipeBar: boolean;
+};
+
+type DrawerRootProps = React.ComponentProps<typeof DrawerPrimitive.Root> & {
+  showSwipeBar?: boolean;
+};
+
+const DrawerContext = React.createContext<DrawerContext | null>(null);
+
+function useDrawerContext() {
+  const context = React.useContext(DrawerContext);
+  if (!context) {
+    throw new Error("useDrawerContext must be used within a <DrawerRoot />");
+  }
+  return context;
+}
+
+const DrawerRoot = (_props: DrawerRootProps) => {
+  const {
+    shouldScaleBackground = true,
+    direction = "bottom",
+    showSwipeBar = true,
+    ...props
+  } = _props;
+  return (
+    <DrawerContext.Provider value={{ direction, showSwipeBar }}>
+      <DrawerPrimitive.Root
+        direction={direction}
+        shouldScaleBackground={shouldScaleBackground}
+        {...props}
+      />
+    </DrawerContext.Provider>
+  );
+};
+DrawerRoot.displayName = "DrawerRoot";
 
 const DrawerTrigger = DrawerPrimitive.Trigger;
 
@@ -30,73 +60,116 @@ const DrawerOverlay = React.forwardRef<
 ));
 DrawerOverlay.displayName = DrawerPrimitive.Overlay.displayName;
 
+const drawerVariants = cva("fixed z-50 flex h-auto border bg-background", {
+  variants: {
+    direction: {
+      top: "top-0 inset-x-0 rounded-b-[10px] mb-24 flex-col-reverse",
+      bottom: "bottom-0 inset-x-0 rounded-t-[10px] mt-24 flex-col",
+      left: "left-0 inset-y-0 rounded-r-[10px] mr-24 flex-row-reverse",
+      right: "right-0 inset-y-0 rounded-l-[10px] ml-24 flex-row",
+    },
+  },
+  defaultVariants: {
+    direction: "bottom",
+  },
+});
+
+const swipeBarVariants = cva("rounded-full bg-bg-muted", {
+  variants: {
+    direction: {
+      top: "mx-auto mb-4 h-2 w-[100px]",
+      bottom: "mx-auto mt-4 h-2 w-[100px]",
+      left: "my-auto mr-4 w-2 h-[100px]",
+      right: "my-auto ml-4 w-2 h-[100px]",
+    },
+  },
+});
+
+type DrawerContentProps = React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content>;
+
 const DrawerContent = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content>
->(({ className, children, ...props }, ref) => (
-  <DrawerPortal>
-    <DrawerOverlay />
-    <DrawerPrimitive.Content
-      ref={ref}
-      className={cn(
-        "fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-[10px] border bg-background",
-        className
-      )}
-      {...props}
-    >
-      <div className="mx-auto mt-4 h-2 w-[100px] rounded-full bg-muted" />
-      {children}
-    </DrawerPrimitive.Content>
-  </DrawerPortal>
-));
+  DrawerContentProps
+>(({ className, children, ...props }, ref) => {
+  const { direction, showSwipeBar } = useDrawerContext();
+  return (
+    <DrawerPortal>
+      <DrawerOverlay />
+      <DrawerPrimitive.Content
+        ref={ref}
+        className={cn(drawerVariants({ direction }), className)}
+        {...props}
+      >
+        {showSwipeBar && <div className={cn(swipeBarVariants({ direction }))} />}
+        <div>{children}</div>
+      </DrawerPrimitive.Content>
+    </DrawerPortal>
+  );
+});
 DrawerContent.displayName = "DrawerContent";
 
-const DrawerHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div
-    className={cn("grid gap-1.5 p-4 text-center sm:text-left", className)}
-    {...props}
-  />
+type DrawerProps = DrawerRootProps & DrawerContentProps;
+
+const Drawer = React.forwardRef<
+  React.ElementRef<typeof DrawerPrimitive.Content>,
+  DrawerProps
+>(
+  (
+    {
+      className,
+      children,
+      open,
+      onOpenChange,
+      direction,
+      snapPoints,
+      fadeFromIndex,
+      activeSnapPoint,
+      setActiveSnapPoint,
+      closeThreshold,
+      shouldScaleBackground,
+      scrollLockTimeout,
+      fixed,
+      dismissible,
+      onDrag,
+      onRelease,
+      modal,
+      nested,
+      onClose,
+      preventScrollRestoration,
+      showSwipeBar,
+      ...DrawerContentprops
+    },
+    ref
+  ) => {
+    const additionalRootProps = snapPoints ? { snapPoints, fadeFromIndex } : {};
+    return (
+      <DrawerRoot
+        direction={direction}
+        open={open}
+        onOpenChange={onOpenChange}
+        activeSnapPoint={activeSnapPoint}
+        setActiveSnapPoint={setActiveSnapPoint}
+        closeThreshold={closeThreshold}
+        shouldScaleBackground={shouldScaleBackground}
+        scrollLockTimeout={scrollLockTimeout}
+        fixed={fixed}
+        dismissible={dismissible}
+        onDrag={onDrag}
+        onRelease={onRelease}
+        modal={modal}
+        nested={nested}
+        onClose={onClose}
+        preventScrollRestoration={preventScrollRestoration}
+        showSwipeBar={showSwipeBar}
+        {...additionalRootProps}
+      >
+        <DrawerContent ref={ref} className={className} {...DrawerContentprops}>
+          {children}
+        </DrawerContent>
+      </DrawerRoot>
+    );
+  }
 );
-DrawerHeader.displayName = "DrawerHeader";
+Drawer.displayName = "Drawer";
 
-const DrawerFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn("mt-auto flex flex-col gap-2 p-4", className)} {...props} />
-);
-DrawerFooter.displayName = "DrawerFooter";
-
-const DrawerTitle = React.forwardRef<
-  React.ElementRef<typeof DrawerPrimitive.Title>,
-  React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Title>
->(({ className, ...props }, ref) => (
-  <DrawerPrimitive.Title
-    ref={ref}
-    className={cn("text-lg font-semibold leading-none tracking-tight", className)}
-    {...props}
-  />
-));
-DrawerTitle.displayName = DrawerPrimitive.Title.displayName;
-
-const DrawerDescription = React.forwardRef<
-  React.ElementRef<typeof DrawerPrimitive.Description>,
-  React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Description>
->(({ className, ...props }, ref) => (
-  <DrawerPrimitive.Description
-    ref={ref}
-    className={cn("text-sm text-muted-foreground", className)}
-    {...props}
-  />
-));
-DrawerDescription.displayName = DrawerPrimitive.Description.displayName;
-
-export {
-  Drawer,
-  DrawerPortal,
-  DrawerOverlay,
-  DrawerTrigger,
-  DrawerClose,
-  DrawerContent,
-  DrawerHeader,
-  DrawerFooter,
-  DrawerTitle,
-  DrawerDescription,
-};
+export { Drawer, DrawerRoot, DrawerTrigger, DrawerClose, DrawerContent };

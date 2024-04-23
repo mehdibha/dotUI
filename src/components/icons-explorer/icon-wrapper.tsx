@@ -3,8 +3,8 @@
 import React from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
-  Tooltip,
   TooltipContent,
+  TooltipRoot,
   TooltipTrigger,
 } from "@/lib/components/core/default/tooltip";
 import { cn } from "@/lib/utils/classes";
@@ -28,7 +28,7 @@ const IconWrapper = (props: IconWrapperProps) => {
   };
 
   return (
-    <Tooltip>
+    <TooltipRoot delayDuration={0}>
       <TooltipTrigger asChild>
         <div className={cn("relative overflow-hidden", className)} onClick={handleCopy}>
           <div className="group flex h-14 cursor-pointer items-center justify-center rounded-md border border-border/20 bg-card/70 duration-150 hover:border-border hover:bg-card">
@@ -49,7 +49,7 @@ const IconWrapper = (props: IconWrapperProps) => {
         </div>
       </TooltipTrigger>
       <TooltipContent>{name}</TooltipContent>
-    </Tooltip>
+    </TooltipRoot>
   );
 };
 

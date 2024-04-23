@@ -9,6 +9,7 @@ const getCategoryDocs = (category: string) => {
     title: category.title,
     href: category.href,
     label: category.label,
+    disabled: category.disabled,
   }));
 };
 
@@ -84,10 +85,6 @@ const docsConfig: DocsConfig = {
         {
           title: "Utils",
           items: getCategoryDocs("components/utils"),
-        },
-        {
-          title: "Animations",
-          items: getCategoryDocs("components/animations"),
         },
       ],
     },

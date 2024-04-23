@@ -1,5 +1,5 @@
 import {
-  Menubar,
+  MenubarRoot,
   MenubarCheckboxItem,
   MenubarContent,
   MenubarItem,
@@ -16,7 +16,7 @@ import {
 
 export default function MenubarDemo() {
   return (
-    <Menubar>
+    <MenubarRoot>
       <MenubarMenu>
         <MenubarTrigger>File</MenubarTrigger>
         <MenubarContent>
@@ -100,6 +100,6 @@ export default function MenubarDemo() {
           <MenubarItem inset>Add Profile...</MenubarItem>
         </MenubarContent>
       </MenubarMenu>
-    </Menubar>
+    </MenubarRoot>
   );
 }

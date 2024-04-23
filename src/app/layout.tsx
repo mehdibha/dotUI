@@ -64,7 +64,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       >
         <Providers>
           <Toaster />
-          <div className="relative">
+          <div vaul-drawer-wrapper="" className="relative">
             <Header />
             <main className="min-h-screen">{children}</main>
             <Footer />

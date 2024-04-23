@@ -38,9 +38,9 @@ export default function Filter() {
           </p>
           <Slider defaultValue={[25, 75]} className="mt-2" />
           <div className="mt-4 flex items-center space-x-2">
-            <Input type="number" value={25} className="w-1/2" />
+            <Input type="number" defaultValue={25} className="w-1/2" />
             <MinusIcon strokeWidth={4} className="text-muted-foreground" />
-            <Input type="number" value={75} className="w-1/2" />
+            <Input type="number" defaultValue={75} className="w-1/2" />
           </div>
         </div>
       </CardContent>
