@@ -143,36 +143,37 @@
     --color-bg-success: 131 41% 46%;
     --color-bg-success-hover: 131 41% 41%;
     --color-bg-success-active: 131 41% 36%;
-    --color-bg-success-muted: 131 41% 10%;
+    --color-bg-success-muted: 156 36% 11%;
     --color-bg-success-muted-hover: 131 41% 46%;
     --color-bg-success-muted-active: 131 41% 46%;
 
     --color-bg-danger: 358 69% 52%;
     --color-bg-danger-hover: 358 69% 57%;
     --color-bg-danger-active: 358 69% 62%;
-    --color-bg-danger-muted: 358 69% 12%;
+    --color-bg-danger-muted: 357 46% 16%;
     --color-bg-danger-muted-hover: 358 69% 52%;
     --color-bg-danger-muted-active: 358 69% 52%;
 
     --color-bg-warning: 35 100% 52%;
     --color-bg-warning-hover: 35 100% 47%;
     --color-bg-warning-active: 35 100% 42%;
-    --color-bg-warning-muted: 0 0% 100%;
+    --color-bg-warning-muted: 35 100% 15%;
     --color-bg-warning-muted-hover: 0 0% 100%;
     --color-bg-warning-muted-active: 0 0% 100%;
 
     --color-bg-info: 212 100% 48%;
-    --color-bg-info-hover: 0 0% 100%;
-    --color-bg-info-active: 0 0% 100%;
-    --color-bg-info-muted: 0 0% 100%;
-    --color-bg-info-muted-hover: 0 0% 100%;
-    --color-bg-info-muted-active: 0 0% 100%;
+    --color-bg-info-hover: 212 100% 48%;
+    --color-bg-info-active: 212 100% 48%;
+    --color-bg-info-muted: 214 59% 15%;
+    --color-bg-info-muted-hover: 212 100% 48%;
+    --color-bg-info-muted-active: 212 100% 48%;
 
     --color-bg-tooltip: 0 0% 20%;
 
     --color-fg: 0 0% 98%;
-    --color-fg-muted: 240 5% 64.9%;
-    --color-fg-inverse: 0 0% 100%;
+    --color-fg-muted: 0 0% 63%;
+    --color-fg-inverse: 0 0% 0%;
+    --color-fg-muted-inverse: 0 0% 40%;
     --color-fg-disabled: 0 0% 45%;
 
     --color-fg-link: 213 100% 67%;
@@ -184,14 +185,21 @@
 
     --color-fg-onPrimary: 240 5.9% 0%;
 
+    --color-fg-success: 131 41% 46%;
     --color-fg-onSuccess: 0 0% 100%;
-    --color-fg-onMutedSuccess: 0 0% 100%;
+    --color-fg-onMutedSuccess: 131 41% 46%;
 
+    --color-fg-danger: 357 100% 69%;
     --color-fg-onDanger: 0 0% 100%;
-    --color-fg-onMutedDanger: 0 0% 100%;
+    --color-fg-onMutedDanger: 357 100% 69%;
 
+    --color-fg-warning: 35 100% 52%;
     --color-fg-onWarning: 0 0% 0%;
-    --color-fg-onMutedWarning: 0 0% 100%;
+    --color-fg-onMutedWarning: 35 100% 52%;
+
+    --color-fg-info: 210 100% 66%;
+    --color-fg-onInfo: 0 0% 100%;
+    --color-fg-onMutedInfo: 210 100% 66%;
 
     --color-fg-onTooltip: 0 0% 100%;
 
@@ -200,8 +208,11 @@
     --color-border-active: 240 3.7% 32%;
     --color-border-disabled: 0 0% 25%;
     --color-border-muted: 0 0% 25%;
-    --color-border-danger: 358 69% 52%;
-    --color-border-success: 131 41% 46%;
+
+    --color-border-success: 131 41% 18%;
+    --color-border-danger: 357 55% 26%;
+    --color-border-warning: 35 100% 18%;
+    --color-border-info: 212 78% 23%;
 
     --color-border-accent: 0 0% 25%;
     --color-border-secondary: 0 0% 100%;

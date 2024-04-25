@@ -74,11 +74,11 @@ export const components = {
   h1: createHeading(1, "font-heading mt-2 scroll-m-20 text-4xl font-bold"),
   h2: createHeading(
     2,
-    "font-heading mt-12 scroll-m-20 border-b pb-2 text-xl font-semibold tracking-tight first:mt-0"
+    "font-heading mt-12 scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight first:mt-0"
   ),
   h3: createHeading(
     3,
-    "font-heading mt-8 scroll-m-20 text-lg font-semibold tracking-tight"
+    "font-heading mt-8 scroll-m-20 text-xl font-semibold tracking-tight"
   ),
   h4: createHeading(
     4,

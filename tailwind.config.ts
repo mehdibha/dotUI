@@ -116,7 +116,7 @@ const config = {
         },
         fg: {
           DEFAULT: "hsl(var(--color-fg))",
-          muted: "hsl(var(--color-fg-muted))",
+          muted: { DEFAULT: "hsl(var(--color-fg-muted))", inverse : "hsl(var(--color-fg-muted-inverse))" },
           inverse: "hsl(var(--color-fg-inverse))",
           disabled: "hsl(var(--color-fg-disabled))",
           link: {
@@ -125,6 +125,10 @@ const config = {
             active: "hsl(var(--color-fg-link-active))",
             visited: "hsl(var(--color-fg-link-visited))",
           },
+          success: "hsl(var(--color-fg-success))",
+          warning: "hsl(var(--color-fg-warning))",
+          danger: "hsl(var(--color-fg-danger))",
+          info: "hsl(var(--color-fg-info))",
           onNeutral: "hsl(var(--color-fg-onNeutral))",
           onPrimary: "hsl(var(--color-fg-onPrimary))",
           onSuccess: "hsl(var(--color-fg-onSuccess))",

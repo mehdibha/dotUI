@@ -22,7 +22,7 @@ npm install vaul
 <Step>Update the import paths to match your project setup.</Step>
 <Step>Add the following data attribute to your root layout</Step>
 
-To enable background scaling, it requires an element with [vaul-drawer-wrapper] data attribute to scale its background
+To enable background scaling, it requires an element with \[vaul-drawer-wrapper\] data attribute to scale its background
 
 ```jsx
 <body>
@@ -73,8 +73,6 @@ the default direction is `bottom`
 
 <ComponentPreview name="demos/components/core/drawer/nested-drawer" />
 
-TODO
-
 ## API Reference
 
 ### Drawer
@@ -110,12 +108,12 @@ This component inherits and merges props from DrawerRoot and DrawerContent parts
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------- | ------- |
 | `asChild`<Info>Change the default rendered element for the one passed as a child, merging their props and behavior.</Info>                                                                                         | `boolean`                                                                                          | false   |
 | `forceMount`<Info>Used to force mounting when more control is needed. Useful when controlling animation with React animation libraries. It inherits from <Code>DrawerPortal</Code>.</Info>                         | `boolean`                                                                                          | -       |
-| ` onAnimationEnd`                                                                                                                                                                                                  | `function: (open: boolean) => void`                                                                | -       |
-| ` onOpenAutoFocus` <Info>Event handler called when focus moves into the component after opening. It can be prevented by calling <Code>event.preventDefault</Code>.</Info>                                          | `function: (event: Event) => void`                                                                 | -       |
-| ` onCloseAutoFocus` <Info>Event handler called when focus moves to the trigger after closing. It can be prevented by calling <Code>event.preventDefault</Code>.</Info>                                             | `function: (event: Event) => void`                                                                 | -       |
-| ` onEscapeKeyDown` <Info>Event handler called when the escape key is down. It can be prevented by calling <Code>event.preventDefault</Code>.</Info>                                                                | `function: (event: KeyboardEvent) => void`                                                         | -       |
-| ` onPointerDownOutside` <Info>Event handler called when a pointer event occurs outside the bounds of the component. It can be prevented by calling <Code>event.preventDefault</Code>.</Info>                       | `function: (event: PointerDownOutsideEvent) => void`                                               | -       |
-| ` onInteractOutside` <Info>Event handler called when an interaction (pointer or focus event) happens outside the bounds of the component. It can be prevented by calling <Code>event.preventDefault</Code>.</Info> | `function` <Info><Code>(event: React.FocusEvent \| MouseEvent \| TouchEvent) => void</Code></Info> | -       |
+| `onAnimationEnd`                                                                                                                                                                                                  | `function: (open: boolean) => void`                                                                | -       |
+| `onOpenAutoFocus` <Info>Event handler called when focus moves into the component after opening. It can be prevented by calling <Code>event.preventDefault</Code>.</Info>                                          | `function: (event: Event) => void`                                                                 | -       |
+| `onCloseAutoFocus` <Info>Event handler called when focus moves to the trigger after closing. It can be prevented by calling <Code>event.preventDefault</Code>.</Info>                                             | `function: (event: Event) => void`                                                                 | -       |
+| `onEscapeKeyDown` <Info>Event handler called when the escape key is down. It can be prevented by calling <Code>event.preventDefault</Code>.</Info>                                                                | `function: (event: KeyboardEvent) => void`                                                         | -       |
+| `onPointerDownOutside` <Info>Event handler called when a pointer event occurs outside the bounds of the component. It can be prevented by calling <Code>event.preventDefault</Code>.</Info>                       | `function: (event: PointerDownOutsideEvent) => void`                                               | -       |
+| `onInteractOutside` <Info>Event handler called when an interaction (pointer or focus event) happens outside the bounds of the component. It can be prevented by calling <Code>event.preventDefault</Code>.</Info> | `function` <Info><Code>(event: React.FocusEvent \| MouseEvent \| TouchEvent) => void</Code></Info> | -       |
 
 ### DrawerTrigger
 
@@ -123,10 +121,9 @@ This component inherits and merges props from DrawerRoot and DrawerContent parts
 | -------------------------------------------------------------------------------------------------------------------------- | --------- | ------- |
 | `asChild`<Info>Change the default rendered element for the one passed as a child, merging their props and behavior.</Info> | `boolean` | `false` |
 
-| Data attribute       | Values                   |
-| -------------------- | ------------------------ |
-| `[data-state]`       | `"open" \| "closed"`     |
-
+| Data attribute | Values               |
+| -------------- | -------------------- |
+| `[data-state]` | `"open" \| "closed"` |
 
 ### DrawerClose
 

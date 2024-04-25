@@ -15,9 +15,9 @@ const buttonVariants = cva(
           "bg-bg-neutral text-fg-onNeutral hover:bg-bg-neutral-hover active:bg-bg-neutral-active",
         link: "text-fg-link underline-offset-4 hover:text-fg-link-hover active:text-fg-link-active hover:underline",
         ghost:
-          "text-fg hover:bg-bg-neutral-hover hover:text-fg-onNeutral active:bg-bg-neutral-active",
+          "text-fg hover:bg-bg-inverse/10 active:bg-bg-inverse/20",
         outline:
-          "border text-fg hover:border-border-hover hover:bg-bg-neutral-hover hover:text-fg-onNeutral active:border-border-active active:bg-bg-neutral-active disabled:bg-transparent disabled:border-border-disabled",
+          "border text-fg hover:border-border-hover active:border-border-active hover:bg-bg-inverse/10 active:bg-bg-inverse/20 disabled:bg-transparent disabled:border-border-disabled",
         danger:
           "bg-bg-danger text-fg-onDanger hover:bg-bg-danger-hover active:bg-bg-danger-active",
         success:

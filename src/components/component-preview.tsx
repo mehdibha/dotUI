@@ -14,7 +14,6 @@ type PreviewsKeys = keyof typeof previews;
 
 export interface ComponentPreviewProps {
   name: PreviewsKeys;
-  centered?: boolean;
   className?: string;
   containerClassName?: string;
   aspect?: "default" | "page";
@@ -22,7 +21,6 @@ export interface ComponentPreviewProps {
 
 export const ComponentPreview = ({
   name,
-  centered = true,
   className,
   containerClassName,
   aspect = "default",
@@ -38,7 +36,7 @@ export const ComponentPreview = ({
   }, [name]);
 
   const code = React.useMemo(() => {
-    const allCodeFiles = previews[name]?.code;
+    const allCodeFiles = previews[name]?.code ?? [];
 
     if (allCodeFiles.length === 0) {
       return [];
@@ -62,17 +60,23 @@ export const ComponentPreview = ({
         </Preview>
       </TabsContent>
       <TabsContent value="code" className="rounded border">
-        <Code
-          subProps={code.map((file) => ({
-            title: code.length > 1 ? file.title : undefined,
-            code: file.code.replace(/[\r\n]+$/, ""),
-            lang: "tsx",
-          }))}
-          style={{ marginTop: 0, marginBottom: 0 }}
-          theme="github-dark-dimmed"
-          codeClassName="text-xs"
-          extensions={[tabs]}
-        />
+        {code && code.length > 0 ? (
+          <Code
+            subProps={code.map((file) => ({
+              title: code.length > 1 ? file.title : undefined,
+              code: file.code.replace(/[\r\n]+$/, ""),
+              lang: "tsx",
+            }))}
+            style={{ marginTop: 0, marginBottom: 0 }}
+            theme="github-dark-dimmed"
+            codeClassName="text-xs"
+            extensions={[tabs]}
+          />
+        ) : (
+          <div className="flex min-h-[200px] items-center justify-center">
+            <p className="text-sm text-muted-foreground">code source not found.</p>
+          </div>
+        )}
       </TabsContent>
     </Tabs>
   );

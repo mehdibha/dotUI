@@ -1,15 +1,120 @@
 ---
 title: Toast
-description: A succinct message that is displayed temporarily.
-disabled: true
+description: An opinionated toast component for React.
+thumbnail:
+  image: /previews/components/core/toast.jpeg
+  video: /previews/components/core/toast.mp4
 ---
 
-<ComponentPreview name="demos/components/core/toast" />
+<ComponentPreview name="demos/components/core/toast/default" />
 
 ## Installation
 
 <Steps>
-  <Step>Copy and paste the following code into your project.</Step>
-  <ComponentSource name="components/core/default/toast" />
-  <Step>Update the import paths to match your project setup.</Step>
+  <Step>Install the following dependencies:</Step>
+
+```bash
+npm install sonner
+```
+
+{" "}
+
+<Step>Copy and paste the following code into your project.</Step>
+<ComponentSource name="components/core/default/toast" />
+<Step>Update the import paths to match your project setup.</Step>
+<Step>Add the Toaster component to your root layout</Step>
+
+```tsx
+import { Toaster } from "@/components/core/toast";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body>
+        {children}
+        <Toaster />
+      </body>
+    </html>
+  );
+}
+```
+
 </Steps>
+
+## Usage
+
+```jsx
+import { toast } from "@/components/core/toast";
+```
+
+```jsx
+<Button onClick={() => toast("My first toast")}>Give me a toast</Button>
+```
+
+## Exemples
+
+### Variants
+
+<ComponentPreview name="demos/components/core/toast/variants" />
+
+### Custom content
+
+<ComponentPreview name="demos/components/core/toast/custom-content" />
+
+### Multi-line
+
+<ComponentPreview name="demos/components/core/toast/multi-line" />
+
+### Preserve
+
+<ComponentPreview name="demos/components/core/toast/preserve" />
+
+### Action
+
+<ComponentPreview name="demos/components/core/toast/action" />
+
+### Description
+
+<ComponentPreview name="demos/components/core/toast/description" />
+
+### Undo
+
+<ComponentPreview name="demos/components/core/toast/undo" />
+
+### Dismissible
+
+<ComponentPreview name="demos/components/core/toast/dismissible" />
+
+### Custom icon
+
+<ComponentPreview name="demos/components/core/toast/custom-icon" />
+
+## API Reference
+
+### toast
+
+These are the available options for the `toast` function, such as `toast.success`, `toast.error`, `toast.warning` and `toast.info`.
+
+#### Params
+
+| Params     | Type                        | Default |
+| ---------- | --------------------------- | ------- |
+| `message*` | `string \| React.ReactNode` | -       |
+| `options`  | `ToastOptions`              | -       |
+
+#### ToastOptions
+
+| Prop                | Type                                                                                                                                                                        | Default          |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- |
+| `description`       | `string \| React.ReactNode`                                                                                                                                                 | -                |
+| `variant`           | `"default" \| "muted" \| "fill"`                                                                                                                                            | `"default"`      |
+| `important`         | `boolean`                                                                                                                                                                   | `false`          |
+| `duration`          | `number`                                                                                                                                                                    | `4000`           |
+| `position`          | `Position` <Info className="min-w-none"><Code>"top-left" \| "top-right" \| "top-center" \| "bottom-left" \| "bottom-right" \| "bottom-center"</Code></Info>                 | `"bottom-right"` |
+| `dismissible`       | `boolean`                                                                                                                                                                   | `true`           |
+| `icon`              | `React.ReactNode`                                                                                                                                                           | -                |
+| `id`                | `string \| number`                                                                                                                                                          | -                |
+| `action`            | `{ label: string; onClick: function }` <Info className="min-w-none"><Code>\{ label: string; onClick: (event: React.MouseEvent\<HTMLButtonElement\>) => void }</Code></Info> | -                |
+| `onAutoClose`       | `() => void`                                                                                                                                                                | -                |
+| `onUndo`            | `() => void`                                                                                                                                                                | -                |
+| `showDismissButton` | `boolean`                                                                                                                                                                   | `true`           |
