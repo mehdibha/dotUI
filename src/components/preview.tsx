@@ -22,11 +22,9 @@ export const Preview = ({
       </div>
       <ThemeWrapper fallback={<Skeleton className="h-[200px]" />}>
         <ScrollArea
-          viewportProps={{
-            className: cn("bg-bg text-fg flex items-center justify-center", {
-              "max-h-[800px]": aspect === "default",
-            }),
-          }}
+          className={cn("flex items-center justify-center bg-bg text-fg", {
+            "max-h-[800px]": aspect === "default",
+          })}
         >
           <div className="flex min-h-[200px] items-center justify-center px-4 py-16">
             <div className={cn("flex w-full items-center justify-center", className)}>

@@ -4,10 +4,9 @@ description: Use to show a placeholder while content is loading.
 thumbnail:
   image: /previews/components/core/skeleton.jpeg
   video: /previews/components/core/skeleton.mp4
-disabled: true
 ---
 
-<ComponentPreview name="demos/components/core/skeleton" />
+<ComponentPreview name="demos/components/core/skeleton/default" />
 
 ## Installation
 
@@ -16,3 +15,27 @@ disabled: true
   <ComponentSource name="components/core/default/skeleton" />
   <Step>Update the import paths to match your project setup.</Step>
 </Steps>
+
+## Usage
+
+```jsx
+import { Skeleton } from "@/components/core/skeleton";
+```
+
+```jsx
+<Skeleton className="h-[20px] w-[100px] rounded-full" />
+```
+
+## Exemples
+
+### Default with set width
+
+<ComponentPreview name="demos/components/core/skeleton/default-with-set-width" />
+
+### Wrapping children
+
+<ComponentPreview name="demos/components/core/skeleton/wrapping-children" />
+
+### Wrapping children with fixed size
+
+<ComponentPreview name="demos/components/core/skeleton/wrapping-children-with-fixed-size" />

@@ -4,7 +4,7 @@ import { cn, cva, type VariantProps } from "@/lib/utils/classes";
 
 const inputVariants = cva(
   [
-    "flex items-center w-full transition-colors rounded-md overflow-hidden border bg-transparent text-sm shadow-sm focus-within:ring-1 focus-within:ring-border-focus",
+    "flex items-center w-full transition-colors rounded-md overflow-hidden border bg-transparent text-sm shadow-sm focus-within:border-border-focus focus-within:ring focus-within:ring-1 focus-within:outline-border-focus",
   ],
   {
     variants: {
@@ -14,8 +14,8 @@ const inputVariants = cva(
         lg: "h-10 [&_svg]:size-5",
       },
       status: {
-        error: "ring-1 ring-border-danger",
-        success: "ring-1 ring-border-success",
+        error: "border-border-danger",
+        success: "border-border-success",
       },
     },
     defaultVariants: {
@@ -65,6 +65,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       status,
       prefix,
       suffix,
+      children,
       disabled,
       loading,
       loaderPosition = "suffix",
@@ -100,6 +101,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           )}
           {...inputProps}
         />
+        {children}
         <InnerVisual className="ml-1 mr-3" loading={showSuffixLoading}>
           {suffix}
         </InnerVisual>

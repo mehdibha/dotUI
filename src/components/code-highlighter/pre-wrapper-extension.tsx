@@ -9,7 +9,7 @@ export const preWrapper: Extension = {
     return (
       <div className="relative">
         <CopyButton code={code} className="absolute right-4 top-2 z-50" />
-        <ScrollArea viewportProps={{ className: "max-h-[350px]" }}>
+        <ScrollArea className="max-h-[350px]">
           {/* @ts-expect-error TODO: fix later */}
           <Code.Pre {...props} />
         </ScrollArea>

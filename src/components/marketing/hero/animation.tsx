@@ -4,12 +4,7 @@ import React from "react";
 import { LayoutGroup, motion } from "framer-motion";
 import { IconExamples } from "@/components/marketing/icon-examples";
 import Filter from "@/lib/blocks/application-ui/filter";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/lib/components/core/default/avatar";
-import { AvatarGroup } from "@/lib/components/core/default/avatar-group";
+import { Avatar, AvatarGroup } from "@/lib/components/core/default/avatar";
 import { Button } from "@/lib/components/core/default/button";
 import { Switch } from "@/lib/components/core/default/switch";
 import CalendarDemo from "@/lib/demos/components/core/calendar";
@@ -52,7 +47,7 @@ export const Animation = () => {
           >
             <h2 className="text-3xl font-bold">components.</h2>
             <div className="mt-4 space-y-4">
-              <AvatarGroup>
+              <AvatarGroup max={6} total={12}>
                 {[
                   { name: "@mehdibha", src: "https://github.com/mehdibha.png" },
                   { name: "@shadcn", src: "https://github.com/shadcn.png" },
@@ -63,10 +58,12 @@ export const Animation = () => {
                     src: "https://github.com/joshwcomeau.png",
                   },
                 ].map((user) => (
-                  <Avatar key={user.name}>
-                    <AvatarImage src={user.src} alt={user.name} />
-                    <AvatarFallback>{user.name[1]}</AvatarFallback>
-                  </Avatar>
+                  <Avatar
+                    key={user.name}
+                    src={user.src}
+                    alt={user.name}
+                    fallback={user.name[1].toUpperCase()}
+                  />
                 ))}
               </AvatarGroup>
               <div className="flex items-center space-x-4">

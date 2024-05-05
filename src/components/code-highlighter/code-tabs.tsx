@@ -80,7 +80,7 @@ export function Content(brightProps: BrightProps) {
             code={getCode(props.title!)}
             className="absolute right-4 top-2 z-50"
           />
-          <ScrollArea viewportProps={{ className: "max-h-[350px]" }}>
+          <ScrollArea className="max-h-[350px]">
             {/* @ts-expect-error - - */}
             <Code.Pre {...props} test="this is a test" />
           </ScrollArea>

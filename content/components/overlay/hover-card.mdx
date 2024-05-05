@@ -4,15 +4,125 @@ description: For sighted users to preview content available behind a link.
 thumbnail:
   image: /previews/components/core/hover-card.jpeg
   video: /previews/components/core/hover-card.mp4
-disabled: true
 ---
 
-<ComponentPreview name="demos/components/core/hover-card" className="min-h-[350px]" />
+<ComponentPreview name="demos/components/core/hover-card/default" />
 
 ## Installation
 
 <Steps>
+  <Step>Install the following dependencies:</Step>
+
+```bash
+npm install @radix-ui/react-hover-card
+```
+
   <Step>Copy and paste the following code into your project.</Step>
   <ComponentSource name="components/core/default/hover-card" />
   <Step>Update the import paths to match your project setup.</Step>
 </Steps>
+
+## Usage
+
+```jsx
+import { HoverCard } from "@/components/core/hover-card";
+```
+
+```jsx
+<HoverCard content="The React Framework - created and maintained by @vercel">
+  <a href="https://nextjs.org">next.js</a>
+</HoverCard>
+```
+
+or
+
+```jsx
+import {
+  HoverCardRoot,
+  HoverCardTrigger,
+  HoverCardContent,
+} from "@/components/core/hover-card";
+```
+
+```jsx
+<HoverCardRoot>
+  <HoverCardTrigger>
+    <a href="https://nextjs.org">next.js</a>
+  </HoverCardTrigger>
+  <HoverCardContent>
+    The React Framework - created and maintained by @vercel.
+  </HoverCardContent>
+</HoverCardRoot>
+```
+
+## Exemples
+
+### No delay
+
+<ComponentPreview name="demos/components/core/hover-card/no-delay" />
+
+### Composition
+
+<ComponentPreview name="demos/components/core/hover-card/composition" />
+
+## API Reference
+
+### HoverCard
+
+This component inherits and merges props from HoverCardRoot, HoverCardPortal and HoverCardContent parts.
+
+| Prop                                                               | Type              | Default |
+| ------------------------------------------------------------------ | ----------------- | ------- |
+| `content*`<Info>The content associated with the hover card.</Info> | `React.ReactNode` | -       |
+
+### HoverCardRoot
+
+Contains all the parts of a hover card.
+
+| Prop                                                                                                                                          | Type                            | Default |
+| --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------- | ------- |
+| `defaultOpen`<Info>The open state of the hover card when it is initially rendered. Use when you do not need to control its open state.</Info> | `boolean`                       | -       |
+| `open`<Info>The controlled open state of the hover card. Must be used in conjunction with <Code>onOpenChange</Code>.</Info>                   | `boolean`                       | -       |
+| `onOpenChange`<Info>Event handler called when the open state of the hover card changes.</Info>                                                | `func: (open: boolean) => void` | -       |
+| `openDelay`<Info>The duration from when the mouse enters the trigger until the hover card opens.</Info>                                       | `number`                        | `700`   |
+| `closeDelay`<Info>The duration from when the mouse leaves the trigger or content until the hover card closes.</Info>                          | `number`                        | `300`   |
+
+### HoverCardTrigger
+
+The link that opens the hover card when hovered.
+
+| Prop                                                                                                                       | Type      | Default |
+| -------------------------------------------------------------------------------------------------------------------------- | --------- | ------- |
+| `asChild`<Info>Change the default rendered element for the one passed as a child, merging their props and behavior.</Info> | `boolean` | `false` |
+
+| Data attribute | Values               |
+| -------------- | -------------------- |
+| `[data-state]` | `"open" \| "closed"` |
+
+### HoverCardPortal
+
+When used, portals the content part into the `body`.
+
+| Prop                                                                                                                                                                                                                        | Type          | Default         |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | --------------- |
+| `forceMount`<Info>Used to force mounting when more control is needed. Useful when controlling animation with React animation libraries. If used on this part, it will be inherited by <Code>HoverCardContent</Code>.</Info> | `boolean`     | -               |
+| `container`<Info>Specify a container element to portal the content into.</Info>                                                                                                                                             | `HTMLElement` | `document.body` |
+
+### HoverCardContent
+
+The component that pops out when the hover card is open.
+
+| Prop                                                                                                                                                                                                                                                                 | Type                                                                                    | Default     |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | ----------- |
+| `asChild`<Info>Change the default rendered element for the one passed as a child, merging their props and behavior.</Info>                                                                                                                                           | `boolean`                                                                               | `false`     |
+| `forceMount`<Info>Used to force mounting when more control is needed. Useful when controlling animation with React animation libraries. It inherits from <Code>HoverCardPortal</Code>.</Info>                                                                          | `boolean`                                                                               | -           |
+| `side`<Info>The preferred side of the trigger to render against when open. Will be reversed when collisions occur and <Code>avoidCollisions</Code> is enabled.</Info>                                                                                                | `"top" \| "right" \| "bottom" \| "left"`                                                | `"bottom"`     |
+| `sideOffset`<Info>The distance in pixels from the trigger.</Info>                                                                                                                                                                                                    | `number`                                                                                | `4`         |
+| `align`<Info>The preferred alignment against the trigger. May change when collisions occur.</Info>                                                                                                                                                                   | `"start" \| "center" \| "end"`                                                          | `"center"`  |
+| `alignOffset`<Info>An offset in pixels from the <Code>"start"</Code> or <Code>"end"</Code> alignment options.</Info>                                                                                                                                                 | `number`                                                                                | `0`         |
+| `avoidCollisions`<Info>When <Code>true</Code>, overrides the <Code>side</Code> and <Code>align</Code> preferences to prevent collisions with boundary edges.</Info>                                                                                                  | `boolean`                                                                               | `true`      |
+| `collisionBoundary` <Info>The element used as the collision boundary. By default this is the viewport, though you can provide additional element(s) to be included in this check.</Info>                                                                             | `Boundary` <Info><Code>Element \| null \| Array\<Element \| null></Code></Info>         | `[]`        |
+| `collisionPadding`<Info>The distance in pixels from the boundary edges where collision detection should occur. Accepts a number (same for all sides), or a partial padding object, for example: <Code>\{ top: 20, left: 20 }</Code>.</Info>                          | `number \| Padding` <Info><Code>number \| Partial\<Record\<Side, number>></Code></Info> | `0`         |
+| `arrowPadding`<Info>The padding between the arrow and the edges of the content. If your content has <Code>border-radius</Code>, this will prevent it from overflowing the corners.</Info>                                                                            | `number`                                                                                | `0`         |
+| `sticky`<Info>The sticky behavior on the align axis. <Code>"partial"</Code> will keep the content in the boundary as long as the trigger is at least partially in the boundary whilst <Code>"always"</Code> will keep the content in the boundary regardless.</Info> | `"partial" \| "always"`                                                                 | `"partial"` |
+| `hideWhenDetached`<Info>Whether to hide the content when the trigger becomes fully occluded.</Info>                                                                                                                                                                  | `boolean`                                                                               | `false`     |

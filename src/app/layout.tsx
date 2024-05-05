@@ -62,6 +62,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         )}
         suppressHydrationWarning
       >
+        {/* <div id="menu-drawer" /> */}
         <Providers>
           <Toaster />
           <div vaul-drawer-wrapper="" className="relative">

@@ -26,7 +26,6 @@ export default function SonnerVariantsDemo() {
         onClick={() =>
           action[type]("Event has been created", {
             variant,
-            duration: Infinity,
           })
         }
       >

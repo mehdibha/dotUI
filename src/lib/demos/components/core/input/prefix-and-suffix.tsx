@@ -1,11 +1,7 @@
 import { DollarSignIcon, XCircleIcon } from "lucide-react";
 import { Button } from "@/lib/components/core/default/button";
 import { Input } from "@/lib/components/core/default/input";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/lib/components/core/default/tooltip";
+import { Tooltip } from "@/lib/components/core/default/tooltip";
 
 export default function InputPrefixAndSuffixDemo() {
   return (
@@ -15,15 +11,10 @@ export default function InputPrefixAndSuffixDemo() {
       <Input suffix={<span>@rcopy.dev</span>} />
       <Input
         suffix={
-          <Tooltip>
-            <TooltipTrigger>
-              <Button variant="ghost" shape="circle" size="sm" className="h-6 w-6">
-                <XCircleIcon />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent side="bottom" className="text-xs">
-              Clear input
-            </TooltipContent>
+          <Tooltip content="Clear input" side="bottom" className="text-xs">
+            <Button variant="ghost" shape="circle" size="sm" className="h-6 w-6">
+              <XCircleIcon />
+            </Button>
           </Tooltip>
         }
       />

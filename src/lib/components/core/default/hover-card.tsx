@@ -4,9 +4,11 @@ import * as React from "react";
 import * as HoverCardPrimitive from "@radix-ui/react-hover-card";
 import { cn } from "@/lib/utils/classes";
 
-const HoverCard = HoverCardPrimitive.Root;
+const HoverCardRoot = HoverCardPrimitive.Root;
 
 const HoverCardTrigger = HoverCardPrimitive.Trigger;
+
+const HoverCardPortal = HoverCardPrimitive.Portal;
 
 const HoverCardContent = React.forwardRef<
   React.ElementRef<typeof HoverCardPrimitive.Content>,
@@ -25,4 +27,57 @@ const HoverCardContent = React.forwardRef<
 ));
 HoverCardContent.displayName = HoverCardPrimitive.Content.displayName;
 
-export { HoverCard, HoverCardTrigger, HoverCardContent };
+interface HoverCardProps
+  extends React.ComponentPropsWithoutRef<typeof HoverCardPrimitive.Root>,
+    React.ComponentPropsWithoutRef<typeof HoverCardPrimitive.Portal>,
+    Omit<
+      React.ComponentPropsWithoutRef<typeof HoverCardPrimitive.Content>,
+      "asChild" | "content"
+    > {
+  content: React.ReactNode;
+}
+
+const HoverCard = React.forwardRef<
+  React.ElementRef<typeof HoverCardPrimitive.Content>,
+  HoverCardProps
+>(
+  (
+    {
+      content,
+      children,
+      defaultOpen,
+      open,
+      onOpenChange,
+      openDelay,
+      closeDelay,
+      forceMount,
+      container,
+      ...hoverCardContentProps
+    },
+    ref
+  ) => (
+    <HoverCardRoot
+      defaultOpen={defaultOpen}
+      open={open}
+      onOpenChange={onOpenChange}
+      openDelay={openDelay}
+      closeDelay={closeDelay}
+    >
+      <HoverCardTrigger asChild>{children}</HoverCardTrigger>
+      <HoverCardPortal forceMount={forceMount} container={container}>
+        <HoverCardContent ref={ref} {...hoverCardContentProps}>
+          {content}
+        </HoverCardContent>
+      </HoverCardPortal>
+    </HoverCardRoot>
+  )
+);
+HoverCard.displayName = "HoverCard";
+
+export {
+  HoverCard,
+  HoverCardRoot,
+  HoverCardTrigger,
+  HoverCardPortal,
+  HoverCardContent,
+};

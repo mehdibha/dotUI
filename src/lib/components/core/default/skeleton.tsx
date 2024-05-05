@@ -1,8 +1,22 @@
 import { cn } from "@/lib/utils/classes";
 
-function Skeleton({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+function Skeleton({
+  className,
+  show = true,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement> & {
+  show?: boolean;
+}) {
+  if (!show) return props.children;
   return (
-    <div className={cn("animate-pulse rounded-md bg-muted", className)} {...props} />
+    <span
+      className={cn(
+        "relative block h-6 animate-pulse rounded-md bg-muted",
+        props.children && "h-auto *:invisible",
+        className
+      )}
+      {...props}
+    />
   );
 }
 

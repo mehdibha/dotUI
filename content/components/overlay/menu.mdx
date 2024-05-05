@@ -1,0 +1,94 @@
+---
+title: Menu
+description: Dropdown menu opened via button. Supports typeahead and keyboard navigation.
+thumbnail:
+  image: /previews/components/core/menu.jpeg
+  video: /previews/components/core/menu.mp4
+---
+
+<ComponentPreview name="demos/components/core/menu/default" />
+
+## Installation
+
+<Steps>
+  <Step>Install the following dependencies:</Step>
+
+```bash
+npm install @radix-ui/react-dropdown-menu vaul
+```
+
+  <Step>Copy and paste the following code into your project.</Step>
+  <ComponentSource name="components/core/default/menu" />
+  <Step>Update the import paths to match your project setup.</Step>
+</Steps>
+
+## Usage
+
+```jsx
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+const Menu = () => (
+  <MenuRoot>
+    <MenuTrigger>Open</MenuTrigger>
+    <MenuContent>
+      <MenuLabel>My Account</MenuLabel>
+      <MenuSeparator />
+      <MenuItem>Profile</MenuItem>
+      <MenuItem>Billing</MenuItem>
+    </MenuContent>
+  </MenuRoot>
+);
+```
+
+## Exemples
+
+### Disabled items
+
+<ComponentPreview name="demos/components/core/menu/disabled-items" />
+
+### Link items
+
+<ComponentPreview name="demos/components/core/menu/link-items" />
+
+### Icon and shortcut
+
+<ComponentPreview name="demos/components/core/menu/icon-and-shortcut" />
+
+### Menu position
+
+<ComponentPreview name="demos/components/core/menu/menu-position" />
+
+### Checkboxes
+
+<ComponentPreview name="demos/components/core/menu/checkboxes" />
+
+### Radio group
+
+<ComponentPreview name="demos/components/core/menu/radio-group" />
+
+## API Reference
+
+### MenuRoot
+
+### MenuTrigger
+
+### MenuContent
+
+### MenuItem
+
+### MenuSeperator
+
+### MenuSub
+
+### MenuSubTrigger
+
+### MenuSubContent
+
+## Accessibility

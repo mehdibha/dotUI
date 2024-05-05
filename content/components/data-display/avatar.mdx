@@ -4,10 +4,13 @@ description: An image element with a fallback for representing the user.
 thumbnail:
   image: /previews/components/core/avatar.jpeg
   video: /previews/components/core/avatar.mp4
-disabled: true
 ---
 
-<ComponentPreview name="demos/components/core/avatar" />
+<ComponentPreview name="demos/components/core/avatar/default" />
+
+TODO add size prop number | "sm" | "md" | "lg" 
+
+TODO add composition to avatargroup
 
 ## Installation
 
@@ -16,3 +19,45 @@ disabled: true
   <ComponentSource name="components/core/default/avatar" />
   <Step>Update the import paths to match your project setup.</Step>
 </Steps>
+
+## Usage
+
+TODO
+
+## Avatar exemples
+
+### Shape
+
+<ComponentPreview name="demos/components/core/avatar/shape" />
+
+### Sizes
+
+<ComponentPreview name="demos/components/core/avatar/sizes" />
+
+### Composition
+
+<ComponentPreview name="demos/components/core/avatar/composition" />
+
+## Avatar group exemples
+
+### Default
+
+`<AvatarGroup />` renders its children as a stack.
+
+<ComponentPreview name="demos/components/core/avatar/avatar-group" />
+
+### Max
+
+Use the max prop to limit the number of avatars.
+
+<ComponentPreview name="demos/components/core/avatar/avatar-group-max" />
+
+### Total count
+
+If you need to control the total number of avatars not shown, you can use the total prop.
+
+<ComponentPreview name="demos/components/core/avatar/avatar-group-total-count" />
+
+## API Reference
+
+TODO

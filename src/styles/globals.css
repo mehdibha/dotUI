@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+  [vaul-drawer] {
+    transition: transform 0.5s cubic-bezier(0.32, 0.72, 0, 1) !important;
+  }
+
   :root {
     /* old  */
     --background: 0 0% 100%;
@@ -36,9 +40,9 @@
     --color-bg-neutral-hover: 240 4.8% 86%;
     --color-bg-neutral-active: 240 4.8% 76%;
 
-    --color-bg-primary: 0 0% 100%;
-    --color-bg-primary-hover: 0 0% 100%;
-    --color-bg-primary-active: 0 0% 100%;
+    --color-bg-primary: 240 5.9% 10%;
+    --color-bg-primary-hover: 240 5.9% 20%;
+    --color-bg-primary-active: 240 5.9% 30%;
 
     --color-bg-success: 0 0% 100%;
     --color-bg-success-hover: 0 0% 100%;

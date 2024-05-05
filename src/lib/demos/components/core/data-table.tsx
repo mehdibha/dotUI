@@ -16,16 +16,16 @@ import {
 import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
 import { Button } from "@/lib/components/core/default/button";
 import { Checkbox } from "@/lib/components/core/default/checkbox";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/lib/components/core/default/dropdown-menu";
 import { Input } from "@/lib/components/core/default/input";
+import {
+  MenuRoot,
+  MenuCheckboxItem,
+  MenuContent,
+  MenuItem,
+  MenuLabel,
+  MenuSeparator,
+  MenuTrigger,
+} from "@/lib/components/core/default/menu";
 import {
   Table,
   TableBody,
@@ -134,23 +134,23 @@ export const columns: ColumnDef<Payment>[] = [
       const payment = row.original;
 
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
+        <MenuRoot>
+          <MenuTrigger asChild>
             <Button variant="ghost" className="h-8 w-8 p-0">
               <span className="sr-only">Open menu</span>
               <MoreHorizontal className="h-4 w-4" />
             </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(payment.id)}>
+          </MenuTrigger>
+          <MenuContent align="end">
+            <MenuLabel>Actions</MenuLabel>
+            <MenuItem onClick={() => navigator.clipboard.writeText(payment.id)}>
               Copy payment ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+            </MenuItem>
+            <MenuSeparator />
+            <MenuItem>View customer</MenuItem>
+            <MenuItem>View payment details</MenuItem>
+          </MenuContent>
+        </MenuRoot>
       );
     },
   },
@@ -192,30 +192,30 @@ export default function DataTableDemo() {
           }
           className="max-w-sm"
         />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
+        <MenuRoot>
+          <MenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
               Columns <ChevronDown className="ml-2 h-4 w-4" />
             </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          </MenuTrigger>
+          <MenuContent align="end">
             {table
               .getAllColumns()
               .filter((column) => column.getCanHide())
               .map((column) => {
                 return (
-                  <DropdownMenuCheckboxItem
+                  <MenuCheckboxItem
                     key={column.id}
                     className="capitalize"
                     checked={column.getIsVisible()}
                     onCheckedChange={(value) => column.toggleVisibility(!!value)}
                   >
                     {column.id}
-                  </DropdownMenuCheckboxItem>
+                  </MenuCheckboxItem>
                 );
               })}
-          </DropdownMenuContent>
-        </DropdownMenu>
+          </MenuContent>
+        </MenuRoot>
       </div>
       <div className="rounded-md border">
         <Table>

@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  Accordion,
+  AccordionRoot,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
@@ -20,7 +20,7 @@ export const FAQ = (props: FAQProps) => {
         Frequently asked questions
       </h2>
       <div className="container mt-8 max-w-3xl">
-        <Accordion type="single" collapsible className="w-full">
+        <AccordionRoot type="single" collapsible className="w-full">
           {questions.map((elem, index) => (
             <AccordionItem key={index} value={index.toString()}>
               <AccordionTrigger className="text-lg font-semibold">
@@ -29,7 +29,7 @@ export const FAQ = (props: FAQProps) => {
               <AccordionContent className="text-md pb-8">{elem.answer}</AccordionContent>
             </AccordionItem>
           ))}
-        </Accordion>
+        </AccordionRoot>
       </div>
     </section>
   );

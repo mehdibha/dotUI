@@ -12,7 +12,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/lib/components/core/default/dropdown-menu";
+} from "@/lib/components/core/default/menu";
 
 export default function BreadcrumbDemo() {
   return (

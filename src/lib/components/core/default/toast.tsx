@@ -8,7 +8,6 @@ import {
   RotateCcwIcon,
   XIcon,
 } from "lucide-react";
-import { useTheme } from "next-themes";
 import { Toaster as Toaster_, toast as toast_ } from "sonner";
 import { cva, cn } from "@/lib/utils/classes";
 import { Button } from "./button";
@@ -55,7 +54,7 @@ const toastVariants = cva(
       {
         type: "warning",
         fill: true,
-        className: "bg-bg-warning text-fg-onWarning border-none]",
+        className: "bg-bg-warning text-fg-onWarning border-none",
       },
       {
         type: "warning",
@@ -97,14 +96,10 @@ const icons = {
   info: <InfoIcon />,
 };
 
-type Theme = "dark" | "light" | "system";
-
 const Toaster = () => {
-  const { theme = "system" } = useTheme();
 
   return (
     <Toaster_
-      theme={theme as Theme}
       expand={false} // Toasts will be expanded by default.
       visibleToasts={3} // Amount of visible toasts.
       hotkey={["altKey", "KeyT"]} // Keyboard shortcut that will move focus to the toaster area.

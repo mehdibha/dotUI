@@ -32,15 +32,37 @@ import { Tooltip } from "@/components/core/tooltip";
 
 ```jsx
 <Tooltip content="Add to library">
-  <Button>
-    Button
-  </Button>
+  <Button>Button</Button>
 </Tooltip>
+```
+
+or
+
+```jsx
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipPortal,
+  TooltipTrigger,
+} from "@/components/core/tooltip";
+```
+
+```jsx
+<TooltipRoot>
+  <TooltipTrigger>Hover</TooltipTrigger>
+  <TooltipPortal>
+    <TooltipContent>
+      <p>Add to library</p>
+    </TooltipContent>
+  </TooltipPortal>
+</TooltipRoot>
 ```
 
 ## Exemples
 
 ### Variants
+
+TODO: add muted 
 
 <ComponentPreview name="demos/components/core/tooltip/variants" />
 
@@ -66,7 +88,7 @@ This component inherits and merges props from TooltipRoot, TooltipPortal and Too
 
 | Prop                                                            | Type                                                        | Default    |
 | --------------------------------------------------------------- | ----------------------------------------------------------- | ---------- |
-| `content*`<Info>The content associated with the tooltip.</Info> | `React.ReactNode`                                                   | -          |
+| `content*`<Info>The content associated with the tooltip.</Info> | `React.ReactNode`                                           | -          |
 | `variant`                                                       | `"default" \| "success" \| "danger" \| "warning" \| "info"` | `"default` |
 
 ### TooltipProvider
@@ -116,7 +138,7 @@ The component that pops out when the tooltip is open.
 | `onPointerDownOutside`<Info>Event handler called when a pointer event occurs outside the bounds of the component. It can be prevented by calling <Code>event.preventDefault</Code>.</Info>                                                                           | `func: (event: PointerDownOutsideEvent) => void`                                        | -           |
 | `forceMount`<Info>Used to force mounting when more control is needed. Useful when controlling animation with React animation libraries. It inherits from <Code>TooltipPortal</Code>.</Info>                                                                          | `boolean`                                                                               | -           |
 | `side`<Info>The preferred side of the trigger to render against when open. Will be reversed when collisions occur and <Code>avoidCollisions</Code> is enabled.</Info>                                                                                                | `"top" \| "right" \| "bottom" \| "left"`                                                | `"top"`     |
-| `sideOffset`<Info>The distance in pixels from the trigger.</Info>                                                                                                                                                                                                    | `number`                                                                                | `0`         |
+| `sideOffset`<Info>The distance in pixels from the trigger.</Info>                                                                                                                                                                                                    | `number`                                                                                | `4`         |
 | `align`<Info>The preferred alignment against the trigger. May change when collisions occur.</Info>                                                                                                                                                                   | `"start" \| "center" \| "end"`                                                          | `"center"`  |
 | `alignOffset`<Info>An offset in pixels from the <Code>"start"</Code> or <Code>"end"</Code> alignment options.</Info>                                                                                                                                                 | `number`                                                                                | `0`         |
 | `avoidCollisions`<Info>When <Code>true</Code>, overrides the <Code>side</Code> and <Code>align</Code> preferences to prevent collisions with boundary edges.</Info>                                                                                                  | `boolean`                                                                               | `true`      |
@@ -125,4 +147,3 @@ The component that pops out when the tooltip is open.
 | `arrowPadding`<Info>The padding between the arrow and the edges of the content. If your content has <Code>border-radius</Code>, this will prevent it from overflowing the corners.</Info>                                                                            | `number`                                                                                | `0`         |
 | `sticky`<Info>The sticky behavior on the align axis. <Code>"partial"</Code> will keep the content in the boundary as long as the trigger is at least partially in the boundary whilst <Code>"always"</Code> will keep the content in the boundary regardless.</Info> | `"partial" \| "always"`                                                                 | `"partial"` |
 | `hideWhenDetached`<Info>Whether to hide the content when the trigger becomes fully occluded.</Info>                                                                                                                                                                  | `boolean`                                                                               | `false`     |
-

@@ -1,54 +1,150 @@
 import * as React from "react";
-import { cva, type VariantProps } from "class-variance-authority";
+import {
+  AlertCircleIcon,
+  AlertTriangleIcon,
+  CheckCircle2Icon,
+  InfoIcon,
+} from "lucide-react";
+import { tv, type VariantProps } from "tailwind-variants";
 import { cn } from "@/lib/utils/classes";
 
-const alertVariants = cva(
-  "relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground",
-  {
-    variants: {
-      variant: {
-        default: "bg-background text-foreground",
-        destructive:
-          "border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive",
-      },
+const alertVariants = tv({
+  slots: {
+    root: "rounded-lg border p-4 flex items-center gap-4",
+    title: "font-medium leading-normal tracking-tight mr-1",
+    content: "text-sm",
+  },
+  variants: {
+    type: {
+      default: { root: "border text-fg" },
+      success: { root: "text-fg-success border border-border-success" },
+      warning: { root: "text-fg-warning border border-border-warning" },
+      danger: { root: "text-fg-danger border border-border-danger" },
+      info: { root: "text-fg-info border border-border-info" },
     },
-    defaultVariants: {
-      variant: "default",
+    variant: {
+      default: {},
+      muted: {},
+      fill: {},
     },
-  }
-);
+  },
+  compoundSlots: [
+    {
+      slots: ["root"],
+      type: "default",
+      variant: "fill",
+      className: "bg-bg-inverse text-fg-inverse border-none",
+    },
+    {
+      slots: ["root"],
+      type: "default",
+      variant: "muted",
+      className: "bg-bg-muted text-fg",
+    },
+    {
+      slots: ["root"],
+      type: "success",
+      variant: "fill",
+      className: "bg-bg-success text-fg-onSuccess border-none",
+    },
+    {
+      slots: ["root"],
+      type: "success",
+      variant: "muted",
+      className: "bg-bg-success-muted text-fg-onMutedSuccess",
+    },
+    {
+      slots: ["root"],
+      type: "warning",
+      variant: "fill",
+      className: "bg-bg-warning text-fg-onWarning border-none]",
+    },
+    {
+      slots: ["root"],
+      type: "warning",
+      variant: "muted",
+      className: "bg-bg-warning-muted text-fg-onMutedWarning",
+    },
+    {
+      slots: ["root"],
+      type: "danger",
+      variant: "fill",
+      className: "bg-bg-danger text-fg-onDanger border-none",
+    },
+    {
+      slots: ["root"],
+      type: "danger",
+      variant: "muted",
+      className: "bg-bg-danger-muted text-fg-onMutedDanger",
+    },
+    {
+      slots: ["root"],
+      type: "info",
+      variant: "fill",
+      className: "bg-bg-info text-fg-onInfo border-none",
+    },
+    {
+      slots: ["root"],
+      type: "info",
+      variant: "muted",
+      className: "bg-bg-info-muted text-fg-onMutedInfo",
+    },
+  ],
+  defaultVariants: {
+    type: "default",
+    variant: "default",
+  },
+});
 
-const Alert = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>
->(({ className, variant, ...props }, ref) => (
-  <div
-    ref={ref}
-    role="alert"
-    className={cn(alertVariants({ variant }), className)}
-    {...props}
-  />
-));
+export interface AlertProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "title">,
+    VariantProps<typeof alertVariants> {
+  title?: React.ReactNode;
+  icon?: React.ReactNode;
+  action?: React.ReactNode;
+}
+
+const icons = {
+  default: <InfoIcon />,
+  success: <CheckCircle2Icon />,
+  warning: <AlertTriangleIcon />,
+  danger: <AlertCircleIcon />,
+  info: <InfoIcon />,
+};
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
+  (
+    { title, children, className, variant, type = "default", icon, action, ...props },
+    ref
+  ) => (
+    <div
+      ref={ref}
+      role="alert"
+      className={cn(alertVariants({ variant, type }).root(), className)}
+      {...props}
+    >
+      {(icon ?? icons[type]) && (
+        <span className="[&_svg]:size-4">{icon ?? icons[type]}</span>
+      )}
+      <div className="flex-1">
+        {title && (
+          <h5 className={cn(alertVariants({ variant, type }).title())}>{title}</h5>
+        )}
+        {children && (
+          <p
+            className={cn(
+              alertVariants({ variant, type }).content(),
+              !!title && "mt-0.5"
+            )}
+          >
+            {children}
+          </p>
+        )}
+      </div>
+      {action && <div className="ml-2 shrink-0">{action}</div>}
+    </div>
+  )
+);
 Alert.displayName = "Alert";
 
-const AlertTitle = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLHeadingElement>
->(({ className, ...props }, ref) => (
-  <h5
-    ref={ref}
-    className={cn("mb-1 font-medium leading-none tracking-tight", className)}
-    {...props}
-  />
-));
-AlertTitle.displayName = "AlertTitle";
-
-const AlertDescription = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement>
->(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("text-sm [&_p]:leading-relaxed", className)} {...props} />
-));
-AlertDescription.displayName = "AlertDescription";
-
-export { Alert, AlertTitle, AlertDescription };
+export { Alert };

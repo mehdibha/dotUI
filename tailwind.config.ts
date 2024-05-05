@@ -1,3 +1,4 @@
+import { withTV } from "tailwind-variants/transformer";
 import type { Config } from "tailwindcss";
 import defaultTheme from "tailwindcss/defaultTheme";
 import { fontFamily } from "tailwindcss/defaultTheme";
@@ -116,7 +117,10 @@ const config = {
         },
         fg: {
           DEFAULT: "hsl(var(--color-fg))",
-          muted: { DEFAULT: "hsl(var(--color-fg-muted))", inverse : "hsl(var(--color-fg-muted-inverse))" },
+          muted: {
+            DEFAULT: "hsl(var(--color-fg-muted))",
+            inverse: "hsl(var(--color-fg-muted-inverse))",
+          },
           inverse: "hsl(var(--color-fg-inverse))",
           disabled: "hsl(var(--color-fg-disabled))",
           link: {
@@ -146,6 +150,8 @@ const config = {
           disabled: "hsl(var(--color-border-disabled))",
           danger: "hsl(var(--color-border-danger))",
           success: "hsl(var(--color-border-success))",
+          warning: "hsl(var(--color-border-warning))",
+          info: "hsl(var(--color-border-info))",
           secondary: "hsl(var(--color-border-secondary))",
           focus: "hsl(var(--color-border-focus))",
           inverse: "hsl(var(--color-border-inverse))",
@@ -199,6 +205,31 @@ const config = {
           "0%,70%,100%": { opacity: "1" },
           "20%,50%": { opacity: "0" },
         },
+        "progress-grow": {
+          "0%": {
+            transform: "scaleX(0.01)",
+          },
+          "20%": {
+            transform: "scaleX(0.1)",
+          },
+          "30%": {
+            transform: "scaleX(0.6)",
+          },
+          "40%,50%": {
+            transform: "scaleX(0.9)",
+          },
+          "100%": {
+            transform: "scaleX(1)",
+          },
+        },
+        "progress-indeterminate": {
+          "0%": {
+            "mask-position": "200% center",
+          },
+          "100%": {
+            "mask-position": "0% center",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -206,6 +237,9 @@ const config = {
         "collapsible-down": "collapsible-down 0.2s ease-out",
         "collapsible-up": "collapsible-up 0.2s ease-out",
         "caret-blink": "caret-blink 1.25s ease-out infinite",
+        "progress-grow": "progress-grow var(--progress-duration) 1 both normal",
+        "progress-indeterminate":
+          "progress-indeterminate 1s ease 0s infinite normal none running",
       },
     },
   },
@@ -213,3 +247,4 @@ const config = {
 } satisfies Config;
 
 export default config;
+// export default withTV(config);

@@ -1,5 +1,5 @@
 import {
-  Accordion,
+  AccordionRoot,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
@@ -7,7 +7,7 @@ import {
 
 export default function AccordionDemo() {
   return (
-    <Accordion type="single" collapsible className="w-full max-w-sm">
+    <AccordionRoot type="single" collapsible className="w-full max-w-sm">
       <AccordionItem value="item-1">
         <AccordionTrigger>Is it accessible?</AccordionTrigger>
         <AccordionContent>
@@ -27,6 +27,6 @@ export default function AccordionDemo() {
           Yes. It&apos;s animated by default, but you can disable it if you prefer.
         </AccordionContent>
       </AccordionItem>
-    </Accordion>
+    </AccordionRoot>
   );
 }

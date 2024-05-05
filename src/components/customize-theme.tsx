@@ -11,8 +11,8 @@ import {
   PopoverTrigger,
 } from "@/lib/components/core/default/popover";
 import {
-  Tooltip,
   TooltipContent,
+  TooltipRoot,
   TooltipTrigger,
 } from "@/lib/components/core/default/tooltip";
 import { defaultTheme } from "@/lib/theme";
@@ -326,7 +326,7 @@ export const ColorPicker = (props: {
   const { label, color, onChange } = props;
 
   return (
-    <Tooltip>
+    <TooltipRoot>
       <Popover>
         <TooltipTrigger asChild>
           <PopoverTrigger asChild>
@@ -350,6 +350,6 @@ export const ColorPicker = (props: {
           <p>{label}</p>
         </TooltipContent>
       )}
-    </Tooltip>
+    </TooltipRoot>
   );
 };
