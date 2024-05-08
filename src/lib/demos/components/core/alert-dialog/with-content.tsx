@@ -1,3 +1,4 @@
+import { Alert } from "@/lib/components/core/default/alert";
 import {
   AlertDialogAction,
   AlertDialogDescription,
@@ -21,14 +22,12 @@ export default function AlertDialogDemo() {
             This project will be deleted, along with all of its settings.
           </AlertDialogDescription>
         </AlertDialogHeader>
+        <Alert type="danger" variant="muted">
+          This action is not reversible. Please be certain.
+        </Alert>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction
-            variant={{ initial: "ghost", sm: "danger" }}
-            className="max-sm:text-fg-danger"
-          >
-            Continue
-          </AlertDialogAction>
+          <AlertDialogAction>Continue</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialogRoot>

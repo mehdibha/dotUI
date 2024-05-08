@@ -1,5 +1,5 @@
 import {
-  ContextMenu,
+  ContextMenuRoot,
   ContextMenuCheckboxItem,
   ContextMenuContent,
   ContextMenuItem,
@@ -16,8 +16,8 @@ import {
 
 export default function ContextMenuDemo() {
   return (
-    <ContextMenu>
-      <ContextMenuTrigger className="flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed text-sm">
+    <ContextMenuRoot>
+      <ContextMenuTrigger className="flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed text-sm select-none">
         Right click here
       </ContextMenuTrigger>
       <ContextMenuContent className="w-64">
@@ -60,6 +60,6 @@ export default function ContextMenuDemo() {
           <ContextMenuRadioItem value="colm">Colm Tuite</ContextMenuRadioItem>
         </ContextMenuRadioGroup>
       </ContextMenuContent>
-    </ContextMenu>
+    </ContextMenuRoot>
   );
 }

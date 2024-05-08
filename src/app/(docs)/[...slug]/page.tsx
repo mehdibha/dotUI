@@ -6,13 +6,13 @@ import { ChevronRightIcon } from "lucide-react";
 import { TableOfContents } from "@/components/docs/toc";
 import { Mdx } from "@/components/mdx/mdx-remote";
 import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/lib/components/core/default/breadcrumb";
+  BreadcrumbsRoot,
+  BreadcrumbsItem,
+  BreadcrumbsLink,
+  BreadcrumbsList,
+  BreadcrumbsPage,
+  BreadcrumbsSeparator,
+} from "@/lib/components/core/default/breadcrumbs";
 import { Button } from "@/lib/components/core/default/button";
 import { ScrollArea } from "@/lib/components/core/default/scroll-area";
 import { cn } from "@/lib/utils/classes";
@@ -59,28 +59,28 @@ export default async function Page({ params }: PageProps) {
     >
       <div className="mx-auto w-full min-w-0 pt-6">
         {metadata.breadcrumbs.length > 1 && (
-          <Breadcrumb className="mb-2">
-            <BreadcrumbList className="sm:gap-1.5">
+          <BreadcrumbsRoot className="mb-2">
+            <BreadcrumbsList className="sm:gap-1.5">
               {metadata.breadcrumbs.map((breadcrumb, index) => (
                 <React.Fragment key={index}>
                   {index === metadata.breadcrumbs.length - 1 ? (
-                    <BreadcrumbPage>{breadcrumb.label}</BreadcrumbPage>
+                    <BreadcrumbsPage>{breadcrumb.label}</BreadcrumbsPage>
                   ) : (
-                    <BreadcrumbItem>
-                      <BreadcrumbLink asChild>
+                    <BreadcrumbsItem>
+                      <BreadcrumbsLink asChild>
                         <Link href={breadcrumb.href}>{breadcrumb.label}</Link>
-                      </BreadcrumbLink>
-                    </BreadcrumbItem>
+                      </BreadcrumbsLink>
+                    </BreadcrumbsItem>
                   )}
                   {index < metadata.breadcrumbs.length - 1 && (
-                    <BreadcrumbSeparator>
+                    <BreadcrumbsSeparator>
                       <ChevronRightIcon />
-                    </BreadcrumbSeparator>
+                    </BreadcrumbsSeparator>
                   )}
                 </React.Fragment>
               ))}
-            </BreadcrumbList>
-          </Breadcrumb>
+            </BreadcrumbsList>
+          </BreadcrumbsRoot>
         )}
         <h1 className="text-4xl font-bold">{metadata.title}</h1>
         <p className="mt-2 text-muted-foreground">{metadata.description}</p>

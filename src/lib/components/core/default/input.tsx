@@ -4,7 +4,7 @@ import { cn, cva, type VariantProps } from "@/lib/utils/classes";
 
 const inputVariants = cva(
   [
-    "flex items-center w-full transition-colors rounded-md overflow-hidden border bg-transparent text-sm shadow-sm focus-within:border-border-focus focus-within:ring focus-within:ring-1 focus-within:outline-border-focus",
+    "flex items-center w-full transition-colors rounded-md overflow-hidden border bg-bg text-sm shadow-sm focus-within:border-border-focus focus-within:ring focus-within:ring-1 focus-within:outline-border-focus",
   ],
   {
     variants: {

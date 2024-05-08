@@ -246,5 +246,5 @@ const config = {
   plugins: [require("tailwindcss-animate")],
 } satisfies Config;
 
-export default config;
-// export default withTV(config);
+// export default config;
+export default withTV(config);

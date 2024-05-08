@@ -49,7 +49,7 @@ import { Drawer } from "@/components/core/drawer";
 </Drawer>
 ```
 
-## Exemples
+## Examples
 
 ### Direction
 
@@ -104,10 +104,10 @@ This component inherits and merges props from DrawerRoot and DrawerContent parts
 
 ### DrawerContent
 
-| Prop                                                                                                                                                                                                               | Type                                                                                               | Default |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------- | ------- |
-| `asChild`<Info>Change the default rendered element for the one passed as a child, merging their props and behavior.</Info>                                                                                         | `boolean`                                                                                          | false   |
-| `forceMount`<Info>Used to force mounting when more control is needed. Useful when controlling animation with React animation libraries. It inherits from <Code>DrawerPortal</Code>.</Info>                         | `boolean`                                                                                          | -       |
+| Prop                                                                                                                                                                                                              | Type                                                                                               | Default |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | ------- |
+| `asChild`<Info>Change the default rendered element for the one passed as a child, merging their props and behavior.</Info>                                                                                        | `boolean`                                                                                          | false   |
+| `forceMount`<Info>Used to force mounting when more control is needed. Useful when controlling animation with React animation libraries. It inherits from <Code>DrawerPortal</Code>.</Info>                        | `boolean`                                                                                          | -       |
 | `onAnimationEnd`                                                                                                                                                                                                  | `function: (open: boolean) => void`                                                                | -       |
 | `onOpenAutoFocus` <Info>Event handler called when focus moves into the component after opening. It can be prevented by calling <Code>event.preventDefault</Code>.</Info>                                          | `function: (event: Event) => void`                                                                 | -       |
 | `onCloseAutoFocus` <Info>Event handler called when focus moves to the trigger after closing. It can be prevented by calling <Code>event.preventDefault</Code>.</Info>                                             | `function: (event: Event) => void`                                                                 | -       |
