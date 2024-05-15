@@ -3,14 +3,21 @@
 import React from "react";
 import { useState } from "react";
 import {
+  motion,
   animate,
   AnimatePresence,
-  motion,
   useMotionTemplate,
   useMotionValue,
   useMotionValueEvent,
   useTransform,
 } from "framer-motion";
+// import { motion } from "framer-motion";
+// import { animate } from "framer-motion";
+// import { AnimatePresence } from "framer-motion";
+// import { useMotionTemplate } from "framer-motion";
+// import { useMotionValue } from "framer-motion";
+// import { useMotionValueEvent } from "framer-motion";
+// import { useTransform } from "framer-motion";
 import {
   Dialog,
   Heading,

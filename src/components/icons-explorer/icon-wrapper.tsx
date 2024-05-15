@@ -2,11 +2,7 @@
 
 import React from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import {
-  TooltipContent,
-  TooltipRoot,
-  TooltipTrigger,
-} from "@/lib/components/core/default/tooltip";
+import { Tooltip } from "@/lib/components/core/default/tooltip";
 import { cn } from "@/lib/utils/classes";
 
 interface IconWrapperProps {
@@ -28,28 +24,25 @@ const IconWrapper = (props: IconWrapperProps) => {
   };
 
   return (
-    <TooltipRoot delayDuration={0}>
-      <TooltipTrigger asChild>
-        <div className={cn("relative overflow-hidden", className)} onClick={handleCopy}>
-          <div className="group flex h-14 cursor-pointer items-center justify-center rounded-md border border-border/20 bg-card/70 duration-150 hover:border-border hover:bg-card">
-            {children}
-          </div>
-          <AnimatePresence>
-            {copied && (
-              <motion.span
-                initial={{ y: 3, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: 3, opacity: 0 }}
-                className="absolute bottom-0 left-0 w-full rounded-t-sm border-t bg-card py-1 text-center text-xs text-muted-foreground shadow-sm"
-              >
-                copied
-              </motion.span>
-            )}
-          </AnimatePresence>
+    <Tooltip content={name} delay={0}>
+      <div className={cn("relative overflow-hidden", className)} onClick={handleCopy}>
+        <div className="group flex h-14 cursor-pointer items-center justify-center rounded-md border border-border/20 bg-card/70 duration-150 hover:border-border hover:bg-card">
+          {children}
         </div>
-      </TooltipTrigger>
-      <TooltipContent>{name}</TooltipContent>
-    </TooltipRoot>
+        <AnimatePresence>
+          {copied && (
+            <motion.span
+              initial={{ y: 3, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 3, opacity: 0 }}
+              className="absolute bottom-0 left-0 w-full rounded-t-sm border-t bg-card py-1 text-center text-xs text-muted-foreground shadow-sm"
+            >
+              copied
+            </motion.span>
+          )}
+        </AnimatePresence>
+      </div>
+    </Tooltip>
   );
 };
 
