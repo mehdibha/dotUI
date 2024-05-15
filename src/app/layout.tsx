@@ -62,10 +62,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         )}
         suppressHydrationWarning
       >
-        {/* <div id="menu-drawer" /> */}
         <Providers>
           <Toaster />
-          <div vaul-drawer-wrapper="" className="relative">
+          <div vaul-drawer-wrapper="" drawer-wrapper="" className="relative">
             <Header />
             <main className="min-h-screen">{children}</main>
             <Footer />

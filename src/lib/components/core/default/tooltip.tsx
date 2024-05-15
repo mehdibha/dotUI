@@ -1,101 +1,146 @@
 "use client";
 
 import * as React from "react";
-import * as TooltipPrimitive from "@radix-ui/react-tooltip";
-import { type VariantProps, cn, cva } from "@/lib/utils/classes";
+import {
+  Tooltip as AriaTooltip,
+  TooltipTrigger as AriaTooltipTrigger,
+  composeRenderProps,
+  OverlayArrow as AriaOverlayArrow,
+  type TooltipProps as AriaTooltipProps,
+  type TooltipTriggerComponentProps as AriaTooltipTriggerProps,
+} from "react-aria-components";
+import { tv, type VariantProps } from "tailwind-variants";
 
-const TooltipProvider = TooltipPrimitive.Provider;
-
-const TooltipRoot = TooltipPrimitive.Root;
-
-const TooltipTrigger = TooltipPrimitive.Trigger;
-
-const TooltipPortal = TooltipPrimitive.Portal;
-
-const tooltipContentVariants = cva(
-  "z-50 overflow-hidden rounded-md px-3 py-1.5 text-sm shadow-md animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
-  {
-    variants: {
-      variant: {
-        default: "bg-bg-tooltip text-fg-onTooltip",
-        danger: "bg-bg-danger text-fg-onDanger",
-        success: "bg-bg-success text-fg-onSuccess",
-        warning: "bg-bg-warning text-fg-onWarning",
-        info: "bg-bg-info text-fg-onInfo",
+const tooltipVariants = tv({
+  base: "z-50 overflow-hidden rounded-md px-3 py-1.5 text-sm shadow-md animate-in fade-in-0 max-w-[200px] sm:max-w-[160px] duration-100 exiting:duration-75 exiting:animate-out exiting:fade-out-0",
+  variants: {
+    variant: {
+      fill: "",
+      muted: "",
+    },
+    type: {
+      neutral: "bg-bg-tooltip text-fg-onTooltip",
+      danger: "bg-bg-danger text-fg-onDanger",
+      success: "bg-bg-success text-fg-onSuccess",
+      warning: "bg-bg-warning text-fg-onWarning",
+      info: "bg-bg-info text-fg-onInfo",
+    },
+    compoundVariants: [
+      {
+        variant: "muted",
+        type: "neutral",
+        className: "border border-border-muted bg-bg-muted text-fg",
       },
-    },
-    defaultVariants: {
-      variant: "default",
-    },
-  }
+      {
+        variant: "muted",
+        type: "danger",
+        className: "border border-border-danger bg-bg-danger-muted text-fg-onMutedDanger",
+      },
+      {
+        variant: "muted",
+        type: "success",
+        className:
+          "border border-border-success bg-bg-success-muted text-fg-onMutedSuccess",
+      },
+      {
+        variant: "muted",
+        type: "warning",
+        className:
+          "border border-border-warning bg-bg-warning-muted text-fg-onMutedWarning",
+      },
+      {
+        variant: "muted",
+        type: "info",
+        className: "border border-border-info bg-bg-info-muted text-fg-onMutedInfo",
+      },
+    ],
+  },
+  defaultVariants: {
+    variant: "fill",
+    type: "neutral",
+  },
+});
+
+type TooltipRootProps = AriaTooltipTriggerProps;
+
+const TooltipRoot = ({ delay = 700, closeDelay = 0, ...props }: TooltipRootProps) => (
+  <AriaTooltipTrigger delay={delay} closeDelay={closeDelay} {...props} />
 );
 
 interface TooltipContentProps
-  extends React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>,
-    VariantProps<typeof tooltipContentVariants> {}
-
-const TooltipContent = React.forwardRef<
-  React.ElementRef<typeof TooltipPrimitive.Content>,
-  TooltipContentProps
->(({ className, sideOffset = 4, variant, ...props }, ref) => (
-  <TooltipPrimitive.Content
-    ref={ref}
-    sideOffset={sideOffset}
-    className={cn(tooltipContentVariants({ variant, className }))}
-    {...props}
-  />
-));
-TooltipContent.displayName = TooltipPrimitive.Content.displayName;
-
-interface TooltipProps
-  extends React.ComponentProps<typeof TooltipPrimitive.Root>,
-    Omit<React.ComponentProps<typeof TooltipPrimitive.Content>, "asChild" | "content">,
-    VariantProps<typeof tooltipContentVariants> {
-  container?: React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Portal>["container"];
-  content: React.ReactNode;
+  extends Omit<AriaTooltipProps, "children">,
+    VariantProps<typeof tooltipVariants> {
+  children: React.ReactNode;
 }
 
-const Tooltip = React.forwardRef<
-  React.ElementRef<typeof TooltipPrimitive.Content>,
-  TooltipProps
->((props, ref) => {
-  const {
-    children,
-    open,
-    defaultOpen,
-    onOpenChange,
-    delayDuration,
-    disableHoverableContent,
-    content,
-    container,
-    forceMount,
-    ...tooltipContentProps
-  } = props;
-  const rootProps = {
-    open,
-    defaultOpen,
-    onOpenChange,
-    delayDuration,
-    disableHoverableContent,
-  };
+const TooltipContent = ({ type, variant, ...props }: TooltipContentProps) => {
   return (
-    <TooltipRoot {...rootProps}>
-      <TooltipTrigger asChild>{children}</TooltipTrigger>
-      <TooltipPortal container={container} forceMount={forceMount}>
-        <TooltipContent {...tooltipContentProps} ref={ref}>
-          {content}
-        </TooltipContent>
-      </TooltipPortal>
+    <AriaTooltip
+      {...props}
+      offset={10}
+      className={composeRenderProps(props.className, (className) =>
+        tooltipVariants({ type, variant, className })
+      )}
+    />
+  );
+};
+
+const TooltipArrow = (props: Partial<React.SVGProps<SVGSVGElement>>) => {
+  return (
+    <AriaOverlayArrow>
+      <svg
+        width={8}
+        height={8}
+        viewBox="0 0 8 8"
+        className="fill-slate-700 stroke-gray-800 group-placement-left:-rotate-90 group-placement-right:rotate-90 group-placement-bottom:rotate-180 dark:fill-slate-600 dark:stroke-white/10 forced-colors:fill-[Canvas] forced-colors:stroke-[ButtonBorder]"
+        {...props}
+      >
+        <path d="M0 0 L6 6 L12 0" />
+      </svg>
+    </AriaOverlayArrow>
+  );
+};
+
+interface TooltipProps
+  extends TooltipRootProps,
+    TooltipContentProps,
+    VariantProps<typeof tooltipVariants> {
+  content: React.ReactNode;
+  arrow?: boolean;
+}
+
+const Tooltip = ({
+  children,
+  isDisabled,
+  delay,
+  closeDelay,
+  trigger,
+  isOpen,
+  defaultOpen,
+  content,
+  arrow = true,
+  variant,
+  type,
+
+  ...props
+}: TooltipProps) => {
+  return (
+    <TooltipRoot
+      isDisabled={isDisabled}
+      delay={delay}
+      closeDelay={closeDelay}
+      trigger={trigger}
+      isOpen={isOpen}
+      defaultOpen={defaultOpen}
+    >
+      {children}
+      {arrow && <TooltipArrow />}
+      <TooltipContent variant={variant} type={type} {...props}>
+        {content}
+      </TooltipContent>
     </TooltipRoot>
   );
-});
-Tooltip.displayName = "Tooltip";
-
-export {
-  Tooltip,
-  TooltipRoot,
-  TooltipTrigger,
-  TooltipContent,
-  TooltipPortal,
-  TooltipProvider,
 };
+
+export { Tooltip, TooltipRoot, TooltipContent, TooltipArrow };
+export type { TooltipProps, TooltipRootProps, TooltipContentProps };

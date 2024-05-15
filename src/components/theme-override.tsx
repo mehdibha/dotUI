@@ -54,7 +54,7 @@ export function ThemeOverride(props: ThemeOverrideProps) {
 
   return (
     <div
-      className={cn("", shouldOverride ? "duration-1000" : "duration-300")}
+      // className={cn("", shouldOverride ? "duration-1000" : "duration-300")}
       style={styles}
     >
       {children}

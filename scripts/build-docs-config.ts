@@ -59,8 +59,20 @@ const docsConfig: DocsConfig = {
           href: "/components",
         },
         {
+          title: "Buttons",
+          items: getCategoryDocs("components/buttons"),
+        },
+        {
+          title: "Selection",
+          items: getCategoryDocs("components/selection"),
+        },
+        {
           title: "Inputs",
           items: getCategoryDocs("components/inputs"),
+        },
+        {
+          title: "Dates",
+          items: getCategoryDocs("components/dates"),
         },
         {
           title: "Feedback",
@@ -73,6 +85,10 @@ const docsConfig: DocsConfig = {
         {
           title: "Data display",
           items: getCategoryDocs("components/data-display"),
+        },
+        {
+          title: "Menus",
+          items: getCategoryDocs("components/menus"),
         },
         {
           title: "Navigation",
@@ -88,28 +104,28 @@ const docsConfig: DocsConfig = {
         },
       ],
     },
-    {
-      title: "Blocks",
-      slug: "blocks",
-      items: [
-        {
-          title: "Overview",
-          href: "/blocks",
-        },
-        {
-          title: "Marketing",
-          items: getCategoryDocs("blocks/marketing"),
-        },
-        {
-          title: "Application UI",
-          items: getCategoryDocs("blocks/application-ui"),
-        },
-        {
-          title: "E-commerce",
-          items: getCategoryDocs("blocks/e-commerce"),
-        },
-      ],
-    },
+    // {
+    //   title: "Blocks",
+    //   slug: "blocks",
+    //   items: [
+    //     {
+    //       title: "Overview",
+    //       href: "/blocks",
+    //     },
+    //     {
+    //       title: "Marketing",
+    //       items: getCategoryDocs("blocks/marketing"),
+    //     },
+    //     {
+    //       title: "Application UI",
+    //       items: getCategoryDocs("blocks/application-ui"),
+    //     },
+    //     {
+    //       title: "E-commerce",
+    //       items: getCategoryDocs("blocks/e-commerce"),
+    //     },
+    //   ],
+    // },
     {
       title: "Hooks",
       slug: "hooks",
@@ -140,27 +156,27 @@ const docsConfig: DocsConfig = {
         },
       ],
     },
-    {
-      title: "Icons",
-      slug: "icons",
-      items: [
-        {
-          title: "Overview",
-          href: "/icons",
-        },
-        ...getCategoryDocs("icons"),
-      ],
-    },
-    {
-      title: "Templates",
-      slug: "templates",
-      items: [
-        {
-          title: "Overview",
-          href: "/templates",
-        },
-      ],
-    },
+    // {
+    //   title: "Icons",
+    //   slug: "icons",
+    //   items: [
+    //     {
+    //       title: "Overview",
+    //       href: "/icons",
+    //     },
+    //     ...getCategoryDocs("icons"),
+    //   ],
+    // },
+    // {
+    //   title: "Templates",
+    //   slug: "templates",
+    //   items: [
+    //     {
+    //       title: "Overview",
+    //       href: "/templates",
+    //     },
+    //   ],
+    // },
   ],
 };
 

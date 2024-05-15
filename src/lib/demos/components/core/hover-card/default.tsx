@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/lib/components/core/default/link";
 import { Avatar } from "@/lib/components/core/default/avatar";
 import { HoverCard } from "@/lib/components/core/default/hover-card";
 
@@ -6,7 +6,7 @@ export default function HoverCardDemo() {
   return (
     <p>
       Follow{" "}
-      <HoverCard content={<Content />}>
+      <HoverCard content={<Content />} className="max-w-64">
         <Link
           href="https://twitter.com/mehdibha_"
           target="_blank"
@@ -44,9 +44,9 @@ const Content = () => {
         <h4 className="text-sm text-fg-muted">@mehdibha_</h4>
         <p className="mt-2 text-sm">
           I tell computers to do things. Building{" "}
-          <Link href="https://rcopy.dev" className="text-fg-link">
+          <span className="text-fg-link">
             rcopy.dev
-          </Link>
+          </span>
         </p>
       </div>
     </div>

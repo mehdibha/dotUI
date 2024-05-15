@@ -1,29 +1,19 @@
-import Link from "next/link";
+import { Link } from "@/lib/components/core/default/link";
 import { Avatar } from "@/lib/components/core/default/avatar";
 import {
   HoverCardContent,
-  HoverCardPortal,
   HoverCardRoot,
-  HoverCardTrigger,
 } from "@/lib/components/core/default/hover-card";
 
 export default function HoverCardDemo() {
   return (
     <HoverCardRoot>
-      <HoverCardTrigger asChild>
-        <Link
-          href="https://twitter.com/mehdibha_"
-          target="_blank"
-          className="text-fg-link"
-        >
-          @mehdibha_
-        </Link>
-      </HoverCardTrigger>
-      <HoverCardPortal>
-        <HoverCardContent>
-          <Content />
-        </HoverCardContent>
-      </HoverCardPortal>
+      <Link href="https://twitter.com/mehdibha_" target="_blank" className="text-fg-link">
+        @mehdibha_
+      </Link>
+      <HoverCardContent>
+        <Content />
+      </HoverCardContent>
     </HoverCardRoot>
   );
 }

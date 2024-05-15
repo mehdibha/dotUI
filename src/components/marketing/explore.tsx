@@ -1,13 +1,14 @@
-import Link from "next/link";
 import { DocsList } from "@/components/docs/docs-list";
-import { Button } from "@/lib/components/core/default/button";
-import { IconExamples } from "./icon-examples";
+import { cn } from "@/lib/utils/classes";
+// import Link from "next/link";
+// import { Button } from "@/lib/components/core/default/button";
+// import { IconExamples } from "./icon-examples";
 
 export const Explore = ({ className }: { className: string }) => {
   const categories = [
     { title: "components", slug: "components/inputs", href: "/components" },
     { title: "hooks", slug: "hooks" },
-    { title: "blocks", slug: "blocks" },
+    // { title: "blocks", slug: "blocks" },
   ];
   return (
     <div className={className}>
@@ -18,7 +19,11 @@ export const Explore = ({ className }: { className: string }) => {
             <h3 className="category-xl pl-6 font-mono text-xl tracking-widest text-muted-foreground">
               {category.title}
             </h3>
-            <div className="border-l border-muted px-6 pb-8 pt-4">
+            <div
+              className={cn("border-l border-muted px-6 pb-8 pt-4", {
+                "pb-0": index === categories.length - 1,
+              })}
+            >
               <DocsList
                 name={category.slug}
                 href={category.href}
@@ -28,7 +33,7 @@ export const Explore = ({ className }: { className: string }) => {
             </div>
           </div>
         ))}
-        <div>
+        {/* <div>
           <h3 className="category-xl pl-6 font-mono text-xl tracking-widest text-muted-foreground">
             Icons
           </h3>
@@ -46,7 +51,7 @@ export const Explore = ({ className }: { className: string }) => {
               </Button>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

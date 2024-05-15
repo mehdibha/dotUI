@@ -1,17 +1,18 @@
-import {
-  AlertDialogAction,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogRoot,
-  AlertDialogTrigger,
-  AlertDialogCancel,
-  AlertDialogTitle,
-  AlertDialogContent,
-  AlertDialogInset,
-} from "@/lib/components/core/default/alert-dialog";
+// import {
+//   AlertDialogAction,
+//   AlertDialogDescription,
+//   AlertDialogFooter,
+//   AlertDialogHeader,
+//   AlertDialogRoot,
+//   AlertDialogTrigger,
+//   AlertDialogCancel,
+//   AlertDialogTitle,
+//   AlertDialogContent,
+//   AlertDialogInset,
+// } from "@/lib/components/core/default/alert-dialog";
 
 export default function AlertDialogDemo() {
+  return null
   return (
     <AlertDialogRoot>
       <AlertDialogTrigger variant="danger">Delete</AlertDialogTrigger>

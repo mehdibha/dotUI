@@ -1,18 +1,113 @@
 ---
 title: Popover
-description: Displays rich content in a portal, triggered by a button.
+description: Displays rich content in an overlay, triggered by a button.
 thumbnail:
   image: /previews/components/core/popover.jpeg
   video: /previews/components/core/popover.mp4
-disabled: true
 ---
 
-<ComponentPreview name="demos/components/core/popover" />
+TODO: Merge props for Popover
+TODO: check https://spectrum.adobe.com/page/popover/
+
+<ComponentPreview name="demos/components/core/popover/basic" />
 
 ## Installation
 
 <Steps>
+  <Step>Install the following dependencies:</Step>
+
+```bash
+npm install react-aria-components
+```
+
   <Step>Copy and paste the following code into your project.</Step>
   <ComponentSource name="components/core/default/popover" />
   <Step>Update the import paths to match your project setup.</Step>
 </Steps>
+
+## Usage
+
+The popover component is used to deliver context-specific information and functionality. It’s a small dialog to bring attention to specific user interface elements. It can provide additional information, options, or actions related to a specific element or task. Popovers can be helpful for flows that require light onboarding or instruction.
+
+Popovers may contain text, links, and buttons.
+
+Popover supports various caret positions, which you can specify, though the default is top. Note that the top-left, bottom-left, top-right, and bottom-right values modify the horizontal alignment of the popover.
+
+### Best practices
+
+Use sparingly to avoid cognitive overload. Though they can be used for a variety of things, they should be used sparingly to avoid cognitive overload. It's important to consider the context in which the popover appears. Are there other popovers on the page? Does it appear on page load, or require the user to open the popover?
+
+Unlike other messaging components, popovers should never include critical information (such as errors) and should always include a dismiss action.
+
+TODO - ADD USAGE GUIDELINES
+
+## Anatomy
+
+TODO
+
+## Options
+
+### Icon
+
+Contextual help can be used to display two types of supplementary content in an experience: in-line information (the info icon) or help and resources to learn more (the help icon).
+
+<ComponentPreview name="demos/components/core/popover/icon" />
+
+### Popover placement
+
+The popover is positioned in relation to the action button. The placement property values are the following: top, top left, top right, top start, top end, bottom, bottom left, bottom right, bottom start, bottom end, left, left top, left bottom, start, start top, start bottom, right, right top, right bottom, end, end top, end bottom. The default placement value is bottom start.
+
+<ComponentPreview name="demos/components/core/popover/position" />
+
+### Popover offset
+
+The offset is the distance between the action button and the popover edge. The default value is 6 px on desktop and 8 px on mobile, but this can be adjusted depending on the context.
+
+<ComponentPreview name="demos/components/core/popover/offset" />
+
+### Popover cross offset
+
+The cross offset is the placement offset on the cross axis (x-axis for top and bottom, y-axis for left and right). The default value is 0 px.
+
+<ComponentPreview name="demos/components/core/popover/cross-offset" />
+
+### Container padding
+
+To make sure that a popover will stay within certain boundaries (e.g., a browser window) it’s possible to define a container, and a container padding value, to respect. The default value is 8 px.
+
+### Optional arrow
+
+To make sure that a popover will stay within certain boundaries (e.g., a browser window) it’s possible to define a container, and a container padding value, to respect. The default value is 8 px.
+
+<ComponentPreview name="demos/components/core/popover/container-padding" />
+
+### Mobile
+
+<ComponentPreview name="demos/components/core/popover/mobile" />
+
+## API Reference
+
+### PopoverRoot
+
+TODO
+
+### Popover
+
+merges content, overlat & title 
+
+### PopoverContent
+
+TODO
+
+### PopoverTitle
+
+TODO
+
+### PopoverOverlay
+
+TODO
+
+## Accessibility
+
+### Keyboard interactions
+

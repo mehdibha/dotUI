@@ -1,10 +1,10 @@
-import Link from "next/link";
 import { Avatar } from "@/lib/components/core/default/avatar";
 import { HoverCard } from "@/lib/components/core/default/hover-card";
+import { Link } from "@/lib/components/core/default/link";
 
 export default function HoverCardDemo() {
   return (
-    <HoverCard openDelay={0} closeDelay={0} content={<Content />}>
+    <HoverCard delay={0} closeDelay={0} content={<Content />}>
       <Link href="https://twitter.com/mehdibha_" target="_blank" className="text-fg-link">
         @mehdibha_
       </Link>

@@ -1,27 +1,37 @@
+"use client";
+
 import * as React from "react";
-import { Slot, Slottable } from "@radix-ui/react-slot";
 import { Loader2Icon } from "lucide-react";
+import {
+  Button as Button_,
+  composeRenderProps,
+  type ButtonProps as ButtonProps_,
+  Link,
+  type LinkProps,
+} from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
+import { focusRing } from "@/lib/utils/styles";
 
 const buttonVariants = tv(
   {
-    base: "inline-flex items-center justify-center whitespace-nowrap rounded-md leading-normal text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2 disabled:!bg-bg-disabled disabled:!cursor-not-allowed disabled:!text-fg-disabled",
+    extend: focusRing,
+    base: "inline-flex items-center justify-center whitespace-nowrap rounded-md leading-normal text-sm font-medium ring-offset-background transition-colors disabled:cursor-not-allowed",
     variants: {
       variant: {
+        fill: "disabled:bg-bg-disabled disabled:text-fg-disabled",
+        ghost: "disabled:bg-bg-disabled disabled:text-fg-disabled",
+        outline: "disabled:border-border-disabled disabled:text-fg-disabled",
+      },
+      type: {
+        neutral: "text-fg border hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20",
         primary:
-          "bg-bg-primary text-fg-onPrimary hover:bg-bg-primary-hover active:bg-bg-primary-active",
-        neutral:
-          "bg-bg-neutral text-fg-onNeutral hover:bg-bg-neutral-hover active:bg-bg-neutral-active",
-        link: "text-fg-link underline-offset-4 hover:text-fg-link-hover active:text-fg-link-active hover:underline",
-        ghost: "text-fg hover:bg-bg-inverse/10 active:bg-bg-inverse/20",
-        outline:
-          "border text-fg hover:border-border-hover active:border-border-active hover:bg-bg-inverse/10 active:bg-bg-inverse/20 disabled:bg-transparent disabled:border-border-disabled",
-        danger:
-          "bg-bg-danger text-fg-onDanger hover:bg-bg-danger-hover active:bg-bg-danger-active",
+          "text-fg-primary border border-border-primary hover:bg-bg-primary/10 pressed:bg-bg-primary/20",
         success:
-          "bg-bg-success text-fg-onSuccess hover:bg-bg-success-hover active:bg-bg-success-active",
+          "text-fg-success border border-border-success hover:bg-bg-success/10 pressed:bg-bg-success/20",
         warning:
-          "bg-bg-warning text-fg-onWarning hover:bg-bg-warning-hover active:bg-bg-warning-active",
+          "text-fg-warning border border-border-warning hover:bg-bg-warning/10 pressed:bg-bg-warning/20",
+        danger:
+          "text-fg-danger border border-border-danger hover:bg-bg-danger/10 pressed:bg-bg-danger/20",
       },
       size: {
         sm: "h-8 px-3 [&_svg]:size-4",
@@ -35,6 +45,7 @@ const buttonVariants = tv(
       },
     },
     compoundVariants: [
+      // sizes
       {
         size: "sm",
         shape: ["square", "circle"],
@@ -50,9 +61,53 @@ const buttonVariants = tv(
         shape: ["square", "circle"],
         className: "w-10 px-0",
       },
+      // variant ghost
+      {
+        variant: "ghost",
+        type: ["neutral", "primary", "success", "warning", "danger"],
+        className: "border-none",
+      },
+      // variant outline
+      {
+        variant: "ghost",
+        type: ["neutral", "primary", "success", "warning", "danger"],
+        className: "border-none",
+      },
+      // variant fill
+      {
+        variant: "fill",
+        type: "neutral",
+        className:
+          "bg-bg-neutral text-fg-onNeutral hover:bg-bg-neutral-hover pressed:bg-bg-neutral-active",
+      },
+      {
+        variant: "fill",
+        type: "primary",
+        className:
+          "bg-bg-primary text-fg-onPrimary hover:bg-bg-primary-hover pressed:bg-bg-primary-active",
+      },
+      {
+        variant: "fill",
+        type: "success",
+        className:
+          "bg-bg-success text-fg-onSuccess hover:bg-bg-success-hover pressed:bg-bg-success-active",
+      },
+      {
+        variant: "fill",
+        type: "warning",
+        className:
+          "bg-bg-warning text-fg-onWarning hover:bg-bg-warning-hover pressed:bg-bg-warning-active",
+      },
+      {
+        variant: "fill",
+        type: "danger",
+        className:
+          "bg-bg-danger text-fg-onDanger hover:bg-bg-danger-hover pressed:bg-bg-danger-active",
+      },
     ],
     defaultVariants: {
-      variant: "neutral",
+      type: "neutral",
+      variant: "fill",
       size: "md",
       shape: "default",
     },
@@ -63,57 +118,108 @@ const buttonVariants = tv(
 );
 
 export interface ButtonProps
-  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "prefix">,
+  extends Omit<ButtonProps_, "type" | "children">,
     VariantProps<typeof buttonVariants> {
-  asChild?: boolean;
-  loading?: boolean;
+  children?: React.ReactNode;
+  htmlType?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
+  isLoading?: boolean;
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    {
-      className,
-      variant,
-      size,
-      shape,
-      asChild = false,
-      children,
-      disabled = false,
-      loading = false,
-      prefix,
-      suffix,
-      ...props
-    },
-    ref
-  ) => {
-    const Comp = asChild ? Slot : "button";
-    return (
-      <Comp
-        className={buttonVariants({ variant, size, shape, className })}
-        ref={ref}
-        disabled={disabled || loading}
-        {...props}
-      >
-        {(prefix ?? loading) && (
-          <span className="pointer-events-none mr-2">
-            {loading ? (
-              <>
-                <Loader2Icon className="size-6 animate-spin" aria-hidden="true" />
-                <span className="sr-only">loading</span>
-              </>
-            ) : (
-              prefix
-            )}
-          </span>
-        )}
-        <Slottable>{children}</Slottable>
-        {suffix && <span className="ml-2">{suffix}</span>}
-      </Comp>
-    );
-  }
-);
-Button.displayName = "Button";
+const Button = ({
+  variant,
+  size,
+  shape,
+  children,
+  isDisabled = false,
+  isLoading = false,
+  prefix,
+  suffix,
+  htmlType,
+  type,
+  ...props
+}: ButtonProps) => {
+  return (
+    <Button_
+      type={htmlType}
+      isDisabled={isDisabled || isLoading}
+      {...props}
+      className={composeRenderProps(props.className, (className, renderProps) =>
+        buttonVariants({ ...renderProps, variant, type, size, shape, className })
+      )}
+    >
+      {({}) => (
+        <>
+          {(prefix ?? isLoading) && (
+            <span className="pointer-events-none mr-2">
+              {isLoading ? (
+                <>
+                  <Loader2Icon className="size-6 animate-spin" aria-hidden="true" />
+                  <span className="sr-only">loading</span>
+                </>
+              ) : (
+                prefix
+              )}
+            </span>
+          )}
+          {children}
+          {suffix && <span className="pointer-events-none ml-2">{suffix}</span>}
+        </>
+      )}
+    </Button_>
+  );
+};
 
-export { Button, buttonVariants };
+export interface LinkButtonProps
+  extends Omit<LinkProps, "type" | "children">,
+    Omit<VariantProps<typeof buttonVariants>, "isDisabled"> {
+  children?: React.ReactNode;
+  isLoading?: boolean;
+  prefix?: React.ReactNode;
+  suffix?: React.ReactNode;
+}
+
+const LinkButton = ({
+  variant,
+  size,
+  shape,
+  children,
+  isDisabled = false,
+  isLoading = false,
+  prefix,
+  suffix,
+  type,
+  ...props
+}: LinkButtonProps) => {
+  return (
+    <Link
+      isDisabled={isDisabled || isLoading}
+      {...props}
+      className={composeRenderProps(props.className, (className, renderProps) =>
+        buttonVariants({ className, variant, type, size, shape, ...renderProps })
+      )}
+    >
+      {({}) => (
+        <>
+          {(prefix ?? isLoading) && (
+            <span className="pointer-events-none mr-2">
+              {isLoading ? (
+                <>
+                  <Loader2Icon className="size-6 animate-spin" aria-hidden="true" />
+                  <span className="sr-only">loading</span>
+                </>
+              ) : (
+                prefix
+              )}
+            </span>
+          )}
+          {children}
+          {suffix && <span className="pointer-events-none ml-2">{suffix}</span>}
+        </>
+      )}
+    </Link>
+  );
+};
+
+export { Button, LinkButton, buttonVariants };

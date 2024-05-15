@@ -18,59 +18,68 @@ thumbnail:
 
 ## Usage
 
-```jsx
-// wrap your app with TooltipProvider
+- Reserve tooltips to visually surface the label for icon buttons.
+- Keep the tooltip text minimal.
+- Never include tooltips on non-interactive components (div, span, p) because it will not be accessible for keyboard or screen reader users.
 
-<TooltipProvider>
-  <App />
-</TooltipProvider>
-```
+### Best practices
 
-```jsx
-import { Tooltip } from "@/components/core/tooltip";
-```
+-Don't place actions inside a tooltip#
+TODO: add best practices
 
-```jsx
-<Tooltip content="Add to library">
-  <Button>Button</Button>
-</Tooltip>
-```
+## Anatomy
 
-or
+TODO
 
-```jsx
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipPortal,
-  TooltipTrigger,
-} from "@/components/core/tooltip";
-```
+## Options
 
-```jsx
-<TooltipRoot>
-  <TooltipTrigger>Hover</TooltipTrigger>
-  <TooltipPortal>
-    <TooltipContent>
-      <p>Add to library</p>
-    </TooltipContent>
-  </TooltipPortal>
-</TooltipRoot>
-```
+### Types
 
-## Examples
+Tooltips come in semantic types : neutral, success, info, warning, danger. These use semantic colors to communicate the meaning.
+
+<ComponentPreview name="demos/components/core/tooltip/types" />
 
 ### Variants
 
-TODO: add muted
+fill, muted
+
+Toolips come in two variants: fill and muted.
 
 <ComponentPreview name="demos/components/core/tooltip/variants" />
 
-### No delay
+### Placement
+
+A tooltip is positioned in relation to its target. The default placement value is at the top.
+
+<ComponentPreview name="demos/components/core/tooltip/placement" />
+
+### Should flip
+
+This option determines whether or not a tooltip should be able to switch sides when constrained by space.
+
+<ComponentPreview name="demos/components/core/tooltip/flip" />
+
+### Offset
+
+This option determines whether or not a tooltip should be able to switch sides when constrained by space.
+
+<ComponentPreview name="demos/components/core/tooltip/offset" />
+
+### Container padding
+
+To make sure that the tooltip will stay within certain boundaries (e.g., a browser window) it’s possible to define a container and a container padding value to respect. The default value for this is 8 px.
+
+<ComponentPreview name="demos/components/core/tooltip/container-padding" />
+
+### Delay
+
+The delay duration (the time from when the mouse enters a tooltip trigger until the tooltip opens) and the close delay can be customised.
 
 <ComponentPreview name="demos/components/core/tooltip/no-delay" />
 
 ### Custom content
+
+The content of a tooltip can accept custom content, not just text.
 
 <ComponentPreview name="demos/components/core/tooltip/custom-content" />
 
@@ -147,3 +156,9 @@ The component that pops out when the tooltip is open.
 | `arrowPadding`<Info>The padding between the arrow and the edges of the content. If your content has <Code>border-radius</Code>, this will prevent it from overflowing the corners.</Info>                                                                            | `number`                                                                                | `0`         |
 | `sticky`<Info>The sticky behavior on the align axis. <Code>"partial"</Code> will keep the content in the boundary as long as the trigger is at least partially in the boundary whilst <Code>"always"</Code> will keep the content in the boundary regardless.</Info> | `"partial" \| "always"`                                                                 | `"partial"` |
 | `hideWhenDetached`<Info>Whether to hide the content when the trigger becomes fully occluded.</Info>                                                                                                                                                                  | `boolean`                                                                               | `false`     |
+
+## Accessibility
+
+### Keyboard interactions
+
+TODO

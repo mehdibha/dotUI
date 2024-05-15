@@ -1,175 +1,82 @@
 "use client";
 
-import * as React from "react";
-import { Drawer as DrawerPrimitive } from "vaul";
-import { cn, cva } from "@/lib/utils/classes";
+import React from "react";
+import {
+  DialogTrigger as AriaDialogTrigger,
+  Dialog as AriaDialog,
+  Heading as AriaHeading,
+  composeRenderProps,
+  type DialogProps as AriaDialogProps,
+  type DialogTriggerProps as AriaDialogTriggerProps,
+  type HeadingProps as AriaHeadingProps,
+} from "react-aria-components";
+import { tv } from "tailwind-variants";
+import { cn } from "@/lib/utils/classes";
+import {
+  DrawerOverlay as DrawerOverlayBase,
+  type DrawerOverlayProps as DrawerOverlayBaseProps,
+} from "./overlay";
 
-type DrawerContext = {
-  direction: "top" | "bottom" | "left" | "right";
-  showSwipeBar: boolean;
+const drawerVariants = tv({
+  slots: {
+    base: "",
+    title: "text-lg font-semibold",
+    overlay: "",
+    backdrop: "", // for mobile view only
+  },
+});
+
+type DrawerRootProps = AriaDialogTriggerProps;
+const DrawerRoot = (props: DrawerRootProps) => {
+  return <AriaDialogTrigger {...props} />;
 };
 
-type DrawerRootProps = React.ComponentProps<typeof DrawerPrimitive.Root> & {
-  showSwipeBar?: boolean;
+type DrawerOverlayProps = DrawerOverlayBaseProps;
+const DrawerOverlay = (props: DrawerOverlayProps) => {
+  return <DrawerOverlayBase {...props} />;
 };
 
-const DrawerContext = React.createContext<DrawerContext | null>(null);
-
-function useDrawerContext() {
-  const context = React.useContext(DrawerContext);
-  if (!context) {
-    throw new Error("useDrawerContext must be used within a <DrawerRoot />");
-  }
-  return context;
-}
-
-const DrawerRoot = (_props: DrawerRootProps) => {
-  const {
-    shouldScaleBackground = true,
-    direction = "bottom",
-    showSwipeBar = true,
-    ...props
-  } = _props;
+type DrawerContentProps = AriaDialogProps;
+const DrawerContent = ({ children, className, ...props }: DrawerContentProps) => {
+  const { base } = drawerVariants();
   return (
-    <DrawerContext.Provider value={{ direction, showSwipeBar }}>
-      <DrawerPrimitive.Root
-        direction={direction}
-        shouldScaleBackground={shouldScaleBackground}
-        {...props}
-      />
-    </DrawerContext.Provider>
+    <AriaDialog {...props} className={base({ className })}>
+      {children}
+    </AriaDialog>
   );
 };
-DrawerRoot.displayName = "DrawerRoot";
 
-const DrawerTrigger = DrawerPrimitive.Trigger;
+type DrawerTitleProps = AriaHeadingProps;
+const DrawerTitle = ({ className, ...props }: DrawerTitleProps) => {
+  const { title } = drawerVariants();
+  return <AriaHeading {...props} className={title({ className })} />;
+};
 
-const DrawerPortal = DrawerPrimitive.Portal;
+type DrawerSlots = keyof ReturnType<typeof drawerVariants>;
+type DrawerClassNames = {
+  [key in DrawerSlots]?: string;
+};
 
-const DrawerClose = DrawerPrimitive.Close;
-
-const DrawerOverlay = React.forwardRef<
-  React.ElementRef<typeof DrawerPrimitive.Overlay>,
-  React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Overlay>
->(({ className, ...props }, ref) => (
-  <DrawerPrimitive.Overlay
-    ref={ref}
-    className={cn("fixed inset-0 z-50 bg-black/80", className)}
-    {...props}
-  />
-));
-DrawerOverlay.displayName = DrawerPrimitive.Overlay.displayName;
-
-const drawerVariants = cva("fixed z-50 flex h-auto border bg-bg", {
-  variants: {
-    direction: {
-      top: "top-0 inset-x-0 rounded-b-[10px] mb-24 flex-col-reverse",
-      bottom: "bottom-0 inset-x-0 rounded-t-[10px] mt-24 flex-col",
-      left: "left-0 inset-y-0 rounded-r-[10px] mr-24 flex-row-reverse",
-      right: "right-0 inset-y-0 rounded-l-[10px] ml-24 flex-row",
-    },
-  },
-  defaultVariants: {
-    direction: "bottom",
-  },
-});
-
-const swipeBarVariants = cva("rounded-full bg-bg-muted", {
-  variants: {
-    direction: {
-      top: "mx-auto mb-4 h-2 w-[100px]",
-      bottom: "mx-auto mt-4 h-2 w-[100px]",
-      left: "my-auto mr-4 w-2 h-[100px]",
-      right: "my-auto ml-4 w-2 h-[100px]",
-    },
-  },
-});
-
-type DrawerContentProps = React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content>;
-
-const DrawerContent = React.forwardRef<
-  React.ElementRef<typeof DrawerPrimitive.Content>,
-  DrawerContentProps
->(({ className, children, ...props }, ref) => {
-  const { direction, showSwipeBar } = useDrawerContext();
+type DrawerProps = DrawerContentProps & {
+  title?: string;
+  classNames?: DrawerClassNames & { overlay?: string };
+};
+const Drawer = ({ title, classNames, className, ...props }: DrawerProps) => {
   return (
-    <DrawerPortal>
-      <DrawerOverlay />
-      <DrawerPrimitive.Content
-        ref={ref}
-        className={cn(drawerVariants({ direction }), className)}
-        {...props}
-      >
-        {showSwipeBar && <div className={cn(swipeBarVariants({ direction }))} />}
-        <div>{children}</div>
-      </DrawerPrimitive.Content>
-    </DrawerPortal>
+    <DrawerOverlay
+      classNames={{ overlay: classNames?.overlay, backdrop: classNames?.backdrop }}
+    >
+      <DrawerContent {...props} className={cn(classNames?.base, className)}>
+        {composeRenderProps(props.children, (children) => (
+          <>
+            {title && <DrawerTitle>{title}</DrawerTitle>}
+            {children}
+          </>
+        ))}
+      </DrawerContent>
+    </DrawerOverlay>
   );
-});
-DrawerContent.displayName = "DrawerContent";
+};
 
-type DrawerProps = DrawerRootProps & DrawerContentProps;
-
-const Drawer = React.forwardRef<
-  React.ElementRef<typeof DrawerPrimitive.Content>,
-  DrawerProps
->(
-  (
-    {
-      className,
-      children,
-      open,
-      onOpenChange,
-      direction,
-      snapPoints,
-      fadeFromIndex,
-      activeSnapPoint,
-      setActiveSnapPoint,
-      closeThreshold,
-      shouldScaleBackground,
-      scrollLockTimeout,
-      fixed,
-      dismissible,
-      onDrag,
-      onRelease,
-      modal,
-      nested,
-      onClose,
-      preventScrollRestoration,
-      showSwipeBar,
-      ...DrawerContentprops
-    },
-    ref
-  ) => {
-    const additionalRootProps = snapPoints ? { snapPoints, fadeFromIndex } : {};
-    return (
-      <DrawerRoot
-        direction={direction}
-        open={open}
-        onOpenChange={onOpenChange}
-        activeSnapPoint={activeSnapPoint}
-        setActiveSnapPoint={setActiveSnapPoint}
-        closeThreshold={closeThreshold}
-        shouldScaleBackground={shouldScaleBackground}
-        scrollLockTimeout={scrollLockTimeout}
-        fixed={fixed}
-        dismissible={dismissible}
-        onDrag={onDrag}
-        onRelease={onRelease}
-        modal={modal}
-        nested={nested}
-        onClose={onClose}
-        preventScrollRestoration={preventScrollRestoration}
-        showSwipeBar={showSwipeBar}
-        {...additionalRootProps}
-      >
-        <DrawerContent ref={ref} className={className} {...DrawerContentprops}>
-          {children}
-        </DrawerContent>
-      </DrawerRoot>
-    );
-  }
-);
-Drawer.displayName = "Drawer";
-
-export { Drawer, DrawerRoot, DrawerTrigger, DrawerClose, DrawerContent };
+export type { DrawerRootProps, DrawerProps, DrawerContentProps, DrawerTitleProps };
+export { DrawerRoot, Drawer, DrawerContent, DrawerOverlay, DrawerTitle };

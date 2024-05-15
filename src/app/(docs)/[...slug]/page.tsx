@@ -5,14 +5,14 @@ import { notFound } from "next/navigation";
 import { ChevronRightIcon } from "lucide-react";
 import { TableOfContents } from "@/components/docs/toc";
 import { Mdx } from "@/components/mdx/mdx-remote";
-import {
-  BreadcrumbsRoot,
-  BreadcrumbsItem,
-  BreadcrumbsLink,
-  BreadcrumbsList,
-  BreadcrumbsPage,
-  BreadcrumbsSeparator,
-} from "@/lib/components/core/default/breadcrumbs";
+// import {
+//   BreadcrumbsRoot,
+//   BreadcrumbsItem,
+//   BreadcrumbsLink,
+//   BreadcrumbsList,
+//   BreadcrumbsPage,
+//   BreadcrumbsSeparator,
+// } from "@/lib/components/core/default/breadcrumbs";
 import { Button } from "@/lib/components/core/default/button";
 import { ScrollArea } from "@/lib/components/core/default/scroll-area";
 import { cn } from "@/lib/utils/classes";
@@ -58,7 +58,7 @@ export default async function Page({ params }: PageProps) {
       })}
     >
       <div className="mx-auto w-full min-w-0 pt-6">
-        {metadata.breadcrumbs.length > 1 && (
+        {/* {metadata.breadcrumbs.length > 1 && (
           <BreadcrumbsRoot className="mb-2">
             <BreadcrumbsList className="sm:gap-1.5">
               {metadata.breadcrumbs.map((breadcrumb, index) => (
@@ -81,7 +81,7 @@ export default async function Page({ params }: PageProps) {
               ))}
             </BreadcrumbsList>
           </BreadcrumbsRoot>
-        )}
+        )} */}
         <h1 className="text-4xl font-bold">{metadata.title}</h1>
         <p className="mt-2 text-muted-foreground">{metadata.description}</p>
         {categories && categories.length > 0 && (

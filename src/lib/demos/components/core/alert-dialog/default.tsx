@@ -1,36 +1,17 @@
-import {
-  AlertDialogAction,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogRoot,
-  AlertDialogTrigger,
-  AlertDialogCancel,
-  AlertDialogTitle,
-  AlertDialogContent,
-} from "@/lib/components/core/default/alert-dialog";
+import { AlertDialogRoot, AlertDialog } from "@/lib/components/core/default/alert-dialog";
+import { Button } from "@/lib/components/core/default/button";
 
 export default function AlertDialogDemo() {
+  // return null;
   return (
     <AlertDialogRoot>
-      <AlertDialogTrigger variant="danger">Delete</AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Delete project</AlertDialogTitle>
-          <AlertDialogDescription>
-            This project will be deleted, along with all of its settings.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction
-            variant={{ initial: "ghost", sm: "danger" }}
-            className="max-sm:text-fg-danger"
-          >
-            Continue
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
+      <Button type="danger">Delete</Button>
+      <AlertDialog
+        title="Delete project"
+        // description="This project will be deleted, along with all of its settings."
+        // cancel={{ label: "Cancel" }}
+        // action={{ label: "Continue"}}}
+      />
     </AlertDialogRoot>
   );
 }

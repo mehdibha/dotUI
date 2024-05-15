@@ -4,7 +4,7 @@ import { ArrowRightIcon, SparklesIcon } from "lucide-react";
 import Balancer from "react-wrap-balancer";
 import { SearchDocs } from "@/components/docs/search-docs";
 import { badgeVariants } from "@/lib/components/core/default/badge";
-import { Button } from "@/lib/components/core/default/button";
+import { LinkButton } from "@/lib/components/core/default/button";
 import { cn } from "@/lib/utils/classes";
 import { Animation } from "./animation";
 
@@ -35,9 +35,9 @@ export const Hero = ({ className }: { className?: string }) => {
           Copy the code, paste it, customize it, own it. Done.
         </p>
         <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-          <Button size="lg" variant="primary" asChild>
-            <Link href="/docs">Read the docs</Link>
-          </Button>
+          <LinkButton href="/docs" type="primary" size="lg">
+            Read the docs
+          </LinkButton>
           <SearchDocs className="w-auto" size="lg" />
         </div>
       </div>

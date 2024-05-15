@@ -15,6 +15,9 @@ const config = {
         "2xl": "1400px",
       },
     },
+    data: {
+      mobile: 'mobile~="true"',
+    },
     screens: {
       xs: "475px",
       ...defaultTheme.screens,
@@ -243,8 +246,7 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require("tailwindcss-react-aria-components")],
 } satisfies Config;
 
-// export default config;
 export default withTV(config);
