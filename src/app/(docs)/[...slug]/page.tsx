@@ -13,7 +13,7 @@ import { Mdx } from "@/components/mdx/mdx-remote";
 //   BreadcrumbsPage,
 //   BreadcrumbsSeparator,
 // } from "@/lib/components/core/default/breadcrumbs";
-import { Button } from "@/lib/components/core/default/button";
+import { Button, LinkButton } from "@/lib/components/core/default/button";
 import { ScrollArea } from "@/lib/components/core/default/scroll-area";
 import { cn } from "@/lib/utils/classes";
 import { getDocFromSlug, getDocs } from "@/server/docs";
@@ -83,13 +83,13 @@ export default async function Page({ params }: PageProps) {
           </BreadcrumbsRoot>
         )} */}
         <h1 className="text-4xl font-bold">{metadata.title}</h1>
-        <p className="mt-2 text-muted-foreground">{metadata.description}</p>
+        <p className="mt-2 text-fg-muted">{metadata.description}</p>
         {categories && categories.length > 0 && (
           <div className="mt-6 flex flex-wrap gap-2">
             {categories.map((category, index) => (
-              <Button key={index} size="sm" asChild className="h-7">
-                <Link href={category.href}>{category.label}</Link>
-              </Button>
+              <LinkButton key={index} size="sm" href={category.href}  className="h-7">
+                {category.label}
+              </LinkButton>
             ))}
           </div>
         )}

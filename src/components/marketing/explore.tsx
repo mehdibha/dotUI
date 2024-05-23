@@ -1,5 +1,6 @@
 import { DocsList } from "@/components/docs/docs-list";
 import { cn } from "@/lib/utils/classes";
+
 // import Link from "next/link";
 // import { Button } from "@/lib/components/core/default/button";
 // import { IconExamples } from "./icon-examples";
@@ -16,7 +17,7 @@ export const Explore = ({ className }: { className: string }) => {
       <div className="mt-6 -space-y-2">
         {categories.map((category, index) => (
           <div key={index}>
-            <h3 className="category-xl pl-6 font-mono text-xl tracking-widest text-muted-foreground">
+            <h3 className="category-xl pl-6 font-mono text-xl tracking-widest text-fg-muted">
               {category.title}
             </h3>
             <div
@@ -34,7 +35,7 @@ export const Explore = ({ className }: { className: string }) => {
           </div>
         ))}
         {/* <div>
-          <h3 className="category-xl pl-6 font-mono text-xl tracking-widest text-muted-foreground">
+          <h3 className="category-xl pl-6 font-mono text-xl tracking-widest text-fg-muted">
             Icons
           </h3>
           <div className="px-6">

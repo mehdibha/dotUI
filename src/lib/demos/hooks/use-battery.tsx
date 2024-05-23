@@ -22,7 +22,7 @@ export default function Demo() {
         {isLoading ? (
           <Loader2Icon className="animate-spin" />
         ) : !isSupported ? (
-          <p className="text-muted-foreground">
+          <p className="text-fg-muted">
             Battery status API is not supported in your browser.
           </p>
         ) : (

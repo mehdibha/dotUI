@@ -6,9 +6,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/lib/components/core/default/card";
-import { Input } from "@/lib/components/core/default/input";
 import { Slider } from "@/lib/components/core/default/slider";
 import { Tabs, TabsList, TabsTrigger } from "@/lib/components/core/default/tabs";
+import { TextField } from "@/lib/components/core/default/text-field";
 
 export default function Filter() {
   return (
@@ -20,7 +20,7 @@ export default function Filter() {
       <CardContent className="space-y-4">
         <div>
           <h3 className="font-semibold">Type of place</h3>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <p className="mt-1 text-sm text-fg-muted">
             Search rooms, entire homes, or any type of place
           </p>
           <Tabs defaultValue="any-type" className="mt-2">
@@ -33,14 +33,14 @@ export default function Filter() {
         </div>
         <div>
           <h3 className="font-semibold">Price range</h3>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <p className="mt-1 text-sm text-fg-muted">
             Search rooms, entire homes, or any type of place
           </p>
           <Slider defaultValue={[25, 75]} className="mt-2" />
           <div className="mt-4 flex items-center space-x-2">
-            <Input type="number" defaultValue={25} className="w-1/2" />
-            <MinusIcon strokeWidth={4} className="text-muted-foreground" />
-            <Input type="number" defaultValue={75} className="w-1/2" />
+            <TextField type="number" defaultValue={25} className="w-1/2" />
+            <MinusIcon strokeWidth={4} className="text-fg-muted" />
+            <TextField type="number" defaultValue={75} className="w-1/2" />
           </div>
         </div>
       </CardContent>

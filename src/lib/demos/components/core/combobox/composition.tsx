@@ -1,5 +1,5 @@
-"use client"
- 
+"use client";
+
 import {
   ComboboxRoot,
   ComboboxCollection,
@@ -9,56 +9,22 @@ import {
   ComboboxListBox,
   ComboboxPopover,
   ComboboxSection,
-} from "@/lib/components/core/default/combobox"
- 
-const frameworks = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
-]
- 
+} from "@/lib/components/core/default/combobox";
+
 export default function ComboboxDemo() {
   return (
-    <ComboboxRoot aria-label="Select Framework">
-      <ComboboxInput
-        className="w-[200px]"
-        placeholder="Select a framework..."
-      />
+    <ComboboxRoot menuTrigger="focus">
+      <ComboboxInput className="w-[200px]" placeholder="Select an animal..." />
       <ComboboxPopover>
         <ComboboxListBox>
-          <ComboboxSection>
-            <ComboboxLabel separator>Frameworks</ComboboxLabel>
-            <ComboboxCollection items={frameworks}>
-              {(item) => (
-                <ComboboxItem
-                  textValue={item.label}
-                  id={item.value}
-                  key={item.value}
-                >
-                  {item.label}
-                </ComboboxItem>
-              )}
-            </ComboboxCollection>
-          </ComboboxSection>
+          <ComboboxItem textValue="Aardvark">Aardvark</ComboboxItem>
+          <ComboboxItem textValue="Cat">Cat</ComboboxItem>
+          <ComboboxItem textValue="Dog">Dog</ComboboxItem>
+          <ComboboxItem textValue="Kangaroo">Kangaroo</ComboboxItem>
+          <ComboboxItem textValue="Panda">Panda</ComboboxItem>
+          <ComboboxItem textValue="Snake">Snake</ComboboxItem>
         </ComboboxListBox>
       </ComboboxPopover>
     </ComboboxRoot>
-  )
+  );
 }

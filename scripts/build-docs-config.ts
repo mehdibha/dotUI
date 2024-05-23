@@ -60,7 +60,13 @@ const docsConfig: DocsConfig = {
         },
         {
           title: "Buttons",
-          items: getCategoryDocs("components/buttons"),
+          items: [
+            { title: "Button", href: "/components/buttons/button" },
+            { title: "Button Group", href: "/components/buttons/button-group" },
+            { title: "Toggle Button", href: "/components/buttons/toggle-button" },
+            { title: "Toggle Group", href: "/components/buttons/toggle-group" },
+            { title: "File Trigger", href: "/components/buttons/file-trigger" },
+          ],
         },
         {
           title: "Selection",
@@ -68,11 +74,29 @@ const docsConfig: DocsConfig = {
         },
         {
           title: "Inputs",
-          items: getCategoryDocs("components/inputs"),
+          items: [
+            { title: "Field", href: "/components/inputs/field" },
+            { title: "TextField", href: "/components/inputs/text-field" },
+            { title: "TextArea", href: "/components/inputs/text-area" },
+            { title: "SearchField", href: "/components/inputs/search-field" },
+            { title: "Checkbox", href: "/components/inputs/checkbox" },
+            { title: "Checkbox Card", href: "/components/inputs/checkbox-card" },
+            { title: "CheckBox Group", href: "/components/inputs/checkbox-group" },
+            { title: "Radio Group", href: "/components/inputs/radio-group" },
+            { title: "Radio Cards", href: "/components/inputs/radio-card" },
+            { title: "Switch", href: "/components/inputs/switch" },
+            { title: "Slider", href: "/components/inputs/slider" },
+            { title: "Form", href: "/components/inputs/form" },
+            // { title: "Input OTP", href: "/components/inputs/input-otp" },
+          ],
         },
         {
           title: "Dates",
           items: getCategoryDocs("components/dates"),
+        },
+        {
+          title: "Drag and drop",
+          items: getCategoryDocs("components/drag-and-drop"),
         },
         {
           title: "Feedback",
@@ -84,7 +108,16 @@ const docsConfig: DocsConfig = {
         },
         {
           title: "Data display",
-          items: getCategoryDocs("components/data-display"),
+          items: [
+            { title: "Avatar", href: "/components/data-display/avatar" },
+            { title: "Badge", href: "/components/data-display/badge" },
+            { title: "Card", href: "/components/data-display/card" },
+            { title: "Carousel", href: "/components/data-display/carousel" },
+            { title: "Separator", href: "/components/data-display/separator" },
+            { title: "Table", href: "/components/data-display/table" },
+            // { title: "Data table", href: "/components/data-display/data-table" },
+            // { title: "Accordion", href: "/components/data-display/accordion" },
+          ],
         },
         {
           title: "Menus",
@@ -92,11 +125,26 @@ const docsConfig: DocsConfig = {
         },
         {
           title: "Navigation",
-          items: getCategoryDocs("components/navigation"),
+          items: [
+            { title: "Link", href: "/components/navigation/link" },
+            { title: "Tabs", href: "/components/navigation/tabs" },
+            // { title: "Breadcrumbs", href: "/components/navigation/breadcrumbs" },
+            // { title: "Command", href: "/components/navigation/command" },
+            // { title: "Pagination", href: "/components/navigation/pagination" },
+          ],
         },
         {
           title: "Overlay",
-          items: getCategoryDocs("components/overlay"),
+          items: [
+            { title: "Overlay", href: "/components/overlay/overlay" },
+            { title: "Dialog", href: "/components/overlay/dialog" },
+            { title: "Alert Dialog", href: "/components/overlay/alert-dialog" },
+            { title: "Drawer", href: "/components/overlay/drawer" },
+            { title: "Popover", href: "/components/overlay/popover" },
+            { title: "Tooltip", href: "/components/overlay/tooltip" },
+            { title: "Hover Card", href: "/components/overlay/hover-card" },
+            // { title: "Context Menu", href: "/components/overlay/context-menu" },
+          ],
         },
         {
           title: "Utils",

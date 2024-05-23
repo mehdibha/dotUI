@@ -1,6 +1,7 @@
 import React from "react";
 import { Code } from "bright";
 import { tabs } from "@/components/code-highlighter/code-tabs";
+import { CodeBlock } from "@/lib/components/core/default/code-block";
 import { getComponentSource } from "@/server/component-source";
 
 export const ComponentSource = ({
@@ -17,6 +18,15 @@ export const ComponentSource = ({
   if (code.length === 0) {
     return <p>Source code not found</p>;
   }
+
+  return (
+    <CodeBlock
+      language="tsx"
+      fileName={code.map((file) => file.title)}
+      code={code.map((file) => file.code.replace(/[\r\n]+$/, ""))}
+      className={className}
+    />
+  );
 
   return (
     <Code

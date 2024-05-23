@@ -1,0 +1,109 @@
+---
+title: TextField
+description: The TextField component is a complete form control including a label, input, and help text.
+thumbnail:
+  image: /previews/components/core/text-field.jpeg
+  video: /previews/components/core/text-field.mp4
+---
+
+<ComponentPreview name="demos/components/core/text-field/default" className="max-w-[250px]" />
+
+## Installation
+
+<Steps>
+  <Step>Copy and paste the following code into your project.</Step>
+  <ComponentSource name="components/core/default/text-field" />
+  <Step>Update the import paths to match your project setup.</Step>
+</Steps>
+
+## Usage
+
+```jsx
+import { TextField } from "@/components/core/text-field";
+```
+
+```jsx
+<TextField label="email" />
+```
+
+## Anatomy
+
+![TextField anatomy](/anatomy/text-field.png)
+
+
+## API Reference
+
+| Prop             | Type                   | Default |
+| ---------------- | ---------------------- | ------- |
+| `size`           | `"sm" \| "md" \| "lg"` | `md`    |
+| `disabled`       | `boolean`              | -       |
+| `prefix`         | `React.ReactNode`      | -       |
+| `suffix`         | `React.ReactNode`      | -       |
+| `loading`        | `boolean`              | -       |
+| `loaderPosition` | `"prefix" \| "suffix"` | -       |
+| `status`         | `"error" \| "success"` | -       |
+
+## Options
+
+### Label
+
+<ComponentPreview
+  name="demos/components/core/text-field/label"
+  className="max-w-xs"
+/>
+
+### Description
+
+<ComponentPreview
+  name="demos/components/core/text-field/description"
+  className="max-w-xs"
+/>
+
+### Sizes
+
+The default size is `md`.
+
+<ComponentPreview name="demos/components/core/text-field/sizes" className="max-w-lg" />
+
+### Disabled
+
+<ComponentPreview name="demos/components/core/text-field/disabled" className="max-w-xs" />
+
+### Types
+
+<ComponentPreview name="demos/components/core/text-field/types" className="max-w-xs" />
+
+### Prefix and suffix
+
+<ComponentPreview
+  name="demos/components/core/text-field/prefix-and-suffix"
+  className="max-w-xs"
+/>
+
+### Loading
+
+<ComponentPreview name="demos/components/core/text-field/loading" className="max-w-xs" />
+
+## Examples
+
+### Controlled
+
+<ComponentPreview
+  name="demos/components/core/text-field/controlled"
+  className="max-w-xs"
+/>
+
+### Composition
+
+<ComponentPreview
+  name="demos/components/core/text-field/composition"
+  className="max-w-xs"
+/>
+
+### Form
+
+<ComponentPreview
+  name="demos/components/core/text-field/form"
+  className="max-w-xs"
+/>
+

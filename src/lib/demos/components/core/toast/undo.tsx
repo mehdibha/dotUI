@@ -6,7 +6,9 @@ import { toast } from "@/lib/components/core/default/toast";
 export default function ToastDemo() {
   return (
     <Button
-      onClick={() => toast("Event has been created", { onUndo: () => console.log("undo") })}
+      onPress={() =>
+        toast("Event has been created", { onUndo: () => console.log("undo") })
+      }
     >
       Show toast
     </Button>

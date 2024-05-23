@@ -2,24 +2,23 @@
 
 import * as React from "react";
 import * as AvatarPrimitive from "@radix-ui/react-avatar";
-import { cn, cva } from "@/lib/utils/classes";
+import { tv } from "tailwind-variants";
+import { cn } from "@/lib/utils/classes";
 
 // TODO: clean the types
 
-const avatarVariants = cva(
-  "relative inline-flex h-10 w-10 shrink-0 overflow-hidden bg-muted",
-  {
-    variants: {
-      shape: {
-        circle: "rounded-full",
-        square: "rounded-sm",
-      },
+const avatarVariants = tv({
+  base: "relative inline-flex h-10 w-10 shrink-0 overflow-hidden bg-bg-muted",
+  variants: {
+    shape: {
+      circle: "rounded-full",
+      square: "rounded-sm",
     },
-    defaultVariants: {
-      shape: "circle",
-    },
-  }
-);
+  },
+  defaultVariants: {
+    shape: "circle",
+  },
+});
 
 const AvatarRoot = React.forwardRef<
   React.ElementRef<typeof AvatarPrimitive.Root>,
@@ -53,7 +52,10 @@ const AvatarFallback = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <AvatarPrimitive.Fallback
     ref={ref}
-    className={cn("flex h-full w-full items-center justify-center select-none", className)}
+    className={cn(
+      "flex h-full w-full select-none items-center justify-center",
+      className
+    )}
     {...props}
   />
 ));

@@ -2,22 +2,22 @@
 
 import React from "react";
 import { useState } from "react";
-import {
-  motion,
-  animate,
-  AnimatePresence,
-  useMotionTemplate,
-  useMotionValue,
-  useMotionValueEvent,
-  useTransform,
-} from "framer-motion";
-// import { motion } from "framer-motion";
-// import { animate } from "framer-motion";
-// import { AnimatePresence } from "framer-motion";
-// import { useMotionTemplate } from "framer-motion";
-// import { useMotionValue } from "framer-motion";
-// import { useMotionValueEvent } from "framer-motion";
-// import { useTransform } from "framer-motion";
+// import {
+//   motion,
+//   animate,
+//   AnimatePresence,
+//   useMotionTemplate,
+//   useMotionValue,
+//   useMotionValueEvent,
+//   useTransform,
+// } from "framer-motion";
+import { motion } from "framer-motion";
+import { animate } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
+import { useMotionTemplate } from "framer-motion";
+import { useMotionValue } from "framer-motion";
+import { useMotionValueEvent } from "framer-motion";
+import { useTransform } from "framer-motion";
 import {
   Dialog,
   Heading,
@@ -42,13 +42,13 @@ const staticTransition = {
   duration: 0.5,
   ease: [0.32, 0.72, 0, 1],
 };
+// const root = document.querySelector("[data-rcopy-root]")!
 
+const root: HTMLElement = document.querySelector("[drawer-wrapper]")!;
 const SHEET_MARGIN = 34;
 const SHEET_RADIUS = 12;
 
 // change this the div element will be like this <div drawer-wrapper=""></div>
-const root: HTMLElement = document.querySelector("[drawer-wrapper]")!;
-// const root = document.querySelector("[data-rcopy-root]")!
 
 export default function Sheet() {
   const [isOpen, setOpen] = useState(false);

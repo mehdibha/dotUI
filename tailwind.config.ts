@@ -24,45 +24,11 @@ const config = {
     },
     extend: {
       colors: {
-        // old (shadcn)
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
-        // new (extended rcopy)
         bg: {
           DEFAULT: "hsl(var(--color-bg))",
           inverse: "hsl(var(--color-bg-inverse))",
           surface: "hsl(var(--color-bg-surface))",
-          muted: "hsl(var(--color-bg-muted))",
+          muted: "hsl(var(--color-bg-bg-muted))",
           disabled: "hsl(var(--color-bg-disabled))",
           neutral: {
             DEFAULT: "hsl(var(--color-bg-neutral))",
@@ -132,6 +98,7 @@ const config = {
             active: "hsl(var(--color-fg-link-active))",
             visited: "hsl(var(--color-fg-link-visited))",
           },
+          accent: "hsl(var(--color-fg-accent))",
           success: "hsl(var(--color-fg-success))",
           warning: "hsl(var(--color-fg-warning))",
           danger: "hsl(var(--color-fg-danger))",
@@ -159,6 +126,9 @@ const config = {
           focus: "hsl(var(--color-border-focus))",
           inverse: "hsl(var(--color-border-inverse))",
         },
+      },
+      transitionTimingFunction: {
+        "drawer": "cubic-bezier(0.32,0.72,0,1)",
       },
       transitionDuration: {
         "3000": "3000ms",

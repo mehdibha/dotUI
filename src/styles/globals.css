@@ -3,38 +3,12 @@
 @tailwind utilities;
 
 @layer base {
-  [vaul-drawer] {
-    transition: transform 0.5s cubic-bezier(0.32, 0.72, 0, 1) !important;
-  }
-
   :root {
-    /* old  */
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-    --card: 230 15% 98%;
-    --card-foreground: 240 10% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 72.22% 50.59%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 5% 64.9%;
     --radius: 0.5rem;
-
-    /* new */
     --color-bg: 0 0% 100%;
     --color-bg-inverse: 240 10% 3.9%;
     --color-bg-surface: 230 15% 98%;
-    --color-bg-disabled: 0 0% 22%;
+    --color-bg-disabled: 0 0% 80%;
 
     --color-bg-neutral: 240 4.8% 96%;
     --color-bg-neutral-hover: 240 4.8% 86%;
@@ -77,7 +51,7 @@
     --color-fg: 240 10% 3.9%;
     --color-fg-secondary: 240 3.8% 40%;
     --color-fg-inverse: 0 0% 100%;
-    --color-fg-disabled: 0 0% 70%;
+    --color-fg-disabled: 0 0% 30%;
 
     --color-fg-link: 0 0% 100%;
     --color-fg-link-hover: 0 0% 100%;
@@ -103,38 +77,24 @@
     --color-border-hover: 0 0% 100%;
     --color-border-active: 0 0% 100%;
     --color-border-disabled: 0 0% 100%;
+
+    --color-border-success: 131 62% 38%;
+    --color-border-danger: 357 75% 54%;
+    --color-border-warning: 35 100% 54%;
+    --color-border-info: 212 78% 23%;
+
+    --color-border-accent: 0 0% 25%;
     --color-border-secondary: 0 0% 100%;
-    --color-border-focus: 0 0% 100%;
+    --color-border-focus: 212 92% 45%;
     --color-border-inverse: 0 0% 100%;
   }
 
   .dark {
-    /* old */
-    --background: 240 10% 10%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 15%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 11%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 90%;
-    --primary-foreground: 240 5.9% 0%;
-    --secondary: 240 3.7% 20%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 20%;
-    --input: 240 3.7% 20%;
-    --ring: 240 4.9% 83.9%;
-
-    /* new */
     --color-bg: 240 10% 10%;
-    --color-bg-muted: 240 6% 13%;
+    --color-bg-bg-muted: 240 6% 13%;
     --color-bg-inverse: 0 0% 100%;
     --color-bg-surface: 0 0% 100%;
+    --color-bg-disabled: 0 0% 25%;
 
     --color-bg-neutral: 240 3.7% 20%;
     --color-bg-neutral-hover: 240 3.7% 25%;
@@ -205,6 +165,8 @@
     --color-fg-onInfo: 0 0% 100%;
     --color-fg-onMutedInfo: 210 100% 66%;
 
+    --color-fg-accent: 210 100 66;
+
     --color-fg-onTooltip: 0 0% 100%;
 
     --color-border: 240 3.7% 22%;
@@ -218,7 +180,7 @@
     --color-border-warning: 35 100% 18%;
     --color-border-info: 212 78% 23%;
 
-    --color-border-accent: 0 0% 25%;
+    --color-border-accent: 210 100 66;
     --color-border-secondary: 0 0% 100%;
     --color-border-focus: 210 100 66;
     --color-border-inverse: 0 0% 100%;
@@ -233,7 +195,7 @@
     @apply scroll-smooth;
   }
   body {
-    @apply bg-bg text-fg;
+    @apply text-fg;
   }
 }
 
@@ -243,7 +205,7 @@
   }
 
   .step:before {
-    @apply absolute inline-flex h-9 w-9 items-center justify-center rounded-full border-4 border-background bg-muted text-center -indent-px font-mono text-base font-medium;
+    @apply absolute inline-flex h-9 w-9 items-center justify-center rounded-full border-4 border-bg bg-bg-muted text-center -indent-px font-mono text-base font-medium;
     @apply ml-[-50px] mt-[-4px];
     content: counter(step);
   }
@@ -253,11 +215,11 @@
   }
 
   .category:before {
-    @apply absolute left-0 top-0 -ml-1 mt-1 h-2 w-2 rounded-full bg-muted content-[''];
+    @apply absolute left-0 top-0 -ml-1 mt-1 h-2 w-2 rounded-full bg-bg-muted content-[''];
   }
 
   .category:after {
-    @apply absolute left-0 top-3 h-2 w-[1px] bg-muted content-[''];
+    @apply absolute left-0 top-3 h-2 w-[1px] bg-bg-muted content-[''];
   }
 
   .category-xl {
@@ -265,16 +227,85 @@
   }
 
   .category-xl:before {
-    @apply absolute left-0 top-0 -ml-[7px] mt-[7px] h-4 w-4 rounded-full bg-muted content-[''];
+    @apply absolute left-0 top-0 -ml-[7px] mt-[7px] h-4 w-4 rounded-full bg-bg-muted content-[''];
   }
 
   .category-xl:after {
-    @apply absolute left-0 top-3 h-4 w-[1px] bg-muted content-[''];
+    @apply absolute left-0 top-3 h-4 w-[1px] bg-bg-muted content-[''];
   }
 
   @media (max-width: 640px) {
     .container {
       @apply px-4;
     }
+  }
+}
+
+/* TODO PUT THIS SHIT IN TAILWIND CLASSES */
+
+.data-dragging .data-scrollable [data-direction='top'] {
+  overflow-y: hidden !important;
+}
+.data-dragging .data-scrollable [data-direction='bottom'] {
+  overflow-y: hidden !important;
+}
+
+.data-dragging .data-scrollable [data-direction='left'] {
+  overflow-x: hidden !important;
+}
+
+.data-dragging .data-scrollable [data-direction='right'] {
+  overflow-x: hidden !important;
+}
+
+[data-drawer]::after {
+  content: '';
+  position: absolute;
+  background: inherit;
+  background-color: inherit;
+}
+
+[data-drawer][data-direction='top']::after {
+  top: initial;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  height: 200%;
+}
+
+[data-drawer][data-direction='bottom']::after {
+  top: 100%;
+  bottom: initial;
+  left: 0;
+  right: 0;
+  height: 200%;
+}
+
+[data-drawer][data-direction='left']::after {
+  left: initial;
+  right: 100%;
+  top: 0;
+  bottom: 0;
+  width: 200%;
+}
+
+[data-drawer][data-direction='right']::after {
+  left: 100%;
+  right: initial;
+  top: 0;
+  bottom: 0;
+  width: 200%;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  [data-drawer] {
+    user-select: none;
+  }
+}
+
+@media (pointer: fine) {
+  [data-handle-hitarea] {
+    width: 100%;
+    height: 100%;
   }
 }

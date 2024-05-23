@@ -17,7 +17,7 @@ import { Overlay, type OverlayProps } from "./overlay";
 
 const alertDialogVariants = tv({
   slots: {
-    base: "outline-none bg-red-500",
+    base: "outline-none rounded-[inherit] p-6",
     title: "text-lg font-semibold",
     arrow: "",
     overlay: "",
@@ -60,9 +60,14 @@ const AlertDialogContent = ({
   className,
   ...props
 }: AlertDialogContentProps) => {
+  const { isMobile } = useAlertDialogContext();
   const { base } = alertDialogVariants();
   return (
-    <AriaDialog {...props} className={base({ className })}>
+    <AriaDialog
+      {...props}
+      data-mobile={isMobile ? "true" : undefined}
+      className={base({ className })}
+    >
       {children}
     </AriaDialog>
   );
@@ -129,13 +134,6 @@ export {
   AlertDialogOverlay,
   AlertDialogTitle,
 };
-
-// "use client";
-
-// import * as React from "react";
-// import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog";
-// import { Button, type ButtonProps } from "@/lib/components/core/default/button";
-// import { cn } from "@/lib/utils/classes";
 
 // const AlertDialogRoot = AlertDialogPrimitive.Root;
 
@@ -243,7 +241,7 @@ export {
 // >(({ className, ...props }, ref) => (
 //   <AlertDialogPrimitive.Description
 //     ref={ref}
-//     className={cn("text-sm text-muted-foreground", className)}
+//     className={cn("text-sm text-fg-muted", className)}
 //     {...props}
 //   />
 // ));

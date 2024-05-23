@@ -1,45 +1,45 @@
 "use client";
 
 import React from "react";
-import * as SwitchPrimitives from "@radix-ui/react-switch";
 import { MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
-import { Label } from "@/lib/components/core/default/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectPopover,
+  SelectTrigger,
+  SelectValue,
+} from "@/lib/components/core/default/select";
 import { useMounted } from "@/lib/hooks/use-mounted";
-import { cn } from "@/lib/utils/classes";
 
 export const ThemeToggle = ({ className }: { className?: string }) => {
-  const { theme, setTheme } = useTheme();
+  const { theme, resolvedTheme, setTheme } = useTheme();
   const mounted = useMounted();
-
   if (!mounted) return null;
-
   return (
-    <SwitchPrimitives.Root
-      checked={theme === "dark"}
-      onCheckedChange={() => {
-        setTheme(theme === "light" ? "dark" : "light");
-      }}
-      className={cn(
-        "peer inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent bg-input shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50",
-        "h-7 w-12",
-        className
-      )}
-      role="button"
-      id="dark-mode"
+    <Select
+      selectedKey={theme}
+      onSelectionChange={(key) => setTheme(key as string)}
+      aria-label="Change Theme"
+      className={className}
     >
-      <Label htmlFor="dark-mode" className="sr-only">
-        Dark mode
-      </Label>
-      <SwitchPrimitives.Thumb
-        className={cn(
-          "pointer-events-none block h-6 w-6 rounded-full bg-background shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0",
-          "flex items-center justify-center"
-        )}
-      >
-        <SunIcon size={18} className="block text-muted-foreground dark:hidden" />
-        <MoonIcon size={18} className="hidden text-muted-foreground dark:block" />
-      </SwitchPrimitives.Thumb>
-    </SwitchPrimitives.Root>
+      <SelectTrigger className="flex size-8 items-center justify-center">
+        <SelectValue>
+          {resolvedTheme === "light" ? (
+            <SunIcon className="size-5" />
+          ) : (
+            <MoonIcon className="size-5" />
+          )}
+        </SelectValue>
+      </SelectTrigger>
+      <SelectPopover>
+        <SelectContent aria-label="items">
+          <SelectItem id="system">System</SelectItem>
+          <SelectItem id="light">Light</SelectItem>
+          <SelectItem id="dark">Dark</SelectItem>
+        </SelectContent>
+      </SelectPopover>
+    </Select>
   );
 };

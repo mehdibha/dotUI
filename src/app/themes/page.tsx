@@ -42,7 +42,7 @@ export default function ThemesPage() {
         <h1 className="leading-tighter mt-4 font-display text-4xl font-bold tracking-tighter md:text-5xl lg:text-5xl">
           <Balancer>Everything starts with identity</Balancer>
         </h1>
-        <p className="text-md mt-4 text-muted-foreground md:text-lg lg:text-xl">
+        <p className="text-md mt-4 text-fg-muted md:text-lg lg:text-xl">
           <Balancer>
             Make your design system, choose your color palette, your components style and
             fonts to match you brand identity.

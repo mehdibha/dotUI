@@ -42,7 +42,7 @@ export const Header = () => {
           <Link
             href="/"
             className={cn(
-              "mr-8 flex items-center space-x-2 transition-all duration-300 hover:opacity-80",
+              "mr-8 flex items-center space-x-2 transition-all duration-75 hover:opacity-80",
               {
                 "translate-x-[-10px] opacity-0 hover:opacity-0": scrolled,
               }
@@ -63,7 +63,7 @@ export const Header = () => {
           className={cn(
             "pointer-events-auto absolute left-1/2 top-1/2 mr-8 hidden translate-x-[-50%] translate-y-[-50%] rounded-md bg-gray-300/0 px-3 backdrop-blur-md transition-all duration-300 lg:block",
             {
-              "bg-card/90 shadow-sm": scrolled,
+              "bg-bg-muted/90 shadow-sm": scrolled,
             }
           )}
         >
@@ -151,11 +151,11 @@ const Nav = (props: NavProps) => {
               key={index}
               href={item.disabled ? "#" : item.href}
               className={cn(
-                "w-full rounded px-4 py-1 text-center text-sm font-medium text-foreground/60 transition-all hover:text-foreground",
+                "w-full rounded px-4 py-1 text-center text-sm font-medium text-fg/60 transition-colors duration-75 hover:text-fg",
                 {
                   "cursor-default text-foreground/30 hover:text-foreground/30":
                     item.disabled,
-                  "bg-foreground/10 text-foreground": pathname.startsWith(item.href),
+                  "bg-bg-inverse/10 text-fg": pathname.startsWith(item.href),
                 }
               )}
               onClick={onNavItemClick}
@@ -182,7 +182,7 @@ const Nav = (props: NavProps) => {
 //             <MenuIcon />
 //           </Button>
 //         </SheetTrigger>
-//         <SheetContent side="right" className=" w-56 bg-card pt-12 ">
+//         <SheetContent side="right" className=" w-56 bg-bg-muted pt-12 ">
 //           <div className="flex flex-col space-y-8">
 //             <Link
 //               href="/"

@@ -1,9 +1,10 @@
 import { Button } from "@/lib/components/core/default/button";
 import { DialogRoot, Dialog } from "@/lib/components/core/default/dialog";
-import { Input } from "@/lib/components/core/default/input";
-import { Label } from "@/lib/components/core/default/label";
+// import { Input } from "@/lib/components/core/default/input";
+import { Label } from "@/lib/components/core/default/field";
 
 export default function DialogDemo() {
+  return null;
   return (
     <DialogRoot>
       <Button variant="outline">Edit Profile</Button>

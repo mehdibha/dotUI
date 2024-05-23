@@ -33,11 +33,11 @@ const SparkleButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
         <span>
           <span
             className={cn(
-              "absolute inset-0 h-[100%] w-[100%] animate-flip overflow-hidden rounded-lg [mask:linear-gradient(white,_transparent_50%)] before:absolute before:aspect-square before:w-[200%] before:rotate-[-90deg] before:animate-rotate before:bg-[conic-gradient(from_0deg,transparent_0_340deg,white_360deg)] before:content-[''] before:[inset:0_auto_auto_50%] before:[translate:-50%_-15%]"
+              "animate-flip before:animate-rotate absolute inset-0 h-[100%] w-[100%] overflow-hidden rounded-lg [mask:linear-gradient(white,_transparent_50%)] before:absolute before:aspect-square before:w-[200%] before:rotate-[-90deg] before:bg-[conic-gradient(from_0deg,transparent_0_340deg,white_360deg)] before:content-[''] before:[inset:0_auto_auto_50%] before:[translate:-50%_-15%]"
             )}
           />
         </span>
-        <span className="backdrop absolute inset-[1px] rounded-md bg-secondary transition-colors duration-200" />
+        <span className="backdrop absolute inset-[1px] rounded-md bg-bg-muted transition-colors duration-200" />
         <span className="z-10">{props.children}</span>
       </Comp>
     );

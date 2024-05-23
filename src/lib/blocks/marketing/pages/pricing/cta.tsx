@@ -20,7 +20,7 @@ export const CallToAction = (props: CallToActionProps) => {
       <h2 className="font-display text-4xl font-semibold tracking-tighter sm:text-5xl">
         {headline}
       </h2>
-      <p className="mt-4 text-muted-foreground">{subheadline}</p>
+      <p className="mt-4 text-fg-muted">{subheadline}</p>
       <Button asChild size="lg" className="mt-8">
         <Link href={cta.href}>{cta.label}</Link>
       </Button>

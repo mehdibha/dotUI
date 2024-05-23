@@ -19,7 +19,7 @@ export const Hero = ({ className }: { className?: string }) => {
           target="_blank"
           className={cn(
             badgeVariants({ variant: "outline" }),
-            "cursor-pointer space-x-2 font-mono delay-75 duration-200 hover:bg-secondary"
+            "cursor-pointer space-x-2 font-mono delay-75 duration-200 hover:bg-bg-muted"
           )}
         >
           <SparklesIcon size={18} />
@@ -31,7 +31,7 @@ export const Hero = ({ className }: { className?: string }) => {
             <span className="bg-gradient bg-clip-text text-transparent">React app</span>
           </Balancer>
         </h1>
-        <p className="text-md mt-6 text-muted-foreground md:text-lg lg:text-xl">
+        <p className="text-md mt-6 text-fg-muted md:text-lg lg:text-xl">
           Copy the code, paste it, customize it, own it. Done.
         </p>
         <div className="mt-10 flex flex-col gap-4 sm:flex-row">

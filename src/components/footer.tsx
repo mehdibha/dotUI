@@ -89,7 +89,7 @@ export const Footer = () => {
               />
               <span className="inline-block font-bold">{siteConfig.global.name}</span>
             </NavLink>
-            <p className="text-md mt-4 text-muted-foreground">
+            <p className="text-md mt-4 text-fg-muted">
               Ship your React app in days, not weeks
             </p>
             <div className="mt-4 flex items-center space-x-4">
@@ -98,7 +98,7 @@ export const Footer = () => {
                   href={Link.href}
                   key={index}
                   target="_blank"
-                  className="text-muted-foreground transition-colors duration-200 hover:text-foreground"
+                  className="text-fg-muted transition-colors duration-200 hover:text-foreground"
                 >
                   <Link.icon size={20} />
                   <span className="sr-only">{Link.label}</span>
@@ -116,7 +116,7 @@ export const Footer = () => {
                     <li key={index}>
                       <NavLink
                         href={link.href}
-                        className="text-muted-foreground transition-colors duration-200 hover:text-foreground"
+                        className="text-fg-muted transition-colors duration-200 hover:text-foreground"
                         target={link.href.startsWith("http") ? "_blank" : undefined}
                       >
                         {link.label}
@@ -129,7 +129,7 @@ export const Footer = () => {
           </div>
         </div>
         <Separator className="mb-4 mt-12" />
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-fg-muted">
           Built by{" "}
           <Link href="https://github.com/mehdibha" target="_blank" className="underline">
             mehdibha

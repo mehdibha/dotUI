@@ -6,7 +6,7 @@ import { toast } from "@/lib/components/core/default/toast";
 export default function ToastDemo() {
   return (
     <Button
-      onClick={() =>
+      onPress={() =>
         toast("Event has been created", {
           description: "Sunday, December 03, 2023 at 9:00 AM",
           action: {

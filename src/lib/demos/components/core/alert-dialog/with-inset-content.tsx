@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+
 // import {
 //   AlertDialogAction,
 //   AlertDialogDescription,
@@ -13,10 +14,10 @@ import React from "react";
 //   AlertDialogContent,
 //   AlertDialogInset,
 // } from "@/lib/components/core/default/alert-dialog";
-import { Input } from "@/lib/components/core/default/input";
+// import { Input } from "@/lib/components/core/default/input";
 
 export default function AlertDialogDemo() {
-  return null
+  return null;
   const [inputValue, setInputValue] = React.useState("");
 
   return (
@@ -29,7 +30,7 @@ export default function AlertDialogDemo() {
             This project will be deleted, along with all of its settings.
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogInset className="bg-bg-muted px-6 py-4 space-y-2">
+        <AlertDialogInset className="space-y-2 bg-bg-muted px-6 py-4">
           <p>
             To verify, type <span className="font-bold">delete my project</span> below:
           </p>
@@ -37,9 +38,7 @@ export default function AlertDialogDemo() {
         </AlertDialogInset>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction
-            disabled={inputValue !== "delete my project"}
-          >
+          <AlertDialogAction disabled={inputValue !== "delete my project"}>
             Continue
           </AlertDialogAction>
         </AlertDialogFooter>

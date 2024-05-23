@@ -55,21 +55,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          "min-h-screen font-sans",
+          "font-sans",
           geistMono.variable,
           geistSans.variable,
           fontDisplay.variable
         )}
         suppressHydrationWarning
       >
-        <Providers>
-          <Toaster />
-          <div vaul-drawer-wrapper="" drawer-wrapper="" className="relative">
+        <div vaul-drawer-wrapper="" drawer-wrapper="" className="bg-bg">
+          <Providers>
+            <Toaster />
             <Header />
             <main className="min-h-screen">{children}</main>
             <Footer />
-          </div>
-        </Providers>
+          </Providers>
+        </div>
       </body>
     </html>
   );

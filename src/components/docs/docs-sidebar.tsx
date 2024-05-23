@@ -60,9 +60,9 @@ const Category = ({ title, slug, items, pathname }: CategoryProps) => {
                   <Link
                     href={item.href}
                     className={cn(
-                      "group ml-2 block border-l border-muted pl-4 text-fg-muted transition-colors hover:text-foreground",
+                      "border-bg-bg-muted group ml-2 block border-l pl-4 text-fg-muted transition-colors hover:text-foreground",
                       {
-                        "border-foreground font-medium text-foreground":
+                        "border-border-accent text-fg-accent font-medium":
                           pathname === item.href,
                       }
                     )}
@@ -77,7 +77,7 @@ const Category = ({ title, slug, items, pathname }: CategoryProps) => {
             if ("items" in item && item.items.length > 0) {
               return (
                 <li key={index} className="ml-2 space-y-2">
-                  <h3 className="category pl-4 font-mono text-xs tracking-widest text-muted-foreground">
+                  <h3 className="category pl-4 font-mono text-xs tracking-widest text-fg">
                     {item.title}
                   </h3>
                   <ul className="list-none">
@@ -105,7 +105,7 @@ const Category = ({ title, slug, items, pathname }: CategoryProps) => {
                           <Link
                             href={subItem.href}
                             className={cn(
-                              "group block border-l border-muted py-1 pl-4 text-muted-foreground transition-colors hover:text-foreground",
+                              "group block border-l border-muted py-1 pl-4 text-fg-muted transition-colors hover:text-foreground",
                               {
                                 "border-foreground font-medium text-foreground":
                                   pathname === subItem.href,
@@ -115,7 +115,7 @@ const Category = ({ title, slug, items, pathname }: CategoryProps) => {
                             <span className="block transition-transform duration-100 group-hover:translate-x-0.5">
                               {subItem.title}
                               {subItem.label && (
-                                <span className="ml-2 rounded-md bg-gradient px-1.5 py-0.5 text-xs leading-none text-black">
+                                <span className="ml-2 rounded-md bg-primary px-1.5 py-0.5 text-xs leading-none text-fg-onPrimary">
                                   {subItem.label}
                                 </span>
                               )}

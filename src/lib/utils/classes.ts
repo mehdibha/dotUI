@@ -5,5 +5,3 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export { cva, type VariantProps } from "class-variance-authority";
-

@@ -2,12 +2,10 @@
 
 import React from "react";
 import { LayoutGroup, motion } from "framer-motion";
-import { IconExamples } from "@/components/marketing/icon-examples";
-import Filter from "@/lib/blocks/application-ui/filter";
 import { Avatar, AvatarGroup } from "@/lib/components/core/default/avatar";
 import { Button } from "@/lib/components/core/default/button";
 import { Switch } from "@/lib/components/core/default/switch";
-import CalendarDemo from "@/lib/demos/components/core/calendar";
+import CalendarDemo from "@/lib/demos/components/core/calendar/basic";
 // import ComboboxDemo from "@/lib/demos/components/core/combobox";
 import { cn } from "@/lib/utils/classes";
 
@@ -17,7 +15,7 @@ export const Animation = () => {
 
   React.useEffect(() => {
     const interval = setInterval(() => {
-      setSelectedTab((prevTab) => (prevTab + 1) % 5); // Modulo 5 to cycle through tabs
+      setSelectedTab((prevTab) => (prevTab + 1) % 3);
       // start animation
       if (!animationStarted) setAnimationStarted(true);
     }, 1500);
@@ -82,9 +80,9 @@ export const Animation = () => {
             <h2 className="text-3xl font-bold">hooks.</h2>
             <div className="mt-4 grid grid-cols-1 gap-4">
               {["useDebounce", "useWindowSize", "useScroll"].map((hookName, i) => (
-                <div key={i} className="rounded-md bg-card p-4 shadow">
+                <div key={i} className="rounded-md bg-bg-muted p-4 shadow">
                   <p className="font-semibold">{hookName}</p>
-                  <p className="text-muted-foreground">
+                  <p className="text-fg-muted">
                     Delay the execution of function or state update with useDebounce.
                   </p>
                 </div>
@@ -93,6 +91,21 @@ export const Animation = () => {
           </motion.div>
         )}
         {selectedTab === 2 && (
+          <motion.div key={2} {...animationProps} className="h-[450px] w-[350px]">
+            <h2 className="text-3xl font-bold">Themes.</h2>
+            {/* <div className="mt-4 grid grid-cols-1 gap-4">
+              {["useDebounce", "useWindowSize", "useScroll"].map((hookName, i) => (
+                <div key={i} className="rounded-md bg-bg-muted p-4 shadow">
+                  <p className="font-semibold">{hookName}</p>
+                  <p className="text-fg-muted">
+                    Delay the execution of function or state update with useDebounce.
+                  </p>
+                </div>
+              ))}
+            </div> */}
+          </motion.div>
+        )}
+        {/* {selectedTab === 2 && (
           <motion.div key={2} {...animationProps} className="h-[450px] w-[350px]">
             <h2 className="text-3xl font-bold">blocks.</h2>
             <div className="mt-4">
@@ -138,7 +151,7 @@ export const Animation = () => {
               </div>
             </div>
           </motion.div>
-        )}
+        )} */}
       </LayoutGroup>
     </div>
   );

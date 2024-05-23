@@ -11,11 +11,11 @@ export default function Demo() {
       <p className="text-xl font-bold">Orientation</p>
       <div className="mt-4 grid grid-cols-2 gap-4">
         <div>
-          <p className="text-muted-foreground">Angle</p>
+          <p className="text-fg-muted">Angle</p>
           <p className="text-xl">{orientation.angle}</p>
         </div>
         <div>
-          <p className="text-muted-foreground">Type</p>
+          <p className="text-fg-muted">Type</p>
           <p className="text-xl">{orientation.type}</p>
         </div>
       </div>

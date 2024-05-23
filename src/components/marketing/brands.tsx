@@ -15,12 +15,12 @@ export const Brands = ({ className }: { className?: string }) => {
         className
       )}
     >
-      <TailwindLogo className="h-4 fill-muted-foreground md:h-6" />
-      <ReactIcon className="h-4 fill-muted-foreground md:h-6" />
-      <NextjsLogo className="h-4 fill-muted-foreground md:h-6" />
-      <FramerLogo className="h-4 fill-muted-foreground md:h-6" />
-      <ShadcnLogo className="h-4 fill-muted-foreground md:h-6" />
-      <UseHooksLogo className="h-4 fill-muted-foreground md:h-6" />
+      <TailwindLogo className="h-4 fill-fg-muted md:h-6" />
+      <ReactIcon className="h-4 fill-fg-muted md:h-6" />
+      <NextjsLogo className="h-4 fill-fg-muted md:h-6" />
+      <FramerLogo className="h-4 fill-fg-muted md:h-6" />
+      <ShadcnLogo className="h-4 fill-fg-muted md:h-6" />
+      <UseHooksLogo className="h-4 fill-fg-muted md:h-6" />
     </div>
   );
 };

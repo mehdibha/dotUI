@@ -25,7 +25,7 @@ export default function Demo() {
       </p>
       <ScrollArea type="always" className="mt-4 h-32 border">
         <div className="flex h-96 flex-col items-center justify-between py-8">
-          <p className="text-muted-foreground">Scroll me down!</p>
+          <p className="text-fg-muted">Scroll me down!</p>
           <p ref={ref} className="border-4 border-dashed p-4">
             Hello world!
           </p>

@@ -21,7 +21,7 @@ export default function Demo() {
 
   return (
     <div>
-      <div className="mx-auto flex rounded-lg border bg-card py-4">
+      <div className="mx-auto flex rounded-lg border bg-bg-muted py-4">
         {[
           {
             caption: "Mouse Position",

@@ -1,17 +1,17 @@
-import { RadioGroup, RadioGroupItem } from "@/lib/components/core/default/radio-group";
+import { RadioGroup, Radio } from "@/lib/components/core/default/radio";
 
 export default function RadioGroupDemo() {
   return (
-    <RadioGroup required defaultValue="comfortable">
-      <RadioGroupItem value="default" id="r1">
+    <RadioGroup defaultValue="comfortable">
+      <Radio value="default" id="r1">
         Default
-      </RadioGroupItem>
-      <RadioGroupItem value="comfortable" id="r2">
+      </Radio>
+      <Radio value="comfortable" id="r2">
         Comfortable
-      </RadioGroupItem>
-      <RadioGroupItem value="compact" id="r2">
+      </Radio>
+      <Radio value="compact" id="r2">
         Compact
-      </RadioGroupItem>
+      </Radio>
     </RadioGroup>
   );
 }

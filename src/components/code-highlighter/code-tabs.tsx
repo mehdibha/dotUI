@@ -1,6 +1,6 @@
 import { Code, type Extension, type BrightProps } from "bright";
 import { ScrollArea } from "@/lib/components/core/default/scroll-area";
-import { TabsRoot, TabsContent, TabsList } from "./client";
+import { TabsRoot, TabsPanel, TabsList } from "./client";
 import { CopyButton } from "./copy-button";
 
 export const title: Extension = {
@@ -43,7 +43,7 @@ export function Root(brightProps: BrightProps) {
   const titles = subProps?.length ? subProps.map((subProp) => subProp.title) : [title];
 
   return (
-    <TabsRoot defaultValue={titles[0]!}>
+    <TabsRoot defaultSelectedKey={titles[0]}>
       <style
         dangerouslySetInnerHTML={{
           __html: `
@@ -75,7 +75,7 @@ export function Content(brightProps: BrightProps) {
   return (
     <>
       {propsList.map((props, index) => (
-        <TabsContent key={index} value={props.title!} className="relative">
+        <TabsPanel key={index} id={props.title} className="relative">
           <CopyButton
             code={getCode(props.title!)}
             className="absolute right-4 top-2 z-50"
@@ -84,7 +84,7 @@ export function Content(brightProps: BrightProps) {
             {/* @ts-expect-error - - */}
             <Code.Pre {...props} test="this is a test" />
           </ScrollArea>
-        </TabsContent>
+        </TabsPanel>
       ))}
     </>
   );

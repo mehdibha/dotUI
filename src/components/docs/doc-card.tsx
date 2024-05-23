@@ -4,13 +4,10 @@ import React from "react";
 import Link from "next/link";
 import { useInView } from "framer-motion";
 import { getAspectFromType } from "@/utils/docs";
+import { AspectRatio } from "@/lib/components/core/default/aspect-ratio";
 import { Badge } from "@/lib/components/core/default/badge";
 import { ScrollArea } from "@/lib/components/core/default/scroll-area";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/lib/components/core/default/tooltip";
+import { Tooltip } from "@/lib/components/core/default/tooltip";
 import { useDebounce } from "@/lib/hooks/use-debounce";
 import { cn } from "@/lib/utils/classes";
 import { truncateOnWord } from "@/lib/utils/string";
@@ -22,7 +19,7 @@ export const DocCard = ({ doc, className }: { doc: DocMetadata; className?: stri
       href={doc.href}
       target={doc.href.startsWith("/") ? undefined : "_blank"}
       className={cn(
-        "group flex cursor-pointer flex-col overflow-hidden rounded-md border border-border/20 bg-card/70 transition-colors duration-150 hover:border-border hover:bg-card",
+        "group flex cursor-pointer flex-col overflow-hidden rounded-md border border-border/20 bg-bg-muted/70 transition-colors duration-150 hover:border-border hover:bg-bg-muted",
         className
       )}
     >
@@ -37,7 +34,7 @@ export const DocCard = ({ doc, className }: { doc: DocMetadata; className?: stri
         <div className="flex-1">
           <p className="text-lg font-semibold">{doc.title}</p>
           {doc.description && (
-            <p className="mt-1 text-sm text-muted-foreground">
+            <p className="mt-1 text-sm text-fg-muted">
               {truncateOnWord(doc.description, 70)}
             </p>
           )}
@@ -52,19 +49,18 @@ export const DocCard = ({ doc, className }: { doc: DocMetadata; className?: stri
                 </Badge>
               ))}
             {doc.keywords.length > 3 && (
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Badge variant="outline" className="text-muted-foreground">
-                    +{doc.keywords.length - 2} more
-                  </Badge>
-                </TooltipTrigger>
-                <TooltipContent side="bottom" className="pl-6">
+              <Tooltip
+                content={
                   <ul className="list-disc">
                     {doc.keywords.slice(2).map((keyword, index) => (
                       <li key={index}>{keyword}</li>
                     ))}
                   </ul>
-                </TooltipContent>
+                }
+              >
+                <Badge variant="outline" className="text-fg-muted">
+                  +{doc.keywords.length - 2} more
+                </Badge>
               </Tooltip>
             )}
           </div>
@@ -95,8 +91,8 @@ const Thumbnail = ({
   if (thumbnail?.video) {
     return (
       <div ref={ref}>
-        {debouncedInView && isInView ? (
-          <div className="aspect-video w-full bg-card">
+        <AspectRatio ratio={16 / 9} asChild className="w-full bg-bg-muted">
+          {debouncedInView && isInView ? (
             <video
               src={thumbnail.video}
               poster={thumbnail.image}
@@ -105,18 +101,16 @@ const Thumbnail = ({
               autoPlay
               playsInline
               preload="none"
-              className="aspect-video object-cover opacity-90 duration-150 group-hover:opacity-100"
+              className="opacity-90 duration-150 group-hover:opacity-100"
             />
-          </div>
-        ) : (
-          <div className="aspect-video w-full bg-card">
+          ) : (
             <img
               src={thumbnail.image}
               alt={title}
-              className="aspect-video object-cover opacity-90 duration-150 group-hover:opacity-100"
+              className="opacity-90 duration-150 group-hover:opacity-100"
             />
-          </div>
-        )}
+          )}
+        </AspectRatio>
       </div>
     );
   }
@@ -134,7 +128,7 @@ const Thumbnail = ({
   }
 
   return (
-    <div className="aspect-video w-full bg-card">
+    <div className="aspect-video w-full bg-bg-muted">
       <img
         src={thumbnail.image}
         alt="Thumbnail"

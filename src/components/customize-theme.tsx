@@ -4,17 +4,13 @@ import { useTheme } from "next-themes";
 import { HexColorInput, HexColorPicker } from "react-colorful";
 import { useConfig } from "@/hooks/use-config";
 import { Button } from "@/lib/components/core/default/button";
-import { Label } from "@/lib/components/core/default/label";
+import { Label } from "@/lib/components/core/default/field";
 import {
   Popover,
   PopoverContent,
-  PopoverTrigger,
+  PopoverRoot,
 } from "@/lib/components/core/default/popover";
-import {
-  TooltipContent,
-  TooltipRoot,
-  TooltipTrigger,
-} from "@/lib/components/core/default/tooltip";
+import { TooltipContent, TooltipRoot } from "@/lib/components/core/default/tooltip";
 import { defaultTheme } from "@/lib/theme";
 import { cn } from "@/lib/utils/classes";
 import type { ColorName } from "@/types/theme";
@@ -22,19 +18,17 @@ import { styles } from "@/config/styles-config";
 
 export const CustomizeTheme = () => {
   return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button variant="outline" size="sm" className="h-7 w-[100px] text-xs">
-          Customize
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent
-        align="start"
+    <PopoverRoot>
+      <Button variant="outline" size="sm" className="h-7 w-[100px] text-xs">
+        Customize
+      </Button>
+      <Popover
+        // align="start"
         className="z-40 w-[340px] rounded-[0.5rem] bg-white p-6 dark:bg-zinc-950"
       >
         <Customizer />
-      </PopoverContent>
-    </Popover>
+      </Popover>
+    </PopoverRoot>
   );
 };
 
@@ -136,14 +130,14 @@ function Customizer() {
       <div className="flex items-start pt-4 md:pt-0">
         <div className="space-y-1 pr-2">
           <div className="font-semibold leading-none tracking-tight">Customize</div>
-          <div className="text-xs text-muted-foreground">
+          <div className="text-xs text-fg-muted">
             Pick a style and color for your components.
           </div>
         </div>
         <Button
           variant="ghost"
           shape="square"
-          onClick={reset}
+          onPress={reset}
           className="ml-auto rounded-[0.5rem]"
         >
           <Undo2Icon size={20} />
@@ -160,7 +154,7 @@ function Customizer() {
                   key={style.name}
                   variant="outline"
                   size="sm"
-                  onClick={() => {
+                  onPress={() => {
                     setStyle(style.name);
                     setType("custom");
                   }}

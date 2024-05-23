@@ -9,84 +9,83 @@ import {
   XIcon,
 } from "lucide-react";
 import { Toaster as Toaster_, toast as toast_ } from "sonner";
-import { cva, cn } from "@/lib/utils/classes";
+import { tv } from "tailwind-variants";
+import { cn } from "@/lib/utils/classes";
 import { Button } from "./button";
 
-const toastVariants = cva(
-  "text-sm w-full p-4 rounded-md bg-bg text-fg flex justify-between items-center gap-4 [&_svg]:size-4 shadow-md",
-  {
-    variants: {
-      type: {
-        default: "border",
-        success: "text-fg-success border border-border-success",
-        warning: "text-fg-warning border border-border-warning",
-        error: "text-fg-danger border border-border-danger",
-        info: "text-fg-info border border-border-info",
-      },
-      muted: {
-        true: "",
-      },
-      fill: {
-        true: "",
-      },
+const toastVariants = tv({
+  base: "text-sm w-full p-4 rounded-md bg-bg text-fg flex justify-between items-center gap-4 [&_svg]:size-4 shadow-md",
+  variants: {
+    type: {
+      default: "border",
+      success: "text-fg-success border border-border-success",
+      warning: "text-fg-warning border border-border-warning",
+      error: "text-fg-danger border border-border-danger",
+      info: "text-fg-info border border-border-info",
     },
-    compoundVariants: [
-      {
-        type: "default",
-        fill: true,
-        className: "bg-bg-inverse text-fg-inverse border-none",
-      },
-      {
-        type: "default",
-        muted: true,
-        className: "bg-bg-muted text-fg",
-      },
-      {
-        type: "success",
-        fill: true,
-        className: "bg-bg-success text-fg-onSuccess border-none",
-      },
-      {
-        type: "success",
-        muted: true,
-        className: "bg-bg-success-muted text-fg-onMutedSuccess",
-      },
-      {
-        type: "warning",
-        fill: true,
-        className: "bg-bg-warning text-fg-onWarning border-none",
-      },
-      {
-        type: "warning",
-        muted: true,
-        className: "bg-bg-warning-muted text-fg-onMutedWarning",
-      },
-      {
-        type: "error",
-        fill: true,
-        className: "bg-bg-danger text-fg-onDanger border-none",
-      },
-      {
-        type: "error",
-        muted: true,
-        className: "bg-bg-danger-muted text-fg-onMutedDanger",
-      },
-      {
-        type: "info",
-        fill: true,
-        className: "bg-bg-info text-fg-onInfo border-none",
-      },
-      {
-        type: "info",
-        muted: true,
-        className: "bg-bg-info-muted text-fg-onMutedInfo",
-      },
-    ],
-    defaultVariants: {
+    muted: {
+      true: "",
+    },
+    fill: {
+      true: "",
+    },
+  },
+  compoundVariants: [
+    {
       type: "default",
+      fill: true,
+      className: "bg-bg-inverse text-fg-inverse border-none",
     },
-  }
-);
+    {
+      type: "default",
+      muted: true,
+      className: "bg-bg-muted text-fg",
+    },
+    {
+      type: "success",
+      fill: true,
+      className: "bg-bg-success text-fg-onSuccess border-none",
+    },
+    {
+      type: "success",
+      muted: true,
+      className: "bg-bg-success-muted text-fg-onMutedSuccess",
+    },
+    {
+      type: "warning",
+      fill: true,
+      className: "bg-bg-warning text-fg-onWarning border-none",
+    },
+    {
+      type: "warning",
+      muted: true,
+      className: "bg-bg-warning-muted text-fg-onMutedWarning",
+    },
+    {
+      type: "error",
+      fill: true,
+      className: "bg-bg-danger text-fg-onDanger border-none",
+    },
+    {
+      type: "error",
+      muted: true,
+      className: "bg-bg-danger-muted text-fg-onMutedDanger",
+    },
+    {
+      type: "info",
+      fill: true,
+      className: "bg-bg-info text-fg-onInfo border-none",
+    },
+    {
+      type: "info",
+      muted: true,
+      className: "bg-bg-info-muted text-fg-onMutedInfo",
+    },
+  ],
+  defaultVariants: {
+    type: "default",
+  },
+});
 
 const icons = {
   default: null,
@@ -97,7 +96,6 @@ const icons = {
 };
 
 const Toaster = () => {
-
   return (
     <Toaster_
       expand={false} // Toasts will be expanded by default.
@@ -196,13 +194,13 @@ const toastMessage: ToastInternalFn = (
               <Button
                 variant="ghost"
                 size="sm"
-                disabled={!dismissible}
-                onClick={() => toast_.dismiss(t)}
+                isDisabled={!dismissible}
+                onPress={() => toast_.dismiss(t)}
               >
                 Dismiss
               </Button>
             )}
-            <Button variant="primary" size="sm" onClick={action.onClick}>
+            <Button type="primary" size="sm" onPress={action.onClick}>
               {action.label}
             </Button>
           </div>
@@ -214,10 +212,10 @@ const toastMessage: ToastInternalFn = (
                 shape="square"
                 size="sm"
                 className={cn("h-6 w-6", {
-                  "text-fg-inverse hover:bg-bg-inverse/10 active:bg-bg-inverse/20":
+                  "text-fg-inverse active:bg-bg-inverse/20 hover:bg-bg-inverse/10":
                     ["default", "warning"].includes(type) && variant == "fill",
                 })}
-                onClick={onUndo}
+                onPress={onUndo}
               >
                 <RotateCcwIcon />
               </Button>
@@ -228,11 +226,11 @@ const toastMessage: ToastInternalFn = (
                 shape="square"
                 size="sm"
                 className={cn("h-6 w-6", {
-                  "text-fg-inverse hover:bg-bg-inverse/10 active:bg-bg-inverse/20":
+                  "text-fg-inverse active:bg-bg-inverse/20 hover:bg-bg-inverse/10":
                     ["default", "warning"].includes(type) && variant == "fill",
                 })}
-                disabled={!dismissible}
-                onClick={() => toast_.dismiss(t)}
+                isDisabled={!dismissible}
+                onPress={() => toast_.dismiss(t)}
               >
                 <XIcon />
               </Button>

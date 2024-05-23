@@ -73,7 +73,7 @@ export const IconExamples = ({ limit }: { limit?: number }) => {
       {icons.slice(0, limit ?? icons.length).map((Icon, i) => (
         <div
           key={i}
-          className="flex h-16 items-center justify-center rounded-md bg-card shadow"
+          className="flex h-16 items-center justify-center rounded-md bg-bg-muted shadow"
         >
           <Icon size={20} />
         </div>

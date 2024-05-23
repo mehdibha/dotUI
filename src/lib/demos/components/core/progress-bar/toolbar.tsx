@@ -3,12 +3,12 @@
 import * as React from "react";
 import { ALargeSmallIcon, RotateCwIcon } from "lucide-react";
 import { Button } from "@/lib/components/core/default/button";
-import { Input } from "@/lib/components/core/default/input";
+import { TextField } from "@/lib/components/core/default/text-field";
 import { ProgressBar } from "@/lib/components/core/default/progress-bar";
 
 export default function ProgressDemo() {
   return (
-    <Input
+    <TextField
       defaultValue="https://rcopy.dev"
       className="relative h-12 pb-0.5 [&_input]:text-center"
       prefix={
@@ -28,6 +28,6 @@ export default function ProgressDemo() {
         variant="info"
         className="absolute bottom-0 left-0 right-0 rounded-none bg-transparent"
       />
-    </Input>
+    </TextField>
   );
 }

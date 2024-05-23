@@ -15,7 +15,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   return (
     <RouterProvider navigate={router.push}>
-      <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <ThemeOverride>{children}</ThemeOverride>
       </ThemeProvider>
     </RouterProvider>

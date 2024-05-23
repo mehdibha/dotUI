@@ -21,7 +21,7 @@ export const PricingPlan = (props: PlanProps) => {
   return (
     <section
       className={cn(
-        "relative flex min-h-[530px] flex-col border border-gray-400 bg-card px-6 py-16 shadow-2xl dark:border-gray-800 sm:px-8",
+        "relative flex min-h-[530px] flex-col border border-gray-400 bg-bg-muted px-6 py-16 shadow-2xl dark:border-gray-800 sm:px-8",
         featured && "z-10 border-none ring-4 ring-ring/80",
         className
       )}
@@ -35,9 +35,7 @@ export const PricingPlan = (props: PlanProps) => {
       <p className={cn("mt-2 text-base")}>{description}</p>
       <p className="order-first text-5xl font-light tracking-tight">
         {billing === "monthly" ? price.monthly : price.yearly}
-        <span className="ml-2 text-base font-normal text-muted-foreground">
-          billed {billing}
-        </span>
+        <span className="ml-2 text-base font-normal text-fg-muted">billed {billing}</span>
       </p>
       <ul
         role="list"

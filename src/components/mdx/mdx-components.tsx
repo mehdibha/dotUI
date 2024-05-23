@@ -10,8 +10,9 @@ import {
 } from "@/components/component-preview";
 import { ComponentSource } from "@/components/component-source";
 import { DocsList, type DocsListProps } from "@/components/docs/docs-list";
-import { IconsExplorer } from "@/components/icons-explorer";
 import { slugify } from "@/utils/string";
+import { Alert } from "@/lib/components/core/default/alert";
+import { CodeBlockCode, codeBlockStyles } from "@/lib/components/core/default/code-block";
 import { cn } from "@/lib/utils/classes";
 import { Info } from "./info";
 
@@ -68,7 +69,7 @@ function createHeading(level: number, className?: string) {
   return Component;
 }
 
-const Pre = (props: BrightProps) => <Code.Pre {...props} />;
+// const Pre = (props: BrightProps) => <Code.Pre {...props} />;
 
 export const components = {
   h1: createHeading(1, "font-heading mt-2 scroll-m-20 text-4xl font-bold"),
@@ -101,60 +102,32 @@ export const components = {
   ),
   blockquote: ({ className, ...props }: ComponentProps<"blockquote">) => (
     <blockquote
-      className={cn("mt-6 border-l-2 pl-6 italic [&>*]:text-muted-foreground", className)}
+      className={cn("mt-6 border-l-2 pl-6 italic [&>*]:text-fg-muted", className)}
       {...props}
     />
   ),
   img: ({ className, alt, ...props }: React.ImgHTMLAttributes<HTMLImageElement>) => (
-    <img className={cn("rounded-md", className)} alt={alt} {...props} />
+    <img className={cn("rounded-md max-w-md mx-auto border", className)} alt={alt} {...props} />
   ),
   hr: ({ ...props }: ComponentProps<"hr">) => <hr className="my-4 md:my-8" {...props} />,
   pre: (props: ComponentProps<"pre">) => (
-    <Code {...props} theme="github-dark-dimmed" codeClassName="text-xs" />
+    <div
+      className={codeBlockStyles().root({
+        className: "w-full [&:not(:first-child)]:mt-4",
+      })}
+    >
+      <CodeBlockCode lang="tsx" {...props} />
+    </div>
   ),
   Code: (props: ComponentProps<"pre">) => (
-    <Code
-      {...props}
-      theme="github-dark-dimmed"
-      codeClassName="text-xs"
-      lang="tsx"
-      style={{ marginTop: 0, marginBottom: 0 }}
-      className="inline-flex mx-0.5"
-      extensions={[
-        {
-          name: "pre",
-          Pre: (props: BrightProps) => (
-            <span className="[&>pre]:!py-1">
-              <Code.Pre
-                {...props}
-              />
-            </span>
-          ),
-        },
-      ]}
-    />
+    <div className={codeBlockStyles().root({ className: "mx-0.5 inline-flex" })}>
+      <CodeBlockCode lang="tsx" {...props} />
+    </div>
   ),
   code: (props: ComponentProps<"pre">) => (
-    <Code
-      {...props}
-      theme="github-dark-dimmed"
-      lang="tsx"
-      codeClassName="text-xs py-0"
-      className="inline-flex mx-0.5"
-      style={{ marginTop: 0, marginBottom: 0 }}
-      extensions={[
-        {
-          name: "pre",
-          Pre: (props: BrightProps) => (
-            <span className="[&>pre]:!py-1">
-              <Code.Pre
-                {...props}
-              />
-            </span>
-          ),
-        },
-      ]}
-    />
+    <div className={codeBlockStyles().root({ className: "mx-0.5 inline-flex" })}>
+      <CodeBlockCode lang="tsx" className="[&>pre]:!py-1" {...props} />
+    </div>
   ),
   Step: ({ className, ...props }: React.ComponentProps<"h3">) => (
     <h3
@@ -177,10 +150,10 @@ export const components = {
     </div>
   ),
   thead: ({ className, ...props }: React.HTMLAttributes<HTMLTableSectionElement>) => (
-    <thead className={cn("bg-muted/100", className)} {...props} />
+    <thead className={cn("bg-bg-muted", className)} {...props} />
   ),
   tr: ({ className, ...props }: React.HTMLAttributes<HTMLTableRowElement>) => (
-    <tr className={cn("m-0 border-t p-0 even:bg-muted/50", className)} {...props} />
+    <tr className={cn("m-0 border-t p-0 even:bg-bg-muted/50", className)} {...props} />
   ),
   th: ({ className, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
     <th
@@ -203,17 +176,20 @@ export const components = {
     </td>
   ),
   ComponentSource: ({ name, ...rest }: { name: string }) => (
-    <ComponentSource name={name} className="my-2" {...rest} />
+    <ComponentSource
+      name={name}
+      className="w-full [&:not(:first-child)]:mt-4"
+      {...rest}
+    />
   ),
   ComponentPreview: (props: ComponentPreviewProps) => (
     <ComponentPreview containerClassName="[&:not(:first-child)]:mt-4" {...props} />
   ),
-  IconsExplorer,
   CodeTabs,
   DocsList: (props: DocsListProps) => <DocsList {...props} className="mt-4" />,
   ColorBadge: ({ className, children, ...props }: ComponentProps<"div">) => (
     <div
-      className="inline-flex items-center space-x-1.5 rounded border bg-muted px-2 py-0.5 font-mono text-sm"
+      className="inline-flex items-center space-x-1.5 rounded border bg-bg-muted px-2 py-0.5 font-mono text-sm"
       {...props}
     >
       <div className={cn("h-3.5 w-3.5 rounded-full border", className)} />
@@ -222,4 +198,5 @@ export const components = {
     </div>
   ),
   Info,
+  Alert,
 };

@@ -6,7 +6,7 @@ import { toast } from "@/lib/components/core/default/toast";
 export default function ToastDemo() {
   return (
     <Button
-      onClick={() =>
+      onPress={() =>
         toast(
           "The Evil Rabbit jumped over the fence. The Evil Rabbit jumped over the fence. The Evil Rabbit jumped over the fence. The Evil Rabbit jumped over the fence."
         )

@@ -19,10 +19,10 @@ import {
 
 const drawerVariants = tv({
   slots: {
-    base: "",
-    title: "text-lg font-semibold",
     overlay: "",
-    backdrop: "", // for mobile view only
+    backdrop: "",
+    content: "outline-none rounded-[inherit] p-4",
+    title: "text-lg font-semibold",
   },
 });
 
@@ -38,9 +38,9 @@ const DrawerOverlay = (props: DrawerOverlayProps) => {
 
 type DrawerContentProps = AriaDialogProps;
 const DrawerContent = ({ children, className, ...props }: DrawerContentProps) => {
-  const { base } = drawerVariants();
+  const { content } = drawerVariants();
   return (
-    <AriaDialog {...props} className={base({ className })}>
+    <AriaDialog {...props} className={content({ className })}>
       {children}
     </AriaDialog>
   );
@@ -66,7 +66,7 @@ const Drawer = ({ title, classNames, className, ...props }: DrawerProps) => {
     <DrawerOverlay
       classNames={{ overlay: classNames?.overlay, backdrop: classNames?.backdrop }}
     >
-      <DrawerContent {...props} className={cn(classNames?.base, className)}>
+      <DrawerContent {...props} className={cn(classNames?.content, className)}>
         {composeRenderProps(props.children, (children) => (
           <>
             {title && <DrawerTitle>{title}</DrawerTitle>}

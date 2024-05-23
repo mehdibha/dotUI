@@ -1,71 +1,56 @@
 "use client";
 
-import {
-  Menu,
-  MenuItem,
-  MenuTrigger,
-  Button,
-  Dialog,
-  DialogTrigger,
-  Heading,
-  Input,
-  Label,
-  Modal,
-  TextField,
-  Popover,
-  ModalOverlay,
-} from "react-aria-components";
-
 export default function Demo() {
-  return (
-    <>
-      <DialogTrigger>
-        <Button>Sign up…</Button>
-        <ModalOverlay
-          isDismissable
-          className="fixed inset-0 z-50 bg-black/80 data-[exiting]:duration-300 data-[entering]:animate-in data-[exiting]:animate-out data-[entering]:fade-in-0 data-[exiting]:fade-out-0"
-        >
-          <Modal className="fixed left-[50%] top-[50%] z-50 w-full max-w-lg translate-x-[-50%] translate-y-[-50%] border bg-background p-6 shadow-lg duration-200 data-[exiting]:duration-300 data-[entering]:animate-in data-[exiting]:animate-out data-[entering]:fade-in-0 data-[exiting]:fade-out-0 data-[entering]:zoom-in-95 data-[exiting]:zoom-out-95 data-[entering]:slide-in-from-left-1/2 data-[entering]:slide-in-from-top-[48%] data-[exiting]:slide-out-to-left-1/2 data-[exiting]:slide-out-to-top-[48%] sm:rounded-lg md:w-full">
-            <Dialog>
-              {({ close }) => (
-                <form>
-                  <Heading slot="title">Sign up</Heading>
-                  <TextField autoFocus>
-                    <Label>First Name</Label>
-                    <Input />
-                  </TextField>
-                  <TextField>
-                    <Label>Last Name</Label>
-                    <Input />
-                  </TextField>
-                  <Button onPress={close} style={{ marginTop: 8 }}>
-                    Submit
-                  </Button>
-                </form>
-              )}
-            </Dialog>
-          </Modal>
-        </ModalOverlay>
-      </DialogTrigger>
-      <MenuTrigger>
-        <Button aria-label="Menu">☰</Button>
-        <ModalOverlay
-          isDismissable
-          className="fixed inset-0 z-50 bg-black/80 data-[exiting]:duration-300 data-[entering]:animate-in data-[exiting]:animate-out data-[entering]:fade-in-0 data-[exiting]:fade-out-0"
-        >
-          <Modal className="fixed left-[50%] top-[50%] z-50 w-full max-w-lg translate-x-[-50%] translate-y-[-50%] border bg-background p-6 shadow-lg duration-200 data-[exiting]:duration-300 data-[entering]:animate-in data-[exiting]:animate-out data-[entering]:fade-in-0 data-[exiting]:fade-out-0 data-[entering]:zoom-in-95 data-[exiting]:zoom-out-95 data-[entering]:slide-in-from-left-1/2 data-[entering]:slide-in-from-top-[48%] data-[exiting]:slide-out-to-left-1/2 data-[exiting]:slide-out-to-top-[48%] sm:rounded-lg md:w-full">
-            <Menu>
-              <MenuItem onAction={() => alert("open")}>Open</MenuItem>
-              <MenuItem onAction={() => alert("rename")}>Rename…</MenuItem>
-              <MenuItem onAction={() => alert("duplicate")}>Duplicate</MenuItem>
-              <MenuItem onAction={() => alert("share")}>Share…</MenuItem>
-              <MenuItem onAction={() => alert("delete")}>Delete…</MenuItem>
-            </Menu>
-          </Modal>
-        </ModalOverlay>
-      </MenuTrigger>
-    </>
-  );
+  return null
+  // return (
+  //   <>
+  //     <DialogTrigger>
+  //       <Button>Sign up…</Button>
+  //       <ModalOverlay
+  //         isDismissable
+  //         className="fixed inset-0 z-50 bg-black/80 data-[exiting]:duration-300 data-[entering]:animate-in data-[exiting]:animate-out data-[entering]:fade-in-0 data-[exiting]:fade-out-0"
+  //       >
+  //         <Modal className="fixed left-[50%] top-[50%] z-50 w-full max-w-lg translate-x-[-50%] translate-y-[-50%] border bg-background p-6 shadow-lg duration-200 data-[exiting]:duration-300 data-[entering]:animate-in data-[exiting]:animate-out data-[entering]:fade-in-0 data-[exiting]:fade-out-0 data-[entering]:zoom-in-95 data-[exiting]:zoom-out-95 data-[entering]:slide-in-from-left-1/2 data-[entering]:slide-in-from-top-[48%] data-[exiting]:slide-out-to-left-1/2 data-[exiting]:slide-out-to-top-[48%] sm:rounded-lg md:w-full">
+  //           <Dialog>
+  //             {({ close }) => (
+  //               <form>
+  //                 <Heading slot="title">Sign up</Heading>
+  //                 <TextField autoFocus>
+  //                   <Label>First Name</Label>
+  //                   <Input />
+  //                 </TextField>
+  //                 <TextField>
+  //                   <Label>Last Name</Label>
+  //                   <Input />
+  //                 </TextField>
+  //                 <Button onPress={close} style={{ marginTop: 8 }}>
+  //                   Submit
+  //                 </Button>
+  //               </form>
+  //             )}
+  //           </Dialog>
+  //         </Modal>
+  //       </ModalOverlay>
+  //     </DialogTrigger>
+  //     <MenuTrigger>
+  //       <Button aria-label="Menu">☰</Button>
+  //       <ModalOverlay
+  //         isDismissable
+  //         className="fixed inset-0 z-50 bg-black/80 data-[exiting]:duration-300 data-[entering]:animate-in data-[exiting]:animate-out data-[entering]:fade-in-0 data-[exiting]:fade-out-0"
+  //       >
+  //         <Modal className="fixed left-[50%] top-[50%] z-50 w-full max-w-lg translate-x-[-50%] translate-y-[-50%] border bg-background p-6 shadow-lg duration-200 data-[exiting]:duration-300 data-[entering]:animate-in data-[exiting]:animate-out data-[entering]:fade-in-0 data-[exiting]:fade-out-0 data-[entering]:zoom-in-95 data-[exiting]:zoom-out-95 data-[entering]:slide-in-from-left-1/2 data-[entering]:slide-in-from-top-[48%] data-[exiting]:slide-out-to-left-1/2 data-[exiting]:slide-out-to-top-[48%] sm:rounded-lg md:w-full">
+  //           <Menu>
+  //             <MenuItem onAction={() => alert("open")}>Open</MenuItem>
+  //             <MenuItem onAction={() => alert("rename")}>Rename…</MenuItem>
+  //             <MenuItem onAction={() => alert("duplicate")}>Duplicate</MenuItem>
+  //             <MenuItem onAction={() => alert("share")}>Share…</MenuItem>
+  //             <MenuItem onAction={() => alert("delete")}>Delete…</MenuItem>
+  //           </Menu>
+  //         </Modal>
+  //       </ModalOverlay>
+  //     </MenuTrigger>
+  //   </>
+  // );
 }
 
 // "use client";

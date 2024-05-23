@@ -86,7 +86,7 @@ export default function PricingPage() {
       <h2 className="text-center font-display text-5xl font-bold tracking-tight">
         {headline}
       </h2>
-      <p className="mt-2 text-center text-lg text-muted-foreground">{subheadline}</p>
+      <p className="mt-2 text-center text-lg text-fg-muted">{subheadline}</p>
       <PricingComparaison plans={pricingPlans} className="mt-8" />
       <FAQ questions={questions} className="mt-32" />
       <CallToAction

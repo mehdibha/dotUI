@@ -1,4 +1,5 @@
-"use client"
+"use client";
+
 import { ChevronRight, MoreHorizontal } from "lucide-react";
 import {
   Breadcrumbs as Breadcrumbs_,
@@ -36,9 +37,7 @@ export function BreadcrumbsItem({ className, ...props }: BreadcrumbProps & LinkP
   return (
     <Primitives.Item {...props} className={cn(item(), className)}>
       <Link {...props} />
-      {props.href && (
-        <ChevronRight className="h-3 w-3" />
-      )}
+      {props.href && <ChevronRight className="h-3 w-3" />}
     </Primitives.Item>
   );
 }
@@ -65,7 +64,7 @@ export function BreadcrumbsItem({ className, ...props }: BreadcrumbProps & LinkP
 //   <ol
 //     ref={ref}
 //     className={cn(
-//       "flex flex-wrap items-center gap-1.5 break-words text-sm text-muted-foreground sm:gap-2.5",
+//       "flex flex-wrap items-center gap-1.5 break-words text-sm text-fg-muted sm:gap-2.5",
 //       className
 //     )}
 //     {...props}

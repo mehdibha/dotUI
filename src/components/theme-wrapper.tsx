@@ -26,28 +26,11 @@ export function ThemeWrapper(props: ThemeWrapperProps) {
     <div
       style={
         {
-          "--background": theme[resolvedMode].background,
-          "--foreground": theme[resolvedMode].foreground,
-          "--card": theme[resolvedMode].card,
-          "--card-foreground": theme[resolvedMode]["card-foreground"],
-          "--popover": theme[resolvedMode].popover,
-          "--popover-foreground": theme[resolvedMode]["popover-foreground"],
-          "--primary": theme[resolvedMode].primary,
-          "--primary-foreground": theme[resolvedMode]["primary-foreground"],
-          "--secondary": theme[resolvedMode].secondary,
-          "--secondary-foreground": theme[resolvedMode]["secondary-foreground"],
-          "--muted": theme[resolvedMode].muted,
-          "--muted-foreground": theme[resolvedMode]["muted-foreground"],
-          "--accent": theme[resolvedMode].accent,
-          "--accent-foreground": theme[resolvedMode]["accent-foreground"],
-          "--destructive": theme[resolvedMode].destructive,
-          "--destructive-foreground": theme[resolvedMode]["destructive-foreground"],
-          "--border": theme[resolvedMode].border,
-          "--input": theme[resolvedMode].input,
-          "--ring": theme[resolvedMode].ring,
+          ...theme[resolvedMode],
           "--radius": `${theme.radius}rem`,
         } as React.CSSProperties
       }
+      className="text-fg"
     >
       {children}
     </div>

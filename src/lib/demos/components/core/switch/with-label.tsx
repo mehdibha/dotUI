@@ -1,4 +1,4 @@
-import { Label } from "@/lib/components/core/default/label";
+import { Label } from "@/lib/components/core/default/field";
 import { Switch } from "@/lib/components/core/default/switch";
 
 export default function SwitchDemo() {

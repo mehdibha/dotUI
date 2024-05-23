@@ -131,14 +131,14 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
           <h5 className={cn(alertVariants({ variant, type }).title())}>{title}</h5>
         )}
         {children && (
-          <p
+          <div
             className={cn(
               alertVariants({ variant, type }).content(),
               !!title && "mt-0.5"
             )}
           >
             {children}
-          </p>
+          </div>
         )}
       </div>
       {action && <div className="ml-2 shrink-0">{action}</div>}

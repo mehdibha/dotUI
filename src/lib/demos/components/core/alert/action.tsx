@@ -5,7 +5,7 @@ export default function AlertDemo() {
   return (
     <Alert
       action={
-        <Button variant="primary" size="sm">
+        <Button type="primary" size="sm">
           Upgrade
         </Button>
       }

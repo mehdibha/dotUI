@@ -2,8 +2,11 @@
 
 import React from "react";
 import { Button } from "@/lib/components/core/default/button";
-import { Label } from "@/lib/components/core/default/label";
-import { RadioGroup, RadioGroupItem } from "@/lib/components/core/default/radio-group";
+import { Label } from "@/lib/components/core/default/field";
+import {
+  RadioGroup,
+  Radio,
+} from "@/lib/components/core/default/radio";
 import { toast } from "@/lib/components/core/default/toast";
 
 type Type = "default" | "success" | "error" | "warning" | "info";
@@ -23,7 +26,7 @@ export default function SonnerVariantsDemo() {
   return (
     <div className="flex items-center gap-16">
       <Button
-        onClick={() =>
+        onPress={() =>
           action[type]("Event has been created", {
             variant,
           })
@@ -34,23 +37,23 @@ export default function SonnerVariantsDemo() {
       <div className="flex gap-4">
         <div className="space-y-2">
           <Label>Type</Label>
-          <RadioGroup value={type} onValueChange={(newVal: Type) => setType(newVal)}>
-            <RadioGroupItem value="default">Default</RadioGroupItem>
-            <RadioGroupItem value="success">Success</RadioGroupItem>
-            <RadioGroupItem value="error">Error</RadioGroupItem>
-            <RadioGroupItem value="warning">Warning</RadioGroupItem>
-            <RadioGroupItem value="info">Info</RadioGroupItem>
+          <RadioGroup value={type} onChange={(newVal) => setType(newVal as Type)}>
+            <Radio value="default">Default</Radio>
+            <Radio value="success">Success</Radio>
+            <Radio value="error">Error</Radio>
+            <Radio value="warning">Warning</Radio>
+            <Radio value="info">Info</Radio>
           </RadioGroup>
         </div>
         <div className="space-y-2">
           <Label>Variant</Label>
           <RadioGroup
             value={variant}
-            onValueChange={(newVal: Variant) => setVariant(newVal)}
+            onChange={(newVal) => setVariant(newVal as Variant)}
           >
-            <RadioGroupItem value="default">Default</RadioGroupItem>
-            <RadioGroupItem value="muted">Muted</RadioGroupItem>
-            <RadioGroupItem value="fill">Fill</RadioGroupItem>
+            <Radio value="default">Default</Radio>
+            <Radio value="muted">Muted</Radio>
+            <Radio value="fill">Fill</Radio>
           </RadioGroup>
         </div>
       </div>

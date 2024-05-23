@@ -1,44 +1,26 @@
 "use client";
 
 import * as React from "react";
-import { Check, ChevronDownIcon, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown } from "lucide-react";
 import {
+  Button,
   Collection,
   ComboBox,
-  FieldError,
   Group,
   Header,
   Input,
-  Label,
   ListBox,
   ListBoxItem,
-  Modal,
-  ModalOverlay,
   Popover,
   Section,
   Separator,
-  Text,
-  type ComboBoxProps as AriaComboboxProps,
   type InputProps,
   type ListBoxItemProps,
   type ListBoxProps,
   type PopoverProps,
   type SeparatorProps,
 } from "react-aria-components";
-import { Button } from "@/lib/components/core/default/button";
 import { cn } from "@/lib/utils/classes";
-
-const ComboboxPrimitives = {
-  Root: ComboBox,
-  Collection: Collection,
-  Input: Input,
-  Item: ListBoxItem,
-  Label: Header,
-  ListBox: ListBox,
-  Popover: Popover,
-  Section: Section,
-  Separator: Separator,
-};
 
 const ComboboxRoot = ComboBox;
 
@@ -55,7 +37,7 @@ const ComboboxInput = ({ className, ...props }: InputProps) => (
     <Input
       className={(values) =>
         cn(
-          "flex w-full bg-background px-3 py-2 text-sm placeholder:text-muted-foreground data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50 data-[focused]:outline-none",
+          "flex w-full bg-background px-3 py-2 text-sm placeholder:text-fg-muted data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50 data-[focused]:outline-none",
           typeof className === "function" ? className(values) : className
         )
       }
@@ -117,14 +99,14 @@ const ComboboxItem = ({ className, children, ...props }: ListBoxItemProps) => (
 );
 
 const ComboboxSeparator = ({ className, ...props }: SeparatorProps) => (
-  <Separator className={cn("-mx-1 my-1 h-px bg-muted", className)} {...props} />
+  <Separator className={cn("-mx-1 my-1 h-px bg-bg-muted", className)} {...props} />
 );
 
 const ComboboxPopover = ({ className, ...props }: PopoverProps) => (
   <Popover
     className={(values) =>
       cn(
-        "relative z-50 w-[--trigger-width] overflow-y-auto rounded-md border bg-popover text-popover-foreground shadow-md data-[entering]:animate-in data-[exiting]:animate-out data-[entering]:fade-in-0 data-[exiting]:fade-out-0 data-[exiting]:zoom-out-95 data-[placement=bottom]:slide-in-from-top-2 data-[placement=left]:slide-in-from-right-2 data-[placement=right]:slide-in-from-left-2 data-[placement=top]:slide-in-from-bottom-2",
+        "relative z-50 w-[--trigger-width]  overflow-y-auto rounded-md border bg-popover text-popover-foreground shadow-md data-[entering]:animate-in data-[exiting]:animate-out data-[entering]:fade-in-0 data-[exiting]:fade-out-0 data-[exiting]:zoom-out-95 data-[placement=bottom]:slide-in-from-top-2 data-[placement=left]:slide-in-from-right-2 data-[placement=right]:slide-in-from-left-2 data-[placement=top]:slide-in-from-bottom-2",
         "data-[placement=bottom]:translate-y-1 data-[placement=left]:-translate-x-1 data-[placement=right]:translate-x-1 data-[placement=top]:-translate-y-1",
         typeof className === "function" ? className(values) : className
       )
@@ -141,46 +123,6 @@ const ComboboxListBox = <T extends object>({ className, ...props }: ListBoxProps
     {...props}
   />
 );
-
-export function ComboBoxItem(props: ListBoxItemProps) {
-  return <ListBoxItem {...props} />;
-}
-
-// export function ComboBoxSection<T extends object>(props: DropdownSectionProps<T>) {
-//   return <DropdownSection {...props} />;
-// }
-
-export interface ComboboxProps<T extends object>
-  extends Omit<AriaComboboxProps<T>, "children"> {
-  label?: string;
-  description?: string | null;
-  errorMessage?: string;
-  children: React.ReactNode | ((item: T) => React.ReactNode);
-}
-
-export function Combobox<T extends object>(props: ComboboxProps<T>) {
-  const { label, description, errorMessage, children, items, ...comboboxRootProps } =
-    props;
-
-  return (
-    <ComboboxRoot {...comboboxRootProps}>
-      <Label>{label}</Label>
-      <ComboboxInput />
-      {description && <Text slot="description">{description}</Text>}
-      <FieldError>{errorMessage}</FieldError>
-      <ModalOverlay className="fixed inset-0 z-50 bg-black/80 data-[exiting]:duration-300 data-[entering]:animate-in data-[exiting]:animate-out data-[entering]:fade-in-0 data-[exiting]:fade-out-0">
-        <Modal className="fixed left-[50%] top-[50%] z-50 w-full max-w-lg translate-x-[-50%] translate-y-[-50%] border bg-background p-6 shadow-lg duration-200 data-[exiting]:duration-300 data-[entering]:animate-in data-[exiting]:animate-out data-[entering]:fade-in-0 data-[exiting]:fade-out-0 data-[entering]:zoom-in-95 data-[exiting]:zoom-out-95 data-[entering]:slide-in-from-left-1/2 data-[entering]:slide-in-from-top-[48%] data-[exiting]:slide-out-to-left-1/2 data-[exiting]:slide-out-to-top-[48%] sm:rounded-lg md:w-full">
-          <ListBox
-            items={items}
-            className="max-h-[inherit] overflow-auto p-1 outline-0 [clip-path:inset(0_0_0_0_round_.75rem)]"
-          >
-            {children}
-          </ListBox>
-        </Modal>
-      </ModalOverlay>
-    </ComboboxRoot>
-  );
-}
 
 export {
   ComboboxSection,
