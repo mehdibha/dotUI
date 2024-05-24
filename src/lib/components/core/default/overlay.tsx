@@ -60,7 +60,7 @@ const modalVariants = tv({
     ],
     overlay: [
       "fixed left-[50%] top-[50%] z-50 w-full max-w-lg translate-x-[-50%] translate-y-[-50%]",
-      "border bg-background shadow-lg sm:rounded-lg md:w-full",
+      "border bg-bg shadow-lg sm:rounded-lg md:w-full",
       "duration-200 data-[exiting]:duration-300 data-[entering]:animate-in data-[exiting]:animate-out data-[entering]:fade-in-0 data-[exiting]:fade-out-0 data-[entering]:zoom-in-95 data-[exiting]:zoom-out-95 data-[entering]:slide-in-from-left-1/2 data-[entering]:slide-in-from-top-[48%] data-[exiting]:slide-out-to-left-1/2 data-[exiting]:slide-out-to-top-[48%]",
     ],
   },
@@ -98,12 +98,14 @@ ModalOverlay.displayName = "ModalOverlay";
 const popoverOverlayVariants = tv({
   slots: {
     overlay: [
-      "z-50 rounded-md border bg-popover text-popover-foreground shadow-md",
-      "entering:animate-in entering:fade-in entering:placement-bottom:slide-in-from-top-1 entering:placement-top:slide-in-from-bottom-1 entering:placement-left:slide-in-from-right-1 entering:placement-right:slide-in-from-left-1 entering:ease-out entering:duration-200",
-      "exiting:animate-out exiting:fade-out exiting:placement-bottom:slide-out-to-top-1 exiting:placement-top:slide-out-to-bottom-1 exiting:placement-left:slide-out-to-right-1 exiting:placement-right:slide-out-to-left-1 exiting:ease-in exiting:duration-150",
+      "z-50 rounded-md border bg-bg text-popover-foreground shadow-md",
+      "entering:duration-200 exiting:duration-150",
+      // TODO FIX THESE ANIMATIONS
+      // "entering:animate-in entering:fade-in entering:placement-bottom:slide-in-from-top-1 entering:placement-top:slide-in-from-bottom-1 entering:placement-left:slide-in-from-right-1 entering:placement-right:slide-in-from-left-1 entering:ease-out entering:duration-200",
+      // "exiting:animate-out exiting:fade-out exiting:placement-bottom:slide-out-to-top-1 exiting:placement-top:slide-out-to-bottom-1 exiting:placement-left:slide-out-to-right-1 exiting:placement-right:slide-out-to-left-1 exiting:ease-in exiting:duration-150",
     ],
     arrow: [
-      "block fill-popover stroke-1 stroke-border",
+      "block fill-bg stroke-1 stroke-border",
       "group-placement-left:-rotate-90 group-placement-right:rotate-90 group-placement-bottom:rotate-180",
     ],
   },
@@ -152,10 +154,8 @@ PopoverOverlay.displayName = "PopoverOverlay";
 const drawerVariants = tv({
   slots: {
     backdrop: [
-      "fixed inset-0 bg-black/40",
-      "opacity-0",
-      "transition-opacity duration-500 ease-drawer",
-      "data-[visible=true]:opacity-100",
+      "fixed inset-0 bg-black/60",
+      "opacity-0 transition-opacity duration-500 ease-drawer data-[visible=true]:opacity-100",
     ],
     overlay: [
       "bg-bg flex flex-col fixed bottom-0 left-0 right-0 max-h-[96%] rounded-t-[10px] outline-none",
@@ -203,6 +203,8 @@ const DrawerOverlay = React.forwardRef<
               {...drawerProps}
               className={cn(overlay(), classNames?.overlay, className)}
             >
+              {/* TODO: Make the swipeIndicator optional */}
+              <div className="bg-bg-muted mx-auto my-4 h-2 w-[100px] rounded-full" />
               {children}
             </div>
           </MotionDrawerContent>

@@ -62,7 +62,7 @@ const Category = ({ title, slug, items, pathname }: CategoryProps) => {
                     className={cn(
                       "border-bg-bg-muted group ml-2 block border-l pl-4 text-fg-muted transition-colors hover:text-foreground",
                       {
-                        "border-border-accent text-fg-accent font-medium":
+                        "border-border text-fg font-medium":
                           pathname === item.href,
                       }
                     )}
@@ -107,7 +107,7 @@ const Category = ({ title, slug, items, pathname }: CategoryProps) => {
                             className={cn(
                               "group block border-l border-muted py-1 pl-4 text-fg-muted transition-colors hover:text-foreground",
                               {
-                                "border-foreground font-medium text-foreground":
+                                "border-fg font-medium text-fg":
                                   pathname === subItem.href,
                               }
                             )}

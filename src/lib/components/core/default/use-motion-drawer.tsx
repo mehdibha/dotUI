@@ -723,7 +723,7 @@ export function usePositionFixed({
 
 const CLOSE_THRESHOLD = 0.25;
 const SCROLL_LOCK_TIMEOUT = 100;
-const BORDER_RADIUS = 8;
+const BORDER_RADIUS = 8
 const WINDOW_TOP_OFFSET = 26;
 const DRAG_CLASS = "vaul-dragging";
 const TRANSITIONS = {

@@ -6,6 +6,7 @@
   :root {
     --radius: 0.5rem;
     --color-bg: 0 0% 100%;
+    --color-bg-muted: 0 0% 90%;
     --color-bg-inverse: 240 10% 3.9%;
     --color-bg-surface: 230 15% 98%;
     --color-bg-disabled: 0 0% 80%;
@@ -91,7 +92,7 @@
 
   .dark {
     --color-bg: 240 10% 10%;
-    --color-bg-bg-muted: 240 6% 13%;
+    --color-bg-muted: 240 6% 13%;
     --color-bg-inverse: 0 0% 100%;
     --color-bg-surface: 0 0% 100%;
     --color-bg-disabled: 0 0% 25%;

@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { ChevronLeft, ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import {
   Calendar as AriaCalendar,
   RangeCalendar as AriaRangeCalendar,
@@ -103,8 +103,8 @@ const RangeCalendar = React.forwardRef((props) => {
                 "before:absolute before:inset-0 before:z-10 before:rounded-[inherit] before:transition-colors before:content-[''] hover:before:bg-bg-inverse/10",
                 "outline-none before:border before:border-transparent before:ring-0 before:ring-border-focus focus-visible:z-50 focus-visible:before:border-border focus-visible:before:ring-2 focus-visible:before:ring-offset-2 focus-visible:before:ring-offset-bg",
                 "selection-start:after:rounded-l-[inherit] selection-end:after:rounded-r-[inherit]",
-                "selection-start:text-fg-onPrimary selection-start:before:bg-primary selection-start:pressed:before:bg-primary/90",
-                "selection-end:text-fg-onPrimary selection-end:before:bg-primary selection-end:pressed:before:bg-primary/90"
+                "selection-start:text-fg-onPrimary selection-start:before:bg-bg-primary selection-start:pressed:before:bg-primary/90",
+                "selection-end:text-fg-onPrimary selection-end:before:bg-bg-primary selection-end:pressed:before:bg-primary/90"
 
                 // "selected:bg-slate-800",
                 // "before:absolute before:inset-0 before:rounded-md before:transition-colors before:content-[''] hover:before:bg-bg-inverse/10 pressed:before:bg-bg-inverse/15",

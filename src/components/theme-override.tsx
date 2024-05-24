@@ -22,7 +22,7 @@ export function ThemeOverride(props: ThemeOverrideProps) {
   const resolvedMode = type === "default" ? rootMode : mode;
 
   const shouldOverride = !!(mounted && pathname === "/themes" && theme);
-  const debouncedShouldOverride = useDebounce(shouldOverride, 700);
+
   const styles = (
     shouldOverride
       ? {
@@ -31,6 +31,20 @@ export function ThemeOverride(props: ThemeOverrideProps) {
         }
       : {}
   ) as React.CSSProperties | undefined;
+
+  React.useEffect(() => {
+    // sync config across tabs
+    function updateConfig(e: StorageEvent) {
+      const { key } = e;
+      if (key === "preview-theme") {
+        void useConfig.persist.rehydrate();
+      }
+    }
+    window.addEventListener("storage", updateConfig);
+    return () => {
+      window.removeEventListener("storage", updateConfig);
+    };
+  }, []);
 
   return (
     <div

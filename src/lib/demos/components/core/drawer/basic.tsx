@@ -9,8 +9,16 @@ export default function DrawerDemo() {
     <DrawerRoot>
       <Button>Open drawer</Button>
       <Drawer title="Salemou 3alaykom">
-        <div className="h-[500px] max-w-sm mx-auto ">
+        <div className="mx-auto h-[500px] max-w-sm ">
           <TextField label="Email" />
+          <DrawerRoot>
+            <Button>Open drawer</Button>
+            <Drawer title="Salemou 3alaykom">
+              <div className="mx-auto h-[500px] max-w-sm ">
+                <TextField label="Email" />
+              </div>
+            </Drawer>
+          </DrawerRoot>
         </div>
       </Drawer>
     </DrawerRoot>
