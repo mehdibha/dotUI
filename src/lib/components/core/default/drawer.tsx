@@ -22,7 +22,7 @@ const drawerVariants = tv({
     overlay: "",
     backdrop: "",
     content: "outline-none rounded-[inherit] p-4",
-    title: "text-lg font-semibold",
+    title: "text-2xl font-bold",
   },
 });
 

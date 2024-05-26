@@ -69,10 +69,6 @@ const docsConfig: DocsConfig = {
           ],
         },
         {
-          title: "Selection",
-          items: getCategoryDocs("components/selection"),
-        },
-        {
           title: "Inputs",
           items: [
             { title: "Field", href: "/components/inputs/field" },
@@ -91,8 +87,33 @@ const docsConfig: DocsConfig = {
           ],
         },
         {
+          title: "Menus",
+          items: getCategoryDocs("components/menus"),
+        },
+        {
+          title: "Selection",
+          items: getCategoryDocs("components/selection"),
+        },
+        {
           title: "Dates",
-          items: getCategoryDocs("components/dates"),
+          items: [
+            { title: "Calendar", href: "/components/dates/calendar" },
+            { title: "Time Field", href: "/components/dates/time-field" },
+            { title: "Date Field", href: "/components/dates/date-field" },
+            { title: "Date Picker", href: "/components/dates/date-picker" },
+            { title: "Date Range Picker", href: "/components/dates/date-range-picker" },
+          ],
+        },
+        {
+          title: "Colors",
+          items: [
+            { title: "Color Area", href: "/components/colors/color-area" },
+            { title: "Color Field", href: "/components/colors/color-field" },
+            { title: "Color Slider", href: "/components/colors/color-slider" },
+            { title: "Color Swatch", href: "/components/colors/color-swatch" },
+            { title: "Color Picker", href: "/components/colors/color-picker" },
+            { title: "Color Swatch Picker", href: "/components/colors/color-swatch-picker" },
+          ],
         },
         {
           title: "Drag and drop",
@@ -118,10 +139,6 @@ const docsConfig: DocsConfig = {
             // { title: "Data table", href: "/components/data-display/data-table" },
             // { title: "Accordion", href: "/components/data-display/accordion" },
           ],
-        },
-        {
-          title: "Menus",
-          items: getCategoryDocs("components/menus"),
         },
         {
           title: "Navigation",
@@ -152,28 +169,6 @@ const docsConfig: DocsConfig = {
         },
       ],
     },
-    // {
-    //   title: "Blocks",
-    //   slug: "blocks",
-    //   items: [
-    //     {
-    //       title: "Overview",
-    //       href: "/blocks",
-    //     },
-    //     {
-    //       title: "Marketing",
-    //       items: getCategoryDocs("blocks/marketing"),
-    //     },
-    //     {
-    //       title: "Application UI",
-    //       items: getCategoryDocs("blocks/application-ui"),
-    //     },
-    //     {
-    //       title: "E-commerce",
-    //       items: getCategoryDocs("blocks/e-commerce"),
-    //     },
-    //   ],
-    // },
     {
       title: "Hooks",
       slug: "hooks",
@@ -204,6 +199,28 @@ const docsConfig: DocsConfig = {
         },
       ],
     },
+    // {
+    //   title: "Blocks",
+    //   slug: "blocks",
+    //   items: [
+    //     {
+    //       title: "Overview",
+    //       href: "/blocks",
+    //     },
+    //     {
+    //       title: "Marketing",
+    //       items: getCategoryDocs("blocks/marketing"),
+    //     },
+    //     {
+    //       title: "Application UI",
+    //       items: getCategoryDocs("blocks/application-ui"),
+    //     },
+    //     {
+    //       title: "E-commerce",
+    //       items: getCategoryDocs("blocks/e-commerce"),
+    //     },
+    //   ],
+    // },
     // {
     //   title: "Icons",
     //   slug: "icons",

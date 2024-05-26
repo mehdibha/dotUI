@@ -15,7 +15,7 @@ import { focusRing } from "@/lib/utils/styles";
 const buttonVariants = tv(
   {
     extend: focusRing,
-    base: "inline-flex items-center justify-center whitespace-nowrap rounded-md leading-normal text-sm font-medium ring-offset-background transition-colors disabled:cursor-not-allowed",
+    base: "inline-flex items-center justify-center whitespace-nowrap rounded-md leading-normal text-sm font-medium ring-offset-background transition-colors disabled:cursor-not-allowed shrink-0",
     variants: {
       variant: {
         fill: "disabled:bg-bg-disabled disabled:text-fg-disabled",

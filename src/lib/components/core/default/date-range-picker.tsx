@@ -3,7 +3,7 @@
 import React from "react";
 import { CalendarIcon } from "lucide-react";
 import {
-  DatePicker as AriaDatePicker,
+  DateRangePicker as AriaDateRangePicker,
   type DatePickerProps as AriaDatePickerProps,
   DateInput,
   DateValue,
@@ -14,7 +14,7 @@ import {
 import { DateSegment } from "react-aria-components";
 import { useMediaQuery } from "@/lib/hooks/use-media-query";
 import { Button } from "./button";
-import { Calendar } from "./calendar";
+import { RangeCalendar } from "./calendar";
 import { DateFieldInput } from "./date-field";
 import { Field } from "./field";
 import { Overlay } from "./overlay";
@@ -33,7 +33,7 @@ interface DatePickerProps<T extends DateValue> extends DatePickerProps<T> {
   errorMessage?: string | ((validation: ValidationResult) => string);
 }
 
-export function DatePicker<T extends DateValue>({
+export function DateRangePicker<T extends DateValue>({
   label,
   labelProps,
   description,
@@ -50,7 +50,7 @@ export function DatePicker<T extends DateValue>({
   const showPrefixLoading = loading && loaderPosition === "prefix";
   const showSuffixLoading = loading && loaderPosition === "suffix";
   return (
-    <AriaDatePicker {...props}>
+    <AriaDateRangePicker {...props}>
       <Field
         label={label}
         labelProps={labelProps}
@@ -63,15 +63,12 @@ export function DatePicker<T extends DateValue>({
           <TextFieldInnerVisual loading={showPrefixLoading}>
             {prefix}
           </TextFieldInnerVisual>
-          <DateFieldInput className="flex items-center space-x-0.5">
-            {(segment) => (
-              <DateSegment
-                className={
-                  "rounded px-0.5 outline-none focus:bg-border-focus focus:text-black focus:caret-transparent"
-                }
-                segment={segment}
-              />
-            )}
+          <DateFieldInput slot="start" className="flex">
+            {(segment) => <DateSegment segment={segment} />}
+          </DateFieldInput>
+          <span aria-hidden="true">–</span>
+          <DateFieldInput slot="end" className="flex">
+            {(segment) => <DateSegment segment={segment} />}
           </DateFieldInput>
           <TextFieldInnerVisual loading={showSuffixLoading}>
             <Button shape="square" size="sm" variant="ghost">
@@ -82,9 +79,9 @@ export function DatePicker<T extends DateValue>({
       </Field>
       <Overlay type={isMobile ? "drawer" : "popover"}>
         <Dialog>
-          <Calendar ></Calendar>
+          <RangeCalendar></RangeCalendar>
         </Dialog>
       </Overlay>
-    </AriaDatePicker>
+    </AriaDateRangePicker>
   );
 }

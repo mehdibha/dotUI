@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import {
-  DateField as AriaDateField,
+  TimeField  as AriaTimeField ,
   DateInput as AriaDateInput,
   Provider,
   DateSegment,
@@ -31,7 +31,7 @@ interface DateFieldProps<T extends DateValue>
   loading?: boolean;
   loaderPosition?: "prefix" | "suffix";
 }
-const DateField = <T extends DateValue>({
+const TimeField = <T extends DateValue>({
   className,
   label,
   labelProps,
@@ -79,7 +79,7 @@ const DateField = <T extends DateValue>({
     </DateFieldRoot>
   );
 };
-DateField.displayName = "DateField";
+TimeField.displayName = "TimeField";
 
 interface DateFieldRootProps<T extends DateValue>
   extends Omit<AriaDateFieldProps<T>, "className">,
@@ -95,7 +95,7 @@ const DateFieldRoot = <T extends DateValue>({
   const { root } = dateFieldStyles({ size, type });
   return (
     <Provider values={[[DateFieldContext, { size, type }]]}>
-      <AriaDateField className={root({ className })} {...props} />
+      <AriaTimeField className={root({ className })} {...props} />
     </Provider>
   );
 };
@@ -126,4 +126,4 @@ const DateFieldInnerVisual = TextFieldInnerVisual;
 const DateFieldContext = TextFieldContext;
 const useDateFieldContext = useTextFieldContext;
 
-export { DateField, DateFieldInput, DateFieldInnerWrapper };
+export { TimeField, DateFieldInput, DateFieldInnerWrapper };
