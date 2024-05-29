@@ -24,7 +24,7 @@ const popoverStyles = tv({
   slots: {
     overlay: "",
     backdrop: "",
-    content: "outline-none rounded-[inherit] p-3 sm:p-6",
+    content: "outline-none rounded-[inherit] p-2 sm:p-4",
     header: "mb-4",
     title: "text-lg font-semibold",
     description: "text-sm text-fg-muted",
@@ -92,7 +92,7 @@ const PopoverOverlay = (props: OverlayProps) => {
   return (
     <Overlay
       isDismissable
-      type={isMobile ? mobileType : "modal"}
+      type={isMobile ? mobileType : "popover"}
       classNames={{ overlay: overlay(), backdrop: backdrop() }}
       {...props}
     />

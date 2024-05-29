@@ -2,23 +2,35 @@
 
 import React from "react";
 import {
+  Color as BaseColor,
+  BackgroundColor,
+  Theme,
+  CssColor,
+} from "@adobe/leonardo-contrast-colors";
+import {
   LockIcon,
   Maximize2Icon,
   Minimize2Icon,
   MonitorIcon,
   MoonIcon,
+  PlusIcon,
   RotateCwIcon,
   SmartphoneIcon,
   SunIcon,
   TabletIcon,
+  Trash2Icon,
 } from "lucide-react";
-import { Modal as AriaModal, Dialog as AriaDialog } from "react-aria-components";
+import { Modal as AriaModal, Dialog as AriaDialog, Color } from "react-aria-components";
 import Balancer from "react-wrap-balancer";
 import { useConfig } from "@/hooks/use-config";
+import { usePalette } from "@/hooks/use-palette";
 import { Button } from "@/lib/components/core/default/button";
+import { ColorPicker } from "@/lib/components/core/default/color-picker";
 import { Dialog, DialogRoot } from "@/lib/components/core/default/dialog";
 import { Drawer, DrawerRoot } from "@/lib/components/core/default/drawer";
-import { ScrollArea } from "@/lib/components/core/default/scroll-area";
+import { Popover, PopoverRoot } from "@/lib/components/core/default/popover";
+import { Slider } from "@/lib/components/core/default/slider";
+import { Switch } from "@/lib/components/core/default/switch";
 import { TextField } from "@/lib/components/core/default/text-field";
 import {
   ToggleGroup,
@@ -29,7 +41,8 @@ import { useMediaQuery } from "@/lib/hooks/use-media-query";
 import { cn } from "@/lib/utils/classes";
 
 export default function ThemesPage() {
-  const { mode, setMode } = useConfig();
+  const { mode, setMode, theme } = useConfig();
+
   return (
     <div className="container">
       <div className="mx-auto mt-14 flex max-w-4xl flex-col lg:items-center lg:text-center">
@@ -66,25 +79,6 @@ export default function ThemesPage() {
           </DialogRoot>
         </div>
         <div className="mt-6 flex items-center gap-4">
-          <div className="flex items-center justify-center gap-1">
-            {[
-              { label: "Neutral", color: "#2E2E2E" },
-              { label: "Primary", color: "#fff" },
-              { label: "Success", color: "#1A9338" },
-              { label: "Warning", color: "#E79D13" },
-              { label: "Danger", color: "#E5484D" },
-              { label: "Info", color: "#0091FF" },
-            ].map((color) => (
-              <Tooltip key={color.label} content={color.label} delay={0}>
-                <Button shape="square" variant="ghost">
-                  <div
-                    className="size-6 rounded-sm border"
-                    style={{ backgroundColor: color.color }}
-                  />
-                </Button>
-              </Tooltip>
-            ))}
-          </div>
           <ToggleGroup
             value={mode}
             onValueChange={(val) => setMode(val as "light" | "dark")}
@@ -102,38 +96,83 @@ export default function ThemesPage() {
       <div className="mt-14 [&>h2]:my-4 [&>h2]:text-3xl [&>h2]:font-semibold [&_h3]:text-xl [&_h3]:font-semibold">
         <h2>Brand assets</h2>
         <h2>Colors</h2>
-        <div className="space-y-4">
-          {[
-            { name: "Neutral", color: "#000" },
-            { name: "Brand", color: "#000" },
-            { name: "Success", color: "#000" },
-            { name: "Warning", color: "#000" },
-            { name: "Danger", color: "#000" },
-            { name: "Info", color: "#000" },
-          ].map((palette, paletteIndex) => (
-            <div key={paletteIndex}>
-              <h3>{palette.name}</h3>
-              <p className="mb-4 text-fg-muted">
-                Neutral is a neutral color and is the foundation of the color system.
-                Almost everything in UI design — text, form fields, backgrounds, dividers
-                — are usually gray.
-              </p>
-              <div className="grid grid-cols-8 gap-4">
-                {Array.from({ length: 8 }, () => ({
-                  name: `${palette.name} 100`,
-                  color: palette.color,
-                })).map((color, index) => (
-                  <div key={index} className="overflow-hidden rounded-md border shadow">
+        <div className="space-y-6">
+          {(
+            [
+              {
+                name: "Neutral",
+                value: "neutral",
+                colors: Object.entries(theme[mode].palettes.neutral.colors).map(
+                  ([key, value]) => ({
+                    name: `Neutral ${key}`,
+                    value: value,
+                  })
+                ),
+              },
+              {
+                name: "Accent",
+                value: "accent",
+                colors: Object.entries(theme[mode].palettes.accent.colors).map(
+                  ([key, value]) => ({
+                    name: `Accent ${key}`,
+                    value: value,
+                  })
+                ),
+              },
+              {
+                name: "Success",
+                value: "success",
+                colors: Object.entries(theme[mode].palettes.success.colors).map(
+                  ([key, value]) => ({
+                    name: `Success ${key}`,
+                    value: value,
+                  })
+                ),
+              },
+              {
+                name: "Danger",
+                value: "danger",
+                colors: Object.entries(theme[mode].palettes.danger.colors).map(
+                  ([key, value]) => ({
+                    name: `Danger ${key}`,
+                    value: value,
+                  })
+                ),
+              },
+              {
+                name: "Warning",
+                value: "warning",
+                colors: Object.entries(theme[mode].palettes.warning.colors).map(
+                  ([key, value]) => ({
+                    name: `Warning ${key}`,
+                    value: value,
+                  })
+                ),
+              },
+            ] as const
+          ).map((palette, index) => (
+            <div key={index}>
+              <div className="flex items-center space-x-2">
+                <h3>{palette.name}</h3>
+                <ColorScalesPopover name={palette.value} />
+              </div>
+              <div className="mt-4 grid grid-cols-10 gap-1">
+                {palette.colors.map((color) => {
+                  return (
                     <div
-                      className="h-20 border-b"
-                      style={{ backgroundColor: color.color }}
-                    />
-                    <div className="p-2 text-sm">
-                      <p>{color.name}</p>
-                      <p className="text-fg-muted">{color.color}</p>
+                      key={color.name}
+                      className="overflow-hidden rounded-md border shadow"
+                    >
+                      <div
+                        className="h-20 border-b"
+                        style={{ backgroundColor: color.value }}
+                      />
+                      <div className="p-2 text-sm">
+                        <p>{color.name}</p>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           ))}
@@ -147,6 +186,89 @@ export default function ThemesPage() {
     </div>
   );
 }
+
+const ColorScalesPopover = ({
+  name,
+}: {
+  name: "neutral" | "accent" | "success" | "danger" | "warning";
+}) => {
+  const {
+    smooth,
+    handleChangeSmooth,
+    lightness,
+    handleChangeLightness,
+    saturation,
+    handleChangeSaturation,
+    baseColors,
+    handleChangeColor,
+    ratios,
+    handleChangeRatio,
+  } = usePalette(name);
+
+  return (
+    <PopoverRoot>
+      <Button size="sm">Color scales</Button>
+      <Popover title="Color scales" className="space-y-4">
+        <Slider label="Lightness" value={lightness} onChange={handleChangeLightness} />
+        <Slider label="Saturation" value={saturation} onChange={handleChangeSaturation} />
+        <Switch isSelected={smooth} onChange={handleChangeSmooth}>
+          Smooth
+        </Switch>
+        <div className="flex items-center justify-between gap-4">
+          <p>Key colors</p>
+          <Tooltip content="Add key color">
+            <Button
+              variant="ghost"
+              shape="square"
+              size="sm"
+              //  onPress={addColor}
+            >
+              <PlusIcon />
+            </Button>
+          </Tooltip>
+        </div>
+        <div className="mt-1">
+          {baseColors.map((color, index) => (
+            <div key={index} className="flex items-center justify-between">
+              <ColorPicker
+                value={color}
+                onChange={(newColor) => {
+                  handleChangeColor(newColor as unknown as CssColor, index);
+                }}
+              />
+              <Button
+              // onPress={() => handleDeleteColor(index)}
+              >
+                <Trash2Icon />
+              </Button>
+            </div>
+          ))}
+        </div>
+        <div className="grid grid-cols-3 gap-2">
+          {ratios.map((ratio, i) => (
+            <TextField
+              key={i}
+              className="w-[80px]"
+              size="sm"
+              htmlType="number"
+              inputMode="decimal"
+              value={ratio.toString()}
+              onChange={(newValue) => handleChangeRatio(newValue, i)}
+            />
+          ))}
+        </div>
+        <div className="flex justify-end">
+          <Button
+            type="primary"
+            // onPress={updateTheme}
+          >
+            Apply changes
+          </Button>
+        </div>
+      </Popover>
+    </PopoverRoot>
+  );
+};
 
 const Preview = () => {
   const [view, setView] = React.useState<"desktop" | "tablet" | "mobile">("desktop");
@@ -174,7 +296,6 @@ const Preview = () => {
 };
 
 type View = "desktop" | "tablet" | "mobile";
-
 const PreviewBase = ({
   view,
   onViewChange,
@@ -188,7 +309,12 @@ const PreviewBase = ({
 }) => {
   const isMobile = useMediaQuery("(max-width: 640px)");
   return (
-    <div className={cn("z-50 flex h-full flex-col rounded border overflow-hidden", className)}>
+    <div
+      className={cn(
+        "z-50 flex h-full flex-col overflow-hidden rounded border",
+        className
+      )}
+    >
       <header className="flex items-center justify-between gap-4 border-b bg-bg-muted px-4 py-1.5">
         <div className={cn("flex w-[144px] items-center gap-2", isMobile && "w-[55px]")}>
           <div className="h-3 w-3 rounded-full bg-red-500"></div>

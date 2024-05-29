@@ -1,7 +1,7 @@
 export const siteConfig = {
   global: {
     url: "https://rCopy.com",
-    name: "rCopy",
+    name: "copy/ui",
     logo: "/images/logo.png",
     title: "rCopy",
     description:

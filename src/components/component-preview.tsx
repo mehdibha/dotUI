@@ -41,7 +41,7 @@ export const ComponentPreview = ({
 
     return allCodeFiles.map((file) => ({
       ...file,
-      code: file.code.replace("export default", "export"),
+      code: file.code.replace("export default function", "function"),
     }));
   }, [name]);
 
