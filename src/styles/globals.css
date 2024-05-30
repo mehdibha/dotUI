@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --color-neutral-100: 0 0% 87%; /* Background layers (default bg) */
+    --color-neutral-100: 0 0% 98%; /* Background layers (default bg) */
     --color-neutral-200: 0 0% 79%; /* Background layers (Bg secondary/muted) */ /* Decorative border */
     --color-neutral-300: 0 0% 73%; /* Decorative border */
     --color-neutral-400: 0 0% 65%; /* Field border */
@@ -151,15 +151,15 @@
   }
 
   .dark {
-    --color-neutral-100: 240 10% 10%;
-    --color-neutral-200: 240 10% 17%;
-    --color-neutral-300: 240 10% 22%;
-    --color-neutral-400: 240 10% 27%;
-    --color-neutral-500: 240 10% 36%;
-    --color-neutral-600: 240 10% 47%;
-    --color-neutral-700: 240 10% 55%;
-    --color-neutral-800: 240 10% 64%;
-    --color-neutral-900: 240 10% 80%;
+    --color-neutral-100: 240 6% 8%;
+    --color-neutral-200: 240 6% 13%;
+    --color-neutral-300: 240 6% 19%;
+    --color-neutral-400: 240 6% 25%;
+    --color-neutral-500: 240 6% 33%;
+    --color-neutral-600: 240 6% 47%;
+    --color-neutral-700: 240 6% 55%;
+    --color-neutral-800: 240 6% 64%;
+    --color-neutral-900: 240 6% 80%;
     --color-neutral-1000: 240 10% 98%;
 
     --color-primary-100: 0 0% 12%;

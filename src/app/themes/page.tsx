@@ -1,12 +1,7 @@
 "use client";
 
 import React from "react";
-import {
-  Color as BaseColor,
-  BackgroundColor,
-  Theme,
-  CssColor,
-} from "@adobe/leonardo-contrast-colors";
+import { CssColor } from "@adobe/leonardo-contrast-colors";
 import {
   LockIcon,
   Maximize2Icon,
@@ -94,9 +89,8 @@ export default function ThemesPage() {
         </div>
       </div>
       <div className="mt-14 [&>h2]:my-4 [&>h2]:text-3xl [&>h2]:font-semibold [&_h3]:text-xl [&_h3]:font-semibold">
-        <h2>Brand assets</h2>
         <h2>Colors</h2>
-        <div className="space-y-6">
+        <div className="space-y-20 mb-20">
           {(
             [
               {
@@ -105,6 +99,7 @@ export default function ThemesPage() {
                 colors: Object.entries(theme[mode].palettes.neutral.colors).map(
                   ([key, value]) => ({
                     name: `Neutral ${key}`,
+                    key: `neutral-${key}`,
                     value: value,
                   })
                 ),
@@ -115,6 +110,7 @@ export default function ThemesPage() {
                 colors: Object.entries(theme[mode].palettes.accent.colors).map(
                   ([key, value]) => ({
                     name: `Accent ${key}`,
+                    key: `accent-${key}`,
                     value: value,
                   })
                 ),
@@ -125,6 +121,7 @@ export default function ThemesPage() {
                 colors: Object.entries(theme[mode].palettes.success.colors).map(
                   ([key, value]) => ({
                     name: `Success ${key}`,
+                    key: `success-${key}`,
                     value: value,
                   })
                 ),
@@ -135,6 +132,7 @@ export default function ThemesPage() {
                 colors: Object.entries(theme[mode].palettes.danger.colors).map(
                   ([key, value]) => ({
                     name: `Danger ${key}`,
+                    key: `danger-${key}`,
                     value: value,
                   })
                 ),
@@ -145,6 +143,7 @@ export default function ThemesPage() {
                 colors: Object.entries(theme[mode].palettes.warning.colors).map(
                   ([key, value]) => ({
                     name: `Warning ${key}`,
+                    key: `warning-${key}`,
                     value: value,
                   })
                 ),
@@ -158,18 +157,24 @@ export default function ThemesPage() {
               </div>
               <div className="mt-4 grid grid-cols-10 gap-1">
                 {palette.colors.map((color) => {
+                  const hint: string | undefined = hints[color.key];
                   return (
-                    <div
-                      key={color.name}
-                      className="overflow-hidden rounded-md border shadow"
-                    >
+                    <div key={color.name} className="relative rounded-md border shadow">
                       <div
-                        className="h-20 border-b"
+                        className="h-20 rounded-t-[inherit] border-b"
                         style={{ backgroundColor: color.value }}
                       />
                       <div className="p-2 text-sm">
                         <p>{color.name}</p>
                       </div>
+                      {hint && (
+                        <div className="absolute bottom-0 left-1/2 flex w-full -translate-x-1/2 translate-y-full flex-col items-center justify-center p-2">
+                          <div className="h-3 w-px bg-fg" />
+                          <p className="w-full text-center text-xs text-fg-muted">
+                            {hint}
+                          </p>
+                        </div>
+                      )}
                     </div>
                   );
                 })}
@@ -375,3 +380,34 @@ const PreviewBase = ({
     </div>
   );
 };
+
+const hints = {
+  "neutral-100": "Default background",
+  "neutral-200": "Secondary background, Decorative border",
+  "neutral-300": "Decorative border",
+  "neutral-400": "Field border",
+  "neutral-600": "Disabled text",
+  "neutral-700": "Control border (switch, checkbox, radio)",
+  "neutral-800": "Secondary text",
+  "neutral-900": "Text",
+  "neutral-1000": "Heading",
+  ...Object.fromEntries(
+    ["accent", "success", "warning", "danger"].flatMap((palette) => [
+      [`${palette}-100`, "Muted background"],
+      [`${palette}-500`, "Component background (default), Text"],
+      [`${palette}-600`, "Component background (hover)"],
+      [`${palette}-700`, "Component background (active)"],
+    ])
+  ),
+};
+
+["accent", "success", "warning", "danger"]
+  .map((palette) => {
+    return [
+      { [`${palette}-100`]: "Muted background" },
+      { [`${palette}-500`]: "Component background (default), Text" },
+      { [`${palette}-600`]: "Component background (hover)" },
+      { [`${palette}-700`]: "Component background (active)" },
+    ];
+  })
+  .flat();

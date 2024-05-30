@@ -43,6 +43,7 @@ export const usePalette = (
       saturation: _saturation ?? saturation,
       output: "HSL",
     });
+    const t = colors.contrast
     setTheme({
       ...theme,
       [mode]: {

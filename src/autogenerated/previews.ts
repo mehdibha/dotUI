@@ -106,7 +106,7 @@ export const previews = {
     },
     "demos/components/core/color-picker/basic": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/color-picker/basic")),
-      code : [{"title":"basic.tsx","code":"import { ColorPicker } from \"@/lib/components/core/default/color-picker\";\r\n\r\nexport default function Demo() {\r\n  return <ColorPicker />;\r\n}\r\n"}]
+      code : [{"title":"basic.tsx","code":"import { ColorPicker } from \"@/lib/components/core/default/color-picker\";\r\n\r\nexport default function Demo() {\r\n  return <ColorPicker defaultValue=\"#000000\" />\r\n}\r\n"}]
     },
     "demos/components/core/color-slider/basic": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/color-slider/basic")),
