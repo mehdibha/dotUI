@@ -11,11 +11,7 @@ import {
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import { cn } from "@/lib/utils/classes";
-import {
-  MotionDrawerContent,
-  MotionDrawerRoot,
-  useMotionDrawer,
-} from "./use-motion-drawer";
+import { MotionDrawerRoot, useMotionDrawer } from "./use-motion-drawer";
 
 type OverlayProps = {
   type?: "modal" | "drawer" | "popover";
@@ -154,15 +150,20 @@ PopoverOverlay.displayName = "PopoverOverlay";
 const drawerVariants = tv({
   slots: {
     backdrop: [
-      "fixed inset-0 bg-black/60",
-      "opacity-0 transition-opacity duration-500 ease-drawer data-[visible=true]:opacity-100",
+      "fixed inset-0 bg-black/60 z-50",
+      "opacity-0", // required
     ],
     overlay: [
-      "bg-bg flex flex-col fixed bottom-0 left-0 right-0 max-h-[96%] rounded-t-[10px] outline-none",
-      "touch-none will-change-transform",
-      "transition-transform duration-500 ease-drawer",
-      "data-[direction=bottom]:translate-y-full data-[direction=top]:-translate-y-full data-[direction=left]:-translate-x-full data-[direction=right]:translate-x-full",
-      "data-[visible=true]:translate-x-0 data-[visible=true]:translate-y-0",
+      "bg-bg flex flex-col fixed z-50 outline-none",
+      // "placement-bottom:inset-x-0 placement-bottom:bottom-0",
+      "inset-0",
+      "placement-bottom:top-auto placement-top:bottom-auto placement-left:right-auto placement-right:left-auto",
+      "placement-bottom:mt-24 placement-bottom:rounded-t-[10px] placement-bottom:border-t",
+      "placement-top:mb-24 placement-top:rounded-b-[10px] placement-top:border-b",
+      "placement-right:ml-24 placement-right:rounded-l-[10px] placement-right:border-l",
+      "placement-left:mr-24 placement-left:rounded-r-[10px] placement-left:border-r",
+      "touch-none will-change-transform", // required
+      "placement-bottom:translate-y-full placement-top:-translate-y-full placement-left:-translate-x-full placement-right:translate-x-full", // required
     ],
   },
 });
@@ -173,6 +174,7 @@ type DrawerOverlayClassNames = {
 };
 
 interface DrawerOverlayProps extends Omit<AriaModalOverlayProps, "children"> {
+  placement?: "top" | "bottom" | "left" | "right";
   children?: React.ReactNode;
   classNames?: DrawerOverlayClassNames;
 }
@@ -180,39 +182,51 @@ interface DrawerOverlayProps extends Omit<AriaModalOverlayProps, "children"> {
 const DrawerOverlay = React.forwardRef<
   React.ElementRef<typeof AriaModalOverlay>,
   DrawerOverlayProps
->(({ children, classNames, className, isDismissable = true, ...props }, ref) => {
-  const { rootProps, modalProps, backdropProps, drawerProps } = useMotionDrawer({
-    dismissible: isDismissable,
-  });
-  const { overlay, backdrop } = drawerVariants({});
-  return (
-    <MotionDrawerRoot {...rootProps}>
-      <AriaModalOverlay
-        ref={ref}
-        isDismissable={isDismissable}
-        {...props}
-        {...modalProps}
-      >
-        <div
-          {...backdropProps}
-          className={backdrop({ className: classNames?.backdrop })}
-        />
-        <AriaModal>
-          <MotionDrawerContent>
+>(
+  (
+    {
+      children,
+      classNames,
+      className,
+      isDismissable = true,
+      placement = "bottom",
+      ...props
+    },
+    ref
+  ) => {
+    const { rootProps, modalProps, backdropProps, drawerProps } = useMotionDrawer({
+      isDismissable,
+      placement,
+    });
+    const { overlay, backdrop } = drawerVariants();
+
+    return (
+      <MotionDrawerRoot {...rootProps}>
+        <AriaModalOverlay
+          ref={ref}
+          isDismissable={isDismissable}
+          {...props}
+          {...modalProps}
+        >
+          <div
+            {...backdropProps}
+            className={backdrop({ className: classNames?.backdrop })}
+          />
+          <AriaModal>
             <div
               {...drawerProps}
               className={cn(overlay(), classNames?.overlay, className)}
             >
               {/* TODO: Make the swipeIndicator optional */}
-              <div className="bg-bg-muted mx-auto my-4 h-2 w-[100px] rounded-full" />
+              <div className="mx-auto my-4 h-2 w-[100px] rounded-full bg-bg-muted" />
               {children}
             </div>
-          </MotionDrawerContent>
-        </AriaModal>
-      </AriaModalOverlay>
-    </MotionDrawerRoot>
-  );
-});
+          </AriaModal>
+        </AriaModalOverlay>
+      </MotionDrawerRoot>
+    );
+  }
+);
 DrawerOverlay.displayName = "DrawerOverlay";
 
 export type { OverlayProps, ModalOverlayProps, DrawerOverlayProps, PopoverOverlayProps };

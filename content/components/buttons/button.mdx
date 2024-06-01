@@ -4,6 +4,11 @@ description: Displays a button or a component that looks like a button.
 thumbnail:
   image: /previews/components/core/button.jpeg
   video: /previews/components/core/button.mp4
+links:
+  - label: Aria docs
+    href: https://react-spectrum.adobe.com/react-aria/Button.html
+  - label: Aria API Reference
+    href: https://react-spectrum.adobe.com/react-aria/Button.html#props
 ---
 
 <ComponentPreview name="demos/components/core/button/default" />
@@ -24,60 +29,62 @@ npm install react-aria-components
 
 ## Usage
 
-```jsx
-import { Button } from "@/components/core/button";
-```
+Buttons allow users to initiate an action or command when clicked or tapped.
 
-```jsx
-<Button>Button</Button>
-```
-
-## Examples
-
-### Sizes
-
-The default size is `md`.
-
-<ComponentPreview name="demos/components/core/button/sizes" />
+## Options
 
 ### Variants
 
-The default variant is `neutral`.
+Use the `variant` prop to control the visual style of the button.<br/>
+The default variant is `default`.
 
 <ComponentPreview name="demos/components/core/button/variants" />
 
+### Size
+
+Use the `size` prop to control the size of the button.<br/>
+The default variant is `md`.
+
+<ComponentPreview name="demos/components/core/button/sizes" />
+
 ### Shapes
 
+Use the `shape` prop to control the shape of the button.<br/>
 Icon-only buttons should include an `aria-label`.
 
 <ComponentPreview name="demos/components/core/button/shapes" />
 
 ### Prefix and suffix
 
+To add additional context for a button label, such as a “search” icon next to the label for a search field submit, use the `prefix` and `suffix` props. Leading visuals always appear locked to the button label, even if the button is full width.
+
 <ComponentPreview name="demos/components/core/button/prefix-and-suffix" />
 
 ### Loading
+
+Use the `isLoading` prop to control the loading state of the button, if you need to wait for a button's action to be completed.
 
 <ComponentPreview name="demos/components/core/button/loading" />
 
 ### Disabled
 
+Use the `isDisabled` prop to disable the button.
+
 <ComponentPreview name="demos/components/core/button/disabled" />
 
 ### Link button
+
+To use a button as a link, use the `ButtonLink` component or pass `buttonStyles` to the className of the link.
 
 <ComponentPreview name="demos/components/core/button/link-button" />
 
 ## API Reference
 
-| Prop      | Type                                                           | Default   |
-| --------- | -------------------------------------------------------------- | --------- |
-| `type`    | `"primary" \| "neutral" \| "danger" \| "success" \| "warning"` | `neutral` |
-| `variant` | `"fill" \| "ghost" \| "outline" `                              | `fill`    |
-| `size`    | `"sm" \| "md" \| "lg"`                                         | `md`      |
-| `shape`   | `"default" \| "square" \| "circle"`                            | `default` |
-| `loading` | `boolean`                                                      | -         |
-| `prefix`  | `React.ReactNode`                                              | -         |
-| `suffix`  | `React.ReactNode`                                              | -         |
-
-
+| Prop      | Type                                                                                                | Default   |
+| --------- | --------------------------------------------------------------------------------------------------- | --------- |
+| `variant` | `"default" \| "primary" \| "ghost" \| "outline" \| "neutral" \| "danger" \| "success" \| "warning"` | `default` |
+| `size`    | `"sm" \| "md" \| "lg"`                                                                              | `md`      |
+| `shape`   | `"default" \| "square" \| "circle"`                                                                 | -         |
+| `loading` | `boolean`                                                                                           | -         |
+| `prefix`  | `React.ReactNode`                                                                                   | -         |
+| `suffix`  | `React.ReactNode`                                                                                   | -         |

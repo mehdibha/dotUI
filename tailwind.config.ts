@@ -70,14 +70,14 @@ const config = {
               active: "hsl(var(--color-bg-warning-muted-active))",
             },
           },
-          info: {
-            DEFAULT: "hsl(var(--color-bg-info))",
-            hover: "hsl(var(--color-bg-info-hover))",
-            active: "hsl(var(--color-bg-info-active))",
+          accent: {
+            DEFAULT: "hsl(var(--color-bg-accent))",
+            hover: "hsl(var(--color-bg-accent-hover))",
+            active: "hsl(var(--color-bg-accent-active))",
             muted: {
-              DEFAULT: "hsl(var(--color-bg-info-muted))",
-              hover: "hsl(var(--color-bg-info-muted-hover))",
-              active: "hsl(var(--color-bg-info-muted-active))",
+              DEFAULT: "hsl(var(--color-bg-accent-muted))",
+              hover: "hsl(var(--color-bg-accent-muted-hover))",
+              active: "hsl(var(--color-bg-accent-muted-active))",
             },
           },
           tooltip: {
@@ -115,6 +115,8 @@ const config = {
         },
         border: {
           DEFAULT: "hsl(var(--color-border))",
+          field: "hsl(var(--color-border-field))",
+          control: "hsl(var(--color-border-control))",
           hover: "hsl(var(--color-border-hover))",
           active: "hsl(var(--color-border-active))",
           disabled: "hsl(var(--color-border-disabled))",
@@ -128,7 +130,7 @@ const config = {
         },
       },
       transitionTimingFunction: {
-        "drawer": "cubic-bezier(0.32,0.72,0,1)",
+        drawer: "cubic-bezier(0.32,0.72,0,1)",
       },
       transitionDuration: {
         "3000": "3000ms",

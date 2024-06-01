@@ -140,7 +140,11 @@ export function ThemeOverride(props: ThemeOverrideProps) {
   }, []);
 
   return (
-    <div className="bg-bg text-fg duration-150" style={styles}>
+    <div
+      drawer-wrapper=""
+      className="bg-bg text-fg duration-150"
+      // style={styles}
+    >
       {children}
     </div>
   );

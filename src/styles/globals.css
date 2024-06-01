@@ -4,6 +4,9 @@
 
 @layer base {
   :root {
+    --color-black: 0 0 0%;
+    --color-white: 0 0 100%;
+
     --color-neutral-100: 0 0% 98%; /* Background layers (default bg) */
     --color-neutral-200: 0 0% 79%; /* Background layers (Bg secondary/muted) */ /* Decorative border */
     --color-neutral-300: 0 0% 73%; /* Decorative border */
@@ -19,7 +22,7 @@
     --color-primary-200: 0 0% 79%;
     --color-primary-300: 0 0% 73%;
     --color-primary-400: 0 0% 65%;
-    --color-primary-500: 0 0% 54%; 
+    --color-primary-500: 0 0% 54%;
     --color-primary-600: 0 0% 42%;
     --color-primary-700: 0 0% 35%;
     --color-primary-800: 0 0% 28%;
@@ -75,7 +78,7 @@
     --color-bg: var(--color-neutral-100);
     --color-bg-muted: var(--color-neutral-200);
     --color-bg-inverse: var(--color-neutral-1000);
-    --color-bg-disabled: var(--color-neutral-400);
+    --color-bg-disabled: var(--color-neutral-200);
 
     --color-bg-neutral: var(--color-neutral-300);
     --color-bg-neutral-hover: var(--color-neutral-400);
@@ -85,9 +88,9 @@
     --color-bg-primary-hover: var(--color-neutral-900);
     --color-bg-primary-active: var(--color-neutral-800);
 
-    --color-bg-success: var(--color-success-800);
-    --color-bg-success-hover: var(--color-success-700);
-    --color-bg-success-active: var(--color-success-600);
+    --color-bg-success: var(--color-success-500);
+    --color-bg-success-hover: var(--color-success-600);
+    --color-bg-success-active: var(--color-success-700);
     --color-bg-success-muted: var(--color-success-300);
     --color-bg-success-muted-hover: var(--color-success-300);
     --color-bg-success-muted-active: var(--color-success-300);
@@ -106,17 +109,17 @@
     --color-bg-warning-muted-hover: var(--color-warning-300);
     --color-bg-warning-muted-active: var(--color-warning-300);
 
-    --color-bg-info: var(--color-info-500);
-    --color-bg-info-hover: var(--color-info-600);
-    --color-bg-info-active: var(--color-info-700);
-    --color-bg-info-muted: var(--color-info-300);
-    --color-bg-info-muted-hover: var(--color-info-300);
-    --color-bg-info-muted-active: var(--color-info-300);
+    --color-bg-accent: var(--color-accent-500);
+    --color-bg-accent-hover: var(--color-accent-600);
+    --color-bg-accent-active: var(--color-accent-700);
+    --color-bg-accent-muted: var(--color-accent-300);
+    --color-bg-accent-muted-hover: var(--color-accent-300);
+    --color-bg-accent-muted-active: var(--color-accent-300);
 
     --color-fg: var(--color-neutral-1000);
     --color-fg-muted: var(--color-neutral-800);
     --color-fg-inverse: var(--color-neutral-100);
-    --color-fg-disabled: var(--color-neutral-600);
+    --color-fg-disabled: var(--color-neutral-500);
 
     --color-fg-link: var(--color-neutral-1000);
     --color-fg-link-hover: var(--color-neutral-1000);
@@ -135,9 +138,11 @@
     --color-fg-onTooltip: var(--color-neutral-1000);
 
     --color-border: var(--color-neutral-300);
+    --color-border-field: var(--color-neutral-400);
+    --color-border-control: var(--color-neutral-700);
     --color-border-hover: var(--color-neutral-1000);
     --color-border-active: var(--color-neutral-1000);
-    --color-border-disabled: var(--color-neutral-1000);
+    --color-border-disabled: var(--color-neutral-300);
 
     --color-border-success: var(--color-success-300);
     --color-border-danger: var(--color-danger-300);
@@ -158,40 +163,29 @@
     --color-neutral-500: 240 6% 33%;
     --color-neutral-600: 240 6% 47%;
     --color-neutral-700: 240 6% 55%;
-    --color-neutral-800: 240 6% 64%;
-    --color-neutral-900: 240 6% 80%;
+    --color-neutral-800: 240 6% 80%;
+    --color-neutral-900: 240 6% 90%;
     --color-neutral-1000: 240 10% 98%;
-
-    --color-primary-100: 0 0% 12%;
-    --color-primary-200: 0 0% 17%;
-    --color-primary-300: 0 0% 22%;
-    --color-primary-400: 0 0% 27%;
-    --color-primary-500: 0 0% 36%;
-    --color-primary-600: 0 0% 47%;
-    --color-primary-700: 0 0% 55%;
-    --color-primary-800: 0 0% 64%;
-    --color-primary-900: 0 0% 80%;
-    --color-primary-1000: 0 0% 86%;
 
     --color-success-100: 132 42% 9%;
     --color-success-200: 130 41% 14%;
     --color-success-300: 131 41% 18%;
     --color-success-400: 132 41% 22%;
-    --color-success-500: 131 41% 29%;
-    --color-success-600: 131 41% 38%;
-    --color-success-700: 131 41% 45%;
-    --color-success-800: 131 34% 55%;
+    --color-success-500: 131 41% 44%;
+    --color-success-600: 131 41% 48%;
+    --color-success-700: 131 41% 54%;
+    --color-success-800: 131 34% 70%;
     --color-success-900: 131 34% 76%;
     --color-success-1000: 130 35% 83%;
 
-    --color-warning-100: 34 91% 9%;
-    --color-warning-200: 34 91% 13%;
-    --color-warning-300: 35 93% 17%;
-    --color-warning-400: 35 92% 21%;
-    --color-warning-500: 35 93% 27%;
-    --color-warning-600: 35 92% 35%;
-    --color-warning-700: 35 92% 42%;
-    --color-warning-800: 35 93% 48%;
+    --color-warning-100: 34 100% 10%;
+    --color-warning-200: 34 100% 20%;
+    --color-warning-300: 35 100% 40%;
+    --color-warning-400: 35 100% 48%;
+    --color-warning-500: 35 100% 50%;
+    --color-warning-600: 35 100% 58%;
+    --color-warning-700: 35 100% 66%;
+    --color-warning-800: 35 93% 65%;
     --color-warning-900: 35 100% 72%;
     --color-warning-1000: 35 100% 80%;
 
@@ -200,9 +194,9 @@
     --color-danger-300: 358 64% 26%;
     --color-danger-400: 358 64% 32%;
     --color-danger-500: 358 64% 42%;
-    --color-danger-600: 358 69% 55%;
-    --color-danger-700: 358 69% 65%;
-    --color-danger-800: 358 69% 72%;
+    --color-danger-600: 358 69% 51%;
+    --color-danger-700: 358 69% 60%;
+    --color-danger-800: 358 69% 70%;
     --color-danger-900: 359 70% 86%;
     --color-danger-1000: 358 69% 90%;
 
@@ -216,6 +210,8 @@
     --color-accent-800: 210 97% 65%;
     --color-accent-900: 210 100% 82%;
     --color-accent-1000: 210 100% 87%;
+
+    --color-fg-onWarning: var(--color-black);
   }
 }
 

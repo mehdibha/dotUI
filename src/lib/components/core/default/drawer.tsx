@@ -21,7 +21,7 @@ const drawerVariants = tv({
   slots: {
     overlay: "",
     backdrop: "",
-    content: "outline-none rounded-[inherit] p-4",
+    content: "outline-none rounded-[inherit] p-4 overflow-auto",
     title: "text-2xl font-bold",
   },
 });
@@ -60,10 +60,18 @@ type DrawerClassNames = {
 type DrawerProps = DrawerContentProps & {
   title?: string;
   classNames?: DrawerClassNames & { overlay?: string };
+  placement?: "top" | "bottom" | "left" | "right";
 };
-const Drawer = ({ title, classNames, className, ...props }: DrawerProps) => {
+const Drawer = ({
+  placement = "bottom",
+  title,
+  classNames,
+  className,
+  ...props
+}: DrawerProps) => {
   return (
     <DrawerOverlay
+      placement={placement}
       classNames={{ overlay: classNames?.overlay, backdrop: classNames?.backdrop }}
     >
       <DrawerContent {...props} className={cn(classNames?.content, className)}>

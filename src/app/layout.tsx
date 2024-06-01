@@ -62,14 +62,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         )}
         suppressHydrationWarning
       >
-        <div vaul-drawer-wrapper="" drawer-wrapper="" className="bg-bg">
-          <Providers>
-            <Toaster />
-            <Header />
-            <main className="min-h-screen">{children}</main>
-            <Footer />
-          </Providers>
-        </div>
+        <Providers>
+          <Toaster />
+          <Header />
+          <main className="min-h-screen">{children}</main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

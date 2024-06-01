@@ -1,5 +1,5 @@
 import { Button } from "@/lib/components/core/default/button";
 
-export default function ButtonDemo() {
+export default function Demo() {
   return <Button>Button</Button>;
 }

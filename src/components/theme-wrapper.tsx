@@ -124,12 +124,12 @@ export function ThemeWrapper(props: ThemeWrapperProps) {
 
   return (
     <div
-      style={
-        {
-          ...styles,
-          "--radius": `${theme.radius}rem`,
-        } as React.CSSProperties
-      }
+      // style={
+      //   {
+      //     ...styles,
+      //     "--radius": `${theme.radius}rem`,
+      //   } as React.CSSProperties
+      // }
       className="text-fg"
     >
       {children}

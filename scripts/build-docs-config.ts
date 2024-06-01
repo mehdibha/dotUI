@@ -62,9 +62,7 @@ const docsConfig: DocsConfig = {
           title: "Buttons",
           items: [
             { title: "Button", href: "/components/buttons/button" },
-            { title: "Button Group", href: "/components/buttons/button-group" },
             { title: "Toggle Button", href: "/components/buttons/toggle-button" },
-            { title: "Toggle Group", href: "/components/buttons/toggle-group" },
             { title: "File Trigger", href: "/components/buttons/file-trigger" },
           ],
         },
@@ -87,8 +85,8 @@ const docsConfig: DocsConfig = {
           ],
         },
         {
-          title: "Menus",
-          items: getCategoryDocs("components/menus"),
+          title: "Collections",
+          items: getCategoryDocs("components/collections"),
         },
         {
           title: "Selection",

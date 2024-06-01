@@ -3,10 +3,10 @@
 import * as React from "react";
 import { Loader2Icon } from "lucide-react";
 import {
-  Button as Button_,
+  Button as AriaButton,
+  Link as AriaLink,
   composeRenderProps,
-  type ButtonProps as ButtonProps_,
-  Link,
+  type ButtonProps as AriaButtonProps,
   type LinkProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
@@ -15,23 +15,24 @@ import { focusRing } from "@/lib/utils/styles";
 const buttonVariants = tv(
   {
     extend: focusRing,
-    base: "inline-flex items-center justify-center whitespace-nowrap rounded-md leading-normal text-sm font-medium ring-offset-background transition-colors disabled:cursor-not-allowed shrink-0",
+    base: "inline-flex items-center justify-center whitespace-nowrap rounded-md leading-normal text-sm font-medium ring-offset-background transition-colors disabled:cursor-not-allowed disabled:bg-bg-disabled disabled:border disabled:border-border-disabled disabled:text-fg-disabled shrink-0",
     variants: {
       variant: {
-        fill: "disabled:bg-bg-disabled disabled:text-fg-disabled",
-        ghost: "disabled:bg-bg-disabled disabled:text-fg-disabled",
-        outline: "disabled:border-border-disabled disabled:text-fg-disabled",
-      },
-      type: {
-        neutral: "text-fg border hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20",
+        default:
+          "bg-bg-neutral hover:bg-bg-neutral-hover pressed:bg-bg-neutral-active text-fg-onNeutral",
         primary:
-          "text-fg-primary border border-border-primary hover:bg-bg-primary/10 pressed:bg-bg-primary/20",
+          "bg-bg-primary hover:bg-bg-primary-hover pressed:bg-bg-primary-active text-fg-onPrimary",
         success:
-          "text-fg-success border border-border-success hover:bg-bg-success/10 pressed:bg-bg-success/20",
+          "bg-bg-success hover:bg-bg-success-hover pressed:bg-bg-success-active text-fg-onSuccess",
         warning:
-          "text-fg-warning border border-border-warning hover:bg-bg-warning/10 pressed:bg-bg-warning/20",
+          "bg-bg-warning hover:bg-bg-warning-hover pressed:bg-bg-warning-active text-fg-onWarning",
         danger:
-          "text-fg-danger border border-border-danger hover:bg-bg-danger/10 pressed:bg-bg-danger/20",
+          "bg-bg-danger hover:bg-bg-danger-hover pressed:bg-bg-danger-active text-fg-onDanger",
+        accent:
+          "bg-bg-accent hover:bg-bg-accent-hover pressed:bg-bg-accent-active text-fg-onAccent",
+        ghost: "bg-transparent hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 text-fg",
+        outline:
+          "border border-border-field bg-transparent hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 text-fg",
       },
       size: {
         sm: "h-8 px-3 [&_svg]:size-4",
@@ -39,13 +40,11 @@ const buttonVariants = tv(
         lg: "h-10 px-6 [&_svg]:size-5",
       },
       shape: {
-        default: "",
         square: "",
         circle: "rounded-full",
       },
     },
     compoundVariants: [
-      // sizes
       {
         size: "sm",
         shape: ["square", "circle"],
@@ -61,55 +60,10 @@ const buttonVariants = tv(
         shape: ["square", "circle"],
         className: "w-10 px-0",
       },
-      // variant ghost
-      {
-        variant: "ghost",
-        type: ["neutral", "primary", "success", "warning", "danger"],
-        className: "border-none",
-      },
-      // variant outline
-      {
-        variant: "ghost",
-        type: ["neutral", "primary", "success", "warning", "danger"],
-        className: "border-none",
-      },
-      // variant fill
-      {
-        variant: "fill",
-        type: "neutral",
-        className:
-          "bg-bg-neutral text-fg-onNeutral hover:bg-bg-neutral-hover pressed:bg-bg-neutral-active",
-      },
-      {
-        variant: "fill",
-        type: "primary",
-        className:
-          "bg-bg-primary text-fg-onPrimary hover:bg-bg-primary-hover pressed:bg-bg-primary-active",
-      },
-      {
-        variant: "fill",
-        type: "success",
-        className:
-          "bg-bg-success text-fg-onSuccess hover:bg-bg-success-hover pressed:bg-bg-success-active",
-      },
-      {
-        variant: "fill",
-        type: "warning",
-        className:
-          "bg-bg-warning text-fg-onWarning hover:bg-bg-warning-hover pressed:bg-bg-warning-active",
-      },
-      {
-        variant: "fill",
-        type: "danger",
-        className:
-          "bg-bg-danger text-fg-onDanger hover:bg-bg-danger-hover pressed:bg-bg-danger-active",
-      },
     ],
     defaultVariants: {
-      type: "neutral",
-      variant: "fill",
+      variant: "default",
       size: "md",
-      shape: "default",
     },
   },
   {
@@ -118,16 +72,17 @@ const buttonVariants = tv(
 );
 
 export interface ButtonProps
-  extends Omit<ButtonProps_, "type" | "children">,
+  extends Omit<AriaButtonProps, "children" | "className">,
     VariantProps<typeof buttonVariants> {
+  className?: string;
   children?: React.ReactNode;
-  htmlType?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
   isLoading?: boolean;
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
 }
 
 const Button = ({
+  className,
   variant,
   size,
   shape,
@@ -136,18 +91,14 @@ const Button = ({
   isLoading = false,
   prefix,
   suffix,
-  htmlType,
   type,
   ...props
 }: ButtonProps) => {
   return (
-    <Button_
-      type={htmlType}
-      isDisabled={isDisabled || isLoading}
+    <AriaButton
       {...props}
-      className={composeRenderProps(props.className, (className, renderProps) =>
-        buttonVariants({ ...renderProps, variant, type, size, shape, className })
-      )}
+      isDisabled={isDisabled || isLoading}
+      className={buttonVariants({ variant, size, shape, className })}
     >
       {({}) => (
         <>
@@ -167,13 +118,14 @@ const Button = ({
           {suffix && <span className="pointer-events-none ml-2">{suffix}</span>}
         </>
       )}
-    </Button_>
+    </AriaButton>
   );
 };
 
 export interface LinkButtonProps
-  extends Omit<LinkProps, "type" | "children">,
+  extends Omit<LinkProps, "children" | "className">,
     Omit<VariantProps<typeof buttonVariants>, "isDisabled"> {
+  className?: string;
   children?: React.ReactNode;
   isLoading?: boolean;
   prefix?: React.ReactNode;
@@ -181,6 +133,7 @@ export interface LinkButtonProps
 }
 
 const LinkButton = ({
+  className,
   variant,
   size,
   shape,
@@ -189,16 +142,13 @@ const LinkButton = ({
   isLoading = false,
   prefix,
   suffix,
-  type,
   ...props
 }: LinkButtonProps) => {
   return (
-    <Link
+    <AriaLink
       isDisabled={isDisabled || isLoading}
       {...props}
-      className={composeRenderProps(props.className, (className, renderProps) =>
-        buttonVariants({ className, variant, type, size, shape, ...renderProps })
-      )}
+      className={buttonVariants({ className, variant, size, shape })}
     >
       {({}) => (
         <>
@@ -218,7 +168,7 @@ const LinkButton = ({
           {suffix && <span className="pointer-events-none ml-2">{suffix}</span>}
         </>
       )}
-    </Link>
+    </AriaLink>
   );
 };
 

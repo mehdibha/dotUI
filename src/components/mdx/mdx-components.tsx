@@ -1,7 +1,6 @@
 import type { ComponentProps } from "react";
 import React from "react";
 import NavLink from "next/link";
-import { type BrightProps, Code } from "bright";
 import { InfoIcon } from "lucide-react";
 import { CodeTabs } from "@/components/code-highlighter/code-tabs";
 import {
@@ -89,7 +88,7 @@ export const components = {
   h6: createHeading(6, "mt-8 scroll-m-20 text-base font-semibold tracking-tight"),
   a: Link,
   p: ({ className, ...props }: ComponentProps<"p">) => (
-    <p className={cn("leading-7 [&:not(:first-child)]:mt-4", className)} {...props} />
+    <p className={cn("leading-7 [&:not(:first-child)]:mt-4 text-base", className)} {...props} />
   ),
   ul: ({ className, ...props }: ComponentProps<"ul">) => (
     <ul className={cn("my-6 ml-6 list-disc", className)} {...props} />
@@ -107,7 +106,11 @@ export const components = {
     />
   ),
   img: ({ className, alt, ...props }: React.ImgHTMLAttributes<HTMLImageElement>) => (
-    <img className={cn("rounded-md max-w-md mx-auto border", className)} alt={alt} {...props} />
+    <img
+      className={cn("mx-auto max-w-md rounded-md border", className)}
+      alt={alt}
+      {...props}
+    />
   ),
   hr: ({ ...props }: ComponentProps<"hr">) => <hr className="my-4 md:my-8" {...props} />,
   pre: (props: ComponentProps<"pre">) => (
@@ -125,9 +128,10 @@ export const components = {
     </div>
   ),
   code: (props: ComponentProps<"pre">) => (
-    <div className={codeBlockStyles().root({ className: "mx-0.5 inline-flex" })}>
-      <CodeBlockCode lang="tsx" className="[&>pre]:!py-1" {...props} />
-    </div>
+    <code
+      className={codeBlockStyles().root({ className: "px-2 py-0.5 inline-flex text-xs text-fg-muted" })}
+      {...props}
+    />
   ),
   Step: ({ className, ...props }: React.ComponentProps<"h3">) => (
     <h3
@@ -153,7 +157,7 @@ export const components = {
     <thead className={cn("bg-bg-muted", className)} {...props} />
   ),
   tr: ({ className, ...props }: React.HTMLAttributes<HTMLTableRowElement>) => (
-    <tr className={cn("m-0 border-t p-0 even:bg-bg-muted/50", className)} {...props} />
+    <tr className={cn("m-0 border-t p-0", className)} {...props} />
   ),
   th: ({ className, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
     <th

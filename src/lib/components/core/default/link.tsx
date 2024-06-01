@@ -23,7 +23,7 @@ const linkVariants = tv({
   },
 });
 
-export interface LinkProps extends AriaLinkProps, VariantProps<typeof linkVariants> {}
+interface LinkProps extends AriaLinkProps, VariantProps<typeof linkVariants> {}
 
 const Link = ({ type, ...props }: LinkProps) => {
   return (
@@ -36,4 +36,5 @@ const Link = ({ type, ...props }: LinkProps) => {
   );
 };
 
+export type { LinkProps };
 export { Link, linkVariants };

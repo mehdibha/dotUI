@@ -1,19 +1,11 @@
 import React from "react";
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ChevronRightIcon } from "lucide-react";
+import { ExternalLinkIcon } from "lucide-react";
 import { TableOfContents } from "@/components/docs/toc";
 import { Mdx } from "@/components/mdx/mdx-remote";
-// import {
-//   BreadcrumbsRoot,
-//   BreadcrumbsItem,
-//   BreadcrumbsLink,
-//   BreadcrumbsList,
-//   BreadcrumbsPage,
-//   BreadcrumbsSeparator,
-// } from "@/lib/components/core/default/breadcrumbs";
-import { Button, LinkButton } from "@/lib/components/core/default/button";
+import { Breadcrumbs, Breadcrumb } from "@/lib/components/core/default/breadcrumbs";
+import { LinkButton } from "@/lib/components/core/default/button";
 import { ScrollArea } from "@/lib/components/core/default/scroll-area";
 import { cn } from "@/lib/utils/classes";
 import { getDocFromSlug, getDocs } from "@/server/docs";
@@ -58,36 +50,40 @@ export default async function Page({ params }: PageProps) {
       })}
     >
       <div className="mx-auto w-full min-w-0 pt-6">
-        {/* {metadata.breadcrumbs.length > 1 && (
-          <BreadcrumbsRoot className="mb-2">
-            <BreadcrumbsList className="sm:gap-1.5">
-              {metadata.breadcrumbs.map((breadcrumb, index) => (
-                <React.Fragment key={index}>
-                  {index === metadata.breadcrumbs.length - 1 ? (
-                    <BreadcrumbsPage>{breadcrumb.label}</BreadcrumbsPage>
-                  ) : (
-                    <BreadcrumbsItem>
-                      <BreadcrumbsLink asChild>
-                        <Link href={breadcrumb.href}>{breadcrumb.label}</Link>
-                      </BreadcrumbsLink>
-                    </BreadcrumbsItem>
-                  )}
-                  {index < metadata.breadcrumbs.length - 1 && (
-                    <BreadcrumbsSeparator>
-                      <ChevronRightIcon />
-                    </BreadcrumbsSeparator>
-                  )}
-                </React.Fragment>
-              ))}
-            </BreadcrumbsList>
-          </BreadcrumbsRoot>
-        )} */}
+        {metadata.breadcrumbs.length > 1 && (
+          <Breadcrumbs className="mb-2">
+            {metadata.breadcrumbs.map((item, index) => (
+              <Breadcrumb
+                key={item.href}
+                href={index < metadata.breadcrumbs.length - 1 ? item.href : undefined}
+              >
+                {item.label}
+              </Breadcrumb>
+            ))}
+          </Breadcrumbs>
+        )}
         <h1 className="text-4xl font-bold">{metadata.title}</h1>
         <p className="mt-2 text-fg-muted">{metadata.description}</p>
+        {metadata.links && metadata.links.length > 0 && (
+          <div className="mt-4 flex gap-2">
+            {metadata.links.map((link, index) => (
+              <LinkButton
+                key={index}
+                href={link.href}
+                suffix={<ExternalLinkIcon />}
+                size="sm"
+                className="h-6 [&_svg]:size-3 text-xs font-semibold"
+                target="_blank"
+              >
+                {link.label}
+              </LinkButton>
+            ))}
+          </div>
+        )}
         {categories && categories.length > 0 && (
           <div className="mt-6 flex flex-wrap gap-2">
             {categories.map((category, index) => (
-              <LinkButton key={index} size="sm" href={category.href}  className="h-7">
+              <LinkButton key={index} size="sm" href={category.href} className="h-7">
                 {category.label}
               </LinkButton>
             ))}

@@ -5,8 +5,9 @@ export type DocType = "hook" | "component" | "page" | "template" | "block" | und
 
 export type DocAspect = "video" | "page";
 
-interface DocLinks {
-  github?: string;
+interface DocLink {
+  label: string;
+  href: string;
 }
 
 interface Thumbnail {
@@ -27,7 +28,7 @@ export interface DocFrontmatter {
   description?: string;
   thumbnail?: Thumbnail;
   keywords?: string[];
-  links?: DocLinks;
+  links?: DocLink[];
   label?: string;
 }
 
@@ -39,7 +40,7 @@ export interface DocMetadata {
   description?: string;
   thumbnail?: Thumbnail;
   keywords?: string[];
-  links?: DocLinks;
+  links?: DocLink[];
   label?: string;
   disabled?: boolean;
 }

@@ -1,7 +1,7 @@
 import { UploadIcon } from "lucide-react";
 import { Button } from "@/lib/components/core/default/button";
 
-export default function ButtonDemo() {
+export default function Demo() {
   return (
     <div className="flex items-center justify-center gap-2">
       <Button prefix={<UploadIcon />} size="sm">

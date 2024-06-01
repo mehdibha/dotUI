@@ -23,7 +23,6 @@ import { Button } from "@/lib/components/core/default/button";
 import { ColorPicker } from "@/lib/components/core/default/color-picker";
 import { Dialog, DialogRoot } from "@/lib/components/core/default/dialog";
 import { Drawer, DrawerRoot } from "@/lib/components/core/default/drawer";
-import { Popover, PopoverRoot } from "@/lib/components/core/default/popover";
 import { Slider } from "@/lib/components/core/default/slider";
 import { Switch } from "@/lib/components/core/default/switch";
 import { TextField } from "@/lib/components/core/default/text-field";
@@ -90,7 +89,7 @@ export default function ThemesPage() {
       </div>
       <div className="mt-14 [&>h2]:my-4 [&>h2]:text-3xl [&>h2]:font-semibold [&_h3]:text-xl [&_h3]:font-semibold">
         <h2>Colors</h2>
-        <div className="space-y-20 mb-20">
+        <div className="mb-20 space-y-20">
           {(
             [
               {
@@ -211,9 +210,9 @@ const ColorScalesPopover = ({
   } = usePalette(name);
 
   return (
-    <PopoverRoot>
+    <DrawerRoot>
       <Button size="sm">Color scales</Button>
-      <Popover title="Color scales" className="space-y-4">
+      <Drawer title="Color scales" placement="right" className="space-y-4">
         <Slider label="Lightness" value={lightness} onChange={handleChangeLightness} />
         <Slider label="Saturation" value={saturation} onChange={handleChangeSaturation} />
         <Switch isSelected={smooth} onChange={handleChangeSmooth}>
@@ -249,11 +248,12 @@ const ColorScalesPopover = ({
             </div>
           ))}
         </div>
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-2 gap-2">
           {ratios.map((ratio, i) => (
             <TextField
               key={i}
-              className="w-[80px]"
+              label={`${name} ${(i + 1) * 100}`}
+              className="w-[150px]"
               size="sm"
               htmlType="number"
               inputMode="decimal"
@@ -264,14 +264,14 @@ const ColorScalesPopover = ({
         </div>
         <div className="flex justify-end">
           <Button
-            type="primary"
+            variant="primary"
             // onPress={updateTheme}
           >
             Apply changes
           </Button>
         </div>
-      </Popover>
-    </PopoverRoot>
+      </Drawer>
+    </DrawerRoot>
   );
 };
 
@@ -383,7 +383,7 @@ const PreviewBase = ({
 
 const hints = {
   "neutral-100": "Default background",
-  "neutral-200": "Secondary background, Decorative border",
+  "neutral-200": "Secondary background, decorative border.",
   "neutral-300": "Decorative border",
   "neutral-400": "Field border",
   "neutral-600": "Disabled text",

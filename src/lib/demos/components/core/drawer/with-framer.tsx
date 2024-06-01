@@ -67,16 +67,16 @@ export default function Sheet() {
   const bodyBorderRadius = useTransform(y, [0, h], [SHEET_RADIUS, 0]);
 
   useMotionValueEvent(bodyScale, "change", (v) => (root.style.scale = `${v}`));
-  useMotionValueEvent(
-    bodyTranslate,
-    "change",
-    (v) => (root.style.translate = `0 ${v}px`)
-  );
-  useMotionValueEvent(
-    bodyBorderRadius,
-    "change",
-    (v) => (root.style.borderRadius = `${v}px`)
-  );
+  // useMotionValueEvent(
+  //   bodyTranslate,
+  //   "change",
+  //   (v) => (root.style.translate = `0 ${v}px`)
+  // );
+  // useMotionValueEvent(
+  //   bodyBorderRadius,
+  //   "change",
+  //   (v) => (root.style.borderRadius = `${v}px`)
+  // );
 
   return (
     <DialogTrigger>

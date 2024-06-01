@@ -4,324 +4,103 @@ import { OverlayTriggerStateContext } from "react-aria-components";
 interface useMotionDrawerProps {
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
-  shouldScaleBackground?: boolean;
+  scaleBackground?: boolean;
   closeThreshold?: number;
   scrollLockTimeout?: number;
-  dismissible?: boolean;
-  direction?: "top" | "bottom" | "left" | "right";
+  isDismissable?: boolean;
+  placement?: "top" | "bottom" | "left" | "right";
 }
+
+type AnimationState = "unmounted" | "hidden" | "visible";
 
 export const useMotionDrawer = (props: useMotionDrawerProps) => {
   const {
-    open: openProp,
-    onOpenChange,
-    shouldScaleBackground = true,
+    scaleBackground = true,
     closeThreshold = CLOSE_THRESHOLD,
     scrollLockTimeout = SCROLL_LOCK_TIMEOUT,
-    dismissible = true,
-    direction = "bottom",
+    isDismissable = true,
+    placement = "bottom",
   } = props;
-  const { isOpen, setOpen } = React.useContext(OverlayTriggerStateContext);
-  const [hasBeenOpened, setHasBeenOpened] = React.useState<boolean>(false);
-  const [visible, setVisible] = React.useState<boolean>(false);
-  const [mounted, setMounted] = React.useState<boolean>(false);
-  const [isDragging, setIsDragging] = React.useState<boolean>(false);
-  const [justReleased, setJustReleased] = React.useState<boolean>(false);
-  const overlayRef = React.useRef<HTMLDivElement>(null);
-  const openTime = React.useRef<Date | null>(null);
+  const contextState = React.useContext(OverlayTriggerStateContext);
+  const context = React.useContext(DrawerInternalContext);
+  const state = contextState;
+  const [animation, setAnimation] = React.useState<AnimationState>("unmounted");
+  const isEntering = animation === "visible";
+  const isExiting = animation === "hidden";
+  const nested = !!context;
+
+  const drawerRef = React.useRef<HTMLDivElement>(null);
+  const backdropRef = React.useRef<HTMLDivElement>(null);
   const dragStartTime = React.useRef<Date | null>(null);
   const dragEndTime = React.useRef<Date | null>(null);
-  const lastTimeDragPrevented = React.useRef<Date | null>(null);
-  const isAllowedToDrag = React.useRef<boolean>(false);
-  const pointerStart = React.useRef(0);
-  const keyboardIsOpen = React.useRef(false);
-  const previousDiffFromInitial = React.useRef(0);
-  const drawerRef = React.useRef<HTMLDivElement>(null);
+
+  const [isDragging, setDragging] = React.useState(false);
   const drawerHeightRef = React.useRef(
     drawerRef.current?.getBoundingClientRect().height || 0
   );
+  const pointerStartRef = React.useRef<{ x: number; y: number } | null>(null);
+  const pointerStart = React.useRef(0);
+  const keyboardIsOpen = React.useRef(false);
   const initialDrawerHeight = React.useRef(0);
+  const previousDiffFromInitial = React.useRef(0);
 
-  const { restorePositionSetting } = usePositionFixed({
-    isOpen,
-    modal: true,
-    nested: false,
-    hasBeenOpened,
-    preventScrollRestoration: true,
-    noBodyStyles: false,
-  });
-
-  function getScale() {
-    return (window.innerWidth - WINDOW_TOP_OFFSET) / window.innerWidth;
-  }
-
-  function onPress(event: React.PointerEvent<HTMLDivElement>) {
-    if (!dismissible) return;
-    if (drawerRef.current && !drawerRef.current.contains(event.target as Node)) return;
-    drawerHeightRef.current = drawerRef.current?.getBoundingClientRect().height || 0;
-    setIsDragging(true);
-    dragStartTime.current = new Date();
-    if (isIOS()) {
-      window.addEventListener("touchend", () => (isAllowedToDrag.current = false), {
-        once: true,
-      });
-    }
-    (event.target as HTMLElement).setPointerCapture(event.pointerId);
-    pointerStart.current = isVertical(direction) ? event.clientY : event.clientX;
-  }
-
-  function shouldDrag(el: EventTarget, isDraggingInDirection: boolean) {
-    let element = el as HTMLElement;
-    const highlightedText = window.getSelection()?.toString();
-    const swipeAmount = drawerRef.current
-      ? getTranslate(drawerRef.current, direction)
-      : null;
-    const date = new Date();
-    if (
-      element.hasAttribute("data-vaul-no-drag") ||
-      element.closest("[data-vaul-no-drag]")
-    ) {
-      return false;
-    }
-    if (direction === "right" || direction === "left") {
-      return true;
-    }
-    if (openTime.current && date.getTime() - openTime.current.getTime() < 500) {
-      return false;
-    }
-    if (swipeAmount !== null) {
-      if (direction === "bottom" ? swipeAmount > 0 : swipeAmount < 0) {
-        return true;
-      }
-    }
-    if (highlightedText && highlightedText.length > 0) {
-      return false;
-    }
-    if (
-      lastTimeDragPrevented.current &&
-      date.getTime() - lastTimeDragPrevented.current.getTime() < scrollLockTimeout &&
-      swipeAmount === 0
-    ) {
-      lastTimeDragPrevented.current = date;
-      return false;
-    }
-    if (isDraggingInDirection) {
-      lastTimeDragPrevented.current = date;
-      return false;
-    }
-    while (element) {
-      if (element.scrollHeight > element.clientHeight) {
-        if (element.scrollTop !== 0) {
-          lastTimeDragPrevented.current = new Date();
-          return false;
-        }
-        if (element.getAttribute("role") === "dialog") {
-          return true;
-        }
-      }
-      element = element.parentNode as HTMLElement;
-    }
+  function shouldDrag(el: EventTarget) {
+    // TODO: add more conditions (scrollLockTimeout / when animating / placement right and left / swipe amout? / scrollable element / ...)
+    const selectedText = window.getSelection()?.toString();
+    if (selectedText && selectedText.length > 0) return false;
+    // if (!isVertical(placement)) return true;
+    // // TODO: Disallow drag when entering or exiting
+    // const swipeAmount = drawerRef.current
+    //   ? getTranslate(drawerRef.current, placement)
+    //   : null;
+    // if (
+    //   swipeAmount !== null &&
+    //   (placement === "bottom" ? swipeAmount > 0 : swipeAmount < 0)
+    // )
+    //   return true;
+    // // TODO: SCROLLLOCKTIMEOUT
+    // // TODO: DRAG IN placement
+    // let element = el as HTMLElement;
+    // while (element) {
+    //   if (element.scrollHeight > element.clientHeight) {
+    //     if (element.scrollTop !== 0) {
+    //       return false;
+    //     }
+    //     if (element.getAttribute("role") === "dialog") {
+    //       return true;
+    //     }
+    //   }
+    //   element = element.parentNode as HTMLElement;
+    // }
     return true;
   }
 
-  function onDrag(event: React.PointerEvent<HTMLDivElement>) {
-    if (!drawerRef.current) {
-      return;
-    }
-    if (isDragging) {
-      const directionMultiplier =
-        direction === "bottom" || direction === "right" ? 1 : -1;
-      const draggedDistance =
-        (pointerStart.current - (isVertical(direction) ? event.clientY : event.clientX)) *
-        directionMultiplier;
-      const isDraggingInDirection = draggedDistance > 0;
-      const absDraggedDistance = Math.abs(draggedDistance);
-      const wrapper = document.querySelector("[vaul-drawer-wrapper]");
-      const percentageDragged = absDraggedDistance / drawerHeightRef.current;
-      if (!isAllowedToDrag.current && !shouldDrag(event.target, isDraggingInDirection))
-        return;
-      drawerRef.current.classList.add(DRAG_CLASS);
-      isAllowedToDrag.current = true;
-      set(drawerRef.current, {
-        transition: "none",
-      });
-      set(overlayRef.current, {
-        transition: "none",
-      });
-      if (isDraggingInDirection) {
-        const dampenedDraggedDistance = dampenValue(draggedDistance);
-        const translateValue =
-          Math.min(dampenedDraggedDistance * -1, 0) * directionMultiplier;
-        set(drawerRef.current, {
-          transform: isVertical(direction)
-            ? `translate3d(0, ${translateValue}px, 0)`
-            : `translate3d(${translateValue}px, 0, 0)`,
-        });
-        return;
-      }
-      const opacityValue = 1 - percentageDragged;
-      set(
-        overlayRef.current,
-        {
-          opacity: `${opacityValue}`,
-          transition: "none",
-        },
-        true
-      );
-      if (wrapper && overlayRef.current && shouldScaleBackground) {
-        const scaleValue = Math.min(getScale() + percentageDragged * (1 - getScale()), 1);
-        const borderRadiusValue = 8 - percentageDragged * 8;
-        const translateValue = Math.max(0, 14 - percentageDragged * 14);
-        set(
-          wrapper,
-          {
-            borderRadius: `${borderRadiusValue}px`,
-            transform: isVertical(direction)
-              ? `scale(${scaleValue}) translate3d(0, ${translateValue}px, 0)`
-              : `scale(${scaleValue}) translate3d(${translateValue}px, 0, 0)`,
-            transition: "none",
-          },
-          true
-        );
-      }
-      const translateValue = absDraggedDistance * directionMultiplier;
-      set(drawerRef.current, {
-        transform: isVertical(direction)
-          ? `translate3d(0, ${translateValue}px, 0)`
-          : `translate3d(${translateValue}px, 0, 0)`,
-      });
-    }
-  }
-
-  React.useEffect(() => {
-    return () => {
-      scaleBackground(false);
-      restorePositionSetting()
-    };
-  }, []);
-
-  React.useEffect(() => {
-    function onVisualViewportChange() {
-      if (!drawerRef.current) return;
-
-      const focusedElement = document.activeElement as HTMLElement;
-      if (isInput(focusedElement) || keyboardIsOpen.current) {
-        const visualViewportHeight = window.visualViewport?.height || 0;
-        // This is the height of the keyboard
-        const diffFromInitial = window.innerHeight - visualViewportHeight;
-        const drawerHeight = drawerRef.current.getBoundingClientRect().height || 0;
-        if (!initialDrawerHeight.current) {
-          initialDrawerHeight.current = drawerHeight;
-        }
-        const offsetFromTop = drawerRef.current.getBoundingClientRect().top;
-        if (Math.abs(previousDiffFromInitial.current - diffFromInitial) > 60) {
-          keyboardIsOpen.current = !keyboardIsOpen.current;
-        }
-        previousDiffFromInitial.current = diffFromInitial;
-        if (drawerHeight > visualViewportHeight || keyboardIsOpen.current) {
-          const height = drawerRef.current.getBoundingClientRect().height;
-          let newDrawerHeight = height;
-          if (height > visualViewportHeight) {
-            newDrawerHeight = visualViewportHeight - WINDOW_TOP_OFFSET;
-          }
-          if (false) {
-            // fixed
-            drawerRef.current.style.height = `${height - Math.max(diffFromInitial, 0)}px`;
-          } else {
-            drawerRef.current.style.height = `${Math.max(
-              newDrawerHeight,
-              visualViewportHeight - offsetFromTop
-            )}px`;
-          }
-        } else {
-          drawerRef.current.style.height = `${initialDrawerHeight.current}px`;
-        }
-        drawerRef.current.style.bottom = `${Math.max(diffFromInitial, 0)}px`;
-      }
-    }
-    window.visualViewport?.addEventListener("resize", onVisualViewportChange);
-    return () =>
-      window.visualViewport?.removeEventListener("resize", onVisualViewportChange);
-  }, []);
-
-  function closeDrawer() {
-    if (!drawerRef.current) return;
-    cancelDrag();
-    set(drawerRef.current, {
-      transform: isVertical(direction)
-        ? `translate3d(0, ${direction === "bottom" ? "100%" : "-100%"}, 0)`
-        : `translate3d(${direction === "right" ? "100%" : "-100%"}, 0, 0)`,
-      transition: `transform ${
-        TRANSITIONS.DURATION
-      }s cubic-bezier(${TRANSITIONS.EASE.join(",")})`,
-    });
-    set(overlayRef.current, {
-      opacity: "0",
-      transition: `opacity ${
-        TRANSITIONS.DURATION
-      }s cubic-bezier(${TRANSITIONS.EASE.join(",")})`,
-    });
-    scaleBackground(false);
-    setTimeout(() => {
-      setVisible(false);
-      setOpen(false);
-    }, 300);
-  }
-
-  React.useEffect(() => {
-    if (!isOpen && shouldScaleBackground) {
-      const id = setTimeout(() => {
-        reset(document.body);
-      }, 200);
-      return () => clearTimeout(id);
-    }
-  }, [isOpen, shouldScaleBackground]);
-
-  React.useLayoutEffect(() => {
-    if (openProp) {
-      setOpen(true);
-      setHasBeenOpened(true);
-    } else {
-      closeDrawer();
-    }
-  }, [openProp]);
-
-  React.useEffect(() => {
-    if (mounted) {
-      onOpenChange?.(isOpen);
-    }
-  }, [isOpen]);
-
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-
   function resetDrawer() {
     if (!drawerRef.current) return;
-    const wrapper = document.querySelector("[vaul-drawer-wrapper]");
-    const currentSwipeAmount = getTranslate(drawerRef.current, direction);
-
+    const wrapper = document.querySelector("[drawer-wrapper]");
+    const currentSwipeAmount = getTranslate(drawerRef.current, placement);
     set(drawerRef.current, {
       transform: "translate3d(0, 0, 0)",
-      transition: `transform ${
-        TRANSITIONS.DURATION
-      }s cubic-bezier(${TRANSITIONS.EASE.join(",")})`,
+      transition: `transform ${TRANSITIONS.DURATION}s cubic-bezier(${TRANSITIONS.EASE.join(",")})`,
     });
-
-    set(overlayRef.current, {
-      transition: `opacity ${
-        TRANSITIONS.DURATION
-      }s cubic-bezier(${TRANSITIONS.EASE.join(",")})`,
+    set(backdropRef.current, {
+      transition: `opacity ${TRANSITIONS.DURATION}s cubic-bezier(${TRANSITIONS.EASE.join(",")})`,
       opacity: "1",
     });
-
-    if (shouldScaleBackground && currentSwipeAmount && currentSwipeAmount > 0 && isOpen) {
+    // TODO: put this in a function (resetBody)
+    if (
+      scaleBackground &&
+      currentSwipeAmount &&
+      currentSwipeAmount > 0 &&
+      state.isOpen &&
+      !nested
+    ) {
+      // WHY state.isOpen????
       set(
         wrapper,
         {
           borderRadius: `${BORDER_RADIUS}px`,
-          overflow: "hidden",
-          ...(isVertical(direction)
+          ...(isVertical(placement)
             ? {
                 transform: `scale(${getScale()}) translate3d(0, calc(env(safe-area-inset-top) + 14px), 0)`,
                 transformOrigin: "top",
@@ -339,35 +118,85 @@ export const useMotionDrawer = (props: useMotionDrawerProps) => {
     }
   }
 
-  function cancelDrag() {
-    if (!isDragging || !drawerRef.current) return;
-    drawerRef.current.classList.remove(DRAG_CLASS);
-    isAllowedToDrag.current = false;
-    setIsDragging(false);
-    dragEndTime.current = new Date();
+  function onPress(event: React.PointerEvent<HTMLDivElement>) {
+    if (drawerRef.current && !drawerRef.current.contains(event.target as Node)) return;
+    drawerHeightRef.current = drawerRef.current?.getBoundingClientRect().height || 0;
+    setDragging(true);
+    dragStartTime.current = new Date();
+    // if (isIOS()) {
+    //   window.addEventListener('touchend', () => (isAllowedToDrag.current = false), { once: true });
+    // }
+    (event.target as HTMLElement).setPointerCapture(event.pointerId);
+    pointerStart.current = isVertical(placement) ? event.clientY : event.clientX;
+  }
+
+  function onDrag(event: React.PointerEvent<HTMLDivElement>) {
+    if (!drawerRef.current || !isDragging || !shouldDrag(event.target)) return;
+    const placementMultiplier = placement === "bottom" || placement === "right" ? 1 : -1;
+    const draggedDistance =
+      (pointerStart.current - (isVertical(placement) ? event.clientY : event.clientX)) *
+      placementMultiplier;
+    const isDraggingInDirection = draggedDistance > 0;
+    const absDraggedDistance = Math.abs(draggedDistance);
+    const wrapper = document.querySelector("[drawer-wrapper]");
+    const percentageDragged = absDraggedDistance / drawerHeightRef.current;
+    if (nested) context.onNestedDrag(percentageDragged);
+    set(drawerRef.current, { transition: "none" }); // WHY?
+    set(backdropRef.current, { transition: "none" }); // WHY?
+    if (isDraggingInDirection) {
+      const dampenedDraggedDistance = dampenValue(draggedDistance);
+      const translateValue =
+        Math.min(dampenedDraggedDistance * -1, 0) * placementMultiplier;
+      set(drawerRef.current, {
+        transform: isVertical(placement)
+          ? `translate3d(0, ${translateValue}px, 0)`
+          : `translate3d(${translateValue}px, 0, 0)`,
+      });
+      return;
+    }
+    const opacityValue = 1 - percentageDragged;
+    set(backdropRef.current, { opacity: `${opacityValue}`, transition: "none" }, true);
+    if (wrapper && backdropRef.current && scaleBackground && !nested) {
+      // Calculate percentageDragged as a fraction (0 to 1)
+      const scaleValue = Math.min(getScale() + percentageDragged * (1 - getScale()), 1);
+      const borderRadiusValue = 8 - percentageDragged * 8;
+      const translateValue = Math.max(0, 14 - percentageDragged * 14);
+      set(
+        wrapper,
+        {
+          borderRadius: `${borderRadiusValue}px`,
+          transform: isVertical(placement)
+            ? `scale(${scaleValue}) translate3d(0, ${translateValue}px, 0)`
+            : `scale(${scaleValue}) translate3d(${translateValue}px, 0, 0)`,
+          transition: "none",
+        },
+        true
+      );
+    }
+    const translateValue = absDraggedDistance * placementMultiplier;
+    set(drawerRef.current, {
+      transform: isVertical(placement)
+        ? `translate3d(0, ${translateValue}px, 0)`
+        : `translate3d(${translateValue}px, 0, 0)`,
+    });
+
+    // TODO: transform body
   }
 
   function onRelease(event: React.PointerEvent<HTMLDivElement>) {
     if (!isDragging || !drawerRef.current) return;
-    drawerRef.current.classList.remove(DRAG_CLASS);
-    isAllowedToDrag.current = false;
-    setIsDragging(false);
+    if (nested) context.onNestedRelease(true);
+    setDragging(false);
     dragEndTime.current = new Date();
-    const swipeAmount = getTranslate(drawerRef.current, direction);
-    if (!shouldDrag(event.target, false) || !swipeAmount || Number.isNaN(swipeAmount))
-      return;
+    const swipeAmount = getTranslate(drawerRef.current, placement);
+    if (!shouldDrag(event.target) || !swipeAmount || isNaN(swipeAmount)) return;
     if (dragStartTime.current === null) return;
+    // TODO: check for justReleased (to not focus on an element on drag end)
     const timeTaken = dragEndTime.current.getTime() - dragStartTime.current.getTime();
     const distMoved =
-      pointerStart.current - (isVertical(direction) ? event.clientY : event.clientX);
+      pointerStart.current - (isVertical(placement) ? event.clientY : event.clientX);
     const velocity = Math.abs(distMoved) / timeTaken;
-    if (velocity > 0.05) {
-      setJustReleased(true);
-      setTimeout(() => {
-        setJustReleased(false);
-      }, 200);
-    }
-    if (direction === "bottom" || direction === "right" ? distMoved > 0 : distMoved < 0) {
+    if (placement === "bottom" || placement === "right" ? distMoved > 0 : distMoved < 0) {
       resetDrawer();
       return;
     }
@@ -386,164 +215,224 @@ export const useMotionDrawer = (props: useMotionDrawerProps) => {
     resetDrawer();
   }
 
-  React.useEffect(() => {
+  function onPointerDown(event: React.PointerEvent<HTMLDivElement>) {
+    pointerStartRef.current = { x: event.clientX, y: event.clientY };
+    onPress(event);
+  }
+
+  function onPointerMove(event: React.PointerEvent<HTMLDivElement>) {
+    if (!pointerStartRef.current) return;
+    // TODO: Is allowed to swipe check?
+    onDrag(event);
+  }
+
+  function onPointerUp(event: React.PointerEvent<HTMLDivElement>) {
+    pointerStartRef.current = null;
+    onRelease(event);
+  }
+
+  function getScale() {
+    return (window.innerWidth - WINDOW_TOP_OFFSET) / window.innerWidth;
+  }
+
+  function animateBody() {
+    if (nested) return;
+    const wrapper = document.querySelector("[drawer-wrapper]");
+    if (!wrapper || !scaleBackground) return;
+    set(document.body, {
+      background: document.body.style.backgroundColor || document.body.style.background,
+    });
+    set(document.body, { background: "black" }, true);
+    set(wrapper, {
+      borderRadius: `${BORDER_RADIUS}px`,
+      ...(isVertical(placement)
+        ? {
+            transform: `scale(${getScale()}) translate3d(0, calc(env(safe-area-inset-top) + 14px), 0)`,
+            transformOrigin: "top",
+          }
+        : {
+            transform: `scale(${getScale()}) translate3d(calc(env(safe-area-inset-top) + 14px), 0, 0)`,
+            transformOrigin: "left",
+          }),
+      transitionProperty: "transform, border-radius",
+      transitionDuration: `${TRANSITIONS.DURATION}s`,
+      transitionTimingFunction: `cubic-bezier(${TRANSITIONS.EASE.join(",")})`,
+    });
+  }
+
+  function resetBody() {
+    if (nested) return;
+    const wrapper = document.querySelector("[drawer-wrapper]");
+    if (!wrapper || !scaleBackground) return;
+    reset(wrapper, "overflow");
+    reset(wrapper, "transform");
+    reset(wrapper, "borderRadius");
+    set(wrapper, {
+      transitionProperty: "transform, border-radius",
+      transitionDuration: `${TRANSITIONS.DURATION}s`,
+      transitionTimingFunction: `cubic-bezier(${TRANSITIONS.EASE.join(",")})`,
+    });
+  }
+
+  function openDrawer() {
+    if (!drawerRef.current) return;
+    if (nested) context.onNestedOpenChange(true);
+    setAnimation("visible");
+    animateBody();
+    set(drawerRef.current, {
+      transform: `translate3d(0, 0, 0)`,
+      transition: `transform ${TRANSITIONS.DURATION}s cubic-bezier(${TRANSITIONS.EASE.join(",")})`,
+    });
+    set(backdropRef.current, {
+      opacity: "1",
+      transition: `opacity ${TRANSITIONS.DURATION}s cubic-bezier(${TRANSITIONS.EASE.join(",")})`,
+    });
+  }
+
+  // TODO: CANCEL DRAG
+
+  function closeDrawer() {
+    if (!drawerRef.current) return;
+    if (nested) context.onNestedOpenChange(false);
+    setAnimation("hidden");
+    resetBody();
+    set(drawerRef.current, {
+      transform: isVertical(placement)
+        ? `translate3d(0, ${placement === "bottom" ? "100%" : "-100%"}, 0)`
+        : `translate3d(${placement === "right" ? "100%" : "-100%"}, 0, 0)`,
+      transition: `transform ${TRANSITIONS.DURATION}s cubic-bezier(${TRANSITIONS.EASE.join(",")})`,
+    });
+    set(backdropRef.current, {
+      opacity: "0",
+      transition: `opacity ${TRANSITIONS.DURATION}s cubic-bezier(${TRANSITIONS.EASE.join(",")})`,
+    });
+  }
+
+  function handleTransitionEnd() {
+    if (isExiting) {
+      setAnimation("unmounted");
+      state.close();
+    }
+  }
+
+  function handleOpenChange(isOpen: boolean) {
+    if (!isOpen) {
+      closeDrawer();
+    }
+  }
+
+  function handleNestedOpenChange(isOpen: boolean) {
+    const scale = isOpen
+      ? (window.innerWidth - NESTED_DISPLACEMENT) / window.innerWidth
+      : 1;
+    const y = isOpen ? -NESTED_DISPLACEMENT : 0;
+    set(drawerRef.current, {
+      transition: `transform ${TRANSITIONS.DURATION}s cubic-bezier(${TRANSITIONS.EASE.join(",")})`,
+      transform: `scale(${scale}) translate3d(0, ${y}px, 0)`,
+    });
+  }
+
+  function handleNestedDrag(percentageDragged: number) {
+    if (percentageDragged < 0) return;
+    const initialDim = isVertical(placement) ? window.innerHeight : window.innerWidth;
+    const initialScale = (initialDim - NESTED_DISPLACEMENT) / initialDim;
+    const newScale = initialScale + percentageDragged * (1 - initialScale);
+    const newTranslate = -NESTED_DISPLACEMENT + percentageDragged * NESTED_DISPLACEMENT;
+    set(drawerRef.current, {
+      transform: isVertical(placement)
+        ? `scale(${newScale}) translate3d(0, ${newTranslate}px, 0)`
+        : `scale(${newScale}) translate3d(${newTranslate}px, 0, 0)`,
+      transition: "none",
+    });
+  }
+
+  function handleNestedRelease(isOpen: boolean) {
+    const dim = isVertical(placement) ? window.innerHeight : window.innerWidth;
+    const scale = isOpen ? (dim - NESTED_DISPLACEMENT) / dim : 1;
+    const translate = isOpen ? -NESTED_DISPLACEMENT : 0;
     if (isOpen) {
-      set(document.documentElement, {
-        scrollBehavior: "auto",
-      });
-      openTime.current = new Date();
-      scaleBackground(true);
-    }
-  }, [isOpen]);
-
-  React.useEffect(() => {
-    if (drawerRef.current && visible) {
-      const children = drawerRef?.current?.querySelectorAll("*");
-      children?.forEach((child: Element) => {
-        const htmlChild = child as HTMLElement;
-        if (
-          htmlChild.scrollHeight > htmlChild.clientHeight ||
-          htmlChild.scrollWidth > htmlChild.clientWidth
-        ) {
-          htmlChild.classList.add("vaul-scrollable");
-        }
-      });
-    }
-  }, [visible]);
-
-  function scaleBackground(open: boolean) {
-    const wrapper = document.querySelector("[vaul-drawer-wrapper]");
-    if (!wrapper || !shouldScaleBackground) return;
-    if (open) {
-      set(document.body, {
-        background: document.body.style.backgroundColor || document.body.style.background,
-      });
-      set(document.body, { background: "black" }, true);
-      set(wrapper, {
-        borderRadius: `${BORDER_RADIUS}px`,
-        overflow: "hidden",
-        ...(isVertical(direction)
-          ? {
-              transform: `scale(${getScale()}) translate3d(0, calc(env(safe-area-inset-top) + 14px), 0)`,
-              transformOrigin: "top",
-            }
-          : {
-              transform: `scale(${getScale()}) translate3d(calc(env(safe-area-inset-top) + 14px), 0, 0)`,
-              transformOrigin: "left",
-            }),
-        transitionProperty: "transform, border-radius",
-        transitionDuration: `${TRANSITIONS.DURATION}s`,
-        transitionTimingFunction: `cubic-bezier(${TRANSITIONS.EASE.join(",")})`,
-      });
-    } else {
-      // Exit
-      reset(wrapper, "overflow");
-      reset(wrapper, "transform");
-      reset(wrapper, "borderRadius");
-      set(wrapper, {
-        transitionProperty: "transform, border-radius",
-        transitionDuration: `${TRANSITIONS.DURATION}s`,
-        transitionTimingFunction: `cubic-bezier(${TRANSITIONS.EASE.join(",")})`,
+      set(drawerRef.current, {
+        transition: `transform ${TRANSITIONS.DURATION}s cubic-bezier(${TRANSITIONS.EASE.join(",")})`,
+        transform: isVertical(placement)
+          ? `scale(${scale}) translate3d(0, ${translate}px, 0)`
+          : `scale(${scale}) translate3d(${translate}px, 0, 0)`,
       });
     }
   }
 
-  const pointerStartRef = React.useRef<{ x: number; y: number } | null>(null);
-  const wasBeyondThePointRef = React.useRef(false);
-
-  const isDeltaInDirection = (
-    delta: { x: number; y: number },
-    direction: DrawerDirection,
-    threshold = 0
-  ) => {
-    if (wasBeyondThePointRef.current) return true;
-
-    const deltaY = Math.abs(delta.y);
-    const deltaX = Math.abs(delta.x);
-    const isDeltaX = deltaX > deltaY;
-    const dFactor = ["bottom", "right"].includes(direction) ? 1 : -1;
-
-    if (direction === "left" || direction === "right") {
-      const isReverseDirection = delta.x * dFactor < 0;
-      if (!isReverseDirection && deltaX >= 0 && deltaX <= threshold) {
-        return isDeltaX;
-      }
-    } else {
-      const isReverseDirection = delta.y * dFactor < 0;
-      if (!isReverseDirection && deltaY >= 0 && deltaY <= threshold) {
-        return !isDeltaX;
-      }
-    }
-
-    wasBeyondThePointRef.current = true;
-    return true;
-  };
+  // TODO: ADD LOGIC FOR INPUT KEYBOARD OPEN ON MOBILE
 
   React.useEffect(() => {
-    console.log("drawerRef", drawerRef.current);
-    if (!drawerRef.current) return;
-    drawerRef.current.addEventListener("pointerdown", (e) => {
-      console.log("pointerdown");
-    });
-  }, [drawerRef]);
+    function onVisualViewportChange() {
+      if (!drawerRef.current) return;
+      const focusedElement = document.activeElement as HTMLElement;
+      if (isInput(focusedElement) || keyboardIsOpen.current) {
+        const visualViewportHeight = window.visualViewport?.height || 0;
+        let diffFromInitial = window.innerHeight - visualViewportHeight;
+        const drawerHeight = drawerRef.current.getBoundingClientRect().height || 0;
+        if (!initialDrawerHeight.current) {
+          initialDrawerHeight.current = drawerHeight;
+        }
+        const offsetFromTop = drawerRef.current.getBoundingClientRect().top;
+        if (Math.abs(previousDiffFromInitial.current - diffFromInitial) > 60) {
+          keyboardIsOpen.current = !keyboardIsOpen.current;
+        }
+        previousDiffFromInitial.current = diffFromInitial;
+        if (drawerHeight > visualViewportHeight || keyboardIsOpen.current) {
+          const height = drawerRef.current.getBoundingClientRect().height;
+          let newDrawerHeight = height;
+          if (height > visualViewportHeight) {
+            newDrawerHeight = visualViewportHeight - WINDOW_TOP_OFFSET;
+          }
+          drawerRef.current.style.height = `${Math.max(newDrawerHeight, visualViewportHeight - offsetFromTop)}px`;
+        } else {
+          drawerRef.current.style.height = `${initialDrawerHeight.current}px`;
+        }
+        drawerRef.current.style.bottom = `${Math.max(diffFromInitial, 0)}px`;
+      }
+    }
+    window.visualViewport?.addEventListener("resize", onVisualViewportChange);
+    return () =>
+      window.visualViewport?.removeEventListener("resize", onVisualViewportChange);
+  }, []);
 
-  const rootProps = { value: { visible, setVisible } };
+  React.useEffect(() => {
+    if (state.isOpen) {
+      openDrawer();
+    } else {
+      if (!nested) {
+        resetBody(); // to ensure that always the body is reset.
+      }
+    }
+  }, [state.isOpen]);
+
+  const rootProps = {
+    value: {
+      onNestedOpenChange: handleNestedOpenChange,
+      onNestedDrag: handleNestedDrag,
+      onNestedRelease: handleNestedRelease,
+    },
+  };
 
   const drawerProps = {
     ref: drawerRef,
+    "data-rac": "",
     "data-drawer": "",
-    "data-direction": direction,
-    "data-visible": visible ? "true" : "false",
-    onPointerDown: (event) => {
-      pointerStartRef.current = { x: event.clientX, y: event.clientY };
-      onPress(event);
-    },
-    onPointerMove: (event) => {
-      if (!pointerStartRef.current) return;
-      const yPosition = event.clientY - pointerStartRef.current.y;
-      const xPosition = event.clientX - pointerStartRef.current.x;
-
-      const swipeStartThreshold = event.pointerType === "touch" ? 10 : 2;
-      const delta = { x: xPosition, y: yPosition };
-
-      const isAllowedToSwipe = isDeltaInDirection(delta, direction, swipeStartThreshold);
-      if (isAllowedToSwipe) onDrag(event);
-      else if (
-        Math.abs(xPosition) > swipeStartThreshold ||
-        Math.abs(yPosition) > swipeStartThreshold
-      ) {
-        pointerStartRef.current = null;
-      }
-    },
-    onPointerUp: (event) => {
-      pointerStartRef.current = null;
-      wasBeyondThePointRef.current = false;
-      onRelease(event);
-    },
+    "data-placement": placement,
+    "data-open": state.isOpen || undefined,
+    onTransitionEnd: handleTransitionEnd,
+    onPointerUp,
+    onPointerDown,
+    onPointerMove,
   };
 
   const modalProps = {
-    isOpen,
-    onOpenChange: (o: boolean) => {
-      if (openProp !== undefined) {
-        onOpenChange?.(o);
-        return;
-      }
-      if (!o) {
-        closeDrawer();
-      } else {
-        setHasBeenOpened(true);
-        setOpen(o);
-      }
-    },
+    isOpen: state.isOpen,
+    onOpenChange: handleOpenChange,
+    isExiting,
   };
 
-  const backdropProps = {
-    ref: overlayRef,
-    "aria-hidden": true,
-    "data-overlay": "",
-    "data-visible": visible ? "true" : "false",
-  };
+  const backdropProps = { ref: backdropRef };
 
   return {
     rootProps,
@@ -567,19 +456,10 @@ export const MotionDrawerRoot = ({
   );
 };
 
-export const MotionDrawerContent = ({ children }: { children: React.ReactNode }) => {
-  const { setVisible } = useDrawerInternalContext();
-
-  React.useEffect(() => {
-    setVisible(true);
-  }, [setVisible]);
-
-  return children;
-};
-
 interface DrawerInternalContextValue {
-  visible: boolean;
-  setVisible: (o: boolean) => void;
+  onNestedOpenChange: (isOpen: boolean) => void;
+  onNestedDrag: (percentageDragged: number) => void;
+  onNestedRelease: (isOpen: boolean) => void;
 }
 
 export const DrawerInternalContext =
@@ -587,154 +467,25 @@ export const DrawerInternalContext =
 
 export const useDrawerInternalContext = () => {
   const context = React.useContext(DrawerInternalContext);
-  if (!context) {
-    throw new Error("useDrawerInternalContext must be used within a MotionDrawerRoot");
-  }
   return context;
 };
-
-// usePositionFixed
-
-let previousBodyPosition: Record<string, string> | null = null;
-
-export function usePositionFixed({
-  isOpen,
-  modal,
-  nested,
-  hasBeenOpened,
-  preventScrollRestoration,
-  noBodyStyles,
-}: {
-  isOpen: boolean;
-  modal: boolean;
-  nested: boolean;
-  hasBeenOpened: boolean;
-  preventScrollRestoration: boolean;
-  noBodyStyles: boolean;
-}) {
-  const [activeUrl, setActiveUrl] = React.useState(() =>
-    typeof window !== "undefined" ? window.location.href : ""
-  );
-  const scrollPos = React.useRef(0);
-
-  const setPositionFixed = React.useCallback(() => {
-    // If previousBodyPosition is already set, don't set it again.
-    if (previousBodyPosition === null && isOpen && !noBodyStyles) {
-      previousBodyPosition = {
-        position: document.body.style.position,
-        top: document.body.style.top,
-        left: document.body.style.left,
-        height: document.body.style.height,
-        right: "unset",
-      };
-
-      // Update the dom inside an animation frame
-      const { scrollX, innerHeight } = window;
-
-      document.body.style.setProperty("position", "fixed", "important");
-      Object.assign(document.body.style, {
-        top: `${-scrollPos.current}px`,
-        left: `${-scrollX}px`,
-        right: "0px",
-        height: "auto",
-      });
-
-      window.setTimeout(
-        () =>
-          window.requestAnimationFrame(() => {
-            // Attempt to check if the bottom bar appeared due to the position change
-            const bottomBarHeight = innerHeight - window.innerHeight;
-            if (bottomBarHeight && scrollPos.current >= innerHeight) {
-              // Move the content further up so that the bottom bar doesn't hide it
-              document.body.style.top = `${-(scrollPos.current + bottomBarHeight)}px`;
-            }
-          }),
-        300
-      );
-    }
-  }, [isOpen]);
-
-  const restorePositionSetting = React.useCallback(() => {
-    if (previousBodyPosition !== null && !noBodyStyles) {
-      // Convert the position from "px" to Int
-      const y = -parseInt(document.body.style.top, 10);
-      const x = -parseInt(document.body.style.left, 10);
-
-      // Restore styles
-      Object.assign(document.body.style, previousBodyPosition);
-
-      window.requestAnimationFrame(() => {
-        if (preventScrollRestoration && activeUrl !== window.location.href) {
-          setActiveUrl(window.location.href);
-          return;
-        }
-
-        window.scrollTo(x, y);
-      });
-
-      previousBodyPosition = null;
-    }
-  }, [activeUrl]);
-
-  React.useEffect(() => {
-    function onScroll() {
-      scrollPos.current = window.scrollY;
-    }
-
-    onScroll();
-
-    window.addEventListener("scroll", onScroll);
-
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-    };
-  }, []);
-
-  React.useEffect(() => {
-    if (nested || !hasBeenOpened) return;
-    // This is needed to force Safari toolbar to show **before** the drawer starts animating to prevent a gnarly shift from happening
-    if (isOpen) {
-      // avoid for standalone mode (PWA)
-      const isStandalone = window.matchMedia("(display-mode: standalone)").matches;
-      !isStandalone && setPositionFixed();
-
-      if (!modal) {
-        window.setTimeout(() => {
-          restorePositionSetting();
-        }, 500);
-      }
-    } else {
-      restorePositionSetting();
-    }
-  }, [
-    isOpen,
-    hasBeenOpened,
-    activeUrl,
-    modal,
-    nested,
-    setPositionFixed,
-    restorePositionSetting,
-  ]);
-
-  return { restorePositionSetting };
-}
 
 // Constants
 
 const CLOSE_THRESHOLD = 0.25;
 const SCROLL_LOCK_TIMEOUT = 100;
-const BORDER_RADIUS = 8
+const BORDER_RADIUS = 8;
 const WINDOW_TOP_OFFSET = 26;
-const DRAG_CLASS = "vaul-dragging";
 const TRANSITIONS = {
   DURATION: 0.5,
   EASE: [0.32, 0.72, 0, 1],
 };
 const VELOCITY_THRESHOLD = 0.4;
+const NESTED_DISPLACEMENT = 16;
 
 // Types
 
-type DrawerDirection = "top" | "bottom" | "left" | "right";
+type DrawerPlacement = "top" | "bottom" | "left" | "right";
 
 // Helpers
 
@@ -798,8 +549,8 @@ export function reset(el: Element | HTMLElement | null, prop?: string) {
   }
 }
 
-export const isVertical = (direction: DrawerDirection) => {
-  switch (direction) {
+export const isVertical = (placement: DrawerPlacement) => {
+  switch (placement) {
     case "top":
     case "bottom":
       return true;
@@ -807,13 +558,13 @@ export const isVertical = (direction: DrawerDirection) => {
     case "right":
       return false;
     default:
-      return direction satisfies never;
+      return placement satisfies never;
   }
 };
 
 export function getTranslate(
   element: HTMLElement,
-  direction: DrawerDirection
+  placement: DrawerPlacement
 ): number | null {
   if (!element) {
     return null;
@@ -825,11 +576,11 @@ export function getTranslate(
   let mat = transform.match(/^matrix3d\((.+)\)$/);
   if (mat) {
     // https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/matrix3d
-    return parseFloat(mat[1].split(", ")[isVertical(direction) ? 13 : 12]);
+    return parseFloat(mat[1].split(", ")[isVertical(placement) ? 13 : 12]);
   }
   // https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/matrix
   mat = transform.match(/^matrix\((.+)\)$/);
-  return mat ? parseFloat(mat[1].split(", ")[isVertical(direction) ? 5 : 4]) : null;
+  return mat ? parseFloat(mat[1].split(", ")[isVertical(placement) ? 5 : 4]) : null;
 }
 
 export function dampenValue(v: number) {
