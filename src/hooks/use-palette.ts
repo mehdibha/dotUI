@@ -43,7 +43,7 @@ export const usePalette = (
       saturation: _saturation ?? saturation,
       output: "HSL",
     });
-    const t = colors.contrast
+    const t = colors.contrast;
     setTheme({
       ...theme,
       [mode]: {
@@ -68,7 +68,7 @@ export const usePalette = (
   };
 
   const handleChangeColor = (color: CssColor, index: number) => {
-    const newBaseColors = baseColors.map((c, i) => (i === index ? color : c))
+    const newBaseColors = baseColors.map((c, i) => (i === index ? color : c));
     updateTheme({ baseColors: newBaseColors });
   };
 

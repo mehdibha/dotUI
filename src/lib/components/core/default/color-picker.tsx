@@ -33,7 +33,7 @@ export const ColorPicker = (props: ColorPickerProps) => {
                 <ColorArea colorSpace="hsb" xChannel="saturation" yChannel="brightness" />
                 <AriaColorSlider colorSpace="hsb" channel="hue">
                   <AriaSliderTrack className="h-7 rounded-md">
-                    <AriaColorThumb className="size-6 rounded-full border-2 border-white ring-1 ring-black/40 top-1/2" />
+                    <AriaColorThumb className="top-1/2 size-6 rounded-full border-2 border-white ring-1 ring-black/40" />
                   </AriaSliderTrack>
                 </AriaColorSlider>
                 <ColorField>

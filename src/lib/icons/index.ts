@@ -1,1 +1,1 @@
-export const LoaderIcon = () => {}
+export const LoaderIcon = () => {};

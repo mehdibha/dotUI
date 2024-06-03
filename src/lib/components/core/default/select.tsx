@@ -44,7 +44,7 @@ const SelectTrigger = ({ className, children, ...props }: ButtonProps) => (
   <Button
     className={(values) =>
       cn(
-        "flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50 data-[focused]:outline-none data-[focused]:ring-2 data-[focused]:ring-ring data-[focused]:ring-offset-2",
+        "border-input bg-background ring-offset-background data-[focused]:ring-ring flex h-10 w-full items-center justify-between rounded-md border px-3 py-2 text-sm data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50 data-[focused]:outline-none data-[focused]:ring-2 data-[focused]:ring-offset-2",
         typeof className === "function" ? className(values) : className
       )
     }
@@ -64,7 +64,7 @@ const SelectHeader = ({
   ...props
 }: React.ComponentPropsWithoutRef<typeof Header>) => (
   <Header
-    className={cn(" py-1.5 pl-8 pr-2 text-sm font-semibold", className)}
+    className={cn("py-1.5 pl-8 pr-2 text-sm font-semibold", className)}
     {...props}
   />
 );
@@ -73,7 +73,7 @@ const SelectItem = ({ className, children, ...props }: ListBoxItemProps) => (
   <ListBoxItem
     className={(values) =>
       cn(
-        "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none data-[disabled]:pointer-events-none data-[focused]:bg-accent data-[focused]:text-accent-foreground data-[disabled]:opacity-50",
+        "data-[focused]:bg-accent data-[focused]:text-accent-foreground relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
         typeof className === "function" ? className(values) : className
       )
     }
@@ -101,7 +101,7 @@ const SelectPopover = ({ className, offset = 0, ...props }: PopoverProps) => (
     offset={offset}
     className={(values) =>
       cn(
-        "relative z-50 w-[--trigger-width]  min-w-[8rem] overflow-y-auto rounded-md border bg-popover text-popover-foreground shadow-md data-[entering]:animate-in data-[exiting]:animate-out data-[entering]:fade-in-0 data-[exiting]:fade-out-0 data-[exiting]:zoom-out-95 data-[placement=bottom]:slide-in-from-top-2 data-[placement=left]:slide-in-from-right-2 data-[placement=right]:slide-in-from-left-2 data-[placement=top]:slide-in-from-bottom-2",
+        "bg-popover text-popover-foreground relative z-50 w-[--trigger-width] min-w-[8rem] overflow-y-auto rounded-md border shadow-md data-[entering]:animate-in data-[exiting]:animate-out data-[entering]:fade-in-0 data-[exiting]:fade-out-0 data-[exiting]:zoom-out-95 data-[placement=bottom]:slide-in-from-top-2 data-[placement=left]:slide-in-from-right-2 data-[placement=right]:slide-in-from-left-2 data-[placement=top]:slide-in-from-bottom-2",
         "data-[placement=bottom]:translate-y-1 data-[placement=left]:-translate-x-1 data-[placement=right]:translate-x-1 data-[placement=top]:-translate-y-1",
         typeof className === "function" ? className(values) : className
       )

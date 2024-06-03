@@ -7,5 +7,4 @@ export default function DatePickerDemo() {
   const [date, setDate] = React.useState<Date>();
 
   return <DatePicker />;
-
 }

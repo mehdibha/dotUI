@@ -2,7 +2,11 @@
 
 import { InfoIcon } from "lucide-react";
 import { Button } from "@/lib/components/core/default/button";
-import { PopoverRoot, Popover, type PopoverProps } from "@/lib/components/core/default/popover";
+import {
+  PopoverRoot,
+  Popover,
+  type PopoverProps,
+} from "@/lib/components/core/default/popover";
 
 export const Info = ({ children, ...props }: PopoverProps) => (
   <PopoverRoot>

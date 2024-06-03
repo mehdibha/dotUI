@@ -17,7 +17,7 @@ import {
 export default function ContextMenuDemo() {
   return (
     <ContextMenuRoot>
-      <ContextMenuTrigger className="flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed text-sm select-none">
+      <ContextMenuTrigger className="flex h-[150px] w-[300px] select-none items-center justify-center rounded-md border border-dashed text-sm">
         Right click here
       </ContextMenuTrigger>
       <ContextMenuContent className="w-64">

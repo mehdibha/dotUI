@@ -1,6 +1,10 @@
 "use client";
 
-import { AlertDialogRoot, AlertDialog, AlertDialogFooter } from "@/lib/components/core/default/alert-dialog";
+import {
+  AlertDialogRoot,
+  AlertDialog,
+  AlertDialogFooter,
+} from "@/lib/components/core/default/alert-dialog";
 import { Button } from "@/lib/components/core/default/button";
 
 export default function AlertDialogDemo() {

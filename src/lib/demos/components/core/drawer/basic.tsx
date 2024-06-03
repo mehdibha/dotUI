@@ -9,7 +9,7 @@ export default function DrawerDemo() {
     <DrawerRoot>
       <Button>Open drawer</Button>
       <Drawer title="Salemou 3alaykom">
-        <div className="mx-auto h-[200px] max-w-sm "></div>
+        <div className="mx-auto h-[200px] max-w-sm"></div>
       </Drawer>
     </DrawerRoot>
   );

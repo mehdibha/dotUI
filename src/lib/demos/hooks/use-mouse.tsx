@@ -62,7 +62,7 @@ export default function Demo() {
       <div
         ref={ref}
         className={cn(
-          "mx-auto mt-4 flex h-[200px] w-full max-w-sm items-center justify-center rounded-lg border bg-background p-4 transition-colors",
+          "bg-background mx-auto mt-4 flex h-[200px] w-full max-w-sm items-center justify-center rounded-lg border p-4 transition-colors",
           isIntersecting && "bg-green-900"
         )}
       >

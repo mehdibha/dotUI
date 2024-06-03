@@ -1,4 +1,5 @@
 import { Alert } from "@/lib/components/core/default/alert";
+
 // import {
 //   AlertDialogAction,
 //   AlertDialogDescription,
@@ -12,7 +13,7 @@ import { Alert } from "@/lib/components/core/default/alert";
 // } from "@/lib/components/core/default/alert-dialog";
 
 export default function AlertDialogDemo() {
-  return null
+  return null;
   return (
     <AlertDialogRoot>
       <AlertDialogTrigger variant="danger">Delete</AlertDialogTrigger>

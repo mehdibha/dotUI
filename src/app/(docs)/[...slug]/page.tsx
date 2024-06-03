@@ -72,7 +72,7 @@ export default async function Page({ params }: PageProps) {
                 href={link.href}
                 suffix={<ExternalLinkIcon />}
                 size="sm"
-                className="h-6 [&_svg]:size-3 text-xs font-semibold"
+                className="h-6 text-xs font-semibold [&_svg]:size-3"
                 target="_blank"
               >
                 {link.label}

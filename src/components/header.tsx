@@ -33,7 +33,7 @@ export const Header = () => {
 
   return (
     <header className="pointer-events-none sticky top-0 z-50 w-full duration-500 animate-in fade-in slide-in-from-top-2">
-      <div className="container relative flex h-16 max-w-screen-2xl items-center justify-between px-4 sm:px-8 ">
+      <div className="container relative flex h-16 max-w-screen-2xl items-center justify-between px-4 sm:px-8">
         <div
           className={cn("pointer-events-auto", {
             "pointer-events-none": scrolled,
@@ -153,7 +153,7 @@ const Nav = (props: NavProps) => {
               className={cn(
                 "w-full rounded px-4 py-1 text-center text-sm font-medium text-fg/60 transition-colors duration-75 hover:text-fg",
                 {
-                  "cursor-default text-foreground/30 hover:text-foreground/30":
+                  "text-foreground/30 hover:text-foreground/30 cursor-default":
                     item.disabled,
                   "bg-bg-inverse/10 text-fg": pathname.startsWith(item.href),
                 }

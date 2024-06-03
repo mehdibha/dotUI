@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+
 // import {
 //   AlertDialogAction,
 //   AlertDialogDescription,
@@ -14,7 +15,7 @@ import React from "react";
 // } from "@/lib/components/core/default/alert-dialog";
 
 export default function AlertDialogDemo() {
-  return null
+  return null;
   const [open, setOpen] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
 

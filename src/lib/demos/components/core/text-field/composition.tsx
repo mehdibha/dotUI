@@ -8,7 +8,6 @@ export default function Demo() {
     <TextField
       placeholder="example@email.com"
       label="Email"
-      htmlType="email"
       autoComplete="off"
       description="Enter your email."
       className="w-full"

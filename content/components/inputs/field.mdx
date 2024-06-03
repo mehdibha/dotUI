@@ -25,13 +25,13 @@ Field component, it is not meant to be used on it's own. Typically, it's used wi
 
 ### Field
 
-| Prop           | Type              | Description |
-| -------------- | ----------------- | ----------- |
+| Prop           | Type        | Description |
+| -------------- | ----------- | ----------- |
 | `children`     | `ReactNode` |             |
 | `label`        | `ReactNode` |             |
 | `description`  | `ReactNode` |             |
 | `errorMessage` | `ReactNode` |             |
-| `classNames`   | `R`               |             |
+| `classNames`   | `R`         |             |
 
 ### Label
 
@@ -51,15 +51,15 @@ Field component, it is not meant to be used on it's own. Typically, it's used wi
 
 ### FieldError
 
-| Prop        | Type                                                                                                         | Description                                                                                                 |
-| ----------- | ------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------- |
+| Prop        | Type                                                                                                   | Description                                                                                                 |
+| ----------- | ------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------- |
 | `children`  | `ReactNode \|(values: FieldErrorRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | The children of the component. A function may be provided to alter the children based on component state.   |
-| `className` | `string`                                                                                                     | The CSS className for the element.                                                                          |
-| `style`     | `CSSProperties \| (values: FieldErrorRenderProps & {defaultStyle: CSSProperties}) => CSSProperties`          | The inline style for the element. A function may be provided to compute the style based on component state. |
+| `className` | `string`                                                                                               | The CSS className for the element.                                                                          |
+| `style`     | `CSSProperties \| (values: FieldErrorRenderProps & {defaultStyle: CSSProperties}) => CSSProperties`    | The inline style for the element. A function may be provided to compute the style based on component state. |
 
 ### HelpText
 
-| Prop           | Type              | Description |
-| -------------- | ----------------- | ----------- |
+| Prop           | Type        | Description |
+| -------------- | ----------- | ----------- |
 | `errorMessage` | `ReactNode` |             |
-| `errorMessage` | `string`          |             |
+| `errorMessage` | `string`    |             |

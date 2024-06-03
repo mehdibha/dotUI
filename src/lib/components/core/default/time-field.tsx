@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import {
-  TimeField  as AriaTimeField ,
+  TimeField as AriaTimeField,
   DateInput as AriaDateInput,
   Provider,
   DateSegment,

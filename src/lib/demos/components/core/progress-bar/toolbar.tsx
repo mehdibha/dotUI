@@ -3,8 +3,8 @@
 import * as React from "react";
 import { ALargeSmallIcon, RotateCwIcon } from "lucide-react";
 import { Button } from "@/lib/components/core/default/button";
-import { TextField } from "@/lib/components/core/default/text-field";
 import { ProgressBar } from "@/lib/components/core/default/progress-bar";
+import { TextField } from "@/lib/components/core/default/text-field";
 
 export default function ProgressDemo() {
   return (

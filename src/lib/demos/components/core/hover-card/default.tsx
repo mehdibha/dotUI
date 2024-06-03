@@ -1,6 +1,6 @@
-import { Link } from "@/lib/components/core/default/link";
 import { Avatar } from "@/lib/components/core/default/avatar";
 import { HoverCard } from "@/lib/components/core/default/hover-card";
+import { Link } from "@/lib/components/core/default/link";
 
 export default function HoverCardDemo() {
   return (
@@ -44,9 +44,7 @@ const Content = () => {
         <h4 className="text-sm text-fg-muted">@mehdibha_</h4>
         <p className="mt-2 text-sm">
           I tell computers to do things. Building{" "}
-          <span className="text-fg-link">
-            rcopy.dev
-          </span>
+          <span className="text-fg-link">rcopy.dev</span>
         </p>
       </div>
     </div>

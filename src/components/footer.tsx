@@ -98,7 +98,7 @@ export const Footer = () => {
                   href={Link.href}
                   key={index}
                   target="_blank"
-                  className="text-fg-muted transition-colors duration-200 hover:text-foreground"
+                  className="hover:text-foreground text-fg-muted transition-colors duration-200"
                 >
                   <Link.icon size={20} />
                   <span className="sr-only">{Link.label}</span>
@@ -116,7 +116,7 @@ export const Footer = () => {
                     <li key={index}>
                       <NavLink
                         href={link.href}
-                        className="text-fg-muted transition-colors duration-200 hover:text-foreground"
+                        className="hover:text-foreground text-fg-muted transition-colors duration-200"
                         target={link.href.startsWith("http") ? "_blank" : undefined}
                       >
                         {link.label}

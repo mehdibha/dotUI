@@ -7,12 +7,12 @@ export const ThemeModeSwitcher = () => {
   const { mode, setMode } = useConfig();
 
   return (
-    <div className="flex items-center rounded border bg-popover p-0.5">
+    <div className="bg-popover flex items-center rounded border p-0.5">
       <Button
         size="sm"
         onClick={() => setMode("light")}
         className={cn(
-          "h-[22px] bg-transparent px-2 text-foreground hover:bg-transparent",
+          "text-foreground h-[22px] bg-transparent px-2 hover:bg-transparent",
           mode === "light" && "bg-background"
         )}
       >
@@ -22,7 +22,7 @@ export const ThemeModeSwitcher = () => {
         size="sm"
         onClick={() => setMode("dark")}
         className={cn(
-          "h-[22px] bg-transparent px-2 text-foreground hover:bg-transparent",
+          "text-foreground h-[22px] bg-transparent px-2 hover:bg-transparent",
           mode === "dark" && "bg-background"
         )}
       >

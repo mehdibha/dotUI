@@ -1,5 +1,8 @@
 import { Bold, Italic, Underline } from "lucide-react";
-import { ToggleGroupButton, ToggleGroup } from "@/lib/components/core/default/toggle-group";
+import {
+  ToggleGroupButton,
+  ToggleGroup,
+} from "@/lib/components/core/default/toggle-group";
 
 const types = ["neutral", "primary", "success", "warning", "danger"] as const;
 

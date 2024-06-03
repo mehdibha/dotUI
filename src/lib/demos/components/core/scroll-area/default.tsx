@@ -3,12 +3,10 @@ import { ScrollArea } from "@/lib/components/core/default/scroll-area";
 
 export default function ScrollAreaDemo() {
   return (
-    <div className="p-6 border rounded-md">
+    <div className="rounded-md border p-6">
       <ScrollArea className="h-72 w-full max-w-sm" type="always">
         <div className="space-y-4 p-4 pr-8">
-          <h4 className="font-bold text-md">
-            Principles of the typographic craft
-          </h4>
+          <h4 className="text-md font-bold">Principles of the typographic craft</h4>
           <p>
             Three fundamental aspects of typography are legibility, readability, and
             aesthetics. Although in a non-technical sense “legible” and “readable” are

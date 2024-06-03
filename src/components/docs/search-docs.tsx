@@ -99,7 +99,7 @@ export const SearchDocs = (props: ButtonProps) => {
                                 <span>{subItem.title}</span>
                               </div>
                               <div>
-                                <span className="rounded-md bg-bg-muted px-3 py-1 text-xs leading-none text-black text-secondary-foreground">
+                                <span className="text-secondary-foreground rounded-md bg-bg-muted px-3 py-1 text-xs leading-none text-black">
                                   {item.title}
                                 </span>
                                 {subItem.label && (

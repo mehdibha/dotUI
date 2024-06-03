@@ -160,7 +160,7 @@ function Customizer() {
                   }}
                   className={cn(
                     "h-8 text-xs",
-                    style.name === currentStyle && "border-2 border-primary"
+                    style.name === currentStyle && "border-primary border-2"
                   )}
                 >
                   {style.label}
@@ -181,7 +181,7 @@ function Customizer() {
               }}
               className={cn(
                 "h-8 text-xs",
-                resolvedMode === "light" && "border-2 border-primary"
+                resolvedMode === "light" && "border-primary border-2"
               )}
             >
               <SunIcon size={15} className="mr-1 -translate-x-1" />
@@ -196,7 +196,7 @@ function Customizer() {
               }}
               className={cn(
                 "h-8 text-xs",
-                resolvedMode === "dark" && "border-2 border-primary"
+                resolvedMode === "dark" && "border-primary border-2"
               )}
             >
               <MoonIcon size={15} className="mr-1 -translate-x-1" />
@@ -286,7 +286,7 @@ function Customizer() {
                   key={value}
                   className={cn(
                     "h-8 text-xs",
-                    theme.radius === value && "border-2 border-primary"
+                    theme.radius === value && "border-primary border-2"
                   )}
                   onClick={() => {
                     setTheme({ ...theme, radius: value });
@@ -305,7 +305,7 @@ function Customizer() {
 
 const ColorCard = ({ label, children }: { label: string; children: React.ReactNode }) => {
   return (
-    <div className="flex h-7 items-center justify-between rounded-md border border-input bg-background px-1.5 text-xs">
+    <div className="border-input bg-background flex h-7 items-center justify-between rounded-md border px-1.5 text-xs">
       <span className="">{label}</span>
       <div className="flex items-center space-x-0.5">{children}</div>
     </div>

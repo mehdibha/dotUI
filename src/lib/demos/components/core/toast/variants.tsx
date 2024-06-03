@@ -3,10 +3,7 @@
 import React from "react";
 import { Button } from "@/lib/components/core/default/button";
 import { Label } from "@/lib/components/core/default/field";
-import {
-  RadioGroup,
-  Radio,
-} from "@/lib/components/core/default/radio";
+import { RadioGroup, Radio } from "@/lib/components/core/default/radio";
 import { toast } from "@/lib/components/core/default/toast";
 
 type Type = "default" | "success" | "error" | "warning" | "info";

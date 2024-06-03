@@ -64,7 +64,7 @@ export const ComponentPreview = ({
         language="tsx"
         code={code.map((file) => file.code.replace(/[\r\n]+$/, ""))}
         fileName={code.map((file) => file.title)}
-        className={"w-full border-b-0 border-x-0 rounded-t-none"}
+        className={"w-full rounded-t-none border-x-0 border-b-0"}
       />
     </div>
   );

@@ -13,7 +13,7 @@ export default function Demo() {
     "Second",
     "Third",
   ]);
-  return null
+  return null;
   return (
     <div>
       <div className="flex gap-2">
@@ -39,7 +39,7 @@ export default function Demo() {
         {list.map((item, index) => (
           <div
             key={index}
-            className="group relative flex h-10 items-center rounded-md border bg-background px-2"
+            className="bg-background group relative flex h-10 items-center rounded-md border px-2"
           >
             <div className="mr-2">{item}</div>
             <div className="absolute right-3 top-[50%] flex translate-y-[-50%] items-center space-x-2 opacity-0 duration-100 group-hover:opacity-100">

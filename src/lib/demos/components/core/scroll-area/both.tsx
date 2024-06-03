@@ -5,7 +5,7 @@ export default function ScrollAreaDemo() {
   return (
     <div className="rounded-md border p-6">
       <ScrollArea orientation="both" className="h-44 w-full max-w-sm" type="always">
-        <div className="flex items-start gap-4 w-[500px]">
+        <div className="flex w-[500px] items-start gap-4">
           <div className="space-y-4 p-4 pr-8">
             <h4 className="text-md font-bold">Principles of the typographic craft</h4>
             <p>

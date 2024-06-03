@@ -10,7 +10,7 @@
 // } from "@/lib/components/core/default/alert-dialog";
 
 export default function AlertDialogDemo() {
-  return null
+  return null;
   return (
     <AlertDialogRoot>
       <AlertDialogTrigger variant="danger">Delete</AlertDialogTrigger>

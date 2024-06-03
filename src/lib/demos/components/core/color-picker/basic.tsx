@@ -1,5 +1,5 @@
 import { ColorPicker } from "@/lib/components/core/default/color-picker";
 
 export default function Demo() {
-  return <ColorPicker defaultValue="#000000" />
+  return <ColorPicker defaultValue="#000000" />;
 }

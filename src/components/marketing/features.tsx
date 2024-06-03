@@ -29,7 +29,7 @@ const AnimatedWord = ({ word, index }: { word: string; index: 1 | 2 | 3 }) => {
     <span
       data-content={word}
       className={cn(
-        "relative inline-block before:absolute before:bottom-0 before:left-0 before:top-0 before:inline-block before:w-full before:px-2 before:text-center before:text-foreground before:content-[attr(data-content)]",
+        "before:text-foreground relative inline-block before:absolute before:bottom-0 before:left-0 before:top-0 before:inline-block before:w-full before:px-2 before:text-center before:content-[attr(data-content)]",
         {
           "before:animate-gradient-background-1": index === 1,
           "before:animate-gradient-background-2": index === 2,

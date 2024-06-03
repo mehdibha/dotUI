@@ -82,7 +82,7 @@ export function DatePicker<T extends DateValue>({
       </Field>
       <Overlay type={isMobile ? "drawer" : "popover"}>
         <Dialog>
-          <Calendar ></Calendar>
+          <Calendar></Calendar>
         </Dialog>
       </Overlay>
     </AriaDatePicker>

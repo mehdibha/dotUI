@@ -11,7 +11,7 @@ export const Brands = ({ className }: { className?: string }) => {
   return (
     <div
       className={cn(
-        "flex flex-wrap items-center justify-center gap-4 sm:gap-8 ",
+        "flex flex-wrap items-center justify-center gap-4 sm:gap-8",
         className
       )}
     >

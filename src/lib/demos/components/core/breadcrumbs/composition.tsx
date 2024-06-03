@@ -1,7 +1,6 @@
 export default function BreadcrumbsDemo() {
-  return null
+  return null;
 }
-
 
 // import {
 //   BreadcrumbsRoot,

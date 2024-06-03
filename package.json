@@ -1,4 +1,3 @@
-
 {
   "name": "rcopy",
   "version": "0.1.0",
@@ -89,7 +88,7 @@
     "lucide-static": "^0.357.0",
     "postcss": "^8.4.31",
     "prettier": "^3.1.0",
-    "prettier-plugin-tailwindcss": "^0.5.7",
+    "prettier-plugin-tailwindcss": "^0.6.1",
     "prisma": "^5.6.0",
     "rimraf": "^5.0.5",
     "simple-icons": "^11.8.0",

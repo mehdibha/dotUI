@@ -72,6 +72,6 @@ const Checkbox = React.forwardRef<React.ElementRef<typeof AriaCheckbox>, Checkbo
     );
   }
 );
-Checkbox.displayName = "Checkbox"
+Checkbox.displayName = "Checkbox";
 
 export { Checkbox };

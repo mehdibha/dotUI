@@ -22,12 +22,12 @@ export const PricingPlan = (props: PlanProps) => {
     <section
       className={cn(
         "relative flex min-h-[530px] flex-col border border-gray-400 bg-bg-muted px-6 py-16 shadow-2xl dark:border-gray-800 sm:px-8",
-        featured && "z-10 border-none ring-4 ring-ring/80",
+        featured && "ring-ring/80 z-10 border-none ring-4",
         className
       )}
     >
       {featured && (
-        <div className="absolute right-8 top-[-4px] z-[-1] translate-y-[-100%] rounded-t-lg bg-ring/80 px-4 py-1 text-white shadow-lg">
+        <div className="bg-ring/80 absolute right-8 top-[-4px] z-[-1] translate-y-[-100%] rounded-t-lg px-4 py-1 text-white shadow-lg">
           Most popular
         </div>
       )}

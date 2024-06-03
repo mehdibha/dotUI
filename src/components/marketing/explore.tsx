@@ -21,7 +21,7 @@ export const Explore = ({ className }: { className: string }) => {
               {category.title}
             </h3>
             <div
-              className={cn("border-l border-muted px-6 pb-8 pt-4", {
+              className={cn("border-muted border-l px-6 pb-8 pt-4", {
                 "pb-0": index === categories.length - 1,
               })}
             >

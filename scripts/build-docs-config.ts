@@ -110,7 +110,10 @@ const docsConfig: DocsConfig = {
             { title: "Color Slider", href: "/components/colors/color-slider" },
             { title: "Color Swatch", href: "/components/colors/color-swatch" },
             { title: "Color Picker", href: "/components/colors/color-picker" },
-            { title: "Color Swatch Picker", href: "/components/colors/color-swatch-picker" },
+            {
+              title: "Color Swatch Picker",
+              href: "/components/colors/color-swatch-picker",
+            },
           ],
         },
         {

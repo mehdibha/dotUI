@@ -19,7 +19,7 @@ export default function ResizableDemo() {
   };
 
   return (
-    <div className="w-full flex flex-col items-center gap-6">
+    <div className="flex w-full flex-col items-center gap-6">
       <Button onClick={collapsePanel}>Collapse</Button>
       <ResizableGroup direction="horizontal" className="max-w-md rounded-lg border">
         <ResizablePanel

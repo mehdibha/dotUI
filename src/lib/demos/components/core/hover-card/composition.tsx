@@ -1,9 +1,9 @@
-import { Link } from "@/lib/components/core/default/link";
 import { Avatar } from "@/lib/components/core/default/avatar";
 import {
   HoverCardContent,
   HoverCardRoot,
 } from "@/lib/components/core/default/hover-card";
+import { Link } from "@/lib/components/core/default/link";
 
 export default function HoverCardDemo() {
   return (

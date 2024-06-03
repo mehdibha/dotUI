@@ -1,6 +1,5 @@
-
 export default function MenuDemo() {
-  return null
+  return null;
   // return (
   //   <MenuRoot>
   //     <MenuTrigger asChild>

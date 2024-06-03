@@ -31,7 +31,10 @@ const calendarStyles = tv({
 
 const Calendar = React.forwardRef(({ className, ...props }) => {
   return (
-    <AriaCalendar className={cn("w-fit max-w-full rounded-md border bg-bg p-3", className)} {...props}>
+    <AriaCalendar
+      className={cn("w-fit max-w-full rounded-md border bg-bg p-3", className)}
+      {...props}
+    >
       <header className="mb-4 flex items-center justify-between gap-2">
         <Button slot="previous" variant="outline" shape="square" size="sm">
           <ChevronLeftIcon className="h-4 w-4" />

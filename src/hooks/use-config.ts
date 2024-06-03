@@ -6,7 +6,7 @@ import type { Style } from "@/config/styles-config";
 
 type Config = {
   theme: Theme;
-  setTheme: (theme: Theme) => void 
+  setTheme: (theme: Theme) => void;
   style: Style["name"];
   setStyle: (style: Style["name"]) => void;
   mode: "light" | "dark";

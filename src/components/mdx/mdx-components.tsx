@@ -88,7 +88,10 @@ export const components = {
   h6: createHeading(6, "mt-8 scroll-m-20 text-base font-semibold tracking-tight"),
   a: Link,
   p: ({ className, ...props }: ComponentProps<"p">) => (
-    <p className={cn("leading-7 [&:not(:first-child)]:mt-4 text-base", className)} {...props} />
+    <p
+      className={cn("text-base leading-7 [&:not(:first-child)]:mt-4", className)}
+      {...props}
+    />
   ),
   ul: ({ className, ...props }: ComponentProps<"ul">) => (
     <ul className={cn("my-6 ml-6 list-disc", className)} {...props} />
@@ -129,7 +132,9 @@ export const components = {
   ),
   code: (props: ComponentProps<"pre">) => (
     <code
-      className={codeBlockStyles().root({ className: "px-2 py-0.5 inline-flex text-xs text-fg-muted" })}
+      className={codeBlockStyles().root({
+        className: "inline-flex px-2 py-0.5 text-xs text-fg-muted",
+      })}
       {...props}
     />
   ),
