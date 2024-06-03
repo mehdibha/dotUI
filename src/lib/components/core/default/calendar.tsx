@@ -16,7 +16,7 @@ import {
 import { tv } from "tailwind-variants";
 import { cn } from "@/lib/utils/classes";
 import { focusRing } from "@/lib/utils/styles";
-import { Button, buttonVariants } from "./button";
+import { Button, buttonStyles } from "./button";
 
 // interface CalendarProps extends AriaCalendarProps {}
 
@@ -53,8 +53,8 @@ const Calendar = React.forwardRef(({ className, ...props }) => {
           {(date) => (
             <AriaCalendarCell
               date={date}
-              className={buttonVariants({
-                variant: "ghost",
+              className={buttonStyles({
+                variant: "quiet",
                 shape: "square",
                 size: "sm",
                 className: cn(

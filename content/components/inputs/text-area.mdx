@@ -1,17 +1,153 @@
 ---
-title: Text Area
-description: Displays a form textarea or a component that looks like a textarea.
+title: TextArea
+description: TODO
 thumbnail:
   image: /previews/components/core/textarea.jpeg
   video: /previews/components/core/textarea.mp4
+links:
+  - label: Aria docs
+    href: https://react-spectrum.adobe.com/react-aria/TextArea.html
+  - label: Aria API Reference
+    href: https://react-spectrum.adobe.com/react-aria/TextArea.html#props
 ---
 
-<ComponentPreview name="demos/components/core/text-area/basic" className="max-w-sm" />
+<ComponentPreview name="demos/components/core/text-area/default" className="max-w-sm" />
 
 ## Installation
 
 <Steps>
+  <Step>Install the following dependencies:</Step>
+
+```bash
+npm install react-aria-components
+```
+
   <Step>Copy and paste the following code into your project.</Step>
-  <ComponentSource name="components/core/default/textarea" />
+  <ComponentSource name="components/core/default/text-area" />
   <Step>Update the import paths to match your project setup.</Step>
 </Steps>
+
+
+## Usage
+
+TODO
+
+## Options
+
+### Variants
+
+Use the `variant` prop to control the visual style of the TextArea.<br/>
+The default variant is `default`.
+
+<ComponentPreview name="demos/components/core/text-area/variants" className="max-w-[250px]" />
+
+### Sizes
+
+Use the `size` prop to control the size of the TextArea.<br/>
+The default variant is `md`.
+
+<ComponentPreview name="demos/components/core/text-area/sizes" className="max-w-lg" />
+
+### Prefix and suffix
+
+TODO
+
+<ComponentPreview
+  name="demos/components/core/text-area/prefix-and-suffix"
+  className="max-w-[250px]"
+/>
+
+### Label
+
+A visual label should be provided for the TextArea using the label prop or a hidden label using `aria-label` prop.<br/>
+If the TextArea is required, the isRequired and necessityIndicator props can be used to show a required state.
+
+<ComponentPreview name="demos/components/core/text-area/label" className="max-w-[250px]" />
+
+### Description
+
+A description can be supplied to a TextArea via the `description` prop. The description is always visible unless the `validationState` is `“invalid”` and an error message is provided.
+
+<ComponentPreview
+  name="demos/components/core/text-area/description"
+  className="max-w-[250px]"
+/>
+
+### Contextual help
+
+TODO
+
+<ComponentPreview
+  name="demos/components/core/text-area/contextual-help"
+  className="max-w-[250px]"
+/>
+
+### Error message
+
+TODO
+
+<ComponentPreview
+  name="demos/components/core/text-area/error-message"
+  className="max-w-[250px]"
+/>
+
+### Loading
+
+Use the `isLoading` prop to control the loading state of the TextArea.
+
+<ComponentPreview name="demos/components/core/text-area/loading" className="max-w-[250px]" />
+
+### Disabled
+
+Use the `isDisabled` prop to disable the TextArea.
+
+<ComponentPreview name="demos/components/core/text-area/disabled" className="max-w-[250px]" />
+
+### ReadOnly
+
+TODO
+
+<ComponentPreview
+  name="demos/components/core/text-area/read-only"
+  className="max-w-[250px]"
+/>
+
+## Examples
+
+### Controlled
+
+TODO
+
+<ComponentPreview
+  name="demos/components/core/text-area/controlled"
+  className="max-w-[250px]"
+/>
+
+### Composition
+
+TODO
+
+<ComponentPreview
+  name="demos/components/core/text-area/composition"
+  className="max-w-[250px]"
+/>
+
+### Form
+
+TODO
+
+<ComponentPreview name="demos/components/core/text-area/form" className="max-w-[250px]" />
+
+## API Reference
+
+TODO
+
+| Prop             | Type                   | Default |
+| ---------------- | ---------------------- | ------- |
+| `size`           | `"sm" \| "md" \| "lg"` | `md`    |
+| `disabled`       | `boolean`              | -       |
+| `prefix`         | `React.ReactNode`      | -       |
+| `suffix`         | `React.ReactNode`      | -       |
+| `loading`        | `boolean`              | -       |
+| `loaderPosition` | `"prefix" \| "suffix"` | -       |
+| `status`         | `"error" \| "success"` | -       |

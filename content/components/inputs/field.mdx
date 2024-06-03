@@ -1,12 +1,65 @@
 ---
 title: Field
-description: Building forms with React Hook Form and Zod.
+description: The Field component is a form control that includes a label, and help text.
 ---
 
 ## Installation
 
 <Steps>
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install react-aria-components
+```
+
   <Step>Copy and paste the following code into your project.</Step>
-  <ComponentSource name="components/core/default/form" />
+  <ComponentSource name="components/core/default/field" />
   <Step>Update the import paths to match your project setup.</Step>
 </Steps>
+
+## Usage
+
+Field component, it is not meant to be used on it's own. Typically, it's used with input components such as `TextField`, `Checkbox`, `Radio`, etc.
+
+## API Reference
+
+### Field
+
+| Prop           | Type              | Description |
+| -------------- | ----------------- | ----------- |
+| `children`     | `ReactNode` |             |
+| `label`        | `ReactNode` |             |
+| `description`  | `ReactNode` |             |
+| `errorMessage` | `ReactNode` |             |
+| `classNames`   | `R`               |             |
+
+### Label
+
+`<Description>` accepts all HTML attributes.
+
+| Prop          | Type     | Description |
+| ------------- | -------- | ----------- |
+| `elementType` | `string` |             |
+
+### Description
+
+`<Description>` accepts all HTML attributes.
+
+| Prop          | Type     | Description |
+| ------------- | -------- | ----------- |
+| `elementType` | `string` |             |
+
+### FieldError
+
+| Prop        | Type                                                                                                         | Description                                                                                                 |
+| ----------- | ------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------- |
+| `children`  | `ReactNode \|(values: FieldErrorRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | The children of the component. A function may be provided to alter the children based on component state.   |
+| `className` | `string`                                                                                                     | The CSS className for the element.                                                                          |
+| `style`     | `CSSProperties \| (values: FieldErrorRenderProps & {defaultStyle: CSSProperties}) => CSSProperties`          | The inline style for the element. A function may be provided to compute the style based on component state. |
+
+### HelpText
+
+| Prop           | Type              | Description |
+| -------------- | ----------------- | ----------- |
+| `errorMessage` | `ReactNode` |             |
+| `errorMessage` | `string`          |             |

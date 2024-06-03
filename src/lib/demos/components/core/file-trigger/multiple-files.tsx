@@ -9,7 +9,6 @@ export default function FileTriggerDemo() {
   const [files, setFiles] = React.useState<string[] | null>(null);
   return (
     <div className="flex flex-col items-center gap-4">
-      {files && <p>You selected <span className="font-semibold">{files.join(", ")}</span></p>}
       <FileTrigger
         onSelect={(e) => {
           if (e) {
@@ -19,10 +18,14 @@ export default function FileTriggerDemo() {
           }
         }}
         allowsMultiple
-
       >
         <Button prefix={<UploadIcon />}>Upload</Button>
       </FileTrigger>
+      {files && (
+        <p>
+          You selected <span className="font-semibold">{files.join(", ")}</span>
+        </p>
+      )}
     </div>
   );
 }

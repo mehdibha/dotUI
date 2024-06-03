@@ -1,9 +1,14 @@
 ---
 title: TextField
-description: The TextField component is a complete form control including a label, input, and help text.
+description: TextField is a complete form control including a label, input, and help text.
 thumbnail:
   image: /previews/components/core/text-field.jpeg
   video: /previews/components/core/text-field.mp4
+links:
+  - label: Aria docs
+    href: https://react-spectrum.adobe.com/react-aria/TextField.html
+  - label: Aria API Reference
+    href: https://react-spectrum.adobe.com/react-aria/TextField.html#props
 ---
 
 <ComponentPreview name="demos/components/core/text-field/default" className="max-w-[250px]" />
@@ -11,6 +16,12 @@ thumbnail:
 ## Installation
 
 <Steps>
+  <Step>Install the following dependencies:</Step>
+
+```bash
+npm install react-aria-components
+```
+
   <Step>Copy and paste the following code into your project.</Step>
   <ComponentSource name="components/core/default/text-field" />
   <Step>Update the import paths to match your project setup.</Step>
@@ -18,20 +29,117 @@ thumbnail:
 
 ## Usage
 
-```jsx
-import { TextField } from "@/components/core/text-field";
-```
+Use a text input to allow users to input custom text entries with a keyboard.
 
-```jsx
-<TextField label="email" />
-```
+## Options
 
-## Anatomy
+### Variants
 
-![TextField anatomy](/anatomy/text-field.png)
+Use the `variant` prop to control the visual style of the TextField.<br/>
+The default variant is `default`.
 
+<ComponentPreview name="demos/components/core/text-field/variants" className="max-w-[250px]" />
+
+### Sizes
+
+Use the `size` prop to control the size of the TextField.<br/>
+The default variant is `md`.
+
+<ComponentPreview name="demos/components/core/text-field/sizes" className="max-w-lg" />
+
+### Prefix and suffix
+
+TODO
+
+<ComponentPreview
+  name="demos/components/core/text-field/prefix-and-suffix"
+  className="max-w-[250px]"
+/>
+
+### Label
+
+A visual label should be provided for the TextField using the label prop or a hidden label using `aria-label` prop.<br/>
+If the TextField is required, the isRequired and necessityIndicator props can be used to show a required state.
+
+<ComponentPreview name="demos/components/core/text-field/label" className="max-w-[250px]" />
+
+### Description
+
+A description can be supplied to a TextField via the `description` prop. The description is always visible unless the `validationState` is `“invalid”` and an error message is provided.
+
+<ComponentPreview
+  name="demos/components/core/text-field/description"
+  className="max-w-[250px]"
+/>
+
+### Contextual help
+
+TODO
+
+<ComponentPreview
+  name="demos/components/core/text-field/contextual-help"
+  className="max-w-[250px]"
+/>
+
+### Error message
+
+TODO
+
+<ComponentPreview
+  name="demos/components/core/text-field/error-message"
+  className="max-w-[250px]"
+/>
+
+### Loading
+
+Use the `isLoading` prop to control the loading state of the TextField.
+
+<ComponentPreview name="demos/components/core/text-field/loading" className="max-w-[250px]" />
+
+### Disabled
+
+Use the `isDisabled` prop to disable the TextField.
+
+<ComponentPreview name="demos/components/core/text-field/disabled" className="max-w-[250px]" />
+
+### ReadOnly
+
+TODO
+
+<ComponentPreview
+  name="demos/components/core/text-field/read-only"
+  className="max-w-[250px]"
+/>
+
+## Examples
+
+### Controlled
+
+TODO
+
+<ComponentPreview
+  name="demos/components/core/text-field/controlled"
+  className="max-w-[250px]"
+/>
+
+### Composition
+
+TODO
+
+<ComponentPreview
+  name="demos/components/core/text-field/composition"
+  className="max-w-[250px]"
+/>
+
+### Form
+
+TODO
+
+<ComponentPreview name="demos/components/core/text-field/form" className="max-w-[250px]" />
 
 ## API Reference
+
+TODO
 
 | Prop             | Type                   | Default |
 | ---------------- | ---------------------- | ------- |
@@ -42,68 +150,3 @@ import { TextField } from "@/components/core/text-field";
 | `loading`        | `boolean`              | -       |
 | `loaderPosition` | `"prefix" \| "suffix"` | -       |
 | `status`         | `"error" \| "success"` | -       |
-
-## Options
-
-### Label
-
-<ComponentPreview
-  name="demos/components/core/text-field/label"
-  className="max-w-xs"
-/>
-
-### Description
-
-<ComponentPreview
-  name="demos/components/core/text-field/description"
-  className="max-w-xs"
-/>
-
-### Sizes
-
-The default size is `md`.
-
-<ComponentPreview name="demos/components/core/text-field/sizes" className="max-w-lg" />
-
-### Disabled
-
-<ComponentPreview name="demos/components/core/text-field/disabled" className="max-w-xs" />
-
-### Types
-
-<ComponentPreview name="demos/components/core/text-field/types" className="max-w-xs" />
-
-### Prefix and suffix
-
-<ComponentPreview
-  name="demos/components/core/text-field/prefix-and-suffix"
-  className="max-w-xs"
-/>
-
-### Loading
-
-<ComponentPreview name="demos/components/core/text-field/loading" className="max-w-xs" />
-
-## Examples
-
-### Controlled
-
-<ComponentPreview
-  name="demos/components/core/text-field/controlled"
-  className="max-w-xs"
-/>
-
-### Composition
-
-<ComponentPreview
-  name="demos/components/core/text-field/composition"
-  className="max-w-xs"
-/>
-
-### Form
-
-<ComponentPreview
-  name="demos/components/core/text-field/form"
-  className="max-w-xs"
-/>
-

@@ -4,7 +4,7 @@ const variants = [
   "default",
   "primary",
   "outline",
-  "ghost",
+  "quiet",
   "success",
   "warning",
   "danger",

@@ -5,66 +5,50 @@ import {
   Label as AriaLabel,
   Text as AriaText,
   FieldError as AriaFieldError,
+  FieldErrorContext as AriaFieldErrorContext,
   type TextProps as AriaTextProps,
   type LabelProps as AriaLabelProps,
   type FieldErrorProps as AriaFieldErrorProps,
-  FieldErrorContext,
 } from "react-aria-components";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
-const labelStyles = tv({
-  base: "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:text-fg-disabled",
+const fieldStyles = tv({
+  slots: {
+    root: "",
+    label:
+      "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:text-fg-disabled",
+    description: "text-xs text-fg-muted",
+    fieldError: "text-xs text-fg-danger",
+  },
 });
-type LabelProps = AriaLabelProps & VariantProps<typeof labelStyles>;
-const Label = React.forwardRef<React.ElementRef<typeof AriaLabel>, LabelProps>(
-  ({ className, ...props }, ref) => (
-    <AriaLabel ref={ref} className={labelStyles({ className })} {...props} />
-  )
-);
-Label.displayName = "Label";
 
-const descriptionStyles = tv({
-  base: "text-xs text-fg-muted",
-});
-type DescriptionProps = AriaTextProps & VariantProps<typeof descriptionStyles>;
-const Description = React.forwardRef<React.ElementRef<typeof AriaText>, DescriptionProps>(
-  ({ className, ...props }, ref) => {
-    return (
-      <AriaText
-        {...props}
-        ref={ref}
-        slot="description"
-        className={descriptionStyles({ className })}
-      />
-    );
-  }
-);
-Description.displayName = "Description";
+type LabelProps = AriaLabelProps;
+const Label = ({ className, ...props }: LabelProps) => {
+  const { label } = fieldStyles();
+  return <AriaLabel className={label({ className })} {...props} />;
+};
 
-const fiellErrorStyles = tv({
-  base: "text-xs text-fg-danger",
-});
-type FieldErrorProps = Omit<AriaFieldErrorProps, "className"> &
-  VariantProps<typeof fiellErrorStyles> & { className?: string };
-const FieldError = React.forwardRef<
-  React.ElementRef<typeof AriaFieldError>,
-  FieldErrorProps
->(({ className, ...props }, ref) => {
+type DescriptionProps = AriaTextProps;
+const Description = ({ className, ...props }: DescriptionProps) => {
+  const { description } = fieldStyles();
   return (
-    <AriaFieldError {...props} ref={ref} className={fiellErrorStyles({ className })} />
+    <AriaText {...props} slot="description" className={description({ className })} />
   );
-});
-FieldError.displayName = "FieldError";
+};
+
+type FieldErrorProps = Omit<AriaFieldErrorProps, "className"> & { className?: string };
+const FieldError = ({ className, ...props }: FieldErrorProps) => {
+  const { fieldError } = fieldStyles();
+  return <AriaFieldError {...props} className={fieldError({ className })} />;
+};
 
 interface HelpTextProps {
   errorMessage?: FieldErrorProps["children"];
-  fieldErrorProps?: Omit<FieldErrorProps, "children">;
   description?: DescriptionProps["children"];
-  descriptionProps?: Omit<DescriptionProps, "children">;
 }
-const HelpText = React.forwardRef<HTMLElement, HelpTextProps>((props, ref) => {
-  const { errorMessage, fieldErrorProps, description, descriptionProps } = props;
-  const validation = React.useContext(FieldErrorContext);
+const HelpText = (props: HelpTextProps) => {
+  const { errorMessage, description } = props;
+  const validation = React.useContext(AriaFieldErrorContext);
   const isErrorMessage =
     validation.isInvalid && (!!errorMessage || validation.validationErrors.length > 0);
   const hasHelpText = !!description || isErrorMessage;
@@ -72,27 +56,21 @@ const HelpText = React.forwardRef<HTMLElement, HelpTextProps>((props, ref) => {
   if (!hasHelpText) return null;
 
   return isErrorMessage ? (
-    <FieldError ref={ref} {...validation} {...fieldErrorProps}>
-      {errorMessage}
-    </FieldError>
+    <FieldError>{errorMessage}</FieldError>
   ) : (
-    <Description ref={ref} {...descriptionProps}>
-      {description}
-    </Description>
+    <Description>{description}</Description>
   );
-});
-HelpText.displayName = "HelpText";
+};
 
 interface FieldProps extends HelpTextProps {
   label?: LabelProps["children"];
-  labelProps?: Omit<LabelProps, "children">;
   children?: React.ReactNode;
 }
 const Field = (props: FieldProps) => {
-  const { children, label, labelProps, ...helpTextProps } = props;
+  const { children, label, ...helpTextProps } = props;
   return (
     <>
-      {label && <Label {...labelProps}>{label}</Label>}
+      {label && <Label>{label}</Label>}
       {children}
       <HelpText {...helpTextProps} />
     </>
@@ -101,4 +79,4 @@ const Field = (props: FieldProps) => {
 Field.displayName = "Field";
 
 export type { LabelProps, DescriptionProps, FieldErrorProps, HelpTextProps, FieldProps };
-export { Label, Description, FieldError, HelpText, Field };
+export { Label, Description, FieldError, HelpText, Field, fieldStyles };

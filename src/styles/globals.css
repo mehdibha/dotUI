@@ -121,6 +121,11 @@
     --color-fg-inverse: var(--color-neutral-100);
     --color-fg-disabled: var(--color-neutral-500);
 
+    --color-fg-danger: var(--color-danger-600);
+    --color-fg-warning: var(--color-warning-600);
+    --color-fg-success: var(--color-success-600);
+    --color-fg-accent: var(--color-accent-600);
+
     --color-fg-link: var(--color-neutral-1000);
     --color-fg-link-hover: var(--color-neutral-1000);
     --color-fg-link-active: var(--color-neutral-1000);
@@ -144,10 +149,10 @@
     --color-border-active: var(--color-neutral-1000);
     --color-border-disabled: var(--color-neutral-300);
 
-    --color-border-success: var(--color-success-300);
-    --color-border-danger: var(--color-danger-300);
-    --color-border-warning: var(--color-warning-300);
-    --color-border-info: var(--color-info-300);
+    --color-border-success: var(--color-success-400);
+    --color-border-danger: var(--color-danger-400);
+    --color-border-warning: var(--color-warning-400);
+    --color-border-info: var(--color-info-400);
 
     --color-border-accent: var(--color-accent-500);
     --color-border-secondary: var(--color-neutral-200);
@@ -163,8 +168,8 @@
     --color-neutral-500: 240 6% 33%;
     --color-neutral-600: 240 6% 47%;
     --color-neutral-700: 240 6% 55%;
-    --color-neutral-800: 240 6% 80%;
-    --color-neutral-900: 240 6% 90%;
+    --color-neutral-800: 240 6% 70%;
+    --color-neutral-900: 240 6% 85%;
     --color-neutral-1000: 240 10% 98%;
 
     --color-success-100: 132 42% 9%;
@@ -202,12 +207,12 @@
 
     --color-accent-100: 211 51% 12%;
     --color-accent-200: 211 52% 18%;
-    --color-accent-300: 210 52% 23%;
-    --color-accent-400: 209 51% 28%;
-    --color-accent-500: 210 52% 37%;
-    --color-accent-600: 210 51% 48%;
-    --color-accent-700: 210 68% 57%;
-    --color-accent-800: 210 97% 65%;
+    --color-accent-300: 210 52% 29%;
+    --color-accent-400: 209 51% 40%;
+    --color-accent-500: 210 52% 48%;
+    --color-accent-600: 210 51% 55%;
+    --color-accent-700: 210 68% 62%;
+    --color-accent-800: 210 97% 71%;
     --color-accent-900: 210 100% 82%;
     --color-accent-1000: 210 100% 87%;
 

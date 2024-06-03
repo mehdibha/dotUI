@@ -1,16 +1,12 @@
 "use client";
 
 import * as React from "react";
-import {
-  TextField as AriaTextField,
-  type TextFieldProps as AriaTextFieldProps,
-} from "react-aria-components";
 import { type VariantProps } from "tailwind-variants";
-import { fieldStyles } from "./field";
 import { Field, type FieldProps } from "./field";
-import { InputWrapper, Input, inputStyles } from "./input";
+import { InputWrapper, TextAreaInput, inputStyles } from "./input";
+import { TextFieldRoot, TextFieldRootProps } from "./text-field";
 
-type TextFieldProps = TextFieldRootProps &
+type TextAreaProps = TextFieldRootProps &
   Omit<FieldProps, "children"> &
   VariantProps<typeof inputStyles> & {
     prefix?: React.ReactNode;
@@ -19,7 +15,7 @@ type TextFieldProps = TextFieldRootProps &
     loaderPosition?: "prefix" | "suffix";
     placeholder?: string;
   };
-const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
+const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
   (
     {
       className,
@@ -47,27 +43,16 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
             suffix={suffix}
             loading={loading}
             loaderPosition={loaderPosition}
+            multiline
           >
-            <Input ref={ref} placeholder={placeholder} />
+            <TextAreaInput ref={ref} placeholder={placeholder} />
           </InputWrapper>
         </Field>
       </TextFieldRoot>
     );
   }
 );
-TextField.displayName = "TextField";
+TextArea.displayName = "TextArea";
 
-type TextFieldRootProps = Omit<AriaTextFieldProps, "className"> & {
-  className?: string;
-};
-const TextFieldRoot = React.forwardRef<
-  React.ElementRef<typeof AriaTextField>,
-  TextFieldRootProps
->(({ className, ...props }, ref) => {
-  const { root } = fieldStyles();
-  return <AriaTextField ref={ref} className={root({ className })} {...props} />;
-});
-TextFieldRoot.displayName = "TextFieldRoot";
-
-export type { TextFieldProps, TextFieldRootProps };
-export { TextField, TextFieldRoot };
+export type { TextAreaProps };
+export { TextArea };

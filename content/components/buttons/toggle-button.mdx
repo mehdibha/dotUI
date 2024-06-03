@@ -1,12 +1,17 @@
 ---
 title: Toggle Button
-description: A two-state button that can be either on or off.
+description: Toggle Buttons allow users to toggle a selection on or off.
 thumbnail:
   image: /previews/components/core/toggle.jpeg
   video: /previews/components/core/toggle.mp4
+links:
+  - label: Aria docs
+    href: https://react-spectrum.adobe.com/react-aria/ToggleButton.html
+  - label: Aria API Reference
+    href: https://react-spectrum.adobe.com/react-aria/ToggleButton.html#props
 ---
 
-<ComponentPreview name="demos/components/core/toggle/default" />
+<ComponentPreview name="demos/components/core/toggle-button/default" />
 
 ## Installation
 
@@ -16,35 +21,64 @@ thumbnail:
 ```bash
 npm install react-aria-components
 ```
+
   <Step>Copy and paste the following code into your project.</Step>
-  <ComponentSource name="components/core/default/toggle" />
+  <ComponentSource name="components/core/default/toggle-button" />
   <Step>Update the import paths to match your project setup.</Step>
 </Steps>
 
 ## Usage
 
-## Examples
+ToggleButtons allow users to toggle a selection on or off, for example, switching between two states or modes.<br />
+They can have a label, an icon, or both. An icon is provided by passing an icon component as child to the ToggleButton or by using the `prefix` and `suffix` props. A visible label can be provided by passing a string as a child.
+
+## Options
 
 ### Variants
 
-<ComponentPreview name="demos/components/core/toggle/variants" />
+Use the `variant` prop to control the visual style of the toggle button.<br/>
+The default variant is `quiet`.
 
-### Types
-
-<ComponentPreview name="demos/components/core/toggle/types" />
+<ComponentPreview name="demos/components/core/toggle-button/variants" />
 
 ### Sizes
 
-<ComponentPreview name="demos/components/core/toggle/sizes" />
+Use the `size` prop to control the size of the toggle button.<br/>
+The default variant is `md`.
 
-### Controlled
+<ComponentPreview name="demos/components/core/toggle-button/sizes" />
 
-<ComponentPreview name="demos/components/core/toggle/controlled" />
+### Shapes
+
+Use the `shape` prop to control the shape of the toggle button.<br/>
+The default variant is `rectangle`.<br/>
+Icon-only toggle buttons should include an `aria-label`.
+
+<ComponentPreview name="demos/components/core/toggle-button/shapes" />
 
 ### Disabled
 
-<ComponentPreview name="demos/components/core/toggle/disabled" />
+<ComponentPreview name="demos/components/core/toggle-button/disabled" />
+
+### Controlled
+
+<ComponentPreview name="demos/components/core/toggle-button/controlled" />
 
 ## API Reference
 
-### ToggleButton
+| Prop      | Type                                  | Default    |
+| --------- | ------------------------------------- | ---------- |
+| `variant` | `"quiet" \| "outline" \| "accent"`    | `"quiet"`  |
+| `size`    | `"sm" \| "md" \| "lg"`                | `"md"`     |
+| `shape`   | `"rectangle" \| "square" \| "circle"` | `"square"` |
+| `prefix`  | `React.ReactNode`                     | -          |
+| `suffix`  | `React.ReactNode`                     | -          |
+
+## Accessibility
+
+### Keyboard interactions
+
+| Key     | Description                       |
+| ------- | --------------------------------- |
+| `Space` | Activates/deactivates the toggle. |
+| `Enter` | Activates/deactivates the toggle. |

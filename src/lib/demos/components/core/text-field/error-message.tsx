@@ -6,11 +6,10 @@ import { TextField } from "@/lib/components/core/default/text-field";
 export default function Demo() {
   return (
     <TextField
-      placeholder="hello@mehdibha.com"
-      type="email"
+      defaultValue="support@copyui.dev"
       label="Email"
-      description="Enter your email."
-      autoComplete="off"
+      isInvalid
+      errorMessage="This email is already taken."
     />
   );
 }
