@@ -1,13 +1,13 @@
 "use client";
 
 import React from "react";
-import { TextField } from "@/lib/components/core/default/text-field";
+import { TextArea } from "@/lib/components/core/default/text-area";
 
 export default function Demo() {
   const [inputValue, setInputValue] = React.useState("Hello world!");
   return (
     <div className="flex flex-col items-center gap-4">
-      <TextField
+      <TextArea
         value={inputValue}
         onChange={(text) => {
           setInputValue(text);

@@ -1,15 +1,15 @@
 "use client";
 
 import React from "react";
-import { TextField } from "@/lib/components/core/default/text-field";
+import { TextArea } from "@/lib/components/core/default/text-area";
 
 export default function Demo() {
   return (
-    <TextField
+    <TextArea
       defaultValue="support@copyui.dev"
-      label="Email"
+      label="Comment"
       isInvalid
-      errorMessage="This email is already taken."
+      errorMessage="You have exceeded the comment limit for one hour."
     />
   );
 }

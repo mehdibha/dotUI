@@ -1,5 +1,5 @@
-import { TextField } from "@/lib/components/core/default/text-field";
+import { TextArea } from "@/lib/components/core/default/text-area";
 
 export default function Demo() {
-  return <TextField value="hello@rcopy.dev" isDisabled />;
+  return <TextArea value="This is a comment" isDisabled />;
 }

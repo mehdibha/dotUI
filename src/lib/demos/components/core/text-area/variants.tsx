@@ -1,11 +1,11 @@
-import { TextField } from "@/lib/components/core/default/text-field";
+import { TextArea } from "@/lib/components/core/default/text-area";
 
 export default function Demo() {
   return (
     <div className="space-y-4">
-      <TextField variant="success" label="Success" />
-      <TextField variant="warning" label="Warning" />
-      <TextField variant="danger" label="Danger" />
+      <TextArea variant="success" label="Success" />
+      <TextArea variant="warning" label="Warning" />
+      <TextArea variant="danger" label="Danger" />
     </div>
   );
 }

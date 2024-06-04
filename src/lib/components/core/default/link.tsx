@@ -13,24 +13,24 @@ const linkVariants = tv({
   extend: focusRing,
   base: "hover:underline underline-offset-4",
   variants: {
-    type: {
+    variant: {
       default: "text-fg-link",
       primary: "",
     },
   },
   defaultVariants: {
-    type: "default",
+    variant: "default",
   },
 });
 
 interface LinkProps extends AriaLinkProps, VariantProps<typeof linkVariants> {}
 
-const Link = ({ type, ...props }: LinkProps) => {
+const Link = ({ variant, ...props }: LinkProps) => {
   return (
     <AriaLink
       {...props}
       className={composeRenderProps(props.className, (className) =>
-        linkVariants({ type, className })
+        linkVariants({ variant, className })
       )}
     />
   );

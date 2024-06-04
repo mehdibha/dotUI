@@ -7,18 +7,19 @@ import {
   type CheckboxProps as AriaCheckboxProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
+import { focusRing } from "@/lib/utils/styles";
 
 const checkboxStyles = tv({
   slots: {
     root: "flex flex-row items-center disabled:text-fg-disabled",
     indicator: [
-      "mr-2",
-      "flex items-center justify-center size-4 shrink-0 rounded-sm border cursor-pointer",
+      focusRing(),
+      "flex items-center justify-center size-4 shrink-0 rounded-sm border border-border-control cursor-pointer",
       "bg-transparent text-transparent selected:bg-bg-primary selected:text-fg-onPrimary transition-colors duration-75 selected:border:border-bg-primary",
       "indeterminate:bg-bg-primary indeterminate:text-fg-onPrimary",
       "disabled:cursor-not-allowed disabled:border-border-disabled disabled:selected:bg-bg-disabled disabled:indeterminate:bg-bg-disabled",
     ],
-    label: "",
+    label: "ml-2",
   },
 });
 
@@ -56,7 +57,6 @@ const Checkbox = React.forwardRef<React.ElementRef<typeof AriaCheckbox>, Checkbo
               data-disabled={isDisabled || undefined}
               data-readonly={isReadOnly || undefined}
               data-invalid={isInvalid || undefined}
-              data-required={props.isRequired || undefined}
               className={indicator({ className: "" })}
             >
               {isIndeterminate ? (

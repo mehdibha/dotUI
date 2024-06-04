@@ -8,8 +8,8 @@ export default function CheckboxDemo() {
     <CheckboxGroup label="Choices" description="You can pick any of these choices.">
       <Checkbox value="opt-1">First option</Checkbox>
       <Checkbox value="opt-2">Another option</Checkbox>
-      <Checkbox value="opt-2">A secret third thing</Checkbox>
-      <Checkbox value="opt-3">The last one</Checkbox>
+      <Checkbox value="opt-3">A secret third thing</Checkbox>
+      <Checkbox value="opt-4">The last one</Checkbox>
     </CheckboxGroup>
   );
 }

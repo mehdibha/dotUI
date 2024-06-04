@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { TextField } from "@/lib/components/core/default/text-field";
+import { TextArea } from "@/lib/components/core/default/text-area";
 
 export default function Demo() {
-  return <TextField label="Email" isReadOnly value="hello@copyui.dev" />;
+  return <TextArea label="Email" isReadOnly value="This is a readonly comment" />;
 }

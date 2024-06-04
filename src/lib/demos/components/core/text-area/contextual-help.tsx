@@ -1,8 +1,6 @@
-"use client";
-
 import React from "react";
-import { TextField } from "@/lib/components/core/default/text-field";
+import { TextArea } from "@/lib/components/core/default/text-area";
 
 export default function Demo() {
-  return <TextField label="Email" description="Enter your email." />;
+  return <TextArea label="Comment" />;
 }

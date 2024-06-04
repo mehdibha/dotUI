@@ -1,8 +1,7 @@
 "use client";
 
 import React from "react";
-import { Label } from "@/lib/components/core/default/field";
-import { TextField } from "@/lib/components/core/default/text-field";
+import { TextArea } from "@/lib/components/core/default/text-area";
 import { useDebounce } from "@/lib/hooks/use-debounce";
 
 export default function Demo() {
@@ -22,10 +21,10 @@ export default function Demo() {
   return (
     <div className="w-full space-y-4">
       <div className="grid grid-cols-2 gap-2">
-        <TextField loading loaderPosition="prefix" />
-        <TextField loading loaderPosition="suffix" />
+        <TextArea loading loaderPosition="prefix" />
+        <TextArea loading loaderPosition="suffix" />
       </div>
-      <TextField
+      <TextArea
         label="Username"
         placeholder="Type a username"
         value={inputValue}

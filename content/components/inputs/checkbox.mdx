@@ -11,10 +11,10 @@ thumbnail:
 ## Installation
 
 <Steps>
-<Step>Install the following dependencies:</Step>
+  <Step>Install the following dependencies:</Step>
 
 ```bash
-npm install @radix-ui/react-checkbox
+npm install react-aria-components
 ```
 
   <Step>Copy and paste the following code into your project.</Step>
@@ -24,46 +24,64 @@ npm install @radix-ui/react-checkbox
 
 ## Usage
 
-```jsx
-import { Checkbox } from "@/components/core/checkbox";
-```
-
-```jsx
-<Checkbox />
-```
-
-## API Reference
-
-| Prop              | Type                                                  | Default |
-| ----------------- | ----------------------------------------------------- | ------- |
-| `asChild`         | `boolean`                                             | false   |
-| `defaultChecked`  | `boolean \| "indeterminate"`                          | -       |
-| `checked`         | `boolean \| "indeterminate"`                          | -       |
-| `onCheckedChange` | `func: (checked: boolean \| 'indeterminate') => void` | -       |
-| `disabled`        | `boolean`                                             | -       |
-| `required`        | `boolean`                                             | -       |
-| `name`            | `string`                                              | -       |
-| `value`           | `string`                                              | "on"    |
-
-| Data attribute    | Values                                        |
-| ----------------- | --------------------------------------------- |
-| `[data-state]`    | `"checked" \| "unchecked" \| "indeterminate"` |
-| `[data-disabled]` | Present when disabled                         |
+TODO
 
 ## Options
 
-### Disabled
+### Label
 
-<ComponentPreview name="demos/components/core/checkbox/disabled" />
+TODO
 
 ### Indeterminate
 
+TODO
+
 <ComponentPreview name="demos/components/core/checkbox/indeterminate" />
+
+### Read only
+
+TODO
+
+<ComponentPreview name="demos/components/core/checkbox/read-only" />
+
+### Disabled
+
+TODO
+
+<ComponentPreview name="demos/components/core/checkbox/disabled" />
 
 ## Examples
 
+### Controlled
+
+TODO
+
+<ComponentPreview name="demos/components/core/checkbox/controlled" />
+
+### Form
+
+TODO
+
+<ComponentPreview name="demos/components/core/checkbox/form" />
+
 ## API Reference
+
+TODO
+
+| Prop    | Type     | Default |
+| ------- | -------- | ------- |
+| `value` | `string` | -       |
+
+TODO
+
+| Data attribute    | Description                       |
+| ----------------- | --------------------------------- |
+| `[data-selected]` | Whether the checkbox is selected. |
 
 ## Accessibility
 
 ### Keyboard interactions
+
+| Key     | Description                   |
+| ------- | ----------------------------- |
+| `Space` | Checks/unchecks the checkbox. |

@@ -8,7 +8,7 @@ import { TextFieldRoot, TextFieldRootProps } from "./text-field";
 
 type TextAreaProps = TextFieldRootProps &
   Omit<FieldProps, "children"> &
-  VariantProps<typeof inputStyles> & {
+  Omit<VariantProps<typeof inputStyles>,"size"> & {
     prefix?: React.ReactNode;
     suffix?: React.ReactNode;
     loading?: boolean;
@@ -20,7 +20,6 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
     {
       className,
       variant,
-      size,
       placeholder,
       label,
       description,
@@ -37,7 +36,6 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
       <TextFieldRoot className={className} {...props}>
         <Field label={label} description={description} errorMessage={errorMessage}>
           <InputWrapper
-            size={size}
             variant={variant}
             prefix={prefix}
             suffix={suffix}

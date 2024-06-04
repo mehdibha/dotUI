@@ -1,7 +1,9 @@
 "use client";
 
 import * as React from "react";
+import { useControlledState } from "@react-stately/utils";
 import { Loader2Icon } from "lucide-react";
+import { chain } from "react-aria";
 import {
   Provider,
   composeRenderProps,
@@ -44,7 +46,14 @@ const inputStyles = tv({
       warning: { root: "border-border-warning focus-within:border-border" },
     },
     multiline: {
-      true: { root: "h-auto", input: "min-h-[80px] py-2" },
+      true: {
+        root: "h-auto flex-col items-stretch p-2",
+        input: "min-h-14 resize-none overflow-auto px-0",
+        innerVisual: "data-[side=start]:pb-2 data-[side=end]:pt-2",
+      },
+      false: {
+        innerVisual: "data-[side=start]:pl-2 data-[side=end]:pr-2",
+      },
     },
   },
   defaultVariants: {
@@ -57,9 +66,47 @@ interface TextAreaInputProps extends Omit<AriaTextAreaProps, "className"> {
   className?: string;
 }
 const TextAreaInput = React.forwardRef<HTMLTextAreaElement, TextAreaInputProps>(
-  ({ className, ...props }, ref) => {
+  ({ className, onChange, rows = 1, ...props }, ref) => {
     const { input } = inputStyles({ multiline: true });
-    return <AriaTextArea ref={ref} className={input({ className })} {...props} />;
+    const [inputValue, setInputValue] = useControlledState(
+      props.value,
+      props.defaultValue ?? "",
+      () => {}
+    );
+    const inputRef = React.useRef<HTMLTextAreaElement>(null);
+
+    const onHeightChange = React.useCallback(() => {
+      if (inputRef.current) {
+        const input = inputRef.current;
+        const prevAlignment = input.style.alignSelf;
+        const prevOverflow = input.style.overflow;
+        const isFirefox = "MozAppearance" in input.style;
+        if (!isFirefox) {
+          input.style.overflow = "hidden";
+        }
+        input.style.alignSelf = "start";
+        input.style.height = "auto";
+        input.style.height = `${input.scrollHeight + (input.offsetHeight - input.clientHeight)}px`;
+        input.style.overflow = prevOverflow;
+        input.style.alignSelf = prevAlignment;
+      }
+    }, [inputRef]);
+
+    React.useLayoutEffect(() => {
+      if (inputRef.current) {
+        onHeightChange();
+      }
+    }, [onHeightChange, inputValue, inputRef]);
+
+    return (
+      <AriaTextArea
+        ref={inputRef}
+        className={input({ className })}
+        onChange={chain(onChange, setInputValue)}
+        rows={rows}
+        {...props}
+      />
+    );
   }
 );
 TextAreaInput.displayName = "TextAreaInput";
@@ -94,7 +141,7 @@ const InputWrapper = React.forwardRef<HTMLDivElement, InputWrapperProps>(
       prefix,
       suffix,
       loaderPosition = "suffix",
-      multiline,
+      multiline = false,
       ...props
     },
     ref
@@ -105,7 +152,7 @@ const InputWrapper = React.forwardRef<HTMLDivElement, InputWrapperProps>(
     const inputRef = React.useRef<HTMLInputElement | HTMLTextAreaElement>(null);
     const { root } = inputStyles({
       size,
-      variant: variant ?? isInvalid ? "danger" : undefined,
+      variant: variant ?? (isInvalid ? "danger" : undefined),
       multiline,
     });
     const showPrefixLoading = loading && loaderPosition === "prefix";
@@ -140,11 +187,11 @@ const InputWrapper = React.forwardRef<HTMLDivElement, InputWrapperProps>(
         >
           {composeRenderProps(props.children, (children) => (
             <>
-              <InputInnerVisual loading={showPrefixLoading} className="pl-2">
+              <InputInnerVisual side="start" loading={showPrefixLoading} multiline={multiline}>
                 {prefix}
               </InputInnerVisual>
               {children}
-              <InputInnerVisual loading={showSuffixLoading} className="pr-2">
+              <InputInnerVisual side="end" loading={showSuffixLoading} multiline={multiline}>
                 {suffix}
               </InputInnerVisual>
             </>
@@ -157,26 +204,19 @@ const InputWrapper = React.forwardRef<HTMLDivElement, InputWrapperProps>(
 InputWrapper.displayName = "InputWrapper";
 
 interface InputInnerVisualProps extends React.HTMLAttributes<HTMLDivElement> {
+  side: "start" | "end";
+  multiline?: boolean;
   loading?: boolean;
 }
 const InputInnerVisual = React.forwardRef<HTMLSpanElement, InputInnerVisualProps>(
-  ({ loading, children, className, ...props }, ref) => {
-    const { innerVisual } = inputStyles();
-    if (loading) {
-      return (
-        <span ref={ref} className={className} {...props}>
-          <Loader2Icon className="animate-spin" />
-        </span>
-      );
-    }
-    if (children) {
-      return (
-        <span ref={ref} className={innerVisual({ className })} {...props}>
-          {children}
-        </span>
-      );
-    }
-    return null;
+  ({ loading, children, className, multiline, side, ...props }, ref) => {
+    const { innerVisual } = inputStyles({ multiline });
+    if (!loading && !children) return null;
+    return (
+      <span ref={ref} data-side={side} className={innerVisual({ className })} {...props}>
+        {loading ? <Loader2Icon className="animate-spin" /> : children}
+      </span>
+    );
   }
 );
 InputInnerVisual.displayName = "InputInnerVisual";

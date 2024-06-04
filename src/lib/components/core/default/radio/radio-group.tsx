@@ -24,40 +24,16 @@ interface RadioGroupProps
 const RadioGroup = React.forwardRef<
   React.ElementRef<typeof AriaRadioGroup>,
   RadioGroupProps
->(
-  (
-    {
-      className,
-      children,
-      label,
-      labelProps,
-      description,
-      descriptionProps,
-      errorMessage,
-      fieldErrorProps,
-      ...props
-    },
-    ref
-  ) => {
-    const { root } = radioGroupStyles({});
-    return (
-      <AriaRadioGroup ref={ref} className={root({ className })} {...props}>
-        {({}) => (
-          <Field
-            label={label}
-            labelProps={labelProps}
-            description={description}
-            descriptionProps={descriptionProps}
-            errorMessage={errorMessage}
-            fieldErrorProps={fieldErrorProps}
-          >
-            <div className="space-y-2">{children}</div>
-          </Field>
-        )}
-      </AriaRadioGroup>
-    );
-  }
-);
+>(({ className, children, label, description, errorMessage, ...props }, ref) => {
+  const { root } = radioGroupStyles({});
+  return (
+    <AriaRadioGroup ref={ref} className={root({ className })} {...props}>
+      <Field label={label} description={description} errorMessage={errorMessage}>
+        <div className="space-y-2">{children}</div>
+      </Field>
+    </AriaRadioGroup>
+  );
+});
 RadioGroup.displayName = "RadioGroup";
 
 export { RadioGroup };
