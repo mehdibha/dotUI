@@ -30,6 +30,8 @@ const config = {
           surface: "hsl(var(--color-bg-surface))",
           muted: "hsl(var(--color-bg-muted))",
           disabled: "hsl(var(--color-bg-disabled))",
+          overlay: "hsl(var(--color-bg-overlay))",
+          tooltip: "hsl(var(--color-bg-tooltip))",
           neutral: {
             DEFAULT: "hsl(var(--color-bg-neutral))",
             hover: "hsl(var(--color-bg-neutral-hover))",
@@ -80,9 +82,6 @@ const config = {
               active: "hsl(var(--color-bg-accent-muted-active))",
             },
           },
-          tooltip: {
-            DEFAULT: "hsl(var(--color-bg-tooltip))",
-          },
         },
         fg: {
           DEFAULT: "hsl(var(--color-fg))",
@@ -103,6 +102,7 @@ const config = {
           warning: "hsl(var(--color-fg-warning))",
           danger: "hsl(var(--color-fg-danger))",
           info: "hsl(var(--color-fg-info))",
+          onAccent: "hsl(var(--color-fg-onAccent))",
           onNeutral: "hsl(var(--color-fg-onNeutral))",
           onPrimary: "hsl(var(--color-fg-onPrimary))",
           onSuccess: "hsl(var(--color-fg-onSuccess))",

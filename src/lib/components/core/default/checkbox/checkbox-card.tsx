@@ -7,21 +7,23 @@ import {
   type CheckboxProps as AriaCheckboxProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
+import { focusRing } from "@/lib/utils/styles";
 
 const checkboxCardStyles = tv({
   slots: {
     root: [
-      "border rounded-md p-4 cursor-pointer flex flex-row items-center justify-between gap-4 selected:bg-bg-muted disabled:text-fg-disabled transition-colors",
+      focusRing(),
+      "border rounded-md p-4 cursor-pointer flex flex-row items-center justify-between gap-4 selected:bg-bg-muted indeterminate:bg-bg-muted disabled:text-fg-disabled disabled:cursor-not-allowed transition-colors",
     ],
     indicator: [
       "flex items-center justify-center size-4 shrink-0 rounded-sm border cursor-pointer",
       "bg-transparent text-transparent selected:bg-bg-primary selected:text-fg-onPrimary transition-colors duration-75 selected:border:border-bg-primary",
       "indeterminate:bg-bg-primary indeterminate:text-fg-onPrimary",
-      "disabled:cursor-not-allowed disabled:border-border-disabled disabled:selected:bg-bg-disabled disabled:indeterminate:bg-bg-disabled",
+      "disabled:selected:text-fg-disabled disabled:cursor-not-allowed disabled:border-border-disabled disabled:selected:bg-bg-disabled disabled:indeterminate:bg-bg-disabled",
     ],
     wrapper: "flex flex-col space-y-1 mr-4 text-sm",
     title: "font-semibold",
-    description: "text-fg-muted",
+    description: "text-fg-muted disabled:text-fg-disabled",
   },
 });
 
@@ -61,7 +63,15 @@ const CheckboxCard = React.forwardRef<
           {children ?? (
             <div className={wrapper({})}>
               <span className={titleStyle({})}>{title}</span>
-              {description && <span className={descriptionStyle({})}>{description}</span>}
+              {description && (
+                <span
+                  data-rac=""
+                  data-disabled={isDisabled || undefined}
+                  className={descriptionStyle({})}
+                >
+                  {description}
+                </span>
+              )}
             </div>
           )}
           <div

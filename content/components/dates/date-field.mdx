@@ -1,22 +1,172 @@
 ---
 title: Date Field
-description: A date field component that allows users to enter and edit date values using a keyboard.
+description: A date field allows users to enter and edit date and time values using a keyboard.
 thumbnail:
-  image: /previews/components/core/button-group.jpeg
-  video: /previews/components/core/button-group.mp4
+  image: /previews/components/core/date-field.jpeg
+  video: /previews/components/core/date-field.mp4
 ---
 
-<ComponentPreview
-  name="demos/components/core/date-field/basic"
-  className="max-w-[150px]"
-/>
+<ComponentPreview name="demos/components/core/date-field/default" />
 
 ## Installation
 
+<Steps>
+  <Step>Install the following dependencies:</Step>
+
+```bash
+npm install react-aria-components
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+  <ComponentSource name="components/core/default/date-field" />
+  <Step>Update the import paths to match your project setup.</Step>
+</Steps>
+
+## Usage
+
+Use a `DateField` to allow users to enter and edit time values using a keyboard.
+
 ## Options
+
+### Label
+
+A visual label can be provided for the `DateField` using the label prop or a hidden label using `aria-label` prop.<br/>
+
+<ComponentPreview name="demos/components/core/date-field/label" />
+
+### Sizes
+
+Use the `size` prop to control the size of the `DateField`.<br/>
+The default variant is `md`.
+
+<ComponentPreview name="demos/components/core/date-field/sizes" />
+
+### Prefix and suffix
+
+To add additional context for the `DateField`, use the `prefix` and `suffix` props.
+
+<ComponentPreview name="demos/components/core/date-field/prefix-and-suffix" />
+
+### Description
+
+A description can be supplied to a DateField via the `description` prop. The description is always visible unless the `validationState` is `“invalid”` and an error message is provided.
+
+<ComponentPreview name="demos/components/core/date-field/description" />
+
+### Contextual help
+
+A ContextualHelp element may be placed next to the label to provide additional information or help about a DateField.
+
+<ComponentPreview name="demos/components/core/date-field/contextual-help" />
+
+### Error message
+
+An error message can be supplied to a DateField, which will be displayed when the `validationState` is `“invalid”`.
+
+<ComponentPreview name="demos/components/core/date-field/error-message" />
+
+### Time zones
+
+DateField is time zone aware when a ZonedDateTime object is provided as the value.
+
+<ComponentPreview name="demos/components/core/date-field/time-zones" />
+
+### Granularity
+
+The `granularity` prop allows you to control the smallest unit that is displayed by DateField.
+
+<ComponentPreview name="demos/components/core/date-field/granularity" />
+
+### Placeholder value
+
+Use the `placeholderValue` prop to control the default values of each segment. The default value is midnight.
+
+<ComponentPreview name="demos/components/core/date-field/placeholder" />
+
+### Hide time zone
+
+Use the `hideTimeZone` prop to hide the time zone abbreviation.
+
+<ComponentPreview name="demos/components/core/date-field/hide-time-zone" />
+
+### Hour cycle
+
+Use the `hourCycle` prop to control the hour cycle of the DateField.
+
+<ComponentPreview name="demos/components/core/date-field/hour-cycle" />
+
+### Loading
+
+Use the `isLoading` prop to control the loading state of the DateField.
+Use the `loaderPosition` prop to control the position of the loader.
+
+<ComponentPreview name="demos/components/core/date-field/loading" className="max-w-xs" />
+
+### Disabled
+
+Use the `isDisabled` prop to disable the DateField.
+
+<ComponentPreview
+  name="demos/components/core/date-field/disabled"
+  className="max-w-[250px]"
+/>
+
+### ReadOnly
+
+The isReadOnly boolean prop makes the DateField's text content immutable. Unlike isDisabled, the DateField remains focusable and the contents can still be copied.
+
+<ComponentPreview
+  name="demos/components/core/date-field/read-only"
+  className="max-w-[250px]"
+/>
+
+### Required
+
+Use the `isRequired` prop to mark the DateField as required.
+Use the `necessityIndicator` prop to control the visual style of the required state.
+
+<ComponentPreview name="demos/components/core/date-field/required" className="max-w-sm" />
 
 ## Examples
 
+### Controlled
+
+Use the `value` and `onChange` props to control the value of the input.
+
+<ComponentPreview
+  name="demos/components/core/date-field/controlled"
+  className="max-w-[250px]"
+/>
+
+### Composition
+
+If you need to customize things further, you can drop down to the composition pattern.
+
+<ComponentPreview
+  name="demos/components/core/date-field/composition"
+  className="max-w-[250px]"
+/>
+
 ## API Reference
 
+TODO
+
+| Prop    | Type    | Default | Description |
+| ------- | ------- | ------- | ----------- |
+| `style` | `salem` | -       |             |
+
+| Event      | Type    | Description |
+| ---------- | ------- | ----------- |
+| `onChange` | `saelm` | salem       |
+
 ## Accessibility
+
+### Keyboard interactions
+
+| Key          | Description                          |
+| ------------ | ------------------------------------ |
+| `Tab`        | Moves focus to the first segment.    |
+| `ArrowRight` | Moves focus to the next segment.     |
+| `ArrowLeft`  | Moves focus to the previous segment. |
+| `ArrowUp`    | Increments the value of the segment. |
+| `ArrowDown`  | Decrements the value of the segment. |

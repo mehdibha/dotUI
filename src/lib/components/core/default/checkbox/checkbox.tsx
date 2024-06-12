@@ -11,13 +11,15 @@ import { focusRing } from "@/lib/utils/styles";
 
 const checkboxStyles = tv({
   slots: {
-    root: "flex flex-row items-center disabled:text-fg-disabled",
+    root: "flex flex-row items-center invalid:text-fg-danger disabled:text-fg-disabled",
     indicator: [
       focusRing(),
       "flex items-center justify-center size-4 shrink-0 rounded-sm border border-border-control cursor-pointer",
       "bg-transparent text-transparent selected:bg-bg-primary selected:text-fg-onPrimary transition-colors duration-75 selected:border:border-bg-primary",
       "indeterminate:bg-bg-primary indeterminate:text-fg-onPrimary",
-      "disabled:cursor-not-allowed disabled:border-border-disabled disabled:selected:bg-bg-disabled disabled:indeterminate:bg-bg-disabled",
+      "read-only:cursor-default",
+      "disabled:cursor-not-allowed disabled:border-border-disabled disabled:selected:text-fg-disabled disabled:selected:bg-bg-disabled disabled:indeterminate:bg-bg-disabled",
+      "invalid:border-border-danger invalid:selected:bg-bg-danger-muted invalid:selected:text-fg-onMutedDanger"
     ],
     label: "ml-2",
   },

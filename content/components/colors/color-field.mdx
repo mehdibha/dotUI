@@ -1,22 +1,189 @@
 ---
 title: Color Field
-description: A date picker combines a DateField and a Calendar popover
+description: A color field allows users to edit a hex color or individual color channel value.
 thumbnail:
   image: /previews/components/core/color-field.jpeg
   video: /previews/components/core/color-field.mp4
+links:
+  - label: Aria docs
+    href: https://react-spectrum.adobe.com/react-aria/ColorField.html
+  - label: Aria API Reference
+    href: https://react-spectrum.adobe.com/react-aria/ColorField.html#props
 ---
 
-<ComponentPreview
-  name="demos/components/core/color-field/basic"
-  className="max-w-[150px]"
-/>
+<ComponentPreview name="demos/components/core/color-field/default" />
 
 ## Installation
 
+<Steps>
+  <Step>Install the following dependencies:</Step>
+
+```bash
+npm install react-aria-components
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+  <ComponentSource name={"components/core/default/color-field"} />
+  <Step>Update the import paths to match your project setup.</Step>
+</Steps>
+
+## Usage
+
+Use a `ColorField` to allow users to edit a hex color or individual color channel value.
+
 ## Options
+
+### Sizes
+
+Use the `size` prop to control the size of the `ColorField`.<br/>
+The default variant is `md`.
+
+<ComponentPreview name="demos/components/core/color-field/sizes" className="max-w-lg" />
+
+### Prefix and suffix
+
+To add additional context for the `ColorField`, use the `prefix` and `suffix` props.
+
+<ComponentPreview
+  name="demos/components/core/color-field/prefix-and-suffix"
+  className="max-w-[250px]"
+/>
+
+### Label
+
+A visual label can be provided for the `ColorField` using the label prop or a hidden label using `aria-label` prop.<br/>
+
+<ComponentPreview
+  name="demos/components/core/color-field/label"
+  className="max-w-[250px]"
+/>
+
+### Description
+
+A description can be supplied to a ColorField via the `description` prop. The description is always visible unless the `validationState` is `“invalid”` and an error message is provided.
+
+<ComponentPreview
+  name="demos/components/core/color-field/description"
+  className="max-w-[250px]"
+/>
+
+### Contextual help
+
+A ContextualHelp element may be placed next to the label to provide additional information or help about a ColorField.
+
+<ComponentPreview
+  name="demos/components/core/color-field/contextual-help"
+  className="max-w-[250px]"
+/>
+
+### Error message
+
+An error message can be supplied to a ColorField, which will be displayed when the `validationState` is `“invalid”`.
+
+<ComponentPreview
+  name="demos/components/core/color-field/error-message"
+  className="max-w-[250px]"
+/>
+
+### Loading
+
+Use the `isLoading` prop to control the loading state of the ColorField.
+Use the `loaderPosition` prop to control the position of the loader.
+
+<ComponentPreview name="demos/components/core/color-field/loading" className="max-w-xs" />
+
+### Disabled
+
+Use the `isDisabled` prop to disable the ColorField.
+
+<ComponentPreview
+  name="demos/components/core/color-field/disabled"
+  className="max-w-[250px]"
+/>
+
+### ReadOnly
+
+The `isReadOnly` boolean prop makes the ColorField's text content immutable. Unlike isDisabled, the ColorField remains focusable and the contents can still be copied.
+
+<ComponentPreview
+  name="demos/components/core/color-field/read-only"
+  className="max-w-[250px]"
+/>
+
+### Required
+
+Use the `isRequired` prop to mark the ColorField as required.
+Use the `necessityIndicator` prop to control the visual style of the required state.
+
+<ComponentPreview
+  name="demos/components/core/color-field/required"
+  className="max-w-sm"
+/>
 
 ## Examples
 
+### Controlled
+
+Use the `value` and `onChange` props to control the value of the input.
+
+<ComponentPreview
+  name="demos/components/core/color-field/controlled"
+  className="max-w-[250px]"
+/>
+
+### Composition
+
+If you need to customize things further, you can drop down to the composition pattern.
+
+<ComponentPreview
+  name="demos/components/core/color-field/composition"
+  className="max-w-[250px]"
+/>
+
 ## API Reference
 
-## Accessibility
+| Prop                 | Type                                                                                                    | Default    | Description                                                                                                                                                                                                                           |
+| -------------------- | ------------------------------------------------------------------------------------------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `channel`            | `'hue' \| 'saturation' \| 'brightness' \| 'lightness' \| 'red' \| 'green' \| 'blue' \| 'alpha'`         | -          | The color channel that this field edits. If not provided, the color is edited as a hex value.                                                                                                                                         |
+| `colorSpace`         | `'rgb' \| 'hsl' \| 'hsb'`                                                                               | -          | The color space that the color field operates in if a channel prop is provided. If no channel is provided, the color field always displays the color as an RGB hex value.                                                             |
+| `isWheelDisabled`    | `boolean`                                                                                               | -          | Enables or disables changing the value with scroll.                                                                                                                                                                                   |
+| `value`              | `T`                                                                                                     | -          | The current value (controlled).                                                                                                                                                                                                       |
+| `defaultValue`       | `T`                                                                                                     | -          | The default value (uncontrolled).                                                                                                                                                                                                     |
+| `isDisabled`         | `boolean`                                                                                               | -          | Whether the input is disabled.                                                                                                                                                                                                        |
+| `isReadOnly`         | `boolean`                                                                                               | -          | Whether the input can be selected but not changed by the user.                                                                                                                                                                        |
+| `isRequired`         | `boolean`                                                                                               | -          | Whether user input is required on the input before form submission.                                                                                                                                                                   |
+| `isInvalid`          | `boolean`                                                                                               | -          | Whether the input value is invalid.                                                                                                                                                                                                   |
+| `validate`           | `(value: Color \| null) => ValidationError \| true \| null \| undefined`                                | -          | A function that returns an error message if a given value is invalid. Validation errors are displayed to the user when the form is submitted if validationBehavior="native". For realtime validation, use the isInvalid prop instead. |
+| `autoFocus`          | `boolean`                                                                                               | -          | Whether the element should receive focus on render.                                                                                                                                                                                   |
+| `name`               | `string`                                                                                                | -          | The name of the input element, used when submitting an HTML form.                                                                                                                                                                     |
+| `validationBehavior` | `'native' \| 'aria'`                                                                                    | `'native'` | Whether to use native HTML form validation to prevent form submission when the value is missing or invalid, or mark the field as required or invalid via ARIA.                                                                        |
+| `children`           | `ReactNode \| (values: ColorFieldRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -          | The children of the component. A function may be provided to alter the children based on component state.                                                                                                                             |
+| `className`          | `string`                                                                                                | -          | The CSS className for the element.                                                                                                                                                                                                    |
+| `style`              | `CSSProperties \| (values: ColorFieldRenderProps & {defaultStyle: CSSProperties}) => CSSProperties`     | -          | The inline style for the element. A function may be provided to compute the style based on component state.                                                                                                                           |
+
+TODO
+
+| Event                 | Type                                        | Description                                                                                                      |
+| --------------------- | ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `onChange`            | `(isSelected: boolean) => void`             | Handler that is called when the Switch's selection state changes.                                                |
+| `onFocus`             | `(e: FocusEvent<Target>) => void`           | Handler that is called when the Switch receives focus.                                                           |
+| `onBlur`              | `(e: FocusEvent<Target>) => void`           | Handler that is called when the Switch loses focus.                                                              |
+| `onFocusChange`       | `(isFocused: boolean) => void`              | Handler that is called when the Switch's focus status changes.                                                   |
+| `onKeyDown`           | `(e: KeyboardEvent) => void`                | Handler that is called when a key is pressed.                                                                    |
+| `onKeyUp`             | `(e: KeyboardEvent) => void`                | Handler that is called when a key is released.                                                                   |
+| `onCopy`              | `ClipboardEventHandler<HTMLInputElement>`   | Handler that is called when the user copies text.                                                                |
+| `onCut`               | `ClipboardEventHandler<HTMLInputElement>`   | Handler that is called when the user cuts text.                                                                  |
+| `onPaste`             | `ClipboardEventHandler<HTMLInputElement>`   | Handler that is called when the user pastes text.                                                                |
+| `onCompositionStart`  | `CompositionEventHandler<HTMLInputElement>` | Handler that is called when a text composition system starts a new text composition session.                     |
+| `onCompositionEnd`    | `CompositionEventHandler<HTMLInputElement>` | Handler that is called when a text composition system completes or cancels the current text composition session. |
+| `onCompositionUpdate` | `CompositionEventHandler<HTMLInputElement>` | Handler that is called when a new character is received in the current text composition session.                 |
+| `onSelect`            | `ReactEventHandler<HTMLInputElement>`       | Handler that is called when text in the input is selected.                                                       |
+| `onBeforeInput`       | `FormEventHandler<HTMLInputElement>`        | Handler that is called when the input value is about to be modified.                                             |
+| `onInput`             | `FormEventHandler<HTMLInputElement>`        | Handler that is called when the input value is modified.                                                         |
+
+| Data attribute                                     | Description                                                                  |
+| -------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `[data-disabled]`                                  | Whether the color field is disabled.                                         |
+| `[data-invalid]`                                   | Whether the color field is invalid.                                          |
+| `[data-channel="hex \| hue \| saturation \| ..."]` | The color channel that this field edits, or "hex" if no channel prop is set. |

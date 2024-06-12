@@ -7,30 +7,37 @@ import {
   Menu as AriaMenu,
   MenuTrigger as AriaMenuTrigger,
   MenuItem as AriaMenuItem,
+  SubmenuTrigger as AriaSubmenuTrigger,
+  Section as AriaSection,
+  SectionProps as AriaSectionProps,
+  Header as AriaHeader,
+  Collection as AriaCollection,
   type MenuItemProps as AriaMenuItemProps,
   type MenuProps as AriaMenuProps,
-  type DialogTriggerProps as AriaDialogTriggerProps,
-  SubmenuTrigger,
+  type MenuTriggerProps as AriaMenuTriggerProps,
 } from "react-aria-components";
 import { Provider } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import { useMediaQuery } from "@/lib/hooks/use-media-query";
+import { Kbd } from "./kbd";
 import { Overlay, type OverlayProps } from "./overlay";
 
 const menuStyles = tv({
   slots: {
-    overlay: "",
+    overlay: "w-auto min-w-[--trigger-width]",
     backdrop: "",
     content: "outline-none rounded-[inherit] p-1 data-mobile:p-2 data-mobile:space-y-1",
     item: [
-      "relative flex cursor-pointer items-center rounded-sm px-3 pr-8 py-1.5 text-sm outline-none transition-colors disabled:pointer-events-none focus:bg-bg-inverse/10 pressed:bg-bg-inserse/15 disabled:bg-bg-disabled disabled:text-fg-disabled",
-      "data-mobile:px-4 data-mobile:py-3 data-mobile:text-base",
-      "selection-mode-single:pl-8 selection-mode-multiple:pl-8 data-[selection-mode=multiple]:pl-8",
+      "flex cursor-pointer items-center rounded-sm px-3 py-1.5 text-sm outline-none transition-colors disabled:pointer-events-none focus:bg-bg-inverse/10 disabled:text-fg-disabled",
+      "selection-single:pl-0 selection-multiple:pl-0",
+      "[&_svg]:size-4"
     ],
+    section: "",
+    title: "px-3 py-1.5 text-xs font-bold",
   },
 });
 
-interface MenuRootProps extends Omit<AriaDialogTriggerProps, "children"> {
+interface MenuRootProps extends Omit<AriaMenuTriggerProps, "children"> {
   children: React.ReactNode | (({ isMobile }: { isMobile: boolean }) => React.ReactNode);
   mobileType?: "drawer" | "modal" | "popover";
   mediaQuery?: string;
@@ -51,18 +58,18 @@ const MenuRoot = ({
   );
 };
 
-type MenuProps<T> = MenuContentProps<T>;
-const Menu = <T extends object>({ ...props }: MenuProps<T>) => {
+type MenuProps<T> = MenuContentProps<T> & { placement?: OverlayProps["placement"] };
+const Menu = <T extends object>({ placement, ...props }: MenuProps<T>) => {
   return (
-    <MenuOverlay>
+    <MenuOverlay placement={placement}>
       <MenuContent {...props} />
     </MenuOverlay>
   );
 };
 
-const MenuSub = SubmenuTrigger;
+const MenuSub = AriaSubmenuTrigger;
 
-const MenuOverlay = ({ placement = "bottom right", ...props }: OverlayProps) => {
+const MenuOverlay = ({ placement, ...props }: OverlayProps) => {
   const { isMobile, mobileType } = usePopoverContext();
   const { overlay, backdrop } = menuStyles();
   return (
@@ -90,9 +97,22 @@ const MenuContent = <T extends object>({ className, ...props }: MenuContentProps
 };
 
 interface MenuItemProps<T> extends Omit<AriaMenuItemProps<T>, "className"> {
+  prefix?: React.ReactNode;
+  suffix?: React.ReactNode;
+  label?: string;
+  description?: string;
+  shortcut?: string;
   className?: string;
 }
-const MenuItem = <T extends object>({ className, ...props }: MenuItemProps<T>) => {
+const MenuItem = <T extends object>({
+  className,
+  label,
+  description,
+  prefix,
+  suffix,
+  shortcut,
+  ...props
+}: MenuItemProps<T>) => {
   const { item } = menuStyles();
   const { isMobile, mobileType } = usePopoverContext();
   return (
@@ -105,21 +125,51 @@ const MenuItem = <T extends object>({ className, ...props }: MenuItemProps<T>) =
         props.children,
         (children, { selectionMode, isSelected, hasSubmenu }) => (
           <>
-            {selectionMode !== "none" && (
-              <span className="absolute left-2 top-1/2 -translate-y-1/2">
-                {isSelected && <CheckIcon aria-hidden className="size-4" />}
+            {selectionMode !== "none" ? (
+              <span className="flex w-8 items-center justify-center">
+                {isSelected && <CheckIcon aria-hidden className="size-4 text-fg" />}
               </span>
+            ) : (
+              <>{prefix && <span className="mr-2">{prefix}</span>}</>
             )}
-            <span>{children}</span>
-            {hasSubmenu && (
-              <span className="absolute right-2 top-1/2 -translate-y-1/2">
+            <span className="flex-1 flex flex-col">
+              {label && <span className="font-semibold">{label}</span>}
+              {description && (
+                <span className="text-xs text-fg-muted">{description}</span>
+              )}
+              {children}
+            </span>
+            {hasSubmenu ? (
+              <span className="ml-3 flex">
                 <ChevronRightIcon aria-hidden className="size-4" />
+              </span>
+            ) : (
+              <span className="flex items-center gap-1 ml-3">
+                {suffix && <span>{suffix}</span>}
+                {shortcut && <Kbd>{shortcut}</Kbd>}
               </span>
             )}
           </>
         )
       )}
     </AriaMenuItem>
+  );
+};
+
+interface MenuSectionProps<T> extends AriaSectionProps<T> {
+  title?: string;
+}
+const MenuSection = <T extends object>({
+  title,
+  className,
+  ...props
+}: MenuSectionProps<T>) => {
+  const { section, title: titleStyle } = menuStyles();
+  return (
+    <AriaSection className={section({ className })}>
+      {title && <AriaHeader className={titleStyle()}>{title}</AriaHeader>}
+      <AriaCollection items={props.items}>{props.children}</AriaCollection>
+    </AriaSection>
   );
 };
 
@@ -137,4 +187,4 @@ function usePopoverContext() {
 }
 
 export type { MenuRootProps, MenuProps };
-export { MenuRoot, Menu, MenuItem, MenuSub };
+export { MenuRoot, Menu, MenuItem, MenuSub, MenuSection };

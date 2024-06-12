@@ -5,7 +5,6 @@ import { CheckboxCard } from "@/lib/components/core/default/checkbox/checkbox-ca
 export default function CheckboxDemo() {
   return (
     <CheckboxCard
-      defaultSelected
       title="Upload documents"
       description="upload documents from your computer."
     />

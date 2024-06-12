@@ -9,7 +9,7 @@ import { TabsItem, TabsList, TabsRoot, TabsPanel, TabsRootProps } from "./tabs";
 const codeBlockStyles = tv({
   slots: {
     root: "block border rounded-md w-fit max-w-full bg-bg-muted",
-    header: "flex items-center justify-between border-b rounded-t-[inherit] pr-2",
+    header: "flex items-center justify-between border-b rounded-t-[inherit] pr-2 h-10",
     body: "",
     code: "!my-0 text-xs [&>pre]:!bg-transparent",
   },
@@ -17,29 +17,33 @@ const codeBlockStyles = tv({
 
 interface CodeBlockProps extends CodeBlockRootProps {
   children?: string;
+  toolbar?: React.ReactNode;
   fileName?: string | string[];
   code?: string | string[];
   language: string | string[];
 }
 const CodeBlock = React.forwardRef<HTMLDivElement, CodeBlockProps>(
-  async ({ children, fileName, code, language, ...props }, ref) => {
+  async ({ children, fileName, code, language, toolbar, ...props }, ref) => {
     const codes = code ? (Array.isArray(code) ? code : [code]) : [children!];
     const fileNames = fileName ? (Array.isArray(fileName) ? fileName : [fileName]) : [];
     const languages = language ? (Array.isArray(language) ? language : [language]) : [];
     return (
       <CodeBlockRoot ref={ref} {...props}>
-        {fileNames.length > 0 && (
-          <CodeBlockHeader>
-            <TabsList>
-              {fileNames.map((fileName, index) => (
-                <TabsItem key={index} id={fileName} className="">
-                  {fileName}
-                </TabsItem>
-              ))}
-            </TabsList>
-            <CodeBlockCopyButton code="" />
-          </CodeBlockHeader>
-        )}
+        <CodeBlockHeader>
+          <div className="flex h-full items-end">
+            {fileNames.length > 0 && (
+              <TabsList>
+                {fileNames.map((fileName, index) => (
+                  <TabsItem key={index} id={fileName} className="">
+                    {fileName}
+                  </TabsItem>
+                ))}
+              </TabsList>
+            )}
+          </div>
+          {toolbar}
+          {/* <CodeBlockCopyButton code="" /> */}
+        </CodeBlockHeader>
         <CodeBlockBody>
           <ScrollArea orientation="both" className="max-h-[200px]">
             {codes.map((codeString, index) => (

@@ -1,6 +1,6 @@
 ---
 title: Menu
-description: Dropdown menu opened via button. Supports typeahead and keyboard navigation.
+description: A menu displays a list of actions or options that a user can choose.
 thumbnail:
   image: /previews/components/core/menu.jpeg
   video: /previews/components/core/menu.mp4
@@ -14,7 +14,7 @@ thumbnail:
   <Step>Install the following dependencies:</Step>
 
 ```bash
-npm install @radix-ui/react-dropdown-menu vaul
+npm install react-aria-components
 ```
 
   <Step>Copy and paste the following code into your project.</Step>
@@ -24,71 +24,187 @@ npm install @radix-ui/react-dropdown-menu vaul
 
 ## Usage
 
-```jsx
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+A menu comprises a set of action list items, where each item represents an action, command, submenu, or the current selection that can be either a single or multi-select. The menu can be invoked by clicking on a button, icon button, or right-clicking on the list items.
 
-const Menu = () => (
-  <MenuRoot>
-    <MenuTrigger>Open</MenuTrigger>
-    <MenuContent>
-      <MenuLabel>My Account</MenuLabel>
-      <MenuSeparator />
-      <MenuItem>Profile</MenuItem>
-      <MenuItem>Billing</MenuItem>
-    </MenuContent>
-  </MenuRoot>
-);
-```
+## Options
 
-## Examples
+### Position
 
-### Disabled items
+Use the `placement` prop to set the position of the menu relative to the trigger button.
 
-<ComponentPreview name="demos/components/core/menu/disabled-items" />
+<ComponentPreview name="demos/components/core/menu/placement" />
+
+### Single selection
+
+Set the `selectionMode` prop to `single` for single selection.
+
+<ComponentPreview name="demos/components/core/menu/single-selection" />
+
+### Multiple selection
+
+Set the `selectionMode` prop to `multiple` for multiple selection.
+
+<ComponentPreview name="demos/components/core/menu/multiple-selection" />
+
+### Section
+
+Menu supports sections with headings in order to group items. Sections can be used by wrapping groups of MenuItems in a Section component.<br />
+A `<Header>` element may also be included to label the section or using the `title` prop on the Section component.
+
+<ComponentPreview name="demos/components/core/menu/section" />
+
+### Separator
+
+Separators may be added between menu items or sections in order to create non-labeled groupings.
+
+<ComponentPreview name="demos/components/core/menu/separator" />
+
+### Label and description
+
+MenuItems also support the "label" and "description" slots to separate primary and secondary content. You can also use the `Text` component to do the same behaviour.
+
+<ComponentPreview name="demos/components/core/menu/label-and-description" />
+
+### Prefix and suffix
+
+To add additional context for the menu item, such as icons, use the prefix and suffix props.
+
+<ComponentPreview name="demos/components/core/menu/prefix-and-suffix" />
+
+### Keyboard shortcut
+
+Use the `shortcut` prop to add a keyboard shortcut to a menu item, or use the `Keyboard` component.
+
+<ComponentPreview name="demos/components/core/menu/shortcut" />
+
+### Item variant
+
+TODO
+
+<ComponentPreview name="demos/components/core/menu/item-variant" />
 
 ### Link items
 
+Alternatively, items may be links to another page or website. This can be achieved by passing the href prop to the `<MenuItem>` component. Link items in a menu are not selectable.
+
 <ComponentPreview name="demos/components/core/menu/link-items" />
 
-### Icon and shortcut
+### Disabled items
 
-<ComponentPreview name="demos/components/core/menu/icon-and-shortcut" />
+A MenuItem can be disabled with the `isDisabled` prop.
 
-### Menu position
+<ComponentPreview name="demos/components/core/menu/disabled-items" />
 
-<ComponentPreview name="demos/components/core/menu/menu-position" />
+### Long press
 
-### Checkboxes
+By default, MenuTrigger opens by pressing the trigger element or activating it via the Space or Enter keys. This behavior can be changed by providing `"longPress"` to the `trigger` prop.
 
-<ComponentPreview name="demos/components/core/menu/checkboxes" />
+<ComponentPreview name="demos/components/core/menu/long-press" />
 
-### Radio group
+### Submenus
 
-<ComponentPreview name="demos/components/core/menu/radio-group" />
+MenuItems also support the "label" and "description" slots to separate primary and secondary content,
+
+<ComponentPreview name="demos/components/core/menu/submenus" />
+
+## Examples
+
+### Controlled open state
+
+The open state can be controlled via `isOpen` and `onOpenChange` props.
+
+<ComponentPreview name="demos/components/core/menu/controlled" />
 
 ## API Reference
 
 ### MenuRoot
 
-### MenuTrigger
+| Prop          | Type                     | Default   | Description                                            |
+| ------------- | ------------------------ | --------- | ------------------------------------------------------ |
+| `children*`   | `React.ReactNode`        | -         |                                                        |
+| `trigger`     | `'press' \| 'longPress'` | `'press'` | How the menu is triggered.                             |
+| `isOpen`      | `boolean`                | -         | Whether the overlay is open by default (controlled).   |
+| `defaultOpen` | `boolean`                | -         | Whether the overlay is open by default (uncontrolled). |
 
-### MenuContent
+| Event          | Type                        | Description                                                   |
+| -------------- | --------------------------- | ------------------------------------------------------------- |
+| `onOpenChange` | `(isOpen: boolean) => void` | Handler that is called when the overlay's open state changes. |
+
+### Menu
+
+| Prop                     | Type                                       | Default  | Description                                                                                             |
+| ------------------------ | ------------------------------------------ | -------- | ------------------------------------------------------------------------------------------------------- |
+| `autoFocus`              | `boolean \| 'first' \| 'last'`             | -        | Where the focus should be set.                                                                          |
+| `shouldFocusWrap`        | `boolean`                                  | -        | Whether keyboard navigation is circular.                                                                |
+| `items`                  | `Iterable<T>`                              | -        | Item objects in the collection.                                                                         |
+| `disabledKeys`           | `Iterable<Key>`                            | -        | The item keys that are disabled. These items cannot be selected, focused, or otherwise interacted with. |
+| `selectionMode`          | `'none' \| 'single' \| 'multiple'`         | `'none'` | The type of selection that is allowed in the collection.                                                |
+| `disallowEmptySelection` | `boolean`                                  | -        | Whether the collection allows empty selection.                                                          |
+| `selectedKeys`           | `'all' \| Iterable<Key>`                   | -        | The currently selected keys in the collection (controlled).                                             |
+| `defaultSelectedKeys`    | `'all' \| Iterable<Key>`                   | -        | The initial selected keys in the collection (uncontrolled).                                             |
+| `children`               | `ReactNode \| (item: object) => ReactNode` | -        | The contents of the collection.                                                                         |
+| `dependencies`           | `any[]`                                    | -        | Values that should invalidate the item cache when using dynamic collections.                            |
+| `className`              | `string`                                   | -        | The CSS className for the element.                                                                      |
+| `style`                  | `CSSProperties`                            | -        | The inline style for the element.                                                                       |
+
+| Event               | Type                            | Description                                                                |
+| ------------------- | ------------------------------- | -------------------------------------------------------------------------- |
+| `onAction`          | `(key: Key) => void`            | Handler that is called when an item is selected.                           |
+| `onClose`           | `() => void`                    | Handler that is called when the menu should close after selecting an item. |
+| `onSelectionChange` | `(keys: Selection) => void`     | Handler that is called when the selection changes.                         |
+| `onScroll`          | `(e: UIEvent<Element>) => void` | Handler that is called when a user scrolls.                                |
 
 ### MenuItem
 
-### MenuSeperator
+| Prop             | Type                                                                                                  | Default | Description                                                                                                 |
+| ---------------- | ----------------------------------------------------------------------------------------------------- | ------- | ----------------------------------------------------------------------------------------------------------- |
+| `id`             | `Key`                                                                                                 | -       | The unique id of the item.                                                                                  |
+| `value`          | `object`                                                                                              | -       | The object value that this item represents. When using dynamic collections, this is set automatically.      |
+| `textValue`      | `string`                                                                                              | -       | A string representation of the item's contents, used for features like typeahead.                           |
+| `isDisabled`     | `boolean`                                                                                             | -       | Whether the item is disabled.                                                                               |
+| `children`       | `ReactNode \| (values: MenuItemRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -       | The children of the component. A function may be provided to alter the children based on component state.   |
+| `className`      | `string`                                                                                              | -       | The CSS className for the element.                                                                          |
+| `style`          | `CSSProperties \| (values: MenuItemRenderProps & {defaultStyle: CSSProperties}) => CSSProperties`     | -       | The inline style for the element. A function may be provided to compute the style based on component state. |
+| `href`           | `Href`                                                                                                | -       | A URL to link to.                                                                                           |
+| `hrefLang`       | `string`                                                                                              | -       | Hints at the human language of the linked URL.                                                              |
+| `target`         | `HTMLAttributeAnchorTarget`                                                                           | -       | The target window for the link.                                                                             |
+| `rel`            | `string`                                                                                              | -       | The relationship between the linked resource and the current page.                                          |
+| `download`       | `boolean \| string`                                                                                   | -       | Causes the browser to download the linked URL. A string may be provided to suggest a file name.             |
+| `ping`           | `string`                                                                                              | -       | A space-separated list of URLs to ping when the link is followed.                                           |
+| `referrerPolicy` | `HTMLAttributeReferrerPolicy`                                                                         | -       | How much of the referrer to send when following the link.                                                   |
+| `routerOptions`  | `RouterOptions`                                                                                       | -       | Options for the configured client side router.                                                              |
+
+| Event           | Type                            | Description                                             |
+| --------------- | ------------------------------- | ------------------------------------------------------- |
+| `onAction`      | `() => void`                    | Handler that is called when the item is selected.       |
+| `onHoverStart`  | `(e: HoverEvent) => void`       | Handler that is called when a hover interaction starts. |
+| `onHoverEnd`    | `(e: HoverEvent) => void`       | Handler that is called when a hover interaction ends.   |
+| `onHoverChange` | `(isHovering: boolean) => void` | Handler that is called when the hover state changes.    |
 
 ### MenuSub
 
-### MenuSubTrigger
+| Prop        | Type              | Default | Description                                                                                                                                       |
+| ----------- | ----------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `children*` | `React.Element[]` | -       | The contents of the SubmenuTrigger. The first child should be an Item (the trigger) and the second child should be the Popover (for the submenu). |
+| `delay`     | `number`          | `200`   | The delay time in milliseconds for the submenu to appear after hovering over the trigger.                                                         |
 
-### MenuSubContent
+### Section
+
+See [section](/components/collections/section) for more information.
+
+### Separator
+
+See [section](/components/collections/separator) for more information.
 
 ## Accessibility
+
+### Keyboard interactions
+
+| Key             | Description                                                                                                                    |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `Space` `Enter` | When focus is on the Trigger, opens the menu and focuses the first item. When focus is on an item, activates the focused item. |
+| `ArrowDown`     | When focus is on the trigger, opens the menu. When focus is on an item, moves focus to the next item.                          |
+| `ArrowUp`       | When focus is on the trigger, opens the menu. When focus is on an item, moves focus to the previous item.                      |
+| `ArrowRight`    | When focus is on submenu trigger, opens the submenu.                                                                           |
+| `ArrowLeft`     | When focus is on submenu trigger, closes the submenu.                                                                          |
+| `Esc`           | When menu is open, closes the menu and moves focus to the Trigger button.                                                      |

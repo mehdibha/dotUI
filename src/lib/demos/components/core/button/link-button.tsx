@@ -1,10 +1,10 @@
 import { LogInIcon } from "lucide-react";
-import { LinkButton } from "@/lib/components/core/default/button";
+import { Button } from "@/lib/components/core/default/button";
 
 export default function Demo() {
   return (
-    <LinkButton href="/login" prefix={<LogInIcon />}>
+    <Button href="/login" prefix={<LogInIcon />} target="_blank">
       Login
-    </LinkButton>
+    </Button>
   );
 }

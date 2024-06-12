@@ -2,22 +2,124 @@
 title: Calendar
 description: A component that allows users to select a single date.
 thumbnail:
-  image: /previews/components/core/button-group.jpeg
-  video: /previews/components/core/button-group.mp4
+  image: /previews/components/core/calendar.jpeg
+  video: /previews/components/core/calendar.mp4
 ---
 
 <ComponentPreview name="demos/components/core/calendar/basic" />
 
-## range
-
-<ComponentPreview name="demos/components/core/calendar/range" />
-
 ## Installation
+
+<Steps>
+  <Step>Install the following dependencies:</Step>
+
+```bash
+npm install react-aria-components
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+  <ComponentSource name="components/core/default/calendar" />
+  <Step>Update the import paths to match your project setup.</Step>
+</Steps>
+
+## Usage
+
+Use `Calendar` to allow users to select a single date.
 
 ## Options
 
+### Label
+
+An aria-label must be provided to the Calendar for accessibility. If it is labeled by a separate element, an aria-labelledby prop must be provided using the id of the labeling element instead.
+
+<ComponentPreview name="demos/components/core/calendar/label" />
+
+### Error message
+
+Calendar tries to avoid allowing the user to select invalid dates in the first place (see [Validation](/dates/calendar#validation) and [Unavailable dates](/dates/calendar#unavailable-dates)). However, if according to application logic a selected date is invalid, Use `isInvalid` and `errorMessage` props.
+
+<ComponentPreview name="demos/components/core/calendar/error-message" />
+
+### Minimum and maximum values
+
+By default, Calendar allows selecting any date. The minValue and maxValue props can also be used to prevent the user from selecting dates outside a certain range.
+
+<ComponentPreview name="demos/components/core/calendar/validation" />
+
+### Unavailable dates
+
+Calendar supports marking certain dates as unavailable. These dates cannot be selected by the user and are displayed with a crossed out appearance. The `isDateUnavailable` prop accepts a callback that is called to evaluate whether each visible date is unavailable.
+
+<ComponentPreview name="demos/components/core/calendar/unvailable-dates" />
+
+### Visible months
+
+By default, the Calendar displays a single month. The `visibleMonths` prop allows displaying up to 3 months at a time.
+
+<ComponentPreview name="demos/components/core/calendar/visible-months" />
+
+### Page behaviour
+
+The `pageBehavior` prop allows you to control how the calendar navigates between months.
+
+<ComponentPreview name="demos/components/core/calendar/page-behaviour" />
+
+### Disabled
+
+The `isDisabled` boolean prop makes the Calendar disabled. Cells cannot be focused or selected.
+
+<ComponentPreview name="demos/components/core/calendar/disabled" />
+
+### Read only
+
+The `isReadOnly` boolean prop makes the Calendar's value immutable. Unlike `isDisabled`, the Calendar remains focusable.
+
+<ComponentPreview name="demos/components/core/calendar/read-only" />
+
 ## Examples
+
+### Controlled
+
+The Calendar component can be controlled by passing the `value` and `onChange` props.
+
+<ComponentPreview name="demos/components/core/calendar/controlled" />
 
 ## API Reference
 
+| Prop                  | Type                                                                                                  | Default     | Description                                                                                                                                         |
+| --------------------- | ----------------------------------------------------------------------------------------------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `visibleMonths`       | `number`                                                                                              | `1`         | The number of months to display at once. Up to 3 months are supported.                                                                              |
+| `minValue`            | `DateValue`                                                                                           | -           | The minimum allowed date that a user may select.                                                                                                    |
+| `maxValue`            | `DateValue`                                                                                           | -           | The maximum allowed date that a user may select.                                                                                                    |
+| `isDateUnavailable`   | `(date: DateValue) => boolean`                                                                        | -           | Callback that is called for each date of the calendar. If it returns true, then the date is unavailable.                                            |
+| `isDisabled`          | `boolean`                                                                                             | `false`     | Whether the calendar is disabled.                                                                                                                   |
+| `isReadOnly`          | `boolean`                                                                                             | `false`     | Whether the calendar value is immutable.                                                                                                            |
+| `autoFocus`           | `boolean`                                                                                             | `false`     | Whether to automatically focus the calendar when it mounts.                                                                                         |
+| `focusedValue`        | `DateValue`                                                                                           | -           | Controls the currently focused date within the calendar.                                                                                            |
+| `defaultFocusedValue` | `DateValue`                                                                                           | -           | The date that is focused when the calendar first mounts (uncountrolled).                                                                            |
+| `isInvalid`           | `boolean`                                                                                             | -           | Whether the current selection is invalid according to application logic.                                                                            |
+| `pageBehavior`        | `'single' \| 'visible'`                                                                               | `'visible'` | Controls the behavior of paging. Pagination either works by advancing the visible page by visibleDuration (default) or one unit of visibleDuration. |
+| `value`               | `DateValue \| null`                                                                                   | -           | The current value (controlled).                                                                                                                     |
+| `defaultValue`        | `DateValue \| null`                                                                                   | -           | The default value (uncontrolled).                                                                                                                   |
+| `children`            | `ReactNode \| (values: CalendarRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -           | The children of the component. A function may be provided to alter the children based on component state.                                           |
+| `className`           | `string`                                                                                              | -           | The CSS className for the element.                                                                                                                  |
+| `style`               | `CSSProperties \| (values: CalendarRenderProps & {defaultStyle: CSSProperties}) => CSSProperties`     | -           | The inline style for the element. A function may be provided to compute the style based on component state.                                         |
+
+| Event           | Type                                          | Description                                           |
+| --------------- | --------------------------------------------- | ----------------------------------------------------- |
+| `onFocusChange` | `(date: CalendarDate) => void`                | Handler that is called when the focused date changes. |
+| `onChange`      | `(value: MappedDateValue<DateValue>) => void` | Handler that is called when the value changes.        |
+
 ## Accessibility
+
+### Keyboard interactions
+
+| Key             | Description                                                   |
+| --------------- | ------------------------------------------------------------- |
+| `Tab`           | Moves focus to the next focusable item in the calendar.       |
+| `Shift+Tab`     | Moves focus to the previous focusable item in the calendar.   |
+| `ArrowRight`    | Moves focus to the next day.                                  |
+| `ArrowLeft`     | Moves focus to the previous day.                              |
+| `ArrowDown`     | Moves focus to the same day of the week in the next week.     |
+| `ArrowUp`       | Moves focus to the same day of the week in the previous week. |
+| `Space` `Enter` | Selects the focused date.                                     |

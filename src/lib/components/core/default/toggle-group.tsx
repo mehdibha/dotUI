@@ -30,7 +30,6 @@ const toggleGroupVariants = tv({
 export interface ToggleGroupButtonProps
   extends Omit<AriaToggleButtonProps, "type">,
     VariantProps<typeof toggleButtonVariants> {
-  htmlType?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
   value: string;
   className?: string;
 }
@@ -38,8 +37,6 @@ export interface ToggleGroupButtonProps
 const ToggleGroupButton = ({
   variant,
   size,
-  type,
-  htmlType,
   shape,
   value,
   className,
@@ -52,7 +49,6 @@ const ToggleGroupButton = ({
       ? {
           isSelected: context.value.includes(value),
           onChange: (isSelected: boolean) => {
-            console.log({ isSelected });
             if (isSelected) {
               context.onItemActivate(value);
             } else {
@@ -66,7 +62,7 @@ const ToggleGroupButton = ({
   const { focusProps, isFocused, isFocusVisible } = useFocusRing(props);
   const { hoverProps, isHovered } = useHover(props);
   const { buttonProps, isPressed } = useToggleButton(
-    { ...props, ...additionalProps, type: htmlType },
+    { ...props, ...additionalProps },
     state,
     ref
   );
@@ -82,7 +78,6 @@ const ToggleGroupButton = ({
     <button
       ref={ref}
       {...typeProps}
-      type={htmlType}
       data-focused={isFocused ? "true" : undefined}
       data-disabled={props.isDisabled ? "true" : undefined}
       data-pressed={isPressed ? "true" : undefined}
@@ -92,7 +87,6 @@ const ToggleGroupButton = ({
       className={toggleButtonVariants({
         variant: variant ?? context?.variant,
         size: size ?? context?.size,
-        type: type ?? context?.type,
         shape: shape ?? context?.shape,
         className: className,
       })}
@@ -143,7 +137,6 @@ const ToggleGroupSingle = (props: ToggleGroupSingleProps) => {
     variant,
     size,
     shape,
-    type,
     className,
   } = props;
   const ref = React.useRef(null);
@@ -164,7 +157,6 @@ const ToggleGroupSingle = (props: ToggleGroupSingleProps) => {
         variant,
         size,
         shape,
-        type,
         isDisabled,
       }}
     >
@@ -205,7 +197,6 @@ const ToggleGroupMultiple = (props: ToggleGroupMultipleProps) => {
     variant,
     size,
     shape,
-    type,
     orientation,
     className,
   } = props;
@@ -237,7 +228,6 @@ const ToggleGroupMultiple = (props: ToggleGroupMultipleProps) => {
         variant,
         size,
         shape,
-        type,
       }}
     >
       <div

@@ -2,9 +2,9 @@
 
 import { Checkbox } from "@/lib/components/core/default/checkbox/checkbox";
 
-export default function CheckboxDisabledDemo() {
+export default function Demo() {
   return (
-    <Checkbox isDisabled defaultSelected>
+    <Checkbox isDisabled>
       I accept the terms and conditions
     </Checkbox>
   );

@@ -6,14 +6,17 @@ import {
   type RadioProps as AriaRadioProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
+import { focusRing } from "@/lib/utils/styles";
 
 const radioStyles = tv({
   slots: {
-    root: "flex flex-row items-center disabled:text-fg-disabled",
+    root: "flex flex-row items-center disabled:text-fg-disabled invalid:text-fg-danger cursor-pointer read-only:cursor-default disabled:cursor-not-allowed",
     indicator: [
+      focusRing(),
       "mr-2",
-      "relative size-4 shrink-0 rounded-full border cursor-pointer selected:border-bg-primary selected:border-4 transition-all duration-100",
-      "disabled:cursor-not-allowed disabled:border-border-disabled disabled:selected:bg-bg-disabled disabled:indeterminate:bg-bg-disabled",
+      "relative size-4 shrink-0 rounded-full border border-control selected:border-bg-primary selected:border-4 transition-all duration-100",
+      "disabled:border-border-disabled disabled:selected:bg-bg-disabled disabled:indeterminate:bg-bg-disabled",
+      "invalid:border-border-danger invalid:selected:border-bg-danger",
     ],
     label: "",
   },

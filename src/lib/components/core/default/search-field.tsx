@@ -16,8 +16,16 @@ type SearchFieldProps = SearchFieldRootProps &
   Omit<FieldProps, "children"> &
   VariantProps<typeof inputStyles> & {
     prefix?: React.ReactNode;
-    suffix?: React.ReactNode;
-    loading?: boolean;
+    suffix?:
+      | React.ReactNode
+      | (({
+          isEmpty,
+          isDisabled,
+        }: {
+          isEmpty?: boolean;
+          isDisabled?: boolean;
+        }) => React.ReactNode);
+    isLoading?: boolean;
     loaderPosition?: "prefix" | "suffix";
     placeholder?: string;
   };
@@ -32,28 +40,43 @@ const SearchField = React.forwardRef<HTMLInputElement, SearchFieldProps>(
       description,
       errorMessage,
       prefix = <SearchIcon />,
-      suffix = (
-        <Button variant="quiet" shape="circle" size="sm" className="size-6">
-          <XIcon />
-        </Button>
-      ),
-      loading,
+      suffix = ({ isEmpty, isDisabled }) => {
+        if (isEmpty || isDisabled) return null;
+        return (
+          <Button variant="quiet" shape="circle" size="sm" className="size-6">
+            <XIcon />
+          </Button>
+        );
+      },
+      isLoading,
       loaderPosition = "suffix",
+      isRequired,
+      necessityIndicator,
+      contextualHelp,
       ...props
     },
     ref
   ) => {
     return (
       <SearchFieldRoot className={className} {...props}>
-        {({ isEmpty }) => (
+        {({ isEmpty, isDisabled }) => (
           <>
-            <Field label={label} description={description} errorMessage={errorMessage}>
+            <Field
+              label={label}
+              description={description}
+              errorMessage={errorMessage}
+              isRequired={isRequired}
+              necessityIndicator={necessityIndicator}
+              contextualHelp={contextualHelp}
+            >
               <InputWrapper
                 size={size}
                 variant={variant}
                 prefix={prefix}
-                suffix={!isEmpty && suffix}
-                loading={loading}
+                suffix={
+                  typeof suffix === "function" ? suffix({ isEmpty, isDisabled }) : suffix
+                }
+                isLoading={isLoading}
                 loaderPosition={loaderPosition}
               >
                 <Input

@@ -1,9 +1,14 @@
 ---
 title: Radio Group
-description: A set of checkable buttons—known as radio buttons—where no more than one of the buttons can be checked at a time.
+description: A radio group allows a user to select a single item from a list of mutually exclusive options.
 thumbnail:
   image: /previews/components/core/radio-group.jpeg
   video: /previews/components/core/radio-group.mp4
+links:
+  - label: Aria docs
+    href: https://react-spectrum.adobe.com/react-aria/RadioGroup.html
+  - label: Aria API Reference
+    href: https://react-spectrum.adobe.com/react-aria/RadioGroup.html#radiogroup-1
 ---
 
 <ComponentPreview name="demos/components/core/radio-group/default" />
@@ -11,32 +16,137 @@ thumbnail:
 ## Installation
 
 <Steps>
-  <Step>Install the following components</Step>
-  
-  [Field](/components/inputs/field)
+  <Step>Install the following dependencies:</Step>
+
+```bash
+npm install react-aria-components
+```
+
+<Step>Install the following components</Step>
+
+[Field](/components/inputs/field)
 
   <Step>Copy and paste the following code into your project.</Step>
-  <ComponentSource name="components/core/default/radio-group" />
+  <ComponentSource name="components/core/default/radio/radio-group" />
   <Step>Update the import paths to match your project setup.</Step>
 </Steps>
 
 ## Usage
 
-```jsx
-import { RadioGroup, RadioGroupITem } from "@/components/core/radio-group";
-```
+Use radio group to allow users to select a single option from a short list of related options.
 
-```jsx
-<RadioGroup defaultValue="option-one">
-  <RadioGroupItem value="option-one">Option One</>
-  <RadioGroupItem value="option-two">Option Two</>
-</RadioGroup>
-```
+## Options
+
+### Orientation
+
+RadioGroups are vertically oriented by default. The `orientation` prop can be used to change the orientation to `'horizontal'`.
+
+<ComponentPreview name="demos/components/core/radio-group/orientation" />
+
+### label
+
+A visual label can be provided for the radio group using the label prop or a hidden label using `aria-label` prop.
+
+<ComponentPreview name="demos/components/core/radio-group/label" />
+
+### Description
+
+A description can be supplied to a radio group via the `description` prop. The description is always visible unless the `validationState` is `“invalid”` and an error message is provided.
+
+<ComponentPreview name="demos/components/core/radio-group/description" />
+
+### Contextual help
+
+A ContextualHelp element may be placed next to the label to provide additional information or help about a CheckboxGroup.
+
+<ComponentPreview name="demos/components/core/radio-group/contextual-help" />
+
+### Error message
+
+An error message can be supplied to a CheckboxGroup, which will be displayed when the `validationState` is `“invalid”`.
+
+<ComponentPreview name="demos/components/core/radio-group/error-message" />
+
+### Disabled
+
+Use the `isDisabled` prop to disable the RadioGroup.
+
+<ComponentPreview name="demos/components/core/radio-group/disabled" />
+
+### Read only
+
+The `isReadOnly` prop makes the selection immutable. Unlike isDisabled, the RadioGroup remains focusable.
+
+<ComponentPreview name="demos/components/core/radio-group/read-only" />
+
+### Required
+
+Use the `isRequired` prop to mark the radio group as required.
+Use the `necessityIndicator` prop to control the visual style of the required state.
+
+<ComponentPreview name="demos/components/core/radio-group/required" />
+
+## Examples
+
+### Cards
+
+Use the `RadioCard` component instead of the radio to have Radio buttons that look like cards.
+
+<ComponentPreview name="demos/components/core/radio-group/cards" />
+
+### Controlled
+
+Use the `value` and `onChange` props to control the value of the radio group.
+
+<ComponentPreview name="demos/components/core/radio-group/controlled" />
+
+### Composition
+
+If you need to customize things further, you can drop down to the composition pattern.
+
+<ComponentPreview name="demos/components/core/radio-group/composition" />
 
 ## API Reference
 
-| Prop                                                                                                                       | Type      | Default |
-| -------------------------------------------------------------------------------------------------------------------------- | --------- | ------- |
-| `asChild`<Info>Change the default rendered element for the one passed as a child, merging their props and behavior.</Info> | `boolean` | false   |
+| Prop                 | Type                                                                                                    | Default      | Description                                                                                                                                                                                                                           |
+| -------------------- | ------------------------------------------------------------------------------------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `orientation`        | `'horizontal' \| 'vertical'`                                                                            | `'vertical'` | The axis the Radio Button(s) should align with.                                                                                                                                                                                       |
+| `value`              | `string \| null`                                                                                        | -            | The current value (controlled).                                                                                                                                                                                                       |
+| `defaultValue`       | `string \| null`                                                                                        | -            | The default value (uncontrolled).                                                                                                                                                                                                     |
+| `isDisabled`         | `boolean`                                                                                               | -            | Whether the input is disabled.                                                                                                                                                                                                        |
+| `isReadOnly`         | `boolean`                                                                                               | -            | Whether the input can be selected but not changed by the user.                                                                                                                                                                        |
+| `name`               | `string`                                                                                                | -            | The name of the input element, used when submitting an HTML form.                                                                                                                                                                     |
+| `isRequired`         | `boolean`                                                                                               | -            | Whether user input is required on the input before form submission.                                                                                                                                                                   |
+| `isInvalid`          | `boolean`                                                                                               | -            | Whether the input value is invalid.                                                                                                                                                                                                   |
+| `validate`           | `(value: string \| null) => ValidationError\| true\| null\| undefined`                                  | -            | A function that returns an error message if a given value is invalid. Validation errors are displayed to the user when the form is submitted if validationBehavior="native". For realtime validation, use the isInvalid prop instead. |
+| `validationBehavior` | `'native' \| 'aria'`                                                                                    | `'native'`   | Whether to use native HTML form validation to prevent form submission when the value is missing or invalid, or mark the field as required or invalid via ARIA.                                                                        |
+| `children`           | `ReactNode \| (values: RadioGroupRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -            | The children of the component. A function may be provided to alter the children based on component state.                                                                                                                             |
 
-## Examples
+| Event           | Type                              | Description                                                        |
+| --------------- | --------------------------------- | ------------------------------------------------------------------ |
+| `onChange`      | `(isSelected: boolean) => void`   | Handler that is called when the element's selection state changes. |
+| `onFocus`       | `(e: FocusEvent<Target>) => void` | Handler that is called when the element receives focus.            |
+| `onBlur`        | `(e: FocusEvent<Target>) => void` | Handler that is called when the element loses focus.               |
+| `onFocusChange` | `(isFocused: boolean) => void`    | Handler that is called when the element's focus status changes.    |
+
+| Data attribute                                | Description                           |
+| --------------------------------------------- | ------------------------------------- |
+| `[data-orientation="horizontal \| vertical"]` | The orientation of the radio group.   |
+| `[data-disabled]`                             | Whether the radio group is disabled.  |
+| `[data-readonly]`                             | Whether the radio group is read only. |
+| `[data-invalid]`                              | Whether the radio group invalid.      |
+| `[data-required]`                             | Whether the radio group is required.  |
+
+## Accessibility
+
+### Keyboard interactions
+
+| Key          | Description                                                                        |
+| ------------ | ---------------------------------------------------------------------------------- |
+| `Tab`        | Moves focus to either the checked radio item or the first radio item in the group. |
+| `Space`      | When focus is on an unchecked radio item, checks it.                               |
+| `ArrowDown`  | Moves focus and checks the next radio item in the group.                           |
+| `ArrowUp`    | Moves focus to the previous radio item in the group.                               |
+| `ArrowRight` | Moves focus and checks the next radio item in the group.                           |
+| `ArrowLeft`  | Moves focus to the previous radio item in the group.                               |
+|              |

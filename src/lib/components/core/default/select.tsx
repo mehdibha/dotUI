@@ -1,82 +1,70 @@
 "use client";
 
 import * as React from "react";
-import { Check, ChevronDown } from "lucide-react";
+import { Check, ChevronDownIcon } from "lucide-react";
 import {
-  Button,
-  Collection,
-  Header,
-  ListBox,
-  ListBoxItem,
-  Popover,
-  Section,
-  Select,
-  SelectValue,
-  Separator,
-  type ButtonProps,
-  type ListBoxItemProps,
-  type ListBoxProps,
-  type PopoverProps,
-  type SelectValueProps,
-  type SeparatorProps,
+  Select as AriaSelect,
+  SelectValue as AriaSelectValue,
+  ListBox as AriaListBox,
+  ListBoxItem as AriaListBoxItem,
+  type SelectProps as AriaSelectProps,
+  type ListBoxItemProps as AriaListBoxItemProps,
 } from "react-aria-components";
-import { cn } from "@/lib/utils/classes";
+import { tv } from "tailwind-variants";
+import { Button } from "./button";
+import { Field, FieldProps, fieldStyles } from "./field";
+import { Overlay } from "./overlay";
 
-const _Select = Select;
+const selectStyles = tv({
+  slots: {
+    root: "",
+  },
+});
 
-const SelectSection = Section;
-
-const SelectCollection = Collection;
-
-const _SelectValue = <T extends object>({ className, ...props }: SelectValueProps<T>) => (
-  <SelectValue
-    className={(values) =>
-      cn(
-        "data-[placeholder]:text-fg-muted",
-        typeof className === "function" ? className(values) : className
-      )
-    }
-    {...props}
-  />
-);
-
-const SelectTrigger = ({ className, children, ...props }: ButtonProps) => (
-  <Button
-    className={(values) =>
-      cn(
-        "border-input bg-background ring-offset-background data-[focused]:ring-ring flex h-10 w-full items-center justify-between rounded-md border px-3 py-2 text-sm data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50 data-[focused]:outline-none data-[focused]:ring-2 data-[focused]:ring-offset-2",
-        typeof className === "function" ? className(values) : className
-      )
-    }
-    {...props}
-  >
-    {(values) => (
-      <>
-        {typeof children === "function" ? children(values) : children}
-        <ChevronDown aria-hidden="true" className="h-4 w-4 opacity-50" />
-      </>
-    )}
-  </Button>
-);
-
-const SelectHeader = ({
-  className,
+interface SelectProps<T extends object>
+  extends SelectRootProps<T>,
+    Omit<FieldProps, "children"> {
+  items?: Iterable<T>;
+}
+const Select = <T extends object>({
+  label,
+  description,
+  errorMessage,
+  children,
+  items,
   ...props
-}: React.ComponentPropsWithoutRef<typeof Header>) => (
-  <Header
-    className={cn("py-1.5 pl-8 pr-2 text-sm font-semibold", className)}
-    {...props}
-  />
-);
+}: SelectProps<T>) => {
+  return (
+    <SelectRoot {...props}>
+      <Field label={label} description={description} errorMessage={errorMessage}>
+        <Button suffix={<ChevronDownIcon />}>
+          <AriaSelectValue className="flex-1" />
+        </Button>
+      </Field>
+      <Overlay type="popover" className="min-w-[--trigger-width]">
+        <AriaListBox className="max-h-[inherit] overflow-auto p-1 outline-none [clip-path:inset(0_0_0_0_round_.75rem)]">
+          {children}
+        </AriaListBox>
+      </Overlay>
+    </SelectRoot>
+  );
+};
 
-const SelectItem = ({ className, children, ...props }: ListBoxItemProps) => (
-  <ListBoxItem
-    className={(values) =>
-      cn(
-        "data-[focused]:bg-accent data-[focused]:text-accent-foreground relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-        typeof className === "function" ? className(values) : className
-      )
-    }
+interface SelectRootProps<T extends object>
+  extends Omit<AriaSelectProps<T>, "className"> {
+  className?: string;
+}
+const SelectRoot = <T extends object>({ className, ...props }: SelectRootProps<T>) => {
+  const { root } = fieldStyles();
+  return <AriaSelect className={root({ className })} {...props} />;
+};
+
+interface SelectItemProps extends Omit<AriaListBoxItemProps, "className"> {
+  className?: string;
+}
+const SelectItem = ({ className, children, ...props }: SelectItemProps) => (
+  <AriaListBoxItem
+    className="data-[focused]:bg-accent data-[focused]:text-accent-foreground relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
     {...props}
   >
     {(values) => (
@@ -89,46 +77,8 @@ const SelectItem = ({ className, children, ...props }: ListBoxItemProps) => (
         {typeof children === "function" ? children(values) : children}
       </>
     )}
-  </ListBoxItem>
+  </AriaListBoxItem>
 );
 
-const SelectSeparator = ({ className, ...props }: SeparatorProps) => (
-  <Separator className={cn("-mx-1 my-1 h-px bg-bg-muted", className)} {...props} />
-);
-
-const SelectPopover = ({ className, offset = 0, ...props }: PopoverProps) => (
-  <Popover
-    offset={offset}
-    className={(values) =>
-      cn(
-        "bg-popover text-popover-foreground relative z-50 w-[--trigger-width] min-w-[8rem] overflow-y-auto rounded-md border shadow-md data-[entering]:animate-in data-[exiting]:animate-out data-[entering]:fade-in-0 data-[exiting]:fade-out-0 data-[exiting]:zoom-out-95 data-[placement=bottom]:slide-in-from-top-2 data-[placement=left]:slide-in-from-right-2 data-[placement=right]:slide-in-from-left-2 data-[placement=top]:slide-in-from-bottom-2",
-        "data-[placement=bottom]:translate-y-1 data-[placement=left]:-translate-x-1 data-[placement=right]:translate-x-1 data-[placement=top]:-translate-y-1",
-        typeof className === "function" ? className(values) : className
-      )
-    }
-    {...props}
-  />
-);
-
-const SelectContent = <T extends object>({ className, ...props }: ListBoxProps<T>) => (
-  <ListBox
-    className={(values) =>
-      cn("p-1", typeof className === "function" ? className(values) : className)
-    }
-    {...props}
-  />
-);
-
-export {
-  _Select as Select,
-  SelectSection,
-  _SelectValue as SelectValue,
-  SelectContent,
-  SelectTrigger,
-  SelectHeader,
-  SelectItem,
-  SelectSeparator,
-  SelectPopover,
-  SelectCollection,
-};
-export type { PopoverProps as SelectPopoverProps };
+export type { SelectProps, SelectRootProps };
+export { Select, SelectRoot, SelectItem };

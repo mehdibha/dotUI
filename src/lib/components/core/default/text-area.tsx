@@ -8,10 +8,10 @@ import { TextFieldRoot, TextFieldRootProps } from "./text-field";
 
 type TextAreaProps = TextFieldRootProps &
   Omit<FieldProps, "children"> &
-  Omit<VariantProps<typeof inputStyles>,"size"> & {
+  Omit<VariantProps<typeof inputStyles>, "size"> & {
     prefix?: React.ReactNode;
     suffix?: React.ReactNode;
-    loading?: boolean;
+    isLoading?: boolean;
     loaderPosition?: "prefix" | "suffix";
     placeholder?: string;
   };
@@ -26,20 +26,30 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
       errorMessage,
       prefix,
       suffix,
-      loading,
+      isLoading,
       loaderPosition = "suffix",
+      isRequired,
+      necessityIndicator,
+      contextualHelp,
       ...props
     },
     ref
   ) => {
     return (
       <TextFieldRoot className={className} {...props}>
-        <Field label={label} description={description} errorMessage={errorMessage}>
+        <Field
+          label={label}
+          description={description}
+          errorMessage={errorMessage}
+          isRequired={isRequired}
+          necessityIndicator={necessityIndicator}
+          contextualHelp={contextualHelp}
+        >
           <InputWrapper
             variant={variant}
             prefix={prefix}
             suffix={suffix}
-            loading={loading}
+            isLoading={isLoading}
             loaderPosition={loaderPosition}
             multiline
           >

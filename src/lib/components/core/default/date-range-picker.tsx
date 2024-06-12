@@ -1,87 +1,99 @@
 "use client";
 
-import React from "react";
+import * as React from "react";
 import { CalendarIcon } from "lucide-react";
 import {
   DateRangePicker as AriaDateRangePicker,
-  type DatePickerProps as AriaDatePickerProps,
-  DateInput,
-  DateValue,
-  Dialog,
-  Group,
-  ValidationResult,
+  Dialog as AriaDialog,
+  type DateRangePickerProps as AriaDateRangePickerProps,
+  type DateValue,
 } from "react-aria-components";
-import { DateSegment } from "react-aria-components";
-import { useMediaQuery } from "@/lib/hooks/use-media-query";
+import { type VariantProps } from "tailwind-variants";
 import { Button } from "./button";
-import { RangeCalendar } from "./calendar";
-import { DateFieldInput } from "./date-field";
-import { Field } from "./field";
+import { Calendar } from "./calendar";
+import { DateInput, DateSegment } from "./date-input";
+import { fieldStyles } from "./field";
+import { Field, type FieldProps } from "./field";
+import { InputWrapper, inputStyles } from "./input";
 import { Overlay } from "./overlay";
-import { PopoverRootProps } from "./popover";
-import {
-  TextFieldContext,
-  TextFieldInnerVisual,
-  TextFieldInnerWrapper,
-  textFieldVariants,
-  useTextFieldContext,
-} from "./text-field";
 
-interface DatePickerProps<T extends DateValue> extends DatePickerProps<T> {
-  label?: string;
-  description?: string;
-  errorMessage?: string | ((validation: ValidationResult) => string);
+interface DateRangePickerProps<T extends DateValue>
+  extends DateRangePickerRootProps<T>,
+    Omit<FieldProps, "children">,
+    VariantProps<typeof inputStyles> {
+  prefix?: React.ReactNode;
+  isLoading?: boolean;
 }
 
-export function DateRangePicker<T extends DateValue>({
+const DateRangePicker = <T extends DateValue>({
+  className,
+  variant,
+  size,
   label,
-  labelProps,
   description,
-  descriptionProps,
   errorMessage,
-  fieldErrorProps,
   prefix,
-  suffix,
-  loaderPosition = "suffix",
-  loading,
+  isLoading,
+  isRequired,
+  isDisabled,
+  necessityIndicator,
+  contextualHelp,
   ...props
-}: DatePickerProps<T>) {
-  const isMobile = useMediaQuery("(max-width: 768px)");
-  const showPrefixLoading = loading && loaderPosition === "prefix";
-  const showSuffixLoading = loading && loaderPosition === "suffix";
+}: DateRangePickerProps<T>) => {
   return (
-    <AriaDateRangePicker {...props}>
+    <DateRangePickerRoot
+      className={className}
+      isRequired={isRequired}
+      isDisabled={isLoading || isDisabled}
+      {...props}
+    >
       <Field
         label={label}
-        labelProps={labelProps}
         description={description}
-        descriptionProps={descriptionProps}
         errorMessage={errorMessage}
-        fieldErrorProps={fieldErrorProps}
+        isRequired={isRequired}
+        necessityIndicator={necessityIndicator}
+        contextualHelp={contextualHelp}
       >
-        <TextFieldInnerWrapper>
-          <TextFieldInnerVisual loading={showPrefixLoading}>
-            {prefix}
-          </TextFieldInnerVisual>
-          <DateFieldInput slot="start" className="flex">
+        <InputWrapper
+          size={size}
+          variant={variant}
+          prefix={prefix}
+          isLoading={isLoading}
+          loaderPosition="prefix"
+        >
+          <DateInput slot="start">
             {(segment) => <DateSegment segment={segment} />}
-          </DateFieldInput>
+          </DateInput>
           <span aria-hidden="true">–</span>
-          <DateFieldInput slot="end" className="flex">
+          <DateInput slot="end">
             {(segment) => <DateSegment segment={segment} />}
-          </DateFieldInput>
-          <TextFieldInnerVisual loading={showSuffixLoading}>
-            <Button shape="square" size="sm" variant="ghost">
-              <CalendarIcon />
-            </Button>
-          </TextFieldInnerVisual>
-        </TextFieldInnerWrapper>
+          </DateInput>
+          <Button size="sm" shape="square" className="h-full rounded-none">
+            <CalendarIcon />
+          </Button>
+        </InputWrapper>
       </Field>
-      <Overlay type={isMobile ? "drawer" : "popover"}>
-        <Dialog>
-          <RangeCalendar></RangeCalendar>
-        </Dialog>
+      <Overlay type="drawer">
+        <AriaDialog className="outline-none">
+          <Calendar className="mx-auto border-none" />
+        </AriaDialog>
       </Overlay>
-    </AriaDateRangePicker>
+    </DateRangePickerRoot>
   );
+};
+
+interface DateRangePickerRootProps<T extends DateValue>
+  extends Omit<AriaDateRangePickerProps<T>, "className"> {
+  className?: string;
 }
+const DateRangePickerRoot = <T extends DateValue>({
+  className,
+  ...props
+}: DateRangePickerRootProps<T>) => {
+  const { root } = fieldStyles();
+  return <AriaDateRangePicker className={root({ className })} {...props} />;
+};
+
+export type { DateRangePickerProps, DateRangePickerRootProps };
+export { DateRangePicker, DateRangePickerRoot };

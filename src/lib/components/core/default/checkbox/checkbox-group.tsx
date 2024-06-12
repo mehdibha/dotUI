@@ -3,61 +3,53 @@
 import * as React from "react";
 import {
   CheckboxGroup as AriaCheckboxGroup,
+  composeRenderProps,
   type CheckboxGroupProps as AriaCheckboxGroupProps,
 } from "react-aria-components";
-import { tv, type VariantProps } from "tailwind-variants";
-import { Field, type FieldProps } from "../field";
-
-const checkboxGroupStyles = tv({
-  slots: {
-    root: "space-y-2",
-  },
-});
+import { Field, fieldStyles, type FieldProps } from "../field";
 
 interface CheckboxGroupProps
-  extends Omit<AriaCheckboxGroupProps, "children" | "className">,
-    VariantProps<typeof checkboxGroupStyles>,
-    FieldProps {
-  className?: string;
-}
+  extends CheckboxGroupRootProps,
+    Omit<FieldProps, "children"> {}
 
 const CheckboxGroup = React.forwardRef<
   React.ElementRef<typeof AriaCheckboxGroup>,
   CheckboxGroupProps
 >(
   (
-    {
-      className,
-      children,
-      label,
-      labelProps,
-      description,
-      descriptionProps,
-      errorMessage,
-      fieldErrorProps,
-      ...props
-    },
+    { label, description, errorMessage, necessityIndicator, contextualHelp, ...props },
     ref
   ) => {
-    const { root } = checkboxGroupStyles({});
     return (
-      <AriaCheckboxGroup ref={ref} className={root({ className })} {...props}>
-        {({}) => (
+      <CheckboxGroupRoot ref={ref} {...props}>
+        {composeRenderProps(props.children, (children, { isRequired }) => (
           <Field
             label={label}
-            labelProps={labelProps}
             description={description}
-            descriptionProps={descriptionProps}
             errorMessage={errorMessage}
-            fieldErrorProps={fieldErrorProps}
+            isRequired={isRequired}
+            necessityIndicator={necessityIndicator}
+            contextualHelp={contextualHelp}
           >
             <div className="space-y-0.5">{children}</div>
           </Field>
-        )}
-      </AriaCheckboxGroup>
+        ))}
+      </CheckboxGroupRoot>
     );
   }
 );
 CheckboxGroup.displayName = "CheckboxGroup";
+
+type CheckboxGroupRootProps = Omit<AriaCheckboxGroupProps, "className"> & {
+  className?: string;
+};
+const CheckboxGroupRoot = React.forwardRef<
+  React.ElementRef<typeof AriaCheckboxGroup>,
+  CheckboxGroupRootProps
+>(({ className, ...props }, ref) => {
+  const { root } = fieldStyles();
+  return <AriaCheckboxGroup ref={ref} className={root({ className })} {...props} />;
+});
+CheckboxGroupRoot.displayName = "CheckboxGroupRoot";
 
 export { CheckboxGroup };

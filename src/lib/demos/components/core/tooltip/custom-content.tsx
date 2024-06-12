@@ -1,16 +1,19 @@
+import { PlusIcon } from "lucide-react";
 import { Button } from "@/lib/components/core/default/button";
 import { Tooltip } from "@/lib/components/core/default/tooltip";
 
-export default function TooltipDemo() {
+export default function Demo() {
   return (
     <Tooltip
       content={
-        <>
-          The <b>Evil Rabbit</b> Jumped over the <i>Fence</i>.
-        </>
+        <p>
+          Add to <b className="font-bold">library</b>
+        </p>
       }
     >
-      <Button>Hover</Button>
+      <Button shape="square">
+        <PlusIcon />
+      </Button>
     </Tooltip>
   );
 }

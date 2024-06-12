@@ -404,6 +404,9 @@ export const useMotionDrawer = (props: useMotionDrawerProps) => {
         resetBody(); // to ensure that always the body is reset.
       }
     }
+    return () => {
+      resetBody();
+    };
   }, [state.isOpen]);
 
   const rootProps = {

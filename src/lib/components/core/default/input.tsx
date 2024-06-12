@@ -9,13 +9,14 @@ import {
   composeRenderProps,
   Input as AriaInput,
   Group as AriaGroup,
+  TextArea as AriaTextArea,
   FieldErrorContext as AriaFieldErrorContext,
   InputContext as AriaInputContext,
-  TextArea as AriaTextArea,
   TextAreaContext as AriaTextAreaContext,
   type TextAreaProps as AriaTextAreaProps,
   type GroupProps as AriaGroupProps,
   type InputProps as AriaInputProps,
+  useSlottedContext,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
 import { focusInput } from "@/lib/utils/styles";
@@ -24,14 +25,15 @@ const inputStyles = tv({
   slots: {
     root: [
       focusInput(),
-      "inline-flex items-center w-full transition-colors rounded-md overflow-hidden border bg-bg shadow-sm cursor-text",
+      "inline-flex items-center transition-colors rounded-md overflow-hidden border bg-bg shadow-sm cursor-text",
       "disabled:cursor-not-allowed disabled:border-border-disabled disabled:bg-bg-disabled",
     ],
     input: [
-      "bg-transparent outline-none items-center w-full px-2 h-full text-fg placeholder:text-fg-muted",
+      "bg-transparent outline-none w-full flex-1 px-2 h-full text-fg placeholder:text-fg-muted",
       "disabled:cursor-not-allowed disabled:text-fg-disabled",
     ],
-    innerVisual: "text-fg-muted shrink-0",
+    innerVisual:
+      "text-fg-muted disabled:text-fg-disabled shrink-0 flex items-center justify-center",
   },
   variants: {
     size: {
@@ -127,7 +129,7 @@ interface InputWrapperProps
     VariantProps<typeof inputStyles> {
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
-  loading?: boolean;
+  isLoading?: boolean;
   loaderPosition?: "prefix" | "suffix";
   className?: string;
 }
@@ -137,7 +139,7 @@ const InputWrapper = React.forwardRef<HTMLDivElement, InputWrapperProps>(
       className,
       size,
       variant,
-      loading,
+      isLoading,
       prefix,
       suffix,
       loaderPosition = "suffix",
@@ -147,16 +149,17 @@ const InputWrapper = React.forwardRef<HTMLDivElement, InputWrapperProps>(
     ref
   ) => {
     const { isInvalid } = React.useContext(AriaFieldErrorContext);
-    const inputProps = React.useContext(AriaInputContext);
-    const textAreaProps = React.useContext(AriaTextAreaContext);
-    const inputRef = React.useRef<HTMLInputElement | HTMLTextAreaElement>(null);
+    const inputProps = useSlottedContext(AriaInputContext);
+    const textAreaProps = useSlottedContext(AriaTextAreaContext);
+    const localRef = React.useRef<HTMLInputElement | HTMLTextAreaElement>(null);
+    const inputRef = inputProps?.ref ?? textAreaProps?.ref ?? localRef; // TODO Fix this with mergeRefs
     const { root } = inputStyles({
       size,
       variant: variant ?? (isInvalid ? "danger" : undefined),
       multiline,
     });
-    const showPrefixLoading = loading && loaderPosition === "prefix";
-    const showSuffixLoading = loading && loaderPosition === "suffix";
+    const showPrefixLoading = isLoading && loaderPosition === "prefix";
+    const showSuffixLoading = isLoading && loaderPosition === "suffix";
     return (
       <Provider
         values={[
@@ -178,7 +181,7 @@ const InputWrapper = React.forwardRef<HTMLDivElement, InputWrapperProps>(
           onPointerDown={(event) => {
             const target = event.target as HTMLElement;
             if (target.closest("input, button, a")) return;
-            const input = inputRef.current;
+            const input = inputRef.current; // TODO
             if (!input) return;
             requestAnimationFrame(() => {
               input.focus();
@@ -187,11 +190,19 @@ const InputWrapper = React.forwardRef<HTMLDivElement, InputWrapperProps>(
         >
           {composeRenderProps(props.children, (children) => (
             <>
-              <InputInnerVisual side="start" loading={showPrefixLoading} multiline={multiline}>
+              <InputInnerVisual
+                side="start"
+                loading={showPrefixLoading}
+                multiline={multiline}
+              >
                 {prefix}
               </InputInnerVisual>
               {children}
-              <InputInnerVisual side="end" loading={showSuffixLoading} multiline={multiline}>
+              <InputInnerVisual
+                side="end"
+                loading={showSuffixLoading}
+                multiline={multiline}
+              >
                 {suffix}
               </InputInnerVisual>
             </>
@@ -211,9 +222,17 @@ interface InputInnerVisualProps extends React.HTMLAttributes<HTMLDivElement> {
 const InputInnerVisual = React.forwardRef<HTMLSpanElement, InputInnerVisualProps>(
   ({ loading, children, className, multiline, side, ...props }, ref) => {
     const { innerVisual } = inputStyles({ multiline });
+    const inputContext = useSlottedContext(AriaInputContext);
     if (!loading && !children) return null;
     return (
-      <span ref={ref} data-side={side} className={innerVisual({ className })} {...props}>
+      <span
+        ref={ref}
+        data-rac=""
+        data-side={side}
+        data-disabled={inputContext?.disabled || undefined}
+        className={innerVisual({ className })}
+        {...props}
+      >
         {loading ? <Loader2Icon className="animate-spin" /> : children}
       </span>
     );

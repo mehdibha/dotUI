@@ -37,7 +37,7 @@ export default function DialogDemo() {
               </Button>
               <Button
                 isLoading={isLoading}
-                type="primary"
+                variant="primary"
                 size={{ initial: "lg", sm: "md" }}
                 onPress={async () => {
                   await handleSubmit();

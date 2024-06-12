@@ -79,6 +79,8 @@
     --color-bg-muted: var(--color-neutral-200);
     --color-bg-inverse: var(--color-neutral-1000);
     --color-bg-disabled: var(--color-neutral-200);
+    --color-bg-tooltip: var(--color-neutral-500);
+    --color-bg-overlay: var(--color-neutral-200);
 
     --color-bg-neutral: var(--color-neutral-300);
     --color-bg-neutral-hover: var(--color-neutral-400);
@@ -131,6 +133,7 @@
     --color-fg-link-active: var(--color-neutral-1000);
     --color-fg-link-visited: var(--color-neutral-1000);
 
+    --color-fg-onAccent: var(--color-neutral-1000);
     --color-fg-onNeutral: var(--color-neutral-1000);
     --color-fg-onPrimary: var(--color-neutral-100);
     --color-fg-onSuccess: var(--color-neutral-1000);
@@ -217,6 +220,7 @@
     --color-accent-1000: 210 100% 87%;
 
     --color-fg-onWarning: var(--color-black);
+    --color-fg-onTooltip: var(--color-white);
   }
 }
 

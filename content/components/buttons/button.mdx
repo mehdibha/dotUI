@@ -50,15 +50,14 @@ The default variant is `md`.
 
 ### Shapes
 
-Use the `shape` prop to control the shape of the button.<br/>
-The default variant is `rectangle`.<br/>
+Use the `shape` prop to control the shape of the button. The default variant is `rectangle`.<br/>
 Icon-only buttons should include an `aria-label`.
 
 <ComponentPreview name="demos/components/core/button/shapes" />
 
 ### Prefix and suffix
 
-To add additional context for a button label, such as a “search” icon next to the label for a search field submit, use the `prefix` and `suffix` props. Leading visuals always appear locked to the button label, even if the button is full width.
+To add additional context for a button label, such as a search icon next to the label for a search field submit, use the `prefix` and `suffix` props. Leading visuals always appear locked to the button label, even if the button is full width.
 
 <ComponentPreview name="demos/components/core/button/prefix-and-suffix" />
 
@@ -76,22 +75,49 @@ Use the `isDisabled` prop to disable the button.
 
 ### Link button
 
-To use a button as a link, use the `ButtonLink` component or pass `buttonStyles` to the className of the link.
+To use a button as a link, use the `href` prop the button will automatically render a link that visually looks like a button.
 
 <ComponentPreview name="demos/components/core/button/link-button" />
 
 ## API Reference
 
-TODO: add adobe api
+| Prop         | Type                                                                                               | Default     | Description                                                        |
+| ------------ | -------------------------------------------------------------------------------------------------- | ----------- | ------------------------------------------------------------------ |
+| `variant`    | `"default" \| "primary" \| "quiet" \| "outline" \| "accent" \| "danger" \| "success" \| "warning"` | `"default"` | The visual style of the button.                                    |
+| `size`       | `"sm" \| "md" \| "lg"`                                                                             | `"md"`      | The size of the button.                                            |
+| `shape`      | `"rectangle" \| "square" \| "circle"`                                                              | -           | The visual shape of the button.                                    |
+| `prefix`     | `React.ReactNode`                                                                                  | -           | A visual to display before the button text.                        |
+| `suffix`     | `React.ReactNode`                                                                                  | -           | A visual to display after the button text.                         |
+| `isLoading`  | `boolean`                                                                                          | -           | Whether the button is in a loading state.                          |
+| `isDisabled` | `boolean`                                                                                          | -           | Whether the button is disabled.                                    |
+| `autoFocus`  | `boolean`                                                                                          | -           | Whether the element should receive focus on render.                |
+| `type`       | `'button' \| 'submit' \| 'reset'`                                                                  | -           | The behavior of the button when used in an HTML form.              |
+| `href`       | `string`                                                                                           | -           | A URL to link to.                                                  |
+| `rel`        | `HTMLAttributeAnchorTarget`                                                                        | -           | The relationship between the linked resource and the current page. |
 
-| Prop      | Type                                                                                               | Default     |
-| --------- | -------------------------------------------------------------------------------------------------- | ----------- |
-| `variant` | `"default" \| "primary" \| "quiet" \| "outline" \| "accent" \| "danger" \| "success" \| "warning"` | `"default"` |
-| `size`    | `"sm" \| "md" \| "lg"`                                                                             | `"md"`      |
-| `shape`   | `"rectangle" \| "square" \| "circle"`                                                              | -           |
-| `loading` | `boolean`                                                                                          | -           |
-| `prefix`  | `React.ReactNode`                                                                                  | -           |
-| `suffix`  | `React.ReactNode`                                                                                  | -           |
+| Event           | Type                              | Description                                                                                                             |
+| --------------- | --------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `onPress`       | `(e: PressEvent) => void`         | Handler that is called when the press is released over the target.                                                      |
+| `onPressStart`  | `(e: PressEvent) => void`         | Handler that is called when a press interaction starts.                                                                 |
+| `onPressEnd`    | `(e: PressEvent) => void`         | Handler that is called when a press interaction ends, either over the target or when the pointer leaves the target.     |
+| `onPressChange` | `(isPressed: boolean) => void`    | Handler that is called when the press state changes.                                                                    |
+| `onPressUp`     | `(e: PressEvent) => void`         | Handler that is called when a press is released over the target, regardless of whether it started on the target or not. |
+| `onFocus`       | `(e: FocusEvent<Target>) => void` | Handler that is called when the element receives focus.                                                                 |
+| `onBlur`        | `(e: FocusEvent<Target>) => void` | Handler that is called when the element loses focus.                                                                    |
+| `onFocusChange` | `(isFocused: boolean) => void`    | Handler that is called when the element's focus status changes.                                                         |
+| `onKeyDown`     | `(e: KeyboardEvent) => void`      | Handler that is called when a key is pressed.                                                                           |
+| `onKeyUp`       | `(e: KeyboardEvent) => void`      | Handler that is called when a key is released.                                                                          |
+| `onHoverStart`  | `(e: HoverEvent) => void`         | Handler that is called when a hover interaction starts.                                                                 |
+| `onHoverEnd`    | `(e: HoverEvent) => void`         | Handler that is called when a hover interaction ends.                                                                   |
+| `onHoverChange` | `(isHovering: boolean) => void`   | Handler that is called when the hover state changes.                                                                    |
+
+| Data attribute         | Description                                                    |
+| ---------------------- | -------------------------------------------------------------- |
+| `[data-hovered]`       | Whether the button is currently hovered with a mouse.          |
+| `[data-pressed]`       | Whether the button is currently in a pressed state.            |
+| `[data-focused]`       | Whether the button is focused, either via a mouse or keyboard. |
+| `[data-focus-visible]` | Whether the button is keyboard focused.                        |
+| `[data-disabled]`      | Whether the button is disabled.                                |
 
 ## Accessibility
 

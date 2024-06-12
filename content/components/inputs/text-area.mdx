@@ -1,9 +1,9 @@
 ---
 title: TextArea
-description: TODO
+description: TextArea is a multiline text input.
 thumbnail:
-  image: /previews/components/core/textarea.jpeg
-  video: /previews/components/core/textarea.mp4
+  image: /previews/components/core/text-area.jpeg
+  video: /previews/components/core/text-area.mp4
 links:
   - label: Aria docs
     href: https://react-spectrum.adobe.com/react-aria/TextArea.html
@@ -22,6 +22,10 @@ links:
 npm install react-aria-components
 ```
 
+<Step>Install the following components:</Step>
+
+install [TextField](/inputs/text-field), [Field](/inputs/field) and [Input](/inputs/input) components.
+
   <Step>Copy and paste the following code into your project.</Step>
   <ComponentSource name="components/core/default/text-area" />
   <Step>Update the import paths to match your project setup.</Step>
@@ -29,13 +33,15 @@ npm install react-aria-components
 
 ## Usage
 
-TODO
+Use a textarea to allow users to input a long string of free-form text.
+
+- Always include a label (it can be visible or hidden with `aria-label`)
 
 ## Options
 
 ### Variants
 
-Use the `variant` prop to control the visual style of the TextArea.<br/>
+Use the `variant` prop to control the visual style of the `TextArea`.<br/>
 The default variant is `default`.
 
 <ComponentPreview
@@ -45,7 +51,7 @@ The default variant is `default`.
 
 ### Prefix and suffix
 
-TODO
+To add additional context for the `TextArea`, use the `prefix` and `suffix` props.
 
 <ComponentPreview
   name="demos/components/core/text-area/prefix-and-suffix"
@@ -54,8 +60,7 @@ TODO
 
 ### Label
 
-A visual label should be provided for the TextArea using the label prop or a hidden label using `aria-label` prop.<br/>
-If the TextArea is required, the isRequired and necessityIndicator props can be used to show a required state.
+A visual label can be provided for the `TextArea` using the label prop or a hidden label using `aria-label` prop.
 
 <ComponentPreview
   name="demos/components/core/text-area/label"
@@ -73,7 +78,7 @@ A description can be supplied to a TextArea via the `description` prop. The desc
 
 ### Contextual help
 
-TODO
+A ContextualHelp element may be placed next to the label to provide additional information or help about a TextArea.
 
 <ComponentPreview
   name="demos/components/core/text-area/contextual-help"
@@ -82,7 +87,7 @@ TODO
 
 ### Error message
 
-TODO
+An error message can be supplied to a TextArea, which will be displayed when the `validationState` is `“invalid”`.
 
 <ComponentPreview
   name="demos/components/core/text-area/error-message"
@@ -92,6 +97,7 @@ TODO
 ### Loading
 
 Use the `isLoading` prop to control the loading state of the TextArea.
+Use the `loaderPosition` prop to control the position of the loader.
 
 <ComponentPreview
   name="demos/components/core/text-area/loading"
@@ -109,18 +115,25 @@ Use the `isDisabled` prop to disable the TextArea.
 
 ### ReadOnly
 
-TODO
+The isReadOnly boolean prop makes the TextArea's text content immutable. Unlike isDisabled, the TextArea remains focusable and the contents can still be copied.
 
 <ComponentPreview
   name="demos/components/core/text-area/read-only"
   className="max-w-[250px]"
 />
 
+### Required
+
+Use the `isRequired` prop to mark the TextArea as required.
+Use the `necessityIndicator` prop to control the visual style of the required state.
+
+<ComponentPreview name="demos/components/core/text-area/required" className="max-w-sm" />
+
 ## Examples
 
 ### Controlled
 
-TODO
+Use the `value` and `onChange` props to control the value of the input.
 
 <ComponentPreview
   name="demos/components/core/text-area/controlled"
@@ -129,29 +142,32 @@ TODO
 
 ### Composition
 
-TODO
+If you need to customize things further, such as accessing all the elements props, you can drop down to the composition pattern.
 
 <ComponentPreview
   name="demos/components/core/text-area/composition"
   className="max-w-[250px]"
 />
 
-### Form
-
-TODO
-
-<ComponentPreview name="demos/components/core/text-area/form" className="max-w-[250px]" />
-
 ## API Reference
 
-TODO
+### TextArea
 
-| Prop             | Type                   | Default |
-| ---------------- | ---------------------- | ------- |
-| `size`           | `"sm" \| "md" \| "lg"` | `md`    |
-| `disabled`       | `boolean`              | -       |
-| `prefix`         | `React.ReactNode`      | -       |
-| `suffix`         | `React.ReactNode`      | -       |
-| `loading`        | `boolean`              | -       |
-| `loaderPosition` | `"prefix" \| "suffix"` | -       |
-| `status`         | `"error" \| "success"` | -       |
+This component inherits and merges props from TextFieldRoot and Field parts.
+
+| Prop             | Type                                                           | Default     | Description                                 |
+| ---------------- | -------------------------------------------------------------- | ----------- | ------------------------------------------- |
+| `variant`        | `"default" \| "primary" \| "danger" \| "success" \| "warning"` | `"default"` | The visual style of the TextArea.           |
+| `size`           | `"sm" \| "md" \| "lg"`                                         | `"md"`      | The size of the input.                      |
+| `prefix`         | `React.ReactNode`                                              | -           | A visual to display before the input.       |
+| `suffix`         | `React.ReactNode`                                              | -           | A visual to display after the input.        |
+| `isLoading`      | `boolean`                                                      | -           | Whether the TextArea is in a loading state. |
+| `loaderPosition` | `"prefix" \| "suffix"`                                         | -           | The loader position                         |
+
+### TextFieldRoot
+
+Refer to the [TextField API reference](/components/inputs/text-field).
+
+### Field
+
+Refer to the [Field API reference](/components/inputs/field).

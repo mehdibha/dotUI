@@ -15,7 +15,7 @@ type TextFieldProps = TextFieldRootProps &
   VariantProps<typeof inputStyles> & {
     prefix?: React.ReactNode;
     suffix?: React.ReactNode;
-    loading?: boolean;
+    isLoading?: boolean;
     loaderPosition?: "prefix" | "suffix";
     placeholder?: string;
   };
@@ -31,21 +31,31 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
       errorMessage,
       prefix,
       suffix,
-      loading,
+      isLoading,
       loaderPosition = "suffix",
+      isRequired,
+      necessityIndicator,
+      contextualHelp,
       ...props
     },
     ref
   ) => {
     return (
-      <TextFieldRoot className={className} {...props}>
-        <Field label={label} description={description} errorMessage={errorMessage}>
+      <TextFieldRoot className={className} isRequired={isRequired} {...props}>
+        <Field
+          label={label}
+          description={description}
+          errorMessage={errorMessage}
+          isRequired={isRequired}
+          necessityIndicator={necessityIndicator}
+          contextualHelp={contextualHelp}
+        >
           <InputWrapper
             size={size}
             variant={variant}
             prefix={prefix}
             suffix={suffix}
-            loading={loading}
+            isLoading={isLoading}
             loaderPosition={loaderPosition}
           >
             <Input ref={ref} placeholder={placeholder} />

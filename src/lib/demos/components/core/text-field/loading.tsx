@@ -1,12 +1,11 @@
 "use client";
 
 import React from "react";
-import { Label } from "@/lib/components/core/default/field";
 import { TextField } from "@/lib/components/core/default/text-field";
 import { useDebounce } from "@/lib/hooks/use-debounce";
 
 export default function Demo() {
-  const [loading, setLoading] = React.useState(false);
+  const [isLoading, setLoading] = React.useState(false);
   const [inputValue, setInputValue] = React.useState("");
   const debouncedInputValue = useDebounce(inputValue, 500);
 
@@ -22,8 +21,8 @@ export default function Demo() {
   return (
     <div className="w-full space-y-4">
       <div className="grid grid-cols-2 gap-2">
-        <TextField loading loaderPosition="prefix" />
-        <TextField loading loaderPosition="suffix" />
+        <TextField isLoading loaderPosition="prefix" />
+        <TextField isLoading loaderPosition="suffix" />
       </div>
       <TextField
         label="Username"
@@ -32,8 +31,8 @@ export default function Demo() {
         onChange={(text) => {
           setInputValue(text);
         }}
-        type={!loading && debouncedInputValue ? "success" : undefined}
-        loading={loading}
+        type={!isLoading && debouncedInputValue ? "success" : undefined}
+        isLoading={isLoading}
       />
     </div>
   );

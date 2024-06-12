@@ -6,11 +6,12 @@ import {
   type RadioGroupProps as AriaRadioGroupProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { Field, type FieldProps } from "../field";
+import { Field, fieldStyles, type FieldProps } from "../field";
 
 const radioGroupStyles = tv({
   slots: {
-    root: "",
+    wrapper:
+      "flex flex-col gap-1 orientation-horizontal:flex-row orientation-horizontal:gap-3",
   },
 });
 
@@ -20,20 +21,60 @@ interface RadioGroupProps
     FieldProps {
   className?: string;
 }
-
 const RadioGroup = React.forwardRef<
   React.ElementRef<typeof AriaRadioGroup>,
   RadioGroupProps
->(({ className, children, label, description, errorMessage, ...props }, ref) => {
-  const { root } = radioGroupStyles({});
-  return (
-    <AriaRadioGroup ref={ref} className={root({ className })} {...props}>
-      <Field label={label} description={description} errorMessage={errorMessage}>
-        <div className="space-y-2">{children}</div>
-      </Field>
-    </AriaRadioGroup>
-  );
-});
+>(
+  (
+    {
+      children,
+      label,
+      description,
+      errorMessage,
+      necessityIndicator,
+      contextualHelp,
+      ...props
+    },
+    ref
+  ) => {
+    const { wrapper } = radioGroupStyles();
+    return (
+      <RadioGroupRoot ref={ref} {...props}>
+        {({ orientation, isRequired }) => (
+          <Field
+            label={label}
+            description={description}
+            errorMessage={errorMessage}
+            isRequired={isRequired}
+            necessityIndicator={necessityIndicator}
+            contextualHelp={contextualHelp}
+          >
+            <div
+              data-rac=""
+              data-orientation={orientation || undefined}
+              className={wrapper()}
+            >
+              {children}
+            </div>
+          </Field>
+        )}
+      </RadioGroupRoot>
+    );
+  }
+);
 RadioGroup.displayName = "RadioGroup";
 
-export { RadioGroup };
+interface RadioGroupRootProps extends Omit<AriaRadioGroupProps, "className"> {
+  className?: string;
+}
+const RadioGroupRoot = React.forwardRef<
+  React.ElementRef<typeof AriaRadioGroup>,
+  RadioGroupRootProps
+>(({ className, ...props }, ref) => {
+  const { root } = fieldStyles();
+  return <AriaRadioGroup ref={ref} className={root({ className })} {...props} />;
+});
+RadioGroupRoot.displayName = "RadioGroupRoot";
+
+export type { RadioGroupRootProps, RadioGroupProps };
+export { RadioGroupRoot, RadioGroup };

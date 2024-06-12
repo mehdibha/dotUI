@@ -5,7 +5,7 @@ import { TextArea } from "@/lib/components/core/default/text-area";
 import { useDebounce } from "@/lib/hooks/use-debounce";
 
 export default function Demo() {
-  const [loading, setLoading] = React.useState(false);
+  const [isLoading, setLoading] = React.useState(false);
   const [inputValue, setInputValue] = React.useState("");
   const debouncedInputValue = useDebounce(inputValue, 500);
 
@@ -21,18 +21,18 @@ export default function Demo() {
   return (
     <div className="w-full space-y-4">
       <div className="grid grid-cols-2 gap-2">
-        <TextArea loading loaderPosition="prefix" />
-        <TextArea loading loaderPosition="suffix" />
+        <TextArea isLoading loaderPosition="prefix" />
+        <TextArea isLoading loaderPosition="suffix" />
       </div>
       <TextArea
-        label="Username"
-        placeholder="Type a username"
+        label="Description"
+        placeholder="Type your description"
         value={inputValue}
         onChange={(text) => {
           setInputValue(text);
         }}
-        type={!loading && debouncedInputValue ? "success" : undefined}
-        loading={loading}
+        type={!isLoading && debouncedInputValue ? "success" : undefined}
+        isLoading={isLoading}
       />
     </div>
   );

@@ -1,9 +1,14 @@
 ---
 title: Checkbox Group
-description: A control that allows the user to toggle between checked and not checked.
+description: A checkbox group allows a user to select multiple items from a list of options.
 thumbnail:
   image: /previews/components/core/checkbox-group.jpeg
   video: /previews/components/core/checkbox-group.mp4
+links:
+  - label: Aria docs
+    href: https://react-spectrum.adobe.com/react-aria/CheckboxGroup.html
+  - label: Aria API Reference
+    href: https://react-spectrum.adobe.com/react-aria/CheckboxGroup.html#props
 ---
 
 <ComponentPreview name="demos/components/core/checkbox-group/default" />
@@ -14,8 +19,12 @@ thumbnail:
 <Step>Install the following dependencies:</Step>
 
 ```bash
-npm install @radix-ui/react-checkbox
+npm install react-aria-components
 ```
+
+<Step>Install the following components:</Step>
+
+install [Field](/inputs/field) component.
 
   <Step>Copy and paste the following code into your project.</Step>
   <ComponentSource name="components/core/default/checkbox-group" />
@@ -24,55 +33,132 @@ npm install @radix-ui/react-checkbox
 
 ## Usage
 
-```jsx
-import { CheckboxGroup } from "@/components/core/checkbox-group";
-```
+Use checkbox group to allow users to select multiple items from a list of individual items, or to mark one individual item as selected.
 
-```jsx
-<Checkbox />
-```
+- If users are only allowed to select a single option, consider using a radio group instead.
+- Each checkbox's state should be independent from other checkboxes in the group. For example: checking one checkbox should not check or disable any other checkboxes.
 
 ## Options
 
-TODO
-
 ### Label
 
-TODO
+A visual label can be provided for the `CheckboxGroup` using the label prop or a hidden label using `aria-label` prop.
+
+<ComponentPreview
+  name="demos/components/core/checkbox-group/label"
+  className="max-w-[250px]"
+/>
 
 ### Description
 
-TODO
+A description can be supplied to a CheckboxGroup via the `description` prop. The description is always visible unless the `validationState` is `“invalid”` and an error message is provided.
+
+<ComponentPreview
+  name="demos/components/core/checkbox-group/description"
+  className="max-w-[250px]"
+/>
+
+### Contextual help
+
+A ContextualHelp element may be placed next to the label to provide additional information or help about a CheckboxGroup.
+
+<ComponentPreview
+  name="demos/components/core/checkbox-group/contextual-help"
+  className="max-w-[250px]"
+/>
 
 ### Error message
 
-TODO
+An error message can be supplied to a CheckboxGroup, which will be displayed when the `validationState` is `“invalid”`.
+
+<ComponentPreview
+  name="demos/components/core/checkbox-group/error-message"
+  className="max-w-[250px]"
+/>
 
 ### Disabled
 
-TODO
+Use the `isDisabled` prop to disable the CheckboxGroup.
+
+<ComponentPreview
+  name="demos/components/core/checkbox-group/disabled"
+  className="max-w-[250px]"
+/>
+
+### ReadOnly
+
+The `isReadOnly` boolean prop makes the CheckboxGroup's text content immutable. Unlike isDisabled, the CheckboxGroup remains focusable and the contents can still be copied.
+
+<ComponentPreview
+  name="demos/components/core/checkbox-group/read-only"
+  className="max-w-[250px]"
+/>
+
+### Required
+
+Use the `isRequired` prop to mark the CheckboxGroup as required.
+Use the `necessityIndicator` prop to control the visual style of the required state.
+
+<ComponentPreview
+  name="demos/components/core/checkbox-group/required"
+  className="max-w-md"
+/>
 
 ## Examples
 
-TODO
+### Cards
+
+<ComponentPreview
+  name="demos/components/core/checkbox-group/cards"
+  className="max-w-[250px]"
+/>
 
 ### Controlled
 
-TODO
+Use the `value` and `onChange` props to control the value of the input.
+
+<ComponentPreview
+  name="demos/components/core/checkbox-group/controlled"
+  className="max-w-[250px]"
+/>
+
+### Composition
+
+If you need to customize things further, you can drop down to the composition pattern.
+
+<ComponentPreview
+  name="demos/components/core/checkbox-group/composition"
+  className="max-w-[250px]"
+/>
 
 ## API Reference
 
-TODO
+| Prop                 | Type                                                                                                       | Default    | Description                                                                                                                                                                                                                           |
+| -------------------- | ---------------------------------------------------------------------------------------------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `value`              | `string[]`                                                                                                 | -          | The current value (controlled).                                                                                                                                                                                                       |
+| `defaultValue`       | `string[]`                                                                                                 | -          | The default value (uncontrolled).                                                                                                                                                                                                     |
+| `isDisabled`         | `boolean`                                                                                                  | -          | Whether the input is disabled.                                                                                                                                                                                                        |
+| `isReadOnly`         | `boolean`                                                                                                  | -          | Whether the input can be selected but not changed by the user.                                                                                                                                                                        |
+| `name`               | `string`                                                                                                   | -          | The name of the input element, used when submitting an HTML form.                                                                                                                                                                     |
+| `isRequired`         | `boolean`                                                                                                  | -          | Whether user input is required on the input before form submission.                                                                                                                                                                   |
+| `isInvalid`          | `boolean`                                                                                                  | -          | Whether the input value is invalid.                                                                                                                                                                                                   |
+| `validate`           | `(value: string[]) => ValidationError\| true\| null\| undefined`                                           | -          | A function that returns an error message if a given value is invalid. Validation errors are displayed to the user when the form is submitted if validationBehavior="native". For realtime validation, use the isInvalid prop instead. |
+| `validationBehavior` | `'native' \| 'aria'`                                                                                       | `'native'` | Whether to use native HTML form validation to prevent form submission when the value is missing or invalid, or mark the field as required or invalid via ARIA.                                                                        |
+| `children`           | `ReactNode \| (values: CheckboxGroupRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -          | The children of the component. A function may be provided to alter the children based on component state.                                                                                                                             |
 
-| Prop    | Type     | Default |
-| ------- | -------- | ------- |
-| `value` | `string` | -       |
+| Event           | Type                              | Description                                                     |
+| --------------- | --------------------------------- | --------------------------------------------------------------- |
+| `onChange`      | `(value: T) => void`              | Handler that is called when the value changes.                  |
+| `onFocus`       | `(e: FocusEvent<Target>) => void` | Handler that is called when the element receives focus.         |
+| `onBlur`        | `(e: FocusEvent<Target>) => void` | Handler that is called when the element loses focus.            |
+| `onFocusChange` | `(isFocused: boolean) => void`    | Handler that is called when the element's focus status changes. |
 
-TODO
-
-| Data attribute    | Description                       |
-| ----------------- | --------------------------------- |
-| `[data-selected]` | Whether the checkbox is selected. |
+| Data attribute    | Description                              |
+| ----------------- | ---------------------------------------- |
+| `[data-disabled]` | Whether the checkbox group is disabled.  |
+| `[data-readonly]` | Whether the checkbox group is read only. |
+| `[data-required]` | Whether the checkbox group is required.  |
+| `[data-invalid]`  | Whether the checkbox group invalid.      |
 
 ## Accessibility
 

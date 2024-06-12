@@ -1,5 +1,6 @@
 import React from "react";
 import { ThemeWrapper } from "@/components/theme-wrapper";
+import { Button } from "@/lib/components/core/default/button";
 import { CodeBlock } from "@/lib/components/core/default/code-block";
 import { ScrollArea } from "@/lib/components/core/default/scroll-area";
 import { Skeleton } from "@/lib/components/core/default/skeleton";
@@ -13,6 +14,7 @@ export interface ComponentPreviewProps {
   className?: string;
   containerClassName?: string;
   aspect?: "default" | "page";
+  defaultExpanded?: boolean
 }
 
 export const ComponentPreview = ({
@@ -20,6 +22,7 @@ export const ComponentPreview = ({
   className,
   containerClassName,
   aspect = "default",
+  defaultExpanded = true
 }: ComponentPreviewProps) => {
   // make it server component
   const component = React.useMemo(() => {
@@ -53,7 +56,7 @@ export const ComponentPreview = ({
             "max-h-[800px]": aspect === "default",
           })}
         >
-          <div className="flex min-h-[100px] items-center justify-center px-4 py-16">
+          <div className="flex min-h-40 items-center justify-center px-4 py-8">
             <div className={cn("flex w-full items-center justify-center", className)}>
               {component}
             </div>
@@ -61,9 +64,14 @@ export const ComponentPreview = ({
         </ScrollArea>
       </ThemeWrapper>
       <CodeBlock
+        toolbar={
+          <div>
+            <Button variant="outline" size="sm">Show code </Button>
+          </div>
+        }
         language="tsx"
-        code={code.map((file) => file.code.replace(/[\r\n]+$/, ""))}
-        fileName={code.map((file) => file.title)}
+        code={defaultExpanded ? code.map((file) => file.code.replace(/[\r\n]+$/, "")) : []}
+        fileName={defaultExpanded ? code.map((file) => file.title) : []}
         className={"w-full rounded-t-none border-x-0 border-b-0"}
       />
     </div>

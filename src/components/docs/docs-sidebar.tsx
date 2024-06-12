@@ -114,7 +114,7 @@ const Category = ({ title, slug, items, pathname }: CategoryProps) => {
                             <span className="block transition-transform duration-100 group-hover:translate-x-0.5">
                               {subItem.title}
                               {subItem.label && (
-                                <span className="bg-primary ml-2 rounded-md px-1.5 py-0.5 text-xs leading-none text-fg-onPrimary">
+                                <span className="bg-bg-primary ml-2 rounded-md px-1.5 py-0.5 text-xs leading-none text-fg-onPrimary">
                                   {subItem.label}
                                 </span>
                               )}

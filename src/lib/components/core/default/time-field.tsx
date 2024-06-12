@@ -3,127 +3,78 @@
 import * as React from "react";
 import {
   TimeField as AriaTimeField,
-  DateInput as AriaDateInput,
-  Provider,
-  DateSegment,
-  DateFieldContext as AriaDateFieldContext,
-  type DateFieldProps as AriaDateFieldProps,
-  type DateInputProps as AriaDateInputProps,
-  type DateValue,
+  type TimeFieldProps as AriaTimeFieldProps,
+  type TimeValue,
 } from "react-aria-components";
-import { tv, type VariantProps } from "tailwind-variants";
+import { type VariantProps } from "tailwind-variants";
+import { DateInput, DateSegment } from "./date-input";
+import { fieldStyles } from "./field";
 import { Field, type FieldProps } from "./field";
-import {
-  TextFieldContext,
-  TextFieldInnerVisual,
-  TextFieldInnerWrapper,
-  textFieldVariants,
-  useTextFieldContext,
-} from "./text-field";
+import { InputWrapper, inputStyles } from "./input";
 
-const dateFieldStyles = tv({ extend: textFieldVariants });
-
-interface DateFieldProps<T extends DateValue>
-  extends DateFieldRootProps<T>,
-    Omit<FieldProps, "children"> {
+interface TimeFieldProps<T extends TimeValue>
+  extends TimeFieldRootProps<T>,
+    Omit<FieldProps, "children">,
+    VariantProps<typeof inputStyles> {
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
-  loading?: boolean;
+  isLoading?: boolean;
   loaderPosition?: "prefix" | "suffix";
 }
-const TimeField = <T extends DateValue>({
+
+const TimeField= <T extends TimeValue>({
   className,
+  variant,
+  size,
   label,
-  labelProps,
   description,
-  descriptionProps,
   errorMessage,
-  fieldErrorProps,
-  loading,
   prefix,
   suffix,
+  isLoading,
   loaderPosition = "suffix",
+  isRequired,
+  isDisabled,
+  necessityIndicator,
+  contextualHelp,
   ...props
-}: DateFieldProps<T>) => {
-  const showPrefixLoading = loading && loaderPosition === "prefix";
-  const showSuffixLoading = loading && loaderPosition === "suffix";
+}: TimeFieldProps<T>) => {
   return (
-    <DateFieldRoot className={className} {...props}>
+    <TimeFieldRoot className={className} isRequired={isRequired} isDisabled={isLoading || isDisabled} {...props}>
       <Field
         label={label}
-        labelProps={labelProps}
         description={description}
-        descriptionProps={descriptionProps}
         errorMessage={errorMessage}
-        fieldErrorProps={fieldErrorProps}
+        isRequired={isRequired}
+        necessityIndicator={necessityIndicator}
+        contextualHelp={contextualHelp}
       >
-        <DateFieldInnerWrapper>
-          <DateFieldInnerVisual loading={showPrefixLoading}>
-            {prefix}
-          </DateFieldInnerVisual>
-          <DateFieldInput className="flex items-center space-x-0.5">
-            {(segment) => (
-              <DateSegment
-                className={
-                  "rounded px-0.5 outline-none focus:bg-border-focus focus:text-black focus:caret-transparent"
-                }
-                segment={segment}
-              />
-            )}
-          </DateFieldInput>
-          <DateFieldInnerVisual loading={showSuffixLoading}>
-            {suffix}
-          </DateFieldInnerVisual>
-        </DateFieldInnerWrapper>
+        <InputWrapper
+          size={size}
+          variant={variant}
+          prefix={prefix}
+          suffix={suffix}
+          isLoading={isLoading}
+          loaderPosition={loaderPosition}
+        >
+          <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
+        </InputWrapper>
       </Field>
-    </DateFieldRoot>
+    </TimeFieldRoot>
   );
 };
-TimeField.displayName = "TimeField";
 
-interface DateFieldRootProps<T extends DateValue>
-  extends Omit<AriaDateFieldProps<T>, "className">,
-    VariantProps<typeof dateFieldStyles> {
+interface TimeFieldRootProps<T extends TimeValue>
+  extends Omit<AriaTimeFieldProps<T>, "className"> {
   className?: string;
 }
-const DateFieldRoot = <T extends DateValue>({
+const TimeFieldRoot = <T extends TimeValue>({
   className,
-  size,
-  type,
   ...props
-}: DateFieldRootProps<T>) => {
-  const { root } = dateFieldStyles({ size, type });
-  return (
-    <Provider values={[[DateFieldContext, { size, type }]]}>
-      <AriaTimeField className={root({ className })} {...props} />
-    </Provider>
-  );
+}: TimeFieldRootProps<T>) => {
+  const { root } = fieldStyles();
+  return <AriaTimeField className={root({ className })} {...props} />;
 };
-DateFieldRoot.displayName = "DateFieldRoot";
 
-interface DateFieldInputProps extends Omit<AriaDateInputProps, "className"> {
-  className?: string;
-}
-const DateFieldInput = React.forwardRef<
-  React.ElementRef<typeof AriaDateInput>,
-  DateFieldInputProps
->(
-  (
-    { className, ...props }: DateFieldInputProps,
-    ref: React.ForwardedRef<HTMLDivElement>
-  ) => {
-    const { size, type } = useDateFieldContext();
-    const { input } = dateFieldStyles({ size, type });
-    return <AriaDateInput ref={ref} className={input({ className })} {...props} />;
-  }
-);
-DateFieldInput.displayName = "DateFieldRoot";
-
-const DateFieldInnerWrapper = TextFieldInnerWrapper;
-
-const DateFieldInnerVisual = TextFieldInnerVisual;
-
-const DateFieldContext = TextFieldContext;
-const useDateFieldContext = useTextFieldContext;
-
-export { TimeField, DateFieldInput, DateFieldInnerWrapper };
+export type { TimeFieldProps, TimeFieldRootProps };
+export { TimeField, TimeFieldRoot };

@@ -24,8 +24,8 @@ const popoverStyles = tv({
   slots: {
     overlay: "",
     backdrop: "",
-    content: "outline-none rounded-[inherit] p-2 sm:p-4",
-    header: "mb-4",
+    content: "outline-none rounded-[inherit] p-2 sm:p-4 max-w-72 space-y-4",
+    header: "",
     title: "text-lg font-semibold",
     description: "text-sm text-fg-muted",
     body: "space-y-4",
@@ -65,10 +65,11 @@ const PopoverRoot = ({
 interface PopoverProps extends PopoverContentProps {
   title?: string;
   description?: string;
+  placement?: OverlayProps["placement"];
 }
-const Popover = ({ title, description, ...props }: PopoverProps) => {
+const Popover = ({ title, description, placement, ...props }: PopoverProps) => {
   return (
-    <PopoverOverlay>
+    <PopoverOverlay placement={placement}>
       <PopoverContent {...props}>
         {composeRenderProps(props.children, (children) => (
           <>

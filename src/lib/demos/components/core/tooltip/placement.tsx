@@ -1,21 +1,56 @@
-import { Button } from "@/lib/components/core/default/button";
-import { Tooltip } from "@/lib/components/core/default/tooltip";
+"use client";
 
-export default function TooltipDemo() {
+import React from "react";
+import { PlusIcon } from "lucide-react";
+import { Button } from "@/lib/components/core/default/button";
+import { Select, SelectItem } from "@/lib/components/core/default/select";
+import { Tooltip, TooltipProps } from "@/lib/components/core/default/tooltip";
+
+type Placement = TooltipProps["placement"];
+
+export default function Demo() {
+  const [placement, setPlacement] = React.useState<Placement>("top");
   return (
-    <div className="flex gap-4">
-      <Tooltip content="Add to library" type="success">
-        <Button>Success</Button>
+    <div className="flex items-center gap-10">
+      <Tooltip placement={placement} content="Add to library">
+        <Button shape="square">
+          <PlusIcon />
+        </Button>
       </Tooltip>
-      <Tooltip content="Add to library" type="danger">
-        <Button>Danger</Button>
-      </Tooltip>
-      <Tooltip content="Add to library" type="warning">
-        <Button>Warning</Button>
-      </Tooltip>
-      <Tooltip content="Add to library" type="info">
-        <Button>Info</Button>
-      </Tooltip>
+      <Select
+        label="Placement"
+        selectedKey={placement}
+        onSelectionChange={(key) => setPlacement(key as Placement)}
+      >
+        {[
+          "bottom",
+          "bottom left",
+          "bottom right",
+          "bottom start",
+          "bottom end",
+          "top",
+          "top left",
+          "top right",
+          "top start",
+          "top end",
+          "left",
+          "left top",
+          "left",
+          "bottom",
+          "start",
+          "start top",
+          "start bottom",
+          "right",
+          "right top",
+          "right",
+          "bottom",
+          "end",
+          "end top",
+          "end bottom",
+        ].map((pos, index) => (
+          <SelectItem key={index}>{pos}</SelectItem>
+        ))}
+      </Select>
     </div>
   );
 }

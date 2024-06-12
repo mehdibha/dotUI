@@ -10,7 +10,7 @@ import { Button } from "@/lib/components/core/default/button";
 export default function AlertDialogDemo() {
   return (
     <AlertDialogRoot>
-      <Button type="danger">Delete</Button>
+      <Button variant="danger">Delete</Button>
       <AlertDialog
         title="Delete project"
         description="This project will be deleted, along with all of its settings."
@@ -20,7 +20,7 @@ export default function AlertDialogDemo() {
             <Button variant="outline" onPress={close}>
               Cancel
             </Button>
-            <Button type="danger" onPress={close}>
+            <Button variant="danger" onPress={close}>
               Cancel
             </Button>
           </AlertDialogFooter>

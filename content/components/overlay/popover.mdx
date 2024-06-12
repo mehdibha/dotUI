@@ -4,6 +4,11 @@ description: Displays rich content in an overlay, triggered by a button.
 thumbnail:
   image: /previews/components/core/popover.jpeg
   video: /previews/components/core/popover.mp4
+links:
+  - label: Aria popover docs
+    href: https://react-spectrum.adobe.com/react-aria/Popover.html
+  - label: Aria dialog docs
+    href: https://react-spectrum.adobe.com/react-aria/Dialog.html
 ---
 
 <ComponentPreview name="demos/components/core/popover/basic" />
@@ -37,10 +42,6 @@ Use sparingly to avoid cognitive overload. Though they can be used for a variety
 Unlike other messaging components, popovers should never include critical information (such as errors) and should always include a dismiss action.
 
 TODO - ADD USAGE GUIDELINES
-
-## Anatomy
-
-TODO
 
 ## Options
 
@@ -84,26 +85,13 @@ To make sure that a popover will stay within certain boundaries (e.g., a browser
 
 ## API Reference
 
-### PopoverRoot
-
-TODO
-
-### Popover
-
-merges content, overlat & title
-
-### PopoverContent
-
-TODO
-
-### PopoverTitle
-
-TODO
-
-### PopoverOverlay
-
-TODO
 
 ## Accessibility
 
 ### Keyboard interactions
+
+| Key         | Description                                                                                                                                           |
+| ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Tab`       | Moves focus to the next button inside the popover (last becomes first). If none of the buttons are selected, the focus is set on the first button.    |
+| `Shift+Tab` | Moves focus to the previous button inside the popover (first becomes last). If none of the buttons are selected, the focus is set on the last button. |
+| `Esc`       | Dismisses the popover. This is equivalent to choosing “Cancel” or an “OK” confirmation.                                                               |

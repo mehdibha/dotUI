@@ -4,11 +4,18 @@ import { CheckboxCard } from "@/lib/components/core/default/checkbox/checkbox-ca
 
 export default function CheckboxDemo() {
   return (
-    <CheckboxCard
-      isDisabled
-      defaultSelected
-      title="Upload documents"
-      description="upload documents from your computer."
-    />
+    <div className="flex items-center gap-4">
+      <CheckboxCard
+        isDisabled
+        title="Upload documents"
+        description="upload documents from your computer."
+      />
+      <CheckboxCard
+        defaultSelected
+        isDisabled
+        title="Upload documents"
+        description="upload documents from your computer."
+      />
+    </div>
   );
 }

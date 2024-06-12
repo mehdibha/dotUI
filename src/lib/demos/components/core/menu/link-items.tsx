@@ -1,24 +1,22 @@
-export default function MenuDemo() {
-  return null;
-  // return (
-  //   <MenuRoot>
-  //     <MenuTrigger asChild>
-  //       <Button shape="square" variant="ghost" aria-label="menu">
-  //         <MenuIcon />
-  //       </Button>
-  //     </MenuTrigger>
-  //     <MenuContent>
-  //       <MenuItem asChild>
-  //         <a href="https://github.com/mehdibha/rcopy" target="_blank">
-  //           GitHub
-  //         </a>
-  //       </MenuItem>
-  //       <MenuItem asChild>
-  //         <a href="https://twitter.com/mehdibha_" target="_blank">
-  //           X
-  //         </a>
-  //       </MenuItem>
-  //     </MenuContent>
-  //   </MenuRoot>
-  // );
+import { DiscordIcon, GitHubIcon, TwitterIcon } from "@/components/icons";
+import { Button } from "@/lib/components/core/default/button";
+import { Menu, MenuItem, MenuRoot } from "@/lib/components/core/default/menu";
+
+export default function Demo() {
+  return (
+    <MenuRoot>
+      <Button>Social links</Button>
+      <Menu>
+        <MenuItem prefix={<GitHubIcon />} href="https://github.com/mehdibha/rcopy" target="_blank">
+          Github
+        </MenuItem>
+        <MenuItem prefix={<TwitterIcon />} href="https://twitter.com/mehdibha_" target="_blank">
+          X
+        </MenuItem>
+        <MenuItem prefix={<DiscordIcon />} href="https://discord.com/invite/DXpj5V2fU8" target="_blank">
+          Discord
+        </MenuItem>
+      </Menu>
+    </MenuRoot>
+  );
 }

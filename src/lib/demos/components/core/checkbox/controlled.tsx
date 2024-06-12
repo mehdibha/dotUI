@@ -1,20 +1,18 @@
 "use client";
 
+import React from "react";
 import { Checkbox } from "@/lib/components/core/default/checkbox/checkbox";
 
-export default function CheckboxDemo() {
+export default function Demo() {
+  const [checked, setChecked] = React.useState(false);
   return (
-    <div className="flex items-center space-x-2">
-      <Checkbox id="terms" />
-      <label
-        htmlFor="terms"
-        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:text-fg-disabled"
-      >
-        I accept the{" "}
-        <a href="#" className="text-fg-link underline underline-offset-2">
-          terms and conditions
-        </a>
-      </label>
+    <div className="flex flex-col items-center gap-4">
+      <Checkbox isSelected={checked} onChange={setChecked}>
+        I accept the terms and conditions
+      </Checkbox>
+      <p className="text-xs text-fg-muted">
+        <span className="font-bold">Checked:</span> {checked ? "true" : "false"}
+      </p>
     </div>
   );
 }

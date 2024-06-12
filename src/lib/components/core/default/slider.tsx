@@ -25,8 +25,8 @@ import { Description, Label, type FieldProps } from "./field";
 
 const sliderStyles = tv({
   slots: {
-    root: "space-y-2",
-    wrapper: "relative",
+    root: "flex flex-col gap-2",
+    trackWrapper: "relative",
     track: [
       "rounded-full bg-bg-muted",
       "grow orientation-vertical:h-full orientation-vertical:w-2 orientation-horizontal:w-full orientation-horizontal:h-2",
@@ -73,45 +73,29 @@ const sliderStyles = tv({
 
 interface SliderProps extends SliderRootProps {
   label?: FieldProps["label"];
-  labelProps?: FieldProps["labelProps"];
   description?: FieldProps["description"];
-  descriptionProps?: FieldProps["descriptionProps"];
   showValueLabel?: boolean;
   getValueLabel?: (value: number[]) => string;
 }
 const Slider = React.forwardRef<React.ElementRef<typeof AriaSlider>, SliderProps>(
-  (
-    {
-      label,
-      labelProps,
-      description,
-      descriptionProps,
-      showValueLabel = true,
-      getValueLabel,
-      ...props
-    },
-    ref
-  ) => (
+  ({ label, description, showValueLabel = true, getValueLabel, ...props }, ref) => (
     <SliderRoot ref={ref} {...props}>
       {({ state }) => (
         <>
-          {label ||
-            (showValueLabel && (
-              <div
-                className={cn("flex items-center justify-between", {
-                  "justify-end": !label,
-                })}
-              >
-                {label && <Label>{label}</Label>}
-                {showValueLabel && (
-                  <SliderValueLabel>
-                    {({ state }) =>
-                      getValueLabel ? <>{getValueLabel(state.values)}</> : undefined
-                    }
-                  </SliderValueLabel>
-                )}
-              </div>
-            ))}
+          <div
+            className={cn("flex items-center justify-between", {
+              "justify-end": !label,
+            })}
+          >
+            {label && <Label>{label}</Label>}
+            {showValueLabel && (
+              <SliderValueLabel>
+                {({ state }) =>
+                  getValueLabel ? <>{getValueLabel(state.values)}</> : undefined
+                }
+              </SliderValueLabel>
+            )}
+          </div>
           <SliderWrapper>
             <SliderTrack />
             <SliderTrackFiller />
@@ -123,7 +107,7 @@ const Slider = React.forwardRef<React.ElementRef<typeof AriaSlider>, SliderProps
               />
             ))}
           </SliderWrapper>
-          {description && <Description {...descriptionProps}>{description}</Description>}
+          {description && <Description>{description}</Description>}
         </>
       )}
     </SliderRoot>
@@ -158,8 +142,12 @@ SliderRoot.displayName = "SliderRoot";
 type SliderWrapperProps = React.HTMLAttributes<HTMLDivElement>;
 const SliderWrapper = React.forwardRef<HTMLDivElement, SliderWrapperProps>(
   ({ className, ...props }, ref) => {
-    const { wrapper } = sliderStyles();
-    return <div ref={ref} className={wrapper({ className })} {...props} />;
+    const { trackWrapper } = sliderStyles();
+    return <div ref={ref} className={trackWrapper
+      
+      
+      
+      ({ className })} {...props} />;
   }
 );
 SliderWrapper.displayName = "SliderWrapper";
@@ -181,7 +169,6 @@ type SliderTrackFillerProps = React.HTMLAttributes<HTMLDivElement>;
 const SliderTrackFiller = React.forwardRef<HTMLDivElement, SliderTrackFillerProps>(
   ({ className, ...props }, ref) => {
     const { size, hideThumb } = useSliderInternalContext();
-    // eslint-disable-next-line @typescript-eslint/unbound-method
     const { orientation, getThumbPercent } = React.useContext(SliderStateContext);
     const { filler } = sliderStyles({ size, hideThumb });
     return (

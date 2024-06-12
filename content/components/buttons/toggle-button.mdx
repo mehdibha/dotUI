@@ -58,21 +58,58 @@ Icon-only toggle buttons should include an `aria-label`.
 
 ### Disabled
 
+Use the `isDisabled` prop to disable the button.
+
 <ComponentPreview name="demos/components/core/toggle-button/disabled" />
 
+## Examples
+
 ### Controlled
+
+Use the `isSelected` and `onChange` props to control the state of the button.
 
 <ComponentPreview name="demos/components/core/toggle-button/controlled" />
 
 ## API Reference
 
-| Prop      | Type                                  | Default    |
-| --------- | ------------------------------------- | ---------- |
-| `variant` | `"quiet" \| "outline" \| "accent"`    | `"quiet"`  |
-| `size`    | `"sm" \| "md" \| "lg"`                | `"md"`     |
-| `shape`   | `"rectangle" \| "square" \| "circle"` | `"square"` |
-| `prefix`  | `React.ReactNode`                     | -          |
-| `suffix`  | `React.ReactNode`                     | -          |
+| Prop              | Type                                  | Default    | Description                                            |
+| ----------------- | ------------------------------------- | ---------- | ------------------------------------------------------ |
+| `variant`         | `"quiet" \| "outline" \| "accent"`    | `"quiet"`  | The visual style of the button.                        |
+| `size`            | `"sm" \| "md" \| "lg"`                | `"md"`     | The size of the button.                                |
+| `shape`           | `"rectangle" \| "square" \| "circle"` | `"square"` | The visual shape of the button.                        |
+| `prefix`          | `React.ReactNode`                     | -          | A visual to display before the button text.            |
+| `suffix`          | `React.ReactNode`                     | -          | A visual to display after the button text.             |
+| `isSelected`      | `boolean`                             | -          | Whether the element should be selected (controlled).   |
+| `defaultSelected` | `boolean`                             | -          | Whether the element should be selected (uncontrolled). |
+| `isDisabled`      | `boolean`                             | -          | Whether the button is disabled.                        |
+| `autoFocus`       | `boolean`                             | -          | Whether the element should receive focus on render.    |
+| `type`            | `'button' \| 'submit' \| 'reset'`     | -          | The behavior of the button when used in an HTML form.  |
+
+| Event           | Type                              | Description                                                                                                             |
+| --------------- | --------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `onChange`      | `(isSelected: boolean) => void`   | Handler that is called when the element's selection state changes.                                                      |
+| `onPress`       | `(e: PressEvent) => void`         | Handler that is called when the press is released over the target.                                                      |
+| `onPressStart`  | `(e: PressEvent) => void`         | Handler that is called when a press interaction starts.                                                                 |
+| `onPressEnd`    | `(e: PressEvent) => void`         | Handler that is called when a press interaction ends, either over the target or when the pointer leaves the target.     |
+| `onPressChange` | `(isPressed: boolean) => void`    | Handler that is called when the press state changes.                                                                    |
+| `onPressUp`     | `(e: PressEvent) => void`         | Handler that is called when a press is released over the target, regardless of whether it started on the target or not. |
+| `onFocus`       | `(e: FocusEvent<Target>) => void` | Handler that is called when the element receives focus.                                                                 |
+| `onBlur`        | `(e: FocusEvent<Target>) => void` | Handler that is called when the element loses focus.                                                                    |
+| `onFocusChange` | `(isFocused: boolean) => void`    | Handler that is called when the element's focus status changes.                                                         |
+| `onKeyDown`     | `(e: KeyboardEvent) => void`      | Handler that is called when a key is pressed.                                                                           |
+| `onKeyUp`       | `(e: KeyboardEvent) => void`      | Handler that is called when a key is released.                                                                          |
+| `onHoverStart`  | `(e: HoverEvent) => void`         | Handler that is called when a hover interaction starts.                                                                 |
+| `onHoverEnd`    | `(e: HoverEvent) => void`         | Handler that is called when a hover interaction ends.                                                                   |
+| `onHoverChange` | `(isHovering: boolean) => void`   | Handler that is called when the hover state changes.                                                                    |
+
+| Data attribute         | Description                                                    |
+| ---------------------- | -------------------------------------------------------------- |
+| `[data-selected]`      | Whether the button is currently selected.                      |
+| `[data-hovered]`       | Whether the button is currently hovered with a mouse.          |
+| `[data-pressed]`       | Whether the button is currently in a pressed state.            |
+| `[data-focused]`       | Whether the button is focused, either via a mouse or keyboard. |
+| `[data-focus-visible]` | Whether the button is keyboard focused.                        |
+| `[data-disabled]`      | Whether the button is disabled.                                |
 
 ## Accessibility
 

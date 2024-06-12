@@ -5,7 +5,7 @@ import { PopoverRoot, Popover } from "@/lib/components/core/default/popover";
 export default function PopoverDemo() {
   return (
     <PopoverRoot>
-      <Button variant="ghost" shape="square">
+      <Button variant="quiet" shape="square">
         <InfoIcon />
       </Button>
       <Popover title="Salemou 3alaykom">

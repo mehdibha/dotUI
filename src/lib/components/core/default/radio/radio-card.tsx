@@ -6,18 +6,24 @@ import {
   type RadioProps as AriaRadioProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
+import { focusRing } from "@/lib/utils/styles";
 
 const radioCardStyles = tv({
   slots: {
-    root: "border rounded-md p-4 cursor-pointer flex flex-row items-center justify-between gap-4 selected:bg-bg-muted disabled:text-fg-disabled transition-colors",
+    root: [
+      focusRing(),
+      "border rounded-md p-4 cursor-pointer flex flex-row items-center justify-between gap-4 selected:bg-bg-muted disabled:text-fg-disabled transition-colors",
+      "invalid:text-fg-danger selected:invalid:bg-bg-danger-muted invalid:border-border-danger",
+    ],
     indicator: [
       "mr-2",
       "relative size-4 shrink-0 rounded-full border cursor-pointer selected:border-bg-primary selected:border-4 transition-all duration-100",
       "disabled:cursor-not-allowed disabled:border-border-disabled disabled:selected:bg-bg-disabled disabled:indeterminate:bg-bg-disabled",
+      "invalid:border-border-danger invalid:selected:border-bg-danger",
     ],
     wrapper: "flex flex-col space-y-1 mr-4 text-sm",
     title: "font-semibold",
-    description: "text-fg-muted",
+    description: "text-fg-muted disabled:text-fg- invalid:text-fg-danger",
   },
 });
 
@@ -55,7 +61,14 @@ const RadioCard = React.forwardRef<React.ElementRef<typeof AriaRadio>, RadioProp
               <div className={wrapper({})}>
                 <span className={titleStyle({})}>{title}</span>
                 {description && (
-                  <span className={descriptionStyle({})}>{description}</span>
+                  <span
+                    data-rac=""
+                    data-disabled={isDisabled || undefined}
+                    data-invalid={isInvalid || undefined}
+                    className={descriptionStyle({})}
+                  >
+                    {description}
+                  </span>
                 )}
               </div>
             )}
@@ -69,7 +82,6 @@ const RadioCard = React.forwardRef<React.ElementRef<typeof AriaRadio>, RadioProp
               data-disabled={isDisabled || undefined}
               data-readonly={isReadOnly || undefined}
               data-invalid={isInvalid || undefined}
-              // data-required={props.isRequired || undefined}
               className={indicator({ className: "" })}
             />
           </>

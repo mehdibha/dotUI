@@ -1,6 +1,12 @@
-import { Label } from "@/lib/components/core/default/field";
 import { Switch } from "@/lib/components/core/default/switch";
 
 export default function SwitchDemo() {
-  return <Switch disabled>Airplane Mode</Switch>;
+  return (
+    <div className="flex items-center gap-10">
+      <Switch isDisabled defaultSelected>
+        Focus Mode
+      </Switch>
+      <Switch isDisabled>Focus Mode</Switch>
+    </div>
+  );
 }
