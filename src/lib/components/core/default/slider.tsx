@@ -90,9 +90,7 @@ const Slider = React.forwardRef<React.ElementRef<typeof AriaSlider>, SliderProps
             {label && <Label>{label}</Label>}
             {showValueLabel && (
               <SliderValueLabel>
-                {({ state }) =>
-                  getValueLabel ? <>{getValueLabel(state.values)}</> : undefined
-                }
+                {({ state }) => (getValueLabel ? <>{getValueLabel(state.values)}</> : undefined)}
               </SliderValueLabel>
             )}
           </div>
@@ -143,11 +141,7 @@ type SliderWrapperProps = React.HTMLAttributes<HTMLDivElement>;
 const SliderWrapper = React.forwardRef<HTMLDivElement, SliderWrapperProps>(
   ({ className, ...props }, ref) => {
     const { trackWrapper } = sliderStyles();
-    return <div ref={ref} className={trackWrapper
-      
-      
-      
-      ({ className })} {...props} />;
+    return <div ref={ref} className={trackWrapper({ className })} {...props} />;
   }
 );
 SliderWrapper.displayName = "SliderWrapper";
@@ -155,14 +149,13 @@ SliderWrapper.displayName = "SliderWrapper";
 interface SliderTrackProps extends Omit<AriaSliderTrackProps, "className"> {
   className?: string;
 }
-const SliderTrack = React.forwardRef<
-  React.ElementRef<typeof AriaSliderTrack>,
-  SliderTrackProps
->(({ className, ...props }, ref) => {
-  const { size, hideThumb } = useSliderInternalContext();
-  const { track } = sliderStyles({ size, hideThumb });
-  return <AriaSliderTrack ref={ref} className={track({ className })} {...props} />;
-});
+const SliderTrack = React.forwardRef<React.ElementRef<typeof AriaSliderTrack>, SliderTrackProps>(
+  ({ className, ...props }, ref) => {
+    const { size, hideThumb } = useSliderInternalContext();
+    const { track } = sliderStyles({ size, hideThumb });
+    return <AriaSliderTrack ref={ref} className={track({ className })} {...props} />;
+  }
+);
 SliderTrack.displayName = "SliderTrack";
 
 type SliderTrackFillerProps = React.HTMLAttributes<HTMLDivElement>;
@@ -179,8 +172,7 @@ const SliderTrackFiller = React.forwardRef<HTMLDivElement, SliderTrackFillerProp
         className={filler({ className })}
         {...props}
         style={{
-          width:
-            orientation === "horizontal" ? `${getThumbPercent(0) * 100}%` : undefined,
+          width: orientation === "horizontal" ? `${getThumbPercent(0) * 100}%` : undefined,
           height: orientation === "vertical" ? `${getThumbPercent(0) * 100}%` : undefined,
           ...props.style,
         }}
@@ -193,14 +185,13 @@ SliderTrackFiller.displayName = "SliderTrackFiller";
 interface SliderThumbProps extends Omit<AriaSliderThumbProps, "className"> {
   className?: string;
 }
-const SliderThumb = React.forwardRef<
-  React.ElementRef<typeof AriaSliderThumb>,
-  SliderThumbProps
->(({ className, ...props }, ref) => {
-  const { size, hideThumb } = useSliderInternalContext();
-  const { thumb } = sliderStyles({ size, hideThumb });
-  return <AriaSliderThumb ref={ref} className={thumb({ className })} {...props} />;
-});
+const SliderThumb = React.forwardRef<React.ElementRef<typeof AriaSliderThumb>, SliderThumbProps>(
+  ({ className, ...props }, ref) => {
+    const { size, hideThumb } = useSliderInternalContext();
+    const { thumb } = sliderStyles({ size, hideThumb });
+    return <AriaSliderThumb ref={ref} className={thumb({ className })} {...props} />;
+  }
+);
 SliderThumb.displayName = "SliderThumb";
 
 interface SliderValueLabelProps extends Omit<AriaSliderOutputProps, "className"> {

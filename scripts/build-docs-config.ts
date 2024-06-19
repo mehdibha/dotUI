@@ -61,131 +61,130 @@ const docsConfig: DocsConfig = {
         {
           title: "Buttons",
           items: [
-            { title: "Button", href: "/components/buttons/button", label: "Done" },
+            { title: "Button", href: "/components/buttons/button" },
             {
               title: "Toggle Button",
               href: "/components/buttons/toggle-button",
-              label: "Done",
             },
             {
               title: "File Trigger",
               href: "/components/buttons/file-trigger",
-              label: "Done",
             },
           ],
         },
         {
           title: "Inputs",
           items: [
-            { title: "Field", href: "/components/inputs/field" },
-            { title: "TextField", href: "/components/inputs/text-field", label: "Done" },
-            { title: "TextArea", href: "/components/inputs/text-area", label: "Done" },
+            { title: "TextField", href: "/components/inputs/text-field" },
+            { title: "TextArea", href: "/components/inputs/text-area" },
             {
               title: "SearchField",
               href: "/components/inputs/search-field",
-              label: "Done",
             },
             {
               title: "NumberField",
               href: "/components/inputs/number-field",
-              label: "Done",
             },
-            { title: "Checkbox", href: "/components/inputs/checkbox", label: "Done" },
+            { title: "Checkbox", href: "/components/inputs/checkbox" },
             {
               title: "Checkbox Card",
               href: "/components/inputs/checkbox-card",
-              label: "Done",
             },
             {
               title: "Checkbox Group",
               href: "/components/inputs/checkbox-group",
-              label: "Done",
             },
-            { title: "Radio", href: "/components/inputs/radio", label: "Done" },
-            { title: "Radio Card", href: "/components/inputs/radio-card", label: "Done" },
+            { title: "Radio", href: "/components/inputs/radio" },
+            { title: "Radio Card", href: "/components/inputs/radio-card" },
             {
               title: "Radio Group",
               href: "/components/inputs/radio-group",
-              label: "Done",
             },
-            { title: "Switch", href: "/components/inputs/switch", label: "Done" },
+            { title: "Switch", href: "/components/inputs/switch" },
             { title: "Slider", href: "/components/inputs/slider" },
-            { title: "Form", href: "/components/inputs/form" },
           ],
         },
         {
-          title: "Collections",
-          items: [{ title: "Menu", href: "/components/collections/menu", label: "Done" }],
-        },
-        {
-          title: "Selection",
+          title: "Menus and Selection",
           items: [
-            { title: "Combobox", href: "/components/selection/combobox" },
-            { title: "Select", href: "/components/selection/select" },
+            { title: "Menu", href: "/components/menus-and-selection/menu" },
+            { title: "ListBox", href: "/components/menus-and-selection/list-box" },
+            { title: "Select", href: "/components/menus-and-selection/select" },
+            { title: "Combobox", href: "/components/menus-and-selection/combobox" },
           ],
         },
         {
           title: "Dates",
           items: [
-            { title: "Calendar", href: "/components/dates/calendar", label: "Done" },
+            { title: "Calendar", href: "/components/dates/calendar" },
             {
               title: "Range Calendar",
               href: "/components/dates/range-calendar",
-              label: "Done",
             },
-            { title: "Time Field", href: "/components/dates/time-field", label: "Done" },
-            { title: "Date Field", href: "/components/dates/date-field", label: "Done" },
-            { title: "Date Picker", href: "/components/dates/date-picker" },
-            { title: "Date Range Picker", href: "/components/dates/date-range-picker" },
+            { title: "Time Field", href: "/components/dates/time-field" },
+            { title: "Date Field", href: "/components/dates/date-field" },
+            {
+              title: "Date Picker",
+              href: "/components/dates/date-picker",
+            },
+            {
+              title: "Date Range Picker",
+              href: "/components/dates/date-range-picker",
+            },
           ],
         },
         {
           title: "Colors",
           items: [
-            { title: "Color Area", href: "/components/colors/color-area", label: "Done" },
+            { title: "Color Area", href: "/components/colors/color-area" },
             {
               title: "Color Field",
               href: "/components/colors/color-field",
-              label: "Done",
             },
             {
               title: "Color Slider",
               href: "/components/colors/color-slider",
-              label: "Done",
             },
             {
               title: "Color Swatch",
               href: "/components/colors/color-swatch",
-              label: "Done",
             },
             {
               title: "Color Picker",
               href: "/components/colors/color-picker",
-              label: "Done",
             },
           ],
         },
         {
           title: "Drag and drop",
-          items: getCategoryDocs("components/drag-and-drop"),
+          items: [
+            {
+              title: "DropZone",
+              href: "/components/drag-and-drop/drop-zone",
+            },
+          ],
         },
         {
           title: "Feedback",
-          items: getCategoryDocs("components/feedback"),
+          items: [
+            { title: "Alert", href: "/components/feedback/alert" },
+            { title: "Progress", href: "/components/feedback/progress" },
+            { title: "Skeleton", href: "/components/feedback/skeleton" },
+          ],
         },
         {
           title: "Layout",
-          items: getCategoryDocs("components/layout"),
+          items: [
+            { title: "Aspect Ratio", href: "/components/layout/aspect-ratio" },
+            { title: "Scroll Area", href: "/components/layout/scroll-area" },
+          ],
         },
         {
           title: "Data display",
           items: [
             { title: "Avatar", href: "/components/data-display/avatar" },
             { title: "Badge", href: "/components/data-display/badge" },
-            { title: "Card", href: "/components/data-display/card" },
-            { title: "Carousel", href: "/components/data-display/carousel" },
             { title: "Separator", href: "/components/data-display/separator" },
-            { title: "Table", href: "/components/data-display/table" },
           ],
         },
         {
@@ -199,17 +198,12 @@ const docsConfig: DocsConfig = {
         {
           title: "Overlay",
           items: [
-            { title: "Overlay", href: "/components/overlay/overlay" },
             { title: "Dialog", href: "/components/overlay/dialog" },
-            { title: "Alert Dialog", href: "/components/overlay/alert-dialog" },
-            { title: "Drawer", href: "/components/overlay/drawer" },
-            { title: "Popover", href: "/components/overlay/popover" },
-            { title: "Tooltip", href: "/components/overlay/tooltip", label: "Done" },
+            { title: "Alert Dialog", href: "/components/overlay/dialog#alert-dialog" },
+            { title: "Drawer", href: "/components/overlay/dialog#drawer" },
+            { title: "Popover", href: "/components/overlay/dialog#popover" },
+            { title: "Tooltip", href: "/components/overlay/tooltip" },
           ],
-        },
-        {
-          title: "Utils",
-          items: getCategoryDocs("components/utils"),
         },
       ],
     },

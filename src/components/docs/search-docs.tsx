@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
-import { CircleIcon, SearchIcon } from "lucide-react";
+import { CircleIcon, FileIcon, SearchIcon } from "lucide-react";
 import { Button, type ButtonProps } from "@/lib/components/core/default/button";
 import {
   Command,
@@ -51,18 +51,16 @@ export const SearchDocs = (props: ButtonProps) => {
       <Button
         variant="outline"
         prefix={<SearchIcon />}
-        suffix={
-          <span className="rounded-md bg-bg-muted px-1 py-0.5 text-xs">Ctrl K</span>
-        }
+        suffix={<span className="rounded-md bg-bg-muted px-1 py-0.5 text-xs">Ctrl K</span>}
         {...props}
         className={cn("w-full px-2 text-sm text-fg-muted", props.className)}
       >
         {/* <span className="mr-4 flex-1 text-left">Quick Search...</span> */}
         <span> Quick Search...</span>
       </Button>
-      <Dialog>
+      <Dialog showDismissButton={false} className="p-0 sm:p-0">
         <Command>
-          <CommandInput placeholder="Search a component, a block, a hook..." />
+          <CommandInput autoFocus placeholder="Search a component, a block, a hook..." />
           <CommandList>
             <CommandEmpty>No results found.</CommandEmpty>
             {docsConfig.nav.map((category, index) => (
@@ -77,7 +75,7 @@ export const SearchDocs = (props: ButtonProps) => {
                         }}
                         className="flex items-center space-x-2"
                       >
-                        <CircleIcon />
+                        <FileIcon className="size-4 text-fg-muted" />
                         <span>{item.title}</span>
                       </CommandItem>
                     );
@@ -95,15 +93,15 @@ export const SearchDocs = (props: ButtonProps) => {
                               className="flex items-center justify-between"
                             >
                               <div className="flex items-center space-x-2">
-                                <CircleIcon />
+                                <FileIcon className="size-4 text-fg-muted" />
                                 <span>{subItem.title}</span>
                               </div>
                               <div>
-                                <span className="text-secondary-foreground rounded-md bg-bg-muted px-3 py-1 text-xs leading-none text-black">
+                                <span className="text-secondary-foreground rounded-md border bg-bg-muted px-3 py-1 text-xs leading-none text-fg-muted">
                                   {item.title}
                                 </span>
                                 {subItem.label && (
-                                  <span className="ml-2 rounded-md bg-gradient px-3 py-1 text-xs leading-none text-black">
+                                  <span className="ml-2 rounded-md bg-gradient px-3 py-1 text-xs leading-none text-white">
                                     {subItem.label}
                                   </span>
                                 )}

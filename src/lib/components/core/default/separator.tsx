@@ -11,7 +11,7 @@ const separatorStyles = tv({
   base: "shrink-0 bg-border",
   variants: {
     orientation: {
-      horizontal: "h-[1px] w-full my-0.5",
+      horizontal: "h-[1px] w-full",
       vertical: "h-full w-[1px]",
     },
   },
@@ -22,9 +22,7 @@ const separatorStyles = tv({
 
 interface SeparatorProps extends AriaSeparatorProps {}
 const Separator = ({ orientation, className, ...props }: SeparatorProps) => {
-  return (
-    <AriaSeparator {...props} className={separatorStyles({ orientation, className })} />
-  );
+  return <AriaSeparator {...props} className={separatorStyles({ orientation, className })} />;
 };
 
 export { Separator };

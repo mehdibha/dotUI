@@ -21,7 +21,7 @@ const toastVariants = tv({
       success: "text-fg-success border border-border-success",
       warning: "text-fg-warning border border-border-warning",
       error: "text-fg-danger border border-border-danger",
-      info: "text-fg-info border border-border-info",
+      info: "text-fg-accent border border-border-accent",
     },
     muted: {
       true: "",
@@ -74,12 +74,12 @@ const toastVariants = tv({
     {
       type: "info",
       fill: true,
-      className: "bg-bg-info text-fg-onInfo border-none",
+      className: "bg-bg-accent text-fg-onInfo border-none",
     },
     {
       type: "info",
       muted: true,
-      className: "bg-bg-info-muted text-fg-onMutedInfo",
+      className: "bg-bg-accent-muted text-fg-onMutedInfo",
     },
   ],
   defaultVariants: {

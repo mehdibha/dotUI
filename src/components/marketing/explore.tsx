@@ -1,15 +1,10 @@
 import { DocsList } from "@/components/docs/docs-list";
 import { cn } from "@/lib/utils/classes";
 
-// import Link from "next/link";
-// import { Button } from "@/lib/components/core/default/button";
-// import { IconExamples } from "./icon-examples";
-
 export const Explore = ({ className }: { className: string }) => {
   const categories = [
     { title: "components", slug: "components/inputs", href: "/components" },
     { title: "hooks", slug: "hooks" },
-    // { title: "blocks", slug: "blocks" },
   ];
   return (
     <div className={className}>
@@ -34,25 +29,6 @@ export const Explore = ({ className }: { className: string }) => {
             </div>
           </div>
         ))}
-        {/* <div>
-          <h3 className="category-xl pl-6 font-mono text-xl tracking-widest text-fg-muted">
-            Icons
-          </h3>
-          <div className="px-6">
-            <div
-              className={
-                "grid grid-cols-4 gap-2 border-l border-muted pb-1 pt-4 sm:grid-cols-8 lg:grid-cols-16"
-              }
-            >
-              <IconExamples limit={32} />
-            </div>
-            <div className="flex justify-end">
-              <Button size="sm" variant="link" className="mt-4 block">
-                <Link href="/icons">Explore more</Link>
-              </Button>
-            </div>
-          </div>
-        </div> */}
       </div>
     </div>
   );

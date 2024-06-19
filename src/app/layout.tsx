@@ -5,7 +5,7 @@ import { Header } from "@/components/header";
 import { Toaster } from "@/lib/components/core/default/toast";
 import { cn } from "@/lib/utils/classes";
 import { truncateOnWord } from "@/lib/utils/string";
-import { fontDisplay, geistMono, geistSans } from "@/styles/fonts";
+import { JosephinFont, fontDisplay, geistMono, geistSans } from "@/styles/fonts";
 import "@/styles/globals.css";
 import { siteConfig } from "@/config";
 import { Providers } from "./providers";
@@ -58,14 +58,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           "font-sans",
           geistMono.variable,
           geistSans.variable,
-          fontDisplay.variable
+          fontDisplay.variable,
+          JosephinFont.variable
         )}
         suppressHydrationWarning
       >
         <Providers>
           <Toaster />
           <Header />
-          <main className="min-h-screen">{children}</main>
+          <main>{children}</main>
           <Footer />
         </Providers>
       </body>

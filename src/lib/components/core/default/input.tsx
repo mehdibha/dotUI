@@ -25,7 +25,7 @@ const inputStyles = tv({
   slots: {
     root: [
       focusInput(),
-      "inline-flex items-center transition-colors rounded-md overflow-hidden border bg-bg shadow-sm cursor-text",
+      "inline-flex items-center transition-colors w-full rounded-md overflow-hidden border bg-bg shadow-sm cursor-text",
       "disabled:cursor-not-allowed disabled:border-border-disabled disabled:bg-bg-disabled",
     ],
     input: [
@@ -148,14 +148,14 @@ const InputWrapper = React.forwardRef<HTMLDivElement, InputWrapperProps>(
     },
     ref
   ) => {
-    const { isInvalid } = React.useContext(AriaFieldErrorContext);
+    // const { isInvalid } = React.useContext(AriaFieldErrorContext);
     const inputProps = useSlottedContext(AriaInputContext);
     const textAreaProps = useSlottedContext(AriaTextAreaContext);
     const localRef = React.useRef<HTMLInputElement | HTMLTextAreaElement>(null);
     const inputRef = inputProps?.ref ?? textAreaProps?.ref ?? localRef; // TODO Fix this with mergeRefs
     const { root } = inputStyles({
       size,
-      variant: variant ?? (isInvalid ? "danger" : undefined),
+      // variant: variant ?? (isInvalid ? "danger" : undefined),
       multiline,
     });
     const showPrefixLoading = isLoading && loaderPosition === "prefix";

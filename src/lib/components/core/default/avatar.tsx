@@ -1,159 +1,141 @@
 "use client";
 
 import * as React from "react";
-import * as AvatarPrimitive from "@radix-ui/react-avatar";
-import { tv } from "tailwind-variants";
-import { cn } from "@/lib/utils/classes";
+import { tv, type VariantProps } from "tailwind-variants";
 
-// TODO: clean the types
-
-const avatarVariants = tv({
-  base: "relative inline-flex h-10 w-10 shrink-0 overflow-hidden bg-bg-muted",
+const avatarStyles = tv({
+  slots: {
+    root: "relative inline-flex align-middle shrink-0 overflow-hidden bg-bg",
+    image: "aspect-square size-full",
+    fallback: "flex size-full select-none items-center justify-center bg-bg-muted",
+    placeholder: "h-full size-full animate-pulse bg-bg-muted flex items-center justify-center",
+  },
   variants: {
+    size: {
+      sm: { root: "size-8" },
+      md: { root: "size-10" },
+      lg: { root: "size-12" },
+    },
     shape: {
-      circle: "rounded-full",
-      square: "rounded-sm",
+      circle: { root: "rounded-full" },
+      square: { root: "rounded-sm" },
     },
   },
   defaultVariants: {
     shape: "circle",
+    size: "md",
   },
 });
 
-const AvatarRoot = React.forwardRef<
-  React.ElementRef<typeof AvatarPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root> & {
-    shape?: "circle" | "square";
-  }
->(({ className, shape = "circle", ...props }, ref) => (
-  <AvatarPrimitive.Root
-    ref={ref}
-    className={cn(avatarVariants({ shape, className }))}
-    {...props}
-  />
-));
-AvatarRoot.displayName = AvatarPrimitive.Root.displayName;
-
-const AvatarImage = React.forwardRef<
-  React.ElementRef<typeof AvatarPrimitive.Image>,
-  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Image>
->(({ className, ...props }, ref) => (
-  <AvatarPrimitive.Image
-    ref={ref}
-    className={cn("aspect-square h-full w-full", className)}
-    {...props}
-  />
-));
-AvatarImage.displayName = AvatarPrimitive.Image.displayName;
-
-const AvatarFallback = React.forwardRef<
-  React.ElementRef<typeof AvatarPrimitive.Fallback>,
-  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Fallback>
->(({ className, ...props }, ref) => (
-  <AvatarPrimitive.Fallback
-    ref={ref}
-    className={cn(
-      "flex h-full w-full select-none items-center justify-center",
-      className
-    )}
-    {...props}
-  />
-));
-AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName;
-
-type AvatarProps = React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Image> & {
-  fallback: React.ReactNode;
-  shape?: "circle" | "square";
-  imageProps?: Omit<React.ComponentPropsWithoutRef<typeof AvatarImage>, "src" | "alt">;
-  fallBackProps?: React.ComponentProps<typeof AvatarFallback>;
-} & {
-  src?: string;
-  alt?: string;
-};
-
-const Avatar = React.forwardRef<
-  React.ElementRef<typeof AvatarPrimitive.Root>,
-  AvatarProps
->(({ fallback, imageProps, fallBackProps, src, alt, ...avatarRootProps }, ref) => {
-  const [status, setStatus] = React.useState<"idle" | "loading" | "loaded" | "error">(
-    "idle"
-  );
+interface AvatarProps extends AvatarImageProps, VariantProps<typeof avatarStyles> {
+  fallback?: React.ReactNode;
+}
+const Avatar = ({ fallback, className, style, size, shape, ...props }: AvatarProps) => {
   return (
-    <AvatarRoot ref={ref} {...avatarRootProps}>
-      {status === "error" ? (
-        <AvatarFallback {...fallBackProps}>{fallback}</AvatarFallback>
-      ) : null}
-      <AvatarPrimitive.Image
-        src={src}
-        alt={alt}
-        {...imageProps}
-        onLoadingStatusChange={(status) => {
-          imageProps?.onLoadingStatusChange?.(status);
-          setStatus(status);
-        }}
-      />
+    <AvatarRoot className={className} style={style} shape={shape} size={size}>
+      <AvatarImage {...props} />
+      <AvatarFallback>{fallback}</AvatarFallback>
+      <AvatarPlaceholder />
     </AvatarRoot>
   );
-});
-Avatar.displayName = "Avatar";
-
-type AvatarGroupProps = React.HTMLAttributes<HTMLDivElement> & {
-  max?: number;
-  total?: number;
-  shape?: "circle" | "square";
-  renderCount?: (count: number) => React.ReactNode;
-  countProps?: React.HTMLAttributes<HTMLSpanElement>;
 };
 
-const AvatarGroup = React.forwardRef<HTMLDivElement, AvatarGroupProps>(
-  (
-    {
-      children: children_,
-      max = 5,
-      className,
-      total,
-      shape,
-      renderCount,
-      countProps,
-      ...props
-    },
-    ref
-  ) => {
-    const clampedMax = max < 2 ? 2 : max;
-    const children = React.Children.toArray(children_).filter((child) => {
-      return React.isValidElement(child);
-    }) as React.ReactElement[];
-    const totalCount = total ?? children.length;
-    const avatarsToShow = totalCount <= clampedMax ? clampedMax : clampedMax - 1;
-    const extraCount = totalCount - avatarsToShow;
+interface AvatarRootProps
+  extends React.HTMLAttributes<HTMLSpanElement>,
+    VariantProps<typeof avatarStyles> {}
+const AvatarRoot = ({ className, shape, size, ...props }: AvatarRootProps) => {
+  const { root } = avatarStyles({ shape, size });
+  const [status, setStatus] = React.useState<Status>("idle");
+  return (
+    <AvatarContext.Provider value={{ status, onStatusChange: setStatus }}>
+      <span className={root({ className })} {...props} />
+    </AvatarContext.Provider>
+  );
+};
 
-    return (
-      <div
-        ref={ref}
-        {...props}
-        className={cn("flex -space-x-2 *:ring *:ring-bg", className)}
-      >
-        {children.slice(0, avatarsToShow).map((child) => {
-          return React.cloneElement(child, {
-            shape,
-          });
-        })}
-        {extraCount > 1 && (
-          <span
-            ref={ref}
-            className={cn(
-              avatarVariants({ shape }),
-              "items-center justify-center text-sm text-fg-muted"
-            )}
-            {...countProps}
-          >
-            {renderCount ? renderCount(extraCount) : `+${extraCount}`}
-          </span>
-        )}
-      </div>
-    );
+interface AvatarImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
+  onStatusChange?: (status: Status) => void;
+}
+const AvatarImage = ({ src, onStatusChange, className, ...props }: AvatarImageProps) => {
+  const { image } = avatarStyles();
+  const context = useAvatarContext();
+  const status = useImageLoadingStatus(src);
+  // use useCallBackRef here
+  const handleStatusChange = (status: Status) => {
+    onStatusChange?.(status);
+    context.onStatusChange(status);
+  };
+
+  React.useLayoutEffect(() => {
+    if (status !== "idle") {
+      handleStatusChange(status);
+    }
+  }, [status, handleStatusChange]);
+
+  return status === "success" ? (
+    <img src={src} className={image({ className })} {...props} />
+  ) : null;
+};
+
+interface AvatarFallbackProps extends React.HTMLAttributes<HTMLSpanElement> {}
+const AvatarFallback = ({ className, ...props }: AvatarFallbackProps) => {
+  const { fallback } = avatarStyles();
+  const context = useAvatarContext();
+
+  return context.status === "error" ? (
+    <span className={fallback({ className })} {...props} />
+  ) : null;
+};
+
+interface AvatarPlaceholderProps extends React.HTMLAttributes<HTMLSpanElement> {}
+const AvatarPlaceholder = ({ className, ...props }: AvatarPlaceholderProps) => {
+  const { placeholder } = avatarStyles();
+  const context = useAvatarContext();
+
+  return ["idle", "loading"].includes(context.status) ? (
+    <span className={placeholder({ className })} {...props} />
+  ) : null;
+};
+
+type AvatarContextValue = {
+  status: Status;
+  onStatusChange: (status: Status) => void;
+};
+const AvatarContext = React.createContext<AvatarContextValue | null>(null);
+const useAvatarContext = () => {
+  const context = React.useContext(AvatarContext);
+  if (!context) {
+    throw new Error("Avatar components must be rendered within the AvatarRoot");
   }
-);
-AvatarGroup.displayName = "AvatarGroup";
+  return context;
+};
 
-export { Avatar, AvatarRoot, AvatarImage, AvatarFallback, AvatarGroup };
+type Status = "idle" | "loading" | "success" | "error";
+const useImageLoadingStatus = (src?: string) => {
+  const [status, setStatus] = React.useState<Status>("idle");
+
+  React.useLayoutEffect(() => {
+    if (!src) {
+      setStatus("error");
+      return;
+    }
+    let isMounted = true;
+    const image = new window.Image();
+    const updateStatus = (status: Status) => () => {
+      if (!isMounted) return;
+      setStatus(status);
+    };
+    setStatus("loading");
+    image.onload = updateStatus("success");
+    image.onerror = updateStatus("error");
+    image.src = src;
+    return () => {
+      isMounted = false;
+    };
+  }, [src]);
+
+  return status;
+};
+
+export type { AvatarProps, AvatarRootProps, AvatarImageProps, AvatarFallbackProps };
+export { Avatar, AvatarRoot, AvatarImage, AvatarFallback, AvatarPlaceholder, avatarStyles };

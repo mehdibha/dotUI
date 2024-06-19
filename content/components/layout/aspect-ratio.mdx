@@ -5,7 +5,7 @@ thumbnail:
   image: /previews/components/core/aspect-ratio.png
 ---
 
-<ComponentPreview name="demos/components/core/aspect-ratio/basic" className="max-w-xs" />
+<ComponentPreview name="demos/components/core/aspect-ratio/default" className="max-w-xs" />
 
 ## Installation
 
@@ -17,6 +17,19 @@ thumbnail:
 
 ## Usage
 
+Use the `AspectRatio` component to display content within a desired ratio.
+
+## Options
+
+### AsChild
+
+Use the `asChild` prop to change the default rendered element for the one passed as a child, merging their props and behavior.
+
+<ComponentPreview name="demos/components/core/aspect-ratio/as-child" className="max-w-xs" />
+
 ## API Reference
 
-TODO
+| Prop      | Type      | Default | Description                                                                                          |
+| --------- | --------- | ------- | ---------------------------------------------------------------------------------------------------- |
+| `asChild` | `boolean` | `false` | Change the default rendered element for the one passed as a child, merging their props and behavior. |
+| `ratio`   | `number`  | `1`     | The desired ratio                                                                                    |

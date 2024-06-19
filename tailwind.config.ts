@@ -136,7 +136,8 @@ const config = {
         "3000": "3000ms",
       },
       backgroundImage: {
-        gradient: "linear-gradient(10deg, rgb(81, 112, 255), rgb(255, 102, 196))",
+        gradient: "linear-gradient(108deg, rgba(8,148,255,1) 0%, rgba(255,46,84,1) 70%, rgba(255,144,4,1) 100%)",
+        // gradient: "linear-gradient(108deg,#0894FF,#C959DD 34%,#FF2E54 68%,#FF9004)",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -147,6 +148,7 @@ const config = {
         sans: ["var(--font-geist-sans)", ...fontFamily.sans],
         mono: ["var(--font-geist-mono)", ...fontFamily.mono],
         display: ["var(--font-display)", ...fontFamily.sans],
+        josephin: ["var(--font-josephin)", ...fontFamily.sans],
       },
       transitionDelay: {
         "400": "400ms",
@@ -197,7 +199,7 @@ const config = {
             transform: "scaleX(1)",
           },
         },
-        "progress-indeterminate": {
+        "progress-pulse": {
           "0%": {
             "mask-position": "200% center",
           },
@@ -212,9 +214,8 @@ const config = {
         "collapsible-down": "collapsible-down 0.2s ease-out",
         "collapsible-up": "collapsible-up 0.2s ease-out",
         "caret-blink": "caret-blink 1.25s ease-out infinite",
-        "progress-grow": "progress-grow var(--progress-duration) 1 both normal",
         "progress-indeterminate":
-          "progress-indeterminate 1s ease 0s infinite normal none running",
+          "progress-grow var(--progress-duration) 1 both normal, progress-pulse 1s ease var(--progress-duration) infinite normal none running",
       },
     },
   },

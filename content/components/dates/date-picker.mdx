@@ -105,29 +105,20 @@ Use the `isLoading` prop to control the loading state of the DatePicker.
 
 Use the `isDisabled` prop to disable the DatePicker.
 
-<ComponentPreview
-  name="demos/components/core/date-picker/disabled"
-  className="max-w-[250px]"
-/>
+<ComponentPreview name="demos/components/core/date-picker/disabled" className="max-w-[250px]" />
 
 ### ReadOnly
 
 The isReadOnly boolean prop makes the DatePicker's text content immutable. Unlike isDisabled, the DatePicker remains focusable and the contents can still be copied.
 
-<ComponentPreview
-  name="demos/components/core/date-picker/read-only"
-  className="max-w-[250px]"
-/>
+<ComponentPreview name="demos/components/core/date-picker/read-only" className="max-w-[250px]" />
 
 ### Required
 
 Use the `isRequired` prop to mark the DatePicker as required.
 Use the `necessityIndicator` prop to control the visual style of the required state.
 
-<ComponentPreview
-  name="demos/components/core/date-picker/required"
-  className="max-w-sm"
-/>
+<ComponentPreview name="demos/components/core/date-picker/required" className="max-w-sm" />
 
 ## Examples
 
@@ -135,40 +126,58 @@ Use the `necessityIndicator` prop to control the visual style of the required st
 
 Use the `value` and `onChange` props to control the value of the input.
 
-<ComponentPreview
-  name="demos/components/core/date-picker/controlled"
-  className="max-w-[250px]"
-/>
+<ComponentPreview name="demos/components/core/date-picker/controlled" className="max-w-[250px]" />
 
 ### Composition
 
-If you need to customize things further, you can drop down to the composition pattern.
+If you need to customize things further, you can drop down to the composition level.
 
-<ComponentPreview
-  name="demos/components/core/date-picker/composition"
-  className="max-w-[250px]"
-/>
+<ComponentPreview name="demos/components/core/date-picker/composition" className="max-w-[250px]" />
 
 ## API Reference
 
-TODO
+| Prop                      | Type                                                                                                         | Default     | Description                                                                                                                                                                                                                           |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------ | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `pageBehavior`            | `'single' \| 'visible'`                                                                                      | `'visible'` | Controls the behavior of paging. Pagination either works by advancing the visible page by visibleDuration (default) or one unit of visibleDuration.                                                                                   |
+| `minValue`                | `DateValue`                                                                                                  | -           | The minimum allowed date that a user may select.                                                                                                                                                                                      |
+| `maxValue`                | `DateValue`                                                                                                  | -           | The maximum allowed date that a user may select.                                                                                                                                                                                      |
+| `isDateUnavailable`       | `(date: DateValue) => boolean`                                                                               | -           | Callback that is called for each date of the calendar. If it returns true, then the date is unavailable.                                                                                                                              |
+| `placeholderValue`        | `DateValue`                                                                                                  | -           | A placeholder date that influences the format of the placeholder shown when no value is selected. Defaults to 12:00 AM or 00:00 depending on the hour cycle.                                                                          |
+| `hourCycle`               | `12 \| 24`                                                                                                   | -           | Whether to display the time in 12 or 24 hour format. By default, this is determined by the user's locale.                                                                                                                             |
+| `granularity`             | `'hour' \| 'minute' \| 'second'`                                                                             | -           | Determines the smallest unit that is displayed in the date picker. By default, this is "day" for dates, and "minute" for times.                                                                                                       |
+| `hideTimeZone`            | `boolean`                                                                                                    | `false`     | Whether to hide the time zone abbreviation.                                                                                                                                                                                           |
+| `shouldForceLeadingZeros` | `boolean`                                                                                                    | -           | Whether to always show leading zeros in the hour field. By default, this is determined by the user's locale.                                                                                                                          |
+| `isDisabled`              | `boolean`                                                                                                    | -           | Whether the input is disabled.                                                                                                                                                                                                        |
+| `isReadOnly`              | `boolean`                                                                                                    | -           | Whether the input can be selected but not changed by the user.                                                                                                                                                                        |
+| `isRequired`              | `boolean`                                                                                                    | -           | Whether user input is required on the input before form submission.                                                                                                                                                                   |
+| `isInvalid`               | `boolean`                                                                                                    | -           | Whether the input value is invalid.                                                                                                                                                                                                   |
+| `validate`                | `(value: MappedDateValue<DateValue>) => ValidationError  \| true  \| null  \| undefined`                     | -           | A function that returns an error message if a given value is invalid. Validation errors are displayed to the user when the form is submitted if validationBehavior="native". For realtime validation, use the isInvalid prop instead. |
+| `autoFocus`               | `boolean`                                                                                                    | -           | Whether the element should receive focus on render.                                                                                                                                                                                   |
+| `isOpen`                  | `boolean`                                                                                                    | -           | Whether the overlay is open by default (controlled).                                                                                                                                                                                  |
+| `defaultOpen`             | `boolean`                                                                                                    | -           | Whether the overlay is open by default (uncontrolled).                                                                                                                                                                                |
+| `value`                   | `DateValue \| null`                                                                                          | -           | The current value (controlled).                                                                                                                                                                                                       |
+| `defaultValue`            | `DateValue \| null`                                                                                          | -           | The default value (uncontrolled).                                                                                                                                                                                                     |
+| `name`                    | `string`                                                                                                     | -           | The name of the input element, used when submitting an HTML form.                                                                                                                                                                     |
+| `shouldCloseOnSelect`     | `boolean \| () => boolean`                                                                                   | `true`      | Determines whether the date picker popover should close automatically when a date is selected.                                                                                                                                        |
+| `validationBehavior`      | `'native' \| 'aria'`                                                                                         | `'aria'`    | Whether to use native HTML form validation to prevent form submission when the value is missing or invalid, or mark the field as required or invalid via ARIA.                                                                        |
+| `children`                | `ReactNode \| (values: DateRangePickerRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -           | The children of the component. A function may be provided to alter the children based on component state.                                                                                                                             |
+| `className`               | `string`                                                                                                     | -           | The CSS className for the element.                                                                                                                                                                                                    |
+| `style`                   | `CSSProperties \| (values: DateRangePickerRenderProps & {defaultStyle: CSSProperties}) => CSSProperties`     | -           | The inline style for the element. A function may be provided to compute the style based on component state.                                                                                                                           |
 
-| Prop    | Type    | Default | Description |
-| ------- | ------- | ------- | ----------- |
-| `style` | `salem` | -       |             |
+| Event           | Type                                                      | Description                                                     |
+| --------------- | --------------------------------------------------------- | --------------------------------------------------------------- |
+| `onFocus`       | `(e: FocusEvent<Target>) => void`                         | Handler that is called when the element receives focus.         |
+| `onBlur`        | `(e: FocusEvent<Target>) => void`                         | Handler that is called when the element loses focus.            |
+| `onFocusChange` | `(isFocused: boolean) => void`                            | Handler that is called when the element's focus status changes. |
+| `onKeyDown`     | `(e: KeyboardEvent) => void`                              | Handler that is called when a key is pressed.                   |
+| `onKeyUp`       | `(e: KeyboardEvent) => void`                              | Handler that is called when a key is released.                  |
+| `onOpenChange`  | `(isOpen: boolean) => void`                               | Handler that is called when the overlay's open state changes.   |
+| `onChange`      | `(value: RangeValue<MappedDateValue<DateValue>>) => void` | Handler that is called when the value changes.                  |
 
-| Event      | Type    | Description |
-| ---------- | ------- | ----------- |
-| `onChange` | `saelm` | salem       |
-
-## Accessibility
-
-### Keyboard interactions
-
-| Key          | Description                          |
-| ------------ | ------------------------------------ |
-| `Tab`        | Moves focus to the first segment.    |
-| `ArrowRight` | Moves focus to the next segment.     |
-| `ArrowLeft`  | Moves focus to the previous segment. |
-| `ArrowUp`    | Increments the value of the segment. |
-| `ArrowDown`  | Decrements the value of the segment. |
+| Data attribute         | Description                                                                           |
+| ---------------------- | ------------------------------------------------------------------------------------- |
+| `[data-focus-within]`  | Whether an element within the date picker is focused, either via a mouse or keyboard. |
+| `[data-focus-visible]` | Whether an element within the date picker is keyboard focused.                        |
+| `[data-disabled]`      | Whether the date picker is disabled.                                                  |
+| `[data-invalid]`       | Whether the date picker is invalid.                                                   |
+| `[data-open]`          | Whether the date picker is open.                                                      |

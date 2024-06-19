@@ -6,7 +6,7 @@ thumbnail:
   video: /previews/components/core/skeleton.mp4
 ---
 
-<ComponentPreview name="demos/components/core/skeleton/default" />
+<ComponentPreview name="demos/components/core/skeleton/card" />
 
 ## Installation
 
@@ -18,24 +18,38 @@ thumbnail:
 
 ## Usage
 
-```jsx
-import { Skeleton } from "@/components/core/skeleton";
-```
+Use the `Skeleton` component to show a placeholder while content is loading.
 
-```jsx
-<Skeleton className="h-[20px] w-[100px] rounded-full" />
-```
+## Options
+
+## Children
+
+If you do not pass a fixed size, skeleton will take the size of the children.
+
+<ComponentPreview name="demos/components/core/skeleton/children" />
+
+## Show
+
+Use the `show` prop to show/hide the skeleton.
+
+<ComponentPreview name="demos/components/core/skeleton/show" />
 
 ## Examples
 
-### Default with set width
+### Loading data from an API
 
-<ComponentPreview name="demos/components/core/skeleton/default-with-set-width" />
-
-### Wrapping children
-
-<ComponentPreview name="demos/components/core/skeleton/wrapping-children" />
+<ComponentPreview name="demos/components/core/skeleton/api-simulation" />
 
 ### Wrapping children with fixed size
 
-<ComponentPreview name="demos/components/core/skeleton/wrapping-children-with-fixed-size" />
+If you do not pass a fixed size, it will be calculated automatically.
+
+<ComponentPreview name="demos/components/core/skeleton/fixed-size-children" />
+
+## API Reference
+
+`Skeleton` accepts all HTML `div` element props and the following:
+
+| Prop   | Type      | Default | Description                                |
+| ------ | --------- | ------- | ------------------------------------------ |
+| `show` | `boolean` | `true`  | Weather the visual style should be filled. |

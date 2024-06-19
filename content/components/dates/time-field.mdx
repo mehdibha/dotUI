@@ -142,7 +142,7 @@ Use the `value` and `onChange` props to control the value of the input.
 
 ### Composition
 
-If you need to customize things further, such as accessing all the elements props, you can drop down to the composition pattern.
+If you need to customize things further, you can drop down to the composition level.
 
 <ComponentPreview
   name="demos/components/core/time-field/composition"
@@ -187,10 +187,8 @@ If you need to customize things further, such as accessing all the elements prop
 
 ### Keyboard interactions
 
-| Key          | Description                          |
-| ------------ | ------------------------------------ |
-| `Tab`        | Moves focus to the first segment.    |
-| `ArrowRight` | Moves focus to the next segment.     |
-| `ArrowLeft`  | Moves focus to the previous segment. |
-| `ArrowUp`    | Increments the value of the segment. |
-| `ArrowDown`  | Decrements the value of the segment. |
+| Key                      | Description                                                                                                                                                                                  |
+| ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Tab`                    | Places focus on the first segment. If a segment is already in focus, moves focus to the next segment. If last segment in in focus, moves focus to the next element in the page tab sequence. |
+| `ArrowRight` `ArrowLeft` | Moves focus between segments.                                                                                                                                                                |
+| `ArrowUp` `ArrowDown`    | Increments/decrements the value of the segment.                                                                                                                                              |

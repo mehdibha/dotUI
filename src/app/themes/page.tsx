@@ -374,7 +374,7 @@ const PreviewBase = ({
             "max-w-sm": view === "mobile" && !isMobile,
           })}
         >
-          <iframe src="/" className={cn("w-full flex-1")} allowTransparency />
+          <iframe src="/themes" className={cn("w-full flex-1")} />
         </div>
       </div>
     </div>

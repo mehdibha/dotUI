@@ -4,7 +4,7 @@ import { CopyIcon } from "lucide-react";
 import { tv } from "tailwind-variants";
 import { Button, ButtonProps } from "./button";
 import { ScrollArea } from "./scroll-area";
-import { TabsItem, TabsList, TabsRoot, TabsPanel, TabsRootProps } from "./tabs";
+import { Tab, TabList, TabPanel, TabsProps, Tabs } from "./tabs";
 
 const codeBlockStyles = tv({
   slots: {
@@ -28,28 +28,28 @@ const CodeBlock = React.forwardRef<HTMLDivElement, CodeBlockProps>(
     const fileNames = fileName ? (Array.isArray(fileName) ? fileName : [fileName]) : [];
     const languages = language ? (Array.isArray(language) ? language : [language]) : [];
     return (
-      <CodeBlockRoot ref={ref} {...props}>
+      <CodeBlockRoot {...props}>
         <CodeBlockHeader>
           <div className="flex h-full items-end">
             {fileNames.length > 0 && (
-              <TabsList>
+              <TabList>
                 {fileNames.map((fileName, index) => (
-                  <TabsItem key={index} id={fileName} className="">
+                  <Tab key={index} id={fileName} className="">
                     {fileName}
-                  </TabsItem>
+                  </Tab>
                 ))}
-              </TabsList>
+              </TabList>
             )}
           </div>
           {toolbar}
           {/* <CodeBlockCopyButton code="" /> */}
         </CodeBlockHeader>
         <CodeBlockBody>
-          <ScrollArea orientation="both" className="max-h-[200px]">
+          <ScrollArea scrollbars="both" className="max-h-[200px]">
             {codes.map((codeString, index) => (
-              <TabsPanel key={index} id={fileNames[0]}>
+              <TabPanel key={index} id={fileNames[0]}>
                 <CodeBlockCode lang={languages[index]} code={codeString} />
-              </TabsPanel>
+              </TabPanel>
             ))}
           </ScrollArea>
         </CodeBlockBody>
@@ -59,14 +59,11 @@ const CodeBlock = React.forwardRef<HTMLDivElement, CodeBlockProps>(
 );
 CodeBlock.displayName = "CodeBlock";
 
-type CodeBlockRootProps = TabsRootProps;
-const CodeBlockRoot = React.forwardRef<HTMLDivElement, CodeBlockRootProps>(
-  ({ className, ...props }, ref) => {
-    const { root } = codeBlockStyles();
-    return <TabsRoot ref={ref} className={root({ className })} {...props} />;
-  }
-);
-CodeBlockRoot.displayName = "CodeBlockRoot";
+type CodeBlockRootProps = TabsProps;
+const CodeBlockRoot = ({ className, ...props }: CodeBlockRootProps) => {
+  const { root } = codeBlockStyles();
+  return <Tabs className={root({ className })} {...props} />;
+};
 
 type CodeBlockHeaderProps = React.HTMLAttributes<HTMLDivElement>;
 const CodeBlockHeader = React.forwardRef<HTMLDivElement, CodeBlockHeaderProps>(
@@ -110,7 +107,7 @@ const CodeBlockCopyButton = ({ code, ...props }: CodeBlockCopyButtonProps) => {
   //   void navigator.clipboard.writeText(code);
   // };
   return (
-    <Button size="sm" shape="square" variant="ghost" className="size-7" {...props}>
+    <Button size="sm" shape="square" variant="quiet" className="size-7" {...props}>
       <CopyIcon className="size-5" />
     </Button>
   );

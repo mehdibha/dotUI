@@ -8,10 +8,6 @@ thumbnail:
 
 <ComponentPreview name="demos/components/core/avatar/default" />
 
-TODO add size prop number | "sm" | "md" | "lg"
-
-TODO add composition to avatargroup
-
 ## Installation
 
 <Steps>
@@ -22,42 +18,38 @@ TODO add composition to avatargroup
 
 ## Usage
 
-TODO
+Use `Avatar` to represent a user or an organization.
 
-## Avatar examples
+## Options
 
 ### Shape
+
+`Avatar` can be either a circle or a square using the `shape` prop.
 
 <ComponentPreview name="demos/components/core/avatar/shape" />
 
 ### Sizes
 
+Use the `size` prop to control the size of the `Avatar`. The default variant is `md`.
+
 <ComponentPreview name="demos/components/core/avatar/sizes" />
+
+## Examples
 
 ### Composition
 
+If you need to customize things further, you can drop down to the composition level.
+
 <ComponentPreview name="demos/components/core/avatar/composition" />
-
-## Avatar group examples
-
-### Default
-
-`<AvatarGroup />` renders its children as a stack.
-
-<ComponentPreview name="demos/components/core/avatar/avatar-group" />
-
-### Max
-
-Use the max prop to limit the number of avatars.
-
-<ComponentPreview name="demos/components/core/avatar/avatar-group-max" />
-
-### Total count
-
-If you need to control the total number of avatars not shown, you can use the total prop.
-
-<ComponentPreview name="demos/components/core/avatar/avatar-group-total-count" />
 
 ## API Reference
 
-TODO
+`Avatar` accepts all image attributes.
+
+| Prop         | Type                   | Default    | Description |
+| ------------ | ---------------------- | ---------- | ----------- |
+| `src*`       | `string`               | -          |             |
+| `alt`        | `string`               | -          |             |
+| `shape`      | `'circle' \| 'square'` | `'circle'` |             |
+| `size`       | `'sm' \| 'md' \| 'lg'` | `'md'`     |             |
+| `fallback`   | `salem`                | -          |             |

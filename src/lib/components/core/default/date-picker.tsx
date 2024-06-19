@@ -68,7 +68,7 @@ const DatePicker = <T extends DateValue>({
           </Button>
         </InputWrapper>
       </Field>
-      <Overlay type="drawer">
+      <Overlay type="popover">
         <AriaDialog className="outline-none">
           <Calendar className="border-none mx-auto" />
         </AriaDialog>

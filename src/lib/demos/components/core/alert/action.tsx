@@ -5,12 +5,12 @@ export default function AlertDemo() {
   return (
     <Alert
       action={
-        <Button type="primary" size="sm">
+        <Button variant="primary" size="sm">
           Upgrade
         </Button>
       }
     >
-      This note details some information.
+      You are currently on the free plan. Upgrade to unlock more features.
     </Alert>
   );
 }

@@ -6,7 +6,7 @@ const config = {
   bracketSameLine: false,
   trailingComma: "es5",
   semi: true,
-  printWidth: 90,
+  printWidth: 100,
   arrowParens: "always",
   endOfLine: "auto",
   importOrder: [

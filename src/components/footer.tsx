@@ -98,7 +98,7 @@ export const Footer = () => {
                   href={Link.href}
                   key={index}
                   target="_blank"
-                  className="hover:text-foreground text-fg-muted transition-colors duration-200"
+                  className="hover:text-fg text-fg-muted transition-colors duration-200"
                 >
                   <Link.icon size={20} />
                   <span className="sr-only">{Link.label}</span>
@@ -107,7 +107,7 @@ export const Footer = () => {
             </div>
             <ThemeToggle className="mt-8" />
           </div>
-          <div className="flex gap-4 sm:gap-16">
+          <div className="flex gap-6 sm:gap-16 flex-wrap">
             {links.map((group, index) => (
               <div key={index}>
                 <h2 className="font-bold">{group.label}</h2>
@@ -116,7 +116,7 @@ export const Footer = () => {
                     <li key={index}>
                       <NavLink
                         href={link.href}
-                        className="hover:text-foreground text-fg-muted transition-colors duration-200"
+                        className="hover:text-fg text-fg-muted transition-colors duration-200"
                         target={link.href.startsWith("http") ? "_blank" : undefined}
                       >
                         {link.label}

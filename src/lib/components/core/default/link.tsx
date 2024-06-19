@@ -11,15 +11,15 @@ import { focusRing } from "@/lib/utils/styles";
 
 const linkVariants = tv({
   extend: focusRing,
-  base: "hover:underline underline-offset-4",
+  base: "inline-flex items-center transition-colors gap-1 disabled:text-fg-disabled",
   variants: {
     variant: {
-      default: "text-fg-link",
-      primary: "",
+      accent: "text-fg-accent hover:text-[#5e9fe0]",
+      quiet: "underline underline-offset-2",
     },
   },
   defaultVariants: {
-    variant: "default",
+    variant: "accent",
   },
 });
 

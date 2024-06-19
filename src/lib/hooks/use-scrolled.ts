@@ -1,7 +1,7 @@
 import React from "react";
 
-export const useScrolled = (threshold = 0) => {
-  const [scrolled, setScrolled] = React.useState(false);
+export const useScrolled = ({ threshold = 0, initial = false }) => {
+  const [scrolled, setScrolled] = React.useState(initial);
   const [mounted, setMounted] = React.useState(false);
 
   React.useEffect(() => {

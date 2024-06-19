@@ -1,7 +1,102 @@
 ---
-title: Link
-description: Link component
+title: Breadcrumbs
+description: Breadcrumbs display a hierarchy of links to the current page or resource in an application.
 thumbnail:
-  image: /previews/components/core/link.jpeg
-  video: /previews/components/core/link.mp4
+  image: /previews/components/core/breadcrumbs.jpeg
+  video: /previews/components/core/breadcrumbs.mp4
+links:
+  - label: Aria docs
+    href: https://react-spectrum.adobe.com/react-aria/Breadcrumbs.html
+  - label: Aria API Reference
+    href: https://react-spectrum.adobe.com/react-aria/Breadcrumbs.html#props
 ---
+
+<ComponentPreview name="demos/components/core/breadcrumbs/basic" />
+
+## Installation
+
+<Steps>
+  <Step>Install the following dependencies:</Step>
+
+```bash
+npm install react-aria-components
+```
+
+  <Step>Copy and paste the following code into your project.</Step>
+  <ComponentSource name="components/core/default/breadcrumbs" />
+  <Step>Update the import paths to match your project setup.</Step>
+</Steps>
+
+## Usage
+
+Use breadcrumbs to display a hierarchy of links to the current page or resource in an application.
+
+## Options
+
+### Disabled
+
+Use the `isDisabled` prop to disable the breadcrumbs.
+
+<ComponentPreview name="demos/components/core/breadcrumbs/disabled" />
+
+## Composition
+
+If you need to customize things further, you can drop down to the composition level.
+
+<ComponentPreview name="demos/components/core/breadcrumbs/composition" />
+
+## Examples
+
+### Icon
+
+<ComponentPreview name="demos/components/core/breadcrumbs/icon" />
+
+### Router integration
+
+<ComponentPreview name="demos/components/core/breadcrumbs/router-integration" />
+
+## API Reference
+
+### Breadcrumbs
+
+| Prop           | Type                                  | Default | Description                                                                  |
+| -------------- | ------------------------------------- | ------- | ---------------------------------------------------------------------------- |
+| `isDisabled`   | `boolean`                             | -       | Whether the breadcrumbs are disabled.                                        |
+| `items`        | `boolean`                             | -       | Item objects in the collection.                                              |
+| `dependencies` | `boolean`                             | -       | Values that should invalidate the item cache when using dynamic collections. |
+| `children`     | `ReactNode \| (item: T) => ReactNode` | -       | The contents of the collection.                                              |
+| `className`    | `string`                              | -       | The CSS className for the element.                                           |
+| `style`        | `CSSProperties`                       | -       | The inline style for the element.                                            |
+
+| Event      | Type                 | Description                                          |
+| ---------- | -------------------- | ---------------------------------------------------- |
+| `onAction` | `(key: Key) => void` | Handler that is called when a breadcrumb is clicked. |
+
+### Breadcrumb
+
+| Prop             | Type                                                                                              | Default | Description                                                                                               |
+| ---------------- | ------------------------------------------------------------------------------------------------- | ------- | --------------------------------------------------------------------------------------------------------- |
+| `id`             | `boolean`                                                                                         | -       | A unique id for the breadcrumb, which will be passed to onAction when the breadcrumb is pressed.          |
+| `isDisabled`     | `boolean`                                                                                         | -       | Whether the link is disabled.                                                                             |
+| `autoFocus`      | `boolean`                                                                                         | -       | Whether the element should receive focus on render.                                                       |
+| `href`           | `Href`                                                                                            | -       | A URL to link to.                                                                                         |
+| `hrefLang`       | `string`                                                                                          | -       | Hints at the human language of the linked URL.                                                            |
+| `target`         | `HTMLAttributeAnchorTarget`                                                                       | -       | The target window for the link.                                                                           |
+| `rel`            | `string`                                                                                          | -       | The relationship between the linked resource and the current page.                                        |
+| `download`       | `boolean \| string`                                                                               | -       | Causes the browser to download the linked URL. A string may be provided to suggest a file name.           |
+| `ping`           | `string`                                                                                          | -       | A space-separated list of URLs to ping when the link is followed.                                         |
+| `referrerPolicy` | `HTMLAttributeReferrerPolicy`                                                                     | -       | How much of the referrer to send when following the link.                                                 |
+| `routerOptions`  | `RouterOptions`                                                                                   | -       | Options for the configured client side router.                                                            |
+| `children`       | `ReactNode \| (values: LinkRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -       | The children of the component. A function may be provided to alter the children based on component state. |
+| `className`      | `string`                                                                                          | -       | The CSS className for the element.                                                                        |
+| `style`          | `CSSProperties`                                                                                   | -       | The inline style for the element.                                                                         |
+
+| Event      | Type                 | Description                                          |
+| ---------- | -------------------- | ---------------------------------------------------- |
+| `onAction` | `(key: Key) => void` | Handler that is called when a breadcrumb is clicked. |
+
+| Data attribute                                     | Description                                                                  |
+| -------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `[data-disabled]`                                  | Whether the color field is disabled.                                         |
+| `[data-invalid]`                                   | Whether the color field is invalid.                                          |
+| `[data-channel="hex \| hue \| saturation \| ..."]` | The color channel that this field edits, or "hex" if no channel prop is set. |

@@ -15,3 +15,33 @@ thumbnail:
   <ComponentSource name="components/core/default/badge" />
   <Step>Update the import paths to match your project setup.</Step>
 </Steps>
+
+## Options
+
+### Variants
+
+Use the `variant` prop to control the visual style of the `Badge`. The default variant is `primary`.
+
+<ComponentPreview name="demos/components/core/badge/variants" />
+
+### Sizes
+
+Use the `size` prop to control the size of the `Badge`. The default variant is `sm`.
+
+<ComponentPreview name="demos/components/core/badge/sizes" />
+
+### Icon
+
+To add additional context for the `Badge`, use the `icon` prop to add an icon.
+
+<ComponentPreview name="demos/components/core/badge/icon" />
+
+## API Reference
+
+Badge accepts all HTML `span` element props and the following:
+
+| Prop      | Type                                                                                                                                                                                                                                     | Default     | Description                               |
+| --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- | ----------------------------------------- |
+| `neutral` | `'outline' \| 'primary \| 'success' \| 'success-subtle' \| 'success-outline' \| 'danger \| 'danger-subtle' \| 'danger-outline' \| 'warning' \| 'warning-subtle' \| 'warning-outline' \| 'accent' \| 'accent-subtle' \| 'accent-outline'` | `'primary'` | The visual style of the badge.            |
+| `size`    | `"sm" \| "md" \| "lg"`                                                                                                                                                                                                                   | `'sm'`      | The size of the badge.                    |
+| `icon`    | `React.ReactNode`                                                                                                                                                                                                                        | -           | An icon to display before the badge text. |

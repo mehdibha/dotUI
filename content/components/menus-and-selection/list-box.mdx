@@ -1,0 +1,186 @@
+---
+title: ListBox
+description: A list of options that can allow selection of one or more.
+thumbnail:
+  image: /previews/components/core/list-box.jpeg
+  video: /previews/components/core/list-box.mp4
+links:
+  - label: Aria docs
+    href: https://react-spectrum.adobe.com/react-aria/ListBox.html
+  - label: Aria API Reference
+    href: https://react-spectrum.adobe.com/react-aria/ListBox.html#props
+---
+
+<ComponentPreview name="demos/components/core/list-box/basic" />
+
+## Installation
+
+<Steps>
+  <Step>Install the following dependencies:</Step>
+
+```bash
+npm install react-aria-components
+```
+
+  <Step>Copy and paste the following code into your project.</Step>
+  <ComponentSource name="components/core/default/list-box" />
+  <Step>Update the import paths to match your project setup.</Step>
+</Steps>
+
+## Usage
+
+Use `<ListBox>` to display a list of options and allow a user to select one or more of them.
+
+## Options
+
+### Selection mode
+
+ListBox supports multiple selection modes. By default, selection is disabled, however this can be changed using the selectionMode prop.
+
+<ComponentPreview name="demos/components/core/list-box/selection-mode" />
+
+### Selection behavior
+
+When `selectionBehavior` is set to `"replace"`, clicking a row with the mouse replaces the selection with only that row. Using the arrow keys moves both focus and selection. To select multiple rows, modifier keys such as `Ctrl`, `Cmd`, and `Shift` can be used. On touch screen devices, selection always behaves as toggle since modifier keys may not be available.
+
+<ComponentPreview name="demos/components/core/list-box/selection-behavior" />
+
+### Links
+
+Items may be links to another page or website. This can be achieved by passing the `href` prop to the `<ListBoxItem>` component.
+
+<ComponentPreview name="demos/components/core/list-box/links" />
+
+### Sections
+
+ListBox supports sections in order to group options. Sections can be used by wrapping groups of items in a Section element.<br />
+Sections without a `title` must provide an aria-label for accessibility.
+
+<ComponentPreview name="demos/components/core/list-box/sections" />
+
+### Label and description
+
+By default, items in a ListBox are labeled by their text contents for accessibility. Items also support the "label" and "description" props to separate primary and secondary content.
+
+<ComponentPreview name="demos/components/core/list-box/label-and-description" />
+
+### Orientation
+
+By default, ListBox expects items to be arranged in a vertical stack, and implements keyboard navigation and drag and drop accordingly.
+Use the `orientation` prop to change the layout to a horizontal stack.
+
+<ComponentPreview name="demos/components/core/list-box/horizontal" />
+
+### Layout
+
+The `layout` prop can be set to "grid" to enable two-dimensional keyboard navigation.
+
+<ComponentPreview name="demos/components/core/list-box/grid" />
+
+### Disabled items
+
+A `ListBoxItem` can be disabled with the `isDisabled` prop.
+
+<ComponentPreview name="demos/components/core/list-box/disabled-items" />
+
+### Loading
+
+Use the `isLoading` prop to indicate that the list is loading.
+
+<ComponentPreview name="demos/components/core/list-box/loading" />
+
+### Empty state
+
+Use the `renderEmptyState` prop to customize what the ListBox will display if there are no items.
+
+<ComponentPreview name="demos/components/core/list-box/empty-state" />
+
+## Uncontrolled
+
+Use `defaultSelectedKey` to provide a default selected item.
+
+<ComponentPreview name="demos/components/core/list-box/uncontrolled" />
+
+## Controlled
+
+Use `selectedKey` to set the selected item.
+
+<ComponentPreview name="demos/components/core/list-box/controlled" />
+
+## Composition
+
+If you need to customize things further, you can drop down to the composition level.
+
+<ComponentPreview name="demos/components/core/list-box/composition" />
+
+## Examples
+
+### Asynchronous loading
+
+This example uses the `useAsyncList` hook to handle asynchronous loading of data from a server.
+
+<ComponentPreview name="demos/components/core/list-box/async-loading" />
+
+## API Reference
+
+### ListBox
+
+| Prop           | Type                                                                                                     | Default        | Description                                                                                                                                                                 |
+| -------------- | -------------------------------------------------------------------------------------------------------- | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `channel*`     | `'hue' \| 'saturation' \| 'brightness' \| 'lightness' \| 'red' \| 'green' \| 'blue' \| 'alpha'`          | -              | The color channel that the slider manipulates.                                                                                                                              |
+| `colorSpace`   | `'rgb' \| 'hsl' \| 'hsb'`                                                                                | -              | The color space that the slider operates in. The channel must be in this color space. If not provided, this defaults to the color space of the color or defaultColor value. |
+| `orientation`  | `'horizontal' \| 'vertical'`                                                                             | `'horizontal'` | The orientation of the Slider.                                                                                                                                              |
+| `isDisabled`   | `boolean`                                                                                                | -              | Whether the whole Slider is disabled.                                                                                                                                       |
+| `value`        | `T`                                                                                                      | -              | The current value (controlled).                                                                                                                                             |
+| `defaultValue` | `T`                                                                                                      | -              | The default value (uncontrolled).                                                                                                                                           |
+| `name`         | `string`                                                                                                 | -              | The name of the input element, used when submitting an HTML form.                                                                                                           |
+| `children`     | `ReactNode \| (values: ColorSliderRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -              | The children of the component. A function may be provided to alter the children based on component state.                                                                   |
+| `className`    | `string`                                                                                                 | -              | The CSS className for the element.                                                                                                                                          |
+| `style`        | `CSSProperties \| (values: ColorSliderRenderProps & {defaultStyle: CSSProperties}) => CSSProperties`     | -              | The inline style for the element. A function may be provided to compute the style based on component state.                                                                 |
+
+| Event         | Type                     | Description                                                       |
+| ------------- | ------------------------ | ----------------------------------------------------------------- |
+| `onChange`    | `(value: Color) => void` | Handler that is called when the value changes, as the user drags. |
+| `onChangeEnd` | `(value: Color) => void` | Handler that is called when the user stops dragging.              |
+
+| Data attribute                                | Description                           |
+| --------------------------------------------- | ------------------------------------- |
+| `[data-orientation="horizontal \| vertical"]` | The orientation of the color slider.  |
+| `[data-disabled]`                             | Whether the color slider is disabled. |
+
+### ListBoxItem
+
+| Prop           | Type                                                                                                     | Default        | Description                                                                                                                                                                 |
+| -------------- | -------------------------------------------------------------------------------------------------------- | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `channel*`     | `'hue' \| 'saturation' \| 'brightness' \| 'lightness' \| 'red' \| 'green' \| 'blue' \| 'alpha'`          | -              | The color channel that the slider manipulates.                                                                                                                              |
+| `colorSpace`   | `'rgb' \| 'hsl' \| 'hsb'`                                                                                | -              | The color space that the slider operates in. The channel must be in this color space. If not provided, this defaults to the color space of the color or defaultColor value. |
+| `orientation`  | `'horizontal' \| 'vertical'`                                                                             | `'horizontal'` | The orientation of the Slider.                                                                                                                                              |
+| `isDisabled`   | `boolean`                                                                                                | -              | Whether the whole Slider is disabled.                                                                                                                                       |
+| `value`        | `T`                                                                                                      | -              | The current value (controlled).                                                                                                                                             |
+| `defaultValue` | `T`                                                                                                      | -              | The default value (uncontrolled).                                                                                                                                           |
+| `name`         | `string`                                                                                                 | -              | The name of the input element, used when submitting an HTML form.                                                                                                           |
+| `children`     | `ReactNode \| (values: ColorSliderRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -              | The children of the component. A function may be provided to alter the children based on component state.                                                                   |
+| `className`    | `string`                                                                                                 | -              | The CSS className for the element.                                                                                                                                          |
+| `style`        | `CSSProperties \| (values: ColorSliderRenderProps & {defaultStyle: CSSProperties}) => CSSProperties`     | -              | The inline style for the element. A function may be provided to compute the style based on component state.                                                                 |
+
+| Event         | Type                     | Description                                                       |
+| ------------- | ------------------------ | ----------------------------------------------------------------- |
+| `onChange`    | `(value: Color) => void` | Handler that is called when the value changes, as the user drags. |
+| `onChangeEnd` | `(value: Color) => void` | Handler that is called when the user stops dragging.              |
+
+| Data attribute                                | Description                           |
+| --------------------------------------------- | ------------------------------------- |
+| `[data-orientation="horizontal \| vertical"]` | The orientation of the color slider.  |
+| `[data-disabled]`                             | Whether the color slider is disabled. |
+
+## Accessibility
+
+### Keyboard interactions
+
+TODO
+
+| Key                                            | Description                                                                                                                             |
+| ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `Tab`                                          | Places focus on the handle. If the handle is already in focus, moves focus to the next handle or next element in the page tab sequence. |
+| `Shift+Tab`                                    | Places focus on the previous handle or previous element in the page tab sequence.                                                       |
+| `ArrowUp` `ArrowDown` `ArrowLeft` `ArrowRight` | Moves the handle up/down/left/right.                                                                                                    |

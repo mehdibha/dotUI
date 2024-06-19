@@ -5,12 +5,35 @@ thumbnail:
   image: /previews/components/core/separator.png
 ---
 
-<ComponentPreview name="demos/components/core/separator/basic" />
+<ComponentPreview name="demos/components/core/separator/card" />
 
 ## Installation
 
 <Steps>
+  <Step>Install the following dependencies:</Step>
+
+```bash
+npm install react-aria-components
+```
+
   <Step>Copy and paste the following code into your project.</Step>
   <ComponentSource name="components/core/default/separator" />
   <Step>Update the import paths to match your project setup.</Step>
 </Steps>
+
+## Options
+
+### Orientation
+
+Use the `orientation` prop to change the direction of the separator.
+
+<ComponentPreview name="demos/components/core/separator/orientation" />
+
+### API Reference
+
+| Prop          | Type                         | Default        | Description                        |
+| ------------- | ---------------------------- | -------------- | ---------------------------------- |
+| `elementType` | `string`                     | -              | The HTML element type to render.   |
+| `orientation` | `'horizontal' \| 'vertical'` | `'horizontal'` | The orientation of the separator.  |
+| `className`   | `string`                     | -              | The CSS className for the element. |
+| `style`       | `CSSProperties`              | -              | The inline style for the element.  |

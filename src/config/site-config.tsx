@@ -1,9 +1,9 @@
 export const siteConfig = {
   global: {
-    url: "https://rCopy.com",
-    name: "copy/ui",
+    url: "https://dotui.org",
+    name: "dotUI",
     logo: "/images/logo.png",
-    title: "rCopy",
+    title: "dotUI",
     description:
       "Copy and paste components, hooks, icons, pages, templates and more for your react app.",
     keywords: [],
@@ -20,7 +20,7 @@ export const siteConfig = {
     },
   },
   links: {
-    github: "https://github.com/mehdibha/rcopy",
+    github: "https://github.com/mehdibha/dotui",
     twitter: "https://twitter.com/mehdibha_",
     discord: "https://discord.gg/DXpj5V2fU8",
   },
@@ -29,11 +29,8 @@ export const siteConfig = {
       links: [
         { href: "/docs", label: "Docs" },
         { href: "/components", label: "Components" },
-        // { href: "/blocks", label: "Blocks" },
         { href: "/hooks", label: "Hooks" },
-        // { href: "/icons", label: "Icons" },
         { href: "/themes", label: "Themes" },
-        // { href: "/templates", label: "Templates" },
       ],
     },
   },

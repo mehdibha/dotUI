@@ -1,12 +1,17 @@
 ---
 title: Dialog
-description: A window overlaid on either the primary window or another dialog window, rendering the content underneath inert.
+description: A dialog is an overlay shown above other content in an application.
 thumbnail:
   image: /previews/components/core/dialog.jpeg
   video: /previews/components/core/dialog.mp4
+links:
+  - label: Aria dialog docs
+    href: https://react-spectrum.adobe.com/react-aria/Dialog.html
+  - label: Aria dialog docs
+    href: https://react-spectrum.adobe.com/react-aria/Dialog.html
 ---
 
-<ComponentPreview name="demos/components/core/dialog/basic" />
+<ComponentPreview name="demos/components/core/dialog/default" />
 
 ## Installation
 
@@ -15,3 +20,128 @@ thumbnail:
   <ComponentSource name="components/core/default/dialog" />
   <Step>Update the import paths to match your project setup.</Step>
 </Steps>
+
+## Usage
+
+Use dialog to display contextual information, tasks, or workflows that appear over the user interface. Depending on the kind of dialog, further interactions may be blocked until the dialog is acknowledged.
+
+## Options
+
+### Title
+
+Dialog is labeled with a title to provide context to the user. Use the `title` prop to provide a title for the dialog.<br />
+If a dialog does not have a visible heading element, an `aria-label` or `aria-labelledby` prop must be passed instead to identify the element to assistive technology.
+
+<ComponentPreview name="demos/components/core/dialog/title" />
+
+### Description
+
+A description can be supplied to the dialog via the `description` prop.
+
+<ComponentPreview name="demos/components/core/dialog/description" />
+
+### Type
+
+Dialogs can be rendered as modals, popovers, or drawers.
+
+<ComponentPreview name="demos/components/core/dialog/types" />
+
+### Mobile type
+
+By default, dialogs are displayed as drawers on mobile. You can override this behavior by setting the `mobileType` prop.
+
+<ComponentPreview name="demos/components/core/dialog/mobile-type" />
+
+### Dismissable
+
+By default, dialogs are dismissable allowing users to click outside to close the dialog. You can disable this behavior by setting the `isDismissable` prop.
+
+<ComponentPreview name="demos/components/core/dialog/dismissable" />
+
+### Dismiss button
+
+By default, dialogs have a dismiss button when they're dismissable. You can disable this behavior by setting `showDismissButton` prop.
+
+<ComponentPreview name="demos/components/core/dialog/dismiss-button" />
+
+### Inset content
+
+Use the `<DialogInset>` component to add inset content to the dialog.
+
+<ComponentPreview name="demos/components/core/dialog/mobile-type" />
+
+## Popover
+
+Use the `type="popover"` prop on the `<Dialog>` element to make a popover dialog.
+
+<ComponentPreview name="demos/components/core/dialog/popover" />
+
+## Drawer
+
+Use the `type="drawer"` prop on the `<Dialog>` element to make a drawer dialog.
+
+<ComponentPreview name="demos/components/core/dialog/drawer" />
+
+## Alert Dialog
+
+Use the `role="alertdialog"` prop on the `<Dialog>` element to make an alert dialog.
+If the `isDismissable` prop is not explicitly set, the dialog will be not dismissable.
+
+<ComponentPreview name="demos/components/core/dialog/alert-dialog" />
+
+## Controlled
+
+Use the `isOpen` and `onOpenChange` props to control the dialog's open state.
+
+<ComponentPreview name="demos/components/core/dialog/controlled" />
+
+## Composition
+
+If you need to customize things further, you can drop down to the composition level.
+
+<ComponentPreview name="demos/components/core/dialog/composition" />
+
+## Examples
+
+### Async form submission
+
+<ComponentPreview name="demos/components/core/dialog/async-form-submission" />
+
+### Nested dialog
+
+Dialogs support nesting, allowing you to open a dialog from within another dialog.
+
+<ComponentPreview name="demos/components/core/dialog/nested" />
+
+## API Reference
+
+### DialogRoot
+
+| Prop          | Type        | Default | Description                                            |
+| ------------- | ----------- | ------- | ------------------------------------------------------ |
+| `children*`   | `ReactNode` | -       |                                                        |
+| `isOpen`      | `boolean`   | -       | Whether the overlay is open by default (controlled).   |
+| `defaultOpen` | `boolean`   | -       | Whether the overlay is open by default (uncontrolled). |
+
+| Event          | Type                        | Description                                                   |
+| -------------- | --------------------------- | ------------------------------------------------------------- |
+| `onOpenChange` | `(isOpen: boolean) => void` | Handler that is called when the overlay's open state changes. |
+
+### Dialog
+
+| Prop        | Type                                                  | Default | Description                                                                                  |
+| ----------- | ----------------------------------------------------- | ------- | -------------------------------------------------------------------------------------------- |
+| `children`  | `ReactNode \| (opts: DialogRenderProps) => ReactNode` | -       | Children of the dialog. A function may be provided to access a function to close the dialog. |
+| `className` | `string`                                              | -       | The CSS className for the element.                                                           |
+| `style`     | `CSSProperties`                                       | -       | The inline style for the element.                                                            |
+
+## Accessibility
+
+### Keyboard interactions
+
+| Key             | Description                                                                                                                                          |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Space` `Enter` | When focus is on the trigger, opens the dialog.                                                                                                      |
+| `Tab`           | Moves focus to the next button inside the dialog (last becomes first). If none of the buttons are selected, the focus is set on the first button.    |
+| `Shift+Tab`     | Moves focus to the previous button inside the dialog (first becomes last). If none of the buttons are selected, the focus is set on the last button. |
+| `Esc`           | Dismisses the dialog and moves focus to the trigger.                                                                                                 |

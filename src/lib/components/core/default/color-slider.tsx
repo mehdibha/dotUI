@@ -13,10 +13,6 @@ import { cn } from "@/lib/utils/classes";
 import { ColorThumb } from "./color-thumb";
 import { Label } from "./field";
 
-interface ColorSliderProps extends ColorSliderRootProps {
-  label?: string;
-}
-
 const colorSliderStyles = tv({
   slots: {
     root: "grid [grid-template-areas:'label_output''track_track'] grid-cols-[1fr_auto] gap-1",
@@ -28,17 +24,19 @@ const colorSliderStyles = tv({
   },
 });
 
-const ColorSlider = ({ label, channel, ...props }: ColorSliderProps) => {
+interface ColorSliderProps extends ColorSliderRootProps {
+  showValueLabel?: boolean;
+  label?: string;
+}
+const ColorSlider = ({ label, channel, showValueLabel = true, ...props }: ColorSliderProps) => {
   return (
     <ColorSliderRoot channel={channel} {...props}>
       {({ orientation }) => (
         <>
           {label && <Label>{label}</Label>}
-          {orientation === "horizontal" && <SliderOutput />}
+          {showValueLabel && <SliderOutput />}
           <SliderTrack>
-            <ColorThumb
-              className={cn(orientation === "horizontal" ? "top-1/2" : "left-1/2")}
-            />
+            <ColorThumb className={cn(orientation === "horizontal" ? "top-1/2" : "left-1/2")} />
           </SliderTrack>
         </>
       )}

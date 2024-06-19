@@ -1,108 +1,37 @@
 import * as React from "react";
-import {
-  AlertCircleIcon,
-  AlertTriangleIcon,
-  CheckCircle2Icon,
-  InfoIcon,
-} from "lucide-react";
+import { AlertCircleIcon, AlertTriangleIcon, CheckCircle2Icon, InfoIcon } from "lucide-react";
 import { tv, type VariantProps } from "tailwind-variants";
-import { cn } from "@/lib/utils/classes";
 
-const alertVariants = tv({
+const alertStyles = tv({
   slots: {
-    root: "rounded-lg border p-4 flex items-center gap-4",
+    root: "rounded-lg border p-4 flex items-center gap-4 [&_svg]:size-4",
     title: "font-medium leading-normal tracking-tight mr-1",
     content: "text-sm",
   },
   variants: {
-    type: {
-      default: { root: "border text-fg" },
-      success: { root: "text-fg-success border border-border-success" },
-      warning: { root: "text-fg-warning border border-border-warning" },
-      danger: { root: "text-fg-danger border border-border-danger" },
-      info: { root: "text-fg-info border border-border-info" },
-    },
     variant: {
-      default: {},
-      muted: {},
-      fill: {},
+      default: { root: "border text-fg" },
+      success: { root: "border border-border-success text-fg-success" },
+      warning: { root: "border border-border-warning text-fg-warning" },
+      danger: { root: "border border-border-danger text-fg-danger" },
+      info: { root: "border border-border-accent text-fg-accent" },
+    },
+    fill: {
+      true: "",
     },
   },
-  compoundSlots: [
-    {
-      slots: ["root"],
-      type: "default",
-      variant: "fill",
-      className: "bg-bg-inverse text-fg-inverse border-none",
-    },
-    {
-      slots: ["root"],
-      type: "default",
-      variant: "muted",
-      className: "bg-bg-muted text-fg",
-    },
-    {
-      slots: ["root"],
-      type: "success",
-      variant: "fill",
-      className: "bg-bg-success text-fg-onSuccess border-none",
-    },
-    {
-      slots: ["root"],
-      type: "success",
-      variant: "muted",
-      className: "bg-bg-success-muted text-fg-onMutedSuccess",
-    },
-    {
-      slots: ["root"],
-      type: "warning",
-      variant: "fill",
-      className: "bg-bg-warning text-fg-onWarning border-none]",
-    },
-    {
-      slots: ["root"],
-      type: "warning",
-      variant: "muted",
-      className: "bg-bg-warning-muted text-fg-onMutedWarning",
-    },
-    {
-      slots: ["root"],
-      type: "danger",
-      variant: "fill",
-      className: "bg-bg-danger text-fg-onDanger border-none",
-    },
-    {
-      slots: ["root"],
-      type: "danger",
-      variant: "muted",
-      className: "bg-bg-danger-muted text-fg-onMutedDanger",
-    },
-    {
-      slots: ["root"],
-      type: "info",
-      variant: "fill",
-      className: "bg-bg-info text-fg-onInfo border-none",
-    },
-    {
-      slots: ["root"],
-      type: "info",
-      variant: "muted",
-      className: "bg-bg-info-muted text-fg-onMutedInfo",
-    },
+  compoundVariants: [
+    { variant: "default", fill: true, className: { root: "bg-bg-muted" } },
+    { variant: "success", fill: true, className: { root: "bg-bg-success-muted" } },
+    { variant: "warning", fill: true, className: { root: "bg-bg-warning-muted" } },
+    { variant: "danger", fill: true, className: { root: "bg-bg-danger-muted" } },
+    { variant: "info", fill: true, className: { root: "bg-bg-accent-muted" } },
   ],
   defaultVariants: {
-    type: "default",
     variant: "default",
+    fill: false,
   },
 });
-
-export interface AlertProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, "title">,
-    VariantProps<typeof alertVariants> {
-  title?: React.ReactNode;
-  icon?: React.ReactNode;
-  action?: React.ReactNode;
-}
 
 const icons = {
   default: <InfoIcon />,
@@ -112,39 +41,55 @@ const icons = {
   info: <InfoIcon />,
 };
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
-  (
-    { title, children, className, variant, type = "default", icon, action, ...props },
-    ref
-  ) => (
-    <div
-      ref={ref}
-      role="alert"
-      className={cn(alertVariants({ variant, type }).root(), className)}
-      {...props}
-    >
-      {(icon ?? icons[type]) && (
-        <span className="[&_svg]:size-4">{icon ?? icons[type]}</span>
-      )}
-      <div className="flex-1">
-        {title && (
-          <h5 className={cn(alertVariants({ variant, type }).title())}>{title}</h5>
-        )}
-        {children && (
-          <div
-            className={cn(
-              alertVariants({ variant, type }).content(),
-              !!title && "mt-0.5"
-            )}
-          >
-            {children}
-          </div>
-        )}
+interface AlertProps extends AlertRootProps {
+  title?: React.ReactNode;
+  icon?: React.ReactNode | null;
+  action?: React.ReactNode;
+}
+const Alert = ({
+  variant = "default",
+  title,
+  children,
+  className,
+  icon,
+  action,
+  ...props
+}: AlertProps) => {
+  return (
+    <AlertRoot variant={variant} {...props}>
+      {icon || icons[variant]}
+      <div className="flex-1 space-y-0.5">
+        {title && <AlertTitle>{title}</AlertTitle>}
+        {children && <AlertContent>{children}</AlertContent>}
       </div>
-      {action && <div className="ml-2 shrink-0">{action}</div>}
-    </div>
-  )
-);
-Alert.displayName = "Alert";
+      {action && <div className="shrink-0">{action}</div>}
+    </AlertRoot>
+  );
+};
 
-export { Alert };
+interface AlertRootProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "title">,
+    VariantProps<typeof alertStyles> {}
+const AlertRoot = ({ className, variant, fill, ...props }: AlertRootProps) => {
+  const { root } = alertStyles({ variant, fill });
+  return <div role="alert" className={root({ className })} {...props} />;
+};
+
+interface AlertTitleProps
+  extends React.HTMLAttributes<HTMLHeadingElement>,
+    VariantProps<typeof alertStyles> {}
+const AlertTitle = ({ className, variant, ...props }: AlertTitleProps) => {
+  const { title } = alertStyles();
+  return <h3 className={title({ className })} {...props} />;
+};
+
+interface AlertContentProps
+  extends React.HTMLAttributes<HTMLElement>,
+    VariantProps<typeof alertStyles> {}
+const AlertContent = ({ className, variant, ...props }: AlertContentProps) => {
+  const { content } = alertStyles();
+  return <section className={content({ className })} {...props} />;
+};
+
+export type { AlertProps, AlertRootProps, AlertTitleProps, AlertContentProps };
+export { Alert, AlertRoot, AlertTitle, AlertContent };

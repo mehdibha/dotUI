@@ -7,7 +7,6 @@ thumbnail:
 ---
 
 <ComponentPreview name="demos/components/core/scroll-area/default" />
-TODO Add Padding to root, slots classNames
 
 ## Installation
 
@@ -17,16 +16,27 @@ TODO Add Padding to root, slots classNames
   <Step>Update the import paths to match your project setup.</Step>
 </Steps>
 
-## Examples
+## Usage
+
+Use `ScrollArea` to augment native scroll functionality for custom, cross-browser styling.
+
+## Options
 
 ### Sizes
 
 <ComponentPreview name="demos/components/core/scroll-area/sizes" />
 
-### Horizontal scroll
+### Scrollbars
 
-<ComponentPreview name="demos/components/core/scroll-area/horizontal" />
+<ComponentPreview name="demos/components/core/scroll-area/scrollbars" />
 
-### Both scroll
+## API Reference
 
-<ComponentPreview name="demos/components/core/scroll-area/both" />
+`ScrollArea` accepts all HTML div element props and the following:
+
+| Prop              | Type                                        | Default      | Description                                                                                                                                                                                |
+| ----------------- | ------------------------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `type`            | `'auto' \| 'always' \| 'scroll' \| 'hover'` | `'hover'`    | Describes the nature of scrollbar visibility.                                                                                                                                              |
+| `scrollHideDelay` | `number`                                    | `600`        | If type is set to either 'scroll' or 'hover', this prop determines the length of time, in milliseconds, before the scrollbars are hidden after the user stops interacting with scrollbars. |
+| `dir`             | `'ltr' \| 'rtl'`                            | `600`        | The reading direction of the scroll area                                                                                                                                                   |
+| `scrollbars`      | `'vertical' \| 'horizontal' \| 'both'`      | `'vertical'` | Controls the scrollable axes.                                                                                                                                                              |

@@ -1,4 +1,4 @@
-interface Item {
+export interface Item {
   title: string;
   href: string;
   disabled?: boolean;
@@ -6,7 +6,7 @@ interface Item {
   label?: string;
 }
 
-interface SubCategory {
+export interface SubCategory {
   title: string;
   items: Item[];
 }

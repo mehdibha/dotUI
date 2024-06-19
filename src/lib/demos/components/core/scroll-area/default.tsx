@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ScrollArea } from "@/lib/components/core/default/scroll-area";
 
-export default function ScrollAreaDemo() {
+export default function Demo() {
   return (
     <div className="rounded-md border p-6">
       <ScrollArea className="h-72 w-full max-w-sm" type="always">

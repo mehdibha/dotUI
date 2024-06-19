@@ -1,30 +1,29 @@
 import React from "react";
-import Link from "next/link";
-import { ArrowRightIcon, SparklesIcon } from "lucide-react";
+import { ArrowRightIcon, PinIcon, SparklesIcon } from "lucide-react";
 import Balancer from "react-wrap-balancer";
 import { SearchDocs } from "@/components/docs/search-docs";
-import { badgeVariants } from "@/lib/components/core/default/badge";
+import { Avatar } from "@/lib/components/core/default/avatar";
+import { AvatarGroup } from "@/lib/components/core/default/avatar-group";
 import { Button } from "@/lib/components/core/default/button";
+import { Switch } from "@/lib/components/core/default/switch";
+import { ToggleButton } from "@/lib/components/core/default/toggle-button";
+import Calendar from "@/lib/demos/components/core/calendar/basic";
 import { cn } from "@/lib/utils/classes";
-import { Animation } from "./animation";
 
 export const Hero = ({ className }: { className?: string }) => {
   return (
-    <section
-      className={cn("mx-auto flex max-w-7xl items-start justify-between", className)}
-    >
+    <section className={cn("w-full items-start justify-between md:flex md:max-w-7xl", className)}>
       <div className="pt-4">
-        <Link
+        <Button
           href="https://github.com/mehdibha/rcopy"
           target="_blank"
-          className={cn(
-            badgeVariants({ variant: "outline" }),
-            "cursor-pointer space-x-2 font-mono delay-75 duration-200 hover:bg-bg-muted"
-          )}
+          prefix={<SparklesIcon />}
+          suffix={<ArrowRightIcon />}
+          size="sm"
+          className="h-7 rounded-md text-sm font-mono text-fg-muted hover:text-fg"
         >
-          <SparklesIcon size={18} />
-          <span>Star us on GitHub</span> <ArrowRightIcon size={15} />
-        </Link>
+          Star us on GitHub
+        </Button>
         <h1 className="mt-4 font-display text-4xl font-bold leading-tight tracking-tight md:text-5xl lg:text-6xl">
           <Balancer>
             Everything you need to build your{" "}
@@ -42,8 +41,41 @@ export const Hero = ({ className }: { className?: string }) => {
         </div>
       </div>
       <div className="hidden px-10 lg:block xl:px-20">
-        <Animation />
+        <Illustration />
       </div>
     </section>
+  );
+};
+
+const Illustration = () => {
+  return (
+    <div className="min-h-[450px] space-y-4 animate-in fade-in slide-in-from-bottom-3">
+      <AvatarGroup max={6} total={12}>
+        {[
+          { name: "@mehdibha", src: "https://github.com/mehdibha.png" },
+          { name: "@t3dotgg", src: "https://github.com/t3dotgg.png" },
+          { name: "@leerob", src: "https://github.com/leerob.png" },
+          {
+            name: "@joshwcomeau",
+            src: "https://github.com/joshwcomeau.png",
+          },
+        ].map((user) => (
+          <Avatar
+            key={user.name}
+            src={user.src}
+            alt={user.name}
+            fallback={user.name[1].toUpperCase()}
+          />
+        ))}
+      </AvatarGroup>
+      <div className="flex items-center space-x-4">
+        <Switch defaultSelected />
+        <Button>Button</Button>
+        <ToggleButton>
+          <PinIcon className="rotate-45" />
+        </ToggleButton>
+      </div>
+      <Calendar />
+    </div>
   );
 };

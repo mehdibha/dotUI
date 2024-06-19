@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { useSlotId } from "@react-aria/utils";
+import { XIcon } from "lucide-react";
 import {
   composeRenderProps,
   DialogContext as AriaDialogContext,
@@ -14,17 +15,19 @@ import {
   type HeadingProps as AriaHeadingProps,
   type TextProps as AriaTextProps,
   TextContext,
+  OverlayTriggerStateContext,
 } from "react-aria-components";
 import { Provider } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import { useMediaQuery } from "@/lib/hooks/use-media-query";
+import { Button, ButtonProps } from "./button";
 import { Overlay, type OverlayProps } from "./overlay";
 
 const dialogStyles = tv({
   slots: {
     overlay: "",
     backdrop: "",
-    content: "outline-none rounded-[inherit] p-3 sm:p-6",
+    content: "relative outline-none rounded-[inherit] p-3 sm:p-6",
     header: "mb-4",
     title: "text-xl font-semibold",
     description: "text-sm text-fg-muted",
@@ -34,30 +37,17 @@ const dialogStyles = tv({
   },
 });
 
-interface DialogRootProps extends Omit<AriaDialogTriggerProps, "children"> {
-  children: React.ReactNode | (({ isMobile }: { isMobile: boolean }) => React.ReactNode);
-  mobileType?: "drawer" | "modal";
-  mediaQuery?: string;
-}
-const DialogRoot = ({
-  children,
-  mobileType = "drawer",
-  mediaQuery = "(max-width: 768px)",
-  ...props
-}: DialogRootProps) => {
+interface DialogRootProps extends AriaDialogTriggerProps {}
+const DialogRoot = (props: DialogRootProps) => {
   const descriptionId = useSlotId();
-  const isMobile = useMediaQuery(mediaQuery);
   return (
     <Provider
       values={[
-        [DialogContext, { isMobile, mobileType }],
         [AriaDialogContext, { "aria-describedby": descriptionId }],
         [TextContext, { slots: { description: { id: descriptionId } } }],
       ]}
     >
-      <AriaDialogTrigger {...props}>
-        {typeof children === "function" ? children({ isMobile }) : children}
-      </AriaDialogTrigger>
+      <AriaDialogTrigger {...props} />
     </Provider>
   );
 };
@@ -65,10 +55,32 @@ const DialogRoot = ({
 interface DialogProps extends DialogContentProps {
   title?: string;
   description?: string;
+  mediaQuery?: string;
+  type?: OverlayProps["type"];
+  mobileType?: OverlayProps["type"];
+  showDismissButton?: boolean;
+  isDismissable?: boolean;
 }
-const Dialog = ({ title, description, ...props }: DialogProps) => {
+const Dialog = ({
+  title,
+  description,
+  type: typeProp = "modal",
+  mobileType = "drawer",
+  mediaQuery = "(max-width: 640px)",
+  isDismissable: isDismissableProp,
+  showDismissButton: showDismissButtonProp,
+  ...props
+}: DialogProps) => {
+  const isMobile = useMediaQuery(mediaQuery);
+  const type = mobileType ? (isMobile ? mobileType : typeProp) : typeProp;
+  const currentType = isMobile ? mobileType : type;
+  const isDismissable = isDismissableProp ?? (props.role === "alertdialog" ? false : true);
+  const showDismissButton = showDismissButtonProp ?? isDismissable;
   return (
-    <DialogOverlay>
+    <Overlay
+      isDismissable={isDismissableProp}
+      type={type}
+    >
       <DialogContent {...props}>
         {composeRenderProps(props.children, (children) => (
           <>
@@ -79,23 +91,13 @@ const Dialog = ({ title, description, ...props }: DialogProps) => {
               </DialogHeader>
             )}
             {children}
+            {showDismissButton && ["modal", "popover"].includes(currentType) && (
+              <DismissButton className="absolute right-3 top-3" />
+            )}
           </>
         ))}
       </DialogContent>
-    </DialogOverlay>
-  );
-};
-
-const DialogOverlay = (props: OverlayProps) => {
-  const { isMobile, mobileType } = useDialogContext();
-  const { overlay, backdrop } = dialogStyles();
-  return (
-    <Overlay
-      isDismissable
-      type={isMobile ? mobileType : "modal"}
-      classNames={{ overlay: overlay(), backdrop: backdrop() }}
-      {...props}
-    />
+    </Overlay>
   );
 };
 
@@ -128,9 +130,7 @@ const DialogTitle = ({ className, ...props }: DialogTitleProps) => {
 type DialogDescriptionProps = AriaTextProps;
 const DialogDescription = ({ className, ...props }: DialogDescriptionProps) => {
   const { description } = dialogStyles();
-  return (
-    <AriaText slot="description" className={description({ className })} {...props} />
-  );
+  return <AriaText slot="description" className={description({ className })} {...props} />;
 };
 
 type DialogBody = React.ComponentProps<"div">;
@@ -149,6 +149,22 @@ type DialogInsetProps = React.ComponentProps<"div">;
 const DialogInset = ({ className, ...props }: DialogInsetProps) => {
   const { inset } = dialogStyles();
   return <div className={inset({ className })} {...props} />;
+};
+
+const DismissButton = (props: ButtonProps) => {
+  const state = React.useContext(OverlayTriggerStateContext)!;
+  return (
+    <Button
+      shape="square"
+      variant="quiet"
+      size="sm"
+      aria-label="Close"
+      {...props}
+      onPress={() => state.close()}
+    >
+      <XIcon className="size-4" />
+    </Button>
+  );
 };
 
 const DialogContext = React.createContext<{

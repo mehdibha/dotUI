@@ -149,7 +149,7 @@
     --color-border-field: var(--color-neutral-400);
     --color-border-control: var(--color-neutral-700);
     --color-border-hover: var(--color-neutral-1000);
-    --color-border-active: var(--color-neutral-1000);
+    --color-border-active: var(--color-neutral-500);
     --color-border-disabled: var(--color-neutral-300);
 
     --color-border-success: var(--color-success-400);

@@ -10,7 +10,7 @@ import {
 } from "react-aria-components";
 import { type VariantProps } from "tailwind-variants";
 import { Button } from "./button";
-import { Calendar } from "./calendar";
+import { RangeCalendar } from "./range-calendar";
 import { DateInput, DateSegment } from "./date-input";
 import { fieldStyles } from "./field";
 import { Field, type FieldProps } from "./field";
@@ -76,7 +76,7 @@ const DateRangePicker = <T extends DateValue>({
       </Field>
       <Overlay type="drawer">
         <AriaDialog className="outline-none">
-          <Calendar className="mx-auto border-none" />
+          <RangeCalendar className="mx-auto border-none" />
         </AriaDialog>
       </Overlay>
     </DateRangePickerRoot>
