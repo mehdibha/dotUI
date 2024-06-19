@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MenuIcon } from "lucide-react";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
+import { Avatar } from "@/lib/components/core/default/avatar";
 import { Badge } from "@/lib/components/core/default/badge";
 import { Button } from "@/lib/components/core/default/button";
 import { Dialog, DialogRoot } from "@/lib/components/core/default/dialog";
@@ -34,12 +35,13 @@ export const Header = () => {
               )}
               aria-hidden={scrolled}
             >
-              <Image
+              <Avatar
                 src={siteConfig.global.logo}
                 alt={siteConfig.global.name}
                 loading="lazy"
                 width={24}
                 height={24}
+                className="size-6 rounded-sm"
               />
               <div className="font-josephin mt-1 font-bold leading-normal tracking-tighter">
                 {siteConfig.global.name}
@@ -76,7 +78,7 @@ export const Header = () => {
           </div>
           <div
             className={cn(
-              "flex items-center justify-end space-x-2 opacity-100 transition-[opacity,transform] duration-300 ease-out w-[130px]",
+              "flex w-[130px] items-center justify-end space-x-2 opacity-100 transition-[opacity,transform] duration-300 ease-out",
               scrolled && "pointer-events-none translate-x-8 opacity-0"
             )}
             aria-hidden={scrolled}
