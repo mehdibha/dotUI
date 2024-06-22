@@ -4,7 +4,7 @@
 <br/>
 <div align="center">
   <a href="https://github.com/mehdibha/dot-ui">
-    <img src="https://dotui.org/images/logo.png" alt="Logo" width="60" height="70">
+    <img src="https://dotui.org/images/logo.png" alt="Logo" width="60" height="60">
   </a>
   <h1 align="center">dotUI</h1>
   <p align="center">
