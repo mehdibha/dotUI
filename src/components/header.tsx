@@ -4,7 +4,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { MenuIcon } from "lucide-react";
+import { MenuIcon, SearchIcon } from "lucide-react";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
 import { Avatar } from "@/lib/components/core/default/avatar";
 import { Badge } from "@/lib/components/core/default/badge";
@@ -15,6 +15,7 @@ import { cn } from "@/lib/utils/classes";
 import { focusRing } from "@/lib/utils/styles";
 import { siteConfig } from "@/config";
 import { SearchDocs } from "./docs/search-docs";
+import { ThemeToggle } from "./theme-toggle";
 
 const config = siteConfig.header;
 
@@ -44,7 +45,7 @@ export const Header = () => {
                 height={24}
                 className="size-6 rounded-sm"
               />
-              <div className="font-josephin mt-1 font-bold leading-normal tracking-tighter">
+              <div className="mt-1 font-josephin font-bold leading-normal tracking-tighter">
                 {siteConfig.global.name}
               </div>
               <Badge size="sm" variant="neutral" className="border">
@@ -93,7 +94,7 @@ export const Header = () => {
               variant="quiet"
               aria-label="github"
             >
-              <GitHubIcon size={18} />
+              <GitHubIcon />
             </Button>
             <Button
               href={siteConfig.links.twitter}
@@ -103,17 +104,18 @@ export const Header = () => {
               variant="quiet"
               aria-label="twitter"
             >
-              <TwitterIcon size={18} />
+              <TwitterIcon />
             </Button>
+            <ThemeToggle />
           </div>
         </div>
         {/* Mobile nav */}
-        <div className="flex w-full items-center justify-between md:hidden gap-4">
+        <div className="flex w-full items-center gap-4 md:hidden">
           <Link
             href="/"
             className={cn(
               focusRing(),
-              "flex items-center space-x-2 rounded transition-opacity hover:opacity-80"
+              "flex w-[130px] items-center space-x-2 rounded transition-opacity hover:opacity-80"
             )}
           >
             <Image
@@ -123,11 +125,16 @@ export const Header = () => {
               width={24}
               height={24}
             />
-            <div className="font-josephin mt-1 font-bold leading-normal tracking-tighter">
+            <div className="mt-1 font-josephin font-bold leading-normal tracking-tighter">
               {siteConfig.global.name}
             </div>
+            <Badge variant="neutral" className="border">
+              beta
+            </Badge>
           </Link>
-          <SearchDocs className="w-auto" />
+          <SearchDocs className="flex-1" size="sm">
+            <span className="mr-4 flex-1 text-left">Search...</span>
+          </SearchDocs>
           <DialogRoot>
             <Button variant="quiet" size="sm" shape="square" aria-label="Open menu">
               <MenuIcon />

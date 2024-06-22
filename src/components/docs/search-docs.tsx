@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
-import { CircleIcon, FileIcon, SearchIcon } from "lucide-react";
+import { FileIcon, SearchIcon } from "lucide-react";
 import { Button, type ButtonProps } from "@/lib/components/core/default/button";
 import {
   Command,
@@ -51,12 +51,15 @@ export const SearchDocs = (props: ButtonProps) => {
       <Button
         variant="outline"
         prefix={<SearchIcon />}
-        suffix={<span className="rounded-md bg-bg-muted px-1 py-0.5 text-xs">Ctrl K</span>}
+        suffix={
+          <span className="hidden rounded-md bg-bg-muted px-1 py-0.5 text-xs md:inline">
+            Ctrl K
+          </span>
+        }
         {...props}
         className={cn("w-full px-2 text-sm text-fg-muted", props.className)}
       >
-        {/* <span className="mr-4 flex-1 text-left">Quick Search...</span> */}
-        Quick Search...
+        {props.children ?? <span className="mr-4 inline-flex flex-1 text-left">Quick Search...</span>}
       </Button>
       <Dialog showDismissButton={false} className="p-0 sm:p-0">
         <Command>

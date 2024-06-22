@@ -6,6 +6,7 @@ import {
   Select as AriaSelect,
   SelectValue as AriaSelectValue,
   type SelectProps as AriaSelectProps,
+  type SelectValueProps as AriaSelectValueProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import { Button } from "./button";
@@ -51,6 +52,12 @@ const SelectTrigger = () => {
       <AriaSelectValue className="flex-1" />
     </Button>
   );
+};
+
+interface SelectValueProps<T extends object> extends AriaSelectValueProps<T> {}
+const SelectValue = <T extends object>({ className, ...props }: SelectValueProps<T>) => {
+  // const { root } = fieldStyles();
+  return <AriaSelectValue className="flex-1" {...props} />;
 };
 
 interface SelectRootProps<T extends object> extends Omit<AriaSelectProps<T>, "className"> {

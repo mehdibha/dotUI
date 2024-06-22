@@ -15,7 +15,7 @@ import { focusRing } from "@/lib/utils/styles";
 const buttonStyles = tv(
   {
     extend: focusRing,
-    base: "inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md leading-normal text-sm font-medium ring-offset-background transition-colors disabled:cursor-not-allowed disabled:bg-bg-disabled disabled:text-fg-disabled",
+    base: "inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md leading-normal text-sm shrink-0 font-medium ring-offset-background transition-colors disabled:cursor-not-allowed disabled:bg-bg-disabled disabled:text-fg-disabled",
     variants: {
       variant: {
         default:
@@ -115,7 +115,7 @@ const Button = ({
               )}
             </span>
           )}
-          <span className="inline-flex truncate">{children}</span>
+          {children}
           {suffix && <span className="ml-2 inline-flex shrink-0">{suffix}</span>}
         </>
       ))}

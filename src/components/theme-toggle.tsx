@@ -3,39 +3,31 @@
 import React from "react";
 import { MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
-import { SelectValue } from "react-aria-components";
 import { Button } from "@/lib/components/core/default/button";
-import { Select, SelectRoot, SelectItem } from "@/lib/components/core/default/select";
-import { useMounted } from "@/lib/hooks/use-mounted";
+import { Item, ListBox } from "@/lib/components/core/default/list-box";
+import { Overlay } from "@/lib/components/core/default/overlay";
+import { SelectRoot } from "@/lib/components/core/default/select";
 
-export const ThemeToggle = ({ className }: { className?: string }) => {
-  const { theme, resolvedTheme, setTheme } = useTheme();
-  const mounted = useMounted();
-  if (!mounted) return null;
-  return null
-  // return (
-  //   <SelectRoot
-  //     selectedKey={theme}
-  //     onSelectionChange={(key) => setTheme(key as string)}
-  //     aria-label="Change Theme"
-  //     className={className}
-  //   >
-  //     <Button>
-  //       <SelectValue>
-  //         {resolvedTheme === "light" ? (
-  //           <SunIcon className="size-5" />
-  //         ) : (
-  //           <MoonIcon className="size-5" />
-  //         )}
-  //       </SelectValue>
-  //     </Button>
-  //     <Overlay>
-  //       <SelectContent aria-label="items">
-  //         <SelectItem id="system">System</SelectItem>
-  //         <SelectItem id="light">Light</SelectItem>
-  //         <SelectItem id="dark">Dark</SelectItem>
-  //       </SelectContent>
-  //     </Overlay>
-  //   </SelectRoot>
-  // );
+export const ThemeToggle = () => {
+  const { theme, setTheme } = useTheme();
+
+  return (
+    <SelectRoot
+      selectedKey={theme}
+      onSelectionChange={(key) => setTheme(key as string)}
+      aria-label="Change Theme"
+    >
+      <Button size="sm" variant="quiet" shape="square" className="[&_svg]:size-[18px]">
+        <SunIcon className="block dark:hidden" />
+        <MoonIcon className="hidden dark:block" />
+      </Button>
+      <Overlay placement="bottom right" type="popover">
+        <ListBox>
+          <Item id="system">System</Item>
+          <Item id="light">Light</Item>
+          <Item id="dark">Dark</Item>
+        </ListBox>
+      </Overlay>
+    </SelectRoot>
+  );
 };

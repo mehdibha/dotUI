@@ -21,7 +21,7 @@ export const siteConfig = {
   },
   links: {
     github: "https://github.com/mehdibha/dotui",
-    twitter: "https://twitter.com/mehdibha_",
+    twitter: "https://x.com/mehdibha_",
     discord: "https://discord.gg/DXpj5V2fU8",
   },
   header: {

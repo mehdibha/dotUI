@@ -2,6 +2,7 @@ import React from "react";
 import { ArrowRightIcon, PinIcon, SparklesIcon } from "lucide-react";
 import Balancer from "react-wrap-balancer";
 import { SearchDocs } from "@/components/docs/search-docs";
+import { GitHubIcon } from "@/components/icons";
 import { Avatar } from "@/lib/components/core/default/avatar";
 import { AvatarGroup } from "@/lib/components/core/default/avatar-group";
 import { Button } from "@/lib/components/core/default/button";
@@ -9,6 +10,7 @@ import { Switch } from "@/lib/components/core/default/switch";
 import { ToggleButton } from "@/lib/components/core/default/toggle-button";
 import Calendar from "@/lib/demos/components/core/calendar/basic";
 import { cn } from "@/lib/utils/classes";
+import { siteConfig } from "@/config";
 
 export const Hero = ({ className }: { className?: string }) => {
   return (
@@ -20,7 +22,7 @@ export const Hero = ({ className }: { className?: string }) => {
           prefix={<SparklesIcon />}
           suffix={<ArrowRightIcon />}
           size="sm"
-          className="h-7 rounded-md text-sm font-mono text-fg-muted hover:text-fg"
+          className="h-7 rounded-md font-mono text-sm text-fg-muted hover:text-fg"
         >
           Star us on GitHub
         </Button>
@@ -37,7 +39,10 @@ export const Hero = ({ className }: { className?: string }) => {
           <Button href="/docs" variant="primary" size="lg">
             Read the docs
           </Button>
-          <SearchDocs className="w-auto" size="lg" />
+          <SearchDocs size="lg" className="w-auto max-md:hidden"  />
+          <Button href={siteConfig.links.github} prefix={<GitHubIcon />} variant="outline" size="lg" className="md:hidden">
+            GitHub
+          </Button>
         </div>
       </div>
       <div className="hidden px-10 lg:block xl:px-20">
