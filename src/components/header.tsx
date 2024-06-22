@@ -33,7 +33,7 @@ export const Header = () => {
               className={cn(
                 focusRing(),
                 "flex items-center space-x-2 rounded opacity-100 transition-[opacity,transform] duration-300 ease-out",
-                scrolled && "pointer-events-none -translate-x-8 opacity-0"
+                scrolled && "pointer-events-none -translate-x-2 opacity-0"
               )}
               aria-hidden={scrolled}
             >
@@ -81,7 +81,7 @@ export const Header = () => {
           <div
             className={cn(
               "flex w-[130px] items-center justify-end space-x-2 opacity-100 transition-[opacity,transform] duration-300 ease-out",
-              scrolled && "pointer-events-none translate-x-8 opacity-0"
+              scrolled && "pointer-events-none translate-x-2 opacity-0"
             )}
             aria-hidden={scrolled}
             tabIndex={scrolled ? -1 : undefined}
