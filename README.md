@@ -40,12 +40,6 @@ See the [contribution guide](CONTRIBUTING.md) and join our amazing list of [cont
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
-## Contributors
-
-<table><tr align="left">
-  <td align="center"><a href="https://github.com/mehdibha"><img src="https://github.com/mehdibha.png" width="64px;"alt="Mehdi BHA"/><br/><sub><b>Mehdi BHA</b></sub></a></td>
-</tr></table>
-
 [contributors-shield]: https://img.shields.io/github/contributors/mehdibha/dot-ui.svg?style=for-the-badge
 [contributors-url]: https://github.com/mehdibha/dot-ui/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/mehdibha/dot-ui.svg?style=for-the-badge
