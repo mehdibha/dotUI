@@ -14,6 +14,7 @@ import { useScrolled } from "@/lib/hooks/use-scrolled";
 import { cn } from "@/lib/utils/classes";
 import { focusRing } from "@/lib/utils/styles";
 import { siteConfig } from "@/config";
+import { SearchDocs } from "./docs/search-docs";
 
 const config = siteConfig.header;
 
@@ -107,7 +108,7 @@ export const Header = () => {
           </div>
         </div>
         {/* Mobile nav */}
-        <div className="flex w-full items-center justify-between md:hidden">
+        <div className="flex w-full items-center justify-between md:hidden gap-4">
           <Link
             href="/"
             className={cn(
@@ -126,6 +127,7 @@ export const Header = () => {
               {siteConfig.global.name}
             </div>
           </Link>
+          <SearchDocs className="w-auto" />
           <DialogRoot>
             <Button variant="quiet" size="sm" shape="square" aria-label="Open menu">
               <MenuIcon />

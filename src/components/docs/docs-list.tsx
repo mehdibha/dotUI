@@ -10,9 +10,10 @@ export interface DocsListProps {
   limit?: number;
   href?: string;
   className?: string;
+  cardClassName?: string;
 }
 
-export const DocsList = ({ name, href, limit, className }: DocsListProps) => {
+export const DocsList = ({ name, href, limit, className, cardClassName }: DocsListProps) => {
   const docs = getDocs(name);
 
   const type = getDocTypeFromSlug(name);
@@ -31,12 +32,12 @@ export const DocsList = ({ name, href, limit, className }: DocsListProps) => {
         )}
       >
         {docs.slice(0, limit).map((doc, index) => (
-          <DocCard key={index} doc={doc} />
+          <DocCard key={index} doc={doc} className={cardClassName} />
         ))}
       </div>
       {hasMore && (
         <div className="flex justify-end">
-          <Button size="sm" variant="link" className="mt-4 block">
+          <Button size="sm" variant="quiet" className="mt-4 block">
             <Link href={href ?? `/${name}`}>Explore more</Link>
           </Button>
         </div>

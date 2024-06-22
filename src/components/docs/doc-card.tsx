@@ -34,20 +34,16 @@ export const DocCard = ({ doc, className }: { doc: DocMetadata; className?: stri
         <div className="flex-1">
           <p className="text-lg font-semibold">{doc.title}</p>
           {doc.description && (
-            <p className="mt-1 text-sm text-fg-muted">
-              {truncateOnWord(doc.description, 70)}
-            </p>
+            <p className="mt-1 text-sm text-fg-muted">{truncateOnWord(doc.description, 70)}</p>
           )}
         </div>
         {doc.keywords && (
           <div className="mt-3 flex flex-wrap gap-1">
-            {doc.keywords
-              .slice(0, doc.keywords.length > 3 ? 2 : 3)
-              .map((keyword, index) => (
-                <Badge key={index} variant="outline">
-                  {keyword}
-                </Badge>
-              ))}
+            {doc.keywords.slice(0, doc.keywords.length > 3 ? 2 : 3).map((keyword, index) => (
+              <Badge key={index} variant="outline">
+                {keyword}
+              </Badge>
+            ))}
             {doc.keywords.length > 3 && (
               <Tooltip
                 content={
@@ -84,9 +80,7 @@ const Thumbnail = ({
   const debouncedInView = useDebounce(isInView, 1500);
 
   if (!thumbnail)
-    return (
-      <div className={cn("aspect-video w-full", aspect === "page" && "aspect-[9/11]")} />
-    );
+    return <div className={cn("aspect-video w-full", aspect === "page" && "aspect-[9/11]")} />;
 
   if (thumbnail?.video) {
     return (
@@ -101,14 +95,9 @@ const Thumbnail = ({
               autoPlay
               playsInline
               preload="none"
-              className="opacity-90 duration-150 group-hover:opacity-100"
             />
           ) : (
-            <img
-              src={thumbnail.image}
-              alt={title}
-              className="opacity-90 duration-150 group-hover:opacity-100"
-            />
+            <img src={thumbnail.image} alt={title} />
           )}
         </AspectRatio>
       </div>
@@ -118,22 +107,14 @@ const Thumbnail = ({
   if (aspect === "page") {
     return (
       <ScrollArea className="aspect-[9/11]">
-        <img
-          src={thumbnail.image}
-          alt={title}
-          className="opacity-90 duration-150 group-hover:opacity-100"
-        />
+        <img src={thumbnail.image} alt={title} />
       </ScrollArea>
     );
   }
 
   return (
     <div className="aspect-video w-full bg-bg-muted">
-      <img
-        src={thumbnail.image}
-        alt="Thumbnail"
-        className="aspect-video object-cover opacity-90 duration-150 group-hover:opacity-100"
-      />
+      <img src={thumbnail.image} alt="Thumbnail" />
     </div>
   );
 };

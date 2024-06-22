@@ -17,7 +17,7 @@ export default function Demo() {
         <DialogRoot>
           <Button variant="outline">Open drawer</Button>
           <Dialog
-            type="popover"
+            type="drawer"
             title="Help"
             description="For help accessing your account, please contact support."
           />

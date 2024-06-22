@@ -40,16 +40,19 @@ export const ColorPicker = ({ label, shape, ...props }: ColorPickerProps) => {
                         colorSpace="hsb"
                         xChannel="saturation"
                         yChannel="brightness"
-                      />
+                        />
                       <ColorSlider
                         orientation="vertical"
                         colorSpace="hsb"
                         channel="hue"
-                      />
+                        className="items-center"
+                        showValueLabel={false}
+                        />
                       <ColorSlider
                         orientation="vertical"
                         colorSpace="hsb"
                         channel="alpha"
+                        showValueLabel={false}
                       />
                     </div>
                     <div className="flex w-[250px] items-end gap-1">

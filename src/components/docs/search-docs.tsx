@@ -56,7 +56,7 @@ export const SearchDocs = (props: ButtonProps) => {
         className={cn("w-full px-2 text-sm text-fg-muted", props.className)}
       >
         {/* <span className="mr-4 flex-1 text-left">Quick Search...</span> */}
-        <span> Quick Search...</span>
+        Quick Search...
       </Button>
       <Dialog showDismissButton={false} className="p-0 sm:p-0">
         <Command>

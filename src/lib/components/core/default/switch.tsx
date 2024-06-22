@@ -18,22 +18,22 @@ const switchStyles = tv({
       "disabled:cursor-not-allowed disabled:bg-transparent disabled:border disabled:border-border-disabled disabled:selected:border-none disabled:selected:bg-bg-disabled selected:bg-border-focus bg-bg-muted",
     ],
     indicator:
-      "pointer-events-none block rounded-full bg-white selected:bg-fg-onAccent shadow-lg ring-0 transition-transform translate-x-0 disabled:bg-fg-disabled",
+      "pointer-events-none block rounded-full bg-white selected:bg-fg-onAccent shadow-lg ring-0 transition-all translate-x-0 disabled:bg-fg-disabled",
     label: "",
   },
   variants: {
     size: {
       sm: {
         wrapper: "h-5 w-9",
-        indicator: "size-4 selected:translate-x-4",
+        indicator: "size-4 pressed:w-5 selected:ml-4 selected:pressed:ml-3",
       },
       md: {
         wrapper: "h-6 w-11",
-        indicator: "size-5 selected:translate-x-5",
+        indicator: "size-5 pressed:w-6 selected:ml-5 selected:pressed:ml-4",
       },
       lg: {
         wrapper: "h-7 w-12",
-        indicator: "size-6 selected:translate-x-5",
+        indicator: "size-6 pressed:w-7 selected:translate-x-5",
       },
     },
   },

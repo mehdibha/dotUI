@@ -74,7 +74,7 @@ const DateRangePicker = <T extends DateValue>({
           </Button>
         </InputWrapper>
       </Field>
-      <Overlay type="drawer">
+      <Overlay type="popover">
         <AriaDialog className="outline-none">
           <RangeCalendar className="mx-auto border-none" />
         </AriaDialog>

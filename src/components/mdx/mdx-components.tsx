@@ -195,7 +195,7 @@ export const components = {
     <ComponentPreview containerClassName="[&:not(:first-child)]:mt-4" {...props} />
   ),
   CodeTabs,
-  DocsList: (props: DocsListProps) => <DocsList {...props} className="mt-4" />,
+  DocsList: (props: DocsListProps) => <DocsList {...props} className="mt-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" />,
   ColorBadge: ({ className, children, ...props }: ComponentProps<"div">) => (
     <div
       className="inline-flex items-center space-x-1.5 rounded border bg-bg-muted px-2 py-0.5 font-mono text-sm"
