@@ -22,7 +22,7 @@ export const Hero = ({ className }: { className?: string }) => {
           prefix={<SparklesIcon />}
           suffix={<ArrowRightIcon />}
           size="sm"
-          className="h-7 rounded-md font-mono text-sm text-fg-muted hover:text-fg"
+          className="h-7 rounded-md font-mono text-sm text-fg-muted hover:text-fg active:text-fg"
         >
           Star us on GitHub
         </Button>

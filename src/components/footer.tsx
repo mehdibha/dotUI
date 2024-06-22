@@ -3,7 +3,6 @@ import Image from "next/image";
 import NavLink from "next/link";
 import Link from "next/link";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
-import { ThemeToggle } from "@/components/theme-toggle";
 import { Separator } from "@/lib/components/core/default/separator";
 import { siteConfig } from "@/config";
 
@@ -89,25 +88,22 @@ export const Footer = () => {
               />
               <span className="inline-block font-bold">{siteConfig.global.name}</span>
             </NavLink>
-            <p className="text-md mt-4 text-fg-muted">
-              Ship your React app in days, not weeks
-            </p>
+            <p className="text-md mt-4 text-fg-muted">Ship your React app in days, not weeks</p>
             <div className="mt-4 flex items-center space-x-4">
               {socialLinks.map((Link, index) => (
                 <NavLink
                   href={Link.href}
                   key={index}
                   target="_blank"
-                  className="hover:text-fg text-fg-muted transition-colors duration-200"
+                  className="text-fg-muted transition-colors duration-200 hover:text-fg"
                 >
                   <Link.icon size={20} />
                   <span className="sr-only">{Link.label}</span>
                 </NavLink>
               ))}
             </div>
-            <ThemeToggle className="mt-8" />
           </div>
-          <div className="flex gap-6 sm:gap-16 flex-wrap">
+          <div className="flex flex-wrap gap-6 sm:gap-16">
             {links.map((group, index) => (
               <div key={index}>
                 <h2 className="font-bold">{group.label}</h2>
@@ -116,7 +112,7 @@ export const Footer = () => {
                     <li key={index}>
                       <NavLink
                         href={link.href}
-                        className="hover:text-fg text-fg-muted transition-colors duration-200"
+                        className="text-fg-muted transition-colors duration-200 hover:text-fg"
                         target={link.href.startsWith("http") ? "_blank" : undefined}
                       >
                         {link.label}
