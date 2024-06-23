@@ -15,13 +15,13 @@ const resizableStyles = tv({
   },
 });
 
-interface ResizableGroupProps extends React.ComponentProps<typeof ResizablePrimitive.PanelGroup> {}
+type ResizableGroupProps = React.ComponentProps<typeof ResizablePrimitive.PanelGroup>;
 const ResizableGroup = ({ className, ...props }: ResizableGroupProps) => {
   const { group } = resizableStyles();
   return <ResizablePrimitive.PanelGroup className={group({ className })} {...props} />;
 };
 
-interface ResizablePanelProps extends React.ComponentProps<typeof ResizablePrimitive.Panel> {}
+type ResizablePanelProps = React.ComponentProps<typeof ResizablePrimitive.Panel>;
 const ResizablePanel = ({ className, ...props }: ResizablePanelProps) => {
   const { panel } = resizableStyles();
   return <ResizablePrimitive.Panel className={panel({ className })} {...props} />;

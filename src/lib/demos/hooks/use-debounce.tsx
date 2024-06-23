@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { SearchIcon } from "lucide-react";
-// import { Input } from "@/lib/components/core/default/input";
+import { TextField } from "@/lib/components/core/default/text-field";
 import { useDebounce } from "@/lib/hooks/use-debounce";
 
 export default function Demo() {
@@ -16,14 +16,14 @@ export default function Demo() {
           size={18}
           className="pointer-events-none absolute left-2 top-1/2 -translate-y-1/2 transform text-fg-muted"
         />
-        {/* <Input
+        <TextField
           value={searchInput}
-          onChange={(e) => {
-            setSearchInput(e.target.value);
+          onChange={(value) => {
+            setSearchInput(value);
           }}
           placeholder="Search"
           className="full-w pl-8"
-        /> */}
+        />
       </div>
       <div className="mt-10 text-center">
         {debouncedValue ? (

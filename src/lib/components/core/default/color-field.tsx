@@ -8,7 +8,7 @@ import {
 import { type VariantProps } from "tailwind-variants";
 import { fieldStyles } from "./field";
 import { Field, type FieldProps } from "./field";
-import { InputWrapper, Input, inputStyles } from "./input";
+import { InputWrapper, Input, type inputStyles } from "./input";
 
 type ColorFieldProps = ColorFieldRootProps &
   Omit<FieldProps, "children"> &

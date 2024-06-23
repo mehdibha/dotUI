@@ -4,9 +4,9 @@ import React from "react";
 import { CheckIcon, CopyIcon } from "lucide-react";
 import type { Key } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { Button, type ButtonProps } from "../../lib/components/core/default/button";
-import { ScrollArea, ScrollAreaProps } from "../../lib/components/core/default/scroll-area";
-import { Tab, TabList, TabPanel, TabsProps, Tabs } from "../../lib/components/core/default/tabs";
+import { Button, type ButtonProps } from "@/lib/components/core/default/button";
+import { ScrollArea, type ScrollAreaProps } from "@/lib/components/core/default/scroll-area";
+import { Tab, Tabs, TabList, TabPanel, type TabsProps } from "@/lib/components/core/default/tabs";
 
 const codeBlockStyles = tv({
   slots: {
@@ -61,9 +61,9 @@ const CodeBlockClient = ({ files, preview, previewStr, ...props }: CodeBlockClie
           )}
           <CodeBlockCopyButton
             code={
-              previewStr && !isExpanded
+              (previewStr && !isExpanded
                 ? previewStr
-                : (files.find(({ fileName }) => fileName === activeTab)?.codeStr as string)
+                : files.find(({ fileName }) => fileName === activeTab)?.codeStr)!
             }
           />
         </div>
@@ -109,7 +109,7 @@ interface CodeBlockCopyButtonProps extends ButtonProps {
 const CodeBlockCopyButton = ({ code, ...props }: CodeBlockCopyButtonProps) => {
   const [copied, setCopied] = React.useState(false);
   const handleCopy = () => {
-    navigator.clipboard.writeText(code);
+    void navigator.clipboard.writeText(code);
     setCopied(true);
     setTimeout(() => setCopied(false), 1000);
   };

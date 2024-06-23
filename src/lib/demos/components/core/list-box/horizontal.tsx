@@ -1,5 +1,4 @@
 import { ListBox, ListBoxItem } from "@/lib/components/core/default/list-box";
-import { Section } from "@/lib/components/core/default/section";
 
 export default function Demo() {
   return (

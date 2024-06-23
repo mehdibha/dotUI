@@ -23,7 +23,7 @@ const CodeClient = ({ className, inline = false, children, code, ...props }: Cod
   const [copied, setCopied] = React.useState(false);
   const ElementType = inline ? "span" : "div";
   const handleCopy = () => {
-    navigator.clipboard.writeText(code);
+    void navigator.clipboard.writeText(code);
     setCopied(true);
     setTimeout(() => {
       setCopied(false);

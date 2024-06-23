@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area";
-import { VariantProps, tv } from "tailwind-variants";
+import { type VariantProps, tv } from "tailwind-variants";
 
 const scrollAreaStyles = tv({
   slots: {
@@ -57,13 +57,13 @@ const ScrollArea = ({
   );
 };
 
-interface ScrollAreaRootProps extends ScrollAreaPrimitive.ScrollAreaProps {}
+type ScrollAreaRootProps = ScrollAreaPrimitive.ScrollAreaProps;
 const ScrollAreaRoot = ({ className, ...props }: ScrollAreaRootProps) => {
   const { root } = scrollAreaStyles();
   return <ScrollAreaPrimitive.Root className={root({ className })} {...props} />;
 };
 
-interface ScrollAreaViewPortProps extends ScrollAreaPrimitive.ScrollAreaViewportProps {}
+type ScrollAreaViewPortProps = ScrollAreaPrimitive.ScrollAreaViewportProps;
 const ScrollAreaViewPort = ({ className, ...props }: ScrollAreaViewPortProps) => {
   const { viewport } = scrollAreaStyles();
   return <ScrollAreaPrimitive.Viewport className={viewport({ className })} {...props} />;

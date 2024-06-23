@@ -4,7 +4,6 @@ import { getComponentSource } from "@/server/component-source";
 
 export const ComponentSource = ({
   name,
-  titles,
   className,
 }: {
   name: string;

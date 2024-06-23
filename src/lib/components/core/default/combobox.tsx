@@ -7,7 +7,7 @@ import {
   type ComboBoxProps as AriaComboboxProps,
 } from "react-aria-components";
 import { Button } from "./button";
-import { Field, FieldProps, fieldStyles } from "./field";
+import { Field, type FieldProps, fieldStyles } from "./field";
 import { Input, InputWrapper } from "./input";
 import { ListBox, ListBoxItem } from "./list-box";
 import { Overlay } from "./overlay";

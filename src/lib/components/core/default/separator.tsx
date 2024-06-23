@@ -20,7 +20,7 @@ const separatorStyles = tv({
   },
 });
 
-interface SeparatorProps extends AriaSeparatorProps {}
+type SeparatorProps = AriaSeparatorProps;
 const Separator = ({ orientation, className, ...props }: SeparatorProps) => {
   return <AriaSeparator {...props} className={separatorStyles({ orientation, className })} />;
 };

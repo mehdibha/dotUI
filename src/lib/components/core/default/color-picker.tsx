@@ -7,10 +7,10 @@ import {
   ColorPicker as AriaColorPicker,
   DialogTrigger as AriaDialogTrigger,
   type ColorPickerProps as AriaColorPickerProps,
-  ColorSpace,
+  type ColorSpace,
   getColorChannels,
 } from "react-aria-components";
-import { Button, ButtonProps } from "./button";
+import { Button, type ButtonProps } from "./button";
 import { ColorArea } from "./color-area";
 import { ColorField } from "./color-field";
 import { ColorSlider } from "./color-slider";
@@ -18,8 +18,7 @@ import { ColorSwatch } from "./color-swatch";
 import { Overlay } from "./overlay";
 import { Select, SelectItem } from "./select";
 
-type ColorPickerProps = AriaColorPickerProps &
-  Omit<ButtonProps, "children"> & { label?: string };
+type ColorPickerProps = AriaColorPickerProps & Omit<ButtonProps, "children"> & { label?: string };
 export const ColorPicker = ({ label, shape, ...props }: ColorPickerProps) => {
   const [space, setSpace] = React.useState<ColorSpace>("rgb");
   return (
@@ -36,18 +35,14 @@ export const ColorPicker = ({ label, shape, ...props }: ColorPickerProps) => {
                 {children ?? (
                   <>
                     <div className="flex gap-2">
-                      <ColorArea
-                        colorSpace="hsb"
-                        xChannel="saturation"
-                        yChannel="brightness"
-                        />
+                      <ColorArea colorSpace="hsb" xChannel="saturation" yChannel="brightness" />
                       <ColorSlider
                         orientation="vertical"
                         colorSpace="hsb"
                         channel="hue"
                         className="items-center"
                         showValueLabel={false}
-                        />
+                      />
                       <ColorSlider
                         orientation="vertical"
                         colorSpace="hsb"

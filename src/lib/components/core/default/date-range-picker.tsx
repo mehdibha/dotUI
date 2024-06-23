@@ -10,12 +10,12 @@ import {
 } from "react-aria-components";
 import { type VariantProps } from "tailwind-variants";
 import { Button } from "./button";
-import { RangeCalendar } from "./range-calendar";
 import { DateInput, DateSegment } from "./date-input";
 import { fieldStyles } from "./field";
 import { Field, type FieldProps } from "./field";
-import { InputWrapper, inputStyles } from "./input";
+import { InputWrapper, type inputStyles } from "./input";
 import { Overlay } from "./overlay";
+import { RangeCalendar } from "./range-calendar";
 
 interface DateRangePickerProps<T extends DateValue>
   extends DateRangePickerRootProps<T>,
@@ -62,13 +62,9 @@ const DateRangePicker = <T extends DateValue>({
           isLoading={isLoading}
           loaderPosition="prefix"
         >
-          <DateInput slot="start">
-            {(segment) => <DateSegment segment={segment} />}
-          </DateInput>
+          <DateInput slot="start">{(segment) => <DateSegment segment={segment} />}</DateInput>
           <span aria-hidden="true">–</span>
-          <DateInput slot="end">
-            {(segment) => <DateSegment segment={segment} />}
-          </DateInput>
+          <DateInput slot="end">{(segment) => <DateSegment segment={segment} />}</DateInput>
           <Button size="sm" shape="square" className="h-full rounded-none">
             <CalendarIcon />
           </Button>

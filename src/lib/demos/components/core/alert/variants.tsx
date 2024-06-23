@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Alert, AlertProps } from "@/lib/components/core/default/alert";
+import { Alert, type AlertProps } from "@/lib/components/core/default/alert";
 import { RadioGroup, Radio } from "@/lib/components/core/default/radio";
 import { Switch } from "@/lib/components/core/default/switch";
 
@@ -19,7 +19,11 @@ export default function SonnerVariantsDemo() {
       <Switch isSelected={fill} onChange={setFill}>
         Fill
       </Switch>
-      <RadioGroup label="Variant" value={variant} onChange={(newVal) => setVariant(newVal as Variant)}>
+      <RadioGroup
+        label="Variant"
+        value={variant}
+        onChange={(newVal) => setVariant(newVal as Variant)}
+      >
         <Radio value="default">Default</Radio>
         <Radio value="success">Success</Radio>
         <Radio value="danger">Danger</Radio>

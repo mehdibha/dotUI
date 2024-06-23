@@ -46,15 +46,7 @@ interface AlertProps extends AlertRootProps {
   icon?: React.ReactNode | null;
   action?: React.ReactNode;
 }
-const Alert = ({
-  variant = "default",
-  title,
-  children,
-  className,
-  icon,
-  action,
-  ...props
-}: AlertProps) => {
+const Alert = ({ variant = "default", title, children, icon, action, ...props }: AlertProps) => {
   return (
     <AlertRoot variant={variant} {...props}>
       {icon || icons[variant]}
@@ -77,16 +69,16 @@ const AlertRoot = ({ className, variant, fill, ...props }: AlertRootProps) => {
 
 interface AlertTitleProps
   extends React.HTMLAttributes<HTMLHeadingElement>,
-    VariantProps<typeof alertStyles> {}
-const AlertTitle = ({ className, variant, ...props }: AlertTitleProps) => {
+    VariantProps<typeof alertStyles> {} // TODO VERIFY THIS
+const AlertTitle = ({ className, ...props }: AlertTitleProps) => {
   const { title } = alertStyles();
   return <h3 className={title({ className })} {...props} />;
 };
 
 interface AlertContentProps
   extends React.HTMLAttributes<HTMLElement>,
-    VariantProps<typeof alertStyles> {}
-const AlertContent = ({ className, variant, ...props }: AlertContentProps) => {
+    VariantProps<typeof alertStyles> {} // TODO VERIFY THIS
+const AlertContent = ({ className, ...props }: AlertContentProps) => {
   const { content } = alertStyles();
   return <section className={content({ className })} {...props} />;
 };

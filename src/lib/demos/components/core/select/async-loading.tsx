@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React from "react";
 import { useAsyncList } from "react-stately";
@@ -11,18 +11,14 @@ interface Character {
 
 export default function Demo() {
   const list = useAsyncList<Character>({
-    async load({ signal, filterText }) {
-      let res = await fetch(`https://pokeapi.co/api/v2/pokemon`, { signal });
-      let json = await res.json();
+    async load({ signal }) {
+      const res = await fetch(`https://pokeapi.co/api/v2/pokemon`, { signal });
+      const json = (await res.json()) as { results: Character[] };
 
       return {
         items: json.results,
       };
     },
   });
-  return (
-    <Select items={list.items}>
-      {(item) => <Item id={item.name}>{item.name}</Item>}
-    </Select>
-  );
+  return <Select items={list.items}>{(item) => <Item id={item.name}>{item.name}</Item>}</Select>;
 }

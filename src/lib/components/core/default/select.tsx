@@ -5,12 +5,11 @@ import { ChevronDownIcon } from "lucide-react";
 import {
   Select as AriaSelect,
   SelectValue as AriaSelectValue,
-  type SelectProps as AriaSelectProps,
-  type SelectValueProps as AriaSelectValueProps,
+  type SelectProps as AriaSelectProps, // type SelectValueProps as AriaSelectValueProps,
 } from "react-aria-components";
-import { tv } from "tailwind-variants";
+// import { tv } from "tailwind-variants";
 import { Button } from "./button";
-import { Field, FieldProps, fieldStyles } from "./field";
+import { Field, type FieldProps, fieldStyles } from "./field";
 import { ListBox, ListBoxItem } from "./list-box";
 import { Overlay } from "./overlay";
 
@@ -54,11 +53,11 @@ const SelectTrigger = () => {
   );
 };
 
-interface SelectValueProps<T extends object> extends AriaSelectValueProps<T> {}
-const SelectValue = <T extends object>({ className, ...props }: SelectValueProps<T>) => {
-  // const { root } = fieldStyles();
-  return <AriaSelectValue className="flex-1" {...props} />;
-};
+// type SelectValueProps<T extends object> = AriaSelectValueProps<T>
+// const SelectValue = <T extends object>({ className, ...props }: SelectValueProps<T>) => {
+//   // const { root } = fieldStyles();
+//   return <AriaSelectValue className="flex-1" {...props} />;
+// };
 
 interface SelectRootProps<T extends object> extends Omit<AriaSelectProps<T>, "className"> {
   className?: string;

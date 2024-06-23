@@ -1,4 +1,4 @@
-import { BackgroundColor, Color, CssColor, Theme } from "@adobe/leonardo-contrast-colors";
+import { BackgroundColor, Color, Theme, type CssColor } from "@adobe/leonardo-contrast-colors";
 import { useConfig } from "./use-config";
 
 export const usePalette = (
@@ -43,7 +43,6 @@ export const usePalette = (
       saturation: _saturation ?? saturation,
       output: "HSL",
     });
-    const t = colors.contrast;
     setTheme({
       ...theme,
       [mode]: {
@@ -100,10 +99,8 @@ export const usePalette = (
   };
 };
 
-function transformObject(input: { [key: string]: string }) {
-  const output: {
-    [key: string]: string;
-  } = {};
+function transformObject(input: Record<string, string>) {
+  const output: Record<string, string> = {};
   for (const key in input) {
     if (key !== "background") {
       const newKey = key.replace("base", "");

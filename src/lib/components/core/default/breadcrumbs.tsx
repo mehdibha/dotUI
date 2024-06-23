@@ -20,7 +20,7 @@ const breadcrumbsStyles = tv({
   },
 });
 
-interface BreadcrumbsProps<T extends object> extends AriaBreadcrumbsProps<T> {}
+type BreadcrumbsProps<T extends object> = AriaBreadcrumbsProps<T>;
 
 const Breadcrumbs = <T extends object>({ className, ...props }: BreadcrumbsProps<T>) => {
   const { root } = breadcrumbsStyles();
@@ -45,10 +45,12 @@ const BreadcrumbItem = ({ className, ...props }: BreadcrumbItemProps) => {
   return <AriaBreadcrumb {...props} className={cn(item({ className }))} />;
 };
 
-type BreadcrumbLinkProps = AriaLinkProps;
+interface BreadcrumbLinkProps extends Omit<AriaLinkProps, "className"> {
+  className?: string;
+}
 const BreadcrumbLink = ({ className, ...props }: BreadcrumbLinkProps) => {
   const { link } = breadcrumbsStyles();
-  return <AriaLink {...props} className={link()} />;
+  return <AriaLink {...props} className={link({ className })} />;
 };
 
 export type { BreadcrumbsProps, BreadcrumbProps, BreadcrumbItemProps, BreadcrumbLinkProps };

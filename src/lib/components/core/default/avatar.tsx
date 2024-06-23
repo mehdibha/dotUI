@@ -60,11 +60,14 @@ const AvatarImage = ({ src, onStatusChange, className, ...props }: AvatarImagePr
   const { image } = avatarStyles();
   const context = useAvatarContext();
   const status = useImageLoadingStatus(src);
-  // use useCallBackRef here
-  const handleStatusChange = (status: Status) => {
-    onStatusChange?.(status);
-    context.onStatusChange(status);
-  };
+  // TODO use useCallBackRef here ?????
+  const handleStatusChange = React.useCallback(
+    (status: Status) => {
+      onStatusChange?.(status);
+      context.onStatusChange(status);
+    },
+    [onStatusChange, context]
+  );
 
   React.useLayoutEffect(() => {
     if (status !== "idle") {
@@ -73,11 +76,12 @@ const AvatarImage = ({ src, onStatusChange, className, ...props }: AvatarImagePr
   }, [status, handleStatusChange]);
 
   return status === "success" ? (
+    // eslint-disable-next-line jsx-a11y/alt-text
     <img src={src} className={image({ className })} {...props} />
   ) : null;
 };
 
-interface AvatarFallbackProps extends React.HTMLAttributes<HTMLSpanElement> {}
+type AvatarFallbackProps = React.HTMLAttributes<HTMLSpanElement>;
 const AvatarFallback = ({ className, ...props }: AvatarFallbackProps) => {
   const { fallback } = avatarStyles();
   const context = useAvatarContext();
@@ -87,7 +91,7 @@ const AvatarFallback = ({ className, ...props }: AvatarFallbackProps) => {
   ) : null;
 };
 
-interface AvatarPlaceholderProps extends React.HTMLAttributes<HTMLSpanElement> {}
+type AvatarPlaceholderProps = React.HTMLAttributes<HTMLSpanElement>;
 const AvatarPlaceholder = ({ className, ...props }: AvatarPlaceholderProps) => {
   const { placeholder } = avatarStyles();
   const context = useAvatarContext();

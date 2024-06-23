@@ -164,7 +164,7 @@ const ProgressIndicator = ({
   );
 };
 
-interface ProgressValueLabelProps extends React.HTMLAttributes<HTMLSpanElement> {}
+type ProgressValueLabelProps = React.HTMLAttributes<HTMLSpanElement>;
 const ProgressValueLabel = ({ children, className, ...props }: ProgressValueLabelProps) => {
   const { valueLabel } = progressStyles();
   const { valueText } = useProgressContext();

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { CssColor } from "@adobe/leonardo-contrast-colors";
+import type { CssColor } from "@adobe/leonardo-contrast-colors";
 import {
   LockIcon,
   Maximize2Icon,
@@ -15,7 +15,7 @@ import {
   TabletIcon,
   Trash2Icon,
 } from "lucide-react";
-import { Modal as AriaModal, Dialog as AriaDialog, Color } from "react-aria-components";
+import { Modal as AriaModal, Dialog as AriaDialog } from "react-aria-components";
 import Balancer from "react-wrap-balancer";
 import { useConfig } from "@/hooks/use-config";
 import { usePalette } from "@/hooks/use-palette";
@@ -53,7 +53,7 @@ export default function ThemesPage() {
             </Button>
             <Dialog type="drawer" title="Themes">
               <h4 className="mt-2 text-lg font-semibold">Your themes</h4>
-              <p className="text-fg-muted">You didn't save any theme yet</p>
+              <p className="text-fg-muted">You didn&apos;t save any theme yet</p>
               <h4 className="mt-2 text-lg font-semibold">Pre-built themes</h4>
               <div className="mt-4 grid grid-cols-8 gap-4">
                 {Array.from({ length: 8 }, (_, index) => (

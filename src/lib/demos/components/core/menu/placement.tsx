@@ -3,15 +3,10 @@
 import React from "react";
 import { MenuIcon } from "lucide-react";
 import { Button } from "@/lib/components/core/default/button";
-import {
-  Menu,
-  MenuItem,
-  MenuRoot,
-  type MenuProps,
-} from "@/lib/components/core/default/menu";
+import { Menu, MenuItem, MenuRoot, type MenuProps } from "@/lib/components/core/default/menu";
 import { Select, SelectItem } from "@/lib/components/core/default/select";
 
-type Placement = MenuProps<Object>["placement"];
+type Placement = MenuProps<object>["placement"];
 
 export default function Demo() {
   const [placement, setPlacement] = React.useState<Placement>("top");

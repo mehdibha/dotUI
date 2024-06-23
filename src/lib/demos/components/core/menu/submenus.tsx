@@ -1,12 +1,5 @@
 import { Button } from "@/lib/components/core/default/button";
-import {
-  Menu,
-  MenuItem,
-  MenuRoot,
-  MenuSection,
-  MenuSub,
-} from "@/lib/components/core/default/menu";
-import { Separator } from "@/lib/components/core/default/separator";
+import { Menu, MenuItem, MenuRoot, MenuSub } from "@/lib/components/core/default/menu";
 
 export default function Demo() {
   return (

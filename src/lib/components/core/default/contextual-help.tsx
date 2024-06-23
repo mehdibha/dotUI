@@ -8,7 +8,7 @@ interface ContextualHelpProps {
   variant?: "info" | "help";
 }
 
-const ContextualHelp = ({ title, description, variant, ...props }: ContextualHelpProps) => {
+const ContextualHelp = ({ title, description, variant }: ContextualHelpProps) => {
   const icon = variant === "info" ? <InfoIcon /> : <HelpCircleIcon />;
   return (
     <DialogRoot>

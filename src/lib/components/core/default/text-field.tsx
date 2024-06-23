@@ -8,7 +8,7 @@ import {
 import { type VariantProps } from "tailwind-variants";
 import { fieldStyles } from "./field";
 import { Field, type FieldProps } from "./field";
-import { InputWrapper, Input, inputStyles } from "./input";
+import { InputWrapper, Input, type inputStyles } from "./input";
 
 type TextFieldProps = TextFieldRootProps &
   Omit<FieldProps, "children"> &
@@ -70,13 +70,12 @@ TextField.displayName = "TextField";
 type TextFieldRootProps = Omit<AriaTextFieldProps, "className"> & {
   className?: string;
 };
-const TextFieldRoot = React.forwardRef<
-  React.ElementRef<typeof AriaTextField>,
-  TextFieldRootProps
->(({ className, ...props }, ref) => {
-  const { root } = fieldStyles();
-  return <AriaTextField ref={ref} className={root({ className })} {...props} />;
-});
+const TextFieldRoot = React.forwardRef<React.ElementRef<typeof AriaTextField>, TextFieldRootProps>(
+  ({ className, ...props }, ref) => {
+    const { root } = fieldStyles();
+    return <AriaTextField ref={ref} className={root({ className })} {...props} />;
+  }
+);
 TextFieldRoot.displayName = "TextFieldRoot";
 
 export type { TextFieldProps, TextFieldRootProps };

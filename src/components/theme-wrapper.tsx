@@ -3,7 +3,7 @@
 import React from "react";
 import { useConfig } from "@/hooks/use-config";
 import { useMounted } from "@/lib/hooks/use-mounted";
-import { ThemeMode } from "@/types/theme";
+import type { ThemeMode } from "@/types/theme";
 
 interface ThemeWrapperProps extends React.ComponentProps<"div"> {
   children: React.ReactNode;
@@ -26,7 +26,7 @@ export function ThemeWrapper(props: ThemeWrapperProps) {
 
   const getCssVars = () => {
     const palettes: ThemeMode["palettes"] = theme[mode].palettes;
-    let cssVars: { [key: string]: string } = {};
+    const cssVars: Record<string, string> = {};
     Object.keys(palettes).forEach((paletteName) => {
       const colors = palettes[paletteName as keyof typeof palettes].colors;
       Object.keys(colors).forEach((colorKey) => {

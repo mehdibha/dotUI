@@ -10,7 +10,6 @@ import {
   Input as AriaInput,
   Group as AriaGroup,
   TextArea as AriaTextArea,
-  FieldErrorContext as AriaFieldErrorContext,
   InputContext as AriaInputContext,
   TextAreaContext as AriaTextAreaContext,
   type TextAreaProps as AriaTextAreaProps,
@@ -69,11 +68,14 @@ interface TextAreaInputProps extends Omit<AriaTextAreaProps, "className"> {
 }
 const TextAreaInput = React.forwardRef<HTMLTextAreaElement, TextAreaInputProps>(
   ({ className, onChange, rows = 1, ...props }, ref) => {
+    console.log(ref); // TODO MERGE
     const { input } = inputStyles({ multiline: true });
     const [inputValue, setInputValue] = useControlledState(
       props.value,
       props.defaultValue ?? "",
-      () => {}
+      () => {
+        // Do nothing
+      }
     );
     const inputRef = React.useRef<HTMLTextAreaElement>(null);
 
@@ -116,12 +118,10 @@ TextAreaInput.displayName = "TextAreaInput";
 interface InputProps extends Omit<AriaInputProps, "className"> {
   className?: string;
 }
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, ...props }, ref) => {
-    const { input } = inputStyles();
-    return <AriaInput ref={ref} className={input({ className })} {...props} />;
-  }
-);
+const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, ...props }, ref) => {
+  const { input } = inputStyles();
+  return <AriaInput ref={ref} className={input({ className })} {...props} />;
+});
 Input.displayName = "Input";
 
 interface InputWrapperProps
@@ -138,7 +138,7 @@ const InputWrapper = React.forwardRef<HTMLDivElement, InputWrapperProps>(
     {
       className,
       size,
-      variant,
+      // variant, // TODO REMOVE VARIANT
       isLoading,
       prefix,
       suffix,
@@ -163,10 +163,7 @@ const InputWrapper = React.forwardRef<HTMLDivElement, InputWrapperProps>(
     return (
       <Provider
         values={[
-          [
-            AriaInputContext,
-            { ...inputProps, ref: inputRef as React.RefObject<HTMLInputElement> },
-          ],
+          [AriaInputContext, { ...inputProps, ref: inputRef as React.RefObject<HTMLInputElement> }],
           [
             AriaTextAreaContext,
             { ...textAreaProps, ref: inputRef as React.RefObject<HTMLTextAreaElement> },
@@ -181,29 +178,23 @@ const InputWrapper = React.forwardRef<HTMLDivElement, InputWrapperProps>(
           onPointerDown={(event) => {
             const target = event.target as HTMLElement;
             if (target.closest("input, button, a")) return;
-            // @ts-expect-error
+            // @ts-expect-error WILL FIX IT SOON
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             const input = inputRef.current; // TODO: Mergeprops correctly here
             if (!input) return;
             requestAnimationFrame(() => {
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
               input.focus();
             });
           }}
         >
           {composeRenderProps(props.children, (children) => (
             <>
-              <InputInnerVisual
-                side="start"
-                loading={showPrefixLoading}
-                multiline={multiline}
-              >
+              <InputInnerVisual side="start" loading={showPrefixLoading} multiline={multiline}>
                 {prefix}
               </InputInnerVisual>
               {children}
-              <InputInnerVisual
-                side="end"
-                loading={showSuffixLoading}
-                multiline={multiline}
-              >
+              <InputInnerVisual side="end" loading={showSuffixLoading} multiline={multiline}>
                 {suffix}
               </InputInnerVisual>
             </>

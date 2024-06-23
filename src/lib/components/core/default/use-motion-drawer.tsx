@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from "react";
 import { OverlayTriggerStateContext } from "react-aria-components";
 
@@ -35,9 +36,7 @@ export const useMotionDrawer = (props: useMotionDrawerProps) => {
   const dragEndTime = React.useRef<Date | null>(null);
 
   const [isDragging, setDragging] = React.useState(false);
-  const drawerHeightRef = React.useRef(
-    drawerRef.current?.getBoundingClientRect().height || 0
-  );
+  const drawerHeightRef = React.useRef(drawerRef.current?.getBoundingClientRect().height || 0);
   const pointerStartRef = React.useRef<{ x: number; y: number } | null>(null);
   const pointerStart = React.useRef(0);
   const keyboardIsOpen = React.useRef(false);
@@ -145,8 +144,7 @@ export const useMotionDrawer = (props: useMotionDrawerProps) => {
     set(backdropRef.current, { transition: "none" }); // WHY?
     if (isDraggingInDirection) {
       const dampenedDraggedDistance = dampenValue(draggedDistance);
-      const translateValue =
-        Math.min(dampenedDraggedDistance * -1, 0) * placementMultiplier;
+      const translateValue = Math.min(dampenedDraggedDistance * -1, 0) * placementMultiplier;
       set(drawerRef.current, {
         transform: isVertical(placement)
           ? `translate3d(0, ${translateValue}px, 0)`
@@ -322,9 +320,7 @@ export const useMotionDrawer = (props: useMotionDrawerProps) => {
   }
 
   function handleNestedOpenChange(isOpen: boolean) {
-    const scale = isOpen
-      ? (window.innerWidth - NESTED_DISPLACEMENT) / window.innerWidth
-      : 1;
+    const scale = isOpen ? (window.innerWidth - NESTED_DISPLACEMENT) / window.innerWidth : 1;
     const y = isOpen ? -NESTED_DISPLACEMENT : 0;
     set(drawerRef.current, {
       transition: `transform ${TRANSITIONS.DURATION}s cubic-bezier(${TRANSITIONS.EASE.join(",")})`,
@@ -368,7 +364,7 @@ export const useMotionDrawer = (props: useMotionDrawerProps) => {
       const focusedElement = document.activeElement as HTMLElement;
       if (isInput(focusedElement) || keyboardIsOpen.current) {
         const visualViewportHeight = window.visualViewport?.height || 0;
-        let diffFromInitial = window.innerHeight - visualViewportHeight;
+        const diffFromInitial = window.innerHeight - visualViewportHeight;
         const drawerHeight = drawerRef.current.getBoundingClientRect().height || 0;
         if (!initialDrawerHeight.current) {
           initialDrawerHeight.current = drawerHeight;
@@ -392,8 +388,7 @@ export const useMotionDrawer = (props: useMotionDrawerProps) => {
       }
     }
     window.visualViewport?.addEventListener("resize", onVisualViewportChange);
-    return () =>
-      window.visualViewport?.removeEventListener("resize", onVisualViewportChange);
+    return () => window.visualViewport?.removeEventListener("resize", onVisualViewportChange);
   }, []);
 
   React.useEffect(() => {
@@ -452,11 +447,7 @@ export const MotionDrawerRoot = ({
   children: React.ReactNode;
   value: DrawerInternalContextValue;
 }) => {
-  return (
-    <DrawerInternalContext.Provider value={value}>
-      {children}
-    </DrawerInternalContext.Provider>
-  );
+  return <DrawerInternalContext.Provider value={value}>{children}</DrawerInternalContext.Provider>;
 };
 
 interface DrawerInternalContextValue {
@@ -465,8 +456,7 @@ interface DrawerInternalContextValue {
   onNestedRelease: (isOpen: boolean) => void;
 }
 
-export const DrawerInternalContext =
-  React.createContext<DrawerInternalContextValue | null>(null);
+export const DrawerInternalContext = React.createContext<DrawerInternalContextValue | null>(null);
 
 export const useDrawerInternalContext = () => {
   const context = React.useContext(DrawerInternalContext);
@@ -492,9 +482,7 @@ type DrawerPlacement = "top" | "bottom" | "left" | "right";
 
 // Helpers
 
-interface Style {
-  [key: string]: string;
-}
+type Style = Record<string, string>;
 
 const cache = new WeakMap();
 
@@ -518,7 +506,7 @@ export function set(
   ignoreCache = false
 ) {
   if (!el || !(el instanceof HTMLElement)) return;
-  let originalStyles: Style = {};
+  const originalStyles: Style = {};
 
   Object.entries(styles).forEach(([key, value]: [string, string]) => {
     if (key.startsWith("--")) {
@@ -537,7 +525,7 @@ export function set(
 
 export function reset(el: Element | HTMLElement | null, prop?: string) {
   if (!el || !(el instanceof HTMLElement)) return;
-  let originalStyles = cache.get(el);
+  const originalStyles = cache.get(el);
 
   if (!originalStyles) {
     return;
@@ -565,10 +553,7 @@ export const isVertical = (placement: DrawerPlacement) => {
   }
 };
 
-export function getTranslate(
-  element: HTMLElement,
-  placement: DrawerPlacement
-): number | null {
+export function getTranslate(element: HTMLElement, placement: DrawerPlacement): number | null {
   if (!element) {
     return null;
   }
@@ -593,9 +578,7 @@ export function dampenValue(v: number) {
 // Additional helpers
 
 function testPlatform(re: RegExp): boolean | undefined {
-  return typeof window !== "undefined" && window.navigator != null
-    ? re.test(window.navigator.platform)
-    : undefined;
+  return window?.navigator != null ? re.test(window.navigator.platform) : undefined;
 }
 
 function isMac(): boolean | undefined {

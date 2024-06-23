@@ -3,8 +3,8 @@
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 import { Field, type FieldProps } from "./field";
-import { InputWrapper, TextAreaInput, inputStyles } from "./input";
-import { TextFieldRoot, TextFieldRootProps } from "./text-field";
+import { InputWrapper, TextAreaInput, type inputStyles } from "./input";
+import { TextFieldRoot, type TextFieldRootProps } from "./text-field";
 
 type TextAreaProps = TextFieldRootProps &
   Omit<FieldProps, "children"> &

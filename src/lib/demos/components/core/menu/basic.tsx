@@ -1,6 +1,6 @@
 import { Avatar } from "@/lib/components/core/default/avatar";
 import { Button } from "@/lib/components/core/default/button";
-import { Menu, MenuItem, MenuRoot, MenuSub } from "@/lib/components/core/default/menu";
+import { Menu, MenuItem, MenuRoot } from "@/lib/components/core/default/menu";
 
 export default function Demo() {
   return (

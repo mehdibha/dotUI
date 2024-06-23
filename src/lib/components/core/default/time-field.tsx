@@ -10,7 +10,7 @@ import { type VariantProps } from "tailwind-variants";
 import { DateInput, DateSegment } from "./date-input";
 import { fieldStyles } from "./field";
 import { Field, type FieldProps } from "./field";
-import { InputWrapper, inputStyles } from "./input";
+import { InputWrapper, type inputStyles } from "./input";
 
 interface TimeFieldProps<T extends TimeValue>
   extends TimeFieldRootProps<T>,
@@ -22,7 +22,7 @@ interface TimeFieldProps<T extends TimeValue>
   loaderPosition?: "prefix" | "suffix";
 }
 
-const TimeField= <T extends TimeValue>({
+const TimeField = <T extends TimeValue>({
   className,
   variant,
   size,
@@ -40,7 +40,12 @@ const TimeField= <T extends TimeValue>({
   ...props
 }: TimeFieldProps<T>) => {
   return (
-    <TimeFieldRoot className={className} isRequired={isRequired} isDisabled={isLoading || isDisabled} {...props}>
+    <TimeFieldRoot
+      className={className}
+      isRequired={isRequired}
+      isDisabled={isLoading || isDisabled}
+      {...props}
+    >
       <Field
         label={label}
         description={description}
@@ -64,14 +69,10 @@ const TimeField= <T extends TimeValue>({
   );
 };
 
-interface TimeFieldRootProps<T extends TimeValue>
-  extends Omit<AriaTimeFieldProps<T>, "className"> {
+interface TimeFieldRootProps<T extends TimeValue> extends Omit<AriaTimeFieldProps<T>, "className"> {
   className?: string;
 }
-const TimeFieldRoot = <T extends TimeValue>({
-  className,
-  ...props
-}: TimeFieldRootProps<T>) => {
+const TimeFieldRoot = <T extends TimeValue>({ className, ...props }: TimeFieldRootProps<T>) => {
   const { root } = fieldStyles();
   return <AriaTimeField className={root({ className })} {...props} />;
 };

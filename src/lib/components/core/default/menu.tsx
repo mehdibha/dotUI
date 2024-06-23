@@ -9,7 +9,7 @@ import {
   MenuItem as AriaMenuItem,
   SubmenuTrigger as AriaSubmenuTrigger,
   Section as AriaSection,
-  SectionProps as AriaSectionProps,
+  type SectionProps as AriaSectionProps,
   Header as AriaHeader,
   Collection as AriaCollection,
   type MenuItemProps as AriaMenuItemProps,
@@ -30,7 +30,7 @@ const menuStyles = tv({
     item: [
       "flex cursor-pointer items-center rounded-sm px-3 py-1.5 text-sm outline-none transition-colors disabled:pointer-events-none focus:bg-bg-inverse/10 disabled:text-fg-disabled",
       "selection-single:pl-0 selection-multiple:pl-0",
-      "[&_svg]:size-4"
+      "[&_svg]:size-4",
     ],
     section: "",
     title: "px-3 py-1.5 text-xs font-bold",
@@ -121,37 +121,32 @@ const MenuItem = <T extends object>({
       data-mobile={(isMobile && mobileType !== "popover") || undefined}
       {...props}
     >
-      {composeRenderProps(
-        props.children,
-        (children, { selectionMode, isSelected, hasSubmenu }) => (
-          <>
-            {selectionMode !== "none" ? (
-              <span className="flex w-8 items-center justify-center">
-                {isSelected && <CheckIcon aria-hidden className="size-4 text-fg" />}
-              </span>
-            ) : (
-              <>{prefix && <span className="mr-2">{prefix}</span>}</>
-            )}
-            <span className="flex-1 flex flex-col">
-              {label && <span className="font-semibold">{label}</span>}
-              {description && (
-                <span className="text-xs text-fg-muted">{description}</span>
-              )}
-              {children}
+      {composeRenderProps(props.children, (children, { selectionMode, isSelected, hasSubmenu }) => (
+        <>
+          {selectionMode !== "none" ? (
+            <span className="flex w-8 items-center justify-center">
+              {isSelected && <CheckIcon aria-hidden className="size-4 text-fg" />}
             </span>
-            {hasSubmenu ? (
-              <span className="ml-3 flex">
-                <ChevronRightIcon aria-hidden className="size-4" />
-              </span>
-            ) : (
-              <span className="flex items-center gap-1 ml-3">
-                {suffix && <span>{suffix}</span>}
-                {shortcut && <Kbd>{shortcut}</Kbd>}
-              </span>
-            )}
-          </>
-        )
-      )}
+          ) : (
+            <>{prefix && <span className="mr-2">{prefix}</span>}</>
+          )}
+          <span className="flex flex-1 flex-col">
+            {label && <span className="font-semibold">{label}</span>}
+            {description && <span className="text-xs text-fg-muted">{description}</span>}
+            {children}
+          </span>
+          {hasSubmenu ? (
+            <span className="ml-3 flex">
+              <ChevronRightIcon aria-hidden className="size-4" />
+            </span>
+          ) : (
+            <span className="ml-3 flex items-center gap-1">
+              {suffix && <span>{suffix}</span>}
+              {shortcut && <Kbd>{shortcut}</Kbd>}
+            </span>
+          )}
+        </>
+      ))}
     </AriaMenuItem>
   );
 };
@@ -159,11 +154,7 @@ const MenuItem = <T extends object>({
 interface MenuSectionProps<T> extends AriaSectionProps<T> {
   title?: string;
 }
-const MenuSection = <T extends object>({
-  title,
-  className,
-  ...props
-}: MenuSectionProps<T>) => {
+const MenuSection = <T extends object>({ title, className, ...props }: MenuSectionProps<T>) => {
   const { section, title: titleStyle } = menuStyles();
   return (
     <AriaSection className={section({ className })}>

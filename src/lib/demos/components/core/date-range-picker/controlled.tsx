@@ -13,7 +13,8 @@ export default function Demo() {
   return (
     <div className="flex flex-col items-center gap-4">
       <DateRangePicker label="Controlled" value={value} onChange={setValue} />
-      <p className="text-sm text-fg-muted">selected date: {value.toString()}</p>
+      {/* TODO: FIX THIS */}
+      <p className="text-sm text-fg-muted">selected date: {JSON.stringify(value)}</p>
     </div>
   );
 }

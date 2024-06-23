@@ -4,7 +4,7 @@ import React from "react";
 import { PlusIcon } from "lucide-react";
 import { Button } from "@/lib/components/core/default/button";
 import { Select, SelectItem } from "@/lib/components/core/default/select";
-import { Tooltip, TooltipProps } from "@/lib/components/core/default/tooltip";
+import { Tooltip, type TooltipProps } from "@/lib/components/core/default/tooltip";
 
 type Placement = TooltipProps["placement"];
 

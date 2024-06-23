@@ -10,12 +10,12 @@ import {
 } from "react-aria-components";
 import { type VariantProps } from "tailwind-variants";
 import { Button } from "./button";
+import { Calendar } from "./calendar";
 import { DateInput, DateSegment } from "./date-input";
 import { fieldStyles } from "./field";
 import { Field, type FieldProps } from "./field";
-import { InputWrapper, inputStyles } from "./input";
+import { InputWrapper, type inputStyles } from "./input";
 import { Overlay } from "./overlay";
-import { Calendar } from "./calendar";
 
 interface DatePickerProps<T extends DateValue>
   extends DatePickerRootProps<T>,
@@ -70,7 +70,7 @@ const DatePicker = <T extends DateValue>({
       </Field>
       <Overlay type="popover">
         <AriaDialog className="outline-none">
-          <Calendar className="border-none mx-auto" />
+          <Calendar className="mx-auto border-none" />
         </AriaDialog>
       </Overlay>
     </DatePickerRoot>
@@ -81,10 +81,7 @@ interface DatePickerRootProps<T extends DateValue>
   extends Omit<AriaDatePickerProps<T>, "className"> {
   className?: string;
 }
-const DatePickerRoot = <T extends DateValue>({
-  className,
-  ...props
-}: DatePickerRootProps<T>) => {
+const DatePickerRoot = <T extends DateValue>({ className, ...props }: DatePickerRootProps<T>) => {
   const { root } = fieldStyles();
   return <AriaDatePicker className={root({ className })} {...props} />;
 };

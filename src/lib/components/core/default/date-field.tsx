@@ -10,7 +10,7 @@ import { type VariantProps } from "tailwind-variants";
 import { DateInput, DateSegment } from "./date-input";
 import { fieldStyles } from "./field";
 import { Field, type FieldProps } from "./field";
-import { InputWrapper, inputStyles } from "./input";
+import { InputWrapper, type inputStyles } from "./input";
 
 interface DateFieldProps<T extends DateValue>
   extends DateFieldRootProps<T>,
@@ -69,14 +69,10 @@ const DateField = <T extends DateValue>({
   );
 };
 
-interface DateFieldRootProps<T extends DateValue>
-  extends Omit<AriaDateFieldProps<T>, "className"> {
+interface DateFieldRootProps<T extends DateValue> extends Omit<AriaDateFieldProps<T>, "className"> {
   className?: string;
 }
-const DateFieldRoot = <T extends DateValue>({
-  className,
-  ...props
-}: DateFieldRootProps<T>) => {
+const DateFieldRoot = <T extends DateValue>({ className, ...props }: DateFieldRootProps<T>) => {
   const { root } = fieldStyles();
   return <AriaDateField className={root({ className })} {...props} />;
 };

@@ -4,7 +4,7 @@ import React from "react";
 import { usePathname } from "next/navigation";
 import { useConfig } from "@/hooks/use-config";
 import { useMounted } from "@/lib/hooks/use-mounted";
-import { ThemeMode } from "@/types/theme";
+import type { ThemeMode } from "@/types/theme";
 
 interface ThemeOverrideProps extends React.ComponentProps<"div"> {
   children: React.ReactNode;
@@ -29,7 +29,7 @@ export function ThemeOverride(props: ThemeOverrideProps) {
 
   const getCssVars = () => {
     const palettes: ThemeMode["palettes"] = theme[mode].palettes;
-    let cssVars: { [key: string]: string } = {};
+    const cssVars: Record<string, string> = {};
     Object.keys(palettes).forEach((paletteName) => {
       const colors = palettes[paletteName as keyof typeof palettes].colors;
       Object.keys(colors).forEach((colorKey) => {
@@ -140,11 +140,7 @@ export function ThemeOverride(props: ThemeOverrideProps) {
   }, []);
 
   return (
-    <div
-      drawer-wrapper=""
-      className="bg-bg text-fg duration-150"
-      style={styles}
-    >
+    <div drawer-wrapper="" className="bg-bg text-fg duration-150" style={styles}>
       {children}
     </div>
   );

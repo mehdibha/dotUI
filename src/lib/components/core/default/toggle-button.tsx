@@ -68,7 +68,6 @@ const ToggleButton = ({
   className,
   variant,
   size,
-  type,
   shape,
   prefix,
   suffix,

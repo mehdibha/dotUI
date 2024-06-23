@@ -1,7 +1,7 @@
 "use client";
 
-import { Text as AriaText, TextProps as AriaTextProps } from "react-aria-components";
-import { VariantProps, tv } from "tailwind-variants";
+import { Text as AriaText, type TextProps as AriaTextProps } from "react-aria-components";
+import { type VariantProps, tv } from "tailwind-variants";
 
 const textStyles = tv({
   variants: {

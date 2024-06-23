@@ -1,8 +1,7 @@
-import { BoldIcon, ItalicIcon, XCircleIcon } from "lucide-react";
+import { BoldIcon, ItalicIcon } from "lucide-react";
 import { Button } from "@/lib/components/core/default/button";
 import { TextArea } from "@/lib/components/core/default/text-area";
 import { ToggleButton } from "@/lib/components/core/default/toggle-button";
-import { Tooltip } from "@/lib/components/core/default/tooltip";
 
 export default function Demo() {
   return (

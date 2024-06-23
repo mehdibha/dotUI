@@ -10,7 +10,7 @@ import { type VariantProps } from "tailwind-variants";
 import { Button } from "./button";
 import { fieldStyles } from "./field";
 import { Field, type FieldProps } from "./field";
-import { InputWrapper, Input, inputStyles } from "./input";
+import { InputWrapper, Input, type inputStyles } from "./input";
 
 type SearchFieldProps = SearchFieldRootProps &
   Omit<FieldProps, "children"> &
@@ -18,13 +18,7 @@ type SearchFieldProps = SearchFieldRootProps &
     prefix?: React.ReactNode;
     suffix?:
       | React.ReactNode
-      | (({
-          isEmpty,
-          isDisabled,
-        }: {
-          isEmpty?: boolean;
-          isDisabled?: boolean;
-        }) => React.ReactNode);
+      | (({ isEmpty, isDisabled }: { isEmpty?: boolean; isDisabled?: boolean }) => React.ReactNode);
     isLoading?: boolean;
     loaderPosition?: "prefix" | "suffix";
     placeholder?: string;
@@ -73,9 +67,7 @@ const SearchField = React.forwardRef<HTMLInputElement, SearchFieldProps>(
                 size={size}
                 variant={variant}
                 prefix={prefix}
-                suffix={
-                  typeof suffix === "function" ? suffix({ isEmpty, isDisabled }) : suffix
-                }
+                suffix={typeof suffix === "function" ? suffix({ isEmpty, isDisabled }) : suffix}
                 isLoading={isLoading}
                 loaderPosition={loaderPosition}
               >

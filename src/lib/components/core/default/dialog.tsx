@@ -20,7 +20,7 @@ import {
 import { Provider } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import { useMediaQuery } from "@/lib/hooks/use-media-query";
-import { Button, ButtonProps } from "./button";
+import { Button, type ButtonProps } from "./button";
 import { Overlay, type OverlayProps } from "./overlay";
 
 const dialogStyles = tv({
@@ -37,7 +37,7 @@ const dialogStyles = tv({
   },
 });
 
-interface DialogRootProps extends AriaDialogTriggerProps {}
+type DialogRootProps = AriaDialogTriggerProps;
 const DialogRoot = (props: DialogRootProps) => {
   const descriptionId = useSlotId();
   return (
@@ -77,10 +77,7 @@ const Dialog = ({
   const isDismissable = isDismissableProp ?? (props.role === "alertdialog" ? false : true);
   const showDismissButton = showDismissButtonProp ?? isDismissable;
   return (
-    <Overlay
-      isDismissable={isDismissableProp}
-      type={type}
-    >
+    <Overlay isDismissable={isDismissableProp} type={type}>
       <DialogContent {...props}>
         {composeRenderProps(props.children, (children) => (
           <>
@@ -152,7 +149,7 @@ const DialogInset = ({ className, ...props }: DialogInsetProps) => {
 };
 
 const DismissButton = (props: ButtonProps) => {
-  const state = React.useContext(OverlayTriggerStateContext)!;
+  const state = React.useContext(OverlayTriggerStateContext);
   return (
     <Button
       shape="square"
@@ -167,18 +164,18 @@ const DismissButton = (props: ButtonProps) => {
   );
 };
 
-const DialogContext = React.createContext<{
-  isMobile: boolean;
-  mobileType: "drawer" | "modal";
-} | null>(null);
+// const DialogContext = React.createContext<{
+//   isMobile: boolean;
+//   mobileType: "drawer" | "modal";
+// } | null>(null);
 
-function useDialogContext() {
-  const context = React.useContext(DialogContext);
-  if (!context) {
-    throw new Error("useDialogContext must be used within a <MenuRoot />");
-  }
-  return context;
-}
+// function useDialogContext() {
+//   const context = React.useContext(DialogContext);
+//   if (!context) {
+//     throw new Error("useDialogContext must be used within a <MenuRoot />");
+//   }
+//   return context;
+// }
 
 export type {
   DialogRootProps,

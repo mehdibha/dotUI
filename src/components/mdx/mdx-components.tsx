@@ -1,8 +1,7 @@
-import type { ComponentProps, ComponentPropsWithRef, ComponentPropsWithoutRef } from "react";
 import React from "react";
 import NavLink from "next/link";
 import { InfoIcon } from "lucide-react";
-import { MDXRemote } from "next-mdx-remote/rsc";
+import { type MDXRemote } from "next-mdx-remote/rsc";
 import { ComponentPreview, type ComponentPreviewProps } from "@/components/component-preview";
 import { ComponentSource } from "@/components/component-source";
 import { DocsList, type DocsListProps } from "@/components/docs/docs-list";
@@ -11,7 +10,13 @@ import { Alert } from "@/lib/components/core/default/alert";
 import { cn } from "@/lib/utils/classes";
 import { Code } from "../code";
 
-export const Link = ({ className, href, ref: _, children, ...props }: ComponentProps<"a">) => {
+export const Link = ({
+  className,
+  href,
+  ref: _,
+  children,
+  ...props
+}: React.ComponentProps<"a">) => {
   const classes = cn("font-medium underline underline-offset-4", className);
 
   if (!!href?.startsWith("/")) {
@@ -101,9 +106,7 @@ export const components: React.ComponentPropsWithoutRef<typeof MDXRemote>["compo
       <table className={cn("w-full", className)} {...props} />
     </div>
   ),
-  thead: ({ className, ...props }) => (
-    <thead className={cn("bg-bg-muted", className)} {...props} />
-  ),
+  thead: ({ className, ...props }) => <thead className={cn("bg-bg-muted", className)} {...props} />,
   tr: ({ className, ...props }) => (
     <tr className={cn("m-0 border-t p-0 text-sm", className)} {...props} />
   ),
@@ -136,7 +139,7 @@ export const components: React.ComponentPropsWithoutRef<typeof MDXRemote>["compo
   DocsList: (props: DocsListProps) => (
     <DocsList {...props} className="mt-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" />
   ),
-  ColorBadge: ({ className, children, ...props }: ComponentProps<"div">) => (
+  ColorBadge: ({ className, children, ...props }: React.ComponentProps<"div">) => (
     <div
       className="inline-flex items-center space-x-1.5 rounded border bg-bg-muted px-2 py-0.5 font-mono text-sm"
       {...props}

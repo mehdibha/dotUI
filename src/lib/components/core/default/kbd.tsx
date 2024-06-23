@@ -6,15 +6,15 @@ const KbdStyles = tv({
   variants: {
     variant: {
       default: "",
-      outline: "px-2 py-1 border rounded-md"
-    }
+      outline: "px-2 py-1 border rounded-md",
+    },
   },
-  defaultVariants:{
-    variant: "default"
-  }
+  defaultVariants: {
+    variant: "default",
+  },
 });
 
-interface KbdProps extends React.HTMLAttributes<HTMLElement> {}
+type KbdProps = React.HTMLAttributes<HTMLElement>;
 const Kbd = ({ className, ...props }: KbdProps) => {
   return <Keyboard className={KbdStyles({ className })} {...props} />;
 };

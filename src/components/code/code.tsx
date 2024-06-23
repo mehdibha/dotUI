@@ -1,3 +1,12 @@
+/* eslint-disable @typescript-eslint/ban-types */
+
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import React from "react";
 import { codeToHtml } from "shiki";
 import { CodeClient } from "./code-client";
@@ -11,7 +20,7 @@ interface CodeProps {
 }
 
 const Code = async ({ children, inline, lang: _lang, ...props }: CodeProps) => {
-  const { code: codeStr, lang, title } = parseChildren(children as CodeText, _lang);
+  const { code: codeStr, lang } = parseChildren(children as CodeText, _lang);
   const html = await codeToHtml(codeStr, {
     lang: lang,
     themes: {

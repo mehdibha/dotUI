@@ -3,7 +3,7 @@
 import {
   Section as AriaSection,
   Header as AriaHeader,
-  SectionProps as AriaSectionProps,
+  type SectionProps as AriaSectionProps,
   Collection as AriaCollection,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
@@ -18,7 +18,7 @@ const SectionStyles = tv({
 interface SectionProps<T> extends AriaSectionProps<T> {
   title?: string;
 }
-const Section = <T extends object>({ className, title, ...props }: SectionProps<T>) => {
+const Section = <T extends object>({ title, ...props }: SectionProps<T>) => {
   return (
     <SectionRoot {...props}>
       <SectionTitle>{title}</SectionTitle>
@@ -27,13 +27,13 @@ const Section = <T extends object>({ className, title, ...props }: SectionProps<
   );
 };
 
-interface SectionRootProps<T> extends AriaSectionProps<T> {}
+type SectionRootProps<T> = AriaSectionProps<T>;
 const SectionRoot = <T extends object>({ className, ...props }: SectionRootProps<T>) => {
   const { root } = SectionStyles();
   return <AriaSection className={root({ className })} {...props} />;
 };
 
-interface SectionTitleProps extends React.HTMLAttributes<HTMLElement> {}
+type SectionTitleProps = React.HTMLAttributes<HTMLElement>;
 const SectionTitle = ({ className, ...props }: SectionTitleProps) => {
   const { title } = SectionStyles();
   return <AriaHeader className={title({ className })} {...props} />;

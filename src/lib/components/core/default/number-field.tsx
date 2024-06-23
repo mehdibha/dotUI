@@ -8,10 +8,10 @@ import {
 } from "react-aria-components";
 import { type VariantProps } from "tailwind-variants";
 import { useMediaQuery } from "@/lib/hooks/use-media-query";
-import { Button, ButtonProps } from "./button";
+import { Button, type ButtonProps } from "./button";
 import { fieldStyles } from "./field";
 import { Field, type FieldProps } from "./field";
-import { InputWrapper, Input, inputStyles } from "./input";
+import { InputWrapper, Input, type inputStyles } from "./input";
 
 type NumberFieldProps = NumberFieldRootProps &
   Omit<FieldProps, "children"> &
@@ -93,11 +93,7 @@ interface NumberFieldButtonProps extends ButtonProps {
   slot: "increment" | "decrement";
   iconType?: "chevron" | "default";
 }
-const NumberFieldButton = ({
-  slot,
-  iconType = "default",
-  ...props
-}: NumberFieldButtonProps) => {
+const NumberFieldButton = ({ slot, iconType = "default", ...props }: NumberFieldButtonProps) => {
   const icon =
     iconType === "chevron" ? (
       slot === "increment" ? (
