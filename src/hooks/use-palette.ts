@@ -80,10 +80,9 @@ export const usePalette = (
     updateTheme({ saturation: value as number });
   };
 
-  const handleChangeRatio = (value: string, index: number) => {
-    const newValue = Number(value);
-    if (isNaN(newValue)) return;
-    const newRatios = ratios.map((r, i) => (i === index ? newValue : r));
+  const handleChangeRatio = (value: number, index: number) => {
+    if (isNaN(value)) return;
+    const newRatios = ratios.map((r, i) => (i === index ? value : r));
     updateTheme({ ratios: newRatios });
   };
 

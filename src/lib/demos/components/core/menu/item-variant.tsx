@@ -3,6 +3,7 @@ import { Button } from "@/lib/components/core/default/button";
 import { Menu, MenuItem, MenuRoot } from "@/lib/components/core/default/menu";
 
 export default function Demo() {
+  // TODO : add variant on items
   return (
     <MenuRoot>
       <Button variant="quiet" shape="square">
@@ -12,7 +13,7 @@ export default function Demo() {
         <MenuItem>Account settings</MenuItem>
         <MenuItem>Create team</MenuItem>
         <MenuItem>Command menu</MenuItem>
-        <MenuItem variant="danger">Delete</MenuItem>
+        <MenuItem>Delete</MenuItem>
       </Menu>
     </MenuRoot>
   );

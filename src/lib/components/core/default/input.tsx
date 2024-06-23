@@ -181,7 +181,8 @@ const InputWrapper = React.forwardRef<HTMLDivElement, InputWrapperProps>(
           onPointerDown={(event) => {
             const target = event.target as HTMLElement;
             if (target.closest("input, button, a")) return;
-            const input = inputRef.current; // TODO
+            // @ts-expect-error
+            const input = inputRef.current; // TODO: Mergeprops correctly here
             if (!input) return;
             requestAnimationFrame(() => {
               input.focus();

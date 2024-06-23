@@ -27,7 +27,7 @@ export default function Demo() {
 
   return (
     <div className="text-center">
-      <Button size="sm" onClick={handleClick}>
+      <Button size="sm" onPress={handleClick}>
         Next
       </Button>
       <div className="mt-8 grid grid-cols-2 gap-4">

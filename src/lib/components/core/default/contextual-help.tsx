@@ -1,6 +1,6 @@
 import { InfoIcon, HelpCircleIcon } from "lucide-react";
 import { Button } from "./button";
-import { PopoverRoot, Popover } from "./popover";
+import { DialogRoot, Dialog } from "./dialog";
 
 interface ContextualHelpProps {
   title?: string;
@@ -8,15 +8,10 @@ interface ContextualHelpProps {
   variant?: "info" | "help";
 }
 
-const ContextualHelp = ({
-  title,
-  description,
-  variant,
-  ...props
-}: ContextualHelpProps) => {
+const ContextualHelp = ({ title, description, variant, ...props }: ContextualHelpProps) => {
   const icon = variant === "info" ? <InfoIcon /> : <HelpCircleIcon />;
   return (
-    <PopoverRoot>
+    <DialogRoot>
       <Button
         slot={null}
         aria-label={variant}
@@ -27,8 +22,8 @@ const ContextualHelp = ({
       >
         {icon}
       </Button>
-      <Popover title={title} description={description} placement="top" />
-    </PopoverRoot>
+      <Dialog type="popover" mobileType="modal" title={title} description={description} />
+    </DialogRoot>
   );
 };
 

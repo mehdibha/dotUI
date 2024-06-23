@@ -724,78 +724,6 @@ export const previews = {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/skeleton/fixed-size-children")),
       code : [{"title":"fixed-size-children.tsx","code":"import { Button } from \"@/lib/components/core/default/button\";\r\nimport { Skeleton } from \"@/lib/components/core/default/skeleton\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <Skeleton className=\"size-20\">\r\n      <Button>Button</Button>\r\n    </Skeleton>\r\n  );\r\n}\r\n"}]
     },
-    "demos/components/core/toast/default": {
-      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/toast/default")),
-      code : [{"title":"default.tsx","code":"\"use client\";\n\nimport { Button } from \"@/lib/components/core/default/button\";\nimport { toast } from \"@/lib/components/core/default/toast\";\n\nexport default function ToastDemo() {\n  return <Button onPress={() => toast(\"Event has been created\")}>Show toast</Button>;\n}\n"}]
-    },
-    "demos/components/core/toast/variants": {
-      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/toast/variants")),
-      code : [{"title":"variants.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { Button } from \"@/lib/components/core/default/button\";\nimport { Label } from \"@/lib/components/core/default/field\";\nimport { RadioGroup, Radio } from \"@/lib/components/core/default/radio\";\nimport { toast } from \"@/lib/components/core/default/toast\";\n\ntype Type = \"default\" | \"success\" | \"error\" | \"warning\" | \"info\";\ntype Variant = \"default\" | \"muted\" | \"fill\";\n\nexport default function SonnerVariantsDemo() {\n  const [type, setType] = React.useState<Type>(\"default\");\n  const [variant, setVariant] = React.useState<Variant>(\"default\");\n  const action = {\n    default: toast,\n    success: toast.success,\n    warning: toast.warning,\n    error: toast.error,\n    info: toast.info,\n  };\n\n  return (\n    <div className=\"flex items-center gap-16\">\n      <Button\n        onPress={() =>\n          action[type](\"Event has been created\", {\n            variant,\n          })\n        }\n      >\n        Show toast\n      </Button>\n      <div className=\"flex gap-4\">\n        <div className=\"space-y-2\">\n          <Label>Type</Label>\n          <RadioGroup value={type} onChange={(newVal) => setType(newVal as Type)}>\n            <Radio value=\"default\">Default</Radio>\n            <Radio value=\"success\">Success</Radio>\n            <Radio value=\"error\">Error</Radio>\n            <Radio value=\"warning\">Warning</Radio>\n            <Radio value=\"info\">Info</Radio>\n          </RadioGroup>\n        </div>\n        <div className=\"space-y-2\">\n          <Label>Variant</Label>\n          <RadioGroup\n            value={variant}\n            onChange={(newVal) => setVariant(newVal as Variant)}\n          >\n            <Radio value=\"default\">Default</Radio>\n            <Radio value=\"muted\">Muted</Radio>\n            <Radio value=\"fill\">Fill</Radio>\n          </RadioGroup>\n        </div>\n      </div>\n    </div>\n  );\n}\n"}]
-    },
-    "demos/components/core/toast/custom-content": {
-      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/toast/custom-content")),
-      code : [{"title":"custom-content.tsx","code":"\"use client\";\n\nimport { Button } from \"@/lib/components/core/default/button\";\nimport { toast } from \"@/lib/components/core/default/toast\";\n\nexport default function ToastDemo() {\n  return (\n    <Button\n      onPress={() =>\n        toast(\n          <>\n            The <span className=\"font-bold\">Evil Rabbit</span> jumped over the fence.\n          </>\n        )\n      }\n    >\n      Show toast\n    </Button>\n  );\n}\n"}]
-    },
-    "demos/components/core/toast/multi-line": {
-      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/toast/multi-line")),
-      code : [{"title":"multi-line.tsx","code":"\"use client\";\r\n\r\nimport { Button } from \"@/lib/components/core/default/button\";\r\nimport { toast } from \"@/lib/components/core/default/toast\";\r\n\r\nexport default function ToastDemo() {\r\n  return (\r\n    <Button\r\n      onPress={() =>\r\n        toast(\r\n          \"The Evil Rabbit jumped over the fence. The Evil Rabbit jumped over the fence. The Evil Rabbit jumped over the fence. The Evil Rabbit jumped over the fence.\"\r\n        )\r\n      }\r\n    >\r\n      Show toast\r\n    </Button>\r\n  );\r\n}\r\n"}]
-    },
-    "demos/components/core/toast/preserve": {
-      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/toast/preserve")),
-      code : [{"title":"preserve.tsx","code":"\"use client\";\n\nimport { Button } from \"@/lib/components/core/default/button\";\nimport { toast } from \"@/lib/components/core/default/toast\";\n\nexport default function ToastDemo() {\n  return (\n    <Button onPress={() => toast(\"Event has been created\", { duration: Infinity })}>\n      Show toast\n    </Button>\n  );\n}\n"}]
-    },
-    "demos/components/core/toast/action": {
-      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/toast/action")),
-      code : [{"title":"action.tsx","code":"\"use client\";\r\n\r\nimport { Button } from \"@/lib/components/core/default/button\";\r\nimport { toast } from \"@/lib/components/core/default/toast\";\r\n\r\nexport default function ToastDemo() {\r\n  return (\r\n    <Button\r\n      onPress={() =>\r\n        toast(\"Event has been created\", {\r\n          description: \"Sunday, December 03, 2023 at 9:00 AM\",\r\n          action: {\r\n            label: \"Undo\",\r\n            onClick: () => console.log(\"Undo\"),\r\n          },\r\n        })\r\n      }\r\n    >\r\n      Show toast\r\n    </Button>\r\n  );\r\n}\r\n"}]
-    },
-    "demos/components/core/toast/description": {
-      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/toast/description")),
-      code : [{"title":"description.tsx","code":"\"use client\";\r\n\r\nimport { Button } from \"@/lib/components/core/default/button\";\r\nimport { toast } from \"@/lib/components/core/default/toast\";\r\n\r\nexport default function ToastDemo() {\r\n  return (\r\n    <Button\r\n      onPress={() =>\r\n        toast(\"Event has been created\", {\r\n          description: \"Sunday, December 03, 2023 at 9:00 AM\",\r\n        })\r\n      }\r\n    >\r\n      Show toast\r\n    </Button>\r\n  );\r\n}\r\n"}]
-    },
-    "demos/components/core/toast/undo": {
-      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/toast/undo")),
-      code : [{"title":"undo.tsx","code":"\"use client\";\r\n\r\nimport { Button } from \"@/lib/components/core/default/button\";\r\nimport { toast } from \"@/lib/components/core/default/toast\";\r\n\r\nexport default function ToastDemo() {\r\n  return (\r\n    <Button\r\n      onPress={() =>\r\n        toast(\"Event has been created\", { onUndo: () => console.log(\"undo\") })\r\n      }\r\n    >\r\n      Show toast\r\n    </Button>\r\n  );\r\n}\r\n"}]
-    },
-    "demos/components/core/toast/dismissible": {
-      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/toast/dismissible")),
-      code : [{"title":"dismissible.tsx","code":"\"use client\";\r\n\r\nimport { Button } from \"@/lib/components/core/default/button\";\r\nimport { toast } from \"@/lib/components/core/default/toast\";\r\n\r\nexport default function ToastDemo() {\r\n  return (\r\n    <Button\r\n      onPress={() =>\r\n        toast(\"Event has been created\", {\r\n          dismissible: false,\r\n        })\r\n      }\r\n    >\r\n      Show toast\r\n    </Button>\r\n  );\r\n}\r\n"}]
-    },
-    "demos/components/core/toast/custom-icon": {
-      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/toast/custom-icon")),
-      code : [{"title":"custom-icon.tsx","code":"\"use client\";\r\n\r\nimport { HelpCircleIcon } from \"lucide-react\";\r\nimport { Button } from \"@/lib/components/core/default/button\";\r\nimport { toast } from \"@/lib/components/core/default/toast\";\r\n\r\nexport default function ToastDemo() {\r\n  return (\r\n    <Button onPress={() => toast(\"Why this is happening?\", { icon: <HelpCircleIcon /> })}>\r\n      Show toast\r\n    </Button>\r\n  );\r\n}\r\n"}]
-    },
-    "demos/components/core/checkbox-card/default": {
-      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/checkbox-card/default")),
-      code : [{"title":"default.tsx","code":"\"use client\";\n\nimport { CheckboxCard } from \"@/lib/components/core/default/checkbox/checkbox-card\";\n\nexport default function CheckboxDemo() {\n  return (\n    <CheckboxCard\n      title=\"Upload documents\"\n      description=\"upload documents from your computer.\"\n    />\n  );\n}\n"}]
-    },
-    "demos/components/core/checkbox-card/title": {
-      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/checkbox-card/title")),
-      code : [{"title":"title.tsx","code":"\"use client\";\n\nimport { CheckboxCard } from \"@/lib/components/core/default/checkbox/checkbox-card\";\n\nexport default function CheckboxDemo() {\n  return (\n    <CheckboxCard defaultSelected title=\"Upload documents\" />\n  );\n}\n"}]
-    },
-    "demos/components/core/checkbox-card/description": {
-      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/checkbox-card/description")),
-      code : [{"title":"description.tsx","code":"\"use client\";\n\nimport { CheckboxCard } from \"@/lib/components/core/default/checkbox/checkbox-card\";\n\nexport default function CheckboxDemo() {\n  return (\n    <CheckboxCard\n      defaultSelected\n      title=\"Upload documents\"\n      description=\"upload documents from your computer.\"\n    />\n  );\n}\n"}]
-    },
-    "demos/components/core/checkbox-card/indeterminate": {
-      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/checkbox-card/indeterminate")),
-      code : [{"title":"indeterminate.tsx","code":"\"use client\";\n\nimport { CheckboxCard } from \"@/lib/components/core/default/checkbox/checkbox-card\";\n\nexport default function CheckboxDisabledDemo() {\n  return (\n    <CheckboxCard isIndeterminate defaultSelected>\n      Select all\n    </CheckboxCard>\n  );\n}\n"}]
-    },
-    "demos/components/core/checkbox-card/disabled": {
-      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/checkbox-card/disabled")),
-      code : [{"title":"disabled.tsx","code":"\"use client\";\r\n\r\nimport { CheckboxCard } from \"@/lib/components/core/default/checkbox/checkbox-card\";\r\n\r\nexport default function CheckboxDemo() {\r\n  return (\r\n    <div className=\"flex items-center gap-4\">\r\n      <CheckboxCard\r\n        isDisabled\r\n        title=\"Upload documents\"\r\n        description=\"upload documents from your computer.\"\r\n      />\r\n      <CheckboxCard\r\n        defaultSelected\r\n        isDisabled\r\n        title=\"Upload documents\"\r\n        description=\"upload documents from your computer.\"\r\n      />\r\n    </div>\r\n  );\r\n}\r\n"}]
-    },
-    "demos/components/core/checkbox-card/read-only": {
-      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/checkbox-card/read-only")),
-      code : [{"title":"read-only.tsx","code":"\"use client\";\n\nimport { CheckboxCard } from \"@/lib/components/core/default/checkbox/checkbox-card\";\n\nexport default function CheckboxDemo() {\n  return (\n    <CheckboxCard\n      isReadOnly\n      title=\"Upload documents\"\n      description=\"upload documents from your computer.\"\n    />\n  );\n}\n"}]
-    },
-    "demos/components/core/checkbox-card/controlled": {
-      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/checkbox-card/controlled")),
-      code : [{"title":"controlled.tsx","code":"\"use client\";\r\n\r\nimport React from \"react\";\r\nimport { CheckboxCard } from \"@/lib/components/core/default/checkbox/checkbox-card\";\r\n\r\nexport default function CheckboxDemo() {\r\n  const [checked, setChecked] = React.useState(true);\r\n  return (\r\n    <div>\r\n      <CheckboxCard\r\n        isSelected={checked}\r\n        onChange={(isSelected) => setChecked(isSelected)}\r\n        title=\"Upload documents\"\r\n        description=\"upload documents from your computer.\"\r\n      />\r\n    </div>\r\n  );\r\n}\r\n"}]
-    },
-    "demos/components/core/checkbox-card/composition": {
-      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/checkbox-card/composition")),
-      code : [{"title":"composition.tsx","code":"\"use client\";\n\nimport { CheckboxCard } from \"@/lib/components/core/default/checkbox/checkbox-card\";\n\nexport default function CheckboxDemo() {\n  return (\n    <CheckboxCard\n      defaultSelected\n      title=\"Upload documents\"\n      description=\"upload documents from your computer.\"\n    />\n  );\n}\n"}]
-    },
     "demos/components/core/checkbox-group/default": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/checkbox-group/default")),
       code : [{"title":"default.tsx","code":"import { Checkbox, CheckboxGroup } from \"@/lib/components/core/default/checkbox\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <CheckboxGroup label=\"React frameworks\" defaultValue={[\"nextjs\"]}>\r\n      <Checkbox value=\"nextjs\">Next.js</Checkbox>\r\n      <Checkbox value=\"remix\">Remix</Checkbox>\r\n      <Checkbox value=\"gatsby\">Gatsby</Checkbox>\r\n    </CheckboxGroup>\r\n  );\r\n}\r\n"}]
@@ -916,22 +844,6 @@ export const previews = {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/number-field/composition")),
       code : [{"title":"composition.tsx","code":"import React from \"react\";\nimport { NumberField } from \"@/lib/components/core/default/number-field\";\n\nexport default function Demo() {\n  return <NumberField label=\"Width\" defaultValue={1024} />;\n}\n"}]
     },
-    "demos/components/core/radio-card/default": {
-      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/radio-card/default")),
-      code : [{"title":"default.tsx","code":"import { RadioGroup, RadioCard } from \"@/lib/components/core/default/radio\";\n\nexport default function Demo() {\n  return (\n    <RadioGroup defaultValue=\"pro-trial\">\n      <RadioCard value=\"pro-trial\" title=\"Pro trial\" />\n    </RadioGroup>\n  );\n}\n"}]
-    },
-    "demos/components/core/radio-card/title": {
-      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/radio-card/title")),
-      code : [{"title":"title.tsx","code":"import { RadioGroup, RadioCard } from \"@/lib/components/core/default/radio\";\n\nexport default function Demo() {\n  return (\n    <RadioGroup>\n      <RadioCard value=\"pro-trial\" title=\"Pro trial\" />\n    </RadioGroup>\n  );\n}\n"}]
-    },
-    "demos/components/core/radio-card/description": {
-      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/radio-card/description")),
-      code : [{"title":"description.tsx","code":"import { RadioGroup, RadioCard } from \"@/lib/components/core/default/radio\";\n\nexport default function Demo() {\n  return (\n    <RadioGroup>\n      <RadioCard value=\"pro-trial\" title=\"Pro trial\" description=\"Free for two weeks\" />\n    </RadioGroup>\n  );\n}\n"}]
-    },
-    "demos/components/core/radio-card/disabled": {
-      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/radio-card/disabled")),
-      code : [{"title":"disabled.tsx","code":"import { RadioGroup, RadioCard } from \"@/lib/components/core/default/radio\";\n\nexport default function Demo() {\n  return (\n    <RadioGroup defaultValue=\"pro-trial\">\n      <RadioCard\n        isDisabled\n        value=\"pro-trial\"\n        title=\"Pro trial\"\n        description=\"Free for two weeks\"\n      />\n    </RadioGroup>\n  );\n}\n"}]
-    },
     "demos/components/core/radio-group/default": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/radio-group/default")),
       code : [{"title":"default.tsx","code":"import { RadioGroup, Radio } from \"@/lib/components/core/default/radio\";\n\nexport default function Demo() {\n  return (\n    <RadioGroup defaultValue=\"sm\" label=\"Size\">\n      <Radio value=\"sm\">Small</Radio>\n      <Radio value=\"md\">Medium</Radio>\n      <Radio value=\"lg\">Large</Radio>\n    </RadioGroup>\n  );\n}\n"}]
@@ -979,14 +891,6 @@ export const previews = {
     "demos/components/core/radio-group/composition": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/radio-group/composition")),
       code : [{"title":"composition.tsx","code":"import { RadioGroup, Radio } from \"@/lib/components/core/default/radio\";\n\nexport default function Demo() {\n  return (\n    <RadioGroup defaultValue=\"sm\" label=\"Size\">\n      <Radio value=\"sm\">Small</Radio>\n      <Radio value=\"md\">Medium</Radio>\n      <Radio value=\"lg\">Large</Radio>\n    </RadioGroup>\n  );\n}\n"}]
-    },
-    "demos/components/core/radio/default": {
-      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/radio/default")),
-      code : [{"title":"default.tsx","code":"import { Radio, RadioGroup } from \"@/lib/components/core/default/radio\";\n\nexport default function Demo() {\n  return (\n    <RadioGroup>\n      <Radio value=\"option-1\">Option</Radio>\n    </RadioGroup>\n  );\n}\n"}]
-    },
-    "demos/components/core/radio/disabled": {
-      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/radio/disabled")),
-      code : [{"title":"disabled.tsx","code":"import { Radio, RadioGroup } from \"@/lib/components/core/default/radio\";\n\nexport default function Demo() {\n  return (\n    <RadioGroup>\n      <Radio value=\"option-1\" isDisabled>\n        Option\n      </Radio>\n    </RadioGroup>\n  );\n}\n"}]
     },
     "demos/components/core/search-field/default": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/search-field/default")),
@@ -1550,15 +1454,15 @@ export const previews = {
     },
     "demos/components/core/dialog/dismissable": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/dialog/dismissable")),
-      code : [{"title":"dismissable.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { Button } from \"@/lib/components/core/default/button\";\nimport { DialogRoot, Dialog, DialogBody, DialogFooter } from \"@/lib/components/core/default/dialog\";\nimport { TextField } from \"@/lib/components/core/default/text-field\";\n\nexport default function Demo() {\n  return (\n    <DialogRoot>\n      <Button variant=\"outline\">Edit Profile</Button>\n      <Dialog title=\"Edit profile\" description=\"Make changes to your profile.\">\n        {({ close }) => (\n          <>\n            <DialogBody>\n              <TextField autoFocus label=\"Name\" defaultValue=\"Mehdi\" />\n              <TextField label=\"Username\" defaultValue=\"@mehdibha_\" />\n            </DialogBody>\n            <DialogFooter>\n              <Button variant=\"outline\" size={{ initial: \"lg\", sm: \"md\" }} onPress={close}>\n                Cancel\n              </Button>\n              <Button variant=\"primary\" size={{ initial: \"lg\", sm: \"md\" }} onPress={close}>\n                Save changes\n              </Button>\n            </DialogFooter>\n          </>\n        )}\n      </Dialog>\n    </DialogRoot>\n  );\n}\n"}]
+      code : [{"title":"dismissable.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { Button } from \"@/lib/components/core/default/button\";\nimport { DialogRoot, Dialog, DialogBody, DialogFooter } from \"@/lib/components/core/default/dialog\";\nimport { TextField } from \"@/lib/components/core/default/text-field\";\n\nexport default function Demo() {\n  return (\n    <DialogRoot>\n      <Button variant=\"outline\">Edit Profile</Button>\n      <Dialog title=\"Edit profile\" description=\"Make changes to your profile.\" isDismissable={false}>\n        {({ close }) => (\n          <>\n            <DialogBody>\n              <TextField autoFocus label=\"Name\" defaultValue=\"Mehdi\" />\n              <TextField label=\"Username\" defaultValue=\"@mehdibha_\" />\n            </DialogBody>\n            <DialogFooter>\n              <Button variant=\"outline\" size={{ initial: \"lg\", sm: \"md\" }} onPress={close}>\n                Cancel\n              </Button>\n              <Button variant=\"primary\" size={{ initial: \"lg\", sm: \"md\" }} onPress={close}>\n                Save changes\n              </Button>\n            </DialogFooter>\n          </>\n        )}\n      </Dialog>\n    </DialogRoot>\n  );\n}\n"}]
     },
     "demos/components/core/dialog/dismiss-button": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/dialog/dismiss-button")),
-      code : [{"title":"dismiss-button.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { Button } from \"@/lib/components/core/default/button\";\nimport { DialogRoot, Dialog, DialogBody, DialogFooter } from \"@/lib/components/core/default/dialog\";\nimport { TextField } from \"@/lib/components/core/default/text-field\";\n\nexport default function Demo() {\n  return (\n    <DialogRoot>\n      <Button variant=\"outline\">Edit Profile</Button>\n      <Dialog title=\"Edit profile\" description=\"Make changes to your profile.\">\n        {({ close }) => (\n          <>\n            <DialogBody>\n              <TextField autoFocus label=\"Name\" defaultValue=\"Mehdi\" />\n              <TextField label=\"Username\" defaultValue=\"@mehdibha_\" />\n            </DialogBody>\n            <DialogFooter>\n              <Button variant=\"outline\" size={{ initial: \"lg\", sm: \"md\" }} onPress={close}>\n                Cancel\n              </Button>\n              <Button variant=\"primary\" size={{ initial: \"lg\", sm: \"md\" }} onPress={close}>\n                Save changes\n              </Button>\n            </DialogFooter>\n          </>\n        )}\n      </Dialog>\n    </DialogRoot>\n  );\n}\n"}]
+      code : [{"title":"dismiss-button.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { Button } from \"@/lib/components/core/default/button\";\nimport { DialogRoot, Dialog, DialogBody, DialogFooter } from \"@/lib/components/core/default/dialog\";\nimport { TextField } from \"@/lib/components/core/default/text-field\";\n\nexport default function Demo() {\n  return (\n    <DialogRoot>\n      <Button variant=\"outline\">Edit Profile</Button>\n      <Dialog\n        title=\"Edit profile\"\n        description=\"Make changes to your profile.\"\n        isDismissable\n        showDismissButton={false}\n      >\n        {({ close }) => (\n          <>\n            <DialogBody>\n              <TextField autoFocus label=\"Name\" defaultValue=\"Mehdi\" />\n              <TextField label=\"Username\" defaultValue=\"@mehdibha_\" />\n            </DialogBody>\n            <DialogFooter>\n              <Button variant=\"outline\" size={{ initial: \"lg\", sm: \"md\" }} onPress={close}>\n                Cancel\n              </Button>\n              <Button variant=\"primary\" size={{ initial: \"lg\", sm: \"md\" }} onPress={close}>\n                Save changes\n              </Button>\n            </DialogFooter>\n          </>\n        )}\n      </Dialog>\n    </DialogRoot>\n  );\n}\n"}]
     },
-    "demos/components/core/dialog/mobile-type": {
-      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/dialog/mobile-type")),
-      code : [{"title":"mobile-type.tsx","code":"import React from \"react\";\r\nimport { Button } from \"@/lib/components/core/default/button\";\r\nimport { DialogRoot, Dialog } from \"@/lib/components/core/default/dialog\";\r\nimport { TextField } from \"@/lib/components/core/default/text-field\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <DialogRoot>\r\n      <Button variant=\"outline\">Edit username</Button>\r\n      <Dialog title=\"Edit username\">\r\n        <TextField label=\"Username\" defaultValue=\"@mehdibha_\" />\r\n      </Dialog>\r\n    </DialogRoot>\r\n  );\r\n}\r\n"}]
+    "demos/components/core/dialog/inset-content": {
+      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/dialog/inset-content")),
+      code : [{"title":"inset-content.tsx","code":"import React from \"react\";\r\n\r\nexport default function Demo() {\r\n  return <p className=\"text-3xl\">TODO</p>;\r\n}\r\n"}]
     },
     "demos/components/core/dialog/popover": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/dialog/popover")),
@@ -1566,7 +1470,7 @@ export const previews = {
     },
     "demos/components/core/dialog/drawer": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/dialog/drawer")),
-      code : [{"title":"drawer.tsx","code":"\"use client\";\r\n\r\nimport React from \"react\";\r\nimport type { Key } from \"react-aria-components\";\r\nimport { Button } from \"@/lib/components/core/default/button\";\r\nimport { DialogRoot, Dialog } from \"@/lib/components/core/default/dialog\";\r\nimport { Item } from \"@/lib/components/core/default/list-box\";\r\nimport { Select } from \"@/lib/components/core/default/select\";\r\nimport { Switch } from \"@/lib/components/core/default/switch\";\r\n\r\nexport default function Demo() {\r\n  const [placement, setPlacement] = React.useState<Key>(\"top\");\r\n  const [swipeable, setSwipeable] = React.useState<boolean>(true);\r\n  return (\r\n    <div className=\"flex w-full items-center\">\r\n      <div className=\"flex flex-1 items-center justify-center\">\r\n        <DialogRoot>\r\n          <Button variant=\"outline\">Open drawer</Button>\r\n          <Dialog\r\n            type=\"popover\"\r\n            title=\"Help\"\r\n            description=\"For help accessing your account, please contact support.\"\r\n          />\r\n        </DialogRoot>\r\n      </div>\r\n      <div className=\"space-y-4 rounded-md border p-4\">\r\n        <Select label=\"Placement\" selectedKey={placement} onSelectionChange={setPlacement}>\r\n          <Item id=\"top\">Top</Item>\r\n          <Item id=\"bottom\">Bottom</Item>\r\n        </Select>\r\n        <Switch isSelected={swipeable} onChange={setSwipeable}>\r\n          Swipeable\r\n        </Switch>\r\n      </div>\r\n    </div>\r\n  );\r\n}\r\n"}]
+      code : [{"title":"drawer.tsx","code":"\"use client\";\r\n\r\nimport React from \"react\";\r\nimport type { Key } from \"react-aria-components\";\r\nimport { Button } from \"@/lib/components/core/default/button\";\r\nimport { DialogRoot, Dialog } from \"@/lib/components/core/default/dialog\";\r\nimport { Item } from \"@/lib/components/core/default/list-box\";\r\nimport { Select } from \"@/lib/components/core/default/select\";\r\nimport { Switch } from \"@/lib/components/core/default/switch\";\r\n\r\nexport default function Demo() {\r\n  const [placement, setPlacement] = React.useState<Key>(\"top\");\r\n  const [swipeable, setSwipeable] = React.useState<boolean>(true);\r\n  return (\r\n    <div className=\"flex w-full items-center\">\r\n      <div className=\"flex flex-1 items-center justify-center\">\r\n        <DialogRoot>\r\n          <Button variant=\"outline\">Open drawer</Button>\r\n          <Dialog\r\n            type=\"drawer\"\r\n            title=\"Help\"\r\n            description=\"For help accessing your account, please contact support.\"\r\n          />\r\n        </DialogRoot>\r\n      </div>\r\n      <div className=\"space-y-4 rounded-md border p-4\">\r\n        <Select label=\"Placement\" selectedKey={placement} onSelectionChange={setPlacement}>\r\n          <Item id=\"top\">Top</Item>\r\n          <Item id=\"bottom\">Bottom</Item>\r\n        </Select>\r\n        <Switch isSelected={swipeable} onChange={setSwipeable}>\r\n          Swipeable\r\n        </Switch>\r\n      </div>\r\n    </div>\r\n  );\r\n}\r\n"}]
     },
     "demos/components/core/dialog/alert-dialog": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/dialog/alert-dialog")),

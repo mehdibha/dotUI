@@ -3,8 +3,9 @@ import { Combobox } from "@/lib/components/core/default/combobox";
 import { Item } from "@/lib/components/core/default/list-box";
 
 export default function Demo() {
+  // TODO : add isLoading prop
   return (
-    <Combobox label="Favorite Animal" isLoading>
+    <Combobox label="Favorite Animal">
       <Item id="red panda">Red Panda</Item>
       <Item id="cat" isDisabled>
         Cat

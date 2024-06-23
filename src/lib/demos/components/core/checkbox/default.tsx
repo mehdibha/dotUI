@@ -6,7 +6,7 @@ import { Link } from "@/lib/components/core/default/link";
 export default function Demo() {
   return (
     <Checkbox defaultSelected>
-      I accept the <Link variant="primary" href="#">terms and conditions</Link>
+      I accept the <Link variant="accent" href="#">terms and conditions</Link>
     </Checkbox>
   );
 }

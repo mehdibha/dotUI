@@ -2,7 +2,6 @@ import React from "react";
 import type { Metadata, Viewport } from "next";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
-import { Toaster } from "@/lib/components/core/default/toast";
 import { cn } from "@/lib/utils/classes";
 import { truncateOnWord } from "@/lib/utils/string";
 import { JosephinFont, fontDisplay, geistMono, geistSans } from "@/styles/fonts";
@@ -64,7 +63,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         suppressHydrationWarning
       >
         <Providers>
-          <Toaster />
           <Header />
           <main>{children}</main>
           <Footer />

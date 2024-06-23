@@ -33,6 +33,7 @@ const Overlay = React.forwardRef<HTMLElement | HTMLDivElement, OverlayProps>(
         );
       case "drawer":
         return (
+          // @ts-expect-error TODO FIX THIS SAME ORIENTATION PROP AS POPOVER :'(
           <DrawerOverlay
             ref={ref as React.ForwardedRef<HTMLDivElement>}
             isDismissable={isDismissable}
