@@ -1,7 +1,9 @@
 import React from "react";
+import { SettingsIcon } from "lucide-react";
+import { CodeBlock } from "@/components/code-block";
 import { ThemeWrapper } from "@/components/theme-wrapper";
 import { Button } from "@/lib/components/core/default/button";
-import { CodeBlock } from "@/lib/components/core/default/code-block";
+import { Dialog, DialogRoot } from "@/lib/components/core/default/dialog";
 import { ScrollArea } from "@/lib/components/core/default/scroll-area";
 import { Skeleton } from "@/lib/components/core/default/skeleton";
 import { cn } from "@/lib/utils/classes";
@@ -14,7 +16,8 @@ export interface ComponentPreviewProps {
   className?: string;
   containerClassName?: string;
   aspect?: "default" | "page";
-  defaultExpanded?: boolean
+  defaultExpanded?: boolean;
+  preview?: string;
 }
 
 export const ComponentPreview = ({
@@ -22,7 +25,7 @@ export const ComponentPreview = ({
   className,
   containerClassName,
   aspect = "default",
-  defaultExpanded = true
+  preview,
 }: ComponentPreviewProps) => {
   // make it server component
   const component = React.useMemo(() => {
@@ -50,28 +53,36 @@ export const ComponentPreview = ({
 
   return (
     <div className={cn("overflow-hidden rounded-md border", containerClassName)}>
-      <ThemeWrapper fallback={<Skeleton className="h-[150px]" />}>
-        <ScrollArea
-          className={cn("flex items-center justify-center bg-bg text-fg", {
-            "max-h-[800px]": aspect === "default",
-          })}
-        >
-          <div className="flex min-h-40 items-center justify-center px-4 py-8">
-            <div className={cn("flex w-full items-center justify-center", className)}>
-              {component}
+      <div className="relative">
+        <ThemeWrapper fallback={<Skeleton className="h-[150px]" />}>
+          <ScrollArea
+            className={cn("flex items-center justify-center bg-bg text-fg", {
+              "max-h-[800px]": aspect === "default",
+            })}
+          >
+            <div className="flex min-h-40 items-center justify-center px-4 py-8">
+              <div className={cn("flex w-full items-center justify-center", className)}>
+                {component}
+              </div>
             </div>
-          </div>
-        </ScrollArea>
-      </ThemeWrapper>
+          </ScrollArea>
+        </ThemeWrapper>
+        <DialogRoot>
+          <Button
+            aria-label="Customize Theme"
+            variant="quiet"
+            size="sm"
+            shape="square"
+            className="absolute right-2 top-2"
+          >
+            <SettingsIcon />
+          </Button>
+          <Dialog type="popover" title="Customize theme"></Dialog>
+        </DialogRoot>
+      </div>
       <CodeBlock
-        toolbar={
-          <div>
-            <Button variant="outline" size="sm">Show code </Button>
-          </div>
-        }
-        language="tsx"
-        code={defaultExpanded ? code.map((file) => file.code.replace(/[\r\n]+$/, "")) : []}
-        fileName={defaultExpanded ? code.map((file) => file.title) : []}
+        files={code.map((file) => ({ fileName: file.title, code: file.code, lang: "tsx" }))}
+        preview={preview}
         className={"w-full rounded-t-none border-x-0 border-b-0"}
       />
     </div>

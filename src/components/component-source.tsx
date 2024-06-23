@@ -1,7 +1,5 @@
 import React from "react";
-import { Code } from "bright";
-import { tabs } from "@/components/code-highlighter/code-tabs";
-import { CodeBlock } from "@/lib/components/core/default/code-block";
+import { CodeBlock } from "@/components/code-block";
 import { getComponentSource } from "@/server/component-source";
 
 export const ComponentSource = ({
@@ -21,24 +19,7 @@ export const ComponentSource = ({
 
   return (
     <CodeBlock
-      language="tsx"
-      fileName={code.map((file) => file.title)}
-      code={code.map((file) => file.code.replace(/[\r\n]+$/, ""))}
-      className={className}
-    />
-  );
-
-  return (
-    <Code
-      subProps={code.map((file, index) => ({
-        title: file.title,
-        code: file.code.replace(/[\r\n]+$/, ""),
-        lang: "tsx",
-        ...(titles?.[index] && { title: titles[index] }),
-      }))}
-      theme="github-dark-dimmed"
-      codeClassName="text-xs"
-      extensions={[tabs]}
+      files={code.map((file) => ({ fileName: file.title, code: file.code, lang: "tsx" }))}
       className={className}
     />
   );

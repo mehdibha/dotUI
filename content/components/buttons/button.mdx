@@ -11,7 +11,7 @@ links:
     href: https://react-spectrum.adobe.com/react-aria/Button.html#props
 ---
 
-<ComponentPreview name="demos/components/core/button/default" />
+<ComponentPreview name="demos/components/core/button/default" preview={`<Button>button</Button>`} />
 
 ## Installation
 
@@ -39,7 +39,17 @@ The button's label indicates the purpose of the action to the user. You may also
 Use the `variant` prop to control the visual style of the button.<br/>
 The default variant is `default`.
 
-<ComponentPreview name="demos/components/core/button/variants" />
+<ComponentPreview
+  name="demos/components/core/button/variants"
+  preview={`<Button variant="default">default</Button>
+<Button variant="primary">primary</Button>
+<Button variant="outline">outline</Button>
+<Button variant="quiet">quiet</Button>
+<Button variant="success">success</Button>
+<Button variant="warning">warning</Button>
+<Button variant="danger">danger</Button>
+<Button variant="accent">accent</Button>`}
+/>
 
 ### Sizes
 
