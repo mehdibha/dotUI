@@ -27,23 +27,14 @@ type LabelProps = AriaLabelProps & {
   isRequired?: boolean;
   necessityIndicator?: "label" | "icon";
 };
-const Label = ({
-  className,
-  children,
-  isRequired,
-  necessityIndicator,
-  ...props
-}: LabelProps) => {
+const Label = ({ className, children, isRequired, necessityIndicator, ...props }: LabelProps) => {
   const { label } = fieldStyles();
   const necessityLabel = isRequired ? "(required)" : "(optional)";
   return (
     <AriaLabel className={label({ className })} {...props}>
       {children}
-      {isRequired && (
-        <span aria-hidden>{necessityIndicator === "icon" ? <></> : <></>}</span>
-      )}
-      {(necessityIndicator === "label" ||
-        (necessityIndicator === "icon" && isRequired)) &&
+      {isRequired && <span aria-hidden>{necessityIndicator === "icon" ? <></> : <></>}</span>}
+      {(necessityIndicator === "label" || (necessityIndicator === "icon" && isRequired)) &&
         " \u200b"}
       {necessityIndicator === "label" && <span aria-hidden>{necessityLabel}</span>}
       {necessityIndicator === "icon" && isRequired && <AsteriskIcon />}
@@ -54,9 +45,7 @@ const Label = ({
 type DescriptionProps = AriaTextProps;
 const Description = ({ className, ...props }: DescriptionProps) => {
   const { description } = fieldStyles();
-  return (
-    <AriaText {...props} slot="description" className={description({ className })} />
-  );
+  return <AriaText {...props} slot="description" className={description({ className })} />;
 };
 
 type FieldErrorProps = Omit<AriaFieldErrorProps, "className"> & { className?: string };
@@ -93,14 +82,8 @@ interface FieldProps extends HelpTextProps {
   children?: React.ReactNode;
 }
 const Field = (props: FieldProps) => {
-  const {
-    children,
-    label,
-    isRequired,
-    necessityIndicator,
-    contextualHelp,
-    ...helpTextProps
-  } = props;
+  const { children, label, isRequired, necessityIndicator, contextualHelp, ...helpTextProps } =
+    props;
   return (
     <>
       {label && contextualHelp && (

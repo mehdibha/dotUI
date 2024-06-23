@@ -10,8 +10,7 @@ import { Field, fieldStyles, type FieldProps } from "../field";
 
 const radioGroupStyles = tv({
   slots: {
-    wrapper:
-      "flex flex-col gap-1 orientation-horizontal:flex-row orientation-horizontal:gap-3",
+    wrapper: "flex flex-col gap-1 orientation-horizontal:flex-row orientation-horizontal:gap-3",
   },
 });
 
@@ -21,20 +20,9 @@ interface RadioGroupProps
     FieldProps {
   className?: string;
 }
-const RadioGroup = React.forwardRef<
-  React.ElementRef<typeof AriaRadioGroup>,
-  RadioGroupProps
->(
+const RadioGroup = React.forwardRef<React.ElementRef<typeof AriaRadioGroup>, RadioGroupProps>(
   (
-    {
-      children,
-      label,
-      description,
-      errorMessage,
-      necessityIndicator,
-      contextualHelp,
-      ...props
-    },
+    { children, label, description, errorMessage, necessityIndicator, contextualHelp, ...props },
     ref
   ) => {
     const { wrapper } = radioGroupStyles();
@@ -49,11 +37,7 @@ const RadioGroup = React.forwardRef<
             necessityIndicator={necessityIndicator}
             contextualHelp={contextualHelp}
           >
-            <div
-              data-rac=""
-              data-orientation={orientation || undefined}
-              className={wrapper()}
-            >
+            <div data-rac="" data-orientation={orientation || undefined} className={wrapper()}>
               {children}
             </div>
           </Field>

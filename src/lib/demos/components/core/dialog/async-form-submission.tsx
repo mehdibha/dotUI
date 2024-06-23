@@ -2,12 +2,7 @@
 
 import React from "react";
 import { Button } from "@/lib/components/core/default/button";
-import {
-  DialogRoot,
-  Dialog,
-  DialogBody,
-  DialogFooter,
-} from "@/lib/components/core/default/dialog";
+import { DialogRoot, Dialog, DialogBody, DialogFooter } from "@/lib/components/core/default/dialog";
 import { TextField } from "@/lib/components/core/default/text-field";
 
 export default function DialogDemo() {
@@ -24,15 +19,11 @@ export default function DialogDemo() {
         {({ close }) => (
           <>
             <DialogBody>
-              <TextField autoFocus label="Name" defaultValue="Mehdi"  className="w-full"/>
+              <TextField autoFocus label="Name" defaultValue="Mehdi" className="w-full" />
               <TextField label="Username" defaultValue="@mehdibha_" />
             </DialogBody>
             <DialogFooter>
-              <Button
-                variant="outline"
-                size={{ initial: "lg", sm: "md" }}
-                onPress={close}
-              >
+              <Button variant="outline" size={{ initial: "lg", sm: "md" }} onPress={close}>
                 Cancel
               </Button>
               <Button

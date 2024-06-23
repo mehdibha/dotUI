@@ -59,7 +59,9 @@ export const SearchDocs = (props: ButtonProps) => {
         {...props}
         className={cn("w-full px-2 text-sm text-fg-muted", props.className)}
       >
-        {props.children ?? <span className="mr-4 inline-flex flex-1 text-left">Quick Search...</span>}
+        {props.children ?? (
+          <span className="mr-4 inline-flex flex-1 text-left">Quick Search...</span>
+        )}
       </Button>
       <Dialog showDismissButton={false} className="p-0 sm:p-0">
         <Command>

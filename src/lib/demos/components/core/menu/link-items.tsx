@@ -13,7 +13,11 @@ export default function Demo() {
         <MenuItem prefix={<TwitterIcon />} href="https://twitter.com/mehdibha_" target="_blank">
           X
         </MenuItem>
-        <MenuItem prefix={<DiscordIcon />} href="https://discord.com/invite/DXpj5V2fU8" target="_blank">
+        <MenuItem
+          prefix={<DiscordIcon />}
+          href="https://discord.com/invite/DXpj5V2fU8"
+          target="_blank"
+        >
           Discord
         </MenuItem>
       </Menu>

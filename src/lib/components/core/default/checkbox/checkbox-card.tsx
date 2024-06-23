@@ -35,70 +35,69 @@ interface CheckboxCardProps
   title?: string;
   description?: string;
 }
-const CheckboxCard = React.forwardRef<
-  React.ElementRef<typeof AriaCheckbox>,
-  CheckboxCardProps
->(({ className, children, title, description, ...props }, ref) => {
-  const {
-    root,
-    indicator,
-    wrapper,
-    title: titleStyle,
-    description: descriptionStyle,
-  } = checkboxCardStyles({});
-  return (
-    <AriaCheckbox ref={ref} {...props} className={root({ className })}>
-      {({
-        isIndeterminate,
-        isSelected,
-        isPressed,
-        isHovered,
-        isFocused,
-        isFocusVisible,
-        isDisabled,
-        isReadOnly,
-        isInvalid,
-      }) => (
-        <>
-          {children ?? (
-            <div className={wrapper({})}>
-              <span className={titleStyle({})}>{title}</span>
-              {description && (
-                <span
-                  data-rac=""
-                  data-disabled={isDisabled || undefined}
-                  className={descriptionStyle({})}
-                >
-                  {description}
-                </span>
+const CheckboxCard = React.forwardRef<React.ElementRef<typeof AriaCheckbox>, CheckboxCardProps>(
+  ({ className, children, title, description, ...props }, ref) => {
+    const {
+      root,
+      indicator,
+      wrapper,
+      title: titleStyle,
+      description: descriptionStyle,
+    } = checkboxCardStyles({});
+    return (
+      <AriaCheckbox ref={ref} {...props} className={root({ className })}>
+        {({
+          isIndeterminate,
+          isSelected,
+          isPressed,
+          isHovered,
+          isFocused,
+          isFocusVisible,
+          isDisabled,
+          isReadOnly,
+          isInvalid,
+        }) => (
+          <>
+            {children ?? (
+              <div className={wrapper({})}>
+                <span className={titleStyle({})}>{title}</span>
+                {description && (
+                  <span
+                    data-rac=""
+                    data-disabled={isDisabled || undefined}
+                    className={descriptionStyle({})}
+                  >
+                    {description}
+                  </span>
+                )}
+              </div>
+            )}
+            <div
+              data-rac=""
+              data-selected={isSelected || undefined}
+              data-indeterminate={props.isIndeterminate || undefined}
+              data-pressed={isPressed || undefined}
+              data-hovered={isHovered || undefined}
+              data-focused={isFocused || undefined}
+              data-focus-visible={isFocusVisible || undefined}
+              data-disabled={isDisabled || undefined}
+              data-readonly={isReadOnly || undefined}
+              data-invalid={isInvalid || undefined}
+              data-required={props.isRequired || undefined}
+              className={indicator({ className: "" })}
+            >
+              {isIndeterminate ? (
+                <MinusIcon strokeWidth={3} className="size-2.5" />
+              ) : (
+                <CheckIcon className="size-3" />
               )}
             </div>
-          )}
-          <div
-            data-rac=""
-            data-selected={isSelected || undefined}
-            data-indeterminate={props.isIndeterminate || undefined}
-            data-pressed={isPressed || undefined}
-            data-hovered={isHovered || undefined}
-            data-focused={isFocused || undefined}
-            data-focus-visible={isFocusVisible || undefined}
-            data-disabled={isDisabled || undefined}
-            data-readonly={isReadOnly || undefined}
-            data-invalid={isInvalid || undefined}
-            data-required={props.isRequired || undefined}
-            className={indicator({ className: "" })}
-          >
-            {isIndeterminate ? (
-              <MinusIcon strokeWidth={3} className="size-2.5" />
-            ) : (
-              <CheckIcon className="size-3" />
-            )}
-          </div>
-        </>
-      )}
-    </AriaCheckbox>
-  );
-});
+          </>
+        )}
+      </AriaCheckbox>
+    );
+  }
+);
 CheckboxCard.displayName = "CheckboxCard";
 
 export { CheckboxCard };

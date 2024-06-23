@@ -55,7 +55,8 @@ interface ListBoxItemProps<T> extends AriaListBoxItemProps<T> {
   description?: string;
 }
 const ListBoxItem = <T extends object>({ label, description, ...props }: ListBoxItemProps<T>) => {
-  const textValue = props.textValue || (typeof props.children === 'string' ? props.children : undefined);
+  const textValue =
+    props.textValue || (typeof props.children === "string" ? props.children : undefined);
   return (
     <AriaListBoxItem
       {...props}

@@ -1,8 +1,4 @@
-import {
-  contrast,
-  convertColorValue,
-  type ColorTuple,
-} from "@adobe/leonardo-contrast-colors";
+import { contrast, convertColorValue, type ColorTuple } from "@adobe/leonardo-contrast-colors";
 
 export const getContrastTextColor = (color: string): "white" | "black" => {
   const RGBColor = convertColorValue(color, "RGB", true) as unknown as {

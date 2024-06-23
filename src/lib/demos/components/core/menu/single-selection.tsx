@@ -10,11 +10,7 @@ export default function Demo() {
   return (
     <MenuRoot>
       <Button size="sm">Align</Button>
-      <Menu
-        selectionMode="single"
-        selectedKeys={selected}
-        onSelectionChange={setSelected}
-      >
+      <Menu selectionMode="single" selectedKeys={selected} onSelectionChange={setSelected}>
         <MenuItem id="start">Start</MenuItem>
         <MenuItem id="center">Center</MenuItem>
         <MenuItem id="end">End</MenuItem>

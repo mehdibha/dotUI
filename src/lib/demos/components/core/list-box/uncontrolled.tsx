@@ -5,7 +5,7 @@ export default function Demo() {
     <ListBox
       aria-label="Framework"
       selectionMode="multiple"
-      defaultSelectedKeys={["nextjs", "remix","astro"]}
+      defaultSelectedKeys={["nextjs", "remix", "astro"]}
     >
       <ListBoxItem id="nextjs">Next.js</ListBoxItem>
       <ListBoxItem id="remix">Remix</ListBoxItem>

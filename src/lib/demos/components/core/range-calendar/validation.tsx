@@ -1,4 +1,5 @@
-"use client"
+"use client";
+
 import { getLocalTimeZone, today } from "@internationalized/date";
 import { RangeCalendar } from "@/lib/components/core/default/range-calendar";
 

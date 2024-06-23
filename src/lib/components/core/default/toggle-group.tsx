@@ -61,11 +61,7 @@ const ToggleGroupButton = ({
   const state = useToggleState({ ...props, ...additionalProps });
   const { focusProps, isFocused, isFocusVisible } = useFocusRing(props);
   const { hoverProps, isHovered } = useHover(props);
-  const { buttonProps, isPressed } = useToggleButton(
-    { ...props, ...additionalProps },
-    state,
-    ref
-  );
+  const { buttonProps, isPressed } = useToggleButton({ ...props, ...additionalProps }, state, ref);
 
   const singleProps = {
     role: "radio",
@@ -220,9 +216,7 @@ const ToggleGroupMultiple = (props: ToggleGroupMultipleProps) => {
         ),
         onItemDeactivate: React.useCallback(
           (itemValue: string) =>
-            setValue((prevValue = []) =>
-              prevValue.filter((value) => value !== itemValue)
-            ),
+            setValue((prevValue = []) => prevValue.filter((value) => value !== itemValue)),
           [setValue]
         ),
         variant,

@@ -6,7 +6,7 @@ import { DropZone, DropZoneLabel } from "@/lib/components/core/default/drop-zone
 
 export default function DropZoneDemo() {
   return (
-    <div className="space-y-2 w-full">
+    <div className="w-full space-y-2">
       <DropZone aria-label="drag and drop files here">
         <UploadIcon />
       </DropZone>

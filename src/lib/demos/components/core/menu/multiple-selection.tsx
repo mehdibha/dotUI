@@ -6,10 +6,7 @@ export default function Demo() {
   return (
     <MenuRoot>
       <Button size="sm">Panels</Button>
-      <Menu
-        selectionMode="multiple"
-        defaultSelectedKeys={["sidebar", "searchbar", "console"]}
-      >
+      <Menu selectionMode="multiple" defaultSelectedKeys={["sidebar", "searchbar", "console"]}>
         <MenuItem id="sidebar">Sidebar</MenuItem>
         <MenuItem id="searchbar">Searchbar</MenuItem>
         <MenuItem id="tools">Tools</MenuItem>

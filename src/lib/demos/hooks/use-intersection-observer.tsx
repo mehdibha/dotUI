@@ -16,9 +16,7 @@ export default function Demo() {
     <div className="w-full max-w-sm">
       <p>
         Element{" "}
-        <span
-          className={cn(entry?.isIntersecting ? "text-green-700" : "text-yellow-600")}
-        >
+        <span className={cn(entry?.isIntersecting ? "text-green-700" : "text-yellow-600")}>
           {entry?.isIntersecting ? "inside" : "outside"}
         </span>{" "}
         the viewport

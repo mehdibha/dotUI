@@ -7,16 +7,8 @@ export default function Demo() {
     <MenuRoot>
       <Button>Settings</Button>
       <Menu>
-        <MenuItem
-          label="New file"
-          description="Create a new file"
-          prefix={<PlusSquareIcon />}
-        />
-        <MenuItem
-          label="Copy link"
-          description="Copy the file link"
-          prefix={<CopyIcon />}
-        />
+        <MenuItem label="New file" description="Create a new file" prefix={<PlusSquareIcon />} />
+        <MenuItem label="Copy link" description="Copy the file link" prefix={<CopyIcon />} />
         <MenuItem
           label="Edit file"
           description="Allows you to edit the file"

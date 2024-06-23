@@ -4,7 +4,7 @@ import { Select } from "@/lib/components/core/default/select";
 
 export default function Demo() {
   return (
-    <Select isRequired necessityIndicator="icon" >
+    <Select isRequired necessityIndicator="icon">
       <Item>Perplexity</Item>
       <Item>Replicate</Item>
       <Item>Together AI</Item>

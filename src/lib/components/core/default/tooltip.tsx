@@ -62,9 +62,7 @@ interface TooltipContentProps
   className?: string;
 }
 const TooltipContent = ({ className, offset = 10, ...props }: TooltipContentProps) => {
-  return (
-    <AriaTooltip offset={offset} className={tooltipVariants({ className })} {...props} />
-  );
+  return <AriaTooltip offset={offset} className={tooltipVariants({ className })} {...props} />;
 };
 
 type OverlayArrowProps = Partial<React.SVGProps<SVGSVGElement>>;

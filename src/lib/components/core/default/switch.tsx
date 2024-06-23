@@ -56,15 +56,7 @@ const Switch = ({ className, size, ...props }: SwitchProps) => {
         props.children,
         (
           children,
-          {
-            isSelected,
-            isPressed,
-            isHovered,
-            isFocused,
-            isFocusVisible,
-            isDisabled,
-            isReadOnly,
-          }
+          { isSelected, isPressed, isHovered, isFocused, isFocusVisible, isDisabled, isReadOnly }
         ) => (
           <>
             <span

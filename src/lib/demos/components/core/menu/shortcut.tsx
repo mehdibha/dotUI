@@ -6,15 +6,9 @@ export default function Demo() {
     <MenuRoot>
       <Button>Settings</Button>
       <Menu>
-        <MenuItem shortcut="⌘N">
-          New file
-        </MenuItem>
-        <MenuItem shortcut="⌘C">
-          Copy link
-        </MenuItem>
-        <MenuItem shortcut="⌘⇧E">
-          Edit file
-        </MenuItem>
+        <MenuItem shortcut="⌘N">New file</MenuItem>
+        <MenuItem shortcut="⌘C">Copy link</MenuItem>
+        <MenuItem shortcut="⌘⇧E">Edit file</MenuItem>
       </Menu>
     </MenuRoot>
   );

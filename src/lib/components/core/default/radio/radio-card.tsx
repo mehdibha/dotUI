@@ -1,10 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  Radio as AriaRadio,
-  type RadioProps as AriaRadioProps,
-} from "react-aria-components";
+import { Radio as AriaRadio, type RadioProps as AriaRadioProps } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
 import { focusRing } from "@/lib/utils/styles";
 

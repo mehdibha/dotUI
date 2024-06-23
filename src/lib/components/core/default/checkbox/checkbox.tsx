@@ -19,7 +19,7 @@ const checkboxStyles = tv({
       "indeterminate:bg-bg-primary indeterminate:text-fg-onPrimary",
       "read-only:cursor-default",
       "disabled:cursor-not-allowed disabled:border-border-disabled disabled:selected:text-fg-disabled disabled:selected:bg-bg-disabled disabled:indeterminate:bg-bg-disabled",
-      "invalid:border-border-danger invalid:selected:bg-bg-danger-muted invalid:selected:text-fg-onMutedDanger"
+      "invalid:border-border-danger invalid:selected:bg-bg-danger-muted invalid:selected:text-fg-onMutedDanger",
     ],
     label: "ml-2",
   },

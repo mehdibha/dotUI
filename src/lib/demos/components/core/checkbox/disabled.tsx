@@ -3,9 +3,5 @@
 import { Checkbox } from "@/lib/components/core/default/checkbox/checkbox";
 
 export default function Demo() {
-  return (
-    <Checkbox isDisabled>
-      I accept the terms and conditions
-    </Checkbox>
-  );
+  return <Checkbox isDisabled>I accept the terms and conditions</Checkbox>;
 }

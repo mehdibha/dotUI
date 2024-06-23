@@ -1,10 +1,6 @@
-"use client"
-import {
-  type DateValue,
-  getLocalTimeZone,
-  isWeekend,
-  today,
-} from "@internationalized/date";
+"use client";
+
+import { type DateValue, getLocalTimeZone, isWeekend, today } from "@internationalized/date";
 import { useLocale } from "react-aria";
 import { Calendar } from "@/lib/components/core/default/calendar";
 

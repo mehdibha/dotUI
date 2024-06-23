@@ -67,9 +67,7 @@ const RangeCalendar = <T extends DateValue>({
                 <AriaCalendarGridBody className={gridBody()}>
                   {(date) => (
                     <AriaCalendarCell date={date} className={cell()}>
-                      {({ formattedDate }) => (
-                        <span className="z-20">{formattedDate}</span>
-                      )}
+                      {({ formattedDate }) => <span className="z-20">{formattedDate}</span>}
                     </AriaCalendarCell>
                   )}
                 </AriaCalendarGridBody>

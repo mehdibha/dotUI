@@ -106,15 +106,14 @@ const Category = ({ title, slug, items, pathname }: CategoryProps) => {
                             className={cn(
                               "border-muted hover:text-foreground group block border-l py-1 pl-4 text-fg-muted transition-colors",
                               {
-                                "border-fg font-medium text-fg":
-                                  pathname === subItem.href,
+                                "border-fg font-medium text-fg": pathname === subItem.href,
                               }
                             )}
                           >
                             <span className="block transition-transform duration-100 group-hover:translate-x-0.5">
                               {subItem.title}
                               {subItem.label && (
-                                <span className="bg-bg-muted ml-2 rounded-md px-1.5 py-0.5 text-xs leading-none text-fg-muted border">
+                                <span className="ml-2 rounded-md border bg-bg-muted px-1.5 py-0.5 text-xs leading-none text-fg-muted">
                                   {subItem.label}
                                 </span>
                               )}

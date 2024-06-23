@@ -15,10 +15,7 @@ export default function Demo() {
           <PlusIcon />
         </Button>
       </Tooltip>
-      <Switch
-        isSelected={shouldFlip}
-        onChange={(isSelected) => setShouldFlip(isSelected)}
-      >
+      <Switch isSelected={shouldFlip} onChange={(isSelected) => setShouldFlip(isSelected)}>
         Should flip
       </Switch>
     </div>

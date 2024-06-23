@@ -9,7 +9,11 @@ export default function Demo() {
   return (
     <DialogRoot>
       <Button variant="outline">Edit Profile</Button>
-      <Dialog title="Edit profile" description="Make changes to your profile." isDismissable={false}>
+      <Dialog
+        title="Edit profile"
+        description="Make changes to your profile."
+        isDismissable={false}
+      >
         {({ close }) => (
           <>
             <DialogBody>

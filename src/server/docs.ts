@@ -1,13 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { getDocTypeFromSlug } from "@/utils/docs";
-import type {
-  Doc,
-  DocCategory,
-  DocFrontmatter,
-  DocMetadata,
-  DocType,
-} from "@/types/docs";
+import type { Doc, DocCategory, DocFrontmatter, DocMetadata, DocType } from "@/types/docs";
 import { getTableOfContents } from "../utils/toc";
 import { getAllMdxFiles, parseMDXFile } from "./mdx";
 
@@ -126,11 +120,7 @@ export const getDocFromSlug = async (slug: string[]): Promise<Doc | null> => {
 // getDocs("hooks") returns all docs from content/hooks folder
 // getDocs("components/core") returns all docs from content/components/core folder
 export const getDocs = (slug?: string, includeIndex = false): DocMetadata[] => {
-  const directoryPath = path.join(
-    process.cwd(),
-    "content",
-    ...(slug ? slug.split("/") : [])
-  );
+  const directoryPath = path.join(process.cwd(), "content", ...(slug ? slug.split("/") : []));
   return getAllMdxFiles(directoryPath, directoryPath, [], includeIndex).map(
     ({ fullPath, relativePath }) => {
       const itemRawContent = fs.readFileSync(fullPath, "utf-8");

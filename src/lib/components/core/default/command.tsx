@@ -12,7 +12,7 @@ const Command = React.forwardRef<
   <CommandPrimitive
     ref={ref}
     className={cn(
-      "bg-bg text-fg flex h-full w-full flex-col overflow-hidden rounded-md",
+      "flex h-full w-full flex-col overflow-hidden rounded-md bg-bg text-fg",
       className
     )}
     {...props}
@@ -96,7 +96,7 @@ const CommandItem = React.forwardRef<
   <CommandPrimitive.Item
     ref={ref}
     className={cn(
-      "aria-selected:bg-bg-muted aria-selected:text-fg relative flex cursor-pointer select-none items-center rounded-sm px-2 h-10 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 transition-colors",
+      "relative flex h-10 cursor-pointer select-none items-center rounded-sm px-2 text-sm outline-none transition-colors aria-selected:bg-bg-muted aria-selected:text-fg data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
       className
     )}
     {...props}
@@ -105,15 +105,9 @@ const CommandItem = React.forwardRef<
 
 CommandItem.displayName = CommandPrimitive.Item.displayName;
 
-const CommandShortcut = ({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLSpanElement>) => {
+const CommandShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) => {
   return (
-    <span
-      className={cn("ml-auto text-xs tracking-widest text-fg-muted", className)}
-      {...props}
-    />
+    <span className={cn("ml-auto text-xs tracking-widest text-fg-muted", className)} {...props} />
   );
 };
 CommandShortcut.displayName = "CommandShortcut";
