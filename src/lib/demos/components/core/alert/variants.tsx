@@ -7,7 +7,7 @@ import { Switch } from "@/lib/components/core/default/switch";
 
 type Variant = AlertProps["variant"];
 
-export default function SonnerVariantsDemo() {
+export default function Demo() {
   const [variant, setVariant] = React.useState<Variant>("default");
   const [fill, setFill] = React.useState(true);
 
