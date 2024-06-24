@@ -6,11 +6,18 @@ export const ComponentSource = ({
   name,
   className,
 }: {
-  name: string;
-  titles?: string[];
+  name: string | string[];
   className?: string;
 }) => {
-  const code = getComponentSource(name);
+  let code: { title: string; code: string }[] = [];
+
+  if (typeof name === "string") {
+    code = getComponentSource(name);
+  }
+
+  if (Array.isArray(name)) {
+    code = name.flatMap((n) => getComponentSource(n));
+  }
 
   if (code.length === 0) {
     return <p>Source code not found</p>;
