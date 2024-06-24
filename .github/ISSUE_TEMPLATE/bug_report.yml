@@ -2,18 +2,7 @@ name: "Bug report"
 description: Report an issue
 title: '[bug]: '
 labels: ["bug"]
-body:
-  - type: markdown
-    attributes:
-      value: |
-        ### Thanks for taking the time to create a bug report. Please search open/closed issues before submitting, as the issue may have already been reported/addressed.
- 
-  - type: markdown
-    attributes:
-      value: |
-        #### If you aren't sure this is a bug or not, please open a discussion instead:
-        - [Discussions](https://github.com/mehdibha/dotUI/discussions/new?category=general)
-
+body: 
   - type: textarea
     id: bug-description
     attributes:
@@ -45,14 +34,11 @@ body:
       required: true
 
   - type: input
-    id: codesandbox-stackblitz
+    id: codesandbox
     attributes:
-      label: Codesandbox/StackBlitz link
+      label: Codesandbox link
       description: | 
-        A link to a CodeSandbox or StackBlitz that includes a minimal reproduction of the problem. [CodeSandbox Template](https://codesandbox.io/s/ymgwf5)
-
-        > [!CAUTION]
-        > If you skip this step, this issue might be **labeled** with `please add a reproduction` and **closed**.
+        A link to a CodeSandbox that includes a minimal reproduction of the problem. [CodeSandbox Template](https://codesandbox.io/s/ymgwf5)
     validations:
       required: false
 
