@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import { useControlledState } from "@react-stately/utils";
-import { Loader2Icon } from "lucide-react";
 import { chain } from "react-aria";
 import {
   Provider,
@@ -18,6 +17,7 @@ import {
   useSlottedContext,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
+import { LoaderIcon } from "@/lib/icons";
 import { focusInput } from "@/lib/utils/styles";
 
 const inputStyles = tv({
@@ -225,7 +225,7 @@ const InputInnerVisual = React.forwardRef<HTMLSpanElement, InputInnerVisualProps
         className={innerVisual({ className })}
         {...props}
       >
-        {loading ? <Loader2Icon className="animate-spin" /> : children}
+        {loading ? <LoaderIcon className="animate-spin" /> : children}
       </span>
     );
   }

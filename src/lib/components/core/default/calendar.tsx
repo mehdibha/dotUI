@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import {
   composeRenderProps,
   Calendar as AriaCalendar,
@@ -16,6 +15,7 @@ import {
   type DateValue,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import { ChevronLeftIcon, ChevronRightIcon } from "@/lib/icons";
 import { Button, buttonStyles } from "./button";
 
 const calendarStyles = tv({

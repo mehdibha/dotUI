@@ -1,9 +1,9 @@
 "use client";
 
 import * as React from "react";
-import { RotateCwIcon } from "lucide-react";
 import { Button } from "@/lib/components/core/default/button";
 import { Progress } from "@/lib/components/core/default/progress";
+import { RotateCwIcon } from "@/lib/icons";
 
 export default function Demo() {
   const [key, setKey] = React.useState(0);

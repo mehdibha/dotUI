@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import { PlusIcon } from "lucide-react";
 import { Button } from "@/lib/components/core/default/button";
 import { NumberField } from "@/lib/components/core/default/number-field";
 import { Tooltip } from "@/lib/components/core/default/tooltip";
+import { PlusIcon } from "@/lib/icons";
 
 export default function Demo() {
   const [containerPadding, setContainerPadding] = React.useState(12);

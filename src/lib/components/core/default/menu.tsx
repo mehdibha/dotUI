@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { CheckIcon, ChevronRightIcon } from "lucide-react";
 import {
   composeRenderProps,
   Menu as AriaMenu,
@@ -19,6 +18,7 @@ import {
 import { Provider } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import { useMediaQuery } from "@/lib/hooks/use-media-query";
+import { CheckIcon, ChevronRightIcon } from "@/lib/icons";
 import { Kbd } from "./kbd";
 import { Overlay, type OverlayProps } from "./overlay";
 

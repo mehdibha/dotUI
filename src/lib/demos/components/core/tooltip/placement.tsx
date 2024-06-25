@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import { PlusIcon } from "lucide-react";
 import { Button } from "@/lib/components/core/default/button";
 import { Select, SelectItem } from "@/lib/components/core/default/select";
 import { Tooltip, type TooltipProps } from "@/lib/components/core/default/tooltip";
+import { PlusIcon } from "@/lib/icons";
 
 type Placement = TooltipProps["placement"];
 

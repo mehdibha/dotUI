@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { getDocTypeFromSlug } from "@/utils/docs";
 import { Button } from "@/lib/components/core/default/button";
 import { cn } from "@/lib/utils/classes";
@@ -37,8 +36,8 @@ export const DocsList = ({ name, href, limit, className, cardClassName }: DocsLi
       </div>
       {hasMore && (
         <div className="flex justify-end">
-          <Button size="sm" variant="quiet" className="mt-4 block">
-            <Link href={href ?? `/${name}`}>Explore more</Link>
+          <Button href={href ?? `/${name}`} size="sm" variant="quiet" className="mt-4 block">
+            Explore more
           </Button>
         </div>
       )}

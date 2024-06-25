@@ -65,7 +65,7 @@ export default async function Page({ params }: PageProps) {
         <h1 className="text-4xl font-bold">{metadata.title}</h1>
         <p className="mt-2 text-fg-muted">{metadata.description}</p>
         {metadata.links && metadata.links.length > 0 && (
-          <div className="mt-4 flex gap-2">
+          <div className="mt-4 flex flex-wrap gap-2">
             {metadata.links.map((link, index) => (
               <Button
                 key={index}

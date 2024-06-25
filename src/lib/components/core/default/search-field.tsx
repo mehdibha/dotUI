@@ -1,12 +1,12 @@
 "use client";
 
 import * as React from "react";
-import { SearchIcon, XIcon } from "lucide-react";
 import {
   SearchField as AriaSearchField,
   type SearchFieldProps as AriaSearchFieldProps,
 } from "react-aria-components";
 import { type VariantProps } from "tailwind-variants";
+import { SearchIcon, XIcon } from "@/lib/icons";
 import { Button } from "./button";
 import { fieldStyles } from "./field";
 import { Field, type FieldProps } from "./field";

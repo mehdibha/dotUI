@@ -1,9 +1,9 @@
-import { ChevronRightSquareIcon } from "lucide-react";
 import {
   Breadcrumbs,
   BreadcrumbItem,
   BreadcrumbLink,
 } from "@/lib/components/core/default/breadcrumbs";
+import { ChevronRightSquareIcon } from "@/lib/icons";
 
 export default function Demo() {
   return (

@@ -1,6 +1,6 @@
-import { CopyIcon, PlusSquareIcon, SquarePenIcon } from "lucide-react";
 import { Button } from "@/lib/components/core/default/button";
 import { Menu, MenuItem, MenuRoot } from "@/lib/components/core/default/menu";
+import { CopyIcon, PlusSquareIcon, SquarePenIcon } from "@/lib/icons";
 
 export default function Demo() {
   return (

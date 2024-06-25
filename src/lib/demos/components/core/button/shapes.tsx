@@ -1,5 +1,5 @@
-import { UploadIcon } from "lucide-react";
 import { Button } from "@/lib/components/core/default/button";
+import { UploadIcon } from "@/lib/icons";
 
 export default function Demo() {
   return (

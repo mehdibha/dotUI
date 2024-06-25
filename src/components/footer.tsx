@@ -1,9 +1,12 @@
 import React from "react";
-import Image from "next/image";
 import NavLink from "next/link";
 import Link from "next/link";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
+import { Avatar } from "@/lib/components/core/default/avatar";
+import { Badge } from "@/lib/components/core/default/badge";
 import { Separator } from "@/lib/components/core/default/separator";
+import { cn } from "@/lib/utils/classes";
+import { focusRing } from "@/lib/utils/styles";
 import { siteConfig } from "@/config";
 
 const links = [
@@ -74,22 +77,25 @@ export const Footer = () => {
     <div>
       <div className="container py-8">
         <div className="flex flex-col items-start justify-between gap-10 lg:flex-row">
-          <div className="max-w-sm">
-            <NavLink
-              href="/"
-              className="mr-8 flex items-center space-x-2 transition-all duration-300 hover:opacity-80"
-            >
-              <Image
+          <div className="flex max-w-sm flex-col items-start">
+            <NavLink href="/" className={cn(focusRing(), "flex items-center gap-2 rounded")}>
+              <Avatar
                 src={siteConfig.global.logo}
                 alt={siteConfig.global.name}
                 loading="lazy"
-                width={20}
-                height={20}
+                width={24}
+                height={24}
+                className="size-6 rounded-sm"
               />
-              <span className="inline-block font-bold">{siteConfig.global.name}</span>
+              <div className="mt-1 font-josephin font-bold leading-normal tracking-tighter">
+                {siteConfig.global.name}
+              </div>
+              <Badge size="sm" variant="neutral" className="border">
+                beta
+              </Badge>
             </NavLink>
-            <p className="text-md mt-4 text-fg-muted">Ship your React app in days, not weeks</p>
-            <div className="mt-4 flex items-center space-x-4">
+            <p className="text-md mt-2 text-fg-muted">{siteConfig.global.description}</p>
+            <div className="mt-4 flex items-center gap-4">
               {socialLinks.map((Link, index) => (
                 <NavLink
                   href={Link.href}

@@ -1,6 +1,5 @@
 "use client";
 
-import { ChevronRight } from "lucide-react";
 import {
   Link as AriaLink,
   Breadcrumbs as AriaBreadcrumbs,
@@ -10,6 +9,7 @@ import {
   type LinkProps as AriaLinkProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import { ChevronRightIcon } from "@/lib/icons";
 import { cn } from "@/lib/utils/classes";
 
 const breadcrumbsStyles = tv({
@@ -34,7 +34,7 @@ const Breadcrumb = ({ children, className, style, icon = null, ...props }: Bread
     <BreadcrumbItem className={className} style={style} {...props}>
       {icon}
       <BreadcrumbLink {...props}>{children}</BreadcrumbLink>
-      <ChevronRight />
+      <ChevronRightIcon />
     </BreadcrumbItem>
   );
 };

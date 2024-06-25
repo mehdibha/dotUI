@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { CalendarIcon } from "lucide-react";
 import {
   DateRangePicker as AriaDateRangePicker,
   Dialog as AriaDialog,
@@ -9,6 +8,7 @@ import {
   type DateValue,
 } from "react-aria-components";
 import { type VariantProps } from "tailwind-variants";
+import { CalendarIcon } from "@/lib/icons";
 import { Button } from "./button";
 import { DateInput, DateSegment } from "./date-input";
 import { fieldStyles } from "./field";

@@ -1,5 +1,5 @@
-import { PaletteIcon } from "lucide-react";
 import { ColorField } from "@/lib/components/core/default/color-field";
+import { PaletteIcon } from "@/lib/icons";
 
 export default function Demo() {
   return (

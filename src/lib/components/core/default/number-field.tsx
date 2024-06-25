@@ -1,13 +1,13 @@
 "use client";
 
 import * as React from "react";
-import { ChevronDownIcon, ChevronUpIcon, MinusIcon, PlusIcon } from "lucide-react";
 import {
   NumberField as AriaNumberField,
   type NumberFieldProps as AriaNumberFieldProps,
 } from "react-aria-components";
 import { type VariantProps } from "tailwind-variants";
 import { useMediaQuery } from "@/lib/hooks/use-media-query";
+import { ChevronDownIcon, ChevronUpIcon, MinusIcon, PlusIcon } from "@/lib/icons";
 import { Button, type ButtonProps } from "./button";
 import { fieldStyles } from "./field";
 import { Field, type FieldProps } from "./field";

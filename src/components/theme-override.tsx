@@ -41,6 +41,7 @@ export function ThemeOverride(props: ThemeOverrideProps) {
     return cssVars;
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const styles = (
     shouldOverride
       ? {
@@ -140,7 +141,11 @@ export function ThemeOverride(props: ThemeOverrideProps) {
   }, []);
 
   return (
-    <div drawer-wrapper="" className="bg-bg text-fg duration-150" style={styles}>
+    <div
+      drawer-wrapper=""
+      // className="bg-bg text-fg duration-150"
+      // style={styles}
+    >
       {children}
     </div>
   );

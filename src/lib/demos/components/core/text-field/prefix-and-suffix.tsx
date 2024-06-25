@@ -1,7 +1,7 @@
-import { XCircleIcon } from "lucide-react";
 import { Button } from "@/lib/components/core/default/button";
 import { TextField } from "@/lib/components/core/default/text-field";
 import { Tooltip } from "@/lib/components/core/default/tooltip";
+import { XCircleIcon } from "@/lib/icons";
 
 export default function Demo() {
   return (

@@ -1,6 +1,6 @@
-import { WalletIcon } from "lucide-react";
 import { AlertContent, AlertRoot, AlertTitle } from "@/lib/components/core/default/alert";
 import { Button } from "@/lib/components/core/default/button";
+import { WalletIcon } from "@/lib/icons";
 
 export default function AlertDemo() {
   return (

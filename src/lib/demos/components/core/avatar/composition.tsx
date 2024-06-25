@@ -1,11 +1,11 @@
 import React from "react";
-import { User2Icon } from "lucide-react";
 import {
   AvatarRoot,
   AvatarImage,
   AvatarFallback,
   AvatarPlaceholder,
 } from "@/lib/components/core/default/avatar";
+import { UserIcon } from "@/lib/icons";
 
 export default function Demo() {
   return (
@@ -13,7 +13,7 @@ export default function Demo() {
       <AvatarImage src="https://github.com/mehdibha.png" alt="@mehdibha" />
       <AvatarFallback>M</AvatarFallback>
       <AvatarPlaceholder>
-        <User2Icon className="size-5" />
+        <UserIcon className="size-5" />
       </AvatarPlaceholder>
     </AvatarRoot>
   );

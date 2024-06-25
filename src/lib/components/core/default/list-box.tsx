@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { CheckIcon, Loader2Icon } from "lucide-react";
 import {
   composeRenderProps,
   ListBox as AriaListBox,
@@ -12,6 +11,7 @@ import {
   ListStateContext,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import { CheckIcon, LoaderIcon } from "@/lib/icons";
 import { focusRing } from "@/lib/utils/styles";
 import { Text } from "./text";
 
@@ -43,7 +43,7 @@ const ListBox = <T extends object>({ children, isLoading, ...props }: ListBoxPro
       <AriaCollection items={props.items}>{children}</AriaCollection>
       {isLoading && (
         <AriaListBoxItem className="flex items-center justify-center py-1.5">
-          <Loader2Icon aria-label="Loading more..." className="size-5 animate-spin text-fg-muted" />
+          <LoaderIcon aria-label="Loading more..." className="size-5 animate-spin text-fg-muted" />
         </AriaListBoxItem>
       )}
     </AriaListBox>

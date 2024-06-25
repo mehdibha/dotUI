@@ -1,7 +1,7 @@
-import { BoldIcon, ItalicIcon } from "lucide-react";
 import { Button } from "@/lib/components/core/default/button";
 import { TextArea } from "@/lib/components/core/default/text-area";
 import { ToggleButton } from "@/lib/components/core/default/toggle-button";
+import { BoldIcon, ItalicIcon } from "@/lib/icons";
 
 export default function Demo() {
   return (

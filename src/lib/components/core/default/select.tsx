@@ -1,12 +1,12 @@
 "use client";
 
 import * as React from "react";
-import { ChevronDownIcon } from "lucide-react";
 import {
   Select as AriaSelect,
   SelectValue as AriaSelectValue,
   type SelectProps as AriaSelectProps, // type SelectValueProps as AriaSelectValueProps,
 } from "react-aria-components";
+import { ChevronDownIcon } from "@/lib/icons";
 // import { tv } from "tailwind-variants";
 import { Button } from "./button";
 import { Field, type FieldProps, fieldStyles } from "./field";

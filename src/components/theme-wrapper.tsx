@@ -38,6 +38,7 @@ export function ThemeWrapper(props: ThemeWrapperProps) {
     return cssVars;
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const styles = {
     ...getCssVars(),
     "--color-bg": "var(--color-neutral-100)",
@@ -124,13 +125,18 @@ export function ThemeWrapper(props: ThemeWrapperProps) {
 
   return (
     <div
+      // style={
+      //   {
+      //     ...styles,
+      //     "--radius": `${theme.radius}rem`,
+      //   } as React.CSSProperties
+      // }
       style={
         {
-          ...styles,
-          "--radius": `${theme.radius}rem`,
+          "--color-bg": "0 0% 0%",
         } as React.CSSProperties
       }
-      className="text-fg"
+      className="relative bg-black text-fg"
     >
       {children}
     </div>

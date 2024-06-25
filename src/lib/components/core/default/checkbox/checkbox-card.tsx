@@ -1,12 +1,12 @@
 "use client";
 
 import * as React from "react";
-import { CheckIcon, MinusIcon } from "lucide-react";
 import {
   Checkbox as AriaCheckbox,
   type CheckboxProps as AriaCheckboxProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
+import { CheckIcon, MinusIcon } from "@/lib/icons";
 import { focusRing } from "@/lib/utils/styles";
 
 const checkboxCardStyles = tv({
@@ -87,7 +87,7 @@ const CheckboxCard = React.forwardRef<React.ElementRef<typeof AriaCheckbox>, Che
               className={indicator({ className: "" })}
             >
               {isIndeterminate ? (
-                <MinusIcon strokeWidth={3} className="size-2.5" />
+                <MinusIcon className="size-2.5" />
               ) : (
                 <CheckIcon className="size-3" />
               )}

@@ -1,4 +1,4 @@
-import { InfoIcon, HelpCircleIcon } from "lucide-react";
+import { InfoIcon, HelpIcon } from "@/lib/icons";
 import { Button } from "./button";
 import { DialogRoot, Dialog } from "./dialog";
 
@@ -9,7 +9,7 @@ interface ContextualHelpProps {
 }
 
 const ContextualHelp = ({ title, description, variant }: ContextualHelpProps) => {
-  const icon = variant === "info" ? <InfoIcon /> : <HelpCircleIcon />;
+  const icon = variant === "info" ? <InfoIcon /> : <HelpIcon />;
   return (
     <DialogRoot>
       <Button

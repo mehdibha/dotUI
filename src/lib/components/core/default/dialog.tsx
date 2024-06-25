@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import { useSlotId } from "@react-aria/utils";
-import { XIcon } from "lucide-react";
 import {
   composeRenderProps,
   DialogContext as AriaDialogContext,
@@ -20,6 +19,7 @@ import {
 import { Provider } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import { useMediaQuery } from "@/lib/hooks/use-media-query";
+import { XIcon } from "@/lib/icons";
 import { Button, type ButtonProps } from "./button";
 import { Overlay, type OverlayProps } from "./overlay";
 

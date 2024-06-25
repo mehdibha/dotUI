@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import {
   composeRenderProps,
   RangeCalendar as AriaRangeCalendar,
@@ -15,6 +14,7 @@ import {
   type RangeCalendarProps as AriaRangeCalendarProps,
   type DateValue,
 } from "react-aria-components";
+import { ChevronLeftIcon, ChevronRightIcon } from "@/lib/icons";
 import { Button } from "./button";
 import { calendarStyles } from "./calendar";
 

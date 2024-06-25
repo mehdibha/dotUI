@@ -4,8 +4,7 @@ export const siteConfig = {
     name: "dotUI",
     logo: "/images/logo.png",
     title: "dotUI",
-    description:
-      "Copy and paste components, hooks, icons, pages, templates and more for your react app.",
+    description: "Accessible, mobile friendly, modern UI components.",
     keywords: [],
     authors: [
       {

@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { InfoIcon } from "lucide-react";
 import type { Key } from "react-aria-components";
 import { Button } from "@/lib/components/core/default/button";
 import { DialogRoot, Dialog } from "@/lib/components/core/default/dialog";
@@ -9,6 +8,7 @@ import { Item } from "@/lib/components/core/default/list-box";
 import { NumberField } from "@/lib/components/core/default/number-field";
 import { Select } from "@/lib/components/core/default/select";
 import { Switch } from "@/lib/components/core/default/switch";
+import { InfoIcon } from "@/lib/icons";
 
 export default function Demo() {
   const [placement, setPlacement] = React.useState<Key>("top");

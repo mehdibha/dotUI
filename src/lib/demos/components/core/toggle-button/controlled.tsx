@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { PinIcon } from "lucide-react";
 import { ToggleButton } from "@/lib/components/core/default/toggle-button";
+import { PinIcon } from "@/lib/icons";
 
 export default function Demo() {
   const [isSelected, setSelected] = React.useState(true);

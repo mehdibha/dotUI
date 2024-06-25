@@ -3,6 +3,8 @@ import { ArrowRightIcon, PinIcon, SparklesIcon } from "lucide-react";
 import Balancer from "react-wrap-balancer";
 import { SearchDocs } from "@/components/docs/search-docs";
 import { GitHubIcon } from "@/components/icons";
+import { Avatar } from "@/lib/components/core/default/avatar";
+import { AvatarGroup } from "@/lib/components/core/default/avatar-group";
 import { Button } from "@/lib/components/core/default/button";
 import { Switch } from "@/lib/components/core/default/switch";
 import { ToggleButton } from "@/lib/components/core/default/toggle-button";
@@ -31,7 +33,7 @@ export const Hero = ({ className }: { className?: string }) => {
           </Balancer>
         </h1>
         <p className="text-md mt-6 text-fg-muted md:text-lg lg:text-xl">
-          Copy the code, paste it, customize it, own it. Done.
+          Accessible, mobile friendly, modern UI components.
         </p>
         <div className="mt-10 flex flex-col gap-4 sm:flex-row">
           <Button href="/docs" variant="primary" size="lg">
@@ -59,6 +61,24 @@ export const Hero = ({ className }: { className?: string }) => {
 const Illustration = () => {
   return (
     <div className="min-h-[450px] space-y-4 animate-in fade-in slide-in-from-bottom-3">
+      <AvatarGroup max={6} total={12}>
+        {[
+          { name: "@mehdibha", src: "https://github.com/mehdibha.png" },
+          { name: "@t3dotgg", src: "https://github.com/t3dotgg.png" },
+          { name: "@leerob", src: "https://github.com/leerob.png" },
+          {
+            name: "@joshwcomeau",
+            src: "https://github.com/joshwcomeau.png",
+          },
+        ].map((user) => (
+          <Avatar
+            key={user.name}
+            src={user.src}
+            alt={user.name}
+            fallback={user.name[1].toUpperCase()}
+          />
+        ))}
+      </AvatarGroup>
       <div className="flex items-center space-x-4">
         <Switch defaultSelected />
         <Button>Button</Button>

@@ -1,6 +1,6 @@
 import React from "react";
-import { UploadIcon } from "lucide-react";
 import { DropZone, DropZoneLabel } from "@/lib/components/core/default/drop-zone";
+import { UploadIcon } from "@/lib/icons";
 
 export default function DropZoneDemo() {
   return (

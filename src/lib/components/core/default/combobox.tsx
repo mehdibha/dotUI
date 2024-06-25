@@ -1,11 +1,11 @@
 "use client";
 
 import * as React from "react";
-import { ChevronDownIcon } from "lucide-react";
 import {
   ComboBox as AriaCombobox,
   type ComboBoxProps as AriaComboboxProps,
 } from "react-aria-components";
+import { ChevronDownIcon } from "@/lib/icons";
 import { Button } from "./button";
 import { Field, type FieldProps, fieldStyles } from "./field";
 import { Input, InputWrapper } from "./input";

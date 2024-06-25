@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { Loader2Icon } from "lucide-react";
 import {
   composeRenderProps,
   Button as AriaButton,
@@ -10,6 +9,7 @@ import {
   type LinkProps as AriaLinkProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
+import { LoaderIcon } from "@/lib/icons";
 import { focusRing } from "@/lib/utils/styles";
 
 const buttonStyles = tv(
@@ -107,7 +107,7 @@ const Button = ({
             <span className="mr-2 inline-flex shrink-0">
               {isLoading ? (
                 <>
-                  <Loader2Icon className="size-6 animate-spin" aria-hidden="true" />
+                  <LoaderIcon className="size-6 animate-spin" aria-hidden="true" />
                   <span className="sr-only">loading</span>
                 </>
               ) : (
