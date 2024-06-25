@@ -7,6 +7,10 @@ import { avatarStyles } from "./avatar";
 
 // This compnoent is not ready for production use. It is a work in progress.
 
+// This compnoent is not ready for production use. It is a work in progress.
+
+// This compnoent is not ready for production use. It is a work in progress.
+
 type AvatarGroupProps = React.HTMLAttributes<HTMLDivElement> & {
   max?: number;
   total?: number;
