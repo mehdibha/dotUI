@@ -1,19 +1,9 @@
-// This compnoent is not ready for production use. It is a work in progress.
 "use client";
 
+// This compnoent is not ready for production use. It is a work in progress.
 import React from "react";
 import { cn } from "@/lib/utils/classes";
 import { avatarStyles } from "./avatar";
-
-// This compnoent is not ready for production use. It is a work in progress.
-
-// This compnoent is not ready for production use. It is a work in progress.
-
-// This compnoent is not ready for production use. It is a work in progress.
-
-// This compnoent is not ready for production use. It is a work in progress.
-
-// This compnoent is not ready for production use. It is a work in progress.
 
 type AvatarGroupProps = React.HTMLAttributes<HTMLDivElement> & {
   max?: number;

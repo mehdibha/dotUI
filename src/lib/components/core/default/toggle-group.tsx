@@ -1,5 +1,6 @@
 "use client";
 
+// This compnoent is not ready for production use. It is a work in progress.
 import * as React from "react";
 import { useControllableState } from "@radix-ui/react-use-controllable-state";
 import { useToolbar, type AriaToolbarProps } from "@react-aria/toolbar";
@@ -12,7 +13,7 @@ import {
 } from "react-aria";
 import { useToggleState } from "react-stately";
 import { tv, type VariantProps } from "tailwind-variants";
-import { toggleButtonVariants } from "./toggle-button";
+import { toggleButtonStyles } from "./toggle-button";
 
 const toggleGroupVariants = tv({
   base: "flex items-center gap-1",
@@ -29,7 +30,7 @@ const toggleGroupVariants = tv({
 
 export interface ToggleGroupButtonProps
   extends Omit<AriaToggleButtonProps, "type">,
-    VariantProps<typeof toggleButtonVariants> {
+    VariantProps<typeof toggleButtonStyles> {
   value: string;
   className?: string;
 }
@@ -80,7 +81,7 @@ const ToggleGroupButton = ({
       data-selected={state.isSelected ? "true" : undefined}
       data-hovered={isHovered ? "true" : undefined}
       data-focus-visible={isFocusVisible ? "true" : undefined}
-      className={toggleButtonVariants({
+      className={toggleButtonStyles({
         variant: variant ?? context?.variant,
         size: size ?? context?.size,
         shape: shape ?? context?.shape,
@@ -111,7 +112,7 @@ const ToggleGroup = (props: ToggleGroupProps) => {
 
 interface ToggleGroupSingleProps
   extends AriaToolbarProps,
-    VariantProps<typeof toggleButtonVariants>,
+    VariantProps<typeof toggleButtonStyles>,
     VariantProps<typeof toggleGroupVariants> {
   value?: string;
   defaultValue?: string;
@@ -174,7 +175,7 @@ const ToggleGroupSingle = (props: ToggleGroupSingleProps) => {
 interface ToggleGroupMultipleProps
   extends AriaToolbarProps,
     VariantProps<typeof toggleGroupVariants>,
-    VariantProps<typeof toggleButtonVariants> {
+    VariantProps<typeof toggleButtonStyles> {
   value?: string[];
   defaultValue?: string[];
   onValueChange?: (value: string[]) => void;
@@ -245,7 +246,7 @@ type ToggleGroupValueContextValue = {
   onItemActivate(value: string): void;
   onItemDeactivate(value: string): void;
   isDisabled?: boolean;
-} & VariantProps<typeof toggleButtonVariants>;
+} & VariantProps<typeof toggleButtonStyles>;
 
 const ToggleGroupContext = React.createContext<ToggleGroupValueContextValue | null>(null);
 
