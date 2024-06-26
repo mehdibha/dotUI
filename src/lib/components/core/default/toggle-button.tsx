@@ -9,9 +9,9 @@ import {
 import { tv, type VariantProps } from "tailwind-variants";
 import { focusRing } from "@/lib/utils/styles";
 
-const toggleButtonVariants = tv({
+const toggleButtonStyles = tv({
   extend: focusRing,
-  base: "inline-flex items-center justify-center whitespace-nowrap rounded-md leading-normal text-sm font-medium ring-offset-background transition-colors disabled:cursor-not-allowed disabled:bg-bg-disabled disabled:text-fg-disabled",
+  base: "inline-flex items-center justify-center gap-2 rounded-md leading-normal text-sm font-medium ring-offset-background transition-colors disabled:cursor-not-allowed disabled:bg-bg-disabled disabled:text-fg-disabled",
   variants: {
     variant: {
       quiet:
@@ -58,41 +58,46 @@ const toggleButtonVariants = tv({
 
 interface ToggleButtonProps
   extends Omit<AriaToggleButtonProps, "className">,
-    VariantProps<typeof toggleButtonVariants> {
+    VariantProps<typeof toggleButtonStyles> {
   className?: string;
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
 }
 
-const ToggleButton = ({
-  className,
-  variant,
-  size,
-  shape,
-  prefix,
-  suffix,
-  ...props
-}: ToggleButtonProps) => {
-  return (
-    <AriaToggleButton
-      {...props}
-      className={toggleButtonVariants({
-        variant,
-        size,
-        shape,
-        className,
-      })}
-    >
-      {composeRenderProps(props.children, (children) => (
-        <>
-          {prefix && <span className="mr-2 shrink-0">{prefix}</span>}
-          <span className="truncate">{children}</span>
-          {suffix && <span className="ml-2 shrink-0">{suffix}</span>}
-        </>
-      ))}
-    </AriaToggleButton>
-  );
+const ToggleButton = React.forwardRef(
+  (localProps: ToggleButtonProps, ref: React.ForwardedRef<HTMLButtonElement>) => {
+    const contextProps = useToggleButtonContext();
+    const props = { ...contextProps, ...localProps };
+    const { className, variant, size, shape, prefix, suffix, ...restProps } = props;
+    return (
+      <AriaToggleButton
+        ref={ref}
+        {...restProps}
+        className={toggleButtonStyles({
+          variant,
+          size,
+          shape,
+          className,
+        })}
+      >
+        {composeRenderProps(props.children, (children) => (
+          <>
+            {prefix}
+            {typeof children === "string" ? <span className="truncate">{children}</span> : children}
+            {suffix}
+          </>
+        ))}
+      </AriaToggleButton>
+    );
+  }
+);
+ToggleButton.displayName = "ToggleButton";
+
+type ToggleButtonContextValue = VariantProps<typeof toggleButtonStyles>;
+const ToggleButtonContext = React.createContext<ToggleButtonContextValue>({});
+const useToggleButtonContext = () => {
+  return React.useContext(ToggleButtonContext);
 };
 
 export type { ToggleButtonProps };
-export { ToggleButton, toggleButtonVariants };
+export { ToggleButton, toggleButtonStyles, ToggleButtonContext };

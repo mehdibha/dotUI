@@ -3,7 +3,7 @@ import { PinIcon } from "@/lib/icons";
 
 export default function Demo() {
   return (
-    <ToggleButton aria-label="Toggle pin">
+    <ToggleButton aria-label="Toggle pin" defaultSelected>
       <PinIcon className="rotate-45" />
     </ToggleButton>
   );

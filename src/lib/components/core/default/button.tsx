@@ -85,7 +85,7 @@ interface ButtonProps
 
 const Button = React.forwardRef(
   (localProps: ButtonProps, ref: React.ForwardedRef<HTMLButtonElement>) => {
-    const contextProps = useButtonContextProps();
+    const contextProps = useButtonContext();
     const props = { ...contextProps, ...localProps };
     const { className, variant, size, shape, isDisabled, isLoading, prefix, suffix, ...restProps } =
       props;
@@ -112,7 +112,7 @@ Button.displayName = "Button";
 
 type ButtonContextValue = VariantProps<typeof buttonStyles>;
 const ButtonContext = React.createContext<ButtonContextValue>({});
-const useButtonContextProps = () => {
+const useButtonContext = () => {
   return React.useContext(ButtonContext);
 };
 
