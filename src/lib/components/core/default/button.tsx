@@ -15,24 +15,24 @@ import { focusRing } from "@/lib/utils/styles";
 const buttonStyles = tv(
   {
     extend: focusRing,
-    base: "inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md leading-normal text-sm shrink-0 font-medium ring-offset-background transition-colors disabled:cursor-not-allowed disabled:bg-bg-disabled disabled:text-fg-disabled",
+    base: "inline-flex gap-2 cursor-pointer items-center justify-center whitespace-nowrap rounded-md leading-normal text-sm shrink-0 font-medium ring-offset-background transition-colors disabled:cursor-not-allowed disabled:bg-bg-disabled disabled:text-fg-disabled",
     variants: {
       variant: {
         default:
           "bg-bg-neutral hover:bg-bg-neutral-hover pressed:bg-bg-neutral-active text-fg-onNeutral",
         primary:
           "bg-bg-primary hover:bg-bg-primary-hover pressed:bg-bg-primary-active text-fg-onPrimary",
+        quiet: "bg-transparent hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 text-fg",
+        outline:
+          "border border-border-field bg-transparent hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 text-fg disabled:border-border-disabled disabled:bg-transparent",
+        accent:
+          "bg-bg-accent hover:bg-bg-accent-hover pressed:bg-bg-accent-active text-fg-onAccent",
         success:
           "bg-bg-success hover:bg-bg-success-hover pressed:bg-bg-success-active text-fg-onSuccess",
         warning:
           "bg-bg-warning hover:bg-bg-warning-hover pressed:bg-bg-warning-active text-fg-onWarning",
         danger:
           "bg-bg-danger hover:bg-bg-danger-hover pressed:bg-bg-danger-active text-fg-onDanger",
-        accent:
-          "bg-bg-accent hover:bg-bg-accent-hover pressed:bg-bg-accent-active text-fg-onAccent",
-        quiet: "bg-transparent hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 text-fg",
-        outline:
-          "border border-border-field bg-transparent hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 text-fg disabled:border-border-disabled disabled:bg-transparent",
       },
       size: {
         sm: "h-8 px-3 [&_svg]:size-4",
@@ -83,45 +83,38 @@ interface ButtonProps
   suffix?: React.ReactNode;
 }
 
-const Button = ({
-  className,
-  variant,
-  size,
-  shape,
-  isDisabled,
-  isLoading,
-  prefix,
-  suffix,
-  ...props
-}: ButtonProps) => {
-  const Element = props.href ? AriaLink : AriaButton;
-  return (
-    <Element
-      {...props}
-      isDisabled={isDisabled || isLoading}
-      className={buttonStyles({ variant, size, shape, className })}
-    >
-      {composeRenderProps(props.children, (children) => (
-        <>
-          {(prefix ?? isLoading) && (
-            <span className="mr-2 inline-flex shrink-0">
-              {isLoading ? (
-                <>
-                  <LoaderIcon className="size-6 animate-spin" aria-hidden="true" />
-                  <span className="sr-only">loading</span>
-                </>
-              ) : (
-                prefix
-              )}
-            </span>
-          )}
-          {children}
-          {suffix && <span className="ml-2 inline-flex shrink-0">{suffix}</span>}
-        </>
-      ))}
-    </Element>
-  );
+const Button = React.forwardRef(
+  (localProps: ButtonProps, ref: React.ForwardedRef<HTMLButtonElement>) => {
+    const contextProps = useButtonContextProps();
+    const props = { ...contextProps, ...localProps };
+    const { className, variant, size, shape, isDisabled, isLoading, prefix, suffix, ...restProps } =
+      props;
+    const Element: React.ElementType = props.href ? AriaLink : AriaButton;
+    return (
+      <Element
+        ref={ref}
+        {...restProps}
+        isDisabled={isDisabled || isLoading}
+        className={buttonStyles({ variant, size, shape, className })}
+      >
+        {composeRenderProps(props.children, (children) => (
+          <>
+            {isLoading ? <LoaderIcon aria-label="loading" className="animate-spin" /> : prefix}
+            {typeof children === "string" ? <span className="truncate">{children}</span> : children}
+            {suffix}
+          </>
+        ))}
+      </Element>
+    );
+  }
+);
+Button.displayName = "Button";
+
+type ButtonContextValue = VariantProps<typeof buttonStyles>;
+const ButtonContext = React.createContext<ButtonContextValue>({});
+const useButtonContextProps = () => {
+  return React.useContext(ButtonContext);
 };
 
 export type { ButtonProps };
-export { Button, buttonStyles };
+export { Button, buttonStyles, ButtonContext };

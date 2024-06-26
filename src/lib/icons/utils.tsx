@@ -1,3 +1,5 @@
+"use client";
+
 import { useConfig } from "@/hooks/use-config";
 import { icons } from "./registry";
 

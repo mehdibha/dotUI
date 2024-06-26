@@ -1,3 +1,5 @@
+"use client";
+
 import { createIcon } from "./utils";
 
 export const LoaderIcon = createIcon("LoaderIcon");
