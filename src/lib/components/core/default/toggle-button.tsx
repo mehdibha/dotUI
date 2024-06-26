@@ -11,7 +11,7 @@ import { focusRing } from "@/lib/utils/styles";
 
 const toggleButtonStyles = tv({
   extend: focusRing,
-  base: "inline-flex items-center justify-center gap-2 rounded-md leading-normal text-sm font-medium ring-offset-background transition-colors disabled:cursor-not-allowed disabled:bg-bg-disabled disabled:text-fg-disabled",
+  base: "inline-flex items-center justify-center gap-2 rounded-md leading-normal text-sm font-medium ring-offset-background transition-colors disabled:cursor-default disabled:bg-bg-disabled disabled:text-fg-disabled",
   variants: {
     variant: {
       quiet:
