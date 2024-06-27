@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/lib/components/core/default/button";
 import { SearchField } from "@/lib/components/core/default/search-field";
 import { Tooltip } from "@/lib/components/core/default/tooltip";
@@ -8,13 +10,16 @@ export default function Demo() {
     <SearchField
       defaultValue="Hello world!"
       prefix="🔍"
-      suffix={
-        <Tooltip content="Clear input" className="text-xs">
-          <Button variant="quiet" shape="square" size="sm" className="size-6">
-            <XCircleIcon />
-          </Button>
-        </Tooltip>
-      }
+      suffix={({ isEmpty, isDisabled }) => {
+        if (isEmpty || isDisabled) return null;
+        return (
+          <Tooltip content="Clear input" className="text-xs">
+            <Button variant="quiet" shape="square" size="sm" className="size-6">
+              <XCircleIcon />
+            </Button>
+          </Tooltip>
+        );
+      }}
     />
   );
 }

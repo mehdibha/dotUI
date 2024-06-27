@@ -60,8 +60,8 @@ A visual label can be provided for the `TextArea` using the label prop or a hidd
 
 <ComponentPreview
   name="demos/components/core/text-area/label"
-  preview={`<salem label="Description" />
-<salem aria-label="Description" />`}
+  preview={`<TextArea label="Description" />
+<TextArea aria-label="Description" />`}
 />
 
 ### Description
@@ -70,7 +70,7 @@ An `errorMessage` can be supplied to a TextField, which will be displayed when t
 
 <ComponentPreview
   name="demos/components/core/text-area/description"
-  preview={`<salem label="Description" description="Type your description" />`}
+  preview={`<TextArea label="Description" description="Type your description" />`}
 />
 
 ### Contextual help
@@ -79,16 +79,16 @@ A `ContextualHelp` element may be placed next to the label to provide additional
 
 <ComponentPreview
   name="demos/components/core/text-area/contextual-help"
-  preview={`<salem label="Bio" contextualHelp={<ContextualHelp />} />`}
+  preview={`<TextArea label="Bio" contextualHelp={<ContextualHelp />} />`}
 />
 
 ### Error message
 
-An `errorMessage` can be supplied to a TextField, which will be displayed when the `isInvalid` prop is set to `true`.
+An `errorMessage` can be supplied to a TextArea, which will be displayed when the `isInvalid` prop is set to `true`.
 
 <ComponentPreview
   name="demos/components/core/text-area/error-message"
-  preview={`<salem 
+  preview={`<TextArea 
   label="Comment"
   isInvalid
   errorMessage="You have exceeded the comment limit for one hour." 
@@ -102,8 +102,8 @@ Use the `loaderPosition` prop to control the position of the loader.
 
 <ComponentPreview
   name="demos/components/core/text-area/loading"
-  preview={`<salem isLoading loaderPosition="prefix" />
-<salem isLoading loaderPosition="suffix" />`}
+  preview={`<TextArea isLoading loaderPosition="prefix" />
+<TextArea isLoading loaderPosition="suffix" />`}
 />
 
 ### Disabled
@@ -112,7 +112,7 @@ Use the `isDisabled` prop to disable the TextArea.
 
 <ComponentPreview
   name="demos/components/core/text-area/disabled"
-  preview={`<salem isDisabled />`}
+  preview={`<TextArea isDisabled />`}
 />
 
 ### ReadOnly
@@ -121,7 +121,7 @@ The `isReadOnly` boolean prop makes the TextArea's text content immutable. Unlik
 
 <ComponentPreview
   name="demos/components/core/text-area/read-only"
-  preview={`<salem isReadOnly />`}
+  preview={`<TextArea isReadOnly />`}
 />
 
 ### Required
@@ -131,7 +131,7 @@ Use the `necessityIndicator` prop to control the visual style of the required st
 
 <ComponentPreview
   name="demos/components/core/text-area/required"
-  preview={`<salem label="Description" isRequired necessityIndicator="icon" />`}
+  preview={`<TextArea label="Description" isRequired necessityIndicator="icon" />`}
 />
 
 ## Uncontrolled
@@ -140,7 +140,7 @@ Use the `defaultValue` prop to set the default input value.
 
 <ComponentPreview
   name="demos/components/core/text-area/uncontrolled"
-  preview={`<salem label="Essay" defaultValue="Roses are red, violets are blue." />`}
+  preview={`<TextArea label="Essay" defaultValue="Roses are red, violets are blue." />`}
 />
 
 ## Controlled
@@ -151,7 +151,7 @@ Use the `value` and `onChange` props to control the value of the input.
   name="demos/components/core/text-area/controlled"
   preview={`const [inputValue, setInputValue] = React.useState("Roses are red, violets are blue.");
 return (
-  <salem
+  <TextArea
     label="Essay"
     value={inputValue}
     onChange={(text) => {

@@ -5,12 +5,15 @@ import {
   SearchField as AriaSearchField,
   type SearchFieldProps as AriaSearchFieldProps,
 } from "react-aria-components";
-import { type VariantProps } from "tailwind-variants";
+import { tv, type VariantProps } from "tailwind-variants";
 import { SearchIcon, XIcon } from "@/lib/icons";
 import { Button } from "./button";
-import { fieldStyles } from "./field";
 import { Field, type FieldProps } from "./field";
 import { InputRoot, Input, type inputStyles } from "./input";
+
+const searchFieldStyles = tv({
+  base: "flex flex-col gap-2 items-start w-48",
+});
 
 type SearchFieldProps = SearchFieldRootProps &
   Omit<FieldProps, "children"> &
@@ -42,7 +45,7 @@ const SearchField = React.forwardRef<HTMLInputElement, SearchFieldProps>(
         );
       },
       isLoading,
-      loaderPosition = "suffix",
+      loaderPosition = "prefix",
       isRequired,
       necessityIndicator,
       contextualHelp,
@@ -91,8 +94,7 @@ const SearchFieldRoot = React.forwardRef<
   React.ElementRef<typeof AriaSearchField>,
   SearchFieldRootProps
 >(({ className, ...props }, ref) => {
-  const { root } = fieldStyles();
-  return <AriaSearchField ref={ref} className={root({ className })} {...props} />;
+  return <AriaSearchField ref={ref} className={searchFieldStyles({ className })} {...props} />;
 });
 SearchFieldRoot.displayName = "SearchFieldRoot";
 

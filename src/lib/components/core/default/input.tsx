@@ -25,7 +25,7 @@ const inputStyles = tv({
   slots: {
     root: [
       focusInput(),
-      "inline-flex items-center gap-2 px-2 transition-colors w-full rounded-md overflow-hidden border bg-bg shadow-sm cursor-text text-fg-muted",
+      "inline-flex items-center gap-2 px-2 transition-colors w-full rounded-md overflow-hidden border bg-bg shadow-sm cursor-text text-fg-muted text-base sm:text-sm [&_svg]:size-4",
       "disabled:cursor-default disabled:border-border-disabled disabled:bg-bg-disabled disabled:text-fg-disabled",
       "invalid:border-border-danger",
     ],
@@ -35,9 +35,9 @@ const inputStyles = tv({
   },
   variants: {
     size: {
-      sm: { root: "text-base sm:text-sm [&_svg]:size-4 h-8" },
-      md: { root: "text-base sm:text-sm [&_svg]:size-4 h-9" },
-      lg: { root: "text-base [&_svg]:size-5 h-10" },
+      sm: { root: "h-8" },
+      md: { root: "h-9" },
+      lg: { root: "h-10" },
     },
     multiline: {
       true: {

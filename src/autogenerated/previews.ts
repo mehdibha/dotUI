@@ -894,7 +894,7 @@ export const previews = {
     },
     "demos/components/core/search-field/default": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/search-field/default")),
-      code : [{"title":"default.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { SearchField } from \"@/lib/components/core/default/search-field\";\n\nexport default function Demo() {\n  return <SearchField aria-label=\"Search\" className=\"w-full\" />;\n}\n"}]
+      code : [{"title":"default.tsx","code":"import React from \"react\";\nimport { SearchField } from \"@/lib/components/core/default/search-field\";\n\nexport default function Demo() {\n  return <SearchField aria-label=\"Search\" />;\n}\n"}]
     },
     "demos/components/core/search-field/sizes": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/search-field/sizes")),
@@ -902,7 +902,7 @@ export const previews = {
     },
     "demos/components/core/search-field/prefix-and-suffix": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/search-field/prefix-and-suffix")),
-      code : [{"title":"prefix-and-suffix.tsx","code":"import { Button } from \"@/lib/components/core/default/button\";\r\nimport { SearchField } from \"@/lib/components/core/default/search-field\";\r\nimport { Tooltip } from \"@/lib/components/core/default/tooltip\";\r\nimport { XCircleIcon } from \"@/lib/icons\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <SearchField\r\n      defaultValue=\"Hello world!\"\r\n      prefix=\"🔍\"\r\n      suffix={\r\n        <Tooltip content=\"Clear input\" className=\"text-xs\">\r\n          <Button variant=\"quiet\" shape=\"square\" size=\"sm\" className=\"size-6\">\r\n            <XCircleIcon />\r\n          </Button>\r\n        </Tooltip>\r\n      }\r\n    />\r\n  );\r\n}\r\n"}]
+      code : [{"title":"prefix-and-suffix.tsx","code":"\"use client\";\r\n\r\nimport { Button } from \"@/lib/components/core/default/button\";\r\nimport { SearchField } from \"@/lib/components/core/default/search-field\";\r\nimport { Tooltip } from \"@/lib/components/core/default/tooltip\";\r\nimport { XCircleIcon } from \"@/lib/icons\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <SearchField\r\n      defaultValue=\"Hello world!\"\r\n      prefix=\"🔍\"\r\n      suffix={({ isEmpty, isDisabled }) => {\r\n        if (isEmpty || isDisabled) return null;\r\n        return (\r\n          <Tooltip content=\"Clear input\" className=\"text-xs\">\r\n            <Button variant=\"quiet\" shape=\"square\" size=\"sm\" className=\"size-6\">\r\n              <XCircleIcon />\r\n            </Button>\r\n          </Tooltip>\r\n        );\r\n      }}\r\n    />\r\n  );\r\n}\r\n"}]
     },
     "demos/components/core/search-field/label": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/search-field/label")),
@@ -910,39 +910,43 @@ export const previews = {
     },
     "demos/components/core/search-field/description": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/search-field/description")),
-      code : [{"title":"description.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { SearchField } from \"@/lib/components/core/default/search-field\";\n\nexport default function Demo() {\n  return <SearchField label=\"Search\" description=\"Enter your search query\" />;\n}\n"}]
+      code : [{"title":"description.tsx","code":"import React from \"react\";\nimport { SearchField } from \"@/lib/components/core/default/search-field\";\n\nexport default function Demo() {\n  return <SearchField label=\"Search\" description=\"Enter your search query\" />;\n}\n"}]
     },
     "demos/components/core/search-field/contextual-help": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/search-field/contextual-help")),
-      code : [{"title":"contextual-help.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { ContextualHelp } from \"@/lib/components/core/default/contextual-help\";\nimport { SearchField } from \"@/lib/components/core/default/search-field\";\n\nexport default function Demo() {\n  return (\n    <SearchField\n      label=\"Search\"\n      contextualHelp={\n        <ContextualHelp\n          title=\"Need help?\"\n          description=\"If you need help, please contact support.\"\n        />\n      }\n    />\n  );\n}\n"}]
+      code : [{"title":"contextual-help.tsx","code":"import React from \"react\";\nimport { ContextualHelp } from \"@/lib/components/core/default/contextual-help\";\nimport { SearchField } from \"@/lib/components/core/default/search-field\";\n\nexport default function Demo() {\n  return (\n    <SearchField\n      label=\"Search\"\n      contextualHelp={\n        <ContextualHelp\n          title=\"Need help?\"\n          description=\"If you need help, please contact support.\"\n        />\n      }\n    />\n  );\n}\n"}]
     },
     "demos/components/core/search-field/error-message": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/search-field/error-message")),
-      code : [{"title":"error-message.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { SearchField } from \"@/lib/components/core/default/search-field\";\n\nexport default function Demo() {\n  return <SearchField label=\"Search\" isInvalid errorMessage=\"Please fill out this field.\" />;\n}\n"}]
+      code : [{"title":"error-message.tsx","code":"import React from \"react\";\nimport { SearchField } from \"@/lib/components/core/default/search-field\";\n\nexport default function Demo() {\n  return <SearchField label=\"Search\" isInvalid errorMessage=\"Please fill out this field.\" />;\n}\n"}]
     },
     "demos/components/core/search-field/loading": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/search-field/loading")),
-      code : [{"title":"loading.tsx","code":"\"use client\";\r\n\r\nimport React from \"react\";\r\nimport { SearchField } from \"@/lib/components/core/default/search-field\";\r\nimport { useDebounce } from \"@/lib/hooks/use-debounce\";\r\n\r\nexport default function Demo() {\r\n  const [isLoading, setLoading] = React.useState(false);\r\n  const [inputValue, setInputValue] = React.useState(\"\");\r\n  const debouncedInputValue = useDebounce(inputValue, 500);\r\n\r\n  React.useEffect(() => {\r\n    if (debouncedInputValue) {\r\n      setLoading(true);\r\n      setTimeout(() => {\r\n        setLoading(false);\r\n      }, 1500);\r\n    }\r\n  }, [debouncedInputValue]);\r\n\r\n  return (\r\n    <div className=\"w-full space-y-4\">\r\n      <div className=\"grid grid-cols-2 gap-2\">\r\n        <SearchField isLoading loaderPosition=\"prefix\" />\r\n        <SearchField isLoading loaderPosition=\"suffix\" />\r\n      </div>\r\n      <SearchField\r\n        label=\"Search\"\r\n        placeholder=\"Type your search query\"\r\n        value={inputValue}\r\n        onChange={(text) => {\r\n          setInputValue(text);\r\n        }}\r\n        type={!isLoading && debouncedInputValue ? \"success\" : undefined}\r\n        isLoading={isLoading}\r\n      />\r\n    </div>\r\n  );\r\n}\r\n"}]
+      code : [{"title":"loading.tsx","code":"import React from \"react\";\r\nimport { SearchField } from \"@/lib/components/core/default/search-field\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <div className=\"flex items-center gap-4\">\r\n      <SearchField isLoading loaderPosition=\"prefix\" />\r\n      <SearchField isLoading loaderPosition=\"suffix\" />\r\n    </div>\r\n  );\r\n}\r\n"}]
     },
     "demos/components/core/search-field/disabled": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/search-field/disabled")),
-      code : [{"title":"disabled.tsx","code":"import { SearchField } from \"@/lib/components/core/default/search-field\";\r\n\r\nexport default function Demo() {\r\n  return <SearchField defaultValue=\"Is CopyUI the next-gen ui lib?\" isDisabled />;\r\n}\r\n"}]
+      code : [{"title":"disabled.tsx","code":"import { SearchField } from \"@/lib/components/core/default/search-field\";\r\n\r\nexport default function Demo() {\r\n  return <SearchField defaultValue=\"Is dotUI the next-gen ui lib?\" isDisabled />;\r\n}\r\n"}]
     },
     "demos/components/core/search-field/read-only": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/search-field/read-only")),
-      code : [{"title":"read-only.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { SearchField } from \"@/lib/components/core/default/search-field\";\n\nexport default function Demo() {\n  return <SearchField label=\"Email\" isReadOnly value=\"hello@copyui.dev\" />;\n}\n"}]
+      code : [{"title":"read-only.tsx","code":"import React from \"react\";\nimport { SearchField } from \"@/lib/components/core/default/search-field\";\n\nexport default function Demo() {\n  return <SearchField label=\"Search\" isReadOnly value=\"Marvel movies\" />;\n}\n"}]
     },
     "demos/components/core/search-field/required": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/search-field/required")),
-      code : [{"title":"required.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { SearchField } from \"@/lib/components/core/default/search-field\";\n\nexport default function Demo() {\n  return (\n    <div className=\"grid grid-cols-2 gap-4\">\n      <SearchField label=\"Search\" isRequired />\n      <SearchField label=\"Search\" isRequired necessityIndicator=\"icon\" />\n      <SearchField label=\"Search\" isRequired necessityIndicator=\"label\" />\n      <SearchField label=\"Search\" necessityIndicator=\"label\" />\n    </div>\n  );\n}\n"}]
+      code : [{"title":"required.tsx","code":"import React from \"react\";\nimport { SearchField } from \"@/lib/components/core/default/search-field\";\n\nexport default function Demo() {\n  return (\n    <div className=\"grid grid-cols-2 gap-4\">\n      <SearchField label=\"Search\" isRequired />\n      <SearchField label=\"Search\" isRequired necessityIndicator=\"icon\" />\n      <SearchField label=\"Search\" isRequired necessityIndicator=\"label\" />\n      <SearchField label=\"Search\" necessityIndicator=\"label\" />\n    </div>\n  );\n}\n"}]
+    },
+    "demos/components/core/search-field/uncontrolled": {
+      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/search-field/uncontrolled")),
+      code : [{"title":"uncontrolled.tsx","code":"import React from \"react\";\r\nimport { SearchField } from \"@/lib/components/core/default/search-field\";\r\n\r\nexport default function Demo() {\r\n  return <SearchField aria-label=\"Search\" defaultValue=\"Marvel movies\" />;\r\n}\r\n"}]
     },
     "demos/components/core/search-field/controlled": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/search-field/controlled")),
-      code : [{"title":"controlled.tsx","code":"\"use client\";\r\n\r\nimport React from \"react\";\r\nimport { SearchField } from \"@/lib/components/core/default/search-field\";\r\n\r\nexport default function Demo() {\r\n  const [inputValue, setInputValue] = React.useState(\"Is CopyUI the next-gen ui lib?\");\r\n  return (\r\n    <div className=\"flex flex-col items-center gap-4\">\r\n      <SearchField\r\n        value={inputValue}\r\n        onChange={(text) => {\r\n          setInputValue(text);\r\n        }}\r\n      />\r\n      <p className=\"text-sm text-fg-muted\">mirrored search text: {inputValue}</p>\r\n    </div>\r\n  );\r\n}\r\n"}]
+      code : [{"title":"controlled.tsx","code":"\"use client\";\r\n\r\nimport React from \"react\";\r\nimport { SearchField } from \"@/lib/components/core/default/search-field\";\r\n\r\nexport default function Demo() {\r\n  const [inputValue, setInputValue] = React.useState(\"Is dotUI the next-gen ui lib?\");\r\n  return (\r\n    <div className=\"flex flex-col items-center gap-4\">\r\n      <SearchField\r\n        value={inputValue}\r\n        onChange={(text) => {\r\n          setInputValue(text);\r\n        }}\r\n      />\r\n      <p className=\"text-sm text-fg-muted\">mirrored search text: {inputValue}</p>\r\n    </div>\r\n  );\r\n}\r\n"}]
     },
     "demos/components/core/search-field/composition": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/search-field/composition")),
-      code : [{"title":"composition.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { SearchField } from \"@/lib/components/core/default/search-field\";\n\nexport default function Demo() {\n  return <SearchField label=\"Search\" />;\n}\n"}]
+      code : [{"title":"composition.tsx","code":"import React from \"react\";\nimport { Description, Label } from \"@/lib/components/core/default/field\";\nimport { Input, InputRoot } from \"@/lib/components/core/default/input\";\nimport { SearchFieldRoot } from \"@/lib/components/core/default/search-field\";\nimport { SearchIcon } from \"@/lib/icons\";\n\nexport default function Demo() {\n  return (\n    <SearchFieldRoot>\n      <Label>Search</Label>\n      <InputRoot prefix={<SearchIcon />}>\n        <Input />\n      </InputRoot>\n      <Description>Enter your search query.</Description>\n    </SearchFieldRoot>\n  );\n}\n"}]
     },
     "demos/components/core/slider/basic": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/slider/basic")),
@@ -1018,7 +1022,7 @@ export const previews = {
     },
     "demos/components/core/text-area/error-message": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/text-area/error-message")),
-      code : [{"title":"error-message.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { TextArea } from \"@/lib/components/core/default/text-area\";\n\nexport default function Demo() {\n  return (\n    <TextArea\n      defaultValue=\"support@copyui.dev\"\n      label=\"Comment\"\n      isInvalid\n      errorMessage=\"You have exceeded the comment limit for one hour.\"\n    />\n  );\n}\n"}]
+      code : [{"title":"error-message.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { TextArea } from \"@/lib/components/core/default/text-area\";\n\nexport default function Demo() {\n  return (\n    <TextArea\n      label=\"Comment\"\n      isInvalid\n      errorMessage=\"You have exceeded the comment limit for one hour.\"\n    />\n  );\n}\n"}]
     },
     "demos/components/core/text-area/loading": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/text-area/loading")),
@@ -1046,7 +1050,7 @@ export const previews = {
     },
     "demos/components/core/text-area/composition": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/text-area/composition")),
-      code : [{"title":"composition.tsx","code":"import React from \"react\";\nimport { TextArea } from \"@/lib/components/core/default/text-area\";\n\nexport default function Demo() {\n  return <TextArea label=\"Comment\" />;\n}\n"}]
+      code : [{"title":"composition.tsx","code":"import React from \"react\";\nimport { Description, Label } from \"@/lib/components/core/default/field\";\nimport { TextAreaInput, InputRoot } from \"@/lib/components/core/default/input\";\nimport { TextFieldRoot } from \"@/lib/components/core/default/text-field\";\n\nexport default function Demo() {\n  return (\n    <TextFieldRoot>\n      <Label>Comment</Label>\n      <InputRoot multiline>\n        <TextAreaInput />\n      </InputRoot>\n      <Description>Enter your comment.</Description>\n    </TextFieldRoot>\n  );\n}\n"}]
     },
     "demos/components/core/text-field/default": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/text-field/default")),
@@ -1102,7 +1106,7 @@ export const previews = {
     },
     "demos/components/core/text-field/composition": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/text-field/composition")),
-      code : [{"title":"composition.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { Description, Label } from \"@/lib/components/core/default/field\";\nimport { Input, InputRoot } from \"@/lib/components/core/default/input\";\nimport { TextFieldRoot } from \"@/lib/components/core/default/text-field\";\n\nexport default function Demo() {\n  return (\n    <TextFieldRoot>\n      <Label>Email</Label>\n      <InputRoot>\n        <Input />\n      </InputRoot>\n      <Description>Enter your email.</Description>\n    </TextFieldRoot>\n  );\n}\n"}]
+      code : [{"title":"composition.tsx","code":"import React from \"react\";\nimport { Description, Label } from \"@/lib/components/core/default/field\";\nimport { Input, InputRoot } from \"@/lib/components/core/default/input\";\nimport { TextFieldRoot } from \"@/lib/components/core/default/text-field\";\n\nexport default function Demo() {\n  return (\n    <TextFieldRoot>\n      <Label>Email</Label>\n      <InputRoot>\n        <Input />\n      </InputRoot>\n      <Description>Enter your email.</Description>\n    </TextFieldRoot>\n  );\n}\n"}]
     },
     "demos/components/core/aspect-ratio/default": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/aspect-ratio/default")),
