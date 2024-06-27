@@ -99,7 +99,7 @@
       "prettier --write",
       "eslint --fix"
     ],
-    "**/*.{mdx}": [
+    "**/*.mdx": [
       "prettier --write"
     ],
     "*.json": [
