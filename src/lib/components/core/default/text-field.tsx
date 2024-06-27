@@ -5,10 +5,13 @@ import {
   TextField as AriaTextField,
   type TextFieldProps as AriaTextFieldProps,
 } from "react-aria-components";
-import { type VariantProps } from "tailwind-variants";
-import { fieldStyles } from "./field";
+import { tv, type VariantProps } from "tailwind-variants";
 import { Field, type FieldProps } from "./field";
-import { InputWrapper, Input, type inputStyles } from "./input";
+import { InputRoot, Input, type inputStyles } from "./input";
+
+const textFieldStyles = tv({
+  base: "flex flex-col gap-2 items-start w-48",
+});
 
 type TextFieldProps = TextFieldRootProps &
   Omit<FieldProps, "children"> &
@@ -23,7 +26,6 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
   (
     {
       className,
-      variant,
       size,
       placeholder,
       label,
@@ -50,16 +52,15 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
           necessityIndicator={necessityIndicator}
           contextualHelp={contextualHelp}
         >
-          <InputWrapper
+          <InputRoot
             size={size}
-            variant={variant}
             prefix={prefix}
             suffix={suffix}
             isLoading={isLoading}
             loaderPosition={loaderPosition}
           >
             <Input ref={ref} placeholder={placeholder} />
-          </InputWrapper>
+          </InputRoot>
         </Field>
       </TextFieldRoot>
     );
@@ -72,8 +73,7 @@ type TextFieldRootProps = Omit<AriaTextFieldProps, "className"> & {
 };
 const TextFieldRoot = React.forwardRef<React.ElementRef<typeof AriaTextField>, TextFieldRootProps>(
   ({ className, ...props }, ref) => {
-    const { root } = fieldStyles();
-    return <AriaTextField ref={ref} className={root({ className })} {...props} />;
+    return <AriaTextField ref={ref} className={textFieldStyles({ className })} {...props} />;
   }
 );
 TextFieldRoot.displayName = "TextFieldRoot";

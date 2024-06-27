@@ -11,7 +11,7 @@ import { ChevronDownIcon, ChevronUpIcon, MinusIcon, PlusIcon } from "@/lib/icons
 import { Button, type ButtonProps } from "./button";
 import { fieldStyles } from "./field";
 import { Field, type FieldProps } from "./field";
-import { InputWrapper, Input, type inputStyles } from "./input";
+import { InputRoot, Input, type inputStyles } from "./input";
 
 type NumberFieldProps = NumberFieldRootProps &
   Omit<FieldProps, "children"> &
@@ -22,7 +22,6 @@ const NumberField = React.forwardRef<HTMLInputElement, NumberFieldProps>(
   (
     {
       className,
-      variant,
       size,
       placeholder,
       label,
@@ -65,11 +64,11 @@ const NumberField = React.forwardRef<HTMLInputElement, NumberFieldProps>(
           necessityIndicator={necessityIndicator}
           contextualHelp={contextualHelp}
         >
-          <InputWrapper size={size} variant={variant}>
+          <InputRoot size={size}>
             {prefix}
             <Input ref={ref} placeholder={placeholder} />
             {suffix}
-          </InputWrapper>
+          </InputRoot>
         </Field>
       </NumberFieldRoot>
     );

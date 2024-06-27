@@ -8,7 +8,7 @@ import {
 import { ChevronDownIcon } from "@/lib/icons";
 import { Button } from "./button";
 import { Field, type FieldProps, fieldStyles } from "./field";
-import { Input, InputWrapper } from "./input";
+import { Input, InputRoot } from "./input";
 import { ListBox, ListBoxItem } from "./list-box";
 import { Overlay } from "./overlay";
 
@@ -40,12 +40,12 @@ const Combobox = <T extends object>({
 
 const ComboboxTrigger = () => {
   return (
-    <InputWrapper>
+    <InputRoot>
       <Input />
       <Button shape="square" className="h-full rounded-none">
         <ChevronDownIcon />
       </Button>
-    </InputWrapper>
+    </InputRoot>
   );
 };
 

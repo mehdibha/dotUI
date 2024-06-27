@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import { TextField } from "@/lib/components/core/default/text-field";
 

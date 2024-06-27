@@ -3,7 +3,7 @@
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
 import { Field, type FieldProps } from "./field";
-import { InputWrapper, TextAreaInput, type inputStyles } from "./input";
+import { InputRoot, TextAreaInput, type inputStyles } from "./input";
 import { TextFieldRoot, type TextFieldRootProps } from "./text-field";
 
 type TextAreaProps = TextFieldRootProps &
@@ -19,7 +19,6 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
   (
     {
       className,
-      variant,
       placeholder,
       label,
       description,
@@ -45,8 +44,7 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
           necessityIndicator={necessityIndicator}
           contextualHelp={contextualHelp}
         >
-          <InputWrapper
-            variant={variant}
+          <InputRoot
             prefix={prefix}
             suffix={suffix}
             isLoading={isLoading}
@@ -54,7 +52,7 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
             multiline
           >
             <TextAreaInput ref={ref} placeholder={placeholder} />
-          </InputWrapper>
+          </InputRoot>
         </Field>
       </TextFieldRoot>
     );

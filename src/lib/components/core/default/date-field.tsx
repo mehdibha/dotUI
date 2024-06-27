@@ -10,7 +10,7 @@ import { type VariantProps } from "tailwind-variants";
 import { DateInput, DateSegment } from "./date-input";
 import { fieldStyles } from "./field";
 import { Field, type FieldProps } from "./field";
-import { InputWrapper, type inputStyles } from "./input";
+import { InputRoot, type inputStyles } from "./input";
 
 interface DateFieldProps<T extends DateValue>
   extends DateFieldRootProps<T>,
@@ -24,7 +24,6 @@ interface DateFieldProps<T extends DateValue>
 
 const DateField = <T extends DateValue>({
   className,
-  variant,
   size,
   label,
   description,
@@ -54,16 +53,15 @@ const DateField = <T extends DateValue>({
         necessityIndicator={necessityIndicator}
         contextualHelp={contextualHelp}
       >
-        <InputWrapper
+        <InputRoot
           size={size}
-          variant={variant}
           prefix={prefix}
           suffix={suffix}
           isLoading={isLoading}
           loaderPosition={loaderPosition}
         >
           <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
-        </InputWrapper>
+        </InputRoot>
       </Field>
     </DateFieldRoot>
   );

@@ -10,7 +10,7 @@ import { SearchIcon, XIcon } from "@/lib/icons";
 import { Button } from "./button";
 import { fieldStyles } from "./field";
 import { Field, type FieldProps } from "./field";
-import { InputWrapper, Input, type inputStyles } from "./input";
+import { InputRoot, Input, type inputStyles } from "./input";
 
 type SearchFieldProps = SearchFieldRootProps &
   Omit<FieldProps, "children"> &
@@ -27,7 +27,6 @@ const SearchField = React.forwardRef<HTMLInputElement, SearchFieldProps>(
   (
     {
       className,
-      variant,
       size,
       placeholder,
       label,
@@ -63,9 +62,8 @@ const SearchField = React.forwardRef<HTMLInputElement, SearchFieldProps>(
               necessityIndicator={necessityIndicator}
               contextualHelp={contextualHelp}
             >
-              <InputWrapper
+              <InputRoot
                 size={size}
-                variant={variant}
                 prefix={prefix}
                 suffix={typeof suffix === "function" ? suffix({ isEmpty, isDisabled }) : suffix}
                 isLoading={isLoading}
@@ -76,7 +74,7 @@ const SearchField = React.forwardRef<HTMLInputElement, SearchFieldProps>(
                   placeholder={placeholder}
                   className="[&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none"
                 />
-              </InputWrapper>
+              </InputRoot>
             </Field>
           </>
         )}

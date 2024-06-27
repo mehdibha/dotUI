@@ -10,7 +10,7 @@ import { type VariantProps } from "tailwind-variants";
 import { DateInput, DateSegment } from "./date-input";
 import { fieldStyles } from "./field";
 import { Field, type FieldProps } from "./field";
-import { InputWrapper, type inputStyles } from "./input";
+import { InputRoot, type inputStyles } from "./input";
 
 interface TimeFieldProps<T extends TimeValue>
   extends TimeFieldRootProps<T>,
@@ -24,7 +24,6 @@ interface TimeFieldProps<T extends TimeValue>
 
 const TimeField = <T extends TimeValue>({
   className,
-  variant,
   size,
   label,
   description,
@@ -54,16 +53,15 @@ const TimeField = <T extends TimeValue>({
         necessityIndicator={necessityIndicator}
         contextualHelp={contextualHelp}
       >
-        <InputWrapper
+        <InputRoot
           size={size}
-          variant={variant}
           prefix={prefix}
           suffix={suffix}
           isLoading={isLoading}
           loaderPosition={loaderPosition}
         >
           <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
-        </InputWrapper>
+        </InputRoot>
       </Field>
     </TimeFieldRoot>
   );

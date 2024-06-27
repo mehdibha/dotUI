@@ -8,7 +8,7 @@ import {
 import { type VariantProps } from "tailwind-variants";
 import { fieldStyles } from "./field";
 import { Field, type FieldProps } from "./field";
-import { InputWrapper, Input, type inputStyles } from "./input";
+import { InputRoot, Input, type inputStyles } from "./input";
 
 type ColorFieldProps = ColorFieldRootProps &
   Omit<FieldProps, "children"> &
@@ -23,7 +23,6 @@ const ColorField = React.forwardRef<HTMLInputElement, ColorFieldProps>(
   (
     {
       className,
-      variant,
       size,
       placeholder,
       label,
@@ -50,16 +49,15 @@ const ColorField = React.forwardRef<HTMLInputElement, ColorFieldProps>(
           necessityIndicator={necessityIndicator}
           contextualHelp={contextualHelp}
         >
-          <InputWrapper
+          <InputRoot
             size={size}
-            variant={variant}
             prefix={prefix}
             suffix={suffix}
             isLoading={isLoading}
             loaderPosition={loaderPosition}
           >
             <Input ref={ref} placeholder={placeholder} />
-          </InputWrapper>
+          </InputRoot>
         </Field>
       </ColorFieldRoot>
     );

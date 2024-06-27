@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { mergeRefs } from "@react-aria/utils";
 import { useControlledState } from "@react-stately/utils";
 import { chain } from "react-aria";
 import {
@@ -24,15 +25,13 @@ const inputStyles = tv({
   slots: {
     root: [
       focusInput(),
-      "inline-flex items-center transition-colors w-full rounded-md overflow-hidden border bg-bg shadow-sm cursor-text",
-      "disabled:cursor-not-allowed disabled:border-border-disabled disabled:bg-bg-disabled",
+      "inline-flex items-center gap-2 px-2 transition-colors w-full rounded-md overflow-hidden border bg-bg shadow-sm cursor-text text-fg-muted",
+      "disabled:cursor-default disabled:border-border-disabled disabled:bg-bg-disabled disabled:text-fg-disabled",
+      "invalid:border-border-danger",
     ],
     input: [
-      "bg-transparent outline-none w-full flex-1 px-2 h-full text-fg placeholder:text-fg-muted",
-      "disabled:cursor-not-allowed disabled:text-fg-disabled",
+      "bg-transparent outline-none w-full flex-1 h-full text-fg placeholder:text-fg-muted disabled:text-fg-disabled disabled:cursor-default",
     ],
-    innerVisual:
-      "text-fg-muted disabled:text-fg-disabled shrink-0 flex items-center justify-center",
   },
   variants: {
     size: {
@@ -40,25 +39,14 @@ const inputStyles = tv({
       md: { root: "text-base sm:text-sm [&_svg]:size-4 h-9" },
       lg: { root: "text-base [&_svg]:size-5 h-10" },
     },
-    variant: {
-      default: {},
-      danger: { root: "border-border-danger focus-within:border-border" },
-      success: { root: "border-border-success focus-within:border-border" },
-      warning: { root: "border-border-warning focus-within:border-border" },
-    },
     multiline: {
       true: {
         root: "h-auto flex-col items-stretch p-2",
         input: "min-h-14 resize-none overflow-auto px-0",
-        innerVisual: "data-[side=start]:pb-2 data-[side=end]:pt-2",
-      },
-      false: {
-        innerVisual: "data-[side=start]:pl-2 data-[side=end]:pr-2",
       },
     },
   },
   defaultVariants: {
-    variant: "default",
     size: "md",
   },
 });
@@ -115,7 +103,7 @@ const TextAreaInput = React.forwardRef<HTMLTextAreaElement, TextAreaInputProps>(
 );
 TextAreaInput.displayName = "TextAreaInput";
 
-interface InputProps extends Omit<AriaInputProps, "className"> {
+interface InputProps extends Omit<AriaInputProps, "className" | "size" | "prefix"> {
   className?: string;
 }
 const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, ...props }, ref) => {
@@ -124,7 +112,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, ...pr
 });
 Input.displayName = "Input";
 
-interface InputWrapperProps
+interface InputRootProps
   extends Omit<AriaGroupProps, "className" | "prefix">,
     VariantProps<typeof inputStyles> {
   prefix?: React.ReactNode;
@@ -133,104 +121,73 @@ interface InputWrapperProps
   loaderPosition?: "prefix" | "suffix";
   className?: string;
 }
-const InputWrapper = React.forwardRef<HTMLDivElement, InputWrapperProps>(
-  (
-    {
-      className,
-      size,
-      // variant, // TODO REMOVE VARIANT
-      isLoading,
-      prefix,
-      suffix,
-      loaderPosition = "suffix",
-      multiline = false,
-      ...props
-    },
-    ref
-  ) => {
-    // const { isInvalid } = React.useContext(AriaFieldErrorContext);
-    const inputProps = useSlottedContext(AriaInputContext);
-    const textAreaProps = useSlottedContext(AriaTextAreaContext);
-    const localRef = React.useRef<HTMLInputElement | HTMLTextAreaElement>(null);
-    const inputRef = inputProps?.ref ?? textAreaProps?.ref ?? localRef; // TODO Fix this with mergeRefs
-    const { root } = inputStyles({
-      size,
-      // variant: variant ?? (isInvalid ? "danger" : undefined),
-      multiline,
+const InputRoot = ({
+  className,
+  prefix,
+  suffix,
+  isLoading,
+  loaderPosition,
+  size,
+  ...props
+}: InputRootProps) => {
+  const { root } = inputStyles({ size });
+  const inputContext = useSlottedContext(AriaInputContext);
+  const textAreaContext = useSlottedContext(AriaTextAreaContext);
+  const inputRef = React.useRef(null);
+  const isDisabled = props.isDisabled || inputContext?.disabled || textAreaContext?.disabled;
+  const isInvalid =
+    props.isInvalid ||
+    (!!inputContext?.["aria-invalid"] && inputContext["aria-invalid"] !== "false") ||
+    (!!textAreaContext?.["aria-invalid"] && textAreaContext["aria-invalid"] !== "false");
+
+  const handlePointerDown = (event: React.PointerEvent<HTMLElement>) => {
+    const target = event.target as HTMLElement;
+    if (target.closest("input, button, a")) return;
+    const input = (inputRef as React.RefObject<HTMLInputElement | HTMLTextAreaElement>).current;
+    if (!input) return;
+    requestAnimationFrame(() => {
+      input.focus();
     });
-    const showPrefixLoading = isLoading && loaderPosition === "prefix";
-    const showSuffixLoading = isLoading && loaderPosition === "suffix";
-    return (
-      <Provider
-        values={[
-          [AriaInputContext, { ...inputProps, ref: inputRef as React.RefObject<HTMLInputElement> }],
-          [
-            AriaTextAreaContext,
-            { ...textAreaProps, ref: inputRef as React.RefObject<HTMLTextAreaElement> },
-          ],
-        ]}
-      >
-        <AriaGroup
-          ref={ref}
-          role="presentation"
-          className={root({ className })}
-          {...props}
-          onPointerDown={(event) => {
-            const target = event.target as HTMLElement;
-            if (target.closest("input, button, a")) return;
-            // @ts-expect-error WILL FIX IT SOON
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            const input = inputRef.current; // TODO: Mergeprops correctly here
-            if (!input) return;
-            requestAnimationFrame(() => {
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-              input.focus();
-            });
-          }}
+  };
+
+  return (
+    <AriaGroup
+      role="presentation"
+      {...props}
+      onPointerDown={handlePointerDown}
+      isDisabled={isDisabled}
+      isInvalid={isInvalid}
+      className={root({ className })}
+    >
+      {composeRenderProps(props.children, (children) => (
+        <Provider
+          values={[
+            [
+              AriaInputContext,
+              { ...inputContext, ref: mergeRefs(inputRef, inputContext?.ref ?? null) },
+            ],
+            [
+              AriaTextAreaContext,
+              { ...textAreaContext, ref: mergeRefs(inputRef, textAreaContext?.ref ?? null) },
+            ],
+          ]}
         >
-          {composeRenderProps(props.children, (children) => (
-            <>
-              <InputInnerVisual side="start" loading={showPrefixLoading} multiline={multiline}>
-                {prefix}
-              </InputInnerVisual>
-              {children}
-              <InputInnerVisual side="end" loading={showSuffixLoading} multiline={multiline}>
-                {suffix}
-              </InputInnerVisual>
-            </>
-          ))}
-        </AriaGroup>
-      </Provider>
-    );
-  }
-);
-InputWrapper.displayName = "InputWrapper";
+          {isLoading && loaderPosition === "prefix" ? (
+            <LoaderIcon className="animate-spin" />
+          ) : (
+            prefix
+          )}
+          {children}
+          {isLoading && loaderPosition === "suffix" ? (
+            <LoaderIcon className="animate-spin" />
+          ) : (
+            suffix
+          )}
+        </Provider>
+      ))}
+    </AriaGroup>
+  );
+};
 
-interface InputInnerVisualProps extends React.HTMLAttributes<HTMLDivElement> {
-  side: "start" | "end";
-  multiline?: boolean;
-  loading?: boolean;
-}
-const InputInnerVisual = React.forwardRef<HTMLSpanElement, InputInnerVisualProps>(
-  ({ loading, children, className, multiline, side, ...props }, ref) => {
-    const { innerVisual } = inputStyles({ multiline });
-    const inputContext = useSlottedContext(AriaInputContext);
-    if (!loading && !children) return null;
-    return (
-      <span
-        ref={ref}
-        data-rac=""
-        data-side={side}
-        data-disabled={inputContext?.disabled || undefined}
-        className={innerVisual({ className })}
-        {...props}
-      >
-        {loading ? <LoaderIcon className="animate-spin" /> : children}
-      </span>
-    );
-  }
-);
-InputInnerVisual.displayName = "InputInnerVisual";
-
-export type { InputProps, TextAreaInputProps, InputWrapperProps, InputInnerVisualProps };
-export { Input, TextAreaInput, InputWrapper, InputInnerVisual, inputStyles };
+export type { InputProps, InputRootProps, TextAreaInputProps };
+export { Input, TextAreaInput, InputRoot, inputStyles };

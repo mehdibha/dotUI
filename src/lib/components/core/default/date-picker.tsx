@@ -14,7 +14,7 @@ import { Calendar } from "./calendar";
 import { DateInput, DateSegment } from "./date-input";
 import { fieldStyles } from "./field";
 import { Field, type FieldProps } from "./field";
-import { InputWrapper, type inputStyles } from "./input";
+import { InputRoot, type inputStyles } from "./input";
 import { Overlay } from "./overlay";
 
 interface DatePickerProps<T extends DateValue>
@@ -27,7 +27,6 @@ interface DatePickerProps<T extends DateValue>
 
 const DatePicker = <T extends DateValue>({
   className,
-  variant,
   size,
   label,
   description,
@@ -55,18 +54,12 @@ const DatePicker = <T extends DateValue>({
         necessityIndicator={necessityIndicator}
         contextualHelp={contextualHelp}
       >
-        <InputWrapper
-          size={size}
-          variant={variant}
-          prefix={prefix}
-          isLoading={isLoading}
-          loaderPosition="prefix"
-        >
+        <InputRoot size={size} prefix={prefix} isLoading={isLoading} loaderPosition="prefix">
           <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
           <Button size="sm" shape="square" className="h-full rounded-none">
             <CalendarIcon />
           </Button>
-        </InputWrapper>
+        </InputRoot>
       </Field>
       <Overlay type="popover">
         <AriaDialog className="outline-none">

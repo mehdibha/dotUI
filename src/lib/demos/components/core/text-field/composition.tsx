@@ -1,16 +1,18 @@
 "use client";
 
 import React from "react";
-import { TextField } from "@/lib/components/core/default/text-field";
+import { Description, Label } from "@/lib/components/core/default/field";
+import { Input, InputRoot } from "@/lib/components/core/default/input";
+import { TextFieldRoot } from "@/lib/components/core/default/text-field";
 
 export default function Demo() {
   return (
-    <TextField
-      placeholder="example@email.com"
-      label="Email"
-      autoComplete="off"
-      description="Enter your email."
-      className="w-full"
-    />
+    <TextFieldRoot>
+      <Label>Email</Label>
+      <InputRoot>
+        <Input />
+      </InputRoot>
+      <Description>Enter your email.</Description>
+    </TextFieldRoot>
   );
 }

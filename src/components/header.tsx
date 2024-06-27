@@ -23,7 +23,12 @@ export const Header = () => {
   const { scrolled } = useScrolled({ initial: false });
 
   return (
-    <header className="sticky top-0 z-50 flex h-14 max-md:border-b max-md:bg-bg md:h-16">
+    <header
+      className={cn(
+        "sticky top-0 z-50 flex h-14 max-md:border-b max-md:bg-bg md:h-16",
+        scrolled && "pointer-events-none"
+      )}
+    >
       <div className="container flex h-full max-w-screen-2xl items-center">
         {/* Desktop Nav */}
         <div className="hidden w-full items-center justify-between md:flex">
@@ -56,7 +61,7 @@ export const Header = () => {
           <div
             className={cn(
               "relative flex items-center gap-6 overflow-hidden rounded-md bg-transparent px-4 py-1 transition-[padding,background-color] duration-300 ease-out",
-              scrolled && "bg-bg-muted pl-14"
+              scrolled && "pointer-events-auto bg-bg-muted pl-14 shadow-md"
             )}
           >
             <Link
