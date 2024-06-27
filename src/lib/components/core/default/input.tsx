@@ -30,7 +30,7 @@ const inputStyles = tv({
       "invalid:border-border-danger",
     ],
     input: [
-      "bg-transparent outline-none w-full flex-1 h-full text-fg placeholder:text-fg-muted disabled:text-fg-disabled disabled:cursor-default",
+      "bg-transparent outline-none w-full h-full text-fg placeholder:text-fg-muted disabled:text-fg-disabled disabled:cursor-default",
     ],
   },
   variants: {
@@ -42,12 +42,16 @@ const inputStyles = tv({
     multiline: {
       true: {
         root: "h-auto flex-col items-stretch p-2",
-        input: "min-h-14 resize-none overflow-auto px-0",
+        input: "min-h-14 resize-none overflow-auto",
+      },
+      false: {
+        input: "flex-1",
       },
     },
   },
   defaultVariants: {
     size: "md",
+    multiline: false,
   },
 });
 
@@ -55,8 +59,7 @@ interface TextAreaInputProps extends Omit<AriaTextAreaProps, "className"> {
   className?: string;
 }
 const TextAreaInput = React.forwardRef<HTMLTextAreaElement, TextAreaInputProps>(
-  ({ className, onChange, rows = 1, ...props }, ref) => {
-    console.log(ref); // TODO MERGE
+  ({ className, onChange, rows = 1, ...props }, forwardedRef) => {
     const { input } = inputStyles({ multiline: true });
     const [inputValue, setInputValue] = useControlledState(
       props.value,
@@ -92,7 +95,7 @@ const TextAreaInput = React.forwardRef<HTMLTextAreaElement, TextAreaInputProps>(
 
     return (
       <AriaTextArea
-        ref={inputRef}
+        ref={mergeRefs(inputRef, forwardedRef)}
         className={input({ className })}
         onChange={chain(onChange, setInputValue)}
         rows={rows}
@@ -128,9 +131,10 @@ const InputRoot = ({
   isLoading,
   loaderPosition,
   size,
+  multiline,
   ...props
 }: InputRootProps) => {
-  const { root } = inputStyles({ size });
+  const { root } = inputStyles({ size, multiline });
   const inputContext = useSlottedContext(AriaInputContext);
   const textAreaContext = useSlottedContext(AriaTextAreaContext);
   const inputRef = React.useRef(null);

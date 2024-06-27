@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import { Description, Label } from "@/lib/components/core/default/field";
 import { Input, InputRoot } from "@/lib/components/core/default/input";
