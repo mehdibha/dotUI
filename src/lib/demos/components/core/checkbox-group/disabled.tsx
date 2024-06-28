@@ -1,5 +1,5 @@
-import { Checkbox } from "@/lib/components/core/default/checkbox/checkbox";
-import { CheckboxGroup } from "@/lib/components/core/default/checkbox/checkbox-group";
+import { Checkbox } from "@/lib/components/core/default/checkbox";
+import { CheckboxGroup } from "@/lib/components/core/default/checkbox-group";
 
 export default function Demo() {
   return (

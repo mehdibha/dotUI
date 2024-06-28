@@ -16,6 +16,7 @@ export interface ComponentPreviewProps {
   aspect?: "default" | "page";
   defaultExpanded?: boolean;
   preview?: string;
+  expandable?: boolean;
 }
 
 export const ComponentPreview = ({
@@ -24,6 +25,7 @@ export const ComponentPreview = ({
   containerClassName,
   aspect = "default",
   preview,
+  expandable,
 }: ComponentPreviewProps) => {
   // make it server component
   const component = React.useMemo(() => {
@@ -71,6 +73,7 @@ export const ComponentPreview = ({
         files={code.map((file) => ({ fileName: file.title, code: file.code, lang: "tsx" }))}
         preview={preview}
         className={"w-full rounded-t-none border-x-0 border-b-0"}
+        expandable={expandable}
       />
     </div>
   );

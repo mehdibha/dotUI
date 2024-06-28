@@ -87,15 +87,9 @@ const docsConfig: DocsConfig = {
             },
             { title: "Checkbox", href: "/components/inputs/checkbox" },
             {
-              title: "Checkbox Card",
-              href: "/components/inputs/checkbox-card",
-            },
-            {
               title: "Checkbox Group",
               href: "/components/inputs/checkbox-group",
             },
-            { title: "Radio", href: "/components/inputs/radio" },
-            { title: "Radio Card", href: "/components/inputs/radio-card" },
             {
               title: "Radio Group",
               href: "/components/inputs/radio-group",

@@ -27,6 +27,7 @@ export const ComponentSource = ({
     <CodeBlock
       files={code.map((file) => ({ fileName: file.title, code: file.code, lang: "tsx" }))}
       className={className}
+      expandable
     />
   );
 };

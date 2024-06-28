@@ -1,10 +1,11 @@
 "use client";
 
 import React from "react";
-import { Checkbox, CheckboxGroup } from "@/lib/components/core/default/checkbox";
+import { Checkbox } from "@/lib/components/core/default/checkbox";
+import { CheckboxGroup } from "@/lib/components/core/default/checkbox-group";
 
 export default function Demo() {
-  const [frameworks, setFrameworks] = React.useState(["nextjs", "remix", "gatsby"]);
+  const [frameworks, setFrameworks] = React.useState(["nextjs"]);
   return (
     <div className="flex flex-col items-center gap-4">
       <CheckboxGroup

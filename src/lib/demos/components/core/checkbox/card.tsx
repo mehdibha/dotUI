@@ -1,7 +1,5 @@
-"use client";
-
 import { Checkbox } from "@/lib/components/core/default/checkbox";
 
 export default function Demo() {
-  return <Checkbox isIndeterminate>Select all</Checkbox>;
+  return <Checkbox variant="card">I agree to the terms and conditions</Checkbox>;
 }

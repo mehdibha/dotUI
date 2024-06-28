@@ -1,4 +1,5 @@
-import { CheckboxGroup, Checkbox } from "@/lib/components/core/default/checkbox";
+import { Checkbox } from "@/lib/components/core/default/checkbox";
+import { CheckboxGroup } from "@/lib/components/core/default/checkbox-group";
 import { ContextualHelp } from "@/lib/components/core/default/contextual-help";
 
 export default function Demo() {

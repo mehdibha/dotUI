@@ -7,12 +7,13 @@ import { tv } from "tailwind-variants";
 import { Button, type ButtonProps } from "@/lib/components/core/default/button";
 import { ScrollArea, type ScrollAreaProps } from "@/lib/components/core/default/scroll-area";
 import { Tab, Tabs, TabList, TabPanel, type TabsProps } from "@/lib/components/core/default/tabs";
+import { cn } from "@/lib/utils/classes";
 
 const codeBlockStyles = tv({
   slots: {
     root: "block border rounded-md w-fit max-w-full bg-bg-muted",
     header: "flex items-center justify-between border-b rounded-t-[inherit] pr-2 h-10",
-    body: "max-h-[200px] text-xs p-4",
+    body: "text-xs p-4",
     code: "text-xs",
   },
 });
@@ -26,8 +27,15 @@ interface CodeBlockClientProps {
   }[];
   preview?: JSX.Element;
   previewStr?: string;
+  expandable?: boolean;
 }
-const CodeBlockClient = ({ files, preview, previewStr, ...props }: CodeBlockClientProps) => {
+const CodeBlockClient = ({
+  files,
+  preview,
+  previewStr,
+  expandable = false,
+  ...props
+}: CodeBlockClientProps) => {
   const [activeTab, setActiveTab] = React.useState<Key>(files[0].fileName);
   const [isExpanded, setExpanded] = React.useState(false);
   const handleExpand = () => {
@@ -54,7 +62,7 @@ const CodeBlockClient = ({ files, preview, previewStr, ...props }: CodeBlockClie
           )}
         </div>
         <div className="flex items-center gap-2">
-          {preview && (
+          {(preview || expandable) && (
             <Button variant="default" size="sm" className="h-7 text-xs" onPress={handleExpand}>
               {isExpanded ? "Collapse" : "Expand"} code
             </Button>
@@ -68,7 +76,7 @@ const CodeBlockClient = ({ files, preview, previewStr, ...props }: CodeBlockClie
           />
         </div>
       </CodeBlockHeader>
-      <CodeBlockBody>
+      <CodeBlockBody className={cn(isExpanded ? "max-h-[400px]" : "max-h-[200px]")}>
         {preview && !isExpanded ? (
           <TabPanel id={files[0].fileName} className="!mt-0">
             {preview}

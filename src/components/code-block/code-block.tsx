@@ -9,6 +9,7 @@ interface CodeBlockProps extends CodeBlockRootProps {
     lang: BundledLanguage;
   }[];
   preview?: string;
+  expandable?: boolean;
 }
 
 const CodeBlock = async ({ files: _files, preview: _preview, ...props }: CodeBlockProps) => {

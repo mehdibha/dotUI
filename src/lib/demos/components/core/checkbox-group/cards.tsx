@@ -1,11 +1,12 @@
-import { CheckboxCard, CheckboxGroup } from "@/lib/components/core/default/checkbox";
+import { Checkbox } from "@/lib/components/core/default/checkbox";
+import { CheckboxGroup } from "@/lib/components/core/default/checkbox-group";
 
 export default function Demo() {
   return (
-    <CheckboxGroup label="React frameworks" defaultValue={["nextjs"]}>
-      <CheckboxCard value="nextjs" title="Next.js" />
-      <CheckboxCard value="remix" title="Remix" />
-      <CheckboxCard value="gatsby" title="Gatsby" />
+    <CheckboxGroup label="React frameworks" defaultValue={["nextjs"]} variant="card">
+      <Checkbox value="nextjs">Next.js</Checkbox>
+      <Checkbox value="remix">Remix</Checkbox>
+      <Checkbox value="gatsby">Gatsby</Checkbox>
     </CheckboxGroup>
   );
 }

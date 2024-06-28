@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Checkbox } from "@/lib/components/core/default/checkbox/checkbox";
+import { Checkbox } from "@/lib/components/core/default/checkbox";
 
 export default function Demo() {
   const [checked, setChecked] = React.useState(false);
