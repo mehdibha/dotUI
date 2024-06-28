@@ -1,11 +1,26 @@
-import { RadioGroup, RadioCard } from "@/lib/components/core/default/radio";
+import { RadioGroup, Radio } from "@/lib/components/core/default/radio-group";
 
 export default function Demo() {
   return (
-    <RadioGroup defaultValue="sm" label="Size" orientation="horizontal">
-      <RadioCard value="sm" title="Small" description="Dimension: 128 x 128" />
-      <RadioCard value="md" title="Medium" description="Dimension: 256 x 256" />
-      <RadioCard value="lg" title="Large" description="Dimension: 512 x 512" />
+    <RadioGroup defaultValue="sm" label="Size" orientation="horizontal" variant="card">
+      <Radio value="sm">
+        <div className="flex flex-col gap-1">
+          <span className="font-bold">Small</span>
+          <span className="text-xs text-fg-muted">Dimension: 128 x 128</span>
+        </div>
+      </Radio>
+      <Radio value="md">
+        <div className="flex flex-col gap-1">
+          <span className="font-bold">Medium</span>
+          <span className="text-xs text-fg-muted">Dimension: 256 x 256</span>
+        </div>
+      </Radio>
+      <Radio value="lg">
+        <div className="flex flex-col gap-1">
+          <span className="font-bold">Large</span>
+          <span className="text-xs text-fg-muted">Dimension: 512 x 512</span>
+        </div>
+      </Radio>
     </RadioGroup>
   );
 }

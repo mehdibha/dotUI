@@ -3,7 +3,7 @@
 import React from "react";
 import { Button } from "@/lib/components/core/default/button";
 import { DialogRoot, Dialog } from "@/lib/components/core/default/dialog";
-import { Radio, RadioGroup } from "@/lib/components/core/default/radio";
+import { Radio, RadioGroup } from "@/lib/components/core/default/radio-group";
 
 type Type = "modal" | "drawer" | "popover";
 

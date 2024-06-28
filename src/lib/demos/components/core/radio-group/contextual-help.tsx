@@ -1,5 +1,5 @@
 import { ContextualHelp } from "@/lib/components/core/default/contextual-help";
-import { RadioGroup, Radio } from "@/lib/components/core/default/radio";
+import { RadioGroup, Radio } from "@/lib/components/core/default/radio-group";
 
 export default function Demo() {
   return (

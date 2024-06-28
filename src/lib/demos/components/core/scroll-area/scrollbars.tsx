@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Radio, RadioGroup } from "@/lib/components/core/default/radio";
+import { Radio, RadioGroup } from "@/lib/components/core/default/radio-group";
 import { ScrollArea, type ScrollAreaProps } from "@/lib/components/core/default/scroll-area";
 
 export default function Demo() {

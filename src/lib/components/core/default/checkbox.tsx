@@ -62,7 +62,7 @@ const Checkbox = React.forwardRef<React.ElementRef<typeof AriaCheckbox>, Checkbo
                 <CheckIcon className="size-3" />
               )}
             </div>
-            {typeof children === "string" ? <span>{children}</span> : children}
+            <span>{children}</span>
           </>
         ))}
       </AriaCheckbox>
@@ -74,8 +74,6 @@ Checkbox.displayName = "Checkbox";
 type CheckboxContextValue = VariantProps<typeof checkboxStyles>;
 const CheckboxContext = React.createContext<CheckboxContextValue>({});
 const useCheckboxContext = () => {
-  const ctx = React.useContext(CheckboxContext);
-  console.log(ctx);
   return React.useContext(CheckboxContext);
 };
 

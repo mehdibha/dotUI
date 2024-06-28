@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Alert, type AlertProps } from "@/lib/components/core/default/alert";
-import { RadioGroup, Radio } from "@/lib/components/core/default/radio";
+import { RadioGroup, Radio } from "@/lib/components/core/default/radio-group";
 import { Switch } from "@/lib/components/core/default/switch";
 
 type Variant = AlertProps["variant"];

@@ -1,4 +1,4 @@
-import { RadioGroup, Radio } from "@/lib/components/core/default/radio";
+import { RadioGroup, Radio } from "@/lib/components/core/default/radio-group";
 
 export default function Demo() {
   return (
