@@ -798,11 +798,11 @@ export const previews = {
     },
     "demos/components/core/number-field/default": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/number-field/default")),
-      code : [{"title":"default.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { NumberField } from \"@/lib/components/core/default/number-field\";\n\nexport default function Demo() {\n  return <NumberField label=\"Width\" defaultValue={1024} />;\n}\n"}]
+      code : [{"title":"default.tsx","code":"import React from \"react\";\nimport { NumberField } from \"@/lib/components/core/default/number-field\";\n\nexport default function Demo() {\n  return <NumberField label=\"Width\" defaultValue={1024} />;\n}\n"}]
     },
     "demos/components/core/number-field/format-options": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/number-field/format-options")),
-      code : [{"title":"format-options.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { NumberField } from \"@/lib/components/core/default/number-field\";\n\nexport default function Demo() {\n  return (\n    <div className=\"grid grid-cols-2 gap-4\">\n      <NumberField\n        label=\"Decimal\"\n        defaultValue={0}\n        formatOptions={{\n          signDisplay: \"exceptZero\",\n          minimumFractionDigits: 1,\n          maximumFractionDigits: 2,\n        }}\n      />\n      <NumberField\n        label=\"Percentage\"\n        defaultValue={0.05}\n        formatOptions={{\n          style: \"percent\",\n        }}\n      />\n      <NumberField\n        label=\"Currency\"\n        defaultValue={45}\n        formatOptions={{\n          style: \"currency\",\n          currency: \"EUR\",\n          currencyDisplay: \"code\",\n          currencySign: \"accounting\",\n        }}\n      />\n      <NumberField\n        label=\"Unit\"\n        defaultValue={4}\n        formatOptions={{\n          style: \"unit\",\n          unit: \"inch\",\n          unitDisplay: \"long\",\n        }}\n      />\n    </div>\n  );\n}\n"}]
+      code : [{"title":"format-options.tsx","code":"import React from \"react\";\nimport { NumberField } from \"@/lib/components/core/default/number-field\";\n\nexport default function Demo() {\n  return (\n    <div className=\"grid grid-cols-2 gap-4\">\n      <NumberField\n        label=\"Decimal\"\n        defaultValue={0}\n        formatOptions={{\n          signDisplay: \"exceptZero\",\n          minimumFractionDigits: 1,\n          maximumFractionDigits: 2,\n        }}\n      />\n      <NumberField\n        label=\"Percentage\"\n        defaultValue={0.05}\n        formatOptions={{\n          style: \"percent\",\n        }}\n      />\n      <NumberField\n        label=\"Currency\"\n        defaultValue={45}\n        formatOptions={{\n          style: \"currency\",\n          currency: \"EUR\",\n          currencyDisplay: \"code\",\n          currencySign: \"accounting\",\n        }}\n      />\n      <NumberField\n        label=\"Unit\"\n        defaultValue={4}\n        formatOptions={{\n          style: \"unit\",\n          unit: \"inch\",\n          unitDisplay: \"long\",\n        }}\n      />\n    </div>\n  );\n}\n"}]
     },
     "demos/components/core/number-field/sizes": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/number-field/sizes")),
@@ -814,15 +814,15 @@ export const previews = {
     },
     "demos/components/core/number-field/description": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/number-field/description")),
-      code : [{"title":"description.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { NumberField } from \"@/lib/components/core/default/number-field\";\n\nexport default function Demo() {\n  return <NumberField label=\"Width\" description=\"Enter the desired width\" />;\n}\n"}]
+      code : [{"title":"description.tsx","code":"import React from \"react\";\nimport { NumberField } from \"@/lib/components/core/default/number-field\";\n\nexport default function Demo() {\n  return <NumberField label=\"Width\" description=\"Enter the desired width.\" />;\n}\n"}]
     },
     "demos/components/core/number-field/contextual-help": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/number-field/contextual-help")),
-      code : [{"title":"contextual-help.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { ContextualHelp } from \"@/lib/components/core/default/contextual-help\";\nimport { NumberField } from \"@/lib/components/core/default/number-field\";\n\nexport default function Demo() {\n  return (\n    <NumberField\n      label=\"Width\"\n      defaultValue={1024}\n      contextualHelp={\n        <ContextualHelp\n          title=\"Need help?\"\n          description=\"If you need help, please contact support.\"\n        />\n      }\n    />\n  );\n}\n"}]
+      code : [{"title":"contextual-help.tsx","code":"import React from \"react\";\nimport { ContextualHelp } from \"@/lib/components/core/default/contextual-help\";\nimport { NumberField } from \"@/lib/components/core/default/number-field\";\n\nexport default function Demo() {\n  return (\n    <NumberField\n      label=\"Width\"\n      defaultValue={1024}\n      contextualHelp={\n        <ContextualHelp\n          title=\"Need help?\"\n          description=\"If you need help, please contact support.\"\n        />\n      }\n    />\n  );\n}\n"}]
     },
     "demos/components/core/number-field/error-message": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/number-field/error-message")),
-      code : [{"title":"error-message.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { NumberField } from \"@/lib/components/core/default/number-field\";\n\nexport default function Demo() {\n  return <NumberField label=\"Search\" isInvalid errorMessage=\"Please fill out this field.\" />;\n}\n"}]
+      code : [{"title":"error-message.tsx","code":"import React from \"react\";\nimport { NumberField } from \"@/lib/components/core/default/number-field\";\n\nexport default function Demo() {\n  return <NumberField label=\"Width\" isInvalid errorMessage=\"Please fill out this field.\" />;\n}\n"}]
     },
     "demos/components/core/number-field/disabled": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/number-field/disabled")),
@@ -830,15 +830,19 @@ export const previews = {
     },
     "demos/components/core/number-field/read-only": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/number-field/read-only")),
-      code : [{"title":"read-only.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { NumberField } from \"@/lib/components/core/default/number-field\";\n\nexport default function Demo() {\n  return <NumberField label=\"Email\" isReadOnly value={69} />;\n}\n"}]
+      code : [{"title":"read-only.tsx","code":"import React from \"react\";\nimport { NumberField } from \"@/lib/components/core/default/number-field\";\n\nexport default function Demo() {\n  return <NumberField aria-label=\"Width\" isReadOnly value={69} />;\n}\n"}]
     },
     "demos/components/core/number-field/required": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/number-field/required")),
-      code : [{"title":"required.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { NumberField } from \"@/lib/components/core/default/number-field\";\n\nexport default function Demo() {\n  return (\n    <div className=\"grid grid-cols-2 gap-4\">\n      <NumberField label=\"Width\" isRequired />\n      <NumberField label=\"Width\" isRequired necessityIndicator=\"icon\" />\n      <NumberField label=\"Width\" isRequired necessityIndicator=\"label\" />\n      <NumberField label=\"Width\" necessityIndicator=\"label\" />\n    </div>\n  );\n}\n"}]
+      code : [{"title":"required.tsx","code":"import React from \"react\";\nimport { NumberField } from \"@/lib/components/core/default/number-field\";\n\nexport default function Demo() {\n  return (\n    <div className=\"grid grid-cols-2 gap-4\">\n      <NumberField label=\"Width\" isRequired />\n      <NumberField label=\"Width\" isRequired necessityIndicator=\"icon\" />\n      <NumberField label=\"Width\" isRequired necessityIndicator=\"label\" />\n      <NumberField label=\"Width\" necessityIndicator=\"label\" />\n    </div>\n  );\n}\n"}]
+    },
+    "demos/components/core/number-field/uncontrolled": {
+      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/number-field/uncontrolled")),
+      code : [{"title":"uncontrolled.tsx","code":"import React from \"react\";\r\nimport { NumberField } from \"@/lib/components/core/default/number-field\";\r\n\r\nexport default function Demo() {\r\n  return <NumberField aria-label=\"Width\" defaultValue={80} />;\r\n}\r\n"}]
     },
     "demos/components/core/number-field/controlled": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/number-field/controlled")),
-      code : [{"title":"controlled.tsx","code":"\"use client\";\r\n\r\nimport React from \"react\";\r\nimport { NumberField } from \"@/lib/components/core/default/number-field\";\r\n\r\nexport default function Demo() {\r\n  const [inputValue, setInputValue] = React.useState(69);\r\n  return (\r\n    <div className=\"flex flex-col items-center gap-4\">\r\n      <NumberField\r\n        value={inputValue}\r\n        onChange={(value) => {\r\n          setInputValue(value);\r\n        }}\r\n      />\r\n      <p className=\"text-sm text-fg-muted\">mirrored number: {inputValue}</p>\r\n    </div>\r\n  );\r\n}\r\n"}]
+      code : [{"title":"controlled.tsx","code":"\"use client\";\r\n\r\nimport React from \"react\";\r\nimport { NumberField } from \"@/lib/components/core/default/number-field\";\r\n\r\nexport default function Demo() {\r\n  const [inputValue, setInputValue] = React.useState(69);\r\n  return (\r\n    <div className=\"flex flex-col items-center gap-4\">\r\n      <NumberField\r\n        aria-label=\"Width\"\r\n        value={inputValue}\r\n        onChange={(value) => {\r\n          setInputValue(value);\r\n        }}\r\n      />\r\n      <p className=\"text-sm text-fg-muted\">mirrored number: {inputValue}</p>\r\n    </div>\r\n  );\r\n}\r\n"}]
     },
     "demos/components/core/number-field/composition": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/number-field/composition")),
@@ -942,7 +946,7 @@ export const previews = {
     },
     "demos/components/core/search-field/controlled": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/search-field/controlled")),
-      code : [{"title":"controlled.tsx","code":"\"use client\";\r\n\r\nimport React from \"react\";\r\nimport { SearchField } from \"@/lib/components/core/default/search-field\";\r\n\r\nexport default function Demo() {\r\n  const [inputValue, setInputValue] = React.useState(\"Is dotUI the next-gen ui lib?\");\r\n  return (\r\n    <div className=\"flex flex-col items-center gap-4\">\r\n      <SearchField\r\n        value={inputValue}\r\n        onChange={(text) => {\r\n          setInputValue(text);\r\n        }}\r\n      />\r\n      <p className=\"text-sm text-fg-muted\">mirrored search text: {inputValue}</p>\r\n    </div>\r\n  );\r\n}\r\n"}]
+      code : [{"title":"controlled.tsx","code":"\"use client\";\r\n\r\nimport React from \"react\";\r\nimport { SearchField } from \"@/lib/components/core/default/search-field\";\r\n\r\nexport default function Demo() {\r\n  const [inputValue, setInputValue] = React.useState(\"Is dotUI the next-gen ui lib?\");\r\n  return (\r\n    <div className=\"flex flex-col items-center gap-4\">\r\n      <SearchField value={inputValue} onChange={setInputValue} />\r\n      <p className=\"text-sm text-fg-muted\">mirrored search text: {inputValue}</p>\r\n    </div>\r\n  );\r\n}\r\n"}]
     },
     "demos/components/core/search-field/composition": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/search-field/composition")),

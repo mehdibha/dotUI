@@ -30,7 +30,7 @@ npm install react-aria-components
 ```
 
   <Step>Copy and paste the following code into your project.</Step>
-  <ComponentSource name={["components/core/default/search-field","components/core/default/field",,"components/core/default/input"]}  />
+  <ComponentSource name={["components/core/default/search-field","components/core/default/field","components/core/default/input"]}  />
   <Step>Update the import paths to match your project setup.</Step>
 </Steps>
 
@@ -42,7 +42,7 @@ Use a `SearchField` to allow a user to enter and clear a search query.
 
 ### Size
 
-Use the `size` prop to control the size of the `SearchField`. The default variant is `"md"`.
+Use the `size` prop to control the size of the `SearchField`. The default size is `"md"`.
 
 <ComponentPreview
   name="demos/components/core/search-field/sizes"
@@ -159,14 +159,7 @@ Use the `value` and `onChange` props to control the value of the input.
 <ComponentPreview
   name="demos/components/core/search-field/controlled"
   preview={`const [inputValue, setInputValue] = React.useState("Marvel movies");
-return (
-  <SearchField
-    value={inputValue}
-    onChange={(text) => {
-      setInputValue(text);
-    }}
-  />
-);`}
+return <SearchField value={inputValue} onChange={setInputValue} />;`}
 />
 
 ## Composition

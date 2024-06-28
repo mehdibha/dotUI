@@ -5,13 +5,16 @@ import {
   NumberField as AriaNumberField,
   type NumberFieldProps as AriaNumberFieldProps,
 } from "react-aria-components";
-import { type VariantProps } from "tailwind-variants";
+import { tv, type VariantProps } from "tailwind-variants";
 import { useMediaQuery } from "@/lib/hooks/use-media-query";
 import { ChevronDownIcon, ChevronUpIcon, MinusIcon, PlusIcon } from "@/lib/icons";
 import { Button, type ButtonProps } from "./button";
-import { fieldStyles } from "./field";
 import { Field, type FieldProps } from "./field";
 import { InputRoot, Input, type inputStyles } from "./input";
+
+const numberFieldStyles = tv({
+  base: "flex flex-col gap-2 items-start w-48",
+});
 
 type NumberFieldProps = NumberFieldRootProps &
   Omit<FieldProps, "children"> &
@@ -36,21 +39,21 @@ const NumberField = React.forwardRef<HTMLInputElement, NumberFieldProps>(
   ) => {
     const isMobile = useMediaQuery("(max-width: 768px)");
     const prefix = isMobile ? (
-      <NumberFieldButton slot="decrement" className="h-full rounded-none" />
-    ) : undefined;
+      <NumberFieldButton slot="decrement" className="h-full rounded-none rounded-l-md border-r" />
+    ) : null;
     const suffix = isMobile ? (
-      <NumberFieldButton slot="increment" className="h-full rounded-none" />
+      <NumberFieldButton slot="increment" className="h-full rounded-none rounded-r-md border-l" />
     ) : (
-      <div className="flex h-full flex-col">
+      <div className="flex h-full flex-col rounded-r-md">
         <NumberFieldButton
           slot="increment"
           iconType="chevron"
-          className="h-auto flex-1 shrink rounded-none"
+          className="h-auto flex-1 shrink rounded-none rounded-tr-md border-b border-l"
         />
         <NumberFieldButton
           slot="decrement"
           iconType="chevron"
-          className="h-auto flex-1 shrink rounded-none"
+          className="h-auto flex-1 shrink rounded-none rounded-br-md border-l"
         />
       </div>
     );
@@ -64,9 +67,12 @@ const NumberField = React.forwardRef<HTMLInputElement, NumberFieldProps>(
           necessityIndicator={necessityIndicator}
           contextualHelp={contextualHelp}
         >
-          <InputRoot size={size}>
+          <InputRoot
+            size={size}
+            className="px-0 [&_button]:invalid:border-border-danger [&_button]:focus-within:invalid:border-border"
+          >
             {prefix}
-            <Input ref={ref} placeholder={placeholder} />
+            <Input ref={ref} placeholder={placeholder} className="px-2" />
             {suffix}
           </InputRoot>
         </Field>
@@ -83,8 +89,7 @@ const NumberFieldRoot = React.forwardRef<
   React.ElementRef<typeof AriaNumberField>,
   NumberFieldRootProps
 >(({ className, ...props }, ref) => {
-  const { root } = fieldStyles();
-  return <AriaNumberField ref={ref} className={root({ className })} {...props} />;
+  return <AriaNumberField ref={ref} className={numberFieldStyles({ className })} {...props} />;
 });
 NumberFieldRoot.displayName = "NumberFieldRoot";
 
@@ -106,7 +111,7 @@ const NumberFieldButton = ({ slot, iconType = "default", ...props }: NumberField
       <MinusIcon />
     );
   return (
-    <Button slot={slot} size="sm" shape="square" {...props}>
+    <Button slot={slot} size="sm" variant="quiet" shape="square" {...props}>
       {icon}
     </Button>
   );

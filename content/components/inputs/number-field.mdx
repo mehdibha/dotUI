@@ -9,9 +9,16 @@ links:
     href: https://react-spectrum.adobe.com/react-aria/NumberField.html
   - label: Aria API Reference
     href: https://react-spectrum.adobe.com/react-aria/NumberField.html#props
+  - label: Report an issue
+    href: https://github.com/mehdibha/dotUI/issues/new/choose
+  - label: Edit this page
+    href: https://github.com/mehdibha/dotUI/tree/main/content/components/inputs/number-field.mdx
 ---
 
-<ComponentPreview name="demos/components/core/number-field/default" className="max-w-[250px]" />
+<ComponentPreview
+  name="demos/components/core/number-field/default"
+  preview={`<NumberField label="Width" defaultValue={1024} />`}
+/>
 
 ## Installation
 
@@ -22,13 +29,8 @@ links:
 npm install react-aria-components
 ```
 
-<Step>Install the following components and hooks:</Step>
-
-install [Field](/inputs/field) and [Input](/inputs/input) components.
-install [useMediaQuery](/hooks/browser/use-media-query) hook.
-
   <Step>Copy and paste the following code into your project.</Step>
-  <ComponentSource name="components/core/default/number-field" />
+  <ComponentSource name={["components/core/default/number-field","components/core/default/field","components/core/default/input"]}  />
   <Step>Update the import paths to match your project setup.</Step>
 </Steps>
 
@@ -40,94 +42,180 @@ Use a `NumberField` to allow a user to enter a number.
 
 ### Number formatting
 
-The NumberField value can be formatted by using the formatOptions prop. formatOptions is compatible with the option parameter of [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat) and is applied based on the current locale.
+The NumberField value can be formatted by using the `formatOptions` prop. formatOptions is compatible with the option parameter of [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat) and is applied based on the current locale.
 
-<ComponentPreview name="demos/components/core/number-field/format-options" className="max-w-sm" />
+<ComponentPreview
+  name="demos/components/core/number-field/format-options"
+  preview={`<NumberField
+  label="Decimal"
+  defaultValue={0}
+  formatOptions={{
+    signDisplay: "exceptZero",
+    minimumFractionDigits: 1,
+    maximumFractionDigits: 2,
+  }}
+/>
+<NumberField
+  label="Percentage"
+  defaultValue={0.05}
+  formatOptions={{
+    style: "percent",
+  }}
+/>
+<NumberField
+  label="Currency"
+  defaultValue={45}
+  formatOptions={{
+    style: "currency",
+    currency: "EUR",
+    currencyDisplay: "code",
+    currencySign: "accounting",
+  }}
+/>
+<NumberField
+  label="Unit"
+  defaultValue={4}
+  formatOptions={{
+    style: "unit",
+    unit: "inch",
+    unitDisplay: "long",
+  }}
+/>`}
+/>
 
-### Sizes
+### Size
 
-Use the `size` prop to control the size of the `NumberField`. The default variant is `md`.
+Use the `size` prop to control the size of the `NumberField`. The default size is `"md"`.
 
-<ComponentPreview name="demos/components/core/number-field/sizes" className="max-w-lg" />
+<ComponentPreview
+  name="demos/components/core/number-field/sizes"
+  preview={`<NumberField size="sm" />
+<NumberField size="md" />
+<NumberField size="lg" />`}
+/>
 
 ### Label
 
-A visual label can be provided for the `NumberField` using the label prop or a hidden label using `aria-label` prop.
+A visual label can be provided for the `NumberField` using the `label` prop or a hidden label using `aria-label` prop.
 
-<ComponentPreview name="demos/components/core/number-field/label" className="max-w-[250px]" />
+<ComponentPreview
+  name="demos/components/core/number-field/label"
+  preview={`<NumberField label="Width" />
+<NumberField aria-label="Width" />`}
+/>
 
 ### Description
 
 A description can be supplied to a NumberField via the `description` prop. The description is always visible unless the `validationState` is `“invalid”` and an error message is provided.
 
-<ComponentPreview name="demos/components/core/number-field/description" className="max-w-[250px]" />
+<ComponentPreview
+  name="demos/components/core/number-field/description"
+  preview={`<NumberField label="Width" description="Enter the desired width." />`}
+/>
 
 ### Contextual help
 
-A ContextualHelp element may be placed next to the label to provide additional information or help about a NumberField.
+A `ContextualHelp` element may be placed next to the label to provide additional information or help about a `NumberField`.
 
 <ComponentPreview
   name="demos/components/core/number-field/contextual-help"
-  className="max-w-[250px]"
+  preview={`<NumberField label="Width" contextualHelp={<ContextualHelp />} />`}
 />
 
 ### Error message
 
-An error message can be supplied to a NumberField, which will be displayed when the `validationState` is `“invalid”`.
+An `errorMessage` can be supplied to a `NumberField`, which will be displayed when the `isInvalid` prop is set to `true`.
 
 <ComponentPreview
   name="demos/components/core/number-field/error-message"
-  className="max-w-[250px]"
+  preview={`<NumberField
+  label="Width"
+  isInvalid
+  errorMessage="Please fill out this field."
+/>`}
 />
 
 ### Disabled
 
 Use the `isDisabled` prop to disable the NumberField.
 
-<ComponentPreview name="demos/components/core/number-field/disabled" className="max-w-[250px]" />
+<ComponentPreview
+  name="demos/components/core/number-field/disabled"
+  preview={`<NumberField isDisabled />`}
+/>
 
 ### ReadOnly
 
-The isReadOnly boolean prop makes the NumberField's text content immutable. Unlike isDisabled, the NumberField remains focusable and the contents can still be copied.
+The `isReadOnly` boolean prop makes the NumberField's text content immutable. Unlike `isDisabled`, the NumberField remains focusable and the contents can still be copied.
 
-<ComponentPreview name="demos/components/core/number-field/read-only" className="max-w-[250px]" />
+<ComponentPreview
+  name="demos/components/core/number-field/read-only"
+  preview={`<NumberField isReadOnly />`}
+/>
 
 ### Required
 
 Use the `isRequired` prop to mark the NumberField as required.
 Use the `necessityIndicator` prop to control the visual style of the required state.
 
-<ComponentPreview name="demos/components/core/number-field/required" className="max-w-sm" />
+<ComponentPreview
+  name="demos/components/core/number-field/required"
+  preview={`<NumberField label="Width" isRequired />
+<NumberField label="Width" isRequired necessityIndicator="icon" />
+<NumberField label="Width" isRequired necessityIndicator="label" />
+<NumberField label="Width" necessityIndicator="label" />`}
+/>
 
-## Examples
+## Uncontrolled
 
-### Controlled
+Use the `defaultValue` prop to set the default input value.
+
+<ComponentPreview
+  name="demos/components/core/number-field/uncontrolled"
+  preview={`<NumberField defaultValue={80} />`}
+/>
+
+## Controlled
 
 Use the `value` and `onChange` props to control the value of the input.
 
-<ComponentPreview name="demos/components/core/number-field/controlled" className="max-w-[250px]" />
+<ComponentPreview
+  name="demos/components/core/number-field/controlled"
+  preview={`const [value, setValue] = React.useState(69);
+return <NumberField value={value} onChange={setValue} />;`}
+/>
 
-### Composition
+## Composition
 
 If you need to customize things further, you can drop down to the composition level.
 
-<ComponentPreview name="demos/components/core/number-field/composition" className="max-w-[250px]" />
+<ComponentPreview
+  name="demos/components/core/number-field/composition"
+  preview={`<NumberFieldRoot>
+  <Label>Quantity</Label>
+  <Group className="flex items-center gap-2">
+    <Button slot="decrement">
+      <MinusIcon />
+    </Button>
+    <InputRoot>
+      <Input />
+    </InputRoot>
+    <Button slot="increment">
+      <PlusIcon />
+    </Button>
+  </Group>
+  <Description>Enter the disired quantity.</Description>
+</NumberFieldRoot>`}
+/>
 
 ## API Reference
 
-### NumberField
-
-This component inherits and merges props from NumberFieldRoot and Field parts.
-
-| Prop      | Type                                                           | Default     | Description                          |
-| --------- | -------------------------------------------------------------- | ----------- | ------------------------------------ |
-| `variant` | `"default" \| "primary" \| "danger" \| "success" \| "warning"` | `"default"` | The visual style of the NumberField. |
-| `size`    | `"sm" \| "md" \| "lg"`                                         | `"md"`      | The size of the input.               |
-
-### NumberFieldRoot
-
 | Prop                 | Type                                                                                                     | Default  | Description                                                                                                                                                                                                                           |
 | -------------------- | -------------------------------------------------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `size`               | `"sm" \| "md" \| "lg"`                                                                                   | `"md"`   | The size of the input.                                                                                                                                                                                                                |
+| `label`              | `ReactNode`                                                                                              |          | The content to display as the label.                                                                                                                                                                                                  |
+| `description`        | `ReactNode`                                                                                              |          | A description for the field. Provides a hint such as specific requirements for what to choose.                                                                                                                                        |
+| `errorMessage`       | `ReactNode \| (v: ValidationResult) => ReactNode`                                                        |          | An error message for the field.                                                                                                                                                                                                       |
 | `decrementAriaLabel` | `string`                                                                                                 | -        | A custom aria-label for the decrement button. If not provided, the localized string "Decrement" is used.                                                                                                                              |
 | `incrementAriaLabel` | `string`                                                                                                 | -        | A custom aria-label for the increment button. If not provided, the localized string "Increment" is used.                                                                                                                              |
 | `isWheelDisabled`    | `boolean`                                                                                                | -        | Enables or disables changing the value with scroll.                                                                                                                                                                                   |
@@ -146,7 +234,28 @@ This component inherits and merges props from NumberFieldRoot and Field parts.
 | `validationBehavior` | `'native' \| 'aria'`                                                                                     | 'native' | Whether to use native HTML form validation to prevent form submission when the value is missing or invalid, or mark the field as required or invalid via ARIA.                                                                        |
 | `name`               | `string`                                                                                                 | -        | The name of the input element, used when submitting an HTML form.                                                                                                                                                                     |
 | `children`           | `ReactNode \| (values: NumberFieldRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -        | The children of the component. A function may be provided to alter the children based on component state.                                                                                                                             |
+| `className`          | `string`                                                                                                 | -        | The CSS className for the element.                                                                                                                                                                                                    |
+| `style`              | `CSSProperties \| (values: NumberFieldRenderProps & {defaultStyle: CSSProperties}) => CSSProperties`     | -        | The inline style for the element. A function may be provided to compute the style based on component state.                                                                                                                           |
 
-### Field
+| Event                 | Type                                        | Description                                                                                                      |
+| --------------------- | ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `onFocus`             | `(e: FocusEvent<Target>) => void`           | Handler that is called when the element receives focus.                                                          |
+| `onBlur`              | `(e: FocusEvent<Target>) => void`           | Handler that is called when the element loses focus.                                                             |
+| `onFocusChange`       | `(isFocused: boolean) => void`              | Handler that is called when the element's focus status changes.                                                  |
+| `onKeyDown`           | `(e: KeyboardEvent) => void`                | Handler that is called when a key is pressed.                                                                    |
+| `onKeyUp`             | `(e: KeyboardEvent) => void`                | Handler that is called when a key is released.                                                                   |
+| `onChange`            | `(value: T) => void`                        | Handler that is called when the value changes.                                                                   |
+| `onCopy`              | `ClipboardEventHandler<HTMLInputElement>`   | Handler that is called when the user copies text.                                                                |
+| `onCut`               | `ClipboardEventHandler<HTMLInputElement>`   | Handler that is called when the user cuts text.                                                                  |
+| `onPaste`             | `ClipboardEventHandler<HTMLInputElement>`   | Handler that is called when the user pastes text.                                                                |
+| `onCompositionStart`  | `CompositionEventHandler<HTMLInputElement>` | Handler that is called when a text composition system starts a new text composition session.                     |
+| `onCompositionEnd`    | `CompositionEventHandler<HTMLInputElement>` | Handler that is called when a text composition system completes or cancels the current text composition session. |
+| `onCompositionUpdate` | `CompositionEventHandler<HTMLInputElement>` | Handler that is called when a new character is received in the current text composition session.                 |
+| `onSelect`            | `ReactEventHandler<HTMLInputElement>`       | Handler that is called when text in the input is selected.                                                       |
+| `onBeforeInput`       | `FormEventHandler<HTMLInputElement>`        | Handler that is called when the input value is about to be modified.                                             |
+| `onInput`             | `FormEventHandler<HTMLInputElement>`        | Handler that is called when the input value is modified.                                                         |
 
-Refer to the [Field docs](/components/inputs/field) for api reference
+| Data attribute    | Description                         |
+| ----------------- | ----------------------------------- |
+| `[data-disabled]` | Whether the text field is disabled. |
+| `[data-invalid]`  | Whether the text field is invalid.  |

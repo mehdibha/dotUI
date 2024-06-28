@@ -8,6 +8,7 @@ export default function Demo() {
   return (
     <div className="flex flex-col items-center gap-4">
       <NumberField
+        aria-label="Width"
         value={inputValue}
         onChange={(value) => {
           setInputValue(value);
