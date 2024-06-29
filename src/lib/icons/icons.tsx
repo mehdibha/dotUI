@@ -43,3 +43,5 @@ export const ItalicIcon = createIcon("ItalicIcon");
 export const TimerIcon = createIcon("TimerIcon");
 export const PinIcon = createIcon("PinIcon");
 export const ALargeSmallIcon = createIcon("ALargeSmallIcon");
+export const Volume1Icon = createIcon("Volume1Icon");
+export const Volume2Icon = createIcon("Volume2Icon");

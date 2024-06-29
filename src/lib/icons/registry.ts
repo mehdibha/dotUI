@@ -43,6 +43,8 @@ import {
   TimerIcon,
   PinIcon,
   ALargeSmallIcon,
+  Volume1Icon,
+  Volume2Icon,
 } from "lucide-react";
 import { Loader } from "react-feather";
 
@@ -333,6 +335,20 @@ const icons = {
     radix: { name: "ALargeSmallIcon", icon: ALargeSmallIcon },
     heroicons: { name: "ALargeSmallIcon", icon: ALargeSmallIcon },
     feather: { name: "ALargeSmallIcon", icon: ALargeSmallIcon },
+  },
+  Volume1Icon: {
+    lucide: { name: "Volume1Icon", icon: Volume1Icon },
+    remix: { name: "Volume1Icon", icon: Volume1Icon },
+    radix: { name: "Volume1Icon", icon: Volume1Icon },
+    heroicons: { name: "Volume1Icon", icon: Volume1Icon },
+    feather: { name: "Volume1Icon", icon: Volume1Icon },
+  },
+  Volume2Icon: {
+    lucide: { name: "Volume2Icon", icon: Volume2Icon },
+    remix: { name: "Volume2Icon", icon: Volume2Icon },
+    radix: { name: "Volume2Icon", icon: Volume2Icon },
+    heroicons: { name: "Volume2Icon", icon: Volume2Icon },
+    feather: { name: "Volume2Icon", icon: Volume2Icon },
   },
 };
 

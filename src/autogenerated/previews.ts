@@ -964,37 +964,65 @@ export const previews = {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/search-field/composition")),
       code : [{"title":"composition.tsx","code":"import React from \"react\";\nimport { Description, Label } from \"@/lib/components/core/default/field\";\nimport { Input, InputRoot } from \"@/lib/components/core/default/input\";\nimport { SearchFieldRoot } from \"@/lib/components/core/default/search-field\";\nimport { SearchIcon } from \"@/lib/icons\";\n\nexport default function Demo() {\n  return (\n    <SearchFieldRoot>\n      <Label>Search</Label>\n      <InputRoot prefix={<SearchIcon />}>\n        <Input />\n      </InputRoot>\n      <Description>Enter your search query.</Description>\n    </SearchFieldRoot>\n  );\n}\n"}]
     },
-    "demos/components/core/slider/basic": {
-      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/slider/basic")),
-      code : [{"title":"basic.tsx","code":"import { Slider } from \"@/lib/components/core/default/slider\";\n\nexport default function SliderDemo() {\n  return <Slider defaultValue={50} label=\"Items to buy\" className=\"w-full\" />;\n}\n"}]
+    "demos/components/core/slider/default": {
+      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/slider/default")),
+      code : [{"title":"default.tsx","code":"import { Slider } from \"@/lib/components/core/default/slider\";\n\nexport default function Demo() {\n  return <Slider aria-label=\"Opacity\" defaultValue={50} />;\n}\n"}]
     },
     "demos/components/core/slider/sizes": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/slider/sizes")),
-      code : [{"title":"sizes.tsx","code":"import { Slider } from \"@/lib/components/core/default/slider\";\n\nexport default function SliderDemo() {\n  return <Slider defaultValue={50} label=\"Items to buy\" className=\"w-full\" />;\n}\n"}]
+      code : [{"title":"sizes.tsx","code":"import { Slider } from \"@/lib/components/core/default/slider\";\n\nexport default function Demo() {\n  return (\n    <div className=\"space-y-4\">\n      <Slider aria-label=\"Opacity\" defaultValue={50} size=\"sm\" />\n      <Slider aria-label=\"Opacity\" defaultValue={50} size=\"md\" />\n      <Slider aria-label=\"Opacity\" defaultValue={50} size=\"lg\" />\n    </div>\n  );\n}\n"}]
     },
-    "demos/components/core/slider/orientation": {
-      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/slider/orientation")),
-      code : [{"title":"orientation.tsx","code":"import { Slider } from \"@/lib/components/core/default/slider\";\n\nexport default function SliderDemo() {\n  return <Slider defaultValue={50} label=\"Items to buy\" className=\"w-full\" />;\n}\n"}]
+    "demos/components/core/slider/vertical": {
+      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/slider/vertical")),
+      code : [{"title":"vertical.tsx","code":"import { Slider } from \"@/lib/components/core/default/slider\";\n\nexport default function Demo() {\n  return <Slider defaultValue={50} aria-label=\"Opacity\" orientation=\"vertical\" />;\n}\n"}]
     },
-    "demos/components/core/slider/range": {
-      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/slider/range")),
-      code : [{"title":"range.tsx","code":"import { Slider } from \"@/lib/components/core/default/slider\";\n\nexport default function SliderDemo() {\n  return <Slider defaultValue={[20, 50]} label=\"Items to buy\" className=\"w-full\" />;\n}\n"}]
+    "demos/components/core/slider/label": {
+      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/slider/label")),
+      code : [{"title":"label.tsx","code":"import { Slider } from \"@/lib/components/core/default/slider\";\n\nexport default function Demo() {\n  return (\n    <div className=\"space-y-4\">\n      <Slider defaultValue={50} label=\"Opacity\" />\n      <Slider defaultValue={50} aria-label=\"Opacity\" />\n    </div>\n  );\n}\n"}]
     },
-    "demos/components/core/slider/prefix-and-suffix": {
-      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/slider/prefix-and-suffix")),
-      code : [{"title":"prefix-and-suffix.tsx","code":"import { Slider } from \"@/lib/components/core/default/slider\";\n\nexport default function SliderDemo() {\n  return <Slider defaultValue={50} label=\"Items to buy\" className=\"w-full\" />;\n}\n"}]
+    "demos/components/core/slider/description": {
+      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/slider/description")),
+      code : [{"title":"description.tsx","code":"import { Slider } from \"@/lib/components/core/default/slider\";\n\nexport default function Demo() {\n  return <Slider defaultValue={50} label=\"Opacity\" description=\"Set the opacity of the element.\" />;\n}\n"}]
     },
     "demos/components/core/slider/value-label": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/slider/value-label")),
-      code : [{"title":"value-label.tsx","code":"import { Slider } from \"@/lib/components/core/default/slider\";\n\nexport default function SliderDemo() {\n  return <Slider defaultValue={50} label=\"Items to buy\" className=\"w-full\" />;\n}\n"}]
+      code : [{"title":"value-label.tsx","code":"\"use client\";\n\nimport { Slider } from \"@/lib/components/core/default/slider\";\n\nexport default function Demo() {\n  return (\n    <div className=\"space-y-4\">\n      <Slider defaultValue={50} label=\"Donuts to buy\" valueLabel className=\"!w-60\" />\n      <Slider\n        defaultValue={50}\n        label=\"Donuts to buy\"\n        valueLabel={(donuts) => `${donuts[0]} of 100 Donuts`}\n        className=\"!w-60\"\n      />\n    </div>\n  );\n}\n"}]
+    },
+    "demos/components/core/slider/value-scale": {
+      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/slider/value-scale")),
+      code : [{"title":"value-scale.tsx","code":"import { Slider } from \"@/lib/components/core/default/slider\";\n\nexport default function Demo() {\n  return <Slider label=\"Cookies to buy\" minValue={1} maxValue={50} defaultValue={25} valueLabel />;\n}\n"}]
+    },
+    "demos/components/core/slider/step": {
+      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/slider/step")),
+      code : [{"title":"step.tsx","code":"import { Slider } from \"@/lib/components/core/default/slider\";\n\nexport default function Demo() {\n  return <Slider label=\"Opacity\" valueLabel minValue={0} maxValue={100} step={5} />;\n}\n"}]
+    },
+    "demos/components/core/slider/format-options": {
+      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/slider/format-options")),
+      code : [{"title":"format-options.tsx","code":"import { Slider } from \"@/lib/components/core/default/slider\";\n\nexport default function Demo() {\n  return (\n    <Slider\n      label=\"Price\"\n      formatOptions={{ style: \"currency\", currency: \"JPY\" }}\n      defaultValue={60}\n      valueLabel\n    />\n  );\n}\n"}]
+    },
+    "demos/components/core/slider/range": {
+      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/slider/range")),
+      code : [{"title":"range.tsx","code":"import { Slider } from \"@/lib/components/core/default/slider\";\n\nexport default function Demo() {\n  return (\n    <Slider\n      label=\"Price Range\"\n      valueLabel\n      defaultValue={[200, 300]}\n      minValue={100}\n      maxValue={500}\n    />\n  );\n}\n"}]
     },
     "demos/components/core/slider/disabled": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/slider/disabled")),
-      code : [{"title":"disabled.tsx","code":"import { Slider } from \"@/lib/components/core/default/slider\";\n\nexport default function SliderDemo() {\n  return <Slider defaultValue={50} label=\"Items to buy\" className=\"w-full\" />;\n}\n"}]
+      code : [{"title":"disabled.tsx","code":"import { Slider } from \"@/lib/components/core/default/slider\";\n\nexport default function Demo() {\n  return <Slider label=\"Opacity\" defaultValue={50} isDisabled />;\n}\n"}]
     },
     "demos/components/core/slider/composition": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/slider/composition")),
-      code : [{"title":"composition.tsx","code":"import { Slider } from \"@/lib/components/core/default/slider\";\n\nexport default function SliderDemo() {\n  return <Slider defaultValue={50} label=\"Items to buy\" className=\"w-full\" />;\n}\n"}]
+      code : [{"title":"composition.tsx","code":"import { Label } from \"@/lib/components/core/default/field\";\nimport { SliderControls, SliderRoot, SliderValueLabel } from \"@/lib/components/core/default/slider\";\n\nexport default function Demo() {\n  return (\n    <SliderRoot defaultValue={50}>\n      <div className=\"flex items-center justify-between\">\n        <Label>Volume</Label>\n        <SliderValueLabel />\n      </div>\n      <SliderControls />\n    </SliderRoot>\n  );\n}\n"}]
+    },
+    "demos/components/core/slider/advanced-composition": {
+      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/slider/advanced-composition")),
+      code : [{"title":"advanced-composition.tsx","code":"import { Label } from \"@/lib/components/core/default/field\";\nimport {\n  SliderFiller,\n  SliderRoot,\n  SliderThumb,\n  SliderTrack,\n  SliderValueLabel,\n} from \"@/lib/components/core/default/slider\";\nimport { Volume1Icon, Volume2Icon } from \"@/lib/icons\";\n\nexport default function Demo() {\n  return (\n    <SliderRoot defaultValue={50}>\n      <div className=\"flex items-center justify-between\">\n        <Label>Volume</Label>\n        <SliderValueLabel />\n      </div>\n      <div className=\"flex items-center gap-2\">\n        <Volume1Icon />\n        <SliderTrack>\n          <SliderFiller />\n          <SliderThumb />\n        </SliderTrack>\n        <Volume2Icon />\n      </div>\n    </SliderRoot>\n  );\n}\n"}]
+    },
+    "demos/components/core/slider/uncontrolled": {
+      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/slider/uncontrolled")),
+      code : [{"title":"uncontrolled.tsx","code":"import { Slider } from \"@/lib/components/core/default/slider\";\n\nexport default function Demo() {\n  return <Slider aria-label=\"Opacity\" defaultValue={50} />;\n}\n"}]
+    },
+    "demos/components/core/slider/controlled": {
+      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/slider/controlled")),
+      code : [{"title":"controlled.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { Slider } from \"@/lib/components/core/default/slider\";\n\nexport default function Demo() {\n  const [value, setValue] = React.useState(50);\n  return (\n    <div className=\"flex flex-col items-center gap-4\">\n      <Slider label=\"Opacity\" value={value} onChange={(value) => setValue(value as number)} />\n      <span className=\"text-sm text-fg-muted\">\n        Value: <span className=\"font-semibold text-fg\">{value}</span>\n      </span>\n    </div>\n  );\n}\n"}]
     },
     "demos/components/core/switch/default": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/switch/default")),
@@ -1002,7 +1030,7 @@ export const previews = {
     },
     "demos/components/core/switch/sizes": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/switch/sizes")),
-      code : [{"title":"sizes.tsx","code":"import { Switch } from \"@/lib/components/core/default/switch\";\n\nexport default function SwitchDemo() {\n  return (\n    <div className=\"flex items-center gap-4\">\n      <Switch size=\"sm\" defaultSelected />\n      <Switch size=\"md\" defaultSelected />\n      <Switch size=\"lg\" defaultSelected />\n    </div>\n  );\n}\n"}]
+      code : [{"title":"sizes.tsx","code":"import { Switch } from \"@/lib/components/core/default/switch\";\n\nexport default function Demo() {\n  return (\n    <div className=\"flex items-center gap-4\">\n      <Switch size=\"sm\" defaultSelected />\n      <Switch size=\"md\" defaultSelected />\n      <Switch size=\"lg\" defaultSelected />\n    </div>\n  );\n}\n"}]
     },
     "demos/components/core/switch/label": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/switch/label")),
@@ -1010,15 +1038,15 @@ export const previews = {
     },
     "demos/components/core/switch/disabled": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/switch/disabled")),
-      code : [{"title":"disabled.tsx","code":"import { Switch } from \"@/lib/components/core/default/switch\";\n\nexport default function SwitchDemo() {\n  return (\n    <div className=\"flex items-center gap-10\">\n      <Switch isDisabled defaultSelected>\n        Focus Mode\n      </Switch>\n      <Switch isDisabled>Focus Mode</Switch>\n    </div>\n  );\n}\n"}]
+      code : [{"title":"disabled.tsx","code":"import { Switch } from \"@/lib/components/core/default/switch\";\n\nexport default function Demo() {\n  return (\n    <div className=\"flex items-center gap-10\">\n      <Switch isDisabled defaultSelected>\n        Focus Mode\n      </Switch>\n      <Switch isDisabled>Focus Mode</Switch>\n    </div>\n  );\n}\n"}]
     },
     "demos/components/core/switch/uncontrolled": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/switch/uncontrolled")),
-      code : [{"title":"uncontrolled.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { Switch } from \"@/lib/components/core/default/switch\";\n\nexport default function SwitchDemo() {\n  const [isSelected, setSelected] = React.useState(true);\n  return (\n    <div className=\"flex flex-col items-center gap-4\">\n      <Switch isSelected={isSelected} onChange={setSelected}>\n        Airplane Mode\n      </Switch>\n      <p className=\"text-xs text-fg-muted\">\n        {isSelected ? (\n          <>\n            You are on <span className=\"font-bold\">focus mode</span>.\n          </>\n        ) : (\n          \"You are not on focus mode.\"\n        )}\n      </p>\n    </div>\n  );\n}\n"}]
+      code : [{"title":"uncontrolled.tsx","code":"import React from \"react\";\nimport { Switch } from \"@/lib/components/core/default/switch\";\n\nexport default function Demo() {\n  return <Switch defaultSelected>Airplane Mode</Switch>;\n}\n"}]
     },
     "demos/components/core/switch/controlled": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/switch/controlled")),
-      code : [{"title":"controlled.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { Switch } from \"@/lib/components/core/default/switch\";\n\nexport default function SwitchDemo() {\n  const [isSelected, setSelected] = React.useState(true);\n  return (\n    <div className=\"flex flex-col items-center gap-4\">\n      <Switch isSelected={isSelected} onChange={setSelected}>\n        Airplane Mode\n      </Switch>\n      <p className=\"text-xs text-fg-muted\">\n        {isSelected ? (\n          <>\n            You are on <span className=\"font-bold\">focus mode</span>.\n          </>\n        ) : (\n          \"You are not on focus mode.\"\n        )}\n      </p>\n    </div>\n  );\n}\n"}]
+      code : [{"title":"controlled.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { Switch } from \"@/lib/components/core/default/switch\";\n\nexport default function Demo() {\n  const [isSelected, setSelected] = React.useState(true);\n  return (\n    <div className=\"flex flex-col items-center gap-4\">\n      <Switch isSelected={isSelected} onChange={setSelected}>\n        Airplane Mode\n      </Switch>\n      <p className=\"text-xs text-fg-muted\">\n        You are {isSelected && \"not\"} on <span className=\"font-bold\">focus mode</span>.\n      </p>\n    </div>\n  );\n}\n"}]
     },
     "demos/components/core/text-area/default": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/text-area/default")),

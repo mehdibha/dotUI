@@ -3,11 +3,10 @@ import { Slider } from "@/lib/components/core/default/slider";
 export default function Demo() {
   return (
     <Slider
-      label="Price Range"
+      label="Price"
+      formatOptions={{ style: "currency", currency: "JPY" }}
+      defaultValue={60}
       valueLabel
-      defaultValue={[200, 300]}
-      minValue={100}
-      maxValue={500}
     />
   );
 }
