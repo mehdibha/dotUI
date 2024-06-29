@@ -3,7 +3,7 @@
 import React from "react";
 import { Switch } from "@/lib/components/core/default/switch";
 
-export default function SwitchDemo() {
+export default function Demo() {
   const [isSelected, setSelected] = React.useState(true);
   return (
     <div className="flex flex-col items-center gap-4">
@@ -11,13 +11,7 @@ export default function SwitchDemo() {
         Airplane Mode
       </Switch>
       <p className="text-xs text-fg-muted">
-        {isSelected ? (
-          <>
-            You are on <span className="font-bold">focus mode</span>.
-          </>
-        ) : (
-          "You are not on focus mode."
-        )}
+        You are {isSelected && "not"} on <span className="font-bold">focus mode</span>.
       </p>
     </div>
   );

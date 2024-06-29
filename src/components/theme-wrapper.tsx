@@ -133,7 +133,7 @@ export function ThemeWrapper(props: ThemeWrapperProps) {
       // }
       style={
         {
-          "--color-bg": "0 0% 0%",
+          // "--color-bg": "0 0% 0%",
         } as React.CSSProperties
       }
       className="relative bg-black text-fg"

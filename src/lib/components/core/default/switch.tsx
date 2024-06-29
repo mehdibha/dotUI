@@ -11,29 +11,32 @@ import { focusRing } from "@/lib/utils/styles";
 
 const switchStyles = tv({
   slots: {
-    root: "flex items-center gap-3 disabled:text-fg-disabled",
+    root: "group/switch flex items-center gap-3 disabled:text-fg-disabled",
     wrapper: [
       focusRing(),
-      "peer inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors",
-      "disabled:cursor-not-allowed disabled:bg-transparent disabled:border disabled:border-border-disabled disabled:selected:border-none disabled:selected:bg-bg-disabled selected:bg-border-focus bg-bg-muted",
+      "inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors",
+      "group-disabled/switch:cursor-not-allowed group-disabled/switch:bg-transparent group-disabled/switch:border group-disabled/switch:border-border-disabled group-disabled/switch:group-selected/switch:border-none group-disabled/switch:group-selected/switch:bg-bg-disabled group-selected/switch:bg-border-focus bg-bg-neutral",
     ],
     indicator:
-      "pointer-events-none block rounded-full bg-white selected:bg-fg-onAccent shadow-lg ring-0 transition-all translate-x-0 disabled:bg-fg-disabled",
+      "pointer-events-none block rounded-full bg-white shadow-lg ring-0 transition-all duration-200 origin-right group-disabled/switch:bg-fg-disabled",
     label: "",
   },
   variants: {
     size: {
       sm: {
         wrapper: "h-5 w-9",
-        indicator: "size-4 pressed:w-5 selected:ml-4 selected:pressed:ml-3",
+        indicator:
+          "size-4 group-pressed/switch:w-5 group-selected/switch:ml-4 group-selected/switch:group-pressed/switch:ml-3",
       },
       md: {
         wrapper: "h-6 w-11",
-        indicator: "size-5 pressed:w-6 selected:ml-5 selected:pressed:ml-4",
+        indicator:
+          "size-5 group-pressed/switch:w-6 group-selected/switch:ml-5 group-selected/switch:group-pressed/switch:ml-4",
       },
       lg: {
         wrapper: "h-7 w-12",
-        indicator: "size-6 pressed:w-7 selected:translate-x-5",
+        indicator:
+          "size-6 group-pressed/switch:w-7 group-selected/switch:ml-6 group-selected/switch:group-pressed/switch:ml-5",
       },
     },
   },
@@ -52,40 +55,14 @@ const Switch = ({ className, size, ...props }: SwitchProps) => {
 
   return (
     <AriaSwitch className={root({ className })} {...props}>
-      {composeRenderProps(
-        props.children,
-        (
-          children,
-          { isSelected, isPressed, isHovered, isFocused, isFocusVisible, isDisabled, isReadOnly }
-        ) => (
-          <>
-            <span
-              data-rac=""
-              data-selected={isSelected || undefined}
-              data-pressed={isPressed || undefined}
-              data-hovered={isHovered || undefined}
-              data-focused={isFocused || undefined}
-              data-focus-visible={isFocusVisible || undefined}
-              data-disabled={isDisabled || undefined}
-              data-readonly={isReadOnly || undefined}
-              className={wrapper({ className })}
-            >
-              <span
-                data-rac=""
-                data-selected={isSelected || undefined}
-                data-pressed={isPressed || undefined}
-                data-hovered={isHovered || undefined}
-                data-focused={isFocused || undefined}
-                data-focus-visible={isFocusVisible || undefined}
-                data-disabled={isDisabled || undefined}
-                data-readonly={isReadOnly || undefined}
-                className={indicator({})}
-              />
-            </span>
-            {children && <span className={label({})}>{children}</span>}
-          </>
-        )
-      )}
+      {composeRenderProps(props.children, (children) => (
+        <>
+          <span className={wrapper({ className })}>
+            <span className={indicator({})} style={{ contain: "layout" }} />
+          </span>
+          {children && <span className={label({})}>{children}</span>}
+        </>
+      ))}
     </AriaSwitch>
   );
 };
