@@ -130,8 +130,8 @@ const DialogDescription = ({ className, ...props }: DialogDescriptionProps) => {
   return <AriaText slot="description" className={description({ className })} {...props} />;
 };
 
-type DialogBody = React.ComponentProps<"div">;
-const DialogBody = ({ className, ...props }: DialogDescriptionProps) => {
+type DialogBodyProps = React.ComponentProps<"div">;
+const DialogBody = ({ className, ...props }: DialogBodyProps) => {
   const { body } = dialogStyles();
   return <div className={body({ className })} {...props} />;
 };
@@ -184,6 +184,7 @@ export type {
   DialogHeaderProps,
   DialogTitleProps,
   DialogDescriptionProps,
+  DialogBodyProps,
   DialogFooterProps,
   DialogInsetProps,
 };
