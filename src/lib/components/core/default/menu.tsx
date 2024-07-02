@@ -102,7 +102,7 @@ const MenuItem = <T extends object>({
         <>
           {selectionMode !== "none" && (
             <span className="flex w-8 items-center justify-center">
-              {isSelected && <CheckIcon aria-hidden className="size-4 text-fg" />}
+              {isSelected && <CheckIcon aria-hidden className="size-4 text-fg-accent" />}
             </span>
           )}
           {prefix}

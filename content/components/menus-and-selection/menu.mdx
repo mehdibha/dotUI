@@ -121,51 +121,6 @@ Set the `selectionMode` prop to `multiple` for multiple selection.
 </MenuRoot>`}
 />
 
-## Sections
-
-Menu supports sections with headings in order to group items. Sections can be used by wrapping groups of MenuItems in a `Section` component.<br />
-A `Header` element may also be included to label the section or using the `title` prop on the `Section` component.
-
-<ComponentPreview
-  name="demos/components/core/menu/section"
-  preview={`<MenuRoot>
-  <Button><MenuIcon /></Button>
-  <Menu>
-    <Section title="Notifications">
-      <MenuItem>Push notifications</MenuItem>
-      <MenuItem>Badges</MenuItem>
-    </Section>
-    <Separator />
-    <Section title="Panels">
-      <MenuItem id="console">Console</MenuItem>
-      <MenuItem>Search</MenuItem>
-    </Section>
-  </Menu>
-</MenuRoot>`}
-/>
-
-## Separator
-
-Separators may be added between menu items or sections in order to create non-labeled groupings.
-
-<ComponentPreview
-  name="demos/components/core/menu/separator"
-  preview={`<MenuRoot>
-  <Button><MenuIcon /></Button>
-  <Menu>
-    <MenuItem>New...</MenuItem>
-    <MenuItem>Badges</MenuItem>
-    <Separator />
-    <MenuItem>Save</MenuItem>
-    <MenuItem>Save as...</MenuItem>
-    <MenuItem>Rename...</MenuItem>
-    <Separator />
-    <MenuItem>Page setup…</MenuItem>
-    <MenuItem>Print…</MenuItem>
-  </Menu>
-</MenuRoot>`}
-/>
-
 ## MenuItem options
 
 ### Variant
@@ -287,6 +242,51 @@ By default, Menu opens by pressing the trigger element or activating it via the 
     <MenuItem>Account settings</MenuItem>
     <MenuItem>Create team</MenuItem>
     <MenuItem>Log out</MenuItem>
+  </Menu>
+</MenuRoot>`}
+/>
+
+## Sections
+
+Menu supports sections with headings in order to group items. Sections can be used by wrapping groups of MenuItems in a `Section` component.<br />
+A `Header` element may also be included to label the section or using the `title` prop on the `Section` component.
+
+<ComponentPreview
+  name="demos/components/core/menu/section"
+  preview={`<MenuRoot>
+  <Button><MenuIcon /></Button>
+  <Menu>
+    <Section title="Notifications">
+      <MenuItem>Push notifications</MenuItem>
+      <MenuItem>Badges</MenuItem>
+    </Section>
+    <Separator />
+    <Section title="Panels">
+      <MenuItem id="console">Console</MenuItem>
+      <MenuItem>Search</MenuItem>
+    </Section>
+  </Menu>
+</MenuRoot>`}
+/>
+
+## Separator
+
+Separators may be added between menu items or sections in order to create non-labeled groupings.
+
+<ComponentPreview
+  name="demos/components/core/menu/separator"
+  preview={`<MenuRoot>
+  <Button><MenuIcon /></Button>
+  <Menu>
+    <MenuItem>New...</MenuItem>
+    <MenuItem>Badges</MenuItem>
+    <Separator />
+    <MenuItem>Save</MenuItem>
+    <MenuItem>Save as...</MenuItem>
+    <MenuItem>Rename...</MenuItem>
+    <Separator />
+    <MenuItem>Page setup…</MenuItem>
+    <MenuItem>Print…</MenuItem>
   </Menu>
 </MenuRoot>`}
 />

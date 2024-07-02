@@ -69,7 +69,7 @@ const ListBoxItem = <T extends object>({ label, description, ...props }: ListBox
         <>
           {selectionMode !== "none" && (
             <span className="flex w-8 items-center justify-center">
-              {isSelected && <CheckIcon className="size-4 text-fg-accent" />}
+              {isSelected && <CheckIcon aria-hidden className="size-4 text-fg-accent" />}
             </span>
           )}
           <span className="flex flex-col">
