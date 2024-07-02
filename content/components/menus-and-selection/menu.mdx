@@ -38,7 +38,7 @@ npm install react-aria-components
 ```
 
   <Step>Copy and paste the following code into your project.</Step>
-  <ComponentSource name={["components/core/default/menu","components/core/default/overlay","components/core/default/kbd"]} />
+  <ComponentSource name={["components/core/default/menu","components/core/default/overlay","components/core/default/kbd","components/core/default/text"]} />
   <Step>Update the import paths to match your project setup.</Step>
 </Steps>
 
@@ -319,7 +319,7 @@ Submenus can be created by wrapping a `MenuItem` and a `Menu` in a `MenuSub`.
 </MenuRoot>`}
 />
 
-## Controlled open state
+## Controlled
 
 The open state can be controlled via `isOpen` and `onOpenChange` props.
 
@@ -336,6 +336,27 @@ return (
     </Menu>
   </MenuRoot>
 )`}
+/>
+
+## Composition
+
+If you need to customize things further, you can drop down to the composition level.
+
+<ComponentPreview
+  name="demos/components/core/menu/composition"
+  preview={`<MenuRoot>
+  <Button>
+    <MenuIcon />
+  </Button>
+  <Overlay type="popover" mobileType="drawer">
+    <MenuContent>
+      <MenuItem>Account settings</MenuItem>
+      <MenuItem>Create team</MenuItem>
+      <MenuItem>Command menu</MenuItem>
+      <MenuItem>Log out</MenuItem>
+    </MenuContent>
+  </Overlay>
+</MenuRoot>`}
 />
 
 ## API Reference

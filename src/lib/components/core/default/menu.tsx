@@ -125,4 +125,4 @@ const MenuItem = <T extends object>({
 };
 
 export type { MenuRootProps, MenuProps };
-export { MenuRoot, Menu, MenuItem, MenuSub };
+export { MenuRoot, Menu, MenuItem, MenuContent, MenuSub };
