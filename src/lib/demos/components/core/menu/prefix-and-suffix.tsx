@@ -5,7 +5,7 @@ import { CopyIcon, MenuIcon, PlusSquareIcon, SquarePenIcon } from "@/lib/icons";
 export default function Demo() {
   return (
     <MenuRoot>
-      <Button variant="quiet" shape="square" size="sm">
+      <Button variant="outline" shape="square" size="sm">
         <MenuIcon />
       </Button>
       <Menu>

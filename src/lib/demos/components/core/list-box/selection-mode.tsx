@@ -1,19 +1,19 @@
-import { ListBox, ListBoxItem } from "@/lib/components/core/default/list-box";
+import { ListBox, Item } from "@/lib/components/core/default/list-box";
 
 export default function Demo() {
   return (
     <div className="flex items-start gap-10">
       <ListBox aria-label="Framework" selectionMode="single">
-        <ListBoxItem>Next.js</ListBoxItem>
-        <ListBoxItem>Remix</ListBoxItem>
-        <ListBoxItem>Astro</ListBoxItem>
-        <ListBoxItem>Gatsby</ListBoxItem>
+        <Item>Next.js</Item>
+        <Item>Remix</Item>
+        <Item>Astro</Item>
+        <Item>Gatsby</Item>
       </ListBox>
       <ListBox aria-label="Framework" selectionMode="multiple">
-        <ListBoxItem>Next.js</ListBoxItem>
-        <ListBoxItem>Remix</ListBoxItem>
-        <ListBoxItem>Astro</ListBoxItem>
-        <ListBoxItem>Gatsby</ListBoxItem>
+        <Item>Next.js</Item>
+        <Item>Remix</Item>
+        <Item>Astro</Item>
+        <Item>Gatsby</Item>
       </ListBox>
     </div>
   );

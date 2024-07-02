@@ -2,7 +2,7 @@
 
 import React from "react";
 import type { Selection } from "react-aria-components";
-import { ListBox, ListBoxItem } from "@/lib/components/core/default/list-box";
+import { ListBox, Item } from "@/lib/components/core/default/list-box";
 
 export default function Demo() {
   const [selected, setSelected] = React.useState<Selection>(new Set(["nextjs", "remix", "astro"]));
@@ -14,10 +14,10 @@ export default function Demo() {
         selectedKeys={selected}
         onSelectionChange={setSelected}
       >
-        <ListBoxItem id="nextjs">Next.js</ListBoxItem>
-        <ListBoxItem id="remix">Remix</ListBoxItem>
-        <ListBoxItem id="astro">Astro</ListBoxItem>
-        <ListBoxItem id="gatsby">Gatsby</ListBoxItem>
+        <Item id="nextjs">Next.js</Item>
+        <Item id="remix">Remix</Item>
+        <Item id="astro">Astro</Item>
+        <Item id="gatsby">Gatsby</Item>
       </ListBox>
       <p className="text-sm text-fg-muted">
         Selected items:{" "}

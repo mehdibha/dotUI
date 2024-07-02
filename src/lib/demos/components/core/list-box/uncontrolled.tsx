@@ -1,4 +1,4 @@
-import { ListBox, ListBoxItem } from "@/lib/components/core/default/list-box";
+import { ListBox, Item } from "@/lib/components/core/default/list-box";
 
 export default function Demo() {
   return (
@@ -7,10 +7,10 @@ export default function Demo() {
       selectionMode="multiple"
       defaultSelectedKeys={["nextjs", "remix", "astro"]}
     >
-      <ListBoxItem id="nextjs">Next.js</ListBoxItem>
-      <ListBoxItem id="remix">Remix</ListBoxItem>
-      <ListBoxItem id="astro">Astro</ListBoxItem>
-      <ListBoxItem id="gatsby">Gatsby</ListBoxItem>
+      <Item id="nextjs">Next.js</Item>
+      <Item id="remix">Remix</Item>
+      <Item id="astro">Astro</Item>
+      <Item id="gatsby">Gatsby</Item>
     </ListBox>
   );
 }

@@ -27,7 +27,7 @@ const menuStyles = tv({
 
 const menuItemStyles = tv({
   base: [
-    "flex cursor-pointer items-center gap-2 rounded-sm px-3 py-1.5 text-sm outline-none transition-colors disabled:pointer-events-none focus:bg-bg-inverse/10 disabled:text-fg-disabled",
+    "flex cursor-pointer items-center rounded-sm px-3 py-1.5 text-sm outline-none transition-colors disabled:pointer-events-none focus:bg-bg-inverse/10 disabled:text-fg-disabled",
     "selection-single:pl-0 selection-multiple:pl-0",
     "group-data-[type=drawer]/overlay:text-md group-data-[type=drawer]/overlay:py-3",
     "group-data-[type=modal]/overlay:text-md group-data-[type=modal]/overlay:py-2",
@@ -41,6 +41,9 @@ const menuItemStyles = tv({
       accent: "text-fg-accent",
       danger: "text-fg-danger",
     },
+  },
+  defaultVariants: {
+    variant: "default",
   },
 });
 
@@ -106,18 +109,16 @@ const MenuItem = <T extends object>({
             </span>
           )}
           {prefix}
-          <span className="flex flex-1 flex-col">
-            {label && (
-              <Text slot="label" className="font-semibold">
-                {label}
-              </Text>
-            )}
-            {description && <span className="text-xs text-fg-muted">{description}</span>}
-            {children}
+          <span className="flex items-center gap-2">
+            <span className="flex flex-1 flex-col">
+              {label && <Text slot="label">{label}</Text>}
+              {description && <Text slot="description">{description}</Text>}
+              {children}
+            </span>
+            {suffix}
+            {shortcut && <Kbd>{shortcut}</Kbd>}
+            {hasSubmenu && <ChevronRightIcon aria-hidden className="size-4" />}
           </span>
-          {hasSubmenu && <ChevronRightIcon aria-hidden className="size-4" />}
-          {suffix}
-          {shortcut && <Kbd>{shortcut}</Kbd>}
         </>
       ))}
     </AriaMenuItem>

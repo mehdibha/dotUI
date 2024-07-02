@@ -1,17 +1,18 @@
-import { ListBox, ListBoxItem } from "@/lib/components/core/default/list-box";
+import { DiscordIcon, GitHubIcon, TwitterIcon } from "@/components/icons";
+import { ListBox, Item } from "@/lib/components/core/default/list-box";
 
 export default function Demo() {
   return (
-    <ListBox aria-label="Links">
-      <ListBoxItem href="https://github.com/mehdibha" target="_blank">
+    <ListBox aria-label="Links" className="w-auto">
+      <Item href="https://github.com/mehdibha" target="_blank" prefix={<GitHubIcon />}>
         GitHub
-      </ListBoxItem>
-      <ListBoxItem href="https://linkedin.com/in/mehdibha" target="_blank">
-        LinkedIn
-      </ListBoxItem>
-      <ListBoxItem href="https://x.com/mehdibha_" target="_blank">
+      </Item>
+      <Item href="https://discord.com/invite/DXpj5V2fU8" target="_blank" prefix={<DiscordIcon />}>
+        Discord
+      </Item>
+      <Item href="https://x.com/mehdibha_" target="_blank" prefix={<TwitterIcon />}>
         X
-      </ListBoxItem>
+      </Item>
     </ListBox>
   );
 }
