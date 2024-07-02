@@ -9,7 +9,9 @@ export default function Demo() {
   const [selected, setSelected] = React.useState<Selection>(new Set(["center"]));
   return (
     <MenuRoot>
-      <Button size="sm">Align</Button>
+      <Button variant="outline" size="sm">
+        Align
+      </Button>
       <Menu selectionMode="single" selectedKeys={selected} onSelectionChange={setSelected}>
         <MenuItem id="start">Start</MenuItem>
         <MenuItem id="center">Center</MenuItem>

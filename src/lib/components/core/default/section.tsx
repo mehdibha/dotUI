@@ -21,7 +21,7 @@ interface SectionProps<T> extends AriaSectionProps<T> {
 const Section = <T extends object>({ title, ...props }: SectionProps<T>) => {
   return (
     <SectionRoot {...props}>
-      <SectionTitle>{title}</SectionTitle>
+      {title && <SectionTitle>{title}</SectionTitle>}
       <AriaCollection items={props.items}>{props.children}</AriaCollection>
     </SectionRoot>
   );

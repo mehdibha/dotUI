@@ -5,7 +5,9 @@ import { Menu, MenuItem, MenuRoot } from "@/lib/components/core/default/menu";
 export default function Demo() {
   return (
     <MenuRoot>
-      <Button>Social links</Button>
+      <Button variant="outline" size="sm">
+        Social
+      </Button>
       <Menu>
         <MenuItem prefix={<GitHubIcon />} href="https://github.com/mehdibha/rcopy" target="_blank">
           Github

@@ -2,8 +2,9 @@
 
 import React from "react";
 import { Button } from "@/lib/components/core/default/button";
+import { Item } from "@/lib/components/core/default/list-box";
 import { Menu, MenuItem, MenuRoot, type MenuProps } from "@/lib/components/core/default/menu";
-import { Select, SelectItem } from "@/lib/components/core/default/select";
+import { Select } from "@/lib/components/core/default/select";
 import { MenuIcon } from "@/lib/icons";
 
 type Placement = MenuProps<object>["placement"];
@@ -13,7 +14,7 @@ export default function Demo() {
   return (
     <div className="flex items-center gap-10">
       <MenuRoot>
-        <Button shape="square" size="sm">
+        <Button variant="outline" shape="square" size="sm">
           <MenuIcon />
         </Button>
         <Menu placement={placement}>
@@ -53,7 +54,9 @@ export default function Demo() {
           "end top",
           "end bottom",
         ].map((pos, index) => (
-          <SelectItem key={index}>{pos}</SelectItem>
+          <Item key={index} id={pos.replace(" ", "")}>
+            {pos}
+          </Item>
         ))}
       </Select>
     </div>

@@ -1,12 +1,12 @@
-import { Avatar } from "@/lib/components/core/default/avatar";
 import { Button } from "@/lib/components/core/default/button";
 import { Menu, MenuItem, MenuRoot } from "@/lib/components/core/default/menu";
+import { MenuIcon } from "@/lib/icons";
 
 export default function Demo() {
   return (
     <MenuRoot>
-      <Button variant="quiet" shape="square">
-        <Avatar src="https://github.com/mehdibha.png" fallback="M" className="size-7" />
+      <Button variant="outline" shape="square">
+        <MenuIcon />
       </Button>
       <Menu>
         <MenuItem>Account settings</MenuItem>

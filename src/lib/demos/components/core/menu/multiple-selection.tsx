@@ -5,7 +5,9 @@ import { Menu, MenuItem, MenuRoot } from "@/lib/components/core/default/menu";
 export default function Demo() {
   return (
     <MenuRoot>
-      <Button size="sm">Panels</Button>
+      <Button variant="outline" size="sm">
+        Panels
+      </Button>
       <Menu selectionMode="multiple" defaultSelectedKeys={["sidebar", "searchbar", "console"]}>
         <MenuItem id="sidebar">Sidebar</MenuItem>
         <MenuItem id="searchbar">Searchbar</MenuItem>

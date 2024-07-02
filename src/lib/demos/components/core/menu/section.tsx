@@ -1,21 +1,23 @@
 import { Button } from "@/lib/components/core/default/button";
-import { Menu, MenuItem, MenuRoot, MenuSection } from "@/lib/components/core/default/menu";
-import { Separator } from "@/lib/components/core/default/separator";
+import { Menu, MenuItem, MenuRoot } from "@/lib/components/core/default/menu";
+import { Section } from "@/lib/components/core/default/section";
+import { MenuIcon } from "@/lib/icons";
 
 export default function Demo() {
   return (
     <MenuRoot>
-      <Button>Settings</Button>
+      <Button variant="outline" shape="square">
+        <MenuIcon />
+      </Button>
       <Menu>
-        <MenuSection title="Notifications">
+        <Section title="Notifications">
           <MenuItem>Push notifications</MenuItem>
           <MenuItem>Badges</MenuItem>
-        </MenuSection>
-        <Separator />
-        <MenuSection title="Panels">
+        </Section>
+        <Section title="Panels">
           <MenuItem id="console">Console</MenuItem>
           <MenuItem>Search</MenuItem>
-        </MenuSection>
+        </Section>
       </Menu>
     </MenuRoot>
   );

@@ -10,18 +10,34 @@ import {
   type ModalOverlayProps as AriaModalOverlayProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import { useMediaQuery } from "@/lib/hooks/use-media-query";
 import { cn } from "@/lib/utils/classes";
 import { MotionDrawerRoot, useMotionDrawer } from "./use-motion-drawer";
 
+type OverlayType = "modal" | "drawer" | "popover";
+
 type OverlayProps = {
-  type?: "modal" | "drawer" | "popover";
+  type?: OverlayType;
+  mobileType?: OverlayProps["type"];
+  mediaQuery?: string;
   children: React.ReactNode;
   classNames?: ModalOverlayClassNames & DrawerOverlayClassNames & PopoverOverlayClassNames;
 } & Omit<AriaModalOverlayProps, "children"> &
   Omit<AriaPopoverProps, "children">;
 
 const Overlay = React.forwardRef<HTMLElement | HTMLDivElement, OverlayProps>(
-  ({ type = "modal", isDismissable, ...props }, ref) => {
+  (
+    {
+      type: typeProp = "modal",
+      mobileType,
+      mediaQuery = "(max-width: 640px)",
+      isDismissable,
+      ...props
+    },
+    ref
+  ) => {
+    const isMobile = useMediaQuery(mediaQuery);
+    const type = mobileType ? (isMobile ? mobileType : typeProp) : typeProp;
     switch (type) {
       case "modal":
         return (
@@ -54,7 +70,7 @@ const modalVariants = tv({
       "data-[exiting]:duration-300 data-[entering]:animate-in data-[exiting]:animate-out data-[entering]:fade-in-0 data-[exiting]:fade-out-0",
     ],
     overlay: [
-      "fixed left-[50%] top-[50%] z-50 w-full max-w-lg translate-x-[-50%] translate-y-[-50%]",
+      "group/overlay fixed left-[50%] top-[50%] z-50 w-full max-w-lg translate-x-[-50%] translate-y-[-50%]",
       "border bg-bg shadow-lg sm:rounded-lg md:w-full",
       "duration-200 data-[exiting]:duration-300 data-[entering]:animate-in data-[exiting]:animate-out data-[entering]:fade-in-0 data-[exiting]:fade-out-0 data-[entering]:zoom-in-95 data-[exiting]:zoom-out-95 data-[entering]:slide-in-from-left-1/2 data-[entering]:slide-in-from-top-[48%] data-[exiting]:slide-out-to-left-1/2 data-[exiting]:slide-out-to-top-[48%]",
     ],
@@ -80,24 +96,20 @@ const ModalOverlay = React.forwardRef<React.ElementRef<typeof AriaModalOverlay>,
         isDismissable={isDismissable}
         className={backdrop({ className: classNames?.backdrop })}
       >
-        <AriaModal {...props} className={cn(overlay(), classNames?.overlay, className)} />
+        <AriaModal
+          {...props}
+          data-type="modal"
+          className={cn(overlay(), classNames?.overlay, className)}
+        />
       </AriaModalOverlay>
     );
   }
 );
 ModalOverlay.displayName = "ModalOverlay";
 
-// TODO: Replace colors and add forced-colors
-
 const popoverOverlayVariants = tv({
   slots: {
-    overlay: [
-      "z-50 rounded-md border bg-bg text-popover-foreground shadow-md",
-      "entering:duration-200 exiting:duration-150",
-      // TODO FIX THESE ANIMATIONS
-      // "entering:animate-in entering:fade-in entering:placement-bottom:slide-in-from-top-1 entering:placement-top:slide-in-from-bottom-1 entering:placement-left:slide-in-from-right-1 entering:placement-right:slide-in-from-left-1 entering:ease-out entering:duration-200",
-      // "exiting:animate-out exiting:fade-out exiting:placement-bottom:slide-out-to-top-1 exiting:placement-top:slide-out-to-bottom-1 exiting:placement-left:slide-out-to-right-1 exiting:placement-right:slide-out-to-left-1 exiting:ease-in exiting:duration-150",
-    ],
+    overlay: "group/overlay z-50 rounded-md border bg-bg text-fg shadow-md",
     arrow: [
       "block fill-bg stroke-1 stroke-border",
       "group-placement-left:-rotate-90 group-placement-right:rotate-90 group-placement-bottom:rotate-180",
@@ -120,7 +132,12 @@ const PopoverOverlay = React.forwardRef<React.ElementRef<typeof AriaPopover>, Po
   ({ arrow = false, children, className, classNames, ...props }, ref) => {
     const { overlay, arrow: arrowStyle } = popoverOverlayVariants({});
     return (
-      <AriaPopover ref={ref} {...props} className={cn(overlay({}), classNames?.overlay, className)}>
+      <AriaPopover
+        data-type="popover"
+        ref={ref}
+        {...props}
+        className={cn(overlay({}), classNames?.overlay, className)}
+      >
         {arrow && (
           <AriaOverlayArrow className="group">
             <svg
@@ -147,7 +164,7 @@ const drawerVariants = tv({
       "opacity-0", // required
     ],
     overlay: [
-      "bg-bg flex flex-col fixed z-50 outline-none",
+      "group/overlay bg-bg flex flex-col fixed z-50 outline-none",
       // "placement-bottom:inset-x-0 placement-bottom:bottom-0",
       "inset-0",
       "placement-bottom:top-auto placement-top:bottom-auto placement-left:right-auto placement-right:left-auto",
@@ -192,7 +209,11 @@ const DrawerOverlay = React.forwardRef<
         <AriaModalOverlay ref={ref} isDismissable={isDismissable} {...props} {...modalProps}>
           <div {...backdropProps} className={backdrop({ className: classNames?.backdrop })} />
           <AriaModal>
-            <div {...drawerProps} className={cn(overlay(), classNames?.overlay, className)}>
+            <div
+              {...drawerProps}
+              data-type="drawer"
+              className={cn(overlay(), classNames?.overlay, className)}
+            >
               {/* TODO: Make the swipeIndicator optional */}
               <div className="mx-auto my-4 h-2 w-[100px] rounded-full bg-bg-muted" />
               {children}
@@ -204,6 +225,22 @@ const DrawerOverlay = React.forwardRef<
   }
 );
 DrawerOverlay.displayName = "DrawerOverlay";
+
+// const DismissButton = (props: ButtonProps) => {
+//   const state = React.useContext(OverlayTriggerStateContext);
+//   return (
+//     <Button
+//       shape="square"
+//       variant="quiet"
+//       size="sm"
+//       aria-label="Close"
+//       {...props}
+//       onPress={() => state.close()}
+//     >
+//       <XIcon />
+//     </Button>
+//   );
+// };
 
 export type { OverlayProps, ModalOverlayProps, DrawerOverlayProps, PopoverOverlayProps };
 export {

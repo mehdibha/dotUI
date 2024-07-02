@@ -5,14 +5,17 @@ import { Separator } from "@/lib/components/core/default/separator";
 export default function Demo() {
   return (
     <MenuRoot>
-      <Button>Settings</Button>
+      <Button variant="outline">File</Button>
       <Menu>
-        <MenuItem>Push notifications</MenuItem>
+        <MenuItem>New...</MenuItem>
         <MenuItem>Badges</MenuItem>
         <Separator />
-        <MenuItem id="console">Console</MenuItem>
+        <MenuItem>Save</MenuItem>
+        <MenuItem>Save as...</MenuItem>
+        <MenuItem>Rename...</MenuItem>
         <Separator />
-        <MenuItem>Search</MenuItem>
+        <MenuItem>Page setup…</MenuItem>
+        <MenuItem>Print…</MenuItem>
       </Menu>
     </MenuRoot>
   );
