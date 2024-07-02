@@ -355,20 +355,24 @@ return (
 
 ### Menu
 
-| Prop                     | Type                                       | Default  | Description                                                                                             |
-| ------------------------ | ------------------------------------------ | -------- | ------------------------------------------------------------------------------------------------------- |
-| `autoFocus`              | `boolean \| 'first' \| 'last'`             | -        | Where the focus should be set.                                                                          |
-| `shouldFocusWrap`        | `boolean`                                  | -        | Whether keyboard navigation is circular.                                                                |
-| `items`                  | `Iterable<T>`                              | -        | Item objects in the collection.                                                                         |
-| `disabledKeys`           | `Iterable<Key>`                            | -        | The item keys that are disabled. These items cannot be selected, focused, or otherwise interacted with. |
-| `selectionMode`          | `'none' \| 'single' \| 'multiple'`         | `'none'` | The type of selection that is allowed in the collection.                                                |
-| `disallowEmptySelection` | `boolean`                                  | -        | Whether the collection allows empty selection.                                                          |
-| `selectedKeys`           | `'all' \| Iterable<Key>`                   | -        | The currently selected keys in the collection (controlled).                                             |
-| `defaultSelectedKeys`    | `'all' \| Iterable<Key>`                   | -        | The initial selected keys in the collection (uncontrolled).                                             |
-| `children`               | `ReactNode \| (item: object) => ReactNode` | -        | The contents of the collection.                                                                         |
-| `dependencies`           | `any[]`                                    | -        | Values that should invalidate the item cache when using dynamic collections.                            |
-| `className`              | `string`                                   | -        | The CSS className for the element.                                                                      |
-| `style`                  | `CSSProperties`                            | -        | The inline style for the element.                                                                       |
+| Prop                     | Type                                       | Default                | Description                                                                                             |
+| ------------------------ | ------------------------------------------ | ---------------------- | ------------------------------------------------------------------------------------------------------- |
+| `type`                   | `"popover" \| "modal" \| "drawer"`         | -                      | The overlay type.                                                                                       |
+| `mobileType`             | `"popover" \| "modal" \| "drawer"`         | -                      | The overlay type for mobile screens.                                                                    |
+| `mediaQuery`             | `string`                                   | `"(max-width: 640px)"` | The media query that determines when the mobile type is used.                                           |
+| `placement`              | `Placement`                                | -                      | The position of the menu relative to the trigger button.                                                |
+| `autoFocus`              | `boolean \| 'first' \| 'last'`             | -                      | Where the focus should be set.                                                                          |
+| `shouldFocusWrap`        | `boolean`                                  | -                      | Whether keyboard navigation is circular.                                                                |
+| `items`                  | `Iterable<T>`                              | -                      | Item objects in the collection.                                                                         |
+| `disabledKeys`           | `Iterable<Key>`                            | -                      | The item keys that are disabled. These items cannot be selected, focused, or otherwise interacted with. |
+| `selectionMode`          | `'none' \| 'single' \| 'multiple'`         | `'none'`               | The type of selection that is allowed in the collection.                                                |
+| `disallowEmptySelection` | `boolean`                                  | -                      | Whether the collection allows empty selection.                                                          |
+| `selectedKeys`           | `'all' \| Iterable<Key>`                   | -                      | The currently selected keys in the collection (controlled).                                             |
+| `defaultSelectedKeys`    | `'all' \| Iterable<Key>`                   | -                      | The initial selected keys in the collection (uncontrolled).                                             |
+| `children`               | `ReactNode \| (item: object) => ReactNode` | -                      | The contents of the collection.                                                                         |
+| `dependencies`           | `any[]`                                    | -                      | Values that should invalidate the item cache when using dynamic collections.                            |
+| `className`              | `string`                                   | -                      | The CSS className for the element.                                                                      |
+| `style`                  | `CSSProperties`                            | -                      | The inline style for the element.                                                                       |
 
 | Event               | Type                            | Description                                                                |
 | ------------------- | ------------------------------- | -------------------------------------------------------------------------- |
@@ -379,23 +383,24 @@ return (
 
 ### MenuItem
 
-| Prop             | Type                                                                                                  | Default | Description                                                                                                 |
-| ---------------- | ----------------------------------------------------------------------------------------------------- | ------- | ----------------------------------------------------------------------------------------------------------- |
-| `id`             | `Key`                                                                                                 | -       | The unique id of the item.                                                                                  |
-| `value`          | `object`                                                                                              | -       | The object value that this item represents. When using dynamic collections, this is set automatically.      |
-| `textValue`      | `string`                                                                                              | -       | A string representation of the item's contents, used for features like typeahead.                           |
-| `isDisabled`     | `boolean`                                                                                             | -       | Whether the item is disabled.                                                                               |
-| `children`       | `ReactNode \| (values: MenuItemRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -       | The children of the component. A function may be provided to alter the children based on component state.   |
-| `className`      | `string`                                                                                              | -       | The CSS className for the element.                                                                          |
-| `style`          | `CSSProperties \| (values: MenuItemRenderProps & {defaultStyle: CSSProperties}) => CSSProperties`     | -       | The inline style for the element. A function may be provided to compute the style based on component state. |
-| `href`           | `Href`                                                                                                | -       | A URL to link to.                                                                                           |
-| `hrefLang`       | `string`                                                                                              | -       | Hints at the human language of the linked URL.                                                              |
-| `target`         | `HTMLAttributeAnchorTarget`                                                                           | -       | The target window for the link.                                                                             |
-| `rel`            | `string`                                                                                              | -       | The relationship between the linked resource and the current page.                                          |
-| `download`       | `boolean \| string`                                                                                   | -       | Causes the browser to download the linked URL. A string may be provided to suggest a file name.             |
-| `ping`           | `string`                                                                                              | -       | A space-separated list of URLs to ping when the link is followed.                                           |
-| `referrerPolicy` | `HTMLAttributeReferrerPolicy`                                                                         | -       | How much of the referrer to send when following the link.                                                   |
-| `routerOptions`  | `RouterOptions`                                                                                       | -       | Options for the configured client side router.                                                              |
+| Prop             | Type                                                                                                  | Default     | Description                                                                                                 |
+| ---------------- | ----------------------------------------------------------------------------------------------------- | ----------- | ----------------------------------------------------------------------------------------------------------- |
+| `id`             | `Key`                                                                                                 | -           | The unique id of the item.                                                                                  |
+| `variant`        | `'default' \| 'success' \| 'warning' \| 'danger' \| 'accent'`                                         | `"default"` | The visual style of the menu item.                                                                          |
+| `value`          | `object`                                                                                              | -           | The object value that this item represents. When using dynamic collections, this is set automatically.      |
+| `textValue`      | `string`                                                                                              | -           | A string representation of the item's contents, used for features like typeahead.                           |
+| `isDisabled`     | `boolean`                                                                                             | -           | Whether the item is disabled.                                                                               |
+| `children`       | `ReactNode \| (values: MenuItemRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -           | The children of the component. A function may be provided to alter the children based on component state.   |
+| `className`      | `string`                                                                                              | -           | The CSS className for the element.                                                                          |
+| `style`          | `CSSProperties \| (values: MenuItemRenderProps & {defaultStyle: CSSProperties}) => CSSProperties`     | -           | The inline style for the element. A function may be provided to compute the style based on component state. |
+| `href`           | `Href`                                                                                                | -           | A URL to link to.                                                                                           |
+| `hrefLang`       | `string`                                                                                              | -           | Hints at the human language of the linked URL.                                                              |
+| `target`         | `HTMLAttributeAnchorTarget`                                                                           | -           | The target window for the link.                                                                             |
+| `rel`            | `string`                                                                                              | -           | The relationship between the linked resource and the current page.                                          |
+| `download`       | `boolean \| string`                                                                                   | -           | Causes the browser to download the linked URL. A string may be provided to suggest a file name.             |
+| `ping`           | `string`                                                                                              | -           | A space-separated list of URLs to ping when the link is followed.                                           |
+| `referrerPolicy` | `HTMLAttributeReferrerPolicy`                                                                         | -           | How much of the referrer to send when following the link.                                                   |
+| `routerOptions`  | `RouterOptions`                                                                                       | -           | Options for the configured client side router.                                                              |
 
 | Event           | Type                            | Description                                             |
 | --------------- | ------------------------------- | ------------------------------------------------------- |
