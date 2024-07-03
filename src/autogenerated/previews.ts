@@ -1246,7 +1246,7 @@ export const previews = {
     },
     "demos/components/core/list-box/horizontal": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/list-box/horizontal")),
-      code : [{"title":"horizontal.tsx","code":"import { ListBox, Item } from \"@/lib/components/core/default/list-box\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <ListBox aria-label=\"Options\" orientation=\"horizontal\" selectionMode=\"single\">\r\n      <Item textValue=\"Read\" label=\"Read\" description=\"Read Only\" />\r\n      <Item textValue=\"Write\" label=\"Write\" description=\"Read and Write Only\" />\r\n      <Item textValue=\"Admin\" label=\"Admin\" description=\"Full access\" />{\" \"}\r\n    </ListBox>\r\n  );\r\n}\r\n"}]
+      code : [{"title":"horizontal.tsx","code":"import { ListBox, Item } from \"@/lib/components/core/default/list-box\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <ListBox aria-label=\"Options\" orientation=\"horizontal\" selectionMode=\"single\">\r\n      <Item textValue=\"Read\" label=\"Read\" description=\"Read Only\" />\r\n      <Item textValue=\"Write\" label=\"Write\" description=\"Read and Write Only\" />\r\n      <Item textValue=\"Admin\" label=\"Admin\" description=\"Full access\" />\r\n    </ListBox>\r\n  );\r\n}\r\n"}]
     },
     "demos/components/core/list-box/grid": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/list-box/grid")),
@@ -1410,7 +1410,7 @@ export const previews = {
     },
     "demos/components/core/select/links": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/select/links")),
-      code : [{"title":"links.tsx","code":"import React from \"react\";\nimport { Item } from \"@/lib/components/core/default/list-box\";\nimport { Select } from \"@/lib/components/core/default/select\";\n\nexport default function Demo() {\n  return (\n    <Select label=\"Project\">\n      <Item href=\"/create-project\" target=\"_blank\">Create new...</Item>\n      <Item>DotUI</Item>\n      <Item>Palettify</Item>\n      <Item>Notionfolio</Item>\n    </Select>\n  );\n}\n"}]
+      code : [{"title":"links.tsx","code":"import React from \"react\";\nimport { Item } from \"@/lib/components/core/default/list-box\";\nimport { Select } from \"@/lib/components/core/default/select\";\n\nexport default function Demo() {\n  return (\n    <Select label=\"Project\">\n      <Item href=\"/create-project\" target=\"_blank\">\n        Create new...\n      </Item>\n      <Item>DotUI</Item>\n      <Item>Palettify</Item>\n      <Item>Notionfolio</Item>\n    </Select>\n  );\n}\n"}]
     },
     "demos/components/core/select/disabled": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/select/disabled")),

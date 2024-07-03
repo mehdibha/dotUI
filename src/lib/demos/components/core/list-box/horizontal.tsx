@@ -5,7 +5,7 @@ export default function Demo() {
     <ListBox aria-label="Options" orientation="horizontal" selectionMode="single">
       <Item textValue="Read" label="Read" description="Read Only" />
       <Item textValue="Write" label="Write" description="Read and Write Only" />
-      <Item textValue="Admin" label="Admin" description="Full access" />{" "}
+      <Item textValue="Admin" label="Admin" description="Full access" />
     </ListBox>
   );
 }
