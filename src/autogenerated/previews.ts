@@ -1422,7 +1422,7 @@ export const previews = {
     },
     "demos/components/core/select/required": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/select/required")),
-      code : [{"title":"required.tsx","code":"import React from \"react\";\nimport { Item } from \"@/lib/components/core/default/list-box\";\nimport { Select } from \"@/lib/components/core/default/select\";\n\nexport default function Demo() {\n  return (\n    <Select isRequired necessityIndicator=\"icon\">\n      <Item>Perplexity</Item>\n      <Item>Replicate</Item>\n      <Item>Together AI</Item>\n      <Item>ElevenLabs</Item>\n    </Select>\n  );\n}\n"}]
+      code : [{"title":"required.tsx","code":"import React from \"react\";\nimport { Item } from \"@/lib/components/core/default/list-box\";\nimport { Select } from \"@/lib/components/core/default/select\";\n\nexport default function Demo() {\n  return (\n    <Select label=\"Provider\" isRequired necessityIndicator=\"icon\">\n      <Item>Perplexity</Item>\n      <Item>Replicate</Item>\n      <Item>Together AI</Item>\n      <Item>ElevenLabs</Item>\n    </Select>\n  );\n}\n"}]
     },
     "demos/components/core/select/uncontrolled": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/select/uncontrolled")),

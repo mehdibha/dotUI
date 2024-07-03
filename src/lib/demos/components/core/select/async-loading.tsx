@@ -20,5 +20,9 @@ export default function Demo() {
       };
     },
   });
-  return <Select items={list.items}>{(item) => <Item id={item.name}>{item.name}</Item>}</Select>;
+  return (
+    <Select isLoading={list.isLoading} items={list.items}>
+      {(item) => <Item id={item.name}>{item.name}</Item>}
+    </Select>
+  );
 }

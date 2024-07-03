@@ -11,6 +11,7 @@ import {
   ChevronLeftIcon,
   ChevronDownIcon,
   ChevronUpIcon,
+  ChevronsUpDownIcon,
   SearchIcon,
   HelpCircleIcon,
   CalendarIcon,
@@ -349,6 +350,13 @@ const icons = {
     radix: { name: "Volume2Icon", icon: Volume2Icon },
     heroicons: { name: "Volume2Icon", icon: Volume2Icon },
     feather: { name: "Volume2Icon", icon: Volume2Icon },
+  },
+  ChevronsUpDownIcon: {
+    lucide: { name: "ChevronsUpDownIcon", icon: ChevronsUpDownIcon },
+    remix: { name: "ChevronsUpDownIcon", icon: ChevronsUpDownIcon },
+    radix: { name: "ChevronsUpDownIcon", icon: ChevronsUpDownIcon },
+    heroicons: { name: "ChevronsUpDownIcon", icon: ChevronsUpDownIcon },
+    feather: { name: "ChevronsUpDownIcon", icon: ChevronsUpDownIcon },
   },
 };
 

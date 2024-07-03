@@ -12,22 +12,23 @@ import { tv } from "tailwind-variants";
 import { ChevronDownIcon } from "@/lib/icons";
 import { Button } from "./button";
 import { Field, type FieldProps } from "./field";
-import { ListBox } from "./list-box";
+import { ListBox, type ListBoxProps } from "./list-box";
 import { Overlay } from "./overlay";
 
 const selectStyles = tv({
   slots: {
     root: "flex flex-col items-start gap-2",
-    selectValue: "flex-1",
+    selectValue: "flex-1 text-left",
   },
 });
 
 interface SelectProps<T extends object>
   extends Omit<SelectRootProps<T>, "children">,
     Omit<FieldProps, "children"> {
-  children: React.ReactNode | ((item: T) => React.ReactNode);
-  items?: Iterable<T>;
-  isLoading?: boolean;
+  children?: ListBoxProps<T>["children"];
+  dependencies?: ListBoxProps<T>["dependencies"];
+  items?: ListBoxProps<T>["items"];
+  isLoading?: ListBoxProps<T>["isLoading"];
 }
 const Select = <T extends object>({
   label,
@@ -36,7 +37,9 @@ const Select = <T extends object>({
   necessityIndicator,
   contextualHelp,
   children,
+  dependencies,
   items,
+  isLoading,
   ...props
 }: SelectProps<T>) => {
   return (
@@ -56,7 +59,9 @@ const Select = <T extends object>({
             </Button>
           </Field>
           <Overlay type="popover">
-            <ListBox items={items}>{children}</ListBox>
+            <ListBox isLoading={isLoading} items={items} dependencies={dependencies}>
+              {children}
+            </ListBox>
           </Overlay>
         </>
       )}
@@ -83,5 +88,5 @@ const SelectRoot = <T extends object>({ className, ...props }: SelectRootProps<T
   return <AriaSelect className={root({ className })} {...props} />;
 };
 
-export type { SelectProps, SelectRootProps };
-export { Select, SelectRoot };
+export type { SelectProps, SelectRootProps, SelectValueProps };
+export { Select, SelectRoot, SelectValue };

@@ -45,3 +45,4 @@ export const PinIcon = createIcon("PinIcon");
 export const ALargeSmallIcon = createIcon("ALargeSmallIcon");
 export const Volume1Icon = createIcon("Volume1Icon");
 export const Volume2Icon = createIcon("Volume2Icon");
+export const ChevronsUpDownIcon = createIcon("ChevronsUpDownIcon");
