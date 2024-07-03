@@ -9,7 +9,7 @@ import { ChevronDownIcon } from "@/lib/icons";
 import { Button } from "./button";
 import { Field, type FieldProps, fieldStyles } from "./field";
 import { Input, InputRoot } from "./input";
-import { ListBox, ListBoxItem } from "./list-box";
+import { ListBox } from "./list-box";
 import { Overlay } from "./overlay";
 
 interface ComboboxProps<T extends object>
@@ -57,7 +57,5 @@ const ComboboxRoot = <T extends object>({ className, ...props }: ComboboxRootPro
   return <AriaCombobox className={root({ className })} {...props} />;
 };
 
-const ComboboxItem = ListBoxItem;
-
 export type { ComboboxProps, ComboboxRootProps };
-export { Combobox, ComboboxRoot, ComboboxTrigger, ComboboxItem };
+export { Combobox, ComboboxRoot, ComboboxTrigger };
