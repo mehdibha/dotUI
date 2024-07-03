@@ -1246,7 +1246,7 @@ export const previews = {
     },
     "demos/components/core/list-box/horizontal": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/list-box/horizontal")),
-      code : [{"title":"horizontal.tsx","code":"import { ListBox, Item } from \"@/lib/components/core/default/list-box\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <ListBox aria-label=\"Options\" orientation=\"horizontal\">\r\n      <Item textValue=\"Read\" label=\"Read\" description=\"Read Only\" />\r\n      <Item textValue=\"Write\" label=\"Write\" description=\"Read and Write Only\" />\r\n      <Item textValue=\"Admin\" label=\"Admin\" description=\"Full access\" />\r\n    </ListBox>\r\n  );\r\n}\r\n"}]
+      code : [{"title":"horizontal.tsx","code":"import { ListBox, Item } from \"@/lib/components/core/default/list-box\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <ListBox aria-label=\"Options\" orientation=\"horizontal\" selectionMode=\"single\">\r\n      <Item textValue=\"Read\" label=\"Read\" description=\"Read Only\" />\r\n      <Item textValue=\"Write\" label=\"Write\" description=\"Read and Write Only\" />\r\n      <Item textValue=\"Admin\" label=\"Admin\" description=\"Full access\" />{\" \"}\r\n    </ListBox>\r\n  );\r\n}\r\n"}]
     },
     "demos/components/core/list-box/grid": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/list-box/grid")),
@@ -1270,7 +1270,7 @@ export const previews = {
     },
     "demos/components/core/list-box/item-variant": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/list-box/item-variant")),
-      code : [{"title":"item-variant.tsx","code":"import { Item, ListBox } from \"@/lib/components/core/default/list-box\";\n\nexport default function Demo() {\n  return (\n    <ListBox>\n      <Item>Account settings</Item>\n      <Item>Create team</Item>\n      <Item>Command menu</Item>\n      <Item variant=\"danger\">Delete</Item>\n    </ListBox>\n  );\n}\n"}]
+      code : [{"title":"item-variant.tsx","code":"import { Item, ListBox } from \"@/lib/components/core/default/list-box\";\n\nexport default function Demo() {\n  return (\n    <ListBox aria-label=\"project\">\n      <Item>View logs</Item>\n      <Item>Manage domains</Item>\n      <Item>Transfer project</Item>\n      <Item variant=\"danger\">Delete project</Item>\n    </ListBox>\n  );\n}\n"}]
     },
     "demos/components/core/list-box/label-and-description": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/list-box/label-and-description")),
@@ -1386,7 +1386,7 @@ export const previews = {
     },
     "demos/components/core/select/placeholder": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/select/placeholder")),
-      code : [{"title":"placeholder.tsx","code":"import React from \"react\";\nimport { Item } from \"@/lib/components/core/default/list-box\";\nimport { Select } from \"@/lib/components/core/default/select\";\n\nexport default function Demo() {\n  return (\n    <Select>\n      <Item>Perplexity</Item>\n      <Item>Replicate</Item>\n      <Item>Together AI</Item>\n      <Item>ElevenLabs</Item>\n    </Select>\n  );\n}\n"}]
+      code : [{"title":"placeholder.tsx","code":"import React from \"react\";\nimport { Item } from \"@/lib/components/core/default/list-box\";\nimport { Select } from \"@/lib/components/core/default/select\";\n\nexport default function Demo() {\n  return (\n    <Select placeholder=\"Select a provider\">\n      <Item>Perplexity</Item>\n      <Item>Replicate</Item>\n      <Item>Together AI</Item>\n      <Item>ElevenLabs</Item>\n    </Select>\n  );\n}\n"}]
     },
     "demos/components/core/select/label": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/select/label")),
@@ -1394,7 +1394,7 @@ export const previews = {
     },
     "demos/components/core/select/description": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/select/description")),
-      code : [{"title":"description.tsx","code":"import React from \"react\";\nimport { Item } from \"@/lib/components/core/default/list-box\";\nimport { Select } from \"@/lib/components/core/default/select\";\n\nexport default function Demo() {\n  return (\n    <Select aria-label=\"Provider\" description=\"Please select a provider.\">\n      <Item>Perplexity</Item>\n      <Item>Replicate</Item>\n      <Item>Together AI</Item>\n      <Item>ElevenLabs</Item>\n    </Select>\n  );\n}\n"}]
+      code : [{"title":"description.tsx","code":"import React from \"react\";\nimport { Item } from \"@/lib/components/core/default/list-box\";\nimport { Select } from \"@/lib/components/core/default/select\";\n\nexport default function Demo() {\n  return (\n    <Select label=\"Provider\" description=\"Please select a provider.\">\n      <Item>Perplexity</Item>\n      <Item>Replicate</Item>\n      <Item>Together AI</Item>\n      <Item>ElevenLabs</Item>\n    </Select>\n  );\n}\n"}]
     },
     "demos/components/core/select/contextual-help": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/select/contextual-help")),
@@ -1410,7 +1410,7 @@ export const previews = {
     },
     "demos/components/core/select/links": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/select/links")),
-      code : [{"title":"links.tsx","code":"import React from \"react\";\nimport { Item } from \"@/lib/components/core/default/list-box\";\nimport { Select } from \"@/lib/components/core/default/select\";\n\nexport default function Demo() {\n  return (\n    <Select label=\"Project\">\n      <Item href=\"#\">Create new...</Item>\n      <Item>DotUI</Item>\n      <Item>Palettify</Item>\n      <Item>Notionfolio</Item>\n    </Select>\n  );\n}\n"}]
+      code : [{"title":"links.tsx","code":"import React from \"react\";\nimport { Item } from \"@/lib/components/core/default/list-box\";\nimport { Select } from \"@/lib/components/core/default/select\";\n\nexport default function Demo() {\n  return (\n    <Select label=\"Project\">\n      <Item href=\"/create-project\" target=\"_blank\">Create new...</Item>\n      <Item>DotUI</Item>\n      <Item>Palettify</Item>\n      <Item>Notionfolio</Item>\n    </Select>\n  );\n}\n"}]
     },
     "demos/components/core/select/disabled": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/select/disabled")),
@@ -1566,7 +1566,7 @@ export const previews = {
     },
     "demos/components/core/tooltip/placement": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/tooltip/placement")),
-      code : [{"title":"placement.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { Button } from \"@/lib/components/core/default/button\";\nimport { Select, SelectItem } from \"@/lib/components/core/default/select\";\nimport { Tooltip, type TooltipProps } from \"@/lib/components/core/default/tooltip\";\nimport { PlusIcon } from \"@/lib/icons\";\n\ntype Placement = TooltipProps[\"placement\"];\n\nexport default function Demo() {\n  const [placement, setPlacement] = React.useState<Placement>(\"top\");\n  return (\n    <div className=\"flex items-center gap-10\">\n      <Tooltip placement={placement} content=\"Add to library\">\n        <Button shape=\"square\">\n          <PlusIcon />\n        </Button>\n      </Tooltip>\n      <Select\n        label=\"Placement\"\n        selectedKey={placement}\n        onSelectionChange={(key) => setPlacement(key as Placement)}\n      >\n        {[\n          \"bottom\",\n          \"bottom left\",\n          \"bottom right\",\n          \"bottom start\",\n          \"bottom end\",\n          \"top\",\n          \"top left\",\n          \"top right\",\n          \"top start\",\n          \"top end\",\n          \"left\",\n          \"left top\",\n          \"left\",\n          \"bottom\",\n          \"start\",\n          \"start top\",\n          \"start bottom\",\n          \"right\",\n          \"right top\",\n          \"right\",\n          \"bottom\",\n          \"end\",\n          \"end top\",\n          \"end bottom\",\n        ].map((pos, index) => (\n          <SelectItem key={index}>{pos}</SelectItem>\n        ))}\n      </Select>\n    </div>\n  );\n}\n"}]
+      code : [{"title":"placement.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { Button } from \"@/lib/components/core/default/button\";\nimport { Item } from \"@/lib/components/core/default/list-box\";\nimport { Select } from \"@/lib/components/core/default/select\";\nimport { Tooltip, type TooltipProps } from \"@/lib/components/core/default/tooltip\";\nimport { PlusIcon } from \"@/lib/icons\";\n\ntype Placement = TooltipProps[\"placement\"];\n\nexport default function Demo() {\n  const [placement, setPlacement] = React.useState<Placement>(\"top\");\n  return (\n    <div className=\"flex items-center gap-10\">\n      <Tooltip placement={placement} content=\"Add to library\">\n        <Button shape=\"square\">\n          <PlusIcon />\n        </Button>\n      </Tooltip>\n      <Select\n        label=\"Placement\"\n        selectedKey={placement}\n        onSelectionChange={(key) => setPlacement(key as Placement)}\n      >\n        {[\n          \"bottom\",\n          \"bottom left\",\n          \"bottom right\",\n          \"bottom start\",\n          \"bottom end\",\n          \"top\",\n          \"top left\",\n          \"top right\",\n          \"top start\",\n          \"top end\",\n          \"left\",\n          \"left top\",\n          \"left\",\n          \"bottom\",\n          \"start\",\n          \"start top\",\n          \"start bottom\",\n          \"right\",\n          \"right top\",\n          \"right\",\n          \"bottom\",\n          \"end\",\n          \"end top\",\n          \"end bottom\",\n        ].map((pos, index) => (\n          <Item key={index}>{pos}</Item>\n        ))}\n      </Select>\n    </div>\n  );\n}\n"}]
     },
     "demos/components/core/tooltip/flip": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/tooltip/flip")),

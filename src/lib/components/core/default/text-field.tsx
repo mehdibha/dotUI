@@ -35,7 +35,6 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
       suffix,
       isLoading,
       loaderPosition = "suffix",
-      isRequired,
       necessityIndicator,
       contextualHelp,
       ...props
@@ -43,25 +42,27 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
     ref
   ) => {
     return (
-      <TextFieldRoot className={className} isRequired={isRequired} {...props}>
-        <Field
-          label={label}
-          description={description}
-          errorMessage={errorMessage}
-          isRequired={isRequired}
-          necessityIndicator={necessityIndicator}
-          contextualHelp={contextualHelp}
-        >
-          <InputRoot
-            size={size}
-            prefix={prefix}
-            suffix={suffix}
-            isLoading={isLoading}
-            loaderPosition={loaderPosition}
+      <TextFieldRoot className={className} {...props}>
+        {({ isRequired }) => (
+          <Field
+            label={label}
+            description={description}
+            errorMessage={errorMessage}
+            isRequired={isRequired}
+            necessityIndicator={necessityIndicator}
+            contextualHelp={contextualHelp}
           >
-            <Input ref={ref} placeholder={placeholder} />
-          </InputRoot>
-        </Field>
+            <InputRoot
+              size={size}
+              prefix={prefix}
+              suffix={suffix}
+              isLoading={isLoading}
+              loaderPosition={loaderPosition}
+            >
+              <Input ref={ref} placeholder={placeholder} />
+            </InputRoot>
+          </Field>
+        )}
       </TextFieldRoot>
     );
   }

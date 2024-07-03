@@ -15,8 +15,9 @@ import { ColorArea } from "./color-area";
 import { ColorField } from "./color-field";
 import { ColorSlider } from "./color-slider";
 import { ColorSwatch } from "./color-swatch";
+import { Item } from "./list-box";
 import { Overlay } from "./overlay";
-import { Select, SelectItem } from "./select";
+import { Select } from "./select";
 
 type ColorPickerProps = AriaColorPickerProps & Omit<ButtonProps, "children"> & { label?: string };
 export const ColorPicker = ({ label, shape, ...props }: ColorPickerProps) => {
@@ -55,9 +56,9 @@ export const ColorPicker = ({ label, shape, ...props }: ColorPickerProps) => {
                         selectedKey={space}
                         onSelectionChange={(s) => setSpace(s as ColorSpace)}
                       >
-                        <SelectItem id="rgb">RGB</SelectItem>
-                        <SelectItem id="hsl">HSL</SelectItem>
-                        <SelectItem id="hsb">HSB</SelectItem>
+                        <Item id="rgb">RGB</Item>
+                        <Item id="hsl">HSL</Item>
+                        <Item id="hsb">HSB</Item>
                       </Select>
                       {getColorChannels(space).map((channel) => (
                         <ColorField

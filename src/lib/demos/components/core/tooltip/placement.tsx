@@ -2,7 +2,8 @@
 
 import React from "react";
 import { Button } from "@/lib/components/core/default/button";
-import { Select, SelectItem } from "@/lib/components/core/default/select";
+import { Item } from "@/lib/components/core/default/list-box";
+import { Select } from "@/lib/components/core/default/select";
 import { Tooltip, type TooltipProps } from "@/lib/components/core/default/tooltip";
 import { PlusIcon } from "@/lib/icons";
 
@@ -48,7 +49,7 @@ export default function Demo() {
           "end top",
           "end bottom",
         ].map((pos, index) => (
-          <SelectItem key={index}>{pos}</SelectItem>
+          <Item key={index}>{pos}</Item>
         ))}
       </Select>
     </div>

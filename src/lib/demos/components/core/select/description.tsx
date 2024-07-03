@@ -4,7 +4,7 @@ import { Select } from "@/lib/components/core/default/select";
 
 export default function Demo() {
   return (
-    <Select aria-label="Provider" description="Please select a provider.">
+    <Select label="Provider" description="Please select a provider.">
       <Item>Perplexity</Item>
       <Item>Replicate</Item>
       <Item>Together AI</Item>
