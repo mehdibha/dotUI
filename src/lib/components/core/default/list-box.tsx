@@ -99,11 +99,11 @@ const Item = <T extends object>({
       {composeRenderProps(props.children, (children, { isSelected, selectionMode }) => (
         <>
           {selectionMode !== "none" && (
-            <span className="flex w-8 items-center justify-center">
+            <span className="flex w-8 shrink-0 items-center justify-center">
               {isSelected && <CheckIcon aria-hidden className="size-4 text-fg-accent" />}
             </span>
           )}
-          <span className="flex items-center gap-2">
+          <span className="flex items-center gap-3">
             {prefix}
             <span className="flex flex-1 flex-col">
               {label && <Text slot="label">{label}</Text>}
