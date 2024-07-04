@@ -3,19 +3,14 @@ import { Combobox } from "@/lib/components/core/default/combobox";
 import { Item } from "@/lib/components/core/default/list-box";
 
 export default function Demo() {
-  // TODO : add isLoading prop
   return (
-    <Combobox label="Favorite Animal">
-      <Item id="red panda">Red Panda</Item>
-      <Item id="cat" isDisabled>
-        Cat
-      </Item>
-      <Item id="dog">Dog</Item>
-      <Item id="aardvark" isDisabled>
-        Aardvark
-      </Item>
-      <Item id="kangaroo">Kangaroo</Item>
-      <Item id="snake">Snake</Item>
+    <Combobox label="Favorite Animal" isLoading>
+      <Item>Red Panda</Item>
+      <Item>Cat</Item>
+      <Item>Dog</Item>
+      <Item>Aardvark</Item>
+      <Item>Kangaroo</Item>
+      <Item>Snake</Item>
     </Combobox>
   );
 }

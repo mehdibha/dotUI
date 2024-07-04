@@ -110,7 +110,7 @@ ModalOverlay.displayName = "ModalOverlay";
 const popoverOverlayVariants = tv({
   slots: {
     overlay:
-      "group/overlay z-50 rounded-md border bg-bg text-fg shadow-md data-[trigger=Select]:min-w-[--trigger-width]",
+      "group/overlay z-50 rounded-md border bg-bg text-fg shadow-md data-[trigger=Select]:min-w-[--trigger-width] data-[trigger=ComboBox]:min-w-[--trigger-width]",
     arrow: [
       "block fill-bg stroke-1 stroke-border",
       "group-placement-left:-rotate-90 group-placement-right:rotate-90 group-placement-bottom:rotate-180",
