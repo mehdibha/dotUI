@@ -4,9 +4,18 @@ description: A component that allows users to select a single date.
 thumbnail:
   image: /previews/components/core/calendar.jpeg
   video: /previews/components/core/calendar.mp4
+links:
+  - label: Aria docs
+    href: https://react-spectrum.adobe.com/react-aria/Calendar.html
+  - label: Aria API Reference
+    href: https://react-spectrum.adobe.com/react-aria/Calendar.html#props
+  - label: Report an issue
+    href: https://github.com/mehdibha/dotUI/issues/new/choose
+  - label: Edit this page
+    href: https://github.com/mehdibha/dotUI/tree/main/content/components/dates/calendar.mdx?plain=1
 ---
 
-<ComponentPreview name="demos/components/core/calendar/basic" />
+<ComponentPreview name="demos/components/core/calendar/basic" preview={`<Calendar />`} />
 
 ## Installation
 
@@ -18,7 +27,14 @@ npm install react-aria-components
 ```
 
 <Step>Copy and paste the following code into your project.</Step>
-  <ComponentSource name="components/core/default/calendar" />
+  <ComponentSource 
+    name={[
+      "components/core/default/calendar",
+      "components/core/default/button",
+      "components/core/default/heading",
+      "components/core/default/text",
+    ]} 
+  />
   <Step>Update the import paths to match your project setup.</Step>
 </Steps>
 
@@ -30,59 +46,126 @@ Use `Calendar` to allow users to select a single date.
 
 ### Label
 
-An aria-label must be provided to the Calendar for accessibility. If it is labeled by a separate element, an aria-labelledby prop must be provided using the id of the labeling element instead.
+An `aria-label` must be provided to the Calendar for accessibility. If it is labeled by a separate element, an `aria-labelledby` prop must be provided using the id of the labeling element instead.
 
-<ComponentPreview name="demos/components/core/calendar/label" />
+<ComponentPreview
+  name="demos/components/core/calendar/label"
+  preview={`<Calendar aria-label="Event date" />`}
+/>
 
 ### Error message
 
-Calendar tries to avoid allowing the user to select invalid dates in the first place (see [Validation](/dates/calendar#validation) and [Unavailable dates](/dates/calendar#unavailable-dates)). However, if according to application logic a selected date is invalid, Use `isInvalid` and `errorMessage` props.
+Calendar tries to avoid allowing the user to select invalid dates in the first place (see [Min and max values](#min-and-max-values) and [Unavailable dates](#unavailable-dates)). However, if according to application logic a selected date is invalid, Use `isInvalid` and `errorMessage` props.
 
-<ComponentPreview name="demos/components/core/calendar/error-message" />
+<ComponentPreview
+  name="demos/components/core/calendar/error-message"
+  preview={`const [date, setDate] = React.useState(today(getLocalTimeZone()));
+const { locale } = useLocale();
+const isInvalid = isWeekend(date, locale);
+return (
+  <Calendar
+    value={date}
+    onChange={setDate}
+    isInvalid={isInvalid}
+    errorMessage={"We are closed on weekends"}
+  />
+);`}
+/>
 
-### Minimum and maximum values
+### Min and max values
 
-By default, Calendar allows selecting any date. The minValue and maxValue props can also be used to prevent the user from selecting dates outside a certain range.
+By default, `Calendar` allows selecting any date. The `minValue` and `maxValue` props can also be used to prevent the user from selecting dates outside a certain range.
 
-<ComponentPreview name="demos/components/core/calendar/validation" />
+<ComponentPreview
+  name="demos/components/core/calendar/validation"
+  preview={`<Calendar minValue={today(getLocalTimeZone())} />`}
+/>
 
 ### Unavailable dates
 
-Calendar supports marking certain dates as unavailable. These dates cannot be selected by the user and are displayed with a crossed out appearance. The `isDateUnavailable` prop accepts a callback that is called to evaluate whether each visible date is unavailable.
+`Calendar` supports marking certain dates as unavailable. These dates cannot be selected by the user and are displayed with a crossed out appearance. The `isDateUnavailable` prop accepts a callback that is called to evaluate whether each visible date is unavailable.
 
-<ComponentPreview name="demos/components/core/calendar/unvailable-dates" />
+{/* prettier-ignore-start */}
+
+<ComponentPreview 
+  name="demos/components/core/calendar/unvailable-dates" 
+  preview={`const now = today(getLocalTimeZone());
+const disabledRanges = [
+  [now, now.add({ days: 5 })],
+  [now.add({ days: 14 }), now.add({ days: 16 })],
+  [now.add({ days: 23 }), now.add({ days: 24 })],
+];
+
+const { locale } = useLocale();
+const isDateUnavailable = (date: DateValue) =>
+  isWeekend(date, locale) ||
+  disabledRanges.some(
+    (interval) => date.compare(interval[0]) >= 0 && date.compare(interval[1]) <= 0
+  );
+
+return (
+  <Calendar
+    minValue={today(getLocalTimeZone())}
+    isDateUnavailable={isDateUnavailable}
+  />
+);`} />
+
+{/* prettier-ignore-end */}
 
 ### Visible months
 
-By default, the Calendar displays a single month. The `visibleMonths` prop allows displaying up to 3 months at a time.
+By default, `Calendar` displays a single month. The `visibleMonths` prop allows displaying up to 3 months at a time.
 
-<ComponentPreview name="demos/components/core/calendar/visible-months" />
+<ComponentPreview
+  name="demos/components/core/calendar/visible-months"
+  preview={`<Calendar visibleMonths={2} />`}
+/>
 
 ### Page behaviour
 
 The `pageBehavior` prop allows you to control how the calendar navigates between months.
 
-<ComponentPreview name="demos/components/core/calendar/page-behaviour" />
+<ComponentPreview
+  name="demos/components/core/calendar/page-behaviour"
+  preview={`<Calendar visibleMonths={2} pageBehavior="single" />`}
+/>
 
 ### Disabled
 
 The `isDisabled` boolean prop makes the Calendar disabled. Cells cannot be focused or selected.
 
-<ComponentPreview name="demos/components/core/calendar/disabled" />
+<ComponentPreview
+  name="demos/components/core/calendar/disabled"
+  preview={`<Calendar isDisabled />`}
+/>
 
 ### Read only
 
 The `isReadOnly` boolean prop makes the Calendar's value immutable. Unlike `isDisabled`, the Calendar remains focusable.
 
-<ComponentPreview name="demos/components/core/calendar/read-only" />
+<ComponentPreview
+  name="demos/components/core/calendar/read-only"
+  preview={`<Calendar isReadOnly value={today(getLocalTimeZone())} />`}
+/>
 
-## Examples
+## Uncontrolled
 
-### Controlled
+An initial, uncontrolled value can be provided to the `Calendar` using the `defaultValue` prop.
 
-The Calendar component can be controlled by passing the `value` and `onChange` props.
+<ComponentPreview
+  name="demos/components/core/calendar/uncontrolled"
+  preview={`<Calendar defaultValue={today(getLocalTimeZone())} />`}
+/>
 
-<ComponentPreview name="demos/components/core/calendar/controlled" />
+## Controlled
+
+The `Calendar` component can be controlled by passing the `value` and `onChange` props.
+
+<ComponentPreview
+  name="demos/components/core/calendar/controlled"
+  preview={`const [value, setValue] = React.useState(today(getLocalTimeZone()));
+return <Calendar aria-label="Date (controlled)" value={value} onChange={setValue} />`}
+/>
 
 ## API Reference
 

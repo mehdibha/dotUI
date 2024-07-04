@@ -276,6 +276,10 @@ export const previews = {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/calendar/read-only")),
       code : [{"title":"read-only.tsx","code":"\"use client\";\n\nimport { getLocalTimeZone, today } from \"@internationalized/date\";\nimport { Calendar } from \"@/lib/components/core/default/calendar\";\n\nexport default function Demo() {\n  return <Calendar aria-label=\"Appointment date\" isReadOnly value={today(getLocalTimeZone())} />;\n}\n"}]
     },
+    "demos/components/core/calendar/uncontrolled": {
+      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/calendar/uncontrolled")),
+      code : [{"title":"uncontrolled.tsx","code":"import React from \"react\";\nimport { getLocalTimeZone, today } from \"@internationalized/date\";\nimport { Calendar } from \"@/lib/components/core/default/calendar\";\n\nexport default function Demo() {\n  return <Calendar aria-label=\"Appointment date\" defaultValue={today(getLocalTimeZone())} />;\n}\n"}]
+    },
     "demos/components/core/calendar/controlled": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/calendar/controlled")),
       code : [{"title":"controlled.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { getLocalTimeZone, today } from \"@internationalized/date\";\nimport { useDateFormatter } from \"react-aria\";\nimport { Calendar } from \"@/lib/components/core/default/calendar\";\n\nexport default function Demo() {\n  const [value, setValue] = React.useState(today(getLocalTimeZone()));\n  const formatter = useDateFormatter({ dateStyle: \"full\" });\n  return (\n    <div className=\"flex flex-col items-center gap-6\">\n      <Calendar aria-label=\"Date (controlled)\" value={value} onChange={setValue} />\n      <p className=\"text-sm text-fg-muted\">\n        Selected date: {formatter.format(value.toDate(getLocalTimeZone()))}\n      </p>\n    </div>\n  );\n}\n"}]
@@ -1230,7 +1234,7 @@ export const previews = {
     },
     "demos/components/core/combobox/async-loading": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/combobox/async-loading")),
-      code : [{"title":"async-loading.tsx","code":"import React from \"react\";\r\nimport { Combobox } from \"@/lib/components/core/default/combobox\";\r\nimport { Item } from \"@/lib/components/core/default/list-box\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <Combobox aria-label=\"country\">\r\n      <Item>Canada</Item>\r\n      <Item>France</Item>\r\n      <Item>Germany</Item>\r\n      <Item>Spain</Item>\r\n      <Item>Tunisia</Item>\r\n      <Item>United states</Item>\r\n      <Item>United Kingdom</Item>\r\n    </Combobox>\r\n  );\r\n}\r\n"}]
+      code : [{"title":"async-loading.tsx","code":"\"use client\";\r\n\r\nimport { useAsyncList } from \"react-stately\";\r\nimport { Combobox } from \"@/lib/components/core/default/combobox\";\r\nimport { Item } from \"@/lib/components/core/default/list-box\";\r\n\r\ninterface Character {\r\n  name: string;\r\n}\r\n\r\nexport default function Demo() {\r\n  const list = useAsyncList<Character>({\r\n    async load({ signal }) {\r\n      const res = await fetch(`https://pokeapi.co/api/v2/pokemon`, { signal });\r\n      const json = (await res.json()) as { results: Character[] };\r\n      return {\r\n        items: json.results,\r\n      };\r\n    },\r\n  });\r\n\r\n  return (\r\n    <Combobox label=\"Pokemon\" items={list.items} isLoading={list.isLoading}>\r\n      {(item) => <Item id={item.name}>{item.name}</Item>}\r\n    </Combobox>\r\n  );\r\n}\r\n"}]
     },
     "demos/components/core/list-box/basic": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/list-box/basic")),

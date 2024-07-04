@@ -4,10 +4,12 @@ import { Text as AriaText, type TextProps as AriaTextProps } from "react-aria-co
 import { type VariantProps, tv } from "tailwind-variants";
 
 const textStyles = tv({
+  base: "text-sm",
   variants: {
     slot: {
-      label: "text-sm font-bold",
-      description: "text-sm text-fg-muted",
+      label: "font-bold",
+      description: "text-fg-muted",
+      errorMessage: "text-fg-danger",
     },
   },
 });

@@ -6,23 +6,27 @@ import {
   Calendar as AriaCalendar,
   CalendarCell as AriaCalendarCell,
   CalendarGrid as AriaCalendarGrid,
-  Heading as AriaHeading,
   CalendarGridHeader as AriaCalendarGridHeader,
   CalendarHeaderCell as AriaCalendarHeaderCell,
   CalendarGridBody as AriaCalendarGridBody,
-  Text as AriaText,
   type CalendarProps as AriaCalendarProps,
+  type CalendarGridProps as AriaCalendarGridProps,
+  type CalendarGridHeaderProps as AriaCalendarGridHeaderProps,
+  type CalendarHeaderCellProps as AriaCalendarHeaderCellProps,
+  type CalendarGridBodyProps as AriaCalendarGridBodyProps,
+  type CalendarCellProps as AriaCalendarCellProps,
   type DateValue,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/lib/icons";
 import { Button, buttonStyles } from "./button";
+import { Heading } from "./heading";
+import { Text } from "./text";
 
 const calendarStyles = tv({
   slots: {
     root: "w-fit max-w-full rounded-md border bg-bg p-3",
     header: "mb-4 flex items-center justify-between gap-2",
-    heading: "text-sm font-medium",
     grid: "w-full border-collapse",
     gridHeader: "mb-4",
     gridHeaderCell: "text-xs font-normal text-fg-muted",
@@ -77,8 +81,7 @@ const Calendar = <T extends DateValue>({
   visibleMonths = 1,
   ...props
 }: CalendarProps<T>) => {
-  const { root, header, heading, grid, gridHeader, gridHeaderCell, gridBody, cell } =
-    calendarStyles();
+  const { root } = calendarStyles();
   visibleMonths = Math.min(Math.max(visibleMonths, 1), 3);
 
   return (
@@ -87,45 +90,72 @@ const Calendar = <T extends DateValue>({
       className={root({ className })}
       {...props}
     >
-      {composeRenderProps(props.children, (_, { isInvalid }) => (
+      {({ isInvalid }) => (
         <>
-          <header className={header()}>
+          <CalendarHeader>
             <Button slot="previous" variant="outline" shape="square" size="sm">
               <ChevronLeftIcon />
             </Button>
-            <AriaHeading className={heading()} />
+            <Heading className="text-sm" />
             <Button slot="next" variant="outline" shape="square" size="sm">
               <ChevronRightIcon />
             </Button>
-          </header>
+          </CalendarHeader>
           <div className="flex items-start gap-4">
             {Array.from({ length: visibleMonths }).map((_, index) => (
-              <AriaCalendarGrid
-                key={index}
-                className={grid()}
-                offset={index === 0 ? undefined : { months: index }}
-              >
-                <AriaCalendarGridHeader className={gridHeader()}>
-                  {(day) => (
-                    <AriaCalendarHeaderCell className={gridHeaderCell()}>
-                      {day}
-                    </AriaCalendarHeaderCell>
-                  )}
-                </AriaCalendarGridHeader>
-                <AriaCalendarGridBody className={gridBody()}>
-                  {(date) => <AriaCalendarCell date={date} className={cell()} />}
-                </AriaCalendarGridBody>
-              </AriaCalendarGrid>
+              <CalendarGrid key={index} offset={index === 0 ? undefined : { months: index }}>
+                <CalendarGridHeader>
+                  {(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}
+                </CalendarGridHeader>
+                <CalendarGridBody>{(date) => <CalendarCell date={date} />}</CalendarGridBody>
+              </CalendarGrid>
             ))}
           </div>
-          {isInvalid && errorMessage && (
-            <AriaText slot="errorMessage" className="text-sm text-fg-danger">
-              {errorMessage}
-            </AriaText>
-          )}
+          {isInvalid && errorMessage && <Text slot="errorMessage">{errorMessage}</Text>}
         </>
-      ))}
+      )}
     </AriaCalendar>
+  );
+};
+
+type CalendarHeaderProps = React.HTMLAttributes<HTMLElement>;
+const CalendarHeader = ({ className, ...props }: CalendarHeaderProps) => {
+  const { header } = calendarStyles();
+  return <header className={header({ className })} {...props} />;
+};
+
+type CalendarGridProps = AriaCalendarGridProps;
+const CalendarGrid = ({ className, ...props }: CalendarGridProps) => {
+  const { grid } = calendarStyles();
+  return <AriaCalendarGrid className={grid({ className })} {...props} />;
+};
+
+type CalendarGridHeaderProps = AriaCalendarGridHeaderProps;
+const CalendarGridHeader = ({ className, ...props }: CalendarGridHeaderProps) => {
+  const { gridHeader } = calendarStyles();
+  return <AriaCalendarGridHeader className={gridHeader({ className })} {...props} />;
+};
+
+type CalendarHeaderCellProps = AriaCalendarHeaderCellProps;
+const CalendarHeaderCell = ({ className, ...props }: CalendarHeaderCellProps) => {
+  const { gridHeaderCell } = calendarStyles();
+  return <AriaCalendarHeaderCell className={gridHeaderCell({ className })} {...props} />;
+};
+
+type CalendarGridBodyProps = AriaCalendarGridBodyProps;
+const CalendarGridBody = ({ className, ...props }: CalendarGridBodyProps) => {
+  const { gridBody } = calendarStyles();
+  return <AriaCalendarGridBody className={gridBody({ className })} {...props} />;
+};
+
+type CalendarCellProps = AriaCalendarCellProps;
+const CalendarCell = (props: CalendarCellProps) => {
+  const { cell } = calendarStyles();
+  return (
+    <AriaCalendarCell
+      {...props}
+      className={composeRenderProps(props.className, (className) => cell({ className }))}
+    />
   );
 };
 
