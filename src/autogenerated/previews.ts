@@ -240,9 +240,9 @@ export const previews = {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/separator/orientation")),
       code : [{"title":"orientation.tsx","code":"import { Separator } from \"@/lib/components/core/default/separator\";\n\nexport default function SeparatorDemo() {\n  return (\n    <div className=\"flex items-center gap-10\">\n      <div className=\"flex h-5 items-center gap-2 text-sm\">\n        <div>Components</div>\n        <Separator orientation=\"vertical\" />\n        <div>Hooks</div>\n      </div>\n      <div className=\"flex flex-col items-center gap-2 text-sm\">\n        <div>Components</div>\n        <Separator orientation=\"horizontal\" />\n        <div>Hooks</div>\n      </div>\n    </div>\n  );\n}\n"}]
     },
-    "demos/components/core/calendar/basic": {
-      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/calendar/basic")),
-      code : [{"title":"basic.tsx","code":"import { Calendar } from \"@/lib/components/core/default/calendar\";\n\nexport default function Demo() {\n  return <Calendar />;\n}\n"}]
+    "demos/components/core/calendar/default": {
+      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/calendar/default")),
+      code : [{"title":"default.tsx","code":"import { Calendar } from \"@/lib/components/core/default/calendar\";\n\nexport default function Demo() {\n  return <Calendar />;\n}\n"}]
     },
     "demos/components/core/calendar/label": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/calendar/label")),
@@ -278,11 +278,15 @@ export const previews = {
     },
     "demos/components/core/calendar/uncontrolled": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/calendar/uncontrolled")),
-      code : [{"title":"uncontrolled.tsx","code":"import React from \"react\";\nimport { getLocalTimeZone, today } from \"@internationalized/date\";\nimport { Calendar } from \"@/lib/components/core/default/calendar\";\n\nexport default function Demo() {\n  return <Calendar aria-label=\"Appointment date\" defaultValue={today(getLocalTimeZone())} />;\n}\n"}]
+      code : [{"title":"uncontrolled.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { getLocalTimeZone, today } from \"@internationalized/date\";\nimport { Calendar } from \"@/lib/components/core/default/calendar\";\n\nexport default function Demo() {\n  return <Calendar aria-label=\"Appointment date\" defaultValue={today(getLocalTimeZone())} />;\n}\n"}]
     },
     "demos/components/core/calendar/controlled": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/calendar/controlled")),
       code : [{"title":"controlled.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { getLocalTimeZone, today } from \"@internationalized/date\";\nimport { useDateFormatter } from \"react-aria\";\nimport { Calendar } from \"@/lib/components/core/default/calendar\";\n\nexport default function Demo() {\n  const [value, setValue] = React.useState(today(getLocalTimeZone()));\n  const formatter = useDateFormatter({ dateStyle: \"full\" });\n  return (\n    <div className=\"flex flex-col items-center gap-6\">\n      <Calendar aria-label=\"Date (controlled)\" value={value} onChange={setValue} />\n      <p className=\"text-sm text-fg-muted\">\n        Selected date: {formatter.format(value.toDate(getLocalTimeZone()))}\n      </p>\n    </div>\n  );\n}\n"}]
+    },
+    "demos/components/core/calendar/composition": {
+      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/calendar/composition")),
+      code : [{"title":"composition.tsx","code":"import { Button } from \"@/lib/components/core/default/button\";\nimport {\n  CalendarRoot,\n  CalendarHeader,\n  CalendarGrid,\n  CalendarGridHeader,\n  CalendarHeaderCell,\n  CalendarGridBody,\n  CalendarCell,\n} from \"@/lib/components/core/default/calendar\";\nimport { Heading } from \"@/lib/components/core/default/heading\";\nimport { ChevronLeftIcon, ChevronRightIcon } from \"@/lib/icons\";\n\nexport default function Demo() {\n  return (\n    <CalendarRoot>\n      <CalendarHeader>\n        <Button slot=\"previous\" variant=\"outline\" shape=\"square\" size=\"sm\">\n          <ChevronLeftIcon />\n        </Button>\n        <Heading className=\"text-sm\" />\n        <Button slot=\"next\" variant=\"outline\" shape=\"square\" size=\"sm\">\n          <ChevronRightIcon />\n        </Button>\n      </CalendarHeader>\n      <CalendarGrid>\n        <CalendarGridHeader>\n          {(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}\n        </CalendarGridHeader>\n        <CalendarGridBody>{(date) => <CalendarCell date={date} />}</CalendarGridBody>\n      </CalendarGrid>\n    </CalendarRoot>\n  );\n}\n"}]
     },
     "demos/components/core/date-field/default": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/date-field/default")),

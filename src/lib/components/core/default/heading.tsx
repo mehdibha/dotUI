@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Heading as AriaHeading,
   type HeadingProps as AriaHeadingProps,

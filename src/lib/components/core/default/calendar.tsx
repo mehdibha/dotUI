@@ -118,6 +118,17 @@ const Calendar = <T extends DateValue>({
   );
 };
 
+type CalendarRootProps<T extends DateValue> = AriaCalendarProps<T>;
+const CalendarRoot = <T extends DateValue>(props: CalendarRootProps<T>) => {
+  const { root } = calendarStyles();
+  return (
+    <AriaCalendar
+      className={composeRenderProps(props.className, (className) => root({ className }))}
+      {...props}
+    />
+  );
+};
+
 type CalendarHeaderProps = React.HTMLAttributes<HTMLElement>;
 const CalendarHeader = ({ className, ...props }: CalendarHeaderProps) => {
   const { header } = calendarStyles();
@@ -159,5 +170,23 @@ const CalendarCell = (props: CalendarCellProps) => {
   );
 };
 
-export type { CalendarProps };
-export { Calendar, calendarStyles };
+export type {
+  CalendarProps,
+  CalendarRootProps,
+  CalendarGridProps,
+  CalendarGridHeaderProps,
+  CalendarHeaderCellProps,
+  CalendarGridBodyProps,
+  CalendarCellProps,
+};
+export {
+  Calendar,
+  CalendarRoot,
+  CalendarHeader,
+  CalendarGrid,
+  CalendarGridHeader,
+  CalendarHeaderCell,
+  CalendarGridBody,
+  CalendarCell,
+  calendarStyles,
+};

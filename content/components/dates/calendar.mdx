@@ -15,7 +15,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/dates/calendar.mdx?plain=1
 ---
 
-<ComponentPreview name="demos/components/core/calendar/basic" preview={`<Calendar />`} />
+<ComponentPreview name="demos/components/core/calendar/default" preview={`<Calendar />`} />
 
 ## Installation
 
@@ -166,6 +166,12 @@ The `Calendar` component can be controlled by passing the `value` and `onChange`
   preview={`const [value, setValue] = React.useState(today(getLocalTimeZone()));
 return <Calendar aria-label="Date (controlled)" value={value} onChange={setValue} />`}
 />
+
+## Composition
+
+If you need to customize things further, you can drop down to the composition level.
+
+<ComponentPreview name="demos/components/core/calendar/composition" />
 
 ## API Reference
 
