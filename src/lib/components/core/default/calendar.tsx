@@ -44,7 +44,7 @@ const calendarStyles = tv({
           }),
           "my-1 selected:bg-bg-primary selected:text-fg-onPrimary disabled:cursor-default disabled:bg-transparent",
           "selected:invalid:bg-bg-danger selected:invalid:text-fg-onDanger",
-          "unavailable:line-through unavailable:hover:bg-transparent unavailable:cursor-default",
+          "unavailable:line-through unavailable:hover:bg-transparent unavailable:cursor-default unavailable:text-fg-muted",
           "outside-month:hidden",
         ],
       },
@@ -58,7 +58,7 @@ const calendarStyles = tv({
           "selection-start:pressed:before:bg-primary/90 selection-start:text-fg-onPrimary selection-start:before:bg-bg-primary",
           "selection-end:pressed:before:bg-primary/90 selection-end:text-fg-onPrimary selection-end:before:bg-bg-primary",
           "selected:invalid:after:bg-bg-danger selected:invalid:[&:not([data-selection-start])]:[&:not([data-selection-end])]:text-fg-onDanger",
-          "unavailable:line-through unavailable:hover:bg-transparent unavailable:cursor-default",
+          "unavailable:line-through unavailable:hover:before:bg-transparent unavailable:cursor-default unavailable:text-fg-muted",
           "outside-month:hidden",
         ],
       },
@@ -69,27 +69,19 @@ const calendarStyles = tv({
   },
 });
 
-interface CalendarProps<T extends DateValue>
-  extends Omit<AriaCalendarProps<T>, "className" | "visibleDuration"> {
+interface CalendarProps<T extends DateValue> extends Omit<AriaCalendarProps<T>, "visibleDuration"> {
   visibleMonths?: number;
-  className?: string;
   errorMessage?: string;
 }
 const Calendar = <T extends DateValue>({
-  className,
   errorMessage,
   visibleMonths = 1,
   ...props
 }: CalendarProps<T>) => {
-  const { root } = calendarStyles();
   visibleMonths = Math.min(Math.max(visibleMonths, 1), 3);
 
   return (
-    <AriaCalendar
-      visibleDuration={{ months: visibleMonths }}
-      className={root({ className })}
-      {...props}
-    >
+    <AriaCalendar visibleDuration={{ months: visibleMonths }} {...props}>
       {({ isInvalid }) => (
         <>
           <CalendarHeader>
@@ -159,9 +151,9 @@ const CalendarGridBody = ({ className, ...props }: CalendarGridBodyProps) => {
   return <AriaCalendarGridBody className={gridBody({ className })} {...props} />;
 };
 
-type CalendarCellProps = AriaCalendarCellProps;
-const CalendarCell = (props: CalendarCellProps) => {
-  const { cell } = calendarStyles();
+type CalendarCellProps = AriaCalendarCellProps & { range?: boolean };
+const CalendarCell = ({ range, ...props }: CalendarCellProps) => {
+  const { cell } = calendarStyles({ range });
   return (
     <AriaCalendarCell
       {...props}
