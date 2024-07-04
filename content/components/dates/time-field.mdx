@@ -57,7 +57,7 @@ A visual label can be provided for the `TimeField` using the `label` prop or a h
 ### Sizes
 
 Use the `size` prop to control the size of the `TimeField`.<br/>
-The default variant is `md`.
+The default variant is `"md"`.
 
 <ComponentPreview
   name="demos/components/core/time-field/sizes"
@@ -68,7 +68,7 @@ The default variant is `md`.
 
 ### Prefix and suffix
 
-To add additional context for the `TimeField`, use the `prefix` and `suffix` props.
+To add additional context for the `TimeField`, such as an icon, use the `prefix` and `suffix` props.
 
 <ComponentPreview
   name="demos/components/core/time-field/prefix-and-suffix"
@@ -78,7 +78,7 @@ To add additional context for the `TimeField`, use the `prefix` and `suffix` pro
 
 ### Description
 
-A description can be supplied to a TimeField via the `description` prop. The description is always visible unless the `validationState` is `“invalid”` and an error message is provided.
+A description can be supplied to `TimeField` via the `description` prop. The description is always visible unless the `isInvalid` prop is `true` and an error message is provided.
 
 <ComponentPreview
   name="demos/components/core/time-field/description"
@@ -99,7 +99,7 @@ A `ContextualHelp` element may be placed next to the label to provide additional
 
 ### Error message
 
-An `errorMessage` can be supplied to `TimeField`, which will be displayed when the `isInvalid` prop is set to `true`.
+An `errorMessage` can be supplied to `TimeField` via the `errorMessage` prop, which will be displayed when the `isInvalid` prop is set to `true`.
 
 <ComponentPreview
   name="demos/components/core/time-field/error-message"
@@ -124,9 +124,7 @@ The `granularity` prop allows you to control the smallest unit that is displayed
   preview={`<TimeField granularity="second" defaultValue={parseAbsoluteToLocal("2021-04-07T18:45:22Z")} />`}
 />
 
-### Format options
-
-#### Placeholder value
+### Placeholder value
 
 Use the `placeholderValue` prop to control the default values of each segment. The default value is midnight.
 
@@ -135,7 +133,7 @@ Use the `placeholderValue` prop to control the default values of each segment. T
   preview={`<TimeField placeholderValue={new Time(9)} />`}
 />
 
-#### Hide time zone
+### Hide time zone
 
 Use the `hideTimeZone` prop to hide the time zone abbreviation.
 
@@ -147,7 +145,7 @@ Use the `hideTimeZone` prop to hide the time zone abbreviation.
 />`}
 />
 
-#### Hour cycle
+### Hour cycle
 
 Use the `hourCycle` prop to control the hour cycle of the TimeField.
 

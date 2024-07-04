@@ -6,11 +6,16 @@ import {
   type DateFieldProps as AriaDateFieldProps,
   type DateValue,
 } from "react-aria-components";
-import { type VariantProps } from "tailwind-variants";
+import { tv, type VariantProps } from "tailwind-variants";
 import { DateInput, DateSegment } from "./date-input";
-import { fieldStyles } from "./field";
 import { Field, type FieldProps } from "./field";
 import { InputRoot, type inputStyles } from "./input";
+
+const dateFieldStyles = tv({
+  slots: {
+    root: "flex flex-col items-start gap-2",
+  },
+});
 
 interface DateFieldProps<T extends DateValue>
   extends DateFieldRootProps<T>,
@@ -71,7 +76,7 @@ interface DateFieldRootProps<T extends DateValue> extends Omit<AriaDateFieldProp
   className?: string;
 }
 const DateFieldRoot = <T extends DateValue>({ className, ...props }: DateFieldRootProps<T>) => {
-  const { root } = fieldStyles();
+  const { root } = dateFieldStyles();
   return <AriaDateField className={root({ className })} {...props} />;
 };
 

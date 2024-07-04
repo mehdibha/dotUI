@@ -294,7 +294,7 @@ export const previews = {
     },
     "demos/components/core/date-field/label": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/date-field/label")),
-      code : [{"title":"label.tsx","code":"import { DateField } from \"@/lib/components/core/default/date-field\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <div className=\"space-y-4\">\r\n      <DateField label=\"Visible label\" />\r\n      <DateField aria-label=\"Hidden label\" />\r\n    </div>\r\n  );\r\n}\r\n"}]
+      code : [{"title":"label.tsx","code":"import { DateField } from \"@/lib/components/core/default/date-field\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <div className=\"space-y-4\">\r\n      <DateField label=\"Meeting date\" />\r\n      <DateField aria-label=\"Meeting date\" />\r\n    </div>\r\n  );\r\n}\r\n"}]
     },
     "demos/components/core/date-field/sizes": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/date-field/sizes")),
@@ -352,9 +352,13 @@ export const previews = {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/date-field/required")),
       code : [{"title":"required.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { DateField } from \"@/lib/components/core/default/date-field\";\n\nexport default function Demo() {\n  return (\n    <div className=\"grid grid-cols-2 gap-4\">\n      <DateField label=\"Event date\" isRequired />\n      <DateField label=\"Event date\" isRequired necessityIndicator=\"icon\" />\n      <DateField label=\"Event date\" isRequired necessityIndicator=\"label\" />\n      <DateField label=\"Event date\" necessityIndicator=\"label\" />\n    </div>\n  );\n}\n"}]
     },
+    "demos/components/core/date-field/uncontrolled": {
+      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/date-field/uncontrolled")),
+      code : [{"title":"uncontrolled.tsx","code":"\"use client\";\r\n\r\nimport React from \"react\";\r\nimport { parseDate } from \"@internationalized/date\";\r\nimport { DateField } from \"@/lib/components/core/default/date-field\";\r\n\r\nexport default function Demo() {\r\n  return <DateField aria-label=\"Event date\" defaultValue={parseDate(\"2020-02-03\")} />;\r\n}\r\n"}]
+    },
     "demos/components/core/date-field/controlled": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/date-field/controlled")),
-      code : [{"title":"controlled.tsx","code":"\"use client\";\r\n\r\nimport React from \"react\";\r\nimport { parseDate } from \"@internationalized/date\";\r\nimport { DateField } from \"@/lib/components/core/default/date-field\";\r\n\r\nexport default function Demo() {\r\n  const [value, setValue] = React.useState(parseDate(\"2020-02-03\"));\r\n  return (\r\n    <div className=\"flex flex-col items-center gap-4\">\r\n      <DateField label=\"Controlled\" value={value} onChange={setValue} />\r\n      <p className=\"text-sm text-fg-muted\">selected date: {value.toString()}</p>\r\n    </div>\r\n  );\r\n}\r\n"}]
+      code : [{"title":"controlled.tsx","code":"\"use client\";\r\n\r\nimport React from \"react\";\r\nimport { parseDate } from \"@internationalized/date\";\r\nimport { DateField } from \"@/lib/components/core/default/date-field\";\r\n\r\nexport default function Demo() {\r\n  const [value, setValue] = React.useState(parseDate(\"2020-02-03\"));\r\n  return (\r\n    <div className=\"flex flex-col items-center gap-4\">\r\n      <DateField aria-label=\"Event date\" value={value} onChange={setValue} />\r\n      <p className=\"text-sm text-fg-muted\">selected date: {value.toString()}</p>\r\n    </div>\r\n  );\r\n}\r\n"}]
     },
     "demos/components/core/date-field/composition": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/date-field/composition")),
@@ -622,7 +626,7 @@ export const previews = {
     },
     "demos/components/core/time-field/uncontrolled": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/time-field/uncontrolled")),
-      code : [{"title":"uncontrolled.tsx","code":"\"use client\"\r\nimport { Time } from \"@internationalized/date\";\r\nimport { TimeField } from \"@/lib/components/core/default/time-field\";\r\n\r\nexport default function Demo() {\r\n  return <TimeField defaultValue={new Time(11, 45)} />;\r\n}\r\n"}]
+      code : [{"title":"uncontrolled.tsx","code":"\"use client\";\r\n\r\nimport { Time } from \"@internationalized/date\";\r\nimport { TimeField } from \"@/lib/components/core/default/time-field\";\r\n\r\nexport default function Demo() {\r\n  return <TimeField defaultValue={new Time(11, 45)} />;\r\n}\r\n"}]
     },
     "demos/components/core/time-field/controlled": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/time-field/controlled")),
