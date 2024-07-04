@@ -8,7 +8,7 @@ import { AvatarGroup } from "@/lib/components/core/default/avatar-group";
 import { Button } from "@/lib/components/core/default/button";
 import { Switch } from "@/lib/components/core/default/switch";
 import { ToggleButton } from "@/lib/components/core/default/toggle-button";
-import Calendar from "@/lib/demos/components/core/calendar/basic";
+import Calendar from "@/lib/demos/components/core/calendar/default";
 import { cn } from "@/lib/utils/classes";
 import { siteConfig } from "@/config";
 
