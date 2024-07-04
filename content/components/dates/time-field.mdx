@@ -4,9 +4,18 @@ description: TimeFields allow users to enter and edit time values using a keyboa
 thumbnail:
   image: /previews/components/core/time-field.jpeg
   video: /previews/components/core/time-field.mp4
+links:
+  - label: Aria docs
+    href: https://react-spectrum.adobe.com/react-aria/TimeField.html
+  - label: Aria API Reference
+    href: https://react-spectrum.adobe.com/react-aria/TimeField.html#props
+  - label: Report an issue
+    href: https://github.com/mehdibha/dotUI/issues/new/choose
+  - label: Edit this page
+    href: https://github.com/mehdibha/dotUI/tree/main/content/components/dates/time-field.mdx?plain=1
 ---
 
-<ComponentPreview name="demos/components/core/time-field/default" />
+<ComponentPreview name="demos/components/core/time-field/default" preview={`<TimeField />`} />
 
 ## Installation
 
@@ -18,7 +27,14 @@ npm install react-aria-components
 ```
 
 <Step>Copy and paste the following code into your project.</Step>
-  <ComponentSource name="components/core/default/time-field" />
+  <ComponentSource 
+    name={[
+      "components/core/default/time-field",
+      "components/core/default/field",
+      "components/core/default/date-input",
+      "components/core/default/input",
+    ]} 
+  />
   <Step>Update the import paths to match your project setup.</Step>
 </Steps>
 
@@ -30,52 +46,83 @@ Use a `TimeField` to allow users to enter and edit time values using a keyboard.
 
 ### Label
 
-A visual label can be provided for the `TimeField` using the label prop or a hidden label using `aria-label` prop.<br/>
+A visual label can be provided for the `TimeField` using the `label` prop or a hidden label using `aria-label` prop.
 
-<ComponentPreview name="demos/components/core/time-field/label" />
+<ComponentPreview
+  name="demos/components/core/time-field/label"
+  preview={`<TimeField label="Event time" />
+<TimeField aria-label="Event time" />`}
+/>
 
 ### Sizes
 
 Use the `size` prop to control the size of the `TimeField`.<br/>
 The default variant is `md`.
 
-<ComponentPreview name="demos/components/core/time-field/sizes" />
+<ComponentPreview
+  name="demos/components/core/time-field/sizes"
+  preview={`<TimeField size="sm" />
+<TimeField size="md" />
+<TimeField size="lg" />`}
+/>
 
 ### Prefix and suffix
 
 To add additional context for the `TimeField`, use the `prefix` and `suffix` props.
 
-<ComponentPreview name="demos/components/core/time-field/prefix-and-suffix" />
+<ComponentPreview
+  name="demos/components/core/time-field/prefix-and-suffix"
+  preview={`<TimeField prefix={<TimerIcon />} />
+<TimeField suffix={<TimerIcon />} />`}
+/>
 
 ### Description
 
 A description can be supplied to a TimeField via the `description` prop. The description is always visible unless the `validationState` is `“invalid”` and an error message is provided.
 
-<ComponentPreview name="demos/components/core/time-field/description" />
+<ComponentPreview
+  name="demos/components/core/time-field/description"
+  preview={`<TimeField label="Appointment" description="Please select a time between 9 AM and 5 PM." />`}
+/>
 
 ### Contextual help
 
-A ContextualHelp element may be placed next to the label to provide additional information or help about a TimeField.
+A `ContextualHelp` element may be placed next to the label to provide additional information or help about a TimeField.
 
-<ComponentPreview name="demos/components/core/time-field/contextual-help" />
+<ComponentPreview
+  name="demos/components/core/time-field/contextual-help"
+  preview={`<TimeField
+  label="Appointment"
+  contextualHelp={<ContextualHelp />  }
+/>`}
+/>
 
 ### Error message
 
-An error message can be supplied to a TimeField, which will be displayed when the `validationState` is `“invalid”`.
+An `errorMessage` can be supplied to `TimeField`, which will be displayed when the `isInvalid` prop is set to `true`.
 
-<ComponentPreview name="demos/components/core/time-field/error-message" />
+<ComponentPreview
+  name="demos/components/core/time-field/error-message"
+  preview={`<TimeField label="Meeting" isInvalid errorMessage="Meetings start every 15 minutes." />`}
+/>
 
 ### Time zones
 
 TimeField is time zone aware when a ZonedDateTime object is provided as the value.
 
-<ComponentPreview name="demos/components/core/time-field/time-zones" />
+<ComponentPreview
+  name="demos/components/core/time-field/time-zones"
+  preview={`<TimeField defaultValue={parseAbsoluteToLocal("2021-11-07T07:45:00Z")} />`}
+/>
 
 ### Granularity
 
 The `granularity` prop allows you to control the smallest unit that is displayed by TimeField.
 
-<ComponentPreview name="demos/components/core/time-field/granularity" />
+<ComponentPreview
+  name="demos/components/core/time-field/granularity"
+  preview={`<TimeField granularity="second" defaultValue={parseAbsoluteToLocal("2021-04-07T18:45:22Z")} />`}
+/>
 
 ### Format options
 
@@ -83,59 +130,107 @@ The `granularity` prop allows you to control the smallest unit that is displayed
 
 Use the `placeholderValue` prop to control the default values of each segment. The default value is midnight.
 
-<ComponentPreview name="demos/components/core/time-field/placeholder" />
+<ComponentPreview
+  name="demos/components/core/time-field/placeholder"
+  preview={`<TimeField placeholderValue={new Time(9)} />`}
+/>
 
 #### Hide time zone
 
 Use the `hideTimeZone` prop to hide the time zone abbreviation.
 
-<ComponentPreview name="demos/components/core/time-field/hide-time-zone" />
+<ComponentPreview
+  name="demos/components/core/time-field/hide-time-zone"
+  preview={`<TimeField
+  defaultValue={parseZonedDateTime("2022-11-07T10:45[America/Los_Angeles]")}
+  hideTimeZone
+/>`}
+/>
 
 #### Hour cycle
 
 Use the `hourCycle` prop to control the hour cycle of the TimeField.
 
-<ComponentPreview name="demos/components/core/time-field/hour-cycle" />
+<ComponentPreview
+  name="demos/components/core/time-field/hour-cycle"
+  preview={`<TimeField hourCycle={24} />`}
+/>
 
 ### Loading
 
 Use the `isLoading` prop to control the loading state of the TimeField.
 Use the `loaderPosition` prop to control the position of the loader.
 
-<ComponentPreview name="demos/components/core/time-field/loading" className="max-w-xs" />
+<ComponentPreview
+  name="demos/components/core/time-field/loading"
+  preview={`<TimeField isLoading loaderPosition="prefix" />
+<TimeField isLoading loaderPosition="suffix" />`}
+/>
 
 ### Disabled
 
 Use the `isDisabled` prop to disable the TimeField.
 
-<ComponentPreview name="demos/components/core/time-field/disabled" className="max-w-[250px]" />
+<ComponentPreview
+  name="demos/components/core/time-field/disabled"
+  preview={`<TimeField label="Event time" isDisabled />`}
+/>
 
 ### ReadOnly
 
 The isReadOnly boolean prop makes the TimeField's text content immutable. Unlike isDisabled, the TimeField remains focusable and the contents can still be copied.
 
-<ComponentPreview name="demos/components/core/time-field/read-only" className="max-w-[250px]" />
+<ComponentPreview
+  name="demos/components/core/time-field/read-only"
+  preview={`<TimeField label="Event time" value={new Time(11)} isReadOnly />`}
+/>
 
 ### Required
 
 Use the `isRequired` prop to mark the TimeField as required.
 Use the `necessityIndicator` prop to control the visual style of the required state.
 
-<ComponentPreview name="demos/components/core/time-field/required" className="max-w-sm" />
+<ComponentPreview
+  name="demos/components/core/time-field/required"
+  preview={`<TimeField label="Event time" isRequired />
+<TimeField label="Event time" isRequired necessityIndicator="icon" />
+<TimeField label="Event time" isRequired necessityIndicator="label" />
+<TimeField label="Event time" necessityIndicator="label" />`}
+/>
 
-## Examples
+## Uncontrolled
 
-### Controlled
+An initial, uncontrolled value can be provided to the `TimeField` using the `defaultValue` prop.
+
+<ComponentPreview
+  name="demos/components/core/time-field/uncontrolled"
+  preview={`<TimeField defaultValue={new Time(11, 45)} />`}
+/>
+
+## Controlled
 
 Use the `value` and `onChange` props to control the value of the input.
 
-<ComponentPreview name="demos/components/core/time-field/controlled" className="max-w-[250px]" />
+<ComponentPreview
+  name="demos/components/core/time-field/controlled"
+  preview={`const [time, setTime] = React.useState(new Time(11, 45));
+return <TimeField value={time} onChange={setTime} />`}
+/>
 
-### Composition
+## Composition
 
 If you need to customize things further, you can drop down to the composition level.
 
-<ComponentPreview name="demos/components/core/time-field/composition" className="max-w-[250px]" />
+<ComponentPreview
+  name="demos/components/core/time-field/composition"
+  preview={`<TimeFieldRoot>
+  <Label>Meeting time</Label>
+  <InputRoot>
+    <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
+  </InputRoot>
+  <Description>Please select a time between 9 AM and 5 PM.</Description>
+</TimeFieldRoot>`}
+/>
 
 ## API Reference
 

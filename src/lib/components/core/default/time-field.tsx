@@ -6,11 +6,16 @@ import {
   type TimeFieldProps as AriaTimeFieldProps,
   type TimeValue,
 } from "react-aria-components";
-import { type VariantProps } from "tailwind-variants";
+import { tv, type VariantProps } from "tailwind-variants";
 import { DateInput, DateSegment } from "./date-input";
-import { fieldStyles } from "./field";
 import { Field, type FieldProps } from "./field";
 import { InputRoot, type inputStyles } from "./input";
+
+const timeFieldStyles = tv({
+  slots: {
+    root: "flex flex-col items-start gap-2",
+  },
+});
 
 interface TimeFieldProps<T extends TimeValue>
   extends TimeFieldRootProps<T>,
@@ -71,7 +76,7 @@ interface TimeFieldRootProps<T extends TimeValue> extends Omit<AriaTimeFieldProp
   className?: string;
 }
 const TimeFieldRoot = <T extends TimeValue>({ className, ...props }: TimeFieldRootProps<T>) => {
-  const { root } = fieldStyles();
+  const { root } = timeFieldStyles();
   return <AriaTimeField className={root({ className })} {...props} />;
 };
 
