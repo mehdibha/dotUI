@@ -9,9 +9,13 @@ links:
     href: https://react-spectrum.adobe.com/react-aria/ColorArea.html
   - label: Aria API Reference
     href: https://react-spectrum.adobe.com/react-aria/ColorArea.html#props
+  - label: Report an issue
+    href: https://github.com/mehdibha/dotUI/issues/new/choose
+  - label: Edit this page
+    href: https://github.com/mehdibha/dotUI/tree/main/content/components/colors/color-area.mdx?plain=1
 ---
 
-<ComponentPreview name="demos/components/core/color-area/default" />
+<ComponentPreview name="demos/components/core/color-area/default" preview={`<ColorArea />`} />
 
 ## Installation
 
@@ -24,13 +28,13 @@ npm install react-aria-components
 
 <Step>Copy and paste the following code into your project.</Step>
 
-  <ComponentSource name={"components/core/default/color-area"} />
+  <ComponentSource name={["components/core/default/color-area","components/core/default/color-thumb"]} />
   <Step>Update the import paths to match your project setup.</Step>
 </Steps>
 
 ## Usage
 
-Use ColorArea to allow users to adjust two channels of an RGB, HSL or HSB color value against a two-dimensional gradient background.
+Use `ColorArea` to allow users to adjust two channels of an RGB, HSL or HSB color value against a two-dimensional gradient background.
 
 ## Options
 
@@ -38,27 +42,49 @@ Use ColorArea to allow users to adjust two channels of an RGB, HSL or HSB color 
 
 `xChannel` and `yChannel` props may be provided to specify which color channels the color area should display
 
-<ComponentPreview name="demos/components/core/color-area/channels" />
+<ComponentPreview
+  name="demos/components/core/color-area/channels"
+  preview={`<ColorArea xChannel="red" yChannel="blue" />`}
+/>
 
 ### Disabled
 
 Use the `isDisabled` prop to disable the color area.
 
-<ComponentPreview name="demos/components/core/color-area/disabled" />
+<ComponentPreview
+  name="demos/components/core/color-area/disabled"
+  preview={`<ColorArea isDisabled />`}
+/>
 
-## Examples
+## Unontrolled
 
-### Controlled
+An initial, uncontrolled value can be provided to the `ColorArea` using the `defaultValue` prop.
+
+<ComponentPreview
+  name="demos/components/core/color-area/uncontrolled"
+  preview={`<ColorArea defaultValue="hsl(30, 100%, 50%)" />`}
+/>
+
+## Controlled
 
 Use the `value` and `onChange` props to control the value of the slider.
 
-<ComponentPreview name="demos/components/core/color-area/controlled" />
+<ComponentPreview
+  name="demos/components/core/color-area/controlled"
+  preview={`const [value, setValue] = React.useState(parseColor("hsl(0, 100%, 50%)"))
+return <ColorArea value={value} onChange={setValue} xChannel="saturation" yChannel="lightness" />`}
+/>
 
-### Composition
+## Composition
 
 If you need to customize things further, you can drop down to the composition level.
 
-<ComponentPreview name="demos/components/core/color-area/composition" />
+<ComponentPreview
+  name="demos/components/core/color-area/composition"
+  preview={`<ColorAreaRoot>
+  <ColorThumb />
+</ColorAreaRoot>`}
+/>
 
 ## API Reference
 

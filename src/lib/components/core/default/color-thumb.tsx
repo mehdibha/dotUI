@@ -9,7 +9,7 @@ import { focusRing } from "@/lib/utils/styles";
 
 const colorThumbStyles = tv({
   extend: focusRing,
-  base: "size-6 rounded-full border-2 border-white ring-1 ring-black/40",
+  base: "size-6 rounded-full border-2 border-white ring-1 ring-black/40 disabled:!bg-bg-disabled disabled:border-border-disabled",
 });
 
 interface ColorThumbProps extends Omit<AriaColorThumbProps, "className"> {
