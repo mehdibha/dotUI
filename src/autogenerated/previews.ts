@@ -362,7 +362,7 @@ export const previews = {
     },
     "demos/components/core/date-field/composition": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/date-field/composition")),
-      code : [{"title":"composition.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { DateField } from \"@/lib/components/core/default/date-field\";\n\nexport default function Demo() {\n  return <DateField />;\n}\n"}]
+      code : [{"title":"composition.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { DateFieldRoot } from \"@/lib/components/core/default/date-field\";\nimport { DateInput, DateSegment } from \"@/lib/components/core/default/date-input\";\nimport { Description, Label } from \"@/lib/components/core/default/field\";\nimport { InputRoot } from \"@/lib/components/core/default/input\";\n\nexport default function Demo() {\n  return (\n    <DateFieldRoot>\n      <Label>Meeting time</Label>\n      <InputRoot>\n        <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>\n      </InputRoot>\n      <Description>Please select a time between 9 AM and 5 PM.</Description>\n    </DateFieldRoot>\n  );\n}\n"}]
     },
     "demos/components/core/date-picker/default": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/date-picker/default")),
@@ -370,7 +370,7 @@ export const previews = {
     },
     "demos/components/core/date-picker/label": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/date-picker/label")),
-      code : [{"title":"label.tsx","code":"import { DatePicker } from \"@/lib/components/core/default/date-picker\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <div className=\"space-y-4\">\r\n      <DatePicker label=\"Visible label\" />\r\n      <DatePicker aria-label=\"Hidden label\" />\r\n    </div>\r\n  );\r\n}\r\n"}]
+      code : [{"title":"label.tsx","code":"import { DatePicker } from \"@/lib/components/core/default/date-picker\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <div className=\"space-y-4\">\r\n      <DatePicker label=\"Meeting date\" />\r\n      <DatePicker aria-label=\"Meeting date\" />\r\n    </div>\r\n  );\r\n}\r\n"}]
     },
     "demos/components/core/date-picker/sizes": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/date-picker/sizes")),
@@ -427,6 +427,10 @@ export const previews = {
     "demos/components/core/date-picker/required": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/date-picker/required")),
       code : [{"title":"required.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { DatePicker } from \"@/lib/components/core/default/date-picker\";\n\nexport default function Demo() {\n  return (\n    <div className=\"grid grid-cols-2 gap-4\">\n      <DatePicker label=\"Event date\" isRequired />\n      <DatePicker label=\"Event date\" isRequired necessityIndicator=\"icon\" />\n      <DatePicker label=\"Event date\" isRequired necessityIndicator=\"label\" />\n      <DatePicker label=\"Event date\" necessityIndicator=\"label\" />\n    </div>\n  );\n}\n"}]
+    },
+    "demos/components/core/date-picker/uncontrolled": {
+      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/date-picker/uncontrolled")),
+      code : [{"title":"uncontrolled.tsx","code":"import { DatePicker } from \"@/lib/components/core/default/date-picker\";\r\n\r\nexport default function Demo() {\r\n  return <DatePicker aria-label=\"Meeting date\" />;\r\n}\r\n"}]
     },
     "demos/components/core/date-picker/controlled": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/date-picker/controlled")),

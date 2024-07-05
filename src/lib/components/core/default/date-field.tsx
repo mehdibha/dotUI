@@ -9,7 +9,7 @@ import {
 import { tv, type VariantProps } from "tailwind-variants";
 import { DateInput, DateSegment } from "./date-input";
 import { Field, type FieldProps } from "./field";
-import { InputRoot, type inputStyles } from "./input";
+import { InputRoot, type InputRootProps, type inputStyles } from "./input";
 
 const dateFieldStyles = tv({
   slots: {
@@ -58,15 +58,13 @@ const DateField = <T extends DateValue>({
         necessityIndicator={necessityIndicator}
         contextualHelp={contextualHelp}
       >
-        <InputRoot
+        <DateFieldInput
           size={size}
           prefix={prefix}
           suffix={suffix}
           isLoading={isLoading}
           loaderPosition={loaderPosition}
-        >
-          <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
-        </InputRoot>
+        />
       </Field>
     </DateFieldRoot>
   );
@@ -79,6 +77,12 @@ const DateFieldRoot = <T extends DateValue>({ className, ...props }: DateFieldRo
   const { root } = dateFieldStyles();
   return <AriaDateField className={root({ className })} {...props} />;
 };
+
+const DateFieldInput = (props: InputRootProps) => (
+  <InputRoot {...props}>
+    <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
+  </InputRoot>
+);
 
 export type { DateFieldProps, DateFieldRootProps };
 export { DateField, DateFieldRoot };

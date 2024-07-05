@@ -3,7 +3,6 @@
 import * as React from "react";
 import {
   DatePicker as AriaDatePicker,
-  Dialog as AriaDialog,
   type DatePickerProps as AriaDatePickerProps,
   type DateValue,
 } from "react-aria-components";
@@ -12,10 +11,10 @@ import { CalendarIcon } from "@/lib/icons";
 import { Button } from "./button";
 import { Calendar } from "./calendar";
 import { DateInput, DateSegment } from "./date-input";
+import { Dialog } from "./dialog";
 import { fieldStyles } from "./field";
 import { Field, type FieldProps } from "./field";
 import { InputRoot, type inputStyles } from "./input";
-import { Overlay } from "./overlay";
 
 interface DatePickerProps<T extends DateValue>
   extends DatePickerRootProps<T>,
@@ -54,18 +53,22 @@ const DatePicker = <T extends DateValue>({
         necessityIndicator={necessityIndicator}
         contextualHelp={contextualHelp}
       >
-        <InputRoot size={size} prefix={prefix} isLoading={isLoading} loaderPosition="prefix">
+        <InputRoot
+          size={size}
+          prefix={prefix}
+          isLoading={isLoading}
+          loaderPosition="prefix"
+          className="pr-1"
+        >
           <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
-          <Button size="sm" shape="square" className="h-full rounded-none">
+          <Button variant="default" size="sm" shape="square" className="my-1 size-7 rounded-sm">
             <CalendarIcon />
           </Button>
         </InputRoot>
       </Field>
-      <Overlay type="popover">
-        <AriaDialog className="outline-none">
-          <Calendar className="mx-auto border-none" />
-        </AriaDialog>
-      </Overlay>
+      <Dialog type="popover">
+        <Calendar />
+      </Dialog>
     </DatePickerRoot>
   );
 };

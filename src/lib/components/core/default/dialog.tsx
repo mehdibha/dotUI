@@ -23,7 +23,7 @@ const dialogStyles = tv({
   slots: {
     overlay: "",
     backdrop: "",
-    content: "relative outline-none rounded-[inherit] p-3 sm:p-6",
+    content: "relative outline-none rounded-[inherit] p-4",
     header: "mb-4",
     title: "text-xl font-semibold",
     description: "text-sm text-fg-muted",
