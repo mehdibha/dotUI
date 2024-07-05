@@ -110,19 +110,19 @@ export const previews = {
     },
     "demos/components/core/color-field/default": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/color-field/default")),
-      code : [{"title":"default.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { ColorField } from \"@/lib/components/core/default/color-field\";\n\nexport default function Demo() {\n  return <ColorField label=\"Color\" defaultValue=\"#7f007f\" />;\n}\n"}]
-    },
-    "demos/components/core/color-field/sizes": {
-      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/color-field/sizes")),
-      code : [{"title":"sizes.tsx","code":"import { ColorField } from \"@/lib/components/core/default/color-field\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <div className=\"flex items-center gap-4\">\r\n      <ColorField label=\"small (sm)\" size=\"sm\" />\r\n      <ColorField label=\"medium (md)\" size=\"md\" />\r\n      <ColorField label=\"large (lg)\" size=\"lg\" />\r\n    </div>\r\n  );\r\n}\r\n"}]
-    },
-    "demos/components/core/color-field/prefix-and-suffix": {
-      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/color-field/prefix-and-suffix")),
-      code : [{"title":"prefix-and-suffix.tsx","code":"import { ColorField } from \"@/lib/components/core/default/color-field\";\r\nimport { PaletteIcon } from \"@/lib/icons\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <div className=\"flex flex-col items-center gap-4\">\r\n      <ColorField prefix={<PaletteIcon />} />\r\n      <ColorField suffix={<PaletteIcon />} />\r\n    </div>\r\n  );\r\n}\r\n"}]
+      code : [{"title":"default.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { ColorField } from \"@/lib/components/core/default/color-field\";\n\nexport default function Demo() {\n  return <ColorField label=\"Color\" />;\n}\n"}]
     },
     "demos/components/core/color-field/label": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/color-field/label")),
       code : [{"title":"label.tsx","code":"import { ColorField } from \"@/lib/components/core/default/color-field\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <div className=\"space-y-4\">\r\n      <ColorField label=\"Background\" placeholder=\"Visible label\" />\r\n      <ColorField aria-label=\"Background\" placeholder=\"Hidden label\" />\r\n    </div>\r\n  );\r\n}\r\n"}]
+    },
+    "demos/components/core/color-field/sizes": {
+      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/color-field/sizes")),
+      code : [{"title":"sizes.tsx","code":"import { ColorField } from \"@/lib/components/core/default/color-field\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <div className=\"flex items-center gap-4\">\r\n      <ColorField label=\"small\" size=\"sm\" />\r\n      <ColorField label=\"medium\" size=\"md\" />\r\n      <ColorField label=\"large\" size=\"lg\" />\r\n    </div>\r\n  );\r\n}\r\n"}]
+    },
+    "demos/components/core/color-field/prefix-and-suffix": {
+      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/color-field/prefix-and-suffix")),
+      code : [{"title":"prefix-and-suffix.tsx","code":"import { ColorField } from \"@/lib/components/core/default/color-field\";\r\nimport { PaletteIcon } from \"@/lib/icons\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <div className=\"flex flex-col items-center gap-4\">\r\n      <ColorField prefix={<PaletteIcon />} />\r\n      <ColorField suffix={<PaletteIcon />} />\r\n    </div>\r\n  );\r\n}\r\n"}]
     },
     "demos/components/core/color-field/description": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/color-field/description")),
@@ -151,6 +151,10 @@ export const previews = {
     "demos/components/core/color-field/required": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/color-field/required")),
       code : [{"title":"required.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { ColorField } from \"@/lib/components/core/default/color-field\";\n\nexport default function Demo() {\n  return (\n    <div className=\"grid grid-cols-2 gap-4\">\n      <ColorField label=\"Color\" isRequired />\n      <ColorField label=\"Color\" isRequired necessityIndicator=\"icon\" />\n      <ColorField label=\"Color\" isRequired necessityIndicator=\"label\" />\n      <ColorField label=\"Color\" necessityIndicator=\"label\" />\n    </div>\n  );\n}\n"}]
+    },
+    "demos/components/core/color-field/uncontrolled": {
+      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/color-field/uncontrolled")),
+      code : [{"title":"uncontrolled.tsx","code":"\"use client\";\r\n\r\nimport React from \"react\";\r\nimport { type Color, parseColor } from \"react-aria-components\";\r\nimport { ColorField } from \"@/lib/components/core/default/color-field\";\r\n\r\nexport default function Demo() {\r\n  const [color, setColor] = React.useState<Color | null>(parseColor(\"#7f007f\"));\r\n  return (\r\n    <div className=\"flex flex-col items-center gap-4\">\r\n      <ColorField value={color} onChange={setColor} />\r\n      <p className=\"text-sm text-fg-muted\">Current color value: {color?.toString(\"hex\")}</p>\r\n    </div>\r\n  );\r\n}\r\n"}]
     },
     "demos/components/core/color-field/controlled": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/color-field/controlled")),
