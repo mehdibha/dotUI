@@ -66,7 +66,7 @@ const ComboboxTrigger = () => {
   return (
     <InputRoot className="px-0">
       <Input className="pl-2" />
-      <Button variant="quiet" shape="square" className="my-1 mr-1 size-7">
+      <Button variant="default" shape="square" className="my-1 mr-1 size-7">
         <ChevronDownIcon />
       </Button>
     </InputRoot>

@@ -27,7 +27,7 @@ export default function Demo() {
       </InputRoot>
       <Description>Please select a date.</Description>
       <FieldError />
-      <Overlay type="popover">
+      <Overlay type="popover" mobileType="drawer">
         <DialogContent>
           <Calendar />
         </DialogContent>

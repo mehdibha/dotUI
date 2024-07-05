@@ -66,8 +66,8 @@ const DatePicker = <T extends DateValue>({
           </Button>
         </InputRoot>
       </Field>
-      <Dialog type="popover">
-        <Calendar />
+      <Dialog type="popover" mobileType="drawer" className="flex">
+        <Calendar className="mx-auto" />
       </Dialog>
     </DatePickerRoot>
   );

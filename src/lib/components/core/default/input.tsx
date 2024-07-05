@@ -25,7 +25,7 @@ const inputStyles = tv({
   slots: {
     root: [
       focusInput(),
-      "inline-flex items-center gap-2 px-2 transition-colors w-full rounded-md border bg-bg shadow-sm cursor-text text-fg-muted text-base sm:text-sm [&_svg]:size-4",
+      "inline-flex justify-start items-center gap-2 px-2 transition-colors w-full rounded-md border bg-bg shadow-sm cursor-text text-fg-muted text-base sm:text-sm [&_svg]:size-4",
       "disabled:cursor-default disabled:border-border-disabled disabled:bg-bg-disabled disabled:text-fg-disabled",
       "invalid:border-border-danger focus-within:invalid:border-border",
     ],

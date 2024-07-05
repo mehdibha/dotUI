@@ -9,7 +9,7 @@ export default function Demo() {
     end: parseAbsoluteToLocal("2021-04-08T20:00:00Z"),
   };
   return (
-    <div className="flex flex-col items-center gap-4">
+    <div className="flex flex-col gap-4">
       <DateRangePicker label="Hour" granularity="hour" defaultValue={dates} />
       <DateRangePicker label="Minute" granularity="minute" defaultValue={dates} />
       <DateRangePicker label="Second" granularity="second" defaultValue={dates} />

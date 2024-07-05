@@ -3,7 +3,6 @@
 import * as React from "react";
 import {
   DateRangePicker as AriaDateRangePicker,
-  Dialog as AriaDialog,
   type DateRangePickerProps as AriaDateRangePickerProps,
   type DateValue,
 } from "react-aria-components";
@@ -11,10 +10,10 @@ import { type VariantProps } from "tailwind-variants";
 import { CalendarIcon } from "@/lib/icons";
 import { Button } from "./button";
 import { DateInput, DateSegment } from "./date-input";
+import { Dialog } from "./dialog";
 import { fieldStyles } from "./field";
 import { Field, type FieldProps } from "./field";
 import { InputRoot, type inputStyles } from "./input";
-import { Overlay } from "./overlay";
 import { RangeCalendar } from "./range-calendar";
 
 interface DateRangePickerProps<T extends DateValue>
@@ -54,20 +53,26 @@ const DateRangePicker = <T extends DateValue>({
         necessityIndicator={necessityIndicator}
         contextualHelp={contextualHelp}
       >
-        <InputRoot size={size} prefix={prefix} isLoading={isLoading} loaderPosition="prefix">
+        <InputRoot
+          size={size}
+          prefix={prefix}
+          isLoading={isLoading}
+          loaderPosition="prefix"
+          className="pr-1"
+        >
           <DateInput slot="start">{(segment) => <DateSegment segment={segment} />}</DateInput>
           <span aria-hidden="true">–</span>
-          <DateInput slot="end">{(segment) => <DateSegment segment={segment} />}</DateInput>
-          <Button size="sm" shape="square" className="h-full rounded-none">
+          <DateInput slot="end" className="flex-1">
+            {(segment) => <DateSegment segment={segment} />}
+          </DateInput>
+          <Button variant="default" size="sm" shape="square" className="my-1 size-7 rounded-sm">
             <CalendarIcon />
           </Button>
         </InputRoot>
       </Field>
-      <Overlay type="popover">
-        <AriaDialog className="outline-none">
-          <RangeCalendar className="mx-auto border-none" />
-        </AriaDialog>
-      </Overlay>
+      <Dialog type="popover" mobileType="drawer" className="flex">
+        <RangeCalendar className="mx-auto" />
+      </Dialog>
     </DateRangePickerRoot>
   );
 };

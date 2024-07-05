@@ -430,15 +430,15 @@ export const previews = {
     },
     "demos/components/core/date-picker/uncontrolled": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/date-picker/uncontrolled")),
-      code : [{"title":"uncontrolled.tsx","code":"import { DatePicker } from \"@/lib/components/core/default/date-picker\";\r\n\r\nexport default function Demo() {\r\n  return <DatePicker aria-label=\"Meeting date\" />;\r\n}\r\n"}]
+      code : [{"title":"uncontrolled.tsx","code":"\"use client\";\r\n\r\nimport React from \"react\";\r\nimport { parseDate } from \"@internationalized/date\";\r\nimport { DatePicker } from \"@/lib/components/core/default/date-picker\";\r\n\r\nexport default function Demo() {\r\n  return <DatePicker aria-label=\"Meeting date\" defaultValue={parseDate(\"2020-02-03\")} />;\r\n}\r\n"}]
     },
     "demos/components/core/date-picker/controlled": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/date-picker/controlled")),
-      code : [{"title":"controlled.tsx","code":"\"use client\";\r\n\r\nimport React from \"react\";\r\nimport { parseDate } from \"@internationalized/date\";\r\nimport { DatePicker } from \"@/lib/components/core/default/date-picker\";\r\n\r\nexport default function Demo() {\r\n  const [value, setValue] = React.useState(parseDate(\"2020-02-03\"));\r\n  return (\r\n    <div className=\"flex flex-col items-center gap-4\">\r\n      <DatePicker label=\"Controlled\" value={value} onChange={setValue} />\r\n      <p className=\"text-sm text-fg-muted\">selected date: {value.toString()}</p>\r\n    </div>\r\n  );\r\n}\r\n"}]
+      code : [{"title":"controlled.tsx","code":"\"use client\";\r\n\r\nimport React from \"react\";\r\nimport { parseDate } from \"@internationalized/date\";\r\nimport { DatePicker } from \"@/lib/components/core/default/date-picker\";\r\n\r\nexport default function Demo() {\r\n  const [value, setValue] = React.useState(parseDate(\"2020-02-03\"));\r\n  return (\r\n    <div className=\"flex flex-col items-center gap-4\">\r\n      <DatePicker label=\"Meeting date\" value={value} onChange={setValue} />\r\n      <p className=\"text-sm text-fg-muted\">selected date: {value.toString()}</p>\r\n    </div>\r\n  );\r\n}\r\n"}]
     },
     "demos/components/core/date-picker/composition": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/date-picker/composition")),
-      code : [{"title":"composition.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { DatePicker } from \"@/lib/components/core/default/date-picker\";\n\nexport default function Demo() {\n  return <DatePicker />;\n}\n"}]
+      code : [{"title":"composition.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { Button } from \"@/lib/components/core/default/button\";\nimport { Calendar } from \"@/lib/components/core/default/calendar\";\nimport { DateInput, DateSegment } from \"@/lib/components/core/default/date-input\";\nimport { DatePickerRoot } from \"@/lib/components/core/default/date-picker\";\nimport { DialogContent } from \"@/lib/components/core/default/dialog\";\nimport { Description, FieldError, Label } from \"@/lib/components/core/default/field\";\nimport { InputRoot } from \"@/lib/components/core/default/input\";\nimport { Overlay } from \"@/lib/components/core/default/overlay\";\nimport { CalendarIcon } from \"@/lib/icons\";\n\nexport default function Demo() {\n  return (\n    <DatePickerRoot>\n      <Label>Meeting date</Label>\n      <InputRoot\n        suffix={\n          <Button variant=\"default\" size=\"sm\" shape=\"square\" className=\"size-7\">\n            <CalendarIcon />\n          </Button>\n        }\n        className=\"pr-1\"\n      >\n        <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>\n      </InputRoot>\n      <Description>Please select a date.</Description>\n      <FieldError />\n      <Overlay type=\"popover\">\n        <DialogContent>\n          <Calendar />\n        </DialogContent>\n      </Overlay>\n    </DatePickerRoot>\n  );\n}\n"}]
     },
     "demos/components/core/date-range-picker/default": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/date-range-picker/default")),
@@ -446,11 +446,11 @@ export const previews = {
     },
     "demos/components/core/date-range-picker/label": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/date-range-picker/label")),
-      code : [{"title":"label.tsx","code":"import { DateRangePicker } from \"@/lib/components/core/default/date-range-picker\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <div className=\"space-y-4\">\r\n      <DateRangePicker label=\"Visible label\" />\r\n      <DateRangePicker aria-label=\"Hidden label\" />\r\n    </div>\r\n  );\r\n}\r\n"}]
+      code : [{"title":"label.tsx","code":"import { DateRangePicker } from \"@/lib/components/core/default/date-range-picker\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <div className=\"space-y-4\">\r\n      <DateRangePicker label=\"Trip\" />\r\n      <DateRangePicker aria-label=\"Trip\" />\r\n    </div>\r\n  );\r\n}\r\n"}]
     },
     "demos/components/core/date-range-picker/sizes": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/date-range-picker/sizes")),
-      code : [{"title":"sizes.tsx","code":"import { DateRangePicker } from \"@/lib/components/core/default/date-range-picker\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <div className=\"flex items-center gap-4\">\r\n      <DateRangePicker label=\"small (sm)\" size=\"sm\" />\r\n      <DateRangePicker label=\"medium (md)\" size=\"md\" />\r\n      <DateRangePicker label=\"large (lg)\" size=\"lg\" />\r\n    </div>\r\n  );\r\n}\r\n"}]
+      code : [{"title":"sizes.tsx","code":"import { DateRangePicker } from \"@/lib/components/core/default/date-range-picker\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <div className=\"flex flex-col gap-2\">\r\n      <DateRangePicker label=\"small\" size=\"sm\" />\r\n      <DateRangePicker label=\"medium\" size=\"md\" />\r\n      <DateRangePicker label=\"large\" size=\"lg\" />\r\n    </div>\r\n  );\r\n}\r\n"}]
     },
     "demos/components/core/date-range-picker/prefix": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/date-range-picker/prefix")),
@@ -474,7 +474,7 @@ export const previews = {
     },
     "demos/components/core/date-range-picker/granularity": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/date-range-picker/granularity")),
-      code : [{"title":"granularity.tsx","code":"\"use client\";\r\n\r\nimport { parseAbsoluteToLocal } from \"@internationalized/date\";\r\nimport { DateRangePicker } from \"@/lib/components/core/default/date-range-picker\";\r\n\r\nexport default function Demo() {\r\n  const dates = {\r\n    start: parseAbsoluteToLocal(\"2021-04-07T18:45:22Z\"),\r\n    end: parseAbsoluteToLocal(\"2021-04-08T20:00:00Z\"),\r\n  };\r\n  return (\r\n    <div className=\"flex flex-col items-center gap-4\">\r\n      <DateRangePicker label=\"Hour\" granularity=\"hour\" defaultValue={dates} />\r\n      <DateRangePicker label=\"Minute\" granularity=\"minute\" defaultValue={dates} />\r\n      <DateRangePicker label=\"Second\" granularity=\"second\" defaultValue={dates} />\r\n    </div>\r\n  );\r\n}\r\n"}]
+      code : [{"title":"granularity.tsx","code":"\"use client\";\r\n\r\nimport { parseAbsoluteToLocal } from \"@internationalized/date\";\r\nimport { DateRangePicker } from \"@/lib/components/core/default/date-range-picker\";\r\n\r\nexport default function Demo() {\r\n  const dates = {\r\n    start: parseAbsoluteToLocal(\"2021-04-07T18:45:22Z\"),\r\n    end: parseAbsoluteToLocal(\"2021-04-08T20:00:00Z\"),\r\n  };\r\n  return (\r\n    <div className=\"flex flex-col gap-4\">\r\n      <DateRangePicker label=\"Hour\" granularity=\"hour\" defaultValue={dates} />\r\n      <DateRangePicker label=\"Minute\" granularity=\"minute\" defaultValue={dates} />\r\n      <DateRangePicker label=\"Second\" granularity=\"second\" defaultValue={dates} />\r\n    </div>\r\n  );\r\n}\r\n"}]
     },
     "demos/components/core/date-range-picker/placeholder": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/date-range-picker/placeholder")),
@@ -503,6 +503,10 @@ export const previews = {
     "demos/components/core/date-range-picker/required": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/date-range-picker/required")),
       code : [{"title":"required.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { DateRangePicker } from \"@/lib/components/core/default/date-range-picker\";\n\nexport default function Demo() {\n  return (\n    <div className=\"grid grid-cols-2 gap-4\">\n      <DateRangePicker label=\"Event date\" isRequired />\n      <DateRangePicker label=\"Event date\" isRequired necessityIndicator=\"icon\" />\n      <DateRangePicker label=\"Event date\" isRequired necessityIndicator=\"label\" />\n      <DateRangePicker label=\"Event date\" necessityIndicator=\"label\" />\n    </div>\n  );\n}\n"}]
+    },
+    "demos/components/core/date-range-picker/uncontrolled": {
+      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/date-range-picker/uncontrolled")),
+      code : [{"title":"uncontrolled.tsx","code":"\"use client\";\r\n\r\nimport React from \"react\";\r\nimport { parseDate } from \"@internationalized/date\";\r\nimport { DateRangePicker } from \"@/lib/components/core/default/date-range-picker\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <DateRangePicker\r\n      label=\"Controlled\"\r\n      defaultValue={{\r\n        start: parseDate(\"2020-02-03\"),\r\n        end: parseDate(\"2020-02-08\"),\r\n      }}\r\n    />\r\n  );\r\n}\r\n"}]
     },
     "demos/components/core/date-range-picker/controlled": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/date-range-picker/controlled")),
