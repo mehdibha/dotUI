@@ -16,6 +16,7 @@ import {
   TextContext as AriaTextContext,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
+import { cn } from "@/lib/utils/classes";
 import { focusRing } from "@/lib/utils/styles";
 import { Description, Label, type FieldProps } from "./field";
 
@@ -67,7 +68,7 @@ interface SliderProps extends SliderRootProps, VariantProps<typeof sliderStyles>
 const Slider = React.forwardRef<React.ElementRef<typeof AriaSlider>, SliderProps>(
   ({ label, description, valueLabel = false, size, ...props }, ref) => (
     <SliderRoot ref={ref} {...props}>
-      <div className="flex items-center justify-between gap-2">
+      <div className={cn("flex items-center justify-between gap-2", !label && "justify-end")}>
         {label && <Label>{label}</Label>}
         {(valueLabel === true || typeof valueLabel === "function") && (
           <SliderValueLabel>

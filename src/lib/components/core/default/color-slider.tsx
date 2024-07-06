@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  composeRenderProps,
   ColorSlider as AriaColorSlider,
   SliderOutput as AriaSliderOutput,
   SliderTrack as AriaSliderTrack,
@@ -15,10 +16,10 @@ import { Label } from "./field";
 
 const colorSliderStyles = tv({
   slots: {
-    root: "grid [grid-template-areas:'label_output''track_track'] grid-cols-[1fr_auto] gap-1",
-    output: "[grid-area:output] text-xs",
+    root: "group/color-slider flex flex-col gap-2 orientation-horizontal:w-48 orientation-vertical:h-48 orientation-vertical:items-center",
+    output: "text-fg-muted text-sm",
     track: [
-      "[grid-area:track] orientation-horizontal:w-48 rounded-md orientation-horizontal:h-6 orientation-vertical:w-6 orientation-vertical:h-48",
+      "orientation-horizontal:w-48 rounded-md orientation-horizontal:h-6 orientation-vertical:w-6 orientation-vertical:h-48 disabled:!bg-bg-disabled",
       "relative before:absolute before:inset-0 before:z-[-1] before:bg-[repeating-conic-gradient(#e6e6e6_0%_25%,_#fff_0%_50%)] before:bg-[length:16px_16px] before:bg-center before:content-[''] before:rounded-[inherit]",
     ],
   },
@@ -31,42 +32,58 @@ interface ColorSliderProps extends ColorSliderRootProps {
 const ColorSlider = ({ label, channel, showValueLabel = true, ...props }: ColorSliderProps) => {
   return (
     <ColorSliderRoot channel={channel} {...props}>
-      {({ orientation }) => (
-        <>
-          {label && <Label>{label}</Label>}
-          {showValueLabel && <SliderOutput />}
-          <SliderTrack>
-            <ColorThumb className={cn(orientation === "horizontal" ? "top-1/2" : "left-1/2")} />
-          </SliderTrack>
-        </>
-      )}
+      <div className={cn("flex items-center justify-between gap-2", !label && "justify-end")}>
+        {label && <Label>{label}</Label>}
+        {showValueLabel && <ColorSliderOutput />}
+      </div>
+      <ColorSliderTrack>
+        <ColorThumb />
+      </ColorSliderTrack>
     </ColorSliderRoot>
   );
 };
 
-interface ColorSliderRootProps extends Omit<AriaColorSliderProps, "className"> {
-  className?: string;
-}
-const ColorSliderRoot = ({ className, ...props }: ColorSliderRootProps) => {
+type ColorSliderRootProps = AriaColorSliderProps;
+const ColorSliderRoot = (props: ColorSliderRootProps) => {
   const { root } = colorSliderStyles();
-  return <AriaColorSlider className={root({ className })} {...props} />;
+  return (
+    <AriaColorSlider
+      {...props}
+      className={composeRenderProps(props.className, (className) => root({ className }))}
+    />
+  );
 };
 
-interface SliderOutputProps extends Omit<AriaSliderOutputProps, "className"> {
-  className?: string;
-}
-const SliderOutput = ({ className, ...props }: SliderOutputProps) => {
-  const { output } = colorSliderStyles();
-  return <AriaSliderOutput className={output({ className })} {...props} />;
-};
-
-interface SliderTrackProps extends Omit<AriaSliderTrackProps, "className"> {
-  className?: string;
-}
-const SliderTrack = ({ className, ...props }: SliderTrackProps) => {
+type ColorSliderTrackProps = AriaSliderTrackProps;
+const ColorSliderTrack = (props: ColorSliderTrackProps) => {
   const { track } = colorSliderStyles();
-  return <AriaSliderTrack className={track({ className })} {...props} />;
+  return (
+    <AriaSliderTrack
+      {...props}
+      style={composeRenderProps(props.style, (style, { isDisabled }) => ({
+        ...style,
+        ...(isDisabled ? { background: "none" } : {}),
+      }))}
+      className={composeRenderProps(props.className, (className) => track({ className }))}
+    />
+  );
 };
 
-export type { ColorSliderProps, ColorSliderRootProps };
-export { ColorSlider, ColorSliderRoot };
+type ColorSliderOutputProps = AriaSliderOutputProps;
+const ColorSliderOutput = (props: ColorSliderOutputProps) => {
+  const { output } = colorSliderStyles();
+  return (
+    <AriaSliderOutput
+      {...props}
+      className={composeRenderProps(props.className, (className) => output({ className }))}
+    />
+  );
+};
+
+export type {
+  ColorSliderProps,
+  ColorSliderRootProps,
+  ColorSliderTrackProps,
+  ColorSliderOutputProps,
+};
+export { ColorSlider, ColorSliderRoot, ColorSliderOutput, ColorSliderTrack, colorSliderStyles };

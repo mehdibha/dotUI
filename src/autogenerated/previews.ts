@@ -154,7 +154,7 @@ export const previews = {
     },
     "demos/components/core/color-field/uncontrolled": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/color-field/uncontrolled")),
-      code : [{"title":"uncontrolled.tsx","code":"\"use client\";\r\n\r\nimport React from \"react\";\r\nimport { type Color, parseColor } from \"react-aria-components\";\r\nimport { ColorField } from \"@/lib/components/core/default/color-field\";\r\n\r\nexport default function Demo() {\r\n  const [color, setColor] = React.useState<Color | null>(parseColor(\"#7f007f\"));\r\n  return (\r\n    <div className=\"flex flex-col items-center gap-4\">\r\n      <ColorField value={color} onChange={setColor} />\r\n      <p className=\"text-sm text-fg-muted\">Current color value: {color?.toString(\"hex\")}</p>\r\n    </div>\r\n  );\r\n}\r\n"}]
+      code : [{"title":"uncontrolled.tsx","code":"import React from \"react\";\r\nimport { ColorField } from \"@/lib/components/core/default/color-field\";\r\n\r\nexport default function Demo() {\r\n  return <ColorField defaultValue=\"#7f007f\" />;\r\n}\r\n"}]
     },
     "demos/components/core/color-field/controlled": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/color-field/controlled")),
@@ -162,7 +162,7 @@ export const previews = {
     },
     "demos/components/core/color-field/composition": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/color-field/composition")),
-      code : [{"title":"composition.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { ColorField } from \"@/lib/components/core/default/color-field\";\n\nexport default function Demo() {\n  return <ColorField />;\n}\n"}]
+      code : [{"title":"composition.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { ColorFieldRoot } from \"@/lib/components/core/default/color-field\";\nimport { Description, FieldError, Label } from \"@/lib/components/core/default/field\";\nimport { Input, InputRoot } from \"@/lib/components/core/default/input\";\n\nexport default function Demo() {\n  return (\n    <ColorFieldRoot>\n      <Label>Background</Label>\n      <InputRoot>\n        <Input />\n      </InputRoot>\n      <Description>Enter a background color.</Description>\n      <FieldError />\n    </ColorFieldRoot>\n  );\n}\n"}]
     },
     "demos/components/core/color-picker/default": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/color-picker/default")),
@@ -182,11 +182,15 @@ export const previews = {
     },
     "demos/components/core/color-slider/default": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/color-slider/default")),
-      code : [{"title":"default.tsx","code":"import { ColorSlider } from \"@/lib/components/core/default/color-slider\";\r\n\r\nexport default function Demo() {\r\n  return <ColorSlider label=\"Hue\" channel=\"hue\" defaultValue=\"hsl(200, 100%, 50%)\" />;\r\n}\r\n"}]
+      code : [{"title":"default.tsx","code":"import { ColorSlider } from \"@/lib/components/core/default/color-slider\";\r\n\r\nexport default function Demo() {\r\n  return <ColorSlider channel=\"hue\" defaultValue=\"hsl(200, 100%, 50%)\" />;\r\n}\r\n"}]
     },
-    "demos/components/core/color-slider/orientation": {
-      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/color-slider/orientation")),
-      code : [{"title":"orientation.tsx","code":"import { ColorSlider } from \"@/lib/components/core/default/color-slider\";\r\n\r\nexport default function Demo() {\r\n  return <ColorSlider orientation=\"vertical\" channel=\"hue\" defaultValue=\"hsl(0, 100%, 50%)\" />;\r\n}\r\n"}]
+    "demos/components/core/color-slider/label": {
+      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/color-slider/label")),
+      code : [{"title":"label.tsx","code":"import { ColorSlider } from \"@/lib/components/core/default/color-slider\";\r\n\r\nexport default function Demo() {\r\n  return <ColorSlider label=\"Hue\" channel=\"hue\" defaultValue=\"hsl(200, 100%, 50%)\" />;\r\n}\r\n"}]
+    },
+    "demos/components/core/color-slider/vertical": {
+      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/color-slider/vertical")),
+      code : [{"title":"vertical.tsx","code":"import { ColorSlider } from \"@/lib/components/core/default/color-slider\";\r\n\r\nexport default function Demo() {\r\n  return <ColorSlider orientation=\"vertical\" channel=\"hue\" defaultValue=\"hsl(0, 100%, 50%)\" />;\r\n}\r\n"}]
     },
     "demos/components/core/color-slider/channel": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/color-slider/channel")),
@@ -196,13 +200,17 @@ export const previews = {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/color-slider/disabled")),
       code : [{"title":"disabled.tsx","code":"import { ColorSlider } from \"@/lib/components/core/default/color-slider\";\r\n\r\nexport default function Demo() {\r\n  return <ColorSlider label=\"Opacity\" defaultValue=\"#f00\" channel=\"alpha\" isDisabled />;\r\n}\r\n"}]
     },
+    "demos/components/core/color-slider/uncontrolled": {
+      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/color-slider/uncontrolled")),
+      code : [{"title":"uncontrolled.tsx","code":"import { ColorSlider } from \"@/lib/components/core/default/color-slider\";\r\n\r\nexport default function Demo() {\r\n  return <ColorSlider channel=\"hue\" defaultValue=\"hsl(0, 100%, 50%)\" />;\r\n}\r\n"}]
+    },
     "demos/components/core/color-slider/controlled": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/color-slider/controlled")),
       code : [{"title":"controlled.tsx","code":"\"use client\";\r\n\r\nimport React from \"react\";\r\nimport { parseColor } from \"react-aria-components\";\r\nimport { ColorSlider } from \"@/lib/components/core/default/color-slider\";\r\n\r\nexport default function Demo() {\r\n  const [value, setValue] = React.useState(parseColor(\"hsl(0, 100%, 50%)\"));\r\n  return (\r\n    <div className=\"flex flex-col items-center gap-4\">\r\n      <ColorSlider value={value} onChange={setValue} channel=\"hue\" />\r\n      <p className=\"text-xs text-fg-muted\">Value: {value.toString(\"hex\")}</p>\r\n    </div>\r\n  );\r\n}\r\n"}]
     },
     "demos/components/core/color-slider/composition": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/color-slider/composition")),
-      code : [{"title":"composition.tsx","code":"export default function Demo() {\r\n  return null;\r\n}\r\n"}]
+      code : [{"title":"composition.tsx","code":"import {\r\n  ColorSliderOutput,\r\n  ColorSliderRoot,\r\n  ColorSliderTrack,\r\n} from \"@/lib/components/core/default/color-slider\";\r\nimport { ColorThumb } from \"@/lib/components/core/default/color-thumb\";\r\nimport { Label } from \"@/lib/components/core/default/field\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <ColorSliderRoot channel=\"hue\" defaultValue=\"hsl(0, 100%, 50%)\">\r\n      <div className=\"flex items-center justify-between\">\r\n        <Label>Hue</Label>\r\n        <ColorSliderOutput />\r\n      </div>\r\n      <ColorSliderTrack>\r\n        <ColorThumb />\r\n      </ColorSliderTrack>\r\n    </ColorSliderRoot>\r\n  );\r\n}\r\n"}]
     },
     "demos/components/core/color-swatch/default": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/color-swatch/default")),
