@@ -68,16 +68,18 @@ interface SliderProps extends SliderRootProps, VariantProps<typeof sliderStyles>
 const Slider = React.forwardRef<React.ElementRef<typeof AriaSlider>, SliderProps>(
   ({ label, description, valueLabel = false, size, ...props }, ref) => (
     <SliderRoot ref={ref} {...props}>
-      <div className={cn("flex items-center justify-between gap-2", !label && "justify-end")}>
-        {label && <Label>{label}</Label>}
-        {(valueLabel === true || typeof valueLabel === "function") && (
-          <SliderValueLabel>
-            {({ state }) =>
-              typeof valueLabel === "function" ? valueLabel(state.values) : undefined
-            }
-          </SliderValueLabel>
-        )}
-      </div>
+      {(label || !!valueLabel) && (
+        <div className={cn("flex items-center justify-between gap-2", !label && "justify-end")}>
+          {label && <Label>{label}</Label>}
+          {!!valueLabel && (
+            <SliderValueLabel>
+              {({ state }) =>
+                typeof valueLabel === "function" ? valueLabel(state.values) : undefined
+              }
+            </SliderValueLabel>
+          )}
+        </div>
+      )}
       <SliderControls size={size} />
       {description && <Description>{description}</Description>}
     </SliderRoot>

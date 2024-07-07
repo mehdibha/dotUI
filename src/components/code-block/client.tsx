@@ -48,7 +48,7 @@ const CodeBlockClient = ({
   return (
     <CodeBlockRoot selectedKey={activeTab} onSelectionChange={setActiveTab} {...props}>
       <CodeBlockHeader>
-        <div className="flex h-full items-end">
+        <div className="shrink-1 flex h-full w-[200px] flex-1 basis-0 items-end gap-2">
           {files.length > 0 && (
             <TabList>
               {files

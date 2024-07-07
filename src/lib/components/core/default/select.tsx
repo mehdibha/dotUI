@@ -10,7 +10,7 @@ import {
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import { ChevronDownIcon } from "@/lib/icons";
-import { Button } from "./button";
+import { Button, type ButtonProps } from "./button";
 import { Field, type FieldProps } from "./field";
 import { ListBox, type ListBoxProps } from "./list-box";
 import { Overlay } from "./overlay";
@@ -29,8 +29,12 @@ interface SelectProps<T extends object>
   dependencies?: ListBoxProps<T>["dependencies"];
   items?: ListBoxProps<T>["items"];
   isLoading?: ListBoxProps<T>["isLoading"];
+  variant?: ButtonProps["variant"];
+  size?: ButtonProps["size"];
 }
 const Select = <T extends object>({
+  variant = "outline",
+  size,
   label,
   description,
   errorMessage,
@@ -54,7 +58,7 @@ const Select = <T extends object>({
             necessityIndicator={necessityIndicator}
             contextualHelp={contextualHelp}
           >
-            <Button variant="outline" suffix={<ChevronDownIcon />}>
+            <Button variant={variant} size={size} suffix={<ChevronDownIcon />}>
               <SelectValue />
             </Button>
           </Field>

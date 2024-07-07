@@ -9,6 +9,10 @@ links:
     href: https://react-spectrum.adobe.com/react-aria/ColorPicker.html
   - label: Aria API Reference
     href: https://react-spectrum.adobe.com/react-aria/ColorPicker.html#props
+  - label: Report an issue
+    href: https://github.com/mehdibha/dotUI/issues/new/choose
+  - label: Edit this page
+    href: https://github.com/mehdibha/dotUI/tree/main/content/components/inputs/text-field.mdx?plain=1
 ---
 
 <ComponentPreview name="demos/components/core/color-picker/default" />
@@ -24,7 +28,19 @@ npm install react-aria-components
 
 <Step>Copy and paste the following code into your project.</Step>
 
-  <ComponentSource name={"components/core/default/color-picker"} />
+  <ComponentSource  
+    name={[
+      "components/core/default/color-picker",
+      "components/core/default/button",
+      "components/core/default/color-area",
+      "components/core/default/color-field",
+      "components/core/default/color-swatch",
+      "components/core/default/dialog",
+      "components/core/default/overlay",
+      "components/core/default/select",
+      "components/core/default/list-box",
+    ]}
+  />
   <Step>Update the import paths to match your project setup.</Step>
 </Steps>
 
@@ -34,29 +50,36 @@ Use a `ColorPicker` to allow users to select and edit a color in an overlay.
 
 ## Options
 
-### Label
+`ColorPicker` accepts all [button options](/components/buttons/button#options).
 
-Use the `label` prop to provide a label for the color picker.
+<ComponentPreview
+  name="demos/components/core/color-picker/options"
+  preview={`<ColorPicker size="sm" shape="rectangle">
+  Fill color
+</ColorPicker>`}
+/>
 
-<ComponentPreview name="demos/components/core/color-picker/label" />
+## Unontrolled
 
-### Visual Options
+An initial, uncontrolled value can be provided to the `ColorPicker` using the `defaultValue` prop.
 
-All [button](/components/buttons/button#options) options are available to the `ColorPicker` component.
+<ComponentPreview name="demos/components/core/color-picker/uncontrolled" preview={``} />
 
-## Examples
-
-### Controlled
+## Controlled
 
 Use the `value` and `onChange` props to control the color picker.
 
-<ComponentPreview name="demos/components/core/color-picker/controlled" />
+<ComponentPreview
+  name="demos/components/core/color-picker/controlled"
+  preview={`const [value, setValue] = React.useState(parseColor("hsl(25, 100%, 50%)"));
+return <ColorPicker value={value as Color & string} onChange={setValue} />;`}
+/>
 
-### Composition
+## Composition
 
 If you need to customize things further, you can drop down to the composition level.
 
-<ComponentPreview name="demos/components/core/color-picker/composition" />
+<ComponentPreview name="demos/components/core/color-picker/composition" preview={``} />
 
 ## API Reference
 

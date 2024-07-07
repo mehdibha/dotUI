@@ -32,10 +32,12 @@ interface ColorSliderProps extends ColorSliderRootProps {
 const ColorSlider = ({ label, channel, showValueLabel = true, ...props }: ColorSliderProps) => {
   return (
     <ColorSliderRoot channel={channel} {...props}>
-      <div className={cn("flex items-center justify-between gap-2", !label && "justify-end")}>
-        {label && <Label>{label}</Label>}
-        {showValueLabel && <ColorSliderOutput />}
-      </div>
+      {(label || showValueLabel) && (
+        <div className={cn("flex items-center justify-between gap-2", !label && "justify-end")}>
+          {label && <Label>{label}</Label>}
+          {showValueLabel && <ColorSliderOutput />}
+        </div>
+      )}
       <ColorSliderTrack>
         <ColorThumb />
       </ColorSliderTrack>

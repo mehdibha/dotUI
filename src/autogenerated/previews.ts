@@ -168,9 +168,13 @@ export const previews = {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/color-picker/default")),
       code : [{"title":"default.tsx","code":"import { ColorPicker } from \"@/lib/components/core/default/color-picker\";\r\n\r\nexport default function Demo() {\r\n  return <ColorPicker defaultValue=\"#5100FF\" />;\r\n}\r\n"}]
     },
-    "demos/components/core/color-picker/label": {
-      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/color-picker/label")),
-      code : [{"title":"label.tsx","code":"import { ColorPicker } from \"@/lib/components/core/default/color-picker\";\r\n\r\nexport default function Demo() {\r\n  return <ColorPicker defaultValue=\"#5100FF\" label=\"Fill color\" />;\r\n}\r\n"}]
+    "demos/components/core/color-picker/options": {
+      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/color-picker/options")),
+      code : [{"title":"options.tsx","code":"import { ColorPicker } from \"@/lib/components/core/default/color-picker\";\r\n\r\nexport default function Demo() {\r\n  return <ColorPicker defaultValue=\"#5100FF\" label=\"Fill color\" />;\r\n}\r\n"}]
+    },
+    "demos/components/core/color-picker/uncontrolled": {
+      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/color-picker/uncontrolled")),
+      code : [{"title":"uncontrolled.tsx","code":"import { ColorPicker } from \"@/lib/components/core/default/color-picker\";\r\n\r\nexport default function Demo() {\r\n  return <ColorPicker defaultValue=\"#5100FF\" />;\r\n}\r\n"}]
     },
     "demos/components/core/color-picker/controlled": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/color-picker/controlled")),

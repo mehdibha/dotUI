@@ -9,7 +9,7 @@ import { tv } from "tailwind-variants";
 import { ColorThumb } from "./color-thumb";
 
 const colorAreaStyles = tv({
-  base: "size-48 rounded-md shrink-0 disabled:!bg-bg-disabled",
+  base: "inline-block size-48 min-w-20 rounded-md disabled:!bg-bg-disabled",
 });
 
 type ColorAreaProps = Omit<ColorAreaRootProps, "children">;

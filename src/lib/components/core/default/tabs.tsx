@@ -18,7 +18,7 @@ import { focusRing } from "@/lib/utils/styles";
 const tabsStyles = tv({
   slots: {
     root: "flex flex-col orientation-vertical:flex-row [&_[role=tabpanel]]:orientation-horizontal:mt-2 [&_[role=tabpanel]]:orientation-vertical:ml-2",
-    list: "flex orientation-horizontal:items-center orientation-horizontal:border-b orientation-vertical:flex-col orientation-vertical:border-r [&_[role=tab]]:orientation-horizontal:border-b-[3px] [&_[role=tab]]:orientation-vertical:border-r-[3px]",
+    list: "flex orientation-horizontal:overflow-x-auto orientation-horizontal:whitespace-nowrap orientation-horizontal:items-center orientation-horizontal:border-b orientation-vertical:flex-col orientation-vertical:border-r [&_[role=tab]]:orientation-horizontal:border-b-[3px] [&_[role=tab]]:orientation-vertical:border-r-[3px]",
     tab: [
       "cursor-pointer text-center text-fg-muted border-transparent selected:border-border-focus selected:text-fg -mb-px px-2 py-2 text-sm font-medium outline-none transition-colors disabled:text-fg-disabled disabled:cursor-default disabled:selected:border-border-disabled",
       "[&>span]:py-1 [&>span]:px-1.5 [&>span]:rounded-md [&>span]:border-2 [&>span]:border-transparent [&>span]:focus-visible:border-border-focus",
@@ -40,7 +40,9 @@ interface TabListProps<T> extends Omit<AriaTabListProps<T>, "className"> {
 }
 const TabList = <T extends object>({ className, ...props }: TabListProps<T>) => {
   const { list } = tabsStyles();
-  return <AriaTabList className={list({ className })} {...props} />;
+  return (
+    <AriaTabList {...props} className={list({ className })} style={{ scrollbarWidth: "none" }} />
+  );
 };
 
 interface TabProps extends Omit<AriaTabProps, "className"> {
