@@ -1,12 +1,13 @@
 import React from "react";
-import { DropZone, DropZoneLabel } from "@/lib/components/core/default/drop-zone";
+import { DropZone } from "@/lib/components/core/default/drop-zone";
+import { Text } from "@/lib/components/core/default/text";
 import { UploadIcon } from "@/lib/icons";
 
-export default function DropZoneDemo() {
+export default function Demo() {
   return (
     <DropZone isDisabled>
       <UploadIcon />
-      <DropZoneLabel>Drag and drop files here</DropZoneLabel>
+      <Text slot="label">Drag and drop files here</Text>
     </DropZone>
   );
 }

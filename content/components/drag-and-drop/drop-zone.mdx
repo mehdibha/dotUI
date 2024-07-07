@@ -4,9 +4,23 @@ description: A drop zone is an area into which one or multiple objects can be dr
 thumbnail:
   image: /previews/components/core/drop-zone.jpeg
   video: /previews/components/core/drop-zone.mp4
+links:
+  - label: Aria docs
+    href: https://react-spectrum.adobe.com/react-aria/DropZone.html
+  - label: Aria API Reference
+    href: https://react-spectrum.adobe.com/react-aria/DropZone.html#props
+  - label: Report an issue
+    href: https://github.com/mehdibha/dotUI/issues/new/choose
+  - label: Edit this page
+    href: https://github.com/mehdibha/dotUI/tree/main/content/components/drag-and-drop/drop-zone.mdx?plain=1
 ---
 
-<ComponentPreview name="demos/components/core/drop-zone/default" className="max-w-sm" />
+<ComponentPreview
+  name="demos/components/core/drop-zone/default"
+  preview={`<DropZone>
+  <UploadIcon />
+</DropZone>`}
+/>
 
 ## Installation
 
@@ -26,21 +40,45 @@ npm install react-aria-components
 
 ### Label
 
-A visual label can be provided for the `DropZone` using the `DropZoneLabel` component, or a hidden label using `aria-label` prop.
+A visual label can be provided for the `DropZone` using the `<Text slot="label">` component, or a hidden label using `aria-label` prop.
 
-<ComponentPreview name="demos/components/core/drop-zone/label" />
+<ComponentPreview
+  name="demos/components/core/drop-zone/label"
+  preview={`<DropZone aria-label="drag and drop files here">
+  <UploadIcon />
+</DropZone>
+<DropZone>
+  <UploadIcon />
+  <DropZoneLabel>Drag and drop files here</DropZoneLabel>
+</DropZone>`}
+/>
 
 ### Disabled
 
 Use the `isDisabled` prop to disable the drop zone.
 
-<ComponentPreview name="demos/components/core/drop-zone/disabled" />
+<ComponentPreview
+  name="demos/components/core/drop-zone/disabled"
+  preview={`<DropZone isDisabled>
+  <UploadIcon />
+  <Text slot="label">Drag and drop files here</Text>
+</DropZone>`}
+/>
 
 ## Examples
 
 ### File trigger
 
-<ComponentPreview name="demos/components/core/drop-zone/file-trigger" />
+<ComponentPreview
+  name="demos/components/core/drop-zone/file-trigger"
+  preview={`<DropZone>
+  <UploadIcon />
+  <Text slot="label">Drag and drop files here</Text>
+  <FileTrigger>
+    <Button>Select files</Button>
+  </FileTrigger>
+</DropZone>`}
+/>
 
 ## API Reference
 
