@@ -15,7 +15,10 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/inputs/text-field.mdx?plain=1
 ---
 
-<ComponentPreview name="demos/components/core/color-picker/default" />
+<ComponentPreview
+  name="demos/components/core/color-picker/default"
+  preview={`<ColorPicker defaultValue="#5100FF" />`}
+/>
 
 ## Installation
 
@@ -63,7 +66,10 @@ Use a `ColorPicker` to allow users to select and edit a color in an overlay.
 
 An initial, uncontrolled value can be provided to the `ColorPicker` using the `defaultValue` prop.
 
-<ComponentPreview name="demos/components/core/color-picker/uncontrolled" preview={``} />
+<ComponentPreview
+  name="demos/components/core/color-picker/uncontrolled"
+  preview={`<ColorPicker defaultValue="#5100FF" />`}
+/>
 
 ## Controlled
 
@@ -79,7 +85,19 @@ return <ColorPicker value={value as Color & string} onChange={setValue} />;`}
 
 If you need to customize things further, you can drop down to the composition level.
 
-<ComponentPreview name="demos/components/core/color-picker/composition" preview={``} />
+<ComponentPreview
+  name="demos/components/core/color-picker/composition"
+  preview={`<ColorPickerRoot defaultValue="#5100FF">
+  <DialogRoot>
+    <Button>
+      <ColorSwatch />
+    </Button>
+    <Dialog>
+      <ColorEditor />
+    </Dialog>
+  </DialogRoot>
+</ColorPickerRoot>`}
+/>
 
 ## API Reference
 
