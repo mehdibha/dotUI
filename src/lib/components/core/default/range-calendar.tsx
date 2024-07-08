@@ -6,6 +6,8 @@ import {
   RangeCalendar as AriaRangeCalendar,
   type RangeCalendarProps as AriaRangeCalendarProps,
   type DateValue,
+  RangeCalendarContext as AriaRangeCalendarContext,
+  useSlottedContext,
 } from "react-aria-components";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/lib/icons";
 import { Button } from "./button";
@@ -70,7 +72,9 @@ const RangeCalendar = <T extends DateValue>({
 
 type RangeCalendarRootProps<T extends DateValue> = AriaRangeCalendarProps<T>;
 const RangeCalendarRoot = <T extends DateValue>(props: RangeCalendarRootProps<T>) => {
-  const { root } = calendarStyles();
+  const CalendarContext = useSlottedContext(AriaRangeCalendarContext);
+  const standalone = Object.keys(CalendarContext ?? {}).length === 0;
+  const { root } = calendarStyles({ standalone });
   return (
     <AriaRangeCalendar
       className={composeRenderProps(props.className, (className) => root({ className }))}

@@ -16,6 +16,8 @@ import {
   type CalendarGridBodyProps as AriaCalendarGridBodyProps,
   type CalendarCellProps as AriaCalendarCellProps,
   type DateValue,
+  CalendarContext as AriaCalendarContext,
+  useSlottedContext,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/lib/icons";
@@ -25,7 +27,7 @@ import { Text } from "./text";
 
 const calendarStyles = tv({
   slots: {
-    root: "w-fit max-w-full rounded-md border bg-bg p-3",
+    root: "",
     header: "mb-4 flex items-center justify-between gap-2",
     grid: "w-full border-collapse",
     gridHeader: "mb-4",
@@ -34,6 +36,14 @@ const calendarStyles = tv({
     cell: "",
   },
   variants: {
+    standalone: {
+      true: {
+        root: "border bg-bg rounded-md p-3",
+      },
+      false: {
+        root: "rounded-[inherit]",
+      },
+    },
     range: {
       false: {
         cell: [
@@ -81,7 +91,7 @@ const Calendar = <T extends DateValue>({
   visibleMonths = Math.min(Math.max(visibleMonths, 1), 3);
 
   return (
-    <AriaCalendar visibleDuration={{ months: visibleMonths }} {...props}>
+    <CalendarRoot visibleDuration={{ months: visibleMonths }} {...props}>
       {({ isInvalid }) => (
         <>
           <CalendarHeader>
@@ -106,17 +116,19 @@ const Calendar = <T extends DateValue>({
           {isInvalid && errorMessage && <Text slot="errorMessage">{errorMessage}</Text>}
         </>
       )}
-    </AriaCalendar>
+    </CalendarRoot>
   );
 };
 
 type CalendarRootProps<T extends DateValue> = AriaCalendarProps<T>;
 const CalendarRoot = <T extends DateValue>(props: CalendarRootProps<T>) => {
-  const { root } = calendarStyles();
+  const CalendarContext = useSlottedContext(AriaCalendarContext);
+  const standalone = Object.keys(CalendarContext ?? {}).length === 0;
+  const { root } = calendarStyles({ standalone });
   return (
     <AriaCalendar
-      className={composeRenderProps(props.className, (className) => root({ className }))}
       {...props}
+      className={composeRenderProps(props.className, (className) => root({ className }))}
     />
   );
 };
