@@ -7,29 +7,27 @@ import {
   DialogContext as AriaDialogContext,
   DialogTrigger as AriaDialogTrigger,
   Dialog as AriaDialog,
-  Heading as AriaHeading,
-  Text as AriaText,
   type DialogProps as AriaDialogProps,
   type DialogTriggerProps as AriaDialogTriggerProps,
-  type HeadingProps as AriaHeadingProps,
-  type TextProps as AriaTextProps,
   TextContext,
 } from "react-aria-components";
 import { Provider } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import { Heading } from "./heading";
 import { Overlay, type OverlayProps } from "./overlay";
+import { Text } from "./text";
 
 const dialogStyles = tv({
   slots: {
-    overlay: "",
-    backdrop: "",
-    content: "relative outline-none rounded-[inherit] p-4 flex flex-col max-w-full",
+    content: [
+      "relative outline-none rounded-[inherit] p-4 flex flex-col max-w-full",
+      "group-data-[type=modal]/overlay:p-6",
+      "group-data-[type=drawer]/overlay:pt-0",
+    ],
     header: "mb-4",
-    title: "text-xl font-semibold",
-    description: "text-sm text-fg-muted",
     body: "space-y-4",
     footer: "flex flex-col-reverse sm:flex-row sm:justify-end gap-2 pt-4",
-    inset: "-mx-3 sm:-mx-6",
+    inset: "-mx-4 group-data-[type=modal]/overlay:-mx-6",
   },
 });
 
@@ -59,8 +57,8 @@ interface DialogProps extends DialogContentProps {
 const Dialog = ({
   title,
   description,
-  type,
-  mobileType,
+  type = "modal",
+  mobileType = "drawer",
   mediaQuery,
   isDismissable: isDismissableProp,
   ...props
@@ -78,8 +76,8 @@ const Dialog = ({
           <>
             {(title || description) && (
               <DialogHeader>
-                {title && <DialogTitle>{title}</DialogTitle>}
-                {description && <DialogDescription>{description}</DialogDescription>}
+                {title && <Heading>{title}</Heading>}
+                {description && <Text slot="description">{description}</Text>}
               </DialogHeader>
             )}
             {children}
@@ -110,20 +108,8 @@ const DialogHeader = ({ children, className, ...props }: DialogHeaderProps) => {
   );
 };
 
-type DialogTitleProps = AriaHeadingProps;
-const DialogTitle = ({ className, ...props }: DialogTitleProps) => {
-  const { title } = dialogStyles();
-  return <AriaHeading slot="title" className={title({ className })} {...props} />;
-};
-
-type DialogDescriptionProps = AriaTextProps;
-const DialogDescription = ({ className, ...props }: DialogDescriptionProps) => {
-  const { description } = dialogStyles();
-  return <AriaText slot="description" className={description({ className })} {...props} />;
-};
-
-type DialogBody = React.ComponentProps<"div">;
-const DialogBody = ({ className, ...props }: DialogDescriptionProps) => {
+type DialogBodyProps = React.ComponentProps<"div">;
+const DialogBody = ({ className, ...props }: DialogBodyProps) => {
   const { body } = dialogStyles();
   return <div className={body({ className })} {...props} />;
 };
@@ -131,7 +117,7 @@ const DialogBody = ({ className, ...props }: DialogDescriptionProps) => {
 type DialogFooterProps = React.ComponentProps<"footer">;
 const DialogFooter = ({ className, ...props }: DialogFooterProps) => {
   const { footer } = dialogStyles();
-  return <footer slot="description" className={footer({ className })} {...props} />;
+  return <footer className={footer({ className })} {...props} />;
 };
 
 type DialogInsetProps = React.ComponentProps<"div">;
@@ -145,19 +131,7 @@ export type {
   DialogProps,
   DialogContentProps,
   DialogHeaderProps,
-  DialogTitleProps,
-  DialogDescriptionProps,
   DialogFooterProps,
   DialogInsetProps,
 };
-export {
-  DialogRoot,
-  DialogContent,
-  Dialog,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogBody,
-  DialogFooter,
-  DialogInset,
-};
+export { DialogRoot, DialogContent, Dialog, DialogHeader, DialogBody, DialogFooter, DialogInset };

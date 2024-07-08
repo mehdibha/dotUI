@@ -8,7 +8,7 @@ export default function Demo() {
     <DialogRoot>
       <Button variant="outline">Edit username</Button>
       <Dialog title="Edit username">
-        <TextField label="Username" defaultValue="@mehdibha_" />
+        <TextField label="Username" defaultValue="@mehdibha_" className="w-full" />
       </Dialog>
     </DialogRoot>
   );

@@ -13,8 +13,8 @@ export default function Demo() {
         {({ close }) => (
           <>
             <DialogBody>
-              <TextField autoFocus label="Name" defaultValue="Mehdi" />
-              <TextField label="Username" defaultValue="@mehdibha_" />
+              <TextField autoFocus label="Name" defaultValue="Mehdi" className="w-full" />
+              <TextField label="Username" defaultValue="@mehdibha_" className="w-full" />
             </DialogBody>
             <DialogFooter>
               <Button variant="outline" size={{ initial: "lg", sm: "md" }} onPress={close}>
