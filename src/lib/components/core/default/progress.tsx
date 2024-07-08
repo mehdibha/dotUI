@@ -12,12 +12,11 @@ import { Label } from "./field";
 
 const progressStyles = tv({
   slots: {
-    root: "w-full grid [grid-template-areas:'label_valueLabel''progress_progress'] grid-cols-[1fr_auto] gap-1",
-    indicator: "[grid-area:progress] relative h-2.5 w-full overflow-hidden rounded-full",
+    root: "flex flex-col gap-2 w-60",
+    indicator: "relative h-2.5 w-full overflow-hidden rounded-full",
     filler:
       "h-full animate-progress-grow w-full flex-1 bg-fg transition-transform origin-left min-w-14",
-    valueLabel: "[grid-area:valueLabel] text-sm",
-    label: "[grid-area:label] ",
+    valueLabel: "text-sm",
   },
   variants: {
     variant: {
@@ -84,8 +83,12 @@ const Progress = ({
 }: ProgressProps) => {
   return (
     <ProgressRoot duration={duration} className={cn(className, classNames?.root)} {...props}>
-      {label && <Label className={classNames?.label}>{label}</Label>}
-      {showValueLabel && <ProgressValueLabel className={classNames?.valueLabel} />}
+      {(label || showValueLabel) && (
+        <div className={cn("flex items-center justify-between gap-2", !label && "justify-end")}>
+          {label && <Label>{label}</Label>}
+          {showValueLabel && <ProgressValueLabel />}
+        </div>
+      )}
       <ProgressIndicator
         variant={variant}
         size={size}

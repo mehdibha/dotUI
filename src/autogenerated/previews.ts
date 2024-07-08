@@ -170,7 +170,7 @@ export const previews = {
     },
     "demos/components/core/color-picker/options": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/color-picker/options")),
-      code : [{"title":"options.tsx","code":"import { ColorPicker } from \"@/lib/components/core/default/color-picker\";\r\n\r\nexport default function Demo() {\r\n  return <ColorPicker defaultValue=\"#5100FF\" label=\"Fill color\" />;\r\n}\r\n"}]
+      code : [{"title":"options.tsx","code":"import { ColorPicker } from \"@/lib/components/core/default/color-picker\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <ColorPicker size=\"sm\" shape=\"rectangle\" defaultValue=\"#107030\">\r\n      Fill color\r\n    </ColorPicker>\r\n  );\r\n}\r\n"}]
     },
     "demos/components/core/color-picker/uncontrolled": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/color-picker/uncontrolled")),
@@ -178,11 +178,11 @@ export const previews = {
     },
     "demos/components/core/color-picker/controlled": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/color-picker/controlled")),
-      code : [{"title":"controlled.tsx","code":"\"use client\";\r\n\r\nimport React from \"react\";\r\nimport { ColorPicker } from \"@/lib/components/core/default/color-picker\";\r\n\r\nexport default function Demo() {\r\n  const [value, setValue] = React.useState<string>(\"hsl(25, 100%, 50%)\");\r\n  return <ColorPicker value={value} onChange={(color) => setValue(color.toString())} />;\r\n}\r\n"}]
+      code : [{"title":"controlled.tsx","code":"\"use client\";\r\n\r\nimport React from \"react\";\r\nimport { type Color, parseColor } from \"react-aria-components\";\r\nimport { ColorPicker } from \"@/lib/components/core/default/color-picker\";\r\n\r\nexport default function Demo() {\r\n  const [value, setValue] = React.useState(parseColor(\"hsl(26, 33%, 78%)\"));\r\n  // React aria components should fix this type issue (normally its Color not Color & string)\r\n  return <ColorPicker value={value as Color & string} onChange={setValue} />;\r\n}\r\n"}]
     },
     "demos/components/core/color-picker/composition": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/color-picker/composition")),
-      code : [{"title":"composition.tsx","code":"import { ColorPicker } from \"@/lib/components/core/default/color-picker\";\r\n\r\nexport default function Demo() {\r\n  return <ColorPicker defaultValue=\"#5100FF\" />;\r\n}\r\n"}]
+      code : [{"title":"composition.tsx","code":"import { Button } from \"@/lib/components/core/default/button\";\r\nimport { ColorEditor, ColorPickerRoot } from \"@/lib/components/core/default/color-picker\";\r\nimport { ColorSwatch } from \"@/lib/components/core/default/color-swatch\";\r\nimport { Dialog, DialogRoot } from \"@/lib/components/core/default/dialog\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <ColorPickerRoot defaultValue=\"#5100FF\">\r\n      <DialogRoot>\r\n        <Button shape=\"square\">\r\n          <ColorSwatch />\r\n        </Button>\r\n        <Dialog type=\"popover\" mobileType=\"drawer\">\r\n          <ColorEditor />\r\n        </Dialog>\r\n      </DialogRoot>\r\n    </ColorPickerRoot>\r\n  );\r\n}\r\n"}]
     },
     "demos/components/core/color-slider/default": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/color-slider/default")),
@@ -666,19 +666,19 @@ export const previews = {
     },
     "demos/components/core/drop-zone/default": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/drop-zone/default")),
-      code : [{"title":"default.tsx","code":"\"use client\";\r\n\r\nimport React from \"react\";\r\nimport { DropZone, DropZoneLabel } from \"@/lib/components/core/default/drop-zone\";\r\nimport { UploadIcon } from \"@/lib/icons\";\r\n\r\nexport default function DropZoneDemo() {\r\n  return (\r\n    <DropZone>\r\n      <UploadIcon />\r\n      <DropZoneLabel>Drag and drop files here</DropZoneLabel>\r\n    </DropZone>\r\n  );\r\n}\r\n"}]
+      code : [{"title":"default.tsx","code":"import React from \"react\";\r\nimport { DropZone } from \"@/lib/components/core/default/drop-zone\";\r\nimport { UploadIcon } from \"@/lib/icons\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <DropZone>\r\n      <UploadIcon />\r\n    </DropZone>\r\n  );\r\n}\r\n"}]
     },
     "demos/components/core/drop-zone/label": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/drop-zone/label")),
-      code : [{"title":"label.tsx","code":"\"use client\";\r\n\r\nimport React from \"react\";\r\nimport { DropZone, DropZoneLabel } from \"@/lib/components/core/default/drop-zone\";\r\nimport { UploadIcon } from \"@/lib/icons\";\r\n\r\nexport default function DropZoneDemo() {\r\n  return (\r\n    <div className=\"w-full space-y-2\">\r\n      <DropZone aria-label=\"drag and drop files here\">\r\n        <UploadIcon />\r\n      </DropZone>\r\n      <DropZone>\r\n        <UploadIcon />\r\n        <DropZoneLabel>Drag and drop files here</DropZoneLabel>\r\n      </DropZone>\r\n    </div>\r\n  );\r\n}\r\n"}]
+      code : [{"title":"label.tsx","code":"\"use client\";\r\n\r\nimport React from \"react\";\r\nimport { DropZone } from \"@/lib/components/core/default/drop-zone\";\r\nimport { Text } from \"@/lib/components/core/default/text\";\r\nimport { UploadIcon } from \"@/lib/icons\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <div className=\"flex flex-col gap-4\">\r\n      <DropZone aria-label=\"drag and drop files here\">\r\n        <UploadIcon />\r\n      </DropZone>\r\n      <DropZone>\r\n        <UploadIcon />\r\n        <Text slot=\"label\">Drag and drop files here</Text>\r\n      </DropZone>\r\n    </div>\r\n  );\r\n}\r\n"}]
     },
     "demos/components/core/drop-zone/disabled": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/drop-zone/disabled")),
-      code : [{"title":"disabled.tsx","code":"import React from \"react\";\r\nimport { DropZone, DropZoneLabel } from \"@/lib/components/core/default/drop-zone\";\r\nimport { UploadIcon } from \"@/lib/icons\";\r\n\r\nexport default function DropZoneDemo() {\r\n  return (\r\n    <DropZone isDisabled>\r\n      <UploadIcon />\r\n      <DropZoneLabel>Drag and drop files here</DropZoneLabel>\r\n    </DropZone>\r\n  );\r\n}\r\n"}]
+      code : [{"title":"disabled.tsx","code":"import React from \"react\";\r\nimport { DropZone } from \"@/lib/components/core/default/drop-zone\";\r\nimport { Text } from \"@/lib/components/core/default/text\";\r\nimport { UploadIcon } from \"@/lib/icons\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <DropZone isDisabled>\r\n      <UploadIcon />\r\n      <Text slot=\"label\">Drag and drop files here</Text>\r\n    </DropZone>\r\n  );\r\n}\r\n"}]
     },
     "demos/components/core/drop-zone/file-trigger": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/drop-zone/file-trigger")),
-      code : [{"title":"file-trigger.tsx","code":"\"use client\";\r\n\r\nimport React from \"react\";\r\nimport { Button } from \"@/lib/components/core/default/button\";\r\nimport { DropZone, DropZoneLabel } from \"@/lib/components/core/default/drop-zone\";\r\nimport { FileTrigger } from \"@/lib/components/core/default/file-trigger\";\r\nimport { UploadIcon } from \"@/lib/icons\";\r\n\r\nexport default function DropZoneDemo() {\r\n  return (\r\n    <DropZone>\r\n      <UploadIcon />\r\n      <DropZoneLabel>Drag and drop files here</DropZoneLabel>\r\n      <FileTrigger>\r\n        <Button className=\"mt-2\">Select files</Button>\r\n      </FileTrigger>\r\n    </DropZone>\r\n  );\r\n}\r\n"}]
+      code : [{"title":"file-trigger.tsx","code":"import React from \"react\";\r\nimport { Button } from \"@/lib/components/core/default/button\";\r\nimport { DropZone } from \"@/lib/components/core/default/drop-zone\";\r\nimport { FileTrigger } from \"@/lib/components/core/default/file-trigger\";\r\nimport { Text } from \"@/lib/components/core/default/text\";\r\nimport { UploadIcon } from \"@/lib/icons\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <DropZone className=\"space-y-1\">\r\n      <UploadIcon />\r\n      <Text slot=\"label\">Drag and drop files here</Text>\r\n      <FileTrigger>\r\n        <Button>Select files</Button>\r\n      </FileTrigger>\r\n    </DropZone>\r\n  );\r\n}\r\n"}]
     },
     "demos/components/core/alert/default": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/alert/default")),
@@ -714,15 +714,15 @@ export const previews = {
     },
     "demos/components/core/progress/variants": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/progress/variants")),
-      code : [{"title":"variants.tsx","code":"import * as React from \"react\";\nimport { Progress } from \"@/lib/components/core/default/progress\";\n\nconst variants = [\"default\", \"success\", \"accent\", \"danger\", \"warning\"] as const;\n\nexport default function Demo() {\n  return (\n    <div className=\"w-full space-y-4\">\n      {variants.map((variant) => (\n        <Progress key={variant} value={75} label={variant} variant={variant} />\n      ))}\n    </div>\n  );\n}\n"}]
+      code : [{"title":"variants.tsx","code":"import * as React from \"react\";\nimport { Progress } from \"@/lib/components/core/default/progress\";\n\nconst variants = [\"default\", \"success\", \"accent\", \"danger\", \"warning\"] as const;\n\nexport default function Demo() {\n  return (\n    <div className=\"space-y-4\">\n      {variants.map((variant) => (\n        <Progress key={variant} value={75} label={variant} variant={variant} />\n      ))}\n    </div>\n  );\n}\n"}]
     },
     "demos/components/core/progress/sizes": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/progress/sizes")),
-      code : [{"title":"sizes.tsx","code":"\"use client\";\n\nimport * as React from \"react\";\nimport { Progress } from \"@/lib/components/core/default/progress\";\n\nconst sizes = [\"sm\", \"md\", \"lg\"] as const;\n\nexport default function Demo() {\n  return (\n    <div className=\"w-full space-y-4\">\n      {sizes.map((size) => (\n        <Progress key={size} value={75} size={size} label={size} />\n      ))}\n    </div>\n  );\n}\n"}]
+      code : [{"title":"sizes.tsx","code":"\"use client\";\n\nimport * as React from \"react\";\nimport { Progress } from \"@/lib/components/core/default/progress\";\n\nconst sizes = [\"sm\", \"md\", \"lg\"] as const;\n\nexport default function Demo() {\n  return (\n    <div className=\"space-y-4\">\n      {sizes.map((size) => (\n        <Progress key={size} value={75} size={size} label={size} />\n      ))}\n    </div>\n  );\n}\n"}]
     },
     "demos/components/core/progress/label": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/progress/label")),
-      code : [{"title":"label.tsx","code":"\"use client\";\n\nimport * as React from \"react\";\nimport { Progress } from \"@/lib/components/core/default/progress\";\n\nexport default function Demo() {\n  return (\n    <div className=\"flex w-full flex-col gap-4\">\n      <Progress aria-label=\"Loading\" value={75} />\n      <Progress label=\"Loading...\" value={75} />\n    </div>\n  );\n}\n"}]
+      code : [{"title":"label.tsx","code":"\"use client\";\n\nimport * as React from \"react\";\nimport { Progress } from \"@/lib/components/core/default/progress\";\n\nexport default function Demo() {\n  return (\n    <div className=\"space-y-4\">\n      <Progress aria-label=\"Loading\" value={75} />\n      <Progress label=\"Loading...\" value={75} />\n    </div>\n  );\n}\n"}]
     },
     "demos/components/core/progress/value-label": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/progress/value-label")),
@@ -734,7 +734,7 @@ export const previews = {
     },
     "demos/components/core/progress/custom-value-label": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/progress/custom-value-label")),
-      code : [{"title":"custom-value-label.tsx","code":"\"use client\";\n\nimport * as React from \"react\";\nimport { Progress } from \"@/lib/components/core/default/progress\";\n\nexport default function Demo() {\n  return <Progress label=\"Feeding…\" valueLabel=\"30 of 100 dogs\" value={30} />;\n}\n"}]
+      code : [{"title":"custom-value-label.tsx","code":"\"use client\";\n\nimport * as React from \"react\";\nimport { Progress } from \"@/lib/components/core/default/progress\";\n\nexport default function Demo() {\n  return <Progress label=\"Feeding…\" showValueLabel valueLabel=\"30 of 100 dogs\" value={30} />;\n}\n"}]
     },
     "demos/components/core/progress/indeterminate": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/progress/indeterminate")),
@@ -1608,9 +1608,13 @@ export const previews = {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/tooltip/default")),
       code : [{"title":"default.tsx","code":"import { Button } from \"@/lib/components/core/default/button\";\nimport { Tooltip } from \"@/lib/components/core/default/tooltip\";\nimport { PlusIcon } from \"@/lib/icons\";\n\nexport default function Demo() {\n  return (\n    <Tooltip content=\"Add to library\">\n      <Button shape=\"square\">\n        <PlusIcon />\n      </Button>\n    </Tooltip>\n  );\n}\n"}]
     },
+    "demos/components/core/tooltip/arrow": {
+      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/tooltip/arrow")),
+      code : [{"title":"arrow.tsx","code":"import { Button } from \"@/lib/components/core/default/button\";\nimport { Tooltip } from \"@/lib/components/core/default/tooltip\";\nimport { PlusIcon } from \"@/lib/icons\";\n\nexport default function Demo() {\n  return (\n    <Tooltip content=\"Add to library\" arrow>\n      <Button shape=\"square\">\n        <PlusIcon />\n      </Button>\n    </Tooltip>\n  );\n}\n"}]
+    },
     "demos/components/core/tooltip/placement": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/tooltip/placement")),
-      code : [{"title":"placement.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { Button } from \"@/lib/components/core/default/button\";\nimport { Item } from \"@/lib/components/core/default/list-box\";\nimport { Select } from \"@/lib/components/core/default/select\";\nimport { Tooltip, type TooltipProps } from \"@/lib/components/core/default/tooltip\";\nimport { PlusIcon } from \"@/lib/icons\";\n\ntype Placement = TooltipProps[\"placement\"];\n\nexport default function Demo() {\n  const [placement, setPlacement] = React.useState<Placement>(\"top\");\n  return (\n    <div className=\"flex items-center gap-10\">\n      <Tooltip placement={placement} content=\"Add to library\">\n        <Button shape=\"square\">\n          <PlusIcon />\n        </Button>\n      </Tooltip>\n      <Select\n        label=\"Placement\"\n        selectedKey={placement}\n        onSelectionChange={(key) => setPlacement(key as Placement)}\n      >\n        {[\n          \"bottom\",\n          \"bottom left\",\n          \"bottom right\",\n          \"bottom start\",\n          \"bottom end\",\n          \"top\",\n          \"top left\",\n          \"top right\",\n          \"top start\",\n          \"top end\",\n          \"left\",\n          \"left top\",\n          \"left\",\n          \"bottom\",\n          \"start\",\n          \"start top\",\n          \"start bottom\",\n          \"right\",\n          \"right top\",\n          \"right\",\n          \"bottom\",\n          \"end\",\n          \"end top\",\n          \"end bottom\",\n        ].map((pos, index) => (\n          <Item key={index}>{pos}</Item>\n        ))}\n      </Select>\n    </div>\n  );\n}\n"}]
+      code : [{"title":"placement.tsx","code":"import React from \"react\";\nimport { Button } from \"@/lib/components/core/default/button\";\nimport { Tooltip } from \"@/lib/components/core/default/tooltip\";\nimport { PlusIcon } from \"@/lib/icons\";\n\nexport default function Demo() {\n  return (\n    <div className=\"flex items-center gap-4\">\n      <Tooltip placement=\"top\" content=\"Add to library\">\n        <Button shape=\"square\">\n          <PlusIcon />\n        </Button>\n      </Tooltip>\n      <Tooltip placement=\"bottom\" content=\"Add to library\">\n        <Button shape=\"square\">\n          <PlusIcon />\n        </Button>\n      </Tooltip>\n      <Tooltip placement=\"left\" content=\"Add to library\">\n        <Button shape=\"square\">\n          <PlusIcon />\n        </Button>\n      </Tooltip>\n      <Tooltip placement=\"right\" content=\"Add to library\">\n        <Button shape=\"square\">\n          <PlusIcon />\n        </Button>\n      </Tooltip>\n    </div>\n  );\n}\n"}]
     },
     "demos/components/core/tooltip/flip": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/tooltip/flip")),
@@ -1627,10 +1631,6 @@ export const previews = {
     "demos/components/core/tooltip/delay": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/tooltip/delay")),
       code : [{"title":"delay.tsx","code":"\"use client\";\n\nimport React from \"react\";\nimport { Button } from \"@/lib/components/core/default/button\";\nimport { NumberField } from \"@/lib/components/core/default/number-field\";\nimport { Tooltip } from \"@/lib/components/core/default/tooltip\";\nimport { PlusIcon } from \"@/lib/icons\";\n\nexport default function Demo() {\n  const [delay, setDelay] = React.useState(700);\n  const [closeDelay, setCloseDelay] = React.useState(0);\n  return (\n    <div className=\"flex flex-col items-center gap-10\">\n      <Tooltip delay={delay} closeDelay={closeDelay} content=\"Add to library\">\n        <Button shape=\"square\">\n          <PlusIcon />\n        </Button>\n      </Tooltip>\n      <div className=\"max-w-[150px] space-y-4\">\n        <NumberField label=\"Delay\" value={delay} onChange={(value) => setDelay(value)} />\n        <NumberField\n          label=\"Close Delay\"\n          value={closeDelay}\n          onChange={(value) => setCloseDelay(value)}\n        />\n      </div>\n    </div>\n  );\n}\n"}]
-    },
-    "demos/components/core/tooltip/custom-content": {
-      component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/tooltip/custom-content")),
-      code : [{"title":"custom-content.tsx","code":"import { Button } from \"@/lib/components/core/default/button\";\nimport { Tooltip } from \"@/lib/components/core/default/tooltip\";\nimport { PlusIcon } from \"@/lib/icons\";\n\nexport default function Demo() {\n  return (\n    <Tooltip\n      content={\n        <p>\n          Add to <b className=\"font-bold\">library</b>\n        </p>\n      }\n    >\n      <Button shape=\"square\">\n        <PlusIcon />\n      </Button>\n    </Tooltip>\n  );\n}\n"}]
     },
     "demos/components/core/tooltip/composition": {
       component: React.lazy<React.FC>(() => import("@/lib/demos/components/core/tooltip/composition")),

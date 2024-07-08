@@ -1,57 +1,31 @@
-"use client";
-
 import React from "react";
 import { Button } from "@/lib/components/core/default/button";
-import { Item } from "@/lib/components/core/default/list-box";
-import { Select } from "@/lib/components/core/default/select";
-import { Tooltip, type TooltipProps } from "@/lib/components/core/default/tooltip";
+import { Tooltip } from "@/lib/components/core/default/tooltip";
 import { PlusIcon } from "@/lib/icons";
 
-type Placement = TooltipProps["placement"];
-
 export default function Demo() {
-  const [placement, setPlacement] = React.useState<Placement>("top");
   return (
-    <div className="flex items-center gap-10">
-      <Tooltip placement={placement} content="Add to library">
+    <div className="flex items-center gap-4">
+      <Tooltip placement="top" content="Add to library">
         <Button shape="square">
           <PlusIcon />
         </Button>
       </Tooltip>
-      <Select
-        label="Placement"
-        selectedKey={placement}
-        onSelectionChange={(key) => setPlacement(key as Placement)}
-      >
-        {[
-          "bottom",
-          "bottom left",
-          "bottom right",
-          "bottom start",
-          "bottom end",
-          "top",
-          "top left",
-          "top right",
-          "top start",
-          "top end",
-          "left",
-          "left top",
-          "left",
-          "bottom",
-          "start",
-          "start top",
-          "start bottom",
-          "right",
-          "right top",
-          "right",
-          "bottom",
-          "end",
-          "end top",
-          "end bottom",
-        ].map((pos, index) => (
-          <Item key={index}>{pos}</Item>
-        ))}
-      </Select>
+      <Tooltip placement="bottom" content="Add to library">
+        <Button shape="square">
+          <PlusIcon />
+        </Button>
+      </Tooltip>
+      <Tooltip placement="left" content="Add to library">
+        <Button shape="square">
+          <PlusIcon />
+        </Button>
+      </Tooltip>
+      <Tooltip placement="right" content="Add to library">
+        <Button shape="square">
+          <PlusIcon />
+        </Button>
+      </Tooltip>
     </div>
   );
 }

@@ -4,13 +4,7 @@ import { PlusIcon } from "@/lib/icons";
 
 export default function Demo() {
   return (
-    <Tooltip
-      content={
-        <p>
-          Add to <b className="font-bold">library</b>
-        </p>
-      }
-    >
+    <Tooltip content="Add to library" arrow>
       <Button shape="square">
         <PlusIcon />
       </Button>

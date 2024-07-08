@@ -9,9 +9,18 @@ links:
     href: https://react-spectrum.adobe.com/react-aria/Tooltip.html
   - label: Aria API Reference
     href: https://react-spectrum.adobe.com/react-aria/Tooltip.html#props
+  - label: Report an issue
+    href: https://github.com/mehdibha/dotUI/issues/new/choose
+  - label: Edit this page
+    href: https://github.com/mehdibha/dotUI/tree/main/content/components/overlay/tooltip.mdx?plain=1
 ---
 
-<ComponentPreview name="demos/components/core/tooltip/default" />
+<ComponentPreview
+  name="demos/components/core/tooltip/default"
+  preview={`<Tooltip content="Add to library">
+  <Button><PlusIcon /></Button>
+</Tooltip>`}
+/>
 
 ## Installation
 
@@ -29,6 +38,10 @@ npm install react-aria-components
 
 ## Usage
 
+Use `Tooltip` to display a description of an element on hover or focus.
+
+### Best practices
+
 - Use tooltips to describe icons (e.g., icon buttons).
 - Keep the tooltip text minimal.
 - Never include tooltips on non-interactive components (div, span, p) because it will not be accessible for keyboard or screen reader users.
@@ -36,94 +49,114 @@ npm install react-aria-components
 
 ## Options
 
+### Arrow
+
+<ComponentPreview
+  name="demos/components/core/tooltip/arrow"
+  preview={`<Tooltip content="Add to library" arrow>
+  <Button><PlusIcon /></Button>
+</Tooltip>`}
+/>
+
 ### Placement
 
-TODO Fix Select
+The Tooltip's placement with respect to its trigger element can be adjusted using the `placement` prop. See the props table for a full list of available placement combinations.
 
-A tooltip is positioned in relation to its target. The default placement value is at the top.
-
-<ComponentPreview name="demos/components/core/tooltip/placement" />
+<ComponentPreview
+  name="demos/components/core/tooltip/placement"
+  preview={`<Tooltip placement="top" content="Add to library"><Button /></Tooltip>
+<Tooltip placement="bottom" content="Add to library"><Button /></Tooltip>
+<Tooltip placement="left" content="Add to library"><Button /></Tooltip>
+<Tooltip placement="right" content="Add to library"><Button /></Tooltip>`}
+/>
 
 ### Should flip
 
 This option determines whether or not a tooltip should be able to switch sides when constrained by space.
 
-<ComponentPreview name="demos/components/core/tooltip/flip" />
+<ComponentPreview
+  name="demos/components/core/tooltip/flip"
+  preview={`<Tooltip shouldFlip={shouldFlip} content="Add to library">
+  <Button><PlusIcon /></Button>
+</Tooltip>`}
+/>
 
 ### Offset
 
 The offset is the distance between the end of the tip and the target.
 
-<ComponentPreview name="demos/components/core/tooltip/offset" />
+<ComponentPreview
+  name="demos/components/core/tooltip/offset"
+  preview={`<Tooltip offset={offset} content="Add to library">
+  <Button><PlusIcon /></Button>
+</Tooltip>`}
+/>
 
 ### Container padding
 
 To make sure that the tooltip will stay within certain boundaries (e.g., a browser window) it’s possible to define a container and a container padding value to respect. The default value for this is 12 px.
 
-<ComponentPreview name="demos/components/core/tooltip/container-padding" />
+<ComponentPreview
+  name="demos/components/core/tooltip/container-padding"
+  preview={`<Tooltip containerPadding={containerPadding} content="Add to library">
+  <Button><PlusIcon /></Button>
+</Tooltip>`}
+/>
 
 ### Delay
 
 The delay duration (the time from when the mouse enters a tooltip trigger until the tooltip opens) and the close delay can be customised.
 
-<ComponentPreview name="demos/components/core/tooltip/delay" />
+<ComponentPreview
+  name="demos/components/core/tooltip/delay"
+  preview={`<Tooltip delay={delay} closeDelay={closeDelay} content="Add to library">
+  <Button><PlusIcon /></Button>
+</Tooltip>`}
+/>
 
-## Examples
-
-### Custom content
-
-The content of a tooltip can accept custom content, not just text.
-
-<ComponentPreview name="demos/components/core/tooltip/custom-content" />
-
-### Composition
+## Composition
 
 For more flexibility, you can use the composition pattern to create a custom tooltip.
 
-<ComponentPreview name="demos/components/core/tooltip/composition" />
+<ComponentPreview
+  name="demos/components/core/tooltip/composition"
+  preview={`<TooltipRoot>
+  <Button>Hover</Button>
+  <TooltipContent>
+    <p>Add to library</p>
+  </TooltipContent>
+</TooltipRoot>`}
+/>
 
 ## API Reference
 
 ### Tooltip
 
-This component inherits and merges props from `TooltipRoot` and `TooltipContent` components.
+| Prop                  | Type              | Default                                                                                              | Description                                                                                                                                                                            |
+| --------------------- | ----------------- | ---------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `content`             | `React.ReactNode` | -                                                                                                    | The content of the Tooltip                                                                                                                                                             |
+| `isDisabled`          | `boolean`         | -                                                                                                    | Whether the tooltip should be disabled, independent from the trigger.                                                                                                                  |
+| `delay`               | `number`          | 700                                                                                                  | The delay time for the tooltip to show up.                                                                                                                                             |
+| `closeDelay`          | `number`          | 0                                                                                                    | The delay time for the tooltip to close.                                                                                                                                               |
+| `trigger`             | `'focus'`         | -                                                                                                    | By default, opens for both focus and hover. Can be made to open only for focus.                                                                                                        |
+| `isOpen`              | `boolean`         | -                                                                                                    | Whether the overlay is open by default (controlled).                                                                                                                                   |
+| `defaultOpen`         | `boolean`         | -                                                                                                    | Whether the overlay is open by default (uncontrolled).                                                                                                                                 |
+| `triggerRef`          | `boolean`         | `RefObject<Element>`                                                                                 | The ref for the element which the tooltip positions itself with respect to.<br/>When used within a TooltipTrigger this is set automatically. It is only required when used standalone. |
+| `isEntering`          | `boolean`         | -                                                                                                    | Whether the tooltip is currently performing an entry animation.                                                                                                                        |
+| `isExiting`           | `boolean`         | -                                                                                                    | Whether the tooltip is currently performing an exit animation.                                                                                                                         |
+| `placement`           | `Placement`       | `'top'`                                                                                              | The placement of the element with respect to its anchor element.                                                                                                                       |
+| `containerPadding`    | `number`          | `12`                                                                                                 | The placement padding that should be applied between the element and its surrounding container.                                                                                        |
+| `offset`              | `number`          | `10`                                                                                                 | The additional offset applied along the main axis between the element and its anchor element.                                                                                          |
+| `crossOffset`         | `number`          | `0`                                                                                                  | The additional offset applied along the cross axis between the element and its anchor element.                                                                                         |
+| `shouldFlip`          | `boolean`         | `true`                                                                                               | Whether the element should flip its orientation (e.g. top to bottom or left to right) when there is insufficient room for it to render completely.                                     |
+| `isOpen`              | `boolean`         | -                                                                                                    | Whether the element is rendered.                                                                                                                                                       |
+| `defaultOpen`         | `boolean`         | -                                                                                                    | Whether the overlay is open by default (uncontrolled).                                                                                                                                 |
+| `arrowBoundaryOffset` | `number`          | -                                                                                                    | The minimum distance the arrow's edge should be from the edge of the overlay element.                                                                                                  |
+| `children`            | `boolean`         | `ReactNode \| (values: TooltipRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | The children of the component. A function may be provided to alter the children based on component state.                                                                              |
 
-| Prop      | Type              | Default | Description                |
-| --------- | ----------------- | ------- | -------------------------- |
-| `content` | `React.ReactNode` | -       | The content of the Tooltip |
-
-### TooltipRoot
-
-Contains all the parts of a tooltip.
-
-| Prop           | Type                        | Default | Description                                                                     |
-| -------------- | --------------------------- | ------- | ------------------------------------------------------------------------------- |
-| `isDisabled`   | `boolean`                   | -       | Whether the tooltip should be disabled, independent from the trigger.           |
-| `delay`        | `number`                    | 700     | The delay time for the tooltip to show up.                                      |
-| `closeDelay`   | `number`                    | 0       | The delay time for the tooltip to close.                                        |
-| `trigger`      | `'focus'`                   | -       | By default, opens for both focus and hover. Can be made to open only for focus. |
-| `isOpen`       | `boolean`                   | -       | Whether the overlay is open by default (controlled).                            |
-| `defaultOpen`  | `boolean`                   | -       | Whether the overlay is open by default (uncontrolled).                          |
-| `onOpenChange` | `(isOpen: boolean) => void` | -       | Handler that is called when the overlay's open state changes.                   |
-
-### TooltipContent
-
-The component that pops out when the tooltip is open.
-
-| Prop                  | Type        | Default                                                                                              | Description                                                                                                                                                                            |
-| --------------------- | ----------- | ---------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `triggerRef`          | `boolean`   | `RefObject<Element>`                                                                                 | The ref for the element which the tooltip positions itself with respect to.<br/>When used within a TooltipTrigger this is set automatically. It is only required when used standalone. |
-| `isEntering`          | `boolean`   | -                                                                                                    | Whether the tooltip is currently performing an entry animation.                                                                                                                        |
-| `isExiting`           | `boolean`   | -                                                                                                    | Whether the tooltip is currently performing an exit animation.                                                                                                                         |
-| `placement`           | `Placement` | `'top'`                                                                                              | The placement of the element with respect to its anchor element.                                                                                                                       |
-| `containerPadding`    | `number`    | `12`                                                                                                 | The placement padding that should be applied between the element and its surrounding container.                                                                                        |
-| `offset`              | `number`    | `10`                                                                                                 | The additional offset applied along the main axis between the element and its anchor element.                                                                                          |
-| `crossOffset`         | `number`    | `0`                                                                                                  | The additional offset applied along the cross axis between the element and its anchor element.                                                                                         |
-| `shouldFlip`          | `boolean`   | `true`                                                                                               | Whether the element should flip its orientation (e.g. top to bottom or left to right) when there is insufficient room for it to render completely.                                     |
-| `isOpen`              | `boolean`   | -                                                                                                    | Whether the element is rendered.                                                                                                                                                       |
-| `defaultOpen`         | `boolean`   | -                                                                                                    | Whether the overlay is open by default (uncontrolled).                                                                                                                                 |
-| `arrowBoundaryOffset` | `number`    | -                                                                                                    | The minimum distance the arrow's edge should be from the edge of the overlay element.                                                                                                  |
-| `children`            | `boolean`   | `ReactNode \| (values: TooltipRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | The children of the component. A function may be provided to alter the children based on component state.                                                                              |
+| Event          | Type                        | Description                                                   |
+| -------------- | --------------------------- | ------------------------------------------------------------- |
+| `onOpenChange` | `(isOpen: boolean) => void` | Handler that is called when the overlay's open state changes. |
 
 ## Accessibility
 
