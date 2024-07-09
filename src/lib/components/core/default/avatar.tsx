@@ -60,7 +60,7 @@ const AvatarImage = ({ src, onStatusChange, className, ...props }: AvatarImagePr
   const { image } = avatarStyles();
   const context = useAvatarContext();
   const status = useImageLoadingStatus(src);
-  // TODO use useCallBackRef here ?????
+  // TODO use useCallBackRef here
   const handleStatusChange = React.useCallback(
     (status: Status) => {
       onStatusChange?.(status);

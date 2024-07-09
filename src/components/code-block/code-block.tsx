@@ -22,7 +22,12 @@ const CodeBlock = async ({ files: _files, preview: _preview, ...props }: CodeBlo
         dark: "github-dark-dimmed",
       },
     });
-    preview = <div dangerouslySetInnerHTML={{ __html: html }} />;
+    preview = (
+      <div
+        className="[&_pre]:outline-none [&_span]:!bg-transparent dark:[&_span]:!text-[var(--shiki-dark)]"
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
+    );
   }
   const files = await Promise.all(
     _files.map(async ({ fileName, code, lang }) => {
@@ -37,7 +42,12 @@ const CodeBlock = async ({ files: _files, preview: _preview, ...props }: CodeBlo
       return {
         fileName,
         codeStr: code,
-        code: <div dangerouslySetInnerHTML={{ __html: html }} className="[&_pre]:outline-none" />,
+        code: (
+          <div
+            className="[&_pre]:outline-none [&_span]:!bg-transparent dark:[&_span]:!text-[var(--shiki-dark)]"
+            dangerouslySetInnerHTML={{ __html: html }}
+          />
+        ),
         lang,
       };
     })
