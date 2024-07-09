@@ -63,7 +63,7 @@ export const SearchDocs = (props: ButtonProps) => {
           <span className="mr-4 inline-flex flex-1 text-left">Quick Search...</span>
         )}
       </Button>
-      <Dialog className="!p-0" showDismissButton={false}>
+      <Dialog className="!p-0" showDismissButton={false} type="modal" mobileType="modal">
         <Command>
           <CommandInput autoFocus placeholder="Search a component, a block, a hook..." />
           <CommandList>
