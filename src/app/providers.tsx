@@ -15,7 +15,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <RouterProvider navigate={router.push}>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        <div drawer-wrapper="" className="overflow-hidden bg-bg">
+        <div drawer-wrapper="" className="bg-bg">
           {children}
         </div>
       </ThemeProvider>

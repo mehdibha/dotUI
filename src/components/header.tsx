@@ -25,7 +25,7 @@ export const Header = () => {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 flex h-14 max-md:border-b max-md:bg-bg md:h-16",
+        "sticky top-0 z-50 flex h-14 rounded-md max-md:border-b max-md:bg-bg md:h-16",
         scrolled && "pointer-events-none"
       )}
     >

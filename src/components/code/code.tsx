@@ -24,17 +24,14 @@ const Code = async ({ children, inline, lang: _lang, ...props }: CodeProps) => {
   const html = await codeToHtml(codeStr, {
     lang: lang,
     themes: {
-      light: "light-plus",
+      light: "github-light",
       dark: "github-dark-dimmed",
     },
     structure: inline ? "inline" : "classic",
   });
   const ElementType = inline ? "span" : "div";
   const code = (
-    <ElementType
-      className="[&_pre]:outline-none [&_span]:!bg-transparent [&_span]:!text-[var(--shiki-dark)]"
-      dangerouslySetInnerHTML={{ __html: html }}
-    />
+    <ElementType className="[&_pre]:outline-none" dangerouslySetInnerHTML={{ __html: html }} />
   );
 
   return (

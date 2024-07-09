@@ -18,7 +18,7 @@ const CodeBlock = async ({ files: _files, preview: _preview, ...props }: CodeBlo
     const html = await codeToHtml(_preview, {
       lang: "tsx",
       themes: {
-        light: "light-plus",
+        light: "github-light",
         dark: "github-dark-dimmed",
       },
     });
@@ -26,7 +26,6 @@ const CodeBlock = async ({ files: _files, preview: _preview, ...props }: CodeBlo
   }
   const files = await Promise.all(
     _files.map(async ({ fileName, code, lang }) => {
-      // code.replace("","")
       const html = await codeToHtml(code, {
         lang: lang,
         themes: {
