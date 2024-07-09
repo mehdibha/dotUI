@@ -9,9 +9,18 @@ links:
     href: https://react-spectrum.adobe.com/react-aria/Link.html
   - label: Aria API Reference
     href: https://react-spectrum.adobe.com/react-aria/Link.html#props
+  - label: Report an issue
+    href: https://github.com/mehdibha/dotUI/issues/new/choose
+  - label: Edit this page
+    href: https://github.com/mehdibha/dotUI/tree/main/content/components/navigation/link.mdx?plain=1
 ---
 
-<ComponentPreview name="demos/components/core/link/default" />
+<ComponentPreview
+  name="demos/components/core/link/default"
+  preview={`<Link href="https://x.com/mehdibha_" target="_blank">
+  @mehdibha_
+</Link>`}
+/>
 
 ## Installation
 
@@ -34,19 +43,40 @@ npm install react-aria-components
 
 Use the `variant` prop to control the appearance of the link.
 
-<ComponentPreview name="demos/components/core/link/variants" />
+<ComponentPreview
+  name="demos/components/core/link/variants"
+  preview={`<Link variant="accent" href="https://x.com/mehdibha_" target="_blank">
+  @mehdibha_
+</Link>
+<Link variant="quiet" href="https://x.com/mehdibha_" target="_blank">
+  @mehdibha_
+</Link>`}
+/>
 
 ### Disabled
 
 Use the `isDisabled` prop to disable the link.
 
-<ComponentPreview name="demos/components/core/link/disabled" />
+<ComponentPreview
+  name="demos/components/core/link/disabled"
+  preview={`<Link href="https://x.com/mehdibha_" isDisabled>
+  @mehdibha_
+</Link>`}
+/>
 
 ## Examples
 
 ### With icon
 
-<ComponentPreview name="demos/components/core/link/icon" />
+<ComponentPreview
+  name="demos/components/core/link/icon"
+  preview={`<Link href="/docs" target="_blank">
+  Docs{" "}
+  <span>
+    <ExternalLinkIcon className="size-4" />
+  </span>
+</Link>`}
+/>
 
 ## API Reference
 

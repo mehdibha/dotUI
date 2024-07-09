@@ -1,6 +1,6 @@
 import { Separator } from "@/lib/components/core/default/separator";
 
-export default function SeparatorDemo() {
+export default function Demo() {
   return (
     <div className="space-y-2 rounded-md border p-4">
       <div>

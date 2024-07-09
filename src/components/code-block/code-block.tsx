@@ -38,7 +38,7 @@ const CodeBlock = async ({ files: _files, preview: _preview, ...props }: CodeBlo
       return {
         fileName,
         codeStr: code,
-        code: <div dangerouslySetInnerHTML={{ __html: html }} />,
+        code: <div dangerouslySetInnerHTML={{ __html: html }} className="[&_pre]:outline-none" />,
         lang,
       };
     })
