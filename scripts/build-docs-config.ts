@@ -2,16 +2,17 @@ import fs from "fs";
 import path from "path";
 import { rimraf } from "rimraf";
 import type { DocsConfig } from "@/types/docs";
-import { getDocs } from "@/server/docs";
 
-const getCategoryDocs = (category: string) => {
-  return getDocs(category).map((category) => ({
-    title: category.title,
-    href: category.href,
-    label: category.label,
-    disabled: category.disabled,
-  }));
-};
+// import { getDocs } from "@/server/docs";
+
+// const getCategoryDocs = (category: string) => {
+//   return getDocs(category).map((category) => ({
+//     title: category.title,
+//     href: category.href,
+//     label: category.label,
+//     disabled: category.disabled,
+//   }));
+// };
 
 const docsConfig: DocsConfig = {
   nav: [
@@ -30,23 +31,6 @@ const docsConfig: DocsConfig = {
         {
           title: "Changelog",
           href: "/docs/changelog",
-        },
-        {
-          title: "Design",
-          items: [
-            {
-              title: "Overview",
-              href: "/docs/design/overview",
-            },
-            {
-              title: "Colors",
-              href: "/docs/design/colors",
-            },
-            {
-              title: "Tokens",
-              href: "/docs/design/tokens",
-            },
-          ],
         },
       ],
     },
@@ -198,36 +182,6 @@ const docsConfig: DocsConfig = {
             { title: "Popover", href: "/components/overlay/dialog#popover" },
             { title: "Tooltip", href: "/components/overlay/tooltip" },
           ],
-        },
-      ],
-    },
-    {
-      title: "Hooks",
-      slug: "hooks",
-      items: [
-        {
-          title: "Overview",
-          href: "/hooks",
-        },
-        {
-          title: "Browser",
-          items: getCategoryDocs("hooks/browser"),
-        },
-        {
-          title: "Elements",
-          items: getCategoryDocs("hooks/elements"),
-        },
-        {
-          title: "Sensors",
-          items: getCategoryDocs("hooks/sensors"),
-        },
-        {
-          title: "State",
-          items: getCategoryDocs("hooks/state"),
-        },
-        {
-          title: "Utilities",
-          items: getCategoryDocs("hooks/utils"),
         },
       ],
     },

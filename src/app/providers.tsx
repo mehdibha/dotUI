@@ -3,7 +3,6 @@
 import { useRouter } from "next/navigation";
 import { ThemeProvider } from "next-themes";
 import { RouterProvider } from "react-aria-components";
-import { ThemeOverride } from "@/components/theme-override";
 
 declare module "react-aria-components" {
   interface RouterConfig {
@@ -16,7 +15,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <RouterProvider navigate={router.push}>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        <ThemeOverride>{children}</ThemeOverride>
+        {children}
       </ThemeProvider>
     </RouterProvider>
   );

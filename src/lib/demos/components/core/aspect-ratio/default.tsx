@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { AspectRatio } from "@/lib/components/core/default/aspect-ratio";
 
-export default function AspectRatioDemo() {
+export default function Demo() {
   return (
     <AspectRatio ratio={16 / 9}>
       <Image

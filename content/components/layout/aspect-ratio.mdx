@@ -3,9 +3,22 @@ title: Aspect Ratio
 description: Displays content within a desired ratio.
 thumbnail:
   image: /previews/components/core/aspect-ratio.jpeg
+links:
+  - label: Radix docs
+    href: https://www.radix-ui.com/primitives/docs/components/aspect-ratio
+  - label: Report an issue
+    href: https://github.com/mehdibha/dotUI/issues/new/choose
+  - label: Edit this page
+    href: https://github.com/mehdibha/dotUI/tree/main/content/components/layout/aspect-ratio.mdx?plain=1
 ---
 
-<ComponentPreview name="demos/components/core/aspect-ratio/default" className="max-w-xs" />
+<ComponentPreview
+  name="demos/components/core/aspect-ratio/default"
+  preview={`<AspectRatio ratio={16 / 9}>
+  <Image />
+</AspectRatio>`}
+  className="max-w-xs"
+/>
 
 ## Installation
 
@@ -25,7 +38,13 @@ Use the `AspectRatio` component to display content within a desired ratio.
 
 Use the `asChild` prop to change the default rendered element for the one passed as a child, merging their props and behavior.
 
-<ComponentPreview name="demos/components/core/aspect-ratio/as-child" className="max-w-xs" />
+<ComponentPreview
+  name="demos/components/core/aspect-ratio/as-child"
+  preview={`<AspectRatio ratio={16 / 9} asChild>
+  <Image />
+</AspectRatio>`}
+  className="max-w-xs"
+/>
 
 ## API Reference
 
