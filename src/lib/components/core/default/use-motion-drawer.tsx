@@ -283,8 +283,6 @@ export const useMotionDrawer = (props: useMotionDrawerProps) => {
     });
   }
 
-  // TODO: CANCEL DRAG
-
   function closeDrawer() {
     if (!drawerRef.current) return;
     if (nested) context.onNestedOpenChange(false);
@@ -305,6 +303,7 @@ export const useMotionDrawer = (props: useMotionDrawerProps) => {
   function handleTransitionEnd() {
     if (isExiting) {
       setAnimation("unmounted");
+      reset(document.body);
       state.close();
     }
   }

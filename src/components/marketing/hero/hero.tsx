@@ -36,7 +36,7 @@ export const Hero = ({ className }: { className?: string }) => {
           Accessible, mobile friendly, modern UI components.
         </p>
         <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-          <Button href="/docs" variant="primary" size="lg">
+          <Button href="/docs/installation" variant="primary" size="lg">
             Read the docs
           </Button>
           <SearchDocs size="lg" className="w-auto max-md:hidden" />

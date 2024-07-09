@@ -36,7 +36,7 @@ const Overlay = React.forwardRef<HTMLElement | HTMLDivElement, OverlayProps>(
       type: typeProp = "modal",
       mobileType,
       mediaQuery = "(max-width: 640px)",
-      isDismissable,
+      isDismissable = true,
       ...props
     },
     ref
@@ -216,7 +216,7 @@ const DrawerOverlay = React.forwardRef<
       classNames,
       className,
       isDismissable,
-      showDismissButton,
+      showDismissButton = false,
       placement = "bottom",
       ...props
     },
@@ -238,9 +238,7 @@ const DrawerOverlay = React.forwardRef<
               data-type="drawer"
               className={cn(overlay(), classNames?.overlay, className)}
             >
-              {(showDismissButton ?? isDismissable) && (
-                <DismissButton shape="rectangle">Done</DismissButton>
-              )}
+              {showDismissButton && <DismissButton shape="rectangle">Done</DismissButton>}
               <div className="mx-auto my-4 h-2 w-[100px] rounded-full bg-bg-muted" />
               {children}
             </div>
