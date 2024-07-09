@@ -9,7 +9,7 @@ export default function Demo() {
         Social
       </Button>
       <Menu>
-        <MenuItem prefix={<GitHubIcon />} href="https://github.com/mehdibha/rcopy" target="_blank">
+        <MenuItem prefix={<GitHubIcon />} href="https://github.com/mehdibha/dotUI" target="_blank">
           Github
         </MenuItem>
         <MenuItem prefix={<TwitterIcon />} href="https://twitter.com/mehdibha_" target="_blank">

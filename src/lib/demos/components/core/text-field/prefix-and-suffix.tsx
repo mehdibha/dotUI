@@ -12,7 +12,7 @@ export default function Demo() {
   return (
     <div className="space-y-2">
       <TextField prefix={<span>https://</span>} />
-      <TextField suffix={<span>@rcopy.dev</span>} />
+      <TextField suffix={<span>@dotui.org</span>} />
       <TextField
         ref={inputRef}
         value={inputValue}

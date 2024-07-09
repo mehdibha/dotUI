@@ -11,7 +11,7 @@ export default function Demo() {
   const [key, setKey] = React.useState(0);
   const refresh = () => setKey((key) => key + 1);
   return (
-    <TextFieldRoot key={key} defaultValue="https://rcopy.dev">
+    <TextFieldRoot key={key} defaultValue="https://dotui.org">
       <InputRoot className="relative h-10 overflow-hidden px-1 pb-0.5">
         <Button size="sm" variant="quiet" shape="square" className="size-7">
           <ALargeSmallIcon />

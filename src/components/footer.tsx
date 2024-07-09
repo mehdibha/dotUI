@@ -53,15 +53,15 @@ const links = [
     links: [
       {
         label: "Open an issue",
-        href: "https://github.com/mehdibha/rcopy/issues/new",
+        href: "https://github.com/mehdibha/dotUI/issues/new",
       },
       {
         label: "Request a feature",
-        href: "https://github.com/mehdibha/rcopy/discussions/new?category=ideas",
+        href: "https://github.com/mehdibha/dotUI/discussions/new?category=ideas",
       },
       {
         label: "Request an element",
-        href: "https://github.com/mehdibha/rcopy/discussions/new?category=requests",
+        href: "https://github.com/mehdibha/dotUI/discussions/new?category=requests",
       },
     ],
   },

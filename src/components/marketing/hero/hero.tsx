@@ -17,7 +17,7 @@ export const Hero = ({ className }: { className?: string }) => {
     <section className={cn("w-full items-start justify-between md:flex md:max-w-7xl", className)}>
       <div className="pt-4">
         <Button
-          href="https://github.com/mehdibha/rcopy"
+          href="https://github.com/mehdibha/dotUI"
           target="_blank"
           prefix={<SparklesIcon />}
           suffix={<ArrowRightIcon />}
