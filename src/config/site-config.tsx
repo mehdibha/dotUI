@@ -26,7 +26,7 @@ export const siteConfig = {
   header: {
     nav: {
       links: [
-        { href: "/docs", label: "Docs" },
+        { href: "/docs/installation", label: "Docs" },
         { href: "/components", label: "Components" },
       ],
     },

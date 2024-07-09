@@ -1,4 +1,6 @@
 /* eslint-disable */
+
+/* This hook is in progress */
 import React from "react";
 import { OverlayTriggerStateContext } from "react-aria-components";
 
@@ -47,30 +49,25 @@ export const useMotionDrawer = (props: useMotionDrawerProps) => {
     // TODO: add more conditions (scrollLockTimeout / when animating / placement right and left / swipe amout? / scrollable element / ...)
     const selectedText = window.getSelection()?.toString();
     if (selectedText && selectedText.length > 0) return false;
-    // if (!isVertical(placement)) return true;
-    // // TODO: Disallow drag when entering or exiting
-    // const swipeAmount = drawerRef.current
-    //   ? getTranslate(drawerRef.current, placement)
-    //   : null;
-    // if (
-    //   swipeAmount !== null &&
-    //   (placement === "bottom" ? swipeAmount > 0 : swipeAmount < 0)
-    // )
-    //   return true;
-    // // TODO: SCROLLLOCKTIMEOUT
-    // // TODO: DRAG IN placement
-    // let element = el as HTMLElement;
-    // while (element) {
-    //   if (element.scrollHeight > element.clientHeight) {
-    //     if (element.scrollTop !== 0) {
-    //       return false;
-    //     }
-    //     if (element.getAttribute("role") === "dialog") {
-    //       return true;
-    //     }
-    //   }
-    //   element = element.parentNode as HTMLElement;
-    // }
+    if (!isVertical(placement)) return true;
+    // TODO: Disallow drag when entering or exiting
+    const swipeAmount = drawerRef.current ? getTranslate(drawerRef.current, placement) : null;
+    if (swipeAmount !== null && (placement === "bottom" ? swipeAmount > 0 : swipeAmount < 0))
+      return true;
+    // TODO: SCROLLLOCKTIMEOUT
+    // TODO: DRAG IN placement
+    let element = el as HTMLElement;
+    while (element) {
+      if (element.scrollHeight > element.clientHeight) {
+        if (element.scrollTop !== 0) {
+          return false;
+        }
+        if (element.getAttribute("role") === "dialog") {
+          return true;
+        }
+      }
+      element = element.parentNode as HTMLElement;
+    }
     return true;
   }
 
@@ -94,7 +91,6 @@ export const useMotionDrawer = (props: useMotionDrawerProps) => {
       state.isOpen &&
       !nested
     ) {
-      // WHY state.isOpen????
       set(
         wrapper,
         {
