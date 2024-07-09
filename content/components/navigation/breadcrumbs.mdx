@@ -9,9 +9,20 @@ links:
     href: https://react-spectrum.adobe.com/react-aria/Breadcrumbs.html
   - label: Aria API Reference
     href: https://react-spectrum.adobe.com/react-aria/Breadcrumbs.html#props
+  - label: Report an issue
+    href: https://github.com/mehdibha/dotUI/issues/new/choose
+  - label: Edit this page
+    href: https://github.com/mehdibha/dotUI/tree/main/content/components/navigation/breadcrumbs.mdx?plain=1
 ---
 
-<ComponentPreview name="demos/components/core/breadcrumbs/basic" />
+<ComponentPreview
+  name="demos/components/core/breadcrumbs/basic"
+  preview={`<Breadcrumbs>
+  <Breadcrumb href="#">Home</Breadcrumb>
+  <Breadcrumb href="#">Components</Breadcrumb>
+  <Breadcrumb href="#">Breadcrumbs</Breadcrumb>
+</Breadcrumbs>`}
+/>
 
 ## Installation
 
@@ -29,7 +40,7 @@ npm install react-aria-components
 
 ## Usage
 
-Use breadcrumbs to display a hierarchy of links to the current page or resource in an application.
+Use `Breadcrumbs` to display a hierarchy of links to the current page or resource in an application.
 
 ## Options
 
@@ -37,23 +48,72 @@ Use breadcrumbs to display a hierarchy of links to the current page or resource 
 
 Use the `isDisabled` prop to disable the breadcrumbs.
 
-<ComponentPreview name="demos/components/core/breadcrumbs/disabled" />
+<ComponentPreview
+  name="demos/components/core/breadcrumbs/disabled"
+  preview={`<Breadcrumbs isDisabled>
+  <Breadcrumb href="#">Home</Breadcrumb>
+  <Breadcrumb href="#">Components</Breadcrumb>
+  <Breadcrumb>Breadcrumbs</Breadcrumb>
+</Breadcrumbs>`}
+/>
 
 ## Composition
 
 If you need to customize things further, you can drop down to the composition level.
 
-<ComponentPreview name="demos/components/core/breadcrumbs/composition" />
+<ComponentPreview
+  name="demos/components/core/breadcrumbs/composition"
+  preview={`<Breadcrumbs>
+  <BreadcrumbItem>
+    <BreadcrumbLink href="#">Home</BreadcrumbLink>
+    <ChevronRightSquareIcon />
+  </BreadcrumbItem>
+  <BreadcrumbItem>
+    <BreadcrumbLink href="#">Components</BreadcrumbLink>
+    <ChevronRightSquareIcon />
+  </BreadcrumbItem>
+  <BreadcrumbItem>
+    <BreadcrumbLink>Breadcrumbs</BreadcrumbLink>
+    <ChevronRightSquareIcon />
+  </BreadcrumbItem>
+</Breadcrumbs>`}
+/>
 
 ## Examples
 
 ### Icon
 
-<ComponentPreview name="demos/components/core/breadcrumbs/icon" />
+<ComponentPreview
+  name="demos/components/core/breadcrumbs/icon"
+  preview={`<Breadcrumbs>
+  <Breadcrumb href="#">
+    <HomeIcon />
+    Home
+  </Breadcrumb>
+  <Breadcrumb href="#">Components</Breadcrumb>
+  <Breadcrumb href="#">Breadcrumbs</Breadcrumb>
+</Breadcrumbs>`}
+/>
 
 ### Router integration
 
-<ComponentPreview name="demos/components/core/breadcrumbs/router-integration" />
+<ComponentPreview
+  name="demos/components/core/breadcrumbs/router-integration"
+  preview={`const pathname = usePathname();
+const pathnames = pathname.split("/").filter((x) => x);
+return (
+  <Breadcrumbs>
+    {pathnames.map((elem, index) => {
+      const href = \`/\${pathnames.slice(0, index + 1).join("/")}\`;
+      return (
+        <Breadcrumb key={elem} href={href} className="capitalize">
+          {elem}
+        </Breadcrumb>
+      );
+    })}
+  </Breadcrumbs>
+);`}
+/>
 
 ## API Reference
 
