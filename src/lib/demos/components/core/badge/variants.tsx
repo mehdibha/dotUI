@@ -1,6 +1,6 @@
 import { Badge } from "@/lib/components/core/default/badge";
 
-export default function BadgeDemo() {
+export default function Demo() {
   return (
     <div className="flex flex-col items-start gap-2">
       <Flex>
@@ -28,7 +28,6 @@ export default function BadgeDemo() {
         <Badge variant="accent-subtle">Accent Subtle</Badge>
         <Badge variant="accent-outline">Accent Outline</Badge>
       </Flex>
-      <Flex></Flex>
     </div>
   );
 }
