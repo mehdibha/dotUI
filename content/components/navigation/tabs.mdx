@@ -9,9 +9,25 @@ links:
     href: https://react-spectrum.adobe.com/react-aria/Tabs.html
   - label: Aria API Reference
     href: https://react-spectrum.adobe.com/react-aria/Tabs.html#props
+  - label: Report an issue
+    href: https://github.com/mehdibha/dotUI/issues/new/choose
+  - label: Edit this page
+    href: https://github.com/mehdibha/dotUI/tree/main/content/components/navigation/tabs.mdx?plain=1
 ---
 
-<ComponentPreview name="demos/components/core/tabs/basic" />
+<ComponentPreview
+  name="demos/components/core/tabs/basic"
+  preview={`<Tabs>
+  <TabList>
+    <Tab id="overview">Overview</Tab>
+    <Tab id="usage">Usage</Tab>
+    <Tab id="settings">Settings</Tab>
+  </TabList>
+  <TabPanel id="overview"> You can view all your projects here. </TabPanel>
+  <TabPanel id="usage"> You can view your usage here. </TabPanel>
+  <TabPanel id="settings"> You can view your settings here. </TabPanel>
+</Tabs>`}
+/>
 
 ## Installation
 
@@ -39,29 +55,94 @@ Use `Tabs` to organize content into multiple sections and allow users to navigat
 
 Use the `orientation` prop to set the orientation of the tabs.
 
-<ComponentPreview name="demos/components/core/tabs/vertical" />
+<ComponentPreview
+  name="demos/components/core/tabs/vertical"
+  preview={`<Tabs orientation="vertical">
+  <TabList>
+    <Tab id="overview">Overview</Tab>
+    <Tab id="usage">Usage</Tab>
+    <Tab id="settings">Settings</Tab>
+  </TabList>
+  <TabPanel id="overview">You can view all your projects here. </TabPanel>
+  <TabPanel id="usage"> You can view your usage here. </TabPanel>
+  <TabPanel id="settings"> You can view your settings here. </TabPanel>
+</Tabs>`}
+/>
 
 ### Disabled
 
 Use the `isDisabled` prop to disable the tabs.
 
-<ComponentPreview name="demos/components/core/tabs/disabled" />
+<ComponentPreview
+  name="demos/components/core/tabs/disabled"
+  preview={`<Tabs isDisabled>
+  <TabList>
+    <Tab id="overview">Overview</Tab>
+    <Tab id="usage">Usage</Tab>
+    <Tab id="settings">Settings</Tab>
+  </TabList>
+  <TabPanel id="overview"> You can view all your projects here. </TabPanel>
+  <TabPanel id="usage"> You can view your usage here. </TabPanel>
+  <TabPanel id="settings"> You can view your settings here. </TabPanel>
+</Tabs>`}
+/>
 
 An individual Tab can also be disabled with the `isDisabled` prop.
 
-<ComponentPreview name="demos/components/core/tabs/disabled-item" />
+<ComponentPreview
+  name="demos/components/core/tabs/disabled-item"
+  preview={`<Tabs>
+  <TabList>
+    <Tab id="overview">Overview</Tab>
+    <Tab id="usage">Usage</Tab>
+    <Tab id="settings" isDisabled>
+      Settings
+    </Tab>
+  </TabList>
+  <TabPanel id="overview"> You can view all your projects here. </TabPanel>
+  <TabPanel id="usage"> You can view your usage here. </TabPanel>
+  <TabPanel id="settings"> You can view your settings here. </TabPanel>
+</Tabs>`}
+/>
 
 ### Keyboard activation
 
 Prevent keyboard activation of tabs by setting `keyboardActivation` prop to `'manual'`.
 
-<ComponentPreview name="demos/components/core/tabs/keyboard-activation" />
+<ComponentPreview
+  name="demos/components/core/tabs/keyboard-activation"
+  preview={`<Tabs keyboardActivation="manual">
+  <TabList>
+    <Tab id="overview">Overview</Tab>
+    <Tab id="usage">Usage</Tab>
+    <Tab id="settings">Settings</Tab>
+  </TabList>
+  <TabPanel id="overview"> You can view all your projects here. </TabPanel>
+  <TabPanel id="usage"> You can view your usage here. </TabPanel>
+  <TabPanel id="settings"> You can view your settings here. </TabPanel>
+</Tabs>`}
+/>
 
 ## Controlled
 
-Use the `selectedKey` prop to control the selected tab.
+Use the `selectedKey` and `onSelectionChange` props to control the selected tab.
 
-<ComponentPreview name="demos/components/core/tabs/controlled" />
+<ComponentPreview
+  name="demos/components/core/tabs/controlled"
+  preview={`const [selectedTab, setSelectedTab] = React.useState<Key>("overview");
+return (
+  <Tabs selectedKey={selectedTab} onSelectionChange={setSelectedTab}>
+    <TabList>
+      <Tab id="overview">Overview</Tab>
+      <Tab id="usage">Usage</Tab>
+      <Tab id="settings">Settings</Tab>
+    </TabList>
+    <TabPanel id="overview"> You can view all your projects here. </TabPanel>
+    <TabPanel id="usage"> You can view your usage here. </TabPanel>
+    <TabPanel id="settings"> You can view your settings here. </TabPanel>
+  </Tabs>
+)`}
+/>
 
 ## API Reference
 
