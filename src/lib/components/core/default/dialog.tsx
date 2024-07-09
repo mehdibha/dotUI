@@ -25,9 +25,9 @@ const dialogStyles = tv({
       "group-data-[type=drawer]/overlay:pt-0",
     ],
     header: "mb-4",
-    body: "space-y-4",
     footer: "flex flex-col-reverse sm:flex-row sm:justify-end gap-2 pt-4",
-    inset: "-mx-4 group-data-[type=modal]/overlay:-mx-6",
+    inset:
+      "-mx-4 group-data-[type=modal]/overlay:-mx-6 px-4 group-data-[type=modal]/overlay:px-6 py-4",
   },
 });
 
@@ -50,6 +50,7 @@ interface DialogProps extends DialogContentProps {
   title?: string;
   description?: string;
   type?: OverlayProps["type"];
+  showDismissButton?: OverlayProps["showDismissButton"];
   mobileType?: OverlayProps["mobileType"];
   mediaQuery?: OverlayProps["mediaQuery"];
   isDismissable?: boolean;
@@ -61,12 +62,14 @@ const Dialog = ({
   mobileType = "drawer",
   mediaQuery,
   isDismissable: isDismissableProp,
+  showDismissButton,
   ...props
 }: DialogProps) => {
   const isDismissable = isDismissableProp ?? (props.role === "alertdialog" ? false : true);
   return (
     <Overlay
       isDismissable={isDismissable}
+      showDismissButton={showDismissButton}
       type={type}
       mobileType={mobileType}
       mediaQuery={mediaQuery}
@@ -108,12 +111,6 @@ const DialogHeader = ({ children, className, ...props }: DialogHeaderProps) => {
   );
 };
 
-type DialogBodyProps = React.ComponentProps<"div">;
-const DialogBody = ({ className, ...props }: DialogBodyProps) => {
-  const { body } = dialogStyles();
-  return <div className={body({ className })} {...props} />;
-};
-
 type DialogFooterProps = React.ComponentProps<"footer">;
 const DialogFooter = ({ className, ...props }: DialogFooterProps) => {
   const { footer } = dialogStyles();
@@ -134,4 +131,4 @@ export type {
   DialogFooterProps,
   DialogInsetProps,
 };
-export { DialogRoot, DialogContent, Dialog, DialogHeader, DialogBody, DialogFooter, DialogInset };
+export { DialogRoot, DialogContent, Dialog, DialogHeader, DialogFooter, DialogInset };

@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Button } from "@/lib/components/core/default/button";
-import { DialogRoot, Dialog, DialogBody, DialogFooter } from "@/lib/components/core/default/dialog";
+import { DialogRoot, Dialog, DialogFooter } from "@/lib/components/core/default/dialog";
 import { TextField } from "@/lib/components/core/default/text-field";
 
 export default function Demo() {
@@ -12,10 +12,10 @@ export default function Demo() {
       <Dialog title="Edit profile" description="Make changes to your profile.">
         {({ close }) => (
           <>
-            <DialogBody>
+            <div className="space-y-4">
               <TextField autoFocus label="Name" defaultValue="Mehdi" className="w-full" />
               <TextField label="Username" defaultValue="@mehdibha_" className="w-full" />
-            </DialogBody>
+            </div>
             <DialogFooter>
               <Button variant="outline" size={{ initial: "lg", sm: "md" }} onPress={close}>
                 Cancel

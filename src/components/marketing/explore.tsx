@@ -3,8 +3,22 @@ import { cn } from "@/lib/utils/classes";
 
 export const Explore = ({ className }: { className: string }) => {
   const categories = [
-    { title: "Inputs", slug: "components/inputs", href: "/components" },
-    // { title: "components", slug: "components/inputs", href: "/components" },
+    { title: "Inputs", slug: "components/inputs", href: "/components/inputs" },
+    {
+      title: "Menus and selection",
+      slug: "components/menus-and-selection",
+      href: "/components/menus-and-selection",
+    },
+    {
+      title: "Dates",
+      slug: "components/dates",
+      href: "/components/dates",
+    },
+    {
+      title: "Colors",
+      slug: "components/colors",
+      href: "/components/colors",
+    },
   ];
   return (
     <div className={className}>

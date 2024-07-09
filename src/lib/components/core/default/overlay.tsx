@@ -2,16 +2,20 @@
 
 import React from "react";
 import {
+  composeRenderProps,
   Popover as AriaPopover,
   OverlayArrow as AriaOverlayArrow,
   Modal as AriaModal,
   ModalOverlay as AriaModalOverlay,
+  OverlayTriggerStateContext as AriaOverlayTriggerStateContext,
   type PopoverProps as AriaPopoverProps,
   type ModalOverlayProps as AriaModalOverlayProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import { useMediaQuery } from "@/lib/hooks/use-media-query";
+import { XIcon } from "@/lib/icons";
 import { cn } from "@/lib/utils/classes";
+import { Button, type ButtonProps } from "./button";
 import { MotionDrawerRoot, useMotionDrawer } from "./use-motion-drawer";
 
 type OverlayType = "modal" | "drawer" | "popover";
@@ -19,6 +23,7 @@ type OverlayType = "modal" | "drawer" | "popover";
 type OverlayProps = {
   type?: OverlayType;
   mobileType?: OverlayProps["type"];
+  showDismissButton?: boolean;
   mediaQuery?: string;
   children: React.ReactNode;
   classNames?: ModalOverlayClassNames & DrawerOverlayClassNames & PopoverOverlayClassNames;
@@ -83,11 +88,12 @@ type ModalOverlayClassNames = {
 };
 
 interface ModalOverlayProps extends AriaModalOverlayProps {
+  showDismissButton?: boolean;
   classNames?: ModalOverlayClassNames;
 }
 
 const ModalOverlay = React.forwardRef<React.ElementRef<typeof AriaModalOverlay>, ModalOverlayProps>(
-  ({ classNames, className, isDismissable = true, ...props }, ref) => {
+  ({ classNames, className, isDismissable, showDismissButton, ...props }, ref) => {
     const { overlay, backdrop } = modalVariants({});
     return (
       <AriaModalOverlay
@@ -100,7 +106,14 @@ const ModalOverlay = React.forwardRef<React.ElementRef<typeof AriaModalOverlay>,
           {...props}
           data-type="modal"
           className={cn(overlay(), classNames?.overlay, className)}
-        />
+        >
+          {composeRenderProps(props.children, (children) => (
+            <>
+              {(showDismissButton ?? isDismissable) && <DismissButton />}
+              {children}
+            </>
+          ))}
+        </AriaModal>
       </AriaModalOverlay>
     );
   }
@@ -123,35 +136,40 @@ type PopoverOverlayClassNames = {
   [key in PopoverOverlaySlots]?: string;
 };
 
-interface PopoverOverlayProps extends Omit<AriaPopoverProps, "children"> {
-  children?: React.ReactNode;
+interface PopoverOverlayProps extends AriaPopoverProps {
   arrow?: boolean;
   classNames?: PopoverOverlayClassNames;
+  showDismissButton?: boolean;
 }
 
 const PopoverOverlay = React.forwardRef<React.ElementRef<typeof AriaPopover>, PopoverOverlayProps>(
-  ({ arrow = false, children, className, classNames, ...props }, ref) => {
+  ({ arrow = false, className, showDismissButton, classNames, ...props }, ref) => {
     const { overlay, arrow: arrowStyle } = popoverOverlayVariants({});
     return (
       <AriaPopover
         data-type="popover"
         ref={ref}
         {...props}
-        className={cn(overlay({}), classNames?.overlay, className)}
+        className={cn(overlay(), classNames?.overlay, className)}
       >
-        {arrow && (
-          <AriaOverlayArrow className="group">
-            <svg
-              width={12}
-              height={12}
-              viewBox="0 0 12 12"
-              className={arrowStyle({ className: classNames?.arrow })}
-            >
-              <path d="M0 0 L6 6 L12 0" />
-            </svg>
-          </AriaOverlayArrow>
-        )}
-        {children}
+        {composeRenderProps(props.children, (children, {}) => (
+          <>
+            {showDismissButton && <DismissButton />}
+            {arrow && (
+              <AriaOverlayArrow className="group">
+                <svg
+                  width={12}
+                  height={12}
+                  viewBox="0 0 12 12"
+                  className={arrowStyle({ className: classNames?.arrow })}
+                >
+                  <path d="M0 0 L6 6 L12 0" />
+                </svg>
+              </AriaOverlayArrow>
+            )}
+            {children}
+          </>
+        ))}
       </AriaPopover>
     );
   }
@@ -160,20 +178,16 @@ PopoverOverlay.displayName = "PopoverOverlay";
 
 const drawerVariants = tv({
   slots: {
-    backdrop: [
-      "fixed inset-0 bg-black/60 z-50",
-      "opacity-0", // required
-    ],
+    backdrop: ["fixed inset-0 bg-black/60 z-50", "opacity-0"],
     overlay: [
       "group/overlay bg-bg flex flex-col fixed z-50 outline-none",
-      // "placement-bottom:inset-x-0 placement-bottom:bottom-0",
       "inset-0",
       "placement-bottom:top-auto placement-top:bottom-auto placement-left:right-auto placement-right:left-auto",
       "placement-bottom:mt-24 placement-bottom:rounded-t-[10px] placement-bottom:border-t",
       "placement-top:mb-24 placement-top:rounded-b-[10px] placement-top:border-b",
       "placement-right:ml-24 placement-right:rounded-l-[10px] placement-right:border-l",
       "placement-left:mr-24 placement-left:rounded-r-[10px] placement-left:border-r",
-      "touch-none will-change-transform", // required
+      "touch-none will-change-transform",
       "placement-bottom:translate-y-full placement-top:-translate-y-full placement-left:-translate-x-full placement-right:translate-x-full", // required
       "max-h-[90%]",
     ],
@@ -187,6 +201,7 @@ type DrawerOverlayClassNames = {
 
 interface DrawerOverlayProps extends Omit<AriaModalOverlayProps, "children"> {
   placement?: "top" | "bottom" | "left" | "right";
+  showDismissButton?: boolean;
   children?: React.ReactNode;
   classNames?: DrawerOverlayClassNames;
 }
@@ -196,7 +211,15 @@ const DrawerOverlay = React.forwardRef<
   DrawerOverlayProps
 >(
   (
-    { children, classNames, className, isDismissable = true, placement = "bottom", ...props },
+    {
+      children,
+      classNames,
+      className,
+      isDismissable,
+      showDismissButton,
+      placement = "bottom",
+      ...props
+    },
     ref
   ) => {
     const { rootProps, modalProps, backdropProps, drawerProps } = useMotionDrawer({
@@ -215,7 +238,9 @@ const DrawerOverlay = React.forwardRef<
               data-type="drawer"
               className={cn(overlay(), classNames?.overlay, className)}
             >
-              {/* TODO: Make the swipeIndicator optional */}
+              {(showDismissButton ?? isDismissable) && (
+                <DismissButton shape="rectangle">Done</DismissButton>
+              )}
               <div className="mx-auto my-4 h-2 w-[100px] rounded-full bg-bg-muted" />
               {children}
             </div>
@@ -227,21 +252,22 @@ const DrawerOverlay = React.forwardRef<
 );
 DrawerOverlay.displayName = "DrawerOverlay";
 
-// const DismissButton = (props: ButtonProps) => {
-//   const state = React.useContext(OverlayTriggerStateContext);
-//   return (
-//     <Button
-//       shape="square"
-//       variant="quiet"
-//       size="sm"
-//       aria-label="Close"
-//       {...props}
-//       onPress={() => state.close()}
-//     >
-//       <XIcon />
-//     </Button>
-//   );
-// };
+const DismissButton = (props: ButtonProps) => {
+  const state = React.useContext(AriaOverlayTriggerStateContext);
+  return (
+    <Button
+      shape="square"
+      variant="quiet"
+      size="sm"
+      aria-label="Close"
+      {...props}
+      className={cn("absolute right-2 top-2 z-20", props.className)}
+      onPress={() => state.close()}
+    >
+      {props.children ?? <XIcon />}
+    </Button>
+  );
+};
 
 export type { OverlayProps, ModalOverlayProps, DrawerOverlayProps, PopoverOverlayProps };
 export {
