@@ -1,5 +1,6 @@
 import React from "react";
 import type { Metadata, Viewport } from "next";
+import { Analytics } from "@vercel/analytics/react";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { cn } from "@/lib/utils/classes";
@@ -62,6 +63,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         )}
         suppressHydrationWarning
       >
+        <Analytics />
         <Providers>
           <Header />
           <main>{children}</main>
