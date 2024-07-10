@@ -5,7 +5,6 @@ import { CheckIcon, CopyIcon } from "lucide-react";
 import { tv } from "tailwind-variants";
 import { Button } from "@/lib/components/core/default/button";
 import { ScrollArea } from "@/lib/components/core/default/scroll-area";
-import { cn } from "@/lib/utils/classes";
 
 const codeStyles = tv({
   base: "relative rounded-md bg-bg-muted",
@@ -21,10 +20,8 @@ interface CodeClientProps extends React.HTMLAttributes<HTMLDivElement> {
   inline?: boolean;
   code: string;
 }
-const CodeClient = ({ className, inline = false, children, code, ...props }: CodeClientProps) => {
+const CodeClient = ({ className, inline = false, children, code }: CodeClientProps) => {
   const [copied, setCopied] = React.useState(false);
-  const ElementType = inline ? "span" : "div";
-  const Wrapper = inline ? React.Fragment : ScrollArea;
   const handleCopy = () => {
     void navigator.clipboard.writeText(code);
     setCopied(true);
@@ -33,11 +30,15 @@ const CodeClient = ({ className, inline = false, children, code, ...props }: Cod
     }, 1000);
   };
 
+  if (inline) {
+    return <span className={codeStyles({ variant: "inline" })}>{children}</span>;
+  }
+
   return (
-    <Wrapper className={cn(className, "max-h-[200px]")}>
-      <ElementType className={codeStyles({ variant: inline ? "inline" : "classic" })} {...props}>
-        {children}
-        {!inline && (
+    <div className={className}>
+      <ScrollArea scrollbars="both" className="max-h-[200px]">
+        <div className={codeStyles({ variant: "classic" })}>
+          {children}
           <Button
             variant="quiet"
             shape="square"
@@ -51,9 +52,9 @@ const CodeClient = ({ className, inline = false, children, code, ...props }: Cod
               <CopyIcon className="animate-in fade-in" />
             )}
           </Button>
-        )}
-      </ElementType>
-    </Wrapper>
+        </div>
+      </ScrollArea>
+    </div>
   );
 };
 
