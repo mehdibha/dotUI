@@ -4,6 +4,8 @@ import React from "react";
 import { CheckIcon, CopyIcon } from "lucide-react";
 import { tv } from "tailwind-variants";
 import { Button } from "@/lib/components/core/default/button";
+import { ScrollArea } from "@/lib/components/core/default/scroll-area";
+import { cn } from "@/lib/utils/classes";
 
 const codeStyles = tv({
   base: "relative rounded-md bg-bg-muted",
@@ -22,6 +24,7 @@ interface CodeClientProps extends React.HTMLAttributes<HTMLDivElement> {
 const CodeClient = ({ className, inline = false, children, code, ...props }: CodeClientProps) => {
   const [copied, setCopied] = React.useState(false);
   const ElementType = inline ? "span" : "div";
+  const Wrapper = inline ? React.Fragment : ScrollArea;
   const handleCopy = () => {
     void navigator.clipboard.writeText(code);
     setCopied(true);
@@ -31,27 +34,26 @@ const CodeClient = ({ className, inline = false, children, code, ...props }: Cod
   };
 
   return (
-    <ElementType
-      className={codeStyles({ className, variant: inline ? "inline" : "classic" })}
-      {...props}
-    >
-      {children}
-      {!inline && (
-        <Button
-          variant="quiet"
-          shape="square"
-          size="sm"
-          className="absolute right-2 top-2 [&_svg]:size-3"
-          onPress={handleCopy}
-        >
-          {copied ? (
-            <CheckIcon className="animate-in fade-in" />
-          ) : (
-            <CopyIcon className="animate-in fade-in" />
-          )}
-        </Button>
-      )}
-    </ElementType>
+    <Wrapper className={cn(className, "max-h-[200px]")}>
+      <ElementType className={codeStyles({ variant: inline ? "inline" : "classic" })} {...props}>
+        {children}
+        {!inline && (
+          <Button
+            variant="quiet"
+            shape="square"
+            size="sm"
+            className="absolute right-2 top-2 [&_svg]:size-3"
+            onPress={handleCopy}
+          >
+            {copied ? (
+              <CheckIcon className="animate-in fade-in" />
+            ) : (
+              <CopyIcon className="animate-in fade-in" />
+            )}
+          </Button>
+        )}
+      </ElementType>
+    </Wrapper>
   );
 };
 
