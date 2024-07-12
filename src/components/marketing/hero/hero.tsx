@@ -64,6 +64,8 @@ const Illustration = () => {
       <AvatarGroup max={6} total={12}>
         {[
           { name: "@mehdibha", src: "https://github.com/mehdibha.png" },
+          { name: "@devongovett", src: "https://github.com/devongovett.png" },
+          { name: "@kentcdodds", src: "https://github.com/kentcdodds.png" },
           { name: "@t3dotgg", src: "https://github.com/t3dotgg.png" },
           { name: "@leerob", src: "https://github.com/leerob.png" },
           {
