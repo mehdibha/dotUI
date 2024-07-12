@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://github.com/mehdibha/dotUI">
-    <img src="https://dotui.org/images/logo.png" alt="Logo" width="60" height="60">
+    <img src="/public/images/logo.png" alt="Logo" width="60" height="60">
   </a>
   <h1 align="center">dotUI</h1>
   <p align="center">
@@ -23,6 +23,8 @@
 Accessible, mobile friendly, modern UI components.
 
 If you want to join this journey, <a href="https://discord.gg/DXpj5V2fU8">join our discord community</a>
+
+<img src="/public/images/thumbnail.png">
 
 <!-- CONTRIBUTING -->
 
