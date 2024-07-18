@@ -15,10 +15,17 @@ Start by creating a new Next.js project using `create-next-app`:
 npx create-next-app@latest my-app --typescript --tailwind --eslint
 ```
 
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm i clsx tailwind-merge tailwind-variants tailwindcss-animate tailwindcss-react-aria-components
+```
+
 <Step>Update `tailwind.config.ts`</Step>
 
 ```ts
 import type { Config } from "tailwindcss";
+import { withTV } from 'tailwind-variants/dist/transformer.js';
 
 const config = {
   darkMode: ["class"],
@@ -418,12 +425,6 @@ Add the following code to the `globals.css` file:
     @apply bg-background text-foreground;
   }
 }
-```
-
-<Step>Install the following dependencies:</Step>
-
-```bash
-npm i clsx tailwind-merge tailwind-variants
 ```
 
 <Step>Add `utils/classes.ts`</Step>
