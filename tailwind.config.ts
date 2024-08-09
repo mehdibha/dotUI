@@ -1,11 +1,11 @@
-import { withTV } from "tailwind-variants/transformer";
+// import { withTV } from "tailwind-variants/transformer";
 import type { Config } from "tailwindcss";
 import defaultTheme from "tailwindcss/defaultTheme";
 import { fontFamily } from "tailwindcss/defaultTheme";
 
 const config = {
   darkMode: ["class"],
-  content: ["./src/**/*.{ts,tsx}", "./content/**/*.{ts,tsx,mdx}"],
+  content: ["src/**/*.{ts,tsx}", "content/**/*.{ts,tsx,mdx}"],
   prefix: "",
   theme: {
     container: {
@@ -223,4 +223,5 @@ const config = {
   plugins: [require("tailwindcss-animate"), require("tailwindcss-react-aria-components")],
 } satisfies Config;
 
-export default withTV(config);
+export default config
+// export default withTV(config);
