@@ -1,0 +1,23 @@
+[
+  {
+    "name": "alert",
+    "files": [
+      "core/alert.tsx"
+    ],
+    "type": "components:core"
+  },
+  {
+    "name": "calendar",
+    "dependencies": [
+      "react-day-picker@8.10.1",
+      "date-fns"
+    ],
+    "registryDependencies": [
+      "button"
+    ],
+    "files": [
+      "ui/calendar.tsx"
+    ],
+    "type": "components:core"
+  }
+]

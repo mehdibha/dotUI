@@ -1,0 +1,13 @@
+{
+  "name": "calendar",
+  "dependencies": [
+    "react-aria-components"
+  ],
+  "files": [
+    {
+      "name": "calendar.tsx",
+      "content": "\"use client\""
+    }
+  ],
+  "type": "components:core"
+}

@@ -1,0 +1,12 @@
+[
+  {
+    "name": "lucide",
+    "label": "Lucide icons",
+    "dep": "lucide-react"
+  },
+  {
+    "name": "radix",
+    "label": "Radix icons",
+    "dep": "@radix-ui/react-icons"
+  }
+]
