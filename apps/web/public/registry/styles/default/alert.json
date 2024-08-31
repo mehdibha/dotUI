@@ -1,0 +1,10 @@
+{
+  "name": "alert",
+  "files": [
+    {
+      "name": "alert.tsx",
+      "content": "\"use client\""
+    }
+  ],
+  "type": "components:core"
+}
