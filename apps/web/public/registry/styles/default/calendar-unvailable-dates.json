@@ -1,0 +1,15 @@
+{
+  "name": "calendar-unvailable-dates",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "calendar"
+  ],
+  "files": [
+    {
+      "path": "core/calendar/demos/unvailable-dates.tsx",
+      "content": "\"use client\";\n\nimport {\n  type DateValue,\n  getLocalTimeZone,\n  isWeekend,\n  today,\n} from \"@internationalized/date\";\nimport { useLocale } from \"react-aria\";\nimport { Calendar } from \"@/registry/ui/default/core/calendar\";\n\nexport default function Demo() {\n  const now = today(getLocalTimeZone());\n  const disabledRanges = [\n    [now, now.add({ days: 5 })],\n    [now.add({ days: 14 }), now.add({ days: 16 })],\n    [now.add({ days: 23 }), now.add({ days: 24 })],\n  ];\n\n  const { locale } = useLocale();\n  const isDateUnavailable = (date: DateValue) =>\n    isWeekend(date, locale) ||\n    disabledRanges.some(\n      (interval) =>\n        date.compare(interval[0]) >= 0 && date.compare(interval[1]) <= 0\n    );\n\n  return (\n    <Calendar\n      aria-label=\"Appointment date\"\n      minValue={today(getLocalTimeZone())}\n      isDateUnavailable={isDateUnavailable}\n    />\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

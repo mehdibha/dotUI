@@ -1,0 +1,15 @@
+{
+  "name": "date-field-controlled",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "date-field"
+  ],
+  "files": [
+    {
+      "path": "core/date-field/demos/controlled.tsx",
+      "content": "\"use client\";\r\n\r\nimport React from \"react\";\r\nimport { parseDate } from \"@internationalized/date\";\r\nimport { DateField } from \"@/registry/ui/default/core/date-field\";\r\n\r\nexport default function Demo() {\r\n  const [value, setValue] = React.useState(parseDate(\"2020-02-03\"));\r\n  return (\r\n    <div className=\"flex flex-col items-center gap-4\">\r\n      <DateField aria-label=\"Event date\" value={value} onChange={setValue} />\r\n      <p className=\"text-sm text-fg-muted\">selected date: {value.toString()}</p>\r\n    </div>\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

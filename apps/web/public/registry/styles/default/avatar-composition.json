@@ -1,0 +1,15 @@
+{
+  "name": "avatar-composition",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "avatar"
+  ],
+  "files": [
+    {
+      "path": "core/avatar/demos/composition.tsx",
+      "content": "import React from \"react\";\r\nimport { UserIcon } from \"@/lib/icons\";\r\nimport {\r\n  AvatarRoot,\r\n  AvatarImage,\r\n  AvatarFallback,\r\n  AvatarPlaceholder,\r\n} from \"@/registry/ui/default/core/avatar\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <AvatarRoot>\r\n      <AvatarImage src=\"https://github.com/mehdibha.png\" alt=\"@mehdibha\" />\r\n      <AvatarFallback>M</AvatarFallback>\r\n      <AvatarPlaceholder>\r\n        <UserIcon className=\"size-5\" />\r\n      </AvatarPlaceholder>\r\n    </AvatarRoot>\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

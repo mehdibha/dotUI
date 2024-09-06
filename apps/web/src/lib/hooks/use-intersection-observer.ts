@@ -4,7 +4,9 @@ export const useIntersectionObserver = <T extends Element>(
   options: IntersectionObserverInit = {}
 ): [React.RefCallback<T>, IntersectionObserverEntry | null] => {
   const { threshold = 1, root = null, rootMargin = "0px" } = options;
-  const [entry, setEntry] = React.useState<IntersectionObserverEntry | null>(null);
+  const [entry, setEntry] = React.useState<IntersectionObserverEntry | null>(
+    null
+  );
 
   const previousObserver = React.useRef<IntersectionObserver | null>(null);
 

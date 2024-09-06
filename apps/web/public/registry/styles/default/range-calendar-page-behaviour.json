@@ -1,0 +1,15 @@
+{
+  "name": "range-calendar-page-behaviour",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "range-calendar"
+  ],
+  "files": [
+    {
+      "path": "core/range-calendar/demos/page-behaviour.tsx",
+      "content": "import { RangeCalendar } from \"@/registry/ui/default/core/range-calendar\";\n\nexport default function Demo() {\n  return <RangeCalendar visibleMonths={2} pageBehavior=\"single\" />;\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

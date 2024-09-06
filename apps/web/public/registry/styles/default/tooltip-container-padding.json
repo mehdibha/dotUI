@@ -1,0 +1,15 @@
+{
+  "name": "tooltip-container-padding",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "tooltip"
+  ],
+  "files": [
+    {
+      "path": "core/tooltip/demos/container-padding.tsx",
+      "content": "\"use client\";\n\nimport React from \"react\";\nimport { PlusIcon } from \"@/lib/icons\";\nimport { Button } from \"@/registry/ui/default/core/button\";\nimport { NumberField } from \"@/registry/ui/default/core/number-field\";\nimport { Tooltip } from \"@/registry/ui/default/core/tooltip\";\n\nexport default function Demo() {\n  const [containerPadding, setContainerPadding] = React.useState(12);\n  return (\n    <div className=\"flex flex-col items-center gap-10\">\n      <Tooltip containerPadding={containerPadding} content=\"Add to library\">\n        <Button shape=\"square\">\n          <PlusIcon />\n        </Button>\n      </Tooltip>\n      <NumberField\n        label=\"Container padding\"\n        value={containerPadding}\n        onChange={(value) => setContainerPadding(value)}\n        className=\"max-w-[150px]\"\n      />\n    </div>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

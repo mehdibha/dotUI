@@ -14,7 +14,9 @@ interface ColorSwatchProps extends Omit<AriaColorSwatchProps, "className"> {
   className?: string;
 }
 const ColorSwatch = ({ className, ...props }: ColorSwatchProps) => {
-  return <AriaColorSwatch className={colorSwatchStyles({ className })} {...props} />;
+  return (
+    <AriaColorSwatch className={colorSwatchStyles({ className })} {...props} />
+  );
 };
 
 export type { ColorSwatchProps };

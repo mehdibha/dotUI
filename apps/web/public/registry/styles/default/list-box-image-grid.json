@@ -1,0 +1,15 @@
+{
+  "name": "list-box-image-grid",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "list-box"
+  ],
+  "files": [
+    {
+      "path": "core/list-box/demos/image-grid.tsx",
+      "content": "export default function Demo() {\r\n  return <p>demo</p>;\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

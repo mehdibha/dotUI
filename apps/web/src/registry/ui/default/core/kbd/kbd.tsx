@@ -1,3 +1,5 @@
+"use client"
+
 import { Keyboard } from "react-aria-components";
 import { tv } from "tailwind-variants";
 

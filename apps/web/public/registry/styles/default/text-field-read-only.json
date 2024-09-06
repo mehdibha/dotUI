@@ -1,0 +1,15 @@
+{
+  "name": "text-field-read-only",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "text-field"
+  ],
+  "files": [
+    {
+      "path": "core/text-field/demos/read-only.tsx",
+      "content": "\"use client\";\n\nimport React from \"react\";\nimport { TextField } from \"@/registry/ui/default/core/text-field\";\n\nexport default function Demo() {\n  return <TextField label=\"Email\" isReadOnly value=\"hello@copyui.dev\" />;\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

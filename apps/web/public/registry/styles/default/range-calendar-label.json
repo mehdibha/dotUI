@@ -1,0 +1,15 @@
+{
+  "name": "range-calendar-label",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "range-calendar"
+  ],
+  "files": [
+    {
+      "path": "core/range-calendar/demos/label.tsx",
+      "content": "import { RangeCalendar } from \"@/registry/ui/default/core/range-calendar\";\n\nexport default function Demo() {\n  return <RangeCalendar aria-label=\"Event date\" />;\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

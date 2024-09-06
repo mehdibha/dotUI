@@ -1,5 +1,6 @@
 "use client";
 
+import { useMouse } from "@/lib/hooks/use-mouse";
 import {
   Table,
   TableBody,
@@ -8,9 +9,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/lib/components/core/default/table";
-import { useMouse } from "@/lib/hooks/use-mouse";
-import { cn } from "@/lib/utils/classes";
+} from "@/registry/ui/default/core/table";
+import { cn } from "@/registry/ui/default/lib/cn";
 
 export default function Demo() {
   const [mouse, ref] = useMouse<HTMLDivElement>();

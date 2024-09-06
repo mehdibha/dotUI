@@ -1,0 +1,15 @@
+{
+  "name": "menu-composition",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "menu"
+  ],
+  "files": [
+    {
+      "path": "core/menu/demos/composition.tsx",
+      "content": "import { MenuIcon } from \"@/lib/icons\";\nimport { Button } from \"@/registry/ui/default/core/button\";\nimport {\n  MenuContent,\n  MenuItem,\n  MenuRoot,\n} from \"@/registry/ui/default/core/menu\";\nimport { Overlay } from \"@/registry/ui/default/core/overlay\";\n\nexport default function Demo() {\n  return (\n    <MenuRoot>\n      <Button variant=\"outline\" shape=\"square\">\n        <MenuIcon />\n      </Button>\n      <Overlay type=\"popover\" mobileType=\"drawer\">\n        <MenuContent>\n          <MenuItem>Account settings</MenuItem>\n          <MenuItem>Create team</MenuItem>\n          <MenuItem>Command menu</MenuItem>\n          <MenuItem>Log out</MenuItem>\n        </MenuContent>\n      </Overlay>\n    </MenuRoot>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

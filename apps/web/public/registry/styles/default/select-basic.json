@@ -1,0 +1,15 @@
+{
+  "name": "select-basic",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "select"
+  ],
+  "files": [
+    {
+      "path": "core/select/demos/basic.tsx",
+      "content": "import React from \"react\";\nimport { Item } from \"@/registry/ui/default/core/list-box\";\nimport { Select } from \"@/registry/ui/default/core/select\";\n\nexport default function Demo() {\n  return (\n    <Select>\n      <Item>Perplexity</Item>\n      <Item>Replicate</Item>\n      <Item>Together AI</Item>\n      <Item>ElevenLabs</Item>\n    </Select>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

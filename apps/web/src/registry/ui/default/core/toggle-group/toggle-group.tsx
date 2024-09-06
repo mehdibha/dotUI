@@ -13,7 +13,7 @@ import {
 } from "react-aria";
 import { useToggleState } from "react-stately";
 import { tv, type VariantProps } from "tailwind-variants";
-import { toggleButtonStyles } from "./toggle-button/toggle-button";
+import { toggleButtonStyles } from "@/registry/ui/default/core/toggle-button";
 
 const toggleGroupVariants = tv({
   base: "flex items-center gap-1",
@@ -62,7 +62,11 @@ const ToggleGroupButton = ({
   const state = useToggleState({ ...props, ...additionalProps });
   const { focusProps, isFocused, isFocusVisible } = useFocusRing(props);
   const { hoverProps, isHovered } = useHover(props);
-  const { buttonProps, isPressed } = useToggleButton({ ...props, ...additionalProps }, state, ref);
+  const { buttonProps, isPressed } = useToggleButton(
+    { ...props, ...additionalProps },
+    state,
+    ref
+  );
 
   const singleProps = {
     role: "radio",
@@ -99,7 +103,11 @@ type ToggleGroupProps =
   | (ToggleGroupMultipleProps & { multiple: true });
 
 const ToggleGroup = (props: ToggleGroupProps) => {
-  const { multiple = false, orientation = "horizontal", ...toggleGroupProps } = props;
+  const {
+    multiple = false,
+    orientation = "horizontal",
+    ...toggleGroupProps
+  } = props;
 
   if (multiple) {
     const multipleProps = toggleGroupProps as ToggleGroupMultipleProps;
@@ -212,12 +220,15 @@ const ToggleGroupMultiple = (props: ToggleGroupMultipleProps) => {
         multiple: true,
         value: value,
         onItemActivate: React.useCallback(
-          (itemValue: string) => setValue((prevValue = []) => [...prevValue, itemValue]),
+          (itemValue: string) =>
+            setValue((prevValue = []) => [...prevValue, itemValue]),
           [setValue]
         ),
         onItemDeactivate: React.useCallback(
           (itemValue: string) =>
-            setValue((prevValue = []) => prevValue.filter((value) => value !== itemValue)),
+            setValue((prevValue = []) =>
+              prevValue.filter((value) => value !== itemValue)
+            ),
           [setValue]
         ),
         variant,
@@ -248,7 +259,8 @@ type ToggleGroupValueContextValue = {
   isDisabled?: boolean;
 } & VariantProps<typeof toggleButtonStyles>;
 
-const ToggleGroupContext = React.createContext<ToggleGroupValueContextValue | null>(null);
+const ToggleGroupContext =
+  React.createContext<ToggleGroupValueContextValue | null>(null);
 
 const useToggleGroup = () => {
   const context = React.useContext(ToggleGroupContext);

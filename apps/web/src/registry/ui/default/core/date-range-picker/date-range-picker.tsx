@@ -8,13 +8,16 @@ import {
 } from "react-aria-components";
 import { type VariantProps } from "tailwind-variants";
 import { CalendarIcon } from "@/lib/icons";
-import { Button } from "./button/button";
-import { DateInput, DateSegment } from "./date-input/date-input";
-import { Dialog } from "./dialog";
-import { fieldStyles } from "./field";
-import { Field, type FieldProps } from "./field";
-import { InputRoot, type inputStyles } from "./input";
-import { RangeCalendar } from "./range-calendar";
+import { Button } from "@/registry/ui/default/core/button";
+import { DateInput, DateSegment } from "@/registry/ui/default/core/date-input";
+import { Dialog } from "@/registry/ui/default/core/dialog";
+import {
+  Field,
+  type FieldProps,
+  fieldStyles,
+} from "@/registry/ui/default/core/field";
+import { InputRoot, type inputStyles } from "@/registry/ui/default/core/input";
+import { RangeCalendar } from "@/registry/ui/default/core/range-calendar";
 
 interface DateRangePickerProps<T extends DateValue>
   extends DateRangePickerRootProps<T>,
@@ -60,12 +63,19 @@ const DateRangePicker = <T extends DateValue>({
           loaderPosition="prefix"
           className="pr-1"
         >
-          <DateInput slot="start">{(segment) => <DateSegment segment={segment} />}</DateInput>
+          <DateInput slot="start">
+            {(segment) => <DateSegment segment={segment} />}
+          </DateInput>
           <span aria-hidden="true">–</span>
           <DateInput slot="end" className="flex-1">
             {(segment) => <DateSegment segment={segment} />}
           </DateInput>
-          <Button variant="default" size="sm" shape="square" className="my-1 size-7 rounded-sm">
+          <Button
+            variant="default"
+            size="sm"
+            shape="square"
+            className="size-7 my-1 rounded-sm"
+          >
             <CalendarIcon />
           </Button>
         </InputRoot>

@@ -1,12 +1,22 @@
 [
   {
     "name": "lucide",
-    "label": "Lucide icons",
-    "dep": "lucide-react"
+    "dependency": "lucide-react"
+  },
+  {
+    "name": "remix",
+    "dependency": "@remixicon/react"
   },
   {
     "name": "radix",
-    "label": "Radix icons",
-    "dep": "@radix-ui/react-icons"
+    "dependency": "@radix-ui/react-icons"
+  },
+  {
+    "name": "heroicons",
+    "dependency": "@heroicons/react"
+  },
+  {
+    "name": "feather",
+    "dependency": "react-feather"
   }
 ]

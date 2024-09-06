@@ -72,11 +72,18 @@ TextField.displayName = "TextField";
 type TextFieldRootProps = Omit<AriaTextFieldProps, "className"> & {
   className?: string;
 };
-const TextFieldRoot = React.forwardRef<React.ElementRef<typeof AriaTextField>, TextFieldRootProps>(
-  ({ className, ...props }, ref) => {
-    return <AriaTextField ref={ref} className={textFieldStyles({ className })} {...props} />;
-  }
-);
+const TextFieldRoot = React.forwardRef<
+  React.ElementRef<typeof AriaTextField>,
+  TextFieldRootProps
+>(({ className, ...props }, ref) => {
+  return (
+    <AriaTextField
+      ref={ref}
+      className={textFieldStyles({ className })}
+      {...props}
+    />
+  );
+});
 TextFieldRoot.displayName = "TextFieldRoot";
 
 export type { TextFieldProps, TextFieldRootProps };

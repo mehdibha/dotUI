@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { Button } from "@/lib/components/core/default/button";
 import { usePrevious } from "@/lib/hooks/use-previous";
+import { Button } from "@/registry/ui/default/core/button";
 
 function getRandomColor() {
   const colors = ["green", "blue", "purple", "red", "pink"];

@@ -1,0 +1,15 @@
+{
+  "name": "aspect-ratio-default",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "aspect-ratio"
+  ],
+  "files": [
+    {
+      "path": "core/aspect-ratio/demos/default.tsx",
+      "content": "import Image from \"next/image\";\nimport { AspectRatio } from \"@/registry/ui/default/core/aspect-ratio\";\n\nexport default function Demo() {\n  return (\n    <AspectRatio ratio={16 / 9}>\n      <Image\n        src=\"https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80\"\n        alt=\"Photo by Drew Beamer\"\n        fill\n        className=\"rounded-md object-cover\"\n      />\n    </AspectRatio>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

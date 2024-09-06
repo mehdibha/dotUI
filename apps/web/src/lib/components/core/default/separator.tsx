@@ -22,7 +22,12 @@ const separatorStyles = tv({
 
 type SeparatorProps = AriaSeparatorProps;
 const Separator = ({ orientation, className, ...props }: SeparatorProps) => {
-  return <AriaSeparator {...props} className={separatorStyles({ orientation, className })} />;
+  return (
+    <AriaSeparator
+      {...props}
+      className={separatorStyles({ orientation, className })}
+    />
+  );
 };
 
 export { Separator };

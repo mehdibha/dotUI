@@ -1,0 +1,19 @@
+{
+  "name": "color-field",
+  "type": "registry:core",
+  "dependencies": [
+    "react-aria-components"
+  ],
+  "registryDependencies": [
+    "field",
+    "input"
+  ],
+  "files": [
+    {
+      "path": "core/color-field/color-field.tsx",
+      "content": "\"use client\";\r\n\r\nimport * as React from \"react\";\r\nimport {\r\n  ColorField as AriaColorField,\r\n  type ColorFieldProps as AriaColorFieldProps,\r\n} from \"react-aria-components\";\r\nimport { tv, type VariantProps } from \"tailwind-variants\";\r\nimport { Field, type FieldProps } from \"@/registry/ui/default/core/field\";\r\nimport {\r\n  InputRoot,\r\n  Input,\r\n  type inputStyles,\r\n} from \"@/registry/ui/default/core/input\";\r\n\r\nconst colorFieldStyles = tv({\r\n  base: \"flex flex-col gap-2 items-start w-48\",\r\n});\r\n\r\ntype ColorFieldProps = ColorFieldRootProps &\r\n  Omit<FieldProps, \"children\"> &\r\n  VariantProps<typeof inputStyles> & {\r\n    prefix?: React.ReactNode;\r\n    suffix?: React.ReactNode;\r\n    isLoading?: boolean;\r\n    loaderPosition?: \"prefix\" | \"suffix\";\r\n    placeholder?: string;\r\n  };\r\nconst ColorField = React.forwardRef<HTMLInputElement, ColorFieldProps>(\r\n  (\r\n    {\r\n      className,\r\n      size,\r\n      placeholder,\r\n      label,\r\n      description,\r\n      errorMessage,\r\n      prefix,\r\n      suffix,\r\n      isLoading,\r\n      loaderPosition = \"suffix\",\r\n      isRequired,\r\n      necessityIndicator,\r\n      contextualHelp,\r\n      ...props\r\n    },\r\n    ref\r\n  ) => {\r\n    return (\r\n      <ColorFieldRoot className={className} isRequired={isRequired} {...props}>\r\n        <Field\r\n          label={label}\r\n          description={description}\r\n          errorMessage={errorMessage}\r\n          isRequired={isRequired}\r\n          necessityIndicator={necessityIndicator}\r\n          contextualHelp={contextualHelp}\r\n        >\r\n          <InputRoot\r\n            size={size}\r\n            prefix={prefix}\r\n            suffix={suffix}\r\n            isLoading={isLoading}\r\n            loaderPosition={loaderPosition}\r\n          >\r\n            <Input ref={ref} placeholder={placeholder} />\r\n          </InputRoot>\r\n        </Field>\r\n      </ColorFieldRoot>\r\n    );\r\n  }\r\n);\r\nColorField.displayName = \"ColorField\";\r\n\r\ntype ColorFieldRootProps = Omit<AriaColorFieldProps, \"className\"> & {\r\n  className?: string;\r\n};\r\nconst ColorFieldRoot = React.forwardRef<\r\n  React.ElementRef<typeof AriaColorField>,\r\n  ColorFieldRootProps\r\n>(({ className, ...props }, ref) => {\r\n  return (\r\n    <AriaColorField\r\n      ref={ref}\r\n      className={colorFieldStyles({ className })}\r\n      {...props}\r\n    />\r\n  );\r\n});\r\nColorFieldRoot.displayName = \"ColorFieldRoot\";\r\n\r\nexport type { ColorFieldProps, ColorFieldRootProps };\r\nexport { ColorField, ColorFieldRoot };\r\n",
+      "type": "registry:core",
+      "target": ""
+    }
+  ]
+}

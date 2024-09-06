@@ -1,0 +1,15 @@
+{
+  "name": "time-field-time-zones",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "time-field"
+  ],
+  "files": [
+    {
+      "path": "core/time-field/demos/time-zones.tsx",
+      "content": "\"use client\";\r\n\r\nimport { parseAbsoluteToLocal } from \"@internationalized/date\";\r\nimport { TimeField } from \"@/registry/ui/default/core/time-field\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <TimeField defaultValue={parseAbsoluteToLocal(\"2021-11-07T07:45:00Z\")} />\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

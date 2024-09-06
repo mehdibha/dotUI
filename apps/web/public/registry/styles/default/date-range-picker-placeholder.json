@@ -1,0 +1,15 @@
+{
+  "name": "date-range-picker-placeholder",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "date-range-picker"
+  ],
+  "files": [
+    {
+      "path": "core/date-range-picker/demos/placeholder.tsx",
+      "content": "\"use client\";\r\n\r\nimport { CalendarDate } from \"@internationalized/date\";\r\nimport { DateRangePicker } from \"@/registry/ui/default/core/date-range-picker\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <DateRangePicker\r\n      label=\"Meeting date\"\r\n      placeholderValue={new CalendarDate(1980, 1, 1)}\r\n    />\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

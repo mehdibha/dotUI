@@ -1,4 +1,9 @@
-import { BackgroundColor, Color, Theme, type CssColor } from "@adobe/leonardo-contrast-colors";
+import {
+  BackgroundColor,
+  Color,
+  Theme,
+  type CssColor,
+} from "@adobe/leonardo-contrast-colors";
 import { useConfig } from "./use-config";
 
 export const usePalette = (

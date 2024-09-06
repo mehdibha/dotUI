@@ -21,7 +21,9 @@ const DropZone = (props: DropZoneProps) => {
   return (
     <AriaDropZone
       {...props}
-      className={composeRenderProps(props.className, (className) => root({ className }))}
+      className={composeRenderProps(props.className, (className) =>
+        root({ className })
+      )}
     />
   );
 };

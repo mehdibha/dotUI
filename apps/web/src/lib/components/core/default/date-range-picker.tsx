@@ -60,12 +60,19 @@ const DateRangePicker = <T extends DateValue>({
           loaderPosition="prefix"
           className="pr-1"
         >
-          <DateInput slot="start">{(segment) => <DateSegment segment={segment} />}</DateInput>
+          <DateInput slot="start">
+            {(segment) => <DateSegment segment={segment} />}
+          </DateInput>
           <span aria-hidden="true">–</span>
           <DateInput slot="end" className="flex-1">
             {(segment) => <DateSegment segment={segment} />}
           </DateInput>
-          <Button variant="default" size="sm" shape="square" className="my-1 size-7 rounded-sm">
+          <Button
+            variant="default"
+            size="sm"
+            shape="square"
+            className="size-7 my-1 rounded-sm"
+          >
             <CalendarIcon />
           </Button>
         </InputRoot>

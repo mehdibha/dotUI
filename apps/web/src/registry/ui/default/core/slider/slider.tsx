@@ -16,9 +16,13 @@ import {
   TextContext as AriaTextContext,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { cn } from "@/lib/utils/classes";
 import { focusRing } from "@/lib/utils/styles";
-import { Description, Label, type FieldProps } from "./field/field";
+import {
+  Description,
+  Label,
+  type FieldProps,
+} from "@/registry/ui/default/core/field";
+import { cn } from "@/registry/ui/default/lib/cn";
 
 const sliderStyles = tv({
   slots: {
@@ -60,48 +64,64 @@ const sliderStyles = tv({
   },
 });
 
-interface SliderProps extends SliderRootProps, VariantProps<typeof sliderStyles> {
+interface SliderProps
+  extends SliderRootProps,
+    VariantProps<typeof sliderStyles> {
   label?: FieldProps["label"];
   description?: FieldProps["description"];
   valueLabel?: boolean | ((value: number[]) => string);
 }
-const Slider = React.forwardRef<React.ElementRef<typeof AriaSlider>, SliderProps>(
-  ({ label, description, valueLabel = false, size, ...props }, ref) => (
-    <SliderRoot ref={ref} {...props}>
-      {(label || !!valueLabel) && (
-        <div className={cn("flex items-center justify-between gap-2", !label && "justify-end")}>
-          {label && <Label>{label}</Label>}
-          {!!valueLabel && (
-            <SliderValueLabel>
-              {({ state }) =>
-                typeof valueLabel === "function" ? valueLabel(state.values) : undefined
-              }
-            </SliderValueLabel>
-          )}
-        </div>
-      )}
-      <SliderControls size={size} />
-      {description && <Description>{description}</Description>}
-    </SliderRoot>
-  )
-);
+const Slider = React.forwardRef<
+  React.ElementRef<typeof AriaSlider>,
+  SliderProps
+>(({ label, description, valueLabel = false, size, ...props }, ref) => (
+  <SliderRoot ref={ref} {...props}>
+    {(label || !!valueLabel) && (
+      <div
+        className={cn(
+          "flex items-center justify-between gap-2",
+          !label && "justify-end"
+        )}
+      >
+        {label && <Label>{label}</Label>}
+        {!!valueLabel && (
+          <SliderValueLabel>
+            {({ state }) =>
+              typeof valueLabel === "function"
+                ? valueLabel(state.values)
+                : undefined
+            }
+          </SliderValueLabel>
+        )}
+      </div>
+    )}
+    <SliderControls size={size} />
+    {description && <Description>{description}</Description>}
+  </SliderRoot>
+));
 Slider.displayName = "Slider";
 
 type SliderRootProps = AriaSliderProps;
-const SliderRoot = React.forwardRef((props: SliderRootProps, ref: React.Ref<HTMLDivElement>) => {
-  const { root } = sliderStyles();
-  const descriptionId = useSlotId();
-  return (
-    <AriaTextContext.Provider value={{ slots: { description: { id: descriptionId } } }}>
-      <AriaSlider
-        ref={ref}
-        aria-describedby={descriptionId}
-        {...props}
-        className={composeRenderProps(props.className, (className) => root({ className }))}
-      />
-    </AriaTextContext.Provider>
-  );
-});
+const SliderRoot = React.forwardRef(
+  (props: SliderRootProps, ref: React.Ref<HTMLDivElement>) => {
+    const { root } = sliderStyles();
+    const descriptionId = useSlotId();
+    return (
+      <AriaTextContext.Provider
+        value={{ slots: { description: { id: descriptionId } } }}
+      >
+        <AriaSlider
+          ref={ref}
+          aria-describedby={descriptionId}
+          {...props}
+          className={composeRenderProps(props.className, (className) =>
+            root({ className })
+          )}
+        />
+      </AriaTextContext.Provider>
+    );
+  }
+);
 SliderRoot.displayName = "SliderRoot";
 
 type SliderControlsProps = SliderTrackProps & VariantProps<typeof sliderStyles>;
@@ -117,13 +137,16 @@ const SliderControls = (props: SliderControlsProps) => {
   );
 };
 
-type SliderTrackProps = AriaSliderTrackProps & VariantProps<typeof sliderStyles>;
+type SliderTrackProps = AriaSliderTrackProps &
+  VariantProps<typeof sliderStyles>;
 const SliderTrack = ({ size, ...props }: SliderTrackProps) => {
   const { track } = sliderStyles({ size });
   return (
     <AriaSliderTrack
       {...props}
-      className={composeRenderProps(props.className, (className) => track({ className }))}
+      className={composeRenderProps(props.className, (className) =>
+        track({ className })
+      )}
     />
   );
 };
@@ -131,7 +154,9 @@ const SliderTrack = ({ size, ...props }: SliderTrackProps) => {
 type SliderFillerProps = React.HTMLAttributes<HTMLDivElement>;
 const SliderFiller = (props: SliderFillerProps) => {
   const { filler } = sliderStyles();
-  const { orientation, getThumbPercent, values } = React.useContext(AriaSliderStateContext);
+  const { orientation, getThumbPercent, values } = React.useContext(
+    AriaSliderStateContext
+  );
   return (
     <div
       {...props}
@@ -157,13 +182,16 @@ const SliderFiller = (props: SliderFillerProps) => {
   );
 };
 
-type SliderThumbProps = AriaSliderThumbProps & VariantProps<typeof sliderStyles>;
+type SliderThumbProps = AriaSliderThumbProps &
+  VariantProps<typeof sliderStyles>;
 const SliderThumb = ({ size, ...props }: SliderThumbProps) => {
   const { thumb } = sliderStyles({ size });
   return (
     <AriaSliderThumb
       {...props}
-      className={composeRenderProps(props.className, (className) => thumb({ className }))}
+      className={composeRenderProps(props.className, (className) =>
+        thumb({ className })
+      )}
     />
   );
 };
@@ -174,12 +202,15 @@ const SliderValueLabel = (props: SliderValueLabelProps) => {
   return (
     <AriaSliderOutput
       {...props}
-      className={composeRenderProps(props.className, (className) => valueLabel({ className }))}
+      className={composeRenderProps(props.className, (className) =>
+        valueLabel({ className })
+      )}
     >
       {composeRenderProps(
         props.children,
         (children, { state }) =>
-          children ?? state.values.map((_, i) => state.getThumbValueLabel(i)).join(" - ")
+          children ??
+          state.values.map((_, i) => state.getThumbValueLabel(i)).join(" - ")
       )}
     </AriaSliderOutput>
   );

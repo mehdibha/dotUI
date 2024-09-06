@@ -1,9 +1,9 @@
 "use client";
 
 import * as React from "react";
-import { ScrollArea } from "@/lib/components/core/default/scroll-area";
 import { useIntersectionObserver } from "@/lib/hooks/use-intersection-observer";
-import { cn } from "@/lib/utils/classes";
+import { ScrollArea } from "@/registry/ui/default/core/scroll-area";
+import { cn } from "@/registry/ui/default/lib/cn";
 
 export default function Demo() {
   const [ref, entry] = useIntersectionObserver({
@@ -16,7 +16,11 @@ export default function Demo() {
     <div className="w-full max-w-sm">
       <p>
         Element{" "}
-        <span className={cn(entry?.isIntersecting ? "text-green-700" : "text-yellow-600")}>
+        <span
+          className={cn(
+            entry?.isIntersecting ? "text-green-700" : "text-yellow-600"
+          )}
+        >
           {entry?.isIntersecting ? "inside" : "outside"}
         </span>{" "}
         the viewport

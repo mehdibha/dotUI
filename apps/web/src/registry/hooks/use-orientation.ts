@@ -34,7 +34,10 @@ export function useOrientation() {
       if (window.screen?.orientation) {
         window.screen.orientation.removeEventListener("change", handleChange);
       } else {
-        window.removeEventListener("orientationchange", handleOrientationChange);
+        window.removeEventListener(
+          "orientationchange",
+          handleOrientationChange
+        );
       }
     };
   }, []);

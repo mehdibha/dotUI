@@ -7,11 +7,11 @@ import {
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import { ChevronDownIcon } from "@/lib/icons";
-import { Button } from "./button/button";
-import { Field, type FieldProps } from "./field";
-import { Input, InputRoot } from "./input";
-import { ListBox } from "./list-box";
-import { Overlay } from "./overlay";
+import { Button } from "@/registry/ui/default/core/button";
+import { Field, type FieldProps } from "@/registry/ui/default/core/field";
+import { Input, InputRoot } from "@/registry/ui/default/core/input";
+import { ListBox } from "@/registry/ui/default/core/list-box";
+import { Overlay } from "@/registry/ui/default/core/overlay";
 
 const comboboxStyles = tv({
   slots: {
@@ -66,17 +66,21 @@ const ComboboxTrigger = () => {
   return (
     <InputRoot className="px-0">
       <Input className="pl-2" />
-      <Button variant="default" shape="square" className="my-1 mr-1 size-7">
+      <Button variant="default" shape="square" className="size-7 my-1 mr-1">
         <ChevronDownIcon />
       </Button>
     </InputRoot>
   );
 };
 
-interface ComboboxRootProps<T extends object> extends Omit<AriaComboboxProps<T>, "className"> {
+interface ComboboxRootProps<T extends object>
+  extends Omit<AriaComboboxProps<T>, "className"> {
   className?: string;
 }
-const ComboboxRoot = <T extends object>({ className, ...props }: ComboboxRootProps<T>) => {
+const ComboboxRoot = <T extends object>({
+  className,
+  ...props
+}: ComboboxRootProps<T>) => {
   const { root } = comboboxStyles();
   return <AriaCombobox className={root({ className })} {...props} />;
 };

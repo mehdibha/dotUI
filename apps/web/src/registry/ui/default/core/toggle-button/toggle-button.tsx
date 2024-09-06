@@ -65,10 +65,14 @@ interface ToggleButtonProps
 }
 
 const ToggleButton = React.forwardRef(
-  (localProps: ToggleButtonProps, ref: React.ForwardedRef<HTMLButtonElement>) => {
+  (
+    localProps: ToggleButtonProps,
+    ref: React.ForwardedRef<HTMLButtonElement>
+  ) => {
     const contextProps = useToggleButtonContext();
     const props = { ...contextProps, ...localProps };
-    const { className, variant, size, shape, prefix, suffix, ...restProps } = props;
+    const { className, variant, size, shape, prefix, suffix, ...restProps } =
+      props;
     return (
       <AriaToggleButton
         ref={ref}
@@ -83,7 +87,11 @@ const ToggleButton = React.forwardRef(
         {composeRenderProps(props.children, (children) => (
           <>
             {prefix}
-            {typeof children === "string" ? <span className="truncate">{children}</span> : children}
+            {typeof children === "string" ? (
+              <span className="truncate">{children}</span>
+            ) : (
+              children
+            )}
             {suffix}
           </>
         ))}

@@ -7,10 +7,19 @@ import {
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
 import { useMediaQuery } from "@/lib/hooks/use-media-query";
-import { ChevronDownIcon, ChevronUpIcon, MinusIcon, PlusIcon } from "@/lib/icons";
-import { Button, type ButtonProps } from "./button/button";
-import { Field, type FieldProps } from "./field/field";
-import { InputRoot, Input, type inputStyles } from "./input/input";
+import {
+  ChevronDownIcon,
+  ChevronUpIcon,
+  MinusIcon,
+  PlusIcon,
+} from "@/lib/icons";
+import { Button, type ButtonProps } from "@/registry/ui/default/core/button";
+import { Field, type FieldProps } from "@/registry/ui/default/core/field";
+import {
+  InputRoot,
+  Input,
+  type inputStyles,
+} from "@/registry/ui/default/core/input";
 
 const numberFieldStyles = tv({
   base: "flex flex-col gap-2 items-start w-48",
@@ -39,10 +48,16 @@ const NumberField = React.forwardRef<HTMLInputElement, NumberFieldProps>(
   ) => {
     const isMobile = useMediaQuery("(max-width: 768px)");
     const prefix = isMobile ? (
-      <NumberFieldButton slot="decrement" className="h-full rounded-none rounded-l-md border-r" />
+      <NumberFieldButton
+        slot="decrement"
+        className="h-full rounded-none rounded-l-md border-r"
+      />
     ) : null;
     const suffix = isMobile ? (
-      <NumberFieldButton slot="increment" className="h-full rounded-none rounded-r-md border-l" />
+      <NumberFieldButton
+        slot="increment"
+        className="h-full rounded-none rounded-r-md border-l"
+      />
     ) : (
       <div className="flex h-full flex-col rounded-r-md">
         <NumberFieldButton
@@ -89,7 +104,13 @@ const NumberFieldRoot = React.forwardRef<
   React.ElementRef<typeof AriaNumberField>,
   NumberFieldRootProps
 >(({ className, ...props }, ref) => {
-  return <AriaNumberField ref={ref} className={numberFieldStyles({ className })} {...props} />;
+  return (
+    <AriaNumberField
+      ref={ref}
+      className={numberFieldStyles({ className })}
+      {...props}
+    />
+  );
 });
 NumberFieldRoot.displayName = "NumberFieldRoot";
 
@@ -97,7 +118,11 @@ interface NumberFieldButtonProps extends ButtonProps {
   slot: "increment" | "decrement";
   iconType?: "chevron" | "default";
 }
-const NumberFieldButton = ({ slot, iconType = "default", ...props }: NumberFieldButtonProps) => {
+const NumberFieldButton = ({
+  slot,
+  iconType = "default",
+  ...props
+}: NumberFieldButtonProps) => {
   const icon =
     iconType === "chevron" ? (
       slot === "increment" ? (

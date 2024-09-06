@@ -1,0 +1,15 @@
+{
+  "name": "slider-value-scale",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "slider"
+  ],
+  "files": [
+    {
+      "path": "core/slider/demos/value-scale.tsx",
+      "content": "import { Slider } from \"@/registry/ui/default/core/slider\";\n\nexport default function Demo() {\n  return (\n    <Slider\n      label=\"Cookies to buy\"\n      minValue={1}\n      maxValue={50}\n      defaultValue={25}\n      valueLabel\n    />\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

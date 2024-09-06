@@ -2,8 +2,8 @@
 
 import * as React from "react";
 import { SearchIcon } from "lucide-react";
-import { TextField } from "@/lib/components/core/default/text-field";
 import { useDebounce } from "@/lib/hooks/use-debounce";
+import { TextField } from "@/registry/ui/default/core/text-field";
 
 export default function Demo() {
   const [searchInput, setSearchInput] = React.useState("");

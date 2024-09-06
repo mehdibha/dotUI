@@ -8,7 +8,7 @@ import {
   type ColorSpace,
   composeRenderProps,
 } from "react-aria-components";
-import { cn } from "@/lib/utils/classes";
+import { cn } from "@/registry/ui/default/lib/cn";
 import { Button, type ButtonProps } from "./button";
 import { ColorArea } from "./color-area";
 import { ColorField } from "./color-field";
@@ -28,7 +28,12 @@ const ColorPicker = ({
   ...props
 }: ColorPickerProps) => {
   return (
-    <ColorPickerRoot slot={slot} value={value} defaultValue={defaultValue} onChange={onChange}>
+    <ColorPickerRoot
+      slot={slot}
+      value={value}
+      defaultValue={defaultValue}
+      onChange={onChange}
+    >
       {composeRenderProps(props.children, (children) => (
         <DialogRoot>
           <Button shape={shape} {...props}>
@@ -55,8 +60,17 @@ const ColorEditor = ({ className, ...props }: ColorEditorProps) => {
   return (
     <div className={cn("mx-auto flex flex-col gap-2", className)} {...props}>
       <div className="flex gap-2">
-        <ColorArea colorSpace="hsb" xChannel="saturation" yChannel="brightness" />
-        <ColorSlider orientation="vertical" colorSpace="hsb" channel="hue" showValueLabel={false} />
+        <ColorArea
+          colorSpace="hsb"
+          xChannel="saturation"
+          yChannel="brightness"
+        />
+        <ColorSlider
+          orientation="vertical"
+          colorSpace="hsb"
+          channel="hue"
+          showValueLabel={false}
+        />
         <ColorSlider
           orientation="vertical"
           colorSpace="hsb"
@@ -65,14 +79,22 @@ const ColorEditor = ({ className, ...props }: ColorEditorProps) => {
         />
       </div>
       <div className="flex items-center gap-2">
-        <Select selectedKey={space} onSelectionChange={(s) => setSpace(s as ColorSpace)} size="sm">
+        <Select
+          selectedKey={space}
+          onSelectionChange={(s) => setSpace(s as ColorSpace)}
+          size="sm"
+        >
           <Item id="hex">Hex</Item>
           <Item id="rgb">RGB</Item>
           <Item id="hsl">HSL</Item>
           <Item id="hsb">HSB</Item>
         </Select>
         {space === "hex" ? (
-          <ColorField aria-label="Hex" className="shrink-1 w-[40px] flex-1 basis-0" size="sm" />
+          <ColorField
+            aria-label="Hex"
+            className="shrink-1 w-[40px] flex-1 basis-0"
+            size="sm"
+          />
         ) : (
           getColorChannels(space).map((channel) => (
             <ColorField

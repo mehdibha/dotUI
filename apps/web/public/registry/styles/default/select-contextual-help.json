@@ -1,0 +1,15 @@
+{
+  "name": "select-contextual-help",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "select"
+  ],
+  "files": [
+    {
+      "path": "core/select/demos/contextual-help.tsx",
+      "content": "import React from \"react\";\nimport { ContextualHelp } from \"@/registry/ui/default/core/contextual-help\";\nimport { Item } from \"@/registry/ui/default/core/list-box\";\nimport { Select } from \"@/registry/ui/default/core/select\";\n\nexport default function SelectDemo() {\n  return (\n    <Select\n      label=\"Provider\"\n      contextualHelp={\n        <ContextualHelp\n          title=\"Need help?\"\n          description=\"If you're having trouble, get assisted by our AI.\"\n        />\n      }\n    >\n      <Item>Perplexity</Item>\n      <Item>Replicate</Item>\n      <Item>Together AI</Item>\n      <Item>ElevenLabs</Item>\n    </Select>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

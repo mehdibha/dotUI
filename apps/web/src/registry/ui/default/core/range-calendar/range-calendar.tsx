@@ -10,7 +10,7 @@ import {
   useSlottedContext,
 } from "react-aria-components";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/lib/icons";
-import { Button } from "./button/button";
+import { Button } from "@/registry/ui/default/core/button";
 import {
   CalendarHeader,
   CalendarGrid,
@@ -19,9 +19,9 @@ import {
   CalendarGridBody,
   CalendarCell,
   calendarStyles,
-} from "./calendar";
-import { Heading } from "./heading/heading";
-import { Text } from "./text";
+} from "@/registry/ui/default/core/calendar";
+import { Heading } from "@/registry/ui/default/core/heading";
+import { Text } from "@/registry/ui/default/core/text";
 
 interface RangeCalendarProps<T extends DateValue>
   extends Omit<AriaRangeCalendarProps<T>, "visibleDuration"> {
@@ -49,21 +49,28 @@ const RangeCalendar = <T extends DateValue>({
           </CalendarHeader>
           <div className="flex items-start gap-4">
             {Array.from({ length: visibleMonths }).map((_, index) => (
-              <CalendarGrid key={index} offset={index === 0 ? undefined : { months: index }}>
+              <CalendarGrid
+                key={index}
+                offset={index === 0 ? undefined : { months: index }}
+              >
                 <CalendarGridHeader>
                   {(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}
                 </CalendarGridHeader>
                 <CalendarGridBody>
                   {(date) => (
                     <CalendarCell date={date} range>
-                      {({ formattedDate }) => <span className="z-20">{formattedDate}</span>}
+                      {({ formattedDate }) => (
+                        <span className="z-20">{formattedDate}</span>
+                      )}
                     </CalendarCell>
                   )}
                 </CalendarGridBody>
               </CalendarGrid>
             ))}
           </div>
-          {isInvalid && errorMessage && <Text slot="errorMessage">{errorMessage}</Text>}
+          {isInvalid && errorMessage && (
+            <Text slot="errorMessage">{errorMessage}</Text>
+          )}
         </>
       )}
     </RangeCalendarRoot>
@@ -71,13 +78,17 @@ const RangeCalendar = <T extends DateValue>({
 };
 
 type RangeCalendarRootProps<T extends DateValue> = AriaRangeCalendarProps<T>;
-const RangeCalendarRoot = <T extends DateValue>(props: RangeCalendarRootProps<T>) => {
+const RangeCalendarRoot = <T extends DateValue>(
+  props: RangeCalendarRootProps<T>
+) => {
   const CalendarContext = useSlottedContext(AriaRangeCalendarContext);
   const standalone = Object.keys(CalendarContext ?? {}).length === 0;
   const { root } = calendarStyles({ standalone });
   return (
     <AriaRangeCalendar
-      className={composeRenderProps(props.className, (className) => root({ className }))}
+      className={composeRenderProps(props.className, (className) =>
+        root({ className })
+      )}
       {...props}
     />
   );

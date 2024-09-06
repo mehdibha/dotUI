@@ -1,0 +1,15 @@
+{
+  "name": "progress-indeterminate",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "progress"
+  ],
+  "files": [
+    {
+      "path": "core/progress/demos/indeterminate.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { Progress } from \"@/registry/ui/default/core/progress\";\n\nexport default function Demo() {\n  return <Progress isIndeterminate />;\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

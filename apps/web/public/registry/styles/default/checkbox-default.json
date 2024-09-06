@@ -1,0 +1,15 @@
+{
+  "name": "checkbox-default",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "checkbox"
+  ],
+  "files": [
+    {
+      "path": "core/checkbox/demos/default.tsx",
+      "content": "\"use client\";\n\nimport { Checkbox } from \"@/registry/ui/default/core/checkbox\";\nimport { Link } from \"@/registry/ui/default/core/link\";\n\nexport default function Demo() {\n  return (\n    <Checkbox>\n      I accept the{\" \"}\n      <Link variant=\"accent\" href=\"#\">\n        terms and conditions\n      </Link>\n    </Checkbox>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

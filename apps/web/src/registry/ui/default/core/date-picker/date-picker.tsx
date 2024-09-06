@@ -8,13 +8,16 @@ import {
 } from "react-aria-components";
 import { type VariantProps } from "tailwind-variants";
 import { CalendarIcon } from "@/lib/icons";
-import { Button } from "../button/button";
-import { Calendar } from "../calendar";
-import { DateInput, DateSegment } from "../date-input/date-input";
-import { Dialog } from "../dialog";
-import { fieldStyles } from "../field/field";
-import { Field, type FieldProps } from "../field/field";
-import { InputRoot, type inputStyles } from "../input/input";
+import { Button } from "@/registry/ui/default/core/button";
+import { Calendar } from "@/registry/ui/default/core/calendar";
+import { DateInput, DateSegment } from "@/registry/ui/default/core/date-input";
+import { Dialog } from "@/registry/ui/default/core/dialog";
+import {
+  Field,
+  fieldStyles,
+  type FieldProps,
+} from "@/registry/ui/default/core/field";
+import { InputRoot, type inputStyles } from "@/registry/ui/default/core/input";
 
 interface DatePickerProps<T extends DateValue>
   extends DatePickerRootProps<T>,
@@ -60,8 +63,15 @@ const DatePicker = <T extends DateValue>({
           loaderPosition="prefix"
           className="pr-1"
         >
-          <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
-          <Button variant="default" size="sm" shape="square" className="my-1 size-7 rounded-sm">
+          <DateInput>
+            {(segment) => <DateSegment segment={segment} />}
+          </DateInput>
+          <Button
+            variant="default"
+            size="sm"
+            shape="square"
+            className="size-7 my-1 rounded-sm"
+          >
             <CalendarIcon />
           </Button>
         </InputRoot>
@@ -77,7 +87,10 @@ interface DatePickerRootProps<T extends DateValue>
   extends Omit<AriaDatePickerProps<T>, "className"> {
   className?: string;
 }
-const DatePickerRoot = <T extends DateValue>({ className, ...props }: DatePickerRootProps<T>) => {
+const DatePickerRoot = <T extends DateValue>({
+  className,
+  ...props
+}: DatePickerRootProps<T>) => {
   const { root } = fieldStyles();
   return <AriaDatePicker className={root({ className })} {...props} />;
 };

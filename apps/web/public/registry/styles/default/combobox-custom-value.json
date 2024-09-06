@@ -1,0 +1,15 @@
+{
+  "name": "combobox-custom-value",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "combobox"
+  ],
+  "files": [
+    {
+      "path": "core/combobox/demos/custom-value.tsx",
+      "content": "import React from \"react\";\r\nimport { Combobox } from \"@/registry/ui/default/core/combobox\";\r\nimport { Item } from \"@/registry/ui/default/core/list-box\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <Combobox aria-label=\"country\" allowsCustomValue>\r\n      <Item>Canada</Item>\r\n      <Item>France</Item>\r\n      <Item>Germany</Item>\r\n      <Item>Spain</Item>\r\n      <Item>Tunisia</Item>\r\n      <Item>United states</Item>\r\n      <Item>United Kingdom</Item>\r\n    </Combobox>\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

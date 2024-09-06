@@ -1,6 +1,6 @@
 import * as React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
-import { cn } from "@/lib/utils/classes";
+import { cn } from "@/registry/ui/default/lib/cn";
 
 const badgeVariants = tv({
   base: "inline-flex items-center gap-1 rounded-md text-xs font-semibold transition-colors shrink-0 whitespace-nowrap",
@@ -40,7 +40,14 @@ export interface BadgeProps
   icon?: React.ReactNode;
 }
 
-function Badge({ children, className, variant, size, icon, ...props }: BadgeProps) {
+function Badge({
+  children,
+  className,
+  variant,
+  size,
+  icon,
+  ...props
+}: BadgeProps) {
   return (
     <span
       role="presentation"

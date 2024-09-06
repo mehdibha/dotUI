@@ -1,0 +1,15 @@
+{
+  "name": "time-field-required",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "time-field"
+  ],
+  "files": [
+    {
+      "path": "core/time-field/demos/required.tsx",
+      "content": "\"use client\";\n\nimport React from \"react\";\nimport { TimeField } from \"@/registry/ui/default/core/time-field\";\n\nexport default function Demo() {\n  return (\n    <div className=\"grid grid-cols-2 gap-4\">\n      <TimeField label=\"Event time\" isRequired />\n      <TimeField label=\"Event time\" isRequired necessityIndicator=\"icon\" />\n      <TimeField label=\"Event time\" isRequired necessityIndicator=\"label\" />\n      <TimeField label=\"Event time\" necessityIndicator=\"label\" />\n    </div>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

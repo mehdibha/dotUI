@@ -1,0 +1,15 @@
+{
+  "name": "date-field-granularity",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "date-field"
+  ],
+  "files": [
+    {
+      "path": "core/date-field/demos/granularity.tsx",
+      "content": "\"use client\";\r\n\r\nimport { parseAbsoluteToLocal } from \"@internationalized/date\";\r\nimport { DateField } from \"@/registry/ui/default/core/date-field\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <div className=\"flex flex-col items-center gap-4\">\r\n      <DateField\r\n        label=\"Hour\"\r\n        granularity=\"hour\"\r\n        defaultValue={parseAbsoluteToLocal(\"2021-04-07T18:45:22Z\")}\r\n      />\r\n      <DateField\r\n        label=\"Minute\"\r\n        granularity=\"minute\"\r\n        defaultValue={parseAbsoluteToLocal(\"2021-04-07T18:45:22Z\")}\r\n      />\r\n      <DateField\r\n        label=\"Second\"\r\n        granularity=\"second\"\r\n        defaultValue={parseAbsoluteToLocal(\"2021-04-07T18:45:22Z\")}\r\n      />\r\n    </div>\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

@@ -4,7 +4,11 @@ interface IconProps extends Partial<SVGProps<SVGSVGElement>> {
   size?: string | number;
 }
 
-export const DiscordIcon = ({ color = "currentColor", size = 24, ...rest }: IconProps) => {
+export const DiscordIcon = ({
+  color = "currentColor",
+  size = 24,
+  ...rest
+}: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

@@ -3,11 +3,16 @@ import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/react";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
-import { cn } from "@/lib/utils/classes";
 import { truncateOnWord } from "@/lib/utils/string";
-import { JosephinFont, fontDisplay, geistMono, geistSans } from "@/styles/fonts";
+import {
+  JosephinFont,
+  fontDisplay,
+  geistMono,
+  geistSans,
+} from "@/styles/fonts";
 import "@/styles/globals.css";
 import { siteConfig } from "@/config";
+import { cn } from "@/registry/ui/default/lib/cn";
 import { Providers } from "./providers";
 
 const config = siteConfig.global;
@@ -50,7 +55,11 @@ export const viewport: Viewport = {
   ],
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body

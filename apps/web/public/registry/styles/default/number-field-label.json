@@ -1,0 +1,15 @@
+{
+  "name": "number-field-label",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "number-field"
+  ],
+  "files": [
+    {
+      "path": "core/number-field/demos/label.tsx",
+      "content": "import { NumberField } from \"@/registry/ui/default/core/number-field\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <div className=\"space-y-4\">\r\n      <NumberField label=\"Width\" placeholder=\"Visible label\" />\r\n      <NumberField aria-label=\"Width\" placeholder=\"Hidden label\" />\r\n    </div>\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

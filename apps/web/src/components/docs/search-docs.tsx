@@ -3,7 +3,8 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { FileIcon, SearchIcon } from "lucide-react";
-import { Button, type ButtonProps } from "@/lib/components/core/default/button";
+import { docsConfig } from "@/config/docs-config";
+import { Button, type ButtonProps } from "@/registry/ui/default/core/button";
 import {
   Command,
   CommandEmpty,
@@ -11,10 +12,9 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/lib/components/core/default/command";
-import { DialogRoot, Dialog } from "@/lib/components/core/default/dialog";
-import { cn } from "@/lib/utils/classes";
-import { docsConfig } from "@/config/docs-config";
+} from "@/registry/ui/default/core/command";
+import { DialogRoot, Dialog } from "@/registry/ui/default/core/dialog";
+import { cn } from "@/registry/ui/default/lib/cn";
 
 export const SearchDocs = (props: ButtonProps) => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -60,12 +60,22 @@ export const SearchDocs = (props: ButtonProps) => {
         className={cn("w-full px-2 text-sm text-fg-muted", props.className)}
       >
         {props.children ?? (
-          <span className="mr-4 inline-flex flex-1 text-left">Quick Search...</span>
+          <span className="mr-4 inline-flex flex-1 text-left">
+            Quick Search...
+          </span>
         )}
       </Button>
-      <Dialog className="!p-0" showDismissButton={false} type="modal" mobileType="modal">
+      <Dialog
+        className="!p-0"
+        showDismissButton={false}
+        type="modal"
+        mobileType="modal"
+      >
         <Command>
-          <CommandInput autoFocus placeholder="Search a component, a block, a hook..." />
+          <CommandInput
+            autoFocus
+            placeholder="Search a component, a block, a hook..."
+          />
           <CommandList>
             <CommandEmpty>No results found.</CommandEmpty>
             {docsConfig.nav.map((category, index) => (

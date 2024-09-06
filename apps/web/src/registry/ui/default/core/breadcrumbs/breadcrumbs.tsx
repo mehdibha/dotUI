@@ -10,7 +10,7 @@ import {
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import { ChevronRightIcon } from "@/lib/icons";
-import { cn } from "@/lib/utils/classes";
+import { cn } from "@/registry/ui/default/lib/cn";
 
 const breadcrumbsStyles = tv({
   slots: {
@@ -22,14 +22,23 @@ const breadcrumbsStyles = tv({
 
 type BreadcrumbsProps<T extends object> = AriaBreadcrumbsProps<T>;
 
-const Breadcrumbs = <T extends object>({ className, ...props }: BreadcrumbsProps<T>) => {
+const Breadcrumbs = <T extends object>({
+  className,
+  ...props
+}: BreadcrumbsProps<T>) => {
   const { root } = breadcrumbsStyles();
   return <AriaBreadcrumbs {...props} className={root({ className })} />;
 };
 
 type BreadcrumbProps = Omit<AriaBreadcrumbProps, "children"> &
   Omit<AriaLinkProps, "className" | "style"> & { icon?: React.ReactNode };
-const Breadcrumb = ({ children, className, style, icon = null, ...props }: BreadcrumbProps) => {
+const Breadcrumb = ({
+  children,
+  className,
+  style,
+  icon = null,
+  ...props
+}: BreadcrumbProps) => {
   return (
     <BreadcrumbItem className={className} style={style} {...props}>
       {icon}
@@ -53,5 +62,10 @@ const BreadcrumbLink = ({ className, ...props }: BreadcrumbLinkProps) => {
   return <AriaLink {...props} className={link({ className })} />;
 };
 
-export type { BreadcrumbsProps, BreadcrumbProps, BreadcrumbItemProps, BreadcrumbLinkProps };
+export type {
+  BreadcrumbsProps,
+  BreadcrumbProps,
+  BreadcrumbItemProps,
+  BreadcrumbLinkProps,
+};
 export { Breadcrumbs, Breadcrumb, BreadcrumbItem, BreadcrumbLink };

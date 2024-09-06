@@ -75,7 +75,13 @@ const ColorFieldRoot = React.forwardRef<
   React.ElementRef<typeof AriaColorField>,
   ColorFieldRootProps
 >(({ className, ...props }, ref) => {
-  return <AriaColorField ref={ref} className={colorFieldStyles({ className })} {...props} />;
+  return (
+    <AriaColorField
+      ref={ref}
+      className={colorFieldStyles({ className })}
+      {...props}
+    />
+  );
 });
 ColorFieldRoot.displayName = "ColorFieldRoot";
 

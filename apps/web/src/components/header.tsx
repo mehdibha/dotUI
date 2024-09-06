@@ -6,14 +6,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MenuIcon } from "lucide-react";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
-import { Avatar } from "@/lib/components/core/default/avatar";
-import { Badge } from "@/lib/components/core/default/badge";
-import { Button } from "@/lib/components/core/default/button";
-import { Dialog, DialogRoot } from "@/lib/components/core/default/dialog";
 import { useScrolled } from "@/lib/hooks/use-scrolled";
-import { cn } from "@/lib/utils/classes";
 import { focusRing } from "@/lib/utils/styles";
 import { siteConfig } from "@/config";
+import { Avatar } from "@/registry/ui/default/core/avatar";
+import { Badge } from "@/registry/ui/default/core/badge";
+import { Button } from "@/registry/ui/default/core/button";
+import { Dialog, DialogRoot } from "@/registry/ui/default/core/dialog";
+import { cn } from "@/registry/ui/default/lib/cn";
 import { SearchDocs } from "./docs/search-docs";
 import { ThemeToggle } from "./theme-toggle";
 
@@ -141,7 +141,12 @@ export const Header = () => {
             <span className="mr-4 flex-1 text-left">Search...</span>
           </SearchDocs>
           <DialogRoot>
-            <Button variant="quiet" size="sm" shape="square" aria-label="Open menu">
+            <Button
+              variant="quiet"
+              size="sm"
+              shape="square"
+              aria-label="Open menu"
+            >
               <MenuIcon />
             </Button>
             <Dialog type="drawer">
@@ -189,7 +194,9 @@ const Nav = (props: NavProps) => {
               className={cn(
                 focusRing(),
                 "flex items-center justify-center gap-2 rounded px-4 py-1 text-sm font-medium text-fg/60 transition-colors hover:text-fg",
-                pathname.startsWith(item.href) && item.href !== "/" && "bg-bg-inverse/10 text-fg",
+                pathname.startsWith(item.href) &&
+                  item.href !== "/" &&
+                  "bg-bg-inverse/10 text-fg",
                 direction === "col" && "text-md w-full py-2"
               )}
               href={item.href}

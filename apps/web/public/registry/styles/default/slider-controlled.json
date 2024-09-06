@@ -1,0 +1,15 @@
+{
+  "name": "slider-controlled",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "slider"
+  ],
+  "files": [
+    {
+      "path": "core/slider/demos/controlled.tsx",
+      "content": "\"use client\";\n\nimport React from \"react\";\nimport { Slider } from \"@/registry/ui/default/core/slider\";\n\nexport default function Demo() {\n  const [value, setValue] = React.useState(50);\n  return (\n    <div className=\"flex flex-col items-center gap-4\">\n      <Slider\n        label=\"Opacity\"\n        value={value}\n        onChange={(value) => setValue(value as number)}\n      />\n      <span className=\"text-sm text-fg-muted\">\n        Value: <span className=\"font-semibold text-fg\">{value}</span>\n      </span>\n    </div>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

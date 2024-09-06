@@ -13,9 +13,9 @@ import {
 } from "react-aria-components";
 import { Provider } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { Heading } from "./heading";
-import { Overlay, type OverlayProps } from "./overlay";
-import { Text } from "./text";
+import { Heading } from "@/registry/ui/default/core/heading";
+import { Overlay, type OverlayProps } from "@/registry/ui/default/core/overlay";
+import { Text } from "@/registry/ui/default/core/text";
 
 const dialogStyles = tv({
   slots: {
@@ -65,7 +65,8 @@ const Dialog = ({
   showDismissButton,
   ...props
 }: DialogProps) => {
-  const isDismissable = isDismissableProp ?? (props.role === "alertdialog" ? false : true);
+  const isDismissable =
+    isDismissableProp ?? (props.role === "alertdialog" ? false : true);
   return (
     <Overlay
       isDismissable={isDismissable}
@@ -92,7 +93,11 @@ const Dialog = ({
 };
 
 type DialogContentProps = AriaDialogProps;
-const DialogContent = ({ children, className, ...props }: DialogContentProps) => {
+const DialogContent = ({
+  children,
+  className,
+  ...props
+}: DialogContentProps) => {
   const { content } = dialogStyles();
   return (
     <AriaDialog className={content({ className })} {...props}>
@@ -131,4 +136,11 @@ export type {
   DialogFooterProps,
   DialogInsetProps,
 };
-export { DialogRoot, DialogContent, Dialog, DialogHeader, DialogFooter, DialogInset };
+export {
+  DialogRoot,
+  DialogContent,
+  Dialog,
+  DialogHeader,
+  DialogFooter,
+  DialogInset,
+};

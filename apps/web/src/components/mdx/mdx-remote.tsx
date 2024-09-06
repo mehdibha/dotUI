@@ -10,5 +10,11 @@ export async function Mdx(props: { source: string }) {
     },
   };
 
-  return <MDXRemote source={props.source} components={components} options={options} />;
+  return (
+    <MDXRemote
+      source={props.source}
+      components={components}
+      options={options}
+    />
+  );
 }

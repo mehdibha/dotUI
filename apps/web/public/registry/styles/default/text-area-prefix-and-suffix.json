@@ -1,0 +1,15 @@
+{
+  "name": "text-area-prefix-and-suffix",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "text-area"
+  ],
+  "files": [
+    {
+      "path": "core/text-area/demos/prefix-and-suffix.tsx",
+      "content": "\"use client\";\r\n\r\nimport React from \"react\";\r\nimport { BoldIcon, ItalicIcon } from \"@/lib/icons\";\r\nimport { Button } from \"@/registry/ui/default/core/button\";\r\nimport { TextArea } from \"@/registry/ui/default/core/text-area\";\r\nimport { ToggleButton } from \"@/registry/ui/default/core/toggle-button\";\r\n\r\nexport default function Demo() {\r\n  const [inputValue, setInputValue] = React.useState(\"\");\r\n  return (\r\n    <TextArea\r\n      label=\"Comment\"\r\n      placeholder=\"type something here\"\r\n      value={inputValue}\r\n      onChange={setInputValue}\r\n      prefix={\r\n        <div className=\"flex items-center gap-1\">\r\n          <Button\r\n            variant=\"quiet\"\r\n            shape=\"square\"\r\n            size=\"sm\"\r\n            className=\"size-7\"\r\n            onPress={() => {\r\n              setInputValue(`${inputValue}👍`);\r\n            }}\r\n          >\r\n            👍\r\n          </Button>\r\n          <Button\r\n            variant=\"quiet\"\r\n            shape=\"square\"\r\n            size=\"sm\"\r\n            className=\"size-7\"\r\n            onPress={() => {\r\n              setInputValue(`${inputValue}❤️`);\r\n            }}\r\n          >\r\n            ❤️\r\n          </Button>\r\n        </div>\r\n      }\r\n      suffix={\r\n        <div className=\"flex items-center justify-between\">\r\n          <div className=\"flex items-center gap-0.5\">\r\n            <ToggleButton size=\"sm\" className=\"size-7\">\r\n              <BoldIcon />\r\n            </ToggleButton>\r\n            <ToggleButton size=\"sm\" className=\"size-7\">\r\n              <ItalicIcon />\r\n            </ToggleButton>\r\n          </div>\r\n          <Button variant=\"primary\" size=\"sm\" className=\"h-7\">\r\n            Comment\r\n          </Button>\r\n        </div>\r\n      }\r\n    />\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

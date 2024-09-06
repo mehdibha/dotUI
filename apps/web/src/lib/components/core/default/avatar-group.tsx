@@ -2,7 +2,7 @@
 
 // This compnoent is not ready for production use. It is a work in progress.
 import React from "react";
-import { cn } from "@/lib/utils/classes";
+import { cn } from "@/registry/ui/default/lib/cn";
 import { avatarStyles } from "./avatar";
 
 type AvatarGroupProps = React.HTMLAttributes<HTMLDivElement> & {
@@ -15,7 +15,16 @@ type AvatarGroupProps = React.HTMLAttributes<HTMLDivElement> & {
 
 const AvatarGroup = React.forwardRef<HTMLDivElement, AvatarGroupProps>(
   (
-    { children: children_, max = 5, className, total, shape, renderCount, countProps, ...props },
+    {
+      children: children_,
+      max = 5,
+      className,
+      total,
+      shape,
+      renderCount,
+      countProps,
+      ...props
+    },
     ref
   ) => {
     const clampedMax = max < 2 ? 2 : max;
@@ -23,11 +32,16 @@ const AvatarGroup = React.forwardRef<HTMLDivElement, AvatarGroupProps>(
       return React.isValidElement(child);
     }) as React.ReactElement[];
     const totalCount = total ?? children.length;
-    const avatarsToShow = totalCount <= clampedMax ? clampedMax : clampedMax - 1;
+    const avatarsToShow =
+      totalCount <= clampedMax ? clampedMax : clampedMax - 1;
     const extraCount = totalCount - avatarsToShow;
 
     return (
-      <div ref={ref} {...props} className={cn("flex -space-x-2 *:ring *:ring-bg", className)}>
+      <div
+        ref={ref}
+        {...props}
+        className={cn("*:ring *:ring-bg flex -space-x-2", className)}
+      >
         {children.slice(0, avatarsToShow).map((child) => {
           return React.cloneElement(child, {
             shape,

@@ -4,16 +4,22 @@ import React from "react";
 import Link from "next/link";
 import { useInView } from "framer-motion";
 import { getAspectFromType } from "@/utils/docs";
-import { AspectRatio } from "@/lib/components/core/default/aspect-ratio";
-import { Badge } from "@/lib/components/core/default/badge";
-import { ScrollArea } from "@/lib/components/core/default/scroll-area";
-import { Tooltip } from "@/lib/components/core/default/tooltip";
 import { useDebounce } from "@/lib/hooks/use-debounce";
-import { cn } from "@/lib/utils/classes";
 import { truncateOnWord } from "@/lib/utils/string";
 import type { DocMetadata } from "@/types/docs";
+import { AspectRatio } from "@/registry/ui/default/core/aspect-ratio";
+import { Badge } from "@/registry/ui/default/core/badge";
+import { ScrollArea } from "@/registry/ui/default/core/scroll-area";
+import { Tooltip } from "@/registry/ui/default/core/tooltip";
+import { cn } from "@/registry/ui/default/lib/cn";
 
-export const DocCard = ({ doc, className }: { doc: DocMetadata; className?: string }) => {
+export const DocCard = ({
+  doc,
+  className,
+}: {
+  doc: DocMetadata;
+  className?: string;
+}) => {
   return (
     <Link
       href={doc.href}
@@ -34,16 +40,20 @@ export const DocCard = ({ doc, className }: { doc: DocMetadata; className?: stri
         <div className="flex-1">
           <p className="text-lg font-semibold">{doc.title}</p>
           {doc.description && (
-            <p className="mt-1 text-sm text-fg-muted">{truncateOnWord(doc.description, 70)}</p>
+            <p className="mt-1 text-sm text-fg-muted">
+              {truncateOnWord(doc.description, 70)}
+            </p>
           )}
         </div>
         {doc.keywords && (
           <div className="mt-3 flex flex-wrap gap-1">
-            {doc.keywords.slice(0, doc.keywords.length > 3 ? 2 : 3).map((keyword, index) => (
-              <Badge key={index} variant="outline">
-                {keyword}
-              </Badge>
-            ))}
+            {doc.keywords
+              .slice(0, doc.keywords.length > 3 ? 2 : 3)
+              .map((keyword, index) => (
+                <Badge key={index} variant="outline">
+                  {keyword}
+                </Badge>
+              ))}
             {doc.keywords.length > 3 && (
               <Tooltip
                 content={
@@ -80,7 +90,14 @@ const Thumbnail = ({
   const debouncedInView = useDebounce(isInView, 1500);
 
   if (!thumbnail)
-    return <div className={cn("aspect-video w-full", aspect === "page" && "aspect-[9/11]")} />;
+    return (
+      <div
+        className={cn(
+          "aspect-video w-full",
+          aspect === "page" && "aspect-[9/11]"
+        )}
+      />
+    );
 
   if (thumbnail?.video) {
     return (

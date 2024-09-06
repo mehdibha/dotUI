@@ -7,8 +7,8 @@ import {
   type CheckboxGroupProps as AriaCheckboxGroupProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { CheckboxContext } from "./checkbox";
-import { Field, type FieldProps } from "./field";
+import { CheckboxContext } from "@/registry/ui/default/core/checkbox";
+import { Field, type FieldProps } from "@/registry/ui/default/core/field";
 
 const checkboxGroupStyles = tv({
   slots: {
@@ -30,13 +30,23 @@ const checkboxGroupStyles = tv({
   },
 });
 
-interface CheckboxGroupProps extends CheckboxGroupRootProps, Omit<FieldProps, "children"> {}
+interface CheckboxGroupProps
+  extends CheckboxGroupRootProps,
+    Omit<FieldProps, "children"> {}
 const CheckboxGroup = React.forwardRef<
   React.ElementRef<typeof AriaCheckboxGroup>,
   CheckboxGroupProps
 >(
   (
-    { label, description, errorMessage, necessityIndicator, contextualHelp, variant, ...props },
+    {
+      label,
+      description,
+      errorMessage,
+      necessityIndicator,
+      contextualHelp,
+      variant,
+      ...props
+    },
     ref
   ) => {
     const { wrapper } = checkboxGroupStyles({ variant });

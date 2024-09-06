@@ -1,0 +1,15 @@
+{
+  "name": "button-default",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "button"
+  ],
+  "files": [
+    {
+      "path": "core/button/demos/default.tsx",
+      "content": "import { Button } from \"@/registry/ui/default/core/button\";\n\nexport default function Demo() {\n  return <Button>Button</Button>;\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

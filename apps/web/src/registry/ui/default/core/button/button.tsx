@@ -22,7 +22,8 @@ const buttonStyles = tv(
           "bg-bg-neutral hover:bg-bg-neutral-hover pressed:bg-bg-neutral-active text-fg-onNeutral",
         primary:
           "bg-bg-primary hover:bg-bg-primary-hover pressed:bg-bg-primary-active text-fg-onPrimary",
-        quiet: "bg-transparent hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 text-fg",
+        quiet:
+          "bg-transparent hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 text-fg",
         outline:
           "border border-border-field bg-transparent hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 text-fg disabled:border-border-disabled disabled:bg-transparent",
         accent:
@@ -87,8 +88,17 @@ const Button = React.forwardRef(
   (localProps: ButtonProps, ref: React.ForwardedRef<HTMLButtonElement>) => {
     const contextProps = useButtonContext();
     const props = { ...contextProps, ...localProps };
-    const { className, variant, size, shape, isDisabled, isLoading, prefix, suffix, ...restProps } =
-      props;
+    const {
+      className,
+      variant,
+      size,
+      shape,
+      isDisabled,
+      isLoading,
+      prefix,
+      suffix,
+      ...restProps
+    } = props;
     const Element: React.ElementType = props.href ? AriaLink : AriaButton;
     return (
       <Element
@@ -99,8 +109,16 @@ const Button = React.forwardRef(
       >
         {composeRenderProps(props.children, (children) => (
           <>
-            {isLoading ? <LoaderIcon aria-label="loading" className="animate-spin" /> : prefix}
-            {typeof children === "string" ? <span className="truncate">{children}</span> : children}
+            {isLoading ? (
+              <LoaderIcon aria-label="loading" className="animate-spin" />
+            ) : (
+              prefix
+            )}
+            {typeof children === "string" ? (
+              <span className="truncate">{children}</span>
+            ) : (
+              children
+            )}
             {suffix}
           </>
         ))}

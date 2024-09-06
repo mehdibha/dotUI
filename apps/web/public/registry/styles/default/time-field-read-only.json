@@ -1,0 +1,15 @@
+{
+  "name": "time-field-read-only",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "time-field"
+  ],
+  "files": [
+    {
+      "path": "core/time-field/demos/read-only.tsx",
+      "content": "\"use client\";\n\nimport React from \"react\";\nimport { Time } from \"@internationalized/date\";\nimport { TimeField } from \"@/registry/ui/default/core/time-field\";\n\nexport default function Demo() {\n  return <TimeField label=\"Event time\" value={new Time(11)} isReadOnly />;\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

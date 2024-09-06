@@ -1,0 +1,15 @@
+{
+  "name": "alert-custom-icon",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "alert"
+  ],
+  "files": [
+    {
+      "path": "core/alert/demos/custom-icon.tsx",
+      "content": "import { GlobeIcon } from \"@/lib/icons\";\nimport { Alert } from \"@/registry/ui/default/core/alert\";\n\nexport default function AlertDemo() {\n  return <Alert icon={<GlobeIcon />}>Hello world!</Alert>;\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

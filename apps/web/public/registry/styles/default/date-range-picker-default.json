@@ -1,0 +1,15 @@
+{
+  "name": "date-range-picker-default",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "date-range-picker"
+  ],
+  "files": [
+    {
+      "path": "core/date-range-picker/demos/default.tsx",
+      "content": "import { DateRangePicker } from \"@/registry/ui/default/core/date-range-picker\";\r\n\r\nexport default function Demo() {\r\n  return <DateRangePicker aria-label=\"Meeting date\" />;\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

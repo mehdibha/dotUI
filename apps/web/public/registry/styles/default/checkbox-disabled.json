@@ -1,0 +1,15 @@
+{
+  "name": "checkbox-disabled",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "checkbox"
+  ],
+  "files": [
+    {
+      "path": "core/checkbox/demos/disabled.tsx",
+      "content": "\"use client\";\r\n\r\nimport { Checkbox } from \"@/registry/ui/default/core/checkbox\";\r\n\r\nexport default function Demo() {\r\n  return <Checkbox isDisabled>I accept the terms and conditions</Checkbox>;\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

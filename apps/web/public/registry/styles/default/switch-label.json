@@ -1,0 +1,15 @@
+{
+  "name": "switch-label",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "switch"
+  ],
+  "files": [
+    {
+      "path": "core/switch/demos/label.tsx",
+      "content": "import React from \"react\";\nimport { Switch } from \"@/registry/ui/default/core/switch\";\n\nexport default function Demo() {\n  return (\n    <div className=\"flex items-center gap-10\">\n      <Switch>Focus mode</Switch>\n      <Switch aria-label=\"Focus mode\" />\n    </div>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

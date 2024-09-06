@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils/classes";
+import { cn } from "@/registry/ui/default/lib/cn";
 
 function Skeleton({
   className,
@@ -12,7 +12,7 @@ function Skeleton({
     <span
       className={cn(
         "relative block h-6 animate-pulse rounded-md bg-bg-muted",
-        props.children && "h-auto *:invisible",
+        props.children && "*:invisible h-auto",
         className
       )}
       {...props}

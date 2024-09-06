@@ -1,0 +1,15 @@
+{
+  "name": "text-field-sizes",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "text-field"
+  ],
+  "files": [
+    {
+      "path": "core/text-field/demos/sizes.tsx",
+      "content": "import { TextField } from \"@/registry/ui/default/core/text-field\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <div className=\"flex items-center gap-4\">\r\n      <TextField placeholder=\"small (sm)\" size=\"sm\" />\r\n      <TextField placeholder=\"medium (md)\" size=\"md\" />\r\n      <TextField placeholder=\"large (lg)\" size=\"lg\" />\r\n    </div>\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

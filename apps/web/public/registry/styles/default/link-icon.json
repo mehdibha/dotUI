@@ -1,0 +1,15 @@
+{
+  "name": "link-icon",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "link"
+  ],
+  "files": [
+    {
+      "path": "core/link/demos/icon.tsx",
+      "content": "import { ExternalLinkIcon } from \"@/lib/icons\";\r\nimport { Link } from \"@/registry/ui/default/core/link\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <Link href=\"/docs\" target=\"_blank\">\r\n      Docs{\" \"}\r\n      <span>\r\n        <ExternalLinkIcon className=\"size-4\" />\r\n      </span>\r\n    </Link>\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

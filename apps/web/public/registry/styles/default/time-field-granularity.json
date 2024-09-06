@@ -1,0 +1,15 @@
+{
+  "name": "time-field-granularity",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "time-field"
+  ],
+  "files": [
+    {
+      "path": "core/time-field/demos/granularity.tsx",
+      "content": "\"use client\";\r\n\r\nimport { parseAbsoluteToLocal } from \"@internationalized/date\";\r\nimport { TimeField } from \"@/registry/ui/default/core/time-field\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <TimeField\r\n      granularity=\"second\"\r\n      defaultValue={parseAbsoluteToLocal(\"2021-04-07T18:45:22Z\")}\r\n    />\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "time-field-prefix-and-suffix",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "time-field"
+  ],
+  "files": [
+    {
+      "path": "core/time-field/demos/prefix-and-suffix.tsx",
+      "content": "import { TimerIcon } from \"@/lib/icons\";\r\nimport { TimeField } from \"@/registry/ui/default/core/time-field\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <div className=\"space-y-2\">\r\n      <TimeField prefix={<TimerIcon />} />\r\n      <TimeField suffix={<TimerIcon />} />\r\n    </div>\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

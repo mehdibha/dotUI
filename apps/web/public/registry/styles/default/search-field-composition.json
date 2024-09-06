@@ -1,0 +1,15 @@
+{
+  "name": "search-field-composition",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "search-field"
+  ],
+  "files": [
+    {
+      "path": "core/search-field/demos/composition.tsx",
+      "content": "import React from \"react\";\nimport { SearchIcon } from \"@/lib/icons\";\nimport { Description, Label } from \"@/registry/ui/default/core/field\";\nimport { Input, InputRoot } from \"@/registry/ui/default/core/input\";\nimport { SearchFieldRoot } from \"@/registry/ui/default/core/search-field\";\n\nexport default function Demo() {\n  return (\n    <SearchFieldRoot>\n      <Label>Search</Label>\n      <InputRoot prefix={<SearchIcon />}>\n        <Input />\n      </InputRoot>\n      <Description>Enter your search query.</Description>\n    </SearchFieldRoot>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

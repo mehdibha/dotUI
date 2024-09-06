@@ -44,7 +44,9 @@ export function useLocalStorage<T>(
     (v: T | ((prevState: T) => T)) => {
       try {
         const nextState =
-          typeof v === "function" ? (v as (prevState: T) => T)(JSON.parse(store!) as T) : v;
+          typeof v === "function"
+            ? (v as (prevState: T) => T)(JSON.parse(store!) as T)
+            : v;
 
         if (nextState === undefined || nextState === null) {
           removeLocalStorageItem(key);
@@ -59,7 +61,10 @@ export function useLocalStorage<T>(
   );
 
   React.useEffect(() => {
-    if (getLocalStorageItem(key) === null && typeof initialValue !== "undefined") {
+    if (
+      getLocalStorageItem(key) === null &&
+      typeof initialValue !== "undefined"
+    ) {
       setLocalStorageItem(key, initialValue);
     }
   }, [key, initialValue]);

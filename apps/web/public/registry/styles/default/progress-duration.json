@@ -1,0 +1,15 @@
+{
+  "name": "progress-duration",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "progress"
+  ],
+  "files": [
+    {
+      "path": "core/progress/demos/duration.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { RotateCwIcon } from \"@/lib/icons\";\nimport { Button } from \"@/registry/ui/default/core/button\";\nimport { Progress } from \"@/registry/ui/default/core/progress\";\n\nexport default function Demo() {\n  const [key, setKey] = React.useState(0);\n  const restart = () => setKey((prev) => prev + 1);\n  return (\n    <div className=\"flex w-full flex-col items-center gap-6\">\n      <Button prefix={<RotateCwIcon />} onPress={restart}>\n        Restart animation\n      </Button>\n      <Progress key={key} duration=\"30s\" />\n    </div>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

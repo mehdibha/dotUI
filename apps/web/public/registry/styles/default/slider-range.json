@@ -1,0 +1,15 @@
+{
+  "name": "slider-range",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "slider"
+  ],
+  "files": [
+    {
+      "path": "core/slider/demos/range.tsx",
+      "content": "import { Slider } from \"@/registry/ui/default/core/slider\";\n\nexport default function Demo() {\n  return (\n    <Slider\n      label=\"Price Range\"\n      valueLabel\n      defaultValue={[200, 300]}\n      minValue={100}\n      maxValue={500}\n    />\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

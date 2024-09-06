@@ -1,0 +1,15 @@
+{
+  "name": "search-field-description",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "search-field"
+  ],
+  "files": [
+    {
+      "path": "core/search-field/demos/description.tsx",
+      "content": "import React from \"react\";\nimport { SearchField } from \"@/registry/ui/default/core/search-field\";\n\nexport default function Demo() {\n  return <SearchField label=\"Search\" description=\"Enter your search query\" />;\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

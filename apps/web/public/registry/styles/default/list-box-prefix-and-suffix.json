@@ -1,0 +1,15 @@
+{
+  "name": "list-box-prefix-and-suffix",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "list-box"
+  ],
+  "files": [
+    {
+      "path": "core/list-box/demos/prefix-and-suffix.tsx",
+      "content": "import { SquarePenIcon, PlusSquareIcon, CopyIcon } from \"@/lib/icons\";\r\nimport { ListBox, Item } from \"@/registry/ui/default/core/list-box\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <ListBox aria-label=\"Framework\" className=\"w-60\">\r\n      <Item\r\n        label=\"New file\"\r\n        description=\"Create a new file\"\r\n        prefix={<PlusSquareIcon />}\r\n      />\r\n      <Item\r\n        label=\"Copy link\"\r\n        description=\"Copy the file link\"\r\n        prefix={<CopyIcon />}\r\n      />\r\n      <Item\r\n        label=\"Edit file\"\r\n        description=\"Allows you to edit the file\"\r\n        prefix={<SquarePenIcon />}\r\n      />\r\n    </ListBox>\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

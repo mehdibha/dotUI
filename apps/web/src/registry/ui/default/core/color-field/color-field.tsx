@@ -6,8 +6,12 @@ import {
   type ColorFieldProps as AriaColorFieldProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { Field, type FieldProps } from "./field";
-import { InputRoot, Input, type inputStyles } from "./input";
+import { Field, type FieldProps } from "@/registry/ui/default/core/field";
+import {
+  InputRoot,
+  Input,
+  type inputStyles,
+} from "@/registry/ui/default/core/input";
 
 const colorFieldStyles = tv({
   base: "flex flex-col gap-2 items-start w-48",
@@ -75,7 +79,13 @@ const ColorFieldRoot = React.forwardRef<
   React.ElementRef<typeof AriaColorField>,
   ColorFieldRootProps
 >(({ className, ...props }, ref) => {
-  return <AriaColorField ref={ref} className={colorFieldStyles({ className })} {...props} />;
+  return (
+    <AriaColorField
+      ref={ref}
+      className={colorFieldStyles({ className })}
+      {...props}
+    />
+  );
 });
 ColorFieldRoot.displayName = "ColorFieldRoot";
 

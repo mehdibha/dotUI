@@ -1,0 +1,15 @@
+{
+  "name": "color-swatch-default",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "color-swatch"
+  ],
+  "files": [
+    {
+      "path": "core/color-swatch/demos/default.tsx",
+      "content": "import { ColorSwatch } from \"@/registry/ui/default/core/color-swatch\";\r\n\r\nexport default function Demo() {\r\n  return <ColorSwatch color=\"#f00\" />;\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

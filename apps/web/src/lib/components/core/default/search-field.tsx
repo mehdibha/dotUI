@@ -21,7 +21,13 @@ type SearchFieldProps = SearchFieldRootProps &
     prefix?: React.ReactNode;
     suffix?:
       | React.ReactNode
-      | (({ isEmpty, isDisabled }: { isEmpty?: boolean; isDisabled?: boolean }) => React.ReactNode);
+      | (({
+          isEmpty,
+          isDisabled,
+        }: {
+          isEmpty?: boolean;
+          isDisabled?: boolean;
+        }) => React.ReactNode);
     isLoading?: boolean;
     loaderPosition?: "prefix" | "suffix";
     placeholder?: string;
@@ -68,7 +74,11 @@ const SearchField = React.forwardRef<HTMLInputElement, SearchFieldProps>(
               <InputRoot
                 size={size}
                 prefix={prefix}
-                suffix={typeof suffix === "function" ? suffix({ isEmpty, isDisabled }) : suffix}
+                suffix={
+                  typeof suffix === "function"
+                    ? suffix({ isEmpty, isDisabled })
+                    : suffix
+                }
                 isLoading={isLoading}
                 loaderPosition={loaderPosition}
               >
@@ -94,7 +104,13 @@ const SearchFieldRoot = React.forwardRef<
   React.ElementRef<typeof AriaSearchField>,
   SearchFieldRootProps
 >(({ className, ...props }, ref) => {
-  return <AriaSearchField ref={ref} className={searchFieldStyles({ className })} {...props} />;
+  return (
+    <AriaSearchField
+      ref={ref}
+      className={searchFieldStyles({ className })}
+      {...props}
+    />
+  );
 });
 SearchFieldRoot.displayName = "SearchFieldRoot";
 

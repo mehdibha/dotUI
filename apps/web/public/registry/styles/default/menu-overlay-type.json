@@ -1,0 +1,15 @@
+{
+  "name": "menu-overlay-type",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "menu"
+  ],
+  "files": [
+    {
+      "path": "core/menu/demos/overlay-type.tsx",
+      "content": "\"use client\";\n\nimport React from \"react\";\nimport { MenuIcon } from \"@/lib/icons\";\nimport { Button } from \"@/registry/ui/default/core/button\";\nimport { Menu, MenuItem, MenuRoot } from \"@/registry/ui/default/core/menu\";\nimport { type OverlayProps } from \"@/registry/ui/default/core/overlay\";\nimport { Radio, RadioGroup } from \"@/registry/ui/default/core/radio-group\";\n\nexport default function Demo() {\n  const [type, setType] = React.useState(\"popover\");\n  const [mobileType, setMobileType] = React.useState(\"drawer\");\n  return (\n    <div className=\"flex items-center gap-14\">\n      <MenuRoot>\n        <Button variant=\"outline\" shape=\"square\">\n          <MenuIcon />\n        </Button>\n        <Menu\n          type={type as OverlayProps[\"type\"]}\n          mobileType={mobileType as OverlayProps[\"type\"]}\n        >\n          <MenuItem>Account settings</MenuItem>\n          <MenuItem>Create team</MenuItem>\n          <MenuItem>Command menu</MenuItem>\n          <MenuItem>Log out</MenuItem>\n        </Menu>\n      </MenuRoot>\n      <div className=\"flex items-center gap-6\">\n        <RadioGroup label=\"Type\" value={type} onChange={setType}>\n          <Radio value=\"popover\">Popover</Radio>\n          <Radio value=\"modal\">Modal</Radio>\n          <Radio value=\"drawer\">Drawer</Radio>\n        </RadioGroup>\n        <RadioGroup\n          label=\"MobileType\"\n          value={mobileType}\n          onChange={setMobileType}\n        >\n          <Radio value=\"popover\">Popover</Radio>\n          <Radio value=\"modal\">Modal</Radio>\n          <Radio value=\"drawer\">Drawer</Radio>\n        </RadioGroup>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

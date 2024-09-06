@@ -1,0 +1,15 @@
+{
+  "name": "avatar-sizes",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "avatar"
+  ],
+  "files": [
+    {
+      "path": "core/avatar/demos/sizes.tsx",
+      "content": "import { Avatar } from \"@/registry/ui/default/core/avatar\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <div className=\"space-x-4\">\r\n      {([\"sm\", \"md\", \"lg\"] as const).map((size) => (\r\n        <Avatar\r\n          key={size}\r\n          size={size}\r\n          src=\"https://github.com/mehdibha.png\"\r\n          alt=\"@mehdibha\"\r\n          fallback=\"M\"\r\n        />\r\n      ))}\r\n    </div>\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

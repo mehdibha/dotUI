@@ -4,13 +4,13 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronRightIcon } from "lucide-react";
+import type { Category as TCategory, DocsNav } from "@/types/docs-nav";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/lib/components/core/default/collapsible";
-import { cn } from "@/lib/utils/classes";
-import type { Category as TCategory, DocsNav } from "@/types/docs-nav";
+} from "@/registry/ui/default/core/collapsible";
+import { cn } from "@/registry/ui/default/lib/cn";
 
 export interface DocsSidebarProps {
   items: DocsNav;
@@ -62,7 +62,8 @@ const Category = ({ title, slug, items, pathname }: CategoryProps) => {
                     className={cn(
                       "border-bg-bg-muted hover:text-foreground group ml-2 block border-l pl-4 text-fg-muted transition-colors",
                       {
-                        "border-border font-medium text-fg": pathname === item.href,
+                        "border-border font-medium text-fg":
+                          pathname === item.href,
                       }
                     )}
                   >
@@ -106,7 +107,8 @@ const Category = ({ title, slug, items, pathname }: CategoryProps) => {
                             className={cn(
                               "border-muted hover:text-foreground group block border-l py-1 pl-4 text-fg-muted transition-colors",
                               {
-                                "border-fg font-medium text-fg": pathname === subItem.href,
+                                "border-fg font-medium text-fg":
+                                  pathname === subItem.href,
                               }
                             )}
                           >

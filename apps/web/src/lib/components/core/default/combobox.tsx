@@ -66,17 +66,21 @@ const ComboboxTrigger = () => {
   return (
     <InputRoot className="px-0">
       <Input className="pl-2" />
-      <Button variant="default" shape="square" className="my-1 mr-1 size-7">
+      <Button variant="default" shape="square" className="size-7 my-1 mr-1">
         <ChevronDownIcon />
       </Button>
     </InputRoot>
   );
 };
 
-interface ComboboxRootProps<T extends object> extends Omit<AriaComboboxProps<T>, "className"> {
+interface ComboboxRootProps<T extends object>
+  extends Omit<AriaComboboxProps<T>, "className"> {
   className?: string;
 }
-const ComboboxRoot = <T extends object>({ className, ...props }: ComboboxRootProps<T>) => {
+const ComboboxRoot = <T extends object>({
+  className,
+  ...props
+}: ComboboxRootProps<T>) => {
   const { root } = comboboxStyles();
   return <AriaCombobox className={root({ className })} {...props} />;
 };

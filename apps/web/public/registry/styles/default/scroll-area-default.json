@@ -1,0 +1,15 @@
+{
+  "name": "scroll-area-default",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "scroll-area"
+  ],
+  "files": [
+    {
+      "path": "core/scroll-area/demos/default.tsx",
+      "content": "import * as React from \"react\";\nimport { ScrollArea } from \"@/registry/ui/default/core/scroll-area\";\n\nexport default function Demo() {\n  return (\n    <div className=\"rounded-md border p-6\">\n      <ScrollArea className=\"h-72 w-full max-w-sm\" type=\"always\">\n        <div className=\"space-y-4 p-4 pr-8\">\n          <h4 className=\"text-md font-bold\">\n            Principles of the typographic craft\n          </h4>\n          <p>\n            Three fundamental aspects of typography are legibility, readability,\n            and aesthetics. Although in a non-technical sense “legible” and\n            “readable” are often used synonymously, typographically they are\n            separate but related concepts.\n          </p>\n          <p>\n            Legibility describes how easily individual characters can be\n            distinguished from one another. It is described by Walter Tracy as\n            “the quality of being decipherable and recognisable”. For instance,\n            if a “b” and an “h”, or a “3” and an “8”, are difficult to\n            distinguish at small sizes, this is a problem of legibility.\n          </p>\n          <p>\n            Typographers are concerned with legibility insofar as it is their\n            job to select the correct font to use. Brush Script is an example of\n            a font containing many characters that might be difficult to\n            distinguish. The selection of cases influences the legibility of\n            typography because using only uppercase letters (all-caps) reduces\n            legibility.\n          </p>\n        </div>\n      </ScrollArea>\n    </div>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

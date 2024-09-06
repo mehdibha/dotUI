@@ -1,0 +1,15 @@
+{
+  "name": "progress-label",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "progress"
+  ],
+  "files": [
+    {
+      "path": "core/progress/demos/label.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { Progress } from \"@/registry/ui/default/core/progress\";\n\nexport default function Demo() {\n  return (\n    <div className=\"space-y-4\">\n      <Progress aria-label=\"Loading\" value={75} />\n      <Progress label=\"Loading...\" value={75} />\n    </div>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

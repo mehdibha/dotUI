@@ -1,0 +1,15 @@
+{
+  "name": "color-swatch",
+  "type": "registry:core",
+  "dependencies": [
+    "react-aria-components"
+  ],
+  "files": [
+    {
+      "path": "core/color-swatch/color-swatch.tsx",
+      "content": "\"use client\";\r\n\r\nimport {\r\n  ColorSwatch as AriaColorSwatch,\r\n  type ColorSwatchProps as AriaColorSwatchProps,\r\n} from \"react-aria-components\";\r\nimport { tv } from \"tailwind-variants\";\r\n\r\nconst colorSwatchStyles = tv({\r\n  base: \"size-5 rounded-sm border\",\r\n});\r\n\r\ninterface ColorSwatchProps extends Omit<AriaColorSwatchProps, \"className\"> {\r\n  className?: string;\r\n}\r\nconst ColorSwatch = ({ className, ...props }: ColorSwatchProps) => {\r\n  return (\r\n    <AriaColorSwatch className={colorSwatchStyles({ className })} {...props} />\r\n  );\r\n};\r\n\r\nexport type { ColorSwatchProps };\r\nexport { ColorSwatch };\r\n",
+      "type": "registry:core",
+      "target": ""
+    }
+  ]
+}

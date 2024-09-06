@@ -1,6 +1,6 @@
 import { getDocTypeFromSlug } from "@/utils/docs";
-import { Button } from "@/lib/components/core/default/button";
-import { cn } from "@/lib/utils/classes";
+import { Button } from "@/registry/ui/default/core/button";
+import { cn } from "@/registry/ui/default/lib/cn";
 import { getDocs } from "@/server/docs";
 import { DocCard } from "./doc-card";
 
@@ -12,7 +12,13 @@ export interface DocsListProps {
   cardClassName?: string;
 }
 
-export const DocsList = ({ name, href, limit, className, cardClassName }: DocsListProps) => {
+export const DocsList = ({
+  name,
+  href,
+  limit,
+  className,
+  cardClassName,
+}: DocsListProps) => {
   const docs = getDocs(name);
 
   const type = getDocTypeFromSlug(name);
@@ -36,7 +42,12 @@ export const DocsList = ({ name, href, limit, className, cardClassName }: DocsLi
       </div>
       {hasMore && (
         <div className="flex justify-end">
-          <Button href={href ?? `/${name}`} size="sm" variant="quiet" className="mt-4 block">
+          <Button
+            href={href ?? `/${name}`}
+            size="sm"
+            variant="quiet"
+            className="mt-4 block"
+          >
             Explore more
           </Button>
         </div>

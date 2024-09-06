@@ -3,18 +3,23 @@ import { ArrowRightIcon, PinIcon, SparklesIcon } from "lucide-react";
 import Balancer from "react-wrap-balancer";
 import { SearchDocs } from "@/components/docs/search-docs";
 import { GitHubIcon } from "@/components/icons";
-import { Avatar } from "@/lib/components/core/default/avatar";
-import { AvatarGroup } from "@/lib/components/core/default/avatar-group";
-import { Button } from "@/lib/components/core/default/button";
-import { Switch } from "@/lib/components/core/default/switch";
-import { ToggleButton } from "@/lib/components/core/default/toggle-button";
 import Calendar from "@/lib/demos/components/core/calendar/default";
-import { cn } from "@/lib/utils/classes";
 import { siteConfig } from "@/config";
+import { Avatar } from "@/registry/ui/default/core/avatar";
+import { AvatarGroup } from "@/registry/ui/default/core/avatar-group";
+import { Button } from "@/registry/ui/default/core/button";
+import { Switch } from "@/registry/ui/default/core/switch";
+import { ToggleButton } from "@/registry/ui/default/core/toggle-button";
+import { cn } from "@/registry/ui/default/lib/cn";
 
 export const Hero = ({ className }: { className?: string }) => {
   return (
-    <section className={cn("w-full items-start justify-between md:flex md:max-w-7xl", className)}>
+    <section
+      className={cn(
+        "w-full items-start justify-between md:flex md:max-w-7xl",
+        className
+      )}
+    >
       <div className="pt-4">
         <Button
           href="https://github.com/mehdibha/dotUI"
@@ -29,7 +34,9 @@ export const Hero = ({ className }: { className?: string }) => {
         <h1 className="mt-4 font-display text-4xl font-bold leading-tight tracking-tight md:text-5xl lg:text-6xl">
           <Balancer>
             Everything you need to build your{" "}
-            <span className="bg-gradient bg-clip-text text-transparent">React app</span>
+            <span className="bg-gradient bg-clip-text text-transparent">
+              React app
+            </span>
           </Balancer>
         </h1>
         <p className="text-md mt-6 text-fg-muted md:text-lg lg:text-xl">

@@ -79,7 +79,8 @@ const calendarStyles = tv({
   },
 });
 
-interface CalendarProps<T extends DateValue> extends Omit<AriaCalendarProps<T>, "visibleDuration"> {
+interface CalendarProps<T extends DateValue>
+  extends Omit<AriaCalendarProps<T>, "visibleDuration"> {
   visibleMonths?: number;
   errorMessage?: string;
 }
@@ -105,15 +106,22 @@ const Calendar = <T extends DateValue>({
           </CalendarHeader>
           <div className="flex items-start gap-4">
             {Array.from({ length: visibleMonths }).map((_, index) => (
-              <CalendarGrid key={index} offset={index === 0 ? undefined : { months: index }}>
+              <CalendarGrid
+                key={index}
+                offset={index === 0 ? undefined : { months: index }}
+              >
                 <CalendarGridHeader>
                   {(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}
                 </CalendarGridHeader>
-                <CalendarGridBody>{(date) => <CalendarCell date={date} />}</CalendarGridBody>
+                <CalendarGridBody>
+                  {(date) => <CalendarCell date={date} />}
+                </CalendarGridBody>
               </CalendarGrid>
             ))}
           </div>
-          {isInvalid && errorMessage && <Text slot="errorMessage">{errorMessage}</Text>}
+          {isInvalid && errorMessage && (
+            <Text slot="errorMessage">{errorMessage}</Text>
+          )}
         </>
       )}
     </CalendarRoot>
@@ -128,7 +136,9 @@ const CalendarRoot = <T extends DateValue>(props: CalendarRootProps<T>) => {
   return (
     <AriaCalendar
       {...props}
-      className={composeRenderProps(props.className, (className) => root({ className }))}
+      className={composeRenderProps(props.className, (className) =>
+        root({ className })
+      )}
     />
   );
 };
@@ -146,21 +156,36 @@ const CalendarGrid = ({ className, ...props }: CalendarGridProps) => {
 };
 
 type CalendarGridHeaderProps = AriaCalendarGridHeaderProps;
-const CalendarGridHeader = ({ className, ...props }: CalendarGridHeaderProps) => {
+const CalendarGridHeader = ({
+  className,
+  ...props
+}: CalendarGridHeaderProps) => {
   const { gridHeader } = calendarStyles();
-  return <AriaCalendarGridHeader className={gridHeader({ className })} {...props} />;
+  return (
+    <AriaCalendarGridHeader className={gridHeader({ className })} {...props} />
+  );
 };
 
 type CalendarHeaderCellProps = AriaCalendarHeaderCellProps;
-const CalendarHeaderCell = ({ className, ...props }: CalendarHeaderCellProps) => {
+const CalendarHeaderCell = ({
+  className,
+  ...props
+}: CalendarHeaderCellProps) => {
   const { gridHeaderCell } = calendarStyles();
-  return <AriaCalendarHeaderCell className={gridHeaderCell({ className })} {...props} />;
+  return (
+    <AriaCalendarHeaderCell
+      className={gridHeaderCell({ className })}
+      {...props}
+    />
+  );
 };
 
 type CalendarGridBodyProps = AriaCalendarGridBodyProps;
 const CalendarGridBody = ({ className, ...props }: CalendarGridBodyProps) => {
   const { gridBody } = calendarStyles();
-  return <AriaCalendarGridBody className={gridBody({ className })} {...props} />;
+  return (
+    <AriaCalendarGridBody className={gridBody({ className })} {...props} />
+  );
 };
 
 type CalendarCellProps = AriaCalendarCellProps & { range?: boolean };
@@ -169,7 +194,9 @@ const CalendarCell = ({ range, ...props }: CalendarCellProps) => {
   return (
     <AriaCalendarCell
       {...props}
-      className={composeRenderProps(props.className, (className) => cell({ className }))}
+      className={composeRenderProps(props.className, (className) =>
+        cell({ className })
+      )}
     />
   );
 };

@@ -1,0 +1,15 @@
+{
+  "name": "dialog-popover",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "dialog"
+  ],
+  "files": [
+    {
+      "path": "core/dialog/demos/popover.tsx",
+      "content": "\"use client\";\r\n\r\nimport React from \"react\";\r\nimport type { Key } from \"react-aria-components\";\r\nimport { InfoIcon } from \"@/lib/icons\";\r\nimport { Button } from \"@/registry/ui/default/core/button\";\r\nimport { DialogRoot, Dialog } from \"@/registry/ui/default/core/dialog\";\r\nimport { Item } from \"@/registry/ui/default/core/list-box\";\r\nimport { NumberField } from \"@/registry/ui/default/core/number-field\";\r\nimport { Select } from \"@/registry/ui/default/core/select\";\r\nimport { Switch } from \"@/registry/ui/default/core/switch\";\r\n\r\nexport default function Demo() {\r\n  const [placement, setPlacement] = React.useState<Key>(\"top\");\r\n  const [offset, setOffset] = React.useState<number>(0);\r\n  const [crossOffset, setCrossOffset] = React.useState<number>(0);\r\n  const [containerPadding, setContainerPadding] = React.useState<number>(0);\r\n  const [showArrow, setShowArrow] = React.useState<boolean>(true);\r\n  return (\r\n    <div className=\"flex w-full items-center\">\r\n      <div className=\"flex flex-1 items-center justify-center\">\r\n        <DialogRoot>\r\n          <Button variant=\"outline\" shape=\"square\">\r\n            <InfoIcon />\r\n          </Button>\r\n          <Dialog\r\n            type=\"popover\"\r\n            title=\"Help\"\r\n            description=\"For help accessing your account, please contact support.\"\r\n          />\r\n        </DialogRoot>\r\n      </div>\r\n      <div className=\"space-y-4 rounded-md border p-4\">\r\n        <Select\r\n          label=\"Placement\"\r\n          selectedKey={placement}\r\n          onSelectionChange={setPlacement}\r\n        >\r\n          <Item id=\"top\">Top</Item>\r\n          <Item id=\"bottom\">Bottom</Item>\r\n        </Select>\r\n        <NumberField label=\"Offset\" value={offset} onChange={setOffset} />\r\n        <NumberField\r\n          label=\"Cross offset\"\r\n          value={crossOffset}\r\n          onChange={setCrossOffset}\r\n        />\r\n        <NumberField\r\n          label=\"Container padding\"\r\n          value={containerPadding}\r\n          onChange={setContainerPadding}\r\n        />\r\n        <Switch isSelected={showArrow} onChange={setShowArrow}>\r\n          Arrow\r\n        </Switch>\r\n      </div>\r\n    </div>\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

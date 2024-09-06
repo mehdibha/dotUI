@@ -1,0 +1,15 @@
+{
+  "name": "menu-shortcut",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "menu"
+  ],
+  "files": [
+    {
+      "path": "core/menu/demos/shortcut.tsx",
+      "content": "import { MenuIcon } from \"@/lib/icons\";\r\nimport { Button } from \"@/registry/ui/default/core/button\";\r\nimport { Menu, MenuItem, MenuRoot } from \"@/registry/ui/default/core/menu\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <MenuRoot>\r\n      <Button variant=\"outline\" shape=\"square\">\r\n        <MenuIcon />\r\n      </Button>\r\n      <Menu>\r\n        <MenuItem shortcut=\"⌘N\">New file</MenuItem>\r\n        <MenuItem shortcut=\"⌘C\">Copy link</MenuItem>\r\n        <MenuItem shortcut=\"⌘⇧E\">Edit file</MenuItem>\r\n      </Menu>\r\n    </MenuRoot>\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

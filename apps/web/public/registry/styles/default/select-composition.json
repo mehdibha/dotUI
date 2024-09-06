@@ -1,0 +1,15 @@
+{
+  "name": "select-composition",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "select"
+  ],
+  "files": [
+    {
+      "path": "core/select/demos/composition.tsx",
+      "content": "import React from \"react\";\nimport { ChevronsUpDownIcon } from \"@/lib/icons\";\nimport { Button } from \"@/registry/ui/default/core/button\";\nimport { Item, ListBox } from \"@/registry/ui/default/core/list-box\";\nimport { Overlay } from \"@/registry/ui/default/core/overlay\";\nimport { SelectRoot, SelectValue } from \"@/registry/ui/default/core/select\";\n\nexport default function Demo() {\n  return (\n    <SelectRoot>\n      <Button\n        variant=\"outline\"\n        suffix={<ChevronsUpDownIcon className=\"text-fg-muted\" />}\n      >\n        <SelectValue />\n      </Button>\n      <Overlay type=\"popover\">\n        <ListBox>\n          <Item>Perplexity</Item>\n          <Item>Replicate</Item>\n          <Item>Together AI</Item>\n          <Item>ElevenLabs</Item>\n        </ListBox>\n      </Overlay>\n    </SelectRoot>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "checkbox-controlled",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "checkbox"
+  ],
+  "files": [
+    {
+      "path": "core/checkbox/demos/controlled.tsx",
+      "content": "\"use client\";\r\n\r\nimport React from \"react\";\r\nimport { Checkbox } from \"@/registry/ui/default/core/checkbox\";\r\n\r\nexport default function Demo() {\r\n  const [checked, setChecked] = React.useState(false);\r\n  return (\r\n    <div className=\"flex flex-col items-center gap-4\">\r\n      <Checkbox isSelected={checked} onChange={setChecked}>\r\n        I accept the terms and conditions\r\n      </Checkbox>\r\n      <p className=\"text-xs text-fg-muted\">\r\n        <span className=\"font-bold\">Checked:</span> {checked ? \"true\" : \"false\"}\r\n      </p>\r\n    </div>\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

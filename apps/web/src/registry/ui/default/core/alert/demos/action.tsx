@@ -1,5 +1,5 @@
-import { Alert } from "@/lib/components/core/default/alert";
-import { Button } from "@/lib/components/core/default/button";
+import { Alert } from "@/registry/ui/default/core/alert";
+import { Button } from "@/registry/ui/default/core/button";
 
 export default function AlertDemo() {
   return (

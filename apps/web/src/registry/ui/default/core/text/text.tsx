@@ -1,6 +1,9 @@
 "use client";
 
-import { Text as AriaText, type TextProps as AriaTextProps } from "react-aria-components";
+import {
+  Text as AriaText,
+  type TextProps as AriaTextProps,
+} from "react-aria-components";
 import { type VariantProps, tv } from "tailwind-variants";
 
 const textStyles = tv({
@@ -14,9 +17,17 @@ const textStyles = tv({
   },
 });
 
-interface TextProps extends Omit<AriaTextProps, "slot">, VariantProps<typeof textStyles> {}
+interface TextProps
+  extends Omit<AriaTextProps, "slot">,
+    VariantProps<typeof textStyles> {}
 const Text = ({ slot, className, ...props }: TextProps) => {
-  return <AriaText slot={slot} className={textStyles({ slot, className })} {...props} />;
+  return (
+    <AriaText
+      slot={slot}
+      className={textStyles({ slot, className })}
+      {...props}
+    />
+  );
 };
 
 export type { textStyles };

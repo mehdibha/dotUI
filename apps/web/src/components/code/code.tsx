@@ -70,7 +70,10 @@ function parseChildren(
     };
   }
 
-  if (typeof children === "object" && typeof children?.props?.children === "string") {
+  if (
+    typeof children === "object" &&
+    typeof children?.props?.children === "string"
+  ) {
     return {
       code: children.props?.children,
       ...getLanguageAndTitle((children as MdCodeText).props?.className),

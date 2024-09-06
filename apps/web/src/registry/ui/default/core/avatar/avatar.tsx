@@ -7,8 +7,10 @@ const avatarStyles = tv({
   slots: {
     root: "relative inline-flex align-middle shrink-0 overflow-hidden bg-bg",
     image: "aspect-square size-full",
-    fallback: "flex size-full select-none items-center justify-center bg-bg-muted",
-    placeholder: "h-full size-full animate-pulse bg-bg-muted flex items-center justify-center",
+    fallback:
+      "flex size-full select-none items-center justify-center bg-bg-muted",
+    placeholder:
+      "h-full size-full animate-pulse bg-bg-muted flex items-center justify-center",
   },
   variants: {
     size: {
@@ -27,10 +29,19 @@ const avatarStyles = tv({
   },
 });
 
-interface AvatarProps extends AvatarImageProps, VariantProps<typeof avatarStyles> {
+interface AvatarProps
+  extends AvatarImageProps,
+    VariantProps<typeof avatarStyles> {
   fallback?: React.ReactNode;
 }
-const Avatar = ({ fallback, className, style, size, shape, ...props }: AvatarProps) => {
+const Avatar = ({
+  fallback,
+  className,
+  style,
+  size,
+  shape,
+  ...props
+}: AvatarProps) => {
   return (
     <AvatarRoot className={className} style={style} shape={shape} size={size}>
       <AvatarImage {...props} />
@@ -56,7 +67,12 @@ const AvatarRoot = ({ className, shape, size, ...props }: AvatarRootProps) => {
 interface AvatarImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   onStatusChange?: (status: Status) => void;
 }
-const AvatarImage = ({ src, onStatusChange, className, ...props }: AvatarImageProps) => {
+const AvatarImage = ({
+  src,
+  onStatusChange,
+  className,
+  ...props
+}: AvatarImageProps) => {
   const { image } = avatarStyles();
   const context = useAvatarContext();
   const status = useImageLoadingStatus(src);
@@ -141,5 +157,17 @@ const useImageLoadingStatus = (src?: string) => {
   return status;
 };
 
-export type { AvatarProps, AvatarRootProps, AvatarImageProps, AvatarFallbackProps };
-export { Avatar, AvatarRoot, AvatarImage, AvatarFallback, AvatarPlaceholder, avatarStyles };
+export type {
+  AvatarProps,
+  AvatarRootProps,
+  AvatarImageProps,
+  AvatarFallbackProps,
+};
+export {
+  Avatar,
+  AvatarRoot,
+  AvatarImage,
+  AvatarFallback,
+  AvatarPlaceholder,
+  avatarStyles,
+};

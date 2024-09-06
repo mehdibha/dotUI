@@ -7,7 +7,7 @@ import {
   type ProgressBarProps as AriaProgressProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { cn } from "@/lib/utils/classes";
+import { cn } from "@/registry/ui/default/lib/cn";
 import { Label } from "./field";
 
 const progressStyles = tv({
@@ -65,7 +65,9 @@ type ProgressClassNames = {
   [key in ProgressSlots]?: string;
 };
 
-interface ProgressProps extends ProgressRootProps, VariantProps<typeof progressStyles> {
+interface ProgressProps
+  extends ProgressRootProps,
+    VariantProps<typeof progressStyles> {
   label?: string;
   showValueLabel?: boolean;
   duration?: string;
@@ -82,9 +84,18 @@ const Progress = ({
   ...props
 }: ProgressProps) => {
   return (
-    <ProgressRoot duration={duration} className={cn(className, classNames?.root)} {...props}>
+    <ProgressRoot
+      duration={duration}
+      className={cn(className, classNames?.root)}
+      {...props}
+    >
       {(label || showValueLabel) && (
-        <div className={cn("flex items-center justify-between gap-2", !label && "justify-end")}>
+        <div
+          className={cn(
+            "flex items-center justify-between gap-2",
+            !label && "justify-end"
+          )}
+        >
           {label && <Label>{label}</Label>}
           {showValueLabel && <ProgressValueLabel />}
         </div>
@@ -93,7 +104,10 @@ const Progress = ({
         variant={variant}
         size={size}
         duration={duration}
-        classNames={{ indicator: classNames?.indicator, filler: classNames?.filler }}
+        classNames={{
+          indicator: classNames?.indicator,
+          filler: classNames?.filler,
+        }}
       />
     </ProgressRoot>
   );
@@ -103,7 +117,12 @@ interface ProgressRootProps extends Omit<AriaProgressProps, "className"> {
   duration?: string;
   className?: string;
 }
-const ProgressRoot = ({ className, isIndeterminate, duration, ...props }: ProgressRootProps) => {
+const ProgressRoot = ({
+  className,
+  isIndeterminate,
+  duration,
+  ...props
+}: ProgressRootProps) => {
   const { root } = progressStyles();
   return (
     <AriaProgress
@@ -114,7 +133,9 @@ const ProgressRoot = ({ className, isIndeterminate, duration, ...props }: Progre
       {composeRenderProps(
         props.children,
         (children, { percentage, isIndeterminate, valueText }) => (
-          <ProgressContext.Provider value={{ percentage, isIndeterminate, valueText }}>
+          <ProgressContext.Provider
+            value={{ percentage, isIndeterminate, valueText }}
+          >
             {children}
           </ProgressContext.Provider>
         )
@@ -143,7 +164,10 @@ const ProgressIndicator = ({
   const { indicator, filler } = progressStyles({ variant, size });
   const { isIndeterminate, percentage } = useProgressContext();
   return (
-    <div className={cn(indicator(), classNames?.indicator, className)} {...props}>
+    <div
+      className={cn(indicator(), classNames?.indicator, className)}
+      {...props}
+    >
       <div
         className={cn(
           filler(),
@@ -156,7 +180,8 @@ const ProgressIndicator = ({
             ...(percentage ? { transform: `scaleX(${percentage / 100})` } : {}),
             ...(isIndeterminate
               ? {
-                  maskImage: "linear-gradient(75deg, rgb(0, 0, 0) 30%, rgba(0, 0, 0, 0.65) 80%)",
+                  maskImage:
+                    "linear-gradient(75deg, rgb(0, 0, 0) 30%, rgba(0, 0, 0, 0.65) 80%)",
                   maskSize: "200%",
                 }
               : {}),
@@ -168,7 +193,11 @@ const ProgressIndicator = ({
 };
 
 type ProgressValueLabelProps = React.HTMLAttributes<HTMLSpanElement>;
-const ProgressValueLabel = ({ children, className, ...props }: ProgressValueLabelProps) => {
+const ProgressValueLabel = ({
+  children,
+  className,
+  ...props
+}: ProgressValueLabelProps) => {
   const { valueLabel } = progressStyles();
   const { valueText } = useProgressContext();
   return (
@@ -187,10 +216,17 @@ const ProgressContext = React.createContext<ProgressContextValue | null>(null);
 const useProgressContext = () => {
   const context = React.useContext(ProgressContext);
   if (!context) {
-    throw new Error("useProgressContext must be used within a ProgressProvider");
+    throw new Error(
+      "useProgressContext must be used within a ProgressProvider"
+    );
   }
   return context;
 };
 
-export type { ProgressProps, ProgressRootProps, ProgressIndicatorProps, ProgressValueLabelProps };
+export type {
+  ProgressProps,
+  ProgressRootProps,
+  ProgressIndicatorProps,
+  ProgressValueLabelProps,
+};
 export { Progress, ProgressRoot, ProgressIndicator, ProgressValueLabel };

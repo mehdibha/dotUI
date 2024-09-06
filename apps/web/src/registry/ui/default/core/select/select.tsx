@@ -10,10 +10,13 @@ import {
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import { ChevronDownIcon } from "@/lib/icons";
-import { Button, type ButtonProps } from "../button/button";
-import { Field, type FieldProps } from "../field/field";
-import { ListBox, type ListBoxProps } from "./list-box";
-import { Overlay } from "./overlay";
+import { Button, type ButtonProps } from "@/registry/ui/default/core/button";
+import { Field, type FieldProps } from "@/registry/ui/default/core/field";
+import {
+  ListBox,
+  type ListBoxProps,
+} from "@/registry/ui/default/core/list-box";
+import { Overlay } from "@/registry/ui/default/core/overlay";
 
 const selectStyles = tv({
   slots: {
@@ -63,7 +66,11 @@ const Select = <T extends object>({
             </Button>
           </Field>
           <Overlay type="popover">
-            <ListBox isLoading={isLoading} items={items} dependencies={dependencies}>
+            <ListBox
+              isLoading={isLoading}
+              items={items}
+              dependencies={dependencies}
+            >
               {children}
             </ListBox>
           </Overlay>
@@ -79,15 +86,21 @@ const SelectValue = <T extends object>(props: SelectValueProps<T>) => {
   return (
     <AriaSelectValue
       {...props}
-      className={composeRenderProps(props.className, (className) => selectValue({ className }))}
+      className={composeRenderProps(props.className, (className) =>
+        selectValue({ className })
+      )}
     />
   );
 };
 
-interface SelectRootProps<T extends object> extends Omit<AriaSelectProps<T>, "className"> {
+interface SelectRootProps<T extends object>
+  extends Omit<AriaSelectProps<T>, "className"> {
   className?: string;
 }
-const SelectRoot = <T extends object>({ className, ...props }: SelectRootProps<T>) => {
+const SelectRoot = <T extends object>({
+  className,
+  ...props
+}: SelectRootProps<T>) => {
   const { root } = selectStyles();
   return <AriaSelect className={root({ className })} {...props} />;
 };
