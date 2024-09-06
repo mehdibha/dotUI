@@ -1,0 +1,15 @@
+{
+  "name": "menu-separator",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "menu"
+  ],
+  "files": [
+    {
+      "path": "core/menu/demos/separator.tsx",
+      "content": "import { Button } from \"@/registry/ui/default/core/button\";\r\nimport { Menu, MenuItem, MenuRoot } from \"@/registry/ui/default/core/menu\";\r\nimport { Separator } from \"@/registry/ui/default/core/separator\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <MenuRoot>\r\n      <Button variant=\"outline\">File</Button>\r\n      <Menu>\r\n        <MenuItem>New...</MenuItem>\r\n        <MenuItem>Badges</MenuItem>\r\n        <Separator />\r\n        <MenuItem>Save</MenuItem>\r\n        <MenuItem>Save as...</MenuItem>\r\n        <MenuItem>Rename...</MenuItem>\r\n        <Separator />\r\n        <MenuItem>Page setup…</MenuItem>\r\n        <MenuItem>Print…</MenuItem>\r\n      </Menu>\r\n    </MenuRoot>\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

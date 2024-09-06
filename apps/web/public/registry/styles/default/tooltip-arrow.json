@@ -1,0 +1,15 @@
+{
+  "name": "tooltip-arrow",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "tooltip"
+  ],
+  "files": [
+    {
+      "path": "core/tooltip/demos/arrow.tsx",
+      "content": "import { PlusIcon } from \"@/lib/icons\";\nimport { Button } from \"@/registry/ui/default/core/button\";\nimport { Tooltip } from \"@/registry/ui/default/core/tooltip\";\n\nexport default function Demo() {\n  return (\n    <Tooltip content=\"Add to library\" arrow>\n      <Button shape=\"square\">\n        <PlusIcon />\n      </Button>\n    </Tooltip>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

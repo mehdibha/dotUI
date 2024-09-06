@@ -2,7 +2,10 @@
 
 import React from "react";
 import * as ResizablePrimitive from "react-resizable-panels";
-import type { ImperativePanelHandle, ImperativePanelGroupHandle } from "react-resizable-panels";
+import type {
+  ImperativePanelHandle,
+  ImperativePanelGroupHandle,
+} from "react-resizable-panels";
 import { tv } from "tailwind-variants";
 
 const resizableStyles = tv({
@@ -15,16 +18,27 @@ const resizableStyles = tv({
   },
 });
 
-type ResizableGroupProps = React.ComponentProps<typeof ResizablePrimitive.PanelGroup>;
+type ResizableGroupProps = React.ComponentProps<
+  typeof ResizablePrimitive.PanelGroup
+>;
 const ResizableGroup = ({ className, ...props }: ResizableGroupProps) => {
   const { group } = resizableStyles();
-  return <ResizablePrimitive.PanelGroup className={group({ className })} {...props} />;
+  return (
+    <ResizablePrimitive.PanelGroup
+      className={group({ className })}
+      {...props}
+    />
+  );
 };
 
-type ResizablePanelProps = React.ComponentProps<typeof ResizablePrimitive.Panel>;
+type ResizablePanelProps = React.ComponentProps<
+  typeof ResizablePrimitive.Panel
+>;
 const ResizablePanel = ({ className, ...props }: ResizablePanelProps) => {
   const { panel } = resizableStyles();
-  return <ResizablePrimitive.Panel className={panel({ className })} {...props} />;
+  return (
+    <ResizablePrimitive.Panel className={panel({ className })} {...props} />
+  );
 };
 
 interface ResizableHandleProps
@@ -33,7 +47,12 @@ interface ResizableHandleProps
 }
 const ResizableHandle = ({ className, ...props }: ResizableHandleProps) => {
   const { handle } = resizableStyles();
-  return <ResizablePrimitive.PanelResizeHandle className={handle({ className })} {...props} />;
+  return (
+    <ResizablePrimitive.PanelResizeHandle
+      className={handle({ className })}
+      {...props}
+    />
+  );
 };
 
 export type {

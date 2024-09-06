@@ -1,0 +1,15 @@
+{
+  "name": "select-validation",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "select"
+  ],
+  "files": [
+    {
+      "path": "core/select/demos/validation.tsx",
+      "content": "import React from \"react\";\nimport { Item } from \"@/registry/ui/default/core/list-box\";\nimport { Select } from \"@/registry/ui/default/core/select\";\n\nexport default function Demo() {\n  return (\n    <Select\n      label=\"Provider\"\n      isInvalid\n      errorMessage=\"Please select an item in the list.\"\n    >\n      <Item>Perplexity</Item>\n      <Item>Replicate</Item>\n      <Item>Together AI</Item>\n      <Item>ElevenLabs</Item>\n    </Select>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

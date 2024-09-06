@@ -1,0 +1,15 @@
+{
+  "name": "combobox-disabled",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "combobox"
+  ],
+  "files": [
+    {
+      "path": "core/combobox/demos/disabled.tsx",
+      "content": "import React from \"react\";\r\nimport { Combobox } from \"@/registry/ui/default/core/combobox\";\r\nimport { Item } from \"@/registry/ui/default/core/list-box\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <Combobox label=\"Favorite Animal\" isDisabled>\r\n      <Item id=\"red panda\">Red Panda</Item>\r\n      <Item id=\"cat\">Cat</Item>\r\n      <Item id=\"dog\">Dog</Item>\r\n      <Item id=\"aardvark\">Aardvark</Item>\r\n      <Item id=\"kangaroo\">Kangaroo</Item>\r\n      <Item id=\"snake\">Snake</Item>\r\n    </Combobox>\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "text-field-error-message",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "text-field"
+  ],
+  "files": [
+    {
+      "path": "core/text-field/demos/error-message.tsx",
+      "content": "\"use client\";\n\nimport React from \"react\";\nimport { TextField } from \"@/registry/ui/default/core/text-field\";\n\nexport default function Demo() {\n  return (\n    <TextField\n      defaultValue=\"support@copyui.dev\"\n      label=\"Email\"\n      isInvalid\n      errorMessage=\"This email is already taken.\"\n    />\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

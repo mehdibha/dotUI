@@ -1,0 +1,15 @@
+{
+  "name": "menu-single-selection",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "menu"
+  ],
+  "files": [
+    {
+      "path": "core/menu/demos/single-selection.tsx",
+      "content": "\"use client\";\r\n\r\nimport React from \"react\";\r\nimport type { Selection } from \"react-aria-components\";\r\nimport { Button } from \"@/registry/ui/default/core/button\";\r\nimport { Menu, MenuItem, MenuRoot } from \"@/registry/ui/default/core/menu\";\r\n\r\nexport default function Demo() {\r\n  const [selected, setSelected] = React.useState<Selection>(\r\n    new Set([\"center\"])\r\n  );\r\n  return (\r\n    <MenuRoot>\r\n      <Button variant=\"outline\" size=\"sm\">\r\n        Align\r\n      </Button>\r\n      <Menu\r\n        selectionMode=\"single\"\r\n        selectedKeys={selected}\r\n        onSelectionChange={setSelected}\r\n      >\r\n        <MenuItem id=\"start\">Start</MenuItem>\r\n        <MenuItem id=\"center\">Center</MenuItem>\r\n        <MenuItem id=\"end\">End</MenuItem>\r\n      </Menu>\r\n    </MenuRoot>\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

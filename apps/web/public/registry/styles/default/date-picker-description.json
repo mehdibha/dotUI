@@ -1,0 +1,15 @@
+{
+  "name": "date-picker-description",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "date-picker"
+  ],
+  "files": [
+    {
+      "path": "core/date-picker/demos/description.tsx",
+      "content": "\"use client\";\n\nimport React from \"react\";\nimport { DatePicker } from \"@/registry/ui/default/core/date-picker\";\n\nexport default function Demo() {\n  return <DatePicker label=\"Appointment\" description=\"Please select a date.\" />;\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

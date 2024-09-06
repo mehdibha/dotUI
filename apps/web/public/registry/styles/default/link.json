@@ -1,0 +1,15 @@
+{
+  "name": "link",
+  "type": "registry:core",
+  "dependencies": [
+    "react-aria-components"
+  ],
+  "files": [
+    {
+      "path": "core/link/link.tsx",
+      "content": "\"use client\";\r\n\r\nimport * as React from \"react\";\r\nimport {\r\n  Link as AriaLink,\r\n  composeRenderProps,\r\n  type LinkProps as AriaLinkProps,\r\n} from \"react-aria-components\";\r\nimport { tv, type VariantProps } from \"tailwind-variants\";\r\nimport { focusRing } from \"@/lib/utils/styles\";\r\n\r\nconst linkVariants = tv({\r\n  extend: focusRing,\r\n  base: \"inline-flex items-center transition-colors gap-1 disabled:text-fg-disabled\",\r\n  variants: {\r\n    variant: {\r\n      accent: \"text-fg-accent hover:text-[#5e9fe0]\",\r\n      quiet: \"underline underline-offset-2\",\r\n    },\r\n  },\r\n  defaultVariants: {\r\n    variant: \"accent\",\r\n  },\r\n});\r\n\r\ninterface LinkProps extends AriaLinkProps, VariantProps<typeof linkVariants> {}\r\n\r\nconst Link = ({ variant, ...props }: LinkProps) => {\r\n  return (\r\n    <AriaLink\r\n      {...props}\r\n      className={composeRenderProps(props.className, (className) =>\r\n        linkVariants({ variant, className })\r\n      )}\r\n    />\r\n  );\r\n};\r\n\r\nexport type { LinkProps };\r\nexport { Link, linkVariants };\r\n",
+      "type": "registry:core",
+      "target": ""
+    }
+  ]
+}

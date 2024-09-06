@@ -1,0 +1,15 @@
+{
+  "name": "color-picker-uncontrolled",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "color-picker"
+  ],
+  "files": [
+    {
+      "path": "core/color-picker/demos/uncontrolled.tsx",
+      "content": "import { ColorPicker } from \"@/registry/ui/default/core/color-picker\";\r\n\r\nexport default function Demo() {\r\n  return <ColorPicker defaultValue=\"#5100FF\" />;\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

@@ -22,9 +22,21 @@ const alertStyles = tv({
   },
   compoundVariants: [
     { variant: "default", fill: true, className: { root: "bg-bg-muted" } },
-    { variant: "success", fill: true, className: { root: "bg-bg-success-muted" } },
-    { variant: "warning", fill: true, className: { root: "bg-bg-warning-muted" } },
-    { variant: "danger", fill: true, className: { root: "bg-bg-danger-muted" } },
+    {
+      variant: "success",
+      fill: true,
+      className: { root: "bg-bg-success-muted" },
+    },
+    {
+      variant: "warning",
+      fill: true,
+      className: { root: "bg-bg-warning-muted" },
+    },
+    {
+      variant: "danger",
+      fill: true,
+      className: { root: "bg-bg-danger-muted" },
+    },
     { variant: "info", fill: true, className: { root: "bg-bg-accent-muted" } },
   ],
   defaultVariants: {
@@ -46,7 +58,14 @@ interface AlertProps extends AlertRootProps {
   icon?: React.ReactNode | null;
   action?: React.ReactNode;
 }
-const Alert = ({ variant = "default", title, children, icon, action, ...props }: AlertProps) => {
+const Alert = ({
+  variant = "default",
+  title,
+  children,
+  icon,
+  action,
+  ...props
+}: AlertProps) => {
   return (
     <AlertRoot variant={variant} {...props}>
       {icon || icons[variant]}

@@ -106,13 +106,16 @@ const TextAreaInput = React.forwardRef<HTMLTextAreaElement, TextAreaInputProps>(
 );
 TextAreaInput.displayName = "TextAreaInput";
 
-interface InputProps extends Omit<AriaInputProps, "className" | "size" | "prefix"> {
+interface InputProps
+  extends Omit<AriaInputProps, "className" | "size" | "prefix"> {
   className?: string;
 }
-const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, ...props }, ref) => {
-  const { input } = inputStyles();
-  return <AriaInput ref={ref} className={input({ className })} {...props} />;
-});
+const Input = React.forwardRef<HTMLInputElement, InputProps>(
+  ({ className, ...props }, ref) => {
+    const { input } = inputStyles();
+    return <AriaInput ref={ref} className={input({ className })} {...props} />;
+  }
+);
 Input.displayName = "Input";
 
 interface InputRootProps
@@ -138,16 +141,21 @@ const InputRoot = ({
   const inputContext = useSlottedContext(AriaInputContext);
   const textAreaContext = useSlottedContext(AriaTextAreaContext);
   const inputRef = React.useRef(null);
-  const isDisabled = props.isDisabled || inputContext?.disabled || textAreaContext?.disabled;
+  const isDisabled =
+    props.isDisabled || inputContext?.disabled || textAreaContext?.disabled;
   const isInvalid =
     props.isInvalid ||
-    (!!inputContext?.["aria-invalid"] && inputContext["aria-invalid"] !== "false") ||
-    (!!textAreaContext?.["aria-invalid"] && textAreaContext["aria-invalid"] !== "false");
+    (!!inputContext?.["aria-invalid"] &&
+      inputContext["aria-invalid"] !== "false") ||
+    (!!textAreaContext?.["aria-invalid"] &&
+      textAreaContext["aria-invalid"] !== "false");
 
   const handlePointerDown = (event: React.PointerEvent<HTMLElement>) => {
     const target = event.target as HTMLElement;
     if (target.closest("input, button, a")) return;
-    const input = (inputRef as React.RefObject<HTMLInputElement | HTMLTextAreaElement>).current;
+    const input = (
+      inputRef as React.RefObject<HTMLInputElement | HTMLTextAreaElement>
+    ).current;
     if (!input) return;
     requestAnimationFrame(() => {
       input.focus();
@@ -168,11 +176,17 @@ const InputRoot = ({
           values={[
             [
               AriaInputContext,
-              { ...inputContext, ref: mergeRefs(inputRef, inputContext?.ref ?? null) },
+              {
+                ...inputContext,
+                ref: mergeRefs(inputRef, inputContext?.ref ?? null),
+              },
             ],
             [
               AriaTextAreaContext,
-              { ...textAreaContext, ref: mergeRefs(inputRef, textAreaContext?.ref ?? null) },
+              {
+                ...textAreaContext,
+                ref: mergeRefs(inputRef, textAreaContext?.ref ?? null),
+              },
             ],
           ]}
         >

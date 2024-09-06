@@ -1,0 +1,15 @@
+{
+  "name": "skeleton-card",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "skeleton"
+  ],
+  "files": [
+    {
+      "path": "core/skeleton/demos/card.tsx",
+      "content": "import { Skeleton } from \"@/registry/ui/default/core/skeleton\";\n\nexport default function Demo() {\n  return (\n    <div className=\"space-y-4\">\n      <Skeleton className=\"h-44 w-64\" />\n      <div className=\"flex items-center space-x-4\">\n        <Skeleton className=\"size-10 rounded-full\" />\n        <div className=\"space-y-2\">\n          <Skeleton className=\"h-4 w-44\" />\n          <Skeleton className=\"h-4 w-36\" />\n        </div>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

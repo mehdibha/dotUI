@@ -1,0 +1,15 @@
+{
+  "name": "date-field-placeholder",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "date-field"
+  ],
+  "files": [
+    {
+      "path": "core/date-field/demos/placeholder.tsx",
+      "content": "\"use client\";\r\n\r\nimport { CalendarDate } from \"@internationalized/date\";\r\nimport { DateField } from \"@/registry/ui/default/core/date-field\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <DateField\r\n      label=\"Meeting date\"\r\n      placeholderValue={new CalendarDate(1980, 1, 1)}\r\n    />\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

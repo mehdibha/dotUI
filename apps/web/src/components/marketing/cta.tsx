@@ -1,8 +1,8 @@
 import React from "react";
 import Link from "next/link";
 import { getGitHubStars } from "@/utils/github";
-import { cn } from "@/lib/utils/classes";
 import { siteConfig } from "@/config";
+import { cn } from "@/registry/ui/default/lib/cn";
 import { GitHubIcon } from "../icons";
 
 interface CallToActionProps {
@@ -16,11 +16,14 @@ export const CallToAction = async (props: CallToActionProps) => {
   return (
     <section className={cn("mx-auto max-w-2xl px-6 text-center", className)}>
       <h2 className="mx-auto mt-8 max-w-2xl text-3xl font-bold tracking-tighter lg:text-5xl">
-        Proudly <span className="bg-gradient bg-clip-text text-transparent">open-source</span>
+        Proudly{" "}
+        <span className="bg-gradient bg-clip-text text-transparent">
+          open-source
+        </span>
       </h2>
       <p className="mt-4 text-lg text-fg-muted">
-        Our source code is available on GitHub - feel free to read, review, or contribute to it
-        however you want!
+        Our source code is available on GitHub - feel free to read, review, or
+        contribute to it however you want!
       </p>
       <div className="mt-10 flex justify-center space-x-2">
         <Link

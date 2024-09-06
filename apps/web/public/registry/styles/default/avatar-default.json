@@ -1,0 +1,15 @@
+{
+  "name": "avatar-default",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "avatar"
+  ],
+  "files": [
+    {
+      "path": "core/avatar/demos/default.tsx",
+      "content": "import { Avatar } from \"@/registry/ui/default/core/avatar\";\n\nexport default function Demo() {\n  return (\n    <Avatar\n      src=\"https://github.com/mehdibha.png\"\n      alt=\"@mehdibha\"\n      fallback=\"M\"\n    />\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

@@ -66,14 +66,22 @@ const Menu = <T extends object>({
   ...props
 }: MenuProps<T>) => {
   return (
-    <Overlay type={type} mobileType={mobileType} mediaQuery={mediaQuery} placement={placement}>
+    <Overlay
+      type={type}
+      mobileType={mobileType}
+      mediaQuery={mediaQuery}
+      placement={placement}
+    >
       <MenuContent {...props} />
     </Overlay>
   );
 };
 
 type MenuContentProps<T> = AriaMenuProps<T>;
-const MenuContent = <T extends object>({ className, ...props }: MenuContentProps<T>) => {
+const MenuContent = <T extends object>({
+  className,
+  ...props
+}: MenuContentProps<T>) => {
   return <AriaMenu className={menuStyles({ className })} {...props} />;
 };
 
@@ -101,26 +109,33 @@ const MenuItem = <T extends object>({
 }: MenuItemProps<T>) => {
   return (
     <AriaMenuItem className={menuItemStyles({ className, variant })} {...props}>
-      {composeRenderProps(props.children, (children, { selectionMode, isSelected, hasSubmenu }) => (
-        <>
-          {selectionMode !== "none" && (
-            <span className="flex w-8 items-center justify-center">
-              {isSelected && <CheckIcon aria-hidden className="size-4 text-fg-accent" />}
+      {composeRenderProps(
+        props.children,
+        (children, { selectionMode, isSelected, hasSubmenu }) => (
+          <>
+            {selectionMode !== "none" && (
+              <span className="flex w-8 items-center justify-center">
+                {isSelected && (
+                  <CheckIcon aria-hidden className="size-4 text-fg-accent" />
+                )}
+              </span>
+            )}
+            {prefix}
+            <span className="flex items-center gap-2">
+              <span className="flex flex-1 flex-col">
+                {label && <Text slot="label">{label}</Text>}
+                {description && <Text slot="description">{description}</Text>}
+                {children}
+              </span>
+              {suffix}
+              {shortcut && <Kbd>{shortcut}</Kbd>}
+              {hasSubmenu && (
+                <ChevronRightIcon aria-hidden className="size-4" />
+              )}
             </span>
-          )}
-          {prefix}
-          <span className="flex items-center gap-2">
-            <span className="flex flex-1 flex-col">
-              {label && <Text slot="label">{label}</Text>}
-              {description && <Text slot="description">{description}</Text>}
-              {children}
-            </span>
-            {suffix}
-            {shortcut && <Kbd>{shortcut}</Kbd>}
-            {hasSubmenu && <ChevronRightIcon aria-hidden className="size-4" />}
-          </span>
-        </>
-      ))}
+          </>
+        )
+      )}
     </AriaMenuItem>
   );
 };

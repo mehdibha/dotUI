@@ -1,0 +1,15 @@
+{
+  "name": "date-picker-required",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "date-picker"
+  ],
+  "files": [
+    {
+      "path": "core/date-picker/demos/required.tsx",
+      "content": "\"use client\";\n\nimport React from \"react\";\nimport { DatePicker } from \"@/registry/ui/default/core/date-picker\";\n\nexport default function Demo() {\n  return (\n    <div className=\"grid grid-cols-2 gap-4\">\n      <DatePicker label=\"Event date\" isRequired />\n      <DatePicker label=\"Event date\" isRequired necessityIndicator=\"icon\" />\n      <DatePicker label=\"Event date\" isRequired necessityIndicator=\"label\" />\n      <DatePicker label=\"Event date\" necessityIndicator=\"label\" />\n    </div>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

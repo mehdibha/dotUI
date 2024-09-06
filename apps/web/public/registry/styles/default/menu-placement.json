@@ -1,0 +1,15 @@
+{
+  "name": "menu-placement",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "menu"
+  ],
+  "files": [
+    {
+      "path": "core/menu/demos/placement.tsx",
+      "content": "\"use client\";\r\n\r\nimport React from \"react\";\r\nimport { MenuIcon } from \"@/lib/icons\";\r\nimport { Button } from \"@/registry/ui/default/core/button\";\r\nimport { Item } from \"@/registry/ui/default/core/list-box\";\r\nimport {\r\n  Menu,\r\n  MenuItem,\r\n  MenuRoot,\r\n  type MenuProps,\r\n} from \"@/registry/ui/default/core/menu\";\r\nimport { Select } from \"@/registry/ui/default/core/select\";\r\n\r\ntype Placement = MenuProps<object>[\"placement\"];\r\n\r\nexport default function Demo() {\r\n  const [placement, setPlacement] = React.useState<Placement>(\"top\");\r\n  return (\r\n    <div className=\"flex items-center gap-10\">\r\n      <MenuRoot>\r\n        <Button variant=\"outline\" shape=\"square\" size=\"sm\">\r\n          <MenuIcon />\r\n        </Button>\r\n        <Menu placement={placement}>\r\n          <MenuItem>Account settings</MenuItem>\r\n          <MenuItem>Create team</MenuItem>\r\n          <MenuItem>Log out</MenuItem>\r\n        </Menu>\r\n      </MenuRoot>\r\n      <Select\r\n        label=\"Placement\"\r\n        selectedKey={placement}\r\n        onSelectionChange={(key) => setPlacement(key as Placement)}\r\n      >\r\n        {[\r\n          \"bottom\",\r\n          \"bottom left\",\r\n          \"bottom right\",\r\n          \"bottom start\",\r\n          \"bottom end\",\r\n          \"top\",\r\n          \"top left\",\r\n          \"top right\",\r\n          \"top start\",\r\n          \"top end\",\r\n          \"left\",\r\n          \"left top\",\r\n          \"left\",\r\n          \"bottom\",\r\n          \"start\",\r\n          \"start top\",\r\n          \"start bottom\",\r\n          \"right\",\r\n          \"right top\",\r\n          \"right\",\r\n          \"bottom\",\r\n          \"end\",\r\n          \"end top\",\r\n          \"end bottom\",\r\n        ].map((pos, index) => (\r\n          <Item key={index} id={pos.replace(\" \", \"\")}>\r\n            {pos}\r\n          </Item>\r\n        ))}\r\n      </Select>\r\n    </div>\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

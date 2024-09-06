@@ -1,0 +1,15 @@
+{
+  "name": "text-area-form",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "text-area"
+  ],
+  "files": [
+    {
+      "path": "core/text-area/demos/form.tsx",
+      "content": "import React from \"react\";\nimport { TextArea } from \"@/registry/ui/default/core/text-area\";\n\nexport default function Demo() {\n  return <TextArea label=\"Comment\" />;\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

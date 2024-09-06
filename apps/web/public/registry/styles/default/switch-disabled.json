@@ -1,0 +1,15 @@
+{
+  "name": "switch-disabled",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "switch"
+  ],
+  "files": [
+    {
+      "path": "core/switch/demos/disabled.tsx",
+      "content": "import { Switch } from \"@/registry/ui/default/core/switch\";\n\nexport default function Demo() {\n  return (\n    <div className=\"flex items-center gap-10\">\n      <Switch isDisabled defaultSelected>\n        Focus Mode\n      </Switch>\n      <Switch isDisabled>Focus Mode</Switch>\n    </div>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

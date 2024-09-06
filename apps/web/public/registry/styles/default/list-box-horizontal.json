@@ -1,0 +1,15 @@
+{
+  "name": "list-box-horizontal",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "list-box"
+  ],
+  "files": [
+    {
+      "path": "core/list-box/demos/horizontal.tsx",
+      "content": "import { ListBox, Item } from \"@/registry/ui/default/core/list-box\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <ListBox\r\n      aria-label=\"Options\"\r\n      orientation=\"horizontal\"\r\n      selectionMode=\"single\"\r\n    >\r\n      <Item textValue=\"Read\" label=\"Read\" description=\"Read Only\" />\r\n      <Item textValue=\"Write\" label=\"Write\" description=\"Read and Write Only\" />\r\n      <Item textValue=\"Admin\" label=\"Admin\" description=\"Full access\" />\r\n    </ListBox>\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

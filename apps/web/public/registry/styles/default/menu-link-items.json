@@ -1,0 +1,15 @@
+{
+  "name": "menu-link-items",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "menu"
+  ],
+  "files": [
+    {
+      "path": "core/menu/demos/link-items.tsx",
+      "content": "import { DiscordIcon, GitHubIcon, TwitterIcon } from \"@/components/icons\";\r\nimport { Button } from \"@/registry/ui/default/core/button\";\r\nimport { Menu, MenuItem, MenuRoot } from \"@/registry/ui/default/core/menu\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <MenuRoot>\r\n      <Button variant=\"outline\" size=\"sm\">\r\n        Social\r\n      </Button>\r\n      <Menu>\r\n        <MenuItem\r\n          prefix={<GitHubIcon />}\r\n          href=\"https://github.com/mehdibha/dotUI\"\r\n          target=\"_blank\"\r\n        >\r\n          Github\r\n        </MenuItem>\r\n        <MenuItem\r\n          prefix={<TwitterIcon />}\r\n          href=\"https://twitter.com/mehdibha_\"\r\n          target=\"_blank\"\r\n        >\r\n          X\r\n        </MenuItem>\r\n        <MenuItem\r\n          prefix={<DiscordIcon />}\r\n          href=\"https://discord.com/invite/DXpj5V2fU8\"\r\n          target=\"_blank\"\r\n        >\r\n          Discord\r\n        </MenuItem>\r\n      </Menu>\r\n    </MenuRoot>\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

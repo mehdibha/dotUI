@@ -1,0 +1,19 @@
+{
+  "name": "text-field",
+  "type": "registry:core",
+  "dependencies": [
+    "react-aria-components"
+  ],
+  "registryDependencies": [
+    "field",
+    "input"
+  ],
+  "files": [
+    {
+      "path": "core/text-field/text-field.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport {\n  TextField as AriaTextField,\n  type TextFieldProps as AriaTextFieldProps,\n} from \"react-aria-components\";\nimport { tv, type VariantProps } from \"tailwind-variants\";\nimport { Field, type FieldProps } from \"@/registry/ui/default/core/field\";\nimport {\n  InputRoot,\n  Input,\n  type inputStyles,\n} from \"@/registry/ui/default/core/input\";\n\nconst textFieldStyles = tv({\n  base: \"flex flex-col gap-2 items-start w-48\",\n});\n\ntype TextFieldProps = TextFieldRootProps &\n  Omit<FieldProps, \"children\"> &\n  VariantProps<typeof inputStyles> & {\n    prefix?: React.ReactNode;\n    suffix?: React.ReactNode;\n    isLoading?: boolean;\n    loaderPosition?: \"prefix\" | \"suffix\";\n    placeholder?: string;\n  };\nconst TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(\n  (\n    {\n      className,\n      size,\n      placeholder,\n      label,\n      description,\n      errorMessage,\n      prefix,\n      suffix,\n      isLoading,\n      loaderPosition = \"suffix\",\n      necessityIndicator,\n      contextualHelp,\n      ...props\n    },\n    ref\n  ) => {\n    return (\n      <TextFieldRoot className={className} {...props}>\n        {({ isRequired }) => (\n          <Field\n            label={label}\n            description={description}\n            errorMessage={errorMessage}\n            isRequired={isRequired}\n            necessityIndicator={necessityIndicator}\n            contextualHelp={contextualHelp}\n          >\n            <InputRoot\n              size={size}\n              prefix={prefix}\n              suffix={suffix}\n              isLoading={isLoading}\n              loaderPosition={loaderPosition}\n            >\n              <Input ref={ref} placeholder={placeholder} />\n            </InputRoot>\n          </Field>\n        )}\n      </TextFieldRoot>\n    );\n  }\n);\nTextField.displayName = \"TextField\";\n\ntype TextFieldRootProps = Omit<AriaTextFieldProps, \"className\"> & {\n  className?: string;\n};\nconst TextFieldRoot = React.forwardRef<\n  React.ElementRef<typeof AriaTextField>,\n  TextFieldRootProps\n>(({ className, ...props }, ref) => {\n  return (\n    <AriaTextField\n      ref={ref}\n      className={textFieldStyles({ className })}\n      {...props}\n    />\n  );\n});\nTextFieldRoot.displayName = \"TextFieldRoot\";\n\nexport type { TextFieldProps, TextFieldRootProps };\nexport { TextField, TextFieldRoot };\n",
+      "type": "registry:core",
+      "target": ""
+    }
+  ]
+}

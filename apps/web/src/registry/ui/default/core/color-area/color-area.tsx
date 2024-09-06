@@ -6,7 +6,7 @@ import {
   type ColorAreaProps as AriaColorAreaProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { ColorThumb } from "./color-thumb";
+import { ColorThumb } from "@/registry/ui/default/core/color-thumb";
 
 const colorAreaStyles = tv({
   base: "inline-block size-48 min-w-20 rounded-md disabled:!bg-bg-disabled",

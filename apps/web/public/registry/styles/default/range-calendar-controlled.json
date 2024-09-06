@@ -1,0 +1,15 @@
+{
+  "name": "range-calendar-controlled",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "range-calendar"
+  ],
+  "files": [
+    {
+      "path": "core/range-calendar/demos/controlled.tsx",
+      "content": "\"use client\";\n\nimport React from \"react\";\nimport { getLocalTimeZone, today } from \"@internationalized/date\";\nimport { type DateRange } from \"react-aria-components\";\nimport { RangeCalendar } from \"@/registry/ui/default/core/range-calendar\";\n\nexport default function Demo() {\n  const [range, setRange] = React.useState<DateRange>({\n    start: today(getLocalTimeZone()),\n    end: today(getLocalTimeZone()).add({ weeks: 1 }),\n  });\n  return (\n    <div className=\"flex flex-col items-center gap-6\">\n      <RangeCalendar\n        aria-label=\"Date (controlled)\"\n        value={range}\n        onChange={setRange}\n      />\n      <p className=\"text-sm text-fg-muted\">\n        Start date: {range?.start.toString()}\n        <br />\n        End date: {range?.end.toString()}\n      </p>\n    </div>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

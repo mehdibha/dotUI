@@ -15,21 +15,27 @@ import {
   TabletIcon,
   Trash2Icon,
 } from "lucide-react";
-import { Modal as AriaModal, Dialog as AriaDialog } from "react-aria-components";
+import {
+  Modal as AriaModal,
+  Dialog as AriaDialog,
+} from "react-aria-components";
 import Balancer from "react-wrap-balancer";
 import { useConfig } from "@/hooks/use-config";
 import { usePalette } from "@/hooks/use-palette";
-import { Button } from "@/lib/components/core/default/button";
-import { ColorPicker } from "@/lib/components/core/default/color-picker";
-import { Dialog, DialogRoot } from "@/lib/components/core/default/dialog";
-import { NumberField } from "@/lib/components/core/default/number-field";
-import { Slider } from "@/lib/components/core/default/slider";
-import { Switch } from "@/lib/components/core/default/switch";
-import { TextField } from "@/lib/components/core/default/text-field";
-import { ToggleGroup, ToggleGroupButton } from "@/lib/components/core/default/toggle-group";
-import { Tooltip } from "@/lib/components/core/default/tooltip";
 import { useMediaQuery } from "@/lib/hooks/use-media-query";
-import { cn } from "@/lib/utils/classes";
+import { Button } from "@/registry/ui/default/core/button";
+import { ColorPicker } from "@/registry/ui/default/core/color-picker";
+import { Dialog, DialogRoot } from "@/registry/ui/default/core/dialog";
+import { NumberField } from "@/registry/ui/default/core/number-field";
+import { Slider } from "@/registry/ui/default/core/slider";
+import { Switch } from "@/registry/ui/default/core/switch";
+import { TextField } from "@/registry/ui/default/core/text-field";
+import {
+  ToggleGroup,
+  ToggleGroupButton,
+} from "@/registry/ui/default/core/toggle-group";
+import { Tooltip } from "@/registry/ui/default/core/tooltip";
+import { cn } from "@/registry/ui/default/lib/cn";
 
 export default function ThemesPage() {
   const { mode, setMode, theme } = useConfig();
@@ -42,8 +48,9 @@ export default function ThemesPage() {
         </h1>
         <p className="text-md mt-4 text-fg-muted md:text-lg">
           <Balancer>
-            Make your design system, choose your color palette, your favourite icon library, your
-            components style and fonts to match you brand identity.
+            Make your design system, choose your color palette, your favourite
+            icon library, your components style and fonts to match you brand
+            identity.
           </Balancer>
         </p>
         <div className="mt-8 flex items-center gap-2">
@@ -53,7 +60,9 @@ export default function ThemesPage() {
             </Button>
             <Dialog type="drawer" title="Themes">
               <h4 className="mt-2 text-lg font-semibold">Your themes</h4>
-              <p className="text-fg-muted">You didn&apos;t save any theme yet</p>
+              <p className="text-fg-muted">
+                You didn&apos;t save any theme yet
+              </p>
               <h4 className="mt-2 text-lg font-semibold">Pre-built themes</h4>
               <div className="mt-4 grid grid-cols-8 gap-4">
                 {Array.from({ length: 8 }, (_, index) => (
@@ -92,47 +101,57 @@ export default function ThemesPage() {
               {
                 name: "Neutral",
                 value: "neutral",
-                colors: Object.entries(theme[mode].palettes.neutral.colors).map(([key, value]) => ({
-                  name: `Neutral ${key}`,
-                  key: `neutral-${key}`,
-                  value: value,
-                })),
+                colors: Object.entries(theme[mode].palettes.neutral.colors).map(
+                  ([key, value]) => ({
+                    name: `Neutral ${key}`,
+                    key: `neutral-${key}`,
+                    value: value,
+                  })
+                ),
               },
               {
                 name: "Accent",
                 value: "accent",
-                colors: Object.entries(theme[mode].palettes.accent.colors).map(([key, value]) => ({
-                  name: `Accent ${key}`,
-                  key: `accent-${key}`,
-                  value: value,
-                })),
+                colors: Object.entries(theme[mode].palettes.accent.colors).map(
+                  ([key, value]) => ({
+                    name: `Accent ${key}`,
+                    key: `accent-${key}`,
+                    value: value,
+                  })
+                ),
               },
               {
                 name: "Success",
                 value: "success",
-                colors: Object.entries(theme[mode].palettes.success.colors).map(([key, value]) => ({
-                  name: `Success ${key}`,
-                  key: `success-${key}`,
-                  value: value,
-                })),
+                colors: Object.entries(theme[mode].palettes.success.colors).map(
+                  ([key, value]) => ({
+                    name: `Success ${key}`,
+                    key: `success-${key}`,
+                    value: value,
+                  })
+                ),
               },
               {
                 name: "Danger",
                 value: "danger",
-                colors: Object.entries(theme[mode].palettes.danger.colors).map(([key, value]) => ({
-                  name: `Danger ${key}`,
-                  key: `danger-${key}`,
-                  value: value,
-                })),
+                colors: Object.entries(theme[mode].palettes.danger.colors).map(
+                  ([key, value]) => ({
+                    name: `Danger ${key}`,
+                    key: `danger-${key}`,
+                    value: value,
+                  })
+                ),
               },
               {
                 name: "Warning",
                 value: "warning",
-                colors: Object.entries(theme[mode].palettes.warning.colors).map(([key, value]) => ({
-                  name: `Warning ${key}`,
-                  key: `warning-${key}`,
-                  value: value,
-                })),
+                colors: Object.entries(theme[mode].palettes.warning.colors).map(
+                  ([key, value]) => ({
+                    name: `Warning ${key}`,
+                    key: `warning-${key}`,
+                    value: value,
+                  })
+                ),
               },
             ] as const
           ).map((palette, index) => (
@@ -143,9 +162,13 @@ export default function ThemesPage() {
               </div>
               <div className="mt-4 grid grid-cols-10 gap-1">
                 {palette.colors.map((color) => {
-                  const hint: string | undefined = hints[color.key as keyof typeof hints];
+                  const hint: string | undefined =
+                    hints[color.key as keyof typeof hints];
                   return (
-                    <div key={color.name} className="relative rounded-md border shadow">
+                    <div
+                      key={color.name}
+                      className="relative rounded-md border shadow"
+                    >
                       <div
                         className="h-20 rounded-t-[inherit] border-b"
                         style={{ backgroundColor: color.value }}
@@ -156,7 +179,9 @@ export default function ThemesPage() {
                       {hint && (
                         <div className="absolute bottom-0 left-1/2 flex w-full -translate-x-1/2 translate-y-full flex-col items-center justify-center p-2">
                           <div className="h-3 w-px bg-fg" />
-                          <p className="w-full text-center text-xs text-fg-muted">{hint}</p>
+                          <p className="w-full text-center text-xs text-fg-muted">
+                            {hint}
+                          </p>
                         </div>
                       )}
                     </div>
@@ -203,8 +228,16 @@ const ColorScalesPopover = ({
         //  placement="right" TODO
         className="space-y-4"
       >
-        <Slider label="Lightness" value={lightness} onChange={handleChangeLightness} />
-        <Slider label="Saturation" value={saturation} onChange={handleChangeSaturation} />
+        <Slider
+          label="Lightness"
+          value={lightness}
+          onChange={handleChangeLightness}
+        />
+        <Slider
+          label="Saturation"
+          value={saturation}
+          onChange={handleChangeSaturation}
+        />
         <Switch isSelected={smooth} onChange={handleChangeSmooth}>
           Smooth
         </Switch>
@@ -258,7 +291,9 @@ const ColorScalesPopover = ({
 };
 
 const Preview = () => {
-  const [view, setView] = React.useState<"desktop" | "tablet" | "mobile">("desktop");
+  const [view, setView] = React.useState<"desktop" | "tablet" | "mobile">(
+    "desktop"
+  );
   const [fullScreen, setFullScreen] = React.useState(false);
   return (
     <PreviewBase view={view} onViewChange={setView} className="h-[90vh]">
@@ -270,7 +305,12 @@ const Preview = () => {
           <AriaDialog className="h-full outline-none">
             {({ close }) => (
               <PreviewBase view={view} onViewChange={setView}>
-                <Button shape="square" variant="quiet" size="sm" onPress={close}>
+                <Button
+                  shape="square"
+                  variant="quiet"
+                  size="sm"
+                  onPress={close}
+                >
                   <Minimize2Icon />
                 </Button>
               </PreviewBase>
@@ -296,9 +336,19 @@ const PreviewBase = ({
 }) => {
   const isMobile = useMediaQuery("(max-width: 640px)");
   return (
-    <div className={cn("z-50 flex h-full flex-col overflow-hidden rounded border", className)}>
+    <div
+      className={cn(
+        "z-50 flex h-full flex-col overflow-hidden rounded border",
+        className
+      )}
+    >
       <header className="flex items-center justify-between gap-4 border-b bg-bg-muted px-4 py-1.5">
-        <div className={cn("flex w-[144px] items-center gap-2", isMobile && "w-[55px]")}>
+        <div
+          className={cn(
+            "flex w-[144px] items-center gap-2",
+            isMobile && "w-[55px]"
+          )}
+        >
           <div className="h-3 w-3 rounded-full bg-red-500"></div>
           <div className="h-3 w-3 rounded-full bg-yellow-500"></div>
           <div className="h-3 w-3 rounded-full bg-green-500"></div>
@@ -314,7 +364,10 @@ const PreviewBase = ({
           size="sm"
         />
         <div
-          className={cn("flex w-[144px] items-center justify-end gap-2", isMobile && "w-[55px]")}
+          className={cn(
+            "flex w-[144px] items-center justify-end gap-2",
+            isMobile && "w-[55px]"
+          )}
         >
           {!isMobile && (
             <ToggleGroup
@@ -324,13 +377,22 @@ const PreviewBase = ({
               }}
               size="sm"
             >
-              <ToggleGroupButton value="desktop" aria-label="Toggle to desktop view">
+              <ToggleGroupButton
+                value="desktop"
+                aria-label="Toggle to desktop view"
+              >
                 <MonitorIcon className="size-4" />
               </ToggleGroupButton>
-              <ToggleGroupButton value="tablet" aria-label="Toggle to tablet view">
+              <ToggleGroupButton
+                value="tablet"
+                aria-label="Toggle to tablet view"
+              >
                 <TabletIcon className="size-4" />
               </ToggleGroupButton>
-              <ToggleGroupButton value="mobile" aria-label="Toggle to mobile view">
+              <ToggleGroupButton
+                value="mobile"
+                aria-label="Toggle to mobile view"
+              >
                 <SmartphoneIcon className="size-4" />
               </ToggleGroupButton>
             </ToggleGroup>

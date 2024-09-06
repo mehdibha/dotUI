@@ -1,0 +1,15 @@
+{
+  "name": "search-field-uncontrolled",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "search-field"
+  ],
+  "files": [
+    {
+      "path": "core/search-field/demos/uncontrolled.tsx",
+      "content": "import React from \"react\";\r\nimport { SearchField } from \"@/registry/ui/default/core/search-field\";\r\n\r\nexport default function Demo() {\r\n  return <SearchField aria-label=\"Search\" defaultValue=\"Marvel movies\" />;\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

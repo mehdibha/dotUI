@@ -1,0 +1,15 @@
+{
+  "name": "date-field-description",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "date-field"
+  ],
+  "files": [
+    {
+      "path": "core/date-field/demos/description.tsx",
+      "content": "\"use client\";\n\nimport React from \"react\";\nimport { DateField } from \"@/registry/ui/default/core/date-field\";\n\nexport default function Demo() {\n  return <DateField label=\"Appointment\" description=\"Please select a date.\" />;\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

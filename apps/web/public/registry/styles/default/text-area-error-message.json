@@ -1,0 +1,15 @@
+{
+  "name": "text-area-error-message",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "text-area"
+  ],
+  "files": [
+    {
+      "path": "core/text-area/demos/error-message.tsx",
+      "content": "\"use client\";\n\nimport React from \"react\";\nimport { TextArea } from \"@/registry/ui/default/core/text-area\";\n\nexport default function Demo() {\n  return (\n    <TextArea\n      label=\"Comment\"\n      isInvalid\n      errorMessage=\"You have exceeded the comment limit for one hour.\"\n    />\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

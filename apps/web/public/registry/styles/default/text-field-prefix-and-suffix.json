@@ -1,0 +1,15 @@
+{
+  "name": "text-field-prefix-and-suffix",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "text-field"
+  ],
+  "files": [
+    {
+      "path": "core/text-field/demos/prefix-and-suffix.tsx",
+      "content": "\"use client\";\r\n\r\nimport React from \"react\";\r\nimport { XCircleIcon } from \"@/lib/icons\";\r\nimport { Button } from \"@/registry/ui/default/core/button\";\r\nimport { TextField } from \"@/registry/ui/default/core/text-field\";\r\nimport { Tooltip } from \"@/registry/ui/default/core/tooltip\";\r\n\r\nexport default function Demo() {\r\n  const [inputValue, setInputValue] = React.useState(\"Hello world!\");\r\n  const inputRef = React.useRef<HTMLInputElement>(null);\r\n  return (\r\n    <div className=\"space-y-2\">\r\n      <TextField prefix={<span>https://</span>} />\r\n      <TextField suffix={<span>@dotui.org</span>} />\r\n      <TextField\r\n        ref={inputRef}\r\n        value={inputValue}\r\n        onChange={setInputValue}\r\n        suffix={\r\n          <Tooltip content=\"Clear input\" placement=\"bottom\" className=\"text-xs\">\r\n            <Button\r\n              variant=\"quiet\"\r\n              shape=\"square\"\r\n              size=\"sm\"\r\n              className=\"size-6\"\r\n              onPress={() => {\r\n                setInputValue(\"\");\r\n                inputRef.current?.focus();\r\n              }}\r\n            >\r\n              <XCircleIcon />\r\n            </Button>\r\n          </Tooltip>\r\n        }\r\n      />\r\n    </div>\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

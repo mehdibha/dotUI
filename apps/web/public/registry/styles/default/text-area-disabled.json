@@ -1,0 +1,15 @@
+{
+  "name": "text-area-disabled",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "text-area"
+  ],
+  "files": [
+    {
+      "path": "core/text-area/demos/disabled.tsx",
+      "content": "import { TextArea } from \"@/registry/ui/default/core/text-area\";\r\n\r\nexport default function Demo() {\r\n  return <TextArea value=\"This is a comment\" isDisabled />;\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "color-field-error-message",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "color-field"
+  ],
+  "files": [
+    {
+      "path": "core/color-field/demos/error-message.tsx",
+      "content": "\"use client\";\n\nimport React from \"react\";\nimport { ColorField } from \"@/registry/ui/default/core/color-field\";\n\nexport default function Demo() {\n  return (\n    <ColorField\n      label=\"Color\"\n      isInvalid\n      errorMessage=\"Please fill out this field.\"\n    />\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

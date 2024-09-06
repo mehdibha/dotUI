@@ -65,7 +65,8 @@ const Dialog = ({
   showDismissButton,
   ...props
 }: DialogProps) => {
-  const isDismissable = isDismissableProp ?? (props.role === "alertdialog" ? false : true);
+  const isDismissable =
+    isDismissableProp ?? (props.role === "alertdialog" ? false : true);
   return (
     <Overlay
       isDismissable={isDismissable}
@@ -92,7 +93,11 @@ const Dialog = ({
 };
 
 type DialogContentProps = AriaDialogProps;
-const DialogContent = ({ children, className, ...props }: DialogContentProps) => {
+const DialogContent = ({
+  children,
+  className,
+  ...props
+}: DialogContentProps) => {
   const { content } = dialogStyles();
   return (
     <AriaDialog className={content({ className })} {...props}>
@@ -131,4 +136,11 @@ export type {
   DialogFooterProps,
   DialogInsetProps,
 };
-export { DialogRoot, DialogContent, Dialog, DialogHeader, DialogFooter, DialogInset };
+export {
+  DialogRoot,
+  DialogContent,
+  Dialog,
+  DialogHeader,
+  DialogFooter,
+  DialogInset,
+};

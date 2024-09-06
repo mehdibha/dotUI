@@ -1,0 +1,15 @@
+{
+  "name": "time-field-hour-cycle",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "time-field"
+  ],
+  "files": [
+    {
+      "path": "core/time-field/demos/hour-cycle.tsx",
+      "content": "\"use client\";\r\n\r\nimport { TimeField } from \"@/registry/ui/default/core/time-field\";\r\n\r\nexport default function Demo() {\r\n  return <TimeField aria-label=\"Appointment time\" hourCycle={24} />;\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

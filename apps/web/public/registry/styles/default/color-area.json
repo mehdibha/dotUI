@@ -1,0 +1,18 @@
+{
+  "name": "color-area",
+  "type": "registry:core",
+  "dependencies": [
+    "react-aria-components"
+  ],
+  "registryDependencies": [
+    "color-thumb"
+  ],
+  "files": [
+    {
+      "path": "core/color-area/color-area.tsx",
+      "content": "\"use client\";\r\n\r\nimport {\r\n  ColorArea as AriaColorArea,\r\n  composeRenderProps,\r\n  type ColorAreaProps as AriaColorAreaProps,\r\n} from \"react-aria-components\";\r\nimport { tv } from \"tailwind-variants\";\r\nimport { ColorThumb } from \"@/registry/ui/default/core/color-thumb\";\r\n\r\nconst colorAreaStyles = tv({\r\n  base: \"inline-block size-48 min-w-20 rounded-md disabled:!bg-bg-disabled\",\r\n});\r\n\r\ntype ColorAreaProps = Omit<ColorAreaRootProps, \"children\">;\r\nconst ColorArea = (props: ColorAreaProps) => {\r\n  return (\r\n    <ColorAreaRoot {...props}>\r\n      <ColorThumb />\r\n    </ColorAreaRoot>\r\n  );\r\n};\r\n\r\ninterface ColorAreaRootProps extends Omit<AriaColorAreaProps, \"className\"> {\r\n  className?: string;\r\n}\r\nconst ColorAreaRoot = ({ className, ...props }: ColorAreaRootProps) => {\r\n  return (\r\n    <AriaColorArea\r\n      {...props}\r\n      className={colorAreaStyles({ className })}\r\n      style={composeRenderProps(props.style, (style, { isDisabled }) => ({\r\n        ...style,\r\n        ...(isDisabled ? { background: \"none\" } : {}),\r\n      }))}\r\n    />\r\n  );\r\n};\r\n\r\nexport { ColorArea, ColorAreaRoot };\r\n",
+      "type": "registry:core",
+      "target": ""
+    }
+  ]
+}

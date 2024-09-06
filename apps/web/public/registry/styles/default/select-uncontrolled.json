@@ -1,0 +1,15 @@
+{
+  "name": "select-uncontrolled",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "select"
+  ],
+  "files": [
+    {
+      "path": "core/select/demos/uncontrolled.tsx",
+      "content": "import React from \"react\";\nimport { Item } from \"@/registry/ui/default/core/list-box\";\nimport { Select } from \"@/registry/ui/default/core/select\";\n\nexport default function Demo() {\n  return (\n    <Select defaultSelectedKey=\"eleven-labs\">\n      <Item id=\"perplexity\">Perplexity</Item>\n      <Item id=\"replicate\">Replicate</Item>\n      <Item id=\"together-ai\">Together AI</Item>\n      <Item id=\"eleven-labs\">ElevenLabs</Item>\n    </Select>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

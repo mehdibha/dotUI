@@ -25,7 +25,9 @@ interface DateInputProps extends Omit<AriaDateInputProps, "className"> {
 const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
   ({ className, ...props }, ref) => {
     const { input } = dateInputStyles();
-    return <AriaDateInput ref={ref} className={input({ className })} {...props} />;
+    return (
+      <AriaDateInput ref={ref} className={input({ className })} {...props} />
+    );
   }
 );
 DateInput.displayName = "Input";
@@ -36,7 +38,13 @@ interface DateSegmentProps extends Omit<AriaDateSegmentProps, "className"> {
 const DateSegment = React.forwardRef<HTMLInputElement, DateSegmentProps>(
   ({ className, ...props }, ref) => {
     const { segment } = dateInputStyles();
-    return <AriaDateSegment ref={ref} className={segment({ className })} {...props} />;
+    return (
+      <AriaDateSegment
+        ref={ref}
+        className={segment({ className })}
+        {...props}
+      />
+    );
   }
 );
 DateSegment.displayName = "Segment";

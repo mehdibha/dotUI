@@ -7,9 +7,13 @@ import {
   type DateValue,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { DateInput, DateSegment } from "./date-input";
-import { Field, type FieldProps } from "./field";
-import { InputRoot, type InputRootProps, type inputStyles } from "./input";
+import { DateInput, DateSegment } from "@/registry/ui/default/core/date-input";
+import { Field, type FieldProps } from "@/registry/ui/default/core/field";
+import {
+  InputRoot,
+  type InputRootProps,
+  type inputStyles,
+} from "@/registry/ui/default/core/input";
 
 const dateFieldStyles = tv({
   slots: {
@@ -70,10 +74,14 @@ const DateField = <T extends DateValue>({
   );
 };
 
-interface DateFieldRootProps<T extends DateValue> extends Omit<AriaDateFieldProps<T>, "className"> {
+interface DateFieldRootProps<T extends DateValue>
+  extends Omit<AriaDateFieldProps<T>, "className"> {
   className?: string;
 }
-const DateFieldRoot = <T extends DateValue>({ className, ...props }: DateFieldRootProps<T>) => {
+const DateFieldRoot = <T extends DateValue>({
+  className,
+  ...props
+}: DateFieldRootProps<T>) => {
   const { root } = dateFieldStyles();
   return <AriaDateField className={root({ className })} {...props} />;
 };

@@ -1,0 +1,15 @@
+{
+  "name": "slider-sizes",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "slider"
+  ],
+  "files": [
+    {
+      "path": "core/slider/demos/sizes.tsx",
+      "content": "import { Slider } from \"@/registry/ui/default/core/slider\";\n\nexport default function Demo() {\n  return (\n    <div className=\"space-y-4\">\n      <Slider aria-label=\"Opacity\" defaultValue={50} size=\"sm\" />\n      <Slider aria-label=\"Opacity\" defaultValue={50} size=\"md\" />\n      <Slider aria-label=\"Opacity\" defaultValue={50} size=\"lg\" />\n    </div>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

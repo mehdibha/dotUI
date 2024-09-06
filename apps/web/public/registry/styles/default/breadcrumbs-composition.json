@@ -1,0 +1,15 @@
+{
+  "name": "breadcrumbs-composition",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "breadcrumbs"
+  ],
+  "files": [
+    {
+      "path": "core/breadcrumbs/demos/composition.tsx",
+      "content": "import { ChevronRightSquareIcon } from \"@/lib/icons\";\nimport {\n  Breadcrumbs,\n  BreadcrumbItem,\n  BreadcrumbLink,\n} from \"@/registry/ui/default/core/breadcrumbs\";\n\nexport default function Demo() {\n  return (\n    <Breadcrumbs>\n      <BreadcrumbItem>\n        <BreadcrumbLink href=\"#\">Home</BreadcrumbLink>\n        <ChevronRightSquareIcon />\n      </BreadcrumbItem>\n      <BreadcrumbItem>\n        <BreadcrumbLink href=\"#\">Components</BreadcrumbLink>\n        <ChevronRightSquareIcon />\n      </BreadcrumbItem>\n      <BreadcrumbItem>\n        <BreadcrumbLink>Breadcrumbs</BreadcrumbLink>\n        <ChevronRightSquareIcon />\n      </BreadcrumbItem>\n    </Breadcrumbs>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

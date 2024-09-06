@@ -1,0 +1,15 @@
+{
+  "name": "date-picker-label",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "date-picker"
+  ],
+  "files": [
+    {
+      "path": "core/date-picker/demos/label.tsx",
+      "content": "import { DatePicker } from \"@/registry/ui/default/core/date-picker\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <div className=\"space-y-4\">\r\n      <DatePicker label=\"Meeting date\" />\r\n      <DatePicker aria-label=\"Meeting date\" />\r\n    </div>\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

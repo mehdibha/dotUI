@@ -54,8 +54,21 @@ interface RadioGroupProps
     Omit<FieldProps, "children"> {
   className?: string;
 }
-const RadioGroup = React.forwardRef<React.ElementRef<typeof AriaRadioGroup>, RadioGroupProps>(
-  ({ label, description, errorMessage, necessityIndicator, contextualHelp, ...props }, ref) => {
+const RadioGroup = React.forwardRef<
+  React.ElementRef<typeof AriaRadioGroup>,
+  RadioGroupProps
+>(
+  (
+    {
+      label,
+      description,
+      errorMessage,
+      necessityIndicator,
+      contextualHelp,
+      ...props
+    },
+    ref
+  ) => {
     const { wrapper } = radioGroupStyles();
     return (
       <RadioGroupRoot ref={ref} {...props}>
@@ -95,7 +108,9 @@ const RadioGroupRoot = React.forwardRef<
 });
 RadioGroupRoot.displayName = "RadioGroupRoot";
 
-interface RadioProps extends Omit<AriaRadioProps, "className">, VariantProps<typeof radioStyles> {
+interface RadioProps
+  extends Omit<AriaRadioProps, "className">,
+    VariantProps<typeof radioStyles> {
   className?: string;
 }
 const Radio = React.forwardRef<React.ElementRef<typeof AriaRadio>, RadioProps>(

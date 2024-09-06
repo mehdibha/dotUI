@@ -10,7 +10,7 @@ import {
   type SliderTrackProps as AriaSliderTrackProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { cn } from "@/lib/utils/classes";
+import { cn } from "@/registry/ui/default/lib/cn";
 import { ColorThumb } from "./color-thumb";
 import { Label } from "./field";
 
@@ -29,11 +29,21 @@ interface ColorSliderProps extends ColorSliderRootProps {
   showValueLabel?: boolean;
   label?: string;
 }
-const ColorSlider = ({ label, channel, showValueLabel = true, ...props }: ColorSliderProps) => {
+const ColorSlider = ({
+  label,
+  channel,
+  showValueLabel = true,
+  ...props
+}: ColorSliderProps) => {
   return (
     <ColorSliderRoot channel={channel} {...props}>
       {(label || showValueLabel) && (
-        <div className={cn("flex items-center justify-between gap-2", !label && "justify-end")}>
+        <div
+          className={cn(
+            "flex items-center justify-between gap-2",
+            !label && "justify-end"
+          )}
+        >
           {label && <Label>{label}</Label>}
           {showValueLabel && <ColorSliderOutput />}
         </div>
@@ -51,7 +61,9 @@ const ColorSliderRoot = (props: ColorSliderRootProps) => {
   return (
     <AriaColorSlider
       {...props}
-      className={composeRenderProps(props.className, (className) => root({ className }))}
+      className={composeRenderProps(props.className, (className) =>
+        root({ className })
+      )}
     />
   );
 };
@@ -66,7 +78,9 @@ const ColorSliderTrack = (props: ColorSliderTrackProps) => {
         ...style,
         ...(isDisabled ? { background: "none" } : {}),
       }))}
-      className={composeRenderProps(props.className, (className) => track({ className }))}
+      className={composeRenderProps(props.className, (className) =>
+        track({ className })
+      )}
     />
   );
 };
@@ -77,7 +91,9 @@ const ColorSliderOutput = (props: ColorSliderOutputProps) => {
   return (
     <AriaSliderOutput
       {...props}
-      className={composeRenderProps(props.className, (className) => output({ className }))}
+      className={composeRenderProps(props.className, (className) =>
+        output({ className })
+      )}
     />
   );
 };
@@ -88,4 +104,10 @@ export type {
   ColorSliderTrackProps,
   ColorSliderOutputProps,
 };
-export { ColorSlider, ColorSliderRoot, ColorSliderOutput, ColorSliderTrack, colorSliderStyles };
+export {
+  ColorSlider,
+  ColorSliderRoot,
+  ColorSliderOutput,
+  ColorSliderTrack,
+  colorSliderStyles,
+};

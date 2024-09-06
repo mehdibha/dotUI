@@ -1,0 +1,15 @@
+{
+  "name": "heading",
+  "type": "registry:core",
+  "dependencies": [
+    "react-aria-components"
+  ],
+  "files": [
+    {
+      "path": "core/heading/heading.tsx",
+      "content": "\"use client\";\r\n\r\nimport {\r\n  Heading as AriaHeading,\r\n  type HeadingProps as AriaHeadingProps,\r\n} from \"react-aria-components\";\r\nimport { tv } from \"tailwind-variants\";\r\n\r\nconst headingStyles = tv({\r\n  base: \"text-lg font-medium\",\r\n});\r\n\r\ntype HeadingProps = AriaHeadingProps;\r\nconst Heading = ({ className, ...props }: HeadingProps) => {\r\n  return <AriaHeading className={headingStyles({ className })} {...props} />;\r\n};\r\n\r\nexport type { HeadingProps };\r\nexport { Heading };\r\n",
+      "type": "registry:core",
+      "target": ""
+    }
+  ]
+}

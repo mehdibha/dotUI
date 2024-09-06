@@ -1,0 +1,15 @@
+{
+  "name": "date-range-picker-contextual-help",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "date-range-picker"
+  ],
+  "files": [
+    {
+      "path": "core/date-range-picker/demos/contextual-help.tsx",
+      "content": "\"use client\";\n\nimport React from \"react\";\nimport { ContextualHelp } from \"@/registry/ui/default/core/contextual-help\";\nimport { DateRangePicker } from \"@/registry/ui/default/core/date-range-picker\";\n\nexport default function Demo() {\n  return (\n    <DateRangePicker\n      label=\"Trip\"\n      contextualHelp={\n        <ContextualHelp\n          title=\"Need help?\"\n          description=\"If you're having trouble, contact our customer\n      support team for help.\"\n        />\n      }\n    />\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

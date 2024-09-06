@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/lib/components/core/default/button";
 import { useCounter } from "@/lib/hooks/use-counter";
+import { Button } from "@/registry/ui/default/core/button";
 
 export default function Demo() {
   const [count, { increment, decrement, set, reset }] = useCounter(3, {
@@ -10,7 +10,9 @@ export default function Demo() {
   });
   return (
     <div>
-      <p className="text-center text-fg-muted">startingValue: 3, min: 0, max: 10</p>
+      <p className="text-center text-fg-muted">
+        startingValue: 3, min: 0, max: 10
+      </p>
       <div className="mt-4 flex items-center gap-2">
         <Button onPress={increment} isDisabled={count >= 10}>
           Increment

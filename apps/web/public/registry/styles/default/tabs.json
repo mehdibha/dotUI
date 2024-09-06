@@ -1,0 +1,15 @@
+{
+  "name": "tabs",
+  "type": "registry:core",
+  "dependencies": [
+    "react-aria-components"
+  ],
+  "files": [
+    {
+      "path": "core/tabs/tabs.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport {\n  Tabs as AriaTabs,\n  TabList as AriaTabList,\n  Tab as AriaTab,\n  TabPanel as AriaTabPanel,\n  type TabsProps as AriaTabsProps,\n  type TabListProps as AriaTabListProps,\n  type TabProps as AriaTabProps,\n  type TabPanelProps as AriaTabPanelProps,\n  composeRenderProps,\n} from \"react-aria-components\";\nimport { tv } from \"tailwind-variants\";\nimport { focusRing } from \"@/lib/utils/styles\";\n\nconst tabsStyles = tv({\n  slots: {\n    root: \"flex flex-col orientation-vertical:flex-row [&_[role=tabpanel]]:orientation-horizontal:mt-2 [&_[role=tabpanel]]:orientation-vertical:ml-2\",\n    list: \"flex orientation-horizontal:overflow-x-auto orientation-horizontal:whitespace-nowrap orientation-horizontal:items-center orientation-horizontal:border-b orientation-vertical:flex-col orientation-vertical:border-r [&_[role=tab]]:orientation-horizontal:border-b-[3px] [&_[role=tab]]:orientation-vertical:border-r-[3px]\",\n    tab: [\n      \"cursor-pointer text-center text-fg-muted border-transparent selected:border-border-focus selected:text-fg -mb-px px-2 py-2 text-sm font-medium outline-none transition-colors disabled:text-fg-disabled disabled:cursor-default disabled:selected:border-border-disabled\",\n      \"[&>span]:py-1 [&>span]:px-1.5 [&>span]:rounded-md [&>span]:border-2 [&>span]:border-transparent [&>span]:focus-visible:border-border-focus\",\n    ],\n    panel: [focusRing(), \"rounded\"],\n  },\n});\n\ninterface TabsProps extends Omit<AriaTabsProps, \"className\"> {\n  className?: string;\n}\nconst Tabs = ({ className, ...props }: TabsProps) => {\n  const { root } = tabsStyles();\n  return <AriaTabs className={root({ className })} {...props} />;\n};\n\ninterface TabListProps<T> extends Omit<AriaTabListProps<T>, \"className\"> {\n  className?: string;\n}\nconst TabList = <T extends object>({\n  className,\n  ...props\n}: TabListProps<T>) => {\n  const { list } = tabsStyles();\n  return (\n    <AriaTabList\n      {...props}\n      className={list({ className })}\n      style={{ scrollbarWidth: \"none\" }}\n    />\n  );\n};\n\ninterface TabProps extends Omit<AriaTabProps, \"className\"> {\n  className?: string;\n}\nconst Tab = ({ className, ...props }: TabProps) => {\n  const { tab } = tabsStyles();\n  return (\n    <AriaTab className={tab({ className })} {...props}>\n      {composeRenderProps(props.children, (children) => (\n        <span>{children}</span>\n      ))}\n    </AriaTab>\n  );\n};\n\ninterface TabPanelProps extends Omit<AriaTabPanelProps, \"className\"> {\n  className?: string;\n}\nconst TabPanel = ({ className, ...props }: TabPanelProps) => {\n  const { panel } = tabsStyles();\n  return <AriaTabPanel className={panel({ className })} {...props} />;\n};\n\nexport type { TabsProps, TabListProps, TabProps, TabPanelProps };\nexport { Tabs, TabList, Tab, TabPanel };\n",
+      "type": "registry:core",
+      "target": ""
+    }
+  ]
+}

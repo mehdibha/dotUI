@@ -14,8 +14,8 @@ import {
 import { tv } from "tailwind-variants";
 import { useMediaQuery } from "@/lib/hooks/use-media-query";
 import { XIcon } from "@/lib/icons";
-import { cn } from "@/lib/utils/classes";
-import { Button, type ButtonProps } from "./button/button";
+import { Button, type ButtonProps } from "@/registry/ui/default/core/button";
+import { cn } from "@/registry/ui/default/lib/cn";
 import { MotionDrawerRoot, useMotionDrawer } from "./use-motion-drawer";
 
 type OverlayType = "modal" | "drawer" | "popover";
@@ -26,7 +26,9 @@ type OverlayProps = {
   showDismissButton?: boolean;
   mediaQuery?: string;
   children: React.ReactNode;
-  classNames?: ModalOverlayClassNames & DrawerOverlayClassNames & PopoverOverlayClassNames;
+  classNames?: ModalOverlayClassNames &
+    DrawerOverlayClassNames &
+    PopoverOverlayClassNames;
 } & Omit<AriaModalOverlayProps, "children"> &
   Omit<AriaPopoverProps, "children">;
 
@@ -62,7 +64,12 @@ const Overlay = React.forwardRef<HTMLElement | HTMLDivElement, OverlayProps>(
           />
         );
       case "popover":
-        return <PopoverOverlay ref={ref as React.ForwardedRef<HTMLElement>} {...props} />;
+        return (
+          <PopoverOverlay
+            ref={ref as React.ForwardedRef<HTMLElement>}
+            {...props}
+          />
+        );
     }
   }
 );
@@ -92,8 +99,14 @@ interface ModalOverlayProps extends AriaModalOverlayProps {
   classNames?: ModalOverlayClassNames;
 }
 
-const ModalOverlay = React.forwardRef<React.ElementRef<typeof AriaModalOverlay>, ModalOverlayProps>(
-  ({ classNames, className, isDismissable, showDismissButton, ...props }, ref) => {
+const ModalOverlay = React.forwardRef<
+  React.ElementRef<typeof AriaModalOverlay>,
+  ModalOverlayProps
+>(
+  (
+    { classNames, className, isDismissable, showDismissButton, ...props },
+    ref
+  ) => {
     const { overlay, backdrop } = modalVariants({});
     return (
       <AriaModalOverlay
@@ -142,8 +155,14 @@ interface PopoverOverlayProps extends AriaPopoverProps {
   showDismissButton?: boolean;
 }
 
-const PopoverOverlay = React.forwardRef<React.ElementRef<typeof AriaPopover>, PopoverOverlayProps>(
-  ({ arrow = false, className, showDismissButton, classNames, ...props }, ref) => {
+const PopoverOverlay = React.forwardRef<
+  React.ElementRef<typeof AriaPopover>,
+  PopoverOverlayProps
+>(
+  (
+    { arrow = false, className, showDismissButton, classNames, ...props },
+    ref
+  ) => {
     const { overlay, arrow: arrowStyle } = popoverOverlayVariants({});
     return (
       <AriaPopover
@@ -222,23 +241,34 @@ const DrawerOverlay = React.forwardRef<
     },
     ref
   ) => {
-    const { rootProps, modalProps, backdropProps, drawerProps } = useMotionDrawer({
-      isDismissable,
-      placement,
-    });
+    const { rootProps, modalProps, backdropProps, drawerProps } =
+      useMotionDrawer({
+        isDismissable,
+        placement,
+      });
     const { overlay, backdrop } = drawerVariants();
 
     return (
       <MotionDrawerRoot {...rootProps}>
-        <AriaModalOverlay ref={ref} isDismissable={isDismissable} {...props} {...modalProps}>
-          <div {...backdropProps} className={backdrop({ className: classNames?.backdrop })} />
+        <AriaModalOverlay
+          ref={ref}
+          isDismissable={isDismissable}
+          {...props}
+          {...modalProps}
+        >
+          <div
+            {...backdropProps}
+            className={backdrop({ className: classNames?.backdrop })}
+          />
           <AriaModal>
             <div
               {...drawerProps}
               data-type="drawer"
               className={cn(overlay(), classNames?.overlay, className)}
             >
-              {showDismissButton && <DismissButton shape="rectangle">Done</DismissButton>}
+              {showDismissButton && (
+                <DismissButton shape="rectangle">Done</DismissButton>
+              )}
               <div className="mx-auto my-4 h-2 w-[100px] rounded-full bg-bg-muted" />
               {children}
             </div>
@@ -267,7 +297,12 @@ const DismissButton = (props: ButtonProps) => {
   );
 };
 
-export type { OverlayProps, ModalOverlayProps, DrawerOverlayProps, PopoverOverlayProps };
+export type {
+  OverlayProps,
+  ModalOverlayProps,
+  DrawerOverlayProps,
+  PopoverOverlayProps,
+};
 export {
   Overlay,
   PopoverOverlay,

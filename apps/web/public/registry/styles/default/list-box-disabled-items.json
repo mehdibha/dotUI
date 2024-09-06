@@ -1,0 +1,15 @@
+{
+  "name": "list-box-disabled-items",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "list-box"
+  ],
+  "files": [
+    {
+      "path": "core/list-box/demos/disabled-items.tsx",
+      "content": "import { ListBox, Item } from \"@/registry/ui/default/core/list-box\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <ListBox aria-label=\"Favorite framework\" selectionMode=\"single\">\r\n      <Item>Next.js</Item>\r\n      <Item>Remix</Item>\r\n      <Item isDisabled>Gatsby</Item>\r\n      <Item>Astro</Item>\r\n    </ListBox>\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

@@ -3,8 +3,8 @@
 import React from "react";
 import { CheckIcon, CopyIcon } from "lucide-react";
 import { tv } from "tailwind-variants";
-import { Button } from "@/lib/components/core/default/button";
-import { ScrollArea } from "@/lib/components/core/default/scroll-area";
+import { Button } from "@/registry/ui/default/core/button";
+import { ScrollArea } from "@/registry/ui/default/core/scroll-area";
 
 const codeStyles = tv({
   base: "relative rounded-md bg-bg-muted",
@@ -20,7 +20,12 @@ interface CodeClientProps extends React.HTMLAttributes<HTMLDivElement> {
   inline?: boolean;
   code: string;
 }
-const CodeClient = ({ className, inline = false, children, code }: CodeClientProps) => {
+const CodeClient = ({
+  className,
+  inline = false,
+  children,
+  code,
+}: CodeClientProps) => {
   const [copied, setCopied] = React.useState(false);
   const handleCopy = () => {
     void navigator.clipboard.writeText(code);
@@ -31,7 +36,9 @@ const CodeClient = ({ className, inline = false, children, code }: CodeClientPro
   };
 
   if (inline) {
-    return <span className={codeStyles({ variant: "inline" })}>{children}</span>;
+    return (
+      <span className={codeStyles({ variant: "inline" })}>{children}</span>
+    );
   }
 
   return (
@@ -43,7 +50,7 @@ const CodeClient = ({ className, inline = false, children, code }: CodeClientPro
             variant="quiet"
             shape="square"
             size="sm"
-            className="absolute right-2 top-2 [&_svg]:size-3"
+            className="[&_svg]:size-3 absolute right-2 top-2"
             onPress={handleCopy}
           >
             {copied ? (

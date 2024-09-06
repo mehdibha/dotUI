@@ -1,0 +1,15 @@
+{
+  "name": "color-slider-controlled",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "color-slider"
+  ],
+  "files": [
+    {
+      "path": "core/color-slider/demos/controlled.tsx",
+      "content": "\"use client\";\r\n\r\nimport React from \"react\";\r\nimport { parseColor } from \"react-aria-components\";\r\nimport { ColorSlider } from \"@/registry/ui/default/core/color-slider\";\r\n\r\nexport default function Demo() {\r\n  const [value, setValue] = React.useState(parseColor(\"hsl(0, 100%, 50%)\"));\r\n  return (\r\n    <div className=\"flex flex-col items-center gap-4\">\r\n      <ColorSlider value={value} onChange={setValue} channel=\"hue\" />\r\n      <p className=\"text-xs text-fg-muted\">Value: {value.toString(\"hex\")}</p>\r\n    </div>\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

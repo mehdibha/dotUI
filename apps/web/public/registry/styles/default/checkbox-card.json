@@ -1,0 +1,15 @@
+{
+  "name": "checkbox-card",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "checkbox"
+  ],
+  "files": [
+    {
+      "path": "core/checkbox/demos/card.tsx",
+      "content": "import { Checkbox } from \"@/registry/ui/default/core/checkbox\";\n\nexport default function Demo() {\n  return (\n    <Checkbox variant=\"card\">I agree to the terms and conditions</Checkbox>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

@@ -30,13 +30,23 @@ const checkboxGroupStyles = tv({
   },
 });
 
-interface CheckboxGroupProps extends CheckboxGroupRootProps, Omit<FieldProps, "children"> {}
+interface CheckboxGroupProps
+  extends CheckboxGroupRootProps,
+    Omit<FieldProps, "children"> {}
 const CheckboxGroup = React.forwardRef<
   React.ElementRef<typeof AriaCheckboxGroup>,
   CheckboxGroupProps
 >(
   (
-    { label, description, errorMessage, necessityIndicator, contextualHelp, variant, ...props },
+    {
+      label,
+      description,
+      errorMessage,
+      necessityIndicator,
+      contextualHelp,
+      variant,
+      ...props
+    },
     ref
   ) => {
     const { wrapper } = checkboxGroupStyles({ variant });

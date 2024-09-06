@@ -1,37 +1,30 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "target": "es6",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "target": "es2015",
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
+    "forceConsistentCasingInFileNames": true,
     "noEmit": true,
+    "incremental": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true,
+    "baseUrl": "src",
+    "paths": {
+      "@/*": ["./*"]
+    },
     "plugins": [
       {
-        "name": "next",
-      },
-    ],
-    "paths": {
-      "@/*": ["./src/*"],
-      "~/*": ["./*"],
-    },
+        "name": "next"
+      }
+    ]
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    "src/hooks/use-mounted.ts",
-    "content/components/core/feedback/alert.mdx",
-    "content/components/core/data-display/accordion.mdx",
-    "content/components/utils/client-only.mdx",
-  ],
-  "exclude": ["node_modules"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "scripts/build-demos.mts"],
+  "exclude": ["node_modules", "./scripts/build-registry.mts", "__registry__"]
 }

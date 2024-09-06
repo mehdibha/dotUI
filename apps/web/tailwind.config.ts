@@ -1,5 +1,5 @@
-import baseConfig from "../../tailwind.config"
 import type { Config } from "tailwindcss";
+import baseConfig from "../../tailwind.config";
 
 const config = {
   ...baseConfig,

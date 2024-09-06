@@ -1,0 +1,15 @@
+{
+  "name": "tooltip-offset",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "tooltip"
+  ],
+  "files": [
+    {
+      "path": "core/tooltip/demos/offset.tsx",
+      "content": "\"use client\";\n\nimport React from \"react\";\nimport { PlusIcon } from \"@/lib/icons\";\nimport { Button } from \"@/registry/ui/default/core/button\";\nimport { NumberField } from \"@/registry/ui/default/core/number-field\";\nimport { Tooltip } from \"@/registry/ui/default/core/tooltip\";\n\nexport default function Demo() {\n  const [offset, setOffset] = React.useState(10);\n  return (\n    <div className=\"flex flex-col items-center gap-10\">\n      <Tooltip offset={offset} content=\"Add to library\">\n        <Button shape=\"square\">\n          <PlusIcon />\n        </Button>\n      </Tooltip>\n      <NumberField\n        label=\"Offset\"\n        value={offset}\n        onChange={(value) => setOffset(value)}\n        className=\"max-w-[150px]\"\n      />\n    </div>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

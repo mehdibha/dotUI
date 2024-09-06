@@ -1,0 +1,15 @@
+{
+  "name": "list-box-controlled",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "list-box"
+  ],
+  "files": [
+    {
+      "path": "core/list-box/demos/controlled.tsx",
+      "content": "\"use client\";\r\n\r\nimport React from \"react\";\r\nimport type { Selection } from \"react-aria-components\";\r\nimport { ListBox, Item } from \"@/registry/ui/default/core/list-box\";\r\n\r\nexport default function Demo() {\r\n  const [selected, setSelected] = React.useState<Selection>(\r\n    new Set([\"nextjs\", \"remix\", \"astro\"])\r\n  );\r\n  return (\r\n    <div className=\"flex flex-col items-center gap-6\">\r\n      <ListBox\r\n        aria-label=\"Framework\"\r\n        selectionMode=\"multiple\"\r\n        selectedKeys={selected}\r\n        onSelectionChange={setSelected}\r\n      >\r\n        <Item id=\"nextjs\">Next.js</Item>\r\n        <Item id=\"remix\">Remix</Item>\r\n        <Item id=\"astro\">Astro</Item>\r\n        <Item id=\"gatsby\">Gatsby</Item>\r\n      </ListBox>\r\n      <p className=\"text-sm text-fg-muted\">\r\n        Selected items:{\" \"}\r\n        <span className=\"font-semibold\">\r\n          {selected === \"all\" ? \"all\" : [...selected].join(\", \")}\r\n        </span>\r\n      </p>\r\n    </div>\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

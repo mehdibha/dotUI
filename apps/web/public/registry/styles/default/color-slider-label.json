@@ -1,0 +1,15 @@
+{
+  "name": "color-slider-label",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "color-slider"
+  ],
+  "files": [
+    {
+      "path": "core/color-slider/demos/label.tsx",
+      "content": "import { ColorSlider } from \"@/registry/ui/default/core/color-slider\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <ColorSlider label=\"Hue\" channel=\"hue\" defaultValue=\"hsl(200, 100%, 50%)\" />\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

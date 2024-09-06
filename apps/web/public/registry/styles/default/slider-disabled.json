@@ -1,0 +1,15 @@
+{
+  "name": "slider-disabled",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "slider"
+  ],
+  "files": [
+    {
+      "path": "core/slider/demos/disabled.tsx",
+      "content": "import { Slider } from \"@/registry/ui/default/core/slider\";\n\nexport default function Demo() {\n  return <Slider label=\"Opacity\" defaultValue={50} isDisabled />;\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

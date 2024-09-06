@@ -1,0 +1,15 @@
+{
+  "name": "progress-toolbar",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "progress"
+  ],
+  "files": [
+    {
+      "path": "core/progress/demos/toolbar.tsx",
+      "content": "\"use client\";\r\n\r\nimport * as React from \"react\";\r\nimport { ALargeSmallIcon, RotateCwIcon } from \"@/lib/icons\";\r\nimport { Button } from \"@/registry/ui/default/core/button\";\r\nimport { Input, InputRoot } from \"@/registry/ui/default/core/input\";\r\nimport { Progress } from \"@/registry/ui/default/core/progress\";\r\nimport { TextFieldRoot } from \"@/registry/ui/default/core/text-field\";\r\n\r\nexport default function Demo() {\r\n  const [key, setKey] = React.useState(0);\r\n  const refresh = () => setKey((key) => key + 1);\r\n  return (\r\n    <TextFieldRoot key={key} defaultValue=\"https://dotui.org\">\r\n      <InputRoot className=\"relative h-10 overflow-hidden px-1 pb-0.5\">\r\n        <Button size=\"sm\" variant=\"quiet\" shape=\"square\" className=\"size-7\">\r\n          <ALargeSmallIcon />\r\n        </Button>\r\n        <Input className=\"text-center\" />\r\n        <Button\r\n          onPress={refresh}\r\n          size=\"sm\"\r\n          variant=\"quiet\"\r\n          shape=\"square\"\r\n          className=\"size-7\"\r\n        >\r\n          <RotateCwIcon />\r\n        </Button>\r\n        <Progress\r\n          value={50}\r\n          size=\"sm\"\r\n          variant=\"accent\"\r\n          duration=\"5s\"\r\n          className=\"absolute bottom-0 left-0 right-0\"\r\n        />\r\n      </InputRoot>\r\n    </TextFieldRoot>\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "radio-group-read-only",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "radio-group"
+  ],
+  "files": [
+    {
+      "path": "core/radio-group/demos/read-only.tsx",
+      "content": "import { RadioGroup, Radio } from \"@/registry/ui/default/core/radio-group\";\n\nexport default function Demo() {\n  return (\n    <RadioGroup defaultValue=\"sm\" label=\"Size\" isReadOnly>\n      <Radio value=\"sm\">Small</Radio>\n      <Radio value=\"md\">Medium</Radio>\n      <Radio value=\"lg\">Large</Radio>\n    </RadioGroup>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

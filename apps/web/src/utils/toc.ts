@@ -69,7 +69,9 @@ const getToc = () => (node, file) => {
   file.data = items;
 };
 
-export async function getTableOfContents(content: string): Promise<TableOfContents> {
+export async function getTableOfContents(
+  content: string
+): Promise<TableOfContents> {
   const result = await remark().use(getToc).process(content);
 
   return result.data;

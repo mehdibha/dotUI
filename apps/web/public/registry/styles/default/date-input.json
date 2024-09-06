@@ -1,0 +1,15 @@
+{
+  "name": "date-input",
+  "type": "registry:core",
+  "dependencies": [
+    "react-aria-components"
+  ],
+  "files": [
+    {
+      "path": "core/date-input/date-input.tsx",
+      "content": "\"use client\";\r\n\r\nimport React from \"react\";\r\nimport {\r\n  DateInput as AriaDateInput,\r\n  DateSegment as AriaDateSegment,\r\n  type DateSegmentProps as AriaDateSegmentProps,\r\n  type DateInputProps as AriaDateInputProps,\r\n} from \"react-aria-components\";\r\nimport { tv } from \"tailwind-variants\";\r\n\r\nconst dateInputStyles = tv({\r\n  slots: {\r\n    input: [\r\n      \"flex justify-start items-center text-fg placeholder:text-fg-muted disabled:text-fg-disabled disabled:cursor-default\",\r\n    ],\r\n    segment:\r\n      \"rounded px-0.5 outline-none focus:bg-bg-accent focus:text-fg-onAccent focus:caret-transparent select-none type-literal:px-0 placeholder-shown:[&:not([data-disabled])]:[&:not([data-focused])]:text-fg-muted disabled:text-fg-disabled\",\r\n  },\r\n});\r\n\r\ninterface DateInputProps extends Omit<AriaDateInputProps, \"className\"> {\r\n  className?: string;\r\n}\r\nconst DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(\r\n  ({ className, ...props }, ref) => {\r\n    const { input } = dateInputStyles();\r\n    return (\r\n      <AriaDateInput ref={ref} className={input({ className })} {...props} />\r\n    );\r\n  }\r\n);\r\nDateInput.displayName = \"Input\";\r\n\r\ninterface DateSegmentProps extends Omit<AriaDateSegmentProps, \"className\"> {\r\n  className?: string;\r\n}\r\nconst DateSegment = React.forwardRef<HTMLInputElement, DateSegmentProps>(\r\n  ({ className, ...props }, ref) => {\r\n    const { segment } = dateInputStyles();\r\n    return (\r\n      <AriaDateSegment\r\n        ref={ref}\r\n        className={segment({ className })}\r\n        {...props}\r\n      />\r\n    );\r\n  }\r\n);\r\nDateSegment.displayName = \"Segment\";\r\n\r\nexport type { DateInputProps, DateSegmentProps };\r\nexport { DateInput, DateSegment };\r\n",
+      "type": "registry:core",
+      "target": ""
+    }
+  ]
+}

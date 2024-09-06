@@ -1,0 +1,15 @@
+{
+  "name": "separator-orientation",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "separator"
+  ],
+  "files": [
+    {
+      "path": "core/separator/demos/orientation.tsx",
+      "content": "import { Separator } from \"@/registry/ui/default/core/separator\";\n\nexport default function Demo() {\n  return (\n    <div className=\"flex items-center gap-10\">\n      <div className=\"flex h-5 items-center gap-2 text-sm\">\n        <div>Components</div>\n        <Separator orientation=\"vertical\" />\n        <div>Hooks</div>\n      </div>\n      <div className=\"flex flex-col items-center gap-2 text-sm\">\n        <div>Components</div>\n        <Separator orientation=\"horizontal\" />\n        <div>Hooks</div>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

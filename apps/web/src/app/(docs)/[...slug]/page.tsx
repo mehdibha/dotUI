@@ -4,10 +4,13 @@ import { notFound } from "next/navigation";
 import { ExternalLinkIcon } from "lucide-react";
 import { TableOfContents } from "@/components/docs/toc";
 import { Mdx } from "@/components/mdx/mdx-remote";
-import { Breadcrumbs, Breadcrumb } from "@/lib/components/core/default/breadcrumbs";
-import { Button } from "@/lib/components/core/default/button";
-import { ScrollArea } from "@/lib/components/core/default/scroll-area";
-import { cn } from "@/lib/utils/classes";
+import {
+  Breadcrumbs,
+  Breadcrumb,
+} from "@/registry/ui/default/core/breadcrumbs";
+import { Button } from "@/registry/ui/default/core/button";
+import { ScrollArea } from "@/registry/ui/default/core/scroll-area";
+import { cn } from "@/registry/ui/default/lib/cn";
 import { getDocFromSlug, getDocs } from "@/server/docs";
 
 interface PageProps {
@@ -16,7 +19,9 @@ interface PageProps {
   };
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const doc = await getDocFromSlug(params.slug);
 
   if (!doc) {
@@ -55,7 +60,11 @@ export default async function Page({ params }: PageProps) {
             {metadata.breadcrumbs.map((item, index) => (
               <Breadcrumb
                 key={item.href}
-                href={index < metadata.breadcrumbs.length - 1 ? item.href : undefined}
+                href={
+                  index < metadata.breadcrumbs.length - 1
+                    ? item.href
+                    : undefined
+                }
               >
                 {item.label}
               </Breadcrumb>
@@ -72,7 +81,7 @@ export default async function Page({ params }: PageProps) {
                 href={link.href}
                 suffix={<ExternalLinkIcon />}
                 size="sm"
-                className="h-6 text-xs font-semibold [&_svg]:size-3"
+                className="[&_svg]:size-3 h-6 text-xs font-semibold"
                 target="_blank"
               >
                 {link.label}
@@ -83,7 +92,12 @@ export default async function Page({ params }: PageProps) {
         {categories && categories.length > 0 && (
           <div className="mt-6 flex flex-wrap gap-2">
             {categories.map((category, index) => (
-              <Button key={index} size="sm" href={category.href} className="h-7">
+              <Button
+                key={index}
+                size="sm"
+                href={category.href}
+                className="h-7"
+              >
                 {category.label}
               </Button>
             ))}

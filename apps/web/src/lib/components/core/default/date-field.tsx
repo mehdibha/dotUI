@@ -70,10 +70,14 @@ const DateField = <T extends DateValue>({
   );
 };
 
-interface DateFieldRootProps<T extends DateValue> extends Omit<AriaDateFieldProps<T>, "className"> {
+interface DateFieldRootProps<T extends DateValue>
+  extends Omit<AriaDateFieldProps<T>, "className"> {
   className?: string;
 }
-const DateFieldRoot = <T extends DateValue>({ className, ...props }: DateFieldRootProps<T>) => {
+const DateFieldRoot = <T extends DateValue>({
+  className,
+  ...props
+}: DateFieldRootProps<T>) => {
   const { root } = dateFieldStyles();
   return <AriaDateField className={root({ className })} {...props} />;
 };

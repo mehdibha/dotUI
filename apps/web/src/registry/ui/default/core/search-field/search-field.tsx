@@ -7,9 +7,13 @@ import {
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
 import { SearchIcon, XIcon } from "@/lib/icons";
-import { Button } from "./button/button";
-import { Field, type FieldProps } from "./field/field";
-import { InputRoot, Input, type inputStyles } from "./input/input";
+import { Button } from "@/registry/ui/default/core/button";
+import { Field, type FieldProps } from "@/registry/ui/default/core/field";
+import {
+  InputRoot,
+  Input,
+  type inputStyles,
+} from "@/registry/ui/default/core/input";
 
 const searchFieldStyles = tv({
   base: "flex flex-col gap-2 items-start w-48",
@@ -21,7 +25,13 @@ type SearchFieldProps = SearchFieldRootProps &
     prefix?: React.ReactNode;
     suffix?:
       | React.ReactNode
-      | (({ isEmpty, isDisabled }: { isEmpty?: boolean; isDisabled?: boolean }) => React.ReactNode);
+      | (({
+          isEmpty,
+          isDisabled,
+        }: {
+          isEmpty?: boolean;
+          isDisabled?: boolean;
+        }) => React.ReactNode);
     isLoading?: boolean;
     loaderPosition?: "prefix" | "suffix";
     placeholder?: string;
@@ -68,7 +78,11 @@ const SearchField = React.forwardRef<HTMLInputElement, SearchFieldProps>(
               <InputRoot
                 size={size}
                 prefix={prefix}
-                suffix={typeof suffix === "function" ? suffix({ isEmpty, isDisabled }) : suffix}
+                suffix={
+                  typeof suffix === "function"
+                    ? suffix({ isEmpty, isDisabled })
+                    : suffix
+                }
                 isLoading={isLoading}
                 loaderPosition={loaderPosition}
               >
@@ -94,7 +108,13 @@ const SearchFieldRoot = React.forwardRef<
   React.ElementRef<typeof AriaSearchField>,
   SearchFieldRootProps
 >(({ className, ...props }, ref) => {
-  return <AriaSearchField ref={ref} className={searchFieldStyles({ className })} {...props} />;
+  return (
+    <AriaSearchField
+      ref={ref}
+      className={searchFieldStyles({ className })}
+      {...props}
+    />
+  );
 });
 SearchFieldRoot.displayName = "SearchFieldRoot";
 

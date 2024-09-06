@@ -1,0 +1,15 @@
+{
+  "name": "breadcrumbs",
+  "type": "registry:core",
+  "dependencies": [
+    "react-aria-components"
+  ],
+  "files": [
+    {
+      "path": "core/breadcrumbs/breadcrumbs.tsx",
+      "content": "\"use client\";\n\nimport {\n  Link as AriaLink,\n  Breadcrumbs as AriaBreadcrumbs,\n  Breadcrumb as AriaBreadcrumb,\n  type BreadcrumbsProps as AriaBreadcrumbsProps,\n  type BreadcrumbProps as AriaBreadcrumbProps,\n  type LinkProps as AriaLinkProps,\n} from \"react-aria-components\";\nimport { tv } from \"tailwind-variants\";\nimport { ChevronRightIcon } from \"@/lib/icons\";\nimport { cn } from \"@/registry/ui/default/lib/cn\";\n\nconst breadcrumbsStyles = tv({\n  slots: {\n    root: \"flex flex-wrap items-center gap-1.5 break-words text-sm text-fg-muted [&_svg]:size-4\",\n    item: \"inline-flex items-center gap-1.5 [&_svg]:last:hidden\",\n    link: \"inline-flex items-center gap-1.5 hover:text-fg transition-colors current:text-fg disabled:[&:not([data-current])]:text-fg-disabled disabled:cursor-default\",\n  },\n});\n\ntype BreadcrumbsProps<T extends object> = AriaBreadcrumbsProps<T>;\n\nconst Breadcrumbs = <T extends object>({\n  className,\n  ...props\n}: BreadcrumbsProps<T>) => {\n  const { root } = breadcrumbsStyles();\n  return <AriaBreadcrumbs {...props} className={root({ className })} />;\n};\n\ntype BreadcrumbProps = Omit<AriaBreadcrumbProps, \"children\"> &\n  Omit<AriaLinkProps, \"className\" | \"style\"> & { icon?: React.ReactNode };\nconst Breadcrumb = ({\n  children,\n  className,\n  style,\n  icon = null,\n  ...props\n}: BreadcrumbProps) => {\n  return (\n    <BreadcrumbItem className={className} style={style} {...props}>\n      {icon}\n      <BreadcrumbLink {...props}>{children}</BreadcrumbLink>\n      <ChevronRightIcon />\n    </BreadcrumbItem>\n  );\n};\n\ntype BreadcrumbItemProps = AriaBreadcrumbProps;\nconst BreadcrumbItem = ({ className, ...props }: BreadcrumbItemProps) => {\n  const { item } = breadcrumbsStyles();\n  return <AriaBreadcrumb {...props} className={cn(item({ className }))} />;\n};\n\ninterface BreadcrumbLinkProps extends Omit<AriaLinkProps, \"className\"> {\n  className?: string;\n}\nconst BreadcrumbLink = ({ className, ...props }: BreadcrumbLinkProps) => {\n  const { link } = breadcrumbsStyles();\n  return <AriaLink {...props} className={link({ className })} />;\n};\n\nexport type {\n  BreadcrumbsProps,\n  BreadcrumbProps,\n  BreadcrumbItemProps,\n  BreadcrumbLinkProps,\n};\nexport { Breadcrumbs, Breadcrumb, BreadcrumbItem, BreadcrumbLink };\n",
+      "type": "registry:core",
+      "target": ""
+    }
+  ]
+}

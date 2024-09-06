@@ -1,0 +1,15 @@
+{
+  "name": "text-area-label",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "text-area"
+  ],
+  "files": [
+    {
+      "path": "core/text-area/demos/label.tsx",
+      "content": "import { TextArea } from \"@/registry/ui/default/core/text-area\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <div className=\"space-y-4\">\r\n      <TextArea label=\"Description\" placeholder=\"Visible label\" />\r\n      <TextArea aria-label=\"Description\" placeholder=\"Hidden label\" />\r\n    </div>\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

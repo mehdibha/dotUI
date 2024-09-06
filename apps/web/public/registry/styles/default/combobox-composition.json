@@ -1,0 +1,15 @@
+{
+  "name": "combobox-composition",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "combobox"
+  ],
+  "files": [
+    {
+      "path": "core/combobox/demos/composition.tsx",
+      "content": "import React from \"react\";\r\nimport {\r\n  ComboboxRoot,\r\n  ComboboxTrigger,\r\n} from \"@/registry/ui/default/core/combobox\";\r\nimport {\r\n  Description,\r\n  FieldError,\r\n  Label,\r\n} from \"@/registry/ui/default/core/field\";\r\nimport { Item, ListBox } from \"@/registry/ui/default/core/list-box\";\r\nimport { Overlay } from \"@/registry/ui/default/core/overlay\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <ComboboxRoot>\r\n      <Label>Framework</Label>\r\n      <ComboboxTrigger />\r\n      <Description>Please choose a framework.</Description>\r\n      <FieldError />\r\n      <Overlay type=\"popover\">\r\n        <ListBox>\r\n          <Item>Next.js</Item>\r\n          <Item>Remix</Item>\r\n          <Item>Gatsby</Item>\r\n          <Item></Item>\r\n        </ListBox>\r\n      </Overlay>\r\n    </ComboboxRoot>\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

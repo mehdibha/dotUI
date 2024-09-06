@@ -1,0 +1,15 @@
+{
+  "name": "list-box-links",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "list-box"
+  ],
+  "files": [
+    {
+      "path": "core/list-box/demos/links.tsx",
+      "content": "import { DiscordIcon, GitHubIcon, TwitterIcon } from \"@/components/icons\";\r\nimport { ListBox, Item } from \"@/registry/ui/default/core/list-box\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <ListBox aria-label=\"Links\" className=\"w-auto\">\r\n      <Item\r\n        href=\"https://github.com/mehdibha\"\r\n        target=\"_blank\"\r\n        prefix={<GitHubIcon />}\r\n      >\r\n        GitHub\r\n      </Item>\r\n      <Item\r\n        href=\"https://discord.com/invite/DXpj5V2fU8\"\r\n        target=\"_blank\"\r\n        prefix={<DiscordIcon />}\r\n      >\r\n        Discord\r\n      </Item>\r\n      <Item\r\n        href=\"https://x.com/mehdibha_\"\r\n        target=\"_blank\"\r\n        prefix={<TwitterIcon />}\r\n      >\r\n        X\r\n      </Item>\r\n    </ListBox>\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

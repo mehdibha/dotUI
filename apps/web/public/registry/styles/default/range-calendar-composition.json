@@ -1,0 +1,15 @@
+{
+  "name": "range-calendar-composition",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "range-calendar"
+  ],
+  "files": [
+    {
+      "path": "core/range-calendar/demos/composition.tsx",
+      "content": "\"use client\";\n\nimport { ChevronLeftIcon, ChevronRightIcon } from \"@/lib/icons\";\nimport { Button } from \"@/registry/ui/default/core/button\";\nimport {\n  CalendarHeader,\n  CalendarGrid,\n  CalendarGridHeader,\n  CalendarHeaderCell,\n  CalendarGridBody,\n  CalendarCell,\n} from \"@/registry/ui/default/core/calendar\";\nimport { Heading } from \"@/registry/ui/default/core/heading\";\nimport { RangeCalendarRoot } from \"@/registry/ui/default/core/range-calendar\";\n\nexport default function Demo() {\n  return (\n    <RangeCalendarRoot>\n      <CalendarHeader>\n        <Button slot=\"previous\" variant=\"outline\" shape=\"square\" size=\"sm\">\n          <ChevronLeftIcon />\n        </Button>\n        <Heading className=\"text-sm\" />\n        <Button slot=\"next\" variant=\"outline\" shape=\"square\" size=\"sm\">\n          <ChevronRightIcon />\n        </Button>\n      </CalendarHeader>\n      <CalendarGrid>\n        <CalendarGridHeader>\n          {(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}\n        </CalendarGridHeader>\n        <CalendarGridBody>\n          {(date) => (\n            <CalendarCell date={date} range>\n              {({ formattedDate }) => (\n                <span className=\"z-20\">{formattedDate}</span>\n              )}\n            </CalendarCell>\n          )}\n        </CalendarGridBody>\n      </CalendarGrid>\n    </RangeCalendarRoot>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

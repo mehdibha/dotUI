@@ -4,7 +4,7 @@ import React from "react";
 import { LaptopIcon, MonitorIcon, PhoneIcon, TabletIcon } from "lucide-react";
 import { ClientOnly } from "@/lib/components/utils/client-only";
 import { useMediaQuery } from "@/lib/hooks/use-media-query";
-import { cn } from "@/lib/utils/classes";
+import { cn } from "@/registry/ui/default/lib/cn";
 
 function Demo() {
   const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
@@ -14,7 +14,9 @@ function Demo() {
   const isLargeDevice = useMediaQuery(
     "only screen and (min-width : 993px) and (max-width : 1200px)"
   );
-  const isExtraLargeDevice = useMediaQuery("only screen and (min-width : 1201px)");
+  const isExtraLargeDevice = useMediaQuery(
+    "only screen and (min-width : 1201px)"
+  );
 
   return (
     <ClientOnly>

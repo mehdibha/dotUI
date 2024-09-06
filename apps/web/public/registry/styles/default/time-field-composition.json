@@ -1,0 +1,15 @@
+{
+  "name": "time-field-composition",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "time-field"
+  ],
+  "files": [
+    {
+      "path": "core/time-field/demos/composition.tsx",
+      "content": "\"use client\";\n\nimport React from \"react\";\nimport { DateInput, DateSegment } from \"@/registry/ui/default/core/date-input\";\nimport { Description, Label } from \"@/registry/ui/default/core/field\";\nimport { InputRoot } from \"@/registry/ui/default/core/input\";\nimport { TimeFieldRoot } from \"@/registry/ui/default/core/time-field\";\n\nexport default function Demo() {\n  return (\n    <TimeFieldRoot>\n      <Label>Meeting time</Label>\n      <InputRoot>\n        <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>\n      </InputRoot>\n      <Description>Please select a time between 9 AM and 5 PM.</Description>\n    </TimeFieldRoot>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

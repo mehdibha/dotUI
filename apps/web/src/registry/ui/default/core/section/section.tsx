@@ -28,7 +28,10 @@ const Section = <T extends object>({ title, ...props }: SectionProps<T>) => {
 };
 
 type SectionRootProps<T> = AriaSectionProps<T>;
-const SectionRoot = <T extends object>({ className, ...props }: SectionRootProps<T>) => {
+const SectionRoot = <T extends object>({
+  className,
+  ...props
+}: SectionRootProps<T>) => {
   const { root } = SectionStyles();
   return <AriaSection className={root({ className })} {...props} />;
 };

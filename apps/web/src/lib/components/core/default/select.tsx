@@ -63,7 +63,11 @@ const Select = <T extends object>({
             </Button>
           </Field>
           <Overlay type="popover">
-            <ListBox isLoading={isLoading} items={items} dependencies={dependencies}>
+            <ListBox
+              isLoading={isLoading}
+              items={items}
+              dependencies={dependencies}
+            >
               {children}
             </ListBox>
           </Overlay>
@@ -79,15 +83,21 @@ const SelectValue = <T extends object>(props: SelectValueProps<T>) => {
   return (
     <AriaSelectValue
       {...props}
-      className={composeRenderProps(props.className, (className) => selectValue({ className }))}
+      className={composeRenderProps(props.className, (className) =>
+        selectValue({ className })
+      )}
     />
   );
 };
 
-interface SelectRootProps<T extends object> extends Omit<AriaSelectProps<T>, "className"> {
+interface SelectRootProps<T extends object>
+  extends Omit<AriaSelectProps<T>, "className"> {
   className?: string;
 }
-const SelectRoot = <T extends object>({ className, ...props }: SelectRootProps<T>) => {
+const SelectRoot = <T extends object>({
+  className,
+  ...props
+}: SelectRootProps<T>) => {
   const { root } = selectStyles();
   return <AriaSelect className={root({ className })} {...props} />;
 };

@@ -1,0 +1,15 @@
+{
+  "name": "number-field-composition",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "number-field"
+  ],
+  "files": [
+    {
+      "path": "core/number-field/demos/composition.tsx",
+      "content": "import React from \"react\";\nimport { MinusIcon, PlusIcon } from \"@/lib/icons\";\nimport { Button } from \"@/registry/ui/default/core/button\";\nimport { Description, Label } from \"@/registry/ui/default/core/field\";\nimport { Group } from \"@/registry/ui/default/core/group\";\nimport { Input, InputRoot } from \"@/registry/ui/default/core/input\";\nimport { NumberFieldRoot } from \"@/registry/ui/default/core/number-field\";\n\nexport default function Demo() {\n  return (\n    <NumberFieldRoot>\n      <Label>Quantity</Label>\n      <Group className=\"flex items-center gap-2\">\n        <Button slot=\"decrement\" shape=\"square\">\n          <MinusIcon />\n        </Button>\n        <InputRoot>\n          <Input />\n        </InputRoot>\n        <Button slot=\"increment\" shape=\"square\">\n          <PlusIcon />\n        </Button>\n      </Group>\n      <Description>Enter the disired quantity.</Description>\n    </NumberFieldRoot>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "select-async-loading",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "select"
+  ],
+  "files": [
+    {
+      "path": "core/select/demos/async-loading.tsx",
+      "content": "\"use client\";\n\nimport React from \"react\";\nimport { useAsyncList } from \"react-stately\";\nimport { Item } from \"@/registry/ui/default/core/list-box\";\nimport { Select } from \"@/registry/ui/default/core/select\";\n\ninterface Character {\n  name: string;\n}\n\nexport default function Demo() {\n  const list = useAsyncList<Character>({\n    async load({ signal }) {\n      const res = await fetch(`https://pokeapi.co/api/v2/pokemon`, { signal });\n      const json = (await res.json()) as { results: Character[] };\n\n      return {\n        items: json.results,\n      };\n    },\n  });\n  return (\n    <Select isLoading={list.isLoading} items={list.items}>\n      {(item) => <Item id={item.name}>{item.name}</Item>}\n    </Select>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

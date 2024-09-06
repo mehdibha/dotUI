@@ -1,0 +1,15 @@
+{
+  "name": "date-field-loading",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "date-field"
+  ],
+  "files": [
+    {
+      "path": "core/date-field/demos/loading.tsx",
+      "content": "\"use client\";\r\n\r\nimport React from \"react\";\r\nimport { DateField } from \"@/registry/ui/default/core/date-field\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <div className=\"grid grid-cols-2 gap-2\">\r\n      <DateField aria-label=\"Meeting date\" isLoading loaderPosition=\"prefix\" />\r\n      <DateField aria-label=\"Meeting date\" isLoading loaderPosition=\"suffix\" />\r\n    </div>\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

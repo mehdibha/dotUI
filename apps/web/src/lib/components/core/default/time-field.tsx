@@ -65,17 +65,23 @@ const TimeField = <T extends TimeValue>({
           isLoading={isLoading}
           loaderPosition={loaderPosition}
         >
-          <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
+          <DateInput>
+            {(segment) => <DateSegment segment={segment} />}
+          </DateInput>
         </InputRoot>
       </Field>
     </TimeFieldRoot>
   );
 };
 
-interface TimeFieldRootProps<T extends TimeValue> extends Omit<AriaTimeFieldProps<T>, "className"> {
+interface TimeFieldRootProps<T extends TimeValue>
+  extends Omit<AriaTimeFieldProps<T>, "className"> {
   className?: string;
 }
-const TimeFieldRoot = <T extends TimeValue>({ className, ...props }: TimeFieldRootProps<T>) => {
+const TimeFieldRoot = <T extends TimeValue>({
+  className,
+  ...props
+}: TimeFieldRootProps<T>) => {
   const { root } = timeFieldStyles();
   return <AriaTimeField className={root({ className })} {...props} />;
 };

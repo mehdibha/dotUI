@@ -1,0 +1,15 @@
+{
+  "name": "breadcrumbs-router-integration",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "breadcrumbs"
+  ],
+  "files": [
+    {
+      "path": "core/breadcrumbs/demos/router-integration.tsx",
+      "content": "\"use client\";\n\nimport { usePathname } from \"next/navigation\";\nimport {\n  Breadcrumbs,\n  Breadcrumb,\n} from \"@/registry/ui/default/core/breadcrumbs\";\n\nexport default function Demo() {\n  const pathname = usePathname();\n  const pathnames = pathname.split(\"/\").filter((x) => x);\n  return (\n    <Breadcrumbs>\n      {pathnames.map((elem, index) => {\n        const href = `/${pathnames.slice(0, index + 1).join(\"/\")}`;\n        return (\n          <Breadcrumb key={elem} href={href} className=\"capitalize\">\n            {elem}\n          </Breadcrumb>\n        );\n      })}\n    </Breadcrumbs>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

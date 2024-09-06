@@ -1,0 +1,15 @@
+{
+  "name": "badge-icon",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "badge"
+  ],
+  "files": [
+    {
+      "path": "core/badge/demos/icon.tsx",
+      "content": "import { ShieldIcon } from \"@/lib/icons\";\nimport { Badge } from \"@/registry/ui/default/core/badge\";\n\nexport default function Demo() {\n  return (\n    <div className=\"flex items-center gap-2\">\n      <Badge icon={<ShieldIcon />} size=\"sm\">\n        Badge\n      </Badge>\n      <Badge icon={<ShieldIcon />} size=\"md\">\n        Badge\n      </Badge>\n      <Badge icon={<ShieldIcon />} size=\"lg\">\n        Badge\n      </Badge>\n    </div>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "date-range-picker-label",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "date-range-picker"
+  ],
+  "files": [
+    {
+      "path": "core/date-range-picker/demos/label.tsx",
+      "content": "import { DateRangePicker } from \"@/registry/ui/default/core/date-range-picker\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <div className=\"space-y-4\">\r\n      <DateRangePicker label=\"Trip\" />\r\n      <DateRangePicker aria-label=\"Trip\" />\r\n    </div>\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

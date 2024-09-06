@@ -1,0 +1,15 @@
+{
+  "name": "radio-group-composition",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "radio-group"
+  ],
+  "files": [
+    {
+      "path": "core/radio-group/demos/composition.tsx",
+      "content": "import {\n  Description,\n  FieldError,\n  Label,\n} from \"@/registry/ui/default/core/field\";\nimport { RadioGroupRoot, Radio } from \"@/registry/ui/default/core/radio-group\";\n\nexport default function Demo() {\n  return (\n    <RadioGroupRoot defaultValue=\"sm\">\n      <Label>Size</Label>\n      <Description>Please select a size.</Description>\n      <div className=\"flex gap-2\">\n        <Radio value=\"sm\">Small</Radio>\n        <Radio value=\"md\">Medium</Radio>\n        <Radio value=\"lg\">Large</Radio>\n      </div>\n      <FieldError />\n    </RadioGroupRoot>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

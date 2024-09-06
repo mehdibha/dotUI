@@ -26,7 +26,8 @@ export const useConfig = create<Config>()(
       setStyle: (style: Style["name"]) => set((state) => ({ ...state, style })),
       setTheme: (theme: Theme) => set((state) => ({ ...state, theme })),
       setMode: (mode: "light" | "dark") => set((state) => ({ ...state, mode })),
-      setIconLibrary: (iconLibrary: IconLibrary) => set((state) => ({ ...state, iconLibrary })),
+      setIconLibrary: (iconLibrary: IconLibrary) =>
+        set((state) => ({ ...state, iconLibrary })),
     }),
     {
       name: "preview-theme",

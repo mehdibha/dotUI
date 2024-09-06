@@ -1,0 +1,15 @@
+{
+  "name": "radio-group-required",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "radio-group"
+  ],
+  "files": [
+    {
+      "path": "core/radio-group/demos/required.tsx",
+      "content": "import React from \"react\";\nimport { RadioGroup, Radio } from \"@/registry/ui/default/core/radio-group\";\n\nexport default function Demo() {\n  return (\n    <div className=\"grid grid-cols-2 gap-4\">\n      <RadioGroup defaultValue=\"sm\" label=\"Size\" isRequired>\n        <Radio value=\"sm\">Small</Radio>\n        <Radio value=\"lg\">Large</Radio>\n      </RadioGroup>\n      <RadioGroup\n        defaultValue=\"sm\"\n        label=\"Size\"\n        isRequired\n        necessityIndicator=\"icon\"\n      >\n        <Radio value=\"sm\">Small</Radio>\n        <Radio value=\"lg\">Large</Radio>\n      </RadioGroup>\n      <RadioGroup\n        defaultValue=\"sm\"\n        label=\"Size\"\n        isRequired\n        necessityIndicator=\"label\"\n      >\n        <Radio value=\"sm\">Small</Radio>\n        <Radio value=\"lg\">Large</Radio>\n      </RadioGroup>\n      <RadioGroup defaultValue=\"sm\" label=\"Size\" necessityIndicator=\"label\">\n        <Radio value=\"sm\">Small</Radio>\n        <Radio value=\"lg\">Large</Radio>\n      </RadioGroup>\n    </div>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

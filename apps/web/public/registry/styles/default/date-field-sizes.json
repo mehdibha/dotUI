@@ -1,0 +1,15 @@
+{
+  "name": "date-field-sizes",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "date-field"
+  ],
+  "files": [
+    {
+      "path": "core/date-field/demos/sizes.tsx",
+      "content": "import { DateField } from \"@/registry/ui/default/core/date-field\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <div className=\"flex items-center gap-4\">\r\n      <DateField label=\"small (sm)\" size=\"sm\" />\r\n      <DateField label=\"medium (md)\" size=\"md\" />\r\n      <DateField label=\"large (lg)\" size=\"lg\" />\r\n    </div>\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

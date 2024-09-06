@@ -78,9 +78,15 @@ const docsConfig: DocsConfig = {
           title: "Menus and Selection",
           items: [
             { title: "Menu", href: "/components/menus-and-selection/menu" },
-            { title: "ListBox", href: "/components/menus-and-selection/list-box" },
+            {
+              title: "ListBox",
+              href: "/components/menus-and-selection/list-box",
+            },
             { title: "Select", href: "/components/menus-and-selection/select" },
-            { title: "Combobox", href: "/components/menus-and-selection/combobox" },
+            {
+              title: "Combobox",
+              href: "/components/menus-and-selection/combobox",
+            },
           ],
         },
         {
@@ -162,14 +168,20 @@ const docsConfig: DocsConfig = {
           items: [
             { title: "Link", href: "/components/navigation/link" },
             { title: "Tabs", href: "/components/navigation/tabs" },
-            { title: "Breadcrumbs", href: "/components/navigation/breadcrumbs" },
+            {
+              title: "Breadcrumbs",
+              href: "/components/navigation/breadcrumbs",
+            },
           ],
         },
         {
           title: "Overlay",
           items: [
             { title: "Dialog", href: "/components/overlay/dialog" },
-            { title: "Alert Dialog", href: "/components/overlay/dialog#alert-dialog" },
+            {
+              title: "Alert Dialog",
+              href: "/components/overlay/dialog#alert-dialog",
+            },
             { title: "Drawer", href: "/components/overlay/dialog#drawer" },
             { title: "Popover", href: "/components/overlay/dialog#popover" },
             { title: "Tooltip", href: "/components/overlay/tooltip" },
@@ -189,6 +201,9 @@ export const docsConfig: DocsConfig = ${JSON.stringify(docsConfig)};
 `;
 
 rimraf.sync(path.join(process.cwd(), "src", "config", "docs-config.ts"));
-fs.writeFileSync(path.join(process.cwd(), "src", "config", "docs-config.ts"), index);
+fs.writeFileSync(
+  path.join(process.cwd(), "src", "config", "docs-config.ts"),
+  index
+);
 
 console.log("\x1b[32m✓\x1b[0m Created docs-config file.");

@@ -1,0 +1,15 @@
+{
+  "name": "date-range-picker-uncontrolled",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "date-range-picker"
+  ],
+  "files": [
+    {
+      "path": "core/date-range-picker/demos/uncontrolled.tsx",
+      "content": "\"use client\";\r\n\r\nimport React from \"react\";\r\nimport { parseDate } from \"@internationalized/date\";\r\nimport { DateRangePicker } from \"@/registry/ui/default/core/date-range-picker\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <DateRangePicker\r\n      label=\"Controlled\"\r\n      defaultValue={{\r\n        start: parseDate(\"2020-02-03\"),\r\n        end: parseDate(\"2020-02-08\"),\r\n      }}\r\n    />\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "checkbox-group-composition",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "checkbox-group"
+  ],
+  "files": [
+    {
+      "path": "core/checkbox-group/demos/composition.tsx",
+      "content": "import { Checkbox } from \"@/registry/ui/default/core/checkbox\";\r\nimport { CheckboxGroupRoot } from \"@/registry/ui/default/core/checkbox-group\";\r\nimport {\r\n  Description,\r\n  FieldError,\r\n  Label,\r\n} from \"@/registry/ui/default/core/field\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <CheckboxGroupRoot defaultValue={[\"nextjs\"]}>\r\n      <Label>React frameworks</Label>\r\n      <Description>You can pick any frameworks.</Description>\r\n      <div className=\"flex items-center gap-4\">\r\n        <Checkbox value=\"nextjs\">Next.js</Checkbox>\r\n        <Checkbox value=\"remix\">Remix</Checkbox>\r\n        <Checkbox value=\"gatsby\">Gatsby</Checkbox>\r\n      </div>\r\n      <FieldError />\r\n    </CheckboxGroupRoot>\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

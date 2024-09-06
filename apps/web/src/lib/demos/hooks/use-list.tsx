@@ -2,17 +2,15 @@
 
 import React from "react";
 import { EditIcon, Trash2Icon } from "lucide-react";
-import { Button } from "@/lib/components/core/default/button";
-import { Input } from "@/lib/components/core/default/input";
 import { useList } from "@/lib/hooks/use-list";
+import { Button } from "@/registry/ui/default/core/button";
+import { Input } from "@/registry/ui/default/core/input";
 
 export default function Demo() {
   const [inputValue, setInputValue] = React.useState("");
-  const [list, { set, push, removeAt, insertAt, clear }] = useList<string | number>([
-    "First",
-    "Second",
-    "Third",
-  ]);
+  const [list, { set, push, removeAt, insertAt, clear }] = useList<
+    string | number
+  >(["First", "Second", "Third"]);
 
   return (
     <div>

@@ -1,0 +1,15 @@
+{
+  "name": "button-disabled",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "button"
+  ],
+  "files": [
+    {
+      "path": "core/button/demos/disabled.tsx",
+      "content": "import { Button } from \"@/registry/ui/default/core/button\";\n\nexport default function Demo() {\n  return <Button isDisabled>Button</Button>;\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

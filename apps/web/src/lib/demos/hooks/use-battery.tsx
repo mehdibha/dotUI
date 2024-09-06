@@ -22,10 +22,14 @@ export default function Demo() {
         {isLoading ? (
           <Loader2Icon className="animate-spin" />
         ) : !isSupported ? (
-          <p className="text-fg-muted">Battery status API is not supported in your browser.</p>
+          <p className="text-fg-muted">
+            Battery status API is not supported in your browser.
+          </p>
         ) : (
           <>
-            <span className="text-5xl font-bold">{Math.round(level * 100)}%</span>
+            <span className="text-5xl font-bold">
+              {Math.round(level * 100)}%
+            </span>
             {isCharging ? (
               <BatteryChargingIcon size={size} />
             ) : level === 1 ? (

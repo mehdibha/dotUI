@@ -1,0 +1,15 @@
+{
+  "name": "tooltip-flip",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "tooltip"
+  ],
+  "files": [
+    {
+      "path": "core/tooltip/demos/flip.tsx",
+      "content": "\"use client\";\n\nimport React from \"react\";\nimport { PlusIcon } from \"@/lib/icons\";\nimport { Button } from \"@/registry/ui/default/core/button\";\nimport { Switch } from \"@/registry/ui/default/core/switch\";\nimport { Tooltip } from \"@/registry/ui/default/core/tooltip\";\n\nexport default function Demo() {\n  const [shouldFlip, setShouldFlip] = React.useState(false);\n  return (\n    <div className=\"flex flex-col items-center gap-10\">\n      <Tooltip shouldFlip={shouldFlip} content=\"Add to library\">\n        <Button shape=\"square\">\n          <PlusIcon />\n        </Button>\n      </Tooltip>\n      <Switch\n        isSelected={shouldFlip}\n        onChange={(isSelected) => setShouldFlip(isSelected)}\n      >\n        Should flip\n      </Switch>\n    </div>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import { Alert, type AlertProps } from "@/lib/components/core/default/alert";
-import { RadioGroup, Radio } from "@/lib/components/core/default/radio-group";
-import { Switch } from "@/lib/components/core/default/switch";
+import { Alert, type AlertProps } from "@/registry/ui/default/core/alert";
+import { RadioGroup, Radio } from "@/registry/ui/default/core/radio-group";
+import { Switch } from "@/registry/ui/default/core/switch";
 
 type Variant = AlertProps["variant"];
 

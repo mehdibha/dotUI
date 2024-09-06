@@ -1,0 +1,15 @@
+{
+  "name": "date-range-picker-controlled",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "date-range-picker"
+  ],
+  "files": [
+    {
+      "path": "core/date-range-picker/demos/controlled.tsx",
+      "content": "\"use client\";\r\n\r\nimport React from \"react\";\r\nimport { getLocalTimeZone, parseDate } from \"@internationalized/date\";\r\nimport { useDateFormatter } from \"react-aria\";\r\nimport { DateRangePicker } from \"@/registry/ui/default/core/date-range-picker\";\r\n\r\nexport default function Demo() {\r\n  const [value, setValue] = React.useState({\r\n    start: parseDate(\"2024-02-03\"),\r\n    end: parseDate(\"2024-02-08\"),\r\n  });\r\n  const formatter = useDateFormatter({ dateStyle: \"long\" });\r\n\r\n  return (\r\n    <div className=\"flex flex-col items-center gap-4\">\r\n      <DateRangePicker label=\"Controlled\" value={value} onChange={setValue} />\r\n      <p className=\"text-sm text-fg-muted\">\r\n        Selected date:{\" \"}\r\n        {value\r\n          ? formatter.formatRange(\r\n              value.start.toDate(getLocalTimeZone()),\r\n              value.end.toDate(getLocalTimeZone())\r\n            )\r\n          : \"--\"}\r\n      </p>\r\n    </div>\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

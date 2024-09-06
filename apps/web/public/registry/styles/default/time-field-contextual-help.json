@@ -1,0 +1,15 @@
+{
+  "name": "time-field-contextual-help",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "time-field"
+  ],
+  "files": [
+    {
+      "path": "core/time-field/demos/contextual-help.tsx",
+      "content": "\"use client\";\n\nimport React from \"react\";\nimport { ContextualHelp } from \"@/registry/ui/default/core/contextual-help\";\nimport { TimeField } from \"@/registry/ui/default/core/time-field\";\n\nexport default function Demo() {\n  return (\n    <TimeField\n      label=\"Appointment\"\n      contextualHelp={\n        <ContextualHelp\n          title=\"Need help?\"\n          description=\"If you're having trouble accessing your account, contact our customer\n      support team for help.\"\n        />\n      }\n    />\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

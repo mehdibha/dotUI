@@ -1,6 +1,6 @@
 import { InfoIcon, HelpIcon } from "@/lib/icons";
-import { Button } from "./button/button";
-import { DialogRoot, Dialog } from "./dialog";
+import { Button } from "@/registry/ui/default/core/button";
+import { DialogRoot, Dialog } from "@/registry/ui/default/core/dialog";
 
 interface ContextualHelpProps {
   title?: string;
@@ -8,7 +8,11 @@ interface ContextualHelpProps {
   variant?: "info" | "help";
 }
 
-const ContextualHelp = ({ title, description, variant }: ContextualHelpProps) => {
+const ContextualHelp = ({
+  title,
+  description,
+  variant,
+}: ContextualHelpProps) => {
   const icon = variant === "info" ? <InfoIcon /> : <HelpIcon />;
   return (
     <DialogRoot>
@@ -22,7 +26,12 @@ const ContextualHelp = ({ title, description, variant }: ContextualHelpProps) =>
       >
         {icon}
       </Button>
-      <Dialog type="popover" mobileType="modal" title={title} description={description} />
+      <Dialog
+        type="popover"
+        mobileType="modal"
+        title={title}
+        description={description}
+      />
     </DialogRoot>
   );
 };

@@ -1,10 +1,10 @@
 import React from "react";
-import { cn } from "@/lib/utils/classes";
 import { AdobeLogo } from "@/assets/images/brands/adobe";
 import { FramerLogo } from "@/assets/images/brands/framer";
 import { NextjsLogo } from "@/assets/images/brands/nextjs";
 import { ReactIcon } from "@/assets/images/brands/reactjs";
 import { TailwindLogo } from "@/assets/images/brands/tailwind";
+import { cn } from "@/registry/ui/default/lib/cn";
 
 export const Brands = ({ className }: { className?: string }) => {
   return (

@@ -1,0 +1,15 @@
+{
+  "name": "date-range-picker-read-only",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "date-range-picker"
+  ],
+  "files": [
+    {
+      "path": "core/date-range-picker/demos/read-only.tsx",
+      "content": "\"use client\";\n\nimport React from \"react\";\nimport { parseAbsoluteToLocal } from \"@internationalized/date\";\nimport { DateRangePicker } from \"@/registry/ui/default/core/date-range-picker\";\n\nexport default function Demo() {\n  return (\n    <DateRangePicker\n      label=\"Event date\"\n      value={{\n        start: parseAbsoluteToLocal(\"2021-04-07T18:45:22Z\"),\n        end: parseAbsoluteToLocal(\"2021-04-08T20:00:00Z\"),\n      }}\n      isReadOnly\n    />\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

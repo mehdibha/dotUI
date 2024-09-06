@@ -38,7 +38,9 @@ export const useMotionDrawer = (props: useMotionDrawerProps) => {
   const dragEndTime = React.useRef<Date | null>(null);
 
   const [isDragging, setDragging] = React.useState(false);
-  const drawerHeightRef = React.useRef(drawerRef.current?.getBoundingClientRect().height || 0);
+  const drawerHeightRef = React.useRef(
+    drawerRef.current?.getBoundingClientRect().height || 0
+  );
   const pointerStartRef = React.useRef<{ x: number; y: number } | null>(null);
   const pointerStart = React.useRef(0);
   const keyboardIsOpen = React.useRef(false);
@@ -51,8 +53,13 @@ export const useMotionDrawer = (props: useMotionDrawerProps) => {
     if (selectedText && selectedText.length > 0) return false;
     if (!isVertical(placement)) return true;
     // TODO: Disallow drag when entering or exiting
-    const swipeAmount = drawerRef.current ? getTranslate(drawerRef.current, placement) : null;
-    if (swipeAmount !== null && (placement === "bottom" ? swipeAmount > 0 : swipeAmount < 0))
+    const swipeAmount = drawerRef.current
+      ? getTranslate(drawerRef.current, placement)
+      : null;
+    if (
+      swipeAmount !== null &&
+      (placement === "bottom" ? swipeAmount > 0 : swipeAmount < 0)
+    )
       return true;
     // TODO: SCROLLLOCKTIMEOUT
     // TODO: DRAG IN placement
@@ -114,22 +121,28 @@ export const useMotionDrawer = (props: useMotionDrawerProps) => {
   }
 
   function onPress(event: React.PointerEvent<HTMLDivElement>) {
-    if (drawerRef.current && !drawerRef.current.contains(event.target as Node)) return;
-    drawerHeightRef.current = drawerRef.current?.getBoundingClientRect().height || 0;
+    if (drawerRef.current && !drawerRef.current.contains(event.target as Node))
+      return;
+    drawerHeightRef.current =
+      drawerRef.current?.getBoundingClientRect().height || 0;
     setDragging(true);
     dragStartTime.current = new Date();
     // if (isIOS()) {
     //   window.addEventListener('touchend', () => (isAllowedToDrag.current = false), { once: true });
     // }
     (event.target as HTMLElement).setPointerCapture(event.pointerId);
-    pointerStart.current = isVertical(placement) ? event.clientY : event.clientX;
+    pointerStart.current = isVertical(placement)
+      ? event.clientY
+      : event.clientX;
   }
 
   function onDrag(event: React.PointerEvent<HTMLDivElement>) {
     if (!drawerRef.current || !isDragging || !shouldDrag(event.target)) return;
-    const placementMultiplier = placement === "bottom" || placement === "right" ? 1 : -1;
+    const placementMultiplier =
+      placement === "bottom" || placement === "right" ? 1 : -1;
     const draggedDistance =
-      (pointerStart.current - (isVertical(placement) ? event.clientY : event.clientX)) *
+      (pointerStart.current -
+        (isVertical(placement) ? event.clientY : event.clientX)) *
       placementMultiplier;
     const isDraggingInDirection = draggedDistance > 0;
     const absDraggedDistance = Math.abs(draggedDistance);
@@ -140,7 +153,8 @@ export const useMotionDrawer = (props: useMotionDrawerProps) => {
     set(backdropRef.current, { transition: "none" }); // WHY?
     if (isDraggingInDirection) {
       const dampenedDraggedDistance = dampenValue(draggedDistance);
-      const translateValue = Math.min(dampenedDraggedDistance * -1, 0) * placementMultiplier;
+      const translateValue =
+        Math.min(dampenedDraggedDistance * -1, 0) * placementMultiplier;
       set(drawerRef.current, {
         transform: isVertical(placement)
           ? `translate3d(0, ${translateValue}px, 0)`
@@ -149,10 +163,17 @@ export const useMotionDrawer = (props: useMotionDrawerProps) => {
       return;
     }
     const opacityValue = 1 - percentageDragged;
-    set(backdropRef.current, { opacity: `${opacityValue}`, transition: "none" }, true);
+    set(
+      backdropRef.current,
+      { opacity: `${opacityValue}`, transition: "none" },
+      true
+    );
     if (wrapper && backdropRef.current && scaleBackground && !nested) {
       // Calculate percentageDragged as a fraction (0 to 1)
-      const scaleValue = Math.min(getScale() + percentageDragged * (1 - getScale()), 1);
+      const scaleValue = Math.min(
+        getScale() + percentageDragged * (1 - getScale()),
+        1
+      );
       const borderRadiusValue = 8 - percentageDragged * 8;
       const translateValue = Math.max(0, 14 - percentageDragged * 14);
       set(
@@ -186,11 +207,17 @@ export const useMotionDrawer = (props: useMotionDrawerProps) => {
     if (!shouldDrag(event.target) || !swipeAmount || isNaN(swipeAmount)) return;
     if (dragStartTime.current === null) return;
     // TODO: check for justReleased (to not focus on an element on drag end)
-    const timeTaken = dragEndTime.current.getTime() - dragStartTime.current.getTime();
+    const timeTaken =
+      dragEndTime.current.getTime() - dragStartTime.current.getTime();
     const distMoved =
-      pointerStart.current - (isVertical(placement) ? event.clientY : event.clientX);
+      pointerStart.current -
+      (isVertical(placement) ? event.clientY : event.clientX);
     const velocity = Math.abs(distMoved) / timeTaken;
-    if (placement === "bottom" || placement === "right" ? distMoved > 0 : distMoved < 0) {
+    if (
+      placement === "bottom" || placement === "right"
+        ? distMoved > 0
+        : distMoved < 0
+    ) {
       resetDrawer();
       return;
     }
@@ -234,7 +261,8 @@ export const useMotionDrawer = (props: useMotionDrawerProps) => {
     const wrapper = document.querySelector("[drawer-wrapper]");
     if (!wrapper || !scaleBackground) return;
     set(document.body, {
-      background: document.body.style.backgroundColor || document.body.style.background,
+      background:
+        document.body.style.backgroundColor || document.body.style.background,
     });
     set(document.body, { background: "black" }, true);
     set(wrapper, {
@@ -315,7 +343,9 @@ export const useMotionDrawer = (props: useMotionDrawerProps) => {
   }
 
   function handleNestedOpenChange(isOpen: boolean) {
-    const scale = isOpen ? (window.innerWidth - NESTED_DISPLACEMENT) / window.innerWidth : 1;
+    const scale = isOpen
+      ? (window.innerWidth - NESTED_DISPLACEMENT) / window.innerWidth
+      : 1;
     const y = isOpen ? -NESTED_DISPLACEMENT : 0;
     set(drawerRef.current, {
       transition: `transform ${TRANSITIONS.DURATION}s cubic-bezier(${TRANSITIONS.EASE.join(",")})`,
@@ -325,10 +355,13 @@ export const useMotionDrawer = (props: useMotionDrawerProps) => {
 
   function handleNestedDrag(percentageDragged: number) {
     if (percentageDragged < 0) return;
-    const initialDim = isVertical(placement) ? window.innerHeight : window.innerWidth;
+    const initialDim = isVertical(placement)
+      ? window.innerHeight
+      : window.innerWidth;
     const initialScale = (initialDim - NESTED_DISPLACEMENT) / initialDim;
     const newScale = initialScale + percentageDragged * (1 - initialScale);
-    const newTranslate = -NESTED_DISPLACEMENT + percentageDragged * NESTED_DISPLACEMENT;
+    const newTranslate =
+      -NESTED_DISPLACEMENT + percentageDragged * NESTED_DISPLACEMENT;
     set(drawerRef.current, {
       transform: isVertical(placement)
         ? `scale(${newScale}) translate3d(0, ${newTranslate}px, 0)`
@@ -360,7 +393,8 @@ export const useMotionDrawer = (props: useMotionDrawerProps) => {
       if (isInput(focusedElement) || keyboardIsOpen.current) {
         const visualViewportHeight = window.visualViewport?.height || 0;
         const diffFromInitial = window.innerHeight - visualViewportHeight;
-        const drawerHeight = drawerRef.current.getBoundingClientRect().height || 0;
+        const drawerHeight =
+          drawerRef.current.getBoundingClientRect().height || 0;
         if (!initialDrawerHeight.current) {
           initialDrawerHeight.current = drawerHeight;
         }
@@ -383,7 +417,11 @@ export const useMotionDrawer = (props: useMotionDrawerProps) => {
       }
     }
     window.visualViewport?.addEventListener("resize", onVisualViewportChange);
-    return () => window.visualViewport?.removeEventListener("resize", onVisualViewportChange);
+    return () =>
+      window.visualViewport?.removeEventListener(
+        "resize",
+        onVisualViewportChange
+      );
   }, []);
 
   React.useEffect(() => {
@@ -442,7 +480,11 @@ export const MotionDrawerRoot = ({
   children: React.ReactNode;
   value: DrawerInternalContextValue;
 }) => {
-  return <DrawerInternalContext.Provider value={value}>{children}</DrawerInternalContext.Provider>;
+  return (
+    <DrawerInternalContext.Provider value={value}>
+      {children}
+    </DrawerInternalContext.Provider>
+  );
 };
 
 interface DrawerInternalContextValue {
@@ -451,7 +493,8 @@ interface DrawerInternalContextValue {
   onNestedRelease: (isOpen: boolean) => void;
 }
 
-export const DrawerInternalContext = React.createContext<DrawerInternalContextValue | null>(null);
+export const DrawerInternalContext =
+  React.createContext<DrawerInternalContextValue | null>(null);
 
 export const useDrawerInternalContext = () => {
   const context = React.useContext(DrawerInternalContext);
@@ -548,7 +591,10 @@ export const isVertical = (placement: DrawerPlacement) => {
   }
 };
 
-export function getTranslate(element: HTMLElement, placement: DrawerPlacement): number | null {
+export function getTranslate(
+  element: HTMLElement,
+  placement: DrawerPlacement
+): number | null {
   if (!element) {
     return null;
   }
@@ -563,7 +609,9 @@ export function getTranslate(element: HTMLElement, placement: DrawerPlacement): 
   }
   // https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/matrix
   mat = transform.match(/^matrix\((.+)\)$/);
-  return mat ? parseFloat(mat[1].split(", ")[isVertical(placement) ? 5 : 4]) : null;
+  return mat
+    ? parseFloat(mat[1].split(", ")[isVertical(placement) ? 5 : 4])
+    : null;
 }
 
 export function dampenValue(v: number) {
@@ -573,7 +621,9 @@ export function dampenValue(v: number) {
 // Additional helpers
 
 function testPlatform(re: RegExp): boolean | undefined {
-  return window?.navigator != null ? re.test(window.navigator.platform) : undefined;
+  return window?.navigator != null
+    ? re.test(window.navigator.platform)
+    : undefined;
 }
 
 function isMac(): boolean | undefined {
@@ -609,7 +659,8 @@ const nonTextInputTypes = new Set([
 ]);
 function isInput(target: Element) {
   return (
-    (target instanceof HTMLInputElement && !nonTextInputTypes.has(target.type)) ||
+    (target instanceof HTMLInputElement &&
+      !nonTextInputTypes.has(target.type)) ||
     target instanceof HTMLTextAreaElement ||
     (target instanceof HTMLElement && target.isContentEditable)
   );

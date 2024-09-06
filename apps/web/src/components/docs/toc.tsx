@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { useMounted } from "@/lib/hooks/use-mounted";
-import { cn } from "@/lib/utils/classes";
+import { cn } from "@/registry/ui/default/lib/cn";
 
 interface Item {
   title: string;
@@ -96,7 +96,9 @@ function Tree({ tree, level = 1, activeItem }: TreeProps) {
               href={item.url}
               className={cn(
                 "inline-block no-underline transition-colors hover:text-fg",
-                item.url === `#${activeItem}` ? "font-medium text-fg" : "text-fg-muted"
+                item.url === `#${activeItem}`
+                  ? "font-medium text-fg"
+                  : "text-fg-muted"
               )}
             >
               {item.title}

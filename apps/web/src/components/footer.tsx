@@ -2,12 +2,12 @@ import React from "react";
 import NavLink from "next/link";
 import Link from "next/link";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
-import { Avatar } from "@/lib/components/core/default/avatar";
-import { Badge } from "@/lib/components/core/default/badge";
-import { Separator } from "@/lib/components/core/default/separator";
-import { cn } from "@/lib/utils/classes";
 import { focusRing } from "@/lib/utils/styles";
 import { siteConfig } from "@/config";
+import { Avatar } from "@/registry/ui/default/core/avatar";
+import { Badge } from "@/registry/ui/default/core/badge";
+import { Separator } from "@/registry/ui/default/core/separator";
+import { cn } from "@/registry/ui/default/lib/cn";
 
 const links = [
   {
@@ -82,7 +82,10 @@ export const Footer = () => {
       <div className="container py-8">
         <div className="flex flex-col items-start justify-between gap-10 lg:flex-row">
           <div className="flex max-w-sm flex-col items-start">
-            <NavLink href="/" className={cn(focusRing(), "flex items-center gap-2 rounded")}>
+            <NavLink
+              href="/"
+              className={cn(focusRing(), "flex items-center gap-2 rounded")}
+            >
               <Avatar
                 src={siteConfig.global.logo}
                 alt={siteConfig.global.name}
@@ -98,7 +101,9 @@ export const Footer = () => {
                 beta
               </Badge>
             </NavLink>
-            <p className="text-md mt-2 text-fg-muted">{siteConfig.global.description}</p>
+            <p className="text-md mt-2 text-fg-muted">
+              {siteConfig.global.description}
+            </p>
             <div className="mt-4 flex items-center gap-4">
               {socialLinks.map((Link, index) => (
                 <NavLink
@@ -123,7 +128,9 @@ export const Footer = () => {
                       <NavLink
                         href={link.href}
                         className="text-fg-muted transition-colors duration-200 hover:text-fg"
-                        target={link.href.startsWith("http") ? "_blank" : undefined}
+                        target={
+                          link.href.startsWith("http") ? "_blank" : undefined
+                        }
                       >
                         {link.label}
                       </NavLink>
@@ -137,11 +144,19 @@ export const Footer = () => {
         <Separator className="mb-4 mt-12" />
         <p className="text-sm text-fg-muted">
           Built by{" "}
-          <Link href="https://github.com/mehdibha" target="_blank" className="underline">
+          <Link
+            href="https://github.com/mehdibha"
+            target="_blank"
+            className="underline"
+          >
             mehdibha
           </Link>
           . The source code is available on{" "}
-          <Link href="https://github.com/mehdibha" target="_blank" className="underline">
+          <Link
+            href="https://github.com/mehdibha"
+            target="_blank"
+            className="underline"
+          >
             GitHub.
           </Link>
         </p>

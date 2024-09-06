@@ -1,0 +1,15 @@
+{
+  "name": "number-field-disabled",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "number-field"
+  ],
+  "files": [
+    {
+      "path": "core/number-field/demos/disabled.tsx",
+      "content": "import { NumberField } from \"@/registry/ui/default/core/number-field\";\r\n\r\nexport default function Demo() {\r\n  return <NumberField defaultValue={20} isDisabled />;\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

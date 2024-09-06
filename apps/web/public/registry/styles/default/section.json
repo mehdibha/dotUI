@@ -1,0 +1,15 @@
+{
+  "name": "section",
+  "type": "registry:core",
+  "dependencies": [
+    "react-aria-components"
+  ],
+  "files": [
+    {
+      "path": "core/section/section.tsx",
+      "content": "\"use client\";\r\n\r\nimport {\r\n  Section as AriaSection,\r\n  Header as AriaHeader,\r\n  type SectionProps as AriaSectionProps,\r\n  Collection as AriaCollection,\r\n} from \"react-aria-components\";\r\nimport { tv } from \"tailwind-variants\";\r\n\r\nconst SectionStyles = tv({\r\n  slots: {\r\n    root: \"first:mt-1 mt-2 space-y-px\",\r\n    title: \"text-sm font-bold pl-3 mb-1\",\r\n  },\r\n});\r\n\r\ninterface SectionProps<T> extends AriaSectionProps<T> {\r\n  title?: string;\r\n}\r\nconst Section = <T extends object>({ title, ...props }: SectionProps<T>) => {\r\n  return (\r\n    <SectionRoot {...props}>\r\n      {title && <SectionTitle>{title}</SectionTitle>}\r\n      <AriaCollection items={props.items}>{props.children}</AriaCollection>\r\n    </SectionRoot>\r\n  );\r\n};\r\n\r\ntype SectionRootProps<T> = AriaSectionProps<T>;\r\nconst SectionRoot = <T extends object>({\r\n  className,\r\n  ...props\r\n}: SectionRootProps<T>) => {\r\n  const { root } = SectionStyles();\r\n  return <AriaSection className={root({ className })} {...props} />;\r\n};\r\n\r\ntype SectionTitleProps = React.HTMLAttributes<HTMLElement>;\r\nconst SectionTitle = ({ className, ...props }: SectionTitleProps) => {\r\n  const { title } = SectionStyles();\r\n  return <AriaHeader className={title({ className })} {...props} />;\r\n};\r\n\r\nexport { Section, SectionTitle };\r\n",
+      "type": "registry:core",
+      "target": ""
+    }
+  ]
+}

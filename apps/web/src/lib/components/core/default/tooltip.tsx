@@ -54,7 +54,11 @@ const Tooltip = ({
 };
 
 type TooltipRootProps = AriaTooltipTriggerProps;
-const TooltipRoot = ({ delay = 700, closeDelay = 0, ...props }: TooltipRootProps) => (
+const TooltipRoot = ({
+  delay = 700,
+  closeDelay = 0,
+  ...props
+}: TooltipRootProps) => (
   <AriaTooltipTrigger delay={delay} closeDelay={closeDelay} {...props} />
 );
 
@@ -63,8 +67,18 @@ interface TooltipContentProps
     VariantProps<typeof tooltipVariants> {
   className?: string;
 }
-const TooltipContent = ({ className, offset = 10, ...props }: TooltipContentProps) => {
-  return <AriaTooltip offset={offset} className={tooltipVariants({ className })} {...props} />;
+const TooltipContent = ({
+  className,
+  offset = 10,
+  ...props
+}: TooltipContentProps) => {
+  return (
+    <AriaTooltip
+      offset={offset}
+      className={tooltipVariants({ className })}
+      {...props}
+    />
+  );
 };
 
 type OverlayArrowProps = Partial<React.SVGProps<SVGSVGElement>>;

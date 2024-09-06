@@ -1,0 +1,15 @@
+{
+  "name": "dialog-dismiss-button",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "dialog"
+  ],
+  "files": [
+    {
+      "path": "core/dialog/demos/dismiss-button.tsx",
+      "content": "\"use client\";\n\nimport React from \"react\";\nimport { Button } from \"@/registry/ui/default/core/button\";\nimport {\n  DialogRoot,\n  Dialog,\n  DialogFooter,\n} from \"@/registry/ui/default/core/dialog\";\nimport { TextField } from \"@/registry/ui/default/core/text-field\";\n\nexport default function Demo() {\n  return (\n    <DialogRoot>\n      <Button variant=\"outline\">Edit Profile</Button>\n      <Dialog\n        title=\"Edit profile\"\n        description=\"Make changes to your profile.\"\n        showDismissButton={false}\n      >\n        {({ close }) => (\n          <>\n            <div className=\"space-y-4\">\n              <TextField\n                autoFocus\n                label=\"Name\"\n                defaultValue=\"Mehdi\"\n                className=\"w-full\"\n              />\n              <TextField\n                label=\"Username\"\n                defaultValue=\"@mehdibha_\"\n                className=\"w-full\"\n              />\n            </div>\n            <DialogFooter>\n              <Button\n                variant=\"outline\"\n                size={{ initial: \"lg\", sm: \"md\" }}\n                onPress={close}\n              >\n                Cancel\n              </Button>\n              <Button\n                variant=\"primary\"\n                size={{ initial: \"lg\", sm: \"md\" }}\n                onPress={close}\n              >\n                Save changes\n              </Button>\n            </DialogFooter>\n          </>\n        )}\n      </Dialog>\n    </DialogRoot>\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

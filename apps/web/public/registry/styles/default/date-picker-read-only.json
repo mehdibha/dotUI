@@ -1,0 +1,15 @@
+{
+  "name": "date-picker-read-only",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "date-picker"
+  ],
+  "files": [
+    {
+      "path": "core/date-picker/demos/read-only.tsx",
+      "content": "\"use client\";\n\nimport React from \"react\";\nimport { CalendarDate } from \"@internationalized/date\";\nimport { DatePicker } from \"@/registry/ui/default/core/date-picker\";\n\nexport default function Demo() {\n  return (\n    <DatePicker\n      label=\"Event date\"\n      value={new CalendarDate(1980, 1, 1)}\n      isReadOnly\n    />\n  );\n}\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

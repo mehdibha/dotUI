@@ -1,0 +1,15 @@
+{
+  "name": "color-area-channels",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "color-area"
+  ],
+  "files": [
+    {
+      "path": "core/color-area/demos/channels.tsx",
+      "content": "import { ColorArea } from \"@/registry/ui/default/core/color-area\";\r\n\r\nexport default function Demo() {\r\n  return <ColorArea xChannel=\"red\" yChannel=\"blue\" />;\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

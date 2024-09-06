@@ -38,10 +38,17 @@ const Tabs = ({ className, ...props }: TabsProps) => {
 interface TabListProps<T> extends Omit<AriaTabListProps<T>, "className"> {
   className?: string;
 }
-const TabList = <T extends object>({ className, ...props }: TabListProps<T>) => {
+const TabList = <T extends object>({
+  className,
+  ...props
+}: TabListProps<T>) => {
   const { list } = tabsStyles();
   return (
-    <AriaTabList {...props} className={list({ className })} style={{ scrollbarWidth: "none" }} />
+    <AriaTabList
+      {...props}
+      className={list({ className })}
+      style={{ scrollbarWidth: "none" }}
+    />
   );
 };
 

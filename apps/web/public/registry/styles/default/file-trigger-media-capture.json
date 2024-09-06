@@ -1,0 +1,15 @@
+{
+  "name": "file-trigger-media-capture",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "file-trigger"
+  ],
+  "files": [
+    {
+      "path": "core/file-trigger/demos/media-capture.tsx",
+      "content": "import React from \"react\";\r\nimport { CameraIcon } from \"@/lib/icons\";\r\nimport { Button } from \"@/registry/ui/default/core/button\";\r\nimport { FileTrigger } from \"@/registry/ui/default/core/file-trigger\";\r\n\r\nexport default function FileTriggerDemo() {\r\n  return (\r\n    <FileTrigger defaultCamera=\"environment\">\r\n      <Button prefix={<CameraIcon />}>Take a picture</Button>\r\n    </FileTrigger>\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}

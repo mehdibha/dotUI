@@ -1,0 +1,15 @@
+{
+  "name": "checkbox-group-required",
+  "type": "registry:demo",
+  "registryDependencies": [
+    "checkbox-group"
+  ],
+  "files": [
+    {
+      "path": "core/checkbox-group/demos/required.tsx",
+      "content": "import React from \"react\";\r\nimport { Checkbox } from \"@/registry/ui/default/core/checkbox\";\r\nimport { CheckboxGroup } from \"@/registry/ui/default/core/checkbox-group\";\r\n\r\nexport default function Demo() {\r\n  return (\r\n    <div className=\"grid grid-cols-2 gap-4\">\r\n      <CheckboxGroup label=\"React frameworks\" isRequired>\r\n        <Checkbox value=\"nextjs\">Next.js</Checkbox>\r\n        <Checkbox value=\"remix\">Remix</Checkbox>\r\n      </CheckboxGroup>\r\n      <CheckboxGroup\r\n        label=\"React frameworks\"\r\n        isRequired\r\n        necessityIndicator=\"icon\"\r\n      >\r\n        <Checkbox value=\"nextjs\">Next.js</Checkbox>\r\n        <Checkbox value=\"remix\">Remix</Checkbox>\r\n      </CheckboxGroup>\r\n      <CheckboxGroup\r\n        label=\"React frameworks\"\r\n        isRequired\r\n        necessityIndicator=\"label\"\r\n      >\r\n        <Checkbox value=\"nextjs\">Next.js</Checkbox>\r\n        <Checkbox value=\"remix\">Remix</Checkbox>\r\n      </CheckboxGroup>\r\n      <CheckboxGroup label=\"React frameworks\" necessityIndicator=\"label\">\r\n        <Checkbox value=\"nextjs\">Next.js</Checkbox>\r\n        <Checkbox value=\"remix\">Remix</Checkbox>\r\n      </CheckboxGroup>\r\n    </div>\r\n  );\r\n}\r\n",
+      "type": "registry:demo",
+      "target": ""
+    }
+  ]
+}
