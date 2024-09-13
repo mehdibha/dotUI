@@ -1,5 +1,5 @@
 {
-  "name": "utils",
+  "name": "styles",
   "type": "registry:lib",
   "dependencies": [
     "tailwind-variants"
