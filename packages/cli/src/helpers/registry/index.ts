@@ -3,13 +3,18 @@ import { logger, highlight } from "@/utils";
 import {
   iconLibariesSchema,
   registryIndexSchema,
+  registryItemFileSchema,
   registryItemSchema,
+  registryResolvedItemsTreeSchema,
   stylesSchema,
+  templateSchema,
   themesSchema,
 } from "./schema";
 import { HttpsProxyAgent } from "https-proxy-agent";
 import fetch from "node-fetch";
 import { z } from "zod";
+import { Config } from "@/helpers/get-config";
+import deepmerge from "deepmerge"
 
 // TODO: fix this
 const REGISTRY_URL = "http://localhost:3000/registry";
@@ -78,6 +83,16 @@ export async function getRegistryThemes() {
   }
 }
 
+export async function getRegistryTemplate(name: string) {
+  try {
+    const [result] = await fetchRegistry([`templates/${name}.json`]);
+
+    return templateSchema.parse(result);
+  } catch (error) {
+    logger.error("\n");
+    handleError(error);
+  }
+}
 export async function getRegistryItem(name: string, style: string) {
   try {
     const [result] = await fetchRegistry([
@@ -176,4 +191,122 @@ function isUrl(path: string) {
   } catch (error) {
     return false;
   }
+}
+
+export async function registryResolveItemsTree(
+  names: z.infer<typeof registryItemSchema>["name"][],
+  config: Config
+) {
+  try {
+    const index = await getRegistryIndex();
+    if (!index) {
+      return null;
+    }
+
+    let items = (
+      await Promise.all(
+        names.map(async (name) => {
+          const item = await getRegistryItem(name, config.style);
+          return item;
+        })
+      )
+    ).filter((item): item is NonNullable<typeof item> => item !== null);
+
+    if (!items.length) {
+      return null;
+    }
+
+    const registryDependencies: string[] = items
+      .map((item) => item.registryDependencies ?? [])
+      .flat();
+
+    const uniqueDependencies = Array.from(new Set(registryDependencies));
+    const urls = Array.from([...names, ...uniqueDependencies]).map((name) =>
+      getRegistryUrl(isUrl(name) ? name : `styles/${config.style}/${name}.json`)
+    );
+    let result = await fetchRegistry(urls);
+    const payload = z.array(registryItemSchema).parse(result);
+
+    if (!payload) {
+      return null;
+    }
+
+    // If we're resolving the index, we want it to go first.
+    if (names.includes("index")) {
+      const index = await getRegistryItem("index", config.style);
+      if (index) {
+        payload.unshift(index);
+      }
+
+      // Fetch the theme item if a base color is provided.
+      // We do this for index only.
+      // Other components will ship with their theme tokens.
+      // if (config.tailwind.baseColor) {
+      //   const theme = await registryGetTheme(config.tailwind.baseColor, config);
+      //   if (theme) {
+      //     payload.unshift(theme);
+      //   }
+      // }
+    }
+
+    let tailwind = {};
+    payload.forEach((item) => {
+      tailwind = deepmerge(tailwind, item.tailwind ?? {});
+    });
+
+    let cssVars = {};
+    payload.forEach((item) => {
+      cssVars = deepmerge(cssVars, item.cssVars ?? {});
+    });
+
+    return registryResolvedItemsTreeSchema.parse({
+      dependencies: deepmerge.all(
+        payload.map((item) => item.dependencies ?? [])
+      ),
+      devDependencies: deepmerge.all(
+        payload.map((item) => item.devDependencies ?? [])
+      ),
+      files: deepmerge.all(payload.map((item) => item.files ?? [])),
+      tailwind,
+      cssVars,
+    });
+  } catch (error) {
+    handleError(error);
+    return null;
+  }
+}
+
+
+export function getRegistryItemFileTargetPath(
+  file: z.infer<typeof registryItemFileSchema>,
+  config: Config,
+  override?: string
+) {
+  if (override) {
+    return override
+  }
+
+  if (file.type === "registry:core") {
+    return config.resolvedPaths.core
+  }
+
+  if (file.type === "registry:lib") {
+    return config.resolvedPaths.lib
+  }
+
+  if (file.type === "registry:block" || file.type === "registry:component") {
+    return config.resolvedPaths.components
+  }
+
+  if (file.type === "registry:hook") {
+    return config.resolvedPaths.hooks
+  }
+
+  // TODO: we put this in components for now.
+  // We should move this to pages as per framework.
+  if (file.type === "registry:page") {
+    return config.resolvedPaths.components
+  }
+
+  return config.resolvedPaths.components
 }
