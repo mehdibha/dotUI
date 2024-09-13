@@ -5120,12 +5120,23 @@ export const Index: Record<string, any> = {
       subcategory: "undefined",
       chunks: []
     },
-    "utils": {
-      name: "utils",
+    "cn": {
+      name: "cn",
       type: "registry:lib",
       registryDependencies: undefined,
       files: ["registry/ui/default/lib/cn.ts"],
       component: React.lazy(() => import("@/registry/ui/default/lib/cn.ts")),
+      source: "",
+      category: "undefined",
+      subcategory: "undefined",
+      chunks: []
+    },
+    "styles": {
+      name: "styles",
+      type: "registry:lib",
+      registryDependencies: undefined,
+      files: ["registry/ui/default/lib/styles.ts"],
+      component: React.lazy(() => import("@/registry/ui/default/lib/styles.ts")),
       source: "",
       category: "undefined",
       subcategory: "undefined",
