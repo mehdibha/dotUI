@@ -2,12 +2,12 @@ import { z } from "zod"
 
 // TODO: Extract this to a shared package.
 export const registryItemTypeSchema = z.enum([
+  "registry:core",
   "registry:style",
   "registry:lib",
   "registry:example",
   "registry:block",
   "registry:component",
-  "registry:ui",
   "registry:hook",
   "registry:theme",
   "registry:page",
@@ -75,6 +75,11 @@ export const themesSchema = z.array(
     name: z.string(),
   })
 )
+
+export const templateSchema = z.object({
+  name: z.string(),
+  githubUrl: z.string(),
+})
 
 export const registryBaseColorSchema = z.object({
   inlineColors: z.object({

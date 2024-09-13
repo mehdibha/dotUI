@@ -1,5 +1,7 @@
 import { detect } from "@antfu/ni"
 
+export type PackageManager = "yarn" | "pnpm" | "bun" | "npm"
+
 export async function getPackageManager(
   targetDir: string,
   { withFallback }: { withFallback?: boolean } = {

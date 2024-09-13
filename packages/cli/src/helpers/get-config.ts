@@ -13,8 +13,8 @@ export const DEFAULT_TAILWIND_BASE_COLOR = "slate";
 
 // TODO: Figure out if we want to support all cosmiconfig formats.
 // A simple components.json file would be nice.
-const explorer = cosmiconfig("components", {
-  searchPlaces: ["components.json"],
+const explorer = cosmiconfig("dotui.config", {
+  searchPlaces: ["dotui.config.json"],
 });
 
 export const rawConfigSchema = z
@@ -33,7 +33,7 @@ export const rawConfigSchema = z
     aliases: z.object({
       components: z.string(),
       utils: z.string(),
-      ui: z.string().optional(),
+      core: z.string().optional(),
       lib: z.string().optional(),
       hooks: z.string().optional(),
     }),
@@ -51,7 +51,7 @@ export const configSchema = rawConfigSchema.extend({
     components: z.string(),
     lib: z.string(),
     hooks: z.string(),
-    ui: z.string(),
+    core: z.string(),
   }),
 });
 
@@ -87,12 +87,12 @@ export async function resolveConfigPaths(cwd: string, config: RawConfig) {
       tailwindCss: path.resolve(cwd, config.tailwind.css),
       utils: await resolveImport(config.aliases["utils"], tsConfig),
       components: await resolveImport(config.aliases["components"], tsConfig),
-      ui: config.aliases["ui"]
-        ? await resolveImport(config.aliases["ui"], tsConfig)
+      core: config.aliases["core"]
+        ? await resolveImport(config.aliases["core"], tsConfig)
         : path.resolve(
             (await resolveImport(config.aliases["components"], tsConfig)) ??
               cwd,
-            "ui"
+            "core"
           ),
       // TODO: Make this configurable.
       // For now, we assume the lib and hooks directories are one level up from the components directory.
@@ -117,7 +117,6 @@ export async function resolveConfigPaths(cwd: string, config: RawConfig) {
 export async function getRawConfig(cwd: string): Promise<RawConfig | null> {
   try {
     const configResult = await explorer.search(cwd);
-
     if (!configResult) {
       return null;
     }

@@ -1,15 +1,17 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig",
-  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "isolatedModules": false,
+    "target": "es2019",
+    "moduleResolution": "node",
+    "strict": true,
     "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "skipLibCheck": false,
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "~/*": ["./*"],
+      "~/*": ["./*"]
     }
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "test/fixtures"]
+  "exclude": ["node_modules", "templates", "dist"]
 }
