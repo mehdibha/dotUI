@@ -8,7 +8,7 @@ import {
 } from "@/components/component-preview";
 import { ComponentSource } from "@/components/component-source";
 import { DocsList, type DocsListProps } from "@/components/docs/docs-list";
-import { slugify } from "@/utils/string";
+import { slugify } from "@/lib/string";
 import { Alert } from "@/registry/ui/default/core/alert";
 import { cn } from "@/registry/ui/default/lib/cn";
 import { Code } from "../code";

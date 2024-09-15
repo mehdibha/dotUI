@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { useMounted } from "@/lib/hooks/use-mounted";
+import { useMounted } from "@/registry/hooks/use-mounted";
 import { cn } from "@/registry/ui/default/lib/cn";
 
 interface Item {

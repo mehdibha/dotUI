@@ -1,4 +1,4 @@
-import { SquarePenIcon, PlusSquareIcon, CopyIcon } from "@/lib/icons";
+import { SquarePenIcon, PlusSquareIcon, CopyIcon } from "@/__icons__";
 import { ListBox, Item } from "@/registry/ui/default/core/list-box";
 
 export default function Demo() {

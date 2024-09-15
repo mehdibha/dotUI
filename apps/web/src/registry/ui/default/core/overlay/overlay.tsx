@@ -12,8 +12,8 @@ import {
   type ModalOverlayProps as AriaModalOverlayProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { useMediaQuery } from "@/lib/hooks/use-media-query";
-import { XIcon } from "@/lib/icons";
+import { XIcon } from "@/__icons__";
+import { useMediaQuery } from "@/registry/hooks/use-media-query";
 import { Button, type ButtonProps } from "@/registry/ui/default/core/button";
 import { cn } from "@/registry/ui/default/lib/cn";
 import { MotionDrawerRoot, useMotionDrawer } from "./use-motion-drawer";

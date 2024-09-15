@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { ALargeSmallIcon, RotateCwIcon } from "@/lib/icons";
+import { ALargeSmallIcon, RotateCwIcon } from "@/__icons__";
 import { Button } from "@/registry/ui/default/core/button";
 import { Input, InputRoot } from "@/registry/ui/default/core/input";
 import { Progress } from "@/registry/ui/default/core/progress";

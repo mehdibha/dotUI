@@ -1,6 +1,6 @@
 "use client";
 
-import { XCircleIcon } from "@/lib/icons";
+import { XCircleIcon } from "@/__icons__";
 import { Button } from "@/registry/ui/default/core/button";
 import { SearchField } from "@/registry/ui/default/core/search-field";
 import { Tooltip } from "@/registry/ui/default/core/tooltip";

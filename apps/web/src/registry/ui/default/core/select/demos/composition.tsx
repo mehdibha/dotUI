@@ -1,5 +1,5 @@
 import React from "react";
-import { ChevronsUpDownIcon } from "@/lib/icons";
+import { ChevronsUpDownIcon } from "@/__icons__";
 import { Button } from "@/registry/ui/default/core/button";
 import { Item, ListBox } from "@/registry/ui/default/core/list-box";
 import { Overlay } from "@/registry/ui/default/core/overlay";

@@ -1,4 +1,4 @@
-import { HomeIcon } from "@/lib/icons";
+import { HomeIcon } from "@/__icons__";
 import {
   Breadcrumbs,
   Breadcrumb,

@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronLeftIcon, ChevronRightIcon } from "@/lib/icons";
+import { ChevronLeftIcon, ChevronRightIcon } from "@/__icons__";
 import { Button } from "@/registry/ui/default/core/button";
 import {
   CalendarHeader,

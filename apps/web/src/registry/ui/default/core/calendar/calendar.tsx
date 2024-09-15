@@ -20,7 +20,7 @@ import {
   useSlottedContext,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { ChevronLeftIcon, ChevronRightIcon } from "@/lib/icons";
+import { ChevronLeftIcon, ChevronRightIcon } from "@/__icons__";
 import { Button, buttonStyles } from "@/registry/ui/default/core/button";
 import { Heading } from "@/registry/ui/default/core/heading";
 import { Text } from "@/registry/ui/default/core/text";

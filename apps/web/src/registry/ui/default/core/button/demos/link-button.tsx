@@ -1,4 +1,4 @@
-import { LogInIcon } from "@/lib/icons";
+import { LogInIcon } from "@/__icons__";
 import { Button } from "@/registry/ui/default/core/button";
 
 export default function Demo() {

@@ -1,4 +1,4 @@
-import { TimerIcon } from "@/lib/icons";
+import { TimerIcon } from "@/__icons__";
 import { TimeField } from "@/registry/ui/default/core/time-field";
 
 export default function Demo() {

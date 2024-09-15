@@ -1,4 +1,4 @@
-import { InfoIcon, HelpIcon } from "@/lib/icons";
+import { InfoIcon, HelpIcon } from "@/__icons__";
 import { Button } from "@/registry/ui/default/core/button";
 import { DialogRoot, Dialog } from "@/registry/ui/default/core/dialog";
 

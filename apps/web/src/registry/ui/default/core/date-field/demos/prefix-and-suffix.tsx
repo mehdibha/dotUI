@@ -1,4 +1,4 @@
-import { CalendarIcon } from "@/lib/icons";
+import { CalendarIcon } from "@/__icons__";
 import { DateField } from "@/registry/ui/default/core/date-field";
 
 export default function Demo() {

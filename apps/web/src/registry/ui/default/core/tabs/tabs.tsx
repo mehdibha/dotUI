@@ -13,7 +13,7 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { focusRing } from "@/lib/utils/styles";
+import { focusRing } from "@/registry/ui/default/lib/styles";
 
 const tabsStyles = tv({
   slots: {

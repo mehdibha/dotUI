@@ -1,6 +1,6 @@
 import * as React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
-import { DangerIcon, InfoIcon, SuccessIcon, WarningIcon } from "@/lib/icons";
+import { DangerIcon, InfoIcon, SuccessIcon, WarningIcon } from "@/__icons__";
 
 const alertStyles = tv({
   slots: {

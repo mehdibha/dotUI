@@ -6,7 +6,7 @@ import {
   type SearchFieldProps as AriaSearchFieldProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { SearchIcon, XIcon } from "@/lib/icons";
+import { SearchIcon, XIcon } from "@/__icons__";
 import { Button } from "@/registry/ui/default/core/button";
 import { Field, type FieldProps } from "@/registry/ui/default/core/field";
 import {

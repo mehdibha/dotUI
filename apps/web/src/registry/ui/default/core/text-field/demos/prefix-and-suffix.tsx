@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { XCircleIcon } from "@/lib/icons";
+import { XCircleIcon } from "@/__icons__";
 import { Button } from "@/registry/ui/default/core/button";
 import { TextField } from "@/registry/ui/default/core/text-field";
 import { Tooltip } from "@/registry/ui/default/core/tooltip";

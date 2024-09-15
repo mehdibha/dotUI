@@ -1,5 +1,5 @@
 import React from "react";
-import { MinusIcon, PlusIcon } from "@/lib/icons";
+import { MinusIcon, PlusIcon } from "@/__icons__";
 import { Button } from "@/registry/ui/default/core/button";
 import { Description, Label } from "@/registry/ui/default/core/field";
 import { Group } from "@/registry/ui/default/core/group";

@@ -12,7 +12,7 @@ import {
   type MenuTriggerProps as AriaMenuTriggerProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { CheckIcon, ChevronRightIcon } from "@/lib/icons";
+import { CheckIcon, ChevronRightIcon } from "@/__icons__";
 import { Kbd } from "@/registry/ui/default/core/kbd";
 import { Overlay, type OverlayProps } from "@/registry/ui/default/core/overlay";
 import { Text } from "@/registry/ui/default/core/text";

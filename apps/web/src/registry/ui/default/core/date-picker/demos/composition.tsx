@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { CalendarIcon } from "@/lib/icons";
+import { CalendarIcon } from "@/__icons__";
 import { Button } from "@/registry/ui/default/core/button";
 import { Calendar } from "@/registry/ui/default/core/calendar";
 import { DateInput, DateSegment } from "@/registry/ui/default/core/date-input";

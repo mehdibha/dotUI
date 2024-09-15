@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { getDocTypeFromSlug } from "@/utils/docs";
+import { getDocTypeFromSlug } from "@/lib/docs";
 import type {
   Doc,
   DocCategory,
@@ -8,7 +8,7 @@ import type {
   DocMetadata,
   DocType,
 } from "@/types/docs";
-import { getTableOfContents } from "../utils/toc";
+import { getTableOfContents } from "../lib/toc";
 import { getAllMdxFiles, parseMDXFile } from "./mdx";
 
 const getBreadcrumbs = (slug: string[]): { label: string; href: string }[] => {

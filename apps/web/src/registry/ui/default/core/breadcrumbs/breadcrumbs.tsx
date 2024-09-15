@@ -9,7 +9,7 @@ import {
   type LinkProps as AriaLinkProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { ChevronRightIcon } from "@/lib/icons";
+import { ChevronRightIcon } from "@/__icons__";
 import { cn } from "@/registry/ui/default/lib/cn";
 
 const breadcrumbsStyles = tv({

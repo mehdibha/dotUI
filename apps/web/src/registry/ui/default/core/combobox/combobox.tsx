@@ -6,7 +6,7 @@ import {
   type ComboBoxProps as AriaComboboxProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { ChevronDownIcon } from "@/lib/icons";
+import { ChevronDownIcon } from "@/__icons__";
 import { Button } from "@/registry/ui/default/core/button";
 import { Field, type FieldProps } from "@/registry/ui/default/core/field";
 import { Input, InputRoot } from "@/registry/ui/default/core/input";
