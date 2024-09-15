@@ -1,4 +1,4 @@
-import { getDocTypeFromSlug } from "@/utils/docs";
+import { getDocTypeFromSlug } from "@/lib/docs";
 import { Button } from "@/registry/ui/default/core/button";
 import { cn } from "@/registry/ui/default/lib/cn";
 import { getDocs } from "@/server/docs";

@@ -4,7 +4,13 @@ export const core: Registry = [
   {
     name: "alert",
     type: "registry:core",
-    files: ["core/alert/alert.tsx"],
+    files: [
+      {
+        path: "core/alert/alert.tsx",
+        type: "registry:core",
+        target: "core/alert.tsx",
+      },
+    ],
   },
   {
     name: "aspect-ratio",

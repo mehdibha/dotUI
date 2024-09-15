@@ -1,4 +1,4 @@
-import { Volume1Icon, Volume2Icon } from "@/lib/icons";
+import { Volume1Icon, Volume2Icon } from "@/__icons__";
 import { Label, Description } from "@/registry/ui/default/core/field";
 import {
   SliderFiller,

@@ -9,8 +9,8 @@ import {
   type RadioProps as AriaRadioProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { focusRing, focusRingGroup } from "@/lib/utils/styles";
 import { Field, type FieldProps } from "@/registry/ui/default/core/field";
+import { focusRing, focusRingGroup } from "@/registry/ui/default/lib/styles";
 
 const radioGroupStyles = tv({
   slots: {

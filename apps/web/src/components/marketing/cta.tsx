@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { getGitHubStars } from "@/utils/github";
+import { getGitHubStars } from "@/lib/github";
 import { siteConfig } from "@/config";
 import { cn } from "@/registry/ui/default/lib/cn";
 import { GitHubIcon } from "../icons";

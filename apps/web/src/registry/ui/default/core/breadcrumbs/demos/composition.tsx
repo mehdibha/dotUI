@@ -1,4 +1,4 @@
-import { ChevronRightSquareIcon } from "@/lib/icons";
+import { ChevronRightCircleIcon } from "@/__icons__";
 import {
   Breadcrumbs,
   BreadcrumbItem,
@@ -10,15 +10,15 @@ export default function Demo() {
     <Breadcrumbs>
       <BreadcrumbItem>
         <BreadcrumbLink href="#">Home</BreadcrumbLink>
-        <ChevronRightSquareIcon />
+        <ChevronRightCircleIcon />
       </BreadcrumbItem>
       <BreadcrumbItem>
         <BreadcrumbLink href="#">Components</BreadcrumbLink>
-        <ChevronRightSquareIcon />
+        <ChevronRightCircleIcon />
       </BreadcrumbItem>
       <BreadcrumbItem>
         <BreadcrumbLink>Breadcrumbs</BreadcrumbLink>
-        <ChevronRightSquareIcon />
+        <ChevronRightCircleIcon />
       </BreadcrumbItem>
     </Breadcrumbs>
   );

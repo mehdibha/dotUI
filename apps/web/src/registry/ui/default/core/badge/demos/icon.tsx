@@ -1,4 +1,4 @@
-import { ShieldIcon } from "@/lib/icons";
+import { ShieldIcon } from "@/__icons__";
 import { Badge } from "@/registry/ui/default/core/badge";
 
 export default function Demo() {

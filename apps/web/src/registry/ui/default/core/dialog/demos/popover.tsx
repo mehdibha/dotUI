@@ -2,7 +2,7 @@
 
 import React from "react";
 import type { Key } from "react-aria-components";
-import { InfoIcon } from "@/lib/icons";
+import { InfoIcon } from "@/__icons__";
 import { Button } from "@/registry/ui/default/core/button";
 import { DialogRoot, Dialog } from "@/registry/ui/default/core/dialog";
 import { Item } from "@/registry/ui/default/core/list-box";

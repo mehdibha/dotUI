@@ -6,14 +6,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MenuIcon } from "lucide-react";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
-import { useScrolled } from "@/lib/hooks/use-scrolled";
-import { focusRing } from "@/lib/utils/styles";
 import { siteConfig } from "@/config";
+import { useScrolled } from "@/registry/hooks/use-scrolled";
 import { Avatar } from "@/registry/ui/default/core/avatar";
 import { Badge } from "@/registry/ui/default/core/badge";
 import { Button } from "@/registry/ui/default/core/button";
 import { Dialog, DialogRoot } from "@/registry/ui/default/core/dialog";
 import { cn } from "@/registry/ui/default/lib/cn";
+import { focusRing } from "@/registry/ui/default/lib/styles";
 import { SearchDocs } from "./docs/search-docs";
 import { ThemeToggle } from "./theme-toggle";
 

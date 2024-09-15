@@ -2,12 +2,12 @@ import React from "react";
 import NavLink from "next/link";
 import Link from "next/link";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
-import { focusRing } from "@/lib/utils/styles";
 import { siteConfig } from "@/config";
 import { Avatar } from "@/registry/ui/default/core/avatar";
 import { Badge } from "@/registry/ui/default/core/badge";
 import { Separator } from "@/registry/ui/default/core/separator";
 import { cn } from "@/registry/ui/default/lib/cn";
+import { focusRing } from "@/registry/ui/default/lib/styles";
 
 const links = [
   {

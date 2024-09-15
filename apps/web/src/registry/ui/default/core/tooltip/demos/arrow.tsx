@@ -1,4 +1,4 @@
-import { PlusIcon } from "@/lib/icons";
+import { PlusIcon } from "@/__icons__";
 import { Button } from "@/registry/ui/default/core/button";
 import { Tooltip } from "@/registry/ui/default/core/tooltip";
 

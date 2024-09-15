@@ -6,13 +6,13 @@ import {
   type NumberFieldProps as AriaNumberFieldProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { useMediaQuery } from "@/lib/hooks/use-media-query";
 import {
   ChevronDownIcon,
   ChevronUpIcon,
   MinusIcon,
   PlusIcon,
-} from "@/lib/icons";
+} from "@/__icons__";
+import { useMediaQuery } from "@/registry/hooks/use-media-query";
 import { Button, type ButtonProps } from "@/registry/ui/default/core/button";
 import { Field, type FieldProps } from "@/registry/ui/default/core/field";
 import {

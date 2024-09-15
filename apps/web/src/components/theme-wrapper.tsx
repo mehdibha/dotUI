@@ -2,8 +2,8 @@
 
 import React from "react";
 import { useConfig } from "@/hooks/use-config";
-import { useMounted } from "@/lib/hooks/use-mounted";
 import type { ThemeMode } from "@/types/theme";
+import { useMounted } from "@/registry/hooks/use-mounted";
 
 interface ThemeWrapperProps extends React.ComponentProps<"div"> {
   children: React.ReactNode;

@@ -3,7 +3,7 @@ import { ArrowRightIcon, PinIcon, SparklesIcon } from "lucide-react";
 import Balancer from "react-wrap-balancer";
 import { SearchDocs } from "@/components/docs/search-docs";
 import { GitHubIcon } from "@/components/icons";
-import Calendar from "@/lib/demos/components/core/calendar/default";
+import Calendar from "@/registry/ui/default/core/calendar/demos/default";
 import { siteConfig } from "@/config";
 import { Avatar } from "@/registry/ui/default/core/avatar";
 import { AvatarGroup } from "@/registry/ui/default/core/avatar-group";

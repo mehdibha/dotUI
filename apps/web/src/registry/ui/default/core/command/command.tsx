@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { Command as CommandPrimitive } from "cmdk";
-import { SearchIcon } from "@/lib/icons";
+import { SearchIcon } from "@/__icons__";
 import { cn } from "@/registry/ui/default/lib/cn";
 
 const Command = React.forwardRef<

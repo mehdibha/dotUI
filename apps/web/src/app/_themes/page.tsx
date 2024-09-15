@@ -22,7 +22,7 @@ import {
 import Balancer from "react-wrap-balancer";
 import { useConfig } from "@/hooks/use-config";
 import { usePalette } from "@/hooks/use-palette";
-import { useMediaQuery } from "@/lib/hooks/use-media-query";
+import { useMediaQuery } from "@/registry/hooks/use-media-query";
 import { Button } from "@/registry/ui/default/core/button";
 import { ColorPicker } from "@/registry/ui/default/core/color-picker";
 import { Dialog, DialogRoot } from "@/registry/ui/default/core/dialog";

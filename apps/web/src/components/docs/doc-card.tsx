@@ -3,10 +3,10 @@
 import React from "react";
 import Link from "next/link";
 import { useInView } from "framer-motion";
-import { getAspectFromType } from "@/utils/docs";
-import { useDebounce } from "@/lib/hooks/use-debounce";
-import { truncateOnWord } from "@/lib/utils/string";
+import { getAspectFromType } from "@/lib/docs";
+import { truncateOnWord } from "@/lib/string";
 import type { DocMetadata } from "@/types/docs";
+import { useDebounce } from "@/registry/hooks/use-debounce";
 import { AspectRatio } from "@/registry/ui/default/core/aspect-ratio";
 import { Badge } from "@/registry/ui/default/core/badge";
 import { ScrollArea } from "@/registry/ui/default/core/scroll-area";

@@ -1,5 +1,5 @@
 import React from "react";
-import { UserIcon } from "@/lib/icons";
+import { UserIcon } from "@/__icons__";
 import {
   AvatarRoot,
   AvatarImage,

@@ -1,4 +1,4 @@
-import { PaletteIcon } from "@/lib/icons";
+import { PaletteIcon } from "@/__icons__";
 import { ColorField } from "@/registry/ui/default/core/color-field";
 
 export default function Demo() {

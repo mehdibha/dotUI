@@ -1,4 +1,4 @@
-import { WalletIcon } from "@/lib/icons";
+import { WalletIcon } from "@/__icons__";
 import {
   AlertContent,
   AlertRoot,

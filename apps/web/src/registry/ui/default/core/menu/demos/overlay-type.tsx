@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { MenuIcon } from "@/lib/icons";
+import { MenuIcon } from "@/__icons__";
 import { Button } from "@/registry/ui/default/core/button";
 import { Menu, MenuItem, MenuRoot } from "@/registry/ui/default/core/menu";
 import { type OverlayProps } from "@/registry/ui/default/core/overlay";

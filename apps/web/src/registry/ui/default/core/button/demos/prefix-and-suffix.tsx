@@ -1,4 +1,4 @@
-import { UploadIcon } from "@/lib/icons";
+import { UploadIcon } from "@/__icons__";
 import { Button } from "@/registry/ui/default/core/button";
 
 export default function Demo() {

@@ -3,7 +3,7 @@ import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/react";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
-import { truncateOnWord } from "@/lib/utils/string";
+import { truncateOnWord } from "@/lib/string";
 import {
   JosephinFont,
   fontDisplay,

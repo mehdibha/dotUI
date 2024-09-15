@@ -9,7 +9,7 @@ import {
   RangeCalendarContext as AriaRangeCalendarContext,
   useSlottedContext,
 } from "react-aria-components";
-import { ChevronLeftIcon, ChevronRightIcon } from "@/lib/icons";
+import { ChevronLeftIcon, ChevronRightIcon } from "@/__icons__";
 import { Button } from "@/registry/ui/default/core/button";
 import {
   CalendarHeader,

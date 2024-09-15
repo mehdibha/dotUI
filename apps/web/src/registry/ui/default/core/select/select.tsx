@@ -9,7 +9,7 @@ import {
   type SelectValueProps as AriaSelectValueProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { ChevronDownIcon } from "@/lib/icons";
+import { ChevronDownIcon } from "@/__icons__";
 import { Button, type ButtonProps } from "@/registry/ui/default/core/button";
 import { Field, type FieldProps } from "@/registry/ui/default/core/field";
 import {

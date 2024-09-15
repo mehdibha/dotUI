@@ -1,4 +1,4 @@
-import { GlobeIcon } from "@/lib/icons";
+import { GlobeIcon } from "@/__icons__";
 import { Alert } from "@/registry/ui/default/core/alert";
 
 export default function AlertDemo() {

@@ -1,5 +1,5 @@
 import React from "react";
-import { SearchIcon } from "@/lib/icons";
+import { SearchIcon } from "@/__icons__";
 import { Description, Label } from "@/registry/ui/default/core/field";
 import { Input, InputRoot } from "@/registry/ui/default/core/input";
 import { SearchFieldRoot } from "@/registry/ui/default/core/search-field";
