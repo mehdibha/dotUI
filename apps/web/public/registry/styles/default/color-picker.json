@@ -1,0 +1,25 @@
+{
+  "name": "color-picker",
+  "type": "registry:core",
+  "dependencies": [
+    "react-aria-components"
+  ],
+  "registryDependencies": [
+    "button",
+    "color-area",
+    "color-field",
+    "color-slider",
+    "color-swatch",
+    "dialog",
+    "list-box",
+    "select"
+  ],
+  "files": [
+    {
+      "path": "core/color-picker/color-picker.tsx",
+      "content": "\"use client\";\r\n\r\nimport React from \"react\";\r\nimport {\r\n  getColorChannels,\r\n  ColorPicker as AriaColorPicker,\r\n  type ColorPickerProps as AriaColorPickerProps,\r\n  type ColorSpace,\r\n  composeRenderProps,\r\n} from \"react-aria-components\";\r\nimport { Button, type ButtonProps } from \"@/registry/ui/default/core/button\";\r\nimport { ColorArea } from \"@/registry/ui/default/core/color-area\";\r\nimport { ColorField } from \"@/registry/ui/default/core/color-field\";\r\nimport { ColorSlider } from \"@/registry/ui/default/core/color-slider\";\r\nimport { ColorSwatch } from \"@/registry/ui/default/core/color-swatch\";\r\nimport { Dialog, DialogRoot } from \"@/registry/ui/default/core/dialog\";\r\nimport { Item } from \"@/registry/ui/default/core/list-box\";\r\nimport { Select } from \"@/registry/ui/default/core/select\";\r\nimport { cn } from \"@/registry/ui/default/lib/cn\";\r\n\r\ntype ColorPickerProps = ColorPickerRootProps & Omit<ButtonProps, \"children\">;\r\nconst ColorPicker = ({\r\n  slot,\r\n  value,\r\n  defaultValue,\r\n  onChange,\r\n  shape = \"square\",\r\n  ...props\r\n}: ColorPickerProps) => {\r\n  return (\r\n    <ColorPickerRoot\r\n      slot={slot}\r\n      value={value}\r\n      defaultValue={defaultValue}\r\n      onChange={onChange}\r\n    >\r\n      {composeRenderProps(props.children, (children) => (\r\n        <DialogRoot>\r\n          <Button shape={shape} {...props}>\r\n            <ColorSwatch />\r\n            {children}\r\n          </Button>\r\n          <Dialog type=\"popover\" mobileType=\"drawer\">\r\n            <ColorEditor className=\"mx-auto\" />\r\n          </Dialog>\r\n        </DialogRoot>\r\n      ))}\r\n    </ColorPickerRoot>\r\n  );\r\n};\r\n\r\ntype ColorPickerRootProps = AriaColorPickerProps;\r\nconst ColorPickerRoot = (props: ColorPickerRootProps) => {\r\n  return <AriaColorPicker {...props} />;\r\n};\r\n\r\ntype ColorEditorProps = React.HTMLAttributes<HTMLDivElement>;\r\nconst ColorEditor = ({ className, ...props }: ColorEditorProps) => {\r\n  const [space, setSpace] = React.useState<ColorSpace | \"hex\">(\"hex\");\r\n  return (\r\n    <div className={cn(\"mx-auto flex flex-col gap-2\", className)} {...props}>\r\n      <div className=\"flex gap-2\">\r\n        <ColorArea\r\n          colorSpace=\"hsb\"\r\n          xChannel=\"saturation\"\r\n          yChannel=\"brightness\"\r\n        />\r\n        <ColorSlider\r\n          orientation=\"vertical\"\r\n          colorSpace=\"hsb\"\r\n          channel=\"hue\"\r\n          showValueLabel={false}\r\n        />\r\n        <ColorSlider\r\n          orientation=\"vertical\"\r\n          colorSpace=\"hsb\"\r\n          channel=\"alpha\"\r\n          showValueLabel={false}\r\n        />\r\n      </div>\r\n      <div className=\"flex items-center gap-2\">\r\n        <Select\r\n          selectedKey={space}\r\n          onSelectionChange={(s) => setSpace(s as ColorSpace)}\r\n          size=\"sm\"\r\n        >\r\n          <Item id=\"hex\">Hex</Item>\r\n          <Item id=\"rgb\">RGB</Item>\r\n          <Item id=\"hsl\">HSL</Item>\r\n          <Item id=\"hsb\">HSB</Item>\r\n        </Select>\r\n        {space === \"hex\" ? (\r\n          <ColorField\r\n            aria-label=\"Hex\"\r\n            className=\"shrink-1 w-[40px] flex-1 basis-0\"\r\n            size=\"sm\"\r\n          />\r\n        ) : (\r\n          getColorChannels(space).map((channel) => (\r\n            <ColorField\r\n              key={channel}\r\n              colorSpace={space}\r\n              channel={channel}\r\n              className=\"shrink-1 w-[40px] flex-1 basis-0\"\r\n              size=\"sm\"\r\n            />\r\n          ))\r\n        )}\r\n      </div>\r\n    </div>\r\n  );\r\n};\r\n\r\nexport type { ColorPickerProps, ColorPickerRootProps };\r\nexport { ColorPicker, ColorPickerRoot, ColorEditor };\r\n",
+      "type": "registry:core",
+      "target": "core/color-picker.tsx"
+    }
+  ]
+}

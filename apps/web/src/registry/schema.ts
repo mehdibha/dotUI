@@ -17,10 +17,11 @@ export const registryItemTypeSchema = z.enum([
   "registry:style",
   "registry:core",
   "registry:lib",
-  "registry:demo",
   "registry:hook",
   "registry:theme",
   "registry:block",
+  "registry:template",
+  "registry:integration",
 ]);
 
 export const registryItemFileSchema = z.union([
@@ -49,6 +50,7 @@ export const registryItemCssVarsSchema = z.object({
 export const registryEntrySchema = z.object({
   name: z.string(),
   type: registryItemTypeSchema,
+  label: z.string().optional(),
   description: z.string().optional(),
   dependencies: z.array(z.string()).optional(),
   devDependencies: z.array(z.string()).optional(),
@@ -60,6 +62,7 @@ export const registryEntrySchema = z.object({
   category: z.string().optional(),
   subcategory: z.string().optional(),
   chunks: z.array(blockChunkSchema).optional(),
+  templateUrl: z.string().optional(),
 });
 
 export const registrySchema = z.array(registryEntrySchema);
