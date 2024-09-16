@@ -1,0 +1,14 @@
+{
+  "name": "styles",
+  "type": "registry:lib",
+  "dependencies": [
+    "tailwind-variants"
+  ],
+  "files": [
+    {
+      "path": "lib/styles.ts",
+      "content": "import { tv } from \"tailwind-variants\";\r\n\r\nexport const focusRing = tv({\r\n  base: \"outline-none ring-0 ring-border-focus focus-visible:ring-offset-2 focus-visible:ring-offset-bg focus-visible:ring-2\",\r\n});\r\n\r\nexport const focusRingGroup = tv({\r\n  base: \"outline-none ring-0 ring-border-focus group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-bg group-focus-visible:ring-2\",\r\n});\r\n\r\nexport const focusInput = tv({\r\n  base: \"ring-0 focus-within:ring-border-focus focus-within:ring-2\",\r\n});\r\n",
+      "type": "registry:lib"
+    }
+  ]
+}

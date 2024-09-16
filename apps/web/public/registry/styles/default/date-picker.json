@@ -1,0 +1,23 @@
+{
+  "name": "date-picker",
+  "type": "registry:core",
+  "dependencies": [
+    "react-aria-components"
+  ],
+  "registryDependencies": [
+    "button",
+    "calendar",
+    "dialog",
+    "date-input",
+    "field",
+    "input"
+  ],
+  "files": [
+    {
+      "path": "core/date-picker/date-picker.tsx",
+      "content": "\"use client\";\r\n\r\nimport * as React from \"react\";\r\nimport {\r\n  DatePicker as AriaDatePicker,\r\n  type DatePickerProps as AriaDatePickerProps,\r\n  type DateValue,\r\n} from \"react-aria-components\";\r\nimport { type VariantProps } from \"tailwind-variants\";\r\nimport { CalendarIcon } from \"@/__icons__\";\r\nimport { Button } from \"@/registry/ui/default/core/button\";\r\nimport { Calendar } from \"@/registry/ui/default/core/calendar\";\r\nimport { DateInput, DateSegment } from \"@/registry/ui/default/core/date-input\";\r\nimport { Dialog } from \"@/registry/ui/default/core/dialog\";\r\nimport {\r\n  Field,\r\n  fieldStyles,\r\n  type FieldProps,\r\n} from \"@/registry/ui/default/core/field\";\r\nimport { InputRoot, type inputStyles } from \"@/registry/ui/default/core/input\";\r\n\r\ninterface DatePickerProps<T extends DateValue>\r\n  extends DatePickerRootProps<T>,\r\n    Omit<FieldProps, \"children\">,\r\n    VariantProps<typeof inputStyles> {\r\n  prefix?: React.ReactNode;\r\n  isLoading?: boolean;\r\n}\r\n\r\nconst DatePicker = <T extends DateValue>({\r\n  className,\r\n  size,\r\n  label,\r\n  description,\r\n  errorMessage,\r\n  prefix,\r\n  isLoading,\r\n  isRequired,\r\n  isDisabled,\r\n  necessityIndicator,\r\n  contextualHelp,\r\n  ...props\r\n}: DatePickerProps<T>) => {\r\n  return (\r\n    <DatePickerRoot\r\n      className={className}\r\n      isRequired={isRequired}\r\n      isDisabled={isLoading || isDisabled}\r\n      {...props}\r\n    >\r\n      <Field\r\n        label={label}\r\n        description={description}\r\n        errorMessage={errorMessage}\r\n        isRequired={isRequired}\r\n        necessityIndicator={necessityIndicator}\r\n        contextualHelp={contextualHelp}\r\n      >\r\n        <InputRoot\r\n          size={size}\r\n          prefix={prefix}\r\n          isLoading={isLoading}\r\n          loaderPosition=\"prefix\"\r\n          className=\"pr-1\"\r\n        >\r\n          <DateInput>\r\n            {(segment) => <DateSegment segment={segment} />}\r\n          </DateInput>\r\n          <Button\r\n            variant=\"default\"\r\n            size=\"sm\"\r\n            shape=\"square\"\r\n            className=\"size-7 my-1 rounded-sm\"\r\n          >\r\n            <CalendarIcon />\r\n          </Button>\r\n        </InputRoot>\r\n      </Field>\r\n      <Dialog type=\"popover\" mobileType=\"drawer\" className=\"flex\">\r\n        <Calendar className=\"mx-auto\" />\r\n      </Dialog>\r\n    </DatePickerRoot>\r\n  );\r\n};\r\n\r\ninterface DatePickerRootProps<T extends DateValue>\r\n  extends Omit<AriaDatePickerProps<T>, \"className\"> {\r\n  className?: string;\r\n}\r\nconst DatePickerRoot = <T extends DateValue>({\r\n  className,\r\n  ...props\r\n}: DatePickerRootProps<T>) => {\r\n  const { root } = fieldStyles();\r\n  return <AriaDatePicker className={root({ className })} {...props} />;\r\n};\r\n\r\nexport type { DatePickerProps, DatePickerRootProps };\r\nexport { DatePicker, DatePickerRoot };\r\n",
+      "type": "registry:core",
+      "target": "core/date-picker.tsx"
+    }
+  ]
+}

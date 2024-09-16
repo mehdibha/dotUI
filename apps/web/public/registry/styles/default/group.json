@@ -1,0 +1,15 @@
+{
+  "name": "group",
+  "type": "registry:core",
+  "dependencies": [
+    "react-aria-components"
+  ],
+  "files": [
+    {
+      "path": "core/group/group.tsx",
+      "content": "\"use client\";\r\n\r\nimport { Group, type GroupProps } from \"react-aria-components\";\r\n\r\nexport type { GroupProps };\r\nexport { Group };\r\n",
+      "type": "registry:core",
+      "target": "core/group.tsx"
+    }
+  ]
+}

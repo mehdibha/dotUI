@@ -1,0 +1,21 @@
+{
+  "name": "select",
+  "type": "registry:core",
+  "dependencies": [
+    "react-aria-components"
+  ],
+  "registryDependencies": [
+    "button",
+    "field",
+    "list-box",
+    "overlay"
+  ],
+  "files": [
+    {
+      "path": "core/select/select.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport {\n  composeRenderProps,\n  Select as AriaSelect,\n  SelectValue as AriaSelectValue,\n  type SelectProps as AriaSelectProps,\n  type SelectValueProps as AriaSelectValueProps,\n} from \"react-aria-components\";\nimport { tv } from \"tailwind-variants\";\nimport { ChevronDownIcon } from \"@/__icons__\";\nimport { Button, type ButtonProps } from \"@/registry/ui/default/core/button\";\nimport { Field, type FieldProps } from \"@/registry/ui/default/core/field\";\nimport {\n  ListBox,\n  type ListBoxProps,\n} from \"@/registry/ui/default/core/list-box\";\nimport { Overlay } from \"@/registry/ui/default/core/overlay\";\n\nconst selectStyles = tv({\n  slots: {\n    root: \"flex flex-col items-start gap-2\",\n    selectValue: \"flex-1 text-left\",\n  },\n});\n\ninterface SelectProps<T extends object>\n  extends Omit<SelectRootProps<T>, \"children\">,\n    Omit<FieldProps, \"children\"> {\n  children?: ListBoxProps<T>[\"children\"];\n  dependencies?: ListBoxProps<T>[\"dependencies\"];\n  items?: ListBoxProps<T>[\"items\"];\n  isLoading?: ListBoxProps<T>[\"isLoading\"];\n  variant?: ButtonProps[\"variant\"];\n  size?: ButtonProps[\"size\"];\n}\nconst Select = <T extends object>({\n  variant = \"outline\",\n  size,\n  label,\n  description,\n  errorMessage,\n  necessityIndicator,\n  contextualHelp,\n  children,\n  dependencies,\n  items,\n  isLoading,\n  ...props\n}: SelectProps<T>) => {\n  return (\n    <SelectRoot {...props}>\n      {({ isRequired }) => (\n        <>\n          <Field\n            label={label}\n            description={description}\n            errorMessage={errorMessage}\n            isRequired={isRequired}\n            necessityIndicator={necessityIndicator}\n            contextualHelp={contextualHelp}\n          >\n            <Button variant={variant} size={size} suffix={<ChevronDownIcon />}>\n              <SelectValue />\n            </Button>\n          </Field>\n          <Overlay type=\"popover\">\n            <ListBox\n              isLoading={isLoading}\n              items={items}\n              dependencies={dependencies}\n            >\n              {children}\n            </ListBox>\n          </Overlay>\n        </>\n      )}\n    </SelectRoot>\n  );\n};\n\ntype SelectValueProps<T extends object> = AriaSelectValueProps<T>;\nconst SelectValue = <T extends object>(props: SelectValueProps<T>) => {\n  const { selectValue } = selectStyles();\n  return (\n    <AriaSelectValue\n      {...props}\n      className={composeRenderProps(props.className, (className) =>\n        selectValue({ className })\n      )}\n    />\n  );\n};\n\ninterface SelectRootProps<T extends object>\n  extends Omit<AriaSelectProps<T>, \"className\"> {\n  className?: string;\n}\nconst SelectRoot = <T extends object>({\n  className,\n  ...props\n}: SelectRootProps<T>) => {\n  const { root } = selectStyles();\n  return <AriaSelect className={root({ className })} {...props} />;\n};\n\nexport type { SelectProps, SelectRootProps, SelectValueProps };\nexport { Select, SelectRoot, SelectValue };\n",
+      "type": "registry:core",
+      "target": "core/select.tsx"
+    }
+  ]
+}

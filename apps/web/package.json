@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "pnpm build:docs-config && pnpm build:previews && next build",
-    "build:registry": "tsx ./scripts/build-registry-2.ts && prettier --log-level silent --write \"src/registry/**/*.{ts,tsx,mdx}\" --cache",
+    "build:registry": "tsx ./scripts/build-registry.ts && prettier --log-level silent --write \"src/registry/**/*.{ts,tsx,mdx}\" --cache",
     "build:previews": "tsx ./scripts/build-previews.ts",
     "build:icons": "tsx ./scripts/build-icons.ts",
     "build:docs-config": "tsx ./scripts/build-docs-config.ts",
