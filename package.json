@@ -16,6 +16,7 @@
     "build": "turbo run build",
     "build:cli": "turbo --filter=dotui-cli build",
     "build:registry": "pnpm --filter=web build:registry",
+    "build:demos": "pnpm --filter=web build:demos",
     "dev": "turbo run dev --parallel",
     "cli:dev": "turbo --filter=dotui-cli dev",
     "cli:start": "pnpm --filter=dotui-cli start",
