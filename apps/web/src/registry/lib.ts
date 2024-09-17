@@ -13,12 +13,12 @@ export const lib: Registry = [
     ],
   },
   {
-    name: "styles",
+    name: "focus-styles",
     type: "registry:lib",
     dependencies: ["tailwind-variants"],
     files: [
       {
-        path: "lib/styles.ts",
+        path: "lib/focus-styles.ts",
         type: "registry:lib",
       },
     ],
