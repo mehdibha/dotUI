@@ -5,11 +5,7 @@ export const styles: Registry = [
     name: "default",
     type: "registry:style",
     label: "Default",
-    dependencies: [
-      "tailwind-variants",
-      "tailwindcss-animate",
-      "class-variance-authority",
-    ],
+    dependencies: ["tailwindcss-animate"],
     registryDependencies: ["cn", "focus-styles"],
     tailwind: {
       config: {

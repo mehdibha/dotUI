@@ -138,7 +138,7 @@ export async function runInit(options: z.infer<typeof initOptionsSchema>) {
     tsConfigSpinner?.succeed();
   }
 
-  logger.break()
+  logger.break();
 
   const config = await promptForConfig({
     projectDir,
@@ -152,14 +152,8 @@ export async function runInit(options: z.infer<typeof initOptionsSchema>) {
   await fs.writeFile(targetPath, JSON.stringify(config, null, 2), "utf8");
   configSpinner.succeed();
 
-  const fullConfig = await resolveConfigPaths(projectDir, config)
-  const components = ["index"]
-  await addComponents(components, fullConfig, {
-    // overwrite: true,
-    // silent: options.silent,
-    // isNewProject:
-    //   options.isNewProject || projectInfo?.framework.name === "next-app",
-  })
+  const fullConfig = await resolveConfigPaths(projectDir, config);
+  await addComponents(["index"], fullConfig, {});
 }
 
 const promptForConfig = async (opts: {
