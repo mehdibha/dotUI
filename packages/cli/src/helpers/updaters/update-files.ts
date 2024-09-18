@@ -17,8 +17,6 @@ export async function updateFiles(
   config: Config,
   options: {
     overwrite?: boolean;
-    force?: boolean;
-    silent?: boolean;
   }
 ) {
   if (!files?.length) {
@@ -26,13 +24,9 @@ export async function updateFiles(
   }
   options = {
     overwrite: false,
-    force: false,
-    silent: false,
     ...options,
   };
-  const filesCreatedSpinner = spinner(`Updating files.`, {
-    silent: options.silent,
-  })?.start();
+  const filesCreatedSpinner = spinner(`Updating files.`)?.start();
 
   const projectInfo = await getProjectInfo(config.resolvedPaths.cwd);
 
@@ -114,10 +108,8 @@ export async function updateFiles(
         filesCreated.length === 1 ? "file" : "files"
       }:`
     );
-    if (!options.silent) {
-      for (const file of filesCreated) {
-        logger.log(`  - ${file}`);
-      }
+    for (const file of filesCreated) {
+      logger.log(`  - ${file}`);
     }
   } else {
     filesCreatedSpinner?.stop();
@@ -127,15 +119,10 @@ export async function updateFiles(
     spinner(
       `Updated ${filesUpdated.length} ${
         filesUpdated.length === 1 ? "file" : "files"
-      }:`,
-      {
-        silent: options.silent,
-      }
+      }:`
     )?.info();
-    if (!options.silent) {
-      for (const file of filesUpdated) {
-        logger.log(`  - ${file}`);
-      }
+    for (const file of filesUpdated) {
+      logger.log(`  - ${file}`);
     }
   }
 
@@ -143,19 +130,12 @@ export async function updateFiles(
     spinner(
       `Skipped ${filesSkipped.length} ${
         filesUpdated.length === 1 ? "file" : "files"
-      }:`,
-      {
-        silent: options.silent,
-      }
+      }:`
     )?.info();
-    if (!options.silent) {
-      for (const file of filesSkipped) {
-        logger.log(`  - ${file}`);
-      }
+    for (const file of filesSkipped) {
+      logger.log(`  - ${file}`);
     }
   }
 
-  if (!options.silent) {
-    logger.break();
-  }
+  logger.break();
 }

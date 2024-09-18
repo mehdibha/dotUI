@@ -14,15 +14,13 @@ import { HttpsProxyAgent } from "https-proxy-agent";
 import fetch from "node-fetch";
 import { z } from "zod";
 import { Config } from "@/helpers/get-config";
-import deepmerge from "deepmerge"
+import deepmerge from "deepmerge";
 
-// TODO: fix this
 const REGISTRY_URL = "http://localhost:3000/registry";
 
 export async function getRegistryIndex() {
   try {
     const [result] = await fetchRegistry(["index.json"]);
-
     return registryIndexSchema.parse(result);
   } catch (error) {
     logger.error("\n");
@@ -33,7 +31,6 @@ export async function getRegistryIndex() {
 export async function getRegistryStyles() {
   try {
     const [result] = await fetchRegistry(["styles/index.json"]);
-
     return stylesSchema.parse(result);
   } catch (error) {
     logger.error("\n");
@@ -45,16 +42,16 @@ export async function getRegistryStyles() {
 export async function getRegistryColorSystems() {
   return [
     {
-      name: "dotui-palettes",
-      label: "with color palettes (recommended)",
+      name: "default",
+      label: "Default",
     },
     {
-      name: "dotui-basic",
-      label: "without color palettes",
+      name: "color-scales",
+      label: "With color scales (recommended)",
     },
     {
       name: "minimal",
-      label: "minimal (shadcn color system)",
+      label: "Minimal (shadcn color system)",
     },
   ];
 }
@@ -62,7 +59,6 @@ export async function getRegistryColorSystems() {
 export async function getRegistryIconLibrairies() {
   try {
     const [result] = await fetchRegistry(["icons/index.json"]);
-
     return iconLibariesSchema.parse(result);
   } catch (error) {
     logger.error("\n");
@@ -74,7 +70,6 @@ export async function getRegistryIconLibrairies() {
 export async function getRegistryThemes() {
   try {
     const [result] = await fetchRegistry(["themes/index.json"]);
-
     return themesSchema.parse(result);
   } catch (error) {
     logger.error("\n");
@@ -93,12 +88,15 @@ export async function getRegistryTemplate(name: string) {
     handleError(error);
   }
 }
-export async function getRegistryItem(name: string, style: string) {
+export async function getRegistryItem(
+  name: string,
+  style: string,
+  type?: "registry:core" | "registry:lib" | "registry:block" | "registry:component" | "registry:hook",
+) {
   try {
     const [result] = await fetchRegistry([
       isUrl(name) ? name : `styles/${style}/${name}.json`,
     ]);
-
     return registryItemSchema.parse(result);
   } catch (error) {
     logger.break();
@@ -184,6 +182,25 @@ function getRegistryUrl(path: string) {
   return `${REGISTRY_URL}/${path}`;
 }
 
+function getRegistryItemPath(name: string, type: z.infer<typeof registryItemSchema>["type"]) {
+  switch (type) {
+    case "registry:core":
+      return `${REGISTRY_URL}/core/${name}.json`;
+    case "registry:lib":
+      return `${REGISTRY_URL}/lib/${name}.json`;
+    case "registry:block":
+      return `${REGISTRY_URL}/blocks/${name}.json`;
+    case "registry:component":
+      return `${REGISTRY_URL}/components/${name}.json`;
+    case "registry:hook":
+      return `${REGISTRY_URL}/hooks/${name}.json`;
+    case "registry:style":
+      return `${REGISTRY_URL}/styles/${name}.json`;
+    default:
+      return `${REGISTRY_URL}/styles/${name}.json`;
+  }
+}
+
 function isUrl(path: string) {
   try {
     new URL(path);
@@ -206,7 +223,7 @@ export async function registryResolveItemsTree(
     let items = (
       await Promise.all(
         names.map(async (name) => {
-          const item = await getRegistryItem(name, config.style);
+          const item = await getRegistryItem(name, config.style, index);
           return item;
         })
       )
@@ -237,16 +254,6 @@ export async function registryResolveItemsTree(
       if (index) {
         payload.unshift(index);
       }
-
-      // Fetch the theme item if a base color is provided.
-      // We do this for index only.
-      // Other components will ship with their theme tokens.
-      // if (config.tailwind.baseColor) {
-      //   const theme = await registryGetTheme(config.tailwind.baseColor, config);
-      //   if (theme) {
-      //     payload.unshift(theme);
-      //   }
-      // }
     }
 
     let tailwind = {};
@@ -276,37 +283,36 @@ export async function registryResolveItemsTree(
   }
 }
 
-
 export function getRegistryItemFileTargetPath(
   file: z.infer<typeof registryItemFileSchema>,
   config: Config,
   override?: string
 ) {
   if (override) {
-    return override
+    return override;
   }
 
   if (file.type === "registry:core") {
-    return config.resolvedPaths.core
+    return config.resolvedPaths.core;
   }
 
   if (file.type === "registry:lib") {
-    return config.resolvedPaths.lib
+    return config.resolvedPaths.lib;
   }
 
   if (file.type === "registry:block" || file.type === "registry:component") {
-    return config.resolvedPaths.components
+    return config.resolvedPaths.components;
   }
 
   if (file.type === "registry:hook") {
-    return config.resolvedPaths.hooks
+    return config.resolvedPaths.hooks;
   }
 
   // TODO: we put this in components for now.
   // We should move this to pages as per framework.
   if (file.type === "registry:page") {
-    return config.resolvedPaths.components
+    return config.resolvedPaths.components;
   }
 
-  return config.resolvedPaths.components
+  return config.resolvedPaths.components;
 }

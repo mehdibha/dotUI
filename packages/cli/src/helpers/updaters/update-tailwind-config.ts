@@ -28,29 +28,18 @@ export async function updateTailwindConfig(
   tailwindConfig:
     | z.infer<typeof registryItemTailwindSchema>["config"]
     | undefined,
-  config: Config,
-  options: {
-    silent?: boolean;
-  }
+  config: Config
 ) {
   if (!tailwindConfig) {
     return;
   }
-
-  options = {
-    silent: false,
-    ...options,
-  };
 
   const tailwindFileRelativePath = path.relative(
     config.resolvedPaths.cwd,
     config.resolvedPaths.tailwindConfig
   );
   const tailwindSpinner = spinner(
-    `Updating ${highlight.info(tailwindFileRelativePath)}`,
-    {
-      silent: options.silent,
-    }
+    `Updating ${highlight.info(tailwindFileRelativePath)}`
   ).start();
   const raw = await fs.readFile(config.resolvedPaths.tailwindConfig, "utf8");
   const output = await transformTailwindConfig(raw, tailwindConfig, config);

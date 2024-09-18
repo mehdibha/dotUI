@@ -5,6 +5,20 @@ export const defaultTheme: RegistryEntry = {
   name: "theme-default",
   label: "Default theme",
   type: "registry:theme",
+  tailwind: {
+    config: {
+      theme: {
+        extend: {
+          borderRadius: {
+            lg: "var(--radius)",
+            md: "calc(var(--radius) - 2px)",
+            sm: "calc(var(--radius) - 4px)",
+          },
+          colors: {},
+        },
+      },
+    },
+  },
   cssVars: {
     light: buildDotUIColorScales("light", {
       neutral: ["#000000"],

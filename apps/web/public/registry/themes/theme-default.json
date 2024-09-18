@@ -2,6 +2,20 @@
   "name": "theme-default",
   "label": "Default theme",
   "type": "registry:theme",
+  "tailwind": {
+    "config": {
+      "theme": {
+        "extend": {
+          "borderRadius": {
+            "lg": "var(--radius)",
+            "md": "calc(var(--radius) - 2px)",
+            "sm": "calc(var(--radius) - 4px)"
+          },
+          "colors": {}
+        }
+      }
+    }
+  },
   "cssVars": {
     "light": {
       "neutral-100": "hsl(0 0% 96%)",
