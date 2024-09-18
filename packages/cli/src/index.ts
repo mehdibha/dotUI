@@ -1,4 +1,7 @@
 #!/usr/bin/env node
+
+// Inspired by: https://github.com/shadcn-ui/ui/blob/main/packages/shadcn
+
 import { Command } from "commander";
 import packageJson from "~/package.json";
 import { createCommand } from "@/commands/create";
@@ -12,7 +15,7 @@ async function main() {
   const program = new Command()
     .name("dotui")
     .helpOption("-h, --help", "Display this help message.")
-    .usage('[command] [options]')
+    .usage("[command] [options]")
     .version(
       packageJson.version,
       "-v, --version",

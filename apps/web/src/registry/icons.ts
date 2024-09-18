@@ -1,15 +1,18 @@
 export const iconLibraries: {
   name: string;
+  label: string;
   dependency: string;
   import: string;
 }[] = [
   {
     name: "lucide",
+    label: "Lucide icons",
     dependency: "lucide-react",
     import: "lucide-react",
   },
   {
     name: "remix",
+    label: "Remix icons",
     dependency: "@remixicon/react",
     import: "@remixicon/react",
   },

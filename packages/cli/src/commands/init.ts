@@ -1,3 +1,4 @@
+import { themeSchema } from "./../helpers/registry/schema";
 import { Command } from "commander";
 import path from "path";
 import { z } from "zod";
@@ -13,6 +14,7 @@ import {
 import { rawConfigSchema, resolveConfigPaths } from "@/helpers/get-config";
 import {
   DEFAULT_COMPONENTS_ALIAS,
+  DEFAULT_CORE_ALIAS,
   DEFAULT_HOOKS_ALIAS,
   DEFAULT_UTILS_ALIAS,
 } from "@/constants/default-config";
@@ -41,13 +43,17 @@ export const init = new Command()
     try {
       const options = initOptionsSchema.parse({ projectDir, ...opts });
       await runInit(options);
-      // TODO: update success message
       logger.log(
-        `${highlight.success(
-          "Success!"
-        )} Project initialization completed.\nYou may now add components.`
+        `${highlight.success("Success!")} Project initialization completed.`
       );
       logger.break();
+      logger.log(
+        `You may now add components, hooks, and more using the \`add\` command.`
+      );
+      logger.break();
+      logger.log(`We suggest that you begin by typing:`);
+      logger.break();
+      logger.success("  npx dotui@latest add button");
     } catch (error) {
       logger.break();
       handleError(error);
@@ -61,9 +67,13 @@ export async function runInit(options: z.infer<typeof initOptionsSchema>) {
     logger.log(
       `We could not find a project at ${highlight.error(projectDir)}.`
     );
+    logger.break();
     logger.log(
-      `Run ${highlight.success("dotui create")} to start a new project.`
+      `Run ${highlight.info(
+        "`npx dotui@latest create`"
+      )} to start a new project.`
     );
+    logger.break();
     process.exit(1);
   }
 
@@ -140,7 +150,7 @@ export async function runInit(options: z.infer<typeof initOptionsSchema>) {
 
   logger.break();
 
-  const config = await promptForConfig({
+  const { config, theme } = await promptForConfig({
     projectDir,
     yes: options.yes,
     skipInstall: options.skipInstall,
@@ -153,7 +163,7 @@ export async function runInit(options: z.infer<typeof initOptionsSchema>) {
   configSpinner.succeed();
 
   const fullConfig = await resolveConfigPaths(projectDir, config);
-  await addComponents(["index"], fullConfig, {});
+  await addComponents(["index", theme.name], fullConfig, {});
 }
 
 const promptForConfig = async (opts: {
@@ -187,7 +197,7 @@ const promptForConfig = async (opts: {
       message: `Which ${highlight.info("theme")} whould you like to install?`,
       choices: themes.map((theme) => ({
         title: theme.name,
-        value: theme.name,
+        value: theme.label,
       })),
       onState: onPromptState,
     },
@@ -199,7 +209,7 @@ const promptForConfig = async (opts: {
       )} whould you like to use?`,
       choices: iconLibraries.map((iconLibrary) => ({
         title: iconLibrary.name,
-        value: iconLibrary.name,
+        value: iconLibrary.label,
       })),
       onState: onPromptState,
     },
@@ -219,32 +229,38 @@ const promptForConfig = async (opts: {
 
   logger.info("");
 
-  return rawConfigSchema.parse({
-    $schema: `${BASE_URL}/schema.json`,
-    style: options.style,
-    iconLibrary: options.iconLibrary,
-    colorSystem: options.colorSystem,
-    rsc: projectInfo?.isRSC,
-    tsx: projectInfo?.isTsx ?? true,
-    tailwind: {
-      config: projectInfo?.tailwindConfigFile,
-      css: projectInfo?.tailwindCssFile,
-      prefix: "",
-      // TOD prefix: projectInfo?.tailwindPrefix ?? "",
-    },
-    aliases: {
-      components: projectInfo?.aliasPrefix
-        ? `${projectInfo.aliasPrefix}/components`
-        : DEFAULT_COMPONENTS_ALIAS,
-      utils: projectInfo?.aliasPrefix
-        ? `${projectInfo.aliasPrefix}/utils`
-        : DEFAULT_UTILS_ALIAS,
-      lib: projectInfo?.aliasPrefix
-        ? `${projectInfo.aliasPrefix}/lib`
-        : DEFAULT_COMPONENTS_ALIAS,
-      hooks: projectInfo?.aliasPrefix
-        ? `${projectInfo.aliasPrefix}/hooks`
-        : DEFAULT_HOOKS_ALIAS,
-    },
-  });
+  return {
+    config: rawConfigSchema.parse({
+      $schema: `${BASE_URL}/schema.json`,
+      style: options.style,
+      iconLibrary: options.iconLibrary,
+      colorSystem: options.colorSystem,
+      rsc: projectInfo?.isRSC,
+      tsx: projectInfo?.isTsx ?? true,
+      tailwind: {
+        config: projectInfo?.tailwindConfigFile,
+        css: projectInfo?.tailwindCssFile,
+        prefix: "",
+        // TOD prefix: projectInfo?.tailwindPrefix ?? "",
+      },
+      aliases: {
+        core: projectInfo?.aliasPrefix
+          ? `${projectInfo.aliasPrefix}/components/core`
+          : DEFAULT_CORE_ALIAS,
+        components: projectInfo?.aliasPrefix
+          ? `${projectInfo.aliasPrefix}/components`
+          : DEFAULT_COMPONENTS_ALIAS,
+        utils: projectInfo?.aliasPrefix
+          ? `${projectInfo.aliasPrefix}/utils`
+          : DEFAULT_UTILS_ALIAS,
+        lib: projectInfo?.aliasPrefix
+          ? `${projectInfo.aliasPrefix}/lib`
+          : DEFAULT_COMPONENTS_ALIAS,
+        hooks: projectInfo?.aliasPrefix
+          ? `${projectInfo.aliasPrefix}/hooks`
+          : DEFAULT_HOOKS_ALIAS,
+      },
+    }),
+    theme: themeSchema.parse(options.theme),
+  };
 };

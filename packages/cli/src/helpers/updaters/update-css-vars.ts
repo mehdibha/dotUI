@@ -11,11 +11,7 @@ import { z } from "zod";
 
 export async function updateCssVars(
   cssVars: z.infer<typeof registryItemCssVarsSchema> | undefined,
-  config: Config,
-  options: {
-    cleanupDefaultNextStyles?: boolean;
-    silent?: boolean;
-  }
+  config: Config
 ) {
   if (
     !cssVars ||
@@ -25,26 +21,16 @@ export async function updateCssVars(
     return;
   }
 
-  options = {
-    cleanupDefaultNextStyles: false,
-    silent: false,
-    ...options,
-  };
   const cssFilepath = config.resolvedPaths.tailwindCss;
   const cssFilepathRelative = path.relative(
     config.resolvedPaths.cwd,
     cssFilepath
   );
   const cssVarsSpinner = spinner(
-    `Updating ${highlight.info(cssFilepathRelative)}`,
-    {
-      silent: options.silent,
-    }
+    `Updating ${highlight.info(cssFilepathRelative)}`
   ).start();
   const raw = await fs.readFile(cssFilepath, "utf8");
-  let output = await transformCssVars(raw, cssVars, config, {
-    cleanupDefaultNextStyles: options.cleanupDefaultNextStyles,
-  });
+  let output = await transformCssVars(raw, cssVars, config);
   await fs.writeFile(cssFilepath, output, "utf8");
   cssVarsSpinner.succeed();
 }
@@ -53,24 +39,17 @@ export async function transformCssVars(
   input: string,
   cssVars: z.infer<typeof registryItemCssVarsSchema>,
   config: Config,
-  options: {
-    cleanupDefaultNextStyles?: boolean;
-  }
 ) {
-  options = {
-    cleanupDefaultNextStyles: false,
-    ...options,
-  };
-
   const plugins = [updateCssVarsPlugin(cssVars)];
-  if (options.cleanupDefaultNextStyles) {
-    plugins.push(cleanupDefaultNextStylesPlugin());
-  }
+  // const cleanupDefaultNextStyles = false
+  // if (options.cleanupDefaultNextStyles) {
+  //   plugins.push(cleanupDefaultNextStylesPlugin());
+  // }
 
   // TODO
   // Only add the base layer plugin if we're using css variables.
   // if (config.tailwind.cssVariables) {
-    plugins.push(updateBaseLayerPlugin());
+  plugins.push(updateBaseLayerPlugin());
   // }
 
   const result = await postcss(plugins).process(input, {

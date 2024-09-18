@@ -1,9 +1,10 @@
+import { runInit } from "@/commands/init";
 import { handleError } from "@/helpers/handle-error";
 import { highlight, logger } from "@/utils";
 import { Command } from "commander";
 import { z } from "zod";
 import { basename, resolve } from "path";
-import prompts, { InitialReturnValue } from "prompts";
+import prompts from "prompts";
 import { validateProjectName } from "@/helpers/validate-project-name";
 import { existsSync, readdirSync } from "fs";
 import ciInfo from "ci-info";
@@ -15,8 +16,8 @@ import { onPromptState } from "@/helpers/on-prompt-state";
 const createOptionsSchema = z.object({
   projectDir: z.string().optional(),
   template: z.string().optional(),
-  skipInstall: z.boolean().optional(),
-  yes: z.boolean().optional(),
+  skipInstall: z.boolean(),
+  yes: z.boolean(),
 });
 
 export const createCommand = new Command()
@@ -39,13 +40,26 @@ export const createCommand = new Command()
   .action(async (projectDir, opts) => {
     try {
       const options = createOptionsSchema.parse(opts);
-      await runCreate({ projectDir, ...options });
-      // TODO: update success log msg
-      logger.log(
-        `${highlight.success(
-          "Success!"
-        )} Project initialization completed.\nUse the \`add\` command to add components, hooks, and more.`
-      );
+      const result = await runCreate({ projectDir, ...options });
+      if (result) {
+        logger.break();
+        await runInit({
+          projectDir: result.appPath,
+          yes: options.yes,
+          skipInstall: options.skipInstall,
+        });
+        logger.log(
+          `${highlight.success("Success!")} Created ${result.appName} at ${result.appPath}.`
+        );
+        logger.break();
+        logger.log(
+          `You may now add components, hooks, and more using the \`add\` command.`
+        );
+        logger.break();
+        logger.log(`We suggest that you begin by typing:`);
+        logger.break();
+        logger.success("  npx dotui@latest add button");
+      }
     } catch (error) {
       logger.break();
       handleError(error);
@@ -61,7 +75,6 @@ const runCreate = async (options: z.infer<typeof createOptionsSchema>) => {
   if (typeof projectPath === "string") {
     projectPath = projectPath.trim();
   }
-
   if (!projectPath) {
     const res = await prompts({
       onState: onPromptState,
@@ -132,12 +145,7 @@ const runCreate = async (options: z.infer<typeof createOptionsSchema>) => {
         type: "select",
         name: "framework",
         message: "What framework would you like to use?",
-        choices: [
-          { title: "Next.js", value: "nextjs" },
-          { title: "Remix", value: "remix" },
-          { title: "Vite", value: "vite" },
-          { title: "Astro", value: "astro" },
-        ],
+        choices: [{ title: "Next.js", value: "nextjs" }],
       },
       {
         onState: onPromptState,
@@ -190,10 +198,12 @@ const runCreate = async (options: z.infer<typeof createOptionsSchema>) => {
     packageManager,
     skipInstall: parsedOptions.skipInstall,
   });
+
+  return { appName, appPath };
 };
 
 const createProjectOptionsSchema = z.object({
-  framework: z.enum(["nextjs", "remix", "vite", "astro"]),
+  framework: z.enum(["nextjs"]),
   typescript: z.boolean(),
   srcDir: z.boolean(),
   importAlias: z.string(),
