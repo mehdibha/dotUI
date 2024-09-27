@@ -1,16 +1,16 @@
 import { existsSync, promises as fs } from "fs";
 import path, { basename } from "path";
+import prompts from "prompts";
 import { Config } from "@/helpers/get-config";
 import { getProjectInfo } from "@/helpers/get-project-info";
 import { logger, highlight, spinner } from "@/utils";
 import { getRegistryItemFileTargetPath } from "@/helpers/registry";
-import { RegistryItem } from "@/helpers/registry/schema";
 import { transform } from "@/helpers/transformers";
 import { transformCssVars } from "@/helpers/transformers/transform-css-vars";
 import { transformImport } from "@/helpers/transformers/transform-import";
 import { transformRsc } from "@/helpers/transformers/transform-rsc";
 import { transformTwPrefixes } from "@/helpers/transformers/transform-tw-prefix";
-import prompts from "prompts";
+import type { RegistryItem } from "@dotui/registry/types";
 
 export async function updateFiles(
   files: RegistryItem["files"],

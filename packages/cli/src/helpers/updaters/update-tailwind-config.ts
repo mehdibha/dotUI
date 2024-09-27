@@ -3,7 +3,6 @@ import { tmpdir } from "os";
 import path from "path";
 import { Config } from "@/helpers/get-config";
 import { highlight } from "@/utils";
-import { registryItemTailwindSchema } from "@/helpers/registry/schema";
 import { spinner } from "@/utils/spinner";
 import deepmerge from "deepmerge";
 import objectToString from "stringify-object";
@@ -18,6 +17,7 @@ import {
   VariableStatement,
 } from "ts-morph";
 import { z } from "zod";
+import { registryItemTailwindSchema } from "@dotui/registry/schema";
 
 export type UpdaterTailwindConfig = Omit<TailwindConfig, "plugins"> & {
   // We only want string plugins for now.

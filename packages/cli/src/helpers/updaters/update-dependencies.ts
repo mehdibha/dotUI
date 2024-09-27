@@ -1,6 +1,6 @@
 import { Config } from "@/helpers/get-config";
 import { getPackageManager } from "@/helpers/get-pkg-manager";
-import { RegistryItem } from "@/helpers/registry/schema";
+import type { RegistryItem } from "@dotui/registry/types";
 import { spinner } from "@/utils";
 import { execa } from "execa";
 

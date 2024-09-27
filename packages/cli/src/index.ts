@@ -4,7 +4,6 @@
 
 import { Command } from "commander";
 import packageJson from "~/package.json";
-import { createCommand } from "@/commands/create";
 import { init } from "@/commands/init";
 import { addCommand } from "@/commands/add";
 
@@ -22,7 +21,7 @@ async function main() {
       "Output the current version of dotUI."
     );
 
-  program.addCommand(createCommand).addCommand(init).addCommand(addCommand);
+  program.addCommand(init).addCommand(addCommand);
 
   program.parse();
 }
