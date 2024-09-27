@@ -1,13 +1,8 @@
 import path from "path";
-import { runInit } from "@/commands/init";
-// import { preFlightAdd } from "@/preflights/preflight-add";
 import { addComponents } from "@/helpers/add-components";
-import { createProject } from "@/helpers/create-project";
-import * as ERRORS from "@/helpers/errors";
 import { handleError } from "@/helpers/handle-error";
 import { highlight, logger } from "@/utils";
 import { getRegistryIndex } from "@/helpers/registry";
-import { updateAppIndex } from "@/helpers/update-app-index";
 import { Command } from "commander";
 import prompts from "prompts";
 import { z } from "zod";
@@ -110,7 +105,6 @@ export const addCommand = new Command()
       //   })
       // }
 
-      let shouldUpdateAppIndex = false;
       // if (errors[ERRORS.MISSING_DIR_OR_EMPTY_PROJECT]) {
       //   const { projectPath } = await createProject({
       //     cwd: options.cwd,
@@ -151,12 +145,6 @@ export const addCommand = new Command()
         );
       }
       await addComponents(options.components, config, options);
-
-      // If we're adding a single component and it's from the v0 registry,
-      // let's update the app/page.tsx file to import the component.
-      if (shouldUpdateAppIndex) {
-        await updateAppIndex(options.components[0], config);
-      }
     } catch (error) {
       logger.break();
       handleError(error);

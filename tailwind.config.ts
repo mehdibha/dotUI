@@ -17,6 +17,7 @@ const config = {
     },
     data: {
       mobile: 'mobile~="true"',
+      collapsed: 'state~="collapsed"',
     },
     screens: {
       xs: "475px",
@@ -210,10 +211,10 @@ const config = {
         },
       },
       animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
-        "collapsible-down": "collapsible-down 0.2s ease-out",
-        "collapsible-up": "collapsible-up 0.2s ease-out",
+        "accordion-down": "accordion-down 0.15s cubic-bezier(0.32, 0.72, 0, 1)",
+        "accordion-up": "accordion-up 0.2s cubic-bezier(0.32, 0.72, 0, 1)",
+        "collapsible-down": "collapsible-down 0.15s cubic-bezier(0.32, 0.72, 0, 1)",
+        "collapsible-up": "collapsible-up 0.15s cubic-bezier(0.32, 0.72, 0, 1)",
         "caret-blink": "caret-blink 1.25s ease-out infinite",
         "progress-indeterminate":
           "progress-grow var(--progress-duration) 1 both normal, progress-pulse 1s ease var(--progress-duration) infinite normal none running",

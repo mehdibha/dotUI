@@ -1,0 +1,14 @@
+{
+  "name": "@dotui/registry",
+  "version": "0.0.1",
+  "description": "The registry for dotui",
+  "main": "./index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./schema": "./schema.ts",
+    "./types": "./types.ts"
+  },
+  "dependencies": {
+    "zod": "^3.22.4"
+  }
+}

@@ -1,4 +1,3 @@
-import { themeSchema } from "./../helpers/registry/schema";
 import { Command } from "commander";
 import path from "path";
 import { z } from "zod";
@@ -11,7 +10,11 @@ import {
   getRegistryStyles,
   getRegistryThemes,
 } from "@/helpers/registry";
-import { rawConfigSchema, resolveConfigPaths } from "@/helpers/get-config";
+import {
+  Config,
+  rawConfigSchema,
+  resolveConfigPaths,
+} from "@/helpers/get-config";
 import {
   DEFAULT_COMPONENTS_ALIAS,
   DEFAULT_CORE_ALIAS,
@@ -66,12 +69,6 @@ export async function runInit(options: z.infer<typeof initOptionsSchema>) {
   if (emptyProject) {
     logger.log(
       `We could not find a project at ${highlight.error(projectDir)}.`
-    );
-    logger.break();
-    logger.log(
-      `Run ${highlight.info(
-        "`npx dotui@latest create`"
-      )} to start a new project.`
     );
     logger.break();
     process.exit(1);
@@ -156,14 +153,14 @@ export async function runInit(options: z.infer<typeof initOptionsSchema>) {
     skipInstall: options.skipInstall,
   });
 
-  // Write dotui.config.json.
-  const configSpinner = spinner(`Writing dotui.config.json.`).start();
-  const targetPath = path.resolve(projectDir, "dotui.config.json");
-  await fs.writeFile(targetPath, JSON.stringify(config, null, 2), "utf8");
-  configSpinner.succeed();
+  // // Write dotui.config.json.
+  // const configSpinner = spinner(`Writing dotui.config.json.`).start();
+  // const targetPath = path.resolve(projectDir, "dotui.config.json");
+  // await fs.writeFile(targetPath, JSON.stringify(config, null, 2), "utf8");
+  // configSpinner.succeed();
 
-  const fullConfig = await resolveConfigPaths(projectDir, config);
-  await addComponents(["index", theme.name], fullConfig, {});
+  // const fullConfig = await resolveConfigPaths(projectDir, config);
+  // await addComponents(["index", theme.name], fullConfig, {});
 }
 
 const promptForConfig = async (opts: {
@@ -171,96 +168,104 @@ const promptForConfig = async (opts: {
   yes: boolean;
   skipInstall: boolean;
 }) => {
-  const [styles, iconLibraries, themes, colorSystems] = await Promise.all([
+  const [
+    styles,
+    //  iconLibraries,
+    //  themes,
+    // colorSystems
+  ] = await Promise.all([
     getRegistryStyles(),
     getRegistryIconLibrairies(),
-    getRegistryThemes(),
-    getRegistryColorSystems(),
+    // getRegistryThemes(),
+    // getRegistryColorSystems(),
   ]);
 
-  const projectInfo = await getProjectInfo(opts.projectDir);
+  // const projectInfo = await getProjectInfo(opts.projectDir);
 
-  const options = await prompts([
-    {
-      type: "select",
-      name: "style",
-      message: `Which ${highlight.info("style")} would you like to use?`,
-      choices: styles.map((style) => ({
-        title: style.label,
-        value: style.name,
-      })),
-      onState: onPromptState,
-    },
-    {
-      type: "select",
-      name: "theme",
-      message: `Which ${highlight.info("theme")} whould you like to install?`,
-      choices: themes.map((theme) => ({
-        title: theme.name,
-        value: theme.label,
-      })),
-      onState: onPromptState,
-    },
-    {
-      type: "select",
-      name: "iconLibrary",
-      message: `Which ${highlight.info(
-        "icon library"
-      )} whould you like to use?`,
-      choices: iconLibraries.map((iconLibrary) => ({
-        title: iconLibrary.name,
-        value: iconLibrary.label,
-      })),
-      onState: onPromptState,
-    },
-    {
-      type: "select",
-      name: "colorSystem",
-      message: `Which ${highlight.info(
-        "color system"
-      )} would you like to use for theming?`,
-      choices: colorSystems.map((style) => ({
-        title: style.label,
-        value: style.name,
-      })),
-      onState: onPromptState,
-    },
-  ]);
+  // const options = await prompts([
+  //   {
+  //     type: "select",
+  //     name: "style",
+  //     message: `Which ${highlight.info("style")} would you like to use?`,
+  //     choices: styles.map((style) => ({
+  //       title: style.label ?? style.name,
+  //       value: style.name,
+  //     })),
+  //     onState: onPromptState,
+  //   },
+  //   {
+  //     type: "select",
+  //     name: "theme",
+  //     message: `Which ${highlight.info("theme")} whould you like to install?`,
+  //     choices: themes.map((theme) => ({
+  //       title: theme.name,
+  //       value: theme.label,
+  //     })),
+  //     onState: onPromptState,
+  //   },
+  //   {
+  //     type: "select",
+  //     name: "iconLibrary",
+  //     message: `Which ${highlight.info(
+  //       "icon library"
+  //     )} whould you like to use?`,
+  //     choices: iconLibraries.map((iconLibrary) => ({
+  //       title: iconLibrary.name,
+  //       value: iconLibrary.label,
+  //     })),
+  //     onState: onPromptState,
+  //   },
+  //   {
+  //     type: "select",
+  //     name: "colorSystem",
+  //     message: `Which ${highlight.info(
+  //       "color system"
+  //     )} would you like to use for theming?`,
+  //     choices: colorSystems.map((style) => ({
+  //       title: style.label,
+  //       value: style.name,
+  //     })),
+  //     onState: onPromptState,
+  //   },
+  // ]);
 
-  logger.info("");
+  // logger.info("");
 
-  return {
-    config: rawConfigSchema.parse({
-      $schema: `${BASE_URL}/schema.json`,
-      style: options.style,
-      iconLibrary: options.iconLibrary,
-      colorSystem: options.colorSystem,
-      rsc: projectInfo?.isRSC,
-      tsx: projectInfo?.isTsx ?? true,
-      tailwind: {
-        config: projectInfo?.tailwindConfigFile,
-        css: projectInfo?.tailwindCssFile,
-        prefix: "",
-        // TOD prefix: projectInfo?.tailwindPrefix ?? "",
-      },
-      aliases: {
-        core: projectInfo?.aliasPrefix
-          ? `${projectInfo.aliasPrefix}/components/core`
-          : DEFAULT_CORE_ALIAS,
-        components: projectInfo?.aliasPrefix
-          ? `${projectInfo.aliasPrefix}/components`
-          : DEFAULT_COMPONENTS_ALIAS,
-        utils: projectInfo?.aliasPrefix
-          ? `${projectInfo.aliasPrefix}/utils`
-          : DEFAULT_UTILS_ALIAS,
-        lib: projectInfo?.aliasPrefix
-          ? `${projectInfo.aliasPrefix}/lib`
-          : DEFAULT_COMPONENTS_ALIAS,
-        hooks: projectInfo?.aliasPrefix
-          ? `${projectInfo.aliasPrefix}/hooks`
-          : DEFAULT_HOOKS_ALIAS,
-      },
-    }),
-    theme: themeSchema.parse(options.theme),
-  };
+  // const config : Config = {
+  //   $schema: `${BASE_URL}/schema.json`,
+  //   style: options.style,
+  //   iconLibrary: options.iconLibrary,
+  //   colorSystem: options.colorSystem,
+  //   rsc: projectInfo?.isRSC,
+  //   tsx: projectInfo?.isTsx ?? true,
+  //   tailwind: {
+  //     config: projectInfo?.tailwindConfigFile,
+  //     css: projectInfo?.tailwindCssFile,
+  //     prefix: "",
+  //   },
+  //   aliases: {
+  //     core: projectInfo?.aliasPrefix
+  //       ? `${projectInfo.aliasPrefix}/components/core`
+  //       : DEFAULT_CORE_ALIAS,
+  //     components: projectInfo?.aliasPrefix
+  //       ? `${projectInfo.aliasPrefix}/components`
+  //       : DEFAULT_COMPONENTS_ALIAS,
+  //     utils: projectInfo?.aliasPrefix
+  //       ? `${projectInfo.aliasPrefix}/utils`
+  //       : DEFAULT_UTILS_ALIAS,
+  //     lib: projectInfo?.aliasPrefix
+  //       ? `${projectInfo.aliasPrefix}/lib`
+  //       : DEFAULT_COMPONENTS_ALIAS,
+  //     hooks: projectInfo?.aliasPrefix
+  //       ? `${projectInfo.aliasPrefix}/hooks`
+  //       : DEFAULT_HOOKS_ALIAS,
+  //   },
+  // }
+
+  // console.log(config)
+
+  // return {
+  //   config: rawConfigSchema.parse(config),
+  //   theme: options.theme,
+  // };
 };
