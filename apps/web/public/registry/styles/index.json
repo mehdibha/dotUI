@@ -1,6 +1,7 @@
 [
   {
     "name": "default",
-    "label": "Default"
+    "label": "Default",
+    "type": "registry:style"
   }
 ]

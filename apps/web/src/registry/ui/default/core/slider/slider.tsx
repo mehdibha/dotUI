@@ -22,7 +22,7 @@ import {
   type FieldProps,
 } from "@/registry/ui/default/core/field";
 import { cn } from "@/registry/ui/default/lib/cn";
-import { focusRing } from "@/registry/ui/default/lib/styles";
+import { focusRing } from "@/registry/ui/default/lib/focus-styles";
 
 const sliderStyles = tv({
   slots: {

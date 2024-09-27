@@ -13,7 +13,7 @@ import { Badge } from "@/registry/ui/default/core/badge";
 import { Button } from "@/registry/ui/default/core/button";
 import { Dialog, DialogRoot } from "@/registry/ui/default/core/dialog";
 import { cn } from "@/registry/ui/default/lib/cn";
-import { focusRing } from "@/registry/ui/default/lib/styles";
+import { focusRing } from "@/registry/ui/default/lib/focus-styles";
 import { SearchDocs } from "./docs/search-docs";
 import { ThemeToggle } from "./theme-toggle";
 

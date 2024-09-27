@@ -7,7 +7,7 @@ import { Avatar } from "@/registry/ui/default/core/avatar";
 import { Badge } from "@/registry/ui/default/core/badge";
 import { Separator } from "@/registry/ui/default/core/separator";
 import { cn } from "@/registry/ui/default/lib/cn";
-import { focusRing } from "@/registry/ui/default/lib/styles";
+import { focusRing } from "@/registry/ui/default/lib/focus-styles";
 
 const links = [
   {

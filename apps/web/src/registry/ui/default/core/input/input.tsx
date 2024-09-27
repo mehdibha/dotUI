@@ -18,7 +18,7 @@ import {
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
 import { LoaderIcon } from "@/__icons__";
-import { focusInput } from "@/registry/ui/default/lib/styles";
+import { focusInput } from "@/registry/ui/default/lib/focus-styles";
 
 const inputStyles = tv({
   slots: {

@@ -9,7 +9,7 @@ const scrollAreaStyles = tv({
     root: "flex flex-col h-full w-full overflow-hidden",
     viewport: "h-full w-full flex flex-col [&>*]:!block [&>*]:w-fit [&>*]:grow",
     scrollbar:
-      "flex touch-none select-none flex-col data-[orientation=horizontal]:flex-row data-[orientation=vertical]:flex-col bg-gray-800 rounded-full m-1",
+      "flex touch-none select-none flex-col data-[orientation=horizontal]:flex-row data-[orientation=vertical]:flex-col bg-gray-800 rounded-full my-0", // TODO: remove my-0, it was my-1
     thumb:
       "relative before:absolute before:content-[''] before:top-1/2 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2] w-full h-full before:min-w-4 before:min-h-4 bg-gray-500 hover:bg-gray-400 transition-colors rounded-[inherit]",
   },
@@ -46,7 +46,7 @@ const ScrollArea = ({
   size,
   asChild,
   type,
-  scrollHideDelay,
+  scrollHideDelay = 0,
   dir,
   ...viewportProps
 }: ScrollAreaProps) => {

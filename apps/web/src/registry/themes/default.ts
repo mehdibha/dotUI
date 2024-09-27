@@ -1,7 +1,7 @@
+import type { RegistryItem } from "@dotui/registry/types";
 import { buildDotUIColorScales } from "@/lib/build-color-scales";
-import { RegistryEntry } from "@/registry/schema";
 
-export const defaultTheme: RegistryEntry = {
+export const defaultTheme: RegistryItem = {
   name: "theme-default",
   label: "Default theme",
   type: "registry:theme",

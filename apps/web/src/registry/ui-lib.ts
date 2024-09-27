@@ -1,4 +1,4 @@
-import { Registry } from "@/registry/schema";
+import { Registry } from "@dotui/registry/types";
 
 export const lib: Registry = [
   {

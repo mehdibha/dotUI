@@ -13,7 +13,7 @@ import {
 import { tv, type VariantProps } from "tailwind-variants";
 import { CheckIcon, LoaderIcon } from "@/__icons__";
 import { Text } from "@/registry/ui/default/core/text";
-import { focusRing } from "@/registry/ui/default/lib/styles";
+import { focusRing } from "@/registry/ui/default/lib/focus-styles";
 
 const listBoxStyles = tv({
   base: [

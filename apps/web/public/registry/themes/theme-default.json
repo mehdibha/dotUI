@@ -19,8 +19,7 @@
   "cssVars": {
     "light": {
       "neutral-100": "hsl(0 0% 96%)",
-      "neutral-200": "hsl(0 0% 79%)",
-      "neutral-300": "hsl(0 0% 73%)",
+      "neutral-200": "hsl(0 0% 79%)",      "neutral-300": "hsl(0 0% 73%)",
       "neutral-400": "hsl(0 0% 65%)",
       "neutral-500": "hsl(0 0% 54%)",
       "neutral-600": "hsl(0 0% 42%)",

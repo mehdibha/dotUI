@@ -10,7 +10,7 @@ import {
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
 import { LoaderIcon } from "@/__icons__";
-import { focusRing } from "@/registry/ui/default/lib/styles";
+import { focusRing } from "@/registry/ui/default/lib/focus-styles";
 
 const buttonStyles = tv(
   {
@@ -88,6 +88,7 @@ const Button = React.forwardRef(
   (localProps: ButtonProps, ref: React.ForwardedRef<HTMLButtonElement>) => {
     const contextProps = useButtonContext();
     const props = { ...contextProps, ...localProps };
+
     const {
       className,
       variant,
@@ -99,7 +100,9 @@ const Button = React.forwardRef(
       suffix,
       ...restProps
     } = props;
+
     const Element: React.ElementType = props.href ? AriaLink : AriaButton;
+
     return (
       <Element
         ref={ref}

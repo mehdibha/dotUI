@@ -1,3 +1,4 @@
+import { registryItemSchema, registrySchema } from "@dotui/registry";
 import { existsSync, promises as fs } from "fs";
 import path from "path";
 import { rimraf } from "rimraf";
@@ -6,11 +7,10 @@ import { core } from "@/registry/core";
 import { demos } from "@/registry/demos";
 import { hooks } from "@/registry/hooks";
 import { iconLibraries, icons } from "@/registry/icons";
-import { lib } from "@/registry/lib";
-import { registryEntrySchema, registrySchema } from "@/registry/schema";
 import { styles } from "@/registry/styles";
 import { templates } from "@/registry/templates";
 import { themes } from "@/registry/themes";
+import { lib } from "@/registry/ui-lib";
 
 const REGISTRY_PATH = path.join(process.cwd(), "public/registry");
 
@@ -282,17 +282,10 @@ const buildStyles = async () => {
         );
       }
 
-      const payload = registryEntrySchema
-        .omit({
-          source: true,
-          category: true,
-          subcategory: true,
-          chunks: true,
-        })
-        .safeParse({
-          ...item,
-          files,
-        });
+      const payload = registryItemSchema.safeParse({
+        ...item,
+        files,
+      });
 
       // ----------------------------------------------------------------------------
       // Build registry/styles/[style]/[name].json
@@ -313,6 +306,7 @@ const buildStyles = async () => {
   const allStyles = styles.map((style) => ({
     name: style.name,
     label: style.label,
+    type: style.type,
   }));
 
   const stylesJson = JSON.stringify(allStyles, null, 2);
@@ -377,17 +371,10 @@ const buildHooks = async () => {
       );
     }
 
-    const payload = registryEntrySchema
-      .omit({
-        source: true,
-        category: true,
-        subcategory: true,
-        chunks: true,
-      })
-      .safeParse({
-        ...item,
-        files,
-      });
+    const payload = registryItemSchema.safeParse({
+      ...item,
+      files,
+    });
 
     // ----------------------------------------------------------------------------
     // Build registry/styles/[style]/[name].json
@@ -431,14 +418,7 @@ const buildTemplates = async () => {
 
   // Build registry/templates/[name].json
   for (const item of templates) {
-    const payload = registryEntrySchema
-      .omit({
-        source: true,
-        category: true,
-        subcategory: true,
-        chunks: true,
-      })
-      .safeParse(item);
+    const payload = registryItemSchema.safeParse(item);
 
     if (payload.success) {
       await fs.writeFile(
@@ -465,7 +445,7 @@ const run = async () => {
     await buildThemes();
     await buildIcons();
     await buildTemplates();
-    await buildDemos();
+    // await buildDemos();
 
     console.log("✅ Done!");
   } catch (error) {

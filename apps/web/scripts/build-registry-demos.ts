@@ -3,7 +3,7 @@ import path from "path";
 import { rimraf } from "rimraf";
 
 async function buildRegistryDemos() {
-  let index = `import { Registry } from "@/registry/schema";
+  let index = `import type { Registry } from "@dotui/registry/types";
 
 const buildDemos = (component: string, demos: string[]): Registry => {
   return demos.map((demo) => {

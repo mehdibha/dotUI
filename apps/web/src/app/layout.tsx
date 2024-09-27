@@ -1,8 +1,7 @@
 import React from "react";
 import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/react";
-import { Footer } from "@/components/footer";
-import { Header } from "@/components/header";
+import { Sidebar } from "@/components/sidebar";
 import { truncateOnWord } from "@/lib/string";
 import {
   JosephinFont,
@@ -74,9 +73,18 @@ export default function RootLayout({
       >
         <Analytics />
         <Providers>
-          <Header />
-          <main>{children}</main>
-          <Footer />
+          {/* TODO: patch min-h-screen */}
+          <div className="relative flex min-h-screen w-full flex-row">
+            <Sidebar />
+            <main className="relative min-h-full flex-1">{children}</main>
+
+            {/* <Header /> */}
+            {/* <div className="relative w-full flex-1">{children}</div> */}
+            {/* <div className="relative min-h-full w-full">
+              <div className="container max-w-7xl"></div>
+            </div> */}
+            {/* <Footer /> */}
+          </div>
         </Providers>
       </body>
     </html>
