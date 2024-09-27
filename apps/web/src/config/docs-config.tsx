@@ -1,4 +1,5 @@
 import type { DocsConfig } from "@/types/docs";
+import { BookIcon, BoxIcon, CodeIcon, FunctionSquareIcon, PaletteIcon } from "lucide-react";
 
 export const docsConfig: DocsConfig = {
   nav: [
@@ -6,10 +7,12 @@ export const docsConfig: DocsConfig = {
       title: "Getting Started",
       slug: "docs",
       items: [{ title: "Installation", href: "/docs/installation" }],
+      icon: <BookIcon />,
     },
     {
       title: "Components",
       slug: "components",
+      icon: <BoxIcon />,
       items: [
         { title: "Overview", href: "/components" },
         {
@@ -136,6 +139,18 @@ export const docsConfig: DocsConfig = {
           ],
         },
       ],
+    },
+    {
+      title: "Hooks",
+      slug: "hooks",
+      icon: <FunctionSquareIcon />,
+      items: [{ title: "useDebounce", href: "/hooks/use-debounce" }],
+    },
+    {
+      title: "Themes",
+      slug: "themes",
+      icon: <PaletteIcon />,
+      // items: [{ title: "Overview", href: "/themes" }],
     },
   ],
 };

@@ -1,4 +1,4 @@
-import { Registry } from "@/registry/schema";
+import type { Registry } from "@dotui/registry/types";
 
 const buildDemos = (component: string, demos: string[]): Registry => {
   return demos.map((demo) => {

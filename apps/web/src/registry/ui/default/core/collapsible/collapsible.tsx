@@ -4,7 +4,7 @@ import React from "react";
 import * as CollapsiblePrimitive from "@radix-ui/react-collapsible";
 import { cn } from "@/registry/ui/default/lib/cn";
 
-const Collapsible = CollapsiblePrimitive.Root;
+const CollapsibleRoot = CollapsiblePrimitive.Root;
 
 const CollapsibleTrigger = CollapsiblePrimitive.CollapsibleTrigger;
 
@@ -24,4 +24,9 @@ const CollapsibleContent = React.forwardRef<
 
 CollapsibleContent.displayName = "CollapsibleContent";
 
-export { Collapsible, CollapsibleTrigger, CollapsibleContent };
+export {
+  CollapsibleRoot,
+  CollapsibleRoot as Collapsible,
+  CollapsibleTrigger,
+  CollapsibleContent,
+};

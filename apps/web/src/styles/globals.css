@@ -276,6 +276,12 @@
       @apply px-4;
     }
   }
+
+  .transition-sidebar {
+    transition-property: transform, width, left, opacity, color;
+    transition-duration: 0.25s;
+    transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+  }
 }
 .shiki,
 .shiki span {

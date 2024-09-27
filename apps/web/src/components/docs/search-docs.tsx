@@ -48,23 +48,7 @@ export const SearchDocs = (props: ButtonProps) => {
 
   return (
     <DialogRoot isOpen={isOpen} onOpenChange={setIsOpen}>
-      <Button
-        variant="outline"
-        prefix={<SearchIcon />}
-        suffix={
-          <span className="hidden rounded-md bg-bg-muted px-1 py-0.5 text-xs md:inline">
-            Ctrl K
-          </span>
-        }
-        {...props}
-        className={cn("w-full px-2 text-sm text-fg-muted", props.className)}
-      >
-        {props.children ?? (
-          <span className="mr-4 inline-flex flex-1 text-left">
-            Quick Search...
-          </span>
-        )}
-      </Button>
+      {props.children}
       <Dialog
         className="!p-0"
         showDismissButton={false}

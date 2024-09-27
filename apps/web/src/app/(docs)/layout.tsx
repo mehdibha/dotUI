@@ -8,15 +8,16 @@ interface DocsLayoutProps {
 }
 
 export default function DocsLayout({ children }: DocsLayoutProps) {
+  return <div className="p-10">{children}</div>
   return (
     <div className="min-h-[90vh] border-b">
       <div className="container items-start md:grid md:grid-cols-[220px_minmax(0,1fr)] md:gap-6">
-        <aside className="z-30 hidden space-y-2 pt-6 md:sticky md:top-0 md:block">
+        {/* <aside className="z-30 hidden space-y-2 pt-6 md:sticky md:top-0 md:block">
           <SearchDocs />
           <ScrollArea className="h-screen pb-8">
             <DocsSidebar items={docsConfig.nav} />
-          </ScrollArea>
-        </aside>
+          </ScrollArea> 
+        </aside>*/}
         {children}
       </div>
     </div>

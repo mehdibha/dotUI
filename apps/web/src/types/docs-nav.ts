@@ -14,6 +14,7 @@ export interface SubCategory {
 export interface Category {
   title: string;
   slug: string;
+  icon?: React.ReactNode;
   items: (Item | SubCategory)[];
 }
 

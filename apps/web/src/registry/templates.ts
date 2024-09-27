@@ -1,4 +1,4 @@
-import { Registry } from "./schema";
+import type { Registry } from "@dotui/registry/types";
 
 export const templates: Registry = [
   {
