@@ -42,25 +42,23 @@ const CodeClient = ({
   }
 
   return (
-    <div className={className}>
+    <div className={codeStyles({ variant: "classic", className })}>
       <ScrollArea scrollbars="both" className="max-h-[200px]">
-        <div className={codeStyles({ variant: "classic" })}>
-          {children}
-          <Button
-            variant="quiet"
-            shape="square"
-            size="sm"
-            className="[&_svg]:size-3 absolute right-2 top-2"
-            onPress={handleCopy}
-          >
-            {copied ? (
-              <CheckIcon className="animate-in fade-in" />
-            ) : (
-              <CopyIcon className="animate-in fade-in" />
-            )}
-          </Button>
-        </div>
+        {children}
       </ScrollArea>
+      <Button
+        variant="quiet"
+        shape="square"
+        size="sm"
+        className="[&_svg]:size-3 absolute right-2 top-2"
+        onPress={handleCopy}
+      >
+        {copied ? (
+          <CheckIcon className="animate-in fade-in" />
+        ) : (
+          <CopyIcon className="animate-in fade-in" />
+        )}
+      </Button>
     </div>
   );
 };

@@ -22,13 +22,6 @@ export const siteConfig = {
     github: "https://github.com/mehdibha/dotui",
     twitter: "https://x.com/mehdibha_",
     discord: "https://discord.gg/DXpj5V2fU8",
-  },
-  header: {
-    nav: {
-      links: [
-        { href: "/docs/installation", label: "Docs" },
-        { href: "/components", label: "Components" },
-      ],
-    },
+    creatorGithub: "https://github.com/mehdibha",
   },
 };
