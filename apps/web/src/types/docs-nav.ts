@@ -15,7 +15,8 @@ export interface Category {
   title: string;
   slug: string;
   icon?: React.ReactNode;
-  items: (Item | SubCategory)[];
+  href?: string;
+  items?: (Item | SubCategory)[];
 }
 
 export type DocsNav = Category[];
