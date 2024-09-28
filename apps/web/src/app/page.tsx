@@ -13,16 +13,16 @@ export default function HomePage() {
       <div className="container flex flex-col items-center justify-center h-full">
         <div className="-translate-y-10">
           <h1 className="font-heading text-pretty text-xl font-semibold tracking-tighter sm:text-3xl md:text-4xl">
-            Add anything to your React app.
+            Scaffold. implement. ship.
           </h1>
           <h2 className="text-balance mt-3 text-sm text-fg-muted">
-            Add components, pages, themes and much more to your React app.
+            Add components, hooks, themes and much more to your <span className="font-bold">React app</span>.
           </h2>
           <div className="relative w-full">
             <div className="absolute left-1/2 top-0 -translate-x-1/2 opacity-70">
               <div className="z-[-1] h-[350px] w-[700px] animate-pulse-hero-bg bg-[radial-gradient(at_0%_0%,#0894ff_0,rgba(0,0,0,0)_40%),radial-gradient(at_50%_30%,#ff2e54_0,rgba(0,0,0,0)_60%),radial-gradient(at_100%_0%,#ff9004_0,rgba(0,0,0,0)_40%)] blur-[100px] delay-400" />
             </div>
-            <CommandMenu className="mt-6 w-full max-w-[600px]" />
+            <CommandMenu className="mt-6 w-full md:min-w-[600px]" />
           </div>
         </div>
         {/* Version */}
