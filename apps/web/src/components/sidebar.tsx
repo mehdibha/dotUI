@@ -12,13 +12,15 @@ import {
 import { siteConfig } from "@/config";
 import { docsConfig } from "@/config/docs-config";
 import { Avatar } from "@/registry/ui/default/core/avatar";
-import { Button } from "@/registry/ui/default/core/button";
+import { Button, ButtonProps } from "@/registry/ui/default/core/button";
 import {
   CollapsibleRoot,
   CollapsibleTrigger,
   CollapsibleContent,
 } from "@/registry/ui/default/core/collapsible";
+import { Kbd } from "@/registry/ui/default/core/kbd";
 import { ScrollArea } from "@/registry/ui/default/core/scroll-area";
+import { Tooltip, TooltipProps } from "@/registry/ui/default/core/tooltip";
 import { cn } from "@/registry/ui/default/lib/cn";
 import { GitHubIcon, TwitterIcon } from "./icons";
 import { ThemeToggle } from "./theme-toggle";
@@ -84,13 +86,15 @@ export const Sidebar = () => {
             </div>
           </div>
           <div className="px-2 pt-3">
-            <Button
-              shape="square"
-              variant="default"
-              size="sm"
-              className="transition-sidebar relative w-full overflow-hidden group-data-collapsed/sidebar:w-8"
+            <StyledTooltip
+              content={
+                <span className="items-center flex gap-2">
+                  Search
+                  <Kbd>⌘K</Kbd>
+                </span>
+              }
             >
-              <div className="transition-sidebar [&>svg]:size-4 absolute inset-2 flex w-[calc(var(--sidebar-width)-theme(spacing.8))] items-center justify-center gap-2 whitespace-nowrap group-data-collapsed/sidebar:left-2">
+              <CollapsibleButton>
                 <SearchIcon />
                 <span className="flex flex-1 flex-row items-center justify-between">
                   <span>Search </span>
@@ -98,8 +102,8 @@ export const Sidebar = () => {
                     <CommandIcon />K
                   </span>
                 </span>
-              </div>
-            </Button>
+              </CollapsibleButton>
+            </StyledTooltip>
           </div>
           <ScrollArea size="sm" className="flex-1">
             <div className="transition-sidebar grid w-full min-w-0 p-2 pt-0">
@@ -107,44 +111,53 @@ export const Sidebar = () => {
                 {docsConfig.nav.map((elem) => {
                   if (!elem.items || elem.items.length === 0) {
                     return (
-                      <Button
+                      <StyledTooltip
                         key={elem.slug}
-                        shape="square"
-                        variant="quiet"
-                        size="sm"
-                        className="transition-sidebar relative w-full overflow-hidden group-data-collapsed/sidebar:w-8"
+                        content={elem.title}
+                        isDisabled={!isCollapsed}
                       >
-                        <div className="transition-sidebar [&>svg]:size-4 absolute inset-2 flex w-[calc(var(--sidebar-width)-theme(spacing.8))] items-center justify-center gap-2 whitespace-nowrap group-data-collapsed/sidebar:left-2">
+                        <CollapsibleButton href={elem.href}>
                           {elem.icon}
                           <span className="flex-1 text-left">{elem.title}</span>
-                        </div>
-                      </Button>
+                        </CollapsibleButton>
+                      </StyledTooltip>
                     );
                   }
+
                   return (
                     <div key={elem.slug} className="relative flex flex-col">
                       <CollapsibleRoot
                         open={expandedItem === elem.slug}
                         onOpenChange={() => toggleExpand(elem.slug)}
                       >
-                        <CollapsibleTrigger asChild>
-                          <Button
-                            shape="square"
-                            variant="quiet"
-                            size="sm"
-                            className="transition-sidebar relative w-full overflow-hidden group-data-collapsed/sidebar:w-8"
-                          >
-                            <div className="transition-sidebar [&>svg]:size-4 absolute inset-2 flex w-[calc(var(--sidebar-width)-theme(spacing.8))] items-center justify-center gap-2 whitespace-nowrap group-data-collapsed/sidebar:left-2">
-                              {elem.icon}
-                              <span className="flex flex-1 flex-row items-center justify-between">
-                                <span>{elem.title}</span>
-                                <ChevronRightIcon
-                                  className={`transition-transform ${expandedItem === elem.slug ? "rotate-90" : ""}`}
-                                />
-                              </span>
-                            </div>
-                          </Button>
-                        </CollapsibleTrigger>
+                        <StyledTooltip
+                          content={elem.title}
+                          isDisabled={!isCollapsed}
+                        >
+                          <CollapsibleTrigger asChild>
+                            <Button
+                              shape="square"
+                              variant="quiet"
+                              size="sm"
+                              className="transition-sidebar relative w-full overflow-hidden group-data-collapsed/sidebar:w-8"
+                              onPress={() => {
+                                if (isCollapsed) {
+                                  setIsCollapsed(false);
+                                }
+                              }}
+                            >
+                              <div className="transition-sidebar [&>svg]:size-4 absolute inset-2 flex w-[calc(var(--sidebar-width)-theme(spacing.8))] items-center justify-center gap-2 whitespace-nowrap group-data-collapsed/sidebar:left-2">
+                                {elem.icon}
+                                <span className="flex flex-1 flex-row items-center justify-between">
+                                  <span>{elem.title}</span>
+                                  <ChevronRightIcon
+                                    className={`transition-transform ${expandedItem === elem.slug ? "rotate-90" : ""}`}
+                                  />
+                                </span>
+                              </div>
+                            </Button>
+                          </CollapsibleTrigger>
+                        </StyledTooltip>
                         <CollapsibleContent asChild>
                           <ul className="space-y-2 pb-2">
                             {elem.items.map((item, index) => {
@@ -262,3 +275,54 @@ export const Sidebar = () => {
     </aside>
   );
 };
+
+const CollapsibleWrapper = ({
+  children,
+  disabled,
+}: {
+  children: React.ReactNode;
+  disabled: boolean;
+}) => {
+  if (disabled) return children;
+  return (
+    <CollapsibleRoot>
+      <CollapsibleTrigger asChild>{children}</CollapsibleTrigger>
+      <CollapsibleContent asChild>
+        <div>some content</div>
+      </CollapsibleContent>
+    </CollapsibleRoot>
+  );
+};
+
+const CollapsibleButton = ({
+  children,
+  ...props
+}: Omit<ButtonProps, "children"> & { children: React.ReactNode }) => {
+  return (
+    <Button
+      shape="square"
+      variant="quiet"
+      size="sm"
+      className="transition-sidebar relative w-full overflow-hidden group-data-collapsed/sidebar:w-8"
+      {...props}
+    >
+      <div className="transition-sidebar [&>svg]:size-4 absolute inset-2 flex w-[calc(var(--sidebar-width)-theme(spacing.8))] items-center justify-center gap-2 whitespace-nowrap group-data-collapsed/sidebar:left-2">
+        {children}
+      </div>
+    </Button>
+  );
+};
+
+const StyledTooltip = (props: TooltipProps) => {
+  return (
+    <Tooltip
+      delay={0}
+      className="px-4 py-1"
+      placement="right"
+      arrow
+      {...props}
+    />
+  );
+};
+
+const SidebarItem = () => {};

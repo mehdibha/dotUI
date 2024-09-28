@@ -6,6 +6,7 @@ export const docsConfig: DocsConfig = {
     {
       title: "Getting Started",
       slug: "docs",
+      href: "/docs/installation",
       items: [{ title: "Installation", href: "/docs/installation" }],
       icon: <BookIcon />,
     },
@@ -13,6 +14,7 @@ export const docsConfig: DocsConfig = {
       title: "Components",
       slug: "components",
       icon: <BoxIcon />,
+      href: "/components/buttons/button",
       items: [
         { title: "Overview", href: "/components" },
         {
@@ -150,7 +152,7 @@ export const docsConfig: DocsConfig = {
       title: "Themes",
       slug: "themes",
       icon: <PaletteIcon />,
-      // items: [{ title: "Overview", href: "/themes" }],
+      href: "/themes",
     },
   ],
 };
