@@ -30,6 +30,13 @@ export const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = React.useState(true);
   const [expandedItem, setExpandedItem] = React.useState<string | null>(null);
 
+  // weather or not the sidebar when collapsed should free some space to the main content
+  const freeSomeSpace = !(
+    pathname.startsWith("/components") ||
+    pathname.startsWith("/docs") ||
+    pathname.startsWith("/hooks")
+  );
+
   const toggleExpand = (value: string) => {
     setExpandedItem(expandedItem === value ? null : value);
   };
@@ -52,7 +59,13 @@ export const Sidebar = () => {
         } as React.CSSProperties
       }
     >
-      <div className="transition-sidebar h-svh relative z-10 w-[--sidebar-width] bg-transparent group-data-collapsed/sidebar:w-[--sidebar-width-collapsed]" />
+      <div
+        className={cn(
+          "transition-sidebar h-svh relative z-10 w-[--sidebar-width] bg-transparent",
+          freeSomeSpace ?
+            "group-data-collapsed/sidebar:w-[--sidebar-width-collapsed]" : "group-data-collapsed/sidebar:w-[190px]"
+        )}
+      />
       <div className="transition-sidebar h-svh fixed inset-y-0 left-0 z-10 flex w-[--sidebar-width] flex-col overflow-hidden border-r bg-bg-muted/60 group-data-collapsed/sidebar:w-[--sidebar-width-collapsed] [&_button]:font-normal [&_svg]:text-fg-muted">
         <div className="h-svh flex w-[--sidebar-width] flex-1 translate-x-[-0.5px] flex-col overflow-hidden">
           <div className="relative flex items-center p-2 pb-1">
@@ -88,13 +101,14 @@ export const Sidebar = () => {
           <div className="px-2 pt-3">
             <StyledTooltip
               content={
-                <span className="items-center flex gap-2">
+                <span className="flex items-center gap-2">
                   Search
                   <Kbd>⌘K</Kbd>
                 </span>
               }
+              isDisabled={!isCollapsed}
             >
-              <CollapsibleButton>
+              <CollapsibleButton variant="default">
                 <SearchIcon />
                 <span className="flex flex-1 flex-row items-center justify-between">
                   <span>Search </span>
@@ -324,5 +338,3 @@ const StyledTooltip = (props: TooltipProps) => {
     />
   );
 };
-
-const SidebarItem = () => {};

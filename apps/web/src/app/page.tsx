@@ -3,9 +3,7 @@ import { TerminalSquareIcon } from "lucide-react";
 import { Code } from "@/components/code";
 import { CommandMenu } from "@/components/command-menu";
 import { siteConfig } from "@/config";
-import { Badge } from "@/registry/ui/default/core/badge";
 import { Link } from "@/registry/ui/default/core/link";
-import { cn } from "@/registry/ui/default/lib/cn";
 
 export default function HomePage() {
   return (
@@ -25,14 +23,6 @@ export default function HomePage() {
             <CommandMenu className="mt-6 w-full md:min-w-[600px]" />
           </div>
         </div>
-        {/* Version */}
-        <Badge
-          size="md"
-          variant="neutral"
-          className="absolute right-3 top-3 border text-[#e9e5e5]"
-        >
-          v0.1.0 beta
-        </Badge>
         {/* footer */}
         <div className="absolute bottom-5 left-0 right-0 flex flex-col items-center justify-center gap-6">
           <Terminal />

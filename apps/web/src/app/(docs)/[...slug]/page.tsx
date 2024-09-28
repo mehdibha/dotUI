@@ -2,6 +2,7 @@ import React from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ExternalLinkIcon } from "lucide-react";
+import { DocsPager } from "@/components/docs-pager";
 import { TableOfContents } from "@/components/docs/toc";
 import { Mdx } from "@/components/mdx/mdx-remote";
 import {
@@ -46,15 +47,17 @@ export default async function Page({ params }: PageProps) {
     notFound();
   }
 
+  const hasToc = !!doc.toc.items && doc.toc.items.length > 0;
   const { rawContent, metadata, categories } = doc;
 
   return (
     <main
-      className={cn("relative pb-20 lg:gap-10", {
-        "xl:grid xl:grid-cols-[1fr_220px]": !!doc.toc.items, // !!doc.toc
+      className={cn("relative py-20", {
+        "xl:grid xl:grid-cols-[1fr_230px] xl:gap-10": hasToc,
       })}
+      // className="relative py-20"
     >
-      <div className="mx-auto w-full min-w-0 pt-6">
+      <div className="container max-w-3xl">
         {metadata.breadcrumbs.length > 1 && (
           <Breadcrumbs className="mb-2">
             {metadata.breadcrumbs.map((item, index) => (
@@ -106,8 +109,11 @@ export default async function Page({ params }: PageProps) {
         <div className="mt-10 text-sm md:text-base">
           <Mdx source={rawContent} />
         </div>
+        <div className="mt-20">
+          <DocsPager />
+        </div>
       </div>
-      {doc.toc.items && ( // doc.toc
+      {hasToc && (
         <div className="hidden text-sm xl:block">
           <div className="sticky top-0">
             <ScrollArea className="h-screen pb-8">

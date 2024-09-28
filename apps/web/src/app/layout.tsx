@@ -11,6 +11,7 @@ import {
 } from "@/styles/fonts";
 import "@/styles/globals.css";
 import { siteConfig } from "@/config";
+import { Badge } from "@/registry/ui/default/core/badge";
 import { cn } from "@/registry/ui/default/lib/cn";
 import { Providers } from "./providers";
 
@@ -76,7 +77,17 @@ export default function RootLayout({
           {/* TODO: patch min-h-screen */}
           <div className="relative flex min-h-screen w-full flex-row">
             <Sidebar />
-            <main className="relative min-h-full flex-1">{children}</main>
+            <main className="relative min-h-full flex-1">
+              {/* Version */}
+              <Badge
+                size="md"
+                variant="neutral"
+                className="absolute right-3 top-3 border text-[#e9e5e5]"
+              >
+                v0.1.0 beta
+              </Badge>
+              {children}
+            </main>
           </div>
         </Providers>
       </body>
