@@ -1,4 +1,3 @@
-// import { withTV } from "tailwind-variants/transformer";
 import type { Config } from "tailwindcss";
 import defaultTheme from "tailwindcss/defaultTheme";
 import { fontFamily } from "tailwindcss/defaultTheme";
@@ -209,20 +208,60 @@ const config = {
             "mask-position": "0% center",
           },
         },
+        shine: {
+          "70%": {
+            backgroundPosition: "200%",
+            opacity: "0",
+          },
+          "100%": {
+            opacity: "0",
+          },
+        },
+        loading: {
+          "0%": { transform: "translateX(-100%)", opacity: "1" },
+          "30%": { transform: "translateX(100%)", opacity: "1" },
+          "50%": { transform: "translateX(0%)", opacity: "0" },
+          "100%": { transform: "translateX(0%)", opacity: "0" },
+        },
+        "pulse-hero-bg": {
+          "0%": {
+            opacity: "70%",
+            transform: "scale(1)"
+          },
+          "40%": {
+            opacity: "100%",
+            transform: "scale(1.05)"
+          },
+          "60%": {
+            opacity: "100%",
+            transform: "scale(1.05)"
+          },
+          "100%": {
+            opacity: "70%",
+            transform: "scale(1)"
+          },
+
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.15s cubic-bezier(0.32, 0.72, 0, 1)",
         "accordion-up": "accordion-up 0.2s cubic-bezier(0.32, 0.72, 0, 1)",
-        "collapsible-down": "collapsible-down 0.15s cubic-bezier(0.32, 0.72, 0, 1)",
-        "collapsible-up": "collapsible-up 0.15s cubic-bezier(0.32, 0.72, 0, 1)",
+        "collapsible-down":
+          "collapsible-down 0.25s cubic-bezier(0.32, 0.72, 0, 1)",
+        "collapsible-up": "collapsible-up 0.25s cubic-bezier(0.32, 0.72, 0, 1)",
         "caret-blink": "caret-blink 1.25s ease-out infinite",
         "progress-indeterminate":
           "progress-grow var(--progress-duration) 1 both normal, progress-pulse 1s ease var(--progress-duration) infinite normal none running",
+        shine: "shine 6s ease .1s infinite",
+        loading: "loading 6s ease 1s infinite",
+        "pulse-hero-bg": "pulse-hero-bg  12s linear infinite",
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), require("tailwindcss-react-aria-components")],
+  plugins: [
+    require("tailwindcss-animate"),
+    require("tailwindcss-react-aria-components"),
+  ],
 } satisfies Config;
 
-export default config
-// export default withTV(config);
+export default config;

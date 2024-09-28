@@ -17,9 +17,16 @@ interface CodeProps {
   code?: string;
   lang?: string;
   inline?: boolean;
+  colorReplacements?: Record<string, string>;
 }
 
-const Code = async ({ children, inline, lang: _lang, ...props }: CodeProps) => {
+const Code = async ({
+  children,
+  inline,
+  lang: _lang,
+  colorReplacements,
+  ...props
+}: CodeProps) => {
   const { code: codeStr, lang } = parseChildren(children as CodeText, _lang);
   const html = await codeToHtml(codeStr, {
     lang: lang,
@@ -27,6 +34,7 @@ const Code = async ({ children, inline, lang: _lang, ...props }: CodeProps) => {
       light: "github-light",
       dark: "github-dark-dimmed",
     },
+    colorReplacements,
     structure: inline ? "inline" : "classic",
   });
   const ElementType = inline ? "span" : "div";

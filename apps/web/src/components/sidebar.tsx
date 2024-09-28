@@ -12,7 +12,6 @@ import {
 import { siteConfig } from "@/config";
 import { docsConfig } from "@/config/docs-config";
 import { Avatar } from "@/registry/ui/default/core/avatar";
-import { Badge } from "@/registry/ui/default/core/badge";
 import { Button } from "@/registry/ui/default/core/button";
 import {
   CollapsibleRoot,
@@ -26,7 +25,7 @@ import { ThemeToggle } from "./theme-toggle";
 
 export const Sidebar = () => {
   const pathname = usePathname();
-  const [isCollapsed, setIsCollapsed] = React.useState(false);
+  const [isCollapsed, setIsCollapsed] = React.useState(true);
   const [expandedItem, setExpandedItem] = React.useState<string | null>(null);
 
   const toggleExpand = (value: string) => {
@@ -67,12 +66,9 @@ export const Sidebar = () => {
                 loading="lazy"
                 className="size-6 m-1 rounded-sm"
               />
-              <div className="mt-1 font-josephin font-bold leading-normal tracking-tighter">
+              <div className="mt-[5px] font-josephin font-bold leading-normal tracking-tighter">
                 {siteConfig.global.name}
               </div>
-              <Badge size="sm" variant="neutral" className="border">
-                beta
-              </Badge>
             </Link>
             <div className="flex-1" />
             <div className="transition-sidebar has-[button:focus-visible]:opacity-100 absolute left-[calc(var(--sidebar-width)-theme(spacing.10))] z-10 duration-75 group-data-collapsed/sidebar:left-2 group-data-collapsed/sidebar:opacity-0 group-hover/sidebar:opacity-100">
@@ -112,6 +108,7 @@ export const Sidebar = () => {
                   if (!elem.items || elem.items.length === 0) {
                     return (
                       <Button
+                        key={elem.slug}
                         shape="square"
                         variant="quiet"
                         size="sm"

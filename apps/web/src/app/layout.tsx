@@ -77,13 +77,6 @@ export default function RootLayout({
           <div className="relative flex min-h-screen w-full flex-row">
             <Sidebar />
             <main className="relative min-h-full flex-1">{children}</main>
-
-            {/* <Header /> */}
-            {/* <div className="relative w-full flex-1">{children}</div> */}
-            {/* <div className="relative min-h-full w-full">
-              <div className="container max-w-7xl"></div>
-            </div> */}
-            {/* <Footer /> */}
           </div>
         </Providers>
       </body>
