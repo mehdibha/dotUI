@@ -1,17 +1,21 @@
-import type { Registry } from "@dotui/registry/types";
+type RegistryDemoItem = {
+  name: string;
+  files: string[];
+};
 
-const buildDemos = (component: string, demos: string[]): Registry => {
+type RegistryDemos = RegistryDemoItem[];
+
+const buildDemos = (component: string, demos: string[]): RegistryDemos => {
   return demos.map((demo) => {
     return {
       name: `${component}-${demo}`,
       type: "registry:demo",
-      registryDependencies: [component],
       files: [`core/${component}/demos/${demo}.tsx`],
     };
   });
 };
 
-export const demos: Registry = [
+export const demos: RegistryDemos = [
   ...buildDemos("alert", [
     "action",
     "composition",

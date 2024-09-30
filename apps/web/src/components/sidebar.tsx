@@ -22,12 +22,13 @@ import { Kbd } from "@/registry/ui/default/core/kbd";
 import { ScrollArea } from "@/registry/ui/default/core/scroll-area";
 import { Tooltip, TooltipProps } from "@/registry/ui/default/core/tooltip";
 import { cn } from "@/registry/ui/default/lib/cn";
+import { CommandMenu } from "./command-menu";
 import { GitHubIcon, TwitterIcon } from "./icons";
 import { ThemeToggle } from "./theme-toggle";
 
 export const Sidebar = () => {
   const pathname = usePathname();
-  const [isCollapsed, setIsCollapsed] = React.useState(true);
+  const [isCollapsed, setIsCollapsed] = React.useState(pathname === "/");
   const [expandedItem, setExpandedItem] = React.useState<string | null>(null);
 
   // weather or not the sidebar when collapsed should free some space to the main content
@@ -62,12 +63,13 @@ export const Sidebar = () => {
       <div
         className={cn(
           "transition-sidebar h-svh relative z-10 w-[--sidebar-width] bg-transparent",
-          freeSomeSpace ?
-            "group-data-collapsed/sidebar:w-[--sidebar-width-collapsed]" : "group-data-collapsed/sidebar:w-[190px]"
+          freeSomeSpace
+            ? "group-data-collapsed/sidebar:w-[--sidebar-width-collapsed]"
+            : "group-data-collapsed/sidebar:w-[200px]"
         )}
       />
       <div className="transition-sidebar h-svh fixed inset-y-0 left-0 z-10 flex w-[--sidebar-width] flex-col overflow-hidden border-r bg-bg-muted/60 group-data-collapsed/sidebar:w-[--sidebar-width-collapsed] [&_button]:font-normal [&_svg]:text-fg-muted">
-        <div className="h-svh flex w-[--sidebar-width] flex-1 translate-x-[-0.5px] flex-col overflow-hidden">
+        <div className="h-svh relative flex w-[--sidebar-width] flex-1 translate-x-[-0.5px] flex-col overflow-hidden">
           <div className="relative flex items-center p-2 pb-1">
             <Link
               href="/"
@@ -108,15 +110,19 @@ export const Sidebar = () => {
               }
               isDisabled={!isCollapsed}
             >
-              <CollapsibleButton variant="default">
-                <SearchIcon />
-                <span className="flex flex-1 flex-row items-center justify-between">
-                  <span>Search </span>
-                  <span className="flex items-center justify-center gap-0.5 text-xs text-fg-muted">
-                    <CommandIcon />K
-                  </span>
-                </span>
-              </CollapsibleButton>
+              {pathname !== "/" && (
+                <CommandMenu>
+                  <CollapsibleButton variant="default">
+                    <SearchIcon />
+                    <span className="flex flex-1 flex-row items-center justify-between">
+                      <span>Search </span>
+                      <span className="flex items-center justify-center gap-0.5 text-xs text-fg-muted">
+                        <CommandIcon />K
+                      </span>
+                    </span>
+                  </CollapsibleButton>
+                </CommandMenu>
+              )}
             </StyledTooltip>
           </div>
           <ScrollArea size="sm" className="flex-1">

@@ -16,7 +16,7 @@ links:
 ---
 
 <ComponentPreview
-  name="demos/components/core/tabs/basic"
+  name="core/tabs-basic"
   preview={`<Tabs>
   <TabList>
     <Tab id="overview">Overview</Tab>
@@ -56,7 +56,7 @@ Use `Tabs` to organize content into multiple sections and allow users to navigat
 Use the `orientation` prop to set the orientation of the tabs.
 
 <ComponentPreview
-  name="demos/components/core/tabs/vertical"
+  name="core/tabs-vertical"
   preview={`<Tabs orientation="vertical">
   <TabList>
     <Tab id="overview">Overview</Tab>
@@ -74,7 +74,7 @@ Use the `orientation` prop to set the orientation of the tabs.
 Use the `isDisabled` prop to disable the tabs.
 
 <ComponentPreview
-  name="demos/components/core/tabs/disabled"
+  name="core/tabs-disabled"
   preview={`<Tabs isDisabled>
   <TabList>
     <Tab id="overview">Overview</Tab>
@@ -90,7 +90,7 @@ Use the `isDisabled` prop to disable the tabs.
 An individual Tab can also be disabled with the `isDisabled` prop.
 
 <ComponentPreview
-  name="demos/components/core/tabs/disabled-item"
+  name="core/tabs-disabled-item"
   preview={`<Tabs>
   <TabList>
     <Tab id="overview">Overview</Tab>
@@ -110,7 +110,7 @@ An individual Tab can also be disabled with the `isDisabled` prop.
 Prevent keyboard activation of tabs by setting `keyboardActivation` prop to `'manual'`.
 
 <ComponentPreview
-  name="demos/components/core/tabs/keyboard-activation"
+  name="core/tabs-keyboard-activation"
   preview={`<Tabs keyboardActivation="manual">
   <TabList>
     <Tab id="overview">Overview</Tab>
@@ -128,7 +128,7 @@ Prevent keyboard activation of tabs by setting `keyboardActivation` prop to `'ma
 Use the `selectedKey` and `onSelectionChange` props to control the selected tab.
 
 <ComponentPreview
-  name="demos/components/core/tabs/controlled"
+  name="core/tabs-controlled"
   preview={`const [selectedTab, setSelectedTab] = React.useState<Key>("overview");
 return (
   <Tabs selectedKey={selectedTab} onSelectionChange={setSelectedTab}>

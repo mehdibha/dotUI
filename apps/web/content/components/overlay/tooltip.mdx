@@ -16,7 +16,7 @@ links:
 ---
 
 <ComponentPreview
-  name="demos/components/core/tooltip/default"
+  name="core/tooltip-default"
   preview={`<Tooltip content="Add to library">
   <Button><PlusIcon /></Button>
 </Tooltip>`}
@@ -52,7 +52,7 @@ Use `Tooltip` to display a description of an element on hover or focus.
 ### Arrow
 
 <ComponentPreview
-  name="demos/components/core/tooltip/arrow"
+  name="core/tooltip-arrow"
   preview={`<Tooltip content="Add to library" arrow>
   <Button><PlusIcon /></Button>
 </Tooltip>`}
@@ -63,7 +63,7 @@ Use `Tooltip` to display a description of an element on hover or focus.
 The Tooltip's placement with respect to its trigger element can be adjusted using the `placement` prop. See the props table for a full list of available placement combinations.
 
 <ComponentPreview
-  name="demos/components/core/tooltip/placement"
+  name="core/tooltip-placement"
   preview={`<Tooltip placement="top" content="Add to library"><Button /></Tooltip>
 <Tooltip placement="bottom" content="Add to library"><Button /></Tooltip>
 <Tooltip placement="left" content="Add to library"><Button /></Tooltip>
@@ -75,7 +75,7 @@ The Tooltip's placement with respect to its trigger element can be adjusted usin
 This option determines whether or not a tooltip should be able to switch sides when constrained by space.
 
 <ComponentPreview
-  name="demos/components/core/tooltip/flip"
+  name="core/tooltip-flip"
   preview={`<Tooltip shouldFlip={shouldFlip} content="Add to library">
   <Button><PlusIcon /></Button>
 </Tooltip>`}
@@ -86,7 +86,7 @@ This option determines whether or not a tooltip should be able to switch sides w
 The offset is the distance between the end of the tip and the target.
 
 <ComponentPreview
-  name="demos/components/core/tooltip/offset"
+  name="core/tooltip-offset"
   preview={`<Tooltip offset={offset} content="Add to library">
   <Button><PlusIcon /></Button>
 </Tooltip>`}
@@ -97,7 +97,7 @@ The offset is the distance between the end of the tip and the target.
 To make sure that the tooltip will stay within certain boundaries (e.g., a browser window) it’s possible to define a container and a container padding value to respect. The default value for this is 12 px.
 
 <ComponentPreview
-  name="demos/components/core/tooltip/container-padding"
+  name="core/tooltip-container-padding"
   preview={`<Tooltip containerPadding={containerPadding} content="Add to library">
   <Button><PlusIcon /></Button>
 </Tooltip>`}
@@ -108,7 +108,7 @@ To make sure that the tooltip will stay within certain boundaries (e.g., a brows
 The delay duration (the time from when the mouse enters a tooltip trigger until the tooltip opens) and the close delay can be customised.
 
 <ComponentPreview
-  name="demos/components/core/tooltip/delay"
+  name="core/tooltip-delay"
   preview={`<Tooltip delay={delay} closeDelay={closeDelay} content="Add to library">
   <Button><PlusIcon /></Button>
 </Tooltip>`}
@@ -119,7 +119,7 @@ The delay duration (the time from when the mouse enters a tooltip trigger until 
 For more flexibility, you can use the composition pattern to create a custom tooltip.
 
 <ComponentPreview
-  name="demos/components/core/tooltip/composition"
+  name="core/tooltip-composition"
   preview={`<TooltipRoot>
   <Button>Hover</Button>
   <TooltipContent>

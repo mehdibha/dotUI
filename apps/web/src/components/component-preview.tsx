@@ -1,82 +1,99 @@
-"use client";
-
 import React from "react";
-import { CodeBlock } from "@/components/code-block";
-import { useConfig } from "@/hooks/use-config";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
+import { getFileSource } from "@/lib/get-file-source";
+import { Index } from "@/__demos__";
 import { styles } from "@/registry/styles";
-import { ScrollArea } from "@/registry/ui/default/core/scroll-area";
 import { cn } from "@/registry/ui/default/lib/cn";
+import { CodeBlock } from "./code-block";
+import { ComponentPreviewClient } from "./component-preview-client";
 
 export interface ComponentPreviewProps {
   name: string;
-  className?: string;
   containerClassName?: string;
-  aspect?: "default" | "page";
-  defaultExpanded?: boolean;
+  className?: string;
   preview?: string;
   expandable?: boolean;
 }
 
-export const ComponentPreview = ({
+export const ComponentPreview = async ({
   name,
-  className,
   containerClassName,
-  aspect = "default",
+  className,
   preview,
   expandable,
 }: ComponentPreviewProps) => {
-  const config = useConfig();
-  const index = styles.findIndex((style) => style.name === config.style);
+  const type = name.split("/")[0];
+  const componentName = name.split("/")[1];
 
-  const component = React.useMemo(() => {
-    // const Component = Index[config.style][name]?.component;
-    const Component = false
+  if (type === "core") {
+    const demos: {
+      component: React.ComponentType;
+      code: Array<{
+        fileName: string;
+        code: string;
+      }>;
+    }[] = styles.map((style) => {
+      const demo = Index["core"][style.name][componentName];
+      return {
+        component: demo.component,
+        code: demo.files.map((file: string) => {
+          const { fileName, content } = getFileSource(file);
+          return {
+            fileName,
+            code: content,
+          };
+        }),
+      };
+    });
 
-    if (!Component) {
-      return <p className="text-sm text-fg-muted">Component not found.</p>;
-    }
-
-    // return <Component />;
-  }, [name]);
-
-  // const code = React.useMemo(() => {
-  //   const allCodeFiles = previews[name]?.code ?? [];
-
-  //   if (allCodeFiles.length === 0) {
-  //     return [];
-  //   }
-
-  //   return allCodeFiles.map((file) => ({
-  //     ...file,
-  //     code: file.code.replace("export default function", "function"),
-  //   }));
-  // }, [name]);
-
-  return (
-    <div className={cn("overflow-hidden rounded-md border", containerClassName)}>
-      <div className="relative">
-        <ScrollArea
-          className={cn("flex items-center justify-center bg-white dark:bg-black", {
-            "max-h-[800px]": aspect === "default",
-          })}
-        >
-          <div className="min-h-40 flex items-center justify-center px-4 py-8">
-            <div className={cn("flex w-full items-center justify-center", className)}>
-              {component}
+    return (
+      <div
+        className={cn("overflow-hidden rounded-md border", containerClassName)}
+      >
+        <div className="relative">
+          <ScrollArea
+            className={cn(
+              "flex items-center justify-center bg-white dark:bg-black"
+            )}
+          >
+            <div className="min-h-40 flex items-center justify-center px-4 py-8">
+              <div
+                className={cn(
+                  "flex w-full items-center justify-center",
+                  className
+                )}
+              >
+                <ComponentPreviewClient
+                  demos={demos.map((elem) => {
+                    const Comp = elem.component;
+                    return <Comp />;
+                  })}
+                />
+              </div>
             </div>
-          </div>
-        </ScrollArea>
+          </ScrollArea>
+        </div>
+        <ComponentPreviewClient
+          demos={demos.map((elem) => {
+            return (
+              <CodeBlock
+                files={elem.code.map((file) => ({
+                  fileName: file.fileName,
+                  code: file.code,
+                  lang: "tsx",
+                }))}
+                preview={preview}
+                className={"w-full rounded-t-none border-x-0 border-b-0"}
+                expandable={expandable}
+              />
+            );
+          })}
+        />
       </div>
-      {/* <CodeBlock
-        files={code.map((file) => ({
-          fileName: file.title,
-          code: file.code,
-          lang: "tsx",
-        }))}
-        preview={preview}
-        className={"w-full rounded-t-none border-x-0 border-b-0"}
-        expandable={expandable}
-      /> */}
-    </div>
-  );
+    );
+  }
+
+  return <p className="text-sm text-fg-muted">Component type {type} not handled.</p>;
+  // TODO: do other demo types
+  return null;
 };

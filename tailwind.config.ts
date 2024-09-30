@@ -138,7 +138,6 @@ const config = {
       backgroundImage: {
         gradient:
           "linear-gradient(108deg, rgba(8,148,255,1) 0%, rgba(255,46,84,1) 70%, rgba(255,144,4,1) 100%)",
-        // gradient: "linear-gradient(108deg,#0894FF,#C959DD 34%,#FF2E54 68%,#FF9004)",
       },
       borderRadius: {
         lg: "var(--radius)",

@@ -16,7 +16,7 @@ links:
 ---
 
 <ComponentPreview
-  name="demos/components/core/list-box/basic"
+  name="core/list-box-basic"
   preview={`<ListBox>
   <Item>Next.js</Item>
   <Item>Remix</Item>
@@ -51,7 +51,7 @@ By default, `ListBox` expects items to be arranged in a vertical stack, and impl
 Use the `orientation` prop to change the layout to a horizontal stack.
 
 <ComponentPreview
-  name="demos/components/core/list-box/horizontal"
+  name="core/list-box-horizontal"
   preview={`<ListBox orientation="horizontal" selectionMode="single">
   <Item textValue="Read" label="Read" description="Read Only" />
   <Item textValue="Write" label="Write" description="Read and Write Only" />
@@ -64,7 +64,7 @@ Use the `orientation` prop to change the layout to a horizontal stack.
 The `layout` prop can be set to `"grid"` to enable two-dimensional keyboard navigation.
 
 <ComponentPreview
-  name="demos/components/core/list-box/grid"
+  name="core/list-box-grid"
   preview={`<ListBox layout="grid">
   <Item>Next.js</Item>
   <Item>Remix</Item>
@@ -78,7 +78,7 @@ The `layout` prop can be set to `"grid"` to enable two-dimensional keyboard navi
 ListBox supports multiple selection modes. By default, selection is disabled, however this can be changed using the `selectionMode` prop.
 
 <ComponentPreview
-  name="demos/components/core/list-box/selection-mode"
+  name="core/list-box-selection-mode"
   preview={`<ListBox selectionMode="single">
   <Item>Next.js</Item>
   <Item>Remix</Item>
@@ -98,7 +98,7 @@ ListBox supports multiple selection modes. By default, selection is disabled, ho
 When `selectionBehavior` is set to `"replace"`, clicking a row with the mouse replaces the selection with only that row. Using the arrow keys moves both focus and selection. To select multiple rows, modifier keys such as `Ctrl`, `Cmd`, and `Shift` can be used. On touch screen devices, selection always behaves as toggle since modifier keys may not be available.
 
 <ComponentPreview
-  name="demos/components/core/list-box/selection-behavior"
+  name="core/list-box-selection-behavior"
   preview={`<ListBox selectionMode="multiple" selectionBehavior="replace">
   <Item>Next.js</Item>
   <Item>Remix</Item>
@@ -112,7 +112,7 @@ When `selectionBehavior` is set to `"replace"`, clicking a row with the mouse re
 Use the `isLoading` prop to indicate that the list is loading.
 
 <ComponentPreview
-  name="demos/components/core/list-box/loading"
+  name="core/list-box-loading"
   preview={`<ListBox isLoading>
   <Item>User 1</Item>
   <Item>User 2</Item>
@@ -125,7 +125,7 @@ Use the `isLoading` prop to indicate that the list is loading.
 Use the `renderEmptyState` prop to customize what the ListBox will display if there are no items.
 
 <ComponentPreview
-  name="demos/components/core/list-box/empty-state"
+  name="core/list-box-empty-state"
   preview={`<ListBox renderEmptyState={() => "No results found."} />`}
 />
 
@@ -136,7 +136,7 @@ Use the `renderEmptyState` prop to customize what the ListBox will display if th
 Use the `variant` prop to set the visual style of the item.
 
 <ComponentPreview
-  name="demos/components/core/list-box/item-variant"
+  name="core/list-box-item-variant"
   preview={`<ListBox>
   <Item>View logs</Item>
   <Item>Manage domains</Item>
@@ -150,7 +150,7 @@ Use the `variant` prop to set the visual style of the item.
 By default, items in a ListBox are labeled by their text contents for accessibility. Items also support the `"label"` and `"description"` props to separate primary and secondary content.
 
 <ComponentPreview
-  name="demos/components/core/list-box/label-and-description"
+  name="core/list-box-label-and-description"
   preview={`<ListBox>
   <Item textValue="Read" label="Read" description="Read Only" />
   <Item textValue="Write" label="Write" description="Read and Write Only" />
@@ -163,7 +163,7 @@ By default, items in a ListBox are labeled by their text contents for accessibil
 To add additional context for the item, such as icons, use the `prefix` and `suffix` props.
 
 <ComponentPreview
-  name="demos/components/core/list-box/prefix-and-suffix"
+  name="core/list-box-prefix-and-suffix"
   preview={`<ListBox>
   <Item label="New file" description="Create a new file" prefix={<PlusSquareIcon />} />
   <Item label="Copy link" description="Copy the file link" prefix={<CopyIcon />} />
@@ -176,7 +176,7 @@ To add additional context for the item, such as icons, use the `prefix` and `suf
 Items may be links to another page or website. This can be achieved by passing the `href` prop to the `Item` component.
 
 <ComponentPreview
-  name="demos/components/core/list-box/links"
+  name="core/list-box-links"
   preview={`<ListBox>
   <Item href="https://github.com/mehdibha">GitHub</Item>
   <Item href="https://linkedin.com/in/mehdibha">LinkedIn</Item>
@@ -189,7 +189,7 @@ Items may be links to another page or website. This can be achieved by passing t
 An `Item` can be disabled with the `isDisabled` prop.
 
 <ComponentPreview
-  name="demos/components/core/list-box/disabled-items"
+  name="core/list-box-disabled-items"
   preview={`<ListBox>
   <Item>Next.js</Item>
   <Item>Remix</Item>
@@ -204,7 +204,7 @@ An `Item` can be disabled with the `isDisabled` prop.
 Sections without a `title` must provide an `aria-label` for accessibility.
 
 <ComponentPreview
-  name="demos/components/core/list-box/sections"
+  name="core/list-box-sections"
   preview={`<ListBox selectionMode="multiple">
   <Section title="Sauces">
     <Item id="signature-sauce">Signature sauce</Item>
@@ -230,7 +230,7 @@ Sections without a `title` must provide an `aria-label` for accessibility.
 Separators may be added between items or sections in order to create non-labeled groupings.
 
 <ComponentPreview
-  name="demos/components/core/list-box/separator"
+  name="core/list-box-separator"
   preview={`<ListBox>
   <Item>New...</Item>
   <Item>Badges</Item>
@@ -249,7 +249,7 @@ Separators may be added between items or sections in order to create non-labeled
 Use `defaultSelectedKey` to set a default selected item.
 
 <ComponentPreview
-  name="demos/components/core/list-box/uncontrolled"
+  name="core/list-box-uncontrolled"
   preview={`<ListBox
   selectionMode="multiple"
   defaultSelectedKeys={["nextjs", "remix", "astro"]}
@@ -266,7 +266,7 @@ Use `defaultSelectedKey` to set a default selected item.
 Use `selectedKey` and `onChange` props to control the selected item.
 
 <ComponentPreview
-  name="demos/components/core/list-box/controlled"
+  name="core/list-box-controlled"
   preview={`const [selected, setSelected] = React.useState<Selection>(new Set(["nextjs", "remix", "astro"]));
 return (
   <ListBox
@@ -287,7 +287,7 @@ return (
 If you need to customize things further, you can drop down to the composition level.
 
 <ComponentPreview
-  name="demos/components/core/list-box/composition"
+  name="core/list-box-composition"
   preview={`<ListBox selectionMode="multiple">
   <Item>
     <Text slot="label">Next.js</Text>
@@ -313,7 +313,7 @@ This example uses the `useAsyncList` hook to handle asynchronous loading of data
 {/* prettier-ignore-start */}
 
 <ComponentPreview 
-  name="demos/components/core/list-box/async-loading"
+  name="core/list-box-async-loading"
   preview={`const list = useAsyncList<Character>({
   async load({ signal }) {
     const res = await fetch(\`https://pokeapi.co/api/v2/pokemon\`, { signal })

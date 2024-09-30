@@ -16,7 +16,7 @@ links:
 ---
 
 <ComponentPreview
-  name="demos/components/core/color-area/default"
+  name="core/color-area-default"
   preview={`<ColorArea />`}
 />
 
@@ -46,7 +46,7 @@ Use `ColorArea` to allow users to adjust two channels of an RGB, HSL or HSB colo
 `xChannel` and `yChannel` props may be provided to specify which color channels the color area should display
 
 <ComponentPreview
-  name="demos/components/core/color-area/channels"
+  name="core/color-area-channels"
   preview={`<ColorArea xChannel="red" yChannel="blue" />`}
 />
 
@@ -55,7 +55,7 @@ Use `ColorArea` to allow users to adjust two channels of an RGB, HSL or HSB colo
 Use the `isDisabled` prop to disable the color area.
 
 <ComponentPreview
-  name="demos/components/core/color-area/disabled"
+  name="core/color-area-disabled"
   preview={`<ColorArea isDisabled />`}
 />
 
@@ -64,7 +64,7 @@ Use the `isDisabled` prop to disable the color area.
 An initial, uncontrolled value can be provided to the `ColorArea` using the `defaultValue` prop.
 
 <ComponentPreview
-  name="demos/components/core/color-area/uncontrolled"
+  name="core/color-area-uncontrolled"
   preview={`<ColorArea defaultValue="hsl(30, 100%, 50%)" />`}
 />
 
@@ -73,7 +73,7 @@ An initial, uncontrolled value can be provided to the `ColorArea` using the `def
 Use the `value` and `onChange` props to control the value of the slider.
 
 <ComponentPreview
-  name="demos/components/core/color-area/controlled"
+  name="core/color-area-controlled"
   preview={`const [value, setValue] = React.useState(parseColor("hsl(0, 100%, 50%)"))
 return <ColorArea value={value} onChange={setValue} xChannel="saturation" yChannel="lightness" />`}
 />
@@ -83,7 +83,7 @@ return <ColorArea value={value} onChange={setValue} xChannel="saturation" yChann
 If you need to customize things further, you can drop down to the composition level.
 
 <ComponentPreview
-  name="demos/components/core/color-area/composition"
+  name="core/color-area-composition"
   preview={`<ColorAreaRoot>
   <ColorThumb />
 </ColorAreaRoot>`}

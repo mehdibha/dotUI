@@ -16,7 +16,7 @@ links:
 ---
 
 <ComponentPreview
-  name="demos/components/core/progress/default"
+  name="core/progress-default"
   preview={`<Progress value={75} />`}
 />
 
@@ -51,7 +51,7 @@ A determinate progress indicator can help people decide whether to do something 
 Use the `variant` prop to control the visual style of the `Progress`. The default variant is `"default"`.
 
 <ComponentPreview
-  name="demos/components/core/progress/variants"
+  name="core/progress-variants"
   preview={`<Progress variant="default" />
 <Progress variant="success" />
 <Progress variant="accent" />
@@ -64,7 +64,7 @@ Use the `variant` prop to control the visual style of the `Progress`. The defaul
 Use the `size` prop to control the size of the `Progress`. The default variant is `"md"`.
 
 <ComponentPreview
-  name="demos/components/core/progress/sizes"
+  name="core/progress-sizes"
   preview={`<Progress size="sm" />
 <Progress size="md" />
 <Progress size="lg" />`}
@@ -75,7 +75,7 @@ Use the `size` prop to control the size of the `Progress`. The default variant i
 A visual label can be provided for the `Progress` using the label prop, or a hidden label using `aria-label` prop.
 
 <ComponentPreview
-  name="demos/components/core/progress/label"
+  name="core/progress-label"
   preview={`<Progress aria-label="loading" />
 <Progress label="loading..." />`}
 />
@@ -85,7 +85,7 @@ A visual label can be provided for the `Progress` using the label prop, or a hid
 Set the `showValueLabel` prop to `true` to display the current value of the progress bar.
 
 <ComponentPreview
-  name="demos/components/core/progress/value-label"
+  name="core/progress-value-label"
   preview={`<Progress label="Loading" showValueLabel value={75} />`}
 />
 
@@ -94,7 +94,7 @@ Set the `showValueLabel` prop to `true` to display the current value of the prog
 Values are formatted as a percentage by default, but this can be modified by using the `formatOptions` prop to specify a different format.
 
 <ComponentPreview
-  name="demos/components/core/progress/format-options"
+  name="core/progress-format-options"
   preview={`<Progress
   label="Sending…"
   showValueLabel
@@ -108,7 +108,7 @@ Values are formatted as a percentage by default, but this can be modified by usi
 The `valueLabel` prop allows the formatted value to be replaced with a custom string.
 
 <ComponentPreview
-  name="demos/components/core/progress/custom-value-label"
+  name="core/progress-custom-value-label"
   preview={``}
 />
 
@@ -117,7 +117,7 @@ The `valueLabel` prop allows the formatted value to be replaced with a custom st
 The `isIndeterminate` prop can be used to represent an interdeterminate operation.
 
 <ComponentPreview
-  name="demos/components/core/progress/indeterminate"
+  name="core/progress-indeterminate"
   preview={``}
 />
 
@@ -126,7 +126,7 @@ The `isIndeterminate` prop can be used to represent an interdeterminate operatio
 Use the duration prop to indicate an approximate duration of an indeterminate task. Once the duration times out, the progress bar will start an indeterminate animation.
 
 <ComponentPreview
-  name="demos/components/core/progress/duration"
+  name="core/progress-duration"
   preview={`<Progress duration="30s" />`}
 />
 
@@ -135,7 +135,7 @@ Use the duration prop to indicate an approximate duration of an indeterminate ta
 A custom value scale can be used by setting the `minValue` and `maxValue` props.
 
 <ComponentPreview
-  name="demos/components/core/progress/min-max-values"
+  name="core/progress-min-max-values"
   preview={``}
 />
 
@@ -146,20 +146,20 @@ A custom value scale can be used by setting the `minValue` and `maxValue` props.
 If you need to customize things further, you can drop down to the composition level.
 
 <ComponentPreview
-  name="demos/components/core/progress/composition"
+  name="core/progress-composition"
   preview={``}
 />
 
 ### Custom color
 
 <ComponentPreview
-  name="demos/components/core/progress/custom-color"
+  name="core/progress-custom-color"
   preview={``}
 />
 
 ### Toolbar
 
-<ComponentPreview name="demos/components/core/progress/toolbar" preview={``} />
+<ComponentPreview name="core/progress-toolbar" preview={``} />
 
 ## API Reference
 

@@ -1,0 +1,41 @@
+---
+title: useMouse
+description: Track and retrieve the position of the mouse cursor with useMouse.
+---
+
+<ComponentPreview name="demos/hooks/use-mouse" />
+
+## Installation
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="hooks/use-mouse" />
+
+<Step>
+  Update the import paths to match your project setup.
+</Step>
+</Steps>
+
+## Parameters
+
+None
+
+## Return values
+
+| Name    | Type     | Description                                                                       |
+| ------- | -------- | --------------------------------------------------------------------------------- |
+| `state` | `object` | An object representing the current mouse position and element information.        |
+| `ref`   | `object` | A ref object that can be used to track the mouse position on a specific element.. |
+
+The `state` object has the following properties:
+
+| Name                     | Type     | Description                                                                             |
+| ------------------------ | -------- | --------------------------------------------------------------------------------------- |
+| `state.x`                | `number` | The current horizontal position of the mouse relative to the page.                      |
+| `state.y`                | `number` | The current vertical position of the mouse relative to the page.                        |
+| `state.elementX`         | `number` | The current horizontal position of the mouse relative to the element’s top-left corner. |
+| `state.elementY`         | `number` | The current vertical position of the mouse relative to the element’s top-left corner.   |
+| `state.elementPositionX` | `number` | The current horizontal position of the element relative to the page.                    |
+| `state.elementPositionY` | `number` | The current vertical position of the element relative to the page.                      |
