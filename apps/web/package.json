@@ -6,10 +6,8 @@
   "scripts": {
     "build": "next build",
     "build:registry": "tsx ./scripts/build-registry.ts && prettier --log-level silent --write \"src/registry/**/*.{ts,tsx,mdx}\" \"src/__demos__/**/*.{ts,tsx}\" --cache",
-    "build:demos": "tsx ./scripts/build-registry-demos.ts && prettier --log-level silent --write \"src/registry/demos.ts\" --cache",
-    "build:previews": "tsx ./scripts/build-previews.ts",
-    "build:icons": "tsx ./scripts/build-icons.ts",
-    "build:docs-config": "tsx ./scripts/build-docs-config.ts",
+    "build:registry-demos": "tsx ./scripts/build-registry-demos.ts && prettier --log-level silent --write \"src/__demos__/registry.ts\" --cache",
+    "build:demos": "tsx ./scripts/build-demos.ts && prettier --log-level silent --write \"src/__demos__/index.tsx\" --cache",
     "start": "next start",
     "dev": "next dev",
     "preview": "next build && next start",

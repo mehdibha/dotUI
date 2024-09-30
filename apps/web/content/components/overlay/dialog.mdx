@@ -16,7 +16,7 @@ links:
 ---
 
 <ComponentPreview
-  name="demos/components/core/dialog/basic"
+  name="core/dialog-basic"
   preview={`<DialogRoot>
   <Button variant="outline">Edit Profile</Button>
   <Dialog title="Edit profile" description="Make changes to your profile.">
@@ -67,7 +67,7 @@ Dialog is labeled with a title to provide context to the user. Use the `title` p
 If a dialog does not have a visible heading element, an `aria-label` or `aria-labelledby` prop must be passed instead to identify the element to assistive technology.
 
 <ComponentPreview
-  name="demos/components/core/dialog/title"
+  name="core/dialog-title"
   preview={`<DialogRoot>
   <Button variant="outline">Edit username</Button>
   <Dialog title="Edit username">
@@ -81,7 +81,7 @@ If a dialog does not have a visible heading element, an `aria-label` or `aria-la
 A description can be supplied to the dialog via the `description` prop.
 
 <ComponentPreview
-  name="demos/components/core/dialog/description"
+  name="core/dialog-description"
   preview={`<DialogRoot>
   <Button variant="outline">Edit username</Button>
   <Dialog title="Edit username" description="Make changes to your username.">
@@ -96,7 +96,7 @@ Dialogs can be rendered as modals, popovers, or drawers using the `type` prop.
 By default, dialogs are displayed as drawers on mobile. You can override this behavior by setting the `mobileType` prop.
 
 <ComponentPreview
-  name="demos/components/core/dialog/types"
+  name="core/dialog-types"
   preview={`<DialogRoot>
   <Button variant="outline">Edit username</Button>
   <Dialog title="Edit username">
@@ -125,7 +125,7 @@ By default, dialogs are displayed as drawers on mobile. You can override this be
 By default, dialogs are dismissable allowing users to click outside to close the dialog. You can disable this behavior by setting the `isDismissable` prop.
 
 <ComponentPreview
-  name="demos/components/core/dialog/dismissable"
+  name="core/dialog-dismissable"
   preview={`<DialogRoot>
   <Button variant="outline">Edit Profile</Button>
   <Dialog
@@ -158,7 +158,7 @@ By default, dialogs are dismissable allowing users to click outside to close the
 By default, dialogs have a dismiss button when they're dismissable. You can disable this behavior by setting `showDismissButton` prop.
 
 <ComponentPreview
-  name="demos/components/core/dialog/dismiss-button"
+  name="core/dialog-dismiss-button"
   preview={`<DialogRoot>
   <Button variant="outline">Edit Profile</Button>
   <Dialog
@@ -191,7 +191,7 @@ By default, dialogs have a dismiss button when they're dismissable. You can disa
 Use the `<DialogInset>` component to add inset content to the dialog.
 
 <ComponentPreview
-  name="demos/components/core/dialog/inset-content"
+  name="core/dialog-inset-content"
   preview={`<DialogRoot>
   <Button variant="outline">Edit Profile</Button>
   <Dialog title="Edit profile" description="Make changes to your profile.">
@@ -220,53 +220,44 @@ Use the `<DialogInset>` component to add inset content to the dialog.
 
 Use the `type="popover"` prop on the `<Dialog>` element to make a popover dialog.
 
-<ComponentPreview name="demos/components/core/dialog/popover" preview={``} />
+<ComponentPreview name="core/dialog-popover" preview={``} />
 
 ## Drawer
 
 Use the `type="drawer"` prop on the `<Dialog>` element to make a drawer dialog.
 
-<ComponentPreview name="demos/components/core/dialog/drawer" preview={``} />
+<ComponentPreview name="core/dialog-drawer" preview={``} />
 
 ## Alert Dialog
 
 Use the `role="alertdialog"` prop on the `<Dialog>` element to make an alert dialog.
 If the `isDismissable` prop is not explicitly set, the dialog will be not dismissable.
 
-<ComponentPreview
-  name="demos/components/core/dialog/alert-dialog"
-  preview={``}
-/>
+<ComponentPreview name="core/dialog-alert-dialog" preview={``} />
 
 ## Controlled
 
 Use the `isOpen` and `onOpenChange` props to control the dialog's open state.
 
-<ComponentPreview name="demos/components/core/dialog/controlled" preview={``} />
+<ComponentPreview name="core/dialog-controlled" preview={``} />
 
 ## Composition
 
 If you need to customize things further, you can drop down to the composition level.
 
-<ComponentPreview
-  name="demos/components/core/dialog/composition"
-  preview={``}
-/>
+<ComponentPreview name="core/dialog-composition" preview={``} />
 
 ## Examples
 
 ### Async form submission
 
-<ComponentPreview
-  name="demos/components/core/dialog/async-form-submission"
-  preview={``}
-/>
+<ComponentPreview name="core/dialog-async-form-submission" preview={``} />
 
 ### Nested dialog
 
 Dialogs support nesting, allowing you to open a dialog from within another dialog.
 
-<ComponentPreview name="demos/components/core/dialog/nested" preview={``} />
+<ComponentPreview name="core/dialog-nested" preview={``} />
 
 ## API Reference
 

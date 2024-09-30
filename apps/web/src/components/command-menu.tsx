@@ -1,7 +1,9 @@
 "use client";
 
 import React from "react";
-import { CalendarIcon } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { FileIcon } from "lucide-react";
+import { docsConfig } from "@/config/docs-config";
 import {
   Command,
   CommandEmpty,
@@ -10,50 +12,107 @@ import {
   CommandItem,
   CommandList,
 } from "@/registry/ui/default/core/command";
-import { Separator } from "@/registry/ui/default/core/separator";
-import { cn } from "@/registry/ui/default/lib/cn";
+import { DialogRoot, Dialog } from "@/registry/ui/default/core/dialog";
 
-export const CommandMenu = ({ className }: { className?: string }) => {
-  // focus on render
-  const inputRef = React.useRef<HTMLInputElement>(null);
+export const CommandMenu = ({ children }: { children: React.ReactNode }) => {
+  const [isOpen, setIsOpen] = React.useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
+
   React.useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
+    const down = (e: KeyboardEvent) => {
+      if (pathname === "/") return;
+      if ((e.key === "k" && (e.metaKey || e.ctrlKey)) || e.key === "/") {
+        if (
+          (e.target instanceof HTMLElement && e.target.isContentEditable) ||
+          e.target instanceof HTMLInputElement ||
+          e.target instanceof HTMLTextAreaElement ||
+          e.target instanceof HTMLSelectElement
+        ) {
+          return;
+        }
+
+        e.preventDefault();
+        setIsOpen((open) => !open);
+      }
+    };
+
+    document.addEventListener("keydown", down);
+    return () => document.removeEventListener("keydown", down);
   }, []);
+
+  const runCommand = React.useCallback((command: () => unknown) => {
+    setIsOpen(false);
+    command();
+  }, []);
+
   return (
-    <Command
-      className={cn(
-        "relative overflow-visible rounded-lg bg-bg-muted shadow-md dark:bg-[#151414]",
-        "relative after:absolute after:-inset-px after:z-[-1] after:animate-shine after:rounded-[inherit] after:bg-[linear-gradient(to_right,#343434_20%,#343434_40%,#707070_50%,#707070_55%,#343434_70%,#343434_100%)] after:bg-[250%_auto] after:content-['']",
-        // we fake border
-        "before:absolute before:-inset-px before:z-[-1] before:rounded-[inherit] before:bg-border before:content-['']",
-        className
-      )}
-    >
-      <CommandInput
-        ref={inputRef}
-        placeholder="Type a command or search..."
-        wrapperClassName="border-b-0"
-      />
-      <Separator className="before:opacity-1 relative before:absolute before:left-0 before:top-0 before:h-full before:w-1/2 before:animate-loading before:bg-[linear-gradient(90deg,rgba(0,0,0,0)_0,#707070_50%,rgba(0,0,0,0)_100%)] before:opacity-0 before:delay-900 before:content-['']" />
-      <CommandList>
-        <CommandEmpty>No results found.</CommandEmpty>
-        <CommandGroup heading="Suggestions">
-          <CommandItem>
-            <CalendarIcon className="mr-2 h-4 w-4" />
-            <span>Installation</span>
-          </CommandItem>
-          <CommandItem>
-            <CalendarIcon className="mr-2 h-4 w-4" />
-            <span>CLI</span>
-          </CommandItem>
-          <CommandItem>
-            <CalendarIcon className="mr-2 h-4 w-4" />
-            <span>Button</span>
-          </CommandItem>
-        </CommandGroup>
-      </CommandList>
-    </Command>
+    <DialogRoot isOpen={isOpen} onOpenChange={setIsOpen}>
+      {children}
+      <Dialog className="!p-0">
+        <Command>
+          <CommandInput
+            autoFocus
+            placeholder="Search a component, a block, a hook..."
+          />
+          <CommandList>
+            <CommandEmpty>No results found.</CommandEmpty>
+            {docsConfig.nav.map((category, index) => (
+              <CommandGroup key={index} heading={category.title}>
+                {category.items &&
+                  category.items.map((item, itemIndex) => {
+                    if ("href" in item && item.href) {
+                      return (
+                        <CommandItem
+                          key={itemIndex}
+                          onSelect={() => {
+                            runCommand(() => router.push(item.href));
+                          }}
+                          className="flex items-center space-x-2"
+                        >
+                          <FileIcon className="size-4 text-fg-muted" />
+                          <span>{item.title}</span>
+                        </CommandItem>
+                      );
+                    }
+                    if ("items" in item && item.items.length > 0) {
+                      return (
+                        <React.Fragment key={itemIndex}>
+                          {item.items.map((subItem, subItemIndex) => {
+                            return (
+                              <CommandItem
+                                key={subItemIndex}
+                                onSelect={() => {
+                                  runCommand(() => router.push(subItem.href));
+                                }}
+                                className="flex items-center justify-between"
+                              >
+                                <div className="flex items-center space-x-2">
+                                  <FileIcon className="size-4 text-fg-muted" />
+                                  <span>{subItem.title}</span>
+                                </div>
+                                <div>
+                                  <span className="text-secondary-foreground rounded-md border bg-bg-muted px-3 py-1 text-xs leading-none text-fg-muted">
+                                    {item.title}
+                                  </span>
+                                  {subItem.label && (
+                                    <span className="ml-2 rounded-md bg-gradient px-3 py-1 text-xs leading-none text-white">
+                                      {subItem.label}
+                                    </span>
+                                  )}
+                                </div>
+                              </CommandItem>
+                            );
+                          })}
+                        </React.Fragment>
+                      );
+                    }
+                  })}
+              </CommandGroup>
+            ))}
+          </CommandList>
+        </Command>
+      </Dialog>
+    </DialogRoot>
   );
 };

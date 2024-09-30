@@ -3,20 +3,24 @@ import path from "path";
 import { rimraf } from "rimraf";
 
 async function buildRegistryDemos() {
-  let index = `import type { Registry } from "@dotui/registry/types";
+  let index = `
+type RegistryDemoItem = {
+  name: string;
+  files: string[];
+};
 
-const buildDemos = (component: string, demos: string[]): Registry => {
+type RegistryDemos =  RegistryDemoItem[];
+
+const buildDemos = (component: string, demos: string[]): RegistryDemos => {
   return demos.map((demo) => {
     return {
       name: \`\${component}-\${demo}\`,
-      type: "registry:demo",
-      registryDependencies: [component],
       files: [\`core/\${component}/demos/\${demo}.tsx\`],
     };
   });
 };
 
-export const demos: Registry = [
+export const demos: RegistryDemos = [
 `;
 
   const components = readdirSync(
@@ -47,8 +51,8 @@ export const demos: Registry = [
   }
   index += `]
 `;
-  rimraf.sync(path.join(process.cwd(), "src/registry/demos.ts"));
-  await fs.writeFile(path.join(process.cwd(), "src/registry/demos.ts"), index);
+  rimraf.sync(path.join(process.cwd(), "src/__demos__/registry.ts"));
+  await fs.writeFile(path.join(process.cwd(), "src/__demos__/registry.ts"), index);
   console.log("✅ Done!");
 }
 

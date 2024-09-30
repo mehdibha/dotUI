@@ -1,6 +1,6 @@
 import React from "react";
 import { CodeBlock } from "@/components/code-block";
-import { getComponentSource } from "@/server/component-source";
+// import { getComponentSource } from "@/server/component-source";
 
 export const ComponentSource = ({
   name,
@@ -9,6 +9,7 @@ export const ComponentSource = ({
   name: string | string[];
   className?: string;
 }) => {
+  return null
   let code: { title: string; code: string }[] = [];
 
   if (typeof name === "string") {

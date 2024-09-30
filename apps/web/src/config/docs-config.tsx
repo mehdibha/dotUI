@@ -1,5 +1,11 @@
+import {
+  BookIcon,
+  BoxIcon,
+  CodeIcon,
+  FunctionSquareIcon,
+  PaletteIcon,
+} from "lucide-react";
 import type { DocsConfig } from "@/types/docs";
-import { BookIcon, BoxIcon, CodeIcon, FunctionSquareIcon, PaletteIcon } from "lucide-react";
 
 export const docsConfig: DocsConfig = {
   nav: [
@@ -7,7 +13,15 @@ export const docsConfig: DocsConfig = {
       title: "Getting Started",
       slug: "docs",
       href: "/docs/installation",
-      items: [{ title: "Installation", href: "/docs/installation" }],
+      items: [
+        { title: "Introduction", href: "/docs/intro" },
+        { title: "Installation", href: "/docs/installation" },
+        { title: "Config", href: "/docs/config" },
+        { title: "CLI", href: "/docs/cli" },
+        { title: "Color system", href: "/docs/color-system" },
+        { title: "Changelog", href: "/docs/changelog" },
+        { title: "Roadmap", href: "/docs/roadmap" },
+      ],
       icon: <BookIcon />,
     },
     {
@@ -16,7 +30,6 @@ export const docsConfig: DocsConfig = {
       icon: <BoxIcon />,
       href: "/components/buttons/button",
       items: [
-        { title: "Overview", href: "/components" },
         {
           title: "Buttons",
           items: [
@@ -146,7 +159,45 @@ export const docsConfig: DocsConfig = {
       title: "Hooks",
       slug: "hooks",
       icon: <FunctionSquareIcon />,
-      items: [{ title: "useDebounce", href: "/hooks/use-debounce" }],
+      items: [
+        {
+          title: "browser",
+          items: [
+            { title: "useMediaQuery", href: "/hooks/browser/use-media-query" },
+          ],
+        },
+        {
+          title: "elements",
+          items: [
+            { title: "useInView", href: "/hooks/elements/use-in-view" },
+            { title: "useIntersectionObserver", href: "/hooks/elements/use-intersection-observer" },
+            { title: "useWindowSize", href: "/hooks/elements/use-window-size" },
+          ],
+        },
+        {
+          title: "sensors",
+          items: [
+            { title: "useBattery", href: "/hooks/sensors/use-battery" },
+            { title: "useMouse", href: "/hooks/sensors/use-mouse" },
+            { title: "useOrientation", href: "/hooks/sensors/use-orientation" },
+          ],
+        },
+        {
+          title: "state",
+          items: [{ title: "useLocalStorage", href: "/hooks/state/use-local-storage" }],
+        },
+        {
+          title: "utils",
+          items: [
+            { title: "useCounter", href: "/hooks/utils/use-counter" },
+            { title: "useDebounce", href: "/hooks/utils/use-debounce" },
+            { title: "useIsClient", href: "/hooks/utils/use-is-client" },
+            { title: "useList", href: "/hooks/utils/use-list" },
+            { title: "useMounted", href: "/hooks/utils/use-mounted" },
+            { title: "usePrevious", href: "/hooks/utils/use-previous" },
+          ],
+        },
+      ],
     },
     {
       title: "Themes",

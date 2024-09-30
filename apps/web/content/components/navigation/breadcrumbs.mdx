@@ -16,7 +16,7 @@ links:
 ---
 
 <ComponentPreview
-  name="demos/components/core/breadcrumbs/basic"
+  name="core/breadcrumbs-basic"
   preview={`<Breadcrumbs>
   <Breadcrumb href="#">Home</Breadcrumb>
   <Breadcrumb href="#">Components</Breadcrumb>
@@ -49,7 +49,7 @@ Use `Breadcrumbs` to display a hierarchy of links to the current page or resourc
 Use the `isDisabled` prop to disable the breadcrumbs.
 
 <ComponentPreview
-  name="demos/components/core/breadcrumbs/disabled"
+  name="core/breadcrumbs-disabled"
   preview={`<Breadcrumbs isDisabled>
   <Breadcrumb href="#">Home</Breadcrumb>
   <Breadcrumb href="#">Components</Breadcrumb>
@@ -62,7 +62,7 @@ Use the `isDisabled` prop to disable the breadcrumbs.
 If you need to customize things further, you can drop down to the composition level.
 
 <ComponentPreview
-  name="demos/components/core/breadcrumbs/composition"
+  name="core/breadcrumbs-composition"
   preview={`<Breadcrumbs>
   <BreadcrumbItem>
     <BreadcrumbLink href="#">Home</BreadcrumbLink>
@@ -84,7 +84,7 @@ If you need to customize things further, you can drop down to the composition le
 ### Icon
 
 <ComponentPreview
-  name="demos/components/core/breadcrumbs/icon"
+  name="core/breadcrumbs-icon"
   preview={`<Breadcrumbs>
   <Breadcrumb href="#">
     <HomeIcon />
@@ -98,7 +98,7 @@ If you need to customize things further, you can drop down to the composition le
 ### Router integration
 
 <ComponentPreview
-  name="demos/components/core/breadcrumbs/router-integration"
+  name="core/breadcrumbs-router-integration"
   preview={`const pathname = usePathname();
 const pathnames = pathname.split("/").filter((x) => x);
 return (

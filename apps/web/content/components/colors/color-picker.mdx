@@ -16,7 +16,7 @@ links:
 ---
 
 <ComponentPreview
-  name="demos/components/core/color-picker/default"
+  name="core/color-picker-default"
   preview={`<ColorPicker defaultValue="#5100FF" />`}
 />
 
@@ -56,7 +56,7 @@ Use a `ColorPicker` to allow users to select and edit a color in an overlay.
 `ColorPicker` accepts all [button options](/components/buttons/button#options).
 
 <ComponentPreview
-  name="demos/components/core/color-picker/options"
+  name="core/color-picker-options"
   preview={`<ColorPicker size="sm" shape="rectangle">
   Fill color
 </ColorPicker>`}
@@ -67,7 +67,7 @@ Use a `ColorPicker` to allow users to select and edit a color in an overlay.
 An initial, uncontrolled value can be provided to the `ColorPicker` using the `defaultValue` prop.
 
 <ComponentPreview
-  name="demos/components/core/color-picker/uncontrolled"
+  name="core/color-picker-uncontrolled"
   preview={`<ColorPicker defaultValue="#5100FF" />`}
 />
 
@@ -76,7 +76,7 @@ An initial, uncontrolled value can be provided to the `ColorPicker` using the `d
 Use the `value` and `onChange` props to control the color picker.
 
 <ComponentPreview
-  name="demos/components/core/color-picker/controlled"
+  name="core/color-picker-controlled"
   preview={`const [value, setValue] = React.useState(parseColor("hsl(25, 100%, 50%)"));
 return <ColorPicker value={value as Color & string} onChange={setValue} />;`}
 />
@@ -86,7 +86,7 @@ return <ColorPicker value={value as Color & string} onChange={setValue} />;`}
 If you need to customize things further, you can drop down to the composition level.
 
 <ComponentPreview
-  name="demos/components/core/color-picker/composition"
+  name="core/color-picker-composition"
   preview={`<ColorPickerRoot defaultValue="#5100FF">
   <DialogRoot>
     <Button>

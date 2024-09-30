@@ -16,7 +16,7 @@ links:
 ---
 
 <ComponentPreview
-  name="demos/components/core/switch/default"
+  name="core/switch-default"
   preview={`<Switch>Focus mode</Switch>`}
 />
 
@@ -46,7 +46,7 @@ Switches, unlike checkboxes, can't have an error state.
 Use the `size` prop to control the size of the switch. The default variant is `"md"`.
 
 <ComponentPreview
-  name="demos/components/core/switch/sizes"
+  name="core/switch-sizes"
   preview={`<Switch size="sm" />
 <Switch size="md" />
 <Switch size="lg" />`}
@@ -57,7 +57,7 @@ Use the `size` prop to control the size of the switch. The default variant is `"
 A visual label can be provided using the component children or a hidden label using `aria-label` prop.
 
 <ComponentPreview
-  name="demos/components/core/switch/label"
+  name="core/switch-label"
   preview={`<Switch>Focus mode</Switch>
 <Switch aria-label="Focus mode" />`}
 />
@@ -67,7 +67,7 @@ A visual label can be provided using the component children or a hidden label us
 Use the `isDisabled` prop to disable the switch.
 
 <ComponentPreview
-  name="demos/components/core/switch/disabled"
+  name="core/switch-disabled"
   preview={`<Switch isDisabled>Focus Mode</Switch>`}
 />
 
@@ -76,7 +76,7 @@ Use the `isDisabled` prop to disable the switch.
 The `defaultValue` prop can be used to set the default state.
 
 <ComponentPreview
-  name="demos/components/core/switch/uncontrolled"
+  name="core/switch-uncontrolled"
   preview={`<Switch defaultSelected>Airplane Mode</Switch>`}
 />
 
@@ -85,7 +85,7 @@ The `defaultValue` prop can be used to set the default state.
 Use the `isSelected` and `onChange` props to control the value of the input.
 
 <ComponentPreview
-  name="demos/components/core/switch/controlled"
+  name="core/switch-controlled"
   preview={`const [isSelected, setSelected] = React.useState(true);
 return (
   <Switch isSelected={isSelected} onChange={setSelected}>
