@@ -9,7 +9,7 @@ on:
 
 jobs:
   main:
-    if: github.repository == 'mehdibha/dotui'
+    if: github.repository == 'mehdibha/dotUI'
     runs-on: ubuntu-latest
     name: Semantic Pull Request
     steps:
