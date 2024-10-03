@@ -12,7 +12,7 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
-    name: Run eslint
+    name: Run lint
     steps:
       - uses: actions/checkout@v4
         with:
@@ -23,7 +23,7 @@ jobs:
 
   format:
     runs-on: ubuntu-latest
-    name: Run prettier
+    name: Run format
     steps:
       - uses: actions/checkout@v4
         with:
@@ -34,7 +34,7 @@ jobs:
 
   tsc:
     runs-on: ubuntu-latest
-    name: Run Typechecker
+    name: Run typecheck
     steps:
       - uses: actions/checkout@v4
         with:
@@ -45,7 +45,7 @@ jobs:
       
   build-www:
     runs-on: ubuntu-latest
-    name: Build and Check Astro
+    name: Build www
     steps:
       - uses: actions/checkout@v4
         with:
