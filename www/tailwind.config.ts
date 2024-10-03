@@ -225,21 +225,20 @@ const config = {
         "pulse-hero-bg": {
           "0%": {
             opacity: "70%",
-            transform: "scale(1)"
+            transform: "scale(1)",
           },
           "40%": {
             opacity: "100%",
-            transform: "scale(1.05)"
+            transform: "scale(1.05)",
           },
           "60%": {
             opacity: "100%",
-            transform: "scale(1.05)"
+            transform: "scale(1.05)",
           },
           "100%": {
             opacity: "70%",
-            transform: "scale(1)"
+            transform: "scale(1)",
           },
-
         },
       },
       animation: {

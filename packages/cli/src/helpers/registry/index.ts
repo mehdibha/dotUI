@@ -27,7 +27,7 @@ export async function getRegistryIndex() {
 export async function getRegistryStyles() {
   try {
     const [result] = await fetchRegistry(["styles/index.json"]);
-    console.log(result)
+    console.log(result);
     return registrySchema.parse(result);
   } catch (error) {
     logger.error("\n");

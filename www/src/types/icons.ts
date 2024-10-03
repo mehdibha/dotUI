@@ -1,3 +1,1 @@
-export type IconLibrary =
-  | "lucide"
-  | "remix"
+export type IconLibrary = "lucide" | "remix";

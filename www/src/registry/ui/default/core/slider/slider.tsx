@@ -168,14 +168,18 @@ const SliderFiller = (props: SliderFillerProps) => {
               }
             : { height: `${getThumbPercent(0) * 100}%` }
           : orientation === "horizontal"
-            ? {
-                left: `${getThumbPercent(0) * 100}%`,
-                width: `${Math.abs(getThumbPercent(0) - getThumbPercent(1)) * 100}%`,
-              }
-            : {
-                bottom: `${getThumbPercent(0) * 100}%`,
-                height: `${Math.abs(getThumbPercent(0) - getThumbPercent(1)) * 100}%`,
-              }
+          ? {
+              left: `${getThumbPercent(0) * 100}%`,
+              width: `${
+                Math.abs(getThumbPercent(0) - getThumbPercent(1)) * 100
+              }%`,
+            }
+          : {
+              bottom: `${getThumbPercent(0) * 100}%`,
+              height: `${
+                Math.abs(getThumbPercent(0) - getThumbPercent(1)) * 100
+              }%`,
+            }
       }
       className={filler({ className: props.className })}
     />

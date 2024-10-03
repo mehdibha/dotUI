@@ -170,7 +170,10 @@ export const docsConfig: DocsConfig = {
           title: "elements",
           items: [
             { title: "useInView", href: "/hooks/elements/use-in-view" },
-            { title: "useIntersectionObserver", href: "/hooks/elements/use-intersection-observer" },
+            {
+              title: "useIntersectionObserver",
+              href: "/hooks/elements/use-intersection-observer",
+            },
             { title: "useWindowSize", href: "/hooks/elements/use-window-size" },
           ],
         },
@@ -184,7 +187,12 @@ export const docsConfig: DocsConfig = {
         },
         {
           title: "state",
-          items: [{ title: "useLocalStorage", href: "/hooks/state/use-local-storage" }],
+          items: [
+            {
+              title: "useLocalStorage",
+              href: "/hooks/state/use-local-storage",
+            },
+          ],
         },
         {
           title: "utils",

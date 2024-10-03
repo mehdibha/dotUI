@@ -40,7 +40,10 @@ async function buildDemos() {
     "${item.name}": {
       name: "${item.name}",
       files: [${resolveFiles.map((file) => `"${file}"`)}],
-      component: React.lazy(() => import("${componentPath.replace(".tsx", "")}")),
+      component: React.lazy(() => import("${componentPath.replace(
+        ".tsx",
+        ""
+      )}")),
     },`;
     }
 

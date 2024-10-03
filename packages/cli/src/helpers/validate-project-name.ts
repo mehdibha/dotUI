@@ -1,11 +1,8 @@
 // source: https://github.com/npm/validate-npm-package-name/blob/main/index.js
-import { builtinModules as builtins } from 'module';
+import { builtinModules as builtins } from "module";
 
-const scopedPackagePattern: RegExp = new RegExp('^(?:@([^/]+?)[/])?([^/]+?)$');
-const blacklist: readonly string[] = [
-  'node_modules',
-  'favicon.ico',
-] as const;
+const scopedPackagePattern: RegExp = new RegExp("^(?:@([^/]+?)[/])?([^/]+?)$");
+const blacklist: readonly string[] = ["node_modules", "favicon.ico"] as const;
 
 interface NpmValidationResult {
   validForNewPackages: boolean;
@@ -19,34 +16,34 @@ const validateNpmName = (name: unknown): NpmValidationResult => {
   const errors: string[] = [];
 
   if (name === null) {
-    errors.push('name cannot be null');
+    errors.push("name cannot be null");
     return done(warnings, errors);
   }
 
   if (name === undefined) {
-    errors.push('name cannot be undefined');
+    errors.push("name cannot be undefined");
     return done(warnings, errors);
   }
 
-  if (typeof name !== 'string') {
-    errors.push('name must be a string');
+  if (typeof name !== "string") {
+    errors.push("name must be a string");
     return done(warnings, errors);
   }
 
   if (!name.length) {
-    errors.push('name length must be greater than zero');
+    errors.push("name length must be greater than zero");
   }
 
   if (name.match(/^\./)) {
-    errors.push('name cannot start with a period');
+    errors.push("name cannot start with a period");
   }
 
   if (name.match(/^_/)) {
-    errors.push('name cannot start with an underscore');
+    errors.push("name cannot start with an underscore");
   }
 
   if (name.trim() !== name) {
-    errors.push('name cannot contain leading or trailing spaces');
+    errors.push("name cannot contain leading or trailing spaces");
   }
 
   // No funny business
@@ -63,15 +60,15 @@ const validateNpmName = (name: unknown): NpmValidationResult => {
   }
 
   if (name.length > 214) {
-    warnings.push('name can no longer contain more than 214 characters');
+    warnings.push("name can no longer contain more than 214 characters");
   }
 
   // mIxeD CaSe nAMEs
   if (name.toLowerCase() !== name) {
-    warnings.push('name can no longer contain capital letters');
+    warnings.push("name can no longer contain capital letters");
   }
 
-  if (/[~'!()*]/.test(name.split('/').slice(-1)[0])) {
+  if (/[~'!()*]/.test(name.split("/").slice(-1)[0])) {
     warnings.push('name can no longer contain special characters ("~\'!()*")');
   }
 
@@ -80,11 +77,16 @@ const validateNpmName = (name: unknown): NpmValidationResult => {
     const nameMatch = name.match(scopedPackagePattern);
     if (nameMatch) {
       const [, user, pkg] = nameMatch;
-      if (user && pkg && encodeURIComponent(user) === user && encodeURIComponent(pkg) === pkg) {
+      if (
+        user &&
+        pkg &&
+        encodeURIComponent(user) === user &&
+        encodeURIComponent(pkg) === pkg
+      ) {
         return done(warnings, errors);
       }
     }
-    errors.push('name can only contain URL-friendly characters');
+    errors.push("name can only contain URL-friendly characters");
   }
 
   return done(warnings, errors);
@@ -109,19 +111,19 @@ const done = (warnings: string[], errors: string[]): NpmValidationResult => {
   return result;
 };
 
-type ValidationResult = 
-| {
-    valid: true
-  }
-| {
-    valid: false
-    errors: string[]
-  }
+type ValidationResult =
+  | {
+      valid: true;
+    }
+  | {
+      valid: false;
+      errors: string[];
+    };
 
 export const validateProjectName = (name: unknown): ValidationResult => {
-  const nameValidation = validateNpmName(name)
+  const nameValidation = validateNpmName(name);
   if (nameValidation.validForNewPackages) {
-    return { valid: true }
+    return { valid: true };
   }
 
   return {
@@ -130,6 +132,5 @@ export const validateProjectName = (name: unknown): ValidationResult => {
       ...(nameValidation.errors || []),
       ...(nameValidation.warnings || []),
     ],
-  }
-}
-
+  };
+};

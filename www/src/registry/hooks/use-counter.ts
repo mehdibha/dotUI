@@ -10,7 +10,7 @@ export function useCounter(
     decrement: () => void;
     set: (nextCount: number) => void;
     reset: () => void;
-  },
+  }
 ] {
   const { min, max } = options;
 

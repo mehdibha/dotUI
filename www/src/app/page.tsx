@@ -14,7 +14,8 @@ export default function HomePage() {
             Scaffold. implement. ship.
           </h1>
           <h2 className="text-balance mt-3 text-sm text-fg-muted">
-            Add components, hooks, themes and much more to your <span className="font-bold">React app</span>.
+            Add components, hooks, themes and much more to your{" "}
+            <span className="font-bold">React app</span>.
           </h2>
           <div className="relative w-full">
             <div className="absolute left-1/2 top-0 -translate-x-1/2 opacity-70">

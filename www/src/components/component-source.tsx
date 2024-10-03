@@ -9,7 +9,7 @@ export const ComponentSource = ({
   name: string | string[];
   className?: string;
 }) => {
-  return null
+  return null;
   // let code: { title: string; code: string }[] = [];
 
   // if (typeof name === "string") {
