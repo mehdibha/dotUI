@@ -9,7 +9,7 @@ on:
 
 jobs:
   main:
-    if: github.repository == 'vitejs/vite'
+    if: github.repository == 'mehdibha/dotui'
     runs-on: ubuntu-latest
     name: Semantic Pull Request
     steps:
