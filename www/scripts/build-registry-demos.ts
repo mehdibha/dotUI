@@ -47,12 +47,17 @@ export const demos: RegistryDemos = [
         "demos"
       )
     );
-    index += `  ...buildDemos("${component}", [${demos.map((demo) => `"${demo.replace(".tsx", "")}"`)}]),\n`;
+    index += `  ...buildDemos("${component}", [${demos.map(
+      (demo) => `"${demo.replace(".tsx", "")}"`
+    )}]),\n`;
   }
   index += `]
 `;
   rimraf.sync(path.join(process.cwd(), "src/__demos__/registry.ts"));
-  await fs.writeFile(path.join(process.cwd(), "src/__demos__/registry.ts"), index);
+  await fs.writeFile(
+    path.join(process.cwd(), "src/__demos__/registry.ts"),
+    index
+  );
   console.log("✅ Done!");
 }
 

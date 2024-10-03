@@ -84,10 +84,14 @@ export const useMotionDrawer = (props: useMotionDrawerProps) => {
     const currentSwipeAmount = getTranslate(drawerRef.current, placement);
     set(drawerRef.current, {
       transform: "translate3d(0, 0, 0)",
-      transition: `transform ${TRANSITIONS.DURATION}s cubic-bezier(${TRANSITIONS.EASE.join(",")})`,
+      transition: `transform ${
+        TRANSITIONS.DURATION
+      }s cubic-bezier(${TRANSITIONS.EASE.join(",")})`,
     });
     set(backdropRef.current, {
-      transition: `opacity ${TRANSITIONS.DURATION}s cubic-bezier(${TRANSITIONS.EASE.join(",")})`,
+      transition: `opacity ${
+        TRANSITIONS.DURATION
+      }s cubic-bezier(${TRANSITIONS.EASE.join(",")})`,
       opacity: "1",
     });
     // TODO: put this in a function (resetBody)
@@ -113,7 +117,9 @@ export const useMotionDrawer = (props: useMotionDrawerProps) => {
               }),
           transitionProperty: "transform, border-radius",
           transitionDuration: `${TRANSITIONS.DURATION}s`,
-          transitionTimingFunction: `cubic-bezier(${TRANSITIONS.EASE.join(",")})`,
+          transitionTimingFunction: `cubic-bezier(${TRANSITIONS.EASE.join(
+            ","
+          )})`,
         },
         true
       );
@@ -303,11 +309,15 @@ export const useMotionDrawer = (props: useMotionDrawerProps) => {
     animateBody();
     set(drawerRef.current, {
       transform: `translate3d(0, 0, 0)`,
-      transition: `transform ${TRANSITIONS.DURATION}s cubic-bezier(${TRANSITIONS.EASE.join(",")})`,
+      transition: `transform ${
+        TRANSITIONS.DURATION
+      }s cubic-bezier(${TRANSITIONS.EASE.join(",")})`,
     });
     set(backdropRef.current, {
       opacity: "1",
-      transition: `opacity ${TRANSITIONS.DURATION}s cubic-bezier(${TRANSITIONS.EASE.join(",")})`,
+      transition: `opacity ${
+        TRANSITIONS.DURATION
+      }s cubic-bezier(${TRANSITIONS.EASE.join(",")})`,
     });
   }
 
@@ -320,11 +330,15 @@ export const useMotionDrawer = (props: useMotionDrawerProps) => {
       transform: isVertical(placement)
         ? `translate3d(0, ${placement === "bottom" ? "100%" : "-100%"}, 0)`
         : `translate3d(${placement === "right" ? "100%" : "-100%"}, 0, 0)`,
-      transition: `transform ${TRANSITIONS.DURATION}s cubic-bezier(${TRANSITIONS.EASE.join(",")})`,
+      transition: `transform ${
+        TRANSITIONS.DURATION
+      }s cubic-bezier(${TRANSITIONS.EASE.join(",")})`,
     });
     set(backdropRef.current, {
       opacity: "0",
-      transition: `opacity ${TRANSITIONS.DURATION}s cubic-bezier(${TRANSITIONS.EASE.join(",")})`,
+      transition: `opacity ${
+        TRANSITIONS.DURATION
+      }s cubic-bezier(${TRANSITIONS.EASE.join(",")})`,
     });
   }
 
@@ -348,7 +362,9 @@ export const useMotionDrawer = (props: useMotionDrawerProps) => {
       : 1;
     const y = isOpen ? -NESTED_DISPLACEMENT : 0;
     set(drawerRef.current, {
-      transition: `transform ${TRANSITIONS.DURATION}s cubic-bezier(${TRANSITIONS.EASE.join(",")})`,
+      transition: `transform ${
+        TRANSITIONS.DURATION
+      }s cubic-bezier(${TRANSITIONS.EASE.join(",")})`,
       transform: `scale(${scale}) translate3d(0, ${y}px, 0)`,
     });
   }
@@ -376,7 +392,9 @@ export const useMotionDrawer = (props: useMotionDrawerProps) => {
     const translate = isOpen ? -NESTED_DISPLACEMENT : 0;
     if (isOpen) {
       set(drawerRef.current, {
-        transition: `transform ${TRANSITIONS.DURATION}s cubic-bezier(${TRANSITIONS.EASE.join(",")})`,
+        transition: `transform ${
+          TRANSITIONS.DURATION
+        }s cubic-bezier(${TRANSITIONS.EASE.join(",")})`,
         transform: isVertical(placement)
           ? `scale(${scale}) translate3d(0, ${translate}px, 0)`
           : `scale(${scale}) translate3d(${translate}px, 0, 0)`,
@@ -409,7 +427,10 @@ export const useMotionDrawer = (props: useMotionDrawerProps) => {
           if (height > visualViewportHeight) {
             newDrawerHeight = visualViewportHeight - WINDOW_TOP_OFFSET;
           }
-          drawerRef.current.style.height = `${Math.max(newDrawerHeight, visualViewportHeight - offsetFromTop)}px`;
+          drawerRef.current.style.height = `${Math.max(
+            newDrawerHeight,
+            visualViewportHeight - offsetFromTop
+          )}px`;
         } else {
           drawerRef.current.style.height = `${initialDrawerHeight.current}px`;
         }

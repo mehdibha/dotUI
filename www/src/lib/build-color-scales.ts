@@ -111,7 +111,7 @@ export const buildDotUIColorScales = (
     const color = colors[colorBase];
     return Array.isArray(color)
       ? defaultModeConfig.colors[colorBase].ratios
-      : (color.ratios ?? defaultModeConfig.colors[colorBase].ratios);
+      : color.ratios ?? defaultModeConfig.colors[colorBase].ratios;
   };
 
   const neutral = new BackgroundColor({

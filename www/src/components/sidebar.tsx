@@ -171,7 +171,11 @@ export const Sidebar = () => {
                                 <span className="flex flex-1 flex-row items-center justify-between">
                                   <span>{elem.title}</span>
                                   <ChevronRightIcon
-                                    className={`transition-transform ${expandedItem === elem.slug ? "rotate-90" : ""}`}
+                                    className={`transition-transform ${
+                                      expandedItem === elem.slug
+                                        ? "rotate-90"
+                                        : ""
+                                    }`}
                                   />
                                 </span>
                               </div>

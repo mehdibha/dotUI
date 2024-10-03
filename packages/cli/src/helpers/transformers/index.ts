@@ -1,36 +1,36 @@
-import { promises as fs } from "fs"
-import { tmpdir } from "os"
-import path from "path"
-import { Config } from "@/helpers/get-config"
-import { transformCssVars } from "@/helpers/transformers/transform-css-vars"
-import { transformImport } from "@/helpers/transformers/transform-import"
-import { transformJsx } from "@/helpers/transformers/transform-jsx"
-import { transformRsc } from "@/helpers/transformers/transform-rsc"
-import { Project, ScriptKind, type SourceFile } from "ts-morph"
-import { z } from "zod"
+import { promises as fs } from "fs";
+import { tmpdir } from "os";
+import path from "path";
+import { Config } from "@/helpers/get-config";
+import { transformCssVars } from "@/helpers/transformers/transform-css-vars";
+import { transformImport } from "@/helpers/transformers/transform-import";
+import { transformJsx } from "@/helpers/transformers/transform-jsx";
+import { transformRsc } from "@/helpers/transformers/transform-rsc";
+import { Project, ScriptKind, type SourceFile } from "ts-morph";
+import { z } from "zod";
 
-import { transformTwPrefixes } from "./transform-tw-prefix"
+import { transformTwPrefixes } from "./transform-tw-prefix";
 
 export type TransformOpts = {
-  filename: string
-  raw: string
-  config: Config
-  transformJsx?: boolean
-}
+  filename: string;
+  raw: string;
+  config: Config;
+  transformJsx?: boolean;
+};
 
 export type Transformer<Output = SourceFile> = (
   opts: TransformOpts & {
-    sourceFile: SourceFile
+    sourceFile: SourceFile;
   }
-) => Promise<Output>
+) => Promise<Output>;
 
 const project = new Project({
   compilerOptions: {},
-})
+});
 
 async function createTempSourceFile(filename: string) {
-  const dir = await fs.mkdtemp(path.join(tmpdir(), "shadcn-"))
-  return path.join(dir, filename)
+  const dir = await fs.mkdtemp(path.join(tmpdir(), "shadcn-"));
+  return path.join(dir, filename);
 }
 
 export async function transform(
@@ -42,21 +42,21 @@ export async function transform(
     transformTwPrefixes,
   ]
 ) {
-  const tempFile = await createTempSourceFile(opts.filename)
+  const tempFile = await createTempSourceFile(opts.filename);
   const sourceFile = project.createSourceFile(tempFile, opts.raw, {
     scriptKind: ScriptKind.TSX,
-  })
+  });
 
   for (const transformer of transformers) {
-    transformer({ sourceFile, ...opts })
+    transformer({ sourceFile, ...opts });
   }
 
   if (opts.transformJsx) {
     return await transformJsx({
       sourceFile,
       ...opts,
-    })
+    });
   }
 
-  return sourceFile.getText()
+  return sourceFile.getText();
 }

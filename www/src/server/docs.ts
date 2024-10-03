@@ -169,7 +169,9 @@ export const getDocs = (slug?: string, includeIndex = false): DocMetadata[] => {
         ...frontmatter,
         type: getDocTypeFromSlug(slug),
         breadcrumbs: [],
-        href: `${slug ? `/${slug}` : ""}/${relativePath.join("/").replace("/index", "")}`,
+        href: `${slug ? `/${slug}` : ""}/${relativePath
+          .join("/")
+          .replace("/index", "")}`,
       };
     }
   );

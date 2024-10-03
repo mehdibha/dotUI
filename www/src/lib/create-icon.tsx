@@ -6,11 +6,11 @@ export const createIcon = (icons: {
 }) => {
   const Icon = (props: { className?: string }) => {
     const { iconLibrary } = useConfig();
-    const Icon = icons[iconLibrary]
+    const Icon = icons[iconLibrary];
     if (!Icon) {
       return null;
     }
-    return <Icon {...props} />
+    return <Icon {...props} />;
   };
   return Icon;
 };

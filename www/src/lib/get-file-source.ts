@@ -9,6 +9,6 @@ export const getFileSource = (filePath: string) => {
 
   return {
     fileName,
-    content: fileContent
+    content: fileContent,
   };
 };

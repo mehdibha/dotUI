@@ -63,6 +63,6 @@ export const FRAMEWORKS = {
       tailwind: "https://tailwindcss.com/docs/installation",
     },
   },
-} as const
+} as const;
 
-export type Framework = (typeof FRAMEWORKS)[keyof typeof FRAMEWORKS]
+export type Framework = (typeof FRAMEWORKS)[keyof typeof FRAMEWORKS];
