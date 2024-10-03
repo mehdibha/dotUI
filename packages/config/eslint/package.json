@@ -1,0 +1,14 @@
+{
+  "name": "@dotui/eslint-config",
+  "version": "1.0.0",
+  "main": "next.js",
+  "files": [
+    "./next.js"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "eslint-config-next": "^14.0.4",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-turbo": "^2.1.3"
+  }
+}

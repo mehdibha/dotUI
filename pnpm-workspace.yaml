@@ -1,3 +1,5 @@
 packages:
-  - "apps/*"
+  - "www"
+  - "templates/*"
   - "packages/*"
+  - "packages/config/*"

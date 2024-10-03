@@ -147,11 +147,11 @@ export async function runInit(options: z.infer<typeof initOptionsSchema>) {
 
   logger.break();
 
-  const { config, theme } = await promptForConfig({
-    projectDir,
-    yes: options.yes,
-    skipInstall: options.skipInstall,
-  });
+  // const { config, theme } = await promptForConfig({
+  //   projectDir,
+  //   yes: options.yes,
+  //   skipInstall: options.skipInstall,
+  // });
 
   // // Write dotui.config.json.
   // const configSpinner = spinner(`Writing dotui.config.json.`).start();

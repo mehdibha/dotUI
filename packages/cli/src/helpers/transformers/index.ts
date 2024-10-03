@@ -2,7 +2,6 @@ import { promises as fs } from "fs"
 import { tmpdir } from "os"
 import path from "path"
 import { Config } from "@/helpers/get-config"
-import { registryBaseColorSchema } from "@/helpers/registry/schema"
 import { transformCssVars } from "@/helpers/transformers/transform-css-vars"
 import { transformImport } from "@/helpers/transformers/transform-import"
 import { transformJsx } from "@/helpers/transformers/transform-jsx"
@@ -16,7 +15,6 @@ export type TransformOpts = {
   filename: string
   raw: string
   config: Config
-  baseColor?: z.infer<typeof registryBaseColorSchema>
   transformJsx?: boolean
 }
 
