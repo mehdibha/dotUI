@@ -1,13 +1,13 @@
 import { promises as fs } from "fs";
 import path from "path";
 import { Config } from "@/helpers/get-config";
-import { registryItemCssVarsSchema } from "@/helpers/registry/schema";
 import { spinner, highlight } from "@/utils";
 import postcss from "postcss";
 import AtRule from "postcss/lib/at-rule";
 import Root from "postcss/lib/root";
 import Rule from "postcss/lib/rule";
 import { z } from "zod";
+import { registryItemCssVarsSchema } from "@dotui/registry/schema";
 
 export async function updateCssVars(
   cssVars: z.infer<typeof registryItemCssVarsSchema> | undefined,
@@ -38,7 +38,7 @@ export async function updateCssVars(
 export async function transformCssVars(
   input: string,
   cssVars: z.infer<typeof registryItemCssVarsSchema>,
-  config: Config,
+  config: Config
 ) {
   const plugins = [updateCssVarsPlugin(cssVars)];
   // const cleanupDefaultNextStyles = false

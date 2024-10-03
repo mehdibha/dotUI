@@ -1,0 +1,55 @@
+# this workflow will run on every pr to make sure the project is following the guidelines
+
+# after labeler, run other actions with strict permissions
+name: CI
+
+on:
+  pull_request:
+    branches: ["*"]
+  merge_group:
+
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    name: Run eslint
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/setup
+
+      - run: pnpm lint
+
+  format:
+    runs-on: ubuntu-latest
+    name: Run prettier
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/setup
+
+      - run: pnpm format:check
+
+  tsc:
+    runs-on: ubuntu-latest
+    name: Run Typechecker
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/setup
+
+      - run: pnpm typecheck
+      
+  build-www:
+    runs-on: ubuntu-latest
+    name: Build and Check Astro
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/setup
+
+      - run: pnpm build:www

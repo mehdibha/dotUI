@@ -9,12 +9,15 @@ export const registryItemTypeSchema = z.enum([
   "registry:theme",
 ]);
 
-export const registryItemFileSchema = z.object({
-  path: z.string(),
-  content: z.string().optional(),
-  type: registryItemTypeSchema,
-  target: z.string().optional(),
-});
+export const registryItemFileSchema = z.union([
+  z.object({
+    path: z.string(),
+    content: z.string().optional(),
+    type: registryItemTypeSchema,
+    target: z.string().optional(),
+  }),
+  z.string(),
+]);
 
 export const registryItemTailwindSchema = z.object({
   config: z.object({
@@ -62,7 +65,6 @@ export const registryTemplateSchema = registryItemSchema.extend({
 
 export const registryTemplatesSchema = z.array(registryTemplateSchema);
 
-
 export const registryResolvedItemsTreeSchema = registryItemSchema.pick({
   dependencies: true,
   devDependencies: true,
@@ -70,4 +72,4 @@ export const registryResolvedItemsTreeSchema = registryItemSchema.pick({
   tailwind: true,
   cssVars: true,
   docs: true,
-})
+});

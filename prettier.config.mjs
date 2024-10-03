@@ -10,8 +10,6 @@ const config = {
   arrowParens: "always",
   endOfLine: "auto",
   importOrder: [
-    // Mocks must be at the top as they contain vi.mock calls
-    "(.*)/__mocks__/(.*)",
     "^(react/(.*)$)|^(react$)",
     "^(next/(.*)$)|^(next$)",
     "<THIRD_PARTY_MODULES>",
