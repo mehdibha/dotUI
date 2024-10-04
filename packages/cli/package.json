@@ -65,6 +65,7 @@
     "node-fetch": "^3.3.0",
     "ora": "^6.1.2",
     "picocolors": "^1.1.0",
+    "postcss": "^8.4.31",
     "prompts": "^2.4.2",
     "recast": "^0.23.2",
     "stringify-object": "^5.0.0",

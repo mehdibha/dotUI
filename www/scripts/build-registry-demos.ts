@@ -1,4 +1,4 @@
-import { existsSync, readdirSync, promises as fs } from "fs";
+import { existsSync, readdirSync, promises as fs } from "node:fs";
 import path from "path";
 import { rimraf } from "rimraf";
 

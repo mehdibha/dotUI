@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs from "node:fs";
 import path from "path";
 import { VFile } from "vfile";
 import { matter } from "vfile-matter";
