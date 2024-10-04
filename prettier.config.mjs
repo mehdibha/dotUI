@@ -25,6 +25,7 @@ const config = {
     "^[./]",
   ],
   importOrderSeparation: false,
+  tailwindFunctions: ["tv", "cn"],
   plugins: [
     "@trivago/prettier-plugin-sort-imports",
     "prettier-plugin-tailwindcss",

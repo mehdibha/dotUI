@@ -1,2 +1,11 @@
 {
+  "eslint.workingDirectories": [
+    "www",
+    { "pattern": "packages/*/" },
+    { "pattern": "packages/config/*/" },
+    { "pattern": "templates/*/" }
+  ],
+  "tailwindCSS.experimental.classRegex": [
+    ["([\"'`][^\"'`]*.*?[\"'`])", "[\"'`]([^\"'`]*).*?[\"'`]"]
+  ]
 }
