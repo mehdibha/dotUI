@@ -1,6 +1,7 @@
 {
   "name": "@dotui/eslint-config",
-  "version": "1.0.0",
+  "version": "0.0.0",
+  "private": true,
   "main": "next.js",
   "files": [
     "./next.js"
