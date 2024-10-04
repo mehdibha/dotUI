@@ -1,8 +1,9 @@
 {
   "name": "@dotui/registry",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "The registry for dotui",
   "main": "./index.ts",
+  "private": true,
   "exports": {
     ".": "./index.ts",
     "./schema": "./schema.ts",
