@@ -3,6 +3,8 @@
 import * as React from "react";
 import { useMounted } from "@/registry/hooks/use-mounted";
 import { cn } from "@/registry/ui/default/lib/cn";
+import { AlignLeftIcon } from "lucide-react";
+import { ScrollArea } from "@/registry/ui/default/core/scroll-area";
 
 interface Item {
   title: string;
@@ -39,8 +41,12 @@ export function TableOfContents({ toc }: TocProps) {
 
   return (
     <div className="space-y-2">
-      <p className="font-medium">On This Page</p>
-      <Tree tree={toc} activeItem={activeHeading ?? undefined} />
+      <h3 className="font-medium flex items-center gap-2 text-fg-muted [&_svg]:size-4">
+        <AlignLeftIcon /> On This Page
+      </h3>
+      <ScrollArea>
+        <Tree tree={toc} activeItem={activeHeading ?? undefined} />
+      </ScrollArea>
     </div>
   );
 }
@@ -87,18 +93,22 @@ interface TreeProps {
 }
 
 function Tree({ tree, level = 1, activeItem }: TreeProps) {
-  return tree?.items?.length && level < 3 ? (
-    <ul className={cn("m-0 list-none", { "pl-4": level !== 1 })}>
+  return tree?.items?.length ? (
+    <ul
+      className={cn("m-0 list-none text-fg-muted")}
+    >
       {tree.items.map((item, index) => {
         return (
-          <li key={index} className={cn("mt-0 pt-2")}>
+          <li key={index}>
             <a
               href={item.url}
+              data-active={item.url === `#${activeItem}`}
               className={cn(
-                "inline-block no-underline transition-colors hover:text-fg",
-                item.url === `#${activeItem}`
-                  ? "font-medium text-fg"
-                  : "text-fg-muted"
+                "inline-block no-underline transition-colors py-1 [overflow-wrap:anywhere] data-[active=true]:font-medium data-[active=true]:text-fg pl-4 w-full",
+                {
+                  "pl-7": level === 2,
+                  "pl-11": level === 3,
+                }
               )}
             >
               {item.title}

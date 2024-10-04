@@ -147,20 +147,6 @@ export const getDocs = (slug?: string, includeIndex = false): DocMetadata[] => {
     "content",
     ...(slug ? slug.split("/") : [])
   );
-  // console.log(
-  //   getAllMdxFiles(directoryPath, directoryPath, [], includeIndex).map(
-  //     ({ fullPath, relativePath }) => {
-  //       const itemRawContent = fs.readFileSync(fullPath, "utf-8");
-  //       const { frontmatter } = parseMDXFile<DocFrontmatter>(itemRawContent);
-  //       return {
-  //         ...frontmatter,
-  //         type: getDocTypeFromSlug(slug),
-  //         breadcrumbs: [],
-  //         href: `${slug ? `/${slug}` : ""}/${relativePath.join("/").replace("/index", "")}`,
-  //       };
-  //     }
-  //   )
-  // );
   return getAllMdxFiles(directoryPath, directoryPath, [], includeIndex).map(
     ({ fullPath, relativePath }) => {
       const itemRawContent = fs.readFileSync(fullPath, "utf-8");

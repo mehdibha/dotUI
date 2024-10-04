@@ -25,18 +25,16 @@ import { cn } from "@/registry/ui/default/lib/cn";
 import { CommandMenu } from "./command-menu";
 import { GitHubIcon, TwitterIcon } from "./icons";
 import { ThemeToggle } from "./theme-toggle";
+import { useCommandMenuInputRef } from "@/hooks/use-focus-command-menu";
 
 export const Sidebar = () => {
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = React.useState(pathname === "/");
   const [expandedItem, setExpandedItem] = React.useState<string | null>(null);
+  const { focusInput } = useCommandMenuInputRef();
 
   // weather or not the sidebar when collapsed should free some space to the main content
-  const freeSomeSpace = !(
-    pathname.startsWith("/components") ||
-    pathname.startsWith("/docs") ||
-    pathname.startsWith("/hooks")
-  );
+  const canCollapse = ["/", "/themes"].includes(pathname);
 
   const toggleExpand = (value: string) => {
     setExpandedItem(expandedItem === value ? null : value);
@@ -49,10 +47,19 @@ export const Sidebar = () => {
     setIsCollapsed(!isCollapsed);
   };
 
+  React.useEffect(() => {
+    if (pathname === "/") {
+      setExpandedItem(null);
+      setIsCollapsed(true);
+    }
+  }, [pathname]);
+
   return (
     <aside
       className="group/sidebar hidden text-sm sm:flex"
-      data-state={isCollapsed ? "collapsed" : "expanded"}
+      data-state={
+        canCollapse ? (isCollapsed ? "collapsed" : "expanded") : "expanded"
+      }
       style={
         {
           "--sidebar-width": "230px",
@@ -62,10 +69,7 @@ export const Sidebar = () => {
     >
       <div
         className={cn(
-          "transition-sidebar h-svh relative z-10 w-[--sidebar-width] bg-transparent",
-          freeSomeSpace
-            ? "group-data-collapsed/sidebar:w-[--sidebar-width-collapsed]"
-            : "group-data-collapsed/sidebar:w-[200px]"
+          "transition-sidebar h-svh relative z-10 w-[--sidebar-width] group-data-collapsed/sidebar:w-[--sidebar-width-collapsed] bg-transparent"
         )}
       />
       <div className="transition-sidebar h-svh fixed inset-y-0 left-0 z-10 flex w-[--sidebar-width] flex-col overflow-hidden border-r bg-bg-muted/60 group-data-collapsed/sidebar:w-[--sidebar-width-collapsed] [&_button]:font-normal [&_svg]:text-fg-muted">
@@ -88,30 +92,32 @@ export const Sidebar = () => {
               </div>
             </Link>
             <div className="flex-1" />
-            <div className="transition-sidebar has-[button:focus-visible]:opacity-100 absolute left-[calc(var(--sidebar-width)-theme(spacing.10))] z-10 duration-75 group-data-collapsed/sidebar:left-2 group-data-collapsed/sidebar:opacity-0 group-hover/sidebar:opacity-100">
-              <Button
-                className="touch:opacity-100 opacity-100 transition-all group-data-collapsed/sidebar:opacity-0 group-hover/sidebar:opacity-100 focus:group-data-collapsed/sidebar:opacity-100 focus-visible:group-data-collapsed/sidebar:opacity-100"
-                shape="square"
-                size="sm"
-                variant="default"
-                onPress={handleCollapse}
-              >
-                <PanelLeftOpenIcon />
-              </Button>
-            </div>
+            {canCollapse && (
+              <div className="transition-sidebar has-[button:focus-visible]:opacity-100 absolute left-[calc(var(--sidebar-width)-theme(spacing.10))] z-10 duration-75 group-data-collapsed/sidebar:left-2 group-data-collapsed/sidebar:opacity-0 group-hover/sidebar:opacity-100">
+                <Button
+                  className="touch:opacity-100 opacity-100 transition-all group-data-collapsed/sidebar:opacity-0 group-hover/sidebar:opacity-100 focus:group-data-collapsed/sidebar:opacity-100 focus-visible:group-data-collapsed/sidebar:opacity-100"
+                  shape="square"
+                  size="sm"
+                  variant="default"
+                  onPress={handleCollapse}
+                >
+                  <PanelLeftOpenIcon />
+                </Button>
+              </div>
+            )}
           </div>
           <div className="px-2 pt-3">
-            <StyledTooltip
-              content={
-                <span className="flex items-center gap-2">
-                  Search
-                  <Kbd>⌘K</Kbd>
-                </span>
-              }
-              isDisabled={!isCollapsed}
-            >
-              <CommandMenu>
-                <CollapsibleButton variant="default">
+            {pathname === "/" ? (
+              <StyledTooltip
+                content={
+                  <span className="flex items-center gap-2">
+                    Search
+                    <Kbd>⌘K</Kbd>
+                  </span>
+                }
+                isDisabled={!isCollapsed}
+              >
+                <CollapsibleButton variant="default" onPress={focusInput}>
                   <SearchIcon />
                   <span className="flex flex-1 flex-row items-center justify-between">
                     <span>Search </span>
@@ -120,8 +126,30 @@ export const Sidebar = () => {
                     </span>
                   </span>
                 </CollapsibleButton>
-              </CommandMenu>
-            </StyledTooltip>
+              </StyledTooltip>
+            ) : (
+              <StyledTooltip
+                content={
+                  <span className="flex items-center gap-2">
+                    Search
+                    <Kbd>⌘K</Kbd>
+                  </span>
+                }
+                isDisabled={!isCollapsed}
+              >
+                <CommandMenu>
+                  <CollapsibleButton variant="default">
+                    <SearchIcon />
+                    <span className="flex flex-1 flex-row items-center justify-between">
+                      <span>Search </span>
+                      <span className="flex items-center justify-center gap-0.5 text-xs text-fg-muted">
+                        <CommandIcon />K
+                      </span>
+                    </span>
+                  </CollapsibleButton>
+                </CommandMenu>
+              </StyledTooltip>
+            )}
           </div>
           <ScrollArea size="sm" className="flex-1">
             <div className="transition-sidebar grid w-full min-w-0 p-2 pt-0">

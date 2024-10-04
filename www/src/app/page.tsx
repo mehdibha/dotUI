@@ -18,8 +18,8 @@ export default function HomePage() {
             <span className="font-bold">React app</span>.
           </h2>
           <div className="relative w-full">
-            <div className="absolute left-1/2 top-0 -translate-x-1/2 opacity-70">
-              <div className="z-[-1] h-[350px] w-[700px] animate-pulse-hero-bg bg-[radial-gradient(at_0%_0%,#0894ff_0,rgba(0,0,0,0)_40%),radial-gradient(at_50%_30%,#ff2e54_0,rgba(0,0,0,0)_60%),radial-gradient(at_100%_0%,#ff9004_0,rgba(0,0,0,0)_40%)] opacity-70 blur-[100px]" />
+            <div className="absolute left-1/2 top-0 -translate-x-1/2">
+              <div className="z-[-1] h-[450px] w-[700px] bg-[radial-gradient(at_0%_0%,#0894ff_0,rgba(0,0,0,0)_40%),radial-gradient(at_50%_30%,#ff2e54_0,rgba(0,0,0,0)_60%),radial-gradient(at_100%_0%,#ff9004_0,rgba(0,0,0,0)_40%)] blur-[100px]" />
             </div>
             <CommandMenu className="mt-6 w-full md:min-w-[600px]" />
           </div>
