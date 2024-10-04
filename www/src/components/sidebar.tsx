@@ -110,19 +110,17 @@ export const Sidebar = () => {
               }
               isDisabled={!isCollapsed}
             >
-              {pathname !== "/" && (
-                <CommandMenu>
-                  <CollapsibleButton variant="default">
-                    <SearchIcon />
-                    <span className="flex flex-1 flex-row items-center justify-between">
-                      <span>Search </span>
-                      <span className="flex items-center justify-center gap-0.5 text-xs text-fg-muted">
-                        <CommandIcon />K
-                      </span>
+              <CommandMenu>
+                <CollapsibleButton variant="default">
+                  <SearchIcon />
+                  <span className="flex flex-1 flex-row items-center justify-between">
+                    <span>Search </span>
+                    <span className="flex items-center justify-center gap-0.5 text-xs text-fg-muted">
+                      <CommandIcon />K
                     </span>
-                  </CollapsibleButton>
-                </CommandMenu>
-              )}
+                  </span>
+                </CollapsibleButton>
+              </CommandMenu>
             </StyledTooltip>
           </div>
           <ScrollArea size="sm" className="flex-1">

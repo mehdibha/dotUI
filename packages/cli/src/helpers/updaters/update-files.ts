@@ -1,4 +1,4 @@
-import { existsSync, promises as fs } from "fs";
+import { existsSync, promises as fs } from "node:fs";
 import path, { basename } from "path";
 import prompts from "prompts";
 import { Config } from "@/helpers/get-config";

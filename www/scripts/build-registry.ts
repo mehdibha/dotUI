@@ -1,5 +1,5 @@
 import { registryItemSchema, registrySchema } from "@dotui/registry";
-import { existsSync, promises as fs } from "fs";
+import { existsSync, promises as fs } from "node:fs";
 import path from "path";
 import { rimraf } from "rimraf";
 import { registry } from "@/registry";

@@ -1,4 +1,4 @@
-import { promises as fs } from "fs";
+import { promises as fs } from "node:fs";
 import path from "path";
 import { Config } from "@/helpers/get-config";
 import { spinner, highlight } from "@/utils";

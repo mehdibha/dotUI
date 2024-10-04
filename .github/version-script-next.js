@@ -1,6 +1,6 @@
 // ORIGINALLY FROM CLOUDFLARE WRANGLER:
 // https://github.com/cloudflare/wrangler2/blob/main/.github/version-script.js
-import fs from "fs";
+import fs from "node:fs";
 import { exec } from "child_process";
 
 const pkgJsonPath = "cli/package.json";
