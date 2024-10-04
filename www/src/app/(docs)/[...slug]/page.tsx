@@ -115,12 +115,8 @@ export default async function Page({ params }: PageProps) {
       </div>
       {hasToc && (
         <div className="hidden text-sm xl:block">
-          <div className="sticky top-0">
-            <ScrollArea className="h-screen pb-8">
-              <div className="pb-16 pt-6">
-                <TableOfContents toc={doc.toc} />
-              </div>
-            </ScrollArea>
+          <div className="sticky top-0 pt-8">
+            <TableOfContents toc={doc.toc} />
           </div>
         </div>
       )}
