@@ -40,34 +40,49 @@ interface ScrollAreaProps
     VariantProps<typeof scrollAreaStyles> {
   scrollbars?: "vertical" | "horizontal" | "both";
 }
-const ScrollArea = ({
-  children,
-  scrollbars = "vertical",
-  size,
-  asChild,
-  type,
-  scrollHideDelay = 0,
-  dir,
-  ...viewportProps
-}: ScrollAreaProps) => {
-  return (
-    <ScrollAreaRoot
-      asChild={asChild}
-      scrollHideDelay={scrollHideDelay}
-      dir={dir}
-      type={type}
-    >
-      <ScrollAreaViewPort {...viewportProps}>{children}</ScrollAreaViewPort>
-      {scrollbars !== "vertical" && (
-        <ScrollAreaScrollbar orientation="horizontal" size={size} />
-      )}
-      {scrollbars !== "horizontal" && (
-        <ScrollAreaScrollbar orientation="vertical" size={size} />
-      )}
-      {scrollbars === "both" && <ScrollAreaCorner />}
-    </ScrollAreaRoot>
-  );
-};
+
+const ScrollArea = React.forwardRef<
+  HTMLDivElement,
+  ScrollAreaProps & { containerClassName?: string }
+>(
+  (
+    {
+      children,
+      scrollbars = "vertical",
+      size,
+      asChild,
+      type,
+      scrollHideDelay = 0,
+      dir,
+      containerClassName,
+      ...viewportProps
+    },
+    ref
+  ) => {
+    return (
+      <ScrollAreaRoot
+        asChild={asChild}
+        scrollHideDelay={scrollHideDelay}
+        dir={dir}
+        type={type}
+        className={containerClassName}
+      >
+        <ScrollAreaViewPort ref={ref} {...viewportProps}>
+          {children}
+        </ScrollAreaViewPort>
+        {scrollbars !== "vertical" && (
+          <ScrollAreaScrollbar orientation="horizontal" size={size} />
+        )}
+        {scrollbars !== "horizontal" && (
+          <ScrollAreaScrollbar orientation="vertical" size={size} />
+        )}
+        {scrollbars === "both" && <ScrollAreaCorner />}
+      </ScrollAreaRoot>
+    );
+  }
+);
+
+ScrollArea.displayName = "ScrollArea";
 
 type ScrollAreaRootProps = ScrollAreaPrimitive.ScrollAreaProps;
 const ScrollAreaRoot = ({ className, ...props }: ScrollAreaRootProps) => {
@@ -78,18 +93,20 @@ const ScrollAreaRoot = ({ className, ...props }: ScrollAreaRootProps) => {
 };
 
 type ScrollAreaViewPortProps = ScrollAreaPrimitive.ScrollAreaViewportProps;
-const ScrollAreaViewPort = ({
-  className,
-  ...props
-}: ScrollAreaViewPortProps) => {
+const ScrollAreaViewPort = React.forwardRef<
+  HTMLDivElement,
+  ScrollAreaViewPortProps
+>(({ className, ...props }, ref) => {
   const { viewport } = scrollAreaStyles();
   return (
     <ScrollAreaPrimitive.Viewport
+      ref={ref}
       className={viewport({ className })}
       {...props}
     />
   );
-};
+});
+ScrollAreaViewPort.displayName = "ScrollAreaViewPort";
 
 interface ScrollAreaScrollbarProps
   extends ScrollAreaPrimitive.ScrollAreaScrollbarProps,

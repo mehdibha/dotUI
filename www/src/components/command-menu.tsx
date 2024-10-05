@@ -102,7 +102,7 @@ export const CommandMenuContent = ({
         <CommandGroup key={index} heading={category.title}>
           {category.items &&
             category.items.map((item, itemIndex) => {
-              if ("href" in item && item.href) {
+              if ("href" in item && typeof item.href === "string") {
                 return (
                   <CommandItem
                     key={itemIndex}
@@ -116,34 +116,36 @@ export const CommandMenuContent = ({
                   </CommandItem>
                 );
               }
-              if ("items" in item && item.items.length > 0) {
+              if ("items" in item && item.items && item.items.length > 0) {
                 return (
                   <React.Fragment key={itemIndex}>
                     {item.items.map((subItem, subItemIndex) => {
-                      return (
-                        <CommandItem
-                          key={subItemIndex}
-                          onSelect={() => {
-                            runCommand(() => router.push(subItem.href));
-                          }}
-                          className="flex items-center justify-between"
-                        >
-                          <div className="flex items-center space-x-2">
-                            <FileIcon className="size-4 text-fg-muted" />
-                            <span>{subItem.title}</span>
-                          </div>
-                          <div>
-                            <span className="text-secondary-foreground rounded-md border bg-bg-muted px-3 py-1 text-xs leading-none text-fg-muted">
-                              {item.title}
-                            </span>
-                            {subItem.label && (
-                              <span className="ml-2 rounded-md bg-gradient px-3 py-1 text-xs leading-none text-white">
-                                {subItem.label}
+                      if ("href" in subItem && subItem.href !== undefined) {
+                        return (
+                          <CommandItem
+                            key={subItemIndex}
+                            onSelect={() => {
+                              runCommand(() => router.push(subItem.href));
+                            }}
+                            className="flex items-center justify-between"
+                          >
+                            <div className="flex items-center space-x-2">
+                              <FileIcon className="size-4 text-fg-muted" />
+                              <span>{subItem.title}</span>
+                            </div>
+                            <div>
+                              <span className="text-secondary-foreground rounded-md border bg-bg-muted px-3 py-1 text-xs leading-none text-fg-muted">
+                                {item.title}
                               </span>
-                            )}
-                          </div>
-                        </CommandItem>
-                      );
+                              {subItem.label && (
+                                <span className="ml-2 rounded-md bg-gradient px-3 py-1 text-xs leading-none text-white">
+                                  {subItem.label}
+                                </span>
+                              )}
+                            </div>
+                          </CommandItem>
+                        );
+                      }
                     })}
                   </React.Fragment>
                 );

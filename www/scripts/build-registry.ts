@@ -95,7 +95,7 @@ const buildIcons = async () => {
 ${iconLibraries
   .map((lib) => `import * as ${lib.name} from "${lib.import}";`)
   .join("\n")}
-import { createIcon } from "@/lib/create-icon";
+import { createIcon } from "./create-icon";
 
 `;
 

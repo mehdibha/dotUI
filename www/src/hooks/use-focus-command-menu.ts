@@ -7,15 +7,16 @@ type FocusCommandMenuStore = {
   focusInput: () => void;
 };
 
-export const useCommandMenuInputRef = create<FocusCommandMenuStore>((set, get) => ({
-  inputRef: null,
-  setInputRef: (ref) => set({ inputRef: ref }),
-  focusInput: () => {
-    const { inputRef } = get();
-    console.log("focusInput", inputRef);
-    if (inputRef && inputRef.current) {
-      inputRef.current.focus();
-    }
-  },
-}));
-
+export const useCommandMenuInputRef = create<FocusCommandMenuStore>(
+  (set, get) => ({
+    inputRef: null,
+    setInputRef: (ref) => set({ inputRef: ref }),
+    focusInput: () => {
+      const { inputRef } = get();
+      console.log("focusInput", inputRef);
+      if (inputRef && inputRef.current) {
+        inputRef.current.focus();
+      }
+    },
+  })
+);

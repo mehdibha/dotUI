@@ -1,20 +1,16 @@
-"use client";
-
-import { usePathname } from "next/navigation";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { docsConfig } from "@/config/docs-config";
 import { Button } from "@/registry/ui/default/core/button";
 
-export const DocsPager = () => {
-  const pathname = usePathname();
+export const DocsPager = ({ currentPagePath }: { currentPagePath: string }) => {
   const flattenedItems = docsConfig.nav.flatMap(
     (section) =>
       section.items?.flatMap((item) => ("items" in item ? item.items : item)) ??
       []
-  );
+  ).filter((item): item is { href: string; title: string } => item?.href !== undefined);
 
   const currentIndex = flattenedItems.findIndex(
-    (item) => item.href === pathname
+    (item) => item.href === currentPagePath
   );
   const prevPage = currentIndex > 0 ? flattenedItems[currentIndex - 1] : null;
   const nextPage =

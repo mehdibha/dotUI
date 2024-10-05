@@ -1,3 +1,5 @@
+import { withContentCollections } from "@content-collections/next";
+
 /** @type {import("next").NextConfig} */
 const config = {
   images: {
@@ -20,4 +22,4 @@ const config = {
   },
 };
 
-export default config;
+export default withContentCollections(config);

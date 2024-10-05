@@ -4,15 +4,14 @@ import { notFound } from "next/navigation";
 import { ExternalLinkIcon } from "lucide-react";
 import { DocsPager } from "@/components/docs-pager";
 import { TableOfContents } from "@/components/toc";
-import { Mdx } from "@/components/mdx/mdx-remote";
-import {
-  Breadcrumbs,
-  Breadcrumb,
-} from "@/registry/ui/default/core/breadcrumbs";
 import { Button } from "@/registry/ui/default/core/button";
-import { ScrollArea } from "@/registry/ui/default/core/scroll-area";
 import { cn } from "@/registry/ui/default/lib/cn";
-import { getDocFromSlug, getDocs } from "@/server/docs";
+import { allDocs, getDocBySlug } from "@/lib/docs";
+import { MDXContent } from "@content-collections/mdx/react";
+import { components } from "@/components/mdx-components";
+import { siteConfig } from "@/config";
+import { truncateOnWord } from "@/lib/string";
+import { getTableOfContents } from "fumadocs-core/server";
 
 interface PageProps {
   params: {
@@ -20,65 +19,67 @@ interface PageProps {
   };
 }
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
-  const doc = await getDocFromSlug(params.slug);
+const config = siteConfig.global;
+
+export function generateMetadata({ params }: PageProps): Metadata {
+  const doc = getDocBySlug(params.slug);
 
   if (!doc) {
     return {};
   }
 
-  return {
-    title: doc.metadata.title,
-    description: doc.metadata.description,
-    // TODO add openGraph and twitter
+  const metadata: Metadata = {
+    title: doc.title,
+    description: doc.description,
+    openGraph: {
+      title: doc.title,
+      description: doc.description
+        ? truncateOnWord(doc.description, 148, true)
+        : undefined,
+      type: "article",
+      url: `${config.url}${doc._meta.path}`,
+      images: [config.thumbnail],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: doc.title,
+      description: doc.description
+        ? truncateOnWord(doc.description, 148, true)
+        : undefined,
+      images: [config.thumbnail],
+      creator: config.twitter.creator,
+    },
   };
+
+  return metadata;
 }
-export async function generateStaticParams(): Promise<PageProps["params"][]> {
-  const allDocs = getDocs(undefined, true);
-  return allDocs.map((doc) => ({ slug: doc.href.split("/").slice(1) }));
+
+export function generateStaticParams(): PageProps["params"][] {
+  return allDocs.map((doc) => ({ slug: doc._meta.path.split("/") }));
 }
 
 export default async function Page({ params }: PageProps) {
-  const doc = await getDocFromSlug(params.slug);
+  const doc = getDocBySlug(params.slug);
 
   if (!doc) {
     notFound();
   }
 
-  const hasToc = !!doc.toc.items && doc.toc.items.length > 0;
-  const { rawContent, metadata, categories } = doc;
+  const toc = await getTableOfContents(doc.rawContent);
+  const hasToc = toc.length > 0;
 
   return (
-    <main
+    <div
       className={cn("relative py-20", {
-        "xl:grid xl:grid-cols-[1fr_230px] xl:gap-10": hasToc,
+        "lg:grid lg:grid-cols-[1fr_230px] lg:gap-10": hasToc,
       })}
-      // className="relative py-20"
     >
       <div className="container max-w-3xl">
-        {metadata.breadcrumbs.length > 1 && (
-          <Breadcrumbs className="mb-2">
-            {metadata.breadcrumbs.map((item, index) => (
-              <Breadcrumb
-                key={item.href}
-                href={
-                  index < metadata.breadcrumbs.length - 1
-                    ? item.href
-                    : undefined
-                }
-              >
-                {item.label}
-              </Breadcrumb>
-            ))}
-          </Breadcrumbs>
-        )}
-        <h1 className="text-4xl font-bold">{metadata.title}</h1>
-        <p className="mt-2 text-fg-muted">{metadata.description}</p>
-        {metadata.links && metadata.links.length > 0 && (
+        <h1 className="text-4xl font-bold">{doc.title}</h1>
+        <p className="mt-2 text-fg-muted">{doc.description}</p>
+        {doc.links && doc.links.length > 0 && (
           <div className="mt-4 flex flex-wrap gap-2">
-            {metadata.links.map((link, index) => (
+            {doc.links.map((link, index) => (
               <Button
                 key={index}
                 href={link.href}
@@ -92,34 +93,20 @@ export default async function Page({ params }: PageProps) {
             ))}
           </div>
         )}
-        {categories && categories.length > 0 && (
-          <div className="mt-6 flex flex-wrap gap-2">
-            {categories.map((category, index) => (
-              <Button
-                key={index}
-                size="sm"
-                href={category.href}
-                className="h-7"
-              >
-                {category.label}
-              </Button>
-            ))}
-          </div>
-        )}
         <div className="mt-10 text-sm md:text-base">
-          <Mdx source={rawContent} />
+          <MDXContent code={doc.content} components={components} />
         </div>
         <div className="mt-20">
-          <DocsPager />
+          <DocsPager currentPagePath={`/${doc._meta.path}`} />
         </div>
       </div>
       {hasToc && (
-        <div className="hidden text-sm xl:block">
+        <div className="hidden text-sm lg:block">
           <div className="sticky top-0 pt-8">
-            <TableOfContents toc={doc.toc} />
+            <TableOfContents toc={toc} />
           </div>
         </div>
       )}
-    </main>
+    </div>
   );
 }

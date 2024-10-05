@@ -1,27 +1,8 @@
-import type { DocAspect, DocType } from "@/types/docs";
-import { removeLastS } from "./string";
+import { allDocs, type Doc } from "content-collections";
 
-export const getDocTypeFromSlug = (slug?: string | string[]): DocType => {
-  if (!slug) return undefined;
-  if (Array.isArray(slug)) {
-    return removeLastS(slug[0]) as DocType;
-  }
-  return removeLastS(slug.split("/")[0]) as DocType;
-};
+export { allDocs };
 
-export const getAspectFromType = (type: DocType): DocAspect => {
-  switch (type) {
-    case "hook":
-      return "video";
-    case "component":
-      return "video";
-    case "page":
-      return "page";
-    case "template":
-      return "page";
-    case "block":
-      return "page";
-    default:
-      return "video";
-  }
-};
+export function getDocBySlug(slug: string[]): Doc | undefined {
+  const fullSlug = slug.join("/");
+  return allDocs.find((doc) => doc._meta.path === fullSlug);
+}
