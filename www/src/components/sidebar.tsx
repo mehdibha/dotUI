@@ -30,36 +30,35 @@ import { useCommandMenuInputRef } from "@/hooks/use-focus-command-menu";
 export const Sidebar = () => {
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = React.useState(pathname === "/");
-  const [expandedItem, setExpandedItem] = React.useState<string | null>(null);
+  const [expandedItems, setExpandedItems] = React.useState<string[]>([
+    "docs",
+    "components",
+    "hooks",
+  ]);
   const { focusInput } = useCommandMenuInputRef();
 
-  // weather or not the sidebar when collapsed should free some space to the main content
-  const canCollapse = ["/", "/themes"].includes(pathname);
-
-  const toggleExpand = (value: string) => {
-    setExpandedItem(expandedItem === value ? null : value);
-  };
-
-  const handleCollapse = () => {
-    if (!isCollapsed) {
-      setExpandedItem(null);
+  const toggleExpand = (slug: string) => {
+    if (isCollapsed) {
+      setExpandedItems(Array.from(new Set([...expandedItems, slug])));
+      setIsCollapsed(false);
+    } else {
+      if (expandedItems.includes(slug)) {
+        setExpandedItems(expandedItems.filter((item) => item !== slug));
+      } else {
+        setExpandedItems([...expandedItems, slug]);
+      }
     }
-    setIsCollapsed(!isCollapsed);
   };
 
+  // debugging
   React.useEffect(() => {
-    if (pathname === "/") {
-      setExpandedItem(null);
-      setIsCollapsed(true);
-    }
-  }, [pathname]);
+    console.log(expandedItems);
+  }, [expandedItems]);
 
   return (
     <aside
       className="group/sidebar hidden text-sm sm:flex"
-      data-state={
-        canCollapse ? (isCollapsed ? "collapsed" : "expanded") : "expanded"
-      }
+      data-state={isCollapsed ? "collapsed" : "expanded"}
       style={
         {
           "--sidebar-width": "230px",
@@ -72,7 +71,7 @@ export const Sidebar = () => {
           "transition-sidebar h-svh relative z-10 w-[--sidebar-width] group-data-collapsed/sidebar:w-[--sidebar-width-collapsed] bg-transparent"
         )}
       />
-      <div className="transition-sidebar h-svh fixed inset-y-0 left-0 z-10 flex w-[--sidebar-width] flex-col overflow-hidden border-r bg-bg-muted/60 group-data-collapsed/sidebar:w-[--sidebar-width-collapsed] [&_button]:font-normal [&_svg]:text-fg-muted">
+      <div className="transition-sidebar h-svh fixed inset-y-0 left-0 z-10 flex w-[--sidebar-width] flex-col overflow-hidden border-r bg-bg/60 group-data-collapsed/sidebar:w-[--sidebar-width-collapsed] [&_button]:font-normal [&_svg]:text-fg-muted">
         <div className="h-svh relative flex w-[--sidebar-width] flex-1 translate-x-[-0.5px] flex-col overflow-hidden">
           <div className="relative flex items-center p-2 pb-1">
             <Link
@@ -92,19 +91,17 @@ export const Sidebar = () => {
               </div>
             </Link>
             <div className="flex-1" />
-            {canCollapse && (
-              <div className="transition-sidebar has-[button:focus-visible]:opacity-100 absolute left-[calc(var(--sidebar-width)-theme(spacing.10))] z-10 duration-75 group-data-collapsed/sidebar:left-2 group-data-collapsed/sidebar:opacity-0 group-hover/sidebar:opacity-100">
-                <Button
-                  className="touch:opacity-100 opacity-100 transition-all group-data-collapsed/sidebar:opacity-0 group-hover/sidebar:opacity-100 focus:group-data-collapsed/sidebar:opacity-100 focus-visible:group-data-collapsed/sidebar:opacity-100"
-                  shape="square"
-                  size="sm"
-                  variant="default"
-                  onPress={handleCollapse}
-                >
-                  <PanelLeftOpenIcon />
-                </Button>
-              </div>
-            )}
+            <div className="transition-sidebar has-[button:focus-visible]:opacity-100 absolute left-[calc(var(--sidebar-width)-theme(spacing.10))] z-10 duration-75 group-data-collapsed/sidebar:left-2 group-data-collapsed/sidebar:opacity-0 group-hover/sidebar:opacity-100">
+              <Button
+                className="touch:opacity-100 opacity-100 transition-all group-data-collapsed/sidebar:opacity-0 group-hover/sidebar:opacity-100 focus:group-data-collapsed/sidebar:opacity-100 focus-visible:group-data-collapsed/sidebar:opacity-100"
+                shape="square"
+                size="sm"
+                variant="default"
+                onPress={() => setIsCollapsed(!isCollapsed)}
+              >
+                <PanelLeftOpenIcon />
+              </Button>
+            </div>
           </div>
           <div className="px-2 pt-3">
             {pathname === "/" ? (
@@ -173,7 +170,12 @@ export const Sidebar = () => {
                   return (
                     <div key={elem.slug} className="relative flex flex-col">
                       <CollapsibleRoot
-                        open={expandedItem === elem.slug}
+                        open={
+                          isCollapsed
+                            ? false
+                            : expandedItems.includes(elem.slug)
+                        }
+
                         onOpenChange={() => toggleExpand(elem.slug)}
                       >
                         <StyledTooltip
@@ -186,29 +188,28 @@ export const Sidebar = () => {
                               variant="quiet"
                               size="sm"
                               className="transition-sidebar relative w-full overflow-hidden group-data-collapsed/sidebar:w-8"
-                              onPress={() => {
-                                if (isCollapsed) {
-                                  setIsCollapsed(false);
-                                }
-                              }}
                             >
                               <div className="transition-sidebar [&>svg]:size-4 absolute inset-2 flex w-[calc(var(--sidebar-width)-theme(spacing.8))] items-center justify-center gap-2 whitespace-nowrap group-data-collapsed/sidebar:left-2">
                                 {elem.icon}
                                 <span className="flex flex-1 flex-row items-center justify-between">
                                   <span>{elem.title}</span>
                                   <ChevronRightIcon
-                                    className={`transition-transform ${
-                                      expandedItem === elem.slug
+                                    className={cn(
+                                      "transition-transfor",
+                                      expandedItems.includes(elem.slug)
                                         ? "rotate-90"
                                         : ""
-                                    }`}
+                                    )}
                                   />
                                 </span>
                               </div>
                             </Button>
                           </CollapsibleTrigger>
                         </StyledTooltip>
-                        <CollapsibleContent asChild>
+                        <CollapsibleContent
+                          asChild
+                          className="data-[state=closed]:opacity-0 duration-300 transition-all"
+                        >
                           <ul className="space-y-2 pb-2">
                             {elem.items.map((item, index) => {
                               if ("href" in item && item.href) {
