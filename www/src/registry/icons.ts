@@ -18,6 +18,8 @@ export const iconLibraries: {
   },
 ] as const;
 
+export type IconLibrary = (typeof iconLibraries)[number]["name"];
+
 type Icons = {
   [key: string]: {
     lucide: string;

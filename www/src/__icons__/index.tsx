@@ -4,7 +4,7 @@
 
 import * as lucide from "lucide-react";
 import * as remix from "@remixicon/react";
-import { createIcon } from "@/lib/create-icon";
+import { createIcon } from "./create-icon";
 
 export const LoaderIcon = createIcon({
   lucide: lucide.Loader2Icon,

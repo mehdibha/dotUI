@@ -248,7 +248,8 @@ const config = {
         "accordion-up": "accordion-up 0.2s cubic-bezier(0.32, 0.72, 0, 1)",
         "collapsible-down":
           "collapsible-down 0.25s cubic-bezier(0.32, 0.72, 0, 1) forwards",
-        "collapsible-up": "collapsible-up 0.25s cubic-bezier(0.32, 0.72, 0, 1) forwards",
+        "collapsible-up":
+          "collapsible-up 0.25s cubic-bezier(0.32, 0.72, 0, 1) forwards",
         "caret-blink": "caret-blink 1.25s ease-out infinite",
         "progress-indeterminate":
           "progress-grow var(--progress-duration) 1 both normal, progress-pulse 1s ease var(--progress-duration) infinite normal none running",

@@ -1,11 +1,30 @@
 import {
   BookIcon,
   BoxIcon,
-  CodeIcon,
   FunctionSquareIcon,
   PaletteIcon,
 } from "lucide-react";
-import type { DocsConfig } from "@/types/docs";
+import { ReactNode } from "react";
+
+type NavItem = {
+  title: string;
+  href?: string;
+  label?: string;
+  disabled?: boolean;
+  items?: NavItem[];
+};
+
+type NavSection = {
+  title: string;
+  slug: string;
+  icon: ReactNode;
+  href?: string;
+  items?: NavItem[];
+};
+
+type DocsConfig = {
+  nav: NavSection[];
+};
 
 export const docsConfig: DocsConfig = {
   nav: [

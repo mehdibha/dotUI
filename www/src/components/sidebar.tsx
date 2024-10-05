@@ -175,7 +175,6 @@ export const Sidebar = () => {
                             ? false
                             : expandedItems.includes(elem.slug)
                         }
-
                         onOpenChange={() => toggleExpand(elem.slug)}
                       >
                         <StyledTooltip
@@ -232,7 +231,11 @@ export const Sidebar = () => {
                                   </li>
                                 );
                               }
-                              if ("items" in item && item.items.length > 0) {
+                              if (
+                                "items" in item &&
+                                item.items &&
+                                item.items.length > 0
+                              ) {
                                 return (
                                   <li key={index} className="ml-2 space-y-2">
                                     <h3 className="category pl-4 font-mono text-xs tracking-widest text-fg">
@@ -258,29 +261,32 @@ export const Sidebar = () => {
                                             </li>
                                           );
                                         }
-                                        return (
-                                          <li key={subIndex}>
-                                            <Link
-                                              href={subItem.href}
-                                              className={cn(
-                                                "border-muted hover:text-foreground group block border-l py-1 pl-4 text-fg-muted transition-colors",
-                                                {
-                                                  "border-fg font-medium text-fg":
-                                                    pathname === subItem.href,
-                                                }
-                                              )}
-                                            >
-                                              <span className="block transition-transform duration-100 group-hover:translate-x-0.5">
-                                                {subItem.title}
-                                                {subItem.label && (
-                                                  <span className="ml-2 rounded-md border bg-bg-muted px-1.5 py-0.5 text-xs leading-none text-fg-muted">
-                                                    {subItem.label}
-                                                  </span>
+
+                                        if ("href" in subItem && subItem.href) {
+                                          return (
+                                            <li key={subIndex}>
+                                              <Link
+                                                href={subItem.href}
+                                                className={cn(
+                                                  "border-muted hover:text-foreground group block border-l py-1 pl-4 text-fg-muted transition-colors",
+                                                  {
+                                                    "border-fg font-medium text-fg":
+                                                      pathname === subItem.href,
+                                                  }
                                                 )}
-                                              </span>
-                                            </Link>
-                                          </li>
-                                        );
+                                              >
+                                                <span className="block transition-transform duration-100 group-hover:translate-x-0.5">
+                                                  {subItem.title}
+                                                  {subItem.label && (
+                                                    <span className="ml-2 rounded-md border bg-bg-muted px-1.5 py-0.5 text-xs leading-none text-fg-muted">
+                                                      {subItem.label}
+                                                    </span>
+                                                  )}
+                                                </span>
+                                              </Link>
+                                            </li>
+                                          );
+                                        }
                                       })}
                                     </ul>
                                   </li>
