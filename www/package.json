@@ -19,6 +19,7 @@
   "dependencies": {
     "@adobe/leonardo-contrast-colors": "^1.0.0",
     "@content-collections/mdx": "^0.1.6",
+    "@fumadocs/content-collections": "^1.1.4",
     "@internationalized/date": "^3.5.4",
     "@radix-ui/react-aspect-ratio": "^1.0.3",
     "@radix-ui/react-collapsible": "^1.0.3",
