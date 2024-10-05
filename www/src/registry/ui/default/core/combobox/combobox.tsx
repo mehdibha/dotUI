@@ -6,16 +6,16 @@ import {
   type ComboBoxProps as AriaComboboxProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { ChevronDownIcon } from "@/__icons__";
 import { Button } from "@/registry/ui/default/core/button";
 import { Field, type FieldProps } from "@/registry/ui/default/core/field";
 import { Input, InputRoot } from "@/registry/ui/default/core/input";
 import { ListBox } from "@/registry/ui/default/core/list-box";
 import { Overlay } from "@/registry/ui/default/core/overlay";
+import { ChevronDownIcon } from "@/__icons__";
 
 const comboboxStyles = tv({
   slots: {
-    root: "flex flex-col items-start gap-2 w-48",
+    root: "flex w-48 flex-col items-start gap-2",
   },
 });
 
@@ -66,7 +66,7 @@ const ComboboxTrigger = () => {
   return (
     <InputRoot className="px-0">
       <Input className="pl-2" />
-      <Button variant="default" shape="square" className="size-7 my-1 mr-1">
+      <Button variant="default" shape="square" className="my-1 mr-1 size-7">
         <ChevronDownIcon />
       </Button>
     </InputRoot>

@@ -16,11 +16,11 @@ import { cn } from "@/registry/ui/default/lib/cn";
 
 const colorSliderStyles = tv({
   slots: {
-    root: "group/color-slider flex flex-col gap-2 orientation-horizontal:w-48 orientation-vertical:h-48 orientation-vertical:items-center",
+    root: "group/color-slider orientation-horizontal:w-48 orientation-vertical:h-48 orientation-vertical:items-center flex flex-col gap-2",
     output: "text-fg-muted text-sm",
     track: [
-      "orientation-horizontal:w-48 rounded-md orientation-horizontal:h-6 orientation-vertical:w-6 orientation-vertical:h-48 disabled:!bg-bg-disabled",
-      "relative before:absolute before:inset-0 before:z-[-1] before:bg-[repeating-conic-gradient(#e6e6e6_0%_25%,_#fff_0%_50%)] before:bg-[length:16px_16px] before:bg-center before:content-[''] before:rounded-[inherit]",
+      "orientation-horizontal:w-48 orientation-horizontal:h-6 orientation-vertical:w-6 orientation-vertical:h-48 disabled:!bg-bg-disabled rounded-md",
+      "relative before:absolute before:inset-0 before:z-[-1] before:rounded-[inherit] before:bg-[repeating-conic-gradient(#e6e6e6_0%_25%,_#fff_0%_50%)] before:bg-[length:16px_16px] before:bg-center before:content-['']",
     ],
   },
 });

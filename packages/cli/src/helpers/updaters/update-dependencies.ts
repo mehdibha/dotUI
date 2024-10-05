@@ -1,8 +1,8 @@
+import type { RegistryItem } from "@dotui/registry/types";
+import { execa } from "execa";
 import { Config } from "@/helpers/get-config";
 import { getPackageManager } from "@/helpers/get-pkg-manager";
-import type { RegistryItem } from "@dotui/registry/types";
 import { spinner } from "@/utils";
-import { execa } from "execa";
 
 export async function updateDependencies(
   dependencies: RegistryItem["dependencies"],

@@ -10,14 +10,14 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { ChevronRightIcon } from "@/__icons__";
 import { cn } from "@/registry/ui/default/lib/cn";
+import { ChevronRightIcon } from "@/__icons__";
 
 const breadcrumbsStyles = tv({
   slots: {
-    root: "flex flex-wrap items-center gap-1.5 break-words text-sm text-fg-muted [&_svg]:size-4",
+    root: "text-fg-muted flex flex-wrap items-center gap-1.5 break-words text-sm [&_svg]:size-4",
     item: "inline-flex items-center gap-1.5 [&_svg]:last:hidden",
-    link: "inline-flex items-center gap-1.5 hover:text-fg transition-colors current:text-fg disabled:[&:not([data-current])]:text-fg-disabled disabled:cursor-default",
+    link: "hover:text-fg current:text-fg disabled:[&:not([data-current])]:text-fg-disabled inline-flex items-center gap-1.5 transition-colors disabled:cursor-default",
   },
 });
 

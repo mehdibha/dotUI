@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import { BoldIcon, ItalicIcon } from "@/__icons__";
 import { Button } from "@/registry/ui/default/core/button";
 import { TextArea } from "@/registry/ui/default/core/text-area";
 import { ToggleButton } from "@/registry/ui/default/core/toggle-button";
+import { BoldIcon, ItalicIcon } from "@/__icons__";
 
 export default function Demo() {
   const [inputValue, setInputValue] = React.useState("");

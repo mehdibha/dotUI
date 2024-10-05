@@ -1,9 +1,9 @@
 import React from "react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { getFileSource } from "@/lib/get-file-source";
-import { Index } from "@/__demos__";
 import { styles } from "@/registry/styles";
 import { cn } from "@/registry/ui/default/lib/cn";
+import { Index } from "@/__demos__";
 import { CodeBlock } from "./code-block";
 import { ComponentPreviewClient } from "./component-preview-client";
 
@@ -56,7 +56,7 @@ export const ComponentPreview = async ({
               "flex items-center justify-center bg-white dark:bg-black"
             )}
           >
-            <div className="min-h-40 flex items-center justify-center px-4 py-8">
+            <div className="flex min-h-40 items-center justify-center px-4 py-8">
               <div
                 className={cn(
                   "flex w-full items-center justify-center",
@@ -96,6 +96,6 @@ export const ComponentPreview = async ({
 
   // TODO: handle other component types
   return (
-    <p className="text-sm text-fg-muted">Component type {type} not handled.</p>
+    <p className="text-fg-muted text-sm">Component type {type} not handled.</p>
   );
 };

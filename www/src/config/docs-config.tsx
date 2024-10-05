@@ -1,10 +1,10 @@
+import { ReactNode } from "react";
 import {
   BookIcon,
   BoxIcon,
   FunctionSquareIcon,
   PaletteIcon,
 } from "lucide-react";
-import { ReactNode } from "react";
 
 type NavItem = {
   title: string;

@@ -1,14 +1,14 @@
 "use client";
 
 import React from "react";
-import { ScrollArea } from "@/registry/ui/default/core/scroll-area";
-import { cn } from "@/registry/ui/default/lib/cn";
 import {
   type TOCItemType,
   type TableOfContents as TocType,
 } from "fumadocs-core/server";
 import * as TocPrimitive from "fumadocs-core/toc";
 import { useTocThumb } from "@/hooks/use-toc-thumb";
+import { ScrollArea } from "@/registry/ui/default/core/scroll-area";
+import { cn } from "@/registry/ui/default/lib/cn";
 
 export const TableOfContents = ({ toc }: { toc: TocType }) => {
   if (toc.length === 0) return null;
@@ -35,7 +35,7 @@ const TocItems = ({ toc }: { toc: TocType }) => {
       <div ref={viewportRef}>
         <div
           role="none"
-          className="absolute start-0 w-[1px] bg-fg transition-all"
+          className="bg-fg absolute start-0 w-[1px] transition-all"
           style={{
             top: pos[0],
             height: pos[1],
@@ -56,7 +56,7 @@ function TOCItem({ item }: { item: TOCItemType }): React.ReactElement {
     <TocPrimitive.TOCItem
       href={item.url}
       className={cn(
-        "py-1 text-sm text-fg-muted transition-colors [overflow-wrap:anywhere] first:pt-0 last:pb-0 data-[active=true]:text-fg",
+        "text-fg-muted data-[active=true]:text-fg py-1 text-sm transition-colors [overflow-wrap:anywhere] first:pt-0 last:pb-0",
         item.depth <= 2 && "ps-6",
         item.depth === 3 && "ps-9",
         item.depth >= 4 && "ps-12"

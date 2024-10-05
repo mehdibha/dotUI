@@ -2,13 +2,13 @@ import { registryItemSchema, registrySchema } from "@dotui/registry";
 import { existsSync, promises as fs } from "node:fs";
 import path from "path";
 import { rimraf } from "rimraf";
-import { registry } from "@/registry";
 import { core } from "@/registry/core";
 import { hooks } from "@/registry/hooks";
 import { iconLibraries, icons } from "@/registry/icons";
 import { styles } from "@/registry/styles";
 import { themes } from "@/registry/themes";
 import { lib } from "@/registry/ui-lib";
+import { registry } from "@/registry";
 
 const REGISTRY_PATH = path.join(process.cwd(), "public/registry");
 

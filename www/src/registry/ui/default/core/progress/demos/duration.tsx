@@ -1,9 +1,9 @@
 "use client";
 
 import * as React from "react";
-import { RotateCwIcon } from "@/__icons__";
 import { Button } from "@/registry/ui/default/core/button";
 import { Progress } from "@/registry/ui/default/core/progress";
+import { RotateCwIcon } from "@/__icons__";
 
 export default function Demo() {
   const [key, setKey] = React.useState(0);

@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import { UploadIcon } from "@/__icons__";
 import { DropZone } from "@/registry/ui/default/core/drop-zone";
 import { Text } from "@/registry/ui/default/core/text";
+import { UploadIcon } from "@/__icons__";
 
 export default function Demo() {
   return (

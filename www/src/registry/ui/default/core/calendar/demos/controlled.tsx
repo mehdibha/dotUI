@@ -15,7 +15,7 @@ export default function Demo() {
         value={value}
         onChange={setValue}
       />
-      <p className="text-sm text-fg-muted">
+      <p className="text-fg-muted text-sm">
         Selected date: {formatter.format(value.toDate(getLocalTimeZone()))}
       </p>
     </div>

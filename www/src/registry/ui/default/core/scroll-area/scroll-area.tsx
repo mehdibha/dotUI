@@ -6,12 +6,12 @@ import { type VariantProps, tv } from "tailwind-variants";
 
 const scrollAreaStyles = tv({
   slots: {
-    root: "flex flex-col h-full w-full overflow-hidden",
-    viewport: "h-full w-full flex flex-col [&>*]:!block [&>*]:w-fit [&>*]:grow",
+    root: "flex h-full w-full flex-col overflow-hidden",
+    viewport: "flex h-full w-full flex-col [&>*]:!block [&>*]:w-fit [&>*]:grow",
     scrollbar:
-      "flex touch-none select-none flex-col data-[orientation=horizontal]:flex-row data-[orientation=vertical]:flex-col bg-gray-800 rounded-full my-0", // TODO: remove my-0, it was my-1
+      "my-0 flex touch-none select-none flex-col rounded-full bg-gray-800 data-[orientation=horizontal]:flex-row data-[orientation=vertical]:flex-col", // TODO: remove my-0, it was my-1
     thumb:
-      "relative before:absolute before:content-[''] before:top-1/2 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2] w-full h-full before:min-w-4 before:min-h-4 bg-gray-500 hover:bg-gray-400 transition-colors rounded-[inherit]",
+      "before:-translate-y-1/2] relative h-full w-full rounded-[inherit] bg-gray-500 transition-colors before:absolute before:left-1/2 before:top-1/2 before:min-h-4 before:min-w-4 before:-translate-x-1/2 before:content-[''] hover:bg-gray-400",
   },
   variants: {
     size: {

@@ -10,8 +10,8 @@ import { tv } from "tailwind-variants";
 
 const dropZoneStyles = tv({
   slots: {
-    root: "flex flex-col p-6 w-60 items-center justify-center gap-2 rounded-md border-2 border-dashed text-sm drop-target:border-border-focus focus-visible:border-border-focus drop-target:bg-bg-accent-muted disabled:text-fg-disabled disabled:border-border-disabled",
-    label: "font-semibold text-md",
+    root: "drop-target:border-border-focus focus-visible:border-border-focus drop-target:bg-bg-accent-muted disabled:text-fg-disabled disabled:border-border-disabled flex w-60 flex-col items-center justify-center gap-2 rounded-md border-2 border-dashed p-6 text-sm",
+    label: "text-md font-semibold",
   },
 });
 

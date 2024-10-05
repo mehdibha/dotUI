@@ -1,32 +1,32 @@
 import { Command } from "commander";
+import fs from "fs-extra";
 import path from "path";
-import { z } from "zod";
-import { logger, highlight, spinner } from "@/utils";
-import { getProjectInfo } from "@/helpers/get-project-info";
 import prompts from "prompts";
-import {
-  getRegistryColorSystems,
-  getRegistryIconLibrairies,
-  getRegistryStyles,
-  getRegistryThemes,
-} from "@/helpers/registry";
-import {
-  Config,
-  rawConfigSchema,
-  resolveConfigPaths,
-} from "@/helpers/get-config";
+import { z } from "zod";
+import { BASE_URL } from "@/constants/config";
 import {
   DEFAULT_COMPONENTS_ALIAS,
   DEFAULT_CORE_ALIAS,
   DEFAULT_HOOKS_ALIAS,
   DEFAULT_UTILS_ALIAS,
 } from "@/constants/default-config";
-import { BASE_URL } from "@/constants/config";
-import { isEmptyProject } from "@/helpers/is-empty-project";
-import fs from "fs-extra";
-import { handleError } from "@/helpers/handle-error";
-import { onPromptState } from "@/helpers/on-prompt-state";
 import { addComponents } from "@/helpers/add-components";
+import {
+  Config,
+  rawConfigSchema,
+  resolveConfigPaths,
+} from "@/helpers/get-config";
+import { getProjectInfo } from "@/helpers/get-project-info";
+import { handleError } from "@/helpers/handle-error";
+import { isEmptyProject } from "@/helpers/is-empty-project";
+import { onPromptState } from "@/helpers/on-prompt-state";
+import {
+  getRegistryColorSystems,
+  getRegistryIconLibrairies,
+  getRegistryStyles,
+  getRegistryThemes,
+} from "@/helpers/registry";
+import { logger, highlight, spinner } from "@/utils";
 
 const initOptionsSchema = z.object({
   projectDir: z.string().optional(),

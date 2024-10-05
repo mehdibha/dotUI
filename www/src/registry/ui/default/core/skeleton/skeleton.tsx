@@ -11,8 +11,8 @@ function Skeleton({
   return (
     <span
       className={cn(
-        "relative block h-6 animate-pulse rounded-md bg-bg-muted",
-        props.children && "*:invisible h-auto",
+        "bg-bg-muted relative block h-6 animate-pulse rounded-md",
+        props.children && "h-auto *:invisible",
         className
       )}
       {...props}

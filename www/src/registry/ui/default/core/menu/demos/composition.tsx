@@ -1,4 +1,3 @@
-import { MenuIcon } from "@/__icons__";
 import { Button } from "@/registry/ui/default/core/button";
 import {
   MenuContent,
@@ -6,6 +5,7 @@ import {
   MenuRoot,
 } from "@/registry/ui/default/core/menu";
 import { Overlay } from "@/registry/ui/default/core/overlay";
+import { MenuIcon } from "@/__icons__";
 
 export default function Demo() {
   return (

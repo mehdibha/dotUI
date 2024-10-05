@@ -8,7 +8,7 @@ const KbdStyles = tv({
   variants: {
     variant: {
       default: "",
-      outline: "px-2 py-1 border rounded-md",
+      outline: "rounded-md border px-2 py-1",
     },
   },
   defaultVariants: {

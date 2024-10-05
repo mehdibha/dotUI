@@ -1,6 +1,6 @@
-import { MenuIcon } from "@/__icons__";
 import { Button } from "@/registry/ui/default/core/button";
 import { Menu, MenuItem, MenuRoot } from "@/registry/ui/default/core/menu";
+import { MenuIcon } from "@/__icons__";
 
 export default function Demo() {
   return (

@@ -1,14 +1,14 @@
 "use client";
 
 import React from "react";
+import { useCommandMenuInputRef } from "@/hooks/use-focus-command-menu";
+import { cn } from "@/registry/ui/default/lib/cn";
 import {
   CommandMenuRoot,
   CommandMenuInput,
   CommandMenuContent,
   CommandMenuSeparator,
 } from "./command-menu";
-import { cn } from "@/registry/ui/default/lib/cn";
-import { useCommandMenuInputRef } from "@/hooks/use-focus-command-menu";
 
 export const CommandMenu = ({ className }: { className?: string }) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -52,15 +52,15 @@ export const CommandMenu = ({ className }: { className?: string }) => {
   return (
     <CommandMenuRoot
       className={cn(
-        "relative overflow-visible rounded-lg shadow-md h-60",
-        "relative after:absolute after:-inset-px after:z-[-1] after:animate-shine after:rounded-[inherit] after:bg-[linear-gradient(to_right,#343434_20%,#343434_40%,#707070_50%,#707070_55%,#343434_70%,#343434_100%)] after:bg-[250%_auto] after:content-['']",
+        "relative h-60 overflow-visible rounded-lg shadow-md",
+        "after:animate-shine relative after:absolute after:-inset-px after:z-[-1] after:rounded-[inherit] after:bg-[linear-gradient(to_right,#343434_20%,#343434_40%,#707070_50%,#707070_55%,#343434_70%,#343434_100%)] after:bg-[250%_auto] after:content-['']",
         // we fake border
-        "before:absolute before:-inset-px before:z-[-1] before:rounded-[inherit] before:bg-border before:content-['']",
+        "before:bg-border before:absolute before:-inset-px before:z-[-1] before:rounded-[inherit] before:content-['']",
         className
       )}
     >
       <CommandMenuInput ref={inputRef} wrapperClassName="border-b-0" />
-      <CommandMenuSeparator className="overflow-hidden before:opacity-1 relative before:absolute before:left-0 before:top-0 before:h-full before:w-1/2 before:animate-loading before:bg-[linear-gradient(90deg,rgba(0,0,0,0)_0,#707070_50%,rgba(0,0,0,0)_100%)] before:opacity-0 before:delay-900 before:content-['']" />
+      <CommandMenuSeparator className="before:opacity-1 before:animate-loading before:delay-900 relative overflow-hidden before:absolute before:left-0 before:top-0 before:h-full before:w-1/2 before:bg-[linear-gradient(90deg,rgba(0,0,0,0)_0,#707070_50%,rgba(0,0,0,0)_100%)] before:opacity-0 before:content-['']" />
       <CommandMenuContent />
     </CommandMenuRoot>
   );

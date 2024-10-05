@@ -26,35 +26,35 @@ import { focusRing } from "@/registry/ui/default/lib/focus-styles";
 
 const sliderStyles = tv({
   slots: {
-    root: "flex flex-col gap-2 orientation-horizontal:w-48 orientation-vertical:h-48 orientation-vertical:items-center",
+    root: "orientation-horizontal:w-48 orientation-vertical:h-48 orientation-vertical:items-center flex flex-col gap-2",
     track: [
-      "relative group/track rounded-full bg-bg-neutral cursor-pointer disabled:cursor-default disabled:bg-bg-disabled",
-      "grow orientation-vertical:flex-1 orientation-vertical:w-2 orientation-horizontal:w-full orientation-horizontal:h-2",
+      "group/track bg-bg-neutral disabled:bg-bg-disabled relative cursor-pointer rounded-full disabled:cursor-default",
+      "orientation-vertical:flex-1 orientation-vertical:w-2 orientation-horizontal:w-full orientation-horizontal:h-2 grow",
     ],
     filler: [
-      "rounded-full bg-border-focus group-disabled/track:bg-bg-disabled",
-      "pointer-events-none absolute group-orientation-horizontal/top-0 group-orientation-vertical/track:w-full group-orientation-vertical/track:bottom-0 group-orientation-horizontal/track:h-full",
+      "bg-border-focus group-disabled/track:bg-bg-disabled rounded-full",
+      "group-orientation-horizontal/top-0 group-orientation-vertical/track:w-full group-orientation-vertical/track:bottom-0 group-orientation-horizontal/track:h-full pointer-events-none absolute",
     ],
     thumb: [
       focusRing(),
       "rounded-full bg-white shadow-md transition-[width,height]",
       "absolute left-[50%] top-[50%] block !-translate-x-1/2 !-translate-y-1/2",
-      "disabled:bg-bg-disabled disabled:border disabled:border-bg",
+      "disabled:bg-bg-disabled disabled:border-bg disabled:border",
     ],
     valueLabel: "text-fg-muted text-sm",
   },
   variants: {
     size: {
       sm: {
-        thumb: "size-3 dragging:size-4",
+        thumb: "dragging:size-4 size-3",
         track: "orientation-vertical:w-1 orientation-horizontal:h-1",
       },
       md: {
-        thumb: "size-4 dragging:size-5",
+        thumb: "dragging:size-5 size-4",
         track: "orientation-vertical:w-2 orientation-horizontal:h-2",
       },
       lg: {
-        thumb: "size-5 dragging:size-6",
+        thumb: "dragging:size-6 size-5",
         track: "orientation-vertical:w-3 orientation-horizontal:h-3",
       },
     },
@@ -168,18 +168,18 @@ const SliderFiller = (props: SliderFillerProps) => {
               }
             : { height: `${getThumbPercent(0) * 100}%` }
           : orientation === "horizontal"
-          ? {
-              left: `${getThumbPercent(0) * 100}%`,
-              width: `${
-                Math.abs(getThumbPercent(0) - getThumbPercent(1)) * 100
-              }%`,
-            }
-          : {
-              bottom: `${getThumbPercent(0) * 100}%`,
-              height: `${
-                Math.abs(getThumbPercent(0) - getThumbPercent(1)) * 100
-              }%`,
-            }
+            ? {
+                left: `${getThumbPercent(0) * 100}%`,
+                width: `${
+                  Math.abs(getThumbPercent(0) - getThumbPercent(1)) * 100
+                }%`,
+              }
+            : {
+                bottom: `${getThumbPercent(0) * 100}%`,
+                height: `${
+                  Math.abs(getThumbPercent(0) - getThumbPercent(1)) * 100
+                }%`,
+              }
       }
       className={filler({ className: props.className })}
     />

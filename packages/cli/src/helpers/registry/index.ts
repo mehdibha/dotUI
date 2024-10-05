@@ -1,7 +1,3 @@
-import { RegistryItemFile, RegistryItemType } from "@dotui/registry/types";
-import { handleError } from "@/helpers/handle-error";
-import { logger } from "@/utils";
-import { fetchRegistry } from "./utils";
 import {
   registryItemSchema,
   registrySchema,
@@ -9,10 +5,14 @@ import {
   registryIconLibrariesSchema,
   registryResolvedItemsTreeSchema,
 } from "@dotui/registry/schema";
+import { RegistryItemFile, RegistryItemType } from "@dotui/registry/types";
+import deepmerge from "deepmerge";
 import { z } from "zod";
 import { Config } from "@/helpers/get-config";
+import { handleError } from "@/helpers/handle-error";
 import { isUrl } from "@/helpers/is-url";
-import deepmerge from "deepmerge";
+import { logger } from "@/utils";
+import { fetchRegistry } from "./utils";
 
 export async function getRegistryIndex() {
   try {

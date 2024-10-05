@@ -10,7 +10,7 @@ export default function Demo() {
       <Switch isSelected={isSelected} onChange={setSelected}>
         Airplane Mode
       </Switch>
-      <p className="text-xs text-fg-muted">
+      <p className="text-fg-muted text-xs">
         You are {isSelected && "not"} on{" "}
         <span className="font-bold">focus mode</span>.
       </p>

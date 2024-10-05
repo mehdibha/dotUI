@@ -22,10 +22,10 @@ export default function Demo() {
         <Item id="us">United States</Item>
         <Item id="uk">United Kingdom</Item>
       </Combobox>
-      <p className="text-sm text-fg-muted">
+      <p className="text-fg-muted text-sm">
         {country ? (
           <>
-            You selected: <span className="font-bold text-fg">{country}</span>
+            You selected: <span className="text-fg font-bold">{country}</span>
           </>
         ) : (
           "Select a country."

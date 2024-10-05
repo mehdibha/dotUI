@@ -3,11 +3,17 @@ import { docsConfig } from "@/config/docs-config";
 import { Button } from "@/registry/ui/default/core/button";
 
 export const DocsPager = ({ currentPagePath }: { currentPagePath: string }) => {
-  const flattenedItems = docsConfig.nav.flatMap(
-    (section) =>
-      section.items?.flatMap((item) => ("items" in item ? item.items : item)) ??
-      []
-  ).filter((item): item is { href: string; title: string } => item?.href !== undefined);
+  const flattenedItems = docsConfig.nav
+    .flatMap(
+      (section) =>
+        section.items?.flatMap((item) =>
+          "items" in item ? item.items : item
+        ) ?? []
+    )
+    .filter(
+      (item): item is { href: string; title: string } =>
+        item?.href !== undefined
+    );
 
   const currentIndex = flattenedItems.findIndex(
     (item) => item.href === currentPagePath

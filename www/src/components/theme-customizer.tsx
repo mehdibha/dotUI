@@ -2,11 +2,11 @@
 
 import { SettingsIcon } from "lucide-react";
 import { useConfig } from "@/hooks/use-config";
-import type { IconLibrary } from "@/types/icons";
 import { Button } from "@/registry/ui/default/core/button";
 import { Dialog, DialogRoot } from "@/registry/ui/default/core/dialog";
 import { Item } from "@/registry/ui/default/core/list-box";
 import { Select } from "@/registry/ui/default/core/select";
+import type { IconLibrary } from "@/types/icons";
 
 const ThemeCustomizer = () => {
   const { iconLibrary, setIconLibrary } = useConfig();

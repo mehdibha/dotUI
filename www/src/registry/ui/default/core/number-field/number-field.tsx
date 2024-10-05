@@ -6,12 +6,6 @@ import {
   type NumberFieldProps as AriaNumberFieldProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import {
-  ChevronDownIcon,
-  ChevronUpIcon,
-  MinusIcon,
-  PlusIcon,
-} from "@/__icons__";
 import { useMediaQuery } from "@/registry/hooks/use-media-query";
 import { Button, type ButtonProps } from "@/registry/ui/default/core/button";
 import { Field, type FieldProps } from "@/registry/ui/default/core/field";
@@ -20,9 +14,15 @@ import {
   Input,
   type inputStyles,
 } from "@/registry/ui/default/core/input";
+import {
+  ChevronDownIcon,
+  ChevronUpIcon,
+  MinusIcon,
+  PlusIcon,
+} from "@/__icons__";
 
 const numberFieldStyles = tv({
-  base: "flex flex-col gap-2 items-start w-48",
+  base: "flex w-48 flex-col items-start gap-2",
 });
 
 type NumberFieldProps = NumberFieldRootProps &
@@ -84,7 +84,7 @@ const NumberField = React.forwardRef<HTMLInputElement, NumberFieldProps>(
         >
           <InputRoot
             size={size}
-            className="px-0 [&_button]:invalid:border-border-danger [&_button]:focus-within:invalid:border-border"
+            className="[&_button]:invalid:border-border-danger [&_button]:focus-within:invalid:border-border px-0"
           >
             {prefix}
             <Input ref={ref} placeholder={placeholder} className="px-2" />

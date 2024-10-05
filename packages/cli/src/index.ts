@@ -1,11 +1,9 @@
 #!/usr/bin/env node
-
 // Inspired by: https://github.com/shadcn-ui/ui/blob/main/packages/shadcn
-
 import { Command } from "commander";
-import packageJson from "~/package.json";
-import { init } from "@/commands/init";
 import { addCommand } from "@/commands/add";
+import { init } from "@/commands/init";
+import packageJson from "~/package.json";
 
 process.on("SIGINT", () => process.exit(0));
 process.on("SIGTERM", () => process.exit(0));

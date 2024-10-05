@@ -15,11 +15,11 @@ import { AsteriskIcon } from "@/__icons__";
 
 const fieldStyles = tv({
   slots: {
-    root: "flex flex-col gap-2 items-start",
+    root: "flex flex-col items-start gap-2",
     label:
-      "text-sm inline-flex items-center gap-px font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:text-fg-disabled [&_svg]:size-3",
-    description: "text-xs text-fg-muted",
-    fieldError: "text-xs text-fg-danger",
+      "peer-disabled:text-fg-disabled inline-flex items-center gap-px text-sm font-medium leading-none peer-disabled:cursor-not-allowed [&_svg]:size-3",
+    description: "text-fg-muted text-xs",
+    fieldError: "text-fg-danger text-xs",
   },
 });
 

@@ -1,11 +1,11 @@
 import { type Config } from "@/helpers/get-config";
 import { handleError } from "@/helpers/handle-error";
 import { registryResolveItemsTree } from "@/helpers/registry";
-import { spinner } from "@/utils/spinner";
 import { updateCssVars } from "@/helpers/updaters/update-css-vars";
 import { updateDependencies } from "@/helpers/updaters/update-dependencies";
 import { updateFiles } from "@/helpers/updaters/update-files";
 import { updateTailwindConfig } from "@/helpers/updaters/update-tailwind-config";
+import { spinner } from "@/utils/spinner";
 
 export async function addComponents(
   components: string[],

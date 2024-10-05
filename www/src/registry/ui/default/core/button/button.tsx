@@ -9,13 +9,13 @@ import {
   type LinkProps as AriaLinkProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { LoaderIcon } from "@/__icons__";
 import { focusRing } from "@/registry/ui/default/lib/focus-styles";
+import { LoaderIcon } from "@/__icons__";
 
 const buttonStyles = tv(
   {
     extend: focusRing,
-    base: "inline-flex gap-2 cursor-pointer items-center justify-center whitespace-nowrap rounded-md leading-normal text-sm shrink-0 font-medium ring-offset-background transition-colors disabled:cursor-default disabled:bg-bg-disabled disabled:text-fg-disabled",
+    base: "ring-offset-background disabled:bg-bg-disabled disabled:text-fg-disabled inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium leading-normal transition-colors disabled:cursor-default",
     variants: {
       variant: {
         default:
@@ -23,9 +23,9 @@ const buttonStyles = tv(
         primary:
           "bg-bg-primary hover:bg-bg-primary-hover pressed:bg-bg-primary-active text-fg-onPrimary",
         quiet:
-          "bg-transparent hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 text-fg",
+          "hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 text-fg bg-transparent",
         outline:
-          "border border-border-field bg-transparent hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 text-fg disabled:border-border-disabled disabled:bg-transparent",
+          "border-border-field hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 text-fg disabled:border-border-disabled border bg-transparent disabled:bg-transparent",
         accent:
           "bg-bg-accent hover:bg-bg-accent-hover pressed:bg-bg-accent-active text-fg-onAccent",
         success:

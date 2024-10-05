@@ -20,14 +20,14 @@ import { Text } from "@/registry/ui/default/core/text";
 const dialogStyles = tv({
   slots: {
     content: [
-      "relative outline-none rounded-[inherit] p-4 flex flex-col max-w-full",
+      "relative flex max-w-full flex-col rounded-[inherit] p-4 outline-none",
       "group-data-[type=modal]/overlay:p-6",
       "group-data-[type=drawer]/overlay:pt-0",
     ],
     header: "mb-4",
-    footer: "flex flex-col-reverse sm:flex-row sm:justify-end gap-2 pt-4",
+    footer: "flex flex-col-reverse gap-2 pt-4 sm:flex-row sm:justify-end",
     inset:
-      "-mx-4 group-data-[type=modal]/overlay:-mx-6 px-4 group-data-[type=modal]/overlay:px-6 py-4",
+      "-mx-4 px-4 py-4 group-data-[type=modal]/overlay:-mx-6 group-data-[type=modal]/overlay:px-6",
   },
 });
 

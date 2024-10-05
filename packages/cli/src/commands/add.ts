@@ -1,12 +1,12 @@
-import path from "path";
-import { addComponents } from "@/helpers/add-components";
-import { handleError } from "@/helpers/handle-error";
-import { highlight, logger } from "@/utils";
-import { getRegistryIndex } from "@/helpers/registry";
 import { Command } from "commander";
+import path from "path";
 import prompts from "prompts";
 import { z } from "zod";
+import { addComponents } from "@/helpers/add-components";
 import { getConfig } from "@/helpers/get-config";
+import { handleError } from "@/helpers/handle-error";
+import { getRegistryIndex } from "@/helpers/registry";
+import { highlight, logger } from "@/utils";
 
 export const addOptionsSchema = z.object({
   components: z.array(z.string()).optional(),

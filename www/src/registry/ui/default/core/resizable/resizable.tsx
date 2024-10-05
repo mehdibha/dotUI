@@ -14,7 +14,7 @@ const resizableStyles = tv({
       "flex h-full w-full flex-row overflow-hidden data-[panel-group-direction=vertical]:flex-col",
     panel: "",
     handle:
-      "relative flex flex-[0_0_1px] items-stretch justify-stretch bg-border transition-colors data-[resize-handle-state=drag]:bg-border-active",
+      "bg-border data-[resize-handle-state=drag]:bg-border-active relative flex flex-[0_0_1px] items-stretch justify-stretch transition-colors",
   },
 });
 

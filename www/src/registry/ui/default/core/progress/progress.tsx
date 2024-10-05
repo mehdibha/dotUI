@@ -12,10 +12,10 @@ import { cn } from "@/registry/ui/default/lib/cn";
 
 const progressStyles = tv({
   slots: {
-    root: "flex flex-col gap-2 w-60",
+    root: "flex w-60 flex-col gap-2",
     indicator: "relative h-2.5 w-full overflow-hidden rounded-full",
     filler:
-      "h-full animate-progress-grow w-full flex-1 bg-fg transition-transform origin-left min-w-14",
+      "animate-progress-grow bg-fg h-full w-full min-w-14 flex-1 origin-left transition-transform",
     valueLabel: "text-sm",
   },
   variants: {

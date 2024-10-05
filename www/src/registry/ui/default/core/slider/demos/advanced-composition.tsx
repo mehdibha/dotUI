@@ -1,4 +1,3 @@
-import { Volume1Icon, Volume2Icon } from "@/__icons__";
 import { Label, Description } from "@/registry/ui/default/core/field";
 import {
   SliderFiller,
@@ -7,6 +6,7 @@ import {
   SliderTrack,
   SliderValueLabel,
 } from "@/registry/ui/default/core/slider";
+import { Volume1Icon, Volume2Icon } from "@/__icons__";
 
 export default function Demo() {
   return (

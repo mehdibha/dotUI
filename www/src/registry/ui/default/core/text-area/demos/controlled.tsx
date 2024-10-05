@@ -16,7 +16,7 @@ export default function Demo() {
           setInputValue(text);
         }}
       />
-      <p className="text-sm text-fg-muted">mirrored text: {inputValue}</p>
+      <p className="text-fg-muted text-sm">mirrored text: {inputValue}</p>
     </div>
   );
 }

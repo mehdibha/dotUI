@@ -11,15 +11,15 @@ import { focusRing } from "@/registry/ui/default/lib/focus-styles";
 
 const toggleButtonStyles = tv({
   extend: focusRing,
-  base: "inline-flex items-center justify-center gap-2 rounded-md leading-normal text-sm font-medium ring-offset-background transition-colors disabled:cursor-default disabled:bg-bg-disabled disabled:text-fg-disabled",
+  base: "ring-offset-background disabled:bg-bg-disabled disabled:text-fg-disabled inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium leading-normal transition-colors disabled:cursor-default",
   variants: {
     variant: {
       quiet:
-        "bg-transparent hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 text-fg selected:bg-bg-primary selected:text-fg-onPrimary selected:hover:bg-bg-primary-hover selected:pressed:bg-bg-primary-active",
+        "hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 text-fg selected:bg-bg-primary selected:text-fg-onPrimary selected:hover:bg-bg-primary-hover selected:pressed:bg-bg-primary-active bg-transparent",
       outline:
-        "border border-border-field bg-transparent hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 pressed:border-transparent text-fg selected:bg-bg-primary selected:border-transparent selected:text-fg-onPrimary selected:hover:bg-bg-primary-hover selected:pressed:bg-bg-primary-active",
+        "border-border-field hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 pressed:border-transparent text-fg selected:bg-bg-primary selected:border-transparent selected:text-fg-onPrimary selected:hover:bg-bg-primary-hover selected:pressed:bg-bg-primary-active border bg-transparent",
       accent:
-        "border border-border-field bg-transparent hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 pressed:border-transparent text-fg selected:bg-bg-accent selected:border-transparent selected:hover:bg-bg-accent-hover selected:pressed:bg-bg-accent-active selected:text-fg-onAccent",
+        "border-border-field hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 pressed:border-transparent text-fg selected:bg-bg-accent selected:border-transparent selected:hover:bg-bg-accent-hover selected:pressed:bg-bg-accent-active selected:text-fg-onAccent border bg-transparent",
     },
     size: {
       sm: "size-8 [&_svg]:size-4",
@@ -36,17 +36,17 @@ const toggleButtonStyles = tv({
     {
       size: "sm",
       shape: "rectangle",
-      className: "px-3 w-auto",
+      className: "w-auto px-3",
     },
     {
       size: "md",
       shape: "rectangle",
-      className: "px-4 w-auto",
+      className: "w-auto px-4",
     },
     {
       size: "lg",
       shape: "rectangle",
-      className: "px-5 w-auto",
+      className: "w-auto px-5",
     },
   ],
   defaultVariants: {

@@ -9,7 +9,7 @@ export default function Demo() {
   return (
     <div className="flex flex-col items-center gap-4">
       <DateField aria-label="Event date" value={value} onChange={setValue} />
-      <p className="text-sm text-fg-muted">selected date: {value.toString()}</p>
+      <p className="text-fg-muted text-sm">selected date: {value.toString()}</p>
     </div>
   );
 }

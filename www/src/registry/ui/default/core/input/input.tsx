@@ -17,19 +17,19 @@ import {
   useSlottedContext,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { LoaderIcon } from "@/__icons__";
 import { focusInput } from "@/registry/ui/default/lib/focus-styles";
+import { LoaderIcon } from "@/__icons__";
 
 const inputStyles = tv({
   slots: {
     root: [
       focusInput(),
-      "inline-flex justify-start items-center gap-2 px-2 transition-colors w-full rounded-md border border-border-field bg-bg shadow-sm cursor-text text-fg-muted text-base sm:text-sm [&_svg]:size-4",
-      "disabled:cursor-default disabled:border-border-disabled disabled:bg-bg-disabled disabled:text-fg-disabled",
+      "border-border-field bg-bg text-fg-muted inline-flex w-full cursor-text items-center justify-start gap-2 rounded-md border px-2 text-base shadow-sm transition-colors sm:text-sm [&_svg]:size-4",
+      "disabled:border-border-disabled disabled:bg-bg-disabled disabled:text-fg-disabled disabled:cursor-default",
       "invalid:border-border-danger focus-within:invalid:border-border",
     ],
     input: [
-      "bg-transparent outline-none w-full h-full text-fg placeholder:text-fg-muted disabled:text-fg-disabled disabled:cursor-default",
+      "text-fg placeholder:text-fg-muted disabled:text-fg-disabled h-full w-full bg-transparent outline-none disabled:cursor-default",
     ],
   },
   variants: {

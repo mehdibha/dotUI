@@ -2,8 +2,8 @@
 
 import React from "react";
 import { today, getLocalTimeZone } from "@internationalized/date";
-import { RangeCalendar } from "@/registry/ui/default/core/range-calendar";
 import { type DateRange } from "react-aria-components";
+import { RangeCalendar } from "@/registry/ui/default/core/range-calendar";
 
 export default function Demo() {
   const [range, setRange] = React.useState<DateRange | null>({

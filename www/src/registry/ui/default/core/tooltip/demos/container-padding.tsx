@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import { PlusIcon } from "@/__icons__";
 import { Button } from "@/registry/ui/default/core/button";
 import { NumberField } from "@/registry/ui/default/core/number-field";
 import { Tooltip } from "@/registry/ui/default/core/tooltip";
+import { PlusIcon } from "@/__icons__";
 
 export default function Demo() {
   const [containerPadding, setContainerPadding] = React.useState(12);

@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { MenuIcon } from "@/__icons__";
 import { Button } from "@/registry/ui/default/core/button";
 import { Item } from "@/registry/ui/default/core/list-box";
 import {
@@ -11,6 +10,7 @@ import {
   type MenuProps,
 } from "@/registry/ui/default/core/menu";
 import { Select } from "@/registry/ui/default/core/select";
+import { MenuIcon } from "@/__icons__";
 
 type Placement = MenuProps<object>["placement"];
 

@@ -1,8 +1,8 @@
-import path from "path";
-import { FRAMEWORKS, Framework } from "@/constants/frameworks";
 import fg from "fast-glob";
 import fs from "fs-extra";
+import path from "path";
 import { loadConfig } from "tsconfig-paths";
+import { FRAMEWORKS, Framework } from "@/constants/frameworks";
 
 type ProjectInfo = {
   framework: Framework;
