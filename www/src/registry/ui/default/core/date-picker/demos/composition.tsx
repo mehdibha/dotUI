@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { CalendarIcon } from "@/__icons__";
 import { Button } from "@/registry/ui/default/core/button";
 import { Calendar } from "@/registry/ui/default/core/calendar";
 import { DateInput, DateSegment } from "@/registry/ui/default/core/date-input";
@@ -14,6 +13,7 @@ import {
 } from "@/registry/ui/default/core/field";
 import { InputRoot } from "@/registry/ui/default/core/input";
 import { Overlay } from "@/registry/ui/default/core/overlay";
+import { CalendarIcon } from "@/__icons__";
 
 export default function Demo() {
   return (

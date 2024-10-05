@@ -11,7 +11,7 @@ import { focusRing } from "@/registry/ui/default/lib/focus-styles";
 
 const linkVariants = tv({
   extend: focusRing,
-  base: "inline-flex items-center transition-colors gap-1 disabled:text-fg-disabled",
+  base: "disabled:text-fg-disabled inline-flex items-center gap-1 transition-colors",
   variants: {
     variant: {
       accent: "text-fg-accent hover:text-[#5e9fe0]",

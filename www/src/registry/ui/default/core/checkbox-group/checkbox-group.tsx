@@ -12,7 +12,7 @@ import { Field, type FieldProps } from "@/registry/ui/default/core/field";
 
 const checkboxGroupStyles = tv({
   slots: {
-    root: "flex flex-col gap-2 items-start",
+    root: "flex flex-col items-start gap-2",
     wrapper: "flex",
   },
   variants: {

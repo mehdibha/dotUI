@@ -19,16 +19,16 @@ const radioGroupStyles = tv({
   slots: {
     root: "group/radio-group flex flex-col gap-2",
     wrapper:
-      "flex flex-col gap-1 group-orientation-horizontal/radio-group:flex-row group-orientation-horizontal/radio-group:gap-3",
+      "group-orientation-horizontal/radio-group:flex-row group-orientation-horizontal/radio-group:gap-3 flex flex-col gap-1",
   },
 });
 
 const radioStyles = tv({
   slots: {
-    root: "group flex flex-row items-center gap-2 disabled:text-fg-disabled invalid:text-fg-danger cursor-pointer disabled:cursor-default",
+    root: "disabled:text-fg-disabled invalid:text-fg-danger group flex cursor-pointer flex-row items-center gap-2 disabled:cursor-default",
     indicator: [
       focusRing(),
-      "relative size-4 shrink-0 rounded-full border border-border-control group-selected:border-bg-primary group-selected:border-4 transition-all duration-100",
+      "border-border-control group-selected:border-bg-primary group-selected:border-4 relative size-4 shrink-0 rounded-full border transition-all duration-100",
       "group-disabled:border-border-disabled group-disabled:selected:bg-bg-disabled group-disabled:indeterminate:bg-bg-disabled",
       "group-invalid:border-border-danger group-invalid:selected:border-bg-danger",
     ],
@@ -41,7 +41,7 @@ const radioStyles = tv({
       card: {
         root: [
           focusRing(),
-          "border p-4 rounded-md flex-row-reverse gap-4 selected:bg-bg-muted disabled:selected:bg-bg-disabled transition-colors disabled:border-border-disabled",
+          "selected:bg-bg-muted disabled:selected:bg-bg-disabled disabled:border-border-disabled flex-row-reverse gap-4 rounded-md border p-4 transition-colors",
         ],
       },
     },

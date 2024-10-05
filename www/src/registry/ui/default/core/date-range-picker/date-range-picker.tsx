@@ -7,7 +7,6 @@ import {
   type DateValue,
 } from "react-aria-components";
 import { type VariantProps } from "tailwind-variants";
-import { CalendarIcon } from "@/__icons__";
 import { Button } from "@/registry/ui/default/core/button";
 import { DateInput, DateSegment } from "@/registry/ui/default/core/date-input";
 import { Dialog } from "@/registry/ui/default/core/dialog";
@@ -18,6 +17,7 @@ import {
 } from "@/registry/ui/default/core/field";
 import { InputRoot, type inputStyles } from "@/registry/ui/default/core/input";
 import { RangeCalendar } from "@/registry/ui/default/core/range-calendar";
+import { CalendarIcon } from "@/__icons__";
 
 interface DateRangePickerProps<T extends DateValue>
   extends DateRangePickerRootProps<T>,
@@ -74,7 +74,7 @@ const DateRangePicker = <T extends DateValue>({
             variant="default"
             size="sm"
             shape="square"
-            className="size-7 my-1 rounded-sm"
+            className="my-1 size-7 rounded-sm"
           >
             <CalendarIcon />
           </Button>

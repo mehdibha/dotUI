@@ -12,8 +12,8 @@ export default function Demo() {
         value={value}
         onChange={(value) => setValue(value as number)}
       />
-      <span className="text-sm text-fg-muted">
-        Value: <span className="font-semibold text-fg">{value}</span>
+      <span className="text-fg-muted text-sm">
+        Value: <span className="text-fg font-semibold">{value}</span>
       </span>
     </div>
   );

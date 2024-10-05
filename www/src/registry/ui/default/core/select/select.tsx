@@ -9,7 +9,6 @@ import {
   type SelectValueProps as AriaSelectValueProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { ChevronDownIcon } from "@/__icons__";
 import { Button, type ButtonProps } from "@/registry/ui/default/core/button";
 import { Field, type FieldProps } from "@/registry/ui/default/core/field";
 import {
@@ -17,6 +16,7 @@ import {
   type ListBoxProps,
 } from "@/registry/ui/default/core/list-box";
 import { Overlay } from "@/registry/ui/default/core/overlay";
+import { ChevronDownIcon } from "@/__icons__";
 
 const selectStyles = tv({
   slots: {

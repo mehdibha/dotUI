@@ -2,13 +2,13 @@
 
 import React from "react";
 import type { Key } from "react-aria-components";
-import { InfoIcon } from "@/__icons__";
 import { Button } from "@/registry/ui/default/core/button";
 import { DialogRoot, Dialog } from "@/registry/ui/default/core/dialog";
 import { Item } from "@/registry/ui/default/core/list-box";
 import { NumberField } from "@/registry/ui/default/core/number-field";
 import { Select } from "@/registry/ui/default/core/select";
 import { Switch } from "@/registry/ui/default/core/switch";
+import { InfoIcon } from "@/__icons__";
 
 export default function Demo() {
   const [placement, setPlacement] = React.useState<Key>("top");

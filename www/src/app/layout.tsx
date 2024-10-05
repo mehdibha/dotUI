@@ -1,8 +1,10 @@
 import React from "react";
 import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/react";
-import { Sidebar } from "@/components/sidebar";
 import { truncateOnWord } from "@/lib/string";
+import { Sidebar } from "@/components/sidebar";
+import { Badge } from "@/registry/ui/default/core/badge";
+import { cn } from "@/registry/ui/default/lib/cn";
 import {
   JosephinFont,
   fontDisplay,
@@ -11,8 +13,6 @@ import {
 } from "@/styles/fonts";
 import "@/styles/globals.css";
 import { siteConfig } from "@/config";
-import { Badge } from "@/registry/ui/default/core/badge";
-import { cn } from "@/registry/ui/default/lib/cn";
 import { Providers } from "./providers";
 
 const config = siteConfig.global;

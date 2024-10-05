@@ -17,7 +17,7 @@ export default function Demo() {
       <Dialog title="Edit profile" description="Make changes to your profile.">
         {({ close }) => (
           <>
-            <DialogInset className="mb-4 border-y bg-bg-muted">
+            <DialogInset className="bg-bg-muted mb-4 border-y">
               Content within the inset.
             </DialogInset>
             <div className="space-y-4">

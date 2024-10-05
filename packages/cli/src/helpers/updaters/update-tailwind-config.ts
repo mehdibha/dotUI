@@ -1,10 +1,8 @@
+import { registryItemTailwindSchema } from "@dotui/registry/schema";
+import deepmerge from "deepmerge";
 import { promises as fs } from "node:fs";
 import { tmpdir } from "os";
 import path from "path";
-import { Config } from "@/helpers/get-config";
-import { highlight } from "@/utils";
-import { spinner } from "@/utils/spinner";
-import deepmerge from "deepmerge";
 import objectToString from "stringify-object";
 import { type Config as TailwindConfig } from "tailwindcss";
 import {
@@ -17,7 +15,9 @@ import {
   VariableStatement,
 } from "ts-morph";
 import { z } from "zod";
-import { registryItemTailwindSchema } from "@dotui/registry/schema";
+import { Config } from "@/helpers/get-config";
+import { highlight } from "@/utils";
+import { spinner } from "@/utils/spinner";
 
 export type UpdaterTailwindConfig = Omit<TailwindConfig, "plugins"> & {
   // We only want string plugins for now.

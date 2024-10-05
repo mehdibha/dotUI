@@ -7,7 +7,6 @@ import {
   type DateValue,
 } from "react-aria-components";
 import { type VariantProps } from "tailwind-variants";
-import { CalendarIcon } from "@/__icons__";
 import { Button } from "@/registry/ui/default/core/button";
 import { Calendar } from "@/registry/ui/default/core/calendar";
 import { DateInput, DateSegment } from "@/registry/ui/default/core/date-input";
@@ -18,6 +17,7 @@ import {
   type FieldProps,
 } from "@/registry/ui/default/core/field";
 import { InputRoot, type inputStyles } from "@/registry/ui/default/core/input";
+import { CalendarIcon } from "@/__icons__";
 
 interface DatePickerProps<T extends DateValue>
   extends DatePickerRootProps<T>,
@@ -70,7 +70,7 @@ const DatePicker = <T extends DateValue>({
             variant="default"
             size="sm"
             shape="square"
-            className="size-7 my-1 rounded-sm"
+            className="my-1 size-7 rounded-sm"
           >
             <CalendarIcon />
           </Button>

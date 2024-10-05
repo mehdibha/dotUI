@@ -1,5 +1,5 @@
-import { ShieldIcon } from "@/__icons__";
 import { Badge } from "@/registry/ui/default/core/badge";
+import { ShieldIcon } from "@/__icons__";
 
 export default function Demo() {
   return (

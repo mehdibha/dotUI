@@ -20,10 +20,10 @@ import {
   useSlottedContext,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { ChevronLeftIcon, ChevronRightIcon } from "@/__icons__";
 import { Button, buttonStyles } from "@/registry/ui/default/core/button";
 import { Heading } from "@/registry/ui/default/core/heading";
 import { Text } from "@/registry/ui/default/core/text";
+import { ChevronLeftIcon, ChevronRightIcon } from "@/__icons__";
 
 const calendarStyles = tv({
   slots: {
@@ -31,14 +31,14 @@ const calendarStyles = tv({
     header: "mb-4 flex items-center justify-between gap-2",
     grid: "w-full border-collapse",
     gridHeader: "mb-4",
-    gridHeaderCell: "text-xs font-normal text-fg-muted",
+    gridHeaderCell: "text-fg-muted text-xs font-normal",
     gridBody: "[&>tr>td]:p-0",
     cell: "",
   },
   variants: {
     standalone: {
       true: {
-        root: "border bg-bg rounded-md p-3",
+        root: "bg-bg rounded-md border p-3",
       },
       false: {
         root: "rounded-[inherit]",
@@ -52,7 +52,7 @@ const calendarStyles = tv({
             shape: "square",
             size: "sm",
           }),
-          "my-1 selected:bg-bg-primary selected:text-fg-onPrimary disabled:cursor-default disabled:bg-transparent",
+          "selected:bg-bg-primary selected:text-fg-onPrimary my-1 disabled:cursor-default disabled:bg-transparent",
           "selected:invalid:bg-bg-danger selected:invalid:text-fg-onDanger",
           "unavailable:line-through unavailable:hover:bg-transparent unavailable:cursor-default unavailable:text-fg-muted",
           "outside-month:hidden",
@@ -60,10 +60,10 @@ const calendarStyles = tv({
       },
       true: {
         cell: [
-          "relative my-1 flex size-8 items-center justify-center rounded-md text-sm font-normal leading-normal disabled:cursor-default disabled:bg-transparent disabled:text-fg-disabled",
-          "after:absolute after:inset-0 after:transition-colors after:content-[''] selected:after:bg-bg-primary/10",
-          "before:absolute before:inset-0 before:z-10 before:rounded-[inherit] before:transition-colors before:content-[''] hover:before:bg-bg-inverse/10",
-          "outline-none before:border before:border-transparent before:ring-0 before:ring-border-focus focus-visible:z-50 focus-visible:before:border-border focus-visible:before:ring-2 focus-visible:before:ring-offset-2 focus-visible:before:ring-offset-bg",
+          "disabled:text-fg-disabled relative my-1 flex size-8 items-center justify-center rounded-md text-sm font-normal leading-normal disabled:cursor-default disabled:bg-transparent",
+          "selected:after:bg-bg-primary/10 after:absolute after:inset-0 after:transition-colors after:content-['']",
+          "hover:before:bg-bg-inverse/10 before:absolute before:inset-0 before:z-10 before:rounded-[inherit] before:transition-colors before:content-['']",
+          "before:ring-border-focus focus-visible:before:border-border focus-visible:before:ring-offset-bg outline-none before:border before:border-transparent before:ring-0 focus-visible:z-50 focus-visible:before:ring-2 focus-visible:before:ring-offset-2",
           "selection-start:after:rounded-l-[inherit] selection-end:after:rounded-r-[inherit]",
           "selection-start:pressed:before:bg-primary/90 selection-start:text-fg-onPrimary selection-start:before:bg-bg-primary",
           "selection-end:pressed:before:bg-primary/90 selection-end:text-fg-onPrimary selection-end:before:bg-bg-primary",

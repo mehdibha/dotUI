@@ -1,6 +1,5 @@
 "use client";
 
-import { ChevronLeftIcon, ChevronRightIcon } from "@/__icons__";
 import { Button } from "@/registry/ui/default/core/button";
 import {
   CalendarHeader,
@@ -12,6 +11,7 @@ import {
 } from "@/registry/ui/default/core/calendar";
 import { Heading } from "@/registry/ui/default/core/heading";
 import { RangeCalendarRoot } from "@/registry/ui/default/core/range-calendar";
+import { ChevronLeftIcon, ChevronRightIcon } from "@/__icons__";
 
 export default function Demo() {
   return (

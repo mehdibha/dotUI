@@ -4,17 +4,17 @@ import { DangerIcon, InfoIcon, SuccessIcon, WarningIcon } from "@/__icons__";
 
 const alertStyles = tv({
   slots: {
-    root: "rounded-lg border p-4 flex items-center gap-4 [&_svg]:size-4",
-    title: "font-medium leading-normal tracking-tight mr-1",
+    root: "flex items-center gap-4 rounded-lg border p-4 [&_svg]:size-4",
+    title: "mr-1 font-medium leading-normal tracking-tight",
     content: "text-sm",
   },
   variants: {
     variant: {
-      default: { root: "border text-fg" },
-      success: { root: "border border-border-success text-fg-success" },
-      warning: { root: "border border-border-warning text-fg-warning" },
-      danger: { root: "border border-border-danger text-fg-danger" },
-      info: { root: "border border-border-accent text-fg-accent" },
+      default: { root: "text-fg border" },
+      success: { root: "border-border-success text-fg-success border" },
+      warning: { root: "border-border-warning text-fg-warning border" },
+      danger: { root: "border-border-danger text-fg-danger border" },
+      info: { root: "border-border-accent text-fg-accent border" },
     },
     fill: {
       true: "",

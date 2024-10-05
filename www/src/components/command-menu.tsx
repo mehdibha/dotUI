@@ -111,7 +111,7 @@ export const CommandMenuContent = ({
                     }}
                     className="flex items-center space-x-2"
                   >
-                    <FileIcon className="size-4 text-fg-muted" />
+                    <FileIcon className="text-fg-muted size-4" />
                     <span>{item.title}</span>
                   </CommandItem>
                 );
@@ -130,15 +130,15 @@ export const CommandMenuContent = ({
                             className="flex items-center justify-between"
                           >
                             <div className="flex items-center space-x-2">
-                              <FileIcon className="size-4 text-fg-muted" />
+                              <FileIcon className="text-fg-muted size-4" />
                               <span>{subItem.title}</span>
                             </div>
                             <div>
-                              <span className="text-secondary-foreground rounded-md border bg-bg-muted px-3 py-1 text-xs leading-none text-fg-muted">
+                              <span className="text-secondary-foreground bg-bg-muted text-fg-muted rounded-md border px-3 py-1 text-xs leading-none">
                                 {item.title}
                               </span>
                               {subItem.label && (
-                                <span className="ml-2 rounded-md bg-gradient px-3 py-1 text-xs leading-none text-white">
+                                <span className="bg-gradient ml-2 rounded-md px-3 py-1 text-xs leading-none text-white">
                                   {subItem.label}
                                 </span>
                               )}

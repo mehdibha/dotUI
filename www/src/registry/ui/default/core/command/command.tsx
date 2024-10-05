@@ -2,8 +2,8 @@
 
 import * as React from "react";
 import { Command as CommandPrimitive } from "cmdk";
-import { SearchIcon } from "@/__icons__";
 import { cn } from "@/registry/ui/default/lib/cn";
+import { SearchIcon } from "@/__icons__";
 
 type CommandRootProps = React.ComponentPropsWithoutRef<typeof CommandPrimitive>;
 const CommandRoot = React.forwardRef<
@@ -13,7 +13,7 @@ const CommandRoot = React.forwardRef<
   <CommandPrimitive
     ref={ref}
     className={cn(
-      "flex h-full w-full flex-col overflow-hidden rounded-md bg-bg text-fg",
+      "bg-bg text-fg flex h-full w-full flex-col overflow-hidden rounded-md",
       className
     )}
     {...props}
@@ -38,7 +38,7 @@ const CommandInput = React.forwardRef<
     <CommandPrimitive.Input
       ref={ref}
       className={cn(
-        "flex h-11 w-full rounded-md bg-transparent py-3 text-base outline-none placeholder:text-fg-muted disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm",
+        "placeholder:text-fg-muted flex h-11 w-full rounded-md bg-transparent py-3 text-base outline-none disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm",
         className
       )}
       {...props}
@@ -87,7 +87,7 @@ const CommandGroup = React.forwardRef<
   <CommandPrimitive.Group
     ref={ref}
     className={cn(
-      "text-foreground overflow-hidden p-1 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-fg-muted",
+      "text-foreground [&_[cmdk-group-heading]]:text-fg-muted overflow-hidden p-1 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium",
       className
     )}
     {...props}
@@ -105,7 +105,7 @@ const CommandSeparator = React.forwardRef<
   <CommandPrimitive.Separator
     ref={ref}
     className={cn(
-      "shrink-0 bg-border separator border-0 h-px w-full",
+      "bg-border separator h-px w-full shrink-0 border-0",
       className
     )}
     // className={cn("-mx-1 h-px bg-border", className)}
@@ -124,7 +124,7 @@ const CommandItem = React.forwardRef<
   <CommandPrimitive.Item
     ref={ref}
     className={cn(
-      "relative flex h-10 cursor-pointer select-none items-center rounded-sm px-2 text-sm outline-none transition-colors aria-selected:bg-bg-muted aria-selected:text-fg data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      "aria-selected:bg-bg-muted aria-selected:text-fg relative flex h-10 cursor-pointer select-none items-center rounded-sm px-2 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
       className
     )}
     {...props}
@@ -136,7 +136,7 @@ type CommandShortcutProps = React.HTMLAttributes<HTMLSpanElement>;
 const CommandShortcut = ({ className, ...props }: CommandShortcutProps) => {
   return (
     <span
-      className={cn("ml-auto text-xs tracking-widest text-fg-muted", className)}
+      className={cn("text-fg-muted ml-auto text-xs tracking-widest", className)}
       {...props}
     />
   );

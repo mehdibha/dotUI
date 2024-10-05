@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { siteConfig } from "@/config";
 import { Avatar } from "@/registry/ui/default/core/avatar";
 import { Badge } from "@/registry/ui/default/core/badge";
 import { cn } from "@/registry/ui/default/lib/cn";
 import { focusRing } from "@/registry/ui/default/lib/focus-styles";
+import { siteConfig } from "@/config";
 
 export const Logo = (props: { collapsed?: boolean }) => {
   return (
@@ -24,7 +24,7 @@ export const Logo = (props: { collapsed?: boolean }) => {
       />
       {!props.collapsed && (
         <>
-          <div className="mt-1 font-josephin font-bold leading-normal tracking-tighter">
+          <div className="font-josephin mt-1 font-bold leading-normal tracking-tighter">
             {siteConfig.global.name}
           </div>
           <Badge size="sm" variant="neutral" className="border">

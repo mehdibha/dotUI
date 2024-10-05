@@ -15,7 +15,7 @@ export default function Demo() {
   return (
     <div className="flex flex-col items-center gap-4">
       <DateRangePicker label="Controlled" value={value} onChange={setValue} />
-      <p className="text-sm text-fg-muted">
+      <p className="text-fg-muted text-sm">
         Selected date:{" "}
         {value
           ? formatter.formatRange(

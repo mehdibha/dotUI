@@ -1,13 +1,14 @@
 "use client";
 
 import React from "react";
-
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CommandMenu } from "./command-menu";
-import { GitHubIcon, TwitterIcon } from "./icons";
-import { ThemeToggle } from "./theme-toggle";
-import { siteConfig } from "@/config";
+import {
+  PanelLeftOpenIcon,
+  ChevronRightIcon,
+  SearchIcon,
+  CommandIcon,
+} from "lucide-react";
 import { docsConfig } from "@/config/docs-config";
 import { useCommandMenuInputRef } from "@/hooks/use-focus-command-menu";
 import { Avatar } from "@/registry/ui/default/core/avatar";
@@ -21,12 +22,19 @@ import { Kbd } from "@/registry/ui/default/core/kbd";
 import { ScrollArea } from "@/registry/ui/default/core/scroll-area";
 import { Tooltip, TooltipProps } from "@/registry/ui/default/core/tooltip";
 import { cn } from "@/registry/ui/default/lib/cn";
-import { PanelLeftOpenIcon, ChevronRightIcon, SearchIcon, CommandIcon } from "lucide-react";
+import { siteConfig } from "@/config";
+import { CommandMenu } from "./command-menu";
+import { GitHubIcon, TwitterIcon } from "./icons";
+import { ThemeToggle } from "./theme-toggle";
 
 export const Sidebar = () => {
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = React.useState(pathname === "/");
-  const [expandedItems, setExpandedItems] = React.useState<string[]>(["docs", "components", "hooks"]);
+  const [expandedItems, setExpandedItems] = React.useState<string[]>([
+    "docs",
+    "components",
+    "hooks",
+  ]);
   const { focusInput } = useCommandMenuInputRef();
 
   const toggleExpand = (slug: string) => {
@@ -56,7 +64,8 @@ export const Sidebar = () => {
           "--sidebar-width": "230px",
           "--sidebar-width-collapsed": "49px",
         } as React.CSSProperties
-      }>
+      }
+    >
       <div
         className={cn(
           "transition-sidebar group-data-collapsed/sidebar:w-[--sidebar-width-collapsed] relative z-10 h-svh w-[--sidebar-width] bg-transparent"
@@ -67,7 +76,8 @@ export const Sidebar = () => {
           <div className="relative flex items-center p-2 pb-1">
             <Link
               href="/"
-              className="flex items-center space-x-2 rounded opacity-100 transition-[opacity,transform] duration-300 ease-out">
+              className="flex items-center space-x-2 rounded opacity-100 transition-[opacity,transform] duration-300 ease-out"
+            >
               <Avatar
                 src={siteConfig.global.logo}
                 alt={siteConfig.global.name}
@@ -87,7 +97,8 @@ export const Sidebar = () => {
                 shape="square"
                 size="sm"
                 variant="default"
-                onPress={() => setIsCollapsed(!isCollapsed)}>
+                onPress={() => setIsCollapsed(!isCollapsed)}
+              >
                 <PanelLeftOpenIcon />
               </Button>
             </div>
@@ -101,7 +112,8 @@ export const Sidebar = () => {
                     <Kbd>⌘K</Kbd>
                   </span>
                 }
-                isDisabled={!isCollapsed}>
+                isDisabled={!isCollapsed}
+              >
                 <CollapsibleButton variant="default" onPress={focusInput}>
                   <SearchIcon />
                   <span className="flex flex-1 flex-row items-center justify-between">
@@ -120,7 +132,8 @@ export const Sidebar = () => {
                     <Kbd>⌘K</Kbd>
                   </span>
                 }
-                isDisabled={!isCollapsed}>
+                isDisabled={!isCollapsed}
+              >
                 <CommandMenu>
                   <CollapsibleButton variant="default">
                     <SearchIcon />
@@ -141,7 +154,11 @@ export const Sidebar = () => {
                 {docsConfig.nav.map((elem) => {
                   if (!elem.items || elem.items.length === 0) {
                     return (
-                      <StyledTooltip key={elem.slug} content={elem.title} isDisabled={!isCollapsed}>
+                      <StyledTooltip
+                        key={elem.slug}
+                        content={elem.title}
+                        isDisabled={!isCollapsed}
+                      >
                         <CollapsibleButton href={elem.href}>
                           {elem.icon}
                           <span className="flex-1 text-left">{elem.title}</span>
@@ -153,15 +170,24 @@ export const Sidebar = () => {
                   return (
                     <div key={elem.slug} className="relative flex flex-col">
                       <CollapsibleRoot
-                        open={isCollapsed ? false : expandedItems.includes(elem.slug)}
-                        onOpenChange={() => toggleExpand(elem.slug)}>
-                        <StyledTooltip content={elem.title} isDisabled={!isCollapsed}>
+                        open={
+                          isCollapsed
+                            ? false
+                            : expandedItems.includes(elem.slug)
+                        }
+                        onOpenChange={() => toggleExpand(elem.slug)}
+                      >
+                        <StyledTooltip
+                          content={elem.title}
+                          isDisabled={!isCollapsed}
+                        >
                           <CollapsibleTrigger asChild>
                             <Button
                               shape="square"
                               variant="quiet"
                               size="sm"
-                              className="transition-sidebar group-data-collapsed/sidebar:w-8 relative w-full overflow-hidden">
+                              className="transition-sidebar group-data-collapsed/sidebar:w-8 relative w-full overflow-hidden"
+                            >
                               <div className="transition-sidebar group-data-collapsed/sidebar:left-2 absolute inset-2 flex w-[calc(var(--sidebar-width)-theme(spacing.8))] items-center justify-center gap-2 whitespace-nowrap [&>svg]:size-4">
                                 {elem.icon}
                                 <span className="flex flex-1 flex-row items-center justify-between">
@@ -169,7 +195,9 @@ export const Sidebar = () => {
                                   <ChevronRightIcon
                                     className={cn(
                                       "transition-transfor",
-                                      expandedItems.includes(elem.slug) ? "rotate-90" : ""
+                                      expandedItems.includes(elem.slug)
+                                        ? "rotate-90"
+                                        : ""
                                     )}
                                   />
                                 </span>
@@ -177,7 +205,10 @@ export const Sidebar = () => {
                             </Button>
                           </CollapsibleTrigger>
                         </StyledTooltip>
-                        <CollapsibleContent asChild className="transition-all duration-300">
+                        <CollapsibleContent
+                          asChild
+                          className="transition-all duration-300"
+                        >
                           <ul className="space-y-2 pb-2">
                             {elem.items.map((item, index) => {
                               if ("href" in item && item.href) {
@@ -188,9 +219,11 @@ export const Sidebar = () => {
                                       className={cn(
                                         "border-bg-bg-muted hover:text-foreground text-fg-muted group ml-2 block border-l pl-4 transition-colors",
                                         {
-                                          "border-border text-fg font-medium": pathname === item.href,
+                                          "border-border text-fg font-medium":
+                                            pathname === item.href,
                                         }
-                                      )}>
+                                      )}
+                                    >
                                       <span className="block duration-100 group-hover:translate-x-0.5">
                                         {item.title}
                                       </span>
@@ -198,7 +231,11 @@ export const Sidebar = () => {
                                   </li>
                                 );
                               }
-                              if ("items" in item && item.items && item.items.length > 0) {
+                              if (
+                                "items" in item &&
+                                item.items &&
+                                item.items.length > 0
+                              ) {
                                 return (
                                   <li key={index} className="ml-2 space-y-2">
                                     <h3 className="category text-fg pl-4 font-mono text-xs tracking-widest">
@@ -212,7 +249,8 @@ export const Sidebar = () => {
                                               <span
                                                 className={cn(
                                                   "border-muted text-fg-disabled block cursor-not-allowed border-l py-1 pl-4"
-                                                )}>
+                                                )}
+                                              >
                                                 {subItem.title}
                                                 {subItem.label && (
                                                   <span className="bg-bg-disabled text-fg-disabled ml-2 rounded-md px-1.5 py-0.5 text-xs leading-none">
@@ -235,7 +273,8 @@ export const Sidebar = () => {
                                                     "border-fg text-fg font-medium":
                                                       pathname === subItem.href,
                                                   }
-                                                )}>
+                                                )}
+                                              >
                                                 <span className="block transition-transform duration-100 group-hover:translate-x-0.5">
                                                   {subItem.title}
                                                   {subItem.label && (
@@ -271,7 +310,8 @@ export const Sidebar = () => {
                 size="sm"
                 shape="square"
                 variant="quiet"
-                aria-label="github">
+                aria-label="github"
+              >
                 <GitHubIcon />
               </Button>
               <Button
@@ -280,7 +320,8 @@ export const Sidebar = () => {
                 size="sm"
                 shape="square"
                 variant="quiet"
-                aria-label="twitter">
+                aria-label="twitter"
+              >
                 <TwitterIcon />
               </Button>
             </div>
@@ -292,7 +333,13 @@ export const Sidebar = () => {
   );
 };
 
-const CollapsibleWrapper = ({ children, disabled }: { children: React.ReactNode; disabled: boolean }) => {
+const CollapsibleWrapper = ({
+  children,
+  disabled,
+}: {
+  children: React.ReactNode;
+  disabled: boolean;
+}) => {
   if (disabled) return children;
   return (
     <CollapsibleRoot>
@@ -314,7 +361,8 @@ const CollapsibleButton = ({
       variant="quiet"
       size="sm"
       className="transition-sidebar group-data-collapsed/sidebar:w-8 relative w-full overflow-hidden"
-      {...props}>
+      {...props}
+    >
       <div className="transition-sidebar group-data-collapsed/sidebar:left-2 absolute inset-2 flex w-[calc(var(--sidebar-width)-theme(spacing.8))] items-center justify-center gap-2 whitespace-nowrap [&>svg]:size-4">
         {children}
       </div>
@@ -323,5 +371,13 @@ const CollapsibleButton = ({
 };
 
 const StyledTooltip = (props: TooltipProps) => {
-  return <Tooltip delay={0} className="px-4 py-1" placement="right" arrow {...props} />;
+  return (
+    <Tooltip
+      delay={0}
+      className="px-4 py-1"
+      placement="right"
+      arrow
+      {...props}
+    />
+  );
 };

@@ -2,12 +2,12 @@ import React from "react";
 import NavLink from "next/link";
 import Link from "next/link";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
-import { siteConfig } from "@/config";
 import { Avatar } from "@/registry/ui/default/core/avatar";
 import { Badge } from "@/registry/ui/default/core/badge";
 import { Separator } from "@/registry/ui/default/core/separator";
 import { cn } from "@/registry/ui/default/lib/cn";
 import { focusRing } from "@/registry/ui/default/lib/focus-styles";
+import { siteConfig } from "@/config";
 
 const links = [
   {
@@ -82,14 +82,14 @@ export const Footer = () => {
                 height={24}
                 className="size-6 rounded-sm"
               />
-              <div className="mt-1 font-josephin font-bold leading-normal tracking-tighter">
+              <div className="font-josephin mt-1 font-bold leading-normal tracking-tighter">
                 {siteConfig.global.name}
               </div>
               <Badge size="sm" variant="neutral" className="border">
                 beta
               </Badge>
             </NavLink>
-            <p className="text-md mt-2 text-fg-muted">
+            <p className="text-md text-fg-muted mt-2">
               {siteConfig.global.description}
             </p>
             <div className="mt-4 flex items-center gap-4">
@@ -98,7 +98,7 @@ export const Footer = () => {
                   href={Link.href}
                   key={index}
                   target="_blank"
-                  className="text-fg-muted transition-colors duration-200 hover:text-fg"
+                  className="text-fg-muted hover:text-fg transition-colors duration-200"
                 >
                   <Link.icon size={20} />
                   <span className="sr-only">{Link.label}</span>
@@ -115,7 +115,7 @@ export const Footer = () => {
                     <li key={index}>
                       <NavLink
                         href={link.href}
-                        className="text-fg-muted transition-colors duration-200 hover:text-fg"
+                        className="text-fg-muted hover:text-fg transition-colors duration-200"
                         target={
                           link.href.startsWith("http") ? "_blank" : undefined
                         }
@@ -130,7 +130,7 @@ export const Footer = () => {
           </div>
         </div>
         <Separator className="mb-4 mt-12" />
-        <p className="text-sm text-fg-muted">
+        <p className="text-fg-muted text-sm">
           Built by{" "}
           <Link
             href="https://github.com/mehdibha"

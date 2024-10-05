@@ -1,9 +1,9 @@
-import { ChevronRightCircleIcon } from "@/__icons__";
 import {
   Breadcrumbs,
   BreadcrumbItem,
   BreadcrumbLink,
 } from "@/registry/ui/default/core/breadcrumbs";
+import { ChevronRightCircleIcon } from "@/__icons__";
 
 export default function Demo() {
   return (

@@ -5,12 +5,12 @@ import { tv, type VariantProps } from "tailwind-variants";
 
 const avatarStyles = tv({
   slots: {
-    root: "relative inline-flex align-middle shrink-0 overflow-hidden bg-bg",
+    root: "bg-bg relative inline-flex shrink-0 overflow-hidden align-middle",
     image: "aspect-square size-full",
     fallback:
-      "flex size-full select-none items-center justify-center bg-bg-muted",
+      "bg-bg-muted flex size-full select-none items-center justify-center",
     placeholder:
-      "h-full size-full animate-pulse bg-bg-muted flex items-center justify-center",
+      "bg-bg-muted flex size-full h-full animate-pulse items-center justify-center",
   },
   variants: {
     size: {

@@ -11,27 +11,27 @@ import {
   ListStateContext,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { CheckIcon, LoaderIcon } from "@/__icons__";
 import { Text } from "@/registry/ui/default/core/text";
 import { focusRing } from "@/registry/ui/default/lib/focus-styles";
+import { CheckIcon, LoaderIcon } from "@/__icons__";
 
 const listBoxStyles = tv({
   base: [
     focusRing(),
-    "flex flex-col p-1 overflow-auto outline-none orientation-horizontal:flex-row orientation-horizontal:w-auto layout-grid:grid layout-grid:grid-cols-2 layout-grid:w-auto empty:justify-center empty:items-center empty:italic empty:min-h-24 empty:text-fg-muted empty:text-sm",
+    "orientation-horizontal:flex-row orientation-horizontal:w-auto layout-grid:grid layout-grid:grid-cols-2 layout-grid:w-auto empty:text-fg-muted flex flex-col overflow-auto p-1 outline-none empty:min-h-24 empty:items-center empty:justify-center empty:text-sm empty:italic",
     "[&_.separator]:-mx-1 [&_.separator]:my-1 [&_.separator]:w-auto",
   ],
   variants: {
     standalone: {
-      true: "border bg-bg w-48 rounded-md max-h-60 overflow-y-auto",
-      false: "rounded-[inherit] max-h-[inherit]",
+      true: "bg-bg max-h-60 w-48 overflow-y-auto rounded-md border",
+      false: "max-h-[inherit] rounded-[inherit]",
     },
   },
 });
 
 const listBoxItemStyles = tv({
   base: [
-    "flex cursor-pointer items-center rounded-sm px-3 py-1.5 text-sm outline-none transition-colors disabled:pointer-default hover:bg-bg-inverse/10 focus:bg-bg-inverse/10 pressed:bg-bg-inverse/15 disabled:text-fg-disabled disabled:cursor-default",
+    "disabled:pointer-default hover:bg-bg-inverse/10 focus:bg-bg-inverse/10 pressed:bg-bg-inverse/15 disabled:text-fg-disabled flex cursor-pointer items-center rounded-sm px-3 py-1.5 text-sm outline-none transition-colors disabled:cursor-default",
     "selection-single:pl-0 selection-multiple:pl-0",
     "[&_svg]:size-4",
   ],
@@ -71,7 +71,7 @@ const ListBox = <T extends object>({
         <AriaListBoxItem className="flex items-center justify-center py-1.5">
           <LoaderIcon
             aria-label="Loading more..."
-            className="size-5 animate-spin text-fg-muted"
+            className="text-fg-muted size-5 animate-spin"
           />
         </AriaListBoxItem>
       )}
@@ -113,7 +113,7 @@ const Item = <T extends object>({
             {selectionMode !== "none" && (
               <span className="flex w-8 shrink-0 items-center justify-center">
                 {isSelected && (
-                  <CheckIcon aria-hidden className="size-4 text-fg-accent" />
+                  <CheckIcon aria-hidden className="text-fg-accent size-4" />
                 )}
               </span>
             )}

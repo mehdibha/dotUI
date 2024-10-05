@@ -1,5 +1,5 @@
-import { create } from "zustand";
 import { RefObject } from "react";
+import { create } from "zustand";
 
 type FocusCommandMenuStore = {
   inputRef: RefObject<HTMLInputElement> | null;

@@ -14,7 +14,7 @@ import {
 } from "@/registry/ui/default/core/input";
 
 const textFieldStyles = tv({
-  base: "flex flex-col gap-2 items-start w-48",
+  base: "flex w-48 flex-col items-start gap-2",
 });
 
 type TextFieldProps = TextFieldRootProps &

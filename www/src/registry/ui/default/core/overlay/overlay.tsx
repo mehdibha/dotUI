@@ -12,10 +12,10 @@ import {
   type ModalOverlayProps as AriaModalOverlayProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { XIcon } from "@/__icons__";
 import { useMediaQuery } from "@/registry/hooks/use-media-query";
 import { Button, type ButtonProps } from "@/registry/ui/default/core/button";
 import { cn } from "@/registry/ui/default/lib/cn";
+import { XIcon } from "@/__icons__";
 import { MotionDrawerRoot, useMotionDrawer } from "./use-motion-drawer";
 
 type OverlayType = "modal" | "drawer" | "popover";
@@ -79,12 +79,12 @@ const modalVariants = tv({
   slots: {
     backdrop: [
       "fixed inset-0 z-50 bg-black/80",
-      "data-[exiting]:duration-300 data-[entering]:animate-in data-[exiting]:animate-out data-[entering]:fade-in-0 data-[exiting]:fade-out-0",
+      "data-[entering]:animate-in data-[exiting]:animate-out data-[entering]:fade-in-0 data-[exiting]:fade-out-0 data-[exiting]:duration-300",
     ],
     overlay: [
       "group/overlay fixed left-[50%] top-[50%] z-50 w-full max-w-lg translate-x-[-50%] translate-y-[-50%]",
-      "border bg-bg shadow-lg sm:rounded-lg md:w-full",
-      "duration-200 data-[exiting]:duration-300 data-[entering]:animate-in data-[exiting]:animate-out data-[entering]:fade-in-0 data-[exiting]:fade-out-0 data-[entering]:zoom-in-95 data-[exiting]:zoom-out-95 data-[entering]:slide-in-from-left-1/2 data-[entering]:slide-in-from-top-[48%] data-[exiting]:slide-out-to-left-1/2 data-[exiting]:slide-out-to-top-[48%]",
+      "bg-bg border shadow-lg sm:rounded-lg md:w-full",
+      "data-[entering]:animate-in data-[exiting]:animate-out data-[entering]:fade-in-0 data-[exiting]:fade-out-0 data-[entering]:zoom-in-95 data-[exiting]:zoom-out-95 data-[entering]:slide-in-from-left-1/2 data-[entering]:slide-in-from-top-[48%] data-[exiting]:slide-out-to-left-1/2 data-[exiting]:slide-out-to-top-[48%] duration-200 data-[exiting]:duration-300",
     ],
   },
 });
@@ -136,9 +136,9 @@ ModalOverlay.displayName = "ModalOverlay";
 const popoverOverlayVariants = tv({
   slots: {
     overlay:
-      "group/overlay z-50 rounded-md border bg-bg text-fg shadow-md data-[trigger=Select]:min-w-[--trigger-width] data-[trigger=ComboBox]:min-w-[--trigger-width]",
+      "group/overlay bg-bg text-fg z-50 rounded-md border shadow-md data-[trigger=ComboBox]:min-w-[--trigger-width] data-[trigger=Select]:min-w-[--trigger-width]",
     arrow: [
-      "block fill-bg stroke-1 stroke-border",
+      "fill-bg stroke-border block stroke-1",
       "group-placement-left:-rotate-90 group-placement-right:rotate-90 group-placement-bottom:rotate-180",
     ],
   },
@@ -197,9 +197,9 @@ PopoverOverlay.displayName = "PopoverOverlay";
 
 const drawerVariants = tv({
   slots: {
-    backdrop: ["fixed inset-0 bg-black/60 z-50", "opacity-0"],
+    backdrop: ["fixed inset-0 z-50 bg-black/60", "opacity-0"],
     overlay: [
-      "group/overlay bg-bg flex flex-col fixed z-50 outline-none",
+      "group/overlay bg-bg fixed z-50 flex flex-col outline-none",
       "inset-0",
       "placement-bottom:top-auto placement-top:bottom-auto placement-left:right-auto placement-right:left-auto",
       "placement-bottom:mt-24 placement-bottom:rounded-t-[10px] placement-bottom:border-t",
@@ -269,7 +269,7 @@ const DrawerOverlay = React.forwardRef<
               {showDismissButton && (
                 <DismissButton shape="rectangle">Done</DismissButton>
               )}
-              <div className="mx-auto my-4 h-2 w-[100px] rounded-full bg-bg-muted" />
+              <div className="bg-bg-muted mx-auto my-4 h-2 w-[100px] rounded-full" />
               {children}
             </div>
           </AriaModal>

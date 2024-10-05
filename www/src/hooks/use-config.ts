@@ -2,8 +2,8 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { defaultTheme } from "@/lib/theme";
 import type { IconLibrary } from "@/registry/icons";
-import type { Theme } from "@/types/theme";
 import type { Style } from "@/registry/styles";
+import type { Theme } from "@/types/theme";
 
 type Config = {
   theme: Theme;

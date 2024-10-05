@@ -6,7 +6,6 @@ import {
   type SearchFieldProps as AriaSearchFieldProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { SearchIcon, XIcon } from "@/__icons__";
 import { Button } from "@/registry/ui/default/core/button";
 import { Field, type FieldProps } from "@/registry/ui/default/core/field";
 import {
@@ -14,9 +13,10 @@ import {
   Input,
   type inputStyles,
 } from "@/registry/ui/default/core/input";
+import { SearchIcon, XIcon } from "@/__icons__";
 
 const searchFieldStyles = tv({
-  base: "flex flex-col gap-2 items-start w-48",
+  base: "flex w-48 flex-col items-start gap-2",
 });
 
 type SearchFieldProps = SearchFieldRootProps &

@@ -7,10 +7,10 @@ import { Button } from "@/registry/ui/default/core/button";
 import { ScrollArea } from "@/registry/ui/default/core/scroll-area";
 
 const codeStyles = tv({
-  base: "relative rounded-md bg-bg-muted",
+  base: "bg-bg-muted relative rounded-md",
   variants: {
     variant: {
-      classic: "text-xs p-4",
+      classic: "p-4 text-xs",
       inline: "px-2 py-0.5",
     },
   },
@@ -50,7 +50,7 @@ const CodeClient = ({
         variant="quiet"
         shape="square"
         size="sm"
-        className="[&_svg]:size-3 absolute right-2 top-2"
+        className="absolute right-2 top-2 [&_svg]:size-3"
         onPress={handleCopy}
       >
         {copied ? (

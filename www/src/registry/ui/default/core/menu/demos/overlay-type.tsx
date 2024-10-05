@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
-import { MenuIcon } from "@/__icons__";
 import { Button } from "@/registry/ui/default/core/button";
 import { Menu, MenuItem, MenuRoot } from "@/registry/ui/default/core/menu";
 import { type OverlayProps } from "@/registry/ui/default/core/overlay";
 import { Radio, RadioGroup } from "@/registry/ui/default/core/radio-group";
+import { MenuIcon } from "@/__icons__";
 
 export default function Demo() {
   const [type, setType] = React.useState("popover");

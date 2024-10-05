@@ -1,5 +1,10 @@
 import { defineCollection, defineConfig } from "@content-collections/core";
-import { createMetaSchema, createDocSchema, transformMDX } from "@fumadocs/content-collections/configuration";
+import {
+  createMetaSchema,
+  createDocSchema,
+  transformMDX,
+} from "@fumadocs/content-collections/configuration";
+
 const docs = defineCollection({
   name: "docs",
   directory: "content",

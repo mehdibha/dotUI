@@ -20,10 +20,10 @@ import { cn } from "@/registry/ui/default/lib/cn";
 
 const codeBlockStyles = tv({
   slots: {
-    root: "block border rounded-md w-fit max-w-full bg-bg-muted",
+    root: "bg-bg-muted block w-fit max-w-full rounded-md border",
     header:
-      "flex items-center justify-between border-b rounded-t-[inherit] pr-2 h-10",
-    body: "text-xs p-4",
+      "flex h-10 items-center justify-between rounded-t-[inherit] border-b pr-2",
+    body: "p-4 text-xs",
     code: "text-xs",
   },
 });

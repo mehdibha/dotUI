@@ -1,10 +1,10 @@
-import { WalletIcon } from "@/__icons__";
 import {
   AlertContent,
   AlertRoot,
   AlertTitle,
 } from "@/registry/ui/default/core/alert";
 import { Button } from "@/registry/ui/default/core/button";
+import { WalletIcon } from "@/__icons__";
 
 export default function AlertDemo() {
   return (

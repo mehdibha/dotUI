@@ -1,17 +1,17 @@
 import React from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { source } from "@/app/source";
-import { DocsPager } from "@/components/docs-pager";
-import { components } from "@/components/mdx-components";
-import { TableOfContents } from "@/components/toc";
-import { siteConfig } from "@/config";
-import { truncateOnWord } from "@/lib/string";
-import { Button } from "@/registry/ui/default/core/button";
-import { cn } from "@/registry/ui/default/lib/cn";
 import { MDXContent } from "@content-collections/mdx/react";
 import { type TableOfContents as TocType } from "fumadocs-core/server";
 import { ExternalLinkIcon } from "lucide-react";
+import { truncateOnWord } from "@/lib/string";
+import { DocsPager } from "@/components/docs-pager";
+import { components } from "@/components/mdx-components";
+import { TableOfContents } from "@/components/toc";
+import { Button } from "@/registry/ui/default/core/button";
+import { cn } from "@/registry/ui/default/lib/cn";
+import { source } from "@/app/source";
+import { siteConfig } from "@/config";
 
 interface PageProps {
   params: {

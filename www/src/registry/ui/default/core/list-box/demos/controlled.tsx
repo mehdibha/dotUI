@@ -21,7 +21,7 @@ export default function Demo() {
         <Item id="astro">Astro</Item>
         <Item id="gatsby">Gatsby</Item>
       </ListBox>
-      <p className="text-sm text-fg-muted">
+      <p className="text-fg-muted text-sm">
         Selected items:{" "}
         <span className="font-semibold">
           {selected === "all" ? "all" : Array.from(selected).join(", ")}

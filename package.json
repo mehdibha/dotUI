@@ -28,7 +28,7 @@
     "start:cli": "pnpm --filter=dotui start",
     "lint": "turbo run lint && manypkg check",
     "lint:fix": "turbo run lint:fix && manypkg fix",
-    "format": "turbo run format:write",
+    "format": "turbo run format",
     "format:check": "turbo run format:check",
     "preview": "turbo run preview",
     "typecheck": "turbo run typecheck",

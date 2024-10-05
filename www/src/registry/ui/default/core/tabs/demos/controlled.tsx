@@ -21,8 +21,8 @@ export default function Demo() {
         <TabPanel id="usage"> You can view your usage here. </TabPanel>
         <TabPanel id="settings"> You can view your settings here. </TabPanel>
       </Tabs>
-      <p className="text-sm text-fg-muted">
-        Selected tab: <span className="font-bold text-fg">{selectedTab}</span>
+      <p className="text-fg-muted text-sm">
+        Selected tab: <span className="text-fg font-bold">{selectedTab}</span>
       </p>
     </div>
   );

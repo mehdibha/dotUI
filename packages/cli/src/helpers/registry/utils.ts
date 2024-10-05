@@ -1,9 +1,9 @@
-import { handleError } from "@/helpers/handle-error";
-import { logger, highlight } from "@/utils";
 import { HttpsProxyAgent } from "https-proxy-agent";
 import fetch from "node-fetch";
-import { isUrl } from "@/helpers/is-url";
 import { REGISTRY_URL } from "@/constants/config";
+import { handleError } from "@/helpers/handle-error";
+import { isUrl } from "@/helpers/is-url";
+import { logger, highlight } from "@/utils";
 
 const agent = process.env.https_proxy
   ? new HttpsProxyAgent(process.env.https_proxy)

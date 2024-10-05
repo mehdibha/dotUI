@@ -1,5 +1,5 @@
-import { ExternalLinkIcon } from "@/__icons__";
 import { Link } from "@/registry/ui/default/core/link";
+import { ExternalLinkIcon } from "@/__icons__";
 
 export default function Demo() {
   return (

@@ -10,7 +10,7 @@ export default function Demo() {
       <Checkbox isSelected={checked} onChange={setChecked}>
         I accept the terms and conditions
       </Checkbox>
-      <p className="text-xs text-fg-muted">
+      <p className="text-fg-muted text-xs">
         <span className="font-bold">Checked:</span> {checked ? "true" : "false"}
       </p>
     </div>

@@ -1,8 +1,8 @@
-import { HomeIcon } from "@/__icons__";
 import {
   Breadcrumbs,
   Breadcrumb,
 } from "@/registry/ui/default/core/breadcrumbs";
+import { HomeIcon } from "@/__icons__";
 
 export default function Demo() {
   return (

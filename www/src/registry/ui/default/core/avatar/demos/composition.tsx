@@ -1,11 +1,11 @@
 import React from "react";
-import { UserIcon } from "@/__icons__";
 import {
   AvatarRoot,
   AvatarImage,
   AvatarFallback,
   AvatarPlaceholder,
 } from "@/registry/ui/default/core/avatar";
+import { UserIcon } from "@/__icons__";
 
 export default function Demo() {
   return (
