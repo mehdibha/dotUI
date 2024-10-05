@@ -173,12 +173,18 @@ const config = {
           to: { height: "0" },
         },
         "collapsible-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-collapsible-content-height)" },
+          from: { height: "0", opacity: "0" },
+          to: {
+            height: "var(--radix-collapsible-content-height)",
+            opacity: "1",
+          },
         },
         "collapsible-up": {
-          from: { height: "var(--radix-collapsible-content-height)" },
-          to: { height: "0" },
+          from: {
+            height: "var(--radix-collapsible-content-height)",
+            opacity: "1",
+          },
+          to: { height: "0", opacity: "0" },
         },
         "caret-blink": {
           "0%,70%,100%": { opacity: "1" },
@@ -244,12 +250,10 @@ const config = {
         },
       },
       animation: {
-        "accordion-down": "accordion-down 0.15s cubic-bezier(0.32, 0.72, 0, 1)",
-        "accordion-up": "accordion-up 0.2s cubic-bezier(0.32, 0.72, 0, 1)",
-        "collapsible-down":
-          "collapsible-down 0.25s cubic-bezier(0.32, 0.72, 0, 1) forwards",
-        "collapsible-up":
-          "collapsible-up 0.25s cubic-bezier(0.32, 0.72, 0, 1) forwards",
+        "accordion-down": "accordion-down 0.15s ease-in-out",
+        "accordion-up": "accordion-up 0.15s ease-in-out",
+        "collapsible-down": "collapsible-down 0.15s ease-in-out",
+        "collapsible-up": "collapsible-up 0.15s ease-in-out",
         "caret-blink": "caret-blink 1.25s ease-out infinite",
         "progress-indeterminate":
           "progress-grow var(--progress-duration) 1 both normal, progress-pulse 1s ease var(--progress-duration) infinite normal none running",

@@ -1,20 +1,11 @@
 import { defineCollection, defineConfig } from "@content-collections/core";
-import { compileMDX } from "@content-collections/mdx";
-import remarkGfm from "remark-gfm";
-
+import { createMetaSchema, createDocSchema, transformMDX } from "@fumadocs/content-collections/configuration";
 const docs = defineCollection({
   name: "docs",
   directory: "content",
   include: "**/*.mdx",
   schema: (z) => ({
-    title: z.string(),
-    description: z.string().optional(),
-    thumbnail: z
-      .object({
-        image: z.string().optional(),
-        video: z.string().optional(),
-      })
-      .optional(),
+    ...createDocSchema(z),
     links: z
       .array(
         z.object({
@@ -23,28 +14,17 @@ const docs = defineCollection({
         })
       )
       .optional(),
-    toc: z
-      .array(
-        z.object({
-          title: z.string(),
-          url: z.string(),
-          depth: z.number(),
-        })
-      )
-      .optional(),
   }),
-  transform: async (doc, ctx) => {
-    const content = await compileMDX(ctx, doc, {
-      remarkPlugins: [remarkGfm],
-    });
-    return {
-      ...doc,
-      content,
-      rawContent: doc.content,
-    };
-  },
+  transform: transformMDX,
+});
+
+const metas = defineCollection({
+  name: "metas",
+  directory: "content",
+  include: "**/*.json",
+  schema: createMetaSchema,
 });
 
 export default defineConfig({
-  collections: [docs],
+  collections: [docs, metas],
 });
