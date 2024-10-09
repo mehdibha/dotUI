@@ -16,7 +16,7 @@
       "cache": false,
       "outputs": []
     },
-    "lint:fix": {
+    "lint:check": {
       "cache": false,
       "outputs": []
     },
@@ -24,7 +24,7 @@
       "cache": false,
       "outputs": []
     },
-    "format:write": {
+    "format:check": {
       "cache": false,
       "outputs": []
     },

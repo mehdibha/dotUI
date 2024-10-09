@@ -13,8 +13,8 @@
     "format": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache --log-level warn",
     "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache --log-level warn",
     "typecheck": "tsc --noEmit",
-    "lint": "next lint",
-    "lint:fix": "next lint --fix",
+    "lint": "next lint --fix",
+    "lint:check": "next lint",
     "postinstall": "fumadocs-mdx"
   },
   "dependencies": {
