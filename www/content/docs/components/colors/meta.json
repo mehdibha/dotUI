@@ -1,0 +1,9 @@
+{
+  "pages": [
+    "color-area",
+    "color-field",
+    "color-slider",
+    "color-swatch",
+    "color-picker"
+  ]
+}

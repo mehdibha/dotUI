@@ -1,14 +1,35 @@
 import { MetadataRoute } from "next";
-import { allDocs } from "@/lib/docs";
+import "@/app/source";
 import { siteConfig } from "@/config";
+import { getPages } from "@/app/source";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const domain = siteConfig.global.url;
+  const url = (path: string): string =>
+    new URL(path, siteConfig.global.url).toString();
 
-  return ["/", "/themes", ...allDocs.map((doc) => `/${doc._meta.path}`)].map(
-    (path) => ({
-      url: `${domain}${path}`,
-      lastModified: new Date(),
-    })
-  );
+  return [
+    {
+      url: url("/"),
+      changeFrequency: "monthly",
+      priority: 1,
+    },
+    {
+      url: url("/showcase"),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: url("/docs"),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    ...getPages().map<MetadataRoute.Sitemap[number]>((page) => ({
+      url: url(page.url),
+      lastModified: page.data.lastModified
+        ? new Date(page.data.lastModified)
+        : undefined,
+      changeFrequency: "weekly",
+      priority: 0.5,
+    })),
+  ];
 }

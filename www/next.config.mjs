@@ -1,4 +1,6 @@
-import { withContentCollections } from "@content-collections/next";
+import { createMDX } from "fumadocs-mdx/next";
+
+const withMDX = createMDX();
 
 /** @type {import("next").NextConfig} */
 const config = {
@@ -22,4 +24,4 @@ const config = {
   },
 };
 
-export default withContentCollections(config);
+export default withMDX(config);

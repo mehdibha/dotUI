@@ -1,54 +1,36 @@
+import { findNeighbour } from "fumadocs-core/server";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import { docsConfig } from "@/config/docs-config";
 import { Button } from "@/registry/ui/default/core/button";
+import { pageTree } from "@/app/source";
 
-export const DocsPager = ({ currentPagePath }: { currentPagePath: string }) => {
-  const flattenedItems = docsConfig.nav
-    .flatMap(
-      (section) =>
-        section.items?.flatMap((item) =>
-          "items" in item ? item.items : item
-        ) ?? []
-    )
-    .filter(
-      (item): item is { href: string; title: string } =>
-        item?.href !== undefined
-    );
-
-  const currentIndex = flattenedItems.findIndex(
-    (item) => item.href === currentPagePath
-  );
-  const prevPage = currentIndex > 0 ? flattenedItems[currentIndex - 1] : null;
-  const nextPage =
-    currentIndex < flattenedItems.length - 1
-      ? flattenedItems[currentIndex + 1]
-      : null;
+export const DocsPager = ({ currentPathname }: { currentPathname: string }) => {
+  const { previous, next } = findNeighbour(pageTree, currentPathname);
 
   return (
     <div className="flex items-center justify-between">
-      {prevPage ? (
+      {previous ? (
         <Button
-          href={prevPage.href}
+          href={previous.url}
           prefix={<ChevronLeftIcon />}
           variant="quiet"
           size="sm"
         >
-          {prevPage.title}
+          {previous.name}
         </Button>
       ) : (
-        <div /> // Empty div to maintain layout when there's no previous page
+        <div />
       )}
-      {nextPage ? (
+      {next ? (
         <Button
-          href={nextPage.href}
+          href={next.url}
           suffix={<ChevronRightIcon />}
           variant="quiet"
           size="sm"
         >
-          {nextPage.title}
+          {next.name}
         </Button>
       ) : (
-        <div /> // Empty div to maintain layout when there's no next page
+        <div />
       )}
     </div>
   );
