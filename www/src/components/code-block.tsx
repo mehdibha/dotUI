@@ -41,7 +41,14 @@ export type CodeBlockProps = HTMLAttributes<HTMLElement> & {
 export const Pre = forwardRef<HTMLPreElement, HTMLAttributes<HTMLPreElement>>(
   ({ className, ...props }, ref) => {
     return (
-      <pre ref={ref} className={cn("max-h-[400px] bg-red-500 p-4 [&_code]:bg-transparent", className)} {...props}>
+      <pre
+        ref={ref}
+        className={cn(
+          "max-h-[400px] bg-red-500 p-4 [&_code]:bg-transparent",
+          className
+        )}
+        {...props}
+      >
         {props.children}
       </pre>
     );
@@ -138,7 +145,11 @@ function CopyButton({
       variant="quiet"
       size="sm"
       shape="square"
-      className={cn("transition-all group-hover:opacity-100", !checked && "opacity-0", className)}
+      className={cn(
+        "transition-all group-hover:opacity-100",
+        !checked && "opacity-0",
+        className
+      )}
       aria-label="Copy Text"
       onPress={onClick}
       {...props}

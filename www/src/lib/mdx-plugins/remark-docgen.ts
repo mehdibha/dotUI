@@ -1,7 +1,7 @@
-import { type BlockContent, type Code, type Root } from 'mdast';
-import { type Transformer } from 'unified';
-import { visit } from 'unist-util-visit';
-import type { VFile } from 'vfile';
+import { type BlockContent, type Code, type Root } from "mdast";
+import { type Transformer } from "unified";
+import { visit } from "unist-util-visit";
+import type { VFile } from "vfile";
 
 type Awaitable<T> = T | Promise<T>;
 
@@ -13,7 +13,7 @@ export interface DocGenerator {
    */
   run: (
     input: unknown,
-    context: Context,
+    context: Context
   ) => Awaitable<object | object[] | undefined>;
 
   onFile?: (tree: Root, file: VFile) => void;
@@ -38,8 +38,8 @@ export function remarkDocGen({
     generators.forEach((gen) => gen.onFile?.(tree, file));
     const queue: Promise<void>[] = [];
 
-    visit(tree, 'code', (code, _, parent) => {
-      if (code.lang !== 'json' || !code.meta || !parent) return;
+    visit(tree, "code", (code, _, parent) => {
+      if (code.lang !== "json" || !code.meta || !parent) return;
 
       const matches = metaRegex.exec(code.meta);
       if (!matches) return;

@@ -5,11 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 // import type { PageTree } from "fumadocs-core/server";
 import { useOnChange } from "fumadocs-core/utils/use-on-change";
-import {
-  ChevronRightIcon,
-  PanelLeftOpenIcon,
-  SearchIcon,
-} from "lucide-react";
+import { ChevronRightIcon, PanelLeftOpenIcon, SearchIcon } from "lucide-react";
 import { hasActive, isActive } from "@/lib/docs/utils";
 import { useCommandMenuInputRef } from "@/hooks/use-focus-command-menu";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
@@ -321,7 +317,7 @@ function FolderNode({
   );
 
   const shouldExtend =
-    active || childActive || (item.defaultOpen ?? defaultOpenLevel >= level)
+    active || childActive || (item.defaultOpen ?? defaultOpenLevel >= level);
   const [open, setOpen] = React.useState(shouldExtend);
 
   useOnChange(shouldExtend, (v) => {

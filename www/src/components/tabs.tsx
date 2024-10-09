@@ -85,7 +85,7 @@ export function InstallTabs({
     <TabsPrimitive.Tabs
       selectedKey={value}
       onSelectionChange={(v) => onValueChange(v as string)}
-      className="install-tabs border rounded-md mt-4"
+      className="install-tabs mt-4 rounded-md border"
     >
       <TabsPrimitive.TabList className="bg-bg-muted rounded-t-[inherit]">
         {values.map((v, i) => (
@@ -111,10 +111,7 @@ export function InstallTab({
   return (
     <TabsPrimitive.TabPanel
       id={toValue(value)}
-      className={cn(
-        "text-xs",
-        className
-      )}
+      className={cn("text-xs", className)}
       {...props}
     />
   );

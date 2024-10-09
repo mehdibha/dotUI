@@ -34,7 +34,7 @@ export const getFilesSource = async (relativePath: string) => {
   return code;
 };
 
-const getFilePath = (relativePath: string) => {;
+const getFilePath = (relativePath: string) => {
   if (relativePath.startsWith("core")) {
     return path.join(
       process.cwd(),

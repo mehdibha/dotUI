@@ -1,8 +1,8 @@
-import * as fs from 'node:fs/promises';
-import * as path from 'node:path';
-import type { Code, Paragraph } from 'mdast';
-import { z } from 'zod';
-import type { DocGenerator } from './remark-docgen';
+import type { Code, Paragraph } from "mdast";
+import * as fs from "node:fs/promises";
+import * as path from "node:path";
+import { z } from "zod";
+import type { DocGenerator } from "./remark-docgen";
 
 export interface FileGeneratorOptions {
   /** @defaultValue true */
@@ -42,7 +42,7 @@ export function fileGenerator({
   trim = true,
 }: FileGeneratorOptions = {}): DocGenerator {
   return {
-    name: 'file',
+    name: "file",
     async run(input, ctx) {
       const { file, codeblock = false } = fileGeneratorSchema.parse(input);
 
@@ -54,15 +54,15 @@ export function fileGenerator({
 
       if (codeblock === false) {
         return {
-          type: 'paragraph',
-          children: [{ type: 'text', value }],
+          type: "paragraph",
+          children: [{ type: "text", value }],
         } as Paragraph;
       }
 
       const codeOptions = codeblock === true ? {} : codeblock;
 
       return {
-        type: 'code',
+        type: "code",
         lang: codeOptions.lang ?? path.extname(dest).slice(1),
         meta: codeOptions.meta,
         value,

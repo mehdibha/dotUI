@@ -57,7 +57,10 @@ export const docsConfig: DocsConfig = {
               title: "Toggle Button",
               href: "/docs/components/buttons/toggle-button",
             },
-            { title: "File Trigger", href: "/docs/components/buttons/file-trigger" },
+            {
+              title: "File Trigger",
+              href: "/docs/components/buttons/file-trigger",
+            },
           ],
         },
         {
@@ -65,14 +68,23 @@ export const docsConfig: DocsConfig = {
           items: [
             { title: "TextField", href: "/docs/components/inputs/text-field" },
             { title: "TextArea", href: "/docs/components/inputs/text-area" },
-            { title: "SearchField", href: "/docs/components/inputs/search-field" },
-            { title: "NumberField", href: "/docs/components/inputs/number-field" },
+            {
+              title: "SearchField",
+              href: "/docs/components/inputs/search-field",
+            },
+            {
+              title: "NumberField",
+              href: "/docs/components/inputs/number-field",
+            },
             { title: "Checkbox", href: "/docs/components/inputs/checkbox" },
             {
               title: "Checkbox Group",
               href: "/docs/components/inputs/checkbox-group",
             },
-            { title: "Radio Group", href: "/docs/components/inputs/radio-group" },
+            {
+              title: "Radio Group",
+              href: "/docs/components/inputs/radio-group",
+            },
             { title: "Switch", href: "/docs/components/inputs/switch" },
             { title: "Slider", href: "/docs/components/inputs/slider" },
           ],
@@ -80,12 +92,18 @@ export const docsConfig: DocsConfig = {
         {
           title: "Menus and Selection",
           items: [
-            { title: "Menu", href: "/docs/components/menus-and-selection/menu" },
+            {
+              title: "Menu",
+              href: "/docs/components/menus-and-selection/menu",
+            },
             {
               title: "ListBox",
               href: "/docs/components/menus-and-selection/list-box",
             },
-            { title: "Select", href: "/docs/components/menus-and-selection/select" },
+            {
+              title: "Select",
+              href: "/docs/components/menus-and-selection/select",
+            },
             {
               title: "Combobox",
               href: "/docs/components/menus-and-selection/combobox",
@@ -102,7 +120,10 @@ export const docsConfig: DocsConfig = {
             },
             { title: "Time Field", href: "/docs/components/dates/time-field" },
             { title: "Date Field", href: "/docs/components/dates/date-field" },
-            { title: "Date Picker", href: "/docs/components/dates/date-picker" },
+            {
+              title: "Date Picker",
+              href: "/docs/components/dates/date-picker",
+            },
             {
               title: "Date Range Picker",
               href: "/docs/components/dates/date-range-picker",
@@ -113,16 +134,31 @@ export const docsConfig: DocsConfig = {
           title: "Colors",
           items: [
             { title: "Color Area", href: "/docs/components/colors/color-area" },
-            { title: "Color Field", href: "/docs/components/colors/color-field" },
-            { title: "Color Slider", href: "/docs/components/colors/color-slider" },
-            { title: "Color Swatch", href: "/docs/components/colors/color-swatch" },
-            { title: "Color Picker", href: "/docs/components/colors/color-picker" },
+            {
+              title: "Color Field",
+              href: "/docs/components/colors/color-field",
+            },
+            {
+              title: "Color Slider",
+              href: "/docs/components/colors/color-slider",
+            },
+            {
+              title: "Color Swatch",
+              href: "/docs/components/colors/color-swatch",
+            },
+            {
+              title: "Color Picker",
+              href: "/docs/components/colors/color-picker",
+            },
           ],
         },
         {
           title: "Drag and drop",
           items: [
-            { title: "DropZone", href: "/docs/components/drag-and-drop/drop-zone" },
+            {
+              title: "DropZone",
+              href: "/docs/components/drag-and-drop/drop-zone",
+            },
           ],
         },
         {
@@ -136,8 +172,14 @@ export const docsConfig: DocsConfig = {
         {
           title: "Layout",
           items: [
-            { title: "Aspect Ratio", href: "/docs/components/layout/aspect-ratio" },
-            { title: "Scroll Area", href: "/docs/components/layout/scroll-area" },
+            {
+              title: "Aspect Ratio",
+              href: "/docs/components/layout/aspect-ratio",
+            },
+            {
+              title: "Scroll Area",
+              href: "/docs/components/layout/scroll-area",
+            },
           ],
         },
         {
@@ -145,7 +187,10 @@ export const docsConfig: DocsConfig = {
           items: [
             { title: "Avatar", href: "/docs/components/data-display/avatar" },
             { title: "Badge", href: "/docs/components/data-display/badge" },
-            { title: "Separator", href: "/docs/components/data-display/separator" },
+            {
+              title: "Separator",
+              href: "/docs/components/data-display/separator",
+            },
           ],
         },
         {
@@ -168,7 +213,10 @@ export const docsConfig: DocsConfig = {
               href: "/docs/components/overlay/dialog#alert-dialog",
             },
             { title: "Drawer", href: "/docs/components/overlay/dialog#drawer" },
-            { title: "Popover", href: "/docs/components/overlay/dialog#popover" },
+            {
+              title: "Popover",
+              href: "/docs/components/overlay/dialog#popover",
+            },
             { title: "Tooltip", href: "/docs/components/overlay/tooltip" },
           ],
         },

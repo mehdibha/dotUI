@@ -1,8 +1,8 @@
-import type { Code, Root } from 'mdast';
-import type { Transformer } from 'unified';
-import { visit } from 'unist-util-visit';
-import convert from 'npm-to-yarn';
-import { createElement, expressionToAttribute } from './utils';
+import type { Code, Root } from "mdast";
+import convert from "npm-to-yarn";
+import type { Transformer } from "unified";
+import { visit } from "unist-util-visit";
+import { createElement, expressionToAttribute } from "./utils";
 
 interface PackageManager {
   name: string;
@@ -43,66 +43,66 @@ export type RemarkInstallOptions = Partial<{
  * ```
  */
 export function remarkInstall({
-  Tab = 'Tab',
-  Tabs = 'Tabs',
+  Tab = "Tab",
+  Tabs = "Tabs",
   persist = false,
   packageManagers = [
-    { command: (cmd) => convert(cmd, 'npm'), name: 'npm' },
-    { command: (cmd) => convert(cmd, 'pnpm'), name: 'pnpm' },
-    { command: (cmd) => convert(cmd, 'yarn'), name: 'yarn' },
-    { command: (cmd) => convert(cmd, 'bun'), name: 'bun' },
+    { command: (cmd) => convert(cmd, "npm"), name: "npm" },
+    { command: (cmd) => convert(cmd, "pnpm"), name: "pnpm" },
+    { command: (cmd) => convert(cmd, "yarn"), name: "yarn" },
+    { command: (cmd) => convert(cmd, "bun"), name: "bun" },
   ],
 }: RemarkInstallOptions = {}): Transformer<Root, Root> {
   return (tree) => {
-    visit(tree, 'code', (node) => {
-      if (node.lang !== 'package-install') return 'skip';
+    visit(tree, "code", (node) => {
+      if (node.lang !== "package-install") return "skip";
       // console.log(node)
 
       const value =
-        node.value.startsWith('npm') || node.value.startsWith('npx')
+        node.value.startsWith("npm") || node.value.startsWith("npx")
           ? node.value
           : `npm install ${node.value}`;
 
       const insert = createElement(
         Tabs,
         [
-          ...(typeof persist === 'object'
+          ...(typeof persist === "object"
             ? [
                 {
-                  type: 'mdxJsxAttribute',
-                  name: 'groupId',
+                  type: "mdxJsxAttribute",
+                  name: "groupId",
                   value: persist.id,
                 },
                 {
-                  type: 'mdxJsxAttribute',
-                  name: 'persist',
+                  type: "mdxJsxAttribute",
+                  name: "persist",
                   value: null,
                 },
               ]
             : []),
-          expressionToAttribute('items', {
-            type: 'ArrayExpression',
+          expressionToAttribute("items", {
+            type: "ArrayExpression",
             elements: packageManagers.map(({ name }) => ({
-              type: 'Literal',
+              type: "Literal",
               value: name,
             })),
           }),
         ],
         packageManagers.map(({ command, name }) => ({
-          type: 'mdxJsxFlowElement',
+          type: "mdxJsxFlowElement",
           name: Tab,
           attributes: [
-            { type: 'mdxJsxAttribute', name: 'value', value: name },
+            { type: "mdxJsxAttribute", name: "value", value: name },
           ].filter(Boolean),
           children: [
             {
-              type: 'code',
-              lang: 'bash',
+              type: "code",
+              lang: "bash",
               meta: node.meta,
               value: command(value),
             } satisfies Code,
           ],
-        })),
+        }))
       );
 
       Object.assign(node, insert);
