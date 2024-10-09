@@ -1,12 +1,12 @@
-import type { Expression, Program } from 'estree';
+import type { Expression, Program } from "estree";
 
 export function createElement(
   name: string,
   attributes: object[],
-  children?: unknown,
+  children?: unknown
 ): object {
   const element: Record<string, unknown> = {
-    type: 'mdxJsxFlowElement',
+    type: "mdxJsxFlowElement",
     name,
     attributes,
   };
@@ -18,16 +18,16 @@ export function createElement(
 
 export function expressionToAttribute(key: string, value: Expression): object {
   return {
-    type: 'mdxJsxAttribute',
+    type: "mdxJsxAttribute",
     name: key,
     value: {
-      type: 'mdxJsxAttributeValueExpression',
+      type: "mdxJsxAttributeValueExpression",
       data: {
         estree: {
-          type: 'Program',
+          type: "Program",
           body: [
             {
-              type: 'ExpressionStatement',
+              type: "ExpressionStatement",
               expression: value,
             },
           ],

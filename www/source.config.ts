@@ -5,11 +5,11 @@ import {
   metaSchema,
 } from "fumadocs-mdx/config";
 import { z } from "zod";
+import remarkInlineCode from "@/lib/mdx-plugins/remark-inline-code";
 import {
   remarkInstall,
   type RemarkInstallOptions,
 } from "@/lib/mdx-plugins/remark-install";
-import remarkInlineCode from "@/lib/mdx-plugins/remark-inline-code";
 
 export const { docs, meta } = defineDocs({
   docs: {
@@ -41,7 +41,7 @@ export default defineConfig({
           Tab: "InstallTab",
         } satisfies RemarkInstallOptions,
       ],
-      [remarkInlineCode]
+      [remarkInlineCode],
     ],
     rehypeCodeOptions: {
       themes: {
@@ -50,7 +50,6 @@ export default defineConfig({
       },
       inline: "tailing-curly-colon",
       defaultLanguage: "ts",
-      
     },
   },
 });
