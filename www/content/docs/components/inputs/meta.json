@@ -1,0 +1,13 @@
+{
+  "pages": [
+    "text-field",
+    "text-area",
+    "search-field",
+    "number-field",
+    "checkbox",
+    "checkbox-group",
+    "radio-group",
+    "switch",
+    "slider"
+  ]
+}

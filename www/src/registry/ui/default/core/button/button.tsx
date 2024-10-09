@@ -25,7 +25,7 @@ const buttonStyles = tv(
         quiet:
           "hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 text-fg bg-transparent",
         outline:
-          "border-border-field hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 text-fg disabled:border-border-disabled border bg-transparent disabled:bg-transparent",
+          "border-border-field bg-bg-inverse/5 hover:bg-bg-inverse/10 pressed:bg-bg-inverse/15 text-fg disabled:border-border-disabled border disabled:bg-transparent",
         accent:
           "bg-bg-accent hover:bg-bg-accent-hover pressed:bg-bg-accent-active text-fg-onAccent",
         success:

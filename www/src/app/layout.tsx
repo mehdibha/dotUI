@@ -76,7 +76,7 @@ export default function RootLayout({
         <Providers>
           {/* TODO: patch min-h-screen */}
           <div className="relative flex min-h-screen w-full flex-row">
-            <Sidebar />
+            {/* <Sidebar /> */}
             <main className="relative min-h-full flex-1">
               {/* Version */}
               <Badge

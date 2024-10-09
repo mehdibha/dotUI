@@ -4,7 +4,7 @@ import { getFileSource } from "@/lib/get-file-source";
 import { styles } from "@/registry/styles";
 import { cn } from "@/registry/ui/default/lib/cn";
 import { Index } from "@/__demos__";
-import { CodeBlock } from "./code-block";
+import { CodeBlock } from "./code-block/code-block";
 import { ComponentPreviewClient } from "./component-preview-client";
 
 export interface ComponentPreviewProps {
