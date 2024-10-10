@@ -13,7 +13,7 @@ export default function Demo() {
       <Button prefix={<RotateCwIcon />} onPress={restart}>
         Restart animation
       </Button>
-      <Progress key={key} duration="30s" />
+      <Progress key={key} duration="30s" aria-label="Loading" />
     </div>
   );
 }

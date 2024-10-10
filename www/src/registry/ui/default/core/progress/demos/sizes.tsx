@@ -9,7 +9,13 @@ export default function Demo() {
   return (
     <div className="space-y-4">
       {sizes.map((size) => (
-        <Progress key={size} value={75} size={size} label={size} />
+        <Progress
+          key={size}
+          aria-label={`Progress size: ${size}`}
+          value={75}
+          size={size}
+          label={size}
+        />
       ))}
     </div>
   );
