@@ -268,7 +268,14 @@ export function NodeList({
               />
             );
           case "folder":
-            return <FolderNode key={id} item={item} level={level + 1} onSelect={onSelect}/>;
+            return (
+              <FolderNode
+                key={id}
+                item={item}
+                level={level + 1}
+                onSelect={onSelect}
+              />
+            );
           default:
             return null;
         }

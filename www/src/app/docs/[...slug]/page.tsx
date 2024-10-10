@@ -36,7 +36,7 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <div
-      className={cn("pt-8 sm:pt-20 pb-20", {
+      className={cn("pb-20 pt-8 sm:pt-20", {
         "xl:grid xl:grid-cols-[1fr_230px] xl:gap-10":
           page.data.toc && page.data.toc.length > 0,
       })}

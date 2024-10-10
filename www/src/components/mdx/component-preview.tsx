@@ -1,10 +1,10 @@
 import React from "react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { getFileSource } from "@/lib/get-file-source";
+import { CodeBlock } from "@/components/code-block";
 import { styles } from "@/registry/styles";
 import { cn } from "@/registry/ui/default/lib/cn";
 import { Index } from "@/__demos__";
-import { CodeBlock } from "@/components/code-block";
 import { ComponentPreviewClient } from "./component-preview-client";
 
 export interface ComponentPreviewProps {

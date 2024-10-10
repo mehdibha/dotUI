@@ -107,10 +107,5 @@ export function Tab({
   className,
   ...props
 }: TabPanelProps & { value: string }): React.ReactElement {
-  return (
-    <TabsPrimitive.TabPanel
-      id={toValue(value)}
-      {...props}
-    />
-  );
+  return <TabsPrimitive.TabPanel id={toValue(value)} {...props} />;
 }

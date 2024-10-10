@@ -245,7 +245,7 @@ const DrawerOverlay = React.forwardRef<
       useMotionDrawer({
         isDismissable,
         placement,
-        scaleBackground: false
+        scaleBackground: false,
       });
     const { overlay, backdrop } = drawerVariants();
 

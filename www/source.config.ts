@@ -5,13 +5,16 @@ import {
   metaSchema,
 } from "fumadocs-mdx/config";
 import { z } from "zod";
+import { fileGenerator } from "@/lib/mdx-plugins/file-generator";
+import {
+  remarkDocGen,
+  RemarkDocGenOptions,
+} from "@/lib/mdx-plugins/remark-docgen";
 import remarkInlineCode from "@/lib/mdx-plugins/remark-inline-code";
 import {
   remarkInstall,
   type RemarkInstallOptions,
 } from "@/lib/mdx-plugins/remark-install";
-import { remarkDocGen, RemarkDocGenOptions } from "@/lib/mdx-plugins/remark-docgen";
-import { fileGenerator } from "@/lib/mdx-plugins/file-generator";
 
 export const { docs, meta } = defineDocs({
   docs: {

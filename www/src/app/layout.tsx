@@ -77,9 +77,7 @@ export default function RootLayout({
         <Analytics />
         <Providers>
           {/* TODO: patch min-h-screen */}
-          <div
-            className="min-h-screen flex flex-col sm:flex-row"
-          >
+          <div className="flex min-h-screen flex-col sm:flex-row">
             <MobileNav items={source.pageTree.children} />
             <Sidebar items={source.pageTree.children} />
             <main className="relative flex-1 overflow-hidden xl:overflow-visible">
