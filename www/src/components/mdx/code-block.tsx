@@ -136,14 +136,9 @@ function CopyButton({
       onPress={onClick}
       {...props}
     >
-      <Check
-        className={cn("transition-transform", !checked && "scale-0")}
-      />
+      <Check className={cn("transition-transform", !checked && "scale-0")} />
       <Copy
-        className={cn(
-          "absolute transition-transform",
-          checked && "scale-0"
-        )}
+        className={cn("absolute transition-transform", checked && "scale-0")}
       />
     </Button>
   );
