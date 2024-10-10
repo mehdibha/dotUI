@@ -7,11 +7,11 @@ import { truncateOnWord } from "@/lib/string";
 import { DocsPager } from "@/components/docs-pager";
 import { AdobeIcon } from "@/components/icons/adobe";
 import { PageLastUpdate } from "@/components/last-update";
-import { mdxComponents } from "@/components/mdx-components";
+import { mdxComponents } from "@/components/mdx/mdx-components";
 import { TableOfContents } from "@/components/toc";
 import { Button } from "@/registry/ui/default/core/button";
 import { cn } from "@/registry/ui/default/lib/cn";
-import { getPage, pageTree, generateParams } from "@/app/source";
+import { source } from "@/app/source";
 import { siteConfig } from "@/config";
 
 interface PageProps {
@@ -23,7 +23,7 @@ interface PageProps {
 const config = siteConfig.global;
 
 export default async function Page({ params }: PageProps) {
-  const page = getPage(params.slug);
+  const page = source.getPage(params.slug);
 
   if (!page) notFound();
 
@@ -36,8 +36,8 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <div
-      className={cn("relative py-20", {
-        "lg:grid lg:grid-cols-[1fr_230px] lg:gap-10":
+      className={cn("pt-8 sm:pt-20 pb-20", {
+        "xl:grid xl:grid-cols-[1fr_230px] xl:gap-10":
           page.data.toc && page.data.toc.length > 0,
       })}
     >
@@ -82,8 +82,8 @@ export default async function Page({ params }: PageProps) {
         </div>
       </div>
       {page.data.toc && page.data.toc.length > 0 && (
-        <div className="hidden text-sm lg:block">
-          <div className="sticky top-0 pt-8">
+        <div className="hidden text-sm xl:block">
+          <div className="sticky top-8">
             <TableOfContents toc={page.data.toc as TocType} />
           </div>
         </div>
@@ -98,7 +98,7 @@ const getIcon = (url: string) => {
 };
 
 export function generateMetadata({ params }: PageProps): Metadata {
-  const page = getPage(params.slug);
+  const page = source.getPage(params.slug);
   if (!page) notFound();
 
   return {
@@ -126,5 +126,5 @@ export function generateMetadata({ params }: PageProps): Metadata {
 }
 
 export function generateStaticParams(): PageProps["params"][] {
-  return generateParams();
+  return source.generateParams();
 }

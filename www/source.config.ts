@@ -10,6 +10,8 @@ import {
   remarkInstall,
   type RemarkInstallOptions,
 } from "@/lib/mdx-plugins/remark-install";
+import { remarkDocGen, RemarkDocGenOptions } from "@/lib/mdx-plugins/remark-docgen";
+import { fileGenerator } from "@/lib/mdx-plugins/file-generator";
 
 export const { docs, meta } = defineDocs({
   docs: {
@@ -42,6 +44,7 @@ export default defineConfig({
         } satisfies RemarkInstallOptions,
       ],
       [remarkInlineCode],
+      [remarkDocGen, { generators: [fileGenerator()] } as RemarkDocGenOptions],
     ],
     rehypeCodeOptions: {
       themes: {
@@ -50,6 +53,7 @@ export default defineConfig({
       },
       inline: "tailing-curly-colon",
       defaultLanguage: "ts",
+      tab: true as any,
     },
   },
 });

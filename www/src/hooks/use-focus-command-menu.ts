@@ -13,7 +13,7 @@ export const useCommandMenuInputRef = create<FocusCommandMenuStore>(
     setInputRef: (ref) => set({ inputRef: ref }),
     focusInput: () => {
       const { inputRef } = get();
-      console.log("focusInput", inputRef);
+      
       if (inputRef && inputRef.current) {
         inputRef.current.focus();
       }

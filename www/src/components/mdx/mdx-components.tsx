@@ -1,22 +1,15 @@
 import React from "react";
 import NavLink from "next/link";
 import { MDXComponents } from "mdx/types";
+import { cn } from "@/registry/ui/default/lib/cn";
+import { Pre } from "./code-block";
 import {
   ComponentPreview,
   type ComponentPreviewProps,
-} from "@/components/component-preview";
-import { ComponentSource } from "@/components/component-source";
-import {
-  Tabs,
-  TabPanel,
-  TabList,
-  Tab,
-  type TabsProps,
-} from "@/registry/ui/default/core/tabs";
-import { cn } from "@/registry/ui/default/lib/cn";
-import { Code } from "./code";
-import { Pre } from "./code-block";
-import { InstallTab, InstallTabs } from "./tabs";
+} from "./component-preview";
+import { ComponentSource } from "./component-source";
+import { InstallTab, InstallTabs } from "./install-tabs";
+import { Tabs, Tab, type TabsProps } from "./tabs";
 
 export const mdxComponents: MDXComponents = {
   h1: createHeading(1, "font-heading mt-2 scroll-m-20 text-4xl font-bold"),
@@ -111,7 +104,7 @@ export const mdxComponents: MDXComponents = {
   code: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
     <code
       className={cn(
-        "bg-bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm",
+        "bg-bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono text-xs",
         className
       )}
       {...props}
@@ -119,12 +112,10 @@ export const mdxComponents: MDXComponents = {
       {props.children}
     </code>
   ),
+  Tab,
   Tabs: (props: TabsProps) => (
     <Tabs {...props} className={cn("mt-4", props.className)} />
   ),
-  TabList,
-  Tab,
-  TabPanel,
   InstallTab,
   InstallTabs,
   ComponentSource: ({ name, ...rest }: { name: string }) => (

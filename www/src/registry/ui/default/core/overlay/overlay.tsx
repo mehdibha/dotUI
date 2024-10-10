@@ -208,7 +208,7 @@ const drawerVariants = tv({
       "placement-left:mr-24 placement-left:rounded-r-[10px] placement-left:border-r",
       "touch-none will-change-transform",
       "placement-bottom:translate-y-full placement-top:-translate-y-full placement-left:-translate-x-full placement-right:translate-x-full", // required
-      "max-h-[90%]",
+      "placement-bottom:max-h-[90%] placement-top:max-h-[90%]",
     ],
   },
 });
@@ -245,6 +245,7 @@ const DrawerOverlay = React.forwardRef<
       useMotionDrawer({
         isDismissable,
         placement,
+        scaleBackground: false
       });
     const { overlay, backdrop } = drawerVariants();
 
@@ -269,7 +270,7 @@ const DrawerOverlay = React.forwardRef<
               {showDismissButton && (
                 <DismissButton shape="rectangle">Done</DismissButton>
               )}
-              <div className="bg-bg-muted mx-auto my-4 h-2 w-[100px] rounded-full" />
+              {/* <div className="bg-bg-muted mx-auto my-4 h-2 w-[100px] rounded-full" /> */}
               {children}
             </div>
           </AriaModal>

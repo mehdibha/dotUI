@@ -1,10 +1,10 @@
 import { findNeighbour } from "fumadocs-core/server";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { Button } from "@/registry/ui/default/core/button";
-import { pageTree } from "@/app/source";
+import { source } from "@/app/source";
 
 export const DocsPager = ({ currentPathname }: { currentPathname: string }) => {
-  const { previous, next } = findNeighbour(pageTree, currentPathname);
+  const { previous, next } = findNeighbour(source.pageTree, currentPathname);
 
   return (
     <div className="flex items-center justify-between">

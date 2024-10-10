@@ -3,9 +3,14 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-// import type { PageTree } from "fumadocs-core/server";
+import type { PageTree } from "fumadocs-core/server";
 import { useOnChange } from "fumadocs-core/utils/use-on-change";
-import { ChevronRightIcon, PanelLeftOpenIcon, SearchIcon } from "lucide-react";
+import {
+  ChevronRightIcon,
+  PanelLeftCloseIcon,
+  PanelLeftOpenIcon,
+  SearchIcon,
+} from "lucide-react";
 import { hasActive, isActive } from "@/lib/docs/utils";
 import { useCommandMenuInputRef } from "@/hooks/use-focus-command-menu";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
@@ -16,18 +21,18 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/registry/ui/default/core/collapsible";
+import { Dialog, DialogRoot } from "@/registry/ui/default/core/dialog";
 import { Kbd } from "@/registry/ui/default/core/kbd";
 import { ScrollArea } from "@/registry/ui/default/core/scroll-area";
 import { Tooltip, TooltipProps } from "@/registry/ui/default/core/tooltip";
 import { cn } from "@/registry/ui/default/lib/cn";
-import { pageTree } from "@/app/source";
 import { siteConfig } from "@/config";
-import { CommandMenu } from "./command-menu";
+import { SearchCommand } from "./search-command";
 import { ThemeToggle } from "./theme-toggle";
 
-export const Sidebar = () => {
+export const Sidebar = ({ items }: { items: PageTree.Node[] }) => {
   const pathname = usePathname();
-  const [isCollapsed, setIsCollapsed] = React.useState(pathname === "/");
+  const [isCollapsed, setIsCollapsed] = React.useState(!!(pathname === "/"));
 
   return (
     <SidebarRoot
@@ -38,23 +43,23 @@ export const Sidebar = () => {
         <Logo />
         <div className="flex-1" />
         <SidebarToggle onPress={() => setIsCollapsed(!isCollapsed)}>
-          <PanelLeftOpenIcon />
+          {isCollapsed ? <PanelLeftOpenIcon /> : <PanelLeftCloseIcon />}
         </SidebarToggle>
       </div>
-      <div className="px-2 pt-3">
+      <div className="-mb-1 px-2 pt-4">
         <SidebarSearchButton isCollapsed={isCollapsed} />
       </div>
       <ScrollArea
         size="sm"
         style={{
           maskImage:
-            "linear-gradient(transparent 2px, white 24px, white calc(100% - 24px), transparent calc(100% - 2px))",
+            "linear-gradient(transparent 2px, white 16px, white calc(100% - 16px), transparent calc(100% - 2px))",
         }}
         className="flex-1 pt-4"
       >
         <div className="transition-sidebar grid w-full min-w-0 p-2 pt-0">
-          <div className="transition-sidebar flex w-full min-w-0 flex-col gap-0.5">
-            <NodeList items={pageTree.children} />
+          <div className="transition-sidebar flex w-full min-w-0 flex-col">
+            <NodeList items={items} />
           </div>
         </div>
       </ScrollArea>
@@ -113,7 +118,7 @@ const SidebarRoot = ({
             "transition-sidebar group-data-collapsed/sidebar:w-[--sidebar-width-collapsed] relative z-10 h-svh w-[--sidebar-width] bg-transparent"
           )}
         />
-        <div className="transition-sidebar bg-bg-muted/40 group-data-collapsed/sidebar:w-[--sidebar-width-collapsed] [&_svg]:text-fg-muted fixed inset-y-0 left-0 z-10 flex h-svh w-[--sidebar-width] flex-col overflow-hidden border-r [&_button]:font-normal">
+        <div className="transition-sidebar bg-bg group-data-collapsed/sidebar:w-[--sidebar-width-collapsed] [&_svg]:text-fg-muted fixed inset-y-0 left-0 z-10 flex h-svh w-[--sidebar-width] flex-col overflow-hidden border-r [&_button]:font-normal">
           <div className="relative flex h-svh w-[--sidebar-width] flex-1 translate-x-[-0.5px] flex-col overflow-hidden">
             {children}
           </div>
@@ -164,9 +169,7 @@ const SidebarToggle = ({ className, ...props }: ButtonProps) => {
         size="sm"
         variant="default"
         {...props}
-      >
-        <PanelLeftOpenIcon />
-      </Button>
+      />
     </div>
   );
 };
@@ -186,7 +189,7 @@ const SidebarSearchButton = ({ isCollapsed }: { isCollapsed: boolean }) => {
         }
         isDisabled={!isCollapsed}
       >
-        <CollapsibleButton variant="outline" onPress={focusInput}>
+        <SidebarButton variant="outline" onPress={focusInput}>
           <SearchIcon />
           <span className="flex flex-1 flex-row items-center justify-between">
             <span>Search </span>
@@ -199,23 +202,23 @@ const SidebarSearchButton = ({ isCollapsed }: { isCollapsed: boolean }) => {
               </Kbd>
             </span>
           </span>
-        </CollapsibleButton>
+        </SidebarButton>
       </StyledTooltip>
     );
   }
 
   return (
-    <StyledTooltip
-      content={
-        <span className="flex items-center gap-2">
-          Search
-          <Kbd>⌘K</Kbd>
-        </span>
-      }
-      isDisabled={!isCollapsed}
-    >
-      <CommandMenu>
-        <CollapsibleButton variant="outline" className="bg-bg-inverse/5">
+    <DialogRoot>
+      <StyledTooltip
+        content={
+          <span className="flex items-center gap-2">
+            Search
+            <Kbd>⌘K</Kbd>
+          </span>
+        }
+        isDisabled={!isCollapsed}
+      >
+        <SidebarButton variant="outline" className="bg-bg-inverse/5">
           <SearchIcon />
           <span className="flex flex-1 flex-row items-center justify-between">
             <span>Search </span>
@@ -228,20 +231,25 @@ const SidebarSearchButton = ({ isCollapsed }: { isCollapsed: boolean }) => {
               </Kbd>
             </span>
           </span>
-        </CollapsibleButton>
-      </CommandMenu>
-    </StyledTooltip>
+        </SidebarButton>
+      </StyledTooltip>
+      <Dialog>
+        <SearchCommand />
+      </Dialog>
+    </DialogRoot>
   );
 };
 
 interface NodeListProps extends React.HTMLAttributes<HTMLDivElement> {
   items: PageTree.Node[];
   level?: number;
+  onSelect?: () => void;
 }
 
-function NodeList({
+export function NodeList({
   items,
   level = 0,
+  onSelect,
   ...props
 }: NodeListProps): React.ReactElement {
   return (
@@ -250,12 +258,19 @@ function NodeList({
         const id = `${item.type}_${i.toString()}`;
 
         switch (item.type) {
-          case "separator":
-            return <div key={id}>separator</div>;
+          case "page":
+            return (
+              <PageNode
+                key={item.url}
+                item={item}
+                level={level + 1}
+                onSelect={onSelect}
+              />
+            );
           case "folder":
-            return <FolderNode key={id} item={item} level={level + 1} />;
+            return <FolderNode key={id} item={item} level={level + 1} onSelect={onSelect}/>;
           default:
-            return <PageNode key={item.url} item={item} level={level + 1} />;
+            return null;
         }
       })}
     </div>
@@ -265,9 +280,11 @@ function NodeList({
 function PageNode({
   item: { icon, external = false, url, name },
   level,
+  onSelect,
 }: {
   item: PageTree.Item;
   level: number;
+  onSelect?: () => void;
 }): React.ReactElement {
   const pathname = usePathname();
   const { isCollapsed } = React.useContext(SidebarContext);
@@ -276,10 +293,10 @@ function PageNode({
   if (level === 1) {
     return (
       <StyledTooltip content={name} isDisabled={!isCollapsed}>
-        <CollapsibleButton href={url}>
+        <SidebarButton href={url} onPress={onSelect}>
           {icon}
           <span className="flex-1 text-left">{name}</span>
-        </CollapsibleButton>
+        </SidebarButton>
       </StyledTooltip>
     );
   }
@@ -293,6 +310,7 @@ function PageNode({
           "text-fg border-fg": active,
         }
       )}
+      onClick={onSelect}
     >
       {name}
     </Link>
@@ -302,13 +320,15 @@ function PageNode({
 function FolderNode({
   item,
   level,
+  onSelect,
 }: {
   item: PageTree.Folder;
   level: number;
+  onSelect?: () => void;
 }): React.ReactElement {
   const defaultOpenLevel = 0;
   const pathname = usePathname();
-  const { isCollapsed } = React.useContext(SidebarContext);
+  const { isCollapsed, onCollapseChange } = React.useContext(SidebarContext);
   const active =
     item.index !== undefined && isActive(item.index.url, pathname, false);
   const childActive = React.useMemo(
@@ -328,8 +348,8 @@ function FolderNode({
     return (
       <CollapsibleRoot open={isCollapsed ? false : open} onOpenChange={setOpen}>
         <StyledTooltip content={item.name} isDisabled={!isCollapsed}>
-          <CollapsibleTrigger asChild>
-            <CollapsibleButton shape="square" variant="quiet" size="sm">
+          <CollapsibleTrigger asChild onClick={() => onCollapseChange(false)}>
+            <SidebarButton shape="square" variant="quiet" size="sm">
               {item.icon}
               <span className="flex flex-1 flex-row items-center justify-between">
                 <span>{item.name}</span>
@@ -340,11 +360,11 @@ function FolderNode({
                   )}
                 />
               </span>
-            </CollapsibleButton>
+            </SidebarButton>
           </CollapsibleTrigger>
         </StyledTooltip>
-        <CollapsibleContent className="pl-2">
-          <NodeList items={item.children} level={level} />
+        <CollapsibleContent className="pb-2 pl-4">
+          <NodeList items={item.children} level={level} onSelect={onSelect} />
         </CollapsibleContent>
       </CollapsibleRoot>
     );
@@ -355,12 +375,12 @@ function FolderNode({
       <h3 className="category text-fg-muted py-1 pl-4 font-mono text-xs tracking-widest">
         {item.name}
       </h3>
-      <NodeList className="pb-2" items={item.children} level={level} />
+      <NodeList items={item.children} level={level} onSelect={onSelect} />
     </>
   );
 }
 
-const CollapsibleButton = ({
+const SidebarButton = ({
   className,
   children,
   ...props
