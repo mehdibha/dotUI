@@ -24,7 +24,6 @@ const config = siteConfig.global;
 
 export default async function Page({ params }: PageProps) {
   const page = source.getPage(params.slug);
-
   if (!page) notFound();
 
   const MDXContent = page.data.body;

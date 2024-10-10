@@ -22,30 +22,30 @@ links:
 
 ## Installation
 
-<Steps>
-  <Step>Install the following dependencies:</Step>
-
-```bash
-npm install react-aria-components
+<Tabs items={["CLI", "Manual"]}>
+  <Tab value="CLI">
+  
+  ```package-install
+npx dotui@latest add color-picker
 ```
 
-<Step>Copy and paste the following code into your project.</Step>
+  </Tab>
+  <Tab value="manual">
+  
+    <Steps>
+      <Step>Install the following dependencies:</Step>
 
-  <ComponentSource  
-    name={[
-      "components/core/default/color-picker",
-      "components/core/default/button",
-      "components/core/default/color-area",
-      "components/core/default/color-field",
-      "components/core/default/color-swatch",
-      "components/core/default/dialog",
-      "components/core/default/overlay",
-      "components/core/default/select",
-      "components/core/default/list-box",
-    ]}
-  />
-  <Step>Update the import paths to match your project setup.</Step>
-</Steps>
+    ```package-install
+    react-aria-components
+    ```
+
+      <Step>Copy and paste the following code into your project.</Step>
+      <ComponentSource name={["core/color-picker"]} />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+
+  </Tab>
+</Tabs>
 
 ## Usage
 

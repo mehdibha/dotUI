@@ -30,25 +30,30 @@ links:
 
 ## Installation
 
-<Steps>
-  <Step>Install the following dependencies:</Step>
-
-```bash
-npm install react-aria-components
+<Tabs items={["CLI", "Manual"]}>
+  <Tab value="CLI">
+  
+  ```package-install
+npx dotui@latest add combobox
 ```
 
-  <Step>Copy and paste the following code into your project.</Step>
-  <ComponentSource 
-    name={[
-      "components/core/default/combobox",
-      "components/core/default/list-box",
-      "components/core/default/button",
-      "components/core/default/field",
-      "components/core/default/overlay",
-    ]} 
-  />
-  <Step>Update the import paths to match your project setup.</Step>
-</Steps>
+  </Tab>
+  <Tab value="manual">
+  
+    <Steps>
+      <Step>Install the following dependencies:</Step>
+
+    ```package-install
+    react-aria-components
+    ```
+
+      <Step>Copy and paste the following code into your project.</Step>
+      <ComponentSource name="core/combobox" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+
+  </Tab>
+</Tabs>
 
 ## Usage
 
