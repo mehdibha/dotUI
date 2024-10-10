@@ -23,6 +23,10 @@ export const toKebabCase = (string: string): string => {
     .trim();
 };
 
+export const kekabCaseToTitle = (string: string): string => {
+  return string.replace(/-/g, " ").replace(/\b\w/g, (char) => char.toUpperCase());
+};
+
 export const truncateOnWord = (
   text: string,
   maxLength: number,

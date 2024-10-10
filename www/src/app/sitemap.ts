@@ -1,6 +1,5 @@
 import { MetadataRoute } from "next";
-import "@/app/source";
-import { getPages } from "@/app/source";
+import { source } from "@/app/source";
 import { siteConfig } from "@/config";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -23,7 +22,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly",
       priority: 0.8,
     },
-    ...getPages().map<MetadataRoute.Sitemap[number]>((page) => ({
+    ...source.getPages().map<MetadataRoute.Sitemap[number]>((page) => ({
       url: url(page.url),
       lastModified: page.data.lastModified
         ? new Date(page.data.lastModified)

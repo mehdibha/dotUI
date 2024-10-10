@@ -2,6 +2,7 @@ import React from "react";
 import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/react";
 import { truncateOnWord } from "@/lib/string";
+import { MobileNav } from "@/components/mobile-nav";
 import { Sidebar } from "@/components/sidebar";
 import { Badge } from "@/registry/ui/default/core/badge";
 import { cn } from "@/registry/ui/default/lib/cn";
@@ -14,6 +15,7 @@ import {
 import "@/styles/globals.css";
 import { siteConfig } from "@/config";
 import { Providers } from "./providers";
+import { source } from "./source";
 
 const config = siteConfig.global;
 
@@ -75,9 +77,12 @@ export default function RootLayout({
         <Analytics />
         <Providers>
           {/* TODO: patch min-h-screen */}
-          <div className="relative flex min-h-screen w-full flex-row">
-            {/* <Sidebar /> */}
-            <main className="relative min-h-full flex-1">
+          <div
+            className="min-h-screen flex flex-col sm:flex-row"
+          >
+            <MobileNav items={source.pageTree.children} />
+            <Sidebar items={source.pageTree.children} />
+            <main className="relative flex-1 overflow-hidden xl:overflow-visible">
               {/* Version */}
               <Badge
                 size="md"

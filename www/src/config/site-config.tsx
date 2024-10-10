@@ -25,3 +25,13 @@ export const siteConfig = {
     creatorGithub: "https://github.com/mehdibha",
   },
 };
+
+export const searchConfig = {
+  defaultResults: [
+    { name: "Installation", href: "/docs/getting-started/installation" },
+    { name: "CLI", href: "/docs/getting-started/cli" },
+    { name: "Components", href: "/docs/components/buttons/button" },
+    { name: "Themes", href: "/themes" },
+    // { name: "Hooks", href: "/docs/getting-started/installation" },
+  ],
+};

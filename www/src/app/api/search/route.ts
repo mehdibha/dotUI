@@ -1,10 +1,15 @@
-import { allDocs } from 'content-collections';
-import { createSearchAPI } from 'fumadocs-core/search/server';
- 
-export const { GET } = createSearchAPI('simple', {
-  indexes: allDocs.map((docs) => ({
-    title: docs.title,
-    content: docs.content // Raw Content
-    url: docs.url,
+import { createSearchAPI } from "fumadocs-core/search/server";
+import { source } from "@/app/source";
+
+export const { GET } = createSearchAPI("advanced", {
+  indexes: source.getPages().map((page) => ({
+    title: page.data.title,
+    description: "components",
+    structuredData: {
+      headings: page.data.structuredData.headings,
+      contents: [],
+    },
+    id: page.url,
+    url: page.url,
   })),
 });

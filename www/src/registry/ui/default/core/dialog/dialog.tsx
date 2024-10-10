@@ -54,6 +54,7 @@ interface DialogProps extends DialogContentProps {
   mobileType?: OverlayProps["mobileType"];
   mediaQuery?: OverlayProps["mediaQuery"];
   isDismissable?: boolean;
+  placement?: OverlayProps["placement"];
 }
 const Dialog = ({
   title,
@@ -63,6 +64,7 @@ const Dialog = ({
   mediaQuery,
   isDismissable: isDismissableProp,
   showDismissButton,
+  placement,
   ...props
 }: DialogProps) => {
   const isDismissable =
@@ -74,6 +76,7 @@ const Dialog = ({
       type={type}
       mobileType={mobileType}
       mediaQuery={mediaQuery}
+      placement={placement}
     >
       <DialogContent {...props}>
         {composeRenderProps(props.children, (children) => (

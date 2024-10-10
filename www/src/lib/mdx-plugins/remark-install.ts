@@ -6,28 +6,17 @@ import { createElement, expressionToAttribute } from "./utils";
 
 interface PackageManager {
   name: string;
-
-  /**
-   * Convert from npm to another package manager
-   */
   command: (command: string) => string;
 }
 
 export type RemarkInstallOptions = Partial<{
   Tabs: string;
   Tab: string;
-
-  /**
-   * Persist Tab value (Fumadocs UI only)
-   *
-   * @defaultValue false
-   */
   persist?:
     | {
         id: string;
       }
     | false;
-
   packageManagers: PackageManager[];
 }>;
 
@@ -56,7 +45,6 @@ export function remarkInstall({
   return (tree) => {
     visit(tree, "code", (node) => {
       if (node.lang !== "package-install") return "skip";
-      // console.log(node)
 
       const value =
         node.value.startsWith("npm") || node.value.startsWith("npx")
