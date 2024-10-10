@@ -176,39 +176,92 @@ const SidebarToggle = ({ className, ...props }: ButtonProps) => {
 
 const SidebarSearchButton = ({ isCollapsed }: { isCollapsed: boolean }) => {
   const pathname = usePathname();
-  const { focusInput } = useCommandMenuInputRef();
 
   if (pathname === "/") {
-    return (
-      <StyledTooltip
-        content={
-          <span className="flex items-center gap-2">
-            Search
-            <Kbd>⌘K</Kbd>
-          </span>
-        }
-        isDisabled={!isCollapsed}
-      >
-        <SidebarButton variant="outline" onPress={focusInput}>
-          <SearchIcon />
-          <span className="flex flex-1 flex-row items-center justify-between">
-            <span>Search </span>
-            <span className="flex items-center gap-0.5">
-              <Kbd className="flex size-6 items-center justify-center p-0 text-xs">
-                ⌘
-              </Kbd>
-              <Kbd className="flex size-6 items-center justify-center p-0 text-xs">
-                K
-              </Kbd>
-            </span>
-          </span>
-        </SidebarButton>
-      </StyledTooltip>
-    );
+    return <SearchCommandButton isCollapsed={isCollapsed} />;
   }
 
+  return <SearchCommandDialog isCollapsed={isCollapsed} />;
+};
+
+const SearchCommandButton = ({ isCollapsed }: { isCollapsed: boolean }) => {
+  const { focusInput } = useCommandMenuInputRef();
+
+  React.useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if ((e.key === "k" && (e.metaKey || e.ctrlKey)) || e.key === "/") {
+        if (
+          (e.target instanceof HTMLElement && e.target.isContentEditable) ||
+          e.target instanceof HTMLInputElement ||
+          e.target instanceof HTMLTextAreaElement ||
+          e.target instanceof HTMLSelectElement
+        ) {
+          return;
+        }
+
+        e.preventDefault();
+        focusInput();
+      }
+    };
+
+    document.addEventListener("keydown", down);
+    return () => document.removeEventListener("keydown", down);
+  }, [focusInput]);
+
   return (
-    <DialogRoot>
+    <StyledTooltip
+      content={
+        <span className="flex items-center gap-2">
+          Search
+          <Kbd>⌘K</Kbd>
+        </span>
+      }
+      isDisabled={!isCollapsed}
+    >
+      <SidebarButton variant="outline" onPress={focusInput}>
+        <SearchIcon />
+        <span className="flex flex-1 flex-row items-center justify-between">
+          <span>Search </span>
+          <span className="flex items-center gap-0.5">
+            <Kbd className="flex size-6 items-center justify-center p-0 text-xs">
+              ⌘
+            </Kbd>
+            <Kbd className="flex size-6 items-center justify-center p-0 text-xs">
+              K
+            </Kbd>
+          </span>
+        </span>
+      </SidebarButton>
+    </StyledTooltip>
+  );
+};
+
+const SearchCommandDialog = ({ isCollapsed }: { isCollapsed: boolean }) => {
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if ((e.key === "k" && (e.metaKey || e.ctrlKey)) || e.key === "/") {
+        if (
+          (e.target instanceof HTMLElement && e.target.isContentEditable) ||
+          e.target instanceof HTMLInputElement ||
+          e.target instanceof HTMLTextAreaElement ||
+          e.target instanceof HTMLSelectElement
+        ) {
+          return;
+        }
+
+        e.preventDefault();
+        setIsOpen((open) => !open);
+      }
+    };
+
+    document.addEventListener("keydown", down);
+    return () => document.removeEventListener("keydown", down);
+  }, []);
+
+  return (
+    <DialogRoot isOpen={isOpen} onOpenChange={setIsOpen}>
       <StyledTooltip
         content={
           <span className="flex items-center gap-2">
@@ -234,7 +287,7 @@ const SidebarSearchButton = ({ isCollapsed }: { isCollapsed: boolean }) => {
         </SidebarButton>
       </StyledTooltip>
       <Dialog>
-        <SearchCommand />
+        <SearchCommand onRunCommand={() => setIsOpen(false)} />
       </Dialog>
     </DialogRoot>
   );

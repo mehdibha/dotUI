@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useRouter } from "next/navigation";
 import { useDocsSearch } from "fumadocs-core/search/client";
 import { SortedResult } from "fumadocs-core/server";
 import { FileTextIcon, HashIcon, TextIcon } from "lucide-react";
@@ -21,9 +22,16 @@ import { searchConfig } from "@/config";
 export const SearchCommand = ({
   className,
   animated,
+  inputRef,
+  onRunCommand,
   ...props
-}: CommandRootProps & { animated?: boolean }) => {
+}: CommandRootProps & {
+  animated?: boolean;
+  inputRef?: React.RefObject<HTMLInputElement>;
+  onRunCommand?: () => void;
+}) => {
   const { search, setSearch, query } = useDocsSearch();
+  const router = useRouter();
 
   const results =
     search === "" || query.data === "empty"
@@ -41,11 +49,18 @@ export const SearchCommand = ({
         ]
       : groupByCategory(query.data);
 
+  const runCommand = React.useCallback(
+    (command: () => unknown) => {
+      onRunCommand?.();
+      command();
+    },
+    [onRunCommand]
+  );
+
   return (
     <CommandRoot
       shouldFilter={false}
       className={cn(
-        // "dark:bg-[#151414]",
         animated && [
           "relative overflow-visible rounded-lg shadow-md",
           "after:animate-shine relative after:absolute after:-inset-px after:z-[-1] after:rounded-[inherit] after:bg-[linear-gradient(to_right,#343434_20%,#343434_40%,#707070_50%,#707070_55%,#343434_70%,#343434_100%)] after:bg-[250%_auto] after:content-['']",
@@ -57,6 +72,7 @@ export const SearchCommand = ({
       {...props}
     >
       <CommandInput
+        ref={inputRef}
         value={search}
         onValueChange={setSearch}
         autoFocus
@@ -64,14 +80,20 @@ export const SearchCommand = ({
         wrapperClassName={cn(animated && "border-b-0")}
       />
       {animated && (
-        <CommandSeparator className="before:opacity-1 before:animate-loading before:delay-900 relative overflow-hidden before:absolute before:left-0 before:top-0 before:h-full before:w-1/2 before:bg-[linear-gradient(90deg,rgba(0,0,0,0)_0,#707070_50%,rgba(0,0,0,0)_100%)] before:opacity-0 before:content-['']" />
+        <CommandSeparator className="before:opacity-1 before:animate-loading before:delay-900 relative h-[2px] overflow-hidden before:absolute before:left-0 before:top-0 before:h-full before:w-1/2 before:bg-[linear-gradient(90deg,rgba(0,0,0,0)_0,#707070_50%,rgba(0,0,0,0)_100%)] before:opacity-0 before:content-['']" />
       )}
       <CommandList>
         <CommandEmpty>No results found</CommandEmpty>
         {results.map((group) => (
           <CommandGroup key={group.id} heading={group.name}>
             {group.results.map((item) => (
-              <CommandItem key={item.id} value={item.id}>
+              <CommandItem
+                key={item.id}
+                value={item.id}
+                onSelect={() => {
+                  runCommand(() => router.push(item.url));
+                }}
+              >
                 <div
                   className={cn(
                     "flex min-h-10 w-full flex-row items-center gap-3",
