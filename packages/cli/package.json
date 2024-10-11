@@ -1,6 +1,6 @@
 {
   "name": "dotui-cli",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Add components, blocks, hooks, themes and icons to your app.",
   "publishConfig": {
     "access": "public"
