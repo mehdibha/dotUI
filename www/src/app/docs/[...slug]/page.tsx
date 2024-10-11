@@ -40,7 +40,7 @@ export default async function Page({ params }: PageProps) {
           page.data.toc && page.data.toc.length > 0,
       })}
     >
-      <div className="container max-w-3xl">
+      <div className="container max-w-screen-md">
         {breadcrumbs.length > 1 && (
           <div className="text-fg-muted mb-2 flex items-center gap-1 text-sm [&_svg]:size-4">
             {breadcrumbs.map((item, index) => (
