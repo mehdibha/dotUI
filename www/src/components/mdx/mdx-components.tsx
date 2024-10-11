@@ -1,6 +1,7 @@
 import React from "react";
 import NavLink from "next/link";
 import { MDXComponents } from "mdx/types";
+import { Alert, AlertProps } from "@/registry/ui/default/core/alert";
 import { cn } from "@/registry/ui/default/lib/cn";
 import { Pre } from "./code-block";
 import {
@@ -145,6 +146,9 @@ export const mdxComponents: MDXComponents = {
       className="[&>h3]:step mb-12 ml-4 border-l pl-8 [counter-reset:step]"
       {...props}
     />
+  ),
+  Alert: ({ className, ...props }: AlertProps) => (
+    <Alert className={cn("mt-4", className)} {...props} />
   ),
 };
 
