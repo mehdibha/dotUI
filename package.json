@@ -13,19 +13,19 @@
     "next.js",
     "react-aria",
     "tailwind",
-    "typescript"
+    "typescript"   
   ],
   "scripts": {
     "build": "turbo run build",
-    "build:cli": "turbo --filter=dotui build",
+    "build:cli": "turbo --filter=dotui-cli build",
     "build:www": "pnpm --filter=www build",
     "build:registry": "pnpm --filter=www build:registry",
     "build:docs": "pnpm --filter=www build:docs",
     "dev": "turbo run dev --parallel",
-    "dev:cli": "turbo --filter=dotui dev",
+    "dev:cli": "turbo --filter=dotui-cli dev",
     "dev:www": "pnpm --filter=www dev",
     "start:www": "pnpm --filter=www start",
-    "start:cli": "pnpm --filter=dotui start",
+    "start:cli": "pnpm --filter=dotui-cli start",
     "lint": "turbo run lint && manypkg fix",
     "lint:check": "turbo run lint:check && manypkg check",
     "format": "turbo run format",
@@ -34,8 +34,8 @@
     "typecheck": "turbo run typecheck",
     "check": "turbo lint:check typecheck format:check",
     "release": "changeset version",
-    "pub:beta": "pnpm --filter=dotui pub:beta",
-    "pub:release": "pnpm --filter=dotui pub:release"
+    "pub:beta": "pnpm --filter=dotui-cli pub:beta",
+    "pub:release": "pnpm --filter=dotui-cli pub:release"
   },
   "dependencies": {
     "@changesets/changelog-github": "^0.4.8",
