@@ -3,7 +3,7 @@
 import fs from "node:fs";
 import { exec } from "child_process";
 
-const pkgJsonPath = "cli/package.json";
+const pkgJsonPath = "packages/cli/package.json";
 try {
   const pkg = JSON.parse(fs.readFileSync(pkgJsonPath));
   exec("git rev-parse --short HEAD", (err, stdout) => {

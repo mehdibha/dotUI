@@ -1,5 +1,5 @@
 {
-  "name": "dotui",
+  "name": "dotui-cli",
   "version": "0.0.1",
   "description": "Add components, blocks, hooks, themes and icons to your app.",
   "publishConfig": {
@@ -36,6 +36,7 @@
     "start": "node dist/index.js",
     "format": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache --log-level warn",
     "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache --log-level warn",
+    "typecheck": "tsc --noEmit",
     "release": "changeset version",
     "pub:beta": "pnpm build && pnpm publish --no-git-checks --access public --tag beta",
     "pub:next": "pnpm build && pnpm publish --no-git-checks --access public --tag next",

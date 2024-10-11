@@ -37,10 +37,10 @@ jobs:
         id: package-version
         uses: martinbeentjes/npm-get-version-action@main
         with:
-          path: cli
+          path: packages/cli
 
       - name: Upload packaged artifact
         uses: actions/upload-artifact@v4
         with:
           name: npm-package-dotui@${{ steps.package-version.outputs.current-version }}-pr-${{ github.event.number }} # encode the PR number into the artifact name
-          path: cli/dist/index.js
+          path: packages/cli/dist/index.js
