@@ -6,6 +6,7 @@ import { useDocsSearch } from "fumadocs-core/search/client";
 import { SortedResult } from "fumadocs-core/server";
 import { FileTextIcon, HashIcon, TextIcon } from "lucide-react";
 import { kekabCaseToTitle } from "@/lib/string";
+import { useCommandMenuInputRef } from "@/hooks/use-focus-command-menu";
 import {
   CommandEmpty,
   CommandGroup,
@@ -22,12 +23,12 @@ import { searchConfig } from "@/config";
 export const SearchCommand = ({
   className,
   animated,
-  inputRef,
   onRunCommand,
+  context,
   ...props
 }: CommandRootProps & {
   animated?: boolean;
-  inputRef?: React.RefObject<HTMLInputElement>;
+  context?: boolean;
   onRunCommand?: () => void;
 }) => {
   const { search, setSearch, query } = useDocsSearch();
@@ -57,6 +58,13 @@ export const SearchCommand = ({
     [onRunCommand]
   );
 
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  const { setInputRef } = useCommandMenuInputRef();
+
+  React.useEffect(() => {
+    if (context) setInputRef(inputRef);
+  }, [context, setInputRef]);
+
   return (
     <CommandRoot
       shouldFilter={false}
@@ -72,7 +80,7 @@ export const SearchCommand = ({
       {...props}
     >
       <CommandInput
-        ref={inputRef}
+        ref={context ? inputRef : undefined}
         value={search}
         onValueChange={setSearch}
         autoFocus
