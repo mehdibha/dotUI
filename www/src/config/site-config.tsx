@@ -31,5 +31,6 @@ export const searchConfig = {
     { name: "Installation", href: "/docs/getting-started/installation" },
     { name: "Button", href: "/docs/components/buttons/button" },
     { name: "TextField", href: "/docs/components/inputs/text-field" },
-    { name: "Menu", href: "/docs/components/menus-and-selection/menu" },  ],
+    { name: "Menu", href: "/docs/components/menus-and-selection/menu" },
+  ],
 };
