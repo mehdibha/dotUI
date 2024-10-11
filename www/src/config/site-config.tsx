@@ -29,9 +29,7 @@ export const siteConfig = {
 export const searchConfig = {
   defaultResults: [
     { name: "Installation", href: "/docs/getting-started/installation" },
-    { name: "CLI", href: "/docs/getting-started/cli" },
-    { name: "Components", href: "/docs/components/buttons/button" },
-    { name: "Themes", href: "/themes" },
-    // { name: "Hooks", href: "/docs/getting-started/installation" },
-  ],
+    { name: "Button", href: "/docs/components/buttons/button" },
+    { name: "TextField", href: "/docs/components/inputs/text-field" },
+    { name: "Menu", href: "/docs/components/menus-and-selection/menu" },  ],
 };
