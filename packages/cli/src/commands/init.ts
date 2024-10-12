@@ -44,6 +44,12 @@ export const init = new Command()
   .option("--skip-install", "skip install", false)
   .action(async (projectDir, opts) => {
     try {
+      logger.log(
+        `${highlight.warn("⚠️  dotui-cli is still under development.")}`
+      );
+      logger.log(`You can follow the progress on https://x.com/mehdibha_.`);
+      logger.break();
+      return;
       const options = initOptionsSchema.parse({ projectDir, ...opts });
       await runInit(options);
       logger.log(

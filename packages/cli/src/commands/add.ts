@@ -43,6 +43,10 @@ export const addCommand = new Command()
   )
   .action(async (components, opts) => {
     try {
+      logger.log(`${highlight.warn("⚠️ dotui-cli is under development.")}`);
+      logger.log(`You can follow the progress on https://x.com/mehdibha_.`);
+      logger.break();
+      return;
       const options = addOptionsSchema.parse({
         components,
         cwd: path.resolve(opts.cwd),
