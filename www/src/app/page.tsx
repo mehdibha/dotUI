@@ -2,7 +2,6 @@ import React from "react";
 import { TerminalSquareIcon } from "lucide-react";
 import { Code } from "@/components/code";
 import { SearchCommand } from "@/components/search-command";
-import { TypewriterAnimation } from "@/components/typewriter-animation";
 import { Link } from "@/registry/ui/default/core/link";
 import { cn } from "@/registry/ui/default/lib/cn";
 import { siteConfig } from "@/config";
