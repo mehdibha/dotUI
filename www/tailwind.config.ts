@@ -134,6 +134,8 @@ const config = {
         // slow: "cubic-bezier(0.32,0.72,0,1)",
       },
       transitionDuration: {
+        "30": "30ms",
+        "50": "50ms",
         "1800": "1800ms",
         "3000": "3000ms",
       },

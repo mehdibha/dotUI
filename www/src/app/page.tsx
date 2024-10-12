@@ -2,6 +2,7 @@ import React from "react";
 import { TerminalSquareIcon } from "lucide-react";
 import { Code } from "@/components/code";
 import { SearchCommand } from "@/components/search-command";
+import { TypewriterAnimation } from "@/components/typewriter-animation";
 import { Link } from "@/registry/ui/default/core/link";
 import { cn } from "@/registry/ui/default/lib/cn";
 import { siteConfig } from "@/config";
@@ -12,9 +13,10 @@ export default function HomePage() {
       <div className="relative size-full">
         <div className="container flex h-full flex-col items-center justify-center">
           <div className="-translate-y-10">
-            <h1 className="font-heading xs:text-2xl text-pretty text-xl font-semibold tracking-tighter sm:text-3xl md:text-4xl">
+            {/* <h1 className="font-heading xs:text-2xl text-pretty text-xl font-semibold tracking-tighter sm:text-3xl md:text-4xl">
               Scaffold. implement. ship.
-            </h1>
+            </h1> */}
+            <TypewriterAnimation />
             <h2 className="text-fg-muted mt-3 text-sm">
               Add components, hooks, themes and much more to your{" "}
               <span className="font-bold">React app</span>.
