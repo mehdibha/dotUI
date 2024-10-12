@@ -10,7 +10,6 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { cn } from "@/registry/ui/default/lib/cn";
 import { ChevronRightIcon } from "@/__icons__";
 
 const breadcrumbsStyles = tv({

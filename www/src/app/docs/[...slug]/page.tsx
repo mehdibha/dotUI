@@ -2,8 +2,9 @@ import React from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { type TableOfContents as TocType } from "fumadocs-core/server";
-import { ChevronRightIcon, ExternalLinkIcon } from "lucide-react";
+import { ExternalLinkIcon } from "lucide-react";
 import { truncateOnWord } from "@/lib/string";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 import { DocsPager } from "@/components/docs-pager";
 import { AdobeIcon } from "@/components/icons/adobe";
 import { PageLastUpdate } from "@/components/last-update";
@@ -25,13 +26,7 @@ const config = siteConfig.global;
 export default async function Page({ params }: PageProps) {
   const page = source.getPage(params.slug);
   if (!page) notFound();
-
   const MDXContent = page.data.body;
-  const breadcrumbs = page.data._file.path
-    .split("/")
-    .map((item) =>
-      item.replace(/-/g, " ").replace(/\b\w/g, (char) => char.toUpperCase())
-    );
 
   return (
     <div
@@ -41,18 +36,7 @@ export default async function Page({ params }: PageProps) {
       })}
     >
       <div className="container max-w-screen-md">
-        {breadcrumbs.length > 1 && (
-          <div className="text-fg-muted mb-2 flex items-center gap-1 text-sm [&_svg]:size-4">
-            {breadcrumbs.map((item, index) => (
-              <>
-                <span key={index}>{item}</span>
-                {index < breadcrumbs.length - 1 && (
-                  <ChevronRightIcon className="" />
-                )}
-              </>
-            ))}
-          </div>
-        )}
+        <Breadcrumbs tree={source.pageTree} className="mb-2" />
         <h1 className="text-4xl font-bold">{page.data.title}</h1>
         <p className="text-fg-muted mt-2">{page.data.description}</p>
         {page.data.links && page.data.links.length > 0 && (
