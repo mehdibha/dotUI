@@ -41,20 +41,42 @@ export const TypewriterAnimation = () => {
 
 const Cursor = ({ targetRef }: { targetRef: React.RefObject<HTMLElement> }) => {
   const cursorRef = React.useRef(null);
+  const canvasRef = React.useRef<HTMLCanvasElement>(null);
   const [position, setPosition] = React.useState({ left: 0, top: 0 });
 
   React.useEffect(() => {
     const updateCursorPosition = () => {
-      if (targetRef.current && cursorRef.current) {
-        const targetRect = targetRef.current.getBoundingClientRect();
-        const text = targetRef.current.textContent;
-        const textWidth = getTextWidth(
-          text as string,
-          getComputedStyle(targetRef.current).font
-        );
-        if (textWidth) {
+      if (targetRef.current && cursorRef.current && canvasRef.current) {
+        const text = targetRef.current.textContent || '';
+        const style = getComputedStyle(targetRef.current);
+        const canvas = canvasRef.current;
+        const context = canvas.getContext('2d');
+        
+        if (context) {
+          // Set canvas size
+          canvas.width = targetRef.current.offsetWidth;
+          canvas.height = targetRef.current.offsetHeight;
+          
+          // Clear canvas
+          context.clearRect(0, 0, canvas.width, canvas.height);
+          
+          // Set font and draw text
+          context.font = `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+          context.fillStyle = 'rgba(255, 255, 255, 255)'; // Semi-transparent blue
+          context.fillText(text, 0, canvas.height / 2);
+          
+          // Draw line at measured text width
+          const textWidth = context.measureText(text).width;
+          context.beginPath();
+          context.moveTo(textWidth, 0);
+          context.lineTo(textWidth, canvas.height);
+          context.strokeStyle = 'red';
+          context.stroke();
+
+          // Adjust for letter spacing
+          const adjustedWidth = textWidth + parseFloat(style.letterSpacing);
           setPosition({
-            left: textWidth,
+            left: adjustedWidth,
             top: 0,
           });
         }
@@ -64,7 +86,6 @@ const Cursor = ({ targetRef }: { targetRef: React.RefObject<HTMLElement> }) => {
     updateCursorPosition();
     window.addEventListener("resize", updateCursorPosition);
 
-    // Add this line to update cursor position when text changes
     const observer = new MutationObserver(updateCursorPosition);
     if (targetRef.current) {
       observer.observe(targetRef.current, { childList: true, characterData: true, subtree: true });
@@ -77,18 +98,17 @@ const Cursor = ({ targetRef }: { targetRef: React.RefObject<HTMLElement> }) => {
   }, [targetRef]);
 
   return (
-    <span
-      ref={cursorRef}
-      className="pointer-events-none absolute left-0 top-0 h-full w-1 rounded-full bg-[#706c6c] transition-transform duration-100 ease-linear will-change-transform"
-      style={{ transform: `translateX(${position.left}px)` }}
-    />
+    <>
+      <span
+        ref={cursorRef}
+        className="pointer-events-none absolute left-0 top-0 h-full w-[2px] rounded-full bg-[#706c6c] transition-transform duration-100 ease-linear will-change-transform"
+        style={{ transform: `translateX(${position.left}px)` }}
+      />
+      <canvas
+        ref={canvasRef}
+        className="pointer-events-none absolute left-0 top-0 h-full w-full"
+        style={{ zIndex: 1000 , width: `${position.left}px` }}
+      />
+    </>
   );
 };
-
-function getTextWidth(text: string, font: string) {
-  const canvas = document.createElement("canvas");
-  const context = canvas.getContext("2d");
-  if (!context) return null;
-  context.font = font;
-  return context.measureText(text).width;
-}
