@@ -74,6 +74,8 @@ Use the `show` prop to show/hide the skeleton.
 
 ### Loading data from an API
 
+{/* prettier-ignore-start */}
+
 <ComponentPreview
   name="core/skeleton-api-simulation"
   preview={`const [status, setStatus] = React.useState<"idle" | "loading" | "error" | "success">("idle");
@@ -81,17 +83,20 @@ Use the `show` prop to show/hide the skeleton.
     {/* Simulate API call */}
   };
 
-return (
-<div>
-<Button isLoading={status === "loading"} onPress={apiCall}>
-Simulate API Call
-</Button>
-<Skeleton show={status === "loading"}>
-<p>Some text loaded from API.</p>
-</Skeleton>
-</div>
-);`}
+  return (
+    <div>
+      <Button isLoading={status === "loading"} onPress={apiCall}>
+        Simulate API Call
+      </Button>
+      <Skeleton show={status === "loading"}>
+        <p>Some text loaded from API.</p>
+      </Skeleton>
+    </div>
+  );`}
 />
+
+{/* prettier-ignore-end */}
+
 
 ### Wrapping children with fixed size
 
