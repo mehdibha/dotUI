@@ -66,7 +66,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          "font-sans",
+          "font-sans antialiased",
           geistMono.variable,
           geistSans.variable,
           fontDisplay.variable,
