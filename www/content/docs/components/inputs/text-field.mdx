@@ -110,10 +110,10 @@ An `errorMessage` can be supplied to `TextField`, which will be displayed when t
 <ComponentPreview
   name="core/text-field-error-message"
   preview={`<TextField
-  label="Email"
-  isInvalid
-  errorMessage="This email is already taken."
-/>`}
+    label="Email"
+    isInvalid
+    errorMessage="This email is already taken."
+  />`}
 />
 
 ### Loading
@@ -174,14 +174,14 @@ Use the `value` and `onChange` props to control the value of the input.
 <ComponentPreview
   name="core/text-field-controlled"
   preview={`const [inputValue, setInputValue] = React.useState("Hello world!");
-return (
-  <TextField
-    value={inputValue}
-    onChange={(text) => {
-      setInputValue(text);
-    }}
-  />
-);`}
+  return (
+    <TextField
+      value={inputValue}
+      onChange={(text) => {
+        setInputValue(text);
+      }}
+    />
+  );`}
 />
 
 ## Composition
@@ -191,12 +191,12 @@ If you need to customize things further, you can drop down to the composition le
 <ComponentPreview
   name="core/text-field-composition"
   preview={`<TextFieldRoot>
-  <Label>Email</Label>
-  <InputRoot>
-    <Input />
-  </InputRoot>
-  <Description>Enter your email.</Description>
-</TextFieldRoot>`}
+    <Label>Email</Label>
+    <InputRoot>
+      <Input />
+    </InputRoot>
+    <Description>Enter your email.</Description>
+  </TextFieldRoot>`}
 />
 
 ## API Reference

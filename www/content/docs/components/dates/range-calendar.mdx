@@ -69,18 +69,18 @@ An `aria-label` must be provided to the `RangeCalendar` for accessibility. If it
 <ComponentPreview
   name="core/range-calendar-error-message"
   preview={`const [range, setRange] = React.useState({
-  start: today(getLocalTimeZone()),
-  end: today(getLocalTimeZone()).add({ weeks: 1, days: 3 }),
-});
-const isInvalid = range.end.compare(range.start) > 7;
-return (
-  <RangeCalendar
-    value={range}
-    onChange={setRange}
-    isInvalid={isInvalid}
-    errorMessage={isInvalid ? "Maximum stay duration is 1 week" : undefined}
-  />
-);`}
+    start: today(getLocalTimeZone()),
+    end: today(getLocalTimeZone()).add({ weeks: 1, days: 3 }),
+  });
+  const isInvalid = range.end.compare(range.start) > 7;
+  return (
+    <RangeCalendar
+      value={range}
+      onChange={setRange}
+      isInvalid={isInvalid}
+      errorMessage={isInvalid ? "Maximum stay duration is 1 week" : undefined}
+    />
+  );`}
 />
 
 ### Min and max values
@@ -101,23 +101,23 @@ Calendar supports marking certain dates as unavailable. These dates cannot be se
 <ComponentPreview
   name="core/range-calendar-unvailable-dates"
   preview={`const now = today(getLocalTimeZone());
-const disabledRanges = [
-  [now, now.add({ days: 5 })],
-  [now.add({ days: 14 }), now.add({ days: 16 })],
-  [now.add({ days: 23 }), now.add({ days: 24 })],
-];
+  const disabledRanges = [
+    [now, now.add({ days: 5 })],
+    [now.add({ days: 14 }), now.add({ days: 16 })],
+    [now.add({ days: 23 }), now.add({ days: 24 })],
+  ];
 
-const isDateUnavailable = (date: DateValue) =>
-  disabledRanges.some(
-    (interval) => date.compare(interval[0]) >= 0 && date.compare(interval[1]) <= 0
-  );
+  const isDateUnavailable = (date: DateValue) =>
+    disabledRanges.some(
+      (interval) => date.compare(interval[0]) >= 0 && date.compare(interval[1]) <= 0
+    );
 
-return (
-  <RangeCalendar
-    minValue={today(getLocalTimeZone())}
-    isDateUnavailable={isDateUnavailable}
-  />
-);`}
+  return (
+    <RangeCalendar
+      minValue={today(getLocalTimeZone())}
+      isDateUnavailable={isDateUnavailable}
+    />
+  );`}
 />
 
 {/* prettier-ignore-end */}
@@ -129,22 +129,22 @@ The `allowsNonContiguousRanges` prop enables a range to be selected even if ther
 <ComponentPreview
   name="core/range-calendar-non-contiguous-ranges"
   preview={`const now = today(getLocalTimeZone());
-const disabledRanges = [
-  [now, now.add({ days: 5 })],
-  [now.add({ days: 14 }), now.add({ days: 16 })],
-  [now.add({ days: 23 }), now.add({ days: 24 })],
-];
-const isDateUnavailable = (date: DateValue) =>
-  disabledRanges.some(
-    (interval) => date.compare(interval[0]) >= 0 && date.compare(interval[1]) <= 0
-  );
-return (
-  <RangeCalendar
-    minValue={today(getLocalTimeZone())}
-    isDateUnavailable={isDateUnavailable}
-    allowsNonContiguousRanges
-  />
-);`}
+  const disabledRanges = [
+    [now, now.add({ days: 5 })],
+    [now.add({ days: 14 }), now.add({ days: 16 })],
+    [now.add({ days: 23 }), now.add({ days: 24 })],
+  ];
+  const isDateUnavailable = (date: DateValue) =>
+    disabledRanges.some(
+      (interval) => date.compare(interval[0]) >= 0 && date.compare(interval[1]) <= 0
+    );
+  return (
+    <RangeCalendar
+      minValue={today(getLocalTimeZone())}
+      isDateUnavailable={isDateUnavailable}
+      allowsNonContiguousRanges
+    />
+  );`}
 />
 
 ### Visible months
@@ -181,12 +181,12 @@ The `isReadOnly` boolean prop makes the `RangeCalendar`'s value immutable. Unlik
 <ComponentPreview
   name="core/range-calendar-read-only"
   preview={`<RangeCalendar
-  isReadOnly
-  value={{
-    start: today(getLocalTimeZone()),
-    end: today(getLocalTimeZone()).add({ weeks: 1 }),
-  }}
-/>`}
+    isReadOnly
+    value={{
+      start: today(getLocalTimeZone()),
+      end: today(getLocalTimeZone()).add({ weeks: 1 }),
+    }}
+  />`}
 />
 
 ## Uncontrolled
@@ -205,10 +205,10 @@ The Range Calendar component can be controlled by passing the `value` and `onCha
 <ComponentPreview
   name="core/range-calendar-controlled"
   preview={`const [range, setRange] = React.useState<DateRange>({
-  start: today(getLocalTimeZone()),
-  end: today(getLocalTimeZone()).add({ weeks: 1 }),
-});
-return <RangeCalendar value={range} onChange={setRange} />`}
+    start: today(getLocalTimeZone()),
+    end: today(getLocalTimeZone()).add({ weeks: 1 }),
+  });
+  return <RangeCalendar value={range} onChange={setRange} />`}
 />
 
 ## Composition
@@ -218,28 +218,28 @@ If you need to customize things further, you can drop down to the composition le
 <ComponentPreview
   name="core/range-calendar-composition"
   preview={`<RangeCalendarRoot>
-  <CalendarHeader>
-    <Button slot="previous" variant="outline" shape="square" size="sm">
-      <ChevronLeftIcon />
-    </Button>
-    <Heading className="text-sm" />
-    <Button slot="next" variant="outline" shape="square" size="sm">
-      <ChevronRightIcon />
-    </Button>
-  </CalendarHeader>
-  <CalendarGrid>
-    <CalendarGridHeader>
-      {(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}
-    </CalendarGridHeader>
-    <CalendarGridBody>
-      {(date) => (
-        <CalendarCell date={date} range>
-          {({ formattedDate }) => <span className="z-20">{formattedDate}</span>}
-        </CalendarCell>
-      )}
-    </CalendarGridBody>
-  </CalendarGrid>
-</RangeCalendarRoot>`}
+    <CalendarHeader>
+      <Button slot="previous" variant="outline" shape="square" size="sm">
+        <ChevronLeftIcon />
+      </Button>
+      <Heading className="text-sm" />
+      <Button slot="next" variant="outline" shape="square" size="sm">
+        <ChevronRightIcon />
+      </Button>
+    </CalendarHeader>
+    <CalendarGrid>
+      <CalendarGridHeader>
+        {(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}
+      </CalendarGridHeader>
+      <CalendarGridBody>
+        {(date) => (
+          <CalendarCell date={date} range>
+            {({ formattedDate }) => <span className="z-20">{formattedDate}</span>}
+          </CalendarCell>
+        )}
+      </CalendarGridBody>
+    </CalendarGrid>
+  </RangeCalendarRoot>`}
 />
 
 ## API Reference

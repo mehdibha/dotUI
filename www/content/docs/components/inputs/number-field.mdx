@@ -60,40 +60,40 @@ The NumberField value can be formatted by using the `formatOptions` prop. format
 <ComponentPreview
   name="core/number-field-format-options"
   preview={`<NumberField
-  label="Decimal"
-  defaultValue={0}
-  formatOptions={{
-    signDisplay: "exceptZero",
-    minimumFractionDigits: 1,
-    maximumFractionDigits: 2,
-  }}
-/>
-<NumberField
-  label="Percentage"
-  defaultValue={0.05}
-  formatOptions={{
-    style: "percent",
-  }}
-/>
-<NumberField
-  label="Currency"
-  defaultValue={45}
-  formatOptions={{
-    style: "currency",
-    currency: "EUR",
-    currencyDisplay: "code",
-    currencySign: "accounting",
-  }}
-/>
-<NumberField
-  label="Unit"
-  defaultValue={4}
-  formatOptions={{
-    style: "unit",
-    unit: "inch",
-    unitDisplay: "long",
-  }}
-/>`}
+    label="Decimal"
+    defaultValue={0}
+    formatOptions={{
+      signDisplay: "exceptZero",
+      minimumFractionDigits: 1,
+      maximumFractionDigits: 2,
+    }}
+  />
+  <NumberField
+    label="Percentage"
+    defaultValue={0.05}
+    formatOptions={{
+      style: "percent",
+    }}
+  />
+  <NumberField
+    label="Currency"
+    defaultValue={45}
+    formatOptions={{
+      style: "currency",
+      currency: "EUR",
+      currencyDisplay: "code",
+      currencySign: "accounting",
+    }}
+  />
+  <NumberField
+    label="Unit"
+    defaultValue={4}
+    formatOptions={{
+      style: "unit",
+      unit: "inch",
+      unitDisplay: "long",
+    }}
+  />`}
 />
 
 ### Size
@@ -142,10 +142,10 @@ An `errorMessage` can be supplied to a `NumberField`, which will be displayed wh
 <ComponentPreview
   name="core/number-field-error-message"
   preview={`<NumberField
-  label="Width"
-  isInvalid
-  errorMessage="Please fill out this field."
-/>`}
+    label="Width"
+    isInvalid
+    errorMessage="Please fill out this field."
+  />`}
 />
 
 ### Disabled
@@ -205,20 +205,20 @@ If you need to customize things further, you can drop down to the composition le
 <ComponentPreview
   name="core/number-field-composition"
   preview={`<NumberFieldRoot>
-  <Label>Quantity</Label>
-  <Group className="flex items-center gap-2">
-    <Button slot="decrement">
-      <MinusIcon />
-    </Button>
-    <InputRoot>
-      <Input />
-    </InputRoot>
-    <Button slot="increment">
-      <PlusIcon />
-    </Button>
-  </Group>
-  <Description>Enter the disired quantity.</Description>
-</NumberFieldRoot>`}
+    <Label>Quantity</Label>
+    <Group className="flex items-center gap-2">
+      <Button slot="decrement">
+        <MinusIcon />
+      </Button>
+      <InputRoot>
+        <Input />
+      </InputRoot>
+      <Button slot="increment">
+        <PlusIcon />
+      </Button>
+    </Group>
+    <Description>Enter the disired quantity.</Description>
+  </NumberFieldRoot>`}
 />
 
 ## API Reference

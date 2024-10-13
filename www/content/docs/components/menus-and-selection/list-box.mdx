@@ -18,11 +18,11 @@ links:
 <ComponentPreview
   name="core/list-box-basic"
   preview={`<ListBox>
-  <Item>Next.js</Item>
-  <Item>Remix</Item>
-  <Item>Astro</Item>
-  <Item>Gatsby</Item>
-</ListBox>`}
+    <Item>Next.js</Item>
+    <Item>Remix</Item>
+    <Item>Astro</Item>
+    <Item>Gatsby</Item>
+  </ListBox>`}
 />
 
 ## Installation
@@ -66,10 +66,10 @@ Use the `orientation` prop to change the layout to a horizontal stack.
 <ComponentPreview
   name="core/list-box-horizontal"
   preview={`<ListBox orientation="horizontal" selectionMode="single">
-  <Item textValue="Read" label="Read" description="Read Only" />
-  <Item textValue="Write" label="Write" description="Read and Write Only" />
-  <Item textValue="Admin" label="Admin" description="Full access" />
-</ListBox>`}
+    <Item textValue="Read" label="Read" description="Read Only" />
+    <Item textValue="Write" label="Write" description="Read and Write Only" />
+    <Item textValue="Admin" label="Admin" description="Full access" />
+  </ListBox>`}
 />
 
 ### Layout
@@ -79,11 +79,11 @@ The `layout` prop can be set to `"grid"` to enable two-dimensional keyboard navi
 <ComponentPreview
   name="core/list-box-grid"
   preview={`<ListBox layout="grid">
-  <Item>Next.js</Item>
-  <Item>Remix</Item>
-  <Item>Astro</Item>
-  <Item>Gatsby</Item>
-</ListBox>`}
+    <Item>Next.js</Item>
+    <Item>Remix</Item>
+    <Item>Astro</Item>
+    <Item>Gatsby</Item>
+  </ListBox>`}
 />
 
 ### Selection mode
@@ -93,17 +93,17 @@ ListBox supports multiple selection modes. By default, selection is disabled, ho
 <ComponentPreview
   name="core/list-box-selection-mode"
   preview={`<ListBox selectionMode="single">
-  <Item>Next.js</Item>
-  <Item>Remix</Item>
-  <Item>Astro</Item>
-  <Item>Gatsby</Item>
-</ListBox>
-<ListBox selectionMode="multiple">
-  <Item>Next.js</Item>
-  <Item>Remix</Item>
-  <Item>Astro</Item>
-  <Item>Gatsby</Item>
-</ListBox>`}
+    <Item>Next.js</Item>
+    <Item>Remix</Item>
+    <Item>Astro</Item>
+    <Item>Gatsby</Item>
+  </ListBox>
+  <ListBox selectionMode="multiple">
+    <Item>Next.js</Item>
+    <Item>Remix</Item>
+    <Item>Astro</Item>
+    <Item>Gatsby</Item>
+  </ListBox>`}
 />
 
 ### Selection behavior
@@ -113,11 +113,11 @@ When `selectionBehavior` is set to `"replace"`, clicking a row with the mouse re
 <ComponentPreview
   name="core/list-box-selection-behavior"
   preview={`<ListBox selectionMode="multiple" selectionBehavior="replace">
-  <Item>Next.js</Item>
-  <Item>Remix</Item>
-  <Item>Astro</Item>
-  <Item>Gatsby</Item>
-</ListBox>`}
+    <Item>Next.js</Item>
+    <Item>Remix</Item>
+    <Item>Astro</Item>
+    <Item>Gatsby</Item>
+  </ListBox>`}
 />
 
 ### Loading
@@ -127,10 +127,10 @@ Use the `isLoading` prop to indicate that the list is loading.
 <ComponentPreview
   name="core/list-box-loading"
   preview={`<ListBox isLoading>
-  <Item>User 1</Item>
-  <Item>User 2</Item>
-  <Item>User 3</Item>
-</ListBox>`}
+    <Item>User 1</Item>
+    <Item>User 2</Item>
+    <Item>User 3</Item>
+  </ListBox>`}
 />
 
 ### Empty state
@@ -151,11 +151,11 @@ Use the `variant` prop to set the visual style of the item.
 <ComponentPreview
   name="core/list-box-item-variant"
   preview={`<ListBox>
-  <Item>View logs</Item>
-  <Item>Manage domains</Item>
-  <Item>Transfer project</Item>
-  <Item variant="danger">Delete project</Item>
-</ListBox>`}
+    <Item>View logs</Item>
+    <Item>Manage domains</Item>
+    <Item>Transfer project</Item>
+    <Item variant="danger">Delete project</Item>
+  </ListBox>`}
 />
 
 ### Label and description
@@ -165,10 +165,10 @@ By default, items in a ListBox are labeled by their text contents for accessibil
 <ComponentPreview
   name="core/list-box-label-and-description"
   preview={`<ListBox>
-  <Item textValue="Read" label="Read" description="Read Only" />
-  <Item textValue="Write" label="Write" description="Read and Write Only" />
-  <Item textValue="Admin" label="Admin" description="Full access" />
-</ListBox>`}
+    <Item textValue="Read" label="Read" description="Read Only" />
+    <Item textValue="Write" label="Write" description="Read and Write Only" />
+    <Item textValue="Admin" label="Admin" description="Full access" />
+  </ListBox>`}
 />
 
 ### Prefix and suffix
@@ -178,10 +178,10 @@ To add additional context for the item, such as icons, use the `prefix` and `suf
 <ComponentPreview
   name="core/list-box-prefix-and-suffix"
   preview={`<ListBox>
-  <Item label="New file" description="Create a new file" prefix={<PlusSquareIcon />} />
-  <Item label="Copy link" description="Copy the file link" prefix={<CopyIcon />} />
-  <Item label="Edit file" description="Allows you to edit the file" prefix={<SquarePenIcon />}/>
-</ListBox>`}
+    <Item label="New file" description="Create a new file" prefix={<PlusSquareIcon />} />
+    <Item label="Copy link" description="Copy the file link" prefix={<CopyIcon />} />
+    <Item label="Edit file" description="Allows you to edit the file" prefix={<SquarePenIcon />}/>
+  </ListBox>`}
 />
 
 ### Link
@@ -191,10 +191,10 @@ Items may be links to another page or website. This can be achieved by passing t
 <ComponentPreview
   name="core/list-box-links"
   preview={`<ListBox>
-  <Item href="https://github.com/mehdibha">GitHub</Item>
-  <Item href="https://linkedin.com/in/mehdibha">LinkedIn</Item>
-  <Item href="https://x.com/mehdibha_" target="_blank">X</Item>
-</ListBox>`}
+    <Item href="https://github.com/mehdibha">GitHub</Item>
+    <Item href="https://linkedin.com/in/mehdibha">LinkedIn</Item>
+    <Item href="https://x.com/mehdibha_" target="_blank">X</Item>
+  </ListBox>`}
 />
 
 ### Disabled
@@ -204,11 +204,11 @@ An `Item` can be disabled with the `isDisabled` prop.
 <ComponentPreview
   name="core/list-box-disabled-items"
   preview={`<ListBox>
-  <Item>Next.js</Item>
-  <Item>Remix</Item>
-  <Item isDisabled>Gatsby</Item>
-  <Item>Astro</Item>
-</ListBox>`}
+    <Item>Next.js</Item>
+    <Item>Remix</Item>
+    <Item isDisabled>Gatsby</Item>
+    <Item>Astro</Item>
+  </ListBox>`}
 />
 
 ## Sections
@@ -219,23 +219,23 @@ Sections without a `title` must provide an `aria-label` for accessibility.
 <ComponentPreview
   name="core/list-box-sections"
   preview={`<ListBox selectionMode="multiple">
-  <Section title="Sauces">
-    <Item id="signature-sauce">Signature sauce</Item>
-    <Item id="bbq-sauce">BBQ sauce</Item>
-    <Item id="honey-mustard">Honey mustard</Item>
-    <Item id="tartar-sauce">Tartar sauce</Item>
-  </Section>
-  <Section title="Cheese">
-    <Item id="pepperjack">Pepperjack</Item>
-    <Item id="mozzarella">Mozzarella</Item>
-    <Item id="blue-cheese">Blue cheese</Item>
-  </Section>
-  <Section title="Extras">
-    <Item id="bacon">Bacon</Item>
-    <Item id="sauteed-onions">Sauteed onions</Item>
-    <Item id="green-pepper">Green pepper</Item>
-  </Section>
-</ListBox>`}
+    <Section title="Sauces">
+      <Item id="signature-sauce">Signature sauce</Item>
+      <Item id="bbq-sauce">BBQ sauce</Item>
+      <Item id="honey-mustard">Honey mustard</Item>
+      <Item id="tartar-sauce">Tartar sauce</Item>
+    </Section>
+    <Section title="Cheese">
+      <Item id="pepperjack">Pepperjack</Item>
+      <Item id="mozzarella">Mozzarella</Item>
+      <Item id="blue-cheese">Blue cheese</Item>
+    </Section>
+    <Section title="Extras">
+      <Item id="bacon">Bacon</Item>
+      <Item id="sauteed-onions">Sauteed onions</Item>
+      <Item id="green-pepper">Green pepper</Item>
+    </Section>
+  </ListBox>`}
 />
 
 ## Separator
@@ -245,16 +245,16 @@ Separators may be added between items or sections in order to create non-labeled
 <ComponentPreview
   name="core/list-box-separator"
   preview={`<ListBox>
-  <Item>New...</Item>
-  <Item>Badges</Item>
-  <Separator />
-  <Item>Save</Item>
-  <Item>Save as...</Item>
-  <Item>Rename...</Item>
-  <Separator />
-  <Item>Page setup…</Item>
-  <Item>Print…</Item>
-</ListBox>`}
+    <Item>New...</Item>
+    <Item>Badges</Item>
+    <Separator />
+    <Item>Save</Item>
+    <Item>Save as...</Item>
+    <Item>Rename...</Item>
+    <Separator />
+    <Item>Page setup…</Item>
+    <Item>Print…</Item>
+  </ListBox>`}
 />
 
 ## Uncontrolled
@@ -264,14 +264,14 @@ Use `defaultSelectedKey` to set a default selected item.
 <ComponentPreview
   name="core/list-box-uncontrolled"
   preview={`<ListBox
-  selectionMode="multiple"
-  defaultSelectedKeys={["nextjs", "remix", "astro"]}
->
-  <Item id="nextjs">Next.js</Item>
-  <Item id="remix">Remix</Item>
-  <Item id="astro">Astro</Item>
-  <Item id="gatsby">Gatsby</Item>
-</ListBox>`}
+    selectionMode="multiple"
+    defaultSelectedKeys={["nextjs", "remix", "astro"]}
+  >
+    <Item id="nextjs">Next.js</Item>
+    <Item id="remix">Remix</Item>
+    <Item id="astro">Astro</Item>
+    <Item id="gatsby">Gatsby</Item>
+  </ListBox>`}
 />
 
 ## Controlled
@@ -281,18 +281,18 @@ Use `selectedKey` and `onChange` props to control the selected item.
 <ComponentPreview
   name="core/list-box-controlled"
   preview={`const [selected, setSelected] = React.useState<Selection>(new Set(["nextjs", "remix", "astro"]));
-return (
-  <ListBox
-    selectionMode="multiple"
-    selectedKeys={selected}
-    onSelectionChange={setSelected}
-  >
-    <Item id="nextjs">Next.js</Item>
-    <Item id="remix">Remix</Item>
-    <Item id="astro">Astro</Item>
-    <Item id="gatsby">Gatsby</Item>
-  </ListBox>
-)`}
+  return (
+    <ListBox
+      selectionMode="multiple"
+      selectedKeys={selected}
+      onSelectionChange={setSelected}
+    >
+      <Item id="nextjs">Next.js</Item>
+      <Item id="remix">Remix</Item>
+      <Item id="astro">Astro</Item>
+      <Item id="gatsby">Gatsby</Item>
+    </ListBox>
+  )`}
 />
 
 ## Composition
@@ -302,19 +302,19 @@ If you need to customize things further, you can drop down to the composition le
 <ComponentPreview
   name="core/list-box-composition"
   preview={`<ListBox selectionMode="multiple">
-  <Item>
-    <Text slot="label">Next.js</Text>
-    <Text slot="description">React-based SSR and static site framework.</Text>
-  </Item>
-  <Item>
-    <Text slot="label">Remix</Text>
-    <Text slot="description">Full-stack framework with efficient data loading.</Text>
-  </Item>
-  <Item>
-    <Text slot="label">Astro</Text>
-    <Text slot="description">Lightweight static site builder for performance.</Text>
-  </Item>
-</ListBox>`}
+    <Item>
+      <Text slot="label">Next.js</Text>
+      <Text slot="description">React-based SSR and static site framework.</Text>
+    </Item>
+    <Item>
+      <Text slot="label">Remix</Text>
+      <Text slot="description">Full-stack framework with efficient data loading.</Text>
+    </Item>
+    <Item>
+      <Text slot="label">Astro</Text>
+      <Text slot="description">Lightweight static site builder for performance.</Text>
+    </Item>
+  </ListBox>`}
 />
 
 ## Examples
@@ -328,25 +328,25 @@ This example uses the `useAsyncList` hook to handle asynchronous loading of data
 <ComponentPreview 
   name="core/list-box-async-loading"
   preview={`const list = useAsyncList<Character>({
-  async load({ signal }) {
-    const res = await fetch(\`https://pokeapi.co/api/v2/pokemon\`, { signal })
-    const json = (await res.json()) as { results: Character[] }
-    return {
-      items: json.results,
+    async load({ signal }) {
+      const res = await fetch(\`https://pokeapi.co/api/v2/pokemon\`, { signal })
+      const json = (await res.json()) as { results: Character[] }
+      return {
+        items: json.results,
+      }
     }
-  }
-})
+  })
 
-return (
-  <ListBox
-    aria-label="Pick a Pokemon"
-    items={list.items}
-    isLoading={list.isLoading}
-    selectionMode="single"
-  >
-    {(item) => <Item id={item.name}>{item.name}</Item>}
-  </ListBox>
-)`} 
+  return (
+    <ListBox
+      aria-label="Pick a Pokemon"
+      items={list.items}
+      isLoading={list.isLoading}
+      selectionMode="single"
+    >
+      {(item) => <Item id={item.name}>{item.name}</Item>}
+    </ListBox>
+  )`} 
 />
 
 {/* prettier-ignore-end */}

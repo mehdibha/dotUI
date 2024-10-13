@@ -98,9 +98,9 @@ A `ContextualHelp` element may be placed next to the label to provide additional
 <ComponentPreview
   name="core/time-field-contextual-help"
   preview={`<TimeField
-  label="Appointment"
-  contextualHelp={<ContextualHelp />  }
-/>`}
+    label="Appointment"
+    contextualHelp={<ContextualHelp />  }
+  />`}
 />
 
 ### Error message
@@ -146,9 +146,9 @@ Use the `hideTimeZone` prop to hide the time zone abbreviation.
 <ComponentPreview
   name="core/time-field-hide-time-zone"
   preview={`<TimeField
-  defaultValue={parseZonedDateTime("2022-11-07T10:45[America/Los_Angeles]")}
-  hideTimeZone
-/>`}
+    defaultValue={parseZonedDateTime("2022-11-07T10:45[America/Los_Angeles]")}
+    hideTimeZone
+  />`}
 />
 
 ### Hour cycle
@@ -228,12 +228,12 @@ If you need to customize things further, you can drop down to the composition le
 <ComponentPreview
   name="core/time-field-composition"
   preview={`<TimeFieldRoot>
-  <Label>Meeting time</Label>
-  <InputRoot>
-    <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
-  </InputRoot>
-  <Description>Please select a time between 9 AM and 5 PM.</Description>
-</TimeFieldRoot>`}
+    <Label>Meeting time</Label>
+    <InputRoot>
+      <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
+    </InputRoot>
+    <Description>Please select a time between 9 AM and 5 PM.</Description>
+  </TimeFieldRoot>`}
 />
 
 ## API Reference

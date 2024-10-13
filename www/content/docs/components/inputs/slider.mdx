@@ -95,10 +95,10 @@ The `valueLabel` boolean prop can be used to display the current value of the sl
 <ComponentPreview
   name="core/slider-value-label"
   preview={`<Slider label="Donuts to buy" valueLabel />
-<Slider
-  label="Donuts to buy"
-  valueLabel={(donuts) => \`\${donuts[0]} of 100 Donuts\`}
-/>`}
+  <Slider
+    label="Donuts to buy"
+    valueLabel={(donuts) => \`\${donuts[0]} of 100 Donuts\`}
+  />`}
 />
 
 ### Value scale
@@ -154,28 +154,28 @@ If you need to customize things further, you can drop down to the composition le
 <ComponentPreview
   name="core/slider-composition"
   preview={`<SliderRoot>
-  <div>
-    <Label>Volume</Label>
-    <SliderValueLabel />
-  </div>
-  <SliderControls />
-</SliderRoot>`}
+    <div>
+      <Label>Volume</Label>
+      <SliderValueLabel />
+    </div>
+    <SliderControls />
+  </SliderRoot>`}
 />
 
 <ComponentPreview
   name="core/slider-advanced-composition"
   preview={`<SliderRoot>
-  <Label>Volume</Label>
-  <SliderValueLabel />
-  <div>
-    <Volume1Icon />
-    <SliderTrack>
-      <SliderFiller />
-      <SliderThumb />
-    </SliderTrack>
-    <Volume2Icon />
-  </div>
-</SliderRoot>`}
+    <Label>Volume</Label>
+    <SliderValueLabel />
+    <div>
+      <Volume1Icon />
+      <SliderTrack>
+        <SliderFiller />
+        <SliderThumb />
+      </SliderTrack>
+      <Volume2Icon />
+    </div>
+  </SliderRoot>`}
 />
 
 ## Uncontrolled
