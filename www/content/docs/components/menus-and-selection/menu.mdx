@@ -18,14 +18,14 @@ links:
 <ComponentPreview
   name="core/menu-basic"
   preview={`<MenuRoot>
-  <Button><MenuIcon /></Button>
-  <Menu>
-    <MenuItem>Account settings</MenuItem>
-    <MenuItem>Create team</MenuItem>
-    <MenuItem>Command menu</MenuItem>
-    <MenuItem>Log out</MenuItem>
-  </Menu>
-</MenuRoot>`}
+    <Button><MenuIcon /></Button>
+    <Menu>
+      <MenuItem>Account settings</MenuItem>
+      <MenuItem>Create team</MenuItem>
+      <MenuItem>Command menu</MenuItem>
+      <MenuItem>Log out</MenuItem>
+    </Menu>
+  </MenuRoot>`}
 />
 
 ## Installation
@@ -68,14 +68,14 @@ Use the `type` prop to set the overlay type. The default is `"popover"`. You can
 <ComponentPreview
   name="core/menu-overlay-type"
   preview={`<MenuRoot>
-  <Button><MenuIcon /></Button>
-  <Menu type={type} mobileType={mobileType}>
-    <MenuItem>Account settings</MenuItem>
-    <MenuItem>Create team</MenuItem>
-    <MenuItem>Command menu</MenuItem>
-    <MenuItem>Log out</MenuItem>
-  </Menu>
-</MenuRoot>`}
+    <Button><MenuIcon /></Button>
+    <Menu type={type} mobileType={mobileType}>
+      <MenuItem>Account settings</MenuItem>
+      <MenuItem>Create team</MenuItem>
+      <MenuItem>Command menu</MenuItem>
+      <MenuItem>Log out</MenuItem>
+    </Menu>
+  </MenuRoot>`}
 />
 
 ### Position
@@ -85,15 +85,13 @@ Use the `placement` prop to set the position of the menu relative to the trigger
 <ComponentPreview
   name="core/menu-placement"
   preview={`<MenuRoot>
-  <Button>
-    <MenuIcon />
-  </Button>
-  <Menu placement={placement}>
-    <MenuItem>Account settings</MenuItem>
-    <MenuItem>Create team</MenuItem>
-    <MenuItem>Log out</MenuItem>
-  </Menu>
-</MenuRoot>`}
+    <Button><MenuIcon /></Button>
+    <Menu placement={placement}>
+      <MenuItem>Account settings</MenuItem>
+      <MenuItem>Create team</MenuItem>
+      <MenuItem>Log out</MenuItem>
+    </Menu>
+  </MenuRoot>`}
 />
 
 ### Selection mode
@@ -105,16 +103,16 @@ Set the `selectionMode` prop to `single` for single selection.
 <ComponentPreview
   name="core/menu-single-selection"
   preview={`const [selected, setSelected] = React.useState<Selection>(new Set(["center"]));
-return (
-  <MenuRoot>
-    <Button>Align</Button>
-    <Menu selectionMode="single" selectedKeys={selected} onSelectionChange={setSelected}>
-      <MenuItem id="start">Start</MenuItem>
-      <MenuItem id="center">Center</MenuItem>
-      <MenuItem id="end">End</MenuItem>
-    </Menu>
-  </MenuRoot>
-);`}
+  return (
+    <MenuRoot>
+      <Button>Align</Button>
+      <Menu selectionMode="single" selectedKeys={selected} onSelectionChange={setSelected}>
+        <MenuItem id="start">Start</MenuItem>
+        <MenuItem id="center">Center</MenuItem>
+        <MenuItem id="end">End</MenuItem>
+      </Menu>
+    </MenuRoot>
+  );`}
 />
 
 #### Multiple selection
@@ -124,14 +122,14 @@ Set the `selectionMode` prop to `multiple` for multiple selection.
 <ComponentPreview
   name="core/menu-multiple-selection"
   preview={`<MenuRoot>
-  <Button>Panels</Button>
-  <Menu selectionMode="multiple" defaultSelectedKeys={["sidebar", "searchbar", "console"]}>
-    <MenuItem id="sidebar">Sidebar</MenuItem>
-    <MenuItem id="searchbar">Searchbar</MenuItem>
-    <MenuItem id="tools">Tools</MenuItem>
-    <MenuItem id="console">Console</MenuItem>
-  </Menu>
-</MenuRoot>`}
+    <Button>Panels</Button>
+    <Menu selectionMode="multiple" defaultSelectedKeys={["sidebar", "searchbar", "console"]}>
+      <MenuItem id="sidebar">Sidebar</MenuItem>
+      <MenuItem id="searchbar">Searchbar</MenuItem>
+      <MenuItem id="tools">Tools</MenuItem>
+      <MenuItem id="console">Console</MenuItem>
+    </Menu>
+  </MenuRoot>`}
 />
 
 ## MenuItem options
@@ -143,14 +141,14 @@ Use the `variant` prop to set the visual style of the menu item.
 <ComponentPreview
   name="core/menu-item-variant"
   preview={`<MenuRoot>
-  <Button><MenuIcon /></Button>
-  <Menu>
-    <MenuItem>Account settings</MenuItem>
-    <MenuItem>Create team</MenuItem>
-    <MenuItem>Command menu</MenuItem>
-    <MenuItem variant="danger">Delete</MenuItem>
-  </Menu>
-</MenuRoot>`}
+    <Button><MenuIcon /></Button>
+    <Menu>
+      <MenuItem>Account settings</MenuItem>
+      <MenuItem>Create team</MenuItem>
+      <MenuItem>Command menu</MenuItem>
+      <MenuItem variant="danger">Delete</MenuItem>
+    </Menu>
+  </MenuRoot>`}
 />
 
 ### Label and description
@@ -160,13 +158,13 @@ MenuItems also support the `"label"` and `"description"` slots to separate prima
 <ComponentPreview
   name="core/menu-label-and-description"
   preview={`<MenuRoot>
-  <Button><MenuIcon /></Button>
-  <Menu>
-    <MenuItem label="New file" description="Create a new file" />
-    <MenuItem label="Copy link" description="Copy the file link" />
-    <MenuItem label="Edit file" description="Allows you to edit the file" />
-  </Menu>
-</MenuRoot>`}
+    <Button><MenuIcon /></Button>
+    <Menu>
+      <MenuItem label="New file" description="Create a new file" />
+      <MenuItem label="Copy link" description="Copy the file link" />
+      <MenuItem label="Edit file" description="Allows you to edit the file" />
+    </Menu>
+  </MenuRoot>`}
 />
 
 ### Prefix and suffix
@@ -176,13 +174,13 @@ To add additional context for the menu item, such as icons, use the `prefix` and
 <ComponentPreview
   name="core/menu-prefix-and-suffix"
   preview={`<MenuRoot>
-  <Button><MenuIcon /></Button>
-  <Menu>
-    <MenuItem label="New file" description="Create a new file" prefix={<PlusSquareIcon />} />
-    <MenuItem label="Copy link" description="Copy the file link" prefix={<CopyIcon />} />
-    <MenuItem label="Edit file" description="Allows you to edit the file" prefix={<SquarePenIcon />} />
-  </Menu>
-</MenuRoot>`}
+    <Button><MenuIcon /></Button>
+    <Menu>
+      <MenuItem label="New file" description="Create a new file" prefix={<PlusSquareIcon />} />
+      <MenuItem label="Copy link" description="Copy the file link" prefix={<CopyIcon />} />
+      <MenuItem label="Edit file" description="Allows you to edit the file" prefix={<SquarePenIcon />} />
+    </Menu>
+  </MenuRoot>`}
 />
 
 ### Keyboard shortcut
@@ -192,13 +190,13 @@ Use the `shortcut` prop to add a keyboard shortcut to a menu item, or use the `K
 <ComponentPreview
   name="core/menu-shortcut"
   preview={`<MenuRoot>
-  <Button><MenuIcon /></Button>
-  <Menu>
-    <MenuItem shortcut="⌘N">New file</MenuItem>
-    <MenuItem shortcut="⌘C">Copy link</MenuItem>
-    <MenuItem shortcut="⌘⇧E">Edit file</MenuItem>
-  </Menu>
-</MenuRoot>`}
+    <Button><MenuIcon /></Button>
+    <Menu>
+      <MenuItem shortcut="⌘N">New file</MenuItem>
+      <MenuItem shortcut="⌘C">Copy link</MenuItem>
+      <MenuItem shortcut="⌘⇧E">Edit file</MenuItem>
+    </Menu>
+  </MenuRoot>`}
 />
 
 ### Link
@@ -208,19 +206,19 @@ Alternatively, items may be links to another page or website. This can be achiev
 <ComponentPreview
   name="core/menu-link-items"
   preview={`<MenuRoot>
-  <Button>Social</Button>
-  <Menu>
-    <MenuItem prefix={<GitHubIcon />} href="https://github.com/mehdibha/dotUI">
-      Github
-    </MenuItem>
-    <MenuItem prefix={<TwitterIcon />} href="https://x.com/mehdibha_">
-      X
-    </MenuItem>
-    <MenuItem prefix={<DiscordIcon />} href="https://discord.com/invite/DXpj5V2fU8">
-      Discord
-    </MenuItem>
-  </Menu>
-</MenuRoot>`}
+    <Button>Social</Button>
+    <Menu>
+      <MenuItem prefix={<GitHubIcon />} href="https://github.com/mehdibha/dotUI">
+        Github
+      </MenuItem>
+      <MenuItem prefix={<TwitterIcon />} href="https://x.com/mehdibha_">
+        X
+      </MenuItem>
+      <MenuItem prefix={<DiscordIcon />} href="https://discord.com/invite/DXpj5V2fU8">
+        Discord
+      </MenuItem>
+    </Menu>
+  </MenuRoot>`}
 />
 
 ### Disabled
@@ -230,15 +228,15 @@ A MenuItem can be disabled with the `isDisabled` prop.
 <ComponentPreview
   name="core/menu-disabled-items"
   preview={`<MenuRoot>
-  <Button><MenuIcon /></Button>
-  <Menu>
-    <MenuItem>Account settings</MenuItem>
-    <MenuItem prefix={<PlusSquareIcon />} isDisabled>
-      Create team
-    </MenuItem>
-    <MenuItem>Log out</MenuItem>
-  </Menu>
-</MenuRoot>`}
+    <Button><MenuIcon /></Button>
+    <Menu>
+      <MenuItem>Account settings</MenuItem>
+      <MenuItem prefix={<PlusSquareIcon />} isDisabled>
+        Create team
+      </MenuItem>
+      <MenuItem>Log out</MenuItem>
+    </Menu>
+  </MenuRoot>`}
 />
 
 ## MenuRoot options
@@ -250,13 +248,13 @@ By default, Menu opens by pressing the trigger element or activating it via the 
 <ComponentPreview
   name="core/menu-long-press"
   preview={`<MenuRoot trigger="longPress">
-  <Button><MenuIcon /></Button>
-  <Menu>
-    <MenuItem>Account settings</MenuItem>
-    <MenuItem>Create team</MenuItem>
-    <MenuItem>Log out</MenuItem>
-  </Menu>
-</MenuRoot>`}
+    <Button><MenuIcon /></Button>
+    <Menu>
+      <MenuItem>Account settings</MenuItem>
+      <MenuItem>Create team</MenuItem>
+      <MenuItem>Log out</MenuItem>
+    </Menu>
+  </MenuRoot>`}
 />
 
 ## Sections
@@ -267,19 +265,19 @@ A `Header` element may also be included to label the section or using the `title
 <ComponentPreview
   name="core/menu-section"
   preview={`<MenuRoot>
-  <Button><MenuIcon /></Button>
-  <Menu>
-    <Section title="Notifications">
-      <MenuItem>Push notifications</MenuItem>
-      <MenuItem>Badges</MenuItem>
-    </Section>
-    <Separator />
-    <Section title="Panels">
-      <MenuItem id="console">Console</MenuItem>
-      <MenuItem>Search</MenuItem>
-    </Section>
-  </Menu>
-</MenuRoot>`}
+    <Button><MenuIcon /></Button>
+    <Menu>
+      <Section title="Notifications">
+        <MenuItem>Push notifications</MenuItem>
+        <MenuItem>Badges</MenuItem>
+      </Section>
+      <Separator />
+      <Section title="Panels">
+        <MenuItem id="console">Console</MenuItem>
+        <MenuItem>Search</MenuItem>
+      </Section>
+    </Menu>
+  </MenuRoot>`}
 />
 
 ## Separator
@@ -289,19 +287,19 @@ Separators may be added between menu items or sections in order to create non-la
 <ComponentPreview
   name="core/menu-separator"
   preview={`<MenuRoot>
-  <Button><MenuIcon /></Button>
-  <Menu>
-    <MenuItem>New...</MenuItem>
-    <MenuItem>Badges</MenuItem>
-    <Separator />
-    <MenuItem>Save</MenuItem>
-    <MenuItem>Save as...</MenuItem>
-    <MenuItem>Rename...</MenuItem>
-    <Separator />
-    <MenuItem>Page setup…</MenuItem>
-    <MenuItem>Print…</MenuItem>
-  </Menu>
-</MenuRoot>`}
+    <Button><MenuIcon /></Button>
+    <Menu>
+      <MenuItem>New...</MenuItem>
+      <MenuItem>Badges</MenuItem>
+      <Separator />
+      <MenuItem>Save</MenuItem>
+      <MenuItem>Save as...</MenuItem>
+      <MenuItem>Rename...</MenuItem>
+      <Separator />
+      <MenuItem>Page setup…</MenuItem>
+      <MenuItem>Print…</MenuItem>
+    </Menu>
+  </MenuRoot>`}
 />
 
 ## Submenus
@@ -311,25 +309,25 @@ Submenus can be created by wrapping a `MenuItem` and a `Menu` in a `MenuSub`.
 <ComponentPreview
   name="core/menu-submenus"
   preview={`<MenuRoot>
-  <Button><MenuIcon /></Button>
-  <Menu>
-    <MenuItem>Account settings</MenuItem>
-    <MenuSub>
-      <MenuItem>Invite users</MenuItem>
-      <Menu>
-        <MenuItem>SMS</MenuItem>
-        <MenuItem>Twitter</MenuItem>
-        <MenuSub>
-          <MenuItem>Email</MenuItem>
-          <Menu>
-            <MenuItem>Work</MenuItem>
-            <MenuItem>Personal</MenuItem>
-          </Menu>
-        </MenuSub>
-      </Menu>
-    </MenuSub>
-  </Menu>
-</MenuRoot>`}
+    <Button><MenuIcon /></Button>
+    <Menu>
+      <MenuItem>Account settings</MenuItem>
+      <MenuSub>
+        <MenuItem>Invite users</MenuItem>
+        <Menu>
+          <MenuItem>SMS</MenuItem>
+          <MenuItem>Twitter</MenuItem>
+          <MenuSub>
+            <MenuItem>Email</MenuItem>
+            <Menu>
+              <MenuItem>Work</MenuItem>
+              <MenuItem>Personal</MenuItem>
+            </Menu>
+          </MenuSub>
+        </Menu>
+      </MenuSub>
+    </Menu>
+  </MenuRoot>`}
 />
 
 ## Controlled
@@ -339,16 +337,16 @@ The open state can be controlled via `isOpen` and `onOpenChange` props.
 <ComponentPreview
   name="core/menu-controlled"
   preview={`const [isOpen, setOpen] = React.useState(false);
-return (
-  <MenuRoot isOpen={isOpen} onOpenChange={setOpen}>
-    <Button><MenuIcon /></Button>
-    <Menu>
-      <MenuItem>Account settings</MenuItem>
-      <MenuItem>Create team</MenuItem>
-      <MenuItem>Log out</MenuItem>
-    </Menu>
-  </MenuRoot>
-)`}
+  return (
+    <MenuRoot isOpen={isOpen} onOpenChange={setOpen}>
+      <Button><MenuIcon /></Button>
+      <Menu>
+        <MenuItem>Account settings</MenuItem>
+        <MenuItem>Create team</MenuItem>
+        <MenuItem>Log out</MenuItem>
+      </Menu>
+    </MenuRoot>
+  )`}
 />
 
 ## Composition
@@ -358,18 +356,18 @@ If you need to customize things further, you can drop down to the composition le
 <ComponentPreview
   name="core/menu-composition"
   preview={`<MenuRoot>
-  <Button>
-    <MenuIcon />
-  </Button>
-  <Overlay type="popover" mobileType="drawer">
-    <MenuContent>
-      <MenuItem>Account settings</MenuItem>
-      <MenuItem>Create team</MenuItem>
-      <MenuItem>Command menu</MenuItem>
-      <MenuItem>Log out</MenuItem>
-    </MenuContent>
-  </Overlay>
-</MenuRoot>`}
+    <Button>
+      <MenuIcon />
+    </Button>
+    <Overlay type="popover" mobileType="drawer">
+      <MenuContent>
+        <MenuItem>Account settings</MenuItem>
+        <MenuItem>Create team</MenuItem>
+        <MenuItem>Command menu</MenuItem>
+        <MenuItem>Log out</MenuItem>
+      </MenuContent>
+    </Overlay>
+  </MenuRoot>`}
 />
 
 ## API Reference

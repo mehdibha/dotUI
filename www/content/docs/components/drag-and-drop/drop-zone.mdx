@@ -17,9 +17,7 @@ links:
 
 <ComponentPreview
   name="core/drop-zone-default"
-  preview={`<DropZone>
-  <UploadIcon />
-</DropZone>`}
+  preview={`<DropZone><UploadIcon /></DropZone>`}
 />
 
 ## Installation
@@ -58,12 +56,12 @@ A visual label can be provided for the `DropZone` using the `<Text slot="label">
 <ComponentPreview
   name="core/drop-zone-label"
   preview={`<DropZone aria-label="drag and drop files here">
-  <UploadIcon />
-</DropZone>
-<DropZone>
-  <UploadIcon />
-  <DropZoneLabel>Drag and drop files here</DropZoneLabel>
-</DropZone>`}
+    <UploadIcon />
+  </DropZone>
+  <DropZone>
+    <UploadIcon />
+    <DropZoneLabel>Drag and drop files here</DropZoneLabel>
+  </DropZone>`}
 />
 
 ### Disabled
@@ -73,9 +71,9 @@ Use the `isDisabled` prop to disable the drop zone.
 <ComponentPreview
   name="core/drop-zone-disabled"
   preview={`<DropZone isDisabled>
-  <UploadIcon />
-  <Text slot="label">Drag and drop files here</Text>
-</DropZone>`}
+    <UploadIcon />
+    <Text slot="label">Drag and drop files here</Text>
+  </DropZone>`}
 />
 
 ## Examples
@@ -85,12 +83,12 @@ Use the `isDisabled` prop to disable the drop zone.
 <ComponentPreview
   name="core/drop-zone-file-trigger"
   preview={`<DropZone>
-  <UploadIcon />
-  <Text slot="label">Drag and drop files here</Text>
-  <FileTrigger>
-    <Button>Select files</Button>
-  </FileTrigger>
-</DropZone>`}
+    <UploadIcon />
+    <Text slot="label">Drag and drop files here</Text>
+    <FileTrigger>
+      <Button>Select files</Button>
+    </FileTrigger>
+  </DropZone>`}
 />
 
 ## API Reference

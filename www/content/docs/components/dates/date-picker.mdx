@@ -106,10 +106,10 @@ An `errorMessage` can be supplied to a `DatePicker`, which will be displayed whe
 <ComponentPreview
   name="core/date-picker-error-message"
   preview={`<DatePicker
-  label="Meeting"
-  isInvalid
-  errorMessage="Meetings can't be scheduled in the past."
-/>`}
+    label="Meeting"
+    isInvalid
+    errorMessage="Meetings can't be scheduled in the past."
+  />`}
 />
 
 ### Time zones
@@ -128,20 +128,20 @@ The `granularity` prop allows you to control the smallest unit that is displayed
 <ComponentPreview
   name="core/date-picker-granularity"
   preview={`<DatePicker
-  label="Hour"
-  granularity="hour"
-  defaultValue={parseAbsoluteToLocal("2021-04-07T18:45:22Z")}
-/>
-<DatePicker
-  label="Minute"
-  granularity="minute"
-  defaultValue={parseAbsoluteToLocal("2021-04-07T18:45:22Z")}
-/>
-<DatePicker
-  label="Second"
-  granularity="second"
-  defaultValue={parseAbsoluteToLocal("2021-04-07T18:45:22Z")}
-/>`}
+    label="Hour"
+    granularity="hour"
+    defaultValue={parseAbsoluteToLocal("2021-04-07T18:45:22Z")}
+  />
+  <DatePicker
+    label="Minute"
+    granularity="minute"
+    defaultValue={parseAbsoluteToLocal("2021-04-07T18:45:22Z")}
+  />
+  <DatePicker
+    label="Second"
+    granularity="second"
+    defaultValue={parseAbsoluteToLocal("2021-04-07T18:45:22Z")}
+  />`}
 />
 
 ### Placeholder value
@@ -160,11 +160,11 @@ Use the `hideTimeZone` prop to hide the time zone abbreviation.
 <ComponentPreview
   name="core/date-picker-hide-time-zone"
   preview={`<DatePicker
-  label="Appointment time"
-  granularity="minute"
-  defaultValue={parseZonedDateTime("2022-11-07T10:45[America/Los_Angeles]")}
-  hideTimeZone
-/>`}
+    label="Appointment time"
+    granularity="minute"
+    defaultValue={parseZonedDateTime("2022-11-07T10:45[America/Los_Angeles]")}
+    hideTimeZone
+  />`}
 />
 
 ### Hour cycle
@@ -242,18 +242,18 @@ If you need to customize things further, you can drop down to the composition le
 <ComponentPreview
   name="core/date-picker-composition"
   preview={`<DatePickerRoot>
-  <Label>Meeting date</Label>
-  <InputRoot suffix={<Button><CalendarIcon /></Button>}>
-    <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
-  </InputRoot>
-  <Description>Please select a date.</Description>
-  <FieldError />
-  <Overlay type="popover">
-    <DialogContent>
-      <Calendar />
-    </DialogContent>
-  </Overlay>
-</DatePickerRoot>`}
+    <Label>Meeting date</Label>
+    <InputRoot suffix={<Button><CalendarIcon /></Button>}>
+      <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
+    </InputRoot>
+    <Description>Please select a date.</Description>
+    <FieldError />
+    <Overlay type="popover">
+      <DialogContent>
+        <Calendar />
+      </DialogContent>
+    </Overlay>
+  </DatePickerRoot>`}
 />
 
 ## API Reference

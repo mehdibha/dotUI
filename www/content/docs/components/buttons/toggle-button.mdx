@@ -17,7 +17,9 @@ links:
 
 <ComponentPreview
   name="core/toggle-button-default"
-  preview={`<ToggleButton><PinIcon /></ToggleButton>`}
+  preview={`<ToggleButton>
+    <PinIcon />
+  </ToggleButton>`}
 />
 
 ## Installation
@@ -115,11 +117,11 @@ Use the `isSelected` and `onChange` props to control the state of the toggle but
 <ComponentPreview
   name="core/toggle-button-controlled"
   preview={`const [isSelected, setSelected] = React.useState(true);
-return (
-  <ToggleButton isSelected={isSelected} onChange={setSelected}>
-    <PinIcon className="rotate-45" />
-  </ToggleButton>
-);`}
+  return (
+    <ToggleButton isSelected={isSelected} onChange={setSelected}>
+      <PinIcon className="rotate-45" />
+    </ToggleButton>
+  );`}
 />
 
 ## API Reference

@@ -60,11 +60,11 @@ To add additional context for the `TextArea`, use the `prefix` and `suffix` prop
 <ComponentPreview
   name="core/text-area-prefix-and-suffix"
   preview={`<TextArea
-  label="Comment"
-  placeholder="type something here"
-  prefix={<Emojis />}
-  suffix={<Toolbar />}
-/>`}
+    label="Comment"
+    placeholder="type something here"
+    prefix={<Emojis />}
+    suffix={<Toolbar />}
+  />`}
 />
 
 ### Label
@@ -74,7 +74,7 @@ A visual label can be provided for the `TextArea` using the label prop or a hidd
 <ComponentPreview
   name="core/text-area-label"
   preview={`<TextArea label="Description" />
-<TextArea aria-label="Description" />`}
+  <TextArea aria-label="Description" />`}
 />
 
 ### Description
@@ -102,10 +102,10 @@ An `errorMessage` can be supplied to a TextArea, which will be displayed when th
 <ComponentPreview
   name="core/text-area-error-message"
   preview={`<TextArea 
-  label="Comment"
-  isInvalid
-  errorMessage="You have exceeded the comment limit for one hour." 
-/>`}
+    label="Comment"
+    isInvalid
+    errorMessage="You have exceeded the comment limit for one hour." 
+  />`}
 />
 
 ### Loading
@@ -163,15 +163,15 @@ Use the `value` and `onChange` props to control the value of the input.
 <ComponentPreview
   name="core/text-area-controlled"
   preview={`const [inputValue, setInputValue] = React.useState("Roses are red, violets are blue.");
-return (
-  <TextArea
-    label="Essay"
-    value={inputValue}
-    onChange={(text) => {
-      setInputValue(text);
-    }}
-  />
-);`}
+  return (
+    <TextArea
+      label="Essay"
+      value={inputValue}
+      onChange={(text) => {
+        setInputValue(text);
+      }}
+    />
+  );`}
 />
 
 ## Composition
@@ -181,12 +181,12 @@ If you need to customize things further, you can drop down to the composition le
 <ComponentPreview
   name="core/text-area-composition"
   preview={`<TextFieldRoot>
-  <Label>Comment</Label>
-  <InputRoot>
-    <TextAreaInput />
-  </InputRoot>
-  <Description>Enter your comment.</Description>
-</TextFieldRoot>`}
+    <Label>Comment</Label>
+    <InputRoot>
+      <TextAreaInput />
+    </InputRoot>
+    <Description>Enter your comment.</Description>
+  </TextFieldRoot>`}
 />
 
 ## API Reference

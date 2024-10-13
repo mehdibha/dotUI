@@ -10,7 +10,10 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/feedback/alert.mdx?plain=1
 ---
 
-<ComponentPreview name="core/alert-default" />
+<ComponentPreview
+  name="core/alert-default"
+  preveiw={`<Alert>You can add components to your app using the cli.</Alert>`}
+/>
 
 ## Installation
 
@@ -39,31 +42,54 @@ npx dotui@latest add alert
 
 Use the `variant` and `fill` props to change the visual style of the alert.
 
-<ComponentPreview name="core/alert-variants" />
+<ComponentPreview
+  name="core/alert-variants"
+  preview={`<Alert variant={variant} fill={fill}>
+    You can add components to your app using the cli.
+  </Alert>`}
+/>
 
 ### Title
 
 Use the `title` prop to add a title to the alert.
 
-<ComponentPreview name="core/alert-title" />
+<ComponentPreview
+  name="core/alert-title"
+  preview={`<Alert variant="warning" fill title="Your account has been suspended." />`}
+/>
 
 ### Content
 
 Pass children to the alert to add content.
 
-<ComponentPreview name="core/alert-content" />
+<ComponentPreview
+  name="core/alert-content"
+  preview={`<Alert title="Payment Information">
+    Enter your payment method to complete your purchase.
+  </Alert>`}
+/>
 
 ### Custom icon
 
 Use the `icon` prop to add a custom icon to the alert. An explicit `null` value can be used to remove the default icon.
 
-<ComponentPreview name="core/alert-custom-icon" />
+<ComponentPreview
+  name="core/alert-custom-icon"
+  preview={`<Alert icon={<GlobeIcon />}>Hello world!</Alert>`}
+/>
 
 ### Action
 
 Use the `action` prop to add an action to the alert.
 
-<ComponentPreview name="core/alert-action" />
+<ComponentPreview
+  name="core/alert-action"
+  preview={`<Alert
+    action={<Button>Upgrade</Button>}
+  >
+    You are currently on the free plan. Upgrade to unlock more features.
+  </Alert>`}
+/>
 
 ## Examples
 
@@ -71,7 +97,21 @@ Use the `action` prop to add an action to the alert.
 
 If you need to customize things further, you can drop down the composition pattern.
 
-<ComponentPreview name="core/alert-composition" />
+<ComponentPreview
+  name="core/alert-composition"
+  preview={`<AlertRoot>
+    <WalletIcon />
+    <div className="flex-1">
+      <AlertTitle>Payment Information</AlertTitle>
+      <AlertContent>
+        Enter your payment method to complete your purchase.
+      </AlertContent>
+    </div>
+    <Button variant="primary" size="sm">
+      Upgrade
+    </Button>
+  </AlertRoot>`}
+/>
 
 ## API Reference
 

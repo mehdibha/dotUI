@@ -109,24 +109,35 @@ Values are formatted as a percentage by default, but this can be modified by usi
 <ComponentPreview
   name="core/progress-format-options"
   preview={`<Progress
-  label="Sending…"
-  showValueLabel
-  formatOptions={{ style: "currency", currency: "JPY" }}
-  value={60}
-/>`}
+    label="Sending…"
+    showValueLabel
+    formatOptions={{ style: "currency", currency: "JPY" }}
+    value={60}
+  />`}
 />
 
 ### Custom value label
 
 The `valueLabel` prop allows the formatted value to be replaced with a custom string.
 
-<ComponentPreview name="core/progress-custom-value-label" preview={``} />
+<ComponentPreview
+  name="core/progress-custom-value-label"
+  preview={`<Progress
+    label="Feeding…"
+    showValueLabel
+    valueLabel="30 of 100 dogs"
+    value={30}
+  />`}
+/>
 
 ### Indeterminate
 
 The `isIndeterminate` prop can be used to represent an interdeterminate operation.
 
-<ComponentPreview name="core/progress-indeterminate" preview={``} />
+<ComponentPreview
+  name="core/progress-indeterminate"
+  preview={`<Progress isIndeterminate aria-label="Loading" />`}
+/>
 
 ### Duration
 
@@ -141,7 +152,15 @@ Use the duration prop to indicate an approximate duration of an indeterminate ta
 
 A custom value scale can be used by setting the `minValue` and `maxValue` props.
 
-<ComponentPreview name="core/progress-min-max-values" preview={``} />
+<ComponentPreview
+  name="core/progress-min-max-values"
+  preview={`<Progress
+    aria-label="Min and max values"
+    minValue={50}
+    maxValue={150}
+    value={100}
+  />`}
+/>
 
 ## Examples
 
@@ -149,11 +168,28 @@ A custom value scale can be used by setting the `minValue` and `maxValue` props.
 
 If you need to customize things further, you can drop down to the composition level.
 
-<ComponentPreview name="core/progress-composition" preview={``} />
+<ComponentPreview
+  name="core/progress-composition"
+  preview={`<ProgressRoot value={50} className="flex-row items-center gap-4">
+    <Label>Progress</Label>
+    <ProgressIndicator />
+    <ProgressValueLabel />
+  </ProgressRoot>`}
+/>
 
 ### Custom color
 
-<ComponentPreview name="core/progress-custom-color" preview={``} />
+<ComponentPreview
+  name="core/progress-custom-color"
+  preview={`<Progress
+    value={75}
+    aria-label="Custom color"
+    classNames={{
+      indicator: "bg-slate-300 dark:bg-slate-800",
+      filler: "bg-slate-800 dark:bg-slate-300",
+    }}
+  />`}
+/>
 
 ### Toolbar
 

@@ -9,13 +9,13 @@ thumbnail:
 <ComponentPreview
   name="core/skeleton-card"
   preview={`<Skeleton className="h-44 w-64" />
-<div>
-  <Skeleton className="size-10 rounded-full" />
   <div>
-    <Skeleton className="h-4 w-44" />
-    <Skeleton className="h-4 w-36" />
-  </div>
-</div>`}
+    <Skeleton className="size-10 rounded-full" />
+    <div>
+      <Skeleton className="h-4 w-44" />
+      <Skeleton className="h-4 w-36" />
+    </div>
+  </div>`}
 />
 
 ## Installation
@@ -49,25 +49,58 @@ Use the `Skeleton` component to show a placeholder while content is loading.
 
 If you do not pass a fixed size, skeleton will take the size of the children.
 
-<ComponentPreview name="core/skeleton-children" />
+<ComponentPreview
+  name="core/skeleton-children"
+  preview={`<Skeleton>
+    <Button>Button</Button>
+  </Skeleton>`}
+/>
 
 ## Show
 
 Use the `show` prop to show/hide the skeleton.
 
-<ComponentPreview name="core/skeleton-show" />
+<ComponentPreview
+  name="core/skeleton-show"
+  preview={`<Skeleton>
+    <Button>Button</Button>
+  </Skeleton>
+  <Skeleton show={false}>
+    <Button>Button</Button>
+  </Skeleton>`}
+/>
 
 ## Examples
 
 ### Loading data from an API
 
-<ComponentPreview name="core/skeleton-api-simulation" />
+<ComponentPreview
+  name="core/skeleton-api-simulation"
+  preview={`const [status, setStatus] = React.useState<"idle" | "loading" | "error" | "success">("idle");
+  const apiCall = () => {
+    {/* Simulate API call */}
+  };
+
+return (
+<div>
+<Button isLoading={status === "loading"} onPress={apiCall}>
+Simulate API Call
+</Button>
+<Skeleton show={status === "loading"}>
+<p>Some text loaded from API.</p>
+</Skeleton>
+</div>
+);`}
+/>
 
 ### Wrapping children with fixed size
 
 If you do not pass a fixed size, it will be calculated automatically.
 
-<ComponentPreview name="core/skeleton-fixed-size-children" />
+<ComponentPreview
+  name="core/skeleton-fixed-size-children"
+  preview={`<Skeleton className="size-20"><Button>Button</Button> </Skeleton>`}
+/>
 
 ## API Reference
 

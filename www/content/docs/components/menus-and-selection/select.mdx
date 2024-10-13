@@ -18,11 +18,11 @@ links:
 <ComponentPreview
   name="core/select-basic"
   preview={`<Select>
-  <Item>Perplexity</Item>
-  <Item>Replicate</Item>
-  <Item>Together AI</Item>
-  <Item>ElevenLabs</Item>
-</Select>`}
+    <Item>Perplexity</Item>
+    <Item>Replicate</Item>
+    <Item>Together AI</Item>
+    <Item>ElevenLabs</Item>
+  </Select>`}
 />
 
 ## Installation
@@ -65,11 +65,11 @@ Use the `placeholder` prop to provide a temporary text that occupies the text in
 <ComponentPreview
   name="core/select-placeholder"
   preview={`<Select placeholder="Select a provider">
-  <Item>Perplexity</Item>
-  <Item>Replicate</Item>
-  <Item>Together AI</Item>
-  <Item>ElevenLabs</Item>
-</Select>`}
+    <Item>Perplexity</Item>
+    <Item>Replicate</Item>
+    <Item>Together AI</Item>
+    <Item>ElevenLabs</Item>
+  </Select>`}
 />
 
 ### Label
@@ -79,11 +79,11 @@ A visual label can be provided for the `Select` using the `label` prop, or a hid
 <ComponentPreview
   name="core/select-label"
   preview={`<Select label="Provider">
-  <Item>Perplexity</Item>
-  <Item>Replicate</Item>
-  <Item>Together AI</Item>
-  <Item>ElevenLabs</Item>
-</Select>`}
+    <Item>Perplexity</Item>
+    <Item>Replicate</Item>
+    <Item>Together AI</Item>
+    <Item>ElevenLabs</Item>
+  </Select>`}
 />
 
 ### Description
@@ -93,11 +93,11 @@ A description can be supplied to a Select via the `description` prop. The descri
 <ComponentPreview
   name="core/select-description"
   preview={`<Select label="Provider" description="Please select a provider.">
-  <Item>Perplexity</Item>
-  <Item>Replicate</Item>
-  <Item>Together AI</Item>
-  <Item>ElevenLabs</Item>
-</Select>`}
+    <Item>Perplexity</Item>
+    <Item>Replicate</Item>
+    <Item>Together AI</Item>
+    <Item>ElevenLabs</Item>
+  </Select>`}
 />
 
 ### Contextual help
@@ -107,14 +107,14 @@ A `ContextualHelp` element may be placed next to the label to provide additional
 <ComponentPreview
   name="core/select-contextual-help"
   preview={`<Select
-  label="Provider"
-  contextualHelp={<ContextualHelp />}
->
-  <Item>Perplexity</Item>
-  <Item>Replicate</Item>
-  <Item>Together AI</Item>
-  <Item>ElevenLabs</Item>
-</Select>`}
+    label="Provider"
+    contextualHelp={<ContextualHelp />}
+  >
+    <Item>Perplexity</Item>
+    <Item>Replicate</Item>
+    <Item>Together AI</Item>
+    <Item>ElevenLabs</Item>
+  </Select>`}
 />
 
 ### Validation
@@ -124,11 +124,11 @@ An `errorMessage` can be supplied to `Select`, which will be displayed when the 
 <ComponentPreview
   name="core/select-validation"
   preview={`<Select label="Provider" isInvalid errorMessage="Please select an item in the list.">
-  <Item>Perplexity</Item>
-  <Item>Replicate</Item>
-  <Item>Together AI</Item>
-  <Item>ElevenLabs</Item>
-</Select>`}
+    <Item>Perplexity</Item>
+    <Item>Replicate</Item>
+    <Item>Together AI</Item>
+    <Item>ElevenLabs</Item>
+  </Select>`}
 />
 
 ### Sections
@@ -139,28 +139,28 @@ Sections without a `title` must provide an `aria-label` for accessibility.
 <ComponentPreview
   name="core/select-sections"
   preview={`<Select label="Model">
-  <Section title="OpenAI">
-    <Item>GPT-4o</Item>
-    <Item>GPT-4 Turbo</Item>
-    <Item>GPT-4</Item>
-    <Item>GPT-3.5 Turbo</Item>
-  </Section>
-  <Section title="Google">
-    <Item>Gemini 1.5 Flash</Item>
-    <Item>Gemini 1.5 Pro</Item>
-    <Item>Gemini 1.0 Pro</Item>
-  </Section>
-  <Section title="Meta">
-    <Item>Llama 3 (70B)</Item>
-    <Item>Llama 3 (8B)</Item>
-    <Item>Code Llama (70B)</Item>
-  </Section>
-  <Section title="Mistral AI">
-    <Item>Mixtral 8x22B</Item>
-    <Item>Mistral Large</Item>
-    <Item>Mistral 7B</Item>
-  </Section>
-</Select>`}
+    <Section title="OpenAI">
+      <Item>GPT-4o</Item>
+      <Item>GPT-4 Turbo</Item>
+      <Item>GPT-4</Item>
+      <Item>GPT-3.5 Turbo</Item>
+    </Section>
+    <Section title="Google">
+      <Item>Gemini 1.5 Flash</Item>
+      <Item>Gemini 1.5 Pro</Item>
+      <Item>Gemini 1.0 Pro</Item>
+    </Section>
+    <Section title="Meta">
+      <Item>Llama 3 (70B)</Item>
+      <Item>Llama 3 (8B)</Item>
+      <Item>Code Llama (70B)</Item>
+    </Section>
+    <Section title="Mistral AI">
+      <Item>Mixtral 8x22B</Item>
+      <Item>Mistral Large</Item>
+      <Item>Mistral 7B</Item>
+    </Section>
+  </Select>`}
 />
 
 ### Links
@@ -170,11 +170,11 @@ Items may be links to another page or website. This can be achieved by passing t
 <ComponentPreview
   name="core/select-links"
   preview={`<Select label="Project">
-  <Item href="/create-project">Create new...</Item>
-  <Item>DotUI</Item>
-  <Item>Palettify</Item>
-  <Item>Notionfolio</Item>
-</Select>`}
+    <Item href="/create-project">Create new...</Item>
+    <Item>DotUI</Item>
+    <Item>Palettify</Item>
+    <Item>Notionfolio</Item>
+  </Select>`}
 />
 
 ### Disabled
@@ -184,11 +184,11 @@ The `isDisabled` prop can be used to disable the Select.
 <ComponentPreview
   name="core/select-disabled"
   preview={`<Select isDisabled>
-  <Item>Perplexity</Item>
-  <Item>Replicate</Item>
-  <Item>Together AI</Item>
-  <Item>ElevenLabs</Item>
-</Select>`}
+    <Item>Perplexity</Item>
+    <Item>Replicate</Item>
+    <Item>Together AI</Item>
+    <Item>ElevenLabs</Item>
+  </Select>`}
 />
 
 ### Loading
@@ -198,11 +198,11 @@ Use the `isLoading` prop to indicate that the list is loading.
 <ComponentPreview
   name="core/select-loading"
   preview={`<Select isLoading>
-  <Item>Perplexity</Item>
-  <Item>Replicate</Item>
-  <Item>Together AI</Item>
-  <Item>ElevenLabs</Item>
-</Select>`}
+    <Item>Perplexity</Item>
+    <Item>Replicate</Item>
+    <Item>Together AI</Item>
+    <Item>ElevenLabs</Item>
+  </Select>`}
 />
 
 ### Required
@@ -213,11 +213,11 @@ Use the `necessityIndicator` prop to control the visual style of the required st
 <ComponentPreview
   name="core/select-required"
   preview={`<Select label="Provider" isRequired necessityIndicator="icon">
-  <Item>Perplexity</Item>
-  <Item>Replicate</Item>
-  <Item>Together AI</Item>
-  <Item>ElevenLabs</Item>
-</Select>`}
+    <Item>Perplexity</Item>
+    <Item>Replicate</Item>
+    <Item>Together AI</Item>
+    <Item>ElevenLabs</Item>
+  </Select>`}
 />
 
 ## Uncontrolled
@@ -227,11 +227,11 @@ Use `defaultSelectedKey` to provide a default set of selected item.
 <ComponentPreview
   name="core/select-uncontrolled"
   preview={`<Select defaultSelectedKey="eleven-labs">
-  <Item id="perplexity">Perplexity</Item>
-  <Item id="replicate">Replicate</Item>
-  <Item id="together-ai">Together AI</Item>
-  <Item id="eleven-labs">ElevenLabs</Item>
-</Select>`}
+    <Item id="perplexity">Perplexity</Item>
+    <Item id="replicate">Replicate</Item>
+    <Item id="together-ai">Together AI</Item>
+    <Item id="eleven-labs">ElevenLabs</Item>
+  </Select>`}
 />
 
 ## Controlled
@@ -241,14 +241,14 @@ Use `selectedKey` to control the selected item.
 <ComponentPreview
   name="core/select-controlled"
   preview={`const [provider, setProvider] = React.useState<Key>("eleven-labs");
-return (
-  <Select selectedKey={provider} onSelectionChange={setProvider}>
-    <Item id="perplexity">Perplexity</Item>
-    <Item id="replicate">Replicate</Item>
-    <Item id="together-ai">Together AI</Item>
-    <Item id="eleven-labs">ElevenLabs</Item>
-  </Select>
-)`}
+  return (
+    <Select selectedKey={provider} onSelectionChange={setProvider}>
+      <Item id="perplexity">Perplexity</Item>
+      <Item id="replicate">Replicate</Item>
+      <Item id="together-ai">Together AI</Item>
+      <Item id="eleven-labs">ElevenLabs</Item>
+    </Select>
+  )`}
 />
 
 ## Composition
@@ -258,18 +258,18 @@ If you need to customize things further, you can drop down to the composition le
 <ComponentPreview
   name="core/select-composition"
   preview={`<SelectRoot>
-  <Button variant="outline" suffix={<ChevronsUpDownIcon className="text-fg-muted" />}>
-    <SelectValue />
-  </Button>
-  <Overlay type="popover">
-    <ListBox>
-      <Item>Perplexity</Item>
-      <Item>Replicate</Item>
-      <Item>Together AI</Item>
-      <Item>ElevenLabs</Item>
-    </ListBox>
-  </Overlay>
-</SelectRoot>`}
+    <Button variant="outline" suffix={<ChevronsUpDownIcon className="text-fg-muted" />}>
+      <SelectValue />
+    </Button>
+    <Overlay type="popover">
+      <ListBox>
+        <Item>Perplexity</Item>
+        <Item>Replicate</Item>
+        <Item>Together AI</Item>
+        <Item>ElevenLabs</Item>
+      </ListBox>
+    </Overlay>
+  </SelectRoot>`}
 />
 
 ## Examples
@@ -281,20 +281,20 @@ If you need to customize things further, you can drop down to the composition le
 <ComponentPreview 
   name="core/select-async-loading" 
   preview={`const list = useAsyncList<Character>({
-  async load({ signal }) {
-    const res = await fetch(\`https://pokeapi.co/api/v2/pokemon\`, { signal });
-    const json = (await res.json()) as { results: Character[] };
+    async load({ signal }) {
+      const res = await fetch(\`https://pokeapi.co/api/v2/pokemon\`, { signal });
+      const json = (await res.json()) as { results: Character[] };
 
-    return {
-      items: json.results,
-    };
-  },
-});
-return (
-  <Select isLoading={list.isLoading} items={list.items}>
-    {(item) => <Item id={item.name}>{item.name}</Item>}
-  </Select>
-);`} 
+      return {
+        items: json.results,
+      };
+    },
+  });
+  return (
+    <Select isLoading={list.isLoading} items={list.items}>
+      {(item) => <Item id={item.name}>{item.name}</Item>}
+    </Select>
+  );`} 
 />
 
 {/* prettier-ignore-end */}

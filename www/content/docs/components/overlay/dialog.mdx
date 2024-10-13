@@ -18,26 +18,26 @@ links:
 <ComponentPreview
   name="core/dialog-basic"
   preview={`<DialogRoot>
-  <Button variant="outline">Edit Profile</Button>
-  <Dialog title="Edit profile" description="Make changes to your profile.">
-    {({ close }) => (
-      <>
-        <div>
-          <TextField autoFocus label="Name" defaultValue="Mehdi" />
-          <TextField label="Username" defaultValue="@mehdibha_" />
-        </div>
-        <DialogFooter>
-          <Button variant="outline" size={{ initial: "lg", sm: "md" }} onPress={close}>
-            Cancel
-          </Button>
-          <Button variant="primary" size={{ initial: "lg", sm: "md" }} onPress={close}>
-            Save changes
-          </Button>
-        </DialogFooter>
-      </>
-    )}
-  </Dialog>
-</DialogRoot>`}
+    <Button variant="outline">Edit Profile</Button>
+    <Dialog title="Edit profile" description="Make changes to your profile.">
+      {({ close }) => (
+        <>
+          <div>
+            <TextField autoFocus label="Name" defaultValue="Mehdi" />
+            <TextField label="Username" defaultValue="@mehdibha_" />
+          </div>
+          <DialogFooter>
+            <Button variant="outline" size={{ initial: "lg", sm: "md" }} onPress={close}>
+              Cancel
+            </Button>
+            <Button variant="primary" size={{ initial: "lg", sm: "md" }} onPress={close}>
+              Save changes
+            </Button>
+          </DialogFooter>
+        </>
+      )}
+    </Dialog>
+  </DialogRoot>`}
 />
 
 ## Installation
@@ -81,11 +81,11 @@ If a dialog does not have a visible heading element, an `aria-label` or `aria-la
 <ComponentPreview
   name="core/dialog-title"
   preview={`<DialogRoot>
-  <Button variant="outline">Edit username</Button>
-  <Dialog title="Edit username">
-    <TextField label="Username" defaultValue="@mehdibha_" className="w-full" />
-  </Dialog>
-</DialogRoot>`}
+    <Button variant="outline">Edit username</Button>
+    <Dialog title="Edit username">
+      <TextField label="Username" defaultValue="@mehdibha_" className="w-full" />
+    </Dialog>
+  </DialogRoot>`}
 />
 
 ### Description
@@ -95,11 +95,11 @@ A description can be supplied to the dialog via the `description` prop.
 <ComponentPreview
   name="core/dialog-description"
   preview={`<DialogRoot>
-  <Button variant="outline">Edit username</Button>
-  <Dialog title="Edit username" description="Make changes to your username.">
-    <TextField label="Username" defaultValue="@mehdibha_" className="w-full" />
-  </Dialog>
-</DialogRoot>`}
+    <Button variant="outline">Edit username</Button>
+    <Dialog title="Edit username" description="Make changes to your username.">
+      <TextField label="Username" defaultValue="@mehdibha_" className="w-full" />
+    </Dialog>
+  </DialogRoot>`}
 />
 
 ### Type
@@ -110,26 +110,26 @@ By default, dialogs are displayed as drawers on mobile. You can override this be
 <ComponentPreview
   name="core/dialog-types"
   preview={`<DialogRoot>
-  <Button variant="outline">Edit username</Button>
-  <Dialog title="Edit username">
-    {({ close }) => (
-      <>
-        <div className="space-y-4">
-          <TextField autoFocus label="Name" defaultValue="Mehdi" className="w-full" />
-          <TextField label="Username" defaultValue="@mehdibha_" className="w-full" />
-        </div>
-        <DialogFooter>
-          <Button variant="outline" size={{ initial: "lg", sm: "md" }} onPress={close}>
-            Cancel
-          </Button>
-          <Button variant="primary" size={{ initial: "lg", sm: "md" }} onPress={close}>
-            Save changes
-          </Button>
-        </DialogFooter>
-      </>
-    )}
-  </Dialog>
-</DialogRoot>`}
+    <Button variant="outline">Edit username</Button>
+    <Dialog title="Edit username">
+      {({ close }) => (
+        <>
+          <div className="space-y-4">
+            <TextField autoFocus label="Name" defaultValue="Mehdi" className="w-full" />
+            <TextField label="Username" defaultValue="@mehdibha_" className="w-full" />
+          </div>
+          <DialogFooter>
+            <Button variant="outline" size={{ initial: "lg", sm: "md" }} onPress={close}>
+              Cancel
+            </Button>
+            <Button variant="primary" size={{ initial: "lg", sm: "md" }} onPress={close}>
+              Save changes
+            </Button>
+          </DialogFooter>
+        </>
+      )}
+    </Dialog>
+  </DialogRoot>`}
 />
 
 ### Dismissable
@@ -139,30 +139,30 @@ By default, dialogs are dismissable allowing users to click outside to close the
 <ComponentPreview
   name="core/dialog-dismissable"
   preview={`<DialogRoot>
-  <Button variant="outline">Edit Profile</Button>
-  <Dialog
-    title="Edit profile"
-    description="Make changes to your profile."
-    isDismissable={false}
-  >
-    {({ close }) => (
-      <>
-        <div className="space-y-4">
-          <TextField autoFocus label="Name" defaultValue="Mehdi" className="w-full" />
-          <TextField label="Username" defaultValue="@mehdibha_" className="w-full" />
-        </div>
-        <DialogFooter>
-          <Button variant="outline" size={{ initial: "lg", sm: "md" }} onPress={close}>
-            Cancel
-          </Button>
-          <Button variant="primary" size={{ initial: "lg", sm: "md" }} onPress={close}>
-            Save changes
-          </Button>
-        </DialogFooter>
-      </>
-    )}
-  </Dialog>
-</DialogRoot>`}
+    <Button variant="outline">Edit Profile</Button>
+    <Dialog
+      title="Edit profile"
+      description="Make changes to your profile."
+      isDismissable={false}
+    >
+      {({ close }) => (
+        <>
+          <div className="space-y-4">
+            <TextField autoFocus label="Name" defaultValue="Mehdi" className="w-full" />
+            <TextField label="Username" defaultValue="@mehdibha_" className="w-full" />
+          </div>
+          <DialogFooter>
+            <Button variant="outline" size={{ initial: "lg", sm: "md" }} onPress={close}>
+              Cancel
+            </Button>
+            <Button variant="primary" size={{ initial: "lg", sm: "md" }} onPress={close}>
+              Save changes
+            </Button>
+          </DialogFooter>
+        </>
+      )}
+    </Dialog>
+  </DialogRoot>`}
 />
 
 ### Dismiss button
@@ -172,30 +172,30 @@ By default, dialogs have a dismiss button when they're dismissable. You can disa
 <ComponentPreview
   name="core/dialog-dismiss-button"
   preview={`<DialogRoot>
-  <Button variant="outline">Edit Profile</Button>
-  <Dialog
-    title="Edit profile"
-    description="Make changes to your profile."
-    showDismissButton={false}
-  >
-    {({ close }) => (
-      <>
-        <div className="space-y-4">
-          <TextField autoFocus label="Name" defaultValue="Mehdi" className="w-full" />
-          <TextField label="Username" defaultValue="@mehdibha_" className="w-full" />
-        </div>
-        <DialogFooter>
-          <Button variant="outline" size={{ initial: "lg", sm: "md" }} onPress={close}>
-            Cancel
-          </Button>
-          <Button variant="primary" size={{ initial: "lg", sm: "md" }} onPress={close}>
-            Save changes
-          </Button>
-        </DialogFooter>
-      </>
-    )}
-  </Dialog>
-</DialogRoot>`}
+    <Button variant="outline">Edit Profile</Button>
+    <Dialog
+      title="Edit profile"
+      description="Make changes to your profile."
+      showDismissButton={false}
+    >
+      {({ close }) => (
+        <>
+          <div className="space-y-4">
+            <TextField autoFocus label="Name" defaultValue="Mehdi" className="w-full" />
+            <TextField label="Username" defaultValue="@mehdibha_" className="w-full" />
+          </div>
+          <DialogFooter>
+            <Button variant="outline" size={{ initial: "lg", sm: "md" }} onPress={close}>
+              Cancel
+            </Button>
+            <Button variant="primary" size={{ initial: "lg", sm: "md" }} onPress={close}>
+              Save changes
+            </Button>
+          </DialogFooter>
+        </>
+      )}
+    </Dialog>
+  </DialogRoot>`}
 />
 
 ### Inset content
@@ -205,27 +205,27 @@ Use the `<DialogInset>` component to add inset content to the dialog.
 <ComponentPreview
   name="core/dialog-inset-content"
   preview={`<DialogRoot>
-  <Button variant="outline">Edit Profile</Button>
-  <Dialog title="Edit profile" description="Make changes to your profile.">
-    {({ close }) => (
-      <>
-        <DialogInset className="mb-4 bg-bg-muted border-y">Content within the inset.</DialogInset>
-        <div className="space-y-4">
-          <TextField autoFocus label="Name" defaultValue="Mehdi" className="w-full" />
-          <TextField label="Username" defaultValue="@mehdibha_" className="w-full" />
-        </div>
-        <DialogFooter>
-          <Button variant="outline" size={{ initial: "lg", sm: "md" }} onPress={close}>
-            Cancel
-          </Button>
-          <Button variant="primary" size={{ initial: "lg", sm: "md" }} onPress={close}>
-            Save changes
-          </Button>
-        </DialogFooter>
-      </>
-    )}
-  </Dialog>
-</DialogRoot>`}
+    <Button variant="outline">Edit Profile</Button>
+    <Dialog title="Edit profile" description="Make changes to your profile.">
+      {({ close }) => (
+        <>
+          <DialogInset className="mb-4 bg-bg-muted border-y">Content within the inset.</DialogInset>
+          <div className="space-y-4">
+            <TextField autoFocus label="Name" defaultValue="Mehdi" className="w-full" />
+            <TextField label="Username" defaultValue="@mehdibha_" className="w-full" />
+          </div>
+          <DialogFooter>
+            <Button variant="outline" size={{ initial: "lg", sm: "md" }} onPress={close}>
+              Cancel
+            </Button>
+            <Button variant="primary" size={{ initial: "lg", sm: "md" }} onPress={close}>
+              Save changes
+            </Button>
+          </DialogFooter>
+        </>
+      )}
+    </Dialog>
+  </DialogRoot>`}
 />
 
 ## Popover

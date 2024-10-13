@@ -100,10 +100,10 @@ An `errorMessage` can be supplied to a `DateRangePicker`, which will be displaye
 <ComponentPreview
   name="core/date-range-picker-error-message"
   preview={`<DateRangePicker
-  label="Trip dates"
-  isInvalid
-  errorMessage="Trip dates can't be scheduled in the past."
-/>`}
+    label="Trip dates"
+    isInvalid
+    errorMessage="Trip dates can't be scheduled in the past."
+  />`}
 />
 
 ### Time zones
@@ -113,11 +113,11 @@ An `errorMessage` can be supplied to a `DateRangePicker`, which will be displaye
 <ComponentPreview
   name="core/date-range-picker-time-zones"
   preview={`<DateRangePicker
-  defaultValue={{
-    start: parseAbsoluteToLocal("2021-04-07T18:45:22Z"),
-    end: parseAbsoluteToLocal("2021-04-08T20:00:00Z"),
-  }}
-/>`}
+    defaultValue={{
+      start: parseAbsoluteToLocal("2021-04-07T18:45:22Z"),
+      end: parseAbsoluteToLocal("2021-04-08T20:00:00Z"),
+    }}
+  />`}
 />
 
 ### Granularity
@@ -145,16 +145,16 @@ Use the `placeholderValue` prop to control the default values of each segment. T
 Use the `hideTimeZone` prop to hide the time zone abbreviation.
 
 <ComponentPreview
-  name="demos/components/core/date-range-picker/hide-time-zone"
+  name="core/date-range-picker-hide-time-zone"
   preview={`<DateRangePicker
-  label="Appointment time"
-  granularity="minute"
-  defaultValue={{
-    start: parseAbsoluteToLocal("2021-04-07T18:45:22Z"),
-    end: parseAbsoluteToLocal("2021-04-08T20:00:00Z"),
-  }}
-  hideTimeZone
-/>`}
+    label="Appointment time"
+    granularity="minute"
+    defaultValue={{
+      start: parseAbsoluteToLocal("2021-04-07T18:45:22Z"),
+      end: parseAbsoluteToLocal("2021-04-08T20:00:00Z"),
+    }}
+    hideTimeZone
+  />`}
 />
 
 ### Hour cycle
@@ -162,7 +162,7 @@ Use the `hideTimeZone` prop to hide the time zone abbreviation.
 Use the `hourCycle` prop to control the hour cycle of the `DateRangePicker`.
 
 <ComponentPreview
-  name="demos/components/core/date-range-picker/hour-cycle"
+  name="core/date-range-picker-hour-cycle"
   preview={`<DateRangePicker granularity="minute" hourCycle={24} />`}
 />
 
@@ -171,7 +171,7 @@ Use the `hourCycle` prop to control the hour cycle of the `DateRangePicker`.
 Use the `isLoading` prop to control the loading state of the `DateRangePicker`.
 
 <ComponentPreview
-  name="demos/components/core/date-range-picker/loading"
+  name="core/date-range-picker-loading"
   preview={`<DateRangePicker isLoading />`}
 />
 
@@ -180,7 +180,7 @@ Use the `isLoading` prop to control the loading state of the `DateRangePicker`.
 Use the `isDisabled` prop to disable the `DateRangePicker`.
 
 <ComponentPreview
-  name="demos/components/core/date-range-picker/disabled"
+  name="core/date-range-picker-disabled"
   preview={`<DateRangePicker label="Trip dates" isDisabled />`}
 />
 
@@ -189,15 +189,15 @@ Use the `isDisabled` prop to disable the `DateRangePicker`.
 The `isReadOnly` boolean prop makes the `DateRangePicker`'s text content immutable. Unlike `isDisabled`, the `DateRangePicker` remains focusable and the contents can still be copied.
 
 <ComponentPreview
-  name="demos/components/core/date-range-picker/read-only"
+  name="core/date-range-picker-read-only"
   preview={`<DateRangePicker
-  label="Event date"
-  value={{
-    start: parseAbsoluteToLocal("2021-04-07T18:45:22Z"),
-    end: parseAbsoluteToLocal("2021-04-08T20:00:00Z"),
-  }}
-  isReadOnly
-/>`}
+    label="Event date"
+    value={{
+      start: parseAbsoluteToLocal("2021-04-07T18:45:22Z"),
+      end: parseAbsoluteToLocal("2021-04-08T20:00:00Z"),
+    }}
+    isReadOnly
+  />`}
 />
 
 ### Required
@@ -206,11 +206,11 @@ Use the `isRequired` prop to mark the `DateRangePicker` as required.
 Use the `necessityIndicator` prop to control the visual style of the required state.
 
 <ComponentPreview
-  name="demos/components/core/date-range-picker/required"
+  name="core/date-range-picker-required"
   preview={`<DateRangePicker label="Event date" isRequired />
-<DateRangePicker label="Event date" isRequired necessityIndicator="icon" />
-<DateRangePicker label="Event date" isRequired necessityIndicator="label" />
-<DateRangePicker label="Event date" necessityIndicator="label" />`}
+  <DateRangePicker label="Event date" isRequired necessityIndicator="icon" />
+  <DateRangePicker label="Event date" isRequired necessityIndicator="label" />
+  <DateRangePicker label="Event date" necessityIndicator="label" />`}
 />
 
 ## Uncontrolled
@@ -218,7 +218,7 @@ Use the `necessityIndicator` prop to control the visual style of the required st
 An initial, uncontrolled value can be provided to the `DateRangePicker` using the `defaultValue` prop.
 
 <ComponentPreview
-  name="demos/components/core/date-range-picker/uncontrolled"
+  name="core/date-range-picker-uncontrolled"
   preview={`<DateRangePicker
   label="Controlled"
   defaultValue={{
@@ -233,7 +233,7 @@ An initial, uncontrolled value can be provided to the `DateRangePicker` using th
 Use the `value` and `onChange` props to control the value of the input.
 
 <ComponentPreview
-  name="demos/components/core/date-range-picker/controlled"
+  name="core/date-range-picker-controlled"
   preview={`const [value, setValue] = React.useState({
   start: parseDate("2024-02-03"),
   end: parseDate("2024-02-08"),
@@ -246,7 +246,7 @@ return <DateRangePicker label="Controlled" value={value} onChange={setValue} />`
 If you need to customize things further, you can drop down to the composition level.
 
 <ComponentPreview
-  name="demos/components/core/date-range-picker/composition"
+  name="core/date-range-picker-composition"
   preview={`<DatePickerRoot>
   <Label>Meeting date</Label>
   <InputRoot suffix={<Button><CalendarIcon /></Button>}>

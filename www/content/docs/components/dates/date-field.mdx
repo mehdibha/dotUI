@@ -98,9 +98,9 @@ A ContextualHelp element may be placed next to the label to provide additional i
 <ComponentPreview
   name="core/date-field-contextual-help"
   preview={`<DateField
-  label="Appointment"
-  contextualHelp={<ContextualHelp />}
-/>`}
+    label="Appointment"
+    contextualHelp={<ContextualHelp />}
+  />`}
 />
 
 ### Error message
@@ -110,10 +110,10 @@ An `errorMessage` can be supplied to `DateField`, which will be displayed when t
 <ComponentPreview
   name="core/date-field-error-message"
   preview={`<DateField
-  label="Meeting"
-  isInvalid
-  errorMessage="Meetings can't be scheduled in the past."
-/>`}
+    label="Meeting"
+    isInvalid
+    errorMessage="Meetings can't be scheduled in the past."
+  />`}
 />
 
 ### Time zones
@@ -132,20 +132,20 @@ The `granularity` prop allows you to control the smallest unit that is displayed
 <ComponentPreview
   name="core/date-field-granularity"
   preview={`<DateField
-  label="Hour"
-  granularity="hour"
-  defaultValue={parseAbsoluteToLocal("2021-04-07T18:45:22Z")}
-/>
-<DateField
-  label="Minute"
-  granularity="minute"
-  defaultValue={parseAbsoluteToLocal("2021-04-07T18:45:22Z")}
-/>
-<DateField
-  label="Second"
-  granularity="second"
-  defaultValue={parseAbsoluteToLocal("2021-04-07T18:45:22Z")}
-/>`}
+    label="Hour"
+    granularity="hour"
+    defaultValue={parseAbsoluteToLocal("2021-04-07T18:45:22Z")}
+  />
+  <DateField
+    label="Minute"
+    granularity="minute"
+    defaultValue={parseAbsoluteToLocal("2021-04-07T18:45:22Z")}
+  />
+  <DateField
+    label="Second"
+    granularity="second"
+    defaultValue={parseAbsoluteToLocal("2021-04-07T18:45:22Z")}
+  />`}
 />
 
 ### Placeholder value
@@ -164,11 +164,11 @@ Use the `hideTimeZone` prop to hide the time zone abbreviation.
 <ComponentPreview
   name="core/date-field-hide-time-zone"
   preview={`<DateField
-  label="Appointment time"
-  granularity="minute"
-  defaultValue={parseZonedDateTime("2022-11-07T10:45[America/Los_Angeles]")}
-  hideTimeZone
-/>`}
+    label="Appointment time"
+    granularity="minute"
+    defaultValue={parseZonedDateTime("2022-11-07T10:45[America/Los_Angeles]")}
+    hideTimeZone
+  />`}
 />
 
 ### Hour cycle
@@ -245,7 +245,16 @@ Use the `value` and `onChange` props to control the value of the input.
 
 If you need to customize things further, you can drop down to the composition level.
 
-<ComponentPreview name="core/date-field-composition" preview={``} />
+<ComponentPreview
+  name="core/date-field-composition"
+  preview={`<DateFieldRoot>
+    <Label>Meeting time</Label>
+    <InputRoot>
+      <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
+    </InputRoot>
+    <Description>Please select a time between 9 AM and 5 PM.</Description>
+  </DateFieldRoot>`}
+/>
 
 ## API Reference
 
