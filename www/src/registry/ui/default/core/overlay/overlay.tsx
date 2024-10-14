@@ -309,6 +309,7 @@ export {
   PopoverOverlay,
   DrawerOverlay,
   ModalOverlay,
+  DismissButton,
   drawerVariants,
   modalVariants,
   popoverOverlayVariants,

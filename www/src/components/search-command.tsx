@@ -4,7 +4,16 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { useDocsSearch } from "fumadocs-core/search/client";
 import { SortedResult } from "fumadocs-core/server";
-import { FileTextIcon, HashIcon, TextIcon } from "lucide-react";
+import {
+  ChevronsUpDownIcon,
+  CornerDownLeftIcon,
+  FileTextIcon,
+  HashIcon,
+  Loader2Icon,
+  SearchIcon,
+  TextIcon,
+  Undo2Icon,
+} from "lucide-react";
 import { kekabCaseToTitle } from "@/lib/string";
 import { useCommandMenuInputRef } from "@/hooks/use-focus-command-menu";
 import {
@@ -85,7 +94,17 @@ export const SearchCommand = ({
         onValueChange={setSearch}
         autoFocus
         placeholder="Search a component, a block, a hook..."
-        wrapperClassName={cn(animated && "border-b-0")}
+        icon={
+          query.isLoading && search !== "" ? (
+            <Loader2Icon className="animate-spin" />
+          ) : (
+            <SearchIcon />
+          )
+        }
+        wrapperClassName={cn(
+          "[&_svg]:text-fg-muted [&_svg]:size-4",
+          animated && "border-b-0"
+        )}
       />
       {animated && (
         <CommandSeparator className="before:opacity-1 before:animate-loading before:delay-900 relative h-[2px] overflow-hidden before:absolute before:left-0 before:top-0 before:h-full before:w-1/2 before:bg-[linear-gradient(90deg,rgba(0,0,0,0)_0,#707070_50%,rgba(0,0,0,0)_100%)] before:opacity-0 before:content-['']" />
@@ -118,6 +137,18 @@ export const SearchCommand = ({
           </CommandGroup>
         ))}
       </CommandList>
+      {!animated && (
+        <div className="text-fg-muted flex items-center justify-end gap-4 rounded-b-[inherit] border-t p-3 text-xs [&_svg]:size-4">
+          <div className="flex items-center gap-1">
+            <ChevronsUpDownIcon />
+            <span>Navigate</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <CornerDownLeftIcon />
+            <span>Go</span>
+          </div>
+        </div>
+      )}
     </CommandRoot>
   );
 };
