@@ -23,6 +23,7 @@ import {
 } from "@/registry/ui/default/core/collapsible";
 import { Dialog, DialogRoot } from "@/registry/ui/default/core/dialog";
 import { Kbd } from "@/registry/ui/default/core/kbd";
+import { DismissButton } from "@/registry/ui/default/core/overlay";
 import { ScrollArea } from "@/registry/ui/default/core/scroll-area";
 import { Tooltip, TooltipProps } from "@/registry/ui/default/core/tooltip";
 import { cn } from "@/registry/ui/default/lib/cn";
@@ -286,8 +287,19 @@ const SearchCommandDialog = ({ isCollapsed }: { isCollapsed: boolean }) => {
           </span>
         </SidebarButton>
       </StyledTooltip>
-      <Dialog>
-        <SearchCommand onRunCommand={() => setIsOpen(false)} />
+      <Dialog className="!p-0" showDismissButton={false}>
+        <SearchCommand
+          onRunCommand={() => setIsOpen(false)}
+          className="h-72 max-h-full"
+        />
+        <DismissButton
+          variant="outline"
+          shape="rectangle"
+          size="sm"
+          className="h-7 px-2 text-xs font-normal"
+        >
+          Esc
+        </DismissButton>
       </Dialog>
     </DialogRoot>
   );
