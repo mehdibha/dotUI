@@ -78,7 +78,7 @@ Overlay.displayName = "Overlay";
 const modalVariants = tv({
   slots: {
     backdrop: [
-      "fixed inset-0 z-50 bg-black/80",
+      "fixed inset-0 z-50 bg-black/40 backdrop-blur-sm",
       "data-[entering]:animate-in data-[exiting]:animate-out data-[entering]:fade-in-0 data-[exiting]:fade-out-0 data-[exiting]:duration-300",
     ],
     overlay: [
@@ -197,7 +197,7 @@ PopoverOverlay.displayName = "PopoverOverlay";
 
 const drawerVariants = tv({
   slots: {
-    backdrop: ["fixed inset-0 z-50 bg-black/60", "opacity-0"],
+    backdrop: ["fixed inset-0 z-50 bg-black/60 backdrop-blur-sm", "opacity-0"],
     overlay: [
       "group/overlay bg-bg fixed z-50 flex flex-col outline-none",
       "inset-0",

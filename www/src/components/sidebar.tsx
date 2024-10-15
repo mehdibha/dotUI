@@ -3,13 +3,16 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { motion } from "framer-motion";
 import type { PageTree } from "fumadocs-core/server";
 import { useOnChange } from "fumadocs-core/utils/use-on-change";
 import {
   ChevronRightIcon,
+  MoonIcon,
   PanelLeftCloseIcon,
   PanelLeftOpenIcon,
   SearchIcon,
+  SunIcon,
 } from "lucide-react";
 import { hasActive, isActive } from "@/lib/docs/utils";
 import { useCommandMenuInputRef } from "@/hooks/use-focus-command-menu";
@@ -31,9 +34,29 @@ import { siteConfig } from "@/config";
 import { SearchCommand } from "./search-command";
 import { ThemeToggle } from "./theme-toggle";
 
+const MotionButton = motion.create(Button);
+
 export const Sidebar = ({ items }: { items: PageTree.Node[] }) => {
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = React.useState(!!(pathname === "/"));
+
+  const transition = {
+    type: "spring",
+    bounce: 0,
+    duration: 0.25,
+  };
+
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.key === 'b') {
+        e.preventDefault();
+        setIsCollapsed(prev => !prev);
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   return (
     <SidebarRoot
@@ -66,28 +89,44 @@ export const Sidebar = ({ items }: { items: PageTree.Node[] }) => {
       </ScrollArea>
       <SidebarFooter>
         <div className="group-data-collapsed/sidebar:flex-col flex items-center gap-1">
-          <Button
+          <MotionButton
             href={siteConfig.links.github}
             target="_blank"
             size="sm"
             shape="square"
             variant="quiet"
             aria-label="github"
+            layout
+            transition={transition}
           >
             <GitHubIcon />
-          </Button>
-          <Button
+          </MotionButton>
+          <MotionButton
             href={siteConfig.links.twitter}
             target="_blank"
             size="sm"
             shape="square"
             variant="quiet"
             aria-label="twitter"
+            layout
+            transition={transition}
           >
             <TwitterIcon />
-          </Button>
+          </MotionButton>
         </div>
-        <ThemeToggle />
+        <ThemeToggle>
+          <MotionButton
+            size="sm"
+            variant="quiet"
+            shape="square"
+            className="[&_svg]:size-[18px]"
+            layout
+            transition={transition}
+          >
+            <SunIcon className="block dark:hidden" />
+            <MoonIcon className="hidden dark:block" />
+          </MotionButton>
+        </ThemeToggle>
       </SidebarFooter>
     </SidebarRoot>
   );
@@ -212,26 +251,21 @@ const SearchCommandButton = ({ isCollapsed }: { isCollapsed: boolean }) => {
   return (
     <StyledTooltip
       content={
-        <span className="flex items-center gap-2">
+        <div className="flex items-center gap-2">
           Search
           <Kbd>⌘K</Kbd>
-        </span>
+        </div>
       }
       isDisabled={!isCollapsed}
     >
       <SidebarButton variant="outline" onPress={focusInput}>
         <SearchIcon />
-        <span className="flex flex-1 flex-row items-center justify-between">
+        <div className="flex flex-1 flex-row items-center justify-between">
           <span>Search </span>
-          <span className="flex items-center gap-0.5">
-            <Kbd className="flex size-6 items-center justify-center p-0 text-xs">
-              ⌘
-            </Kbd>
-            <Kbd className="flex size-6 items-center justify-center p-0 text-xs">
-              K
-            </Kbd>
-          </span>
-        </span>
+          <Kbd className="flex items-center justify-center p-1 text-xs ">
+            ⌘K
+          </Kbd>
+        </div>
       </SidebarButton>
     </StyledTooltip>
   );
@@ -265,26 +299,21 @@ const SearchCommandDialog = ({ isCollapsed }: { isCollapsed: boolean }) => {
     <DialogRoot isOpen={isOpen} onOpenChange={setIsOpen}>
       <StyledTooltip
         content={
-          <span className="flex items-center gap-2">
+          <div className="flex items-center gap-2">
             Search
             <Kbd>⌘K</Kbd>
-          </span>
+          </div>
         }
         isDisabled={!isCollapsed}
       >
         <SidebarButton variant="outline" className="bg-bg-inverse/5">
           <SearchIcon />
-          <span className="flex flex-1 flex-row items-center justify-between">
+          <div className="flex flex-1 flex-row items-center justify-between">
             <span>Search </span>
-            <span className="flex items-center gap-0.5">
-              <Kbd className="flex size-6 items-center justify-center p-0 text-xs">
-                ⌘
-              </Kbd>
-              <Kbd className="flex size-6 items-center justify-center p-0 text-xs">
-                K
-              </Kbd>
-            </span>
-          </span>
+            <Kbd className="flex size-6 items-center justify-center p-0 text-xs">
+              ⌘ K
+            </Kbd>
+          </div>
         </SidebarButton>
       </StyledTooltip>
       <Dialog className="!p-0" showDismissButton={false}>
@@ -489,7 +518,7 @@ const StyledTooltip = (props: TooltipProps) => {
 
 const SidebarFooter = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="group-data-collapsed/sidebar:w-[--sidebar-width-collapsed] group-data-collapsed/sidebar:flex-col group-data-collapsed/sidebar:justify-end flex flex-row items-center justify-between gap-1 p-2">
+    <div className="group-data-collapsed/sidebar:w-[--sidebar-width-collapsed] group-data-collapsed/sidebar:flex-col group-data-collapsed/sidebar:justify-end flex flex-row items-end justify-between gap-1 p-2">
       {children}
     </div>
   );
