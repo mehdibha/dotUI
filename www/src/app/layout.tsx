@@ -66,7 +66,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          "font-sans",
+          "font-sans antialiased",
           geistMono.variable,
           geistSans.variable,
           fontDisplay.variable,
@@ -77,11 +77,10 @@ export default function RootLayout({
         <Analytics />
         <Providers>
           {/* TODO: patch min-h-screen */}
-          <div className="flex min-h-screen flex-col sm:flex-row">
+          <div className="relative sm:flex w-full sm:flex-row">
             <MobileNav items={source.pageTree.children} />
             <Sidebar items={source.pageTree.children} />
-            <main className="relative flex-1 overflow-hidden xl:overflow-visible">
-              {/* Version */}
+            <main className="relative flex-1">
               <Badge
                 size="md"
                 variant="neutral"
@@ -92,6 +91,20 @@ export default function RootLayout({
               {children}
             </main>
           </div>
+          {/* <div className="flex min-h-screen flex-col sm:flex-row">
+            <MobileNav items={source.pageTree.children} />
+            <Sidebar items={source.pageTree.children} />
+            <main className="relative flex-1 overflow-hidden xl:overflow-visible">
+              <Badge
+                size="md"
+                variant="neutral"
+                className="absolute right-3 top-3 border text-[#e9e5e5]"
+              >
+                v0.1.0 beta
+              </Badge>
+              {children}
+            </main>
+          </div> */}
         </Providers>
       </body>
     </html>

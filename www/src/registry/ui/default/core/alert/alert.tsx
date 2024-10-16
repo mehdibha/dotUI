@@ -52,47 +52,50 @@ const icons = {
   danger: <DangerIcon />,
   info: <InfoIcon />,
 };
-
 interface AlertProps extends AlertRootProps {
   title?: React.ReactNode;
   icon?: React.ReactNode | null;
   action?: React.ReactNode;
 }
-const Alert = ({
-  variant = "default",
-  title,
-  children,
-  icon,
-  action,
-  ...props
-}: AlertProps) => {
-  return (
-    <AlertRoot variant={variant} {...props}>
-      {icon || icons[variant]}
-      <div className="flex-1 space-y-0.5">
-        {title && <AlertTitle>{title}</AlertTitle>}
-        {children && <AlertContent>{children}</AlertContent>}
-      </div>
-      {action && <div className="shrink-0">{action}</div>}
-    </AlertRoot>
-  );
-};
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
+  ({ variant = "default", title, children, icon, action, ...props }, ref) => {
+    return (
+      <AlertRoot variant={variant} {...props} ref={ref}>
+        {icon || icons[variant]}
+        <div className="flex-1 space-y-0.5">
+          {title && <AlertTitle>{title}</AlertTitle>}
+          {children && <AlertContent>{children}</AlertContent>}
+        </div>
+        {action && <div className="shrink-0">{action}</div>}
+      </AlertRoot>
+    );
+  }
+);
+Alert.displayName = "Alert";
 
 interface AlertRootProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "title">,
     VariantProps<typeof alertStyles> {}
-const AlertRoot = ({ className, variant, fill, ...props }: AlertRootProps) => {
-  const { root } = alertStyles({ variant, fill });
-  return <div role="alert" className={root({ className })} {...props} />;
-};
+const AlertRoot = React.forwardRef<HTMLDivElement, AlertRootProps>(
+  ({ className, variant, fill, ...props }, ref) => {
+    const { root } = alertStyles({ variant, fill });
+    return (
+      <div role="alert" className={root({ className })} {...props} ref={ref} />
+    );
+  }
+);
+AlertRoot.displayName = "AlertRoot";
 
 interface AlertTitleProps
   extends React.HTMLAttributes<HTMLHeadingElement>,
     VariantProps<typeof alertStyles> {} // TODO VERIFY THIS
-const AlertTitle = ({ className, ...props }: AlertTitleProps) => {
-  const { title } = alertStyles();
-  return <h3 className={title({ className })} {...props} />;
-};
+const AlertTitle = React.forwardRef<HTMLHeadingElement, AlertTitleProps>(
+  ({ className, ...props }, ref) => {
+    const { title } = alertStyles();
+    return <h3 className={title({ className })} {...props} ref={ref} />;
+  }
+);
+AlertTitle.displayName = "AlertTitle";
 
 interface AlertContentProps
   extends React.HTMLAttributes<HTMLElement>,
