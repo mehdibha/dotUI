@@ -14,6 +14,7 @@ import { tv } from "tailwind-variants";
 import { Button } from "@/registry/ui/default/core/button";
 import { Field } from "@/registry/ui/default/core/field";
 import { focusRing } from "@/registry/ui/default/lib/focus-styles";
+import { cn } from "../../lib/cn";
 import { toggleButtonStyles } from "../toggle-button";
 
 const tagGroupStyles = tv({
@@ -78,7 +79,7 @@ function Tag({ children, ...props }: TagProps) {
         variant: "outline",
         shape: "rectangle",
         size: "sm",
-        className: "cursor-pointer",
+        className: cn("cursor-pointer", props.className),
       })}
     >
       {({ allowsRemoving }) => (

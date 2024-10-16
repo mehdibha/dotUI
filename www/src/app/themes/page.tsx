@@ -88,7 +88,7 @@ export default function Page() {
                   }}
                   className="flex-1"
                 >
-                  <span className="flex-1 text-left">{colorBase.label}</span>
+                  {colorBase.label}
                 </ColorPicker>
               ))}
             </div>
@@ -148,6 +148,28 @@ export default function Page() {
             >
               <Item id="Arial">Lucide icons</Item>
             </Select>
+          </Section>
+          <Section
+            title="Borders"
+            onHoverStart={() => {
+              setCurrentSection("borders");
+            }}
+          >
+            <h4 className="font-semibold">
+              <span className="text-fg-muted">#</span> Radius
+            </h4>
+            <TagGroup
+              selectionMode="single"
+              defaultSelectedKeys={["0.5"]}
+              disallowEmptySelection
+              className="mt-2 w-full"
+            >
+              {[0, 0.5, 0.75, 1].map((value) => (
+                <Tag key={value} id={value.toString()} className="w-14">
+                  {value}
+                </Tag>
+              ))}
+            </TagGroup>
           </Section>
         </div>
       </div>

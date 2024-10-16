@@ -50,14 +50,6 @@ export const Preview = ({ currentSection }: { currentSection: string }) => {
         {currentSection === "color-warning" && <ColorPreview color="warning" />}
         {currentSection === "color-danger" && <ColorPreview color="danger" />}
         {currentSection === "color-accent" && <ColorPreview color="accent" />}
-        {currentSection === "colors" && (
-          <motion.div layout className="grid grid-cols-2 gap-2">
-            <MotionButton>Button 1</MotionButton>
-            <MotionButton>Button 2</MotionButton>
-            <MotionButton>Button 3</MotionButton>
-            <MotionButton>Button 5</MotionButton>
-          </motion.div>
-        )}
         {currentSection === "typography" && (
           <motion.div>
             <motion.p layout className="text-4xl font-bold">
@@ -79,6 +71,36 @@ export const Preview = ({ currentSection }: { currentSection: string }) => {
                 <MotionIcon key={`icon-${key}`} layout className="size-5" />
               );
             })}
+          </motion.div>
+        )}
+        {currentSection === "borders" && (
+          <motion.div>
+            <div className="grid grid-cols-5 gap-2">
+              {["sm", "", "md", "lg", "xl"].map((size) => (
+                <motion.div layout key={size} className="flex flex-col items-center gap-2">
+                  <div
+                    className={cn("size-16 border-l border-t", {
+                      "rounded-tl-sm": size === "sm",
+                      "rounded-tl": size === "",
+                      "rounded-tl-md": size === "md",
+                      "rounded-tl-lg": size === "lg",
+                      "rounded-tl-xl": size === "xl",
+                    })}
+                  />
+                  <p className="text-fg-muted text-sm">
+                    rounded{size ? `-${size}` : ""}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+            <div className="mt-4 flex items-center gap-2">
+              <MotionButton layoutId="button-default">Button</MotionButton>
+              <MotionToggleButton layoutId="toggle-default" defaultSelected>
+                <PinIcon />
+              </MotionToggleButton>
+              <TextField placeholder="example@domain.com" />
+            </div>
+            <Alert fill className="mt-4">This is an important message!</Alert>
           </motion.div>
         )}
       </div>
