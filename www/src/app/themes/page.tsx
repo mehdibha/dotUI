@@ -19,7 +19,7 @@ export default function Page() {
 
   return (
     <div className="container grid grid-cols-12 gap-10">
-      <div className="col-span-6 py-12">
+      <div className="col-span-6 py-16">
         <h1 className="font-heading xs:text-2xl text-pretty text-xl font-semibold tracking-tighter sm:text-3xl md:text-4xl">
           Everything starts with identity.
         </h1>
@@ -45,7 +45,7 @@ export default function Page() {
             Copy code
           </Button>
         </div>
-        <div className="mt-10">
+        <div className="mt-20">
           <Section
             title="Colors"
             onHoverStart={() => setCurrentSection("color-neutral")}

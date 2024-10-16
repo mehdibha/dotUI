@@ -5,7 +5,11 @@ import { motion } from "framer-motion";
 import { Maximize2Icon, PinIcon, SmartphoneIcon } from "lucide-react";
 import { Alert } from "@/registry/ui/default/core/alert";
 import { Button } from "@/registry/ui/default/core/button";
+import { Progress } from "@/registry/ui/default/core/progress";
+import { Switch } from "@/registry/ui/default/core/switch";
+import { TextField } from "@/registry/ui/default/core/text-field";
 import { ToggleButton } from "@/registry/ui/default/core/toggle-button";
+import { cn } from "@/registry/ui/default/lib/cn";
 import * as icons from "@/__icons__";
 
 const transitionProps = {
@@ -22,17 +26,22 @@ export const Preview = ({ currentSection }: { currentSection: string }) => {
       className="overflow-hidden rounded-lg border"
       // transition={{ type: "spring", bounce: 0.2, duration: 0.4 }}
     >
-      <div className="bg-bg-muted flex h-10 items-center justify-between pl-4 pr-2">
-        <p className="text-fg-muted text-sm">Preview</p>
-        <div className="flex items-center gap-2">
+      <motion.div
+        layout
+        className="bg-bg-muted flex h-10 items-center justify-between pl-4 pr-2"
+      >
+        <motion.p layout className="text-fg-muted text-sm">
+          Preview
+        </motion.p>
+        <motion.div layout className="flex items-center gap-2">
           <Button variant="quiet" shape="square" size="sm">
             <Maximize2Icon />
           </Button>
           <Button variant="quiet" shape="square" size="sm">
             <SmartphoneIcon />
           </Button>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
       <div className="p-6">
         {currentSection === "color-neutral" && (
           <ColorPreview color="neutral" showBackground />
@@ -42,19 +51,15 @@ export const Preview = ({ currentSection }: { currentSection: string }) => {
         {currentSection === "color-danger" && <ColorPreview color="danger" />}
         {currentSection === "color-accent" && <ColorPreview color="accent" />}
         {currentSection === "colors" && (
-          <motion.div
-            key={0}
-            className="grid grid-cols-2 gap-2"
-            {...transitionProps}
-          >
-            <MotionButton layout>Button 1</MotionButton>
-            <MotionButton layout>Button 2</MotionButton>
-            <MotionButton layout>Button 3</MotionButton>
-            <MotionButton layout>Button 5</MotionButton>
+          <motion.div layout className="grid grid-cols-2 gap-2">
+            <MotionButton>Button 1</MotionButton>
+            <MotionButton>Button 2</MotionButton>
+            <MotionButton>Button 3</MotionButton>
+            <MotionButton>Button 5</MotionButton>
           </motion.div>
         )}
         {currentSection === "typography" && (
-          <motion.div key={1} {...transitionProps}>
+          <motion.div>
             <motion.p layout className="text-4xl font-bold">
               Heading
             </motion.p>
@@ -67,11 +72,7 @@ export const Preview = ({ currentSection }: { currentSection: string }) => {
           </motion.div>
         )}
         {currentSection === "icons" && (
-          <motion.div
-            key={2}
-            className="grid grid-cols-8 gap-4"
-            {...transitionProps}
-          >
+          <motion.div className="grid grid-cols-8 gap-4">
             {Object.entries(icons).map(([key, Icon]) => {
               const MotionIcon = motion.create(Icon);
               return (
@@ -124,7 +125,7 @@ const ColorPreview = ({
       )}
       <motion.div
         layoutId="color-preview-buttons"
-        className="mt-6 flex items-center gap-6"
+        className={cn("flex items-center gap-6", showBackground && "mt-6")}
       >
         <div className="flex items-center gap-2">
           <MotionButton variant="default" layoutId="button-default">
@@ -176,6 +177,31 @@ const ColorPreview = ({
           This is an important message!
         </MotionAlert>
       </div>
+      {color === "neutral" && (
+        <div className="mt-6">
+          <Progress value={50} className="w-full" variant="default" />
+        </div>
+      )}
+      {color === "accent" && (
+        <>
+          <div className="mt-6 flex items-center gap-4">
+            <Switch defaultSelected>Focus mode</Switch>
+            <TextField placeholder="hello@mehdibha.com" />
+          </div>
+          <div className="mt-6 flex items-center gap-4">
+            <Progress value={50} className="w-full" variant="accent" />
+          </div>
+        </>
+      )}
+      {color === "danger" && (
+        <div className="mt-6 flex items-center gap-4">
+          <TextField
+            label="Email"
+            isInvalid
+            errorMessage="This email is already taken."
+          />
+        </div>
+      )}
     </motion.div>
   );
 };
