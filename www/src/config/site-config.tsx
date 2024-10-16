@@ -2,7 +2,7 @@ export const siteConfig = {
   global: {
     url: "https://dotui.org",
     name: "dotUI",
-    logo: "/images/logo.png",
+    logo: "https://dotui.org/images/logo.png",
     title: "dotUI",
     description: "Accessible, mobile friendly, modern UI components.",
     keywords: [],
@@ -13,7 +13,7 @@ export const siteConfig = {
       },
     ],
     creator: "mehdibha",
-    thumbnail: "/images/thumbnail.png",
+    thumbnail: "https://dotui.org/images/thumbnail.png",
     twitter: {
       creator: "@mehdibha_",
     },
