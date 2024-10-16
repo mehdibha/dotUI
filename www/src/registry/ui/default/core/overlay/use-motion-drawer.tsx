@@ -657,9 +657,8 @@ function isIPhone(): boolean | undefined {
 
 function isIPad(): boolean | undefined {
   return (
-    testPlatform(/^iPad/) ||
     // iPadOS 13 lies and says it's a Mac, but we can distinguish by detecting touch support.
-    (isMac() && navigator.maxTouchPoints > 1)
+    testPlatform(/^iPad/) || (isMac() && navigator.maxTouchPoints > 1)
   );
 }
 

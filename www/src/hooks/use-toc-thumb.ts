@@ -3,7 +3,9 @@ import * as Primitive from "fumadocs-core/toc";
 
 export type TOCThumb = [top: number, height: number];
 
-export function useTocThumb(containerRef: RefObject<HTMLElement>): TOCThumb {
+export function useTocThumb(
+  containerRef: RefObject<HTMLElement | null>
+): TOCThumb {
   const active = Primitive.useActiveAnchors();
   const [pos, setPos] = useState<TOCThumb>([0, 0]);
 

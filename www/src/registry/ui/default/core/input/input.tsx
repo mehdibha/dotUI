@@ -155,7 +155,7 @@ const InputRoot = ({
     const target = event.target as HTMLElement;
     if (target.closest("input, button, a")) return;
     const input = (
-      inputRef as React.RefObject<HTMLInputElement | HTMLTextAreaElement>
+      inputRef as React.RefObject<HTMLInputElement | HTMLTextAreaElement | null>
     ).current;
     if (!input) return;
     requestAnimationFrame(() => {

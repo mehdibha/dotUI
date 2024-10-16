@@ -16,14 +16,15 @@ import { source } from "@/app/source";
 import { siteConfig } from "@/config";
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string[];
-  };
+  }>;
 }
 
 const config = siteConfig.global;
 
-export default async function Page({ params }: PageProps) {
+export default async function Page(props: PageProps) {
+  const params = await props.params;
   const page = source.getPage(params.slug);
   if (!page) notFound();
   const MDXContent = page.data.body;
@@ -80,7 +81,8 @@ const getIcon = (url: string) => {
   return null;
 };
 
-export function generateMetadata({ params }: PageProps): Metadata {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
   const page = source.getPage(params.slug);
   if (!page) notFound();
 
