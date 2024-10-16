@@ -48,14 +48,14 @@ export const Sidebar = ({ items }: { items: PageTree.Node[] }) => {
 
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.ctrlKey && e.key === 'b') {
+      if (e.ctrlKey && e.key === "b") {
         e.preventDefault();
-        setIsCollapsed(prev => !prev);
+        setIsCollapsed((prev) => !prev);
       }
     };
 
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   return (
@@ -262,9 +262,7 @@ const SearchCommandButton = ({ isCollapsed }: { isCollapsed: boolean }) => {
         <SearchIcon />
         <div className="flex flex-1 flex-row items-center justify-between">
           <span>Search </span>
-          <Kbd className="flex items-center justify-center p-1 text-xs ">
-            ⌘K
-          </Kbd>
+          <Kbd className="flex items-center justify-center p-1 text-xs">⌘K</Kbd>
         </div>
       </SidebarButton>
     </StyledTooltip>

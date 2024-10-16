@@ -78,7 +78,7 @@ function Tag({ children, ...props }: TagProps) {
         variant: "outline",
         shape: "rectangle",
         size: "sm",
-        className: "cursor-pointer"
+        className: "cursor-pointer",
       })}
     >
       {({ allowsRemoving }) => (

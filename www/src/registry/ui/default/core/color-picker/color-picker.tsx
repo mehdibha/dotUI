@@ -13,18 +13,25 @@ import { ColorArea } from "@/registry/ui/default/core/color-area";
 import { ColorField } from "@/registry/ui/default/core/color-field";
 import { ColorSlider } from "@/registry/ui/default/core/color-slider";
 import { ColorSwatch } from "@/registry/ui/default/core/color-swatch";
-import { Dialog, DialogRoot } from "@/registry/ui/default/core/dialog";
+import {
+  Dialog,
+  DialogRoot,
+  DialogRootProps,
+} from "@/registry/ui/default/core/dialog";
 import { Item } from "@/registry/ui/default/core/list-box";
 import { Select } from "@/registry/ui/default/core/select";
 import { cn } from "@/registry/ui/default/lib/cn";
 
-type ColorPickerProps = ColorPickerRootProps & Omit<ButtonProps, "children">;
+type ColorPickerProps = ColorPickerRootProps &
+  Omit<ButtonProps, "children"> &
+  Pick<DialogRootProps, "onOpenChange">;
 const ColorPicker = ({
   slot,
   value,
   defaultValue,
   onChange,
   shape = "square",
+  onOpenChange,
   ...props
 }: ColorPickerProps) => {
   return (
@@ -35,7 +42,7 @@ const ColorPicker = ({
       onChange={onChange}
     >
       {composeRenderProps(props.children, (children) => (
-        <DialogRoot>
+        <DialogRoot onOpenChange={onOpenChange}>
           <Button shape={shape} {...props}>
             <ColorSwatch />
             {children}

@@ -1,7 +1,9 @@
 "use client";
 
 import React from "react";
-import { CopyIcon} from "lucide-react";
+import { CopyIcon } from "lucide-react";
+import { Button as AriaButton } from "react-aria-components";
+import { Preview } from "@/components/themes/preview";
 import { Button } from "@/registry/ui/default/core/button";
 import { ColorPicker } from "@/registry/ui/default/core/color-picker";
 import { Dialog, DialogRoot } from "@/registry/ui/default/core/dialog";
@@ -10,7 +12,6 @@ import { Select } from "@/registry/ui/default/core/select";
 import { Tag, TagGroup } from "@/registry/ui/default/core/tag-group/tag-group";
 import { Tooltip } from "@/registry/ui/default/core/tooltip";
 import { cn } from "@/registry/ui/default/lib/cn";
-import { Preview } from "@/components/themes/preview";
 
 export default function Page() {
   const [currentSection, setCurrentSection] = React.useState<string>("colors");
@@ -78,6 +79,12 @@ export default function Page() {
                   shape="rectangle"
                   defaultValue={colorBase.color}
                   aria-label={colorBase.label}
+                  onOpenChange={() => {
+                    setCurrentSection(`color-${colorBase.value}`);
+                  }}
+                  onHoverStart={() => {
+                    setCurrentSection(`color-${colorBase.value}`);
+                  }}
                   className="flex-1"
                 >
                   <span className="flex-1 text-left">{colorBase.label}</span>
@@ -89,6 +96,7 @@ export default function Page() {
             </h4>
             <div className="mt-2 flex flex-col gap-2">
               {[
+                { label: "Backgrounds", value: "bg", length: 2 },
                 { label: "Neutral", value: "neutral" },
                 { label: "Success", value: "success" },
                 { label: "Warning", value: "warning" },
@@ -143,7 +151,10 @@ export default function Page() {
         </div>
       </div>
       <div className="sticky top-0 col-span-6 flex h-screen items-center justify-center">
-        <Preview currentSection={currentSection} />
+        <Preview
+          // currentSection={"color-neutral"}
+          currentSection={currentSection}
+        />
       </div>
     </div>
   );
@@ -172,17 +183,25 @@ const Section = ({
   );
 };
 
-const ColorScale = ({ label, value }: { label: string; value: string }) => {
+const ColorScale = ({
+  label,
+  value,
+  length = 10,
+}: {
+  label: string;
+  value: string;
+  length?: number;
+}) => {
   return (
     <div className="flex flex-row gap-2 xl:flex-row xl:items-center">
-      <div className="w-[80px]">
+      <div className="w-[120px]">
         <p className="text-sm font-semibold">{label}</p>
       </div>
-      <ul className="flex w-full items-center gap-2">
-        {Array.from({ length: 10 }).map((_, index) => (
-          <li key={index} className="w-full">
+      <ul className="grid w-full grid-cols-10 gap-2">
+        {Array.from({ length }).map((_, index) => (
+          <li key={index} className="col-span-1">
             <Tooltip content={`${value}-${index * 100}`}>
-              <div
+              <AriaButton
                 className="h-10 w-full rounded-md border"
                 style={{
                   backgroundColor: `hsl(var(--color-${value}-${index * 100}))`,
