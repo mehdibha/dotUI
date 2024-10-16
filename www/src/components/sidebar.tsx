@@ -38,7 +38,8 @@ const MotionButton = motion.create(Button);
 
 export const Sidebar = ({ items }: { items: PageTree.Node[] }) => {
   const pathname = usePathname();
-  const [isCollapsed, setIsCollapsed] = React.useState(!!(pathname === "/"));
+  const shouldInitialCollapse = !!(pathname === "/" || pathname === "/themes");
+  const [isCollapsed, setIsCollapsed] = React.useState(shouldInitialCollapse);
 
   const transition = {
     type: "spring",
