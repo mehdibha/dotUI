@@ -47,7 +47,7 @@ export default function Page() {
         <div className="mt-10">
           <Section
             title="Colors"
-            onHoverStart={() => setCurrentSection("colors")}
+            onHoverStart={() => setCurrentSection("color-neutral")}
           >
             <h4 className="font-heading text-pretty font-semibold">
               <span className="text-fg-muted">#</span> Mode
