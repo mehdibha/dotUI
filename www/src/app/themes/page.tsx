@@ -14,7 +14,7 @@ import { Tooltip } from "@/registry/ui/default/core/tooltip";
 import { cn } from "@/registry/ui/default/lib/cn";
 
 export default function Page() {
-  const [currentSection, setCurrentSection] = React.useState<string>("colors");
+  const [currentSection, setCurrentSection] = React.useState<string>("color-neutral");
 
   return (
     <div className="container grid grid-cols-12 gap-10">
