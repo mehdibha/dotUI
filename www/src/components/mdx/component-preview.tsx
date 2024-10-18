@@ -5,6 +5,7 @@ import { CodeBlock } from "@/components/code-block";
 import { styles } from "@/registry/styles";
 import { cn } from "@/registry/ui/default/lib/cn";
 import { Index } from "@/__demos__";
+import { ThemeOverride } from "../theme-override";
 import { ComponentPreviewClient } from "./component-preview-client";
 
 export interface ComponentPreviewProps {
@@ -51,27 +52,30 @@ export const ComponentPreview = async ({
         className={cn("overflow-hidden rounded-md border", containerClassName)}
       >
         <div className="relative">
-          <ScrollArea
-            className={cn(
-              "flex items-center justify-center bg-white dark:bg-black"
-            )}
-          >
-            <div className="flex min-h-40 items-center justify-center px-4 py-8">
-              <div
-                className={cn(
-                  "flex w-full items-center justify-center",
-                  className
-                )}
-              >
-                <ComponentPreviewClient
-                  demos={demos.map((elem, index) => {
-                    const Comp = elem.component;
-                    return <Comp key={index} />;
-                  })}
-                />
+          <ThemeOverride>
+            <ScrollArea
+              className={cn(
+                "flex items-center justify-center",
+                "bg-bg text-fg"
+              )}
+            >
+              <div className="flex min-h-40 items-center justify-center px-4 py-8">
+                <div
+                  className={cn(
+                    "flex w-full items-center justify-center",
+                    className
+                  )}
+                >
+                  <ComponentPreviewClient
+                    demos={demos.map((elem, index) => {
+                      const Comp = elem.component;
+                      return <Comp key={index} />;
+                    })}
+                  />
+                </div>
               </div>
-            </div>
-          </ScrollArea>
+            </ScrollArea>
+          </ThemeOverride>
         </div>
         <ComponentPreviewClient
           demos={demos.map((elem, index) => {
