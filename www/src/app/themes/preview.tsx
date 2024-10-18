@@ -11,20 +11,22 @@ import { TextField } from "@/registry/ui/default/core/text-field";
 import { ToggleButton } from "@/registry/ui/default/core/toggle-button";
 import { cn } from "@/registry/ui/default/lib/cn";
 import * as icons from "@/__icons__";
+import { ThemeOverride } from "../../components/theme-override";
+import { usePreview } from "./context";
 
-const transitionProps = {
-  initial: { opacity: 0 },
-  animate: { opacity: 1 },
-  exit: { opacity: 0 },
-  transition: { duration: 0.2 },
-};
+// const transitionProps = {
+//   initial: { opacity: 0 },
+//   animate: { opacity: 1 },
+//   exit: { opacity: 0 },
+//   transition: { duration: 0.2 },
+// };
 
-export const Preview = ({ currentSection }: { currentSection: string }) => {
+export const Preview = () => {
+  const { preview } = usePreview();
   return (
     <motion.div
       layout
-      className="overflow-hidden rounded-lg border"
-      // transition={{ type: "spring", bounce: 0.2, duration: 0.4 }}
+      className="bg-bg text-fg overflow-hidden rounded-lg border"
     >
       <motion.div
         layout
@@ -42,68 +44,76 @@ export const Preview = ({ currentSection }: { currentSection: string }) => {
           </Button>
         </motion.div>
       </motion.div>
-      <div className="p-6">
-        {currentSection === "color-neutral" && (
-          <ColorPreview color="neutral" showBackground />
-        )}
-        {currentSection === "color-success" && <ColorPreview color="success" />}
-        {currentSection === "color-warning" && <ColorPreview color="warning" />}
-        {currentSection === "color-danger" && <ColorPreview color="danger" />}
-        {currentSection === "color-accent" && <ColorPreview color="accent" />}
-        {currentSection === "typography" && (
-          <motion.div>
-            <motion.p layout className="text-4xl font-bold">
-              Heading
-            </motion.p>
-            <motion.p layout className="mt-2">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
-            </motion.p>
-          </motion.div>
-        )}
-        {currentSection === "icons" && (
-          <motion.div className="grid grid-cols-8 gap-4">
-            {Object.entries(icons).map(([key, Icon]) => {
-              const MotionIcon = motion.create(Icon);
-              return (
-                <MotionIcon key={`icon-${key}`} layout className="size-5" />
-              );
-            })}
-          </motion.div>
-        )}
-        {currentSection === "borders" && (
-          <motion.div>
-            <div className="grid grid-cols-5 gap-2">
-              {["sm", "", "md", "lg", "xl"].map((size) => (
-                <motion.div layout key={size} className="flex flex-col items-center gap-2">
-                  <div
-                    className={cn("size-16 border-l border-t", {
-                      "rounded-tl-sm": size === "sm",
-                      "rounded-tl": size === "",
-                      "rounded-tl-md": size === "md",
-                      "rounded-tl-lg": size === "lg",
-                      "rounded-tl-xl": size === "xl",
-                    })}
-                  />
-                  <p className="text-fg-muted text-sm">
-                    rounded{size ? `-${size}` : ""}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-            <div className="mt-4 flex items-center gap-2">
-              <MotionButton layoutId="button-default">Button</MotionButton>
-              <MotionToggleButton layoutId="toggle-default" defaultSelected>
-                <PinIcon />
-              </MotionToggleButton>
-              <TextField placeholder="example@domain.com" />
-            </div>
-            <Alert fill className="mt-4">This is an important message!</Alert>
-          </motion.div>
-        )}
-      </div>
+      <ThemeOverride>
+        <div className="p-6">
+          {preview === "color-neutral" && (
+            <ColorPreview color="neutral" showBackground />
+          )}
+          {preview === "color-success" && <ColorPreview color="success" />}
+          {preview === "color-warning" && <ColorPreview color="warning" />}
+          {preview === "color-danger" && <ColorPreview color="danger" />}
+          {preview === "color-accent" && <ColorPreview color="accent" />}
+          {preview === "typography" && (
+            <motion.div>
+              <motion.p layout className="text-4xl font-bold">
+                Heading
+              </motion.p>
+              <motion.p layout className="mt-2">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat.
+              </motion.p>
+            </motion.div>
+          )}
+          {preview === "icons" && (
+            <motion.div className="grid grid-cols-8 gap-4">
+              {Object.entries(icons).map(([key, Icon]) => {
+                const MotionIcon = motion.create(Icon);
+                return (
+                  <MotionIcon key={`icon-${key}`} layout className="size-5" />
+                );
+              })}
+            </motion.div>
+          )}
+          {preview === "borders" && (
+            <motion.div>
+              <div className="grid grid-cols-5 gap-2">
+                {["sm", "", "md", "lg", "xl"].map((size) => (
+                  <motion.div
+                    layout
+                    key={size}
+                    className="flex flex-col items-center gap-2"
+                  >
+                    <div
+                      className={cn("size-16 border-l border-t", {
+                        "rounded-tl-sm": size === "sm",
+                        "rounded-tl": size === "",
+                        "rounded-tl-md": size === "md",
+                        "rounded-tl-lg": size === "lg",
+                        "rounded-tl-xl": size === "xl",
+                      })}
+                    />
+                    <p className="text-fg-muted text-sm">
+                      rounded{size ? `-${size}` : ""}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
+              <div className="mt-4 flex items-center gap-2">
+                <MotionButton layoutId="button-default">Button</MotionButton>
+                <MotionToggleButton layoutId="toggle-default" defaultSelected>
+                  <PinIcon />
+                </MotionToggleButton>
+                <TextField placeholder="example@domain.com" />
+              </div>
+              <Alert fill className="mt-4">
+                This is an important message!
+              </Alert>
+            </motion.div>
+          )}
+        </div>
+      </ThemeOverride>
     </motion.div>
   );
 };

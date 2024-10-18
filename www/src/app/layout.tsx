@@ -77,7 +77,7 @@ export default function RootLayout({
         <Analytics />
         <Providers>
           {/* TODO: patch min-h-screen */}
-          <div className="relative sm:flex w-full sm:flex-row">
+          <div className="relative w-full sm:flex sm:flex-row">
             <MobileNav items={source.pageTree.children} />
             <Sidebar items={source.pageTree.children} />
             <main className="relative flex-1">

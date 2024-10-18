@@ -78,7 +78,7 @@ function Tag({ children, ...props }: TagProps) {
       className={toggleButtonStyles({
         variant: "outline",
         shape: "rectangle",
-        size: "sm",
+        // size: "sm",
         className: cn("cursor-pointer", props.className),
       })}
     >

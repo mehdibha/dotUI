@@ -16,7 +16,12 @@ export function Providers({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   return (
     <RouterProvider navigate={router.push}>
-      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
+      >
         <div drawer-wrapper="" className="bg-bg">
           {children}
         </div>
