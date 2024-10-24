@@ -1,12 +1,14 @@
 "use client";
 
 import React from "react";
+import { useThemes } from "@/hooks/use-themes";
 import { Button } from "@/registry/ui/default/core/button";
 import {
   Dialog,
   DialogFooter,
   DialogRoot,
 } from "@/registry/ui/default/core/dialog";
+import { Form } from "@/registry/ui/default/core/form";
 import { TextField } from "@/registry/ui/default/core/text-field";
 
 export const CreateThemeDialog = ({
@@ -14,28 +16,51 @@ export const CreateThemeDialog = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const [name, setName] = React.useState("");
+  const { createTheme } = useThemes();
+
   return (
     <DialogRoot>
       {children}
       <Dialog title="Create new theme">
         {({ close }) => (
-          <>
-            <TextField label="Name" className="w-full" />
+          <Form
+            onSubmit={(e) => {
+              e.preventDefault();
+              createTheme({ name });
+              setName("");
+              close();
+            }}
+          >
+            <TextField
+              autoFocus
+              label="Name"
+              isRequired
+              value={name}
+              onChange={setName}
+              className="w-full"
+            />
             <DialogFooter>
-              <Button variant="outline" size="sm" onPress={close}>
+              <Button
+                variant="outline"
+                size="sm"
+                onPress={() => {
+                  setName("");
+                  close();
+                }}
+              >
                 Cancel
               </Button>
               <Button
+                type="submit"
                 variant="primary"
                 size="sm"
-                onPress={() => {
-                  close();
-                }}
+                isDisabled={!name}
               >
                 Save theme
               </Button>
             </DialogFooter>
-          </>
+          </Form>
         )}
       </Dialog>
     </DialogRoot>

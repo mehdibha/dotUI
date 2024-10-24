@@ -1,12 +1,124 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { useAtom } from "jotai";
+import { withImmer } from "jotai-immer";
+import { atomWithStorage } from "jotai/utils";
+import { nanoid } from "nanoid";
+import { defaultTheme, dotUIThemes } from "@/lib/themes";
+import { useMounted } from "@/registry/hooks/use-mounted";
+import { BaseColor, ModeConfig, Theme } from "@/types/theme";
 
-type Config = {
+type Mode = "light" | "dark";
+
+type State = {
   themes: Theme[];
+  currentThemeId: string;
+  mode: Mode;
 };
 
-export const useConfig = create<Config>()(
-  persist((set) => ({}), {
-    name: "preview-theme",
+const themesAtom = withImmer(
+  atomWithStorage<State>("themes", {
+    themes: [],
+    mode: "light",
+    currentThemeId: "default",
   })
 );
+
+export const useThemes = () => {
+  const [state, setState] = useAtom(themesAtom);
+  const mounted = useMounted();
+
+  const currentTheme = [...state.themes, ...dotUIThemes].find(
+    (t) => t.id === state.currentThemeId
+  ) as Theme;
+  const isCurrentThemeEditable = state.themes.some(
+    (t) => t.id === state.currentThemeId
+  );
+
+  const setCurrentThemeId = (themeId: string) => {
+    setState((draft) => {
+      draft.currentThemeId = themeId;
+    });
+  };
+  const setMode = (mode: Mode) => {
+    setState((draft) => {
+      draft.mode = mode;
+    });
+  };
+  const createTheme = (
+    themeProperties: Prettify<
+      Omit<Partial<Theme>, "id" | "name"> & { name: string }
+    >
+  ) => {
+    setState((draft) => {
+      const id = nanoid();
+      draft.themes.push({
+        ...defaultTheme,
+        ...themeProperties,
+        id,
+      });
+      draft.currentThemeId = id;
+    });
+  };
+
+  const cloneTheme = (
+    themeId: string,
+    themeProps: Prettify<Omit<Partial<Theme>, "id"> & { name: string }>
+  ) => {
+    const theme = [...state.themes, ...dotUIThemes].find(
+      (t) => t.id === themeId
+    );
+    if (!theme) return;
+    const { id, name, ...targetThemeProps } = theme;
+    createTheme({
+      ...targetThemeProps,
+      ...themeProps,
+    });
+  };
+
+  const setThemeName = (name: string) => {
+    setState((draft) => {
+      const theme = draft.themes.find((t) => t.id === draft.currentThemeId);
+      if (theme) {
+        theme.name = name;
+      }
+    });
+  };
+
+  const handleBaseColorChange = (baseColor: BaseColor, value: string) => {
+    if (!isCurrentThemeEditable) return;
+    setState((draft) => {
+      const theme = draft.themes.find((t) => t.id === draft.currentThemeId);
+      if (theme) {
+        theme.colors[state.mode][baseColor].baseColor = value;
+      }
+    });
+  };
+
+  const handleColorConfigChange = (
+    config: "lightness" | "saturation",
+    value: number
+  ) => {
+    if (!isCurrentThemeEditable) return;
+    setState((draft) => {
+      const theme = draft.themes.find((t) => t.id === draft.currentThemeId);
+      if (theme) {
+        theme.colors[state.mode][config] = value;
+      }
+    });
+  };
+
+  return {
+    isLoading: !mounted,
+    themes: state.themes,
+    mode: state.mode,
+    currentTheme,
+    isCurrentThemeEditable,
+    createTheme,
+    cloneTheme,
+    setThemeName,
+    currentThemeId: state.currentThemeId,
+    setCurrentThemeId,
+    setMode,
+    handleBaseColorChange,
+    handleColorConfigChange,
+  };
+};

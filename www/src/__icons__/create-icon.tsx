@@ -1,12 +1,12 @@
 import React, { forwardRef } from "react";
-import { useConfig } from "@/hooks/use-config";
 
 export const createIcon = (icons: {
   lucide: React.ElementType;
   remix: React.ElementType;
 }) => {
   const Icon = forwardRef<HTMLElement, { className?: string }>((props, ref) => {
-    const { iconLibrary } = useConfig();
+    // TODO: get icon library from config
+    const iconLibrary = "lucide";
     const IconComponent = icons[iconLibrary as keyof typeof icons];
     if (!IconComponent) {
       return null;

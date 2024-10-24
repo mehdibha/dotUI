@@ -15,35 +15,51 @@ import {
   TextField as UnstyledTextField,
   Input as UnstyledInput,
 } from "react-aria-components";
+import { useThemes } from "@/hooks/use-themes";
 import { Button } from "@/registry/ui/default/core/button";
 import { ColorPicker } from "@/registry/ui/default/core/color-picker";
-import {
-  Dialog,
-  DialogFooter,
-  DialogRoot,
-} from "@/registry/ui/default/core/dialog";
 import { Label } from "@/registry/ui/default/core/field";
+import { Form } from "@/registry/ui/default/core/form";
 import { InputProps } from "@/registry/ui/default/core/input";
 import { Link } from "@/registry/ui/default/core/link";
 import { Item } from "@/registry/ui/default/core/list-box";
-import { Radio, RadioGroup } from "@/registry/ui/default/core/radio-group";
+import { Progress } from "@/registry/ui/default/core/progress";
 import { Select } from "@/registry/ui/default/core/select";
+import { Skeleton } from "@/registry/ui/default/core/skeleton";
+import { Slider } from "@/registry/ui/default/core/slider";
 import { Tag, TagGroup } from "@/registry/ui/default/core/tag-group/tag-group";
-import { TextField } from "@/registry/ui/default/core/text-field";
 import { Tooltip } from "@/registry/ui/default/core/tooltip";
 import { cn } from "@/registry/ui/default/lib/cn";
+import { BaseColor } from "@/types/theme";
+import { CloneThemeDialog } from "./clone-theme";
 import { usePreview } from "./context";
+import { CopyThemeDialog } from "./copy-theme";
 
 export const ThemeCustomizer = (
   props: React.HTMLAttributes<HTMLDivElement>
 ) => {
-  const [themeName, setThemeName] = React.useState<string>("Default");
+  const {
+    isLoading,
+    currentTheme,
+    setThemeName,
+    isCurrentThemeEditable,
+    mode,
+    setMode,
+    handleBaseColorChange,
+    handleColorConfigChange,
+  } = useThemes();
   const { setPreview } = usePreview();
 
   return (
     <div {...props} className={cn("space-y-6", props.className)}>
       <div className="flex items-center justify-between border-b pb-2">
-        <ThemeName currentName={themeName} setCurrentName={setThemeName} />
+        <Skeleton show={isLoading}>
+          <ThemeName
+            currentName={currentTheme.name}
+            setCurrentName={setThemeName}
+            isEditable={isCurrentThemeEditable}
+          />
+        </Skeleton>
         <div className="flex items-center gap-2">
           <CopyThemeDialog>
             <Button variant="outline" prefix={<CopyIcon />}>
@@ -58,60 +74,101 @@ export const ThemeCustomizer = (
         </div>
       </div>
       <Section title="Colors">
-        <TagGroup
-          label="Mode"
-          defaultSelectedKeys={["light"]}
-          selectionMode="single"
-          disallowEmptySelection
-          className="mt-2"
-        >
-          <Tag id="light">Light</Tag>
-          <Tag id="dark">Dark</Tag>
-        </TagGroup>
+        <Skeleton show={isLoading}>
+          <TagGroup
+            label="Mode"
+            selectedKeys={[mode]}
+            onSelectionChange={(keys) =>
+              setMode([...keys][0] as "light" | "dark")
+            }
+            selectionMode="single"
+            disallowEmptySelection
+            className="mt-2"
+          >
+            <Tag id="light">Light</Tag>
+            <Tag id="dark">Dark</Tag>
+          </TagGroup>
+        </Skeleton>
         <div>
           <Label>Base colors</Label>
           <p className="text-fg-muted text-sm">
             You can generate color scales using these base colors.
           </p>
           <div className="mt-2 flex items-center gap-2">
-            {[
-              {
-                label: "Neutral",
-                value: "neutral",
-                color: "#000000",
-              },
-              {
-                label: "Success",
-                value: "success",
-                color: "#1A9338",
-              },
-              {
-                label: "Warning",
-                value: "warning",
-                color: "#E79D13",
-              },
-              { label: "Danger", value: "danger", color: "#D93036" },
-              { label: "Accent", value: "accent", color: "#0091FF" },
-            ].map((colorBase) => (
-              <ColorPicker
+            {(
+              [
+                {
+                  label: "Neutral",
+                  value: "neutral",
+                  color: currentTheme.colors[mode].neutral.baseColor,
+                },
+                {
+                  label: "Success",
+                  value: "success",
+                  color: currentTheme.colors[mode].success.baseColor,
+                },
+                {
+                  label: "Warning",
+                  value: "warning",
+                  color: currentTheme.colors[mode].warning.baseColor,
+                },
+                {
+                  label: "Danger",
+                  value: "danger",
+                  color: currentTheme.colors[mode].danger.baseColor,
+                },
+                {
+                  label: "Accent",
+                  value: "accent",
+                  color: currentTheme.colors[mode].accent.baseColor,
+                },
+              ] as const
+            ).map((colorBase) => (
+              <Skeleton
                 key={colorBase.value}
-                variant="outline"
-                size="sm"
-                shape="rectangle"
-                defaultValue={colorBase.color}
-                aria-label={colorBase.label}
-                onOpenChange={() => {
-                  setPreview(`color-${colorBase.value}`);
-                }}
-                onHoverStart={() => {
-                  setPreview(`color-${colorBase.value}`);
-                }}
+                show={isLoading}
                 className="flex-1"
               >
-                {colorBase.label}
-              </ColorPicker>
+                <ColorPicker
+                  variant="outline"
+                  size="sm"
+                  shape="rectangle"
+                  value={colorBase.color}
+                  onChange={(value) =>
+                    handleBaseColorChange(colorBase.value, value.toString())
+                  }
+                  aria-label={colorBase.label}
+                  onOpenChange={() => {
+                    setPreview(`color-${colorBase.value}`);
+                  }}
+                  onHoverStart={() => {
+                    setPreview(`color-${colorBase.value}`);
+                  }}
+                  className="flex-1"
+                >
+                  {colorBase.label}
+                </ColorPicker>
+              </Skeleton>
             ))}
           </div>
+        </div>
+        <div className="grid grid-cols-2 gap-10">
+          <Slider
+            label="Lightness"
+            value={currentTheme.colors[mode].lightness}
+            onChange={(value) =>
+              handleColorConfigChange("lightness", value as number)
+            }
+            className="!w-full"
+          />
+          <Slider
+            label="Saturation"
+            value={currentTheme.colors[mode].saturation}
+            onChange={(value) =>
+              handleColorConfigChange("saturation", value as number)
+            }
+            className="!w-full"
+          />
         </div>
         <div>
           <Label>Scales</Label>
@@ -124,13 +181,15 @@ export const ThemeCustomizer = (
             .
           </p>
           <div className="mt-3 flex flex-col gap-2">
-            {[
-              { label: "Neutral", value: "neutral" },
-              { label: "Success", value: "success" },
-              { label: "Warning", value: "warning" },
-              { label: "Danger", value: "danger" },
-              { label: "Accent", value: "accent" },
-            ].map((colorBase) => (
+            {(
+              [
+                { label: "Neutral", value: "neutral" },
+                { label: "Success", value: "success" },
+                { label: "Warning", value: "warning" },
+                { label: "Danger", value: "danger" },
+                { label: "Accent", value: "accent" },
+              ] as const
+            ).map((colorBase) => (
               <ColorScale key={colorBase.value} {...colorBase} />
             ))}
           </div>
@@ -187,47 +246,74 @@ export const ThemeCustomizer = (
 const ThemeName = ({
   currentName,
   setCurrentName,
+  isEditable,
 }: {
   currentName: string;
   setCurrentName: (value: string) => void;
+  isEditable: boolean;
 }) => {
-  const [edit, setEdit] = React.useState<boolean>(false);
+  const formRef = React.useRef<HTMLFormElement>(null);
+  const [editMode, setEditMode] = React.useState<boolean>(false);
   const [inputValue, setInputValue] = React.useState<string>(currentName);
   const inputRef = React.useRef<HTMLInputElement>(null);
 
   const onDismiss = React.useCallback(() => {
-    setEdit(false);
+    setEditMode(false);
     setInputValue(currentName);
   }, [currentName]);
 
   const onSave = React.useCallback(() => {
     setCurrentName(inputValue);
-    setEdit(false);
+    setEditMode(false);
   }, [inputValue, setCurrentName]);
 
   const onEdit = () => {
-    setEdit(true);
+    setEditMode(true);
+    setInputValue(currentName);
     setTimeout(() => {
       inputRef.current?.focus();
     }, 0);
   };
 
   React.useEffect(() => {
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Enter" && edit) {
-        onSave();
-      }
-      if (e.key === "Escape" && edit) {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (formRef.current && !formRef.current.contains(e.target as Node)) {
         onDismiss();
       }
     };
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [onSave, onDismiss, edit]);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [onDismiss]);
+
+  // Dismiss when edit mode when esc is pressed
+  React.useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && editMode) {
+        onDismiss();
+      }
+    };
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [onDismiss, editMode]);
+
+  if (!isEditable) {
+    return (
+      <h2 className="font-heading pb-px text-2xl font-semibold">
+        {currentName}
+      </h2>
+    );
+  }
 
   return (
-    <div className="flex items-center gap-4">
-      {edit ? (
+    <Form
+      ref={formRef}
+      onSubmit={(e) => {
+        e.preventDefault();
+        onSave();
+      }}
+      className="flex items-center gap-2"
+    >
+      {editMode ? (
         <>
           <UnstyledTextField value={inputValue} onChange={setInputValue}>
             <AutoResizeInput
@@ -237,11 +323,11 @@ const ThemeName = ({
           </UnstyledTextField>
           <div className="flex items-center gap-1">
             <Button
+              type="submit"
               variant="quiet"
               size="sm"
               shape="square"
               className="[&_svg]:text-fg-success size-7 [&_svg]:size-3.5"
-              onPress={onSave}
             >
               <CheckIcon />
             </Button>
@@ -272,164 +358,7 @@ const ThemeName = ({
           </Button>
         </>
       )}
-    </div>
-  );
-};
-
-// ----------------------------------------------------------------------------
-// Dialogs
-// ----------------------------------------------------------------------------
-
-const ExploreThemesDialog = ({
-  children,
-  themes,
-  currentTheme,
-  setCurrentTheme,
-}: {
-  children: React.ReactNode;
-  currentTheme: string;
-  themes: { name: string; value: string }[];
-  setCurrentTheme: (value: string) => void;
-}) => {
-  return (
-    <DialogRoot>
-      {children}
-      <Dialog type="drawer" className="container max-w-screen-xl !py-8">
-        <h2 className="text-lg font-bold">Themes</h2>
-        <p className="text-fg-muted text-sm">
-          Curated collection of handcrafted themes, inspired by leading brands
-          and designed to elevate your project&apos;s visual identity.
-        </p>
-        <RadioGroup
-          value={currentTheme}
-          onChange={setCurrentTheme}
-          variant="card"
-          orientation="horizontal"
-          className="mt-4 gap-2"
-        >
-          {[
-            { name: "Default", value: "default" },
-            { name: "Ruby", value: "ruby" },
-            { name: "GitHub", value: "github" },
-            { name: "Vercel", value: "vercel" },
-          ].map((theme, index) => (
-            <Radio key={index} value={theme.value}>
-              <div className="p-0">
-                <p className="font-semibold">{theme.name}</p>
-                <p className="text-fg-muted text-sm">
-                  Lorem ipsum dolor sit amet...
-                </p>
-              </div>
-              <div className="mt-2 grid grid-cols-5 overflow-hidden rounded">
-                <div className="h-5 bg-slate-600" />
-                <div className="h-5 bg-green-500" />
-                <div className="h-5 bg-red-500" />
-                <div className="h-5 bg-amber-500" />
-                <div className="h-5 bg-blue-700" />
-              </div>
-            </Radio>
-          ))}
-        </RadioGroup>
-        <h2 className="mt-6 text-lg font-bold">Your themes</h2>
-        <p className="text-fg-muted text-sm">
-          Custom themes you create will appear here.
-        </p>
-        <RadioGroup
-          value={currentTheme}
-          onChange={setCurrentTheme}
-          variant="card"
-          orientation="horizontal"
-          className="mt-4 gap-2"
-        >
-          {[{ name: "dotUI", value: "dotUI" }].map((theme, index) => (
-            <Radio key={index} value={theme.value}>
-              <div className="p-0">
-                <p className="font-semibold">{theme.name}</p>
-                <p className="text-fg-muted text-sm">
-                  Lorem ipsum dolor sit amet...
-                </p>
-              </div>
-              <div className="mt-2 grid grid-cols-5 overflow-hidden rounded">
-                <div className="h-5 bg-slate-600" />
-                <div className="h-5 bg-green-500" />
-                <div className="h-5 bg-red-500" />
-                <div className="h-5 bg-amber-500" />
-                <div className="h-5 bg-blue-700" />
-              </div>
-            </Radio>
-          ))}
-        </RadioGroup>
-      </Dialog>
-    </DialogRoot>
-  );
-};
-
-const CreateThemeDialog = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <DialogRoot>
-      {children}
-      <Dialog title="Create new theme">
-        {({ close }) => (
-          <>
-            <TextField label="Name" className="w-full" />
-            <DialogFooter>
-              <Button variant="outline" size="sm" onPress={close}>
-                Cancel
-              </Button>
-              <Button
-                variant="primary"
-                size="sm"
-                onPress={() => {
-                  close();
-                }}
-              >
-                Save theme
-              </Button>
-            </DialogFooter>
-          </>
-        )}
-      </Dialog>
-    </DialogRoot>
-  );
-};
-
-const CloneThemeDialog = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <DialogRoot>
-      {children}
-      <Dialog title="Clone theme">
-        {({ close }) => (
-          <>
-            <TextField label="Name" className="w-full" />
-            <DialogFooter>
-              <Button variant="outline" size="sm" onPress={close}>
-                Cancel
-              </Button>
-              <Button
-                variant="primary"
-                size="sm"
-                onPress={() => {
-                  close();
-                }}
-              >
-                Save theme
-              </Button>
-            </DialogFooter>
-          </>
-        )}
-      </Dialog>
-    </DialogRoot>
-  );
-};
-
-const CopyThemeDialog = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <DialogRoot>
-      {children}
-      <Dialog title="Copy theme">
-        <p>code here</p>
-      </Dialog>
-    </DialogRoot>
+    </Form>
   );
 };
 
@@ -451,33 +380,27 @@ const Section = ({
       {/* <h3 className="font-heading text-pretty text-xl font-semibold">
         {title}
       </h3> */}
-      <div className={cn("mt-3 space-y-3", className)}>{children}</div>
+      <div className={cn("mt-3 space-y-4", className)}>{children}</div>
     </div>
   );
 };
 
-const ColorScale = ({
-  label,
-  value,
-  length = 10,
-}: {
-  label: string;
-  value: string;
-  length?: number;
-}) => {
+const ColorScale = ({ label, value }: { label: string; value: BaseColor }) => {
+  const { currentTheme, mode } = useThemes();
+  const shades = currentTheme.colors[mode][value].shades;
   return (
     <div className="flex flex-row gap-2 xl:flex-row xl:items-center">
       <div className="w-[60px]">
         <p className="text-xs font-semibold">{label}</p>
       </div>
       <ul className="grid w-full grid-cols-10 gap-2">
-        {Array.from({ length }).map((_, index) => (
+        {shades.map((color, index) => (
           <li key={index} className="col-span-1 h-10">
             <Tooltip content={`${value}-${index * 100}`}>
               <AriaButton
                 className="h-full w-full rounded-md border"
                 style={{
-                  backgroundColor: `hsl(var(--color-${value}-${index * 100}))`,
+                  backgroundColor: color,
                 }}
               />
             </Tooltip>
@@ -518,7 +441,7 @@ const AutoResizeInput = React.forwardRef<HTMLInputElement, InputProps>(
         ref={mergeRefs(inputRef, forwardedRef)}
         onChange={chain(onChange, setInputValue)}
         className={cn(
-          "border-fg min-w-[10px] border-b focus:outline-none",
+          "border-fg min-w-[10px] focus:border-b focus:outline-none",
           className
         )}
         {...props}

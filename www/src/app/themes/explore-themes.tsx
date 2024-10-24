@@ -1,6 +1,9 @@
 "use client";
 
 import React from "react";
+import { dotUIThemes } from "@/lib/themes";
+import { useThemes } from "@/hooks/use-themes";
+import { Alert } from "@/registry/ui/default/core/alert";
 import { Dialog, DialogRoot } from "@/registry/ui/default/core/dialog";
 import { Radio, RadioGroup } from "@/registry/ui/default/core/radio-group";
 
@@ -9,6 +12,7 @@ export const ExploreThemesDialog = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const { themes: userThemes, currentThemeId, setCurrentThemeId } = useThemes();
   return (
     <DialogRoot>
       {children}
@@ -19,17 +23,14 @@ export const ExploreThemesDialog = ({
           and designed to elevate your project&apos;s visual identity.
         </p>
         <RadioGroup
+          value={currentThemeId}
+          onChange={setCurrentThemeId}
           variant="card"
           orientation="horizontal"
           className="mt-4 gap-2"
         >
-          {[
-            { name: "Default", value: "default" },
-            { name: "Ruby", value: "ruby" },
-            { name: "GitHub", value: "github" },
-            { name: "Vercel", value: "vercel" },
-          ].map((theme, index) => (
-            <Radio key={index} value={theme.value}>
+          {dotUIThemes.map((theme, index) => (
+            <Radio key={index} value={theme.id}>
               <div className="p-0">
                 <p className="font-semibold">{theme.name}</p>
                 <p className="text-fg-muted text-sm">
@@ -50,29 +51,39 @@ export const ExploreThemesDialog = ({
         <p className="text-fg-muted text-sm">
           Custom themes you create will appear here.
         </p>
-        <RadioGroup
-          variant="card"
-          orientation="horizontal"
-          className="mt-4 gap-2"
-        >
-          {[{ name: "dotUI", value: "dotUI" }].map((theme, index) => (
-            <Radio key={index} value={theme.value}>
-              <div className="p-0">
-                <p className="font-semibold">{theme.name}</p>
-                <p className="text-fg-muted text-sm">
-                  Lorem ipsum dolor sit amet...
-                </p>
-              </div>
-              <div className="mt-2 grid grid-cols-5 overflow-hidden rounded">
-                <div className="h-5 bg-slate-600" />
-                <div className="h-5 bg-green-500" />
-                <div className="h-5 bg-red-500" />
-                <div className="h-5 bg-amber-500" />
-                <div className="h-5 bg-blue-700" />
-              </div>
-            </Radio>
-          ))}
-        </RadioGroup>
+        {userThemes.length > 0 ? (
+          <RadioGroup
+            value={currentThemeId}
+            onChange={setCurrentThemeId}
+            variant="card"
+            orientation="horizontal"
+            className="mt-4 gap-2"
+          >
+            {userThemes.map((theme, index) => (
+              <Radio key={index} value={theme.id}>
+                <div className="p-0">
+                  <p className="font-semibold">{theme.name}</p>
+                  <p className="text-fg-muted text-sm">
+                    Lorem ipsum dolor sit amet...
+                  </p>
+                </div>
+                <div className="mt-2 grid grid-cols-5 overflow-hidden rounded">
+                  <div className="h-5 bg-slate-600" />
+                  <div className="h-5 bg-green-500" />
+                  <div className="h-5 bg-red-500" />
+                  <div className="h-5 bg-amber-500" />
+                  <div className="h-5 bg-blue-700" />
+                </div>
+              </Radio>
+            ))}
+          </RadioGroup>
+        ) : (
+          <div className="mt-4 flex">
+            <Alert variant="info" className="text-fg-muted">
+              No themes created yet. Create your first theme to get started.
+            </Alert>
+          </div>
+        )}
       </Dialog>
     </DialogRoot>
   );

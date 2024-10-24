@@ -25,12 +25,6 @@ export const metadata: Metadata = {
   keywords: config.keywords,
   authors: config.authors,
   creator: config.creator,
-  icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon-16x16.png",
-    apple: "/apple-touch-icon.png",
-  },
-  manifest: "/site.webmanifest",
   openGraph: {
     type: "website",
     locale: "en_US",

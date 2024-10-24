@@ -1,42 +1,62 @@
-import type { CssColor } from "@adobe/leonardo-contrast-colors";
+type ColorShade = [
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+];
 
-type ColorShades = {
-  100: string;
-  200: string;
-  300: string;
-  400: string;
-  500: string;
-  600: string;
-  700: string;
-  800: string;
-  900: string;
-  1000: string;
+type ColorRatios = [
+  number,
+  number,
+  number,
+  number,
+  number,
+  number,
+  number,
+  number,
+  number,
+  number,
+];
+
+export type BaseColors = {
+  neutral: string;
+  accent: string;
+  danger: string;
+  success: string;
+  warning: string;
 };
 
-export type Palette = {
-  baseColors: CssColor[];
-  colors: ColorShades;
-  ratios: number[];
-  smooth: boolean;
+export type BaseColor = keyof BaseColors;
+
+type ColorConfig = {
+  baseColor: string;
+  shades: ColorShade;
+  // ratios: ColorRatios;
+};
+
+export type ModeConfig = {
+  [K in keyof BaseColors]: ColorConfig;
+} & {
   lightness: number;
   saturation: number;
 };
 
-export type ThemeMode = {
-  palettes: {
-    neutral: Palette;
-    primary: Palette;
-    success: Palette;
-    warning: Palette;
-    danger: Palette;
-    accent: Palette;
-  };
-};
-
 export type Theme = {
-  light: ThemeMode;
-  dark: ThemeMode;
-  radius: string;
+  id: string;
+  name: string;
+  colors: {
+    light: ModeConfig;
+    dark: ModeConfig;
+  };
+  // fonts: {
+  //   heading: string;
+  //   body: string;
+  // };
+  // iconLibrary: "lucide" | "phosphor";
 };
-
-// export type ColorName = keyof ColorScheme;
