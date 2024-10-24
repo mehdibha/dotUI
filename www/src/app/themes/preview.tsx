@@ -28,14 +28,6 @@ export const Preview = () => {
         <motion.p layout className="text-fg-muted text-sm">
           Preview
         </motion.p>
-        <motion.div layout className="flex items-center gap-2">
-          <Button variant="quiet" shape="square" size="sm">
-            <Maximize2Icon />
-          </Button>
-          <Button variant="quiet" shape="square" size="sm">
-            <SmartphoneIcon />
-          </Button>
-        </motion.div>
       </motion.div>
       <ThemeOverride>
         <div className="p-6">

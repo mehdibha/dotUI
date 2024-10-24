@@ -94,9 +94,9 @@ export const ThemeCustomizer = (
         </Skeleton>
         <div>
           <Label>Base colors</Label>
-          <p className="text-fg-muted text-sm">
+          {/* <p className="text-fg-muted text-sm">
             You can generate color scales using these base colors.
-          </p>
+          </p> */}
           <div className="mt-2 flex items-center gap-2">
             {(
               [
@@ -156,18 +156,20 @@ export const ThemeCustomizer = (
           <Skeleton show={isLoading}>
             <Slider
               label="Lightness"
-              description="Adjust the lightness of the base colors."
+              // description="Adjust the lightness of the base colors."
               value={currentTheme.colors[mode].lightness}
               onChange={(value) =>
                 handleColorConfigChange("lightness", value as number)
               }
+              size="lg"
               className="!w-full"
             />
           </Skeleton>
           <Skeleton show={isLoading}>
             <Slider
               label="Saturation"
-              description="Adjust the saturation of the base colors."
+              size="lg"
+              // description="Adjust the saturation of the base colors."
               value={currentTheme.colors[mode].saturation}
               onChange={(value) =>
                 handleColorConfigChange("saturation", value as number)
@@ -178,14 +180,14 @@ export const ThemeCustomizer = (
         </div>
         <div>
           <Label>Scales</Label>
-          <p className="text-fg-muted text-sm">
+          {/* <p className="text-fg-muted text-sm">
             There are 5 color scales in the color system. You can learn more
             about it{" "}
             <Link variant="quiet" href="/docs/getting-started/color-system">
               here
             </Link>
             .
-          </p>
+          </p> */}
           <div className="mt-3 flex flex-col gap-2">
             {(
               [
@@ -203,74 +205,82 @@ export const ThemeCustomizer = (
       </Section>
       <Section title="Typography">
         <div className="grid grid-cols-2 gap-4">
-          <Select
-            label="Heading"
-            selectedKey={fonts.heading}
-            onSelectionChange={(key) => {
-              handleFontChange("heading", key as string);
-            }}
-            onOpenChange={(isOpen) => {
-              if (isOpen) {
-                setPreview("typography");
-              }
-            }}
-            className="[&_button]:w-full"
-          >
-            {googleFonts.map((font) => (
-              <Item key={font.id} id={font.id}>
-                {font.name}
-              </Item>
-            ))}
-          </Select>
-          <Select
-            label="Body"
-            selectedKey={fonts.body}
-            onSelectionChange={(key) => {
-              handleFontChange("body", key as string);
-            }}
-            onOpenChange={(isOpen) => {
-              if (isOpen) {
-                setPreview("typography");
-              }
-            }}
-            className="[&_button]:w-full"
-          >
-            {googleFonts.map((font) => (
-              <Item key={font.id} id={font.id}>
-                {font.name}
-              </Item>
-            ))}
-          </Select>
+          <Skeleton show={isLoading}>
+            <Select
+              label="Heading"
+              selectedKey={fonts.heading}
+              onSelectionChange={(key) => {
+                handleFontChange("heading", key as string);
+              }}
+              onOpenChange={(isOpen) => {
+                if (isOpen) {
+                  setPreview("typography");
+                }
+              }}
+              className="[&_button]:w-full"
+            >
+              {googleFonts.map((font) => (
+                <Item key={font.id} id={font.id}>
+                  {font.name}
+                </Item>
+              ))}
+            </Select>
+          </Skeleton>
+          <Skeleton show={isLoading}>
+            <Select
+              label="Body"
+              selectedKey={fonts.body}
+              onSelectionChange={(key) => {
+                handleFontChange("body", key as string);
+              }}
+              onOpenChange={(isOpen) => {
+                if (isOpen) {
+                  setPreview("typography");
+                }
+              }}
+              className="[&_button]:w-full"
+            >
+              {googleFonts.map((font) => (
+                <Item key={font.id} id={font.id}>
+                  {font.name}
+                </Item>
+              ))}
+            </Select>
+          </Skeleton>
         </div>
       </Section>
       <Section title="Icons">
-        <Select
-          label="Icon library"
-          className="[&_button]:w-[calc(50%-theme(spacing.2))]"
-          defaultSelectedKey="lucide"
-          onOpenChange={(isOpen) => {
-            if (isOpen) {
-              setPreview("icons");
-            }
-          }}
-        >
-          <Item id="lucide">Lucide icons</Item>
-        </Select>
+        <Skeleton show={isLoading} className="w-[calc(50%-theme(spacing.2))]">
+          <Select
+            label="Icon library"
+            className="[&_button]:w-[calc(50%-theme(spacing.2))]"
+            defaultSelectedKey="lucide"
+            onOpenChange={(isOpen) => {
+              if (isOpen) {
+                setPreview("icons");
+              }
+            }}
+          >
+            <Item id="lucide">Lucide icons</Item>
+          </Select>
+        </Skeleton>
       </Section>
       <Section title="Borders">
-        <Slider
-          label="Radius (rem)"
-          valueLabel
-          className="!w-[calc(50%-theme(spacing.2))]"
-          minValue={0}
-          maxValue={1.2}
-          step={0.1}
-          value={currentTheme.radius}
-          onChange={(value) => {
-            setPreview("borders");
-            handleRadiusChange(value as number);
-          }}
-        />
+        <Skeleton show={isLoading} className="w-[calc(50%-theme(spacing.2))]">
+          <Slider
+            label="Radius (rem)"
+            valueLabel
+            className="!w-[calc(50%-theme(spacing.2))]"
+            minValue={0}
+            maxValue={1.2}
+            step={0.1}
+            value={currentTheme.radius}
+            onChange={(value) => {
+              setPreview("borders");
+              handleRadiusChange(value as number);
+            }}
+          />
+        </Skeleton>
       </Section>
     </div>
   );
@@ -408,16 +418,16 @@ const Section = ({
 }) => {
   return (
     <div className={cn("", wrapperClassName)}>
-      <h3 className="font-heading text-pretty text-xl font-semibold">
+      {/* <h3 className="font-heading text-pretty text-xl font-semibold">
         {title}
-      </h3>
-      <div className={cn("mt-3 space-y-6", className)}>{children}</div>
+      </h3> */}
+      <div className={cn("mt-0 space-y-4", className)}>{children}</div>
     </div>
   );
 };
 
 const ColorScale = ({ label, value }: { label: string; value: BaseColor }) => {
-  const { currentTheme, mode } = useThemes();
+  const { currentTheme, mode, isLoading } = useThemes();
   const shades = currentTheme.colors[mode][value].shades;
   return (
     <div className="flex flex-row gap-2 xl:flex-row xl:items-center">
@@ -428,12 +438,14 @@ const ColorScale = ({ label, value }: { label: string; value: BaseColor }) => {
         {shades.map((color, index) => (
           <li key={index} className="col-span-1 h-10">
             <Tooltip content={`${value}-${index * 100}`}>
-              <AriaButton
-                className="h-full w-full rounded-md border"
-                style={{
-                  backgroundColor: color,
-                }}
-              />
+              <Skeleton show={isLoading} className="h-full w-full">
+                <AriaButton
+                  className="h-full w-full rounded-md border"
+                  style={{
+                    backgroundColor: color,
+                  }}
+                />
+              </Skeleton>
             </Tooltip>
           </li>
         ))}
