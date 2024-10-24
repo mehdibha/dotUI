@@ -1,9 +1,11 @@
 "use client";
 
 import React from "react";
+import { googleFonts } from "@/lib/fonts";
 import { useThemes } from "@/hooks/use-themes";
 import { useMounted } from "@/registry/hooks/use-mounted";
 import { Skeleton } from "@/registry/ui/default/core/skeleton";
+import { cn } from "@/registry/ui/default/lib/cn";
 
 interface ThemeOverrideProps extends React.ComponentProps<"div"> {
   children: React.ReactNode;
@@ -11,9 +13,28 @@ interface ThemeOverrideProps extends React.ComponentProps<"div"> {
 }
 
 export function ThemeOverride({ children }: ThemeOverrideProps) {
-  const { currentTheme, mode } = useThemes();
+  const { currentTheme, mode, fonts } = useThemes();
+  const headingFont = googleFonts.find((f) => f.id === fonts.heading);
+  const bodyFont = googleFonts.find((f) => f.id === fonts.body);
   const mounted = useMounted();
 
+  // fonts
+  React.useEffect(() => {
+    if (headingFont) {
+      const head = document.head;
+      const existingLink = head.querySelector("#heading-font");
+      if (existingLink) {
+        existingLink.remove();
+      }
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = headingFont.url;
+      link.id = "heading-font";
+      head.appendChild(link);
+    }
+  }, [headingFont]);
+
+  // colors
   const currentMode = currentTheme.colors[mode];
 
   const styles = Object.fromEntries(
@@ -120,11 +141,14 @@ export function ThemeOverride({ children }: ThemeOverrideProps) {
     <div
       style={
         {
-          ...styles,
+          ...(mounted ? styles : {}),
           ...baseCssVars,
+          "--font-heading": headingFont?.name,
+          "--font-body": bodyFont?.name,
+          "--radius": `${currentTheme.radius}rem`,
         } as React.CSSProperties
       }
-      className="bg-bg text-fg"
+      className={cn("bg-bg text-fg font-body")}
     >
       <Skeleton show={!mounted} className="rounded-none">
         {children}

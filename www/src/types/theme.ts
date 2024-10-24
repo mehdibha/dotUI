@@ -54,9 +54,10 @@ export type Theme = {
     light: ModeConfig;
     dark: ModeConfig;
   };
-  // fonts: {
-  //   heading: string;
-  //   body: string;
-  // };
+  fonts: {
+    heading: string;
+    body: string;
+  };
+  radius: number;
   // iconLibrary: "lucide" | "phosphor";
 };

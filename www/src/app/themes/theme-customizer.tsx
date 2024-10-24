@@ -15,6 +15,7 @@ import {
   TextField as UnstyledTextField,
   Input as UnstyledInput,
 } from "react-aria-components";
+import { googleFonts } from "@/lib/fonts";
 import { useThemes } from "@/hooks/use-themes";
 import { Button } from "@/registry/ui/default/core/button";
 import { ColorPicker } from "@/registry/ui/default/core/color-picker";
@@ -23,7 +24,6 @@ import { Form } from "@/registry/ui/default/core/form";
 import { InputProps } from "@/registry/ui/default/core/input";
 import { Link } from "@/registry/ui/default/core/link";
 import { Item } from "@/registry/ui/default/core/list-box";
-import { Progress } from "@/registry/ui/default/core/progress";
 import { Select } from "@/registry/ui/default/core/select";
 import { Skeleton } from "@/registry/ui/default/core/skeleton";
 import { Slider } from "@/registry/ui/default/core/slider";
@@ -39,6 +39,8 @@ export const ThemeCustomizer = (
   props: React.HTMLAttributes<HTMLDivElement>
 ) => {
   const {
+    fonts,
+    handleFontChange,
     isLoading,
     currentTheme,
     setThemeName,
@@ -47,6 +49,7 @@ export const ThemeCustomizer = (
     setMode,
     handleBaseColorChange,
     handleColorConfigChange,
+    handleRadiusChange,
   } = useThemes();
   const { setPreview } = usePreview();
 
@@ -141,9 +144,6 @@ export const ThemeCustomizer = (
                   onOpenChange={() => {
                     setPreview(`color-${colorBase.value}`);
                   }}
-                  onHoverStart={() => {
-                    setPreview(`color-${colorBase.value}`);
-                  }}
                   className="flex-1"
                 >
                   {colorBase.label}
@@ -152,23 +152,29 @@ export const ThemeCustomizer = (
             ))}
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-10">
-          <Slider
-            label="Lightness"
-            value={currentTheme.colors[mode].lightness}
-            onChange={(value) =>
-              handleColorConfigChange("lightness", value as number)
-            }
-            className="!w-full"
-          />
-          <Slider
-            label="Saturation"
-            value={currentTheme.colors[mode].saturation}
-            onChange={(value) =>
-              handleColorConfigChange("saturation", value as number)
-            }
-            className="!w-full"
-          />
+        <div className="grid grid-cols-2 gap-8">
+          <Skeleton show={isLoading}>
+            <Slider
+              label="Lightness"
+              description="Adjust the lightness of the base colors."
+              value={currentTheme.colors[mode].lightness}
+              onChange={(value) =>
+                handleColorConfigChange("lightness", value as number)
+              }
+              className="!w-full"
+            />
+          </Skeleton>
+          <Skeleton show={isLoading}>
+            <Slider
+              label="Saturation"
+              description="Adjust the saturation of the base colors."
+              value={currentTheme.colors[mode].saturation}
+              onChange={(value) =>
+                handleColorConfigChange("saturation", value as number)
+              }
+              className="!w-full"
+            />
+          </Skeleton>
         </div>
         <div>
           <Label>Scales</Label>
@@ -195,50 +201,77 @@ export const ThemeCustomizer = (
           </div>
         </div>
       </Section>
-      <Section title="Typography" onHoverStart={() => setPreview("typography")}>
+      <Section title="Typography">
         <div className="grid grid-cols-2 gap-4">
           <Select
-            className="[&_button]:w-full"
-            defaultSelectedKey="Arial"
             label="Heading"
+            selectedKey={fonts.heading}
+            onSelectionChange={(key) => {
+              handleFontChange("heading", key as string);
+            }}
+            onOpenChange={(isOpen) => {
+              if (isOpen) {
+                setPreview("typography");
+              }
+            }}
+            className="[&_button]:w-full"
           >
-            <Item id="Arial">Geist sans</Item>
+            {googleFonts.map((font) => (
+              <Item key={font.id} id={font.id}>
+                {font.name}
+              </Item>
+            ))}
           </Select>
           <Select
             label="Body"
+            selectedKey={fonts.body}
+            onSelectionChange={(key) => {
+              handleFontChange("body", key as string);
+            }}
+            onOpenChange={(isOpen) => {
+              if (isOpen) {
+                setPreview("typography");
+              }
+            }}
             className="[&_button]:w-full"
-            defaultSelectedKey="Arial"
           >
-            <Item id="Arial">Inter</Item>
+            {googleFonts.map((font) => (
+              <Item key={font.id} id={font.id}>
+                {font.name}
+              </Item>
+            ))}
           </Select>
         </div>
       </Section>
-      <div className="grid grid-cols-2 gap-4">
-        <Section title="Icons" onHoverStart={() => setPreview("icons")}>
-          <Select
-            label="Icon library"
-            className="[&_button]:w-full"
-            defaultSelectedKey="lucide"
-          >
-            <Item id="lucide">Lucide icons</Item>
-          </Select>
-        </Section>
-        <Section title="Borders" onHoverStart={() => setPreview("borders")}>
-          <TagGroup
-            label="Radius"
-            selectionMode="single"
-            defaultSelectedKeys={["0.5"]}
-            disallowEmptySelection
-            className="w-full"
-          >
-            {[0, 0.5, 0.75, 1].map((value) => (
-              <Tag key={value} id={value.toString()} className="w-14">
-                {value}
-              </Tag>
-            ))}
-          </TagGroup>
-        </Section>
-      </div>
+      <Section title="Icons">
+        <Select
+          label="Icon library"
+          className="[&_button]:w-[calc(50%-theme(spacing.2))]"
+          defaultSelectedKey="lucide"
+          onOpenChange={(isOpen) => {
+            if (isOpen) {
+              setPreview("icons");
+            }
+          }}
+        >
+          <Item id="lucide">Lucide icons</Item>
+        </Select>
+      </Section>
+      <Section title="Borders">
+        <Slider
+          label="Radius (rem)"
+          valueLabel
+          className="!w-[calc(50%-theme(spacing.2))]"
+          minValue={0}
+          maxValue={1.2}
+          step={0.1}
+          value={currentTheme.radius}
+          onChange={(value) => {
+            setPreview("borders");
+            handleRadiusChange(value as number);
+          }}
+        />
+      </Section>
     </div>
   );
 };
@@ -367,20 +400,18 @@ const Section = ({
   children,
   className,
   wrapperClassName,
-  onHoverStart,
 }: {
   title: string;
   children: React.ReactNode;
   className?: string;
   wrapperClassName?: string;
-  onHoverStart?: () => void;
 }) => {
   return (
-    <div className={cn("", wrapperClassName)} onMouseEnter={onHoverStart}>
-      {/* <h3 className="font-heading text-pretty text-xl font-semibold">
+    <div className={cn("", wrapperClassName)}>
+      <h3 className="font-heading text-pretty text-xl font-semibold">
         {title}
-      </h3> */}
-      <div className={cn("mt-3 space-y-4", className)}>{children}</div>
+      </h3>
+      <div className={cn("mt-3 space-y-6", className)}>{children}</div>
     </div>
   );
 };

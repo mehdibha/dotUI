@@ -4,7 +4,7 @@ import { atomWithStorage } from "jotai/utils";
 import { nanoid } from "nanoid";
 import { defaultTheme, dotUIThemes } from "@/lib/themes";
 import { useMounted } from "@/registry/hooks/use-mounted";
-import { BaseColor, ModeConfig, Theme } from "@/types/theme";
+import { BaseColor, Theme } from "@/types/theme";
 
 type Mode = "light" | "dark";
 
@@ -106,6 +106,28 @@ export const useThemes = () => {
     });
   };
 
+  const fonts = currentTheme.fonts;
+
+  const handleFontChange = (font: "heading" | "body", value: string) => {
+    if (!isCurrentThemeEditable) return;
+    setState((draft) => {
+      const theme = draft.themes.find((t) => t.id === draft.currentThemeId);
+      if (theme) {
+        theme.fonts[font] = value;
+      }
+    });
+  };
+
+  const handleRadiusChange = (value: number) => {
+    if (!isCurrentThemeEditable) return;
+    setState((draft) => {
+      const theme = draft.themes.find((t) => t.id === draft.currentThemeId);
+      if (theme) {
+        theme.radius = value;
+      }
+    });
+  };
+
   return {
     isLoading: !mounted,
     themes: state.themes,
@@ -120,5 +142,9 @@ export const useThemes = () => {
     setMode,
     handleBaseColorChange,
     handleColorConfigChange,
+    handleFontChange,
+    fonts,
+    radius: currentTheme.radius,
+    handleRadiusChange,
   };
 };

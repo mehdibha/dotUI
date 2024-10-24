@@ -4,6 +4,11 @@ export const dotUIThemes: Theme[] = [
   {
     id: "default",
     name: "Default",
+    fonts: {
+      heading: "inter",
+      body: "josefin",
+    },
+    radius: 0.5,
     colors: {
       light: {
         neutral: {
@@ -81,7 +86,7 @@ export const dotUIThemes: Theme[] = [
             "hsl(132, 42%, 9%)", // --color-success-1000
           ],
         },
-        lightness: 0,
+        lightness: 100,
         saturation: 0,
       },
       dark: {
@@ -160,7 +165,7 @@ export const dotUIThemes: Theme[] = [
             "hsl(130, 35%, 83%)", // --color-success-1000
           ],
         },
-        lightness: 100,
+        lightness: 0,
         saturation: 0,
       },
     },

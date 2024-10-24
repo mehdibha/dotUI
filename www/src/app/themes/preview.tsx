@@ -3,6 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Maximize2Icon, PinIcon, SmartphoneIcon } from "lucide-react";
+import { ThemeOverride } from "@/components/theme-override";
 import { Alert } from "@/registry/ui/default/core/alert";
 import { Button } from "@/registry/ui/default/core/button";
 import { Progress } from "@/registry/ui/default/core/progress";
@@ -11,15 +12,7 @@ import { TextField } from "@/registry/ui/default/core/text-field";
 import { ToggleButton } from "@/registry/ui/default/core/toggle-button";
 import { cn } from "@/registry/ui/default/lib/cn";
 import * as icons from "@/__icons__";
-import { ThemeOverride } from "../../components/theme-override";
 import { usePreview } from "./context";
-
-// const transitionProps = {
-//   initial: { opacity: 0 },
-//   animate: { opacity: 1 },
-//   exit: { opacity: 0 },
-//   transition: { duration: 0.2 },
-// };
 
 export const Preview = () => {
   const { preview } = usePreview();
@@ -54,8 +47,8 @@ export const Preview = () => {
           {preview === "color-danger" && <ColorPreview color="danger" />}
           {preview === "color-accent" && <ColorPreview color="accent" />}
           {preview === "typography" && (
-            <motion.div>
-              <motion.p layout className="text-4xl font-bold">
+            <motion.div className="max-w-sm">
+              <motion.p layout className="font-heading text-4xl font-bold">
                 Heading
               </motion.p>
               <motion.p layout className="mt-2">
@@ -78,20 +71,19 @@ export const Preview = () => {
           )}
           {preview === "borders" && (
             <motion.div>
-              <div className="grid grid-cols-5 gap-2">
-                {["sm", "", "md", "lg", "xl"].map((size) => (
+              <div className="grid grid-cols-4 gap-2">
+                {["sm", "", "md", "lg"].map((size) => (
                   <motion.div
                     layout
                     key={size}
                     className="flex flex-col items-center gap-2"
                   >
                     <div
-                      className={cn("size-16 border-l border-t", {
+                      className={cn("border-fg size-16 border-l-2 border-t-2", {
                         "rounded-tl-sm": size === "sm",
                         "rounded-tl": size === "",
                         "rounded-tl-md": size === "md",
                         "rounded-tl-lg": size === "lg",
-                        "rounded-tl-xl": size === "xl",
                       })}
                     />
                     <p className="text-fg-muted text-sm">
