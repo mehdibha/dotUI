@@ -22,7 +22,6 @@ import { ColorPicker } from "@/registry/ui/default/core/color-picker";
 import { Label } from "@/registry/ui/default/core/field";
 import { Form } from "@/registry/ui/default/core/form";
 import { InputProps } from "@/registry/ui/default/core/input";
-import { Link } from "@/registry/ui/default/core/link";
 import { Item } from "@/registry/ui/default/core/list-box";
 import { Select } from "@/registry/ui/default/core/select";
 import { Skeleton } from "@/registry/ui/default/core/skeleton";
@@ -94,9 +93,6 @@ export const ThemeCustomizer = (
         </Skeleton>
         <div>
           <Label>Base colors</Label>
-          {/* <p className="text-fg-muted text-sm">
-            You can generate color scales using these base colors.
-          </p> */}
           <div className="mt-2 flex items-center gap-2">
             {(
               [
@@ -156,20 +152,20 @@ export const ThemeCustomizer = (
           <Skeleton show={isLoading}>
             <Slider
               label="Lightness"
-              // description="Adjust the lightness of the base colors."
+              valueLabel
               value={currentTheme.colors[mode].lightness}
               onChange={(value) =>
                 handleColorConfigChange("lightness", value as number)
               }
-              size="lg"
+              size="sm"
               className="!w-full"
             />
           </Skeleton>
           <Skeleton show={isLoading}>
             <Slider
               label="Saturation"
-              size="lg"
-              // description="Adjust the saturation of the base colors."
+              size="sm"
+              valueLabel
               value={currentTheme.colors[mode].saturation}
               onChange={(value) =>
                 handleColorConfigChange("saturation", value as number)
@@ -180,14 +176,6 @@ export const ThemeCustomizer = (
         </div>
         <div>
           <Label>Scales</Label>
-          {/* <p className="text-fg-muted text-sm">
-            There are 5 color scales in the color system. You can learn more
-            about it{" "}
-            <Link variant="quiet" href="/docs/getting-started/color-system">
-              here
-            </Link>
-            .
-          </p> */}
           <div className="mt-3 flex flex-col gap-2">
             {(
               [
@@ -328,7 +316,6 @@ const ThemeName = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [onDismiss]);
 
-  // Dismiss when edit mode when esc is pressed
   React.useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape" && editMode) {
@@ -406,7 +393,6 @@ const ThemeName = ({
 };
 
 const Section = ({
-  title,
   children,
   className,
   wrapperClassName,
@@ -418,9 +404,6 @@ const Section = ({
 }) => {
   return (
     <div className={cn("", wrapperClassName)}>
-      {/* <h3 className="font-heading text-pretty text-xl font-semibold">
-        {title}
-      </h3> */}
       <div className={cn("mt-0 space-y-4", className)}>{children}</div>
     </div>
   );
@@ -459,9 +442,7 @@ const AutoResizeInput = React.forwardRef<HTMLInputElement, InputProps>(
     const [inputValue, setInputValue] = useControlledState(
       props.value,
       props.defaultValue ?? "",
-      () => {
-        // Do nothing
-      }
+      () => {}
     );
     const inputRef = React.useRef<HTMLInputElement>(null);
 

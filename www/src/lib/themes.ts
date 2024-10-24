@@ -87,7 +87,7 @@ export const dotUIThemes: Theme[] = [
           ],
         },
         lightness: 100,
-        saturation: 0,
+        saturation: 100,
       },
       dark: {
         neutral: {
@@ -166,7 +166,7 @@ export const dotUIThemes: Theme[] = [
           ],
         },
         lightness: 0,
-        saturation: 0,
+        saturation: 100,
       },
     },
   },

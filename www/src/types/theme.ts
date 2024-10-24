@@ -1,4 +1,4 @@
-type ColorShade = [
+export type ColorShade = [
   string,
   string,
   string,

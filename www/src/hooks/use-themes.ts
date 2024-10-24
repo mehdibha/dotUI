@@ -2,6 +2,7 @@ import { useAtom } from "jotai";
 import { withImmer } from "jotai-immer";
 import { atomWithStorage } from "jotai/utils";
 import { nanoid } from "nanoid";
+import { buildColorScales } from "@/lib/colors";
 import { defaultTheme, dotUIThemes } from "@/lib/themes";
 import { useMounted } from "@/registry/hooks/use-mounted";
 import { BaseColor, Theme } from "@/types/theme";
@@ -29,6 +30,7 @@ export const useThemes = () => {
   const currentTheme = [...state.themes, ...dotUIThemes].find(
     (t) => t.id === state.currentThemeId
   ) as Theme;
+
   const isCurrentThemeEditable = state.themes.some(
     (t) => t.id === state.currentThemeId
   );
@@ -38,11 +40,13 @@ export const useThemes = () => {
       draft.currentThemeId = themeId;
     });
   };
+
   const setMode = (mode: Mode) => {
     setState((draft) => {
       draft.mode = mode;
     });
   };
+
   const createTheme = (
     themeProperties: Prettify<
       Omit<Partial<Theme>, "id" | "name"> & { name: string }
@@ -89,6 +93,18 @@ export const useThemes = () => {
       const theme = draft.themes.find((t) => t.id === draft.currentThemeId);
       if (theme) {
         theme.colors[state.mode][baseColor].baseColor = value;
+        const currentColors = theme.colors[state.mode];
+        const modeConfig = buildColorScales({
+          neutral: { baseColors: [currentColors.neutral.baseColor] },
+          warning: { baseColors: [currentColors.warning.baseColor] },
+          success: { baseColors: [currentColors.success.baseColor] },
+          danger: { baseColors: [currentColors.danger.baseColor] },
+          accent: { baseColors: [currentColors.accent.baseColor] },
+          lightness: currentColors.lightness,
+          saturation: currentColors.saturation,
+          mode: state.mode,
+        });
+        theme.colors[state.mode] = modeConfig;
       }
     });
   };
@@ -102,6 +118,18 @@ export const useThemes = () => {
       const theme = draft.themes.find((t) => t.id === draft.currentThemeId);
       if (theme) {
         theme.colors[state.mode][config] = value;
+        const currentColors = theme.colors[state.mode];
+        const modeConfig = buildColorScales({
+          neutral: { baseColors: [currentColors.neutral.baseColor] },
+          warning: { baseColors: [currentColors.warning.baseColor] },
+          success: { baseColors: [currentColors.success.baseColor] },
+          danger: { baseColors: [currentColors.danger.baseColor] },
+          accent: { baseColors: [currentColors.accent.baseColor] },
+          lightness: currentColors.lightness,
+          saturation: currentColors.saturation,
+          mode: state.mode,
+        });
+        theme.colors[state.mode] = modeConfig;
       }
     });
   };
