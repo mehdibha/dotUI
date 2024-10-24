@@ -47,7 +47,7 @@ export default defineConfig({
         } satisfies RemarkInstallOptions,
       ],
       [remarkInlineCode],
-      [remarkDocGen, { generators: [fileGenerator()] } as RemarkDocGenOptions],
+      // [remarkDocGen, { generators: [fileGenerator()] } as RemarkDocGenOptions],
     ],
     rehypeCodeOptions: {
       themes: {
