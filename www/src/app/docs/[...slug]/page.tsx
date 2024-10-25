@@ -66,7 +66,7 @@ export default async function Page({ params }: PageProps) {
       </div>
       {page.data.toc && page.data.toc.length > 0 && (
         <div className="hidden text-sm xl:block">
-          <div className="sticky top-8">
+          <div className="sticky top-8 h-[calc(100svh-theme(spacing.8))]">
             <TableOfContents toc={page.data.toc as TocType} />
           </div>
         </div>
