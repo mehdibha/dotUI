@@ -116,9 +116,9 @@ const ColorPreview = ({
   return (
     <motion.div>
       {showBackground && (
-        <div className="bg-bg flex h-[300px] w-[500px] flex-row border">
+        <div className="bg-bg flex h-[300px] w-[400px] flex-row border xl:w-[500px]">
           <div className="flex h-[50%] items-center justify-center border-r md:h-[100%] md:w-[50%]">
-            <div className="bg-bg relative flex size-40 items-center justify-center rounded-[12px] border">
+            <div className="bg-bg relative flex size-32 items-center justify-center rounded-[12px] border">
               <div className="bg-bg-muted text-fg-muted flex size-6 items-center justify-center rounded-full text-xs">
                 1
               </div>
@@ -128,7 +128,7 @@ const ColorPreview = ({
             </div>
           </div>
           <div className="bg-bg-muted flex h-[50%] items-center justify-center border-r border-t md:h-[100%] md:w-[50%] md:border-none">
-            <div className="bg-bg relative flex size-40 items-center justify-center rounded-[12px] border">
+            <div className="bg-bg relative flex size-32 items-center justify-center rounded-[12px] border">
               <div className="bg-bg-muted text-fg-muted flex size-6 items-center justify-center rounded-full text-xs">
                 1
               </div>
@@ -141,30 +141,31 @@ const ColorPreview = ({
       )}
       <motion.div
         layoutId="color-preview-buttons"
-        className={cn("flex items-center gap-6", showBackground && "mt-6")}
+        className={cn(
+          "flex flex-wrap items-center gap-2",
+          showBackground && "mt-6"
+        )}
       >
-        <div className="flex items-center gap-2">
-          <MotionButton variant="default" layoutId="button-default">
-            default
+        <MotionButton variant="default" layoutId="button-default">
+          default
+        </MotionButton>
+        {color === "neutral" ? (
+          <MotionButton variant="primary" layoutId="button-primary">
+            primary
           </MotionButton>
-          {color === "neutral" ? (
-            <MotionButton variant="primary" layoutId="button-primary">
-              primary
-            </MotionButton>
-          ) : (
-            <MotionButton variant={color} layoutId="button-primary">
-              primary
-            </MotionButton>
-          )}
-          <MotionButton variant="outline" layoutId="button-outline">
-            outline
+        ) : (
+          <MotionButton variant={color} layoutId="button-primary">
+            primary
           </MotionButton>
-          <MotionButton variant="quiet" layoutId="button-quiet">
-            quiet
-          </MotionButton>
-        </div>
+        )}
+        <MotionButton variant="outline" layoutId="button-outline">
+          outline
+        </MotionButton>
+        <MotionButton variant="quiet" layoutId="button-quiet">
+          quiet
+        </MotionButton>
         {color === "neutral" && (
-          <div className="flex items-center gap-2">
+          <>
             <MotionToggleButton
               variant="quiet"
               defaultSelected
@@ -175,7 +176,7 @@ const ColorPreview = ({
             <MotionToggleButton variant="outline" layoutId="toggle-outline">
               <PinIcon />
             </MotionToggleButton>
-          </div>
+          </>
         )}
       </motion.div>
       <div className="mt-6">

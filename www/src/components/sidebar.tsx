@@ -305,12 +305,12 @@ const SearchCommandDialog = ({ isCollapsed }: { isCollapsed: boolean }) => {
         }
         isDisabled={!isCollapsed}
       >
-        <SidebarButton variant="outline" className="bg-bg-inverse/5">
+        <SidebarButton variant="outline">
           <SearchIcon />
           <div className="flex flex-1 flex-row items-center justify-between">
             <span>Search </span>
-            <Kbd className="flex size-6 items-center justify-center p-0 text-xs">
-              ⌘ K
+            <Kbd className="flex items-center justify-center p-1 text-xs">
+              ⌘K
             </Kbd>
           </div>
         </SidebarButton>

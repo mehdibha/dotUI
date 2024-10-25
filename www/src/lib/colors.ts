@@ -30,7 +30,7 @@ const defaultConfig = {
     colors: {
       neutral: {
         baseColors: ["#000000"],
-        ratios: [1, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
+        ratios: [1.05, 1.25, 1.7, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
       },
       success: {
         baseColors: ["#1A9338"],
@@ -56,7 +56,7 @@ const defaultConfig = {
     colors: {
       neutral: {
         baseColors: ["#ffffff"],
-        ratios: [1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
+        ratios: [1, 1.25, 1.7, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
       },
       success: {
         baseColors: ["#1A9338"],

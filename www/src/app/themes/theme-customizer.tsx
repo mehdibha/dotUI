@@ -93,7 +93,7 @@ export const ThemeCustomizer = (
         </Skeleton>
         <div>
           <Label>Base colors</Label>
-          <div className="mt-2 flex items-center gap-2">
+          <div className="mt-2 grid grid-cols-3 gap-2 md:grid-cols-5 lg:grid-cols-3 xl:grid-cols-5">
             {(
               [
                 {
@@ -126,7 +126,7 @@ export const ThemeCustomizer = (
               <Skeleton
                 key={colorBase.value}
                 show={isLoading}
-                className="flex-1"
+                // className="flex-1"
               >
                 <ColorPicker
                   variant="outline"
@@ -140,9 +140,9 @@ export const ThemeCustomizer = (
                   onOpenChange={() => {
                     setPreview(`color-${colorBase.value}`);
                   }}
-                  className="flex-1"
+                  // className="flex-1"
                 >
-                  {colorBase.label}
+                  <span className="truncate">{colorBase.label}</span>
                 </ColorPicker>
               </Skeleton>
             ))}
@@ -420,7 +420,7 @@ const ColorScale = ({ label, value }: { label: string; value: BaseColor }) => {
       <ul className="grid w-full grid-cols-10 gap-2">
         {shades.map((color, index) => (
           <li key={index} className="col-span-1 h-10">
-            <Tooltip content={`${value}-${index * 100}`}>
+            <Tooltip content={`${value}-${(index + 1) * 100}`}>
               <Skeleton show={isLoading} className="h-full w-full">
                 <AriaButton
                   className="h-full w-full rounded-md border"
