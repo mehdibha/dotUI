@@ -32,7 +32,7 @@ export default function HomePage() {
           </div>
           {/* footer */}
           <div className="absolute bottom-5 left-0 right-0 z-0 flex flex-col items-center justify-center gap-6">
-            <Terminal>{`npx dotui@latest init`}</Terminal>
+            <Terminal>{`npx dotui-cli@latest init`}</Terminal>
             <p className="text-fg-muted px-4 text-xs">
               Built by{" "}
               <Link

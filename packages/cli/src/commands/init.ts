@@ -62,7 +62,7 @@ export const init = new Command()
       logger.break();
       logger.log(`We suggest that you begin by typing:`);
       logger.break();
-      logger.success("  npx dotui@latest add button");
+      logger.success("  npx dotui-cli@latest add button");
     } catch (error) {
       logger.break();
       handleError(error);
