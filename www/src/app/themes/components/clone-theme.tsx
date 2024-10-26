@@ -5,19 +5,19 @@ import {
   DialogRoot,
   Dialog,
   DialogFooter,
+  DialogRootProps,
 } from "@/registry/ui/default/core/dialog";
 import { Form } from "@/registry/ui/default/core/form";
 import { TextField } from "@/registry/ui/default/core/text-field";
 
 export const CloneThemeDialog = ({
   children,
-}: {
-  children: React.ReactNode;
-}) => {
+  ...props
+}: Omit<DialogRootProps, "children"> & { children?: React.ReactNode }) => {
   const [name, setName] = React.useState("");
   const { cloneTheme, currentThemeId } = useThemes();
   return (
-    <DialogRoot>
+    <DialogRoot {...props}>
       {children}
       <Dialog title="Clone theme">
         {({ close }) => (

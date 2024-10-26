@@ -32,7 +32,7 @@ import { Tooltip, TooltipProps } from "@/registry/ui/default/core/tooltip";
 import { cn } from "@/registry/ui/default/lib/cn";
 import { siteConfig } from "@/config";
 import { SearchCommand } from "./search-command";
-import { ThemeToggle } from "./theme-toggle";
+import { ThemeSwitcher } from "./theme-switcher";
 
 const MotionButton = motion.create(Button);
 
@@ -115,7 +115,7 @@ export const Sidebar = ({ items }: { items: PageTree.Node[] }) => {
             <TwitterIcon />
           </MotionButton>
         </div>
-        <ThemeToggle>
+        <ThemeSwitcher>
           <MotionButton
             size="sm"
             variant="quiet"
@@ -127,7 +127,7 @@ export const Sidebar = ({ items }: { items: PageTree.Node[] }) => {
             <SunIcon className="block dark:hidden" />
             <MoonIcon className="hidden dark:block" />
           </MotionButton>
-        </ThemeToggle>
+        </ThemeSwitcher>
       </SidebarFooter>
     </SidebarRoot>
   );
@@ -297,12 +297,7 @@ const SearchCommandDialog = ({ isCollapsed }: { isCollapsed: boolean }) => {
   return (
     <DialogRoot isOpen={isOpen} onOpenChange={setIsOpen}>
       <StyledTooltip
-        content={
-          <div className="flex items-center gap-2">
-            Search
-            <Kbd>⌘K</Kbd>
-          </div>
-        }
+        content={<div className="flex items-center gap-2">Search</div>}
         isDisabled={!isCollapsed}
       >
         <SidebarButton variant="outline">
@@ -318,7 +313,7 @@ const SearchCommandDialog = ({ isCollapsed }: { isCollapsed: boolean }) => {
       <Dialog className="!p-0" showDismissButton={false}>
         <SearchCommand
           onRunCommand={() => setIsOpen(false)}
-          className="h-72 max-h-full"
+          className="h-72 max-h-full rounded-lg"
         />
         <DismissButton
           variant="outline"

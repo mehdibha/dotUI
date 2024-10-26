@@ -2,11 +2,11 @@ import React from "react";
 import type { Metadata } from "next";
 import { PlusIcon } from "lucide-react";
 import { Button } from "@/registry/ui/default/core/button";
-import { Preview } from "@/app/themes/preview";
-import { PreviewProvider } from "./context";
-import { CreateThemeDialog } from "./create-theme";
-import { ExploreThemesDialog } from "./explore-themes";
-import { ThemeCustomizer } from "./theme-customizer";
+import { Preview } from "./components/preview";
+import { PreviewProvider } from "./components/context";
+import { CreateThemeDialog } from "./components/create-theme";
+import { ExploreThemesDialog } from "./components/explore-themes";
+import { ThemeCustomizer } from "./components/theme-customizer";
 
 export const metadata: Metadata = {
   title: "Themes",

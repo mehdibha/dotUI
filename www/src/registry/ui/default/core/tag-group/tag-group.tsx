@@ -20,7 +20,7 @@ import { toggleButtonStyles } from "../toggle-button";
 const tagGroupStyles = tv({
   slots: {
     root: "flex w-48 flex-col items-start gap-2",
-    list: "flex flex-wrap gap-1",
+    list: "flex w-full flex-wrap gap-1",
     tag: [focusRing(), "bg-bg-muted rounded-md px-2 py-1 text-sm"],
   },
 });
@@ -67,9 +67,11 @@ function TagGroup<T extends object>({
   );
 }
 
-interface TagProps extends AriaTagProps {}
+interface TagProps extends AriaTagProps {
+  size?: "sm" | "md" | "lg";
+}
 
-function Tag({ children, ...props }: TagProps) {
+function Tag({ children, size = "md", ...props }: TagProps) {
   let textValue = typeof children === "string" ? children : undefined;
   return (
     <AriaTag
@@ -78,7 +80,7 @@ function Tag({ children, ...props }: TagProps) {
       className={toggleButtonStyles({
         variant: "outline",
         shape: "rectangle",
-        // size: "sm",
+        size,
         className: cn("cursor-pointer", props.className),
       })}
     >

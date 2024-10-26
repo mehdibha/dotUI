@@ -78,6 +78,13 @@ export const useThemes = () => {
     });
   };
 
+  const deleteTheme = (themeId: string) => {
+    setState((draft) => {
+      draft.currentThemeId = "default";
+      draft.themes = draft.themes.filter((t) => t.id !== themeId);
+    });
+  };
+
   const setThemeName = (name: string) => {
     setState((draft) => {
       const theme = draft.themes.find((t) => t.id === draft.currentThemeId);
@@ -174,5 +181,6 @@ export const useThemes = () => {
     fonts,
     radius: currentTheme.radius,
     handleRadiusChange,
+    deleteTheme
   };
 };

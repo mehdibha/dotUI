@@ -54,7 +54,7 @@ export function ThemeOverride({ children }: ThemeOverrideProps) {
     "--color-bg-muted": "var(--color-neutral-200)",
     "--color-bg-inverse": "var(--color-neutral-1000)",
     "--color-bg-disabled": "var(--color-neutral-200)",
-    "--color-bg-tooltip": "var(--color-neutral-500)",
+    "--color-bg-tooltip": "var(--color-neutral-300)",
     "--color-bg-overlay": "var(--color-neutral-200)",
 
     "--color-bg-neutral": "var(--color-neutral-300)",

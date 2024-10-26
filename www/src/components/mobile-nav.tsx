@@ -10,7 +10,7 @@ import { Dialog, DialogRoot } from "@/registry/ui/default/core/dialog";
 import { ScrollArea } from "@/registry/ui/default/core/scroll-area";
 import { siteConfig } from "@/config";
 import { NodeList } from "./sidebar";
-import { ThemeToggle } from "./theme-toggle";
+import { ThemeSwitcher } from "./theme-switcher";
 
 export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
   return (
@@ -79,7 +79,7 @@ export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
                       <TwitterIcon />
                     </Button>
                   </div>
-                  <ThemeToggle />
+                  <ThemeSwitcher />
                 </div>
               </div>
             )}

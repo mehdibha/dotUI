@@ -152,6 +152,7 @@ const config = {
         sans: ["var(--font-geist-sans)", ...fontFamily.mono],
         heading: ["var(--font-heading)", ...fontFamily.mono],
         body: ["var(--font-body)", ...fontFamily.mono],
+        josephin: ["var(--font-josefin)", ...fontFamily.sans],
       },
       transitionDelay: {
         "400": "400ms",

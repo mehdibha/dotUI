@@ -11,6 +11,7 @@ import "@/styles/globals.css";
 import { siteConfig } from "@/config";
 import { Providers } from "./providers";
 import { source } from "./source";
+import { josefinSans } from "@/styles/fonts";
 
 const config = siteConfig.global;
 
@@ -54,7 +55,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={cn("font-sans antialiased", GeistSans.variable)}
+        className={cn("font-sans antialiased", GeistSans.variable, josefinSans.variable)}
         suppressHydrationWarning
       >
         <Analytics />

@@ -1,14 +1,14 @@
 "use client";
 
 import React from "react";
-import { MoonIcon, SunIcon } from "lucide-react";
+import { MonitorIcon, MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Button } from "@/registry/ui/default/core/button";
 import { Item, ListBox } from "@/registry/ui/default/core/list-box";
 import { Overlay } from "@/registry/ui/default/core/overlay";
 import { SelectRoot } from "@/registry/ui/default/core/select";
 
-export const ThemeToggle = ({ children }: { children?: React.ReactNode }) => {
+export const ThemeSwitcher = ({ children }: { children?: React.ReactNode }) => {
   const { theme, setTheme } = useTheme();
 
   return (
@@ -30,9 +30,9 @@ export const ThemeToggle = ({ children }: { children?: React.ReactNode }) => {
       )}
       <Overlay placement="bottom right" type="popover">
         <ListBox>
-          <Item id="system">System</Item>
-          <Item id="light">Light</Item>
-          <Item id="dark">Dark</Item>
+          <Item id="system" prefix={<MonitorIcon />}>System</Item>
+          <Item id="light" prefix={<SunIcon />}>Light</Item>
+          <Item id="dark" prefix={<MoonIcon />}>Dark</Item>
         </ListBox>
       </Overlay>
     </SelectRoot>

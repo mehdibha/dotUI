@@ -34,9 +34,11 @@ import { Tag, TagGroup } from "@/registry/ui/default/core/tag-group/tag-group";
 import { Tooltip } from "@/registry/ui/default/core/tooltip";
 import { cn } from "@/registry/ui/default/lib/cn";
 import { BaseColor } from "@/types/theme";
-import { CloneThemeDialog } from "./components/clone-theme";
-import { usePreview } from "./components/context";
-import { CopyThemeDialog } from "./components/copy-theme";
+import { CloneThemeDialog } from "./clone-theme";
+import { usePreview } from "./context";
+import { CopyThemeDialog } from "./copy-theme";
+import { DeleteThemeDialog } from "./delete-theme";
+import { dotUIThemes } from "@/lib/themes";
 
 export const ThemeCustomizer = (
   props: React.HTMLAttributes<HTMLDivElement>
@@ -55,6 +57,8 @@ export const ThemeCustomizer = (
     handleRadiusChange,
   } = useThemes();
   const { setPreview } = usePreview();
+  const [isCloneDialogOpen, setIsCloneDialogOpen] = React.useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = React.useState(false);
 
   return (
     <div {...props} className={cn("space-y-6", props.className)}>
@@ -77,14 +81,35 @@ export const ThemeCustomizer = (
               <MoreHorizontalIcon />
             </Button>
             <Menu placement="bottom end">
-              <CloneThemeDialog>
-                <MenuItem prefix={<GitBranchIcon />}>Clone theme</MenuItem>
-              </CloneThemeDialog>
-              <MenuItem prefix={<Trash2Icon />} variant="danger">
-                Delete theme
+              <MenuItem
+                prefix={<GitBranchIcon />}
+                onAction={() => {
+                  setIsCloneDialogOpen(true);
+                }}
+              >
+                Clone theme
               </MenuItem>
+              {isCurrentThemeEditable && (
+                <MenuItem
+                  prefix={<Trash2Icon />}
+                  variant="danger"
+                  onAction={() => {
+                    setIsDeleteDialogOpen(true);
+                  }}
+                >
+                  Delete theme
+                </MenuItem>
+              )}
             </Menu>
           </MenuRoot>
+          <CloneThemeDialog
+            isOpen={isCloneDialogOpen}
+            onOpenChange={setIsCloneDialogOpen}
+          />
+          <DeleteThemeDialog
+            isOpen={isDeleteDialogOpen}
+            onOpenChange={setIsDeleteDialogOpen}
+          />
         </div>
       </div>
       {!isLoading && !isCurrentThemeEditable && (

@@ -1,10 +1,14 @@
 import React from "react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
+import { PaintBucket, Settings2Icon } from "lucide-react";
 import { getFileSource } from "@/lib/get-file-source";
 import { CodeBlock } from "@/components/code-block";
 import { styles } from "@/registry/styles";
+import { Button } from "@/registry/ui/default/core/button";
+import { Tooltip } from "@/registry/ui/default/core/tooltip";
 import { cn } from "@/registry/ui/default/lib/cn";
 import { Index } from "@/__demos__";
+import { ThemeCustomizerDialog } from "../theme-customizer";
 import { ThemeOverride } from "../theme-override";
 import { ComponentPreviewClient } from "./component-preview-client";
 
@@ -53,6 +57,24 @@ export const ComponentPreview = async ({
       >
         <div className="relative">
           <ThemeOverride>
+            <ThemeCustomizerDialog>
+              <Tooltip
+                content={
+                  <span>
+                    <span className="text-fg-muted">Theme:</span> dotUI
+                  </span>
+                }
+              >
+                <Button
+                  variant="outline"
+                  shape="square"
+                  size="sm"
+                  className="absolute right-2 top-2 z-50 font-normal"
+                >
+                  <PaintBucket />
+                </Button>
+              </Tooltip>
+            </ThemeCustomizerDialog>
             <ScrollArea
               className={cn(
                 "flex items-center justify-center",
