@@ -40,7 +40,7 @@ export const SearchCommand = ({
   context?: boolean;
   onRunCommand?: () => void;
 }) => {
-  const { search, setSearch, query } = useDocsSearch();
+  const { search, setSearch, query } = useDocsSearch({ type: "fetch"});
   const router = useRouter();
 
   const results =
