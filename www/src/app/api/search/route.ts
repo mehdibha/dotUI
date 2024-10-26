@@ -4,7 +4,6 @@ import { source } from "@/app/source";
 export const { GET } = createSearchAPI("advanced", {
   indexes: source.getPages().map((page) => ({
     title: page.data.title,
-    description: "components",
     structuredData: {
       headings: page.data.structuredData.headings,
       contents: [],

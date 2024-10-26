@@ -26,7 +26,7 @@ export const toKebabCase = (string: string): string => {
 export const kekabCaseToTitle = (string: string): string => {
   return string
     .replace(/-/g, " ")
-    .replace(/\b\w/g, (char) => char.toUpperCase());
+    .replace(/^\w/, (char) => char.toUpperCase());
 };
 
 export const truncateOnWord = (

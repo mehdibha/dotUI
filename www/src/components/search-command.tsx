@@ -28,6 +28,7 @@ import {
 } from "@/registry/ui/default/core/command";
 import { cn } from "@/registry/ui/default/lib/cn";
 import { searchConfig } from "@/config";
+import { Command } from "cmdk";
 
 export const SearchCommand = ({
   className,
@@ -40,11 +41,11 @@ export const SearchCommand = ({
   context?: boolean;
   onRunCommand?: () => void;
 }) => {
-  const { search, setSearch, query } = useDocsSearch({ type: "fetch"});
+  const { search, setSearch, query } = useDocsSearch({ type: "fetch" });
   const router = useRouter();
 
   const results =
-    search === "" || query.data === "empty"
+    query.data === "empty"
       ? [
           {
             id: "suggestions",
@@ -96,7 +97,7 @@ export const SearchCommand = ({
         autoFocus
         placeholder="Search a component, a block, a hook..."
         icon={
-          query.isLoading && search !== "" ? (
+          query.isLoading ? (
             <Loader2Icon className="animate-spin" />
           ) : (
             <SearchIcon />
@@ -121,6 +122,7 @@ export const SearchCommand = ({
                 onSelect={() => {
                   runCommand(() => router.push(item.url));
                 }}
+                className="text-fg"
               >
                 <div
                   className={cn(
@@ -128,7 +130,7 @@ export const SearchCommand = ({
                     item.type !== "page" && "ms-2 gap-2 border-s ps-4"
                   )}
                 >
-                  <div className="text-fd-muted-foreground [&_svg]:size-4">
+                  <div className="text-fg-muted [&_svg]:size-4">
                     {icons[item.type as keyof typeof icons]}
                   </div>
                   <p className="w-0 flex-1 truncate">{item.content}</p>
