@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
+import { Command } from "cmdk";
 import { useDocsSearch } from "fumadocs-core/search/client";
 import { SortedResult } from "fumadocs-core/server";
 import {
@@ -28,7 +29,6 @@ import {
 } from "@/registry/ui/default/core/command";
 import { cn } from "@/registry/ui/default/lib/cn";
 import { searchConfig } from "@/config";
-import { Command } from "cmdk";
 
 export const SearchCommand = ({
   className,
@@ -45,7 +45,7 @@ export const SearchCommand = ({
   const router = useRouter();
 
   const results =
-    query.data === "empty"
+    search === "" || query.data === "empty"
       ? [
           {
             id: "suggestions",
@@ -112,7 +112,9 @@ export const SearchCommand = ({
         <CommandSeparator className="before:opacity-1 before:animate-loading before:delay-900 relative h-[2px] overflow-hidden before:absolute before:left-0 before:top-0 before:h-full before:w-1/2 before:bg-[linear-gradient(90deg,rgba(0,0,0,0)_0,#707070_50%,rgba(0,0,0,0)_100%)] before:opacity-0 before:content-['']" />
       )}
       <CommandList>
-        <CommandEmpty>No results found</CommandEmpty>
+        {query.data !== "empty" && (
+          <CommandEmpty>No results found</CommandEmpty>
+        )}
         {results.map((group) => (
           <CommandGroup key={group.id} heading={group.name}>
             {group.results.map((item) => (
