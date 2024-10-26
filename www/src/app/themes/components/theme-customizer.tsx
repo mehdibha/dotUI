@@ -18,6 +18,7 @@ import {
   Input as UnstyledInput,
 } from "react-aria-components";
 import { googleFonts } from "@/lib/fonts";
+import { dotUIThemes } from "@/lib/themes";
 import { useThemes } from "@/hooks/use-themes";
 import { Alert } from "@/registry/ui/default/core/alert";
 import { Button } from "@/registry/ui/default/core/button";
@@ -38,7 +39,6 @@ import { CloneThemeDialog } from "./clone-theme";
 import { usePreview } from "./context";
 import { CopyThemeDialog } from "./copy-theme";
 import { DeleteThemeDialog } from "./delete-theme";
-import { dotUIThemes } from "@/lib/themes";
 
 export const ThemeCustomizer = (
   props: React.HTMLAttributes<HTMLDivElement>

@@ -181,6 +181,6 @@ export const useThemes = () => {
     fonts,
     radius: currentTheme.radius,
     handleRadiusChange,
-    deleteTheme
+    deleteTheme,
   };
 };

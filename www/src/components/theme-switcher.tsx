@@ -30,9 +30,15 @@ export const ThemeSwitcher = ({ children }: { children?: React.ReactNode }) => {
       )}
       <Overlay placement="bottom right" type="popover">
         <ListBox>
-          <Item id="system" prefix={<MonitorIcon />}>System</Item>
-          <Item id="light" prefix={<SunIcon />}>Light</Item>
-          <Item id="dark" prefix={<MoonIcon />}>Dark</Item>
+          <Item id="system" prefix={<MonitorIcon />}>
+            System
+          </Item>
+          <Item id="light" prefix={<SunIcon />}>
+            Light
+          </Item>
+          <Item id="dark" prefix={<MoonIcon />}>
+            Dark
+          </Item>
         </ListBox>
       </Overlay>
     </SelectRoot>

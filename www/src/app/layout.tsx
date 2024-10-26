@@ -7,11 +7,11 @@ import { MobileNav } from "@/components/mobile-nav";
 import { Sidebar } from "@/components/sidebar";
 import { Badge } from "@/registry/ui/default/core/badge";
 import { cn } from "@/registry/ui/default/lib/cn";
+import { josefinSans } from "@/styles/fonts";
 import "@/styles/globals.css";
 import { siteConfig } from "@/config";
 import { Providers } from "./providers";
 import { source } from "./source";
-import { josefinSans } from "@/styles/fonts";
 
 const config = siteConfig.global;
 
@@ -55,7 +55,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={cn("font-sans antialiased", GeistSans.variable, josefinSans.variable)}
+        className={cn(
+          "font-sans antialiased",
+          GeistSans.variable,
+          josefinSans.variable
+        )}
         suppressHydrationWarning
       >
         <Analytics />
