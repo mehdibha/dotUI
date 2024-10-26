@@ -77,6 +77,7 @@ export const SearchCommand = ({
   return (
     <CommandRoot
       shouldFilter={false}
+      loop
       className={cn(
         animated && [
           "relative overflow-visible rounded-lg shadow-md",
