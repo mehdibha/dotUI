@@ -30,49 +30,64 @@ const tabsStyles = tv({
 interface TabsProps extends Omit<AriaTabsProps, "className"> {
   className?: string;
 }
-const Tabs = ({ className, ...props }: TabsProps) => {
-  const { root } = tabsStyles();
-  return <AriaTabs className={root({ className })} {...props} />;
-};
+const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(
+  ({ className, ...props }, ref) => {
+    const { root } = tabsStyles();
+    return <AriaTabs ref={ref} className={root({ className })} {...props} />;
+  }
+);
+Tabs.displayName = "Tabs";
 
 interface TabListProps<T> extends Omit<AriaTabListProps<T>, "className"> {
   className?: string;
 }
-const TabList = <T extends object>({
-  className,
-  ...props
-}: TabListProps<T>) => {
-  const { list } = tabsStyles();
-  return (
-    <AriaTabList
-      {...props}
-      className={list({ className })}
-      style={{ scrollbarWidth: "none" }}
-    />
-  );
-};
+const TabList = React.forwardRef<HTMLDivElement, TabListProps<any>>(
+  <T extends object>(
+    { className, ...props }: TabListProps<T>,
+    ref: React.Ref<HTMLDivElement>
+  ) => {
+    const { list } = tabsStyles();
+    return (
+      <AriaTabList
+        ref={ref}
+        {...props}
+        className={list({ className })}
+        style={{ scrollbarWidth: "none" }}
+      />
+    );
+  }
+);
+TabList.displayName = "TabList";
 
 interface TabProps extends Omit<AriaTabProps, "className"> {
   className?: string;
 }
-const Tab = ({ className, ...props }: TabProps) => {
-  const { tab } = tabsStyles();
-  return (
-    <AriaTab className={tab({ className })} {...props}>
-      {composeRenderProps(props.children, (children) => (
-        <span>{children}</span>
-      ))}
-    </AriaTab>
-  );
-};
+const Tab = React.forwardRef<HTMLDivElement, TabProps>(
+  ({ className, ...props }, ref) => {
+    const { tab } = tabsStyles();
+    return (
+      <AriaTab ref={ref} className={tab({ className })} {...props}>
+        {composeRenderProps(props.children, (children) => (
+          <span>{children}</span>
+        ))}
+      </AriaTab>
+    );
+  }
+);
+Tab.displayName = "Tab";
 
 interface TabPanelProps extends Omit<AriaTabPanelProps, "className"> {
   className?: string;
 }
-const TabPanel = ({ className, ...props }: TabPanelProps) => {
-  const { panel } = tabsStyles();
-  return <AriaTabPanel className={panel({ className })} {...props} />;
-};
+const TabPanel = React.forwardRef<HTMLDivElement, TabPanelProps>(
+  ({ className, ...props }, ref) => {
+    const { panel } = tabsStyles();
+    return (
+      <AriaTabPanel ref={ref} className={panel({ className })} {...props} />
+    );
+  }
+);
+TabPanel.displayName = "TabPanel";
 
 export type { TabsProps, TabListProps, TabProps, TabPanelProps };
 export { Tabs, TabList, Tab, TabPanel };

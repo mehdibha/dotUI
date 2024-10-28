@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { BackgroundColor } from "@adobe/leonardo-contrast-colors";
 import { dotUIThemes } from "@/lib/themes";
 import { useThemes } from "@/hooks/use-themes";
 import { Alert } from "@/registry/ui/default/core/alert";
@@ -43,12 +44,21 @@ export const ExploreThemesDialog = ({
                       Lorem ipsum dolor sit amet...
                     </p>
                   </div>
-                  <div className="mt-2 grid grid-cols-5 overflow-hidden rounded">
-                    <div className="h-5 bg-slate-600" />
-                    <div className="h-5 bg-green-500" />
-                    <div className="h-5 bg-red-500" />
-                    <div className="h-5 bg-amber-500" />
-                    <div className="h-5 bg-blue-700" />
+                  <div className="mt-2 grid grid-cols-4 overflow-hidden rounded">
+                    {[
+                      theme.colors[theme.defaultMode].neutral.shades[0],
+                      theme.colors[theme.defaultMode].neutral.shades[1],
+                      theme.colors[theme.defaultMode].accent.shades[3],
+                      theme.colors[theme.defaultMode].accent.shades[4],
+                    ].map((color, index) => (
+                      <div
+                        key={index}
+                        className="h-5"
+                        style={{
+                          backgroundColor: color,
+                        }}
+                      />
+                    ))}
                   </div>
                 </Radio>
               ))}
@@ -76,12 +86,21 @@ export const ExploreThemesDialog = ({
                         Lorem ipsum dolor sit amet...
                       </p>
                     </div>
-                    <div className="mt-2 grid grid-cols-5 overflow-hidden rounded">
-                      <div className="h-5 bg-slate-600" />
-                      <div className="h-5 bg-green-500" />
-                      <div className="h-5 bg-red-500" />
-                      <div className="h-5 bg-amber-500" />
-                      <div className="h-5 bg-blue-700" />
+                    <div className="mt-2 grid grid-cols-4 overflow-hidden rounded">
+                      {[
+                        theme.colors[theme.defaultMode].neutral.shades[0],
+                        theme.colors[theme.defaultMode].neutral.shades[1],
+                        theme.colors[theme.defaultMode].accent.shades[3],
+                        theme.colors[theme.defaultMode].accent.shades[4],
+                      ].map((color, index) => (
+                        <div
+                          key={index}
+                          className="h-5"
+                          style={{
+                            backgroundColor: color,
+                          }}
+                        />
+                      ))}
                     </div>
                   </Radio>
                 ))}

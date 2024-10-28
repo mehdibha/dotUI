@@ -57,7 +57,7 @@ export const CreateThemeDialog = ({
                 size="sm"
                 isDisabled={!name}
               >
-                Save theme
+                Create theme
               </Button>
             </DialogFooter>
           </Form>

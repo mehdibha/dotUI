@@ -3,12 +3,12 @@
 import React, { createContext } from "react";
 
 interface Context {
-  preview: string;
-  setPreview: (preview: string) => void;
+  preview: string | null;
+  setPreview: (preview: string | null) => void;
 }
 
 const PreviewContext = createContext<Context>({
-  preview: "",
+  preview: null,
   setPreview: () => {},
 });
 
@@ -22,7 +22,7 @@ export const PreviewProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [preview, setPreview] = React.useState<string>("color-neutral");
+  const [preview, setPreview] = React.useState<string | null>(null);
   return (
     <PreviewContext.Provider value={{ preview, setPreview }}>
       {children}

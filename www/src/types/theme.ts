@@ -59,5 +59,6 @@ export type Theme = {
     body: string;
   };
   radius: number;
+  defaultMode: "light" | "dark";
   // iconLibrary: "lucide" | "phosphor";
 };

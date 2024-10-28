@@ -38,12 +38,25 @@ export const useThemes = () => {
   const setCurrentThemeId = (themeId: string) => {
     setState((draft) => {
       draft.currentThemeId = themeId;
+      const theme = [...draft.themes, ...dotUIThemes].find(
+        (t) => t.id === themeId
+      );
+      if (theme && theme.defaultMode) {
+        console.log("setting mode", theme.defaultMode);
+        draft.mode = theme.defaultMode;
+      }
     });
   };
 
   const setMode = (mode: Mode) => {
     setState((draft) => {
       draft.mode = mode;
+      const currentTheme = draft.themes.find(
+        (t) => t.id === draft.currentThemeId
+      );
+      if (currentTheme) {
+        currentTheme.defaultMode = mode;
+      }
     });
   };
 
@@ -116,12 +129,18 @@ export const useThemes = () => {
     });
   };
 
+  const handleColorChange = () => {};
+
   const handleColorConfigChange = (
     config: "lightness" | "saturation",
     value: number
   ) => {
     if (!isCurrentThemeEditable) return;
     setState((draft) => {
+      if (config === "lightness" && state.mode === "light" && value < 50)
+        value = 50;
+      if (config === "lightness" && state.mode === "dark" && value > 49)
+        value = 49;
       const theme = draft.themes.find((t) => t.id === draft.currentThemeId);
       if (theme) {
         theme.colors[state.mode][config] = value;

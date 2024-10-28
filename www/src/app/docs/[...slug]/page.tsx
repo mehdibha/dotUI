@@ -6,7 +6,7 @@ import { ExternalLinkIcon } from "lucide-react";
 import { truncateOnWord } from "@/lib/string";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { DocsPager } from "@/components/docs-pager";
-import { AdobeIcon } from "@/components/icons/adobe";
+import { AdobeIcon } from "@/components/icons/adobe-icon";
 import { PageLastUpdate } from "@/components/last-update";
 import { mdxComponents } from "@/components/mdx/mdx-components";
 import { TableOfContents } from "@/components/toc";

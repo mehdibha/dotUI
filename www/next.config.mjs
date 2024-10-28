@@ -16,12 +16,7 @@ const config = {
       },
     ],
   },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+  transpilePackages: ["jotai-devtools"],
 };
 
 export default withMDX(config);

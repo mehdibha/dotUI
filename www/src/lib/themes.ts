@@ -4,6 +4,7 @@ export const dotUIThemes: Theme[] = [
   {
     id: "default",
     name: "Default",
+    defaultMode: "dark",
     fonts: {
       heading: "inter",
       body: "josefin",

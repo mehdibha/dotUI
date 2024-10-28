@@ -22,7 +22,13 @@ import { dotUIThemes } from "@/lib/themes";
 import { useThemes } from "@/hooks/use-themes";
 import { Alert } from "@/registry/ui/default/core/alert";
 import { Button } from "@/registry/ui/default/core/button";
-import { ColorPicker } from "@/registry/ui/default/core/color-picker";
+import {
+  ColorEditor,
+  ColorPicker,
+  ColorPickerRoot,
+} from "@/registry/ui/default/core/color-picker";
+import { ColorSwatch } from "@/registry/ui/default/core/color-swatch";
+import { Dialog, DialogRoot } from "@/registry/ui/default/core/dialog";
 import { Label } from "@/registry/ui/default/core/field";
 import { Form } from "@/registry/ui/default/core/form";
 import { InputProps } from "@/registry/ui/default/core/input";
@@ -30,10 +36,18 @@ import { Item } from "@/registry/ui/default/core/list-box";
 import { Menu, MenuItem, MenuRoot } from "@/registry/ui/default/core/menu";
 import { Select } from "@/registry/ui/default/core/select";
 import { Skeleton } from "@/registry/ui/default/core/skeleton";
-import { Slider } from "@/registry/ui/default/core/slider";
+import {
+  Slider,
+  SliderFiller,
+  SliderRoot,
+  SliderThumb,
+  SliderTrack,
+  SliderValueLabel,
+} from "@/registry/ui/default/core/slider";
 import { Tag, TagGroup } from "@/registry/ui/default/core/tag-group/tag-group";
 import { Tooltip } from "@/registry/ui/default/core/tooltip";
 import { cn } from "@/registry/ui/default/lib/cn";
+import { focusRing } from "@/registry/ui/default/lib/focus-styles";
 import { BaseColor } from "@/types/theme";
 import { CloneThemeDialog } from "./clone-theme";
 import { usePreview } from "./context";
@@ -44,11 +58,13 @@ export const ThemeCustomizer = (
   props: React.HTMLAttributes<HTMLDivElement>
 ) => {
   const {
+    themes: userThemes,
     fonts,
     handleFontChange,
     isLoading,
     currentTheme,
     setThemeName,
+    setCurrentThemeId,
     isCurrentThemeEditable,
     mode,
     setMode,
@@ -59,6 +75,40 @@ export const ThemeCustomizer = (
   const { setPreview } = usePreview();
   const [isCloneDialogOpen, setIsCloneDialogOpen] = React.useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = React.useState(false);
+
+  // Themes keyboard navigation
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!e.ctrlKey) return;
+
+      const themes = [...dotUIThemes, ...userThemes];
+      const themesCount = themes.length;
+      const currentIndex = themes.findIndex(
+        (theme) => theme.id === currentTheme.id
+      );
+
+      if (e.key === "ArrowRight") {
+        console.log("ArrowRight");
+        // Move to next theme, loop to start if at end
+        const nextIndex = (currentIndex + 1) % themesCount;
+        const nextTheme = themes[nextIndex];
+        if (nextTheme) {
+          setCurrentThemeId(nextTheme.id);
+        }
+      } else if (e.key === "ArrowLeft") {
+        // Move to previous theme, loop to end if at start
+        const prevIndex =
+          currentIndex === 0 ? themesCount - 1 : currentIndex - 1;
+        const prevTheme = themes[prevIndex];
+        if (prevTheme) {
+          setCurrentThemeId(prevTheme.id);
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [currentTheme.id, userThemes, setCurrentThemeId]);
 
   return (
     <div {...props} className={cn("space-y-6", props.className)}>
@@ -184,8 +234,8 @@ export const ThemeCustomizer = (
                     handleBaseColorChange(colorBase.value, value.toString())
                   }
                   aria-label={colorBase.label}
-                  onOpenChange={() => {
-                    setPreview(`color-${colorBase.value}`);
+                  onOpenChange={(isOpen) => {
+                    setPreview(isOpen ? `color-${colorBase.value}` : null);
                   }}
                   isDisabled={!isCurrentThemeEditable}
                 >
@@ -199,7 +249,7 @@ export const ThemeCustomizer = (
           <Skeleton show={isLoading}>
             <Slider
               label="Lightness"
-              valueLabel
+              valueLabel={(value) => `${value[0]}%`}
               value={currentTheme.colors[mode].lightness}
               onChange={(value) =>
                 handleColorConfigChange("lightness", value as number)
@@ -213,7 +263,7 @@ export const ThemeCustomizer = (
             <Slider
               label="Saturation"
               size="sm"
-              valueLabel
+              valueLabel={(value) => `${value[0]}%`}
               value={currentTheme.colors[mode].saturation}
               onChange={(value) =>
                 handleColorConfigChange("saturation", value as number)
@@ -250,9 +300,7 @@ export const ThemeCustomizer = (
                 handleFontChange("heading", key as string);
               }}
               onOpenChange={(isOpen) => {
-                if (isOpen) {
-                  setPreview("typography");
-                }
+                setPreview(isOpen ? "typography" : null);
               }}
               isDisabled={!isCurrentThemeEditable}
               className="[&_button]:w-full"
@@ -272,9 +320,7 @@ export const ThemeCustomizer = (
                 handleFontChange("body", key as string);
               }}
               onOpenChange={(isOpen) => {
-                if (isOpen) {
-                  setPreview("typography");
-                }
+                setPreview(isOpen ? "typography" : null);
               }}
               isDisabled={!isCurrentThemeEditable}
               className="[&_button]:w-full"
@@ -288,41 +334,53 @@ export const ThemeCustomizer = (
           </Skeleton>
         </div>
       </Section>
-      <Section title="Icons">
-        <Skeleton show={isLoading} className="w-[calc(50%-theme(spacing.2))]">
-          <Select
-            label="Icon library"
-            className="[&_button]:w-[calc(50%-theme(spacing.2))]"
-            defaultSelectedKey="lucide"
-            onOpenChange={(isOpen) => {
-              if (isOpen) {
-                setPreview("icons");
-              }
-            }}
-            isDisabled={!isCurrentThemeEditable}
-          >
-            <Item id="lucide">Lucide icons</Item>
-          </Select>
-        </Skeleton>
-      </Section>
-      <Section title="Borders">
-        <Skeleton show={isLoading} className="w-[calc(50%-theme(spacing.2))]">
-          <Slider
-            label="Radius (rem)"
-            valueLabel
-            className="!w-[calc(50%-theme(spacing.2))]"
-            minValue={0}
-            maxValue={1.2}
-            step={0.1}
-            value={currentTheme.radius}
-            onChange={(value) => {
-              setPreview("borders");
-              handleRadiusChange(value as number);
-            }}
-            isDisabled={!isCurrentThemeEditable}
-          />
-        </Skeleton>
-      </Section>
+      <div className="grid grid-cols-2 items-center gap-4">
+        <Section title="Icons">
+          <Skeleton show={isLoading}>
+            <Select
+              label="Icon library"
+              defaultSelectedKey="lucide"
+              onOpenChange={(isOpen) => {
+                setPreview(isOpen ? "icons" : null);
+              }}
+              isDisabled={!isCurrentThemeEditable}
+              className="[&_button]:w-full"
+            >
+              <Item id="lucide">Lucide icons</Item>
+            </Select>
+          </Skeleton>
+        </Section>
+        <Section title="Borders">
+          <Skeleton show={isLoading}>
+            <SliderRoot
+              minValue={0}
+              maxValue={1.2}
+              step={0.1}
+              value={currentTheme.radius}
+              onChange={(value) => {
+                handleRadiusChange(value as number);
+              }}
+              isDisabled={!isCurrentThemeEditable}
+              className="!w-full"
+            >
+              <div className="flex items-center justify-between">
+                <Label>Radius (rem)</Label>
+                <SliderValueLabel />
+              </div>
+              <div>
+                <SliderTrack>
+                  <SliderFiller />
+                  <SliderThumb
+                    onFocusChange={(isFocused) => {
+                      setPreview(isFocused ? "borders" : null);
+                    }}
+                  />
+                </SliderTrack>
+              </div>
+            </SliderRoot>
+          </Skeleton>
+        </Section>
+      </div>
     </div>
   );
 };
@@ -475,12 +533,18 @@ const ColorScale = ({ label, value }: { label: string; value: BaseColor }) => {
           <li key={index} className="col-span-1 h-10">
             <Tooltip content={`${value}-${(index + 1) * 100}`}>
               <Skeleton show={isLoading} className="h-full w-full">
-                <AriaButton
-                  className="h-full w-full rounded-md border"
-                  style={{
-                    backgroundColor: color,
-                  }}
-                />
+                <ColorPickerRoot value={color}>
+                  <DialogRoot>
+                    <AriaButton
+                      className={cn(focusRing(), "h-full w-full rounded-md")}
+                    >
+                      <ColorSwatch className="size-full rounded-[inherit]" />
+                    </AriaButton>
+                    <Dialog type="popover" mobileType="drawer">
+                      <ColorEditor className="mx-auto" />
+                    </Dialog>
+                  </DialogRoot>
+                </ColorPickerRoot>
               </Skeleton>
             </Tooltip>
           </li>

@@ -2,7 +2,6 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
-import { Command } from "cmdk";
 import { useDocsSearch } from "fumadocs-core/search/client";
 import { SortedResult } from "fumadocs-core/server";
 import {

@@ -14,10 +14,11 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
+  // return <Preview />
   return (
     <PreviewProvider>
-      <div className="container grid grid-cols-2 gap-10">
-        <div className="col-span-2 py-16 lg:col-span-1">
+      <div className="container grid grid-cols-12 gap-10">
+        <div className="col-span-12 py-16 lg:col-span-5">
           <h1 className="font-heading xs:text-2xl text-pretty text-xl font-semibold tracking-tighter sm:text-3xl md:text-4xl">
             Everything starts with identity.
           </h1>
@@ -36,7 +37,7 @@ export default function Page() {
           </div>
           <ThemeCustomizer className="mt-16" />
         </div>
-        <div className="sticky top-0 hidden h-screen items-center justify-center lg:flex">
+        <div className="sticky top-0 hidden h-screen items-center justify-center lg:col-span-7 lg:flex">
           <Preview />
         </div>
       </div>

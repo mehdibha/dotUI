@@ -1,10 +1,10 @@
 import {
   contrast,
   convertColorValue,
-  type ColorTuple,
   Theme,
   Color,
   BackgroundColor,
+  type ColorTuple,
   type CssColor,
 } from "@adobe/leonardo-contrast-colors";
 import { ColorShade, ModeConfig } from "@/types/theme";
