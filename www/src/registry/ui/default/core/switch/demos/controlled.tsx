@@ -8,10 +8,10 @@ export default function Demo() {
   return (
     <div className="flex flex-col items-center gap-4">
       <Switch isSelected={isSelected} onChange={setSelected}>
-        Airplane Mode
+        Focus mode
       </Switch>
       <p className="text-fg-muted text-xs">
-        You are {isSelected && "not"} on{" "}
+        You are {!isSelected && "not"} on{" "}
         <span className="font-bold">focus mode</span>.
       </p>
     </div>
