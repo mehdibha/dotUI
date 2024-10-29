@@ -78,12 +78,12 @@ const ColorEditor = ({ className, ...props }: ColorEditorProps) => {
           channel="hue"
           showValueLabel={false}
         />
-        <ColorSlider
+        {/* <ColorSlider
           orientation="vertical"
           colorSpace="hsb"
           channel="alpha"
           showValueLabel={false}
-        />
+        /> */}
       </div>
       <div className="flex items-center gap-2">
         <Select

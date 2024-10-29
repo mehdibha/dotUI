@@ -13,6 +13,7 @@ type State = {
   themes: Theme[];
   currentThemeId: string;
   mode: Mode;
+  showKeyboardHint: boolean;
 };
 
 const themesAtom = withImmer(
@@ -20,6 +21,7 @@ const themesAtom = withImmer(
     themes: [],
     mode: "light",
     currentThemeId: "default",
+    showKeyboardHint: true,
   })
 );
 
@@ -182,6 +184,13 @@ export const useThemes = () => {
     });
   };
 
+  const showKeyboardHint = state.showKeyboardHint;
+  const setShowKeyboardHint = (value: boolean) => {
+    setState((draft) => {
+      draft.showKeyboardHint = value;
+    });
+  };
+
   return {
     isLoading: !mounted,
     themes: state.themes,
@@ -201,5 +210,7 @@ export const useThemes = () => {
     radius: currentTheme.radius,
     handleRadiusChange,
     deleteTheme,
+    showKeyboardHint,
+    setShowKeyboardHint,
   };
 };

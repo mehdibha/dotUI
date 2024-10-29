@@ -32,6 +32,7 @@ import { Dialog, DialogRoot } from "@/registry/ui/default/core/dialog";
 import { Label } from "@/registry/ui/default/core/field";
 import { Form } from "@/registry/ui/default/core/form";
 import { InputProps } from "@/registry/ui/default/core/input";
+import { Kbd } from "@/registry/ui/default/core/kbd";
 import { Item } from "@/registry/ui/default/core/list-box";
 import { Menu, MenuItem, MenuRoot } from "@/registry/ui/default/core/menu";
 import { Select } from "@/registry/ui/default/core/select";
@@ -71,6 +72,8 @@ export const ThemeCustomizer = (
     handleBaseColorChange,
     handleColorConfigChange,
     handleRadiusChange,
+    showKeyboardHint,
+    setShowKeyboardHint,
   } = useThemes();
   const { setPreview } = usePreview();
   const [isCloneDialogOpen, setIsCloneDialogOpen] = React.useState(false);
@@ -162,6 +165,25 @@ export const ThemeCustomizer = (
           />
         </div>
       </div>
+      {!isLoading && showKeyboardHint && (
+        <Alert
+          fill
+          action={
+            <Button
+              variant="quiet"
+              size="sm"
+              shape="square"
+              onPress={() => setShowKeyboardHint(false)}
+            >
+              <XIcon />
+            </Button>
+          }
+          className="[&_kbd]:text-xs"
+        >
+          Use <Kbd>Ctrl</Kbd> + <Kbd>→</Kbd> or <Kbd>←</Kbd> to navigate between
+          themes
+        </Alert>
+      )}
       {!isLoading && !isCurrentThemeEditable && (
         <Alert
           action={
@@ -523,6 +545,7 @@ const Section = ({
 const ColorScale = ({ label, value }: { label: string; value: BaseColor }) => {
   const { currentTheme, mode, isLoading } = useThemes();
   const shades = currentTheme.colors[mode][value].shades;
+
   return (
     <div className="flex flex-row gap-2 xl:flex-row xl:items-center">
       <div className="w-[60px]">
@@ -530,8 +553,8 @@ const ColorScale = ({ label, value }: { label: string; value: BaseColor }) => {
       </div>
       <ul className="grid w-full grid-cols-10 gap-2">
         {shades.map((color, index) => (
-          <li key={index} className="col-span-1 h-10">
-            <Tooltip content={`${value}-${(index + 1) * 100}`}>
+          <li key={index} className="relative col-span-1 h-10 overflow-hidden">
+            <Tooltip content={`${value}-${(index + 1) * 100}: ${color}`}>
               <Skeleton show={isLoading} className="h-full w-full">
                 <ColorPickerRoot value={color}>
                   <DialogRoot>
