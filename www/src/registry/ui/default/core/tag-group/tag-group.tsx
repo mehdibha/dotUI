@@ -29,6 +29,8 @@ const tagStyles = tv({
   base: "ring-offset-background disabled:bg-bg-disabled disabled:text-fg-disabled inline-flex cursor-pointer items-center justify-center gap-2 rounded-md text-sm font-medium leading-normal transition-colors disabled:cursor-default",
   variants: {
     variant: {
+      default:
+        "bg-bg-neutral hover:bg-bg-neutral-hover pressed:bg-bg-neutral-active text-fg-onNeutral selected:bg-bg-primary selected:text-fg-onPrimary",
       quiet:
         "hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 text-fg selected:bg-bg-primary selected:text-fg-onPrimary bg-transparent",
       outline:
@@ -65,14 +67,14 @@ const tagStyles = tv({
     },
   ],
   defaultVariants: {
-    variant: "outline",
+    variant: "default",
     size: "md",
     shape: "rectangle",
   },
 });
 
 interface TagGroupProps<T>
-  extends Omit<AriaTagGroupProps, "children">,
+  extends Omit<TagGroupRootProps, "children">,
     Pick<AriaTagListProps<T>, "items" | "children" | "renderEmptyState"> {
   label?: string;
   description?: string;
@@ -139,13 +141,13 @@ interface TagProps extends AriaTagProps, VariantProps<typeof tagStyles> {}
 function Tag(localProps: TagProps) {
   const contextProps = useTagGroupContext();
   const props = { ...contextProps, ...localProps };
-  const { variant, size, shape, ...restProps } = props;
+  const { variant, size, shape, className, ...restProps } = props;
   const textValue =
     typeof props.children === "string" ? props.children : undefined;
   return (
     <AriaTag
       textValue={textValue}
-      className={composeRenderProps(props.className, (className) =>
+      className={composeRenderProps(className, (className) =>
         tagStyles({ variant, size, shape, className })
       )}
       {...restProps}

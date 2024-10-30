@@ -82,7 +82,7 @@ export const ThemeCustomizer = (
   // Themes keyboard navigation
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (!e.ctrlKey) return;
+      if (!e.ctrlKey && !e.metaKey) return;
 
       const themes = [...dotUIThemes, ...userThemes];
       const themesCount = themes.length;
@@ -91,27 +91,26 @@ export const ThemeCustomizer = (
       );
 
       if (e.key === "ArrowRight") {
-        console.log("ArrowRight");
-        // Move to next theme, loop to start if at end
         const nextIndex = (currentIndex + 1) % themesCount;
         const nextTheme = themes[nextIndex];
         if (nextTheme) {
           setCurrentThemeId(nextTheme.id);
+          setShowKeyboardHint(false);
         }
       } else if (e.key === "ArrowLeft") {
-        // Move to previous theme, loop to end if at start
         const prevIndex =
           currentIndex === 0 ? themesCount - 1 : currentIndex - 1;
         const prevTheme = themes[prevIndex];
         if (prevTheme) {
           setCurrentThemeId(prevTheme.id);
+          setShowKeyboardHint(false);
         }
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [currentTheme.id, userThemes, setCurrentThemeId]);
+  }, [currentTheme.id, userThemes, setCurrentThemeId, setShowKeyboardHint]);
 
   return (
     <div {...props} className={cn("space-y-6", props.className)}>
@@ -125,12 +124,10 @@ export const ThemeCustomizer = (
         </Skeleton>
         <div className="flex items-center gap-2">
           <CopyThemeDialog>
-            <Button variant="outline" prefix={<CopyIcon />}>
-              Copy code
-            </Button>
+            <Button prefix={<CopyIcon />}>Copy code</Button>
           </CopyThemeDialog>
           <MenuRoot>
-            <Button shape="square" variant="outline">
+            <Button shape="square">
               <MoreHorizontalIcon />
             </Button>
             <Menu placement="bottom end">
@@ -188,9 +185,7 @@ export const ThemeCustomizer = (
         <Alert
           action={
             <CloneThemeDialog>
-              <Button variant="outline" prefix={<GitBranchIcon />}>
-                Clone theme
-              </Button>
+              <Button prefix={<GitBranchIcon />}>Clone theme</Button>
             </CloneThemeDialog>
           }
         >
@@ -209,9 +204,14 @@ export const ThemeCustomizer = (
             selectionMode="single"
             disallowEmptySelection
             className="mt-2"
+            size="sm"
           >
-            <Tag id="light">Light</Tag>
-            <Tag id="dark">Dark</Tag>
+            <Tag id="light" className="px-4">
+              Light
+            </Tag>
+            <Tag id="dark" className="px-4">
+              Dark
+            </Tag>
           </TagGroup>
         </Skeleton>
         <div>
@@ -248,7 +248,6 @@ export const ThemeCustomizer = (
             ).map((colorBase) => (
               <Skeleton key={colorBase.value} show={isLoading}>
                 <ColorPicker
-                  variant="outline"
                   size="sm"
                   shape="rectangle"
                   value={colorBase.color}

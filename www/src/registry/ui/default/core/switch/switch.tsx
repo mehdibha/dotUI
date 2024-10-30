@@ -50,21 +50,26 @@ interface SwitchProps
     VariantProps<typeof switchStyles> {
   className?: string;
 }
-const Switch = ({ className, size, ...props }: SwitchProps) => {
-  const { root, wrapper, indicator, label } = switchStyles({ size });
 
-  return (
-    <AriaSwitch className={root({ className })} {...props}>
-      {composeRenderProps(props.children, (children) => (
-        <>
-          <span className={wrapper({})}>
-            <span className={indicator({})} style={{ contain: "layout" }} />
-          </span>
-          {children && <span className={label({})}>{children}</span>}
-        </>
-      ))}
-    </AriaSwitch>
-  );
-};
+const Switch = React.forwardRef<HTMLLabelElement, SwitchProps>(
+  ({ className, size, ...props }, ref) => {
+    const { root, wrapper, indicator, label } = switchStyles({ size });
+
+    return (
+      <AriaSwitch className={root({ className })} {...props} ref={ref}>
+        {composeRenderProps(props.children, (children) => (
+          <>
+            <span className={wrapper({})}>
+              <span className={indicator({})} style={{ contain: "layout" }} />
+            </span>
+            {children && <span className={label({})}>{children}</span>}
+          </>
+        ))}
+      </AriaSwitch>
+    );
+  }
+);
+
+Switch.displayName = "Switch";
 
 export { Switch };

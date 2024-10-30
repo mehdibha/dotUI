@@ -63,7 +63,7 @@ const ColorPickerRoot = (props: ColorPickerRootProps) => {
 
 type ColorEditorProps = React.HTMLAttributes<HTMLDivElement>;
 const ColorEditor = ({ className, ...props }: ColorEditorProps) => {
-  const [space, setSpace] = React.useState<ColorSpace | "hex">("hex");
+  const [space, setSpace] = React.useState<ColorSpace | "hex">("hsl");
   return (
     <div className={cn("mx-auto flex flex-col gap-2", className)} {...props}>
       <div className="flex gap-2">

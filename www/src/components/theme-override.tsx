@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { ReactNode } from "react";
 import { googleFonts } from "@/lib/fonts";
 import { useThemes } from "@/hooks/use-themes";
 import { useMounted } from "@/registry/hooks/use-mounted";
@@ -9,13 +9,13 @@ import { cn } from "@/registry/ui/default/lib/cn";
 
 interface ThemeOverrideProps extends React.ComponentProps<"div"> {
   children: React.ReactNode;
-  disabled?: boolean;
+  fallback?: ReactNode;
 }
 
 export const ThemeOverride = React.forwardRef<
   HTMLDivElement,
   ThemeOverrideProps
->(({ children, ...props }, ref) => {
+>(({ children, fallback, ...props }, ref) => {
   const { currentTheme, mode, fonts } = useThemes();
   const headingFont = googleFonts.find((f) => f.id === fonts.heading);
   const bodyFont = googleFonts.find((f) => f.id === fonts.body);
@@ -51,6 +51,10 @@ export const ThemeOverride = React.forwardRef<
       }
     )
   );
+
+  if (fallback && !mounted) {
+    return fallback;
+  }
 
   return (
     <div

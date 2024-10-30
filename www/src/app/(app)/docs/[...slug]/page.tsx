@@ -6,6 +6,7 @@ import { ExternalLinkIcon } from "lucide-react";
 import { truncateOnWord } from "@/lib/string";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { DocsPager } from "@/components/docs-pager";
+import { GitHubIcon } from "@/components/icons";
 import { AdobeIcon } from "@/components/icons/adobe-icon";
 import { PageLastUpdate } from "@/components/last-update";
 import { mdxComponents } from "@/components/mdx/mdx-components";
@@ -77,6 +78,7 @@ export default async function Page({ params }: PageProps) {
 
 const getIcon = (url: string) => {
   if (url.includes("adobe")) return <AdobeIcon />;
+  if (url.includes("github")) return <GitHubIcon />;
   return null;
 };
 

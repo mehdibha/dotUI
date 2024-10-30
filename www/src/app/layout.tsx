@@ -1,17 +1,12 @@
 import React from "react";
 import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/react";
-import { GeistSans } from "geist/font/sans";
 import { truncateOnWord } from "@/lib/string";
-import { MobileNav } from "@/components/mobile-nav";
-import { Sidebar } from "@/components/sidebar";
-import { Badge } from "@/registry/ui/default/core/badge";
 import { cn } from "@/registry/ui/default/lib/cn";
 import { fontMono, fontSans, josefinSans } from "@/styles/fonts";
 import "@/styles/globals.css";
 import { siteConfig } from "@/config";
 import { Providers } from "./providers";
-import { source } from "./source";
 
 const config = siteConfig.global;
 
@@ -64,37 +59,7 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <Analytics />
-        <Providers>
-          {/* TODO: patch min-h-screen */}
-          <div className="relative w-full sm:flex sm:flex-row">
-            <MobileNav items={source.pageTree.children} />
-            <Sidebar items={source.pageTree.children} />
-            <main className="relative flex-1">
-              <Badge
-                size="md"
-                variant="neutral"
-                className="absolute right-3 top-3 border text-[#e9e5e5]"
-              >
-                v0.1.0 beta
-              </Badge>
-              {children}
-            </main>
-          </div>
-          {/* <div className="flex min-h-screen flex-col sm:flex-row">
-            <MobileNav items={source.pageTree.children} />
-            <Sidebar items={source.pageTree.children} />
-            <main className="relative flex-1 overflow-hidden xl:overflow-visible">
-              <Badge
-                size="md"
-                variant="neutral"
-                className="absolute right-3 top-3 border text-[#e9e5e5]"
-              >
-                v0.1.0 beta
-              </Badge>
-              {children}
-            </main>
-          </div> */}
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
