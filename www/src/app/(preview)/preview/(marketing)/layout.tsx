@@ -53,4 +53,4 @@ const Footer = () => {
       </div>
     </div>
   );
-}
+};

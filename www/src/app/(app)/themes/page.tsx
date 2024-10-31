@@ -39,7 +39,7 @@ export default function Page() {
             <Foundations className="mt-16" />
           </div>
           <div className="sticky top-10 hidden h-[calc(100svh-theme(spacing.20))] justify-center lg:col-span-7 lg:flex">
-              <Preview />
+            <Preview />
           </div>
         </div>
       </div>

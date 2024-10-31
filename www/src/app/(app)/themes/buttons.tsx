@@ -1,4 +1,5 @@
-"use client"
+"use client";
+
 import { ColorPicker } from "@/registry/ui/default/core/color-picker";
 import { Label } from "@/registry/ui/default/core/field";
 

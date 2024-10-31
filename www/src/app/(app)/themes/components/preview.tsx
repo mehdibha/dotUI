@@ -1,11 +1,7 @@
 "use client";
 
 import React from "react";
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  RotateCwIcon,
-} from "lucide-react";
+import { ChevronLeftIcon, ChevronRightIcon, RotateCwIcon } from "lucide-react";
 import { Button } from "@/registry/ui/default/core/button";
 import { cn } from "@/registry/ui/default/lib/cn";
 
