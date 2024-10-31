@@ -11,7 +11,7 @@ import {
 import { tv, type VariantProps } from "tailwind-variants";
 
 const tooltipVariants = tv({
-  base: "group/tooltip bg-bg-tooltip text-fg entering:animate-in entering:fade-in entering:ease-out entering:placement-bottom:slide-in-from-top-0.5 entering:placement-top:slide-in-from-bottom-0.5 entering:placement-left:slide-in-from-right-0.5 entering:placement-right:slide-in-from-left-0.5 exiting:animate-out exiting:fade-out exiting:ease-in exiting:placement-bottom:slide-out-to-top-0.5 exiting:placement-top:slide-out-to-bottom-0.5 exiting:placement-left:slide-out-to-right-0.5 exiting:placement-right:slide-out-to-left-0.5 z-50 overflow-hidden rounded-md px-3 py-1.5 text-sm shadow-md will-change-transform",
+  base: "group/tooltip bg-bg-muted text-fg entering:animate-in entering:fade-in entering:ease-out entering:placement-bottom:slide-in-from-top-0.5 entering:placement-top:slide-in-from-bottom-0.5 entering:placement-left:slide-in-from-right-0.5 entering:placement-right:slide-in-from-left-0.5 exiting:animate-out exiting:fade-out exiting:ease-in exiting:placement-bottom:slide-out-to-top-0.5 exiting:placement-top:slide-out-to-bottom-0.5 exiting:placement-left:slide-out-to-right-0.5 exiting:placement-right:slide-out-to-left-0.5 z-50 overflow-hidden rounded-md px-3 py-1.5 text-sm shadow-md will-change-transform",
 });
 
 interface TooltipProps

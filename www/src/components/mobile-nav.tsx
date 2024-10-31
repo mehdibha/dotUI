@@ -10,7 +10,7 @@ import { Dialog, DialogRoot } from "@/registry/ui/default/core/dialog";
 import { ScrollArea } from "@/registry/ui/default/core/scroll-area";
 import { siteConfig } from "@/config";
 import { NodeList } from "./sidebar";
-import { ThemeToggle } from "./theme-toggle";
+import { ThemeSwitcher } from "./theme-switcher";
 
 export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
   return (
@@ -20,7 +20,12 @@ export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
           <Button variant="quiet" size="sm" shape="square">
             <AlignLeftIcon />
           </Button>
-          <Dialog type="drawer" placement="left" className="w-60 !p-0">
+          <Dialog
+            type="drawer"
+            placement="left"
+            swipeIndicator={false}
+            className="w-60 !p-0"
+          >
             {({ close }) => (
               <div className="flex h-screen flex-col">
                 <div className="flex items-center justify-between p-2">
@@ -79,7 +84,7 @@ export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
                       <TwitterIcon />
                     </Button>
                   </div>
-                  <ThemeToggle />
+                  <ThemeSwitcher />
                 </div>
               </div>
             )}

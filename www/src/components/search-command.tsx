@@ -40,7 +40,7 @@ export const SearchCommand = ({
   context?: boolean;
   onRunCommand?: () => void;
 }) => {
-  const { search, setSearch, query } = useDocsSearch();
+  const { search, setSearch, query } = useDocsSearch({ type: "fetch" });
   const router = useRouter();
 
   const results =
@@ -77,6 +77,7 @@ export const SearchCommand = ({
   return (
     <CommandRoot
       shouldFilter={false}
+      loop
       className={cn(
         animated && [
           "relative overflow-visible rounded-lg shadow-md",
@@ -95,7 +96,7 @@ export const SearchCommand = ({
         autoFocus
         placeholder="Search a component, a block, a hook..."
         icon={
-          query.isLoading && search !== "" ? (
+          query.isLoading ? (
             <Loader2Icon className="animate-spin" />
           ) : (
             <SearchIcon />
@@ -110,7 +111,9 @@ export const SearchCommand = ({
         <CommandSeparator className="before:opacity-1 before:animate-loading before:delay-900 relative h-[2px] overflow-hidden before:absolute before:left-0 before:top-0 before:h-full before:w-1/2 before:bg-[linear-gradient(90deg,rgba(0,0,0,0)_0,#707070_50%,rgba(0,0,0,0)_100%)] before:opacity-0 before:content-['']" />
       )}
       <CommandList>
-        <CommandEmpty>No results found</CommandEmpty>
+        {query.data !== "empty" && (
+          <CommandEmpty>No results found</CommandEmpty>
+        )}
         {results.map((group) => (
           <CommandGroup key={group.id} heading={group.name}>
             {group.results.map((item) => (
@@ -120,6 +123,7 @@ export const SearchCommand = ({
                 onSelect={() => {
                   runCommand(() => router.push(item.url));
                 }}
+                className="text-fg"
               >
                 <div
                   className={cn(
@@ -127,7 +131,7 @@ export const SearchCommand = ({
                     item.type !== "page" && "ms-2 gap-2 border-s ps-4"
                   )}
                 >
-                  <div className="text-fd-muted-foreground [&_svg]:size-4">
+                  <div className="text-fg-muted [&_svg]:size-4">
                     {icons[item.type as keyof typeof icons]}
                   </div>
                   <p className="w-0 flex-1 truncate">{item.content}</p>

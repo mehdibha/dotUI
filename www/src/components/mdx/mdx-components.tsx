@@ -166,7 +166,6 @@ function createHeading(level: number, className?: string) {
 function Link({
   className,
   href,
-  ref: _,
   children,
   ...props
 }: React.ComponentProps<"a">) {

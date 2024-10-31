@@ -25,7 +25,7 @@ const buttonStyles = tv(
         quiet:
           "hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 text-fg bg-transparent",
         outline:
-          "border-border-field bg-bg-inverse/5 hover:bg-bg-inverse/10 pressed:bg-bg-inverse/15 text-fg disabled:border-border-disabled border disabled:bg-transparent",
+          "border-border-field hover:bg-bg-inverse/10 pressed:bg-bg-inverse/15 text-fg disabled:border-border-disabled border disabled:bg-transparent",
         accent:
           "bg-bg-accent hover:bg-bg-accent-hover pressed:bg-bg-accent-active text-fg-onAccent",
         success:
@@ -36,9 +36,9 @@ const buttonStyles = tv(
           "bg-bg-danger hover:bg-bg-danger-hover pressed:bg-bg-danger-active text-fg-onDanger",
       },
       size: {
-        sm: "h-8 px-3 [&_svg]:size-4",
-        md: "h-9 px-4 [&_svg]:size-4",
-        lg: "h-10 px-5 [&_svg]:size-5",
+        sm: "size-8 [&_svg]:size-4",
+        md: "size-9 [&_svg]:size-4",
+        lg: "size-10 [&_svg]:size-5",
       },
       shape: {
         rectangle: "",
@@ -49,18 +49,18 @@ const buttonStyles = tv(
     compoundVariants: [
       {
         size: "sm",
-        shape: ["square", "circle"],
-        className: "w-8 px-0",
+        shape: "rectangle",
+        className: "w-auto px-3",
       },
       {
         size: "md",
-        shape: ["square", "circle"],
-        className: "w-9 px-0",
+        shape: "rectangle",
+        className: "w-auto px-4",
       },
       {
         size: "lg",
-        shape: ["square", "circle"],
-        className: "w-10 px-0",
+        shape: "rectangle",
+        className: "w-auto px-5",
       },
     ],
     defaultVariants: {

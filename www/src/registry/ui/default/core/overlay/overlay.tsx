@@ -24,6 +24,7 @@ type OverlayProps = {
   type?: OverlayType;
   mobileType?: OverlayProps["type"];
   showDismissButton?: boolean;
+  swipeIndicator?: boolean;
   mediaQuery?: string;
   children: React.ReactNode;
   classNames?: ModalOverlayClassNames &
@@ -39,6 +40,7 @@ const Overlay = React.forwardRef<HTMLElement | HTMLDivElement, OverlayProps>(
       mobileType,
       mediaQuery = "(max-width: 640px)",
       isDismissable = true,
+      swipeIndicator,
       ...props
     },
     ref
@@ -59,6 +61,7 @@ const Overlay = React.forwardRef<HTMLElement | HTMLDivElement, OverlayProps>(
           // @ts-expect-error TODO FIX THIS SAME ORIENTATION PROP AS POPOVER :'(
           <DrawerOverlay
             ref={ref as React.ForwardedRef<HTMLDivElement>}
+            swipeIndicator={swipeIndicator}
             isDismissable={isDismissable}
             {...props}
           />
@@ -78,7 +81,7 @@ Overlay.displayName = "Overlay";
 const modalVariants = tv({
   slots: {
     backdrop: [
-      "fixed inset-0 z-50 bg-black/80",
+      "fixed inset-0 z-50 bg-black/40 backdrop-blur-sm",
       "data-[entering]:animate-in data-[exiting]:animate-out data-[entering]:fade-in-0 data-[exiting]:fade-out-0 data-[exiting]:duration-300",
     ],
     overlay: [
@@ -197,7 +200,7 @@ PopoverOverlay.displayName = "PopoverOverlay";
 
 const drawerVariants = tv({
   slots: {
-    backdrop: ["fixed inset-0 z-50 bg-black/60", "opacity-0"],
+    backdrop: ["fixed inset-0 z-50 bg-black/60 backdrop-blur-sm", "opacity-0"],
     overlay: [
       "group/overlay bg-bg fixed z-50 flex flex-col outline-none",
       "inset-0",
@@ -221,6 +224,7 @@ type DrawerOverlayClassNames = {
 interface DrawerOverlayProps extends Omit<AriaModalOverlayProps, "children"> {
   placement?: "top" | "bottom" | "left" | "right";
   showDismissButton?: boolean;
+  swipeIndicator?: boolean;
   children?: React.ReactNode;
   classNames?: DrawerOverlayClassNames;
 }
@@ -236,6 +240,7 @@ const DrawerOverlay = React.forwardRef<
       className,
       isDismissable,
       showDismissButton = false,
+      swipeIndicator = true,
       placement = "bottom",
       ...props
     },
@@ -270,7 +275,9 @@ const DrawerOverlay = React.forwardRef<
               {showDismissButton && (
                 <DismissButton shape="rectangle">Done</DismissButton>
               )}
-              {/* <div className="bg-bg-muted mx-auto my-4 h-2 w-[100px] rounded-full" /> */}
+              {swipeIndicator && (
+                <div className="bg-bg-muted mx-auto my-4 h-2 w-[100px] rounded-full" />
+              )}
               {children}
             </div>
           </AriaModal>

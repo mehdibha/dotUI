@@ -36,7 +36,7 @@ interface SelectProps<T extends object>
   size?: ButtonProps["size"];
 }
 const Select = <T extends object>({
-  variant = "outline",
+  variant,
   size,
   label,
   description,

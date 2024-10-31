@@ -149,10 +149,11 @@ const config = {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        sans: ["var(--font-geist-sans)", ...fontFamily.sans],
+        josephin: ["var(--font-josefin)", ...fontFamily.sans],
+        sans: ["var(--font-geist-sans)", ...fontFamily.mono],
         mono: ["var(--font-geist-mono)", ...fontFamily.mono],
-        display: ["var(--font-display)", ...fontFamily.sans],
-        josephin: ["var(--font-josephin)", ...fontFamily.sans],
+        heading: ["var(--font-heading)", ...fontFamily.sans],
+        body: ["var(--font-body)", ...fontFamily.sans],
       },
       transitionDelay: {
         "400": "400ms",

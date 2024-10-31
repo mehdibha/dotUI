@@ -6,7 +6,8 @@ import { ExternalLinkIcon } from "lucide-react";
 import { truncateOnWord } from "@/lib/string";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { DocsPager } from "@/components/docs-pager";
-import { AdobeIcon } from "@/components/icons/adobe";
+import { GitHubIcon } from "@/components/icons";
+import { AdobeIcon } from "@/components/icons/adobe-icon";
 import { PageLastUpdate } from "@/components/last-update";
 import { mdxComponents } from "@/components/mdx/mdx-components";
 import { TableOfContents } from "@/components/toc";
@@ -66,7 +67,7 @@ export default async function Page({ params }: PageProps) {
       </div>
       {page.data.toc && page.data.toc.length > 0 && (
         <div className="hidden text-sm xl:block">
-          <div className="sticky top-8">
+          <div className="sticky top-8 h-[calc(100svh-theme(spacing.8))]">
             <TableOfContents toc={page.data.toc as TocType} />
           </div>
         </div>
@@ -77,6 +78,7 @@ export default async function Page({ params }: PageProps) {
 
 const getIcon = (url: string) => {
   if (url.includes("adobe")) return <AdobeIcon />;
+  if (url.includes("github")) return <GitHubIcon />;
   return null;
 };
 

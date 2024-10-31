@@ -1,5 +1,5 @@
 {
   "title": "Getting started",
   "icon": "Book",
-  "pages": ["installation", "cli"]
+  "pages": ["installation", "..."]
 }
