@@ -4,21 +4,21 @@ import { Button } from "@/registry/ui/default/core/button";
 import { Link } from "@/registry/ui/default/core/link";
 import { TextField } from "@/registry/ui/default/core/text-field";
 
-export default function LoginPage() {
+export default function RegisterPage() {
   return (
     <div className="bg-bg-muted w-full max-w-sm rounded-lg border p-8">
       <h1 className="text-2xl font-semibold leading-none tracking-tight">
-        Login
+        Create an account
       </h1>
       <p className="text-fg-muted mt-2 text-sm">
-        Enter your email below to login to your account
+        Enter your email below to create your account
       </p>
       <div className="mt-4 flex items-center gap-2">
         <Button
           href="/preview/overview"
           variant="outline"
           className="flex-1"
-          aria-label="Sign in with google"
+          aria-label="Sign up with google"
         >
           <GoogleIcon />
         </Button>
@@ -26,7 +26,7 @@ export default function LoginPage() {
           href="/preview/overview"
           variant="outline"
           className="flex-1"
-          aria-label="Sign in with X"
+          aria-label="Sign up with X"
         >
           <TwitterIcon />
         </Button>
@@ -34,7 +34,7 @@ export default function LoginPage() {
           href="/preview/overview"
           variant="outline"
           className="flex-1"
-          aria-label="Sign in with github"
+          aria-label="Sign up with github"
         >
           <GitHubIcon />
         </Button>
@@ -53,12 +53,12 @@ export default function LoginPage() {
         variant="primary"
         className="mt-4 w-full"
       >
-        Continue with email
+        Sign up with email
       </Button>
       <p className="text-fg-muted mt-4 text-sm">
-        Don&apos;t have an account?{" "}
-        <Link variant="quiet" href="/preview/register">
-          Register
+        Already have an account?{" "}
+        <Link variant="quiet" href="/preview/login">
+          Login
         </Link>
       </p>
     </div>

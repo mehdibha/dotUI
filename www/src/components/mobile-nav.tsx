@@ -20,7 +20,7 @@ export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
           <Button variant="quiet" size="sm" shape="square">
             <AlignLeftIcon />
           </Button>
-          <Dialog type="drawer" placement="left" className="w-60 !p-0">
+          <Dialog type="drawer" placement="left" swipeIndicator={false} className="w-60 !p-0">
             {({ close }) => (
               <div className="flex h-screen flex-col">
                 <div className="flex items-center justify-between p-2">

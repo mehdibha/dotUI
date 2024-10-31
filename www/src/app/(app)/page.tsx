@@ -7,6 +7,9 @@ import { cn } from "@/registry/ui/default/lib/cn";
 import { siteConfig } from "@/config";
 
 export default function HomePage() {
+  // return null
+  // return <div className="absolute inset-0 h-full bg-red-500"> </div>;
+  // return <div className="absolute inset-0 h-full bg-red-500"> </div>;
   return (
     <div className="absolute inset-0 h-full overflow-hidden">
       <div className="relative size-full">

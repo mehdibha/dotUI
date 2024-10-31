@@ -55,7 +55,7 @@ import { usePreview } from "./context";
 import { CopyThemeDialog } from "./copy-theme";
 import { DeleteThemeDialog } from "./delete-theme";
 
-export const ThemeCustomizer = (
+export const Foundations = (
   props: React.HTMLAttributes<HTMLDivElement>
 ) => {
   const {

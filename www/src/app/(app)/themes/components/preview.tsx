@@ -2,8 +2,6 @@
 
 import React from "react";
 import {
-  ArrowLeftIcon,
-  ArrowRightIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   RotateCwIcon,
