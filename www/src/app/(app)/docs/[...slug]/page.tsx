@@ -112,6 +112,6 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
   };
 }
 
-export function generateStaticParams(): PageProps["params"][] {
+export function generateStaticParams(): { slug: string[] }[] {
   return source.generateParams();
 }

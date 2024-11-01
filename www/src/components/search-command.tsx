@@ -12,7 +12,6 @@ import {
   Loader2Icon,
   SearchIcon,
   TextIcon,
-  Undo2Icon,
 } from "lucide-react";
 import { kekabCaseToTitle } from "@/lib/string";
 import { useCommandMenuInputRef } from "@/hooks/use-focus-command-menu";
