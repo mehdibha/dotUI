@@ -186,11 +186,11 @@ export const Index: Record<string, any> = {
           () => import("@/registry/ui/default/core/button/demos/link-button")
         ),
       },
-      "button-loading": {
-        name: "button-loading",
-        files: ["registry/ui/default/core/button/demos/loading.tsx"],
+      "button-pending": {
+        name: "button-pending",
+        files: ["registry/ui/default/core/button/demos/pending.tsx"],
         component: React.lazy(
-          () => import("@/registry/ui/default/core/button/demos/loading")
+          () => import("@/registry/ui/default/core/button/demos/pending")
         ),
       },
       "button-prefix-and-suffix": {

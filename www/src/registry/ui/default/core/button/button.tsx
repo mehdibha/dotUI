@@ -8,6 +8,8 @@ import {
   type ButtonProps as AriaButtonProps,
   type LinkProps as AriaLinkProps,
 } from "react-aria-components";
+import { ProgressBar } from "react-aria-components";
+import type { ProgressBarProps } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
 import { focusRing } from "@/registry/ui/default/lib/focus-styles";
 import { LoaderIcon } from "@/__icons__";
@@ -15,7 +17,7 @@ import { LoaderIcon } from "@/__icons__";
 const buttonStyles = tv(
   {
     extend: focusRing,
-    base: "ring-offset-background disabled:bg-bg-disabled disabled:text-fg-disabled inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium leading-normal transition-colors disabled:cursor-default",
+    base: "disabled:bg-bg-disabled disabled:text-fg-disabled pending:cursor-default pending:bg-bg-disabled pending:text-fg-disabled inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium leading-normal transition-colors disabled:cursor-default",
     variants: {
       variant: {
         default:
@@ -75,60 +77,46 @@ const buttonStyles = tv(
 );
 
 interface ButtonProps
-  extends Omit<AriaButtonProps, "className">,
+  extends Omit<React.ComponentProps<typeof AriaButton>, "className">,
     Omit<AriaLinkProps, "className" | "children" | "style">,
     VariantProps<typeof buttonStyles> {
   className?: string;
-  isLoading?: boolean;
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
 }
 
-const Button = React.forwardRef(
-  (localProps: ButtonProps, ref: React.ForwardedRef<HTMLButtonElement>) => {
-    const contextProps = useButtonContext();
-    const props = { ...contextProps, ...localProps };
+const Button = (localProps: ButtonProps) => {
+  const contextProps = useButtonContext();
+  const props = { ...contextProps, ...localProps };
 
-    const {
-      className,
-      variant,
-      size,
-      shape,
-      isDisabled,
-      isLoading,
-      prefix,
-      suffix,
-      ...restProps
-    } = props;
+  const { className, variant, size, shape, prefix, suffix, ...restProps } =
+    props;
 
-    const Element: React.ElementType = props.href ? AriaLink : AriaButton;
+  const Element: React.ElementType = props.href ? AriaLink : AriaButton;
 
-    return (
-      <Element
-        ref={ref}
-        {...restProps}
-        isDisabled={isDisabled || isLoading}
-        className={buttonStyles({ variant, size, shape, className })}
-      >
-        {composeRenderProps(props.children, (children) => (
-          <>
-            {isLoading ? (
-              <LoaderIcon aria-label="loading" className="animate-spin" />
-            ) : (
-              prefix
-            )}
-            {typeof children === "string" ? (
-              <span className="truncate">{children}</span>
-            ) : (
-              children
-            )}
-            {suffix}
-          </>
-        ))}
-      </Element>
-    );
-  }
-);
+  return (
+    <Element
+      className={buttonStyles({ variant, size, shape, className })}
+      {...restProps}
+    >
+      {composeRenderProps(props.children, (children, { isPending }) => (
+        <>
+          {isPending ? (
+            <MyProgressCircle aria-label="pending" />
+          ) : (
+            prefix
+          )}
+          {typeof children === "string" ? (
+            <span className="truncate">{children}</span>
+          ) : (
+            children
+          )}
+          {suffix}
+        </>
+      ))}
+    </Element>
+  );
+};
 Button.displayName = "Button";
 
 type ButtonContextValue = VariantProps<typeof buttonStyles>;
@@ -139,3 +127,34 @@ const useButtonContext = () => {
 
 export type { ButtonProps };
 export { Button, buttonStyles, ButtonContext };
+
+function MyProgressCircle(props: ProgressBarProps) {
+  return (
+    <ProgressBar {...props}>
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        style={{ display: "block" }}
+      >
+        <path
+          fill="currentColor"
+          d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z"
+          opacity=".25"
+        />
+        <path
+          fill="currentColor"
+          d="M10.14,1.16a11,11,0,0,0-9,8.92A1.59,1.59,0,0,0,2.46,12,1.52,1.52,0,0,0,4.11,10.7a8,8,0,0,1,6.66-6.61A1.42,1.42,0,0,0,12,2.69h0A1.57,1.57,0,0,0,10.14,1.16Z"
+        >
+          <animateTransform
+            attributeName="transform"
+            type="rotate"
+            dur="0.75s"
+            values="0 12 12;360 12 12"
+            repeatCount="indefinite"
+          />
+        </path>
+      </svg>
+    </ProgressBar>
+  );
+}

@@ -9,7 +9,6 @@ const buildDemos = (component: string, demos: string[]): RegistryDemos => {
   return demos.map((demo) => {
     return {
       name: `${component}-${demo}`,
-      type: "registry:demo",
       files: [`core/${component}/demos/${demo}.tsx`],
     };
   });
@@ -39,7 +38,7 @@ export const demos: RegistryDemos = [
     "default",
     "disabled",
     "link-button",
-    "loading",
+    "pending",
     "prefix-and-suffix",
     "shapes",
     "sizes",
