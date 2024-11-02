@@ -4,7 +4,7 @@ import { PlusIcon } from "@/__icons__";
 
 export default function Demo() {
   return (
-    <Tooltip content="Add to library" arrow>
+    <Tooltip content="Add to library" arrow >
       <Button shape="square">
         <PlusIcon />
       </Button>
