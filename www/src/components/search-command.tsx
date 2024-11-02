@@ -12,7 +12,6 @@ import {
   Loader2Icon,
   SearchIcon,
   TextIcon,
-  Undo2Icon,
 } from "lucide-react";
 import { kekabCaseToTitle } from "@/lib/string";
 import { useCommandMenuInputRef } from "@/hooks/use-focus-command-menu";
@@ -71,7 +70,7 @@ export const SearchCommand = ({
   const { setInputRef } = useCommandMenuInputRef();
 
   React.useEffect(() => {
-    if (context) setInputRef(inputRef);
+    if (context && inputRef.current) setInputRef(inputRef);
   }, [context, setInputRef]);
 
   return (

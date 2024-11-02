@@ -2,8 +2,8 @@ import { RefObject } from "react";
 import { create } from "zustand";
 
 type FocusCommandMenuStore = {
-  inputRef: RefObject<HTMLInputElement> | null;
-  setInputRef: (ref: RefObject<HTMLInputElement>) => void;
+  inputRef: RefObject<HTMLInputElement | null> | null;
+  setInputRef: (ref: RefObject<HTMLInputElement | null>) => void;
   focusInput: () => void;
 };
 

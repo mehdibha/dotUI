@@ -16,7 +16,6 @@ const config = {
       },
     ],
   },
-  transpilePackages: ["jotai-devtools"],
 };
 
 export default withMDX(config);
