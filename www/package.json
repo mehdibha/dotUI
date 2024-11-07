@@ -78,7 +78,7 @@
     "rimraf": "^6.0.1",
     "tailwindcss": "^3.4.3",
     "tailwindcss-animate": "^1.0.7",
-    "tailwindcss-react-aria-components": "^1.1.2",
+    "tailwindcss-react-aria-components": "3.0.0-nightly-dcc0752f8-241031",
     "typescript": "^5",
     "vfile": "^6.0.3"
   }
