@@ -1,7 +1,8 @@
 import React from "react";
-import NavLink from "next/link";
+import { ArrowUpRight, ArrowUpRightIcon, ExternalLinkIcon } from "lucide-react";
 import { MDXComponents } from "mdx/types";
 import { Alert, AlertProps } from "@/registry/ui/default/core/alert";
+import { LinkProps, Link as NavLink } from "@/registry/ui/default/core/link";
 import { cn } from "@/registry/ui/default/lib/cn";
 import { Pre } from "./code-block";
 import {
@@ -11,6 +12,7 @@ import {
 import { ComponentSource } from "./component-source";
 import { InstallTab, InstallTabs } from "./install-tabs";
 import { Tabs, Tab, type TabsProps } from "./tabs";
+import { Choice, Choices } from "./choices";
 
 export const mdxComponents: MDXComponents = {
   h1: createHeading(1, "font-heading mt-2 scroll-m-20 text-4xl font-bold"),
@@ -31,7 +33,7 @@ export const mdxComponents: MDXComponents = {
     6,
     "mt-8 scroll-m-20 text-base font-semibold tracking-tight"
   ),
-  a: Link,
+  a: Link as unknown as React.ComponentType<React.AnchorHTMLAttributes<HTMLAnchorElement>>,
   p: ({ className, ...props }) => (
     <p
       className={cn(
@@ -100,12 +102,12 @@ export const mdxComponents: MDXComponents = {
   ),
   // add mt-4 to all pre except when it has a parent with class install-tabs
   pre: ({ className, ...props }: React.HTMLAttributes<HTMLPreElement>) => (
-    <Pre className={cn("[&:not(:first-child)]:mt-4", className)} {...props} />
+    <Pre className={cn("[&:not(:first-child)]:mt-4 [&_code]:p-0 [&_code]:text-xs [&_code]:bg-transparent", className)} {...props} />
   ),
   code: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
     <code
       className={cn(
-        "bg-bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono text-xs",
+        "font-mono text-sm bg-bg-muted rounded-md p-1",
         className
       )}
       {...props}
@@ -116,6 +118,10 @@ export const mdxComponents: MDXComponents = {
   Tab,
   Tabs: (props: TabsProps) => (
     <Tabs {...props} className={cn("mt-4", props.className)} />
+  ),
+  Choice,
+  Choices: (props: TabsProps) => (
+    <Choices {...props} className={cn("mt-4", props.className)} />
   ),
   InstallTab,
   InstallTabs,
@@ -163,31 +169,21 @@ function createHeading(level: number, className?: string) {
   return Component;
 }
 
-function Link({
-  className,
-  href,
-  children,
-  ...props
-}: React.ComponentProps<"a">) {
-  const classes = cn("font-medium underline underline-offset-4", className);
-
-  if (!!href?.startsWith("/")) {
-    return (
-      <NavLink {...props} href={href} className={classes}>
-        {children}
-      </NavLink>
-    );
-  }
-
+function Link(
+  props: Omit<LinkProps, "children"> & { children: React.ReactNode }
+) {
   return (
-    <a
-      rel="noopener noreferrer"
-      target="_blank"
+    <NavLink
+      target={props.href?.startsWith("/") ? "_self" : "_blank"}
       {...props}
-      href={href}
-      className={classes}
+      className="inline"
     >
-      {children}
-    </a>
+      {props.children}
+      {!props.href?.startsWith("/") && (
+        <span className="inline-flex">
+          <ArrowUpRightIcon className="size-4" />
+        </span>
+      )}
+    </NavLink>
   );
 }

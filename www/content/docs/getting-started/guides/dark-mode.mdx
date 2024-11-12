@@ -1,0 +1,302 @@
+---
+title: Dark mode
+---
+
+import { ViteIcon, NextJsIcon, RemixIcon } from "@/components/icons";
+
+<Choices
+  items={[
+    {
+      value: "nextjs",
+      title: "Next.js", 
+      icon: <NextJsIcon />,
+      description: "Server-side rendered React framework",
+    },
+    {
+      value: "vite",
+      title: "Vite",
+      icon: <ViteIcon />,
+      description: "Fast modern build tool for web development",
+    },
+    {
+      value: "remix",
+      title: "Remix",
+      icon: <RemixIcon />,
+      description: "Full stack web framework focused on simplicity",
+    },
+  ]}
+>
+
+<Choice id="nextjs">
+
+<Steps>
+
+<Step>Install `next-themes`</Step>
+
+```package-install
+npm install next-themes
+```
+
+<Step>Create a theme provider</Step>
+
+```tsx title="components/theme-provider.tsx"
+"use client"
+ 
+import * as React from "react"
+import { ThemeProvider as NextThemesProvider } from "next-themes"
+ 
+export function ThemeProvider({
+  children,
+  ...props
+}: React.ComponentProps<typeof NextThemesProvider>) {
+  return <NextThemesProvider {...props}>{children}</NextThemesProvider>
+}
+```
+
+<Step>Wrap your root layout with `ThemeProvider`</Step>
+
+```tsx title="app/layout.tsx"
+import { ThemeProvider } from "@/components/theme-provider"
+ 
+export default function RootLayout({ children }: RootLayoutProps) {
+  return (
+    <>
+      <html lang="en" suppressHydrationWarning>
+        <head />
+        <body>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </body>
+      </html>
+    </>
+  )
+}
+```
+
+</Steps>
+
+</Choice>
+
+<Choice id="vite">
+
+<Steps>
+
+<Step>Create a theme provider</Step>
+
+```tsx title="components/theme-provider.tsx"
+import { createContext, useContext, useEffect, useState } from "react"
+ 
+type Theme = "dark" | "light" | "system"
+ 
+type ThemeProviderProps = {
+  children: React.ReactNode
+  defaultTheme?: Theme
+  storageKey?: string
+}
+ 
+type ThemeProviderState = {
+  theme: Theme
+  setTheme: (theme: Theme) => void
+}
+ 
+const initialState: ThemeProviderState = {
+  theme: "system",
+  setTheme: () => null,
+}
+ 
+const ThemeProviderContext = createContext<ThemeProviderState>(initialState)
+ 
+export function ThemeProvider({
+  children,
+  defaultTheme = "system",
+  storageKey = "vite-ui-theme",
+  ...props
+}: ThemeProviderProps) {
+  const [theme, setTheme] = useState<Theme>(
+    () => (localStorage.getItem(storageKey) as Theme) || defaultTheme
+  )
+ 
+  useEffect(() => {
+    const root = window.document.documentElement
+ 
+    root.classList.remove("light", "dark")
+ 
+    if (theme === "system") {
+      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+        .matches
+        ? "dark"
+        : "light"
+ 
+      root.classList.add(systemTheme)
+      return
+    }
+ 
+    root.classList.add(theme)
+  }, [theme])
+ 
+  const value = {
+    theme,
+    setTheme: (theme: Theme) => {
+      localStorage.setItem(storageKey, theme)
+      setTheme(theme)
+    },
+  }
+ 
+  return (
+    <ThemeProviderContext.Provider {...props} value={value}>
+      {children}
+    </ThemeProviderContext.Provider>
+  )
+}
+ 
+export const useTheme = () => {
+  const context = useContext(ThemeProviderContext)
+ 
+  if (context === undefined)
+    throw new Error("useTheme must be used within a ThemeProvider")
+ 
+  return context
+}
+```
+
+<Step>Wrap your root layout with `ThemeProvider`</Step>
+
+```tsx title="app/layout.tsx"
+import { ThemeProvider } from "@/components/theme-provider"
+ 
+function App() {
+  return (
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      {children}
+    </ThemeProvider>
+  )
+}
+ 
+export default App
+```
+
+</Steps>
+
+</Choice>
+
+<Choice id="remix">
+
+<Steps>
+
+<Step>Install `remix-themes`</Step>
+
+```package-install
+npm install remix-themes
+```
+
+<Step>Modify your tailwind.css file</Step>
+
+Add :root[class~="dark"] to your tailwind.css file. This will allow you to use the dark class on your html element to apply dark mode styles.
+
+```css title="tailwind.css"
+.dark,
+:root[class~="dark"] {
+  /* ... */
+}
+```
+
+<Step>Create a session storage and theme session resolver</Step>
+
+```tsx title="app/sessions.server.tsx"
+import { createThemeSessionResolver } from "remix-themes"
+ 
+// You can default to 'development' if process.env.NODE_ENV is not set
+const isProduction = process.env.NODE_ENV === "production"
+ 
+const sessionStorage = createCookieSessionStorage({
+  cookie: {
+    name: "theme",
+    path: "/",
+    httpOnly: true,
+    sameSite: "lax",
+    secrets: ["s3cr3t"],
+    // Set domain and secure only if in production
+    ...(isProduction
+      ? { domain: "your-production-domain.com", secure: true }
+      : {}),
+  },
+})
+ 
+export const themeSessionResolver = createThemeSessionResolver(sessionStorage)
+```
+
+<Step>Setup remix themes</Step>
+
+Add `ThemeProvider` to your root layout.
+
+```tsx title="app/root.tsx"
+import clsx from "clsx"
+import { PreventFlashOnWrongTheme, ThemeProvider, useTheme } from "remix-themes"
+ 
+import { themeSessionResolver } from "./sessions.server"
+ 
+// Return the theme from the session storage using the loader
+export async function loader({ request }: LoaderFunctionArgs) {
+  const { getTheme } = await themeSessionResolver(request)
+  return {
+    theme: getTheme(),
+  }
+}
+// Wrap your app with ThemeProvider.
+// `specifiedTheme` is the stored theme in the session storage.
+// `themeAction` is the action name that's used to change the theme in the session storage.
+export default function AppWithProviders() {
+  const data = useLoaderData<typeof loader>()
+  return (
+    <ThemeProvider specifiedTheme={data.theme} themeAction="/action/set-theme">
+      <App />
+    </ThemeProvider>
+  )
+}
+ 
+export function App() {
+  const data = useLoaderData<typeof loader>()
+  const [theme] = useTheme()
+  return (
+    <html lang="en" className={clsx(theme)}>
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <Meta />
+        <PreventFlashOnWrongTheme ssrTheme={Boolean(data.theme)} />
+        <Links />
+      </head>
+      <body>
+        <Outlet />
+        <ScrollRestoration />
+        <Scripts />
+        <LiveReload />
+      </body>
+    </html>
+  )
+}
+```
+
+<Step>Add an action route</Step>
+
+Create a file in `/routes/action.set-theme.ts`. Ensure that you pass the filename to the ThemeProvider component. This route it's used to store the preferred theme in the session storage when the user changes it.
+
+```tsx title="app/routes/action.set-theme.ts"
+import { createThemeAction } from "remix-themes"
+
+import { themeSessionResolver } from "./sessions.server"
+
+export const action = createThemeAction(themeSessionResolver)
+```
+
+</Steps>
+
+</Choice>
+
+</Choices>

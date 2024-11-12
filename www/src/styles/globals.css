@@ -248,13 +248,13 @@
   }
 
   .step:before {
-    @apply absolute inline-flex h-9 w-9 items-center justify-center rounded-full border-4 border-bg bg-bg-muted text-center -indent-px font-mono text-base font-medium;
+    @apply absolute inline-flex size-9 items-center justify-center rounded-xl border-4 border-bg bg-bg-muted text-center -indent-px font-mono text-sm font-medium text-fg-muted;
     @apply ml-[-50px] mt-[-4px];
     content: counter(step);
   }
 
   .category {
-    position: relative;
+    @apply relative;
   }
 
   .category:before {
@@ -264,10 +264,6 @@
   .category:after {
     @apply absolute left-0 top-3 h-3 w-[1px] bg-border content-[''];
   }
-
-  .focus-ring {
-		@apply ring-team-current ring-offset-4 ring-offset-white transition duration-300 focus-within:outline-none focus-within:ring-2 focus-within:ring-team-current hover:ring-2 hover:ring-team-current focus:outline-none focus:ring-2 focus:ring-team-current disabled:ring-0 group-hover:ring-2 group-hover:ring-team-current group-focus:ring-2 group-focus:ring-team-current dark:ring-offset-gray-900;
-	}
 
   @media (max-width: 640px) {
     .container {
