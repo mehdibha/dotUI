@@ -32,7 +32,7 @@ export default async function Page({ params }: PageProps) {
   return (
     <div
       className={cn("pb-20 pt-8 sm:pt-20", {
-        "xl:grid xl:grid-cols-[1fr_230px] xl:gap-10":
+        "xl:grid xl:grid-cols-[1fr_250px] xl:gap-10":
           page.data.toc && page.data.toc.length > 0,
       })}
     >
@@ -67,7 +67,7 @@ export default async function Page({ params }: PageProps) {
       </div>
       {page.data.toc && page.data.toc.length > 0 && (
         <div className="hidden text-sm xl:block">
-          <div className="sticky top-8 h-[calc(100svh-theme(spacing.8))]">
+          <div className="sticky top-8 h-[calc(100svh-theme(spacing.8))] pr-8">
             <TableOfContents toc={page.data.toc as TocType} />
           </div>
         </div>

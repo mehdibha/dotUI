@@ -31,7 +31,7 @@ export function Choices({ items, ...props }: TabsProps): React.ReactElement {
             key={item.value}
             className={cn(
               focusRing(),
-              "selected:bg-bg-muted relative cursor-pointer rounded-md border p-4 transition-colors duration-100"
+              "selected:bg-bg-muted hover:bg-bg-muted/50 relative cursor-pointer rounded-md border p-4 transition-colors duration-100"
             )}
             id={item.value}
           >
@@ -44,7 +44,7 @@ export function Choices({ items, ...props }: TabsProps): React.ReactElement {
                 <p className="text-fg-muted mt-2 text-sm">{item.description}</p>
                 <div
                   className={cn(
-                    "border-border-control absolute right-4 top-4 flex size-6 shrink-0 items-center justify-center rounded-full border [&_svg]:size-4",
+                    "border-border-control absolute right-2 top-2 flex size-4 shrink-0 items-center justify-center rounded-full border [&_svg]:size-3",
                     isSelected && "bg-bg-accent text-fg-onAccent"
                   )}
                 >
