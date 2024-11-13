@@ -12,7 +12,7 @@ import {
 import { cn } from "@/registry/ui/default/lib/cn";
 import { focusRing } from "@/registry/ui/default/lib/focus-styles";
 
-export interface TabsProps extends Omit<BaseProps, "children"> {
+export interface ChoicesProps extends Omit<BaseProps, "children"> {
   children: React.ReactNode;
   items: {
     value: string;
@@ -22,10 +22,10 @@ export interface TabsProps extends Omit<BaseProps, "children"> {
   }[];
 }
 
-export function Choices({ items, ...props }: TabsProps): React.ReactElement {
+export function Choices({ items, ...props }: ChoicesProps): React.ReactElement {
   return (
     <Tabs {...props}>
-      <TabList className="grid grid-cols-3 gap-2 mb-4">
+      <TabList className="mb-4 grid grid-cols-3 gap-2">
         {items.map((item, i) => (
           <Tab
             key={item.value}

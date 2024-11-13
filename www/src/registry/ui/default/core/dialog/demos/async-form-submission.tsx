@@ -10,11 +10,11 @@ import {
 import { TextField } from "@/registry/ui/default/core/text-field";
 
 export default function DialogDemo() {
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isPending, setIsPending] = React.useState(false);
   const handleSubmit = async () => {
-    setIsLoading(true);
+    setIsPending(true);
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    setIsLoading(false);
+    setIsPending(false);
   };
   return (
     <DialogRoot>
@@ -40,7 +40,7 @@ export default function DialogDemo() {
                 Cancel
               </Button>
               <Button
-                isLoading={isLoading}
+                isPending={isPending}
                 variant="primary"
                 size={{ initial: "lg", sm: "md" }}
                 onPress={async () => {
