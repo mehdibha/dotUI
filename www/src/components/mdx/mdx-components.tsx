@@ -12,6 +12,7 @@ import {
 } from "./component-preview";
 import { ComponentSource } from "./component-source";
 import { InstallTab, InstallTabs } from "./install-tabs";
+import { Palette, PaletteProps } from "./palette";
 import { Tabs, Tab, type TabsProps } from "./tabs";
 
 export const mdxComponents: MDXComponents = {
@@ -160,6 +161,9 @@ export const mdxComponents: MDXComponents = {
   ),
   Alert: ({ className, ...props }: AlertProps) => (
     <Alert className={cn("mt-4", className)} {...props} />
+  ),
+  Palette: ({ className, ...props }: PaletteProps) => (
+    <Palette className={cn("mt-4", className)} {...props} />
   ),
 };
 
