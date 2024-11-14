@@ -1,3 +1,6 @@
+> ⚠️ dotUI is still in development, i plan to ship the first release in 1st january 2025.
+<br />
+
 <div align="center">
   <a href="https://github.com/mehdibha/dotUI">
     <img src="/www/public/images/logo.png" alt="Logo" width="60" height="60">
