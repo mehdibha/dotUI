@@ -16,7 +16,8 @@ export default function HomePage() {
         <div className="container flex h-full flex-col items-center justify-center">
           <div className="-translate-y-10">
             <h1 className="font-heading xs:text-2xl text-pretty text-xl font-semibold tracking-tighter sm:text-3xl md:text-4xl">
-              Scaffold. implement. ship <span className="font-bold">unique</span>.
+              Scaffold. implement. ship{" "}
+              <span className="font-bold">unique</span>.
             </h1>
             <h2 className="text-fg-muted mt-3 text-sm">
               Add components, hooks, themes and much more to your{" "}

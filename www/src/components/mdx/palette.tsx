@@ -1,5 +1,5 @@
-import { cn } from "@/registry/ui/default/lib/cn";
 import { ThemeOverride } from "@/components/theme-override";
+import { cn } from "@/registry/ui/default/lib/cn";
 
 export interface PaletteProps extends React.ComponentProps<"div"> {
   baseColor:
