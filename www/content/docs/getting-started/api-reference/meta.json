@@ -1,3 +1,4 @@
 {
-  "title": "API reference"
+  "title": "API reference",
+  "pages": ["cli", "dotui-json"]
 }

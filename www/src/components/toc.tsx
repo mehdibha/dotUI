@@ -57,8 +57,8 @@ function TOCItem({ item }: { item: TOCItemType }): React.ReactElement {
       href={item.url}
       className={cn(
         "text-fg-muted data-[active=true]:text-fg py-1 text-sm transition-colors [overflow-wrap:anywhere] first:pt-0 last:pb-0",
-        item.depth <= 2 && "pl-6",
-        item.depth === 3 && "pl-9",
+        item.depth <= 2 && "pl-4",
+        item.depth === 3 && "pl-8",
         item.depth >= 4 && "pl-12"
       )}
     >

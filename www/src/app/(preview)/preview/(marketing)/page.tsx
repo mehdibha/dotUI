@@ -24,7 +24,7 @@ export default function PreviewPage() {
       {/* Brands */}
       <div className="text-center">
         <h2 className="text-fg-muted text-base tracking-tighter">
-          Powering the world’s best product teams.
+          Powering the world's best product teams.
         </h2>
         <div className="grid grid-cols-4 grid-rows-2 gap-4"></div>
       </div>

@@ -72,7 +72,7 @@ export const mdxComponents: MDXComponents = {
   ),
   hr: ({ ...props }) => <hr className="my-4 md:my-8" {...props} />,
   table: ({ className, ...props }) => (
-    <div className="my-6 w-full overflow-y-auto rounded-md">
+    <div className="my-6 w-full overflow-y-auto rounded-md [&_code]:text-xs">
       <table className={cn("w-full", className)} {...props} />
     </div>
   ),
