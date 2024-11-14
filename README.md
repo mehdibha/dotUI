@@ -4,7 +4,7 @@
   </a>
   <h1 align="center">dotUI</h1>
   <p align="center">
-    Scaffold, implement, ship unique.
+    Scaffold, implement, ship <strong>unique</strong>.
   </p>
   <p>
     
@@ -20,7 +20,8 @@
 
 ## About The Project
 
-dotUI is here to solve a problem every React developer knows all too well: standing out. With dotUI, you're not just getting a collection of components, utilities, and tools—you're gaining a toolkit that lets you craft a unique, robust design system for your project.
+dotUI is here to solve a problem every React developer knows all too well: **standing out**.
+You're not just getting a collection of components, you're gaining a toolkit that lets you craft a unique, robust design system for your project.
 
 If you want to join this journey, i'm streaming everyday at <a href="https://discord.gg/DXpj5V2fU8">our discord channel</a>
 
