@@ -4,7 +4,7 @@
   </a>
   <h1 align="center">dotUI</h1>
   <p align="center">
-    Accessible, mobile friendly, modern UI components.
+    Scaffold, implement, ship unique.
   </p>
   <p>
     
@@ -20,9 +20,9 @@
 
 ## About The Project
 
-Accessible, mobile friendly, modern UI components.
+dotUI is here to solve a problem every React developer knows all too well: standing out. With dotUI, you're not just getting a collection of components, utilities, and tools—you're gaining a toolkit that lets you craft a unique, robust design system for your project.
 
-If you want to join this journey, <a href="https://discord.gg/DXpj5V2fU8">join our discord community</a>
+If you want to join this journey, i'm streaming everyday at <a href="https://discord.gg/DXpj5V2fU8">our discord channel</a>
 
 <img src="/www/public/images/thumbnail.png">
 
