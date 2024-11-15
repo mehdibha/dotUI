@@ -1,4 +1,4 @@
-> ⚠️ dotUI is still in development, i plan to ship the first release in 1st january 2025.
+> ⚠️ dotUI is still in development, [follow me on X](https://x.com/mehdibha_) to stay updated.
 <br />
 
 <div align="center">
