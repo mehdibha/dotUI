@@ -30,9 +30,11 @@ const badgeVariants = tv({
   },
   defaultVariants: {
     variant: "primary",
-    size: "sm",
+    size: "md",
   },
 });
+
+// TODO: change icon to prefix/suffix
 
 export interface BadgeProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -55,7 +57,7 @@ function Badge({
       {...props}
     >
       {icon && <span>{icon}</span>}
-      <span>{children}</span>
+      {children}
     </span>
   );
 }

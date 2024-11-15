@@ -2,6 +2,7 @@ import React from "react";
 import { ArrowUpRight, ArrowUpRightIcon, ExternalLinkIcon } from "lucide-react";
 import { MDXComponents } from "mdx/types";
 import { Alert, AlertProps } from "@/registry/ui/default/core/alert";
+import { Badge, BadgeProps } from "@/registry/ui/default/core/badge";
 import { LinkProps, Link as NavLink } from "@/registry/ui/default/core/link";
 import { cn } from "@/registry/ui/default/lib/cn";
 import { Choice, Choices, ChoicesProps } from "./choices";
@@ -14,6 +15,7 @@ import { ComponentSource } from "./component-source";
 import { InstallTab, InstallTabs } from "./install-tabs";
 import { Palette, PaletteProps } from "./palette";
 import { Tabs, Tab, type TabsProps } from "./tabs";
+import { BadgePalette } from "./badge-palette";
 
 export const mdxComponents: MDXComponents = {
   h1: createHeading(1, "font-heading mt-2 scroll-m-20 text-4xl font-bold"),
@@ -165,6 +167,8 @@ export const mdxComponents: MDXComponents = {
   Palette: ({ className, ...props }: PaletteProps) => (
     <Palette className={cn("mt-4", className)} {...props} />
   ),
+  Badge: ({className, ...props}: BadgeProps) => <Badge variant="neutral" size="sm"  className={cn()} {...props} />,
+  BadgePalette: BadgePalette
 };
 
 function createHeading(level: number, className?: string) {
