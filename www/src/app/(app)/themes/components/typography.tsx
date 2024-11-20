@@ -9,12 +9,8 @@ import { Skeleton } from "@/registry/ui/default/core/skeleton";
 import { usePreview } from "./context";
 
 export function Typography() {
-  const {
-    fonts,
-    handleFontChange,
-    isLoading,
-    isCurrentThemeEditable,
-  } = useThemes();
+  const { fonts, handleFontChange, isLoading, isCurrentThemeEditable } =
+    useThemes();
   const { setPreview } = usePreview();
   return (
     <div className="grid grid-cols-2 gap-4">

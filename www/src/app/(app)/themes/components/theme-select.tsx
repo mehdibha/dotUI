@@ -22,13 +22,13 @@ import { Alert } from "@/registry/ui/default/core/alert";
 import { Button } from "@/registry/ui/default/core/button";
 import { Form } from "@/registry/ui/default/core/form";
 import { InputProps } from "@/registry/ui/default/core/input";
+import { Kbd } from "@/registry/ui/default/core/kbd";
 import { Menu, MenuItem, MenuRoot } from "@/registry/ui/default/core/menu";
 import { Skeleton } from "@/registry/ui/default/core/skeleton";
 import { cn } from "@/registry/ui/default/lib/cn";
 import { CloneThemeDialog } from "./clone-theme";
 import { CopyThemeDialog } from "./copy-theme";
 import { DeleteThemeDialog } from "./delete-theme";
-import { Kbd } from "@/registry/ui/default/core/kbd";
 
 export function ThemeSelect({ className }: { className?: string }) {
   const {

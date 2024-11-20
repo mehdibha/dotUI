@@ -11,7 +11,7 @@ export function BadgePalette({
     <Badge
       variant="neutral"
       // size="sm"
-      className={cn("rounded-full gap-2 border pr-1", className)}
+      className={cn("gap-2 rounded-full border pr-1", className)}
       {...props}
     >
       <span>{props.children}</span>
