@@ -2,12 +2,17 @@ import React from "react";
 import type { Metadata } from "next";
 import { PlusIcon } from "lucide-react";
 import { Button } from "@/registry/ui/default/core/button";
-import { ButtonsCustomizer } from "./buttons";
+import { cn } from "@/registry/ui/default/lib/cn";
+import { Borders } from "./components/borders";
+import { ButtonStyle } from "./components/button-style";
+import { Colors } from "./components/colors";
 import { PreviewProvider } from "./components/context";
 import { CreateThemeDialog } from "./components/create-theme";
 import { ExploreThemesDialog } from "./components/explore-themes";
-import { Foundations } from "./components/foundations";
+import { Iconography } from "./components/iconography";
 import { Preview } from "./components/preview";
+import { ThemeSelect } from "./components/theme-select";
+import { Typography } from "./components/typography";
 
 export const metadata: Metadata = {
   title: "Themes",
@@ -36,7 +41,26 @@ export default function Page() {
                 </Button>
               </CreateThemeDialog>
             </div>
-            <Foundations className="mt-16" />
+            <Section className="mt-16 py-2 pr-2">
+              <ThemeSelect />
+            </Section>
+            <div className="mt-6 space-y-6">
+              <Section title="Colors">
+                <Colors />
+              </Section>
+              <Section title="Typography">
+                <Typography />
+              </Section>
+              <Section title="Borders">
+                <Borders />
+              </Section>
+              <Section title="Iconography">
+                <Iconography />
+              </Section>
+              <Section title="Button style">
+                <ButtonStyle />
+              </Section>
+            </div>
           </div>
           <div className="sticky top-10 hidden h-[calc(100svh-theme(spacing.20))] justify-center lg:col-span-7 lg:flex">
             <Preview />
@@ -46,3 +70,26 @@ export default function Page() {
     </PreviewProvider>
   );
 }
+
+const Section = ({
+  title,
+  children,
+  className,
+}: {
+  title?: string;
+  children?: React.ReactNode;
+  className?: string;
+}) => {
+  return (
+    <div
+      className={cn("bg-bg-muted/40 -ml-6 rounded-md border p-6", className)}
+    >
+      {title && (
+        <h3 className="font-heading mb-4 text-lg font-semibold tracking-tighter">
+          {title}
+        </h3>
+      )}
+      {children}
+    </div>
+  );
+};
