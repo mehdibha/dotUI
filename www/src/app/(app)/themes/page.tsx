@@ -1,6 +1,7 @@
 import React from "react";
 import type { Metadata } from "next";
 import { PlusIcon } from "lucide-react";
+import { Alert } from "@/registry/ui/default/core/alert";
 import { Button } from "@/registry/ui/default/core/button";
 import { cn } from "@/registry/ui/default/lib/cn";
 import { Borders } from "./components/borders";
@@ -41,9 +42,7 @@ export default function Page() {
                 </Button>
               </CreateThemeDialog>
             </div>
-            <Section className="mt-16 py-2 pr-2">
-              <ThemeSelect />
-            </Section>
+            <ThemeSelect className="mt-10" />
             <div className="mt-6 space-y-6">
               <Section title="Colors">
                 <Colors />
@@ -57,9 +56,9 @@ export default function Page() {
               <Section title="Iconography">
                 <Iconography />
               </Section>
-              <Section title="Button style">
-                <ButtonStyle />
-              </Section>
+              <Alert>
+                More customization are coming such as components style.
+              </Alert>
             </div>
           </div>
           <div className="sticky top-10 hidden h-[calc(100svh-theme(spacing.20))] justify-center lg:col-span-7 lg:flex">
@@ -81,9 +80,7 @@ const Section = ({
   className?: string;
 }) => {
   return (
-    <div
-      className={cn("bg-bg-muted/40 -ml-6 rounded-md border p-6", className)}
-    >
+    <div className={cn("bg-bg-muted/40 rounded-md border p-4", className)}>
       {title && (
         <h3 className="font-heading mb-4 text-lg font-semibold tracking-tighter">
           {title}

@@ -77,8 +77,8 @@ export function ThemeSelect({ className }: { className?: string }) {
   }, [currentTheme.id, userThemes, setCurrentThemeId, setShowKeyboardHint]);
 
   return (
-    <div>
-      <div className={cn("flex items-center justify-between", className)}>
+    <div className="space-y-4">
+      <div className={cn("flex items-center justify-between pl-1", className)}>
         <Skeleton show={isLoading}>
           <ThemeName
             currentName={currentTheme.name}
@@ -147,6 +147,7 @@ export function ThemeSelect({ className }: { className?: string }) {
       )}
       {!isLoading && !isCurrentThemeEditable && (
         <Alert
+          fill
           action={
             <CloneThemeDialog>
               <Button prefix={<GitBranchIcon />}>Clone theme</Button>
