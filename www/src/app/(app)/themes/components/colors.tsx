@@ -56,7 +56,7 @@ export const Colors = (props: React.HTMLAttributes<HTMLDivElement>) => {
       </Skeleton>
       <div>
         <Label>Base colors</Label>
-        <div className="mt-2 grid grid-cols-3 gap-2 md:grid-cols-5 lg:grid-cols-3 xl:grid-cols-5">
+        <div className="mt-2 flex flex-wrap gap-2">
           {(
             [
               {
