@@ -1,0 +1,47 @@
+---
+title: CLI
+---
+
+The `dotui-cli` allow you to setup up your design system quickly, scaffold components, hooks, and more.
+It is the easiest way to get started with dotUI.
+
+## Init command
+
+Use the `init` command to initialize configuration and dependencies for a new project.
+
+The `init` command installs dependencies, adds utilities, configures tailwind.config.js, and CSS variables for the project.
+
+### Usage
+
+```package-install
+npx dotui-cli init [your-theme-id] [options]
+```
+
+### Reference
+
+| Option                     | Description              |
+| -------------------------- | ------------------------ |
+| `-h{:bash}` `-help{:bash}` | Display help for command |
+| `-y{:bash}` `--yes{:bash}` | Use default options      |
+| `--skip-install{:bash}`    | Skip install             |
+
+## Add command
+
+Use the `add` command to add components, hooks, and more to your project.
+
+### Usage
+
+```package-install
+npx dotui-cli add [components...] [options]
+```
+
+### Reference
+
+| Option                           | Description                       |
+| -------------------------------- | --------------------------------- |
+| `-h{:bash}` `-help{:bash}`       | Display help for command          |
+| `-y{:bash}` `--yes{:bash}`       | Use default options               |
+| `-o{:bash}` `--overwrite{:bash}` | Overwrite existing files          |
+| `--cwd{:bash}`                   | The working directory             |
+| `--all{:bash}`                   | Add all available components      |
+| `--path{:bash}`                  | The path to add the component to. |

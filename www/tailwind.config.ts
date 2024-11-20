@@ -131,7 +131,6 @@ const config = {
       },
       transitionTimingFunction: {
         drawer: "cubic-bezier(0.32,0.72,0,1)",
-        // slow: "cubic-bezier(0.32,0.72,0,1)",
       },
       transitionDuration: {
         "30": "30ms",

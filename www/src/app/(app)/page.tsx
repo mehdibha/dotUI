@@ -16,7 +16,8 @@ export default function HomePage() {
         <div className="container flex h-full flex-col items-center justify-center">
           <div className="-translate-y-10">
             <h1 className="font-heading xs:text-2xl text-pretty text-xl font-semibold tracking-tighter sm:text-3xl md:text-4xl">
-              Scaffold. implement. ship.
+              Scaffold. implement. ship{" "}
+              <span className="font-bold">unique</span>.
             </h1>
             <h2 className="text-fg-muted mt-3 text-sm">
               Add components, hooks, themes and much more to your{" "}
@@ -69,7 +70,7 @@ const Terminal = ({
   className?: string;
 }) => {
   return (
-    <div className={cn("w-56 rounded-md border", className)}>
+    <div className={cn("w-[245px] rounded-md border", className)}>
       <div className="bg-bg-muted rounded-t-[inherit] border-b p-1">
         <TerminalSquareIcon className="text-fg-muted size-3" />
       </div>

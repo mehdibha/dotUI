@@ -1,8 +1,12 @@
 import React from "react";
-import NavLink from "next/link";
+import { ArrowUpRight, ArrowUpRightIcon, ExternalLinkIcon } from "lucide-react";
 import { MDXComponents } from "mdx/types";
 import { Alert, AlertProps } from "@/registry/ui/default/core/alert";
+import { Badge, BadgeProps } from "@/registry/ui/default/core/badge";
+import { LinkProps, Link as NavLink } from "@/registry/ui/default/core/link";
 import { cn } from "@/registry/ui/default/lib/cn";
+import { BadgePalette } from "./badge-palette";
+import { Choice, Choices, ChoicesProps } from "./choices";
 import { Pre } from "./code-block";
 import {
   ComponentPreview,
@@ -10,6 +14,7 @@ import {
 } from "./component-preview";
 import { ComponentSource } from "./component-source";
 import { InstallTab, InstallTabs } from "./install-tabs";
+import { Palette, PaletteProps } from "./palette";
 import { Tabs, Tab, type TabsProps } from "./tabs";
 
 export const mdxComponents: MDXComponents = {
@@ -31,7 +36,9 @@ export const mdxComponents: MDXComponents = {
     6,
     "mt-8 scroll-m-20 text-base font-semibold tracking-tight"
   ),
-  a: Link,
+  a: Link as unknown as React.ComponentType<
+    React.AnchorHTMLAttributes<HTMLAnchorElement>
+  >,
   p: ({ className, ...props }) => (
     <p
       className={cn(
@@ -68,7 +75,7 @@ export const mdxComponents: MDXComponents = {
   ),
   hr: ({ ...props }) => <hr className="my-4 md:my-8" {...props} />,
   table: ({ className, ...props }) => (
-    <div className="my-6 w-full overflow-y-auto rounded-md">
+    <div className="my-6 w-full overflow-y-auto rounded-md [&_code]:text-xs">
       <table className={cn("w-full", className)} {...props} />
     </div>
   ),
@@ -100,14 +107,17 @@ export const mdxComponents: MDXComponents = {
   ),
   // add mt-4 to all pre except when it has a parent with class install-tabs
   pre: ({ className, ...props }: React.HTMLAttributes<HTMLPreElement>) => (
-    <Pre className={cn("[&:not(:first-child)]:mt-4", className)} {...props} />
+    <Pre
+      className={cn(
+        "[&:not(:first-child)]:mt-4 [&_code]:bg-transparent [&_code]:p-0 [&_code]:text-xs",
+        className
+      )}
+      {...props}
+    />
   ),
   code: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
     <code
-      className={cn(
-        "bg-bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono text-xs",
-        className
-      )}
+      className={cn("bg-bg-muted rounded-md p-1 font-mono text-sm", className)}
       {...props}
     >
       {props.children}
@@ -116,6 +126,10 @@ export const mdxComponents: MDXComponents = {
   Tab,
   Tabs: (props: TabsProps) => (
     <Tabs {...props} className={cn("mt-4", props.className)} />
+  ),
+  Choice,
+  Choices: (props: ChoicesProps) => (
+    <Choices {...props} className={cn("mt-4", props.className)} />
   ),
   InstallTab,
   InstallTabs,
@@ -150,6 +164,13 @@ export const mdxComponents: MDXComponents = {
   Alert: ({ className, ...props }: AlertProps) => (
     <Alert className={cn("mt-4", className)} {...props} />
   ),
+  Palette: ({ className, ...props }: PaletteProps) => (
+    <Palette className={cn("mt-4", className)} {...props} />
+  ),
+  Badge: ({ className, ...props }: BadgeProps) => (
+    <Badge variant="neutral" size="sm" className={cn()} {...props} />
+  ),
+  BadgePalette: BadgePalette,
 };
 
 function createHeading(level: number, className?: string) {
@@ -163,31 +184,21 @@ function createHeading(level: number, className?: string) {
   return Component;
 }
 
-function Link({
-  className,
-  href,
-  children,
-  ...props
-}: React.ComponentProps<"a">) {
-  const classes = cn("font-medium underline underline-offset-4", className);
-
-  if (!!href?.startsWith("/")) {
-    return (
-      <NavLink {...props} href={href} className={classes}>
-        {children}
-      </NavLink>
-    );
-  }
-
+function Link(
+  props: Omit<LinkProps, "children"> & { children: React.ReactNode }
+) {
   return (
-    <a
-      rel="noopener noreferrer"
-      target="_blank"
+    <NavLink
+      target={props.href?.startsWith("/") ? "_self" : "_blank"}
       {...props}
-      href={href}
-      className={classes}
+      className="inline"
     >
-      {children}
-    </a>
+      {props.children}
+      {!props.href?.startsWith("/") && (
+        <span className="inline-flex">
+          <ArrowUpRightIcon className="size-4" />
+        </span>
+      )}
+    </NavLink>
   );
 }

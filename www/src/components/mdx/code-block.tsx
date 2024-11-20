@@ -77,7 +77,7 @@ export const CodeBlock = forwardRef<HTMLElement, CodeBlockProps>(
         {...props}
       >
         {title ? (
-          <div className="bg-fd-muted flex flex-row items-center gap-2 border-b px-4 py-1.5">
+          <div className="bg-bg-muted flex flex-row items-center gap-2 border-b px-4 py-1.5">
             {icon ? (
               <div
                 className="text-fd-muted-foreground [&_svg]:size-3.5"

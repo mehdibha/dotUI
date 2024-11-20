@@ -6,20 +6,20 @@ import { Skeleton } from "@/registry/ui/default/core/skeleton";
 
 export default function Demo() {
   const [status, setStatus] = React.useState<
-    "idle" | "loading" | "error" | "success"
+    "idle" | "pending" | "error" | "success"
   >("idle");
   const apiCall = () => {
-    setStatus("loading");
+    setStatus("pending");
     setTimeout(() => {
       setStatus("success");
     }, 4000);
   };
   return (
     <div className="flex flex-col items-center gap-4">
-      <Button isLoading={status === "loading"} onPress={apiCall}>
+      <Button isPending={status === "pending"} onPress={apiCall}>
         Simulate API Call
       </Button>
-      <Skeleton show={status === "loading"}>
+      <Skeleton show={status === "pending"}>
         <p>Some text loaded from API.</p>
       </Skeleton>
     </div>

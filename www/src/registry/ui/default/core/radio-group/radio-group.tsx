@@ -25,7 +25,7 @@ const radioGroupStyles = tv({
 
 const radioStyles = tv({
   slots: {
-    root: "disabled:text-fg-disabled invalid:text-fg-danger group flex cursor-pointer flex-row items-center gap-2 disabled:cursor-default",
+    root: "disabled:text-fg-disabled invalid:text-fg-danger group flex cursor-pointer flex-row items-center justify-between gap-2 disabled:cursor-default",
     indicator: [
       focusRing(),
       "border-border-control group-selected:border-bg-primary group-selected:border-4 relative size-4 shrink-0 rounded-full border transition-all duration-100",
@@ -127,7 +127,7 @@ const Radio = React.forwardRef<React.ElementRef<typeof AriaRadio>, RadioProps>(
         {composeRenderProps(props.children, (children) => (
           <>
             <div className={indicator({ className: "" })} />
-            <span>{children}</span>
+            <div>{children}</div>
           </>
         ))}
       </AriaRadio>

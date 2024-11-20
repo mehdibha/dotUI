@@ -15,7 +15,7 @@ import { LoaderIcon } from "@/__icons__";
 const buttonStyles = tv(
   {
     extend: focusRing,
-    base: "ring-offset-background disabled:bg-bg-disabled disabled:text-fg-disabled inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium leading-normal transition-colors disabled:cursor-default",
+    base: "ring-offset-background disabled:bg-bg-disabled disabled:text-fg-disabled pending:cursor-default pending:bg-bg-disabled pending:text-fg-disabled pending:border pending:border-border-disabled inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium leading-normal transition-colors disabled:cursor-default",
     variants: {
       variant: {
         default:
@@ -79,7 +79,6 @@ interface ButtonProps
     Omit<AriaLinkProps, "className" | "children" | "style">,
     VariantProps<typeof buttonStyles> {
   className?: string;
-  isLoading?: boolean;
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
 }
@@ -89,17 +88,8 @@ const Button = React.forwardRef(
     const contextProps = useButtonContext();
     const props = { ...contextProps, ...localProps };
 
-    const {
-      className,
-      variant,
-      size,
-      shape,
-      isDisabled,
-      isLoading,
-      prefix,
-      suffix,
-      ...restProps
-    } = props;
+    const { className, variant, size, shape, prefix, suffix, ...restProps } =
+      props;
 
     const Element: React.ElementType = props.href ? AriaLink : AriaButton;
 
@@ -107,16 +97,14 @@ const Button = React.forwardRef(
       <Element
         ref={ref}
         {...restProps}
-        isDisabled={isDisabled || isLoading}
         className={buttonStyles({ variant, size, shape, className })}
       >
-        {composeRenderProps(props.children, (children) => (
+        {composeRenderProps(props.children, (children, { isPending }) => (
           <>
-            {isLoading ? (
+            {isPending && (
               <LoaderIcon aria-label="loading" className="animate-spin" />
-            ) : (
-              prefix
             )}
+            {prefix}
             {typeof children === "string" ? (
               <span className="truncate">{children}</span>
             ) : (
