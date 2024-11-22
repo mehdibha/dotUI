@@ -21,7 +21,7 @@ const config = {
       {
         source: "/",
         destination: "/docs/getting-started/introduction",
-        permanent: true,
+        permanent: false,
       },
     ];
   },
