@@ -1,8 +1,6 @@
 @import "tailwindcss";
-@plugin "tailwindcss-react-aria-components";
 @plugin "tailwindcss-animate";
-
-@config '../../tailwind.config.ts';
+@plugin "tailwindcss-react-aria-components";
 
 /* Base Colors */
 @layer base {
@@ -135,6 +133,7 @@
 }
 
 @theme {
+  --font-*: initial;
   /* fonts */
   --font-josefin: var(--font-josefin);
   --font-sans: var(--font-geist-sans);

@@ -321,8 +321,8 @@ importers:
         specifier: ^2.2.0
         version: 2.5.2
       tailwind-variants:
-        specifier: ^0.2.1
-        version: 0.2.1(tailwindcss@4.0.0-beta.1)
+        specifier: ^0.3.0
+        version: 0.3.0(tailwindcss@4.0.0-beta.2)
       tsx:
         specifier: ^4.7.1
         version: 4.19.1
@@ -376,14 +376,14 @@ importers:
         specifier: ^6.0.1
         version: 6.0.1
       tailwindcss:
-        specifier: 4.0.0-beta.1
-        version: 4.0.0-beta.1
+        specifier: 4.0.0-beta.2
+        version: 4.0.0-beta.2
       tailwindcss-animate:
         specifier: ^1.0.7
-        version: 1.0.7(tailwindcss@4.0.0-beta.1)
+        version: 1.0.7(tailwindcss@4.0.0-beta.2)
       tailwindcss-react-aria-components:
-        specifier: 3.0.0-nightly-dcc0752f8-241031
-        version: 3.0.0-nightly-dcc0752f8-241031(tailwindcss@4.0.0-beta.1)
+        specifier: 1.2.0
+        version: 1.2.0(tailwindcss@4.0.0-beta.2)
       typescript:
         specifier: ^5
         version: 5.6.2
@@ -6127,8 +6127,11 @@ packages:
   tailwind-merge@2.5.2:
     resolution: {integrity: sha512-kjEBm+pvD+6eAwzJL2Bi+02/9LFLal1Gs61+QB7HvTfQQ0aXwC5LGT8PEt1gS0CWKktKe6ysPTAy3cBC5MeiIg==}
 
-  tailwind-variants@0.2.1:
-    resolution: {integrity: sha512-2xmhAf4UIc3PijOUcJPA1LP4AbxhpcHuHM2C26xM0k81r0maAO6uoUSHl3APmvHZcY5cZCY/bYuJdfFa4eGoaw==}
+  tailwind-merge@2.5.4:
+    resolution: {integrity: sha512-0q8cfZHMu9nuYP/b5Shb7Y7Sh1B7Nnl5GqNr1U+n2p6+mybvRtayrQ+0042Z5byvTA8ihjlP8Odo8/VnHbZu4Q==}
+
+  tailwind-variants@0.3.0:
+    resolution: {integrity: sha512-ho2k5kn+LB1fT5XdNS3Clb96zieWxbStE9wNLK7D0AV64kdZMaYzAKo0fWl6fXLPY99ffF9oBJnIj5escEl/8A==}
     engines: {node: '>=16.x', pnpm: '>=7.x'}
     peerDependencies:
       tailwindcss: '*'
@@ -6138,8 +6141,8 @@ packages:
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders'
 
-  tailwindcss-react-aria-components@3.0.0-nightly-dcc0752f8-241031:
-    resolution: {integrity: sha512-iHnk5fnSGFYvXLWPMW2VQckBss+/JaDaiVX6Sw5CW5jJfZdXCkKYo1Kz952rMDrZChg88XXwHLjjLJbSIzX/Pw==}
+  tailwindcss-react-aria-components@1.2.0:
+    resolution: {integrity: sha512-ynlQIfAdoWAz0Og0dCe/d4QVE+L8Yuo6rtK9apdhehZZMoLC1GdwtnvLZyUyx+wHwnTjRuNtFPdN0DpPsPXJJg==}
     peerDependencies:
       tailwindcss: '*'
 
@@ -6150,6 +6153,9 @@ packages:
 
   tailwindcss@4.0.0-beta.1:
     resolution: {integrity: sha512-Pnj2oLtAiNgnd+eHfW4RFuG8EIklYF1FModYFtr6bXrgLoZndePW5jX17Zwyo7Oeq+0dXTekjjMr5IRnQHgCXg==}
+
+  tailwindcss@4.0.0-beta.2:
+    resolution: {integrity: sha512-uZ+vgVsy6i18Glc3XYMkTq7dl4GsU4m8X8qRTVlU4+g8Uit7g+wttwfDCl3p+ZOq5KCB09th9XgVDx1zFLCeHA==}
 
   tapable@2.2.1:
     resolution: {integrity: sha512-GNzQvQTOIP6RyTfE2Qxb8ZVlNmw0n88vp1szwWRimP02mnTsx3Wtn5qRdqY9w2XduFNUgvOwhNnQsjwCp+kqaQ==}
@@ -14112,18 +14118,20 @@ snapshots:
 
   tailwind-merge@2.5.2: {}
 
-  tailwind-variants@0.2.1(tailwindcss@4.0.0-beta.1):
-    dependencies:
-      tailwind-merge: 2.5.2
-      tailwindcss: 4.0.0-beta.1
+  tailwind-merge@2.5.4: {}
 
-  tailwindcss-animate@1.0.7(tailwindcss@4.0.0-beta.1):
+  tailwind-variants@0.3.0(tailwindcss@4.0.0-beta.2):
     dependencies:
-      tailwindcss: 4.0.0-beta.1
+      tailwind-merge: 2.5.4
+      tailwindcss: 4.0.0-beta.2
 
-  tailwindcss-react-aria-components@3.0.0-nightly-dcc0752f8-241031(tailwindcss@4.0.0-beta.1):
+  tailwindcss-animate@1.0.7(tailwindcss@4.0.0-beta.2):
     dependencies:
-      tailwindcss: 4.0.0-beta.1
+      tailwindcss: 4.0.0-beta.2
+
+  tailwindcss-react-aria-components@1.2.0(tailwindcss@4.0.0-beta.2):
+    dependencies:
+      tailwindcss: 4.0.0-beta.2
 
   tailwindcss@3.4.13(ts-node@10.9.2(@types/node@22.7.7)(typescript@5.6.2)):
     dependencies:
@@ -14153,6 +14161,8 @@ snapshots:
       - ts-node
 
   tailwindcss@4.0.0-beta.1: {}
+
+  tailwindcss@4.0.0-beta.2: {}
 
   tapable@2.2.1: {}
 

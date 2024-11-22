@@ -89,7 +89,7 @@ export const Sidebar = ({ items }: { items: PageTree.Node[] }) => {
         </div>
       </ScrollArea>
       <SidebarFooter>
-        <div className="group-data-collapsed/sidebar:flex-col flex items-center gap-1">
+        <div className="group-collapsed/sidebar:flex-col flex items-center gap-1">
           <MotionButton
             href={siteConfig.links.github}
             target="_blank"
@@ -146,7 +146,7 @@ const SidebarRoot = ({
     <SidebarContext.Provider value={{ isCollapsed, onCollapseChange }}>
       <aside
         className="group/sidebar hidden text-sm sm:flex"
-        data-state={isCollapsed ? "" : undefined}
+        data-collapsed={isCollapsed ? "" : undefined}
         style={
           {
             "--sidebar-width": "230px",
@@ -191,7 +191,7 @@ const Logo = () => {
         loading="lazy"
         className="m-1 size-6 rounded-sm"
       />
-      <div className="font-josephin mt-[5px] font-bold leading-normal tracking-tighter">
+      <div className="font-josefin mt-[5px] font-bold leading-normal tracking-tighter">
         {siteConfig.global.name}
       </div>
     </Link>
