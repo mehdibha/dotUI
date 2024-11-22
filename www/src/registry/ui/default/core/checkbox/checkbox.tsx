@@ -21,7 +21,7 @@ const checkboxStyles = tv({
       "group-selected:bg-bg-primary group-selected:text-fg-onPrimary group-selected:border-transparent bg-transparent text-transparent transition-colors duration-75",
       "group-indeterminate:bg-bg-primary group-indeterminate:text-fg-onPrimary",
       "group-read-only:cursor-default",
-      "group-disabled:border-border-disabled group-disabled:group-selected:text-fg-disabled group-disabled:group-selected:bg-bg-disabled group-disabled:group-indeterminate:bg-bg-disabled group-disabled:cursor-not-allowed",
+      "group-disabled:border-border-disabled group-selected:group-disabled:text-fg-disabled group-selected:group-disabled:bg-bg-disabled group-indeterminate:group-disabled:bg-bg-disabled group-disabled:cursor-not-allowed",
       "group-invalid:border-border-danger group-invalid:group-selected:bg-bg-danger-muted group-invalid:group-selected:text-fg-onMutedDanger",
     ],
   },

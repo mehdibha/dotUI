@@ -117,7 +117,7 @@ export const Colors = (props: React.HTMLAttributes<HTMLDivElement>) => {
             }
             isDisabled={!isCurrentThemeEditable}
             size="sm"
-            className="!w-full"
+            className="w-full!"
           />
         </Skeleton>
         <Skeleton show={isLoading}>
@@ -130,7 +130,7 @@ export const Colors = (props: React.HTMLAttributes<HTMLDivElement>) => {
               handleColorConfigChange("saturation", value as number)
             }
             isDisabled={!isCurrentThemeEditable}
-            className="!w-full"
+            className="w-full!"
           />
         </Skeleton>
       </div>

@@ -192,7 +192,7 @@ export const ThemeCustomizerDialog = ({
                 handleRadiusChange(value as number);
               }}
               isDisabled={!isCurrentThemeEditable}
-              className="!w-36"
+              className="w-36!"
             />
           </Skeleton>
         </div>

@@ -42,7 +42,7 @@ export const mdxComponents: MDXComponents = {
   p: ({ className, ...props }) => (
     <p
       className={cn(
-        "text-base leading-7 [&:not(:first-child)]:mt-4",
+        "text-base leading-7 not-first:mt-4",
         className
       )}
       {...props}
@@ -60,7 +60,7 @@ export const mdxComponents: MDXComponents = {
   blockquote: ({ className, ...props }) => (
     <blockquote
       className={cn(
-        "[&>*]:text-fg-muted mt-6 border-l-2 pl-6 italic",
+        "*:text-fg-muted mt-6 border-l-2 pl-6 italic",
         className
       )}
       {...props}
@@ -109,7 +109,7 @@ export const mdxComponents: MDXComponents = {
   pre: ({ className, ...props }: React.HTMLAttributes<HTMLPreElement>) => (
     <Pre
       className={cn(
-        "[&:not(:first-child)]:mt-4 [&_code]:bg-transparent [&_code]:p-0 [&_code]:text-xs",
+        "not-first:mt-4 [&_code]:bg-transparent [&_code]:p-0 [&_code]:text-xs",
         className
       )}
       {...props}
@@ -136,13 +136,13 @@ export const mdxComponents: MDXComponents = {
   ComponentSource: ({ name, ...rest }: { name: string }) => (
     <ComponentSource
       name={name}
-      className="w-full [&:not(:first-child)]:mt-4"
+      className="w-full not-first:mt-4"
       {...rest}
     />
   ),
   ComponentPreview: (props: ComponentPreviewProps) => (
     <ComponentPreview
-      containerClassName="[&:not(:first-child)]:mt-4"
+      containerClassName="not-first:mt-4"
       {...props}
     />
   ),

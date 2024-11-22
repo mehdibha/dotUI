@@ -63,7 +63,7 @@ const calendarStyles = tv({
           "disabled:text-fg-disabled relative my-1 flex size-8 items-center justify-center rounded-md text-sm font-normal leading-normal disabled:cursor-default disabled:bg-transparent",
           "selected:after:bg-bg-primary/10 after:absolute after:inset-0 after:transition-colors after:content-['']",
           "hover:before:bg-bg-inverse/10 before:absolute before:inset-0 before:z-10 before:rounded-[inherit] before:transition-colors before:content-['']",
-          "before:ring-border-focus focus-visible:before:border-border focus-visible:before:ring-offset-bg outline-none before:border before:border-transparent before:ring-0 focus-visible:z-50 focus-visible:before:ring-2 focus-visible:before:ring-offset-2",
+          "before:ring-border-focus focus-visible:before:border-border focus-visible:before:ring-offset-bg outline-hidden before:border before:border-transparent before:ring-0 focus-visible:z-50 focus-visible:before:ring-2 focus-visible:before:ring-offset-2",
           "selection-start:after:rounded-l-[inherit] selection-end:after:rounded-r-[inherit]",
           "selection-start:pressed:before:bg-primary/90 selection-start:text-fg-onPrimary selection-start:before:bg-bg-primary",
           "selection-end:pressed:before:bg-primary/90 selection-end:text-fg-onPrimary selection-end:before:bg-bg-primary",

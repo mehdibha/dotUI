@@ -61,7 +61,7 @@ export default function Page() {
               </Alert>
             </div>
           </div>
-          <div className="sticky top-10 hidden h-[calc(100svh-theme(spacing.20))] justify-center lg:col-span-7 lg:flex">
+          <div className="sticky top-10 hidden h-[calc(100svh-calc(var(--spacing)*20))] justify-center lg:col-span-7 lg:flex">
             <Preview />
           </div>
         </div>

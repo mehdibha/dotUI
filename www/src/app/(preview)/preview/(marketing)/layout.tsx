@@ -7,7 +7,7 @@ export default function MarketingLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="container max-w-screen-lg">
+    <div className="container max-w-(--breakpoint-lg)">
       <Header />
       <main className="mt-16">{children}</main>
       <Footer />

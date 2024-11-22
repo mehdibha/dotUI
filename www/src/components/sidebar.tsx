@@ -146,7 +146,7 @@ const SidebarRoot = ({
     <SidebarContext.Provider value={{ isCollapsed, onCollapseChange }}>
       <aside
         className="group/sidebar hidden text-sm sm:flex"
-        data-state={isCollapsed ? "collapsed" : "expanded"}
+        data-state={isCollapsed ? "" : undefined}
         style={
           {
             "--sidebar-width": "230px",
@@ -156,11 +156,11 @@ const SidebarRoot = ({
       >
         <div
           className={cn(
-            "transition-sidebar group-data-collapsed/sidebar:w-[--sidebar-width-collapsed] relative z-10 h-svh w-[--sidebar-width] bg-transparent"
+            "transition-sidebar group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) relative z-10 h-svh w-(--sidebar-width) bg-transparent"
           )}
         />
-        <div className="transition-sidebar bg-bg group-data-collapsed/sidebar:w-[--sidebar-width-collapsed] [&_svg]:text-fg-muted fixed inset-y-0 left-0 z-10 flex h-svh w-[--sidebar-width] flex-col overflow-hidden border-r [&_button]:font-normal">
-          <div className="relative flex h-svh w-[--sidebar-width] flex-1 translate-x-[-0.5px] flex-col overflow-hidden">
+        <div className="transition-sidebar bg-bg group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) [&_svg]:text-fg-muted fixed inset-y-0 left-0 z-10 flex h-svh w-(--sidebar-width) flex-col overflow-hidden border-r [&_button]:font-normal">
+          <div className="relative flex h-svh w-(--sidebar-width) flex-1 translate-x-[-0.5px] flex-col overflow-hidden">
             {children}
           </div>
         </div>
@@ -200,10 +200,10 @@ const Logo = () => {
 
 const SidebarToggle = ({ className, ...props }: ButtonProps) => {
   return (
-    <div className="transition-sidebar group-data-collapsed/sidebar:left-2 group-data-collapsed/sidebar:opacity-0 absolute left-[calc(var(--sidebar-width)-theme(spacing.10))] z-10 duration-75 group-hover/sidebar:opacity-100 has-[button:focus-visible]:opacity-100">
+    <div className="transition-sidebar group-data-collapsed/sidebar:left-2 group-data-collapsed/sidebar:opacity-0 absolute left-[calc(var(--sidebar-width)-calc(var(--spacing)*10))] z-10 duration-75 group-hover/sidebar:opacity-100 has-[button:focus-visible]:opacity-100">
       <Button
         className={cn(
-          "touch:opacity-100 group-data-collapsed/sidebar:opacity-0 focus:group-data-collapsed/sidebar:opacity-100 focus-visible:group-data-collapsed/sidebar:opacity-100 opacity-100 transition-all group-hover/sidebar:opacity-100",
+          "touch:opacity-100 group-data-collapsed/sidebar:opacity-0 group-data-collapsed/sidebar:focus:opacity-100 group-data-collapsed/sidebar:focus-visible:opacity-100 opacity-100 transition-all group-hover/sidebar:opacity-100",
           className
         )}
         shape="square"
@@ -310,7 +310,7 @@ const SearchCommandDialog = ({ isCollapsed }: { isCollapsed: boolean }) => {
           </div>
         </SidebarButton>
       </StyledTooltip>
-      <Dialog className="!p-0" showDismissButton={false}>
+      <Dialog className="p-0!" showDismissButton={false}>
         <SearchCommand
           onRunCommand={() => setIsOpen(false)}
           className="h-72 max-h-full rounded-lg"
@@ -491,7 +491,7 @@ const SidebarButton = ({
       )}
       {...props}
     >
-      <div className="transition-sidebar group-data-collapsed/sidebar:left-2 absolute inset-2 flex w-[calc(var(--sidebar-width)-theme(spacing.8))] items-center justify-center gap-2 whitespace-nowrap [&>svg]:size-4">
+      <div className="transition-sidebar group-data-collapsed/sidebar:left-2 absolute inset-2 flex w-[calc(var(--sidebar-width)-calc(var(--spacing)*8))] items-center justify-center gap-2 whitespace-nowrap [&>svg]:size-4">
         {children}
       </div>
     </Button>
@@ -512,7 +512,7 @@ const StyledTooltip = (props: TooltipProps) => {
 
 const SidebarFooter = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="group-data-collapsed/sidebar:w-[--sidebar-width-collapsed] group-data-collapsed/sidebar:flex-col group-data-collapsed/sidebar:justify-end flex flex-row items-end justify-between gap-1 p-2">
+    <div className="group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) group-data-collapsed/sidebar:flex-col group-data-collapsed/sidebar:justify-end flex flex-row items-end justify-between gap-1 p-2">
       {children}
     </div>
   );

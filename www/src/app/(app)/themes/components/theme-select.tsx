@@ -308,7 +308,7 @@ const AutoResizeInput = React.forwardRef<HTMLInputElement, InputProps>(
         ref={mergeRefs(inputRef, forwardedRef)}
         onChange={chain(onChange, setInputValue)}
         className={cn(
-          "border-fg min-w-[10px] focus:border-b focus:outline-none",
+          "border-fg min-w-[10px] focus:border-b focus:outline-hidden",
           className
         )}
         {...props}

@@ -31,7 +31,7 @@ const Code = async ({
   const ElementType = inline ? "span" : "div";
   const code = (
     <ElementType
-      className="[&_pre]:outline-none [&_span]:!bg-transparent dark:[&_span]:!text-[var(--shiki-dark)]"
+      className="[&_pre]:outline-hidden [&_span]:bg-transparent! dark:[&_span]:text-(--shiki-dark)!"
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );

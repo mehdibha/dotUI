@@ -100,7 +100,7 @@ export const CodeBlock = forwardRef<HTMLElement, CodeBlockProps>(
         ) : (
           allowCopy && (
             <CopyButton
-              className="absolute right-2 top-2 z-[2] backdrop-blur-sm"
+              className="absolute right-2 top-2 z-2 backdrop-blur-sm"
               onCopy={onCopy}
             />
           )

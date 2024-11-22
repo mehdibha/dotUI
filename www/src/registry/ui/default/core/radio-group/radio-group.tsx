@@ -29,7 +29,7 @@ const radioStyles = tv({
     indicator: [
       focusRing(),
       "border-border-control group-selected:border-bg-primary group-selected:border-4 relative size-4 shrink-0 rounded-full border transition-all duration-100",
-      "group-disabled:border-border-disabled group-disabled:selected:bg-bg-disabled group-disabled:indeterminate:bg-bg-disabled",
+      "group-disabled:border-border-disabled selected:group-disabled:bg-bg-disabled indeterminate:group-disabled:bg-bg-disabled",
       "group-invalid:border-border-danger group-invalid:selected:border-bg-danger",
     ],
   },

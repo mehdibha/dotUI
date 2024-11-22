@@ -33,7 +33,7 @@ export function Borders() {
           handleRadiusChange(value as number);
         }}
         isDisabled={!isCurrentThemeEditable}
-        className="!w-full"
+        className="w-full!"
       >
         <div className="flex items-center justify-between">
           <Label>Radius (rem)</Label>

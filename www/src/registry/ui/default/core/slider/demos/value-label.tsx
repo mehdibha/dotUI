@@ -9,13 +9,13 @@ export default function Demo() {
         defaultValue={50}
         label="Donuts to buy"
         valueLabel
-        className="!w-60"
+        className="w-60!"
       />
       <Slider
         defaultValue={50}
         label="Donuts to buy"
         valueLabel={(donuts) => `${donuts[0]} of 100 Donuts`}
-        className="!w-60"
+        className="w-60!"
       />
     </div>
   );

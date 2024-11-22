@@ -15,7 +15,7 @@ import { ChevronRightIcon } from "@/__icons__";
 const breadcrumbsStyles = tv({
   slots: {
     root: "text-fg-muted flex flex-wrap items-center gap-1.5 break-words text-sm [&_svg]:size-4",
-    item: "inline-flex items-center gap-1.5 [&_svg]:last:hidden",
+    item: "inline-flex items-center gap-1.5 last:[&_svg]:hidden",
     link: "hover:text-fg current:text-fg disabled:[&:not([data-current])]:text-fg-disabled inline-flex items-center gap-1.5 transition-colors disabled:cursor-default",
   },
 });

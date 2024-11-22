@@ -100,12 +100,12 @@ const CodeBlockClient = ({
         className={cn(isExpanded ? "max-h-[400px]" : "max-h-[200px]")}
       >
         {preview && !isExpanded ? (
-          <TabPanel id={files[0].fileName} className="!mt-0">
+          <TabPanel id={files[0].fileName} className="mt-0!">
             {preview}
           </TabPanel>
         ) : (
           files.map(({ fileName, code }, index) => (
-            <TabPanel key={index} id={fileName} className="!mt-0">
+            <TabPanel key={index} id={fileName} className="mt-0!">
               {code}
             </TabPanel>
           ))

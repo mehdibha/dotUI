@@ -1,6 +1,90 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@config '../../tailwind.config.ts';
+
+/*
+  In Tailwind CSS v4, basic styles are applied to form elements by default. To
+  maintain compatibility with v3, the following resets have been added:
+*/
+@layer base {
+  input,
+  textarea,
+  select,
+  button {
+    border: 0px solid;
+    border-radius: 0;
+    padding: 0;
+    color: inherit;
+    background-color: transparent;
+  }
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+@utility shiki {
+  & code span {
+    color: var(--shiki-light);
+  }
+  .dark & code span {
+    color: var(--shiki-dark);
+  }
+}
+
+@utility dark {
+  & .shiki code span {
+    color: var(--shiki-dark);
+  }
+}
+
+@utility step {
+  counter-increment: step;
+
+  &:before {
+    @apply absolute inline-flex size-9 items-center justify-center rounded-xl border-4 border-bg bg-bg-muted text-center -indent-px font-mono text-sm font-medium text-fg-muted;
+    @apply ml-[-50px] mt-[-4px];
+    content: counter(step);
+  }
+}
+
+@utility category {
+  @apply relative;
+
+  &:before {
+    @apply absolute left-0 top-0 -ml-1 mt-2 h-2 w-2 rounded-full bg-border content-[''];
+  }
+
+  &:after {
+    @apply absolute left-0 top-3 h-3 w-[1px] bg-border content-[''];
+  }
+}
+
+@utility container {
+  @media (max-width: 640px) {
+    @apply px-4;
+  }
+}
+
+@utility transition-sidebar {
+  transition-property: transform, width, left, opacity, color;
+  transition-duration: 0.25s;
+  transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+}
 
 @layer base {
   :root {
@@ -230,51 +314,6 @@
   }
   body {
     @apply bg-bg text-fg;
-  }
-}
-
-@layer components {
-  .shiki code span {
-    color: var(--shiki-light);
-  }
-  .dark .shiki code span {
-    color: var(--shiki-dark);
-  }
-}
-
-@layer utilities {
-  .step {
-    counter-increment: step;
-  }
-
-  .step:before {
-    @apply absolute inline-flex size-9 items-center justify-center rounded-xl border-4 border-bg bg-bg-muted text-center -indent-px font-mono text-sm font-medium text-fg-muted;
-    @apply ml-[-50px] mt-[-4px];
-    content: counter(step);
-  }
-
-  .category {
-    @apply relative;
-  }
-
-  .category:before {
-    @apply absolute left-0 top-0 -ml-1 mt-2 h-2 w-2 rounded-full bg-border content-[''];
-  }
-
-  .category:after {
-    @apply absolute left-0 top-3 h-3 w-[1px] bg-border content-[''];
-  }
-
-  @media (max-width: 640px) {
-    .container {
-      @apply px-4;
-    }
-  }
-
-  .transition-sidebar {
-    transition-property: transform, width, left, opacity, color;
-    transition-duration: 0.25s;
-    transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
   }
 }
 .shiki,

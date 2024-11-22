@@ -16,7 +16,6 @@ const config = {
     },
     data: {
       mobile: 'mobile~="true"',
-      collapsed: 'state~="collapsed"',
     },
     screens: {
       xs: "475px",

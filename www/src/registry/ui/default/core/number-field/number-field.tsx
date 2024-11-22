@@ -84,7 +84,7 @@ const NumberField = React.forwardRef<HTMLInputElement, NumberFieldProps>(
         >
           <InputRoot
             size={size}
-            className="[&_button]:invalid:border-border-danger [&_button]:focus-within:invalid:border-border px-0"
+            className="invalid:[&_button]:border-border-danger invalid:focus-within:[&_button]:border-border px-0"
           >
             {prefix}
             <Input ref={ref} placeholder={placeholder} className="px-2" />

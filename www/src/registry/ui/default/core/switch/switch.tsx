@@ -15,7 +15,7 @@ const switchStyles = tv({
     wrapper: [
       focusRingGroup(),
       "inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors",
-      "group-disabled:border-border-disabled group-disabled:group-selected:border-none group-disabled:group-selected:bg-bg-disabled group-selected:bg-border-focus bg-bg-neutral group-disabled:cursor-not-allowed group-disabled:border group-disabled:bg-transparent",
+      "group-disabled:border-border-disabled group-selected:group-disabled:border-none group-selected:group-disabled:bg-bg-disabled group-selected:bg-border-focus bg-bg-neutral group-disabled:cursor-not-allowed group-disabled:border group-disabled:bg-transparent",
     ],
     indicator:
       "group-disabled:bg-fg-disabled pointer-events-none block origin-right rounded-full bg-white shadow-lg ring-0 transition-all duration-200",
