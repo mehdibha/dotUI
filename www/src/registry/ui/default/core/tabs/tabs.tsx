@@ -20,7 +20,7 @@ const tabsStyles = tv({
     root: "orientation-vertical:flex-row flex flex-col",
     list: "orientation-horizontal:overflow-x-auto orientation-horizontal:whitespace-nowrap orientation-horizontal:items-center orientation-horizontal:border-b orientation-vertical:flex-col orientation-vertical:border-r orientation-horizontal:[&_[role=tab]]:border-b-[3px] orientation-vertical:[&_[role=tab]]:border-r-[3px] flex",
     tab: [
-      "text-fg-muted selected:border-border-focus selected:text-fg disabled:text-fg-disabled disabled:selected:border-border-disabled -mb-px cursor-pointer border-transparent px-2 py-2 text-center text-sm font-medium outline-hidden transition-colors disabled:cursor-default",
+      "text-fg-muted selected:border-border-focus selected:text-fg disabled:text-fg-disabled disabled:selected:border-border-disabled outline-hidden -mb-px cursor-pointer border-transparent px-2 py-2 text-center text-sm font-medium transition-colors disabled:cursor-default",
       "focus-visible:[&>span]:border-border-focus [&>span]:rounded-md [&>span]:border-2 [&>span]:border-transparent [&>span]:px-1.5 [&>span]:py-1",
     ],
     panel: [focusRing(), "rounded"],

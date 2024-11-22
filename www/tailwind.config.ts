@@ -1,5 +1,4 @@
 import type { Config } from "tailwindcss";
-import defaultTheme from "tailwindcss/defaultTheme";
 
 const config = {
   content: ["src/**/*.{ts,tsx}", "content/**/*.{ts,tsx,mdx}"],

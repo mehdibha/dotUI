@@ -18,7 +18,7 @@ import { CheckIcon, LoaderIcon } from "@/__icons__";
 const listBoxStyles = tv({
   base: [
     focusRing(),
-    "orientation-horizontal:flex-row orientation-horizontal:w-auto layout-grid:grid layout-grid:grid-cols-2 layout-grid:w-auto empty:text-fg-muted flex flex-col overflow-auto p-1 outline-hidden empty:min-h-24 empty:items-center empty:justify-center empty:text-sm empty:italic",
+    "orientation-horizontal:flex-row orientation-horizontal:w-auto layout-grid:grid layout-grid:grid-cols-2 layout-grid:w-auto empty:text-fg-muted outline-hidden flex flex-col overflow-auto p-1 empty:min-h-24 empty:items-center empty:justify-center empty:text-sm empty:italic",
     "[&_.separator]:-mx-1 [&_.separator]:my-1 [&_.separator]:w-auto",
   ],
   variants: {
@@ -31,7 +31,7 @@ const listBoxStyles = tv({
 
 const listBoxItemStyles = tv({
   base: [
-    "disabled:pointer-default hover:bg-bg-inverse/10 focus:bg-bg-inverse/10 pressed:bg-bg-inverse/15 disabled:text-fg-disabled flex cursor-pointer items-center rounded-sm px-3 py-1.5 text-sm outline-hidden transition-colors disabled:cursor-default",
+    "disabled:pointer-default hover:bg-bg-inverse/10 focus:bg-bg-inverse/10 pressed:bg-bg-inverse/15 disabled:text-fg-disabled outline-hidden flex cursor-pointer items-center rounded-sm px-3 py-1.5 text-sm transition-colors disabled:cursor-default",
     "selection-single:pl-0 selection-multiple:pl-0",
     "[&_svg]:size-4",
   ],

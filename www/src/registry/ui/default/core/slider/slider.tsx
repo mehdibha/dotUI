@@ -38,7 +38,7 @@ const sliderStyles = tv({
     thumb: [
       focusRing(),
       "rounded-full bg-white shadow-md transition-[width,height]",
-      "absolute left-[50%] top-[50%] block -translate-x-1/2! -translate-y-1/2!",
+      "-translate-x-1/2! -translate-y-1/2! absolute left-[50%] top-[50%] block",
       "disabled:bg-bg-disabled disabled:border-bg disabled:border",
     ],
     valueLabel: "text-fg-muted text-sm",

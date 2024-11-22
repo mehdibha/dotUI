@@ -15,7 +15,7 @@ import { ThemeSwitcher } from "./theme-switcher";
 export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
   return (
     <header className="bg-bg sticky top-0 z-50 block border-b backdrop-blur-md sm:hidden">
-      <div className="container flex h-14 w-full max-w-(--breakpoint-2xl) items-center justify-between">
+      <div className="max-w-(--breakpoint-2xl) container flex h-14 w-full items-center justify-between">
         <DialogRoot>
           <Button variant="quiet" size="sm" shape="square">
             <AlignLeftIcon />
@@ -24,7 +24,7 @@ export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
             type="drawer"
             placement="left"
             swipeIndicator={false}
-            className="w-60 p-0!"
+            className="p-0! w-60"
           >
             {({ close }) => (
               <div className="flex h-screen flex-col">

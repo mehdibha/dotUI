@@ -7,7 +7,7 @@ import { type VariantProps, tv } from "tailwind-variants";
 const scrollAreaStyles = tv({
   slots: {
     root: "flex h-full w-full flex-col overflow-hidden",
-    viewport: "flex h-full w-full flex-col *:block! *:w-fit *:grow",
+    viewport: "*:block! flex h-full w-full flex-col *:w-fit *:grow",
     scrollbar:
       "my-0 flex touch-none select-none flex-col rounded-full bg-gray-800 data-[orientation=horizontal]:flex-row data-[orientation=vertical]:flex-col", // TODO: remove my-0, it was my-1
     thumb:

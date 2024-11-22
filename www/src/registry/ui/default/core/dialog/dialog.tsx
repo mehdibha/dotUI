@@ -20,7 +20,7 @@ import { Text } from "@/registry/ui/default/core/text";
 const dialogStyles = tv({
   slots: {
     content: [
-      "relative flex max-w-full flex-col rounded-[inherit] p-4 outline-hidden",
+      "outline-hidden relative flex max-w-full flex-col rounded-[inherit] p-4",
       "group-data-[type=modal]/overlay:p-6",
       "group-data-[type=drawer]/overlay:pt-0",
     ],

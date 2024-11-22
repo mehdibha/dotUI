@@ -156,11 +156,11 @@ const SidebarRoot = ({
       >
         <div
           className={cn(
-            "transition-sidebar group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) relative z-10 h-svh w-(--sidebar-width) bg-transparent"
+            "transition-sidebar group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) w-(--sidebar-width) relative z-10 h-svh bg-transparent"
           )}
         />
-        <div className="transition-sidebar bg-bg group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) [&_svg]:text-fg-muted fixed inset-y-0 left-0 z-10 flex h-svh w-(--sidebar-width) flex-col overflow-hidden border-r [&_button]:font-normal">
-          <div className="relative flex h-svh w-(--sidebar-width) flex-1 translate-x-[-0.5px] flex-col overflow-hidden">
+        <div className="transition-sidebar bg-bg group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) [&_svg]:text-fg-muted w-(--sidebar-width) fixed inset-y-0 left-0 z-10 flex h-svh flex-col overflow-hidden border-r [&_button]:font-normal">
+          <div className="w-(--sidebar-width) relative flex h-svh flex-1 translate-x-[-0.5px] flex-col overflow-hidden">
             {children}
           </div>
         </div>

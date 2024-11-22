@@ -17,7 +17,7 @@ export const ExploreThemesDialog = ({
   return (
     <DialogRoot>
       {children}
-      <Dialog type="drawer" className="container max-w-(--breakpoint-xl) py-8!">
+      <Dialog type="drawer" className="max-w-(--breakpoint-xl) py-8! container">
         {({ close }) => (
           <>
             <h2 className="text-lg font-bold">Themes</h2>

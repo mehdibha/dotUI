@@ -81,7 +81,7 @@ Overlay.displayName = "Overlay";
 const modalVariants = tv({
   slots: {
     backdrop: [
-      "fixed left-0 top-0 z-50 flex h-(--visual-viewport-height) w-[100vw] items-center justify-center bg-black/40 backdrop-blur-sm",
+      "h-(--visual-viewport-height) fixed left-0 top-0 z-50 flex w-[100vw] items-center justify-center bg-black/40 backdrop-blur-sm",
       "entering:animate-in entering:fade-in-0 entering:zoom-in-95 exiting:animate-out exiting:fade-out-0 exiting:zoom-out-95 entering:duration-200 exiting:duration-150",
     ],
     overlay: [
@@ -139,7 +139,7 @@ ModalOverlay.displayName = "ModalOverlay";
 const popoverOverlayVariants = tv({
   slots: {
     overlay:
-      "group/overlay bg-bg text-fg z-50 rounded-md border shadow-md data-[trigger=ComboBox]:min-w-(--trigger-width) data-[trigger=Select]:min-w-(--trigger-width)",
+      "group/overlay bg-bg text-fg data-[trigger=ComboBox]:min-w-(--trigger-width) data-[trigger=Select]:min-w-(--trigger-width) z-50 rounded-md border shadow-md",
     arrow: [
       "fill-bg stroke-border block stroke-1",
       "group-placement-left:-rotate-90 group-placement-right:rotate-90 group-placement-bottom:rotate-180",
@@ -202,7 +202,7 @@ const drawerVariants = tv({
   slots: {
     backdrop: ["fixed inset-0 z-50 bg-black/60 backdrop-blur-sm", "opacity-0"],
     overlay: [
-      "group/overlay bg-bg fixed z-50 flex flex-col outline-hidden",
+      "group/overlay bg-bg outline-hidden fixed z-50 flex flex-col",
       "inset-0",
       "placement-bottom:top-auto placement-top:bottom-auto placement-left:right-auto placement-right:left-auto",
       "placement-bottom:mt-24 placement-bottom:rounded-t-[10px] placement-bottom:border-t",

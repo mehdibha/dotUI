@@ -41,10 +41,7 @@ export const mdxComponents: MDXComponents = {
   >,
   p: ({ className, ...props }) => (
     <p
-      className={cn(
-        "text-base leading-7 not-first:mt-4",
-        className
-      )}
+      className={cn("not-first:mt-4 text-base leading-7", className)}
       {...props}
     />
   ),
@@ -59,10 +56,7 @@ export const mdxComponents: MDXComponents = {
   ),
   blockquote: ({ className, ...props }) => (
     <blockquote
-      className={cn(
-        "*:text-fg-muted mt-6 border-l-2 pl-6 italic",
-        className
-      )}
+      className={cn("*:text-fg-muted mt-6 border-l-2 pl-6 italic", className)}
       {...props}
     />
   ),
@@ -134,17 +128,10 @@ export const mdxComponents: MDXComponents = {
   InstallTab,
   InstallTabs,
   ComponentSource: ({ name, ...rest }: { name: string }) => (
-    <ComponentSource
-      name={name}
-      className="w-full not-first:mt-4"
-      {...rest}
-    />
+    <ComponentSource name={name} className="not-first:mt-4 w-full" {...rest} />
   ),
   ComponentPreview: (props: ComponentPreviewProps) => (
-    <ComponentPreview
-      containerClassName="not-first:mt-4"
-      {...props}
-    />
+    <ComponentPreview containerClassName="not-first:mt-4" {...props} />
   ),
   Step: ({ className, ...props }: React.ComponentProps<"h3">) => (
     <h3
