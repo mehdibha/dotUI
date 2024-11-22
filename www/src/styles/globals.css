@@ -139,8 +139,6 @@
   --font-josefin: var(--font-josefin);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-heading);
-  --font-body: var(--font-body);
 
   /* colors */
   --color-bg: var(--color-neutral-100);
@@ -324,7 +322,7 @@
   padding-left: 2rem;
   padding-right: 2rem;
 
-  @media (width >= 1400px) {
+  @media (width >= theme(--breakpoint-2xl)) {
     max-width: 1400px;
   }
 }

@@ -64,12 +64,13 @@ export const ThemeOverride = React.forwardRef<
         {
           ...(mounted ? styles : {}),
           ...baseCssVars,
-          "--font-heading": headingFont?.name,
-          "--font-body": bodyFont?.name,
+          // TODO: fix fonts
+          // "--font-heading": headingFont?.name,
+          // "--font-body": bodyFont?.name,
           "--radius": `${currentTheme.radius}rem`,
         } as React.CSSProperties
       }
-      className={cn("bg-bg text-fg font-body", props.className)}
+      className={cn("bg-bg text-fg", props.className)}
     >
       <Skeleton show={!mounted} className="rounded-none">
         {children}
