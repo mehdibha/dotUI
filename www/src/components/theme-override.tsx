@@ -46,7 +46,7 @@ export const ThemeOverride = React.forwardRef<
         const shades = currentMode[color].shades;
         return shades.map((shade, index) => {
           const [h, s, l] = shade.match(/\d+(\.\d+)?/g) || [];
-          return [`--color-${color}-${(index + 1) * 100}`, `${h} ${s}% ${l}%`];
+          return [`--color-${color}-${(index + 1) * 100}`, shade];
         });
       }
     )
