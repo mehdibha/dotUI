@@ -16,7 +16,7 @@
     "**/*.ts",
     "**/*.d.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts",
+    ".next/types/**/*.ts", "src/lib/tw-plugins/tw-rac.js",
   ],
   "exclude": ["node_modules"]
 }

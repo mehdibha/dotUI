@@ -181,7 +181,7 @@ const Logo = () => {
   return (
     <Link
       href="/"
-      className="flex items-center space-x-2 rounded opacity-100 transition-[opacity,transform] duration-300 ease-out"
+      className="flex items-center gap-2 rounded opacity-100 transition-[opacity,transform] duration-300 ease-out"
     >
       <Avatar
         src={siteConfig.global.logo}
@@ -191,7 +191,7 @@ const Logo = () => {
         loading="lazy"
         className="m-1 size-6 rounded-sm"
       />
-      <div className="font-josefin mt-[5px] font-bold leading-normal tracking-tighter">
+      <div className="font-josefin mt-[5px] font-bold leading-normal tracking-tighter group-data-collapsed/sidebar:opacity-0 transition-colors">
         {siteConfig.global.name}
       </div>
     </Link>

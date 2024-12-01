@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @plugin "tailwindcss-animate";
-@plugin "tailwindcss-react-aria-components";
+ /* @plugin "tailwindcss-react-aria-components"; */
+@plugin "../lib/tw-plugins/tw-rac";
 
 /* Base Colors */
 @layer base {
