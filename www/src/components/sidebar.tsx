@@ -191,7 +191,7 @@ const Logo = () => {
         loading="lazy"
         className="m-1 size-6 rounded-sm"
       />
-      <div className="font-josefin mt-[5px] font-bold leading-normal tracking-tighter group-data-collapsed/sidebar:opacity-0 transition-colors">
+      <div className="font-josefin group-data-collapsed/sidebar:opacity-0 mt-[5px] font-bold leading-normal tracking-tighter transition-colors">
         {siteConfig.global.name}
       </div>
     </Link>
