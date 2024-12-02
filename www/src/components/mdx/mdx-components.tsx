@@ -103,7 +103,7 @@ export const mdxComponents: MDXComponents = {
   pre: ({ className, ...props }: React.HTMLAttributes<HTMLPreElement>) => (
     <Pre
       className={cn(
-        "not-first:mt-4 [&_code]:bg-transparent [&_code]:p-0 [&_code]:text-xs [&_code]:grid",
+        "not-first:mt-4 [&_code]:grid [&_code]:bg-transparent [&_code]:p-0 [&_code]:text-xs",
         className
       )}
       {...props}
@@ -111,7 +111,10 @@ export const mdxComponents: MDXComponents = {
   ),
   code: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
     <code
-      className={cn("bg-bg-muted rounded-md p-1 font-mono text-sm w-full", className)}
+      className={cn(
+        "bg-bg-muted w-full rounded-md p-1 font-mono text-sm",
+        className
+      )}
       {...props}
     >
       {props.children}
