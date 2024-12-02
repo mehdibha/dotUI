@@ -25,7 +25,7 @@ export interface ChoicesProps extends Omit<BaseProps, "children"> {
 export function Choices({ items, ...props }: ChoicesProps): React.ReactElement {
   return (
     <Tabs {...props}>
-      <TabList className="mb-4 grid grid-cols-3 gap-2">
+      <TabList className="mb-4 grid grid-cols-2 gap-2">
         {items.map((item, i) => (
           <Tab
             key={item.value}

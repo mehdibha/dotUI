@@ -23,12 +23,6 @@ Learn how to implement dark mode in your project.
       icon: <ViteIcon />,
       description: "Fast modern build tool for web development",
     },
-    {
-      value: "remix",
-      title: "Remix",
-      icon: <RemixIcon />,
-      description: "Full stack web framework focused on simplicity",
-    },
   ]}
 >
 
@@ -82,6 +76,16 @@ export default function RootLayout({ children }: RootLayoutProps) {
     </>
   );
 }
+```
+
+<Step>Configure Tailwind</Step>
+
+Update your global css file 
+
+```css {4}
+@import "tailwindcss";
+@import "tailwindcss-rac";
+@variant dark (&:where(.dark, .dark *)); // [!code highlight]
 ```
 
 </Steps>

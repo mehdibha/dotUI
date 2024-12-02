@@ -79,7 +79,7 @@
     "rimraf": "^6.0.1",
     "tailwindcss": "4.0.0-beta.4",
     "tailwindcss-animate": "^1.0.7",
-    "tailwindcss-react-aria-components": "1.2.0",
+    "tailwindcss-rac": "workspace:*",
     "typescript": "^5",
     "vfile": "^6.0.3"
   }
