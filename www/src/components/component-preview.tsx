@@ -30,7 +30,7 @@ export const ComponentPreview = async ({
   const componentName = name.split("/")[1];
 
   const demoItem = Index[type][componentName];
-  console.log(demoItem);
+  
   const demos: {
     component: React.ComponentType;
     code: Array<{
