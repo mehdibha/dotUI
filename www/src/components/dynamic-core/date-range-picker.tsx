@@ -1,1 +1,1 @@
-export * from "@/registry-v2/core/date-range-picker";
+export * from "@/registry/core/date-range-picker";

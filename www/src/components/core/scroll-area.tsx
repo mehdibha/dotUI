@@ -1,1 +1,1 @@
-export * from "@/registry-v2/core/scroll-area";
+export * from "@/registry/core/scroll-area";

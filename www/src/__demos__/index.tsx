@@ -6,2328 +6,2614 @@ export const Index: Record<string, any> = {
   core: {
     "alert-action": {
       name: "alert-action",
-      component: React.lazy(() => import("@/registry-v2/demos/alert/action")),
+      files: ["registry/demos/alert/action.tsx"],
+      component: React.lazy(() => import("@/registry/demos/alert/action")),
     },
     "alert-composition": {
       name: "alert-composition",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/alert/composition")
-      ),
+      files: ["registry/demos/alert/composition.tsx"],
+      component: React.lazy(() => import("@/registry/demos/alert/composition")),
     },
     "alert-content": {
       name: "alert-content",
-      component: React.lazy(() => import("@/registry-v2/demos/alert/content")),
+      files: ["registry/demos/alert/content.tsx"],
+      component: React.lazy(() => import("@/registry/demos/alert/content")),
     },
     "alert-custom-icon": {
       name: "alert-custom-icon",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/alert/custom-icon")
-      ),
+      files: ["registry/demos/alert/custom-icon.tsx"],
+      component: React.lazy(() => import("@/registry/demos/alert/custom-icon")),
     },
     "alert-default": {
       name: "alert-default",
-      component: React.lazy(() => import("@/registry-v2/demos/alert/default")),
+      files: ["registry/demos/alert/default.tsx"],
+      component: React.lazy(() => import("@/registry/demos/alert/default")),
     },
     "alert-title": {
       name: "alert-title",
-      component: React.lazy(() => import("@/registry-v2/demos/alert/title")),
+      files: ["registry/demos/alert/title.tsx"],
+      component: React.lazy(() => import("@/registry/demos/alert/title")),
     },
     "alert-variants": {
       name: "alert-variants",
-      component: React.lazy(() => import("@/registry-v2/demos/alert/variants")),
+      files: ["registry/demos/alert/variants.tsx"],
+      component: React.lazy(() => import("@/registry/demos/alert/variants")),
     },
     "avatar-composition": {
       name: "avatar-composition",
+      files: ["registry/demos/avatar/composition.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/avatar/composition")
+        () => import("@/registry/demos/avatar/composition")
       ),
     },
     "avatar-default": {
       name: "avatar-default",
-      component: React.lazy(() => import("@/registry-v2/demos/avatar/default")),
+      files: ["registry/demos/avatar/default.tsx"],
+      component: React.lazy(() => import("@/registry/demos/avatar/default")),
     },
     "avatar-shape": {
       name: "avatar-shape",
-      component: React.lazy(() => import("@/registry-v2/demos/avatar/shape")),
+      files: ["registry/demos/avatar/shape.tsx"],
+      component: React.lazy(() => import("@/registry/demos/avatar/shape")),
     },
     "avatar-sizes": {
       name: "avatar-sizes",
-      component: React.lazy(() => import("@/registry-v2/demos/avatar/sizes")),
+      files: ["registry/demos/avatar/sizes.tsx"],
+      component: React.lazy(() => import("@/registry/demos/avatar/sizes")),
     },
     "breadcrumbs-basic": {
       name: "breadcrumbs-basic",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/breadcrumbs/basic")
-      ),
+      files: ["registry/demos/breadcrumbs/basic.tsx"],
+      component: React.lazy(() => import("@/registry/demos/breadcrumbs/basic")),
     },
     "breadcrumbs-composition": {
       name: "breadcrumbs-composition",
+      files: ["registry/demos/breadcrumbs/composition.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/breadcrumbs/composition")
+        () => import("@/registry/demos/breadcrumbs/composition")
       ),
     },
     "breadcrumbs-disabled": {
       name: "breadcrumbs-disabled",
+      files: ["registry/demos/breadcrumbs/disabled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/breadcrumbs/disabled")
+        () => import("@/registry/demos/breadcrumbs/disabled")
       ),
     },
     "breadcrumbs-icon": {
       name: "breadcrumbs-icon",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/breadcrumbs/icon")
-      ),
+      files: ["registry/demos/breadcrumbs/icon.tsx"],
+      component: React.lazy(() => import("@/registry/demos/breadcrumbs/icon")),
     },
     "breadcrumbs-router-integration": {
       name: "breadcrumbs-router-integration",
+      files: ["registry/demos/breadcrumbs/router-integration.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/breadcrumbs/router-integration")
+        () => import("@/registry/demos/breadcrumbs/router-integration")
       ),
     },
     "button-default": {
       name: "button-default",
-      component: React.lazy(() => import("@/registry-v2/demos/button/default")),
+      files: ["registry/demos/button/default.tsx"],
+      component: React.lazy(() => import("@/registry/demos/button/default")),
     },
     "button-disabled": {
       name: "button-disabled",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/button/disabled")
-      ),
+      files: ["registry/demos/button/disabled.tsx"],
+      component: React.lazy(() => import("@/registry/demos/button/disabled")),
     },
     "button-link-button": {
       name: "button-link-button",
+      files: ["registry/demos/button/link-button.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/button/link-button")
+        () => import("@/registry/demos/button/link-button")
       ),
     },
     "button-loading": {
       name: "button-loading",
-      component: React.lazy(() => import("@/registry-v2/demos/button/loading")),
+      files: ["registry/demos/button/loading.tsx"],
+      component: React.lazy(() => import("@/registry/demos/button/loading")),
     },
     "button-prefix-and-suffix": {
       name: "button-prefix-and-suffix",
+      files: ["registry/demos/button/prefix-and-suffix.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/button/prefix-and-suffix")
+        () => import("@/registry/demos/button/prefix-and-suffix")
       ),
     },
     "button-shapes": {
       name: "button-shapes",
-      component: React.lazy(() => import("@/registry-v2/demos/button/shapes")),
+      files: ["registry/demos/button/shapes.tsx"],
+      component: React.lazy(() => import("@/registry/demos/button/shapes")),
     },
     "button-sizes": {
       name: "button-sizes",
-      component: React.lazy(() => import("@/registry-v2/demos/button/sizes")),
+      files: ["registry/demos/button/sizes.tsx"],
+      component: React.lazy(() => import("@/registry/demos/button/sizes")),
     },
     "button-variants": {
       name: "button-variants",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/button/variants")
-      ),
+      files: ["registry/demos/button/variants.tsx"],
+      component: React.lazy(() => import("@/registry/demos/button/variants")),
     },
     "calendar-composition": {
       name: "calendar-composition",
+      files: ["registry/demos/calendar/composition.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/calendar/composition")
+        () => import("@/registry/demos/calendar/composition")
       ),
     },
     "calendar-controlled": {
       name: "calendar-controlled",
+      files: ["registry/demos/calendar/controlled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/calendar/controlled")
+        () => import("@/registry/demos/calendar/controlled")
       ),
     },
     "calendar-default": {
       name: "calendar-default",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/calendar/default")
-      ),
+      files: ["registry/demos/calendar/default.tsx"],
+      component: React.lazy(() => import("@/registry/demos/calendar/default")),
     },
     "calendar-disabled": {
       name: "calendar-disabled",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/calendar/disabled")
-      ),
+      files: ["registry/demos/calendar/disabled.tsx"],
+      component: React.lazy(() => import("@/registry/demos/calendar/disabled")),
     },
     "calendar-error-message": {
       name: "calendar-error-message",
+      files: ["registry/demos/calendar/error-message.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/calendar/error-message")
+        () => import("@/registry/demos/calendar/error-message")
       ),
     },
     "calendar-label": {
       name: "calendar-label",
-      component: React.lazy(() => import("@/registry-v2/demos/calendar/label")),
+      files: ["registry/demos/calendar/label.tsx"],
+      component: React.lazy(() => import("@/registry/demos/calendar/label")),
     },
     "calendar-page-behaviour": {
       name: "calendar-page-behaviour",
+      files: ["registry/demos/calendar/page-behaviour.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/calendar/page-behaviour")
+        () => import("@/registry/demos/calendar/page-behaviour")
       ),
     },
     "calendar-read-only": {
       name: "calendar-read-only",
+      files: ["registry/demos/calendar/read-only.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/calendar/read-only")
+        () => import("@/registry/demos/calendar/read-only")
       ),
     },
     "calendar-uncontrolled": {
       name: "calendar-uncontrolled",
+      files: ["registry/demos/calendar/uncontrolled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/calendar/uncontrolled")
+        () => import("@/registry/demos/calendar/uncontrolled")
       ),
     },
     "calendar-unvailable-dates": {
       name: "calendar-unvailable-dates",
+      files: ["registry/demos/calendar/unvailable-dates.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/calendar/unvailable-dates")
+        () => import("@/registry/demos/calendar/unvailable-dates")
       ),
     },
     "calendar-validation": {
       name: "calendar-validation",
+      files: ["registry/demos/calendar/validation.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/calendar/validation")
+        () => import("@/registry/demos/calendar/validation")
       ),
     },
     "calendar-visible-months": {
       name: "calendar-visible-months",
+      files: ["registry/demos/calendar/visible-months.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/calendar/visible-months")
+        () => import("@/registry/demos/calendar/visible-months")
       ),
     },
     "checkbox-group-cards": {
       name: "checkbox-group-cards",
+      files: ["registry/demos/checkbox-group/cards.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/checkbox-group/cards")
+        () => import("@/registry/demos/checkbox-group/cards")
       ),
     },
     "checkbox-group-composition": {
       name: "checkbox-group-composition",
+      files: ["registry/demos/checkbox-group/composition.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/checkbox-group/composition")
+        () => import("@/registry/demos/checkbox-group/composition")
       ),
     },
     "checkbox-group-contextual-help": {
       name: "checkbox-group-contextual-help",
+      files: ["registry/demos/checkbox-group/contextual-help.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/checkbox-group/contextual-help")
+        () => import("@/registry/demos/checkbox-group/contextual-help")
       ),
     },
     "checkbox-group-controlled": {
       name: "checkbox-group-controlled",
+      files: ["registry/demos/checkbox-group/controlled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/checkbox-group/controlled")
+        () => import("@/registry/demos/checkbox-group/controlled")
       ),
     },
     "checkbox-group-default": {
       name: "checkbox-group-default",
+      files: ["registry/demos/checkbox-group/default.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/checkbox-group/default")
+        () => import("@/registry/demos/checkbox-group/default")
       ),
     },
     "checkbox-group-description": {
       name: "checkbox-group-description",
+      files: ["registry/demos/checkbox-group/description.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/checkbox-group/description")
+        () => import("@/registry/demos/checkbox-group/description")
       ),
     },
     "checkbox-group-disabled": {
       name: "checkbox-group-disabled",
+      files: ["registry/demos/checkbox-group/disabled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/checkbox-group/disabled")
+        () => import("@/registry/demos/checkbox-group/disabled")
       ),
     },
     "checkbox-group-error-message": {
       name: "checkbox-group-error-message",
+      files: ["registry/demos/checkbox-group/error-message.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/checkbox-group/error-message")
+        () => import("@/registry/demos/checkbox-group/error-message")
       ),
     },
     "checkbox-group-label": {
       name: "checkbox-group-label",
+      files: ["registry/demos/checkbox-group/label.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/checkbox-group/label")
+        () => import("@/registry/demos/checkbox-group/label")
       ),
     },
     "checkbox-group-read-only": {
       name: "checkbox-group-read-only",
+      files: ["registry/demos/checkbox-group/read-only.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/checkbox-group/read-only")
+        () => import("@/registry/demos/checkbox-group/read-only")
       ),
     },
     "checkbox-group-required": {
       name: "checkbox-group-required",
+      files: ["registry/demos/checkbox-group/required.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/checkbox-group/required")
+        () => import("@/registry/demos/checkbox-group/required")
       ),
     },
     "checkbox-group-uncontrolled": {
       name: "checkbox-group-uncontrolled",
+      files: ["registry/demos/checkbox-group/uncontrolled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/checkbox-group/uncontrolled")
+        () => import("@/registry/demos/checkbox-group/uncontrolled")
       ),
     },
     "checkbox-card": {
       name: "checkbox-card",
-      component: React.lazy(() => import("@/registry-v2/demos/checkbox/card")),
+      files: ["registry/demos/checkbox/card.tsx"],
+      component: React.lazy(() => import("@/registry/demos/checkbox/card")),
     },
     "checkbox-controlled": {
       name: "checkbox-controlled",
+      files: ["registry/demos/checkbox/controlled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/checkbox/controlled")
+        () => import("@/registry/demos/checkbox/controlled")
       ),
     },
     "checkbox-default": {
       name: "checkbox-default",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/checkbox/default")
-      ),
+      files: ["registry/demos/checkbox/default.tsx"],
+      component: React.lazy(() => import("@/registry/demos/checkbox/default")),
     },
     "checkbox-disabled": {
       name: "checkbox-disabled",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/checkbox/disabled")
-      ),
+      files: ["registry/demos/checkbox/disabled.tsx"],
+      component: React.lazy(() => import("@/registry/demos/checkbox/disabled")),
     },
     "checkbox-indeterminate": {
       name: "checkbox-indeterminate",
+      files: ["registry/demos/checkbox/indeterminate.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/checkbox/indeterminate")
+        () => import("@/registry/demos/checkbox/indeterminate")
       ),
     },
     "checkbox-read-only": {
       name: "checkbox-read-only",
+      files: ["registry/demos/checkbox/read-only.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/checkbox/read-only")
+        () => import("@/registry/demos/checkbox/read-only")
       ),
     },
     "checkbox-uncontrolled": {
       name: "checkbox-uncontrolled",
+      files: ["registry/demos/checkbox/uncontrolled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/checkbox/uncontrolled")
+        () => import("@/registry/demos/checkbox/uncontrolled")
       ),
     },
     "color-area-channels": {
       name: "color-area-channels",
+      files: ["registry/demos/color-area/channels.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/color-area/channels")
+        () => import("@/registry/demos/color-area/channels")
       ),
     },
     "color-area-composition": {
       name: "color-area-composition",
+      files: ["registry/demos/color-area/composition.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/color-area/composition")
+        () => import("@/registry/demos/color-area/composition")
       ),
     },
     "color-area-controlled": {
       name: "color-area-controlled",
+      files: ["registry/demos/color-area/controlled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/color-area/controlled")
+        () => import("@/registry/demos/color-area/controlled")
       ),
     },
     "color-area-default": {
       name: "color-area-default",
+      files: ["registry/demos/color-area/default.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/color-area/default")
+        () => import("@/registry/demos/color-area/default")
       ),
     },
     "color-area-disabled": {
       name: "color-area-disabled",
+      files: ["registry/demos/color-area/disabled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/color-area/disabled")
+        () => import("@/registry/demos/color-area/disabled")
       ),
     },
     "color-area-uncontrolled": {
       name: "color-area-uncontrolled",
+      files: ["registry/demos/color-area/uncontrolled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/color-area/uncontrolled")
+        () => import("@/registry/demos/color-area/uncontrolled")
       ),
     },
     "color-field-composition": {
       name: "color-field-composition",
+      files: ["registry/demos/color-field/composition.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/color-field/composition")
+        () => import("@/registry/demos/color-field/composition")
       ),
     },
     "color-field-contextual-help": {
       name: "color-field-contextual-help",
+      files: ["registry/demos/color-field/contextual-help.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/color-field/contextual-help")
+        () => import("@/registry/demos/color-field/contextual-help")
       ),
     },
     "color-field-controlled": {
       name: "color-field-controlled",
+      files: ["registry/demos/color-field/controlled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/color-field/controlled")
+        () => import("@/registry/demos/color-field/controlled")
       ),
     },
     "color-field-default": {
       name: "color-field-default",
+      files: ["registry/demos/color-field/default.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/color-field/default")
+        () => import("@/registry/demos/color-field/default")
       ),
     },
     "color-field-description": {
       name: "color-field-description",
+      files: ["registry/demos/color-field/description.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/color-field/description")
+        () => import("@/registry/demos/color-field/description")
       ),
     },
     "color-field-disabled": {
       name: "color-field-disabled",
+      files: ["registry/demos/color-field/disabled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/color-field/disabled")
+        () => import("@/registry/demos/color-field/disabled")
       ),
     },
     "color-field-error-message": {
       name: "color-field-error-message",
+      files: ["registry/demos/color-field/error-message.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/color-field/error-message")
+        () => import("@/registry/demos/color-field/error-message")
       ),
     },
     "color-field-form": {
       name: "color-field-form",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/color-field/form")
-      ),
+      files: ["registry/demos/color-field/form.tsx"],
+      component: React.lazy(() => import("@/registry/demos/color-field/form")),
     },
     "color-field-label": {
       name: "color-field-label",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/color-field/label")
-      ),
+      files: ["registry/demos/color-field/label.tsx"],
+      component: React.lazy(() => import("@/registry/demos/color-field/label")),
     },
     "color-field-loading": {
       name: "color-field-loading",
+      files: ["registry/demos/color-field/loading.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/color-field/loading")
+        () => import("@/registry/demos/color-field/loading")
       ),
     },
     "color-field-prefix-and-suffix": {
       name: "color-field-prefix-and-suffix",
+      files: ["registry/demos/color-field/prefix-and-suffix.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/color-field/prefix-and-suffix")
+        () => import("@/registry/demos/color-field/prefix-and-suffix")
       ),
     },
     "color-field-read-only": {
       name: "color-field-read-only",
+      files: ["registry/demos/color-field/read-only.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/color-field/read-only")
+        () => import("@/registry/demos/color-field/read-only")
       ),
     },
     "color-field-required": {
       name: "color-field-required",
+      files: ["registry/demos/color-field/required.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/color-field/required")
+        () => import("@/registry/demos/color-field/required")
       ),
     },
     "color-field-sizes": {
       name: "color-field-sizes",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/color-field/sizes")
-      ),
+      files: ["registry/demos/color-field/sizes.tsx"],
+      component: React.lazy(() => import("@/registry/demos/color-field/sizes")),
     },
     "color-field-uncontrolled": {
       name: "color-field-uncontrolled",
+      files: ["registry/demos/color-field/uncontrolled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/color-field/uncontrolled")
+        () => import("@/registry/demos/color-field/uncontrolled")
       ),
     },
     "color-picker-composition": {
       name: "color-picker-composition",
+      files: ["registry/demos/color-picker/composition.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/color-picker/composition")
+        () => import("@/registry/demos/color-picker/composition")
       ),
     },
     "color-picker-controlled": {
       name: "color-picker-controlled",
+      files: ["registry/demos/color-picker/controlled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/color-picker/controlled")
+        () => import("@/registry/demos/color-picker/controlled")
       ),
     },
     "color-picker-default": {
       name: "color-picker-default",
+      files: ["registry/demos/color-picker/default.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/color-picker/default")
+        () => import("@/registry/demos/color-picker/default")
       ),
     },
     "color-picker-options": {
       name: "color-picker-options",
+      files: ["registry/demos/color-picker/options.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/color-picker/options")
+        () => import("@/registry/demos/color-picker/options")
       ),
     },
     "color-picker-uncontrolled": {
       name: "color-picker-uncontrolled",
+      files: ["registry/demos/color-picker/uncontrolled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/color-picker/uncontrolled")
+        () => import("@/registry/demos/color-picker/uncontrolled")
       ),
     },
     "color-slider-channel": {
       name: "color-slider-channel",
+      files: ["registry/demos/color-slider/channel.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/color-slider/channel")
+        () => import("@/registry/demos/color-slider/channel")
       ),
     },
     "color-slider-composition": {
       name: "color-slider-composition",
+      files: ["registry/demos/color-slider/composition.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/color-slider/composition")
+        () => import("@/registry/demos/color-slider/composition")
       ),
     },
     "color-slider-controlled": {
       name: "color-slider-controlled",
+      files: ["registry/demos/color-slider/controlled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/color-slider/controlled")
+        () => import("@/registry/demos/color-slider/controlled")
       ),
     },
     "color-slider-default": {
       name: "color-slider-default",
+      files: ["registry/demos/color-slider/default.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/color-slider/default")
+        () => import("@/registry/demos/color-slider/default")
       ),
     },
     "color-slider-disabled": {
       name: "color-slider-disabled",
+      files: ["registry/demos/color-slider/disabled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/color-slider/disabled")
+        () => import("@/registry/demos/color-slider/disabled")
       ),
     },
     "color-slider-label": {
       name: "color-slider-label",
+      files: ["registry/demos/color-slider/label.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/color-slider/label")
+        () => import("@/registry/demos/color-slider/label")
       ),
     },
     "color-slider-uncontrolled": {
       name: "color-slider-uncontrolled",
+      files: ["registry/demos/color-slider/uncontrolled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/color-slider/uncontrolled")
+        () => import("@/registry/demos/color-slider/uncontrolled")
       ),
     },
     "color-slider-vertical": {
       name: "color-slider-vertical",
+      files: ["registry/demos/color-slider/vertical.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/color-slider/vertical")
+        () => import("@/registry/demos/color-slider/vertical")
       ),
     },
     "color-swatch-default": {
       name: "color-swatch-default",
+      files: ["registry/demos/color-swatch/default.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/color-swatch/default")
+        () => import("@/registry/demos/color-swatch/default")
       ),
     },
     "combobox-async-loading": {
       name: "combobox-async-loading",
+      files: ["registry/demos/combobox/async-loading.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/combobox/async-loading")
+        () => import("@/registry/demos/combobox/async-loading")
       ),
     },
     "combobox-basic": {
       name: "combobox-basic",
-      component: React.lazy(() => import("@/registry-v2/demos/combobox/basic")),
+      files: ["registry/demos/combobox/basic.tsx"],
+      component: React.lazy(() => import("@/registry/demos/combobox/basic")),
     },
     "combobox-composition": {
       name: "combobox-composition",
+      files: ["registry/demos/combobox/composition.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/combobox/composition")
+        () => import("@/registry/demos/combobox/composition")
       ),
     },
     "combobox-contextual-help": {
       name: "combobox-contextual-help",
+      files: ["registry/demos/combobox/contextual-help.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/combobox/contextual-help")
+        () => import("@/registry/demos/combobox/contextual-help")
       ),
     },
     "combobox-controlled": {
       name: "combobox-controlled",
+      files: ["registry/demos/combobox/controlled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/combobox/controlled")
+        () => import("@/registry/demos/combobox/controlled")
       ),
     },
     "combobox-custom-value": {
       name: "combobox-custom-value",
+      files: ["registry/demos/combobox/custom-value.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/combobox/custom-value")
+        () => import("@/registry/demos/combobox/custom-value")
       ),
     },
     "combobox-description": {
       name: "combobox-description",
+      files: ["registry/demos/combobox/description.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/combobox/description")
+        () => import("@/registry/demos/combobox/description")
       ),
     },
     "combobox-disabled": {
       name: "combobox-disabled",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/combobox/disabled")
-      ),
+      files: ["registry/demos/combobox/disabled.tsx"],
+      component: React.lazy(() => import("@/registry/demos/combobox/disabled")),
     },
     "combobox-label": {
       name: "combobox-label",
-      component: React.lazy(() => import("@/registry-v2/demos/combobox/label")),
+      files: ["registry/demos/combobox/label.tsx"],
+      component: React.lazy(() => import("@/registry/demos/combobox/label")),
     },
     "combobox-loading": {
       name: "combobox-loading",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/combobox/loading")
-      ),
+      files: ["registry/demos/combobox/loading.tsx"],
+      component: React.lazy(() => import("@/registry/demos/combobox/loading")),
     },
     "combobox-required": {
       name: "combobox-required",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/combobox/required")
-      ),
+      files: ["registry/demos/combobox/required.tsx"],
+      component: React.lazy(() => import("@/registry/demos/combobox/required")),
     },
     "combobox-sections": {
       name: "combobox-sections",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/combobox/sections")
-      ),
+      files: ["registry/demos/combobox/sections.tsx"],
+      component: React.lazy(() => import("@/registry/demos/combobox/sections")),
     },
     "combobox-uncontrolled": {
       name: "combobox-uncontrolled",
+      files: ["registry/demos/combobox/uncontrolled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/combobox/uncontrolled")
+        () => import("@/registry/demos/combobox/uncontrolled")
       ),
     },
     "combobox-validation": {
       name: "combobox-validation",
+      files: ["registry/demos/combobox/validation.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/combobox/validation")
+        () => import("@/registry/demos/combobox/validation")
       ),
     },
     "date-field-composition": {
       name: "date-field-composition",
+      files: ["registry/demos/date-field/composition.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-field/composition")
+        () => import("@/registry/demos/date-field/composition")
       ),
     },
     "date-field-contextual-help": {
       name: "date-field-contextual-help",
+      files: ["registry/demos/date-field/contextual-help.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-field/contextual-help")
+        () => import("@/registry/demos/date-field/contextual-help")
       ),
     },
     "date-field-controlled": {
       name: "date-field-controlled",
+      files: ["registry/demos/date-field/controlled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-field/controlled")
+        () => import("@/registry/demos/date-field/controlled")
       ),
     },
     "date-field-default": {
       name: "date-field-default",
+      files: ["registry/demos/date-field/default.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-field/default")
+        () => import("@/registry/demos/date-field/default")
       ),
     },
     "date-field-description": {
       name: "date-field-description",
+      files: ["registry/demos/date-field/description.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-field/description")
+        () => import("@/registry/demos/date-field/description")
       ),
     },
     "date-field-disabled": {
       name: "date-field-disabled",
+      files: ["registry/demos/date-field/disabled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-field/disabled")
+        () => import("@/registry/demos/date-field/disabled")
       ),
     },
     "date-field-error-message": {
       name: "date-field-error-message",
+      files: ["registry/demos/date-field/error-message.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-field/error-message")
+        () => import("@/registry/demos/date-field/error-message")
       ),
     },
     "date-field-granularity": {
       name: "date-field-granularity",
+      files: ["registry/demos/date-field/granularity.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-field/granularity")
+        () => import("@/registry/demos/date-field/granularity")
       ),
     },
     "date-field-hide-time-zone": {
       name: "date-field-hide-time-zone",
+      files: ["registry/demos/date-field/hide-time-zone.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-field/hide-time-zone")
+        () => import("@/registry/demos/date-field/hide-time-zone")
       ),
     },
     "date-field-hour-cycle": {
       name: "date-field-hour-cycle",
+      files: ["registry/demos/date-field/hour-cycle.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-field/hour-cycle")
+        () => import("@/registry/demos/date-field/hour-cycle")
       ),
     },
     "date-field-label": {
       name: "date-field-label",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/date-field/label")
-      ),
+      files: ["registry/demos/date-field/label.tsx"],
+      component: React.lazy(() => import("@/registry/demos/date-field/label")),
     },
     "date-field-loading": {
       name: "date-field-loading",
+      files: ["registry/demos/date-field/loading.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-field/loading")
+        () => import("@/registry/demos/date-field/loading")
       ),
     },
     "date-field-placeholder": {
       name: "date-field-placeholder",
+      files: ["registry/demos/date-field/placeholder.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-field/placeholder")
+        () => import("@/registry/demos/date-field/placeholder")
       ),
     },
     "date-field-prefix-and-suffix": {
       name: "date-field-prefix-and-suffix",
+      files: ["registry/demos/date-field/prefix-and-suffix.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-field/prefix-and-suffix")
+        () => import("@/registry/demos/date-field/prefix-and-suffix")
       ),
     },
     "date-field-read-only": {
       name: "date-field-read-only",
+      files: ["registry/demos/date-field/read-only.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-field/read-only")
+        () => import("@/registry/demos/date-field/read-only")
       ),
     },
     "date-field-required": {
       name: "date-field-required",
+      files: ["registry/demos/date-field/required.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-field/required")
+        () => import("@/registry/demos/date-field/required")
       ),
     },
     "date-field-sizes": {
       name: "date-field-sizes",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/date-field/sizes")
-      ),
+      files: ["registry/demos/date-field/sizes.tsx"],
+      component: React.lazy(() => import("@/registry/demos/date-field/sizes")),
     },
     "date-field-time-zones": {
       name: "date-field-time-zones",
+      files: ["registry/demos/date-field/time-zones.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-field/time-zones")
+        () => import("@/registry/demos/date-field/time-zones")
       ),
     },
     "date-field-uncontrolled": {
       name: "date-field-uncontrolled",
+      files: ["registry/demos/date-field/uncontrolled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-field/uncontrolled")
+        () => import("@/registry/demos/date-field/uncontrolled")
       ),
     },
     "date-picker-composition": {
       name: "date-picker-composition",
+      files: ["registry/demos/date-picker/composition.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-picker/composition")
+        () => import("@/registry/demos/date-picker/composition")
       ),
     },
     "date-picker-contextual-help": {
       name: "date-picker-contextual-help",
+      files: ["registry/demos/date-picker/contextual-help.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-picker/contextual-help")
+        () => import("@/registry/demos/date-picker/contextual-help")
       ),
     },
     "date-picker-controlled": {
       name: "date-picker-controlled",
+      files: ["registry/demos/date-picker/controlled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-picker/controlled")
+        () => import("@/registry/demos/date-picker/controlled")
       ),
     },
     "date-picker-default": {
       name: "date-picker-default",
+      files: ["registry/demos/date-picker/default.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-picker/default")
+        () => import("@/registry/demos/date-picker/default")
       ),
     },
     "date-picker-description": {
       name: "date-picker-description",
+      files: ["registry/demos/date-picker/description.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-picker/description")
+        () => import("@/registry/demos/date-picker/description")
       ),
     },
     "date-picker-disabled": {
       name: "date-picker-disabled",
+      files: ["registry/demos/date-picker/disabled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-picker/disabled")
+        () => import("@/registry/demos/date-picker/disabled")
       ),
     },
     "date-picker-error-message": {
       name: "date-picker-error-message",
+      files: ["registry/demos/date-picker/error-message.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-picker/error-message")
+        () => import("@/registry/demos/date-picker/error-message")
       ),
     },
     "date-picker-granularity": {
       name: "date-picker-granularity",
+      files: ["registry/demos/date-picker/granularity.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-picker/granularity")
+        () => import("@/registry/demos/date-picker/granularity")
       ),
     },
     "date-picker-hide-time-zone": {
       name: "date-picker-hide-time-zone",
+      files: ["registry/demos/date-picker/hide-time-zone.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-picker/hide-time-zone")
+        () => import("@/registry/demos/date-picker/hide-time-zone")
       ),
     },
     "date-picker-hour-cycle": {
       name: "date-picker-hour-cycle",
+      files: ["registry/demos/date-picker/hour-cycle.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-picker/hour-cycle")
+        () => import("@/registry/demos/date-picker/hour-cycle")
       ),
     },
     "date-picker-label": {
       name: "date-picker-label",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/date-picker/label")
-      ),
+      files: ["registry/demos/date-picker/label.tsx"],
+      component: React.lazy(() => import("@/registry/demos/date-picker/label")),
     },
     "date-picker-loading": {
       name: "date-picker-loading",
+      files: ["registry/demos/date-picker/loading.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-picker/loading")
+        () => import("@/registry/demos/date-picker/loading")
       ),
     },
     "date-picker-placeholder": {
       name: "date-picker-placeholder",
+      files: ["registry/demos/date-picker/placeholder.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-picker/placeholder")
+        () => import("@/registry/demos/date-picker/placeholder")
       ),
     },
     "date-picker-prefix": {
       name: "date-picker-prefix",
+      files: ["registry/demos/date-picker/prefix.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-picker/prefix")
+        () => import("@/registry/demos/date-picker/prefix")
       ),
     },
     "date-picker-read-only": {
       name: "date-picker-read-only",
+      files: ["registry/demos/date-picker/read-only.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-picker/read-only")
+        () => import("@/registry/demos/date-picker/read-only")
       ),
     },
     "date-picker-required": {
       name: "date-picker-required",
+      files: ["registry/demos/date-picker/required.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-picker/required")
+        () => import("@/registry/demos/date-picker/required")
       ),
     },
     "date-picker-sizes": {
       name: "date-picker-sizes",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/date-picker/sizes")
-      ),
+      files: ["registry/demos/date-picker/sizes.tsx"],
+      component: React.lazy(() => import("@/registry/demos/date-picker/sizes")),
     },
     "date-picker-time-zones": {
       name: "date-picker-time-zones",
+      files: ["registry/demos/date-picker/time-zones.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-picker/time-zones")
+        () => import("@/registry/demos/date-picker/time-zones")
       ),
     },
     "date-picker-uncontrolled": {
       name: "date-picker-uncontrolled",
+      files: ["registry/demos/date-picker/uncontrolled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-picker/uncontrolled")
+        () => import("@/registry/demos/date-picker/uncontrolled")
       ),
     },
     "date-range-picker-composition": {
       name: "date-range-picker-composition",
+      files: ["registry/demos/date-range-picker/composition.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-range-picker/composition")
+        () => import("@/registry/demos/date-range-picker/composition")
       ),
     },
     "date-range-picker-contextual-help": {
       name: "date-range-picker-contextual-help",
+      files: ["registry/demos/date-range-picker/contextual-help.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-range-picker/contextual-help")
+        () => import("@/registry/demos/date-range-picker/contextual-help")
       ),
     },
     "date-range-picker-controlled": {
       name: "date-range-picker-controlled",
+      files: ["registry/demos/date-range-picker/controlled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-range-picker/controlled")
+        () => import("@/registry/demos/date-range-picker/controlled")
       ),
     },
     "date-range-picker-default": {
       name: "date-range-picker-default",
+      files: ["registry/demos/date-range-picker/default.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-range-picker/default")
+        () => import("@/registry/demos/date-range-picker/default")
       ),
     },
     "date-range-picker-description": {
       name: "date-range-picker-description",
+      files: ["registry/demos/date-range-picker/description.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-range-picker/description")
+        () => import("@/registry/demos/date-range-picker/description")
       ),
     },
     "date-range-picker-disabled": {
       name: "date-range-picker-disabled",
+      files: ["registry/demos/date-range-picker/disabled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-range-picker/disabled")
+        () => import("@/registry/demos/date-range-picker/disabled")
       ),
     },
     "date-range-picker-error-message": {
       name: "date-range-picker-error-message",
+      files: ["registry/demos/date-range-picker/error-message.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-range-picker/error-message")
+        () => import("@/registry/demos/date-range-picker/error-message")
       ),
     },
     "date-range-picker-granularity": {
       name: "date-range-picker-granularity",
+      files: ["registry/demos/date-range-picker/granularity.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-range-picker/granularity")
+        () => import("@/registry/demos/date-range-picker/granularity")
       ),
     },
     "date-range-picker-hide-time-zone": {
       name: "date-range-picker-hide-time-zone",
+      files: ["registry/demos/date-range-picker/hide-time-zone.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-range-picker/hide-time-zone")
+        () => import("@/registry/demos/date-range-picker/hide-time-zone")
       ),
     },
     "date-range-picker-hour-cycle": {
       name: "date-range-picker-hour-cycle",
+      files: ["registry/demos/date-range-picker/hour-cycle.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-range-picker/hour-cycle")
+        () => import("@/registry/demos/date-range-picker/hour-cycle")
       ),
     },
     "date-range-picker-label": {
       name: "date-range-picker-label",
+      files: ["registry/demos/date-range-picker/label.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-range-picker/label")
+        () => import("@/registry/demos/date-range-picker/label")
       ),
     },
     "date-range-picker-loading": {
       name: "date-range-picker-loading",
+      files: ["registry/demos/date-range-picker/loading.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-range-picker/loading")
+        () => import("@/registry/demos/date-range-picker/loading")
       ),
     },
     "date-range-picker-placeholder": {
       name: "date-range-picker-placeholder",
+      files: ["registry/demos/date-range-picker/placeholder.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-range-picker/placeholder")
+        () => import("@/registry/demos/date-range-picker/placeholder")
       ),
     },
     "date-range-picker-prefix": {
       name: "date-range-picker-prefix",
+      files: ["registry/demos/date-range-picker/prefix.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-range-picker/prefix")
+        () => import("@/registry/demos/date-range-picker/prefix")
       ),
     },
     "date-range-picker-read-only": {
       name: "date-range-picker-read-only",
+      files: ["registry/demos/date-range-picker/read-only.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-range-picker/read-only")
+        () => import("@/registry/demos/date-range-picker/read-only")
       ),
     },
     "date-range-picker-required": {
       name: "date-range-picker-required",
+      files: ["registry/demos/date-range-picker/required.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-range-picker/required")
+        () => import("@/registry/demos/date-range-picker/required")
       ),
     },
     "date-range-picker-sizes": {
       name: "date-range-picker-sizes",
+      files: ["registry/demos/date-range-picker/sizes.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-range-picker/sizes")
+        () => import("@/registry/demos/date-range-picker/sizes")
       ),
     },
     "date-range-picker-time-zones": {
       name: "date-range-picker-time-zones",
+      files: ["registry/demos/date-range-picker/time-zones.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-range-picker/time-zones")
+        () => import("@/registry/demos/date-range-picker/time-zones")
       ),
     },
     "date-range-picker-uncontrolled": {
       name: "date-range-picker-uncontrolled",
+      files: ["registry/demos/date-range-picker/uncontrolled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/date-range-picker/uncontrolled")
+        () => import("@/registry/demos/date-range-picker/uncontrolled")
       ),
     },
     "dialog-alert-dialog": {
       name: "dialog-alert-dialog",
+      files: ["registry/demos/dialog/alert-dialog.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/dialog/alert-dialog")
+        () => import("@/registry/demos/dialog/alert-dialog")
       ),
     },
     "dialog-async-form-submission": {
       name: "dialog-async-form-submission",
+      files: ["registry/demos/dialog/async-form-submission.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/dialog/async-form-submission")
+        () => import("@/registry/demos/dialog/async-form-submission")
       ),
     },
     "dialog-basic": {
       name: "dialog-basic",
-      component: React.lazy(() => import("@/registry-v2/demos/dialog/basic")),
+      files: ["registry/demos/dialog/basic.tsx"],
+      component: React.lazy(() => import("@/registry/demos/dialog/basic")),
     },
     "dialog-composition": {
       name: "dialog-composition",
+      files: ["registry/demos/dialog/composition.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/dialog/composition")
+        () => import("@/registry/demos/dialog/composition")
       ),
     },
     "dialog-controlled": {
       name: "dialog-controlled",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/dialog/controlled")
-      ),
+      files: ["registry/demos/dialog/controlled.tsx"],
+      component: React.lazy(() => import("@/registry/demos/dialog/controlled")),
     },
     "dialog-description": {
       name: "dialog-description",
+      files: ["registry/demos/dialog/description.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/dialog/description")
+        () => import("@/registry/demos/dialog/description")
       ),
     },
     "dialog-dismiss-button": {
       name: "dialog-dismiss-button",
+      files: ["registry/demos/dialog/dismiss-button.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/dialog/dismiss-button")
+        () => import("@/registry/demos/dialog/dismiss-button")
       ),
     },
     "dialog-dismissable": {
       name: "dialog-dismissable",
+      files: ["registry/demos/dialog/dismissable.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/dialog/dismissable")
+        () => import("@/registry/demos/dialog/dismissable")
       ),
     },
     "dialog-drawer": {
       name: "dialog-drawer",
-      component: React.lazy(() => import("@/registry-v2/demos/dialog/drawer")),
+      files: ["registry/demos/dialog/drawer.tsx"],
+      component: React.lazy(() => import("@/registry/demos/dialog/drawer")),
     },
     "dialog-inset-content": {
       name: "dialog-inset-content",
+      files: ["registry/demos/dialog/inset-content.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/dialog/inset-content")
+        () => import("@/registry/demos/dialog/inset-content")
       ),
     },
     "dialog-nested": {
       name: "dialog-nested",
-      component: React.lazy(() => import("@/registry-v2/demos/dialog/nested")),
+      files: ["registry/demos/dialog/nested.tsx"],
+      component: React.lazy(() => import("@/registry/demos/dialog/nested")),
     },
     "dialog-popover": {
       name: "dialog-popover",
-      component: React.lazy(() => import("@/registry-v2/demos/dialog/popover")),
+      files: ["registry/demos/dialog/popover.tsx"],
+      component: React.lazy(() => import("@/registry/demos/dialog/popover")),
     },
     "dialog-title": {
       name: "dialog-title",
-      component: React.lazy(() => import("@/registry-v2/demos/dialog/title")),
+      files: ["registry/demos/dialog/title.tsx"],
+      component: React.lazy(() => import("@/registry/demos/dialog/title")),
     },
     "dialog-types": {
       name: "dialog-types",
-      component: React.lazy(() => import("@/registry-v2/demos/dialog/types")),
+      files: ["registry/demos/dialog/types.tsx"],
+      component: React.lazy(() => import("@/registry/demos/dialog/types")),
     },
     "drop-zone-default": {
       name: "drop-zone-default",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/drop-zone/default")
-      ),
+      files: ["registry/demos/drop-zone/default.tsx"],
+      component: React.lazy(() => import("@/registry/demos/drop-zone/default")),
     },
     "drop-zone-disabled": {
       name: "drop-zone-disabled",
+      files: ["registry/demos/drop-zone/disabled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/drop-zone/disabled")
+        () => import("@/registry/demos/drop-zone/disabled")
       ),
     },
     "drop-zone-file-trigger": {
       name: "drop-zone-file-trigger",
+      files: ["registry/demos/drop-zone/file-trigger.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/drop-zone/file-trigger")
+        () => import("@/registry/demos/drop-zone/file-trigger")
       ),
     },
     "drop-zone-label": {
       name: "drop-zone-label",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/drop-zone/label")
-      ),
+      files: ["registry/demos/drop-zone/label.tsx"],
+      component: React.lazy(() => import("@/registry/demos/drop-zone/label")),
     },
     "file-trigger-default": {
       name: "file-trigger-default",
+      files: ["registry/demos/file-trigger/default.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/file-trigger/default")
+        () => import("@/registry/demos/file-trigger/default")
       ),
     },
     "file-trigger-directory-selection": {
       name: "file-trigger-directory-selection",
+      files: ["registry/demos/file-trigger/directory-selection.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/file-trigger/directory-selection")
+        () => import("@/registry/demos/file-trigger/directory-selection")
       ),
     },
     "file-trigger-file-types": {
       name: "file-trigger-file-types",
+      files: ["registry/demos/file-trigger/file-types.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/file-trigger/file-types")
+        () => import("@/registry/demos/file-trigger/file-types")
       ),
     },
     "file-trigger-media-capture": {
       name: "file-trigger-media-capture",
+      files: ["registry/demos/file-trigger/media-capture.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/file-trigger/media-capture")
+        () => import("@/registry/demos/file-trigger/media-capture")
       ),
     },
     "file-trigger-multiple-files": {
       name: "file-trigger-multiple-files",
+      files: ["registry/demos/file-trigger/multiple-files.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/file-trigger/multiple-files")
+        () => import("@/registry/demos/file-trigger/multiple-files")
       ),
     },
     "link-default": {
       name: "link-default",
-      component: React.lazy(() => import("@/registry-v2/demos/link/default")),
+      files: ["registry/demos/link/default.tsx"],
+      component: React.lazy(() => import("@/registry/demos/link/default")),
     },
     "link-disabled": {
       name: "link-disabled",
-      component: React.lazy(() => import("@/registry-v2/demos/link/disabled")),
+      files: ["registry/demos/link/disabled.tsx"],
+      component: React.lazy(() => import("@/registry/demos/link/disabled")),
     },
     "link-icon": {
       name: "link-icon",
-      component: React.lazy(() => import("@/registry-v2/demos/link/icon")),
+      files: ["registry/demos/link/icon.tsx"],
+      component: React.lazy(() => import("@/registry/demos/link/icon")),
     },
     "link-variants": {
       name: "link-variants",
-      component: React.lazy(() => import("@/registry-v2/demos/link/variants")),
+      files: ["registry/demos/link/variants.tsx"],
+      component: React.lazy(() => import("@/registry/demos/link/variants")),
     },
     "list-box-async-loading": {
       name: "list-box-async-loading",
+      files: ["registry/demos/list-box/async-loading.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/list-box/async-loading")
+        () => import("@/registry/demos/list-box/async-loading")
       ),
     },
     "list-box-basic": {
       name: "list-box-basic",
-      component: React.lazy(() => import("@/registry-v2/demos/list-box/basic")),
+      files: ["registry/demos/list-box/basic.tsx"],
+      component: React.lazy(() => import("@/registry/demos/list-box/basic")),
     },
     "list-box-composition": {
       name: "list-box-composition",
+      files: ["registry/demos/list-box/composition.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/list-box/composition")
+        () => import("@/registry/demos/list-box/composition")
       ),
     },
     "list-box-contact-list": {
       name: "list-box-contact-list",
+      files: ["registry/demos/list-box/contact-list.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/list-box/contact-list")
+        () => import("@/registry/demos/list-box/contact-list")
       ),
     },
     "list-box-controlled": {
       name: "list-box-controlled",
+      files: ["registry/demos/list-box/controlled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/list-box/controlled")
+        () => import("@/registry/demos/list-box/controlled")
       ),
     },
     "list-box-disabled-items": {
       name: "list-box-disabled-items",
+      files: ["registry/demos/list-box/disabled-items.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/list-box/disabled-items")
+        () => import("@/registry/demos/list-box/disabled-items")
       ),
     },
     "list-box-empty-state": {
       name: "list-box-empty-state",
+      files: ["registry/demos/list-box/empty-state.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/list-box/empty-state")
+        () => import("@/registry/demos/list-box/empty-state")
       ),
     },
     "list-box-grid": {
       name: "list-box-grid",
-      component: React.lazy(() => import("@/registry-v2/demos/list-box/grid")),
+      files: ["registry/demos/list-box/grid.tsx"],
+      component: React.lazy(() => import("@/registry/demos/list-box/grid")),
     },
     "list-box-horizontal": {
       name: "list-box-horizontal",
+      files: ["registry/demos/list-box/horizontal.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/list-box/horizontal")
+        () => import("@/registry/demos/list-box/horizontal")
       ),
     },
     "list-box-image-grid": {
       name: "list-box-image-grid",
+      files: ["registry/demos/list-box/image-grid.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/list-box/image-grid")
+        () => import("@/registry/demos/list-box/image-grid")
       ),
     },
     "list-box-item-variant": {
       name: "list-box-item-variant",
+      files: ["registry/demos/list-box/item-variant.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/list-box/item-variant")
+        () => import("@/registry/demos/list-box/item-variant")
       ),
     },
     "list-box-label-and-description": {
       name: "list-box-label-and-description",
+      files: ["registry/demos/list-box/label-and-description.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/list-box/label-and-description")
+        () => import("@/registry/demos/list-box/label-and-description")
       ),
     },
     "list-box-links": {
       name: "list-box-links",
-      component: React.lazy(() => import("@/registry-v2/demos/list-box/links")),
+      files: ["registry/demos/list-box/links.tsx"],
+      component: React.lazy(() => import("@/registry/demos/list-box/links")),
     },
     "list-box-loading": {
       name: "list-box-loading",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/list-box/loading")
-      ),
+      files: ["registry/demos/list-box/loading.tsx"],
+      component: React.lazy(() => import("@/registry/demos/list-box/loading")),
     },
     "list-box-prefix-and-suffix": {
       name: "list-box-prefix-and-suffix",
+      files: ["registry/demos/list-box/prefix-and-suffix.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/list-box/prefix-and-suffix")
+        () => import("@/registry/demos/list-box/prefix-and-suffix")
       ),
     },
     "list-box-sections": {
       name: "list-box-sections",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/list-box/sections")
-      ),
+      files: ["registry/demos/list-box/sections.tsx"],
+      component: React.lazy(() => import("@/registry/demos/list-box/sections")),
     },
     "list-box-selection-behavior": {
       name: "list-box-selection-behavior",
+      files: ["registry/demos/list-box/selection-behavior.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/list-box/selection-behavior")
+        () => import("@/registry/demos/list-box/selection-behavior")
       ),
     },
     "list-box-selection-mode": {
       name: "list-box-selection-mode",
+      files: ["registry/demos/list-box/selection-mode.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/list-box/selection-mode")
+        () => import("@/registry/demos/list-box/selection-mode")
       ),
     },
     "list-box-separator": {
       name: "list-box-separator",
+      files: ["registry/demos/list-box/separator.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/list-box/separator")
+        () => import("@/registry/demos/list-box/separator")
       ),
     },
     "list-box-uncontrolled": {
       name: "list-box-uncontrolled",
+      files: ["registry/demos/list-box/uncontrolled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/list-box/uncontrolled")
+        () => import("@/registry/demos/list-box/uncontrolled")
       ),
     },
     "menu-basic": {
       name: "menu-basic",
-      component: React.lazy(() => import("@/registry-v2/demos/menu/basic")),
+      files: ["registry/demos/menu/basic.tsx"],
+      component: React.lazy(() => import("@/registry/demos/menu/basic")),
     },
     "menu-composition": {
       name: "menu-composition",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/menu/composition")
-      ),
+      files: ["registry/demos/menu/composition.tsx"],
+      component: React.lazy(() => import("@/registry/demos/menu/composition")),
     },
     "menu-controlled": {
       name: "menu-controlled",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/menu/controlled")
-      ),
+      files: ["registry/demos/menu/controlled.tsx"],
+      component: React.lazy(() => import("@/registry/demos/menu/controlled")),
     },
     "menu-disabled-items": {
       name: "menu-disabled-items",
+      files: ["registry/demos/menu/disabled-items.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/menu/disabled-items")
+        () => import("@/registry/demos/menu/disabled-items")
       ),
     },
     "menu-item-variant": {
       name: "menu-item-variant",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/menu/item-variant")
-      ),
+      files: ["registry/demos/menu/item-variant.tsx"],
+      component: React.lazy(() => import("@/registry/demos/menu/item-variant")),
     },
     "menu-label-and-description": {
       name: "menu-label-and-description",
+      files: ["registry/demos/menu/label-and-description.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/menu/label-and-description")
+        () => import("@/registry/demos/menu/label-and-description")
       ),
     },
     "menu-link-items": {
       name: "menu-link-items",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/menu/link-items")
-      ),
+      files: ["registry/demos/menu/link-items.tsx"],
+      component: React.lazy(() => import("@/registry/demos/menu/link-items")),
     },
     "menu-long-press": {
       name: "menu-long-press",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/menu/long-press")
-      ),
+      files: ["registry/demos/menu/long-press.tsx"],
+      component: React.lazy(() => import("@/registry/demos/menu/long-press")),
     },
     "menu-multiple-selection": {
       name: "menu-multiple-selection",
+      files: ["registry/demos/menu/multiple-selection.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/menu/multiple-selection")
+        () => import("@/registry/demos/menu/multiple-selection")
       ),
     },
     "menu-overlay-type": {
       name: "menu-overlay-type",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/menu/overlay-type")
-      ),
+      files: ["registry/demos/menu/overlay-type.tsx"],
+      component: React.lazy(() => import("@/registry/demos/menu/overlay-type")),
     },
     "menu-placement": {
       name: "menu-placement",
-      component: React.lazy(() => import("@/registry-v2/demos/menu/placement")),
+      files: ["registry/demos/menu/placement.tsx"],
+      component: React.lazy(() => import("@/registry/demos/menu/placement")),
     },
     "menu-prefix-and-suffix": {
       name: "menu-prefix-and-suffix",
+      files: ["registry/demos/menu/prefix-and-suffix.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/menu/prefix-and-suffix")
+        () => import("@/registry/demos/menu/prefix-and-suffix")
       ),
     },
     "menu-section": {
       name: "menu-section",
-      component: React.lazy(() => import("@/registry-v2/demos/menu/section")),
+      files: ["registry/demos/menu/section.tsx"],
+      component: React.lazy(() => import("@/registry/demos/menu/section")),
     },
     "menu-separator": {
       name: "menu-separator",
-      component: React.lazy(() => import("@/registry-v2/demos/menu/separator")),
+      files: ["registry/demos/menu/separator.tsx"],
+      component: React.lazy(() => import("@/registry/demos/menu/separator")),
     },
     "menu-shortcut": {
       name: "menu-shortcut",
-      component: React.lazy(() => import("@/registry-v2/demos/menu/shortcut")),
+      files: ["registry/demos/menu/shortcut.tsx"],
+      component: React.lazy(() => import("@/registry/demos/menu/shortcut")),
     },
     "menu-single-selection": {
       name: "menu-single-selection",
+      files: ["registry/demos/menu/single-selection.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/menu/single-selection")
+        () => import("@/registry/demos/menu/single-selection")
       ),
     },
     "menu-submenus": {
       name: "menu-submenus",
-      component: React.lazy(() => import("@/registry-v2/demos/menu/submenus")),
+      files: ["registry/demos/menu/submenus.tsx"],
+      component: React.lazy(() => import("@/registry/demos/menu/submenus")),
     },
     "number-field-composition": {
       name: "number-field-composition",
+      files: ["registry/demos/number-field/composition.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/number-field/composition")
+        () => import("@/registry/demos/number-field/composition")
       ),
     },
     "number-field-contextual-help": {
       name: "number-field-contextual-help",
+      files: ["registry/demos/number-field/contextual-help.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/number-field/contextual-help")
+        () => import("@/registry/demos/number-field/contextual-help")
       ),
     },
     "number-field-controlled": {
       name: "number-field-controlled",
+      files: ["registry/demos/number-field/controlled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/number-field/controlled")
+        () => import("@/registry/demos/number-field/controlled")
       ),
     },
     "number-field-default": {
       name: "number-field-default",
+      files: ["registry/demos/number-field/default.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/number-field/default")
+        () => import("@/registry/demos/number-field/default")
       ),
     },
     "number-field-description": {
       name: "number-field-description",
+      files: ["registry/demos/number-field/description.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/number-field/description")
+        () => import("@/registry/demos/number-field/description")
       ),
     },
     "number-field-disabled": {
       name: "number-field-disabled",
+      files: ["registry/demos/number-field/disabled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/number-field/disabled")
+        () => import("@/registry/demos/number-field/disabled")
       ),
     },
     "number-field-error-message": {
       name: "number-field-error-message",
+      files: ["registry/demos/number-field/error-message.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/number-field/error-message")
+        () => import("@/registry/demos/number-field/error-message")
       ),
     },
     "number-field-format-options": {
       name: "number-field-format-options",
+      files: ["registry/demos/number-field/format-options.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/number-field/format-options")
+        () => import("@/registry/demos/number-field/format-options")
       ),
     },
     "number-field-label": {
       name: "number-field-label",
+      files: ["registry/demos/number-field/label.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/number-field/label")
+        () => import("@/registry/demos/number-field/label")
       ),
     },
     "number-field-read-only": {
       name: "number-field-read-only",
+      files: ["registry/demos/number-field/read-only.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/number-field/read-only")
+        () => import("@/registry/demos/number-field/read-only")
       ),
     },
     "number-field-required": {
       name: "number-field-required",
+      files: ["registry/demos/number-field/required.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/number-field/required")
+        () => import("@/registry/demos/number-field/required")
       ),
     },
     "number-field-sizes": {
       name: "number-field-sizes",
+      files: ["registry/demos/number-field/sizes.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/number-field/sizes")
+        () => import("@/registry/demos/number-field/sizes")
       ),
     },
     "number-field-uncontrolled": {
       name: "number-field-uncontrolled",
+      files: ["registry/demos/number-field/uncontrolled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/number-field/uncontrolled")
+        () => import("@/registry/demos/number-field/uncontrolled")
       ),
     },
     "progress-composition": {
       name: "progress-composition",
+      files: ["registry/demos/progress/composition.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/progress/composition")
+        () => import("@/registry/demos/progress/composition")
       ),
     },
     "progress-custom-color": {
       name: "progress-custom-color",
+      files: ["registry/demos/progress/custom-color.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/progress/custom-color")
+        () => import("@/registry/demos/progress/custom-color")
       ),
     },
     "progress-custom-value-label": {
       name: "progress-custom-value-label",
+      files: ["registry/demos/progress/custom-value-label.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/progress/custom-value-label")
+        () => import("@/registry/demos/progress/custom-value-label")
       ),
     },
     "progress-default": {
       name: "progress-default",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/progress/default")
-      ),
+      files: ["registry/demos/progress/default.tsx"],
+      component: React.lazy(() => import("@/registry/demos/progress/default")),
     },
     "progress-duration": {
       name: "progress-duration",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/progress/duration")
-      ),
+      files: ["registry/demos/progress/duration.tsx"],
+      component: React.lazy(() => import("@/registry/demos/progress/duration")),
     },
     "progress-format-options": {
       name: "progress-format-options",
+      files: ["registry/demos/progress/format-options.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/progress/format-options")
+        () => import("@/registry/demos/progress/format-options")
       ),
     },
     "progress-indeterminate": {
       name: "progress-indeterminate",
+      files: ["registry/demos/progress/indeterminate.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/progress/indeterminate")
+        () => import("@/registry/demos/progress/indeterminate")
       ),
     },
     "progress-label": {
       name: "progress-label",
-      component: React.lazy(() => import("@/registry-v2/demos/progress/label")),
+      files: ["registry/demos/progress/label.tsx"],
+      component: React.lazy(() => import("@/registry/demos/progress/label")),
     },
     "progress-min-max-values": {
       name: "progress-min-max-values",
+      files: ["registry/demos/progress/min-max-values.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/progress/min-max-values")
+        () => import("@/registry/demos/progress/min-max-values")
       ),
     },
     "progress-shape": {
       name: "progress-shape",
-      component: React.lazy(() => import("@/registry-v2/demos/progress/shape")),
+      files: ["registry/demos/progress/shape.tsx"],
+      component: React.lazy(() => import("@/registry/demos/progress/shape")),
     },
     "progress-sizes": {
       name: "progress-sizes",
-      component: React.lazy(() => import("@/registry-v2/demos/progress/sizes")),
+      files: ["registry/demos/progress/sizes.tsx"],
+      component: React.lazy(() => import("@/registry/demos/progress/sizes")),
     },
     "progress-toolbar": {
       name: "progress-toolbar",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/progress/toolbar")
-      ),
+      files: ["registry/demos/progress/toolbar.tsx"],
+      component: React.lazy(() => import("@/registry/demos/progress/toolbar")),
     },
     "progress-value-label": {
       name: "progress-value-label",
+      files: ["registry/demos/progress/value-label.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/progress/value-label")
+        () => import("@/registry/demos/progress/value-label")
       ),
     },
     "progress-variants": {
       name: "progress-variants",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/progress/variants")
-      ),
+      files: ["registry/demos/progress/variants.tsx"],
+      component: React.lazy(() => import("@/registry/demos/progress/variants")),
     },
     "radio-group-cards": {
       name: "radio-group-cards",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/radio-group/cards")
-      ),
+      files: ["registry/demos/radio-group/cards.tsx"],
+      component: React.lazy(() => import("@/registry/demos/radio-group/cards")),
     },
     "radio-group-composition": {
       name: "radio-group-composition",
+      files: ["registry/demos/radio-group/composition.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/radio-group/composition")
+        () => import("@/registry/demos/radio-group/composition")
       ),
     },
     "radio-group-contextual-help": {
       name: "radio-group-contextual-help",
+      files: ["registry/demos/radio-group/contextual-help.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/radio-group/contextual-help")
+        () => import("@/registry/demos/radio-group/contextual-help")
       ),
     },
     "radio-group-controlled": {
       name: "radio-group-controlled",
+      files: ["registry/demos/radio-group/controlled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/radio-group/controlled")
+        () => import("@/registry/demos/radio-group/controlled")
       ),
     },
     "radio-group-default": {
       name: "radio-group-default",
+      files: ["registry/demos/radio-group/default.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/radio-group/default")
+        () => import("@/registry/demos/radio-group/default")
       ),
     },
     "radio-group-description": {
       name: "radio-group-description",
+      files: ["registry/demos/radio-group/description.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/radio-group/description")
+        () => import("@/registry/demos/radio-group/description")
       ),
     },
     "radio-group-disabled": {
       name: "radio-group-disabled",
+      files: ["registry/demos/radio-group/disabled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/radio-group/disabled")
+        () => import("@/registry/demos/radio-group/disabled")
       ),
     },
     "radio-group-error-message": {
       name: "radio-group-error-message",
+      files: ["registry/demos/radio-group/error-message.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/radio-group/error-message")
+        () => import("@/registry/demos/radio-group/error-message")
       ),
     },
     "radio-group-label": {
       name: "radio-group-label",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/radio-group/label")
-      ),
+      files: ["registry/demos/radio-group/label.tsx"],
+      component: React.lazy(() => import("@/registry/demos/radio-group/label")),
     },
     "radio-group-orientation": {
       name: "radio-group-orientation",
+      files: ["registry/demos/radio-group/orientation.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/radio-group/orientation")
+        () => import("@/registry/demos/radio-group/orientation")
       ),
     },
     "radio-group-read-only": {
       name: "radio-group-read-only",
+      files: ["registry/demos/radio-group/read-only.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/radio-group/read-only")
+        () => import("@/registry/demos/radio-group/read-only")
       ),
     },
     "radio-group-required": {
       name: "radio-group-required",
+      files: ["registry/demos/radio-group/required.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/radio-group/required")
+        () => import("@/registry/demos/radio-group/required")
       ),
     },
     "radio-group-uncontrolled": {
       name: "radio-group-uncontrolled",
+      files: ["registry/demos/radio-group/uncontrolled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/radio-group/uncontrolled")
+        () => import("@/registry/demos/radio-group/uncontrolled")
       ),
     },
     "range-calendar-composition": {
       name: "range-calendar-composition",
+      files: ["registry/demos/range-calendar/composition.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/range-calendar/composition")
+        () => import("@/registry/demos/range-calendar/composition")
       ),
     },
     "range-calendar-controlled": {
       name: "range-calendar-controlled",
+      files: ["registry/demos/range-calendar/controlled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/range-calendar/controlled")
+        () => import("@/registry/demos/range-calendar/controlled")
       ),
     },
     "range-calendar-default": {
       name: "range-calendar-default",
+      files: ["registry/demos/range-calendar/default.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/range-calendar/default")
+        () => import("@/registry/demos/range-calendar/default")
       ),
     },
     "range-calendar-disabled": {
       name: "range-calendar-disabled",
+      files: ["registry/demos/range-calendar/disabled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/range-calendar/disabled")
+        () => import("@/registry/demos/range-calendar/disabled")
       ),
     },
     "range-calendar-error-message": {
       name: "range-calendar-error-message",
+      files: ["registry/demos/range-calendar/error-message.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/range-calendar/error-message")
+        () => import("@/registry/demos/range-calendar/error-message")
       ),
     },
     "range-calendar-label": {
       name: "range-calendar-label",
+      files: ["registry/demos/range-calendar/label.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/range-calendar/label")
+        () => import("@/registry/demos/range-calendar/label")
       ),
     },
     "range-calendar-non-contiguous-ranges": {
       name: "range-calendar-non-contiguous-ranges",
+      files: ["registry/demos/range-calendar/non-contiguous-ranges.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/range-calendar/non-contiguous-ranges")
+        () => import("@/registry/demos/range-calendar/non-contiguous-ranges")
       ),
     },
     "range-calendar-page-behaviour": {
       name: "range-calendar-page-behaviour",
+      files: ["registry/demos/range-calendar/page-behaviour.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/range-calendar/page-behaviour")
+        () => import("@/registry/demos/range-calendar/page-behaviour")
       ),
     },
     "range-calendar-read-only": {
       name: "range-calendar-read-only",
+      files: ["registry/demos/range-calendar/read-only.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/range-calendar/read-only")
+        () => import("@/registry/demos/range-calendar/read-only")
       ),
     },
     "range-calendar-uncontrolled": {
       name: "range-calendar-uncontrolled",
+      files: ["registry/demos/range-calendar/uncontrolled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/range-calendar/uncontrolled")
+        () => import("@/registry/demos/range-calendar/uncontrolled")
       ),
     },
     "range-calendar-unvailable-dates": {
       name: "range-calendar-unvailable-dates",
+      files: ["registry/demos/range-calendar/unvailable-dates.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/range-calendar/unvailable-dates")
+        () => import("@/registry/demos/range-calendar/unvailable-dates")
       ),
     },
     "range-calendar-validation": {
       name: "range-calendar-validation",
+      files: ["registry/demos/range-calendar/validation.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/range-calendar/validation")
+        () => import("@/registry/demos/range-calendar/validation")
       ),
     },
     "range-calendar-visible-months": {
       name: "range-calendar-visible-months",
+      files: ["registry/demos/range-calendar/visible-months.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/range-calendar/visible-months")
+        () => import("@/registry/demos/range-calendar/visible-months")
       ),
     },
     "scroll-area-default": {
       name: "scroll-area-default",
+      files: ["registry/demos/scroll-area/default.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/scroll-area/default")
+        () => import("@/registry/demos/scroll-area/default")
       ),
     },
     "scroll-area-scrollbars": {
       name: "scroll-area-scrollbars",
+      files: ["registry/demos/scroll-area/scrollbars.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/scroll-area/scrollbars")
+        () => import("@/registry/demos/scroll-area/scrollbars")
       ),
     },
     "scroll-area-sizes": {
       name: "scroll-area-sizes",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/scroll-area/sizes")
-      ),
+      files: ["registry/demos/scroll-area/sizes.tsx"],
+      component: React.lazy(() => import("@/registry/demos/scroll-area/sizes")),
     },
     "search-field-composition": {
       name: "search-field-composition",
+      files: ["registry/demos/search-field/composition.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/search-field/composition")
+        () => import("@/registry/demos/search-field/composition")
       ),
     },
     "search-field-contextual-help": {
       name: "search-field-contextual-help",
+      files: ["registry/demos/search-field/contextual-help.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/search-field/contextual-help")
+        () => import("@/registry/demos/search-field/contextual-help")
       ),
     },
     "search-field-controlled": {
       name: "search-field-controlled",
+      files: ["registry/demos/search-field/controlled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/search-field/controlled")
+        () => import("@/registry/demos/search-field/controlled")
       ),
     },
     "search-field-default": {
       name: "search-field-default",
+      files: ["registry/demos/search-field/default.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/search-field/default")
+        () => import("@/registry/demos/search-field/default")
       ),
     },
     "search-field-description": {
       name: "search-field-description",
+      files: ["registry/demos/search-field/description.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/search-field/description")
+        () => import("@/registry/demos/search-field/description")
       ),
     },
     "search-field-disabled": {
       name: "search-field-disabled",
+      files: ["registry/demos/search-field/disabled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/search-field/disabled")
+        () => import("@/registry/demos/search-field/disabled")
       ),
     },
     "search-field-error-message": {
       name: "search-field-error-message",
+      files: ["registry/demos/search-field/error-message.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/search-field/error-message")
+        () => import("@/registry/demos/search-field/error-message")
       ),
     },
     "search-field-form": {
       name: "search-field-form",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/search-field/form")
-      ),
+      files: ["registry/demos/search-field/form.tsx"],
+      component: React.lazy(() => import("@/registry/demos/search-field/form")),
     },
     "search-field-label": {
       name: "search-field-label",
+      files: ["registry/demos/search-field/label.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/search-field/label")
+        () => import("@/registry/demos/search-field/label")
       ),
     },
     "search-field-loading": {
       name: "search-field-loading",
+      files: ["registry/demos/search-field/loading.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/search-field/loading")
+        () => import("@/registry/demos/search-field/loading")
       ),
     },
     "search-field-prefix-and-suffix": {
       name: "search-field-prefix-and-suffix",
+      files: ["registry/demos/search-field/prefix-and-suffix.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/search-field/prefix-and-suffix")
+        () => import("@/registry/demos/search-field/prefix-and-suffix")
       ),
     },
     "search-field-read-only": {
       name: "search-field-read-only",
+      files: ["registry/demos/search-field/read-only.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/search-field/read-only")
+        () => import("@/registry/demos/search-field/read-only")
       ),
     },
     "search-field-required": {
       name: "search-field-required",
+      files: ["registry/demos/search-field/required.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/search-field/required")
+        () => import("@/registry/demos/search-field/required")
       ),
     },
     "search-field-sizes": {
       name: "search-field-sizes",
+      files: ["registry/demos/search-field/sizes.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/search-field/sizes")
+        () => import("@/registry/demos/search-field/sizes")
       ),
     },
     "search-field-uncontrolled": {
       name: "search-field-uncontrolled",
+      files: ["registry/demos/search-field/uncontrolled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/search-field/uncontrolled")
+        () => import("@/registry/demos/search-field/uncontrolled")
       ),
     },
     "select-async-loading": {
       name: "select-async-loading",
+      files: ["registry/demos/select/async-loading.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/select/async-loading")
+        () => import("@/registry/demos/select/async-loading")
       ),
     },
     "select-basic": {
       name: "select-basic",
-      component: React.lazy(() => import("@/registry-v2/demos/select/basic")),
+      files: ["registry/demos/select/basic.tsx"],
+      component: React.lazy(() => import("@/registry/demos/select/basic")),
     },
     "select-composition": {
       name: "select-composition",
+      files: ["registry/demos/select/composition.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/select/composition")
+        () => import("@/registry/demos/select/composition")
       ),
     },
     "select-contextual-help": {
       name: "select-contextual-help",
+      files: ["registry/demos/select/contextual-help.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/select/contextual-help")
+        () => import("@/registry/demos/select/contextual-help")
       ),
     },
     "select-controlled": {
       name: "select-controlled",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/select/controlled")
-      ),
+      files: ["registry/demos/select/controlled.tsx"],
+      component: React.lazy(() => import("@/registry/demos/select/controlled")),
     },
     "select-description": {
       name: "select-description",
+      files: ["registry/demos/select/description.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/select/description")
+        () => import("@/registry/demos/select/description")
       ),
     },
     "select-disabled": {
       name: "select-disabled",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/select/disabled")
-      ),
+      files: ["registry/demos/select/disabled.tsx"],
+      component: React.lazy(() => import("@/registry/demos/select/disabled")),
     },
     "select-label": {
       name: "select-label",
-      component: React.lazy(() => import("@/registry-v2/demos/select/label")),
+      files: ["registry/demos/select/label.tsx"],
+      component: React.lazy(() => import("@/registry/demos/select/label")),
     },
     "select-links": {
       name: "select-links",
-      component: React.lazy(() => import("@/registry-v2/demos/select/links")),
+      files: ["registry/demos/select/links.tsx"],
+      component: React.lazy(() => import("@/registry/demos/select/links")),
     },
     "select-loading": {
       name: "select-loading",
-      component: React.lazy(() => import("@/registry-v2/demos/select/loading")),
+      files: ["registry/demos/select/loading.tsx"],
+      component: React.lazy(() => import("@/registry/demos/select/loading")),
     },
     "select-placeholder": {
       name: "select-placeholder",
+      files: ["registry/demos/select/placeholder.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/select/placeholder")
+        () => import("@/registry/demos/select/placeholder")
       ),
     },
     "select-required": {
       name: "select-required",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/select/required")
-      ),
+      files: ["registry/demos/select/required.tsx"],
+      component: React.lazy(() => import("@/registry/demos/select/required")),
     },
     "select-sections": {
       name: "select-sections",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/select/sections")
-      ),
+      files: ["registry/demos/select/sections.tsx"],
+      component: React.lazy(() => import("@/registry/demos/select/sections")),
     },
     "select-uncontrolled": {
       name: "select-uncontrolled",
+      files: ["registry/demos/select/uncontrolled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/select/uncontrolled")
+        () => import("@/registry/demos/select/uncontrolled")
       ),
     },
     "select-validation": {
       name: "select-validation",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/select/validation")
-      ),
+      files: ["registry/demos/select/validation.tsx"],
+      component: React.lazy(() => import("@/registry/demos/select/validation")),
     },
     "separator-card": {
       name: "separator-card",
-      component: React.lazy(() => import("@/registry-v2/demos/separator/card")),
+      files: ["registry/demos/separator/card.tsx"],
+      component: React.lazy(() => import("@/registry/demos/separator/card")),
     },
     "separator-orientation": {
       name: "separator-orientation",
+      files: ["registry/demos/separator/orientation.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/separator/orientation")
+        () => import("@/registry/demos/separator/orientation")
       ),
     },
     "skeleton-api-simulation": {
       name: "skeleton-api-simulation",
+      files: ["registry/demos/skeleton/api-simulation.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/skeleton/api-simulation")
+        () => import("@/registry/demos/skeleton/api-simulation")
       ),
     },
     "skeleton-card": {
       name: "skeleton-card",
-      component: React.lazy(() => import("@/registry-v2/demos/skeleton/card")),
+      files: ["registry/demos/skeleton/card.tsx"],
+      component: React.lazy(() => import("@/registry/demos/skeleton/card")),
     },
     "skeleton-children": {
       name: "skeleton-children",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/skeleton/children")
-      ),
+      files: ["registry/demos/skeleton/children.tsx"],
+      component: React.lazy(() => import("@/registry/demos/skeleton/children")),
     },
     "skeleton-fixed-size-children": {
       name: "skeleton-fixed-size-children",
+      files: ["registry/demos/skeleton/fixed-size-children.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/skeleton/fixed-size-children")
+        () => import("@/registry/demos/skeleton/fixed-size-children")
       ),
     },
     "skeleton-show": {
       name: "skeleton-show",
-      component: React.lazy(() => import("@/registry-v2/demos/skeleton/show")),
+      files: ["registry/demos/skeleton/show.tsx"],
+      component: React.lazy(() => import("@/registry/demos/skeleton/show")),
     },
     "slider-advanced-composition": {
       name: "slider-advanced-composition",
+      files: ["registry/demos/slider/advanced-composition.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/slider/advanced-composition")
+        () => import("@/registry/demos/slider/advanced-composition")
       ),
     },
     "slider-composition": {
       name: "slider-composition",
+      files: ["registry/demos/slider/composition.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/slider/composition")
+        () => import("@/registry/demos/slider/composition")
       ),
     },
     "slider-controlled": {
       name: "slider-controlled",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/slider/controlled")
-      ),
+      files: ["registry/demos/slider/controlled.tsx"],
+      component: React.lazy(() => import("@/registry/demos/slider/controlled")),
     },
     "slider-default": {
       name: "slider-default",
-      component: React.lazy(() => import("@/registry-v2/demos/slider/default")),
+      files: ["registry/demos/slider/default.tsx"],
+      component: React.lazy(() => import("@/registry/demos/slider/default")),
     },
     "slider-description": {
       name: "slider-description",
+      files: ["registry/demos/slider/description.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/slider/description")
+        () => import("@/registry/demos/slider/description")
       ),
     },
     "slider-disabled": {
       name: "slider-disabled",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/slider/disabled")
-      ),
+      files: ["registry/demos/slider/disabled.tsx"],
+      component: React.lazy(() => import("@/registry/demos/slider/disabled")),
     },
     "slider-format-options": {
       name: "slider-format-options",
+      files: ["registry/demos/slider/format-options.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/slider/format-options")
+        () => import("@/registry/demos/slider/format-options")
       ),
     },
     "slider-label": {
       name: "slider-label",
-      component: React.lazy(() => import("@/registry-v2/demos/slider/label")),
+      files: ["registry/demos/slider/label.tsx"],
+      component: React.lazy(() => import("@/registry/demos/slider/label")),
     },
     "slider-range": {
       name: "slider-range",
-      component: React.lazy(() => import("@/registry-v2/demos/slider/range")),
+      files: ["registry/demos/slider/range.tsx"],
+      component: React.lazy(() => import("@/registry/demos/slider/range")),
     },
     "slider-sizes": {
       name: "slider-sizes",
-      component: React.lazy(() => import("@/registry-v2/demos/slider/sizes")),
+      files: ["registry/demos/slider/sizes.tsx"],
+      component: React.lazy(() => import("@/registry/demos/slider/sizes")),
     },
     "slider-step": {
       name: "slider-step",
-      component: React.lazy(() => import("@/registry-v2/demos/slider/step")),
+      files: ["registry/demos/slider/step.tsx"],
+      component: React.lazy(() => import("@/registry/demos/slider/step")),
     },
     "slider-uncontrolled": {
       name: "slider-uncontrolled",
+      files: ["registry/demos/slider/uncontrolled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/slider/uncontrolled")
+        () => import("@/registry/demos/slider/uncontrolled")
       ),
     },
     "slider-value-label": {
       name: "slider-value-label",
+      files: ["registry/demos/slider/value-label.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/slider/value-label")
+        () => import("@/registry/demos/slider/value-label")
       ),
     },
     "slider-value-scale": {
       name: "slider-value-scale",
+      files: ["registry/demos/slider/value-scale.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/slider/value-scale")
+        () => import("@/registry/demos/slider/value-scale")
       ),
     },
     "slider-vertical": {
       name: "slider-vertical",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/slider/vertical")
-      ),
+      files: ["registry/demos/slider/vertical.tsx"],
+      component: React.lazy(() => import("@/registry/demos/slider/vertical")),
     },
     "switch-controlled": {
       name: "switch-controlled",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/switch/controlled")
-      ),
+      files: ["registry/demos/switch/controlled.tsx"],
+      component: React.lazy(() => import("@/registry/demos/switch/controlled")),
     },
     "switch-default": {
       name: "switch-default",
-      component: React.lazy(() => import("@/registry-v2/demos/switch/default")),
+      files: ["registry/demos/switch/default.tsx"],
+      component: React.lazy(() => import("@/registry/demos/switch/default")),
     },
     "switch-disabled": {
       name: "switch-disabled",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/switch/disabled")
-      ),
+      files: ["registry/demos/switch/disabled.tsx"],
+      component: React.lazy(() => import("@/registry/demos/switch/disabled")),
     },
     "switch-label": {
       name: "switch-label",
-      component: React.lazy(() => import("@/registry-v2/demos/switch/label")),
+      files: ["registry/demos/switch/label.tsx"],
+      component: React.lazy(() => import("@/registry/demos/switch/label")),
     },
     "switch-sizes": {
       name: "switch-sizes",
-      component: React.lazy(() => import("@/registry-v2/demos/switch/sizes")),
+      files: ["registry/demos/switch/sizes.tsx"],
+      component: React.lazy(() => import("@/registry/demos/switch/sizes")),
     },
     "switch-uncontrolled": {
       name: "switch-uncontrolled",
+      files: ["registry/demos/switch/uncontrolled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/switch/uncontrolled")
+        () => import("@/registry/demos/switch/uncontrolled")
       ),
     },
     "tabs-basic": {
       name: "tabs-basic",
-      component: React.lazy(() => import("@/registry-v2/demos/tabs/basic")),
+      files: ["registry/demos/tabs/basic.tsx"],
+      component: React.lazy(() => import("@/registry/demos/tabs/basic")),
     },
     "tabs-controlled": {
       name: "tabs-controlled",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/tabs/controlled")
-      ),
+      files: ["registry/demos/tabs/controlled.tsx"],
+      component: React.lazy(() => import("@/registry/demos/tabs/controlled")),
     },
     "tabs-disabled-item": {
       name: "tabs-disabled-item",
+      files: ["registry/demos/tabs/disabled-item.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/tabs/disabled-item")
+        () => import("@/registry/demos/tabs/disabled-item")
       ),
     },
     "tabs-disabled": {
       name: "tabs-disabled",
-      component: React.lazy(() => import("@/registry-v2/demos/tabs/disabled")),
+      files: ["registry/demos/tabs/disabled.tsx"],
+      component: React.lazy(() => import("@/registry/demos/tabs/disabled")),
     },
     "tabs-keyboard-activation": {
       name: "tabs-keyboard-activation",
+      files: ["registry/demos/tabs/keyboard-activation.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/tabs/keyboard-activation")
+        () => import("@/registry/demos/tabs/keyboard-activation")
       ),
     },
     "tabs-vertical": {
       name: "tabs-vertical",
-      component: React.lazy(() => import("@/registry-v2/demos/tabs/vertical")),
+      files: ["registry/demos/tabs/vertical.tsx"],
+      component: React.lazy(() => import("@/registry/demos/tabs/vertical")),
     },
     "text-area-composition": {
       name: "text-area-composition",
+      files: ["registry/demos/text-area/composition.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/text-area/composition")
+        () => import("@/registry/demos/text-area/composition")
       ),
     },
     "text-area-contextual-help": {
       name: "text-area-contextual-help",
+      files: ["registry/demos/text-area/contextual-help.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/text-area/contextual-help")
+        () => import("@/registry/demos/text-area/contextual-help")
       ),
     },
     "text-area-controlled": {
       name: "text-area-controlled",
+      files: ["registry/demos/text-area/controlled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/text-area/controlled")
+        () => import("@/registry/demos/text-area/controlled")
       ),
     },
     "text-area-default": {
       name: "text-area-default",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/text-area/default")
-      ),
+      files: ["registry/demos/text-area/default.tsx"],
+      component: React.lazy(() => import("@/registry/demos/text-area/default")),
     },
     "text-area-description": {
       name: "text-area-description",
+      files: ["registry/demos/text-area/description.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/text-area/description")
+        () => import("@/registry/demos/text-area/description")
       ),
     },
     "text-area-disabled": {
       name: "text-area-disabled",
+      files: ["registry/demos/text-area/disabled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/text-area/disabled")
+        () => import("@/registry/demos/text-area/disabled")
       ),
     },
     "text-area-error-message": {
       name: "text-area-error-message",
+      files: ["registry/demos/text-area/error-message.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/text-area/error-message")
+        () => import("@/registry/demos/text-area/error-message")
       ),
     },
     "text-area-form": {
       name: "text-area-form",
-      component: React.lazy(() => import("@/registry-v2/demos/text-area/form")),
+      files: ["registry/demos/text-area/form.tsx"],
+      component: React.lazy(() => import("@/registry/demos/text-area/form")),
     },
     "text-area-label": {
       name: "text-area-label",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/text-area/label")
-      ),
+      files: ["registry/demos/text-area/label.tsx"],
+      component: React.lazy(() => import("@/registry/demos/text-area/label")),
     },
     "text-area-loading": {
       name: "text-area-loading",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/text-area/loading")
-      ),
+      files: ["registry/demos/text-area/loading.tsx"],
+      component: React.lazy(() => import("@/registry/demos/text-area/loading")),
     },
     "text-area-prefix-and-suffix": {
       name: "text-area-prefix-and-suffix",
+      files: ["registry/demos/text-area/prefix-and-suffix.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/text-area/prefix-and-suffix")
+        () => import("@/registry/demos/text-area/prefix-and-suffix")
       ),
     },
     "text-area-read-only": {
       name: "text-area-read-only",
+      files: ["registry/demos/text-area/read-only.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/text-area/read-only")
+        () => import("@/registry/demos/text-area/read-only")
       ),
     },
     "text-area-required": {
       name: "text-area-required",
+      files: ["registry/demos/text-area/required.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/text-area/required")
+        () => import("@/registry/demos/text-area/required")
       ),
     },
     "text-area-uncontrolled": {
       name: "text-area-uncontrolled",
+      files: ["registry/demos/text-area/uncontrolled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/text-area/uncontrolled")
+        () => import("@/registry/demos/text-area/uncontrolled")
       ),
     },
     "text-field-composition": {
       name: "text-field-composition",
+      files: ["registry/demos/text-field/composition.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/text-field/composition")
+        () => import("@/registry/demos/text-field/composition")
       ),
     },
     "text-field-contextual-help": {
       name: "text-field-contextual-help",
+      files: ["registry/demos/text-field/contextual-help.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/text-field/contextual-help")
+        () => import("@/registry/demos/text-field/contextual-help")
       ),
     },
     "text-field-controlled": {
       name: "text-field-controlled",
+      files: ["registry/demos/text-field/controlled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/text-field/controlled")
+        () => import("@/registry/demos/text-field/controlled")
       ),
     },
     "text-field-default": {
       name: "text-field-default",
+      files: ["registry/demos/text-field/default.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/text-field/default")
+        () => import("@/registry/demos/text-field/default")
       ),
     },
     "text-field-description": {
       name: "text-field-description",
+      files: ["registry/demos/text-field/description.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/text-field/description")
+        () => import("@/registry/demos/text-field/description")
       ),
     },
     "text-field-disabled": {
       name: "text-field-disabled",
+      files: ["registry/demos/text-field/disabled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/text-field/disabled")
+        () => import("@/registry/demos/text-field/disabled")
       ),
     },
     "text-field-error-message": {
       name: "text-field-error-message",
+      files: ["registry/demos/text-field/error-message.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/text-field/error-message")
+        () => import("@/registry/demos/text-field/error-message")
       ),
     },
     "text-field-label": {
       name: "text-field-label",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/text-field/label")
-      ),
+      files: ["registry/demos/text-field/label.tsx"],
+      component: React.lazy(() => import("@/registry/demos/text-field/label")),
     },
     "text-field-loading": {
       name: "text-field-loading",
+      files: ["registry/demos/text-field/loading.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/text-field/loading")
+        () => import("@/registry/demos/text-field/loading")
       ),
     },
     "text-field-prefix-and-suffix": {
       name: "text-field-prefix-and-suffix",
+      files: ["registry/demos/text-field/prefix-and-suffix.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/text-field/prefix-and-suffix")
+        () => import("@/registry/demos/text-field/prefix-and-suffix")
       ),
     },
     "text-field-read-only": {
       name: "text-field-read-only",
+      files: ["registry/demos/text-field/read-only.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/text-field/read-only")
+        () => import("@/registry/demos/text-field/read-only")
       ),
     },
     "text-field-required": {
       name: "text-field-required",
+      files: ["registry/demos/text-field/required.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/text-field/required")
+        () => import("@/registry/demos/text-field/required")
       ),
     },
     "text-field-sizes": {
       name: "text-field-sizes",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/text-field/sizes")
-      ),
+      files: ["registry/demos/text-field/sizes.tsx"],
+      component: React.lazy(() => import("@/registry/demos/text-field/sizes")),
     },
     "text-field-uncontrolled": {
       name: "text-field-uncontrolled",
+      files: ["registry/demos/text-field/uncontrolled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/text-field/uncontrolled")
+        () => import("@/registry/demos/text-field/uncontrolled")
       ),
     },
     "time-field-composition": {
       name: "time-field-composition",
+      files: ["registry/demos/time-field/composition.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/time-field/composition")
+        () => import("@/registry/demos/time-field/composition")
       ),
     },
     "time-field-contextual-help": {
       name: "time-field-contextual-help",
+      files: ["registry/demos/time-field/contextual-help.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/time-field/contextual-help")
+        () => import("@/registry/demos/time-field/contextual-help")
       ),
     },
     "time-field-controlled": {
       name: "time-field-controlled",
+      files: ["registry/demos/time-field/controlled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/time-field/controlled")
+        () => import("@/registry/demos/time-field/controlled")
       ),
     },
     "time-field-default": {
       name: "time-field-default",
+      files: ["registry/demos/time-field/default.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/time-field/default")
+        () => import("@/registry/demos/time-field/default")
       ),
     },
     "time-field-description": {
       name: "time-field-description",
+      files: ["registry/demos/time-field/description.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/time-field/description")
+        () => import("@/registry/demos/time-field/description")
       ),
     },
     "time-field-disabled": {
       name: "time-field-disabled",
+      files: ["registry/demos/time-field/disabled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/time-field/disabled")
+        () => import("@/registry/demos/time-field/disabled")
       ),
     },
     "time-field-error-message": {
       name: "time-field-error-message",
+      files: ["registry/demos/time-field/error-message.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/time-field/error-message")
+        () => import("@/registry/demos/time-field/error-message")
       ),
     },
     "time-field-granularity": {
       name: "time-field-granularity",
+      files: ["registry/demos/time-field/granularity.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/time-field/granularity")
+        () => import("@/registry/demos/time-field/granularity")
       ),
     },
     "time-field-hide-time-zone": {
       name: "time-field-hide-time-zone",
+      files: ["registry/demos/time-field/hide-time-zone.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/time-field/hide-time-zone")
+        () => import("@/registry/demos/time-field/hide-time-zone")
       ),
     },
     "time-field-hour-cycle": {
       name: "time-field-hour-cycle",
+      files: ["registry/demos/time-field/hour-cycle.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/time-field/hour-cycle")
+        () => import("@/registry/demos/time-field/hour-cycle")
       ),
     },
     "time-field-label": {
       name: "time-field-label",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/time-field/label")
-      ),
+      files: ["registry/demos/time-field/label.tsx"],
+      component: React.lazy(() => import("@/registry/demos/time-field/label")),
     },
     "time-field-loading": {
       name: "time-field-loading",
+      files: ["registry/demos/time-field/loading.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/time-field/loading")
+        () => import("@/registry/demos/time-field/loading")
       ),
     },
     "time-field-placeholder": {
       name: "time-field-placeholder",
+      files: ["registry/demos/time-field/placeholder.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/time-field/placeholder")
+        () => import("@/registry/demos/time-field/placeholder")
       ),
     },
     "time-field-prefix-and-suffix": {
       name: "time-field-prefix-and-suffix",
+      files: ["registry/demos/time-field/prefix-and-suffix.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/time-field/prefix-and-suffix")
+        () => import("@/registry/demos/time-field/prefix-and-suffix")
       ),
     },
     "time-field-read-only": {
       name: "time-field-read-only",
+      files: ["registry/demos/time-field/read-only.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/time-field/read-only")
+        () => import("@/registry/demos/time-field/read-only")
       ),
     },
     "time-field-required": {
       name: "time-field-required",
+      files: ["registry/demos/time-field/required.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/time-field/required")
+        () => import("@/registry/demos/time-field/required")
       ),
     },
     "time-field-sizes": {
       name: "time-field-sizes",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/time-field/sizes")
-      ),
+      files: ["registry/demos/time-field/sizes.tsx"],
+      component: React.lazy(() => import("@/registry/demos/time-field/sizes")),
     },
     "time-field-time-zones": {
       name: "time-field-time-zones",
+      files: ["registry/demos/time-field/time-zones.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/time-field/time-zones")
+        () => import("@/registry/demos/time-field/time-zones")
       ),
     },
     "time-field-uncontrolled": {
       name: "time-field-uncontrolled",
+      files: ["registry/demos/time-field/uncontrolled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/time-field/uncontrolled")
+        () => import("@/registry/demos/time-field/uncontrolled")
       ),
     },
     "toggle-button-controlled": {
       name: "toggle-button-controlled",
+      files: ["registry/demos/toggle-button/controlled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/toggle-button/controlled")
+        () => import("@/registry/demos/toggle-button/controlled")
       ),
     },
     "toggle-button-default": {
       name: "toggle-button-default",
+      files: ["registry/demos/toggle-button/default.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/toggle-button/default")
+        () => import("@/registry/demos/toggle-button/default")
       ),
     },
     "toggle-button-disabled": {
       name: "toggle-button-disabled",
+      files: ["registry/demos/toggle-button/disabled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/toggle-button/disabled")
+        () => import("@/registry/demos/toggle-button/disabled")
       ),
     },
     "toggle-button-shapes": {
       name: "toggle-button-shapes",
+      files: ["registry/demos/toggle-button/shapes.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/toggle-button/shapes")
+        () => import("@/registry/demos/toggle-button/shapes")
       ),
     },
     "toggle-button-sizes": {
       name: "toggle-button-sizes",
+      files: ["registry/demos/toggle-button/sizes.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/toggle-button/sizes")
+        () => import("@/registry/demos/toggle-button/sizes")
       ),
     },
     "toggle-button-uncontrolled": {
       name: "toggle-button-uncontrolled",
+      files: ["registry/demos/toggle-button/uncontrolled.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/toggle-button/uncontrolled")
+        () => import("@/registry/demos/toggle-button/uncontrolled")
       ),
     },
     "toggle-button-variants": {
       name: "toggle-button-variants",
+      files: ["registry/demos/toggle-button/variants.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/toggle-button/variants")
+        () => import("@/registry/demos/toggle-button/variants")
       ),
     },
     "tooltip-arrow": {
       name: "tooltip-arrow",
-      component: React.lazy(() => import("@/registry-v2/demos/tooltip/arrow")),
+      files: ["registry/demos/tooltip/arrow.tsx"],
+      component: React.lazy(() => import("@/registry/demos/tooltip/arrow")),
     },
     "tooltip-composition": {
       name: "tooltip-composition",
+      files: ["registry/demos/tooltip/composition.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/tooltip/composition")
+        () => import("@/registry/demos/tooltip/composition")
       ),
     },
     "tooltip-container-padding": {
       name: "tooltip-container-padding",
+      files: ["registry/demos/tooltip/container-padding.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/tooltip/container-padding")
+        () => import("@/registry/demos/tooltip/container-padding")
       ),
     },
     "tooltip-default": {
       name: "tooltip-default",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/tooltip/default")
-      ),
+      files: ["registry/demos/tooltip/default.tsx"],
+      component: React.lazy(() => import("@/registry/demos/tooltip/default")),
     },
     "tooltip-delay": {
       name: "tooltip-delay",
-      component: React.lazy(() => import("@/registry-v2/demos/tooltip/delay")),
+      files: ["registry/demos/tooltip/delay.tsx"],
+      component: React.lazy(() => import("@/registry/demos/tooltip/delay")),
     },
     "tooltip-flip": {
       name: "tooltip-flip",
-      component: React.lazy(() => import("@/registry-v2/demos/tooltip/flip")),
+      files: ["registry/demos/tooltip/flip.tsx"],
+      component: React.lazy(() => import("@/registry/demos/tooltip/flip")),
     },
     "tooltip-offset": {
       name: "tooltip-offset",
-      component: React.lazy(() => import("@/registry-v2/demos/tooltip/offset")),
+      files: ["registry/demos/tooltip/offset.tsx"],
+      component: React.lazy(() => import("@/registry/demos/tooltip/offset")),
     },
     "tooltip-placement": {
       name: "tooltip-placement",
-      component: React.lazy(
-        () => import("@/registry-v2/demos/tooltip/placement")
-      ),
+      files: ["registry/demos/tooltip/placement.tsx"],
+      component: React.lazy(() => import("@/registry/demos/tooltip/placement")),
     },
     "tooltip-with-arrow": {
       name: "tooltip-with-arrow",
+      files: ["registry/demos/tooltip/with-arrow.tsx"],
       component: React.lazy(
-        () => import("@/registry-v2/demos/tooltip/with-arrow")
+        () => import("@/registry/demos/tooltip/with-arrow")
       ),
     },
   },

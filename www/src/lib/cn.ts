@@ -1,1 +1,1 @@
-export * from "@/registry-v2/lib/cn"
+export * from "@/registry/lib/cn";

@@ -1,1 +1,1 @@
-export * from "@/registry-v2/core/radio-group";
+export * from "@/registry/core/radio-group";

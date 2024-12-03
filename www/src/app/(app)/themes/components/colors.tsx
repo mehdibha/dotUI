@@ -14,9 +14,9 @@ import { Dialog, DialogRoot } from "@/components/core/dialog";
 import { Label } from "@/components/core/field";
 import { Skeleton } from "@/components/core/skeleton";
 import { Slider } from "@/components/core/slider";
-import { Tag, TagGroup } from "@/components/core/tag-group/tag-group";
+import { Tag, TagGroup } from "@/components/core/tag-group";
 import { Tooltip } from "@/components/core/tooltip";
-import { focusRing } from "@/registry/ui/default/lib/focus-styles";
+import { focusRing } from "@/lib/focus-styles";
 import { BaseColor } from "@/types/theme";
 import { usePreview } from "./context";
 

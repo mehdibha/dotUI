@@ -1,1 +1,1 @@
-export * from "@/registry-v2/core/resizable";
+export * from "@/registry/core/resizable";

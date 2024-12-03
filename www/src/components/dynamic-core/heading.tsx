@@ -1,1 +1,1 @@
-export * from "@/registry-v2/core/heading";
+export * from "@/registry/core/heading";

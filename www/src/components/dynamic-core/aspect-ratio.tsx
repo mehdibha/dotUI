@@ -1,1 +1,1 @@
-export * from "@/registry-v2/core/aspect-ratio";
+export * from "@/registry/core/aspect-ratio";

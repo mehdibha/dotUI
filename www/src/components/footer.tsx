@@ -6,7 +6,7 @@ import { Avatar } from "@/components/core/avatar";
 import { Badge } from "@/components/core/badge";
 import { Separator } from "@/components/core/separator";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
-import { focusRing } from "@/registry/ui/default/lib/focus-styles";
+import { focusRing } from "@/lib/focus-styles";
 import { siteConfig } from "@/config";
 
 const links = [

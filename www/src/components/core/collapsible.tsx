@@ -1,1 +1,1 @@
-export * from "@/registry-v2/core/collapsible";
+export * from "@/registry/core/collapsible";

@@ -1,1 +1,1 @@
-export * from "@/registry-v2/core/slider";
+export * from "@/registry/core/slider";

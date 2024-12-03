@@ -1,1 +1,1 @@
-export * from "@/registry-v2/core/overlay";
+export * from "@/registry/core/overlay";

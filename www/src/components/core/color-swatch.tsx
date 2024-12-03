@@ -1,1 +1,1 @@
-export * from "@/registry-v2/core/color-swatch";
+export * from "@/registry/core/color-swatch";

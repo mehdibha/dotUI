@@ -1,1 +1,1 @@
-export * from "@/registry-v2/core/avatar";
+export * from "@/registry/core/avatar";

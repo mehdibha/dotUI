@@ -1,1 +1,1 @@
-export * from "@/registry-v2/core/menu";
+export * from "@/registry/core/menu";

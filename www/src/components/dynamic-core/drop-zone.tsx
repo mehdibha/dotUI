@@ -1,1 +1,1 @@
-export * from "@/registry-v2/core/drop-zone";
+export * from "@/registry/core/drop-zone";

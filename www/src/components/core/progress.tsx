@@ -1,1 +1,1 @@
-export * from "@/registry-v2/core/progress";
+export * from "@/registry/core/progress";
