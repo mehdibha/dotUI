@@ -4,7 +4,7 @@ import {
   AvatarImage,
   AvatarFallback,
   AvatarPlaceholder,
-} from "@/registry/ui/default/core/avatar";
+} from "@/components/dynamic-core/avatar";
 import { UserIcon } from "@/__icons__";
 
 export default function Demo() {

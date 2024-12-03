@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ScrollArea } from "@/registry/ui/default/core/scroll-area";
+import { ScrollArea } from "@/components/dynamic-core/scroll-area";
 
 const sizes = ["sm", "md", "lg"] as const;
 

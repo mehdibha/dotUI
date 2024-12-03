@@ -7,7 +7,7 @@ import { hooks } from "@/registry/hooks";
 import { iconLibraries, icons } from "@/registry/icons";
 import { styles } from "@/registry/styles";
 import { themes } from "@/registry/themes";
-import { lib } from "@/registry/ui-lib";
+import { lib } from "@/registry-v2/index/lib";
 import { registry } from "@/registry";
 
 const REGISTRY_PATH = path.join(process.cwd(), "public/registry");

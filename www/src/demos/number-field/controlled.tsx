@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { NumberField } from "@/registry/ui/default/core/number-field";
+import { NumberField } from "@/components/dynamic-core/number-field";
 
 export default function Demo() {
   const [inputValue, setInputValue] = React.useState(69);

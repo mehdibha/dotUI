@@ -1,4 +1,4 @@
-import { Link } from "@/registry/ui/default/core/link";
+import { Link } from "@/components/dynamic-core/link";
 import { ExternalLinkIcon } from "@/__icons__";
 
 export default function Demo() {

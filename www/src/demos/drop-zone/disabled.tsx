@@ -1,6 +1,6 @@
 import React from "react";
-import { DropZone } from "@/registry/ui/default/core/drop-zone";
-import { Text } from "@/registry/ui/default/core/text";
+import { DropZone } from "@/components/dynamic-core/drop-zone";
+import { Text } from "@/components/dynamic-core/text";
 import { UploadIcon } from "@/__icons__";
 
 export default function Demo() {

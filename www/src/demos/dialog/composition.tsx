@@ -1,7 +1,7 @@
 import React from "react";
-import { Button } from "@/registry/ui/default/core/button";
-import { DialogRoot, Dialog } from "@/registry/ui/default/core/dialog";
-import { TextField } from "@/registry/ui/default/core/text-field";
+import { Button } from "@/components/dynamic-core/button";
+import { DialogRoot, Dialog } from "@/components/dynamic-core/dialog";
+import { TextField } from "@/components/dynamic-core/text-field";
 
 export default function Demo() {
   return (

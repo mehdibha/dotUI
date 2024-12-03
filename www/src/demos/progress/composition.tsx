@@ -6,7 +6,7 @@ import {
   ProgressIndicator,
   ProgressRoot,
   ProgressValueLabel,
-} from "@/registry/ui/default/core/progress";
+} from "@/components/dynamic-core/progress";
 
 export default function Demo() {
   return (

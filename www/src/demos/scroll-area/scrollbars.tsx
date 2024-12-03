@@ -1,11 +1,11 @@
 "use client";
 
 import * as React from "react";
-import { Radio, RadioGroup } from "@/registry/ui/default/core/radio-group";
+import { Radio, RadioGroup } from "@/components/dynamic-core/radio-group";
 import {
   ScrollArea,
   type ScrollAreaProps,
-} from "@/registry/ui/default/core/scroll-area";
+} from "@/components/dynamic-core/scroll-area";
 
 export default function Demo() {
   const [scrollbars, setScrollbars] = React.useState("vertical");

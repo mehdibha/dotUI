@@ -2,7 +2,7 @@
 
 import React from "react";
 import { type Color, parseColor } from "react-aria-components";
-import { ColorPicker } from "@/registry/ui/default/core/color-picker";
+import { ColorPicker } from "@/components/dynamic-core/color-picker";
 
 export default function Demo() {
   const [value, setValue] = React.useState(parseColor("hsl(26, 33%, 78%)"));

@@ -1,8 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { Button } from "@/registry/ui/default/core/button";
-import { Progress } from "@/registry/ui/default/core/progress";
+import { Button } from "@/components/dynamic-core/button";
+import { Progress } from "@/components/dynamic-core/progress";
 import { RotateCwIcon } from "@/__icons__";
 
 export default function Demo() {

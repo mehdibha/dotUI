@@ -1,5 +1,5 @@
+import { ListBox, Item } from "@/components/dynamic-core/list-box";
 import { DiscordIcon, GitHubIcon, TwitterIcon } from "@/components/icons";
-import { ListBox, Item } from "@/registry/ui/default/core/list-box";
 
 export default function Demo() {
   return (

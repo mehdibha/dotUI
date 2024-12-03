@@ -1,8 +1,8 @@
 import React from "react";
-import { Button } from "@/registry/ui/default/core/button";
-import { DropZone } from "@/registry/ui/default/core/drop-zone";
-import { FileTrigger } from "@/registry/ui/default/core/file-trigger";
-import { Text } from "@/registry/ui/default/core/text";
+import { Button } from "@/components/dynamic-core/button";
+import { DropZone } from "@/components/dynamic-core/drop-zone";
+import { FileTrigger } from "@/components/dynamic-core/file-trigger";
+import { Text } from "@/components/dynamic-core/text";
 import { UploadIcon } from "@/__icons__";
 
 export default function Demo() {

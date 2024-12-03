@@ -7,17 +7,13 @@ import {
   type DateValue,
 } from "react-aria-components";
 import { type VariantProps } from "tailwind-variants";
-import { Button } from "@/registry/ui/default/core/button";
-import { DateInput, DateSegment } from "@/registry/ui/default/core/date-input";
-import { Dialog } from "@/registry/ui/default/core/dialog";
-import {
-  Field,
-  type FieldProps,
-  fieldStyles,
-} from "@/registry/ui/default/core/field";
-import { InputRoot, type inputStyles } from "@/registry/ui/default/core/input";
-import { RangeCalendar } from "@/registry/ui/default/core/range-calendar";
 import { CalendarIcon } from "@/__icons__";
+import { Button } from "@/registry-v2/core/button";
+import { DateInput, DateSegment } from "@/registry-v2/core/date-input";
+import { Dialog } from "@/registry-v2/core/dialog";
+import { Field, type FieldProps, fieldStyles } from "@/registry-v2/core/field";
+import { InputRoot, type inputStyles } from "@/registry-v2/core/input";
+import { RangeCalendar } from "@/registry-v2/core/range-calendar";
 
 interface DateRangePickerProps<T extends DateValue>
   extends DateRangePickerRootProps<T>,

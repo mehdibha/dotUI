@@ -20,10 +20,10 @@ import {
   useSlottedContext,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { Button, buttonStyles } from "@/registry/ui/default/core/button";
-import { Heading } from "@/registry/ui/default/core/heading";
-import { Text } from "@/registry/ui/default/core/text";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/__icons__";
+import { Button, buttonStyles } from "@/registry-v2/core/button";
+import { Heading } from "@/registry-v2/core/heading";
+import { Text } from "@/registry-v2/core/text";
 
 const calendarStyles = tv({
   slots: {

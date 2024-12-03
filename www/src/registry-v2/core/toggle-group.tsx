@@ -13,7 +13,7 @@ import {
 } from "react-aria";
 import { useToggleState } from "react-stately";
 import { tv, type VariantProps } from "tailwind-variants";
-import { toggleButtonStyles } from "@/registry/ui/default/core/toggle-button";
+import { toggleButtonStyles } from "@/registry-v2/core/toggle-button";
 
 const toggleGroupVariants = tv({
   base: "flex items-center gap-1",

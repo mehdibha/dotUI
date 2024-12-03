@@ -5,7 +5,7 @@ import {
   getLocalTimeZone,
   today,
 } from "@internationalized/date";
-import { RangeCalendar } from "@/registry/ui/default/core/range-calendar";
+import { RangeCalendar } from "@/components/dynamic-core/range-calendar";
 
 export default function Demo() {
   const now = today(getLocalTimeZone());

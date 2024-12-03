@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { ContextualHelp } from "@/registry/ui/default/core/contextual-help";
-import { TextField } from "@/registry/ui/default/core/text-field";
+import { ContextualHelp } from "@/components/dynamic-core/contextual-help";
+import { TextField } from "@/components/dynamic-core/text-field";
 
 export default function Demo() {
   return (

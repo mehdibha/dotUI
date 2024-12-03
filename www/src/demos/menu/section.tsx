@@ -1,6 +1,6 @@
-import { Button } from "@/registry/ui/default/core/button";
-import { Menu, MenuItem, MenuRoot } from "@/registry/ui/default/core/menu";
-import { Section } from "@/registry/ui/default/core/section";
+import { Button } from "@/components/dynamic-core/button";
+import { Menu, MenuItem, MenuRoot } from "@/components/dynamic-core/menu";
+import { Section } from "@/components/dynamic-core/section";
 import { MenuIcon } from "@/__icons__";
 
 export default function Demo() {

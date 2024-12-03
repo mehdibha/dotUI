@@ -1,10 +1,10 @@
-import { Checkbox } from "@/registry/ui/default/core/checkbox";
-import { CheckboxGroupRoot } from "@/registry/ui/default/core/checkbox-group";
+import { Checkbox } from "@/components/dynamic-core/checkbox";
+import { CheckboxGroupRoot } from "@/components/dynamic-core/checkbox-group";
 import {
   Description,
   FieldError,
   Label,
-} from "@/registry/ui/default/core/field";
+} from "@/components/dynamic-core/field";
 
 export default function Demo() {
   return (

@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { ContextualHelp } from "@/registry/ui/default/core/contextual-help";
-import { DateField } from "@/registry/ui/default/core/date-field";
+import { ContextualHelp } from "@/components/dynamic-core/contextual-help";
+import { DateField } from "@/components/dynamic-core/date-field";
 
 export default function Demo() {
   return (

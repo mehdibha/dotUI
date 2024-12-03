@@ -3,7 +3,7 @@
 import React from "react";
 import { getLocalTimeZone, today } from "@internationalized/date";
 import { useDateFormatter } from "react-aria";
-import { Calendar } from "@/registry/ui/default/core/calendar";
+import { Calendar } from "@/components/dynamic-core/calendar";
 
 export default function Demo() {
   const [value, setValue] = React.useState(today(getLocalTimeZone()));

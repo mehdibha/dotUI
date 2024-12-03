@@ -1,8 +1,8 @@
 import React from "react";
-import { Button } from "@/registry/ui/default/core/button";
-import { Item, ListBox } from "@/registry/ui/default/core/list-box";
-import { Overlay } from "@/registry/ui/default/core/overlay";
-import { SelectRoot, SelectValue } from "@/registry/ui/default/core/select";
+import { Button } from "@/components/dynamic-core/button";
+import { Item, ListBox } from "@/components/dynamic-core/list-box";
+import { Overlay } from "@/components/dynamic-core/overlay";
+import { SelectRoot, SelectValue } from "@/components/dynamic-core/select";
 import { ChevronsUpDownIcon } from "@/__icons__";
 
 export default function Demo() {

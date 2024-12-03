@@ -1,4 +1,4 @@
-import { ToggleButton } from "@/registry/ui/default/core/toggle-button";
+import { ToggleButton } from "@/components/dynamic-core/toggle-button";
 import { PinIcon } from "@/__icons__";
 
 const variants = ["quiet", "outline", "accent"] as const;

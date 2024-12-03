@@ -13,9 +13,9 @@ import {
 } from "react-aria-components";
 import { Provider } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { Heading } from "@/registry/ui/default/core/heading";
-import { Overlay, type OverlayProps } from "@/registry/ui/default/core/overlay";
-import { Text } from "@/registry/ui/default/core/text";
+import { Heading } from "@/registry-v2/core/heading";
+import { Overlay, type OverlayProps } from "@/registry-v2/core/overlay";
+import { Text } from "@/registry-v2/core/text";
 
 const dialogStyles = tv({
   slots: {

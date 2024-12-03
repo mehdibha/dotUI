@@ -1,15 +1,15 @@
 "use client";
 
 import React from "react";
-import { Button } from "@/registry/ui/default/core/button";
-import { Item } from "@/registry/ui/default/core/list-box";
+import { Button } from "@/components/dynamic-core/button";
+import { Item } from "@/components/dynamic-core/list-box";
 import {
   Menu,
   MenuItem,
   MenuRoot,
   type MenuProps,
-} from "@/registry/ui/default/core/menu";
-import { Select } from "@/registry/ui/default/core/select";
+} from "@/components/dynamic-core/menu";
+import { Select } from "@/components/dynamic-core/select";
 import { MenuIcon } from "@/__icons__";
 
 type Placement = MenuProps<object>["placement"];

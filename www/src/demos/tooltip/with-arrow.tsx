@@ -1,5 +1,5 @@
-import { Button } from "@/registry/ui/default/core/button";
-import { Tooltip } from "@/registry/ui/default/core/tooltip";
+import { Button } from "@/components/dynamic-core/button";
+import { Tooltip } from "@/components/dynamic-core/tooltip";
 import { PlusIcon } from "@/__icons__";
 
 export default function TooltipDemo() {

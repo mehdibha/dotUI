@@ -9,8 +9,8 @@ import {
   type LinkProps as AriaLinkProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { focusRing } from "@/registry/ui/default/lib/focus-styles";
 import { LoaderIcon } from "@/__icons__";
+import { focusRing } from "@/registry-v2/lib/focus-styles";
 
 const buttonStyles = tv(
   {

@@ -1,4 +1,4 @@
-import { ColorArea } from "@/registry/ui/default/core/color-area";
+import { ColorArea } from "@/components/dynamic-core/color-area";
 
 export default function Demo() {
   return <ColorArea isDisabled />;

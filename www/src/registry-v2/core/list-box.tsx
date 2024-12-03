@@ -11,9 +11,9 @@ import {
   ListStateContext,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { Text } from "@/registry/ui/default/core/text";
-import { focusRing } from "@/registry/ui/default/lib/focus-styles";
 import { CheckIcon, LoaderIcon } from "@/__icons__";
+import { Text } from "@/registry-v2/core/text";
+import { focusRing } from "@/registry-v2/lib/focus-styles";
 
 const listBoxStyles = tv({
   base: [

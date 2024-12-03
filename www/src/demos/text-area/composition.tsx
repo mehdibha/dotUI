@@ -1,7 +1,7 @@
 import React from "react";
-import { Description, Label } from "@/registry/ui/default/core/field";
-import { TextAreaInput, InputRoot } from "@/registry/ui/default/core/input";
-import { TextFieldRoot } from "@/registry/ui/default/core/text-field";
+import { Description, Label } from "@/components/dynamic-core/field";
+import { TextAreaInput, InputRoot } from "@/components/dynamic-core/input";
+import { TextFieldRoot } from "@/components/dynamic-core/text-field";
 
 export default function Demo() {
   return (

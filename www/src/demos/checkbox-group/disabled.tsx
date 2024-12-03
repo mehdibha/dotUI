@@ -1,5 +1,5 @@
-import { Checkbox } from "@/registry/ui/default/core/checkbox";
-import { CheckboxGroup } from "@/registry/ui/default/core/checkbox-group";
+import { Checkbox } from "@/components/dynamic-core/checkbox";
+import { CheckboxGroup } from "@/components/dynamic-core/checkbox-group";
 
 export default function Demo() {
   return (

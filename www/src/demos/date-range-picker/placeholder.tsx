@@ -1,7 +1,7 @@
 "use client";
 
 import { CalendarDate } from "@internationalized/date";
-import { DateRangePicker } from "@/registry/ui/default/core/date-range-picker";
+import { DateRangePicker } from "@/components/dynamic-core/date-range-picker";
 
 export default function Demo() {
   return (

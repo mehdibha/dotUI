@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { ContextualHelp } from "@/registry/ui/default/core/contextual-help";
-import { DatePicker } from "@/registry/ui/default/core/date-picker";
+import { ContextualHelp } from "@/components/dynamic-core/contextual-help";
+import { DatePicker } from "@/components/dynamic-core/date-picker";
 
 export default function Demo() {
   return (

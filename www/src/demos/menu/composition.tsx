@@ -1,10 +1,10 @@
-import { Button } from "@/registry/ui/default/core/button";
+import { Button } from "@/components/dynamic-core/button";
 import {
   MenuContent,
   MenuItem,
   MenuRoot,
-} from "@/registry/ui/default/core/menu";
-import { Overlay } from "@/registry/ui/default/core/overlay";
+} from "@/components/dynamic-core/menu";
+import { Overlay } from "@/components/dynamic-core/overlay";
 import { MenuIcon } from "@/__icons__";
 
 export default function Demo() {

@@ -1,13 +1,13 @@
 "use client";
 
 import React from "react";
-import { ColorFieldRoot } from "@/registry/ui/default/core/color-field";
+import { ColorFieldRoot } from "@/components/dynamic-core/color-field";
 import {
   Description,
   FieldError,
   Label,
-} from "@/registry/ui/default/core/field";
-import { Input, InputRoot } from "@/registry/ui/default/core/input";
+} from "@/components/dynamic-core/field";
+import { Input, InputRoot } from "@/components/dynamic-core/input";
 
 export default function Demo() {
   return (

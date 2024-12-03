@@ -2,8 +2,8 @@ import {
   Description,
   FieldError,
   Label,
-} from "@/registry/ui/default/core/field";
-import { RadioGroupRoot, Radio } from "@/registry/ui/default/core/radio-group";
+} from "@/components/dynamic-core/field";
+import { RadioGroupRoot, Radio } from "@/components/dynamic-core/radio-group";
 
 export default function Demo() {
   return (

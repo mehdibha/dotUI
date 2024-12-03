@@ -1,6 +1,6 @@
 import React from "react";
-import { ContextualHelp } from "@/registry/ui/default/core/contextual-help";
-import { NumberField } from "@/registry/ui/default/core/number-field";
+import { ContextualHelp } from "@/components/dynamic-core/contextual-help";
+import { NumberField } from "@/components/dynamic-core/number-field";
 
 export default function Demo() {
   return (

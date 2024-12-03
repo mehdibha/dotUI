@@ -1,6 +1,6 @@
-import { Button } from "@/registry/ui/default/core/button";
-import { DialogRoot, Dialog } from "@/registry/ui/default/core/dialog";
 import { InfoIcon, HelpIcon } from "@/__icons__";
+import { Button } from "@/registry-v2/core/button";
+import { DialogRoot, Dialog } from "@/registry-v2/core/dialog";
 
 interface ContextualHelpProps {
   title?: string;

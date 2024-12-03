@@ -2,7 +2,7 @@ import {
   Breadcrumbs,
   BreadcrumbItem,
   BreadcrumbLink,
-} from "@/registry/ui/default/core/breadcrumbs";
+} from "@/components/dynamic-core/breadcrumbs";
 import { ChevronRightCircleIcon } from "@/__icons__";
 
 export default function Demo() {

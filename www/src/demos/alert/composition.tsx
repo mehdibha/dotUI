@@ -2,8 +2,8 @@ import {
   AlertContent,
   AlertRoot,
   AlertTitle,
-} from "@/registry/ui/default/core/alert";
-import { Button } from "@/registry/ui/default/core/button";
+} from "@/components/dynamic-core/alert";
+import { Button } from "@/components/dynamic-core/button";
 import { WalletIcon } from "@/__icons__";
 
 export default function AlertDemo() {

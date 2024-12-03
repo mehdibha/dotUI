@@ -6,12 +6,8 @@ import {
   type ColorFieldProps as AriaColorFieldProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { Field, type FieldProps } from "@/registry/ui/default/core/field";
-import {
-  InputRoot,
-  Input,
-  type inputStyles,
-} from "@/registry/ui/default/core/input";
+import { Field, type FieldProps } from "@/registry-v2/core/field";
+import { InputRoot, Input, type inputStyles } from "@/registry-v2/core/input";
 
 const colorFieldStyles = tv({
   base: "flex w-48 flex-col items-start gap-2",

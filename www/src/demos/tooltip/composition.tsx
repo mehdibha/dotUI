@@ -1,8 +1,5 @@
-import { Button } from "@/registry/ui/default/core/button";
-import {
-  TooltipRoot,
-  TooltipContent,
-} from "@/registry/ui/default/core/tooltip";
+import { Button } from "@/components/dynamic-core/button";
+import { TooltipRoot, TooltipContent } from "@/components/dynamic-core/tooltip";
 
 export default function Demo() {
   return (

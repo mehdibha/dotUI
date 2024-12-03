@@ -7,7 +7,7 @@ import {
   type LinkProps as AriaLinkProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { focusRing } from "@/registry/ui/default/lib/focus-styles";
+import { focusRing } from "@/registry-v2/lib/focus-styles";
 
 const linkVariants = tv({
   extend: focusRing,

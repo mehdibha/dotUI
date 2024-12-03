@@ -1,10 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import {
-  Breadcrumbs,
-  Breadcrumb,
-} from "@/registry/ui/default/core/breadcrumbs";
+import { Breadcrumbs, Breadcrumb } from "@/components/dynamic-core/breadcrumbs";
 
 export default function Demo() {
   const pathname = usePathname();

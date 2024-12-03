@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Switch } from "@/registry/ui/default/core/switch";
+import { Switch } from "@/components/dynamic-core/switch";
 
 export default function Demo() {
   const [isSelected, setSelected] = React.useState(true);

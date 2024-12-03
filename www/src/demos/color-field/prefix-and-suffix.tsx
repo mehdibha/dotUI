@@ -1,4 +1,4 @@
-import { ColorField } from "@/registry/ui/default/core/color-field";
+import { ColorField } from "@/components/dynamic-core/color-field";
 import { PaletteIcon } from "@/__icons__";
 
 export default function Demo() {

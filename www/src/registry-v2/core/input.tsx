@@ -17,8 +17,8 @@ import {
   useSlottedContext,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { focusInput } from "@/registry/ui/default/lib/focus-styles";
 import { LoaderIcon } from "@/__icons__";
+import { focusInput } from "@/registry-v2/lib/focus-styles";
 
 const inputStyles = tv({
   slots: {

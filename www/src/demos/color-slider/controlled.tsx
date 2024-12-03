@@ -2,7 +2,7 @@
 
 import React from "react";
 import { parseColor } from "react-aria-components";
-import { ColorSlider } from "@/registry/ui/default/core/color-slider";
+import { ColorSlider } from "@/components/dynamic-core/color-slider";
 
 export default function Demo() {
   const [value, setValue] = React.useState(parseColor("hsl(0, 100%, 50%)"));

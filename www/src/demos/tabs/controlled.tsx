@@ -2,7 +2,7 @@
 
 import React from "react";
 import type { Key } from "react-aria-components";
-import { Tabs, TabList, TabPanel, Tab } from "@/registry/ui/default/core/tabs";
+import { Tabs, TabList, TabPanel, Tab } from "@/components/dynamic-core/tabs";
 
 export default function Demo() {
   const [selectedTab, setSelectedTab] = React.useState<Key>("overview");

@@ -1,5 +1,5 @@
-import { Button } from "@/registry/ui/default/core/button";
-import { Menu, MenuItem, MenuRoot } from "@/registry/ui/default/core/menu";
+import { Button } from "@/components/dynamic-core/button";
+import { Menu, MenuItem, MenuRoot } from "@/components/dynamic-core/menu";
 import { CopyIcon, MenuIcon, PlusSquareIcon, SquarePenIcon } from "@/__icons__";
 
 export default function Demo() {

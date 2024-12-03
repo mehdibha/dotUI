@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import { Button } from "@/registry/ui/default/core/button";
-import { TextArea } from "@/registry/ui/default/core/text-area";
-import { ToggleButton } from "@/registry/ui/default/core/toggle-button";
+import { Button } from "@/components/dynamic-core/button";
+import { TextArea } from "@/components/dynamic-core/text-area";
+import { ToggleButton } from "@/components/dynamic-core/toggle-button";
 import { BoldIcon, ItalicIcon } from "@/__icons__";
 
 export default function Demo() {

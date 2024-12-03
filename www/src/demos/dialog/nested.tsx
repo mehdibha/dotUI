@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import { Button } from "@/registry/ui/default/core/button";
-import { DialogRoot, Dialog } from "@/registry/ui/default/core/dialog";
-import { Radio, RadioGroup } from "@/registry/ui/default/core/radio-group";
+import { Button } from "@/components/dynamic-core/button";
+import { DialogRoot, Dialog } from "@/components/dynamic-core/dialog";
+import { Radio, RadioGroup } from "@/components/dynamic-core/radio-group";
 
 type Type = "modal" | "drawer" | "popover";
 

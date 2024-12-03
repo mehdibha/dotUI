@@ -1,5 +1,5 @@
-import { ContextualHelp } from "@/registry/ui/default/core/contextual-help";
-import { RadioGroup, Radio } from "@/registry/ui/default/core/radio-group";
+import { ContextualHelp } from "@/components/dynamic-core/contextual-help";
+import { RadioGroup, Radio } from "@/components/dynamic-core/radio-group";
 
 export default function Demo() {
   return (

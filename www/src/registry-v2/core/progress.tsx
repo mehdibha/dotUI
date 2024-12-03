@@ -7,8 +7,8 @@ import {
   type ProgressBarProps as AriaProgressProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { Label } from "@/registry/ui/default/core/field";
-import { cn } from "@/registry/ui/default/lib/cn";
+import { Label } from "@/registry-v2/core/field";
+import { cn } from "@/registry-v2/lib/cn";
 
 const progressStyles = tv({
   slots: {

@@ -1,4 +1,4 @@
-import { TimeField } from "@/registry/ui/default/core/time-field";
+import { TimeField } from "@/components/dynamic-core/time-field";
 
 export default function Demo() {
   return <TimeField />;

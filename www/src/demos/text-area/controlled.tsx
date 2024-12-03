@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { TextArea } from "@/registry/ui/default/core/text-area";
+import { TextArea } from "@/components/dynamic-core/text-area";
 
 export default function Demo() {
   const [inputValue, setInputValue] = React.useState(

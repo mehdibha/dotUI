@@ -1,6 +1,6 @@
-import { Button } from "@/registry/ui/default/core/button";
-import { Menu, MenuItem, MenuRoot } from "@/registry/ui/default/core/menu";
-import { Separator } from "@/registry/ui/default/core/separator";
+import { Button } from "@/components/dynamic-core/button";
+import { Menu, MenuItem, MenuRoot } from "@/components/dynamic-core/menu";
+import { Separator } from "@/components/dynamic-core/separator";
 
 export default function Demo() {
   return (

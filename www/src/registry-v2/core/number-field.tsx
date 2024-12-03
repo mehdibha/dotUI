@@ -6,20 +6,16 @@ import {
   type NumberFieldProps as AriaNumberFieldProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { useMediaQuery } from "@/registry/hooks/use-media-query";
-import { Button, type ButtonProps } from "@/registry/ui/default/core/button";
-import { Field, type FieldProps } from "@/registry/ui/default/core/field";
-import {
-  InputRoot,
-  Input,
-  type inputStyles,
-} from "@/registry/ui/default/core/input";
 import {
   ChevronDownIcon,
   ChevronUpIcon,
   MinusIcon,
   PlusIcon,
 } from "@/__icons__";
+import { Button, type ButtonProps } from "@/registry-v2/core/button";
+import { Field, type FieldProps } from "@/registry-v2/core/field";
+import { InputRoot, Input, type inputStyles } from "@/registry-v2/core/input";
+import { useMediaQuery } from "@/registry-v2/hooks/use-media-query";
 
 const numberFieldStyles = tv({
   base: "flex w-48 flex-col items-start gap-2",

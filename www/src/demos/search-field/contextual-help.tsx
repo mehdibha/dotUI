@@ -1,6 +1,6 @@
 import React from "react";
-import { ContextualHelp } from "@/registry/ui/default/core/contextual-help";
-import { SearchField } from "@/registry/ui/default/core/search-field";
+import { ContextualHelp } from "@/components/dynamic-core/contextual-help";
+import { SearchField } from "@/components/dynamic-core/search-field";
 
 export default function Demo() {
   return (

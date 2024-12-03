@@ -8,19 +8,15 @@ import {
   type ColorSpace,
   composeRenderProps,
 } from "react-aria-components";
-import { Button, type ButtonProps } from "@/registry/ui/default/core/button";
-import { ColorArea } from "@/registry/ui/default/core/color-area";
-import { ColorField } from "@/registry/ui/default/core/color-field";
-import { ColorSlider } from "@/registry/ui/default/core/color-slider";
-import { ColorSwatch } from "@/registry/ui/default/core/color-swatch";
-import {
-  Dialog,
-  DialogRoot,
-  DialogRootProps,
-} from "@/registry/ui/default/core/dialog";
-import { Item } from "@/registry/ui/default/core/list-box";
-import { Select } from "@/registry/ui/default/core/select";
-import { cn } from "@/registry/ui/default/lib/cn";
+import { Button, type ButtonProps } from "@/registry-v2/core/button";
+import { ColorArea } from "@/registry-v2/core/color-area";
+import { ColorField } from "@/registry-v2/core/color-field";
+import { ColorSlider } from "@/registry-v2/core/color-slider";
+import { ColorSwatch } from "@/registry-v2/core/color-swatch";
+import { Dialog, DialogRoot, DialogRootProps } from "@/registry-v2/core/dialog";
+import { Item } from "@/registry-v2/core/list-box";
+import { Select } from "@/registry-v2/core/select";
+import { cn } from "@/registry-v2/lib/cn";
 
 type ColorPickerProps = ColorPickerRootProps &
   Omit<ButtonProps, "children"> &

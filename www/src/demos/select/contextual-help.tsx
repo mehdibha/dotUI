@@ -1,7 +1,7 @@
 import React from "react";
-import { ContextualHelp } from "@/registry/ui/default/core/contextual-help";
-import { Item } from "@/registry/ui/default/core/list-box";
-import { Select } from "@/registry/ui/default/core/select";
+import { ContextualHelp } from "@/components/dynamic-core/contextual-help";
+import { Item } from "@/components/dynamic-core/list-box";
+import { Select } from "@/components/dynamic-core/select";
 
 export default function SelectDemo() {
   return (

@@ -2,8 +2,8 @@
 
 import React from "react";
 import { useAsyncList } from "react-stately";
-import { Item } from "@/registry/ui/default/core/list-box";
-import { Select } from "@/registry/ui/default/core/select";
+import { Item } from "@/components/dynamic-core/list-box";
+import { Select } from "@/components/dynamic-core/select";
 
 interface Character {
   name: string;

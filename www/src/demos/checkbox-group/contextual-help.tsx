@@ -1,6 +1,6 @@
-import { Checkbox } from "@/registry/ui/default/core/checkbox";
-import { CheckboxGroup } from "@/registry/ui/default/core/checkbox-group";
-import { ContextualHelp } from "@/registry/ui/default/core/contextual-help";
+import { Checkbox } from "@/components/dynamic-core/checkbox";
+import { CheckboxGroup } from "@/components/dynamic-core/checkbox-group";
+import { ContextualHelp } from "@/components/dynamic-core/contextual-help";
 
 export default function Demo() {
   return (

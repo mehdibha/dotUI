@@ -1,7 +1,7 @@
 "use client";
 
-import { Checkbox } from "@/registry/ui/default/core/checkbox";
-import { Link } from "@/registry/ui/default/core/link";
+import { Checkbox } from "@/components/dynamic-core/checkbox";
+import { Link } from "@/components/dynamic-core/link";
 
 export default function Demo() {
   return (

@@ -2,7 +2,7 @@
 
 import React from "react";
 import { CalendarDate } from "@internationalized/date";
-import { DateField } from "@/registry/ui/default/core/date-field";
+import { DateField } from "@/components/dynamic-core/date-field";
 
 export default function Demo() {
   return (

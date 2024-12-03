@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/registry/ui/default/core/button";
+import { Button } from "@/components/dynamic-core/button";
 import {
   CalendarHeader,
   CalendarGrid,
@@ -8,9 +8,9 @@ import {
   CalendarHeaderCell,
   CalendarGridBody,
   CalendarCell,
-} from "@/registry/ui/default/core/calendar";
-import { Heading } from "@/registry/ui/default/core/heading";
-import { RangeCalendarRoot } from "@/registry/ui/default/core/range-calendar";
+} from "@/components/dynamic-core/calendar";
+import { Heading } from "@/components/dynamic-core/heading";
+import { RangeCalendarRoot } from "@/components/dynamic-core/range-calendar";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/__icons__";
 
 export default function Demo() {

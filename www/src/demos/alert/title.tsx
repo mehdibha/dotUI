@@ -1,4 +1,4 @@
-import { Alert } from "@/registry/ui/default/core/alert";
+import { Alert } from "@/components/dynamic-core/alert";
 
 export default function AlertDemo() {
   return (

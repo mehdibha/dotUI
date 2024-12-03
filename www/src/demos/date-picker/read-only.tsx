@@ -2,7 +2,7 @@
 
 import React from "react";
 import { CalendarDate } from "@internationalized/date";
-import { DatePicker } from "@/registry/ui/default/core/date-picker";
+import { DatePicker } from "@/components/dynamic-core/date-picker";
 
 export default function Demo() {
   return (

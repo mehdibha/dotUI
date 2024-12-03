@@ -1,18 +1,18 @@
 "use client";
 
 import React from "react";
-import { Button } from "@/registry/ui/default/core/button";
-import { Calendar } from "@/registry/ui/default/core/calendar";
-import { DateInput, DateSegment } from "@/registry/ui/default/core/date-input";
-import { DatePickerRoot } from "@/registry/ui/default/core/date-picker";
-import { DialogContent } from "@/registry/ui/default/core/dialog";
+import { Button } from "@/components/dynamic-core/button";
+import { Calendar } from "@/components/dynamic-core/calendar";
+import { DateInput, DateSegment } from "@/components/dynamic-core/date-input";
+import { DatePickerRoot } from "@/components/dynamic-core/date-picker";
+import { DialogContent } from "@/components/dynamic-core/dialog";
 import {
   Description,
   FieldError,
   Label,
-} from "@/registry/ui/default/core/field";
-import { InputRoot } from "@/registry/ui/default/core/input";
-import { Overlay } from "@/registry/ui/default/core/overlay";
+} from "@/components/dynamic-core/field";
+import { InputRoot } from "@/components/dynamic-core/input";
+import { Overlay } from "@/components/dynamic-core/overlay";
 import { CalendarIcon } from "@/__icons__";
 
 export default function Demo() {

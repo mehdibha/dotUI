@@ -1,4 +1,4 @@
-import { DateField } from "@/registry/ui/default/core/date-field";
+import { DateField } from "@/components/dynamic-core/date-field";
 import { CalendarIcon } from "@/__icons__";
 
 export default function Demo() {

@@ -1,7 +1,7 @@
 import React from "react";
-import { Combobox } from "@/registry/ui/default/core/combobox";
-import { Item } from "@/registry/ui/default/core/list-box";
-import { Section } from "@/registry/ui/default/core/section";
+import { Combobox } from "@/components/dynamic-core/combobox";
+import { Item } from "@/components/dynamic-core/list-box";
+import { Section } from "@/components/dynamic-core/section";
 
 export default function Demo() {
   return (

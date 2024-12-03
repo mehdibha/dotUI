@@ -1,6 +1,6 @@
 import React from "react";
-import { ContextualHelp } from "@/registry/ui/default/core/contextual-help";
-import { TextArea } from "@/registry/ui/default/core/text-area";
+import { ContextualHelp } from "@/components/dynamic-core/contextual-help";
+import { TextArea } from "@/components/dynamic-core/text-area";
 
 export default function Demo() {
   return (

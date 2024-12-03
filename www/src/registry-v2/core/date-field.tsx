@@ -7,13 +7,13 @@ import {
   type DateValue,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { DateInput, DateSegment } from "@/registry/ui/default/core/date-input";
-import { Field, type FieldProps } from "@/registry/ui/default/core/field";
+import { DateInput, DateSegment } from "@/registry-v2/core/date-input";
+import { Field, type FieldProps } from "@/registry-v2/core/field";
 import {
   InputRoot,
   type InputRootProps,
   type inputStyles,
-} from "@/registry/ui/default/core/input";
+} from "@/registry-v2/core/input";
 
 const dateFieldStyles = tv({
   slots: {

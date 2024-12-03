@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import { DateInput, DateSegment } from "@/registry/ui/default/core/date-input";
-import { Description, Label } from "@/registry/ui/default/core/field";
-import { InputRoot } from "@/registry/ui/default/core/input";
-import { TimeFieldRoot } from "@/registry/ui/default/core/time-field";
+import { DateInput, DateSegment } from "@/components/dynamic-core/date-input";
+import { Description, Label } from "@/components/dynamic-core/field";
+import { InputRoot } from "@/components/dynamic-core/input";
+import { TimeFieldRoot } from "@/components/dynamic-core/time-field";
 
 export default function Demo() {
   return (

@@ -7,9 +7,9 @@ import {
   type TimeValue,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { DateInput, DateSegment } from "@/registry/ui/default/core/date-input";
-import { Field, type FieldProps } from "@/registry/ui/default/core/field";
-import { InputRoot, type inputStyles } from "@/registry/ui/default/core/input";
+import { DateInput, DateSegment } from "@/registry-v2/core/date-input";
+import { Field, type FieldProps } from "@/registry-v2/core/field";
+import { InputRoot, type inputStyles } from "@/registry-v2/core/input";
 
 const timeFieldStyles = tv({
   slots: {

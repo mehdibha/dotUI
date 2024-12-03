@@ -1,4 +1,4 @@
-import { DateRangePicker } from "@/registry/ui/default/core/date-range-picker";
+import { DateRangePicker } from "@/components/dynamic-core/date-range-picker";
 import { PlaneIcon } from "@/__icons__";
 
 export default function Demo() {

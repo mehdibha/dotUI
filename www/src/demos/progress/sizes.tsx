@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Progress } from "@/registry/ui/default/core/progress";
+import { Progress } from "@/components/dynamic-core/progress";
 
 const sizes = ["sm", "md", "lg"] as const;
 

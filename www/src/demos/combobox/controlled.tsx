@@ -2,8 +2,8 @@
 
 import React from "react";
 import type { Key } from "react-aria-components";
-import { Combobox } from "@/registry/ui/default/core/combobox";
-import { Item } from "@/registry/ui/default/core/list-box";
+import { Combobox } from "@/components/dynamic-core/combobox";
+import { Item } from "@/components/dynamic-core/list-box";
 
 export default function Demo() {
   const [country, setCountry] = React.useState<Key | null>("tn");

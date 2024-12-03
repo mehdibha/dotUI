@@ -1,9 +1,9 @@
-import { Description, Label } from "@/registry/ui/default/core/field";
+import { Description, Label } from "@/components/dynamic-core/field";
 import {
   SliderControls,
   SliderRoot,
   SliderValueLabel,
-} from "@/registry/ui/default/core/slider";
+} from "@/components/dynamic-core/slider";
 
 export default function Demo() {
   return (

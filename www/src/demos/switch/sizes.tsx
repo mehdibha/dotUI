@@ -1,4 +1,4 @@
-import { Switch } from "@/registry/ui/default/core/switch";
+import { Switch } from "@/components/dynamic-core/switch";
 
 export default function Demo() {
   return (

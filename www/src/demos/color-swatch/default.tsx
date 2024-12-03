@@ -1,4 +1,4 @@
-import { ColorSwatch } from "@/registry/ui/default/core/color-swatch";
+import { ColorSwatch } from "@/components/dynamic-core/color-swatch";
 
 export default function Demo() {
   return <ColorSwatch color="#f00" />;

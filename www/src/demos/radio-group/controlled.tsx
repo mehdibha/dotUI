@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { RadioGroup, Radio } from "@/registry/ui/default/core/radio-group";
+import { RadioGroup, Radio } from "@/components/dynamic-core/radio-group";
 
 export default function Demo() {
   const [size, setSize] = React.useState("sm");

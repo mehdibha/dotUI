@@ -1,4 +1,4 @@
-import { Calendar } from "@/registry/ui/default/core/calendar";
+import { Calendar } from "@/components/dynamic-core/calendar";
 
 export default function Demo() {
   return <Calendar visibleMonths={2} />;

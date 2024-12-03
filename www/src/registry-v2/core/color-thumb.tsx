@@ -5,7 +5,7 @@ import {
   type ColorThumbProps as AriaColorThumbProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { focusRing } from "@/registry/ui/default/lib/focus-styles";
+import { focusRing } from "@/registry-v2/lib/focus-styles";
 
 const colorThumbStyles = tv({
   extend: focusRing,

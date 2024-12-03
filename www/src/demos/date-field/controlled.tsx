@@ -2,7 +2,7 @@
 
 import React from "react";
 import { parseDate } from "@internationalized/date";
-import { DateField } from "@/registry/ui/default/core/date-field";
+import { DateField } from "@/components/dynamic-core/date-field";
 
 export default function Demo() {
   const [value, setValue] = React.useState(parseDate("2020-02-03"));

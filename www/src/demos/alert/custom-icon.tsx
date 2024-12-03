@@ -1,4 +1,4 @@
-import { Alert } from "@/registry/ui/default/core/alert";
+import { Alert } from "@/components/dynamic-core/alert";
 import { GlobeIcon } from "@/__icons__";
 
 export default function AlertDemo() {

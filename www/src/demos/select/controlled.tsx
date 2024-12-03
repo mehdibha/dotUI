@@ -2,8 +2,8 @@
 
 import React from "react";
 import type { Key } from "react-aria-components";
-import { Item } from "@/registry/ui/default/core/list-box";
-import { Select } from "@/registry/ui/default/core/select";
+import { Item } from "@/components/dynamic-core/list-box";
+import { Select } from "@/components/dynamic-core/select";
 
 export default function Demo() {
   const [provider, setProvider] = React.useState<Key>("eleven-labs");

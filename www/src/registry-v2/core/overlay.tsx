@@ -12,10 +12,10 @@ import {
   type ModalOverlayProps as AriaModalOverlayProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { useMediaQuery } from "@/registry/hooks/use-media-query";
-import { Button, type ButtonProps } from "@/registry/ui/default/core/button";
-import { cn } from "@/registry/ui/default/lib/cn";
 import { XIcon } from "@/__icons__";
+import { Button, type ButtonProps } from "@/registry-v2/core/button";
+import { useMediaQuery } from "@/registry-v2/hooks/use-media-query";
+import { cn } from "@/registry-v2/lib/cn";
 import { MotionDrawerRoot, useMotionDrawer } from "./use-motion-drawer";
 
 type OverlayType = "modal" | "drawer" | "popover";

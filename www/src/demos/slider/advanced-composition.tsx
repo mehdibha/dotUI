@@ -1,11 +1,11 @@
-import { Label, Description } from "@/registry/ui/default/core/field";
+import { Label, Description } from "@/components/dynamic-core/field";
 import {
   SliderFiller,
   SliderRoot,
   SliderThumb,
   SliderTrack,
   SliderValueLabel,
-} from "@/registry/ui/default/core/slider";
+} from "@/components/dynamic-core/slider";
 import { Volume1Icon, Volume2Icon } from "@/__icons__";
 
 export default function Demo() {

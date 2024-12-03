@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import { Button } from "@/registry/ui/default/core/button";
-import { Switch } from "@/registry/ui/default/core/switch";
-import { Tooltip } from "@/registry/ui/default/core/tooltip";
+import { Button } from "@/components/dynamic-core/button";
+import { Switch } from "@/components/dynamic-core/switch";
+import { Tooltip } from "@/components/dynamic-core/tooltip";
 import { PlusIcon } from "@/__icons__";
 
 export default function Demo() {

@@ -1,14 +1,14 @@
 "use client";
 
 import React from "react";
-import { Button } from "@/registry/ui/default/core/button";
+import { Button } from "@/components/dynamic-core/button";
 import {
   DialogRoot,
   Dialog,
   DialogFooter,
-} from "@/registry/ui/default/core/dialog";
-import { Radio, RadioGroup } from "@/registry/ui/default/core/radio-group";
-import { TextField } from "@/registry/ui/default/core/text-field";
+} from "@/components/dynamic-core/dialog";
+import { Radio, RadioGroup } from "@/components/dynamic-core/radio-group";
+import { TextField } from "@/components/dynamic-core/text-field";
 
 type Type = "modal" | "drawer" | "popover";
 

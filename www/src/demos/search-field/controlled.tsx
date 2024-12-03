@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { SearchField } from "@/registry/ui/default/core/search-field";
+import { SearchField } from "@/components/dynamic-core/search-field";
 
 export default function Demo() {
   const [inputValue, setInputValue] = React.useState(

@@ -7,7 +7,7 @@ import {
   type SwitchProps as AriaSwitchProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { focusRingGroup } from "@/registry/ui/default/lib/focus-styles";
+import { focusRingGroup } from "@/registry-v2/lib/focus-styles";
 
 const switchStyles = tv({
   slots: {

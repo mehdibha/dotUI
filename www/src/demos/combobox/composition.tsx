@@ -2,14 +2,14 @@ import React from "react";
 import {
   ComboboxRoot,
   ComboboxTrigger,
-} from "@/registry/ui/default/core/combobox";
+} from "@/components/dynamic-core/combobox";
 import {
   Description,
   FieldError,
   Label,
-} from "@/registry/ui/default/core/field";
-import { Item, ListBox } from "@/registry/ui/default/core/list-box";
-import { Overlay } from "@/registry/ui/default/core/overlay";
+} from "@/components/dynamic-core/field";
+import { Item, ListBox } from "@/components/dynamic-core/list-box";
+import { Overlay } from "@/components/dynamic-core/overlay";
 
 export default function Demo() {
   return (

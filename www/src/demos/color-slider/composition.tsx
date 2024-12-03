@@ -2,9 +2,9 @@ import {
   ColorSliderOutput,
   ColorSliderRoot,
   ColorSliderTrack,
-} from "@/registry/ui/default/core/color-slider";
-import { ColorThumb } from "@/registry/ui/default/core/color-thumb";
-import { Label } from "@/registry/ui/default/core/field";
+} from "@/components/dynamic-core/color-slider";
+import { ColorThumb } from "@/components/dynamic-core/color-thumb";
+import { Label } from "@/components/dynamic-core/field";
 
 export default function Demo() {
   return (

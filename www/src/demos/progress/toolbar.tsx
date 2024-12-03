@@ -1,10 +1,10 @@
 "use client";
 
 import * as React from "react";
-import { Button } from "@/registry/ui/default/core/button";
-import { Input, InputRoot } from "@/registry/ui/default/core/input";
-import { Progress } from "@/registry/ui/default/core/progress";
-import { TextFieldRoot } from "@/registry/ui/default/core/text-field";
+import { Button } from "@/components/dynamic-core/button";
+import { Input, InputRoot } from "@/components/dynamic-core/input";
+import { Progress } from "@/components/dynamic-core/progress";
+import { TextFieldRoot } from "@/components/dynamic-core/text-field";
 import { ALargeSmallIcon, RotateCwIcon } from "@/__icons__";
 
 export default function Demo() {

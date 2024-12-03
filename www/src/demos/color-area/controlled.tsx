@@ -2,7 +2,7 @@
 
 import React from "react";
 import { parseColor } from "react-aria-components";
-import { ColorArea } from "@/registry/ui/default/core/color-area";
+import { ColorArea } from "@/components/dynamic-core/color-area";
 
 export default function Demo() {
   const [value, setValue] = React.useState(parseColor("hsl(0, 100%, 50%)"));

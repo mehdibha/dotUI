@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { Button } from "@/registry/ui/default/core/button";
-import { FileTrigger } from "@/registry/ui/default/core/file-trigger";
+import { Button } from "@/components/dynamic-core/button";
+import { FileTrigger } from "@/components/dynamic-core/file-trigger";
 import { UploadIcon } from "@/__icons__";
 
 export default function FileTriggerDemo() {

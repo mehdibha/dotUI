@@ -2,8 +2,8 @@
 
 import * as React from "react";
 import { Command as CommandPrimitive } from "cmdk";
-import { cn } from "@/registry/ui/default/lib/cn";
 import { SearchIcon } from "@/__icons__";
+import { cn } from "@/registry-v2/lib/cn";
 
 type CommandRootProps = React.ComponentPropsWithoutRef<typeof CommandPrimitive>;
 const CommandRoot = React.forwardRef<

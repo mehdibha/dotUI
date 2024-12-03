@@ -1,6 +1,6 @@
 import React from "react";
-import { ColorField } from "@/registry/ui/default/core/color-field";
-import { ContextualHelp } from "@/registry/ui/default/core/contextual-help";
+import { ColorField } from "@/components/dynamic-core/color-field";
+import { ContextualHelp } from "@/components/dynamic-core/contextual-help";
 
 export default function Demo() {
   return (

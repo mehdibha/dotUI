@@ -1,5 +1,5 @@
-import { ListBox, Item } from "@/registry/ui/default/core/list-box";
-import { Text } from "@/registry/ui/default/core/text";
+import { ListBox, Item } from "@/components/dynamic-core/list-box";
+import { Text } from "@/components/dynamic-core/text";
 
 export default function Demo() {
   return (

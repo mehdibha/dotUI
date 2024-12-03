@@ -16,13 +16,9 @@ import {
   TextContext as AriaTextContext,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import {
-  Description,
-  Label,
-  type FieldProps,
-} from "@/registry/ui/default/core/field";
-import { cn } from "@/registry/ui/default/lib/cn";
-import { focusRing } from "@/registry/ui/default/lib/focus-styles";
+import { Description, Label, type FieldProps } from "@/registry-v2/core/field";
+import { cn } from "@/registry-v2/lib/cn";
+import { focusRing } from "@/registry-v2/lib/focus-styles";
 
 const sliderStyles = tv({
   slots: {

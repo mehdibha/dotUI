@@ -3,7 +3,7 @@
 import React from "react";
 import { getLocalTimeZone, parseDate } from "@internationalized/date";
 import { useDateFormatter } from "react-aria";
-import { DateRangePicker } from "@/registry/ui/default/core/date-range-picker";
+import { DateRangePicker } from "@/components/dynamic-core/date-range-picker";
 
 export default function Demo() {
   const [value, setValue] = React.useState({
