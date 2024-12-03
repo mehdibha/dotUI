@@ -3,6 +3,7 @@
 import React from "react";
 import { Button as AriaButton } from "react-aria-components";
 import { cn } from "@/lib/cn";
+import { focusRing } from "@/lib/focus-styles";
 import { useThemes } from "@/hooks/use-themes";
 import {
   ColorEditor,
@@ -16,7 +17,6 @@ import { Skeleton } from "@/components/core/skeleton";
 import { Slider } from "@/components/core/slider";
 import { Tag, TagGroup } from "@/components/core/tag-group";
 import { Tooltip } from "@/components/core/tooltip";
-import { focusRing } from "@/lib/focus-styles";
 import { BaseColor } from "@/types/theme";
 import { usePreview } from "./context";
 

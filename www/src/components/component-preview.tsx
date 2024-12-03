@@ -96,22 +96,22 @@ export const ComponentPreview = async ({
         </ThemeOverride>
       </div>
       <ComponentPreviewClient
-          demos={demos.map((elem, index) => {
-            return (
-              <CodeBlock
-                key={index}
-                files={elem.code.map((file) => ({
-                  fileName: file.fileName,
-                  code: file.code,
-                  lang: "tsx",
-                }))}
-                preview={preview}
-                className={"w-full rounded-t-none border-x-0 border-b-0"}
-                expandable={expandable}
-              />
-            );
-          })}
-        />
+        demos={demos.map((elem, index) => {
+          return (
+            <CodeBlock
+              key={index}
+              files={elem.code.map((file) => ({
+                fileName: file.fileName,
+                code: file.code,
+                lang: "tsx",
+              }))}
+              preview={preview}
+              className={"w-full rounded-t-none border-x-0 border-b-0"}
+              expandable={expandable}
+            />
+          );
+        })}
+      />
     </div>
   );
 };

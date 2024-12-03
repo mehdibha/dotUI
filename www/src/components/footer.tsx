@@ -2,11 +2,11 @@ import React from "react";
 import NavLink from "next/link";
 import Link from "next/link";
 import { cn } from "@/lib/cn";
+import { focusRing } from "@/lib/focus-styles";
 import { Avatar } from "@/components/core/avatar";
 import { Badge } from "@/components/core/badge";
 import { Separator } from "@/components/core/separator";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
-import { focusRing } from "@/lib/focus-styles";
 import { siteConfig } from "@/config";
 
 const links = [
