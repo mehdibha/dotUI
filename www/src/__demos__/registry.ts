@@ -9,8 +9,7 @@ const buildDemos = (component: string, demos: string[]): RegistryDemos => {
   return demos.map((demo) => {
     return {
       name: `${component}-${demo}`,
-      type: "registry:demo",
-      files: [`core/${component}/demos/${demo}.tsx`],
+      files: [`/${component}/${demo}.tsx`],
     };
   });
 };
@@ -25,9 +24,9 @@ export const demos: RegistryDemos = [
     "title",
     "variants",
   ]),
-  ...buildDemos("aspect-ratio", ["as-child", "default"]),
+  ...buildDemos("aspect-ratio", []),
   ...buildDemos("avatar", ["composition", "default", "shape", "sizes"]),
-  ...buildDemos("badge", ["default", "icon", "sizes", "variants"]),
+  ...buildDemos("badge", []),
   ...buildDemos("breadcrumbs", [
     "basic",
     "composition",
@@ -59,15 +58,6 @@ export const demos: RegistryDemos = [
     "validation",
     "visible-months",
   ]),
-  ...buildDemos("checkbox", [
-    "card",
-    "controlled",
-    "default",
-    "disabled",
-    "indeterminate",
-    "read-only",
-    "uncontrolled",
-  ]),
   ...buildDemos("checkbox-group", [
     "cards",
     "composition",
@@ -80,6 +70,15 @@ export const demos: RegistryDemos = [
     "label",
     "read-only",
     "required",
+    "uncontrolled",
+  ]),
+  ...buildDemos("checkbox", [
+    "card",
+    "controlled",
+    "default",
+    "disabled",
+    "indeterminate",
+    "read-only",
     "uncontrolled",
   ]),
   ...buildDemos("color-area", [
@@ -125,6 +124,7 @@ export const demos: RegistryDemos = [
     "vertical",
   ]),
   ...buildDemos("color-swatch", ["default"]),
+  ...buildDemos("color-thumb", []),
   ...buildDemos("combobox", [
     "async-loading",
     "basic",

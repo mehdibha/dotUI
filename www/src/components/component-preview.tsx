@@ -1,14 +1,14 @@
 import React from "react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
-import { PaintBucket, Settings2Icon } from "lucide-react";
+import { PaintBucket } from "lucide-react";
 import { cn } from "@/lib/cn";
-import { getFileSource } from "@/lib/get-file-source";
-import { CodeBlock } from "@/components/code-block";
+// import { getFileSource } from "@/lib/get-file-source";
+// import { CodeBlock } from "@/components/code-block";
 import { Button } from "@/components/core/button";
 import { Tooltip } from "@/components/core/tooltip";
-import { styles } from "@/registry/styles";
-import { Index } from "@/__demos__";
-import { ComponentPreviewClient } from "./component-preview-client";
+// import { styles } from "@/registry/styles";
+// import { Index } from "@/__demos__";
+// import { ComponentPreviewClient } from "./component-preview-client";
 import { ThemeCustomizerDialog } from "./theme-customizer";
 import { ThemeOverride } from "./theme-override";
 
@@ -28,28 +28,28 @@ export const ComponentPreview = async ({
   expandable,
 }: ComponentPreviewProps) => {
   const type = name.split("/")[0];
-  const componentName = name.split("/")[1];
+  // const componentName = name.split("/")[1];
 
   if (type === "core") {
-    const demos: {
-      component: React.ComponentType;
-      code: Array<{
-        fileName: string;
-        code: string;
-      }>;
-    }[] = styles.map((style) => {
-      const demo = Index["core"][style.name][componentName];
-      return {
-        component: demo.component,
-        code: demo.files.map((file: string) => {
-          const { fileName, content } = getFileSource(file);
-          return {
-            fileName,
-            code: content,
-          };
-        }),
-      };
-    });
+  //   const demos: {
+  //     component: React.ComponentType;
+  //     code: Array<{
+  //       fileName: string;
+  //       code: string;
+  //     }>;
+  //   }[] = styles.map((style) => {
+  //     const demo = Index["core"][style.name][componentName];
+  //     return {
+  //       component: demo.component,
+  //       code: demo.files.map((file: string) => {
+  //         const { fileName, content } = getFileSource(file);
+  //         return {
+  //           fileName,
+  //           code: content,
+  //         };
+  //       }),
+  //     };
+  //   });
 
     return (
       <div
@@ -88,18 +88,18 @@ export const ComponentPreview = async ({
                     className
                   )}
                 >
-                  <ComponentPreviewClient
+                  {/* <ComponentPreviewClient
                     demos={demos.map((elem, index) => {
                       const Comp = elem.component;
                       return <Comp key={index} />;
                     })}
-                  />
+                  /> */}
                 </div>
               </div>
             </ScrollArea>
           </ThemeOverride>
         </div>
-        <ComponentPreviewClient
+        {/* <ComponentPreviewClient
           demos={demos.map((elem, index) => {
             return (
               <CodeBlock
@@ -115,7 +115,7 @@ export const ComponentPreview = async ({
               />
             );
           })}
-        />
+        /> */}
       </div>
     );
   }
