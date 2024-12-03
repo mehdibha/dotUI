@@ -1,0 +1,1 @@
+export * from "@/registry-v2/core/link";

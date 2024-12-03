@@ -9,7 +9,7 @@ import { DocsPager } from "@/components/docs-pager";
 import { GitHubIcon } from "@/components/icons";
 import { AdobeIcon } from "@/components/icons/adobe-icon";
 import { PageLastUpdate } from "@/components/last-update";
-import { mdxComponents } from "@/components/mdx/mdx-components";
+import { mdxComponents } from "@/components/mdx-components";
 import { TableOfContents } from "@/components/toc";
 import { Button } from "@/registry/ui/default/core/button";
 import { cn } from "@/registry/ui/default/lib/cn";
