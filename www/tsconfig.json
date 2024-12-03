@@ -9,14 +9,14 @@
     "paths": {
       "@/*": ["./src/*"],
       "~/*": ["./*"]
-    },
+    }
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.d.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts", "src/lib/tw-plugins/tw-rac.js",
+    ".next/types/**/*.ts",
   ],
   "exclude": ["node_modules"]
 }

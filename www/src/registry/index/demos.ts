@@ -24,9 +24,9 @@ export const demos: RegistryDemos = [
     "title",
     "variants",
   ]),
-  ...buildDemos("aspect-ratio", []),
+  ...buildDemos("aspect-ratio", ["as-child", "default"]),
   ...buildDemos("avatar", ["composition", "default", "shape", "sizes"]),
-  ...buildDemos("badge", []),
+  ...buildDemos("badge", ["default", "icon", "sizes", "variants"]),
   ...buildDemos("breadcrumbs", [
     "basic",
     "composition",

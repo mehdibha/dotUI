@@ -39,6 +39,20 @@ export const Index: Record<string, any> = {
       files: ["registry/demos/alert/variants.tsx"],
       component: React.lazy(() => import("@/registry/demos/alert/variants")),
     },
+    "aspect-ratio-as-child": {
+      name: "aspect-ratio-as-child",
+      files: ["registry/demos/aspect-ratio/as-child.tsx"],
+      component: React.lazy(
+        () => import("@/registry/demos/aspect-ratio/as-child")
+      ),
+    },
+    "aspect-ratio-default": {
+      name: "aspect-ratio-default",
+      files: ["registry/demos/aspect-ratio/default.tsx"],
+      component: React.lazy(
+        () => import("@/registry/demos/aspect-ratio/default")
+      ),
+    },
     "avatar-composition": {
       name: "avatar-composition",
       files: ["registry/demos/avatar/composition.tsx"],
@@ -60,6 +74,26 @@ export const Index: Record<string, any> = {
       name: "avatar-sizes",
       files: ["registry/demos/avatar/sizes.tsx"],
       component: React.lazy(() => import("@/registry/demos/avatar/sizes")),
+    },
+    "badge-default": {
+      name: "badge-default",
+      files: ["registry/demos/badge/default.tsx"],
+      component: React.lazy(() => import("@/registry/demos/badge/default")),
+    },
+    "badge-icon": {
+      name: "badge-icon",
+      files: ["registry/demos/badge/icon.tsx"],
+      component: React.lazy(() => import("@/registry/demos/badge/icon")),
+    },
+    "badge-sizes": {
+      name: "badge-sizes",
+      files: ["registry/demos/badge/sizes.tsx"],
+      component: React.lazy(() => import("@/registry/demos/badge/sizes")),
+    },
+    "badge-variants": {
+      name: "badge-variants",
+      files: ["registry/demos/badge/variants.tsx"],
+      component: React.lazy(() => import("@/registry/demos/badge/variants")),
     },
     "breadcrumbs-basic": {
       name: "breadcrumbs-basic",
