@@ -2,11 +2,11 @@
 
 import { useRouter } from "next/navigation";
 import { Form } from "react-aria-components";
+import { Button } from "@/components/core/button";
+import { Link } from "@/components/core/link";
+import { TextField } from "@/components/core/text-field";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
 import { GoogleIcon } from "@/components/icons/google-icon";
-import { Button } from "@/registry/ui/default/core/button";
-import { Link } from "@/registry/ui/default/core/link";
-import { TextField } from "@/registry/ui/default/core/text-field";
 import { useSimulateApiCall } from "@/app/(preview)/preview/hooks/use-api";
 
 export default function LoginPage() {

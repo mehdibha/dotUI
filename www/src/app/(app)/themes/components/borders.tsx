@@ -2,15 +2,15 @@
 
 import React from "react";
 import { useThemes } from "@/hooks/use-themes";
-import { Label } from "@/registry/ui/default/core/field";
-import { Skeleton } from "@/registry/ui/default/core/skeleton";
+import { Label } from "@/components/core/field";
+import { Skeleton } from "@/components/core/skeleton";
 import {
   SliderFiller,
   SliderRoot,
   SliderThumb,
   SliderTrack,
   SliderValueLabel,
-} from "@/registry/ui/default/core/slider";
+} from "@/components/core/slider";
 import { usePreview } from "./context";
 
 export function Borders() {

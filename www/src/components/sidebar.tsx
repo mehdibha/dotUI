@@ -14,22 +14,22 @@ import {
   SearchIcon,
   SunIcon,
 } from "lucide-react";
+import { cn } from "@/lib/cn";
 import { hasActive, isActive } from "@/lib/docs/utils";
 import { useCommandMenuInputRef } from "@/hooks/use-focus-command-menu";
-import { GitHubIcon, TwitterIcon } from "@/components/icons";
-import { Avatar } from "@/registry/ui/default/core/avatar";
-import { Button, ButtonProps } from "@/registry/ui/default/core/button";
+import { Avatar } from "@/components/core/avatar";
+import { Button, ButtonProps } from "@/components/core/button";
 import {
   CollapsibleRoot,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/registry/ui/default/core/collapsible";
-import { Dialog, DialogRoot } from "@/registry/ui/default/core/dialog";
-import { Kbd } from "@/registry/ui/default/core/kbd";
-import { DismissButton } from "@/registry/ui/default/core/overlay";
-import { ScrollArea } from "@/registry/ui/default/core/scroll-area";
-import { Tooltip, TooltipProps } from "@/registry/ui/default/core/tooltip";
-import { cn } from "@/registry/ui/default/lib/cn";
+} from "@/components/core/collapsible";
+import { Dialog, DialogRoot } from "@/components/core/dialog";
+import { Kbd } from "@/components/core/kbd";
+import { DismissButton } from "@/components/core/overlay";
+import { ScrollArea } from "@/components/core/scroll-area";
+import { Tooltip, TooltipProps } from "@/components/core/tooltip";
+import { GitHubIcon, TwitterIcon } from "@/components/icons";
 import { siteConfig } from "@/config";
 import { SearchCommand } from "./search-command";
 import { ThemeSwitcher } from "./theme-switcher";

@@ -2,9 +2,9 @@
 
 import React from "react";
 import { useThemes } from "@/hooks/use-themes";
-import { Item } from "@/registry/ui/default/core/list-box";
-import { Select } from "@/registry/ui/default/core/select";
-import { Skeleton } from "@/registry/ui/default/core/skeleton";
+import { Item } from "@/components/core/list-box";
+import { Select } from "@/components/core/select";
+import { Skeleton } from "@/components/core/skeleton";
 
 export function Iconography() {
   const { isLoading, isCurrentThemeEditable } = useThemes();

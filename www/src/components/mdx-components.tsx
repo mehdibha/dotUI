@@ -1,10 +1,10 @@
 import React from "react";
 import { ArrowUpRightIcon } from "lucide-react";
 import { MDXComponents } from "mdx/types";
-import { Alert, AlertProps } from "@/registry/ui/default/core/alert";
-import { Badge, BadgeProps } from "@/registry/ui/default/core/badge";
-import { LinkProps, Link as NavLink } from "@/registry/ui/default/core/link";
-import { cn } from "@/registry/ui/default/lib/cn";
+import { cn } from "@/lib/cn";
+import { Alert, AlertProps } from "@/components/core/alert";
+import { Badge, BadgeProps } from "@/components/core/badge";
+import { LinkProps, Link as NavLink } from "@/components/core/link";
 import { BadgePalette } from "./badge-palette";
 import { Choice, Choices, ChoicesProps } from "./choices";
 import { Pre } from "./code-block-mdx";

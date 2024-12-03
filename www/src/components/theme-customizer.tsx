@@ -3,18 +3,14 @@
 import { googleFonts } from "@/lib/fonts";
 import { dotUIThemes } from "@/lib/themes";
 import { useThemes } from "@/hooks/use-themes";
-import { ColorPicker } from "@/registry/ui/default/core/color-picker";
-import {
-  DialogRootProps,
-  DialogRoot,
-  Dialog,
-} from "@/registry/ui/default/core/dialog";
-import { Label } from "@/registry/ui/default/core/field";
-import { Item } from "@/registry/ui/default/core/list-box";
-import { Select, SelectRoot } from "@/registry/ui/default/core/select";
-import { Skeleton } from "@/registry/ui/default/core/skeleton";
-import { Slider } from "@/registry/ui/default/core/slider";
-import { Tag, TagGroup } from "@/registry/ui/default/core/tag-group/tag-group";
+import { ColorPicker } from "@/components/core/color-picker";
+import { DialogRootProps, DialogRoot, Dialog } from "@/components/core/dialog";
+import { Label } from "@/components/core/field";
+import { Item } from "@/components/core/list-box";
+import { Select } from "@/components/core/select";
+import { Skeleton } from "@/components/core/skeleton";
+import { Slider } from "@/components/core/slider";
+import { Tag, TagGroup } from "@/components/core/tag-group";
 
 export const ThemeCustomizerDialog = ({
   children,

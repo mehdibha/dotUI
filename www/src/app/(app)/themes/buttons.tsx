@@ -1,7 +1,7 @@
 "use client";
 
-import { ColorPicker } from "@/registry/ui/default/core/color-picker";
-import { Label } from "@/registry/ui/default/core/field";
+import { ColorPicker } from "@/components/core/color-picker";
+import { Label } from "@/components/core/field";
 
 export const ButtonsCustomizer = () => {
   return (

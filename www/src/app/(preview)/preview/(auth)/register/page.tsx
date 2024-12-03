@@ -1,8 +1,8 @@
+import { Button } from "@/components/core/button";
+import { Link } from "@/components/core/link";
+import { TextField } from "@/components/core/text-field";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
 import { GoogleIcon } from "@/components/icons/google-icon";
-import { Button } from "@/registry/ui/default/core/button";
-import { Link } from "@/registry/ui/default/core/link";
-import { TextField } from "@/registry/ui/default/core/text-field";
 
 export default function RegisterPage() {
   return (

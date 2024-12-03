@@ -4,9 +4,9 @@ import React from "react";
 import { BackgroundColor } from "@adobe/leonardo-contrast-colors";
 import { dotUIThemes } from "@/lib/themes";
 import { useThemes } from "@/hooks/use-themes";
-import { Alert } from "@/registry/ui/default/core/alert";
-import { Dialog, DialogRoot } from "@/registry/ui/default/core/dialog";
-import { Radio, RadioGroup } from "@/registry/ui/default/core/radio-group";
+import { Alert } from "@/components/core/alert";
+import { Dialog, DialogRoot } from "@/components/core/dialog";
+import { Radio, RadioGroup } from "@/components/core/radio-group";
 
 export const ExploreThemesDialog = ({
   children,

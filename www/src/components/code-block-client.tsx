@@ -4,19 +4,19 @@ import React from "react";
 import { CheckIcon, CopyIcon } from "lucide-react";
 import type { Key } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { Button, type ButtonProps } from "@/registry/ui/default/core/button";
+import { cn } from "@/lib/cn";
+import { Button, type ButtonProps } from "@/components/core/button";
 import {
   ScrollArea,
   type ScrollAreaProps,
-} from "@/registry/ui/default/core/scroll-area";
+} from "@/components/core/scroll-area";
 import {
   Tab,
   Tabs,
   TabList,
   TabPanel,
   type TabsProps,
-} from "@/registry/ui/default/core/tabs";
-import { cn } from "@/registry/ui/default/lib/cn";
+} from "@/components/core/tabs";
 
 const codeBlockStyles = tv({
   slots: {

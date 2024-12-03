@@ -16,16 +16,16 @@ import {
   TextField as UnstyledTextField,
   Input as UnstyledInput,
 } from "react-aria-components";
+import { cn } from "@/lib/cn";
 import { dotUIThemes } from "@/lib/themes";
 import { useThemes } from "@/hooks/use-themes";
-import { Alert } from "@/registry/ui/default/core/alert";
-import { Button } from "@/registry/ui/default/core/button";
-import { Form } from "@/registry/ui/default/core/form";
-import { InputProps } from "@/registry/ui/default/core/input";
-import { Kbd } from "@/registry/ui/default/core/kbd";
-import { Menu, MenuItem, MenuRoot } from "@/registry/ui/default/core/menu";
-import { Skeleton } from "@/registry/ui/default/core/skeleton";
-import { cn } from "@/registry/ui/default/lib/cn";
+import { Alert } from "@/components/core/alert";
+import { Button } from "@/components/core/button";
+import { Form } from "@/components/core/form";
+import { InputProps } from "@/components/core/input";
+import { Kbd } from "@/components/core/kbd";
+import { Menu, MenuItem, MenuRoot } from "@/components/core/menu";
+import { Skeleton } from "@/components/core/skeleton";
 import { CloneThemeDialog } from "./clone-theme";
 import { CopyThemeDialog } from "./copy-theme";
 import { DeleteThemeDialog } from "./delete-theme";

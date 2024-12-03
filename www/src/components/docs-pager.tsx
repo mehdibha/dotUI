@@ -1,6 +1,6 @@
 import { findNeighbour } from "fumadocs-core/server";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import { Button } from "@/registry/ui/default/core/button";
+import { Button } from "@/components/core/button";
 import { source } from "@/app/source";
 
 export const DocsPager = ({ currentPathname }: { currentPathname: string }) => {

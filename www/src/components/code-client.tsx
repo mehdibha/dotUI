@@ -3,8 +3,8 @@
 import React from "react";
 import { CheckIcon, CopyIcon } from "lucide-react";
 import { tv } from "tailwind-variants";
-import { Button } from "@/registry/ui/default/core/button";
-import { ScrollArea } from "@/registry/ui/default/core/scroll-area";
+import { Button } from "@/components/core/button";
+import { ScrollArea } from "@/components/core/scroll-area";
 
 const codeStyles = tv({
   base: "bg-bg-muted relative rounded-md",

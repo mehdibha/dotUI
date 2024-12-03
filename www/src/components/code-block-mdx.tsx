@@ -10,10 +10,10 @@ import {
   useRef,
 } from "react";
 import { Check, Copy } from "lucide-react";
+import { cn } from "@/lib/cn";
 import { useCopyButton } from "@/hooks/use-copy-button";
-import { Button, ButtonProps } from "@/registry/ui/default/core/button";
-import { ScrollArea } from "@/registry/ui/default/core/scroll-area";
-import { cn } from "@/registry/ui/default/lib/cn";
+import { Button, ButtonProps } from "@/components/core/button";
+import { ScrollArea } from "@/components/core/scroll-area";
 
 export type CodeBlockProps = HTMLAttributes<HTMLElement> & {
   icon?: ReactNode;

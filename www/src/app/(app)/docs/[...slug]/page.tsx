@@ -3,16 +3,16 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { type TableOfContents as TocType } from "fumadocs-core/server";
 import { ExternalLinkIcon } from "lucide-react";
+import { cn } from "@/lib/cn";
 import { truncateOnWord } from "@/lib/string";
 import { Breadcrumbs } from "@/components/breadcrumbs";
+import { Button } from "@/components/core/button";
 import { DocsPager } from "@/components/docs-pager";
 import { GitHubIcon } from "@/components/icons";
 import { AdobeIcon } from "@/components/icons/adobe-icon";
 import { PageLastUpdate } from "@/components/last-update";
 import { mdxComponents } from "@/components/mdx-components";
 import { TableOfContents } from "@/components/toc";
-import { Button } from "@/registry/ui/default/core/button";
-import { cn } from "@/registry/ui/default/lib/cn";
 import { source } from "@/app/source";
 import { siteConfig } from "@/config";
 

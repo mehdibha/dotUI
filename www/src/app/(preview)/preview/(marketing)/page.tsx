@@ -1,4 +1,4 @@
-import { Button } from "@/registry/ui/default/core/button";
+import { Button } from "@/components/core/button";
 
 export default function PreviewPage() {
   return (

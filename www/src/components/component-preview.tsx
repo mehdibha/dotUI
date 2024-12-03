@@ -1,12 +1,12 @@
 import React from "react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { PaintBucket, Settings2Icon } from "lucide-react";
+import { cn } from "@/lib/cn";
 import { getFileSource } from "@/lib/get-file-source";
 import { CodeBlock } from "@/components/code-block";
+import { Button } from "@/components/core/button";
+import { Tooltip } from "@/components/core/tooltip";
 import { styles } from "@/registry/styles";
-import { Button } from "@/registry/ui/default/core/button";
-import { Tooltip } from "@/registry/ui/default/core/tooltip";
-import { cn } from "@/registry/ui/default/lib/cn";
 import { Index } from "@/__demos__";
 import { ComponentPreviewClient } from "./component-preview-client";
 import { ThemeCustomizerDialog } from "./theme-customizer";

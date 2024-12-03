@@ -3,11 +3,11 @@
 import Link from "next/link";
 import type { PageTree } from "fumadocs-core/server";
 import { AlignLeftIcon, PanelLeftCloseIcon, SearchIcon } from "lucide-react";
+import { Avatar } from "@/components/core/avatar";
+import { Button } from "@/components/core/button";
+import { Dialog, DialogRoot } from "@/components/core/dialog";
+import { ScrollArea } from "@/components/core/scroll-area";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
-import { Avatar } from "@/registry/ui/default/core/avatar";
-import { Button } from "@/registry/ui/default/core/button";
-import { Dialog, DialogRoot } from "@/registry/ui/default/core/dialog";
-import { ScrollArea } from "@/registry/ui/default/core/scroll-area";
 import { siteConfig } from "@/config";
 import { NodeList } from "./sidebar";
 import { ThemeSwitcher } from "./theme-switcher";

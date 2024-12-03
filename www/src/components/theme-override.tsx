@@ -1,11 +1,11 @@
 "use client";
 
 import React, { ReactNode } from "react";
+import { cn } from "@/lib/cn";
 import { googleFonts } from "@/lib/fonts";
 import { useThemes } from "@/hooks/use-themes";
+import { Skeleton } from "@/components/core/skeleton";
 import { useMounted } from "@/registry/hooks/use-mounted";
-import { Skeleton } from "@/registry/ui/default/core/skeleton";
-import { cn } from "@/registry/ui/default/lib/cn";
 
 interface ThemeOverrideProps extends React.ComponentProps<"div"> {
   children: React.ReactNode;

@@ -11,8 +11,8 @@ import {
   SettingsIcon,
   UsersIcon,
 } from "lucide-react";
-import { Button } from "@/registry/ui/default/core/button";
-import { Tooltip } from "@/registry/ui/default/core/tooltip";
+import { Button } from "@/components/core/button";
+import { Tooltip } from "@/components/core/tooltip";
 
 export default function DashboardLayout({
   children,

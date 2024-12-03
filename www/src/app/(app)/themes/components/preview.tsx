@@ -2,8 +2,8 @@
 
 import React from "react";
 import { ChevronLeftIcon, ChevronRightIcon, RotateCwIcon } from "lucide-react";
-import { Button } from "@/registry/ui/default/core/button";
-import { cn } from "@/registry/ui/default/lib/cn";
+import { cn } from "@/lib/cn";
+import { Button } from "@/components/core/button";
 
 export function Preview() {
   const iframeRef = React.useRef<HTMLIFrameElement>(null);

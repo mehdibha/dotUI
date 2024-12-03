@@ -3,10 +3,10 @@
 import React from "react";
 import { MonitorIcon, MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
-import { Button } from "@/registry/ui/default/core/button";
-import { Item, ListBox } from "@/registry/ui/default/core/list-box";
-import { Overlay } from "@/registry/ui/default/core/overlay";
-import { SelectRoot } from "@/registry/ui/default/core/select";
+import { Button } from "@/components/core/button";
+import { Item, ListBox } from "@/components/core/list-box";
+import { Overlay } from "@/components/core/overlay";
+import { SelectRoot } from "@/components/core/select";
 
 export const ThemeSwitcher = ({ children }: { children?: React.ReactNode }) => {
   const { theme, setTheme } = useTheme();

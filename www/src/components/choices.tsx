@@ -9,7 +9,7 @@ import {
   type TabsProps as BaseProps,
   type TabPanelProps,
 } from "react-aria-components";
-import { cn } from "@/registry/ui/default/lib/cn";
+import { cn } from "@/lib/cn";
 import { focusRing } from "@/registry/ui/default/lib/focus-styles";
 
 export interface ChoicesProps extends Omit<BaseProps, "children"> {

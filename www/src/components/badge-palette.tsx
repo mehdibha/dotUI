@@ -1,6 +1,6 @@
 import { BackgroundColor } from "@adobe/leonardo-contrast-colors";
-import { Badge, BadgeProps } from "@/registry/ui/default/core/badge";
-import { cn } from "@/registry/ui/default/lib/cn";
+import { cn } from "@/lib/cn";
+import { Badge, BadgeProps } from "@/components/core/badge";
 
 export function BadgePalette({
   className,
