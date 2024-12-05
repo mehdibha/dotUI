@@ -19,11 +19,11 @@ const buttonStyles = tv(
     variants: {
       variant: {
         default:
-          "bg-red-500 hover:bg-bg-neutral-hover pressed:bg-bg-neutral-active text-fg-onNeutral",
+          "hover:bg-bg-neutral-hover pressed:bg-bg-neutral-active text-fg-onNeutral bg-red-500",
         primary:
           "bg-bg-primary hover:bg-bg-primary-hover pressed:bg-bg-primary-active text-fg-onPrimary",
         quiet:
-          "hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 text-fg bg-red-500",
+          "hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 text-fg bg-transparent",
         outline:
           "border-border-field hover:bg-bg-inverse/10 pressed:bg-bg-inverse/15 text-fg disabled:border-border-disabled border disabled:bg-transparent",
         accent:
