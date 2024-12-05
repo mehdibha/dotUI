@@ -1,1 +1,1 @@
-export * from "@/registry/core/form";
+export * from "@/registry/core/form-01";

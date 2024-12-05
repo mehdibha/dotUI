@@ -8,35 +8,36 @@ export const ComponentSource = async ({
   name: string | string[];
   className?: string;
 }) => {
-  let code: { title: string; code: string }[] = [];
+  return <div>TO DO</div>
+  // let code: { title: string; code: string }[] = [];
 
-  if (typeof name === "string") {
-    code = await getFilesSource(name);
-  }
+  // if (typeof name === "string") {
+  //   code = await getFilesSource(name);
+  // }
 
-  if (Array.isArray(name)) {
-    for (const n of name) {
-      code.push(...(await getFilesSource(n)));
-    }
-  }
+  // if (Array.isArray(name)) {
+  //   for (const n of name) {
+  //     code.push(...(await getFilesSource(n)));
+  //   }
+  // }
 
-  if (code.length === 0) {
-    return <p>Source code not found</p>;
-  }
+  // if (code.length === 0) {
+  //   return <p>Source code not found</p>;
+  // }
 
-  code = code.map((file) => ({
-    ...file,
-  }));
+  // code = code.map((file) => ({
+  //   ...file,
+  // }));
 
-  return (
-    <CodeBlock
-      files={code.map((file) => ({
-        fileName: file.title,
-        code: file.code,
-        lang: "tsx",
-      }))}
-      className={className}
-      expandable
-    />
-  );
+  // return (
+  //   <CodeBlock
+  //     files={code.map((file) => ({
+  //       fileName: file.title,
+  //       code: file.code,
+  //       lang: "tsx",
+  //     }))}
+  //     className={className}
+  //     expandable
+  //   />
+  // );
 };

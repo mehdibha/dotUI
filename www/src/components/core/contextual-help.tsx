@@ -1,1 +1,1 @@
-export * from "@/registry/core/contextual-help";
+export * from "@/registry/core/contextual-help-01";

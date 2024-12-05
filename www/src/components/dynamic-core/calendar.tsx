@@ -1,1 +1,1 @@
-export * from "@/registry/core/calendar";
+export * from "@/__registry__/core/calendar-02";
