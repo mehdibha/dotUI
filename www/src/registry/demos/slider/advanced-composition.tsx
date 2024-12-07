@@ -1,3 +1,4 @@
+import { Volume1Icon, Volume2Icon } from "lucide-react";
 import { Label, Description } from "@/components/dynamic-core/field";
 import {
   SliderFiller,
@@ -6,7 +7,6 @@ import {
   SliderTrack,
   SliderValueLabel,
 } from "@/components/dynamic-core/slider";
-import { Volume1Icon, Volume2Icon } from "@/__icons__";
 
 export default function Demo() {
   return (

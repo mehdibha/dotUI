@@ -1,6 +1,6 @@
-import { InfoIcon, HelpIcon } from "@/__icons__";
-import { Button } from "@/__registry__/core/button";
-import { DialogRoot, Dialog } from "@/__registry__/core/dialog";
+import { Button } from "@/registry/core/button-01";
+import { DialogRoot, Dialog } from "@/registry/core/dialog-01";
+import { InfoIcon, HelpCircleIcon } from "@/__registry__/icons";
 
 interface ContextualHelpProps {
   title?: string;
@@ -13,7 +13,7 @@ const ContextualHelp = ({
   description,
   variant,
 }: ContextualHelpProps) => {
-  const icon = variant === "info" ? <InfoIcon /> : <HelpIcon />;
+  const icon = variant === "info" ? <InfoIcon /> : <HelpCircleIcon />;
   return (
     <DialogRoot>
       <Button

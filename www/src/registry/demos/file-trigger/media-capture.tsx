@@ -1,7 +1,7 @@
 import React from "react";
+import { CameraIcon } from "lucide-react";
 import { Button } from "@/components/dynamic-core/button";
 import { FileTrigger } from "@/components/dynamic-core/file-trigger";
-import { CameraIcon } from "@/__icons__";
 
 export default function FileTriggerDemo() {
   return (

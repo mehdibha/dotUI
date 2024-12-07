@@ -60,5 +60,5 @@ export type Theme = {
   };
   radius: number;
   defaultMode: "light" | "dark";
-  // iconLibrary: "lucide" | "phosphor";
+  iconLibrary: "lucide" | "remix";
 };

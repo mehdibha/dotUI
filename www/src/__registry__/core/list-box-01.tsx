@@ -11,9 +11,9 @@ import {
   ListStateContext,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
+import { Text } from "@/registry/core/text-01";
 import { focusRing } from "@/registry/lib/focus-styles";
-import { CheckIcon, LoaderIcon } from "@/__icons__";
-import { Text } from "@/__registry__/core/text";
+import { CheckIcon, Loader2Icon } from "@/__registry__/icons";
 
 const listBoxStyles = tv({
   base: [
@@ -69,7 +69,7 @@ const ListBox = <T extends object>({
       <AriaCollection items={props.items}>{children}</AriaCollection>
       {isLoading && (
         <AriaListBoxItem className="flex items-center justify-center py-1.5">
-          <LoaderIcon
+          <Loader2Icon
             aria-label="Loading more..."
             className="text-fg-muted size-5 animate-spin"
           />

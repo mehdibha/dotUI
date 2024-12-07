@@ -7,8 +7,8 @@ import {
   type CheckboxGroupProps as AriaCheckboxGroupProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { CheckboxContext } from "@/__registry__/core/checkbox";
-import { Field, type FieldProps } from "@/__registry__/core/field";
+import { CheckboxContext } from "@/registry/core/checkbox-01";
+import { Field, type FieldProps } from "@/registry/core/field-01";
 
 const checkboxGroupStyles = tv({
   slots: {

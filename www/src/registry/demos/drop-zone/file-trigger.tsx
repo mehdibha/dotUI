@@ -1,9 +1,9 @@
 import React from "react";
+import { UploadIcon } from "lucide-react";
 import { Button } from "@/components/dynamic-core/button";
 import { DropZone } from "@/components/dynamic-core/drop-zone";
 import { FileTrigger } from "@/components/dynamic-core/file-trigger";
 import { Text } from "@/components/dynamic-core/text";
-import { UploadIcon } from "@/__icons__";
 
 export default function Demo() {
   return (

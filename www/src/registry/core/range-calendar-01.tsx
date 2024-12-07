@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import {
   composeRenderProps,
   RangeCalendar as AriaRangeCalendar,
@@ -21,7 +22,6 @@ import {
 } from "@/registry/core/calendar-01";
 import { Heading } from "@/registry/core/heading-01";
 import { Text } from "@/registry/core/text-01";
-import { ChevronLeftIcon, ChevronRightIcon } from "@/__icons__";
 
 interface RangeCalendarProps<T extends DateValue>
   extends Omit<AriaRangeCalendarProps<T>, "visibleDuration"> {

@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { Loader2Icon } from "lucide-react";
 import {
   composeRenderProps,
   Button as AriaButton,
@@ -10,7 +11,6 @@ import {
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
 import { focusRing } from "@/registry/lib/focus-styles";
-import { LoaderIcon } from "@/__icons__";
 
 const buttonStyles = tv(
   {
@@ -19,7 +19,7 @@ const buttonStyles = tv(
     variants: {
       variant: {
         default:
-          "bg-red-500  hover:bg-bg-neutral-hover pressed:bg-bg-neutral-active text-fg-onNeutral",
+          "hover:bg-bg-neutral-hover pressed:bg-bg-neutral-active text-fg-onNeutral bg-red-500",
         primary:
           "bg-bg-primary hover:bg-bg-primary-hover pressed:bg-bg-primary-active text-fg-onPrimary",
         quiet:
@@ -102,7 +102,7 @@ const Button = React.forwardRef(
         {composeRenderProps(props.children, (children, { isPending }) => (
           <>
             {isPending && (
-              <LoaderIcon aria-label="loading" className="animate-spin" />
+              <Loader2Icon aria-label="loading" className="animate-spin" />
             )}
             {prefix}
             {typeof children === "string" ? (

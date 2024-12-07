@@ -1,5 +1,5 @@
+import { UploadIcon } from "lucide-react";
 import { Button } from "@/components/dynamic-core/button";
-import { UploadIcon } from "@/__icons__";
 
 export default function Demo() {
   return (

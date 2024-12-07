@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
+import { UploadIcon } from "lucide-react";
 import { DropZone } from "@/components/dynamic-core/drop-zone";
 import { Text } from "@/components/dynamic-core/text";
-import { UploadIcon } from "@/__icons__";
 
 export default function Demo() {
   return (

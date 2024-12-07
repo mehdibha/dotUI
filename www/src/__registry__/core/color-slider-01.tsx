@@ -11,8 +11,8 @@ import {
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import { ColorThumb } from "@/registry/core/color-thumb-01";
+import { Label } from "@/registry/core/field-01";
 import { cn } from "@/registry/lib/cn";
-import { Label } from "@/__registry__/core/field";
 
 const colorSliderStyles = tv({
   slots: {

@@ -12,10 +12,10 @@ import {
   type MenuTriggerProps as AriaMenuTriggerProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { CheckIcon, ChevronRightIcon } from "@/__icons__";
-import { Kbd } from "@/__registry__/core/kbd";
-import { Overlay, type OverlayProps } from "@/__registry__/core/overlay";
-import { Text } from "@/__registry__/core/text";
+import { Kbd } from "@/registry/core/kbd-01";
+import { Overlay, type OverlayProps } from "@/registry/core/overlay-01";
+import { Text } from "@/registry/core/text-01";
+import { CheckIcon, ChevronRightIcon } from "@/__registry__/icons";
 
 const menuStyles = tv({
   base: [

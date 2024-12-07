@@ -1,46 +1,33 @@
-export const iconLibraries: {
-  name: string;
-  label: string;
-  dependency: string;
-  import: string;
-}[] = [
-  {
-    name: "lucide",
-    label: "Lucide icons",
-    dependency: "lucide-react",
+export const iconLibraries = {
+  lucide: {
+    name: "lucide-react",
+    package: "lucide-react",
     import: "lucide-react",
   },
-  {
-    name: "remix",
-    label: "Remix icons",
-    dependency: "@remixicon/react",
+  remix: {
+    name: "@remixicon/react",
+    package: "@remixicon/react",
     import: "@remixicon/react",
   },
-] as const;
+} as const;
 
-export type IconLibrary = (typeof iconLibraries)[number]["name"];
-
-type Icons = {
-  [key: string]: {
-    lucide: string;
-    remix: string;
-  };
-};
-
-export const icons: Icons = {
-  LoaderIcon: {
+export const icons: Record<
+  string,
+  Record<keyof typeof iconLibraries, string>
+> = {
+  Loader2Icon: {
     lucide: "Loader2Icon",
     remix: "RiLoader4Line",
   },
-  DangerIcon: {
+  AlertCircleIcon: {
     lucide: "AlertCircleIcon",
     remix: "RiErrorWarningFill",
   },
-  WarningIcon: {
+  AlertTriangleIcon: {
     lucide: "AlertTriangleIcon",
     remix: "RiAlertLine",
   },
-  SuccessIcon: {
+  CheckCircle2Icon: {
     lucide: "CheckCircle2Icon",
     remix: "RiCheckboxCircleLine",
   },
@@ -68,7 +55,7 @@ export const icons: Icons = {
     lucide: "SearchIcon",
     remix: "RiSearchLine",
   },
-  HelpIcon: {
+  HelpCircleIcon: {
     lucide: "HelpCircleIcon",
     remix: "RiQuestionLine",
   },
@@ -104,7 +91,7 @@ export const icons: Icons = {
     lucide: "GlobeIcon",
     remix: "RiGlobalLine",
   },
-  UserIcon: {
+  User2Icon: {
     lucide: "User2Icon",
     remix: "RiUserLine",
   },
@@ -112,7 +99,7 @@ export const icons: Icons = {
     lucide: "ShieldIcon",
     remix: "RiShieldLine",
   },
-  ChevronRightCircleIcon: {
+  ArrowRightCircleIcon: {
     lucide: "ArrowRightCircleIcon",
     remix: "RiArrowRightCircleLine",
   },

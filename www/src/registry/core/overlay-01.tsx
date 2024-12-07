@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { XIcon } from "lucide-react";
 import {
   composeRenderProps,
   Popover as AriaPopover,
@@ -15,7 +16,6 @@ import { tv } from "tailwind-variants";
 import { Button, type ButtonProps } from "@/registry/core/button-01";
 import { useMediaQuery } from "@/registry/hooks/use-media-query";
 import { cn } from "@/registry/lib/cn";
-import { XIcon } from "@/__icons__";
 import { MotionDrawerRoot, useMotionDrawer } from "./use-motion-drawer";
 
 type OverlayType = "modal" | "drawer" | "popover";

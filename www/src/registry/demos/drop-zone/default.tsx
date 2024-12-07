@@ -1,6 +1,6 @@
 import React from "react";
+import { UploadIcon } from "lucide-react";
 import { DropZone } from "@/components/dynamic-core/drop-zone";
-import { UploadIcon } from "@/__icons__";
 
 export default function Demo() {
   return (

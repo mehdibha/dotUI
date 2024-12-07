@@ -6,7 +6,7 @@ import { getFileSource } from "@/lib/get-file-source";
 import { CodeBlock } from "@/components/code-block";
 import { Button } from "@/components/core/button";
 import { Tooltip } from "@/components/core/tooltip";
-import { Index } from "@/__demos__";
+import { Index } from "@/__registry__/demos";
 import { ComponentPreviewClient } from "./component-preview-client";
 import { ThemeCustomizerDialog } from "./theme-customizer";
 import { ThemeOverride } from "./theme-override";

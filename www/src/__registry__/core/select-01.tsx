@@ -9,11 +9,11 @@ import {
   type SelectValueProps as AriaSelectValueProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import { Button, type ButtonProps } from "@/registry/core/button-01";
+import { Field, type FieldProps } from "@/registry/core/field-01";
 import { ListBox, type ListBoxProps } from "@/registry/core/list-box-01";
-import { ChevronDownIcon } from "@/__icons__";
-import { Button, type ButtonProps } from "@/__registry__/core/button";
-import { Field, type FieldProps } from "@/__registry__/core/field";
-import { Overlay } from "@/__registry__/core/overlay";
+import { Overlay } from "@/registry/core/overlay-01";
+import { ChevronDownIcon } from "@/__registry__/icons";
 
 const selectStyles = tv({
   slots: {

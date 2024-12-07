@@ -207,6 +207,7 @@ export const useThemes = () => {
     handleColorConfigChange,
     handleFontChange,
     fonts,
+    currentIconLibrary: currentTheme.iconLibrary,
     radius: currentTheme.radius,
     handleRadiusChange,
     deleteTheme,

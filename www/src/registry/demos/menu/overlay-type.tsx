@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
+import { MenuIcon } from "lucide-react";
 import { Button } from "@/components/dynamic-core/button";
 import { Menu, MenuItem, MenuRoot } from "@/components/dynamic-core/menu";
 import { type OverlayProps } from "@/components/dynamic-core/overlay";
 import { Radio, RadioGroup } from "@/components/dynamic-core/radio-group";
-import { MenuIcon } from "@/__icons__";
 
 export default function Demo() {
   const [type, setType] = React.useState("popover");

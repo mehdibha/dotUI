@@ -1,6 +1,11 @@
 import * as React from "react";
+import {
+  AlertCircleIcon,
+  AlertTriangleIcon,
+  CheckCircle2Icon,
+  InfoIcon,
+} from "lucide-react";
 import { tv, type VariantProps } from "tailwind-variants";
-import { DangerIcon, InfoIcon, SuccessIcon, WarningIcon } from "@/__icons__";
 
 const alertStyles = tv({
   slots: {
@@ -47,9 +52,9 @@ const alertStyles = tv({
 
 const icons = {
   default: <InfoIcon />,
-  success: <SuccessIcon />,
-  warning: <WarningIcon />,
-  danger: <DangerIcon />,
+  danger: <AlertCircleIcon />,
+  success: <CheckCircle2Icon />,
+  warning: <AlertTriangleIcon />,
   info: <InfoIcon />,
 };
 interface AlertProps extends AlertRootProps {

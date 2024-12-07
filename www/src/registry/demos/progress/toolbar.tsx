@@ -1,11 +1,11 @@
 "use client";
 
 import * as React from "react";
+import { ALargeSmallIcon, RotateCwIcon } from "lucide-react";
 import { Button } from "@/components/dynamic-core/button";
 import { Input, InputRoot } from "@/components/dynamic-core/input";
 import { Progress } from "@/components/dynamic-core/progress";
 import { TextFieldRoot } from "@/components/dynamic-core/text-field";
-import { ALargeSmallIcon, RotateCwIcon } from "@/__icons__";
 
 export default function Demo() {
   const [key, setKey] = React.useState(0);

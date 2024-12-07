@@ -2,6 +2,12 @@
 
 import * as React from "react";
 import {
+  ChevronDownIcon,
+  ChevronUpIcon,
+  MinusIcon,
+  PlusIcon,
+} from "lucide-react";
+import {
   NumberField as AriaNumberField,
   type NumberFieldProps as AriaNumberFieldProps,
 } from "react-aria-components";
@@ -10,12 +16,6 @@ import { Button, type ButtonProps } from "@/registry/core/button-01";
 import { Field, type FieldProps } from "@/registry/core/field-01";
 import { InputRoot, Input, type inputStyles } from "@/registry/core/input-01";
 import { useMediaQuery } from "@/registry/hooks/use-media-query";
-import {
-  ChevronDownIcon,
-  ChevronUpIcon,
-  MinusIcon,
-  PlusIcon,
-} from "@/__icons__";
 
 const numberFieldStyles = tv({
   base: "flex w-48 flex-col items-start gap-2",

@@ -1,9 +1,9 @@
 "use client";
 
+import { XCircleIcon } from "lucide-react";
 import { Button } from "@/components/dynamic-core/button";
 import { SearchField } from "@/components/dynamic-core/search-field";
 import { Tooltip } from "@/components/dynamic-core/tooltip";
-import { XCircleIcon } from "@/__icons__";
 
 export default function Demo() {
   return (

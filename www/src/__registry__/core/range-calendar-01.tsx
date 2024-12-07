@@ -9,8 +9,7 @@ import {
   RangeCalendarContext as AriaRangeCalendarContext,
   useSlottedContext,
 } from "react-aria-components";
-import { ChevronLeftIcon, ChevronRightIcon } from "@/__icons__";
-import { Button } from "@/__registry__/core/button";
+import { Button } from "@/registry/core/button-01";
 import {
   CalendarHeader,
   CalendarGrid,
@@ -19,9 +18,10 @@ import {
   CalendarGridBody,
   CalendarCell,
   calendarStyles,
-} from "@/__registry__/core/calendar";
-import { Heading } from "@/__registry__/core/heading";
-import { Text } from "@/__registry__/core/text";
+} from "@/registry/core/calendar-01";
+import { Heading } from "@/registry/core/heading-01";
+import { Text } from "@/registry/core/text-01";
+import { ChevronLeftIcon, ChevronRightIcon } from "@/__registry__/icons";
 
 interface RangeCalendarProps<T extends DateValue>
   extends Omit<AriaRangeCalendarProps<T>, "visibleDuration"> {

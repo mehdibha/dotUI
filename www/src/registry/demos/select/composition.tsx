@@ -1,9 +1,9 @@
 import React from "react";
+import { ChevronsUpDownIcon } from "lucide-react";
 import { Button } from "@/components/dynamic-core/button";
 import { Item, ListBox } from "@/components/dynamic-core/list-box";
 import { Overlay } from "@/components/dynamic-core/overlay";
 import { SelectRoot, SelectValue } from "@/components/dynamic-core/select";
-import { ChevronsUpDownIcon } from "@/__icons__";
 
 export default function Demo() {
   return (

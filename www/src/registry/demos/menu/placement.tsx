@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { MenuIcon } from "lucide-react";
 import { Button } from "@/components/dynamic-core/button";
 import { Item } from "@/components/dynamic-core/list-box";
 import {
@@ -10,7 +11,6 @@ import {
   type MenuProps,
 } from "@/components/dynamic-core/menu";
 import { Select } from "@/components/dynamic-core/select";
-import { MenuIcon } from "@/__icons__";
 
 type Placement = MenuProps<object>["placement"];
 

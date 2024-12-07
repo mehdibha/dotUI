@@ -1,5 +1,6 @@
 "use client";
 
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { Button } from "@/components/dynamic-core/button";
 import {
   CalendarRoot,
@@ -11,7 +12,6 @@ import {
   CalendarCell,
 } from "@/components/dynamic-core/calendar";
 import { Heading } from "@/components/dynamic-core/heading";
-import { ChevronLeftIcon, ChevronRightIcon } from "@/__icons__";
 
 export default function Demo() {
   return (

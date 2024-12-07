@@ -1,3 +1,4 @@
+import { MenuIcon } from "lucide-react";
 import { Button } from "@/components/dynamic-core/button";
 import {
   MenuContent,
@@ -5,7 +6,6 @@ import {
   MenuRoot,
 } from "@/components/dynamic-core/menu";
 import { Overlay } from "@/components/dynamic-core/overlay";
-import { MenuIcon } from "@/__icons__";
 
 export default function Demo() {
   return (

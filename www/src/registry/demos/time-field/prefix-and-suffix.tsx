@@ -1,5 +1,5 @@
+import { TimerIcon } from "lucide-react";
 import { TimeField } from "@/components/dynamic-core/time-field";
-import { TimerIcon } from "@/__icons__";
 
 export default function Demo() {
   return (

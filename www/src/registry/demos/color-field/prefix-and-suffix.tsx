@@ -1,5 +1,5 @@
+import { PaletteIcon } from "lucide-react";
 import { ColorField } from "@/components/dynamic-core/color-field";
-import { PaletteIcon } from "@/__icons__";
 
 export default function Demo() {
   return (

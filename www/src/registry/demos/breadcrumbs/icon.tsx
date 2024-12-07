@@ -1,5 +1,5 @@
+import { HomeIcon } from "lucide-react";
 import { Breadcrumbs, Breadcrumb } from "@/components/dynamic-core/breadcrumbs";
-import { HomeIcon } from "@/__icons__";
 
 export default function Demo() {
   return (

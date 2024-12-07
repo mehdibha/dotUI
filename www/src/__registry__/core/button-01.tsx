@@ -10,7 +10,7 @@ import {
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
 import { focusRing } from "@/registry/lib/focus-styles";
-import { LoaderIcon } from "@/__icons__";
+import { Loader2Icon } from "@/__registry__/icons";
 
 const buttonStyles = tv(
   {
@@ -102,7 +102,7 @@ const Button = React.forwardRef(
         {composeRenderProps(props.children, (children, { isPending }) => (
           <>
             {isPending && (
-              <LoaderIcon aria-label="loading" className="animate-spin" />
+              <Loader2Icon aria-label="loading" className="animate-spin" />
             )}
             {prefix}
             {typeof children === "string" ? (

@@ -1,10 +1,10 @@
 import React from "react";
+import { MinusIcon, PlusIcon } from "lucide-react";
 import { Button } from "@/components/dynamic-core/button";
 import { Description, Label } from "@/components/dynamic-core/field";
 import { Group } from "@/components/dynamic-core/group";
 import { Input, InputRoot } from "@/components/dynamic-core/input";
 import { NumberFieldRoot } from "@/components/dynamic-core/number-field";
-import { MinusIcon, PlusIcon } from "@/__icons__";
 
 export default function Demo() {
   return (

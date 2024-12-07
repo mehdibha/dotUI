@@ -1,5 +1,5 @@
+import { SquarePenIcon, PlusSquareIcon, CopyIcon } from "lucide-react";
 import { ListBox, Item } from "@/components/dynamic-core/list-box";
-import { SquarePenIcon, PlusSquareIcon, CopyIcon } from "@/__icons__";
 
 export default function Demo() {
   return (

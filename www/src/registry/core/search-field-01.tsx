@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { SearchIcon, XIcon } from "lucide-react";
 import {
   SearchField as AriaSearchField,
   type SearchFieldProps as AriaSearchFieldProps,
@@ -9,7 +10,6 @@ import { tv, type VariantProps } from "tailwind-variants";
 import { Button } from "@/registry/core/button-01";
 import { Field, type FieldProps } from "@/registry/core/field-01";
 import { InputRoot, Input, type inputStyles } from "@/registry/core/input-01";
-import { SearchIcon, XIcon } from "@/__icons__";
 
 const searchFieldStyles = tv({
   base: "flex w-48 flex-col items-start gap-2",

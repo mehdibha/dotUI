@@ -8,8 +8,8 @@ import {
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
 import { DateInput, DateSegment } from "@/registry/core/date-input-01";
-import { Field, type FieldProps } from "@/__registry__/core/field";
-import { InputRoot, type inputStyles } from "@/__registry__/core/input";
+import { Field, type FieldProps } from "@/registry/core/field-01";
+import { InputRoot, type inputStyles } from "@/registry/core/input-01";
 
 const timeFieldStyles = tv({
   slots: {

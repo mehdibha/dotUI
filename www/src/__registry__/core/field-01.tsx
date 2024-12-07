@@ -11,7 +11,7 @@ import {
   type FieldErrorProps as AriaFieldErrorProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { AsteriskIcon } from "@/__icons__";
+import { AsteriskIcon } from "@/__registry__/icons";
 
 const fieldStyles = tv({
   slots: {

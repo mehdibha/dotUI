@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { CheckIcon, MinusIcon } from "lucide-react";
 import {
   Checkbox as AriaCheckbox,
   composeRenderProps,
@@ -8,7 +9,6 @@ import {
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
 import { focusRing, focusRingGroup } from "@/registry/lib/focus-styles";
-import { CheckIcon, MinusIcon } from "@/__icons__";
 
 const checkboxStyles = tv({
   slots: {

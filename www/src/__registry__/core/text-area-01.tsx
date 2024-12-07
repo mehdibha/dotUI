@@ -2,16 +2,16 @@
 
 import * as React from "react";
 import { type VariantProps } from "tailwind-variants";
-import {
-  TextFieldRoot,
-  type TextFieldRootProps,
-} from "@/registry/core/text-field-01";
-import { Field, type FieldProps } from "@/__registry__/core/field";
+import { Field, type FieldProps } from "@/registry/core/field-01";
 import {
   InputRoot,
   TextAreaInput,
   type inputStyles,
-} from "@/__registry__/core/input";
+} from "@/registry/core/input-01";
+import {
+  TextFieldRoot,
+  type TextFieldRootProps,
+} from "@/registry/core/text-field-01";
 
 type TextAreaProps = TextFieldRootProps &
   Omit<FieldProps, "children"> &

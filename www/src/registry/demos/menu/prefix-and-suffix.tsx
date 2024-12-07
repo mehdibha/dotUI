@@ -1,6 +1,11 @@
+import {
+  CopyIcon,
+  MenuIcon,
+  PlusSquareIcon,
+  SquarePenIcon,
+} from "lucide-react";
 import { Button } from "@/components/dynamic-core/button";
 import { Menu, MenuItem, MenuRoot } from "@/components/dynamic-core/menu";
-import { CopyIcon, MenuIcon, PlusSquareIcon, SquarePenIcon } from "@/__icons__";
 
 export default function Demo() {
   return (

@@ -4,6 +4,7 @@ export const core: Registry = [
   {
     name: "alert",
     type: "registry:core",
+    components: ["Alert"],
     variants: [
       {
         name: "alert-01",
@@ -24,6 +25,7 @@ export const core: Registry = [
   {
     name: "avatar",
     type: "registry:core",
+    components: ["Avatar"],
     variants: [
       {
         name: "avatar-01",
@@ -43,6 +45,7 @@ export const core: Registry = [
   },
   {
     name: "badge",
+    components: ["Badge"],
     type: "registry:core",
     variants: [
       {
@@ -64,6 +67,7 @@ export const core: Registry = [
   {
     name: "breadcrumbs",
     type: "registry:core",
+    components: ["Breadcrumbs"],
     variants: [
       {
         name: "breadcrumbs-01",

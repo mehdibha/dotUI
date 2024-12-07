@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { CalendarIcon } from "lucide-react";
 import { Button } from "@/components/dynamic-core/button";
 import { Calendar } from "@/components/dynamic-core/calendar";
 import { DateInput, DateSegment } from "@/components/dynamic-core/date-input";
@@ -13,7 +14,6 @@ import {
 } from "@/components/dynamic-core/field";
 import { InputRoot } from "@/components/dynamic-core/input";
 import { Overlay } from "@/components/dynamic-core/overlay";
-import { CalendarIcon } from "@/__icons__";
 
 export default function Demo() {
   return (

@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { CalendarIcon } from "lucide-react";
 import {
   DateRangePicker as AriaDateRangePicker,
   type DateRangePickerProps as AriaDateRangePickerProps,
@@ -13,7 +14,6 @@ import { Dialog } from "@/registry/core/dialog-01";
 import { Field, type FieldProps, fieldStyles } from "@/registry/core/field-01";
 import { InputRoot, type inputStyles } from "@/registry/core/input-01";
 import { RangeCalendar } from "@/registry/core/range-calendar-01";
-import { CalendarIcon } from "@/__icons__";
 
 interface DateRangePickerProps<T extends DateValue>
   extends DateRangePickerRootProps<T>,

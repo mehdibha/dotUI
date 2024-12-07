@@ -8,7 +8,7 @@ import {
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
 import { focusRing, focusRingGroup } from "@/registry/lib/focus-styles";
-import { CheckIcon, MinusIcon } from "@/__icons__";
+import { CheckIcon, MinusIcon } from "@/__registry__/icons";
 
 const checkboxStyles = tv({
   slots: {

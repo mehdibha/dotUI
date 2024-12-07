@@ -8,7 +8,7 @@ export const ComponentSource = async ({
   name: string | string[];
   className?: string;
 }) => {
-  return <div>TO DO</div>
+  return <div>TO DO</div>;
   // let code: { title: string; code: string }[] = [];
 
   // if (typeof name === "string") {

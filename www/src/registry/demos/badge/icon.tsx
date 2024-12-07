@@ -1,5 +1,5 @@
+import { ShieldIcon } from "lucide-react";
 import { Badge } from "@/registry/core/badge-01";
-import { ShieldIcon } from "@/__icons__";
 
 export default function Demo() {
   return (

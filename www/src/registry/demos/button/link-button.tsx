@@ -1,5 +1,5 @@
+import { LogInIcon } from "lucide-react";
 import { Button } from "@/components/dynamic-core/button";
-import { LogInIcon } from "@/__icons__";
 
 export default function Demo() {
   return (

@@ -1,5 +1,5 @@
+import { CalendarIcon } from "lucide-react";
 import { DateField } from "@/components/dynamic-core/date-field";
-import { CalendarIcon } from "@/__icons__";
 
 export default function Demo() {
   return (

@@ -1,5 +1,5 @@
+import { ExternalLinkIcon } from "lucide-react";
 import { Link } from "@/components/dynamic-core/link";
-import { ExternalLinkIcon } from "@/__icons__";
 
 export default function Demo() {
   return (
