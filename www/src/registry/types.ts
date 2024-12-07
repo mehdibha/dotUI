@@ -16,7 +16,6 @@ export type RegistryItem = Prettify<
         }[];
       }
     | {
-        components: string[]; // needed for build-internal-registry.ts
         variants: {
           name: string;
           description?: string;

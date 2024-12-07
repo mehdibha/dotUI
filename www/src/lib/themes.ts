@@ -10,6 +10,11 @@ export const dotUIThemes: Theme[] = [
       body: "josefin",
     },
     radius: 0.5,
+    iconLibrary: "lucide",
+    variants: {
+      button: "button-01",
+      calendar: "calendar-01",
+    },
     colors: {
       light: {
         neutral: {
@@ -180,6 +185,11 @@ export const dotUIThemes: Theme[] = [
       body: "inter",
     },
     radius: 0.5,
+    iconLibrary: "lucide",
+    variants: {
+      button: "button-02",
+      calendar: "calendar-01",
+    },
     colors: {
       light: {
         neutral: {
@@ -350,6 +360,11 @@ export const dotUIThemes: Theme[] = [
       body: "josefin",
     },
     radius: 0,
+    iconLibrary: "lucide",
+    variants: {
+      button: "button-02",
+      calendar: "calendar-01",
+    },
     colors: {
       light: {
         neutral: {

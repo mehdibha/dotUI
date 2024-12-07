@@ -213,5 +213,6 @@ export const useThemes = () => {
     deleteTheme,
     showKeyboardHint,
     setShowKeyboardHint,
+    currentVariants: currentTheme.variants,
   };
 };
