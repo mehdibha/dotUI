@@ -1,0 +1,1 @@
+export * from "@/components/core/breadcrumbs"

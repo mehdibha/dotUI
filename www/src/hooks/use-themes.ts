@@ -4,7 +4,7 @@ import { atomWithStorage } from "jotai/utils";
 import { nanoid } from "nanoid";
 import { buildColorScales } from "@/lib/colors";
 import { defaultTheme, dotUIThemes } from "@/lib/themes";
-import { useMounted } from "@/registry/hooks/use-mounted";
+import { useMounted } from "@/hooks/use-mounted";
 import { BaseColor, Theme } from "@/types/theme";
 
 type Mode = "light" | "dark";
@@ -207,10 +207,12 @@ export const useThemes = () => {
     handleColorConfigChange,
     handleFontChange,
     fonts,
+    currentIconLibrary: currentTheme.iconLibrary,
     radius: currentTheme.radius,
     handleRadiusChange,
     deleteTheme,
     showKeyboardHint,
     setShowKeyboardHint,
+    currentVariants: currentTheme.variants,
   };
 };

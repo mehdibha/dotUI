@@ -1,4 +1,4 @@
-import { Radio, RadioGroup } from "@/registry/ui/default/core/radio-group";
+import { Radio, RadioGroup } from "@/components/core/radio-group";
 
 const variants = [
   { label: "Variant 1", value: "button-01" },

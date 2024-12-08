@@ -35,16 +35,5 @@ export const getFilesSource = async (relativePath: string) => {
 };
 
 const getFilePath = (relativePath: string) => {
-  if (relativePath.startsWith("core")) {
-    return path.join(
-      process.cwd(),
-      "src",
-      "registry",
-      "ui",
-      "default",
-      relativePath,
-      relativePath.split("/").pop() || ""
-    );
-  }
   return path.join(process.cwd(), "src", "registry", relativePath);
 };

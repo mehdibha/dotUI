@@ -3,11 +3,11 @@
 import Link from "next/link";
 import type { PageTree } from "fumadocs-core/server";
 import { AlignLeftIcon, PanelLeftCloseIcon, SearchIcon } from "lucide-react";
+import { Avatar } from "@/components/core/avatar";
+import { Button } from "@/components/core/button";
+import { Dialog, DialogRoot } from "@/components/core/dialog";
+import { ScrollArea } from "@/components/core/scroll-area";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
-import { Avatar } from "@/registry/ui/default/core/avatar";
-import { Button } from "@/registry/ui/default/core/button";
-import { Dialog, DialogRoot } from "@/registry/ui/default/core/dialog";
-import { ScrollArea } from "@/registry/ui/default/core/scroll-area";
 import { siteConfig } from "@/config";
 import { NodeList } from "./sidebar";
 import { ThemeSwitcher } from "./theme-switcher";
@@ -15,7 +15,7 @@ import { ThemeSwitcher } from "./theme-switcher";
 export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
   return (
     <header className="bg-bg sticky top-0 z-50 block border-b backdrop-blur-md sm:hidden">
-      <div className="container flex h-14 w-full max-w-screen-2xl items-center justify-between">
+      <div className="max-w-(--breakpoint-2xl) container flex h-14 w-full items-center justify-between">
         <DialogRoot>
           <Button variant="quiet" size="sm" shape="square">
             <AlignLeftIcon />
@@ -24,7 +24,7 @@ export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
             type="drawer"
             placement="left"
             swipeIndicator={false}
-            className="w-60 !p-0"
+            className="p-0! w-60"
           >
             {({ close }) => (
               <div className="flex h-screen flex-col">

@@ -13,6 +13,7 @@ import {
   SearchIcon,
   TextIcon,
 } from "lucide-react";
+import { cn } from "@/lib/cn";
 import { kekabCaseToTitle } from "@/lib/string";
 import { useCommandMenuInputRef } from "@/hooks/use-focus-command-menu";
 import {
@@ -24,8 +25,7 @@ import {
   CommandRoot,
   CommandSeparator,
   type CommandRootProps,
-} from "@/registry/ui/default/core/command";
-import { cn } from "@/registry/ui/default/lib/cn";
+} from "@/components/core/command";
 import { searchConfig } from "@/config";
 
 export const SearchCommand = ({

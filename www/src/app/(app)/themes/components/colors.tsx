@@ -2,21 +2,21 @@
 
 import React from "react";
 import { Button as AriaButton } from "react-aria-components";
+import { cn } from "@/lib/cn";
+import { focusRing } from "@/lib/focus-styles";
 import { useThemes } from "@/hooks/use-themes";
 import {
   ColorEditor,
   ColorPicker,
   ColorPickerRoot,
-} from "@/registry/ui/default/core/color-picker";
-import { ColorSwatch } from "@/registry/ui/default/core/color-swatch";
-import { Dialog, DialogRoot } from "@/registry/ui/default/core/dialog";
-import { Label } from "@/registry/ui/default/core/field";
-import { Skeleton } from "@/registry/ui/default/core/skeleton";
-import { Slider } from "@/registry/ui/default/core/slider";
-import { Tag, TagGroup } from "@/registry/ui/default/core/tag-group/tag-group";
-import { Tooltip } from "@/registry/ui/default/core/tooltip";
-import { cn } from "@/registry/ui/default/lib/cn";
-import { focusRing } from "@/registry/ui/default/lib/focus-styles";
+} from "@/components/core/color-picker";
+import { ColorSwatch } from "@/components/core/color-swatch";
+import { Dialog, DialogRoot } from "@/components/core/dialog";
+import { Label } from "@/components/core/field";
+import { Skeleton } from "@/components/core/skeleton";
+import { Slider } from "@/components/core/slider";
+import { Tag, TagGroup } from "@/components/core/tag-group";
+import { Tooltip } from "@/components/core/tooltip";
 import { BaseColor } from "@/types/theme";
 import { usePreview } from "./context";
 
@@ -117,7 +117,7 @@ export const Colors = (props: React.HTMLAttributes<HTMLDivElement>) => {
             }
             isDisabled={!isCurrentThemeEditable}
             size="sm"
-            className="!w-full"
+            className="w-full!"
           />
         </Skeleton>
         <Skeleton show={isLoading}>
@@ -130,7 +130,7 @@ export const Colors = (props: React.HTMLAttributes<HTMLDivElement>) => {
               handleColorConfigChange("saturation", value as number)
             }
             isDisabled={!isCurrentThemeEditable}
-            className="!w-full"
+            className="w-full!"
           />
         </Skeleton>
       </div>

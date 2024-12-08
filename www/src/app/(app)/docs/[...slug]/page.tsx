@@ -3,16 +3,16 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { type TableOfContents as TocType } from "fumadocs-core/server";
 import { ExternalLinkIcon } from "lucide-react";
+import { cn } from "@/lib/cn";
 import { truncateOnWord } from "@/lib/string";
 import { Breadcrumbs } from "@/components/breadcrumbs";
+import { Button } from "@/components/core/button";
 import { DocsPager } from "@/components/docs-pager";
 import { GitHubIcon } from "@/components/icons";
 import { AdobeIcon } from "@/components/icons/adobe-icon";
 import { PageLastUpdate } from "@/components/last-update";
-import { mdxComponents } from "@/components/mdx/mdx-components";
+import { mdxComponents } from "@/components/mdx-components";
 import { TableOfContents } from "@/components/toc";
-import { Button } from "@/registry/ui/default/core/button";
-import { cn } from "@/registry/ui/default/lib/cn";
 import { source } from "@/app/source";
 import { siteConfig } from "@/config";
 
@@ -36,7 +36,7 @@ export default async function Page({ params }: PageProps) {
           page.data.toc && page.data.toc.length > 0,
       })}
     >
-      <div className="container max-w-screen-md">
+      <div className="max-w-(--breakpoint-md) container">
         <Breadcrumbs tree={source.pageTree} className="mb-2" />
         <h1 className="text-4xl font-bold">{page.data.title}</h1>
         <p className="text-fg-muted mt-2">{page.data.description}</p>
@@ -67,7 +67,7 @@ export default async function Page({ params }: PageProps) {
       </div>
       {page.data.toc && page.data.toc.length > 0 && (
         <div className="hidden text-sm xl:block">
-          <div className="sticky top-8 h-[calc(100svh-theme(spacing.8))] pr-8">
+          <div className="sticky top-8 h-[calc(100svh-calc(var(--spacing)*8))] pr-8">
             <TableOfContents toc={page.data.toc as TocType} />
           </div>
         </div>

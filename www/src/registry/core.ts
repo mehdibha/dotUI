@@ -1,35 +1,41 @@
-import type { Registry } from "@dotui/registry/types";
+import type { Registry } from "@/registry/types";
 
 export const core: Registry = [
   {
     name: "alert",
     type: "registry:core",
+    variants: [
+      {
+        name: "alert-01",
+      },
+    ],
+  },
+  {
+    name: "alert-01",
+    type: "registry:core",
     files: [
       {
-        path: "core/alert/alert.tsx",
+        path: "core/alert-01.tsx",
         type: "registry:core",
         target: "core/alert.tsx",
       },
     ],
   },
   {
-    name: "aspect-ratio",
+    name: "avatar",
     type: "registry:core",
-    dependencies: ["@radix-ui/react-aspect-ratio"],
-    files: [
+    variants: [
       {
-        path: "core/aspect-ratio/aspect-ratio.tsx",
-        type: "registry:core",
-        target: "core/aspect-ratio.tsx",
+        name: "avatar-01",
       },
     ],
   },
   {
-    name: "avatar",
+    name: "avatar-01",
     type: "registry:core",
     files: [
       {
-        path: "core/avatar/avatar.tsx",
+        path: "core/avatar-01.tsx",
         type: "registry:core",
         target: "core/avatar.tsx",
       },
@@ -38,9 +44,18 @@ export const core: Registry = [
   {
     name: "badge",
     type: "registry:core",
+    variants: [
+      {
+        name: "badge-01",
+      },
+    ],
+  },
+  {
+    name: "badge-01",
+    type: "registry:core",
     files: [
       {
-        path: "core/badge/badge.tsx",
+        path: "core/badge-01.tsx",
         type: "registry:core",
         target: "core/badge.tsx",
       },
@@ -49,10 +64,19 @@ export const core: Registry = [
   {
     name: "breadcrumbs",
     type: "registry:core",
+    variants: [
+      {
+        name: "breadcrumbs-01",
+      },
+    ],
+  },
+  {
+    name: "breadcrumbs-01",
+    type: "registry:core",
     dependencies: ["react-aria-components"],
     files: [
       {
-        path: "core/breadcrumbs/breadcrumbs.tsx",
+        path: "core/breadcrumbs-01.tsx",
         type: "registry:core",
         target: "core/breadcrumbs.tsx",
       },
@@ -61,10 +85,34 @@ export const core: Registry = [
   {
     name: "button",
     type: "registry:core",
+    variants: [
+      {
+        name: "button-01",
+      },
+      {
+        name: "button-02",
+      },
+    ],
+  },
+  {
+    name: "button-01",
+    type: "registry:core",
     dependencies: ["react-aria-components"],
     files: [
       {
-        path: "core/button/button.tsx",
+        path: "core/button-01.tsx",
+        type: "registry:core",
+        target: "core/button.tsx",
+      },
+    ],
+  },
+  {
+    name: "button-02",
+    type: "registry:core",
+    dependencies: ["react-aria-components"],
+    files: [
+      {
+        path: "core/button-02.tsx",
         type: "registry:core",
         target: "core/button.tsx",
       },
@@ -73,11 +121,23 @@ export const core: Registry = [
   {
     name: "calendar",
     type: "registry:core",
+    variants: [
+      {
+        name: "calendar-01",
+      },
+      {
+        name: "calendar-02",
+      },
+    ],
+  },
+  {
+    name: "calendar-01",
+    type: "registry:core",
     dependencies: ["react-aria-components"],
     registryDependencies: ["button", "heading", "text"],
     files: [
       {
-        path: "core/calendar/calendar.tsx",
+        path: "core/calendar-01.tsx",
         type: "registry:core",
         target: "core/calendar.tsx",
       },
@@ -86,10 +146,19 @@ export const core: Registry = [
   {
     name: "checkbox",
     type: "registry:core",
+    variants: [
+      {
+        name: "checkbox-01",
+      },
+    ],
+  },
+  {
+    name: "checkbox-01",
+    type: "registry:core",
     dependencies: ["react-aria-components"],
     files: [
       {
-        path: "core/checkbox/checkbox.tsx",
+        path: "core/checkbox-01.tsx",
         type: "registry:core",
         target: "core/checkbox.tsx",
       },
@@ -98,11 +167,20 @@ export const core: Registry = [
   {
     name: "checkbox-group",
     type: "registry:core",
+    variants: [
+      {
+        name: "checkbox-group-01",
+      },
+    ],
+  },
+  {
+    name: "checkbox-group-01",
+    type: "registry:core",
     dependencies: ["react-aria-components"],
     registryDependencies: ["checkbox"],
     files: [
       {
-        path: "core/checkbox-group/checkbox-group.tsx",
+        path: "core/checkbox-group-01.tsx",
         type: "registry:core",
         target: "core/checkbox-group.tsx",
       },
@@ -111,11 +189,20 @@ export const core: Registry = [
   {
     name: "color-area",
     type: "registry:core",
+    variants: [
+      {
+        name: "color-area-01",
+      },
+    ],
+  },
+  {
+    name: "color-area-01",
+    type: "registry:core",
     dependencies: ["react-aria-components"],
     registryDependencies: ["color-thumb"],
     files: [
       {
-        path: "core/color-area/color-area.tsx",
+        path: "core/color-area-01.tsx",
         type: "registry:core",
         target: "core/color-area.tsx",
       },
@@ -124,11 +211,20 @@ export const core: Registry = [
   {
     name: "color-field",
     type: "registry:core",
+    variants: [
+      {
+        name: "color-field-01",
+      },
+    ],
+  },
+  {
+    name: "color-field-01",
+    type: "registry:core",
     dependencies: ["react-aria-components"],
     registryDependencies: ["field", "input"],
     files: [
       {
-        path: "core/color-field/color-field.tsx",
+        path: "core/color-field/color-field-01.tsx",
         type: "registry:core",
         target: "core/color-field.tsx",
       },

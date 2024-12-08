@@ -1,11 +1,12 @@
 "use client";
 
 import React, { ReactNode } from "react";
+import { Loader2Icon } from "lucide-react";
+import { cn } from "@/lib/cn";
 import { googleFonts } from "@/lib/fonts";
+import { useMounted } from "@/hooks/use-mounted";
 import { useThemes } from "@/hooks/use-themes";
-import { useMounted } from "@/registry/hooks/use-mounted";
-import { Skeleton } from "@/registry/ui/default/core/skeleton";
-import { cn } from "@/registry/ui/default/lib/cn";
+import { Skeleton } from "@/components/core/skeleton";
 
 interface ThemeOverrideProps extends React.ComponentProps<"div"> {
   children: React.ReactNode;
@@ -46,15 +47,15 @@ export const ThemeOverride = React.forwardRef<
         const shades = currentMode[color].shades;
         return shades.map((shade, index) => {
           const [h, s, l] = shade.match(/\d+(\.\d+)?/g) || [];
-          return [`--color-${color}-${(index + 1) * 100}`, `${h} ${s}% ${l}%`];
+          return [`--color-${color}-${(index + 1) * 100}`, shade];
         });
       }
     )
   );
 
-  if (fallback && !mounted) {
-    return fallback;
-  }
+  // if (fallback && !mounted) {
+  //   return fallback;
+  // }
 
   return (
     <div
@@ -64,16 +65,15 @@ export const ThemeOverride = React.forwardRef<
         {
           ...(mounted ? styles : {}),
           ...baseCssVars,
-          "--font-heading": headingFont?.name,
-          "--font-body": bodyFont?.name,
+          // TODO: fix fonts
+          // "--font-heading": headingFont?.name,
+          // "--font-body": bodyFont?.name,
           "--radius": `${currentTheme.radius}rem`,
         } as React.CSSProperties
       }
-      className={cn("bg-bg text-fg font-body", props.className)}
+      className={cn("bg-bg text-fg", props.className)}
     >
-      <Skeleton show={!mounted} className="rounded-none">
-        {children}
-      </Skeleton>
+      {children}
     </div>
   );
 });

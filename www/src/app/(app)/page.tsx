@@ -1,15 +1,12 @@
 import React from "react";
 import { TerminalSquareIcon } from "lucide-react";
+import { cn } from "@/lib/cn";
 import { Code } from "@/components/code";
+import { Link } from "@/components/core/link";
 import { SearchCommand } from "@/components/search-command";
-import { Link } from "@/registry/ui/default/core/link";
-import { cn } from "@/registry/ui/default/lib/cn";
 import { siteConfig } from "@/config";
 
 export default function HomePage() {
-  // return null
-  // return <div className="absolute inset-0 h-full bg-red-500"> </div>;
-  // return <div className="absolute inset-0 h-full bg-red-500"> </div>;
   return (
     <div className="absolute inset-0 h-full overflow-hidden">
       <div className="relative size-full">

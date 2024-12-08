@@ -1,4 +1,4 @@
-import { Dialog, DialogRoot } from "@/registry/ui/default/core/dialog";
+import { Dialog, DialogRoot } from "@/components/core/dialog";
 
 export const CopyThemeDialog = ({
   children,

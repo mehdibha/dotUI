@@ -2,14 +2,10 @@
 
 import React from "react";
 import { useThemes } from "@/hooks/use-themes";
-import { Button } from "@/registry/ui/default/core/button";
-import {
-  Dialog,
-  DialogFooter,
-  DialogRoot,
-} from "@/registry/ui/default/core/dialog";
-import { Form } from "@/registry/ui/default/core/form";
-import { TextField } from "@/registry/ui/default/core/text-field";
+import { Button } from "@/components/core/button";
+import { Dialog, DialogFooter, DialogRoot } from "@/components/core/dialog";
+import { Form } from "@/components/core/form";
+import { TextField } from "@/components/core/text-field";
 
 export const CreateThemeDialog = ({
   children,
