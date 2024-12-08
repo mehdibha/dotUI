@@ -1,1 +1,1 @@
-export * from "@/registry/core/breadcrumbs-01";
+export * from "@/components/core/breadcrumbs"

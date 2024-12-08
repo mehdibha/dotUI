@@ -1,13 +1,13 @@
 import React from "react";
 import { useThemes } from "@/hooks/use-themes";
 
-type Registry = Record<string, () => Promise<any>>;
+type Registry<T> = Record<string, React.ComponentType<T>>;
 
 export const createDynamicComponent = <Props extends {}>(
   registryItem: string,
   componentName: string,
-  registry: Registry
-) => {
+  registry: Registry<Props>
+): React.FC<Props> => {
   const Component: React.FC<Props> = (props) => {
     const { currentTheme } = useThemes();
 
@@ -19,23 +19,9 @@ export const createDynamicComponent = <Props extends {}>(
       );
     }
 
-    const LazyComponent = React.lazy(() =>
-      registry[variant]().then((module) => {
-        const exportComponent = module[componentName];
-        if (!exportComponent) {
-          throw new Error(
-            `Component "${componentName}" not found in module for variant "${variant}".`
-          );
-        }
-        return { default: exportComponent };
-      })
-    );
+    const LazyComponent = registry[variant];
 
-    return (
-      <React.Suspense>
-        <LazyComponent {...props} />
-      </React.Suspense>
-    );
+    return <LazyComponent {...props} />;
   };
 
   Component.displayName = componentName;

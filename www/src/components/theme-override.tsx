@@ -1,6 +1,7 @@
 "use client";
 
 import React, { ReactNode } from "react";
+import { Loader2Icon } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { googleFonts } from "@/lib/fonts";
 import { useMounted } from "@/hooks/use-mounted";
@@ -52,9 +53,9 @@ export const ThemeOverride = React.forwardRef<
     )
   );
 
-  if (fallback && !mounted) {
-    return fallback;
-  }
+  // if (fallback && !mounted) {
+  //   return fallback;
+  // }
 
   return (
     <div
@@ -72,9 +73,7 @@ export const ThemeOverride = React.forwardRef<
       }
       className={cn("bg-bg text-fg", props.className)}
     >
-      <Skeleton show={!mounted} className="rounded-none">
-        {children}
-      </Skeleton>
+      {children}
     </div>
   );
 });

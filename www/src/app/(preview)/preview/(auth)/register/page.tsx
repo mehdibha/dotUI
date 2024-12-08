@@ -1,6 +1,6 @@
-import { Button } from "@/components/core/button";
-import { Link } from "@/components/core/link";
-import { TextField } from "@/components/core/text-field";
+import { Button } from "@/components/dynamic-core/button";
+import { Link } from "@/components/dynamic-core/link";
+import { TextField } from "@/components/dynamic-core/text-field";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
 import { GoogleIcon } from "@/components/icons/google-icon";
 

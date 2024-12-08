@@ -1,11 +1,12 @@
 import React from "react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
-import { PaintBucket } from "lucide-react";
+import { Loader2Icon, PaintBucket } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { getFileSource } from "@/lib/get-file-source";
 import { CodeBlock } from "@/components/code-block";
 import { Button } from "@/components/core/button";
 import { Tooltip } from "@/components/core/tooltip";
+import { Skeleton } from "@/__registry__/core/skeleton-01";
 import { Index } from "@/__registry__/demos";
 import { ComponentPreviewClient } from "./component-preview-client";
 import { ThemeCustomizerDialog } from "./theme-customizer";

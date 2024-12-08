@@ -21,7 +21,8 @@ import {
   useSlottedContext,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { Button, buttonStyles } from "@/registry/core/button-01";
+import { Button } from "@/components/dynamic-core/button";
+import { buttonStyles } from "@/registry/core/button-01";
 import { Heading } from "@/registry/core/heading-01";
 import { Text } from "@/registry/core/text-01";
 
@@ -47,11 +48,11 @@ const calendarStyles = tv({
     range: {
       false: {
         cell: [
-          buttonStyles({
-            variant: "quiet",
-            shape: "square",
-            size: "sm",
-          }),
+          // buttonStyles({
+          //   variant: "quiet",
+          //   shape: "square",
+          //   size: "sm",
+          // }),
           "selected:bg-bg-primary selected:text-fg-onPrimary my-1 disabled:cursor-default disabled:bg-transparent",
           "selected:invalid:bg-bg-danger selected:invalid:text-fg-onDanger",
           "unavailable:line-through unavailable:hover:bg-transparent unavailable:cursor-default unavailable:text-fg-muted",
@@ -210,6 +211,7 @@ export type {
   CalendarGridBodyProps,
   CalendarCellProps,
 };
+
 export {
   Calendar,
   CalendarRoot,

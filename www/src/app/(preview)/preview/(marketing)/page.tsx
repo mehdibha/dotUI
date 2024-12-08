@@ -1,4 +1,4 @@
-import { Button } from "@/components/core/button";
+import { Button } from "@/components/dynamic-core/button";
 
 export default function PreviewPage() {
   return (

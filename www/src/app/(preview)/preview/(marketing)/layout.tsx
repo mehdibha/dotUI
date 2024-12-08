@@ -1,5 +1,5 @@
 import { HexagonIcon } from "lucide-react";
-import { Button } from "@/components/core/button";
+import { Button } from "@/components/dynamic-core/button";
 
 export default function MarketingLayout({
   children,

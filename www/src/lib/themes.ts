@@ -188,7 +188,7 @@ export const dotUIThemes: Theme[] = [
     iconLibrary: "lucide",
     variants: {
       button: "button-02",
-      calendar: "calendar-01",
+      calendar: "calendar-02",
     },
     colors: {
       light: {

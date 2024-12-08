@@ -1,8 +1,8 @@
-// @ts-nocheck
-// TODO: fix types
-import React, { forwardRef } from "react";
+import React, { SVGProps } from "react";
 import { useThemes } from "@/hooks/use-themes";
 import { Icons } from "@/__registry__/icons/registry";
+
+type IconProps = SVGProps<SVGSVGElement>;
 
 export const createIcon = (name: string) => {
   const icon = Icons[name as keyof typeof Icons];
@@ -10,15 +10,14 @@ export const createIcon = (name: string) => {
     return null;
   }
 
-  const Icon = forwardRef<HTMLElement, { className?: string }>((props, ref) => {
+  const Icon: React.FC<IconProps> = (props: IconProps) => {
     const { currentIconLibrary } = useThemes();
 
     if (!currentIconLibrary || !icon || !icon[currentIconLibrary]) return null;
 
-    const IconComponent = icon[currentIconLibrary];
+    const IconComponent = icon[currentIconLibrary] as React.FC<IconProps>;
 
-    return <IconComponent {...props} ref={ref} />;
-  });
-  Icon.displayName = "Icon";
+    return <IconComponent {...props} />;
+  };
   return Icon;
 };

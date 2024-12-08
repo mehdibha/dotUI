@@ -27,7 +27,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@/__registry__/icons";
 
 const calendarStyles = tv({
   slots: {
-    root: "bg-red-500",
+    root: "",
     header: "mb-4 flex items-center justify-between gap-2",
     grid: "w-full border-collapse",
     gridHeader: "mb-4",
@@ -38,7 +38,7 @@ const calendarStyles = tv({
   variants: {
     standalone: {
       true: {
-        root: "bg-bg rounded-md border p-3",
+        root: "rounded-md border p-3",
       },
       false: {
         root: "rounded-[inherit]",
