@@ -63,3 +63,8 @@ export type Theme = {
   iconLibrary: "lucide" | "remix";
   variants: Record<string, string>;
 };
+
+export type registryVariants =
+  | "button" // includes Button, ToggleButton, ToggleButtonGroup
+  | "badge"
+  | "dialog";

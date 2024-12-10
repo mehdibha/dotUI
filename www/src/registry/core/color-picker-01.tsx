@@ -114,5 +114,5 @@ const ColorEditor = ({ className, ...props }: ColorEditorProps) => {
   );
 };
 
-export type { ColorPickerProps, ColorPickerRootProps };
+export type { ColorPickerProps, ColorPickerRootProps, ColorEditorProps };
 export { ColorPicker, ColorPickerRoot, ColorEditor };

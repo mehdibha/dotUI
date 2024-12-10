@@ -9,6 +9,7 @@ import type {
   AvatarRootProps,
   AvatarImageProps,
   AvatarFallbackProps,
+  AvatarPlaceholderProps,
 } from "@/registry/core/avatar-01";
 
 export const Avatar = createDynamicComponent<AvatarProps>("avatar", "Avatar", {
@@ -55,6 +56,23 @@ export const AvatarFallback = createDynamicComponent<AvatarFallbackProps>(
   {
     "avatar-01": dynamic(
       () => import("@/__registry__/core/avatar-01").then((mod) => mod.Avatar),
+      {
+        loading: () => <Loader2Icon className="size-6 animate-spin" />,
+        ssr: false,
+      }
+    ),
+  }
+);
+
+export const AvatarPlaceholder = createDynamicComponent<AvatarPlaceholderProps>(
+  "avatar",
+  "AvatarPlaceholder",
+  {
+    "avatar-01": dynamic(
+      () =>
+        import("@/__registry__/core/avatar-01").then(
+          (mod) => mod.AvatarPlaceholder
+        ),
       {
         loading: () => <Loader2Icon className="size-6 animate-spin" />,
         ssr: false,
