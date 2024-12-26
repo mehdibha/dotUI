@@ -1,7 +1,6 @@
-@import "tailwindcss" source(none);
+@import "tailwindcss";
 @plugin "tailwindcss-animate";
-/* @plugin "tailwindcss-rac"; */
-
+@plugin "tailwindcss-rac";
 
 @variant dark (&:where(.dark, .dark *));
 
@@ -248,6 +247,26 @@
   --breakpoint-lg: 64rem;
   --breakpoint-xl: 80rem;
   --breakpoint-2xl: 96rem;
+}
+
+/* for specific styles */
+@layer base {
+  :root {
+    --box-shadow-x: 4px;
+    --box-shadow-y: 4px;
+    --border-brutalism: #000;
+  }
+
+  .dark {
+    --box-shadow-x: 4px;
+    --box-shadow-y: 4px;
+    --border-brutalism: #000;
+  }
+}
+
+@theme {
+  --shadow-brutalism: var(--box-shadow-x) var(--box-shadow-y) 0px 0px
+    var(--border-brutalism);
 }
 
 @keyframes accordion-down {

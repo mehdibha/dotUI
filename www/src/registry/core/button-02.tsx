@@ -15,25 +15,25 @@ import { focusRing } from "@/registry/lib/focus-styles";
 const buttonStyles = tv(
   {
     extend: focusRing,
-    base: "ring-offset-background disabled:bg-bg-disabled disabled:text-fg-disabled pending:cursor-default pending:bg-bg-disabled pending:text-fg-disabled pending:border pending:border-border-disabled inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium leading-normal transition-colors disabled:cursor-default",
+    base: "ring-offset-background disabled:bg-bg-disabled disabled:text-fg-disabled pending:cursor-default pending:bg-bg-disabled pending:text-fg-disabled pending:border pending:border-border-disabled inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium leading-normal ring-0 ring-transparent transition-[background,box-shadow] hover:ring-4 disabled:cursor-default",
     variants: {
       variant: {
         default:
-          "hover:bg-bg-neutral-hover pressed:bg-bg-neutral-active text-fg-onNeutral",
+          "bg-bg-neutral hover:bg-bg-neutral-hover hover:ring-bg-neutral/50 pressed:bg-bg-neutral-active text-fg-onNeutral",
         primary:
-          "bg-bg-primary hover:bg-bg-primary-hover pressed:bg-bg-primary-active text-fg-onPrimary",
+          "bg-bg-primary hover:bg-bg-primary-hover hover:ring-bg-primary/50 pressed:bg-bg-primary-active text-fg-onPrimary",
         quiet:
-          "hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 text-fg bg-transparent",
+          "hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 text-fg hover:ring-bg-neutral/50 bg-transparent",
         outline:
-          "border-border-field hover:bg-bg-inverse/10 pressed:bg-bg-inverse/15 text-fg disabled:border-border-disabled border disabled:bg-transparent",
+          "border-border-field hover:bg-bg-inverse/10 pressed:bg-bg-inverse/15 hover:ring-bg-neutral/50 text-fg disabled:border-border-disabled border disabled:bg-transparent",
         accent:
-          "bg-bg-accent hover:bg-bg-accent-hover pressed:bg-bg-accent-active text-fg-onAccent",
+          "bg-bg-accent hover:bg-bg-accent-hover pressed:bg-bg-accent-active text-fg-onAccent hover:ring-bg-accent/40",
         success:
-          "bg-bg-success hover:bg-bg-success-hover pressed:bg-bg-success-active text-fg-onSuccess",
+          "bg-bg-success hover:bg-bg-success-hover pressed:bg-bg-success-active text-fg-onSuccess hover:ring-bg-success/40",
         warning:
-          "bg-bg-warning hover:bg-bg-warning-hover pressed:bg-bg-warning-active text-fg-onWarning",
+          "bg-bg-warning hover:bg-bg-warning-hover pressed:bg-bg-warning-active text-fg-onWarning hover:ring-bg-warning/40",
         danger:
-          "bg-bg-danger hover:bg-bg-danger-hover pressed:bg-bg-danger-active text-fg-onDanger",
+          "bg-bg-danger hover:bg-bg-danger-hover pressed:bg-bg-danger-active text-fg-onDanger hover:ring-bg-danger/40",
       },
       size: {
         sm: "size-8 [&_svg]:size-4",

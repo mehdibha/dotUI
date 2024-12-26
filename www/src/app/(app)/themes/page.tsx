@@ -23,8 +23,8 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <PreviewProvider>
-      <div className="container">
-        <div className="relative grid grid-cols-12 items-start gap-10 py-10">
+      <div className="container space-y-6 pb-20">
+        <div className="relative grid grid-cols-12 items-start gap-6 pt-10">
           <div className="col-span-12 mt-6 lg:col-span-5">
             <h1 className="font-heading xs:text-2xl text-pretty text-xl font-semibold tracking-tighter sm:text-3xl md:text-4xl">
               Everything starts with identity.
@@ -56,15 +56,15 @@ export default function Page() {
               <Section title="Iconography">
                 <Iconography />
               </Section>
-              <Alert>
-                More customization are coming such as components style.
-              </Alert>
             </div>
           </div>
           <div className="sticky top-10 hidden h-[calc(100svh-calc(var(--spacing)*20))] justify-center lg:col-span-7 lg:flex">
             <Preview />
           </div>
         </div>
+        <Section title="Button style" className="col-span-6">
+          <ButtonStyle />
+        </Section>
       </div>
     </PreviewProvider>
   );

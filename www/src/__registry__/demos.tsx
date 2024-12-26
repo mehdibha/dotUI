@@ -1818,25 +1818,6 @@ export const Index: Record<string, any> = {
         () => import("@/registry/demos/range-calendar/visible-months")
       ),
     },
-    "scroll-area-default": {
-      name: "scroll-area-default",
-      files: ["registry/demos/scroll-area/default.tsx"],
-      component: React.lazy(
-        () => import("@/registry/demos/scroll-area/default")
-      ),
-    },
-    "scroll-area-scrollbars": {
-      name: "scroll-area-scrollbars",
-      files: ["registry/demos/scroll-area/scrollbars.tsx"],
-      component: React.lazy(
-        () => import("@/registry/demos/scroll-area/scrollbars")
-      ),
-    },
-    "scroll-area-sizes": {
-      name: "scroll-area-sizes",
-      files: ["registry/demos/scroll-area/sizes.tsx"],
-      component: React.lazy(() => import("@/registry/demos/scroll-area/sizes")),
-    },
     "search-field-composition": {
       name: "search-field-composition",
       files: ["registry/demos/search-field/composition.tsx"],

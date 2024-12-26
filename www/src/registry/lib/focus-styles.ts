@@ -1,7 +1,7 @@
 import { tv } from "tailwind-variants";
 
 export const focusRing = tv({
-  base: "ring-border-focus focus-visible:ring-offset-bg outline-hidden ring-0 focus-visible:ring-2 focus-visible:ring-offset-2",
+  base: "focus-visible:ring-border-focus focus-visible:ring-offset-bg outline-hidden ring-0 transition-[box-shadow] focus-visible:ring-2 focus-visible:ring-offset-2",
 });
 
 export const focusRingGroup = tv({

@@ -4,6 +4,7 @@ import React, { ReactNode } from "react";
 import { Loader2Icon } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { googleFonts } from "@/lib/fonts";
+import { useDebounce } from "@/hooks/use-debounce";
 import { useMounted } from "@/hooks/use-mounted";
 import { useThemes } from "@/hooks/use-themes";
 import { Skeleton } from "@/components/core/skeleton";
@@ -20,7 +21,8 @@ export const ThemeOverride = React.forwardRef<
   const { currentTheme, mode, fonts } = useThemes();
   const headingFont = googleFonts.find((f) => f.id === fonts.heading);
   const bodyFont = googleFonts.find((f) => f.id === fonts.body);
-  const mounted = useMounted();
+  const isMounted = useMounted();
+  const debouncedIsMounted = useDebounce(isMounted, 500);
 
   // fonts
   React.useEffect(() => {
@@ -53,27 +55,20 @@ export const ThemeOverride = React.forwardRef<
     )
   );
 
-  // if (fallback && !mounted) {
-  //   return fallback;
-  // }
-
   return (
     <div
       ref={ref}
       {...props}
       style={
         {
-          ...(mounted ? styles : {}),
+          ...(debouncedIsMounted ? styles : {}),
           ...baseCssVars,
-          // TODO: fix fonts
-          // "--font-heading": headingFont?.name,
-          // "--font-body": bodyFont?.name,
           "--radius": `${currentTheme.radius}rem`,
         } as React.CSSProperties
       }
       className={cn("bg-bg text-fg", props.className)}
     >
-      {children}
+      <Skeleton show={!debouncedIsMounted}>{children}</Skeleton>
     </div>
   );
 });

@@ -21,7 +21,11 @@ export const createDynamicComponent = <Props extends {}>(
 
     const LazyComponent = registry[variant];
 
-    return <LazyComponent {...props} />;
+    return (
+      <React.Suspense fallback={null}>
+        <LazyComponent {...props} />
+      </React.Suspense>
+    );
   };
 
   Component.displayName = componentName;

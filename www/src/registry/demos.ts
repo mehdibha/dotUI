@@ -330,7 +330,6 @@ export const demos: RegistryDemos = [
     "validation",
     "visible-months",
   ]),
-  ...buildDemos("scroll-area", ["default", "scrollbars", "sizes"]),
   ...buildDemos("search-field", [
     "composition",
     "contextual-help",

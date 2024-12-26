@@ -1,17 +1,39 @@
-"use client";
+import { InfoIcon, HelpCircleIcon } from "lucide-react";
+import { Button } from "@/components/dynamic-core/button";
+import { DialogRoot, Dialog } from "@/registry/core/dialog-01";
 
-import React from "react";
-import dynamic from "next/dynamic";
-import { Loader2Icon } from "lucide-react";
-import { createDynamicComponent } from "@/lib/create-dynamic-component";
-import type { BadgeProps } from "@/registry/core/badge-01";
+interface ContextualHelpProps {
+  title?: string;
+  description?: string;
+  variant?: "info" | "help";
+}
 
-export const Badge = createDynamicComponent<BadgeProps>("badge", "Badge", {
-  "badge-01": dynamic(
-    () => import("@/__registry__/core/badge-01").then((mod) => mod.Badge),
-    {
-      loading: () => <Loader2Icon className="size-6 animate-spin" />,
-      ssr: false,
-    }
-  ),
-});
+const ContextualHelp = ({
+  title,
+  description,
+  variant,
+}: ContextualHelpProps) => {
+  const icon = variant === "info" ? <InfoIcon /> : <HelpCircleIcon />;
+  return (
+    <DialogRoot>
+      <Button
+        slot={null}
+        aria-label={variant}
+        variant="quiet"
+        size="sm"
+        shape="square"
+        className="size-6"
+      >
+        {icon}
+      </Button>
+      <Dialog
+        type="popover"
+        mobileType="modal"
+        title={title}
+        description={description}
+      />
+    </DialogRoot>
+  );
+};
+
+export { ContextualHelp };

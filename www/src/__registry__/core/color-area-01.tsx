@@ -37,4 +37,5 @@ const ColorAreaRoot = ({ className, ...props }: ColorAreaRootProps) => {
   );
 };
 
+export type { ColorAreaProps, ColorAreaRootProps };
 export { ColorArea, ColorAreaRoot };

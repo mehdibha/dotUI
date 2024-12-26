@@ -184,6 +184,16 @@ export const useThemes = () => {
     });
   };
 
+  const updateVariant = (variant: string, value: string) => {
+    if (!isCurrentThemeEditable) return;
+    setState((draft) => {
+      const theme = draft.themes.find((t) => t.id === draft.currentThemeId);
+      if (theme) {
+        theme.variants[variant] = value;
+      }
+    });
+  };
+
   const showKeyboardHint = state.showKeyboardHint;
   const setShowKeyboardHint = (value: boolean) => {
     setState((draft) => {
@@ -214,5 +224,6 @@ export const useThemes = () => {
     showKeyboardHint,
     setShowKeyboardHint,
     currentVariants: currentTheme.variants,
+    updateVariant
   };
 };

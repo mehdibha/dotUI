@@ -10,20 +10,7 @@ const config = {
         protocol: "https",
         hostname: "avatars.githubusercontent.com",
       },
-      {
-        protocol: "https",
-        hostname: "images.unsplash.com",
-      },
     ],
-  },
-  redirects: async () => {
-    return [
-      {
-        source: "/",
-        destination: "/docs/getting-started/introduction",
-        permanent: true,
-      },
-    ];
   },
 };
 

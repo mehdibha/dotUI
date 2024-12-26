@@ -1,39 +1,36 @@
 "use client";
 
 import * as React from "react";
+import { chain } from "react-aria";
 import {
   composeRenderProps,
   Button as AriaButton,
   Link as AriaLink,
   type ButtonProps as AriaButtonProps,
   type LinkProps as AriaLinkProps,
+  PressEvent,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
+import { Ripple } from "@/registry/core/ripple";
+import { useRipple } from "@/registry/hooks/use-ripple";
 import { focusRing } from "@/registry/lib/focus-styles";
 import { Loader2Icon } from "@/__registry__/icons";
 
 const buttonStyles = tv(
   {
     extend: focusRing,
-    base: "disabled:bg-bg-disabled disabled:text-fg-disabled pending:cursor-default pending:bg-bg-disabled pending:text-fg-disabled pending:border pending:border-border-disabled inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium leading-normal transition-colors disabled:cursor-default",
+    base: "disabled:bg-bg-disabled overflow-hidden disabled:text-fg-disabled pending:cursor-default pending:bg-bg-disabled pending:text-fg-disabled pending:border pending:border-border-disabled relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium leading-normal transition-colors disabled:cursor-default pressed:scale-95",
     variants: {
       variant: {
-        default:
-          "bg-bg-neutral hover:bg-bg-neutral-hover pressed:bg-bg-neutral-active text-fg-onNeutral",
-        primary:
-          "bg-bg-primary hover:bg-bg-primary-hover pressed:bg-bg-primary-active text-fg-onPrimary",
-        quiet:
-          "hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 text-fg bg-transparent",
+        default: "bg-bg-neutral hover:bg-bg-neutral-hover text-fg-onNeutral",
+        primary: "bg-bg-primary hover:bg-bg-primary-hover text-fg-onPrimary",
+        quiet: "hover:bg-bg-inverse/10 text-fg bg-transparent",
         outline:
-          "border-border-field hover:bg-bg-inverse/10 pressed:bg-bg-inverse/15 text-fg disabled:border-border-disabled border disabled:bg-transparent",
-        accent:
-          "bg-bg-accent hover:bg-bg-accent-hover pressed:bg-bg-accent-active text-fg-onAccent",
-        success:
-          "bg-bg-success hover:bg-bg-success-hover pressed:bg-bg-success-active text-fg-onSuccess",
-        warning:
-          "bg-bg-warning hover:bg-bg-warning-hover pressed:bg-bg-warning-active text-fg-onWarning",
-        danger:
-          "bg-bg-danger hover:bg-bg-danger-hover pressed:bg-bg-danger-active text-fg-onDanger",
+          "border-border-field hover:bg-bg-inverse/10 text-fg disabled:border-border-disabled border disabled:bg-transparent",
+        accent: "bg-bg-accent hover:bg-bg-accent-hover text-fg-onAccent",
+        success: "bg-bg-success hover:bg-bg-success-hover text-fg-onSuccess",
+        warning: "bg-bg-warning hover:bg-bg-warning-hover text-fg-onWarning",
+        danger: "bg-bg-danger hover:bg-bg-danger-hover text-fg-onDanger",
       },
       size: {
         sm: "size-8 [&_svg]:size-4",
@@ -91,16 +88,33 @@ const Button = React.forwardRef(
     const { className, variant, size, shape, prefix, suffix, ...restProps } =
       props;
 
+    const {
+      onPress: onRipplePressHandler,
+      onClear: onClearRipple,
+      ripples,
+    } = useRipple();
+
     const Element: React.ElementType = props.href ? AriaLink : AriaButton;
+
+    const handlePress = React.useCallback(
+      (e: PressEvent) => {
+        // if (disableRipple || isDisabled || disableAnimation) return;
+        onRipplePressHandler(e);
+        // domRef.current && onRipplePressHandler(e);
+      },
+      [onRipplePressHandler]
+    );
 
     return (
       <Element
         ref={ref}
         {...restProps}
         className={buttonStyles({ variant, size, shape, className })}
+        onPress={chain(props.onPress, handlePress)}
       >
         {composeRenderProps(props.children, (children, { isPending }) => (
           <>
+            <Ripple ripples={ripples} onClear={onClearRipple} />
             {isPending && (
               <Loader2Icon aria-label="loading" className="animate-spin" />
             )}
