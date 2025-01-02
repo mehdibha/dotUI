@@ -1,1 +1,1 @@
-export * from "@/registry/core/alert-01"
+export * from "@/registry/core/alert-01";

@@ -153,7 +153,7 @@ const SliderFiller = (props: SliderFillerProps) => {
   const { orientation, getThumbPercent, values } = React.useContext(
     AriaSliderStateContext
   );
-  
+
   return (
     <div
       {...props}

@@ -6,6 +6,8 @@ import { createDynamicComponent } from "@/lib/create-dynamic-component";
 import { ButtonProps } from "@/registry/core/button-01";
 import { buttonStyles as buttonStyles01 } from "@/registry/core/button-01";
 
+// export * from "@/registry/core/button-02";
+
 export const Button = createDynamicComponent<ButtonProps>("button", "Button", {
   "button-01": React.lazy(() =>
     import("@/__registry__/core/button-01").then((mod) => ({

@@ -1,1 +1,1 @@
-export * from "@/registry/core/tabs-01"
+export * from "@/registry/core/tabs-01";

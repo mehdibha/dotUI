@@ -8,8 +8,7 @@ const toggleGroupStyles = tv({
   base: "flex gap-1",
   variants: {
     orientation: {
-      horizontal:
-        "flex-row",
+      horizontal: "flex-row",
       vertical: "flex-col items-start",
     },
   },

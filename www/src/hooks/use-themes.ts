@@ -224,6 +224,6 @@ export const useThemes = () => {
     showKeyboardHint,
     setShowKeyboardHint,
     currentVariants: currentTheme.variants,
-    updateVariant
+    updateVariant,
   };
 };

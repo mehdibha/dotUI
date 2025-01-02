@@ -1,1 +1,1 @@
-export * from "@/registry/core/combobox-01"
+export * from "@/registry/core/combobox-01";

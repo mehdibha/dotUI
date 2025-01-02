@@ -162,7 +162,7 @@ export type {
   AvatarRootProps,
   AvatarImageProps,
   AvatarFallbackProps,
-  AvatarPlaceholderProps
+  AvatarPlaceholderProps,
 };
 
 export {

@@ -22,22 +22,15 @@ const buttonStyles = tv(
     base: "disabled:bg-bg-disabled disabled:text-fg-disabled pending:cursor-default pending:bg-bg-disabled pending:text-fg-disabled pending:border pending:border-border-disabled relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium leading-normal transition-colors disabled:cursor-default",
     variants: {
       variant: {
-        default:
-          "bg-bg-neutral hover:bg-bg-neutral-hover text-fg-onNeutral",
-        primary:
-          "bg-bg-primary hover:bg-bg-primary-hover text-fg-onPrimary",
-        quiet:
-          "hover:bg-bg-inverse/10 text-fg bg-transparent",
+        default: "bg-bg-neutral hover:bg-bg-neutral-hover text-fg-onNeutral",
+        primary: "bg-bg-primary hover:bg-bg-primary-hover text-fg-onPrimary",
+        quiet: "hover:bg-bg-inverse/10 text-fg bg-transparent",
         outline:
           "border-border-field hover:bg-bg-inverse/10 text-fg disabled:border-border-disabled border disabled:bg-transparent",
-        accent:
-          "bg-bg-accent hover:bg-bg-accent-hover text-fg-onAccent",
-        success:
-          "bg-bg-success hover:bg-bg-success-hover text-fg-onSuccess",
-        warning:
-          "bg-bg-warning hover:bg-bg-warning-hover text-fg-onWarning",
-        danger:
-          "bg-bg-danger hover:bg-bg-danger-hover text-fg-onDanger",
+        accent: "bg-bg-accent hover:bg-bg-accent-hover text-fg-onAccent",
+        success: "bg-bg-success hover:bg-bg-success-hover text-fg-onSuccess",
+        warning: "bg-bg-warning hover:bg-bg-warning-hover text-fg-onWarning",
+        danger: "bg-bg-danger hover:bg-bg-danger-hover text-fg-onDanger",
       },
       size: {
         sm: "size-8 [&_svg]:size-4",
@@ -106,10 +99,10 @@ const Button = React.forwardRef(
     const handlePress = React.useCallback(
       (e: PressEvent) => {
         // if (disableRipple || isDisabled || disableAnimation) return;
-         onRipplePressHandler(e);
+        onRipplePressHandler(e);
         // domRef.current && onRipplePressHandler(e);
       },
-      [onRipplePressHandler],
+      [onRipplePressHandler]
     );
 
     return (

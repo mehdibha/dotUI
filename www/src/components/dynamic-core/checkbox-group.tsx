@@ -1,1 +1,1 @@
-export * from "@/registry/core/checkbox-group-01"
+export * from "@/registry/core/checkbox-group-01";

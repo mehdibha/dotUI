@@ -21,12 +21,9 @@ const buttonStyles = tv(
     ],
     variants: {
       variant: {
-        default:
-          "bg-bg-neutral text-fg-onNeutral",
-        primary:
-          "bg-bg-primary text-fg-onPrimary",
-        quiet:
-          "text-fg bg-transparent",
+        default: "bg-bg-neutral text-fg-onNeutral",
+        primary: "bg-bg-primary text-fg-onPrimary",
+        quiet: "text-fg bg-transparent",
         outline:
           "border-border-field hover:bg-bg-inverse/10 pressed:bg-bg-inverse/15 text-fg disabled:border-border-disabled border disabled:bg-transparent",
         accent:
