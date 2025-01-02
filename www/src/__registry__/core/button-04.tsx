@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { Loader2Icon } from "lucide-react";
 import { chain } from "react-aria";
 import {
   composeRenderProps,
@@ -14,12 +15,11 @@ import { tv, type VariantProps } from "tailwind-variants";
 import { Ripple } from "@/registry/core/ripple";
 import { useRipple } from "@/registry/hooks/use-ripple";
 import { focusRing } from "@/registry/lib/focus-styles";
-import { Loader2Icon } from "@/__registry__/icons";
 
 const buttonStyles = tv(
   {
     extend: focusRing,
-    base: "disabled:bg-bg-disabled overflow-hidden disabled:text-fg-disabled pending:cursor-default pending:bg-bg-disabled pending:text-fg-disabled pending:border pending:border-border-disabled relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium leading-normal transition-colors disabled:cursor-default pressed:scale-95",
+    base: "disabled:bg-bg-disabled disabled:text-fg-disabled pending:cursor-default pending:bg-bg-disabled pending:text-fg-disabled pending:border pending:border-border-disabled relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium leading-normal transition-colors disabled:cursor-default",
     variants: {
       variant: {
         default: "bg-bg-neutral hover:bg-bg-neutral-hover text-fg-onNeutral",

@@ -1,5 +1,6 @@
 "use client";
 
+import { ChevronRightIcon } from "lucide-react";
 import {
   Link as AriaLink,
   Breadcrumbs as AriaBreadcrumbs,
@@ -10,7 +11,6 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { ChevronRightIcon } from "@/__registry__/icons";
 
 const breadcrumbsStyles = tv({
   slots: {

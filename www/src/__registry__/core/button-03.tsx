@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { Loader2Icon } from "lucide-react";
 import {
   composeRenderProps,
   Button as AriaButton,
@@ -10,7 +11,6 @@ import {
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
 import { focusRing } from "@/registry/lib/focus-styles";
-import { Loader2Icon } from "@/__registry__/icons";
 
 const buttonStyles = tv(
   {

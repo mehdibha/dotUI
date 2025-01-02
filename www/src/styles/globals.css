@@ -342,10 +342,6 @@
   margin-right: auto;
   padding-left: 2rem;
   padding-right: 2rem;
-
-  @media (width >= theme(--breakpoint-2xl)) {
-    max-width: 1400px;
-  }
 }
 
 @utility shiki {

@@ -8,7 +8,6 @@ import {
   OverlayArrow as AriaOverlayArrow,
   Modal as AriaModal,
   ModalOverlay as AriaModalOverlay,
-  OverlayTriggerStateContext as AriaOverlayTriggerStateContext,
   type PopoverProps as AriaPopoverProps,
   type ModalOverlayProps as AriaModalOverlayProps,
 } from "react-aria-components";
@@ -289,16 +288,15 @@ const DrawerOverlay = React.forwardRef<
 DrawerOverlay.displayName = "DrawerOverlay";
 
 const DismissButton = (props: ButtonProps) => {
-  const state = React.useContext(AriaOverlayTriggerStateContext);
   return (
     <Button
       shape="square"
+      slot="close"
       variant="quiet"
       size="sm"
       aria-label="Close"
       {...props}
       className={cn("absolute right-2 top-2 z-20", props.className)}
-      onPress={() => state.close()}
     >
       {props.children ?? <XIcon />}
     </Button>

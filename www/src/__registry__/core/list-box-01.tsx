@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { CheckIcon, Loader2Icon } from "lucide-react";
 import {
   composeRenderProps,
   ListBox as AriaListBox,
@@ -13,7 +14,6 @@ import {
 import { tv, type VariantProps } from "tailwind-variants";
 import { Text } from "@/registry/core/text-01";
 import { focusRing } from "@/registry/lib/focus-styles";
-import { CheckIcon, Loader2Icon } from "@/__registry__/icons";
 
 const listBoxStyles = tv({
   base: [

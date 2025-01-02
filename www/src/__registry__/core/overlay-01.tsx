@@ -1,13 +1,13 @@
 "use client";
 
 import React from "react";
+import { XIcon } from "lucide-react";
 import {
   composeRenderProps,
   Popover as AriaPopover,
   OverlayArrow as AriaOverlayArrow,
   Modal as AriaModal,
   ModalOverlay as AriaModalOverlay,
-  OverlayTriggerStateContext as AriaOverlayTriggerStateContext,
   type PopoverProps as AriaPopoverProps,
   type ModalOverlayProps as AriaModalOverlayProps,
 } from "react-aria-components";
@@ -15,7 +15,6 @@ import { tv } from "tailwind-variants";
 import { Button, type ButtonProps } from "@/registry/core/button-01";
 import { useMediaQuery } from "@/registry/hooks/use-media-query";
 import { cn } from "@/registry/lib/cn";
-import { XIcon } from "@/__registry__/icons";
 import { MotionDrawerRoot, useMotionDrawer } from "./use-motion-drawer";
 
 type OverlayType = "modal" | "drawer" | "popover";
@@ -289,16 +288,15 @@ const DrawerOverlay = React.forwardRef<
 DrawerOverlay.displayName = "DrawerOverlay";
 
 const DismissButton = (props: ButtonProps) => {
-  const state = React.useContext(AriaOverlayTriggerStateContext);
   return (
     <Button
       shape="square"
+      slot="close"
       variant="quiet"
       size="sm"
       aria-label="Close"
       {...props}
       className={cn("absolute right-2 top-2 z-20", props.className)}
-      onPress={() => state.close()}
     >
       {props.children ?? <XIcon />}
     </Button>

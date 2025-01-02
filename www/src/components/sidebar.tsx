@@ -221,64 +221,6 @@ const Logo = () => {
 };
 
 const SidebarSearchButton = ({ isCollapsed }: { isCollapsed: boolean }) => {
-  const pathname = usePathname();
-
-  if (pathname === "/") {
-    return <SearchCommandButton isCollapsed={isCollapsed} />;
-  }
-
-  return <SearchCommandDialog isCollapsed={isCollapsed} />;
-};
-
-const SearchCommandButton = ({ isCollapsed }: { isCollapsed: boolean }) => {
-  const { focusInput } = useCommandMenuInputRef();
-
-  React.useEffect(() => {
-    const down = (e: KeyboardEvent) => {
-      if ((e.key === "k" && (e.metaKey || e.ctrlKey)) || e.key === "/") {
-        if (
-          (e.target instanceof HTMLElement && e.target.isContentEditable) ||
-          e.target instanceof HTMLInputElement ||
-          e.target instanceof HTMLTextAreaElement ||
-          e.target instanceof HTMLSelectElement
-        ) {
-          return;
-        }
-
-        e.preventDefault();
-        focusInput();
-      }
-    };
-
-    document.addEventListener("keydown", down);
-    return () => document.removeEventListener("keydown", down);
-  }, [focusInput]);
-
-  return (
-    <StyledTooltip
-      content={
-        <div className="flex items-center gap-2">
-          Searchh
-          <div className="flex items-center gap-0.5">
-            <Kbd>Ctrl</Kbd>
-            <Kbd>⌘K</Kbd>
-          </div>
-        </div>
-      }
-      isDisabled={!isCollapsed}
-    >
-      <SidebarButton variant="outline" onPress={focusInput}>
-        <SearchIcon />
-        <div className="flex flex-1 flex-row items-center justify-between">
-          <span>Search </span>
-          <Kbd className="flex items-center justify-center p-1 text-xs">⌘K</Kbd>
-        </div>
-      </SidebarButton>
-    </StyledTooltip>
-  );
-};
-
-const SearchCommandDialog = ({ isCollapsed }: { isCollapsed: boolean }) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
   React.useEffect(() => {

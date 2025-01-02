@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import {
   composeRenderProps,
   Calendar as AriaCalendar,
@@ -24,7 +25,6 @@ import { Button } from "@/components/dynamic-core/button";
 import { buttonStyles } from "@/registry/core/button-01";
 import { Heading } from "@/registry/core/heading-01";
 import { Text } from "@/registry/core/text-01";
-import { ChevronLeftIcon, ChevronRightIcon } from "@/__registry__/icons";
 
 const calendarStyles = tv({
   slots: {

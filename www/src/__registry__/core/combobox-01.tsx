@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { ChevronDownIcon } from "lucide-react";
 import {
   ComboBox as AriaCombobox,
   type ComboBoxProps as AriaComboboxProps,
@@ -11,7 +12,6 @@ import { Field, type FieldProps } from "@/registry/core/field-01";
 import { Input, InputRoot } from "@/registry/core/input-01";
 import { ListBox } from "@/registry/core/list-box-01";
 import { Overlay } from "@/registry/core/overlay-01";
-import { ChevronDownIcon } from "@/__registry__/icons";
 
 const comboboxStyles = tv({
   slots: {

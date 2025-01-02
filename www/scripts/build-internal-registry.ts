@@ -142,7 +142,7 @@ async function buildCoreComponents() {
     let content = await fs.readFile(sourceFilePath, "utf-8");
 
     // transform icons import
-    content = content.replace(/lucide-react/g, "@/__registry__/icons");
+    // content = content.replace(/lucide-react/g, "@/__registry__/icons");
     // transform registryDependencies import
     // content = content.replace(
     //   /@\/registry\/core\/([a-zA-Z]+)-\d+/g,

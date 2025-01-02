@@ -1,11 +1,11 @@
 import * as React from "react";
-import { tv, type VariantProps } from "tailwind-variants";
 import {
   AlertCircleIcon,
   AlertTriangleIcon,
   CheckCircle2Icon,
   InfoIcon,
-} from "@/__registry__/icons";
+} from "lucide-react";
+import { tv, type VariantProps } from "tailwind-variants";
 
 const alertStyles = tv({
   slots: {
