@@ -5,11 +5,13 @@ import { Alert } from "@/components/dynamic-core/alert";
 import { Avatar } from "@/components/dynamic-core/avatar";
 import { Button } from "@/components/dynamic-core/button";
 import { Checkbox } from "@/components/dynamic-core/checkbox";
+import { ColorSlider } from "@/components/dynamic-core/color-slider";
 import { Combobox } from "@/components/dynamic-core/combobox";
 import { DateRangePicker } from "@/components/dynamic-core/date-range-picker";
 import { Link } from "@/components/dynamic-core/link";
 import { Item, ListBox } from "@/components/dynamic-core/list-box";
 import { NumberField } from "@/components/dynamic-core/number-field";
+import { Progress } from "@/components/dynamic-core/progress";
 import { RangeCalendar } from "@/components/dynamic-core/range-calendar";
 import { SearchField } from "@/components/dynamic-core/search-field";
 import { Select } from "@/components/dynamic-core/select";
@@ -33,7 +35,7 @@ export function ComponentsOverview() {
   return (
     <div className="grid grid-cols-10 gap-8 p-8">
       <div className="col-span-8">
-        <Slider defaultValue={50} className="!w-full" />
+        <Slider label="Progress" valueLabel defaultValue={50} className="!w-full" />
       </div>
       <div className="col-span-2 row-span-2">
         <RadioGroup>
@@ -60,7 +62,7 @@ export function ComponentsOverview() {
         />
         <DateRangePicker />
       </div>
-      <div className="col-span-3 row-span-8 flex flex-col justify-between gap-8">
+      <div className="col-span-3 row-span-8 flex flex-col justify-between gap-2">
         <Alert title="Payment Information">
           Enter your payment method to complete your purchase.
         </Alert>
@@ -80,7 +82,13 @@ export function ComponentsOverview() {
             <Register />
           </TabPanel>
         </Tabs>
-        <div className="bg-bg-muted h-20 rounded-md border"></div>
+        <ColorSlider
+          label="Opacity"
+          defaultValue="hsla(210, 64%, 35%, 0.7)"
+          channel="alpha"
+          className="!w-full"
+        />
+        <Progress label="Loading..." value={75} className="w-full" />
       </div>
       <div className="col-span-5 row-span-2 flex justify-between gap-6">
         <ListBox className="h-full max-h-none w-full">

@@ -1,10 +1,8 @@
+"use client";
+
 import React from "react";
 import { createDynamicComponent } from "@/lib/create-dynamic-component";
 import { LoaderProps } from "@/registry/core/loader-ring";
-
-export * from "@/registry/core/link";
-
-("use client");
 
 export const Loader = createDynamicComponent<LoaderProps>("loader", "Loader", {
   "loader-dot-spinner": React.lazy(() =>
