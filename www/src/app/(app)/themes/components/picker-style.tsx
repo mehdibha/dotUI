@@ -56,7 +56,7 @@ export function PickerStyle() {
           </Radio>
         ))}
       </RadioGroup>
-      <ThemeOverride className="w-full flex flex-col items-center justify-center rounded-md border p-4">
+      <ThemeOverride className="flex w-full flex-col items-center justify-center rounded-md border p-4">
         <div className="flex flex-wrap items-center justify-center gap-4 p-2">
           <SelectDemo />
           <DatePickerDemo />

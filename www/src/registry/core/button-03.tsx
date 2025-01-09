@@ -9,8 +9,8 @@ import {
   type LinkProps as AriaLinkProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { focusRing } from "@/registry/lib/focus-styles";
 import { Loader } from "@/registry/core/loader-ring";
+import { focusRing } from "@/registry/lib/focus-styles";
 
 const buttonStyles = tv(
   {
@@ -101,9 +101,7 @@ const Button = React.forwardRef(
       >
         {composeRenderProps(props.children, (children, { isPending }) => (
           <>
-            {isPending && (
-              <Loader aria-label="loading" size={16} />
-            )}
+            {isPending && <Loader aria-label="loading" size={16} />}
             {prefix}
             {typeof children === "string" ? (
               <span className="truncate">{children}</span>

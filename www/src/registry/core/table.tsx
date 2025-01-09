@@ -32,9 +32,9 @@ import { cn } from "@/registry/lib/cn";
 
 const table = tv({
   slots: {
-    root: "outline-hidden **:drop-target:border **:drop-target:border-primary table w-full min-w-full caption-bottom border-spacing-0 text-sm border rounded-md",
+    root: "outline-hidden **:drop-target:border **:drop-target:border-primary table w-full min-w-full caption-bottom border-spacing-0 rounded-md border text-sm",
     header: "x32 border-b",
-    row: "tr bg-bg text-fg/70 outline-hidden ring-primary focus-visible:ring-1 focus:ring-0 group relative cursor-default border-b",
+    row: "tr bg-bg text-fg/70 outline-hidden ring-primary group relative cursor-default border-b focus:ring-0 focus-visible:ring-1",
     cellIcon:
       "bg-bg-muted text-fg grid size-[1.15rem] flex-none shrink-0 place-content-center rounded *:data-[slot=icon]:size-3.5 *:data-[slot=icon]:shrink-0 *:data-[slot=icon]:transition-transform *:data-[slot=icon]:duration-200",
     columnResizer: [

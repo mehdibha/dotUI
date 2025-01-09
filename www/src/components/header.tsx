@@ -17,7 +17,7 @@ export function Header() {
   return (
     <header className="bg-bg sticky top-0 z-50 w-full border-b">
       {/* <div className="container max-w-screen-2xl relative flex h-14  items-center justify-between"> */}
-      <div className="container max-w-screen-2xl relative flex h-14 items-center justify-between">
+      <div className="container relative flex h-14 max-w-screen-2xl items-center justify-between">
         <div className="flex items-center gap-6">
           <Logo />
           <div className="flex items-center gap-3 text-sm">
