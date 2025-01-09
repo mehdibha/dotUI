@@ -1,1 +1,1 @@
-export * from "@/registry/core/kbd-01";
+export * from "@/registry/core/kbd";

@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @plugin "tailwindcss-animate";
 @plugin "tailwindcss-rac";
+@import "./docs.css";
 
 @variant dark (&:where(.dark, .dark *));
 
@@ -20,16 +21,16 @@
     --color-neutral-900: hsl(0, 0%, 16%);
     --color-neutral-1000: hsl(0, 0%, 12%);
 
-    --color-primary-100: hsl(0, 0%, 87%);
-    --color-primary-200: hsl(0, 0%, 79%);
-    --color-primary-300: hsl(0, 0%, 73%);
-    --color-primary-400: hsl(0, 0%, 65%);
-    --color-primary-500: hsl(0, 0%, 54%);
-    --color-primary-600: hsl(0, 0%, 42%);
-    --color-primary-700: hsl(0, 0%, 35%);
-    --color-primary-800: hsl(0, 0%, 28%);
-    --color-primary-900: hsl(0, 0%, 16%);
-    --color-primary-1000: hsl(0, 0%, 12%);
+    --color-accent-100: hsl(210, 100%, 88%);
+    --color-accent-200: hsl(210, 100%, 81%);
+    --color-accent-300: hsl(210, 100%, 74%);
+    --color-accent-400: hsl(210, 100%, 67%);
+    --color-accent-500: hsl(210, 64%, 55%);
+    --color-accent-600: hsl(210, 51%, 44%);
+    --color-accent-700: hsl(210, 51%, 36%);
+    --color-accent-800: hsl(210, 52%, 29%);
+    --color-accent-900: hsl(211, 52%, 17%);
+    --color-accent-1000: hsl(211, 52%, 12%);
 
     --color-success-100: hsl(130, 34%, 83%);
     --color-success-200: hsl(131, 35%, 75%);
@@ -64,16 +65,16 @@
     --color-danger-900: hsl(357, 64%, 20%);
     --color-danger-1000: hsl(358, 65%, 15%);
 
-    --color-accent-100: hsl(210, 100%, 88%);
-    --color-accent-200: hsl(210, 100%, 81%);
-    --color-accent-300: hsl(210, 100%, 74%);
-    --color-accent-400: hsl(210, 100%, 67%);
-    --color-accent-500: hsl(210, 64%, 55%);
-    --color-accent-600: hsl(210, 51%, 44%);
-    --color-accent-700: hsl(210, 51%, 36%);
-    --color-accent-800: hsl(210, 52%, 29%);
-    --color-accent-900: hsl(211, 52%, 17%);
-    --color-accent-1000: hsl(211, 52%, 12%);
+    --color-info-100: hsl(210, 100%, 88%);
+    --color-info-200: hsl(210, 100%, 81%);
+    --color-info-300: hsl(210, 100%, 74%);
+    --color-info-400: hsl(210, 100%, 67%);
+    --color-info-500: hsl(210, 64%, 55%);
+    --color-info-600: hsl(210, 51%, 44%);
+    --color-info-700: hsl(210, 51%, 36%);
+    --color-info-800: hsl(210, 52%, 29%);
+    --color-info-900: hsl(211, 52%, 17%);
+    --color-info-1000: hsl(211, 52%, 12%);
   }
 
   .dark {
@@ -87,6 +88,17 @@
     --color-neutral-800: hsl(240, 6%, 70%);
     --color-neutral-900: hsl(240, 6%, 85%);
     --color-neutral-1000: hsl(240, 10%, 98%);
+
+    --color-accent-100: hsl(211, 51%, 12%);
+    --color-accent-200: hsl(211, 52%, 18%);
+    --color-accent-300: hsl(210, 52%, 29%);
+    --color-accent-400: hsl(209, 51%, 40%);
+    --color-accent-500: hsl(210, 52%, 48%);
+    --color-accent-600: hsl(210, 51%, 55%);
+    --color-accent-700: hsl(210, 68%, 62%);
+    --color-accent-800: hsl(210, 97%, 71%);
+    --color-accent-900: hsl(210, 100%, 82%);
+    --color-accent-1000: hsl(210, 100%, 87%);
 
     --color-success-100: hsl(132, 42%, 9%);
     --color-success-200: hsl(130, 41%, 14%);
@@ -121,22 +133,22 @@
     --color-danger-900: hsl(359, 70%, 86%);
     --color-danger-1000: hsl(358, 69%, 90%);
 
-    --color-accent-100: hsl(211, 51%, 12%);
-    --color-accent-200: hsl(211, 52%, 18%);
-    --color-accent-300: hsl(210, 52%, 29%);
-    --color-accent-400: hsl(209, 51%, 40%);
-    --color-accent-500: hsl(210, 52%, 48%);
-    --color-accent-600: hsl(210, 51%, 55%);
-    --color-accent-700: hsl(210, 68%, 62%);
-    --color-accent-800: hsl(210, 97%, 71%);
-    --color-accent-900: hsl(210, 100%, 82%);
-    --color-accent-1000: hsl(210, 100%, 87%);
+    --color-info-100: hsl(211, 51%, 12%);
+    --color-info-200: hsl(211, 52%, 18%);
+    --color-info-300: hsl(210, 52%, 29%);
+    --color-info-400: hsl(209, 51%, 40%);
+    --color-info-500: hsl(210, 52%, 48%);
+    --color-info-600: hsl(210, 51%, 55%);
+    --color-info-700: hsl(210, 68%, 62%);
+    --color-info-800: hsl(210, 97%, 71%);
+    --color-info-900: hsl(210, 100%, 82%);
+    --color-info-1000: hsl(210, 100%, 87%);
   }
 }
 
 @theme {
-  --font-*: initial;
   /* fonts */
+  --font-*: initial;
   --font-josefin: var(--font-josefin);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
@@ -146,8 +158,6 @@
   --color-bg-muted: var(--color-neutral-200);
   --color-bg-inverse: var(--color-neutral-1000);
   --color-bg-disabled: var(--color-neutral-200);
-  --color-bg-tooltip: var(--color-neutral-200);
-  --color-bg-overlay: var(--color-neutral-200);
 
   --color-bg-neutral: var(--color-neutral-300);
   --color-bg-neutral-hover: var(--color-neutral-400);
@@ -160,73 +170,47 @@
   --color-bg-success: var(--color-success-500);
   --color-bg-success-hover: var(--color-success-600);
   --color-bg-success-active: var(--color-success-700);
-  --color-bg-success-muted: var(--color-success-200);
-  --color-bg-success-muted-hover: var(--color-success-300);
-  --color-bg-success-muted-active: var(--color-success-300);
 
   --color-bg-danger: var(--color-danger-500);
   --color-bg-danger-hover: var(--color-danger-600);
   --color-bg-danger-active: var(--color-danger-700);
-  --color-bg-danger-muted: var(--color-danger-100);
-  --color-bg-danger-muted-hover: var(--color-danger-300);
-  --color-bg-danger-muted-active: var(--color-danger-300);
 
   --color-bg-warning: var(--color-warning-500);
   --color-bg-warning-hover: var(--color-warning-600);
   --color-bg-warning-active: var(--color-warning-700);
-  --color-bg-warning-muted: var(--color-warning-100);
-  --color-bg-warning-muted-hover: var(--color-warning-300);
-  --color-bg-warning-muted-active: var(--color-warning-300);
 
   --color-bg-accent: var(--color-accent-500);
   --color-bg-accent-hover: var(--color-accent-600);
   --color-bg-accent-active: var(--color-accent-700);
-  --color-bg-accent-muted: var(--color-accent-200);
-  --color-bg-accent-muted-hover: var(--color-accent-300);
-  --color-bg-accent-muted-active: var(--color-accent-300);
 
   --color-fg: var(--color-neutral-1000);
   --color-fg-muted: var(--color-neutral-800);
   --color-fg-inverse: var(--color-neutral-100);
   --color-fg-disabled: var(--color-neutral-500);
-
   --color-fg-danger: var(--color-danger-700);
   --color-fg-warning: var(--color-warning-600);
   --color-fg-success: var(--color-success-700);
   --color-fg-accent: var(--color-accent-700);
 
-  --color-fg-link: var(--color-neutral-1000);
-  --color-fg-link-hover: var(--color-neutral-1000);
-  --color-fg-link-active: var(--color-neutral-1000);
-  --color-fg-link-visited: var(--color-neutral-1000);
-
-  --color-fg-onAccent: var(--color-neutral-1000);
   --color-fg-onNeutral: var(--color-neutral-1000);
   --color-fg-onPrimary: var(--color-neutral-100);
+  --color-fg-onAccent: var(--color-neutral-1000);
   --color-fg-onSuccess: var(--color-neutral-1000);
-  --color-fg-onMutedSuccess: var(--color-neutral-1000);
   --color-fg-onDanger: var(--color-neutral-1000);
-  --color-fg-onMutedDanger: var(--color-neutral-1000);
   --color-fg-onWarning: var(--color-neutral-1000);
-  --color-fg-onMutedWarning: var(--color-neutral-1000);
-  --color-fg-onTooltip: var(--color-neutral-1000);
+  --color-fg-onInfo: var(--color-neutral-1000);
 
   --color-border: var(--color-neutral-300);
   --color-border-field: var(--color-neutral-400);
   --color-border-control: var(--color-neutral-700);
-  --color-border-hover: var(--color-neutral-1000);
-  --color-border-active: var(--color-neutral-500);
   --color-border-disabled: var(--color-neutral-300);
+  --color-border-focus: var(--color-accent-500);
 
   --color-border-success: var(--color-success-300);
-  --color-border-danger: var(--color-danger-300);
-  --color-border-warning: var(--color-warning-200);
   --color-border-accent: var(--color-accent-300);
-
-  --color-border-accent: var(--color-accent-500);
-  --color-border-secondary: var(--color-neutral-200);
-  --color-border-focus: var(--color-accent-500);
-  --color-border-inverse: var(--color-neutral-500);
+  --color-border-danger: var(--color-danger-300);
+  --color-border-warning: var(--color-warning-300);
+  --color-border-info: var(--color-info-300);
 
   /* easing */
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
@@ -239,14 +223,8 @@
   --animate-progress-indeterminate: progress-grow var(--progress-duration) 1
       both normal,
     progress-pulse 1s ease var(--progress-duration) infinite normal none running;
-
-  /* breakpoints */
-  --breakpoint-xs: 30rem;
-  --breakpoint-sm: 40rem;
-  --breakpoint-md: 48rem;
-  --breakpoint-lg: 64rem;
-  --breakpoint-xl: 80rem;
-  --breakpoint-2xl: 96rem;
+  --animate-line-spinner: line-spinner 1.2s linear infinite;
+  --animate-dot-spinner: dot-spinner 0.8s linear infinite;
 }
 
 /* for specific styles */
@@ -337,59 +315,24 @@
   }
 }
 
-@utility container {
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 2rem;
-  padding-right: 2rem;
-}
-
-@utility shiki {
-  & code span {
-    color: var(--shiki-light);
+@keyframes line-spinner {
+  0% {
+    opacity: 1;
   }
-  .dark & code span {
-    color: var(--shiki-dark);
-  }
-  .highlighted {
-    margin: 0 -16px;
-    padding: 2px 16px;
-    background-color: var(--color-bg-muted) !important;
+  100% {
+    opacity: 0.15;
   }
 }
 
-@utility dark {
-  & .shiki code span {
-    color: var(--shiki-dark);
+@keyframes dot-spinner {
+  0% {
+    opacity: 1;
+    transform: scale(1);
   }
-}
-
-@utility step {
-  counter-increment: step;
-
-  &:before {
-    @apply border-bg bg-bg-muted text-fg-muted absolute inline-flex size-9 items-center justify-center rounded-xl border-4 text-center -indent-px font-mono text-sm font-medium;
-    @apply ml-[-50px] mt-[-4px];
-    content: counter(step);
+  100% {
+    opacity: 0.15;
+    transform: scale(0.5);
   }
-}
-
-@utility category {
-  @apply relative;
-
-  &:before {
-    @apply bg-border absolute left-0 top-0 -ml-1 mt-2 h-2 w-2 rounded-full content-[''];
-  }
-
-  &:after {
-    @apply bg-border absolute left-0 top-3 h-3 w-[1px] content-[''];
-  }
-}
-
-@utility transition-sidebar {
-  transition-property: transform, width, left, opacity, color;
-  transition-duration: 0.25s;
-  transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 @layer base {
@@ -399,9 +342,4 @@
   body {
     @apply bg-bg text-fg;
   }
-}
-
-.shiki,
-.shiki span {
-  background-color: transparent !important;
 }

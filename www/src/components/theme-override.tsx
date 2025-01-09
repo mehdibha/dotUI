@@ -1,7 +1,6 @@
 "use client";
 
 import React, { ReactNode } from "react";
-import { Loader2Icon } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { googleFonts } from "@/lib/fonts";
 import { useDebounce } from "@/hooks/use-debounce";

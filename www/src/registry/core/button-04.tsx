@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { Loader2Icon } from "lucide-react";
 import { chain } from "react-aria";
 import {
   composeRenderProps,
@@ -12,6 +11,7 @@ import {
   PressEvent,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
+import { Loader } from "@/registry/core/loader-ring";
 import { Ripple } from "@/registry/core/ripple";
 import { useRipple } from "@/registry/hooks/use-ripple";
 import { focusRing } from "@/registry/lib/focus-styles";
@@ -115,9 +115,7 @@ const Button = React.forwardRef(
         {composeRenderProps(props.children, (children, { isPending }) => (
           <>
             <Ripple ripples={ripples} onClear={onClearRipple} />
-            {isPending && (
-              <Loader2Icon aria-label="loading" className="animate-spin" />
-            )}
+            {isPending && <Loader aria-label="loading" size={16} />}
             {prefix}
             {typeof children === "string" ? (
               <span className="truncate">{children}</span>

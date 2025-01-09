@@ -8,7 +8,7 @@
     "build:internal-registry": "tsx ./scripts/build-internal-registry.ts && prettier --log-level silent --write \"src/__registry__/**/*.{ts,tsx,mdx}\" --cache",
     "build:demos": "tsx ./scripts/build-demos.ts && prettier --log-level silent --write \"src/__demos__/index.tsx\" --cache",
     "start": "next start",
-    "dev": "next dev --turbo",
+    "dev": "next dev",
     "preview": "next build && next start",
     "format": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache --log-level warn",
     "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache --log-level warn",

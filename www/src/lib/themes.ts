@@ -12,6 +12,7 @@ export const dotUIThemes: Theme[] = [
     radius: 0.5,
     iconLibrary: "lucide",
     variants: {
+      loader: "loader-ring",
       button: "button-01",
       calendar: "calendar-01",
     },
@@ -187,6 +188,7 @@ export const dotUIThemes: Theme[] = [
     radius: 0.5,
     iconLibrary: "lucide",
     variants: {
+      loader: "loader-ring",
       button: "button-02",
       calendar: "calendar-02",
     },

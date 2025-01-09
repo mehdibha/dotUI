@@ -1,1 +1,1 @@
-export * from "@/registry/core/color-picker-01";
+export * from "@/registry/core/color-picker";

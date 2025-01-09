@@ -1,6 +1,6 @@
 import { InfoIcon, HelpCircleIcon } from "lucide-react";
 import { Button } from "@/components/dynamic-core/button";
-import { DialogRoot, Dialog } from "@/registry/core/dialog-01";
+import { DialogRoot, Dialog } from "@/registry/core/dialog";
 
 interface ContextualHelpProps {
   title?: string;

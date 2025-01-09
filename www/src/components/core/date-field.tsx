@@ -1,1 +1,1 @@
-export * from "@/registry/core/date-field-01";
+export * from "@/registry/core/date-field";

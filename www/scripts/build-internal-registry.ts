@@ -1,10 +1,10 @@
 import { existsSync, promises as fs } from "node:fs";
 import path from "node:path";
 import { rimraf } from "rimraf";
-import { core } from "@/registry/core";
-import { demos } from "@/registry/demos";
-import { iconLibraries, icons } from "@/registry/icons";
+import { core } from "@/registry/registry-core";
+import { iconLibraries, icons } from "@/registry/registry-icons";
 import { RegistryItem } from "@/registry/types";
+import { demos } from "@/demos/registry";
 
 const INTERNAL_REGISTRY_PATH = path.join(process.cwd(), "src/__registry__");
 const SOURCE_REGISTRY_PATH = path.join(process.cwd(), "src/registry");
@@ -144,10 +144,13 @@ async function buildCoreComponents() {
     // transform icons import
     // content = content.replace(/lucide-react/g, "@/__registry__/icons");
     // transform registryDependencies import
-    // content = content.replace(
-    //   /@\/registry\/core\/([a-zA-Z]+)-\d+/g,
-    //   "@/__registry__/core/$1"
-    // );
+    const overrides = [["loader-ring", "loader"]];
+    for (const [from, to] of overrides) {
+      content = content.replace(
+        new RegExp(`@/registry/core/${from}`, "g"),
+        `@/components/dynamic-core/${to}`
+      );
+    }
     await fs.writeFile(targetFilePath, content);
   }
 
@@ -175,8 +178,8 @@ async function run() {
   try {
     await setup();
     await buildDemos();
-    await buildIcons();
     await buildCoreComponents();
+    // await buildIcons();
     console.log("✅ Done!");
   } catch (error) {
     console.error(error);

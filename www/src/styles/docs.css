@@ -1,0 +1,63 @@
+@utility container {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  
+  @media (width >= 1400px) {
+    max-width: 1400px;
+  }
+}
+
+@utility shiki {
+  & code span {
+    color: var(--shiki-light);
+  }
+  .dark & code span {
+    color: var(--shiki-dark);
+  }
+  .highlighted {
+    margin: 0 -16px;
+    padding: 2px 16px;
+    background-color: var(--color-bg-muted) !important;
+  }
+}
+
+@utility dark {
+  & .shiki code span {
+    color: var(--shiki-dark);
+  }
+}
+
+@utility step {
+  counter-increment: step;
+
+  &:before {
+    @apply border-bg bg-bg-muted text-fg-muted absolute inline-flex size-9 items-center justify-center rounded-xl border-4 text-center -indent-px font-mono text-sm font-medium;
+    @apply ml-[-50px] mt-[-4px];
+    content: counter(step);
+  }
+}
+
+@utility category {
+  @apply relative;
+
+  &:before {
+    @apply bg-border absolute left-0 top-0 -ml-1 mt-2 h-2 w-2 rounded-full content-[''];
+  }
+
+  &:after {
+    @apply bg-border absolute left-0 top-3 h-3 w-[1px] content-[''];
+  }
+}
+
+@utility transition-sidebar {
+  transition-property: transform, width, left, opacity, color;
+  transition-duration: 0.25s;
+  transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.shiki,
+.shiki span {
+  background-color: transparent !important;
+}

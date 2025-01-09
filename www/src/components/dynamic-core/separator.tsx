@@ -1,1 +1,1 @@
-export * from "@/registry/core/separator-01";
+export * from "@/registry/core/separator";

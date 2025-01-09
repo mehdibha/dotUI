@@ -1,1 +1,1 @@
-export * from "@/registry/core/link-01";
+export * from "@/registry/core/link";

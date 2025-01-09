@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { Loader2Icon } from "lucide-react";
 import {
   composeRenderProps,
   Button as AriaButton,
@@ -10,6 +9,7 @@ import {
   type LinkProps as AriaLinkProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
+import { Loader } from "@/registry/core/loader-ring";
 import { focusRing } from "@/registry/lib/focus-styles";
 
 const buttonStyles = tv(
@@ -101,9 +101,7 @@ const Button = React.forwardRef(
       >
         {composeRenderProps(props.children, (children, { isPending }) => (
           <>
-            {isPending && (
-              <Loader2Icon aria-label="loading" className="animate-spin" />
-            )}
+            {isPending && <Loader aria-label="loading" size={16} />}
             {prefix}
             {typeof children === "string" ? (
               <span className="truncate">{children}</span>
