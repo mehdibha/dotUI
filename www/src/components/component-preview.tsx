@@ -1,11 +1,16 @@
 import React from "react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
-import { PaintBucket } from "lucide-react";
+import { ChevronDownIcon, PaintBucket } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { getFileSource } from "@/lib/get-file-source";
 import { CodeBlock } from "@/components/code-block";
 import { Button } from "@/components/core/button";
+import { ListBox, Item } from "@/components/core/list-box";
+import { Overlay } from "@/components/core/overlay";
+import { Select, SelectRoot, SelectValue } from "@/components/core/select";
 import { Tooltip } from "@/components/core/tooltip";
+import { core } from "@/registry/registry-core";
+import { RegistryItem } from "@/registry/types";
 import { Index } from "@/__registry__/demos";
 import { ComponentPreviewClient } from "./component-preview-client";
 import { ThemeCustomizerDialog } from "./theme-customizer";
@@ -28,6 +33,8 @@ export const ComponentPreview = async ({
 }: ComponentPreviewProps) => {
   const type = name.split("/")[0];
   const componentName = name.split("/")[1];
+  const compName = "button";
+  const variants = getAllComponentVariants(compName);
 
   const demoItem = Index[type][componentName];
 
@@ -56,6 +63,26 @@ export const ComponentPreview = async ({
     >
       <div className="relative">
         <ThemeOverride>
+          <SelectRoot defaultSelectedKey="alert-01">
+            <Button
+              variant="outline"
+              size="sm"
+              suffix={<ChevronDownIcon />}
+              className="border-border absolute left-2 top-2 z-50 text-xs font-normal"
+            >
+              <span className="font-bold">variant:</span> <SelectValue />
+            </Button>
+            <Overlay type="popover">
+              <ListBox>
+                {variants &&
+                  variants.map((item) => (
+                    <Item key={item.name} id={item.name} description={item.description}>
+                      {item.name} {false && "(current theme)"}
+                    </Item>
+                  ))}
+              </ListBox>
+            </Overlay>
+          </SelectRoot>
           <ThemeCustomizerDialog>
             <Tooltip
               content={
@@ -68,7 +95,7 @@ export const ComponentPreview = async ({
                 variant="outline"
                 shape="square"
                 size="sm"
-                className="absolute right-2 top-2 z-50 font-normal"
+                className="border-border absolute right-2 top-2 z-50 font-normal"
               >
                 <PaintBucket />
               </Button>
@@ -77,7 +104,7 @@ export const ComponentPreview = async ({
           <ScrollArea
             className={cn("flex items-center justify-center", "bg-bg text-fg")}
           >
-            <div className="flex min-h-40 items-center justify-center px-4 py-8">
+            <div className="flex min-h-52 items-center justify-center px-4 py-16">
               <div
                 className={cn(
                   "flex w-full items-center justify-center",
@@ -115,3 +142,19 @@ export const ComponentPreview = async ({
     </div>
   );
 };
+
+const getAllComponentVariants = (name: string) => {
+  const item = core.find((item) => item.name === name);
+
+  if (hasVariants(item)) {
+    return item.variants;
+  } else {
+    return false;
+  }
+};
+
+function hasVariants(
+  item?: RegistryItem
+): item is Extract<RegistryItem, { variants: unknown }> {
+  return item !== undefined && "variants" in item;
+}

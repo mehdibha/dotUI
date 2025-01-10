@@ -12,6 +12,8 @@ export const createDynamicComponent = <Props extends {}>(
     const { currentTheme } = useThemes();
 
     const variant = currentTheme.variants[registryItem];
+    const { variants } = useComponentsVariants();
+    const contextVariant = variants[componentName];
 
     if (!variant || !registry[variant]) {
       throw new Error(
@@ -19,7 +21,7 @@ export const createDynamicComponent = <Props extends {}>(
       );
     }
 
-    const LazyComponent = registry[variant];
+    const LazyComponent = registry[contextVariant ?? variant];
 
     return (
       <React.Suspense fallback={null}>
@@ -32,3 +34,22 @@ export const createDynamicComponent = <Props extends {}>(
 
   return Component;
 };
+
+const variantsContext = React.createContext<{
+  variants: Record<string, string>;
+  setVariants: (value: Record<string, string>) => void;
+}>({ variants: {}, setVariants: () => {} });
+
+export const VariantsProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  const [variants, setVariants] = React.useState<Record<string, string>>({});
+  return (
+    <variantsContext.Provider value={{ variants, setVariants }}>
+      {children}
+    </variantsContext.Provider>
+  );
+};
+const useComponentsVariants = () => React.useContext(variantsContext);

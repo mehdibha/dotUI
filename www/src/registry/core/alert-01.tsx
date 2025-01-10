@@ -1,5 +1,3 @@
-"use client";
-
 import * as React from "react";
 import {
   AlertCircleIcon,
@@ -44,25 +42,22 @@ const icons = {
 };
 
 interface AlertProps extends AlertRootProps {
-  title?: string;
+  title: string;
   description?: string;
-  action?: React.ReactNode;
 }
 
 function Alert({
-  variant = "neutral",
   title,
   description,
-  action,
+  variant = "neutral",
   ...props
 }: AlertProps) {
   return (
     <AlertRoot variant={variant} {...props}>
       {icons[variant]}
-      <div className="flex-1 space-y-0.5">
+      <div>
         <AlertTitle>{title}</AlertTitle>
         {description && <AlertContent>{description}</AlertContent>}
-        {action}
       </div>
     </AlertRoot>
   );
