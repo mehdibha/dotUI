@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import type { PageTree } from "fumadocs-core/server";
 import { useOnChange } from "fumadocs-core/utils/use-on-change";
 import {
@@ -42,9 +42,9 @@ export const Sidebar = ({ items }: { items: PageTree.Node[] }) => {
   const [isCollapsed, setIsCollapsed] = React.useState(shouldInitialCollapse);
 
   const transition = {
-    type: "spring",
-    bounce: 0,
-    duration: 0.25,
+    // type: "tween",
+    // bounce: 0,
+    // duration: 0.25,
   };
 
   React.useEffect(() => {

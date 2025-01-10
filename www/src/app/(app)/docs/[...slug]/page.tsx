@@ -16,16 +16,14 @@ import { TableOfContents } from "@/components/toc";
 import { source } from "@/app/source";
 import { siteConfig } from "@/config";
 
-interface PageProps {
-  params: {
-    slug: string[];
-  };
-}
-
 const config = siteConfig.global;
 
-export default async function Page({ params }: PageProps) {
-  const page = source.getPage(params.slug);
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string[] }>;
+}) {
+  const page = source.getPage((await params).slug);
   if (!page) notFound();
   const MDXContent = page.data.body;
 
@@ -82,8 +80,12 @@ const getIcon = (url: string) => {
   return null;
 };
 
-export function generateMetadata({ params }: PageProps): Metadata {
-  const page = source.getPage(params.slug);
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string[] }>;
+}): Promise<Metadata> {
+  const page = source.getPage((await params).slug);
   if (!page) notFound();
 
   return {
@@ -110,6 +112,6 @@ export function generateMetadata({ params }: PageProps): Metadata {
   };
 }
 
-export function generateStaticParams(): PageProps["params"][] {
+export function generateStaticParams() {
   return source.generateParams();
 }

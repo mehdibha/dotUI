@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { ProgressBar as AriaProgressBar } from "react-aria-components";
 import type { ProgressBarProps } from "react-aria-components";
 import { cn } from "@/registry/lib/cn";

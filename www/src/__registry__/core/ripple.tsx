@@ -1,8 +1,8 @@
 "use client";
 
 import type { FC } from "react";
-import type { HTMLMotionProps } from "framer-motion";
-import { AnimatePresence, motion } from "framer-motion";
+import type { HTMLMotionProps } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import type { RippleType } from "@/registry/hooks/use-ripple";
 
 function clamp(value: number, min: number, max: number) {

@@ -11,7 +11,7 @@ export default function HomePage() {
       <Header />
       <div className="container">
         <section className="mx-auto max-w-3xl pt-28">
-          <h1 className="text-center text-3xl tracking-tight md:text-5xl lg:text-6xl">
+          <h1 className="text-center text-3xl tracking-tight md:text-5xl lg:text-5xl">
             Build your component library
             <br /> with a <span className="font-bold italic">unique</span>{" "}
             style.
@@ -25,7 +25,7 @@ export default function HomePage() {
               size="lg"
               variant="primary"
               href="/docs/getting-started/introduction"
-              className="h-12 px-8 text-base font-semibold"
+              className="h-11 px-8"
             >
               Get started
             </Button>
@@ -33,7 +33,7 @@ export default function HomePage() {
               href="/themes"
               size="lg"
               variant="outline"
-              className="bg-bg-inverse/5 h-12 px-8 text-base font-semibold"
+              className="bg-bg-inverse/5 h-11 px-8"
               // prefix={<PaletteIcon />}
             >
               Explore themes
