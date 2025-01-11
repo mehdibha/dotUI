@@ -23,7 +23,10 @@ export function StyleSwitcher({ componentName }: { componentName: string }) {
     <SelectRoot
       selectedKey={currentVariant}
       onSelectionChange={(key) => {
-        setVariants((prevVariants) => ({ ...prevVariants , [componentName]: key }));
+        setVariants((prevVariants) => ({
+          ...prevVariants,
+          [componentName]: key,
+        }));
       }}
     >
       <Button
@@ -43,7 +46,8 @@ export function StyleSwitcher({ componentName }: { componentName: string }) {
                 id={item.name}
                 description={item.description}
               >
-                {item.name} {currentThemeVariant === item.name && "(current theme)"}
+                {item.name}{" "}
+                {currentThemeVariant === item.name && "(current theme)"}
               </Item>
             ))}
         </ListBox>

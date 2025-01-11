@@ -35,7 +35,12 @@ export function ComponentsOverview() {
   return (
     <div className="grid grid-cols-10 gap-8 p-8">
       <div className="col-span-8">
-        <Slider label="Progress" valueLabel defaultValue={50} className="!w-full" />
+        <Slider
+          label="Progress"
+          valueLabel
+          defaultValue={50}
+          className="!w-full"
+        />
       </div>
       <div className="col-span-2 row-span-2">
         <RadioGroup>

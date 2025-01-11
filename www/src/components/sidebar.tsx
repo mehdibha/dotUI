@@ -3,7 +3,6 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion } from "motion/react";
 import type { PageTree } from "fumadocs-core/server";
 import { useOnChange } from "fumadocs-core/utils/use-on-change";
 import {
@@ -14,6 +13,7 @@ import {
   SearchIcon,
   SunIcon,
 } from "lucide-react";
+import { motion } from "motion/react";
 import { cn } from "@/lib/cn";
 import { hasActive, isActive } from "@/lib/docs/utils";
 import { useCommandMenuInputRef } from "@/hooks/use-focus-command-menu";

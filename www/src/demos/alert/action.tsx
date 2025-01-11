@@ -10,6 +10,6 @@ export default function AlertDemo() {
         </Button>
       }
       description="You are currently on the free plan. Upgrade to unlock more features."
-     />
+    />
   );
 }
