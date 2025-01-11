@@ -1,9 +1,6 @@
 ---
 title: Link
 description: Link allows a user to navigate to another page or resource within a web page or application.
-thumbnail:
-  image: /previews/components/core/link.jpeg
-  video: /previews/components/core/link.mp4
 links:
   - label: Aria docs
     href: https://react-spectrum.adobe.com/react-aria/Link.html
@@ -16,7 +13,7 @@ links:
 ---
 
 <ComponentPreview
-  name="core/link-default"
+  name="core/link/link-default"
   preview={`<Link href="https://x.com/mehdibha_" target="_blank">
     @mehdibha_
   </Link>`}
@@ -42,7 +39,7 @@ npx dotui-cli@latest add link
     ```
 
       <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name="core/link" />
+      <ComponentSource name="core/link/link" />
       <Step>Update the import paths to match your project setup.</Step>
     </Steps>
 
@@ -56,7 +53,7 @@ npx dotui-cli@latest add link
 Use the `variant` prop to control the appearance of the link.
 
 <ComponentPreview
-  name="core/link-variants"
+  name="core/link/link-variants"
   preview={`<Link variant="accent" href="https://x.com/mehdibha_" target="_blank">
     @mehdibha_
   </Link>
@@ -70,7 +67,7 @@ Use the `variant` prop to control the appearance of the link.
 Use the `isDisabled` prop to disable the link.
 
 <ComponentPreview
-  name="core/link-disabled"
+  name="core/link/link-disabled"
   preview={`<Link href="https://x.com/mehdibha_" isDisabled>
     @mehdibha_
   </Link>`}
@@ -81,7 +78,7 @@ Use the `isDisabled` prop to disable the link.
 ### With icon
 
 <ComponentPreview
-  name="core/link-icon"
+  name="core/link/link-icon"
   preview={`<Link href="/docs" target="_blank">
     Docs{" "}
     <span>

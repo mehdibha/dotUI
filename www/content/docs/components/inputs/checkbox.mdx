@@ -1,9 +1,6 @@
 ---
 title: Checkbox
 description: Checkboxes allow users to select multiple items from a list of individual items, or to mark one individual item as selected.
-thumbnail:
-  image: /previews/components/core/checkbox.jpeg
-  video: /previews/components/core/checkbox.mp4
 links:
   - label: Aria docs
     href: https://react-spectrum.adobe.com/react-aria/Checkbox.html
@@ -16,7 +13,7 @@ links:
 ---
 
 <ComponentPreview
-  name="core/checkbox-default"
+  name="core/checkbox/checkbox-default"
   preview={`<Checkbox>I accept the <Link href="/terms">terms and conditions</Link></Checkbox>`}
 />
 
@@ -40,7 +37,7 @@ npx dotui-cli@latest add checkbox
     ```
 
       <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name="core/checkbox" />
+      <ComponentSource name="core/checkbox/checkbox" />
       <Step>Update the import paths to match your project setup.</Step>
     </Steps>
 
@@ -58,7 +55,7 @@ Use `checkbox` to allow users to select multiple items from a list of individual
 Use the `variant` prop to control the visual style of the checkbox.
 
 <ComponentPreview
-  name="core/checkbox-card"
+  name="core/checkbox/checkbox-card"
   preview={`<Checkbox variant="card">I accept the terms and conditions</Checkbox>`}
 />
 
@@ -67,7 +64,7 @@ Use the `variant` prop to control the visual style of the checkbox.
 A checkbox can be in an indeterminate state, controlled using the `isIndeterminate` prop.
 
 <ComponentPreview
-  name="core/checkbox-indeterminate"
+  name="core/checkbox/checkbox-indeterminate"
   preview={`<Checkbox isIndeterminate>Select all</Checkbox>`}
 />
 
@@ -76,7 +73,7 @@ A checkbox can be in an indeterminate state, controlled using the `isIndetermina
 Use the `isDisabled` prop to disable the checkbox.
 
 <ComponentPreview
-  name="core/checkbox-disabled"
+  name="core/checkbox/checkbox-disabled"
   preview={`<Checkbox isDisabled>I accept the terms and conditions</Checkbox>`}
 />
 
@@ -85,7 +82,7 @@ Use the `isDisabled` prop to disable the checkbox.
 The `isReadOnly` prop makes the selection immutable. Unlike isDisabled, the Checkbox remains focusable.
 
 <ComponentPreview
-  name="core/checkbox-read-only"
+  name="core/checkbox/checkbox-read-only"
   preview={`<Checkbox isReadOnly>I accept the terms and conditions</Checkbox>`}
 />
 
@@ -94,7 +91,7 @@ The `isReadOnly` prop makes the selection immutable. Unlike isDisabled, the Chec
 The `defaultSelected` prop can be used to set the default state.
 
 <ComponentPreview
-  name="core/checkbox-uncontrolled"
+  name="core/checkbox/checkbox-uncontrolled"
   preview={`<Checkbox defaultSelected>I accept the terms and conditions</Checkbox>`}
 />
 
@@ -103,7 +100,7 @@ The `defaultSelected` prop can be used to set the default state.
 Use the `isSelected` and `onChange` props to control the value of the input.
 
 <ComponentPreview
-  name="core/checkbox-controlled"
+  name="core/checkbox/checkbox-controlled"
   preview={`const [checked, setChecked] = React.useState(false);
   return (
     <Checkbox isSelected={checked} onChange={setChecked}>

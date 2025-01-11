@@ -1,9 +1,6 @@
 ---
 title: SearchField
 description: SearchField is a text field designed for searches.
-thumbnail:
-  image: /previews/components/core/search-field.jpeg
-  video: /previews/components/core/search-field.mp4
 links:
   - label: Aria docs
     href: https://react-spectrum.adobe.com/react-aria/SearchField.html
@@ -16,7 +13,7 @@ links:
 ---
 
 <ComponentPreview
-  name="core/search-field-default"
+  name="core/search-field/search-field-default"
   preview={`<SearchField aria-label="Search" />`}
 />
 
@@ -40,7 +37,7 @@ npx dotui-cli@latest add search-field
     ```
 
       <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name="core/search-field" />
+      <ComponentSource name="core/search-field/search-field" />
       <Step>Update the import paths to match your project setup.</Step>
     </Steps>
 
@@ -58,7 +55,7 @@ Use a `SearchField` to allow a user to enter and clear a search query.
 Use the `size` prop to control the size of the `SearchField`. The default size is `"md"`.
 
 <ComponentPreview
-  name="core/search-field-sizes"
+  name="core/search-field/search-field-sizes"
   preview={`<SearchField size="sm" />
 <SearchField size="md" />
 <SearchField size="lg" />`}
@@ -69,7 +66,7 @@ Use the `size` prop to control the size of the `SearchField`. The default size i
 By default, `prefix` contains a search icon and `suffix` contains a clear button. You can customize these by passing a custom element to the `prefix` and `suffix` props.
 
 <ComponentPreview
-  name="core/search-field-prefix-and-suffix"
+  name="core/search-field/search-field-prefix-and-suffix"
   preview={`<SearchField prefix="🔍" />
 <SearchField suffix={(props) => <ClearButton {...props} />} />`}
 />
@@ -79,7 +76,7 @@ By default, `prefix` contains a search icon and `suffix` contains a clear button
 A visual label can be provided for the `SearchField` using the `label` prop or a hidden label using `aria-label` prop.
 
 <ComponentPreview
-  name="core/search-field-label"
+  name="core/search-field/search-field-label"
   preview={`<SearchField label="Search" />
 <SearchField aria-label="Search" />`}
 />
@@ -89,7 +86,7 @@ A visual label can be provided for the `SearchField` using the `label` prop or a
 A description can be supplied to a SearchField via the `description` prop. The description is always visible unless the `isInvalid` prop is `true` and an error message is provided.
 
 <ComponentPreview
-  name="core/search-field-description"
+  name="core/search-field/search-field-description"
   preview={`<SearchField label="Search" description="Enter your search query." />`}
 />
 
@@ -98,7 +95,7 @@ A description can be supplied to a SearchField via the `description` prop. The d
 A `ContextualHelp` element may be placed next to the label to provide additional information or help about a SearchField.
 
 <ComponentPreview
-  name="core/search-field-contextual-help"
+  name="core/search-field/search-field-contextual-help"
   preview={`<SearchField label="Search" contextualHelp={<ContextualHelp />} />`}
 />
 
@@ -107,7 +104,7 @@ A `ContextualHelp` element may be placed next to the label to provide additional
 An `errorMessage` can be supplied to a SearchField, which will be displayed when the `isInvalid` prop is set to `true`.
 
 <ComponentPreview
-  name="core/search-field-error-message"
+  name="core/search-field/search-field-error-message"
   preview={`<SearchField
     label="Search"
     isInvalid
@@ -120,7 +117,7 @@ Use the `isLoading` prop to control the loading state of the SearchField.
 Use the `loaderPosition` prop to control the position of the loader.
 
 <ComponentPreview
-  name="core/search-field-loading"
+  name="core/search-field/search-field-loading"
   preview={`<SearchField isLoading loaderPosition="prefix" />
 <SearchField isLoading loaderPosition="suffix" />`}
 />
@@ -130,7 +127,7 @@ Use the `loaderPosition` prop to control the position of the loader.
 Use the `isDisabled` prop to disable the SearchField.
 
 <ComponentPreview
-  name="core/search-field-disabled"
+  name="core/search-field/search-field-disabled"
   preview={`<SearchField isDisabled />`}
 />
 
@@ -139,7 +136,7 @@ Use the `isDisabled` prop to disable the SearchField.
 The `isReadOnly` boolean prop makes the SearchField's text content immutable. Unlike `isDisabled`, the SearchField remains focusable and the contents can still be copied.
 
 <ComponentPreview
-  name="core/search-field-read-only"
+  name="core/search-field/search-field-read-only"
   preview={`<SearchField isReadOnly />`}
 />
 
@@ -149,7 +146,7 @@ Use the `isRequired` prop to mark the SearchField as required.
 Use the `necessityIndicator` prop to control the visual style of the required state.
 
 <ComponentPreview
-  name="core/search-field-required"
+  name="core/search-field/search-field-required"
   preview={`<SearchField label="Search" isRequired />
 <SearchField label="Search" isRequired necessityIndicator="icon" />
 <SearchField label="Search" isRequired necessityIndicator="label" />
@@ -161,7 +158,7 @@ Use the `necessityIndicator` prop to control the visual style of the required st
 Use the `defaultValue` prop to set the default input value.
 
 <ComponentPreview
-  name="core/search-field-uncontrolled"
+  name="core/search-field/search-field-uncontrolled"
   preview={`<SearchField defaultValue="Marvel movies" />`}
 />
 
@@ -170,7 +167,7 @@ Use the `defaultValue` prop to set the default input value.
 Use the `value` and `onChange` props to control the value of the input.
 
 <ComponentPreview
-  name="core/search-field-controlled"
+  name="core/search-field/search-field-controlled"
   preview={`const [inputValue, setInputValue] = React.useState("Marvel movies");
 return <SearchField value={inputValue} onChange={setInputValue} />;`}
 />
@@ -180,7 +177,7 @@ return <SearchField value={inputValue} onChange={setInputValue} />;`}
 If you need to customize things further, you can drop down to the composition level.
 
 <ComponentPreview
-  name="core/search-field-composition"
+  name="core/search-field/search-field-composition"
   preview={`<SearchFieldRoot>
     <Label>Search</Label>
     <InputRoot prefix={<SearchIcon />}>

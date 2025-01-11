@@ -1,9 +1,6 @@
 ---
 title: Checkbox Group
 description: A checkbox group allows a user to select multiple items from a list of options.
-thumbnail:
-  image: /previews/components/core/checkbox-group.jpeg
-  video: /previews/components/core/checkbox-group.mp4
 links:
   - label: Aria docs
     href: https://react-spectrum.adobe.com/react-aria/CheckboxGroup.html
@@ -16,7 +13,7 @@ links:
 ---
 
 <ComponentPreview
-  name="core/checkbox-group-default"
+  name="core/checkbox-group/checkbox-group-default"
   preview={`<CheckboxGroup label="React frameworks" defaultValue={["nextjs"]}>
     <Checkbox value="nextjs">Next.js</Checkbox>
     <Checkbox value="remix">Remix</Checkbox>
@@ -44,7 +41,7 @@ npx dotui-cli@latest add checkbox-group
     ```
 
       <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name="core/checkbox-group" />
+      <ComponentSource name="core/checkbox-group/checkbox-group" />
       <Step>Update the import paths to match your project setup.</Step>
     </Steps>
 
@@ -67,7 +64,7 @@ Use `CheckboxGroup` to allow users to select multiple items from a list of indiv
 Use the `variant` prop to control the visual style of the `CheckBoxGroup`.
 
 <ComponentPreview
-  name="core/checkbox-group-cards"
+  name="core/checkbox-group/checkbox-group-cards"
   preview={`<CheckboxGroup label="React frameworks" defaultValue={["nextjs"]} variant="card">
     <Checkbox value="nextjs">Next.js</Checkbox>
     <Checkbox value="remix">Remix</Checkbox>
@@ -80,7 +77,7 @@ Use the `variant` prop to control the visual style of the `CheckBoxGroup`.
 A visual label can be provided for the `CheckboxGroup` using the `label` prop or a hidden label using `aria-label` prop.
 
 <ComponentPreview
-  name="core/checkbox-group-label"
+  name="core/checkbox-group/checkbox-group-label"
   preview={`<CheckboxGroup label="React frameworks" defaultValue={["nextjs"]}>
     <Checkbox value="nextjs">Next.js</Checkbox>
     <Checkbox value="remix">Remix</Checkbox>
@@ -96,7 +93,7 @@ A visual label can be provided for the `CheckboxGroup` using the `label` prop or
 A description can be supplied to a `CheckboxGroup` via the `description` prop. The description is always visible unless the `isInvalid` prop is `true` and an error message is provided.
 
 <ComponentPreview
-  name="core/checkbox-group-description"
+  name="core/checkbox-group/checkbox-group-description"
   preview={`<CheckboxGroup
     label="React frameworks"
     defaultValue={["nextjs"]}
@@ -113,7 +110,7 @@ A description can be supplied to a `CheckboxGroup` via the `description` prop. T
 A `ContextualHelp` element may be placed next to the label to provide additional information or help about a CheckboxGroup.
 
 <ComponentPreview
-  name="core/checkbox-group-contextual-help"
+  name="core/checkbox-group/checkbox-group-contextual-help"
   preview={`<CheckboxGroup
     label="React frameworks"
     defaultValue={["nextjs"]}
@@ -130,7 +127,7 @@ A `ContextualHelp` element may be placed next to the label to provide additional
 An error message can be supplied to a CheckboxGroup, which will be displayed when the `validationState` is `“invalid”`.
 
 <ComponentPreview
-  name="core/checkbox-group-error-message"
+  name="core/checkbox-group/checkbox-group-error-message"
   preview={`<CheckboxGroup label="React frameworks" isInvalid errorMessage="Please select a framework.">
     <Checkbox value="nextjs">Next.js</Checkbox>
     <Checkbox value="remix">Remix</Checkbox>
@@ -143,7 +140,7 @@ An error message can be supplied to a CheckboxGroup, which will be displayed whe
 Use the `isDisabled` prop to disable the CheckboxGroup.
 
 <ComponentPreview
-  name="core/checkbox-group-disabled"
+  name="core/checkbox-group/checkbox-group-disabled"
   preview={`<CheckboxGroup label="React frameworks" isDisabled>
     <Checkbox value="nextjs">Next.js</Checkbox>
     <Checkbox value="remix">Remix</Checkbox>
@@ -156,7 +153,7 @@ Use the `isDisabled` prop to disable the CheckboxGroup.
 The `isReadOnly` boolean prop makes the CheckboxGroup's text content immutable. Unlike isDisabled, the CheckboxGroup remains focusable and the contents can still be copied.
 
 <ComponentPreview
-  name="core/checkbox-group-read-only"
+  name="core/checkbox-group/checkbox-group-read-only"
   preview={`<CheckboxGroup label="React frameworks" isReadOnly>
     <Checkbox value="nextjs">Next.js</Checkbox>
     <Checkbox value="remix">Remix</Checkbox>
@@ -170,7 +167,7 @@ Use the `isRequired` prop to mark the CheckboxGroup as required.
 Use the `necessityIndicator` prop to control the visual style of the required state.
 
 <ComponentPreview
-  name="core/checkbox-group-required"
+  name="core/checkbox-group/checkbox-group-required"
   preview={`<CheckboxGroup label="React frameworks" isRequired>
     <Checkbox value="nextjs">Next.js</Checkbox>
     <Checkbox value="remix">Remix</Checkbox>
@@ -194,7 +191,7 @@ Use the `necessityIndicator` prop to control the visual style of the required st
 The `defaultValue` prop can be used to set the default state.
 
 <ComponentPreview
-  name="core/checkbox-group-uncontrolled"
+  name="core/checkbox-group/checkbox-group-uncontrolled"
   preview={`<CheckboxGroup label="React frameworks" defaultValue={["nextjs"]}>
     <Checkbox value="nextjs">Next.js</Checkbox>
     <Checkbox value="remix">Remix</Checkbox>
@@ -207,7 +204,7 @@ The `defaultValue` prop can be used to set the default state.
 Use the `value` and `onChange` props to control the value of the input.
 
 <ComponentPreview
-  name="core/checkbox-group-controlled"
+  name="core/checkbox-group/checkbox-group-controlled"
   preview={`const [frameworks, setFrameworks] = React.useState(["nextjs"]);
   return (
     <CheckboxGroup label="React frameworks" defaultValue={["nextjs"]}>
@@ -223,7 +220,7 @@ Use the `value` and `onChange` props to control the value of the input.
 If you need to customize things further, you can drop down to the composition level.
 
 <ComponentPreview
-  name="core/checkbox-group-composition"
+  name="core/checkbox-group/checkbox-group-composition"
   preview={`<CheckboxGroupRoot defaultValue={["nextjs"]}>
     <Label>React frameworks</Label>
     <Description>You can pick any frameworks.</Description>

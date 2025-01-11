@@ -1,9 +1,6 @@
 ---
 title: Color Slider
 description: ColorSlider allow users to adjust an individual channel of a color value.
-thumbnail:
-  image: /previews/components/core/color-slider.jpeg
-  video: /previews/components/core/color-slider.mp4
 links:
   - label: Aria docs
     href: https://react-spectrum.adobe.com/react-aria/ColorSlider.html
@@ -16,7 +13,7 @@ links:
 ---
 
 <ComponentPreview
-  name="core/color-slider-default"
+  name="core/color-slider/color-slider-default"
   preview={`<ColorSlider channel="hue" defaultValue="hsl(200, 100%, 50%)" />`}
 />
 
@@ -40,7 +37,7 @@ npx dotui-cli@latest add color-slider
     ```
 
       <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name={["core/color-slider"]} />
+      <ComponentSource name={["core/color-slider/color-slider"]} />
       <Step>Update the import paths to match your project setup.</Step>
     </Steps>
 
@@ -58,7 +55,7 @@ Use `ColorSlider` to allow users to adjust an individual channel of a color valu
 Use the `label` prop to provide a label for the color slider.
 
 <ComponentPreview
-  name="core/color-slider-label"
+  name="core/color-slider/color-slider-label"
   preview={`<ColorSlider label="Hue" channel="hue" defaultValue="hsl(200, 100%, 50%)" />`}
 />
 
@@ -67,7 +64,7 @@ Use the `label` prop to provide a label for the color slider.
 `orientation` prop may be provided to specify the orientation of the color slider.
 
 <ComponentPreview
-  name="core/color-slider-vertical"
+  name="core/color-slider/color-slider-vertical"
   preview={`<ColorSlider orientation="vertical" channel="hue" defaultValue="hsl(0, 100%, 50%)" />`}
 />
 
@@ -76,7 +73,7 @@ Use the `label` prop to provide a label for the color slider.
 `channel` prop may be provided to specify which color channel the color slider should display
 
 <ComponentPreview
-  name="core/color-slider-channel"
+  name="core/color-slider/color-slider-channel"
   preview={`<ColorSlider label="Opacity" defaultValue="#f00" channel="alpha" />`}
 />
 
@@ -85,7 +82,7 @@ Use the `label` prop to provide a label for the color slider.
 Use the `isDisabled` prop to disable the color slider.
 
 <ComponentPreview
-  name="core/color-slider-disabled"
+  name="core/color-slider/color-slider-disabled"
   preview={`<ColorSlider label="Opacity" defaultValue="#f00" channel="alpha" isDisabled />`}
 />
 
@@ -94,7 +91,7 @@ Use the `isDisabled` prop to disable the color slider.
 Use the `value` and `onChange` props to control the value of the slider.
 
 <ComponentPreview
-  name="core/color-slider-uncontrolled"
+  name="core/color-slider/color-slider-uncontrolled"
   preview={`<ColorSlider channel="hue" defaultValue="hsl(0, 100%, 50%)" />`}
 />
 
@@ -103,7 +100,7 @@ Use the `value` and `onChange` props to control the value of the slider.
 Use the `value` and `onChange` props to control the value of the slider.
 
 <ComponentPreview
-  name="core/color-slider-controlled"
+  name="core/color-slider/color-slider-controlled"
   preview={`const [value, setValue] = React.useState(parseColor("hsl(0, 100%, 50%)"));
   return <ColorSlider value={value} onChange={setValue} channel="hue" />`}
 />
@@ -113,7 +110,7 @@ Use the `value` and `onChange` props to control the value of the slider.
 If you need to customize things further, you can drop down to the composition level.
 
 <ComponentPreview
-  name="core/color-slider-composition"
+  name="core/color-slider/color-slider-composition"
   preview={`<ColorSliderRoot channel="hue" defaultValue="hsl(0, 100%, 50%)">
     <Label>Hue</Label>
     <ColorSliderOutput />

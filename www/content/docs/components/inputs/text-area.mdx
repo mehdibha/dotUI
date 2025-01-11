@@ -1,9 +1,6 @@
 ---
 title: TextArea
 description: TextArea is a multiline text input.
-thumbnail:
-  image: /previews/components/core/text-area.jpeg
-  video: /previews/components/core/text-area.mp4
 links:
   - label: Aria docs
     href: https://react-spectrum.adobe.com/react-aria/TextArea.html
@@ -16,7 +13,7 @@ links:
 ---
 
 <ComponentPreview
-  name="core/text-area-default"
+  name="core/text-area/text-area-default"
   preview={`<TextArea label="Description" placeholder="Type your message here" />`}
 />
 
@@ -40,7 +37,7 @@ npx dotui-cli@latest add text-area
     ```
 
       <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name="core/text-area" />
+      <ComponentSource name="core/text-area/text-area" />
       <Step>Update the import paths to match your project setup.</Step>
     </Steps>
 
@@ -58,7 +55,7 @@ Use a `TextArea` to allow users to input a long string of free-form text.
 To add additional context for the `TextArea`, use the `prefix` and `suffix` props.
 
 <ComponentPreview
-  name="core/text-area-prefix-and-suffix"
+  name="core/text-area/text-area-prefix-and-suffix"
   preview={`<TextArea
     label="Comment"
     placeholder="type something here"
@@ -72,7 +69,7 @@ To add additional context for the `TextArea`, use the `prefix` and `suffix` prop
 A visual label can be provided for the `TextArea` using the label prop or a hidden label using `aria-label` prop.
 
 <ComponentPreview
-  name="core/text-area-label"
+  name="core/text-area/text-area-label"
   preview={`<TextArea label="Description" />
   <TextArea aria-label="Description" />`}
 />
@@ -82,7 +79,7 @@ A visual label can be provided for the `TextArea` using the label prop or a hidd
 An `errorMessage` can be supplied to a TextField, which will be displayed when the `isInvalid` prop is set to `true`.
 
 <ComponentPreview
-  name="core/text-area-description"
+  name="core/text-area/text-area-description"
   preview={`<TextArea label="Description" description="Type your description" />`}
 />
 
@@ -91,7 +88,7 @@ An `errorMessage` can be supplied to a TextField, which will be displayed when t
 A `ContextualHelp` element may be placed next to the label to provide additional information or help about a text area.
 
 <ComponentPreview
-  name="core/text-area-contextual-help"
+  name="core/text-area/text-area-contextual-help"
   preview={`<TextArea label="Bio" contextualHelp={<ContextualHelp />} />`}
 />
 
@@ -100,7 +97,7 @@ A `ContextualHelp` element may be placed next to the label to provide additional
 An `errorMessage` can be supplied to a TextArea, which will be displayed when the `isInvalid` prop is set to `true`.
 
 <ComponentPreview
-  name="core/text-area-error-message"
+  name="core/text-area/text-area-error-message"
   preview={`<TextArea 
     label="Comment"
     isInvalid
@@ -114,7 +111,7 @@ Use the `isLoading` prop to control the loading state of the TextArea.
 Use the `loaderPosition` prop to control the position of the loader.
 
 <ComponentPreview
-  name="core/text-area-loading"
+  name="core/text-area/text-area-loading"
   preview={`<TextArea isLoading loaderPosition="prefix" />
 <TextArea isLoading loaderPosition="suffix" />`}
 />
@@ -124,7 +121,7 @@ Use the `loaderPosition` prop to control the position of the loader.
 Use the `isDisabled` prop to disable the TextArea.
 
 <ComponentPreview
-  name="core/text-area-disabled"
+  name="core/text-area/text-area-disabled"
   preview={`<TextArea isDisabled />`}
 />
 
@@ -133,7 +130,7 @@ Use the `isDisabled` prop to disable the TextArea.
 The `isReadOnly` boolean prop makes the TextArea's text content immutable. Unlike `isDisabled`, the text area remains focusable and the contents can still be copied.
 
 <ComponentPreview
-  name="core/text-area-read-only"
+  name="core/text-area/text-area-read-only"
   preview={`<TextArea isReadOnly />`}
 />
 
@@ -143,7 +140,7 @@ Use the `isRequired` prop to mark the TextArea as required.
 Use the `necessityIndicator` prop to control the visual style of the required state.
 
 <ComponentPreview
-  name="core/text-area-required"
+  name="core/text-area/text-area-required"
   preview={`<TextArea label="Description" isRequired necessityIndicator="icon" />`}
 />
 
@@ -152,7 +149,7 @@ Use the `necessityIndicator` prop to control the visual style of the required st
 Use the `defaultValue` prop to set the default input value.
 
 <ComponentPreview
-  name="core/text-area-uncontrolled"
+  name="core/text-area/text-area-uncontrolled"
   preview={`<TextArea label="Essay" defaultValue="Roses are red, violets are blue." />`}
 />
 
@@ -161,7 +158,7 @@ Use the `defaultValue` prop to set the default input value.
 Use the `value` and `onChange` props to control the value of the input.
 
 <ComponentPreview
-  name="core/text-area-controlled"
+  name="core/text-area/text-area-controlled"
   preview={`const [inputValue, setInputValue] = React.useState("Roses are red, violets are blue.");
   return (
     <TextArea
@@ -179,7 +176,7 @@ Use the `value` and `onChange` props to control the value of the input.
 If you need to customize things further, you can drop down to the composition level.
 
 <ComponentPreview
-  name="core/text-area-composition"
+  name="core/text-area/text-area-composition"
   preview={`<TextFieldRoot>
     <Label>Comment</Label>
     <InputRoot>

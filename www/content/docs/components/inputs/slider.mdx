@@ -1,9 +1,6 @@
 ---
 title: Slider
 description: An input where the user selects a value from within a given range.
-thumbnail:
-  image: /previews/components/core/slider.jpeg
-  video: /previews/components/core/slider.mp4
 links:
   - label: Aria docs
     href: https://react-spectrum.adobe.com/react-aria/Slider.html
@@ -16,7 +13,7 @@ links:
 ---
 
 <ComponentPreview
-  name="core/slider-default"
+  name="core/slider/slider-default"
   preview={`<Slider defaultValue={50} />`}
 />
 
@@ -40,7 +37,7 @@ npx dotui-cli@latest add slider
     ```
 
       <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name="core/slider" />
+      <ComponentSource name="core/slider/slider" />
       <Step>Update the import paths to match your project setup.</Step>
     </Steps>
 
@@ -54,7 +51,7 @@ npx dotui-cli@latest add slider
 Use the `size` prop to control the size of the slider. The default variant is `"md"`.
 
 <ComponentPreview
-  name="core/slider-sizes"
+  name="core/slider/slider-sizes"
   preview={`<Slider size="sm" />
 <Slider size="md" />
 <Slider size="lg" />`}
@@ -65,7 +62,7 @@ Use the `size` prop to control the size of the slider. The default variant is `"
 Sliders are horizontally oriented by default. The `orientation` prop can be set to `"vertical"` to create a vertical slider.
 
 <ComponentPreview
-  name="core/slider-vertical"
+  name="core/slider/slider-vertical"
   preview={`<Slider orientation="vertical" />`}
 />
 
@@ -74,7 +71,7 @@ Sliders are horizontally oriented by default. The `orientation` prop can be set 
 A visual label can be provided using the `label` prop or a hidden label using `aria-label` prop.
 
 <ComponentPreview
-  name="core/slider-label"
+  name="core/slider/slider-label"
   preview={`<Slider label="Opacity" defaultValue={50} />
 <Slider aria-label="Opacity" defaultValue={50} />`}
 />
@@ -84,7 +81,7 @@ A visual label can be provided using the `label` prop or a hidden label using `a
 A description can be supplied to the slider using the `description` prop.
 
 <ComponentPreview
-  name="core/slider-description"
+  name="core/slider/slider-description"
   preview={`<Slider label="Opacity" description="Adjust the background opacity." />`}
 />
 
@@ -93,7 +90,7 @@ A description can be supplied to the slider using the `description` prop.
 The `valueLabel` boolean prop can be used to display the current value of the slider. The `valueLabel` prop can also be set to a function that returns a custom value label.
 
 <ComponentPreview
-  name="core/slider-value-label"
+  name="core/slider/slider-value-label"
   preview={`<Slider label="Donuts to buy" valueLabel />
   <Slider
     label="Donuts to buy"
@@ -106,7 +103,7 @@ The `valueLabel` boolean prop can be used to display the current value of the sl
 By default, slider values are precentages between 0 and 100. A different scale can be used by setting the `minValue` and `maxValue` props.
 
 <ComponentPreview
-  name="core/slider-value-scale"
+  name="core/slider/slider-value-scale"
   preview={`<Slider label="Cookies to buy" minValue={1} maxValue={50} />`}
 />
 
@@ -115,7 +112,7 @@ By default, slider values are precentages between 0 and 100. A different scale c
 The `step` prop can be used to snap the value to certain increments.
 
 <ComponentPreview
-  name="core/slider-step"
+  name="core/slider/slider-step"
   preview={`<Slider label="Opacity" step={5} />`}
 />
 
@@ -125,7 +122,7 @@ Values are formatted as a percentage by default, but this can be modified by usi
 `formatOptions` is compatible with the option parameter of [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat) and is applied based on the current locale.
 
 <ComponentPreview
-  name="core/slider-format-options"
+  name="core/slider/slider-format-options"
   preview={`<Slider label="Price" formatOptions={{ style: "currency", currency: "JPY" }} />`}
 />
 
@@ -134,7 +131,7 @@ Values are formatted as a percentage by default, but this can be modified by usi
 Passing an array to the `defaultValue` or `value` props will create a range slider.
 
 <ComponentPreview
-  name="core/slider-range"
+  name="core/slider/slider-range"
   preview={`<Slider defaultValue={[200, 300]} />`}
 />
 
@@ -143,7 +140,7 @@ Passing an array to the `defaultValue` or `value` props will create a range slid
 Use the `isDisabled` prop to disable the slider.
 
 <ComponentPreview
-  name="core/slider-disabled"
+  name="core/slider/slider-disabled"
   preview={`<Slider isDisabled />`}
 />
 
@@ -152,7 +149,7 @@ Use the `isDisabled` prop to disable the slider.
 If you need to customize things further, you can drop down to the composition level.
 
 <ComponentPreview
-  name="core/slider-composition"
+  name="core/slider/slider-composition"
   preview={`<SliderRoot>
     <div>
       <Label>Volume</Label>
@@ -163,7 +160,7 @@ If you need to customize things further, you can drop down to the composition le
 />
 
 <ComponentPreview
-  name="core/slider-advanced-composition"
+  name="core/slider/slider-advanced-composition"
   preview={`<SliderRoot>
     <Label>Volume</Label>
     <SliderValueLabel />
@@ -183,7 +180,7 @@ If you need to customize things further, you can drop down to the composition le
 The `defaultValue` prop can be used to set the default state.
 
 <ComponentPreview
-  name="core/slider-uncontrolled"
+  name="core/slider/slider-uncontrolled"
   preview={`<Slider defaultValue={20} />`}
 />
 
@@ -192,7 +189,7 @@ The `defaultValue` prop can be used to set the default state.
 Use the `value` and `onChange` props to control the value of the input.
 
 <ComponentPreview
-  name="core/slider-controlled"
+  name="core/slider/slider-controlled"
   preview={`const [value, setValue] = React.useState(50);
 return <Slider value={value} onChange={(value) => setValue(value as number)} />;`}
 />

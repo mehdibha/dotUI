@@ -1,13 +1,10 @@
 ---
 title: Skeleton
 description: Use to show a placeholder while content is loading.
-thumbnail:
-  image: /previews/components/core/skeleton.jpeg
-  video: /previews/components/core/skeleton.mp4
 ---
 
 <ComponentPreview
-  name="core/skeleton-card"
+  name="core/skeleton/skeleton-card"
   preview={`<Skeleton className="h-44 w-64" />
   <div>
     <Skeleton className="size-10 rounded-full" />
@@ -32,7 +29,7 @@ npx dotui-cli@latest add skeleton
   
     <Steps>
       <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name="core/skeleton" />
+      <ComponentSource name="core/skeleton/skeleton" />
       <Step>Update the import paths to match your project setup.</Step>
     </Steps>
 
@@ -50,7 +47,7 @@ Use the `Skeleton` component to show a placeholder while content is loading.
 If you do not pass a fixed size, skeleton will take the size of the children.
 
 <ComponentPreview
-  name="core/skeleton-children"
+  name="core/skeleton/skeleton-children"
   preview={`<Skeleton>
     <Button>Button</Button>
   </Skeleton>`}
@@ -61,7 +58,7 @@ If you do not pass a fixed size, skeleton will take the size of the children.
 Use the `show` prop to show/hide the skeleton.
 
 <ComponentPreview
-  name="core/skeleton-show"
+  name="core/skeleton/skeleton-show"
   preview={`<Skeleton>
     <Button>Button</Button>
   </Skeleton>
@@ -77,7 +74,7 @@ Use the `show` prop to show/hide the skeleton.
 {/* prettier-ignore-start */}
 
 <ComponentPreview
-  name="core/skeleton-api-simulation"
+  name="core/skeleton/skeleton-api-simulation"
   preview={`const [status, setStatus] = React.useState<"idle" | "loading" | "error" | "success">("idle");
   const apiCall = () => {
     {/* Simulate API call */}
@@ -102,7 +99,7 @@ Use the `show` prop to show/hide the skeleton.
 If you do not pass a fixed size, it will be calculated automatically.
 
 <ComponentPreview
-  name="core/skeleton-fixed-size-children"
+  name="core/skeleton/skeleton-fixed-size-children"
   preview={`<Skeleton className="size-20"><Button>Button</Button> </Skeleton>`}
 />
 

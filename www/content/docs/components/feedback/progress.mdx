@@ -1,9 +1,6 @@
 ---
 title: Progress
 description: Progress shows the completion progress of a task in shape of a bar, displayed as a progress bar..
-thumbnail:
-  image: /previews/components/core/progress.jpeg
-  video: /previews/components/core/progress.mp4
 links:
   - label: Aria docs
     href: https://react-spectrum.adobe.com/react-aria/ProgressBar.html
@@ -16,7 +13,7 @@ links:
 ---
 
 <ComponentPreview
-  name="core/progress-default"
+  name="core/progress/progress-default"
   preview={`<Progress value={75} />`}
 />
 
@@ -40,7 +37,7 @@ npx dotui-cli@latest add progress
     ```
 
       <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name="core/progress" />
+      <ComponentSource name="core/progress/progress" />
       <Step>Update the import paths to match your project setup.</Step>
     </Steps>
 
@@ -64,7 +61,7 @@ A determinate progress indicator can help people decide whether to do something 
 Use the `variant` prop to control the visual style of the `Progress`. The default variant is `"default"`.
 
 <ComponentPreview
-  name="core/progress-variants"
+  name="core/progress/progress-variants"
   preview={`<Progress variant="default" />
 <Progress variant="success" />
 <Progress variant="accent" />
@@ -77,7 +74,7 @@ Use the `variant` prop to control the visual style of the `Progress`. The defaul
 Use the `size` prop to control the size of the `Progress`. The default variant is `"md"`.
 
 <ComponentPreview
-  name="core/progress-sizes"
+  name="core/progress/progress-sizes"
   preview={`<Progress size="sm" />
 <Progress size="md" />
 <Progress size="lg" />`}
@@ -88,7 +85,7 @@ Use the `size` prop to control the size of the `Progress`. The default variant i
 A visual label can be provided for the `Progress` using the label prop, or a hidden label using `aria-label` prop.
 
 <ComponentPreview
-  name="core/progress-label"
+  name="core/progress/progress-label"
   preview={`<Progress aria-label="loading" />
 <Progress label="loading..." />`}
 />
@@ -98,7 +95,7 @@ A visual label can be provided for the `Progress` using the label prop, or a hid
 Set the `showValueLabel` prop to `true` to display the current value of the progress bar.
 
 <ComponentPreview
-  name="core/progress-value-label"
+  name="core/progress/progress-value-label"
   preview={`<Progress label="Loading" showValueLabel value={75} />`}
 />
 
@@ -107,7 +104,7 @@ Set the `showValueLabel` prop to `true` to display the current value of the prog
 Values are formatted as a percentage by default, but this can be modified by using the `formatOptions` prop to specify a different format.
 
 <ComponentPreview
-  name="core/progress-format-options"
+  name="core/progress/progress-format-options"
   preview={`<Progress
     label="Sending…"
     showValueLabel
@@ -121,7 +118,7 @@ Values are formatted as a percentage by default, but this can be modified by usi
 The `valueLabel` prop allows the formatted value to be replaced with a custom string.
 
 <ComponentPreview
-  name="core/progress-custom-value-label"
+  name="core/progress/progress-custom-value-label"
   preview={`<Progress
     label="Feeding…"
     showValueLabel
@@ -135,7 +132,7 @@ The `valueLabel` prop allows the formatted value to be replaced with a custom st
 The `isIndeterminate` prop can be used to represent an interdeterminate operation.
 
 <ComponentPreview
-  name="core/progress-indeterminate"
+  name="core/progress/progress-indeterminate"
   preview={`<Progress isIndeterminate aria-label="Loading" />`}
 />
 
@@ -144,7 +141,7 @@ The `isIndeterminate` prop can be used to represent an interdeterminate operatio
 Use the duration prop to indicate an approximate duration of an indeterminate task. Once the duration times out, the progress bar will start an indeterminate animation.
 
 <ComponentPreview
-  name="core/progress-duration"
+  name="core/progress/progress-duration"
   preview={`<Progress duration="30s" />`}
 />
 
@@ -153,7 +150,7 @@ Use the duration prop to indicate an approximate duration of an indeterminate ta
 A custom value scale can be used by setting the `minValue` and `maxValue` props.
 
 <ComponentPreview
-  name="core/progress-min-max-values"
+  name="core/progress/progress-min-max-values"
   preview={`<Progress
     aria-label="Min and max values"
     minValue={50}
@@ -169,7 +166,7 @@ A custom value scale can be used by setting the `minValue` and `maxValue` props.
 If you need to customize things further, you can drop down to the composition level.
 
 <ComponentPreview
-  name="core/progress-composition"
+  name="core/progress/progress-composition"
   preview={`<ProgressRoot value={50} className="flex-row items-center gap-4">
     <Label>Progress</Label>
     <ProgressIndicator />
@@ -180,7 +177,7 @@ If you need to customize things further, you can drop down to the composition le
 ### Custom color
 
 <ComponentPreview
-  name="core/progress-custom-color"
+  name="core/progress/progress-custom-color"
   preview={`<Progress
     value={75}
     aria-label="Custom color"
@@ -193,7 +190,7 @@ If you need to customize things further, you can drop down to the composition le
 
 ### Toolbar
 
-<ComponentPreview name="core/progress-toolbar" preview={``} />
+<ComponentPreview name="core/progress/progress-toolbar" preview={``} />
 
 ## API Reference
 

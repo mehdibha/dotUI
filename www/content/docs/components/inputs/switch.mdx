@@ -1,9 +1,6 @@
 ---
 title: Switch
 description: Switches allow users to turn an individual option on or off.
-thumbnail:
-  image: /previews/components/core/switch.jpeg
-  video: /previews/components/core/switch.mp4
 links:
   - label: Aria docs
     href: https://react-spectrum.adobe.com/react-aria/Switch.html
@@ -16,7 +13,7 @@ links:
 ---
 
 <ComponentPreview
-  name="core/switch-default"
+  name="core/switch/switch-default"
   preview={`<Switch>Focus mode</Switch>`}
 />
 
@@ -40,7 +37,7 @@ npx dotui-cli@latest add switch
     ```
 
       <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name="core/switch" />
+      <ComponentSource name="core/switch/switch" />
       <Step>Update the import paths to match your project setup.</Step>
     </Steps>
 
@@ -59,7 +56,7 @@ Switches, unlike checkboxes, can't have an error state.
 Use the `size` prop to control the size of the switch. The default variant is `"md"`.
 
 <ComponentPreview
-  name="core/switch-sizes"
+  name="core/switch/switch-sizes"
   preview={`<Switch size="sm" />
 <Switch size="md" />
 <Switch size="lg" />`}
@@ -70,7 +67,7 @@ Use the `size` prop to control the size of the switch. The default variant is `"
 A visual label can be provided using the component children or a hidden label using `aria-label` prop.
 
 <ComponentPreview
-  name="core/switch-label"
+  name="core/switch/switch-label"
   preview={`<Switch>Focus mode</Switch>
 <Switch aria-label="Focus mode" />`}
 />
@@ -80,7 +77,7 @@ A visual label can be provided using the component children or a hidden label us
 Use the `isDisabled` prop to disable the switch.
 
 <ComponentPreview
-  name="core/switch-disabled"
+  name="core/switch/switch-disabled"
   preview={`<Switch isDisabled>Focus Mode</Switch>`}
 />
 
@@ -89,7 +86,7 @@ Use the `isDisabled` prop to disable the switch.
 The `defaultValue` prop can be used to set the default state.
 
 <ComponentPreview
-  name="core/switch-uncontrolled"
+  name="core/switch/switch-uncontrolled"
   preview={`<Switch defaultSelected>Airplane Mode</Switch>`}
 />
 
@@ -98,7 +95,7 @@ The `defaultValue` prop can be used to set the default state.
 Use the `isSelected` and `onChange` props to control the value of the input.
 
 <ComponentPreview
-  name="core/switch-controlled"
+  name="core/switch/switch-controlled"
   preview={`const [isSelected, setSelected] = React.useState(true);
   return (
     <Switch isSelected={isSelected} onChange={setSelected}>

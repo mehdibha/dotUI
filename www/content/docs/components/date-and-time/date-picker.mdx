@@ -1,9 +1,6 @@
 ---
 title: Date Picker
 description: DatePicker combine a DateField and a Calendar overlay to allow users to enter or select a date and time value.
-thumbnail:
-  image: /previews/components/core/date-picker.jpeg
-  video: /previews/components/core/date-picker.mp4
 links:
   - label: Aria docs
     href: https://react-spectrum.adobe.com/react-aria/DatePicker.html
@@ -15,7 +12,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/dates/date-picker.mdx?plain=1
 ---
 
-<ComponentPreview name="core/date-picker-default" preview={`<DatePicker />`} />
+<ComponentPreview name="core/date-picker/date-picker-default" preview={`<DatePicker />`} />
 
 ## Installation
 
@@ -37,7 +34,7 @@ npx dotui-cli@latest add date-picker
     ```
 
       <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name="core/date-picker" />
+      <ComponentSource name="core/date-picker/date-picker" />
       <Step>Update the import paths to match your project setup.</Step>
     </Steps>
 
@@ -55,7 +52,7 @@ Use a `DatePicker` to allow users to enter and edit time values.
 A visual label can be provided for the `DatePicker` using the label prop or a hidden `label` using `aria-label` prop.
 
 <ComponentPreview
-  name="core/date-picker-label"
+  name="core/date-picker/date-picker-label"
   preview={`<DatePicker label="Meeting date" />
 <DatePicker aria-label="Meeting date" />`}
 />
@@ -66,7 +63,7 @@ Use the `size` prop to control the size of the `DatePicker`.<br/>
 The default variant is `"md"`.
 
 <ComponentPreview
-  name="core/date-picker-sizes"
+  name="core/date-picker/date-picker-sizes"
   preview={`<DatePicker size="sm" />
 <DatePicker size="md" />
 <DatePicker size="lg" />`}
@@ -77,7 +74,7 @@ The default variant is `"md"`.
 To add additional context for the `DatePicker`, use the `prefix` prop.
 
 <ComponentPreview
-  name="core/date-picker-prefix"
+  name="core/date-picker/date-picker-prefix"
   preview={`<DatePicker prefix={<UsersIcon />} />`}
 />
 
@@ -86,7 +83,7 @@ To add additional context for the `DatePicker`, use the `prefix` prop.
 A description can be supplied to `DatePicker` via the `description` prop. The description is always visible unless the `isInvalid` prop is `true` and an error message is provided.
 
 <ComponentPreview
-  name="core/date-picker-description"
+  name="core/date-picker/date-picker-description"
   preview={`<DatePicker label="Appointment" description="Please select a date." />`}
 />
 
@@ -95,7 +92,7 @@ A description can be supplied to `DatePicker` via the `description` prop. The de
 A `ContextualHelp` element may be placed next to the label to provide additional information or help about a `DatePicker`.
 
 <ComponentPreview
-  name="core/date-picker-contextual-help"
+  name="core/date-picker/date-picker-contextual-help"
   preview={`<DatePicker label="Appointment" contextualHelp={<ContextualHelp />} />`}
 />
 
@@ -104,7 +101,7 @@ A `ContextualHelp` element may be placed next to the label to provide additional
 An `errorMessage` can be supplied to a `DatePicker`, which will be displayed when the `isInvalid` prop is set to `true`.
 
 <ComponentPreview
-  name="core/date-picker-error-message"
+  name="core/date-picker/date-picker-error-message"
   preview={`<DatePicker
     label="Meeting"
     isInvalid
@@ -117,7 +114,7 @@ An `errorMessage` can be supplied to a `DatePicker`, which will be displayed whe
 `DatePicker` is time zone aware when a ZonedDateTime object is provided as the value.
 
 <ComponentPreview
-  name="core/date-picker-time-zones"
+  name="core/date-picker/date-picker-time-zones"
   preview={`<DatePicker defaultValue={parseAbsoluteToLocal("2021-11-07T07:45:00Z")} />`}
 />
 
@@ -126,7 +123,7 @@ An `errorMessage` can be supplied to a `DatePicker`, which will be displayed whe
 The `granularity` prop allows you to control the smallest unit that is displayed by DatePicker.
 
 <ComponentPreview
-  name="core/date-picker-granularity"
+  name="core/date-picker/date-picker-granularity"
   preview={`<DatePicker
     label="Hour"
     granularity="hour"
@@ -149,7 +146,7 @@ The `granularity` prop allows you to control the smallest unit that is displayed
 Use the `placeholderValue` prop to control the default values of each segment. The default value is midnight.
 
 <ComponentPreview
-  name="core/date-picker-placeholder"
+  name="core/date-picker/date-picker-placeholder"
   preview={`<DatePicker label="Meeting date" placeholderValue={new CalendarDate(1980, 1, 1)} />`}
 />
 
@@ -158,7 +155,7 @@ Use the `placeholderValue` prop to control the default values of each segment. T
 Use the `hideTimeZone` prop to hide the time zone abbreviation.
 
 <ComponentPreview
-  name="core/date-picker-hide-time-zone"
+  name="core/date-picker/date-picker-hide-time-zone"
   preview={`<DatePicker
     label="Appointment time"
     granularity="minute"
@@ -172,7 +169,7 @@ Use the `hideTimeZone` prop to hide the time zone abbreviation.
 Use the `hourCycle` prop to control the hour cycle of the `DatePicker`.
 
 <ComponentPreview
-  name="core/date-picker-hour-cycle"
+  name="core/date-picker/date-picker-hour-cycle"
   preview={`<DatePicker aria-label="Appointment date" granularity="minute" hourCycle={24} />`}
 />
 
@@ -181,7 +178,7 @@ Use the `hourCycle` prop to control the hour cycle of the `DatePicker`.
 Use the `isLoading` prop to control the loading state of the `DatePicker`.
 
 <ComponentPreview
-  name="core/date-picker-loading"
+  name="core/date-picker/date-picker-loading"
   preview={`<DatePicker aria-label="Meeting date" isLoading />`}
 />
 
@@ -190,7 +187,7 @@ Use the `isLoading` prop to control the loading state of the `DatePicker`.
 Use the `isDisabled` prop to disable the `DatePicker`.
 
 <ComponentPreview
-  name="core/date-picker-disabled"
+  name="core/date-picker/date-picker-disabled"
   preview={`<DatePicker label="Event date" isDisabled />`}
 />
 
@@ -199,7 +196,7 @@ Use the `isDisabled` prop to disable the `DatePicker`.
 The isReadOnly boolean prop makes the `DatePicker`'s text content immutable. Unlike isDisabled, the `DatePicker` remains focusable and the contents can still be copied.
 
 <ComponentPreview
-  name="core/date-picker-read-only"
+  name="core/date-picker/date-picker-read-only"
   preview={`<DatePicker label="Event date" value={new CalendarDate(1980, 1, 1)} isReadOnly />`}
 />
 
@@ -209,7 +206,7 @@ Use the `isRequired` prop to mark the `DatePicker` as required.
 Use the `necessityIndicator` prop to control the visual style of the required state.
 
 <ComponentPreview
-  name="core/date-picker-required"
+  name="core/date-picker/date-picker-required"
   preview={`<DatePicker label="Event date" isRequired />
 <DatePicker label="Event date" isRequired necessityIndicator="icon" />
 <DatePicker label="Event date" isRequired necessityIndicator="label" />
@@ -221,7 +218,7 @@ Use the `necessityIndicator` prop to control the visual style of the required st
 An initial, uncontrolled value can be provided to the `DatePicker` using the `defaultValue` prop.
 
 <ComponentPreview
-  name="core/date-picker-uncontrolled"
+  name="core/date-picker/date-picker-uncontrolled"
   preview={`<DatePicker defaultValue={parseDate("2020-02-03")} />`}
 />
 
@@ -230,7 +227,7 @@ An initial, uncontrolled value can be provided to the `DatePicker` using the `de
 Use the `value` and `onChange` props to control the value of the input.
 
 <ComponentPreview
-  name="core/date-picker-controlled"
+  name="core/date-picker/date-picker-controlled"
   preview={`const [value, setValue] = React.useState(parseDate("2020-02-03"));
   return <DatePicker label="Controlled" value={value} onChange={setValue} />`}
 />
@@ -240,7 +237,7 @@ Use the `value` and `onChange` props to control the value of the input.
 If you need to customize things further, you can drop down to the composition level.
 
 <ComponentPreview
-  name="core/date-picker-composition"
+  name="core/date-picker/date-picker-composition"
   preview={`<DatePickerRoot>
     <Label>Meeting date</Label>
     <InputRoot suffix={<Button><CalendarIcon /></Button>}>

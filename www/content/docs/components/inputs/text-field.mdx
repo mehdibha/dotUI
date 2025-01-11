@@ -1,9 +1,6 @@
 ---
 title: TextField
 description: TextField allows a user to enter a plain text value with a keyboard.
-thumbnail:
-  image: /previews/components/core/text-field.jpeg
-  video: /previews/components/core/text-field.mp4
 links:
   - label: Aria docs
     href: https://react-spectrum.adobe.com/react-aria/TextField.html
@@ -16,7 +13,7 @@ links:
 ---
 
 <ComponentPreview
-  name="core/text-field-default"
+  name="core/text-field/text-field-default"
   preview={`<TextField label="Email" placeholder="hello@mehdibha.com" />`}
 />
 
@@ -40,7 +37,7 @@ npx dotui-cli@latest add text-field
     ```
 
       <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name="core/text-field" />
+      <ComponentSource name="core/text-field/text-field" />
       <Step>Update the import paths to match your project setup.</Step>
     </Steps>
 
@@ -58,7 +55,7 @@ Use a `TextField` to allow users to input custom text entries with a keyboard.
 Use the `size` prop to control the size of the `TextField`. The default size is `"md"`.
 
 <ComponentPreview
-  name="core/text-field-sizes"
+  name="core/text-field/text-field-sizes"
   preview={`<TextField size="sm" />
 <TextField size="md" />
 <TextField size="lg" />`}
@@ -69,7 +66,7 @@ Use the `size` prop to control the size of the `TextField`. The default size is 
 To add additional context for the `TextField`, use the `prefix` and `suffix` props.
 
 <ComponentPreview
-  name="core/text-field-prefix-and-suffix"
+  name="core/text-field/text-field-prefix-and-suffix"
   preview={`<TextField prefix={<span>https://</span>} />
 <TextField suffix={<span>@dotui.org</span>} />
 <TextField suffix={<ClearButton />} />`}
@@ -80,7 +77,7 @@ To add additional context for the `TextField`, use the `prefix` and `suffix` pro
 A visual label can be provided for the `TextField` using the label prop, or a hidden label using `aria-label` prop.
 
 <ComponentPreview
-  name="core/text-field-label"
+  name="core/text-field/text-field-label"
   preview={`<TextField label="Email" />
 <TextField aria-label="Email" />`}
 />
@@ -90,7 +87,7 @@ A visual label can be provided for the `TextField` using the label prop, or a hi
 A description can be supplied to `TextField` via the `description` prop. The description is always visible unless the `isInvalid` prop is `true` and an error message is provided.
 
 <ComponentPreview
-  name="core/text-field-description"
+  name="core/text-field/text-field-description"
   preview={`<TextField label="Email" description="Enter your email." />`}
 />
 
@@ -99,7 +96,7 @@ A description can be supplied to `TextField` via the `description` prop. The des
 A `ContextualHelp` element may be placed next to the label to provide additional information or help about a TextField.
 
 <ComponentPreview
-  name="core/text-field-contextual-help"
+  name="core/text-field/text-field-contextual-help"
   preview={`<TextField label="Password" contextualHelp={<ContextualHelp />} />`}
 />
 
@@ -108,7 +105,7 @@ A `ContextualHelp` element may be placed next to the label to provide additional
 An `errorMessage` can be supplied to `TextField`, which will be displayed when the `isInvalid` prop is set to `true`.
 
 <ComponentPreview
-  name="core/text-field-error-message"
+  name="core/text-field/text-field-error-message"
   preview={`<TextField
     label="Email"
     isInvalid
@@ -122,7 +119,7 @@ Use the `isLoading` prop to control the loading state of the TextField.
 Use the `loaderPosition` prop to control the position of the loader.
 
 <ComponentPreview
-  name="core/text-field-loading"
+  name="core/text-field/text-field-loading"
   preview={`<TextField isLoading loaderPosition="prefix" />
 <TextField isLoading loaderPosition="suffix" />`}
 />
@@ -132,7 +129,7 @@ Use the `loaderPosition` prop to control the position of the loader.
 Use the `isDisabled` prop to disable the TextField.
 
 <ComponentPreview
-  name="core/text-field-disabled"
+  name="core/text-field/text-field-disabled"
   preview={`<TextField isDisabled />`}
 />
 
@@ -141,7 +138,7 @@ Use the `isDisabled` prop to disable the TextField.
 The `isReadOnly` boolean prop makes the TextField's text content immutable. Unlike `isDisabled`, the TextField remains focusable and the contents can still be copied.
 
 <ComponentPreview
-  name="core/text-field-read-only"
+  name="core/text-field/text-field-read-only"
   preview={`<TextField isReadOnly />`}
 />
 
@@ -151,7 +148,7 @@ Use the `isRequired` prop to mark the TextField as required.
 Use the `necessityIndicator` prop to control the visual style of the required state.
 
 <ComponentPreview
-  name="core/text-field-required"
+  name="core/text-field/text-field-required"
   preview={`<TextField label="Email" isRequired />
 <TextField label="Email" isRequired necessityIndicator="icon" />
 <TextField label="Email" isRequired necessityIndicator="label" />
@@ -163,7 +160,7 @@ Use the `necessityIndicator` prop to control the visual style of the required st
 Use the `defaultValue` prop to set the default input value.
 
 <ComponentPreview
-  name="core/text-field-uncontrolled"
+  name="core/text-field/text-field-uncontrolled"
   preview={`<TextField label="Name" defaultValue="Mehdi" />`}
 />
 
@@ -172,7 +169,7 @@ Use the `defaultValue` prop to set the default input value.
 Use the `value` and `onChange` props to control the value of the input.
 
 <ComponentPreview
-  name="core/text-field-controlled"
+  name="core/text-field/text-field-controlled"
   preview={`const [inputValue, setInputValue] = React.useState("Hello world!");
   return (
     <TextField
@@ -189,7 +186,7 @@ Use the `value` and `onChange` props to control the value of the input.
 If you need to customize things further, you can drop down to the composition level.
 
 <ComponentPreview
-  name="core/text-field-composition"
+  name="core/text-field/text-field-composition"
   preview={`<TextFieldRoot>
     <Label>Email</Label>
     <InputRoot>

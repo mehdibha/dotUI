@@ -1,9 +1,6 @@
 ---
 title: Avatar
 description: An image element with a fallback for representing the user.
-thumbnail:
-  image: /previews/components/core/avatar.jpeg
-  video: /previews/components/core/avatar.mp4
 links:
   - label: Report an issue
     href: https://github.com/mehdibha/dotUI/issues/new/choose
@@ -12,7 +9,7 @@ links:
 ---
 
 <ComponentPreview
-  name="core/avatar-default"
+  name="core/avatar/avatar-default"
   preview={`<Avatar src="https://github.com/mehdibha.png" alt="@mehdibha" fallback="M" />`}
 />
 
@@ -30,7 +27,7 @@ npx dotui-cli@latest add avatar
   
     <Steps>
       <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name={["core/avatar"]} />
+      <ComponentSource name={["core/avatar/avatar"]} />
       <Step>Update the import paths to match your project setup.</Step>
     </Steps>
 
@@ -48,7 +45,7 @@ Use `Avatar` to represent a user or an organization.
 `Avatar` can be either a circle or a square using the `shape` prop.
 
 <ComponentPreview
-  name="core/avatar-shape"
+  name="core/avatar/avatar-shape"
   preview={`<Avatar shape="square" />
 <Avatar shape="circle" />`}
 />
@@ -58,7 +55,7 @@ Use `Avatar` to represent a user or an organization.
 Use the `size` prop to control the size of the `Avatar`. The default variant is `md`.
 
 <ComponentPreview
-  name="core/avatar-sizes"
+  name="core/avatar/avatar-sizes"
   preview={`<Avatar size="sm" />
   <Avatar size="md" />
   <Avatar size="lg" />`}
@@ -69,7 +66,7 @@ Use the `size` prop to control the size of the `Avatar`. The default variant is 
 If you need to customize things further, you can drop down to the composition level.
 
 <ComponentPreview
-  name="core/avatar-composition"
+  name="core/avatar/avatar-composition"
   preview={`<AvatarRoot>
     <AvatarImage src="https://github.com/mehdibha.png" alt="@mehdibha" />
     <AvatarFallback>M</AvatarFallback>

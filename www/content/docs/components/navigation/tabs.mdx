@@ -1,9 +1,6 @@
 ---
 title: Tabs
 description: Tabs organize content into multiple sections and allow users to navigate between them
-thumbnail:
-  image: /previews/components/core/tabs.jpeg
-  video: /previews/components/core/tabs.mp4
 links:
   - label: Aria docs
     href: https://react-spectrum.adobe.com/react-aria/Tabs.html
@@ -16,7 +13,7 @@ links:
 ---
 
 <ComponentPreview
-  name="core/tabs-basic"
+  name="core/tabs/tabs-basic"
   preview={`<Tabs>
     <TabList>
       <Tab id="overview">Overview</Tab>
@@ -49,7 +46,7 @@ npx dotui-cli@latest add tabs
     ```
 
       <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name="core/tabs" />
+      <ComponentSource name="core/tabs/tabs" />
       <Step>Update the import paths to match your project setup.</Step>
     </Steps>
 
@@ -69,7 +66,7 @@ Use `Tabs` to organize content into multiple sections and allow users to navigat
 Use the `orientation` prop to set the orientation of the tabs.
 
 <ComponentPreview
-  name="core/tabs-vertical"
+  name="core/tabs/tabs-vertical"
   preview={`<Tabs orientation="vertical">
     <TabList>
       <Tab id="overview">Overview</Tab>
@@ -87,7 +84,7 @@ Use the `orientation` prop to set the orientation of the tabs.
 Use the `isDisabled` prop to disable the tabs.
 
 <ComponentPreview
-  name="core/tabs-disabled"
+  name="core/tabs/tabs-disabled"
   preview={`<Tabs isDisabled>
     <TabList>
       <Tab id="overview">Overview</Tab>
@@ -103,7 +100,7 @@ Use the `isDisabled` prop to disable the tabs.
 An individual Tab can also be disabled with the `isDisabled` prop.
 
 <ComponentPreview
-  name="core/tabs-disabled-item"
+  name="core/tabs/tabs-disabled-item"
   preview={`<Tabs>
     <TabList>
       <Tab id="overview">Overview</Tab>
@@ -123,7 +120,7 @@ An individual Tab can also be disabled with the `isDisabled` prop.
 Prevent keyboard activation of tabs by setting `keyboardActivation` prop to `'manual'`.
 
 <ComponentPreview
-  name="core/tabs-keyboard-activation"
+  name="core/tabs/tabs-keyboard-activation"
   preview={`<Tabs keyboardActivation="manual">
     <TabList>
       <Tab id="overview">Overview</Tab>
@@ -141,7 +138,7 @@ Prevent keyboard activation of tabs by setting `keyboardActivation` prop to `'ma
 Use the `selectedKey` and `onSelectionChange` props to control the selected tab.
 
 <ComponentPreview
-  name="core/tabs-controlled"
+  name="core/tabs/tabs-controlled"
   preview={`const [selectedTab, setSelectedTab] = React.useState<Key>("overview");
   return (
     <Tabs selectedKey={selectedTab} onSelectionChange={setSelectedTab}>
