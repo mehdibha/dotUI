@@ -9,8 +9,7 @@ export default function AlertDemo() {
           Upgrade
         </Button>
       }
-    >
-      You are currently on the free plan. Upgrade to unlock more features.
-    </Alert>
+      description="You are currently on the free plan. Upgrade to unlock more features."
+     />
   );
 }

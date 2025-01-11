@@ -34,7 +34,7 @@ const sliderStyles = tv({
     thumb: [
       focusRing(),
       "rounded-full bg-white shadow-md transition-[width,height]",
-      "-translate-x-1/2! -translate-y-1/2! absolute left-[50%] top-[50%] block",
+      "left-[50%] top-[50%]",
       "disabled:bg-bg-disabled disabled:border-bg disabled:border",
     ],
     valueLabel: "text-fg-muted text-sm",
@@ -122,13 +122,16 @@ SliderRoot.displayName = "SliderRoot";
 
 type SliderControlsProps = SliderTrackProps & VariantProps<typeof sliderStyles>;
 const SliderControls = (props: SliderControlsProps) => {
-  const { values } = React.useContext(AriaSliderStateContext);
   return (
     <SliderTrack {...props}>
-      <SliderFiller />
-      {values.map((_, i) => (
-        <SliderThumb key={i} index={i} size={props.size} />
-      ))}
+      {({ state }) => (
+        <>
+          <SliderFiller />
+          {state.values.map((_, i) => (
+            <SliderThumb key={i} index={i} size={props.size} />
+          ))}
+        </>
+      )}
     </SliderTrack>
   );
 };

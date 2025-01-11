@@ -92,6 +92,12 @@ export const core: Registry = [
       {
         name: "button-02",
       },
+      {
+        name: "button-03",
+      },
+      {
+        name: "button-04",
+      },
     ],
   },
   {

@@ -13,7 +13,7 @@ export const createDynamicComponent = <Props extends {}>(
 
     const variant = currentTheme.variants[registryItem];
     const { variants } = useComponentsVariants();
-    const contextVariant = variants[componentName];
+    const contextVariant = variants[registryItem];
 
     if (!variant || !registry[variant]) {
       throw new Error(
@@ -52,4 +52,5 @@ export const VariantsProvider = ({
     </variantsContext.Provider>
   );
 };
-const useComponentsVariants = () => React.useContext(variantsContext);
+
+export const useComponentsVariants = () => React.useContext(variantsContext);

@@ -62,8 +62,8 @@ function Alert({
       <div className="flex-1 space-y-0.5">
         <AlertTitle>{title}</AlertTitle>
         {description && <AlertContent>{description}</AlertContent>}
-        {action}
       </div>
+      {action}
     </AlertRoot>
   );
 }

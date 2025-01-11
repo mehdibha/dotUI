@@ -124,7 +124,7 @@ const Radio = React.forwardRef<React.ElementRef<typeof AriaRadio>, RadioProps>(
         {composeRenderProps(props.children, (children) => (
           <>
             <div className={indicator({ className: "" })} />
-            <div>{children}</div>
+            {children}
           </>
         ))}
       </AriaRadio>

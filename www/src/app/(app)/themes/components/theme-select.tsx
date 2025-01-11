@@ -128,7 +128,6 @@ export function ThemeSelect({ className }: { className?: string }) {
       </div>
       {!isLoading && showKeyboardHint && (
         <Alert
-          fill
           action={
             <Button
               variant="quiet"
@@ -139,24 +138,24 @@ export function ThemeSelect({ className }: { className?: string }) {
               <XIcon />
             </Button>
           }
+          description={
+            <>
+              Use <Kbd>Ctrl</Kbd> + <Kbd>→</Kbd> or <Kbd>←</Kbd> to navigate
+              between themes
+            </>
+          }
           className="[&_kbd]:text-xs"
-        >
-          Use <Kbd>Ctrl</Kbd> + <Kbd>→</Kbd> or <Kbd>←</Kbd> to navigate between
-          themes
-        </Alert>
+        />
       )}
       {!isLoading && !isCurrentThemeEditable && (
         <Alert
-          fill
           action={
             <CloneThemeDialog>
               <Button prefix={<GitBranchIcon />}>Clone theme</Button>
             </CloneThemeDialog>
           }
-        >
-          To adjust, preview and generate color palette, fonts, radius and more,
-          you need to clone the theme.
-        </Alert>
+          description="To adjust, preview and generate color palette, fonts, radius and more, you need to clone the theme."
+        />
       )}
     </div>
   );

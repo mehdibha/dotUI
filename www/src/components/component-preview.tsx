@@ -2,17 +2,20 @@ import React from "react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { ChevronDownIcon, PaintBucket } from "lucide-react";
 import { cn } from "@/lib/cn";
+import { useComponentsVariants } from "@/lib/create-dynamic-component";
 import { getFileSource } from "@/lib/get-file-source";
+import { useThemes } from "@/hooks/use-themes";
 import { CodeBlock } from "@/components/code-block";
 import { Button } from "@/components/core/button";
 import { ListBox, Item } from "@/components/core/list-box";
 import { Overlay } from "@/components/core/overlay";
-import { Select, SelectRoot, SelectValue } from "@/components/core/select";
+import { SelectRoot, SelectValue } from "@/components/core/select";
 import { Tooltip } from "@/components/core/tooltip";
 import { core } from "@/registry/registry-core";
 import { RegistryItem } from "@/registry/types";
 import { Index } from "@/__registry__/demos";
 import { ComponentPreviewClient } from "./component-preview-client";
+import { StyleSwitcher } from "./style-switcher";
 import { ThemeCustomizerDialog } from "./theme-customizer";
 import { ThemeOverride } from "./theme-override";
 
@@ -33,10 +36,9 @@ export const ComponentPreview = async ({
 }: ComponentPreviewProps) => {
   const type = name.split("/")[0];
   const componentName = name.split("/")[1];
-  const compName = "button";
-  const variants = getAllComponentVariants(compName);
+  const demoName = name.split("/")[2];
 
-  const demoItem = Index[type][componentName];
+  const demoItem = Index[type][demoName];
 
   const demos: {
     component: React.ComponentType;
@@ -63,26 +65,7 @@ export const ComponentPreview = async ({
     >
       <div className="relative">
         <ThemeOverride>
-          <SelectRoot defaultSelectedKey="alert-01">
-            <Button
-              variant="outline"
-              size="sm"
-              suffix={<ChevronDownIcon />}
-              className="border-border absolute left-2 top-2 z-50 text-xs font-normal"
-            >
-              <span className="font-bold">variant:</span> <SelectValue />
-            </Button>
-            <Overlay type="popover">
-              <ListBox>
-                {variants &&
-                  variants.map((item) => (
-                    <Item key={item.name} id={item.name} description={item.description}>
-                      {item.name} {false && "(current theme)"}
-                    </Item>
-                  ))}
-              </ListBox>
-            </Overlay>
-          </SelectRoot>
+          <StyleSwitcher componentName={componentName} />
           <ThemeCustomizerDialog>
             <Tooltip
               content={
@@ -142,19 +125,3 @@ export const ComponentPreview = async ({
     </div>
   );
 };
-
-const getAllComponentVariants = (name: string) => {
-  const item = core.find((item) => item.name === name);
-
-  if (hasVariants(item)) {
-    return item.variants;
-  } else {
-    return false;
-  }
-};
-
-function hasVariants(
-  item?: RegistryItem
-): item is Extract<RegistryItem, { variants: unknown }> {
-  return item !== undefined && "variants" in item;
-}

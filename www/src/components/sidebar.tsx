@@ -258,7 +258,7 @@ const SidebarSearchButton = ({ isCollapsed }: { isCollapsed: boolean }) => {
         }
         isDisabled={!isCollapsed}
       >
-        <SidebarButton variant="outline">
+        <SidebarButton variant="outline" className="bg-bg-inverse/5">
           <SearchIcon />
           <div className="flex flex-1 flex-row items-center justify-between">
             <span>Search </span>
