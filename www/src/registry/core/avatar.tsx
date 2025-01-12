@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
+import { createScopedContext } from "@/lib/helpers";
 
 const avatarStyles = tv({
   slots: {
@@ -29,22 +30,24 @@ const avatarStyles = tv({
   },
 });
 
+const { root, image, fallback, placeholder } = avatarStyles();
+
+const [AvatarProvider, useAvatarContext] = createScopedContext<
+  VariantProps<typeof avatarStyles> & {
+    status: Status;
+    setStatus: (status: Status) => void;
+  }
+>("AlertRoot");
+
 interface AvatarProps
-  extends AvatarImageProps,
-    VariantProps<typeof avatarStyles> {
+  extends AvatarRootProps,
+    Pick<AvatarImageProps, "src" | "alt"> {
   fallback?: React.ReactNode;
 }
-const Avatar = ({
-  fallback,
-  className,
-  style,
-  size,
-  shape,
-  ...props
-}: AvatarProps) => {
+const Avatar = ({ src, alt, fallback, ...props }: AvatarProps) => {
   return (
-    <AvatarRoot className={className} style={style} shape={shape} size={size}>
-      <AvatarImage {...props} />
+    <AvatarRoot {...props}>
+      <AvatarImage src={src} alt={alt} />
       <AvatarFallback>{fallback}</AvatarFallback>
       <AvatarPlaceholder />
     </AvatarRoot>
@@ -52,86 +55,67 @@ const Avatar = ({
 };
 
 interface AvatarRootProps
-  extends React.HTMLAttributes<HTMLSpanElement>,
+  extends React.ComponentProps<"span">,
     VariantProps<typeof avatarStyles> {}
-const AvatarRoot = ({ className, shape, size, ...props }: AvatarRootProps) => {
-  const { root } = avatarStyles({ shape, size });
-  const [status, setStatus] = React.useState<Status>("idle");
-  return (
-    <AvatarContext.Provider value={{ status, onStatusChange: setStatus }}>
-      <span className={root({ className })} {...props} />
-    </AvatarContext.Provider>
-  );
-};
 
-interface AvatarImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
-  onStatusChange?: (status: Status) => void;
-}
-const AvatarImage = ({
-  src,
-  onStatusChange,
-  className,
-  ...props
-}: AvatarImageProps) => {
-  const { image } = avatarStyles();
-  const context = useAvatarContext();
-  const status = useImageLoadingStatus(src);
-  // TODO use useCallBackRef here
-  const handleStatusChange = React.useCallback(
-    (status: Status) => {
-      onStatusChange?.(status);
-      context.onStatusChange(status);
-    },
-    [onStatusChange, context]
+function AvatarRoot({ className, shape, size, ...props }: AvatarRootProps) {
+  const [status, setStatus] = React.useState<Status>("idle");
+
+  return (
+    <AvatarProvider
+      shape={shape}
+      size={size}
+      status={status}
+      setStatus={setStatus}
+    >
+      <span className={root({ className, shape, size })} {...props} />
+    </AvatarProvider>
   );
+}
+
+interface AvatarImageProps extends React.ComponentProps<"img"> {}
+function AvatarImage({ src, alt, className, ...props }: AvatarImageProps) {
+  const status = useImageLoadingStatus(src);
+  const { setStatus } = useAvatarContext("AvatarImage");
 
   React.useLayoutEffect(() => {
     if (status !== "idle") {
-      handleStatusChange(status);
+      setStatus(status);
     }
-  }, [status, handleStatusChange]);
+  }, [status, setStatus]);
 
-  return status === "success" ? (
-    // eslint-disable-next-line jsx-a11y/alt-text
-    <img src={src} className={image({ className })} {...props} />
-  ) : null;
-};
+  if (status === "success")
+    return (
+      <img className={image({ className })} src={src} alt={alt} {...props} />
+    );
+
+  return null;
+}
 
 type AvatarFallbackProps = React.HTMLAttributes<HTMLSpanElement>;
+
 const AvatarFallback = ({ className, ...props }: AvatarFallbackProps) => {
-  const { fallback } = avatarStyles();
-  const context = useAvatarContext();
+  const { status } = useAvatarContext("AvatarFallback");
 
-  return context.status === "error" ? (
-    <span className={fallback({ className })} {...props} />
-  ) : null;
+  if (status === "error")
+    return <span className={fallback({ className })} {...props} />;
+
+  return null;
 };
 
-type AvatarPlaceholderProps = React.HTMLAttributes<HTMLSpanElement>;
+interface AvatarPlaceholderProps extends React.ComponentProps<"span"> {}
+
 const AvatarPlaceholder = ({ className, ...props }: AvatarPlaceholderProps) => {
-  const { placeholder } = avatarStyles();
-  const context = useAvatarContext();
+  const { status } = useAvatarContext("AvatarPlaceholder");
 
-  return ["idle", "loading"].includes(context.status) ? (
-    <span className={placeholder({ className })} {...props} />
-  ) : null;
-};
+  if (["idle", "loading"].includes(status))
+    return <span className={placeholder({ className })} {...props} />;
 
-type AvatarContextValue = {
-  status: Status;
-  onStatusChange: (status: Status) => void;
-};
-const AvatarContext = React.createContext<AvatarContextValue | null>(null);
-const useAvatarContext = () => {
-  const context = React.useContext(AvatarContext);
-  if (!context) {
-    throw new Error("Avatar components must be rendered within the AvatarRoot");
-  }
-  return context;
+  return null;
 };
 
 type Status = "idle" | "loading" | "success" | "error";
-const useImageLoadingStatus = (src?: string) => {
+function useImageLoadingStatus(src?: string) {
   const [status, setStatus] = React.useState<Status>("idle");
 
   React.useLayoutEffect(() => {
@@ -155,7 +139,7 @@ const useImageLoadingStatus = (src?: string) => {
   }, [src]);
 
   return status;
-};
+}
 
 export type {
   AvatarProps,
@@ -164,12 +148,4 @@ export type {
   AvatarFallbackProps,
   AvatarPlaceholderProps,
 };
-
-export {
-  Avatar,
-  AvatarRoot,
-  AvatarImage,
-  AvatarFallback,
-  AvatarPlaceholder,
-  avatarStyles,
-};
+export { Avatar, AvatarRoot, AvatarImage, AvatarFallback, AvatarPlaceholder };

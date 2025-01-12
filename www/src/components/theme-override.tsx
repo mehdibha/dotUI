@@ -154,9 +154,10 @@ const baseCssVars = {
 
   "--color-border-success": "var(--color-success-300)",
   "--color-border-danger": "var(--color-danger-300)",
-  "--color-border-warning": "var(--color-warning-200)",
+  "--color-border-warning": "var(--color-warning-300)",
+  "--color-border-info": "var(--color-warning-300)",
+  "--color-border-accent": "var(--color-accent-300)",
 
-  "--color-border-accent": "var(--color-accent-500)",
   "--color-border-secondary": "var(--color-neutral-200)",
   "--color-border-focus": "var(--color-accent-500)",
   "--color-border-inverse": "var(--color-neutral-500)",

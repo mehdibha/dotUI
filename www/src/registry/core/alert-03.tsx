@@ -12,24 +12,24 @@ import { createScopedContext } from "@/lib/helpers";
 
 const alertStyles = tv({
   slots: {
-    root: "bg-bg-muted text-fg flex items-center gap-4 rounded-lg border-l-8 p-4 [&_svg]:size-4",
+    root: "text-fg flex items-center gap-4 rounded-lg border-l-8 p-4 [&_svg]:size-4",
     title: "mr-1 font-medium leading-normal tracking-tight",
     content: "text-sm",
   },
   variants: {
     variant: {
-      neutral: { root: "border-bg-primary" },
+      neutral: { root: "border-bg-primary bg-bg-muted" },
       success: {
-        root: "border-bg-success",
+        root: "bg-bg-success-muted border-bg-success text-fg-success",
       },
       warning: {
-        root: "border-bg-warning",
+        root: "bg-bg-warning-muted border-bg-warning text-fg-warning",
       },
       danger: {
-        root: "border-bg-danger",
+        root: "bg-bg-danger-muted border-bg-danger text-fg-danger",
       },
       info: {
-        root: "border-bg-info",
+        root: "bg-bg-info-muted border-bg-info text-fg-info",
       },
     },
   },

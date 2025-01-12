@@ -8,6 +8,7 @@ import { Button } from "@/components/core/button";
 import { DialogRoot, Dialog } from "@/components/core/dialog";
 import { DismissButton } from "@/components/core/overlay";
 import { siteConfig } from "@/config";
+import { Badge } from "./core/badge";
 import { Kbd } from "./core/kbd";
 import { GitHubIcon, TwitterIcon } from "./icons";
 import { SearchCommand } from "./search-command";

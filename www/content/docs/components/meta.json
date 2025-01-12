@@ -3,7 +3,7 @@
   "icon": "Box",
   "pages": [
     "buttons",
-    "inputs",
+    "forms-and-inputs",
     "menus-and-selection",
     "date-and-time",
     "colors",

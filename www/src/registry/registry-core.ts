@@ -8,6 +8,18 @@ export const core: Registry = [
       {
         name: "alert-01",
       },
+      {
+        name: "alert-02",
+      },
+      {
+        name: "alert-03",
+      },
+      {
+        name: "alert-04",
+      },
+      {
+        name: "alert-05",
+      },
     ],
   },
   {

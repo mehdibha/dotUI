@@ -1,3 +1,9 @@
 {
-  "pages": ["button", "toggle-button", "toggle-button-group", "file-trigger"]
+  "pages": [
+    "button",
+    "button-group",
+    "toggle-button",
+    "toggle-button-group",
+    "file-trigger"
+  ]
 }

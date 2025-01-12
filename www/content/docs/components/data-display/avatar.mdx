@@ -15,28 +15,24 @@ links:
 
 ## Installation
 
-<Tabs items={["CLI", "Manual"]}>
-  <Tab value="CLI">
-  
-  ```package-install
+```package-install
 npx dotui-cli@latest add avatar
 ```
 
-  </Tab>
-  <Tab value="manual">
-  
-    <Steps>
-      <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name={["core/avatar/avatar"]} />
-      <Step>Update the import paths to match your project setup.</Step>
-    </Steps>
+## Composition
 
-  </Tab>
-</Tabs>
+If you need to customize things further, you can drop down to the composition level.
 
-## Usage
-
-Use `Avatar` to represent a user or an organization.
+<ComponentPreview
+  name="core/avatar/avatar-composition"
+  preview={`<AvatarRoot>
+    <AvatarImage src="https://github.com/mehdibha.png" alt="@mehdibha" />
+    <AvatarFallback>M</AvatarFallback>
+    <AvatarPlaceholder>
+      <UserIcon className="size-5" />
+    </AvatarPlaceholder>
+  </AvatarRoot>`}
+/>
 
 ## Options
 
@@ -59,21 +55,6 @@ Use the `size` prop to control the size of the `Avatar`. The default variant is 
   preview={`<Avatar size="sm" />
   <Avatar size="md" />
   <Avatar size="lg" />`}
-/>
-
-## Composition
-
-If you need to customize things further, you can drop down to the composition level.
-
-<ComponentPreview
-  name="core/avatar/avatar-composition"
-  preview={`<AvatarRoot>
-    <AvatarImage src="https://github.com/mehdibha.png" alt="@mehdibha" />
-    <AvatarFallback>M</AvatarFallback>
-    <AvatarPlaceholder>
-      <UserIcon className="size-5" />
-    </AvatarPlaceholder>
-  </AvatarRoot>`}
 />
 
 ## API Reference
