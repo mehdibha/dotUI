@@ -2,7 +2,7 @@ import { Badge } from "@/registry/core/badge";
 
 export default function Demo() {
   return (
-    <div className="flex flex-wrap gap-2 justify-center">
+    <div className="flex flex-wrap justify-center gap-2">
       <Badge variant="neutral">Neutral</Badge>
       <Badge variant="outline">Outline</Badge>
       <Badge variant="primary">Primary</Badge>
