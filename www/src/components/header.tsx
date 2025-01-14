@@ -6,9 +6,7 @@ import { SearchIcon } from "lucide-react";
 import { Avatar } from "@/components/core/avatar";
 import { Button } from "@/components/core/button";
 import { DialogRoot, Dialog } from "@/components/core/dialog";
-import { DismissButton } from "@/components/core/overlay";
 import { siteConfig } from "@/config";
-import { Badge } from "./core/badge";
 import { Kbd } from "./core/kbd";
 import { GitHubIcon, TwitterIcon } from "./icons";
 import { SearchCommand } from "./search-command";
@@ -122,19 +120,20 @@ const SearchDocs = ({ children }: { children: React.ReactNode }) => {
   return (
     <DialogRoot isOpen={isOpen} onOpenChange={setIsOpen}>
       {children}
-      <Dialog className="p-0!" showDismissButton={false}>
+      <Dialog className="p-0!">
         <SearchCommand
           onRunCommand={() => setIsOpen(false)}
           className="h-72 max-h-full rounded-lg"
         />
-        <DismissButton
+        <Button
+          slot="close"
           variant="outline"
           shape="rectangle"
           size="sm"
           className="h-7 px-2 text-xs font-normal"
         >
           Esc
-        </DismissButton>
+        </Button>
       </Dialog>
     </DialogRoot>
   );

@@ -4,7 +4,7 @@ import React from "react";
 import { dotUIThemes } from "@/lib/themes";
 import { useThemes } from "@/hooks/use-themes";
 import { ToggleButton } from "@/components/core/toggle-button";
-import { ToggleGroup } from "@/components/core/toggle-button-group";
+import { ToggleButtonGroup } from "@/components/core/toggle-button-group";
 import { ThemeOverride } from "@/components/theme-override";
 import { ComponentsOverview } from "./components-overview";
 
@@ -13,7 +13,7 @@ export function ThemesPreview() {
 
   return (
     <div>
-      <ToggleGroup
+      <ToggleButtonGroup
         className="justify-center"
         defaultSelectedKeys={[currentThemeId]}
         onSelectionChange={(keys) => setCurrentThemeId([...keys][0] as string)}
@@ -30,7 +30,7 @@ export function ThemesPreview() {
             {theme.name}
           </ToggleButton>
         ))}
-      </ToggleGroup>
+      </ToggleButtonGroup>
       <ThemeOverride className="mt-6 rounded-xl border shadow-lg">
         <ComponentsOverview />
       </ThemeOverride>

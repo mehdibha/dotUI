@@ -27,7 +27,7 @@ import {
   useTableOptions,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { Checkbox } from "@/registry/core/checkbox";
+import { Checkbox } from "@/registry/core/checkbox_basic";
 import { cn } from "@/registry/lib/cn";
 
 const table = tv({
