@@ -79,6 +79,7 @@ export const demos: RegistryDemos = [
     "indeterminate",
     "read-only",
     "uncontrolled",
+    "composition",
   ]),
   ...buildDemos("color-area", [
     "channels",
@@ -219,6 +220,7 @@ export const demos: RegistryDemos = [
     "title",
     "types",
   ]),
+  ...buildDemos("drawer", ["basic"]),
   ...buildDemos("drop-zone", ["default", "disabled", "file-trigger", "label"]),
   ...buildDemos("file-trigger", [
     "default",
@@ -269,6 +271,7 @@ export const demos: RegistryDemos = [
     "single-selection",
     "submenus",
   ]),
+  ...buildDemos("modal", ["basic"]),
   ...buildDemos("number-field", [
     "composition",
     "contextual-help",
@@ -284,6 +287,7 @@ export const demos: RegistryDemos = [
     "sizes",
     "uncontrolled",
   ]),
+  ...buildDemos("popover", ["basic"]),
   ...buildDemos("progress", [
     "composition",
     "custom-color",
@@ -478,4 +482,11 @@ export const demos: RegistryDemos = [
     "placement",
     "with-arrow",
   ]),
+  ...buildDemos("toggle-button-group", ["default"]),
+  ...buildDemos("button-group", ["default"]),
+  ...buildDemos("tag-group", ["default"]),
+  ...buildDemos("table", ["default"]),
+  ...buildDemos("disclosure", ["default"]),
+  ...buildDemos("disclosure-group", ["default"]),
+  ...buildDemos("form", ["basic", "react-aria", "react-hook-form"]),
 ];

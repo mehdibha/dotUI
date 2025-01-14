@@ -1,5 +1,15 @@
 import { Theme } from "@/types/theme";
 
+const defaultVariants = {
+  alert: "alert-01",
+  loader: "loader-ring",
+  button: "button-01",
+  calendar: "calendar-01",
+  tooltip: "tooltip-01",
+  form: "react-hook-form",
+  checkbox: "checkbox_basic",
+};
+
 export const dotUIThemes: Theme[] = [
   {
     id: "default",
@@ -12,10 +22,7 @@ export const dotUIThemes: Theme[] = [
     radius: 0.5,
     iconLibrary: "lucide",
     variants: {
-      alert: "alert-01",
-      loader: "loader-ring",
-      button: "button-01",
-      calendar: "calendar-01",
+      ...defaultVariants,
     },
     colors: {
       light: {
@@ -189,10 +196,7 @@ export const dotUIThemes: Theme[] = [
     radius: 0.5,
     iconLibrary: "lucide",
     variants: {
-      alert: "alert-01",
-      loader: "loader-ring",
-      button: "button-02",
-      calendar: "calendar-02",
+      ...defaultVariants,
     },
     colors: {
       light: {
@@ -366,10 +370,7 @@ export const dotUIThemes: Theme[] = [
     radius: 0,
     iconLibrary: "lucide",
     variants: {
-      alert: "alert-01",
-      loader: "loader-ring",
-      button: "button-02",
-      calendar: "calendar-01",
+      ...defaultVariants,
     },
     colors: {
       light: {

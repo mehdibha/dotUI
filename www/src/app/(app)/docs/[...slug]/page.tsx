@@ -29,12 +29,12 @@ export default async function Page({
 
   return (
     <div
-      className={cn("pb-20 pt-8 sm:pt-20", {
+      className={cn("pt-8 sm:pt-20", {
         "xl:grid xl:grid-cols-[1fr_250px] xl:gap-10":
           page.data.toc && page.data.toc.length > 0,
       })}
     >
-      <div className="max-w-(--breakpoint-md) container">
+      <div className="max-w-(--breakpoint-md) container pb-20">
         <Breadcrumbs tree={source.pageTree} className="mb-2" />
         <h1 className="text-4xl font-bold">{page.data.title}</h1>
         <p className="text-fg-muted mt-2">{page.data.description}</p>

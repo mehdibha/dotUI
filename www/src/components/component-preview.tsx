@@ -1,18 +1,11 @@
 import React from "react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
-import { ChevronDownIcon, PaintBucket } from "lucide-react";
+import { PaintBucket } from "lucide-react";
 import { cn } from "@/lib/cn";
-import { useComponentsVariants } from "@/lib/create-dynamic-component";
 import { getFileSource } from "@/lib/get-file-source";
-import { useThemes } from "@/hooks/use-themes";
 import { CodeBlock } from "@/components/code-block";
 import { Button } from "@/components/core/button";
-import { ListBox, Item } from "@/components/core/list-box";
-import { Overlay } from "@/components/core/overlay";
-import { SelectRoot, SelectValue } from "@/components/core/select";
 import { Tooltip } from "@/components/core/tooltip";
-import { core } from "@/registry/registry-core";
-import { RegistryItem } from "@/registry/types";
 import { Index } from "@/__registry__/demos";
 import { ComponentPreviewClient } from "./component-preview-client";
 import { StyleSwitcher } from "./style-switcher";
@@ -32,7 +25,7 @@ export const ComponentPreview = async ({
   containerClassName,
   className,
   preview,
-  expandable,
+  expandable = true,
 }: ComponentPreviewProps) => {
   const type = name.split("/")[0];
   const componentName = name.split("/")[1];
@@ -87,7 +80,7 @@ export const ComponentPreview = async ({
           <ScrollArea
             className={cn("flex items-center justify-center", "bg-bg text-fg")}
           >
-            <div className="flex min-h-52 items-center justify-center px-4 py-16">
+            <div className="flex min-h-52 items-center justify-center px-4 py-20">
               <div
                 className={cn(
                   "flex w-full items-center justify-center",

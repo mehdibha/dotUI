@@ -13,7 +13,7 @@ import {
   SearchIcon,
   SunIcon,
 } from "lucide-react";
-import { motion } from "motion/react";
+import { motion, Transition } from "motion/react";
 import { cn } from "@/lib/cn";
 import { hasActive, isActive } from "@/lib/docs/utils";
 import { useCommandMenuInputRef } from "@/hooks/use-focus-command-menu";
@@ -26,7 +26,7 @@ import {
 } from "@/components/core/collapsible";
 import { Dialog, DialogRoot } from "@/components/core/dialog";
 import { Kbd } from "@/components/core/kbd";
-import { DismissButton } from "@/components/core/overlay";
+// import { DismissButton } from "@/components/core/overlay";
 import { ScrollArea } from "@/components/core/scroll-area";
 import { Tooltip, TooltipProps } from "@/components/core/tooltip";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
@@ -41,10 +41,10 @@ export const Sidebar = ({ items }: { items: PageTree.Node[] }) => {
   const shouldInitialCollapse = !!(pathname === "/" || pathname === "/themes");
   const [isCollapsed, setIsCollapsed] = React.useState(shouldInitialCollapse);
 
-  const transition = {
-    // type: "tween",
-    // bounce: 0,
-    // duration: 0.25,
+  const transition: Transition = {
+    type: "spring",
+    duration: 0.2,
+    bounce: 0,
   };
 
   React.useEffect(() => {
@@ -86,44 +86,44 @@ export const Sidebar = ({ items }: { items: PageTree.Node[] }) => {
       </ScrollArea>
       <SidebarFooter>
         <div className="group-data-collapsed/sidebar:flex-col flex items-center gap-1">
-          <MotionButton
-            href={siteConfig.links.github}
-            target="_blank"
-            size="sm"
-            shape="square"
-            variant="quiet"
-            aria-label="github"
-            layout
-            transition={transition}
-          >
-            <GitHubIcon />
-          </MotionButton>
-          <MotionButton
-            href={siteConfig.links.twitter}
-            target="_blank"
-            size="sm"
-            shape="square"
-            variant="quiet"
-            aria-label="twitter"
-            layout
-            transition={transition}
-          >
-            <TwitterIcon />
-          </MotionButton>
+          <motion.div layout transition={transition}>
+            <Button
+              href={siteConfig.links.github}
+              target="_blank"
+              size="sm"
+              shape="square"
+              variant="quiet"
+              aria-label="github"
+            >
+              <GitHubIcon />
+            </Button>
+          </motion.div>
+          <motion.div layout transition={transition}>
+            <Button
+              href={siteConfig.links.twitter}
+              target="_blank"
+              size="sm"
+              shape="square"
+              variant="quiet"
+              aria-label="twitter"
+            >
+              <TwitterIcon />
+            </Button>
+          </motion.div>
         </div>
         <div className="group-data-collapsed/sidebar:flex-col flex items-center gap-1">
           <ThemeSwitcher>
-            <MotionButton
-              size="sm"
-              variant="quiet"
-              shape="square"
-              className="[&_svg]:size-[18px]"
-              layout
-              transition={transition}
-            >
-              <SunIcon className="block dark:hidden" />
-              <MoonIcon className="hidden dark:block" />
-            </MotionButton>
+            <motion.div layout transition={transition}>
+              <Button
+                size="sm"
+                variant="quiet"
+                shape="square"
+                className="[&_svg]:size-[18px]"
+              >
+                <SunIcon className="block dark:hidden" />
+                <MoonIcon className="hidden dark:block" />
+              </Button>
+            </motion.div>
           </ThemeSwitcher>
           <StyledTooltip
             content={
@@ -138,16 +138,16 @@ export const Sidebar = ({ items }: { items: PageTree.Node[] }) => {
             placement="right"
             arrow
           >
-            <MotionButton
-              layout
-              transition={transition}
-              shape="square"
-              size="sm"
-              variant="default"
-              onPress={() => setIsCollapsed(!isCollapsed)}
-            >
-              {isCollapsed ? <PanelLeftOpenIcon /> : <PanelLeftCloseIcon />}
-            </MotionButton>
+            <motion.div layout transition={transition}>
+              <Button
+                shape="square"
+                size="sm"
+                variant="default"
+                onPress={() => setIsCollapsed(!isCollapsed)}
+              >
+                {isCollapsed ? <PanelLeftOpenIcon /> : <PanelLeftCloseIcon />}
+              </Button>
+            </motion.div>
           </StyledTooltip>
         </div>
       </SidebarFooter>
@@ -269,19 +269,19 @@ const SidebarSearchButton = ({ isCollapsed }: { isCollapsed: boolean }) => {
           </div>
         </SidebarButton>
       </StyledTooltip>
-      <Dialog className="p-0!" showDismissButton={false}>
+      <Dialog className="p-0!">
         <SearchCommand
           onRunCommand={() => setIsOpen(false)}
           className="h-72 max-h-full rounded-lg"
         />
-        <DismissButton
+        {/* <DismissButton
           variant="outline"
           shape="rectangle"
           size="sm"
           className="h-7 px-2 text-xs font-normal"
         >
           Esc
-        </DismissButton>
+        </DismissButton> */}
       </Dialog>
     </DialogRoot>
   );
@@ -332,7 +332,7 @@ export function NodeList({
 }
 
 function PageNode({
-  item: { icon, external = false, url, name },
+  item: { icon, url, name },
   level,
   onSelect,
 }: {

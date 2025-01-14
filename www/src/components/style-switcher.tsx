@@ -46,7 +46,7 @@ export function StyleSwitcher({ componentName }: { componentName: string }) {
                 id={item.name}
                 description={item.description}
               >
-                {item.name}{" "}
+                {item.label ?? item.name}{" "}
                 {currentThemeVariant === item.name && "(current theme)"}
               </Item>
             ))}

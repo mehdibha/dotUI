@@ -4,7 +4,7 @@ import React from "react";
 import { dotUIThemes } from "@/lib/themes";
 import { useThemes } from "@/hooks/use-themes";
 import { ToggleButton } from "@/components/core/toggle-button";
-import { ToggleGroup } from "@/components/core/toggle-group";
+import { ToggleGroup } from "@/components/core/toggle-button-group";
 import { ThemeOverride } from "@/components/theme-override";
 import { ComponentsOverview } from "./components-overview";
 

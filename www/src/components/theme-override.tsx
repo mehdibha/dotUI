@@ -9,7 +9,7 @@ import { useThemes } from "@/hooks/use-themes";
 import { Skeleton } from "@/components/core/skeleton";
 
 interface ThemeOverrideProps extends React.ComponentProps<"div"> {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   fallback?: ReactNode;
 }
 
@@ -54,10 +54,13 @@ export const ThemeOverride = React.forwardRef<
     )
   );
 
+  return children
+
   return (
     <div
       ref={ref}
       {...props}
+      data-theme={currentTheme.id}
       style={
         {
           ...(debouncedIsMounted ? styles : {}),
@@ -155,7 +158,7 @@ const baseCssVars = {
   "--color-border-success": "var(--color-success-300)",
   "--color-border-danger": "var(--color-danger-300)",
   "--color-border-warning": "var(--color-warning-300)",
-  "--color-border-info": "var(--color-warning-300)",
+  "--color-border-info": "var(--color-info-300)",
   "--color-border-accent": "var(--color-accent-300)",
 
   "--color-border-secondary": "var(--color-neutral-200)",

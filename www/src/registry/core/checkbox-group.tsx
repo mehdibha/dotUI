@@ -7,7 +7,7 @@ import {
   type CheckboxGroupProps as AriaCheckboxGroupProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { CheckboxContext } from "@/registry/core/checkbox";
+import { CheckboxProvider } from "@/registry/core/checkbox_basic";
 import { Field, type FieldProps } from "@/registry/core/field";
 
 const checkboxGroupStyles = tv({
@@ -81,9 +81,9 @@ const CheckboxGroupRoot = React.forwardRef<
 >(({ className, variant, ...props }, ref) => {
   const { root } = checkboxGroupStyles({ variant });
   return (
-    <CheckboxContext.Provider value={{ variant }}>
+    <CheckboxProvider variant={variant}>
       <AriaCheckboxGroup ref={ref} className={root({ className })} {...props} />
-    </CheckboxContext.Provider>
+    </CheckboxProvider>
   );
 });
 CheckboxGroupRoot.displayName = "CheckboxGroupRoot";

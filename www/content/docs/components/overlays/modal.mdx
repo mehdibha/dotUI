@@ -1,0 +1,56 @@
+---
+title: Modal
+description: A modal is an overlay element which blocks interaction with elements outside it.
+links:
+  - label: Aria docs
+    href: https://react-spectrum.adobe.com/react-aria/Modal.html
+  - label: Aria API Reference
+    href: https://react-spectrum.adobe.com/react-aria/Modal.html#props
+  - label: Report an issue
+    href: https://github.com/mehdibha/dotUI/issues/new/choose
+  - label: Edit this page
+    href: https://github.com/mehdibha/dotUI/tree/main/content/components/overlays/toggle-button-group.mdx?plain=1
+---
+
+<ComponentPreview
+  name="core/modal/modal-basic"
+  preview={`<DialogRoot>
+    <Button>Edit profile</Button>
+    <Modal>
+      <DialogContent className="space-y-4">
+        <Heading>Edit Profile</Heading>
+        <TextField
+          autoFocus
+          label="Name"
+          defaultValue="Mehdi"
+        />
+        <TextField
+          label="Username"
+          defaultValue="@mehdibha_"
+        />
+        <div className="flex items-center justify-end gap-2">
+          <Button slot="close" variant="outline">
+            Cancel
+          </Button>
+          <Button slot="close" variant="primary">
+            Save changes
+          </Button>
+        </div>
+      </DialogContent>
+    </Modal>
+  </DialogRoot>`}
+/>
+
+## Installation
+
+```package-install
+npx dotui-cli@latest add modal
+```
+
+## API Reference
+
+| Prop        | Type                                                                                                        | Default | Description                                                                                                  |
+| ----------- | ----------------------------------------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------ |
+| `children`  | `ReactNode \| (opts: ModalRenderProps) => ReactNode`                                                        | -       | The children of the component. A function may be provided to alter the children based on component state.    |
+| `className` | `string \| (values: ModalRenderProps & {defaultClassName: string \| undefined}) => string`                  | -       | The CSS className for the element. A function may be provided to compute the class based on component state. |
+| `style`     | `CSSProperties \| (values: ModalRenderProps & {defaultStyle: CSSProperties}) => CSSProperties \| undefined` | -       | The inline style for the element. A function may be provided to compute the style based on component state.  |

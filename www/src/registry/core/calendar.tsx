@@ -48,11 +48,11 @@ const calendarStyles = tv({
     range: {
       false: {
         cell: [
-          // buttonStyles({
-          //   variant: "quiet",
-          //   shape: "square",
-          //   size: "sm",
-          // }),
+          buttonStyles({
+            variant: "quiet",
+            shape: "square",
+            size: "sm",
+          }),
           "selected:bg-bg-primary selected:text-fg-onPrimary my-1 disabled:cursor-default disabled:bg-transparent",
           "selected:invalid:bg-bg-danger selected:invalid:text-fg-onDanger",
           "unavailable:line-through unavailable:hover:bg-transparent unavailable:cursor-default unavailable:text-fg-muted",

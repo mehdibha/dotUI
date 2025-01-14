@@ -1,17 +1,13 @@
 "use client";
 
 import * as React from "react";
-import { useSlotId } from "@react-aria/utils";
 import {
   composeRenderProps,
-  DialogContext as AriaDialogContext,
   DialogTrigger as AriaDialogTrigger,
   Dialog as AriaDialog,
   type DialogProps as AriaDialogProps,
   type DialogTriggerProps as AriaDialogTriggerProps,
-  TextContext,
 } from "react-aria-components";
-import { Provider } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import { Heading } from "@/registry/core/heading";
 import { Overlay, type OverlayProps } from "@/registry/core/overlay";
@@ -33,29 +29,14 @@ const dialogStyles = tv({
 
 type DialogRootProps = AriaDialogTriggerProps;
 const DialogRoot = (props: DialogRootProps) => {
-  const descriptionId = useSlotId();
-  return (
-    <Provider
-      values={[
-        [AriaDialogContext, { "aria-describedby": descriptionId }],
-        [TextContext, { slots: { description: { id: descriptionId } } }],
-      ]}
-    >
-      <AriaDialogTrigger {...props} />
-    </Provider>
-  );
+  return <AriaDialogTrigger {...props} />;
 };
 
-interface DialogProps extends DialogContentProps {
+interface DialogProps
+  extends DialogContentProps,
+    Omit<OverlayProps, "children"> {
   title?: string;
   description?: string;
-  type?: OverlayProps["type"];
-  showDismissButton?: OverlayProps["showDismissButton"];
-  mobileType?: OverlayProps["mobileType"];
-  mediaQuery?: OverlayProps["mediaQuery"];
-  isDismissable?: boolean;
-  swipeIndicator?: boolean;
-  placement?: OverlayProps["placement"];
 }
 const Dialog = ({
   title,
@@ -63,23 +44,19 @@ const Dialog = ({
   type = "modal",
   mobileType = "drawer",
   mediaQuery,
-  isDismissable: isDismissableProp,
-  showDismissButton,
-  placement,
-  swipeIndicator,
+  modalProps,
+  popoverProps,
+  drawerProps,
   ...props
 }: DialogProps) => {
-  const isDismissable =
-    isDismissableProp ?? (props.role === "alertdialog" ? false : true);
   return (
     <Overlay
-      isDismissable={isDismissable}
-      showDismissButton={showDismissButton}
       type={type}
       mobileType={mobileType}
       mediaQuery={mediaQuery}
-      placement={placement}
-      swipeIndicator={swipeIndicator}
+      modalProps={modalProps}
+      popoverProps={popoverProps}
+      drawerProps={drawerProps}
     >
       <DialogContent {...props}>
         {composeRenderProps(props.children, (children) => (

@@ -166,17 +166,18 @@ export const core: Registry = [
     type: "registry:core",
     variants: [
       {
-        name: "checkbox-01",
+        name: "checkbox_basic",
+        label: "Basic",
       },
     ],
   },
   {
-    name: "checkbox-01",
+    name: "checkbox_basic",
     type: "registry:core",
     dependencies: ["react-aria-components"],
     files: [
       {
-        path: "core/checkbox-01.tsx",
+        path: "core/checkbox_basic.tsx",
         type: "registry:core",
         target: "core/checkbox.tsx",
       },
@@ -431,6 +432,28 @@ export const core: Registry = [
         path: "core/file-trigger/file-trigger.tsx",
         type: "registry:core",
         target: "core/file-trigger.tsx",
+      },
+    ],
+  },
+  {
+    name: "form",
+    type: "registry:core",
+    variants: [
+      {
+        name: "react-hook-form",
+        label: "React Hook Form",
+      },
+    ],
+  },
+  {
+    name: "react-hook-form",
+    type: "registry:core",
+    dependencies: ["react-hook-form", "@hookform/resolvers", "zod"],
+    files: [
+      {
+        path: "core/form_react-hook-form.tsx",
+        type: "registry:core",
+        target: "core/form.tsx",
       },
     ],
   },
@@ -772,11 +795,19 @@ export const core: Registry = [
   {
     name: "tooltip",
     type: "registry:core",
+    variants: [
+      {
+        name: "tooltip-01",
+      },
+    ],
+  },
+  {
+    name: "tooltip-01",
+    type: "registry:core",
     dependencies: ["react-aria-components"],
-    registryDependencies: ["overlay", "text"],
     files: [
       {
-        path: "core/tooltip/tooltip.tsx",
+        path: "core/tooltip-01.tsx",
         type: "registry:core",
         target: "core/tooltip.tsx",
       },

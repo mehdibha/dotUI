@@ -7,6 +7,7 @@ import {
   type ToggleButtonProps as AriaToggleButtonProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
+import { createOptionalScopedContext } from "@/lib/helpers";
 import { focusRing } from "@/registry/lib/focus-styles";
 
 const toggleButtonStyles = tv({
@@ -56,6 +57,11 @@ const toggleButtonStyles = tv({
   },
 });
 
+const [ToggleButtonProvider, useToggleButtonContext] =
+  createOptionalScopedContext<VariantProps<typeof toggleButtonStyles>>(
+    "Button"
+  );
+
 interface ToggleButtonProps
   extends Omit<AriaToggleButtonProps, "className">,
     VariantProps<typeof toggleButtonStyles> {
@@ -101,11 +107,5 @@ const ToggleButton = React.forwardRef(
 );
 ToggleButton.displayName = "ToggleButton";
 
-type ToggleButtonContextValue = VariantProps<typeof toggleButtonStyles>;
-const ToggleButtonContext = React.createContext<ToggleButtonContextValue>({});
-const useToggleButtonContext = () => {
-  return React.useContext(ToggleButtonContext);
-};
-
 export type { ToggleButtonProps };
-export { ToggleButton, toggleButtonStyles, ToggleButtonContext };
+export { ToggleButton, toggleButtonStyles, ToggleButtonProvider };

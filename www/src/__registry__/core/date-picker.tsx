@@ -33,6 +33,7 @@ const DatePicker = <T extends DateValue>({
   isLoading,
   isRequired,
   isDisabled,
+  isInvalid,
   necessityIndicator,
   contextualHelp,
   ...props
@@ -42,6 +43,7 @@ const DatePicker = <T extends DateValue>({
       className={className}
       isRequired={isRequired}
       isDisabled={isLoading || isDisabled}
+      isInvalid={isInvalid}
       {...props}
     >
       <Field
@@ -56,10 +58,11 @@ const DatePicker = <T extends DateValue>({
           size={size}
           prefix={prefix}
           isLoading={isLoading}
+          isInvalid={isInvalid}
           loaderPosition="prefix"
           className="pr-1"
         >
-          <DateInput>
+          <DateInput className="flex-1">
             {(segment) => <DateSegment segment={segment} />}
           </DateInput>
           <Button

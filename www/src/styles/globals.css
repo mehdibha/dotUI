@@ -170,26 +170,27 @@
   --color-bg-success: var(--color-success-500);
   --color-bg-success-hover: var(--color-success-600);
   --color-bg-success-active: var(--color-success-700);
-  --color-bg-success-muted: var(--color-success-200);
+  --color-bg-success-muted: var(--color-success-100);
 
   --color-bg-danger: var(--color-danger-500);
   --color-bg-danger-hover: var(--color-danger-600);
   --color-bg-danger-active: var(--color-danger-700);
-  --color-bg-danger-muted: var(--color-danger-200);
+  --color-bg-danger-muted: var(--color-danger-100);
 
   --color-bg-warning: var(--color-warning-500);
   --color-bg-warning-hover: var(--color-warning-600);
   --color-bg-warning-active: var(--color-warning-700);
-  --color-bg-warning-muted: var(--color-warning-200);
+  --color-bg-warning-muted: var(--color-warning-100);
 
   --color-bg-info: var(--color-info-500);
   --color-bg-info-hover: var(--color-info-600);
   --color-bg-info-active: var(--color-info-700);
-  --color-bg-info-muted: var(--color-info-200);
-
+  --color-bg-info-muted: var(--color-info-100);
+  
   --color-bg-accent: var(--color-accent-500);
   --color-bg-accent-hover: var(--color-accent-600);
   --color-bg-accent-active: var(--color-accent-700);
+  --color-bg-accent-muted: var(--color-accent-100);
 
   --color-fg: var(--color-neutral-1000);
   --color-fg-muted: var(--color-neutral-800);

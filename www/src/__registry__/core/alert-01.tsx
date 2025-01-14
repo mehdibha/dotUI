@@ -18,11 +18,19 @@ const alertStyles = tv({
   },
   variants: {
     variant: {
-      neutral: { root: "text-fg border" },
-      success: { root: "border-border-success text-fg-success border" },
-      warning: { root: "border-border-warning text-fg-warning border" },
-      danger: { root: "border-border-danger text-fg-danger border" },
-      info: { root: "border-border-accent text-fg-accent border" },
+      neutral: { root: "bg-bg-muted text-fg border" },
+      success: {
+        root: "bg-bg-success-muted border-border-success text-fg-success border",
+      },
+      warning: {
+        root: "bg-bg-warning-muted border-border-warning text-fg-warning border",
+      },
+      danger: {
+        root: "bg-bg-danger-muted border-border-danger text-fg-danger border",
+      },
+      info: {
+        root: "bg-bg-info-muted border-border-info text-fg-info border",
+      },
     },
   },
   defaultVariants: {
@@ -35,8 +43,8 @@ const { root, title, content } = alertStyles();
 const [AlertProvider, useAlertContext] =
   createScopedContext<VariantProps<typeof alertStyles>>("AlertRoot");
 
-const icons = {
-  neutral: <InfoIcon />,
+const defaultIcons = {
+  neutral: null,
   danger: <AlertCircleIcon />,
   success: <CheckCircle2Icon />,
   warning: <AlertTriangleIcon />,
@@ -47,6 +55,7 @@ interface AlertProps extends AlertRootProps {
   title?: string;
   description?: string;
   action?: React.ReactNode;
+  icon?: React.ReactNode | null;
 }
 
 function Alert({
@@ -54,11 +63,13 @@ function Alert({
   title,
   description,
   action,
+  icon,
   ...props
 }: AlertProps) {
+  const resolvedIcon = icon === undefined ? defaultIcons[variant] : icon;
   return (
     <AlertRoot variant={variant} {...props}>
-      {icons[variant]}
+      {resolvedIcon}
       <div className="flex-1 space-y-0.5">
         <AlertTitle>{title}</AlertTitle>
         {description && <AlertContent>{description}</AlertContent>}

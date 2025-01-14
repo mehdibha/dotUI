@@ -9,6 +9,7 @@ import {
   type LinkProps as AriaLinkProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
+import { createOptionalScopedContext } from "@/lib/helpers";
 import { Loader } from "@/registry/core/loader-ring";
 import { focusRing } from "@/registry/lib/focus-styles";
 
@@ -74,6 +75,9 @@ const buttonStyles = tv(
   }
 );
 
+const [ButtonProvider, useButtonContext] =
+  createOptionalScopedContext<VariantProps<typeof buttonStyles>>("Button");
+
 interface ButtonProps
   extends Omit<AriaButtonProps, "className">,
     Omit<AriaLinkProps, "className" | "children" | "style">,
@@ -117,11 +121,5 @@ const Button = React.forwardRef(
 );
 Button.displayName = "Button";
 
-type ButtonContextValue = VariantProps<typeof buttonStyles>;
-const ButtonContext = React.createContext<ButtonContextValue>({});
-const useButtonContext = () => {
-  return React.useContext(ButtonContext);
-};
-
 export type { ButtonProps };
-export { Button, buttonStyles, ButtonContext };
+export { Button, buttonStyles, ButtonProvider };

@@ -7,6 +7,7 @@ import { fontMono, fontSans, josefinSans } from "@/styles/fonts";
 import "@/styles/globals.css";
 import { siteConfig } from "@/config";
 import { Providers } from "./providers";
+import { ThemeOverride } from "@/components/theme-override";
 
 const config = siteConfig.global;
 
