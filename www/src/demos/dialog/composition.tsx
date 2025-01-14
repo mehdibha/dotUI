@@ -15,9 +15,7 @@ export default function Demo() {
       <Button variant="outline">Edit username</Button>
       <Overlay type="modal">
         <DialogContent className="space-y-4">
-          <DialogHeader>
-            
-          </DialogHeader>
+          <DialogHeader></DialogHeader>
           <TextField
             label="Username"
             defaultValue="@mehdibha_"

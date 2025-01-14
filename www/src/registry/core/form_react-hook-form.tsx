@@ -30,7 +30,10 @@ function FormControl<
   return (
     <Controller
       {...rest}
-      render={({ field: { disabled, ...field}, fieldState: { invalid, error, ...fieldState } }) =>
+      render={({
+        field: { disabled, ...field },
+        fieldState: { invalid, error, ...fieldState },
+      }) =>
         render({
           ...field,
           ...fieldState,

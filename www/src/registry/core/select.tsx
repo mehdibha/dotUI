@@ -58,7 +58,12 @@ const Select = <T extends object>({
             necessityIndicator={necessityIndicator}
             contextualHelp={contextualHelp}
           >
-            <Button variant={variant} size={size} suffix={<ChevronDownIcon />} className=" w-full">
+            <Button
+              variant={variant}
+              size={size}
+              suffix={<ChevronDownIcon />}
+              className="w-full"
+            >
               <SelectValue />
             </Button>
           </Field>

@@ -1,1 +1,1 @@
-export * from "@/registry/core/drawer"
+export * from "@/registry/core/drawer";

@@ -12,10 +12,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/overlays/toggle-button-group.mdx?plain=1
 ---
 
-<ComponentPreview
-  name="core/popover/popover-basic"
-  preview={``}
-/>
+<ComponentPreview name="core/popover/popover-basic" preview={``} />
 
 ## Installation
 
@@ -25,8 +22,8 @@ npx dotui-cli@latest add popover
 
 ## API Reference
 
-| Prop        | Type                                                                                                        | Default | Description                                                                                                  |
-| ----------- | ----------------------------------------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------ |
+| Prop        | Type                                                                                                          | Default | Description                                                                                                  |
+| ----------- | ------------------------------------------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------ |
 | `children`  | `ReactNode \| (opts: PopoverRenderProps) => ReactNode`                                                        | -       | The children of the component. A function may be provided to alter the children based on component state.    |
 | `className` | `string \| (values: PopoverRenderProps & {defaultClassName: string \| undefined}) => string`                  | -       | The CSS className for the element. A function may be provided to compute the class based on component state. |
 | `style`     | `CSSProperties \| (values: PopoverRenderProps & {defaultStyle: CSSProperties}) => CSSProperties \| undefined` | -       | The inline style for the element. A function may be provided to compute the style based on component state.  |

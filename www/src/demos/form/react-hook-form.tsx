@@ -130,7 +130,7 @@ export default function Demo() {
         <div className="flex justify-end">
           <Button type="submit">Register</Button>
         </div>
-      </Form>   
+      </Form>
     </div>
   );
 }

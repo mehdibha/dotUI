@@ -6,7 +6,7 @@ import { ButtonProvider } from "@/components/dynamic-core/button";
 import { buttonStyles } from "@/registry/core/button-01";
 
 const buttonGroupStyles = tv({
-  base: "inline-flex isolate items-center [&_button]:first:rounded-s-md [&_button]:last:rounded-e-md [&_button]:rounded-none",
+  base: "isolate inline-flex items-center [&_button]:rounded-none [&_button]:first:rounded-s-md [&_button]:last:rounded-e-md",
   variants: {
     orientation: {
       horizontal: "flex-row",

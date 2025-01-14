@@ -27,25 +27,29 @@ export const Button = createDynamicComponent<ButtonProps>("button", "Button", {
   ),
 });
 
-export const ButtonProvider = createDynamicComponent("button", "ButtonProvider", {
-  "button-01": React.lazy(() =>
-    import("@/registry/core/button-01").then((mod) => ({
-      default: mod.ButtonProvider,
-    }))
-  ),
-  "button-02": React.lazy(() =>
-    import("@/registry/core/button-02").then((mod) => ({
-      default: mod.ButtonProvider,
-    }))
-  ),
-  "button-03": React.lazy(() =>
-    import("@/registry/core/button-03").then((mod) => ({
-      default: mod.ButtonProvider,
-    }))
-  ),
-  "button-04": React.lazy(() =>
-    import("@/registry/core/button-04").then((mod) => ({
-      default: mod.ButtonProvider,
-    }))
-  ),
-});
+export const ButtonProvider = createDynamicComponent(
+  "button",
+  "ButtonProvider",
+  {
+    "button-01": React.lazy(() =>
+      import("@/registry/core/button-01").then((mod) => ({
+        default: mod.ButtonProvider,
+      }))
+    ),
+    "button-02": React.lazy(() =>
+      import("@/registry/core/button-02").then((mod) => ({
+        default: mod.ButtonProvider,
+      }))
+    ),
+    "button-03": React.lazy(() =>
+      import("@/registry/core/button-03").then((mod) => ({
+        default: mod.ButtonProvider,
+      }))
+    ),
+    "button-04": React.lazy(() =>
+      import("@/registry/core/button-04").then((mod) => ({
+        default: mod.ButtonProvider,
+      }))
+    ),
+  }
+);

@@ -28,4 +28,3 @@ const checkboxGroupStyles = tv({
 
 interface CheckboxGroupRootProps
   extends React.ComponentProps<typeof AriaCheckboxGroup> {}
-
