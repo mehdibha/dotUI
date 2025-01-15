@@ -43,7 +43,6 @@ const CheckboxGroup = React.forwardRef<
       description,
       errorMessage,
       necessityIndicator,
-      contextualHelp,
       variant,
       ...props
     },
@@ -59,7 +58,6 @@ const CheckboxGroup = React.forwardRef<
             errorMessage={errorMessage}
             isRequired={isRequired}
             necessityIndicator={necessityIndicator}
-            contextualHelp={contextualHelp}
           >
             <div className={wrapper()}>{children}</div>
           </Field>

@@ -54,7 +54,7 @@ export const ThemeOverride = React.forwardRef<
     )
   );
 
-  return children;
+  return <div className={cn("bg-bg text-fg", props.className)}>{children}</div>;
 
   return (
     <div

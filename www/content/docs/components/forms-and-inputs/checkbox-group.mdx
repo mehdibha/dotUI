@@ -4,8 +4,6 @@ description: A checkbox group allows a user to select multiple items from a list
 links:
   - label: Aria docs
     href: https://react-spectrum.adobe.com/react-aria/CheckboxGroup.html
-  - label: Aria API Reference
-    href: https://react-spectrum.adobe.com/react-aria/CheckboxGroup.html#props
   - label: Report an issue
     href: https://github.com/mehdibha/dotUI/issues/new/choose
   - label: Edit this page
@@ -23,34 +21,38 @@ links:
 
 ## Installation
 
-<Tabs items={["CLI", "Manual"]}>
-  <Tab value="CLI">
-  
-  ```package-install
+```package-install
 npx dotui-cli@latest add checkbox-group
 ```
-
-  </Tab>
-  <Tab value="manual">
-  
-    <Steps>
-      <Step>Install the following dependencies:</Step>
-
-    ```package-install
-    react-aria-components
-    ```
-
-      <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name="core/checkbox-group/checkbox-group" />
-      <Step>Update the import paths to match your project setup.</Step>
-    </Steps>
-
-  </Tab>
-</Tabs>
 
 ## Usage
 
 Use `CheckboxGroup` to allow users to select multiple items from a list of individual items, or to mark one individual item as selected.
+
+```tsx
+import { Checkbox } from "@/components/core/checkbox";
+import { CheckboxGroup } from "@/components/core/checkbox-group";
+
+<CheckboxGroup label="React frameworks" defaultValue={["nextjs"]}>
+  <Checkbox value="nextjs">Next.js</Checkbox>
+  <Checkbox value="remix">Remix</Checkbox>
+  <Checkbox value="gatsby">Gatsby</Checkbox>
+</CheckboxGroup>;
+```
+
+```tsx
+import { Checkbox } from "@/components/core/checkbox";
+import { CheckboxGroup } from "@/components/core/checkbox-group";
+import { Label } from "@/components/core/field";
+
+<CheckboxGroupRoot defaultValue={["nextjs"]}>
+  <Label>React frameworks</Label>
+  <Checkbox value="nextjs">Next.js</Checkbox>
+  <Checkbox value="remix">Remix</Checkbox>
+  <Checkbox value="gatsby">Gatsby</Checkbox>
+  
+</CheckboxGroupRoot>;
+```
 
 ### Best practices
 
@@ -98,23 +100,6 @@ A description can be supplied to a `CheckboxGroup` via the `description` prop. T
     label="React frameworks"
     defaultValue={["nextjs"]}
     description="You can pick any frameworks."
-  >
-    <Checkbox value="nextjs">Next.js</Checkbox>
-    <Checkbox value="remix">Remix</Checkbox>
-    <Checkbox value="gatsby">Gatsby</Checkbox>
-  </CheckboxGroup>`}
-/>
-
-### Contextual help
-
-A `ContextualHelp` element may be placed next to the label to provide additional information or help about a CheckboxGroup.
-
-<ComponentPreview
-  name="core/checkbox-group/checkbox-group-contextual-help"
-  preview={`<CheckboxGroup
-    label="React frameworks"
-    defaultValue={["nextjs"]}
-    contextualHelp={<ContextualHelp />}
   >
     <Checkbox value="nextjs">Next.js</Checkbox>
     <Checkbox value="remix">Remix</Checkbox>

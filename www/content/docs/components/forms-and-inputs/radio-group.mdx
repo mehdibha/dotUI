@@ -126,24 +126,6 @@ A description can be supplied to a radio group via the `description` prop. The d
   </RadioGroup>`}
 />
 
-### Contextual help
-
-A ContextualHelp element may be placed next to the label to provide additional information or help about a CheckboxGroup.
-
-<ComponentPreview
-  name="core/radio-group/radio-group-contextual-help"
-  preview={`<RadioGroup
-    defaultValue="sm" 
-    label="Size" 
-    description="Select a product size."
-    contextualHelp={<ContextualHelp />}
-  >
-    <Radio value="sm">Small</Radio>
-    <Radio value="md">Medium</Radio>
-    <Radio value="lg">Large</Radio>
-  </RadioGroup>`}
-/>
-
 ### Error message
 
 An `errorMessage` can be supplied to a `RadioGroup`, which will be displayed when the `isInvalid` prop is set to `true`.

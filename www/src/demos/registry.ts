@@ -60,7 +60,6 @@ export const demos: RegistryDemos = [
   ...buildDemos("checkbox-group", [
     "cards",
     "composition",
-    "contextual-help",
     "controlled",
     "default",
     "description",
@@ -91,7 +90,6 @@ export const demos: RegistryDemos = [
   ]),
   ...buildDemos("color-field", [
     "composition",
-    "contextual-help",
     "controlled",
     "default",
     "description",
@@ -129,7 +127,6 @@ export const demos: RegistryDemos = [
     "async-loading",
     "basic",
     "composition",
-    "contextual-help",
     "controlled",
     "custom-value",
     "description",
@@ -143,7 +140,6 @@ export const demos: RegistryDemos = [
   ]),
   ...buildDemos("date-field", [
     "composition",
-    "contextual-help",
     "controlled",
     "default",
     "description",
@@ -164,7 +160,6 @@ export const demos: RegistryDemos = [
   ]),
   ...buildDemos("date-picker", [
     "composition",
-    "contextual-help",
     "controlled",
     "default",
     "description",
@@ -185,7 +180,6 @@ export const demos: RegistryDemos = [
   ]),
   ...buildDemos("date-range-picker", [
     "composition",
-    "contextual-help",
     "controlled",
     "default",
     "description",
@@ -274,7 +268,6 @@ export const demos: RegistryDemos = [
   ...buildDemos("modal", ["basic"]),
   ...buildDemos("number-field", [
     "composition",
-    "contextual-help",
     "controlled",
     "default",
     "description",
@@ -307,7 +300,6 @@ export const demos: RegistryDemos = [
   ...buildDemos("radio-group", [
     "cards",
     "composition",
-    "contextual-help",
     "controlled",
     "default",
     "description",
@@ -336,7 +328,6 @@ export const demos: RegistryDemos = [
   ]),
   ...buildDemos("search-field", [
     "composition",
-    "contextual-help",
     "controlled",
     "default",
     "description",
@@ -355,7 +346,6 @@ export const demos: RegistryDemos = [
     "async-loading",
     "basic",
     "composition",
-    "contextual-help",
     "controlled",
     "description",
     "disabled",
@@ -411,7 +401,6 @@ export const demos: RegistryDemos = [
   ]),
   ...buildDemos("text-area", [
     "composition",
-    "contextual-help",
     "controlled",
     "default",
     "description",
@@ -427,7 +416,6 @@ export const demos: RegistryDemos = [
   ]),
   ...buildDemos("text-field", [
     "composition",
-    "contextual-help",
     "controlled",
     "default",
     "description",
@@ -443,7 +431,6 @@ export const demos: RegistryDemos = [
   ]),
   ...buildDemos("time-field", [
     "composition",
-    "contextual-help",
     "controlled",
     "default",
     "description",

@@ -188,18 +188,19 @@ export const core: Registry = [
     type: "registry:core",
     variants: [
       {
-        name: "checkbox-group-01",
+        name: "checkbox-group_basic",
+        label: "Basic",
       },
     ],
   },
   {
-    name: "checkbox-group-01",
+    name: "checkbox-group_basic",
     type: "registry:core",
     dependencies: ["react-aria-components"],
     registryDependencies: ["checkbox"],
     files: [
       {
-        path: "core/checkbox-group-01.tsx",
+        path: "core/checkbox-group-_basic.tsx",
         type: "registry:core",
         target: "core/checkbox-group.tsx",
       },

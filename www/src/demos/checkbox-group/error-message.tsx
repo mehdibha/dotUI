@@ -7,6 +7,7 @@ export default function Demo() {
       label="React frameworks"
       isInvalid
       errorMessage="Please select a framework."
+      description="hello world"
     >
       <Checkbox value="nextjs">Next.js</Checkbox>
       <Checkbox value="remix">Remix</Checkbox>
