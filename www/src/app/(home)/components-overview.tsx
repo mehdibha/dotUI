@@ -12,7 +12,7 @@ import { Link } from "@/components/dynamic-core/link";
 import { Item, ListBox } from "@/components/dynamic-core/list-box";
 import { NumberField } from "@/components/dynamic-core/number-field";
 import { Progress } from "@/components/dynamic-core/progress";
-import { RangeCalendar } from "@/components/dynamic-core/range-calendar";
+import { RangeCalendar } from "@/components/dynamic-core/calendar";
 import { SearchField } from "@/components/dynamic-core/search-field";
 import { Select } from "@/components/dynamic-core/select";
 import { Separator } from "@/components/dynamic-core/separator";
@@ -37,7 +37,7 @@ export function ComponentsOverview() {
       <div className="col-span-8">
         <Slider
           label="Progress"
-          valueLabel
+          showValueLabel
           defaultValue={50}
           className="!w-full"
         />

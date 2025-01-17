@@ -373,7 +373,7 @@ export const core: Registry = [
     dependencies: ["react-aria-components"],
     registryDependencies: [
       "button",
-      "range-calendar",
+      "calendar",
       "dialog",
       "date-input",
       "field",
@@ -631,19 +631,6 @@ export const core: Registry = [
         path: "core/radio-group/radio-group.tsx",
         type: "registry:core",
         target: "core/radio-group.tsx",
-      },
-    ],
-  },
-  {
-    name: "range-calendar",
-    type: "registry:core",
-    dependencies: ["react-aria-components"],
-    registryDependencies: ["button", "calendar", "heading", "text"],
-    files: [
-      {
-        path: "core/range-calendar/range-calendar.tsx",
-        type: "registry:core",
-        target: "core/range-calendar.tsx",
       },
     ],
   },

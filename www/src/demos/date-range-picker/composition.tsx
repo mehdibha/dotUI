@@ -13,7 +13,7 @@ import {
 } from "@/components/dynamic-core/field";
 import { InputRoot } from "@/components/dynamic-core/input";
 import { Overlay } from "@/components/dynamic-core/overlay";
-import { RangeCalendar } from "@/components/dynamic-core/range-calendar";
+import { RangeCalendar } from "@/components/dynamic-core/calendar";
 
 export default function Demo() {
   return (

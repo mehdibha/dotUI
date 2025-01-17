@@ -2,7 +2,7 @@
 
 import React from "react";
 import { getLocalTimeZone, today } from "@internationalized/date";
-import { RangeCalendar } from "@/components/dynamic-core/range-calendar";
+import { RangeCalendar } from "@/components/dynamic-core/calendar";
 
 export default function Demo() {
   return (

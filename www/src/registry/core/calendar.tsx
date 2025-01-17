@@ -1,99 +1,72 @@
 "use client";
 
-import * as React from "react";
+import React from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import {
-  composeRenderProps,
   Calendar as AriaCalendar,
+  RangeCalendar as AriaRangeCalendar,
   CalendarCell as AriaCalendarCell,
   CalendarGrid as AriaCalendarGrid,
   CalendarGridHeader as AriaCalendarGridHeader,
   CalendarHeaderCell as AriaCalendarHeaderCell,
   CalendarGridBody as AriaCalendarGridBody,
-  type CalendarProps as AriaCalendarProps,
-  type CalendarGridProps as AriaCalendarGridProps,
-  type CalendarGridHeaderProps as AriaCalendarGridHeaderProps,
-  type CalendarHeaderCellProps as AriaCalendarHeaderCellProps,
-  type CalendarGridBodyProps as AriaCalendarGridBodyProps,
-  type CalendarCellProps as AriaCalendarCellProps,
-  type DateValue,
   CalendarContext as AriaCalendarContext,
+  RangeCalendarContext as AriaRangeCalendarContext,
+  composeRenderProps,
   useSlottedContext,
 } from "react-aria-components";
+import type {
+  DateValue,
+  CalendarProps as AriaCalendarProps,
+  RangeCalendarProps as AriaRangeCalendarProps,
+} from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { Button } from "@/components/dynamic-core/button";
-import { buttonStyles } from "@/registry/core/button-01";
+import { Button } from "@/registry/core/button-01";
 import { Heading } from "@/registry/core/heading";
 import { Text } from "@/registry/core/text";
 
 const calendarStyles = tv({
   slots: {
     root: "",
-    header: "mb-4 flex items-center justify-between gap-2",
-    grid: "w-full border-collapse",
-    gridHeader: "mb-4",
-    gridHeaderCell: "text-fg-muted text-xs font-normal",
-    gridBody: "[&>tr>td]:p-0",
+    header: "",
+    grid: "",
+    gridHeader: "",
+    gridHeaderCell: "",
+    gridBody: "",
     cell: "",
   },
   variants: {
+    variant: {
+      default: "",
+      accent: "",
+    },
     standalone: {
       true: {
         root: "bg-bg rounded-md border p-3",
       },
-      false: {
-        root: "rounded-[inherit]",
-      },
     },
     range: {
-      false: {
-        cell: [
-          buttonStyles({
-            variant: "quiet",
-            shape: "square",
-            size: "sm",
-          }),
-          "selected:bg-bg-primary selected:text-fg-onPrimary my-1 disabled:cursor-default disabled:bg-transparent",
-          "selected:invalid:bg-bg-danger selected:invalid:text-fg-onDanger",
-          "unavailable:line-through unavailable:hover:bg-transparent unavailable:cursor-default unavailable:text-fg-muted",
-          "outside-month:hidden",
-        ],
-      },
-      true: {
-        cell: [
-          "disabled:text-fg-disabled relative my-1 flex size-8 items-center justify-center rounded-md text-sm font-normal leading-normal disabled:cursor-default disabled:bg-transparent",
-          "selected:after:bg-bg-primary/10 after:absolute after:inset-0 after:transition-colors after:content-['']",
-          "hover:before:bg-bg-inverse/10 before:absolute before:inset-0 before:z-10 before:rounded-[inherit] before:transition-colors before:content-['']",
-          "before:ring-border-focus focus-visible:before:border-border focus-visible:before:ring-offset-bg outline-hidden before:border before:border-transparent before:ring-0 focus-visible:z-50 focus-visible:before:ring-2 focus-visible:before:ring-offset-2",
-          "selection-start:after:rounded-l-[inherit] selection-end:after:rounded-r-[inherit]",
-          "selection-start:pressed:before:bg-primary/90 selection-start:text-fg-onPrimary selection-start:before:bg-bg-primary",
-          "selection-end:pressed:before:bg-primary/90 selection-end:text-fg-onPrimary selection-end:before:bg-bg-primary",
-          "selected:invalid:after:bg-bg-danger selected:invalid:[&:not([data-selection-start])]:[&:not([data-selection-end])]:text-fg-onDanger",
-          "unavailable:line-through unavailable:hover:before:bg-transparent unavailable:cursor-default unavailable:text-fg-muted",
-          "outside-month:hidden",
-        ],
-      },
+      true: {},
     },
-  },
-  defaultVariants: {
-    range: false,
   },
 });
 
+const { root, header, grid, gridHeader, gridHeaderCell, gridBody, cell } =
+  calendarStyles();
+
 interface CalendarProps<T extends DateValue>
-  extends Omit<AriaCalendarProps<T>, "visibleDuration"> {
+  extends Omit<CalendarRootProps<T>, "visibleDuration"> {
   visibleMonths?: number;
   errorMessage?: string;
 }
 const Calendar = <T extends DateValue>({
-  errorMessage,
   visibleMonths = 1,
+  errorMessage,
   ...props
 }: CalendarProps<T>) => {
   visibleMonths = Math.min(Math.max(visibleMonths, 1), 3);
-
   return (
-    <CalendarRoot visibleDuration={{ months: visibleMonths }} {...props}>
+    <CalendarRoot {...props}>
       {({ isInvalid }) => (
         <>
           <CalendarHeader>
@@ -129,50 +102,123 @@ const Calendar = <T extends DateValue>({
   );
 };
 
-type CalendarRootProps<T extends DateValue> = AriaCalendarProps<T>;
-const CalendarRoot = <T extends DateValue>(props: CalendarRootProps<T>) => {
+interface RangeCalendarProps<T extends DateValue>
+  extends Omit<RangeCalendarRootProps<T>, "visibleDuration"> {
+  visibleMonths?: number;
+  errorMessage?: string;
+}
+const RangeCalendar = <T extends DateValue>({
+  visibleMonths = 1,
+  errorMessage,
+  ...props
+}: RangeCalendarProps<T>) => {
+  visibleMonths = Math.min(Math.max(visibleMonths, 1), 3);
+  return (
+    <RangeCalendarRoot visibleDuration={{ months: visibleMonths }} {...props}>
+      {({ isInvalid }) => (
+        <>
+          <CalendarHeader>
+            <Button slot="previous" variant="outline" shape="square" size="sm">
+              <ChevronLeftIcon />
+            </Button>
+            <Heading className="text-sm" />
+            <Button slot="next" variant="outline" shape="square" size="sm">
+              <ChevronRightIcon />
+            </Button>
+          </CalendarHeader>
+          <div className="flex items-start gap-4">
+            {Array.from({ length: visibleMonths }).map((_, index) => (
+              <CalendarGrid
+                key={index}
+                offset={index === 0 ? undefined : { months: index }}
+              >
+                <CalendarGridHeader>
+                  {(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}
+                </CalendarGridHeader>
+                <CalendarGridBody>
+                  {(date) => (
+                    <CalendarCell date={date} range>
+                      {({ formattedDate }) => (
+                        <span className="z-20">{formattedDate}</span>
+                      )}
+                    </CalendarCell>
+                  )}
+                </CalendarGridBody>
+              </CalendarGrid>
+            ))}
+          </div>
+          {isInvalid && errorMessage && (
+            <Text slot="errorMessage">{errorMessage}</Text>
+          )}
+        </>
+      )}
+    </RangeCalendarRoot>
+  );
+};
+
+interface CalendarRootProps<T extends DateValue> extends AriaCalendarProps<T> {}
+const CalendarRoot = <T extends DateValue>({
+  className,
+  ...props
+}: CalendarRootProps<T>) => {
   const CalendarContext = useSlottedContext(AriaCalendarContext);
   const standalone = Object.keys(CalendarContext ?? {}).length === 0;
-  const { root } = calendarStyles({ standalone });
   return (
     <AriaCalendar
-      {...props}
-      className={composeRenderProps(props.className, (className) =>
-        root({ className })
+      className={composeRenderProps(className, (className) =>
+        root({ standalone, className })
       )}
+      {...props}
     />
   );
 };
 
-type CalendarHeaderProps = React.HTMLAttributes<HTMLElement>;
+interface RangeCalendarRootProps<T extends DateValue>
+  extends AriaRangeCalendarProps<T> {}
+const RangeCalendarRoot = <T extends DateValue>({
+  className,
+  ...props
+}: RangeCalendarRootProps<T>) => {
+  const CalendarContext = useSlottedContext(AriaRangeCalendarContext);
+  const standalone = Object.keys(CalendarContext ?? {}).length === 0;
+  return (
+    <AriaRangeCalendar
+      className={composeRenderProps(className, (className) =>
+        root({ range: true, standalone, className })
+      )}
+      {...props}
+    />
+  );
+};
+
+interface CalendarHeaderProps extends React.ComponentProps<"header"> {}
 const CalendarHeader = ({ className, ...props }: CalendarHeaderProps) => {
-  const { header } = calendarStyles();
   return <header className={header({ className })} {...props} />;
 };
 
-type CalendarGridProps = AriaCalendarGridProps;
+interface CalendarGridProps
+  extends React.ComponentProps<typeof AriaCalendarGrid> {}
 const CalendarGrid = ({ className, ...props }: CalendarGridProps) => {
-  const { grid } = calendarStyles();
   return <AriaCalendarGrid className={grid({ className })} {...props} />;
 };
 
-type CalendarGridHeaderProps = AriaCalendarGridHeaderProps;
+interface CalendarGridHeaderProps
+  extends React.ComponentProps<typeof AriaCalendarGridHeader> {}
 const CalendarGridHeader = ({
   className,
   ...props
 }: CalendarGridHeaderProps) => {
-  const { gridHeader } = calendarStyles();
   return (
     <AriaCalendarGridHeader className={gridHeader({ className })} {...props} />
   );
 };
 
-type CalendarHeaderCellProps = AriaCalendarHeaderCellProps;
+interface CalendarHeaderCellProps
+  extends React.ComponentProps<typeof AriaCalendarHeaderCell> {}
 const CalendarHeaderCell = ({
   className,
   ...props
 }: CalendarHeaderCellProps) => {
-  const { gridHeaderCell } = calendarStyles();
   return (
     <AriaCalendarHeaderCell
       className={gridHeaderCell({ className })}
@@ -181,17 +227,19 @@ const CalendarHeaderCell = ({
   );
 };
 
-type CalendarGridBodyProps = AriaCalendarGridBodyProps;
+interface CalendarGridBodyProps
+  extends React.ComponentProps<typeof AriaCalendarGridBody> {}
 const CalendarGridBody = ({ className, ...props }: CalendarGridBodyProps) => {
-  const { gridBody } = calendarStyles();
   return (
     <AriaCalendarGridBody className={gridBody({ className })} {...props} />
   );
 };
 
-type CalendarCellProps = AriaCalendarCellProps & { range?: boolean };
-const CalendarCell = ({ range, ...props }: CalendarCellProps) => {
-  const { cell } = calendarStyles({ range });
+interface CalendarCellProps
+  extends React.ComponentProps<typeof AriaCalendarCell> {
+  range?: boolean;
+}
+const CalendarCell = ({ range = false, ...props }: CalendarCellProps) => {
   return (
     <AriaCalendarCell
       {...props}
@@ -205,6 +253,8 @@ const CalendarCell = ({ range, ...props }: CalendarCellProps) => {
 export type {
   CalendarProps,
   CalendarRootProps,
+  RangeCalendarProps,
+  RangeCalendarRootProps,
   CalendarGridProps,
   CalendarGridHeaderProps,
   CalendarHeaderCellProps,
@@ -215,6 +265,8 @@ export type {
 export {
   Calendar,
   CalendarRoot,
+  RangeCalendar,
+  RangeCalendarRoot,
   CalendarHeader,
   CalendarGrid,
   CalendarGridHeader,

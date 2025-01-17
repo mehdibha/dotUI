@@ -11,7 +11,7 @@ import {
   CalendarCell,
 } from "@/components/dynamic-core/calendar";
 import { Heading } from "@/components/dynamic-core/heading";
-import { RangeCalendarRoot } from "@/components/dynamic-core/range-calendar";
+import { RangeCalendarRoot } from "@/components/dynamic-core/calendar";
 
 export default function Demo() {
   return (

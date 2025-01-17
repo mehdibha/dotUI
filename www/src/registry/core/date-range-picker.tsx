@@ -13,7 +13,7 @@ import { DateInput, DateSegment } from "@/registry/core/date-input";
 import { Dialog } from "@/registry/core/dialog";
 import { Field, type FieldProps, fieldStyles } from "@/registry/core/field";
 import { InputRoot, type inputStyles } from "@/registry/core/input";
-import { RangeCalendar } from "@/registry/core/range-calendar";
+import { RangeCalendar } from "@/registry/core/calendar";
 
 interface DateRangePickerProps<T extends DateValue>
   extends DateRangePickerRootProps<T>,
