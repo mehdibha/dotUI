@@ -3,7 +3,6 @@ import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/react";
 import { cn } from "@/lib/cn";
 import { truncateOnWord } from "@/lib/string";
-import { ThemeOverride } from "@/components/theme-override";
 import { fontMono, fontSans, josefinSans } from "@/styles/fonts";
 import "@/styles/globals.css";
 import { siteConfig } from "@/config";

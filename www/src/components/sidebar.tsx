@@ -16,7 +16,6 @@ import {
 import { motion, Transition } from "motion/react";
 import { cn } from "@/lib/cn";
 import { hasActive, isActive } from "@/lib/docs/utils";
-import { useCommandMenuInputRef } from "@/hooks/use-focus-command-menu";
 import { Avatar } from "@/components/core/avatar";
 import { Button, ButtonProps } from "@/components/core/button";
 import {
@@ -26,15 +25,12 @@ import {
 } from "@/components/core/collapsible";
 import { Dialog, DialogRoot } from "@/components/core/dialog";
 import { Kbd } from "@/components/core/kbd";
-// import { DismissButton } from "@/components/core/overlay";
 import { ScrollArea } from "@/components/core/scroll-area";
 import { Tooltip, TooltipProps } from "@/components/core/tooltip";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
 import { siteConfig } from "@/config";
 import { SearchCommand } from "./search-command";
 import { ThemeSwitcher } from "./theme-switcher";
-
-const MotionButton = motion.create(Button);
 
 export const Sidebar = ({ items }: { items: PageTree.Node[] }) => {
   const pathname = usePathname();
@@ -274,14 +270,14 @@ const SidebarSearchButton = ({ isCollapsed }: { isCollapsed: boolean }) => {
           onRunCommand={() => setIsOpen(false)}
           className="h-72 max-h-full rounded-lg"
         />
-        {/* <DismissButton
+        <Button
           variant="outline"
           shape="rectangle"
           size="sm"
-          className="h-7 px-2 text-xs font-normal"
+          className="h-7 px-2 text-xs font-normal absolute top-[13px] right-3"
         >
           Esc
-        </DismissButton> */}
+        </Button>
       </Dialog>
     </DialogRoot>
   );

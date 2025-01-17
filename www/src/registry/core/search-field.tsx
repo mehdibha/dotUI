@@ -4,115 +4,69 @@ import * as React from "react";
 import { SearchIcon, XIcon } from "lucide-react";
 import {
   SearchField as AriaSearchField,
-  type SearchFieldProps as AriaSearchFieldProps,
+  Button as AriaButton,
+  composeRenderProps,
 } from "react-aria-components";
-import { tv, type VariantProps } from "tailwind-variants";
-import { Button } from "@/registry/core/button-01";
-import { Field, type FieldProps } from "@/registry/core/field";
-import { InputRoot, Input, type inputStyles } from "@/registry/core/input";
+import { tv } from "tailwind-variants";
+import { Label, HelpText, type FieldProps } from "@/registry/core/field-01";
+import {
+  InputRoot,
+  Input,
+  type InputRootProps,
+} from "@/registry/core/input_new";
+import { Button } from "./button-01";
 
-const searchFieldStyles = tv({
-  base: "flex w-48 flex-col items-start gap-2",
+const searchFieldtyles = tv({
+  base: "group flex w-48 flex-col items-start gap-2 empty:[&_button[slot='clear']]:hidden [&_input]:[&::-webkit-search-cancel-button]:appearance-none [&_input]:[&::-webkit-search-decoration]:appearance-none",
 });
 
-type SearchFieldProps = SearchFieldRootProps &
-  Omit<FieldProps, "children"> &
-  VariantProps<typeof inputStyles> & {
-    prefix?: React.ReactNode;
-    suffix?:
-      | React.ReactNode
-      | (({
-          isEmpty,
-          isDisabled,
-        }: {
-          isEmpty?: boolean;
-          isDisabled?: boolean;
-        }) => React.ReactNode);
-    isLoading?: boolean;
-    loaderPosition?: "prefix" | "suffix";
-    placeholder?: string;
-  };
-const SearchField = React.forwardRef<HTMLInputElement, SearchFieldProps>(
-  (
-    {
-      className,
-      size,
-      placeholder,
-      label,
-      description,
-      errorMessage,
-      prefix = <SearchIcon />,
-      suffix = ({ isEmpty, isDisabled }) => {
-        if (isEmpty || isDisabled) return null;
-        return (
-          <Button variant="quiet" shape="circle" size="sm" className="size-6">
-            <XIcon />
-          </Button>
-        );
-      },
-      isLoading,
-      loaderPosition = "prefix",
-      isRequired,
-      necessityIndicator,
-      contextualHelp,
-      ...props
-    },
-    ref
-  ) => {
-    return (
-      <SearchFieldRoot className={className} {...props}>
-        {({ isEmpty, isDisabled }) => (
-          <>
-            <Field
-              label={label}
-              description={description}
-              errorMessage={errorMessage}
-              isRequired={isRequired}
-              necessityIndicator={necessityIndicator}
-              contextualHelp={contextualHelp}
-            >
-              <InputRoot
-                size={size}
-                prefix={prefix}
-                suffix={
-                  typeof suffix === "function"
-                    ? suffix({ isEmpty, isDisabled })
-                    : suffix
-                }
-                isLoading={isLoading}
-                loaderPosition={loaderPosition}
-              >
-                <Input
-                  ref={ref}
-                  placeholder={placeholder}
-                  className="[&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none"
-                />
-              </InputRoot>
-            </Field>
-          </>
-        )}
-      </SearchFieldRoot>
-    );
-  }
-);
-SearchField.displayName = "SearchField";
+interface SearchFieldProps
+  extends SearchFieldRootProps,
+    Pick<InputRootProps, "size">,
+    FieldProps {}
 
-type SearchFieldRootProps = Omit<AriaSearchFieldProps, "className"> & {
-  className?: string;
+const SearchField = ({
+  label,
+  description,
+  errorMessage,
+  size,
+  ...props
+}: SearchFieldProps) => {
+  return (
+    <SearchFieldRoot {...props}>
+      {label && <Label>{label}</Label>}
+      <InputRoot size={size}>
+        <SearchIcon />
+        <Input />
+        <Button
+          slot="clear"
+          variant="quiet"
+          size="sm"
+          shape="circle"
+          className="size-6"
+        >
+          <XIcon />
+        </Button>
+      </InputRoot>
+      <HelpText description={description} errorMessage={errorMessage} />
+    </SearchFieldRoot>
+  );
 };
-const SearchFieldRoot = React.forwardRef<
-  React.ElementRef<typeof AriaSearchField>,
-  SearchFieldRootProps
->(({ className, ...props }, ref) => {
+
+interface SearchFieldRootProps
+  extends React.ComponentProps<typeof AriaSearchField> {
+  placeholder?: string;
+}
+const SearchFieldRoot = ({ className, ...props }: SearchFieldRootProps) => {
   return (
     <AriaSearchField
-      ref={ref}
-      className={searchFieldStyles({ className })}
+      className={composeRenderProps(className, (className) =>
+        searchFieldtyles({ className })
+      )}
       {...props}
     />
   );
-});
-SearchFieldRoot.displayName = "SearchFieldRoot";
+};
 
 export type { SearchFieldProps, SearchFieldRootProps };
 export { SearchField, SearchFieldRoot };

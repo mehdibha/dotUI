@@ -22,22 +22,21 @@ import { InputRootProps } from "./input_new";
 const numberFieldStyles = tv({
   slots: {
     root: "flex w-48 flex-col items-start gap-2",
-    inputRoot: "px-0 grid gap-0",
-    input: "[grid-area:field] px-2",
-    increment: "[grid-area:increment] w-8 p-0",
-    decrement: "[grid-area:decrement] w-8 p-0",
+    inputRoot: "px-0 grid",
+    input: "[grid-area:field]",
+    increment: "[grid-area:increment]",
+    decrement: "[grid-area:decrement]",
   },
   variants: {
     isMobile: {
       true: {
-        inputRoot: "[grid-template-areas:'decrement_field_increment'] grid-cols-[auto_1fr_auto]",
-        increment: "h-full rounded-none rounded-r-md border-l",
-        decrement: "h-full rounded-none rounded-l-md border-r",
+        increment: "",
+        decrement: "",
       },
       false: {
         inputRoot: "[grid-template-areas:'field_increment''field_decrement'] grid-cols-[1fr_auto]",
-        increment: "h-auto shrink rounded-none rounded-tr-md border-b border-l",
-        decrement: "h-auto shrink rounded-none rounded-br-md border-l",
+        increment: "",
+        decrement: "",
       },
     },
   },

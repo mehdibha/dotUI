@@ -13,7 +13,7 @@ const config = {
     ],
   },
   typescript: {
-    ignoreBuildErrors: true
+    ignoreBuildErrors: true,
   },
   // experimental: {
   //   reactCompiler: true,

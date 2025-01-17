@@ -597,6 +597,33 @@ export const core: Registry = [
   {
     name: "radio-group",
     type: "registry:core",
+    variants: [
+      {
+        name: "radio-group_basic",
+        label: "Basic",
+      },
+    ],
+  },
+  {
+    name: "radio-group_basic",
+    type: "registry:core",
+    dependencies: ["react-aria-components"],
+    registryDependencies: ["field"],
+    files: [
+      {
+        path: "core/radio-group-_basic.tsx",
+        type: "registry:core",
+        target: "core/radio-group.tsx",
+      },
+    ],
+  },
+
+
+
+
+  {
+    name: "radio-group",
+    type: "registry:core",
     dependencies: ["react-aria-components"],
     registryDependencies: ["field"],
     files: [

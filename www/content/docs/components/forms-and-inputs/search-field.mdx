@@ -1,11 +1,9 @@
 ---
-title: SearchField
+title: SearchField ☑️
 description: SearchField is a text field designed for searches.
 links:
   - label: Aria docs
     href: https://react-spectrum.adobe.com/react-aria/SearchField.html
-  - label: Aria API Reference
-    href: https://react-spectrum.adobe.com/react-aria/SearchField.html#props
   - label: Report an issue
     href: https://github.com/mehdibha/dotUI/issues/new/choose
   - label: Edit this page
@@ -19,57 +17,41 @@ links:
 
 ## Installation
 
-<Tabs items={["CLI", "Manual"]}>
-  <Tab value="CLI">
-  
-  ```package-install
+```package-install
 npx dotui-cli@latest add search-field
 ```
-
-  </Tab>
-  <Tab value="manual">
-  
-    <Steps>
-      <Step>Install the following dependencies:</Step>
-
-    ```package-install
-    react-aria-components
-    ```
-
-      <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name="core/search-field/search-field" />
-      <Step>Update the import paths to match your project setup.</Step>
-    </Steps>
-
-  </Tab>
-</Tabs>
 
 ## Usage
 
 Use a `SearchField` to allow a user to enter and clear a search query.
 
+```tsx
+import { SearchField } from "@/components/core/search-field";
+
+<SearchField label="Search" description="Enter your search query." />;
+```
+
+```tsx
+import { SearchIcon, XIcon } from "lucide-react";
+import { Button } from "@/components/core/button";
+import { Label, Description } from "@/components/core/field";
+import { InputRoot, Input } from "@/components/core/input";
+import { SearchFieldRoot } from "@/components/core/search-field";
+
+<SearchFieldRoot>
+  <Label>Email</Label>
+  <InputRoot>
+    <SearchIcon />
+    <Input />
+    <Button slot="clear">
+      <XIcon />
+    </Button>
+  </InputRoot>
+  <Description>Enter your search query.</Description>
+</SearchFieldRoot>;
+```
+
 ## Options
-
-### Size
-
-Use the `size` prop to control the size of the `SearchField`. The default size is `"md"`.
-
-<ComponentPreview
-  name="core/search-field/search-field-sizes"
-  preview={`<SearchField size="sm" />
-<SearchField size="md" />
-<SearchField size="lg" />`}
-/>
-
-### Prefix and suffix
-
-By default, `prefix` contains a search icon and `suffix` contains a clear button. You can customize these by passing a custom element to the `prefix` and `suffix` props.
-
-<ComponentPreview
-  name="core/search-field/search-field-prefix-and-suffix"
-  preview={`<SearchField prefix="🔍" />
-<SearchField suffix={(props) => <ClearButton {...props} />} />`}
-/>
 
 ### Label
 
@@ -102,15 +84,16 @@ An `errorMessage` can be supplied to a SearchField, which will be displayed when
     errorMessage="Please fill out this field."
   />`}
 />
-### Loading
 
-Use the `isLoading` prop to control the loading state of the SearchField.
-Use the `loaderPosition` prop to control the position of the loader.
+### Size
+
+Use the `size` prop to control the size of the `SearchField`. The default size is `"md"`.
 
 <ComponentPreview
-  name="core/search-field/search-field-loading"
-  preview={`<SearchField isLoading loaderPosition="prefix" />
-<SearchField isLoading loaderPosition="suffix" />`}
+  name="core/search-field/search-field-sizes"
+  preview={`<SearchField size="sm" />
+<SearchField size="md" />
+<SearchField size="lg" />`}
 />
 
 ### Disabled
@@ -180,35 +163,31 @@ If you need to customize things further, you can drop down to the composition le
 
 ## API Reference
 
-| Prop                 | Type                                                                                                             | Default                               | Description                                                                                                                                                                                                                           |
-| -------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `size`               | `"sm" \| "md" \| "lg"`                                                                                           | `"md"`                                | The size of the input.                                                                                                                                                                                                                |
-| `prefix`             | `React.ReactNode`                                                                                                | `<SearchIcon />`                      | A visual to display before the input.                                                                                                                                                                                                 |
-| `suffix`             | `React.ReactNode \| (({ isEmpty, isDisabled }: { isEmpty?: boolean; isDisabled?: boolean }) => React.ReactNode)` | `props => <ClearButton {...props} />` | A visual to display after the input.                                                                                                                                                                                                  |
-| `label`              | `ReactNode`                                                                                                      | -                                     | The content to display as the label.                                                                                                                                                                                                  |
-| `description`        | `ReactNode`                                                                                                      | -                                     | A description for the field. Provides a hint such as specific requirements for what to choose.                                                                                                                                        |
-| `errorMessage`       | `ReactNode \| (v: ValidationResult) => ReactNode`                                                                | -                                     | An error message for the field.                                                                                                                                                                                                       |
-| `loaderPosition`     | `"prefix" \| "suffix"`                                                                                           | `"prefix"`                            | The loader position                                                                                                                                                                                                                   |
-| `isLoading`          | `boolean`                                                                                                        | -                                     | Whether the TextField is in a pending state.                                                                                                                                                                                          |
-| `isInvalid`          | `boolean`                                                                                                        | -                                     | Whether the value is invalid.                                                                                                                                                                                                         |
-| `isDisabled`         | `boolean`                                                                                                        | -                                     | Whether the input is disabled.                                                                                                                                                                                                        |
-| `isReadOnly`         | `boolean`                                                                                                        | -                                     | Whether the input can be selected but not changed by the user.                                                                                                                                                                        |
-| `isRequired`         | `boolean`                                                                                                        | -                                     | Whether user input is required on the input before form submission.                                                                                                                                                                   |
-| `validate`           | `(value: string) => ValidationError \| true \| null \| undefined`                                                | -                                     | A function that returns an error message if a given value is invalid. Validation errors are displayed to the user when the form is submitted if validationBehavior="native". For realtime validation, use the isInvalid prop instead. |
-| `autoFocus`          | `boolean`                                                                                                        | -                                     | Whether the element should receive focus on render.                                                                                                                                                                                   |
-| `value`              | `string`                                                                                                         | -                                     | The current value (controlled).                                                                                                                                                                                                       |
-| `defaultValue`       | `string`                                                                                                         | -                                     | The default value (uncontrolled).                                                                                                                                                                                                     |
-| `autoComplete`       | `string`                                                                                                         | -                                     | Describes the type of autocomplete functionality the input should provide if any.                                                                                                                                                     |
-| `maxLength`          | `number`                                                                                                         | -                                     | The maximum number of characters supported by the input.                                                                                                                                                                              |
-| `minLength`          | `number`                                                                                                         | -                                     | The minimum number of characters required by the input.                                                                                                                                                                               |
-| `pattern`            | `string`                                                                                                         | -                                     | Regex pattern that the value of the input must match to be valid.                                                                                                                                                                     |
-| `type`               | `'text' \| 'search' \| 'url' \| 'tel' \| 'email' \| 'password' \| string & {}`                                   | -                                     | The type of input to render.                                                                                                                                                                                                          |
-| `inputMode`          | `'none' \| 'text' \| 'tel' \| 'url' \| 'email' \| 'numeric' \| 'decimal' \| 'search'`                            | -                                     | Hints at the type of data that might be entered by the user while editing the element or its contents.                                                                                                                                |
-| `name`               | `string`                                                                                                         | -                                     | The name of the input element, used when submitting an HTML form.                                                                                                                                                                     |
-| `validationBehavior` | `'native' \| 'aria'`                                                                                             | 'native'                              | Whether to use native HTML form validation to prevent form submission when the value is missing or invalid, or mark the field as required or invalid via ARIA.                                                                        |
-| `children`           | `ReactNode \| (values: SearchFieldRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode`         | -                                     | The children of the component. A function may be provided to alter the children based on component state.                                                                                                                             |
-| `className`          | `string`                                                                                                         | -                                     | The CSS className for the element.                                                                                                                                                                                                    |
-| `style`              | `CSSProperties \| (values: SearchFieldRenderProps & {defaultStyle: CSSProperties}) => CSSProperties`             | -                                     | The inline style for the element. A function may be provided to compute the style based on component state.                                                                                                                           |
+| Prop                 | Type                                                                                                     | Default  | Description                                                                                                                                                                                                                           |
+| -------------------- | -------------------------------------------------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `label`              | `ReactNode`                                                                                              | -        | The content to display as the label.                                                                                                                                                                                                  |
+| `description`        | `ReactNode`                                                                                              | -        | A description for the field. Provides a hint such as specific requirements for what to choose.                                                                                                                                        |
+| `errorMessage`       | `ReactNode \| (v: ValidationResult) => ReactNode`                                                        | -        | An error message for the field.                                                                                                                                                                                                       |
+| `size`               | `"sm" \| "md" \| "lg"`                                                                                   | `"md"`   | The size of the input.                                                                                                                                                                                                                |
+| `isInvalid`          | `boolean`                                                                                                | -        | Whether the value is invalid.                                                                                                                                                                                                         |
+| `isDisabled`         | `boolean`                                                                                                | -        | Whether the input is disabled.                                                                                                                                                                                                        |
+| `isReadOnly`         | `boolean`                                                                                                | -        | Whether the input can be selected but not changed by the user.                                                                                                                                                                        |
+| `isRequired`         | `boolean`                                                                                                | -        | Whether user input is required on the input before form submission.                                                                                                                                                                   |
+| `validate`           | `(value: string) => ValidationError \| true \| null \| undefined`                                        | -        | A function that returns an error message if a given value is invalid. Validation errors are displayed to the user when the form is submitted if validationBehavior="native". For realtime validation, use the isInvalid prop instead. |
+| `autoFocus`          | `boolean`                                                                                                | -        | Whether the element should receive focus on render.                                                                                                                                                                                   |
+| `value`              | `string`                                                                                                 | -        | The current value (controlled).                                                                                                                                                                                                       |
+| `defaultValue`       | `string`                                                                                                 | -        | The default value (uncontrolled).                                                                                                                                                                                                     |
+| `autoComplete`       | `string`                                                                                                 | -        | Describes the type of autocomplete functionality the input should provide if any.                                                                                                                                                     |
+| `maxLength`          | `number`                                                                                                 | -        | The maximum number of characters supported by the input.                                                                                                                                                                              |
+| `minLength`          | `number`                                                                                                 | -        | The minimum number of characters required by the input.                                                                                                                                                                               |
+| `pattern`            | `string`                                                                                                 | -        | Regex pattern that the value of the input must match to be valid.                                                                                                                                                                     |
+| `type`               | `'text' \| 'search' \| 'url' \| 'tel' \| 'email' \| 'password' \| string & {}`                           | -        | The type of input to render.                                                                                                                                                                                                          |
+| `inputMode`          | `'none' \| 'text' \| 'tel' \| 'url' \| 'email' \| 'numeric' \| 'decimal' \| 'search'`                    | -        | Hints at the type of data that might be entered by the user while editing the element or its contents.                                                                                                                                |
+| `name`               | `string`                                                                                                 | -        | The name of the input element, used when submitting an HTML form.                                                                                                                                                                     |
+| `validationBehavior` | `'native' \| 'aria'`                                                                                     | 'native' | Whether to use native HTML form validation to prevent form submission when the value is missing or invalid, or mark the field as required or invalid via ARIA.                                                                        |
+| `children`           | `ReactNode \| (values: SearchFieldRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -        | The children of the component. A function may be provided to alter the children based on component state.                                                                                                                             |
+| `className`          | `string`                                                                                                 | -        | The CSS className for the element.                                                                                                                                                                                                    |
+| `style`              | `CSSProperties \| (values: SearchFieldRenderProps & {defaultStyle: CSSProperties}) => CSSProperties`     | -        | The inline style for the element. A function may be provided to compute the style based on component state.                                                                                                                           |
 
 | Event                 | Type                                        | Description                                                                                                      |
 | --------------------- | ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |

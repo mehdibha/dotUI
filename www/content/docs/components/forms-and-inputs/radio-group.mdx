@@ -1,11 +1,9 @@
 ---
-title: Radio Group
+title: Radio Group ☑️
 description: A radio group allows a user to select a single item from a list of mutually exclusive options.
 links:
   - label: Aria docs
     href: https://react-spectrum.adobe.com/react-aria/RadioGroup.html
-  - label: Aria API Reference
-    href: https://react-spectrum.adobe.com/react-aria/RadioGroup.html#props
   - label: Report an issue
     href: https://github.com/mehdibha/dotUI/issues/new/choose
   - label: Edit this page
@@ -23,34 +21,49 @@ links:
 
 ## Installation
 
-<Tabs items={["CLI", "Manual"]}>
-  <Tab value="CLI">
-  
-  ```package-install
+```package-install
 npx dotui-cli@latest add radio-group
 ```
-
-  </Tab>
-  <Tab value="manual">
-  
-    <Steps>
-      <Step>Install the following dependencies:</Step>
-
-    ```package-install
-    react-aria-components
-    ```
-
-      <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name="core/radio-group/radio-group" />
-      <Step>Update the import paths to match your project setup.</Step>
-    </Steps>
-
-  </Tab>
-</Tabs>
 
 ## Usage
 
 Use radio group to allow users to select a single option from a short list of related options.
+
+```tsx
+import { RadioGroup, Radio } from "@/components/core/radio-group";
+
+<RadioGroup defaultValue="sm" label="Size" description="Select a product size.">
+  <Radio value="sm">Small</Radio>
+  <Radio value="md">Medium</Radio>
+  <Radio value="lg">Large</Radio>
+</RadioGroup>;
+```
+
+```tsx
+import { Label, Description } from "@/components/core/field";
+import {
+  RadioGroupRoot,
+  RadioRoot,
+  RadioIndicator,
+} from "@/components/core/radio-group";
+
+<RadioGroupRoot defaultValue="sm">
+  <Label>Size</Label>
+  <RadioRoot value="sm">
+    <span>Next.js</span>
+    <RadioIndicator />
+  </RadioRoot>
+  <RadioRoot value="md">
+    <span>Next.js</span>
+    <RadioIndicator />
+  </RadioRoot>
+  <RadioRoot value="lg">
+    <span>..</span>
+    <RadioIndicator />
+  </RadioRoot>
+  <Description>Select a product size.</Description>
+</RadioGroupRoot>;
+```
 
 ## Options
 

@@ -10,8 +10,8 @@ import { tv } from "tailwind-variants";
 
 const SectionStyles = tv({
   slots: {
-    root: "mt-2 space-y-px first:mt-1",
-    title: "mb-1 pl-3 text-sm font-bold",
+    root: "pt-2 space-y-px",
+    title: "mb-1 pl-3 text-xs text-fg-muted",
   },
 });
 

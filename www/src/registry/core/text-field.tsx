@@ -3,88 +3,59 @@
 import * as React from "react";
 import {
   TextField as AriaTextField,
-  type TextFieldProps as AriaTextFieldProps,
+  composeRenderProps,
 } from "react-aria-components";
-import { tv, type VariantProps } from "tailwind-variants";
-import { Field, type FieldProps } from "@/registry/core/field";
-import { InputRoot, Input, type inputStyles } from "@/registry/core/input";
+import { tv } from "tailwind-variants";
+import { Label, HelpText, type FieldProps } from "@/registry/core/field-01";
+import {
+  InputRoot,
+  Input,
+  type InputRootProps,
+} from "@/registry/core/input_new";
 
 const textFieldStyles = tv({
   base: "flex w-48 flex-col items-start gap-2",
 });
 
-type TextFieldProps = TextFieldRootProps &
-  Omit<FieldProps, "children"> &
-  VariantProps<typeof inputStyles> & {
-    prefix?: React.ReactNode;
-    suffix?: React.ReactNode;
-    isLoading?: boolean;
-    loaderPosition?: "prefix" | "suffix";
-    placeholder?: string;
-  };
-const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
-  (
-    {
-      className,
-      size,
-      placeholder,
-      label,
-      description,
-      errorMessage,
-      prefix,
-      suffix,
-      isLoading,
-      loaderPosition = "suffix",
-      necessityIndicator,
-      contextualHelp,
-      ...props
-    },
-    ref
-  ) => {
-    return (
-      <TextFieldRoot className={className} {...props}>
-        {({ isRequired }) => (
-          <Field
-            label={label}
-            description={description}
-            errorMessage={errorMessage}
-            isRequired={isRequired}
-            necessityIndicator={necessityIndicator}
-            contextualHelp={contextualHelp}
-          >
-            <InputRoot
-              size={size}
-              prefix={prefix}
-              suffix={suffix}
-              isLoading={isLoading}
-              loaderPosition={loaderPosition}
-            >
-              <Input ref={ref} placeholder={placeholder} />
-            </InputRoot>
-          </Field>
-        )}
-      </TextFieldRoot>
-    );
-  }
-);
-TextField.displayName = "TextField";
+interface TextFieldProps
+  extends TextFieldRootProps,
+    Pick<InputRootProps, "size" | "prefix" | "suffix">,
+    FieldProps {}
 
-type TextFieldRootProps = Omit<AriaTextFieldProps, "className"> & {
-  className?: string;
+const TextField = ({
+  label,
+  description,
+  errorMessage,
+  prefix,
+  suffix,
+  size,
+  ...props
+}: TextFieldProps) => {
+  return (
+    <TextFieldRoot {...props}>
+      {label && <Label>{label}</Label>}
+      <InputRoot size={size} prefix={prefix} suffix={suffix}>
+        <Input />
+      </InputRoot>
+      <HelpText description={description} errorMessage={errorMessage} />
+    </TextFieldRoot>
+  );
 };
-const TextFieldRoot = React.forwardRef<
-  React.ElementRef<typeof AriaTextField>,
-  TextFieldRootProps
->(({ className, ...props }, ref) => {
+
+interface TextFieldRootProps
+  extends React.ComponentProps<typeof AriaTextField> {
+  placeholder?: string;
+}
+const TextFieldRoot = ({ className, ...props }: TextFieldRootProps) => {
   return (
     <AriaTextField
-      ref={ref}
-      className={textFieldStyles({ className })}
+      className={composeRenderProps(className, (className) =>
+        textFieldStyles({ className })
+      )}
       {...props}
     />
   );
-});
-TextFieldRoot.displayName = "TextFieldRoot";
+};
 
 export type { TextFieldProps, TextFieldRootProps };
 export { TextField, TextFieldRoot };

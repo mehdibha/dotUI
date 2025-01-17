@@ -33,7 +33,7 @@ const checkboxStyles = tv({
       card: {
         root: [
           focusRing(),
-          "selected:bg-bg-muted disabled:selected:bg-bg-disabled disabled:border-border-disabled flex-row-reverse gap-4 rounded-md border p-4 transition-colors",
+          "selected:bg-bg-muted disabled:selected:bg-bg-disabled disabled:border-border-disabled flex-row-reverse justify-between gap-4 rounded-md border p-4 transition-colors",
         ],
       },
     },
@@ -58,8 +58,8 @@ const Checkbox = ({ children, ...props }: CheckboxProps) => {
     <CheckboxRoot {...props}>
       {composeRenderProps(children, (children) => (
         <>
-          <span>{children}</span>
           <CheckboxIndicator />
+          {children}
         </>
       ))}
     </CheckboxRoot>

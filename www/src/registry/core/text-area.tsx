@@ -1,71 +1,58 @@
 "use client";
 
 import * as React from "react";
-import { type VariantProps } from "tailwind-variants";
-import { Field, type FieldProps } from "@/registry/core/field";
+import {
+  TextField as AriaTextField,
+  composeRenderProps,
+} from "react-aria-components";
+import { tv } from "tailwind-variants";
+import { Label, HelpText, type FieldProps } from "@/registry/core/field-01";
 import {
   InputRoot,
   TextAreaInput,
-  type inputStyles,
-} from "@/registry/core/input";
-import {
-  TextFieldRoot,
-  type TextFieldRootProps,
-} from "@/registry/core/text-field";
+  type InputRootProps,
+} from "@/registry/core/input_new";
 
-type TextAreaProps = TextFieldRootProps &
-  Omit<FieldProps, "children"> &
-  Omit<VariantProps<typeof inputStyles>, "size"> & {
-    prefix?: React.ReactNode;
-    suffix?: React.ReactNode;
-    isLoading?: boolean;
-    loaderPosition?: "prefix" | "suffix";
-    placeholder?: string;
-  };
-const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
-  (
-    {
-      className,
-      placeholder,
-      label,
-      description,
-      errorMessage,
-      prefix,
-      suffix,
-      isLoading,
-      loaderPosition = "suffix",
-      isRequired,
-      necessityIndicator,
-      contextualHelp,
-      ...props
-    },
-    ref
-  ) => {
-    return (
-      <TextFieldRoot className={className} {...props}>
-        <Field
-          label={label}
-          description={description}
-          errorMessage={errorMessage}
-          isRequired={isRequired}
-          necessityIndicator={necessityIndicator}
-          contextualHelp={contextualHelp}
-        >
-          <InputRoot
-            prefix={prefix}
-            suffix={suffix}
-            isLoading={isLoading}
-            loaderPosition={loaderPosition}
-            multiline
-          >
-            <TextAreaInput ref={ref} placeholder={placeholder} />
-          </InputRoot>
-        </Field>
-      </TextFieldRoot>
-    );
-  }
-);
-TextArea.displayName = "TextArea";
+const textAreaStyles = tv({
+  base: "flex w-48 flex-col items-start gap-2",
+});
 
-export type { TextAreaProps };
-export { TextArea };
+interface TextAreaProps
+  extends TextAreaRootProps,
+    Pick<InputRootProps, "prefix" | "suffix">,
+    FieldProps {}
+
+const TextArea = ({
+  label,
+  description,
+  errorMessage,
+  prefix,
+  suffix,
+  ...props
+}: TextAreaProps) => {
+  return (
+    <TextAreaRoot {...props}>
+      {label && <Label>{label}</Label>}
+      <InputRoot prefix={prefix} suffix={suffix} multiline>
+        <TextAreaInput />
+      </InputRoot>
+      <HelpText description={description} errorMessage={errorMessage} />
+    </TextAreaRoot>
+  );
+};
+
+interface TextAreaRootProps
+  extends React.ComponentProps<typeof AriaTextField> {}
+const TextAreaRoot = ({ className, ...props }: TextAreaRootProps) => {
+  return (
+    <AriaTextField
+      className={composeRenderProps(className, (className) =>
+        textAreaStyles({ className })
+      )}
+      {...props}
+    />
+  );
+};
+
+export type { TextAreaProps, TextAreaRootProps };
+export { TextArea, TextAreaRoot };

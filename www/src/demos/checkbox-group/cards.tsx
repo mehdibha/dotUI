@@ -7,6 +7,7 @@ export default function Demo() {
       label="React frameworks"
       defaultValue={["nextjs"]}
       variant="card"
+      className="w-52"
     >
       <Checkbox value="nextjs">Next.js</Checkbox>
       <Checkbox value="remix">Remix</Checkbox>

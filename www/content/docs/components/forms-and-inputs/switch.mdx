@@ -1,11 +1,9 @@
 ---
-title: Switch
+title: Switch ☑️
 description: Switches allow users to turn an individual option on or off.
 links:
   - label: Aria docs
     href: https://react-spectrum.adobe.com/react-aria/Switch.html
-  - label: Aria API Reference
-    href: https://react-spectrum.adobe.com/react-aria/Switch.html#props
   - label: Report an issue
     href: https://github.com/mehdibha/dotUI/issues/new/choose
   - label: Edit this page
@@ -19,37 +17,43 @@ links:
 
 ## Installation
 
-<Tabs items={["CLI", "Manual"]}>
-  <Tab value="CLI">
-  
-  ```package-install
+```package-install
 npx dotui-cli@latest add switch
 ```
-
-  </Tab>
-  <Tab value="manual">
-  
-    <Steps>
-      <Step>Install the following dependencies:</Step>
-
-    ```package-install
-    react-aria-components
-    ```
-
-      <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name="core/switch/switch" />
-      <Step>Update the import paths to match your project setup.</Step>
-    </Steps>
-
-  </Tab>
-</Tabs>
 
 ## Usage
 
 Use switch for communicating activation (e.g. on/off states), while checkboxes are best used for communicating selection (e.g. multiple table rows).
 Switches, unlike checkboxes, can't have an error state.
 
+```tsx
+import { Switch } from "@/components/core/switch";
+
+<Switch>Focus mode</Switch>;
+```
+
+```tsx
+import {
+  SwitchRoot,
+  SwitchIndicator,
+  SwitchThumb,
+} from "@/components/core/switch";
+
+<SwitchRoot>
+  <SwitchIndicator>
+    <SwitchThumb />
+  </SwitchIndicator>
+  <span>Focus mode</span>
+</SwitchRoot>;
+```
+
 ## Options
+
+### Variant
+
+Use the `variant` prop to control the visual style of the switch.
+
+<ComponentPreview name="core/switch/switch-card" />
 
 ### Size
 
@@ -83,7 +87,7 @@ Use the `isDisabled` prop to disable the switch.
 
 ## Uncontrolled
 
-The `defaultValue` prop can be used to set the default state.
+The `defaultSelected` prop can be used to set the default state.
 
 <ComponentPreview
   name="core/switch/switch-uncontrolled"
@@ -102,6 +106,19 @@ Use the `isSelected` and `onChange` props to control the value of the input.
       Airplane Mode
     </Switch>
   )`}
+/>
+
+## Composition
+
+If you need to customize things further, you can drop down to the composition level.
+
+<ComponentPreview
+  name="core/switch/switch-composition"
+  preview={`<SwitchRoot>
+    <SwitchIndicator>
+      <SwitchThumb />
+    </SwitchIndicator>
+  </SwitchRoot>`}
 />
 
 ## API Reference

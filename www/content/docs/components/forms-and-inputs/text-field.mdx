@@ -1,11 +1,9 @@
 ---
-title: TextField
+title: TextField ☑️
 description: TextField allows a user to enter a plain text value with a keyboard.
 links:
   - label: Aria docs
     href: https://react-spectrum.adobe.com/react-aria/TextField.html
-  - label: Aria API Reference
-    href: https://react-spectrum.adobe.com/react-aria/TextField.html#props
   - label: Report an issue
     href: https://github.com/mehdibha/dotUI/issues/new/choose
   - label: Edit this page
@@ -19,58 +17,35 @@ links:
 
 ## Installation
 
-<Tabs items={["CLI", "Manual"]}>
-  <Tab value="CLI">
-  
-  ```package-install
+```package-install
 npx dotui-cli@latest add text-field
 ```
-
-  </Tab>
-  <Tab value="manual">
-  
-    <Steps>
-      <Step>Install the following dependencies:</Step>
-
-    ```package-install
-    react-aria-components
-    ```
-
-      <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name="core/text-field/text-field" />
-      <Step>Update the import paths to match your project setup.</Step>
-    </Steps>
-
-  </Tab>
-</Tabs>
 
 ## Usage
 
 Use a `TextField` to allow users to input custom text entries with a keyboard.
 
+```tsx
+import { TextField } from "@/components/core/text-field";
+
+<TextField label="Email" description="Enter your email." />;
+```
+
+```tsx
+import { Label, Description } from "@/components/core/field";
+import { InputRoot, Input } from "@/components/core/input";
+import { TextFieldRoot } from "@/components/core/text-field";
+
+<TextFieldRoot>
+  <Label>Email</Label>
+  <InputRoot>
+    <Input />
+  </InputRoot>
+  <Description>Enter your email.</Description>
+</TextFieldRoot>;
+```
+
 ## Options
-
-### Size
-
-Use the `size` prop to control the size of the `TextField`. The default size is `"md"`.
-
-<ComponentPreview
-  name="core/text-field/text-field-sizes"
-  preview={`<TextField size="sm" />
-<TextField size="md" />
-<TextField size="lg" />`}
-/>
-
-### Prefix and suffix
-
-To add additional context for the `TextField`, use the `prefix` and `suffix` props.
-
-<ComponentPreview
-  name="core/text-field/text-field-prefix-and-suffix"
-  preview={`<TextField prefix={<span>https://</span>} />
-<TextField suffix={<span>@dotui.org</span>} />
-<TextField suffix={<ClearButton />} />`}
-/>
 
 ### Label
 
@@ -104,15 +79,26 @@ An `errorMessage` can be supplied to `TextField`, which will be displayed when t
   />`}
 />
 
-### Loading
+### Size
 
-Use the `isLoading` prop to control the loading state of the TextField.
-Use the `loaderPosition` prop to control the position of the loader.
+Use the `size` prop to control the size of the `TextField`. The default size is `"md"`.
 
 <ComponentPreview
-  name="core/text-field/text-field-loading"
-  preview={`<TextField isLoading loaderPosition="prefix" />
-<TextField isLoading loaderPosition="suffix" />`}
+  name="core/text-field/text-field-sizes"
+  preview={`<TextField size="sm" />
+<TextField size="md" />
+<TextField size="lg" />`}
+/>
+
+### Prefix and suffix
+
+To add additional context for the `TextField`, use the `prefix` and `suffix` props.
+
+<ComponentPreview
+  name="core/text-field/text-field-prefix-and-suffix"
+  preview={`<TextField prefix={<span>https://</span>} />
+<TextField suffix={<span>@dotui.org</span>} />
+<TextField suffix={<ClearButton />} />`}
 />
 
 ### Disabled
@@ -191,14 +177,12 @@ If you need to customize things further, you can drop down to the composition le
 
 | Prop                 | Type                                                                                                   | Default    | Description                                                                                                                                                                                                                           |
 | -------------------- | ------------------------------------------------------------------------------------------------------ | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `size`               | `"sm" \| "md" \| "lg"`                                                                                 | `"md"`     | The size of the input.                                                                                                                                                                                                                |
-| `prefix`             | `ReactNode`                                                                                            | -          | A visual to display before the input.                                                                                                                                                                                                 |
-| `suffix`             | `ReactNode`                                                                                            | -          | A visual to display after the input.                                                                                                                                                                                                  |
 | `label`              | `ReactNode`                                                                                            |            | The content to display as the label.                                                                                                                                                                                                  |
 | `description`        | `ReactNode`                                                                                            |            | A description for the field. Provides a hint such as specific requirements for what to choose.                                                                                                                                        |
 | `errorMessage`       | `ReactNode \| (v: ValidationResult) => ReactNode`                                                      |            | An error message for the field.                                                                                                                                                                                                       |
-| `loaderPosition`     | `"prefix" \| "suffix"`                                                                                 | `"suffix"` | The loader position                                                                                                                                                                                                                   |
-| `isLoading`          | `boolean`                                                                                              | -          | Whether the TextField is in a pending state.                                                                                                                                                                                          |
+| `prefix`             | `ReactNode`                                                                                            | -          | A visual to display before the input.                                                                                                                                                                                                 |
+| `suffix`             | `ReactNode`                                                                                            | -          | A visual to display after the input.                                                                                                                                                                                                  |
+| `size`               | `"sm" \| "md" \| "lg"`                                                                                 | `"md"`     | The size of the input.                                                                                                                                                                                                                |
 | `isInvalid`          | `boolean`                                                                                              | -          | Whether the value is invalid.                                                                                                                                                                                                         |
 | `isDisabled`         | `boolean`                                                                                              | -          | Whether the input is disabled.                                                                                                                                                                                                        |
 | `isReadOnly`         | `boolean`                                                                                              | -          | Whether the input can be selected but not changed by the user.                                                                                                                                                                        |

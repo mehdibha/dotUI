@@ -148,7 +148,7 @@
 
 @theme {
   /* fonts */
-  --font-*: initial;
+  /* --font-*: initial; */
   --font-josefin: var(--font-josefin);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);

@@ -6,19 +6,15 @@ import {
   type ValidationResult,
 } from "react-aria-components";
 import { tv, VariantProps } from "tailwind-variants";
-import { Label, Description, FieldError, HelpText } from "./field-01";
+import {
+  CheckboxProvider,
+  checkboxStyles,
+} from "@/registry/core/checkbox_basic";
+import { Label, HelpText } from "@/registry/core/field-01";
 
 const checkboxGroupStyles = tv({
-  slots: {
-    root: "grid gap-2",
-    wrapper: "grid gap-0.5",
-  },
-  defaultVariants: {
-    variant: "default",
-  },
+  base: "flex flex-col gap-2",
 });
-
-const { root, wrapper } = checkboxGroupStyles();
 
 interface CheckboxGroupProps extends CheckboxGroupRootProps {
   label?: string;
@@ -38,7 +34,7 @@ const CheckboxGroup = ({
       {composeRenderProps(children, (children) => (
         <>
           {label && <Label>{label}</Label>}
-          <div className={wrapper()}>{children}</div>
+          {children}
           <HelpText description={description} errorMessage={errorMessage} />
         </>
       ))}
@@ -48,20 +44,23 @@ const CheckboxGroup = ({
 
 interface CheckboxGroupRootProps
   extends React.ComponentProps<typeof AriaCheckboxGroup>,
-    VariantProps<typeof checkboxGroupStyles> {}
+    VariantProps<typeof checkboxGroupStyles>,
+    VariantProps<typeof checkboxStyles> {}
 
 const CheckboxGroupRoot = ({
-  // variant,
+  variant,
   className,
   ...props
 }: CheckboxGroupRootProps) => {
   return (
-    <AriaCheckboxGroup
-      className={composeRenderProps(className, (className) =>
-        root({ className })
-      )}
-      {...props}
-    />
+    <CheckboxProvider variant={variant}>
+      <AriaCheckboxGroup
+        className={composeRenderProps(className, (className) =>
+          checkboxGroupStyles({ className })
+        )}
+        {...props}
+      />
+    </CheckboxProvider>
   );
 };
 

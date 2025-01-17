@@ -1,11 +1,9 @@
 ---
-title: TextArea
+title: TextArea ☑️
 description: TextArea is a multiline text input.
 links:
   - label: Aria docs
     href: https://react-spectrum.adobe.com/react-aria/TextArea.html
-  - label: Aria API Reference
-    href: https://react-spectrum.adobe.com/react-aria/TextArea.html#props
   - label: Report an issue
     href: https://github.com/mehdibha/dotUI/issues/new/choose
   - label: Edit this page
@@ -19,50 +17,35 @@ links:
 
 ## Installation
 
-<Tabs items={["CLI", "Manual"]}>
-  <Tab value="CLI">
-  
-  ```package-install
+```package-install
 npx dotui-cli@latest add text-area
 ```
-
-  </Tab>
-  <Tab value="manual">
-  
-    <Steps>
-      <Step>Install the following dependencies:</Step>
-
-    ```package-install
-    react-aria-components
-    ```
-
-      <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name="core/text-area/text-area" />
-      <Step>Update the import paths to match your project setup.</Step>
-    </Steps>
-
-  </Tab>
-</Tabs>
 
 ## Usage
 
 Use a `TextArea` to allow users to input a long string of free-form text.
 
+```tsx
+import { TextArea } from "@/components/core/text-area";
+
+<TextArea label="Description" description="Enter your description." />;
+```
+
+```tsx
+import { Label, Description } from "@/components/core/field";
+import { InputRoot, TextAreaInput } from "@/components/core/input";
+import { TextAreaRoot } from "@/components/core/text-field";
+
+<TextAreaRoot>
+  <Label>Email</Label>
+  <InputRoot multiline>
+    <TextAreaInput />
+  </InputRoot>
+  <Description>Enter your email.</Description>
+</TextAreaRoot>;
+```
+
 ## Options
-
-### Prefix and suffix
-
-To add additional context for the `TextArea`, use the `prefix` and `suffix` props.
-
-<ComponentPreview
-  name="core/text-area/text-area-prefix-and-suffix"
-  preview={`<TextArea
-    label="Comment"
-    placeholder="type something here"
-    prefix={<Emojis />}
-    suffix={<Toolbar />}
-  />`}
-/>
 
 ### Label
 
@@ -96,15 +79,18 @@ An `errorMessage` can be supplied to a TextArea, which will be displayed when th
   />`}
 />
 
-### Loading
+### Prefix and suffix
 
-Use the `isLoading` prop to control the loading state of the TextArea.
-Use the `loaderPosition` prop to control the position of the loader.
+To add additional context for the `TextArea`, use the `prefix` and `suffix` props.
 
 <ComponentPreview
-  name="core/text-area/text-area-loading"
-  preview={`<TextArea isLoading loaderPosition="prefix" />
-<TextArea isLoading loaderPosition="suffix" />`}
+  name="core/text-area/text-area-prefix-and-suffix"
+  preview={`<TextArea
+    label="Comment"
+    placeholder="type something here"
+    prefix={<Emojis />}
+    suffix={<Toolbar />}
+  />`}
 />
 
 ### Disabled
@@ -168,26 +154,24 @@ If you need to customize things further, you can drop down to the composition le
 
 <ComponentPreview
   name="core/text-area/text-area-composition"
-  preview={`<TextFieldRoot>
+  preview={`<TextAreaRoot>
     <Label>Comment</Label>
     <InputRoot>
       <TextAreaInput />
     </InputRoot>
     <Description>Enter your comment.</Description>
-  </TextFieldRoot>`}
+  </TextAreaRoot>`}
 />
 
 ## API Reference
 
 | Prop                 | Type                                                                                                   | Default    | Description                                                                                                                                                                                                                           |
 | -------------------- | ------------------------------------------------------------------------------------------------------ | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `prefix`             | `ReactNode`                                                                                            | -          | A visual to display before the input.                                                                                                                                                                                                 |
-| `suffix`             | `ReactNode`                                                                                            | -          | A visual to display after the input.                                                                                                                                                                                                  |
-| `loaderPosition`     | `"prefix" \| "suffix"`                                                                                 | `"suffix"` | The loader position                                                                                                                                                                                                                   |
 | `label`              | `ReactNode`                                                                                            |            | The content to display as the label.                                                                                                                                                                                                  |
 | `description`        | `ReactNode`                                                                                            |            | A description for the field. Provides a hint such as specific requirements for what to choose.                                                                                                                                        |
 | `errorMessage`       | `ReactNode \| (v: ValidationResult) => ReactNode`                                                      |            | An error message for the field.                                                                                                                                                                                                       |
-| `isLoading`          | `boolean`                                                                                              | -          | Whether the TextField is in a pending state.                                                                                                                                                                                          |
+| `prefix`             | `ReactNode`                                                                                            | -          | A visual to display before the input.                                                                                                                                                                                                 |
+| `suffix`             | `ReactNode`                                                                                            | -          | A visual to display after the input.                                                                                                                                                                                                  |
 | `isInvalid`          | `boolean`                                                                                              | -          | Whether the value is invalid.                                                                                                                                                                                                         |
 | `isDisabled`         | `boolean`                                                                                              | -          | Whether the input is disabled.                                                                                                                                                                                                        |
 | `isReadOnly`         | `boolean`                                                                                              | -          | Whether the input can be selected but not changed by the user.                                                                                                                                                                        |

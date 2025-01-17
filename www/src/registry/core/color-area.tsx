@@ -24,6 +24,8 @@ const ColorArea = (props: ColorAreaProps) => {
 interface ColorAreaRootProps extends Omit<AriaColorAreaProps, "className"> {
   className?: string;
 }
+interface ColorAreaRootProps
+  extends React.ComponentProps<typeof AriaColorArea> {}
 const ColorAreaRoot = ({ className, ...props }: ColorAreaRootProps) => {
   return (
     <AriaColorArea

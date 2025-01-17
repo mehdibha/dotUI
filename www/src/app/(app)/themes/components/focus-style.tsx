@@ -6,7 +6,7 @@ import { useThemes } from "@/hooks/use-themes";
 import { Button } from "@/components/dynamic-core/button";
 import { TextField } from "@/components/dynamic-core/text-field";
 import { ThemeOverride } from "@/components/theme-override";
-import { Radio, RadioGroup } from "@/registry/core/radio-group";
+import { Radio, RadioGroup } from "@/registry/core/radio-group_basic";
 
 const variants = [
   {

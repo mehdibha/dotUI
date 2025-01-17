@@ -216,13 +216,6 @@ export const Index: Record<string, any> = {
       files: ["demos/checkbox-group/composition.tsx"],
       component: React.lazy(() => import("@/demos/checkbox-group/composition")),
     },
-    "checkbox-group-contextual-help": {
-      name: "checkbox-group-contextual-help",
-      files: ["demos/checkbox-group/contextual-help.tsx"],
-      component: React.lazy(
-        () => import("@/demos/checkbox-group/contextual-help")
-      ),
-    },
     "checkbox-group-controlled": {
       name: "checkbox-group-controlled",
       files: ["demos/checkbox-group/controlled.tsx"],
@@ -347,13 +340,6 @@ export const Index: Record<string, any> = {
       files: ["demos/color-field/composition.tsx"],
       component: React.lazy(() => import("@/demos/color-field/composition")),
     },
-    "color-field-contextual-help": {
-      name: "color-field-contextual-help",
-      files: ["demos/color-field/contextual-help.tsx"],
-      component: React.lazy(
-        () => import("@/demos/color-field/contextual-help")
-      ),
-    },
     "color-field-controlled": {
       name: "color-field-controlled",
       files: ["demos/color-field/controlled.tsx"],
@@ -388,11 +374,6 @@ export const Index: Record<string, any> = {
       name: "color-field-label",
       files: ["demos/color-field/label.tsx"],
       component: React.lazy(() => import("@/demos/color-field/label")),
-    },
-    "color-field-loading": {
-      name: "color-field-loading",
-      files: ["demos/color-field/loading.tsx"],
-      component: React.lazy(() => import("@/demos/color-field/loading")),
     },
     "color-field-prefix-and-suffix": {
       name: "color-field-prefix-and-suffix",
@@ -506,11 +487,6 @@ export const Index: Record<string, any> = {
       files: ["demos/combobox/composition.tsx"],
       component: React.lazy(() => import("@/demos/combobox/composition")),
     },
-    "combobox-contextual-help": {
-      name: "combobox-contextual-help",
-      files: ["demos/combobox/contextual-help.tsx"],
-      component: React.lazy(() => import("@/demos/combobox/contextual-help")),
-    },
     "combobox-controlled": {
       name: "combobox-controlled",
       files: ["demos/combobox/controlled.tsx"],
@@ -566,11 +542,6 @@ export const Index: Record<string, any> = {
       files: ["demos/date-field/composition.tsx"],
       component: React.lazy(() => import("@/demos/date-field/composition")),
     },
-    "date-field-contextual-help": {
-      name: "date-field-contextual-help",
-      files: ["demos/date-field/contextual-help.tsx"],
-      component: React.lazy(() => import("@/demos/date-field/contextual-help")),
-    },
     "date-field-controlled": {
       name: "date-field-controlled",
       files: ["demos/date-field/controlled.tsx"],
@@ -616,11 +587,6 @@ export const Index: Record<string, any> = {
       files: ["demos/date-field/label.tsx"],
       component: React.lazy(() => import("@/demos/date-field/label")),
     },
-    "date-field-loading": {
-      name: "date-field-loading",
-      files: ["demos/date-field/loading.tsx"],
-      component: React.lazy(() => import("@/demos/date-field/loading")),
-    },
     "date-field-placeholder": {
       name: "date-field-placeholder",
       files: ["demos/date-field/placeholder.tsx"],
@@ -662,13 +628,6 @@ export const Index: Record<string, any> = {
       name: "date-picker-composition",
       files: ["demos/date-picker/composition.tsx"],
       component: React.lazy(() => import("@/demos/date-picker/composition")),
-    },
-    "date-picker-contextual-help": {
-      name: "date-picker-contextual-help",
-      files: ["demos/date-picker/contextual-help.tsx"],
-      component: React.lazy(
-        () => import("@/demos/date-picker/contextual-help")
-      ),
     },
     "date-picker-controlled": {
       name: "date-picker-controlled",
@@ -715,11 +674,6 @@ export const Index: Record<string, any> = {
       files: ["demos/date-picker/label.tsx"],
       component: React.lazy(() => import("@/demos/date-picker/label")),
     },
-    "date-picker-loading": {
-      name: "date-picker-loading",
-      files: ["demos/date-picker/loading.tsx"],
-      component: React.lazy(() => import("@/demos/date-picker/loading")),
-    },
     "date-picker-placeholder": {
       name: "date-picker-placeholder",
       files: ["demos/date-picker/placeholder.tsx"],
@@ -760,13 +714,6 @@ export const Index: Record<string, any> = {
       files: ["demos/date-range-picker/composition.tsx"],
       component: React.lazy(
         () => import("@/demos/date-range-picker/composition")
-      ),
-    },
-    "date-range-picker-contextual-help": {
-      name: "date-range-picker-contextual-help",
-      files: ["demos/date-range-picker/contextual-help.tsx"],
-      component: React.lazy(
-        () => import("@/demos/date-range-picker/contextual-help")
       ),
     },
     "date-range-picker-controlled": {
@@ -825,11 +772,6 @@ export const Index: Record<string, any> = {
       name: "date-range-picker-label",
       files: ["demos/date-range-picker/label.tsx"],
       component: React.lazy(() => import("@/demos/date-range-picker/label")),
-    },
-    "date-range-picker-loading": {
-      name: "date-range-picker-loading",
-      files: ["demos/date-range-picker/loading.tsx"],
-      component: React.lazy(() => import("@/demos/date-range-picker/loading")),
     },
     "date-range-picker-placeholder": {
       name: "date-range-picker-placeholder",
@@ -1219,13 +1161,6 @@ export const Index: Record<string, any> = {
       files: ["demos/number-field/composition.tsx"],
       component: React.lazy(() => import("@/demos/number-field/composition")),
     },
-    "number-field-contextual-help": {
-      name: "number-field-contextual-help",
-      files: ["demos/number-field/contextual-help.tsx"],
-      component: React.lazy(
-        () => import("@/demos/number-field/contextual-help")
-      ),
-    },
     "number-field-controlled": {
       name: "number-field-controlled",
       files: ["demos/number-field/controlled.tsx"],
@@ -1370,13 +1305,6 @@ export const Index: Record<string, any> = {
       files: ["demos/radio-group/composition.tsx"],
       component: React.lazy(() => import("@/demos/radio-group/composition")),
     },
-    "radio-group-contextual-help": {
-      name: "radio-group-contextual-help",
-      files: ["demos/radio-group/contextual-help.tsx"],
-      component: React.lazy(
-        () => import("@/demos/radio-group/contextual-help")
-      ),
-    },
     "radio-group-controlled": {
       name: "radio-group-controlled",
       files: ["demos/radio-group/controlled.tsx"],
@@ -1509,13 +1437,6 @@ export const Index: Record<string, any> = {
       files: ["demos/search-field/composition.tsx"],
       component: React.lazy(() => import("@/demos/search-field/composition")),
     },
-    "search-field-contextual-help": {
-      name: "search-field-contextual-help",
-      files: ["demos/search-field/contextual-help.tsx"],
-      component: React.lazy(
-        () => import("@/demos/search-field/contextual-help")
-      ),
-    },
     "search-field-controlled": {
       name: "search-field-controlled",
       files: ["demos/search-field/controlled.tsx"],
@@ -1550,11 +1471,6 @@ export const Index: Record<string, any> = {
       name: "search-field-label",
       files: ["demos/search-field/label.tsx"],
       component: React.lazy(() => import("@/demos/search-field/label")),
-    },
-    "search-field-loading": {
-      name: "search-field-loading",
-      files: ["demos/search-field/loading.tsx"],
-      component: React.lazy(() => import("@/demos/search-field/loading")),
     },
     "search-field-prefix-and-suffix": {
       name: "search-field-prefix-and-suffix",
@@ -1597,11 +1513,6 @@ export const Index: Record<string, any> = {
       name: "select-composition",
       files: ["demos/select/composition.tsx"],
       component: React.lazy(() => import("@/demos/select/composition")),
-    },
-    "select-contextual-help": {
-      name: "select-contextual-help",
-      files: ["demos/select/contextual-help.tsx"],
-      component: React.lazy(() => import("@/demos/select/contextual-help")),
     },
     "select-controlled": {
       name: "select-controlled",
@@ -1694,13 +1605,6 @@ export const Index: Record<string, any> = {
       name: "skeleton-show",
       files: ["demos/skeleton/show.tsx"],
       component: React.lazy(() => import("@/demos/skeleton/show")),
-    },
-    "slider-advanced-composition": {
-      name: "slider-advanced-composition",
-      files: ["demos/slider/advanced-composition.tsx"],
-      component: React.lazy(
-        () => import("@/demos/slider/advanced-composition")
-      ),
     },
     "slider-composition": {
       name: "slider-composition",
@@ -1802,6 +1706,16 @@ export const Index: Record<string, any> = {
       files: ["demos/switch/uncontrolled.tsx"],
       component: React.lazy(() => import("@/demos/switch/uncontrolled")),
     },
+    "switch-card": {
+      name: "switch-card",
+      files: ["demos/switch/card.tsx"],
+      component: React.lazy(() => import("@/demos/switch/card")),
+    },
+    "switch-composition": {
+      name: "switch-composition",
+      files: ["demos/switch/composition.tsx"],
+      component: React.lazy(() => import("@/demos/switch/composition")),
+    },
     "tabs-basic": {
       name: "tabs-basic",
       files: ["demos/tabs/basic.tsx"],
@@ -1836,11 +1750,6 @@ export const Index: Record<string, any> = {
       name: "text-area-composition",
       files: ["demos/text-area/composition.tsx"],
       component: React.lazy(() => import("@/demos/text-area/composition")),
-    },
-    "text-area-contextual-help": {
-      name: "text-area-contextual-help",
-      files: ["demos/text-area/contextual-help.tsx"],
-      component: React.lazy(() => import("@/demos/text-area/contextual-help")),
     },
     "text-area-controlled": {
       name: "text-area-controlled",
@@ -1877,11 +1786,6 @@ export const Index: Record<string, any> = {
       files: ["demos/text-area/label.tsx"],
       component: React.lazy(() => import("@/demos/text-area/label")),
     },
-    "text-area-loading": {
-      name: "text-area-loading",
-      files: ["demos/text-area/loading.tsx"],
-      component: React.lazy(() => import("@/demos/text-area/loading")),
-    },
     "text-area-prefix-and-suffix": {
       name: "text-area-prefix-and-suffix",
       files: ["demos/text-area/prefix-and-suffix.tsx"],
@@ -1908,11 +1812,6 @@ export const Index: Record<string, any> = {
       name: "text-field-composition",
       files: ["demos/text-field/composition.tsx"],
       component: React.lazy(() => import("@/demos/text-field/composition")),
-    },
-    "text-field-contextual-help": {
-      name: "text-field-contextual-help",
-      files: ["demos/text-field/contextual-help.tsx"],
-      component: React.lazy(() => import("@/demos/text-field/contextual-help")),
     },
     "text-field-controlled": {
       name: "text-field-controlled",
@@ -1943,11 +1842,6 @@ export const Index: Record<string, any> = {
       name: "text-field-label",
       files: ["demos/text-field/label.tsx"],
       component: React.lazy(() => import("@/demos/text-field/label")),
-    },
-    "text-field-loading": {
-      name: "text-field-loading",
-      files: ["demos/text-field/loading.tsx"],
-      component: React.lazy(() => import("@/demos/text-field/loading")),
     },
     "text-field-prefix-and-suffix": {
       name: "text-field-prefix-and-suffix",
@@ -1980,11 +1874,6 @@ export const Index: Record<string, any> = {
       name: "time-field-composition",
       files: ["demos/time-field/composition.tsx"],
       component: React.lazy(() => import("@/demos/time-field/composition")),
-    },
-    "time-field-contextual-help": {
-      name: "time-field-contextual-help",
-      files: ["demos/time-field/contextual-help.tsx"],
-      component: React.lazy(() => import("@/demos/time-field/contextual-help")),
     },
     "time-field-controlled": {
       name: "time-field-controlled",
@@ -2030,11 +1919,6 @@ export const Index: Record<string, any> = {
       name: "time-field-label",
       files: ["demos/time-field/label.tsx"],
       component: React.lazy(() => import("@/demos/time-field/label")),
-    },
-    "time-field-loading": {
-      name: "time-field-loading",
-      files: ["demos/time-field/loading.tsx"],
-      component: React.lazy(() => import("@/demos/time-field/loading")),
     },
     "time-field-placeholder": {
       name: "time-field-placeholder",
@@ -2199,6 +2083,16 @@ export const Index: Record<string, any> = {
       name: "form-react-hook-form",
       files: ["demos/form/react-hook-form.tsx"],
       component: React.lazy(() => import("@/demos/form/react-hook-form")),
+    },
+    "command-basic": {
+      name: "command-basic",
+      files: ["demos/command/basic.tsx"],
+      component: React.lazy(() => import("@/demos/command/basic")),
+    },
+    "command-dialog": {
+      name: "command-dialog",
+      files: ["demos/command/dialog.tsx"],
+      component: React.lazy(() => import("@/demos/command/dialog")),
     },
   },
 };

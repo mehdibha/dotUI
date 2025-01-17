@@ -1,3 +1,3 @@
 {
-  "pages": ["menu", "list-box", "select", "combobox", "tag-group"]
+  "pages": ["menu", "list-box", "select", "combobox", "tag-group", "command"]
 }

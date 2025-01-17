@@ -10,7 +10,7 @@ import { Loader as LineSpinner } from "@/registry/core/loader-line-spinner";
 import { Loader as Ring } from "@/registry/core/loader-ring";
 import { Loader as Tailspin } from "@/registry/core/loader-tailspin";
 import { Loader as Wave } from "@/registry/core/loader-wave";
-import { Radio, RadioGroup } from "@/registry/core/radio-group";
+import { Radio, RadioGroup } from "@/registry/core/radio-group_basic";
 
 const variants = [
   {

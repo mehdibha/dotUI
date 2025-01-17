@@ -66,5 +66,15 @@ const HelpText = ({ description, errorMessage, ...props }: HelpTextProps) => {
   return null;
 };
 
-export type { LabelProps, DescriptionProps, FieldErrorProps, HelpTextProps };
+interface FieldProps extends HelpTextProps {
+  label?: LabelProps["children"];
+}
+
+export type {
+  LabelProps,
+  DescriptionProps,
+  FieldErrorProps,
+  HelpTextProps,
+  FieldProps,
+};
 export { Label, Description, FieldError, HelpText };
