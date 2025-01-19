@@ -1,11 +1,9 @@
 ---
-title: Color Area
+title: Color Area ☑️
 description: ColorArea allows users to adjust two channels of an RGB, HSL or HSB color value against a two-dimensional gradient background.
 links:
   - label: Aria docs
     href: https://react-spectrum.adobe.com/react-aria/ColorArea.html
-  - label: Aria API Reference
-    href: https://react-spectrum.adobe.com/react-aria/ColorArea.html#props
   - label: Report an issue
     href: https://github.com/mehdibha/dotUI/issues/new/choose
   - label: Edit this page
@@ -19,34 +17,47 @@ links:
 
 ## Installation
 
-<Tabs items={["CLI", "Manual"]}>
-  <Tab value="CLI">
-  
-  ```package-install
+```package-install
 npx dotui-cli@latest add color-area
 ```
-
-  </Tab>
-  <Tab value="manual">
-  
-    <Steps>
-      <Step>Install the following dependencies:</Step>
-
-    ```package-install
-    react-aria-components
-    ```
-
-      <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name={["core/color-area/color-area"]} />
-      <Step>Update the import paths to match your project setup.</Step>
-    </Steps>
-
-  </Tab>
-</Tabs>
 
 ## Usage
 
 Use `ColorArea` to allow users to adjust two channels of an RGB, HSL or HSB color value against a two-dimensional gradient background.
+
+```tsx
+import { ColorArea } from "@/components/core/color-area";
+
+<ColorArea />;
+```
+
+```tsx
+import { ColorAreaRoot } from "@/components/core/color-area";
+import { ColorThumb } from "@/components/core/color-thumb";
+
+<ColorAreaRoot>
+  <ColorThumb />
+</ColorAreaRoot>;
+```
+
+## Unontrolled
+
+An initial, uncontrolled value can be provided to the `ColorArea` using the `defaultValue` prop.
+
+<ComponentPreview
+  name="core/color-area/color-area-uncontrolled"
+  preview={`<ColorArea defaultValue="hsl(30, 100%, 50%)" />`}
+/>
+
+## Controlled
+
+Use the `value` and `onChange` props to control the value of the slider.
+
+<ComponentPreview
+  name="core/color-area/color-area-controlled"
+  preview={`const [value, setValue] = React.useState(parseColor("hsl(0, 100%, 50%)"))
+return <ColorArea value={value} onChange={setValue} xChannel="saturation" yChannel="lightness" />`}
+/>
 
 ## Options
 
@@ -66,25 +77,6 @@ Use the `isDisabled` prop to disable the color area.
 <ComponentPreview
   name="core/color-area/color-area-disabled"
   preview={`<ColorArea isDisabled />`}
-/>
-
-## Unontrolled
-
-An initial, uncontrolled value can be provided to the `ColorArea` using the `defaultValue` prop.
-
-<ComponentPreview
-  name="core/color-area/color-area-uncontrolled"
-  preview={`<ColorArea defaultValue="hsl(30, 100%, 50%)" />`}
-/>
-
-## Controlled
-
-Use the `value` and `onChange` props to control the value of the slider.
-
-<ComponentPreview
-  name="core/color-area/color-area-controlled"
-  preview={`const [value, setValue] = React.useState(parseColor("hsl(0, 100%, 50%)"))
-return <ColorArea value={value} onChange={setValue} xChannel="saturation" yChannel="lightness" />`}
 />
 
 ## Composition

@@ -1,11 +1,11 @@
 ---
-title: Range Calendar
+title: Range Calendar ☑️
 description: A component that allows users to select a range of dates.
 links:
   - label: Aria docs
     href: https://react-spectrum.adobe.com/react-aria/RangeCalendar.html
-  - label: Aria API Reference
-    href: https://react-spectrum.adobe.com/react-aria/RangeCalendar.html#props
+  - label: "@internationalized/date"
+    href: https://react-spectrum.adobe.com/internationalized/date/index.html
   - label: Report an issue
     href: https://github.com/mehdibha/dotUI/issues/new/choose
   - label: Edit this page
@@ -14,84 +14,124 @@ links:
 
 <ComponentPreview
   name="core/range-calendar/range-calendar-default"
-  preview={`<RangeCalendar />`}
+  preview={`<RangeCalendar aria-label="Trip dates" />`}
 />
 
 ## Installation
 
-<Tabs items={["CLI", "Manual"]}>
-  <Tab value="CLI">
-  
-  ```package-install
-npx dotui-cli@latest add range-calendar
+```package-install
+npx dotui-cli@latest add calendar
 ```
-
-  </Tab>
-  <Tab value="manual">
-  
-    <Steps>
-      <Step>Install the following dependencies:</Step>
-
-    ```package-install
-    react-aria-components
-    ```
-
-      <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name="core/range-calendar/range-calendar" />
-      <Step>Update the import paths to match your project setup.</Step>
-    </Steps>
-
-  </Tab>
-</Tabs>
 
 ## Usage
 
 Use `RangeCalendar` to allow users to select a contiguous or non-contiguous range of dates.
 
-## Options
+```tsx
+import { parseDate } from "@internationalized/date";
+import { RangeCalendar } from "@/components/core/calendar";
 
-### Label
+<RangeCalendar
+  aria-label="Trip dates"
+  defaultValue={{
+    start: parseDate("2020-02-03"),
+    end: parseDate("2020-02-12"),
+  }}
+/>;
+```
 
-An `aria-label` must be provided to the `RangeCalendar` for accessibility. If it is labeled by a separate element, an `aria-labelledby` prop must be provided using the id of the labeling element instead.
+```tsx
+import { parseDate } from "@internationalized/date";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { Button } from "@/components/core/button";
+import {
+  RangeCalendarRoot,
+  CalendarHeader,
+  CalendarGrid,
+  CalendarGridHeader,
+  CalendarHeaderCell,
+  CalendarGridBody,
+  CalendarCell,
+} from "@/components/core/calendar";
+import { Heading } from "@/registry/ui/default/core/heading";
+
+<RangeCalendarRoot
+  aria-label="Trip dates"
+  defaultValue={{
+    start: parseDate("2020-02-03"),
+    end: parseDate("2020-02-12"),
+  }}
+>
+  <CalendarHeader>
+    <Button slot="previous">
+      <ChevronLeftIcon />
+    </Button>
+    <Heading />
+    <Button slot="next">
+      <ChevronRightIcon />
+    </Button>
+  </CalendarHeader>
+  <CalendarGrid>
+    <CalendarGridHeader>
+      {(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}
+    </CalendarGridHeader>
+    <CalendarGridBody>
+      {(date) => <CalendarCell date={date} />}
+    </CalendarGridBody>
+  </CalendarGrid>
+</RangeCalendarRoot>;
+```
+
+### Best practices
+
+- An `aria-label` must be provided to the `RangeCalendar` for accessibility. If it is labeled by a separate element, an `aria-labelledby` prop must be provided using the id of the labeling element instead.
+
+## Uncontrolled
+
+An initial, uncontrolled value can be provided to the `RangeCalendar` using the `defaultValue` prop.
 
 <ComponentPreview
-  name="core/range-calendar/range-calendar-label"
-  preview={`<RangeCalendar aria-label="Event date" />`}
+  name="core/range-calendar/range-calendar-uncontrolled"
+  preview={`<RangeCalendar
+    aria-label="Trip dates"
+    defaultValue={{
+      start: parseDate("2020-02-03"),
+      end: parseDate("2020-02-12"),
+    }}
+  />`}
 />
 
-### Error message
+## Controlled
 
-`RangeCalendar` tries to avoid allowing the user to select invalid dates in the first place (see [Min and max values](#min-and-max-values) and [Unavailable dates](#unavailable-dates)). However, if according to application logic a selected date is invalid, Use `isInvalid` and `errorMessage` props.
+The Range Calendar component can be controlled by passing the `value` and `onChange` props.
 
 <ComponentPreview
-  name="core/range-calendar/range-calendar-error-message"
-  preview={`const [range, setRange] = React.useState({
-    start: today(getLocalTimeZone()),
-    end: today(getLocalTimeZone()).add({ weeks: 1, days: 3 }),
+  name="core/range-calendar/range-calendar-controlled"
+  preview={`const [value, setValue] = React.useState<DateRange>({
+    start: parseDate("2020-02-03"),
+    end: parseDate("2020-02-12"),
   });
-  const isInvalid = range.end.compare(range.start) > 7;
-  return (
-    <RangeCalendar
-      value={range}
-      onChange={setRange}
-      isInvalid={isInvalid}
-      errorMessage={isInvalid ? "Maximum stay duration is 1 week" : undefined}
-    />
-  );`}
+  return <RangeCalendar aria-label="Trip dates" value={value} onChange={setValue} />`}
 />
+
+## Validation
 
 ### Min and max values
 
 By default, Calendar allows selecting any date. The minValue and maxValue props can also be used to prevent the user from selecting dates outside a certain range.
 
+This example only accepts dates after today.
+
 <ComponentPreview
   name="core/range-calendar/range-calendar-validation"
-  preview={`<RangeCalendar minValue={today(getLocalTimeZone())} />`}
+  preview={`<RangeCalendar aria-label="Trip dates" minValue={today(getLocalTimeZone())} />`}
 />
 
 ### Unavailable dates
 
 Calendar supports marking certain dates as unavailable. These dates cannot be selected by the user and are displayed with a crossed out appearance. The `isDateUnavailable` prop accepts a callback that is called to evaluate whether each visible date is unavailable.
+
+This example includes multiple unavailable date ranges, e.g. dates when a rental house is not available. The `minValue` prop is also used to prevent selecting dates before today.
 
 {/* prettier-ignore-start */}
 
@@ -111,6 +151,7 @@ Calendar supports marking certain dates as unavailable. These dates cannot be se
 
   return (
     <RangeCalendar
+      aria-label="Trip dates"
       minValue={today(getLocalTimeZone())}
       isDateUnavailable={isDateUnavailable}
     />
@@ -122,6 +163,8 @@ Calendar supports marking certain dates as unavailable. These dates cannot be se
 ### Non-contiguous ranges
 
 The `allowsNonContiguousRanges` prop enables a range to be selected even if there are unavailable dates in the middle.
+
+This example prevents selecting weekends, but allows selecting ranges that span multiple weeks.
 
 <ComponentPreview
   name="core/range-calendar/range-calendar-non-contiguous-ranges"
@@ -137,6 +180,7 @@ The `allowsNonContiguousRanges` prop enables a range to be selected even if ther
     );
   return (
     <RangeCalendar
+      aria-label="Trip dates"
       minValue={today(getLocalTimeZone())}
       isDateUnavailable={isDateUnavailable}
       allowsNonContiguousRanges
@@ -144,13 +188,39 @@ The `allowsNonContiguousRanges` prop enables a range to be selected even if ther
   );`}
 />
 
+### Error message
+
+`RangeCalendar` tries to avoid allowing the user to select invalid dates in the first place (see [Min and max values](/docs/components/date-and-time/calendar#min-and-max-values) and [Unavailable dates](/docs/components/date-and-time/calendar#unavailable-dates)). However, if according to application logic a selected date is invalid, Use `isInvalid` and `errorMessage` props.
+
+This example validates that the selected date range is a maximum of 1 week in duration.
+
+<ComponentPreview
+  name="core/range-calendar/range-calendar-error-message"
+  preview={`const [range, setRange] = React.useState({
+    start: today(getLocalTimeZone()),
+    end: today(getLocalTimeZone()).add({ weeks: 1, days: 3 }),
+  });
+  const isInvalid = range.end.compare(range.start) > 7;
+  return (
+    <RangeCalendar
+      aria-label="Trip dates"
+      value={range}
+      onChange={setRange}
+      isInvalid={isInvalid}
+      errorMessage={isInvalid ? "Maximum stay duration is 1 week" : undefined}
+    />
+  );`}
+/>
+
+## Options
+
 ### Visible months
 
 By default, the `RangeCalendar` displays a single month. The `visibleMonths` prop allows displaying up to 3 months at a time.
 
 <ComponentPreview
   name="core/range-calendar/range-calendar-visible-months"
-  preview={`<RangeCalendar visibleMonths={2} />`}
+  preview={`<RangeCalendar aria-label="Trip dates" visibleMonths={2} />`}
 />
 
 ### Page behaviour
@@ -159,7 +229,7 @@ The `pageBehavior` prop allows you to control how the range-calendar navigates b
 
 <ComponentPreview
   name="core/range-calendar/range-calendar-page-behaviour"
-  preview={`<RangeCalendar visibleMonths={2} pageBehavior="single" />`}
+  preview={`<RangeCalendar aria-label="Trip dates" visibleMonths={2} pageBehavior="single" />`}
 />
 
 ### Disabled
@@ -168,7 +238,7 @@ The `isDisabled` boolean prop makes the `RangeCalendar` disabled. cells cannot b
 
 <ComponentPreview
   name="core/range-calendar/range-calendar-disabled"
-  preview={`<RangeCalendar isDisabled />`}
+  preview={`<RangeCalendar aria-label="Trip dates" isDisabled />`}
 />
 
 ### Read only
@@ -178,34 +248,13 @@ The `isReadOnly` boolean prop makes the `RangeCalendar`'s value immutable. Unlik
 <ComponentPreview
   name="core/range-calendar/range-calendar-read-only"
   preview={`<RangeCalendar
+    aria-label="Trip dates"
     isReadOnly
     value={{
-      start: today(getLocalTimeZone()),
-      end: today(getLocalTimeZone()).add({ weeks: 1 }),
+      start: parseDate("2020-02-03"),
+      end: parseDate("2020-02-12"),
     }}
   />`}
-/>
-
-## Uncontrolled
-
-An initial, uncontrolled value can be provided to the `Calendar` using the `defaultValue` prop.
-
-<ComponentPreview
-  name="core/range-calendar/range-calendar-uncontrolled"
-  preview={`<Calendar defaultValue={today(getLocalTimeZone())} />`}
-/>
-
-## Controlled
-
-The Range Calendar component can be controlled by passing the `value` and `onChange` props.
-
-<ComponentPreview
-  name="core/range-calendar/range-calendar-controlled"
-  preview={`const [range, setRange] = React.useState<DateRange>({
-    start: today(getLocalTimeZone()),
-    end: today(getLocalTimeZone()).add({ weeks: 1 }),
-  });
-  return <RangeCalendar value={range} onChange={setRange} />`}
 />
 
 ## Composition
@@ -214,13 +263,13 @@ If you need to customize things further, you can drop down to the composition le
 
 <ComponentPreview
   name="core/range-calendar/range-calendar-composition"
-  preview={`<RangeCalendarRoot>
+  preview={`<RangeCalendarRoot aria-label="Trip dates">
     <CalendarHeader>
-      <Button slot="previous" variant="outline" shape="square" size="sm">
+      <Button slot="previous">
         <ChevronLeftIcon />
       </Button>
-      <Heading className="text-sm" />
-      <Button slot="next" variant="outline" shape="square" size="sm">
+      <Heading />
+      <Button slot="next">
         <ChevronRightIcon />
       </Button>
     </CalendarHeader>
@@ -229,11 +278,7 @@ If you need to customize things further, you can drop down to the composition le
         {(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}
       </CalendarGridHeader>
       <CalendarGridBody>
-        {(date) => (
-          <CalendarCell date={date} range>
-            {({ formattedDate }) => <span className="z-20">{formattedDate}</span>}
-          </CalendarCell>
-        )}
+        {(date) => <CalendarCell date={date} />}
       </CalendarGridBody>
     </CalendarGrid>
   </RangeCalendarRoot>`}

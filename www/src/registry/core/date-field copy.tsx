@@ -2,26 +2,26 @@
 
 import * as React from "react";
 import {
-  TimeField as AriaTimeField,
+  DateField as AriaDateField,
   composeRenderProps,
-  type TimeValue,
-  type TimeFieldProps as AriaTimeFieldProps,
+  type DateValue,
+  type DateFieldProps as AriaDateFieldProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import { DateInput, DateSegment } from "@/registry/core/date-input";
 import { HelpText, Label, type FieldProps } from "./field_new";
 import { InputRoot, type InputRootProps } from "./input_new";
 
-const timeFieldStyles = tv({
+const dateFieldStyles = tv({
   base: "flex w-32 flex-col items-start gap-2",
 });
 
-interface TimeFieldProps<T extends TimeValue>
-  extends TimeFieldRootProps<T>,
+interface DateFieldProps<T extends DateValue>
+  extends DateFieldRootProps<T>,
     Pick<InputRootProps, "size" | "prefix" | "suffix">,
     FieldProps {}
 
-const TimeField = <T extends TimeValue>({
+const DateField = <T extends DateValue>({
   label,
   description,
   errorMessage,
@@ -29,44 +29,35 @@ const TimeField = <T extends TimeValue>({
   suffix,
   size,
   ...props
-}: TimeFieldProps<T>) => {
+}: DateFieldProps<T>) => {
   return (
-    <TimeFieldRoot {...props}>
+    <DateFieldRoot {...props}>
       {label && <Label>{label}</Label>}
       <InputRoot size={size} prefix={prefix} suffix={suffix}>
         <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
       </InputRoot>
       <HelpText description={description} errorMessage={errorMessage} />
-    </TimeFieldRoot>
+    </DateFieldRoot>
   );
 };
 
-interface TimeFieldRootProps<T extends TimeValue>
-  extends AriaTimeFieldProps<T> {
+interface DateFieldRootProps<T extends DateValue>
+  extends AriaDateFieldProps<T> {
   ref?: React.Ref<HTMLDivElement>;
 }
-const TimeFieldRoot = <T extends TimeValue>({
+const DateFieldRoot = <T extends DateValue>({
   className,
   ...props
-}: TimeFieldRootProps<T>) => {
+}: DateFieldRootProps<T>) => {
   return (
-    <AriaTimeField
+    <AriaDateField
       className={composeRenderProps(className, (className) =>
-        timeFieldStyles({ className })
+        dateFieldStyles({ className })
       )}
       {...props}
     />
   );
 };
 
-interface TimeFieldInputProps extends InputRootProps {}
-const TimeFieldInput = (props: TimeFieldInputProps) => {
-  return (
-    <InputRoot {...props}>
-      <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
-    </InputRoot>
-  );
-};
-
-export type { TimeFieldProps, TimeFieldRootProps, TimeFieldInputProps };
-export { TimeField, TimeFieldRoot, TimeFieldInput };
+export type { DateFieldProps, DateFieldRootProps };
+export { DateField, DateFieldRoot };

@@ -16,8 +16,9 @@ import { tv } from "tailwind-variants";
 const fieldStyles = tv({
   slots: {
     root: "flex flex-col items-start gap-2",
+    // TODO: check peer-disabled
     label:
-      "peer-disabled:text-fg-disabled inline-flex items-center gap-px text-sm font-medium leading-none peer-disabled:cursor-not-allowed [&_svg]:size-3",
+      "[grid-area:label] peer-disabled:text-fg-disabled inline-flex items-center gap-px text-sm font-medium leading-none peer-disabled:cursor-not-allowed [&_svg]:size-3",
     description: "text-fg-muted text-xs",
     fieldError: "text-fg-danger text-xs",
   },

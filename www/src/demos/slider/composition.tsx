@@ -10,8 +10,8 @@ import {
 
 export default function Demo() {
   return (
-    <SliderRoot defaultValue={50}>
-      <div className="flex items-center justify-between">
+    <SliderRoot defaultValue={50} className="flex flex-col gap-2">
+      <div className="flex items-center justify-between gap-2">
         <Label>Volume</Label>
         <SliderValueLabel />
       </div>

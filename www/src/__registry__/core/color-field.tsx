@@ -3,87 +3,76 @@
 import * as React from "react";
 import {
   ColorField as AriaColorField,
-  type ColorFieldProps as AriaColorFieldProps,
+  composeRenderProps,
 } from "react-aria-components";
-import { tv, type VariantProps } from "tailwind-variants";
-import { Field, type FieldProps } from "@/registry/core/field";
-import { InputRoot, Input, type inputStyles } from "@/registry/core/input";
+import { tv } from "tailwind-variants";
+import { Label, HelpText, type FieldProps } from "@/registry/core/field_new";
+import {
+  InputRoot,
+  Input,
+  type InputRootProps,
+} from "@/registry/core/input_new";
 
-const colorFieldStyles = tv({
+const textFieldStyles = tv({
   base: "flex w-48 flex-col items-start gap-2",
 });
 
-type ColorFieldProps = ColorFieldRootProps &
-  Omit<FieldProps, "children"> &
-  VariantProps<typeof inputStyles> & {
-    prefix?: React.ReactNode;
-    suffix?: React.ReactNode;
-    isLoading?: boolean;
-    loaderPosition?: "prefix" | "suffix";
-    placeholder?: string;
-  };
-const ColorField = React.forwardRef<HTMLInputElement, ColorFieldProps>(
-  (
-    {
-      className,
-      size,
-      placeholder,
-      label,
-      description,
-      errorMessage,
-      prefix,
-      suffix,
-      isLoading,
-      loaderPosition = "suffix",
-      isRequired,
-      necessityIndicator,
-      contextualHelp,
-      ...props
-    },
-    ref
-  ) => {
-    return (
-      <ColorFieldRoot className={className} isRequired={isRequired} {...props}>
-        <Field
-          label={label}
-          description={description}
-          errorMessage={errorMessage}
-          isRequired={isRequired}
-          necessityIndicator={necessityIndicator}
-          contextualHelp={contextualHelp}
-        >
-          <InputRoot
-            size={size}
-            prefix={prefix}
-            suffix={suffix}
-            isLoading={isLoading}
-            loaderPosition={loaderPosition}
-          >
-            <Input ref={ref} placeholder={placeholder} />
-          </InputRoot>
-        </Field>
-      </ColorFieldRoot>
-    );
-  }
-);
-ColorField.displayName = "ColorField";
+interface ColorFieldProps
+  extends ColorFieldRootProps,
+    Pick<InputRootProps, "size" | "prefix" | "suffix">,
+    FieldProps {
+  inputRef?: React.Ref<HTMLInputElement>;
+}
 
-type ColorFieldRootProps = Omit<AriaColorFieldProps, "className"> & {
-  className?: string;
+const ColorField = ({
+  label,
+  description,
+  errorMessage,
+  prefix,
+  suffix,
+  size,
+  inputRef,
+  ...props
+}: ColorFieldProps) => {
+  return (
+    <ColorFieldRoot {...props}>
+      {label && <Label>{label}</Label>}
+      <ColorFieldInput
+        inputRef={inputRef}
+        size={size}
+        prefix={prefix}
+        suffix={suffix}
+      />
+      <HelpText description={description} errorMessage={errorMessage} />
+    </ColorFieldRoot>
+  );
 };
-const ColorFieldRoot = React.forwardRef<
-  React.ElementRef<typeof AriaColorField>,
-  ColorFieldRootProps
->(({ className, ...props }, ref) => {
+
+interface ColorFieldRootProps
+  extends React.ComponentProps<typeof AriaColorField> {
+  placeholder?: string;
+}
+const ColorFieldRoot = ({ className, ...props }: ColorFieldRootProps) => {
   return (
     <AriaColorField
-      ref={ref}
-      className={colorFieldStyles({ className })}
+      className={composeRenderProps(className, (className) =>
+        textFieldStyles({ className })
+      )}
       {...props}
     />
   );
-});
-ColorFieldRoot.displayName = "ColorFieldRoot";
+};
 
-export type { ColorFieldProps, ColorFieldRootProps };
-export { ColorField, ColorFieldRoot };
+interface ColorFieldInputProps extends InputRootProps {
+  inputRef?: React.Ref<HTMLInputElement>;
+}
+const ColorFieldInput = ({ inputRef, ...props }: ColorFieldInputProps) => {
+  return (
+    <InputRoot {...props}>
+      <Input ref={inputRef} />
+    </InputRoot>
+  );
+};
+
+export type { ColorFieldProps, ColorFieldRootProps, ColorFieldInputProps };
+export { ColorField, ColorFieldRoot, ColorFieldInput };

@@ -54,8 +54,6 @@ export const ThemeOverride = React.forwardRef<
     )
   );
 
-  return <div className={cn("bg-bg text-fg", props.className)}>{children}</div>;
-
   return (
     <div
       ref={ref}
@@ -70,7 +68,7 @@ export const ThemeOverride = React.forwardRef<
       }
       className={cn("bg-bg text-fg", props.className)}
     >
-      <Skeleton show={!debouncedIsMounted}>{children}</Skeleton>
+      {children}
     </div>
   );
 });

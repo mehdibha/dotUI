@@ -15,13 +15,13 @@ import { Heading } from "@/components/dynamic-core/heading";
 
 export default function Demo() {
   return (
-    <CalendarRoot>
+    <CalendarRoot aria-label="Event date">
       <CalendarHeader>
-        <Button slot="previous" variant="outline" shape="square" size="sm">
+        <Button slot="previous" variant="outline" shape="circle" size="sm">
           <ChevronLeftIcon />
         </Button>
-        <Heading className="text-sm" />
-        <Button slot="next" variant="outline" shape="square" size="sm">
+        <Heading className="text-fg-muted text-sm" />
+        <Button slot="next" variant="outline" shape="circle" size="sm">
           <ChevronRightIcon />
         </Button>
       </CalendarHeader>

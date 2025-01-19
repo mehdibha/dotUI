@@ -2,7 +2,7 @@
 
 import {
   ColorSwatch as AriaColorSwatch,
-  type ColorSwatchProps as AriaColorSwatchProps,
+  composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
@@ -10,12 +10,16 @@ const colorSwatchStyles = tv({
   base: "size-5 rounded-sm border",
 });
 
-interface ColorSwatchProps extends Omit<AriaColorSwatchProps, "className"> {
-  className?: string;
-}
+interface ColorSwatchProps
+  extends React.ComponentProps<typeof AriaColorSwatch> {}
 const ColorSwatch = ({ className, ...props }: ColorSwatchProps) => {
   return (
-    <AriaColorSwatch className={colorSwatchStyles({ className })} {...props} />
+    <AriaColorSwatch
+      className={composeRenderProps(className, (className) =>
+        colorSwatchStyles({ className })
+      )}
+      {...props}
+    />
   );
 };
 

@@ -9,7 +9,7 @@ import {
 } from "react-aria-components";
 import { type VariantProps } from "tailwind-variants";
 import { Button } from "@/registry/core/button-01";
-import { Calendar } from "@/registry/core/calendar";
+import { Calendar } from "@/registry/core/calendar_basic";
 import { DateInput, DateSegment } from "@/registry/core/date-input";
 import { Dialog } from "@/registry/core/dialog";
 import { Field, fieldStyles, type FieldProps } from "@/registry/core/field";

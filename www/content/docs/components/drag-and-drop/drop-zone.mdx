@@ -1,11 +1,9 @@
 ---
-title: Dropzone
+title: Dropzone ☑️
 description: A drop zone is an area into which one or multiple objects can be dragged and dropped.
 links:
   - label: Aria docs
     href: https://react-spectrum.adobe.com/react-aria/DropZone.html
-  - label: Aria API Reference
-    href: https://react-spectrum.adobe.com/react-aria/DropZone.html#props
   - label: Report an issue
     href: https://github.com/mehdibha/dotUI/issues/new/choose
   - label: Edit this page
@@ -13,40 +11,17 @@ links:
 ---
 
 <ComponentPreview
-  name="core/drop-zone/drop-zone-default"
+  name="core/drop-zone/drop-zone-basic"
   preview={`<DropZone><UploadIcon /></DropZone>`}
 />
 
 ## Installation
 
-<Tabs items={["CLI", "Manual"]}>
-  <Tab value="CLI">
-  
-  ```package-install
+```package-install
 npx dotui-cli@latest add drop-zone
 ```
 
-  </Tab>
-  <Tab value="manual">
-  
-    <Steps>
-      <Step>Install the following dependencies:</Step>
-
-    ```package-install
-    react-aria-components
-    ```
-
-      <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name="core/drop-zone/drop-zone" />
-      <Step>Update the import paths to match your project setup.</Step>
-    </Steps>
-
-  </Tab>
-</Tabs>
-
-## Options
-
-### Label
+## Label
 
 A visual label can be provided for the `DropZone` using the `<Text slot="label">` component, or a hidden label using `aria-label` prop.
 
@@ -61,21 +36,26 @@ A visual label can be provided for the `DropZone` using the `<Text slot="label">
   </DropZone>`}
 />
 
-### Disabled
+## Events
 
-Use the `isDisabled` prop to disable the drop zone.
+DropZone supports user interactions via mouse, keyboard, and touch. You can handle all of these via the `onDrop` prop. In addition, the `onDropEnter`, `onDropMove`, and `onDropExit` events are fired as the user interacts with the dropzone.
 
 <ComponentPreview
-  name="core/drop-zone/drop-zone-disabled"
-  preview={`<DropZone isDisabled>
-    <UploadIcon />
-    <Text slot="label">Drag and drop files here</Text>
+  name="core/drop-zone/drop-zone-events"
+  preview={`<Draggable text="Component A" />
+  <Draggable text="Component B" />
+  <DropZone
+    onDrop={async (e) => {
+      {/* handle drop event */}
+    }}
+  >
+    <Text slot="label">Droppable</Text>
   </DropZone>`}
 />
 
-## Examples
+## File trigger
 
-### File trigger
+To allow the selection of files from the user's device, pass FileTrigger as a child of DropZone.
 
 <ComponentPreview
   name="core/drop-zone/drop-zone-file-trigger"
@@ -85,6 +65,33 @@ Use the `isDisabled` prop to disable the drop zone.
     <FileTrigger>
       <Button>Select files</Button>
     </FileTrigger>
+  </DropZone>`}
+/>
+
+## Visual feedback
+
+A dropzone displays visual feedback to the user when a drag hovers over the drop target by passing the `getDropOperation` function. If a drop target only supports data of specific types (e.g. images, videos, text, etc.), then it should implement the `getDropOperation` prop and return `"cancel"` for types that aren't supported. This will prevent visual feedback indicating that the drop target accepts the dragged data when this is not true.
+
+<ComponentPreview
+  name="core/drop-zone/drop-zone-visual-feedback"
+  preview={`<DropZone
+    getDropOperation={(types) => (types.has("image/png") ? "copy" : "cancel")}
+  >
+    {dropped ? "Successful drop!" : "Drop files here"}
+  </DropZone>`}
+/>
+
+## Options
+
+### Disabled
+
+Use the `isDisabled` prop to disable the drop zone.
+
+<ComponentPreview
+  name="core/drop-zone/drop-zone-disabled"
+  preview={`<DropZone isDisabled>
+    <UploadIcon />
+    <Text slot="label">Drag and drop files here</Text>
   </DropZone>`}
 />
 

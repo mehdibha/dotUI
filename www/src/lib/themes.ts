@@ -4,7 +4,7 @@ const defaultVariants = {
   alert: "alert-01",
   loader: "loader-ring",
   button: "button-01",
-  calendar: "calendar-01",
+  calendar: "calendar_basic",
   tooltip: "tooltip-01",
   form: "react-hook-form",
   checkbox: "checkbox_basic",
@@ -198,6 +198,7 @@ export const dotUIThemes: Theme[] = [
     iconLibrary: "lucide",
     variants: {
       ...defaultVariants,
+      button: "button-02",
     },
     colors: {
       light: {
@@ -372,6 +373,7 @@ export const dotUIThemes: Theme[] = [
     iconLibrary: "lucide",
     variants: {
       ...defaultVariants,
+      button: "button-03",
     },
     colors: {
       light: {

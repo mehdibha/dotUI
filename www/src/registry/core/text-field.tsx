@@ -6,7 +6,7 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { Label, HelpText, type FieldProps } from "@/registry/core/field-01";
+import { Label, HelpText, type FieldProps } from "@/registry/core/field_new";
 import {
   InputRoot,
   Input,
@@ -20,7 +20,9 @@ const textFieldStyles = tv({
 interface TextFieldProps
   extends TextFieldRootProps,
     Pick<InputRootProps, "size" | "prefix" | "suffix">,
-    FieldProps {}
+    FieldProps {
+  inputRef?: React.Ref<HTMLInputElement>;
+}
 
 const TextField = ({
   label,
@@ -29,14 +31,18 @@ const TextField = ({
   prefix,
   suffix,
   size,
+  inputRef,
   ...props
 }: TextFieldProps) => {
   return (
     <TextFieldRoot {...props}>
       {label && <Label>{label}</Label>}
-      <InputRoot size={size} prefix={prefix} suffix={suffix}>
-        <Input />
-      </InputRoot>
+      <TextFieldInput
+        inputRef={inputRef}
+        size={size}
+        prefix={prefix}
+        suffix={suffix}
+      />
       <HelpText description={description} errorMessage={errorMessage} />
     </TextFieldRoot>
   );
@@ -57,5 +63,16 @@ const TextFieldRoot = ({ className, ...props }: TextFieldRootProps) => {
   );
 };
 
-export type { TextFieldProps, TextFieldRootProps };
-export { TextField, TextFieldRoot };
+interface TextFieldInputProps extends InputRootProps {
+  inputRef?: React.Ref<HTMLInputElement>;
+}
+const TextFieldInput = ({ inputRef, ...props }: TextFieldInputProps) => {
+  return (
+    <InputRoot {...props}>
+      <Input ref={inputRef} />
+    </InputRoot>
+  );
+};
+
+export type { TextFieldProps, TextFieldRootProps, TextFieldInputProps };
+export { TextField, TextFieldRoot, TextFieldInput };

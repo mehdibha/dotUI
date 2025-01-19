@@ -80,21 +80,23 @@ export const ComponentPreview = async ({
           <ScrollArea
             className={cn("flex items-center justify-center", "bg-bg text-fg")}
           >
-            <div className="flex min-h-52 items-center justify-center px-4 py-20">
-              <div
-                className={cn(
-                  "flex w-full items-center justify-center",
-                  className
-                )}
-              >
-                <ComponentPreviewClient
-                  demos={demos.map((elem, index) => {
-                    const Comp = elem.component;
-                    return <Comp key={index} />;
-                  })}
-                />
+            <React.Suspense fallback={<div>loading...</div>}>
+              <div className="flex min-h-52 items-center justify-center px-4 py-20">
+                <div
+                  className={cn(
+                    "flex w-full items-center justify-center",
+                    className
+                  )}
+                >
+                  <ComponentPreviewClient
+                    demos={demos.map((elem, index) => {
+                      const Comp = elem.component;
+                      return <Comp key={index} />;
+                    })}
+                  />
+                </div>
               </div>
-            </div>
+            </React.Suspense>
           </ScrollArea>
         </ThemeOverride>
       </div>

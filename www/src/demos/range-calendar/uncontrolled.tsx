@@ -1,16 +1,16 @@
 "use client";
 
 import React from "react";
-import { getLocalTimeZone, today } from "@internationalized/date";
+import { parseDate } from "@internationalized/date";
 import { RangeCalendar } from "@/components/dynamic-core/calendar";
 
 export default function Demo() {
   return (
     <RangeCalendar
-      aria-label="Date (controlled)"
+      aria-label="Trip dates"
       defaultValue={{
-        start: today(getLocalTimeZone()),
-        end: today(getLocalTimeZone()).add({ weeks: 1 }),
+        start: parseDate("2020-02-03"),
+        end: parseDate("2020-02-12"),
       }}
     />
   );

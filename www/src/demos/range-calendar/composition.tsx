@@ -10,18 +10,18 @@ import {
   CalendarGridBody,
   CalendarCell,
 } from "@/components/dynamic-core/calendar";
-import { Heading } from "@/components/dynamic-core/heading";
 import { RangeCalendarRoot } from "@/components/dynamic-core/calendar";
+import { Heading } from "@/components/dynamic-core/heading";
 
 export default function Demo() {
   return (
-    <RangeCalendarRoot>
+    <RangeCalendarRoot aria-label="Trip dates">
       <CalendarHeader>
-        <Button slot="previous" variant="outline" shape="square" size="sm">
+        <Button slot="previous" variant="outline" shape="circle" size="sm">
           <ChevronLeftIcon />
         </Button>
         <Heading className="text-sm" />
-        <Button slot="next" variant="outline" shape="square" size="sm">
+        <Button slot="next" variant="outline" shape="circle" size="sm">
           <ChevronRightIcon />
         </Button>
       </CalendarHeader>
@@ -30,13 +30,7 @@ export default function Demo() {
           {(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}
         </CalendarGridHeader>
         <CalendarGridBody>
-          {(date) => (
-            <CalendarCell date={date} range>
-              {({ formattedDate }) => (
-                <span className="z-20">{formattedDate}</span>
-              )}
-            </CalendarCell>
-          )}
+          {(date) => <CalendarCell date={date} />}
         </CalendarGridBody>
       </CalendarGrid>
     </RangeCalendarRoot>

@@ -8,12 +8,12 @@ import {
   type ValidationResult,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { focusRing, focusRingGroup } from "@/registry/lib/focus-styles";
+import { HelpText, Label } from "@/registry/core/field_new";
 import {
   createOptionalScopedContext,
   createScopedContext,
 } from "@/registry/lib/context-helpers";
-import { HelpText, Label } from "@/registry/core/field-01";
+import { focusRing, focusRingGroup } from "@/registry/lib/focus-styles";
 
 const radioStyles = tv({
   slots: {
@@ -47,7 +47,7 @@ const { root, indicator } = radioStyles();
 
 const [VariantsProvider, useVariantsContext] =
   createScopedContext<VariantProps<typeof radioStyles>>("RadioRoot");
-  
+
 const [RadioProvider, useRadioContext] =
   createOptionalScopedContext<VariantProps<typeof radioStyles>>("Radio");
 

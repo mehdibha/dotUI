@@ -1,11 +1,9 @@
 ---
-title: Time Field
+title: Time Field ☑️
 description: TimeFields allow users to enter and edit time values using a keyboard.
 links:
   - label: Aria docs
     href: https://react-spectrum.adobe.com/react-aria/TimeField.html
-  - label: Aria API Reference
-    href: https://react-spectrum.adobe.com/react-aria/TimeField.html#props
   - label: Report an issue
     href: https://github.com/mehdibha/dotUI/issues/new/choose
   - label: Edit this page
@@ -14,39 +12,58 @@ links:
 
 <ComponentPreview
   name="core/time-field/time-field-default"
-  preview={`<TimeField />`}
+  preview={`<TimeField aria-label="Event time" />`}
 />
 
 ## Installation
 
-<Tabs items={["CLI", "Manual"]}>
-  <Tab value="CLI">
-  
-  ```package-install
+```package-install
 npx dotui-cli@latest add time-field
 ```
-
-  </Tab>
-  <Tab value="manual">
-  
-    <Steps>
-      <Step>Install the following dependencies:</Step>
-
-    ```package-install
-    react-aria-components
-    ```
-
-      <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name="core/time-field/time-field" />
-      <Step>Update the import paths to match your project setup.</Step>
-    </Steps>
-
-  </Tab>
-</Tabs>
 
 ## Usage
 
 Use a `TimeField` to allow users to enter and edit time values using a keyboard.
+
+```tsx
+import { TimeField } from "@/components/core/time-field";
+
+<TimeField label="Event time" description="Please select your event time." />;
+```
+
+```tsx
+import { Label, Description } from "@/components/dynamic-core/field";
+import {
+  TimeFieldRoot,
+  TimeFieldInput,
+} from "@/components/dynamic-core/time-field";
+
+<TimeFieldRoot>
+  <Label>Meeting time</Label>
+  <TimeFieldInput />
+  <Description>Please select a time between 9 AM and 5 PM.</Description>
+  <FieldError />
+</TimeFieldRoot>;
+```
+
+## Uncontrolled
+
+An initial, uncontrolled value can be provided to the `TimeField` using the `defaultValue` prop.
+
+<ComponentPreview
+  name="core/time-field/time-field-uncontrolled"
+  preview={`<TimeField aria-label="Event time" defaultValue={new Time(11, 45)} />`}
+/>
+
+## Controlled
+
+Use the `value` and `onChange` props to control the value of the input.
+
+<ComponentPreview
+  name="core/time-field/time-field-controlled"
+  preview={`const [time, setTime] = React.useState(new Time(11, 45));
+return <TimeField aria-label="Event time" value={time} onChange={setTime} />`}
+/>
 
 ## Options
 
@@ -60,16 +77,16 @@ A visual label can be provided for the `TimeField` using the `label` prop or a h
 <TimeField aria-label="Event time" />`}
 />
 
-### Sizes
+### Size
 
 Use the `size` prop to control the size of the `TimeField`.<br/>
 The default variant is `"md"`.
 
 <ComponentPreview
   name="core/time-field/time-field-sizes"
-  preview={`<TimeField size="sm" />
-<TimeField size="md" />
-<TimeField size="lg" />`}
+  preview={`<TimeField label="small (sm)" size="sm" />
+  <TimeField label="medium (md)" size="md" />
+  <TimeField label="large (lg)" size="lg" />`}
 />
 
 ### Prefix and suffix
@@ -78,8 +95,8 @@ To add additional context for the `TimeField`, such as an icon, use the `prefix`
 
 <ComponentPreview
   name="core/time-field/time-field-prefix-and-suffix"
-  preview={`<TimeField prefix={<TimerIcon />} />
-<TimeField suffix={<TimerIcon />} />`}
+  preview={`<TimeField aria-label="Event time" prefix={<TimerIcon />} />
+  <TimeField aria-label="Event time" suffix={<TimerIcon />} />`}
 />
 
 ### Description
@@ -98,54 +115,6 @@ An `errorMessage` can be supplied to `TimeField` via the `errorMessage` prop, wh
 <ComponentPreview
   name="core/time-field/time-field-error-message"
   preview={`<TimeField label="Meeting" isInvalid errorMessage="Meetings start every 15 minutes." />`}
-/>
-
-### Time zones
-
-TimeField is time zone aware when a ZonedDateTime object is provided as the value.
-
-<ComponentPreview
-  name="core/time-field/time-field-time-zones"
-  preview={`<TimeField defaultValue={parseAbsoluteToLocal("2021-11-07T07:45:00Z")} />`}
-/>
-
-### Granularity
-
-The `granularity` prop allows you to control the smallest unit that is displayed by TimeField.
-
-<ComponentPreview
-  name="core/time-field/time-field-granularity"
-  preview={`<TimeField granularity="second" defaultValue={parseAbsoluteToLocal("2021-04-07T18:45:22Z")} />`}
-/>
-
-### Placeholder value
-
-Use the `placeholderValue` prop to control the default values of each segment. The default value is midnight.
-
-<ComponentPreview
-  name="core/time-field/time-field-placeholder"
-  preview={`<TimeField placeholderValue={new Time(9)} />`}
-/>
-
-### Hide time zone
-
-Use the `hideTimeZone` prop to hide the time zone abbreviation.
-
-<ComponentPreview
-  name="core/time-field/time-field-hide-time-zone"
-  preview={`<TimeField
-    defaultValue={parseZonedDateTime("2022-11-07T10:45[America/Los_Angeles]")}
-    hideTimeZone
-  />`}
-/>
-
-### Hour cycle
-
-Use the `hourCycle` prop to control the hour cycle of the TimeField.
-
-<ComponentPreview
-  name="core/time-field/time-field-hour-cycle"
-  preview={`<TimeField hourCycle={24} />`}
 />
 
 ### Disabled
@@ -179,23 +148,65 @@ Use the `necessityIndicator` prop to control the visual style of the required st
 <TimeField label="Event time" necessityIndicator="label" />`}
 />
 
-## Uncontrolled
+## Value options
 
-An initial, uncontrolled value can be provided to the `TimeField` using the `defaultValue` prop.
+### Time zones
+
+TimeField is time zone aware when a `ZonedDateTime` object is provided as the value.
 
 <ComponentPreview
-  name="core/time-field/time-field-uncontrolled"
-  preview={`<TimeField defaultValue={new Time(11, 45)} />`}
+  name="core/time-field/time-field-time-zones"
+  preview={`<TimeField
+    aria-label="Event time"
+    defaultValue={parseAbsoluteToLocal("2021-11-07T07:45:00Z")}
+  />`}
 />
 
-## Controlled
+### Granularity
 
-Use the `value` and `onChange` props to control the value of the input.
+The `granularity` prop allows you to control the smallest unit that is displayed by TimeField.
 
 <ComponentPreview
-  name="core/time-field/time-field-controlled"
-  preview={`const [time, setTime] = React.useState(new Time(11, 45));
-return <TimeField value={time} onChange={setTime} />`}
+  name="core/time-field/time-field-granularity"
+  preview={`<TimeField
+    aria-label="Event time"
+    granularity="second"
+    defaultValue={parseAbsoluteToLocal("2021-04-07T18:45:22Z")}
+  />`}
+/>
+
+## Format Options
+
+### Placeholder value
+
+`placeholderValue` controls the default values of each segment when the user first interacts with them, e.g. using the up and down arrow keys.
+The default value is midnight.
+
+<ComponentPreview
+  name="core/time-field/time-field-placeholder"
+  preview={`<TimeField aria-label="Event time" placeholderValue={new Time(9)} />`}
+/>
+
+### Hide time zone
+
+Use the `hideTimeZone` prop to hide the time zone abbreviation.
+
+<ComponentPreview
+  name="core/time-field/time-field-hide-time-zone"
+  preview={`<TimeField
+    aria-label="Appointment time"
+    defaultValue={parseZonedDateTime("2022-11-07T10:45[America/Los_Angeles]")}
+    hideTimeZone
+  />`}
+/>
+
+### Hour cycle
+
+Use the `hourCycle` prop to control the hour cycle of the TimeField.
+
+<ComponentPreview
+  name="core/time-field/time-field-hour-cycle"
+  preview={`<TimeField aria-label="Appointment time" hourCycle={24} />`}
 />
 
 ## Composition
@@ -206,10 +217,9 @@ If you need to customize things further, you can drop down to the composition le
   name="core/time-field/time-field-composition"
   preview={`<TimeFieldRoot>
     <Label>Meeting time</Label>
-    <InputRoot>
-      <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
-    </InputRoot>
+    <TimeFieldInput />
     <Description>Please select a time between 9 AM and 5 PM.</Description>
+    <FieldError />
   </TimeFieldRoot>`}
 />
 

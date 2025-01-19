@@ -4,8 +4,8 @@ import { TimeField } from "@/components/dynamic-core/time-field";
 export default function Demo() {
   return (
     <div className="space-y-2">
-      <TimeField prefix={<TimerIcon />} />
-      <TimeField suffix={<TimerIcon />} />
+      <TimeField aria-label="Event time" prefix={<TimerIcon />} />
+      <TimeField aria-label="Event time" suffix={<TimerIcon />} />
     </div>
   );
 }

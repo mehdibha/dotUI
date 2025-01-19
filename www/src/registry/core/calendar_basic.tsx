@@ -12,6 +12,7 @@ import {
   CalendarGridBody as AriaCalendarGridBody,
   CalendarContext as AriaCalendarContext,
   RangeCalendarContext as AriaRangeCalendarContext,
+  RangeCalendarStateContext as AriaRangeCalendarStateContext,
   composeRenderProps,
   useSlottedContext,
 } from "react-aria-components";
@@ -20,53 +21,110 @@ import type {
   CalendarProps as AriaCalendarProps,
   RangeCalendarProps as AriaRangeCalendarProps,
 } from "react-aria-components";
-import { tv } from "tailwind-variants";
+import { tv, VariantProps } from "tailwind-variants";
 import { Button } from "@/registry/core/button-01";
 import { Heading } from "@/registry/core/heading";
 import { Text } from "@/registry/core/text";
+import { focusRing } from "@/registry/lib/focus-styles";
 
 const calendarStyles = tv({
   slots: {
-    root: "",
-    header: "",
-    grid: "",
+    root: "flex flex-col gap-4",
+    header: "flex items-center justify-between gap-2",
+    grid: "w-full border-collapse",
     gridHeader: "",
-    gridHeaderCell: "",
+    gridHeaderCell: "text-fg-muted text-xs font-normal",
     gridBody: "",
-    cell: "",
   },
   variants: {
-    variant: {
-      default: "",
-      accent: "",
-    },
     standalone: {
       true: {
         root: "bg-bg rounded-md border p-3",
       },
     },
-    range: {
-      true: {},
-    },
   },
 });
 
-const { root, header, grid, gridHeader, gridHeaderCell, gridBody, cell } =
+const calendarCellStyles = tv({
+  slots: {
+    cellRoot:
+      "outside-month:hidden selection-start:rounded-l-md selection-end:rounded-r-md outline-none",
+    cell: [
+      focusRing(),
+      "hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 hover:unavailable:bg-transparent unavailable:cursor-default unavailable:text-fg-disabled disabled:text-fg-disabled unavailable:not-disabled:line-through my-1 flex size-8 cursor-pointer items-center justify-center rounded-md text-sm transition-colors read-only:cursor-default hover:read-only:bg-transparent disabled:cursor-default disabled:bg-transparent",
+    ],
+  },
+  variants: {
+    variant: {
+      primary: {},
+      accent: {},
+    },
+    range: {
+      true: {
+        cellRoot:
+          "selected:bg-bg-inverse/10 selected:invalid:bg-bg-danger-muted selected: selected:invalid:text-fg-danger",
+        cell: "selection-start:invalid:bg-bg-danger selection-start:invalid:text-fg-onDanger selection-end:invalid:bg-bg-danger selection-end:invalid:text-fg-onDanger",
+      },
+      false: {
+        cell: "selected:invalid:bg-bg-danger selected:invalid:text-fg-onDanger",
+      },
+    },
+  },
+  compoundVariants: [
+    {
+      variant: "primary",
+      range: false,
+      className: {
+        cell: "selected:bg-bg-primary selected:text-fg-onPrimary",
+      },
+    },
+    {
+      variant: "accent",
+      range: false,
+      className: {
+        cell: "selected:bg-bg-accent selected:text-fg-onAccent",
+      },
+    },
+    {
+      variant: "primary",
+      range: true,
+      className: {
+        cell: "selection-start:bg-bg-primary selection-start:text-fg-onPrimary selection-end:bg-bg-primary selection-end:text-fg-onPrimary",
+      },
+    },
+    {
+      variant: "accent",
+      range: true,
+      className: {
+        cell: "selection-start:bg-bg-accent selection-start:text-fg-onAccent selection-end:bg-bg-accent selection-end:text-fg-onAccent",
+      },
+    },
+  ],
+  defaultVariants: {
+    variant: "accent",
+  },
+});
+
+const { root, header, grid, gridHeader, gridHeaderCell, gridBody } =
   calendarStyles();
 
+const { cellRoot, cell } = calendarCellStyles();
+
 interface CalendarProps<T extends DateValue>
-  extends Omit<CalendarRootProps<T>, "visibleDuration"> {
+  extends Omit<CalendarRootProps<T>, "visibleDuration">,
+    Omit<VariantProps<typeof calendarCellStyles>, "range"> {
   visibleMonths?: number;
   errorMessage?: string;
 }
 const Calendar = <T extends DateValue>({
+  variant,
   visibleMonths = 1,
   errorMessage,
   ...props
 }: CalendarProps<T>) => {
   visibleMonths = Math.min(Math.max(visibleMonths, 1), 3);
   return (
-    <CalendarRoot {...props}>
+    <CalendarRoot visibleDuration={{ months: visibleMonths }} {...props}>
       {({ isInvalid }) => (
         <>
           <CalendarHeader>
@@ -88,7 +146,7 @@ const Calendar = <T extends DateValue>({
                   {(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}
                 </CalendarGridHeader>
                 <CalendarGridBody>
-                  {(date) => <CalendarCell date={date} />}
+                  {(date) => <CalendarCell variant={variant} date={date} />}
                 </CalendarGridBody>
               </CalendarGrid>
             ))}
@@ -103,11 +161,13 @@ const Calendar = <T extends DateValue>({
 };
 
 interface RangeCalendarProps<T extends DateValue>
-  extends Omit<RangeCalendarRootProps<T>, "visibleDuration"> {
+  extends Omit<RangeCalendarRootProps<T>, "visibleDuration">,
+    Omit<VariantProps<typeof calendarCellStyles>, "range"> {
   visibleMonths?: number;
   errorMessage?: string;
 }
 const RangeCalendar = <T extends DateValue>({
+  variant,
   visibleMonths = 1,
   errorMessage,
   ...props
@@ -136,13 +196,7 @@ const RangeCalendar = <T extends DateValue>({
                   {(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}
                 </CalendarGridHeader>
                 <CalendarGridBody>
-                  {(date) => (
-                    <CalendarCell date={date} range>
-                      {({ formattedDate }) => (
-                        <span className="z-20">{formattedDate}</span>
-                      )}
-                    </CalendarCell>
-                  )}
+                  {(date) => <CalendarCell variant={variant} date={date} />}
                 </CalendarGridBody>
               </CalendarGrid>
             ))}
@@ -184,7 +238,7 @@ const RangeCalendarRoot = <T extends DateValue>({
   return (
     <AriaRangeCalendar
       className={composeRenderProps(className, (className) =>
-        root({ range: true, standalone, className })
+        root({ standalone, className })
       )}
       {...props}
     />
@@ -236,17 +290,72 @@ const CalendarGridBody = ({ className, ...props }: CalendarGridBodyProps) => {
 };
 
 interface CalendarCellProps
-  extends React.ComponentProps<typeof AriaCalendarCell> {
-  range?: boolean;
-}
-const CalendarCell = ({ range = false, ...props }: CalendarCellProps) => {
+  extends React.ComponentProps<typeof AriaCalendarCell>,
+    Omit<VariantProps<typeof calendarCellStyles>, "range"> {}
+const CalendarCell = ({
+  variant = "accent",
+  children,
+  className,
+  ...props
+}: CalendarCellProps) => {
+  const rangeCalendarState = React.use(AriaRangeCalendarStateContext);
+  const range = !!rangeCalendarState;
+
   return (
     <AriaCalendarCell
       {...props}
-      className={composeRenderProps(props.className, (className) =>
-        cell({ className })
+      className={composeRenderProps(className, (className) =>
+        cellRoot({
+          range,
+          variant,
+          className,
+        })
       )}
-    />
+    >
+      {composeRenderProps(
+        children,
+        (
+          _,
+          {
+            isSelected,
+            isFocused,
+            isHovered,
+            isPressed,
+            isUnavailable,
+            isDisabled,
+            isFocusVisible,
+            isInvalid,
+            isOutsideMonth,
+            isOutsideVisibleRange,
+            isSelectionEnd,
+            isSelectionStart,
+            formattedDate,
+          }
+        ) => (
+          <span
+            data-rac=""
+            data-focused={isFocused || undefined}
+            data-selected={isSelected || undefined}
+            data-hovered={isHovered || undefined}
+            data-pressed={isPressed || undefined}
+            data-unavailable={isUnavailable || undefined}
+            data-disabled={isDisabled || undefined}
+            data-focus-visible={isFocusVisible || undefined}
+            data-invalid={isInvalid || undefined}
+            data-outside-month={isOutsideMonth || undefined}
+            data-outside-visible-range={isOutsideVisibleRange || undefined}
+            data-selection-end={isSelectionEnd || undefined}
+            data-selection-start={isSelectionStart || undefined}
+            className={cell({
+              range,
+              variant,
+            })}
+          >
+            {formattedDate}
+          </span>
+        )
+      )}
+    </AriaCalendarCell>
   );
 };
 
@@ -255,6 +364,7 @@ export type {
   CalendarRootProps,
   RangeCalendarProps,
   RangeCalendarRootProps,
+  CalendarHeaderProps,
   CalendarGridProps,
   CalendarGridHeaderProps,
   CalendarHeaderCellProps,

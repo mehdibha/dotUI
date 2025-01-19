@@ -141,21 +141,34 @@ export const core: Registry = [
     type: "registry:core",
     variants: [
       {
-        name: "calendar-01",
+        name: "calendar_basic",
       },
       {
-        name: "calendar-02",
+        name: "calendar_cal",
       },
     ],
   },
   {
-    name: "calendar-01",
+    name: "calendar_basic",
     type: "registry:core",
     dependencies: ["react-aria-components"],
     registryDependencies: ["button", "heading", "text"],
     files: [
       {
-        path: "core/calendar-01.tsx",
+        path: "core/calendar_basic.tsx",
+        type: "registry:core",
+        target: "core/calendar.tsx",
+      },
+    ],
+  },
+  {
+    name: "calendar_cal",
+    type: "registry:core",
+    dependencies: ["react-aria-components"],
+    registryDependencies: ["button", "heading", "text"],
+    files: [
+      {
+        path: "core/calendar_cal.tsx",
         type: "registry:core",
         target: "core/calendar.tsx",
       },

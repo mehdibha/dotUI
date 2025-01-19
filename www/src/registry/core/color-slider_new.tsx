@@ -18,16 +18,16 @@ import { focusRing } from "@/registry/lib/focus-styles";
 
 const sliderStyles = tv({
   slots: {
-    root: "group flex flex-col gap-2",
+    root: "group grid grid-cols-[1fr_auto] [grid-template-areas:'label_valueLabel'_'field_field']",
     track:
-      "bg-bg-neutral disabled:bg-bg-disabled relative grow cursor-pointer rounded-full disabled:cursor-default",
+      "[grid-area:field] bg-bg-neutral disabled:bg-bg-disabled relative grow cursor-pointer rounded-full disabled:cursor-default",
     filler:
       "bg-border-focus group-disabled:bg-bg-disabled pointer-events-none absolute rounded-full",
     thumb: [
       focusRing(),
       "disabled:bg-bg-disabled disabled:border-bg left-[50%] top-[50%] rounded-full bg-white shadow-md transition-[width,height] disabled:border",
     ],
-    valueLabel: "text-fg-muted text-sm",
+    valueLabel: "[grid-area:valueLabel] text-fg-muted text-sm",
   },
   variants: {
     orientation: {
@@ -82,26 +82,17 @@ const Slider = ({
 }: SliderProps) => {
   return (
     <SliderRoot {...props}>
-      <div className="grid grid-cols-[1fr_auto] [grid-template-areas:'label_value']">
-        {label && <Label className="[grid-area:label]">{label}</Label>}
+        {label && <Label>{label}</Label>}
         {showValueLabel && (
-          <SliderValueLabel className="[grid-area:value]">
+          <SliderValueLabel>
             {({ state }) =>
               getValueLabel ? getValueLabel(state.values) : null
             }
           </SliderValueLabel>
         )}
-      </div>
-      <SliderTrack>
-        {({ state }) => (
-          <>
-            <SliderFiller />
-            {state.values.map((_, i) => (
-              <SliderThumb key={i} index={i} />
-            ))}
-          </>
-        )}
-      </SliderTrack>
+      {/* <div className="grid grid-cols-[1fr_auto] [grid-template-areas:'label_value']">
+      </div> */}
+      <SliderTrack />
       {description && <Description>{description}</Description>}
     </SliderRoot>
   );
@@ -140,10 +131,26 @@ const SliderRoot = ({
   );
 };
 
-interface SliderTrackProps
-  extends React.ComponentProps<typeof AriaSliderTrack> {}
+interface SliderTrackProps extends SliderTrackRootProps {}
 const SliderTrack = ({ ...props }: SliderTrackProps) => {
-  const { orientation, size } = useSliderContext("SliderTrack");
+  return (
+    <SliderTrackRoot {...props}>
+      {({ state }) => (
+        <>
+          <SliderFiller />
+          {state.values.map((_, i) => (
+            <SliderThumb key={i} index={i} />
+          ))}
+        </>
+      )}
+    </SliderTrackRoot>
+  );
+};
+
+interface SliderTrackRootProps
+  extends React.ComponentProps<typeof AriaSliderTrack> {}
+const SliderTrackRoot = (props: SliderTrackRootProps) => {
+  const { orientation, size } = useSliderContext("SliderTrackRoot");
   return (
     <AriaSliderTrack
       className={composeRenderProps(props.className, (className) =>
@@ -227,14 +234,14 @@ const getFillerDimensions = (
 
   if (orientation === "horizontal")
     return {
-      left: `${getThumbPercent(0) * 100}%`,
-      width: `${Math.abs(getThumbPercent(0) - getThumbPercent(1)) * 100}%`,
+      width: `${getThumbPercent(0) * 100}%`,
+      left: `${getThumbPercent(1) * 100}%`,
     };
 
   if (orientation === "vertical")
     return {
-      bottom: `${getThumbPercent(0) * 100}%`,
-      height: `${Math.abs(getThumbPercent(0) - getThumbPercent(1)) * 100}%`,
+      height: `${getThumbPercent(0) * 100}%`,
+      top: `${getThumbPercent(1) * 100}%`,
     };
 
   return {};

@@ -1,11 +1,9 @@
 ---
-title: Color Field
+title: Color Field ☑️
 description: A color field allows users to edit a hex color or individual color channel value.
 links:
   - label: Aria docs
     href: https://react-spectrum.adobe.com/react-aria/ColorField.html
-  - label: Aria API Reference
-    href: https://react-spectrum.adobe.com/react-aria/ColorField.html#props
   - label: Report an issue
     href: https://github.com/mehdibha/dotUI/issues/new/choose
   - label: Edit this page
@@ -19,35 +17,61 @@ links:
 
 ## Installation
 
-<Tabs items={["CLI", "Manual"]}>
-  <Tab value="CLI">
-  
-  ```package-install
+```package-install
 npx dotui-cli@latest add color-field
 ```
-
-  </Tab>
-  <Tab value="manual">
-  
-    <Steps>
-      <Step>Install the following dependencies:</Step>
-
-    ```package-install
-    react-aria-components
-    ```
-
-      <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name={["core/color-field/color-field"]} />
-      <Step>Update the import paths to match your project setup.</Step>
-    </Steps>
-
-  </Tab>
-</Tabs>
 
 ## Usage
 
 Use a `ColorField` to allow users to edit a hex color or individual color channel value.
 
+```tsx
+import { ColorField } from "@/components/core/color-field";
+
+<ColorField label="Background" description="Enter a background color." />;
+```
+
+```tsx
+import { ColorFieldRoot, ColorFiedInput } from "@/components/core/color-field";
+import { Label, Description, FieldError } from "@/components/core/field";
+
+<ColorFieldRoot>
+  <Label>Background</Label>
+  <ColorFieldInput />
+  <Description>Enter a background color.</Description>
+  <FieldError />
+</ColorFieldRoot>;
+```
+
+## Uncontrolled
+
+Use the `value` and `onChange` props to control the value of the input.
+
+<ComponentPreview
+  name="core/color-field/color-field-uncontrolled"
+  preview={`<ColorField defaultValue="#7f007f" />`}
+/>
+
+## Controlled
+
+Use the `value` and `onChange` props to control the value of the input.
+
+<ComponentPreview
+  name="core/color-field/color-field-controlled"
+  preview={`const [color, setColor] = React.useState<Color | null>(parseColor("#7f007f"));
+return <ColorField value={color} onChange={setColor} />`}
+/>
+
+## Color channel
+
+By default, ColorField allows the user to edit the color as a hex value. When the colorSpace and channel props are provided, ColorField displays the value for that channel formatted as a number instead.Rendering multiple ColorFields together can allow a user to edit a color.
+
+<ComponentPreview
+  name="core/color-field/color-field-color-channel"
+  preview={`<ColorField label="Hue" colorSpace="hsl" channel="hue" />
+  <ColorField label="Saturation" colorSpace="hsl" channel="saturation" />
+  <ColorField label="Lightness" colorSpace="hsl" channel="lightness" />`}
+/>
 ## Options
 
 ### Label
@@ -131,25 +155,6 @@ Use the `necessityIndicator` prop to control the visual style of the required st
 <ColorField label="Color" necessityIndicator="label" />`}
 />
 
-## Uncontrolled
-
-Use the `value` and `onChange` props to control the value of the input.
-
-<ComponentPreview
-  name="core/color-field/color-field-uncontrolled"
-  preview={`<ColorField defaultValue="#7f007f" />`}
-/>
-
-## Controlled
-
-Use the `value` and `onChange` props to control the value of the input.
-
-<ComponentPreview
-  name="core/color-field/color-field-controlled"
-  preview={`const [color, setColor] = React.useState<Color | null>(parseColor("#7f007f"));
-return <ColorField value={color} onChange={setColor} />`}
-/>
-
 ## Composition
 
 If you need to customize things further, you can drop down to the composition level.
@@ -158,9 +163,7 @@ If you need to customize things further, you can drop down to the composition le
   name="core/color-field/color-field-composition"
   preview={`<ColorFieldRoot>
     <Label>Background</Label>
-    <InputRoot>
-      <Input />
-    </InputRoot>
+    <ColorFieldInput />
     <Description>Enter a background color.</Description>
     <FieldError />
   </ColorFieldRoot>`}

@@ -14,7 +14,7 @@ import {
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
 import { Button, type ButtonProps } from "@/registry/core/button-01";
-import { Label, HelpText, type FieldProps } from "@/registry/core/field-01";
+import { Label, HelpText, type FieldProps } from "@/registry/core/field_new";
 import { InputRoot, Input, type inputStyles } from "@/registry/core/input";
 import { useMediaQuery } from "@/registry/hooks/use-media-query";
 import { InputRootProps } from "./input_new";
@@ -22,7 +22,7 @@ import { InputRootProps } from "./input_new";
 const numberFieldStyles = tv({
   slots: {
     root: "flex w-48 flex-col items-start gap-2",
-    inputRoot: "px-0 grid",
+    inputRoot: "grid px-0",
     input: "[grid-area:field]",
     increment: "[grid-area:increment]",
     decrement: "[grid-area:decrement]",
@@ -34,7 +34,8 @@ const numberFieldStyles = tv({
         decrement: "",
       },
       false: {
-        inputRoot: "[grid-template-areas:'field_increment''field_decrement'] grid-cols-[1fr_auto]",
+        inputRoot:
+          "grid-cols-[1fr_auto] [grid-template-areas:'field_increment''field_decrement']",
         increment: "",
         decrement: "",
       },

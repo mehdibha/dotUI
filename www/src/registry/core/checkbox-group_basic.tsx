@@ -10,7 +10,7 @@ import {
   CheckboxProvider,
   checkboxStyles,
 } from "@/registry/core/checkbox_basic";
-import { Label, HelpText } from "@/registry/core/field-01";
+import { Label, HelpText } from "@/registry/core/field_new";
 
 const checkboxGroupStyles = tv({
   base: "flex flex-col gap-2",

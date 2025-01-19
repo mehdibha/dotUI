@@ -6,7 +6,7 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { Label, HelpText, type FieldProps } from "@/registry/core/field-01";
+import { Label, HelpText, type FieldProps } from "@/registry/core/field_new";
 import {
   InputRoot,
   TextAreaInput,

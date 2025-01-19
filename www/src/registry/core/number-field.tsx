@@ -14,7 +14,7 @@ import {
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
 import { Button, type ButtonProps } from "@/registry/core/button-01";
-import { Label, HelpText, type FieldProps } from "@/registry/core/field-01";
+import { Label, HelpText, type FieldProps } from "@/registry/core/field_new";
 import { InputRoot, Input, type inputStyles } from "@/registry/core/input";
 import { useMediaQuery } from "@/registry/hooks/use-media-query";
 import { InputRootProps } from "./input_new";
@@ -22,20 +22,22 @@ import { InputRootProps } from "./input_new";
 const numberFieldStyles = tv({
   slots: {
     root: "flex w-48 flex-col items-start gap-2",
-    inputRoot: "px-0 grid gap-0",
-    input: "[grid-area:field] px-2",
-    increment: "[grid-area:increment] w-8 p-0",
-    decrement: "[grid-area:decrement] w-8 p-0",
+    inputRoot: "grid gap-0 px-0",
+    input: "px-2 [grid-area:field]",
+    increment: "w-8 p-0 [grid-area:increment]",
+    decrement: "w-8 p-0 [grid-area:decrement]",
   },
   variants: {
     isMobile: {
       true: {
-        inputRoot: "[grid-template-areas:'decrement_field_increment'] grid-cols-[auto_1fr_auto]",
+        inputRoot:
+          "grid-cols-[auto_1fr_auto] [grid-template-areas:'decrement_field_increment']",
         increment: "h-full rounded-none rounded-r-md border-l",
         decrement: "h-full rounded-none rounded-l-md border-r",
       },
       false: {
-        inputRoot: "[grid-template-areas:'field_increment''field_decrement'] grid-cols-[1fr_auto]",
+        inputRoot:
+          "grid-cols-[1fr_auto] [grid-template-areas:'field_increment''field_decrement']",
         increment: "h-auto shrink rounded-none rounded-tr-md border-b border-l",
         decrement: "h-auto shrink rounded-none rounded-br-md border-l",
       },

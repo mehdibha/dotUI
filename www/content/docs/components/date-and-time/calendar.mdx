@@ -1,95 +1,122 @@
 ---
-title: Calendar
+title: Calendar ☑️
 description: A component that allows users to select a single date.
 links:
   - label: Aria docs
     href: https://react-spectrum.adobe.com/react-aria/Calendar.html
-  - label: Aria API Reference
-    href: https://react-spectrum.adobe.com/react-aria/Calendar.html#props
+  - label: "@internationalized/date"
+    href: https://react-spectrum.adobe.com/internationalized/date/index.html
   - label: Report an issue
     href: https://github.com/mehdibha/dotUI/issues/new/choose
   - label: Edit this page
-    href: https://github.com/mehdibha/dotUI/tree/main/content/components/dates/calendar.mdx?plain=1
+    href: https://github.com/mehdibha/dotUI/tree/main/content/components/date-and-time/calendar.mdx?plain=1
 ---
 
 <ComponentPreview
   name="core/calendar/calendar-default"
-  preview={`<Calendar />`}
+  preview={`<Calendar aria-label="Appointment date" />`}
 />
 
 ## Installation
 
-<Tabs items={["CLI", "Manual"]}>
-  <Tab value="CLI">
-  
-  ```package-install
+```package-install
 npx dotui-cli@latest add calendar
 ```
-
-  </Tab>
-  <Tab value="manual">
-  
-    <Steps>
-      <Step>Install the following dependencies:</Step>
-
-    ```package-install
-    react-aria-components
-    ```
-
-      <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name="core/calendar/calendar" />
-      <Step>Update the import paths to match your project setup.</Step>
-    </Steps>
-
-  </Tab>
-</Tabs>
 
 ## Usage
 
 Use `Calendar` to allow users to select a single date.
 
-## Options
+```tsx
+import { parseDate } from "@internationalized/date";
+import { Calendar } from "@/components/core/calendar";
 
-### Label
+<Calendar
+  aria-label="Appointment date"
+  defaultValue={parseDate("2025-01-01")}
+/>;
+```
 
-An `aria-label` must be provided to the Calendar for accessibility. If it is labeled by a separate element, an `aria-labelledby` prop must be provided using the id of the labeling element instead.
+```tsx
+import { parseDate } from "@internationalized/date";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { Button } from "@/components/core/button";
+import {
+  CalendarRoot,
+  CalendarHeader,
+  CalendarGrid,
+  CalendarGridHeader,
+  CalendarHeaderCell,
+  CalendarGridBody,
+  CalendarCell,
+} from "@/components/core/calendar";
+import { Heading } from "@/registry/ui/default/core/heading";
+
+<CalendarRoot
+  aria-label="Appointment date"
+  defaultValue={parseDate("2025-01-01")}
+>
+  <CalendarHeader>
+    <Button slot="previous">
+      <ChevronLeftIcon />
+    </Button>
+    <Heading />
+    <Button slot="next">
+      <ChevronRightIcon />
+    </Button>
+  </CalendarHeader>
+  <CalendarGrid>
+    <CalendarGridHeader>
+      {(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}
+    </CalendarGridHeader>
+    <CalendarGridBody>
+      {(date) => <CalendarCell date={date} />}
+    </CalendarGridBody>
+  </CalendarGrid>
+</CalendarRoot>;
+```
+
+### Best practices
+
+- An `aria-label` must be provided to the `Calendar` for accessibility. If it is labeled by a separate element, an `aria-labelledby` prop must be provided using the id of the labeling element instead.
+
+## Uncontrolled
+
+An initial, uncontrolled value can be provided to the `Calendar` using the `defaultValue` prop.
 
 <ComponentPreview
-  name="core/calendar/calendar-label"
-  preview={`<Calendar aria-label="Event date" />`}
+  name="core/calendar/calendar-uncontrolled"
+  preview={`<Calendar aria-label="Appointment date" defaultValue={parseDate("2025-01-01")} />`}
 />
 
-### Error message
+## Controlled
 
-`Calendar` tries to avoid allowing the user to select invalid dates in the first place (see [Min and max values](#min-and-max-values) and [Unavailable dates](#unavailable-dates)). However, if according to application logic a selected date is invalid, Use `isInvalid` and `errorMessage` props.
+The `Calendar` component can be controlled by passing the `value` and `onChange` props.
 
 <ComponentPreview
-  name="core/calendar/calendar-error-message"
-  preview={`const [date, setDate] = React.useState(today(getLocalTimeZone()));
-  const { locale } = useLocale();
-  const isInvalid = isWeekend(date, locale);
-  return (
-    <Calendar
-      value={date}
-      onChange={setDate}
-      isInvalid={isInvalid}
-      errorMessage={"We are closed on weekends"}
-    />
-  );`}
+  name="core/calendar/calendar-controlled"
+  preview={`const [value, setValue] = React.useState<DateValue>(parseDate('2025-01-01'))
+return <Calendar aria-label="Event date" value={value} onChange={setValue} />`}
 />
+
+## Validation
 
 ### Min and max values
 
 By default, `Calendar` allows selecting any date. The `minValue` and `maxValue` props can also be used to prevent the user from selecting dates outside a certain range.
 
+This example only accepts dates after today.
+
 <ComponentPreview
   name="core/calendar/calendar-validation"
-  preview={`<Calendar minValue={today(getLocalTimeZone())} />`}
+  preview={`<Calendar aria-label="Appointment date" minValue={today(getLocalTimeZone())} />`}
 />
 
 ### Unavailable dates
 
 `Calendar` supports marking certain dates as unavailable. These dates cannot be selected by the user and are displayed with a crossed out appearance. The `isDateUnavailable` prop accepts a callback that is called to evaluate whether each visible date is unavailable.
+
+This example includes multiple unavailable date ranges, e.g. dates when no appointments are available. In addition, all weekends are unavailable. The minValue prop is also used to prevent selecting dates before today.
 
 {/* prettier-ignore-start */}
 
@@ -119,13 +146,51 @@ By default, `Calendar` allows selecting any date. The `minValue` and `maxValue` 
 
 {/* prettier-ignore-end */}
 
+### Error message
+
+`Calendar` tries to avoid allowing the user to select invalid dates in the first place (see [Min and max values](/docs/components/date-and-time/calendar#min-and-max-values) and [Unavailable dates](/docs/components/date-and-time/calendar#unavailable-dates). However, if according to application logic a selected date is invalid, Use `isInvalid` and `errorMessage` props.
+
+This example validates that the selected date is a weekday and not a weekend according to the current locale.
+
+<ComponentPreview
+  name="core/calendar/calendar-error-message"
+  preview={`const [date, setDate] = React.useState(today(getLocalTimeZone()));
+  const { locale } = useLocale();
+  const isInvalid = isWeekend(date, locale);
+  return (
+    <Calendar
+      aria-label="Appointment date"
+      value={date}
+      onChange={setDate}
+      isInvalid={isInvalid}
+      errorMessage={"We are closed on weekends"}
+    />
+
+);`}
+/>
+
+## Options
+
+### Variant
+
+The `variant` prop can be used to change the appearance of the `Calendar`.
+
+<ComponentPreview
+  name="core/calendar/calendar-variant"
+  preview={`<Calendar
+    aria-label="Appointment date"
+    variant="primary"
+    defaultValue={parseDate("2025-01-01")}
+  />`}
+/>
+
 ### Visible months
 
 By default, `Calendar` displays a single month. The `visibleMonths` prop allows displaying up to 3 months at a time.
 
 <ComponentPreview
   name="core/calendar/calendar-visible-months"
-  preview={`<Calendar visibleMonths={2} />`}
+  preview={`<Calendar aria-label="Appointment date" visibleMonths={2} />`}
 />
 
 ### Page behaviour
@@ -134,7 +199,7 @@ The `pageBehavior` prop allows you to control how the calendar navigates between
 
 <ComponentPreview
   name="core/calendar/calendar-page-behaviour"
-  preview={`<Calendar visibleMonths={2} pageBehavior="single" />`}
+  preview={`<Calendar aria-label="Appointment date" visibleMonths={2} pageBehavior="single" />`}
 />
 
 ### Disabled
@@ -143,7 +208,7 @@ The `isDisabled` boolean prop makes the Calendar disabled. Cells cannot be focus
 
 <ComponentPreview
   name="core/calendar/calendar-disabled"
-  preview={`<Calendar isDisabled />`}
+  preview={`<Calendar aria-label="Appointment date" isDisabled />`}
 />
 
 ### Read only
@@ -152,33 +217,35 @@ The `isReadOnly` boolean prop makes the Calendar's value immutable. Unlike `isDi
 
 <ComponentPreview
   name="core/calendar/calendar-read-only"
-  preview={`<Calendar isReadOnly value={today(getLocalTimeZone())} />`}
-/>
-
-## Uncontrolled
-
-An initial, uncontrolled value can be provided to the `Calendar` using the `defaultValue` prop.
-
-<ComponentPreview
-  name="core/calendar/calendar-uncontrolled"
-  preview={`<Calendar defaultValue={today(getLocalTimeZone())} />`}
-/>
-
-## Controlled
-
-The `Calendar` component can be controlled by passing the `value` and `onChange` props.
-
-<ComponentPreview
-  name="core/calendar/calendar-controlled"
-  preview={`const [value, setValue] = React.useState(today(getLocalTimeZone()));
-return <Calendar aria-label="Date (controlled)" value={value} onChange={setValue} />`}
+  preview={`<Calendar aria-label="Appointment date" isReadOnly value={today(getLocalTimeZone())} />`}
 />
 
 ## Composition
 
 If you need to customize things further, you can drop down to the composition level.
 
-<ComponentPreview name="core/calendar/calendar-composition" />
+<ComponentPreview
+  name="core/calendar/calendar-composition"
+  preview={`<CalendarRoot aria-label="Event date">
+    <CalendarHeader>
+      <Button slot="previous">
+        <ChevronLeftIcon />
+      </Button>
+      <Heading />
+      <Button slot="next">
+        <ChevronRightIcon />
+      </Button>
+    </CalendarHeader>
+    <CalendarGrid>
+      <CalendarGridHeader>
+        {(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}
+      </CalendarGridHeader>
+      <CalendarGridBody>
+        {(date) => <CalendarCell date={date} />}
+      </CalendarGridBody>
+    </CalendarGrid>
+  </CalendarRoot>`}
+/>
 
 ## API Reference
 

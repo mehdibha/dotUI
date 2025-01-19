@@ -5,6 +5,9 @@ import { TimeField } from "@/components/dynamic-core/time-field";
 
 export default function Demo() {
   return (
-    <TimeField defaultValue={parseAbsoluteToLocal("2021-11-07T07:45:00Z")} />
+    <TimeField
+      aria-label="Event time"
+      defaultValue={parseAbsoluteToLocal("2021-11-07T07:45:00Z")}
+    />
   );
 }

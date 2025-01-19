@@ -3,94 +3,68 @@
 import * as React from "react";
 import {
   DateField as AriaDateField,
-  type DateFieldProps as AriaDateFieldProps,
+  composeRenderProps,
   type DateValue,
+  type DateFieldProps as AriaDateFieldProps,
 } from "react-aria-components";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 import { DateInput, DateSegment } from "@/registry/core/date-input";
-import { Field, type FieldProps } from "@/registry/core/field";
-import {
-  InputRoot,
-  type InputRootProps,
-  type inputStyles,
-} from "@/registry/core/input";
+import { HelpText, Label, type FieldProps } from "./field_new";
+import { InputRoot, type InputRootProps } from "./input_new";
 
 const dateFieldStyles = tv({
-  slots: {
-    root: "flex flex-col items-start gap-2",
-  },
+  base: "flex w-32 flex-col items-start gap-2",
 });
 
 interface DateFieldProps<T extends DateValue>
   extends DateFieldRootProps<T>,
-    Omit<FieldProps, "children">,
-    VariantProps<typeof inputStyles> {
-  prefix?: React.ReactNode;
-  suffix?: React.ReactNode;
-  isLoading?: boolean;
-  loaderPosition?: "prefix" | "suffix";
-}
+    Pick<InputRootProps, "size" | "prefix" | "suffix">,
+    FieldProps {}
 
 const DateField = <T extends DateValue>({
-  className,
-  size,
   label,
   description,
   errorMessage,
   prefix,
   suffix,
-  isLoading,
-  loaderPosition = "suffix",
-  isRequired,
-  isDisabled,
-  necessityIndicator,
-  contextualHelp,
+  size,
   ...props
 }: DateFieldProps<T>) => {
   return (
-    <DateFieldRoot
-      className={className}
-      isRequired={isRequired}
-      isDisabled={isLoading || isDisabled}
-      {...props}
-    >
-      <Field
-        label={label}
-        description={description}
-        errorMessage={errorMessage}
-        isRequired={isRequired}
-        necessityIndicator={necessityIndicator}
-        contextualHelp={contextualHelp}
-      >
-        <DateFieldInput
-          size={size}
-          prefix={prefix}
-          suffix={suffix}
-          isLoading={isLoading}
-          loaderPosition={loaderPosition}
-        />
-      </Field>
+    <DateFieldRoot {...props}>
+      {label && <Label>{label}</Label>}
+      <DateFieldInput />
+      <HelpText description={description} errorMessage={errorMessage} />
     </DateFieldRoot>
   );
 };
 
 interface DateFieldRootProps<T extends DateValue>
-  extends Omit<AriaDateFieldProps<T>, "className"> {
-  className?: string;
+  extends AriaDateFieldProps<T> {
+  ref?: React.Ref<HTMLDivElement>;
 }
 const DateFieldRoot = <T extends DateValue>({
   className,
   ...props
 }: DateFieldRootProps<T>) => {
-  const { root } = dateFieldStyles();
-  return <AriaDateField className={root({ className })} {...props} />;
+  return (
+    <AriaDateField
+      className={composeRenderProps(className, (className) =>
+        dateFieldStyles({ className })
+      )}
+      {...props}
+    />
+  );
 };
 
-const DateFieldInput = (props: InputRootProps) => (
-  <InputRoot {...props}>
-    <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
-  </InputRoot>
-);
+interface DateFieldInputProps extends InputRootProps {}
+const DateFieldInput = (props: DateFieldInputProps) => {
+  return (
+    <InputRoot {...props}>
+      <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
+    </InputRoot>
+  );
+};
 
-export type { DateFieldProps, DateFieldRootProps };
-export { DateField, DateFieldRoot };
+export type { DateFieldProps, DateFieldRootProps, DateFieldInputProps };
+export { DateField, DateFieldRoot, DateFieldInput };

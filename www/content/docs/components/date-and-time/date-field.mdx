@@ -1,11 +1,9 @@
 ---
-title: Date Field
+title: Date Field ☑️
 description: A date field allows users to enter and edit date and time values using a keyboard.
 links:
   - label: Aria docs
     href: https://react-spectrum.adobe.com/react-aria/DateField.html
-  - label: Aria API Reference
-    href: https://react-spectrum.adobe.com/react-aria/DateField.html#props
   - label: Report an issue
     href: https://github.com/mehdibha/dotUI/issues/new/choose
   - label: Edit this page
@@ -14,39 +12,55 @@ links:
 
 <ComponentPreview
   name="core/date-field/date-field-default"
-  preview={`<DateField />`}
+  preview={`<DateField aria-label="Meeting date" />`}
 />
 
 ## Installation
 
-<Tabs items={["CLI", "Manual"]}>
-  <Tab value="CLI">
-  
-  ```package-install
+```package-install
 npx dotui-cli@latest add date-field
 ```
-
-  </Tab>
-  <Tab value="manual">
-  
-    <Steps>
-      <Step>Install the following dependencies:</Step>
-
-    ```package-install
-    react-aria-components
-    ```
-
-      <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name="core/date-field/date-field" />
-      <Step>Update the import paths to match your project setup.</Step>
-    </Steps>
-
-  </Tab>
-</Tabs>
 
 ## Usage
 
 Use a `DateField` to allow users to enter and edit time values using a keyboard.
+
+```tsx
+import { DateField } from "@/components/core/date-field";
+
+<DateField label="Event date" description="Please select your event date." />;
+```
+
+```tsx
+import { DateFieldRoot, DateFieldInput } from "@/components/core/date-field";
+import { Label, Description, FieldError } from "@/components/core/field";
+
+<DateFieldRoot>
+  <Label>Event date</Label>
+  <DateFieldInput />
+  <Description>Please select your event date.</Description>
+  <FieldError />
+</DateFieldRoot>
+```
+
+## Uncontrolled
+
+An initial, uncontrolled value can be provided to the `DateField` using the `defaultValue` prop.
+
+<ComponentPreview
+  name="core/date-field/date-field-uncontrolled"
+  preview={`<DateField defaultValue={parseDate("2020-02-03")} />`}
+/>
+
+## Controlled
+
+Use the `value` and `onChange` props to control the value of the input.
+
+<ComponentPreview
+  name="core/date-field/date-field-controlled"
+  preview={`const [value, setValue] = React.useState(parseDate("2020-02-03"));
+  return <DateField value={value} onChange={setValue} />`}
+/>
 
 ## Options
 
@@ -60,7 +74,7 @@ A visual label can be provided for the `DateField` using the `label` prop or a h
 <DateField aria-label="Meeting date" />`}
 />
 
-### Sizes
+### Size
 
 Use the `size` prop to control the size of the `DateField`.<br/>
 The default variant is `"md"`.
@@ -104,13 +118,46 @@ An `errorMessage` can be supplied to `DateField`, which will be displayed when t
   />`}
 />
 
+### Disabled
+
+Use the `isDisabled` prop to disable the DateField.
+
+<ComponentPreview
+  name="core/date-field/date-field-disabled"
+  preview={`<DateField label="Event date" isDisabled />`}
+/>
+
+### ReadOnly
+
+The `isReadOnly` boolean prop makes the DateField's text content immutable. Unlike isDisabled, the DateField remains focusable and the contents can still be copied.
+
+<ComponentPreview
+  name="core/date-field/date-field-read-only"
+  preview={`<DateField label="Event date" value={new CalendarDate(1980, 1, 1)} isReadOnly />`}
+/>
+
+### Required
+
+Use the `isRequired` prop to mark the DateField as required.
+Use the `necessityIndicator` prop to control the visual style of the required state.
+
+<ComponentPreview
+  name="core/date-field/date-field-required"
+  preview={`<DateField label="Event date" isRequired />`}
+/>
+
+## Value options
+
 ### Time zones
 
 `DateField` is time zone aware when a ZonedDateTime object is provided as the value.
 
 <ComponentPreview
   name="core/date-field/date-field-time-zones"
-  preview={`<DateField defaultValue={parseAbsoluteToLocal("2021-11-07T07:45:00Z")} />`}
+  preview={`<DateField
+    aria-label="Meeting time"
+    defaultValue={parseAbsoluteToLocal("2021-11-07T07:45:00Z")}
+  />`}
 />
 
 ### Granularity
@@ -135,6 +182,8 @@ The `granularity` prop allows you to control the smallest unit that is displayed
     defaultValue={parseAbsoluteToLocal("2021-04-07T18:45:22Z")}
   />`}
 />
+
+## Format Options
 
 ### Placeholder value
 
@@ -165,57 +214,7 @@ Use the `hourCycle` prop to control the hour cycle of the DateField.
 
 <ComponentPreview
   name="core/date-field/date-field-hour-cycle"
-  preview={`<DateField granularity="minute" hourCycle={24} />`}
-/>
-
-### Disabled
-
-Use the `isDisabled` prop to disable the DateField.
-
-<ComponentPreview
-  name="core/date-field/date-field-disabled"
-  preview={`<DateField label="Event date" isDisabled />`}
-/>
-
-### ReadOnly
-
-The isReadOnly boolean prop makes the DateField's text content immutable. Unlike isDisabled, the DateField remains focusable and the contents can still be copied.
-
-<ComponentPreview
-  name="core/date-field/date-field-read-only"
-  preview={`<DateField label="Event date" value={new CalendarDate(1980, 1, 1)} isReadOnly />`}
-/>
-
-### Required
-
-Use the `isRequired` prop to mark the DateField as required.
-Use the `necessityIndicator` prop to control the visual style of the required state.
-
-<ComponentPreview
-  name="core/date-field/date-field-required"
-  preview={`<DateField label="Event date" isRequired />
-<DateField label="Event date" isRequired necessityIndicator="icon" />
-<DateField label="Event date" isRequired necessityIndicator="label" />
-<DateField label="Event date" necessityIndicator="label" />`}
-/>
-
-## Uncontrolled
-
-An initial, uncontrolled value can be provided to the `DateField` using the `defaultValue` prop.
-
-<ComponentPreview
-  name="core/date-field/date-field-uncontrolled"
-  preview={`<DateField defaultValue={parseDate("2020-02-03")} />`}
-/>
-
-## Controlled
-
-Use the `value` and `onChange` props to control the value of the input.
-
-<ComponentPreview
-  name="core/date-field/date-field-controlled"
-  preview={`const [value, setValue] = React.useState(parseDate("2020-02-03"));
-  return <DateField value={value} onChange={setValue} />`}
+  preview={`<DateField aria-label="Meeting time" granularity="minute" hourCycle={24} />`}
 />
 
 ## Composition
@@ -226,9 +225,7 @@ If you need to customize things further, you can drop down to the composition le
   name="core/date-field/date-field-composition"
   preview={`<DateFieldRoot>
     <Label>Meeting time</Label>
-    <InputRoot>
-      <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
-    </InputRoot>
+    <DateFieldInput />
     <Description>Please select a time between 9 AM and 5 PM.</Description>
   </DateFieldRoot>`}
 />

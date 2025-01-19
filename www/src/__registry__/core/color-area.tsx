@@ -3,13 +3,12 @@
 import {
   ColorArea as AriaColorArea,
   composeRenderProps,
-  type ColorAreaProps as AriaColorAreaProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import { ColorThumb } from "@/registry/core/color-thumb";
 
 const colorAreaStyles = tv({
-  base: "disabled:bg-bg-disabled! inline-block size-48 min-w-20 rounded-md",
+  base: "block size-48 min-w-20 rounded-md disabled:[background:var(--color-bg-disabled)]!",
 });
 
 type ColorAreaProps = Omit<ColorAreaRootProps, "children">;
@@ -21,18 +20,15 @@ const ColorArea = (props: ColorAreaProps) => {
   );
 };
 
-interface ColorAreaRootProps extends Omit<AriaColorAreaProps, "className"> {
-  className?: string;
-}
+interface ColorAreaRootProps
+  extends React.ComponentProps<typeof AriaColorArea> {}
 const ColorAreaRoot = ({ className, ...props }: ColorAreaRootProps) => {
   return (
     <AriaColorArea
+      className={composeRenderProps(className, (className) =>
+        colorAreaStyles({ className })
+      )}
       {...props}
-      className={colorAreaStyles({ className })}
-      style={composeRenderProps(props.style, (style, { isDisabled }) => ({
-        ...style,
-        ...(isDisabled ? { background: "none" } : {}),
-      }))}
     />
   );
 };

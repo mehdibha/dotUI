@@ -20,7 +20,7 @@
   "dependencies": {
     "@adobe/leonardo-contrast-colors": "^1.0.0",
     "@hookform/resolvers": "^3.10.0",
-    "@internationalized/date": "^3.5.4",
+    "@internationalized/date": "^3.7.0",
     "@radix-ui/react-aspect-ratio": "^1.0.3",
     "@radix-ui/react-collapsible": "^1.0.3",
     "@radix-ui/react-scroll-area": "^1.0.5",

@@ -9,11 +9,11 @@ import {
 } from "react-aria-components";
 import { type VariantProps } from "tailwind-variants";
 import { Button } from "@/registry/core/button-01";
+import { RangeCalendar } from "@/registry/core/calendar_basic";
 import { DateInput, DateSegment } from "@/registry/core/date-input";
 import { Dialog } from "@/registry/core/dialog";
 import { Field, type FieldProps, fieldStyles } from "@/registry/core/field";
 import { InputRoot, type inputStyles } from "@/registry/core/input";
-import { RangeCalendar } from "@/registry/core/range-calendar";
 
 interface DateRangePickerProps<T extends DateValue>
   extends DateRangePickerRootProps<T>,
