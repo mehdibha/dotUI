@@ -1,11 +1,13 @@
 import React from "react";
 import { useThemes } from "@/hooks/use-themes";
+import { Skeleton } from "@/registry/core/skeleton";
 
 type Registry<T> = Record<string, React.ComponentType<T>>;
 
 export const createDynamicComponent = <Props extends {}>(
   registryItem: string,
   componentName: string,
+  DefaultComp: React.ComponentType<Props>,
   registry: Registry<Props>
 ): React.FC<Props> => {
   const Component: React.FC<Props> = (props) => {
@@ -16,19 +18,22 @@ export const createDynamicComponent = <Props extends {}>(
     const contextVariant = variants[registryItem];
 
     if (!variant || !registry[variant]) {
-      throw new Error(
-        `Variant "${variant}" for component "${componentName}" not found in the registry.`
-      );
+      return <DefaultComp {...props} />;
     }
 
     const LazyComponent = registry[contextVariant ?? variant];
 
-    return <LazyComponent {...props} />;
-    // return (
-    //   <React.Suspense fallback={null}>
-    //     <LazyComponent {...props} />
-    //   </React.Suspense>
-    // );
+    return (
+      <React.Suspense
+        fallback={
+          <Skeleton>
+            <DefaultComp {...props} />
+          </Skeleton>
+        }
+      >
+        <LazyComponent {...props} />
+      </React.Suspense>
+    );
   };
 
   Component.displayName = componentName;
@@ -56,18 +61,3 @@ export const VariantsProvider = ({
 
 export const useComponentsVariants = () => React.useContext(variantsContext);
 
-// const LazyLoaderContext = React.createContext<{
-//   isLoading: boolean;
-//   setLoading: (value: boolean) => void;
-// }>({
-//   isLoading: true,
-//   setLoading: () => {},
-// });
-// const LazyLoader = ({ children }: { children: React.ReactNode }) => {
-//   const [isLoading, setLoading] = React.useState(true);
-//   return (
-//     <LazyLoaderContext value={{ isLoading, setLoading }}>
-//       <React.Suspense fallback={children}>{children}</React.Suspense>
-//     </LazyLoaderContext>
-//   );
-// };

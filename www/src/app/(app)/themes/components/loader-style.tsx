@@ -3,8 +3,8 @@
 import React from "react";
 import { type PressEvent } from "react-aria-components";
 import { useThemes } from "@/hooks/use-themes";
+import { ThemeOverride } from "@/components/docs/theme-override";
 import { Button } from "@/components/dynamic-core/button";
-import { ThemeOverride } from "@/components/theme-override";
 import { Loader as DotSpinner } from "@/registry/core/loader-dot-spinner";
 import { Loader as LineSpinner } from "@/registry/core/loader-line-spinner";
 import { Loader as Ring } from "@/registry/core/loader-ring";

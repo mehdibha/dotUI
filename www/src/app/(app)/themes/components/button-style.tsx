@@ -2,7 +2,7 @@
 
 import { useThemes } from "@/hooks/use-themes";
 import { Radio, RadioGroup } from "@/components/core/radio-group";
-import { ThemeOverride } from "@/components/theme-override";
+import { ThemeOverride } from "@/components/docs/theme-override";
 import ButtonVariants from "@/demos/button/variants";
 import ToggleButtonVariants from "@/demos/toggle-button/variants";
 

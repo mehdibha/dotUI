@@ -1,5 +1,5 @@
 import { getFilesSource } from "@/lib/get-files-source";
-import { CodeBlock } from "@/components/code-block";
+import { CodeBlock } from "@/components/docs/code-block";
 
 export const ComponentSource = async ({
   name,

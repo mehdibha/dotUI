@@ -3,14 +3,14 @@ import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { PaintBucket } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { getFileSource } from "@/lib/get-file-source";
-import { CodeBlock } from "@/components/code-block";
 import { Button } from "@/components/core/button";
 import { Tooltip } from "@/components/core/tooltip";
+import { CodeBlock } from "@/components/docs/code-block";
 import { Index } from "@/__registry__/demos";
-import { ComponentPreviewClient } from "./component-preview-client";
 import { StyleSwitcher } from "./style-switcher";
 import { ThemeCustomizerDialog } from "./theme-customizer";
 import { ThemeOverride } from "./theme-override";
+import { ComponentPreviewClient } from "./component-preview-client";
 
 export interface ComponentPreviewProps {
   name: string;

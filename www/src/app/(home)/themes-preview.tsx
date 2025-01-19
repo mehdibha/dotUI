@@ -5,7 +5,7 @@ import { dotUIThemes } from "@/lib/themes";
 import { useThemes } from "@/hooks/use-themes";
 import { ToggleButton } from "@/components/core/toggle-button";
 import { ToggleButtonGroup } from "@/components/core/toggle-button-group";
-import { ThemeOverride } from "@/components/theme-override";
+import { ThemeOverride } from "@/components/docs/theme-override";
 import { ComponentsOverview } from "./components-overview";
 
 export function ThemesPreview() {

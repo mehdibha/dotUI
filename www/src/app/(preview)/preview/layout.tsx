@@ -1,5 +1,5 @@
 import { Loader2Icon } from "lucide-react";
-import { ThemeOverride } from "@/components/theme-override";
+import { ThemeOverride } from "@/components/docs/theme-override";
 
 export default function PreviewLayout({
   children,

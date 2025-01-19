@@ -2,7 +2,7 @@
 
 import { useThemes } from "@/hooks/use-themes";
 import { Radio, RadioGroup } from "@/components/core/radio-group";
-import { ThemeOverride } from "@/components/theme-override";
+import { ThemeOverride } from "@/components/docs/theme-override";
 import ColorPickerDemo from "@/demos/color-picker/default";
 import ComboboxDemo from "@/demos/combobox/basic";
 import DatePickerDemo from "@/demos/date-picker/default";

@@ -3,6 +3,12 @@
 import React from "react";
 import { createDynamicComponent } from "@/lib/create-dynamic-component";
 import {
+  Tooltip as _Tooltip,
+  TooltipRoot as _TooltipRoot,
+  TooltipContent as _TooltipContent,
+  TooltipArrow as _TooltipArrow,
+} from "@/registry/core/tooltip-01";
+import type {
   TooltipProps,
   TooltipRootProps,
   TooltipContentProps,
@@ -12,6 +18,7 @@ import {
 export const Tooltip = createDynamicComponent<TooltipProps>(
   "tooltip",
   "Tooltip",
+  _Tooltip,
   {
     "tooltip-01": React.lazy(() =>
       import("@/registry/core/tooltip-01").then((mod) => ({
@@ -24,6 +31,7 @@ export const Tooltip = createDynamicComponent<TooltipProps>(
 export const TooltipRoot = createDynamicComponent<TooltipRootProps>(
   "tooltip",
   "TooltipRoot",
+  _TooltipRoot,
   {
     "tooltip-01": React.lazy(() =>
       import("@/registry/core/tooltip-01").then((mod) => ({
@@ -36,6 +44,7 @@ export const TooltipRoot = createDynamicComponent<TooltipRootProps>(
 export const TooltipContent = createDynamicComponent<TooltipContentProps>(
   "tooltip",
   "TooltipContent",
+  _TooltipContent,
   {
     "tooltip-01": React.lazy(() =>
       import("@/registry/core/tooltip-01").then((mod) => ({
@@ -48,6 +57,7 @@ export const TooltipContent = createDynamicComponent<TooltipContentProps>(
 export const TooltipArrow = createDynamicComponent<TooltipArrowProps>(
   "tooltip",
   "TooltipArrow",
+  _TooltipArrow,
   {
     "tooltip-01": React.lazy(() =>
       import("@/registry/core/tooltip-01").then((mod) => ({
