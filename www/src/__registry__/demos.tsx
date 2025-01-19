@@ -2004,16 +2004,6 @@
       files: ["demos/table/default.tsx"],
       component: React.lazy(() => import("@/demos/table/default")),
     },
-    "disclosure-default": {
-      name: "disclosure-default",
-      files: ["demos/disclosure/default.tsx"],
-      component: React.lazy(() => import("@/demos/disclosure/default")),
-    },
-    "disclosure-group-default": {
-      name: "disclosure-group-default",
-      files: ["demos/disclosure-group/default.tsx"],
-      component: React.lazy(() => import("@/demos/disclosure-group/default")),
-    },
     "form-basic": {
       name: "form-basic",
       files: ["demos/form/basic.tsx"],

@@ -474,8 +474,6 @@ export const demos: RegistryDemos = [
   ...buildDemos("button-group", ["default"]),
   ...buildDemos("tag-group", ["default"]),
   ...buildDemos("table", ["default"]),
-  ...buildDemos("disclosure", ["default"]),
-  ...buildDemos("disclosure-group", ["default"]),
   ...buildDemos("form", ["basic", "react-aria", "react-hook-form"]),
   ...buildDemos("command", ["basic", "dialog"]),
 ];
