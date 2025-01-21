@@ -476,4 +476,5 @@ export const demos: RegistryDemos = [
   ...buildDemos("table", ["default"]),
   ...buildDemos("form", ["basic", "react-aria", "react-hook-form"]),
   ...buildDemos("command", ["basic", "dialog"]),
+  ...buildDemos("overlay", ["type"]),
 ];

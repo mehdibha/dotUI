@@ -1,29 +1,51 @@
 ---
-title: Drawer
-description: A toggle button group allows a user to toggle multiple options, with single or multiple selection.
+title: Drawer ☑️
+description: A drawer is an overlay element which blocks interaction with elements outside it.
 links:
   - label: Aria docs
-    href: https://react-spectrum.adobe.com/react-aria/ToggleButtonGroup.html
-  - label: Aria API Reference
-    href: https://react-spectrum.adobe.com/react-aria/ToggleButtonGroup.html#props
+    href: https://react-spectrum.adobe.com/react-aria/Modal.html
   - label: Report an issue
     href: https://github.com/mehdibha/dotUI/issues/new/choose
   - label: Edit this page
-    href: https://github.com/mehdibha/dotUI/tree/main/content/components/buttons/toggle-button-group.mdx?plain=1
+    href: https://github.com/mehdibha/dotUI/tree/main/content/components/overlays/drawer.mdx?plain=1
 ---
+
+<Alert>
+  <span className="font-bold">Note:</span>{" "}
+  {
+    "Drawer only provides the overlay itself. It should be combined with Dialog to create fully accessible drawer dialogs. Other overlays such as menus may also be placed in a drawer overlay."
+  }
+</Alert>
+
+<ComponentPreview name="core/drawer/drawer-basic" />
 
 ## Installation
 
-## Usage
+```package-install
+npx dotui-cli@latest add drawer
+```
 
-## Options
+## Anatomy
 
-## Uncontrolled
+A drawer consists of an overlay container element, and an underlay. The overlay may contain a Dialog, or another element such as a Menu or ListBox when used within a component such as a Select or Combobox.
 
-## Controlled
+```tsx
+import { Button } from "@/components/core/button";
+import { DialogRoot, DialogContent } from "@/components/core/dialog";
+import { Drawer } from "@/components/core/drawer";
+
+<DialogRoot>
+  <Button>Open drawer</Button>
+  <Drawer>
+    <DialogContent>{/* Content */}</DialogContent>
+  </Drawer>
+</DialogRoot>;
+```
 
 ## API Reference
 
-## Accessibility
-
-### Keyboard interactions
+| Prop        | Type                                                                                                        | Default | Description                                                                                                  |
+| ----------- | ----------------------------------------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------ |
+| `children`  | `ReactNode \| (opts: ModalRenderProps) => ReactNode`                                                        | -       | The children of the component. A function may be provided to alter the children based on component state.    |
+| `className` | `string \| (values: ModalRenderProps & {defaultClassName: string \| undefined}) => string`                  | -       | The CSS className for the element. A function may be provided to compute the class based on component state. |
+| `style`     | `CSSProperties \| (values: ModalRenderProps & {defaultStyle: CSSProperties}) => CSSProperties \| undefined` | -       | The inline style for the element. A function may be provided to compute the style based on component state.  |

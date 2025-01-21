@@ -44,7 +44,7 @@ const [AlertProvider, useAlertContext] =
   createScopedContext<VariantProps<typeof alertStyles>>("AlertRoot");
 
 const defaultIcons = {
-  neutral: null,
+  neutral: <InfoIcon />,
   danger: <AlertCircleIcon />,
   success: <CheckCircle2Icon />,
   warning: <AlertTriangleIcon />,
@@ -53,7 +53,6 @@ const defaultIcons = {
 
 interface AlertProps extends AlertRootProps {
   title?: string;
-  description?: string;
   action?: React.ReactNode;
   icon?: React.ReactNode | null;
 }
@@ -61,9 +60,9 @@ interface AlertProps extends AlertRootProps {
 function Alert({
   variant = "neutral",
   title,
-  description,
   action,
   icon,
+  children,
   ...props
 }: AlertProps) {
   const resolvedIcon = icon === undefined ? defaultIcons[variant] : icon;
@@ -72,7 +71,7 @@ function Alert({
       {resolvedIcon}
       <div className="flex-1 space-y-0.5">
         <AlertTitle>{title}</AlertTitle>
-        {description && <AlertContent>{description}</AlertContent>}
+        {children && <AlertContent>{children}</AlertContent>}
       </div>
       {action}
     </AlertRoot>

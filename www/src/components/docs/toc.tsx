@@ -17,7 +17,7 @@ export const TableOfContents = ({ toc }: { toc: TocType }) => {
     <TocPrimitive.AnchorProvider toc={toc}>
       <ScrollArea
         containerClassName="flex flex-col"
-        className="relative min-h-0 text-sm"
+        className="relative min-h-0 text-sm pb-4"
       >
         <TocItems toc={toc} />
       </ScrollArea>

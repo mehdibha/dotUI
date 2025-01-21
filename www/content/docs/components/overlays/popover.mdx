@@ -1,16 +1,21 @@
 ---
-title: Popover
+title: Popover ☑️
 description: A popover is an overlay element positioned relative to a trigger.
 links:
   - label: Aria docs
     href: https://react-spectrum.adobe.com/react-aria/Popover.html
-  - label: Aria API Reference
-    href: https://react-spectrum.adobe.com/react-aria/Popover.html#props
   - label: Report an issue
     href: https://github.com/mehdibha/dotUI/issues/new/choose
   - label: Edit this page
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/overlays/toggle-button-group.mdx?plain=1
 ---
+
+<Alert variant="warning">
+  <span className="font-bold">Note:</span>{" "}
+  {
+    "Popover only provides the overlay itself. It should be combined with Dialog to create fully accessible popovers. Other overlays such as menus may also be placed in a popover."
+  }
+</Alert>
 
 <ComponentPreview name="core/popover/popover-basic" preview={``} />
 
@@ -18,6 +23,23 @@ links:
 
 ```package-install
 npx dotui-cli@latest add popover
+```
+
+## Anatomy
+
+A popover consists of a trigger element (e.g. button) and an overlay, which is positioned relative to the trigger. The overlay may contain a Dialog, or another element such as a Menu or ListBox when used within a component such as a Select or ComboBox.
+
+```tsx
+import { Button } from "@/components/core/button";
+import { DialogRoot, DialogContent } from "@/components/core/dialog";
+import { Popover } from "@/components/core/popover";
+
+<DialogRoot>
+  <Button>Open Popover</Button>
+  <Popover>
+    <DialogContent>{/* Content */}</DialogContent>
+  </Popover>
+</DialogRoot>;
 ```
 
 ## API Reference

@@ -12,6 +12,9 @@ const config = {
       },
     ],
   },
+  devIndicators: {
+    appIsrStatus: false,
+  },
   typescript: {
     ignoreBuildErrors: true,
   },

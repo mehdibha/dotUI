@@ -10,34 +10,33 @@ import { tv } from "tailwind-variants";
 
 const modalStyles = tv({
   slots: {
-    backdrop: [
-      "h-(--visual-viewport-height) fixed left-0 top-0 z-50 flex w-[100vw] items-center justify-center bg-black/40 backdrop-blur-sm",
-      "entering:animate-in entering:fade-in-0 entering:zoom-in-95 exiting:animate-out exiting:fade-out-0 exiting:zoom-out-95 entering:duration-200 exiting:duration-150",
-    ],
-    overlay: [
-      "group/overlay relative z-50 w-full max-w-lg",
-      "bg-bg border shadow-lg sm:rounded-lg md:w-full",
-      "entering:animate-in entering:fade-in-0 entering:zoom-in-95 exiting:animate-out exiting:fade-out-0 exiting:zoom-out-95 entering:duration-200 exiting:duration-150",
-    ],
+    underlay:
+      "h-(--visual-viewport-height) entering:animate-in entering:fade-in exiting:animate-out exiting:fade-out-0 entering:duration-200 exiting:duration-150 bg-bg-inverse dark:bg-bg/40 fixed left-0 top-0 z-50 flex w-[100vw] items-center justify-center ease-[cubic-bezier(0.165,0.84,0.44,1)]",
+    overlay:
+      "bg-bg entering:animate-in entering:zoom-in-95 exiting:animate-out exiting:zoom-out-95 entering:duration-200 exiting:duration-150 relative z-50 w-full max-w-lg border shadow-lg ease-[cubic-bezier(0.165,0.84,0.44,1)] sm:rounded-lg md:w-full",
   },
 });
 
-const { backdrop, overlay } = modalStyles();
+const { underlay, overlay } = modalStyles();
 
-interface ModalProps extends React.ComponentProps<typeof AriaModalOverlay> {}
-function Modal({ isDismissable = true, className, ...props }: ModalProps) {
-  return (
-    <AriaModalOverlay
+interface ModalProps extends React.ComponentProps<typeof AriaModal> {}
+const Modal = ({ className, isDismissable = true, ...props }: ModalProps) => (
+  <AriaModalOverlay
+    isDismissable={isDismissable}
+    className={composeRenderProps(className, (className) =>
+      underlay({ className })
+    )}
+    {...props}
+  >
+    <AriaModal
       isDismissable={isDismissable}
       className={composeRenderProps(className, (className) =>
-        backdrop({ className })
+        overlay({ className })
       )}
       {...props}
-    >
-      <AriaModal className={overlay()}>{props.children}</AriaModal>
-    </AriaModalOverlay>
-  );
-}
+    />
+  </AriaModalOverlay>
+);
 
 export type { ModalProps };
 export { Modal };

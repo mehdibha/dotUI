@@ -2029,5 +2029,10 @@
       files: ["demos/command/dialog.tsx"],
       component: React.lazy(() => import("@/demos/command/dialog")),
     },
+    "overlay-type": {
+      name: "overlay-type",
+      files: ["demos/overlay/type.tsx"],
+      component: React.lazy(() => import("@/demos/overlay/type")),
+    },
   },
 }

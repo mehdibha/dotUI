@@ -274,7 +274,7 @@ const SidebarSearchButton = ({ isCollapsed }: { isCollapsed: boolean }) => {
           variant="outline"
           shape="rectangle"
           size="sm"
-          className="h-7 px-2 text-xs font-normal absolute top-[13px] right-3"
+          className="absolute right-3 top-[13px] h-7 px-2 text-xs font-normal"
         >
           Esc
         </Button>
@@ -396,10 +396,21 @@ function FolderNode({
 
   if (level === 1) {
     return (
-      <CollapsibleRoot open={isCollapsed ? false : open} onOpenChange={setOpen}>
+      <CollapsibleRoot open={isCollapsed ? false : open}>
         <StyledTooltip content={item.name} isDisabled={!isCollapsed}>
-          <CollapsibleTrigger asChild onClick={() => onCollapseChange(false)}>
-            <SidebarButton shape="square" variant="quiet" size="sm">
+          <CollapsibleTrigger asChild>
+            <SidebarButton
+              shape="square"
+              variant="quiet"
+              size="sm"
+              onPress={() => {
+                if (!isCollapsed) {
+                  setOpen(!open);
+                  return;
+                }
+                onCollapseChange(false);
+              }}
+            >
               {item.icon}
               <span className="flex flex-1 flex-row items-center justify-between">
                 <span>{item.name}</span>

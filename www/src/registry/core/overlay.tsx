@@ -10,7 +10,7 @@ type Type = "modal" | "popover" | "drawer";
 interface OverlayProps {
   children?: React.ReactNode;
   type?: Type;
-  mobileType?: Type;
+  mobileType?: Type | null;
   mediaQuery?: string;
   popoverProps?: PopoverProps;
   modalProps?: ModalProps;
@@ -19,7 +19,7 @@ interface OverlayProps {
 
 function Overlay({
   type = "modal",
-  mobileType,
+  mobileType = "drawer",
   mediaQuery = "(max-width: 640px)",
   children,
   modalProps,

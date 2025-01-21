@@ -22,16 +22,17 @@ export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
           </Button>
           <Dialog
             type="drawer"
-            placement="left"
-            swipeIndicator={false}
+            drawerProps={{
+              placement: "left",
+            }}
             className="p-0! w-60"
           >
             {({ close }) => (
-              <div className="flex h-screen flex-col">
+              <div className="z-50 flex h-screen flex-col">
                 <div className="flex items-center justify-between p-2">
                   <Link
                     href="/"
-                    className="flex items-center space-x-2 rounded opacity-100 transition-[opacity,transform] duration-300 ease-out"
+                    className="flex items-center gap-2 rounded opacity-100 transition-[opacity,transform] duration-300 ease-out"
                   >
                     <Avatar
                       src={siteConfig.global.logo}
@@ -41,7 +42,7 @@ export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
                       loading="lazy"
                       className="m-1 size-6 rounded-sm"
                     />
-                    <div className="font-josephin mt-[5px] font-bold leading-normal tracking-tighter">
+                    <div className="font-josefin group-data-collapsed/sidebar:opacity-0 mt-[5px] font-bold leading-normal tracking-tighter transition-colors">
                       {siteConfig.global.name}
                     </div>
                   </Link>

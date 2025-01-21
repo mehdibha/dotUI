@@ -5,7 +5,7 @@ import { MonitorIcon, MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/core/button";
 import { Item, ListBox } from "@/components/core/list-box";
-import { Overlay } from "@/components/core/overlay";
+import { Popover } from "@/components/core/popover";
 import { SelectRoot } from "@/components/core/select";
 
 export const ThemeSwitcher = ({ children }: { children?: React.ReactNode }) => {
@@ -28,7 +28,7 @@ export const ThemeSwitcher = ({ children }: { children?: React.ReactNode }) => {
           <MoonIcon className="hidden dark:block" />
         </Button>
       )}
-      <Overlay placement="bottom right" type="popover">
+      <Popover placement="bottom right">
         <ListBox>
           <Item id="system" prefix={<MonitorIcon />}>
             System
@@ -40,7 +40,7 @@ export const ThemeSwitcher = ({ children }: { children?: React.ReactNode }) => {
             Dark
           </Item>
         </ListBox>
-      </Overlay>
+      </Popover>
     </SelectRoot>
   );
 };

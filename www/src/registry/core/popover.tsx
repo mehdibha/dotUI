@@ -10,30 +10,30 @@ import { tv } from "tailwind-variants";
 
 const popoverStyles = tv({
   slots: {
-    overlay:
-      "group/popover bg-bg text-fg data-[trigger=ComboBox]:min-w-(--trigger-width) data-[trigger=Select]:min-w-(--trigger-width) entering:animate-in entering:fade-in entering:ease-out entering:placement-bottom:slide-in-from-top-0.5 entering:placement-top:slide-in-from-bottom-0.5 entering:placement-left:slide-in-from-right-0.5 entering:placement-right:slide-in-from-left-0.5 exiting:animate-out exiting:fade-out exiting:ease-in exiting:placement-bottom:slide-out-to-top-0.5 exiting:placement-top:slide-out-to-bottom-0.5 exiting:placement-left:slide-out-to-right-0.5 exiting:placement-right:slide-out-to-left-0.5 z-50 rounded-md border px-3 py-1.5 text-sm shadow-md",
+    popover:
+      "bg-bg min-w-(--trigger-width) entering:animate-in entering:fade-in entering:zoom-in-95 entering:duration-150 exiting:duration-100 entering:placement-bottom:slide-in-from-top-2 entering:placement-top:slide-in-from-bottom-2 entering:placement-left:slide-in-from-right-2 entering:placement-right:slide-in-from-left-2 exiting:animate-out exiting:fade-out exiting:zoom-out-95 exiting:placement-bottom:slide-out-to-top-2 exiting:placement-top:slide-out-to-bottom-2 exiting:placement-left:slide-out-to-right-2 exiting:placement-right:slide-out-to-left-2 placement-bottom:origin-top placement-top:origin-bottom placement-left:origin-right placement-right:origin-left group rounded-md border shadow-md ease-[cubic-bezier(0.165,0.84,0.44,1)]",
     arrow:
-      "stroke-border fill-bg group-placement-left/popover:-rotate-90 group-placement-right/popover:rotate-90 group-placement-bottom/popover:rotate-180 stroke-1",
+      "stroke-border fill-bg group-placement-left:-rotate-90 group-placement-right:rotate-90 group-placement-bottom:rotate-180 stroke-1",
   },
 });
 
-const { overlay, arrow } = popoverStyles();
+const { popover, arrow } = popoverStyles();
 
 interface PopoverProps extends React.ComponentProps<typeof AriaPopover> {
-  arrow?: boolean;
+  showArrow?: boolean;
 }
-function Popover({ className, arrow, ...props }: PopoverProps) {
+function Popover({ className, showArrow = false, ...props }: PopoverProps) {
   return (
     <AriaPopover
       className={composeRenderProps(className, (className) =>
-        overlay({ className })
+        popover({ className })
       )}
       {...props}
     >
       {composeRenderProps(props.children, (children) => (
         <>
           {children}
-          {arrow && <PopoverArrow />}
+          {showArrow && <PopoverArrow />}
         </>
       ))}
     </AriaPopover>
@@ -45,8 +45,8 @@ function PopoverArrow({ className, ...props }: PopoverArrowProps) {
   return (
     <AriaOverlayArrow>
       <svg
-        width={8}
-        height={8}
+        width={12}
+        height={12}
         viewBox="0 0 8 8"
         className={arrow({ className })}
         {...props}
