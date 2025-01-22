@@ -1,11 +1,13 @@
 "use client";
 
 import * as React from "react";
+import { AnimatePresence, motion, type Variants } from "motion/react";
 import {
   Tooltip as AriaTooltip,
   TooltipTrigger as AriaTooltipTrigger,
   OverlayArrow as AriaOverlayArrow,
   composeRenderProps,
+  TooltipTriggerStateContext,
 } from "react-aria-components";
 import { tv, VariantProps } from "tailwind-variants";
 import { createScopedContext } from "@/lib/helpers";
@@ -13,15 +15,15 @@ import { createScopedContext } from "@/lib/helpers";
 const tooltipStyles = tv({
   slots: {
     content:
-      "group/tooltip text-fg entering:animate-in entering:fade-in entering:ease-out entering:placement-bottom:slide-in-from-top-0.5 entering:placement-top:slide-in-from-bottom-0.5 entering:placement-left:slide-in-from-right-0.5 entering:placement-right:slide-in-from-left-0.5 exiting:animate-out exiting:fade-out exiting:ease-in exiting:placement-bottom:slide-out-to-top-0.5 exiting:placement-top:slide-out-to-bottom-0.5 exiting:placement-left:slide-out-to-right-0.5 exiting:placement-right:slide-out-to-left-0.5 z-50 rounded-md px-3 py-1.5 text-sm shadow-md",
+      "group/tooltip text-fg placement-bottom:origin-top placement-top:origin-bottom placement-left:origin-right placement-right:origin-left z-50 rounded-md px-3 py-1.5 text-sm shadow-md",
     arrow:
       "group-placement-left/tooltip:-rotate-90 group-placement-right/tooltip:rotate-90 group-placement-bottom/tooltip:rotate-180",
   },
   variants: {
     variant: {
       default: {
-        content: "bg-bg-muted",
-        arrow: "fill-bg-muted",
+        content: "bg-bg-muted border",
+        arrow: "fill-bg-muted stroke-border",
       },
       inverse: {
         content: "bg-bg-inverse text-fg-inverse",
@@ -36,6 +38,26 @@ const tooltipStyles = tv({
 
 const { content, arrow } = tooltipStyles();
 
+const motionVariants: Variants = {
+  enter: {
+    transform: "scale(1)",
+    opacity: 1,
+    transition: {
+      type: "spring",
+      bounce: 0,
+      duration: 0.2,
+    },
+  },
+  exit: {
+    transform: "scale(0.85)",
+    opacity: 0,
+    transition: {
+      type: "easeOut",
+      duration: 0.15,
+    },
+  },
+};
+
 const [TooltipProvider, useTooltipContext] =
   createScopedContext<VariantProps<typeof tooltipStyles>>("TooltipRoot");
 
@@ -43,7 +65,7 @@ interface TooltipProps
   extends TooltipRootProps,
     Omit<TooltipContentProps, "children"> {
   content?: React.ReactNode;
-  arrow?: boolean;
+  showArrow?: boolean;
 }
 const Tooltip = ({
   delay,
@@ -54,7 +76,7 @@ const Tooltip = ({
   onOpenChange,
   isDisabled,
   content,
-  arrow = false,
+  showArrow = false,
   children,
   ...props
 }: TooltipProps) => {
@@ -70,7 +92,7 @@ const Tooltip = ({
     >
       {children}
       <TooltipContent {...props}>
-        {arrow && <TooltipArrow />}
+        {showArrow && <TooltipArrow />}
         {content}
       </TooltipContent>
     </TooltipRoot>
@@ -87,24 +109,40 @@ const TooltipRoot = ({
   <AriaTooltipTrigger delay={delay} closeDelay={closeDelay} {...props} />
 );
 
+const MotionTooltip = motion.create(AriaTooltip);
+
 interface TooltipContentProps
-  extends React.ComponentProps<typeof AriaTooltip>,
-    VariantProps<typeof tooltipStyles> {}
+  extends Omit<React.ComponentProps<typeof AriaTooltip>, "children" | "style">,
+    VariantProps<typeof tooltipStyles> {
+  children?: React.ReactNode;
+  style?: React.CSSProperties;
+}
 function TooltipContent({
   variant,
   offset = 10,
   className,
   ...props
 }: TooltipContentProps) {
+  const state = React.use(TooltipTriggerStateContext)!;
+  const isOpen = state.isOpen;
   return (
     <TooltipProvider variant={variant}>
-      <AriaTooltip
-        offset={offset}
-        className={composeRenderProps(className, (className) =>
-          content({ variant, className })
+      <AnimatePresence>
+        {isOpen && (
+          <MotionTooltip
+            isOpen
+            initial="exit"
+            animate="enter"
+            exit="exit"
+            offset={offset}
+            variants={motionVariants}
+            className={composeRenderProps(className, (className) =>
+              content({ variant, className })
+            )}
+            {...props}
+          />
         )}
-        {...props}
-      />
+      </AnimatePresence>
     </TooltipProvider>
   );
 }
@@ -127,10 +165,10 @@ function TooltipArrow({ className, ...props }: TooltipArrowProps) {
   );
 }
 
-export { Tooltip, TooltipRoot, TooltipContent, TooltipArrow };
 export type {
   TooltipProps,
   TooltipRootProps,
   TooltipContentProps,
   TooltipArrowProps,
 };
+export { Tooltip, TooltipRoot, TooltipContent, TooltipArrow };

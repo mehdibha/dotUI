@@ -1,61 +1,37 @@
 "use client";
 
 import React from "react";
-import { RadioGroup, Radio } from "@/components/core/radio-group";
 import { Button } from "@/components/dynamic-core/button";
-import { DialogContent, DialogRoot } from "@/components/dynamic-core/dialog";
-import { TextField } from "@/components/dynamic-core/text-field";
-import { Heading } from "@/registry/core/heading";
-import { Overlay, OverlayProps } from "@/registry/core/overlay";
+import { DialogRoot, DialogContent } from "@/components/dynamic-core/dialog";
+import { Radio, RadioGroup } from "@/components/dynamic-core/radio-group";
+import { Overlay } from "@/registry/core/overlay";
 
-type OverlayType = OverlayProps["type"];
+type Type = "modal" | "drawer" | "popover";
 
 export default function Demo() {
-  const [type, setType] = React.useState<OverlayType>("modal");
-  const [mobileType, setMobileType] = React.useState<OverlayType>("drawer");
-
+  const [type, setType] = React.useState<Type>("modal");
+  const [mobileType, setMobileType] = React.useState<Type>("drawer");
   return (
-    <div className="flex gap-8">
+    <div className="flex w-full items-center gap-8">
       <DialogRoot>
-        <Button>Open overlay</Button>
+        <Button>Open</Button>
         <Overlay type={type} mobileType={mobileType}>
-          <DialogContent className="space-y-4">
-            <Heading>Edit Profile</Heading>
-            <TextField
-              autoFocus
-              label="Name"
-              defaultValue="Mehdi"
-              className="w-full"
-            />
-            <TextField
-              label="Username"
-              defaultValue="@mehdibha_"
-              className="w-full"
-            />
-            <div className="flex items-center justify-end gap-2">
-              <Button slot="close" variant="outline">
-                Cancel
-              </Button>
-              <Button slot="close" variant="primary">
-                Save changes
-              </Button>
-            </div>
-          </DialogContent>
+          <DialogContent>some content</DialogContent>
         </Overlay>
       </DialogRoot>
       <RadioGroup
         label="Type"
         value={type}
-        onChange={(val) => setType(val as OverlayType)}
+        onChange={(value) => setType(value as Type)}
       >
         <Radio value="modal">Modal</Radio>
         <Radio value="drawer">Drawer</Radio>
         <Radio value="popover">Popover</Radio>
       </RadioGroup>
       <RadioGroup
-        label="Mobile Type"
+        label="Mobile type"
         value={mobileType}
-        onChange={(val) => setMobileType(val as OverlayType)}
+        onChange={(value) => setMobileType(value as Type)}
       >
         <Radio value="modal">Modal</Radio>
         <Radio value="drawer">Drawer</Radio>

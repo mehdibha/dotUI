@@ -41,8 +41,9 @@ const TextArea = ({
   );
 };
 
-interface TextAreaRootProps
-  extends React.ComponentProps<typeof AriaTextField> {}
+interface TextAreaRootProps extends React.ComponentProps<typeof AriaTextField> {
+  placeholder?: string;
+}
 const TextAreaRoot = ({ className, ...props }: TextAreaRootProps) => {
   return (
     <AriaTextField

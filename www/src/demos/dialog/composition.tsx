@@ -1,35 +1,46 @@
 import React from "react";
+import { PenSquareIcon } from "lucide-react";
 import { Button } from "@/components/dynamic-core/button";
 import {
   DialogRoot,
   DialogContent,
-  DialogHeader,
+  DialogBody,
   DialogFooter,
+  DialogHeader,
+  DialogHeading,
+  DialogDescription,
 } from "@/components/dynamic-core/dialog";
+import { TextArea } from "@/components/dynamic-core/text-area";
 import { TextField } from "@/components/dynamic-core/text-field";
 import { Overlay } from "@/registry/core/overlay";
 
 export default function Demo() {
   return (
     <DialogRoot>
-      <Button variant="outline">Edit username</Button>
-      <Overlay type="modal">
-        <DialogContent className="space-y-4">
-          <DialogHeader></DialogHeader>
-          <TextField
-            label="Username"
-            defaultValue="@mehdibha_"
-            className="w-full"
-          />
-          <TextField
-            label="Username"
-            defaultValue="@mehdibha_"
-            className="w-full"
-          />
+      <Button prefix={<PenSquareIcon />}>Create issue</Button>
+      <Overlay>
+        <DialogContent>
+          <DialogHeader>
+            <DialogHeading>Create a new issue</DialogHeading>
+            <DialogDescription>
+              Report an issue or create a feature request.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogBody>
+            <TextField
+              aria-label="Title"
+              placeholder="Title"
+              autoFocus
+              className="w-full"
+            />
+            <TextArea
+              aria-label="Description"
+              placeholder="description"
+              className="w-full"
+            />
+          </DialogBody>
           <DialogFooter>
-            <Button slot="close" variant="outline">
-              Cancel
-            </Button>
+            <Button slot="close">Cancel</Button>
             <Button slot="close" variant="primary">
               Save changes
             </Button>

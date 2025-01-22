@@ -202,7 +202,6 @@ export const demos: RegistryDemos = [
     "composition",
     "controlled",
     "description",
-    "dismiss-button",
     "dismissable",
     "drawer",
     "inset-content",
@@ -211,7 +210,7 @@ export const demos: RegistryDemos = [
     "title",
     "types",
   ]),
-  ...buildDemos("drawer", ["basic"]),
+  ...buildDemos("drawer", ["basic", "placement"]),
   ...buildDemos("drop-zone", [
     "basic",
     "disabled",
@@ -460,6 +459,7 @@ export const demos: RegistryDemos = [
     "variants",
   ]),
   ...buildDemos("tooltip", [
+    "variant",
     "arrow",
     "composition",
     "container-padding",
@@ -476,5 +476,5 @@ export const demos: RegistryDemos = [
   ...buildDemos("table", ["default"]),
   ...buildDemos("form", ["basic", "react-aria", "react-hook-form"]),
   ...buildDemos("command", ["basic", "dialog"]),
-  ...buildDemos("overlay", ["type"]),
+  ...buildDemos("overlay", ["basic", "type"]),
 ];

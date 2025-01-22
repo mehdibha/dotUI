@@ -101,7 +101,7 @@ interface AlertContentProps extends React.ComponentProps<"p"> {}
 
 function AlertContent({ className, ...props }: AlertContentProps) {
   const { variant } = useAlertContext("AlertTitle");
-  return <p className={content({ variant, className })} {...props} />;
+  return <div className={content({ variant, className })} {...props} />;
 }
 
 export type { AlertProps, AlertRootProps, AlertTitleProps, AlertContentProps };

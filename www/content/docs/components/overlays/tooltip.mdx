@@ -1,11 +1,9 @@
 ---
-title: Tooltip
+title: Tooltip ☑️
 description: Tooltip displays a description of an element on hover or focus.
 links:
   - label: Aria docs
     href: https://react-spectrum.adobe.com/react-aria/Tooltip.html
-  - label: Aria API Reference
-    href: https://react-spectrum.adobe.com/react-aria/Tooltip.html#props
   - label: Report an issue
     href: https://github.com/mehdibha/dotUI/issues/new/choose
   - label: Edit this page
@@ -14,8 +12,10 @@ links:
 
 <ComponentPreview
   name="core/tooltip/tooltip-default"
-  preview={`<Tooltip content="Add to library">
-    <Button><PlusIcon /></Button>
+  preview={`<Tooltip content={<span>Create new issue <Kbd>C</Kbd></span>}>
+    <Button shape="square">
+      <SquarePenIcon />
+    </Button>
   </Tooltip>`}
 />
 
@@ -23,6 +23,31 @@ links:
 
 ```package-install
 npx dotui-cli@latest add tooltip
+```
+
+## Anatomy
+
+```tsx
+import { Tooltip } from "@/components/core/tooltip";
+
+<Tooltip content="Edit">
+  <Button>
+    <EditIcon />
+  </Button>
+</Tooltip>;
+```
+
+```tsx
+import { TooltipRoot, TooltipContent } from "@/components/core/tooltip";
+
+<TooltipRoot>
+  <Button>
+    <EditIcon />
+  </Button>
+  <TooltipContent>
+    <p>Edit</p>
+  </TooltipContent>
+</TooltipRoot>;
 ```
 
 ## Usage
@@ -34,7 +59,99 @@ Use `Tooltip` to display a description of an element on hover or focus.
 - Use tooltips to describe icons (e.g., icon buttons).
 - Keep the tooltip text minimal.
 - Never include tooltips on non-interactive components (div, span, p) because it will not be accessible for keyboard or screen reader users.
-- Don't place actions inside a tooltip
+- Don't place actions inside a tooltip (use Popover instead)
+
+## Options
+
+### Variant
+
+Use the `variant` prop to change the appearance of the tooltip.
+
+<ComponentPreview
+  name="core/tooltip/tooltip-variant"
+  preview={`<Tooltip variant="inverse" content="Create new issue">
+    <Button shape="square">
+      <SquarePenIcon />
+    </Button>
+  </Tooltip>`}
+/>
+
+### Placement
+
+The Tooltip's placement with respect to its trigger element can be adjusted using the `placement` prop. See the props table for a full list of available placement combinations.
+
+<ComponentPreview
+  name="core/tooltip/tooltip-placement"
+  preview={`<Tooltip placement="top" content="Create new issue"><Button /></Tooltip>
+<Tooltip placement="bottom" content="Create new issue"><Button /></Tooltip>
+<Tooltip placement="left" content="Create new issue"><Button /></Tooltip>
+<Tooltip placement="right" content="Create new issue"><Button /></Tooltip>`}
+/>
+
+### Delay
+
+The delay duration (the time from when the mouse enters a tooltip trigger until the tooltip opens) and the close delay can be customised.
+
+<ComponentPreview
+  name="core/tooltip/tooltip-delay"
+  preview={`<Tooltip delay={delay} closeDelay={closeDelay} content="Create new issue">
+    <Button>
+      <PenIcon />
+    </Button>
+  </Tooltip>`}
+/>
+
+### Arrow
+
+Use the `showArrow` prop to add an arrow to the tooltip.
+
+<ComponentPreview
+  name="core/tooltip/tooltip-arrow"
+  preview={`<Tooltip content="Create new issue" arrow>
+    <Button>
+      <PenIcon />
+    </Button>
+  </Tooltip>`}
+/>
+
+### Should flip
+
+This option determines whether or not a tooltip should be able to switch sides when constrained by space.
+
+<ComponentPreview
+  name="core/tooltip/tooltip-flip"
+  preview={`<Tooltip shouldFlip={shouldFlip} content="Create new issue">
+    <Button>
+      <PenIcon />
+    </Button>
+  </Tooltip>`}
+/>
+
+### Offset
+
+The offset is the distance between the end of the tip and the target.
+
+<ComponentPreview
+  name="core/tooltip/tooltip-offset"
+  preview={`<Tooltip offset={offset} content="Create new issue">
+    <Button>
+      <PenIcon />
+    </Button>
+  </Tooltip>`}
+/>
+
+### Container padding
+
+To make sure that the tooltip will stay within certain boundaries (e.g., a browser window) it's possible to define a container and a container padding value to respect. The default value for this is 12 px.
+
+<ComponentPreview
+  name="core/tooltip/tooltip-container-padding"
+  preview={`<Tooltip containerPadding={containerPadding} content="Create new issue">
+    <Button>
+      <PenIcon />
+    </Button>
+  </Tooltip>`}
+/>
 
 ## Composition
 
@@ -45,76 +162,9 @@ For more flexibility, you can drop down to the composition level.
   preview={`<TooltipRoot>
     <Button>Hover</Button>
     <TooltipContent>
-      <p>Add to library</p>
+      <p>Create new issue</p>
     </TooltipContent>
   </TooltipRoot>`}
-/>
-
-## Options
-
-### Arrow
-
-<ComponentPreview
-  name="core/tooltip/tooltip-arrow"
-  preview={`<Tooltip content="Add to library" arrow>
-    <Button><PlusIcon /></Button>
-  </Tooltip>`}
-/>
-
-### Placement
-
-The Tooltip's placement with respect to its trigger element can be adjusted using the `placement` prop. See the props table for a full list of available placement combinations.
-
-<ComponentPreview
-  name="core/tooltip/tooltip-placement"
-  preview={`<Tooltip placement="top" content="Add to library"><Button /></Tooltip>
-<Tooltip placement="bottom" content="Add to library"><Button /></Tooltip>
-<Tooltip placement="left" content="Add to library"><Button /></Tooltip>
-<Tooltip placement="right" content="Add to library"><Button /></Tooltip>`}
-/>
-
-### Should flip
-
-This option determines whether or not a tooltip should be able to switch sides when constrained by space.
-
-<ComponentPreview
-  name="core/tooltip/tooltip-flip"
-  preview={`<Tooltip shouldFlip={shouldFlip} content="Add to library">
-    <Button><PlusIcon /></Button>
-  </Tooltip>`}
-/>
-
-### Offset
-
-The offset is the distance between the end of the tip and the target.
-
-<ComponentPreview
-  name="core/tooltip/tooltip-offset"
-  preview={`<Tooltip offset={offset} content="Add to library">
-    <Button><PlusIcon /></Button>
-  </Tooltip>`}
-/>
-
-### Container padding
-
-To make sure that the tooltip will stay within certain boundaries (e.g., a browser window) it's possible to define a container and a container padding value to respect. The default value for this is 12 px.
-
-<ComponentPreview
-  name="core/tooltip/tooltip-container-padding"
-  preview={`<Tooltip containerPadding={containerPadding} content="Add to library">
-    <Button><PlusIcon /></Button>
-  </Tooltip>`}
-/>
-
-### Delay
-
-The delay duration (the time from when the mouse enters a tooltip trigger until the tooltip opens) and the close delay can be customised.
-
-<ComponentPreview
-  name="core/tooltip/tooltip-delay"
-  preview={`<Tooltip delay={delay} closeDelay={closeDelay} content="Add to library">
-    <Button><PlusIcon /></Button>
-  </Tooltip>`}
 />
 
 ## API Reference

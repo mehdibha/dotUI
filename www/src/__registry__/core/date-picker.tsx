@@ -11,7 +11,7 @@ import { type VariantProps } from "tailwind-variants";
 import { Button } from "@/registry/core/button-01";
 import { Calendar } from "@/registry/core/calendar_basic";
 import { DateInput, DateSegment } from "@/registry/core/date-input";
-import { Dialog } from "@/registry/core/dialog";
+import { Dialog } from "@/registry/core/dialog_basic";
 import { Field, fieldStyles, type FieldProps } from "@/registry/core/field";
 import { InputRoot, type inputStyles } from "@/registry/core/input";
 

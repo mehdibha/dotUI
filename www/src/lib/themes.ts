@@ -5,10 +5,10 @@ const defaultVariants = {
   loader: "loader-ring",
   button: "button-01",
   calendar: "calendar_basic",
-  tooltip: "tooltip-01",
   form: "react-hook-form",
   checkbox: "checkbox_basic",
   "checkbox-group": "checkbox-group_basic",
+  tooltip: "tooltip_basic",
 };
 
 export const dotUIThemes: Theme[] = [

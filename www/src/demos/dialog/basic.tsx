@@ -1,38 +1,38 @@
-"use client";
-
 import React from "react";
+import { PenSquareIcon } from "lucide-react";
 import { Button } from "@/components/dynamic-core/button";
 import {
   DialogRoot,
   Dialog,
+  DialogBody,
   DialogFooter,
 } from "@/components/dynamic-core/dialog";
+import { TextArea } from "@/components/dynamic-core/text-area";
 import { TextField } from "@/components/dynamic-core/text-field";
 
 export default function Demo() {
   return (
     <DialogRoot>
-      <Button variant="outline">Edit Profile</Button>
+      <Button prefix={<PenSquareIcon />}>Create issue</Button>
       <Dialog
-        title="Edit profile"
-        description="Make changes to your profile."
-        className="space-y-4"
+        title="Create a new issue"
+        description="Report an issue or create a feature request."
       >
-        <TextField
-          autoFocus
-          label="Name"
-          defaultValue="Mehdi"
-          className="w-full"
-        />
-        <TextField
-          label="Username"
-          defaultValue="@mehdibha_"
-          className="w-full"
-        />
+        <DialogBody>
+          <TextField
+            aria-label="Title"
+            placeholder="Title"
+            autoFocus
+            className="w-full"
+          />
+          <TextArea
+            aria-label="Description"
+            placeholder="description"
+            className="w-full"
+          />
+        </DialogBody>
         <DialogFooter>
-          <Button slot="close" variant="outline">
-            Cancel
-          </Button>
+          <Button slot="close">Cancel</Button>
           <Button slot="close" variant="primary">
             Save changes
           </Button>

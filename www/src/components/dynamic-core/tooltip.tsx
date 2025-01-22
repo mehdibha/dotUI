@@ -7,21 +7,22 @@ import {
   TooltipRoot as _TooltipRoot,
   TooltipContent as _TooltipContent,
   TooltipArrow as _TooltipArrow,
-} from "@/registry/core/tooltip-01";
+} from "@/registry/core/tooltip_basic";
 import type {
   TooltipProps,
   TooltipRootProps,
   TooltipContentProps,
   TooltipArrowProps,
-} from "@/registry/core/tooltip-01";
+} from "@/registry/core/tooltip_basic";
 
 export const Tooltip = createDynamicComponent<TooltipProps>(
   "tooltip",
   "Tooltip",
   _Tooltip,
   {
-    "tooltip-01": React.lazy(() =>
-      import("@/registry/core/tooltip-01").then((mod) => ({
+    // @ts-ignore
+    tooltip_framer: React.lazy(() =>
+      import("@/registry/core/tooltip_framer").then((mod) => ({
         default: mod.Tooltip,
       }))
     ),
@@ -33,8 +34,8 @@ export const TooltipRoot = createDynamicComponent<TooltipRootProps>(
   "TooltipRoot",
   _TooltipRoot,
   {
-    "tooltip-01": React.lazy(() =>
-      import("@/registry/core/tooltip-01").then((mod) => ({
+    tooltip_framer: React.lazy(() =>
+      import("@/registry/core/tooltip_framer").then((mod) => ({
         default: mod.TooltipRoot,
       }))
     ),
@@ -46,8 +47,9 @@ export const TooltipContent = createDynamicComponent<TooltipContentProps>(
   "TooltipContent",
   _TooltipContent,
   {
-    "tooltip-01": React.lazy(() =>
-      import("@/registry/core/tooltip-01").then((mod) => ({
+    // @ts-ignore
+    tooltip_framer: React.lazy(() =>
+      import("@/registry/core/tooltip_framer").then((mod) => ({
         default: mod.TooltipContent,
       }))
     ),
@@ -59,8 +61,8 @@ export const TooltipArrow = createDynamicComponent<TooltipArrowProps>(
   "TooltipArrow",
   _TooltipArrow,
   {
-    "tooltip-01": React.lazy(() =>
-      import("@/registry/core/tooltip-01").then((mod) => ({
+    tooltip_framer: React.lazy(() =>
+      import("@/registry/core/tooltip_framer").then((mod) => ({
         default: mod.TooltipArrow,
       }))
     ),

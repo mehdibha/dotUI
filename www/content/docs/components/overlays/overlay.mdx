@@ -8,7 +8,21 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/overlays/overlay.mdx?plain=1
 ---
 
-<ComponentPreview name="core/drawer/overlay-type" />
+{/* prettier-ignore-start */}
+
+<Alert><span className="font-bold">Note:</span> Overlay only provides the overlay itself. It should be combined with Dialog to create fully accessible dialogs. <Link href="/docs/components/overlays/dialog">See dialog</Link> component instead.</Alert>
+
+{/* prettier-ignore-end */}
+
+<ComponentPreview
+  name="core/drawer/overlay-basic"
+  preview={`<DialogRoot>
+    <Button>Open overlay</Button>
+    <Overlay>
+      <DialogContent>some content</DialogContent>
+    </Overlay>
+  </DialogRoot>`}
+/>
 
 ## Installation
 
@@ -16,27 +30,38 @@ links:
 npx dotui-cli@latest add overlay
 ```
 
-## Anatomy
+## Overlay type
 
-An overlay consists of an overlay container element, and an underlay. The overlay may contain a Dialog, or another element such as a Menu or ListBox when used within a component such as a Select or Combobox.
+Overlay can be rendered as modal, popover, or drawer using the `type` prop. You can set a different type for mobile view with the `mobileType` prop.
 
-```tsx
-import { Button } from "@/components/core/button";
-import { DialogRoot, DialogContent } from "@/components/core/dialog";
-import { Overlay } from "@/components/core/drawer";
-
-<DialogRoot>
-  <Button>Open Overlay</Button>
-  <Overlay type="modal" mobileType="drawer">
-    <DialogContent>{/* Content */}</DialogContent>
-  </Overlay>
-</DialogRoot>;
-```
+<ComponentPreview
+  name="core/drawer/overlay-type"
+  preview={`<DialogRoot>
+    <Button>Create issue</Button>
+    <Overlay type={type} mobileType={mobileType}>
+      <DialogContent>
+        {/* Dialog content */}
+      </DialogContent>
+    </Overlay>
+  </DialogRoot>`}
+/>
 
 ## API Reference
 
-| Prop        | Type                                                                                                        | Default | Description                                                                                                  |
-| ----------- | ----------------------------------------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------ |
-| `children`  | `ReactNode \| (opts: ModalRenderProps) => ReactNode`                                                        | -       | The children of the component. A function may be provided to alter the children based on component state.    |
-| `className` | `string \| (values: ModalRenderProps & {defaultClassName: string \| undefined}) => string`                  | -       | The CSS className for the element. A function may be provided to compute the class based on component state. |
-| `style`     | `CSSProperties \| (values: ModalRenderProps & {defaultStyle: CSSProperties}) => CSSProperties \| undefined` | -       | The inline style for the element. A function may be provided to compute the style based on component state.  |
+| Prop                           | Type                                | Default         | Description                                                                                                                                                                                                                                                                                                     |
+| ------------------------------ | ----------------------------------- | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `type`                         | `'modal' \|'drawer' \|'popover' \|` | `'modal'`       | The type of the overlay.                                                                                                                                                                                                                                                                                        |
+| `mobileType`                   | `'modal' \|'drawer' \|'popover' \|` | `'drawer'`      | The mobile type of the overlay.                                                                                                                                                                                                                                                                                 |
+| `isOpen`                       | `boolean`                           | -               | Whether the overlay is open by default (controlled).                                                                                                                                                                                                                                                            |
+| `defaultOpen`                  | `boolean`                           | -               | Whether the overlay is open by default (uncontrolled).                                                                                                                                                                                                                                                          |
+| `isDismissable`                | `boolean`                           | `false`         | Whether to close the modal when the user interacts outside it.                                                                                                                                                                                                                                                  |
+| `UNSTABLE_portalContainer`     | `Element`                           | `document.body` | The container element in which the overlay portal will be placed. This may have unknown behavior depending on where it is portalled to.                                                                                                                                                                         |
+| `isKeyboardDismissDisabled`    | `boolean`                           | `false`         | Whether pressing the escape key to close the dialog should be disabled.                                                                                                                                                                                                                                         |
+| `shouldCloseOnInteractOutside` | `(element: Element) => boolean`     | -               | When user interacts with the argument element outside of the overlay ref, return `true` if `onClose` should be called. This gives you a chance to filter out interaction with elements that should not dismiss the overlay. By default, `onClose` will always be called on interaction outside the overlay ref. |
+| `modalProps`                   | `ModalProps`                        | -               | Props applied to the Modal element. [See ModalProps](/docs/components/overlays/modal#api-reference)                                                                                                                                                                                                             |
+| `drawerProps`                  | `DrawerProps`                       | -               | Props applied to the Drawer element. [See DrawerProps](/docs/components/overlays/drawer#api-reference)                                                                                                                                                                                                          |
+| `popoverProps`                 | `PopoverProps`                      | -               | Props applied to the Popover element. [See PopoverProps](/docs/components/overlays/popover#api-reference)                                                                                                                                                                                                       |
+
+| Event          | Type                        | Description                                                   |
+| -------------- | --------------------------- | ------------------------------------------------------------- |
+| `onOpenChange` | `(isOpen: boolean) => void` | Handler that is called when the overlay's open state changes. |

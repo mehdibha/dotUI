@@ -27,11 +27,11 @@ const drawerVariants = tv({
       },
       left: {
         overlay:
-          "exiting:slide-out-to-left entering:slide-in-from-left inset-y-0 left-0 h-full w-3/4 border-r sm:max-w-sm",
+          "exiting:slide-out-to-left entering:slide-in-from-left top-0 left-0 h-(--visual-viewport-height) border-r",
       },
       right: {
         overlay:
-          "exiting:slide-out-to-right entering:slide-in-from-right inset-y-0 right-0 h-full w-3/4 border-l sm:max-w-sm",
+          "exiting:slide-out-to-right entering:slide-in-from-right top-0 right-0 h-(--visual-viewport-height) border-l",
       },
     },
   },
@@ -43,13 +43,14 @@ const drawerVariants = tv({
 const { overlay, underlay } = drawerVariants();
 
 interface DrawerProps extends React.ComponentProps<typeof AriaModal> {
-  side?: "top" | "bottom" | "left" | "right";
+  placement?: "top" | "bottom" | "left" | "right";
 }
 
 function Drawer({
   isDismissable = true,
   className,
   style,
+  placement,
   ...props
 }: DrawerProps) {
   return (
@@ -60,7 +61,7 @@ function Drawer({
     >
       <AriaModal
         className={composeRenderProps(className, (className) =>
-          overlay({ className })
+          overlay({ placement, className })
         )}
         style={style}
         {...props}

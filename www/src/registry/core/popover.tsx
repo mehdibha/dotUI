@@ -11,7 +11,7 @@ import { tv } from "tailwind-variants";
 const popoverStyles = tv({
   slots: {
     popover:
-      "bg-bg min-w-(--trigger-width) entering:animate-in entering:fade-in entering:zoom-in-95 entering:duration-150 exiting:duration-100 entering:placement-bottom:slide-in-from-top-2 entering:placement-top:slide-in-from-bottom-2 entering:placement-left:slide-in-from-right-2 entering:placement-right:slide-in-from-left-2 exiting:animate-out exiting:fade-out exiting:zoom-out-95 exiting:placement-bottom:slide-out-to-top-2 exiting:placement-top:slide-out-to-bottom-2 exiting:placement-left:slide-out-to-right-2 exiting:placement-right:slide-out-to-left-2 placement-bottom:origin-top placement-top:origin-bottom placement-left:origin-right placement-right:origin-left group rounded-md border shadow-md ease-[cubic-bezier(0.165,0.84,0.44,1)]",
+      "bg-bg min-w-(--trigger-width) entering:animate-in entering:fade-in entering:zoom-in-95 entering:duration-150 exiting:duration-150 entering:placement-bottom:slide-in-from-top-2 entering:placement-top:slide-in-from-bottom-2 entering:placement-left:slide-in-from-right-2 entering:placement-right:slide-in-from-left-2 exiting:animate-out exiting:fade-out exiting:zoom-out-95 exiting:placement-bottom:slide-out-to-top-2 exiting:placement-top:slide-out-to-bottom-2 exiting:placement-left:slide-out-to-right-2 exiting:placement-right:slide-out-to-left-2 placement-bottom:origin-top placement-top:origin-bottom placement-left:origin-right placement-right:origin-left group rounded-md border shadow-md ease-[cubic-bezier(0.165,0.84,0.44,1)]",
     arrow:
       "stroke-border fill-bg group-placement-left:-rotate-90 group-placement-right:rotate-90 group-placement-bottom:rotate-180 stroke-1",
   },

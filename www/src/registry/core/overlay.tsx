@@ -7,38 +7,45 @@ import { useMediaQuery } from "@/registry/hooks/use-media-query";
 
 type Type = "modal" | "popover" | "drawer";
 
-interface OverlayProps {
+type CommonProps =
+  | "UNSTABLE_portalContainer"
+  | "isDismissable"
+  | "isOpen"
+  | "defaultOpen"
+  | "onOpenChange"
+  | "isKeyboardDismissDisabled"
+  | "shouldCloseOnInteractOutside";
+
+interface OverlayProps extends Pick<ModalProps, CommonProps> {
   children?: React.ReactNode;
   type?: Type;
   mobileType?: Type | null;
-  mediaQuery?: string;
-  popoverProps?: PopoverProps;
-  modalProps?: ModalProps;
-  drawerProps?: DrawerProps;
+  popoverProps?: Omit<PopoverProps, "children" | CommonProps>;
+  modalProps?: Omit<ModalProps, "children" | CommonProps>;
+  drawerProps?: Omit<DrawerProps, "children" | CommonProps>;
 }
 
 function Overlay({
   type = "modal",
   mobileType = "drawer",
-  mediaQuery = "(max-width: 640px)",
-  children,
   modalProps,
   popoverProps,
   drawerProps,
+  ...props
 }: OverlayProps) {
-  const isMobile = useMediaQuery(mediaQuery);
+  const isMobile = useMediaQuery("(max-width: 640px)");
   const resolvedType = mobileType ? (isMobile ? mobileType : type) : type;
 
   if (resolvedType === "modal") {
-    return <Modal {...modalProps}>{children}</Modal>;
+    return <Modal {...modalProps} {...props} />;
   }
 
   if (resolvedType === "popover") {
-    return <Popover {...popoverProps}>{children}</Popover>;
+    return <Popover {...popoverProps} {...props} />;
   }
 
   if (resolvedType === "drawer") {
-    return <Drawer {...drawerProps}>{children}</Drawer>;
+    return <Drawer {...drawerProps} {...props} />;
   }
 }
 

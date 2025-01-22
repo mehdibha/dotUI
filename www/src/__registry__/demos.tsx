@@ -819,11 +819,6 @@
       files: ["demos/dialog/description.tsx"],
       component: React.lazy(() => import("@/demos/dialog/description")),
     },
-    "dialog-dismiss-button": {
-      name: "dialog-dismiss-button",
-      files: ["demos/dialog/dismiss-button.tsx"],
-      component: React.lazy(() => import("@/demos/dialog/dismiss-button")),
-    },
     "dialog-dismissable": {
       name: "dialog-dismissable",
       files: ["demos/dialog/dismissable.tsx"],
@@ -863,6 +858,11 @@
       name: "drawer-basic",
       files: ["demos/drawer/basic.tsx"],
       component: React.lazy(() => import("@/demos/drawer/basic")),
+    },
+    "drawer-placement": {
+      name: "drawer-placement",
+      files: ["demos/drawer/placement.tsx"],
+      component: React.lazy(() => import("@/demos/drawer/placement")),
     },
     "drop-zone-basic": {
       name: "drop-zone-basic",
@@ -1939,6 +1939,11 @@
       files: ["demos/toggle-button/variants.tsx"],
       component: React.lazy(() => import("@/demos/toggle-button/variants")),
     },
+    "tooltip-variant": {
+      name: "tooltip-variant",
+      files: ["demos/tooltip/variant.tsx"],
+      component: React.lazy(() => import("@/demos/tooltip/variant")),
+    },
     "tooltip-arrow": {
       name: "tooltip-arrow",
       files: ["demos/tooltip/arrow.tsx"],
@@ -2028,6 +2033,11 @@
       name: "command-dialog",
       files: ["demos/command/dialog.tsx"],
       component: React.lazy(() => import("@/demos/command/dialog")),
+    },
+    "overlay-basic": {
+      name: "overlay-basic",
+      files: ["demos/overlay/basic.tsx"],
+      component: React.lazy(() => import("@/demos/overlay/basic")),
     },
     "overlay-type": {
       name: "overlay-type",

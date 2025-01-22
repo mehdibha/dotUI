@@ -13,15 +13,18 @@ export const createDynamicComponent = <Props extends {}>(
   const Component: React.FC<Props> = (props) => {
     const { currentTheme } = useThemes();
 
-    const variant = currentTheme.variants[registryItem];
+    const currentThemeVariant = currentTheme.variants[registryItem];
     const { variants } = useComponentsVariants();
     const contextVariant = variants[registryItem];
 
-    if (!variant || !registry[variant]) {
+    if (
+      (!currentThemeVariant || !registry[currentThemeVariant]) &&
+      (!contextVariant || !registry[contextVariant])
+    ) {
       return <DefaultComp {...props} />;
     }
 
-    const LazyComponent = registry[contextVariant ?? variant];
+    const LazyComponent = registry[contextVariant ?? currentThemeVariant];
 
     return (
       <React.Suspense
@@ -60,4 +63,3 @@ export const VariantsProvider = ({
 };
 
 export const useComponentsVariants = () => React.useContext(variantsContext);
-

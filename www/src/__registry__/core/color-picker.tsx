@@ -13,7 +13,11 @@ import { ColorArea } from "@/registry/core/color-area";
 import { ColorField } from "@/registry/core/color-field";
 import { ColorSlider } from "@/registry/core/color-slider";
 import { ColorSwatch } from "@/registry/core/color-swatch";
-import { Dialog, DialogRoot, DialogRootProps } from "@/registry/core/dialog";
+import {
+  Dialog,
+  DialogRoot,
+  DialogRootProps,
+} from "@/registry/core/dialog_basic";
 import { Item } from "@/registry/core/list-box";
 import { Select } from "@/registry/core/select";
 import { cn } from "@/registry/lib/cn";

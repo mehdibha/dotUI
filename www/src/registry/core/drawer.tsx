@@ -11,27 +11,27 @@ import { tv } from "tailwind-variants";
 const drawerVariants = tv({
   slots: {
     underlay:
-      "before:ease-drawer before:animate-in before:fade-in exiting:before:animate-out exiting:before:fade-out exiting:before:duration-300 fixed inset-0 z-50 before:fixed before:inset-0 before:bg-black/40 before:duration-300 before:content-['']",
+      "before:ease-drawer before:animate-in before:fade-in exiting:before:animate-out exiting:before:fade-out exiting:before:duration-500 fixed inset-0 z-50 before:fixed before:inset-0 before:bg-black/40 before:duration-500 before:content-['']",
     overlay:
-      "outline-hidden entering:animate-in exiting:animate-out entering:duration-300 exiting:duration-300 bg-bg ease-drawer fixed z-50 flex flex-col",
+      "bg-bg ease-drawer fixed z-50 flex flex-col border duration-500 will-change-transform",
   },
   variants: {
     placement: {
       top: {
         overlay:
-          "exiting:slide-out-to-top entering:slide-in-from-top inset-x-0 top-0 border-b",
+          "entering:-translate-y-full exiting:-translate-y-full top-0 max-h-[calc(var(--visual-viewport-height)-var(--drawer-margin))] min-h-20 w-screen translate-y-0 rounded-b-xl border-t-0",
       },
       bottom: {
         overlay:
-          "exiting:slide-out-to-bottom entering:slide-in-from-bottom inset-x-0 bottom-0 border-t",
+          "top-(--visual-viewport-height) exiting:translate-y-0 entering:translate-y-0 max-h-[calc(var(--visual-viewport-height)-var(--drawer-margin))] min-h-20 w-screen -translate-y-full rounded-t-xl border-b-0 *:last:pb-[calc(max(calc(var(--spacing)*4),env(safe-area-inset-bottom)))]",
       },
       left: {
         overlay:
-          "exiting:slide-out-to-left entering:slide-in-from-left top-0 left-0 h-(--visual-viewport-height) border-r",
+          "entering:-translate-x-full exiting:-translate-x-full max-h-(--visual-viewport-height) h-(--visual-viewport-height) left-0 top-0 min-w-20 max-w-[calc(100vw-var(--drawer-margin))] translate-x-0 rounded-r-xl border-l-0 *:last:pb-[calc(max(calc(var(--spacing)*4),env(safe-area-inset-bottom)))]",
       },
       right: {
         overlay:
-          "exiting:slide-out-to-right entering:slide-in-from-right top-0 right-0 h-(--visual-viewport-height) border-l",
+          "entering:translate-x-full exiting:translate-x-full max-h-(--visual-viewport-height) h-(--visual-viewport-height) right-0 top-0 min-w-20 max-w-[calc(100vw-var(--drawer-margin))] translate-x-0 rounded-l-xl border-r-0 *:last:pb-[calc(max(calc(var(--spacing)*4),env(safe-area-inset-bottom)))]",
       },
     },
   },
@@ -63,7 +63,10 @@ function Drawer({
         className={composeRenderProps(className, (className) =>
           overlay({ placement, className })
         )}
-        style={style}
+        style={composeRenderProps(style, (style) => ({
+          "--drawer-margin": "calc(var(--spacing)*24)",
+          ...style,
+        }))}
         {...props}
       />
     </AriaModalOverlay>

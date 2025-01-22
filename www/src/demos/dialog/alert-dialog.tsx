@@ -13,31 +13,18 @@ export default function Demo() {
     <DialogRoot>
       <Button variant="danger">Delete project</Button>
       <Dialog
+        role="alertdialog"
         title="Delete project"
         description="Are you sure you want to delete this project? This action is permanent and cannot be undone."
-        role="alertdialog"
-        // isDissmissible={false}
       >
-        {({ close }) => (
-          <>
-            <DialogFooter>
-              <Button
-                variant="outline"
-                size={{ initial: "lg", sm: "md" }}
-                onPress={close}
-              >
-                Cancel
-              </Button>
-              <Button
-                variant="danger"
-                size={{ initial: "lg", sm: "md" }}
-                onPress={close}
-              >
-                Delete project
-              </Button>
-            </DialogFooter>
-          </>
-        )}
+        <DialogFooter>
+          <Button slot="close" variant="outline">
+            Cancel
+          </Button>
+          <Button slot="close" variant="danger">
+            Delete project
+          </Button>
+        </DialogFooter>
       </Dialog>
     </DialogRoot>
   );

@@ -34,7 +34,7 @@ export default async function Page({
           page.data.toc && page.data.toc.length > 0,
       })}
     >
-      <div className="max-w-(--breakpoint-md) container pb-20">
+      <div className="container max-w-3xl pb-20">
         <Breadcrumbs tree={source.pageTree} className="mb-2" />
         <h1 className="text-4xl font-bold">{page.data.title}</h1>
         <p className="text-fg-muted mt-2">{page.data.description}</p>

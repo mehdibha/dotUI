@@ -5,7 +5,7 @@ import { Command } from "@/components/dynamic-core/command";
 import { MenuContent, MenuItem } from "@/components/dynamic-core/menu";
 import { SearchField } from "@/components/dynamic-core/search-field";
 import { Button } from "@/registry/core/button-01";
-import { Dialog, DialogRoot } from "@/registry/core/dialog";
+import { Dialog, DialogRoot } from "@/registry/core/dialog_basic";
 
 export default function Demo() {
   const { contains } = useFilter({ sensitivity: "base" });

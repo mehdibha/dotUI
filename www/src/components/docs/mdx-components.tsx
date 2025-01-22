@@ -96,7 +96,7 @@ export const mdxComponents: MDXComponents = {
       )}
       {...props}
     >
-      <div className="flex flex-wrap items-center gap-2">{children}</div>
+      {children}
     </td>
   ),
   // add mt-4 to all pre except when it has a parent with class install-tabs
@@ -161,6 +161,7 @@ export const mdxComponents: MDXComponents = {
     <Badge variant="neutral" size="sm" className={cn()} {...props} />
   ),
   BadgePalette: BadgePalette,
+  Link,
 };
 
 function createHeading(level: number, className?: string) {

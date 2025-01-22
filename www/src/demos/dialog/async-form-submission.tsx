@@ -1,57 +1,55 @@
 "use client";
 
 import React from "react";
+import { Form } from "react-aria-components";
 import { Button } from "@/components/dynamic-core/button";
 import {
   DialogRoot,
   Dialog,
   DialogFooter,
+  DialogBody,
 } from "@/components/dynamic-core/dialog";
 import { TextField } from "@/components/dynamic-core/text-field";
 
 export default function DialogDemo() {
   const [isPending, setIsPending] = React.useState(false);
-  const handleSubmit = async () => {
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setIsPending(true);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     setIsPending(false);
   };
+
   return (
     <DialogRoot>
-      <Button variant="outline">Edit Profile</Button>
-      <Dialog title="Edit profile" description="Make changes to your profile.">
+      <Button>Edit username</Button>
+      <Dialog title="Edit username" description="Make changes to your profile.">
         {({ close }) => (
-          <>
-            <div className="space-y-4">
+          <Form
+            onSubmit={(e) => {
+              handleSubmit(e);
+              close();
+            }}
+          >
+            <DialogBody>
               <TextField
                 autoFocus
-                label="Name"
-                defaultValue="Mehdi"
+                label="Username"
+                defaultValue="@mehdibha_"
+                isRequired
                 className="w-full"
               />
-              <TextField label="Username" defaultValue="@mehdibha_" />
-            </div>
+            </DialogBody>
             <DialogFooter>
-              <Button
-                variant="outline"
-                size={{ initial: "lg", sm: "md" }}
-                onPress={close}
-              >
+              <Button variant="outline" slot="close">
                 Cancel
               </Button>
-              <Button
-                isPending={isPending}
-                variant="primary"
-                size={{ initial: "lg", sm: "md" }}
-                onPress={async () => {
-                  await handleSubmit();
-                  close();
-                }}
-              >
+              <Button type="submit" isPending={isPending} variant="primary">
                 Save changes
               </Button>
             </DialogFooter>
-          </>
+          </Form>
         )}
       </Dialog>
     </DialogRoot>

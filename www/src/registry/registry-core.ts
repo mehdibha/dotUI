@@ -825,17 +825,32 @@ export const core: Registry = [
     type: "registry:core",
     variants: [
       {
-        name: "tooltip-01",
+        name: "tooltip_basic",
+      },
+      {
+        name: "tooltip_framer",
       },
     ],
   },
   {
-    name: "tooltip-01",
+    name: "tooltip_basic",
     type: "registry:core",
     dependencies: ["react-aria-components"],
     files: [
       {
-        path: "core/tooltip-01.tsx",
+        path: "core/tooltip_basic.tsx",
+        type: "registry:core",
+        target: "core/tooltip.tsx",
+      },
+    ],
+  },
+  {
+    name: "tooltip_framer",
+    type: "registry:core",
+    dependencies: ["react-aria-components"],
+    files: [
+      {
+        path: "core/tooltip_framer.tsx",
         type: "registry:core",
         target: "core/tooltip.tsx",
       },

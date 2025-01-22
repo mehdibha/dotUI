@@ -18,9 +18,9 @@ const config = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  experimental: {
-    reactCompiler: true,
-  },
+  // experimental: {
+  //   reactCompiler: true,
+  // },
 };
 
 export default withMDX(config);
