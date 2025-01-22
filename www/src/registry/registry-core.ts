@@ -631,9 +631,6 @@ export const core: Registry = [
     ],
   },
 
-
-
-
   {
     name: "radio-group",
     type: "registry:core",
@@ -853,6 +850,69 @@ export const core: Registry = [
         path: "core/tooltip_framer.tsx",
         type: "registry:core",
         target: "core/tooltip.tsx",
+      },
+    ],
+  },
+  {
+    name: "modal",
+    type: "registry:core",
+    variants: [
+      {
+        name: "modal_basic",
+      },
+    ],
+  },
+  {
+    name: "modal_basic",
+    type: "registry:core",
+    dependencies: ["react-aria-components"],
+    files: [
+      {
+        path: "core/modal_basic.tsx",
+        type: "registry:core",
+        target: "core/modal.tsx",
+      },
+    ],
+  },
+  {
+    name: "popover",
+    type: "registry:core",
+    variants: [
+      {
+        name: "popover_basic",
+      },
+    ],
+  },
+  {
+    name: "popover_basic",
+    type: "registry:core",
+    dependencies: ["react-aria-components"],
+    files: [
+      {
+        path: "core/popover_basic.tsx",
+        type: "registry:core",
+        target: "core/popover.tsx",
+      },
+    ],
+  },
+  {
+    name: "drawer",
+    type: "registry:core",
+    variants: [
+      {
+        name: "drawer_basic",
+      },
+    ],
+  },
+  {
+    name: "drawer_basic",
+    type: "registry:core",
+    dependencies: ["react-aria-components"],
+    files: [
+      {
+        path: "core/drawer_basic.tsx",
+        type: "registry:core",
+        target: "core/drawer.tsx",
       },
     ],
   },

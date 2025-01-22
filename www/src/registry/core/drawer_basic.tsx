@@ -11,7 +11,7 @@ import { tv } from "tailwind-variants";
 const drawerVariants = tv({
   slots: {
     underlay:
-      "before:ease-drawer before:animate-in before:fade-in exiting:before:animate-out exiting:before:fade-out exiting:before:duration-500 fixed inset-0 z-50 before:fixed before:inset-0 before:bg-black/40 before:duration-500 before:content-['']",
+      "before:ease-drawer entering:before:opacity-0 exiting:before:opacity-0 before:opacity-100 fixed inset-0 z-50 before:fixed before:inset-0 before:bg-black/40 before:duration-500 before:content-['']",
     overlay:
       "bg-bg ease-drawer fixed z-50 flex flex-col border duration-500 will-change-transform",
   },

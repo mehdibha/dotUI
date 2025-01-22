@@ -1,8 +1,8 @@
 "use client";
 
-import { Drawer, DrawerProps } from "@/registry/core/drawer";
-import { Modal, ModalProps } from "@/registry/core/modal";
-import { Popover, PopoverProps } from "@/registry/core/popover";
+import { Drawer, DrawerProps } from "@/registry/core/drawer_basic";
+import { Modal, ModalProps } from "@/registry/core/modal_basic";
+import { Popover, PopoverProps } from "@/registry/core/popover_basic";
 import { useMediaQuery } from "@/registry/hooks/use-media-query";
 
 type Type = "modal" | "popover" | "drawer";

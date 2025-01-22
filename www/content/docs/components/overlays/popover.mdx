@@ -7,15 +7,14 @@ links:
   - label: Report an issue
     href: https://github.com/mehdibha/dotUI/issues/new/choose
   - label: Edit this page
-    href: https://github.com/mehdibha/dotUI/tree/main/content/components/overlays/toggle-button-group.mdx?plain=1
+    href: https://github.com/mehdibha/dotUI/tree/main/content/components/overlays/popover.mdx?plain=1
 ---
 
-<Alert variant="warning">
-  <span className="font-bold">Note:</span>{" "}
-  {
-    "Popover only provides the overlay itself. It should be combined with Dialog to create fully accessible popovers. Other overlays such as menus may also be placed in a popover."
-  }
-</Alert>
+{/* prettier-ignore-start */}
+
+<Alert><span className="font-bold">Note:</span> Popover only provides the overlay itself. It should be combined with Dialog to create fully accessible modal dialogs. <Link href="/docs/components/overlays/dialog">See dialog</Link> component instead.</Alert>
+
+{/* prettier-ignore-end */}
 
 <ComponentPreview name="core/popover/popover-basic" preview={``} />
 

@@ -19,7 +19,7 @@ const dialogStyles = tv({
     header: "mb-4",
     heading: "text-lg font-medium",
     description: "text-fg-muted text-sm",
-    body: "-mx-4 flex-1 space-y-2 overflow-y-auto px-4",
+    body: "-mx-4 flex-1 space-y-2 overflow-y-auto px-4 py-2",
     inset: "bg-bg-muted -mx-4 border px-4 py-4",
     footer: "flex flex-col-reverse gap-2 pt-8 sm:flex-row sm:justify-end",
   },

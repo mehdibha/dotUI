@@ -9,6 +9,9 @@ const defaultVariants = {
   checkbox: "checkbox_basic",
   "checkbox-group": "checkbox-group_basic",
   tooltip: "tooltip_basic",
+  modal: "modal_basic",
+  popover: "popover_basic",
+  drawer: "drawer_basic",
 };
 
 export const dotUIThemes: Theme[] = [
