@@ -7,10 +7,10 @@ import { Button } from "@/components/core/button";
 import { Tooltip } from "@/components/core/tooltip";
 import { CodeBlock } from "@/components/docs/code-block";
 import { Index } from "@/__registry__/demos";
+import { Loader } from "./component-preview-client";
 import { StyleSwitcher } from "./style-switcher";
 import { ThemeCustomizerDialog } from "./theme-customizer";
 import { ThemeOverride } from "./theme-override";
-import { ComponentPreviewClient } from "./component-preview-client";
 
 export interface ComponentPreviewProps {
   name: string;
@@ -33,54 +33,49 @@ export const ComponentPreview = async ({
 
   const demoItem = Index[type][demoName];
 
-  const demos: {
-    component: React.ComponentType;
-    code: Array<{
-      fileName: string;
-      code: string;
-    }>;
-  }[] = [
-    {
-      component: demoItem.component,
-      code: demoItem.files.map((file: string) => {
-        const { fileName, content } = getFileSource(file);
-        return {
-          fileName,
-          code: content,
-        };
-      }),
-    },
-  ];
+  const Component = demoItem.component;
+  const code: { fileName: string; code: string }[] = demoItem.files.map(
+    (file: string) => {
+      const { fileName, content } = getFileSource(file);
+      return {
+        fileName,
+        code: content,
+      };
+    }
+  );
 
   return (
     <div
       className={cn("overflow-hidden rounded-md border", containerClassName)}
     >
       <div className="relative">
-        <ThemeOverride>
-          <StyleSwitcher componentName={componentName} />
-          <ThemeCustomizerDialog>
-            <Tooltip
-              content={
-                <span>
-                  <span className="text-fg-muted">Theme:</span> dotUI
-                </span>
-              }
-            >
-              <Button
-                variant="outline"
-                shape="square"
-                size="sm"
-                className="border-border absolute right-2 top-2 z-50 font-normal"
-              >
-                <PaintBucket />
-              </Button>
-            </Tooltip>
-          </ThemeCustomizerDialog>
-          <ScrollArea
-            className={cn("flex items-center justify-center", "bg-bg text-fg")}
+        <StyleSwitcher componentName={componentName} />
+        <ThemeCustomizerDialog>
+          <Tooltip
+            content={
+              <span>
+                <span className="text-fg-muted">Theme:</span> dotUI
+              </span>
+            }
           >
-            <React.Suspense fallback={<div>loading...</div>}>
+            <Button
+              variant="outline"
+              shape="square"
+              size="sm"
+              className="border-border absolute right-2 top-2 z-50 font-normal"
+            >
+              <PaintBucket />
+            </Button>
+          </Tooltip>
+        </ThemeCustomizerDialog>
+        <Loader>
+          <ThemeOverride>
+            <ScrollArea
+              className={cn(
+                "flex items-center justify-center",
+                "bg-bg text-fg"
+              )}
+            >
               <div className="flex min-h-52 items-center justify-center px-4 py-20">
                 <div
                   className={cn(
@@ -88,34 +83,22 @@ export const ComponentPreview = async ({
                     className
                   )}
                 >
-                  <ComponentPreviewClient
-                    demos={demos.map((elem, index) => {
-                      const Comp = elem.component;
-                      return <Comp key={index} />;
-                    })}
-                  />
+                  {<Component />}
                 </div>
               </div>
-            </React.Suspense>
-          </ScrollArea>
-        </ThemeOverride>
+            </ScrollArea>
+          </ThemeOverride>
+        </Loader>
       </div>
-      <ComponentPreviewClient
-        demos={demos.map((elem, index) => {
-          return (
-            <CodeBlock
-              key={index}
-              files={elem.code.map((file) => ({
-                fileName: file.fileName,
-                code: file.code,
-                lang: "tsx",
-              }))}
-              preview={preview}
-              className={"w-full rounded-t-none border-x-0 border-b-0"}
-              expandable={expandable}
-            />
-          );
-        })}
+      <CodeBlock
+        files={code.map((file) => ({
+          fileName: file.fileName,
+          code: file.code,
+          lang: "tsx",
+        }))}
+        preview={preview}
+        className={"w-full rounded-t-none border-x-0 border-b-0"}
+        expandable={expandable}
       />
     </div>
   );
