@@ -28,7 +28,7 @@ export const Breadcrumb = createDynamicComponent<BreadcrumbProps>(
   {}
 );
 
-export const BreacrumbItem = createDynamicComponent<BreadcrumbItemProps>(
+export const BreadcrumbItem = createDynamicComponent<BreadcrumbItemProps>(
   "breadcrumbs",
   "BreadcrumbItem",
   _BreadcrumbItem,
