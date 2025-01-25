@@ -43,7 +43,7 @@ const DateField = <T extends DateValue>({
 
 interface DateFieldRootProps<T extends DateValue>
   extends AriaDateFieldProps<T> {
-  ref?: React.Ref<HTMLDivElement>;
+  ref?: React.RefObject<HTMLDivElement>;
 }
 const DateFieldRoot = <T extends DateValue>({
   className,

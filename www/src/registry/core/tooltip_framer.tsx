@@ -38,7 +38,7 @@ const tooltipStyles = tv({
 
 const { content, arrow } = tooltipStyles();
 
-const motionVariants: Variants = {
+const MOTION_VARIANTS: Variants = {
   enter: {
     transform: "scale(1)",
     opacity: 1,
@@ -135,7 +135,7 @@ function TooltipContent({
             animate="enter"
             exit="exit"
             offset={offset}
-            variants={motionVariants}
+            variants={MOTION_VARIANTS}
             className={composeRenderProps(className, (className) =>
               content({ variant, className })
             )}

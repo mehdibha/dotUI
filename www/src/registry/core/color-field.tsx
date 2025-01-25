@@ -21,7 +21,7 @@ interface ColorFieldProps
   extends ColorFieldRootProps,
     Pick<InputRootProps, "size" | "prefix" | "suffix">,
     FieldProps {
-  inputRef?: React.Ref<HTMLInputElement>;
+  inputRef?: React.RefObject<HTMLInputElement>;
 }
 
 const ColorField = ({
@@ -64,7 +64,7 @@ const ColorFieldRoot = ({ className, ...props }: ColorFieldRootProps) => {
 };
 
 interface ColorFieldInputProps extends InputRootProps {
-  inputRef?: React.Ref<HTMLInputElement>;
+  inputRef?: React.RefObject<HTMLInputElement>;
 }
 const ColorFieldInput = ({ inputRef, ...props }: ColorFieldInputProps) => {
   return (

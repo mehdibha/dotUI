@@ -2,7 +2,7 @@ import { Tabs, TabList, TabPanel, Tab } from "@/components/dynamic-core/tabs";
 
 export default function Demo() {
   return (
-    <Tabs>
+    <Tabs variant="solid">
       <TabList>
         <Tab id="overview">Overview</Tab>
         <Tab id="usage">Usage</Tab>

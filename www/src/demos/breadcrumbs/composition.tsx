@@ -18,7 +18,6 @@ export default function Demo() {
       </BreadcrumbItem>
       <BreadcrumbItem>
         <BreadcrumbLink>Breadcrumbs</BreadcrumbLink>
-        <ArrowRightCircleIcon />
       </BreadcrumbItem>
     </Breadcrumbs>
   );

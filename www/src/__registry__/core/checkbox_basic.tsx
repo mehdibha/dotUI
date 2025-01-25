@@ -27,6 +27,17 @@ const checkboxStyles = tv({
   },
   variants: {
     variant: {
+      primary: {
+        indicator:
+          "group-selected:bg-bg-primary group-selected:text-fg-onPrimary group-indeterminate:bg-bg-primary",
+      },
+      accent: {
+        indicator:
+          "group-selected:bg-bg-accent group-selected:text-fg-onAccent group-indeterminate:bg-bg-Accent",
+      },
+    },
+
+    appearance: {
       default: {
         indicator: focusRingGroup(),
       },
@@ -36,10 +47,12 @@ const checkboxStyles = tv({
           "selected:bg-bg-muted disabled:selected:bg-bg-disabled disabled:border-border-disabled flex-row-reverse justify-between gap-4 rounded-md border p-4 transition-colors",
         ],
       },
+      emphasized: {},
     },
   },
   defaultVariants: {
-    variant: "default",
+    variant: "accent",
+    appearance: "default",
   },
 });
 

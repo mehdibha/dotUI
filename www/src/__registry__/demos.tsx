@@ -259,6 +259,11 @@
       files: ["demos/checkbox-group/uncontrolled.tsx"],
       component: React.lazy(() => import("@/demos/checkbox-group/uncontrolled")),
     },
+    "checkbox-variants": {
+      name: "checkbox-variants",
+      files: ["demos/checkbox/variants.tsx"],
+      component: React.lazy(() => import("@/demos/checkbox/variants")),
+    },
     "checkbox-card": {
       name: "checkbox-card",
       files: ["demos/checkbox/card.tsx"],
@@ -918,26 +923,6 @@
       name: "file-trigger-multiple-files",
       files: ["demos/file-trigger/multiple-files.tsx"],
       component: React.lazy(() => import("@/demos/file-trigger/multiple-files")),
-    },
-    "link-default": {
-      name: "link-default",
-      files: ["demos/link/default.tsx"],
-      component: React.lazy(() => import("@/demos/link/default")),
-    },
-    "link-disabled": {
-      name: "link-disabled",
-      files: ["demos/link/disabled.tsx"],
-      component: React.lazy(() => import("@/demos/link/disabled")),
-    },
-    "link-icon": {
-      name: "link-icon",
-      files: ["demos/link/icon.tsx"],
-      component: React.lazy(() => import("@/demos/link/icon")),
-    },
-    "link-variants": {
-      name: "link-variants",
-      files: ["demos/link/variants.tsx"],
-      component: React.lazy(() => import("@/demos/link/variants")),
     },
     "list-box-async-loading": {
       name: "list-box-async-loading",
@@ -1679,11 +1664,6 @@
       files: ["demos/tabs/controlled.tsx"],
       component: React.lazy(() => import("@/demos/tabs/controlled")),
     },
-    "tabs-disabled-item": {
-      name: "tabs-disabled-item",
-      files: ["demos/tabs/disabled-item.tsx"],
-      component: React.lazy(() => import("@/demos/tabs/disabled-item")),
-    },
     "tabs-disabled": {
       name: "tabs-disabled",
       files: ["demos/tabs/disabled.tsx"],
@@ -1698,6 +1678,11 @@
       name: "tabs-vertical",
       files: ["demos/tabs/vertical.tsx"],
       component: React.lazy(() => import("@/demos/tabs/vertical")),
+    },
+    "tabs-variant": {
+      name: "tabs-variant",
+      files: ["demos/tabs/variant.tsx"],
+      component: React.lazy(() => import("@/demos/tabs/variant")),
     },
     "text-area-composition": {
       name: "text-area-composition",
@@ -2004,10 +1989,85 @@
       files: ["demos/tag-group/default.tsx"],
       component: React.lazy(() => import("@/demos/tag-group/default")),
     },
-    "table-default": {
-      name: "table-default",
-      files: ["demos/table/default.tsx"],
-      component: React.lazy(() => import("@/demos/table/default")),
+    "table-dynamic-collection": {
+      name: "table-dynamic-collection",
+      files: ["demos/table/dynamic-collection.tsx"],
+      component: React.lazy(() => import("@/demos/table/dynamic-collection")),
+    },
+    "table-basic": {
+      name: "table-basic",
+      files: ["demos/table/basic.tsx"],
+      component: React.lazy(() => import("@/demos/table/basic")),
+    },
+    "table-disallow-empty-selection": {
+      name: "table-disallow-empty-selection",
+      files: ["demos/table/disallow-empty-selection.tsx"],
+      component: React.lazy(() => import("@/demos/table/disallow-empty-selection")),
+    },
+    "table-empty-state": {
+      name: "table-empty-state",
+      files: ["demos/table/empty-state.tsx"],
+      component: React.lazy(() => import("@/demos/table/empty-state")),
+    },
+    "table-links": {
+      name: "table-links",
+      files: ["demos/table/links.tsx"],
+      component: React.lazy(() => import("@/demos/table/links")),
+    },
+    "table-sorting": {
+      name: "table-sorting",
+      files: ["demos/table/sorting.tsx"],
+      component: React.lazy(() => import("@/demos/table/sorting")),
+    },
+    "table-disabled-rows": {
+      name: "table-disabled-rows",
+      files: ["demos/table/disabled-rows.tsx"],
+      component: React.lazy(() => import("@/demos/table/disabled-rows")),
+    },
+    "table-static-row-action": {
+      name: "table-static-row-action",
+      files: ["demos/table/static-row-action.tsx"],
+      component: React.lazy(() => import("@/demos/table/static-row-action")),
+    },
+    "table-row-action": {
+      name: "table-row-action",
+      files: ["demos/table/row-action.tsx"],
+      component: React.lazy(() => import("@/demos/table/row-action")),
+    },
+    "table-selection-mode": {
+      name: "table-selection-mode",
+      files: ["demos/table/selection-mode.tsx"],
+      component: React.lazy(() => import("@/demos/table/selection-mode")),
+    },
+    "table-selection-behavior": {
+      name: "table-selection-behavior",
+      files: ["demos/table/selection-behavior.tsx"],
+      component: React.lazy(() => import("@/demos/table/selection-behavior")),
+    },
+    "table-variants": {
+      name: "table-variants",
+      files: ["demos/table/variants.tsx"],
+      component: React.lazy(() => import("@/demos/table/variants")),
+    },
+    "table-column-resizing": {
+      name: "table-column-resizing",
+      files: ["demos/table/column-resizing.tsx"],
+      component: React.lazy(() => import("@/demos/table/column-resizing")),
+    },
+    "table-controlled": {
+      name: "table-controlled",
+      files: ["demos/table/controlled.tsx"],
+      component: React.lazy(() => import("@/demos/table/controlled")),
+    },
+    "table-uncontrolled": {
+      name: "table-uncontrolled",
+      files: ["demos/table/uncontrolled.tsx"],
+      component: React.lazy(() => import("@/demos/table/uncontrolled")),
+    },
+    "table-reordable": {
+      name: "table-reordable",
+      files: ["demos/table/reordable.tsx"],
+      component: React.lazy(() => import("@/demos/table/reordable")),
     },
     "form-basic": {
       name: "form-basic",

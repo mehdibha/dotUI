@@ -21,7 +21,7 @@ interface TextFieldProps
   extends TextFieldRootProps,
     Pick<InputRootProps, "size" | "prefix" | "suffix">,
     FieldProps {
-  inputRef?: React.Ref<HTMLInputElement>;
+  inputRef?: React.RefObject<HTMLInputElement>;
 }
 
 const TextField = ({
@@ -64,7 +64,7 @@ const TextFieldRoot = ({ className, ...props }: TextFieldRootProps) => {
 };
 
 interface TextFieldInputProps extends InputRootProps {
-  inputRef?: React.Ref<HTMLInputElement>;
+  inputRef?: React.RefObject<HTMLInputElement>;
 }
 const TextFieldInput = ({ inputRef, ...props }: TextFieldInputProps) => {
   return (

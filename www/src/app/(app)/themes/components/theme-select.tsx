@@ -138,14 +138,11 @@ export function ThemeSelect({ className }: { className?: string }) {
               <XIcon />
             </Button>
           }
-          description={
-            <>
-              Use <Kbd>Ctrl</Kbd> + <Kbd>→</Kbd> or <Kbd>←</Kbd> to navigate
-              between themes
-            </>
-          }
-          className="[&_kbd]:text-xs"
-        />
+          className="[&_kbd]:text-xs bg-bg-muted/50"
+        >
+          Use <Kbd>Ctrl</Kbd> + <Kbd>→</Kbd> or <Kbd>←</Kbd> to navigate between
+          themes
+        </Alert>
       )}
       {!isLoading && !isCurrentThemeEditable && (
         <Alert
@@ -154,8 +151,11 @@ export function ThemeSelect({ className }: { className?: string }) {
               <Button prefix={<GitBranchIcon />}>Clone theme</Button>
             </CloneThemeDialog>
           }
-          description="To adjust, preview and generate color palette, fonts, radius and more, you need to clone the theme."
-        />
+          className="bg-bg-muted/50"
+        >
+          To adjust, preview and generate color palette, fonts, radius and more,
+          you need to clone the theme.
+        </Alert>
       )}
     </div>
   );

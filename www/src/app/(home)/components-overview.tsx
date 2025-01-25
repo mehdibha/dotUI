@@ -4,6 +4,7 @@ import { RadioGroup, Radio } from "@/components/core/radio-group";
 import { Alert } from "@/components/dynamic-core/alert";
 import { Avatar } from "@/components/dynamic-core/avatar";
 import { Button } from "@/components/dynamic-core/button";
+import { RangeCalendar } from "@/components/dynamic-core/calendar";
 import { Checkbox } from "@/components/dynamic-core/checkbox";
 import { ColorSlider } from "@/components/dynamic-core/color-slider";
 import { Combobox } from "@/components/dynamic-core/combobox";
@@ -12,14 +13,13 @@ import { Link } from "@/components/dynamic-core/link";
 import { Item, ListBox } from "@/components/dynamic-core/list-box";
 import { NumberField } from "@/components/dynamic-core/number-field";
 import { Progress } from "@/components/dynamic-core/progress";
-import { RangeCalendar } from "@/components/dynamic-core/calendar";
 import { SearchField } from "@/components/dynamic-core/search-field";
 import { Select } from "@/components/dynamic-core/select";
 import { Separator } from "@/components/dynamic-core/separator";
 import { Slider } from "@/components/dynamic-core/slider";
 import { Switch } from "@/components/dynamic-core/switch";
 import {
-  Table,
+  TableRoot,
   TableBody,
   TableColumn,
   TableCell,
@@ -128,16 +128,14 @@ export function ComponentsOverview() {
         <NumberField label="Width" defaultValue={1024} className="w-full" />
       </div>
       <div className="col-span-7 row-span-6">
-        <Table allowResize aria-label="Vocalists" selectionMode="multiple">
+        <TableRoot aria-label="Vocalists" selectionMode="multiple">
           <TableHeader>
             <TableColumn className="max-w-0">ID</TableColumn>
-            <TableColumn isRowHeader isResizable>
-              Name
-            </TableColumn>
-            <TableColumn isResizable>Email</TableColumn>
+            <TableColumn isRowHeader>Name</TableColumn>
+            <TableColumn>Email</TableColumn>
             <TableColumn>Age</TableColumn>
             <TableColumn>Role</TableColumn>
-            <TableColumn isResizable>Band</TableColumn>
+            <TableColumn>Band</TableColumn>
             <TableColumn>Status</TableColumn>
           </TableHeader>
           <TableBody items={items}>
@@ -153,7 +151,7 @@ export function ComponentsOverview() {
               </TableRow>
             )}
           </TableBody>
-        </Table>
+        </TableRoot>
       </div>
     </div>
   );

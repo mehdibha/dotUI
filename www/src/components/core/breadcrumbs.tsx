@@ -1,1 +1,1 @@
-export * from "@/registry/core/breadcrumbs";
+export * from "@/registry/core/breadcrumbs_basic";

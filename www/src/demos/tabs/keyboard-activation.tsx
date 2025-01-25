@@ -8,9 +8,9 @@ export default function Demo() {
         <Tab id="usage">Usage</Tab>
         <Tab id="settings">Settings</Tab>
       </TabList>
-      <TabPanel id="overview"> You can view all your projects here. </TabPanel>
-      <TabPanel id="usage"> You can view your usage here. </TabPanel>
-      <TabPanel id="settings"> You can view your settings here. </TabPanel>
+      <TabPanel id="overview">Overview content</TabPanel>
+      <TabPanel id="usage">Usage content</TabPanel>
+      <TabPanel id="settings">Settings content</TabPanel>
     </Tabs>
   );
 }

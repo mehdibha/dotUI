@@ -45,16 +45,16 @@ const Dialog = ({
   description,
   type = "modal",
   mobileType = "drawer",
-  // modalProps,
-  // popoverProps,
-  // drawerProps,
+  modalProps,
+  popoverProps,
+  drawerProps,
   isDismissable: isDismissableProp,
   role,
-  // isOpen,
-  // defaultOpen,
-  // onOpenChange,
-  // isKeyboardDismissDisabled,
-  // shouldCloseOnInteractOutside,
+  isOpen,
+  defaultOpen,
+  onOpenChange,
+  isKeyboardDismissDisabled,
+  shouldCloseOnInteractOutside,
   ...props
 }: DialogProps) => {
   const isDismissable = isDismissableProp ?? role !== "alertdialog";
@@ -62,16 +62,15 @@ const Dialog = ({
     <Overlay
       type={type}
       mobileType={mobileType}
-      // isOpen={isOpen}
-      // defaultOpen={defaultOpen}
-      // onOpenChange={onOpenChange}
+      isOpen={isOpen}
+      defaultOpen={defaultOpen}
+      onOpenChange={onOpenChange}
       isDismissable={isDismissable}
-      // isKeyboardDismissDisabled={isKeyboardDismissDisabled}
-      // shouldCloseOnInteractOutside={shouldCloseOnInteractOutside}
-      // modalProps={modalProps}
-      // popoverProps={popoverProps}
-      // drawerProps={drawerProps}
-      {...props}
+      isKeyboardDismissDisabled={isKeyboardDismissDisabled}
+      shouldCloseOnInteractOutside={shouldCloseOnInteractOutside}
+      modalProps={modalProps}
+      popoverProps={popoverProps}
+      drawerProps={drawerProps}
     >
       <DialogContent role={role} {...props}>
         {composeRenderProps(props.children, (children) => (

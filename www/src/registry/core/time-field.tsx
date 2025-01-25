@@ -43,7 +43,7 @@ const TimeField = <T extends TimeValue>({
 
 interface TimeFieldRootProps<T extends TimeValue>
   extends AriaTimeFieldProps<T> {
-  ref?: React.Ref<HTMLDivElement>;
+  ref?: React.RefObject<HTMLDivElement>;
 }
 const TimeFieldRoot = <T extends TimeValue>({
   className,

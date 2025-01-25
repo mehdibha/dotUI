@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { BackgroundColor } from "@adobe/leonardo-contrast-colors";
 import { dotUIThemes } from "@/lib/themes";
 import { useThemes } from "@/hooks/use-themes";
 import { Alert } from "@/components/core/alert";

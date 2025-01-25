@@ -745,10 +745,34 @@ export const core: Registry = [
   {
     name: "tabs",
     type: "registry:core",
+    variants: [
+      {
+        name: "tabs_basic",
+      },
+      {
+        name: "tabs_motion",
+      },
+    ],
+  },
+  {
+    name: "tabs_basic",
+    type: "registry:core",
     dependencies: ["react-aria-components"],
     files: [
       {
-        path: "core/tabs/tabs.tsx",
+        path: "core/tabs_basic.tsx",
+        type: "registry:core",
+        target: "core/tabs.tsx",
+      },
+    ],
+  },
+  {
+    name: "tabs_motion",
+    type: "registry:core",
+    dependencies: ["react-aria-components"],
+    files: [
+      {
+        path: "core/tabs_motion.tsx",
         type: "registry:core",
         target: "core/tabs.tsx",
       },

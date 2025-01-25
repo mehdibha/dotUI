@@ -10,10 +10,194 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/layout/aspect-ratio.mdx?plain=1
 ---
 
-<ComponentPreview name="core/table/table-default" />
+<ComponentPreview name="core/table/table-basic" />
 
 ## Installation
 
 ```package-install
 npx dotui-cli@latest add table
 ```
+
+## Anatomy
+
+A table consists of a container element, with columns and rows of cells containing data inside. The cells within a table may contain focusable elements or plain text content.
+
+```tsx
+import {
+  TableRoot,
+  TableHeader,
+  TableColumn,
+  TableBody,
+  TableRow,
+  TableCell,
+} from "@/components/core/table";
+
+<TableRoot>
+  <TableHeader>
+    <TableColumn>#</TableColumn>
+    <TableColumn>Name</TableColumn>
+    <TableColumn>Email</TableColumn>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>1</TableCell>
+      <TableCell>Mehdi BHA</TableCell>
+      <TableCell>hello@mehdibha.com</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>2</TableCell>
+      <TableCell>Devon Govett</TableCell>
+      <TableCell>devon@govett.com</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>3</TableCell>
+      <TableCell>Theo Browne</TableCell>
+      <TableCell>theo@ping.gg</TableCell>
+    </TableRow>
+  </TableBody>
+</TableRoot>;
+```
+
+## Variants
+
+Use the `variant` prop to change the appearance of the Table. 
+
+<ComponentPreview name="core/table/table-variants" />
+
+## Dynamic collections
+
+The first example have shown static collections, where the data is hard coded. Dynamic collections, as shown below, can be used when the table data comes from an external data source such as an API, or updates over time. In the example below, both the columns and the rows are provided to the table via a render function. You can also make the columns static and only the rows dynamic.
+
+<ComponentPreview name="core/table/table-dynamic-collection" />
+
+## Selection
+
+### Selection mode
+
+By default, Table doesn't allow row selection but this can be enabled using the `selectionMode` prop.
+
+<ComponentPreview name="core/table/table-selection-mode" />
+
+### Controlled and uncontrolled selection
+
+Use `defaultSelectedKeys` to provide a default set of selected rows. Note that the value of the selected keys must match the `id` prop of the row.
+
+<ComponentPreview name="core/table/table-uncontrolled" />
+
+To programmatically control row selection, use the `selectedKeys` prop paired with the onSelectionChange callback. The `id` prop from the selected rows will be passed into the callback when the row is pressed, allowing you to update state accordingly.
+
+<ComponentPreview name="core/table/table-controlled" />
+
+### Disallow empty selection
+
+Table also supports a `disallowEmptySelection` prop which forces the user to have at least one row in the Table selected at all times. In this mode, if a single row is selected and the user presses it, it will not be deselected.
+
+<ComponentPreview name="core/table/table-disallow-empty-selection" />
+
+### Selection Behavior
+
+By default, Table uses the `"toggle"` selection behavior. TODO TODO TODO TODO
+
+<ComponentPreview name="core/table/table-selection-behavior" />
+
+## Row options
+
+### Action
+
+Table supports row actions via the `onRowAction` prop
+
+<ComponentPreview name="core/table/table-row-action" />
+
+Rows may also have a row action specified by directly applying `onAction` on the Row itself. This may be especially convenient in static collections.
+
+<ComponentPreview name="core/table/table-static-row-action" />
+
+### Link
+
+Table rows may also be links to another page or website. This can be achieved by passing the href prop to the `<TableRow>` component.
+
+<ComponentPreview name="core/table/table-links" />
+
+### Disabled
+
+A Row can be disabled with the `isDisabled` prop.
+
+```tsx
+<TableRow isDisabled>
+  <TableCell>1</TableCell>
+  <TableCell>Mehdi BHA</TableCell>
+  <TableCell>
+</TableRow>
+```
+
+In dynamic collections, it may be more convenient to use the `disabledKeys` prop at the Table level instead of `isDisabled` on individual rows.
+
+<ComponentPreview name="core/table/table-disabled-rows" />
+
+## Sorting
+
+Table supports sorting its data when a column header is pressed. To designate that a Column should support sorting, provide it with the `allowsSorting` prop.
+The Table accepts a `sortDescriptor` prop that defines the current column key to sort by and the sort direction (ascending/descending). When the user presses a sortable column header, the column's key and sort direction is passed into the `onSortChange` callback, allowing you to update the `sortDescriptor` appropriately.
+
+<ComponentPreview name="core/table/table-sorting" />
+
+## Empty state
+
+Use the `renderEmptyState` prop to customize what the `TableBody` will display if there are no items.
+
+## Column resizing
+
+TODO TODO TODO
+
+## Drag and drop
+
+### Reordable
+
+<ComponentPreview name="core/table/table-reordable" />
+
+## API Reference
+
+### TableRoot
+
+| Prop   | Type   | Default     | Description |
+| ------ | ------ | ----------- | ----------- |
+| `todo` | `todo` | `'default'` | toodo       |
+
+### TableHeader
+
+| Prop   | Type   | Default     | Description |
+| ------ | ------ | ----------- | ----------- |
+| `todo` | `todo` | `'default'` | toodo       |
+
+### TableColumn
+
+| Prop   | Type   | Default     | Description |
+| ------ | ------ | ----------- | ----------- |
+| `todo` | `todo` | `'default'` | toodo       |
+
+### TableBody
+
+| Prop   | Type   | Default     | Description |
+| ------ | ------ | ----------- | ----------- |
+| `todo` | `todo` | `'default'` | toodo       |
+
+### TableRow
+
+| Prop   | Type   | Default     | Description |
+| ------ | ------ | ----------- | ----------- |
+| `todo` | `todo` | `'default'` | toodo       |
+
+### TableCell
+
+| Prop   | Type   | Default     | Description |
+| ------ | ------ | ----------- | ----------- |
+| `todo` | `todo` | `'default'` | toodo       |
+
+## Accessibility
+
+### Keyboard interactions
+
+| Key    | Description           |
+| ------ | --------------------- |
+| `TODO` | TODO                  |
+| `Tab`  | Activates the button. |

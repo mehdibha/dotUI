@@ -12,6 +12,7 @@ const defaultVariants = {
   modal: "modal_basic",
   popover: "popover_basic",
   drawer: "drawer_basic",
+  tabs: "tabs_basic",
 };
 
 export const dotUIThemes: Theme[] = [
