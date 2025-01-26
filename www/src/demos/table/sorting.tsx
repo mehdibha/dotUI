@@ -1,5 +1,7 @@
 "use client";
 
+import React from "react";
+import type { SortDescriptor } from "react-aria-components";
 import {
   TableRoot,
   TableHeader,
@@ -15,7 +17,7 @@ const columns: Column[] = [
   { name: "Date Modified", id: "date" },
 ];
 
-const data: Item[] = [
+const items: Item[] = [
   { id: 1, name: "Games", date: "6/7/2020", type: "File folder" },
   { id: 2, name: "Program Files", date: "4/7/2021", type: "File folder" },
   { id: 3, name: "bootmgr", date: "11/20/2010", type: "System file" },
@@ -23,16 +25,39 @@ const data: Item[] = [
 ];
 
 export default function Demo() {
+  const [sortDescriptor, setSortDescriptor] = React.useState<SortDescriptor>({
+    column: "name",
+    direction: "ascending",
+  });
+
+  const sortedItems = React.useMemo(() => {
+    return items.sort((a, b) => {
+      const first = a[sortDescriptor.column as keyof Item] as string;
+      const second = b[sortDescriptor.column as keyof Item] as string;
+      let cmp = first.localeCompare(second);
+      if (sortDescriptor.direction === "descending") {
+        cmp *= -1;
+      }
+      return cmp;
+    });
+  }, [sortDescriptor]);
+
   return (
-    <TableRoot aria-label="Files">
+    <TableRoot
+      aria-label="Files"
+      sortDescriptor={sortDescriptor}
+      onSortChange={setSortDescriptor}
+    >
       <TableHeader columns={columns}>
-        {(column) => (
-          <TableColumn isRowHeader={column.isRowHeader}>
-            {column.name}
-          </TableColumn>
-        )}
+        <TableColumn id="name" isRowHeader allowsSorting>
+          Name
+        </TableColumn>
+        <TableColumn id="type" allowsSorting>
+          Type
+        </TableColumn>
+        <TableColumn id="date">Date Modified</TableColumn>
       </TableHeader>
-      <TableBody items={data}>
+      <TableBody items={sortedItems}>
         {(item) => (
           <TableRow columns={columns}>
             {(column) => <TableCell>{item[column.id]}</TableCell>}

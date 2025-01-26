@@ -53,6 +53,7 @@ export const ThemeOverride = React.forwardRef<
       }
     )
   );
+  return children;
 
   return (
     <div

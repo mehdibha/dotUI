@@ -24,7 +24,7 @@ const data: Item[] = [
 
 export default function Demo() {
   return (
-    <TableRoot aria-label="Files">
+    <TableRoot aria-label="Files" disabledKeys={[3,4]}>
       <TableHeader columns={columns}>
         {(column) => (
           <TableColumn isRowHeader={column.isRowHeader}>

@@ -24,7 +24,12 @@ const data: Item[] = [
 
 export default function Demo() {
   return (
-    <TableRoot aria-label="Files">
+    <TableRoot
+      aria-label="Files"
+      selectionMode="single"
+      defaultSelectedKeys={[2]}
+      disallowEmptySelection
+    >
       <TableHeader columns={columns}>
         {(column) => (
           <TableColumn isRowHeader={column.isRowHeader}>

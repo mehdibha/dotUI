@@ -148,7 +148,6 @@
 
 @theme {
   /* fonts */
-  /* --font-*: initial; */
   --font-josefin: var(--font-josefin);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
@@ -166,6 +165,7 @@
   --color-bg-primary: var(--color-neutral-1000);
   --color-bg-primary-hover: var(--color-neutral-900);
   --color-bg-primary-active: var(--color-neutral-800);
+  --color-bg-primary-muted: var(--color-neutral-200);
 
   --color-bg-success: var(--color-success-500);
   --color-bg-success-hover: var(--color-success-600);

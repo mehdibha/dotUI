@@ -26,18 +26,26 @@ export default function Demo() {
   return (
     <TableRoot aria-label="Files">
       <TableHeader columns={columns}>
-        {(column) => (
-          <TableColumn isRowHeader={column.isRowHeader}>
-            {column.name}
-          </TableColumn>
-        )}
+        <TableColumn isRowHeader>Name</TableColumn>
+        <TableColumn>URL</TableColumn>
+        <TableColumn>Date added</TableColumn>
       </TableHeader>
       <TableBody items={data}>
-        {(item) => (
-          <TableRow columns={columns}>
-            {(column) => <TableCell>{item[column.id]}</TableCell>}
-          </TableRow>
-        )}
+        <TableRow href="https://adobe.com/" target="_blank">
+          <TableCell>Adobe</TableCell>
+          <TableCell>https://adobe.com/</TableCell>
+          <TableCell>January 28, 2023</TableCell>
+        </TableRow>
+        <TableRow href="https://google.com/" target="_blank">
+          <TableCell>Google</TableCell>
+          <TableCell>https://google.com/</TableCell>
+          <TableCell>April 5, 2023</TableCell>
+        </TableRow>
+        <TableRow href="https://nytimes.com/" target="_blank">
+          <TableCell>New York Times</TableCell>
+          <TableCell>https://nytimes.com/</TableCell>
+          <TableCell>July 12, 2023</TableCell>
+        </TableRow>
       </TableBody>
     </TableRoot>
   );

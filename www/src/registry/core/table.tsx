@@ -1,8 +1,8 @@
 "use client";
 
-import { ArrowUpDownIcon } from "lucide-react";
+import { ChevronDownIcon, ChevronUpIcon, GripVerticalIcon } from "lucide-react";
 import {
-  ResizableTableContainer,
+  ResizableTableContainer as AriaResizableTableContainer,
   Table as AriaTable,
   TableHeader as AriaTableHeader,
   TableBody as AriaTableBody,
@@ -20,19 +20,32 @@ import {
 } from "react-aria-components";
 import { tv, VariantProps } from "tailwind-variants";
 import { Checkbox } from "@/registry/core/checkbox_basic";
+import { cn } from "@/registry/lib/cn";
 import { createScopedContext } from "@/registry/lib/context-helpers";
 import { focusRing } from "@/registry/lib/focus-styles";
 
 const tableStyles = tv({
   slots: {
-    root: "relative w-full border-separate border-spacing-0 text-sm",
+    resizableContainer: "w-[500px] overflow-auto",
+    root: [
+      "relative min-h-24 w-full border-separate border-spacing-0 cursor-default text-sm",
+      "[&_.react-aria-DropIndicator]:outline-bg-accent [&_.react-aria-DropIndicator]:translate-z-0 [&_.react-aria-DropIndicator]:outline",
+    ],
     header: "sticky top-0 z-10",
-    column: [focusRing(), "px-3 py-2 text-left font-medium"],
-    resizer:
-      "resizing:bg-bg-accent resizing:w-[2px] h-5 w-px cursor-col-resize rounded-full",
-    body: "text-fg-muted",
-    row: [focusRing(), " relative select-none"],
-    cell: [focusRing(), "px-3 py-2"],
+    column: [
+      focusRing(),
+      "relative allows-sorting:cursor-pointer whitespace-nowrap px-3 py-2 text-left font-medium text-fg-muted",
+    ],
+    resizer: [
+      focusRing(),
+      "resizing:before:bg-bg-accent absolute right-0 before:bg-border-field box-content h-5 w-px resizing:before:w-0.5 cursor-col-resize px-2 before:content-['']  before:block before:w-px before:h-5 before:transition-colors",
+    ],
+    body: "empty:text-center empty:italic",
+    row: [
+      focusRing(),
+      "data-href:cursor-pointer data-href:hover:bg-bg-muted data-action:cursor-pointer data-action:hover:bg-bg-muted disabled:text-fg-disabled data-[selection-mode=single]:hover:not-selected:bg-bg-muted data-[selection-mode=multiple]:hover:not-selected:bg-bg-muted selected:text-fg dragging:bg-bg relative transition-colors data-[selection-mode=multiple]:cursor-pointer data-[selection-mode=single]:cursor-pointer",
+    ],
+    cell: [focusRing(), "truncate px-3 py-2"],
   },
   variants: {
     variant: {
@@ -57,48 +70,48 @@ const tableStyles = tv({
     },
     selectionVariant: {
       primary: {
-
+        row: "selected:bg-bg-primary-muted",
       },
-      accent: "",
+      accent: {
+        row: "selected:bg-bg-accent-muted",
+      },
     },
+  },
+  defaultVariants: {
+    variant: "line",
+    selectionVariant: "accent",
   },
 });
 
-const { root, header, column, resizer, body, row, cell } = tableStyles();
+const { resizableContainer, root, header, column, resizer, body, row, cell } =
+  tableStyles();
 
 const [TableProvider, useTableContext] = createScopedContext<
   VariantProps<typeof tableStyles> & {
-    allowsResizing?: boolean;
+    globalAction?: boolean;
   }
 >("TableRoot");
 
 interface TableRootProps
   extends React.ComponentProps<typeof AriaTable>,
-    VariantProps<typeof tableStyles> {
-  allowsResizing?: boolean;
-}
+    VariantProps<typeof tableStyles> {}
 const TableRoot = ({
-  variant = "bordered",
-  selectionVariant = "accent",
-  allowsResizing,
+  variant,
+  selectionVariant,
+  onRowAction,
   ...props
 }: TableRootProps) => {
-  if (allowsResizing) {
-    return (
-      <TableProvider
-        allowsResizing
-        variant={variant}
-        selectionVariant={selectionVariant}
-      >
-        <ResizableTableContainer className="overflow-auto">
-          <AriaTable className={root({ variant })} {...props} />
-        </ResizableTableContainer>
-      </TableProvider>
-    );
-  }
   return (
-    <TableProvider allowsResizing={false} variant={variant}>
-      <AriaTable className={root({ variant })} {...props} />
+    <TableProvider
+      variant={variant}
+      selectionVariant={selectionVariant}
+      globalAction={!!onRowAction}
+    >
+      <AriaTable
+        className={root({ variant })}
+        onRowAction={onRowAction}
+        {...props}
+      />
     </TableProvider>
   );
 };
@@ -114,22 +127,28 @@ const TableHeader = <T extends object>({
     useTableOptions();
   return (
     <AriaTableHeader className={header({ variant })} {...props}>
-      {allowsDragging && <AriaColumn />}
+      {allowsDragging && <TableColumn />}
       {selectionBehavior === "toggle" && (
-        <AriaColumn>
+        <TableColumn>
           {selectionMode === "multiple" && (
             <Checkbox slot="selection" variant={selectionVariant} />
           )}
-        </AriaColumn>
+        </TableColumn>
       )}
       <AriaCollection items={columns}>{children}</AriaCollection>
     </AriaTableHeader>
   );
 };
 
-interface TableColumnProps extends React.ComponentProps<typeof AriaColumn> {}
-function TableColumn({ children, className, ...props }: TableColumnProps) {
-  const { allowsResizing } = useTableContext("TableColumn");
+interface TableColumnProps extends React.ComponentProps<typeof AriaColumn> {
+  allowsResizing?: boolean;
+}
+function TableColumn({
+  allowsResizing,
+  children,
+  className,
+  ...props
+}: TableColumnProps) {
   const { variant } = useTableContext("TableColumn");
   return (
     <AriaColumn
@@ -138,15 +157,23 @@ function TableColumn({ children, className, ...props }: TableColumnProps) {
       )}
       {...props}
     >
-      {composeRenderProps(children, (children, { allowsSorting }) => (
-        <div className="flex items-center gap-2">
-          <span className="flex-1">{children}</span>
-          {allowsSorting && <ArrowUpDownIcon aria-hidden className="size-5" />}
-          {allowsResizing && !props.width && (
-            <AriaColumnResizer className={resizer()} />
-          )}
-        </div>
-      ))}
+      {composeRenderProps(
+        children,
+        (children, { allowsSorting, sortDirection }) => (
+          <div className="flex items-center gap-2">
+            <span className="flex-1 truncate">{children}</span>
+            {allowsSorting &&
+              (sortDirection === "ascending" ? (
+                <ChevronUpIcon aria-hidden className="text-fg-muted size-3" />
+              ) : (
+                <ChevronDownIcon aria-hidden className="text-fg-muted size-3" />
+              ))}
+            {allowsResizing && !props.width && (
+              <AriaColumnResizer className={resizer()} />
+            )}
+          </div>
+        )
+      )}
     </AriaColumn>
   );
 }
@@ -154,12 +181,14 @@ interface TableBodyProps<T extends object> extends AriaTableBodyProps<T> {
   ref?: React.RefObject<HTMLTableSectionElement>;
 }
 const TableBody = <T extends object>({
+  renderEmptyState = () => "No results found.",
   className,
   ...props
 }: TableBodyProps<T>) => {
   const { variant } = useTableContext("TableBody");
   return (
     <AriaTableBody
+      renderEmptyState={renderEmptyState}
       className={composeRenderProps(className, (className) =>
         body({ variant, className })
       )}
@@ -170,24 +199,38 @@ const TableBody = <T extends object>({
 
 interface TableRowProps<T extends object> extends AriaRowProps<T> {}
 function TableRow<T extends object>({
-  id,
   columns,
   children,
-  ...otherProps
+  onAction,
+  ...props
 }: TableRowProps<T>) {
   const { selectionBehavior, allowsDragging } = useTableOptions();
-  const { variant } = useTableContext("TableRow");
+  const { variant, selectionVariant, globalAction } =
+    useTableContext("TableRow");
 
   return (
-    <AriaRow id={id} {...otherProps} className={row({ variant })}>
+    <AriaRow
+      data-action={globalAction || !!onAction || undefined}
+      className={row({ variant, selectionVariant })}
+      onAction={onAction}
+      {...props}
+    >
       {allowsDragging && (
-        <TableCell>
-          <AriaButton slot="drag">≡</AriaButton>
+        <TableCell className="cursor-grab">
+          <AriaButton
+            slot="drag"
+            className={cn(
+              focusRing(),
+              "rounded-xs inline-flex items-center justify-center [&_svg]:size-4 text-fg-muted"
+            )}
+          >
+            <GripVerticalIcon />
+          </AriaButton>
         </TableCell>
       )}
       {selectionBehavior === "toggle" && (
         <TableCell>
-          <Checkbox slot="selection" />
+          <Checkbox slot="selection" variant={selectionVariant} />
         </TableCell>
       )}
       <AriaCollection items={columns}>{children}</AriaCollection>
@@ -196,12 +239,34 @@ function TableRow<T extends object>({
 }
 
 interface TableCellProps extends React.ComponentProps<typeof AriaCell> {}
-const TableCell = (props: TableCellProps) => {
+const TableCell = ({ className, ...props }: TableCellProps) => {
   const { variant } = useTableContext("TableCell");
-  return <AriaCell {...props} className={cell({ variant })} />;
+  return (
+    <AriaCell
+      className={composeRenderProps(className, (className) =>
+        cell({ variant, className })
+      )}
+      {...props}
+    />
+  );
+};
+
+interface TableResizableContainerProps
+  extends React.ComponentProps<typeof AriaResizableTableContainer> {}
+const TableResizableContainer = ({
+  className,
+  ...props
+}: TableResizableContainerProps) => {
+  return (
+    <AriaResizableTableContainer
+      className={resizableContainer({ className })}
+      {...props}
+    />
+  );
 };
 
 export type {
+  TableResizableContainerProps,
   TableRootProps,
   TableHeaderProps,
   TableBodyProps,
@@ -209,4 +274,12 @@ export type {
   TableRowProps,
   TableCellProps,
 };
-export { TableRoot, TableHeader, TableBody, TableColumn, TableRow, TableCell };
+export {
+  TableResizableContainer,
+  TableRoot,
+  TableHeader,
+  TableBody,
+  TableColumn,
+  TableRow,
+  TableCell,
+};

@@ -40,7 +40,7 @@ export default function HomePage() {
             </Button>
           </div>
         </section>
-        <section className="relative mt-32">
+        <section className="relative mt-35">
           <div className="animate-in fade-in-50 zoom-in-75 slide-in-from-bottom-10 duration-2000 absolute -top-5 left-1/2 z-0 h-[450px] w-[900px] max-w-[80%] -translate-x-1/2 rounded-full bg-[radial-gradient(at_0%_0%,#0894ff_0,rgba(0,0,0,0)_40%),radial-gradient(at_50%_30%,#ff2e54_0,rgba(0,0,0,0)_60%),radial-gradient(at_100%_0%,#ff9004_0,rgba(0,0,0,0)_40%)] blur-[70px] ease-in-out dark:blur-[100px]" />
           <div className="z-2 relative">
             <ThemesPreview />

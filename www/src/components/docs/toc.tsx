@@ -17,7 +17,7 @@ export const TableOfContents = ({ toc }: { toc: TocType }) => {
     <TocPrimitive.AnchorProvider toc={toc}>
       <ScrollArea
         containerClassName="flex flex-col"
-        className="relative min-h-0 text-sm pb-4"
+        className="relative min-h-0 pb-4 text-sm"
       >
         <TocItems toc={toc} />
       </ScrollArea>
@@ -35,7 +35,7 @@ const TocItems = ({ toc }: { toc: TocType }) => {
       <div ref={viewportRef}>
         <div
           role="none"
-          className="bg-fg absolute start-0 w-[1px] transition-all"
+          className="bg-fg absolute start-0 w-px transition-all"
           style={{
             top: pos[0],
             height: pos[1],

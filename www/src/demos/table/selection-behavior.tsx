@@ -1,5 +1,7 @@
 "use client";
 
+import React from "react";
+import { RadioGroup, Radio } from "@/components/dynamic-core/radio-group";
 import {
   TableRoot,
   TableHeader,
@@ -7,7 +9,7 @@ import {
   TableRow,
   TableColumn,
   TableCell,
-} from "@/registry/core/table";
+} from "@/components/dynamic-core/table";
 
 const columns: Column[] = [
   { name: "Name", id: "name", isRowHeader: true },
@@ -22,24 +24,44 @@ const data: Item[] = [
   { id: 4, name: "log.txt", date: "1/18/2016", type: "Text Document" },
 ];
 
+type SelectionBehavior = "toggle" | "replace";
+
 export default function Demo() {
+  const [selectionBehavior, setSelectionBehavior] =
+    React.useState<SelectionBehavior>("toggle");
   return (
-    <TableRoot aria-label="Files">
-      <TableHeader columns={columns}>
-        {(column) => (
-          <TableColumn isRowHeader={column.isRowHeader}>
-            {column.name}
-          </TableColumn>
-        )}
-      </TableHeader>
-      <TableBody items={data}>
-        {(item) => (
-          <TableRow columns={columns}>
-            {(column) => <TableCell>{item[column.id]}</TableCell>}
-          </TableRow>
-        )}
-      </TableBody>
-    </TableRoot>
+    <div className="flex gap-12">
+      <TableRoot
+        aria-label="Files"
+        selectionMode="multiple"
+        selectionBehavior={selectionBehavior}
+        defaultSelectedKeys={[2, 3]}
+      >
+        <TableHeader columns={columns}>
+          {(column) => (
+            <TableColumn isRowHeader={column.isRowHeader}>
+              {column.name}
+            </TableColumn>
+          )}
+        </TableHeader>
+        <TableBody items={data}>
+          {(item) => (
+            <TableRow columns={columns}>
+              {(column) => <TableCell>{item[column.id]}</TableCell>}
+            </TableRow>
+          )}
+        </TableBody>
+      </TableRoot>
+      <RadioGroup
+        label="Behavior"
+        value={selectionBehavior}
+        onChange={(value) => setSelectionBehavior(value as SelectionBehavior)}
+        className="text-sm"
+      >
+        <Radio value="toggle">Toggle</Radio>
+        <Radio value="accent">Replace</Radio>
+      </RadioGroup>
+    </div>
   );
 }
 

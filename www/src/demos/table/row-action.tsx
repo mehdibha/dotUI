@@ -24,7 +24,10 @@ const data: Item[] = [
 
 export default function Demo() {
   return (
-    <TableRoot aria-label="Files">
+    <TableRoot
+      aria-label="Files"
+      onRowAction={(key) => alert(`Opening item ${key}...`)}
+    >
       <TableHeader columns={columns}>
         {(column) => (
           <TableColumn isRowHeader={column.isRowHeader}>

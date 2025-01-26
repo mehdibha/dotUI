@@ -36,7 +36,6 @@ const checkboxStyles = tv({
           "group-selected:bg-bg-accent group-selected:text-fg-onAccent group-indeterminate:bg-bg-Accent",
       },
     },
-
     appearance: {
       default: {
         indicator: focusRingGroup(),
@@ -44,12 +43,27 @@ const checkboxStyles = tv({
       card: {
         root: [
           focusRing(),
-          "selected:bg-bg-muted disabled:selected:bg-bg-disabled disabled:border-border-disabled flex-row-reverse justify-between gap-4 rounded-md border p-4 transition-colors",
+          "disabled:selected:bg-bg-disabled disabled:border-border-disabled flex-row-reverse justify-between gap-4 rounded-md border p-4 transition-colors",
         ],
       },
-      emphasized: {},
     },
   },
+  compoundVariants: [
+    {
+      appearance: "card",
+      variant: "primary",
+      className: {
+        root: "selected:bg-bg-muted",
+      },
+    },
+    {
+      appearance: "card",
+      variant: "accent",
+      className: {
+        root: "selected:bg-bg-accent-muted",
+      },
+    },
+  ],
   defaultVariants: {
     variant: "accent",
     appearance: "default",
@@ -85,16 +99,28 @@ interface CheckboxRootProps
 
 const CheckboxRoot = (localProps: CheckboxRootProps) => {
   const contextProps = useCheckboxContext();
-  const { variant, className, ...props } = { ...contextProps, ...localProps };
+  const {
+    variant,
+    appearance,
+    className,
+    ...props
+  } = {
+    ...contextProps,
+    ...localProps,
+  };
   return (
     <AriaCheckbox
       className={composeRenderProps(className, (className) =>
-        root({ variant, className })
+        root({ variant, appearance, className })
       )}
       {...props}
     >
       {composeRenderProps(props.children, (children, { isIndeterminate }) => (
-        <VariantsProvider variant={variant} isIndeterminate={isIndeterminate}>
+        <VariantsProvider
+          variant={variant}
+          appearance={appearance}
+          isIndeterminate={isIndeterminate}
+        >
           {children}
         </VariantsProvider>
       ))}
@@ -105,9 +131,10 @@ const CheckboxRoot = (localProps: CheckboxRootProps) => {
 interface CheckboxIndicatorProps extends React.ComponentProps<"div"> {}
 
 const CheckboxIndicator = ({ className, ...props }: CheckboxIndicatorProps) => {
-  const { variant, isIndeterminate } = useVariantsContext("CheckboxIndicator");
+  const { variant, appearance, isIndeterminate } =
+    useVariantsContext("CheckboxIndicator");
   return (
-    <div className={indicator({ variant, className })} {...props}>
+    <div className={indicator({ variant, appearance, className })} {...props}>
       {isIndeterminate ? (
         <MinusIcon className="size-2.5" />
       ) : (

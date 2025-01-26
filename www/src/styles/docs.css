@@ -47,7 +47,7 @@
   }
 
   &:after {
-    @apply bg-border absolute left-0 top-3 h-3 w-[1px] content-[''];
+    @apply bg-border absolute left-0 top-3 h-3 w-px content-[''];
   }
 }
 

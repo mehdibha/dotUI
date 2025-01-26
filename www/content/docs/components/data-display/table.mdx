@@ -1,6 +1,6 @@
 ---
-title: Table
-description: Displays content within a desired ratio.
+title: Table ☑️
+description: A table displays data in rows and columns and enables a user to navigate its contents via directional navigation keys, and optionally supports row selection and sorting.
 links:
   - label: Radix docs
     href: https://www.radix-ui.com/primitives/docs/components/aspect-ratio
@@ -60,7 +60,7 @@ import {
 
 ## Variants
 
-Use the `variant` prop to change the appearance of the Table. 
+Use the `variant` prop to change the appearance of the Table.
 
 <ComponentPreview name="core/table/table-variants" />
 
@@ -78,15 +78,23 @@ By default, Table doesn't allow row selection but this can be enabled using the 
 
 <ComponentPreview name="core/table/table-selection-mode" />
 
-### Controlled and uncontrolled selection
+### Uncontrolled selection
 
 Use `defaultSelectedKeys` to provide a default set of selected rows. Note that the value of the selected keys must match the `id` prop of the row.
 
 <ComponentPreview name="core/table/table-uncontrolled" />
 
+### Controlled selection
+
 To programmatically control row selection, use the `selectedKeys` prop paired with the onSelectionChange callback. The `id` prop from the selected rows will be passed into the callback when the row is pressed, allowing you to update state accordingly.
 
 <ComponentPreview name="core/table/table-controlled" />
+
+### Selection variant
+
+Use the `selectionVariant` prop to change the appearance of the selected rows.
+
+<ComponentPreview name="core/table/table-selection-variant" />
 
 ### Disallow empty selection
 
@@ -96,7 +104,7 @@ Table also supports a `disallowEmptySelection` prop which forces the user to hav
 
 ### Selection Behavior
 
-By default, Table uses the `"toggle"` selection behavior. TODO TODO TODO TODO
+You can control how multiple selection should behave in the collection using the `selectionBehavior` prop.
 
 <ComponentPreview name="core/table/table-selection-behavior" />
 
@@ -126,7 +134,7 @@ A Row can be disabled with the `isDisabled` prop.
 <TableRow isDisabled>
   <TableCell>1</TableCell>
   <TableCell>Mehdi BHA</TableCell>
-  <TableCell>
+  <TableCell>hello@mehdibha.com</TableCell>
 </TableRow>
 ```
 
@@ -144,10 +152,13 @@ The Table accepts a `sortDescriptor` prop that defines the current column key to
 ## Empty state
 
 Use the `renderEmptyState` prop to customize what the `TableBody` will display if there are no items.
+By default the `TableBody` will display a message saying `"No results found."`.
+
+<ComponentPreview name="core/table/table-empty-state" />
 
 ## Column resizing
 
-TODO TODO TODO
+<ComponentPreview name="core/table/table-column-resizing" />
 
 ## Drag and drop
 
@@ -159,45 +170,24 @@ TODO TODO TODO
 
 ### TableRoot
 
-| Prop   | Type   | Default     | Description |
-| ------ | ------ | ----------- | ----------- |
-| `todo` | `todo` | `'default'` | toodo       |
+| Prop                     | Type                                                                                           | Default      | Description                                                                                                  |
+| ------------------------ | ---------------------------------------------------------------------------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------ |
+| `children`               | `ReactNode`                                                                                    | -            | The elements that make up the table. Includes the TableHeader, TableBody, Columns, and Rows.                 |
+| `selectionBehavior`      | `'toggle' \| 'replace'`                                                                        | `'toggle'`   | How multiple selection should behave in the collection.                                                      |
+| `disabledBehavior`       | `'selection' \| 'all'`                                                                         | `'selection` | Whether disabledKeys applies to all interactions, or only selection.                                         |
+| `dragAndDropHooks`       | `DragAndDropHooks`                                                                             | -            | The drag and drop hooks returned by useDragAndDrop used to enable drag and drop behavior for the Table.      |
+| `disabledKeys`           | `Iterable<Key>`                                                                                | -            | A list of row keys to disable.                                                                               |
+| `selectionMode`          | `'none'\| 'single'\| 'multiple'`                                                               | -            | The type of selection that is allowed in the collection.                                                     |
+| `disallowEmptySelection` | `boolean`                                                                                      | -            | Whether the collection allows empty selection.                                                               |
+| `selectedKeys`           | `'all' \| Iterable<Key>`                                                                       | -            | The currently selected keys in the collection (controlled).                                                  |
+| `defaultSelectedKeys`    | `'all' \| Iterable<Key>`                                                                       | -            | The initial selected keys in the collection (uncontrolled).                                                  |
+| `sortDescriptor`         | `SortDescriptor`                                                                               | -            | The current sorted column and direction.                                                                     |
+| `className`              | `string \| (values: TableRenderProps & {defaultClassName: string \| undefined}) => string`     | -            | The CSS className for the element. A function may be provided to compute the class based on component state. |
+| `style`                  | `CSSProperties \| (values: TableRenderProps & {defaultStyle: CSSProperties}) => CSSProperties` | -            | The inline style for the element. A function may be provided to compute the style based on component state.  |
 
-### TableHeader
-
-| Prop   | Type   | Default     | Description |
-| ------ | ------ | ----------- | ----------- |
-| `todo` | `todo` | `'default'` | toodo       |
-
-### TableColumn
-
-| Prop   | Type   | Default     | Description |
-| ------ | ------ | ----------- | ----------- |
-| `todo` | `todo` | `'default'` | toodo       |
-
-### TableBody
-
-| Prop   | Type   | Default     | Description |
-| ------ | ------ | ----------- | ----------- |
-| `todo` | `todo` | `'default'` | toodo       |
-
-### TableRow
-
-| Prop   | Type   | Default     | Description |
-| ------ | ------ | ----------- | ----------- |
-| `todo` | `todo` | `'default'` | toodo       |
-
-### TableCell
-
-| Prop   | Type   | Default     | Description |
-| ------ | ------ | ----------- | ----------- |
-| `todo` | `todo` | `'default'` | toodo       |
-
-## Accessibility
-
-### Keyboard interactions
-
-| Key    | Description           |
-| ------ | --------------------- |
-| `TODO` | TODO                  |
-| `Tab`  | Activates the button. |
+| Event               | Type                                  | Description                                                                                                                   |
+| ------------------- | ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `onRowAction`       | `(key: Key) => void`                  | Handler that is called when a user performs an action on the row.                                                             |
+| `onSelectionChange` | `(key: Selection) => void`            | Handler that is called when the selection changes.                                                                            |
+| `onSortChange`      | `(descriptor: SortDescriptor) => any` | Handler that is called when the sorted column or direction changes.                                                           |
+| `onScroll`          | `(e: UIEvent<Element>) => void`       | Handler that is called when a user scrolls. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Element/scroll_event). |

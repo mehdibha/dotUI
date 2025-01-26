@@ -2069,6 +2069,11 @@
       files: ["demos/table/reordable.tsx"],
       component: React.lazy(() => import("@/demos/table/reordable")),
     },
+    "table-selection-variant": {
+      name: "table-selection-variant",
+      files: ["demos/table/selection-variant.tsx"],
+      component: React.lazy(() => import("@/demos/table/selection-variant")),
+    },
     "form-basic": {
       name: "form-basic",
       files: ["demos/form/basic.tsx"],

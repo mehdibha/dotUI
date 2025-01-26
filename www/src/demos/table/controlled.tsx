@@ -1,5 +1,7 @@
 "use client";
 
+import React from "react";
+import { type Selection } from "react-aria-components";
 import {
   TableRoot,
   TableHeader,
@@ -23,8 +25,16 @@ const data: Item[] = [
 ];
 
 export default function Demo() {
+  const [selectedKeys, setSelectedKeys] = React.useState<Selection>(
+    new Set([2, 3])
+  );
   return (
-    <TableRoot aria-label="Files">
+    <TableRoot
+      aria-label="Files"
+      selectionMode="multiple"
+      selectedKeys={selectedKeys}
+      onSelectionChange={setSelectedKeys}
+    >
       <TableHeader columns={columns}>
         {(column) => (
           <TableColumn isRowHeader={column.isRowHeader}>

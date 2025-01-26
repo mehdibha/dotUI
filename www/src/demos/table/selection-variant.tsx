@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { RadioGroup, Radio } from "@/components/dynamic-core/radio-group";
 import {
   TableRoot,
   TableHeader,
@@ -8,8 +9,7 @@ import {
   TableRow,
   TableColumn,
   TableCell,
-  TableResizableContainer,
-} from "@/registry/core/table";
+} from "@/components/dynamic-core/table";
 
 const columns: Column[] = [
   { name: "Name", id: "name", isRowHeader: true },
@@ -17,27 +17,33 @@ const columns: Column[] = [
   { name: "Date Modified", id: "date" },
 ];
 
-const items: Item[] = [
+const data: Item[] = [
   { id: 1, name: "Games", date: "6/7/2020", type: "File folder" },
   { id: 2, name: "Program Files", date: "4/7/2021", type: "File folder" },
   { id: 3, name: "bootmgr", date: "11/20/2010", type: "System file" },
   { id: 4, name: "log.txt", date: "1/18/2016", type: "Text Document" },
 ];
 
+type Variant = "primary" | "accent";
+
 export default function Demo() {
+  const [variant, setVariant] = React.useState<Variant>("primary");
   return (
-    <TableResizableContainer>
-      <TableRoot aria-label="Files">
+    <div className="flex gap-12">
+      <TableRoot
+        aria-label="Files"
+        selectionMode="single"
+        selectionVariant={variant}
+        defaultSelectedKeys={[2]}
+      >
         <TableHeader columns={columns}>
-          <TableColumn id="name" isRowHeader allowsResizing>
-            Name
-          </TableColumn>
-          <TableColumn id="type" allowsResizing>
-            Type
-          </TableColumn>
-          <TableColumn id="date">Date Modified</TableColumn>
+          {(column) => (
+            <TableColumn isRowHeader={column.isRowHeader}>
+              {column.name}
+            </TableColumn>
+          )}
         </TableHeader>
-        <TableBody items={items}>
+        <TableBody items={data}>
           {(item) => (
             <TableRow columns={columns}>
               {(column) => <TableCell>{item[column.id]}</TableCell>}
@@ -45,7 +51,15 @@ export default function Demo() {
           )}
         </TableBody>
       </TableRoot>
-    </TableResizableContainer>
+      <RadioGroup
+        label="Variant"
+        value={variant}
+        onChange={(value) => setVariant(value as Variant)}
+      >
+        <Radio value="primary">Primary</Radio>
+        <Radio value="accent">Accent</Radio>
+      </RadioGroup>
+    </div>
   );
 }
 

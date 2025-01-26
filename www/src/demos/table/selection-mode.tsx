@@ -41,7 +41,7 @@ export default function Demo() {
           )}
         </TableBody>
       </TableRoot>
-      <TableRoot aria-label="Files">
+      <TableRoot aria-label="Files" selectionMode="multiple">
         <TableHeader columns={columns}>
           {(column) => (
             <TableColumn isRowHeader={column.isRowHeader}>
