@@ -22,7 +22,7 @@ export default function Demo() {
         </TableHeader>
         <TableBody>{[]}</TableBody>
       </TableRoot>
-      
+
       <TableRoot aria-label="Files">
         <TableHeader>
           <TableColumn id="name" isRowHeader>
@@ -31,7 +31,7 @@ export default function Demo() {
           <TableColumn id="type">Type</TableColumn>
           <TableColumn id="date">Date Modified</TableColumn>
         </TableHeader>
-        <TableBody renderEmptyState={()=> "Nothing here."}>{[]}</TableBody>
+        <TableBody renderEmptyState={() => "Nothing here."}>{[]}</TableBody>
       </TableRoot>
     </div>
   );

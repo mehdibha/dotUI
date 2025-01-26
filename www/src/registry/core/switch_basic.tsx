@@ -40,7 +40,7 @@ const switchStyles = tv({
           "group-pressed:w-6 group-selected:ml-5 group-selected:group-pressed:ml-4 size-5",
       },
       lg: {
-        indicator: "h-7 w-13",
+        indicator: "w-13 h-7",
         thumb:
           "group-pressed:w-7 group-selected:ml-6 group-selected:group-pressed:ml-5 size-6",
       },

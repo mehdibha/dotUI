@@ -138,7 +138,7 @@ export function ThemeSelect({ className }: { className?: string }) {
               <XIcon />
             </Button>
           }
-          className="[&_kbd]:text-xs bg-bg-muted/50"
+          className="bg-bg-muted/50 [&_kbd]:text-xs"
         >
           Use <Kbd>Ctrl</Kbd> + <Kbd>→</Kbd> or <Kbd>←</Kbd> to navigate between
           themes

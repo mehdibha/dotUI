@@ -34,11 +34,11 @@ const tableStyles = tv({
     header: "sticky top-0 z-10",
     column: [
       focusRing(),
-      "relative allows-sorting:cursor-pointer whitespace-nowrap px-3 py-2 text-left font-medium text-fg-muted",
+      "allows-sorting:cursor-pointer text-fg-muted relative whitespace-nowrap px-3 py-2 text-left font-medium",
     ],
     resizer: [
       focusRing(),
-      "resizing:before:bg-bg-accent absolute right-0 before:bg-border-field box-content h-5 w-px resizing:before:w-0.5 cursor-col-resize px-2 before:content-['']  before:block before:w-px before:h-5 before:transition-colors",
+      "resizing:before:bg-bg-accent before:bg-border-field resizing:before:w-0.5 absolute right-0 box-content h-5 w-px cursor-col-resize px-2 before:block before:h-5 before:w-px before:transition-colors before:content-['']",
     ],
     body: "empty:text-center empty:italic",
     row: [
@@ -221,7 +221,7 @@ function TableRow<T extends object>({
             slot="drag"
             className={cn(
               focusRing(),
-              "rounded-xs inline-flex items-center justify-center [&_svg]:size-4 text-fg-muted"
+              "rounded-xs text-fg-muted inline-flex items-center justify-center [&_svg]:size-4"
             )}
           >
             <GripVerticalIcon />

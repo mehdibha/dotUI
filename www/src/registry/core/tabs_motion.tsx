@@ -45,7 +45,7 @@ const tabsStyles = tv({
         cursor: "bg-bg-inverse/10 inset-0 z-0 rounded-[inherit] shadow-sm",
       },
       underline: {
-        tab: "selected:border-bg-accent border-transparent px-3 py-[7px] ",
+        tab: "selected:border-bg-accent border-transparent px-3 py-[7px]",
         cursor: "",
       },
     },
@@ -56,7 +56,7 @@ const tabsStyles = tv({
       variant: "underline",
       className: {
         list: "border-b",
-        cursor: "inset-x-0 bottom-0 h-[2px] transform-none origin-[50%_50%_0]"
+        cursor: "inset-x-0 bottom-0 h-[2px] origin-[50%_50%_0] transform-none",
       },
     },
     {

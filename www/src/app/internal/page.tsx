@@ -17,7 +17,7 @@ export default function Demo() {
             <li
               key={index}
               style={{ width: "100%" }}
-              className="relative p-[5px_15px] w-full"
+              className="relative w-full p-[5px_15px]"
               // style={{ position: "relative", padding: "8px", minWidth: 0 , display: "flex"}}
               // className="relative min-w-0 p-2"
               // className="relative p-2"

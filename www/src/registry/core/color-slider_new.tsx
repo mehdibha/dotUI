@@ -20,14 +20,14 @@ const sliderStyles = tv({
   slots: {
     root: "group grid grid-cols-[1fr_auto] [grid-template-areas:'label_valueLabel'_'field_field']",
     track:
-      "[grid-area:field] bg-bg-neutral disabled:bg-bg-disabled relative grow cursor-pointer rounded-full disabled:cursor-default",
+      "bg-bg-neutral disabled:bg-bg-disabled relative grow cursor-pointer rounded-full [grid-area:field] disabled:cursor-default",
     filler:
       "bg-border-focus group-disabled:bg-bg-disabled pointer-events-none absolute rounded-full",
     thumb: [
       focusRing(),
       "disabled:bg-bg-disabled disabled:border-bg left-[50%] top-[50%] rounded-full bg-white shadow-md transition-[width,height] disabled:border",
     ],
-    valueLabel: "[grid-area:valueLabel] text-fg-muted text-sm",
+    valueLabel: "text-fg-muted text-sm [grid-area:valueLabel]",
   },
   variants: {
     orientation: {
@@ -82,14 +82,12 @@ const Slider = ({
 }: SliderProps) => {
   return (
     <SliderRoot {...props}>
-        {label && <Label>{label}</Label>}
-        {showValueLabel && (
-          <SliderValueLabel>
-            {({ state }) =>
-              getValueLabel ? getValueLabel(state.values) : null
-            }
-          </SliderValueLabel>
-        )}
+      {label && <Label>{label}</Label>}
+      {showValueLabel && (
+        <SliderValueLabel>
+          {({ state }) => (getValueLabel ? getValueLabel(state.values) : null)}
+        </SliderValueLabel>
+      )}
       {/* <div className="grid grid-cols-[1fr_auto] [grid-template-areas:'label_value']">
       </div> */}
       <SliderTrack />

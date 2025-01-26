@@ -10,12 +10,12 @@ export default function Demo() {
         label="Hour"
         granularity="hour"
         defaultValue={parseAbsoluteToLocal("2021-04-07T18:45:22Z")}
-        />
+      />
       <DateField
         label="Minute"
         granularity="minute"
         defaultValue={parseAbsoluteToLocal("2021-04-07T18:45:22Z")}
-        />
+      />
       <DateField
         label="Second"
         granularity="second"

@@ -40,7 +40,8 @@ const [AvatarProvider, useAvatarContext] = createScopedContext<
 >("AlertRoot");
 
 interface AvatarProps
-  extends AvatarRootProps,AvatarImageProps,
+  extends AvatarRootProps,
+    AvatarImageProps,
     Pick<AvatarImageProps, "src" | "alt"> {
   fallback?: React.ReactNode;
 }

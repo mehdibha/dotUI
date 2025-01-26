@@ -10,9 +10,9 @@ import { Breadcrumbs } from "@/components/docs/breadcrumbs";
 import { DocsPager } from "@/components/docs/docs-pager";
 import { PageLastUpdate } from "@/components/docs/last-update";
 import { mdxComponents } from "@/components/docs/mdx-components";
+import { TableOfContents } from "@/components/docs/toc";
 import { GitHubIcon } from "@/components/icons";
 import { AdobeIcon } from "@/components/icons/adobe-icon";
-import { TableOfContents } from "@/components/docs/toc";
 import { source } from "@/app/source";
 import { siteConfig } from "@/config";
 

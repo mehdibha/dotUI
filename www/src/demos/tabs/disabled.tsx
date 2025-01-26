@@ -17,7 +17,9 @@ export default function Demo() {
         <TabList>
           <Tab id="overview">Overview</Tab>
           <Tab id="usage">Usage</Tab>
-          <Tab id="settings" isDisabled>Settings</Tab>
+          <Tab id="settings" isDisabled>
+            Settings
+          </Tab>
         </TabList>
         <TabPanel id="overview">Overview content</TabPanel>
         <TabPanel id="usage">Usage content</TabPanel>

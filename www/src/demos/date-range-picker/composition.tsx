@@ -3,6 +3,7 @@
 import React from "react";
 import { CalendarIcon } from "lucide-react";
 import { Button } from "@/components/dynamic-core/button";
+import { RangeCalendar } from "@/components/dynamic-core/calendar";
 import { DateInput, DateSegment } from "@/components/dynamic-core/date-input";
 import { DatePickerRoot } from "@/components/dynamic-core/date-picker";
 import { DialogContent } from "@/components/dynamic-core/dialog";
@@ -13,7 +14,6 @@ import {
 } from "@/components/dynamic-core/field";
 import { InputRoot } from "@/components/dynamic-core/input";
 import { Overlay } from "@/components/dynamic-core/overlay";
-import { RangeCalendar } from "@/components/dynamic-core/calendar";
 
 export default function Demo() {
   return (

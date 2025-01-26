@@ -490,7 +490,7 @@ export const demos: RegistryDemos = [
     "controlled",
     "uncontrolled",
     "reordable",
-    "selection-variant"
+    "selection-variant",
   ]),
   ...buildDemos("form", ["basic", "react-aria", "react-hook-form"]),
   ...buildDemos("command", ["basic", "dialog"]),

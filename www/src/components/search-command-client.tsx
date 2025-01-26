@@ -59,7 +59,12 @@ export function SearchCommandClient({ items }: SearchCommandClientProps) {
           <Section key={categoryIndex} title={category.title}>
             {category.items.map((page) => (
               <React.Fragment key={page.id}>
-                <MenuItem href={page.url} textValue={page.title} prefix={<FileTextIcon />} className="py-2">
+                <MenuItem
+                  href={page.url}
+                  textValue={page.title}
+                  prefix={<FileTextIcon />}
+                  className="py-2"
+                >
                   {page.title}
                 </MenuItem>
                 {/* {inputValue !== "" && (
