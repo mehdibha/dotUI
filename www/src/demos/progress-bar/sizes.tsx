@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Progress } from "@/components/dynamic-core/progress";
+import { ProgressBar } from "@/components/dynamic-core/progress-bar";
 
 const sizes = ["sm", "md", "lg"] as const;
 
@@ -9,7 +9,7 @@ export default function Demo() {
   return (
     <div className="space-y-4">
       {sizes.map((size) => (
-        <Progress
+        <ProgressBar
           key={size}
           aria-label={`Progress size: ${size}`}
           value={75}

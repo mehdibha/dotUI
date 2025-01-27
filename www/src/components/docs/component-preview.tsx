@@ -7,7 +7,7 @@ import { Button } from "@/components/core/button";
 import { Tooltip } from "@/components/core/tooltip";
 import { CodeBlock } from "@/components/docs/code-block";
 import { Index } from "@/__registry__/demos";
-import { Loader } from "./component-preview-client";
+import { Loader, ResizableContainer } from "./component-preview-client";
 import { StyleSwitcher } from "./style-switcher";
 import { ThemeCustomizerDialog } from "./theme-customizer";
 import { ThemeOverride } from "./theme-override";
@@ -18,14 +18,17 @@ export interface ComponentPreviewProps {
   className?: string;
   preview?: string;
   expandable?: boolean;
+  fullWidth?: boolean;
+  resizable?: boolean;
 }
 
 export const ComponentPreview = async ({
   name,
   containerClassName,
-  className,
   preview,
   expandable = true,
+  fullWidth = false,
+  resizable = false,
 }: ComponentPreviewProps) => {
   const type = name.split("/")[0];
   const componentName = name.split("/")[1];
@@ -45,10 +48,8 @@ export const ComponentPreview = async ({
   );
 
   return (
-    <div
-      className={cn("overflow-hidden rounded-md border", containerClassName)}
-    >
-      <div className="relative">
+    <div className={cn("rounded-md border overflow-hidden", containerClassName)}>
+      <div className="relative bg-bg-muted">
         <StyleSwitcher componentName={componentName} />
         <ThemeCustomizerDialog>
           <Tooltip
@@ -68,27 +69,30 @@ export const ComponentPreview = async ({
             </Button>
           </Tooltip>
         </ThemeCustomizerDialog>
-        <Loader>
-          <ThemeOverride>
-            <ScrollArea
-              className={cn(
-                "flex items-center justify-center",
-                "bg-bg text-fg"
-              )}
-            >
-              <div className="flex min-h-52 items-center justify-center px-4 py-20">
+        <ResizableContainer resizable={resizable}>
+          <Loader>
+            <ThemeOverride>
+              <ScrollArea className="bg-bg text-fg">
                 <div
                   className={cn(
-                    "flex w-full items-center justify-center",
-                    className
+                    "flex min-h-52 py-20",
+                    fullWidth
+                      ? "px-8 lg:px-12"
+                      : "flex items-center justify-center px-4"
                   )}
                 >
-                  {<Component />}
+                  <div
+                    className={cn(
+                      fullWidth ? "w-full" : "flex items-center justify-center"
+                    )}
+                  >
+                    <Component />
+                  </div>
                 </div>
-              </div>
-            </ScrollArea>
-          </ThemeOverride>
-        </Loader>
+              </ScrollArea>
+            </ThemeOverride>
+          </Loader>
+        </ResizableContainer>
       </div>
       <CodeBlock
         files={code.map((file) => ({

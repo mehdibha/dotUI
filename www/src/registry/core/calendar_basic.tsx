@@ -51,7 +51,7 @@ const calendarCellStyles = tv({
       "outside-month:hidden selection-start:rounded-l-md selection-end:rounded-r-md outline-none",
     cell: [
       focusRing(),
-      "hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 hover:unavailable:bg-transparent unavailable:cursor-default unavailable:text-fg-disabled disabled:text-fg-disabled unavailable:not-disabled:line-through my-1 flex size-8 cursor-pointer items-center justify-center rounded-md text-sm transition-colors read-only:cursor-default hover:read-only:bg-transparent disabled:cursor-default disabled:bg-transparent",
+      "hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 hover:unavailable:bg-transparent unavailable:cursor-default unavailable:text-fg-disabled disabled:text-fg-disabled unavailable:[&:not([data-disabled])]:line-through my-1 flex size-8 cursor-pointer items-center justify-center rounded-md text-sm transition-colors read-only:cursor-default hover:read-only:bg-transparent disabled:cursor-default disabled:bg-transparent",
     ],
   },
   variants: {

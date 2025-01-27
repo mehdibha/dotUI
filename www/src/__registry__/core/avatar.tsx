@@ -39,15 +39,13 @@ const [AvatarProvider, useAvatarContext] = createScopedContext<
   }
 >("AlertRoot");
 
-interface AvatarProps
-  extends AvatarRootProps,AvatarImageProps,
-    Pick<AvatarImageProps, "src" | "alt"> {
+interface AvatarProps extends AvatarImageProps {
   fallback?: React.ReactNode;
 }
-const Avatar = ({ src, alt, fallback, ...props }: AvatarProps) => {
+const Avatar = ({ className, style, fallback, ...props }: AvatarProps) => {
   return (
-    <AvatarRoot {...props}>
-      <AvatarImage src={src} alt={alt} />
+    <AvatarRoot className={className} style={style}>
+      <AvatarImage {...props} />
       <AvatarFallback>{fallback}</AvatarFallback>
       <AvatarPlaceholder />
     </AvatarRoot>
@@ -57,7 +55,6 @@ const Avatar = ({ src, alt, fallback, ...props }: AvatarProps) => {
 interface AvatarRootProps
   extends React.ComponentProps<"span">,
     VariantProps<typeof avatarStyles> {}
-
 function AvatarRoot({ className, shape, size, ...props }: AvatarRootProps) {
   const [status, setStatus] = React.useState<Status>("idle");
 

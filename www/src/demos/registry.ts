@@ -284,9 +284,8 @@ export const demos: RegistryDemos = [
     "uncontrolled",
   ]),
   ...buildDemos("popover", ["basic"]),
-  ...buildDemos("progress", [
+  ...buildDemos("progress-bar", [
     "composition",
-    "custom-color",
     "custom-value-label",
     "default",
     "duration",
@@ -296,7 +295,6 @@ export const demos: RegistryDemos = [
     "min-max-values",
     "shape",
     "sizes",
-    "toolbar",
     "value-label",
     "variants",
   ]),

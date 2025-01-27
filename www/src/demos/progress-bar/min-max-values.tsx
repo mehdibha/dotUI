@@ -1,11 +1,11 @@
 "use client";
 
 import * as React from "react";
-import { Progress } from "@/components/dynamic-core/progress";
+import { ProgressBar } from "@/components/dynamic-core/progress-bar";
 
 export default function Demo() {
   return (
-    <Progress
+    <ProgressBar
       aria-label="Min and max values"
       minValue={50}
       maxValue={150}

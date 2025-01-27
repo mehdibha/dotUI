@@ -100,7 +100,7 @@
     --color-accent-900: hsl(210, 100%, 82%);
     --color-accent-1000: hsl(210, 100%, 87%);
 
-    --color-success-100: hsl(132, 42%, 9%);
+    --color-success-100: hsl(131, 44%, 8%);
     --color-success-200: hsl(130, 41%, 14%);
     --color-success-300: hsl(131, 41%, 18%);
     --color-success-400: hsl(132, 41%, 22%);
@@ -111,9 +111,9 @@
     --color-success-900: hsl(131, 34%, 76%);
     --color-success-1000: hsl(130, 35%, 83%);
 
-    --color-warning-100: hsl(34, 100%, 14%);
+    --color-warning-100: hsl(35, 100%, 7%);
     --color-warning-200: hsl(34, 100%, 21%);
-    --color-warning-300: hsl(35, 100%, 26%);
+    --color-warning-300: hsl(35, 96%, 19%);
     --color-warning-400: hsl(35, 100%, 48%);
     --color-warning-500: hsl(35, 100%, 50%);
     --color-warning-600: hsl(35, 100%, 58%);
@@ -146,7 +146,7 @@
   }
 }
 
-@theme {
+@theme inline {
   /* fonts */
   --font-josefin: var(--font-josefin);
   --font-sans: var(--font-geist-sans);
@@ -186,7 +186,7 @@
   --color-bg-info-hover: var(--color-info-600);
   --color-bg-info-active: var(--color-info-700);
   --color-bg-info-muted: var(--color-info-100);
-  
+
   --color-bg-accent: var(--color-accent-500);
   --color-bg-accent-hover: var(--color-accent-600);
   --color-bg-accent-active: var(--color-accent-700);
@@ -230,11 +230,11 @@
   --animate-accordion-up: accordion-up 0.15s ease-out;
   --animate-collapsible-down: collapsible-down 0.15s ease-out;
   --animate-collapsible-up: collapsible-up 0.15s ease-out;
+  --animate-line-spinner: line-spinner 1.2s linear infinite;
+  --animate-dot-spinner: dot-spinner 0.8s linear infinite;
   --animate-progress-indeterminate: progress-grow var(--progress-duration) 1
       both normal,
     progress-pulse 1s ease var(--progress-duration) infinite normal none running;
-  --animate-line-spinner: line-spinner 1.2s linear infinite;
-  --animate-dot-spinner: dot-spinner 0.8s linear infinite;
 }
 
 /* for specific styles */
@@ -299,20 +299,20 @@
 
 @keyframes progress-grow {
   0% {
-    transform: "scaleX(0.01)";
+    transform: scaleX(0.01);
   }
   20% {
-    transform: "scaleX(0.1)";
+    transform: scaleX(0.1);
   }
   30% {
-    transform: "scaleX(0.6)";
+    transform: scaleX(0.6);
   }
   40%,
   50% {
-    transform: "scaleX(0.9)";
+    transform: scaleX(0.9);
   }
   100% {
-    transform: "scaleX(1)";
+    transform: scaleX(1);
   }
 }
 

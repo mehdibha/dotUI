@@ -4,13 +4,16 @@ import { Badge } from "@/registry/core/badge";
 export default function Demo() {
   return (
     <div className="flex items-center gap-2">
-      <Badge icon={<ShieldIcon />} size="sm">
+      <Badge size="sm">
+        <ShieldIcon />
         Badge
       </Badge>
-      <Badge icon={<ShieldIcon />} size="md">
+      <Badge size="md">
+        <ShieldIcon />
         Badge
       </Badge>
-      <Badge icon={<ShieldIcon />} size="lg">
+      <Badge size="lg">
+        <ShieldIcon />
         Badge
       </Badge>
     </div>

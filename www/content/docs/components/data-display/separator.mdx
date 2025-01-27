@@ -32,30 +32,17 @@ links:
 
 ## Installation
 
-<Tabs items={["CLI", "Manual"]}>
-  <Tab value="CLI">
-  
-  ```package-install
+```package-install
 npx dotui-cli@latest add separator
 ```
 
-  </Tab>
-  <Tab value="manual">
-  
-    <Steps>
-      <Step>Install the following dependencies:</Step>
+## Anatomy
 
-    ```package-install
-    react-aria-components
-    ```
+```tsx
+import { Separator } from '@/components/core/separator';
 
-      <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name="core/separator/separator" />
-      <Step>Update the import paths to match your project setup.</Step>
-    </Steps>
-
-  </Tab>
-</Tabs>
+<Separator />;
+```
 
 ## Options
 

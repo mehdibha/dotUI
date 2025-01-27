@@ -1179,75 +1179,65 @@
       files: ["demos/popover/basic.tsx"],
       component: React.lazy(() => import("@/demos/popover/basic")),
     },
-    "progress-composition": {
-      name: "progress-composition",
-      files: ["demos/progress/composition.tsx"],
-      component: React.lazy(() => import("@/demos/progress/composition")),
+    "progress-bar-composition": {
+      name: "progress-bar-composition",
+      files: ["demos/progress-bar/composition.tsx"],
+      component: React.lazy(() => import("@/demos/progress-bar/composition")),
     },
-    "progress-custom-color": {
-      name: "progress-custom-color",
-      files: ["demos/progress/custom-color.tsx"],
-      component: React.lazy(() => import("@/demos/progress/custom-color")),
+    "progress-bar-custom-value-label": {
+      name: "progress-bar-custom-value-label",
+      files: ["demos/progress-bar/custom-value-label.tsx"],
+      component: React.lazy(() => import("@/demos/progress-bar/custom-value-label")),
     },
-    "progress-custom-value-label": {
-      name: "progress-custom-value-label",
-      files: ["demos/progress/custom-value-label.tsx"],
-      component: React.lazy(() => import("@/demos/progress/custom-value-label")),
+    "progress-bar-default": {
+      name: "progress-bar-default",
+      files: ["demos/progress-bar/default.tsx"],
+      component: React.lazy(() => import("@/demos/progress-bar/default")),
     },
-    "progress-default": {
-      name: "progress-default",
-      files: ["demos/progress/default.tsx"],
-      component: React.lazy(() => import("@/demos/progress/default")),
+    "progress-bar-duration": {
+      name: "progress-bar-duration",
+      files: ["demos/progress-bar/duration.tsx"],
+      component: React.lazy(() => import("@/demos/progress-bar/duration")),
     },
-    "progress-duration": {
-      name: "progress-duration",
-      files: ["demos/progress/duration.tsx"],
-      component: React.lazy(() => import("@/demos/progress/duration")),
+    "progress-bar-format-options": {
+      name: "progress-bar-format-options",
+      files: ["demos/progress-bar/format-options.tsx"],
+      component: React.lazy(() => import("@/demos/progress-bar/format-options")),
     },
-    "progress-format-options": {
-      name: "progress-format-options",
-      files: ["demos/progress/format-options.tsx"],
-      component: React.lazy(() => import("@/demos/progress/format-options")),
+    "progress-bar-indeterminate": {
+      name: "progress-bar-indeterminate",
+      files: ["demos/progress-bar/indeterminate.tsx"],
+      component: React.lazy(() => import("@/demos/progress-bar/indeterminate")),
     },
-    "progress-indeterminate": {
-      name: "progress-indeterminate",
-      files: ["demos/progress/indeterminate.tsx"],
-      component: React.lazy(() => import("@/demos/progress/indeterminate")),
+    "progress-bar-label": {
+      name: "progress-bar-label",
+      files: ["demos/progress-bar/label.tsx"],
+      component: React.lazy(() => import("@/demos/progress-bar/label")),
     },
-    "progress-label": {
-      name: "progress-label",
-      files: ["demos/progress/label.tsx"],
-      component: React.lazy(() => import("@/demos/progress/label")),
+    "progress-bar-min-max-values": {
+      name: "progress-bar-min-max-values",
+      files: ["demos/progress-bar/min-max-values.tsx"],
+      component: React.lazy(() => import("@/demos/progress-bar/min-max-values")),
     },
-    "progress-min-max-values": {
-      name: "progress-min-max-values",
-      files: ["demos/progress/min-max-values.tsx"],
-      component: React.lazy(() => import("@/demos/progress/min-max-values")),
+    "progress-bar-shape": {
+      name: "progress-bar-shape",
+      files: ["demos/progress-bar/shape.tsx"],
+      component: React.lazy(() => import("@/demos/progress-bar/shape")),
     },
-    "progress-shape": {
-      name: "progress-shape",
-      files: ["demos/progress/shape.tsx"],
-      component: React.lazy(() => import("@/demos/progress/shape")),
+    "progress-bar-sizes": {
+      name: "progress-bar-sizes",
+      files: ["demos/progress-bar/sizes.tsx"],
+      component: React.lazy(() => import("@/demos/progress-bar/sizes")),
     },
-    "progress-sizes": {
-      name: "progress-sizes",
-      files: ["demos/progress/sizes.tsx"],
-      component: React.lazy(() => import("@/demos/progress/sizes")),
+    "progress-bar-value-label": {
+      name: "progress-bar-value-label",
+      files: ["demos/progress-bar/value-label.tsx"],
+      component: React.lazy(() => import("@/demos/progress-bar/value-label")),
     },
-    "progress-toolbar": {
-      name: "progress-toolbar",
-      files: ["demos/progress/toolbar.tsx"],
-      component: React.lazy(() => import("@/demos/progress/toolbar")),
-    },
-    "progress-value-label": {
-      name: "progress-value-label",
-      files: ["demos/progress/value-label.tsx"],
-      component: React.lazy(() => import("@/demos/progress/value-label")),
-    },
-    "progress-variants": {
-      name: "progress-variants",
-      files: ["demos/progress/variants.tsx"],
-      component: React.lazy(() => import("@/demos/progress/variants")),
+    "progress-bar-variants": {
+      name: "progress-bar-variants",
+      files: ["demos/progress-bar/variants.tsx"],
+      component: React.lazy(() => import("@/demos/progress-bar/variants")),
     },
     "radio-group-cards": {
       name: "radio-group-cards",

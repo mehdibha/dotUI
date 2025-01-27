@@ -3,7 +3,7 @@
 import * as React from "react";
 import { RotateCwIcon } from "lucide-react";
 import { Button } from "@/components/dynamic-core/button";
-import { Progress } from "@/components/dynamic-core/progress";
+import { ProgressBar } from "@/components/dynamic-core/progress-bar";
 
 export default function Demo() {
   const [key, setKey] = React.useState(0);
@@ -13,7 +13,7 @@ export default function Demo() {
       <Button prefix={<RotateCwIcon />} onPress={restart}>
         Restart animation
       </Button>
-      <Progress key={key} duration="30s" aria-label="Loading" />
+      <ProgressBar key={key} duration="30s" aria-label="Loading" />
     </div>
   );
 }

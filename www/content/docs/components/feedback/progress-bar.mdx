@@ -1,11 +1,9 @@
 ---
-title: Progress
-description: Progress shows the completion progress of a task in shape of a bar, displayed as a progress bar..
+title: Progress Bar ☑️
+description: Progress bar show either determinate or indeterminate progress of an operation over time.
 links:
   - label: Aria docs
     href: https://react-spectrum.adobe.com/react-aria/ProgressBar.html
-  - label: Aria API Reference
-    href: https://react-spectrum.adobe.com/react-aria/ProgressBar.html#props
   - label: Report an issue
     href: https://github.com/mehdibha/dotUI/issues/new/choose
   - label: Edit this page
@@ -13,60 +11,54 @@ links:
 ---
 
 <ComponentPreview
-  name="core/progress/progress-default"
-  preview={`<Progress value={75} />`}
+  name="core/progress-bar/progress-bar-default"
+  preview={`<ProgressBar value={75} />`}
 />
 
 ## Installation
 
-<Tabs items={["CLI", "Manual"]}>
-  <Tab value="CLI">
-  
-  ```package-install
+```package-install
 npx dotui-cli@latest add progress
 ```
 
-  </Tab>
-  <Tab value="manual">
-  
-    <Steps>
-      <Step>Install the following dependencies:</Step>
+## Anatomy
 
-    ```package-install
-    react-aria-components
-    ```
+```tsx
+import { ProgressBar } from "@/components/core/progress-bar";
 
-      <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name="core/progress/progress" />
-      <Step>Update the import paths to match your project setup.</Step>
-    </Steps>
+<ProgressBar value={30} />;
+```
 
-  </Tab>
-</Tabs>
+```tsx
+import { Label } from "@/components/core/field";
+import {
+  ProgressBarRoot,
+  ProgressBarValueLabel,
+  ProgressBarIndicator,
+} from "@/components/core/progress-bar";
 
-## Usage
+<ProgressBarRoot value={30}>
+  <div className="flex items-center justify-between gap-2">
+    <Label>Progress</Label>
+    <ProgressBarValueLabel />
+  </div>
+  <ProgressBarIndicator />
+</ProgressBarRoot>;
+```
 
-Use `Progress` to show the completion progress of a task. It can represent either determinate or indeterminate progress.
-
-### Best pratices
-
-When possible, use a determinate progress indicator.<br/>
-An indeterminate progress indicator shows that a process is occurring, but it doesn't help people estimate how long a task will take.<br/>
-A determinate progress indicator can help people decide whether to do something else while waiting for the task to complete, restart the task at a different time, or abandon the task.
-
-## Options
+## Visual options
 
 ### Variant
 
 Use the `variant` prop to control the visual style of the `Progress`. The default variant is `"default"`.
 
 <ComponentPreview
-  name="core/progress/progress-variants"
-  preview={`<Progress variant="default" />
-<Progress variant="success" />
-<Progress variant="accent" />
-<Progress variant="danger" />
-<Progress variant="warning" />`}
+  name="core/progress-bar/progress-bar-variants"
+  preview={`<ProgressBar variant="primary" />
+<ProgressBar variant="success" />
+<ProgressBar variant="accent" />
+<ProgressBar variant="danger" />
+<ProgressBar variant="warning" />`}
 />
 
 ### Size
@@ -74,20 +66,22 @@ Use the `variant` prop to control the visual style of the `Progress`. The defaul
 Use the `size` prop to control the size of the `Progress`. The default variant is `"md"`.
 
 <ComponentPreview
-  name="core/progress/progress-sizes"
-  preview={`<Progress size="sm" />
-<Progress size="md" />
-<Progress size="lg" />`}
+  name="core/progress-bar/progress-bar-sizes"
+  preview={`<ProgressBar size="sm" />
+<ProgressBar size="md" />
+<ProgressBar size="lg" />`}
 />
+
+## Labelling
 
 ### Label
 
-A visual label can be provided for the `Progress` using the label prop, or a hidden label using `aria-label` prop.
+A visual label can be provided using the `label` prop, or a hidden label using `aria-label` prop.
 
 <ComponentPreview
-  name="core/progress/progress-label"
-  preview={`<Progress aria-label="loading" />
-<Progress label="loading..." />`}
+  name="core/progress-bar/progress-bar-label"
+  preview={`<ProgressBar aria-label="loading" />
+<ProgressBar label="loading..." />`}
 />
 
 ### Value label
@@ -95,8 +89,8 @@ A visual label can be provided for the `Progress` using the label prop, or a hid
 Set the `showValueLabel` prop to `true` to display the current value of the progress bar.
 
 <ComponentPreview
-  name="core/progress/progress-value-label"
-  preview={`<Progress label="Loading" showValueLabel value={75} />`}
+  name="core/progress-bar/progress-bar-value-label"
+  preview={`<ProgressBar label="Loading" showValueLabel value={75} />`}
 />
 
 ### Format options
@@ -104,7 +98,7 @@ Set the `showValueLabel` prop to `true` to display the current value of the prog
 Values are formatted as a percentage by default, but this can be modified by using the `formatOptions` prop to specify a different format.
 
 <ComponentPreview
-  name="core/progress/progress-format-options"
+  name="core/progress-bar/progress-bar-format-options"
   preview={`<Progress
     label="Sending…"
     showValueLabel
@@ -118,7 +112,7 @@ Values are formatted as a percentage by default, but this can be modified by usi
 The `valueLabel` prop allows the formatted value to be replaced with a custom string.
 
 <ComponentPreview
-  name="core/progress/progress-custom-value-label"
+  name="core/progress-bar/progress-bar-custom-value-label"
   preview={`<Progress
     label="Feeding…"
     showValueLabel
@@ -127,30 +121,14 @@ The `valueLabel` prop allows the formatted value to be replaced with a custom st
   />`}
 />
 
-### Indeterminate
+## Value
 
-The `isIndeterminate` prop can be used to represent an interdeterminate operation.
-
-<ComponentPreview
-  name="core/progress/progress-indeterminate"
-  preview={`<Progress isIndeterminate aria-label="Loading" />`}
-/>
-
-### Duration
-
-Use the duration prop to indicate an approximate duration of an indeterminate task. Once the duration times out, the progress bar will start an indeterminate animation.
-
-<ComponentPreview
-  name="core/progress/progress-duration"
-  preview={`<Progress duration="30s" />`}
-/>
-
-### Min and max values
+### Value scale
 
 A custom value scale can be used by setting the `minValue` and `maxValue` props.
 
 <ComponentPreview
-  name="core/progress/progress-min-max-values"
+  name="core/progress-bar/progress-bar-min-max-values"
   preview={`<Progress
     aria-label="Min and max values"
     minValue={50}
@@ -159,46 +137,45 @@ A custom value scale can be used by setting the `minValue` and `maxValue` props.
   />`}
 />
 
-## Examples
+### Indeterminate
 
-### Composition
+The `isIndeterminate` prop can be used to represent an interdeterminate operation.
+
+<ComponentPreview
+  name="core/progress-bar/progress-bar-indeterminate"
+  preview={`<ProgressBar isIndeterminate aria-label="Loading" />`}
+/>
+
+### Duration
+
+Use the `duration` prop to indicate an approximate duration of an indeterminate task. Once the duration times out, the progress bar will start an indeterminate animation.
+
+<ComponentPreview
+  name="core/progress-bar/progress-bar-duration"
+  preview={`<ProgressBar duration="30s" />`}
+/>
+
+## Composition
 
 If you need to customize things further, you can drop down to the composition level.
 
 <ComponentPreview
-  name="core/progress/progress-composition"
-  preview={`<ProgressRoot value={50} className="flex-row items-center gap-4">
+  name="core/progress-bar/progress-bar-composition"
+  preview={`<ProgressBarRoot value={50} className="flex-row items-center gap-4">
     <Label>Progress</Label>
-    <ProgressIndicator />
-    <ProgressValueLabel />
-  </ProgressRoot>`}
+    <ProgressBarIndicator />
+    <ProgressBarValueLabel />
+  </ProgressBarRoot>`}
 />
-
-### Custom color
-
-<ComponentPreview
-  name="core/progress/progress-custom-color"
-  preview={`<Progress
-    value={75}
-    aria-label="Custom color"
-    classNames={{
-      indicator: "bg-slate-300 dark:bg-slate-800",
-      filler: "bg-slate-800 dark:bg-slate-300",
-    }}
-  />`}
-/>
-
-### Toolbar
-
-<ComponentPreview name="core/progress/progress-toolbar" preview={``} />
 
 ## API Reference
 
 | Prop              | Type                                                                                                     | Default              | Description                                                                                                 |
 | ----------------- | -------------------------------------------------------------------------------------------------------- | -------------------- | ----------------------------------------------------------------------------------------------------------- |
-| `variant`         | `"default" \| "primary" \| "danger" \| "success" \| "warning"`                                           | `"default"`          | The visual style of the progress indicator.                                                                 |
+| `variant`         | `"primary" \| "primary" \| "danger" \| "success" \| "warning"`                                           | `"default"`          | The visual style of the progress indicator.                                                                 |
 | `size`            | `"sm" \| "md" \| "lg"`                                                                                   | `"md"`               | The size of the progress indicator                                                                          |
 | `isIndeterminate` | `boolean`                                                                                                | -                    | Whether presentation is indeterminate when progress isn't known.                                            |
+| `duration`        | `` `${number}s` \| `${number}ms` ``                                                                      | `'0s'`               | The estimated duration of an indeterminate progress.                                                        |
 | `formatOptions`   | `Intl.NumberFormatOptions`                                                                               | `{style: 'percent'}` | The display format of the value label.                                                                      |
 | `valueLabel`      | `ReactNode`                                                                                              | -                    | The content to display as the value's label (e.g. 1 of 4).                                                  |
 | `showValueLabel`  | `boolean`                                                                                                | `false`              | Whether the value's label is displayed.                                                                     |
@@ -208,8 +185,3 @@ If you need to customize things further, you can drop down to the composition le
 | `children`        | `ReactNode \| (values: ProgressBarRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -                    | The children of the component. A function may be provided to alter the children based on component state.   |
 | `className`       | `string`                                                                                                 | -                    | The CSS className for the element.                                                                          |
 | `style`           | `CSSProperties \| (values: ProgressBarRenderProps & {defaultStyle: CSSProperties}) => CSSProperties`     | -                    | The inline style for the element. A function may be provided to compute the style based on component state. |
-
-| CSS Selector            | Description                                |
-| ----------------------- | ------------------------------------------ |
-| `[aria-valuetext]`      | A formatted version of the value.          |
-| `:not([aria-valuenow])` | Whether the progress bar is indeterminate. |

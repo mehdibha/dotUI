@@ -99,12 +99,7 @@ interface CheckboxRootProps
 
 const CheckboxRoot = (localProps: CheckboxRootProps) => {
   const contextProps = useCheckboxContext();
-  const {
-    variant,
-    appearance,
-    className,
-    ...props
-  } = {
+  const { variant, appearance, className, ...props } = {
     ...contextProps,
     ...localProps,
   };

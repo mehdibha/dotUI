@@ -12,7 +12,7 @@ import { DateRangePicker } from "@/components/dynamic-core/date-range-picker";
 import { Link } from "@/components/dynamic-core/link";
 import { Item, ListBox } from "@/components/dynamic-core/list-box";
 import { NumberField } from "@/components/dynamic-core/number-field";
-import { Progress } from "@/components/dynamic-core/progress";
+import { ProgressBar } from "@/components/dynamic-core/progress-bar";
 import { SearchField } from "@/components/dynamic-core/search-field";
 import { Select } from "@/components/dynamic-core/select";
 import { Separator } from "@/components/dynamic-core/separator";
@@ -93,7 +93,7 @@ export function ComponentsOverview() {
           channel="alpha"
           className="!w-full"
         />
-        <Progress label="Loading..." value={75} className="w-full" />
+        <ProgressBar label="Loading..." value={75} className="w-full" />
       </div>
       <div className="col-span-5 row-span-2 flex justify-between gap-6">
         <ListBox className="h-full max-h-none w-full">
