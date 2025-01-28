@@ -12,7 +12,7 @@ import { createScopedContext } from "@/lib/helpers";
 
 const alertStyles = tv({
   slots: {
-    root: "flex w-full items-center gap-4 rounded-lg border p-4 [&_svg]:size-4",
+    root: "flex w-full items-center gap-4 rounded-lg border p-4 [&_svg]:size-4 text-sm",
     title: "font-medium leading-normal tracking-tight",
     content: "",
   },

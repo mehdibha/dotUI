@@ -23,7 +23,7 @@ npx dotui-cli@latest add drop-zone
 
 ## Label
 
-A visual label can be provided for the `DropZone` using the `<Text slot="label">` component, or a hidden label using `aria-label` prop.
+A visual label can be provided for the `DropZone` using the `<DropZoneLabel>` component, or a hidden label using `aria-label` prop.
 
 <ComponentPreview
   name="core/drop-zone/drop-zone-label"
@@ -49,7 +49,7 @@ DropZone supports user interactions via mouse, keyboard, and touch. You can hand
       {/* handle drop event */}
     }}
   >
-    <Text slot="label">Droppable</Text>
+    <DropZoneLabel>Droppable</DropZoneLabel>
   </DropZone>`}
 />
 
@@ -61,7 +61,7 @@ To allow the selection of files from the user's device, pass FileTrigger as a ch
   name="core/drop-zone/drop-zone-file-trigger"
   preview={`<DropZone>
     <UploadIcon />
-    <Text slot="label">Drag and drop files here</Text>
+    <DropZoneLabel>Drag and drop files here</DropZoneLabel>
     <FileTrigger>
       <Button>Select files</Button>
     </FileTrigger>
@@ -91,11 +91,13 @@ Use the `isDisabled` prop to disable the drop zone.
   name="core/drop-zone/drop-zone-disabled"
   preview={`<DropZone isDisabled>
     <UploadIcon />
-    <Text slot="label">Drag and drop files here</Text>
+    <DropZoneLabel>Drag and drop files here</DropZoneLabel>
   </DropZone>`}
 />
 
 ## API Reference
+
+### DropZone
 
 | Prop               | Type                                                                                                  | Default | Description                                                                                                                 |
 | ------------------ | ----------------------------------------------------------------------------------------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------- |

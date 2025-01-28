@@ -1,6 +1,6 @@
 ---
 title: Color Picker
-description: A ColorPicker combines a swatch with a customizable popover for editing a color.
+description: A ColorPicker allow users to select and edit a color in an overlay.
 links:
   - label: Aria docs
     href: https://react-spectrum.adobe.com/react-aria/ColorPicker.html
@@ -19,38 +19,39 @@ links:
 
 ## Installation
 
-<Tabs items={["CLI", "Manual"]}>
-  <Tab value="CLI">
-  
-  ```package-install
+```package-install
 npx dotui-cli@latest add color-picker
 ```
 
-  </Tab>
-  <Tab value="manual">
-  
-    <Steps>
-      <Step>Install the following dependencies:</Step>
+## Anatomy
 
-    ```package-install
-    react-aria-components
-    ```
+```tsx
+import { ColorPicker } from "@/components/core/color-picker";
 
-      <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name={["core/color-picker/color-picker"]} />
-      <Step>Update the import paths to match your project setup.</Step>
-    </Steps>
+<ColorPicker defaultValue="#5100FF" />;
+```
 
-  </Tab>
-</Tabs>
+```tsx
+import {
+  ColorPickerRoot,
+  ColorPickerButton,
+  ColorPickerEditor,
+} from "@/components/core/color-picker";
+import { DialogRoot, Dialog } from "@/components/core/dialog";
 
-## Usage
-
-Use a `ColorPicker` to allow users to select and edit a color in an overlay.
+<ColorPickerRoot defaultValue="#5100FF">
+  <DialogRoot>
+    <ColorPickerButton />
+    <Dialog>
+      <ColorPickerEditor />
+    </Dialog>
+  </DialogRoot>
+</ColorPickerRoot>;
+```
 
 ## Options
 
-`ColorPicker` accepts all [button options](/components/buttons/button#options).
+`ColorPicker` accepts all [button options](/docs/components/buttons/button#options).
 
 <ComponentPreview
   name="core/color-picker/color-picker-options"

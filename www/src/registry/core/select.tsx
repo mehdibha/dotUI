@@ -13,11 +13,11 @@ import { tv } from "tailwind-variants";
 import { Button, type ButtonProps } from "@/registry/core/button-01";
 import { Field, type FieldProps } from "@/registry/core/field";
 import { ListBox, type ListBoxProps } from "@/registry/core/list-box";
-import { Overlay } from "@/registry/core/overlay";
+import { Popover } from "./popover_basic";
 
 const selectStyles = tv({
   slots: {
-    root: "flex flex-col items-start gap-2",
+    root: "flex flex-col items-start gap-2 w-48",
     selectValue: "flex-1 text-left",
   },
 });
@@ -67,7 +67,7 @@ const Select = <T extends object>({
               <SelectValue />
             </Button>
           </Field>
-          <Overlay type="popover">
+          <Popover>
             <ListBox
               isLoading={isLoading}
               items={items}
@@ -75,7 +75,7 @@ const Select = <T extends object>({
             >
               {children}
             </ListBox>
-          </Overlay>
+          </Popover>
         </>
       )}
     </SelectRoot>

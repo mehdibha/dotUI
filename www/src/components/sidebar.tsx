@@ -108,6 +108,29 @@ export const Sidebar = ({ items }: { items: PageTree.Node[] }) => {
           </motion.div>
         </div>
         <div className="group-data-collapsed/sidebar:flex-col flex items-center gap-1">
+          <StyledTooltip
+            content={
+              <div className="flex items-center gap-2">
+                Toggle Sidebar
+                <div className="flex items-center gap-0.5">
+                  <Kbd>ctrl</Kbd>
+                  <Kbd>B</Kbd>
+                </div>
+              </div>
+            }
+            placement="right"
+          >
+            <motion.div layout transition={transition}>
+              <Button
+                shape="square"
+                size="sm"
+                variant="default"
+                onPress={() => setIsCollapsed(!isCollapsed)}
+              >
+                {isCollapsed ? <PanelLeftOpenIcon /> : <PanelLeftCloseIcon />}
+              </Button>
+            </motion.div>
+          </StyledTooltip>
           <ThemeSwitcher>
             <motion.div layout transition={transition}>
               <Button
@@ -121,30 +144,6 @@ export const Sidebar = ({ items }: { items: PageTree.Node[] }) => {
               </Button>
             </motion.div>
           </ThemeSwitcher>
-          <StyledTooltip
-            content={
-              <div className="flex items-center gap-2">
-                Toggle Sidebar
-                <div className="flex items-center gap-0.5">
-                  <Kbd>ctrl</Kbd>
-                  <Kbd>B</Kbd>
-                </div>
-              </div>
-            }
-            placement="right"
-            arrow
-          >
-            <motion.div layout transition={transition}>
-              <Button
-                shape="square"
-                size="sm"
-                variant="default"
-                onPress={() => setIsCollapsed(!isCollapsed)}
-              >
-                {isCollapsed ? <PanelLeftOpenIcon /> : <PanelLeftCloseIcon />}
-              </Button>
-            </motion.div>
-          </StyledTooltip>
         </div>
       </SidebarFooter>
     </SidebarRoot>
@@ -470,7 +469,7 @@ const StyledTooltip = (props: TooltipProps) => {
       delay={0}
       className="px-4 py-1"
       placement="right"
-      arrow
+      showArrow
       {...props}
     />
   );

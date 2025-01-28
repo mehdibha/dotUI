@@ -3,8 +3,7 @@
 import React from "react";
 import { useDrag } from "react-aria";
 import { TextDropItem } from "react-aria-components";
-import { DropZone } from "@/components/dynamic-core/drop-zone";
-import { Text } from "@/registry/core/text";
+import { DropZone, DropZoneLabel } from "@/components/dynamic-core/drop-zone";
 
 export default function Demo() {
   return (
@@ -25,7 +24,7 @@ export default function Demo() {
           alert(`You dropped ${items.join("\n")}`);
         }}
       >
-        <Text slot="label">Droppable</Text>
+        <DropZoneLabel>Droppable</DropZoneLabel>
       </DropZone>
     </div>
   );

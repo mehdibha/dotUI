@@ -1,19 +1,16 @@
-"use client";
-
 import React from "react";
 import { UploadIcon } from "lucide-react";
-import { DropZone } from "@/components/dynamic-core/drop-zone";
-import { Text } from "@/components/dynamic-core/text";
+import { DropZone, DropZoneLabel } from "@/components/dynamic-core/drop-zone";
 
 export default function Demo() {
   return (
     <div className="flex flex-col gap-4">
       <DropZone aria-label="drag and drop files here">
-        <UploadIcon />
+        <UploadIcon className="text-fg-muted size-5" />
       </DropZone>
       <DropZone>
-        <UploadIcon />
-        <Text slot="label">Drag and drop files here</Text>
+        <UploadIcon className="text-fg-muted size-5" />
+        <DropZoneLabel>Drag and drop files here</DropZoneLabel>
       </DropZone>
     </div>
   );

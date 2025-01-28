@@ -23,15 +23,15 @@ const drawerVariants = tv({
       },
       bottom: {
         overlay:
-          "top-(--visual-viewport-height) exiting:translate-y-0 entering:translate-y-0 max-h-[calc(var(--visual-viewport-height)-var(--drawer-margin))] min-h-20 w-screen -translate-y-full rounded-t-xl border-b-0 *:last:pb-[calc(max(calc(var(--spacing)*4),env(safe-area-inset-bottom)))]",
+          "top-(--visual-viewport-height) exiting:translate-y-0 entering:translate-y-0 max-h-[calc(var(--visual-viewport-height)-var(--drawer-margin))] min-h-20 w-screen -translate-y-full rounded-t-xl border-b-0", // [&>[role=dialog]]:pb-[calc(max(calc(var(--spacing)*4),env(safe-area-inset-bottom)))]
       },
       left: {
         overlay:
-          "entering:-translate-x-full exiting:-translate-x-full max-h-(--visual-viewport-height) h-(--visual-viewport-height) left-0 top-0 min-w-20 max-w-[calc(100vw-var(--drawer-margin))] translate-x-0 rounded-r-xl border-l-0 *:last:pb-[calc(max(calc(var(--spacing)*4),env(safe-area-inset-bottom)))]",
+          "entering:-translate-x-full exiting:-translate-x-full max-h-(--visual-viewport-height) h-(--visual-viewport-height) left-0 top-0 min-w-20 max-w-[calc(100vw-var(--drawer-margin))] translate-x-0 rounded-r-xl border-l-0", // [&>[role=dialog]]:pb-[calc(max(calc(var(--spacing)*4),env(safe-area-inset-bottom)))]
       },
       right: {
         overlay:
-          "entering:translate-x-full exiting:translate-x-full max-h-(--visual-viewport-height) h-(--visual-viewport-height) right-0 top-0 min-w-20 max-w-[calc(100vw-var(--drawer-margin))] translate-x-0 rounded-l-xl border-r-0 *:last:pb-[calc(max(calc(var(--spacing)*4),env(safe-area-inset-bottom)))]",
+          "entering:translate-x-full exiting:translate-x-full max-h-(--visual-viewport-height) h-(--visual-viewport-height) right-0 top-0 min-w-20 max-w-[calc(100vw-var(--drawer-margin))] translate-x-0 rounded-l-xl border-r-0", // [&>[role=dialog]]:pb-[calc(max(calc(var(--spacing)*4),env(safe-area-inset-bottom)))]
       },
     },
   },

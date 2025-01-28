@@ -7,6 +7,7 @@ import { useThemes } from "@/hooks/use-themes";
 import { Button } from "@/components/core/button";
 import { ListBox, Item } from "@/components/core/list-box";
 import { Overlay } from "@/components/core/overlay";
+import { Popover } from "@/components/core/popover";
 import { SelectRoot, SelectValue } from "@/components/core/select";
 import { core } from "@/registry/registry-core";
 import { RegistryItem } from "@/registry/types";
@@ -37,7 +38,7 @@ export function StyleSwitcher({ componentName }: { componentName: string }) {
       >
         <span className="font-bold">variant:</span> <SelectValue />
       </Button>
-      <Overlay type="popover">
+      <Popover>
         <ListBox>
           {variants &&
             variants.map((item) => (
@@ -51,7 +52,7 @@ export function StyleSwitcher({ componentName }: { componentName: string }) {
               </Item>
             ))}
         </ListBox>
-      </Overlay>
+      </Popover>
     </SelectRoot>
   );
 }

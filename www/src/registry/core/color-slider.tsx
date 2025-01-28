@@ -32,7 +32,7 @@ interface ColorSliderProps extends ColorSliderRootProps {
 const ColorSlider = ({
   label,
   channel,
-  showValueLabel = true,
+  showValueLabel = false,
   ...props
 }: ColorSliderProps) => {
   return (

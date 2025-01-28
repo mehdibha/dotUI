@@ -25,10 +25,10 @@ export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
             drawerProps={{
               placement: "left",
             }}
-            className="p-0! w-60"
+            className="p-0 w-60 flex flex-col"
           >
             {({ close }) => (
-              <div className="z-50 flex h-screen flex-col">
+              <div className="z-50 flex h-full flex-col">
                 <div className="flex items-center justify-between p-2">
                   <Link
                     href="/"
