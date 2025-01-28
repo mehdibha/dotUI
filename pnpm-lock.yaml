@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  tailwind-variants:
+    hash: 3gftwx6tedpz3ddwa7homjsoma
+    path: patches/tailwind-variants.patch
+
 importers:
 
   .:
@@ -325,7 +330,7 @@ importers:
         version: 2.6.0
       tailwind-variants:
         specifier: ^0.3.1
-        version: 0.3.1(tailwindcss@4.0.0)
+        version: 0.3.1(patch_hash=3gftwx6tedpz3ddwa7homjsoma)(tailwindcss@4.0.0)
       tsx:
         specifier: ^4.7.1
         version: 4.19.2
@@ -13902,7 +13907,7 @@ snapshots:
 
   tailwind-merge@2.6.0: {}
 
-  tailwind-variants@0.3.1(tailwindcss@4.0.0):
+  tailwind-variants@0.3.1(patch_hash=3gftwx6tedpz3ddwa7homjsoma)(tailwindcss@4.0.0):
     dependencies:
       tailwind-merge: 2.5.4
       tailwindcss: 4.0.0

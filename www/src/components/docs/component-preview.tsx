@@ -48,8 +48,10 @@ export const ComponentPreview = async ({
   );
 
   return (
-    <div className={cn("rounded-md border overflow-hidden", containerClassName)}>
-      <div className="relative bg-bg-muted">
+    <div
+      className={cn("overflow-hidden rounded-md border", containerClassName)}
+    >
+      <div className="bg-bg-muted relative">
         <StyleSwitcher componentName={componentName} />
         <ThemeCustomizerDialog>
           <Tooltip

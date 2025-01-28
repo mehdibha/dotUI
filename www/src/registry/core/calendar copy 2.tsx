@@ -68,7 +68,7 @@ const calendarStyles = tv({
           "selection-start:after:rounded-l-[inherit] selection-end:after:rounded-r-[inherit]",
           "selection-start:pressed:before:bg-primary/90 selection-start:text-fg-onPrimary selection-start:before:bg-bg-primary",
           "selection-end:pressed:before:bg-primary/90 selection-end:text-fg-onPrimary selection-end:before:bg-bg-primary",
-          "selected:invalid:after:bg-bg-danger selected:invalid:[&:not([data-selection-start])]:[&:not([data-selection-end])]:text-fg-onDanger",
+          "selected:invalid:after:bg-bg-danger selected:invalid:not-selection-start:not-selection-end:text-fg-onDanger",
           "unavailable:line-through unavailable:hover:before:bg-transparent unavailable:cursor-default unavailable:text-fg-muted",
           "outside-month:hidden",
         ],

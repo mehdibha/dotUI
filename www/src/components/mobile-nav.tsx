@@ -25,7 +25,7 @@ export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
             drawerProps={{
               placement: "left",
             }}
-            className="p-0 w-60 flex flex-col"
+            className="flex w-60 flex-col p-0"
           >
             {({ close }) => (
               <div className="z-50 flex h-full flex-col">
