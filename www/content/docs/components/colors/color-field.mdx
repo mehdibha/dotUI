@@ -21,9 +21,7 @@ links:
 npx dotui-cli@latest add color-field
 ```
 
-## Usage
-
-Use a `ColorField` to allow users to edit a hex color or individual color channel value.
+## Anatomy
 
 ```tsx
 import { ColorField } from "@/components/core/color-field";
@@ -42,15 +40,6 @@ import { Label, Description, FieldError } from "@/components/core/field";
   <FieldError />
 </ColorFieldRoot>;
 ```
-
-## Uncontrolled
-
-Use the `value` and `onChange` props to control the value of the input.
-
-<ComponentPreview
-  name="core/color-field/color-field-uncontrolled"
-  preview={`<ColorField defaultValue="#7f007f" />`}
-/>
 
 ## Controlled
 
@@ -72,9 +61,8 @@ By default, ColorField allows the user to edit the color as a hex value. When th
   <ColorField label="Saturation" colorSpace="hsl" channel="saturation" />
   <ColorField label="Lightness" colorSpace="hsl" channel="lightness" />`}
 />
-## Options
 
-### Label
+## Label
 
 A visual label can be provided for the `ColorField` using the `label` prop or a hidden label using `aria-label` prop.
 
@@ -83,6 +71,26 @@ A visual label can be provided for the `ColorField` using the `label` prop or a 
   preview={`<ColorField label="Background" placeholder="Visible label" />
 <ColorField aria-label="Background" placeholder="Hidden label" />`}
 />
+
+## Description
+
+A description can be supplied to `ColorField` via the `description` prop. The description is always visible unless the `isInvalid` prop is `true` and an error message is provided.
+
+<ComponentPreview
+  name="core/color-field/color-field-description"
+  preview={`<ColorField label="Color" description="Enter a background color." />`}
+/>
+
+## Validation
+
+By default, `ColorField` displays default validation messages provided by the browser. You can customize this using the `errorMessage` prop, which will be displayed when the `isInvalid` prop is set to `true`.
+
+<ComponentPreview
+  name="core/color-field/color-field-error-message"
+  preview={`<ColorField label="Color" isInvalid errorMessage="Please fill out this field." />`}
+/>
+
+## Options
 
 ### Size
 
@@ -104,24 +112,6 @@ To add additional context for the `ColorField`, use the `prefix` and `suffix` pr
   name="core/color-field/color-field-prefix-and-suffix"
   preview={`<ColorField prefix={<PaletteIcon />} />
 <ColorField suffix={<PaletteIcon />} />`}
-/>
-
-### Description
-
-A description can be supplied to `ColorField` via the `description` prop. The description is always visible unless the `isInvalid` prop is `true` and an error message is provided.
-
-<ComponentPreview
-  name="core/color-field/color-field-description"
-  preview={`<ColorField label="Color" description="Enter a background color." />`}
-/>
-
-### Error message
-
-An `errorMessage` can be supplied to `ColorField`, which will be displayed when the `isInvalid` prop is set to `true`.
-
-<ComponentPreview
-  name="core/color-field/color-field-error-message"
-  preview={`<ColorField label="Color" isInvalid errorMessage="Please fill out this field." />`}
 />
 
 ### Disabled

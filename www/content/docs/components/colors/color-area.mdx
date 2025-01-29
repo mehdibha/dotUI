@@ -21,9 +21,7 @@ links:
 npx dotui-cli@latest add color-area
 ```
 
-## Usage
-
-Use `ColorArea` to allow users to adjust two channels of an RGB, HSL or HSB color value against a two-dimensional gradient background.
+## Anatomy
 
 ```tsx
 import { ColorArea } from "@/components/core/color-area";
@@ -59,9 +57,7 @@ Use the `value` and `onChange` props to control the value of the slider.
 return <ColorArea value={value} onChange={setValue} xChannel="saturation" yChannel="lightness" />`}
 />
 
-## Options
-
-### Channels
+## Channels
 
 `xChannel` and `yChannel` props may be provided to specify which color channels the color area should display
 
@@ -69,6 +65,8 @@ return <ColorArea value={value} onChange={setValue} xChannel="saturation" yChann
   name="core/color-area/color-area-channels"
   preview={`<ColorArea xChannel="red" yChannel="blue" />`}
 />
+
+## Options
 
 ### Disabled
 

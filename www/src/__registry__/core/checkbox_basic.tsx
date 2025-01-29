@@ -18,10 +18,9 @@ const checkboxStyles = tv({
     root: "invalid:text-fg-danger disabled:text-fg-disabled group flex cursor-pointer flex-row items-center gap-2 disabled:cursor-default",
     indicator: [
       "border-border-control flex size-4 shrink-0 cursor-pointer items-center justify-center rounded-sm border",
-      "group-selected:bg-bg-primary group-selected:text-fg-onPrimary group-selected:border-transparent bg-transparent text-transparent transition-colors duration-75",
-      "group-indeterminate:bg-bg-primary group-indeterminate:text-fg-onPrimary",
+      "group-selected:border-transparent bg-transparent text-transparent transition-colors duration-75 group-indeterminate:border-transparent",
       "group-read-only:cursor-default",
-      "group-disabled:border-border-disabled group-selected:group-disabled:text-fg-disabled group-selected:group-disabled:bg-bg-disabled group-indeterminate:group-disabled:bg-bg-disabled group-disabled:cursor-not-allowed",
+      "group-disabled:border-border-disabled group-selected:group-disabled:text-fg-disabled group-selected:group-disabled:bg-bg-disabled group-indeterminate:group-disabled:bg-bg-disabled group-disabled:cursor-default",
       "group-invalid:border-border-danger group-invalid:group-selected:bg-bg-danger-muted group-invalid:group-selected:text-fg-onMutedDanger",
     ],
   },
@@ -29,11 +28,11 @@ const checkboxStyles = tv({
     variant: {
       primary: {
         indicator:
-          "group-selected:bg-bg-primary group-selected:text-fg-onPrimary group-indeterminate:bg-bg-primary",
+          "group-selected:bg-bg-primary group-selected:text-fg-onPrimary group-indeterminate:bg-bg-primary group-indeterminate:text-fg-onPrimary",
       },
       accent: {
         indicator:
-          "group-selected:bg-bg-accent group-selected:text-fg-onAccent group-indeterminate:bg-bg-Accent",
+          "group-selected:bg-bg-accent group-selected:text-fg-onAccent group-indeterminate:bg-bg-Accent group-indeterminate:text-fg-onAccent",
       },
     },
     appearance: {
@@ -65,7 +64,7 @@ const checkboxStyles = tv({
     },
   ],
   defaultVariants: {
-    variant: "accent",
+    variant: "primary",
     appearance: "default",
   },
 });

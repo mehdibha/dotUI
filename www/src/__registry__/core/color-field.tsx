@@ -13,7 +13,7 @@ import {
   type InputRootProps,
 } from "@/registry/core/input_new";
 
-const textFieldStyles = tv({
+const colorFieldStyles = tv({
   base: "flex w-48 flex-col items-start gap-2",
 });
 
@@ -56,7 +56,7 @@ const ColorFieldRoot = ({ className, ...props }: ColorFieldRootProps) => {
   return (
     <AriaColorField
       className={composeRenderProps(className, (className) =>
-        textFieldStyles({ className })
+        colorFieldStyles({ className })
       )}
       {...props}
     />

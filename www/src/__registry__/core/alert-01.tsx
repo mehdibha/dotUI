@@ -12,9 +12,9 @@ import { createScopedContext } from "@/lib/helpers";
 
 const alertStyles = tv({
   slots: {
-    root: "flex items-center gap-4 rounded-lg border p-4 [&_svg]:size-4",
-    title: "mr-1 font-medium leading-normal tracking-tight",
-    content: "text-sm",
+    root: "flex w-full items-center gap-4 rounded-lg border p-4 text-sm [&_svg]:size-4",
+    title: "font-medium leading-normal tracking-tight",
+    content: "",
   },
   variants: {
     variant: {
@@ -67,13 +67,15 @@ function Alert({
 }: AlertProps) {
   const resolvedIcon = icon === undefined ? defaultIcons[variant] : icon;
   return (
-    <AlertRoot variant={variant} {...props}>
-      {resolvedIcon}
-      <div className="flex-1 space-y-0.5">
-        <AlertTitle>{title}</AlertTitle>
-        {children && <AlertContent>{children}</AlertContent>}
+    <AlertRoot variant={variant} {...props} className="@container items-start">
+      <div className="pt-2">{resolvedIcon}</div>
+      <div className="@sm:items-center @sm:flex-row flex flex-1 flex-col items-start gap-4">
+        <div className="flex-1 space-y-0.5">
+          {title && <AlertTitle>{title}</AlertTitle>}
+          {children && <AlertContent>{children}</AlertContent>}
+        </div>
+        {action}
       </div>
-      {action}
     </AlertRoot>
   );
 }

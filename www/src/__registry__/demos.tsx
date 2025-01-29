@@ -407,11 +407,6 @@ export const Index: Record<string, any> = {
       files: ["demos/color-field/sizes.tsx"],
       component: React.lazy(() => import("@/demos/color-field/sizes")),
     },
-    "color-field-uncontrolled": {
-      name: "color-field-uncontrolled",
-      files: ["demos/color-field/uncontrolled.tsx"],
-      component: React.lazy(() => import("@/demos/color-field/uncontrolled")),
-    },
     "color-picker-composition": {
       name: "color-picker-composition",
       files: ["demos/color-picker/composition.tsx"],
@@ -436,6 +431,18 @@ export const Index: Record<string, any> = {
       name: "color-picker-uncontrolled",
       files: ["demos/color-picker/uncontrolled.tsx"],
       component: React.lazy(() => import("@/demos/color-picker/uncontrolled")),
+    },
+    "color-picker-channel-sliders": {
+      name: "color-picker-channel-sliders",
+      files: ["demos/color-picker/channel-sliders.tsx"],
+      component: React.lazy(
+        () => import("@/demos/color-picker/channel-sliders")
+      ),
+    },
+    "color-picker-swatches": {
+      name: "color-picker-swatches",
+      files: ["demos/color-picker/swatches.tsx"],
+      component: React.lazy(() => import("@/demos/color-picker/swatches")),
     },
     "color-slider-channel": {
       name: "color-slider-channel",
@@ -467,11 +474,6 @@ export const Index: Record<string, any> = {
       files: ["demos/color-slider/label.tsx"],
       component: React.lazy(() => import("@/demos/color-slider/label")),
     },
-    "color-slider-uncontrolled": {
-      name: "color-slider-uncontrolled",
-      files: ["demos/color-slider/uncontrolled.tsx"],
-      component: React.lazy(() => import("@/demos/color-slider/uncontrolled")),
-    },
     "color-slider-vertical": {
       name: "color-slider-vertical",
       files: ["demos/color-slider/vertical.tsx"],
@@ -481,6 +483,25 @@ export const Index: Record<string, any> = {
       name: "color-swatch-default",
       files: ["demos/color-swatch/default.tsx"],
       component: React.lazy(() => import("@/demos/color-swatch/default")),
+    },
+    "color-swatch-picker-basic": {
+      name: "color-swatch-picker-basic",
+      files: ["demos/color-swatch-picker/basic.tsx"],
+      component: React.lazy(() => import("@/demos/color-swatch-picker/basic")),
+    },
+    "color-swatch-picker-controlled": {
+      name: "color-swatch-picker-controlled",
+      files: ["demos/color-swatch-picker/controlled.tsx"],
+      component: React.lazy(
+        () => import("@/demos/color-swatch-picker/controlled")
+      ),
+    },
+    "color-swatch-picker-disabled": {
+      name: "color-swatch-picker-disabled",
+      files: ["demos/color-swatch-picker/disabled.tsx"],
+      component: React.lazy(
+        () => import("@/demos/color-swatch-picker/disabled")
+      ),
     },
     "combobox-async-loading": {
       name: "combobox-async-loading",

@@ -13,6 +13,21 @@ export const Loader = ({ children }: { children: React.ReactNode }) => {
   return <Skeleton show={!isMounted}>{children}</Skeleton>;
 };
 
+export const ComponentWrapper = ({
+  suspense,
+  fallback = <Skeleton className="h-40" />,
+  children,
+}: {
+  suspense?: boolean;
+  fallback?: React.ReactNode;
+  children: React.ReactNode;
+}) => {
+  if (suspense) {
+    return <React.Suspense fallback={fallback}>{children}</React.Suspense>;
+  }
+  return children;
+};
+
 export const ResizableContainer = ({
   children,
   resizable,

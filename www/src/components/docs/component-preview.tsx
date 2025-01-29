@@ -7,7 +7,11 @@ import { Button } from "@/components/core/button";
 import { Tooltip } from "@/components/core/tooltip";
 import { CodeBlock } from "@/components/docs/code-block";
 import { Index } from "@/__registry__/demos";
-import { Loader, ResizableContainer } from "./component-preview-client";
+import {
+  ComponentWrapper,
+  Loader,
+  ResizableContainer,
+} from "./component-preview-client";
 import { StyleSwitcher } from "./style-switcher";
 import { ThemeCustomizerDialog } from "./theme-customizer";
 import { ThemeOverride } from "./theme-override";
@@ -20,6 +24,7 @@ export interface ComponentPreviewProps {
   expandable?: boolean;
   fullWidth?: boolean;
   resizable?: boolean;
+  suspense?: boolean;
 }
 
 export const ComponentPreview = async ({
@@ -29,6 +34,7 @@ export const ComponentPreview = async ({
   expandable = true,
   fullWidth = false,
   resizable = false,
+  suspense = false,
 }: ComponentPreviewProps) => {
   const type = name.split("/")[0];
   const componentName = name.split("/")[1];
@@ -52,7 +58,11 @@ export const ComponentPreview = async ({
       className={cn("overflow-hidden rounded-md border", containerClassName)}
     >
       <div className="bg-bg-muted relative">
-        <StyleSwitcher componentName={componentName} />
+        <StyleSwitcher
+          componentName={
+            componentName === "range-calendar" ? "calendar" : componentName
+          }
+        />
         <ThemeCustomizerDialog>
           <Tooltip
             content={
@@ -88,7 +98,9 @@ export const ComponentPreview = async ({
                       fullWidth ? "w-full" : "flex items-center justify-center"
                     )}
                   >
-                    <Component />
+                    <ComponentWrapper suspense={suspense}>
+                      <Component />
+                    </ComponentWrapper>
                   </div>
                 </div>
               </ScrollArea>

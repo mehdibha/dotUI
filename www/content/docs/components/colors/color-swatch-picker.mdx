@@ -1,0 +1,73 @@
+---
+title: Color Swatch Picker ☑️
+description: A ColorSwatchPicker displays a list of color swatches and allows a user to select one of them.
+links:
+  - label: Aria docs
+    href: https://react-spectrum.adobe.com/react-aria/ColorSwatchPicker.html
+  - label: Report an issue
+    href: https://github.com/mehdibha/dotUI/issues/new/choose
+  - label: Edit this page
+    href: https://github.com/mehdibha/dotUI/tree/main/content/components/colors/color-swatch-picker.mdx?plain=1
+---
+
+<ComponentPreview
+  name="core/color-swatch-picker/color-swatch-picker-basic"
+  preview={`<ColorSwatchPicker defaultValue="#fff">
+    <ColorSwatchPickerItem color="#fff" />
+    <ColorSwatchPickerItem color="#A00" />
+    <ColorSwatchPickerItem color="#f80" />
+    <ColorSwatchPickerItem color="#080" />
+    <ColorSwatchPickerItem color="#08f" />
+    <ColorSwatchPickerItem color="#088" />
+    <ColorSwatchPickerItem color="#008" />
+  </ColorSwatchPicker>`}
+/>
+
+## Installation
+
+```package-install
+npx dotui-cli@latest add color-swatch-picker
+```
+
+## Anatomy
+
+```tsx
+import {
+  ColorSwatchPicker,
+  ColorSwatchPickerItem,
+} from "@/components/core/color-swatch-picker";
+
+<ColorSwatchPicker>
+  <ColorSwatchPickerItem color="#A00" />
+  <ColorSwatchPickerItem color="#f80" />
+</ColorSwatchPicker>;
+```
+
+## Controlled
+
+<ComponentPreview name="core/color-swatch-picker/color-swatch-picker-controlled" />
+
+## Label
+
+By default, `ColorSwatchPicker` has an `aria-label` with the localized string "Color swatches". This can be overridden with a more specific accessibility label using the `aria-label` or `aria-labelledb`y props. All labels should be localized.
+
+## Options
+
+### Disabled
+
+<ComponentPreview name="core/color-swatch-picker/color-swatch-picker-disabled" />
+
+## API Reference
+
+| Prop           | Type                                                                                                                    | Default  | Description                                                                                                  |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------ |
+| `children`     | `ReactNode`                                                                                                             | -        | The children of the component.                                                                               |
+| `layout`       | `'grid' \| 'stack'`                                                                                                     | `'grid'` | Whether the items are arranged in a stack or grid.                                                           |
+| `value`        | `string \| Color`                                                                                                       | -        | The current value (controlled).                                                                              |
+| `defaultValue` | `string \| Color`                                                                                                       | -        | The default value (uncontrolled).                                                                            |
+| `className`    | `string \| (values: ColorSwatchPickerRenderProps & {defaultClassName: string \| undefined}) => string`                  | -        | The CSS className for the element. A function may be provided to compute the class based on component state. |
+| `style`        | `CSSProperties \| (values: ColorSwatchPickerRenderProps & {defaultStyle: CSSProperties}) => CSSProperties \| undefined` | -        | The inline style for the element. A function may be provided to compute the style based on component state.  |
+
+| Event      | Type                     | Description                                    |
+| ---------- | ------------------------ | ---------------------------------------------- |
+| `onChange` | `(value: Color) => void` | Handler that is called when the value changes. |

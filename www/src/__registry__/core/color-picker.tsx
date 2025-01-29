@@ -2,68 +2,117 @@
 
 import React from "react";
 import {
-  getColorChannels,
   ColorPicker as AriaColorPicker,
-  type ColorPickerProps as AriaColorPickerProps,
-  type ColorSpace,
+  ColorPickerStateContext,
+  getColorChannels,
   composeRenderProps,
+  type ColorFormat,
 } from "react-aria-components";
 import { Button, type ButtonProps } from "@/registry/core/button-01";
 import { ColorArea } from "@/registry/core/color-area";
 import { ColorField } from "@/registry/core/color-field";
 import { ColorSlider } from "@/registry/core/color-slider";
 import { ColorSwatch } from "@/registry/core/color-swatch";
-import {
-  Dialog,
-  DialogRoot,
-  DialogRootProps,
-} from "@/registry/core/dialog_basic";
+import { Dialog, DialogProps, DialogRoot } from "@/registry/core/dialog_basic";
 import { Item } from "@/registry/core/list-box";
 import { Select } from "@/registry/core/select";
 import { cn } from "@/registry/lib/cn";
 
-type ColorPickerProps = ColorPickerRootProps &
-  Omit<ButtonProps, "children"> &
-  Pick<DialogRootProps, "onOpenChange">;
+interface ColorPickerProps
+  extends ColorPickerRootProps,
+    Omit<ColorPickerButtonProps, "children" | "value">,
+    Pick<
+      ColorPickerEditorProps,
+      "showAlphaChannel" | "colorFormat" | "showFormatSelector"
+    >,
+    Pick<DialogProps, "isOpen" | "onOpenChange"> {}
 const ColorPicker = ({
-  slot,
   value,
   defaultValue,
   onChange,
-  shape = "square",
+  children,
+  showAlphaChannel,
+  colorFormat,
+  showFormatSelector,
+  isOpen,
   onOpenChange,
   ...props
 }: ColorPickerProps) => {
   return (
     <ColorPickerRoot
-      slot={slot}
       value={value}
       defaultValue={defaultValue}
       onChange={onChange}
+      {...props}
     >
-      {composeRenderProps(props.children, (children) => (
-        <DialogRoot onOpenChange={onOpenChange}>
-          <Button shape={shape} {...props}>
-            <ColorSwatch />
-            {children}
-          </Button>
-          <Dialog type="popover" mobileType="drawer">
-            <ColorEditor className="mx-auto" />
-          </Dialog>
-        </DialogRoot>
+      {composeRenderProps(children, (children) => (
+        <>
+          <DialogRoot isOpen={isOpen} onOpenChange={onOpenChange}>
+            <ColorPickerButton {...props}>{children}</ColorPickerButton>
+            <Dialog type="popover" mobileType="drawer">
+              <ColorPickerEditor
+                showAlphaChannel={showAlphaChannel}
+                colorFormat={colorFormat}
+                showFormatSelector={showFormatSelector}
+              />
+            </Dialog>
+          </DialogRoot>
+        </>
       ))}
     </ColorPickerRoot>
   );
 };
 
-type ColorPickerRootProps = AriaColorPickerProps;
+interface ColorPickerRootProps
+  extends React.ComponentProps<typeof AriaColorPicker> {}
 const ColorPickerRoot = (props: ColorPickerRootProps) => {
-  return <AriaColorPicker {...props} />;
+  return <AriaColorPicker value="" onChange={() => {}} {...props} />;
 };
 
-type ColorEditorProps = React.HTMLAttributes<HTMLDivElement>;
-const ColorEditor = ({ className, ...props }: ColorEditorProps) => {
-  const [space, setSpace] = React.useState<ColorSpace | "hex">("hsl");
+interface ColorPickerButtonProps extends Omit<ButtonProps, "children"> {
+  children?: React.ReactNode;
+  format?: ColorFormat | "css";
+  showValue?: boolean;
+}
+const ColorPickerButton = ({
+  children,
+  format = "hex",
+  showValue = true,
+  ...props
+}: ColorPickerButtonProps) => {
+  const state = React.use(ColorPickerStateContext)!;
+  return (
+    <Button {...props}>
+      {children || (
+        <>
+          <ColorSwatch />
+          {showValue && (
+            <span className="w-14 truncate text-left">
+              {state.color.toString(format)}
+            </span>
+          )}
+        </>
+      )}
+    </Button>
+  );
+};
+
+type PickerColorFormat = "hex" | "rgb" | "hsl" | "hsb";
+interface ColorPickerEditorProps extends React.ComponentProps<"div"> {
+  showAlphaChannel?: boolean;
+  colorFormat?: PickerColorFormat;
+  showFormatSelector?: boolean;
+}
+const ColorPickerEditor = ({
+  showAlphaChannel = false,
+  colorFormat: ColorFormatProp = "hex",
+  showFormatSelector = true,
+  className,
+  ...props
+}: ColorPickerEditorProps) => {
+  const [colorFormat, setColorFormat] =
+    React.useState<PickerColorFormat>(ColorFormatProp);
+
   return (
     <div className={cn("mx-auto flex flex-col gap-2", className)} {...props}>
       <div className="flex gap-2">
@@ -72,51 +121,61 @@ const ColorEditor = ({ className, ...props }: ColorEditorProps) => {
           xChannel="saturation"
           yChannel="brightness"
         />
-        <ColorSlider
-          orientation="vertical"
-          colorSpace="hsb"
-          channel="hue"
-          showValueLabel={false}
-        />
-        {/* <ColorSlider
-          orientation="vertical"
-          colorSpace="hsb"
-          channel="alpha"
-          showValueLabel={false}
-        /> */}
-      </div>
-      <div className="flex items-center gap-2">
-        <Select
-          selectedKey={space}
-          onSelectionChange={(s) => setSpace(s as ColorSpace)}
-          size="sm"
-        >
-          <Item id="hex">Hex</Item>
-          <Item id="rgb">RGB</Item>
-          <Item id="hsl">HSL</Item>
-          <Item id="hsb">HSB</Item>
-        </Select>
-        {space === "hex" ? (
-          <ColorField
-            aria-label="Hex"
-            className="shrink-1 w-[40px] flex-1 basis-0"
-            size="sm"
+        <ColorSlider orientation="vertical" colorSpace="hsb" channel="hue" />
+        {showAlphaChannel && (
+          <ColorSlider
+            orientation="vertical"
+            colorSpace="hsb"
+            channel="alpha"
           />
-        ) : (
-          getColorChannels(space).map((channel) => (
-            <ColorField
-              key={channel}
-              colorSpace={space}
-              channel={channel}
-              className="shrink-1 w-[40px] flex-1 basis-0"
-              size="sm"
-            />
-          ))
         )}
+      </div>
+      <div
+        className={cn(
+          "flex flex-col gap-2",
+          colorFormat === "hex" && "flex-row"
+        )}
+      >
+        {showFormatSelector && (
+          <Select
+            aria-label="Color format"
+            selectedKey={colorFormat}
+            onSelectionChange={(key) =>
+              setColorFormat(key as PickerColorFormat)
+            }
+            size="sm"
+            className="w-auto"
+          >
+            <Item id="hex">Hex</Item>
+            <Item id="rgb">RGB</Item>
+            <Item id="hsl">HSL</Item>
+            <Item id="hsb">HSB</Item>
+          </Select>
+        )}
+        <div className="flex flex-1 items-center gap-2">
+          {colorFormat === "hex" ? (
+            <ColorField aria-label="Hex" className="w-10 flex-1" size="sm" />
+          ) : (
+            getColorChannels(colorFormat).map((channel) => (
+              <ColorField
+                key={channel}
+                colorSpace={colorFormat}
+                channel={channel}
+                className="w-10 flex-1"
+                size="sm"
+              />
+            ))
+          )}
+        </div>
       </div>
     </div>
   );
 };
 
-export type { ColorPickerProps, ColorPickerRootProps, ColorEditorProps };
-export { ColorPicker, ColorPickerRoot, ColorEditor };
+export type {
+  ColorPickerProps,
+  ColorPickerRootProps,
+  ColorPickerButtonProps,
+  ColorPickerEditorProps,
+};
+export { ColorPicker, ColorPickerRoot, ColorPickerButton, ColorPickerEditor };

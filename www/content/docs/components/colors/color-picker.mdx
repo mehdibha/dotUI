@@ -1,11 +1,9 @@
 ---
-title: Color Picker
+title: Color Picker ☑️
 description: A ColorPicker allow users to select and edit a color in an overlay.
 links:
   - label: Aria docs
     href: https://react-spectrum.adobe.com/react-aria/ColorPicker.html
-  - label: Aria API Reference
-    href: https://react-spectrum.adobe.com/react-aria/ColorPicker.html#props
   - label: Report an issue
     href: https://github.com/mehdibha/dotUI/issues/new/choose
   - label: Edit this page
@@ -49,17 +47,6 @@ import { DialogRoot, Dialog } from "@/components/core/dialog";
 </ColorPickerRoot>;
 ```
 
-## Options
-
-`ColorPicker` accepts all [button options](/docs/components/buttons/button#options).
-
-<ComponentPreview
-  name="core/color-picker/color-picker-options"
-  preview={`<ColorPicker size="sm" shape="rectangle">
-  Fill color
-</ColorPicker>`}
-/>
-
 ## Unontrolled
 
 An initial, uncontrolled value can be provided to the `ColorPicker` using the `defaultValue` prop.
@@ -71,12 +58,23 @@ An initial, uncontrolled value can be provided to the `ColorPicker` using the `d
 
 ## Controlled
 
-Use the `value` and `onChange` props to control the color picker.
+Use the `value` and `onChange` props to control the color picker value.
 
 <ComponentPreview
   name="core/color-picker/color-picker-controlled"
   preview={`const [value, setValue] = React.useState(parseColor("hsl(25, 100%, 50%)"));
-return <ColorPicker value={value as Color & string} onChange={setValue} />;`}
+ <ColorPicker value={value} onChange={setValue} />;`}
+/>
+
+## Button options
+
+`ColorPicker` accepts all [button options](/docs/components/buttons/button#options).
+
+<ComponentPreview
+  name="core/color-picker/color-picker-options"
+  preview={`<ColorPicker size="sm" shape="rectangle">
+    Fill color
+  </ColorPicker>`}
 />
 
 ## Composition
@@ -87,23 +85,42 @@ If you need to customize things further, you can drop down to the composition le
   name="core/color-picker/color-picker-composition"
   preview={`<ColorPickerRoot defaultValue="#5100FF">
     <DialogRoot>
-      <Button><ColorSwatch /></Button>
-      <Dialog>
-        <ColorEditor />
+      <ColorPickerButton />
+      <Dialog type="popover" mobileType="drawer">
+        <ColorPickerEditor />
       </Dialog>
     </DialogRoot>
   </ColorPickerRoot>`}
 />
 
+## Examples
+
+### Channel sliders
+
+This example uses [ColorSlider](/docs/components/colors/color-slider) to allow a user to adjust each channel of a color value, with a [Select](/docs/components/menus-and-selection/select) to switch between color spaces.
+
+<ComponentPreview name="core/color-picker/color-picker-channel-sliders" />
+
+### Swatches
+
+This example uses a [ColorSwatchPicker](/docs/components/colors/color-swatch-picker) to provide color presets for a color picker.
+
+<ComponentPreview name="core/color-picker/color-picker-swatches" />
+
 ## API Reference
 
-`ColorPicker` extends and merges the props of the [Button](/components/buttons/button#api-reference) component.
+### ColorPicker
 
-| Prop           | Type                                                                                | Default | Description                                                                                               |
-| -------------- | ----------------------------------------------------------------------------------- | ------- | --------------------------------------------------------------------------------------------------------- |
-| `value`        | `string \| Color \| null`                                                           | -       | The current value (controlled).                                                                           |
-| `defaultValue` | `string \| Color \| null`                                                           | -       | The default value (uncontrolled).                                                                         |
-| `children`     | `ReactNode \| (values: T & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -       | The children of the component. A function may be provided to alter the children based on component state. |
+`ColorPicker` props extends and [Button](/components/buttons/button#api-reference)'s props and the following
+
+| Prop                 | Type                                                                                | Default | Description                                                                                               |
+| -------------------- | ----------------------------------------------------------------------------------- | ------- | --------------------------------------------------------------------------------------------------------- |
+| `value`              | `string \| Color`                                                                   | -       | The current value (controlled).                                                                           |
+| `defaultValue`       | `string \| Color`                                                                   | -       | The default value (uncontrolled).                                                                         |
+| `showAlphaChannel`   | `boolean`                                                                           | `false` | Whether to show the alpha channel slider.                                                                 |
+| `colorFormat`        | `'hex' \| 'rgb' \| 'hsl' \| 'hsb'`                                                  | `'hex'` | The color format to display.                                                                              |
+| `showFormatSelector` | `boolean`                                                                           | `false` | Whether to show the format selector.                                                                      |
+| `children`           | `ReactNode \| (values: T & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -       | The children of the component. A function may be provided to alter the children based on component state. |
 
 | Event      | Type                     | Description                                    |
 | ---------- | ------------------------ | ---------------------------------------------- |

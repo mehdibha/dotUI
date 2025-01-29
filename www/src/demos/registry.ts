@@ -103,7 +103,6 @@ export const demos: RegistryDemos = [
     "read-only",
     "required",
     "sizes",
-    "uncontrolled",
   ]),
   ...buildDemos("color-picker", [
     "composition",
@@ -111,6 +110,8 @@ export const demos: RegistryDemos = [
     "default",
     "options",
     "uncontrolled",
+    "channel-sliders",
+    "swatches",
   ]),
   ...buildDemos("color-slider", [
     "channel",
@@ -119,10 +120,10 @@ export const demos: RegistryDemos = [
     "default",
     "disabled",
     "label",
-    "uncontrolled",
     "vertical",
   ]),
   ...buildDemos("color-swatch", ["default"]),
+  ...buildDemos("color-swatch-picker", ["basic", "controlled", "disabled"]),
   ...buildDemos("color-thumb", []),
   ...buildDemos("combobox", [
     "async-loading",

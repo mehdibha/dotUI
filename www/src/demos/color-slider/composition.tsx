@@ -1,9 +1,8 @@
 import {
-  ColorSliderOutput,
   ColorSliderRoot,
-  ColorSliderTrack,
+  ColorSliderControl,
+  ColorSliderOutput,
 } from "@/components/dynamic-core/color-slider";
-import { ColorThumb } from "@/components/dynamic-core/color-thumb";
 import { Label } from "@/components/dynamic-core/field";
 
 export default function Demo() {
@@ -13,9 +12,7 @@ export default function Demo() {
         <Label>Hue</Label>
         <ColorSliderOutput />
       </div>
-      <ColorSliderTrack>
-        <ColorThumb />
-      </ColorSliderTrack>
+      <ColorSliderControl />
     </ColorSliderRoot>
   );
 }

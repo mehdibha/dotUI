@@ -1,6 +1,6 @@
 import { Button } from "@/components/dynamic-core/button";
 import {
-  ColorEditor,
+  ColorPickerEditor,
   ColorPickerRoot,
 } from "@/components/dynamic-core/color-picker";
 import { ColorSwatch } from "@/components/dynamic-core/color-swatch";
@@ -14,7 +14,7 @@ export default function Demo() {
           <ColorSwatch />
         </Button>
         <Dialog type="popover" mobileType="drawer">
-          <ColorEditor />
+          <ColorPickerEditor />
         </Dialog>
       </DialogRoot>
     </ColorPickerRoot>

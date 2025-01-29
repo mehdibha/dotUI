@@ -6,7 +6,7 @@ import { cn } from "@/lib/cn";
 import { focusRing } from "@/lib/focus-styles";
 import { useThemes } from "@/hooks/use-themes";
 import {
-  ColorEditor,
+  ColorPickerEditor,
   ColorPicker,
   ColorPickerRoot,
 } from "@/components/core/color-picker";
@@ -110,7 +110,7 @@ export const Colors = (props: React.HTMLAttributes<HTMLDivElement>) => {
         <Skeleton show={isLoading}>
           <Slider
             label="Lightness"
-            valueLabel={(value) => `${value[0]}%`}
+            getValueLabel={(value) => `${value[0]}%`}
             value={currentTheme.colors[mode].lightness}
             onChange={(value) =>
               handleColorConfigChange("lightness", value as number)
@@ -124,7 +124,7 @@ export const Colors = (props: React.HTMLAttributes<HTMLDivElement>) => {
           <Slider
             label="Saturation"
             size="sm"
-            valueLabel={(value) => `${value[0]}%`}
+            getValueLabel={(value) => `${value[0]}%`}
             value={currentTheme.colors[mode].saturation}
             onChange={(value) =>
               handleColorConfigChange("saturation", value as number)
@@ -176,7 +176,7 @@ const ColorScale = ({ label, value }: { label: string; value: BaseColor }) => {
                       <ColorSwatch className="size-full rounded-[inherit]" />
                     </AriaButton>
                     <Dialog type="popover" mobileType="drawer">
-                      <ColorEditor className="mx-auto" />
+                      <ColorPickerEditor />
                     </Dialog>
                   </DialogRoot>
                 </ColorPickerRoot>

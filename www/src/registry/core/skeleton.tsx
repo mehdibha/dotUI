@@ -11,7 +11,7 @@ function Skeleton({
 }) {
   if (!show) return props.children;
   return (
-    <span
+    <div
       className={cn(
         "bg-bg-muted relative block h-6 animate-pulse rounded-md",
         props.children && "h-auto *:invisible",
