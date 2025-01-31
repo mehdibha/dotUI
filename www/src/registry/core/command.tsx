@@ -1,11 +1,7 @@
 "use client";
 
 import React from "react";
-import {
-  AutocompleteProps,
-  UNSTABLE_Autocomplete as AriaAutocomplete,
-  composeRenderProps,
-} from "react-aria-components";
+import { UNSTABLE_Autocomplete as AriaAutocomplete } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
 const commandStyles = tv({

@@ -28,7 +28,7 @@ export const TableOfContents = ({ toc }: { toc: TocType }) => {
 const TocItems = ({ toc }: { toc: TocType }) => {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const viewportRef = React.useRef<HTMLDivElement>(null);
-  const pos = useTocThumb(containerRef);
+  const pos = useTocThumb(containerRef as React.RefObject<HTMLElement>);
 
   return (
     <TocPrimitive.ScrollProvider containerRef={viewportRef}>

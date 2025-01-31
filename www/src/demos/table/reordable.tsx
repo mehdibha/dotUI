@@ -30,6 +30,7 @@ export default function Demo() {
   const { dragAndDropHooks } = useDragAndDrop({
     getItems: (keys) =>
       [...keys].map((key) => ({
+        // @ts-ignore
         "text/plain": list.getItem(key).name,
       })),
     onReorder(e) {

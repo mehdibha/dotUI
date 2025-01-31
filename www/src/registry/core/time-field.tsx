@@ -10,7 +10,7 @@ import {
 import { tv } from "tailwind-variants";
 import { DateInput, DateSegment } from "@/registry/core/date-input";
 import { HelpText, Label, type FieldProps } from "./field_new";
-import { InputRoot, type InputRootProps } from "./input_new";
+import { InputRoot, type InputRootProps } from "./input_basic";
 
 const timeFieldStyles = tv({
   base: "flex w-32 flex-col items-start gap-2",

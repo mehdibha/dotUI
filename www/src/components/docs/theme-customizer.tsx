@@ -37,7 +37,7 @@ export const ThemeCustomizerDialog = ({
         title="Customize theme"
         description="Pick a style and color for your components."
         type="popover"
-        placement="bottom start"
+        // TODO TODO placement="bottom start"
         className="space-y-4"
       >
         <div className="grid grid-cols-2 gap-4">
@@ -179,7 +179,7 @@ export const ThemeCustomizerDialog = ({
           <Skeleton show={isLoading}>
             <Slider
               label="Radius (rem)"
-              valueLabel
+              showValueLabel
               minValue={0}
               maxValue={1.2}
               step={0.1}

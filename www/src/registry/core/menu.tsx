@@ -55,23 +55,14 @@ const MenuRoot = (props: MenuRootProps) => {
 type MenuProps<T> = MenuContentProps<T> & {
   type?: OverlayProps["type"];
   mobileType?: OverlayProps["mobileType"];
-  mediaQuery?: OverlayProps["mediaQuery"];
-  placement?: OverlayProps["placement"];
 };
 const Menu = <T extends object>({
-  placement,
   type = "popover",
   mobileType = "drawer",
-  mediaQuery,
   ...props
 }: MenuProps<T>) => {
   return (
-    <Overlay
-      type={type}
-      mobileType={mobileType}
-      mediaQuery={mediaQuery}
-      placement={placement}
-    >
+    <Overlay type={type} mobileType={mobileType}>
       <MenuContent {...props} />
     </Overlay>
   );

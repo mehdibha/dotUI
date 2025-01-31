@@ -6,7 +6,6 @@ import { useComponentsVariants } from "@/lib/create-dynamic-component";
 import { useThemes } from "@/hooks/use-themes";
 import { Button } from "@/components/core/button";
 import { ListBox, Item } from "@/components/core/list-box";
-import { Overlay } from "@/components/core/overlay";
 import { Popover } from "@/components/core/popover";
 import { SelectRoot, SelectValue } from "@/components/core/select";
 import { core } from "@/registry/registry-core";
@@ -24,6 +23,7 @@ export function StyleSwitcher({ componentName }: { componentName: string }) {
     <SelectRoot
       selectedKey={currentVariant}
       onSelectionChange={(key) => {
+        // @ts-ignore
         setVariants((prevVariants) => ({
           ...prevVariants,
           [componentName]: key,

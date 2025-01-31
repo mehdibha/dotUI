@@ -13,7 +13,7 @@ import { Calendar } from "@/registry/core/calendar_basic";
 import { DateInput, DateSegment } from "@/registry/core/date-input";
 import { Dialog } from "@/registry/core/dialog_basic";
 import { Field, fieldStyles, type FieldProps } from "@/registry/core/field";
-import { InputRoot, type inputStyles } from "@/registry/core/input";
+import { InputRoot, type inputStyles } from "@/registry/core/input_basic";
 
 interface DatePickerProps<T extends DateValue>
   extends DatePickerRootProps<T>,
@@ -57,9 +57,7 @@ const DatePicker = <T extends DateValue>({
         <InputRoot
           size={size}
           prefix={prefix}
-          isLoading={isLoading}
           isInvalid={isInvalid}
-          loaderPosition="prefix"
           className="pr-1"
         >
           <DateInput className="flex-1">

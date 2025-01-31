@@ -19,6 +19,7 @@ export async function addPrimitives(
   const addPrimitivesSpinner = spinner();
 
   addPrimitivesSpinner.start(options.message);
+  addPrimitivesSpinner.message("Cheking registry");
   await new Promise((resolve) => setTimeout(resolve, 3000));
   // const tree = await registryResolveItemsTree(primitives, config)
   // if (!tree) {
@@ -47,6 +48,6 @@ export async function addPrimitives(
   // await updateFiles(tree.files, config, {
   //   overwrite: options.overwrite,
   // })
-  
+
   addPrimitivesSpinner.stop(options.message);
 }

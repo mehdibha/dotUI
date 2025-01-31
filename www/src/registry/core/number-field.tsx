@@ -15,9 +15,13 @@ import {
 import { tv, type VariantProps } from "tailwind-variants";
 import { Button, type ButtonProps } from "@/registry/core/button-01";
 import { Label, HelpText, type FieldProps } from "@/registry/core/field_new";
-import { InputRoot, Input, type inputStyles } from "@/registry/core/input";
+import {
+  InputRoot,
+  Input,
+  type inputStyles,
+} from "@/registry/core/input_basic";
 import { useMediaQuery } from "@/registry/hooks/use-media-query";
-import { InputRootProps } from "./input_new";
+import { InputRootProps } from "./input_basic";
 
 const numberFieldStyles = tv({
   slots: {
@@ -79,7 +83,9 @@ const NumberField = ({
 };
 
 interface NumberFieldRootProps
-  extends React.ComponentProps<typeof AriaNumberField> {}
+  extends React.ComponentProps<typeof AriaNumberField> {
+  placeholder?: string;
+}
 const NumberFieldRoot = ({ className, ...props }: NumberFieldRootProps) => {
   return (
     <AriaNumberField

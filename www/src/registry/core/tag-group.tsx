@@ -141,7 +141,7 @@ interface TagProps extends AriaTagProps, VariantProps<typeof tagStyles> {}
 function Tag(localProps: TagProps) {
   const contextProps = useTagGroupContext();
   const props = { ...contextProps, ...localProps };
-  const { variant, size, shape, className, ...restProps } = props;
+  const { children, variant, size, shape, className, ...restProps } = props;
   const textValue =
     typeof props.children === "string" ? props.children : undefined;
   return (
@@ -152,12 +152,12 @@ function Tag(localProps: TagProps) {
       )}
       {...restProps}
     >
-      {({ allowsRemoving }) => (
+      {composeRenderProps(children, (children, { allowsRemoving }) => (
         <>
-          {props.children}
+          {children}
           {allowsRemoving && <Button slot="remove">ⓧ</Button>}
         </>
-      )}
+      ))}
     </AriaTag>
   );
 }

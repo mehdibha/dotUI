@@ -6,7 +6,7 @@ export default function Demo() {
     <CheckboxGroup
       label="React frameworks"
       defaultValue={["nextjs"]}
-      variant="card"
+      appearance="card"
       className="w-52"
     >
       <Checkbox value="nextjs">Next.js</Checkbox>

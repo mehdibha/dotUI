@@ -1487,13 +1487,6 @@ export const Index: Record<string, any> = {
       files: ["demos/search-field/label.tsx"],
       component: React.lazy(() => import("@/demos/search-field/label")),
     },
-    "search-field-prefix-and-suffix": {
-      name: "search-field-prefix-and-suffix",
-      files: ["demos/search-field/prefix-and-suffix.tsx"],
-      component: React.lazy(
-        () => import("@/demos/search-field/prefix-and-suffix")
-      ),
-    },
     "search-field-read-only": {
       name: "search-field-read-only",
       files: ["demos/search-field/read-only.tsx"],

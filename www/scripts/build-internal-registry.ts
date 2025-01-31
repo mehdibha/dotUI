@@ -178,7 +178,7 @@ async function run() {
   try {
     await setup();
     await buildDemos();
-    await buildCoreComponents();
+    // await buildCoreComponents();
     // await buildIcons();
     console.log("✅ Done!");
   } catch (error) {

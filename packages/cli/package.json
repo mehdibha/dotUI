@@ -36,6 +36,7 @@
     "start": "node dist/index.js",
     "format": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache --log-level warn",
     "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache --log-level warn",
+    "typecheck": "tsc --noEmit",
     "release": "changeset version",
     "pub:beta": "pnpm build && pnpm publish --no-git-checks --access public --tag beta",
     "pub:next": "pnpm build && pnpm publish --no-git-checks --access public --tag next",
@@ -44,6 +45,7 @@
     "test:dev": "REGISTRY_URL=http://localhost:3000/registry vitest run"
   },
   "dependencies": {
+    "@dotui/registry": "workspace:*",
     "@clack/prompts": "^0.9.1",
     "@types/fs-extra": "^11.0.4",
     "commander": "^10.0.0",
@@ -54,7 +56,6 @@
     "type-fest": "^4.33.0"
   },
   "devDependencies": {
-    "@dotui/registry": "workspace:*",
     "@types/node": "^18.17.0",
     "tsup": "^8.3.6",
     "typescript": "^5"

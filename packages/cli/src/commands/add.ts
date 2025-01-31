@@ -28,7 +28,11 @@ export const addCommand = new Command()
     ) => {
       try {
         p.intro("Adding primitives.");
-        await addPrimitives(components, {}, { overwrite: options.overwrite, message: "Updating your project" });
+        await addPrimitives(
+          components,
+          {},
+          { overwrite: options.overwrite, message: "Updating your project" }
+        );
         p.outro(
           `Successfully added ${c.info("button, text-field, and 21 other components.")}`
         );

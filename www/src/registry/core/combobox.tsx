@@ -9,7 +9,7 @@ import {
 import { tv } from "tailwind-variants";
 import { Button } from "@/registry/core/button-01";
 import { Field, type FieldProps } from "@/registry/core/field";
-import { Input, InputRoot } from "@/registry/core/input";
+import { Input, InputRoot } from "@/registry/core/input_basic";
 import { ListBox } from "@/registry/core/list-box";
 import { Overlay } from "@/registry/core/overlay";
 

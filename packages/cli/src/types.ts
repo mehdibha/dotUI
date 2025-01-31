@@ -4,4 +4,4 @@ export type Aliases = {
   hooks: string;
   lib: string;
   utils: string;
-}
+};

@@ -11,7 +11,7 @@ import {
   InputRoot,
   Input,
   type InputRootProps,
-} from "@/registry/core/input_new";
+} from "@/registry/core/input_basic";
 
 const colorFieldStyles = tv({
   base: "flex w-48 flex-col items-start gap-2",

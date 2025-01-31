@@ -337,7 +337,6 @@ export const demos: RegistryDemos = [
     "error-message",
     "form",
     "label",
-    "prefix-and-suffix",
     "read-only",
     "required",
     "sizes",

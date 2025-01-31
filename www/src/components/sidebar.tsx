@@ -266,8 +266,9 @@ const SidebarSearchButton = ({ isCollapsed }: { isCollapsed: boolean }) => {
       </StyledTooltip>
       <Dialog className="p-0!">
         <SearchCommand
-          onRunCommand={() => setIsOpen(false)}
-          className="h-72 max-h-full rounded-lg"
+        // TODO CHECK THIS
+        // onRunCommand={() => setIsOpen(false)}
+        // className="h-72 max-h-full rounded-lg"
         />
         <Button
           variant="outline"

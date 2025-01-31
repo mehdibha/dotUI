@@ -39,12 +39,21 @@ const [AvatarProvider, useAvatarContext] = createScopedContext<
   }
 >("AlertRoot");
 
-interface AvatarProps extends AvatarImageProps {
+interface AvatarProps
+  extends AvatarImageProps,
+    VariantProps<typeof avatarStyles> {
   fallback?: React.ReactNode;
 }
-const Avatar = ({ className, style, fallback, ...props }: AvatarProps) => {
+const Avatar = ({
+  className,
+  style,
+  fallback,
+  size,
+  shape,
+  ...props
+}: AvatarProps) => {
   return (
-    <AvatarRoot className={className} style={style}>
+    <AvatarRoot className={className} style={style} size={size} shape={shape}>
       <AvatarImage {...props} />
       <AvatarFallback>{fallback}</AvatarFallback>
       <AvatarPlaceholder />

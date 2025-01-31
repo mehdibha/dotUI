@@ -6,7 +6,7 @@ export default function Demo() {
       label="Price"
       formatOptions={{ style: "currency", currency: "JPY" }}
       defaultValue={60}
-      valueLabel
+      showValueLabel
     />
   );
 }

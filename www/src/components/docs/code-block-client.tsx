@@ -31,11 +31,11 @@ const codeBlockStyles = tv({
 interface CodeBlockClientProps {
   files: {
     fileName: string;
-    code: JSX.Element;
+    code: React.ReactNode;
     codeStr: string;
     lang: string;
   }[];
-  preview?: JSX.Element;
+  preview?: React.ReactNode;
   previewStr?: string;
   expandable?: boolean;
 }
@@ -115,7 +115,7 @@ const CodeBlockClient = ({
   );
 };
 
-type CodeBlockRootProps = TabsProps;
+type CodeBlockRootProps = Omit<TabsProps, "className"> & { className?: string };
 const CodeBlockRoot = ({ className, ...props }: CodeBlockRootProps) => {
   const { root } = codeBlockStyles();
   return <Tabs className={root({ className })} {...props} />;

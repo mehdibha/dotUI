@@ -94,7 +94,9 @@ export function ThemeSelect({ className }: { className?: string }) {
             <Button shape="square">
               <MoreHorizontalIcon />
             </Button>
-            <Menu placement="bottom end">
+            <Menu
+            // TODO: placement="bottom end"
+            >
               <MenuItem
                 prefix={<GitBranchIcon />}
                 onAction={() => {

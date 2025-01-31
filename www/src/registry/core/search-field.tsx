@@ -13,7 +13,7 @@ import {
   InputRoot,
   Input,
   type InputRootProps,
-} from "@/registry/core/input_new";
+} from "@/registry/core/input_basic";
 import { Button } from "./button-01";
 
 const searchFieldtyles = tv({

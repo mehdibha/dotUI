@@ -122,8 +122,9 @@ const SearchDocs = ({ children }: { children: React.ReactNode }) => {
       {children}
       <Dialog className="p-0!">
         <SearchCommand
-          onRunCommand={() => setIsOpen(false)}
-          className="h-72 max-h-full rounded-lg"
+        // TODO CHECK THIS
+        // onRunCommand={() => setIsOpen(false)}
+        // className="h-72 max-h-full rounded-lg"
         />
         <Button
           slot="close"

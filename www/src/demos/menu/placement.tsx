@@ -12,17 +12,18 @@ import {
 } from "@/components/dynamic-core/menu";
 import { Select } from "@/components/dynamic-core/select";
 
-type Placement = MenuProps<object>["placement"];
+// TODO
+// type Placement = MenuProps<object>["placement"]
 
 export default function Demo() {
-  const [placement, setPlacement] = React.useState<Placement>("top");
+  const [placement, setPlacement] = React.useState("top");
   return (
     <div className="flex items-center gap-10">
       <MenuRoot>
         <Button variant="outline" shape="square" size="sm">
           <MenuIcon />
         </Button>
-        <Menu placement={placement}>
+        <Menu>
           <MenuItem>Account settings</MenuItem>
           <MenuItem>Create team</MenuItem>
           <MenuItem>Log out</MenuItem>
@@ -31,7 +32,7 @@ export default function Demo() {
       <Select
         label="Placement"
         selectedKey={placement}
-        onSelectionChange={(key) => setPlacement(key as Placement)}
+        onSelectionChange={(key) => setPlacement(key as string)}
       >
         {[
           "bottom",

@@ -8,13 +8,14 @@ export default function Demo() {
       <Slider
         defaultValue={50}
         label="Donuts to buy"
-        valueLabel
+        showValueLabel
         className="w-60!"
       />
       <Slider
         defaultValue={50}
         label="Donuts to buy"
-        valueLabel={(donuts) => `${donuts[0]} of 100 Donuts`}
+        showValueLabel
+        getValueLabel={(donuts) => `${donuts[0]} of 100 Donuts`}
         className="w-60!"
       />
     </div>

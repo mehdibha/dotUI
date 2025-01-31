@@ -4,7 +4,7 @@ import { Tooltip } from "@/components/dynamic-core/tooltip";
 
 export default function TooltipDemo() {
   return (
-    <Tooltip content="Add to library" arrow>
+    <Tooltip content="Add to library" showArrow>
       <Button shape="square">
         <PlusIcon />
       </Button>

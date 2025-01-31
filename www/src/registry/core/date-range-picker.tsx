@@ -13,7 +13,7 @@ import { RangeCalendar } from "@/registry/core/calendar_basic";
 import { DateInput, DateSegment } from "@/registry/core/date-input";
 import { Dialog } from "@/registry/core/dialog_basic";
 import { Field, type FieldProps, fieldStyles } from "@/registry/core/field";
-import { InputRoot, type inputStyles } from "@/registry/core/input";
+import { InputRoot, type inputStyles } from "@/registry/core/input_basic";
 
 interface DateRangePickerProps<T extends DateValue>
   extends DateRangePickerRootProps<T>,
@@ -52,13 +52,7 @@ const DateRangePicker = <T extends DateValue>({
         necessityIndicator={necessityIndicator}
         contextualHelp={contextualHelp}
       >
-        <InputRoot
-          size={size}
-          prefix={prefix}
-          isLoading={isLoading}
-          loaderPosition="prefix"
-          className="pr-1"
-        >
+        <InputRoot size={size} prefix={prefix} className="pr-1">
           <DateInput slot="start">
             {(segment) => <DateSegment segment={segment} />}
           </DateInput>
