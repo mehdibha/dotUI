@@ -10,10 +10,14 @@ import { Heading } from "@/registry/core/heading";
 export default function Demo() {
   return (
     <DialogRoot>
-      <Button variant="outline" shape="square">
+      <Button shape="square">
         <InfoIcon />
       </Button>
-      <Popover>
+      <Popover
+        UNSTABLE_portalContainer={
+          document.getElementById("custom-theme-portal")!
+        }
+      >
         <DialogContent className="w-56 space-y-4">
           <Heading>Need help?</Heading>
           <p>

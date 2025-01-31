@@ -72,7 +72,6 @@ export const ComponentPreview = async ({
             }
           >
             <Button
-              variant="outline"
               shape="square"
               size="sm"
               className="border-border absolute right-2 top-2 z-50 font-normal"

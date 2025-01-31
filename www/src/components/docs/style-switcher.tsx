@@ -31,7 +31,6 @@ export function StyleSwitcher({ componentName }: { componentName: string }) {
       }}
     >
       <Button
-        variant="outline"
         size="sm"
         suffix={<ChevronDownIcon />}
         className="border-border absolute left-2 top-2 z-50 text-xs font-normal"
