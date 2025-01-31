@@ -1,13 +1,5 @@
-import ora, { type Options } from "ora";
+import { spinner as spinner_ } from "@clack/prompts";
 
-export function spinner(
-  text: Options["text"],
-  options?: {
-    silent?: boolean;
-  }
-) {
-  return ora({
-    text,
-    isSilent: options?.silent,
-  });
+export function spinner () {
+  return spinner_()
 }

@@ -1,5 +1,24 @@
 import { z } from "zod";
 
+export const iconLibrarySchema = z.enum(["lucide-icons", "remix-icons"]);
+
+export const stylesSchema = z.object({
+  button: z.enum(["basic"]),
+  "toggle-button": z.enum(["basic"]),
+  input: z.enum(["basic"]),
+  modal: z.enum(["basic"]),
+  popover: z.enum(["basic"]),
+  tooltip: z.enum(["basic"]),
+  calendar: z.enum(["basic", "cal"]),
+});
+
+export const registryThemeSchema = z.object({
+  id: z.string(),
+  label: z.string(),
+  iconLibrary: iconLibrarySchema,
+  styles: z.record(z.string(), z.string()),
+});
+
 export const registryItemTypeSchema = z.enum([
   "registry:style",
   "registry:core",
