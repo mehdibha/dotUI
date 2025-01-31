@@ -15,9 +15,6 @@ const config = {
   devIndicators: {
     appIsrStatus: false,
   },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
 };
 
 export default withMDX(config);
