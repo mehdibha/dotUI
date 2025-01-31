@@ -57,32 +57,34 @@ export const ComponentPreview = async ({
     <div
       className={cn("overflow-hidden rounded-md border", containerClassName)}
     >
-      <div className="bg-bg-muted relative">
-        <StyleSwitcher
-          componentName={
-            componentName === "range-calendar" ? "calendar" : componentName
-          }
-        />
-        <ThemeCustomizerDialog>
-          <Tooltip
-            content={
-              <span>
-                <span className="text-fg-muted">Theme:</span> dotUI
-              </span>
-            }
-          >
-            <Button
-              shape="square"
-              size="sm"
-              className="border-border absolute right-2 top-2 z-50 font-normal"
-            >
-              <PaintBucket />
-            </Button>
-          </Tooltip>
-        </ThemeCustomizerDialog>
+      <div className="bg-bg-muted">
         <ResizableContainer resizable={resizable}>
           <Loader>
-            <ThemeOverride>
+            <ThemeOverride className="relative">
+              <StyleSwitcher
+                componentName={
+                  componentName === "range-calendar"
+                    ? "calendar"
+                    : componentName
+                }
+              />
+              <ThemeCustomizerDialog>
+                <Tooltip
+                  content={
+                    <span>
+                      <span className="text-fg-muted">Theme:</span> dotUI
+                    </span>
+                  }
+                >
+                  <Button
+                    shape="square"
+                    size="sm"
+                    className="border-border absolute right-2 top-2 z-50 font-normal"
+                  >
+                    <PaintBucket />
+                  </Button>
+                </Tooltip>
+              </ThemeCustomizerDialog>
               <ScrollArea className="bg-bg text-fg">
                 <div
                   className={cn(
