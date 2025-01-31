@@ -29,6 +29,7 @@ export function StyleSwitcher({ componentName }: { componentName: string }) {
           [componentName]: key,
         }));
       }}
+      className="w-auto"
     >
       <Button
         size="sm"

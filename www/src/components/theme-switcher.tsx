@@ -16,6 +16,7 @@ export const ThemeSwitcher = ({ children }: { children?: React.ReactNode }) => {
       selectedKey={theme}
       onSelectionChange={(key) => setTheme(key as string)}
       aria-label="Change Theme"
+      className="w-auto"
     >
       {children ?? (
         <Button

@@ -6,19 +6,13 @@ export const core: Registry = [
     type: "registry:core",
     variants: [
       {
-        name: "alert-01",
+        name: "alert_basic",
       },
       {
         name: "alert-02",
       },
       {
         name: "alert-03",
-      },
-      {
-        name: "alert-04",
-      },
-      {
-        name: "alert-05",
       },
     ],
   },

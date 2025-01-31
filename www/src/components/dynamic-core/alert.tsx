@@ -7,13 +7,13 @@ import {
   AlertRoot as _AlertRoot,
   AlertTitle as _AlertTitle,
   AlertContent as _AlertContent,
-} from "@/registry/core/alert-01";
+} from "@/registry/core/alert_basic";
 import type {
   AlertProps,
   AlertRootProps,
   AlertTitleProps,
   AlertContentProps,
-} from "@/registry/core/alert-01";
+} from "@/registry/core/alert_basic";
 
 export const Alert = createDynamicComponent<AlertProps>(
   "alert",
@@ -21,7 +21,7 @@ export const Alert = createDynamicComponent<AlertProps>(
   _Alert,
   {
     "alert-01": React.lazy(() =>
-      import("@/registry/core/alert-01").then((mod) => ({
+      import("@/registry/core/alert_basic").then((mod) => ({
         default: mod.Alert,
       }))
     ),
@@ -32,16 +32,6 @@ export const Alert = createDynamicComponent<AlertProps>(
     ),
     "alert-03": React.lazy(() =>
       import("@/registry/core/alert-03").then((mod) => ({
-        default: mod.Alert,
-      }))
-    ),
-    "alert-04": React.lazy(() =>
-      import("@/registry/core/alert-04").then((mod) => ({
-        default: mod.Alert,
-      }))
-    ),
-    "alert-05": React.lazy(() =>
-      import("@/registry/core/alert-05").then((mod) => ({
         default: mod.Alert,
       }))
     ),
@@ -54,7 +44,7 @@ export const AlertRoot = createDynamicComponent<AlertRootProps>(
   _AlertRoot,
   {
     "alert-01": React.lazy(() =>
-      import("@/registry/core/alert-01").then((mod) => ({
+      import("@/registry/core/alert_basic").then((mod) => ({
         default: mod.AlertRoot,
       }))
     ),
@@ -65,16 +55,6 @@ export const AlertRoot = createDynamicComponent<AlertRootProps>(
     ),
     "alert-03": React.lazy(() =>
       import("@/registry/core/alert-03").then((mod) => ({
-        default: mod.AlertRoot,
-      }))
-    ),
-    "alert-04": React.lazy(() =>
-      import("@/registry/core/alert-04").then((mod) => ({
-        default: mod.AlertRoot,
-      }))
-    ),
-    "alert-05": React.lazy(() =>
-      import("@/registry/core/alert-05").then((mod) => ({
         default: mod.AlertRoot,
       }))
     ),
@@ -87,7 +67,7 @@ export const AlertTitle = createDynamicComponent<AlertTitleProps>(
   _AlertTitle,
   {
     "alert-01": React.lazy(() =>
-      import("@/registry/core/alert-01").then((mod) => ({
+      import("@/registry/core/alert_basic").then((mod) => ({
         default: mod.AlertTitle,
       }))
     ),
@@ -98,16 +78,6 @@ export const AlertTitle = createDynamicComponent<AlertTitleProps>(
     ),
     "alert-03": React.lazy(() =>
       import("@/registry/core/alert-03").then((mod) => ({
-        default: mod.AlertTitle,
-      }))
-    ),
-    "alert-04": React.lazy(() =>
-      import("@/registry/core/alert-04").then((mod) => ({
-        default: mod.AlertTitle,
-      }))
-    ),
-    "alert-05": React.lazy(() =>
-      import("@/registry/core/alert-05").then((mod) => ({
         default: mod.AlertTitle,
       }))
     ),
@@ -119,7 +89,7 @@ export const AlertContent = createDynamicComponent<AlertContentProps>(
   _AlertContent,
   {
     "alert-01": React.lazy(() =>
-      import("@/registry/core/alert-01").then((mod) => ({
+      import("@/registry/core/alert_basic").then((mod) => ({
         default: mod.AlertContent,
       }))
     ),
@@ -130,16 +100,6 @@ export const AlertContent = createDynamicComponent<AlertContentProps>(
     ),
     "alert-03": React.lazy(() =>
       import("@/registry/core/alert-03").then((mod) => ({
-        default: mod.AlertContent,
-      }))
-    ),
-    "alert-04": React.lazy(() =>
-      import("@/registry/core/alert-04").then((mod) => ({
-        default: mod.AlertContent,
-      }))
-    ),
-    "alert-05": React.lazy(() =>
-      import("@/registry/core/alert-05").then((mod) => ({
         default: mod.AlertContent,
       }))
     ),

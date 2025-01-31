@@ -108,6 +108,19 @@ export const Sidebar = ({ items }: { items: PageTree.Node[] }) => {
           </motion.div>
         </div>
         <div className="group-data-collapsed/sidebar:flex-col flex items-center gap-1">
+          <ThemeSwitcher>
+            <motion.div layout transition={transition}>
+              <Button
+                size="sm"
+                variant="quiet"
+                shape="square"
+                className="[&_svg]:size-[18px]"
+              >
+                <SunIcon className="block dark:hidden" />
+                <MoonIcon className="hidden dark:block" />
+              </Button>
+            </motion.div>
+          </ThemeSwitcher>
           <StyledTooltip
             content={
               <div className="flex items-center gap-2">
@@ -131,19 +144,6 @@ export const Sidebar = ({ items }: { items: PageTree.Node[] }) => {
               </Button>
             </motion.div>
           </StyledTooltip>
-          <ThemeSwitcher>
-            <motion.div layout transition={transition}>
-              <Button
-                size="sm"
-                variant="quiet"
-                shape="square"
-                className="[&_svg]:size-[18px]"
-              >
-                <SunIcon className="block dark:hidden" />
-                <MoonIcon className="hidden dark:block" />
-              </Button>
-            </motion.div>
-          </ThemeSwitcher>
         </div>
       </SidebarFooter>
     </SidebarRoot>
