@@ -54,7 +54,7 @@ export function SearchCommandClient({ items }: SearchCommandClientProps) {
           </InputRoot>
         </SearchFieldRoot>
       </div>
-      <MenuContent items={items} className="h-full overflow-y-scroll">
+      <MenuContent items={items} className="h-full overflow-y-scroll py-1">
         {items.map((category, categoryIndex) => (
           <Section key={categoryIndex} title={category.title}>
             {category.items.map((page) => (
