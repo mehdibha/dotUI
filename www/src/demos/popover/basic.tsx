@@ -13,11 +13,7 @@ export default function Demo() {
       <Button shape="square">
         <InfoIcon />
       </Button>
-      <Popover
-        UNSTABLE_portalContainer={
-          document.getElementById("custom-theme-portal")!
-        }
-      >
+      <Popover>
         <DialogContent className="w-56 space-y-4">
           <Heading>Need help?</Heading>
           <p>
