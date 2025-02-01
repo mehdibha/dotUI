@@ -12,7 +12,7 @@ import {
 } from "@/components/dynamic-core/dialog";
 import { TextArea } from "@/components/dynamic-core/text-area";
 import { TextField } from "@/components/dynamic-core/text-field";
-import { Overlay } from "@/registry/core/overlay";
+import { Overlay } from "@/registry/core/overlay_basic";
 
 export default function Demo() {
   return (

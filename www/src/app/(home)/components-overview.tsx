@@ -1,5 +1,6 @@
 "use client";
 
+import { Link } from "@/components/core/link";
 import { RadioGroup, Radio } from "@/components/core/radio-group";
 import { Alert } from "@/components/dynamic-core/alert";
 import { Avatar } from "@/components/dynamic-core/avatar";
@@ -9,7 +10,6 @@ import { Checkbox } from "@/components/dynamic-core/checkbox";
 import { ColorSlider } from "@/components/dynamic-core/color-slider";
 import { Combobox } from "@/components/dynamic-core/combobox";
 import { DateRangePicker } from "@/components/dynamic-core/date-range-picker";
-import { Link } from "@/components/dynamic-core/link";
 import { Item, ListBox } from "@/components/dynamic-core/list-box";
 import { NumberField } from "@/components/dynamic-core/number-field";
 import { ProgressBar } from "@/components/dynamic-core/progress-bar";

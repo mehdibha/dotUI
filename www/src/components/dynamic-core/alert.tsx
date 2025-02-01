@@ -26,12 +26,12 @@ export const Alert = createDynamicComponent<AlertProps>(
       }))
     ),
     "alert-02": React.lazy(() =>
-      import("@/registry/core/alert-02").then((mod) => ({
+      import("@/registry/core/alert_notch").then((mod) => ({
         default: mod.Alert,
       }))
     ),
     "alert-03": React.lazy(() =>
-      import("@/registry/core/alert-03").then((mod) => ({
+      import("@/registry/core/alert_notch-2").then((mod) => ({
         default: mod.Alert,
       }))
     ),
@@ -49,12 +49,12 @@ export const AlertRoot = createDynamicComponent<AlertRootProps>(
       }))
     ),
     "alert-02": React.lazy(() =>
-      import("@/registry/core/alert-02").then((mod) => ({
+      import("@/registry/core/alert_notch").then((mod) => ({
         default: mod.AlertRoot,
       }))
     ),
     "alert-03": React.lazy(() =>
-      import("@/registry/core/alert-03").then((mod) => ({
+      import("@/registry/core/alert_notch-2").then((mod) => ({
         default: mod.AlertRoot,
       }))
     ),
@@ -72,12 +72,12 @@ export const AlertTitle = createDynamicComponent<AlertTitleProps>(
       }))
     ),
     "alert-02": React.lazy(() =>
-      import("@/registry/core/alert-02").then((mod) => ({
+      import("@/registry/core/alert_notch").then((mod) => ({
         default: mod.AlertTitle,
       }))
     ),
     "alert-03": React.lazy(() =>
-      import("@/registry/core/alert-03").then((mod) => ({
+      import("@/registry/core/alert_notch-2").then((mod) => ({
         default: mod.AlertTitle,
       }))
     ),
@@ -94,12 +94,12 @@ export const AlertContent = createDynamicComponent<AlertContentProps>(
       }))
     ),
     "alert-02": React.lazy(() =>
-      import("@/registry/core/alert-02").then((mod) => ({
+      import("@/registry/core/alert_notch").then((mod) => ({
         default: mod.AlertContent,
       }))
     ),
     "alert-03": React.lazy(() =>
-      import("@/registry/core/alert-03").then((mod) => ({
+      import("@/registry/core/alert_notch-2").then((mod) => ({
         default: mod.AlertContent,
       }))
     ),

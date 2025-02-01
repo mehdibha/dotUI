@@ -16,11 +16,14 @@ export type RegistryItem = Prettify<
         }[];
       }
     | {
-        variants: {
-          name: string;
-          label?: string;
-          description?: string;
-        }[];
+        variants: (
+          | {
+              name: string;
+              label?: string;
+              description?: string;
+            }
+          | string
+        )[];
       }
   )
 >;

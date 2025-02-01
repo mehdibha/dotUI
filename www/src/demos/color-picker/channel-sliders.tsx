@@ -7,9 +7,9 @@ import {
   ColorPickerButton,
 } from "@/components/dynamic-core/color-picker";
 import { Dialog, DialogRoot } from "@/components/dynamic-core/dialog";
-import { ColorSlider } from "@/registry/core/color-slider";
-import { Item } from "@/registry/core/list-box";
-import { Select } from "@/registry/core/select";
+import { ColorSlider } from "@/registry/core/color-slider_basic";
+import { Item } from "@/registry/core/list-box_basic";
+import { Select } from "@/registry/core/select_basic";
 
 export default function Demo() {
   const [space, setSpace] = React.useState<ColorSpace>("rgb");

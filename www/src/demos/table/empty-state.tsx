@@ -7,7 +7,7 @@ import {
   TableRow,
   TableColumn,
   TableCell,
-} from "@/registry/core/table";
+} from "@/registry/core/table_basic";
 
 export default function Demo() {
   return (

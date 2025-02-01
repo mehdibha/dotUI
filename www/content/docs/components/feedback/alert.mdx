@@ -34,6 +34,8 @@ Use the `variant` prop to change the visual style of the alert.
 <Alert variant="danger" title="This is a critical alert" />
 <Alert variant="warning" title="This is a warning alert" />
 <Alert variant="success" title="This is a success alert" />`}
+  fullWidth
+  resizable
 />
 
 ### Title
@@ -43,6 +45,8 @@ Use the `title` prop to add a title to the alert.
 <ComponentPreview
   name="core/alert/alert-title"
   preview={`<Alert variant="warning" fill title="Your account has been suspended." />`}
+  fullWidth
+  resizable
 />
 
 ### Content
@@ -54,6 +58,8 @@ Pass children to the alert to add content.
   preview={`<Alert title="Payment Information">
     Enter your payment method to complete your purchase.
   </Alert>`}
+  fullWidth
+  resizable
 />
 
 ### Custom icon
@@ -63,6 +69,8 @@ Use the `icon` prop to add a custom icon to the alert. An explicit `null` value 
 <ComponentPreview
   name="core/alert/alert-custom-icon"
   preview={`<Alert icon={<GlobeIcon />}>Hello world!</Alert>`}
+  fullWidth
+  resizable
 />
 
 ### Action

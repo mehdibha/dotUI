@@ -11,8 +11,8 @@ import {
   type TagProps as AriaTagProps,
 } from "react-aria-components";
 import { tv, VariantProps } from "tailwind-variants";
-import { Button } from "@/registry/core/button-01";
-import { Field } from "@/registry/core/field";
+import { Button } from "@/registry/core/button_basic";
+import { HelpText, Label, type FieldProps } from "@/registry/core/field_basic";
 import { focusRing } from "@/registry/lib/focus-styles";
 
 const tagGroupStyles = tv({
@@ -75,12 +75,8 @@ const tagStyles = tv({
 
 interface TagGroupProps<T>
   extends Omit<TagGroupRootProps, "children">,
-    Pick<AriaTagListProps<T>, "items" | "children" | "renderEmptyState"> {
-  label?: string;
-  description?: string;
-  errorMessage?: string;
-  contextualHelp?: React.ReactNode;
-}
+    Pick<AriaTagListProps<T>, "items" | "children" | "renderEmptyState">,
+    FieldProps {}
 
 function TagGroup<T extends object>({
   label,
@@ -89,21 +85,15 @@ function TagGroup<T extends object>({
   items,
   children,
   renderEmptyState,
-  contextualHelp,
   ...props
 }: TagGroupProps<T>) {
   return (
     <TagGroupRoot {...props}>
-      <Field
-        label={label}
-        description={description}
-        errorMessage={errorMessage}
-        contextualHelp={contextualHelp}
-      >
-        <TagList items={items} renderEmptyState={renderEmptyState}>
-          {children}
-        </TagList>
-      </Field>
+      {label && <Label>{label}</Label>}
+      <TagList items={items} renderEmptyState={renderEmptyState}>
+        {children}
+      </TagList>
+      <HelpText description={description} errorMessage={errorMessage} />
     </TagGroupRoot>
   );
 }

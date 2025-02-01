@@ -3,7 +3,7 @@
 import React from "react";
 import { Button } from "@/components/dynamic-core/button";
 import { TextField } from "@/components/dynamic-core/text-field";
-import { Form } from "@/registry/core/form";
+import { Form } from "@/registry/core/form_basic";
 
 export default function Demo() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {

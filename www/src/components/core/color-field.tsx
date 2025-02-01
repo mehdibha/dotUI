@@ -1,1 +1,1 @@
-export * from "@/registry/core/color-field";
+export * from "@/registry/core/color-field_basic";

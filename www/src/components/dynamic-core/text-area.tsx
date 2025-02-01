@@ -1,1 +1,1 @@
-export * from "@/registry/core/text-area";
+export * from "@/registry/core/text-area_basic";

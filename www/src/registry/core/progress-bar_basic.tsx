@@ -6,7 +6,7 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { Label } from "@/registry/core/field";
+import { Label } from "@/registry/core/field_basic";
 import { createScopedContext } from "@/registry/lib/context-helpers";
 
 const progressStyles = tv({

@@ -13,6 +13,7 @@ import {
   CalendarContext as AriaCalendarContext,
   RangeCalendarContext as AriaRangeCalendarContext,
   RangeCalendarStateContext as AriaRangeCalendarStateContext,
+  Heading as AriaHeading,
   composeRenderProps,
   useSlottedContext,
 } from "react-aria-components";
@@ -22,11 +23,10 @@ import type {
   RangeCalendarProps as AriaRangeCalendarProps,
 } from "react-aria-components";
 import { tv, VariantProps } from "tailwind-variants";
-import { Button } from "@/registry/core/button-01";
-import { Heading } from "@/registry/core/heading";
-import { Text } from "@/registry/core/text";
+import { Button } from "@/registry/core/button_basic";
+import { Text } from "@/registry/core/text_basic";
 import { focusRing } from "@/registry/lib/focus-styles";
-import { ButtonGroup } from "./button-group";
+import { ButtonGroup } from "./button-group_basic";
 
 const calendarStyles = tv({
   slots: {
@@ -129,7 +129,7 @@ const Calendar = <T extends DateValue>({
       {({ isInvalid }) => (
         <>
           <CalendarHeader>
-            <Heading className="text-sm" />
+            <AriaHeading className="text-sm font-medium" />
             <ButtonGroup variant="quiet" shape="square" size="sm">
               <Button slot="previous">
                 <ChevronLeftIcon />
@@ -184,7 +184,7 @@ const RangeCalendar = <T extends DateValue>({
             <Button slot="previous" variant="outline" shape="square" size="sm">
               <ChevronLeftIcon />
             </Button>
-            <Heading />
+            <AriaHeading className="text-sm font-medium" />
             <Button slot="next" variant="outline" shape="square" size="sm">
               <ChevronRightIcon />
             </Button>

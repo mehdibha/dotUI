@@ -12,7 +12,7 @@ import {
   SliderStateContext,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { Description, Label } from "@/registry/core/field";
+import { Description, Label } from "@/registry/core/field_basic";
 import { createScopedContext } from "@/registry/lib/context-helpers";
 import { focusRing } from "@/registry/lib/focus-styles";
 

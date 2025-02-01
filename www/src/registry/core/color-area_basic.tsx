@@ -5,7 +5,7 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { ColorThumb } from "@/registry/core/color-thumb";
+import { ColorThumb } from "@/registry/core/color-thumb_basic";
 
 const colorAreaStyles = tv({
   base: "disabled:[background:var(--color-bg-disabled)]! block size-48 min-w-20 rounded-md",

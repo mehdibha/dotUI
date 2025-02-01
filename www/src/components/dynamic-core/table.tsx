@@ -1,1 +1,1 @@
-export * from "@/registry/core/table";
+export * from "@/registry/core/table_basic";

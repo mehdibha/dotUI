@@ -2,29 +2,29 @@
 
 import * as React from "react";
 import {
-  ColorField as AriaColorField,
+  TextField as AriaTextField,
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { Label, HelpText, type FieldProps } from "@/registry/core/field_new";
+import { Label, HelpText, type FieldProps } from "@/registry/core/field_basic";
 import {
   InputRoot,
   Input,
   type InputRootProps,
 } from "@/registry/core/input_basic";
 
-const colorFieldStyles = tv({
+const textFieldStyles = tv({
   base: "flex w-48 flex-col items-start gap-2",
 });
 
-interface ColorFieldProps
-  extends ColorFieldRootProps,
+interface TextFieldProps
+  extends TextFieldRootProps,
     Pick<InputRootProps, "size" | "prefix" | "suffix">,
     FieldProps {
   inputRef?: React.RefObject<HTMLInputElement>;
 }
 
-const ColorField = ({
+const TextField = ({
   label,
   description,
   errorMessage,
@@ -33,40 +33,40 @@ const ColorField = ({
   size,
   inputRef,
   ...props
-}: ColorFieldProps) => {
+}: TextFieldProps) => {
   return (
-    <ColorFieldRoot {...props}>
+    <TextFieldRoot {...props}>
       {label && <Label>{label}</Label>}
-      <ColorFieldInput
+      <TextFieldInput
         inputRef={inputRef}
         size={size}
         prefix={prefix}
         suffix={suffix}
       />
       <HelpText description={description} errorMessage={errorMessage} />
-    </ColorFieldRoot>
+    </TextFieldRoot>
   );
 };
 
-interface ColorFieldRootProps
-  extends React.ComponentProps<typeof AriaColorField> {
+interface TextFieldRootProps
+  extends React.ComponentProps<typeof AriaTextField> {
   placeholder?: string;
 }
-const ColorFieldRoot = ({ className, ...props }: ColorFieldRootProps) => {
+const TextFieldRoot = ({ className, ...props }: TextFieldRootProps) => {
   return (
-    <AriaColorField
+    <AriaTextField
       className={composeRenderProps(className, (className) =>
-        colorFieldStyles({ className })
+        textFieldStyles({ className })
       )}
       {...props}
     />
   );
 };
 
-interface ColorFieldInputProps extends InputRootProps {
+interface TextFieldInputProps extends InputRootProps {
   inputRef?: React.RefObject<HTMLInputElement>;
 }
-const ColorFieldInput = ({ inputRef, ...props }: ColorFieldInputProps) => {
+const TextFieldInput = ({ inputRef, ...props }: TextFieldInputProps) => {
   return (
     <InputRoot {...props}>
       <Input ref={inputRef} />
@@ -74,5 +74,5 @@ const ColorFieldInput = ({ inputRef, ...props }: ColorFieldInputProps) => {
   );
 };
 
-export type { ColorFieldProps, ColorFieldRootProps, ColorFieldInputProps };
-export { ColorField, ColorFieldRoot, ColorFieldInput };
+export type { TextFieldProps, TextFieldRootProps, TextFieldInputProps };
+export { TextField, TextFieldRoot, TextFieldInput };

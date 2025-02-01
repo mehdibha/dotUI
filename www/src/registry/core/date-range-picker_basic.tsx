@@ -3,27 +3,31 @@
 import * as React from "react";
 import { CalendarIcon } from "lucide-react";
 import {
-  DatePicker as AriaDatePicker,
-  type DatePickerProps as AriaDatePickerProps,
+  DateRangePicker as AriaDateRangePicker,
+  type DateRangePickerProps as AriaDateRangePickerProps,
   type DateValue,
 } from "react-aria-components";
 import { type VariantProps } from "tailwind-variants";
-import { Button } from "@/registry/core/button-01";
-import { Calendar } from "@/registry/core/calendar_basic";
-import { DateInput, DateSegment } from "@/registry/core/date-input";
+import { Button } from "@/registry/core/button_basic";
+import { RangeCalendar } from "@/registry/core/calendar_basic";
+import { DateInput, DateSegment } from "@/registry/core/date-input_basic";
 import { Dialog } from "@/registry/core/dialog_basic";
-import { Field, fieldStyles, type FieldProps } from "@/registry/core/field";
+import {
+  Field,
+  type FieldProps,
+  fieldStyles,
+} from "@/registry/core/field_basic";
 import { InputRoot, type inputStyles } from "@/registry/core/input_basic";
 
-interface DatePickerProps<T extends DateValue>
-  extends DatePickerRootProps<T>,
+interface DateRangePickerProps<T extends DateValue>
+  extends DateRangePickerRootProps<T>,
     Omit<FieldProps, "children">,
     VariantProps<typeof inputStyles> {
   prefix?: React.ReactNode;
   isLoading?: boolean;
 }
 
-const DatePicker = <T extends DateValue>({
+const DateRangePicker = <T extends DateValue>({
   className,
   size,
   label,
@@ -33,17 +37,15 @@ const DatePicker = <T extends DateValue>({
   isLoading,
   isRequired,
   isDisabled,
-  isInvalid,
   necessityIndicator,
   contextualHelp,
   ...props
-}: DatePickerProps<T>) => {
+}: DateRangePickerProps<T>) => {
   return (
-    <DatePickerRoot
+    <DateRangePickerRoot
       className={className}
       isRequired={isRequired}
       isDisabled={isLoading || isDisabled}
-      isInvalid={isInvalid}
       {...props}
     >
       <Field
@@ -54,13 +56,12 @@ const DatePicker = <T extends DateValue>({
         necessityIndicator={necessityIndicator}
         contextualHelp={contextualHelp}
       >
-        <InputRoot
-          size={size}
-          prefix={prefix}
-          isInvalid={isInvalid}
-          className="pr-1"
-        >
-          <DateInput className="flex-1">
+        <InputRoot size={size} prefix={prefix} className="pr-1">
+          <DateInput slot="start">
+            {(segment) => <DateSegment segment={segment} />}
+          </DateInput>
+          <span aria-hidden="true">–</span>
+          <DateInput slot="end" className="flex-1">
             {(segment) => <DateSegment segment={segment} />}
           </DateInput>
           <Button
@@ -74,23 +75,23 @@ const DatePicker = <T extends DateValue>({
         </InputRoot>
       </Field>
       <Dialog type="popover" mobileType="drawer" className="flex">
-        <Calendar className="mx-auto" />
+        <RangeCalendar className="mx-auto" />
       </Dialog>
-    </DatePickerRoot>
+    </DateRangePickerRoot>
   );
 };
 
-interface DatePickerRootProps<T extends DateValue>
-  extends Omit<AriaDatePickerProps<T>, "className"> {
+interface DateRangePickerRootProps<T extends DateValue>
+  extends Omit<AriaDateRangePickerProps<T>, "className"> {
   className?: string;
 }
-const DatePickerRoot = <T extends DateValue>({
+const DateRangePickerRoot = <T extends DateValue>({
   className,
   ...props
-}: DatePickerRootProps<T>) => {
+}: DateRangePickerRootProps<T>) => {
   const { root } = fieldStyles();
-  return <AriaDatePicker className={root({ className })} {...props} />;
+  return <AriaDateRangePicker className={root({ className })} {...props} />;
 };
 
-export type { DatePickerProps, DatePickerRootProps };
-export { DatePicker, DatePickerRoot };
+export type { DateRangePickerProps, DateRangePickerRootProps };
+export { DateRangePicker, DateRangePickerRoot };

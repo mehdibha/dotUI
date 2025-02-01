@@ -3,7 +3,7 @@
 import { ButtonContext as AriaButtonContext } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
 import { ButtonProvider } from "@/components/dynamic-core/button";
-import { buttonStyles } from "@/registry/core/button-01";
+import { buttonStyles } from "@/registry/core/button_basic";
 
 const buttonGroupStyles = tv({
   base: "isolate inline-flex items-center [&_button]:rounded-none [&_button]:first:rounded-s-md [&_button]:last:rounded-e-md",

@@ -1,1 +1,1 @@
-export * from "@/registry/core/color-thumb";
+export * from "@/registry/core/color-thumb_basic";

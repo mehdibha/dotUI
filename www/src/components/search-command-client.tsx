@@ -14,7 +14,7 @@ import { Button } from "@/components/core/button";
 import { MenuContent, MenuItem } from "@/components/core/menu";
 import { SearchField, SearchFieldRoot } from "@/components/core/search-field";
 import { Section } from "@/components/core/section";
-import { Command } from "@/registry/core/command";
+import { Command } from "@/registry/core/command_basic";
 import { Input, InputRoot } from "@/registry/core/input_basic";
 
 interface Heading {

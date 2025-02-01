@@ -1,6 +1,6 @@
 import React from "react";
 import { useThemes } from "@/hooks/use-themes";
-import { Skeleton } from "@/registry/core/skeleton";
+import { Skeleton } from "@/registry/core/skeleton_basic";
 
 type Registry<T> = Record<string, React.ComponentType<T>>;
 

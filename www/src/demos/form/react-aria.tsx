@@ -9,7 +9,7 @@ import { Item } from "@/components/dynamic-core/list-box";
 import { RadioGroup, Radio } from "@/components/dynamic-core/radio-group";
 import { Select } from "@/components/dynamic-core/select";
 import { TextField } from "@/components/dynamic-core/text-field";
-import { Form } from "@/registry/core/form";
+import { Form } from "@/registry/core/form_basic";
 
 export default function Demo() {
   return (

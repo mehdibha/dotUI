@@ -13,8 +13,8 @@ import {
   type NumberFieldProps as AriaNumberFieldProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { Button, type ButtonProps } from "@/registry/core/button-01";
-import { Label, HelpText, type FieldProps } from "@/registry/core/field_new";
+import { Button, type ButtonProps } from "@/registry/core/button_basic";
+import { Label, HelpText, type FieldProps } from "@/registry/core/field_basic";
 import {
   InputRoot,
   Input,

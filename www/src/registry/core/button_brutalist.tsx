@@ -10,7 +10,7 @@ import {
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
 import { createOptionalScopedContext } from "@/lib/helpers";
-import { Loader } from "@/registry/core/loader-ring";
+import { Loader } from "@/registry/core/loader_ring";
 import { focusRing } from "@/registry/lib/focus-styles";
 
 const buttonStyles = tv(

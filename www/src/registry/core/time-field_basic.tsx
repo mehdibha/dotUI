@@ -8,8 +8,8 @@ import {
   type TimeFieldProps as AriaTimeFieldProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { DateInput, DateSegment } from "@/registry/core/date-input";
-import { HelpText, Label, type FieldProps } from "./field_new";
+import { DateInput, DateSegment } from "@/registry/core/date-input_basic";
+import { HelpText, Label, type FieldProps } from "./field_basic";
 import { InputRoot, type InputRootProps } from "./input_basic";
 
 const timeFieldStyles = tv({

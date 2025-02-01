@@ -2,8 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { Form } from "react-aria-components";
+import { Link } from "@/components/core/link";
 import { Button } from "@/components/dynamic-core/button";
-import { Link } from "@/components/dynamic-core/link";
 import { TextField } from "@/components/dynamic-core/text-field";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
 import { GoogleIcon } from "@/components/icons/google-icon";

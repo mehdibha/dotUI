@@ -1,1 +1,1 @@
-export * from "@/registry/core/list-box";
+export * from "@/registry/core/list-box_basic";

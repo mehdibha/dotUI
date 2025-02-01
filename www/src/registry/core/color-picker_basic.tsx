@@ -8,14 +8,14 @@ import {
   composeRenderProps,
   type ColorFormat,
 } from "react-aria-components";
-import { Button, type ButtonProps } from "@/registry/core/button-01";
-import { ColorArea } from "@/registry/core/color-area";
-import { ColorField } from "@/registry/core/color-field";
-import { ColorSlider } from "@/registry/core/color-slider";
-import { ColorSwatch } from "@/registry/core/color-swatch";
+import { Button, type ButtonProps } from "@/registry/core/button_basic";
+import { ColorArea } from "@/registry/core/color-area_basic";
+import { ColorField } from "@/registry/core/color-field_basic";
+import { ColorSlider } from "@/registry/core/color-slider_basic";
+import { ColorSwatch } from "@/registry/core/color-swatch_basic";
 import { Dialog, DialogProps, DialogRoot } from "@/registry/core/dialog_basic";
-import { Item } from "@/registry/core/list-box";
-import { Select } from "@/registry/core/select";
+import { Item } from "@/registry/core/list-box_basic";
+import { Select } from "@/registry/core/select_basic";
 import { cn } from "@/registry/lib/cn";
 
 interface ColorPickerProps

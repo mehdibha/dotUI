@@ -9,7 +9,7 @@ import {
   TableRow,
   TableColumn,
   TableCell,
-} from "@/registry/core/table";
+} from "@/registry/core/table_basic";
 
 const columns: Column[] = [
   { name: "Name", id: "name", isRowHeader: true },

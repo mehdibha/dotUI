@@ -2,6 +2,7 @@
 
 import {
   Section as AriaSection,
+  ListBoxSection as AriaListBoxSection,
   Header as AriaHeader,
   type SectionProps as AriaSectionProps,
   Collection as AriaCollection,

@@ -8,7 +8,7 @@ import {
   type ValidationResult,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { HelpText, Label } from "@/registry/core/field_new";
+import { HelpText, Label } from "@/registry/core/field_basic";
 import {
   createOptionalScopedContext,
   createScopedContext,

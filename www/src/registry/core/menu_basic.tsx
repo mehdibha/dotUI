@@ -13,9 +13,9 @@ import {
   type MenuTriggerProps as AriaMenuTriggerProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { Kbd } from "@/registry/core/kbd";
-import { Overlay, type OverlayProps } from "@/registry/core/overlay";
-import { Text } from "@/registry/core/text";
+import { Kbd } from "@/registry/core/kbd_basic";
+import { Overlay, type OverlayProps } from "@/registry/core/overlay_basic";
+import { Text } from "@/registry/core/text_basic";
 
 const menuStyles = tv({
   base: [

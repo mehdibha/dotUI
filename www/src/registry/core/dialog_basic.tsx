@@ -9,7 +9,7 @@ import {
   Text as AriaText,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { Overlay, type OverlayProps } from "@/registry/core/overlay";
+import { Overlay, type OverlayProps } from "@/registry/core/overlay_basic";
 
 const dialogStyles = tv({
   slots: {

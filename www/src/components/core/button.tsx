@@ -1,1 +1,1 @@
-export * from "@/registry/core/button-01";
+export * from "@/registry/core/button_basic";

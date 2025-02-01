@@ -12,7 +12,7 @@ import {
   ListStateContext,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { Text } from "@/registry/core/text";
+import { Text } from "@/registry/core/text_basic";
 import { focusRing } from "@/registry/lib/focus-styles";
 
 const listBoxStyles = tv({

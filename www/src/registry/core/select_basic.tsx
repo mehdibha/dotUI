@@ -10,10 +10,10 @@ import {
   type SelectValueProps as AriaSelectValueProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { Button, type ButtonProps } from "@/registry/core/button-01";
-import { Field, type FieldProps } from "@/registry/core/field";
-import { ListBox, type ListBoxProps } from "@/registry/core/list-box";
-import { Popover } from "./popover_basic";
+import { Button, type ButtonProps } from "@/registry/core/button_basic";
+import { HelpText, Label, type FieldProps } from "@/registry/core/field_basic";
+import { ListBox, type ListBoxProps } from "@/registry/core/list-box_basic";
+import { Popover } from "@/registry/core/popover_basic";
 
 const selectStyles = tv({
   slots: {
@@ -24,7 +24,7 @@ const selectStyles = tv({
 
 interface SelectProps<T extends object>
   extends Omit<SelectRootProps<T>, "children">,
-    Omit<FieldProps, "children"> {
+    FieldProps {
   children?: ListBoxProps<T>["children"];
   dependencies?: ListBoxProps<T>["dependencies"];
   items?: ListBoxProps<T>["items"];
@@ -38,8 +38,6 @@ const Select = <T extends object>({
   label,
   description,
   errorMessage,
-  necessityIndicator,
-  contextualHelp,
   children,
   dependencies,
   items,
@@ -48,36 +46,25 @@ const Select = <T extends object>({
 }: SelectProps<T>) => {
   return (
     <SelectRoot {...props}>
-      {({ isRequired }) => (
-        <>
-          <Field
-            label={label}
-            description={description}
-            errorMessage={errorMessage}
-            isRequired={isRequired}
-            necessityIndicator={necessityIndicator}
-            contextualHelp={contextualHelp}
-          >
-            <Button
-              variant={variant}
-              size={size}
-              suffix={<ChevronDownIcon />}
-              className="w-full"
-            >
-              <SelectValue />
-            </Button>
-          </Field>
-          <Popover>
-            <ListBox
-              isLoading={isLoading}
-              items={items}
-              dependencies={dependencies}
-            >
-              {children}
-            </ListBox>
-          </Popover>
-        </>
-      )}
+      {label && <Label>{label}</Label>}
+      <Button
+        variant={variant}
+        size={size}
+        suffix={<ChevronDownIcon />}
+        className="w-full"
+      >
+        <SelectValue />
+      </Button>
+      <HelpText description={description} errorMessage={errorMessage} />
+      <Popover>
+        <ListBox
+          isLoading={isLoading}
+          items={items}
+          dependencies={dependencies}
+        >
+          {children}
+        </ListBox>
+      </Popover>
     </SelectRoot>
   );
 };

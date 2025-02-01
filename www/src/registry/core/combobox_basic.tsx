@@ -7,11 +7,11 @@ import {
   type ComboBoxProps as AriaComboboxProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { Button } from "@/registry/core/button-01";
-import { Field, type FieldProps } from "@/registry/core/field";
+import { Button } from "@/registry/core/button_basic";
+import { Field, type FieldProps } from "@/registry/core/field_basic";
 import { Input, InputRoot } from "@/registry/core/input_basic";
-import { ListBox } from "@/registry/core/list-box";
-import { Overlay } from "@/registry/core/overlay";
+import { ListBox } from "@/registry/core/list-box_basic";
+import { Overlay } from "@/registry/core/overlay_basic";
 
 const comboboxStyles = tv({
   slots: {

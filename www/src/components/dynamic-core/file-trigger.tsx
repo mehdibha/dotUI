@@ -1,1 +1,1 @@
-export * from "@/registry/core/file-trigger";
+export * from "@/registry/core/file-trigger_basic";

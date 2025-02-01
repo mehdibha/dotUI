@@ -7,8 +7,8 @@ import {
   SliderTrack as AriaSliderTrack,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { ColorThumb } from "@/registry/core/color-thumb";
-import { Label } from "@/registry/core/field";
+import { ColorThumb } from "@/registry/core/color-thumb_basic";
+import { Label } from "@/registry/core/field_basic";
 
 const colorSliderStyles = tv({
   slots: {

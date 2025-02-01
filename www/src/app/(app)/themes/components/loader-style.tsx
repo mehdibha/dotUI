@@ -5,11 +5,11 @@ import { type PressEvent } from "react-aria-components";
 import { useThemes } from "@/hooks/use-themes";
 import { ThemeOverride } from "@/components/docs/theme-override";
 import { Button } from "@/components/dynamic-core/button";
-import { Loader as DotSpinner } from "@/registry/core/loader-dot-spinner";
-import { Loader as LineSpinner } from "@/registry/core/loader-line-spinner";
-import { Loader as Ring } from "@/registry/core/loader-ring";
-import { Loader as Tailspin } from "@/registry/core/loader-tailspin";
-import { Loader as Wave } from "@/registry/core/loader-wave";
+import { Loader as DotSpinner } from "@/registry/core/loader_dots";
+import { Loader as LineSpinner } from "@/registry/core/loader_line";
+import { Loader as Ring } from "@/registry/core/loader_ring";
+import { Loader as Tailspin } from "@/registry/core/loader_tailspin";
+import { Loader as Wave } from "@/registry/core/loader_wave";
 import { Radio, RadioGroup } from "@/registry/core/radio-group_basic";
 
 const variants = [

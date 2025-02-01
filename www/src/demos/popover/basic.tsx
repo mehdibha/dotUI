@@ -1,11 +1,12 @@
-"use client";
-
 import React from "react";
 import { InfoIcon } from "lucide-react";
 import { Button } from "@/components/dynamic-core/button";
-import { DialogContent, DialogRoot } from "@/components/dynamic-core/dialog";
+import {
+  DialogContent,
+  DialogRoot,
+  DialogHeading,
+} from "@/components/dynamic-core/dialog";
 import { Popover } from "@/components/dynamic-core/popover";
-import { Heading } from "@/registry/core/heading";
 
 export default function Demo() {
   return (
@@ -15,7 +16,7 @@ export default function Demo() {
       </Button>
       <Popover>
         <DialogContent className="w-56 space-y-4">
-          <Heading>Need help?</Heading>
+          <DialogHeading>Need help?</DialogHeading>
           <p>
             If you&apos;re having issues accessing your account, contact our
             customer support team for help.
