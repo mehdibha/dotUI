@@ -4,7 +4,7 @@ import { Item } from "@/components/dynamic-core/list-box";
 
 export default function Demo() {
   return (
-    <Combobox label="Country" isRequired necessityIndicator="icon">
+    <Combobox label="Country" isRequired>
       <Item>Canada</Item>
       <Item>France</Item>
       <Item>Germany</Item>

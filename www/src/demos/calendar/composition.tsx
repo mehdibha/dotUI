@@ -1,6 +1,7 @@
 "use client";
 
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { Heading } from "react-aria-components";
 import { Button } from "@/components/dynamic-core/button";
 import {
   CalendarRoot,
@@ -11,7 +12,6 @@ import {
   CalendarGridBody,
   CalendarCell,
 } from "@/components/dynamic-core/calendar";
-import { Heading } from "@/components/dynamic-core/heading";
 
 export default function Demo() {
   return (

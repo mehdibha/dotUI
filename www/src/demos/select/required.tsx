@@ -4,7 +4,7 @@ import { Select } from "@/components/dynamic-core/select";
 
 export default function Demo() {
   return (
-    <Select label="Provider" isRequired necessityIndicator="icon">
+    <Select label="Provider" isRequired>
       <Item>Perplexity</Item>
       <Item>Replicate</Item>
       <Item>Together AI</Item>

@@ -1,7 +1,7 @@
 import React from "react";
 import {
   ComboboxRoot,
-  ComboboxTrigger,
+  ComboboxInput,
 } from "@/components/dynamic-core/combobox";
 import {
   Description,
@@ -15,7 +15,7 @@ export default function Demo() {
   return (
     <ComboboxRoot>
       <Label>Framework</Label>
-      <ComboboxTrigger />
+      <ComboboxInput />
       <Description>Please choose a framework.</Description>
       <FieldError />
       <Overlay type="popover">

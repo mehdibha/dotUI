@@ -8,7 +8,7 @@ import {
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import { Button } from "@/registry/core/button_basic";
-import { Field, type FieldProps } from "@/registry/core/field_basic";
+import { Label, HelpText, type FieldProps } from "@/registry/core/field_basic";
 import { Input, InputRoot } from "@/registry/core/input_basic";
 import { ListBox } from "@/registry/core/list-box_basic";
 import { Overlay } from "@/registry/core/overlay_basic";
@@ -30,8 +30,6 @@ const Combobox = <T extends object>({
   label,
   description,
   errorMessage,
-  necessityIndicator,
-  contextualHelp,
   children,
   items,
   isLoading,
@@ -39,30 +37,19 @@ const Combobox = <T extends object>({
 }: ComboboxProps<T>) => {
   return (
     <ComboboxRoot {...props}>
-      {({ isRequired }) => (
-        <>
-          <Field
-            label={label}
-            description={description}
-            errorMessage={errorMessage}
-            isRequired={isRequired}
-            necessityIndicator={necessityIndicator}
-            contextualHelp={contextualHelp}
-          >
-            <ComboboxTrigger />
-          </Field>
-          <Overlay type="popover">
-            <ListBox items={items} isLoading={isLoading}>
-              {children}
-            </ListBox>
-          </Overlay>
-        </>
-      )}
+      {label && <Label>{label}</Label>}
+      <ComboboxInput />
+      <HelpText description={description} errorMessage={errorMessage} />
+      <Overlay type="popover">
+        <ListBox items={items} isLoading={isLoading}>
+          {children}
+        </ListBox>
+      </Overlay>
     </ComboboxRoot>
   );
 };
 
-const ComboboxTrigger = () => {
+const ComboboxInput = () => {
   return (
     <InputRoot className="px-0">
       <Input className="pl-2" />
@@ -86,4 +73,4 @@ const ComboboxRoot = <T extends object>({
 };
 
 export type { ComboboxProps, ComboboxRootProps };
-export { Combobox, ComboboxRoot, ComboboxTrigger };
+export { Combobox, ComboboxRoot, ComboboxInput };
