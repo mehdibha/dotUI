@@ -26,7 +26,7 @@ export const ComponentWrapper = ({
   if (suspense) {
     return <React.Suspense fallback={fallback}>{children}</React.Suspense>;
   }
-  return <DemosProvider>{children};</DemosProvider>;
+  return <DemosProvider>{children}</DemosProvider>;
 };
 
 export const ResizableContainer = ({

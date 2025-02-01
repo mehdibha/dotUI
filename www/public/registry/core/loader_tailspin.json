@@ -1,0 +1,12 @@
+{
+  "name": "loader_tailspin",
+  "type": "registry:core",
+  "files": [
+    {
+      "path": "core/loader_tailspin.tsx",
+      "content": "\"use client\";\r\n\r\nimport React from \"react\";\r\nimport { ProgressBar as AriaProgressBar } from \"react-aria-components\";\r\nimport type { ProgressBarProps } from \"react-aria-components\";\r\n\r\ninterface LoaderProps extends ProgressBarProps {\r\n  size?: number;\r\n}\r\n\r\nfunction Loader({ size = 40, ...props }: LoaderProps) {\r\n  return (\r\n    <AriaProgressBar {...props} isIndeterminate>\r\n      <div\r\n        className=\"relative flex animate-spin items-center justify-start rounded-full\"\r\n        style={\r\n          {\r\n            \"--size\": `${size}px`,\r\n            \"--color\": \"currentColor\",\r\n            \"--stroke\": `${size / 10}px`,\r\n            \"--mask-size\": \"calc(var(--size) / 2 - var(--stroke))\",\r\n            width: \"var(--size)\",\r\n            height: \"var(--size)\",\r\n            WebkitMask:\r\n              \"radial-gradient(circle var(--mask-size), transparent 99%, #000 100%)\",\r\n            mask: \"radial-gradient(circle var(--mask-size), transparent 99%, #000 100%)\",\r\n            backgroundImage: \"conic-gradient(transparent 25%, var(--color))\",\r\n          } as React.CSSProperties\r\n        }\r\n      ></div>\r\n    </AriaProgressBar>\r\n  );\r\n}\r\n\r\nexport type { LoaderProps };\r\nexport { Loader };\r\n\r\n{\r\n  /* <div class=\"container\"></div>\r\n\r\n<style>\r\n  .container {\r\n    --uib-size: 40px;\r\n    --uib-color: black;\r\n    --uib-speed: .9s;\r\n    --uib-stroke: 5px;\r\n    --mask-size: calc(var(--uib-size) / 2 - var(--uib-stroke));\r\n    position: relative;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: flex-start;\r\n    height: var(--uib-size);\r\n    width: var(--uib-size);\r\n    -webkit-mask: radial-gradient(\r\n      circle var(--mask-size),\r\n      transparent 99%,\r\n      #000 100%\r\n    );\r\n    mask: radial-gradient(circle var(--mask-size), transparent 99%, #000 100%);\r\n    background-image: conic-gradient(transparent 25%, var(--uib-color));\r\n    animation: spin calc(var(--uib-speed)) linear infinite;\r\n    border-radius: 50%;\r\n  }\r\n\r\n  @keyframes spin {\r\n    0% {\r\n      transform: rotate(0deg);\r\n    }\r\n    100% {\r\n      transform: rotate(360deg);\r\n    }\r\n  }\r\n</style>\r\n */\r\n}\r\n",
+      "type": "registry:core",
+      "target": "core/loader.tsx"
+    }
+  ]
+}

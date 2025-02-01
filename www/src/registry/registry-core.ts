@@ -3,17 +3,15 @@ import type { Registry } from "./types";
 export const core: Registry = [
   {
     name: "alert",
-    type: "registry:core",
     variants: ["basic", "notch", "notch-2"],
   },
   {
     name: "alert_basic",
     description: "Minimal with a subtle border and muted background.",
-    type: "registry:core",
     files: [
       {
-        path: "core/alert_basic.tsx",
         type: "registry:core",
+        path: "core/alert_basic.tsx",
         target: "core/alert.tsx",
       },
     ],
@@ -34,7 +32,6 @@ export const core: Registry = [
     name: "alert_notch-2",
     description:
       "Alert with a bold left border for emphasis and muted background.",
-    type: "registry:core",
     files: [
       {
         path: "core/alert_notch.tsx",
@@ -45,7 +42,6 @@ export const core: Registry = [
   },
   {
     name: "avatar",
-    type: "registry:core",
     files: [
       {
         path: "core/avatar_basic.tsx",
@@ -56,7 +52,6 @@ export const core: Registry = [
   },
   {
     name: "badge",
-    type: "registry:core",
     files: [
       {
         path: "core/badge_basic.tsx",
@@ -67,7 +62,6 @@ export const core: Registry = [
   },
   {
     name: "breadcrumbs",
-    type: "registry:core",
     files: [
       {
         path: "core/breadcrumbs_basic.tsx",
@@ -78,12 +72,10 @@ export const core: Registry = [
   },
   {
     name: "button",
-    type: "registry:core",
     variants: ["basic", "brutalist", "ripple"],
   },
   {
     name: "button_basic",
-    type: "registry:core",
     files: [
       {
         path: "core/button_basic.tsx",
@@ -94,7 +86,6 @@ export const core: Registry = [
   },
   {
     name: "button_brutalist",
-    type: "registry:core",
     files: [
       {
         path: "core/button_brutalist.tsx",
@@ -105,7 +96,6 @@ export const core: Registry = [
   },
   {
     name: "button_ripple",
-    type: "registry:core",
     files: [
       {
         path: "core/button_ripple.tsx",
@@ -118,20 +108,18 @@ export const core: Registry = [
         target: "core/ripple.tsx",
       },
       {
-        path: "hooks/use-ripple.tsx",
+        path: "hooks/use-ripple.ts",
         type: "registry:hook",
-        target: "hooks/use-ripple.tsx",
+        target: "hooks/use-ripple.ts",
       },
     ],
   },
   {
     name: "calendar",
-    type: "registry:core",
     variants: ["basic", "cal"],
   },
   {
     name: "calendar_basic",
-    type: "registry:core",
     files: [
       {
         path: "core/calendar_basic.tsx",
@@ -142,7 +130,6 @@ export const core: Registry = [
   },
   {
     name: "calendar_cal",
-    type: "registry:core",
     files: [
       {
         path: "core/calendar_cal.tsx",
@@ -153,7 +140,6 @@ export const core: Registry = [
   },
   {
     name: "checkbox",
-    type: "registry:core",
     files: [
       {
         path: "core/checkbox_basic.tsx",
@@ -164,7 +150,6 @@ export const core: Registry = [
   },
   {
     name: "checkbox-group",
-    type: "registry:core",
     files: [
       {
         path: "core/checkbox-group_basic.tsx",
@@ -175,7 +160,6 @@ export const core: Registry = [
   },
   {
     name: "color-area",
-    type: "registry:core",
     files: [
       {
         path: "core/color-area_basic.tsx",
@@ -186,7 +170,6 @@ export const core: Registry = [
   },
   {
     name: "color-field",
-    type: "registry:core",
     files: [
       {
         path: "core/color-field_basic.tsx",
@@ -197,7 +180,6 @@ export const core: Registry = [
   },
   {
     name: "color-picker",
-    type: "registry:core",
     files: [
       {
         path: "core/color-picker_basic.tsx",
@@ -208,7 +190,6 @@ export const core: Registry = [
   },
   {
     name: "color-slider",
-    type: "registry:core",
     files: [
       {
         path: "core/color-slider_basic.tsx",
@@ -219,7 +200,6 @@ export const core: Registry = [
   },
   {
     name: "color-swatch",
-    type: "registry:core",
     files: [
       {
         path: "core/color-swatch_basic.tsx",
@@ -230,7 +210,6 @@ export const core: Registry = [
   },
   {
     name: "color-swatch-picker",
-    type: "registry:core",
     files: [
       {
         path: "core/color-swatch-picker_basic.tsx",
@@ -241,7 +220,6 @@ export const core: Registry = [
   },
   {
     name: "color-thumb",
-    type: "registry:core",
     files: [
       {
         path: "core/color-thumb_basic.tsx",
@@ -252,7 +230,6 @@ export const core: Registry = [
   },
   {
     name: "combobox",
-    type: "registry:core",
     files: [
       {
         path: "core/combobox_basic.tsx",
@@ -263,7 +240,6 @@ export const core: Registry = [
   },
   {
     name: "command",
-    type: "registry:core",
     files: [
       {
         path: "core/command_basic.tsx",
@@ -274,7 +250,6 @@ export const core: Registry = [
   },
   {
     name: "date-field",
-    type: "registry:core",
     files: [
       {
         path: "core/date-field_basic.tsx",
@@ -285,7 +260,6 @@ export const core: Registry = [
   },
   {
     name: "date-input",
-    type: "registry:core",
     files: [
       {
         path: "core/date-input_basic.tsx",
@@ -296,7 +270,6 @@ export const core: Registry = [
   },
   {
     name: "date-picker",
-    type: "registry:core",
     files: [
       {
         path: "core/date-picker_basic.tsx",
@@ -307,7 +280,6 @@ export const core: Registry = [
   },
   {
     name: "date-range-picker",
-    type: "registry:core",
     files: [
       {
         path: "core/date-range-picker_basic.tsx",
@@ -318,7 +290,6 @@ export const core: Registry = [
   },
   {
     name: "dialog",
-    type: "registry:core",
     files: [
       {
         path: "core/dialog_basic.tsx",
@@ -329,7 +300,6 @@ export const core: Registry = [
   },
   {
     name: "drawer",
-    type: "registry:core",
     files: [
       {
         path: "core/drawer_basic.tsx",
@@ -340,7 +310,6 @@ export const core: Registry = [
   },
   {
     name: "drop-zone",
-    type: "registry:core",
     files: [
       {
         path: "core/drop-zone_basic.tsx",
@@ -351,7 +320,6 @@ export const core: Registry = [
   },
   {
     name: "field",
-    type: "registry:core",
     files: [
       {
         path: "core/field_basic.tsx",
@@ -362,7 +330,6 @@ export const core: Registry = [
   },
   {
     name: "file-trigger",
-    type: "registry:core",
     files: [
       {
         path: "core/file-trigger_basic.tsx",
@@ -373,12 +340,10 @@ export const core: Registry = [
   },
   {
     name: "form",
-    type: "registry:core",
     variants: ["basic", "react-hook-form"],
   },
   {
     name: "form_basic",
-    type: "registry:core",
     files: [
       {
         path: "core/form_basic.tsx",
@@ -389,7 +354,6 @@ export const core: Registry = [
   },
   {
     name: "form_react-hook-form",
-    type: "registry:core",
     files: [
       {
         path: "core/form_react-hook-form.tsx",
@@ -400,12 +364,10 @@ export const core: Registry = [
   },
   {
     name: "input",
-    type: "registry:core",
     variants: ["basic"],
   },
   {
     name: "input_basic",
-    type: "registry:core",
     files: [
       {
         path: "core/input_basic.tsx",
@@ -416,7 +378,6 @@ export const core: Registry = [
   },
   {
     name: "kbd",
-    type: "registry:core",
     files: [
       {
         path: "core/kbd_basic.tsx",
@@ -427,7 +388,6 @@ export const core: Registry = [
   },
   {
     name: "list-box",
-    type: "registry:core",
     files: [
       {
         path: "core/list-box_basic.tsx",
@@ -438,7 +398,6 @@ export const core: Registry = [
   },
   {
     name: "list-box",
-    type: "registry:core",
     files: [
       {
         path: "core/list-box_basic.tsx",
@@ -449,12 +408,10 @@ export const core: Registry = [
   },
   {
     name: "loader",
-    type: "registry:core",
     variants: ["dots", "line", "ring", "tailspin", "wave"],
   },
   {
     name: "loader_dots",
-    type: "registry:core",
     files: [
       {
         path: "core/loader_dots.tsx",
@@ -465,7 +422,6 @@ export const core: Registry = [
   },
   {
     name: "loader_line",
-    type: "registry:core",
     files: [
       {
         path: "core/loader_line.tsx",
@@ -476,7 +432,6 @@ export const core: Registry = [
   },
   {
     name: "loader_ring",
-    type: "registry:core",
     files: [
       {
         path: "core/loader_ring.tsx",
@@ -487,7 +442,6 @@ export const core: Registry = [
   },
   {
     name: "loader_tailspin",
-    type: "registry:core",
     files: [
       {
         path: "core/loader_tailspin.tsx",
@@ -498,7 +452,6 @@ export const core: Registry = [
   },
   {
     name: "loader_wave",
-    type: "registry:core",
     files: [
       {
         path: "core/loader_wave.tsx",
@@ -509,7 +462,6 @@ export const core: Registry = [
   },
   {
     name: "menu",
-    type: "registry:core",
     files: [
       {
         path: "core/menu_basic.tsx",
@@ -520,7 +472,6 @@ export const core: Registry = [
   },
   {
     name: "modal",
-    type: "registry:core",
     files: [
       {
         path: "core/modal_basic.tsx",
@@ -531,7 +482,6 @@ export const core: Registry = [
   },
   {
     name: "number-field",
-    type: "registry:core",
     files: [
       {
         path: "core/number-field_basic.tsx",
@@ -542,7 +492,6 @@ export const core: Registry = [
   },
   {
     name: "overlay",
-    type: "registry:core",
     files: [
       {
         path: "core/overlay_basic.tsx",
@@ -553,7 +502,6 @@ export const core: Registry = [
   },
   {
     name: "popover",
-    type: "registry:core",
     files: [
       {
         path: "core/popover_basic.tsx",
@@ -564,7 +512,6 @@ export const core: Registry = [
   },
   {
     name: "progress-bar",
-    type: "registry:core",
     files: [
       {
         path: "core/progress-bar_basic.tsx",
@@ -575,7 +522,6 @@ export const core: Registry = [
   },
   {
     name: "radio-group",
-    type: "registry:core",
     files: [
       {
         path: "core/radio-group_basic.tsx",
@@ -586,7 +532,6 @@ export const core: Registry = [
   },
   {
     name: "search-field",
-    type: "registry:core",
     files: [
       {
         path: "core/search-field_basic.tsx",
@@ -597,7 +542,6 @@ export const core: Registry = [
   },
   {
     name: "select",
-    type: "registry:core",
     files: [
       {
         path: "core/select_basic.tsx",
@@ -608,7 +552,6 @@ export const core: Registry = [
   },
   {
     name: "separator",
-    type: "registry:core",
     files: [
       {
         path: "core/separator_basic.tsx",
@@ -619,7 +562,6 @@ export const core: Registry = [
   },
   {
     name: "skeleton",
-    type: "registry:core",
     files: [
       {
         path: "core/skeleton_basic.tsx",
@@ -630,7 +572,6 @@ export const core: Registry = [
   },
   {
     name: "slider",
-    type: "registry:core",
     files: [
       {
         path: "core/slider_basic.tsx",
@@ -641,7 +582,6 @@ export const core: Registry = [
   },
   {
     name: "switch",
-    type: "registry:core",
     files: [
       {
         path: "core/switch_basic.tsx",
@@ -652,7 +592,6 @@ export const core: Registry = [
   },
   {
     name: "table",
-    type: "registry:core",
     files: [
       {
         path: "core/table_basic.tsx",
@@ -663,12 +602,10 @@ export const core: Registry = [
   },
   {
     name: "tabs",
-    type: "registry:core",
     variants: ["basic", "motion"],
   },
   {
     name: "tabs_basic",
-    type: "registry:core",
     files: [
       {
         path: "core/tabs_basic.tsx",
@@ -679,7 +616,6 @@ export const core: Registry = [
   },
   {
     name: "tabs_motion",
-    type: "registry:core",
     files: [
       {
         path: "core/tabs_motion.tsx",
@@ -690,7 +626,6 @@ export const core: Registry = [
   },
   {
     name: "tag-group",
-    type: "registry:core",
     files: [
       {
         path: "core/tag-group_basic.tsx",
@@ -701,7 +636,6 @@ export const core: Registry = [
   },
   {
     name: "text",
-    type: "registry:core",
     files: [
       {
         path: "core/text_basic.tsx",
@@ -712,7 +646,6 @@ export const core: Registry = [
   },
   {
     name: "text-area",
-    type: "registry:core",
     files: [
       {
         path: "core/text-area_basic.tsx",
@@ -723,7 +656,6 @@ export const core: Registry = [
   },
   {
     name: "text-field",
-    type: "registry:core",
     files: [
       {
         path: "core/text-field_basic.tsx",
@@ -734,7 +666,6 @@ export const core: Registry = [
   },
   {
     name: "time-field",
-    type: "registry:core",
     files: [
       {
         path: "core/time-field_basic.tsx",
@@ -745,7 +676,6 @@ export const core: Registry = [
   },
   {
     name: "toggle-button",
-    type: "registry:core",
     files: [
       {
         path: "core/toggle-button_basic.tsx",
@@ -756,7 +686,6 @@ export const core: Registry = [
   },
   {
     name: "toggle-button-group",
-    type: "registry:core",
     files: [
       {
         path: "core/toggle-button-group_basic.tsx",
@@ -767,7 +696,6 @@ export const core: Registry = [
   },
   {
     name: "tooltip",
-    type: "registry:core",
     variants: ["basic", "motion"],
   },
   {
@@ -783,7 +711,6 @@ export const core: Registry = [
   },
   {
     name: "tooltip_motion",
-    type: "registry:core",
     files: [
       {
         path: "core/tooltip_motion.tsx",

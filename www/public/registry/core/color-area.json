@@ -1,0 +1,12 @@
+{
+  "name": "color-area",
+  "type": "registry:core",
+  "files": [
+    {
+      "path": "core/color-area_basic.tsx",
+      "content": "\"use client\";\n\nimport {\n  ColorArea as AriaColorArea,\n  composeRenderProps,\n} from \"react-aria-components\";\nimport { tv } from \"tailwind-variants\";\nimport { ColorThumb } from \"@/registry/core/color-thumb_basic\";\n\nconst colorAreaStyles = tv({\n  base: \"disabled:[background:var(--color-bg-disabled)]! block size-48 min-w-20 rounded-md\",\n});\n\ntype ColorAreaProps = Omit<ColorAreaRootProps, \"children\">;\nconst ColorArea = (props: ColorAreaProps) => {\n  return (\n    <ColorAreaRoot {...props}>\n      <ColorThumb />\n    </ColorAreaRoot>\n  );\n};\n\ninterface ColorAreaRootProps\n  extends React.ComponentProps<typeof AriaColorArea> {}\nconst ColorAreaRoot = ({ className, ...props }: ColorAreaRootProps) => {\n  return (\n    <AriaColorArea\n      className={composeRenderProps(className, (className) =>\n        colorAreaStyles({ className })\n      )}\n      {...props}\n    />\n  );\n};\n\nexport type { ColorAreaProps, ColorAreaRootProps };\nexport { ColorArea, ColorAreaRoot };\n",
+      "type": "registry:core",
+      "target": "core/color-area.tsx"
+    }
+  ]
+}

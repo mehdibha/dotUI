@@ -1,0 +1,12 @@
+{
+  "name": "loader_wave",
+  "type": "registry:core",
+  "files": [
+    {
+      "path": "core/loader_wave.tsx",
+      "content": "\"use client\";\r\n\r\nimport { motion } from \"motion/react\";\r\nimport { ProgressBar as AriaProgressBar } from \"react-aria-components\";\r\nimport type { ProgressBarProps } from \"react-aria-components\";\r\nimport { cn } from \"@/registry/lib/cn\";\r\n\r\ninterface LoaderProps extends ProgressBarProps {\r\n  size?: number;\r\n}\r\n\r\nfunction Loader({ size = 20, className, ...props }: LoaderProps) {\r\n  return (\r\n    <AriaProgressBar\r\n      className={cn(\"flex items-center justify-between\")}\r\n      {...props}\r\n      isIndeterminate\r\n      style={\r\n        {\r\n          \"--size\": `${size}px`,\r\n          width: `var(--size)`,\r\n          height: `calc(var(--size) * 0.9)`,\r\n        } as React.CSSProperties\r\n      }\r\n    >\r\n      {[...Array(4)].map((_, index) => (\r\n        <motion.div\r\n          key={index}\r\n          className=\"h-full w-[2px] rounded-full bg-current\"\r\n          animate={{\r\n            scaleY: [0.3, 1, 0.3],\r\n          }}\r\n          transition={{\r\n            duration: 1,\r\n            repeat: Infinity,\r\n            ease: \"easeInOut\",\r\n            delay: index * 0.1,\r\n          }}\r\n        />\r\n      ))}\r\n    </AriaProgressBar>\r\n  );\r\n}\r\n\r\nexport type { LoaderProps };\r\nexport { Loader };\r\n",
+      "type": "registry:core",
+      "target": "core/loader.tsx"
+    }
+  ]
+}

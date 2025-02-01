@@ -1,36 +1,112 @@
-// import { registryItemSchema, registrySchema } from "@dotui/registry";
-// import { existsSync, promises as fs } from "node:fs";
-// import path from "path";
-// import { rimraf } from "rimraf";
-// import { core } from "@/registry/core";
-// import { hooks } from "@/registry/hooks";
-// import { iconLibraries, icons } from "@/registry/icons";
-// import { styles } from "@/registry/styles";
-// import { themes } from "@/registry/themes";
-// import { lib } from "@/registry/index/lib";
-// import { registry } from "@/registry";
+import { registryItemSchema, registrySchema } from "@dotui/registry";
+import { existsSync, promises as fs } from "node:fs";
+import path from "path";
+import { rimraf } from "rimraf";
+import {
+  kebabCaseToTitleCase,
+  kekabCaseToTitle,
+  snakeCaseToTitle,
+} from "@/lib/string";
+import { core } from "@/registry/registry-core";
+import { hooks } from "@/registry/registry-hooks";
+import { iconLibraries, icons } from "@/registry/registry-icons";
+import { lib } from "@/registry/registry-lib";
+import { themes } from "@/registry/registry-themes";
+import { registry } from "@/registry";
 
-// const REGISTRY_PATH = path.join(process.cwd(), "public/registry");
+const REGISTRY_PATH = path.join(process.cwd(), "public/registry");
 
-// // ----------------------------------------------------------------------------
-// // Build registry/index.json.
-// // Contains the list of all components, hooks, etc.
-// // ----------------------------------------------------------------------------
-// const buildRegistry = async () => {
-//   const targetPath = REGISTRY_PATH;
-//   rimraf.sync(targetPath);
-//   if (!existsSync(targetPath)) {
-//     await fs.mkdir(targetPath, { recursive: true });
-//   }
+// ----------------------------------------------------------------------------
+// Build registry/index.json.
+// Contains the list of all components, hooks, etc.
+// ----------------------------------------------------------------------------
+const buildRegistry = async () => {
+  const targetPath = REGISTRY_PATH;
+  rimraf.sync(targetPath);
+  if (!existsSync(targetPath)) {
+    await fs.mkdir(targetPath, { recursive: true });
+  }
 
-//   const payload = registry.map((item) => ({
-//     name: item.name,
-//     type: item.type,
-//   }));
+  const payload = registry.map((item) => ({
+    name: item.name,
+    type: item.type,
+  }));
 
-//   const registryJson = JSON.stringify(payload, null, 2);
-//   await fs.writeFile(path.join(targetPath, "index.json"), registryJson, "utf8");
-// };
+  const registryJson = JSON.stringify(payload, null, 2);
+  await fs.writeFile(path.join(targetPath, "index.json"), registryJson, "utf8");
+};
+
+// ----------------------------------------------------------------------------
+// Build registry/core/index.json.
+// Contains the list of all core components.
+//
+// Build registry/core/[name].json
+// Component's infos.
+// ----------------------------------------------------------------------------
+const buildCore = async () => {
+  const targetPath = path.join(REGISTRY_PATH, "core");
+  rimraf.sync(targetPath);
+  if (!existsSync(targetPath)) {
+    await fs.mkdir(targetPath, { recursive: true });
+  }
+
+  const allCore = core
+    .filter((elem) => {
+      if (elem.variants) return true;
+      if (elem.name.includes("_")) return false;
+      return true;
+    })
+    .map((comp) => ({
+      name: comp.name,
+      label: kebabCaseToTitleCase(comp.name),
+      description: comp.description,
+    }));
+
+  // Build registry/core/index.json
+  const indexContent = JSON.stringify(allCore, null, 2);
+  await fs.writeFile(path.join(targetPath, "index.json"), indexContent, "utf8");
+
+  // Build registry/core/[name].json
+  for (const item of core) {
+    let files;
+    if (item.files) {
+      files = await Promise.all(
+        item.files.map(async (_file) => {
+          const file =
+            typeof _file === "string"
+              ? {
+                  path: _file,
+                  type: item.type,
+                  content: "",
+                  target: "",
+                }
+              : _file;
+          const content = await fs.readFile(
+            path.join(process.cwd(), "src", "registry", file.path),
+            "utf8"
+          );
+          return {
+            path: file.path,
+            type: file.type,
+            content: content,
+            target: file.target,
+          };
+        })
+      );
+    }
+
+    const payload = registryItemSchema.safeParse({
+      ...item,
+      files,
+    });
+    
+    await fs.writeFile(
+      path.join(targetPath, `${item.name}.json`),
+      JSON.stringify(payload.data, null, 2),
+      "utf8"
+    );
+  }
+};
 
 // // ----------------------------------------------------------------------------
 // // Build registry/icons/index.json.
@@ -335,26 +411,26 @@
 //   }
 // };
 
-// const run = async () => {
-//   try {
-//     const result = registrySchema.safeParse(registry);
+const run = async () => {
+  try {
+    // const result = registrySchema.safeParse(registry);
 
-//     if (!result.success) {
-//       console.error(result.error);
-//       process.exit(1);
-//     }
+    // if (!result.success) {
+    //   console.error(result.error);
+    //   process.exit(1);
+    // }
 
-//     await buildRegistry();
-//     await buildStyles();
-//     await buildHooks();
-//     await buildThemes();
-//     await buildIcons();
+    await buildRegistry();
+    await buildCore();
+    // await buildHooks();
+    // await buildThemes();
+    // await buildIcons();
 
-//     console.log("✅ Done!");
-//   } catch (error) {
-//     console.error(error);
-//     process.exit(1);
-//   }
-// };
+    console.log("✅ Done!");
+  } catch (error) {
+    console.error(error);
+    process.exit(1);
+  }
+};
 
-// run();
+run();

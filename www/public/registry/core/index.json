@@ -1,0 +1,222 @@
+[
+  {
+    "name": "alert",
+    "label": "Alert"
+  },
+  {
+    "name": "avatar",
+    "label": "Avatar"
+  },
+  {
+    "name": "badge",
+    "label": "Badge"
+  },
+  {
+    "name": "breadcrumbs",
+    "label": "Breadcrumbs"
+  },
+  {
+    "name": "button",
+    "label": "Button"
+  },
+  {
+    "name": "calendar",
+    "label": "Calendar"
+  },
+  {
+    "name": "checkbox",
+    "label": "Checkbox"
+  },
+  {
+    "name": "checkbox-group",
+    "label": "Checkbox Group"
+  },
+  {
+    "name": "color-area",
+    "label": "Color Area"
+  },
+  {
+    "name": "color-field",
+    "label": "Color Field"
+  },
+  {
+    "name": "color-picker",
+    "label": "Color Picker"
+  },
+  {
+    "name": "color-slider",
+    "label": "Color Slider"
+  },
+  {
+    "name": "color-swatch",
+    "label": "Color Swatch"
+  },
+  {
+    "name": "color-swatch-picker",
+    "label": "Color Swatch Picker"
+  },
+  {
+    "name": "color-thumb",
+    "label": "Color Thumb"
+  },
+  {
+    "name": "combobox",
+    "label": "Combobox"
+  },
+  {
+    "name": "command",
+    "label": "Command"
+  },
+  {
+    "name": "date-field",
+    "label": "Date Field"
+  },
+  {
+    "name": "date-input",
+    "label": "Date Input"
+  },
+  {
+    "name": "date-picker",
+    "label": "Date Picker"
+  },
+  {
+    "name": "date-range-picker",
+    "label": "Date Range Picker"
+  },
+  {
+    "name": "dialog",
+    "label": "Dialog"
+  },
+  {
+    "name": "drawer",
+    "label": "Drawer"
+  },
+  {
+    "name": "drop-zone",
+    "label": "Drop Zone"
+  },
+  {
+    "name": "field",
+    "label": "Field"
+  },
+  {
+    "name": "file-trigger",
+    "label": "File Trigger"
+  },
+  {
+    "name": "form",
+    "label": "Form"
+  },
+  {
+    "name": "input",
+    "label": "Input"
+  },
+  {
+    "name": "kbd",
+    "label": "Kbd"
+  },
+  {
+    "name": "list-box",
+    "label": "List Box"
+  },
+  {
+    "name": "list-box",
+    "label": "List Box"
+  },
+  {
+    "name": "loader",
+    "label": "Loader"
+  },
+  {
+    "name": "menu",
+    "label": "Menu"
+  },
+  {
+    "name": "modal",
+    "label": "Modal"
+  },
+  {
+    "name": "number-field",
+    "label": "Number Field"
+  },
+  {
+    "name": "overlay",
+    "label": "Overlay"
+  },
+  {
+    "name": "popover",
+    "label": "Popover"
+  },
+  {
+    "name": "progress-bar",
+    "label": "Progress Bar"
+  },
+  {
+    "name": "radio-group",
+    "label": "Radio Group"
+  },
+  {
+    "name": "search-field",
+    "label": "Search Field"
+  },
+  {
+    "name": "select",
+    "label": "Select"
+  },
+  {
+    "name": "separator",
+    "label": "Separator"
+  },
+  {
+    "name": "skeleton",
+    "label": "Skeleton"
+  },
+  {
+    "name": "slider",
+    "label": "Slider"
+  },
+  {
+    "name": "switch",
+    "label": "Switch"
+  },
+  {
+    "name": "table",
+    "label": "Table"
+  },
+  {
+    "name": "tabs",
+    "label": "Tabs"
+  },
+  {
+    "name": "tag-group",
+    "label": "Tag Group"
+  },
+  {
+    "name": "text",
+    "label": "Text"
+  },
+  {
+    "name": "text-area",
+    "label": "Text Area"
+  },
+  {
+    "name": "text-field",
+    "label": "Text Field"
+  },
+  {
+    "name": "time-field",
+    "label": "Time Field"
+  },
+  {
+    "name": "toggle-button",
+    "label": "Toggle Button"
+  },
+  {
+    "name": "toggle-button-group",
+    "label": "Toggle Button Group"
+  },
+  {
+    "name": "tooltip",
+    "label": "Tooltip"
+  }
+]

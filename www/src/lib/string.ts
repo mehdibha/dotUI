@@ -27,6 +27,14 @@ export const kekabCaseToTitle = (string: string): string => {
   return string.replace(/-/g, " ").replace(/^\w/, (char) => char.toUpperCase());
 };
 
+// aaa-bbb-ccc => Terer Fkf Skfk
+export const kebabCaseToTitleCase = (string: string): string => {
+  return string
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};
+
 export const truncateOnWord = (
   text: string,
   maxLength: number,

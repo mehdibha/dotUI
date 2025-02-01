@@ -1,0 +1,12 @@
+{
+  "name": "form_basic",
+  "type": "registry:core",
+  "files": [
+    {
+      "path": "core/form_basic.tsx",
+      "content": "\"use client\";\r\n\r\nimport {\r\n  Form as AriaForm,\r\n  FormProps as AriaFormProps,\r\n} from \"react-aria-components\";\r\n\r\nexport type FormProps = AriaFormProps;\r\nexport { AriaForm as Form };\r\n",
+      "type": "registry:core",
+      "target": "core/form.tsx"
+    }
+  ]
+}

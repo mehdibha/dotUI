@@ -1,0 +1,12 @@
+{
+  "name": "loader_ring",
+  "type": "registry:core",
+  "files": [
+    {
+      "path": "core/loader_ring.tsx",
+      "content": "\"use client\";\r\n\r\nimport { ProgressBar as AriaProgressBar } from \"react-aria-components\";\r\nimport type { ProgressBarProps } from \"react-aria-components\";\r\n\r\ninterface LoaderProps extends ProgressBarProps {\r\n  size?: number;\r\n}\r\n\r\nfunction Loader({ size = 20, ...props }: LoaderProps) {\r\n  return (\r\n    <AriaProgressBar {...props} isIndeterminate>\r\n      <svg\r\n        width={size}\r\n        height={size}\r\n        viewBox=\"0 0 24 24\"\r\n        className=\"block animate-spin\"\r\n      >\r\n        <path\r\n          className=\"fill-current opacity-25\"\r\n          d=\"M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z\"\r\n        />\r\n        <path\r\n          className=\"fill-current\"\r\n          d=\"M10.14,1.16a11,11,0,0,0-9,8.92A1.59,1.59,0,0,0,2.46,12,1.52,1.52,0,0,0,4.11,10.7a8,8,0,0,1,6.66-6.61A1.42,1.42,0,0,0,12,2.69h0A1.57,1.57,0,0,0,10.14,1.16Z\"\r\n        />\r\n      </svg>\r\n    </AriaProgressBar>\r\n  );\r\n}\r\n\r\nexport type { LoaderProps };\r\nexport { Loader };\r\n",
+      "type": "registry:core",
+      "target": "core/loader.tsx"
+    }
+  ]
+}
