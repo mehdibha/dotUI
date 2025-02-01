@@ -2,8 +2,8 @@
 
 import { useThemes } from "@/hooks/use-themes";
 import { Radio, RadioGroup } from "@/components/core/radio-group";
+import TabsDemo from "@/components/demos/tabs/basic";
 import { ThemeOverride } from "@/components/docs/theme-override";
-import TabsDemo from "@/demos/tabs/basic";
 
 const variants = [
   {

@@ -11,7 +11,7 @@ links:
 ---
 
 <ComponentPreview
-  name="core/checkbox-group/checkbox-group-default"
+  name="checkbox-group/default"
   preview={`<CheckboxGroup label="React frameworks" defaultValue={["nextjs"]}>
     <Checkbox value="nextjs">Next.js</Checkbox>
     <Checkbox value="remix">Remix</Checkbox>
@@ -65,7 +65,7 @@ import { Label } from "@/components/core/field";
 Use the `variant` prop to control the visual style of the `CheckBoxGroup`.
 
 <ComponentPreview
-  name="core/checkbox-group/checkbox-group-cards"
+  name="checkbox-group/cards"
   preview={`<CheckboxGroup label="React frameworks" defaultValue={["nextjs"]} variant="card">
     <Checkbox value="nextjs">Next.js</Checkbox>
     <Checkbox value="remix">Remix</Checkbox>
@@ -78,7 +78,7 @@ Use the `variant` prop to control the visual style of the `CheckBoxGroup`.
 A visual label can be provided for the `CheckboxGroup` using the `label` prop or a hidden label using `aria-label` prop.
 
 <ComponentPreview
-  name="core/checkbox-group/checkbox-group-label"
+  name="checkbox-group/label"
   preview={`<CheckboxGroup label="React frameworks" defaultValue={["nextjs"]}>
     <Checkbox value="nextjs">Next.js</Checkbox>
     <Checkbox value="remix">Remix</Checkbox>
@@ -94,7 +94,7 @@ A visual label can be provided for the `CheckboxGroup` using the `label` prop or
 A description can be supplied to a `CheckboxGroup` via the `description` prop. The description is always visible unless the `isInvalid` prop is `true` and an error message is provided.
 
 <ComponentPreview
-  name="core/checkbox-group/checkbox-group-description"
+  name="checkbox-group/description"
   preview={`<CheckboxGroup
     label="React frameworks"
     defaultValue={["nextjs"]}
@@ -111,7 +111,7 @@ A description can be supplied to a `CheckboxGroup` via the `description` prop. T
 An error message can be supplied to a CheckboxGroup, which will be displayed when the `isInvalid` prop is set to `true`.
 
 <ComponentPreview
-  name="core/checkbox-group/checkbox-group-error-message"
+  name="checkbox-group/error-message"
   preview={`<CheckboxGroup label="React frameworks" isInvalid errorMessage="Please select a framework.">
     <Checkbox value="nextjs">Next.js</Checkbox>
     <Checkbox value="remix">Remix</Checkbox>
@@ -124,7 +124,7 @@ An error message can be supplied to a CheckboxGroup, which will be displayed whe
 Use the `isDisabled` prop to disable the CheckboxGroup.
 
 <ComponentPreview
-  name="core/checkbox-group/checkbox-group-disabled"
+  name="checkbox-group/disabled"
   preview={`<CheckboxGroup label="React frameworks" isDisabled>
     <Checkbox value="nextjs">Next.js</Checkbox>
     <Checkbox value="remix">Remix</Checkbox>
@@ -137,7 +137,7 @@ Use the `isDisabled` prop to disable the CheckboxGroup.
 The `isReadOnly` boolean prop makes the CheckboxGroup's text content immutable. Unlike isDisabled, the CheckboxGroup remains focusable and the contents can still be copied.
 
 <ComponentPreview
-  name="core/checkbox-group/checkbox-group-read-only"
+  name="checkbox-group/read-only"
   preview={`<CheckboxGroup label="React frameworks" isReadOnly>
     <Checkbox value="nextjs">Next.js</Checkbox>
     <Checkbox value="remix">Remix</Checkbox>
@@ -151,7 +151,7 @@ Use the `isRequired` prop to mark the CheckboxGroup as required.
 Use the `necessityIndicator` prop to control the visual style of the required state.
 
 <ComponentPreview
-  name="core/checkbox-group/checkbox-group-required"
+  name="checkbox-group/required"
   preview={`<CheckboxGroup label="React frameworks" isRequired>
     <Checkbox value="nextjs">Next.js</Checkbox>
     <Checkbox value="remix">Remix</Checkbox>
@@ -175,7 +175,7 @@ Use the `necessityIndicator` prop to control the visual style of the required st
 The `defaultValue` prop can be used to set the default state.
 
 <ComponentPreview
-  name="core/checkbox-group/checkbox-group-uncontrolled"
+  name="checkbox-group/uncontrolled"
   preview={`<CheckboxGroup label="React frameworks" defaultValue={["nextjs"]}>
     <Checkbox value="nextjs">Next.js</Checkbox>
     <Checkbox value="remix">Remix</Checkbox>
@@ -188,7 +188,7 @@ The `defaultValue` prop can be used to set the default state.
 Use the `value` and `onChange` props to control the value of the input.
 
 <ComponentPreview
-  name="core/checkbox-group/checkbox-group-controlled"
+  name="checkbox-group/controlled"
   preview={`const [frameworks, setFrameworks] = React.useState(["nextjs"]);
   return (
     <CheckboxGroup label="React frameworks" defaultValue={["nextjs"]}>
@@ -204,7 +204,7 @@ Use the `value` and `onChange` props to control the value of the input.
 If you need to customize things further, you can drop down to the composition level.
 
 <ComponentPreview
-  name="core/checkbox-group/checkbox-group-composition"
+  name="checkbox-group/composition"
   preview={`<CheckboxGroupRoot defaultValue={["nextjs"]}>
     <Label>React frameworks</Label>
     <Description>You can pick any frameworks.</Description>

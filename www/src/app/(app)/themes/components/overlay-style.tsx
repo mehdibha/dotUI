@@ -2,8 +2,8 @@
 
 import { useThemes } from "@/hooks/use-themes";
 import { Radio, RadioGroup } from "@/components/core/radio-group";
+import DialogDemo from "@/components/demos/dialog/basic";
 import { ThemeOverride } from "@/components/docs/theme-override";
-import DialogDemo from "@/demos/dialog/basic";
 
 const variants = [
   {

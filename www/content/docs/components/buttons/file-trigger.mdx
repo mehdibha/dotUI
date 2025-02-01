@@ -11,7 +11,7 @@ links:
 ---
 
 <ComponentPreview
-  name="core/file-trigger/file-trigger-default"
+  name="file-trigger/default"
   preview={`<FileTrigger>
     <Button prefix={<UploadIcon />}>Upload</Button>
 </FileTrigger>`}
@@ -41,7 +41,7 @@ import { FileTrigger } from "@/components/core/file-trigger";
 By default, the file trigger will accept any file type. To support only certain file types, pass an array of the [mime type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types) of files via the `acceptedFileTypes` prop.
 
 <ComponentPreview
-  name="core/file-trigger/file-trigger-file-types"
+  name="file-trigger/file-types"
   preview={`<FileTrigger acceptedFileTypes={["image/*"]}>
     <Button prefix={<UploadIcon />}>Upload</Button>
 </FileTrigger>`}
@@ -52,7 +52,7 @@ By default, the file trigger will accept any file type. To support only certain 
 A file trigger can accept multiple files by passsing the `allowsMultiple` prop.
 
 <ComponentPreview
-  name="core/file-trigger/file-trigger-multiple-files"
+  name="file-trigger/multiple-files"
   preview={`<FileTrigger allowMultiple>
     <Button prefix={<UploadIcon />}>Upload</Button>
 </FileTrigger>`}
@@ -64,7 +64,7 @@ To enable selecting directories instead of files, use the `acceptDirectory` prop
 This reflects the [webkitdirectory](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/webkitdirectory) HTML attribute and allows users to select directories and their contents. Please note that support for this feature varies from browser to browser.
 
 <ComponentPreview
-  name="core/file-trigger/file-trigger-directory-selection"
+  name="file-trigger/directory-selection"
   preview={`<FileTrigger acceptDirectory>
     <Button prefix={<UploadIcon />}>Upload</Button>
 </FileTrigger>`}
@@ -76,7 +76,7 @@ To specify the media capture mechanism to capture media on the spot, pass user f
 This behavior only works on mobile devices. On desktop devices, it will open the file system like normal. [Read more about capture](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/capture).
 
 <ComponentPreview
-  name="core/file-trigger/file-trigger-media-capture"
+  name="file-trigger/media-capture"
   preview={`<FileTrigger defaultCamera="environment">
     <Button prefix={<UploadIcon />}>Upload</Button>
 </FileTrigger>`}

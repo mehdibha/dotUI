@@ -1,10 +1,10 @@
 import { existsSync, promises as fs } from "node:fs";
 import path from "node:path";
 import { rimraf } from "rimraf";
+import { demos } from "@/components/demos/registry";
 import { core } from "@/registry/registry-core";
 import { iconLibraries, icons } from "@/registry/registry-icons";
 import { RegistryItem } from "@/registry/types";
-import { demos } from "@/demos/registry";
 
 const INTERNAL_REGISTRY_PATH = path.join(process.cwd(), "src/__registry__");
 const SOURCE_REGISTRY_PATH = path.join(process.cwd(), "src/registry");
@@ -41,14 +41,23 @@ async function buildDemos() {
 
   index += `  core: {`;
 
-  for (const item of demos) {
-    const demoPath = item.files[0];
-    index += `
-    "${item.name}": {
-      name: "${item.name}",
-      files: ["${demoPath}"],
-      component: React.lazy(() => import("@/${demoPath.replace(".tsx", "")}")),
-    },`;
+  // get all foders in src/components/demos and for each folder get all files
+  const sourcePath = path.join(process.cwd(), "src/components/demos");
+  const folders = await fs.readdir(sourcePath);
+  for (const folder of folders) {
+    const folderPath = path.join(sourcePath, folder);
+    const primitiveName = folder;
+    const demos = await fs.readdir(folderPath);
+    for (const demo of demos) {
+      const demoName = `${primitiveName}-${demo}`;
+      const demoPath = `@/components/demos/${primitiveName}/${demo}`;
+      index += `
+      "${demoName}": {
+        name: "${demoName}",
+        files: ["demos/${primitiveName}/${demo}"],
+        component: React.lazy(() => import("@/${demoPath.replace(".tsx", "")}")),
+      },`;
+    }
   }
 
   index += `

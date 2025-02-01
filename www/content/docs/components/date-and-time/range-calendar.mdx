@@ -13,7 +13,7 @@ links:
 ---
 
 <ComponentPreview
-  name="core/range-calendar/range-calendar-default"
+  name="range-calendar/default"
   preview={`<RangeCalendar aria-label="Trip dates" />`}
 />
 
@@ -91,7 +91,7 @@ import { Heading } from "@/registry/ui/default/core/heading";
 An initial, uncontrolled value can be provided to the `RangeCalendar` using the `defaultValue` prop.
 
 <ComponentPreview
-  name="core/range-calendar/range-calendar-uncontrolled"
+  name="range-calendar/uncontrolled"
   preview={`<RangeCalendar
     aria-label="Trip dates"
     defaultValue={{
@@ -106,7 +106,7 @@ An initial, uncontrolled value can be provided to the `RangeCalendar` using the 
 The Range Calendar component can be controlled by passing the `value` and `onChange` props.
 
 <ComponentPreview
-  name="core/range-calendar/range-calendar-controlled"
+  name="range-calendar/controlled"
   preview={`const [value, setValue] = React.useState<DateRange>({
     start: parseDate("2020-02-03"),
     end: parseDate("2020-02-12"),
@@ -123,7 +123,7 @@ By default, Calendar allows selecting any date. The minValue and maxValue props 
 This example only accepts dates after today.
 
 <ComponentPreview
-  name="core/range-calendar/range-calendar-validation"
+  name="range-calendar/validation"
   preview={`<RangeCalendar aria-label="Trip dates" minValue={today(getLocalTimeZone())} />`}
 />
 
@@ -136,7 +136,7 @@ This example includes multiple unavailable date ranges, e.g. dates when a rental
 {/* prettier-ignore-start */}
 
 <ComponentPreview
-  name="core/range-calendar/range-calendar-unvailable-dates"
+  name="range-calendar/unvailable-dates"
   preview={`const now = today(getLocalTimeZone());
   const disabledRanges = [
     [now, now.add({ days: 5 })],
@@ -167,7 +167,7 @@ The `allowsNonContiguousRanges` prop enables a range to be selected even if ther
 This example prevents selecting weekends, but allows selecting ranges that span multiple weeks.
 
 <ComponentPreview
-  name="core/range-calendar/range-calendar-non-contiguous-ranges"
+  name="range-calendar/non-contiguous-ranges"
   preview={`const now = today(getLocalTimeZone());
   const disabledRanges = [
     [now, now.add({ days: 5 })],
@@ -195,7 +195,7 @@ This example prevents selecting weekends, but allows selecting ranges that span 
 This example validates that the selected date range is a maximum of 1 week in duration.
 
 <ComponentPreview
-  name="core/range-calendar/range-calendar-error-message"
+  name="range-calendar/error-message"
   preview={`const [range, setRange] = React.useState({
     start: today(getLocalTimeZone()),
     end: today(getLocalTimeZone()).add({ weeks: 1, days: 3 }),
@@ -219,7 +219,7 @@ This example validates that the selected date range is a maximum of 1 week in du
 By default, the `RangeCalendar` displays a single month. The `visibleMonths` prop allows displaying up to 3 months at a time.
 
 <ComponentPreview
-  name="core/range-calendar/range-calendar-visible-months"
+  name="range-calendar/visible-months"
   preview={`<RangeCalendar aria-label="Trip dates" visibleMonths={2} />`}
 />
 
@@ -228,7 +228,7 @@ By default, the `RangeCalendar` displays a single month. The `visibleMonths` pro
 The `pageBehavior` prop allows you to control how the range-calendar navigates between months.
 
 <ComponentPreview
-  name="core/range-calendar/range-calendar-page-behaviour"
+  name="range-calendar/page-behaviour"
   preview={`<RangeCalendar aria-label="Trip dates" visibleMonths={2} pageBehavior="single" />`}
 />
 
@@ -237,7 +237,7 @@ The `pageBehavior` prop allows you to control how the range-calendar navigates b
 The `isDisabled` boolean prop makes the `RangeCalendar` disabled. cells cannot be focused or selected.
 
 <ComponentPreview
-  name="core/range-calendar/range-calendar-disabled"
+  name="range-calendar/disabled"
   preview={`<RangeCalendar aria-label="Trip dates" isDisabled />`}
 />
 
@@ -246,7 +246,7 @@ The `isDisabled` boolean prop makes the `RangeCalendar` disabled. cells cannot b
 The `isReadOnly` boolean prop makes the `RangeCalendar`'s value immutable. Unlike `isDisabled`, the `RangeCalendar` remains focusable.
 
 <ComponentPreview
-  name="core/range-calendar/range-calendar-read-only"
+  name="range-calendar/read-only"
   preview={`<RangeCalendar
     aria-label="Trip dates"
     isReadOnly
@@ -263,7 +263,7 @@ If you need to customize things further, you can drop down to the composition le
 
 <ComponentPreview
   suspense
-  name="core/range-calendar/range-calendar-composition"
+  name="range-calendar/composition"
   preview={`<RangeCalendarRoot aria-label="Trip dates">
     <CalendarHeader>
       <Button slot="previous">

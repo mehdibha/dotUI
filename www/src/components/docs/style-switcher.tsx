@@ -43,11 +43,11 @@ export function StyleSwitcher({ componentName }: { componentName: string }) {
           {variants &&
             variants.map((item) => (
               <Item
-                key={item.name}
-                id={item.name}
-                description={item.description}
+                key={item}
+                id={item}
+                // description={item.description}
               >
-                {item.label ?? item.name}{" "}
+                {item}
                 {currentThemeVariant === item.name && "(current theme)"}
               </Item>
             ))}
@@ -57,7 +57,7 @@ export function StyleSwitcher({ componentName }: { componentName: string }) {
   );
 }
 
-const getAllComponentVariants = (name: string) => {
+const getPrimitiveInfo = (name: string) => {
   const item = core.find((item) => item.name === name);
 
   if (hasVariants(item)) {

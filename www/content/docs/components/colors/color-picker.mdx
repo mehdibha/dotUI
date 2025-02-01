@@ -11,7 +11,7 @@ links:
 ---
 
 <ComponentPreview
-  name="core/color-picker/color-picker-default"
+  name="color-picker/default"
   preview={`<ColorPicker defaultValue="#5100FF" />`}
 />
 
@@ -52,7 +52,7 @@ import { DialogRoot, Dialog } from "@/components/core/dialog";
 An initial, uncontrolled value can be provided to the `ColorPicker` using the `defaultValue` prop.
 
 <ComponentPreview
-  name="core/color-picker/color-picker-uncontrolled"
+  name="color-picker/uncontrolled"
   preview={`<ColorPicker defaultValue="#5100FF" />`}
 />
 
@@ -61,7 +61,7 @@ An initial, uncontrolled value can be provided to the `ColorPicker` using the `d
 Use the `value` and `onChange` props to control the color picker value.
 
 <ComponentPreview
-  name="core/color-picker/color-picker-controlled"
+  name="color-picker/controlled"
   preview={`const [value, setValue] = React.useState(parseColor("hsl(25, 100%, 50%)"));
  <ColorPicker value={value} onChange={setValue} />;`}
 />
@@ -71,7 +71,7 @@ Use the `value` and `onChange` props to control the color picker value.
 `ColorPicker` accepts all [button options](/docs/components/buttons/button#options).
 
 <ComponentPreview
-  name="core/color-picker/color-picker-options"
+  name="color-picker/options"
   preview={`<ColorPicker size="sm" shape="rectangle">
     Fill color
   </ColorPicker>`}
@@ -82,7 +82,7 @@ Use the `value` and `onChange` props to control the color picker value.
 If you need to customize things further, you can drop down to the composition level.
 
 <ComponentPreview
-  name="core/color-picker/color-picker-composition"
+  name="color-picker/composition"
   preview={`<ColorPickerRoot defaultValue="#5100FF">
     <DialogRoot>
       <ColorPickerButton />
@@ -99,13 +99,13 @@ If you need to customize things further, you can drop down to the composition le
 
 This example uses [ColorSlider](/docs/components/colors/color-slider) to allow a user to adjust each channel of a color value, with a [Select](/docs/components/menus-and-selection/select) to switch between color spaces.
 
-<ComponentPreview name="core/color-picker/color-picker-channel-sliders" />
+<ComponentPreview name="color-picker/channel-sliders" />
 
 ### Swatches
 
 This example uses a [ColorSwatchPicker](/docs/components/colors/color-swatch-picker) to provide color presets for a color picker.
 
-<ComponentPreview name="core/color-picker/color-picker-swatches" />
+<ComponentPreview name="color-picker/swatches" />
 
 ## API Reference
 

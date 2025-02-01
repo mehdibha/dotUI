@@ -11,7 +11,7 @@ links:
 ---
 
 <ComponentPreview
-  name="core/tooltip/tooltip-default"
+  name="tooltip/default"
   preview={`<Tooltip content={<span>Create new issue <Kbd>C</Kbd></span>}>
     <Button shape="square">
       <SquarePenIcon />
@@ -68,7 +68,7 @@ Use `Tooltip` to display a description of an element on hover or focus.
 Use the `variant` prop to change the appearance of the tooltip.
 
 <ComponentPreview
-  name="core/tooltip/tooltip-variant"
+  name="tooltip/variant"
   preview={`<Tooltip variant="inverse" content="Create new issue">
     <Button shape="square">
       <SquarePenIcon />
@@ -81,7 +81,7 @@ Use the `variant` prop to change the appearance of the tooltip.
 The Tooltip's placement with respect to its trigger element can be adjusted using the `placement` prop. See the props table for a full list of available placement combinations.
 
 <ComponentPreview
-  name="core/tooltip/tooltip-placement"
+  name="tooltip/placement"
   preview={`<Tooltip placement="top" content="Create new issue"><Button /></Tooltip>
 <Tooltip placement="bottom" content="Create new issue"><Button /></Tooltip>
 <Tooltip placement="left" content="Create new issue"><Button /></Tooltip>
@@ -93,7 +93,7 @@ The Tooltip's placement with respect to its trigger element can be adjusted usin
 The delay duration (the time from when the mouse enters a tooltip trigger until the tooltip opens) and the close delay can be customised.
 
 <ComponentPreview
-  name="core/tooltip/tooltip-delay"
+  name="tooltip/delay"
   preview={`<Tooltip delay={delay} closeDelay={closeDelay} content="Create new issue">
     <Button>
       <PenIcon />
@@ -106,7 +106,7 @@ The delay duration (the time from when the mouse enters a tooltip trigger until 
 Use the `showArrow` prop to add an arrow to the tooltip.
 
 <ComponentPreview
-  name="core/tooltip/tooltip-arrow"
+  name="tooltip/arrow"
   preview={`<Tooltip content="Create new issue" arrow>
     <Button>
       <PenIcon />
@@ -119,7 +119,7 @@ Use the `showArrow` prop to add an arrow to the tooltip.
 This option determines whether or not a tooltip should be able to switch sides when constrained by space.
 
 <ComponentPreview
-  name="core/tooltip/tooltip-flip"
+  name="tooltip/flip"
   preview={`<Tooltip shouldFlip={shouldFlip} content="Create new issue">
     <Button>
       <PenIcon />
@@ -132,7 +132,7 @@ This option determines whether or not a tooltip should be able to switch sides w
 The offset is the distance between the end of the tip and the target.
 
 <ComponentPreview
-  name="core/tooltip/tooltip-offset"
+  name="tooltip/offset"
   preview={`<Tooltip offset={offset} content="Create new issue">
     <Button>
       <PenIcon />
@@ -145,7 +145,7 @@ The offset is the distance between the end of the tip and the target.
 To make sure that the tooltip will stay within certain boundaries (e.g., a browser window) it's possible to define a container and a container padding value to respect. The default value for this is 12 px.
 
 <ComponentPreview
-  name="core/tooltip/tooltip-container-padding"
+  name="tooltip/container-padding"
   preview={`<Tooltip containerPadding={containerPadding} content="Create new issue">
     <Button>
       <PenIcon />
@@ -158,7 +158,7 @@ To make sure that the tooltip will stay within certain boundaries (e.g., a brows
 For more flexibility, you can drop down to the composition level.
 
 <ComponentPreview
-  name="core/tooltip/tooltip-composition"
+  name="tooltip/composition"
   preview={`<TooltipRoot>
     <Button>Hover</Button>
     <TooltipContent>

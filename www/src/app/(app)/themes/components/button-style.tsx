@@ -2,9 +2,9 @@
 
 import { useThemes } from "@/hooks/use-themes";
 import { Radio, RadioGroup } from "@/components/core/radio-group";
+import ButtonVariants from "@/components/demos/button/variants";
+import ToggleButtonVariants from "@/components/demos/toggle-button/variants";
 import { ThemeOverride } from "@/components/docs/theme-override";
-import ButtonVariants from "@/demos/button/variants";
-import ToggleButtonVariants from "@/demos/toggle-button/variants";
 
 const variants = [
   {

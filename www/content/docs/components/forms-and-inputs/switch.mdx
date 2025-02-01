@@ -11,7 +11,7 @@ links:
 ---
 
 <ComponentPreview
-  name="core/switch/switch-default"
+  name="switch/default"
   preview={`<Switch>Focus mode</Switch>`}
 />
 
@@ -53,14 +53,14 @@ import {
 
 Use the `variant` prop to control the visual style of the switch.
 
-<ComponentPreview name="core/switch/switch-card" />
+<ComponentPreview name="switch/card" />
 
 ### Size
 
 Use the `size` prop to control the size of the switch. The default variant is `"md"`.
 
 <ComponentPreview
-  name="core/switch/switch-sizes"
+  name="switch/sizes"
   preview={`<Switch size="sm" />
 <Switch size="md" />
 <Switch size="lg" />`}
@@ -71,7 +71,7 @@ Use the `size` prop to control the size of the switch. The default variant is `"
 A visual label can be provided using the component children or a hidden label using `aria-label` prop.
 
 <ComponentPreview
-  name="core/switch/switch-label"
+  name="switch/label"
   preview={`<Switch>Focus mode</Switch>
 <Switch aria-label="Focus mode" />`}
 />
@@ -81,7 +81,7 @@ A visual label can be provided using the component children or a hidden label us
 Use the `isDisabled` prop to disable the switch.
 
 <ComponentPreview
-  name="core/switch/switch-disabled"
+  name="switch/disabled"
   preview={`<Switch isDisabled>Focus Mode</Switch>`}
 />
 
@@ -90,7 +90,7 @@ Use the `isDisabled` prop to disable the switch.
 The `defaultSelected` prop can be used to set the default state.
 
 <ComponentPreview
-  name="core/switch/switch-uncontrolled"
+  name="switch/uncontrolled"
   preview={`<Switch defaultSelected>Airplane Mode</Switch>`}
 />
 
@@ -99,7 +99,7 @@ The `defaultSelected` prop can be used to set the default state.
 Use the `isSelected` and `onChange` props to control the value of the input.
 
 <ComponentPreview
-  name="core/switch/switch-controlled"
+  name="switch/controlled"
   preview={`const [isSelected, setSelected] = React.useState(true);
   return (
     <Switch isSelected={isSelected} onChange={setSelected}>
@@ -113,7 +113,7 @@ Use the `isSelected` and `onChange` props to control the value of the input.
 If you need to customize things further, you can drop down to the composition level.
 
 <ComponentPreview
-  name="core/switch/switch-composition"
+  name="switch/composition"
   preview={`<SwitchRoot>
     <SwitchIndicator>
       <SwitchThumb />

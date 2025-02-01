@@ -11,7 +11,7 @@ links:
 ---
 
 <ComponentPreview
-  name="core/tabs/tabs-basic"
+  name="tabs/basic"
   preview={`<Tabs>
     <TabList>
       <Tab id="overview">Overview</Tab>
@@ -35,7 +35,7 @@ npx dotui-cli@latest add tabs
 Use the `selectedKey` and `onSelectionChange` props to control the selected tab.
 
 <ComponentPreview
-  name="core/tabs/tabs-controlled"
+  name="tabs/controlled"
   preview={`const [selectedTab, setSelectedTab] = React.useState<Key>("overview");
   return (
     <Tabs selectedKey={selectedTab} onSelectionChange={setSelectedTab}>
@@ -58,7 +58,7 @@ Use the `selectedKey` and `onSelectionChange` props to control the selected tab.
 Use the `variant` prop to set the visual style of the tabs.
 
 <ComponentPreview
-  name="core/tabs/tabs-variant"
+  name="tabs/variant"
   preview={`<Tabs variant="solid">
     <TabList>
       <Tab id="overview">Overview</Tab>
@@ -76,7 +76,7 @@ Use the `variant` prop to set the visual style of the tabs.
 Use the `orientation` prop to set the orientation of the tabs.
 
 <ComponentPreview
-  name="core/tabs/tabs-vertical"
+  name="tabs/vertical"
   preview={`<Tabs orientation="vertical">
     <TabList>
       <Tab id="overview">Overview</Tab>
@@ -94,7 +94,7 @@ Use the `orientation` prop to set the orientation of the tabs.
 Use the `isDisabled` prop on `Tabs` or `Tab` to disable the entire tab list or individual tabs.
 
 <ComponentPreview
-  name="core/tabs/tabs-disabled"
+  name="tabs/disabled"
   preview={`<Tabs isDisabled> {/* All tabs disabled */}
     <TabList>
       <Tab id="overview">Overview</Tab>
@@ -123,7 +123,7 @@ Use the `isDisabled` prop on `Tabs` or `Tab` to disable the entire tab list or i
 Prevent keyboard activation of tabs by setting `keyboardActivation` prop to `'manual'`.
 
 <ComponentPreview
-  name="core/tabs/tabs-keyboard-activation"
+  name="tabs/keyboard-activation"
   preview={`<Tabs keyboardActivation="manual">
     <TabList>
       <Tab id="overview">Overview</Tab>

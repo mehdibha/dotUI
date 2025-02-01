@@ -2,11 +2,11 @@
 
 import { useThemes } from "@/hooks/use-themes";
 import { Radio, RadioGroup } from "@/components/core/radio-group";
+import ColorPickerDemo from "@/components/demos/color-picker/default";
+import ComboboxDemo from "@/components/demos/combobox/basic";
+import DatePickerDemo from "@/components/demos/date-picker/default";
+import SelectDemo from "@/components/demos/select/basic";
 import { ThemeOverride } from "@/components/docs/theme-override";
-import ColorPickerDemo from "@/demos/color-picker/default";
-import ComboboxDemo from "@/demos/combobox/basic";
-import DatePickerDemo from "@/demos/date-picker/default";
-import SelectDemo from "@/demos/select/basic";
 
 const variants = [
   {

@@ -2,10 +2,10 @@
 
 import { useThemes } from "@/hooks/use-themes";
 import { Radio, RadioGroup } from "@/components/core/radio-group";
+import ComboboxDemo from "@/components/demos/combobox/basic";
+import ListBoxDemo from "@/components/demos/list-box/basic";
+import SelectDemo from "@/components/demos/select/basic";
 import { ThemeOverride } from "@/components/docs/theme-override";
-import ComboboxDemo from "@/demos/combobox/basic";
-import ListBoxDemo from "@/demos/list-box/basic";
-import SelectDemo from "@/demos/select/basic";
 
 const variants = [
   {

@@ -10,10 +10,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/colors/color-area.mdx?plain=1
 ---
 
-<ComponentPreview
-  name="core/color-area/color-area-default"
-  preview={`<ColorArea />`}
-/>
+<ComponentPreview name="color-area/default" preview={`<ColorArea />`} />
 
 ## Installation
 
@@ -43,7 +40,7 @@ import { ColorThumb } from "@/components/core/color-thumb";
 An initial, uncontrolled value can be provided to the `ColorArea` using the `defaultValue` prop.
 
 <ComponentPreview
-  name="core/color-area/color-area-uncontrolled"
+  name="color-area/uncontrolled"
   preview={`<ColorArea defaultValue="hsl(30, 100%, 50%)" />`}
 />
 
@@ -52,7 +49,7 @@ An initial, uncontrolled value can be provided to the `ColorArea` using the `def
 Use the `value` and `onChange` props to control the value of the slider.
 
 <ComponentPreview
-  name="core/color-area/color-area-controlled"
+  name="color-area/controlled"
   preview={`const [value, setValue] = React.useState(parseColor("hsl(0, 100%, 50%)"))
 return <ColorArea value={value} onChange={setValue} xChannel="saturation" yChannel="lightness" />`}
 />
@@ -62,7 +59,7 @@ return <ColorArea value={value} onChange={setValue} xChannel="saturation" yChann
 `xChannel` and `yChannel` props may be provided to specify which color channels the color area should display
 
 <ComponentPreview
-  name="core/color-area/color-area-channels"
+  name="color-area/channels"
   preview={`<ColorArea xChannel="red" yChannel="blue" />`}
 />
 
@@ -73,7 +70,7 @@ return <ColorArea value={value} onChange={setValue} xChannel="saturation" yChann
 Use the `isDisabled` prop to disable the color area.
 
 <ComponentPreview
-  name="core/color-area/color-area-disabled"
+  name="color-area/disabled"
   preview={`<ColorArea isDisabled />`}
 />
 
@@ -82,7 +79,7 @@ Use the `isDisabled` prop to disable the color area.
 If you need to customize things further, you can drop down to the composition level.
 
 <ComponentPreview
-  name="core/color-area/color-area-composition"
+  name="color-area/composition"
   preview={`<ColorAreaRoot>
     <ColorThumb />
   </ColorAreaRoot>`}

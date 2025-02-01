@@ -2,6 +2,7 @@
 
 import { Link } from "@/components/core/link";
 import { RadioGroup, Radio } from "@/components/core/radio-group";
+import FileTriggerDemo from "@/components/demos/file-trigger/default";
 import { Alert } from "@/components/dynamic-core/alert";
 import { Avatar } from "@/components/dynamic-core/avatar";
 import { Button } from "@/components/dynamic-core/button";
@@ -29,7 +30,6 @@ import {
 import { Tabs, Tab, TabList, TabPanel } from "@/components/dynamic-core/tabs";
 import { TextField } from "@/components/dynamic-core/text-field";
 import { GitHubIcon, TwitterIcon, GoogleIcon } from "@/components/icons";
-import FileTriggerDemo from "@/demos/file-trigger/default";
 
 export function ComponentsOverview() {
   return (

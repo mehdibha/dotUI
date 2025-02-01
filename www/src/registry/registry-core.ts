@@ -1,27 +1,43 @@
-import type { Registry } from "@/registry/types";
+import type { Registry } from "./types";
 
 export const core: Registry = [
   {
     name: "alert",
     type: "registry:core",
-    variants: [
+    variants: ["basic", "notch", "notch-2"],
+  },
+  {
+    name: "alert_basic",
+    description: "Minimal with a subtle border and muted background.",
+    type: "registry:core",
+    files: [
       {
-        name: "alert_basic",
-      },
-      {
-        name: "alert-02",
-      },
-      {
-        name: "alert-03",
+        path: "core/alert_basic.tsx",
+        type: "registry:core",
+        target: "core/alert.tsx",
       },
     ],
   },
   {
-    name: "alert-01",
+    name: "alert_notch",
+    description: "Alert with a bold left border for emphasis.",
     type: "registry:core",
     files: [
       {
-        path: "core/alert-01.tsx",
+        path: "core/alert_notch.tsx",
+        type: "registry:core",
+        target: "core/alert.tsx",
+      },
+    ],
+  },
+  {
+    name: "alert_notch-2",
+    description:
+      "Alert with a bold left border for emphasis and muted background.",
+    type: "registry:core",
+    files: [
+      {
+        path: "core/alert_notch.tsx",
         type: "registry:core",
         target: "core/alert.tsx",
       },
@@ -30,18 +46,9 @@ export const core: Registry = [
   {
     name: "avatar",
     type: "registry:core",
-    variants: [
-      {
-        name: "avatar-01",
-      },
-    ],
-  },
-  {
-    name: "avatar-01",
-    type: "registry:core",
     files: [
       {
-        path: "core/avatar-01.tsx",
+        path: "core/avatar_basic.tsx",
         type: "registry:core",
         target: "core/avatar.tsx",
       },
@@ -50,18 +57,9 @@ export const core: Registry = [
   {
     name: "badge",
     type: "registry:core",
-    variants: [
-      {
-        name: "badge-01",
-      },
-    ],
-  },
-  {
-    name: "badge-01",
-    type: "registry:core",
     files: [
       {
-        path: "core/badge-01.tsx",
+        path: "core/badge_basic.tsx",
         type: "registry:core",
         target: "core/badge.tsx",
       },
@@ -70,19 +68,9 @@ export const core: Registry = [
   {
     name: "breadcrumbs",
     type: "registry:core",
-    variants: [
-      {
-        name: "breadcrumbs-01",
-      },
-    ],
-  },
-  {
-    name: "breadcrumbs-01",
-    type: "registry:core",
-    dependencies: ["react-aria-components"],
     files: [
       {
-        path: "core/breadcrumbs-01.tsx",
+        path: "core/breadcrumbs_basic.tsx",
         type: "registry:core",
         target: "core/breadcrumbs.tsx",
       },
@@ -91,62 +79,59 @@ export const core: Registry = [
   {
     name: "button",
     type: "registry:core",
-    variants: [
-      {
-        name: "button-01",
-      },
-      {
-        name: "button-02",
-      },
-      {
-        name: "button-03",
-      },
-      {
-        name: "button-04",
-      },
-    ],
+    variants: ["basic", "brutalist", "ripple"],
   },
   {
-    name: "button-01",
+    name: "button_basic",
     type: "registry:core",
-    dependencies: ["react-aria-components"],
     files: [
       {
-        path: "core/button-01.tsx",
+        path: "core/button_basic.tsx",
         type: "registry:core",
         target: "core/button.tsx",
       },
     ],
   },
   {
-    name: "button-02",
+    name: "button_brutalist",
     type: "registry:core",
-    dependencies: ["react-aria-components"],
     files: [
       {
-        path: "core/button-02.tsx",
+        path: "core/button_brutalist.tsx",
         type: "registry:core",
         target: "core/button.tsx",
+      },
+    ],
+  },
+  {
+    name: "button_ripple",
+    type: "registry:core",
+    files: [
+      {
+        path: "core/button_ripple.tsx",
+        type: "registry:core",
+        target: "core/button.tsx",
+      },
+      {
+        path: "core/ripple.tsx",
+        type: "registry:core",
+        target: "core/ripple.tsx",
+      },
+      {
+        path: "hooks/use-ripple.tsx",
+        type: "registry:hook",
+        target: "hooks/use-ripple.tsx",
       },
     ],
   },
   {
     name: "calendar",
     type: "registry:core",
-    variants: [
-      {
-        name: "calendar_basic",
-      },
-      {
-        name: "calendar_cal",
-      },
-    ],
+    variants: ["basic", "cal"],
   },
   {
     name: "calendar_basic",
     type: "registry:core",
-    dependencies: ["react-aria-components"],
-    registryDependencies: ["button", "heading", "text"],
     files: [
       {
         path: "core/calendar_basic.tsx",
@@ -158,8 +143,6 @@ export const core: Registry = [
   {
     name: "calendar_cal",
     type: "registry:core",
-    dependencies: ["react-aria-components"],
-    registryDependencies: ["button", "heading", "text"],
     files: [
       {
         path: "core/calendar_cal.tsx",
@@ -171,17 +154,6 @@ export const core: Registry = [
   {
     name: "checkbox",
     type: "registry:core",
-    variants: [
-      {
-        name: "checkbox_basic",
-        label: "Basic",
-      },
-    ],
-  },
-  {
-    name: "checkbox_basic",
-    type: "registry:core",
-    dependencies: ["react-aria-components"],
     files: [
       {
         path: "core/checkbox_basic.tsx",
@@ -193,21 +165,9 @@ export const core: Registry = [
   {
     name: "checkbox-group",
     type: "registry:core",
-    variants: [
-      {
-        name: "checkbox-group_basic",
-        label: "Basic",
-      },
-    ],
-  },
-  {
-    name: "checkbox-group_basic",
-    type: "registry:core",
-    dependencies: ["react-aria-components"],
-    registryDependencies: ["checkbox"],
     files: [
       {
-        path: "core/checkbox-group-_basic.tsx",
+        path: "core/checkbox-group_basic.tsx",
         type: "registry:core",
         target: "core/checkbox-group.tsx",
       },
@@ -216,20 +176,9 @@ export const core: Registry = [
   {
     name: "color-area",
     type: "registry:core",
-    variants: [
-      {
-        name: "color-area-01",
-      },
-    ],
-  },
-  {
-    name: "color-area-01",
-    type: "registry:core",
-    dependencies: ["react-aria-components"],
-    registryDependencies: ["color-thumb"],
     files: [
       {
-        path: "core/color-area-01.tsx",
+        path: "core/color-area_basic.tsx",
         type: "registry:core",
         target: "core/color-area.tsx",
       },
@@ -238,20 +187,9 @@ export const core: Registry = [
   {
     name: "color-field",
     type: "registry:core",
-    variants: [
-      {
-        name: "color-field-01",
-      },
-    ],
-  },
-  {
-    name: "color-field-01",
-    type: "registry:core",
-    dependencies: ["react-aria-components"],
-    registryDependencies: ["field", "input"],
     files: [
       {
-        path: "core/color-field/color-field-01.tsx",
+        path: "core/color-field_basic.tsx",
         type: "registry:core",
         target: "core/color-field.tsx",
       },
@@ -260,20 +198,9 @@ export const core: Registry = [
   {
     name: "color-picker",
     type: "registry:core",
-    dependencies: ["react-aria-components"],
-    registryDependencies: [
-      "button",
-      "color-area",
-      "color-field",
-      "color-slider",
-      "color-swatch",
-      "dialog",
-      "list-box",
-      "select",
-    ],
     files: [
       {
-        path: "core/color-picker/color-picker.tsx",
+        path: "core/color-picker_basic.tsx",
         type: "registry:core",
         target: "core/color-picker.tsx",
       },
@@ -282,11 +209,9 @@ export const core: Registry = [
   {
     name: "color-slider",
     type: "registry:core",
-    dependencies: ["react-aria-components"],
-    registryDependencies: ["color-thumb", "field"],
     files: [
       {
-        path: "core/color-slider/color-slider.tsx",
+        path: "core/color-slider_basic.tsx",
         type: "registry:core",
         target: "core/color-slider.tsx",
       },
@@ -295,22 +220,31 @@ export const core: Registry = [
   {
     name: "color-swatch",
     type: "registry:core",
-    dependencies: ["react-aria-components"],
     files: [
       {
-        path: "core/color-swatch/color-swatch.tsx",
+        path: "core/color-swatch_basic.tsx",
         type: "registry:core",
         target: "core/color-swatch.tsx",
       },
     ],
   },
   {
-    name: "color-thumb",
+    name: "color-swatch-picker",
     type: "registry:core",
-    dependencies: ["react-aria-components"],
     files: [
       {
-        path: "core/color-thumb/color-thumb.tsx",
+        path: "core/color-swatch-picker_basic.tsx",
+        type: "registry:core",
+        target: "core/color-swatch-picker.tsx",
+      },
+    ],
+  },
+  {
+    name: "color-thumb",
+    type: "registry:core",
+    files: [
+      {
+        path: "core/color-thumb_basic.tsx",
         type: "registry:core",
         target: "core/color-thumb.tsx",
       },
@@ -319,24 +253,31 @@ export const core: Registry = [
   {
     name: "combobox",
     type: "registry:core",
-    dependencies: ["react-aria-components"],
-    registryDependencies: ["button", "field", "input", "list-box", "overlay"],
     files: [
       {
-        path: "core/combobox/combobox.tsx",
+        path: "core/combobox_basic.tsx",
         type: "registry:core",
         target: "core/combobox.tsx",
       },
     ],
   },
   {
-    name: "date-field",
+    name: "command",
     type: "registry:core",
-    dependencies: ["react-aria-components"],
-    registryDependencies: ["date-input", "field", "input"],
     files: [
       {
-        path: "core/date-field/date-field.tsx",
+        path: "core/command_basic.tsx",
+        type: "registry:core",
+        target: "core/command.tsx",
+      },
+    ],
+  },
+  {
+    name: "date-field",
+    type: "registry:core",
+    files: [
+      {
+        path: "core/date-field_basic.tsx",
         type: "registry:core",
         target: "core/date-field.tsx",
       },
@@ -345,10 +286,9 @@ export const core: Registry = [
   {
     name: "date-input",
     type: "registry:core",
-    dependencies: ["react-aria-components"],
     files: [
       {
-        path: "core/date-input/date-input.tsx",
+        path: "core/date-input_basic.tsx",
         type: "registry:core",
         target: "core/date-input.tsx",
       },
@@ -357,18 +297,9 @@ export const core: Registry = [
   {
     name: "date-picker",
     type: "registry:core",
-    dependencies: ["react-aria-components"],
-    registryDependencies: [
-      "button",
-      "calendar",
-      "dialog",
-      "date-input",
-      "field",
-      "input",
-    ],
     files: [
       {
-        path: "core/date-picker/date-picker.tsx",
+        path: "core/date-picker_basic.tsx",
         type: "registry:core",
         target: "core/date-picker.tsx",
       },
@@ -377,18 +308,9 @@ export const core: Registry = [
   {
     name: "date-range-picker",
     type: "registry:core",
-    dependencies: ["react-aria-components"],
-    registryDependencies: [
-      "button",
-      "calendar",
-      "dialog",
-      "date-input",
-      "field",
-      "input",
-    ],
     files: [
       {
-        path: "core/date-range-picker/date-range-picker.tsx",
+        path: "core/date-range-picker_basic.tsx",
         type: "registry:core",
         target: "core/date-range-picker.tsx",
       },
@@ -397,23 +319,31 @@ export const core: Registry = [
   {
     name: "dialog",
     type: "registry:core",
-    dependencies: ["react-aria-components"],
-    registryDependencies: ["overlay", "heading", "text"],
     files: [
       {
-        path: "core/dialog/dialog.tsx",
+        path: "core/dialog_basic.tsx",
         type: "registry:core",
         target: "core/dialog.tsx",
       },
     ],
   },
   {
-    name: "drop-zone",
+    name: "drawer",
     type: "registry:core",
-    dependencies: ["react-aria-components"],
     files: [
       {
-        path: "core/drop-zone/drop-zone.tsx",
+        path: "core/drawer_basic.tsx",
+        type: "registry:core",
+        target: "core/drawer.tsx",
+      },
+    ],
+  },
+  {
+    name: "drop-zone",
+    type: "registry:core",
+    files: [
+      {
+        path: "core/drop-zone_basic.tsx",
         type: "registry:core",
         target: "core/drop-zone.tsx",
       },
@@ -422,10 +352,9 @@ export const core: Registry = [
   {
     name: "field",
     type: "registry:core",
-    dependencies: ["react-aria-components"],
     files: [
       {
-        path: "core/field/field.tsx",
+        path: "core/field_basic.tsx",
         type: "registry:core",
         target: "core/field.tsx",
       },
@@ -434,10 +363,9 @@ export const core: Registry = [
   {
     name: "file-trigger",
     type: "registry:core",
-    dependencies: ["react-aria-components"],
     files: [
       {
-        path: "core/file-trigger/file-trigger.tsx",
+        path: "core/file-trigger_basic.tsx",
         type: "registry:core",
         target: "core/file-trigger.tsx",
       },
@@ -446,17 +374,22 @@ export const core: Registry = [
   {
     name: "form",
     type: "registry:core",
-    variants: [
+    variants: ["basic", "react-hook-form"],
+  },
+  {
+    name: "form_basic",
+    type: "registry:core",
+    files: [
       {
-        name: "react-hook-form",
-        label: "React Hook Form",
+        path: "core/form_basic.tsx",
+        type: "registry:core",
+        target: "core/form.tsx",
       },
     ],
   },
   {
-    name: "react-hook-form",
+    name: "form_react-hook-form",
     type: "registry:core",
-    dependencies: ["react-hook-form", "@hookform/resolvers", "zod"],
     files: [
       {
         path: "core/form_react-hook-form.tsx",
@@ -466,40 +399,16 @@ export const core: Registry = [
     ],
   },
   {
-    name: "group",
-    type: "registry:core",
-    dependencies: ["react-aria-components"],
-    files: [
-      {
-        path: "core/group/group.tsx",
-        type: "registry:core",
-        target: "core/group.tsx",
-      },
-    ],
-  },
-  {
-    name: "heading",
-    type: "registry:core",
-    dependencies: ["react-aria-components"],
-    files: [
-      {
-        path: "core/heading/heading.tsx",
-        type: "registry:core",
-        target: "core/heading.tsx",
-      },
-    ],
-  },
-  {
     name: "input",
     type: "registry:core",
-    dependencies: [
-      "react-aria-components",
-      "@react-aria/utils",
-      "@react-stately/utils",
-    ],
+    variants: ["basic"],
+  },
+  {
+    name: "input_basic",
+    type: "registry:core",
     files: [
       {
-        path: "core/input/input.tsx",
+        path: "core/input_basic.tsx",
         type: "registry:core",
         target: "core/input.tsx",
       },
@@ -508,181 +417,190 @@ export const core: Registry = [
   {
     name: "kbd",
     type: "registry:core",
-    dependencies: ["react-aria-components"],
     files: [
       {
-        path: "core/kbd/kbd.tsx",
+        path: "core/kbd_basic.tsx",
         type: "registry:core",
         target: "core/kbd.tsx",
       },
     ],
   },
   {
-    name: "link",
-    type: "registry:core",
-    dependencies: ["react-aria-components"],
-    files: [
-      {
-        path: "core/link/link.tsx",
-        type: "registry:core",
-        target: "core/link.tsx",
-      },
-    ],
-  },
-  {
     name: "list-box",
     type: "registry:core",
-    dependencies: ["react-aria-components"],
-    registryDependencies: ["text"],
     files: [
       {
-        path: "core/list-box/list-box.tsx",
+        path: "core/list-box_basic.tsx",
         type: "registry:core",
         target: "core/list-box.tsx",
       },
     ],
   },
   {
-    name: "menu",
+    name: "list-box",
     type: "registry:core",
-    dependencies: ["react-aria-components"],
-    registryDependencies: ["overlay", "kbd", "text"],
     files: [
       {
-        path: "core/menu/menu.tsx",
+        path: "core/list-box_basic.tsx",
+        type: "registry:core",
+        target: "core/list-box.tsx",
+      },
+    ],
+  },
+  {
+    name: "loader",
+    type: "registry:core",
+    variants: ["dots", "line", "ring", "tailspin", "wave"],
+  },
+  {
+    name: "loader_dots",
+    type: "registry:core",
+    files: [
+      {
+        path: "core/loader_dots.tsx",
+        type: "registry:core",
+        target: "core/loader.tsx",
+      },
+    ],
+  },
+  {
+    name: "loader_line",
+    type: "registry:core",
+    files: [
+      {
+        path: "core/loader_line.tsx",
+        type: "registry:core",
+        target: "core/loader.tsx",
+      },
+    ],
+  },
+  {
+    name: "loader_ring",
+    type: "registry:core",
+    files: [
+      {
+        path: "core/loader_ring.tsx",
+        type: "registry:core",
+        target: "core/loader.tsx",
+      },
+    ],
+  },
+  {
+    name: "loader_tailspin",
+    type: "registry:core",
+    files: [
+      {
+        path: "core/loader_tailspin.tsx",
+        type: "registry:core",
+        target: "core/loader.tsx",
+      },
+    ],
+  },
+  {
+    name: "loader_wave",
+    type: "registry:core",
+    files: [
+      {
+        path: "core/loader_wave.tsx",
+        type: "registry:core",
+        target: "core/loader.tsx",
+      },
+    ],
+  },
+  {
+    name: "menu",
+    type: "registry:core",
+    files: [
+      {
+        path: "core/menu_basic.tsx",
         type: "registry:core",
         target: "core/menu.tsx",
       },
     ],
   },
-  // TODO: add useMediaQuery
+  {
+    name: "modal",
+    type: "registry:core",
+    files: [
+      {
+        path: "core/modal_basic.tsx",
+        type: "registry:core",
+        target: "core/modal.tsx",
+      },
+    ],
+  },
   {
     name: "number-field",
     type: "registry:core",
-    dependencies: ["react-aria-components"],
-    registryDependencies: ["input", "field", "button"],
     files: [
       {
-        path: "core/number-field/number-field.tsx",
+        path: "core/number-field_basic.tsx",
         type: "registry:core",
         target: "core/number-field.tsx",
       },
     ],
   },
-  // TODO: add useMediaQuery
   {
     name: "overlay",
     type: "registry:core",
-    dependencies: ["react-aria-components"],
-    registryDependencies: ["button"],
     files: [
       {
-        path: "core/overlay/overlay.tsx",
-        type: "registry:core",
-        target: "core/overlay.tsx",
-      },
-      {
-        path: "core/overlay/use-motion-drawer.tsx",
+        path: "core/overlay_basic.tsx",
         type: "registry:core",
         target: "core/overlay.tsx",
       },
     ],
   },
   {
-    name: "progress",
+    name: "popover",
     type: "registry:core",
-    dependencies: ["react-aria-components"],
-    registryDependencies: ["field"],
     files: [
       {
-        path: "core/progress/progress.tsx",
+        path: "core/popover_basic.tsx",
         type: "registry:core",
-        target: "core/progress.tsx",
+        target: "core/popover.tsx",
+      },
+    ],
+  },
+  {
+    name: "progress-bar",
+    type: "registry:core",
+    files: [
+      {
+        path: "core/progress-bar_basic.tsx",
+        type: "registry:core",
+        target: "core/progress-bar.tsx",
       },
     ],
   },
   {
     name: "radio-group",
     type: "registry:core",
-    variants: [
-      {
-        name: "radio-group_basic",
-        label: "Basic",
-      },
-    ],
-  },
-  {
-    name: "radio-group_basic",
-    type: "registry:core",
-    dependencies: ["react-aria-components"],
-    registryDependencies: ["field"],
     files: [
       {
-        path: "core/radio-group-_basic.tsx",
+        path: "core/radio-group_basic.tsx",
         type: "registry:core",
         target: "core/radio-group.tsx",
-      },
-    ],
-  },
-
-  {
-    name: "radio-group",
-    type: "registry:core",
-    dependencies: ["react-aria-components"],
-    registryDependencies: ["field"],
-    files: [
-      {
-        path: "core/radio-group/radio-group.tsx",
-        type: "registry:core",
-        target: "core/radio-group.tsx",
-      },
-    ],
-  },
-  {
-    name: "scroll-area",
-    type: "registry:core",
-    dependencies: ["@radix-ui/react-scroll-area"],
-    files: [
-      {
-        path: "core/scroll-area/scroll-area.tsx",
-        type: "registry:core",
-        target: "core/scroll-area.tsx",
       },
     ],
   },
   {
     name: "search-field",
     type: "registry:core",
-    dependencies: ["react-aria-components"],
-    registryDependencies: ["button", "field", "input"],
     files: [
       {
-        path: "core/search-field/search-field.tsx",
+        path: "core/search-field_basic.tsx",
         type: "registry:core",
         target: "core/search-field.tsx",
       },
     ],
   },
   {
-    name: "section",
-    type: "registry:core",
-    dependencies: ["react-aria-components"],
-    files: [
-      {
-        path: "core/section/section.tsx",
-        type: "registry:core",
-        target: "core/section.tsx",
-      },
-    ],
-  },
-  {
     name: "select",
     type: "registry:core",
-    dependencies: ["react-aria-components"],
-    registryDependencies: ["button", "field", "list-box", "overlay"],
     files: [
       {
-        path: "core/select/select.tsx",
+        path: "core/select_basic.tsx",
         type: "registry:core",
         target: "core/select.tsx",
       },
@@ -691,10 +609,9 @@ export const core: Registry = [
   {
     name: "separator",
     type: "registry:core",
-    dependencies: ["react-aria-components"],
     files: [
       {
-        path: "core/separator/separator.tsx",
+        path: "core/separator_basic.tsx",
         type: "registry:core",
         target: "core/separator.tsx",
       },
@@ -705,20 +622,18 @@ export const core: Registry = [
     type: "registry:core",
     files: [
       {
-        path: "core/separator/separator.tsx",
+        path: "core/skeleton_basic.tsx",
         type: "registry:core",
-        target: "core/separator.tsx",
+        target: "core/skeleton.tsx",
       },
     ],
   },
   {
     name: "slider",
     type: "registry:core",
-    dependencies: ["react-aria-components"],
-    registryDependencies: ["field"],
     files: [
       {
-        path: "core/slider/slider.tsx",
+        path: "core/slider_basic.tsx",
         type: "registry:core",
         target: "core/slider.tsx",
       },
@@ -727,31 +642,33 @@ export const core: Registry = [
   {
     name: "switch",
     type: "registry:core",
-    dependencies: ["react-aria-components"],
     files: [
       {
-        path: "core/switch/switch.tsx",
+        path: "core/switch_basic.tsx",
         type: "registry:core",
         target: "core/switch.tsx",
       },
     ],
   },
   {
-    name: "tabs",
+    name: "table",
     type: "registry:core",
-    variants: [
+    files: [
       {
-        name: "tabs_basic",
-      },
-      {
-        name: "tabs_motion",
+        path: "core/table_basic.tsx",
+        type: "registry:core",
+        target: "core/table.tsx",
       },
     ],
   },
   {
+    name: "tabs",
+    type: "registry:core",
+    variants: ["basic", "motion"],
+  },
+  {
     name: "tabs_basic",
     type: "registry:core",
-    dependencies: ["react-aria-components"],
     files: [
       {
         path: "core/tabs_basic.tsx",
@@ -763,7 +680,6 @@ export const core: Registry = [
   {
     name: "tabs_motion",
     type: "registry:core",
-    dependencies: ["react-aria-components"],
     files: [
       {
         path: "core/tabs_motion.tsx",
@@ -773,12 +689,22 @@ export const core: Registry = [
     ],
   },
   {
-    name: "text",
+    name: "tag-group",
     type: "registry:core",
-    dependencies: ["react-aria-components"],
     files: [
       {
-        path: "core/text/text.tsx",
+        path: "core/tag-group_basic.tsx",
+        type: "registry:core",
+        target: "core/tag-group.tsx",
+      },
+    ],
+  },
+  {
+    name: "text",
+    type: "registry:core",
+    files: [
+      {
+        path: "core/text_basic.tsx",
         type: "registry:core",
         target: "core/text.tsx",
       },
@@ -787,11 +713,9 @@ export const core: Registry = [
   {
     name: "text-area",
     type: "registry:core",
-    dependencies: ["react-aria-components"],
-    registryDependencies: ["field", "input", "text-field"],
     files: [
       {
-        path: "core/text-area/text-area.tsx",
+        path: "core/text-area_basic.tsx",
         type: "registry:core",
         target: "core/text-area.tsx",
       },
@@ -800,11 +724,9 @@ export const core: Registry = [
   {
     name: "text-field",
     type: "registry:core",
-    dependencies: ["react-aria-components"],
-    registryDependencies: ["field", "input"],
     files: [
       {
-        path: "core/text-field/text-field.tsx",
+        path: "core/text-field_basic.tsx",
         type: "registry:core",
         target: "core/text-field.tsx",
       },
@@ -813,11 +735,9 @@ export const core: Registry = [
   {
     name: "time-field",
     type: "registry:core",
-    dependencies: ["react-aria-components"],
-    registryDependencies: ["field", "input", "date-input"],
     files: [
       {
-        path: "core/time-field/time-field.tsx",
+        path: "core/time-field_basic.tsx",
         type: "registry:core",
         target: "core/time-field.tsx",
       },
@@ -826,31 +746,33 @@ export const core: Registry = [
   {
     name: "toggle-button",
     type: "registry:core",
-    dependencies: ["react-aria-components"],
     files: [
       {
-        path: "core/toggle-button/toggle-button.tsx",
+        path: "core/toggle-button_basic.tsx",
         type: "registry:core",
         target: "core/toggle-button.tsx",
       },
     ],
   },
   {
-    name: "tooltip",
+    name: "toggle-button-group",
     type: "registry:core",
-    variants: [
+    files: [
       {
-        name: "tooltip_basic",
-      },
-      {
-        name: "tooltip_framer",
+        path: "core/toggle-button-group_basic.tsx",
+        type: "registry:core",
+        target: "core/toggle-button-group.tsx",
       },
     ],
   },
   {
+    name: "tooltip",
+    type: "registry:core",
+    variants: ["basic", "motion"],
+  },
+  {
     name: "tooltip_basic",
     type: "registry:core",
-    dependencies: ["react-aria-components"],
     files: [
       {
         path: "core/tooltip_basic.tsx",
@@ -860,77 +782,13 @@ export const core: Registry = [
     ],
   },
   {
-    name: "tooltip_framer",
+    name: "tooltip_motion",
     type: "registry:core",
-    dependencies: ["react-aria-components"],
     files: [
       {
-        path: "core/tooltip_framer.tsx",
+        path: "core/tooltip_motion.tsx",
         type: "registry:core",
         target: "core/tooltip.tsx",
-      },
-    ],
-  },
-  {
-    name: "modal",
-    type: "registry:core",
-    variants: [
-      {
-        name: "modal_basic",
-      },
-    ],
-  },
-  {
-    name: "modal_basic",
-    type: "registry:core",
-    dependencies: ["react-aria-components"],
-    files: [
-      {
-        path: "core/modal_basic.tsx",
-        type: "registry:core",
-        target: "core/modal.tsx",
-      },
-    ],
-  },
-  {
-    name: "popover",
-    type: "registry:core",
-    variants: [
-      {
-        name: "popover_basic",
-      },
-    ],
-  },
-  {
-    name: "popover_basic",
-    type: "registry:core",
-    dependencies: ["react-aria-components"],
-    files: [
-      {
-        path: "core/popover_basic.tsx",
-        type: "registry:core",
-        target: "core/popover.tsx",
-      },
-    ],
-  },
-  {
-    name: "drawer",
-    type: "registry:core",
-    variants: [
-      {
-        name: "drawer_basic",
-      },
-    ],
-  },
-  {
-    name: "drawer_basic",
-    type: "registry:core",
-    dependencies: ["react-aria-components"],
-    files: [
-      {
-        path: "core/drawer_basic.tsx",
-        type: "registry:core",
-        target: "core/drawer.tsx",
       },
     ],
   },

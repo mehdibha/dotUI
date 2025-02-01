@@ -2,8 +2,8 @@
 
 import { useThemes } from "@/hooks/use-themes";
 import { Radio, RadioGroup } from "@/components/core/radio-group";
+import Inputs from "@/components/demos/text-field/prefix-and-suffix";
 import { ThemeOverride } from "@/components/docs/theme-override";
-import Inputs from "@/demos/text-field/prefix-and-suffix";
 
 const variants = [
   {

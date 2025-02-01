@@ -13,7 +13,7 @@ links:
 ---
 
 <ComponentPreview
-  name="core/toggle-button/toggle-button-default"
+  name="toggle-button/default"
   preview={`<ToggleButton>
     <PinIcon />
   </ToggleButton>`}
@@ -39,7 +39,7 @@ npx dotui-cli@latest add toggle-button
     ```
 
       <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name="core/toggle-button/toggle-button" />
+      <ComponentSource name="toggle-button/toggle-button" />
       <Step>Update the import paths to match your project setup.</Step>
     </Steps>
 
@@ -59,7 +59,7 @@ Use the `variant` prop to control the visual style of the toggle button.
 The default size is `"quiet"`.
 
 <ComponentPreview
-  name="core/toggle-button/toggle-button-variants"
+  name="toggle-button/variants"
   preview={`<ToggleButton variant="quiet"><PinIcon /></ToggleButton>
 <ToggleButton variant="outline"><PinIcon /></ToggleButton>
 <ToggleButton variant="accent"><PinIcon /></ToggleButton>`}
@@ -71,7 +71,7 @@ Use the `size` prop to control the size of the toggle button.<br/>
 The default size is `"md"`.
 
 <ComponentPreview
-  name="core/toggle-button/toggle-button-sizes"
+  name="toggle-button/sizes"
   preview={`<ToggleButton size="sm"><PinIcon /></ToggleButton>
 <ToggleButton size="md"><PinIcon /></ToggleButton>
 <ToggleButton size="lg"><PinIcon /></ToggleButton>`}
@@ -83,7 +83,7 @@ Use the `shape` prop to control the shape of the toggle button. The default shap
 Icon-only toggle buttons should include an `aria-label`.
 
 <ComponentPreview
-  name="core/toggle-button/toggle-button-shapes"
+  name="toggle-button/shapes"
   preview={`<ToggleButton shape="square"><PinIcon /></ToggleButton>
 <ToggleButton shape="circular"><PinIcon /></ToggleButton>
 <ToggleButton prefix={<PinIcon />} shape="rectangle">Pin</ToggleButton>`}
@@ -94,7 +94,7 @@ Icon-only toggle buttons should include an `aria-label`.
 Use the `isDisabled` prop to disable the toggle button.
 
 <ComponentPreview
-  name="core/toggle-button/toggle-button-disabled"
+  name="toggle-button/disabled"
   preview={`<ToggleButton isDisabled><PinIcon /></ToggleButton>`}
 />
 
@@ -103,7 +103,7 @@ Use the `isDisabled` prop to disable the toggle button.
 Use the `defaultSelected` to set the initial state of the toggle button.
 
 <ComponentPreview
-  name="core/toggle-button/toggle-button-uncontrolled"
+  name="toggle-button/uncontrolled"
   preview={`<ToggleButton defaultSelected><PinIcon /></ToggleButton>`}
 />
 
@@ -112,7 +112,7 @@ Use the `defaultSelected` to set the initial state of the toggle button.
 Use the `isSelected` and `onChange` props to control the state of the toggle button.
 
 <ComponentPreview
-  name="core/toggle-button/toggle-button-controlled"
+  name="toggle-button/controlled"
   preview={`const [isSelected, setSelected] = React.useState(true);
   return (
     <ToggleButton isSelected={isSelected} onChange={setSelected}>

@@ -1,18 +1,18 @@
 import { Theme } from "@/types/theme";
 
 const defaultVariants = {
-  alert: "alert-01",
-  loader: "loader-ring",
-  button: "button-01",
-  calendar: "calendar_basic",
+  alert: "basic",
+  loader: "ring",
+  button: "basic",
+  calendar: "basic",
   form: "react-hook-form",
-  checkbox: "checkbox_basic",
-  "checkbox-group": "checkbox-group_basic",
-  tooltip: "tooltip_basic",
-  modal: "modal_basic",
-  popover: "popover_basic",
-  drawer: "drawer_basic",
-  tabs: "tabs_basic",
+  checkbox: "basic",
+  "checkbox-group": "basic",
+  tooltip: "basic",
+  modal: "basic",
+  popover: "basic",
+  drawer: "basic",
+  tabs: "basic",
 };
 
 export const dotUIThemes: Theme[] = [
