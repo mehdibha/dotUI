@@ -9,6 +9,7 @@ const defaultVariants = {
   checkbox: "basic",
   "checkbox-group": "basic",
   tooltip: "basic",
+  input: "basic",
   modal: "basic",
   popover: "basic",
   drawer: "basic",

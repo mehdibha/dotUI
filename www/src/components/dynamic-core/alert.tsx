@@ -20,17 +20,17 @@ export const Alert = createDynamicComponent<AlertProps>(
   "Alert",
   _Alert,
   {
-    "alert-01": React.lazy(() =>
+    basic: React.lazy(() =>
       import("@/registry/core/alert_basic").then((mod) => ({
         default: mod.Alert,
       }))
     ),
-    "alert-02": React.lazy(() =>
+    notch: React.lazy(() =>
       import("@/registry/core/alert_notch").then((mod) => ({
         default: mod.Alert,
       }))
     ),
-    "alert-03": React.lazy(() =>
+    "notch-2": React.lazy(() =>
       import("@/registry/core/alert_notch-2").then((mod) => ({
         default: mod.Alert,
       }))
@@ -43,17 +43,17 @@ export const AlertRoot = createDynamicComponent<AlertRootProps>(
   "AlertRoot",
   _AlertRoot,
   {
-    "alert-01": React.lazy(() =>
+    basic: React.lazy(() =>
       import("@/registry/core/alert_basic").then((mod) => ({
         default: mod.AlertRoot,
       }))
     ),
-    "alert-02": React.lazy(() =>
+    notch: React.lazy(() =>
       import("@/registry/core/alert_notch").then((mod) => ({
         default: mod.AlertRoot,
       }))
     ),
-    "alert-03": React.lazy(() =>
+    "notch-2": React.lazy(() =>
       import("@/registry/core/alert_notch-2").then((mod) => ({
         default: mod.AlertRoot,
       }))
@@ -66,17 +66,17 @@ export const AlertTitle = createDynamicComponent<AlertTitleProps>(
   "AlertTitle",
   _AlertTitle,
   {
-    "alert-01": React.lazy(() =>
+    basic: React.lazy(() =>
       import("@/registry/core/alert_basic").then((mod) => ({
         default: mod.AlertTitle,
       }))
     ),
-    "alert-02": React.lazy(() =>
+    notch: React.lazy(() =>
       import("@/registry/core/alert_notch").then((mod) => ({
         default: mod.AlertTitle,
       }))
     ),
-    "alert-03": React.lazy(() =>
+    "notch-2": React.lazy(() =>
       import("@/registry/core/alert_notch-2").then((mod) => ({
         default: mod.AlertTitle,
       }))
@@ -88,17 +88,17 @@ export const AlertContent = createDynamicComponent<AlertContentProps>(
   "AlertContent",
   _AlertContent,
   {
-    "alert-01": React.lazy(() =>
+    basic: React.lazy(() =>
       import("@/registry/core/alert_basic").then((mod) => ({
         default: mod.AlertContent,
       }))
     ),
-    "alert-02": React.lazy(() =>
+    notch: React.lazy(() =>
       import("@/registry/core/alert_notch").then((mod) => ({
         default: mod.AlertContent,
       }))
     ),
-    "alert-03": React.lazy(() =>
+    "notch-2": React.lazy(() =>
       import("@/registry/core/alert_notch-2").then((mod) => ({
         default: mod.AlertContent,
       }))

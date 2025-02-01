@@ -12,12 +12,17 @@ import { core } from "@/registry/registry-core";
 import { RegistryItem } from "@/registry/types";
 
 export function StyleSwitcher({ componentName }: { componentName: string }) {
-  const variants = getAllComponentVariants(componentName);
+  const primitiveInfo = getPrimitiveInfo(componentName);
   const { variants: contextVariants, setVariants } = useComponentsVariants();
   const { currentTheme } = useThemes();
-  const currentThemeVariant = currentTheme.variants[componentName];
+
+  if (!primitiveInfo) return null;
+
+  const { primitiveName, variants } = primitiveInfo;
+
+  const currentThemeVariant = currentTheme.variants[primitiveName];
   const currentVariant =
-    contextVariants[componentName] ?? currentTheme.variants[componentName];
+    contextVariants[primitiveName] ?? currentTheme.variants[primitiveName];
 
   return (
     <SelectRoot
@@ -36,19 +41,15 @@ export function StyleSwitcher({ componentName }: { componentName: string }) {
         suffix={<ChevronDownIcon />}
         className="border-border absolute left-2 top-2 z-50 text-xs font-normal"
       >
-        <span className="font-bold">variant:</span> <SelectValue />
+        <span className="font-bold">{primitiveName}:</span> <SelectValue />
       </Button>
       <Popover>
         <ListBox>
           {variants &&
             variants.map((item) => (
-              <Item
-                key={item}
-                id={item}
-                // description={item.description}
-              >
+              <Item key={item} id={item}>
                 {item}
-                {currentThemeVariant === item.name && "(current theme)"}
+                {currentThemeVariant === item && " (current theme)"}
               </Item>
             ))}
         </ListBox>
@@ -60,11 +61,13 @@ export function StyleSwitcher({ componentName }: { componentName: string }) {
 const getPrimitiveInfo = (name: string) => {
   const item = core.find((item) => item.name === name);
 
-  if (hasVariants(item)) {
-    return item.variants;
-  } else {
-    return false;
-  }
+  if (hasVariants(item))
+    return { primitiveName: name, variants: item.variants };
+
+  if (["text-field", "time-field", "date-field"].includes(name))
+    return getPrimitiveInfo("input");
+
+  return null;
 };
 
 function hasVariants(

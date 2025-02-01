@@ -36,11 +36,7 @@ export const ComponentPreview = async ({
   resizable = false,
   suspense = false,
 }: ComponentPreviewProps) => {
-  const type = name.split("/")[0];
-  const componentName = name.split("/")[1];
-  const demoName = name.split("/")[2];
-
-  const demoItem = Index[type][demoName];
+  const demoItem = Index[name];
 
   const Component = demoItem.component;
   const code: { fileName: string; code: string }[] = demoItem.files.map(
@@ -61,13 +57,7 @@ export const ComponentPreview = async ({
         <ResizableContainer resizable={resizable}>
           <Loader>
             <ThemeOverride className="relative">
-              <StyleSwitcher
-                componentName={
-                  componentName === "range-calendar"
-                    ? "calendar"
-                    : componentName
-                }
-              />
+              <StyleSwitcher componentName={getComponentName(name)} />
               <ThemeCustomizerDialog>
                 <Tooltip
                   content={
@@ -121,4 +111,10 @@ export const ComponentPreview = async ({
       />
     </div>
   );
+};
+
+const getComponentName = (name: string) => {
+  const groupName = name.split("/")[0];
+  if (groupName === "range-calendar") return "calendar";
+  return groupName;
 };
