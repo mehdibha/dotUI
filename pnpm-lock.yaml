@@ -82,6 +82,9 @@ importers:
       type-fest:
         specifier: ^4.33.0
         version: 4.33.0
+      zod:
+        specifier: ^3.22.4
+        version: 3.24.1
     devDependencies:
       '@types/node':
         specifier: ^18.17.0

@@ -45,15 +45,16 @@
     "test:dev": "REGISTRY_URL=http://localhost:3000/registry vitest run"
   },
   "dependencies": {
-    "@dotui/registry": "workspace:*",
     "@clack/prompts": "^0.9.1",
+    "@dotui/registry": "workspace:*",
     "@types/fs-extra": "^11.0.4",
     "commander": "^10.0.0",
     "fast-glob": "^3.3.3",
     "fs-extra": "^11.3.0",
     "picocolors": "^1.1.0",
     "tsconfig-paths": "^4.2.0",
-    "type-fest": "^4.33.0"
+    "type-fest": "^4.33.0",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/node": "^18.17.0",

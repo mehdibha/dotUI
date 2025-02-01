@@ -1,4 +1,5 @@
 import { spinner } from "@clack/prompts";
+import { getRegistryIndex, getRegistryItem } from "@/registry/api";
 
 interface Config {}
 
@@ -20,6 +21,9 @@ export async function addPrimitives(
 
   addPrimitivesSpinner.start(options.message);
   addPrimitivesSpinner.message("Cheking registry");
+  const registryIndex = await getRegistryIndex();
+  const items = registryIndex.filter((item) => primitives.includes(item.name));
+  await getRegistryItem(items[0].name, items[0].type);
   await new Promise((resolve) => setTimeout(resolve, 3000));
   // const tree = await registryResolveItemsTree(primitives, config)
   // if (!tree) {

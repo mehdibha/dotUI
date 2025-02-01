@@ -35,7 +35,7 @@ export const initCommand = new Command()
         const theme = await getRegistryTheme(themeId);
         await createConfigFile(options.dir, aliases, theme);
         await addPrimitives(
-          ["index"],
+          ["base"],
           {},
           { overwrite: true, message: "Adding required primitives." }
         );

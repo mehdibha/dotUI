@@ -23,13 +23,13 @@ export const addCommand = new Command()
   )
   .action(
     async (
-      components: string[],
+      primitives: string[],
       options: { overwrite: boolean; all: boolean; dir: string }
     ) => {
       try {
         p.intro("Adding primitives.");
         await addPrimitives(
-          components,
+          primitives,
           {},
           { overwrite: options.overwrite, message: "Updating your project" }
         );

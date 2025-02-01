@@ -1,5 +1,21 @@
 import { z } from "zod";
 
+export const registryItemTypeSchema = z.enum([
+  "base",
+  "core",
+  "component",
+  "lib",
+  "hook",
+  "theme",
+]);
+
+export const registryIndexSchema = z.array(
+  z.object({
+    name: z.string(),
+    type: registryItemTypeSchema,
+  })
+);
+
 export const iconLibrarySchema = z.enum(["lucide-icons", "remix-icons"]);
 
 export const stylesSchema = z.object({
@@ -18,14 +34,6 @@ export const registryThemeSchema = z.object({
   iconLibrary: iconLibrarySchema,
   styles: z.record(z.string(), z.string()),
 });
-
-export const registryItemTypeSchema = z.enum([
-  "core",
-  "component",
-  "lib",
-  "hook",
-  "theme",
-]);
 
 export const registryItemFileSchema = z.union([
   z.object({

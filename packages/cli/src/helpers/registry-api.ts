@@ -8,8 +8,8 @@ export const getRegistryThemes = async () => {
   ];
 };
 
-// eslint-disable-next-line no-unused-vars
 export const getRegistryTheme = async (
+  // eslint-disable-next-line no-unused-vars
   themeId: string
 ): Promise<RegistryTheme> => {
   return {
