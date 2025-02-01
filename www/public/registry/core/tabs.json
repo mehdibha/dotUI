@@ -1,4 +1,7 @@
 {
   "name": "tabs",
-  "type": "registry:core"
+  "variants": [
+    "basic",
+    "motion"
+  ]
 }

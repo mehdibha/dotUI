@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import { useBreadcrumb } from "fumadocs-core/breadcrumb";
 import { PageTree } from "fumadocs-core/server";
 import { ChevronRightIcon } from "lucide-react";
-import { cn } from "@/lib/cn";
+import { cn } from "@/lib/utils";
 import {
   Breadcrumbs as Breadcrumbs_,
   BreadcrumbItem,

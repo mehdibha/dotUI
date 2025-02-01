@@ -1,0 +1,10 @@
+{
+  "name": "use-is-mobile",
+  "files": [
+    {
+      "type": "hook",
+      "content": "import * as React from \"react\";\n\nexport function useMediaQuery(query: string) {\n  const [value, setValue] = React.useState(false);\n\n  React.useEffect(() => {\n    function onChange(event: MediaQueryListEvent) {\n      setValue(event.matches);\n    }\n\n    const result = matchMedia(query);\n    result.addEventListener(\"change\", onChange);\n    setValue(result.matches);\n\n    return () => result.removeEventListener(\"change\", onChange);\n  }, [query]);\n\n  return value;\n}\n",
+      "target": "hooks/use-is-mobile.ts"
+    }
+  ]
+}

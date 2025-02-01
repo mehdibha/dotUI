@@ -1,4 +1,8 @@
 {
   "name": "button",
-  "type": "registry:core"
+  "variants": [
+    "basic",
+    "brutalist",
+    "ripple"
+  ]
 }

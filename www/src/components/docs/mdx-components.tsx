@@ -1,7 +1,7 @@
 import React from "react";
 import { ArrowUpRightIcon } from "lucide-react";
 import { MDXComponents } from "mdx/types";
-import { cn } from "@/lib/cn";
+import { cn } from "@/lib/utils";
 import { Alert, AlertProps } from "@/components/core/alert";
 import { Badge, BadgeProps } from "@/components/core/badge";
 import { LinkProps, Link as NavLink } from "@/components/core/link";

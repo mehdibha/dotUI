@@ -1,8 +1,8 @@
 "use client";
 
 import React, { ReactNode } from "react";
-import { cn } from "@/lib/cn";
 import { googleFonts } from "@/lib/fonts";
+import { cn } from "@/lib/utils";
 import { useMounted } from "@/hooks/use-mounted";
 import { useThemes } from "@/hooks/use-themes";
 

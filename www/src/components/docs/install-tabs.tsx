@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState, useCallback, useLayoutEffect } from "react";
-import { cn } from "@/lib/cn";
+import { cn } from "@/lib/utils";
 import * as TabsPrimitive from "@/components/core/tabs";
 import type {
   TabsProps as BaseProps,

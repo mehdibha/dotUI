@@ -20,9 +20,9 @@ import {
 } from "react-aria-components";
 import { tv, VariantProps } from "tailwind-variants";
 import { Checkbox } from "@/registry/core/checkbox_basic";
-import { cn } from "@/registry/lib/cn";
-import { createScopedContext } from "@/registry/lib/context-helpers";
 import { focusRing } from "@/registry/lib/focus-styles";
+import { cn } from "@/registry/lib/utils";
+import { createScopedContext } from "@/registry/lib/utils";
 
 const tableStyles = tv({
   slots: {

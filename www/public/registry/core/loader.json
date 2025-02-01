@@ -1,4 +1,10 @@
 {
   "name": "loader",
-  "type": "registry:core"
+  "variants": [
+    "dots",
+    "line",
+    "ring",
+    "tailspin",
+    "wave"
+  ]
 }

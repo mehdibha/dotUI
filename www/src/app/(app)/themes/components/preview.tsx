@@ -2,7 +2,7 @@
 
 import React from "react";
 import { ChevronLeftIcon, ChevronRightIcon, RotateCwIcon } from "lucide-react";
-import { cn } from "@/lib/cn";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/core/button";
 
 export function Preview() {

@@ -8,7 +8,7 @@ import {
   InfoIcon,
 } from "lucide-react";
 import { tv, type VariantProps } from "tailwind-variants";
-import { createScopedContext } from "@/lib/helpers";
+import { createScopedContext } from "@/lib/utils";
 
 const alertStyles = tv({
   slots: {

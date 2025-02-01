@@ -20,12 +20,11 @@ export const registryThemeSchema = z.object({
 });
 
 export const registryItemTypeSchema = z.enum([
-  "registry:style",
-  "registry:core",
-  "registry:component",
-  "registry:lib",
-  "registry:hook",
-  "registry:theme",
+  "core",
+  "component",
+  "lib",
+  "hook",
+  "theme",
 ]);
 
 export const registryItemFileSchema = z.union([
@@ -53,7 +52,7 @@ export const registryItemCssVarsSchema = z.object({
 
 export const registryItemSchema = z.object({
   name: z.string(),
-  type: registryItemTypeSchema,
+  type: registryItemTypeSchema.optional(),
   label: z.string().optional(),
   description: z.string().optional(),
   dependencies: z.array(z.string()).optional(),

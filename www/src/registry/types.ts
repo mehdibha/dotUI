@@ -1,4 +1,4 @@
-export type RegistryType = "registry:core" | "registry:hook" | "registry:lib";
+export type RegistryType = "base" | "core" | "hook" | "lib" | "theme";
 
 export type RegistryItem = {
   name: string;

@@ -8,7 +8,7 @@ import {
 } from "react-aria-components";
 import { focusRing } from "@/lib/focus-styles";
 import { ColorSwatch } from "@/registry/core/color-swatch_basic";
-import { cn } from "@/registry/lib/cn";
+import { cn } from "@/registry/lib/utils";
 
 interface ColorSwatchPickerProps
   extends React.ComponentProps<typeof AriaColorSwatchPicker> {}

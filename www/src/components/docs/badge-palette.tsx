@@ -1,5 +1,5 @@
 import { BackgroundColor } from "@adobe/leonardo-contrast-colors";
-import { cn } from "@/lib/cn";
+import { cn } from "@/lib/utils";
 import { Badge, BadgeProps } from "@/components/core/badge";
 
 export function BadgePalette({

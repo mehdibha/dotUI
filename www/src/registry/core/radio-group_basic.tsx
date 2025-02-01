@@ -9,11 +9,11 @@ import {
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
 import { HelpText, Label } from "@/registry/core/field_basic";
+import { focusRing, focusRingGroup } from "@/registry/lib/focus-styles";
 import {
   createOptionalScopedContext,
   createScopedContext,
-} from "@/registry/lib/context-helpers";
-import { focusRing, focusRingGroup } from "@/registry/lib/focus-styles";
+} from "@/registry/lib/utils";
 
 const radioStyles = tv({
   slots: {

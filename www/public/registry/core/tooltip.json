@@ -1,4 +1,7 @@
 {
   "name": "tooltip",
-  "type": "registry:core"
+  "variants": [
+    "basic",
+    "motion"
+  ]
 }

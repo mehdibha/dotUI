@@ -4,7 +4,7 @@ import React from "react";
 import { CheckIcon, CopyIcon } from "lucide-react";
 import type { Key } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { cn } from "@/lib/cn";
+import { cn } from "@/lib/utils";
 import { Button, type ButtonProps } from "@/components/core/button";
 import {
   ScrollArea,

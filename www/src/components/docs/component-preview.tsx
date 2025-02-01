@@ -1,8 +1,8 @@
 import React from "react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { PaintBucket } from "lucide-react";
-import { cn } from "@/lib/cn";
 import { getFileSource } from "@/lib/get-file-source";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/core/button";
 import { Tooltip } from "@/components/core/tooltip";
 import { CodeBlock } from "@/components/docs/code-block";

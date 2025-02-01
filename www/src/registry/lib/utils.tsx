@@ -1,4 +1,10 @@
 import * as React from "react";
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
 
 export function createScopedContext<ContextValueType extends object | null>(
   rootComponentName: string,

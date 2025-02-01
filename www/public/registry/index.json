@@ -1,306 +1,318 @@
 [
   {
+    "name": "base",
+    "type": "base"
+  },
+  {
     "name": "alert",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "alert_basic",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "alert_notch",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "alert_notch-2",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "avatar",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "badge",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "breadcrumbs",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "button",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "button_basic",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "button_brutalist",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "button_ripple",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "calendar",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "calendar_basic",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "calendar_cal",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "checkbox",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "checkbox-group",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "color-area",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "color-field",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "color-picker",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "color-slider",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "color-swatch",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "color-swatch-picker",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "color-thumb",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "combobox",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "command",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "date-field",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "date-input",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "date-picker",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "date-range-picker",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "dialog",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "drawer",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "drop-zone",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "field",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "file-trigger",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "form",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "form_basic",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "form_react-hook-form",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "input",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "input_basic",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "kbd",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "list-box",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "list-box",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "loader",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "loader_dots",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "loader_line",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "loader_ring",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "loader_tailspin",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "loader_wave",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "menu",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "modal",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "number-field",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "overlay",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "popover",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "progress-bar",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "radio-group",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "search-field",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "select",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "separator",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "skeleton",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "slider",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "switch",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "table",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "tabs",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "tabs_basic",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "tabs_motion",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "tag-group",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "text",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "text-area",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "text-field",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "time-field",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "toggle-button",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "toggle-button-group",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "tooltip",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "tooltip_basic",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "tooltip_motion",
-    "type": "registry:core"
+    "type": "core"
   },
   {
-    "name": "use-media-query",
-    "type": "registry:hook"
+    "name": "use-is-mobile",
+    "type": "hook"
+  },
+  {
+    "name": "utils",
+    "type": "lib"
+  },
+  {
+    "name": "focus-styles",
+    "type": "lib"
   }
 ]

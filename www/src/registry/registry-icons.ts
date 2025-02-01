@@ -1,11 +1,11 @@
 export const iconLibraries = {
   lucide: {
-    name: "lucide-react",
+    name: "lucide-icons",
     package: "lucide-react",
     import: "lucide-react",
   },
   remix: {
-    name: "@remixicon/react",
+    name: "remix-icons",
     package: "@remixicon/react",
     import: "@remixicon/react",
   },

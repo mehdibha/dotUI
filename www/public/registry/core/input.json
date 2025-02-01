@@ -1,4 +1,6 @@
 {
   "name": "input",
-  "type": "registry:core"
+  "variants": [
+    "basic"
+  ]
 }

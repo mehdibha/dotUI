@@ -1,6 +1,6 @@
 // work in progress
 // Auto layout skeleton inspiration: https://x.com/devongovett/status/1838980741197447529
-import { cn } from "@/registry/lib/cn";
+import { cn } from "@/registry/lib/utils";
 
 function Skeleton({
   className,

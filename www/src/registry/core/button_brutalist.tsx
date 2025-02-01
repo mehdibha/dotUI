@@ -9,7 +9,7 @@ import {
   type LinkProps as AriaLinkProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { createOptionalScopedContext } from "@/lib/helpers";
+import { createOptionalScopedContext } from "@/lib/utils";
 import { Loader } from "@/registry/core/loader_ring";
 import { focusRing } from "@/registry/lib/focus-styles";
 

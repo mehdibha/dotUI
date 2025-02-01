@@ -1,11 +1,9 @@
 {
   "name": "color-thumb",
-  "type": "registry:core",
   "files": [
     {
-      "path": "core/color-thumb_basic.tsx",
-      "content": "\"use client\";\n\nimport {\n  ColorThumb as AriaColorThumb,\n  type ColorThumbProps as AriaColorThumbProps,\n} from \"react-aria-components\";\nimport { tv } from \"tailwind-variants\";\nimport { focusRing } from \"@/registry/lib/focus-styles\";\n\nconst colorThumbStyles = tv({\n  extend: focusRing,\n  base: [\n    \"disabled:bg-bg-disabled! disabled:border-border-disabled z-30 size-6 rounded-full border-2 border-white ring-1 ring-black/40\",\n    \"group-orientation-horizontal/color-slider:top-1/2 group-orientation-vertical/color-slider:left-1/2\",\n  ],\n});\n\ninterface ColorThumbProps extends Omit<AriaColorThumbProps, \"className\"> {\n  className?: string;\n}\nconst ColorThumb = ({ className, ...props }: ColorThumbProps) => {\n  return (\n    <AriaColorThumb className={colorThumbStyles({ className })} {...props} />\n  );\n};\n\nexport type { ColorThumbProps };\nexport { ColorThumb };\n",
       "type": "registry:core",
+      "content": "\"use client\";\n\nimport {\n  ColorThumb as AriaColorThumb,\n  type ColorThumbProps as AriaColorThumbProps,\n} from \"react-aria-components\";\nimport { tv } from \"tailwind-variants\";\nimport { focusRing } from \"@/registry/lib/focus-styles\";\n\nconst colorThumbStyles = tv({\n  extend: focusRing,\n  base: [\n    \"disabled:bg-bg-disabled! disabled:border-border-disabled z-30 size-6 rounded-full border-2 border-white ring-1 ring-black/40\",\n    \"group-orientation-horizontal/color-slider:top-1/2 group-orientation-vertical/color-slider:left-1/2\",\n  ],\n});\n\ninterface ColorThumbProps extends Omit<AriaColorThumbProps, \"className\"> {\n  className?: string;\n}\nconst ColorThumb = ({ className, ...props }: ColorThumbProps) => {\n  return (\n    <AriaColorThumb className={colorThumbStyles({ className })} {...props} />\n  );\n};\n\nexport type { ColorThumbProps };\nexport { ColorThumb };\n",
       "target": "core/color-thumb.tsx"
     }
   ]

@@ -7,7 +7,7 @@ import {
   type ToggleButtonProps as AriaToggleButtonProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { createOptionalScopedContext } from "@/lib/helpers";
+import { createOptionalScopedContext } from "@/lib/utils";
 import { focusRing } from "@/registry/lib/focus-styles";
 
 const toggleButtonStyles = tv({

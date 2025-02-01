@@ -14,8 +14,8 @@ import {
   SunIcon,
 } from "lucide-react";
 import { motion, Transition } from "motion/react";
-import { cn } from "@/lib/cn";
 import { hasActive, isActive } from "@/lib/docs/utils";
+import { cn } from "@/lib/utils";
 import { Avatar } from "@/components/core/avatar";
 import { Button, ButtonProps } from "@/components/core/button";
 import {

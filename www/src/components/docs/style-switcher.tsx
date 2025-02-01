@@ -61,17 +61,10 @@ export function StyleSwitcher({ componentName }: { componentName: string }) {
 const getPrimitiveInfo = (name: string) => {
   const item = core.find((item) => item.name === name);
 
-  if (hasVariants(item))
-    return { primitiveName: name, variants: item.variants };
+  if (item?.variants) return { primitiveName: name, variants: item.variants };
 
   if (["text-field", "time-field", "date-field"].includes(name))
     return getPrimitiveInfo("input");
 
   return null;
 };
-
-function hasVariants(
-  item?: RegistryItem
-): item is Extract<RegistryItem, { variants: unknown }> {
-  return item !== undefined && "variants" in item;
-}

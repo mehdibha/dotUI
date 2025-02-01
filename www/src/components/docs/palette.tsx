@@ -1,4 +1,4 @@
-import { cn } from "@/lib/cn";
+import { cn } from "@/lib/utils";
 import { ThemeOverride } from "@/components/docs/theme-override";
 
 export interface PaletteProps extends React.ComponentProps<"div"> {

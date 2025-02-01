@@ -1,4 +1,7 @@
 {
   "name": "calendar",
-  "type": "registry:core"
+  "variants": [
+    "basic",
+    "cal"
+  ]
 }

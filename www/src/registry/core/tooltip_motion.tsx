@@ -10,7 +10,7 @@ import {
   TooltipTriggerStateContext,
 } from "react-aria-components";
 import { tv, VariantProps } from "tailwind-variants";
-import { createScopedContext } from "@/lib/helpers";
+import { createScopedContext } from "@/lib/utils";
 
 const tooltipStyles = tv({
   slots: {

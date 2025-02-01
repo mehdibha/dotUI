@@ -35,6 +35,11 @@ export const kebabCaseToTitleCase = (string: string): string => {
     .join(" ");
 };
 
+// aaa-bbb-ccc => aaaBbbCcc
+export const kebabCaseToCamelCase = (string: string): string => {
+  return string.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
+};
+
 export const truncateOnWord = (
   text: string,
   maxLength: number,
