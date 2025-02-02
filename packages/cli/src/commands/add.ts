@@ -15,7 +15,7 @@ export const addCommand = new Command()
     "the primitives to add wheather components, hoooks, themes."
   )
   .helpOption("-h, --help", "show all available options")
-  .option("-o, --overwrite", "overwrite existing files.", false)
+  .option("-o, --overwrite", "overwrite existing files.", true)
   .option("-a, --all", "add all available core components.", false)
   .option(
     "-d --dir",

@@ -6,7 +6,6 @@ import {
 } from "@dotui/registry";
 import deepmerge from "deepmerge";
 import { z } from "zod";
-import { defaultConfig } from "@/constants";
 import { fetchRegistry } from "./helpers";
 
 interface Config {
@@ -36,10 +35,9 @@ export async function resolvePrimitives(names: string[], config: Config) {
     const item = index.find((item) => item.name === name);
     if (!item) throw new Error(`${name} not found in registry`);
     if (item.variants) {
-      // we check if the variant is defined in the config, if not we use the default one0
+      // we check if the variant is defined in the config, if not we use the first one (supposed to be the default)
       const variant =
-        config.primitives?.[name] ??
-        defaultConfig.primitives[name as keyof typeof defaultConfig.primitives];
+        config.primitives?.[name] ?? item.variants[0]
 
       registryDeps = [
         ...registryDeps,

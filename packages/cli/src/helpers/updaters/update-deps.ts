@@ -14,7 +14,6 @@ export async function updateDeps(
 
   const packageManager = await getPackageManager(config.resolvedPaths.cwd);
 
-  console.log(`using ${packageManager}...`);
   await execa(
     packageManager,
     [packageManager === "npm" ? "install" : "add", ...dependencies],

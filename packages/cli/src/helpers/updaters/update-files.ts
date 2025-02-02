@@ -1,7 +1,6 @@
-import { confirm, isCancel } from "@clack/prompts";
 import { RegistryItemFile } from "@dotui/registry";
 import { existsSync, promises as fs } from "fs";
-import path, { basename } from "path";
+import path from "path";
 import { Config } from "@/helpers/get-config";
 import { transform } from "@/helpers/transformers";
 
@@ -31,24 +30,14 @@ export async function updateFiles(
   for (const file of files) {
     if (!file.content) continue;
 
-    let filePath = resolveFilePath(file, config, {
-      isSrcDir: false, // TODO: fix this
-    });
+    let filePath = resolveFilePath(file, config);
 
-    const fileName = basename(file.path);
     const targetDir = path.dirname(filePath);
     const existingFile = existsSync(filePath);
 
     if (existingFile && !options.overwrite) {
-      const overwrite = await confirm({
-        message: `The file ${fileName} already exists. Would you like to overwrite?`,
-        initialValue: false,
-      });
-
-      if (isCancel(overwrite)) {
-        filesSkipped.push(path.relative(config.resolvedPaths.cwd, filePath));
-        continue;
-      }
+      filesSkipped.push(path.relative(config.resolvedPaths.cwd, filePath));
+      continue;
     }
 
     // Create the target directory if it doesn't exist.
@@ -57,14 +46,11 @@ export async function updateFiles(
     }
 
     // Run our transformers.
-    const content = await transform(
-      {
-        filename: file.path,
-        raw: file.content,
-        config,
-      },
-      []
-    );
+    const content = await transform({
+      filename: file.path,
+      raw: file.content,
+      config,
+    });
 
     await fs.writeFile(filePath, content, "utf-8");
 
@@ -76,27 +62,7 @@ export async function updateFiles(
   return { filesCreated, filesUpdated, filesSkipped };
 }
 
-function resolveFilePath(
-  file: RegistryItemFile,
-  config: Config,
-  options: {
-    isSrcDir?: boolean;
-  }
-) {
-  if (file.path) {
-    if (file.path.startsWith("~/")) {
-      return path.join(config.resolvedPaths.cwd, file.path.replace("~/", ""));
-    }
-
-    return options.isSrcDir
-      ? path.join(
-          config.resolvedPaths.cwd,
-          "src",
-          file.path.replace("src/", "")
-        )
-      : path.join(config.resolvedPaths.cwd, file.path.replace("src/", ""));
-  }
-
+function resolveFilePath(file: RegistryItemFile, config: Config) {
   const targetDir = resolveFileTargetDirectory(file, config);
 
   const relativePath = resolveNestedFilePath(file.path, targetDir);
