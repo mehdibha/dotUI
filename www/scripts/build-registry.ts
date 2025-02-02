@@ -27,7 +27,7 @@ const buildRegistry = async () => {
     type: item.type,
     deps: item.dependencies,
     registryDeps: item.registryDependencies,
-    variants: item.variants
+    variants: item.variants,
   }));
 
   const registryJson = JSON.stringify(payload, null, 2);

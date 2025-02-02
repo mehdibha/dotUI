@@ -79,7 +79,7 @@ export async function resolvePrimitives(names: string[], config: Config) {
     payload.map((item) => item.dependencies ?? [])
   );
   const files = deepmerge.all(payload.map((item) => item.files ?? []));
-  
+
   return registryResolvedItemsTreeSchema.parse({
     files: files ?? [],
     dependencies: dependencies ?? [],
