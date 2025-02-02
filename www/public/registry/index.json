@@ -1,11 +1,24 @@
 [
   {
     "name": "base",
-    "type": "base"
+    "type": "base",
+    "deps": [
+      "tailwind-variants",
+      "react-aria-components",
+      "tailwindcss-react-aria-components"
+    ],
+    "registryDeps": [
+      "utils"
+    ]
   },
   {
     "name": "alert",
-    "type": "core"
+    "type": "core",
+    "variants": [
+      "basic",
+      "notch",
+      "notch-2"
+    ]
   },
   {
     "name": "alert_basic",
@@ -33,7 +46,12 @@
   },
   {
     "name": "button",
-    "type": "core"
+    "type": "core",
+    "variants": [
+      "basic",
+      "brutalist",
+      "ripple"
+    ]
   },
   {
     "name": "button_basic",
@@ -49,7 +67,11 @@
   },
   {
     "name": "calendar",
-    "type": "core"
+    "type": "core",
+    "variants": [
+      "basic",
+      "cal"
+    ]
   },
   {
     "name": "calendar_basic",
@@ -141,7 +163,11 @@
   },
   {
     "name": "form",
-    "type": "core"
+    "type": "core",
+    "variants": [
+      "basic",
+      "react-hook-form"
+    ]
   },
   {
     "name": "form_basic",
@@ -153,7 +179,10 @@
   },
   {
     "name": "input",
-    "type": "core"
+    "type": "core",
+    "variants": [
+      "basic"
+    ]
   },
   {
     "name": "input_basic",
@@ -173,7 +202,14 @@
   },
   {
     "name": "loader",
-    "type": "core"
+    "type": "core",
+    "variants": [
+      "dots",
+      "line",
+      "ring",
+      "tailspin",
+      "wave"
+    ]
   },
   {
     "name": "loader_dots",
@@ -253,7 +289,11 @@
   },
   {
     "name": "tabs",
-    "type": "core"
+    "type": "core",
+    "variants": [
+      "basic",
+      "motion"
+    ]
   },
   {
     "name": "tabs_basic",
@@ -293,7 +333,11 @@
   },
   {
     "name": "tooltip",
-    "type": "core"
+    "type": "core",
+    "variants": [
+      "basic",
+      "motion"
+    ]
   },
   {
     "name": "tooltip_basic",
@@ -309,7 +353,11 @@
   },
   {
     "name": "utils",
-    "type": "lib"
+    "type": "lib",
+    "deps": [
+      "clsx",
+      "tailwind-merge"
+    ]
   },
   {
     "name": "focus-styles",

@@ -6,6 +6,7 @@ import { base } from "@/registry/registry-base";
 import { core } from "@/registry/registry-core";
 import { hooks } from "@/registry/registry-hooks";
 import { iconLibraries, icons } from "@/registry/registry-icons";
+import { lib } from "@/registry/registry-lib";
 import { registry } from "@/registry";
 
 const REGISTRY_PATH = path.join(process.cwd(), "public/registry");
@@ -24,6 +25,9 @@ const buildRegistry = async () => {
   const payload = registry.map((item) => ({
     name: item.name,
     type: item.type,
+    deps: item.dependencies,
+    registryDeps: item.registryDependencies,
+    variants: item.variants
   }));
 
   const registryJson = JSON.stringify(payload, null, 2);
@@ -79,16 +83,7 @@ const buildCore = async () => {
     let files;
     if (item.files) {
       files = await Promise.all(
-        item.files.map(async (_file) => {
-          const file =
-            typeof _file === "string"
-              ? {
-                  path: _file,
-                  type: item.type,
-                  content: "",
-                  target: "",
-                }
-              : _file;
+        item.files.map(async (file) => {
           const content = await fs.readFile(
             path.join(process.cwd(), "src", "registry", file.path),
             "utf8"
@@ -96,7 +91,7 @@ const buildCore = async () => {
           return {
             type: file.type,
             content: content,
-            target: file.target,
+            path: file.target,
           };
         })
       );
@@ -145,16 +140,7 @@ const buildHooks = async () => {
     let files;
     if (item.files) {
       files = await Promise.all(
-        item.files.map(async (_file) => {
-          const file =
-            typeof _file === "string"
-              ? {
-                  path: _file,
-                  type: item.type,
-                  content: "",
-                  target: "",
-                }
-              : _file;
+        item.files.map(async (file) => {
           const content = await fs.readFile(
             path.join(process.cwd(), "src", "registry", file.path),
             "utf8"
@@ -162,7 +148,64 @@ const buildHooks = async () => {
           return {
             type: file.type,
             content: content,
-            target: file.target,
+            path: file.target,
+          };
+        })
+      );
+    }
+
+    const payload = {
+      ...item,
+      files,
+    };
+
+    // TODO Validation
+
+    await fs.writeFile(
+      path.join(targetPath, `${item.name}.json`),
+      JSON.stringify(payload, null, 2),
+      "utf8"
+    );
+  }
+};
+
+const buildLib = async () => {
+  const targetPath = path.join(REGISTRY_PATH, "lib");
+  rimraf.sync(targetPath);
+  if (!existsSync(targetPath)) {
+    await fs.mkdir(targetPath, { recursive: true });
+  }
+
+  const allLib = lib
+    .filter((elem) => {
+      if (elem.variants) return true;
+      if (elem.name.includes("_")) return false;
+      return true;
+    })
+    .map((comp) => ({
+      name: comp.name,
+      label: kebabCaseToCamelCase(comp.name),
+      description: comp.description,
+    }));
+
+  // Build registry/core/index.json
+  const indexContent = JSON.stringify(allLib, null, 2);
+  await fs.writeFile(path.join(targetPath, "index.json"), indexContent, "utf8");
+
+  // Build registry/core/[name].json
+  for (const item of lib) {
+    let files;
+    if (item.files) {
+      files = await Promise.all(
+        item.files.map(async (file) => {
+          const content = await fs.readFile(
+            path.join(process.cwd(), "src", "registry", file.path),
+            "utf8"
+          );
+          return {
+            type: file.type,
+            content: content,
+            path: file.target,
           };
         })
       );
@@ -278,6 +321,7 @@ const run = async () => {
     await buildBase();
     await buildCore();
     await buildHooks();
+    await buildLib();
     await buildIcons();
     // await buildThemes();
 

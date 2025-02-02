@@ -4,6 +4,7 @@ import { Command } from "commander";
 import fs from "fs-extra";
 import path from "path";
 import { addPrimitives } from "@/helpers/add-primitives";
+import { Config, RawConfig, resolveConfigPaths } from "@/helpers/get-config";
 import { handleError } from "@/helpers/handle-error";
 import { initChecks } from "@/helpers/init-checks";
 import { getRegistryTheme, getRegistryThemes } from "@/helpers/registry-api";
@@ -33,12 +34,11 @@ export const initCommand = new Command()
         const aliases = await getOrPromptForAlias();
         themeId = await getOrPromptForThemeId(themeId);
         const theme = await getRegistryTheme(themeId);
-        await createConfigFile(options.dir, aliases, theme);
-        await addPrimitives(
-          ["base"],
-          {},
-          { overwrite: true, message: "Adding required primitives." }
-        );
+        const config = await createConfigFile(options.dir, aliases, theme);
+        await addPrimitives(["base"], config, {
+          overwrite: true,
+          message: "Updating your project",
+        });
         p.outro(
           `${c.success("Project initialized successfully.")}\n\nYou may know add components: ${c.info("npx dotui-cli add button")}`
         );
@@ -65,8 +65,8 @@ const getOrPromptForAlias = async () => {
   }
 
   let alias = {
-    core: "@/components/core",
     components: "@/components",
+    core: "@/components/core",
     hooks: "@/hooks",
     lib: "@/lib",
     utils: "@/lib/utils",
@@ -75,15 +75,15 @@ const getOrPromptForAlias = async () => {
   if (customizeAlias) {
     alias = await p.group(
       {
-        core: () =>
-          p.text({
-            message: `Configure the import alias for ${c.info("core components")}:`,
-            placeholder: "@/components/core",
-          }),
         components: () =>
           p.text({
             message: `Configure the import alias for ${c.info("components")}:`,
             placeholder: "@/components",
+          }),
+        core: () =>
+          p.text({
+            message: `Configure the import alias for ${c.info("core components")}:`,
+            placeholder: "@/components/core",
           }),
         hooks: () =>
           p.text({
@@ -138,7 +138,7 @@ async function createConfigFile(
   cwd: string,
   aliases: Aliases,
   theme: RegistryTheme
-) {
+): Promise<Config> {
   const proceed = await p.confirm({
     message: `Write configuration to ${c.info("dotui.json")}. Proceed?`,
   });
@@ -152,15 +152,19 @@ async function createConfigFile(
   const createConfigSpinner = p.spinner();
   createConfigSpinner.start("Creating configuration file");
   const targetPath = path.resolve(cwd, "dotui.json");
-  const config = {
-    iconLibrary: theme.iconLibrary,
+  const rawConfig: RawConfig = {
+    $schema: "http://localhost:3000/schema.json", // TODO update this
+    css: "app/globals.css", // TODO FIX THIS
     aliases: aliases,
-    styles: theme.styles,
+    iconLibrary: theme.iconLibrary,
+    primitives: theme.primitives,
   };
   if (fs.existsSync(targetPath)) {
     await fs.remove(targetPath);
   }
-  await fs.writeFile(targetPath, JSON.stringify(config, null, 2), "utf8");
+  await fs.writeFile(targetPath, JSON.stringify(rawConfig, null, 2), "utf8");
 
+  const config = await resolveConfigPaths(cwd, rawConfig);
   createConfigSpinner.stop("Created configuration file");
+  return config;
 }

@@ -2,9 +2,9 @@
   "name": "file-trigger",
   "files": [
     {
-      "type": "registry:core",
+      "type": "core",
       "content": "\"use client\";\n\nimport { FileTrigger, type FileTriggerProps } from \"react-aria-components\";\n\nexport type { FileTriggerProps };\nexport { FileTrigger };\n",
-      "target": "core/file-trigger.tsx"
+      "path": "core/file-trigger.tsx"
     }
   ]
 }

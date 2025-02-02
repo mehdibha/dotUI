@@ -28,6 +28,9 @@ module.exports = {
   overrides: [
     {
       files: ["*.js?(x)", "*.ts?(x)"],
+      rules: {
+        "turbo/no-undeclared-env-vars": "off"
+      }
     },
   ],
 };

@@ -1,4 +1,4 @@
-import { Registry } from "@dotui/registry/types";
+import { Registry } from "./types";
 
 export const lib: Registry = [
   {
@@ -7,9 +7,9 @@ export const lib: Registry = [
     dependencies: ["clsx", "tailwind-merge"],
     files: [
       {
-        path: "lib/utils.ts",
+        path: "lib/utils.tsx",
         type: "lib",
-        target: "lib/utils.ts",
+        target: "lib/utils.tsx",
       },
     ],
   },
@@ -20,6 +20,7 @@ export const lib: Registry = [
       {
         path: "lib/focus-styles.ts",
         type: "lib",
+        target: "lib/focus-styles.ts",
       },
     ],
   },

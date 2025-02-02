@@ -1,7 +1,7 @@
 import { spinner } from "@clack/prompts";
-import { getRegistryIndex, getRegistryItem } from "@/registry/api";
-
-interface Config {}
+import { resolvePrimitives } from "@/registry/api";
+import { Config } from "@/helpers/get-config";
+import { updateDeps, updateFiles } from "@/helpers/updaters";
 
 export async function addPrimitives(
   primitives: string[],
@@ -21,37 +21,15 @@ export async function addPrimitives(
 
   addPrimitivesSpinner.start(options.message);
   addPrimitivesSpinner.message("Cheking registry");
-  const registryIndex = await getRegistryIndex();
-  const items = registryIndex.filter((item) => primitives.includes(item.name));
-  await getRegistryItem(items[0].name, items[0].type);
-  await new Promise((resolve) => setTimeout(resolve, 3000));
-  // const tree = await registryResolveItemsTree(primitives, config)
-  // if (!tree) {
-  //   registrySpinner?.fail()
-  //   return handleError(new Error("Failed to fetch primitives from registry."))
-  // }
+  const { files, dependencies } = await resolvePrimitives(primitives, config);
 
   addPrimitivesSpinner.message("Updating your CSS.");
-  await new Promise((resolve) => setTimeout(resolve, 3000));
-  // await updateCss(tree.cssVars, config, {
-  //   cleanupDefaultNextStyles: options.isNewProject,
-  //   silent: options.silent,
-  // })
 
   addPrimitivesSpinner.message("Updating dependencies.");
-  await new Promise((resolve) => setTimeout(resolve, 3000));
-  // await updateDependencies(tree.dependencies, config, {
-  //   silent: options.silent,
-  // })
-  // await updateFiles(tree.files, config, {
-  //   overwrite: options.overwrite,
-  // })
+  await updateDeps(dependencies, config);
 
   addPrimitivesSpinner.message("Updating files.");
-  await new Promise((resolve) => setTimeout(resolve, 3000));
-  // await updateFiles(tree.files, config, {
-  //   overwrite: options.overwrite,
-  // })
+  await updateFiles(files ?? [], config, { overwrite: options.overwrite });
 
   addPrimitivesSpinner.stop(options.message);
 }

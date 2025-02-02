@@ -16,7 +16,7 @@ export const getRegistryTheme = async (
     id: "darky",
     label: "Darky",
     iconLibrary: "lucide-icons",
-    styles: {
+    primitives: {
       button: "basic",
       "toggle-button": "basic",
       input: "basic",

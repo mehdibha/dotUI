@@ -1,12 +1,12 @@
-{
-  "lucide": {
+[
+  {
     "name": "lucide-icons",
     "package": "lucide-react",
     "import": "lucide-react"
   },
-  "remix": {
+  {
     "name": "remix-icons",
     "package": "@remixicon/react",
     "import": "@remixicon/react"
   }
-}
+]

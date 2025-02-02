@@ -13,6 +13,9 @@ export const registryIndexSchema = z.array(
   z.object({
     name: z.string(),
     type: registryItemTypeSchema,
+    deps: z.array(z.string()).optional(),
+    registryDeps: z.array(z.string()).optional(),
+    variants: z.array(z.string()).optional(),
   })
 );
 
@@ -32,18 +35,14 @@ export const registryThemeSchema = z.object({
   id: z.string(),
   label: z.string(),
   iconLibrary: iconLibrarySchema,
-  styles: z.record(z.string(), z.string()),
+  primitives: z.record(z.string(), z.string()),
 });
 
-export const registryItemFileSchema = z.union([
-  z.object({
-    path: z.string(),
-    content: z.string().optional(),
-    type: registryItemTypeSchema,
-    target: z.string().optional(),
-  }),
-  z.string(),
-]);
+export const registryItemFileSchema = z.object({
+  type: registryItemTypeSchema,
+  content: z.string(),
+  path: z.string(),
+});
 
 export const registryItemTailwindSchema = z.object({
   config: z.object({
@@ -95,7 +94,4 @@ export const registryResolvedItemsTreeSchema = registryItemSchema.pick({
   dependencies: true,
   devDependencies: true,
   files: true,
-  tailwind: true,
-  cssVars: true,
-  docs: true,
 });

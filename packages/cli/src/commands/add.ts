@@ -1,5 +1,6 @@
 import * as p from "@clack/prompts";
 import { Command } from "commander";
+import { addChecks } from "@/helpers/add-checks";
 import { addPrimitives } from "@/helpers/add-primitives";
 import { handleError } from "@/helpers/handle-error";
 import { c } from "@/utils";
@@ -28,11 +29,11 @@ export const addCommand = new Command()
     ) => {
       try {
         p.intro("Adding primitives.");
-        await addPrimitives(
-          primitives,
-          {},
-          { overwrite: options.overwrite, message: "Updating your project" }
-        );
+        const { config } = await addChecks(options.dir);
+        await addPrimitives(primitives, config, {
+          overwrite: options.overwrite,
+          message: "Updating your project",
+        });
         p.outro(
           `Successfully added ${c.info("button, text-field, and 21 other components.")}`
         );

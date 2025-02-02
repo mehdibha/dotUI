@@ -6,7 +6,7 @@ import { base } from "./registry-base";
 import { RegistryItem, type Registry } from "./types";
 
 export const registry: Registry = [
-  ...base.map((item) => ({ ...item, type: "base" }) as RegistryItem),
+  { ...base, type: "base" },
   ...core.map((item) => ({ ...item, type: "core" }) as RegistryItem),
   ...hooks.map((item) => ({ ...item, type: "hook" }) as RegistryItem),
   ...themes.map((item) => ({ ...item, type: "theme" }) as RegistryItem),
