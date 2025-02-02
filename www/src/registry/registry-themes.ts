@@ -1,3 +1,3 @@
-import type { Registry } from "@dotui/registry/types";
+import type { Registry } from "./types";
 
 export const themes: Registry = [];
