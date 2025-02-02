@@ -1,5 +1,10 @@
 {
   "name": "menu",
+  "registryDependencies": [
+    "kbd",
+    "overlay",
+    "text"
+  ],
   "files": [
     {
       "type": "core",

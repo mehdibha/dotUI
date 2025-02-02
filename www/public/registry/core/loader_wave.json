@@ -1,5 +1,8 @@
 {
   "name": "loader_wave",
+  "dependencies": [
+    "motion"
+  ],
   "files": [
     {
       "type": "core",

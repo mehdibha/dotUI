@@ -1,5 +1,8 @@
 {
   "name": "toggle-button-group",
+  "registryDependencies": [
+    "toggle-button"
+  ],
   "files": [
     {
       "type": "core",

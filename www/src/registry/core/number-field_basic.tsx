@@ -18,10 +18,12 @@ import { Label, HelpText, type FieldProps } from "@/registry/core/field_basic";
 import {
   InputRoot,
   Input,
+  type InputRootProps,
   type inputStyles,
 } from "@/registry/core/input_basic";
 import { useMediaQuery } from "@/registry/hooks/use-media-query";
-import { InputRootProps } from "./input_basic";
+
+// TODO: update registry
 
 const numberFieldStyles = tv({
   slots: {

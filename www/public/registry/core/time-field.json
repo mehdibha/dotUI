@@ -1,5 +1,10 @@
 {
   "name": "time-field",
+  "registryDependencies": [
+    "field",
+    "input",
+    "date-input"
+  ],
   "files": [
     {
       "type": "core",

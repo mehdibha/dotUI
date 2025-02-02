@@ -1,5 +1,8 @@
 {
   "name": "toggle-button",
+  "registryDependencies": [
+    "focus-styles"
+  ],
   "files": [
     {
       "type": "core",

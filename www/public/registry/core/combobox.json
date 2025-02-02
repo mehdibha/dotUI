@@ -1,5 +1,12 @@
 {
   "name": "combobox",
+  "registryDependencies": [
+    "field",
+    "button",
+    "input",
+    "list-box",
+    "overlay"
+  ],
   "files": [
     {
       "type": "core",

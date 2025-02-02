@@ -1,5 +1,9 @@
 {
   "name": "radio-group",
+  "registryDependencies": [
+    "focus-styles",
+    "field"
+  ],
   "files": [
     {
       "type": "core",

@@ -1,5 +1,13 @@
 {
   "name": "date-picker",
+  "registryDependencies": [
+    "button",
+    "calendar",
+    "field",
+    "input",
+    "date-input",
+    "dialog"
+  ],
   "files": [
     {
       "type": "core",

@@ -1,5 +1,8 @@
 {
   "name": "breadcrumbs",
+  "registryDependencies": [
+    "focus-styles"
+  ],
   "files": [
     {
       "type": "core",

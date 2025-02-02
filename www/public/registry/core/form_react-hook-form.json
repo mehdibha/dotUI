@@ -1,5 +1,8 @@
 {
   "name": "form_react-hook-form",
+  "dependencies": [
+    "react-hook-form"
+  ],
   "files": [
     {
       "type": "core",

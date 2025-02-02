@@ -8,11 +8,16 @@ import {
   SelectValue as AriaSelectValue,
   type SelectProps as AriaSelectProps,
   type SelectValueProps as AriaSelectValueProps,
+  ListBoxItemProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import { Button, type ButtonProps } from "@/registry/core/button_basic";
 import { HelpText, Label, type FieldProps } from "@/registry/core/field_basic";
-import { ListBox, type ListBoxProps } from "@/registry/core/list-box_basic";
+import {
+  Item,
+  ListBox,
+  type ListBoxProps,
+} from "@/registry/core/list-box_basic";
 import { Popover } from "@/registry/core/popover_basic";
 
 const selectStyles = tv({
@@ -21,6 +26,8 @@ const selectStyles = tv({
     selectValue: "flex-1 text-left",
   },
 });
+
+const { root, selectValue } = selectStyles();
 
 interface SelectProps<T extends object>
   extends Omit<SelectRootProps<T>, "children">,
@@ -70,14 +77,16 @@ const Select = <T extends object>({
 };
 
 type SelectValueProps<T extends object> = AriaSelectValueProps<T>;
-const SelectValue = <T extends object>(props: SelectValueProps<T>) => {
-  const { selectValue } = selectStyles();
+const SelectValue = <T extends object>({
+  className,
+  ...props
+}: SelectValueProps<T>) => {
   return (
     <AriaSelectValue
-      {...props}
-      className={composeRenderProps(props.className, (className) =>
+      className={composeRenderProps(className, (className) =>
         selectValue({ className })
       )}
+      {...props}
     />
   );
 };
@@ -90,9 +99,11 @@ const SelectRoot = <T extends object>({
   className,
   ...props
 }: SelectRootProps<T>) => {
-  const { root } = selectStyles();
   return <AriaSelect className={root({ className })} {...props} />;
 };
 
-export type { SelectProps, SelectRootProps, SelectValueProps };
-export { Select, SelectRoot, SelectValue };
+interface SelectItemProps<T> extends ListBoxItemProps<T> {}
+const SelectItem = Item;
+
+export type { SelectProps, SelectRootProps, SelectItemProps, SelectValueProps };
+export { Select, SelectRoot, SelectItem, SelectValue };

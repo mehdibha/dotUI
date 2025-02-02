@@ -14,8 +14,7 @@ import { ColorField } from "@/registry/core/color-field_basic";
 import { ColorSlider } from "@/registry/core/color-slider_basic";
 import { ColorSwatch } from "@/registry/core/color-swatch_basic";
 import { Dialog, DialogProps, DialogRoot } from "@/registry/core/dialog_basic";
-import { Item } from "@/registry/core/list-box_basic";
-import { Select } from "@/registry/core/select_basic";
+import { Select, SelectItem } from "@/registry/core/select_basic";
 import { cn } from "@/registry/lib/utils";
 
 interface ColorPickerProps
@@ -146,10 +145,10 @@ const ColorPickerEditor = ({
             size="sm"
             className="w-auto"
           >
-            <Item id="hex">Hex</Item>
-            <Item id="rgb">RGB</Item>
-            <Item id="hsl">HSL</Item>
-            <Item id="hsb">HSB</Item>
+            <SelectItem id="hex">Hex</SelectItem>
+            <SelectItem id="rgb">RGB</SelectItem>
+            <SelectItem id="hsl">HSL</SelectItem>
+            <SelectItem id="hsb">HSB</SelectItem>
           </Select>
         )}
         <div className="flex flex-1 items-center gap-2">

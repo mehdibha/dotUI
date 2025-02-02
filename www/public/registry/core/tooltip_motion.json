@@ -1,5 +1,8 @@
 {
   "name": "tooltip_motion",
+  "dependencies": [
+    "motion"
+  ],
   "files": [
     {
       "type": "core",

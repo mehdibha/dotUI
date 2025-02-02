@@ -1,5 +1,10 @@
 {
   "name": "calendar_basic",
+  "registryDependencies": [
+    "button",
+    "text",
+    "focus-styles"
+  ],
   "files": [
     {
       "type": "core",

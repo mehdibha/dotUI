@@ -1,5 +1,12 @@
 {
   "name": "slider",
+  "dependencies": [
+    "@react-aria/utils"
+  ],
+  "registryDependencies": [
+    "field",
+    "focus-styles"
+  ],
   "files": [
     {
       "type": "core",

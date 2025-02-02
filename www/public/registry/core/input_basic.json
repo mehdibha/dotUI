@@ -1,5 +1,12 @@
 {
   "name": "input_basic",
+  "dependencies": [
+    "@react-aria/utils",
+    "@react-stately/utils"
+  ],
+  "registryDependencies": [
+    "focus-styles"
+  ],
   "files": [
     {
       "type": "core",

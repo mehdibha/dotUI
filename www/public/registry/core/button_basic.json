@@ -1,5 +1,9 @@
 {
   "name": "button_basic",
+  "registryDependencies": [
+    "loader",
+    "focus-styles"
+  ],
   "files": [
     {
       "type": "core",

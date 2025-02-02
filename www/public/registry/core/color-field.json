@@ -1,5 +1,9 @@
 {
   "name": "color-field",
+  "registryDependencies": [
+    "field",
+    "input"
+  ],
   "files": [
     {
       "type": "core",

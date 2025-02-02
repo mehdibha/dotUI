@@ -1,5 +1,9 @@
 {
   "name": "button_brutalist",
+  "registryDependencies": [
+    "loader",
+    "focus-styles"
+  ],
   "files": [
     {
       "type": "core",

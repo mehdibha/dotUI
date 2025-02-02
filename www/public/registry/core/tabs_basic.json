@@ -1,5 +1,8 @@
 {
   "name": "tabs_basic",
+  "registryDependencies": [
+    "focus-styles"
+  ],
   "files": [
     {
       "type": "core",

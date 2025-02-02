@@ -1,5 +1,10 @@
 {
   "name": "tag-group",
+  "registryDependencies": [
+    "field",
+    "button",
+    "focus-styles"
+  ],
   "files": [
     {
       "type": "core",

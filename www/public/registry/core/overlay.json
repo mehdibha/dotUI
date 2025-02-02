@@ -1,5 +1,11 @@
 {
   "name": "overlay",
+  "registryDependencies": [
+    "modal",
+    "popover",
+    "drawer",
+    "use-is-mobile"
+  ],
   "files": [
     {
       "type": "core",

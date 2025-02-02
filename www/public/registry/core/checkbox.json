@@ -1,5 +1,8 @@
 {
   "name": "checkbox",
+  "registryDependencies": [
+    "focus-styles"
+  ],
   "files": [
     {
       "type": "core",

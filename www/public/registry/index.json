@@ -42,7 +42,10 @@
   },
   {
     "name": "breadcrumbs",
-    "type": "core"
+    "type": "core",
+    "registryDeps": [
+      "focus-styles"
+    ]
   },
   {
     "name": "button",
@@ -55,15 +58,27 @@
   },
   {
     "name": "button_basic",
-    "type": "core"
+    "type": "core",
+    "registryDeps": [
+      "loader",
+      "focus-styles"
+    ]
   },
   {
     "name": "button_brutalist",
-    "type": "core"
+    "type": "core",
+    "registryDeps": [
+      "loader",
+      "focus-styles"
+    ]
   },
   {
     "name": "button_ripple",
-    "type": "core"
+    "type": "core",
+    "registryDeps": [
+      "loader",
+      "focus-styles"
+    ]
   },
   {
     "name": "calendar",
@@ -75,35 +90,72 @@
   },
   {
     "name": "calendar_basic",
-    "type": "core"
+    "type": "core",
+    "registryDeps": [
+      "button",
+      "text",
+      "focus-styles"
+    ]
   },
   {
     "name": "calendar_cal",
-    "type": "core"
+    "type": "core",
+    "registryDeps": [
+      "button",
+      "text",
+      "focus-styles"
+    ]
   },
   {
     "name": "checkbox",
-    "type": "core"
+    "type": "core",
+    "registryDeps": [
+      "focus-styles"
+    ]
   },
   {
     "name": "checkbox-group",
-    "type": "core"
+    "type": "core",
+    "registryDeps": [
+      "field",
+      "checkbox"
+    ]
   },
   {
     "name": "color-area",
-    "type": "core"
+    "type": "core",
+    "registryDeps": [
+      "color-thumb"
+    ]
   },
   {
     "name": "color-field",
-    "type": "core"
+    "type": "core",
+    "registryDeps": [
+      "field",
+      "input"
+    ]
   },
   {
     "name": "color-picker",
-    "type": "core"
+    "type": "core",
+    "registryDeps": [
+      "button",
+      "color-area",
+      "color-field",
+      "color-slider",
+      "color-swatch",
+      "dialog",
+      "select"
+    ]
   },
   {
     "name": "color-slider",
-    "type": "core"
+    "type": "core",
+    "registryDeps": [
+      "field",
+      "color-thum"
+    ]
   },
   {
     "name": "color-swatch",
@@ -111,15 +163,29 @@
   },
   {
     "name": "color-swatch-picker",
-    "type": "core"
+    "type": "core",
+    "registryDeps": [
+      "focus-styles",
+      "color-swatch"
+    ]
   },
   {
     "name": "color-thumb",
-    "type": "core"
+    "type": "core",
+    "registryDeps": [
+      "focus-styles"
+    ]
   },
   {
     "name": "combobox",
-    "type": "core"
+    "type": "core",
+    "registryDeps": [
+      "field",
+      "button",
+      "input",
+      "list-box",
+      "overlay"
+    ]
   },
   {
     "name": "command",
@@ -127,7 +193,12 @@
   },
   {
     "name": "date-field",
-    "type": "core"
+    "type": "core",
+    "registryDeps": [
+      "field",
+      "input",
+      "date-input"
+    ]
   },
   {
     "name": "date-input",
@@ -135,15 +206,34 @@
   },
   {
     "name": "date-picker",
-    "type": "core"
+    "type": "core",
+    "registryDeps": [
+      "button",
+      "calendar",
+      "field",
+      "input",
+      "date-input",
+      "dialog"
+    ]
   },
   {
     "name": "date-range-picker",
-    "type": "core"
+    "type": "core",
+    "registryDeps": [
+      "button",
+      "calendar",
+      "field",
+      "input",
+      "date-input",
+      "dialog"
+    ]
   },
   {
     "name": "dialog",
-    "type": "core"
+    "type": "core",
+    "registryDeps": [
+      "overlay"
+    ]
   },
   {
     "name": "drawer",
@@ -175,7 +265,10 @@
   },
   {
     "name": "form_react-hook-form",
-    "type": "core"
+    "type": "core",
+    "deps": [
+      "react-hook-form"
+    ]
   },
   {
     "name": "input",
@@ -186,7 +279,14 @@
   },
   {
     "name": "input_basic",
-    "type": "core"
+    "type": "core",
+    "deps": [
+      "@react-aria/utils",
+      "@react-stately/utils"
+    ],
+    "registryDeps": [
+      "focus-styles"
+    ]
   },
   {
     "name": "kbd",
@@ -194,11 +294,11 @@
   },
   {
     "name": "list-box",
-    "type": "core"
-  },
-  {
-    "name": "list-box",
-    "type": "core"
+    "type": "core",
+    "registryDeps": [
+      "text",
+      "focus-styles"
+    ]
   },
   {
     "name": "loader",
@@ -229,11 +329,19 @@
   },
   {
     "name": "loader_wave",
-    "type": "core"
+    "type": "core",
+    "deps": [
+      "motion"
+    ]
   },
   {
     "name": "menu",
-    "type": "core"
+    "type": "core",
+    "registryDeps": [
+      "kbd",
+      "overlay",
+      "text"
+    ]
   },
   {
     "name": "modal",
@@ -241,11 +349,22 @@
   },
   {
     "name": "number-field",
-    "type": "core"
+    "type": "core",
+    "registryDeps": [
+      "input",
+      "field",
+      "use-is-mobile"
+    ]
   },
   {
     "name": "overlay",
-    "type": "core"
+    "type": "core",
+    "registryDeps": [
+      "modal",
+      "popover",
+      "drawer",
+      "use-is-mobile"
+    ]
   },
   {
     "name": "popover",
@@ -253,19 +372,36 @@
   },
   {
     "name": "progress-bar",
-    "type": "core"
+    "type": "core",
+    "registryDeps": [
+      "field"
+    ]
   },
   {
     "name": "radio-group",
-    "type": "core"
+    "type": "core",
+    "registryDeps": [
+      "focus-styles",
+      "field"
+    ]
   },
   {
     "name": "search-field",
-    "type": "core"
+    "type": "core",
+    "registryDeps": [
+      "field",
+      "button"
+    ]
   },
   {
     "name": "select",
-    "type": "core"
+    "type": "core",
+    "registryDeps": [
+      "button",
+      "field",
+      "list-box",
+      "popover"
+    ]
   },
   {
     "name": "separator",
@@ -277,15 +413,29 @@
   },
   {
     "name": "slider",
-    "type": "core"
+    "type": "core",
+    "deps": [
+      "@react-aria/utils"
+    ],
+    "registryDeps": [
+      "field",
+      "focus-styles"
+    ]
   },
   {
     "name": "switch",
-    "type": "core"
+    "type": "core",
+    "registryDeps": [
+      "focus-styles"
+    ]
   },
   {
     "name": "table",
-    "type": "core"
+    "type": "core",
+    "registryDeps": [
+      "checkbox",
+      "focus-styles"
+    ]
   },
   {
     "name": "tabs",
@@ -297,15 +447,29 @@
   },
   {
     "name": "tabs_basic",
-    "type": "core"
+    "type": "core",
+    "registryDeps": [
+      "focus-styles"
+    ]
   },
   {
     "name": "tabs_motion",
-    "type": "core"
+    "type": "core",
+    "deps": [
+      "motion"
+    ],
+    "registryDeps": [
+      "focus-styles"
+    ]
   },
   {
     "name": "tag-group",
-    "type": "core"
+    "type": "core",
+    "registryDeps": [
+      "field",
+      "button",
+      "focus-styles"
+    ]
   },
   {
     "name": "text",
@@ -313,23 +477,42 @@
   },
   {
     "name": "text-area",
-    "type": "core"
+    "type": "core",
+    "registryDeps": [
+      "field",
+      "input"
+    ]
   },
   {
     "name": "text-field",
-    "type": "core"
+    "type": "core",
+    "registryDeps": [
+      "field",
+      "input"
+    ]
   },
   {
     "name": "time-field",
-    "type": "core"
+    "type": "core",
+    "registryDeps": [
+      "field",
+      "input",
+      "date-input"
+    ]
   },
   {
     "name": "toggle-button",
-    "type": "core"
+    "type": "core",
+    "registryDeps": [
+      "focus-styles"
+    ]
   },
   {
     "name": "toggle-button-group",
-    "type": "core"
+    "type": "core",
+    "registryDeps": [
+      "toggle-button"
+    ]
   },
   {
     "name": "tooltip",
@@ -345,7 +528,10 @@
   },
   {
     "name": "tooltip_motion",
-    "type": "core"
+    "type": "core",
+    "deps": [
+      "motion"
+    ]
   },
   {
     "name": "use-is-mobile",

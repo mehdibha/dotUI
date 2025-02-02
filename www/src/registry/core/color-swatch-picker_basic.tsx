@@ -4,7 +4,6 @@ import React from "react";
 import {
   ColorSwatchPicker as AriaColorSwatchPicker,
   ColorSwatchPickerItem as AriaColorSwatchPickerItem,
-  type Color,
 } from "react-aria-components";
 import { focusRing } from "@/lib/focus-styles";
 import { ColorSwatch } from "@/registry/core/color-swatch_basic";
