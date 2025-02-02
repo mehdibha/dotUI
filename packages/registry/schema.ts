@@ -7,6 +7,7 @@ export const registryItemTypeSchema = z.enum([
   "lib",
   "hook",
   "theme",
+  "icon-library",
 ]);
 
 export const registryIndexSchema = z.array(

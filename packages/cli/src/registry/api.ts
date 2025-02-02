@@ -1,5 +1,6 @@
 import {
   registryIndexSchema,
+  RegistryItem,
   registryItemSchema,
   registryResolvedItemsTreeSchema,
   type RegistryItemType,
@@ -30,14 +31,20 @@ const getPrimitivePath = (name: string, type: RegistryItemType) => {
 export async function resolvePrimitives(names: string[], config: Config) {
   const index = await getRegistryIndex();
 
+  let iconLibraryDeps: string[] = [];
   const getAllRegistryDeps = (name: string) => {
     let registryDeps: string[] = [name];
     const item = index.find((item) => item.name === name);
     if (!item) throw new Error(`${name} not found in registry`);
+    if (item.type === "icon-library") {
+      if (item.deps) {
+        iconLibraryDeps.push(item.deps[0]);
+      }
+      return [];
+    }
     if (item.variants) {
       // we check if the variant is defined in the config, if not we use the first one (supposed to be the default)
-      const variant =
-        config.primitives?.[name] ?? item.variants[0]
+      const variant = config.primitives?.[name] ?? item.variants[0];
 
       registryDeps = [
         ...registryDeps,
@@ -60,22 +67,25 @@ export async function resolvePrimitives(names: string[], config: Config) {
     new Set(names.flatMap((name) => getAllRegistryDeps(name)))
   );
 
+  let skipped: RegistryItem[] = [];
   const primitivesPaths = primitives.map((name) => {
     const item = index.find((item) => item.name === name);
     if (!item) throw new Error(`${name} not found in registry`);
+    if (item.type === "icon-library") skipped.push(item);
     return getPrimitivePath(name, item.type);
   });
 
   const result = await fetchRegistry(primitivesPaths);
-  const payload = z.array(registryItemSchema).parse(result);
+  const payload = z.array(registryItemSchema).parse([...result, ...skipped]);
 
   if (!payload) {
     throw new Error("Failed to validate registry items"); // TODO: fix
   }
 
-  const dependencies = deepmerge.all(
-    payload.map((item) => item.dependencies ?? [])
-  );
+  const dependencies = deepmerge.all([
+    ...payload.map((item) => item.dependencies ?? []),
+    iconLibraryDeps,
+  ]);
   const files = deepmerge.all(payload.map((item) => item.files ?? []));
 
   return registryResolvedItemsTreeSchema.parse({

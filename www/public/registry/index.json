@@ -548,5 +548,19 @@
   {
     "name": "focus-styles",
     "type": "lib"
+  },
+  {
+    "name": "lucide-icons",
+    "type": "icon-library",
+    "deps": [
+      "lucide-react"
+    ]
+  },
+  {
+    "name": "remix-icons",
+    "type": "icon-library",
+    "deps": [
+      "@remixicon/react"
+    ]
   }
 ]

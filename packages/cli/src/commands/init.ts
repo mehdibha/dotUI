@@ -35,7 +35,7 @@ export const initCommand = new Command()
         themeId = await getOrPromptForThemeId(themeId);
         const theme = await getRegistryTheme(themeId);
         const config = await createConfigFile(options.dir, aliases, theme);
-        await addPrimitives(["base"], config, {
+        await addPrimitives(["base", theme.iconLibrary], config, {
           overwrite: true,
           message: "Updating your project",
         });

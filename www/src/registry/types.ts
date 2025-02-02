@@ -1,14 +1,14 @@
-export type RegistryType = "base" | "core" | "hook" | "lib" | "theme";
+import { RegistryItemType } from "@dotui/registry";
 
 export type RegistryItem = {
   name: string;
-  type?: RegistryType;
+  type?: RegistryItemType;
   description?: string;
   dependencies?: string[];
   registryDependencies?: string[];
   files?: {
     path: string;
-    type: RegistryType;
+    type: RegistryItemType;
     target: string;
   }[];
   variants?: string[];
