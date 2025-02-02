@@ -21,7 +21,7 @@ import {
   type InputRootProps,
   type inputStyles,
 } from "@/registry/core/input_basic";
-import { useMediaQuery } from "@/registry/hooks/use-media-query";
+import { useIsMobile } from "@/registry/hooks/use-is-mobile";
 
 // TODO: update registry
 
@@ -65,7 +65,7 @@ const NumberField = ({
   size,
   ...props
 }: NumberFieldProps) => {
-  const isMobile = useMediaQuery("(max-width: 768px)");
+  const isMobile = useIsMobile();
 
   return (
     <NumberFieldRoot {...props}>

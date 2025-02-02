@@ -3,7 +3,7 @@
 import { Drawer, DrawerProps } from "@/registry/core/drawer_basic";
 import { Modal, ModalProps } from "@/registry/core/modal_basic";
 import { Popover, PopoverProps } from "@/registry/core/popover_basic";
-import { useMediaQuery } from "@/registry/hooks/use-media-query";
+import { useIsMobile } from "@/registry/hooks/use-is-mobile";
 
 type Type = "modal" | "popover" | "drawer";
 
@@ -33,7 +33,7 @@ function Overlay({
   drawerProps,
   ...props
 }: OverlayProps) {
-  const isMobile = useMediaQuery("(max-width: 640px)");
+  const isMobile = useIsMobile();
   const resolvedType = mobileType ? (isMobile ? mobileType : type) : type;
 
   if (resolvedType === "modal") {

@@ -6,7 +6,7 @@ export const hooks: Registry = [
     files: [
       {
         type: "hook",
-        path: "hooks/use-media-query.ts",
+        path: "hooks/use-is-mobile.ts",
         target: "hooks/use-is-mobile.ts",
       },
     ],

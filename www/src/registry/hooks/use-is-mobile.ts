@@ -1,19 +1,19 @@
 import * as React from "react";
 
-export function useMediaQuery(query: string) {
-  const [value, setValue] = React.useState(false);
+export function useIsMobile() {
+  const [isMobile, setMobile] = React.useState(false);
 
   React.useEffect(() => {
     function onChange(event: MediaQueryListEvent) {
-      setValue(event.matches);
+      setMobile(event.matches);
     }
 
-    const result = matchMedia(query);
+    const result = matchMedia("(max-width: 640px)");
     result.addEventListener("change", onChange);
-    setValue(result.matches);
+    setMobile(result.matches);
 
     return () => result.removeEventListener("change", onChange);
-  }, [query]);
+  }, []);
 
-  return value;
+  return isMobile;
 }
