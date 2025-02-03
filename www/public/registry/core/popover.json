@@ -1,5 +1,6 @@
 {
   "name": "popover",
+  "type": "core",
   "files": [
     {
       "type": "core",

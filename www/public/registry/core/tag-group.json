@@ -1,6 +1,7 @@
 {
   "name": "tag-group",
-  "registryDependencies": [
+  "type": "core",
+  "registryDeps": [
     "field",
     "button",
     "focus-styles"

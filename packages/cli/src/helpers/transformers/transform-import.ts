@@ -1,4 +1,4 @@
-import { Config } from "@/helpers/get-config";
+import { ExtendedConfig } from "@dotui/schemas";
 import { Transformer } from "@/helpers/transformers";
 
 export const transformImport: Transformer = async ({ sourceFile, config }) => {
@@ -14,7 +14,7 @@ export const transformImport: Transformer = async ({ sourceFile, config }) => {
   return sourceFile;
 };
 
-function updateImportAliases(moduleSpecifier: string, config: Config) {
+function updateImportAliases(moduleSpecifier: string, config: ExtendedConfig) {
   // Not a local import.
   if (!moduleSpecifier.startsWith("@/")) {
     return moduleSpecifier;
@@ -28,7 +28,9 @@ function updateImportAliases(moduleSpecifier: string, config: Config) {
   }
 
   if (moduleSpecifier.match(/^@\/registry\/core/)) {
-    return moduleSpecifier.replace(/^@\/registry\/core/, config.aliases.core).replace(/_[^/_]+$/, "")
+    return moduleSpecifier
+      .replace(/^@\/registry\/core/, config.aliases.core)
+      .replace(/_[^/_]+$/, "");
   }
 
   if (

@@ -1,5 +1,6 @@
 {
   "name": "form_basic",
+  "type": "core",
   "files": [
     {
       "type": "core",

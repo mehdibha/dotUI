@@ -1,6 +1,7 @@
 [
   {
     "name": "use-is-mobile",
+    "type": "hook",
     "label": "useIsMobile"
   }
 ]

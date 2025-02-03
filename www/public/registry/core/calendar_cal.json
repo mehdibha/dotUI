@@ -1,6 +1,7 @@
 {
   "name": "calendar_cal",
-  "registryDependencies": [
+  "type": "core",
+  "registryDeps": [
     "button",
     "text",
     "focus-styles"

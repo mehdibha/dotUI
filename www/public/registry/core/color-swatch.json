@@ -1,5 +1,6 @@
 {
   "name": "color-swatch",
+  "type": "core",
   "files": [
     {
       "type": "core",

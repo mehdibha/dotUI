@@ -452,7 +452,7 @@ const SidebarButton = ({
       variant="quiet"
       size="sm"
       className={cn(
-        "transition-sidebar group-data-collapsed/sidebar:w-8 relative w-full overflow-hidden font-normal",
+        "transition-sidebar group-data-collapsed/sidebar:w-8 hover:bg-inverse/10 relative w-full overflow-hidden font-normal",
         className
       )}
       {...props}

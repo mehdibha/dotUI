@@ -1,5 +1,6 @@
 {
   "name": "loader_tailspin",
+  "type": "core",
   "files": [
     {
       "type": "core",

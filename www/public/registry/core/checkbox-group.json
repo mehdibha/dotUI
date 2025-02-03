@@ -1,6 +1,7 @@
 {
   "name": "checkbox-group",
-  "registryDependencies": [
+  "type": "core",
+  "registryDeps": [
     "field",
     "checkbox"
   ],

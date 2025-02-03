@@ -1,5 +1,6 @@
 {
   "name": "separator",
+  "type": "core",
   "files": [
     {
       "type": "core",

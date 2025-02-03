@@ -1,6 +1,7 @@
 {
   "name": "color-thumb",
-  "registryDependencies": [
+  "type": "core",
+  "registryDeps": [
     "focus-styles"
   ],
   "files": [

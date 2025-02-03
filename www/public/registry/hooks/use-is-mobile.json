@@ -1,5 +1,6 @@
 {
   "name": "use-is-mobile",
+  "type": "hook",
   "files": [
     {
       "type": "hook",

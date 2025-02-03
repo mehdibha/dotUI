@@ -1,6 +1,7 @@
 {
   "name": "tooltip_motion",
-  "dependencies": [
+  "type": "core",
+  "deps": [
     "motion"
   ],
   "files": [

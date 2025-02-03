@@ -1,5 +1,6 @@
 {
   "name": "alert",
+  "type": "core",
   "variants": [
     "basic",
     "notch",

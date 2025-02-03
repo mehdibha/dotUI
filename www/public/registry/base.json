@@ -1,11 +1,12 @@
 {
   "name": "base",
-  "dependencies": [
+  "type": "base",
+  "deps": [
     "tailwind-variants",
     "react-aria-components",
     "tailwindcss-react-aria-components"
   ],
-  "registryDependencies": [
+  "registryDeps": [
     "utils"
   ],
   "files": []

@@ -1,6 +1,7 @@
 {
   "name": "overlay",
-  "registryDependencies": [
+  "type": "core",
+  "registryDeps": [
     "modal",
     "popover",
     "drawer",

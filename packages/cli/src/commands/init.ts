@@ -1,14 +1,18 @@
 import * as p from "@clack/prompts";
-import type { RegistryTheme } from "@dotui/registry";
+import type {
+  Aliases,
+  ExtendedConfig,
+  RawConfig,
+  RegistryTheme,
+} from "@dotui/schemas";
 import { Command } from "commander";
 import fs from "fs-extra";
 import path from "path";
 import { addPrimitives } from "@/helpers/add-primitives";
-import { Config, RawConfig, resolveConfigPaths } from "@/helpers/get-config";
+import { resolveConfigPaths } from "@/helpers/get-config";
 import { handleError } from "@/helpers/handle-error";
 import { initChecks } from "@/helpers/init-checks";
 import { getRegistryTheme, getRegistryThemes } from "@/helpers/registry-api";
-import { Aliases } from "@/types";
 import { c } from "@/utils";
 
 export const initCommand = new Command()
@@ -138,7 +142,7 @@ async function createConfigFile(
   cwd: string,
   aliases: Aliases,
   theme: RegistryTheme
-): Promise<Config> {
+): Promise<ExtendedConfig> {
   const proceed = await p.confirm({
     message: `Write configuration to ${c.info("dotui.json")}. Proceed?`,
   });
@@ -153,7 +157,7 @@ async function createConfigFile(
   createConfigSpinner.start("Creating configuration file");
   const targetPath = path.resolve(cwd, "dotui.json");
   const rawConfig: RawConfig = {
-    $schema: "http://localhost:3000/schema.json", // TODO update this
+    $schema: "http://localhost:3000/schema.json",
     css: "app/globals.css", // TODO FIX THIS
     aliases: aliases,
     iconLibrary: theme.iconLibrary,

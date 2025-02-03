@@ -1,6 +1,7 @@
 {
   "name": "color-picker",
-  "registryDependencies": [
+  "type": "core",
+  "registryDeps": [
     "button",
     "color-area",
     "color-field",

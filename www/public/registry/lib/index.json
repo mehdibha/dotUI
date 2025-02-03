@@ -1,10 +1,12 @@
 [
   {
     "name": "utils",
+    "type": "lib",
     "label": "utils"
   },
   {
     "name": "focus-styles",
+    "type": "lib",
     "label": "focusStyles"
   }
 ]

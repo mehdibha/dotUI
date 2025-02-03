@@ -1,6 +1,7 @@
 {
   "name": "switch",
-  "registryDependencies": [
+  "type": "core",
+  "registryDeps": [
     "focus-styles"
   ],
   "files": [

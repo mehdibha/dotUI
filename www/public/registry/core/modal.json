@@ -1,5 +1,6 @@
 {
   "name": "modal",
+  "type": "core",
   "files": [
     {
       "type": "core",

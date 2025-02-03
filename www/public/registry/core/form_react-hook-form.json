@@ -1,6 +1,7 @@
 {
   "name": "form_react-hook-form",
-  "dependencies": [
+  "type": "core",
+  "deps": [
     "react-hook-form"
   ],
   "files": [

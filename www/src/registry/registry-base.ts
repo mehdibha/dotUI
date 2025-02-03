@@ -1,12 +1,13 @@
-import type { RegistryItem } from "./types";
+import { InternalRegistryItem } from "@dotui/schemas";
 
-export const base: RegistryItem = {
+export const base: InternalRegistryItem = {
   name: "base",
-  dependencies: [
+  type: "base",
+  deps: [
     "tailwind-variants",
     "react-aria-components",
     "tailwindcss-react-aria-components",
   ],
-  registryDependencies: ["utils"],
+  registryDeps: ["utils"],
   files: [],
 };

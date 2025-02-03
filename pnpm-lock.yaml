@@ -58,9 +58,9 @@ importers:
       '@clack/prompts':
         specifier: ^0.9.1
         version: 0.9.1
-      '@dotui/registry':
+      '@dotui/schemas':
         specifier: workspace:*
-        version: link:../registry
+        version: link:../schemas
       '@types/fs-extra':
         specifier: ^11.0.4
         version: 11.0.4
@@ -125,7 +125,7 @@ importers:
 
   packages/config/tsconfig: {}
 
-  packages/registry:
+  packages/schemas:
     dependencies:
       zod:
         specifier: ^3.22.4
@@ -275,9 +275,9 @@ importers:
       '@dotui/eslint-config':
         specifier: workspace:*
         version: link:../packages/config/eslint
-      '@dotui/registry':
+      '@dotui/schemas':
         specifier: workspace:*
-        version: link:../packages/registry
+        version: link:../packages/schemas
       '@dotui/ts-config':
         specifier: workspace:*
         version: link:../packages/config/tsconfig

@@ -1,3 +1,7 @@
-import type { Registry } from "./types";
+import type { InternalRegistry } from "@dotui/schemas";
 
-export const themes: Registry = [];
+export const themes: InternalRegistry = [];
+// .map(
+//   ({ name, ...rest }) =>
+//     ({ name, type: "lib", ...rest }) as InternalRegistryItem
+// );

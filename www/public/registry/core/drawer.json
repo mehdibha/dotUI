@@ -1,5 +1,6 @@
 {
   "name": "drawer",
+  "type": "core",
   "files": [
     {
       "type": "core",

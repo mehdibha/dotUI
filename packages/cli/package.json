@@ -46,7 +46,7 @@
   },
   "dependencies": {
     "@clack/prompts": "^0.9.1",
-    "@dotui/registry": "workspace:*",
+    "@dotui/schemas": "workspace:*",
     "@types/fs-extra": "^11.0.4",
     "commander": "^10.0.0",
     "cosmiconfig": "^9.0.0",

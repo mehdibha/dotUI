@@ -1,6 +1,7 @@
 {
   "name": "color-slider",
-  "registryDependencies": [
+  "type": "core",
+  "registryDeps": [
     "field",
     "color-thum"
   ],

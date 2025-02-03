@@ -1,6 +1,7 @@
 {
   "name": "color-area",
-  "registryDependencies": [
+  "type": "core",
+  "registryDeps": [
     "color-thumb"
   ],
   "files": [

@@ -1,6 +1,7 @@
 {
   "name": "number-field",
-  "registryDependencies": [
+  "type": "core",
+  "registryDeps": [
     "input",
     "field",
     "use-is-mobile"

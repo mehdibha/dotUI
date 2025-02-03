@@ -1,6 +1,7 @@
 {
   "name": "search-field",
-  "registryDependencies": [
+  "type": "core",
+  "registryDeps": [
     "field",
     "button"
   ],

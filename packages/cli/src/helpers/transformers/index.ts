@@ -1,14 +1,14 @@
+import { ExtendedConfig } from "@dotui/schemas";
 import { promises as fs } from "fs";
 import { tmpdir } from "os";
 import path from "path";
 import { Project, ScriptKind, type SourceFile } from "ts-morph";
-import { Config } from "@/helpers/get-config";
 import { transformImport } from "./transform-import";
 
 export type TransformOptions = {
   filename: string;
   raw: string;
-  config: Config;
+  config: ExtendedConfig;
 };
 
 export type Transformer<Output = SourceFile> = (

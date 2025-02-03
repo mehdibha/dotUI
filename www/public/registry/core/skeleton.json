@@ -1,5 +1,6 @@
 {
   "name": "skeleton",
+  "type": "core",
   "files": [
     {
       "type": "core",

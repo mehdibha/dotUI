@@ -1,6 +1,7 @@
 {
   "name": "date-field",
-  "registryDependencies": [
+  "type": "core",
+  "registryDeps": [
     "field",
     "input",
     "date-input"

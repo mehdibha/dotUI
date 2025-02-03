@@ -1,5 +1,6 @@
 {
   "name": "file-trigger",
+  "type": "core",
   "files": [
     {
       "type": "core",

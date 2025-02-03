@@ -551,16 +551,10 @@
   },
   {
     "name": "lucide-icons",
-    "type": "icon-library",
-    "deps": [
-      "lucide-react"
-    ]
+    "type": "icon-library"
   },
   {
     "name": "remix-icons",
-    "type": "icon-library",
-    "deps": [
-      "@remixicon/react"
-    ]
+    "type": "icon-library"
   }
 ]

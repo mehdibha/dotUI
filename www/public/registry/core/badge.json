@@ -1,5 +1,6 @@
 {
   "name": "badge",
+  "type": "core",
   "files": [
     {
       "type": "core",

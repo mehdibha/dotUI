@@ -1,6 +1,7 @@
 {
   "name": "select",
-  "registryDependencies": [
+  "type": "core",
+  "registryDeps": [
     "button",
     "field",
     "list-box",

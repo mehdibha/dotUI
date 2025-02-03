@@ -1,7 +1,6 @@
-import { RegistryItemFile } from "@dotui/registry";
+import { ExtendedConfig, RegistryItemFile } from "@dotui/schemas";
 import { existsSync, promises as fs } from "fs";
 import path from "path";
-import { Config } from "@/helpers/get-config";
 import { transform } from "@/helpers/transformers";
 
 interface Result {
@@ -12,7 +11,7 @@ interface Result {
 
 export async function updateFiles(
   files: RegistryItemFile[],
-  config: Config,
+  config: ExtendedConfig,
   options: { overwrite?: boolean } = {}
 ): Promise<Result> {
   options = {
@@ -62,14 +61,17 @@ export async function updateFiles(
   return { filesCreated, filesUpdated, filesSkipped };
 }
 
-function resolveFilePath(file: RegistryItemFile, config: Config) {
+function resolveFilePath(file: RegistryItemFile, config: ExtendedConfig) {
   const targetDir = resolveFileTargetDirectory(file, config);
 
   const relativePath = resolveNestedFilePath(file.path, targetDir);
   return path.join(targetDir, relativePath);
 }
 
-function resolveFileTargetDirectory(file: RegistryItemFile, config: Config) {
+function resolveFileTargetDirectory(
+  file: RegistryItemFile,
+  config: ExtendedConfig
+) {
   if (file.type === "component") {
     return config.resolvedPaths.components;
   }

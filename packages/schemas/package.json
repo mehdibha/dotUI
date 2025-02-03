@@ -1,5 +1,5 @@
 {
-  "name": "@dotui/registry",
+  "name": "@dotui/schemas",
   "version": "0.0.0",
   "description": "The registry for dotui",
   "main": "./index.ts",

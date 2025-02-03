@@ -1,11 +1,10 @@
-import { RegistryItem } from "@dotui/registry";
+import { ExtendedConfig, RegistryItem } from "@dotui/schemas";
 import { execa } from "execa";
-import { Config } from "@/helpers/get-config";
 import { getPackageManager } from "@/utils";
 
 export async function updateDeps(
-  dependencies: RegistryItem["dependencies"],
-  config: Config
+  dependencies: RegistryItem["deps"],
+  config: ExtendedConfig
 ) {
   dependencies = Array.from(new Set(dependencies));
   if (!dependencies?.length) {

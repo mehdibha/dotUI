@@ -9,7 +9,6 @@ import { ListBox, Item } from "@/components/core/list-box";
 import { Popover } from "@/components/core/popover";
 import { SelectRoot, SelectValue } from "@/components/core/select";
 import { core } from "@/registry/registry-core";
-import { RegistryItem } from "@/registry/types";
 
 export function StyleSwitcher({ componentName }: { componentName: string }) {
   const primitiveInfo = getPrimitiveInfo(componentName);

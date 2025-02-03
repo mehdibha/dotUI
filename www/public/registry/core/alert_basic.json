@@ -1,5 +1,6 @@
 {
   "name": "alert_basic",
+  "type": "core",
   "description": "Minimal with a subtle border and muted background.",
   "files": [
     {

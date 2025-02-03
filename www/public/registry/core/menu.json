@@ -1,6 +1,7 @@
 {
   "name": "menu",
-  "registryDependencies": [
+  "type": "core",
+  "registryDeps": [
     "kbd",
     "overlay",
     "text"

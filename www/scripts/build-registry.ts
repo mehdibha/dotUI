@@ -1,3 +1,8 @@
+import {
+  RegistryIndex,
+  registryIndexSchema,
+  registryItemSchema,
+} from "@dotui/schemas";
 import { existsSync, promises as fs } from "node:fs";
 import path from "path";
 import { rimraf } from "rimraf";
@@ -5,7 +10,7 @@ import { kebabCaseToCamelCase, kebabCaseToTitleCase } from "@/lib/string";
 import { base } from "@/registry/registry-base";
 import { core } from "@/registry/registry-core";
 import { hooks } from "@/registry/registry-hooks";
-import { iconLibraries, icons } from "@/registry/registry-icons";
+import { iconLibraries } from "@/registry/registry-icons";
 import { lib } from "@/registry/registry-lib";
 import { registry } from "@/registry";
 
@@ -22,13 +27,15 @@ const buildRegistry = async () => {
     await fs.mkdir(targetPath, { recursive: true });
   }
 
-  const payload = registry.map((item) => ({
+  const payload: RegistryIndex = registry.map((item) => ({
     name: item.name,
     type: item.type,
-    deps: item.dependencies,
-    registryDeps: item.registryDependencies,
+    deps: item.deps,
+    registryDeps: item.registryDeps,
     variants: item.variants,
   }));
+
+  registryIndexSchema.parse(payload);
 
   const registryJson = JSON.stringify(payload, null, 2);
   await fs.writeFile(path.join(targetPath, "index.json"), registryJson, "utf8");
@@ -42,7 +49,9 @@ const buildBase = async () => {
   const targetPath = path.join(REGISTRY_PATH, "base.json");
   rimraf.sync(targetPath);
 
-  const payload = base;
+  const payload = { ...base };
+
+  registryItemSchema.parse(payload);
 
   const baseJson = JSON.stringify(payload, null, 2);
   await fs.writeFile(targetPath, baseJson, "utf8");
@@ -68,13 +77,15 @@ const buildCore = async () => {
       if (elem.name.includes("_")) return false;
       return true;
     })
-    .map((comp) => ({
-      name: comp.name,
-      label: kebabCaseToTitleCase(comp.name),
-      description: comp.description,
+    .map((item) => ({
+      name: item.name,
+      type: item.type,
+      label: kebabCaseToTitleCase(item.name),
+      description: item.description,
     }));
 
   // Build registry/core/index.json
+  registryIndexSchema.parse(allCore);
   const indexContent = JSON.stringify(allCore, null, 2);
   await fs.writeFile(path.join(targetPath, "index.json"), indexContent, "utf8");
 
@@ -85,7 +96,7 @@ const buildCore = async () => {
       files = await Promise.all(
         item.files.map(async (file) => {
           const content = await fs.readFile(
-            path.join(process.cwd(), "src", "registry", file.path),
+            path.join(process.cwd(), "src", "registry", file.source),
             "utf8"
           );
           return {
@@ -102,7 +113,7 @@ const buildCore = async () => {
       files,
     };
 
-    // TODO Validation
+    registryItemSchema.parse(payload);
 
     await fs.writeFile(
       path.join(targetPath, `${item.name}.json`),
@@ -125,10 +136,11 @@ const buildHooks = async () => {
       if (elem.name.includes("_")) return false;
       return true;
     })
-    .map((comp) => ({
-      name: comp.name,
-      label: kebabCaseToCamelCase(comp.name),
-      description: comp.description,
+    .map((item) => ({
+      name: item.name,
+      type: item.type,
+      label: kebabCaseToCamelCase(item.name),
+      description: item.description,
     }));
 
   // Build registry/core/index.json
@@ -142,7 +154,7 @@ const buildHooks = async () => {
       files = await Promise.all(
         item.files.map(async (file) => {
           const content = await fs.readFile(
-            path.join(process.cwd(), "src", "registry", file.path),
+            path.join(process.cwd(), "src", "registry", file.source),
             "utf8"
           );
           return {
@@ -159,7 +171,7 @@ const buildHooks = async () => {
       files,
     };
 
-    // TODO Validation
+    registryItemSchema.parse(payload);
 
     await fs.writeFile(
       path.join(targetPath, `${item.name}.json`),
@@ -182,10 +194,11 @@ const buildLib = async () => {
       if (elem.name.includes("_")) return false;
       return true;
     })
-    .map((comp) => ({
-      name: comp.name,
-      label: kebabCaseToCamelCase(comp.name),
-      description: comp.description,
+    .map((item) => ({
+      name: item.name,
+      type: item.type,
+      label: kebabCaseToCamelCase(item.name),
+      description: item.description,
     }));
 
   // Build registry/core/index.json
@@ -199,7 +212,7 @@ const buildLib = async () => {
       files = await Promise.all(
         item.files.map(async (file) => {
           const content = await fs.readFile(
-            path.join(process.cwd(), "src", "registry", file.path),
+            path.join(process.cwd(), "src", "registry", file.source),
             "utf8"
           );
           return {
@@ -216,7 +229,7 @@ const buildLib = async () => {
       files,
     };
 
-    // TODO Validation
+    registryItemSchema.parse(payload);
 
     await fs.writeFile(
       path.join(targetPath, `${item.name}.json`),
@@ -243,10 +256,16 @@ const buildIcons = async () => {
     await fs.mkdir(targetPath, { recursive: true });
   }
 
-  const iconLibs = Object.entries(iconLibraries).map(([_, value]) => value);
+  const payload = Object.entries(iconLibraries).map(([_, value]) => ({
+    name: value.name,
+    type: "icon-library",
+    dependencies: [value.package],
+  }));
+
+  registryIndexSchema.parse(payload);
 
   // Build registry/icons/index.json
-  const iconLibrariesJson = JSON.stringify(iconLibs, null, 2);
+  const iconLibrariesJson = JSON.stringify(payload, null, 2);
   await fs.writeFile(
     path.join(targetPath, "index.json"),
     iconLibrariesJson,
@@ -323,7 +342,6 @@ const run = async () => {
     await buildHooks();
     await buildLib();
     await buildIcons();
-    // await buildThemes();
 
     console.log("✅ Done!");
   } catch (error) {

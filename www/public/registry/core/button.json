@@ -1,5 +1,6 @@
 {
   "name": "button",
+  "type": "core",
   "variants": [
     "basic",
     "brutalist",

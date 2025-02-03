@@ -1,6 +1,7 @@
 {
   "name": "list-box",
-  "registryDependencies": [
+  "type": "core",
+  "registryDeps": [
     "text",
     "focus-styles"
   ],

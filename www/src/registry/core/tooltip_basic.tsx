@@ -10,6 +10,8 @@ import {
 import { tv, VariantProps } from "tailwind-variants";
 import { createScopedContext } from "@/lib/utils";
 
+// TODO: Remove tailwindcss-animate an replace it with css transitions
+
 const tooltipStyles = tv({
   slots: {
     content:

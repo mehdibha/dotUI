@@ -1,6 +1,7 @@
 {
   "name": "text-area",
-  "registryDependencies": [
+  "type": "core",
+  "registryDeps": [
     "field",
     "input"
   ],

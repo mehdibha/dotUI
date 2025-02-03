@@ -9,5 +9,5 @@ export default defineConfig({
   minify: false,
   target: "esnext",
   outDir: "dist",
-  noExternal: ["@dotui/registry"],
+  noExternal: ["@dotui/schemas"],
 });

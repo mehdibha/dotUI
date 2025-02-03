@@ -1,6 +1,7 @@
 {
   "name": "progress-bar",
-  "registryDependencies": [
+  "type": "core",
+  "registryDeps": [
     "field"
   ],
   "files": [

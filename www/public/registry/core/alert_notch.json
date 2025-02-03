@@ -1,5 +1,6 @@
 {
   "name": "alert_notch",
+  "type": "core",
   "description": "Alert with a bold left border for emphasis.",
   "files": [
     {

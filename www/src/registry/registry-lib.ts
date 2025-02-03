@@ -1,13 +1,12 @@
-import { Registry } from "./types";
+import { InternalRegistry, InternalRegistryItem } from "@dotui/schemas";
 
-export const lib: Registry = [
+export const lib: InternalRegistry = [
   {
     name: "utils",
-    type: "lib",
-    dependencies: ["clsx", "tailwind-merge"],
+    deps: ["clsx", "tailwind-merge"],
     files: [
       {
-        path: "lib/utils.tsx",
+        source: "lib/utils.tsx",
         type: "lib",
         target: "lib/utils.tsx",
       },
@@ -15,13 +14,15 @@ export const lib: Registry = [
   },
   {
     name: "focus-styles",
-    type: "lib",
     files: [
       {
-        path: "lib/focus-styles.ts",
+        source: "lib/focus-styles.ts",
         type: "lib",
         target: "lib/focus-styles.ts",
       },
     ],
   },
-];
+].map(
+  ({ name, ...rest }) =>
+    ({ name, type: "lib", ...rest }) as InternalRegistryItem
+);

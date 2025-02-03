@@ -1,5 +1,6 @@
 {
   "name": "text",
+  "type": "core",
   "files": [
     {
       "type": "core",

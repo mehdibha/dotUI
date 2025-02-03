@@ -1,6 +1,7 @@
 {
   "name": "table",
-  "registryDependencies": [
+  "type": "core",
+  "registryDeps": [
     "checkbox",
     "focus-styles"
   ],

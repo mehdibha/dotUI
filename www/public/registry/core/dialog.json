@@ -1,6 +1,7 @@
 {
   "name": "dialog",
-  "registryDependencies": [
+  "type": "core",
+  "registryDeps": [
     "overlay"
   ],
   "files": [

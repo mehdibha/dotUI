@@ -1,5 +1,6 @@
 {
   "name": "avatar",
+  "type": "core",
   "files": [
     {
       "type": "core",

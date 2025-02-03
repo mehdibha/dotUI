@@ -1,11 +1,11 @@
 import { spinner } from "@clack/prompts";
+import { ExtendedConfig } from "@dotui/schemas";
 import { resolvePrimitives } from "@/registry/api";
-import { Config } from "@/helpers/get-config";
 import { updateDeps, updateFiles } from "@/helpers/updaters";
 
 export async function addPrimitives(
   primitives: string[],
-  config: Config,
+  config: ExtendedConfig,
   options?: {
     overwrite?: boolean;
     message?: string;
@@ -21,12 +21,12 @@ export async function addPrimitives(
 
   addPrimitivesSpinner.start(options.message);
   addPrimitivesSpinner.message("Cheking registry");
-  const { files, dependencies } = await resolvePrimitives(primitives, config);
+  const { files, deps } = await resolvePrimitives(primitives, config);
 
   addPrimitivesSpinner.message("Updating your CSS.");
 
   addPrimitivesSpinner.message("Updating dependencies.");
-  await updateDeps(dependencies, config);
+  await updateDeps(deps, config);
 
   addPrimitivesSpinner.message("Updating files.");
   await updateFiles(files ?? [], config, { overwrite: options.overwrite });

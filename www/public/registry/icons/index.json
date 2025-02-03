@@ -1,12 +1,16 @@
 [
   {
     "name": "lucide-icons",
-    "package": "lucide-react",
-    "import": "lucide-react"
+    "type": "icon-library",
+    "dependencies": [
+      "lucide-react"
+    ]
   },
   {
     "name": "remix-icons",
-    "package": "@remixicon/react",
-    "import": "@remixicon/react"
+    "type": "icon-library",
+    "dependencies": [
+      "@remixicon/react"
+    ]
   }
 ]

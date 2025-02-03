@@ -4,7 +4,7 @@ import {
   registryItemSchema,
   registryResolvedItemsTreeSchema,
   type RegistryItemType,
-} from "@dotui/registry";
+} from "@dotui/schemas";
 import deepmerge from "deepmerge";
 import { z } from "zod";
 import { fetchRegistry } from "./helpers";
@@ -82,14 +82,14 @@ export async function resolvePrimitives(names: string[], config: Config) {
     throw new Error("Failed to validate registry items"); // TODO: fix
   }
 
-  const dependencies = deepmerge.all([
-    ...payload.map((item) => item.dependencies ?? []),
+  const deps = deepmerge.all([
+    ...payload.map((item) => item.deps ?? []),
     iconLibraryDeps,
   ]);
   const files = deepmerge.all(payload.map((item) => item.files ?? []));
 
   return registryResolvedItemsTreeSchema.parse({
     files: files ?? [],
-    dependencies: dependencies ?? [],
+    deps: deps ?? [],
   });
 }

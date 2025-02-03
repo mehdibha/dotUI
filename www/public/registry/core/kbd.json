@@ -1,5 +1,6 @@
 {
   "name": "kbd",
+  "type": "core",
   "files": [
     {
       "type": "core",

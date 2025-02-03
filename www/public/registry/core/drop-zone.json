@@ -1,5 +1,6 @@
 {
   "name": "drop-zone",
+  "type": "core",
   "files": [
     {
       "type": "core",

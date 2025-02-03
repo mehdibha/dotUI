@@ -1,6 +1,7 @@
 {
   "name": "date-picker",
-  "registryDependencies": [
+  "type": "core",
+  "registryDeps": [
     "button",
     "calendar",
     "field",

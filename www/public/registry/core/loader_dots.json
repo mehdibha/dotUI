@@ -1,5 +1,6 @@
 {
   "name": "loader_dots",
+  "type": "core",
   "files": [
     {
       "type": "core",

@@ -1,9 +1,10 @@
 {
   "name": "tabs_motion",
-  "dependencies": [
+  "type": "core",
+  "deps": [
     "motion"
   ],
-  "registryDependencies": [
+  "registryDeps": [
     "focus-styles"
   ],
   "files": [

@@ -1,4 +1,4 @@
-import type { RegistryTheme } from "@dotui/registry";
+import type { RegistryTheme } from "@dotui/schemas";
 
 export const getRegistryThemes = async () => {
   return [
@@ -13,7 +13,7 @@ export const getRegistryTheme = async (
   themeId: string
 ): Promise<RegistryTheme> => {
   return {
-    id: "darky",
+    name: "darky",
     label: "Darky",
     iconLibrary: "lucide-icons",
     primitives: {

@@ -1,6 +1,7 @@
 {
   "name": "combobox",
-  "registryDependencies": [
+  "type": "core",
+  "registryDeps": [
     "field",
     "button",
     "input",

@@ -1,6 +1,6 @@
-import type { Registry } from "./types";
+import { InternalRegistry, InternalRegistryItem } from "@dotui/schemas";
 
-export const core: Registry = [
+export const core: InternalRegistry = [
   {
     name: "alert",
     variants: ["basic", "notch", "notch-2"],
@@ -11,7 +11,7 @@ export const core: Registry = [
     files: [
       {
         type: "core",
-        path: "core/alert_basic.tsx",
+        source: "core/alert_basic.tsx",
         target: "core/alert.tsx",
       },
     ],
@@ -21,8 +21,8 @@ export const core: Registry = [
     description: "Alert with a bold left border for emphasis.",
     files: [
       {
-        path: "core/alert_notch.tsx",
         type: "core",
+        source: "core/alert_notch.tsx",
         target: "core/alert.tsx",
       },
     ],
@@ -33,8 +33,8 @@ export const core: Registry = [
       "Alert with a bold left border for emphasis and muted background.",
     files: [
       {
-        path: "core/alert_notch.tsx",
         type: "core",
+        source: "core/alert_notch.tsx",
         target: "core/alert.tsx",
       },
     ],
@@ -43,8 +43,8 @@ export const core: Registry = [
     name: "avatar",
     files: [
       {
-        path: "core/avatar_basic.tsx",
         type: "core",
+        source: "core/avatar_basic.tsx",
         target: "core/avatar.tsx",
       },
     ],
@@ -53,19 +53,19 @@ export const core: Registry = [
     name: "badge",
     files: [
       {
-        path: "core/badge_basic.tsx",
         type: "core",
+        source: "core/badge_basic.tsx",
         target: "core/badge.tsx",
       },
     ],
   },
   {
     name: "breadcrumbs",
-    registryDependencies: ["focus-styles"],
+    registryDeps: ["focus-styles"],
     files: [
       {
-        path: "core/breadcrumbs_basic.tsx",
         type: "core",
+        source: "core/breadcrumbs_basic.tsx",
         target: "core/breadcrumbs.tsx",
       },
     ],
@@ -76,43 +76,43 @@ export const core: Registry = [
   },
   {
     name: "button_basic",
-    registryDependencies: ["loader", "focus-styles"],
+    registryDeps: ["loader", "focus-styles"],
     files: [
       {
-        path: "core/button_basic.tsx",
         type: "core",
+        source: "core/button_basic.tsx",
         target: "core/button.tsx",
       },
     ],
   },
   {
     name: "button_brutalist",
-    registryDependencies: ["loader", "focus-styles"],
+    registryDeps: ["loader", "focus-styles"],
     files: [
       {
-        path: "core/button_brutalist.tsx",
         type: "core",
+        source: "core/button_brutalist.tsx",
         target: "core/button.tsx",
       },
     ],
   },
   {
     name: "button_ripple",
-    registryDependencies: ["loader", "focus-styles"],
+    registryDeps: ["loader", "focus-styles"],
     files: [
       {
-        path: "core/button_ripple.tsx",
         type: "core",
+        source: "core/button_ripple.tsx",
         target: "core/button.tsx",
       },
       {
-        path: "core/ripple.tsx",
         type: "core",
+        source: "core/ripple.tsx",
         target: "core/ripple.tsx",
       },
       {
-        path: "hooks/use-ripple.ts",
         type: "hook",
+        source: "hooks/use-ripple.ts",
         target: "hooks/use-ripple.ts",
       },
     ],
@@ -123,73 +123,73 @@ export const core: Registry = [
   },
   {
     name: "calendar_basic",
-    registryDependencies: ["button", "text", "focus-styles"],
+    registryDeps: ["button", "text", "focus-styles"],
     files: [
       {
-        path: "core/calendar_basic.tsx",
         type: "core",
+        source: "core/calendar_basic.tsx",
         target: "core/calendar.tsx",
       },
     ],
   },
   {
     name: "calendar_cal",
-    registryDependencies: ["button", "text", "focus-styles"],
+    registryDeps: ["button", "text", "focus-styles"],
     files: [
       {
-        path: "core/calendar_cal.tsx",
         type: "core",
+        source: "core/calendar_cal.tsx",
         target: "core/calendar.tsx",
       },
     ],
   },
   {
     name: "checkbox",
-    registryDependencies: ["focus-styles"],
+    registryDeps: ["focus-styles"],
     files: [
       {
-        path: "core/checkbox_basic.tsx",
         type: "core",
+        source: "core/checkbox_basic.tsx",
         target: "core/checkbox.tsx",
       },
     ],
   },
   {
     name: "checkbox-group",
-    registryDependencies: ["field", "checkbox"],
+    registryDeps: ["field", "checkbox"],
     files: [
       {
-        path: "core/checkbox-group_basic.tsx",
         type: "core",
+        source: "core/checkbox-group_basic.tsx",
         target: "core/checkbox-group.tsx",
       },
     ],
   },
   {
     name: "color-area",
-    registryDependencies: ["color-thumb"],
+    registryDeps: ["color-thumb"],
     files: [
       {
-        path: "core/color-area_basic.tsx",
         type: "core",
+        source: "core/color-area_basic.tsx",
         target: "core/color-area.tsx",
       },
     ],
   },
   {
     name: "color-field",
-    registryDependencies: ["field", "input"],
+    registryDeps: ["field", "input"],
     files: [
       {
-        path: "core/color-field_basic.tsx",
         type: "core",
+        source: "core/color-field_basic.tsx",
         target: "core/color-field.tsx",
       },
     ],
   },
   {
     name: "color-picker",
-    registryDependencies: [
+    registryDeps: [
       "button",
       "color-area",
       "color-field",
@@ -200,19 +200,19 @@ export const core: Registry = [
     ],
     files: [
       {
-        path: "core/color-picker_basic.tsx",
         type: "core",
+        source: "core/color-picker_basic.tsx",
         target: "core/color-picker.tsx",
       },
     ],
   },
   {
     name: "color-slider",
-    registryDependencies: ["field", "color-thum"],
+    registryDeps: ["field", "color-thum"],
     files: [
       {
-        path: "core/color-slider_basic.tsx",
         type: "core",
+        source: "core/color-slider_basic.tsx",
         target: "core/color-slider.tsx",
       },
     ],
@@ -221,41 +221,41 @@ export const core: Registry = [
     name: "color-swatch",
     files: [
       {
-        path: "core/color-swatch_basic.tsx",
         type: "core",
+        source: "core/color-swatch_basic.tsx",
         target: "core/color-swatch.tsx",
       },
     ],
   },
   {
     name: "color-swatch-picker",
-    registryDependencies: ["focus-styles", "color-swatch"],
+    registryDeps: ["focus-styles", "color-swatch"],
     files: [
       {
-        path: "core/color-swatch-picker_basic.tsx",
         type: "core",
+        source: "core/color-swatch-picker_basic.tsx",
         target: "core/color-swatch-picker.tsx",
       },
     ],
   },
   {
     name: "color-thumb",
-    registryDependencies: ["focus-styles"],
+    registryDeps: ["focus-styles"],
     files: [
       {
-        path: "core/color-thumb_basic.tsx",
         type: "core",
+        source: "core/color-thumb_basic.tsx",
         target: "core/color-thumb.tsx",
       },
     ],
   },
   {
     name: "combobox",
-    registryDependencies: ["field", "button", "input", "list-box", "overlay"],
+    registryDeps: ["field", "button", "input", "list-box", "overlay"],
     files: [
       {
-        path: "core/combobox_basic.tsx",
         type: "core",
+        source: "core/combobox_basic.tsx",
         target: "core/combobox.tsx",
       },
     ],
@@ -264,19 +264,19 @@ export const core: Registry = [
     name: "command",
     files: [
       {
-        path: "core/command_basic.tsx",
         type: "core",
+        source: "core/command_basic.tsx",
         target: "core/command.tsx",
       },
     ],
   },
   {
     name: "date-field",
-    registryDependencies: ["field", "input", "date-input"],
+    registryDeps: ["field", "input", "date-input"],
     files: [
       {
-        path: "core/date-field_basic.tsx",
         type: "core",
+        source: "core/date-field_basic.tsx",
         target: "core/date-field.tsx",
       },
     ],
@@ -285,15 +285,15 @@ export const core: Registry = [
     name: "date-input",
     files: [
       {
-        path: "core/date-input_basic.tsx",
         type: "core",
+        source: "core/date-input_basic.tsx",
         target: "core/date-input.tsx",
       },
     ],
   },
   {
     name: "date-picker",
-    registryDependencies: [
+    registryDeps: [
       "button",
       "calendar",
       "field",
@@ -303,15 +303,15 @@ export const core: Registry = [
     ],
     files: [
       {
-        path: "core/date-picker_basic.tsx",
         type: "core",
+        source: "core/date-picker_basic.tsx",
         target: "core/date-picker.tsx",
       },
     ],
   },
   {
     name: "date-range-picker",
-    registryDependencies: [
+    registryDeps: [
       "button",
       "calendar",
       "field",
@@ -321,19 +321,19 @@ export const core: Registry = [
     ],
     files: [
       {
-        path: "core/date-range-picker_basic.tsx",
         type: "core",
+        source: "core/date-range-picker_basic.tsx",
         target: "core/date-range-picker.tsx",
       },
     ],
   },
   {
     name: "dialog",
-    registryDependencies: ["overlay"],
+    registryDeps: ["overlay"],
     files: [
       {
-        path: "core/dialog_basic.tsx",
         type: "core",
+        source: "core/dialog_basic.tsx",
         target: "core/dialog.tsx",
       },
     ],
@@ -342,8 +342,8 @@ export const core: Registry = [
     name: "drawer",
     files: [
       {
-        path: "core/drawer_basic.tsx",
         type: "core",
+        source: "core/drawer_basic.tsx",
         target: "core/drawer.tsx",
       },
     ],
@@ -352,8 +352,8 @@ export const core: Registry = [
     name: "drop-zone",
     files: [
       {
-        path: "core/drop-zone_basic.tsx",
         type: "core",
+        source: "core/drop-zone_basic.tsx",
         target: "core/drop-zone.tsx",
       },
     ],
@@ -362,8 +362,8 @@ export const core: Registry = [
     name: "field",
     files: [
       {
-        path: "core/field_basic.tsx",
         type: "core",
+        source: "core/field_basic.tsx",
         target: "core/field.tsx",
       },
     ],
@@ -372,8 +372,8 @@ export const core: Registry = [
     name: "file-trigger",
     files: [
       {
-        path: "core/file-trigger_basic.tsx",
         type: "core",
+        source: "core/file-trigger_basic.tsx",
         target: "core/file-trigger.tsx",
       },
     ],
@@ -386,19 +386,19 @@ export const core: Registry = [
     name: "form_basic",
     files: [
       {
-        path: "core/form_basic.tsx",
         type: "core",
+        source: "core/form_basic.tsx",
         target: "core/form.tsx",
       },
     ],
   },
   {
     name: "form_react-hook-form",
-    dependencies: ["react-hook-form"],
+    deps: ["react-hook-form"],
     files: [
       {
-        path: "core/form_react-hook-form.tsx",
         type: "core",
+        source: "core/form_react-hook-form.tsx",
         target: "core/form.tsx",
       },
     ],
@@ -409,12 +409,12 @@ export const core: Registry = [
   },
   {
     name: "input_basic",
-    dependencies: ["@react-aria/utils", "@react-stately/utils"],
-    registryDependencies: ["focus-styles"],
+    deps: ["@react-aria/utils", "@react-stately/utils"],
+    registryDeps: ["focus-styles"],
     files: [
       {
-        path: "core/input_basic.tsx",
         type: "core",
+        source: "core/input_basic.tsx",
         target: "core/input.tsx",
       },
     ],
@@ -423,19 +423,19 @@ export const core: Registry = [
     name: "kbd",
     files: [
       {
-        path: "core/kbd_basic.tsx",
         type: "core",
+        source: "core/kbd_basic.tsx",
         target: "core/kbd.tsx",
       },
     ],
   },
   {
     name: "list-box",
-    registryDependencies: ["text", "focus-styles"],
+    registryDeps: ["text", "focus-styles"],
     files: [
       {
-        path: "core/list-box_basic.tsx",
         type: "core",
+        source: "core/list-box_basic.tsx",
         target: "core/list-box.tsx",
       },
     ],
@@ -448,8 +448,8 @@ export const core: Registry = [
     name: "loader_dots",
     files: [
       {
-        path: "core/loader_dots.tsx",
         type: "core",
+        source: "core/loader_dots.tsx",
         target: "core/loader.tsx",
       },
     ],
@@ -458,8 +458,8 @@ export const core: Registry = [
     name: "loader_line",
     files: [
       {
-        path: "core/loader_line.tsx",
         type: "core",
+        source: "core/loader_line.tsx",
         target: "core/loader.tsx",
       },
     ],
@@ -468,8 +468,8 @@ export const core: Registry = [
     name: "loader_ring",
     files: [
       {
-        path: "core/loader_ring.tsx",
         type: "core",
+        source: "core/loader_ring.tsx",
         target: "core/loader.tsx",
       },
     ],
@@ -478,30 +478,30 @@ export const core: Registry = [
     name: "loader_tailspin",
     files: [
       {
-        path: "core/loader_tailspin.tsx",
         type: "core",
+        source: "core/loader_tailspin.tsx",
         target: "core/loader.tsx",
       },
     ],
   },
   {
     name: "loader_wave",
-    dependencies: ["motion"],
+    deps: ["motion"],
     files: [
       {
-        path: "core/loader_wave.tsx",
         type: "core",
+        source: "core/loader_wave.tsx",
         target: "core/loader.tsx",
       },
     ],
   },
   {
     name: "menu",
-    registryDependencies: ["kbd", "overlay", "text"],
+    registryDeps: ["kbd", "overlay", "text"],
     files: [
       {
-        path: "core/menu_basic.tsx",
         type: "core",
+        source: "core/menu_basic.tsx",
         target: "core/menu.tsx",
       },
     ],
@@ -510,30 +510,30 @@ export const core: Registry = [
     name: "modal",
     files: [
       {
-        path: "core/modal_basic.tsx",
         type: "core",
+        source: "core/modal_basic.tsx",
         target: "core/modal.tsx",
       },
     ],
   },
   {
     name: "number-field",
-    registryDependencies: ["input", "field", "use-is-mobile"],
+    registryDeps: ["input", "field", "use-is-mobile"],
     files: [
       {
-        path: "core/number-field_basic.tsx",
         type: "core",
+        source: "core/number-field_basic.tsx",
         target: "core/number-field.tsx",
       },
     ],
   },
   {
     name: "overlay",
-    registryDependencies: ["modal", "popover", "drawer", "use-is-mobile"],
+    registryDeps: ["modal", "popover", "drawer", "use-is-mobile"],
     files: [
       {
-        path: "core/overlay_basic.tsx",
         type: "core",
+        source: "core/overlay_basic.tsx",
         target: "core/overlay.tsx",
       },
     ],
@@ -542,52 +542,52 @@ export const core: Registry = [
     name: "popover",
     files: [
       {
-        path: "core/popover_basic.tsx",
         type: "core",
+        source: "core/popover_basic.tsx",
         target: "core/popover.tsx",
       },
     ],
   },
   {
     name: "progress-bar",
-    registryDependencies: ["field"],
+    registryDeps: ["field"],
     files: [
       {
-        path: "core/progress-bar_basic.tsx",
         type: "core",
+        source: "core/progress-bar_basic.tsx",
         target: "core/progress-bar.tsx",
       },
     ],
   },
   {
     name: "radio-group",
-    registryDependencies: ["focus-styles", "field"],
+    registryDeps: ["focus-styles", "field"],
     files: [
       {
-        path: "core/radio-group_basic.tsx",
         type: "core",
+        source: "core/radio-group_basic.tsx",
         target: "core/radio-group.tsx",
       },
     ],
   },
   {
     name: "search-field",
-    registryDependencies: ["field", "button"],
+    registryDeps: ["field", "button"],
     files: [
       {
-        path: "core/search-field_basic.tsx",
         type: "core",
+        source: "core/search-field_basic.tsx",
         target: "core/search-field.tsx",
       },
     ],
   },
   {
     name: "select",
-    registryDependencies: ["button", "field", "list-box", "popover"],
+    registryDeps: ["button", "field", "list-box", "popover"],
     files: [
       {
-        path: "core/select_basic.tsx",
         type: "core",
+        source: "core/select_basic.tsx",
         target: "core/select.tsx",
       },
     ],
@@ -596,8 +596,8 @@ export const core: Registry = [
     name: "separator",
     files: [
       {
-        path: "core/separator_basic.tsx",
         type: "core",
+        source: "core/separator_basic.tsx",
         target: "core/separator.tsx",
       },
     ],
@@ -606,42 +606,42 @@ export const core: Registry = [
     name: "skeleton",
     files: [
       {
-        path: "core/skeleton_basic.tsx",
         type: "core",
+        source: "core/skeleton_basic.tsx",
         target: "core/skeleton.tsx",
       },
     ],
   },
   {
     name: "slider",
-    dependencies: ["@react-aria/utils"],
-    registryDependencies: ["field", "focus-styles"],
+    deps: ["@react-aria/utils"],
+    registryDeps: ["field", "focus-styles"],
     files: [
       {
-        path: "core/slider_basic.tsx",
         type: "core",
+        source: "core/slider_basic.tsx",
         target: "core/slider.tsx",
       },
     ],
   },
   {
     name: "switch",
-    registryDependencies: ["focus-styles"],
+    registryDeps: ["focus-styles"],
     files: [
       {
-        path: "core/switch_basic.tsx",
         type: "core",
+        source: "core/switch_basic.tsx",
         target: "core/switch.tsx",
       },
     ],
   },
   {
     name: "table",
-    registryDependencies: ["checkbox", "focus-styles"],
+    registryDeps: ["checkbox", "focus-styles"],
     files: [
       {
-        path: "core/table_basic.tsx",
         type: "core",
+        source: "core/table_basic.tsx",
         target: "core/table.tsx",
       },
     ],
@@ -652,34 +652,34 @@ export const core: Registry = [
   },
   {
     name: "tabs_basic",
-    registryDependencies: ["focus-styles"],
+    registryDeps: ["focus-styles"],
     files: [
       {
-        path: "core/tabs_basic.tsx",
         type: "core",
+        source: "core/tabs_basic.tsx",
         target: "core/tabs.tsx",
       },
     ],
   },
   {
     name: "tabs_motion",
-    dependencies: ["motion"],
-    registryDependencies: ["focus-styles"],
+    deps: ["motion"],
+    registryDeps: ["focus-styles"],
     files: [
       {
-        path: "core/tabs_motion.tsx",
         type: "core",
+        source: "core/tabs_motion.tsx",
         target: "core/tabs.tsx",
       },
     ],
   },
   {
     name: "tag-group",
-    registryDependencies: ["field", "button", "focus-styles"],
+    registryDeps: ["field", "button", "focus-styles"],
     files: [
       {
-        path: "core/tag-group_basic.tsx",
         type: "core",
+        source: "core/tag-group_basic.tsx",
         target: "core/tag-group.tsx",
       },
     ],
@@ -688,63 +688,63 @@ export const core: Registry = [
     name: "text",
     files: [
       {
-        path: "core/text_basic.tsx",
         type: "core",
+        source: "core/text_basic.tsx",
         target: "core/text.tsx",
       },
     ],
   },
   {
     name: "text-area",
-    registryDependencies: ["field", "input"],
+    registryDeps: ["field", "input"],
     files: [
       {
-        path: "core/text-area_basic.tsx",
         type: "core",
+        source: "core/text-area_basic.tsx",
         target: "core/text-area.tsx",
       },
     ],
   },
   {
     name: "text-field",
-    registryDependencies: ["field", "input"],
+    registryDeps: ["field", "input"],
     files: [
       {
-        path: "core/text-field_basic.tsx",
         type: "core",
+        source: "core/text-field_basic.tsx",
         target: "core/text-field.tsx",
       },
     ],
   },
   {
     name: "time-field",
-    registryDependencies: ["field", "input", "date-input"],
+    registryDeps: ["field", "input", "date-input"],
     files: [
       {
-        path: "core/time-field_basic.tsx",
         type: "core",
+        source: "core/time-field_basic.tsx",
         target: "core/time-field.tsx",
       },
     ],
   },
   {
     name: "toggle-button",
-    registryDependencies: ["focus-styles"],
+    registryDeps: ["focus-styles"],
     files: [
       {
-        path: "core/toggle-button_basic.tsx",
         type: "core",
+        source: "core/toggle-button_basic.tsx",
         target: "core/toggle-button.tsx",
       },
     ],
   },
   {
     name: "toggle-button-group",
-    registryDependencies: ["toggle-button"],
+    registryDeps: ["toggle-button"],
     files: [
       {
-        path: "core/toggle-button-group_basic.tsx",
         type: "core",
+        source: "core/toggle-button-group_basic.tsx",
         target: "core/toggle-button-group.tsx",
       },
     ],
@@ -757,21 +757,24 @@ export const core: Registry = [
     name: "tooltip_basic",
     files: [
       {
-        path: "core/tooltip_basic.tsx",
         type: "core",
+        source: "core/tooltip_basic.tsx",
         target: "core/tooltip.tsx",
       },
     ],
   },
   {
     name: "tooltip_motion",
-    dependencies: ["motion"],
+    deps: ["motion"],
     files: [
       {
-        path: "core/tooltip_motion.tsx",
         type: "core",
+        source: "core/tooltip_motion.tsx",
         target: "core/tooltip.tsx",
       },
     ],
   },
-];
+].map(
+  ({ name, ...rest }) =>
+    ({ name, type: "core", ...rest }) as InternalRegistryItem
+);

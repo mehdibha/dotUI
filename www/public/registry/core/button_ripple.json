@@ -1,6 +1,7 @@
 {
   "name": "button_ripple",
-  "registryDependencies": [
+  "type": "core",
+  "registryDeps": [
     "loader",
     "focus-styles"
   ],

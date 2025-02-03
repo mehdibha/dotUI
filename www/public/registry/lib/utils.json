@@ -1,7 +1,7 @@
 {
   "name": "utils",
   "type": "lib",
-  "dependencies": [
+  "deps": [
     "clsx",
     "tailwind-merge"
   ],
