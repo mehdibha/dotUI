@@ -12,7 +12,7 @@ interface LoaderProps extends ProgressBarProps {
 function Loader({ size = 20, className, ...props }: LoaderProps) {
   return (
     <AriaProgressBar
-      className={cn("flex items-center justify-between")}
+      className={cn("flex items-center justify-between", className)}
       {...props}
       isIndeterminate
       style={

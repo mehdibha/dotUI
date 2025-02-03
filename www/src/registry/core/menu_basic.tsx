@@ -8,9 +8,13 @@ import {
   MenuTrigger as AriaMenuTrigger,
   MenuItem as AriaMenuItem,
   SubmenuTrigger as AriaSubmenuTrigger,
+  MenuSection as AriaMenuSection,
+  Heading as AriaHeading,
+  Collection as AriaCollection,
   type MenuItemProps as AriaMenuItemProps,
   type MenuProps as AriaMenuProps,
   type MenuTriggerProps as AriaMenuTriggerProps,
+  type MenuSectionProps as AriaMenuSectionProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
 import { Kbd } from "@/registry/core/kbd_basic";
@@ -45,6 +49,10 @@ const menuItemStyles = tv({
   defaultVariants: {
     variant: "default",
   },
+});
+
+const menuSectionStyles = tv({
+  base: "space-y-px pt-2",
 });
 
 type MenuRootProps = AriaMenuTriggerProps;
@@ -131,5 +139,27 @@ const MenuItem = <T extends object>({
   );
 };
 
-export type { MenuRootProps, MenuProps };
-export { MenuRoot, Menu, MenuItem, MenuContent, MenuSub };
+interface MenuSectionProps<T> extends AriaMenuSectionProps<T> {
+  ref?: React.Ref<HTMLElement>;
+  title?: React.ReactNode;
+}
+const MenuSection = <T extends object>({
+  title,
+  children,
+  className,
+  ...props
+}: MenuSectionProps<T>) => {
+  return (
+    <AriaMenuSection className={menuSectionStyles({ className })} {...props}>
+      {title && (
+        <AriaHeading className="text-fg-muted mb-1 pl-3 text-xs">
+          {title}
+        </AriaHeading>
+      )}
+      <AriaCollection items={props.items}>{children}</AriaCollection>
+    </AriaMenuSection>
+  );
+};
+
+export type { MenuProps, MenuRootProps };
+export { Menu, MenuRoot, MenuItem, MenuContent, MenuSub, MenuSection };

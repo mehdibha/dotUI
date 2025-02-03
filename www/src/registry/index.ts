@@ -1,4 +1,4 @@
-import { Registry, RegistryIndex, RegistryItem } from "@dotui/schemas";
+import { RegistryIndex } from "@dotui/schemas";
 import { base as _base } from "@/registry/registry-base";
 import { core as _core } from "@/registry/registry-core";
 import { hooks as _hooks } from "@/registry/registry-hooks";
@@ -15,7 +15,7 @@ const themes: RegistryIndex = _themes.map((item) => ({
   type: "theme",
 }));
 const iconLibs: RegistryIndex = Object.entries(iconLibraries).map(
-  ([_, value]) =>
+  ([, value]) =>
     ({
       name: value.name,
       type: "icon-library",

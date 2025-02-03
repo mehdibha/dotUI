@@ -32,7 +32,7 @@ export default function Demo() {
       [...keys].map((key) => {
         const item = list.getItem(key);
         return {
-          "text/plain": item?.name ?? '',
+          "text/plain": item?.name ?? "",
         };
       }),
     onReorder(e) {

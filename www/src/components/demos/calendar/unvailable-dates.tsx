@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  CalendarDate,
   type DateValue,
   getLocalTimeZone,
   isWeekend,
@@ -11,7 +12,7 @@ import { Calendar } from "@/components/dynamic-core/calendar";
 
 export default function Demo() {
   const now = today(getLocalTimeZone());
-  const disabledRanges = [
+  const disabledRanges: [CalendarDate, CalendarDate][] = [
     [now, now.add({ days: 5 })],
     [now.add({ days: 14 }), now.add({ days: 16 })],
     [now.add({ days: 23 }), now.add({ days: 24 })],

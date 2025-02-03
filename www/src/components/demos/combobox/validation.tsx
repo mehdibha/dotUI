@@ -1,6 +1,5 @@
 import React from "react";
-import { Combobox } from "@/components/dynamic-core/combobox";
-import { Item } from "@/components/dynamic-core/list-box";
+import { Combobox, ComboboxItem } from "@/components/dynamic-core/combobox";
 
 export default function Demo() {
   return (
@@ -9,13 +8,13 @@ export default function Demo() {
       isInvalid
       errorMessage="Please select a country in the list."
     >
-      <Item>Canada</Item>
-      <Item>France</Item>
-      <Item>Germany</Item>
-      <Item>Spain</Item>
-      <Item>Tunisia</Item>
-      <Item>United states</Item>
-      <Item>United Kingdom</Item>
+      <ComboboxItem>Canada</ComboboxItem>
+      <ComboboxItem>France</ComboboxItem>
+      <ComboboxItem>Germany</ComboboxItem>
+      <ComboboxItem>Spain</ComboboxItem>
+      <ComboboxItem>Tunisia</ComboboxItem>
+      <ComboboxItem>United states</ComboboxItem>
+      <ComboboxItem>United Kingdom</ComboboxItem>
     </Combobox>
   );
 }

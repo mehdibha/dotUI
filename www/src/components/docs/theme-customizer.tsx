@@ -6,8 +6,7 @@ import { useThemes } from "@/hooks/use-themes";
 import { ColorPicker } from "@/components/core/color-picker";
 import { DialogRootProps, DialogRoot, Dialog } from "@/components/core/dialog";
 import { Label } from "@/components/core/field";
-import { Item } from "@/components/core/list-box";
-import { Select } from "@/components/core/select";
+import { Select, SelectItem } from "@/components/core/select";
 import { Skeleton } from "@/components/core/skeleton";
 import { Slider } from "@/components/core/slider";
 import { Tag, TagGroup } from "@/components/core/tag-group";
@@ -52,9 +51,9 @@ export const ThemeCustomizerDialog = ({
               className="w-36 [&_button]:w-full"
             >
               {themes.map((theme) => (
-                <Item key={theme.id} id={theme.id}>
+                <SelectItem key={theme.id} id={theme.id}>
                   {theme.name}
-                </Item>
+                </SelectItem>
               ))}
             </Select>
             {!isLoading && isCurrentThemeEditable && <></>}
@@ -142,9 +141,9 @@ export const ThemeCustomizerDialog = ({
               isDisabled={!isCurrentThemeEditable}
             >
               {googleFonts.map((font) => (
-                <Item key={font.id} id={font.id}>
+                <SelectItem key={font.id} id={font.id}>
                   {font.name}
-                </Item>
+                </SelectItem>
               ))}
             </Select>
           </Skeleton>
@@ -160,9 +159,9 @@ export const ThemeCustomizerDialog = ({
               isDisabled={!isCurrentThemeEditable}
             >
               {googleFonts.map((font) => (
-                <Item key={font.id} id={font.id}>
+                <SelectItem key={font.id} id={font.id}>
                   {font.name}
-                </Item>
+                </SelectItem>
               ))}
             </Select>
           </Skeleton>
@@ -173,7 +172,7 @@ export const ThemeCustomizerDialog = ({
               className="w-36 [&_button]:w-full"
               isDisabled={!isCurrentThemeEditable}
             >
-              <Item id="lucide">Lucide icons</Item>
+              <SelectItem id="lucide">Lucide icons</SelectItem>
             </Select>
           </Skeleton>
           <Skeleton show={isLoading}>

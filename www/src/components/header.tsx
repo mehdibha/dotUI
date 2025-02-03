@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { SearchIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { Avatar } from "@/components/core/avatar";
 import { Button } from "@/components/core/button";
 import { DialogRoot, Dialog } from "@/components/core/dialog";
@@ -12,10 +13,11 @@ import { GitHubIcon, TwitterIcon } from "./icons";
 import { SearchCommand } from "./search-command";
 import { ThemeSwitcher } from "./theme-switcher";
 
-export function Header() {
+export function Header({ className }: { className?: string }) {
   return (
-    <header className="bg-bg sticky top-0 z-50 w-full border-b">
-      {/* <div className="container max-w-screen-2xl relative flex h-14  items-center justify-between"> */}
+    <header
+      className={cn("bg-bg sticky top-0 z-50 w-full border-b", className)}
+    >
       <div className="container relative flex h-14 max-w-screen-2xl items-center justify-between">
         <div className="flex items-center gap-6">
           <Logo />
@@ -121,11 +123,7 @@ const SearchDocs = ({ children }: { children: React.ReactNode }) => {
     <DialogRoot isOpen={isOpen} onOpenChange={setIsOpen}>
       {children}
       <Dialog className="p-0!">
-        <SearchCommand
-        // TODO CHECK THIS
-        // onRunCommand={() => setIsOpen(false)}
-        // className="h-72 max-h-full rounded-lg"
-        />
+        <SearchCommand />
         <Button
           slot="close"
           variant="outline"

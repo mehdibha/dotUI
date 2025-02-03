@@ -8,7 +8,7 @@ import {
   FieldError,
   Label,
 } from "@/components/dynamic-core/field";
-import { Item, ListBox } from "@/components/dynamic-core/list-box";
+import { ListBoxItem, ListBox } from "@/components/dynamic-core/list-box";
 import { Overlay } from "@/components/dynamic-core/overlay";
 
 export default function Demo() {
@@ -20,10 +20,10 @@ export default function Demo() {
       <FieldError />
       <Overlay type="popover">
         <ListBox>
-          <Item>Next.js</Item>
-          <Item>Remix</Item>
-          <Item>Gatsby</Item>
-          <Item></Item>
+          <ListBoxItem>Next.js</ListBoxItem>
+          <ListBoxItem>Remix</ListBoxItem>
+          <ListBoxItem>Gatsby</ListBoxItem>
+          <ListBoxItem></ListBoxItem>
         </ListBox>
       </Overlay>
     </ComboboxRoot>

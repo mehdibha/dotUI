@@ -4,8 +4,7 @@ import React from "react";
 import type { Key } from "react-aria-components";
 import { Button } from "@/components/dynamic-core/button";
 import { DialogRoot, Dialog } from "@/components/dynamic-core/dialog";
-import { Item } from "@/components/dynamic-core/list-box";
-import { Select } from "@/components/dynamic-core/select";
+import { Select, SelectItem } from "@/components/dynamic-core/select";
 import { Switch } from "@/components/dynamic-core/switch";
 
 export default function Demo() {
@@ -29,8 +28,8 @@ export default function Demo() {
           selectedKey={placement}
           onSelectionChange={setPlacement}
         >
-          <Item id="top">Top</Item>
-          <Item id="bottom">Bottom</Item>
+          <SelectItem id="top">Top</SelectItem>
+          <SelectItem id="bottom">Bottom</SelectItem>
         </Select>
         <Switch isSelected={swipeable} onChange={setSwipeable}>
           Swipeable

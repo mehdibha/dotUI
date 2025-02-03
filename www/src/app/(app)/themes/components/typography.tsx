@@ -3,8 +3,7 @@
 import React from "react";
 import { googleFonts } from "@/lib/fonts";
 import { useThemes } from "@/hooks/use-themes";
-import { Item } from "@/components/core/list-box";
-import { Select } from "@/components/core/select";
+import { Select, SelectItem } from "@/components/core/select";
 import { Skeleton } from "@/components/core/skeleton";
 import { usePreview } from "./context";
 
@@ -28,9 +27,9 @@ export function Typography() {
           className="[&_button]:w-full"
         >
           {googleFonts.map((font) => (
-            <Item key={font.id} id={font.id}>
+            <SelectItem key={font.id} id={font.id}>
               {font.name}
-            </Item>
+            </SelectItem>
           ))}
         </Select>
       </Skeleton>
@@ -48,9 +47,9 @@ export function Typography() {
           className="[&_button]:w-full"
         >
           {googleFonts.map((font) => (
-            <Item key={font.id} id={font.id}>
+            <SelectItem key={font.id} id={font.id}>
               {font.name}
-            </Item>
+            </SelectItem>
           ))}
         </Select>
       </Skeleton>

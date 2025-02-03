@@ -9,13 +9,13 @@ import { Button } from "@/components/dynamic-core/button";
 import { RangeCalendar } from "@/components/dynamic-core/calendar";
 import { Checkbox } from "@/components/dynamic-core/checkbox";
 import { ColorSlider } from "@/components/dynamic-core/color-slider";
-import { Combobox } from "@/components/dynamic-core/combobox";
+import { Combobox, ComboboxItem } from "@/components/dynamic-core/combobox";
 import { DateRangePicker } from "@/components/dynamic-core/date-range-picker";
-import { Item, ListBox } from "@/components/dynamic-core/list-box";
+import { ListBox, ListBoxItem } from "@/components/dynamic-core/list-box";
 import { NumberField } from "@/components/dynamic-core/number-field";
 import { ProgressBar } from "@/components/dynamic-core/progress-bar";
 import { SearchField } from "@/components/dynamic-core/search-field";
-import { Select } from "@/components/dynamic-core/select";
+import { Select, SelectItem } from "@/components/dynamic-core/select";
 import { Separator } from "@/components/dynamic-core/separator";
 import { Slider } from "@/components/dynamic-core/slider";
 import { Switch } from "@/components/dynamic-core/switch";
@@ -52,10 +52,10 @@ export function ComponentsOverview() {
       <div className="col-span-8 flex justify-between gap-4">
         <Button variant="accent">Button</Button>
         <Select>
-          <Item>Perplexity</Item>
-          <Item>Replicate</Item>
-          <Item>Together AI</Item>
-          <Item>ElevenLabs</Item>
+          <SelectItem>Perplexity</SelectItem>
+          <SelectItem>Replicate</SelectItem>
+          <SelectItem>Together AI</SelectItem>
+          <SelectItem>ElevenLabs</SelectItem>
         </Select>
         <FileTriggerDemo />
         <div className="flex-1" />
@@ -97,15 +97,15 @@ export function ComponentsOverview() {
       </div>
       <div className="col-span-5 row-span-2 flex justify-between gap-6">
         <ListBox className="h-full max-h-none w-full">
-          <Item>New...</Item>
-          <Item>Badges</Item>
+          <ListBoxItem>New...</ListBoxItem>
+          <ListBoxItem>Badges</ListBoxItem>
           <Separator />
-          <Item>Save</Item>
-          <Item>Save as...</Item>
-          <Item>Rename...</Item>
+          <ListBoxItem>Save</ListBoxItem>
+          <ListBoxItem>Save as...</ListBoxItem>
+          <ListBoxItem>Rename...</ListBoxItem>
           <Separator />
-          <Item>Page setup…</Item>
-          <Item>Print…</Item>
+          <ListBoxItem>Page setup…</ListBoxItem>
+          <ListBoxItem>Print…</ListBoxItem>
         </ListBox>
         <RangeCalendar />
       </div>
@@ -117,13 +117,13 @@ export function ComponentsOverview() {
           description="Please select a country."
           className="w-full"
         >
-          <Item>Canada</Item>
-          <Item>France</Item>
-          <Item>Germany</Item>
-          <Item>Spain</Item>
-          <Item>Tunisia</Item>
-          <Item>United states</Item>
-          <Item>United Kingdom</Item>
+          <ComboboxItem>Canada</ComboboxItem>
+          <ComboboxItem>France</ComboboxItem>
+          <ComboboxItem>Germany</ComboboxItem>
+          <ComboboxItem>Spain</ComboboxItem>
+          <ComboboxItem>Tunisia</ComboboxItem>
+          <ComboboxItem>United states</ComboboxItem>
+          <ComboboxItem>United Kingdom</ComboboxItem>
         </Combobox>
         <NumberField label="Width" defaultValue={1024} className="w-full" />
       </div>

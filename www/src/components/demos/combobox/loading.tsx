@@ -1,16 +1,15 @@
 import React from "react";
-import { Combobox } from "@/components/dynamic-core/combobox";
-import { Item } from "@/components/dynamic-core/list-box";
+import { Combobox, ComboboxItem } from "@/components/dynamic-core/combobox";
 
 export default function Demo() {
   return (
     <Combobox label="Favorite Animal" isLoading>
-      <Item>Red Panda</Item>
-      <Item>Cat</Item>
-      <Item>Dog</Item>
-      <Item>Aardvark</Item>
-      <Item>Kangaroo</Item>
-      <Item>Snake</Item>
+      <ComboboxItem>Red Panda</ComboboxItem>
+      <ComboboxItem>Cat</ComboboxItem>
+      <ComboboxItem>Dog</ComboboxItem>
+      <ComboboxItem>Aardvark</ComboboxItem>
+      <ComboboxItem>Kangaroo</ComboboxItem>
+      <ComboboxItem>Snake</ComboboxItem>
     </Combobox>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useAsyncList } from "react-stately";
-import { ListBox, Item } from "@/components/dynamic-core/list-box";
+import { ListBox, ListBoxItem } from "@/components/dynamic-core/list-box";
 
 interface Character {
   name: string;
@@ -25,7 +25,7 @@ export default function Demo() {
       isLoading={list.isLoading}
       selectionMode="single"
     >
-      {(item) => <Item id={item.name}>{item.name}</Item>}
+      {(item) => <ListBoxItem id={item.name}>{item.name}</ListBoxItem>}
     </ListBox>
   );
 }

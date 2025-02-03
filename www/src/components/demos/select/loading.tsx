@@ -1,14 +1,13 @@
 import React from "react";
-import { Item } from "@/components/dynamic-core/list-box";
-import { Select } from "@/components/dynamic-core/select";
+import { Select, SelectItem } from "@/components/dynamic-core/select";
 
 export default function Demo() {
   return (
     <Select isLoading>
-      <Item>Perplexity</Item>
-      <Item>Replicate</Item>
-      <Item>Together AI</Item>
-      <Item>ElevenLabs</Item>
+      <SelectItem>Perplexity</SelectItem>
+      <SelectItem>Replicate</SelectItem>
+      <SelectItem>Together AI</SelectItem>
+      <SelectItem>ElevenLabs</SelectItem>
     </Select>
   );
 }

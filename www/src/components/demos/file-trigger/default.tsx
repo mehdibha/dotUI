@@ -13,7 +13,8 @@ export default function FileTriggerDemo() {
         onSelect={(e) => {
           if (e) {
             const files = Array.from(e);
-            setFile(files[0].name);
+            const fileName = files[0]?.name;
+            if (fileName) setFile(fileName);
           }
         }}
         allowsMultiple

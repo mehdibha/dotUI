@@ -14,7 +14,7 @@ import { tv } from "tailwind-variants";
 import { Button, type ButtonProps } from "@/registry/core/button_basic";
 import { HelpText, Label, type FieldProps } from "@/registry/core/field_basic";
 import {
-  Item,
+  ListBoxItem,
   ListBox,
   type ListBoxProps,
 } from "@/registry/core/list-box_basic";
@@ -103,7 +103,7 @@ const SelectRoot = <T extends object>({
 };
 
 interface SelectItemProps<T> extends ListBoxItemProps<T> {}
-const SelectItem = Item;
+const SelectItem = ListBoxItem;
 
 export type { SelectProps, SelectRootProps, SelectItemProps, SelectValueProps };
 export { Select, SelectRoot, SelectItem, SelectValue };

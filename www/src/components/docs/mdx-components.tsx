@@ -60,7 +60,6 @@ export const mdxComponents: MDXComponents = {
     />
   ),
   img: ({ className, alt, ...props }) => (
-    // eslint-disable-next-line @next/next/no-img-element
     <img
       className={cn("mx-auto max-w-md rounded-md border", className)}
       alt={alt}

@@ -1,31 +1,30 @@
 import React from "react";
-import { Combobox } from "@/components/dynamic-core/combobox";
-import { Item } from "@/components/dynamic-core/list-box";
-import { Section } from "@/components/dynamic-core/section";
+import { Combobox, ComboboxItem } from "@/components/dynamic-core/combobox";
+import { ListBoxSection } from "@/components/dynamic-core/list-box";
 
 export default function Demo() {
   return (
     <Combobox aria-label="Country">
-      <Section title="Africa">
-        <Item>Tunisia</Item>
-        <Item>Algeria</Item>
-        <Item>Morocco</Item>
-      </Section>
-      <Section title="America">
-        <Item>Canada</Item>
-        <Item>United states</Item>
-      </Section>
-      <Section title="Asia">
-        <Item>India</Item>
-        <Item>Japan</Item>
-        <Item>Korea</Item>
-      </Section>
-      <Section title="Europe">
-        <Item>France</Item>
-        <Item>Germany</Item>
-        <Item>Spain</Item>
-        <Item>United Kingdom</Item>
-      </Section>
+      <ListBoxSection title="Africa">
+        <ComboboxItem>Tunisia</ComboboxItem>
+        <ComboboxItem>Algeria</ComboboxItem>
+        <ComboboxItem>Morocco</ComboboxItem>
+      </ListBoxSection>
+      <ListBoxSection title="America">
+        <ComboboxItem>Canada</ComboboxItem>
+        <ComboboxItem>United states</ComboboxItem>
+      </ListBoxSection>
+      <ListBoxSection title="Asia">
+        <ComboboxItem>India</ComboboxItem>
+        <ComboboxItem>Japan</ComboboxItem>
+        <ComboboxItem>Korea</ComboboxItem>
+      </ListBoxSection>
+      <ListBoxSection title="Europe">
+        <ComboboxItem>France</ComboboxItem>
+        <ComboboxItem>Germany</ComboboxItem>
+        <ComboboxItem>Spain</ComboboxItem>
+        <ComboboxItem>United Kingdom</ComboboxItem>
+      </ListBoxSection>
     </Combobox>
   );
 }

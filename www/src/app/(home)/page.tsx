@@ -2,13 +2,16 @@ import React from "react";
 import { Button } from "@/components/core/button";
 import { Link } from "@/components/core/link";
 import { Header } from "@/components/header";
+import { MobileNav } from "@/components/mobile-nav";
+import { source } from "@/app/source";
 import { siteConfig } from "@/config";
 import { ThemesPreview } from "./themes-preview";
 
 export default function HomePage() {
   return (
     <div>
-      <Header />
+      <Header className="hidden md:block" />
+      <MobileNav items={source.pageTree.children} className="md:hidden" />
       <div className="container">
         <section className="mx-auto max-w-3xl pt-28">
           <h1 className="text-center text-3xl tracking-tight md:text-5xl lg:text-5xl">

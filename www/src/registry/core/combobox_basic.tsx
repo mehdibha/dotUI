@@ -10,7 +10,11 @@ import { tv } from "tailwind-variants";
 import { Button } from "@/registry/core/button_basic";
 import { Label, HelpText, type FieldProps } from "@/registry/core/field_basic";
 import { Input, InputRoot } from "@/registry/core/input_basic";
-import { ListBox } from "@/registry/core/list-box_basic";
+import {
+  ListBox,
+  ListBoxItem,
+  ListBoxItemProps,
+} from "@/registry/core/list-box_basic";
 import { Overlay } from "@/registry/core/overlay_basic";
 
 const comboboxStyles = tv({
@@ -72,5 +76,8 @@ const ComboboxRoot = <T extends object>({
   return <AriaCombobox className={root({ className })} {...props} />;
 };
 
-export type { ComboboxProps, ComboboxRootProps };
-export { Combobox, ComboboxRoot, ComboboxInput };
+interface ComboboxItemProps<T> extends ListBoxItemProps<T> {}
+const ComboboxItem = ListBoxItem;
+
+export type { ComboboxProps, ComboboxRootProps, ComboboxItemProps };
+export { Combobox, ComboboxRoot, ComboboxInput, ComboboxItem };

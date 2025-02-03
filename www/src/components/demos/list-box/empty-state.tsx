@@ -7,6 +7,8 @@ export default function Demo() {
     <ListBox
       aria-label="Search results"
       renderEmptyState={() => "No results found."}
-    ></ListBox>
+    >
+      {[]}
+    </ListBox>
   );
 }

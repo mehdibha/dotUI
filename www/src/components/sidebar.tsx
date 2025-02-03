@@ -32,10 +32,14 @@ import { siteConfig } from "@/config";
 import { SearchCommand } from "./search-command";
 import { ThemeSwitcher } from "./theme-switcher";
 
-export const Sidebar = ({ items }: { items: PageTree.Node[] }) => {
-  const pathname = usePathname();
-  const shouldInitialCollapse = !!(pathname === "/" || pathname === "/themes");
-  const [isCollapsed, setIsCollapsed] = React.useState(shouldInitialCollapse);
+export const Sidebar = ({
+  className,
+  items,
+}: {
+  className?: string;
+  items: PageTree.Node[];
+}) => {
+  const [isCollapsed, setIsCollapsed] = React.useState(false);
 
   const transition: Transition = {
     type: "spring",
@@ -59,6 +63,7 @@ export const Sidebar = ({ items }: { items: PageTree.Node[] }) => {
     <SidebarRoot
       isCollapsed={isCollapsed}
       onCollapseChange={(c) => setIsCollapsed(c)}
+      className={className}
     >
       <div className="relative flex items-center p-2 pb-1">
         <Logo />
@@ -154,15 +159,17 @@ const SidebarRoot = ({
   children,
   isCollapsed,
   onCollapseChange,
+  className,
 }: {
   children: React.ReactNode;
   isCollapsed: boolean;
   onCollapseChange: (isCollapsed: boolean) => void;
+  className?: string;
 }) => {
   return (
     <SidebarContext.Provider value={{ isCollapsed, onCollapseChange }}>
       <aside
-        className="group/sidebar hidden text-sm sm:flex"
+        className={cn("group/sidebar text-sm", className)}
         data-collapsed={isCollapsed ? "" : undefined}
         style={
           {
@@ -265,11 +272,7 @@ const SidebarSearchButton = ({ isCollapsed }: { isCollapsed: boolean }) => {
         </SidebarButton>
       </StyledTooltip>
       <Dialog className="p-0!">
-        <SearchCommand
-        // TODO CHECK THIS
-        // onRunCommand={() => setIsOpen(false)}
-        // className="h-72 max-h-full rounded-lg"
-        />
+        <SearchCommand />
         <Button
           variant="outline"
           shape="rectangle"
@@ -361,6 +364,7 @@ function PageNode({
         }
       )}
       onClick={onSelect}
+      suppressHydrationWarning
     >
       {name}
     </Link>

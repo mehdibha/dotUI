@@ -1,25 +1,28 @@
-import { ListBox, Item } from "@/components/dynamic-core/list-box";
-import { Section } from "@/components/dynamic-core/section";
+import {
+  ListBox,
+  ListBoxItem,
+  ListBoxSection,
+} from "@/components/dynamic-core/list-box";
 
 export default function Demo() {
   return (
     <ListBox aria-label="Burger contents" selectionMode="multiple">
-      <Section title="Sauces">
-        <Item id="signature-sauce">Signature sauce</Item>
-        <Item id="bbq-sauce">BBQ sauce</Item>
-        <Item id="honey-mustard">Honey mustard</Item>
-        <Item id="tartar-sauce">Tartar sauce</Item>
-      </Section>
-      <Section title="Cheese">
-        <Item id="pepperjack">Pepperjack</Item>
-        <Item id="mozzarella">Mozzarella</Item>
-        <Item id="blue-cheese">Blue cheese</Item>
-      </Section>
-      <Section title="Extras">
-        <Item id="bacon">Bacon</Item>
-        <Item id="sauteed-onions">Sauteed onions</Item>
-        <Item id="green-pepper">Green pepper</Item>
-      </Section>
+      <ListBoxSection title="Sauces">
+        <ListBoxItem id="signature-sauce">Signature sauce</ListBoxItem>
+        <ListBoxItem id="bbq-sauce">BBQ sauce</ListBoxItem>
+        <ListBoxItem id="honey-mustard">Honey mustard</ListBoxItem>
+        <ListBoxItem id="tartar-sauce">Tartar sauce</ListBoxItem>
+      </ListBoxSection>
+      <ListBoxSection title="Cheese">
+        <ListBoxItem id="pepperjack">Pepperjack</ListBoxItem>
+        <ListBoxItem id="mozzarella">Mozzarella</ListBoxItem>
+        <ListBoxItem id="blue-cheese">Blue cheese</ListBoxItem>
+      </ListBoxSection>
+      <ListBoxSection title="Extras">
+        <ListBoxItem id="bacon">Bacon</ListBoxItem>
+        <ListBoxItem id="sauteed-onions">Sauteed onions</ListBoxItem>
+        <ListBoxItem id="green-pepper">Green pepper</ListBoxItem>
+      </ListBoxSection>
     </ListBox>
   );
 }

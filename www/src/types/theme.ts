@@ -11,19 +11,6 @@ export type ColorShade = [
   string,
 ];
 
-type ColorRatios = [
-  number,
-  number,
-  number,
-  number,
-  number,
-  number,
-  number,
-  number,
-  number,
-  number,
-];
-
 export type BaseColors = {
   neutral: string;
   accent: string;

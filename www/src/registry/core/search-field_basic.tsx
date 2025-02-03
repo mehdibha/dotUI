@@ -4,7 +4,6 @@ import * as React from "react";
 import { SearchIcon, XIcon } from "lucide-react";
 import {
   SearchField as AriaSearchField,
-  Button as AriaButton,
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";

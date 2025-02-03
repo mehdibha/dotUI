@@ -10,16 +10,14 @@ import {
 import {
   NumberField as AriaNumberField,
   composeRenderProps,
-  type NumberFieldProps as AriaNumberFieldProps,
 } from "react-aria-components";
-import { tv, type VariantProps } from "tailwind-variants";
-import { Button, type ButtonProps } from "@/registry/core/button_basic";
+import { tv } from "tailwind-variants";
+import { Button } from "@/registry/core/button_basic";
 import { Label, HelpText, type FieldProps } from "@/registry/core/field_basic";
 import {
   InputRoot,
   Input,
   type InputRootProps,
-  type inputStyles,
 } from "@/registry/core/input_basic";
 import { useIsMobile } from "@/registry/hooks/use-is-mobile";
 

@@ -1,4 +1,4 @@
-import { ListBox, Item } from "@/components/dynamic-core/list-box";
+import { ListBox, ListBoxItem } from "@/components/dynamic-core/list-box";
 
 export default function Demo() {
   return (
@@ -7,9 +7,13 @@ export default function Demo() {
       orientation="horizontal"
       selectionMode="single"
     >
-      <Item textValue="Read" label="Read" description="Read Only" />
-      <Item textValue="Write" label="Write" description="Read and Write Only" />
-      <Item textValue="Admin" label="Admin" description="Full access" />
+      <ListBoxItem textValue="Read" label="Read" description="Read Only" />
+      <ListBoxItem
+        textValue="Write"
+        label="Write"
+        description="Read and Write Only"
+      />
+      <ListBoxItem textValue="Admin" label="Admin" description="Full access" />
     </ListBox>
   );
 }

@@ -1,7 +1,11 @@
 import { MenuIcon } from "lucide-react";
 import { Button } from "@/components/dynamic-core/button";
-import { Menu, MenuItem, MenuRoot } from "@/components/dynamic-core/menu";
-import { Section } from "@/components/dynamic-core/section";
+import {
+  Menu,
+  MenuItem,
+  MenuRoot,
+  MenuSection,
+} from "@/components/dynamic-core/menu";
 
 export default function Demo() {
   return (
@@ -10,14 +14,14 @@ export default function Demo() {
         <MenuIcon />
       </Button>
       <Menu>
-        <Section title="Notifications">
+        <MenuSection title="Notifications">
           <MenuItem>Push notifications</MenuItem>
           <MenuItem>Badges</MenuItem>
-        </Section>
-        <Section title="Panels">
+        </MenuSection>
+        <MenuSection title="Panels">
           <MenuItem id="console">Console</MenuItem>
           <MenuItem>Search</MenuItem>
-        </Section>
+        </MenuSection>
       </Menu>
     </MenuRoot>
   );

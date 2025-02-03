@@ -1,18 +1,25 @@
-import { ListBox, Item } from "@/components/dynamic-core/list-box";
-import { Section } from "@/components/dynamic-core/section";
+import {
+  ListBox,
+  ListBoxItem,
+  ListBoxSection,
+} from "@/components/dynamic-core/list-box";
 
 export default function Demo() {
   return (
     <ListBox aria-label="Options" selectionMode="single">
-      <Section title="Permissions">
-        <Item textValue="Read" label="Read" description="Read Only" />
-        <Item
+      <ListBoxSection title="Permissions">
+        <ListBoxItem textValue="Read" label="Read" description="Read Only" />
+        <ListBoxItem
           textValue="Write"
           label="Write"
           description="Read and Write Only"
         />
-        <Item textValue="Admin" label="Admin" description="Full access" />
-      </Section>
+        <ListBoxItem
+          textValue="Admin"
+          label="Admin"
+          description="Full access"
+        />
+      </ListBoxSection>
     </ListBox>
   );
 }

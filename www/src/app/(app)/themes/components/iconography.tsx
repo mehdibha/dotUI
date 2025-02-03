@@ -2,8 +2,7 @@
 
 import React from "react";
 import { useThemes } from "@/hooks/use-themes";
-import { Item } from "@/components/core/list-box";
-import { Select } from "@/components/core/select";
+import { Select, SelectItem } from "@/components/core/select";
 import { Skeleton } from "@/components/core/skeleton";
 
 export function Iconography() {
@@ -16,7 +15,7 @@ export function Iconography() {
         isDisabled={!isCurrentThemeEditable}
         className="[&_button]:w-full"
       >
-        <Item id="lucide">Lucide icons</Item>
+        <SelectItem id="lucide">Lucide icons</SelectItem>
       </Select>
     </Skeleton>
   );

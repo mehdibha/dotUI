@@ -2,8 +2,7 @@
 
 import React from "react";
 import type { Key } from "react-aria-components";
-import { Combobox } from "@/components/dynamic-core/combobox";
-import { Item } from "@/components/dynamic-core/list-box";
+import { Combobox, ComboboxItem } from "@/components/dynamic-core/combobox";
 
 export default function Demo() {
   const [country, setCountry] = React.useState<Key | null>("tn");
@@ -14,13 +13,13 @@ export default function Demo() {
         selectedKey={country}
         onSelectionChange={setCountry}
       >
-        <Item id="ca">Canada</Item>
-        <Item id="fr">France</Item>
-        <Item id="de">Germany</Item>
-        <Item id="es">Spain</Item>
-        <Item id="tn">Tunisia</Item>
-        <Item id="us">United States</Item>
-        <Item id="uk">United Kingdom</Item>
+        <ComboboxItem id="ca">Canada</ComboboxItem>
+        <ComboboxItem id="fr">France</ComboboxItem>
+        <ComboboxItem id="de">Germany</ComboboxItem>
+        <ComboboxItem id="es">Spain</ComboboxItem>
+        <ComboboxItem id="tn">Tunisia</ComboboxItem>
+        <ComboboxItem id="us">United States</ComboboxItem>
+        <ComboboxItem id="uk">United Kingdom</ComboboxItem>
       </Combobox>
       <p className="text-fg-muted text-sm">
         {country ? (

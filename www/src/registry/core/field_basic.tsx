@@ -55,7 +55,7 @@ interface HelpTextProps {
   description?: DescriptionProps["children"];
   errorMessage?: FieldErrorProps["children"];
 }
-const HelpText = ({ description, errorMessage, ...props }: HelpTextProps) => {
+const HelpText = ({ description, errorMessage }: HelpTextProps) => {
   const validation = React.use(FieldErrorContext);
   const isError =
     validation?.isInvalid &&

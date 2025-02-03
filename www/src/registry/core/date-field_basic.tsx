@@ -33,7 +33,7 @@ const DateField = <T extends DateValue>({
   return (
     <DateFieldRoot {...props}>
       {label && <Label>{label}</Label>}
-      <DateFieldInput />
+      <DateFieldInput prefix={prefix} suffix={suffix} size={size} />
       <HelpText description={description} errorMessage={errorMessage} />
     </DateFieldRoot>
   );

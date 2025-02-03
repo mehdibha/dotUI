@@ -8,6 +8,7 @@ import {
   DialogFooter,
   DialogInset,
 } from "@/components/dynamic-core/dialog";
+
 export default function Demo() {
   return (
     <DialogRoot>

@@ -6,9 +6,12 @@ import {
   composeRenderProps,
   ListBox as AriaListBox,
   ListBoxItem as AriaListBoxItem,
+  ListBoxSection as AriaListBoxSection,
   Collection as AriaCollection,
+  Heading as AriaHeading,
   type ListBoxProps as AriaListBoxProps,
   type ListBoxItemProps as AriaListBoxItemProps,
+  type ListBoxSectionProps as AriaListBoxSectionProps,
   ListStateContext,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
@@ -50,6 +53,10 @@ const listBoxItemStyles = tv({
   },
 });
 
+const listboxSectionStyles = tv({
+  base: "space-y-px pt-2",
+});
+
 interface ListBoxProps<T> extends AriaListBoxProps<T> {
   isLoading?: boolean;
 }
@@ -77,7 +84,7 @@ const ListBox = <T extends object>({
   );
 };
 
-interface ItemProps<T>
+interface ListBoxItemProps<T>
   extends AriaListBoxItemProps<T>,
     VariantProps<typeof listBoxItemStyles> {
   label?: string;
@@ -85,14 +92,14 @@ interface ItemProps<T>
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
 }
-const Item = <T extends object>({
+const ListBoxItem = <T extends object>({
   variant,
   label,
   description,
   prefix,
   suffix,
   ...props
-}: ItemProps<T>) => {
+}: ListBoxItemProps<T>) => {
   const textValue =
     props.textValue ||
     (typeof props.children === "string" ? props.children : undefined);
@@ -131,5 +138,30 @@ const Item = <T extends object>({
   );
 };
 
-export type { ListBoxProps, ItemProps };
-export { ListBox, Item };
+interface ListBoxSectionProps<T> extends AriaListBoxSectionProps<T> {
+  ref?: React.Ref<HTMLElement>;
+  title?: React.ReactNode;
+}
+const ListBoxSection = <T extends object>({
+  title,
+  children,
+  className,
+  ...props
+}: ListBoxSectionProps<T>) => {
+  return (
+    <AriaListBoxSection
+      className={listboxSectionStyles({ className })}
+      {...props}
+    >
+      {title && (
+        <AriaHeading className="text-fg-muted mb-1 pl-3 text-xs">
+          {title}
+        </AriaHeading>
+      )}
+      <AriaCollection items={props.items}>{children}</AriaCollection>
+    </AriaListBoxSection>
+  );
+};
+
+export type { ListBoxProps, ListBoxItemProps, ListBoxSectionProps };
+export { ListBox, ListBoxItem, ListBoxSection };

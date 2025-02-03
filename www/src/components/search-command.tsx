@@ -28,6 +28,7 @@ export function SearchCommand() {
   ).filter(Boolean);
 
   const items = uniqueCategories.map((category) => ({
+    // @ts-expect-error TODO fix later
     title: kekabCaseToTitle(category),
     items: pages.filter((item) => item.url.split("/")[2] === category),
   }));

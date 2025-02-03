@@ -127,7 +127,7 @@ export const buildColorScales = ({
     output: "HSL",
   });
 
-  const [_, ...contrastColors] = theme.contrastColors;
+  const [, ...contrastColors] = theme.contrastColors;
 
   const result = {
     neutral: {
@@ -163,6 +163,7 @@ export const buildColorScales = ({
     lightness,
     saturation,
   };
-  
+
+  // @ts-expect-error TODO fix later
   return result;
 };

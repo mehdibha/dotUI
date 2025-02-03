@@ -1,8 +1,7 @@
 "use client";
 
 import { useAsyncList } from "react-stately";
-import { Combobox } from "@/components/dynamic-core/combobox";
-import { Item } from "@/components/dynamic-core/list-box";
+import { Combobox, ComboboxItem } from "@/components/dynamic-core/combobox";
 
 interface Character {
   name: string;
@@ -21,7 +20,7 @@ export default function Demo() {
 
   return (
     <Combobox label="Pokemon" items={list.items} isLoading={list.isLoading}>
-      {(item) => <Item id={item.name}>{item.name}</Item>}
+      {(item) => <ComboboxItem id={item.name}>{item.name}</ComboboxItem>}
     </Combobox>
   );
 }

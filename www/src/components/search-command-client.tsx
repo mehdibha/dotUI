@@ -8,9 +8,8 @@ import {
   SearchIcon,
 } from "lucide-react";
 import { useFilter } from "react-aria-components";
-import { MenuContent, MenuItem } from "@/components/core/menu";
+import { MenuContent, MenuItem, MenuSection } from "@/components/core/menu";
 import { SearchFieldRoot } from "@/components/core/search-field";
-import { Section } from "@/components/core/section";
 import { Command } from "@/registry/core/command_basic";
 import { Input, InputRoot } from "@/registry/core/input_basic";
 
@@ -53,7 +52,7 @@ export function SearchCommandClient({ items }: SearchCommandClientProps) {
       </div>
       <MenuContent items={items} className="h-full overflow-y-scroll py-1">
         {items.map((category, categoryIndex) => (
-          <Section key={categoryIndex} title={category.title}>
+          <MenuSection key={categoryIndex} title={category.title}>
             {category.items.map((page) => (
               <React.Fragment key={page.id}>
                 <MenuItem
@@ -66,7 +65,7 @@ export function SearchCommandClient({ items }: SearchCommandClientProps) {
                 </MenuItem>
               </React.Fragment>
             ))}
-          </Section>
+          </MenuSection>
         ))}
       </MenuContent>
       <div className="text-fg-muted flex items-center justify-end gap-4 rounded-b-[inherit] border-t p-3 text-xs [&_svg]:size-4">

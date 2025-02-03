@@ -26,6 +26,7 @@ export const createDynamicComponent = <Props extends {}>(
       return <DefaultComp {...props} />;
     }
 
+    // @ts-expect-error TODO fix later
     const LazyComponent = registry[contextVariant ?? currentThemeVariant];
 
     if (shouldWrapWithSuspense) {

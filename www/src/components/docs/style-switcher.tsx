@@ -5,7 +5,7 @@ import { ChevronDownIcon } from "lucide-react";
 import { useComponentsVariants } from "@/lib/create-dynamic-component";
 import { useThemes } from "@/hooks/use-themes";
 import { Button } from "@/components/core/button";
-import { ListBox, Item } from "@/components/core/list-box";
+import { ListBox, ListBoxItem } from "@/components/core/list-box";
 import { Popover } from "@/components/core/popover";
 import { SelectRoot, SelectValue } from "@/components/core/select";
 import { core } from "@/registry/registry-core";
@@ -27,7 +27,7 @@ export function StyleSwitcher({ componentName }: { componentName: string }) {
     <SelectRoot
       selectedKey={currentVariant}
       onSelectionChange={(key) => {
-        // @ts-ignore
+        // @ts-expect-error TODO fix later
         setVariants((prevVariants) => ({
           ...prevVariants,
           [componentName]: key,
@@ -38,7 +38,7 @@ export function StyleSwitcher({ componentName }: { componentName: string }) {
       <Button
         size="sm"
         suffix={<ChevronDownIcon />}
-        className="border-border absolute left-2 top-2 z-50 text-xs font-normal"
+        className="border-border absolute left-2 top-2 z-10 text-xs font-normal"
       >
         <span className="font-bold">{primitiveName}:</span> <SelectValue />
       </Button>
@@ -46,10 +46,10 @@ export function StyleSwitcher({ componentName }: { componentName: string }) {
         <ListBox>
           {variants &&
             variants.map((item) => (
-              <Item key={item} id={item}>
+              <ListBoxItem key={item} id={item}>
                 {item}
                 {currentThemeVariant === item && " (current theme)"}
-              </Item>
+              </ListBoxItem>
             ))}
         </ListBox>
       </Popover>

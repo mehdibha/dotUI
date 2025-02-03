@@ -1,7 +1,7 @@
 import React from "react";
 import { ChevronsUpDownIcon } from "lucide-react";
 import { Button } from "@/components/dynamic-core/button";
-import { Item, ListBox } from "@/components/dynamic-core/list-box";
+import { ListBoxItem, ListBox } from "@/components/dynamic-core/list-box";
 import { Overlay } from "@/components/dynamic-core/overlay";
 import { SelectRoot, SelectValue } from "@/components/dynamic-core/select";
 
@@ -16,10 +16,10 @@ export default function Demo() {
       </Button>
       <Overlay type="popover">
         <ListBox>
-          <Item>Perplexity</Item>
-          <Item>Replicate</Item>
-          <Item>Together AI</Item>
-          <Item>ElevenLabs</Item>
+          <ListBoxItem>Perplexity</ListBoxItem>
+          <ListBoxItem>Replicate</ListBoxItem>
+          <ListBoxItem>Together AI</ListBoxItem>
+          <ListBoxItem>ElevenLabs</ListBoxItem>
         </ListBox>
       </Overlay>
     </SelectRoot>

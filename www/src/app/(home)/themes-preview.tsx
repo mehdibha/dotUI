@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { dotUIThemes } from "@/lib/themes";
 import { useThemes } from "@/hooks/use-themes";
 import { ToggleButton } from "@/components/core/toggle-button";
@@ -31,6 +32,13 @@ export function ThemesPreview() {
           </ToggleButton>
         ))}
       </ToggleButtonGroup>
+      <Image
+        src="https://ui.shadcn.com/_next/image?url=%2Fexamples%2Fmail-dark.png&w=1920&q=75"
+        alt="dashboard"
+        className="w-full md:hidden"
+        width={250}
+        height={250}
+      />
       <ThemeOverride className="mt-6 rounded-xl border shadow-lg">
         <ComponentsOverview />
       </ThemeOverride>

@@ -2,8 +2,7 @@
 
 import React from "react";
 import { useAsyncList } from "react-stately";
-import { Item } from "@/components/dynamic-core/list-box";
-import { Select } from "@/components/dynamic-core/select";
+import { Select, SelectItem } from "@/components/dynamic-core/select";
 
 interface Character {
   name: string;
@@ -22,7 +21,7 @@ export default function Demo() {
   });
   return (
     <Select isLoading={list.isLoading} items={list.items}>
-      {(item) => <Item id={item.name}>{item.name}</Item>}
+      {(item) => <SelectItem id={item.name}>{item.name}</SelectItem>}
     </Select>
   );
 }

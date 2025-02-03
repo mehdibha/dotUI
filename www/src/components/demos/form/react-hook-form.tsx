@@ -8,9 +8,8 @@ import { Button } from "@/components/dynamic-core/button";
 import { Checkbox } from "@/components/dynamic-core/checkbox";
 import { Combobox } from "@/components/dynamic-core/combobox";
 import { DatePicker } from "@/components/dynamic-core/date-picker";
-import { Item } from "@/components/dynamic-core/list-box";
 import { RadioGroup, Radio } from "@/components/dynamic-core/radio-group";
-import { Select } from "@/components/dynamic-core/select";
+import { Select, SelectItem } from "@/components/dynamic-core/select";
 import { TextField } from "@/components/dynamic-core/text-field";
 import { Form, FormControl } from "@/registry/core/form_react-hook-form";
 
@@ -95,9 +94,9 @@ export default function Demo() {
               {...props}
             >
               {(item) => (
-                <Item key={item.value} id={item.value}>
+                <SelectItem key={item.value} id={item.value}>
                   {item.label}
-                </Item>
+                </SelectItem>
               )}
             </Combobox>
           )}
@@ -113,8 +112,8 @@ export default function Demo() {
               className="w-full"
               {...props}
             >
-              <Item id="linkedin">LinkedIn</Item>
-              <Item id="x">X</Item>
+              <SelectItem id="linkedin">LinkedIn</SelectItem>
+              <SelectItem id="x">X</SelectItem>
             </Select>
           )}
         />

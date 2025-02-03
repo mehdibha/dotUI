@@ -3,17 +3,10 @@
 import React from "react";
 import { MenuIcon } from "lucide-react";
 import { Button } from "@/components/dynamic-core/button";
-import { Item } from "@/components/dynamic-core/list-box";
-import {
-  Menu,
-  MenuItem,
-  MenuRoot,
-  type MenuProps,
-} from "@/components/dynamic-core/menu";
-import { Select } from "@/components/dynamic-core/select";
+import { Menu, MenuItem, MenuRoot } from "@/components/dynamic-core/menu";
+import { Select, SelectItem } from "@/components/dynamic-core/select";
 
-// TODO
-// type Placement = MenuProps<object>["placement"]
+// TODO: finish example
 
 export default function Demo() {
   const [placement, setPlacement] = React.useState("top");
@@ -60,9 +53,9 @@ export default function Demo() {
           "end top",
           "end bottom",
         ].map((pos, index) => (
-          <Item key={index} id={pos.replace(" ", "")}>
+          <SelectItem key={index} id={pos.replace(" ", "")}>
             {pos}
-          </Item>
+          </SelectItem>
         ))}
       </Select>
     </div>

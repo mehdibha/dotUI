@@ -6,7 +6,7 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { Label } from "@/registry/core/field_basic";
+import { Description, Label } from "@/registry/core/field_basic";
 import { createScopedContext } from "@/registry/lib/utils";
 
 const progressStyles = tv({
@@ -91,6 +91,8 @@ const ProgressBar = ({
         )}
       </div>
       <ProgressBarIndicator />
+      {description && <Description>{description}</Description>}{" "}
+      {/* TODO: check this */}
     </ProgressBarRoot>
   );
 };

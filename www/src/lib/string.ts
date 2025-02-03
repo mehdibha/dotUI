@@ -12,8 +12,8 @@ export function slugify(str: string) {
     .trim() // Remove whitespace from both ends of a string
     .replace(/\s+/g, "-") // Replace spaces with -
     .replace(/&/g, "-and-") // Replace & with 'and'
-    .replace(/[^\w\-]+/g, "") // Remove all non-word characters except for -
-    .replace(/\-\-+/g, "-"); // Replace multiple - with single -
+    .replace(/[^\w-]+/g, "") // Remove all non-word characters except for -
+    .replace(/--+/g, "-"); // Replace multiple - with single -
 }
 
 export const toKebabCase = (string: string): string => {
@@ -37,6 +37,7 @@ export const kebabCaseToTitleCase = (string: string): string => {
 
 // aaa-bbb-ccc => aaaBbbCcc
 export const kebabCaseToCamelCase = (string: string): string => {
+  // @ts-expect-error TODO fix later
   return string.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
 };
 

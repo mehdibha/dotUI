@@ -8,8 +8,7 @@ import {
 } from "@/components/dynamic-core/color-picker";
 import { Dialog, DialogRoot } from "@/components/dynamic-core/dialog";
 import { ColorSlider } from "@/registry/core/color-slider_basic";
-import { Item } from "@/registry/core/list-box_basic";
-import { Select } from "@/registry/core/select_basic";
+import { Select, SelectItem } from "@/registry/core/select_basic";
 
 export default function Demo() {
   const [space, setSpace] = React.useState<ColorSpace>("rgb");
@@ -24,9 +23,9 @@ export default function Demo() {
             onSelectionChange={(key) => setSpace(key as ColorSpace)}
             size="sm"
           >
-            <Item id="rgb">RGB</Item>
-            <Item id="hsl">HSL</Item>
-            <Item id="hsb">HSB</Item>
+            <SelectItem id="rgb">RGB</SelectItem>
+            <SelectItem id="hsl">HSL</SelectItem>
+            <SelectItem id="hsb">HSB</SelectItem>
           </Select>
           {getColorChannels(space).map((channel) => (
             <ColorSlider

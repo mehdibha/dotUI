@@ -1,18 +1,18 @@
-import { ListBox, Item } from "@/components/dynamic-core/list-box";
+import { ListBox, ListBoxItem } from "@/components/dynamic-core/list-box";
 import { Separator } from "@/components/dynamic-core/separator";
 
 export default function Demo() {
   return (
     <ListBox aria-label="File">
-      <Item>New...</Item>
-      <Item>Badges</Item>
+      <ListBoxItem>New...</ListBoxItem>
+      <ListBoxItem>Badges</ListBoxItem>
       <Separator />
-      <Item>Save</Item>
-      <Item>Save as...</Item>
-      <Item>Rename...</Item>
+      <ListBoxItem>Save</ListBoxItem>
+      <ListBoxItem>Save as...</ListBoxItem>
+      <ListBoxItem>Rename...</ListBoxItem>
       <Separator />
-      <Item>Page setup…</Item>
-      <Item>Print…</Item>
+      <ListBoxItem>Page setup…</ListBoxItem>
+      <ListBoxItem>Print…</ListBoxItem>
     </ListBox>
   );
 }
