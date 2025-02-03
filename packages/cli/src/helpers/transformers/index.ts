@@ -12,7 +12,6 @@ export type TransformOptions = {
 };
 
 export type Transformer<Output = SourceFile> = (
-  // eslint-disable-next-line no-unused-vars
   opts: TransformOptions & {
     sourceFile: SourceFile;
   }

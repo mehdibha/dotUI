@@ -31,7 +31,7 @@ const getPrimitivePath = (name: string, type: RegistryItemType) => {
 export async function resolvePrimitives(names: string[], config: Config) {
   const index = await getRegistryIndex();
 
-  let iconLibraryDeps: string[] = [];
+  const iconLibraryDeps: string[] = [];
   const getAllRegistryDeps = (name: string) => {
     let registryDeps: string[] = [name];
     const item = index.find((item) => item.name === name);
@@ -67,7 +67,7 @@ export async function resolvePrimitives(names: string[], config: Config) {
     new Set(names.flatMap((name) => getAllRegistryDeps(name)))
   );
 
-  let skipped: RegistryItem[] = [];
+  const skipped: RegistryItem[] = [];
   const primitivesPaths = primitives.map((name) => {
     const item = index.find((item) => item.name === name);
     if (!item) throw new Error(`${name} not found in registry`);

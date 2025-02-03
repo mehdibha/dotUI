@@ -5,7 +5,7 @@ import { addCommand } from "./commands/add";
 import { initCommand } from "./commands/init";
 
 async function main() {
-  let program = new Command()
+  const program = new Command()
     .name("dotui")
     .description("CLI to setup dotUI.")
     .helpOption("-h, --help", "Display this help message.")

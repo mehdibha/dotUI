@@ -34,6 +34,8 @@
     "clean": "rimraf dist && rimraf components",
     "start:dev": "cross-env REGISTRY_URL=http://localhost:3000/registry node dist/index.js",
     "start": "node dist/index.js",
+    "lint": "eslint . --fix",
+    "lint:check": "eslint . --max-warnings 0",
     "format": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache --log-level warn",
     "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache --log-level warn",
     "typecheck": "tsc --noEmit",

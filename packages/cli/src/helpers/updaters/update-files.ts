@@ -22,14 +22,14 @@ export async function updateFiles(
   if (!files.length)
     return { filesCreated: [], filesUpdated: [], filesSkipped: [] };
 
-  let filesCreated = [];
-  let filesUpdated = [];
-  let filesSkipped = [];
+  const filesCreated = [];
+  const filesUpdated = [];
+  const filesSkipped = [];
 
   for (const file of files) {
     if (!file.content) continue;
 
-    let filePath = resolveFilePath(file, config);
+    const filePath = resolveFilePath(file, config);
 
     const targetDir = path.dirname(filePath);
     const existingFile = existsSync(filePath);
@@ -53,9 +53,11 @@ export async function updateFiles(
 
     await fs.writeFile(filePath, content, "utf-8");
 
-    existingFile
-      ? filesUpdated.push(path.relative(config.resolvedPaths.cwd, filePath))
-      : filesCreated.push(path.relative(config.resolvedPaths.cwd, filePath));
+    if (existingFile) {
+      filesUpdated.push(path.relative(config.resolvedPaths.cwd, filePath));
+    } else {
+      filesCreated.push(path.relative(config.resolvedPaths.cwd, filePath));
+    }
   }
 
   return { filesCreated, filesUpdated, filesSkipped };
