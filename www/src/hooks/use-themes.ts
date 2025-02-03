@@ -69,6 +69,7 @@ export const useThemes = () => {
   ) => {
     setState((draft) => {
       const id = nanoid();
+      // @ts-expect-error TODO
       draft.themes.push({
         ...defaultTheme,
         ...themeProperties,
@@ -86,6 +87,7 @@ export const useThemes = () => {
       (t) => t.id === themeId
     );
     if (!theme) return;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { id, name, ...targetThemeProps } = theme;
     createTheme({
       ...targetThemeProps,
@@ -130,8 +132,6 @@ export const useThemes = () => {
       }
     });
   };
-
-  const handleColorChange = () => {};
 
   const handleColorConfigChange = (
     config: "lightness" | "saturation",

@@ -12,7 +12,6 @@ import {
   ComponentPreview,
   type ComponentPreviewProps,
 } from "./component-preview";
-import { ComponentSource } from "./component-source";
 import { InstallTab, InstallTabs } from "./install-tabs";
 import { Palette, PaletteProps } from "./palette";
 import { Tabs, Tab, type TabsProps } from "./tabs";
@@ -61,6 +60,7 @@ export const mdxComponents: MDXComponents = {
     />
   ),
   img: ({ className, alt, ...props }) => (
+    // eslint-disable-next-line @next/next/no-img-element
     <img
       className={cn("mx-auto max-w-md rounded-md border", className)}
       alt={alt}
@@ -130,9 +130,6 @@ export const mdxComponents: MDXComponents = {
   ),
   InstallTab,
   InstallTabs,
-  ComponentSource: ({ name, ...rest }: { name: string }) => (
-    <ComponentSource name={name} className="not-first:mt-4 w-full" {...rest} />
-  ),
   ComponentPreview: (props: ComponentPreviewProps) => (
     <ComponentPreview containerClassName="not-first:mt-4" {...props} />
   ),
@@ -157,8 +154,8 @@ export const mdxComponents: MDXComponents = {
   Palette: ({ className, ...props }: PaletteProps) => (
     <Palette className={cn("mt-4", className)} {...props} />
   ),
-  Badge: ({ className, ...props }: BadgeProps) => (
-    <Badge variant="neutral" size="sm" className={cn()} {...props} />
+  Badge: (props: BadgeProps) => (
+    <Badge variant="neutral" size="sm" {...props} />
   ),
   BadgePalette: BadgePalette,
   Link,

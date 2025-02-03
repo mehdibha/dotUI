@@ -20,7 +20,7 @@ export const Tooltip = createDynamicComponent<TooltipProps>(
   "Tooltip",
   _Tooltip,
   {
-    // @ts-ignore
+    // @ts-expect-error - motion modify the props
     tooltip_framer: React.lazy(() =>
       import("@/registry/core/tooltip_motion").then((mod) => ({
         default: mod.Tooltip,
@@ -47,7 +47,7 @@ export const TooltipContent = createDynamicComponent<TooltipContentProps>(
   "TooltipContent",
   _TooltipContent,
   {
-    // @ts-ignore
+    // @ts-expect-error - motion modify the props
     tooltip_framer: React.lazy(() =>
       import("@/registry/core/tooltip_motion").then((mod) => ({
         default: mod.TooltipContent,

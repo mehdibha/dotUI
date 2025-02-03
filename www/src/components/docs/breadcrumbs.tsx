@@ -16,7 +16,7 @@ export const Breadcrumbs = <T extends object>({
   tree,
   ...props
 }: BreadcrumbsProps<T> & { tree: PageTree.Root }) => {
-  let pathname = usePathname();
+  const pathname = usePathname();
   const breadcrumbs = useBreadcrumb(pathname, tree);
 
   return (

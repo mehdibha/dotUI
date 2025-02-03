@@ -8,9 +8,6 @@ import {
   DialogFooter,
   DialogInset,
 } from "@/components/dynamic-core/dialog";
-import { TextArea } from "@/components/dynamic-core/text-area";
-import { TextField } from "@/components/dynamic-core/text-field";
-
 export default function Demo() {
   return (
     <DialogRoot>

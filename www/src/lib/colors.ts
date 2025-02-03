@@ -163,5 +163,6 @@ export const buildColorScales = ({
     lightness,
     saturation,
   };
+  
   return result;
 };

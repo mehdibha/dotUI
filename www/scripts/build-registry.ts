@@ -256,7 +256,7 @@ const buildIcons = async () => {
     await fs.mkdir(targetPath, { recursive: true });
   }
 
-  const payload = Object.entries(iconLibraries).map(([_, value]) => ({
+  const payload = Object.entries(iconLibraries).map(([, value]) => ({
     name: value.name,
     type: "icon-library",
     dependencies: [value.package],

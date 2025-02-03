@@ -26,9 +26,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
             enableSystem
             disableTransitionOnChange
           >
-            <div drawer-wrapper="" className="bg-bg">
-              {children}
-            </div>
+            {children}
           </ThemeProvider>
         </RouterProvider>
       </VariantsProvider>

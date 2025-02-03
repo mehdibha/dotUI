@@ -3,7 +3,6 @@
 import React, { ReactNode } from "react";
 import { googleFonts } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
-import { useMounted } from "@/hooks/use-mounted";
 import { useThemes } from "@/hooks/use-themes";
 
 interface ThemeOverrideProps extends React.ComponentProps<"div"> {
@@ -14,11 +13,9 @@ interface ThemeOverrideProps extends React.ComponentProps<"div"> {
 export const ThemeOverride = React.forwardRef<
   HTMLDivElement,
   ThemeOverrideProps
->(({ children, fallback, ...props }, ref) => {
+>(({ children, ...props }, ref) => {
   const { currentTheme, mode, fonts } = useThemes();
   const headingFont = googleFonts.find((f) => f.id === fonts.heading);
-  const bodyFont = googleFonts.find((f) => f.id === fonts.body);
-  const isMounted = useMounted();
 
   // fonts
   React.useEffect(() => {
@@ -44,7 +41,6 @@ export const ThemeOverride = React.forwardRef<
       (color) => {
         const shades = currentMode[color].shades;
         return shades.map((shade, index) => {
-          const [h, s, l] = shade.match(/\d+(\.\d+)?/g) || [];
           return [`--color-${color}-${(index + 1) * 100}`, shade];
         });
       }

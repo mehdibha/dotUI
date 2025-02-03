@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { PenSquareIcon, PlusIcon } from "lucide-react";
+import { PenSquareIcon } from "lucide-react";
 import { Button } from "@/components/dynamic-core/button";
 import { NumberField } from "@/components/dynamic-core/number-field";
 import { Tooltip } from "@/components/dynamic-core/tooltip";

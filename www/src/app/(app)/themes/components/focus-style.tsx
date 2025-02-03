@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { type PressEvent } from "react-aria-components";
 import { useThemes } from "@/hooks/use-themes";
 import { ThemeOverride } from "@/components/docs/theme-override";
 import { Button } from "@/components/dynamic-core/button";

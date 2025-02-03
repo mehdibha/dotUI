@@ -4,9 +4,7 @@ import {
   TableRoot,
   TableHeader,
   TableBody,
-  TableRow,
   TableColumn,
-  TableCell,
 } from "@/registry/core/table_basic";
 
 export default function Demo() {
@@ -35,17 +33,4 @@ export default function Demo() {
       </TableRoot>
     </div>
   );
-}
-
-type Item = {
-  id: number;
-  name: string;
-  date: string;
-  type: string;
-};
-
-interface Column {
-  id: keyof Omit<Item, "id">;
-  name: string;
-  isRowHeader?: boolean;
 }

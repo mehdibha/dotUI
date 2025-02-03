@@ -31,7 +31,7 @@ export default function Demo() {
 }
 
 const Draggable = ({ text }: { text: string }) => {
-  let { dragProps, isDragging } = useDrag({
+  const { dragProps, isDragging } = useDrag({
     getItems() {
       return [
         {

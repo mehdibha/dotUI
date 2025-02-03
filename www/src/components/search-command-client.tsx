@@ -5,14 +5,11 @@ import {
   ChevronsUpDownIcon,
   CornerDownLeftIcon,
   FileTextIcon,
-  HashIcon,
   SearchIcon,
-  XIcon,
 } from "lucide-react";
 import { useFilter } from "react-aria-components";
-import { Button } from "@/components/core/button";
 import { MenuContent, MenuItem } from "@/components/core/menu";
-import { SearchField, SearchFieldRoot } from "@/components/core/search-field";
+import { SearchFieldRoot } from "@/components/core/search-field";
 import { Section } from "@/components/core/section";
 import { Command } from "@/registry/core/command_basic";
 import { Input, InputRoot } from "@/registry/core/input_basic";
@@ -67,21 +64,6 @@ export function SearchCommandClient({ items }: SearchCommandClientProps) {
                 >
                   {page.title}
                 </MenuItem>
-                {/* {inputValue !== "" && (
-                  <React.Fragment>
-                    {page.headings.map((heading) => (
-                      <MenuItem
-                        key={heading.id}
-                        href={`${page.url}#${heading.id}`}
-                        textValue={heading.content}
-                        prefix={<HashIcon />}
-                        className="pl-6"
-                      >
-                        {heading.content}
-                      </MenuItem>
-                    ))}
-                  </React.Fragment>
-                )} */}
               </React.Fragment>
             ))}
           </Section>

@@ -29,10 +29,12 @@ export default function Demo() {
 
   const { dragAndDropHooks } = useDragAndDrop({
     getItems: (keys) =>
-      [...keys].map((key) => ({
-        // @ts-ignore
-        "text/plain": list.getItem(key).name,
-      })),
+      [...keys].map((key) => {
+        const item = list.getItem(key);
+        return {
+          "text/plain": item?.name ?? '',
+        };
+      }),
     onReorder(e) {
       if (e.target.dropPosition === "before") {
         list.moveBefore(e.target.key, e.keys);

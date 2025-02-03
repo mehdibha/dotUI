@@ -1,4 +1,3 @@
-import { BackgroundColor } from "@adobe/leonardo-contrast-colors";
 import { cn } from "@/lib/utils";
 import { Badge, BadgeProps } from "@/components/core/badge";
 
@@ -10,7 +9,6 @@ export function BadgePalette({
   return (
     <Badge
       variant="neutral"
-      // size="sm"
       className={cn("gap-2 rounded-full border pr-1", className)}
       {...props}
     >

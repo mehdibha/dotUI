@@ -12,7 +12,7 @@ import { useSimulateApiCall } from "@/app/(preview)/preview/hooks/use-api";
 export default function LoginPage() {
   const router = useRouter();
   const loginWithEmail = useSimulateApiCall({
-    // onSuccess: () => router.push("/preview/app/overview"),
+    onSuccess: () => router.push("/preview/app/overview"),
   });
   const loginWithGoogle = useSimulateApiCall({
     onSuccess: () => router.push("/preview/app/overview"),
@@ -40,7 +40,8 @@ export default function LoginPage() {
         </p>
         <div className="mt-4 flex items-center gap-2">
           <Button
-            href="/preview/overview"
+            isPending={loginWithGoogle.status === "loading"}
+            onPress={loginWithGoogle.simulateApiCall}
             variant="outline"
             className="flex-1"
             aria-label="Sign in with google"
@@ -48,7 +49,8 @@ export default function LoginPage() {
             <GoogleIcon />
           </Button>
           <Button
-            href="/preview/overview"
+            isPending={loginWithX.status === "loading"}
+            onPress={loginWithX.simulateApiCall}
             variant="outline"
             className="flex-1"
             aria-label="Sign in with X"
@@ -56,7 +58,8 @@ export default function LoginPage() {
             <TwitterIcon />
           </Button>
           <Button
-            href="/preview/overview"
+            isPending={loginWithGithub.status === "loading"}
+            onPress={loginWithGithub.simulateApiCall}
             variant="outline"
             className="flex-1"
             aria-label="Sign in with github"

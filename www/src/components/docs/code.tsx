@@ -49,6 +49,7 @@ type MdCodeText = {
 };
 
 type MdMultiCodeText = {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
   type: Function;
   props: {
     children: MdCodeText[];
@@ -80,6 +81,7 @@ function parseChildren(
   }
 
   if (typeof children === "object") {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const files = React.Children.toArray(children as any).map((file: any) => {
       const code = file.props?.children;
       const className = file.props?.className;
@@ -88,6 +90,7 @@ function parseChildren(
         ...getLanguageAndTitle(className as string),
       };
     });
+    //@ts-expect-error - This is a valid case
     return files[0];
   }
 

@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { type PressEvent } from "react-aria-components";
 import { useThemes } from "@/hooks/use-themes";
 import { ThemeOverride } from "@/components/docs/theme-override";
 import { Button } from "@/components/dynamic-core/button";
@@ -36,7 +35,7 @@ export function LoaderStyle() {
   const { currentTheme, isCurrentThemeEditable, updateVariant } = useThemes();
   const [isPending, setPending] = React.useState(false);
 
-  const handlePress = (e: PressEvent) => {
+  const handlePress = () => {
     setPending(true);
     setTimeout(() => {
       setPending(false);

@@ -26,7 +26,7 @@ export function Choices({ items, ...props }: ChoicesProps): React.ReactElement {
   return (
     <Tabs {...props}>
       <TabList className="mb-4 grid grid-cols-2 gap-2">
-        {items.map((item, i) => (
+        {items.map((item) => (
           <Tab
             key={item.value}
             className={cn(
