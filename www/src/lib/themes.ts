@@ -203,7 +203,7 @@ export const dotUIThemes: Theme[] = [
     iconLibrary: "lucide",
     variants: {
       ...defaultVariants,
-      button: "button-02",
+      button: "button-03",
     },
     colors: {
       light: {

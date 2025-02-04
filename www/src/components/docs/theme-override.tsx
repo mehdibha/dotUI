@@ -5,9 +5,11 @@ import { googleFonts } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import { useThemes } from "@/hooks/use-themes";
 
-interface ThemeOverrideProps extends React.ComponentProps<"div"> {
+interface ThemeOverrideProps
+  extends Omit<React.ComponentProps<"div">, "style"> {
   children?: React.ReactNode;
   fallback?: ReactNode;
+  style?: (color: string) => React.CSSProperties;
 }
 
 export const ThemeOverride = React.forwardRef<
@@ -55,6 +57,7 @@ export const ThemeOverride = React.forwardRef<
       style={
         {
           ...styles,
+          ...props.style?.(currentMode.neutral.shades[3]),
         } as React.CSSProperties
       }
       className={cn("bg-bg text-fg", props.className)}

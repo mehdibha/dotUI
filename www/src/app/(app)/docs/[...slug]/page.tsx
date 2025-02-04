@@ -28,48 +28,49 @@ export default async function Page({
   const MDXContent = page.data.body;
 
   return (
-    <div
-      className={cn("pt-8 sm:pt-20", {
-        "xl:grid xl:grid-cols-[1fr_250px] xl:gap-10":
-          page.data.toc && page.data.toc.length > 0,
-      })}
-    >
-      <div className="container max-w-3xl pb-20">
-        <Breadcrumbs tree={source.pageTree} className="mb-2" />
-        <h1 className="text-4xl font-bold">{page.data.title}</h1>
-        <p className="text-fg-muted mt-2">{page.data.description}</p>
-        {page.data.links && page.data.links.length > 0 && (
-          <div className="mt-4 flex flex-wrap gap-2">
-            {page.data.links.map((link, index) => (
-              <Button
-                key={index}
-                href={link.href}
-                prefix={getIcon(link.href)}
-                suffix={<ExternalLinkIcon />}
-                size="sm"
-                className="h-6 text-xs font-semibold [&_svg]:size-3"
-                target="_blank"
-              >
-                {link.label}
-              </Button>
-            ))}
+    <div className="xl:grid xl:grid-cols-[minmax(50px,1fr)_minmax(0,1100px)_minmax(50px,1fr)] xl:gap-10">
+      <div className="border-x-(--pattern-fg) h-full border-x bg-[image:repeating-linear-gradient(315deg,_var(--pattern-fg)_0,_var(--pattern-fg)_1px,_transparent_0,_transparent_50%)] bg-[size:10px_10px]" />
+      <div className="container max-w-6xl pt-20">
+        <div className="before:bg-border grid grid-cols-[1fr_200px] gap-10 before:absolute before:top-0 before:h-px before:w-[200vw] before:-translate-x-1/2 before:content-['']">
+          <div className="pt-4">
+            <Breadcrumbs tree={source.pageTree} className="mb-2" />
+            <h1 className="text-4xl font-bold">{page.data.title}</h1>
+            <p className="text-fg-muted mt-2">{page.data.description}</p>
+            {page.data.links && page.data.links.length > 0 && (
+              <div className="mt-4 flex flex-wrap gap-2">
+                {page.data.links.map((link, index) => (
+                  <Button
+                    key={index}
+                    href={link.href}
+                    prefix={getIcon(link.href)}
+                    suffix={<ExternalLinkIcon />}
+                    size="sm"
+                    className="h-6 text-xs font-semibold [&_svg]:size-3"
+                    target="_blank"
+                  >
+                    {link.label}
+                  </Button>
+                ))}
+              </div>
+            )}
+            <div className="mt-10 text-sm md:text-base">
+              <MDXContent components={mdxComponents} />
+            </div>
+            <div className="mt-20 pb-20 space-y-4">
+              <PageLastUpdate path={page.file.path} />
+              <DocsPager currentPathname={page.url} />
+            </div>
           </div>
-        )}
-        <div className="mt-10 text-sm md:text-base">
-          <MDXContent components={mdxComponents} />
-        </div>
-        <div className="mt-20 space-y-4">
-          <PageLastUpdate path={page.file.path} />
-          <DocsPager currentPathname={page.url} />
+          {page.data.toc && page.data.toc.length > 0 && (
+            <div className="bg-bg z-10 hidden pt-4 text-sm xl:block">
+              <div className="sticky top-8 h-[calc(100svh-calc(var(--spacing)*8))]">
+                <TableOfContents toc={page.data.toc as TocType} />
+              </div>
+            </div>
+          )}
         </div>
       </div>
-      {page.data.toc && page.data.toc.length > 0 && (
-        <div className="hidden text-sm xl:block">
-          <div className="sticky top-8 h-[calc(100svh-calc(var(--spacing)*8))] pr-8">
-            <TableOfContents toc={page.data.toc as TocType} />
-          </div>
-        </div>
-      )}
+      <div className="border-x-(--pattern-fg) h-full border-x bg-[image:repeating-linear-gradient(315deg,_var(--pattern-fg)_0,_var(--pattern-fg)_1px,_transparent_0,_transparent_50%)] bg-[size:10px_10px]" />
     </div>
   );
 }

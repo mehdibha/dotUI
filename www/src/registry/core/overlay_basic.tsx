@@ -1,7 +1,7 @@
 "use client";
 
 import { Drawer, DrawerProps } from "@/registry/core/drawer_basic";
-import { Modal, ModalProps } from "@/registry/core/modal_basic";
+import { Modal, ModalProps } from "@/registry/core/modal_blur";
 import { Popover, PopoverProps } from "@/registry/core/popover_basic";
 import { useIsMobile } from "@/registry/hooks/use-is-mobile";
 

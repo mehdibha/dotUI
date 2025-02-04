@@ -33,7 +33,7 @@ import { GitHubIcon, TwitterIcon, GoogleIcon } from "@/components/icons";
 
 export function ComponentsOverview() {
   return (
-    <div className="grid grid-cols-10 gap-8 p-8">
+    <div className="grid grid-cols-10 gap-8 p-8 container">
       <div className="col-span-8">
         <Slider
           label="Progress"

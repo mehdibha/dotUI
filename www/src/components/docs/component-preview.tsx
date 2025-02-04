@@ -58,7 +58,7 @@ export const ComponentPreview = async ({
       <div className="bg-bg-muted">
         <ResizableContainer resizable={resizable}>
           <Loader>
-            <ThemeOverride className="relative">
+            <ThemeOverride className="relative duration-300">
               {/* @ts-expect-error fix later */}
               <StyleSwitcher componentName={getComponentName(name)} />
               <ThemeCustomizerDialog>
