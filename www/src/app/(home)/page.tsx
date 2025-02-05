@@ -46,7 +46,7 @@ export default function HomePage() {
         </section>
       </div>
       {/* Components overview */}
-      <section className="px-8">
+      <section className="px-2 sm:px-8">
         <ThemesOverview />
       </section>
     </div>

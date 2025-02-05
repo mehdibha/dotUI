@@ -67,7 +67,7 @@ function Alert({
 }: AlertProps) {
   const resolvedIcon = icon === undefined ? defaultIcons[variant] : icon;
   return (
-    <AlertRoot variant={variant} {...props} className="@container items-start">
+    <AlertRoot variant={variant} {...props}>
       <div className="pt-2">{resolvedIcon}</div>
       <div className="@sm:items-center @sm:flex-row flex flex-1 flex-col items-start gap-4">
         <div className="flex-1 space-y-0.5">

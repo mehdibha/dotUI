@@ -8,7 +8,7 @@ import {
   TableRow,
   TableColumn,
   TableCell,
-  TableResizableContainer,
+  TableContainer,
 } from "@/registry/core/table_basic";
 
 const columns: Column[] = [
@@ -26,7 +26,7 @@ const items: Item[] = [
 
 export default function Demo() {
   return (
-    <TableResizableContainer>
+    <TableContainer>
       <TableRoot aria-label="Files">
         <TableHeader columns={columns}>
           <TableColumn id="name" isRowHeader allowsResizing>
@@ -45,7 +45,7 @@ export default function Demo() {
           )}
         </TableBody>
       </TableRoot>
-    </TableResizableContainer>
+    </TableContainer>
   );
 }
 

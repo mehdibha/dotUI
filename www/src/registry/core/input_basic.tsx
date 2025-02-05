@@ -25,7 +25,7 @@ const inputStyles = tv({
       "has-[input[data-invalid]]:border-border-danger focus-within:has-[input[data-invalid]]:border-border",
     ],
     input: [
-      "text-fg placeholder:text-fg-muted disabled:text-fg-disabled outline-hidden bg-transparent outline-none disabled:cursor-default",
+      "text-fg placeholder:text-fg-muted disabled:text-fg-disabled outline-hidden min-w-0 bg-transparent disabled:cursor-default",
     ],
   },
   variants: {
@@ -53,10 +53,10 @@ const inputStyles = tv({
 const { root, input } = inputStyles();
 
 interface InputProps extends React.ComponentProps<typeof AriaInput> {}
-const Input = (props: InputProps) => {
+const Input = ({ className, ...props }: InputProps) => {
   return (
     <AriaInput
-      className={composeRenderProps(props.className, (className) =>
+      className={composeRenderProps(className, (className) =>
         input({ className })
       )}
       {...props}

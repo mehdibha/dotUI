@@ -3,12 +3,14 @@
 import React from "react";
 import { useTheme } from "next-themes";
 import { useMounted } from "@/hooks/use-mounted";
-import { MobileComponentsOverview } from "@/components/components-overview";
 import { Skeleton } from "@/registry/core/skeleton_basic";
 import { Tabs, TabList, Tab } from "@/registry/core/tabs_motion";
 import { themes } from "@/registry/registry-themes";
 import { Theme } from "@/types/theme";
-import { ComponentsOverview } from "@/modules/demos/components/components-overview";
+import {
+  ComponentsOverview,
+  MobileComponentsOverview,
+} from "@/modules/demos/components/components-overview";
 import { ThemeProvider } from "./theme-provider";
 
 export const ThemesOverview = () => {
@@ -98,10 +100,10 @@ export const ThemesOverview = () => {
         <ThemeProvider
           mode={resolvedTheme === "light" ? "light" : "dark"}
           theme={currentTheme}
-          className="rounded-md border duration-300"
+          className="w-full rounded-md border duration-300"
         >
-          <ComponentsOverview className="hidden lg:grid" />
-          <MobileComponentsOverview className="lg:hidden" />
+          <ComponentsOverview className="hidden min-[920px]:grid" />
+          <MobileComponentsOverview className="min-[920px]:hidden" />
         </ThemeProvider>
       </Skeleton>
     </div>

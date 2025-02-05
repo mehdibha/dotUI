@@ -14,6 +14,7 @@ import {
   Button as AriaButton,
   useTableOptions,
   composeRenderProps,
+  type ResizableTableContainerProps as AriaResiableTableContainerProps,
   type RowProps as AriaRowProps,
   type TableBodyProps as AriaTableBodyProps,
   type TableHeaderProps as AriaTableHeaderProps,
@@ -26,9 +27,9 @@ import { createScopedContext } from "@/registry/lib/utils";
 
 const tableStyles = tv({
   slots: {
-    resizableContainer: "w-[500px] overflow-auto",
+    container: "w-full overflow-auto",
     root: [
-      "relative min-h-24 w-full border-separate border-spacing-0 cursor-default overflow-auto text-sm",
+      "relative table min-h-24 w-auto border-separate border-spacing-0 cursor-default text-sm",
       "[&_.react-aria-DropIndicator]:outline-bg-accent [&_.react-aria-DropIndicator]:translate-z-0 [&_.react-aria-DropIndicator]:outline",
     ],
     header: "sticky top-0 z-10",
@@ -50,13 +51,13 @@ const tableStyles = tv({
   variants: {
     variant: {
       bordered: {
-        root: "rounded-md border",
+        container: "rounded-md border",
         column: "border-b",
         row: "group/row",
         cell: "border-b group-last/row:border-b-0",
       },
       solid: {
-        root: "bg-bg-inverse/5 rounded-lg p-2",
+        container: "bg-bg-inverse/5 rounded-lg p-2",
         header: "text-fg-muted border-y",
         body: "text-fg",
         column: "bg-bg-inverse/5 first:rounded-l-sm last:rounded-r-sm",
@@ -83,7 +84,7 @@ const tableStyles = tv({
   },
 });
 
-const { resizableContainer, root, header, column, resizer, body, row, cell } =
+const { container, root, header, column, resizer, body, row, cell } =
   tableStyles();
 
 const [TableProvider, useTableContext] = createScopedContext<
@@ -93,9 +94,12 @@ const [TableProvider, useTableContext] = createScopedContext<
 >("TableRoot");
 
 interface TableRootProps
-  extends React.ComponentProps<typeof AriaTable>,
+  extends Omit<React.ComponentProps<typeof AriaTable>, "className" | "style">,
+    Pick<AriaResiableTableContainerProps, "className" | "style">,
     VariantProps<typeof tableStyles> {}
 const TableRoot = ({
+  className,
+  style,
   variant,
   selectionVariant,
   onRowAction,
@@ -107,11 +111,13 @@ const TableRoot = ({
       selectionVariant={selectionVariant}
       globalAction={!!onRowAction}
     >
-      <AriaTable
-        className={root({ variant })}
-        onRowAction={onRowAction}
-        {...props}
-      />
+      <TableContainer className={className} style={style}>
+        <AriaTable
+          className={root({ variant })}
+          onRowAction={onRowAction}
+          {...props}
+        />
+      </TableContainer>
     </TableProvider>
   );
 };
@@ -251,22 +257,37 @@ const TableCell = ({ className, ...props }: TableCellProps) => {
   );
 };
 
-interface TableResizableContainerProps
-  extends React.ComponentProps<typeof AriaResizableTableContainer> {}
-const TableResizableContainer = ({
+interface TableContainerProps
+  extends React.ComponentProps<typeof AriaResizableTableContainer> {
+  resizable?: boolean;
+}
+const TableContainer = ({
+  ref,
+  resizable = false,
+  children,
   className,
+  style,
   ...props
-}: TableResizableContainerProps) => {
+}: TableContainerProps) => {
+  const { variant } = useTableContext("TableContainer");
+  if (resizable)
+    return (
+      <AriaResizableTableContainer
+        className={container({ variant, className })}
+        {...props}
+      >
+        {children}
+      </AriaResizableTableContainer>
+    );
   return (
-    <AriaResizableTableContainer
-      className={resizableContainer({ className })}
-      {...props}
-    />
+    <div ref={ref} className={container({ variant, className })} style={style}>
+      {children}
+    </div>
   );
 };
 
 export type {
-  TableResizableContainerProps,
+  TableContainerProps,
   TableRootProps,
   TableHeaderProps,
   TableBodyProps,
@@ -275,7 +296,7 @@ export type {
   TableCellProps,
 };
 export {
-  TableResizableContainer,
+  TableContainer,
   TableRoot,
   TableHeader,
   TableBody,

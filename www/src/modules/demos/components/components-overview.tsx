@@ -47,7 +47,9 @@ export function ComponentsOverview({ className }: { className?: string }) {
         <RadioGroup>
           <Radio value="email">Email</Radio>
           <Radio value="phone">Phone (SMS)</Radio>
-          <Radio value="notification">Push notification</Radio>
+          <Radio value="notification">
+            <span className="truncate">Push notification</span>
+          </Radio>
         </RadioGroup>
       </div>
       <div className="col-span-8 flex items-center justify-between gap-4">
@@ -66,9 +68,9 @@ export function ComponentsOverview({ className }: { className?: string }) {
           alt="@mehdibha"
           fallback="M"
         />
-        <DateRangePicker />
+        <DateRangePicker className="hidden xl:block" />
       </div>
-      <div className="col-span-3 row-span-8 flex flex-col justify-between gap-2">
+      <div className="col-span-6 flex flex-col gap-4 lg:col-span-3 lg:row-span-8">
         <Alert title="Payment Information">
           Enter your payment method to complete your purchase.
         </Alert>
@@ -92,12 +94,12 @@ export function ComponentsOverview({ className }: { className?: string }) {
           label="Opacity"
           defaultValue="hsla(210, 64%, 35%, 0.7)"
           channel="alpha"
-          className="!w-full"
+          className="hidden !w-full lg:block"
         />
         <ProgressBar label="Loading..." value={75} className="w-full" />
       </div>
-      <div className="col-span-5 row-span-2 flex justify-between gap-6">
-        <ListBox className="h-full max-h-none w-full">
+      <div className="col-span-4 flex justify-between gap-6 lg:col-span-5 lg:row-span-2">
+        <ListBox className="hidden max-h-none w-full lg:flex">
           <ListBoxItem>New...</ListBoxItem>
           <ListBoxItem>Badges</ListBoxItem>
           <Separator />
@@ -108,15 +110,41 @@ export function ComponentsOverview({ className }: { className?: string }) {
           <ListBoxItem>Page setup…</ListBoxItem>
           <ListBoxItem>Print…</ListBoxItem>
         </ListBox>
-        <RangeCalendar />
+        <div className="w-full lg:hidden" />
+        <div className="space-y-4">
+          <DateRangePicker className="block lg:hidden" />
+          <RangeCalendar />
+          <Checkbox defaultSelected className="flex w-full lg:hidden">
+            Notifications
+          </Checkbox>
+          <SearchField aria-label="Search" className="block w-full lg:hidden" />
+          <Combobox
+            label="Country"
+            description="Please select a country."
+            className="block w-full lg:hidden"
+          >
+            <ComboboxItem>Canada</ComboboxItem>
+            <ComboboxItem>France</ComboboxItem>
+            <ComboboxItem>Germany</ComboboxItem>
+            <ComboboxItem>Spain</ComboboxItem>
+            <ComboboxItem>Tunisia</ComboboxItem>
+            <ComboboxItem>United states</ComboboxItem>
+            <ComboboxItem>United Kingdom</ComboboxItem>
+          </Combobox>
+          <NumberField
+            label="Width"
+            defaultValue={1024}
+            className="block w-full lg:hidden"
+          />
+        </div>
       </div>
-      <div className="col-span-2 row-span-2 flex flex-col gap-4">
+      <div className="col-span-2 row-span-2 hidden flex-col gap-4 lg:flex">
         <Checkbox defaultSelected>Notifications</Checkbox>
-        <SearchField aria-label="Search" className="w-full" />
+        <SearchField aria-label="Search" className="w-auto" />
         <Combobox
           label="Country"
           description="Please select a country."
-          className="w-full"
+          className="w-auto"
         >
           <ComboboxItem>Canada</ComboboxItem>
           <ComboboxItem>France</ComboboxItem>
@@ -126,13 +154,13 @@ export function ComponentsOverview({ className }: { className?: string }) {
           <ComboboxItem>United states</ComboboxItem>
           <ComboboxItem>United Kingdom</ComboboxItem>
         </Combobox>
-        <NumberField label="Width" defaultValue={1024} className="w-full" />
+        <NumberField label="Width" defaultValue={1024} className="w-auto" />
       </div>
-      <div className="col-span-7 row-span-6">
+      <div className="col-span-10 row-span-6 lg:col-span-7">
         <TableRoot
           aria-label="Vocalists"
           selectionMode="multiple"
-          variant="solid"
+          variant="bordered"
         >
           <TableHeader>
             <TableColumn>ID</TableColumn>
@@ -162,9 +190,27 @@ export function ComponentsOverview({ className }: { className?: string }) {
   );
 }
 
+export const MobileComponentsOverview = ({
+  className,
+}: {
+  className?: string;
+}) => {
+  return (
+    <div className={cn("space-y-4 p-4", className)}>
+      <Slider
+        label="Progress"
+        showValueLabel
+        defaultValue={50}
+        className="w-full"
+      />
+      {/* TODO */}
+    </div>
+  );
+};
+
 function Login() {
   return (
-    <div className="bg-bg-muted w-full max-w-sm rounded-lg border p-8">
+    <div className="bg-bg-muted w-full rounded-lg border p-8">
       <h1 className="text-2xl font-semibold leading-none tracking-tight">
         Login
       </h1>
@@ -218,7 +264,7 @@ function Login() {
 
 function Register() {
   return (
-    <div className="bg-bg-muted w-full max-w-sm rounded-lg border p-8">
+    <div className="bg-bg-muted w-full rounded-lg border p-8">
       <h1 className="text-2xl font-semibold leading-none tracking-tight">
         Create an account
       </h1>
