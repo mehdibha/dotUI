@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import { type TableOfContents as TocType } from "fumadocs-core/server";
 import { ExternalLinkIcon } from "lucide-react";
 import { truncateOnWord } from "@/lib/string";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/core/button";
 import { Breadcrumbs } from "@/components/docs/breadcrumbs";
 import { DocsPager } from "@/components/docs/docs-pager";
@@ -56,7 +55,7 @@ export default async function Page({
             <div className="mt-10 text-sm md:text-base">
               <MDXContent components={mdxComponents} />
             </div>
-            <div className="mt-20 pb-20 space-y-4">
+            <div className="mt-20 space-y-4 pb-20">
               <PageLastUpdate path={page.file.path} />
               <DocsPager currentPathname={page.url} />
             </div>

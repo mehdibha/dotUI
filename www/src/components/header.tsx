@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { SearchIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Avatar } from "@/components/core/avatar";
+// import { Avatar } from "@/components/core/avatar";
 import { Button } from "@/components/core/button";
 import { DialogRoot, Dialog } from "@/components/core/dialog";
 import { siteConfig } from "@/config";
@@ -80,7 +80,7 @@ const Logo = () => {
       href="/"
       className="flex items-center gap-2 rounded opacity-100 transition-[opacity,transform] duration-300 ease-out"
     >
-       {/* <Avatar
+      {/* <Avatar
         src={siteConfig.global.logo}
         alt={siteConfig.global.name}
         width={24}
@@ -107,11 +107,17 @@ const Logo = () => {
           </clipPath>
         </defs>
         <g clipPath="url(#a)">
-          <path d="M-30-30h360v360H-30z" className="dark:fill-white fill-[#381e1e]" />
+          <path
+            d="M-30-30h360v360H-30z"
+            className="fill-[#381e1e] dark:fill-white"
+          />
         </g>
         <g clipPath="url(#b)">
           <g clipPath="url(#c)">
-            <path d="M187.5 194.418h66.145v66.144H187.5Zm0 0" className="dark:fill-[#381e1e] fill-[#fff]" />
+            <path
+              d="M187.5 194.418h66.145v66.144H187.5Zm0 0"
+              className="fill-[#fff] dark:fill-[#381e1e]"
+            />
           </g>
         </g>
       </svg>

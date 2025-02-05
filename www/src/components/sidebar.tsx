@@ -16,7 +16,7 @@ import {
 import { motion, Transition } from "motion/react";
 import { hasActive, isActive } from "@/lib/docs/utils";
 import { cn } from "@/lib/utils";
-import { Avatar } from "@/components/core/avatar";
+// import { Avatar } from "@/components/core/avatar";
 import { Button, ButtonProps } from "@/components/core/button";
 import {
   CollapsibleRoot,
@@ -234,11 +234,17 @@ const Logo = () => {
           </clipPath>
         </defs>
         <g clipPath="url(#a)">
-          <path d="M-30-30h360v360H-30z" className="dark:fill-white fill-[#381e1e]" />
+          <path
+            d="M-30-30h360v360H-30z"
+            className="fill-[#381e1e] dark:fill-white"
+          />
         </g>
         <g clipPath="url(#b)">
           <g clipPath="url(#c)">
-            <path d="M187.5 194.418h66.145v66.144H187.5Zm0 0" className="dark:fill-[#381e1e] fill-[#fff]" />
+            <path
+              d="M187.5 194.418h66.145v66.144H187.5Zm0 0"
+              className="fill-[#fff] dark:fill-[#381e1e]"
+            />
           </g>
         </g>
       </svg>

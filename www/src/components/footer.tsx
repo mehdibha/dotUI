@@ -3,7 +3,6 @@ import NavLink from "next/link";
 import Link from "next/link";
 import { focusRing } from "@/lib/focus-styles";
 import { cn } from "@/lib/utils";
-import { Separator } from "@/components/core/separator";
 import { Logo } from "@/components/logo";
 import { siteConfig } from "@/config";
 
@@ -72,7 +71,7 @@ export const Footer = () => {
             Bringing singularity to the web.
           </p>
         </div>
-        <div className="flex flex-wrap gap-6 sm:gap-16 text-sm">
+        <div className="flex flex-wrap gap-6 text-sm sm:gap-16">
           {links.map((group, index) => (
             <div key={index}>
               <h2 className="font-bold">{group.label}</h2>
