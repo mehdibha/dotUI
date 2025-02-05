@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import { Link } from "@/components/core/link";
 import { RadioGroup, Radio } from "@/components/core/radio-group";
 import FileTriggerDemo from "@/components/demos/file-trigger/default";
@@ -31,9 +32,9 @@ import { Tabs, Tab, TabList, TabPanel } from "@/components/dynamic-core/tabs";
 import { TextField } from "@/components/dynamic-core/text-field";
 import { GitHubIcon, TwitterIcon, GoogleIcon } from "@/components/icons";
 
-export function ComponentsOverview() {
+export function ComponentsOverview({ className }: { className?: string }) {
   return (
-    <div className="container grid grid-cols-10 gap-8 p-8">
+    <div className={cn("container grid grid-cols-10 gap-8 p-8", className)}>
       <div className="col-span-8">
         <Slider
           label="Progress"
@@ -156,6 +157,42 @@ export function ComponentsOverview() {
     </div>
   );
 }
+
+export const MobileComponentsOverview = ({
+  className,
+}: {
+  className?: string;
+}) => {
+  return (
+    <div className={cn("space-y-4 p-4", className)}>
+      <Slider
+        label="Progress"
+        showValueLabel
+        defaultValue={50}
+        className="w-full"
+      />
+      <div className="flex items-center gap-2">
+        <Button variant="accent">Button</Button>
+        <Select>
+          <SelectItem>Perplexity</SelectItem>
+          <SelectItem>Replicate</SelectItem>
+          <SelectItem>Together AI</SelectItem>
+          <SelectItem>ElevenLabs</SelectItem>
+        </Select>
+        <FileTriggerDemo />
+      </div>
+      <div className="flex items-center gap-2">
+        <Switch>Focus mode</Switch>
+        <Avatar
+          src="https://github.com/mehdibha.png"
+          alt="@mehdibha"
+          fallback="M"
+        />
+      </div>
+      <DateRangePicker />
+    </div>
+  );
+};
 
 function Login() {
   return (

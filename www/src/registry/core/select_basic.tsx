@@ -22,7 +22,7 @@ import { Popover } from "@/registry/core/popover_basic";
 
 const selectStyles = tv({
   slots: {
-    root: "flex w-48 flex-col items-start gap-2",
+    root: "flex flex-col items-start gap-2",
     selectValue: "flex-1 text-left",
   },
 });

@@ -44,7 +44,7 @@ export const ResizableContainer = ({
 
   return (
     <div
-      className="relative"
+      className="relative overflow-hidden"
       ref={containerRef}
       style={{ width: width !== null ? `${width}px` : undefined }}
     >

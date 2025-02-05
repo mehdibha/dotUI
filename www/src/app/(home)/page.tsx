@@ -8,7 +8,7 @@ export default function HomePage() {
     <div>
       {/* Hero section */}
       <div className="container">
-        <section className="max-w-3xl pb-28 pt-8 sm:pt-24">
+        <section className="max-w-3xl pb-4 pt-8 sm:pt-24 lg:pb-28">
           <Button
             prefix={<LayoutTemplateIcon />}
             variant="outline"
@@ -29,7 +29,8 @@ export default function HomePage() {
               href="/docs/getting-started/introduction"
               variant="primary"
               size="lg"
-              className="h-11 px-8"
+              className="h-10"
+              // className="h-11 px-8"
             >
               Get started
             </Button>
@@ -37,7 +38,7 @@ export default function HomePage() {
               href="/themes"
               variant="outline"
               size="lg"
-              className="bg-bg-inverse/5 h-11 px-8"
+              className="bg-bg-inverse/5 h-10"
             >
               Explore themes
             </Button>
@@ -45,7 +46,7 @@ export default function HomePage() {
         </section>
       </div>
       {/* Components overview */}
-      <section>
+      <section className="px-8">
         <ThemesOverview />
       </section>
     </div>

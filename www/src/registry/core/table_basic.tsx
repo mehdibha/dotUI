@@ -28,7 +28,7 @@ const tableStyles = tv({
   slots: {
     resizableContainer: "w-[500px] overflow-auto",
     root: [
-      "relative min-h-24 w-full border-separate border-spacing-0 cursor-default text-sm",
+      "relative min-h-24 w-full border-separate border-spacing-0 cursor-default overflow-auto text-sm",
       "[&_.react-aria-DropIndicator]:outline-bg-accent [&_.react-aria-DropIndicator]:translate-z-0 [&_.react-aria-DropIndicator]:outline",
     ],
     header: "sticky top-0 z-10",

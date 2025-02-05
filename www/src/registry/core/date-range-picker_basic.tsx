@@ -16,7 +16,7 @@ import { Label, HelpText, type FieldProps } from "@/registry/core/field_basic";
 import { InputRoot, type inputStyles } from "@/registry/core/input_basic";
 
 const dateRangePickerStyles = tv({
-  base: "flex w-48 flex-col items-start gap-2",
+  base: "flex flex-col items-start gap-2",
 });
 
 interface DateRangePickerProps<T extends DateValue>

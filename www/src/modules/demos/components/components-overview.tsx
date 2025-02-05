@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import { Link } from "@/components/core/link";
 import { RadioGroup, Radio } from "@/components/core/radio-group";
 import FileTriggerDemo from "@/components/demos/file-trigger/default";
@@ -31,9 +32,9 @@ import { Tabs, Tab, TabList, TabPanel } from "@/components/dynamic-core/tabs";
 import { TextField } from "@/components/dynamic-core/text-field";
 import { GitHubIcon, TwitterIcon, GoogleIcon } from "@/components/icons";
 
-export function ComponentsOverview() {
+export function ComponentsOverview({ className }: { className?: string }) {
   return (
-    <div className="container grid grid-cols-10 gap-8 p-8">
+    <div className={cn("container grid grid-cols-10 gap-8 p-8", className)}>
       <div className="col-span-8">
         <Slider
           label="Progress"
@@ -49,7 +50,7 @@ export function ComponentsOverview() {
           <Radio value="notification">Push notification</Radio>
         </RadioGroup>
       </div>
-      <div className="col-span-8 flex justify-between gap-4">
+      <div className="col-span-8 flex items-center justify-between gap-4">
         <Button variant="accent">Button</Button>
         <Select>
           <SelectItem>Perplexity</SelectItem>
@@ -128,9 +129,13 @@ export function ComponentsOverview() {
         <NumberField label="Width" defaultValue={1024} className="w-full" />
       </div>
       <div className="col-span-7 row-span-6">
-        <TableRoot aria-label="Vocalists" selectionMode="multiple">
+        <TableRoot
+          aria-label="Vocalists"
+          selectionMode="multiple"
+          variant="solid"
+        >
           <TableHeader>
-            <TableColumn className="max-w-0">ID</TableColumn>
+            <TableColumn>ID</TableColumn>
             <TableColumn isRowHeader>Name</TableColumn>
             <TableColumn>Email</TableColumn>
             <TableColumn>Age</TableColumn>
