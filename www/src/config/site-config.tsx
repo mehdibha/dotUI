@@ -1,7 +1,7 @@
 export const siteConfig = {
   global: {
     url: "https://dotui.org",
-    name: "dotUI.",
+    name: "dotUI",
     logo: "https://dotui.org/images/logo.png",
     title: "dotUI",
     description: "Accessible, mobile friendly, modern UI components.",

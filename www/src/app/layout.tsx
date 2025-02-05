@@ -57,10 +57,6 @@ export default function RootLayout({
           fontSans.variable,
           fontMono.variable
         )}
-        style={{
-          "--pattern-fg":
-            "color-mix(in oklab, var(--color-fg) 10%, transparent)",
-        } as React.CSSProperties}
         suppressHydrationWarning
       >
         <Analytics />

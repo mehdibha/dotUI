@@ -57,6 +57,11 @@
   transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
 }
 
+@utility diagonal-pattern {
+  --pattern-fg: color-mix(in oklab, var(--color-fg) 10%, transparent);
+  @apply border-x-(--pattern-fg) h-full border-x bg-[image:repeating-linear-gradient(315deg,_var(--pattern-fg)_0,_var(--pattern-fg)_1px,_transparent_0,_transparent_50%)] bg-[size:10px_10px];
+}
+
 .shiki,
 .shiki span {
   background-color: transparent !important;

@@ -16,13 +16,19 @@ export const registryItemFileSchema = z.object({
   path: z.string(),
 });
 
+export const e = z.object({
+  colors: z.object({}),
+});
+
 export const registryItemCssSchema = z.object({
-  theme: z
+  colors: z
     .object({
-      light: z.record(z.string(), z.string()).optional(),
-      dark: z.record(z.string(), z.string()).optional(),
+      light: z.record(z.string(), z.string()),
+      dark: z.record(z.string(), z.string()),
     })
     .optional(),
+  themeVars: z.record(z.string(), z.string()).optional(),
+  keyframes: z.record(z.string(), z.string()).optional(),
 });
 
 export const registryItemSchema = z.object({
@@ -80,9 +86,9 @@ export const registryThemeSchema = z.object({
   name: z.string(),
   label: z.string(),
   description: z.string().optional(),
-  css: registryItemCssSchema.optional(), // TODO : fix
+  css: registryItemCssSchema, // TODO : fix
   iconLibrary: iconLibrarySchema,
-  primitives: primitivesSchema,
+  primitives: primitivesSchema.optional(),
 });
 
 // ----------------------------------------------

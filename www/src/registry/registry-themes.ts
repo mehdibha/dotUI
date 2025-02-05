@@ -1,7 +1,5 @@
-import type { InternalRegistry } from "@dotui/schemas";
+import { defaultTheme } from "@/registry/themes/default";
+import { forestTheme } from "@/registry/themes/forest";
+import type { Theme } from "@/modules/themes/types";
 
-export const themes: InternalRegistry = [];
-// .map(
-//   ({ name, ...rest }) =>
-//     ({ name, type: "lib", ...rest }) as InternalRegistryItem
-// );
+export const themes: Theme[] = [defaultTheme, forestTheme];

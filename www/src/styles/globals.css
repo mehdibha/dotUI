@@ -8,8 +8,6 @@
 /* Base Colors */
 @layer base {
   :root {
-    --radius: 0.5rem;
-
     --color-neutral-100: hsl(0, 0%, 98%);
     --color-neutral-200: hsl(0, 0%, 94%);
     --color-neutral-300: hsl(0, 0%, 90%);
