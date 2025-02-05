@@ -86,7 +86,7 @@ export const registryThemeSchema = z.object({
   name: z.string(),
   label: z.string(),
   description: z.string().optional(),
-  css: registryItemCssSchema, // TODO : fix
+  css: registryItemCssSchema,
   iconLibrary: iconLibrarySchema,
   primitives: primitivesSchema.optional(),
 });
@@ -114,7 +114,7 @@ export const rawConfigSchema = z.object({
     lib: z.string(),
   }),
   iconLibrary: z.string().optional(),
-  primitives: primitivesSchema,
+  primitives: primitivesSchema.optional(),
 });
 
 export const extendedConfigSchema = rawConfigSchema.extend({
