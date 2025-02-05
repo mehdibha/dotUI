@@ -22,5 +22,6 @@ export const getRegistryTheme = async (
       input: "basic",
       modal: "basic",
     },
+    css: {} // TODO
   };
 };
