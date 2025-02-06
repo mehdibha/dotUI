@@ -67,7 +67,7 @@ export const ThemesOverview = () => {
           />
           <pre>
             <code>
-              <motion.span layout>
+              <motion.span layout transition={{ duration: 0.5 }}>
                 <span className="text-[#F69D50]">npx</span> dotui-cli init{" "}
               </motion.span>
               <AnimatePresence mode="popLayout">
