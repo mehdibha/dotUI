@@ -15,7 +15,9 @@ export const createTheme = (theme: Theme): RegistryTheme => {
     css: {
       colors: {
         light: createThemeCssVars(foundations, "light"),
-        dark: createThemeCssVars(foundations, "dark"),
+        ...(foundations.dark
+          ? { dark: createThemeCssVars(foundations, "dark") }
+          : {}),
       },
     },
   };
@@ -25,8 +27,9 @@ export const createThemeCssVars = (
   foundations: Theme["foundations"],
   mode: "light" | "dark"
 ): Record<string, string> => {
-  const themeFoundations = foundations[mode];
-  const defaultFoundations = defaultColorsFoundations[mode];
+  const resolvedMode = foundations.dark ? mode : "light";
+  const themeFoundations = foundations[resolvedMode]!;
+  const defaultFoundations = defaultColorsFoundations[resolvedMode];
 
   const neutral = new LeonardoBgColor({
     name: "neutral",

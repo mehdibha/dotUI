@@ -31,8 +31,11 @@ import {
 import { Tabs, Tab, TabList, TabPanel } from "@/components/dynamic-core/tabs";
 import { TextField } from "@/components/dynamic-core/text-field";
 import { GitHubIcon, TwitterIcon, GoogleIcon } from "@/components/icons";
+import { useLocalVariants } from "@/modules/themes/contexts/variants-context";
 
 export function ComponentsOverview({ className }: { className?: string }) {
+  const { variants } = useLocalVariants();
+  const globalVariant = variants.global;
   return (
     <div className={cn("container grid grid-cols-10 gap-8 p-8", className)}>
       <div className="col-span-8">
@@ -40,6 +43,7 @@ export function ComponentsOverview({ className }: { className?: string }) {
           label="Progress"
           showValueLabel
           defaultValue={50}
+          variant={globalVariant}
           className="!w-full"
         />
       </div>
@@ -53,7 +57,7 @@ export function ComponentsOverview({ className }: { className?: string }) {
         </RadioGroup>
       </div>
       <div className="col-span-8 flex items-center justify-between gap-4">
-        <Button variant="accent">Button</Button>
+        <Button variant={globalVariant}>Button</Button>
         <Select>
           <SelectItem>Perplexity</SelectItem>
           <SelectItem>Replicate</SelectItem>
@@ -96,7 +100,12 @@ export function ComponentsOverview({ className }: { className?: string }) {
           channel="alpha"
           className="hidden !w-full lg:block"
         />
-        <ProgressBar label="Loading..." value={75} className="w-full" />
+        <ProgressBar
+          label="Loading..."
+          value={75}
+          variant={globalVariant}
+          className="w-full"
+        />
       </div>
       <div className="col-span-4 flex justify-between gap-6 lg:col-span-5 lg:row-span-2">
         <ListBox className="hidden max-h-none w-full lg:flex">
@@ -209,6 +218,8 @@ export const MobileComponentsOverview = ({
 };
 
 function Login() {
+  const { variants } = useLocalVariants();
+  const globalVariant = variants.global;
   return (
     <div className="bg-bg-muted w-full rounded-lg border p-8">
       <h1 className="text-2xl font-semibold leading-none tracking-tight">
@@ -249,7 +260,7 @@ function Login() {
         </div>
       </div>
       <TextField label="Email address" type="email" className="w-full" />
-      <Button variant="primary" className="mt-4 w-full" type="submit">
+      <Button variant={globalVariant} className="mt-4 w-full" type="submit">
         Continue with email
       </Button>
       <p className="text-fg-muted mt-4 text-sm">
@@ -263,6 +274,8 @@ function Login() {
 }
 
 function Register() {
+  const { variants } = useLocalVariants();
+  const globalVariant = variants.global;
   return (
     <div className="bg-bg-muted w-full rounded-lg border p-8">
       <h1 className="text-2xl font-semibold leading-none tracking-tight">
@@ -304,7 +317,7 @@ function Register() {
         </div>
       </div>
       <TextField label="Email address" className="w-full" />
-      <Button variant="primary" className="mt-4 w-full">
+      <Button variant={globalVariant} className="mt-4 w-full">
         Sign up with email
       </Button>
       <p className="text-fg-muted mt-4 text-sm">

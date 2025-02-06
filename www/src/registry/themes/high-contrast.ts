@@ -1,8 +1,8 @@
 import { Theme } from "@/modules/themes/types";
 
-export const forestTheme: Theme = {
-  name: "forest",
-  label: "Forest",
+export const highContrastTheme: Theme = {
+  name: "high-contrast",
+  label: "High contrast",
   foundations: {
     light: {
       palettes: {
@@ -10,7 +10,7 @@ export const forestTheme: Theme = {
           baseColors: ["#fff"],
         },
         accent: {
-          baseColors: ["#3d7b42"],
+          baseColors: ["#0091FF"],
         },
       },
     },
@@ -20,13 +20,16 @@ export const forestTheme: Theme = {
           baseColors: ["#000"],
         },
         accent: {
-          baseColors: ["#3d7b42"],
+          baseColors: ["#0091FF"],
         },
       },
-      lightness: 10,
+    },
+    overrides: {
+      "--color-border": "var(--color-neutral-500)",
+      "--color-border-field": "var(--color-neutral-600)",
     },
   },
-  primitives: {
-    button: "ripple",
+  variants: {
+    global: "primary",
   },
 };

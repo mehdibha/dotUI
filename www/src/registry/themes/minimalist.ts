@@ -1,8 +1,8 @@
 import { Theme } from "@/modules/themes/types";
 
-export const defaultTheme: Theme = {
-  name: "default",
-  label: "Default",
+export const minimalistTheme: Theme = {
+  name: "minimalist",
+  label: "Minimalist",
   foundations: {
     light: {
       palettes: {
@@ -24,5 +24,8 @@ export const defaultTheme: Theme = {
         },
       },
     },
+  },
+  variants: {
+    global: "primary",
   },
 };

@@ -111,7 +111,9 @@ const TableRoot = ({
       selectionVariant={selectionVariant}
       globalAction={!!onRowAction}
     >
-      <TableContainer className={className} style={style}>
+      <TableContainer variant={variant} className={className} style={style}>
+        {" "}
+        {/* TODO: FIX THIS SHIT */}
         <AriaTable
           className={root({ variant })}
           onRowAction={onRowAction}
@@ -258,18 +260,19 @@ const TableCell = ({ className, ...props }: TableCellProps) => {
 };
 
 interface TableContainerProps
-  extends React.ComponentProps<typeof AriaResizableTableContainer> {
+  extends React.ComponentProps<typeof AriaResizableTableContainer>,
+    VariantProps<typeof tableStyles> {
   resizable?: boolean;
 }
 const TableContainer = ({
   ref,
   resizable = false,
+  variant,
   children,
   className,
   style,
   ...props
 }: TableContainerProps) => {
-  const { variant } = useTableContext("TableContainer");
   if (resizable)
     return (
       <AriaResizableTableContainer

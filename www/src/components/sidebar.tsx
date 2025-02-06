@@ -16,7 +16,6 @@ import {
 import { motion, Transition } from "motion/react";
 import { hasActive, isActive } from "@/lib/docs/utils";
 import { cn } from "@/lib/utils";
-// import { Avatar } from "@/components/core/avatar";
 import { Button, ButtonProps } from "@/components/core/button";
 import {
   CollapsibleRoot,
@@ -65,7 +64,7 @@ export const Sidebar = ({
       onCollapseChange={(c) => setIsCollapsed(c)}
       className={className}
     >
-      <div className="relative flex items-center p-2 pb-1">
+      <div className="relative flex items-center p-3 pb-1">
         <Logo />
       </div>
       <div className="-mb-1 px-2 pt-4">
@@ -205,7 +204,7 @@ const Logo = () => {
   return (
     <Link
       href="/"
-      className="flex items-center gap-2 rounded opacity-100 transition-[opacity,transform] duration-300 ease-out"
+      className="flex items-center gap-2 rounded-sm opacity-100 transition-[opacity,transform] duration-300 ease-out"
     >
       {/* <Avatar
         src={siteConfig.global.logo}
@@ -217,9 +216,9 @@ const Logo = () => {
       /> */}
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width={20}
-        height={20}
-        className="rounded-xs"
+        width={24}
+        height={24}
+        className="rounded-sm"
         viewBox="0 0 300 300"
       >
         <defs>

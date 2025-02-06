@@ -97,7 +97,7 @@ const Button = React.forwardRef(
 
     const handlePress = React.useCallback(
       (e: PressEvent) => {
-        // if (disableRipple || isDisabled || disableAnimation) return;
+        // if (isDisabled) return;
         onRipplePressHandler(e);
         // domRef.current && onRipplePressHandler(e);
       },
@@ -109,7 +109,7 @@ const Button = React.forwardRef(
         ref={ref}
         {...restProps}
         className={buttonStyles({ variant, size, shape, className })}
-        onPress={chain(props.onPress, handlePress)}
+        onPressStart={chain(props.onPress, handlePress)}
       >
         {composeRenderProps(props.children, (children, { isPending }) => (
           <>

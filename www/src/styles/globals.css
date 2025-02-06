@@ -144,7 +144,7 @@
   }
 }
 
-@theme inline {
+@theme {
   /* fonts */
   --font-josefin: var(--font-josefin);
   --font-sans: var(--font-geist-sans);

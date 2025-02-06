@@ -10,7 +10,8 @@ const base: RegistryIndex = [{ ..._base, type: "base" }];
 const core: RegistryIndex = _core.map((item) => ({ ...item, type: "core" }));
 const hooks: RegistryIndex = _hooks.map((item) => ({ ...item, type: "hook" }));
 const lib: RegistryIndex = _lib.map((item) => ({ ...item, type: "lib" }));
-const themes: RegistryIndex = _themes.map((item) => ({
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const themes: RegistryIndex = _themes.map(({ variants, ...item }) => ({
   ...item,
   type: "theme",
 }));

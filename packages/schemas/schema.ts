@@ -24,7 +24,7 @@ export const registryItemCssSchema = z.object({
   colors: z
     .object({
       light: z.record(z.string(), z.string()),
-      dark: z.record(z.string(), z.string()),
+      dark: z.record(z.string(), z.string()).optional(),
     })
     .optional(),
   themeVars: z.record(z.string(), z.string()).optional(),

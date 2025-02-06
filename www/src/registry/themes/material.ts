@@ -1,8 +1,8 @@
 import { Theme } from "@/modules/themes/types";
 
-export const forestTheme: Theme = {
-  name: "forest",
-  label: "Forest",
+export const materialTheme: Theme = {
+  name: "material",
+  label: "Material",
   foundations: {
     light: {
       palettes: {
@@ -10,7 +10,7 @@ export const forestTheme: Theme = {
           baseColors: ["#fff"],
         },
         accent: {
-          baseColors: ["#3d7b42"],
+          baseColors: ["#0091FF"],
         },
       },
     },
@@ -20,10 +20,9 @@ export const forestTheme: Theme = {
           baseColors: ["#000"],
         },
         accent: {
-          baseColors: ["#3d7b42"],
+          baseColors: ["#0091FF"],
         },
       },
-      lightness: 10,
     },
   },
   primitives: {

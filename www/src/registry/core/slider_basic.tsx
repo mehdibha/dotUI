@@ -22,7 +22,7 @@ const sliderStyles = tv({
     track:
       "bg-bg-neutral disabled:bg-bg-disabled relative grow cursor-pointer rounded-full disabled:cursor-default",
     filler:
-      "bg-border-focus group-disabled:bg-bg-disabled pointer-events-none absolute rounded-full",
+      "group-disabled:bg-bg-disabled pointer-events-none absolute rounded-full",
     thumb: [
       focusRing(),
       "disabled:bg-bg-disabled disabled:border-bg left-[50%] top-[50%] rounded-full bg-white shadow-md transition-[width,height] disabled:border",
@@ -30,6 +30,14 @@ const sliderStyles = tv({
     valueLabel: "text-fg-muted text-sm",
   },
   variants: {
+    variant: {
+      accent: {
+        filler: "bg-bg-accent",
+      },
+      primary: {
+        filler: "bg-bg-primary",
+      },
+    },
     orientation: {
       horizontal: {
         root: "w-48",
@@ -58,6 +66,7 @@ const sliderStyles = tv({
     },
   },
   defaultVariants: {
+    variant: "accent",
     size: "md",
   },
 });
@@ -113,6 +122,7 @@ interface SliderRootProps
 const SliderRoot = ({
   children,
   className,
+  variant,
   size,
   ...props
 }: SliderRootProps) => {
@@ -130,7 +140,11 @@ const SliderRoot = ({
           <TextContext
             value={{ slots: { description: { id: descriptionId } } }}
           >
-            <SliderProvider orientation={orientation} size={size}>
+            <SliderProvider
+              variant={variant}
+              orientation={orientation}
+              size={size}
+            >
               {children}
             </SliderProvider>
           </TextContext>
@@ -156,7 +170,7 @@ const SliderTrack = ({ ...props }: SliderTrackProps) => {
 
 interface SliderFillerProps extends React.ComponentProps<"div"> {}
 const SliderFiller = ({ className, style, ...props }: SliderFillerProps) => {
-  const { size } = useSliderContext("SliderTrack");
+  const { variant, size } = useSliderContext("SliderTrack");
   const SliderState = React.useContext(SliderStateContext);
   if (!SliderState)
     throw new Error("SliderFiller must be used within SliderRoot");
@@ -169,7 +183,7 @@ const SliderFiller = ({ className, style, ...props }: SliderFillerProps) => {
 
   return (
     <div
-      className={filler({ orientation, size, className })}
+      className={filler({ variant, orientation, size, className })}
       style={{ ...style, ...dimensionStyles }}
       {...props}
     />

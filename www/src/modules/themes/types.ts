@@ -20,15 +20,21 @@ export type Colors = {
   saturation?: number;
 };
 
+export type Variants = {
+  global: "primary" | "accent";
+};
+
 export type Theme = {
   name: string;
   label: string;
   description?: string;
   iconLibrary?: IconLibrary;
   primitives?: Primitives;
+  variants?: Partial<Variants>;
   foundations: {
     light: Colors;
-    dark: Colors;
+    dark?: Colors;
     overrides?: Record<string, string>;
   };
+  defaultDisplayMode?: "light" | "dark";
 };

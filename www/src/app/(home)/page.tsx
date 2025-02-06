@@ -8,7 +8,7 @@ export default function HomePage() {
     <div>
       {/* Hero section */}
       <div className="container">
-        <section className="max-w-3xl pb-4 pt-8 sm:pt-24 lg:pb-28">
+        <section className="max-w-3xl pb-4 pt-8 sm:pt-24 lg:pb-32">
           <Button
             prefix={<LayoutTemplateIcon />}
             variant="outline"
