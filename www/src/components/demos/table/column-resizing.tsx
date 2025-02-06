@@ -26,7 +26,7 @@ const items: Item[] = [
 
 export default function Demo() {
   return (
-    <TableContainer>
+    <TableContainer resizable>
       <TableRoot aria-label="Files">
         <TableHeader columns={columns}>
           <TableColumn id="name" isRowHeader allowsResizing>

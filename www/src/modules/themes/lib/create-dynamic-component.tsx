@@ -18,12 +18,9 @@ export const createDynamicComponent = <Props extends {}>(
   const Component = (props: Props) => {
     const { currentTheme } = useCurrentTheme();
     const { primitives: localPrimitives } = useLocalPrimitives();
-    console.log("local primitives", localPrimitives);
     const currentThemePrimitive = currentTheme?.primitives?.[primitiveName];
     const localPrimitive = localPrimitives[primitiveName];
-    // console.log("CURRENT THEME LOCAL PRIMITIVE", currentThemePrimitive);
     const resolvedPrimitive = localPrimitive ?? currentThemePrimitive;
-    // console.log("RESOLVED PRIMITIVE", resolvedPrimitive);
     const shouldWrapWithSuspense = true;
 
     if (!resolvedPrimitive) {

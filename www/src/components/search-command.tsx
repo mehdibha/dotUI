@@ -1,4 +1,4 @@
-import { type PageTree } from "fumadocs-core/server";
+// import { type PageTree } from "fumadocs-core/server";
 import { kekabCaseToTitle } from "@/lib/string";
 import { source } from "@/app/source";
 import { SearchCommandClient } from "./search-command-client";
@@ -33,10 +33,9 @@ export function SearchCommand() {
     items: pages.filter((item) => item.url.split("/")[2] === category),
   }));
 
-  console.log(typeof source.pageTree.children);
-  const newItems: PageTree.Node[] = source.pageTree.children;
-  newItems.forEach((item) => {
-    console.log(item);
-  });
+  // const newItems: PageTree.Node[] = source.pageTree.children;
+  // newItems.forEach((item) => {
+  //   console.log(item);
+  // });
   return <SearchCommandClient items={items} />;
 }

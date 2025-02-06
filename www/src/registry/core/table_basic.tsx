@@ -112,7 +112,6 @@ const TableRoot = ({
       globalAction={!!onRowAction}
     >
       <TableContainer variant={variant} className={className} style={style}>
-        {" "}
         {/* TODO: FIX THIS SHIT */}
         <AriaTable
           className={root({ variant })}
