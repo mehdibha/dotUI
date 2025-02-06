@@ -58,12 +58,12 @@ export const ThemesOverview = () => {
   return (
     <div className="flex flex-col items-center gap-4">
       <div className="relative flex flex-col items-center gap-6">
-        <div className="text-fg-muted relative hidden items-center gap-2 overflow-hidden py-2 pl-4 pr-2 font-mono text-xs lg:flex">
+        <div className="text-fg-muted relative hidden items-center gap-2 py-2 pl-4 pr-2 font-mono text-xs lg:flex">
           <motion.div
             layout
             initial={false}
             transition={{ duration: 0.5 }}
-            className="bg-bg-muted/50 absolute inset-0 z-[-1] rounded-md border"
+            className="bg-[#19191d] absolute inset-0 z-[-1] rounded-md border"
           />
           <pre>
             <code>
@@ -89,7 +89,7 @@ export const ThemesOverview = () => {
               shape="square"
               size="sm"
               onPress={handleCopy}
-              className="text-fg-muted bg-bg-muted/50 z-20 [&_svg]:size-3.5"
+              className="text-fg-muted bg-[#19191d] z-20 [&_svg]:size-3.5"
             >
               {copied ? (
                 <CheckIcon className="animate-in fade-in" />
