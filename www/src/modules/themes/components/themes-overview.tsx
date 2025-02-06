@@ -63,7 +63,7 @@ export const ThemesOverview = () => {
             layout
             initial={false}
             transition={{ duration: 0.5 }}
-            className="bg-[#19191d] absolute inset-0 z-[-1] rounded-md border"
+            className="absolute inset-0 z-[-1] rounded-md border"
           />
           <pre>
             <code>
@@ -89,7 +89,7 @@ export const ThemesOverview = () => {
               shape="square"
               size="sm"
               onPress={handleCopy}
-              className="text-fg-muted bg-[#19191d] z-20 [&_svg]:size-3.5"
+              className="text-fg-muted z-20 [&_svg]:size-3.5"
             >
               {copied ? (
                 <CheckIcon className="animate-in fade-in" />
