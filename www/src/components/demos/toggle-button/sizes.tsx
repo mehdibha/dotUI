@@ -10,7 +10,6 @@ export default function Demo() {
         <ToggleButton
           key={size}
           size={size}
-          variant="outline"
           aria-label="Toggle pin"
         >
           <PinIcon className="rotate-45" />

@@ -4,10 +4,10 @@ import { ToggleButton } from "@/components/dynamic-core/toggle-button";
 export default function Demo() {
   return (
     <div className="flex items-center gap-4">
-      <ToggleButton variant="outline" shape="square" aria-label="Toggle pin">
+      <ToggleButton shape="square" aria-label="Toggle pin">
         <PinIcon className="rotate-45" />
       </ToggleButton>
-      <ToggleButton variant="outline" shape="circle" aria-label="Toggle pin">
+      <ToggleButton shape="circle" aria-label="Toggle pin">
         <PinIcon className="rotate-45" />
       </ToggleButton>
       <ToggleButton

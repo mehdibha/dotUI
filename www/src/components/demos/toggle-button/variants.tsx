@@ -1,7 +1,7 @@
 import { PinIcon } from "lucide-react";
 import { ToggleButton } from "@/components/dynamic-core/toggle-button";
 
-const variants = ["quiet", "outline", "accent"] as const;
+const variants = ["quiet", "primary", "accent"] as const;
 
 export default function Demo() {
   return (
