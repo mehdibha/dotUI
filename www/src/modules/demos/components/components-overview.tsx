@@ -176,7 +176,7 @@ export const MobileComponentsOverview = ({
   const { variants } = useLocalVariants();
   const globalVariant = variants.global;
   return (
-    <div className={cn("grid grid-cols-10 gap-4 p-4", className)}>
+    <div className={cn("grid grid-cols-10 gap-3 p-4", className)}>
       <div className="col-span-10">
         <Slider
           label="Progress"
@@ -188,25 +188,31 @@ export const MobileComponentsOverview = ({
       </div>
       <div className="min-[35rem]:col-span-3 col-span-10 row-span-2 flex justify-between">
         <RadioGroup>
-          <Radio value="email">Email</Radio>
-          <Radio value="phone">Phone (SMS)</Radio>
+          <Radio value="email">
+            <span className="truncate">Email</span>
+          </Radio>
+          <Radio value="phone">
+            <span className="truncate">Phone (SMS)</span>
+          </Radio>
           <Radio value="notification">
             <span className="truncate">Push notification</span>
           </Radio>
-          <Radio value="none">None</Radio>
+          <Radio value="none" className="min-[35rem]:flex hidden">
+            None
+          </Radio>
         </RadioGroup>
-        <div className="min-[35rem]:hidden flex flex-col items-end gap-2">
+        <div className="min-[35rem]:hidden flex flex-col items-end gap-3">
+          <Switch>
+            <span className="truncate">Focus mode</span>
+          </Switch>
           <Avatar
             src="https://github.com/mehdibha.png"
             alt="@mehdibha"
             fallback="M"
           />
-          <Switch>
-            <span className="truncate">Focus mode</span>
-          </Switch>
         </div>
       </div>
-      <div className="min-[35rem]:col-span-7 col-span-10 flex flex-wrap items-center justify-end gap-2">
+      <div className="min-[35rem]:col-span-7 col-span-10 flex flex-wrap items-center justify-end gap-3">
         <Button variant={globalVariant}>Button</Button>
         <ToggleButton aria-label="pin" variant={globalVariant}>
           <PinIcon />
@@ -230,7 +236,7 @@ export const MobileComponentsOverview = ({
           <SelectItem>ElevenLabs</SelectItem>
         </Select>
       </div>
-      <div className="min-[35rem]:flex col-span-7 hidden items-center justify-end gap-2">
+      <div className="min-[35rem]:flex col-span-7 hidden items-center justify-end gap-3">
         <Avatar
           src="https://github.com/mehdibha.png"
           alt="@mehdibha"
@@ -243,7 +249,7 @@ export const MobileComponentsOverview = ({
       <div className="col-span-10">
         <DatePicker className="w-full" />
       </div>
-      <div className="col-span-10 flex items-center gap-2 flex-wrap">
+      <div className="col-span-10 flex flex-wrap items-center gap-3">
         <FileTriggerDemo />
         <ColorPicker defaultValue="#5100FF" className="flex-1" />
         <TimeField aria-label="Event time" className="flex-1" />
