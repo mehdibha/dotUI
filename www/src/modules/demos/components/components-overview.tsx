@@ -44,9 +44,7 @@ export function ComponentsOverview({ className }: { className?: string }) {
   const { variants } = useLocalVariants();
   const globalVariant = variants.global;
   return (
-    <div
-      className={cn("grid grid-cols-10 gap-8 p-4 sm:p-8", className)}
-    >
+    <div className={cn("grid grid-cols-10 gap-8 p-4 sm:p-8", className)}>
       <div className="col-span-10 xl:col-span-6">
         <Slider
           label="Progress"
@@ -66,7 +64,7 @@ export function ComponentsOverview({ className }: { className?: string }) {
           fallback="M"
         />
       </div>
-      <div className="col-span-4 lg:col-span-2 row-span-2">
+      <div className="col-span-4 row-span-2 lg:col-span-2">
         <RadioGroup>
           <Radio value="email">Email</Radio>
           <Radio value="phone">Phone (SMS)</Radio>
@@ -76,7 +74,7 @@ export function ComponentsOverview({ className }: { className?: string }) {
           <Radio value="none">None</Radio>
         </RadioGroup>
       </div>
-      <div className="col-span-6 lg:col-span-8 row-span-2 flex flex-col items-end justify-between gap-2 lg:row-span-1 lg:flex-row lg:items-center xl:col-span-5 xl:justify-start">
+      <div className="col-span-6 row-span-2 flex flex-col items-end justify-between gap-2 lg:col-span-8 lg:row-span-1 lg:flex-row lg:items-center xl:col-span-5 xl:justify-start">
         <div className="flex items-center gap-2">
           <Button variant={globalVariant}>Button</Button>
           <ToggleButton aria-label="pin" variant={globalVariant}>
@@ -111,7 +109,7 @@ export function ComponentsOverview({ className }: { className?: string }) {
           />
         </div>
       </div>
-      <div className="col-span-10 lg:col-span-8 flex items-center justify-end gap-2 xl:col-span-3">
+      <div className="col-span-10 flex items-center justify-end gap-2 lg:col-span-8 xl:col-span-3">
         <FileTriggerDemo />
         <ColorPicker defaultValue="#5100FF" />
         <TimeField aria-label="Event time" />
@@ -175,14 +173,83 @@ export const MobileComponentsOverview = ({
 }: {
   className?: string;
 }) => {
+  const { variants } = useLocalVariants();
+  const globalVariant = variants.global;
   return (
-    <div className={cn("space-y-4 p-4", className)}>
-      <Slider
-        label="Progress"
-        showValueLabel
-        defaultValue={50}
-        className="w-full"
-      />
+    <div className={cn("grid grid-cols-10 gap-4 p-4", className)}>
+      <div className="col-span-10">
+        <Slider
+          label="Progress"
+          showValueLabel
+          defaultValue={50}
+          variant={globalVariant}
+          className="!w-full"
+        />
+      </div>
+      <div className="min-[35rem]:col-span-3 col-span-10 row-span-2 flex justify-between">
+        <RadioGroup>
+          <Radio value="email">Email</Radio>
+          <Radio value="phone">Phone (SMS)</Radio>
+          <Radio value="notification">
+            <span className="truncate">Push notification</span>
+          </Radio>
+          <Radio value="none">None</Radio>
+        </RadioGroup>
+        <div className="min-[35rem]:hidden flex flex-col items-end gap-2">
+          <Avatar
+            src="https://github.com/mehdibha.png"
+            alt="@mehdibha"
+            fallback="M"
+          />
+          <Switch>
+            <span className="truncate">Focus mode</span>
+          </Switch>
+        </div>
+      </div>
+      <div className="min-[35rem]:col-span-7 col-span-10 flex flex-wrap items-center justify-end gap-2">
+        <Button variant={globalVariant}>Button</Button>
+        <ToggleButton aria-label="pin" variant={globalVariant}>
+          <PinIcon />
+        </ToggleButton>
+        <span className="flex-1" />
+        <MenuRoot>
+          <Button shape="square">
+            <MenuIcon />
+          </Button>
+          <Menu>
+            <MenuItem>Account settings</MenuItem>
+            <MenuItem>Create team</MenuItem>
+            <MenuItem>Command menu</MenuItem>
+            <MenuItem>Log out</MenuItem>
+          </Menu>
+        </MenuRoot>
+        <Select className="xs:flex-auto flex-1">
+          <SelectItem>Perplexity</SelectItem>
+          <SelectItem>Replicate</SelectItem>
+          <SelectItem>Together AI</SelectItem>
+          <SelectItem>ElevenLabs</SelectItem>
+        </Select>
+      </div>
+      <div className="min-[35rem]:flex col-span-7 hidden items-center justify-end gap-2">
+        <Avatar
+          src="https://github.com/mehdibha.png"
+          alt="@mehdibha"
+          fallback="M"
+        />
+        <Switch>
+          <span className="truncate">Focus mode</span>
+        </Switch>
+      </div>
+      <div className="col-span-10">
+        <DatePicker className="w-full" />
+      </div>
+      <div className="col-span-10 flex items-center gap-2 flex-wrap">
+        <FileTriggerDemo />
+        <ColorPicker defaultValue="#5100FF" className="flex-1" />
+        <TimeField aria-label="Event time" className="flex-1" />
+      </div>
+      {/* <div className="col-span-5 flex justify-end">
+      </div> */}
       {/* TODO */}
     </div>
   );

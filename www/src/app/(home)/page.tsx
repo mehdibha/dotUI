@@ -21,21 +21,22 @@ export default function HomePage() {
       <div className="container">
         <section className="max-w-3xl pb-4 pt-8 sm:pt-24 lg:pb-32">
           <Button
+            href="/themes"
             prefix={<LayoutTemplateIcon />}
             variant="outline"
             className="bg-bg-inverse/5 text-fg-muted mb-3 h-7 rounded-lg text-xs [&_svvg]:size-4"
           >
             Introducing themes
           </Button>
-          <h1 className="text-balance text-3xl tracking-tighter max-lg:font-medium sm:text-4xl md:text-5xl lg:text-6xl">
+          <h1 className="text-balance text-2xl xs:text-3xl tracking-tighter max-lg:font-medium sm:text-4xl md:text-5xl lg:text-6xl">
             Quickly build your component library with a{" "}
             <span className="font-bold italic">unique</span> look.
           </h1>
-          <p className="text-fg-muted text-balace mt-4 text-lg">
+          <p className="text-fg-muted text-balace mt-2 md:mt-4 text-lg">
             Over 40 components available in multiple variants ready to match
             your brand identity.
           </p>
-          <div className="mt-8 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
+          <div className="mt-4 sm:mt-8 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
             <Button
               href="/docs/getting-started/introduction"
               variant="primary"
@@ -60,11 +61,11 @@ export default function HomePage() {
         <ThemesOverview />
       </section>
       <section className="mt-10 border-y py-12 lg:py-8">
-        <div className="container flex flex-col lg:flex-row items-center justify-between gap-5 lg:gap-10">
-          <h2 className="text-fg-muted text-pretty font-mono text-sm xs:text-base lg:text-lg tracking-tight">
+        <div className="container flex flex-col items-center justify-between gap-5 lg:flex-row lg:gap-10">
+          <h2 className="text-fg-muted xs:text-base text-pretty font-mono text-sm tracking-tight lg:text-lg">
             Built on modern, battle-tested tools
           </h2>
-          <div className="flex items-center justify-center flex-wrap gap-4 sm:gap-8">
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8">
             {[
               {
                 label: "react-aria-components",
@@ -107,15 +108,15 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      <section className="container pt-14 sm:pt-20 sm:pb-10">
-        <h2 className="text-pretty text-2xl lg:text-3xl xl:text-4xl font-semibold tracking-tighter">
+      <section className="container pt-14 sm:pb-10 sm:pt-20">
+        <h2 className="text-pretty text-2xl font-semibold tracking-tighter lg:text-3xl xl:text-4xl">
           Bringing singularity to the web, fueled by your stars.
         </h2>
         <p className="text-fg-muted mt-2 text-base">
           Our contributors are working hard to make the web a more singular
           place.
         </p>
-        <div className="mt-6 flex max-xs:flex-col items-center sm:items-end gap-6 sm:gap-10 lg:gap-20 pl-8 pr-4 justify-between sm:justify-start">
+        <div className="max-xs:flex-col mt-6 flex items-center justify-between gap-6 pl-8 pr-4 sm:items-end sm:justify-start sm:gap-10 lg:gap-20">
           <div className="flex flex-col items-center gap-6">
             <svg
               width="40"

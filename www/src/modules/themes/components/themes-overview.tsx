@@ -56,8 +56,8 @@ export const ThemesOverview = () => {
   // }, [currentThemeName, touched]);
 
   return (
-    <div className="flex flex-col items-center gap-4">
-      <div className="relative flex flex-col items-center gap-6">
+    <div className="flex flex-col items-center gap-10 md:gap-4">
+      <div className="relative flex flex-col items-center gap-6 container">
         <div className="text-fg-muted relative hidden items-center gap-2 py-2 pl-4 pr-2 font-mono text-xs lg:flex">
           <motion.div
             layout
@@ -215,8 +215,8 @@ export const ThemesOverview = () => {
                   )}
                 </AnimatePresence>
                 <div className="bg-bg w-full rounded-md border">
-                  <ComponentsOverview className="xl:container" />
-                  {/* <MobileComponentsOverview className="z-5 min-[920px]:hidden" /> */}
+                  <ComponentsOverview className="hidden sm:grid xl:container" />
+                  <MobileComponentsOverview className="sm:hidden" />
                 </div>
               </>
             )}
