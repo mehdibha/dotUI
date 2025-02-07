@@ -23,7 +23,7 @@ const codeBlockStyles = tv({
     root: "block w-fit max-w-full rounded-md border",
     header:
       "bg-bg-muted flex h-10 items-center justify-between rounded-t-[inherit] border-b pr-2",
-    body: "bg-bg p-4 text-xs",
+    body: "bg-bg-muted/30 p-4 text-xs",
     code: "text-xs",
   },
 });

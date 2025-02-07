@@ -112,7 +112,7 @@ export function InstallTab({
     <TabsPrimitive.TabPanel
       id={toValue(value)}
       className={cn(
-        "mt-0 text-xs [&>figure:only-child]:m-0 [&>figure:only-child]:rounded-none [&>figure:only-child]:border-none",
+        "mt-0 text-xs [&>figure:only-child]:m-0 [&>figure:only-child]:rounded-none [&>figure:only-child]:border-none overflow-hidden",
         className
       )}
       {...props}
