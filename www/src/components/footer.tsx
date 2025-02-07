@@ -16,11 +16,7 @@ const links = [
       },
       {
         label: "Components",
-        href: "/components",
-      },
-      {
-        label: "Hooks",
-        href: "/hooks",
+        href: "/docs/components/buttons/button",
       },
     ],
   },
@@ -42,15 +38,15 @@ const links = [
     links: [
       {
         label: "Open an issue",
-        href: "https://github.com/mehdibha/dotUI/issues/new",
+        href: `${siteConfig.links.github}/issues/new`,
       },
       {
         label: "Request a feature",
-        href: "https://github.com/mehdibha/dotUI/discussions/new?category=ideas",
+        href: `${siteConfig.links.github}/discussions/new?category=ideas`,
       },
       {
         label: "Request an element",
-        href: "https://github.com/mehdibha/dotUI/discussions/new?category=requests",
+        href: `${siteConfig.links.github}/discussions/new?category=requests`,
       },
     ],
   },

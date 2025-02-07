@@ -220,6 +220,9 @@
   --color-border-warning: var(--color-warning-300);
   --color-border-info: var(--color-info-300);
 
+  /* breakpoints */
+  --breakpoint-xs: 30rem;
+
   /* easing */
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
 

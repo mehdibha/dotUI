@@ -39,21 +39,21 @@ export const ThemesOverview = () => {
 
   const currentTheme = themes.find((theme) => theme.name === currentThemeName)!;
 
-  React.useEffect(() => {
-    const interval = setInterval(() => {
-      if (touched) return;
-      const currentIndex = themes.findIndex(
-        (theme) => theme.name === currentThemeName
-      );
-      const nextIndex = (currentIndex + 1) % themes.length;
-      const nextTheme = themes[nextIndex];
-      if (nextTheme) {
-        setCurrentThemeName(nextTheme.name);
-      }
-    }, 5000);
+  // React.useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     if (touched) return;
+  //     const currentIndex = themes.findIndex(
+  //       (theme) => theme.name === currentThemeName
+  //     );
+  //     const nextIndex = (currentIndex + 1) % themes.length;
+  //     const nextTheme = themes[nextIndex];
+  //     if (nextTheme) {
+  //       setCurrentThemeName(nextTheme.name);
+  //     }
+  //   }, 5000);
 
-    return () => clearInterval(interval);
-  }, [currentThemeName, touched]);
+  //   return () => clearInterval(interval);
+  // }, [currentThemeName, touched]);
 
   return (
     <div className="flex flex-col items-center gap-4">
@@ -63,7 +63,7 @@ export const ThemesOverview = () => {
             layout
             initial={false}
             transition={{ duration: 0.5 }}
-            className="absolute inset-0 z-[-1] rounded-md border"
+            className="absolute inset-0 z-[-1] rounded-md border bg-[#f5f5f5] dark:bg-[#19191d]"
           />
           <pre>
             <code>
@@ -89,7 +89,7 @@ export const ThemesOverview = () => {
               shape="square"
               size="sm"
               onPress={handleCopy}
-              className="text-fg-muted z-20 [&_svg]:size-3.5"
+              className="text-fg-muted z-20 bg-[#f5f5f5] dark:bg-[#19191d] [&_svg]:size-3.5"
             >
               {copied ? (
                 <CheckIcon className="animate-in fade-in" />
@@ -159,7 +159,7 @@ export const ThemesOverview = () => {
         </div>
       </div>
       <Skeleton show={!isMounted} className="w-full rounded-md">
-        <div className="relative">
+        <div className="relative w-full">
           <ThemeProvider
             theme={currentTheme}
             mode={userMode}
@@ -188,7 +188,15 @@ export const ThemesOverview = () => {
                           shape="square"
                           size="sm"
                           onPress={() => {
-                            setUserMode(mode === "light" ? "dark" : "light");
+                            setUserMode(
+                              userMode
+                                ? userMode === "light"
+                                  ? "dark"
+                                  : "light"
+                                : mode === "light"
+                                  ? "dark"
+                                  : "light"
+                            );
                             setTouched(true);
                           }}
                           className="rounded-none"
@@ -207,8 +215,8 @@ export const ThemesOverview = () => {
                   )}
                 </AnimatePresence>
                 <div className="bg-bg w-full rounded-md border">
-                  <ComponentsOverview className="z-5 hidden min-[920px]:grid" />
-                  <MobileComponentsOverview className="z-5 min-[920px]:hidden" />
+                  <ComponentsOverview className="xl:container" />
+                  {/* <MobileComponentsOverview className="z-5 min-[920px]:hidden" /> */}
                 </div>
               </>
             )}

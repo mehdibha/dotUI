@@ -1,6 +1,17 @@
+"use client";
+
 import React from "react";
 import { LayoutTemplateIcon } from "lucide-react";
+import { Link } from "react-aria-components";
 import { Button } from "@/components/core/button";
+import { GitHubIcon } from "@/components/icons";
+import { AdobeIcon } from "@/components/icons/adobe-icon";
+import { ReactJsIcon } from "@/components/icons/reactjs-icon";
+import { TailwindIcon } from "@/components/icons/tailwindcss-icon";
+import { TypescriptIcon } from "@/components/icons/typescript-icon";
+import { Avatar } from "@/registry/core/avatar_basic";
+import { Tooltip } from "@/registry/core/tooltip_basic";
+import { siteConfig } from "@/config";
 import { ThemesOverview } from "@/modules/themes/components/themes-overview";
 
 export default function HomePage() {
@@ -30,7 +41,6 @@ export default function HomePage() {
               variant="primary"
               size="lg"
               className="h-10"
-              // className="h-11 px-8"
             >
               Get started
             </Button>
@@ -46,8 +56,108 @@ export default function HomePage() {
         </section>
       </div>
       {/* Components overview */}
-      <section className="px-2 sm:px-8">
+      <section className="px-4 sm:px-8">
         <ThemesOverview />
+      </section>
+      <section className="mt-10 border-y py-12 lg:py-8">
+        <div className="container flex flex-col lg:flex-row items-center justify-between gap-5 lg:gap-10">
+          <h2 className="text-fg-muted text-pretty font-mono text-sm xs:text-base lg:text-lg tracking-tight">
+            Built on modern, battle-tested tools
+          </h2>
+          <div className="flex items-center justify-center flex-wrap gap-4 sm:gap-8">
+            {[
+              {
+                label: "react-aria-components",
+                icon: <AdobeIcon className="size-7 sm:size-9" fill="#E1251B" />,
+                href: "https://react-spectrum.adobe.com/react-aria/index.html",
+              },
+              {
+                label: "Tailwind CSS v4.0",
+                icon: <TailwindIcon className="h-5 sm:h-7" />,
+                href: "https://tailwindcss.com",
+              },
+              {
+                label: "React 19",
+                icon: <ReactJsIcon className="size-7 sm:size-9" />,
+                href: "https://react.dev",
+              },
+              {
+                label: "TypeScript 5",
+                icon: <TypescriptIcon className="size-7 sm:size-9" />,
+                href: "https://www.typescriptlang.org/",
+              },
+            ].map(({ icon, label, href }, index) => (
+              <Tooltip
+                key={index}
+                content={label}
+                delay={500}
+                closeDelay={0}
+                offset={10}
+                placement="top"
+              >
+                <Link
+                  target="_blank"
+                  className="flex items-center justify-center opacity-60 grayscale transition-opacity hover:opacity-100 hover:grayscale-0"
+                  href={href}
+                >
+                  {icon}
+                </Link>
+              </Tooltip>
+            ))}
+          </div>
+        </div>
+      </section>
+      <section className="container pt-14 sm:pt-20 sm:pb-10">
+        <h2 className="text-pretty text-2xl lg:text-3xl xl:text-4xl font-semibold tracking-tighter">
+          Bringing singularity to the web, fueled by your stars.
+        </h2>
+        <p className="text-fg-muted mt-2 text-base">
+          Our contributors are working hard to make the web a more singular
+          place.
+        </p>
+        <div className="mt-6 flex max-xs:flex-col items-center sm:items-end gap-6 sm:gap-10 lg:gap-20 pl-8 pr-4 justify-between sm:justify-start">
+          <div className="flex flex-col items-center gap-6">
+            <svg
+              width="40"
+              viewBox="0 0 236 66"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="-rotate-110 text-fg-muted"
+            >
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M23.9244 0.127533C18.3186 0.573079 9.85122 2.47255 4.6676 4.44233C1.59496 5.61482 0 7.46734 0 9.81232C0 11.2897 0.422197 12.298 1.43077 13.2594C2.39244 14.174 3.02573 14.4085 5.74654 14.9713C10.4611 15.9327 20.4765 20.4351 27.5365 24.7968C31.5708 27.2825 32.8374 27.8218 32.8374 27.0479C32.8374 26.6727 31.0313 24.5154 27.513 20.6931C26.3168 19.3799 25.3317 18.2308 25.3317 18.1605C25.3317 17.9963 26.7625 18.0901 34.362 18.7467C54.9088 20.5055 75.5964 24.7733 95.463 31.3861C103.156 33.9422 107.894 35.7244 116.221 39.1949C123.633 42.2669 125.322 42.8766 126.846 42.8766C127.925 42.8766 128.183 42.7828 128.957 42.0793C129.731 41.3523 129.825 41.1413 129.802 40.2033C129.778 39.0777 129.848 39.1949 127.034 35.7244C125.298 33.5904 124.078 31.4096 124.078 30.4247C124.078 29.4398 124.829 29.0412 126.893 29.0412C131.584 29.0412 140.802 32.5587 157.338 40.6723C166.72 45.2685 169.605 46.5816 170.708 46.7692C172.514 47.0506 173.944 46.1361 174.367 44.4477C174.46 44.049 174.226 42.0089 173.804 39.4294C173.053 34.974 173.03 33.8249 173.71 32.5117C174.179 31.6207 174.718 31.3861 176.313 31.3861C180.911 31.3861 190.762 36.0761 205.562 45.2919C214.85 51.0605 219.541 54.3435 227.845 60.886C230.542 63.0199 233.052 64.9194 233.427 65.107C234.318 65.5291 235.35 65.1539 235.726 64.2159C236.218 63.0434 235.515 62.1523 231.175 58.2596C224.537 52.3034 220.104 48.8328 212.974 44.0022C198.854 34.4112 187.22 28.1266 180.488 26.4617C171.599 24.234 166.908 28.9943 168.855 38.1632C169.136 39.4998 169.347 40.6019 169.3 40.6488C169.253 40.6957 167.424 39.7343 165.242 38.5149C159.59 35.3492 148.777 30.0261 144.367 28.2204C137.542 25.383 133.39 24.1167 129.567 23.6477C124.782 23.0615 120.889 24.703 119.716 27.7749C119.223 29.0881 119.364 31.5503 120.044 33.098C120.302 33.7077 120.49 34.2001 120.443 34.2001C120.396 34.2001 118.262 33.1683 115.681 31.902C90.4436 19.4267 60.1159 11.8525 28.9907 10.2579C22.7516 9.9296 22.9158 10.0468 26.6452 8.63983C29.366 7.63148 30.7264 6.0838 30.7264 4.06711C30.703 3.26982 29.882 1.72214 29.1315 1.089C28.4043 0.479303 26.5279 -0.0835156 25.4959 0.0102836C25.2144 0.0337334 24.5108 0.080633 23.9244 0.127533Z"
+                fill="currentColor"
+              />
+            </svg>
+            <div className="flex items-center gap-1">
+              <Tooltip variant="inverse" content="Mehdi BHA">
+                <Link href="https://github.com/mehdibha" target="_blank">
+                  <Avatar src="https://github.com/mehdibha.png" />
+                </Link>
+              </Tooltip>
+              <Tooltip variant="inverse" content="github-actions[bot]">
+                <Link
+                  href="https://github.com/features/actions"
+                  target="_blank"
+                >
+                  <Avatar shape="square" src="https://github.com/github.png" />
+                </Link>
+              </Tooltip>
+            </div>
+          </div>
+          <Button
+            href={siteConfig.links.github}
+            target="_blank"
+            prefix={<GitHubIcon />}
+            variant="outline"
+            size="lg"
+            className="bg-bg-inverse/5 h-12"
+          >
+            Star on GitHub
+          </Button>
+        </div>
       </section>
     </div>
   );

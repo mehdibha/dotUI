@@ -23,7 +23,7 @@ export const ThemeProvider = ({
   ...props
 }: ThemeProviderProps) => {
   const { resolvedTheme } = useTheme();
-  const currentMode = (mode ?? resolvedTheme === "light") ? "light" : "dark";
+  const currentMode = mode ?? (resolvedTheme === "light" ? "light" : "dark");
   const cssVars = React.useMemo(() => {
     if (!theme || !resolvedTheme) return {};
     const themeCssVars = createThemeCssVars(

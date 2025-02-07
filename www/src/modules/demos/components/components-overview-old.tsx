@@ -1,23 +1,19 @@
 "use client";
 
-import { MenuIcon, PinIcon, UploadIcon } from "lucide-react";
+import { PinIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Link } from "@/components/core/link";
 import { RadioGroup, Radio } from "@/components/core/radio-group";
-import BadgeVariants from "@/components/demos/badge/variants";
 import FileTriggerDemo from "@/components/demos/file-trigger/default";
 import { Alert } from "@/components/dynamic-core/alert";
 import { Avatar } from "@/components/dynamic-core/avatar";
 import { Button } from "@/components/dynamic-core/button";
 import { RangeCalendar } from "@/components/dynamic-core/calendar";
 import { Checkbox } from "@/components/dynamic-core/checkbox";
-import { ColorPicker } from "@/components/dynamic-core/color-picker";
 import { ColorSlider } from "@/components/dynamic-core/color-slider";
 import { Combobox, ComboboxItem } from "@/components/dynamic-core/combobox";
-import { DatePicker } from "@/components/dynamic-core/date-picker";
-import { DropZone, DropZoneLabel } from "@/components/dynamic-core/drop-zone";
+import { DateRangePicker } from "@/components/dynamic-core/date-range-picker";
 import { ListBox, ListBoxItem } from "@/components/dynamic-core/list-box";
-import { Menu, MenuItem, MenuRoot } from "@/components/dynamic-core/menu";
 import { NumberField } from "@/components/dynamic-core/number-field";
 import { ProgressBar } from "@/components/dynamic-core/progress-bar";
 import { SearchField } from "@/components/dynamic-core/search-field";
@@ -35,8 +31,6 @@ import {
 } from "@/components/dynamic-core/table";
 import { Tabs, Tab, TabList, TabPanel } from "@/components/dynamic-core/tabs";
 import { TextField } from "@/components/dynamic-core/text-field";
-import { TimeField } from "@/components/dynamic-core/time-field";
-import { ToggleButton } from "@/components/dynamic-core/toggle-button";
 import { GitHubIcon, TwitterIcon, GoogleIcon } from "@/components/icons";
 import { useLocalVariants } from "@/modules/themes/contexts/variants-context";
 
@@ -44,10 +38,8 @@ export function ComponentsOverview({ className }: { className?: string }) {
   const { variants } = useLocalVariants();
   const globalVariant = variants.global;
   return (
-    <div
-      className={cn("grid grid-cols-10 gap-8 p-4 sm:p-8", className)}
-    >
-      <div className="col-span-10 xl:col-span-6">
+    <div className={cn("container grid grid-cols-10 gap-8 p-8", className)}>
+      <div className="col-span-8">
         <Slider
           label="Progress"
           showValueLabel
@@ -56,76 +48,125 @@ export function ComponentsOverview({ className }: { className?: string }) {
           className="!w-full"
         />
       </div>
-      <div className="col-span-3 hidden translate-y-3 justify-end gap-2 xl:col-span-2 xl:flex">
-        <Switch>
-          <span className="truncate">Focus mode</span>
-        </Switch>
-        <Avatar
-          src="https://github.com/mehdibha.png"
-          alt="@mehdibha"
-          fallback="M"
-        />
-      </div>
-      <div className="col-span-4 lg:col-span-2 row-span-2">
+      <div className="col-span-2 row-span-2">
         <RadioGroup>
           <Radio value="email">Email</Radio>
           <Radio value="phone">Phone (SMS)</Radio>
           <Radio value="notification">
             <span className="truncate">Push notification</span>
           </Radio>
-          <Radio value="none">None</Radio>
         </RadioGroup>
       </div>
-      <div className="col-span-6 lg:col-span-8 row-span-2 flex flex-col items-end justify-between gap-2 lg:row-span-1 lg:flex-row lg:items-center xl:col-span-5 xl:justify-start">
-        <div className="flex items-center gap-2">
-          <Button variant={globalVariant}>Button</Button>
-          <ToggleButton aria-label="pin" variant={globalVariant}>
-            <PinIcon />
-          </ToggleButton>
-          <MenuRoot>
-            <Button shape="square">
-              <MenuIcon />
-            </Button>
-            <Menu>
-              <MenuItem>Account settings</MenuItem>
-              <MenuItem>Create team</MenuItem>
-              <MenuItem>Command menu</MenuItem>
-              <MenuItem>Log out</MenuItem>
-            </Menu>
-          </MenuRoot>
-          <Select>
-            <SelectItem>Perplexity</SelectItem>
-            <SelectItem>Replicate</SelectItem>
-            <SelectItem>Together AI</SelectItem>
-            <SelectItem>ElevenLabs</SelectItem>
-          </Select>
-        </div>
-        <div className="flex items-center gap-2 xl:hidden">
-          <Switch>
-            <span className="truncate">Focus mode</span>
-          </Switch>
-          <Avatar
-            src="https://github.com/mehdibha.png"
-            alt="@mehdibha"
-            fallback="M"
-          />
-        </div>
-      </div>
-      <div className="col-span-10 lg:col-span-8 flex items-center justify-end gap-2 xl:col-span-3">
+      <div className="col-span-8 flex items-center justify-between gap-4">
+        <Button variant={globalVariant}>Button</Button>
+        <Select>
+          <SelectItem>Perplexity</SelectItem>
+          <SelectItem>Replicate</SelectItem>
+          <SelectItem>Together AI</SelectItem>
+          <SelectItem>ElevenLabs</SelectItem>
+        </Select>
         <FileTriggerDemo />
-        <ColorPicker defaultValue="#5100FF" />
-        <TimeField aria-label="Event time" />
-        <DatePicker className="" />
-      </div>
-      {/* <div className="col-span-3 flex items-center justify-end gap-2">
+        <div className="flex-1" />
         <Switch>Focus mode</Switch>
         <Avatar
           src="https://github.com/mehdibha.png"
           alt="@mehdibha"
           fallback="M"
         />
-      </div> */}
-      {/* <div className="col-span-10 row-span-6 lg:col-span-7">
+        <DateRangePicker className="hidden xl:block" />
+      </div>
+      <div className="col-span-6 flex flex-col gap-4 lg:col-span-3 lg:row-span-8">
+        <Alert title="Payment Information">
+          Enter your payment method to complete your purchase.
+        </Alert>
+        <Tabs>
+          <TabList>
+            <Tab id="login" className="w-1/2">
+              Login
+            </Tab>
+            <Tab id="register" className="w-1/2">
+              Register
+            </Tab>
+          </TabList>
+          <TabPanel id="login" className="mt-4">
+            <Login />
+          </TabPanel>
+          <TabPanel id="register" className="mt-4">
+            <Register />
+          </TabPanel>
+        </Tabs>
+        <ColorSlider
+          label="Opacity"
+          defaultValue="hsla(210, 64%, 35%, 0.7)"
+          channel="alpha"
+          className="hidden !w-full lg:block"
+        />
+        <ProgressBar
+          label="Loading..."
+          value={75}
+          variant={globalVariant}
+          className="w-full"
+        />
+      </div>
+      <div className="col-span-4 flex justify-between gap-6 lg:col-span-5 lg:row-span-2">
+        <ListBox className="hidden max-h-none w-full lg:flex">
+          <ListBoxItem>New...</ListBoxItem>
+          <ListBoxItem>Badges</ListBoxItem>
+          <Separator />
+          <ListBoxItem>Save</ListBoxItem>
+          <ListBoxItem>Save as...</ListBoxItem>
+          <ListBoxItem>Rename...</ListBoxItem>
+          <Separator />
+          <ListBoxItem>Page setup…</ListBoxItem>
+          <ListBoxItem>Print…</ListBoxItem>
+        </ListBox>
+        <div className="w-full lg:hidden" />
+        <div className="space-y-4">
+          <DateRangePicker className="block lg:hidden" />
+          <RangeCalendar />
+          <Checkbox defaultSelected className="flex w-full lg:hidden">
+            Notifications
+          </Checkbox>
+          <SearchField aria-label="Search" className="block w-full lg:hidden" />
+          <Combobox
+            label="Country"
+            description="Please select a country."
+            className="block w-full lg:hidden"
+          >
+            <ComboboxItem>Canada</ComboboxItem>
+            <ComboboxItem>France</ComboboxItem>
+            <ComboboxItem>Germany</ComboboxItem>
+            <ComboboxItem>Spain</ComboboxItem>
+            <ComboboxItem>Tunisia</ComboboxItem>
+            <ComboboxItem>United states</ComboboxItem>
+            <ComboboxItem>United Kingdom</ComboboxItem>
+          </Combobox>
+          <NumberField
+            label="Width"
+            defaultValue={1024}
+            className="block w-full lg:hidden"
+          />
+        </div>
+      </div>
+      <div className="col-span-2 row-span-2 hidden flex-col gap-4 lg:flex">
+        <Checkbox defaultSelected>Notifications</Checkbox>
+        <SearchField aria-label="Search" className="w-auto" />
+        <Combobox
+          label="Country"
+          description="Please select a country."
+          className="w-auto"
+        >
+          <ComboboxItem>Canada</ComboboxItem>
+          <ComboboxItem>France</ComboboxItem>
+          <ComboboxItem>Germany</ComboboxItem>
+          <ComboboxItem>Spain</ComboboxItem>
+          <ComboboxItem>Tunisia</ComboboxItem>
+          <ComboboxItem>United states</ComboboxItem>
+          <ComboboxItem>United Kingdom</ComboboxItem>
+        </Combobox>
+        <NumberField label="Width" defaultValue={1024} className="w-auto" />
+      </div>
+      <div className="col-span-10 row-span-6 lg:col-span-7">
         <TableRoot
           aria-label="Vocalists"
           selectionMode="multiple"
@@ -154,18 +195,7 @@ export function ComponentsOverview({ className }: { className?: string }) {
             )}
           </TableBody>
         </TableRoot>
-        <DropZone>
-          <UploadIcon />
-          <DropZoneLabel>Drag and drop files here</DropZoneLabel>
-        </DropZone>
-        <ProgressBar
-          label="Loading..."
-          duration="30s"
-          variant={globalVariant}
-          className="w-full"
-        />
-        <BadgeVariants />
-      </div> */}
+      </div>
     </div>
   );
 }
