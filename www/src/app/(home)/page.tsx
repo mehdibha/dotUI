@@ -68,24 +68,24 @@ export default function HomePage() {
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8">
             {[
               {
-                label: "react-aria-components",
-                icon: <AdobeIcon className="size-7 sm:size-9" fill="#E1251B" />,
-                href: "https://react-spectrum.adobe.com/react-aria/index.html",
-              },
-              {
-                label: "Tailwind CSS v4.0",
-                icon: <TailwindIcon className="h-5 sm:h-7" />,
-                href: "https://tailwindcss.com",
-              },
-              {
                 label: "React 19",
                 icon: <ReactJsIcon className="size-7 sm:size-9" />,
                 href: "https://react.dev",
               },
               {
+                label: "react-aria-components",
+                icon: <AdobeIcon className="size-7 sm:size-9" fill="#E1251B" />,
+                href: "https://react-spectrum.adobe.com/react-aria/index.html",
+              },
+              {
                 label: "TypeScript 5",
                 icon: <TypescriptIcon className="size-7 sm:size-9" />,
                 href: "https://www.typescriptlang.org/",
+              },
+              {
+                label: "Tailwind CSS v4.0",
+                icon: <TailwindIcon className="h-5 sm:h-7" />,
+                href: "https://tailwindcss.com",
               },
             ].map(({ icon, label, href }, index) => (
               <Tooltip
