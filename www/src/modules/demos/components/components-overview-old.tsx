@@ -34,7 +34,7 @@ import { TextField } from "@/components/dynamic-core/text-field";
 import { GitHubIcon, TwitterIcon, GoogleIcon } from "@/components/icons";
 import { useLocalVariants } from "@/modules/themes/contexts/variants-context";
 
-export function ComponentsOverview({ className }: { className?: string }) {
+export function ComponentsOverviewOld({ className }: { className?: string }) {
   const { variants } = useLocalVariants();
   const globalVariant = variants.global;
   return (

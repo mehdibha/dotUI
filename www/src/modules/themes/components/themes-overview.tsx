@@ -14,6 +14,7 @@ import {
   ComponentsOverview,
   MobileComponentsOverview,
 } from "@/modules/demos/components/components-overview";
+import { ComponentsOverviewOld } from "@/modules/demos/components/components-overview-old";
 import { ThemeProvider } from "./theme-provider";
 
 export const ThemesOverview = () => {
@@ -57,8 +58,8 @@ export const ThemesOverview = () => {
 
   return (
     <div className="flex flex-col items-center gap-10 md:gap-4">
-      <div className="relative flex flex-col items-center gap-6 container">
-        <div className="text-fg-muted relative items-center gap-2 py-2 pl-4 pr-2 font-mono text-xs flex">
+      <div className="container relative flex flex-col items-center gap-6">
+        <div className="text-fg-muted relative flex items-center gap-2 py-2 pl-4 pr-2 font-mono text-xs">
           <motion.div
             layout
             initial={false}
@@ -100,7 +101,7 @@ export const ThemesOverview = () => {
           </motion.div>
         </div>
         <div className="relative flex flex-col items-end gap-2">
-          <div className="hidden xs:block absolute right-0 top-0 translate-x-[calc(100%-30px)] translate-y-[calc(-100%-30px)]">
+          <div className="xs:block absolute right-0 top-0 hidden translate-x-[calc(100%-30px)] translate-y-[calc(-100%-30px)]">
             <div>
               <svg
                 width="30"
@@ -116,7 +117,7 @@ export const ThemesOverview = () => {
                   fill="currentColor"
                 />
               </svg>
-              <span className="text-fg-muted w-30 font-josefin absolute right-0 top-0 translate-x-[150px] text-sm font-bold hidden lg:block">
+              <span className="text-fg-muted w-30 font-josefin absolute right-0 top-0 hidden translate-x-[150px] text-sm font-bold lg:block">
                 Give it a shot!
               </span>
             </div>
@@ -215,7 +216,8 @@ export const ThemesOverview = () => {
                   )}
                 </AnimatePresence>
                 <div className="bg-bg w-full rounded-md border">
-                  <ComponentsOverview className="hidden sm:grid xl:container" />
+                  {/* <ComponentsOverviewOld /> */}
+                  <ComponentsOverview className="hidden xl:container sm:grid" />
                   <MobileComponentsOverview className="sm:hidden" />
                 </div>
               </>

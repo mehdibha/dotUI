@@ -115,15 +115,87 @@ export function ComponentsOverview({ className }: { className?: string }) {
         <TimeField aria-label="Event time" />
         <DatePicker className="" />
       </div>
-      {/* <div className="col-span-3 flex items-center justify-end gap-2">
-        <Switch>Focus mode</Switch>
-        <Avatar
-          src="https://github.com/mehdibha.png"
-          alt="@mehdibha"
-          fallback="M"
+      <div className="col-span-5 flex flex-col gap-4 md:col-span-4 lg:col-span-3 md:row-span-6 lg:row-span-8">
+        <Alert title="Payment Information" className="md:flex hidden">
+          Enter your payment method to complete your purchase.
+        </Alert>
+        <Tabs>
+          <TabList>
+            <Tab id="login" className="w-1/2">
+              Login
+            </Tab>
+            <Tab id="register" className="w-1/2">
+              Register
+            </Tab>
+          </TabList>
+          <TabPanel id="login" className="mt-4">
+            <Login />
+          </TabPanel>
+          <TabPanel id="register" className="mt-4">
+            <Register />
+          </TabPanel>
+        </Tabs>
+        <ColorSlider
+          label="Opacity"
+          defaultValue="hsla(210, 64%, 35%, 0.7)"
+          channel="alpha"
+          className="hidden !w-full md:flex"
         />
-      </div> */}
-      {/* <div className="col-span-10 row-span-6 lg:col-span-7">
+        <ProgressBar
+          label="Loading..."
+          value={75}
+          variant={globalVariant}
+          className="hidden w-full lg:flex"
+        />
+      </div>
+      <div className="col-span-5 flex flex-col gap-4 md:col-span-6 md:row-span-3 lg:col-span-2">
+        <Alert title="Payment Information" className="md:hidden">
+          Enter your payment method to complete your purchase.
+        </Alert>
+        <Checkbox defaultSelected>Notifications</Checkbox>
+        <SearchField aria-label="Search" className="w-full" />
+        <Combobox
+          label="Country"
+          description="Please select a country."
+          className="w-full"
+        >
+          <ComboboxItem>Canada</ComboboxItem>
+          <ComboboxItem>France</ComboboxItem>
+          <ComboboxItem>Germany</ComboboxItem>
+          <ComboboxItem>Spain</ComboboxItem>
+          <ComboboxItem>Tunisia</ComboboxItem>
+          <ComboboxItem>United states</ComboboxItem>
+          <ComboboxItem>United Kingdom</ComboboxItem>
+        </Combobox>
+        <NumberField label="Width" defaultValue={1024} className="w-full" />
+        <ColorSlider
+          label="Opacity"
+          defaultValue="hsla(210, 64%, 35%, 0.7)"
+          channel="alpha"
+          className="!w-full md:hidden"
+        />
+        <ProgressBar
+          label="Loading..."
+          value={75}
+          variant={globalVariant}
+          className="w-full lg:hidden"
+        />
+      </div>
+      <div className="col-span-10 flex justify-between gap-8 md:col-span-6 lg:col-span-5 lg:row-span-3">
+        <ListBox className="max-h-none w-full">
+          <ListBoxItem>New...</ListBoxItem>
+          <ListBoxItem>Badges</ListBoxItem>
+          <Separator />
+          <ListBoxItem>Save</ListBoxItem>
+          <ListBoxItem>Save as...</ListBoxItem>
+          <ListBoxItem>Rename...</ListBoxItem>
+          <Separator />
+          <ListBoxItem>Page setup…</ListBoxItem>
+          <ListBoxItem>Print…</ListBoxItem>
+        </ListBox>
+        <RangeCalendar />
+      </div>
+      <div className="col-span-10 row-span-6 lg:col-span-7">
         <TableRoot
           aria-label="Vocalists"
           selectionMode="multiple"
@@ -152,7 +224,8 @@ export function ComponentsOverview({ className }: { className?: string }) {
             )}
           </TableBody>
         </TableRoot>
-        <DropZone>
+      </div>
+      {/* <DropZone>
           <UploadIcon />
           <DropZoneLabel>Drag and drop files here</DropZoneLabel>
         </DropZone>
@@ -162,8 +235,7 @@ export function ComponentsOverview({ className }: { className?: string }) {
           variant={globalVariant}
           className="w-full"
         />
-        <BadgeVariants />
-      </div> */}
+        <BadgeVariants /> */}
     </div>
   );
 }
