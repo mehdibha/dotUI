@@ -115,8 +115,8 @@ export function ComponentsOverview({ className }: { className?: string }) {
         <TimeField aria-label="Event time" />
         <DatePicker className="" />
       </div>
-      <div className="col-span-5 flex flex-col gap-4 md:col-span-4 lg:col-span-3 md:row-span-6 lg:row-span-8">
-        <Alert title="Payment Information" className="md:flex hidden">
+      <div className="col-span-5 flex flex-col gap-4 md:col-span-4 md:row-span-6 lg:col-span-3 lg:row-span-8">
+        <Alert title="Payment Information" className="hidden md:flex">
           Enter your payment method to complete your purchase.
         </Alert>
         <Tabs>
