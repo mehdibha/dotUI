@@ -222,6 +222,7 @@
 
   /* breakpoints */
   --breakpoint-xs: 30rem;
+  --breakpoint-3xl: 120rem;
 
   /* easing */
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);

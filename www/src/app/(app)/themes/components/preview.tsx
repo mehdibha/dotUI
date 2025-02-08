@@ -52,15 +52,15 @@ export function Preview() {
   }, [updateUrl]);
 
   return (
-    <div className="bg-bg size-full overflow-hidden rounded border">
+    <div className="bg-bg size-full overflow-hidden border">
       <div className="bg-bg-muted flex items-center justify-between gap-2 border-b py-1 pl-4 pr-2">
         <div className="flex w-32 items-center gap-3">
           {/* window controls (decorative) */}
-          <div className="flex items-center gap-1.5">
-            <div className="size-3 rounded-full bg-red-500" />
-            <div className="size-3 rounded-full bg-yellow-500" />
-            <div className="size-3 rounded-full bg-green-500" />
-          </div>
+          {/* <div className="flex items-center gap-1.5">
+            <div className="size-3 rounded-full border border-field" />
+            <div className="size-3 rounded-full border border-field" />
+            <div className="size-3 rounded-full border border-field" />
+          </div> */}
           <div className="flex items-center gap-1">
             <Button
               onPress={goBack}

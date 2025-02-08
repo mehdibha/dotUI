@@ -37,7 +37,7 @@ export const Sidebar = ({
   className?: string;
   items: PageTree.Node[];
 }) => {
-  const [isCollapsed, setIsCollapsed] = React.useState(false);
+  const { isCollapsed, setCollapsed } = useSidebarContext();
 
   const transition: Transition = {
     type: "spring",
@@ -49,20 +49,16 @@ export const Sidebar = ({
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.ctrlKey && e.key === "b") {
         e.preventDefault();
-        setIsCollapsed((prev) => !prev);
+        setCollapsed((prev) => !prev);
       }
     };
 
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, []);
+  }, [setCollapsed]);
 
   return (
-    <SidebarRoot
-      isCollapsed={isCollapsed}
-      onCollapseChange={(c) => setIsCollapsed(c)}
-      className={className}
-    >
+    <SidebarRoot className={className}>
       <div className="relative flex items-center p-3 pb-1">
         <Logo />
       </div>
@@ -141,7 +137,7 @@ export const Sidebar = ({
                 shape="square"
                 size="sm"
                 variant="default"
-                onPress={() => setIsCollapsed(!isCollapsed)}
+                onPress={() => setCollapsed(!isCollapsed)}
               >
                 {isCollapsed ? <PanelLeftOpenIcon /> : <PanelLeftCloseIcon />}
               </Button>
@@ -155,49 +151,65 @@ export const Sidebar = ({
 
 const SidebarRoot = ({
   children,
-  isCollapsed,
-  onCollapseChange,
   className,
 }: {
   children: React.ReactNode;
-  isCollapsed: boolean;
-  onCollapseChange: (isCollapsed: boolean) => void;
   className?: string;
 }) => {
+  const { isCollapsed } = useSidebarContext();
   return (
-    <SidebarContext.Provider value={{ isCollapsed, onCollapseChange }}>
-      <aside
-        className={cn("group/sidebar text-sm", className)}
-        data-collapsed={isCollapsed ? "" : undefined}
-        style={
-          {
-            "--sidebar-width": "230px",
-            "--sidebar-width-collapsed": "49px",
-          } as React.CSSProperties
-        }
-      >
-        <div
-          className={cn(
-            "transition-sidebar group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) w-(--sidebar-width) relative z-10 h-svh bg-transparent"
-          )}
-        />
-        <div className="transition-sidebar bg-bg group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) [&_svg]:text-fg-muted w-(--sidebar-width) fixed inset-y-0 left-0 z-10 flex h-svh flex-col overflow-hidden [&_button]:font-normal">
-          <div className="w-(--sidebar-width) relative flex h-svh flex-1 translate-x-[-0.5px] flex-col overflow-hidden">
-            {children}
-          </div>
+    <aside
+      className={cn("group/sidebar text-sm", className)}
+      data-collapsed={isCollapsed ? "" : undefined}
+      style={
+        {
+          "--sidebar-width": "230px",
+          "--sidebar-width-collapsed": "49px",
+        } as React.CSSProperties
+      }
+    >
+      <div
+        className={cn(
+          "transition-sidebar group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) w-(--sidebar-width) relative z-10 h-svh bg-transparent"
+        )}
+      />
+      <div className="transition-sidebar bg-bg group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) [&_svg]:text-fg-muted w-(--sidebar-width) fixed inset-y-0 left-0 z-10 flex h-svh flex-col overflow-hidden [&_button]:font-normal">
+        <div className="w-(--sidebar-width) relative flex h-svh flex-1 translate-x-[-0.5px] flex-col overflow-hidden">
+          {children}
         </div>
-      </aside>
-    </SidebarContext.Provider>
+      </div>
+    </aside>
   );
 };
 
 const SidebarContext = React.createContext<{
   isCollapsed: boolean;
-  onCollapseChange: (isCollapsed: boolean) => void;
+  setCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
 }>({
   isCollapsed: false,
-  onCollapseChange: () => {},
+  setCollapsed: () => {},
 });
+
+export const SidebarProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  const [isCollapsed, setCollapsed] = React.useState(true);
+  return (
+    <SidebarContext value={{ isCollapsed, setCollapsed }}>
+      {children}
+    </SidebarContext>
+  );
+};
+
+export const useSidebarContext = () => {
+  const ctx = React.useContext(SidebarContext);
+  if (!ctx) {
+    throw new Error("useSidebarContext must be used within SidebarProvider");
+  }
+  return ctx;
+};
 
 const Logo = () => {
   return (
@@ -379,7 +391,7 @@ function FolderNode({
 }): React.ReactElement {
   const defaultOpenLevel = 0;
   const pathname = usePathname();
-  const { isCollapsed, onCollapseChange } = React.useContext(SidebarContext);
+  const { isCollapsed, setCollapsed } = useSidebarContext();
   const active =
     item.index !== undefined && isActive(item.index.url, pathname, false);
   const childActive = React.useMemo(
@@ -409,7 +421,7 @@ function FolderNode({
                   setOpen(!open);
                   return;
                 }
-                onCollapseChange(false);
+                setCollapsed(false);
               }}
             >
               {item.icon}
