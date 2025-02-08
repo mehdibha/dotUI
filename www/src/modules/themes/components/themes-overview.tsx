@@ -14,7 +14,6 @@ import {
   ComponentsOverview,
   MobileComponentsOverview,
 } from "@/modules/demos/components/components-overview";
-import { ComponentsOverviewOld } from "@/modules/demos/components/components-overview-old";
 import { ThemeProvider } from "./theme-provider";
 
 export const ThemesOverview = () => {
@@ -40,21 +39,21 @@ export const ThemesOverview = () => {
 
   const currentTheme = themes.find((theme) => theme.name === currentThemeName)!;
 
-  // React.useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     if (touched) return;
-  //     const currentIndex = themes.findIndex(
-  //       (theme) => theme.name === currentThemeName
-  //     );
-  //     const nextIndex = (currentIndex + 1) % themes.length;
-  //     const nextTheme = themes[nextIndex];
-  //     if (nextTheme) {
-  //       setCurrentThemeName(nextTheme.name);
-  //     }
-  //   }, 5000);
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      if (touched) return;
+      const currentIndex = themes.findIndex(
+        (theme) => theme.name === currentThemeName
+      );
+      const nextIndex = (currentIndex + 1) % themes.length;
+      const nextTheme = themes[nextIndex];
+      if (nextTheme) {
+        setCurrentThemeName(nextTheme.name);
+      }
+    }, 5000);
 
-  //   return () => clearInterval(interval);
-  // }, [currentThemeName, touched]);
+    return () => clearInterval(interval);
+  }, [currentThemeName, touched]);
 
   return (
     <div className="flex flex-col items-center gap-10 md:gap-4">
@@ -216,7 +215,6 @@ export const ThemesOverview = () => {
                   )}
                 </AnimatePresence>
                 <div className="bg-bg w-full rounded-md border">
-                  {/* <ComponentsOverviewOld /> */}
                   <ComponentsOverview className="hidden xl:container sm:grid" />
                   <MobileComponentsOverview className="sm:hidden" />
                 </div>

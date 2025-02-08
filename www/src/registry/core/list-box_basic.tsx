@@ -8,7 +8,7 @@ import {
   ListBoxItem as AriaListBoxItem,
   ListBoxSection as AriaListBoxSection,
   Collection as AriaCollection,
-  Heading as AriaHeading,
+  Header as AriaHeader,
   type ListBoxProps as AriaListBoxProps,
   type ListBoxItemProps as AriaListBoxItemProps,
   type ListBoxSectionProps as AriaListBoxSectionProps,
@@ -154,9 +154,9 @@ const ListBoxSection = <T extends object>({
       {...props}
     >
       {title && (
-        <AriaHeading className="text-fg-muted mb-1 pl-3 text-xs">
+        <AriaHeader className="text-fg-muted mb-1 pl-3 text-xs">
           {title}
-        </AriaHeading>
+        </AriaHeader>
       )}
       <AriaCollection items={props.items}>{children}</AriaCollection>
     </AriaListBoxSection>

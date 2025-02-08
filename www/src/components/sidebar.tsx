@@ -22,7 +22,6 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/core/collapsible";
-import { Dialog, DialogRoot } from "@/components/core/dialog";
 import { Kbd } from "@/components/core/kbd";
 import { ScrollArea } from "@/components/core/scroll-area";
 import { Tooltip, TooltipProps } from "@/components/core/tooltip";
@@ -255,31 +254,8 @@ const Logo = () => {
 };
 
 const SidebarSearchButton = ({ isCollapsed }: { isCollapsed: boolean }) => {
-  const [isOpen, setIsOpen] = React.useState(false);
-
-  React.useEffect(() => {
-    const down = (e: KeyboardEvent) => {
-      if ((e.key === "k" && (e.metaKey || e.ctrlKey)) || e.key === "/") {
-        if (
-          (e.target instanceof HTMLElement && e.target.isContentEditable) ||
-          e.target instanceof HTMLInputElement ||
-          e.target instanceof HTMLTextAreaElement ||
-          e.target instanceof HTMLSelectElement
-        ) {
-          return;
-        }
-
-        e.preventDefault();
-        setIsOpen((open) => !open);
-      }
-    };
-
-    document.addEventListener("keydown", down);
-    return () => document.removeEventListener("keydown", down);
-  }, []);
-
   return (
-    <DialogRoot isOpen={isOpen} onOpenChange={setIsOpen}>
+    <SearchCommand keyboardShortcut>
       <StyledTooltip
         content={
           <div className="flex items-center gap-2">
@@ -303,18 +279,7 @@ const SidebarSearchButton = ({ isCollapsed }: { isCollapsed: boolean }) => {
           </div>
         </SidebarButton>
       </StyledTooltip>
-      <Dialog className="p-0!">
-        <SearchCommand />
-        <Button
-          variant="outline"
-          shape="rectangle"
-          size="sm"
-          className="absolute right-3 top-[13px] h-7 px-2 text-xs font-normal"
-        >
-          Esc
-        </Button>
-      </Dialog>
-    </DialogRoot>
+    </SearchCommand>
   );
 };
 

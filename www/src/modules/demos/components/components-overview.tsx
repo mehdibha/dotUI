@@ -1,10 +1,10 @@
 "use client";
 
-import { MenuIcon, PinIcon, UploadIcon } from "lucide-react";
+import { MenuIcon, PinIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Link } from "@/components/core/link";
 import { RadioGroup, Radio } from "@/components/core/radio-group";
-import BadgeVariants from "@/components/demos/badge/variants";
+// import BadgeVariants from "@/components/demos/badge/variants";
 import FileTriggerDemo from "@/components/demos/file-trigger/default";
 import { Alert } from "@/components/dynamic-core/alert";
 import { Avatar } from "@/components/dynamic-core/avatar";
@@ -15,7 +15,7 @@ import { ColorPicker } from "@/components/dynamic-core/color-picker";
 import { ColorSlider } from "@/components/dynamic-core/color-slider";
 import { Combobox, ComboboxItem } from "@/components/dynamic-core/combobox";
 import { DatePicker } from "@/components/dynamic-core/date-picker";
-import { DropZone, DropZoneLabel } from "@/components/dynamic-core/drop-zone";
+// import { DropZone, DropZoneLabel } from "@/components/dynamic-core/drop-zone";
 import { ListBox, ListBoxItem } from "@/components/dynamic-core/list-box";
 import { Menu, MenuItem, MenuRoot } from "@/components/dynamic-core/menu";
 import { NumberField } from "@/components/dynamic-core/number-field";

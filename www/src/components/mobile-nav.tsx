@@ -65,7 +65,15 @@ export const MobileNav = ({
                     </Button>
                   </div>
                   <div className="p-2">
-                    <SearchCommandButton />
+                    <SearchCommand>
+                      <Button
+                        prefix={<SearchIcon />}
+                        variant="outline"
+                        className="bg-bg-inverse/5 w-full"
+                      >
+                        <span className="flex-1 text-left">Search </span>
+                      </Button>
+                    </SearchCommand>
                   </div>
                 </div>
                 <ScrollArea
@@ -110,14 +118,11 @@ export const MobileNav = ({
           </Dialog>
         </DialogRoot>
         <div className="flex items-center gap-1">
-          <DialogRoot>
+          <SearchCommand>
             <Button variant="quiet" size="sm" shape="square">
               <SearchIcon />
             </Button>
-            <Dialog className="p-0!">
-              <SearchCommand />
-            </Dialog>
-          </DialogRoot>
+          </SearchCommand>
           <Button
             href={siteConfig.links.github}
             target="_blank"
@@ -141,22 +146,5 @@ export const MobileNav = ({
         </div>
       </div>
     </header>
-  );
-};
-
-const SearchCommandButton = () => {
-  return (
-    <DialogRoot>
-      <Button
-        prefix={<SearchIcon />}
-        variant="outline"
-        className="bg-bg-inverse/5 w-full"
-      >
-        <span className="flex-1 text-left">Search </span>
-      </Button>
-      <Dialog className="p-0!">
-        <SearchCommand />
-      </Dialog>
-    </DialogRoot>
   );
 };

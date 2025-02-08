@@ -4,9 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { SearchIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-// import { Avatar } from "@/components/core/avatar";
 import { Button } from "@/components/core/button";
-import { DialogRoot, Dialog } from "@/components/core/dialog";
 import { siteConfig } from "@/config";
 import { Kbd } from "./core/kbd";
 import { GitHubIcon, TwitterIcon } from "./icons";
@@ -38,7 +36,7 @@ export function Header({ className }: { className?: string }) {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <SearchDocs>
+          <SearchCommand keyboardShortcut>
             <Button
               size="sm"
               variant="outline"
@@ -48,7 +46,7 @@ export function Header({ className }: { className?: string }) {
             >
               <span className="mr-6 flex-1">Search docs...</span>
             </Button>
-          </SearchDocs>
+          </SearchCommand>
           <Button
             href={siteConfig.links.github}
             target="_blank"
@@ -125,48 +123,5 @@ const Logo = () => {
         {siteConfig.global.name}
       </div>
     </Link>
-  );
-};
-
-const SearchDocs = ({ children }: { children: React.ReactNode }) => {
-  const [isOpen, setIsOpen] = React.useState(false);
-
-  React.useEffect(() => {
-    const down = (e: KeyboardEvent) => {
-      if ((e.key === "k" && (e.metaKey || e.ctrlKey)) || e.key === "/") {
-        if (
-          (e.target instanceof HTMLElement && e.target.isContentEditable) ||
-          e.target instanceof HTMLInputElement ||
-          e.target instanceof HTMLTextAreaElement ||
-          e.target instanceof HTMLSelectElement
-        ) {
-          return;
-        }
-
-        e.preventDefault();
-        setIsOpen((open) => !open);
-      }
-    };
-
-    document.addEventListener("keydown", down);
-    return () => document.removeEventListener("keydown", down);
-  }, []);
-
-  return (
-    <DialogRoot isOpen={isOpen} onOpenChange={setIsOpen}>
-      {children}
-      <Dialog className="p-0!">
-        <SearchCommand />
-        <Button
-          slot="close"
-          variant="outline"
-          shape="rectangle"
-          size="sm"
-          className="h-7 px-2 text-xs font-normal"
-        >
-          Esc
-        </Button>
-      </Dialog>
-    </DialogRoot>
   );
 };

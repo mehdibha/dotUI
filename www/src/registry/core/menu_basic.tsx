@@ -9,7 +9,7 @@ import {
   MenuItem as AriaMenuItem,
   SubmenuTrigger as AriaSubmenuTrigger,
   MenuSection as AriaMenuSection,
-  Heading as AriaHeading,
+  Header as AriaHeader,
   Collection as AriaCollection,
   type MenuItemProps as AriaMenuItemProps,
   type MenuProps as AriaMenuProps,
@@ -152,9 +152,9 @@ const MenuSection = <T extends object>({
   return (
     <AriaMenuSection className={menuSectionStyles({ className })} {...props}>
       {title && (
-        <AriaHeading className="text-fg-muted mb-1 pl-3 text-xs">
+        <AriaHeader className="text-fg-muted mb-1 pl-3 text-xs">
           {title}
-        </AriaHeading>
+        </AriaHeader>
       )}
       <AriaCollection items={props.items}>{children}</AriaCollection>
     </AriaMenuSection>

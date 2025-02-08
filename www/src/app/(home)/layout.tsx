@@ -8,7 +8,6 @@ export default function HomeLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // return children
   return (
     <div>
       <Header className="hidden md:block" />

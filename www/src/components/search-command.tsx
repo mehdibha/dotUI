@@ -1,4 +1,3 @@
-// import { type PageTree } from "fumadocs-core/server";
 import { kekabCaseToTitle } from "@/lib/string";
 import { source } from "@/app/source";
 import { SearchCommandClient } from "./search-command-client";
@@ -12,7 +11,13 @@ const additionalPages = [
   },
 ];
 
-export function SearchCommand() {
+export function SearchCommand({
+  children,
+  keyboardShortcut,
+}: {
+  children: React.ReactNode;
+  keyboardShortcut?: boolean;
+}) {
   const pages = [
     ...source.getPages().map((page) => ({
       id: page.url,
@@ -33,9 +38,9 @@ export function SearchCommand() {
     items: pages.filter((item) => item.url.split("/")[2] === category),
   }));
 
-  // const newItems: PageTree.Node[] = source.pageTree.children;
-  // newItems.forEach((item) => {
-  //   console.log(item);
-  // });
-  return <SearchCommandClient items={items} />;
+  return (
+    <SearchCommandClient keyboardShortcut={keyboardShortcut} items={items}>
+      {children}
+    </SearchCommandClient>
+  );
 }
