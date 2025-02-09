@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { parseColor, type Color } from "react-aria-components";
-import { Button } from "@/components/core/button";
+// import { parseColor, type Color } from "react-aria-components";
+// import { Button } from "@/components/core/button";
 import {
   ColorSwatchPicker,
   ColorSwatchPickerItem,
@@ -14,14 +14,14 @@ export const ThemeColorsSelector = ({
 }: {
   children?: React.ReactNode;
 }) => {
-  const [accentColor, setAccentColor] = React.useState<{
-    name: "";
-    value: Color;
-  }>({
-    name: "",
-    value: parseColor("#f9a825"),
-  });
-  const [primaryColor, setPrimaryColor] = React.useState<string | null>(null);
+  // const [accentColor, setAccentColor] = React.useState<{
+  //   name: "";
+  //   value: Color;
+  // }>({
+  //   name: "",
+  //   value: parseColor("#f9a825"),
+  // });
+  // const [primaryColor, setPrimaryColor] = React.useState<string | null>(null);
 
   return (
     <DialogRoot>
@@ -32,7 +32,7 @@ export const ThemeColorsSelector = ({
       >
         <p className="text-fg-muted text-sm">Neutral</p>
         <ColorSwatchPicker
-          value={accentColor.value}
+          // value={accentColor.value}
           className="grid grid-cols-5"
         >
           {neutralColors.map((color) => (

@@ -21,7 +21,6 @@ interface ColorSwatchPickerItemProps
   extends React.ComponentProps<typeof AriaColorSwatchPickerItem> {}
 const ColorSwatchPickerItem = ({
   className,
-  children,
   ...props
 }: ColorSwatchPickerItemProps) => {
   return (
