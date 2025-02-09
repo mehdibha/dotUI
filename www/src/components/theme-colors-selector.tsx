@@ -26,7 +26,10 @@ export const ThemeColorsSelector = ({
   return (
     <DialogRoot>
       {children}
-      <Dialog type="popover" popoverProps={{ placement: "bottom right", shouldFlip: false }}>
+      <Dialog
+        type="popover"
+        popoverProps={{ placement: "bottom right", shouldFlip: false }}
+      >
         <p className="text-fg-muted text-sm">Neutral</p>
         <ColorSwatchPicker
           value={accentColor.value}

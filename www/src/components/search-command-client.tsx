@@ -5,6 +5,7 @@ import {
   ChevronsUpDownIcon,
   CornerDownLeftIcon,
   FileTextIcon,
+  HashIcon,
   SearchIcon,
 } from "lucide-react";
 import { useFilter } from "react-aria-components";
@@ -41,12 +42,15 @@ export function SearchCommandClient({
   children,
   items,
 }: SearchCommandClientProps) {
-  const { contains } = useFilter({ sensitivity: "base" });
   const [inputValue, setInputValue] = React.useState("");
+  const filteredItems = React.useMemo(
+    () => filterResults(inputValue, items),
+    [inputValue, items]
+  );
+
   return (
     <SearchCommandDialog keyboardShortcut={keyboardShortcut} trigger={children}>
       <Command
-        filter={contains}
         inputValue={inputValue}
         onInputChange={setInputValue}
         className="h-72"
@@ -59,20 +63,30 @@ export function SearchCommandClient({
             </InputRoot>
           </SearchFieldRoot>
         </div>
-        <MenuContent items={items} className="h-full overflow-y-scroll py-1">
-          {items.map((category, categoryIndex) => (
-            <MenuSection key={categoryIndex} title={category.title}>
-              {category.items.map((page) => (
-                <React.Fragment key={page.id}>
-                  <MenuItem
-                    href={page.url}
-                    textValue={page.title}
-                    prefix={<FileTextIcon />}
-                    className="py-2"
-                  >
-                    {page.title}
-                  </MenuItem>
-                </React.Fragment>
+        <MenuContent className="h-full overflow-y-scroll py-1">
+          {filteredItems.map((category) => (
+            <MenuSection key={category.id} title={category.title}>
+              {category.items.map((item) => (
+                <MenuItem
+                  key={`${item.href}-${item.type}`}
+                  href={item.href}
+                  textValue={item.title}
+                  prefix={item.type === "page" ? <FileTextIcon /> : undefined}
+                  className={
+                    item.type === "page"
+                      ? "[&_svg]:text-fg-muted gap-3 py-2"
+                      : "py-0 pl-2.5"
+                  }
+                >
+                  {item.type === "page" ? (
+                    item.title
+                  ) : (
+                    <div className="[&_svg]:text-fg-muted ml-2 flex items-center gap-3 border-l pl-4 [&_svg]:size-4">
+                      <HashIcon />
+                      <p className="flex-1 truncate py-2">{item.title}</p>
+                    </div>
+                  )}
+                </MenuItem>
               ))}
             </MenuSection>
           ))}
@@ -91,6 +105,80 @@ export function SearchCommandClient({
     </SearchCommandDialog>
   );
 }
+
+type FilteredItems = {
+  title: string;
+  href: string;
+  type: "page" | "heading";
+}[];
+
+type FilteredResult = {
+  id: string;
+  title: string;
+  items: FilteredItems;
+}[];
+
+const filterResults = (
+  query: string,
+  items: SearchCommandClientProps["items"]
+): FilteredResult => {
+  // When no query, return all pages without headings
+  if (!query) {
+    return items.map((category) => ({
+      id: category.title,
+      title: category.title,
+      items: category.items.map((page) => ({
+        title: page.title,
+        href: page.url,
+        type: "page",
+      })),
+    }));
+  }
+
+  const normalizedQuery = query.toLowerCase().trim();
+  const results: FilteredResult = [];
+
+  items.forEach((category) => {
+    const matchedItems: FilteredItems = [];
+
+    category.items.forEach((page) => {
+      const isPageMatch = page.title.toLowerCase().includes(normalizedQuery);
+      const matchedHeadings = page.headings.filter((heading) =>
+        heading.content.toLowerCase().includes(normalizedQuery)
+      );
+
+      // Add page if title matches or if there are matched headings
+      if (isPageMatch || matchedHeadings.length > 0) {
+        matchedItems.push({
+          title: page.title,
+          href: page.url,
+          type: "page",
+        });
+      }
+
+      // Add matched headings after their parent page
+      matchedHeadings.forEach((heading) => {
+        matchedItems.push({
+          title: heading.content,
+          href: `${page.url}#${heading.id}`,
+          type: "heading",
+        });
+      });
+    });
+
+    // Only add categories that have matches
+    if (matchedItems.length > 0) {
+      results.push({
+        id: category.title,
+        title: category.title,
+        items: matchedItems,
+      });
+    }
+  });
+
+  return results;
+};
+
 const SearchCommandDialog = ({
   keyboardShortcut = false,
   trigger,

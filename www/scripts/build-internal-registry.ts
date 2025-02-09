@@ -176,9 +176,7 @@ async function buildDemos() {
 //   // export const Components = {`;
 // }
 
-const createPalette = () => {
-  
-}
+const createPalette = () => {};
 
 const buildThemes = async () => {
   const targetPath = path.join(process.cwd(), "src/styles/themes.css");
@@ -208,7 +206,7 @@ const buildThemes = async () => {
         },
       },
       "light"
-    )
+    );
     themesCSS
       .push
       // template(THEME_STYLES_WITH_VARIABLES)({
