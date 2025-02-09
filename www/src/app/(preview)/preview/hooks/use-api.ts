@@ -11,13 +11,9 @@ export const useSimulateApiCall = ({
 
   const simulateApiCall = async () => {
     setStatus("loading");
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      setStatus("success");
-      onSuccess?.();
-    } catch (error) {
-      setStatus("error");
-    }
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    setStatus("success");
+    onSuccess?.();
   };
 
   return { status, simulateApiCall };

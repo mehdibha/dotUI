@@ -2,9 +2,8 @@
 
 import React from "react";
 import { useThemes } from "@/hooks/use-themes";
-import { Item } from "@/registry/ui/default/core/list-box";
-import { Select } from "@/registry/ui/default/core/select";
-import { Skeleton } from "@/registry/ui/default/core/skeleton";
+import { Select, SelectItem } from "@/components/core/select";
+import { Skeleton } from "@/components/core/skeleton";
 
 export function Iconography() {
   const { isLoading, isCurrentThemeEditable } = useThemes();
@@ -16,7 +15,7 @@ export function Iconography() {
         isDisabled={!isCurrentThemeEditable}
         className="[&_button]:w-full"
       >
-        <Item id="lucide">Lucide icons</Item>
+        <SelectItem id="lucide">Lucide icons</SelectItem>
       </Select>
     </Skeleton>
   );

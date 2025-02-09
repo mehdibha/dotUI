@@ -1,0 +1,100 @@
+---
+title: Form
+description: Forms allow users to enter and submit data, and provide them with feedback along the way.
+links:
+  - label: Aria docs
+    href: https://react-spectrum.adobe.com/react-aria/Form.html
+  - label: React Hook Form docs
+    href: https://react-hook-form.com/
+  - label: Report an issue
+    href: https://github.com/mehdibha/dotUI/issues/new/choose
+  - label: Edit this page
+    href: https://github.com/mehdibha/dotUI/tree/main/content/components/buttons/toggle-button-group.mdx?plain=1
+---
+
+<ComponentPreview
+  name="form/basic"
+  preview={`const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    /* Handle form submission */
+  };
+  
+  return (
+    <Form onSubmit={handleSubmit}>
+      <TextField
+        name="name"
+        label="Name"
+        description="Please enter your full name."
+        minLength={2}
+        isRequired
+      />
+      <Button variant="primary" type="submit">
+        Submit
+      </Button>
+    </Form>
+  );`}
+/>
+
+## Installation
+
+```package-install
+npx dotui-cli@latest add form
+```
+
+## React Aria
+
+### Label & help text
+
+Accessible forms start with clear, descriptive labels for each field. All dotUI form components support labeling using the Label component or the `label` prop, which is automatically associated with the field via the id and for attributes on your behalf.
+
+In addition, the components support help text, which associates additional context with a field such as a description or error message. The label and help text are announced by assistive technology such as screen readers when the user focuses the field.
+
+```tsx
+import {TextField, Label, Input, Text} from 'react-aria-components';
+
+<TextField type="password">
+  <Label>Password</Label>
+  <Input />
+  <Text slot="description">Password must be at least 8 characters.</Text>
+</TextField>c
+```
+
+### Built-in validation
+
+All React Aria form components integrate with native HTML [constraint validation](https://developer.mozilla.org/en-US/docs/Web/HTML/Constraint_validation). This allows you to define constraints on each field such as required, minimum and maximum values, text formats such as email addresses, and even custom regular expression patterns. These constraints are checked by the browser when the user commits changes to the value (e.g. on blur) or submits the form.
+
+<ComponentPreview name="form/react-aria" />
+
+## React Hook Form
+
+In most cases, uncontrolled forms with the builtin validation features are enough. However, if you are building a truly complex form, a separate form library such as React Hook Form may be helpful.
+
+### Anatomy
+
+```tsx
+const formSchema = z.object({
+  // Define your form schema
+});
+
+const Demo = () => {
+  const { control, handleSubmit } = useForm();
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    /* Handle form submission */
+  };
+
+  return (
+    <Form onSubmit={handleSubmit(onSubmit)}>
+      <FormControl
+        control={control}
+        name="..."
+        render={(props) => {
+          // Your form component
+        }}
+      />
+    </Form>
+  );
+};
+```
+
+### Example
+
+<ComponentPreview name="form/react-hook-form" />

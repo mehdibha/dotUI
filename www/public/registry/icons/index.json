@@ -1,14 +1,16 @@
 [
   {
-    "name": "lucide",
-    "label": "Lucide icons",
-    "dependency": "lucide-react",
-    "import": "lucide-react"
+    "name": "lucide-icons",
+    "type": "icon-library",
+    "dependencies": [
+      "lucide-react"
+    ]
   },
   {
-    "name": "remix",
-    "label": "Remix icons",
-    "dependency": "@remixicon/react",
-    "import": "@remixicon/react"
+    "name": "remix-icons",
+    "type": "icon-library",
+    "dependencies": [
+      "@remixicon/react"
+    ]
   }
 ]

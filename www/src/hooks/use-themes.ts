@@ -4,7 +4,7 @@ import { atomWithStorage } from "jotai/utils";
 import { nanoid } from "nanoid";
 import { buildColorScales } from "@/lib/colors";
 import { defaultTheme, dotUIThemes } from "@/lib/themes";
-import { useMounted } from "@/registry/hooks/use-mounted";
+import { useMounted } from "@/hooks/use-mounted";
 import { BaseColor, Theme } from "@/types/theme";
 
 type Mode = "light" | "dark";
@@ -69,6 +69,7 @@ export const useThemes = () => {
   ) => {
     setState((draft) => {
       const id = nanoid();
+      // @ts-expect-error TODO
       draft.themes.push({
         ...defaultTheme,
         ...themeProperties,
@@ -86,6 +87,7 @@ export const useThemes = () => {
       (t) => t.id === themeId
     );
     if (!theme) return;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { id, name, ...targetThemeProps } = theme;
     createTheme({
       ...targetThemeProps,
@@ -130,8 +132,6 @@ export const useThemes = () => {
       }
     });
   };
-
-  const handleColorChange = () => {};
 
   const handleColorConfigChange = (
     config: "lightness" | "saturation",
@@ -184,6 +184,16 @@ export const useThemes = () => {
     });
   };
 
+  const updateVariant = (variant: string, value: string) => {
+    if (!isCurrentThemeEditable) return;
+    setState((draft) => {
+      const theme = draft.themes.find((t) => t.id === draft.currentThemeId);
+      if (theme) {
+        theme.variants[variant] = value;
+      }
+    });
+  };
+
   const showKeyboardHint = state.showKeyboardHint;
   const setShowKeyboardHint = (value: boolean) => {
     setState((draft) => {
@@ -207,10 +217,13 @@ export const useThemes = () => {
     handleColorConfigChange,
     handleFontChange,
     fonts,
+    currentIconLibrary: currentTheme.iconLibrary,
     radius: currentTheme.radius,
     handleRadiusChange,
     deleteTheme,
     showKeyboardHint,
     setShowKeyboardHint,
+    currentVariants: currentTheme.variants,
+    updateVariant,
   };
 };

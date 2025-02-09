@@ -1,53 +1,86 @@
 "use client";
 
+import React from "react";
 import Link from "next/link";
 import type { PageTree } from "fumadocs-core/server";
 import { AlignLeftIcon, PanelLeftCloseIcon, SearchIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Avatar } from "@/components/core/avatar";
+import { Button } from "@/components/core/button";
+import { Dialog, DialogRoot } from "@/components/core/dialog";
+import { ScrollArea } from "@/components/core/scroll-area";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
-import { Avatar } from "@/registry/ui/default/core/avatar";
-import { Button } from "@/registry/ui/default/core/button";
-import { Dialog, DialogRoot } from "@/registry/ui/default/core/dialog";
-import { ScrollArea } from "@/registry/ui/default/core/scroll-area";
 import { siteConfig } from "@/config";
+import { SearchCommand } from "./search-command";
 import { NodeList } from "./sidebar";
 import { ThemeSwitcher } from "./theme-switcher";
 
-export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
+export const MobileNav = ({
+  className,
+  items,
+}: {
+  className?: string;
+  items: PageTree.Node[];
+}) => {
+  const [isOpen, setOpen] = React.useState(false);
   return (
-    <header className="bg-bg sticky top-0 z-50 block border-b backdrop-blur-md sm:hidden">
-      <div className="container flex h-14 w-full max-w-screen-2xl items-center justify-between">
-        <DialogRoot>
+    <header
+      className={cn(
+        "bg-bg sticky top-0 z-50 block border-b backdrop-blur-md",
+        className
+      )}
+    >
+      <div className="max-w-(--breakpoint-2xl) container flex h-14 w-full items-center justify-between">
+        <DialogRoot isOpen={isOpen} onOpenChange={setOpen}>
           <Button variant="quiet" size="sm" shape="square">
             <AlignLeftIcon />
           </Button>
           <Dialog
             type="drawer"
-            placement="left"
-            swipeIndicator={false}
-            className="w-60 !p-0"
+            drawerProps={{
+              placement: "left",
+            }}
+            className="flex w-60 flex-col p-0"
           >
             {({ close }) => (
-              <div className="flex h-screen flex-col">
-                <div className="flex items-center justify-between p-2">
-                  <Link
-                    href="/"
-                    className="flex items-center space-x-2 rounded opacity-100 transition-[opacity,transform] duration-300 ease-out"
-                  >
-                    <Avatar
-                      src={siteConfig.global.logo}
-                      alt={siteConfig.global.name}
-                      width={24}
-                      height={24}
-                      loading="lazy"
-                      className="m-1 size-6 rounded-sm"
-                    />
-                    <div className="font-josephin mt-[5px] font-bold leading-normal tracking-tighter">
-                      {siteConfig.global.name}
-                    </div>
-                  </Link>
-                  <Button size="sm" shape="square" onPress={close}>
-                    <PanelLeftCloseIcon />
-                  </Button>
+              <div className="z-50 flex h-full flex-col">
+                <div>
+                  <div className="flex items-center justify-between p-2">
+                    <Link
+                      href="/"
+                      className="flex items-center gap-2 rounded opacity-100 transition-[opacity,transform] duration-300 ease-out"
+                    >
+                      <Avatar
+                        src={siteConfig.global.logo}
+                        alt={siteConfig.global.name}
+                        width={24}
+                        height={24}
+                        loading="lazy"
+                        className="m-1 size-6 rounded-sm"
+                      />
+                      <div className="font-josefin group-data-collapsed/sidebar:opacity-0 mt-[5px] font-bold leading-normal tracking-tighter transition-colors">
+                        {siteConfig.global.name}
+                      </div>
+                    </Link>
+                    <Button size="sm" shape="square" onPress={close}>
+                      <PanelLeftCloseIcon />
+                    </Button>
+                  </div>
+                  <div className="p-2">
+                    <SearchCommand
+                      onAction={() => {
+                        setOpen(false);
+                      }}
+                    >
+                      <Button
+                        prefix={<SearchIcon />}
+                        variant="outline"
+                        className="bg-bg-inverse/5 w-full"
+                      >
+                        <span className="flex-1 text-left">Search </span>
+                      </Button>
+                    </SearchCommand>
+                  </div>
                 </div>
                 <ScrollArea
                   size="sm"
@@ -91,9 +124,11 @@ export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
           </Dialog>
         </DialogRoot>
         <div className="flex items-center gap-1">
-          <Button variant="quiet" size="sm" shape="square">
-            <SearchIcon />
-          </Button>
+          <SearchCommand>
+            <Button variant="quiet" size="sm" shape="square">
+              <SearchIcon />
+            </Button>
+          </SearchCommand>
           <Button
             href={siteConfig.links.github}
             target="_blank"

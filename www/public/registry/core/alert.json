@@ -1,0 +1,9 @@
+{
+  "name": "alert",
+  "type": "core",
+  "variants": [
+    "basic",
+    "notch",
+    "notch-2"
+  ]
+}

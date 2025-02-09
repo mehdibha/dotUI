@@ -1,8 +1,6 @@
 ---
 title: Alert
 description: Displays a callout for user attention.
-thumbnail:
-  image: /previews/components/core/alert.jpeg
 links:
   - label: Report an issue
     href: https://github.com/mehdibha/dotUI/issues/new/choose
@@ -11,42 +9,33 @@ links:
 ---
 
 <ComponentPreview
-  name="core/alert-default"
-  preveiw={`<Alert>You can add components to your app using the cli.</Alert>`}
+  name="alert/default"
+  preview={`<Alert>You can add components to your app using the cli.</Alert>`}
+  fullWidth
+  resizable
 />
 
 ## Installation
 
-<Tabs items={["CLI", "Manual"]}>
-  <Tab value="CLI">
-  
-  ```package-install
+```package-install
 npx dotui-cli@latest add alert
 ```
-
-  </Tab>
-  <Tab value="manual">
-  
-    <Steps>
-      <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name="core/alert" />
-      <Step>Update the import paths to match your project setup.</Step>
-    </Steps>
-
-  </Tab>
-</Tabs>
 
 ## Examples
 
 ### Variants
 
-Use the `variant` and `fill` props to change the visual style of the alert.
+Use the `variant` prop to change the visual style of the alert.
 
 <ComponentPreview
-  name="core/alert-variants"
-  preview={`<Alert variant={variant} fill={fill}>
-    You can add components to your app using the cli.
-  </Alert>`}
+  name="alert/variants"
+  preview={`<Alert variant="neutral" title="This is a neutral alert" />
+<Alert variant="info" title="This is a neutral alert" />
+<Alert variant="danger" title="This is a critical alert" />
+<Alert variant="warning" title="This is a warning alert" />
+<Alert variant="success" title="This is a success alert" />`}
+  fullWidth
+  resizable
 />
 
 ### Title
@@ -54,8 +43,10 @@ Use the `variant` and `fill` props to change the visual style of the alert.
 Use the `title` prop to add a title to the alert.
 
 <ComponentPreview
-  name="core/alert-title"
+  name="alert/title"
   preview={`<Alert variant="warning" fill title="Your account has been suspended." />`}
+  fullWidth
+  resizable
 />
 
 ### Content
@@ -63,10 +54,12 @@ Use the `title` prop to add a title to the alert.
 Pass children to the alert to add content.
 
 <ComponentPreview
-  name="core/alert-content"
+  name="alert/content"
   preview={`<Alert title="Payment Information">
     Enter your payment method to complete your purchase.
   </Alert>`}
+  fullWidth
+  resizable
 />
 
 ### Custom icon
@@ -74,8 +67,10 @@ Pass children to the alert to add content.
 Use the `icon` prop to add a custom icon to the alert. An explicit `null` value can be used to remove the default icon.
 
 <ComponentPreview
-  name="core/alert-custom-icon"
+  name="alert/custom-icon"
   preview={`<Alert icon={<GlobeIcon />}>Hello world!</Alert>`}
+  fullWidth
+  resizable
 />
 
 ### Action
@@ -83,7 +78,7 @@ Use the `icon` prop to add a custom icon to the alert. An explicit `null` value 
 Use the `action` prop to add an action to the alert.
 
 <ComponentPreview
-  name="core/alert-action"
+  name="alert/action"
   preview={`<Alert
     action={<Button>Upgrade</Button>}
   >
@@ -98,7 +93,7 @@ Use the `action` prop to add an action to the alert.
 If you need to customize things further, you can drop down the composition pattern.
 
 <ComponentPreview
-  name="core/alert-composition"
+  name="alert/composition"
   preview={`<AlertRoot>
     <WalletIcon />
     <div className="flex-1">
@@ -117,7 +112,7 @@ If you need to customize things further, you can drop down the composition patte
 
 Alert accepts all HTML `div` element props and the following:
 
-| Prop      | Type                                                       | Default     | Description                                |
-| --------- | ---------------------------------------------------------- | ----------- | ------------------------------------------ |
-| `variant` | `'default' \| 'success \| 'warning' \| 'danger \| 'info' ` | `'default'` | The visual style of the alert.             |
-| `fill`    | `boolean`                                                  | `false`     | Weather the visual style should be filled. |
+| Prop      | Type                                                         | Default     | Description                                |
+| --------- | ------------------------------------------------------------ | ----------- | ------------------------------------------ |
+| `variant` | `'default' \| 'success' \| 'warning' \| 'danger' \| 'info' ` | `'default'` | The visual style of the alert.             |
+| `fill`    | `boolean`                                                    | `false`     | Weather the visual style should be filled. |

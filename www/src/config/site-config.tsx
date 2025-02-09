@@ -19,7 +19,7 @@ export const siteConfig = {
     },
   },
   links: {
-    github: "https://github.com/mehdibha/dotui",
+    github: "https://github.com/mehdibha/dotUI",
     twitter: "https://x.com/mehdibha_",
     discord: "https://discord.gg/DXpj5V2fU8",
     creatorGithub: "https://github.com/mehdibha",

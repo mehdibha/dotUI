@@ -1,17 +1,21 @@
 import React from "react";
 import type { Metadata } from "next";
 import { PlusIcon } from "lucide-react";
-import { Alert } from "@/registry/ui/default/core/alert";
-import { Button } from "@/registry/ui/default/core/button";
-import { cn } from "@/registry/ui/default/lib/cn";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/core/button";
 import { Borders } from "./components/borders";
 import { ButtonStyle } from "./components/button-style";
 import { Colors } from "./components/colors";
-import { PreviewProvider } from "./components/context";
 import { CreateThemeDialog } from "./components/create-theme";
 import { ExploreThemesDialog } from "./components/explore-themes";
+import { FocusStyle } from "./components/focus-style";
 import { Iconography } from "./components/iconography";
-import { Preview } from "./components/preview";
+import { InputStyle } from "./components/input-style";
+import { ListBoxStyle } from "./components/listbox-style";
+import { LoaderStyle } from "./components/loader-style";
+import { OverlayStyle } from "./components/overlay-style";
+import { PickerStyle } from "./components/picker-style";
+import { TabsStyle } from "./components/tabs-style";
 import { ThemeSelect } from "./components/theme-select";
 import { Typography } from "./components/typography";
 
@@ -22,51 +26,71 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <PreviewProvider>
-      <div className="container">
-        <div className="relative grid grid-cols-12 items-start gap-10 py-10">
-          <div className="col-span-12 mt-6 lg:col-span-5">
-            <h1 className="font-heading xs:text-2xl text-pretty text-xl font-semibold tracking-tighter sm:text-3xl md:text-4xl">
-              Everything starts with identity.
-            </h1>
-            <h2 className="text-fg-muted mt-3 text-sm">
-              Generate colors, fonts, and spacing to match your brand identity.
-            </h2>
-            <div className="mt-4 flex items-center gap-2">
-              <ExploreThemesDialog>
-                <Button variant="primary">Explore themes</Button>
-              </ExploreThemesDialog>
-              <CreateThemeDialog>
-                <Button variant="outline" prefix={<PlusIcon />}>
-                  Create theme
-                </Button>
-              </CreateThemeDialog>
-            </div>
-            <ThemeSelect className="mt-10" />
-            <div className="mt-6 space-y-6">
-              <Section title="Colors">
-                <Colors />
-              </Section>
-              <Section title="Typography">
-                <Typography />
-              </Section>
-              <Section title="Borders">
-                <Borders />
-              </Section>
-              <Section title="Iconography">
-                <Iconography />
-              </Section>
-              <Alert>
-                More customization are coming such as components style.
-              </Alert>
-            </div>
-          </div>
-          <div className="sticky top-10 hidden h-[calc(100svh-theme(spacing.20))] justify-center lg:col-span-7 lg:flex">
-            <Preview />
-          </div>
+    <div className="pb-20">
+      <section className="pb-10 pt-16">
+        <h1 className="font-heading xs:text-2xl text-pretty text-xl font-semibold tracking-tighter sm:text-3xl md:text-4xl">
+          Everything starts with identity.
+        </h1>
+        <h2 className="text-fg-muted mt-3 text-sm">
+          Generate colors, fonts, and spacing to match your brand identity.
+        </h2>
+        <div className="mt-4 flex items-center gap-2">
+          <ExploreThemesDialog>
+            <Button variant="primary">Explore themes</Button>
+          </ExploreThemesDialog>
+          <CreateThemeDialog>
+            <Button
+              variant="outline"
+              className="bg-bg-inverse/5"
+              prefix={<PlusIcon />}
+            >
+              Create theme
+            </Button>
+          </CreateThemeDialog>
         </div>
-      </div>
-    </PreviewProvider>
+      </section>
+      <section className="py-8">
+        <ThemeSelect />
+        <div className="mt-6 space-y-6">
+          <Section title="Colors">
+            <Colors />
+          </Section>
+          <Section title="Typography">
+            <Typography />
+          </Section>
+          <Section title="Borders">
+            <Borders />
+          </Section>
+          <Section title="Iconography">
+            <Iconography />
+          </Section>
+          <Section title="Loader style" className="col-span-6">
+            <LoaderStyle />
+          </Section>
+          <Section title="Focus style" className="col-span-6">
+            <FocusStyle />
+          </Section>
+          <Section title="Button style" className="col-span-6">
+            <ButtonStyle />
+          </Section>
+          <Section title="Input style" className="col-span-6">
+            <InputStyle />
+          </Section>
+          <Section title="Picker style" className="col-span-6">
+            <PickerStyle />
+          </Section>
+          <Section title="Listbox style" className="col-span-6">
+            <ListBoxStyle />
+          </Section>
+          <Section title="Modal/Popover/Tooltip style" className="col-span-6">
+            <OverlayStyle />
+          </Section>
+          <Section title="Tabs style" className="col-span-6">
+            <TabsStyle />
+          </Section>
+        </div>
+      </section>
+    </div>
   );
 }
 

@@ -1,9 +1,6 @@
 ---
 title: Badge
 description: Displays a badge or a component that looks like a badge.
-thumbnail:
-  image: /previews/components/core/badge.jpeg
-  video: /previews/components/core/badge.mp4
 links:
   - label: Report an issue
     href: https://github.com/mehdibha/dotUI/issues/new/choose
@@ -11,28 +8,21 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/data-display/badge.mdx?plain=1
 ---
 
-<ComponentPreview name="core/badge-default" preview={`<Badge>Badge</Badge>`} />
+<ComponentPreview name="badge/default" preview={`<Badge>Badge</Badge>`} />
 
 ## Installation
 
-<Tabs items={["CLI", "Manual"]}>
-  <Tab value="CLI">
-  
-  ```package-install
+```package-install
 npx dotui-cli@latest add badge
 ```
 
-  </Tab>
-  <Tab value="manual">
-  
-    <Steps>
-      <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name="core/badge" />
-      <Step>Update the import paths to match your project setup.</Step>
-    </Steps>
+## Anatomy
 
-  </Tab>
-</Tabs>
+```tsx
+import { Badge } from "@/components/core/badge";
+
+<Badge>Badge</Badge>;
+```
 
 ## Options
 
@@ -41,32 +31,13 @@ npx dotui-cli@latest add badge
 Use the `variant` prop to control the visual style of the `Badge`. The default variant is `primary`.
 
 <ComponentPreview
-  name="core/badge-variants"
-  preview={`<Flex>
-    <Badge variant="neutral">Neutral</Badge>
-    <Badge variant="outline">Outline</Badge>
-    <Badge variant="primary">Primary</Badge>
-  </Flex>
-  <Flex>
-    <Badge variant="success">Success</Badge>
-    <Badge variant="success-subtle">Success Subtle</Badge>
-    <Badge variant="success-outline">Success Outline</Badge>
-  </Flex>
-  <Flex>
-    <Badge variant="danger">Danger</Badge>
-    <Badge variant="danger-subtle">Danger Subtle</Badge>
-    <Badge variant="danger-outline">Danger Outline</Badge>
-  </Flex>
-  <Flex>
-    <Badge variant="warning">Warning</Badge>
-    <Badge variant="warning-subtle">Warning Subtle</Badge>
-    <Badge variant="warning-outline">Warning Outline</Badge>
-  </Flex>
-  <Flex>
-    <Badge variant="accent">Accent</Badge>
-    <Badge variant="accent-subtle">Accent Subtle</Badge>
-    <Badge variant="accent-outline">Accent Outline</Badge>
-  </Flex>`}
+  name="badge/variants"
+  preview={`<Badge variant="neutral">neutral</Badge>
+  <Badge variant="accent">accent</Badge>
+  <Badge variant="success">success</Badge>
+  <Badge variant="danger">danger</Badge>
+  <Badge variant="warning">warning</Badge>
+  <Badge variant="info">info</Badge>`}
 />
 
 ### Size
@@ -74,41 +45,28 @@ Use the `variant` prop to control the visual style of the `Badge`. The default v
 Use the `size` prop to control the size of the `Badge`. The default variant is `sm`.
 
 <ComponentPreview
-  name="core/badge-sizes"
-  preview={`<Badge variant="primary" size="sm">
-    Small
-  </Badge>
-  <Badge variant="primary" size="md">
-    Medium
-  </Badge>
-  <Badge variant="primary" size="lg">
-    Large
-  </Badge>`}
+  name="badge/sizes"
+  preview={`<Badge size="sm">Small</Badge>
+  <Badge size="md">Medium</Badge>
+  <Badge size="lg">Large</Badge>`}
 />
 
-### Icon
+## Examples
 
-To add additional context for the `Badge`, use the `icon` prop to add an icon.
+### With icon
 
 <ComponentPreview
-  name="core/badge-icon"
-  preview={`<Badge icon={<ShieldIcon />} size="sm">
-    Badge
-  </Badge>
-  <Badge icon={<ShieldIcon />} size="md">
-    Badge
-  </Badge>
-  <Badge icon={<ShieldIcon />} size="lg">
-    Badge
-  </Badge>`}
+  name="badge/icon"
+  preview={`<Badge size="sm"><ShieldIcon />Badge</Badge>
+  <Badge size="md"><ShieldIcon />Badge</Badge>
+  <Badge size="lg"><ShieldIcon />Badge</Badge>`}
 />
 
 ## API Reference
 
 Badge accepts all HTML `span` element props and the following:
 
-| Prop      | Type                                                                                                                                                                                                                                       | Default     | Description                               |
-| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------- | ----------------------------------------- |
-| `neutral` | `"outline" \| "primary" \| "success" \| "success-subtle" \| "success-outline" \| "danger" \| "danger-subtle" \| "danger-outline" \| "warning" \| "warning-subtle" \| "warning-outline" \| "accent" \| "accent-subtle" \| "accent-outline"` | `"primary"` | The visual style of the badge.            |
-| `size`    | `"sm" \| "md" \| "lg"`                                                                                                                                                                                                                     | `"sm"`      | The size of the badge.                    |
-| `icon`    | `React.ReactNode`                                                                                                                                                                                                                          | -           | An icon to display before the badge text. |
+| Prop      | Type                                                                    | Default                        | Description            |
+| --------- | ----------------------------------------------------------------------- | ------------------------------ | ---------------------- |
+| `neutral` | `'neutral' \| 'accent' \| 'success' \| 'warning' \| 'info' \| 'danger'` | The visual style of the badge. |
+| `size`    | `'sm' \| 'md' \| 'lg'`                                                  | `"sm"`                         | The size of the badge. |

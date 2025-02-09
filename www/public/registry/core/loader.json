@@ -1,0 +1,11 @@
+{
+  "name": "loader",
+  "type": "core",
+  "variants": [
+    "dots",
+    "line",
+    "ring",
+    "tailspin",
+    "wave"
+  ]
+}

@@ -2,21 +2,21 @@
 
 import React from "react";
 import { Button as AriaButton } from "react-aria-components";
+import { focusRing } from "@/lib/focus-styles";
+import { cn } from "@/lib/utils";
 import { useThemes } from "@/hooks/use-themes";
 import {
-  ColorEditor,
+  ColorPickerEditor,
   ColorPicker,
   ColorPickerRoot,
-} from "@/registry/ui/default/core/color-picker";
-import { ColorSwatch } from "@/registry/ui/default/core/color-swatch";
-import { Dialog, DialogRoot } from "@/registry/ui/default/core/dialog";
-import { Label } from "@/registry/ui/default/core/field";
-import { Skeleton } from "@/registry/ui/default/core/skeleton";
-import { Slider } from "@/registry/ui/default/core/slider";
-import { Tag, TagGroup } from "@/registry/ui/default/core/tag-group/tag-group";
-import { Tooltip } from "@/registry/ui/default/core/tooltip";
-import { cn } from "@/registry/ui/default/lib/cn";
-import { focusRing } from "@/registry/ui/default/lib/focus-styles";
+} from "@/components/core/color-picker";
+import { ColorSwatch } from "@/components/core/color-swatch";
+import { Dialog, DialogRoot } from "@/components/core/dialog";
+import { Label } from "@/components/core/field";
+import { Skeleton } from "@/components/core/skeleton";
+import { Slider } from "@/components/core/slider";
+import { Tag, TagGroup } from "@/components/core/tag-group";
+import { Tooltip } from "@/components/core/tooltip";
 import { BaseColor } from "@/types/theme";
 import { usePreview } from "./context";
 
@@ -110,27 +110,27 @@ export const Colors = (props: React.HTMLAttributes<HTMLDivElement>) => {
         <Skeleton show={isLoading}>
           <Slider
             label="Lightness"
-            valueLabel={(value) => `${value[0]}%`}
+            getValueLabel={(value) => `${value[0]}%`}
             value={currentTheme.colors[mode].lightness}
             onChange={(value) =>
               handleColorConfigChange("lightness", value as number)
             }
             isDisabled={!isCurrentThemeEditable}
             size="sm"
-            className="!w-full"
+            className="w-full!"
           />
         </Skeleton>
         <Skeleton show={isLoading}>
           <Slider
             label="Saturation"
             size="sm"
-            valueLabel={(value) => `${value[0]}%`}
+            getValueLabel={(value) => `${value[0]}%`}
             value={currentTheme.colors[mode].saturation}
             onChange={(value) =>
               handleColorConfigChange("saturation", value as number)
             }
             isDisabled={!isCurrentThemeEditable}
-            className="!w-full"
+            className="w-full!"
           />
         </Skeleton>
       </div>
@@ -176,7 +176,7 @@ const ColorScale = ({ label, value }: { label: string; value: BaseColor }) => {
                       <ColorSwatch className="size-full rounded-[inherit]" />
                     </AriaButton>
                     <Dialog type="popover" mobileType="drawer">
-                      <ColorEditor className="mx-auto" />
+                      <ColorPickerEditor />
                     </Dialog>
                   </DialogRoot>
                 </ColorPickerRoot>

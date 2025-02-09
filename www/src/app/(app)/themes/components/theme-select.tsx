@@ -17,15 +17,15 @@ import {
   Input as UnstyledInput,
 } from "react-aria-components";
 import { dotUIThemes } from "@/lib/themes";
+import { cn } from "@/lib/utils";
 import { useThemes } from "@/hooks/use-themes";
-import { Alert } from "@/registry/ui/default/core/alert";
-import { Button } from "@/registry/ui/default/core/button";
-import { Form } from "@/registry/ui/default/core/form";
-import { InputProps } from "@/registry/ui/default/core/input";
-import { Kbd } from "@/registry/ui/default/core/kbd";
-import { Menu, MenuItem, MenuRoot } from "@/registry/ui/default/core/menu";
-import { Skeleton } from "@/registry/ui/default/core/skeleton";
-import { cn } from "@/registry/ui/default/lib/cn";
+import { Alert } from "@/components/core/alert";
+import { Button } from "@/components/core/button";
+import { Form } from "@/components/core/form";
+import { InputProps } from "@/components/core/input";
+import { Kbd } from "@/components/core/kbd";
+import { Menu, MenuItem, MenuRoot } from "@/components/core/menu";
+import { Skeleton } from "@/components/core/skeleton";
 import { CloneThemeDialog } from "./clone-theme";
 import { CopyThemeDialog } from "./copy-theme";
 import { DeleteThemeDialog } from "./delete-theme";
@@ -94,7 +94,9 @@ export function ThemeSelect({ className }: { className?: string }) {
             <Button shape="square">
               <MoreHorizontalIcon />
             </Button>
-            <Menu placement="bottom end">
+            <Menu
+            // TODO: placement="bottom end"
+            >
               <MenuItem
                 prefix={<GitBranchIcon />}
                 onAction={() => {
@@ -128,7 +130,6 @@ export function ThemeSelect({ className }: { className?: string }) {
       </div>
       {!isLoading && showKeyboardHint && (
         <Alert
-          fill
           action={
             <Button
               variant="quiet"
@@ -139,7 +140,7 @@ export function ThemeSelect({ className }: { className?: string }) {
               <XIcon />
             </Button>
           }
-          className="[&_kbd]:text-xs"
+          className="bg-bg-muted/50 [&_kbd]:text-xs"
         >
           Use <Kbd>Ctrl</Kbd> + <Kbd>→</Kbd> or <Kbd>←</Kbd> to navigate between
           themes
@@ -147,12 +148,12 @@ export function ThemeSelect({ className }: { className?: string }) {
       )}
       {!isLoading && !isCurrentThemeEditable && (
         <Alert
-          fill
           action={
             <CloneThemeDialog>
               <Button prefix={<GitBranchIcon />}>Clone theme</Button>
             </CloneThemeDialog>
           }
+          className="bg-bg-muted/50"
         >
           To adjust, preview and generate color palette, fonts, radius and more,
           you need to clone the theme.
@@ -308,7 +309,7 @@ const AutoResizeInput = React.forwardRef<HTMLInputElement, InputProps>(
         ref={mergeRefs(inputRef, forwardedRef)}
         onChange={chain(onChange, setInputValue)}
         className={cn(
-          "border-fg min-w-[10px] focus:border-b focus:outline-none",
+          "border-fg focus:outline-hidden min-w-[10px] focus:border-b",
           className
         )}
         {...props}

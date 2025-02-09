@@ -20,6 +20,7 @@ export async function getGitHubStars(): Promise<string | null> {
 
     return parseInt(json["stargazers_count"]).toLocaleString();
   } catch (error) {
+    console.error(error);
     return null;
   }
 }

@@ -1,78 +1,42 @@
-import type { RegistryItem } from "@dotui/registry/types";
-import { existsSync, promises as fs } from "node:fs";
-import path, { basename } from "path";
-import prompts from "prompts";
-import { Config } from "@/helpers/get-config";
-import { getProjectInfo } from "@/helpers/get-project-info";
-import { getRegistryItemFileTargetPath } from "@/helpers/registry";
+import { ExtendedConfig, RegistryItemFile } from "@dotui/schemas";
+import { existsSync, promises as fs } from "fs";
+import path from "path";
 import { transform } from "@/helpers/transformers";
-import { transformCssVars } from "@/helpers/transformers/transform-css-vars";
-import { transformImport } from "@/helpers/transformers/transform-import";
-import { transformRsc } from "@/helpers/transformers/transform-rsc";
-import { transformTwPrefixes } from "@/helpers/transformers/transform-tw-prefix";
-import { logger, highlight, spinner } from "@/utils";
+
+interface Result {
+  filesCreated: string[];
+  filesUpdated: string[];
+  filesSkipped: string[];
+}
 
 export async function updateFiles(
-  files: RegistryItem["files"],
-  config: Config,
-  options: {
-    overwrite?: boolean;
-  }
-) {
-  if (!files?.length) {
-    return;
-  }
+  files: RegistryItemFile[],
+  config: ExtendedConfig,
+  options: { overwrite?: boolean } = {}
+): Promise<Result> {
   options = {
     overwrite: false,
     ...options,
   };
-  const filesCreatedSpinner = spinner(`Updating files.`)?.start();
 
-  const projectInfo = await getProjectInfo(config.resolvedPaths.cwd);
+  if (!files.length)
+    return { filesCreated: [], filesUpdated: [], filesSkipped: [] };
 
   const filesCreated = [];
   const filesUpdated = [];
   const filesSkipped = [];
 
   for (const file of files) {
-    if (!file.content) {
-      continue;
-    }
+    if (!file.content) continue;
 
-    let targetDir = getRegistryItemFileTargetPath(file, config);
-    const fileName = basename(file.path);
-    let filePath = path.join(targetDir, fileName);
+    const filePath = resolveFilePath(file, config);
 
-    if (file.target) {
-      filePath = projectInfo?.isSrcDir
-        ? path.join(config.resolvedPaths.cwd, "src", file.target)
-        : path.join(config.resolvedPaths.cwd, file.target);
-      targetDir = path.dirname(filePath);
-    }
-
-    if (!config.tsx) {
-      filePath = filePath.replace(/\.tsx?$/, (match) =>
-        match === ".tsx" ? ".jsx" : ".js"
-      );
-    }
-
+    const targetDir = path.dirname(filePath);
     const existingFile = existsSync(filePath);
-    if (existingFile && !options.overwrite) {
-      filesCreatedSpinner.stop();
-      const { overwrite } = await prompts({
-        type: "confirm",
-        name: "overwrite",
-        message: `The file ${highlight.info(
-          fileName
-        )} already exists. Would you like to overwrite?`,
-        initial: false,
-      });
 
-      if (!overwrite) {
-        filesSkipped.push(path.relative(config.resolvedPaths.cwd, filePath));
-        continue;
-      }
-      filesCreatedSpinner?.start();
+    if (existingFile && !options.overwrite) {
+      filesSkipped.push(path.relative(config.resolvedPaths.cwd, filePath));
+      continue;
     }
 
     // Create the target directory if it doesn't exist.
@@ -81,61 +45,76 @@ export async function updateFiles(
     }
 
     // Run our transformers.
-    const content = await transform(
-      {
-        filename: file.path,
-        raw: file.content,
-        config,
-        transformJsx: !config.tsx,
-      },
-      [transformImport, transformRsc, transformCssVars, transformTwPrefixes]
-    );
+    const content = await transform({
+      filename: file.path,
+      raw: file.content,
+      config,
+    });
 
     await fs.writeFile(filePath, content, "utf-8");
-    existingFile
-      ? filesUpdated.push(path.relative(config.resolvedPaths.cwd, filePath))
-      : filesCreated.push(path.relative(config.resolvedPaths.cwd, filePath));
-  }
 
-  const hasUpdatedFiles = filesCreated.length || filesUpdated.length;
-  if (!hasUpdatedFiles && !filesSkipped.length) {
-    filesCreatedSpinner?.info("No files updated.");
-  }
-
-  if (filesCreated.length) {
-    filesCreatedSpinner?.succeed(
-      `Created ${filesCreated.length} ${
-        filesCreated.length === 1 ? "file" : "files"
-      }:`
-    );
-    for (const file of filesCreated) {
-      logger.log(`  - ${file}`);
-    }
-  } else {
-    filesCreatedSpinner?.stop();
-  }
-
-  if (filesUpdated.length) {
-    spinner(
-      `Updated ${filesUpdated.length} ${
-        filesUpdated.length === 1 ? "file" : "files"
-      }:`
-    )?.info();
-    for (const file of filesUpdated) {
-      logger.log(`  - ${file}`);
+    if (existingFile) {
+      filesUpdated.push(path.relative(config.resolvedPaths.cwd, filePath));
+    } else {
+      filesCreated.push(path.relative(config.resolvedPaths.cwd, filePath));
     }
   }
 
-  if (filesSkipped.length) {
-    spinner(
-      `Skipped ${filesSkipped.length} ${
-        filesUpdated.length === 1 ? "file" : "files"
-      }:`
-    )?.info();
-    for (const file of filesSkipped) {
-      logger.log(`  - ${file}`);
-    }
+  return { filesCreated, filesUpdated, filesSkipped };
+}
+
+function resolveFilePath(file: RegistryItemFile, config: ExtendedConfig) {
+  const targetDir = resolveFileTargetDirectory(file, config);
+
+  const relativePath = resolveNestedFilePath(file.path, targetDir);
+  return path.join(targetDir, relativePath);
+}
+
+function resolveFileTargetDirectory(
+  file: RegistryItemFile,
+  config: ExtendedConfig
+) {
+  if (file.type === "component") {
+    return config.resolvedPaths.components;
+  }
+  if (file.type === "core") {
+    return config.resolvedPaths.core;
   }
 
-  logger.break();
+  if (file.type === "hook") {
+    return config.resolvedPaths.hooks;
+  }
+
+  if (file.type === "lib") {
+    return config.resolvedPaths.lib;
+  }
+
+  return config.resolvedPaths.components;
+}
+
+export function resolveNestedFilePath(
+  filePath: string,
+  targetDir: string
+): string {
+  // Normalize paths by removing leading/trailing slashes
+  const normalizedFilePath = filePath.replace(/^\/|\/$/g, "");
+  const normalizedTargetDir = targetDir.replace(/^\/|\/$/g, "");
+
+  // Split paths into segments
+  const fileSegments = normalizedFilePath.split("/");
+  const targetSegments = normalizedTargetDir.split("/");
+
+  // Find the last matching segment from targetDir in filePath
+  const lastTargetSegment = targetSegments[targetSegments.length - 1];
+  const commonDirIndex = fileSegments.findIndex(
+    (segment) => segment === lastTargetSegment
+  );
+
+  if (commonDirIndex === -1) {
+    // Return just the filename if no common directory is found
+    return fileSegments[fileSegments.length - 1];
+  }
+
+  // Return everything after the common directory
+  return fileSegments.slice(commonDirIndex + 1).join("/");
 }

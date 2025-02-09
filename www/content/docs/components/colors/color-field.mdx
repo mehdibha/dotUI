@@ -1,14 +1,9 @@
 ---
 title: Color Field
 description: A color field allows users to edit a hex color or individual color channel value.
-thumbnail:
-  image: /previews/components/core/color-field.jpeg
-  video: /previews/components/core/color-field.mp4
 links:
   - label: Aria docs
     href: https://react-spectrum.adobe.com/react-aria/ColorField.html
-  - label: Aria API Reference
-    href: https://react-spectrum.adobe.com/react-aria/ColorField.html#props
   - label: Report an issue
     href: https://github.com/mehdibha/dotUI/issues/new/choose
   - label: Edit this page
@@ -16,52 +11,86 @@ links:
 ---
 
 <ComponentPreview
-  name="core/color-field-default"
+  name="color-field/default"
   preview={`<ColorField label="Color" />`}
 />
 
 ## Installation
 
-<Tabs items={["CLI", "Manual"]}>
-  <Tab value="CLI">
-  
-  ```package-install
+```package-install
 npx dotui-cli@latest add color-field
 ```
 
-  </Tab>
-  <Tab value="manual">
-  
-    <Steps>
-      <Step>Install the following dependencies:</Step>
+## Anatomy
 
-    ```package-install
-    react-aria-components
-    ```
+```tsx
+import { ColorField } from "@/components/core/color-field";
 
-      <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name={["core/color-field"]} />
-      <Step>Update the import paths to match your project setup.</Step>
-    </Steps>
+<ColorField label="Background" description="Enter a background color." />;
+```
 
-  </Tab>
-</Tabs>
+```tsx
+import { ColorFieldRoot, ColorFiedInput } from "@/components/core/color-field";
+import { Label, Description, FieldError } from "@/components/core/field";
 
-## Usage
+<ColorFieldRoot>
+  <Label>Background</Label>
+  <ColorFieldInput />
+  <Description>Enter a background color.</Description>
+  <FieldError />
+</ColorFieldRoot>;
+```
 
-Use a `ColorField` to allow users to edit a hex color or individual color channel value.
+## Controlled
 
-## Options
+Use the `value` and `onChange` props to control the value of the input.
 
-### Label
+<ComponentPreview
+  name="color-field/controlled"
+  preview={`const [color, setColor] = React.useState<Color | null>(parseColor("#7f007f"));
+return <ColorField value={color} onChange={setColor} />`}
+/>
+
+## Color channel
+
+By default, ColorField allows the user to edit the color as a hex value. When the colorSpace and channel props are provided, ColorField displays the value for that channel formatted as a number instead.Rendering multiple ColorFields together can allow a user to edit a color.
+
+<ComponentPreview
+  name="color-field/color-channel"
+  preview={`<ColorField label="Hue" colorSpace="hsl" channel="hue" />
+  <ColorField label="Saturation" colorSpace="hsl" channel="saturation" />
+  <ColorField label="Lightness" colorSpace="hsl" channel="lightness" />`}
+/>
+
+## Label
 
 A visual label can be provided for the `ColorField` using the `label` prop or a hidden label using `aria-label` prop.
 
 <ComponentPreview
-  name="core/color-field-label"
+  name="color-field/label"
   preview={`<ColorField label="Background" placeholder="Visible label" />
 <ColorField aria-label="Background" placeholder="Hidden label" />`}
 />
+
+## Description
+
+A description can be supplied to `ColorField` via the `description` prop. The description is always visible unless the `isInvalid` prop is `true` and an error message is provided.
+
+<ComponentPreview
+  name="color-field/description"
+  preview={`<ColorField label="Color" description="Enter a background color." />`}
+/>
+
+## Validation
+
+By default, `ColorField` displays default validation messages provided by the browser. You can customize this using the `errorMessage` prop, which will be displayed when the `isInvalid` prop is set to `true`.
+
+<ComponentPreview
+  name="color-field/error-message"
+  preview={`<ColorField label="Color" isInvalid errorMessage="Please fill out this field." />`}
+/>
+
+## Options
 
 ### Size
 
@@ -69,7 +98,7 @@ Use the `size` prop to control the size of the `ColorField`.<br/>
 The default variant is `"md"`.
 
 <ComponentPreview
-  name="core/color-field-sizes"
+  name="color-field/sizes"
   preview={`<ColorField label="small" size="sm" />
 <ColorField label="medium" size="md" />
 <ColorField label="large" size="lg" />`}
@@ -80,47 +109,9 @@ The default variant is `"md"`.
 To add additional context for the `ColorField`, use the `prefix` and `suffix` props.
 
 <ComponentPreview
-  name="core/color-field-prefix-and-suffix"
+  name="color-field/prefix-and-suffix"
   preview={`<ColorField prefix={<PaletteIcon />} />
 <ColorField suffix={<PaletteIcon />} />`}
-/>
-
-### Description
-
-A description can be supplied to `ColorField` via the `description` prop. The description is always visible unless the `isInvalid` prop is `true` and an error message is provided.
-
-<ComponentPreview
-  name="core/color-field-description"
-  preview={`<ColorField label="Color" description="Enter a background color." />`}
-/>
-
-### Contextual help
-
-A ContextualHelp element may be placed next to the label to provide additional information or help about a ColorField.
-
-<ComponentPreview
-  name="core/color-field-contextual-help"
-  preview={`<ColorField label="Color" contextualHelp={<ContextualHelp />} />`}
-/>
-
-### Error message
-
-An `errorMessage` can be supplied to `ColorField`, which will be displayed when the `isInvalid` prop is set to `true`.
-
-<ComponentPreview
-  name="core/color-field-error-message"
-  preview={`<ColorField label="Color" isInvalid errorMessage="Please fill out this field." />`}
-/>
-
-### Loading
-
-Use the `isLoading` prop to control the loading state of the ColorField.
-Use the `loaderPosition` prop to control the position of the loader.
-
-<ComponentPreview
-  name="core/color-field-loading"
-  preview={`<ColorField isLoading loaderPosition="prefix" />
-<ColorField isLoading loaderPosition="suffix" />`}
 />
 
 ### Disabled
@@ -128,7 +119,7 @@ Use the `loaderPosition` prop to control the position of the loader.
 Use the `isDisabled` prop to disable the `ColorField`.
 
 <ComponentPreview
-  name="core/color-field-disabled"
+  name="color-field/disabled"
   preview={`<ColorField value={parseColor("rgb(222,70,58)")} isDisabled />`}
 />
 
@@ -137,7 +128,7 @@ Use the `isDisabled` prop to disable the `ColorField`.
 The `isReadOnly` boolean prop makes the `ColorField`'s text content immutable. Unlike `isDisabled`, the `ColorField` remains focusable and the contents can still be copied.
 
 <ComponentPreview
-  name="core/color-field-read-only"
+  name="color-field/read-only"
   preview={`<ColorField label="Color" isReadOnly value="#121212" />`}
 />
 
@@ -147,30 +138,11 @@ Use the `isRequired` prop to mark the `ColorField` as required.
 Use the `necessityIndicator` prop to control the visual style of the required state.
 
 <ComponentPreview
-  name="core/color-field-required"
+  name="color-field/required"
   preview={`<ColorField label="Color" isRequired />
 <ColorField label="Color" isRequired necessityIndicator="icon" />
 <ColorField label="Color" isRequired necessityIndicator="label" />
 <ColorField label="Color" necessityIndicator="label" />`}
-/>
-
-## Uncontrolled
-
-Use the `value` and `onChange` props to control the value of the input.
-
-<ComponentPreview
-  name="core/color-field-uncontrolled"
-  preview={`<ColorField defaultValue="#7f007f" />`}
-/>
-
-## Controlled
-
-Use the `value` and `onChange` props to control the value of the input.
-
-<ComponentPreview
-  name="core/color-field-controlled"
-  preview={`const [color, setColor] = React.useState<Color | null>(parseColor("#7f007f"));
-return <ColorField value={color} onChange={setColor} />`}
 />
 
 ## Composition
@@ -178,12 +150,10 @@ return <ColorField value={color} onChange={setColor} />`}
 If you need to customize things further, you can drop down to the composition level.
 
 <ComponentPreview
-  name="core/color-field-composition"
+  name="color-field/composition"
   preview={`<ColorFieldRoot>
     <Label>Background</Label>
-    <InputRoot>
-      <Input />
-    </InputRoot>
+    <ColorFieldInput />
     <Description>Enter a background color.</Description>
     <FieldError />
   </ColorFieldRoot>`}

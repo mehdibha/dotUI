@@ -1,0 +1,14 @@
+{
+  "name": "form_react-hook-form",
+  "type": "core",
+  "deps": [
+    "react-hook-form"
+  ],
+  "files": [
+    {
+      "type": "core",
+      "content": "\"use client\";\r\n\r\nimport { Form } from \"react-aria-components\";\r\nimport { Controller, FieldValues } from \"react-hook-form\";\r\nimport type {\r\n  FieldPath,\r\n  UseControllerProps,\r\n  ControllerRenderProps,\r\n  ControllerFieldState,\r\n} from \"react-hook-form\";\r\n\r\ntype FormControlProps<\r\n  TFieldValues extends FieldValues = FieldValues,\r\n  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,\r\n> = Omit<UseControllerProps<TFieldValues, TName>, \"render\"> & {\r\n  render: (\r\n    props: Omit<ControllerRenderProps<TFieldValues, TName>, \"disabled\"> &\r\n      Omit<ControllerFieldState, \"invalid\" | \"error\"> & {\r\n        isInvalid: boolean;\r\n        isDisabled?: boolean;\r\n        errorMessage?: string;\r\n      }\r\n  ) => React.ReactElement;\r\n};\r\n\r\nfunction FormControl<\r\n  TFieldValues extends FieldValues,\r\n  TName extends FieldPath<TFieldValues>,\r\n>({ render, ...rest }: FormControlProps<TFieldValues, TName>) {\r\n  return (\r\n    <Controller\r\n      {...rest}\r\n      render={({\r\n        field: { disabled, ...field },\r\n        fieldState: { invalid, error, ...fieldState },\r\n      }) =>\r\n        render({\r\n          ...field,\r\n          ...fieldState,\r\n          isDisabled: disabled,\r\n          isInvalid: invalid,\r\n          errorMessage: error?.message,\r\n        })\r\n      }\r\n    />\r\n  );\r\n}\r\n\r\nexport { Form, FormControl };\r\n",
+      "path": "core/form.tsx"
+    }
+  ]
+}

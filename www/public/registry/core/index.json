@@ -1,0 +1,272 @@
+[
+  {
+    "name": "alert",
+    "type": "core",
+    "label": "Alert"
+  },
+  {
+    "name": "avatar",
+    "type": "core",
+    "label": "Avatar"
+  },
+  {
+    "name": "badge",
+    "type": "core",
+    "label": "Badge"
+  },
+  {
+    "name": "breadcrumbs",
+    "type": "core",
+    "label": "Breadcrumbs"
+  },
+  {
+    "name": "button",
+    "type": "core",
+    "label": "Button"
+  },
+  {
+    "name": "calendar",
+    "type": "core",
+    "label": "Calendar"
+  },
+  {
+    "name": "checkbox",
+    "type": "core",
+    "label": "Checkbox"
+  },
+  {
+    "name": "checkbox-group",
+    "type": "core",
+    "label": "Checkbox Group"
+  },
+  {
+    "name": "color-area",
+    "type": "core",
+    "label": "Color Area"
+  },
+  {
+    "name": "color-field",
+    "type": "core",
+    "label": "Color Field"
+  },
+  {
+    "name": "color-picker",
+    "type": "core",
+    "label": "Color Picker"
+  },
+  {
+    "name": "color-slider",
+    "type": "core",
+    "label": "Color Slider"
+  },
+  {
+    "name": "color-swatch",
+    "type": "core",
+    "label": "Color Swatch"
+  },
+  {
+    "name": "color-swatch-picker",
+    "type": "core",
+    "label": "Color Swatch Picker"
+  },
+  {
+    "name": "color-thumb",
+    "type": "core",
+    "label": "Color Thumb"
+  },
+  {
+    "name": "combobox",
+    "type": "core",
+    "label": "Combobox"
+  },
+  {
+    "name": "command",
+    "type": "core",
+    "label": "Command"
+  },
+  {
+    "name": "date-field",
+    "type": "core",
+    "label": "Date Field"
+  },
+  {
+    "name": "date-input",
+    "type": "core",
+    "label": "Date Input"
+  },
+  {
+    "name": "date-picker",
+    "type": "core",
+    "label": "Date Picker"
+  },
+  {
+    "name": "date-range-picker",
+    "type": "core",
+    "label": "Date Range Picker"
+  },
+  {
+    "name": "dialog",
+    "type": "core",
+    "label": "Dialog"
+  },
+  {
+    "name": "drawer",
+    "type": "core",
+    "label": "Drawer"
+  },
+  {
+    "name": "drop-zone",
+    "type": "core",
+    "label": "Drop Zone"
+  },
+  {
+    "name": "field",
+    "type": "core",
+    "label": "Field"
+  },
+  {
+    "name": "file-trigger",
+    "type": "core",
+    "label": "File Trigger"
+  },
+  {
+    "name": "form",
+    "type": "core",
+    "label": "Form"
+  },
+  {
+    "name": "input",
+    "type": "core",
+    "label": "Input"
+  },
+  {
+    "name": "kbd",
+    "type": "core",
+    "label": "Kbd"
+  },
+  {
+    "name": "list-box",
+    "type": "core",
+    "label": "List Box"
+  },
+  {
+    "name": "loader",
+    "type": "core",
+    "label": "Loader"
+  },
+  {
+    "name": "menu",
+    "type": "core",
+    "label": "Menu"
+  },
+  {
+    "name": "modal",
+    "type": "core",
+    "label": "Modal"
+  },
+  {
+    "name": "number-field",
+    "type": "core",
+    "label": "Number Field"
+  },
+  {
+    "name": "overlay",
+    "type": "core",
+    "label": "Overlay"
+  },
+  {
+    "name": "popover",
+    "type": "core",
+    "label": "Popover"
+  },
+  {
+    "name": "progress-bar",
+    "type": "core",
+    "label": "Progress Bar"
+  },
+  {
+    "name": "radio-group",
+    "type": "core",
+    "label": "Radio Group"
+  },
+  {
+    "name": "search-field",
+    "type": "core",
+    "label": "Search Field"
+  },
+  {
+    "name": "select",
+    "type": "core",
+    "label": "Select"
+  },
+  {
+    "name": "separator",
+    "type": "core",
+    "label": "Separator"
+  },
+  {
+    "name": "skeleton",
+    "type": "core",
+    "label": "Skeleton"
+  },
+  {
+    "name": "slider",
+    "type": "core",
+    "label": "Slider"
+  },
+  {
+    "name": "switch",
+    "type": "core",
+    "label": "Switch"
+  },
+  {
+    "name": "table",
+    "type": "core",
+    "label": "Table"
+  },
+  {
+    "name": "tabs",
+    "type": "core",
+    "label": "Tabs"
+  },
+  {
+    "name": "tag-group",
+    "type": "core",
+    "label": "Tag Group"
+  },
+  {
+    "name": "text",
+    "type": "core",
+    "label": "Text"
+  },
+  {
+    "name": "text-area",
+    "type": "core",
+    "label": "Text Area"
+  },
+  {
+    "name": "text-field",
+    "type": "core",
+    "label": "Text Field"
+  },
+  {
+    "name": "time-field",
+    "type": "core",
+    "label": "Time Field"
+  },
+  {
+    "name": "toggle-button",
+    "type": "core",
+    "label": "Toggle Button"
+  },
+  {
+    "name": "toggle-button-group",
+    "type": "core",
+    "label": "Toggle Button Group"
+  },
+  {
+    "name": "tooltip",
+    "type": "core",
+    "label": "Tooltip"
+  }
+]

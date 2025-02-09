@@ -1,277 +1,174 @@
+import * as p from "@clack/prompts";
+import type {
+  Aliases,
+  ExtendedConfig,
+  RawConfig,
+  RegistryTheme,
+} from "@dotui/schemas";
 import { Command } from "commander";
 import fs from "fs-extra";
 import path from "path";
-import prompts from "prompts";
-import { z } from "zod";
-import { BASE_URL } from "@/constants/config";
-import {
-  DEFAULT_COMPONENTS_ALIAS,
-  DEFAULT_CORE_ALIAS,
-  DEFAULT_HOOKS_ALIAS,
-  DEFAULT_UTILS_ALIAS,
-} from "@/constants/default-config";
-import { addComponents } from "@/helpers/add-components";
-import {
-  Config,
-  rawConfigSchema,
-  resolveConfigPaths,
-} from "@/helpers/get-config";
-import { getProjectInfo } from "@/helpers/get-project-info";
+import { addPrimitives } from "@/helpers/add-primitives";
+import { resolveConfigPaths } from "@/helpers/get-config";
 import { handleError } from "@/helpers/handle-error";
-import { isEmptyProject } from "@/helpers/is-empty-project";
-import { onPromptState } from "@/helpers/on-prompt-state";
-import {
-  getRegistryColorSystems,
-  getRegistryIconLibrairies,
-  getRegistryStyles,
-  getRegistryThemes,
-} from "@/helpers/registry";
-import { logger, highlight, spinner } from "@/utils";
+import { initChecks } from "@/helpers/init-checks";
+import { getRegistryTheme, getRegistryThemes } from "@/helpers/registry-api";
+import { c } from "@/utils";
 
-const initOptionsSchema = z.object({
-  projectDir: z.string().optional(),
-  yes: z.boolean(),
-  skipInstall: z.boolean(),
-});
-
-export const init = new Command()
+export const initCommand = new Command()
   .name("init")
   .description("initialize your project and install required dependencies")
-  .argument("[projectDir]")
-  .usage("[projectDir] [options]")
-  .helpOption("-h, --help", "Display this help message.")
+  .argument("[themeId]")
+  .usage("[themeId] [options]")
+  .helpOption("-h, --help", "show all available options")
   .option("-y --yes", "use default options", false)
-  .option("--skip-install", "skip install", false)
-  .action(async (projectDir, opts) => {
-    try {
-      logger.log(
-        `${highlight.warn("⚠️  dotui-cli is still under development.")}`
-      );
-      logger.log(`You can follow the progress on https://x.com/mehdibha_.`);
-      logger.break();
-      return;
-      const options = initOptionsSchema.parse({ projectDir, ...opts });
-      await runInit(options);
-      logger.log(
-        `${highlight.success("Success!")} Project initialization completed.`
-      );
-      logger.break();
-      logger.log(
-        `You may now add components, hooks, and more using the \`add\` command.`
-      );
-      logger.break();
-      logger.log(`We suggest that you begin by typing:`);
-      logger.break();
-      logger.success("  npx dotui-cli@latest add button");
-    } catch (error) {
-      logger.break();
-      handleError(error);
-    }
-  });
-
-export async function runInit(options: z.infer<typeof initOptionsSchema>) {
-  let projectDir = options.projectDir ?? process.cwd();
-  const emptyProject = isEmptyProject(projectDir);
-  if (emptyProject) {
-    logger.log(
-      `We could not find a project at ${highlight.error(projectDir)}.`
-    );
-    logger.break();
-    process.exit(1);
-  }
-
-  // We check if a config file already exists
-  const configPath = path.resolve(projectDir, "dotui.config.json");
-  const checkConfigSpinner = spinner(`Verifying your project config.`).start();
-  if (fs.existsSync(configPath) && !options.yes) {
-    {
-      checkConfigSpinner?.fail();
-      const { proceed } = await prompts({
-        onState: onPromptState,
-        type: "confirm",
-        name: "proceed",
-        message: `A ${highlight.info(
-          "dotui.config.json"
-        )} file already exists.\nDo you want to overwrite it?`,
-        initial: false,
-      });
-      if (!proceed) {
-        process.exit(1);
+  .option(
+    "-d --dir",
+    "the working directory. defaults to the current directory.",
+    process.cwd()
+  )
+  .action(
+    async (
+      themeId: string | undefined,
+      options: { yes: boolean; dir: string }
+    ) => {
+      try {
+        p.intro("Initializing dotUI in your project.");
+        await initChecks(options);
+        const aliases = await getOrPromptForAlias();
+        themeId = await getOrPromptForThemeId(themeId);
+        const theme = await getRegistryTheme(themeId);
+        const config = await createConfigFile(options.dir, aliases, theme);
+        await addPrimitives(["base", theme.iconLibrary], config, {
+          overwrite: true,
+          message: "Updating your project",
+        });
+        p.outro(
+          `${c.success("Project initialized successfully.")}\n\nYou may know add components: ${c.info("npx dotui-cli add button")}`
+        );
+      } catch (error) {
+        p.outro(
+          c.error(
+            "Someting went wrong. If the problem persists, please open an issue on GitHub."
+          )
+        );
+        handleError(error);
       }
-      fs.removeSync(configPath);
     }
-  }
-  checkConfigSpinner?.succeed();
-
-  // We check the framework
-  const frameworkSpinner = spinner(`Verifying framework.`).start();
-  const projectInfo = await getProjectInfo(projectDir);
-  if (!projectInfo || projectInfo?.framework.name === "manual") {
-    frameworkSpinner?.fail();
-    logger.break();
-    logger.error(
-      `We could not detect a supported framework at ${highlight.info(
-        projectDir
-      )}.`
-    );
-    logger.break();
-    process.exit(1);
-  }
-  frameworkSpinner?.succeed(
-    `Verifying framework. Found ${highlight.info(projectInfo.framework.label)}.`
   );
 
-  // We check the tailwind configuration
-  const tailwindSpinner = spinner(`Validating Tailwind CSS.`).start();
-  if (!projectInfo?.tailwindConfigFile || !projectInfo?.tailwindCssFile) {
-    tailwindSpinner?.fail();
-    logger.break();
-    logger.error(
-      `No Tailwind CSS configuration found at ${highlight.info(projectDir)}.`
-    );
-    logger.error(
-      `It is likely you do not have Tailwind CSS installed or have an invalid configuration.`
-    );
-    logger.error(`Install Tailwind CSS then try again.`);
-    logger.break();
-    process.exit(1);
-  } else {
-    tailwindSpinner?.succeed();
+const getOrPromptForAlias = async () => {
+  const customizeAlias = await p.confirm({
+    message: "Would you like to customize the import alias?",
+    initialValue: false,
+  });
+
+  if (p.isCancel(customizeAlias)) {
+    p.cancel("Project init cancelled.");
+    process.exit(0);
   }
 
-  // We check the import alias
-  const tsConfigSpinner = spinner(`Validating import alias.`).start();
-  if (!projectInfo?.aliasPrefix) {
-    tsConfigSpinner?.fail();
-    logger.break();
-    logger.error(`No import alias found in your tsconfig.json file.`);
-    logger.break();
-    process.exit(1);
-  } else {
-    tsConfigSpinner?.succeed();
+  let alias = {
+    components: "@/components",
+    core: "@/components/core",
+    hooks: "@/hooks",
+    lib: "@/lib",
+    utils: "@/lib/utils",
+  };
+
+  if (customizeAlias) {
+    alias = await p.group(
+      {
+        components: () =>
+          p.text({
+            message: `Configure the import alias for ${c.info("components")}:`,
+            placeholder: "@/components",
+          }),
+        core: () =>
+          p.text({
+            message: `Configure the import alias for ${c.info("core components")}:`,
+            placeholder: "@/components/core",
+          }),
+        hooks: () =>
+          p.text({
+            message: `Configure the import alias for ${c.info("hooks")}:`,
+            placeholder: "@/hooks",
+          }),
+        lib: () =>
+          p.text({
+            message: `Configure the import alias for ${c.info("lib")}:`,
+            placeholder: "@/lib",
+          }),
+        utils: () =>
+          p.text({
+            message: `Configure the import alias for ${c.info("utils")}:`,
+            placeholder: "@/lib/utils",
+          }),
+      },
+      {
+        onCancel: () => {
+          p.cancel("Project init cancelled.");
+          process.exit(0);
+        },
+      }
+    );
   }
 
-  logger.break();
+  return alias;
+};
 
-  // const { config, theme } = await promptForConfig({
-  //   projectDir,
-  //   yes: options.yes,
-  //   skipInstall: options.skipInstall,
-  // });
+async function getOrPromptForThemeId(argumentThemeId: string | undefined) {
+  if (argumentThemeId) return argumentThemeId;
 
-  // // Write dotui.config.json.
-  // const configSpinner = spinner(`Writing dotui.config.json.`).start();
-  // const targetPath = path.resolve(projectDir, "dotui.config.json");
-  // await fs.writeFile(targetPath, JSON.stringify(config, null, 2), "utf8");
-  // configSpinner.succeed();
+  const themes = await getRegistryThemes();
 
-  // const fullConfig = await resolveConfigPaths(projectDir, config);
-  // await addComponents(["index", theme.name], fullConfig, {});
+  const themeId = await p.select({
+    message: "Select a theme:",
+    options: themes.map((theme) => ({
+      value: theme.id,
+      label: theme.label,
+    })),
+  });
+
+  if (p.isCancel(themeId)) {
+    p.cancel("Project init cancelled.");
+    process.exit(1);
+  }
+
+  return themeId;
 }
 
-const promptForConfig = async (opts: {
-  projectDir: string;
-  yes: boolean;
-  skipInstall: boolean;
-}) => {
-  const [
-    styles,
-    //  iconLibraries,
-    //  themes,
-    // colorSystems
-  ] = await Promise.all([
-    getRegistryStyles(),
-    getRegistryIconLibrairies(),
-    // getRegistryThemes(),
-    // getRegistryColorSystems(),
-  ]);
+async function createConfigFile(
+  cwd: string,
+  aliases: Aliases,
+  theme: RegistryTheme
+): Promise<ExtendedConfig> {
+  const proceed = await p.confirm({
+    message: `Write configuration to ${c.info("dotui.json")}. Proceed?`,
+  });
 
-  // const projectInfo = await getProjectInfo(opts.projectDir);
+  if (p.isCancel(proceed)) {
+    p.cancel("Project init cancelled.");
+    process.exit(0);
+  }
 
-  // const options = await prompts([
-  //   {
-  //     type: "select",
-  //     name: "style",
-  //     message: `Which ${highlight.info("style")} would you like to use?`,
-  //     choices: styles.map((style) => ({
-  //       title: style.label ?? style.name,
-  //       value: style.name,
-  //     })),
-  //     onState: onPromptState,
-  //   },
-  //   {
-  //     type: "select",
-  //     name: "theme",
-  //     message: `Which ${highlight.info("theme")} whould you like to install?`,
-  //     choices: themes.map((theme) => ({
-  //       title: theme.name,
-  //       value: theme.label,
-  //     })),
-  //     onState: onPromptState,
-  //   },
-  //   {
-  //     type: "select",
-  //     name: "iconLibrary",
-  //     message: `Which ${highlight.info(
-  //       "icon library"
-  //     )} whould you like to use?`,
-  //     choices: iconLibraries.map((iconLibrary) => ({
-  //       title: iconLibrary.name,
-  //       value: iconLibrary.label,
-  //     })),
-  //     onState: onPromptState,
-  //   },
-  //   {
-  //     type: "select",
-  //     name: "colorSystem",
-  //     message: `Which ${highlight.info(
-  //       "color system"
-  //     )} would you like to use for theming?`,
-  //     choices: colorSystems.map((style) => ({
-  //       title: style.label,
-  //       value: style.name,
-  //     })),
-  //     onState: onPromptState,
-  //   },
-  // ]);
+  // Write config file
+  const createConfigSpinner = p.spinner();
+  createConfigSpinner.start("Creating configuration file");
+  const targetPath = path.resolve(cwd, "dotui.json");
+  const rawConfig: RawConfig = {
+    $schema: "http://localhost:3000/schema.json",
+    css: "app/globals.css", // TODO FIX THIS
+    aliases: aliases,
+    iconLibrary: theme.iconLibrary,
+    primitives: theme.primitives,
+  };
+  if (fs.existsSync(targetPath)) {
+    await fs.remove(targetPath);
+  }
+  await fs.writeFile(targetPath, JSON.stringify(rawConfig, null, 2), "utf8");
 
-  // logger.info("");
-
-  // const config : Config = {
-  //   $schema: `${BASE_URL}/schema.json`,
-  //   style: options.style,
-  //   iconLibrary: options.iconLibrary,
-  //   colorSystem: options.colorSystem,
-  //   rsc: projectInfo?.isRSC,
-  //   tsx: projectInfo?.isTsx ?? true,
-  //   tailwind: {
-  //     config: projectInfo?.tailwindConfigFile,
-  //     css: projectInfo?.tailwindCssFile,
-  //     prefix: "",
-  //   },
-  //   aliases: {
-  //     core: projectInfo?.aliasPrefix
-  //       ? `${projectInfo.aliasPrefix}/components/core`
-  //       : DEFAULT_CORE_ALIAS,
-  //     components: projectInfo?.aliasPrefix
-  //       ? `${projectInfo.aliasPrefix}/components`
-  //       : DEFAULT_COMPONENTS_ALIAS,
-  //     utils: projectInfo?.aliasPrefix
-  //       ? `${projectInfo.aliasPrefix}/utils`
-  //       : DEFAULT_UTILS_ALIAS,
-  //     lib: projectInfo?.aliasPrefix
-  //       ? `${projectInfo.aliasPrefix}/lib`
-  //       : DEFAULT_COMPONENTS_ALIAS,
-  //     hooks: projectInfo?.aliasPrefix
-  //       ? `${projectInfo.aliasPrefix}/hooks`
-  //       : DEFAULT_HOOKS_ALIAS,
-  //   },
-  // }
-
-  // console.log(config)
-
-  // return {
-  //   config: rawConfigSchema.parse(config),
-  //   theme: options.theme,
-  // };
-};
+  const config = await resolveConfigPaths(cwd, rawConfig);
+  createConfigSpinner.stop("Created configuration file");
+  return config;
+}

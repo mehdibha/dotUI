@@ -1,0 +1,8 @@
+{
+  "name": "form",
+  "type": "core",
+  "variants": [
+    "basic",
+    "react-hook-form"
+  ]
+}

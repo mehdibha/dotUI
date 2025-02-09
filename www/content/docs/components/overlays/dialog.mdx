@@ -1,0 +1,265 @@
+---
+title: Dialog
+description: A dialog is an overlay shown above other content in an application.
+links:
+  - label: Aria dialog docs
+    href: https://react-spectrum.adobe.com/react-aria/Dialog.html
+  - label: Report an issue
+    href: https://github.com/mehdibha/dotUI/issues/new/choose
+  - label: Edit this page
+    href: https://github.com/mehdibha/dotUI/tree/main/content/components/overlays/dialog.mdx?plain=1
+---
+
+<ComponentPreview
+  name="dialog/basic"
+  preview={`<DialogRoot>
+    <Button prefix={<PenSquareIcon />}>Create issue</Button>
+    <Dialog
+      title="Create a new issue"
+      description="Report an issue or create a feature request."
+    >
+      <DialogBody>
+        <TextField aria-label="Title" placeholder="Title" autoFocus />
+        <TextArea aria-label="Description" placeholder="description" />
+      </DialogBody>
+      <DialogFooter>
+        <Button slot="close">Cancel</Button>
+        <Button slot="close">Save changes</Button>
+      </DialogFooter>
+    </Dialog>
+  </DialogRoot>`}
+/>
+
+## Installation
+
+```package-install
+npx dotui-cli@latest add dialog
+```
+
+## Anatomy
+
+A dialog consists of a container element and an optional title, description and close button. It can be placed within a Modal, Popover, Drawer or an Overlay to create modal dialogs, popovers, and other types of overlays. A DialogRoot can be used to open a dialog overlay in response to a user action, e.g. clicking a button.
+
+```tsx
+import { Button } from "@/components/core/button";
+import { DialogRoot, Dialog } from "@/components/core/dialog";
+
+<DialogRoot>
+  <Button>Open dialog</Button>
+  <Dialog heading=".." description="..">
+    {/* Dialog content */}
+  </Dialog>
+</DialogRoot>;
+```
+
+```tsx
+import { Button } from "@/components/core/button";
+import {
+  DialogRoot,
+  DialogHeader
+  DialogHeading,
+  DialogDescription
+  DialogContent,
+  DialogFooter
+} from "@/components/core/dialog";
+import { Overlay } from "@/components/core/overlay";
+
+<DialogRoot>
+  <Button>Open dialog</Button>
+  <Overlay type="modal">
+    <DialogContent>
+      <DialogHeader>
+        <DialogHeading>{/* Dialog title */}</DialogHeading>
+        <DialogDescription>{/* Dialog description */}</DialogDescription>
+      </DialogHeader>
+      <DialogBody>
+      {/* Dialog content */}
+      </DialogBody>
+      <DialogFooter>
+        <Button slot="close">Cancel</Button>
+        <Button>Save changes</Button>
+      </DialogFooter>
+    </DialogContent>
+  </Overlay>
+</DialogRoot>;
+```
+
+## Usage
+
+Use dialog to grab the user's attention for critical tasks, like confirming actions, providing additional details, or capturing input, without navigating away from the current view.
+
+### Best practices
+
+- If a dialog does not have a visible heading element, an `aria-label` or `aria-labelledby` prop must be passed instead to identify the element to assistive technology.
+
+## Type
+
+Dialogs can be rendered as modals, popovers, or drawers using the `type` prop.
+By default, dialogs are displayed as drawers on mobile. You can override this behavior by setting the `mobileType` prop.
+
+<ComponentPreview
+  name="dialog/types"
+  preview={`<DialogRoot>
+    <Button>Create issue</Button>
+    <Dialog type={type} mobileType={mobileType}>  {/* "modal", "popover", "drawer" */}
+      {/* Dialog content */}
+    </Dialog>
+  </DialogRoot>`}
+/>
+
+## Alert Dialog
+
+Use the `role="alertdialog"` prop on the `<Dialog>` element to make an alert dialog.
+If the `isDismissable` prop is not explicitly set, the dialog will be not dismissable.
+
+<ComponentPreview
+  name="dialog/alert-dialog"
+  preview={`<DialogRoot>
+    <Button>Delete project</Button>
+    <Dialog role="alertdialog">
+      {/* Dialog content */}
+    </Dialog>
+  </DialogRoot>`}
+/>
+
+## Dismissable
+
+Dialogs are dismissable by default (except alert dialogs) allowing users to click outside to close the dialog.
+
+<ComponentPreview
+  name="dialog/dismissable"
+  preview={`<DialogRoot>
+    <Button>Create issue</Button>
+    <Dialog isDismissable={isDismissable}>
+      {/* Dialog content */}
+    </Dialog>
+  </DialogRoot>`}
+/>
+
+## Inset content
+
+Use the `DialogInset` component to add inset content to the dialog.
+
+<ComponentPreview
+  name="dialog/inset-content"
+  preview={`<DialogRoot>
+    <Button>Create issue</Button>
+    <Dialog title=".." description="..">
+      <DialogBody>
+        <DialogInset>
+          Content within the inset.
+        </DialogInset>
+        <p className="mt-4">Content outside the inset.</p>
+      </DialogBody>
+      {/* Dialog footer */}
+    </Dialog>
+  </DialogRoot>`}
+/>
+
+## Controlled
+
+Use the `isOpen` and `onOpenChange` props to control the dialog's open state.
+
+<ComponentPreview
+  name="dialog/controlled"
+  preview={`const [isOpen, setOpen] = React.useState(false);
+  return (
+    <DialogRoot isOpen={isOpen} onOpenChange={setOpen}>
+      <Button>Open dialog</Button>
+      <Dialog title="This is a heading" description="this is a description">
+        content here
+      </Dialog>
+    </DialogRoot>
+  );`}
+/>
+
+## Composition
+
+If you need to customize things further, you can drop down to the composition level.
+
+<ComponentPreview
+  name="dialog/composition"
+  preview={`<DialogRoot>
+    <Button>Create issue</Button>
+    <Overlay>
+      <DialogContent>
+        <DialogHeader>
+          <DialogHeading>Create a new issue</DialogHeading>
+          <DialogDescription>
+            Report an issue or create a feature request.
+          </DialogDescription>
+        </DialogHeader>
+        <DialogBody>
+          <TextField aria-label="Title" placeholder="Title" autoFocus />
+          <TextArea aria-label="Description" placeholder="description" />
+        </DialogBody>
+        <DialogFooter>
+          <Button>Cancel</Button>
+          <Button>Save changes</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Overlay>
+  </DialogRoot>`}
+/>
+
+## Examples
+
+### Async form submission
+
+<ComponentPreview name="dialog/async-form-submission" preview={``} />
+
+### Nested dialog
+
+Dialogs support nesting, allowing you to open a dialog from within another dialog.
+
+<ComponentPreview name="dialog/nested" preview={``} />
+
+## API Reference
+
+### DialogRoot
+
+| Prop          | Type        | Default | Description                                            |
+| ------------- | ----------- | ------- | ------------------------------------------------------ |
+| `children*`   | `ReactNode` | -       |                                                        |
+| `isOpen`      | `boolean`   | -       | Whether the overlay is open by default (controlled).   |
+| `defaultOpen` | `boolean`   | -       | Whether the overlay is open by default (uncontrolled). |
+
+### Dialog
+
+| Prop                           | Type                                | Default    | Description                                                                                                                                                                                                                                                                                                     |
+| ------------------------------ | ----------------------------------- | ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `type`                         | `'modal' \|'drawer' \|'popover' \|` | `'modal'`  | The type of the overlay.                                                                                                                                                                                                                                                                                        |
+| `mobileType`                   | `'modal' \|'drawer' \|'popover' \|` | `'drawer'` | The mobile type of the overlay.                                                                                                                                                                                                                                                                                 |
+| `isKeyboardDismissDisabled`    | `boolean`                           | `false`    | Whether pressing the escape key to close the dialog should be disabled.                                                                                                                                                                                                                                         |
+| `shouldCloseOnInteractOutside` | `(element: Element) => boolean`     | -          | When user interacts with the argument element outside of the overlay ref, return `true` if `onClose` should be called. This gives you a chance to filter out interaction with elements that should not dismiss the overlay. By default, `onClose` will always be called on interaction outside the overlay ref. |
+| `isOpen`                       | `boolean`                           | -          | Whether the overlay is open by default (controlled).                                                                                                                                                                                                                                                            |
+| `defaultOpen`                  | `boolean`                           | -          | Whether the overlay is open by default (uncontrolled).                                                                                                                                                                                                                                                          |
+| `modalProps`                   | `ModalProps`                        | -          | Props applied to the Modal element. [See ModalProps](/docs/components/overlays/modal#api-reference)                                                                                                                                                                                                             |
+| `drawerProps`                  | `DrawerProps`                       | -          | Props applied to the Drawer element. [See DrawerProps](/docs/components/overlays/drawer#api-reference)                                                                                                                                                                                                          |
+| `popoverProps`                 | `PopoverProps`                      | -          | Props applied to the Popover element. [See PopoverProps](/docs/components/overlays/popover#api-reference)                                                                                                                                                                                                       |
+| `className`                    | `string`                            | -          | The CSS className for the element.                                                                                                                                                                                                                                                                              |
+| `style`                        | `CSSProperties`                     | -          | The inline style for the element.                                                                                                                                                                                                                                                                               |
+
+| Event          | Type                        | Description                                                   |
+| -------------- | --------------------------- | ------------------------------------------------------------- |
+| `onOpenChange` | `(isOpen: boolean) => void` | Handler that is called when the overlay's open state changes. |
+
+| Prop               | Type                        | Default    | Description                                                                                                         |
+| ------------------ | --------------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------- |
+| `role`             | `'dialog' \| 'alertdialog'` | `'dialog'` | The accessibility role for the dialog.                                                                              |
+| `id`               | `string`                    | -          | The element's unique identifier. [See MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id). |
+| `aria-label`       | `string`                    | -          | Defines a string value that labels the current element.                                                             |
+| `aria-labelledby`  | `string`                    | -          | Identifies the element (or elements) that labels the current element.                                               |
+| `aria-describedby` | `string`                    | -          | Identifies the element (or elements) that describes the object.                                                     |
+| `aria-details`     | `string`                    | -          | Identifies the element (or elements) that provide a detailed, extended description for the object.                  |
+
+## Accessibility
+
+### Keyboard interactions
+
+| Key             | Description                                                                                                                                          |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Space` `Enter` | When focus is on the trigger, opens the dialog.                                                                                                      |
+| `Tab`           | Moves focus to the next button inside the dialog (last becomes first). If none of the buttons are selected, the focus is set on the first button.    |
+| `Shift+Tab`     | Moves focus to the previous button inside the dialog (first becomes last). If none of the buttons are selected, the focus is set on the last button. |
+| `Esc`           | Dismisses the dialog and moves focus to the trigger.                                                                                                 |

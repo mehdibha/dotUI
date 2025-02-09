@@ -1,12 +1,11 @@
 "use client";
 
 import React from "react";
-import { BackgroundColor } from "@adobe/leonardo-contrast-colors";
 import { dotUIThemes } from "@/lib/themes";
 import { useThemes } from "@/hooks/use-themes";
-import { Alert } from "@/registry/ui/default/core/alert";
-import { Dialog, DialogRoot } from "@/registry/ui/default/core/dialog";
-import { Radio, RadioGroup } from "@/registry/ui/default/core/radio-group";
+import { Alert } from "@/components/core/alert";
+import { Dialog, DialogRoot } from "@/components/core/dialog";
+import { Radio, RadioGroup } from "@/components/core/radio-group";
 
 export const ExploreThemesDialog = ({
   children,
@@ -17,7 +16,7 @@ export const ExploreThemesDialog = ({
   return (
     <DialogRoot>
       {children}
-      <Dialog type="drawer" className="container max-w-screen-xl !py-8">
+      <Dialog type="drawer" className="max-w-(--breakpoint-xl) py-8! container">
         {({ close }) => (
           <>
             <h2 className="text-lg font-bold">Themes</h2>

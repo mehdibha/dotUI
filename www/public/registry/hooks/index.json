@@ -1,6 +1,7 @@
 [
   {
-    "name": "use-media-query",
-    "label": "use-media-query"
+    "name": "use-is-mobile",
+    "type": "hook",
+    "label": "useIsMobile"
   }
 ]

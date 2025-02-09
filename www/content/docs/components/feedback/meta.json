@@ -1,3 +1,3 @@
 {
-  "pages": ["alert", "progress", "skeleton"]
+  "pages": ["alert", "progress-bar"]
 }

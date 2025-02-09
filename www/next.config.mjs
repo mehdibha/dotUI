@@ -12,18 +12,12 @@ const config = {
       },
       {
         protocol: "https",
-        hostname: "images.unsplash.com",
+        hostname: "ui.shadcn.com",
       },
     ],
   },
-  redirects: async () => {
-    return [
-      {
-        source: "/",
-        destination: "/docs/getting-started/introduction",
-        permanent: false,
-      },
-    ];
+  devIndicators: {
+    appIsrStatus: false,
   },
 };
 

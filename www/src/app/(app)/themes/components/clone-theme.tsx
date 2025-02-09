@@ -1,14 +1,14 @@
 import React from "react";
 import { useThemes } from "@/hooks/use-themes";
-import { Button } from "@/registry/ui/default/core/button";
+import { Button } from "@/components/core/button";
 import {
   DialogRoot,
   Dialog,
   DialogFooter,
   DialogRootProps,
-} from "@/registry/ui/default/core/dialog";
-import { Form } from "@/registry/ui/default/core/form";
-import { TextField } from "@/registry/ui/default/core/text-field";
+} from "@/components/core/dialog";
+import { Form } from "@/components/core/form";
+import { TextField } from "@/components/core/text-field";
 
 export const CloneThemeDialog = ({
   children,

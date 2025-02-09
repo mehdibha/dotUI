@@ -7,6 +7,7 @@ import { visit } from "unist-util-visit";
 export default function remarkInlineCode(): Transformer<Root, Root> {
   return (tree) => {
     visit(tree, "inlineCode", (node) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const raw = toString(node as any);
       const match = raw.match(/(.+)\{:([\w-]+)\}$/);
       node.value = match?.[2] ? node.value : `${node.value}{:tsx}`;

@@ -16,7 +16,7 @@ links:
 ---
 
 <ComponentPreview
-  name="core/select-basic"
+  name="select/basic"
   preview={`<Select>
     <Item>Perplexity</Item>
     <Item>Replicate</Item>
@@ -27,30 +27,9 @@ links:
 
 ## Installation
 
-<Tabs items={["CLI", "Manual"]}>
-  <Tab value="CLI">
-  
-  ```package-install
+```package-install
 npx dotui-cli@latest add select
 ```
-
-  </Tab>
-  <Tab value="manual">
-  
-    <Steps>
-      <Step>Install the following dependencies:</Step>
-
-    ```package-install
-    react-aria-components
-    ```
-
-      <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name="core/select" />
-      <Step>Update the import paths to match your project setup.</Step>
-    </Steps>
-
-  </Tab>
-</Tabs>
 
 ## Usage
 
@@ -65,7 +44,7 @@ Use `Select` to allow users to choose a single option from a collapsible list of
 Use the `placeholder` prop to provide a temporary text that occupies the text input when it is empty.
 
 <ComponentPreview
-  name="core/select-placeholder"
+  name="select/placeholder"
   preview={`<Select placeholder="Select a provider">
     <Item>Perplexity</Item>
     <Item>Replicate</Item>
@@ -79,7 +58,7 @@ Use the `placeholder` prop to provide a temporary text that occupies the text in
 A visual label can be provided for the `Select` using the `label` prop, or a hidden label using `aria-label` prop.
 
 <ComponentPreview
-  name="core/select-label"
+  name="select/label"
   preview={`<Select label="Provider">
     <Item>Perplexity</Item>
     <Item>Replicate</Item>
@@ -93,25 +72,8 @@ A visual label can be provided for the `Select` using the `label` prop, or a hid
 A description can be supplied to a Select via the `description` prop. The description is always visible unless the `isInvalid` prop is `true` and an error message is provided.
 
 <ComponentPreview
-  name="core/select-description"
+  name="select/description"
   preview={`<Select label="Provider" description="Please select a provider.">
-    <Item>Perplexity</Item>
-    <Item>Replicate</Item>
-    <Item>Together AI</Item>
-    <Item>ElevenLabs</Item>
-  </Select>`}
-/>
-
-### Contextual help
-
-A `ContextualHelp` element may be placed next to the label to provide additional information or help about a `Select`.
-
-<ComponentPreview
-  name="core/select-contextual-help"
-  preview={`<Select
-    label="Provider"
-    contextualHelp={<ContextualHelp />}
-  >
     <Item>Perplexity</Item>
     <Item>Replicate</Item>
     <Item>Together AI</Item>
@@ -124,7 +86,7 @@ A `ContextualHelp` element may be placed next to the label to provide additional
 An `errorMessage` can be supplied to `Select`, which will be displayed when the `isInvalid` prop is set to `true`.
 
 <ComponentPreview
-  name="core/select-validation"
+  name="select/validation"
   preview={`<Select label="Provider" isInvalid errorMessage="Please select an item in the list.">
     <Item>Perplexity</Item>
     <Item>Replicate</Item>
@@ -139,7 +101,7 @@ Select supports sections in order to group options. Sections can be used by wrap
 Sections without a `title` must provide an `aria-label` for accessibility.
 
 <ComponentPreview
-  name="core/select-sections"
+  name="select/sections"
   preview={`<Select label="Model">
     <Section title="OpenAI">
       <Item>GPT-4o</Item>
@@ -170,7 +132,7 @@ Sections without a `title` must provide an `aria-label` for accessibility.
 Items may be links to another page or website. This can be achieved by passing the `href` prop to the `Item` component.
 
 <ComponentPreview
-  name="core/select-links"
+  name="select/links"
   preview={`<Select label="Project">
     <Item href="/create-project">Create new...</Item>
     <Item>DotUI</Item>
@@ -184,7 +146,7 @@ Items may be links to another page or website. This can be achieved by passing t
 The `isDisabled` prop can be used to disable the Select.
 
 <ComponentPreview
-  name="core/select-disabled"
+  name="select/disabled"
   preview={`<Select isDisabled>
     <Item>Perplexity</Item>
     <Item>Replicate</Item>
@@ -198,7 +160,7 @@ The `isDisabled` prop can be used to disable the Select.
 Use the `isLoading` prop to indicate that the list is loading.
 
 <ComponentPreview
-  name="core/select-loading"
+  name="select/loading"
   preview={`<Select isLoading>
     <Item>Perplexity</Item>
     <Item>Replicate</Item>
@@ -213,7 +175,7 @@ Use the `isRequired` prop to mark the TextField as required.
 Use the `necessityIndicator` prop to control the visual style of the required state.
 
 <ComponentPreview
-  name="core/select-required"
+  name="select/required"
   preview={`<Select label="Provider" isRequired necessityIndicator="icon">
     <Item>Perplexity</Item>
     <Item>Replicate</Item>
@@ -227,7 +189,7 @@ Use the `necessityIndicator` prop to control the visual style of the required st
 Use `defaultSelectedKey` to provide a default set of selected item.
 
 <ComponentPreview
-  name="core/select-uncontrolled"
+  name="select/uncontrolled"
   preview={`<Select defaultSelectedKey="eleven-labs">
     <Item id="perplexity">Perplexity</Item>
     <Item id="replicate">Replicate</Item>
@@ -241,7 +203,7 @@ Use `defaultSelectedKey` to provide a default set of selected item.
 Use `selectedKey` to control the selected item.
 
 <ComponentPreview
-  name="core/select-controlled"
+  name="select/controlled"
   preview={`const [provider, setProvider] = React.useState<Key>("eleven-labs");
   return (
     <Select selectedKey={provider} onSelectionChange={setProvider}>
@@ -258,7 +220,7 @@ Use `selectedKey` to control the selected item.
 If you need to customize things further, you can drop down to the composition level.
 
 <ComponentPreview
-  name="core/select-composition"
+  name="select/composition"
   preview={`<SelectRoot>
     <Button variant="outline" suffix={<ChevronsUpDownIcon className="text-fg-muted" />}>
       <SelectValue />
@@ -281,7 +243,7 @@ If you need to customize things further, you can drop down to the composition le
 {/* prettier-ignore-start */}
 
 <ComponentPreview 
-  name="core/select-async-loading" 
+  name="select/async-loading" 
   preview={`const list = useAsyncList<Character>({
     async load({ signal }) {
       const res = await fetch(\`https://pokeapi.co/api/v2/pokemon\`, { signal });
