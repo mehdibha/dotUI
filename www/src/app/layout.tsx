@@ -1,5 +1,6 @@
 import React from "react";
 import type { Metadata, Viewport } from "next";
+import { cookies } from "next/headers";
 import { Analytics } from "@vercel/analytics/react";
 import { truncateOnWord } from "@/lib/string";
 import { cn } from "@/lib/utils";
@@ -43,11 +44,14 @@ export const viewport: Viewport = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const cookieStore = await cookies();
+  const theme = cookieStore.get("site-theme")?.value ?? ""
+  console.log(theme)
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -61,8 +65,13 @@ export default function RootLayout({
       >
         <Analytics />
         <Providers>
-          <ThemeOverride id="custom-theme-portal" className="bg-transparent" />
-          {children}
+          <div>
+            <ThemeOverride
+              id="custom-theme-portal"
+              className="bg-transparent"
+            />
+            {children}
+          </div>
         </Providers>
       </body>
     </html>

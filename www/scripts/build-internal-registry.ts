@@ -1,6 +1,11 @@
 import { existsSync, promises as fs } from "node:fs";
 import path from "node:path";
 import { rimraf } from "rimraf";
+import { accentColors } from "@/modules/themes";
+import {
+  createTheme,
+  createThemeCssVars,
+} from "@/modules/themes/lib/create-theme";
 
 // import { iconLibraries, icons } from "@/registry/registry-icons";
 
@@ -170,6 +175,49 @@ async function buildDemos() {
 
 //   // export const Components = {`;
 // }
+
+const createPalette = () => {
+  
+}
+
+const buildThemes = async () => {
+  const targetPath = path.join(process.cwd(), "src/styles/themes.css");
+  const ACCENT_THEME = `
+.theme-<%- theme %> {
+  --background: <%- colors.light["background"] %>;
+  --foreground: <%- colors.light["foreground"] %>;
+}
+
+.dark .theme-<%- theme %> {
+  --background: <%- colors.dark["background"] %>;
+  --foreground: <%- colors.dark["foreground"] %>;
+}`;
+
+  const themesCSS = [];
+
+  for (const accentColor of accentColors) {
+    const generatedTheme = createThemeCssVars(
+      {
+        light: {
+          palettes: {
+            neutral: { baseColors: ["#fff"] },
+            accent: {
+              baseColors: ["#f9a825"],
+            },
+          },
+        },
+      },
+      "light"
+    )
+    themesCSS
+      .push
+      // template(THEME_STYLES_WITH_VARIABLES)({
+      //   colors: theme.cssVars,
+      //   theme: theme.name,
+      // })
+      ();
+  }
+};
 
 async function run() {
   try {

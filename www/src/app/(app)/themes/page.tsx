@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <div className="pb-20">
-      <section className="py-10">
+      <section className="pt-16 pb-10">
         <h1 className="font-heading xs:text-2xl text-pretty text-xl font-semibold tracking-tighter sm:text-3xl md:text-4xl">
           Everything starts with identity.
         </h1>
@@ -39,7 +39,7 @@ export default function Page() {
             <Button variant="primary">Explore themes</Button>
           </ExploreThemesDialog>
           <CreateThemeDialog>
-            <Button variant="outline" prefix={<PlusIcon />}>
+            <Button variant="outline" className="bg-bg-inverse/5" prefix={<PlusIcon />}>
               Create theme
             </Button>
           </CreateThemeDialog>

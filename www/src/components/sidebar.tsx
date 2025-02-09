@@ -195,7 +195,8 @@ export const SidebarProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [isCollapsed, setCollapsed] = React.useState(true);
+  const pathname = usePathname();
+  const [isCollapsed, setCollapsed] = React.useState(pathname === "/themes");
   return (
     <SidebarContext value={{ isCollapsed, setCollapsed }}>
       {children}

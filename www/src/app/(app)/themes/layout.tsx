@@ -27,7 +27,19 @@ export default function ThemesLayout({
     <PreviewProvider>
       <div className={cn("max-w-screen-3xl relative mx-auto flex")}>
         <div className="relative flex-1">
-          <div className="sticky top-0 flex h-12 items-center justify-end pr-2">
+          <div className="container max-w-4xl px-0">
+            <div
+              className={cn(
+                "container max-w-none border-x",
+                isOpen && "border-transparent"
+              )}
+            >
+              {children}
+            </div>
+          </div>
+        </div>
+        <div className="relative">
+          <div className="absolute -left-2 top-2 -translate-x-full">
             <AnimatePresence>
               {!isOpen && isMounted && (
                 <motion.div
@@ -37,9 +49,10 @@ export default function ThemesLayout({
                   transition={{ duration: 0.2 }}
                 >
                   <Button
+                    variant="default"
                     size="sm"
                     onPress={() => setIsOpen(true)}
-                    className="sticky top-0"
+                    className="bg-bg-inverse/5 sticky top-0 border"
                   >
                     Preview
                   </Button>
@@ -47,9 +60,6 @@ export default function ThemesLayout({
               )}
             </AnimatePresence>
           </div>
-          <div className="container max-w-4xl">{children}</div>
-        </div>
-        <div className="relative">
           <motion.div
             initial={false}
             animate={{ width: isOpen ? (isCollapsed ? 600 : 500) : 0 }}

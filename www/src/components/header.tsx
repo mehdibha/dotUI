@@ -2,13 +2,14 @@
 
 import React from "react";
 import Link from "next/link";
-import { SearchIcon } from "lucide-react";
+import { SearchIcon, SwatchBookIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/core/button";
 import { siteConfig } from "@/config";
 import { Kbd } from "./core/kbd";
 import { GitHubIcon, TwitterIcon } from "./icons";
 import { SearchCommand } from "./search-command";
+import { ThemeColorsSelector } from "./theme-colors-selector";
 import { ThemeSwitcher } from "./theme-switcher";
 
 export function Header({ className }: { className?: string }) {
@@ -65,6 +66,12 @@ export function Header({ className }: { className?: string }) {
           >
             <TwitterIcon />
           </Button>
+
+          <ThemeColorsSelector>
+            <Button variant="quiet" size="sm" shape="square">
+              <SwatchBookIcon />
+            </Button>
+          </ThemeColorsSelector>
           <ThemeSwitcher />
         </div>
       </div>
