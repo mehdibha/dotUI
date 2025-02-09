@@ -1,6 +1,8 @@
 "use client";
 
 import React from "react";
+import { useDocsSearch } from "fumadocs-core/search/client";
+import type { SortedResult } from "fumadocs-core/server";
 import {
   ChevronsUpDownIcon,
   CornerDownLeftIcon,
@@ -8,69 +10,61 @@ import {
   HashIcon,
   SearchIcon,
 } from "lucide-react";
-import { useFilter } from "react-aria-components";
+import { kekabCaseToTitle } from "@/lib/string";
 import { Button } from "@/components/core/button";
 import { DialogRoot, Dialog } from "@/components/core/dialog";
+import { Loader } from "@/components/core/loader";
 import { MenuContent, MenuItem, MenuSection } from "@/components/core/menu";
 import { SearchFieldRoot } from "@/components/core/search-field";
 import { Command } from "@/registry/core/command_basic";
 import { Input, InputRoot } from "@/registry/core/input_basic";
-
-interface Heading {
-  id: string;
-  content: string;
-}
-
-interface Page {
-  id: string;
-  title: string;
-  headings: Heading[];
-  url: string;
-}
+import { searchConfig } from "@/config";
 
 interface SearchCommandClientProps {
   keyboardShortcut?: boolean;
   children: React.ReactNode;
-  items: {
-    title: string;
-    items: Page[];
-  }[];
 }
 
 export function SearchCommandClient({
   keyboardShortcut,
   children,
-  items,
 }: SearchCommandClientProps) {
-  const [inputValue, setInputValue] = React.useState("");
-  const filteredItems = React.useMemo(
-    () => filterResults(inputValue, items),
-    [inputValue, items]
-  );
+  const { search, setSearch, query } = useDocsSearch({ type: "fetch" });
+  const results =
+    search === "" || query.data === "empty"
+      ? [
+          {
+            id: "suggestions",
+            name: "Suggestions",
+            results: searchConfig.defaultResults.map((elem) => ({
+              id: elem.href,
+              content: elem.name,
+              url: elem.href,
+              type: "page",
+            })),
+          },
+        ]
+      : groupByCategory(query.data);
 
   return (
     <SearchCommandDialog keyboardShortcut={keyboardShortcut} trigger={children}>
-      <Command
-        inputValue={inputValue}
-        onInputChange={setInputValue}
-        className="h-72"
-      >
+      <Command inputValue={search} onInputChange={setSearch} className="h-72">
         <div className="p-1">
           <SearchFieldRoot placeholder="Search" autoFocus className="w-full">
             <InputRoot className="focus-within:ring-1">
-              <SearchIcon />
+              {query.isLoading ? <Loader /> : <SearchIcon />}
               <Input />
             </InputRoot>
           </SearchFieldRoot>
         </div>
         <MenuContent className="h-full overflow-y-scroll py-1">
-          {filteredItems.map((category) => (
-            <MenuSection key={category.id} title={category.title}>
-              {category.items.map((item) => (
+          {results.map((group) => (
+            <MenuSection key={group.id} title={group.name}>
+              {group.results.map((item) => (
                 <MenuItem
-                  key={`${item.href}-${item.type}`}
-                  href={item.href}
-                  textValue={item.title}
+                  key={item.id}
+                  href={item.url}
+                  textValue={item.content}
                   prefix={item.type === "page" ? <FileTextIcon /> : undefined}
                   className={
                     item.type === "page"
@@ -79,11 +73,11 @@ export function SearchCommandClient({
                   }
                 >
                   {item.type === "page" ? (
-                    item.title
+                    item.content
                   ) : (
                     <div className="[&_svg]:text-fg-muted ml-2 flex items-center gap-3 border-l pl-4 [&_svg]:size-4">
                       <HashIcon />
-                      <p className="flex-1 truncate py-2">{item.title}</p>
+                      <p className="flex-1 truncate py-2">{item.content}</p>
                     </div>
                   )}
                 </MenuItem>
@@ -106,77 +100,26 @@ export function SearchCommandClient({
   );
 }
 
-type FilteredItems = {
-  title: string;
-  href: string;
-  type: "page" | "heading";
-}[];
-
-type FilteredResult = {
+type GroupedResults = {
   id: string;
-  title: string;
-  items: FilteredItems;
+  name: string;
+  results: SortedResult[];
 }[];
+const groupByCategory = (results?: SortedResult[]): GroupedResults => {
+  // We will get the category from the url and group the results by category
+  // eg url: /docs/components/buttons/button -> category: components
+  if (!results) return [];
+  const uniqueCategories = Array.from(
+    new Set(results.map((result) => result.url.split("/")[2]!))
+  ).filter(Boolean);
 
-const filterResults = (
-  query: string,
-  items: SearchCommandClientProps["items"]
-): FilteredResult => {
-  // When no query, return all pages without headings
-  if (!query) {
-    return items.map((category) => ({
-      id: category.title,
-      title: category.title,
-      items: category.items.map((page) => ({
-        title: page.title,
-        href: page.url,
-        type: "page",
-      })),
-    }));
-  }
+  const groupedResults: GroupedResults = uniqueCategories.map((category) => ({
+    id: category,
+    name: kekabCaseToTitle(category),
+    results: results.filter((result) => result.url.split("/")[2] === category),
+  }));
 
-  const normalizedQuery = query.toLowerCase().trim();
-  const results: FilteredResult = [];
-
-  items.forEach((category) => {
-    const matchedItems: FilteredItems = [];
-
-    category.items.forEach((page) => {
-      const isPageMatch = page.title.toLowerCase().includes(normalizedQuery);
-      const matchedHeadings = page.headings.filter((heading) =>
-        heading.content.toLowerCase().includes(normalizedQuery)
-      );
-
-      // Add page if title matches or if there are matched headings
-      if (isPageMatch || matchedHeadings.length > 0) {
-        matchedItems.push({
-          title: page.title,
-          href: page.url,
-          type: "page",
-        });
-      }
-
-      // Add matched headings after their parent page
-      matchedHeadings.forEach((heading) => {
-        matchedItems.push({
-          title: heading.content,
-          href: `${page.url}#${heading.id}`,
-          type: "heading",
-        });
-      });
-    });
-
-    // Only add categories that have matches
-    if (matchedItems.length > 0) {
-      results.push({
-        id: category.title,
-        title: category.title,
-        items: matchedItems,
-      });
-    }
-  });
-
-  return results;
+  return groupedResults;
 };
 
 const SearchCommandDialog = ({
