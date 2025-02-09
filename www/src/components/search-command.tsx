@@ -23,11 +23,13 @@ import { searchConfig } from "@/config";
 interface SearchCommandProps {
   keyboardShortcut?: boolean;
   children: React.ReactNode;
+  onAction?: () => void;
 }
 
 export function SearchCommand({
   keyboardShortcut,
   children,
+  onAction,
 }: SearchCommandProps) {
   const { search, setSearch, query } = useDocsSearch({ type: "fetch" });
   const results =
@@ -48,7 +50,11 @@ export function SearchCommand({
 
   return (
     <SearchCommandDialog keyboardShortcut={keyboardShortcut} trigger={children}>
-      <Command inputValue={search} onInputChange={setSearch} className="h-72">
+      <Command
+        inputValue={search}
+        onInputChange={setSearch}
+        className="h-72"
+      >
         <div className="p-1">
           <SearchFieldRoot placeholder="Search" autoFocus className="w-full">
             <InputRoot className="focus-within:ring-1">
@@ -57,7 +63,13 @@ export function SearchCommand({
             </InputRoot>
           </SearchFieldRoot>
         </div>
-        <MenuContent className="h-full overflow-y-scroll py-1">
+        <MenuContent
+          onAction={() => {
+            setSearch("");
+            onAction?.();
+          }}
+          className="h-full overflow-y-scroll py-1"
+        >
           {results.map((group) => (
             <MenuSection key={group.id} title={group.name}>
               {group.results.map((item) => (

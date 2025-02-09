@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import Link from "next/link";
 import type { PageTree } from "fumadocs-core/server";
 import { AlignLeftIcon, PanelLeftCloseIcon, SearchIcon } from "lucide-react";
@@ -21,6 +22,7 @@ export const MobileNav = ({
   className?: string;
   items: PageTree.Node[];
 }) => {
+  const [isOpen, setOpen] = React.useState(false);
   return (
     <header
       className={cn(
@@ -29,7 +31,7 @@ export const MobileNav = ({
       )}
     >
       <div className="max-w-(--breakpoint-2xl) container flex h-14 w-full items-center justify-between">
-        <DialogRoot>
+        <DialogRoot isOpen={isOpen} onOpenChange={setOpen}>
           <Button variant="quiet" size="sm" shape="square">
             <AlignLeftIcon />
           </Button>
@@ -65,7 +67,11 @@ export const MobileNav = ({
                     </Button>
                   </div>
                   <div className="p-2">
-                    <SearchCommand>
+                    <SearchCommand
+                      onAction={() => {
+                        setOpen(false);
+                      }}
+                    >
                       <Button
                         prefix={<SearchIcon />}
                         variant="outline"
