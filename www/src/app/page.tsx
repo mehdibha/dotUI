@@ -7,13 +7,14 @@ import { siteConfig } from "@/config";
 export default function Page() {
   return (
     <div className="container flex max-w-2xl flex-col items-center py-8 text-center">
-      <div className="mt-24 flex items-center gap-2">
+      <div className="mt-20 flex items-center gap-2">
         <Logo size={30} className="mb-2 rounded-sm" />
         <span className="font-josephin text-2xl font-bold leading-normal tracking-tighter">
           dotUI.
         </span>
       </div>
-      <h1 className="font-heading mt-24 text-2xl font-bold tracking-tighter">
+      <p className="mt-16 text-sm font-medium text-fg-muted">coming soon.</p>
+      <h1 className="font-heading text-balance mt-6 text-xl lg:text-2xl font-bold tracking-tighter">
         Who said your component library should be minimalist?
       </h1>
       <p className="text-fg-muted mt-3 text-balance text-sm">
@@ -21,17 +22,11 @@ export default function Page() {
         component library have a <span className="font-bold">unique</span> look,
         we&apos; re highly open to contributions and feedback.
       </p>
-      <div className="mt-6 flex w-full items-center justify-center gap-2">
-        <TextField aria-label="Email" placeholder="email" />
-        <Button variant="outline" className="bg-bg-inverse/5">
-          Notify me for launch
-        </Button>
-      </div>
       <div className="mt-6 flex items-center justify-center gap-2">
         <Button
           variant="quiet"
           shape="square"
-          size="sm"
+          size="lg"
           href={siteConfig.links.discord}
           target="_blank"
           className="bg-bg-inverse/5"
@@ -41,7 +36,7 @@ export default function Page() {
         <Button
           variant="quiet"
           shape="square"
-          size="sm"
+          size="lg"
           href={siteConfig.links.github}
           target="_blank"
           className="bg-bg-inverse/5"
@@ -51,7 +46,7 @@ export default function Page() {
         <Button
           variant="quiet"
           shape="square"
-          size="sm"
+          size="lg"
           href={siteConfig.links.twitter}
           target="_blank"
           className="bg-bg-inverse/5"
