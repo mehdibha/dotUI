@@ -3,9 +3,10 @@
 
 # dotUI
 
+
 Build your component library with a unique style.
 
-![image](https://github.com/user-attachments/assets/1e8ae69c-b9e3-4857-8479-7115b8d2d329)
+![dotUI](https://github.com/user-attachments/assets/90de89e9-a1dd-47ec-8da5-5b577a109fd5)
 
 ## What's different from shadcn-ui
 
