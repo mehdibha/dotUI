@@ -4,13 +4,18 @@ import React from "react";
 import { ChevronDownIcon } from "lucide-react";
 import { useComponentsVariants } from "@/lib/create-dynamic-component";
 import { useThemes } from "@/hooks/use-themes";
-import { Button } from "@/components/core/button";
+import { Button, ButtonProps } from "@/components/core/button";
 import { ListBox, ListBoxItem } from "@/components/core/list-box";
 import { Popover } from "@/components/core/popover";
 import { SelectRoot, SelectValue } from "@/components/core/select";
 import { core } from "@/registry/registry-core";
 
-export function StyleSwitcher({ componentName }: { componentName: string }) {
+export function StyleSwitcher({
+  componentName,
+  ...props
+}: {
+  componentName: string;
+} & ButtonProps) {
   const primitiveInfo = getPrimitiveInfo(componentName);
   const { variants: contextVariants, setVariants } = useComponentsVariants();
   const { currentTheme } = useThemes();
@@ -35,11 +40,7 @@ export function StyleSwitcher({ componentName }: { componentName: string }) {
       }}
       className="w-auto"
     >
-      <Button
-        size="sm"
-        suffix={<ChevronDownIcon />}
-        className="border-border absolute left-2 top-2 z-10 text-xs font-normal"
-      >
+      <Button size="sm" suffix={<ChevronDownIcon />} {...props}>
         <span className="font-bold">{primitiveName}:</span> <SelectValue />
       </Button>
       <Popover>

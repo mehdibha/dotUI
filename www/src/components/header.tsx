@@ -85,14 +85,6 @@ const Logo = () => {
       href="/"
       className="flex items-center gap-2 rounded opacity-100 transition-[opacity,transform] duration-300 ease-out"
     >
-      {/* <Avatar
-        src={siteConfig.global.logo}
-        alt={siteConfig.global.name}
-        width={24}
-        height={24}
-        loading="lazy"
-        className="m-1 size-6 rounded-sm"
-      /> */}
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width={20}

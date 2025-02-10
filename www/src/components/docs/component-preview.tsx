@@ -1,6 +1,10 @@
 import React from "react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
-import { PaintBucket } from "lucide-react";
+import {
+  PaintBucket,
+  Settings2Icon,
+  SlidersHorizontalIcon,
+} from "lucide-react";
 import { getFileSource } from "@/lib/get-file-source";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/core/button";
@@ -25,6 +29,7 @@ export interface ComponentPreviewProps {
   fullWidth?: boolean;
   resizable?: boolean;
   suspense?: boolean;
+  primary?: boolean;
 }
 
 export const ComponentPreview = async ({
@@ -35,6 +40,7 @@ export const ComponentPreview = async ({
   fullWidth = false,
   resizable = false,
   suspense = false,
+  primary = false,
 }: ComponentPreviewProps) => {
   const demoItem = Index[name];
 
@@ -55,33 +61,49 @@ export const ComponentPreview = async ({
     <div
       className={cn("overflow-hidden rounded-md border", containerClassName)}
     >
+      {/* <div className="bg-bg-muted flex items-center justify-between rounded-t-[inherit] border-b p-2">
+        <StyleSwitcher
+          // @ts-expect-error TODO fix later
+          componentName={getComponentName(name)}
+          variant="outline"
+          className="bg-bg-inverse/5 h-7 text-xs font-normal"
+        />
+        <ThemeCustomizerDialog>
+          <Tooltip
+            content={
+              <span>
+                <span className="text-fg-muted">Theme:</span> dotUI
+              </span>
+            }
+          >
+            <Button
+              variant="outline"
+              shape="square"
+              size="sm"
+              className="bg-bg-inverse/5 size-7 text-sm font-normal"
+            >
+              <PaintBucket />
+            </Button>
+          </Tooltip>
+        </ThemeCustomizerDialog>
+      </div> */}
       <div className="bg-bg-muted">
         <ResizableContainer resizable={resizable}>
           <Loader>
             <ThemeOverride className="relative duration-300">
-              {/* @ts-expect-error fix later */}
-              <StyleSwitcher componentName={getComponentName(name)} />
-              <ThemeCustomizerDialog>
-                <Tooltip
-                  content={
-                    <span>
-                      <span className="text-fg-muted">Theme:</span> dotUI
-                    </span>
-                  }
-                >
-                  <Button
-                    shape="square"
-                    size="sm"
-                    className="border-border absolute right-2 top-2 z-10 font-normal"
-                  >
-                    <PaintBucket />
-                  </Button>
-                </Tooltip>
-              </ThemeCustomizerDialog>
+              <Button
+                variant="quiet"
+                shape="square"
+                size="sm"
+                className="absolute right-2 top-2 z-10"
+              >
+                <SlidersHorizontalIcon />
+              </Button>
               <ScrollArea className="bg-bg text-fg">
                 <div
                   className={cn(
-                    "flex min-h-52 py-20",
+                    "flex py-10",
+                    primary && "min-h-48 py-20",
                     fullWidth
                       ? "px-8 lg:px-12"
                       : "flex items-center justify-center px-4"
