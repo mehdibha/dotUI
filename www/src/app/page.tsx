@@ -1,64 +1,82 @@
+import { Container, Item } from "@/components/fade-in";
 import { DiscordIcon, GitHubIcon, TwitterIcon } from "@/components/icons";
+import { Badge } from "@/registry/ui/default/core/badge";
 import { Button } from "@/registry/ui/default/core/button";
 import { Link } from "@/registry/ui/default/core/link";
-import { TextField } from "@/registry/ui/default/core/text-field";
 import { siteConfig } from "@/config";
 
 export default function Page() {
   return (
-    <div className="container flex max-w-2xl flex-col items-center py-8 text-center">
-      <div className="mt-20 flex items-center gap-2">
-        <Logo size={30} className="mb-2 rounded-sm" />
-        <span className="font-josephin text-2xl font-bold leading-normal tracking-tighter">
-          dotUI.
-        </span>
+    <Container>
+      <div className="container flex max-w-2xl flex-col items-center py-8 text-center">
+        <Item className="mt-20 flex items-center gap-2">
+          <Logo size={30} className="mb-2 rounded-sm" />
+          <span className="font-josephin text-2xl font-bold leading-normal tracking-tighter">
+            dotUI.
+          </span>
+        </Item>
+        <Item>
+          <Badge variant="outline" className="bg-bg-inverse/5 mt-2">
+            status: beta
+          </Badge>
+        </Item>
+        <Item>
+          <p className="text-fg-muted mt-14 text-sm font-medium">
+            Coming soon.
+          </p>
+        </Item>
+        <Item>
+          <h1 className="font-heading mt-6 text-balance text-xl font-bold tracking-tighter lg:text-2xl">
+            Who said your component library should be minimalist?
+          </h1>
+        </Item>
+        <Item>
+          <p className="text-fg-muted mt-3 text-balance text-sm">
+            We&apos;re working hard to make your component library have a{" "}
+            <span className="font-bold">unique</span> look, we&apos; re highly
+            open to contributions and feedback.
+          </p>
+        </Item>
+        <Item className="mt-6 flex items-center justify-center gap-2">
+          <Button
+            variant="quiet"
+            shape="square"
+            size="lg"
+            href={siteConfig.links.discord}
+            target="_blank"
+            className="bg-bg-inverse/5"
+          >
+            <DiscordIcon />
+          </Button>
+          <Button
+            variant="quiet"
+            shape="square"
+            size="lg"
+            href={siteConfig.links.github}
+            target="_blank"
+            className="bg-bg-inverse/5"
+          >
+            <GitHubIcon />
+          </Button>
+          <Button
+            variant="quiet"
+            shape="square"
+            size="lg"
+            href={siteConfig.links.twitter}
+            target="_blank"
+            className="bg-bg-inverse/5"
+          >
+            <TwitterIcon />
+          </Button>
+        </Item>
+        <Item>
+          <p className="text-fg-muted mt-10">
+            I dont&apos;t care, i want see the{" "}
+            <Link href="https://next.dotui.org">beta version</Link>!
+          </p>
+        </Item>
       </div>
-      <p className="text-fg-muted mt-16 text-sm font-medium">coming soon.</p>
-      <h1 className="font-heading mt-6 text-balance text-xl font-bold tracking-tighter lg:text-2xl">
-        Who said your component library should be minimalist?
-      </h1>
-      <p className="text-fg-muted mt-3 text-balance text-sm">
-        We&apos;re working <span className="font-bold">hard</span> to make your
-        component library have a <span className="font-bold">unique</span> look,
-        we&apos; re highly open to contributions and feedback.
-      </p>
-      <div className="mt-6 flex items-center justify-center gap-2">
-        <Button
-          variant="quiet"
-          shape="square"
-          size="lg"
-          href={siteConfig.links.discord}
-          target="_blank"
-          className="bg-bg-inverse/5"
-        >
-          <DiscordIcon />
-        </Button>
-        <Button
-          variant="quiet"
-          shape="square"
-          size="lg"
-          href={siteConfig.links.github}
-          target="_blank"
-          className="bg-bg-inverse/5"
-        >
-          <GitHubIcon />
-        </Button>
-        <Button
-          variant="quiet"
-          shape="square"
-          size="lg"
-          href={siteConfig.links.twitter}
-          target="_blank"
-          className="bg-bg-inverse/5"
-        >
-          <TwitterIcon />
-        </Button>
-      </div>
-      <p className="text-fg-muted mt-10">
-        I dont&apos;t care, i want see what{" "}
-        <Link href="https://next.dotui.org">you&apos;ve built</Link>!
-      </p>
-    </div>
+    </Container>
   );
 }
 
