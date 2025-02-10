@@ -1,5 +1,6 @@
 "use client";
 
+import { AsteriskIcon } from "lucide-react";
 import * as React from "react";
 import {
   Label as AriaLabel,
@@ -11,7 +12,6 @@ import {
   type FieldErrorProps as AriaFieldErrorProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { AsteriskIcon } from "@/__icons__";
 
 const fieldStyles = tv({
   slots: {

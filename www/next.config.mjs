@@ -16,15 +16,6 @@ const config = {
       },
     ],
   },
-  redirects: async () => {
-    return [
-      {
-        source: "/",
-        destination: "/docs/getting-started/introduction",
-        permanent: true,
-      },
-    ];
-  },
 };
 
 export default withMDX(config);

@@ -18,7 +18,7 @@ import {
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
 import { focusInput } from "@/registry/ui/default/lib/focus-styles";
-import { LoaderIcon } from "@/__icons__";
+import { Loader2Icon } from "lucide-react";
 
 const inputStyles = tv({
   slots: {
@@ -192,13 +192,13 @@ const InputRoot = ({
           ]}
         >
           {isLoading && loaderPosition === "prefix" ? (
-            <LoaderIcon className="animate-spin" />
+            <Loader2Icon className="animate-spin" />
           ) : (
             prefix
           )}
           {children}
           {isLoading && loaderPosition === "suffix" ? (
-            <LoaderIcon className="animate-spin" />
+              <Loader2Icon className="animate-spin" />
           ) : (
             suffix
           )}
