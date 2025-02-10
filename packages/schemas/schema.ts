@@ -23,7 +23,7 @@ export const e = z.object({
 export const registryItemCssSchema = z.object({
   colors: z
     .object({
-      light: z.record(z.string(), z.string()),
+      light: z.record(z.string(), z.string()).optional(),
       dark: z.record(z.string(), z.string()).optional(),
     })
     .optional(),

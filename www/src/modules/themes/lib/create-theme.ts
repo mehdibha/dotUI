@@ -14,7 +14,9 @@ export const createTheme = (theme: Theme): RegistryTheme => {
     ...propreties,
     css: {
       colors: {
-        light: createThemeCssVars(foundations, "light"),
+        ...(foundations.light
+          ? { light: createThemeCssVars(foundations, "light") }
+          : {}),
         ...(foundations.dark
           ? { dark: createThemeCssVars(foundations, "dark") }
           : {}),
@@ -27,7 +29,8 @@ export const createThemeCssVars = (
   foundations: Theme["foundations"],
   mode: "light" | "dark"
 ): Record<string, string> => {
-  const resolvedMode = foundations.dark ? mode : "light";
+  const resolvedMode = mode 
+  if (!foundations[mode]) throw new Error(`No ${mode} mode found in theme`);
   const themeFoundations = foundations[resolvedMode]!;
   const defaultFoundations = defaultColorsFoundations[resolvedMode];
 
@@ -71,7 +74,7 @@ export const createThemeCssVars = (
       if ("name" in color) {
         return color.values.map((value, index) => {
           const scale = (index + 1) * 100;
-          return [`--color-${color.name}-${scale}`, value.value];
+          return [`--${color.name}-${scale}`, value.value];
         });
       }
       return undefined;

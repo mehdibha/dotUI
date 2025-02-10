@@ -32,7 +32,7 @@ export const ThemeProvider = ({
         ? (theme.defaultDisplayMode ?? currentMode)
         : "light"
     );
-    return { ...themeCssVars, ...baseVars, ...theme.foundations.overrides };
+    return { ...baseVars, ...themeCssVars, ...theme.foundations.overrides };
   }, [theme, resolvedTheme, currentMode]);
 
   const resolvedMode =

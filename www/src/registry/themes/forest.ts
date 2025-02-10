@@ -26,7 +26,4 @@ export const forestTheme: Theme = {
       lightness: 10,
     },
   },
-  primitives: {
-    button: "ripple",
-  },
 };
