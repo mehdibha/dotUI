@@ -13,8 +13,8 @@ export default function Page() {
           dotUI.
         </span>
       </div>
-      <p className="mt-16 text-sm font-medium text-fg-muted">coming soon.</p>
-      <h1 className="font-heading text-balance mt-6 text-xl lg:text-2xl font-bold tracking-tighter">
+      <p className="text-fg-muted mt-16 text-sm font-medium">coming soon.</p>
+      <h1 className="font-heading mt-6 text-balance text-xl font-bold tracking-tighter lg:text-2xl">
         Who said your component library should be minimalist?
       </h1>
       <p className="text-fg-muted mt-3 text-balance text-sm">
