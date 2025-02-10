@@ -14,7 +14,7 @@ dotUI gives you a custom starting point based on the theme you've chosen or crea
 
 ## Why react-aria?
 
-Because react-aria has a lot more features than radix, primitive components are reusable, has more flexibility, is actively maintained by radix, it's just better.
+Because react-aria has a lot more features than radix, primitive components are reusable, has more flexibility, is actively maintained by Adobe, it's just better.
 
 <!-- CONTRIBUTING -->
 
