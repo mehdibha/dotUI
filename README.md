@@ -8,12 +8,20 @@ Build your component library with a unique style.
 
 ![dotUI](https://github.com/user-attachments/assets/90de89e9-a1dd-47ec-8da5-5b577a109fd5)
 
-## What's different from shadcn-ui
+## Requirements
 
-shadcn-ui gives you a starting point to create your component library, but this starting point is the same for everyone.
+* React 19
+* Tailwind CSS 4.0
+* Typescript
+
+## FAQ
+
+### What's different from shadcn-ui
+
+shadcn-ui gives you a starting point to create your component library, but this starting point is the same for everyone.<br/>
 dotUI gives you a custom starting point based on the theme you've chosen or created.
 
-## Why react-aria?
+### Why react-aria?
 
 Because react-aria has a lot more features than radix, primitive components are reusable, has more flexibility, is actively maintained by Adobe, it's just better.
 
@@ -21,7 +29,9 @@ Because react-aria has a lot more features than radix, primitive components are 
 
 ## Contributing
 
-See the [contribution guide](CONTRIBUTING.md), we'd love to have you 
+See the [contribution guide](CONTRIBUTING.md), We’d love to see your ideas, refinements, and innovations—let’s build the future of UI development.
+
+Join our [discord channel](https://discord.gg/DXpj5V2fU8)
 
 <!-- LICENSE -->
 
