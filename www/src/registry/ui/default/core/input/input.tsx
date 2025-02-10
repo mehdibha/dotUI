@@ -3,6 +3,7 @@
 import * as React from "react";
 import { mergeRefs, chain } from "@react-aria/utils";
 import { useControlledState } from "@react-stately/utils";
+import { Loader2Icon } from "lucide-react";
 import {
   Provider,
   composeRenderProps,
@@ -18,7 +19,6 @@ import {
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
 import { focusInput } from "@/registry/ui/default/lib/focus-styles";
-import { Loader2Icon } from "lucide-react";
 
 const inputStyles = tv({
   slots: {
@@ -198,7 +198,7 @@ const InputRoot = ({
           )}
           {children}
           {isLoading && loaderPosition === "suffix" ? (
-              <Loader2Icon className="animate-spin" />
+            <Loader2Icon className="animate-spin" />
           ) : (
             suffix
           )}

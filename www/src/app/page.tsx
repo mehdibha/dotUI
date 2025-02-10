@@ -6,8 +6,8 @@ import { siteConfig } from "@/config";
 
 export default function Page() {
   return (
-    <div className="flex container max-w-2xl flex-col items-center py-8 text-center">
-      <div className="flex items-center gap-2 mt-24">
+    <div className="container flex max-w-2xl flex-col items-center py-8 text-center">
+      <div className="mt-24 flex items-center gap-2">
         <Logo size={30} className="mb-2 rounded-sm" />
         <span className="font-josephin text-2xl font-bold leading-normal tracking-tighter">
           dotUI.

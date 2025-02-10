@@ -1,7 +1,7 @@
 "use client";
 
-import { AsteriskIcon } from "lucide-react";
 import * as React from "react";
+import { AsteriskIcon } from "lucide-react";
 import {
   Label as AriaLabel,
   Text as AriaText,
