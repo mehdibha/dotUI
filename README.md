@@ -1,40 +1,37 @@
-> ⚠️ dotUI is still in development, [follow me on X](https://x.com/mehdibha_) to stay updated.
-<br />
 
-<div align="center">
-  <a href="https://github.com/mehdibha/dotUI">
-    <img src="/www/public/images/logo.png" alt="Logo" width="60" height="60">
-  </a>
-  <h1 align="center">dotUI</h1>
-  <p align="center">
-    Scaffold, implement, ship <strong>unique</strong>.
-  </p>
-  <p>
-    
-   <a href="https://dotui.org">Visit site</a>
-    ·
-    <a href="https://github.com/mehdibha/dotUI/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/mehdibha/dotUI/issues">Request Feature</a>
-  </p>
-</div>
+> Each time a component library gets popular, all apps start looking the... same.
 
-<!-- ABOUT THE PROJECT -->
+# dotUI
 
-## About The Project
 
-dotUI is here to solve a problem every React developer knows all too well: **standing out**.
-You're not just getting a collection of components, you're gaining a toolkit that lets you craft a unique, robust design system for your project.
+Build your component library with a unique style.
 
-If you want to join this journey, i'm streaming everyday at <a href="https://discord.gg/DXpj5V2fU8">our discord channel</a>
+![dotUI](https://github.com/user-attachments/assets/90de89e9-a1dd-47ec-8da5-5b577a109fd5)
 
-<img src="/www/public/images/thumbnail.png">
+## Requirements
+
+* React 19
+* Tailwind CSS 4.0
+* Typescript
+
+## FAQ
+
+### What's different from shadcn-ui
+
+shadcn-ui gives you a starting point to create your component library, but this starting point is the same for everyone.<br/>
+dotUI gives you a custom starting point based on the theme you've chosen or created.
+
+### Why react-aria?
+
+Because react-aria has a lot more features than radix, primitive components are reusable, has more flexibility, is actively maintained by Adobe, it's just better.
 
 <!-- CONTRIBUTING -->
 
 ## Contributing
 
-See the [contribution guide](CONTRIBUTING.md) and join our amazing list of [contributors](https://github.com/mehdibha/dotUI/graphs/contributors)!
+See the [contribution guide](CONTRIBUTING.md), We’d love to see your ideas, refinements, and innovations—let’s build the future of UI development.
+
+Join our [discord channel](https://discord.gg/DXpj5V2fU8)
 
 <!-- LICENSE -->
 
