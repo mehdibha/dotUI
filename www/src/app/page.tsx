@@ -71,7 +71,7 @@ interface IconProps extends Partial<React.SVGProps<SVGSVGElement>> {
   size?: string | number;
 }
 
-export const Logo = ({
+const Logo = ({
   color = "currentColor",
   size = 16,
   ...rest
