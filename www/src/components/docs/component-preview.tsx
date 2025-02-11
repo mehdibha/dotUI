@@ -1,14 +1,14 @@
 import React from "react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import {
-  PaintBucket,
-  Settings2Icon,
+  // PaintBucket,
+  // Settings2Icon,
   SlidersHorizontalIcon,
 } from "lucide-react";
 import { getFileSource } from "@/lib/get-file-source";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/core/button";
-import { Tooltip } from "@/components/core/tooltip";
+// import { Tooltip } from "@/components/core/tooltip";
 import { CodeBlock } from "@/components/docs/code-block";
 import { Index } from "@/__registry__/demos";
 import {
@@ -16,8 +16,8 @@ import {
   Loader,
   ResizableContainer,
 } from "./component-preview-client";
-import { StyleSwitcher } from "./style-switcher";
-import { ThemeCustomizerDialog } from "./theme-customizer";
+// import { StyleSwitcher } from "./style-switcher";
+// import { ThemeCustomizerDialog } from "./theme-customizer";
 import { ThemeOverride } from "./theme-override";
 
 export interface ComponentPreviewProps {
@@ -138,8 +138,8 @@ export const ComponentPreview = async ({
   );
 };
 
-const getComponentName = (name: string) => {
-  const groupName = name.split("/")[0];
-  if (groupName === "range-calendar") return "calendar";
-  return groupName;
-};
+// const getComponentName = (name: string) => {
+//   const groupName = name.split("/")[0];
+//   if (groupName === "range-calendar") return "calendar";
+//   return groupName;
+// };

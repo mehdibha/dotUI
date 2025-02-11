@@ -29,6 +29,10 @@ export type Theme = {
   label: string;
   description?: string;
   iconLibrary?: IconLibrary;
+  fonts?: {
+    heading?: string;
+    body?: string;
+  };
   primitives?: Primitives;
   variants?: Partial<Variants>;
   foundations: {

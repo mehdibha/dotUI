@@ -149,6 +149,9 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
+  --font-heading: var(--font-geist-sans);
+  --font-body: var(--font-geist-sans);
+
   /* colors */
   --color-bg: var(--neutral-100);
   --color-bg-muted: var(--neutral-200);

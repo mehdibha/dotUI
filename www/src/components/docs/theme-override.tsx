@@ -1,7 +1,6 @@
 "use client";
 
 import React, { ReactNode } from "react";
-import { googleFonts } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import { useThemes } from "@/hooks/use-themes";
 
@@ -16,24 +15,7 @@ export const ThemeOverride = React.forwardRef<
   HTMLDivElement,
   ThemeOverrideProps
 >(({ children, ...props }, ref) => {
-  const { currentTheme, mode, fonts } = useThemes();
-  const headingFont = googleFonts.find((f) => f.id === fonts.heading);
-
-  // fonts
-  React.useEffect(() => {
-    if (headingFont) {
-      const head = document.head;
-      const existingLink = head.querySelector("#heading-font");
-      if (existingLink) {
-        existingLink.remove();
-      }
-      const link = document.createElement("link");
-      link.rel = "stylesheet";
-      link.href = headingFont.url;
-      link.id = "heading-font";
-      head.appendChild(link);
-    }
-  }, [headingFont]);
+  const { currentTheme, mode } = useThemes();
 
   // colors
   const currentMode = currentTheme.colors[mode];

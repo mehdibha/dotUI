@@ -50,11 +50,7 @@ export function SearchCommand({
 
   return (
     <SearchCommandDialog keyboardShortcut={keyboardShortcut} trigger={children}>
-      <Command
-        inputValue={search}
-        onInputChange={setSearch}
-        className="h-72"
-      >
+      <Command inputValue={search} onInputChange={setSearch} className="h-72">
         <div className="p-1">
           <SearchFieldRoot placeholder="Search" autoFocus className="w-full">
             <InputRoot className="focus-within:ring-1">

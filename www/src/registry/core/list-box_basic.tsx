@@ -35,7 +35,7 @@ const listBoxStyles = tv({
 
 const listBoxItemStyles = tv({
   base: [
-    "disabled:pointer-default hover:bg-bg-inverse/10 focus:bg-bg-inverse/10 pressed:bg-bg-inverse/15 disabled:text-fg-disabled outline-hidden flex cursor-pointer items-center rounded-sm px-3 py-1.5 text-sm transition-colors disabled:cursor-default",
+    "disabled:pointer-default hover:bg-bg-inverse/10 focus:bg-bg-inverse/10 pressed:bg-bg-inverse/15 disabled:text-fg-disabled outline-hidden flex h-8 cursor-pointer items-center rounded-sm px-3 py-1.5 text-sm transition-colors disabled:cursor-default",
     "selection-single:pl-0 selection-multiple:pl-0",
     "[&_svg]:size-4",
   ],

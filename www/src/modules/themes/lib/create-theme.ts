@@ -29,7 +29,7 @@ export const createThemeCssVars = (
   foundations: Theme["foundations"],
   mode: "light" | "dark"
 ): Record<string, string> => {
-  const resolvedMode = mode 
+  const resolvedMode = mode;
   if (!foundations[mode]) throw new Error(`No ${mode} mode found in theme`);
   const themeFoundations = foundations[resolvedMode]!;
   const defaultFoundations = defaultColorsFoundations[resolvedMode];

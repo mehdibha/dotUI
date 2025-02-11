@@ -43,7 +43,7 @@ export default function HomePage() {
               size="lg"
               className="h-10"
             >
-              Get started
+              Create your library
             </Button>
             <Button
               href="/themes"
@@ -51,7 +51,7 @@ export default function HomePage() {
               size="lg"
               className="bg-bg-inverse/5 h-10"
             >
-              Explore themes
+              Explore docs
             </Button>
           </div>
         </section>

@@ -25,6 +25,10 @@ export const materialTheme: Theme = {
       },
     },
   },
+  fonts: {
+    heading: "Inter",
+    body: "Inter",
+  },
   primitives: {
     button: "ripple",
   },

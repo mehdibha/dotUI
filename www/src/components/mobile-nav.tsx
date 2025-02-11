@@ -61,7 +61,7 @@ export const MobileNav = ({
                       <div className="font-josefin group-data-collapsed/sidebar:opacity-0 mt-[5px] font-bold leading-normal tracking-tighter transition-colors">
                         {siteConfig.global.name}
                       </div>
-                      </Link>
+                    </Link>
                     <Button size="sm" shape="square" onPress={close}>
                       <PanelLeftCloseIcon />
                     </Button>

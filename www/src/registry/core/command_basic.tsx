@@ -52,4 +52,4 @@ const CommandRoot = ({
   );
 };
 
-export { Command };
+export { Command, CommandRoot };

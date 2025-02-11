@@ -3,6 +3,10 @@ import { Theme } from "@/modules/themes/types";
 export const minimalistTheme: Theme = {
   name: "minimalist",
   label: "Minimalist",
+  fonts: {
+    heading: "Inter",
+    body: "Inter",
+  },
   foundations: {
     light: {
       palettes: {

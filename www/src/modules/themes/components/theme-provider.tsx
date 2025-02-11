@@ -5,6 +5,7 @@ import { PrimitivesProvider } from "@/modules/themes/contexts/primitives-context
 import { VariantsProvider } from "@/modules/themes/contexts/variants-context";
 import { createThemeCssVars } from "@/modules/themes/lib/create-theme";
 import { Theme } from "@/modules/themes/types";
+import { FontLoader } from "./font-loader";
 
 interface ThemeProviderProps
   extends Omit<React.ComponentProps<"div">, "children"> {
@@ -24,6 +25,7 @@ export const ThemeProvider = ({
 }: ThemeProviderProps) => {
   const { resolvedTheme } = useTheme();
   const currentMode = mode ?? (resolvedTheme === "light" ? "light" : "dark");
+
   const cssVars = React.useMemo(() => {
     if (!theme || !resolvedTheme) return {};
     const themeCssVars = createThemeCssVars(
@@ -45,12 +47,18 @@ export const ThemeProvider = ({
   return (
     <VariantsProvider variants={theme?.variants}>
       <PrimitivesProvider primitives={theme?.primitives}>
+        <FontLoader font={theme?.fonts?.heading} />
+        <FontLoader font={theme?.fonts?.body} />
         <div
-          style={{
-            ...cssVars,
-            ...style,
-          }}
-          className={cn("bg-bg text-fg isolate", className)}
+          style={
+            {
+              ...cssVars,
+              ...style,
+              "--font-heading": theme?.fonts?.heading,
+              "--font-body": theme?.fonts?.body,
+            } as React.CSSProperties
+          }
+          className={cn("bg-bg text-fg font-body isolate", className)}
           suppressHydrationWarning
           {...props}
         >
