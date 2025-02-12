@@ -1,8 +1,6 @@
 import React from "react";
 import NavLink from "next/link";
 import Link from "next/link";
-import { focusRing } from "@/lib/focus-styles";
-import { cn } from "@/lib/utils";
 import { Logo } from "@/components/logo";
 import { siteConfig } from "@/config";
 
@@ -57,12 +55,7 @@ export const Footer = () => {
     <div className="border-t py-12">
       <div className="container flex flex-col items-start justify-between gap-10 lg:flex-row">
         <div className="space-y-1">
-          <NavLink href="/" className={cn(focusRing(), "flex gap-2 rounded")}>
-            <Logo className="translate-y-0.5" />
-            <div className="font-josefin font-bold tracking-tighter">
-              dotUI.
-            </div>
-          </NavLink>
+          <Logo />
           <p className="text-fg-muted text-base">
             Bringing singularity to the web.
           </p>

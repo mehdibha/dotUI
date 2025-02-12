@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { ChevronsRightIcon } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import { useMounted } from "@/hooks/use-mounted";
@@ -15,28 +14,19 @@ export default function ThemesLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen, setOpen] = React.useState(false);
   const { isCollapsed } = useSidebarContext();
   const isMounted = useMounted();
 
   React.useEffect(() => {
-    setIsOpen(true);
+    setOpen(true);
   }, []);
 
   return (
     <PreviewProvider>
       <div className={cn("max-w-screen-3xl relative mx-auto flex")}>
         <div className="relative flex-1">
-          <div className="container max-w-4xl px-0">
-            <div
-              className={cn(
-                "container max-w-none border-x",
-                isOpen && "border-transparent"
-              )}
-            >
-              {children}
-            </div>
-          </div>
+          <div className={cn("container max-w-3xl")}>{children}</div>
         </div>
         <div className="relative">
           <div className="absolute -left-2 top-2 -translate-x-full">
@@ -51,7 +41,7 @@ export default function ThemesLayout({
                   <Button
                     variant="default"
                     size="sm"
-                    onPress={() => setIsOpen(true)}
+                    onPress={() => setOpen(true)}
                     className="bg-bg-inverse/5 sticky top-0 border"
                   >
                     Preview
@@ -70,20 +60,9 @@ export default function ThemesLayout({
               initial={false}
               animate={{ width: isCollapsed ? 600 : 500 }}
               transition={{ type: "spring", bounce: 0, duration: 0.3 }}
-              className="h-full"
+              className="h-full p-4"
             >
-              <div className="bg-bg-muted flex items-center border-x px-2 py-1">
-                <Button
-                  variant="quiet"
-                  shape="square"
-                  size="sm"
-                  className="size-7"
-                  onPress={() => setIsOpen(false)}
-                >
-                  <ChevronsRightIcon />
-                </Button>
-              </div>
-              <Preview />
+              <Preview setOpen={setOpen} />
             </motion.div>
           </motion.div>
         </div>

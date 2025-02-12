@@ -1,16 +1,15 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
 import type { PageTree } from "fumadocs-core/server";
 import { AlignLeftIcon, PanelLeftCloseIcon, SearchIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Avatar } from "@/components/core/avatar";
 import { Button } from "@/components/core/button";
 import { Dialog, DialogRoot } from "@/components/core/dialog";
 import { ScrollArea } from "@/components/core/scroll-area";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
 import { siteConfig } from "@/config";
+import { Logo } from "./logo";
 import { SearchCommand } from "./search-command";
 import { NodeList } from "./sidebar";
 import { ThemeSwitcher } from "./theme-switcher";
@@ -26,7 +25,7 @@ export const MobileNav = ({
   return (
     <header
       className={cn(
-        "bg-bg sticky top-0 z-50 block border-b backdrop-blur-md",
+        "bg-bg/95 sticky top-0 z-50 block border-b backdrop-blur-sm",
         className
       )}
     >
@@ -46,22 +45,7 @@ export const MobileNav = ({
               <div className="z-50 flex h-full flex-col">
                 <div>
                   <div className="flex items-center justify-between p-2">
-                    <Link
-                      href="/"
-                      className="flex items-center gap-2 rounded opacity-100 transition-[opacity,transform] duration-300 ease-out"
-                    >
-                      <Avatar
-                        src={siteConfig.global.logo}
-                        alt={siteConfig.global.name}
-                        width={24}
-                        height={24}
-                        loading="lazy"
-                        className="m-1 size-6 rounded-sm"
-                      />
-                      <div className="font-josefin group-data-collapsed/sidebar:opacity-0 mt-[5px] font-bold leading-normal tracking-tighter transition-colors">
-                        {siteConfig.global.name}
-                      </div>
-                    </Link>
+                    <Logo />
                     <Button size="sm" shape="square" onPress={close}>
                       <PanelLeftCloseIcon />
                     </Button>

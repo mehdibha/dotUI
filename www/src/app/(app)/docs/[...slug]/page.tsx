@@ -28,50 +28,50 @@ export default async function Page({
   const MDXContent = page.data.body;
 
   return (
-    <div className="container max-w-4xl py-8 lg:py-20 xl:max-w-6xl">
-      <div
-        className={cn("", {
-          "xl:grid xl:grid-cols-[1fr_220px] xl:gap-10":
-            page.data.toc && page.data.toc.length > 0,
-        })}
-      >
-        <div className="pt-4">
-          <Breadcrumbs tree={source.pageTree} className="mb-2" />
-          <h1 className="text-4xl font-bold">{page.data.title}</h1>
-          <p className="text-fg-muted mt-2">{page.data.description}</p>
-          {page.data.links && page.data.links.length > 0 && (
-            <div className="mt-4 flex flex-wrap gap-2">
-              {page.data.links.map((link, index) => (
-                <Button
-                  key={index}
-                  href={link.href}
-                  prefix={getIcon(link.href)}
-                  suffix={<ExternalLinkIcon />}
-                  size="sm"
-                  className="h-6 text-xs font-semibold [&_svg]:size-3"
-                  target="_blank"
-                >
-                  {link.label}
-                </Button>
-              ))}
-            </div>
-          )}
-          <div className="mt-10 text-sm md:text-base">
-            <MDXContent components={mdxComponents} />
-          </div>
-          <div className="mt-20 space-y-4">
-            <PageLastUpdate path={page.file.path} />
-            <DocsPager currentPathname={page.url} />
-          </div>
-        </div>
-        {page.data.toc && page.data.toc.length > 0 && (
-          <div className="bg-bg z-10 hidden justify-end pt-4 text-sm xl:flex">
-            <div className="sticky top-8 h-[calc(100svh-calc(var(--spacing)*8))]">
-              <TableOfContents toc={page.data.toc as TocType} />
-            </div>
+    <div
+      className={cn(
+        "container w-full max-w-3xl xl:max-w-4xl",
+        page.data.toc &&
+          page.data.toc.length > 0 &&
+          "grid grid-cols-1 gap-10 xl:max-w-5xl xl:grid-cols-[minmax(0,1fr)_minmax(180px,220px)]"
+      )}
+    >
+      <div className="pb-24 pt-4 sm:pt-10 lg:pt-20">
+        <Breadcrumbs tree={source.pageTree} className="mb-2" />
+        <h1 className="text-3xl font-bold lg:text-4xl">{page.data.title}</h1>
+        <p className="text-fg-muted mt-2">{page.data.description}</p>
+        {page.data.links && page.data.links.length > 0 && (
+          <div className="mt-4 flex flex-wrap gap-2">
+            {page.data.links.map((link, index) => (
+              <Button
+                key={index}
+                href={link.href}
+                prefix={getIcon(link.href)}
+                suffix={<ExternalLinkIcon />}
+                size="sm"
+                className="h-6 text-xs font-semibold [&_svg]:size-3"
+                target="_blank"
+              >
+                {link.label}
+              </Button>
+            ))}
           </div>
         )}
+        <div className="mt-10 text-sm md:text-base">
+          <MDXContent components={mdxComponents} />
+        </div>
+        <div className="mt-20 space-y-4">
+          <PageLastUpdate path={page.file.path} />
+          <DocsPager currentPathname={page.url} />
+        </div>
       </div>
+      {page.data.toc && page.data.toc.length > 0 && (
+        <div className="pt-20">
+          <div className="sticky top-10 h-[calc(100svh-calc(var(--spacing)*10))]">
+            <TableOfContents toc={page.data.toc as TocType} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -14,7 +14,6 @@ import {
   SunIcon,
 } from "lucide-react";
 import { motion, Transition } from "motion/react";
-import { hasActive, isActive } from "@/lib/docs/utils";
 import { cn } from "@/lib/utils";
 import { Button, ButtonProps } from "@/components/core/button";
 import {
@@ -27,6 +26,8 @@ import { ScrollArea } from "@/components/core/scroll-area";
 import { Tooltip, TooltipProps } from "@/components/core/tooltip";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
 import { siteConfig } from "@/config";
+import { hasActive, isActive } from "@/modules/docs/lib/utils";
+import { Logo } from "./logo";
 import { SearchCommand } from "./search-command";
 import { ThemeSwitcher } from "./theme-switcher";
 
@@ -59,10 +60,10 @@ export const Sidebar = ({
 
   return (
     <SidebarRoot className={className}>
-      <div className="relative flex items-center p-3 pb-1">
+      <div className="relative flex items-center p-3.5">
         <Logo />
       </div>
-      <div className="-mb-1 px-2 pt-4">
+      <div className="-mb-1 px-2 pt-0">
         <SidebarSearchButton isCollapsed={isCollapsed} />
       </div>
       <ScrollArea
@@ -210,60 +211,6 @@ export const useSidebarContext = () => {
     throw new Error("useSidebarContext must be used within SidebarProvider");
   }
   return ctx;
-};
-
-const Logo = () => {
-  return (
-    <Link
-      href="/"
-      className="flex items-center gap-2 rounded-sm opacity-100 transition-[opacity,transform] duration-300 ease-out"
-    >
-      {/* <Avatar
-        src={siteConfig.global.logo}
-        alt={siteConfig.global.name}
-        width={24}
-        height={24}
-        loading="lazy"
-        className="m-1 size-6 rounded-sm"
-      /> */}
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width={24}
-        height={24}
-        className="rounded-sm"
-        viewBox="0 0 300 300"
-      >
-        <defs>
-          <clipPath id="a">
-            <path d="M24 0h252c13.254 0 24 10.746 24 24v252c0 13.254-10.746 24-24 24H24c-13.254 0-24-10.746-24-24V24C0 10.746 10.746 0 24 0Zm0 0" />
-          </clipPath>
-          <clipPath id="b">
-            <path d="M187.5 194.418h66.145v66.144H187.5Zm0 0" />
-          </clipPath>
-          <clipPath id="c">
-            <path d="M220.57 194.418c-18.261 0-33.07 14.809-33.07 33.074 0 18.266 14.809 33.07 33.07 33.07 18.266 0 33.075-14.804 33.075-33.07 0-18.265-14.81-33.074-33.075-33.074Zm0 0" />
-          </clipPath>
-        </defs>
-        <g clipPath="url(#a)">
-          <path
-            d="M-30-30h360v360H-30z"
-            className="fill-[#381e1e] dark:fill-white"
-          />
-        </g>
-        <g clipPath="url(#b)">
-          <g clipPath="url(#c)">
-            <path
-              d="M187.5 194.418h66.145v66.144H187.5Zm0 0"
-              className="fill-[#fff] dark:fill-[#381e1e]"
-            />
-          </g>
-        </g>
-      </svg>
-      <div className="font-josefin group-data-collapsed/sidebar:opacity-0 mt-[5px] font-bold leading-normal tracking-tighter transition-colors">
-        {siteConfig.global.name}
-      </div>
-    </Link>
-  );
 };
 
 const SidebarSearchButton = ({ isCollapsed }: { isCollapsed: boolean }) => {
@@ -422,6 +369,7 @@ function FolderNode({
                   setOpen(!open);
                   return;
                 }
+                setOpen(true);
                 setCollapsed(false);
               }}
             >
@@ -466,7 +414,7 @@ const SidebarButton = ({
       variant="quiet"
       size="sm"
       className={cn(
-        "transition-sidebar group-data-collapsed/sidebar:w-8 hover:bg-inverse/10 relative w-full overflow-hidden font-normal",
+        "transition-sidebar group-data-collapsed/sidebar:w-8 hover:bg-bg-inverse/10 relative w-full overflow-hidden font-normal",
         className
       )}
       {...props}

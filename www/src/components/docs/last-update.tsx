@@ -1,4 +1,4 @@
-import { getGithubLastEdit } from "@/lib/docs/get-github-last-edit";
+import { getGithubLastEdit } from "@/modules/docs/lib/get-github-last-edit";
 
 export async function PageLastUpdate({ path }: { path: string }) {
   try {
