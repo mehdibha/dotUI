@@ -18,8 +18,8 @@ export default function HomePage() {
   return (
     <div>
       {/* Hero section */}
-      <div className="container">
-        <section className="max-w-3xl pb-20 pt-14 sm:pt-24 lg:pb-32">
+      <div className="container max-w-screen-2xl">
+        <section className="max-w-3xl pb-20 pt-10 sm:pt-14">
           <Button
             href="/themes"
             prefix={<LayoutTemplateIcon />}
@@ -28,15 +28,15 @@ export default function HomePage() {
           >
             Introducing themes
           </Button>
-          <h1 className="xs:text-3xl text-balance text-2xl tracking-tighter max-lg:font-medium sm:text-4xl md:text-5xl lg:text-6xl">
+          <h1 className="xs:text-3xl text-balance text-2xl tracking-tighter max-lg:font-medium md:text-4xl lg:text-5xl">
             Quickly build your component library with a{" "}
             <span className="font-bold italic">unique</span> look.
           </h1>
-          <p className="text-fg-muted text-balace mt-2 text-lg md:mt-4">
+          <p className="text-fg-muted text-balace mt-2 text-lg">
             Over 40 components available in multiple variants ready to match
             your brand identity.
           </p>
-          <div className="mt-4 flex flex-col gap-2 sm:mt-8 sm:flex-row sm:items-center sm:gap-4">
+          <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
             <Button
               href="/docs/getting-started/introduction"
               variant="primary"
@@ -57,7 +57,7 @@ export default function HomePage() {
         </section>
       </div>
       {/* Components overview */}
-      <section className="px-4 sm:px-8">
+      <section className="container max-w-screen-2xl">
         <ThemesOverview />
       </section>
       <section className="shadow-xs mt-10 border-y py-12 lg:py-8">

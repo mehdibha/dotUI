@@ -57,7 +57,7 @@ export const ThemesOverview = () => {
 
   return (
     <div className="flex flex-col items-center gap-10 md:gap-4">
-      <div className="container relative flex flex-col items-center gap-6">
+      <div className="container relative flex max-w-screen-2xl flex-col items-center gap-6">
         <div className="text-fg-muted relative flex items-center gap-2 py-2 pl-4 pr-2 font-mono text-xs">
           <motion.div
             layout
@@ -209,7 +209,7 @@ export const ThemesOverview = () => {
                       animate="show"
                       exit="hidden"
                     >
-                      <ComponentsOverview className="hidden xl:container sm:grid" />
+                      <ComponentsOverview className="hidden sm:grid" />
                       <MobileComponentsOverview className="sm:hidden" />
                     </motion.div>
                   </AnimatePresence>

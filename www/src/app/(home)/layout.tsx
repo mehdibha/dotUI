@@ -12,7 +12,7 @@ export default function HomeLayout({
     <div>
       <Header className="hidden md:block" />
       <MobileNav items={source.pageTree.children} className="md:hidden" />
-      <div className="mx-auto min-h-screen max-w-screen-2xl sm:grid sm:grid-cols-[20px_1fr_20px] md:grid-cols-[30px_1fr_30px] lg:grid-cols-[50px_1fr_50px]">
+      <div className="mx-auto min-h-screen max-w-screen-2xl sm:grid sm:grid-cols-[20px_1fr_20px] md:grid-cols-[30px_1fr_30px]">
         <div className="diagonal-pattern hidden sm:block" />
         <div className="">
           <div className="min-h-[70vh]">{children}</div>

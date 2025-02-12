@@ -15,7 +15,7 @@ import { focusRing } from "@/registry/lib/focus-styles";
 
 const buttonStyles = tv({
   extend: focusRing,
-  base: "disabled:bg-bg-disabled disabled:text-fg-disabled pending:cursor-default pending:bg-bg-disabled pending:text-fg-disabled pending:border pending:border-border-disabled inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium leading-normal transition-all disabled:cursor-default",
+  base: "disabled:bg-bg-disabled disabled:text-fg-disabled pending:cursor-default pending:bg-bg-disabled pending:text-fg-disabled pending:border pending:border-border-disabled pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0 relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium leading-normal transition-all disabled:cursor-default",
   variants: {
     variant: {
       default:
@@ -102,17 +102,14 @@ const Button = React.forwardRef(
           <>
             {isPending && (
               <Loader
+                data-slot="spinner"
                 aria-label="loading"
                 className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
                 size={16}
               />
             )}
             {prefix}
-            {typeof children === "string" ? (
-              <span className="truncate">{children}</span>
-            ) : (
-              children
-            )}
+            <span className="truncate">{children}</span>
             {suffix}
           </>
         ))}

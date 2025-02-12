@@ -8,6 +8,7 @@ import { Button } from "@/components/core/button";
 import { siteConfig } from "@/config";
 import { Kbd } from "./core/kbd";
 import { GitHubIcon, TwitterIcon } from "./icons";
+import { Logo } from "./logo";
 import { SearchCommand } from "./search-command";
 import { ThemeColorsSelector } from "./theme-colors-selector";
 import { ThemeSwitcher } from "./theme-switcher";
@@ -19,7 +20,7 @@ export function Header({ className }: { className?: string }) {
     >
       <div className="px-12.5 container relative flex h-14 max-w-screen-2xl items-center justify-between">
         <div className="flex items-center gap-6">
-          {/* <Logo /> */}
+          <Logo />
           <div className="flex items-center gap-3 text-sm">
             {[
               { label: "Docs", href: "/docs/getting-started/introduction" },
