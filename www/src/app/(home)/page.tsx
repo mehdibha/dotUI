@@ -60,9 +60,9 @@ export default function HomePage() {
       <section className="container max-w-screen-2xl">
         <ThemesOverview />
       </section>
-      <section className="shadow-xs mt-10 border-y py-12 lg:py-8">
-        <div className="container flex flex-col items-center justify-between gap-5 lg:flex-row lg:gap-10">
-          <h2 className="text-fg-muted xs:text-base text-pretty font-mono text-sm tracking-tight lg:text-lg">
+      <section className="shadow-xs mt-10 py-12">
+        <div className="container flex flex-col items-center justify-center gap-5 lg:gap-10">
+          <h2 className="text-fg-muted xs:text-base text-pretty font-mono text-sm tracking-wide lg:text-base">
             Built on modern, battle-tested tools
           </h2>
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8">
@@ -110,10 +110,10 @@ export default function HomePage() {
       </section>
       {/* Call to action */}
       <section className="container max-w-2xl py-20 sm:py-32">
-        <h2 className="text-pretty text-2xl tracking-tighter lg:text-3xl xl:text-4xl">
-          Bringing <span className="text-fg-muted">singularity</span> to the
-          web.
-          <br /> Fueled by your <span className="text-fg-muted">stars</span>.
+        <h2 className="text-pretty text-2xl font-medium tracking-tighter lg:text-3xl xl:text-4xl">
+          {/* Bringing <span className="text-fg-muted">singularity</span> to the
+          web.<br /> */}
+          Fueled by your <span className="">stars</span>.
         </h2>
         <p className="text-fg-muted mt-2 text-base">
           Our contributors are working hard to make the web a more singular

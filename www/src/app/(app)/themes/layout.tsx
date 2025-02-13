@@ -6,6 +6,7 @@ import { ViewTransitions } from "next-view-transitions";
 import { cn } from "@/lib/utils";
 import { useMounted } from "@/hooks/use-mounted";
 import { Button } from "@/components/core/button";
+import { TableOfContents } from "@/components/docs/toc";
 import { useSidebarContext } from "@/components/sidebar";
 import { PreviewProvider } from "./theme/components/context";
 import { Preview } from "./theme/components/preview";
@@ -36,6 +37,32 @@ export default function ThemesLayout({
           <div className="relative flex-1">
             <div className={cn("container max-w-3xl")}>{children}</div>
           </div>
+          {isMounted && (
+            <motion.div
+              initial={false}
+              animate={{ width: isOpen ? 0 : 300 }}
+              transition={{ type: "spring", bounce: 0, duration: 0.3 }}
+              className="sticky right-0 top-0 z-0 h-[100svh] w-0 overflow-hidden"
+            >
+              <motion.div
+                initial={false}
+                animate={{ width: 300, opacity: isOpen ? 0 : 1 }}
+                transition={{ type: "spring", bounce: 0, duration: 0.3 }}
+                className="h-full pt-10"
+              >
+                <TableOfContents
+                  toc={[
+                    { depth: 2, title: "Foundations", url: "#foundations" },
+                    { depth: 3, title: "Colors", url: "#colors" },
+                    { depth: 3, title: "Typography", url: "#typography" },
+                    { depth: 3, title: "Spacing", url: "#spacing" },
+                    { depth: 3, title: "Radius", url: "#radius" },
+                    { depth: 3, title: "Icongraphy", url: "#iconography" },
+                  ]}
+                />
+              </motion.div>
+            </motion.div>
+          )}
           <div className="relative">
             <div className="absolute -left-2 top-5 -translate-x-full">
               <AnimatePresence>
@@ -62,12 +89,11 @@ export default function ThemesLayout({
               initial={false}
               animate={{ width: containerWidth }}
               transition={{ type: "spring", bounce: 0, duration: 0.3 }}
-              className="sticky right-0 top-0 z-10 h-[100svh] w-0 overflow-hidden"
+              className="sticky right-0 top-0 z-10 flex h-[100svh] w-0 justify-end overflow-hidden"
             >
-              <motion.div
-                initial={false}
-                animate={{ width: previewWidth }}
-                transition={{ type: "spring", bounce: 0, duration: 0.3 }}
+              <div
+                style={{ width: previewWidth }}
+                // transition={{ type: "spring", bounce: 0, duration: 0.3 }}
                 className="h-full p-4"
               >
                 <Preview
@@ -75,7 +101,7 @@ export default function ThemesLayout({
                   screen={screen}
                   onScreenChange={setScreen}
                 />
-              </motion.div>
+              </div>
             </motion.div>
           </div>
         </div>
