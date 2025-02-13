@@ -5,12 +5,22 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   ChevronsRightIcon,
+  MonitorIcon,
   RotateCwIcon,
+  SmartphoneIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/core/button";
 
-export function Preview({ setOpen }: { setOpen: (open: boolean) => void }) {
+export function Preview({
+  setOpen,
+  screen,
+  onScreenChange,
+}: {
+  setOpen: (open: boolean) => void;
+  screen: "desktop" | "mobile";
+  onScreenChange: (screen: "desktop" | "mobile") => void;
+}) {
   const iframeRef = React.useRef<HTMLIFrameElement>(null);
   const [iframeIsLoading, setIframeLoading] = React.useState(true);
   const [currentPathname, setCurrentPathname] = React.useState("");
@@ -57,15 +67,9 @@ export function Preview({ setOpen }: { setOpen: (open: boolean) => void }) {
   }, [updateUrl]);
 
   return (
-    <div className="bg-bg size-full overflow-hidden rounded-b-md border">
-      <div className="bg-bg-muted flex items-center justify-between gap-2 border-b px-2 py-1">
+    <div className="bg-bg size-full overflow-hidden rounded-md border">
+      <div className="bg-bg-muted flex items-center justify-between gap-2 border-b border-t-[inherit] p-1">
         <div className="flex w-32 items-center gap-3">
-          {/* window controls (decorative) */}
-          {/* <div className="flex items-center gap-1.5">
-            <div className="size-3 rounded-full border border-field" />
-            <div className="size-3 rounded-full border border-field" />
-            <div className="size-3 rounded-full border border-field" />
-          </div> */}
           <div className="flex items-center gap-1">
             <Button
               variant="quiet"
@@ -114,7 +118,19 @@ export function Preview({ setOpen }: { setOpen: (open: boolean) => void }) {
         >
           acme.com{currentPathname}
         </Button>
-        <div className="w-32"></div>
+        <div className="flex w-32 justify-end">
+          <Button
+            variant="quiet"
+            shape="square"
+            size="sm"
+            className="size-7"
+            onPress={() =>
+              onScreenChange(screen === "desktop" ? "mobile" : "desktop")
+            }
+          >
+            {screen === "desktop" ? <MonitorIcon /> : <SmartphoneIcon />}
+          </Button>
+        </div>
       </div>
       <iframe
         ref={iframeRef}
