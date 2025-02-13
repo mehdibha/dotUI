@@ -81,7 +81,8 @@ export function ThemeSelect({ className }: { className?: string }) {
       <div className={cn("flex items-center justify-between pl-1", className)}>
         <Skeleton show={isLoading}>
           <ThemeName
-            currentName={currentTheme.name}
+            currentName="forest"
+            // currentName={currentTheme.name}
             setCurrentName={setThemeName}
             isEditable={isCurrentThemeEditable}
           />
@@ -217,7 +218,10 @@ const ThemeName = ({
 
   if (!isEditable) {
     return (
-      <h2 className="font-heading pb-px text-2xl font-semibold">
+      <h2
+        className="font-heading w-fit pb-px text-2xl font-semibold"
+        style={{ viewTransitionName: currentName }}
+      >
         {currentName}
       </h2>
     );
@@ -237,7 +241,8 @@ const ThemeName = ({
           <UnstyledTextField value={inputValue} onChange={setInputValue}>
             <AutoResizeInput
               ref={inputRef}
-              className="font-heading w-auto text-2xl font-semibold"
+              className="font-heading w-fit text-2xl font-semibold"
+              style={{ viewTransitionName: currentName }}
             />
           </UnstyledTextField>
           <div className="flex items-center gap-1">
@@ -263,7 +268,10 @@ const ThemeName = ({
         </>
       ) : (
         <>
-          <h2 className="font-heading pb-px text-2xl font-semibold">
+          <h2
+            className="font-heading w-fit pb-px text-2xl font-semibold"
+            style={{ viewTransitionName: currentName }}
+          >
             {currentName}
           </h2>
           <Button

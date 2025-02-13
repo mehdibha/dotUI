@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
@@ -58,7 +60,7 @@ export const ThemeProvider = ({
               "--font-body": theme?.fonts?.body,
             } as React.CSSProperties
           }
-          className={cn("bg-bg text-fg font-body isolate", className)}
+          className={cn("bg-bg text-fg font-body", className)}
           suppressHydrationWarning
           {...props}
         >
