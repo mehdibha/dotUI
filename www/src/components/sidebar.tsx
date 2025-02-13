@@ -221,7 +221,7 @@ const SidebarSearchButton = ({ isCollapsed }: { isCollapsed: boolean }) => {
           <div className="flex items-center gap-2">
             Search{" "}
             <div className="flex items-center gap-0.5">
-              <Kbd>Ctrl</Kbd>
+              <Kbd>ctrl</Kbd>
               <Kbd>K</Kbd>
             </div>
           </div>

@@ -18,7 +18,7 @@ const breadcrumbsStyles = tv({
     item: "inline-flex items-center gap-1",
     link: [
       focusRing(),
-      "hover:text-fg current:text-fg disabled:not-current:text-fg-disabled inline-flex items-center gap-1 rounded px-0.5 leading-none transition-colors disabled:cursor-default",
+      "current:text-fg hover:[&:is(a)]:text-fg disabled:not-current:text-fg-disabled inline-flex items-center gap-1 rounded px-0.5 leading-none transition-colors disabled:cursor-default",
     ],
   },
 });

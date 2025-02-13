@@ -92,9 +92,9 @@ export const ThemesOverview = () => {
               className="text-fg-muted z-20 bg-[#f5f5f5] dark:bg-[#19191d] [&_svg]:size-3.5"
             >
               {copied ? (
-                <CheckIcon className="animate-in fade-in" />
+                <CheckIcon className="animate-in fade-in duration-75" />
               ) : (
-                <CopyIcon className="animate-in fade-in" />
+                <CopyIcon className="animate-in fade-in duration-75" />
               )}
             </Button>
           </motion.div>

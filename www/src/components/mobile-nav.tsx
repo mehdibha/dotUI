@@ -6,6 +6,7 @@ import { AlignLeftIcon, PanelLeftCloseIcon, SearchIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/core/button";
 import { Dialog, DialogRoot } from "@/components/core/dialog";
+import { Kbd } from "@/components/core/kbd";
 import { ScrollArea } from "@/components/core/scroll-area";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
 import { siteConfig } from "@/config";
@@ -29,7 +30,7 @@ export const MobileNav = ({
         className
       )}
     >
-      <div className="max-w-(--breakpoint-2xl) container flex h-14 w-full items-center justify-between">
+      <div className="max-w-(--breakpoint-2xl) container flex h-14 w-full items-center justify-between gap-1 sm:gap-2">
         <DialogRoot isOpen={isOpen} onOpenChange={setOpen}>
           <Button variant="quiet" size="sm" shape="square">
             <AlignLeftIcon />
@@ -59,9 +60,9 @@ export const MobileNav = ({
                       <Button
                         prefix={<SearchIcon />}
                         variant="outline"
-                        className="bg-bg-inverse/5 w-full"
+                        className="bg-bg-inverse/5 text-fg-muted w-full"
                       >
-                        <span className="flex-1 text-left">Search </span>
+                        <span className="flex-1 text-left">Search docs...</span>
                       </Button>
                     </SearchCommand>
                   </div>
@@ -107,33 +108,47 @@ export const MobileNav = ({
             )}
           </Dialog>
         </DialogRoot>
-        <div className="flex items-center gap-1">
-          <SearchCommand>
-            <Button variant="quiet" size="sm" shape="square">
-              <SearchIcon />
-            </Button>
-          </SearchCommand>
+        <span className="hidden sm:block sm:flex-1" />
+        <SearchCommand
+          onAction={() => {
+            setOpen(false);
+          }}
+        >
           <Button
-            href={siteConfig.links.github}
-            target="_blank"
             size="sm"
-            shape="square"
-            variant="quiet"
-            aria-label="github"
+            variant="outline"
+            prefix={<SearchIcon />}
+            suffix={
+              <div className="flex items-center gap-0.5 text-xs max-sm:hidden">
+                <Kbd>Ctrl</Kbd>
+                <Kbd>K</Kbd>
+              </div>
+            }
+            className="bg-bg-inverse/5 text-fg-muted gap-2 pl-3 pr-1 max-sm:flex-1"
           >
-            <GitHubIcon />
+            <span className="mr-6 flex-1 text-left">Search docs...</span>
           </Button>
-          <Button
-            href={siteConfig.links.twitter}
-            target="_blank"
-            size="sm"
-            shape="square"
-            variant="quiet"
-            aria-label="twitter"
-          >
-            <TwitterIcon />
-          </Button>
-        </div>
+        </SearchCommand>
+        <Button
+          href={siteConfig.links.github}
+          target="_blank"
+          size="sm"
+          shape="square"
+          variant="quiet"
+          aria-label="github"
+        >
+          <GitHubIcon />
+        </Button>
+        <Button
+          href={siteConfig.links.twitter}
+          target="_blank"
+          size="sm"
+          shape="square"
+          variant="quiet"
+          aria-label="twitter"
+        >
+          <TwitterIcon />
+        </Button>
       </div>
     </header>
   );

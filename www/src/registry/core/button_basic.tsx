@@ -109,7 +109,11 @@ const Button = React.forwardRef(
               />
             )}
             {prefix}
-            <span className="truncate">{children}</span>
+            {typeof children === "string" ? (
+              <span className="truncate">{children}</span>
+            ) : (
+              children
+            )}
             {suffix}
           </>
         ))}

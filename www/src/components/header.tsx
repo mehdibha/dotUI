@@ -43,8 +43,13 @@ export function Header({ className }: { className?: string }) {
               size="sm"
               variant="outline"
               prefix={<SearchIcon />}
-              suffix={<Kbd className="text-xs">Ctrl+K</Kbd>}
-              className="bg-bg-inverse/5 gap-2 px-3"
+              suffix={
+                <div className="flex items-center gap-0.5 text-xs">
+                  <Kbd>Ctrl</Kbd>
+                  <Kbd>K</Kbd>
+                </div>
+              }
+              className="bg-bg-inverse/5 text-fg-muted gap-2 pl-3 pr-1"
             >
               <span className="mr-6 flex-1">Search docs...</span>
             </Button>

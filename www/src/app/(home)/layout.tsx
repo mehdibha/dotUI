@@ -10,8 +10,8 @@ export default function HomeLayout({
 }) {
   return (
     <div>
-      <Header className="hidden md:block" />
-      <MobileNav items={source.pageTree.children} className="md:hidden" />
+      <Header className="hidden lg:block" />
+      <MobileNav items={source.pageTree.children} className="lg:hidden" />
       <div className="mx-auto min-h-screen max-w-screen-2xl sm:grid sm:grid-cols-[20px_1fr_20px] md:grid-cols-[30px_1fr_30px]">
         <div className="diagonal-pattern hidden sm:block" />
         <div className="">
