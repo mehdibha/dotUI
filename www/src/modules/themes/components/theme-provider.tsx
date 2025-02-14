@@ -16,6 +16,7 @@ interface ThemeProviderProps
     | ((mode: "light" | "dark" | undefined) => React.ReactNode);
   mode?: "light" | "dark";
   theme?: Theme;
+  unstyled?: boolean;
 }
 export const ThemeProvider = ({
   theme,
@@ -23,6 +24,7 @@ export const ThemeProvider = ({
   children,
   className,
   style,
+  unstyled = false,
   ...props
 }: ThemeProviderProps) => {
   const { resolvedTheme } = useTheme();
@@ -60,7 +62,7 @@ export const ThemeProvider = ({
               "--font-body": theme?.fonts?.body,
             } as React.CSSProperties
           }
-          className={cn("bg-bg text-fg font-body", className)}
+          className={cn(!unstyled && "bg-bg text-fg font-body", className)}
           suppressHydrationWarning
           {...props}
         >

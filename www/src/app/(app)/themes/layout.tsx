@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "motion/react";
 import { ViewTransitions } from "next-view-transitions";
 import { cn } from "@/lib/utils";
@@ -8,15 +9,17 @@ import { useMounted } from "@/hooks/use-mounted";
 import { Button } from "@/components/core/button";
 import { TableOfContents } from "@/components/docs/toc";
 import { useSidebarContext } from "@/components/sidebar";
-import { PreviewProvider } from "./theme/components/context";
-import { Preview } from "./theme/components/preview";
+import { PreviewProvider } from "@/app/(app)/themes/theme/components/context";
+import { Preview } from "@/app/(app)/themes/theme/components/preview";
 
 export default function ThemesLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [isOpen, setOpen] = React.useState(false);
+  const pathname = usePathname();
+  const [isOpenState, setOpen] = React.useState(false);
+  const isOpen = pathname === "/themes" ? false : isOpenState;
   const [screen, setScreen] = React.useState<"desktop" | "mobile">("desktop");
   const { isCollapsed } = useSidebarContext();
   const previewWidth = Math.min(
@@ -37,7 +40,7 @@ export default function ThemesLayout({
           <div className="relative flex-1">
             <div className={cn("container max-w-3xl")}>{children}</div>
           </div>
-          {isMounted && (
+          {isMounted && pathname !== "/themes" && (
             <motion.div
               initial={false}
               animate={{ width: isOpen ? 0 : 300 }}
@@ -52,12 +55,16 @@ export default function ThemesLayout({
               >
                 <TableOfContents
                   toc={[
-                    { depth: 2, title: "Foundations", url: "#foundations" },
-                    { depth: 3, title: "Colors", url: "#colors" },
-                    { depth: 3, title: "Typography", url: "#typography" },
-                    { depth: 3, title: "Spacing", url: "#spacing" },
-                    { depth: 3, title: "Radius", url: "#radius" },
-                    { depth: 3, title: "Icongraphy", url: "#iconography" },
+                    { depth: 2, title: "Colors", url: "#colors" },
+                    { depth: 3, title: "Core colors", url: "#core-colors" },
+                    {
+                      depth: 3,
+                      title: "Semantic colors",
+                      url: "#semantic-colors",
+                    },
+                    { depth: 2, title: "Typography", url: "#typography" },
+                    { depth: 2, title: "Icongraphy", url: "#iconography" },
+                    { depth: 2, title: "Layout", url: "#radius" },
                   ]}
                 />
               </motion.div>
@@ -91,17 +98,17 @@ export default function ThemesLayout({
               transition={{ type: "spring", bounce: 0, duration: 0.3 }}
               className="sticky right-0 top-0 z-10 flex h-[100svh] w-0 justify-end overflow-hidden"
             >
-              <div
-                style={{ width: previewWidth }}
-                // transition={{ type: "spring", bounce: 0, duration: 0.3 }}
-                className="h-full p-4"
+              <motion.div
+                animate={{ width: previewWidth }}
+                transition={{ type: "spring", bounce: 0, duration: 0.3 }}
+                className="h-full p-4 pl-0"
               >
                 <Preview
                   setOpen={setOpen}
                   screen={screen}
                   onScreenChange={setScreen}
                 />
-              </div>
+              </motion.div>
             </motion.div>
           </div>
         </div>

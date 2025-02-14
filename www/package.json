@@ -53,6 +53,7 @@
     "react-hook-form": "^7.54.2",
     "react-resizable-panels": "^2.0.19",
     "react-stately": "^3.31.0",
+    "react-use": "^17.6.0",
     "remark-gfm": "^4.0.0",
     "sharp": "^0.33.2",
     "shiki": "^2.2.0",
