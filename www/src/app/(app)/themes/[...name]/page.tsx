@@ -18,7 +18,23 @@ import { Tabs, Tab, TabList } from "@/components/core/tabs";
 import { ToggleButton } from "@/components/core/toggle-button";
 import { Tooltip } from "@/components/core/tooltip";
 import { ButtonDemo } from "@/modules/themes/components/demos/button-demo";
+import { CalendarDemo } from "@/modules/themes/components/demos/calendar-demo";
+import { CheckboxDemo } from "@/modules/themes/components/demos/checkbox-demo";
+import { ComboboxDemo } from "@/modules/themes/components/demos/combobox-demo";
+import { CommandDemo } from "@/modules/themes/components/demos/command-demo";
+import { DatePickerDemo } from "@/modules/themes/components/demos/date-picker-demo";
+import { DateRangePickerDemo } from "@/modules/themes/components/demos/date-range-picker-demo";
 import { IconsDemo } from "@/modules/themes/components/demos/icons-demo";
+import { ListBoxDemo } from "@/modules/themes/components/demos/listbox-demo";
+import { MenuDemo } from "@/modules/themes/components/demos/menu-demo";
+import { NumberFieldDemo } from "@/modules/themes/components/demos/number-field-demo";
+import { RadioGroupDemo } from "@/modules/themes/components/demos/radio-group-demo";
+import { SearchFieldDemo } from "@/modules/themes/components/demos/search-field-demo";
+import { SelectDemo } from "@/modules/themes/components/demos/select-demo";
+import { SliderDemo } from "@/modules/themes/components/demos/slider-demo";
+import { SwitchDemo } from "@/modules/themes/components/demos/switch-demo";
+import { TagGroupDemo } from "@/modules/themes/components/demos/tag-group-demo";
+import { TextAreaDemo } from "@/modules/themes/components/demos/text-area-demo";
 import { TextFieldDemo } from "@/modules/themes/components/demos/text-field-demo";
 import { ToggleButtonDemo } from "@/modules/themes/components/demos/toggle-button-demo";
 
@@ -215,25 +231,57 @@ export default function ThemePage() {
           <ComponentSection title="TextField">
             <TextFieldDemo />
           </ComponentSection>
-          <ComponentSection title="TextArea"></ComponentSection>
-          <ComponentSection title="SearchField"></ComponentSection>
-          <ComponentSection title="NumberField"></ComponentSection>
-          <ComponentSection title="Checkbox"></ComponentSection>
+          <ComponentSection title="TextArea">
+            <TextAreaDemo />
+          </ComponentSection>
+          <ComponentSection title="SearchField">
+            <SearchFieldDemo />
+          </ComponentSection>
+          <ComponentSection title="NumberField">
+            <NumberFieldDemo />
+          </ComponentSection>
+          <ComponentSection title="Checkbox">
+            <CheckboxDemo />
+          </ComponentSection>
           <ComponentSection title="Checkbox Group"></ComponentSection>
-          <ComponentSection title="Radio Group"></ComponentSection>
-          <ComponentSection title="Switch"></ComponentSection>
-          <ComponentSection title="Slider"></ComponentSection>
+          <ComponentSection title="Radio Group">
+            <RadioGroupDemo />
+          </ComponentSection>
+          <ComponentSection title="Switch">
+            <SwitchDemo />
+          </ComponentSection>
+          <ComponentSection title="Slider">
+            <SliderDemo />
+          </ComponentSection>
           {/* Menus and selection */}
-          <ComponentSection title="ListBox"></ComponentSection>
-          <ComponentSection title="Menu"></ComponentSection>
-          <ComponentSection title="Select"></ComponentSection>
-          <ComponentSection title="Combobox"></ComponentSection>
-          <ComponentSection title="Tag Group"></ComponentSection>
-          <ComponentSection title="Command"></ComponentSection>
+          <ComponentSection title="ListBox">
+            <ListBoxDemo />
+          </ComponentSection>
+          <ComponentSection title="Menu">
+            <MenuDemo />
+          </ComponentSection>
+          <ComponentSection title="Select">
+            <SelectDemo />
+          </ComponentSection>
+          <ComponentSection title="Combobox">
+            <ComboboxDemo />
+          </ComponentSection>
+          <ComponentSection title="Tag Group">
+            <TagGroupDemo />
+          </ComponentSection>
+          <ComponentSection title="Command">
+            <CommandDemo />
+          </ComponentSection>
           {/* Date and time */}
-          <ComponentSection title="Calendar"></ComponentSection>
-          <ComponentSection title="DatePicker"></ComponentSection>
-          <ComponentSection title="DateRangePicker"></ComponentSection>
+          <ComponentSection title="Calendar">
+            <CalendarDemo />
+          </ComponentSection>
+          <ComponentSection title="DatePicker">
+            <DatePickerDemo />
+          </ComponentSection>
+          <ComponentSection title="DateRangePicker">
+            <DateRangePickerDemo />
+          </ComponentSection>
         </Section>
       </div>
     </div>
@@ -307,25 +355,25 @@ const Section = ({
   );
 };
 
-const Container = ({
-  children,
-  className,
-}: {
-  children?: React.ReactNode;
-  className?: string;
-}) => {
-  return (
-    <motion.div
-      initial={false}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0 }}
-      transition={TRANSITION}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
-};
+// const Container = ({
+//   children,
+//   className,
+// }: {
+//   children?: React.ReactNode;
+//   className?: string;
+// }) => {
+//   return (
+//     <motion.div
+//       initial={false}
+//       animate={{ opacity: 1, y: 0 }}
+//       exit={{ opacity: 0 }}
+//       transition={TRANSITION}
+//       className={className}
+//     >
+//       {children}
+//     </motion.div>
+//   );
+// };
 
 const Item = ({
   containerClassName,

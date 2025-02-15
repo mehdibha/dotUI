@@ -1,5 +1,6 @@
 "use client";
 
+import { ListFilterIcon } from "lucide-react";
 import { Link } from "next-view-transitions";
 import { useMounted } from "@/hooks/use-mounted";
 import { Button } from "@/components/core/button";
@@ -11,7 +12,7 @@ import { ThemeProvider } from "@/modules/themes/components/theme-provider";
 export default function Page() {
   const isMounted = useMounted();
   return (
-    <div className="container max-w-3xl pt-16">
+    <div className="container max-w-3xl pb-36 pt-16">
       <h2 className="w-fit text-2xl font-semibold [view-transition-name:themes-title]">
         Themes
       </h2>
@@ -21,6 +22,7 @@ export default function Page() {
       </p>
       <div className="mt-6 flex items-center gap-2">
         <SearchField placeholder="Search themes..." className="flex-1" />
+        <Button prefix={<ListFilterIcon />}>Filter</Button>
         <Button variant="primary" className="">
           Create theme
         </Button>
