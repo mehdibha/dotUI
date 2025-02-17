@@ -14,7 +14,6 @@ export default async function PreviewLayout({
   return (
     <ThemeProvider theme={themes.find((theme) => theme.name === themeName)}>
       <ThemeUpdater />
-      <div>currentTheme: {themeName}</div>
       <div className="min-h-screen">{children}</div>
     </ThemeProvider>
   );

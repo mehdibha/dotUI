@@ -9,11 +9,12 @@ import {
   SaveIcon,
   SunIcon,
 } from "lucide-react";
-import { AnimatePresence, motion, Transition } from "motion/react";
+import { motion, Transition } from "motion/react";
 import { Link } from "next-view-transitions";
 import { useMeasure } from "react-use";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/core/button";
+import { Dialog, DialogRoot } from "@/components/core/dialog";
 import { Tabs, Tab, TabList } from "@/components/core/tabs";
 import { ToggleButton } from "@/components/core/toggle-button";
 import { Tooltip } from "@/components/core/tooltip";
@@ -37,57 +38,56 @@ import { TagGroupDemo } from "@/modules/themes/components/demos/tag-group-demo";
 import { TextAreaDemo } from "@/modules/themes/components/demos/text-area-demo";
 import { TextFieldDemo } from "@/modules/themes/components/demos/text-field-demo";
 import { ToggleButtonDemo } from "@/modules/themes/components/demos/toggle-button-demo";
+import { PreviewContent } from "../preview";
 
 export default function ThemePage() {
   const [isEditMode, setEditMode] = React.useState(false);
 
   return (
-    <div className="pb-20 pt-10">
-      <Link
-        href="/themes-old"
-        className="text-fg-muted hover:text-fg flex cursor-pointer items-center gap-1 text-sm"
-      >
-        <ArrowLeftIcon className="size-4" />
-        <span>
-          <span className="[view-transition-name:themes-title]">themes</span>
-        </span>
-      </Link>
-      <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-semibold tracking-tight">Forest</h2>
-        <div className="flex items-center gap-2">
-          <AnimatePresence>
+    <div className="relative pb-20">
+      <div className="max-lg:bg-bg max-lg:sticky max-lg:top-[57px] max-lg:z-10 max-lg:border-b max-lg:p-4">
+        <Link
+          href="/themes"
+          className="text-fg-muted hover:text-fg flex cursor-pointer items-center gap-1 text-sm"
+        >
+          <ArrowLeftIcon className="size-4" />
+          <span>
+            <span className="[view-transition-name:themes-title]">themes</span>
+          </span>
+        </Link>
+        <div className="flex items-center justify-between">
+          <h2 className="text-3xl font-semibold tracking-tight">Forest</h2>
+          <div className="flex items-center gap-2">
+            <DialogRoot>
+              <Button className="xl:hidden">Preview</Button>
+              <Dialog type="drawer" className="h-[80svh] p-0">
+                <PreviewContent
+                  themeName="minimalist"
+                  collapsible={false}
+                  resizable={false}
+                />
+              </Dialog>
+            </DialogRoot>
             {isEditMode && (
-              <motion.div
-                initial={{ width: 60, opacity: 0 }}
-                animate={{ width: 112, opacity: 1 }}
-                exit={{ width: 60, opacity: 0 }}
-                transition={TRANSITION}
-                className="overflow-hidden"
-              >
-                <Button
-                  prefix={<SaveIcon />}
-                  isDisabled
-                  className="w-full min-w-0"
-                >
-                  Save
-                </Button>
-              </motion.div>
+              <Button shape="square" isDisabled>
+                <SaveIcon />
+              </Button>
             )}
-          </AnimatePresence>
-          <Tooltip content="Edit mode" variant="inverse" showArrow>
-            <ToggleButton
-              isSelected={isEditMode}
-              onChange={setEditMode}
-              prefix={<PenIcon />}
-              variant="primary"
-              shape="rectangle"
-            >
-              Edit mode
-            </ToggleButton>
-          </Tooltip>
+            <Tooltip content="Edit mode" variant="inverse" showArrow>
+              <ToggleButton
+                isSelected={isEditMode}
+                onChange={setEditMode}
+                prefix={<PenIcon />}
+                variant="primary"
+                shape="rectangle"
+              >
+                Edit mode
+              </ToggleButton>
+            </Tooltip>
+          </div>
         </div>
       </div>
-      <div className="mt-12 space-y-10">
+      <div className="max-w-[calc(100vw-24px)] space-y-10 overflow-hidden max-lg:p-4 sm:max-w-[calc(100vw-57px)] lg:mt-12">
         <Section
           title="Colors"
           description="Learn how to work with color system."
