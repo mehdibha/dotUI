@@ -33,6 +33,10 @@ export function PreviewProvider({ children }: { children: React.ReactNode }) {
   const [isOpen, setOpen] = React.useState(false);
   const [screen, setScreen] = React.useState<"desktop" | "mobile">("desktop");
 
+  React.useEffect(() => {
+    setOpen(true)
+  }, []);
+
   return (
     <PreviewContext.Provider value={{ isOpen, setOpen, screen, setScreen }}>
       {children}
@@ -54,8 +58,8 @@ export const Preview = () => {
   const themeName = params?.themeName ?? currentTheme.name;
 
   const previewWidth = Math.min(
-    screen === "mobile" ? 420 : 700,
-    isCollapsed ? 700 : 600
+    screen === "mobile" ? 430 : 768,
+    isCollapsed ? 768 : 600
   );
   const containerWidth = isOpen && shouldOpen ? previewWidth : 0;
 
@@ -217,7 +221,7 @@ export function PreviewContent({
           acme.com{currentPathname}
         </Button>
         <div className="flex w-32 justify-end">
-          {
+          {resizable && (
             <Button
               variant="quiet"
               shape="square"
@@ -229,7 +233,7 @@ export function PreviewContent({
             >
               {screen === "desktop" ? <MonitorIcon /> : <SmartphoneIcon />}
             </Button>
-          }
+          )}
         </div>
       </div>
       <iframe

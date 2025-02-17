@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import {
   ArrowLeftIcon,
   CheckIcon,
@@ -10,7 +11,6 @@ import {
   SunIcon,
 } from "lucide-react";
 import { motion, Transition } from "motion/react";
-import { Link } from "next-view-transitions";
 import { useMeasure } from "react-use";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/core/button";
@@ -44,68 +44,67 @@ export default function ThemePage() {
   const [isEditMode, setEditMode] = React.useState(false);
 
   return (
-    <div className="relative pb-20">
-      <div className="max-lg:bg-bg max-lg:sticky max-lg:top-[57px] max-lg:z-10 max-lg:border-b max-lg:p-4">
-        <Link
-          href="/themes"
-          className="text-fg-muted hover:text-fg flex cursor-pointer items-center gap-1 text-sm"
-        >
-          <ArrowLeftIcon className="size-4" />
-          <span>
-            <span className="[view-transition-name:themes-title]">themes</span>
-          </span>
-        </Link>
-        <div className="flex items-center justify-between">
-          <h2 className="text-3xl font-semibold tracking-tight">Forest</h2>
-          <div className="flex items-center gap-2">
-            <DialogRoot>
-              <Button className="xl:hidden">Preview</Button>
-              <Dialog type="drawer" className="h-[80svh] p-0">
-                <PreviewContent
-                  themeName="minimalist"
-                  collapsible={false}
-                  resizable={false}
-                />
-              </Dialog>
-            </DialogRoot>
-            {isEditMode && (
-              <Button shape="square" isDisabled>
-                <SaveIcon />
-              </Button>
-            )}
-            <Tooltip content="Edit mode" variant="inverse" showArrow>
-              <ToggleButton
-                isSelected={isEditMode}
-                onChange={setEditMode}
-                prefix={<PenIcon />}
-                variant="primary"
-                shape="rectangle"
-              >
-                Edit mode
-              </ToggleButton>
-            </Tooltip>
+    <div>
+      <div className="relative pb-20">
+        <div className="max-lg:bg-bg max-lg:sticky max-lg:top-[57px] max-lg:z-10 max-lg:border-b max-lg:p-4">
+          <Link
+            href="/themes"
+            className="text-fg-muted hover:text-fg flex cursor-pointer items-center gap-1 text-sm"
+          >
+            <ArrowLeftIcon className="size-4" />
+            <span>themes</span>
+          </Link>
+          <div className="flex items-center justify-between">
+            <h2 className="text-3xl font-semibold tracking-tight">Forest</h2>
+            <div className="flex items-center gap-2">
+              <DialogRoot>
+                <Button className="xl:hidden">Preview</Button>
+                <Dialog type="drawer" className="h-[80svh] p-0">
+                  <PreviewContent
+                    themeName="minimalist"
+                    collapsible={false}
+                    resizable={false}
+                  />
+                </Dialog>
+              </DialogRoot>
+              {isEditMode && (
+                <Button shape="square" isDisabled>
+                  <SaveIcon />
+                </Button>
+              )}
+              <Tooltip content="Edit mode" variant="inverse" showArrow>
+                <ToggleButton
+                  isSelected={isEditMode}
+                  onChange={setEditMode}
+                  prefix={<PenIcon />}
+                  variant="primary"
+                  shape="rectangle"
+                >
+                  Edit mode
+                </ToggleButton>
+              </Tooltip>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="max-w-[calc(100vw-24px)] space-y-10 overflow-hidden max-lg:p-4 sm:max-w-[calc(100vw-57px)] lg:mt-12">
-        <Section
-          title="Colors"
-          description="Learn how to work with color system."
-          action={
-            <Tabs variant="solid">
-              <TabList className="[&_svg]:size-4">
-                <Tab id="light">
-                  <SunIcon />
-                </Tab>
-                <Tab id="dark">
-                  <MoonIcon />
-                </Tab>
-              </TabList>
-            </Tabs>
-          }
-          className="pt-4"
-        >
-          {/* {isEditMode ? (
+        <div className="space-y-10 overflow-hidden max-lg:p-4 lg:mt-12">
+          <Section
+            title="Colors"
+            description="Learn how to work with color system."
+            action={
+              <Tabs variant="solid">
+                <TabList className="[&_svg]:size-4">
+                  <Tab id="light">
+                    <SunIcon />
+                  </Tab>
+                  <Tab id="dark">
+                    <MoonIcon />
+                  </Tab>
+                </TabList>
+              </Tabs>
+            }
+            className="pt-4"
+          >
+            {/* {isEditMode ? (
             <Container key="edit">
               <p>edit colors here</p>
             </Container>
@@ -114,175 +113,180 @@ export default function ThemePage() {
               
             </Container>
           )} */}
-          <p className="font-medium tracking-tight">Core colors</p>
-          <div className="mt-1 flex gap-1">
-            <Item
-              className="bg-bg-neutral rounded-sm"
-              containerClassName=" ml-0! mr-0!"
-            />
-            <Item
-              className="bg-bg-accent rounded-sm"
-              containerClassName=" ml-0! mr-0!"
-            />
-          </div>
-          <div className="mt-1 space-y-1">
-            {[
-              { name: "neutral", label: "Neutral" },
-              { name: "accent", label: "Accent" },
-            ].map((shade) => (
-              <div key={shade.name} className="flex items-center gap-2">
-                <p className="text-fg-muted w-[60px] text-sm">{shade.label}</p>
-                <div className="flex flex-1">
-                  {Array.from({ length: 10 }).map((_, i) => (
-                    <Item
-                      key={i}
-                      style={{
-                        backgroundColor: `var(--${shade.name}-${(i + 1) * 100})`,
-                      }}
-                      className="h-8 rounded-sm"
-                      containerClassName="not-last:-mr-16 not-first:-ml-16 h-8"
-                    />
-                  ))}
+            <p className="font-medium tracking-tight">Core colors</p>
+            <div className="mt-1 flex gap-1">
+              <Item
+                className="bg-bg-neutral rounded-sm"
+                containerClassName=" ml-0! mr-0!"
+              />
+              <Item
+                className="bg-bg-accent rounded-sm"
+                containerClassName=" ml-0! mr-0!"
+              />
+            </div>
+            <div className="mt-1 space-y-1">
+              {[
+                { name: "neutral", label: "Neutral" },
+                { name: "accent", label: "Accent" },
+              ].map((shade) => (
+                <div key={shade.name} className="flex items-center gap-2">
+                  <p className="text-fg-muted w-[60px] text-sm">
+                    {shade.label}
+                  </p>
+                  <div className="flex flex-1">
+                    {Array.from({ length: 10 }).map((_, i) => (
+                      <Item
+                        key={i}
+                        style={{
+                          backgroundColor: `var(--${shade.name}-${(i + 1) * 100})`,
+                        }}
+                        className="h-8 rounded-sm"
+                        containerClassName="not-last:-mr-16 not-first:-ml-16 h-8"
+                      />
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-          <p className="mt-4 font-medium tracking-tight">Semantic colors</p>
-          <div className="mt-1 flex gap-1">
-            {/* <Item className="bg-bg-info" /> */}
-            <Item
-              className="bg-bg-success rounded-sm"
-              containerClassName="ml-0! mr-0!"
-            />
-            <Item
-              className="bg-bg-warning rounded-sm"
-              containerClassName=" ml-0! mr-0!"
-            />
-            <Item
-              className="bg-bg-danger rounded-sm"
-              containerClassName=" ml-0! mr-0!"
-            />
-          </div>
-          <div className="mt-1 space-y-1">
-            {[
-              { name: "success", label: "Success" },
-              { name: "warning", label: "Warning" },
-              { name: "danger", label: "Danger" },
-              // { name: "info", label: "Info" },
-            ].map((shade) => (
-              <div key={shade.name} className="flex items-center gap-2">
-                <p className="text-fg-muted w-[60px] text-sm">{shade.label}</p>
-                <div className="flex flex-1">
-                  {Array.from({ length: 10 }).map((_, i) => (
-                    <Item
-                      key={i}
-                      style={{
-                        backgroundColor: `var(--${shade.name}-${(i + 1) * 100})`,
-                      }}
-                      className="h-8 rounded-sm"
-                      containerClassName="not-last:-mr-16 not-first:-ml-16 h-8"
-                    />
-                  ))}
+              ))}
+            </div>
+            <p className="mt-4 font-medium tracking-tight">Semantic colors</p>
+            <div className="mt-1 flex gap-1">
+              {/* <Item className="bg-bg-info" /> */}
+              <Item
+                className="bg-bg-success rounded-sm"
+                containerClassName="ml-0! mr-0!"
+              />
+              <Item
+                className="bg-bg-warning rounded-sm"
+                containerClassName=" ml-0! mr-0!"
+              />
+              <Item
+                className="bg-bg-danger rounded-sm"
+                containerClassName=" ml-0! mr-0!"
+              />
+            </div>
+            <div className="mt-1 space-y-1">
+              {[
+                { name: "success", label: "Success" },
+                { name: "warning", label: "Warning" },
+                { name: "danger", label: "Danger" },
+                // { name: "info", label: "Info" },
+              ].map((shade) => (
+                <div key={shade.name} className="flex items-center gap-2">
+                  <p className="text-fg-muted w-[60px] text-sm">
+                    {shade.label}
+                  </p>
+                  <div className="flex flex-1">
+                    {Array.from({ length: 10 }).map((_, i) => (
+                      <Item
+                        key={i}
+                        style={{
+                          backgroundColor: `var(--${shade.name}-${(i + 1) * 100})`,
+                        }}
+                        className="h-8 rounded-sm"
+                        containerClassName="not-last:-mr-16 not-first:-ml-16 h-8"
+                      />
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </Section>
-        <Section
-          title="Typography"
-          description="Rules of typesetting throughout the system."
-          className="pt-4"
-        >
-          <div className="font-heading space-y-1 font-bold tracking-tight">
-            <p className="text-5xl">Heading 5XL</p>
-            <p className="text-4xl">Heading 4XL</p>
-            <p className="text-3xl">Heading 3XL</p>
-            <p className="text-2xl">Heading 2XL</p>
-            <p className="text-xl">Heading XL</p>
-            <p className="text-lg">Heading LG</p>
-          </div>
-          <div className="font-body mt-4 space-y-0.5 tracking-tight">
-            <p className="text-xl">This is body content XL</p>
-            <p className="text-lg">This is body content LG</p>
-            <p className="text-base">This is body content base</p>
-            <p className="text-sm">This is body content sm</p>
-          </div>
-        </Section>
-        <Section
-          title="Iconography"
-          description="A collection of icons."
-          className="pt-4"
-        >
-          <IconsDemo />
-        </Section>
-        <Section
-          title="Components overview"
-          description="Components are the reusable primitives for creating user interfaces."
-          className="space-y-4 pt-4"
-        >
-          {/* Buttons */}
-          <ComponentSection title="Button">
-            <ButtonDemo />
-          </ComponentSection>
-          <ComponentSection title="Toggle Button">
-            <ToggleButtonDemo />
-          </ComponentSection>
-          {/* Inputs */}
-          <ComponentSection title="TextField">
-            <TextFieldDemo />
-          </ComponentSection>
-          <ComponentSection title="TextArea">
-            <TextAreaDemo />
-          </ComponentSection>
-          <ComponentSection title="SearchField">
-            <SearchFieldDemo />
-          </ComponentSection>
-          <ComponentSection title="NumberField">
-            <NumberFieldDemo />
-          </ComponentSection>
-          <ComponentSection title="Checkbox">
-            <CheckboxDemo />
-          </ComponentSection>
-          <ComponentSection title="Checkbox Group"></ComponentSection>
-          <ComponentSection title="Radio Group">
-            <RadioGroupDemo />
-          </ComponentSection>
-          <ComponentSection title="Switch">
-            <SwitchDemo />
-          </ComponentSection>
-          <ComponentSection title="Slider">
-            <SliderDemo />
-          </ComponentSection>
-          {/* Menus and selection */}
-          <ComponentSection title="ListBox">
-            <ListBoxDemo />
-          </ComponentSection>
-          <ComponentSection title="Menu">
-            <MenuDemo />
-          </ComponentSection>
-          <ComponentSection title="Select">
-            <SelectDemo />
-          </ComponentSection>
-          <ComponentSection title="Combobox">
-            <ComboboxDemo />
-          </ComponentSection>
-          <ComponentSection title="Tag Group">
-            <TagGroupDemo />
-          </ComponentSection>
-          <ComponentSection title="Command">
-            <CommandDemo />
-          </ComponentSection>
-          {/* Date and time */}
-          <ComponentSection title="Calendar">
-            <CalendarDemo />
-          </ComponentSection>
-          <ComponentSection title="DatePicker">
-            <DatePickerDemo />
-          </ComponentSection>
-          <ComponentSection title="DateRangePicker">
-            <DateRangePickerDemo />
-          </ComponentSection>
-        </Section>
+              ))}
+            </div>
+          </Section>
+          <Section
+            title="Typography"
+            description="Rules of typesetting throughout the system."
+            className="hidden pt-4"
+          >
+            <div className="font-heading space-y-1 font-bold tracking-tight">
+              <p className="text-5xl">Heading 5XL</p>
+              <p className="text-4xl">Heading 4XL</p>
+              <p className="text-3xl">Heading 3XL</p>
+              <p className="text-2xl">Heading 2XL</p>
+              <p className="text-xl">Heading XL</p>
+              <p className="text-lg">Heading LG</p>
+            </div>
+            <div className="font-body mt-4 space-y-0.5 tracking-tight">
+              <p className="text-xl">This is body content XL</p>
+              <p className="text-lg">This is body content LG</p>
+              <p className="text-base">This is body content base</p>
+              <p className="text-sm">This is body content sm</p>
+            </div>
+          </Section>
+          <Section
+            title="Iconography"
+            description="A collection of icons."
+            className="hidden pt-4"
+          >
+            <IconsDemo />
+          </Section>
+          <Section
+            title="Components overview"
+            description="Components are the reusable primitives for creating user interfaces."
+            className="hidden space-y-4 pt-4"
+          >
+            {/* Buttons */}
+            <ComponentSection title="Button">
+              <ButtonDemo />
+            </ComponentSection>
+            <ComponentSection title="Toggle Button">
+              <ToggleButtonDemo />
+            </ComponentSection>
+            {/* Inputs */}
+            <ComponentSection title="TextField">
+              <TextFieldDemo />
+            </ComponentSection>
+            <ComponentSection title="TextArea">
+              <TextAreaDemo />
+            </ComponentSection>
+            <ComponentSection title="SearchField">
+              <SearchFieldDemo />
+            </ComponentSection>
+            <ComponentSection title="NumberField">
+              <NumberFieldDemo />
+            </ComponentSection>
+            <ComponentSection title="Checkbox">
+              <CheckboxDemo />
+            </ComponentSection>
+            <ComponentSection title="Checkbox Group"></ComponentSection>
+            <ComponentSection title="Radio Group">
+              <RadioGroupDemo />
+            </ComponentSection>
+            <ComponentSection title="Switch">
+              <SwitchDemo />
+            </ComponentSection>
+            <ComponentSection title="Slider">
+              <SliderDemo />
+            </ComponentSection>
+            {/* Menus and selection */}
+            <ComponentSection title="ListBox">
+              <ListBoxDemo />
+            </ComponentSection>
+            <ComponentSection title="Menu">
+              <MenuDemo />
+            </ComponentSection>
+            <ComponentSection title="Select">
+              <SelectDemo />
+            </ComponentSection>
+            <ComponentSection title="Combobox">
+              <ComboboxDemo />
+            </ComponentSection>
+            <ComponentSection title="Tag Group">
+              <TagGroupDemo />
+            </ComponentSection>
+            <ComponentSection title="Command">
+              <CommandDemo />
+            </ComponentSection>
+            {/* Date and time */}
+            <ComponentSection title="Calendar">
+              <CalendarDemo />
+            </ComponentSection>
+            <ComponentSection title="DatePicker">
+              <DatePickerDemo />
+            </ComponentSection>
+            <ComponentSection title="DateRangePicker">
+              <DateRangePickerDemo />
+            </ComponentSection>
+          </Section>
+        </div>
       </div>
     </div>
   );
@@ -334,7 +338,7 @@ const Section = ({
   children?: React.ReactNode;
   className?: string;
 }) => {
-  const [ref, { height }] = useMeasure<HTMLDivElement>();
+  // const [ref, { height }] = useMeasure<HTMLDivElement>();
   return (
     <section>
       <div className="flex items-start justify-between">
@@ -346,11 +350,11 @@ const Section = ({
         </div>
         {action}
       </div>
-      <motion.div animate={{ height }} transition={TRANSITION}>
+      <div className={className}>{children}</div>
+      {/* <motion.div animate={{ height }} transition={TRANSITION}>
         <div ref={ref}>
-          <div className={className}>{children}</div>
         </div>
-      </motion.div>
+      </motion.div> */}
     </section>
   );
 };
