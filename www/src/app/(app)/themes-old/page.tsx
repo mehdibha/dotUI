@@ -44,7 +44,7 @@ export default function Page() {
                 className="text-fg"
               >
                 <Link
-                  href={`/themes/${theme.name}`}
+                  href={`/themes-old/${theme.name}`}
                   className="bg-bg flex flex-col items-start justify-start gap-0 overflow-hidden rounded-md border p-0"
                 >
                   <div className="flex w-full items-start justify-between p-2">

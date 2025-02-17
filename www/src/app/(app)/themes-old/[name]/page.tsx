@@ -44,7 +44,7 @@ export default function ThemePage() {
   return (
     <div className="pb-20 pt-10">
       <Link
-        href="/themes"
+        href="/themes-old"
         className="text-fg-muted hover:text-fg flex cursor-pointer items-center gap-1 text-sm"
       >
         <ArrowLeftIcon className="size-4" />
