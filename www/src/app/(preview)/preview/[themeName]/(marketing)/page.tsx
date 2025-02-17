@@ -13,7 +13,7 @@ export default function PreviewPage() {
           projects, and product roadmaps.
         </p>
         <div className="mt-4 flex items-center gap-2">
-          <Button href="/preview/login" variant="primary" className="mt-4">
+          <Button href="/preview/login" variant="accent" className="mt-4">
             Start for free
           </Button>
           <Button variant="quiet" className="mt-4">

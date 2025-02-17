@@ -9,7 +9,7 @@ import { createThemeCssVars } from "@/modules/themes/lib/create-theme";
 import { Theme } from "@/modules/themes/types";
 import { FontLoader } from "./font-loader";
 
-interface ThemeProviderProps
+export interface ThemeProviderProps
   extends Omit<React.ComponentProps<"div">, "children"> {
   children:
     | React.ReactNode

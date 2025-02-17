@@ -1,24 +1,17 @@
 import React from "react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
-import {
-  // PaintBucket,
-  // Settings2Icon,
-  SlidersHorizontalIcon,
-} from "lucide-react";
+import { SlidersHorizontalIcon } from "lucide-react";
 import { getFileSource } from "@/lib/get-file-source";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/core/button";
-// import { Tooltip } from "@/components/core/tooltip";
 import { CodeBlock } from "@/components/docs/code-block";
 import { Index } from "@/__registry__/demos";
+import { CurrentThemeProvider } from "@/modules/themes/components/current-theme-provider";
 import {
   ComponentWrapper,
   Loader,
   ResizableContainer,
 } from "./component-preview-client";
-// import { StyleSwitcher } from "./style-switcher";
-// import { ThemeCustomizerDialog } from "./theme-customizer";
-import { ThemeOverride } from "./theme-override";
 
 export interface ComponentPreviewProps {
   name: string;
@@ -61,36 +54,10 @@ export const ComponentPreview = async ({
     <div
       className={cn("overflow-hidden rounded-md border", containerClassName)}
     >
-      {/* <div className="bg-bg-muted flex items-center justify-between rounded-t-[inherit] border-b p-2">
-        <StyleSwitcher
-          // @ts-expect-error TODO fix later
-          componentName={getComponentName(name)}
-          variant="outline"
-          className="bg-bg-inverse/5 h-7 text-xs font-normal"
-        />
-        <ThemeCustomizerDialog>
-          <Tooltip
-            content={
-              <span>
-                <span className="text-fg-muted">Theme:</span> dotUI
-              </span>
-            }
-          >
-            <Button
-              variant="outline"
-              shape="square"
-              size="sm"
-              className="bg-bg-inverse/5 size-7 text-sm font-normal"
-            >
-              <PaintBucket />
-            </Button>
-          </Tooltip>
-        </ThemeCustomizerDialog>
-      </div> */}
       <div className="bg-bg-muted">
         <ResizableContainer resizable={resizable}>
           <Loader>
-            <ThemeOverride className="relative duration-300">
+            <CurrentThemeProvider className="relative duration-300">
               <Button
                 variant="quiet"
                 shape="square"
@@ -120,7 +87,7 @@ export const ComponentPreview = async ({
                   </div>
                 </div>
               </ScrollArea>
-            </ThemeOverride>
+            </CurrentThemeProvider>
           </Loader>
         </ResizableContainer>
       </div>
@@ -137,9 +104,3 @@ export const ComponentPreview = async ({
     </div>
   );
 };
-
-// const getComponentName = (name: string) => {
-//   const groupName = name.split("/")[0];
-//   if (groupName === "range-calendar") return "calendar";
-//   return groupName;
-// };

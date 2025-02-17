@@ -33,7 +33,7 @@ import {
 
 export function IconsDemo() {
   return (
-    <div className="flex flex-wrap gap-2 [&_svg]:size-6">
+    <div className="flex flex-wrap gap-4 [&_svg]:size-6">
       <ActivityIcon />
       <AlertCircleIcon />
       <ArrowRightIcon />

@@ -13,17 +13,31 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/core/button";
 
 export function Preview({
+  themeName: initialThemeName,
   setOpen,
   screen,
   onScreenChange,
 }: {
+  themeName: string;
   setOpen: (open: boolean) => void;
   screen: "desktop" | "mobile";
   onScreenChange: (screen: "desktop" | "mobile") => void;
 }) {
+  const [themeName, setThemeName] = React.useState(initialThemeName);
   const iframeRef = React.useRef<HTMLIFrameElement>(null);
   const [iframeIsLoading, setIframeLoading] = React.useState(true);
   const [currentPathname, setCurrentPathname] = React.useState("");
+
+  React.useEffect(() => {
+    if (iframeRef.current && iframeRef.current.contentWindow) {
+      setThemeName(initialThemeName);
+      iframeRef.current.contentWindow.postMessage(
+        { type: "UPDATE_THEME", themeName },
+        "*" // Replace '*' with the iframe's origin for security
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialThemeName]);
 
   const reload = () => {
     if (iframeRef.current) {
@@ -134,7 +148,7 @@ export function Preview({
       </div>
       <iframe
         ref={iframeRef}
-        src="/preview"
+        src={`/preview/${themeName}`}
         className="rounded-{inherit] size-full"
         onLoad={() => {
           setIframeLoading(false);

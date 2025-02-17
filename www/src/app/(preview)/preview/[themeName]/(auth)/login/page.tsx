@@ -7,7 +7,7 @@ import { Button } from "@/components/dynamic-core/button";
 import { TextField } from "@/components/dynamic-core/text-field";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
 import { GoogleIcon } from "@/components/icons/google-icon";
-import { useSimulateApiCall } from "@/app/(preview)/preview/hooks/use-api";
+import { useSimulateApiCall } from "@/app/(preview)/preview/[themeName]/hooks/use-api";
 
 export default function LoginPage() {
   const router = useRouter();
