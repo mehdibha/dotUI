@@ -10,7 +10,7 @@ export default function ThemesLayout({
     <PreviewProvider>
       <div className="relative flex">
         <div className="relative flex-1">
-          <div className="lg:container lg:max-w-4xl pt-10">{children}</div>
+          <div className="container max-w-4xl pt-10">{children}</div>
         </div>
         <div className="flex items-start h-[100svh] sticky top-0 max-xl:hidden">
           <ThemeTableOfContents />

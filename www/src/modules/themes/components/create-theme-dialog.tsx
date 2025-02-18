@@ -2,8 +2,10 @@
 
 import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useControlledState } from "@react-stately/utils";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { Alert } from "@/components/core/alert";
 import { Button } from "@/components/core/button";
 import {
   Dialog,
@@ -12,16 +14,32 @@ import {
   DialogRoot,
 } from "@/components/core/dialog";
 import { Form, FormControl } from "@/components/core/form";
-// import { RadioGroup, Radio } from "@/components/core/radio-group";
 import { TextField } from "@/components/core/text-field";
 import { useUserThemes } from "@/modules/themes/atoms/themes-atom";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   name: z.string().min(2),
 });
 
-export function CreateThemeDialog({ children }: { children: React.ReactNode }) {
-  const [isOpen, setOpen] = React.useState(false);
+export function CreateThemeDialog({
+  isOpen: isOpenProp,
+  onOpenChange: onOpenChangeProp,
+  clonedThemeName,
+  children,
+}: {
+  isOpen?: boolean;
+  onOpenChange?: (isOpen: boolean) => void;
+  clonedThemeName?: string;
+  children?: React.ReactNode;
+}) {
+  const router = useRouter();
+  const [isOpen, setOpen] = useControlledState(
+    isOpenProp,
+    false,
+    onOpenChangeProp
+  );
+
   const [status, setStatus] = React.useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
@@ -38,36 +56,57 @@ export function CreateThemeDialog({ children }: { children: React.ReactNode }) {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       setStatus("loading");
-      await createTheme(values.name);
+      setErrorMessage(null);
+      await createTheme(values.name, clonedThemeName);
       setStatus("success");
+      router.push(`/themes/${values.name}`);
       setOpen(false);
     } catch (error) {
       setStatus("error");
-      setErrorMessage(error as string);
+      if (error instanceof Error) {
+        setErrorMessage(error.message);
+      } else {
+        setErrorMessage("An unknown error occurred.");
+      }
     }
-    setOpen(false);
   };
 
   return (
     <DialogRoot isOpen={isOpen} onOpenChange={setOpen}>
       {children}
       <Dialog
-        title="Create theme"
-        description="Create a new theme to get started."
+        title={clonedThemeName ? "Clone theme" : "Create theme"}
+        description={
+          clonedThemeName
+            ? "Clone a theme to get started."
+            : "Create a new theme to get started."
+        }
       >
         <Form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <DialogBody className="space-y-4">
+            {status === "error" && errorMessage && (
+              <Alert variant="danger">{errorMessage}</Alert>
+            )}
             <FormControl
               name="name"
               control={control}
               render={(props) => (
-                <TextField label="Name" className="w-full" {...props} />
+                <TextField
+                  autoFocus
+                  label="Name"
+                  className="w-full"
+                  {...props}
+                />
               )}
             />
           </DialogBody>
           <DialogFooter>
             <Button slot="close">Cancel</Button>
-            <Button variant="primary" type="submit" isPending={status === "loading"}>
+            <Button
+              variant="primary"
+              type="submit"
+              isPending={status === "loading"}
+            >
               Create theme
             </Button>
           </DialogFooter>

@@ -23,10 +23,15 @@ const themesAtom = withImmer(
 export const useUserThemes = () => {
   const [state, setState] = useAtom(themesAtom);
 
-  const createTheme = async (name: string) => {
+  const allThemes = [...state.userThemes, ...themes];
+
+  const createTheme = async (
+    themeName: string,
+    clonedTheme: string = "minimalist"
+  ) => {
     if (
       state.userThemes.find(
-        (t) => t.name === name.toLowerCase().replace(" ", "-")
+        (t) => t.name === themeName.toLowerCase().replace(" ", "-")
       )
     ) {
       throw new Error("Theme already exists");
@@ -35,26 +40,37 @@ export const useUserThemes = () => {
 
     setState((draft) => {
       draft.userThemes.push({
-        ...minimalistTheme,
-        name: name.toLowerCase().replace(" ", "-"),
-        label: name,
+        ...allThemes.find((t) => t.name === clonedTheme)!,
+        name: themeName.toLowerCase().replace(" ", "-"),
+        label: themeName,
       });
     });
   };
 
-  const updateTheme = (theme: Theme) => {
+  const updateTheme = async (theme: Theme) => {
     setState((draft) => {
       const index = draft.userThemes.findIndex((t) => t.name === theme.name);
       if (index !== -1) {
         draft.userThemes[index] = theme;
       }
     });
+    await new Promise((resolve) => setTimeout(resolve, 500));
+  };
+
+  const deleteTheme = async (themeName: string) => {
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    setState((draft) => {
+      draft.userThemes = draft.userThemes.filter((t) => t.name !== themeName);
+    });
   };
 
   return {
     userThemes: state.userThemes,
+    currentThemeName: state.currentTheme,
+    currentMode: state.currentMode,
     createTheme,
     updateTheme,
+    deleteTheme,
   };
 };
 
