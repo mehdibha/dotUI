@@ -1,5 +1,5 @@
 import { Preview, PreviewProvider } from "./preview";
-import { ThemeTableOfContents } from "./toc";
+// import { ThemeTableOfContents } from "./toc";
 
 export default function ThemesLayout({
   children,
@@ -10,10 +10,10 @@ export default function ThemesLayout({
     <PreviewProvider>
       <div className="relative flex">
         <div className="relative flex-1">
-          <div className="container max-w-4xl pt-10">{children}</div>
+          <div className="">{children}</div>
         </div>
         <div className="flex items-start h-[100svh] sticky top-0 max-xl:hidden">
-          <ThemeTableOfContents />
+          {/* <ThemeTableOfContents /> */}
           <Preview />
         </div>
       </div>

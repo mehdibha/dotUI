@@ -26,7 +26,7 @@ export function ThemeTableOfContents() {
         initial={false}
         animate={{ width: 170, opacity: isOpen ? 1 : 0 }}
         transition={{ type: "spring", bounce: 0, duration: 0.3 }}
-        className="h-full pt-10"
+        className="h-full pt-14"
       >
         <TableOfContents
           toc={[

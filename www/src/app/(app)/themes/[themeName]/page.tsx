@@ -39,13 +39,14 @@ import { TextAreaDemo } from "@/modules/themes/components/demos/text-area-demo";
 import { TextFieldDemo } from "@/modules/themes/components/demos/text-field-demo";
 import { ToggleButtonDemo } from "@/modules/themes/components/demos/toggle-button-demo";
 import { PreviewContent } from "../preview";
+import { ThemeTableOfContents } from "../toc";
 
 export default function ThemePage() {
   const [isEditMode, setEditMode] = React.useState(false);
 
   return (
-    <div>
-      <div className="relative pb-20">
+    <div className="flex container max-w-5xl gap-10">
+      <div className="relative pb-20 flex-1 pt-10">
         <div className="max-lg:bg-bg max-lg:sticky max-lg:top-[57px] max-lg:z-10 max-lg:border-b max-lg:p-4">
           <Link
             href="/themes"
@@ -288,6 +289,7 @@ export default function ThemePage() {
           </Section>
         </div>
       </div>
+      <ThemeTableOfContents />
     </div>
   );
 }

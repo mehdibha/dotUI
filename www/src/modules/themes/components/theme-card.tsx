@@ -51,7 +51,7 @@ export function ThemeCard({
             <div className="flex w-full items-center justify-between">
               <h6 className="flex items-center gap-2 text-lg font-semibold">
                 <span>{theme.label}</span>
-                {isCurrent && <Badge>current theme</Badge>}
+                {isCurrent && <Badge className='border'>current theme</Badge>}
               </h6>
               <MenuRoot>
                 <Button
