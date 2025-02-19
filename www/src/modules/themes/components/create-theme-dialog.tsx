@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useControlledState } from "@react-stately/utils";
 import { useForm } from "react-hook-form";
@@ -16,7 +17,6 @@ import {
 import { Form, FormControl } from "@/components/core/form";
 import { TextField } from "@/components/core/text-field";
 import { useUserThemes } from "@/modules/themes/atoms/themes-atom";
-import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   name: z.string().min(2),

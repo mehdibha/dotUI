@@ -1,22 +1,18 @@
 import { useAtom } from "jotai";
 import { withImmer } from "jotai-immer";
 import { atomWithStorage } from "jotai/utils";
-// import { nanoid } from "nanoid";
 import { themes } from "@/registry/registry-themes";
-import { minimalistTheme } from "@/registry/themes/minimalist";
 import { Theme } from "@/modules/themes/types";
 
 type State = {
   userThemes: Theme[];
   currentTheme: string;
-  currentMode: "light" | "dark";
 };
 
 const themesAtom = withImmer(
   atomWithStorage<State>("new-themes", {
     userThemes: [],
     currentTheme: "minimalist",
-    currentMode: "dark",
   })
 );
 
@@ -64,13 +60,20 @@ export const useUserThemes = () => {
     });
   };
 
+  const setCurrentTheme = async (themeName: string) => {
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    setState((draft) => {
+      draft.currentTheme = themeName;
+    });
+  };
+
   return {
     userThemes: state.userThemes,
     currentThemeName: state.currentTheme,
-    currentMode: state.currentMode,
     createTheme,
     updateTheme,
     deleteTheme,
+    setCurrentTheme,
   };
 };
 

@@ -4,10 +4,10 @@ import { cookies } from "next/headers";
 import { Analytics } from "@vercel/analytics/react";
 import { truncateOnWord } from "@/lib/string";
 import { cn } from "@/lib/utils";
-import { ThemeOverride } from "@/components/docs/theme-override";
 import { fontMono, fontSans, josefinSans } from "@/styles/fonts";
 import "@/styles/globals.css";
 import { siteConfig } from "@/config";
+import { ThemeProvider } from "@/modules/themes/components/theme-provider";
 import { Providers } from "./providers";
 
 const config = siteConfig.global;
@@ -50,8 +50,11 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const cookieStore = await cookies();
-  const theme = cookieStore.get("site-theme")?.value ?? "";
-  console.log(theme);
+  const defaultMode = (cookieStore.get("preview-mode")?.value ?? null) as
+    | "light"
+    | "dark"
+    | null;
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -64,12 +67,9 @@ export default async function RootLayout({
         suppressHydrationWarning
       >
         <Analytics />
-        <Providers>
+        <Providers defaultPreviewMode={defaultMode}>
           <div>
-            <ThemeOverride
-              id="custom-theme-portal"
-              className="bg-transparent"
-            />
+            <ThemeProvider id="custom-theme-portal" unstyled />
             {children}
           </div>
         </Providers>

@@ -36,7 +36,7 @@ export type Theme = {
   primitives?: Primitives;
   variants?: Partial<Variants>;
   foundations: {
-    light: Colors;
+    light?: Colors;
     dark?: Colors;
     overrides?: Record<string, string>;
   };

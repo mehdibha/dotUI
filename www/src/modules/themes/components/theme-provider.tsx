@@ -3,50 +3,49 @@
 import React from "react";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
+import { usePreviewMode } from "@/components/mode-provider";
 import { PrimitivesProvider } from "@/modules/themes/contexts/primitives-context";
 import { VariantsProvider } from "@/modules/themes/contexts/variants-context";
 import { createThemeCssVars } from "@/modules/themes/lib/create-theme";
-import { Theme } from "@/modules/themes/types";
+import type { Theme } from "@/modules/themes/types";
 import { FontLoader } from "./font-loader";
 
 export interface ThemeProviderProps
   extends Omit<React.ComponentProps<"div">, "children"> {
-  children:
+  children?:
     | React.ReactNode
-    | ((mode: "light" | "dark" | undefined) => React.ReactNode);
-  mode?: "light" | "dark";
+    | ((mode: "light" | "dark" | null) => React.ReactNode);
   theme?: Theme;
   unstyled?: boolean;
+  ignorePreviewMode?: boolean;
 }
 export const ThemeProvider = ({
   theme,
-  mode,
   children,
   className,
   style,
   unstyled = false,
+  ignorePreviewMode = false,
   ...props
 }: ThemeProviderProps) => {
   const { resolvedTheme } = useTheme();
-  const currentMode = mode ?? (resolvedTheme === "light" ? "light" : "dark");
+  const { mode: previewMode } = usePreviewMode();
+  const resolvedMode: "light" | "dark" | null = // if preview mode is set, use it, otherwise use the current site mode
+    theme?.foundations.dark && theme.foundations.light && previewMode
+      ? ignorePreviewMode
+        ? resolvedTheme && ["light", "dark"].includes(resolvedTheme)
+          ? (resolvedTheme as "light" | "dark")
+          : null
+        : previewMode
+      : theme?.foundations.dark
+        ? "dark"
+        : "light";
 
   const cssVars = React.useMemo(() => {
-    if (!theme || !resolvedTheme) return {};
-    const themeCssVars = createThemeCssVars(
-      theme.foundations,
-      theme.foundations.dark // we check if theme supports dark mode
-        ? (theme.defaultDisplayMode ?? currentMode)
-        : "light"
-    );
+    if (!theme || !resolvedMode) return {};
+    const themeCssVars = createThemeCssVars(theme.foundations, resolvedMode);
     return { ...baseVars, ...themeCssVars, ...theme.foundations.overrides };
-  }, [theme, resolvedTheme, currentMode]);
-
-  const resolvedMode =
-    theme?.foundations.dark && resolvedTheme && resolvedTheme !== "system"
-      ? resolvedTheme === "light"
-        ? "light"
-        : "dark"
-      : undefined;
+  }, [theme, resolvedMode]);
 
   return (
     <VariantsProvider variants={theme?.variants}>

@@ -3,8 +3,6 @@
 import React from "react";
 import { CheckIcon, CopyIcon, MoonIcon, SunIcon } from "lucide-react";
 import { AnimatePresence, motion, Variants } from "motion/react";
-import { cn } from "@/lib/utils";
-import { useMounted } from "@/hooks/use-mounted";
 import { Button } from "@/components/core/button";
 import { Skeleton } from "@/registry/core/skeleton_basic";
 import { Tabs, TabList, Tab } from "@/registry/core/tabs_motion";
@@ -21,10 +19,6 @@ export const ThemesOverview = () => {
     (themes[0] as unknown as Theme).name
   );
   const [touched, setTouched] = React.useState<boolean>(false);
-  const [userMode, setUserMode] = React.useState<"light" | "dark" | undefined>(
-    undefined
-  );
-  const isMounted = useMounted();
   const [copied, setCopied] = React.useState(false);
 
   const handleCopy = () => {
@@ -144,78 +138,27 @@ export const ThemesOverview = () => {
           </Tabs>
         </div>
       </div>
-      <Skeleton show={!isMounted} className="w-full rounded-md">
+      <Skeleton show={false} className="w-full rounded-md">
         <div className="relative w-full">
           <ThemeProvider
             theme={currentTheme}
-            mode={userMode}
+            ignorePreviewMode
             className="relative w-full bg-transparent"
           >
-            {(mode) => (
-              <>
-                <AnimatePresence>
-                  {isMounted && mode && (
-                    <motion.div
-                      initial={{ y: 40, zIndex: -1, opacity: 0 }}
-                      animate={{ y: 0, zIndex: 1, opacity: 1 }}
-                      exit={{ y: 40, zIndex: -1 }}
-                      transition={{
-                        type: "spring",
-                        bounce: 0,
-                        duration: 0.5,
-                      }}
-                      className={cn(
-                        "bg-bg absolute right-0 top-0 z-[-1] flex -translate-y-[calc(100%-7px)] flex-col overflow-hidden rounded-t-md"
-                      )}
-                    >
-                      <motion.div className="overflow-hidden rounded-t-md border-x border-t">
-                        <Button
-                          variant="quiet"
-                          shape="square"
-                          size="sm"
-                          onPress={() => {
-                            setUserMode(
-                              userMode
-                                ? userMode === "light"
-                                  ? "dark"
-                                  : "light"
-                                : mode === "light"
-                                  ? "dark"
-                                  : "light"
-                            );
-                            setTouched(true);
-                          }}
-                          className="rounded-none"
-                        >
-                          {(
-                            userMode ? userMode === "light" : mode === "light"
-                          ) ? (
-                            <SunIcon />
-                          ) : (
-                            <MoonIcon />
-                          )}
-                        </Button>
-                      </motion.div>
-                      <div className="bg-bg h-1.5 w-full border-r" />
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-                <div className="bg-bg w-full rounded-md border">
-                  <AnimatePresence mode="popLayout">
-                    <motion.div
-                      key={currentThemeName}
-                      variants={variants}
-                      initial="hidden"
-                      animate="show"
-                      exit="hidden"
-                    >
-                      <ComponentsOverview className="hidden sm:grid" />
-                      <MobileComponentsOverview className="sm:hidden" />
-                    </motion.div>
-                  </AnimatePresence>
-                </div>
-              </>
-            )}
+            <div className="bg-bg w-full rounded-md border">
+              <AnimatePresence mode="popLayout">
+                <motion.div
+                  key={currentThemeName}
+                  variants={variants}
+                  initial="hidden"
+                  animate="show"
+                  exit="hidden"
+                >
+                  <ComponentsOverview className="hidden sm:grid" />
+                  <MobileComponentsOverview className="sm:hidden" />
+                </motion.div>
+              </AnimatePresence>
+            </div>
           </ThemeProvider>
         </div>
       </Skeleton>

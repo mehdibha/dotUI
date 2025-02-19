@@ -34,7 +34,7 @@ export function PreviewProvider({ children }: { children: React.ReactNode }) {
   const [screen, setScreen] = React.useState<"desktop" | "mobile">("desktop");
 
   React.useEffect(() => {
-    setOpen(true)
+    setOpen(true);
   }, []);
 
   return (
@@ -47,9 +47,9 @@ export function PreviewProvider({ children }: { children: React.ReactNode }) {
 export const usePreviewContext = () => React.useContext(PreviewContext);
 
 export const Preview = () => {
-  const { isOpen, setOpen, screen } = usePreviewContext();
+  const { isOpen: isPreviewOpen, setOpen, screen } = usePreviewContext();
   const pathname = usePathname();
-  const shouldOpen = pathname.startsWith("/themes/");
+  const isOpen = pathname.startsWith("/themes/") && isPreviewOpen;
   const { isCollapsed } = useSidebarContext();
   const { currentTheme } = useCurrentTheme();
   const isMounted = useMounted();
@@ -61,7 +61,7 @@ export const Preview = () => {
     screen === "mobile" ? 430 : 768,
     isCollapsed ? 768 : 600
   );
-  const containerWidth = isOpen && shouldOpen ? previewWidth : 0;
+  const containerWidth = isOpen ? previewWidth : 0;
 
   if (!isMounted) return null;
 
@@ -70,9 +70,14 @@ export const Preview = () => {
       <motion.div
         key="preview-button"
         initial={{ width: 0 }}
-        animate={{ width: isOpen || !shouldOpen ? 0 : 110 }}
+        animate={{
+          width: isOpen ? 0 : 110,
+          marginLeft: isOpen ? 0 : -110,
+        }}
         transition={{ type: "spring", bounce: 0, duration: 0.3 }}
         className="flex justify-start overflow-hidden"
+        aria-hidden={isOpen}
+        inert={isOpen || undefined}
       >
         <div style={{ width: 110 }} className="p-4">
           <Button
@@ -91,6 +96,8 @@ export const Preview = () => {
         animate={{ width: containerWidth }}
         transition={{ type: "spring", bounce: 0, duration: 0.3 }}
         className="h-full overflow-hidden"
+        aria-hidden={!isOpen}
+        inert={!isOpen || undefined}
       >
         <motion.div
           animate={{ width: previewWidth }}

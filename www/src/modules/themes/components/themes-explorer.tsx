@@ -3,6 +3,8 @@
 import React from "react";
 import { ListFilterIcon } from "lucide-react";
 import { useFilter } from "react-aria-components";
+import { cn } from "@/lib/utils";
+import { useMounted } from "@/hooks/use-mounted";
 import { Button } from "@/components/core/button";
 import { Menu, MenuItem, MenuRoot } from "@/components/core/menu";
 import { SearchField } from "@/components/core/search-field";
@@ -12,46 +14,83 @@ import { CreateThemeDialog } from "./create-theme-dialog";
 import { ThemeCard } from "./theme-card";
 
 type Filter = "light" | "dark" | "light-dark" | "all";
+type Theme = (typeof themes)[number];
 
-export function ThemesExplorer() {
-  const { currentThemeName, userThemes, deleteTheme } = useUserThemes();
+const FILTER_OPTIONS: Array<{ id: Filter; label: string }> = [
+  { id: "all", label: "All" },
+  { id: "light-dark", label: "Light and dark" },
+  { id: "light", label: "Light only" },
+  { id: "dark", label: "Dark only" },
+];
+
+const filterThemes = (themes: Theme[], filter: Filter) => {
+  if (filter === "light-dark") {
+    return themes.filter(
+      (theme) => theme.foundations.dark && theme.foundations.light
+    );
+  }
+  if (filter === "light") {
+    return themes.filter(
+      (theme) => theme.foundations.light && !theme.foundations.dark
+    );
+  }
+  if (filter === "dark") {
+    return themes.filter(
+      (theme) => theme.foundations.dark && !theme.foundations.light
+    );
+  }
+  return themes;
+};
+
+const ThemeGrid: React.FC<{
+  themes: Theme[];
+  currentThemeName: string;
+  onDelete?: (name: string) => void;
+  onSetCurrent?: (name: string) => void;
+  className?: string;
+}> = ({ themes, currentThemeName, onDelete, onSetCurrent, className }) => (
+  <div className={cn("group grid grid-cols-3 gap-x-2 gap-y-4", className)}>
+    {themes.length > 0 ? (
+      themes.map((theme) => (
+        <ThemeCard
+          key={theme.name}
+          theme={theme}
+          onDelete={onDelete ? () => onDelete(theme.name) : undefined}
+          isCurrent={theme.name === currentThemeName}
+          onSetCurrent={() => onSetCurrent?.(theme.name)}
+        />
+      ))
+    ) : (
+      <p className="text-fg-muted">No themes created yet.</p>
+    )}
+  </div>
+);
+
+export function ThemesExplorer({ className }: { className?: string }) {
+  const isMounted = useMounted();
+  const { currentThemeName, userThemes, deleteTheme, setCurrentTheme } =
+    useUserThemes();
   const [searchInput, setSearchInput] = React.useState("");
   const [filter, setFilter] = React.useState<Filter>("all");
   const { contains } = useFilter({ sensitivity: "base" });
 
-  const filteredThemes = themes
-    .filter((theme) => contains(theme.name, searchInput))
-    .filter((theme) => {
-      if (filter === "light-dark") {
-        return theme.foundations.dark && theme.foundations.light;
-      }
-      if (filter === "light") {
-        return theme.foundations.light && !theme.foundations.dark;
-      }
-      if (filter === "dark") {
-        return theme.foundations.dark && !theme.foundations.light;
-      }
-      return true;
-    });
+  const filteredThemes = React.useMemo(() => {
+    const searchFiltered = themes.filter((theme) =>
+      contains(theme.name, searchInput)
+    );
+    return filterThemes(searchFiltered, filter);
+  }, [searchInput, filter, contains]);
 
-  const filteredUserThemes = userThemes
-    .filter((theme) => contains(theme.name, searchInput))
-    .filter((theme) => {
-      if (filter === "light-dark") {
-        return theme.foundations.dark && theme.foundations.light;
-      }
-      if (filter === "light") {
-        return theme.foundations.light && !theme.foundations.dark;
-      }
-      if (filter === "dark") {
-        return theme.foundations.dark && !theme.foundations.light;
-      }
-      return true;
-    });
+  const filteredUserThemes = React.useMemo(() => {
+    const searchFiltered = userThemes.filter((theme) =>
+      contains(theme.name, searchInput)
+    );
+    return filterThemes(searchFiltered, filter);
+  }, [userThemes, searchInput, filter, contains]);
 
   return (
-    <div>
-      <div className="mt-6 flex items-center gap-2">
+    <div className={className}>
+      <div className="flex items-center gap-2">
         <SearchField
           placeholder="Search themes..."
           className="flex-1"
@@ -63,47 +102,41 @@ export function ThemesExplorer() {
           <Menu
             selectionMode="single"
             selectedKeys={new Set([filter])}
-            onSelectionChange={(keys) => {
-              setFilter([...keys][0] as Filter);
-            }}
+            onSelectionChange={(keys) => setFilter([...keys][0] as Filter)}
           >
-            <MenuItem id="all">All</MenuItem>
-            <MenuItem id="light-dark">Light and dark</MenuItem>
-            <MenuItem id="light">Light only</MenuItem>
-            <MenuItem id="dark">Dark only</MenuItem>
+            {FILTER_OPTIONS.map((option) => (
+              <MenuItem key={option.id} id={option.id}>
+                {option.label}
+              </MenuItem>
+            ))}
           </Menu>
         </MenuRoot>
         <CreateThemeDialog>
-          <Button variant="primary" className="">
-            Create theme
-          </Button>
+          <Button variant="primary">Create theme</Button>
         </CreateThemeDialog>
       </div>
-      <div className="group mt-4 grid grid-cols-3 gap-x-2 gap-y-4">
-        {filteredThemes.map((theme) => (
-          <ThemeCard
-            key={theme.name}
-            theme={theme}
-            isCurrent={theme.name === currentThemeName}
-          />
-        ))}
-      </div>
-      <h3 className="mt-6 text-lg font-semibold">Your themes</h3>
-      <div className="group mt-2 grid grid-cols-3 gap-x-2 gap-y-4">
-        {filteredUserThemes.length > 0 ? (
-          filteredUserThemes.map((theme) => (
-            <ThemeCard
-              key={theme.name}
-              theme={theme}
-              isDeletable
-              onDelete={() => deleteTheme(theme.name)}
-              isCurrent={theme.name === currentThemeName}
-            />
-          ))
-        ) : (
-          <p className="text-fg-muted">No themes created yet.</p>
-        )}
-      </div>
+      <ThemeGrid
+        themes={filteredThemes}
+        currentThemeName={currentThemeName}
+        onSetCurrent={setCurrentTheme}
+        className="mt-4"
+      />
+      <h3 className="mt-4 text-lg font-semibold">Your themes</h3>
+      {isMounted ? (
+        <ThemeGrid
+          themes={filteredUserThemes}
+          currentThemeName={currentThemeName}
+          onDelete={deleteTheme}
+          onSetCurrent={setCurrentTheme}
+          className="mt-2"
+        />
+      ) : (
+        <ThemeGrid
+          themes={themes.slice(0, 3)}
+          currentThemeName={currentThemeName}
+          className="mt-2"
+        />
+      )}
     </div>
   );
 }

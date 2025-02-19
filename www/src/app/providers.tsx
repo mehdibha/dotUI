@@ -5,6 +5,7 @@ import { Provider as JotaiProvider } from "jotai";
 import { ThemeProvider } from "next-themes";
 import { RouterProvider } from "react-aria-components";
 import { VariantsProvider } from "@/lib/create-dynamic-component";
+import { PreviewModeProvider } from "@/components/mode-provider";
 
 declare module "react-aria-components" {
   interface RouterConfig {
@@ -14,7 +15,13 @@ declare module "react-aria-components" {
   }
 }
 
-export function Providers({ children }: { children: React.ReactNode }) {
+export function Providers({
+  defaultPreviewMode,
+  children,
+}: {
+  defaultPreviewMode: "light" | "dark" | null;
+  children: React.ReactNode;
+}) {
   const router = useRouter();
   return (
     <JotaiProvider>
@@ -26,7 +33,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
             enableSystem
             disableTransitionOnChange
           >
-            {children}
+            <PreviewModeProvider defaultMode={defaultPreviewMode}>
+              {children}
+            </PreviewModeProvider>
           </ThemeProvider>
         </RouterProvider>
       </VariantsProvider>

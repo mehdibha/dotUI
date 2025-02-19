@@ -19,9 +19,6 @@ const config = {
   devIndicators: {
     appIsrStatus: false,
   },
-  experimental: {
-    reactCompiler: true,
-  },
 };
 
 export default withMDX(config);

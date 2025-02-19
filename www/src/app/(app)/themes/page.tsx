@@ -8,7 +8,7 @@ export default function ThemesPage() {
         A theme provide a complete design system with its own colors, fonts,
         icons, layout, and components.
       </p>
-      <ThemesExplorer />
+      <ThemesExplorer className="mt-6" />
     </div>
   );
 }

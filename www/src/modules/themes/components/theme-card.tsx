@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { CheckIcon, EllipsisIcon } from "lucide-react";
+import { EllipsisIcon } from "lucide-react";
 import { Link } from "react-aria-components";
 import { useMounted } from "@/hooks/use-mounted";
 import { Alert } from "@/components/core/alert";
@@ -16,17 +16,15 @@ import { CreateThemeDialog } from "./create-theme-dialog";
 
 export function ThemeCard({
   theme,
-  isDeletable = false,
+  isClonable = true,
   isCurrent = false,
   onDelete,
   onSetCurrent,
-  isClonable = true,
 }: {
   theme: Theme;
-  isDeletable?: boolean;
   isCurrent?: boolean;
-  onSetCurrent?: () => void;
   isClonable?: boolean;
+  onSetCurrent?: () => void;
   onDelete?: () => void;
 }) {
   const isMounted = useMounted();
@@ -39,6 +37,7 @@ export function ThemeCard({
         key={theme.name}
         theme={theme}
         unstyled
+        ignorePreviewMode
         className="text-fg relative"
       >
         <div className="bg-bg flex flex-col items-start justify-start gap-0 overflow-hidden rounded-md border">
@@ -51,7 +50,7 @@ export function ThemeCard({
             <div className="flex w-full items-center justify-between">
               <h6 className="flex items-center gap-2 text-lg font-semibold">
                 <span>{theme.label}</span>
-                {isCurrent && <Badge className='border'>current theme</Badge>}
+                {isCurrent && <Badge className="border">current theme</Badge>}
               </h6>
               <MenuRoot>
                 <Button
@@ -66,7 +65,7 @@ export function ThemeCard({
                 <Menu>
                   {onSetCurrent && (
                     <MenuItem id="set-default" onAction={onSetCurrent}>
-                      Set default theme
+                      Set current theme
                     </MenuItem>
                   )}
                   {isClonable && (
@@ -74,7 +73,7 @@ export function ThemeCard({
                       Clone
                     </MenuItem>
                   )}
-                  {isDeletable && (
+                  {onDelete && (
                     <MenuItem
                       id="delete"
                       variant="danger"
@@ -92,7 +91,7 @@ export function ThemeCard({
                   onOpenChange={setCloneOpen}
                 />
               )}
-              {isDeletable && (
+              {onDelete && (
                 <DialogRoot isOpen={isOpen} onOpenChange={setOpen}>
                   <Dialog
                     title="Delete theme"
