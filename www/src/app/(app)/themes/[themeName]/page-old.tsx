@@ -10,7 +10,7 @@ import {
   SaveIcon,
   SunIcon,
 } from "lucide-react";
-import { Transition } from "motion/react";
+// import { Transition } from "motion/react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/core/button";
 import { Dialog, DialogRoot } from "@/components/core/dialog";
@@ -315,11 +315,11 @@ const ComponentSection = ({
   );
 };
 
-const TRANSITION: Transition = {
-  type: "spring",
-  bounce: 0,
-  duration: 0.25,
-};
+// const TRANSITION: Transition = {
+//   type: "spring",
+//   bounce: 0,
+//   duration: 0.25,
+// };
 
 const Section = ({
   title,
