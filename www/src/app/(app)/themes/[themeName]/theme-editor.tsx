@@ -381,18 +381,26 @@ function ThemeColors({ theme }: { theme?: Theme }) {
             </TableBody>
           </TableRoot>
         </Collapsible>
-        <div className="mt-1 flex gap-1">
-          <ColorItem
-            colorName="Neutral"
-            // colorValue={theme?.foundations}
-            className="bg-bg-neutral rounded-sm"
-            containerClassName=" ml-0! mr-0!"
-          />
-          <ColorItem
-            className="bg-bg-accent rounded-sm"
-            containerClassName=" ml-0! mr-0!"
-          />
-        </div>
+        <Collapsible
+          unstyled
+          show={!isEditMode}
+          marginTop={0}
+          marginBottom={0}
+          className="p-0"
+        >
+          <div className="mt-1 flex gap-1">
+            <ColorItem
+              colorName="Neutral"
+              // colorValue={theme?.foundations}
+              className="bg-bg-neutral rounded-sm"
+              containerClassName=" ml-0! mr-0!"
+            />
+            <ColorItem
+              className="bg-bg-accent rounded-sm"
+              containerClassName=" ml-0! mr-0!"
+            />
+          </div>
+        </Collapsible>
         <div className="mt-1 space-y-1">
           {[
             { name: "neutral", label: "Neutral" },
@@ -420,21 +428,69 @@ function ThemeColors({ theme }: { theme?: Theme }) {
         <p id="semantic-colors" className="mt-4 font-medium tracking-tight">
           Semantic colors
         </p>
-        <div className="mt-1 flex gap-1">
-          {/* <Item className="bg-bg-info" /> */}
-          <ColorItem
-            className="bg-bg-success rounded-sm"
-            containerClassName="ml-0! mr-0!"
-          />
-          <ColorItem
-            className="bg-bg-warning rounded-sm"
-            containerClassName=" ml-0! mr-0!"
-          />
-          <ColorItem
-            className="bg-bg-danger rounded-sm"
-            containerClassName=" ml-0! mr-0!"
-          />
-        </div>
+        <Collapsible
+          show={isEditMode}
+          className="space-y-2 p-0 text-sm"
+          unstyled
+        >
+          <TableRoot
+            aria-label="Core colors"
+            variant="bordered"
+            className="w-full"
+          >
+            <TableHeader>
+              <TableColumn isRowHeader>Name</TableColumn>
+              <TableColumn>Base color</TableColumn>
+              <TableColumn className="w-full">Ratios</TableColumn>
+            </TableHeader>
+            <TableBody>
+              {[
+                { label: "Warning", name: "warning" },
+                { label: "Danger", name: "danger" },
+                { label: "Success", name: "success" },
+              ].map(({ label, name }) => (
+                <TableRow key={name}>
+                  <TableCell>{label}</TableCell>
+                  <TableCell>
+                    <ColorPicker />
+                  </TableCell>
+                  <TableCell>
+                    <RatiosSlider
+                      aria-label="Ratios"
+                      defaultValue={[
+                        1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2,
+                        15.2,
+                      ]}
+                    />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </TableRoot>
+        </Collapsible>
+        <Collapsible
+          unstyled
+          show={!isEditMode}
+          marginTop={0}
+          marginBottom={0}
+          className="p-0"
+        >
+          <div className="mt-1 flex gap-1">
+            {/* <Item className="bg-bg-info" /> */}
+            <ColorItem
+              className="bg-bg-success rounded-sm"
+              containerClassName="ml-0! mr-0!"
+            />
+            <ColorItem
+              className="bg-bg-warning rounded-sm"
+              containerClassName=" ml-0! mr-0!"
+            />
+            <ColorItem
+              className="bg-bg-danger rounded-sm"
+              containerClassName=" ml-0! mr-0!"
+            />
+          </div>
+        </Collapsible>
         <div className="mt-1 space-y-1">
           {[
             { name: "success", label: "Success" },
