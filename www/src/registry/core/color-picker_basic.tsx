@@ -86,7 +86,7 @@ const ColorPickerButton = ({
         <>
           <ColorSwatch />
           {showValue && (
-            <span className="w-14 truncate text-left">
+            <span className="truncate text-left">
               {state.color.toString(format)}
             </span>
           )}

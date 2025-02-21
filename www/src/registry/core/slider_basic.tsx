@@ -254,6 +254,8 @@ const getFillerDimensions = (
   return {};
 };
 
+export type { SliderProps };
+
 export {
   Slider,
   SliderRoot,

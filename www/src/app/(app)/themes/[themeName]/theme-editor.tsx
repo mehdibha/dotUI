@@ -7,30 +7,57 @@ import {
   ArrowLeftIcon,
   CheckIcon,
   EllipsisVerticalIcon,
-  MoonIcon,
   PenIcon,
   SaveIcon,
-  SunIcon,
 } from "lucide-react";
+import {
+  AnimatePresence,
+  HTMLMotionProps,
+  motion,
+  type Transition,
+} from "motion/react";
+import { useMeasure } from "react-use";
 import { cn } from "@/lib/utils";
 import { useMounted } from "@/hooks/use-mounted";
+import { Alert } from "@/components/core/alert";
 import { Button } from "@/components/core/button";
+import { ColorPicker } from "@/components/core/color-picker";
 import { Dialog, DialogRoot } from "@/components/core/dialog";
+import { Label } from "@/components/core/field";
 import { MenuRoot, Menu, MenuItem } from "@/components/core/menu";
+import { RadioGroup, Radio } from "@/components/core/radio-group";
 import { Skeleton } from "@/components/core/skeleton";
-import { Tabs, Tab, TabList } from "@/components/core/tabs";
+import {
+  Slider,
+  SliderRoot,
+  SliderThumb,
+  SliderTrack,
+  type SliderProps,
+} from "@/components/core/slider";
+import {
+  TableRoot,
+  TableHeader,
+  TableColumn,
+  TableBody,
+  TableRow,
+  TableCell,
+} from "@/components/core/table";
 import { ToggleButton } from "@/components/core/toggle-button";
 import { Tooltip } from "@/components/core/tooltip";
 import { usePreviewMode } from "@/components/mode-provider";
 import { useUserThemes } from "@/modules/themes/atoms/themes-atom";
+import { CreateThemeDialog } from "@/modules/themes/components/create-theme-dialog";
 import { ThemeProvider } from "@/modules/themes/components/theme-provider";
 import { Theme } from "@/modules/themes/types";
 import { PreviewContent } from "../preview";
+import { ModeSwitch } from "./mode-switch";
 
 const ThemeEditorContext = React.createContext<{
   isLoading: boolean;
+  isEditMode: boolean;
 }>({
   isLoading: false,
+  isEditMode: false,
 });
 
 const useThemeEditorContext = () => React.useContext(ThemeEditorContext);
@@ -60,7 +87,9 @@ export function ThemeEditor({
   }
 
   return (
-    <ThemeEditorContext value={{ isLoading }}>
+    <ThemeEditorContext
+      value={{ isLoading, isEditMode: isEditable && isEditMode }}
+    >
       <div>
         <ThemeEditorHeader
           theme={theme}
@@ -70,6 +99,18 @@ export function ThemeEditor({
           setEditMode={setEditMode}
         />
         <ThemeEditorBody>
+          {!isEditable && (
+            <Alert
+              action={
+                <CreateThemeDialog clonedThemeName={theme?.name}>
+                  <Button variant="primary">Clone theme</Button>
+                </CreateThemeDialog>
+              }
+            >
+              To adjust, edit and generate color palettes, fonts, radius,
+              components and more, You need to clone the theme.
+            </Alert>
+          )}
           <Section
             title="Colors"
             description="Theme color palette and variations"
@@ -77,22 +118,12 @@ export function ThemeEditor({
               theme?.foundations.light &&
               theme?.foundations.dark &&
               previewMode && (
-                <Tabs
-                  variant="solid"
-                  selectedKey={previewMode}
-                  onSelectionChange={(key) =>
-                    setPreviewMode(key as "light" | "dark")
+                <ModeSwitch
+                  isSelected={previewMode === "dark"}
+                  onChange={(isSelected) =>
+                    setPreviewMode(isSelected ? "dark" : "light")
                   }
-                >
-                  <TabList className="[&_svg]:size-4">
-                    <Tab id="light">
-                      <SunIcon />
-                    </Tab>
-                    <Tab id="dark">
-                      <MoonIcon />
-                    </Tab>
-                  </TabList>
-                </Tabs>
+                />
               )
             }
           >
@@ -208,7 +239,7 @@ function Section({
 }: SectionProps) {
   return (
     <section id={title.toLowerCase().replace(" ", "-")}>
-      <div className="flex items-start justify-between">
+      <div className="flex items-center justify-between gap-2">
         <div>
           <h2 className="text-2xl font-semibold tracking-tight">{title}</h2>
           {description && (
@@ -217,22 +248,139 @@ function Section({
         </div>
         {action}
       </div>
-      <div className={className}>{children}</div>
+      <div className={cn("pt-2", className)}>{children}</div>
     </section>
   );
 }
 
+const TRANSITION: Transition = {
+  type: "spring",
+  bounce: 0,
+  duration: 0.25,
+};
+
+function Collapsible({
+  show,
+  children,
+  className,
+  marginTop = 8,
+  marginBottom = 8,
+  unstyled = false,
+  ...props
+}: {
+  show: boolean;
+  children: React.ReactNode;
+  marginTop?: number;
+  marginBottom?: number;
+  unstyled?: boolean;
+} & Omit<HTMLMotionProps<"div">, "animate" | "transition">) {
+  const [ref, { height }] = useMeasure<HTMLDivElement>();
+  return (
+    <AnimatePresence>
+      {show && (
+        <>
+          <motion.div
+            initial={{ height: 0, marginTop: 0, marginBottom: 0 }}
+            animate={{ height: height + 3, marginTop, marginBottom }}
+            exit={{ height: 0, marginTop: 0, marginBottom: 0 }}
+            transition={TRANSITION}
+            className="overflow-hidden"
+            {...props}
+          >
+            <div
+              ref={ref}
+              className={cn(
+                "mt-px",
+                !unstyled &&
+                  "[&_[data-slot='label']]:text-fg-muted mt-px rounded-md border"
+              )}
+            >
+              <div className={cn("p-4", className)}>{children}</div>
+            </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+  );
+}
+
 function ThemeColors({ theme }: { theme?: Theme }) {
+  const { isEditMode } = useThemeEditorContext();
   return (
     <div
       style={
         { "--color-secondary": "var(--color-fg-muted)" } as React.CSSProperties
       }
     >
+      <Collapsible show={isEditMode} className="space-y-4 text-sm">
+        <RadioGroup label="Theme mode" orientation="horizontal">
+          {[
+            { value: "light", label: "Light" },
+            { value: "dark", label: "Dark" },
+            { value: "both", label: "Light and dark" },
+          ].map(({ value, label }) => (
+            <Radio key={value} value={value}>
+              {label}
+            </Radio>
+          ))}
+        </RadioGroup>
+        <div className="grid grid-cols-3 gap-4">
+          <Slider label="Lightness" className="w-full" />
+          <Slider label="Contrast" className="w-full" />
+          <Slider label="Saturation" className="w-full" />
+        </div>
+      </Collapsible>
       <ThemeProvider theme={theme} unstyled>
-        <p id="core-colors" className="mt-4 font-medium tracking-tight">
+        <p id="core-colors" className="mt-2 font-medium tracking-tight">
           Core colors
         </p>
+        <Collapsible
+          show={isEditMode}
+          className="space-y-2 p-0 text-sm"
+          unstyled
+        >
+          <TableRoot
+            aria-label="Core colors"
+            variant="bordered"
+            className="w-full"
+          >
+            <TableHeader>
+              <TableColumn isRowHeader>Name</TableColumn>
+              <TableColumn>Base color</TableColumn>
+              <TableColumn className="w-full">Ratios</TableColumn>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell>Neutral</TableCell>
+                <TableCell>
+                  <ColorPicker />
+                </TableCell>
+                <TableCell>
+                  <RatiosSlider
+                    aria-label="Ratios"
+                    defaultValue={[
+                      1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2,
+                    ]}
+                  />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Accent</TableCell>
+                <TableCell>
+                  <ColorPicker />
+                </TableCell>
+                <TableCell>
+                  <RatiosSlider
+                    aria-label="Ratios"
+                    defaultValue={[
+                      1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2,
+                    ]}
+                  />
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </TableRoot>
+        </Collapsible>
         <div className="mt-1 flex gap-1">
           <ColorItem
             colorName="Neutral"
@@ -401,4 +549,52 @@ function ThemeLayout() {
 
 function ThemeRadius() {
   return <div>radius</div>;
+}
+
+function RatiosSlider({
+  label,
+  defaultValue,
+  minValue = 0,
+  maxValue = 20,
+  step = 0.1,
+  className,
+}: SliderProps) {
+  return (
+    <SliderRoot
+      defaultValue={defaultValue}
+      minValue={minValue}
+      maxValue={maxValue}
+      step={step}
+      className={cn("w-full space-y-1", className)}
+    >
+      {label && <Label>{label}</Label>}
+      <SliderTrack>
+        {({ state }) => (
+          <>
+            {state.values.map((_, i) => (
+              <SliderThumb key={i} index={i} className="dragging:w-1.5 w-1">
+                {({ isDragging, state }) =>
+                  isDragging && (
+                    <AnimatePresence>
+                      <span className="relative">
+                        <motion.span
+                          initial={{ opacity: 0, y: 5 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 5 }}
+                          transition={TRANSITION}
+                          className="bg-bg-muted absolute left-1/2 top-0 -translate-x-1/2 -translate-y-[calc(100%+10px)] rounded-sm border p-2"
+                        >
+                          {state.values[i]}
+                        </motion.span>
+                      </span>
+                    </AnimatePresence>
+                  )
+                }
+              </SliderThumb>
+            ))}
+          </>
+        )}
+      </SliderTrack>
+    </SliderRoot>
+  );
 }
