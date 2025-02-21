@@ -10,12 +10,7 @@ import {
   PenIcon,
   SaveIcon,
 } from "lucide-react";
-import {
-  AnimatePresence,
-  HTMLMotionProps,
-  motion,
-  type Transition,
-} from "motion/react";
+import { AnimatePresence, motion, type Transition } from "motion/react";
 import { useMeasure } from "react-use";
 import { cn } from "@/lib/utils";
 import { useMounted } from "@/hooks/use-mounted";
@@ -90,7 +85,7 @@ export function ThemeEditor({
     <ThemeEditorContext
       value={{ isLoading, isEditMode: isEditable && isEditMode }}
     >
-      <div>
+      <div className="[&_[data-slot=label]]:text-fg-muted">
         <ThemeEditorHeader
           theme={theme}
           isLoading={isLoading}
@@ -263,40 +258,24 @@ function Collapsible({
   show,
   children,
   className,
-  marginTop = 8,
-  marginBottom = 8,
-  unstyled = false,
-  ...props
 }: {
   show: boolean;
   children: React.ReactNode;
-  marginTop?: number;
-  marginBottom?: number;
-  unstyled?: boolean;
-} & Omit<HTMLMotionProps<"div">, "animate" | "transition">) {
+  className?: string;
+}) {
   const [ref, { height }] = useMeasure<HTMLDivElement>();
   return (
     <AnimatePresence>
       {show && (
         <>
           <motion.div
-            initial={{ height: 0, marginTop: 0, marginBottom: 0 }}
-            animate={{ height: height + 3, marginTop, marginBottom }}
-            exit={{ height: 0, marginTop: 0, marginBottom: 0 }}
+            initial={{ height: 0 }}
+            animate={{ height: height, overflow: "visible" }}
+            exit={{ height: 0 }}
             transition={TRANSITION}
-            className="overflow-hidden"
-            {...props}
+            className={cn("overflow-hidden", className)}
           >
-            <div
-              ref={ref}
-              className={cn(
-                "mt-px",
-                !unstyled &&
-                  "[&_[data-slot='label']]:text-fg-muted mt-px rounded-md border"
-              )}
-            >
-              <div className={cn("p-4", className)}>{children}</div>
-            </div>
+            <div ref={ref}>{children}</div>
           </motion.div>
         </>
       )}
@@ -312,86 +291,81 @@ function ThemeColors({ theme }: { theme?: Theme }) {
         { "--color-secondary": "var(--color-fg-muted)" } as React.CSSProperties
       }
     >
-      <Collapsible show={isEditMode} className="space-y-4 text-sm">
-        <RadioGroup label="Theme mode" orientation="horizontal">
-          {[
-            { value: "light", label: "Light" },
-            { value: "dark", label: "Dark" },
-            { value: "both", label: "Light and dark" },
-          ].map(({ value, label }) => (
-            <Radio key={value} value={value}>
-              {label}
-            </Radio>
-          ))}
-        </RadioGroup>
-        <div className="grid grid-cols-3 gap-4">
-          <Slider label="Lightness" className="w-full" />
-          <Slider label="Contrast" className="w-full" />
-          <Slider label="Saturation" className="w-full" />
+      <Collapsible show={false}>
+        <div className="box-border space-y-4 rounded-md border p-4 text-sm">
+          <RadioGroup label="Theme mode" orientation="horizontal">
+            {[
+              { value: "light", label: "Light" },
+              { value: "dark", label: "Dark" },
+              { value: "both", label: "Light and dark" },
+            ].map(({ value, label }) => (
+              <Radio key={value} value={value}>
+                {label}
+              </Radio>
+            ))}
+          </RadioGroup>
+          <div className="grid grid-cols-3 gap-4">
+            <Slider label="Lightness" className="w-full" />
+            <Slider label="Contrast" className="w-full" />
+            <Slider label="Saturation" className="w-full" />
+          </div>
         </div>
       </Collapsible>
       <ThemeProvider theme={theme} unstyled>
         <p id="core-colors" className="mt-2 font-medium tracking-tight">
           Core colors
         </p>
-        <Collapsible
-          show={isEditMode}
-          className="space-y-2 p-0 text-sm"
-          unstyled
-        >
-          <TableRoot
-            aria-label="Core colors"
-            variant="bordered"
-            className="w-full"
-          >
-            <TableHeader>
-              <TableColumn isRowHeader>Name</TableColumn>
-              <TableColumn>Base color</TableColumn>
-              <TableColumn className="w-full">Ratios</TableColumn>
-            </TableHeader>
-            <TableBody>
-              <TableRow>
-                <TableCell>Neutral</TableCell>
-                <TableCell>
-                  <ColorPicker />
-                </TableCell>
-                <TableCell>
-                  <RatiosSlider
-                    aria-label="Ratios"
-                    defaultValue={[
-                      1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2,
-                    ]}
-                  />
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Accent</TableCell>
-                <TableCell>
-                  <ColorPicker />
-                </TableCell>
-                <TableCell>
-                  <RatiosSlider
-                    aria-label="Ratios"
-                    defaultValue={[
-                      1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2,
-                    ]}
-                  />
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </TableRoot>
+        <Collapsible show={false}>
+          <div className="py-1">
+            <TableRoot
+              aria-label="Core colors"
+              variant="bordered"
+              className="w-full"
+            >
+              <TableHeader>
+                <TableColumn isRowHeader>Name</TableColumn>
+                <TableColumn>Base color</TableColumn>
+                <TableColumn className="w-full">Ratios</TableColumn>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell>Neutral</TableCell>
+                  <TableCell>
+                    <ColorPicker />
+                  </TableCell>
+                  <TableCell>
+                    <RatiosSlider
+                      aria-label="Ratios"
+                      defaultValue={[
+                        1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2,
+                        15.2,
+                      ]}
+                    />
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Accent</TableCell>
+                  <TableCell>
+                    <ColorPicker />
+                  </TableCell>
+                  <TableCell>
+                    <RatiosSlider
+                      aria-label="Ratios"
+                      defaultValue={[
+                        1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2,
+                        15.2,
+                      ]}
+                    />
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </TableRoot>
+          </div>
         </Collapsible>
-        <Collapsible
-          unstyled
-          show={!isEditMode}
-          marginTop={0}
-          marginBottom={0}
-          className="p-0"
-        >
+        <Collapsible show={!isEditMode}>
           <div className="mt-1 flex gap-1">
             <ColorItem
               colorName="Neutral"
-              // colorValue={theme?.foundations}
               className="bg-bg-neutral rounded-sm"
               containerClassName=" ml-0! mr-0!"
             />
@@ -428,53 +402,45 @@ function ThemeColors({ theme }: { theme?: Theme }) {
         <p id="semantic-colors" className="mt-4 font-medium tracking-tight">
           Semantic colors
         </p>
-        <Collapsible
-          show={isEditMode}
-          className="space-y-2 p-0 text-sm"
-          unstyled
-        >
-          <TableRoot
-            aria-label="Core colors"
-            variant="bordered"
-            className="w-full"
-          >
-            <TableHeader>
-              <TableColumn isRowHeader>Name</TableColumn>
-              <TableColumn>Base color</TableColumn>
-              <TableColumn className="w-full">Ratios</TableColumn>
-            </TableHeader>
-            <TableBody>
-              {[
-                { label: "Warning", name: "warning" },
-                { label: "Danger", name: "danger" },
-                { label: "Success", name: "success" },
-              ].map(({ label, name }) => (
-                <TableRow key={name}>
-                  <TableCell>{label}</TableCell>
-                  <TableCell>
-                    <ColorPicker />
-                  </TableCell>
-                  <TableCell>
-                    <RatiosSlider
-                      aria-label="Ratios"
-                      defaultValue={[
-                        1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2,
-                        15.2,
-                      ]}
-                    />
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </TableRoot>
+        <Collapsible show={isEditMode}>
+          <div className="py-1">
+            <TableRoot
+              aria-label="Core colors"
+              variant="bordered"
+              className="w-full"
+            >
+              <TableHeader>
+                <TableColumn isRowHeader>Name</TableColumn>
+                <TableColumn>Base color</TableColumn>
+                <TableColumn className="w-full">Ratios</TableColumn>
+              </TableHeader>
+              <TableBody>
+                {[
+                  { label: "Warning", name: "warning" },
+                  { label: "Danger", name: "danger" },
+                  { label: "Success", name: "success" },
+                ].map(({ label, name }) => (
+                  <TableRow key={name}>
+                    <TableCell>{label}</TableCell>
+                    <TableCell>
+                      <ColorPicker />
+                    </TableCell>
+                    <TableCell>
+                      <RatiosSlider
+                        aria-label="Ratios"
+                        defaultValue={[
+                          1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2,
+                          15.2,
+                        ]}
+                      />
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </TableRoot>
+          </div>
         </Collapsible>
-        <Collapsible
-          unstyled
-          show={!isEditMode}
-          marginTop={0}
-          marginBottom={0}
-          className="p-0"
-        >
+        <Collapsible show={!isEditMode}>
           <div className="mt-1 flex gap-1">
             {/* <Item className="bg-bg-info" /> */}
             <ColorItem

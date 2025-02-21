@@ -16,7 +16,13 @@ const labelStyles = tv({
 
 interface LabelProps extends React.ComponentProps<typeof AriaLabel> {}
 const Label = ({ className, ...props }: LabelProps) => {
-  return <AriaLabel className={labelStyles({ className })} {...props} />;
+  return (
+    <AriaLabel
+      data-slot="label"
+      className={labelStyles({ className })}
+      {...props}
+    />
+  );
 };
 
 const descriptionStyles = tv({
