@@ -18,6 +18,7 @@ export interface ThemeProviderProps
   theme?: Theme;
   unstyled?: boolean;
   ignorePreviewMode?: boolean;
+  noBaseVars?: boolean
 }
 export const ThemeProvider = ({
   theme,
@@ -26,6 +27,7 @@ export const ThemeProvider = ({
   style,
   unstyled = false,
   ignorePreviewMode = false,
+  noBaseVars = false ,
   ...props
 }: ThemeProviderProps) => {
   const { resolvedTheme } = useTheme();
@@ -44,8 +46,8 @@ export const ThemeProvider = ({
   const cssVars = React.useMemo(() => {
     if (!theme || !resolvedMode) return {};
     const themeCssVars = createThemeCssVars(theme.foundations, resolvedMode);
-    return { ...baseVars, ...themeCssVars, ...theme.foundations.overrides };
-  }, [theme, resolvedMode]);
+    return { ...(noBaseVars ? {} : baseVars), ...themeCssVars, ...theme.foundations.overrides };
+  }, [theme, resolvedMode, noBaseVars]);
 
   return (
     <VariantsProvider variants={theme?.variants}>

@@ -23,11 +23,12 @@ import { useUserThemes } from "@/modules/themes/atoms/themes-atom";
 import { CreateThemeDialog } from "@/modules/themes/components/create-theme-dialog";
 import { Theme } from "@/modules/themes/types";
 import { PreviewContent } from "../../preview";
-import { ModeSwitch } from "../mode-switch";
+import { ModeSwitch } from "./mode-switch";
 import { ThemeColors } from "./colors";
 import { ThemeEditorContext } from "./context";
 import { ThemeIconography } from "./iconography";
 import { ThemeTypography } from "./typography";
+import { ThemeComponents } from "./components";
 
 export function ThemeEditor({
   theme: themeProp,
@@ -57,7 +58,7 @@ export function ThemeEditor({
     <ThemeEditorContext
       value={{ isLoading, isEditMode: isEditable && isEditMode }}
     >
-      <div className="[&_[data-slot=label]]:text-fg-muted">
+      <div className="[&_[data-slot=label]]:text-fg-muted [&_[data-slot=label]]:text-sm">
         <ThemeEditorHeader
           theme={theme}
           isLoading={isLoading}
@@ -101,6 +102,9 @@ export function ThemeEditor({
           </Section>
           <Section title="Iconography" description="Theme iconography">
             <ThemeIconography />
+          </Section>
+          <Section title="Components" description="Theme components"> 
+            <ThemeComponents />
           </Section>
         </ThemeEditorBody>
       </div>

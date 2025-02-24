@@ -29,12 +29,8 @@ import { useThemeEditorContext } from "./context";
 export function ThemeColors({ theme }: { theme?: Theme }) {
   const { isEditMode } = useThemeEditorContext();
   return (
-    <div
-      style={
-        { "--color-secondary": "var(--color-fg-muted)" } as React.CSSProperties
-      }
-    >
-      <Collapsible show={false}>
+    <div>
+      <Collapsible show={isEditMode}>
         <div className="box-border space-y-4 rounded-md border p-4 text-sm">
           <RadioGroup label="Theme mode" orientation="horizontal">
             {[
@@ -54,11 +50,11 @@ export function ThemeColors({ theme }: { theme?: Theme }) {
           </div>
         </div>
       </Collapsible>
-      <ThemeProvider theme={theme} unstyled>
+      <ThemeProvider theme={theme} unstyled noBaseVars>
         <p id="core-colors" className="mt-2 font-medium tracking-tight">
           Core colors
         </p>
-        <Collapsible show={false}>
+        <Collapsible show={isEditMode}>
           <div className="py-1">
             <TableRoot
               aria-label="Core colors"
@@ -74,7 +70,7 @@ export function ThemeColors({ theme }: { theme?: Theme }) {
                 <TableRow>
                   <TableCell>Neutral</TableCell>
                   <TableCell>
-                    <ColorPicker />
+                    <ColorPicker size="sm" />
                   </TableCell>
                   <TableCell>
                     <RatiosSlider
@@ -89,7 +85,7 @@ export function ThemeColors({ theme }: { theme?: Theme }) {
                 <TableRow>
                   <TableCell>Accent</TableCell>
                   <TableCell>
-                    <ColorPicker />
+                    <ColorPicker size="sm" />
                   </TableCell>
                   <TableCell>
                     <RatiosSlider
@@ -106,13 +102,14 @@ export function ThemeColors({ theme }: { theme?: Theme }) {
           </div>
         </Collapsible>
         <Collapsible show={!isEditMode}>
-          <div className="mt-1 flex gap-1">
+          <div className="flex gap-1 pt-1">
             <ColorItem
               colorName="Neutral"
               className="bg-bg-neutral rounded-sm"
               containerClassName=" ml-0! mr-0!"
             />
             <ColorItem
+              colorName="Accent"
               className="bg-bg-accent rounded-sm"
               containerClassName=" ml-0! mr-0!"
             />
@@ -124,7 +121,7 @@ export function ThemeColors({ theme }: { theme?: Theme }) {
             { name: "accent", label: "Accent" },
           ].map((shade) => (
             <div key={shade.name} className="flex items-center gap-2">
-              <p className="text-(--color-secondary) w-[60px] text-sm">
+              <p className="text-fg-muted w-[60px] text-sm">
                 {shade.label}
               </p>
               <div className="flex flex-1">
@@ -134,8 +131,10 @@ export function ThemeColors({ theme }: { theme?: Theme }) {
                     style={{
                       backgroundColor: `var(--${shade.name}-${(i + 1) * 100})`,
                     }}
+                    colorName={`${shade.label} ${(i + 1) * 100}`}
                     className="h-8 rounded-sm"
                     containerClassName="not-last:-mr-16 not-first:-ml-16 h-8"
+                    hoverAnimation
                   />
                 ))}
               </div>
@@ -166,7 +165,7 @@ export function ThemeColors({ theme }: { theme?: Theme }) {
                   <TableRow key={name}>
                     <TableCell>{label}</TableCell>
                     <TableCell>
-                      <ColorPicker />
+                      <ColorPicker size="sm" />
                     </TableCell>
                     <TableCell>
                       <RatiosSlider
@@ -184,7 +183,7 @@ export function ThemeColors({ theme }: { theme?: Theme }) {
           </div>
         </Collapsible>
         <Collapsible show={!isEditMode}>
-          <div className="mt-1 flex gap-1">
+          <div className="flex gap-1 pt-1">
             {/* <Item className="bg-bg-info" /> */}
             <ColorItem
               className="bg-bg-success rounded-sm"
@@ -208,7 +207,7 @@ export function ThemeColors({ theme }: { theme?: Theme }) {
             // { name: "info", label: "Info" },
           ].map((shade) => (
             <div key={shade.name} className="flex items-center gap-2">
-              <p className="text-(--color-secondary) w-[60px] text-sm">
+              <p className="text-fg-muted w-[60px] text-sm">
                 {shade.label}
               </p>
               <div className="flex flex-1">
@@ -220,6 +219,7 @@ export function ThemeColors({ theme }: { theme?: Theme }) {
                     }}
                     className="h-8 rounded-sm"
                     containerClassName="not-last:-mr-16 not-first:-ml-16 h-8"
+                    hoverAnimation
                   />
                 ))}
               </div>
@@ -237,6 +237,7 @@ interface ColorItemProps {
   style?: React.CSSProperties;
   colorValue?: string;
   colorName?: string;
+  hoverAnimation?: boolean;
 }
 function ColorItem({
   containerClassName,
@@ -244,6 +245,7 @@ function ColorItem({
   style,
   colorValue = "#000000",
   colorName,
+  hoverAnimation = false,
 }: ColorItemProps) {
   const { isLoading } = useThemeEditorContext();
   const [isCopied, setCopied] = React.useState(false);
@@ -272,18 +274,21 @@ function ColorItem({
       >
         <div
           className={cn(
-            "hover:h-22 duration-250 group absolute bottom-0 left-0 h-12 w-full cursor-pointer overflow-hidden rounded-t-2xl transition-[height]",
+            "group absolute bottom-0 left-0 h-12 w-full cursor-pointer overflow-hidden rounded-t-2xl",
+            hoverAnimation && "hover:h-22 duration-250 transition-[height]",
             className
           )}
           style={style}
         >
           <div
             className={cn(
-              "flex items-center justify-between p-2 text-sm opacity-0 transition-opacity group-hover:opacity-100",
+              "flex items-center justify-between p-2 text-sm transition-opacity",
+              hoverAnimation && "opacity-0 group-hover:opacity-100",
+              !colorName && "justify-end",
               isCopied && "opacity-0!"
             )}
           >
-            <p>{colorName || "Color"}</p>
+            {colorName && <p>{colorName}</p>}
             <p>{colorValue}</p>
           </div>
           <div

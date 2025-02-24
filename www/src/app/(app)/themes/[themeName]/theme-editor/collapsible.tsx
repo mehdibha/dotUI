@@ -1,3 +1,4 @@
+import React from "react";
 import { AnimatePresence, motion, type Transition } from "motion/react";
 import { useMeasure } from "react-use";
 import { cn } from "@/lib/utils";
@@ -5,13 +6,14 @@ import { cn } from "@/lib/utils";
 const TRANSITION: Transition = {
   type: "spring",
   bounce: 0,
-  duration: 0.25,
+  duration: 0.35,
 };
 
 export function Collapsible({
   show,
   children,
   className,
+  ...props
 }: {
   show: boolean;
   children: React.ReactNode;
@@ -24,10 +26,11 @@ export function Collapsible({
         <>
           <motion.div
             initial={{ height: 0 }}
-            animate={{ height: height, overflow: "visible" }}
+            animate={{ height: height }}
             exit={{ height: 0 }}
             transition={TRANSITION}
             className={cn("overflow-hidden", className)}
+            {...props}
           >
             <div ref={ref}>{children}</div>
           </motion.div>

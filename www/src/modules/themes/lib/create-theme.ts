@@ -27,7 +27,8 @@ export const createTheme = (theme: Theme): RegistryTheme => {
 
 export const createThemeCssVars = (
   foundations: Theme["foundations"],
-  mode: "light" | "dark"
+  mode: "light" | "dark",
+  createForegrounds: boolean = false
 ): Record<string, string> => {
   const resolvedMode = mode;
   if (!foundations[mode]) throw new Error(`No ${mode} mode found in theme`);
