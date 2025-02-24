@@ -5,6 +5,7 @@ import {
 } from "@adobe/leonardo-contrast-colors";
 import { RegistryTheme } from "@dotui/schemas";
 import { Colors, Theme } from "@/modules/themes/types";
+import { getContrastTextColor } from "@/lib/colors";
 
 export const createTheme = (theme: Theme): RegistryTheme => {
   const { foundations, ...propreties } = theme;
@@ -75,13 +76,24 @@ export const createThemeCssVars = (
       if ("name" in color) {
         return color.values.map((value, index) => {
           const scale = (index + 1) * 100;
-          return [`--${color.name}-${scale}`, value.value];
+          const entries: [string, string][] = [
+            [`--${color.name}-${scale}`, value.value],
+          ];
+
+          // Generate foreground colors if requested
+          if (createForegrounds) {
+            const bgColor = value.value;
+            const fg = getContrastTextColor(bgColor);
+            entries.push([`--${color.name}-${scale}-fg`, fg]);
+          }
+
+          return entries;
         });
       }
       return undefined;
     })
     .filter(Boolean)
-    .flatMap((color) => color as [string, string][])
+    .flatMap((color) => color as [string, string][][])
     .reduce((acc, curr) => ({ ...acc, ...{ [curr[0]]: curr[1] } }), {});
 
   return cssVariables;

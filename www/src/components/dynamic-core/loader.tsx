@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { createDynamicComponent } from "@/lib/create-dynamic-component";
+import { createDynamicComponent } from "@/modules/themes/lib/create-dynamic-component";
 import { LoaderProps } from "@/registry/core/loader_ring";
 import { Loader as _Loader } from "@/registry/core/loader_ring";
 

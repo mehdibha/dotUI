@@ -50,7 +50,7 @@ export function ThemeColors({ theme }: { theme?: Theme }) {
           </div>
         </div>
       </Collapsible>
-      <ThemeProvider theme={theme} unstyled noBaseVars>
+      <ThemeProvider theme={theme} unstyled noBaseVars createForegrounds>
         <p id="core-colors" className="mt-2 font-medium tracking-tight">
           Core colors
         </p>
@@ -130,6 +130,7 @@ export function ThemeColors({ theme }: { theme?: Theme }) {
                     key={i}
                     style={{
                       backgroundColor: `var(--${shade.name}-${(i + 1) * 100})`,
+                      color: `var(--${shade.name}-${(i + 1) * 100}-fg)`,
                     }}
                     colorName={`${shade.label} ${(i + 1) * 100}`}
                     className="h-8 rounded-sm"

@@ -80,6 +80,9 @@ export const primitivesSchema = z.object({
   popover: z.enum(["basic"]).optional(),
   tooltip: z.enum(["basic"]).optional(),
   calendar: z.enum(["basic", "cal"]).optional(),
+  alert: z.enum(["basic"]).optional(),
+  loader: z.enum(["basic"]).optional(),
+  tabs: z.enum(["basic"]).optional(),
 });
 
 export const registryThemeSchema = z.object({

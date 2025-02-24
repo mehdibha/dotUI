@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { createDynamicComponent } from "@/lib/create-dynamic-component";
+import { createDynamicComponent } from "@/modules/themes/lib/create-dynamic-component";
 import {
   Alert as _Alert,
   AlertRoot as _AlertRoot,

@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { DemosProvider } from "@/lib/create-dynamic-component";
 import { useHorizontalResize } from "@/hooks/use-horizontal-resize";
 import { Skeleton } from "@/components/core/skeleton";
 
@@ -26,7 +25,7 @@ export const ComponentWrapper = ({
   if (suspense) {
     return <React.Suspense fallback={fallback}>{children}</React.Suspense>;
   }
-  return <DemosProvider>{children}</DemosProvider>;
+  return children;
 };
 
 export const ResizableContainer = ({

@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { createDynamicComponent } from "@/lib/create-dynamic-component";
 import {
   Tooltip as _Tooltip,
   TooltipRoot as _TooltipRoot,
@@ -14,14 +13,15 @@ import type {
   TooltipContentProps,
   TooltipArrowProps,
 } from "@/registry/core/tooltip_basic";
+import { createDynamicComponent } from "@/modules/themes/lib/create-dynamic-component";
 
 export const Tooltip = createDynamicComponent<TooltipProps>(
   "tooltip",
   "Tooltip",
   _Tooltip,
   {
-    // @ts-expect-error - motion modify the props
     tooltip_framer: React.lazy(() =>
+      // @ts-expect-error - motion modify the props
       import("@/registry/core/tooltip_motion").then((mod) => ({
         default: mod.Tooltip,
       }))
@@ -47,8 +47,8 @@ export const TooltipContent = createDynamicComponent<TooltipContentProps>(
   "TooltipContent",
   _TooltipContent,
   {
-    // @ts-expect-error - motion modify the props
     tooltip_framer: React.lazy(() =>
+      // @ts-expect-error - motion modify the props
       import("@/registry/core/tooltip_motion").then((mod) => ({
         default: mod.TooltipContent,
       }))

@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { Provider as JotaiProvider } from "jotai";
 import { ThemeProvider } from "next-themes";
 import { RouterProvider } from "react-aria-components";
-import { VariantsProvider } from "@/lib/create-dynamic-component";
 import { PreviewModeProvider } from "@/components/mode-provider";
 
 declare module "react-aria-components" {
@@ -25,20 +24,18 @@ export function Providers({
   const router = useRouter();
   return (
     <JotaiProvider>
-      <VariantsProvider>
-        <RouterProvider navigate={router.push}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <PreviewModeProvider defaultMode={defaultPreviewMode}>
-              {children}
-            </PreviewModeProvider>
-          </ThemeProvider>
-        </RouterProvider>
-      </VariantsProvider>
+      <RouterProvider navigate={router.push}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <PreviewModeProvider defaultMode={defaultPreviewMode}>
+            {children}
+          </PreviewModeProvider>
+        </ThemeProvider>
+      </RouterProvider>
     </JotaiProvider>
   );
 }
