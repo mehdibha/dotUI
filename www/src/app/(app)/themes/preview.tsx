@@ -76,7 +76,7 @@ export const Preview = () => {
           width: isOpen ? 0 : 110,
           marginLeft: isOpen ? 0 : -110,
         }}
-        transition={{ type: "spring", bounce: 0, duration: 0.3 }}
+        transition={{ type: "spring", bounce: 0, duration: 0.25 }}
         className="flex justify-start overflow-hidden"
         aria-hidden={isOpen}
         inert={isOpen || undefined}
@@ -96,14 +96,14 @@ export const Preview = () => {
         key="preview-container"
         initial={{ width: 0 }}
         animate={{ width: containerWidth }}
-        transition={{ type: "spring", bounce: 0, duration: 0.3 }}
+        transition={{ type: "spring", bounce: 0, duration: 0.25 }}
         className="h-full overflow-hidden"
         aria-hidden={!isOpen}
         inert={!isOpen || undefined}
       >
         <motion.div
           animate={{ width: previewWidth }}
-          transition={{ type: "spring", bounce: 0, duration: 0.3 }}
+          transition={{ type: "spring", bounce: 0, duration: 0.25 }}
           className="h-full p-4 pl-0"
         >
           <PreviewContent themeName={themeName} />

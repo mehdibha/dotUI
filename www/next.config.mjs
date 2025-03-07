@@ -15,10 +15,7 @@ const config = {
         hostname: "ui.shadcn.com",
       },
     ],
-  },
-  devIndicators: {
-    appIsrStatus: false,
-  },
+  }
 };
 
 export default withMDX(config);

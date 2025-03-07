@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { CheckIcon, CopyIcon, MoonIcon, SunIcon } from "lucide-react";
+import { CheckIcon, CopyIcon } from "lucide-react";
 import { AnimatePresence, motion, Variants } from "motion/react";
 import { Button } from "@/components/core/button";
 import { Skeleton } from "@/registry/core/skeleton_basic";

@@ -4,8 +4,8 @@ import {
   Theme as LeonardoTheme,
 } from "@adobe/leonardo-contrast-colors";
 import { RegistryTheme } from "@dotui/schemas";
-import { Colors, Theme } from "@/modules/themes/types";
 import { getContrastTextColor } from "@/lib/colors";
+import { Colors, Theme } from "@/modules/themes/types";
 
 export const createTheme = (theme: Theme): RegistryTheme => {
   const { foundations, ...propreties } = theme;
@@ -74,16 +74,15 @@ export const createThemeCssVars = (
   const cssVariables = generatedTheme.contrastColors
     .map((color) => {
       if ("name" in color) {
-        return color.values.map((value, index) => {
+        return color.values.map((item, index) => {
           const scale = (index + 1) * 100;
           const entries: [string, string][] = [
-            [`--${color.name}-${scale}`, value.value],
+            [`--${color.name}-${scale}`, item.value],
           ];
 
-          // Generate foreground colors if requested
           if (createForegrounds) {
-            const bgColor = value.value;
-            const fg = getContrastTextColor(bgColor);
+            const bgColor = item.value;
+            const fg = getContrastTextColor(bgColor.replace("deg", ""));
             entries.push([`--${color.name}-${scale}-fg`, fg]);
           }
 
@@ -94,7 +93,16 @@ export const createThemeCssVars = (
     })
     .filter(Boolean)
     .flatMap((color) => color as [string, string][][])
-    .reduce((acc, curr) => ({ ...acc, ...{ [curr[0]]: curr[1] } }), {});
+    .reduce(
+      (acc, curr) => {
+        const result: Record<string, string> = {};
+        curr.forEach(([key, value]) => {
+          result[key] = value;
+        });
+        return { ...acc, ...result };
+      },
+      {} as Record<string, string>
+    );
 
   return cssVariables;
 };

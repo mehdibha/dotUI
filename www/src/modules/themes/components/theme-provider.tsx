@@ -14,7 +14,10 @@ export interface ThemeProviderProps
   extends Omit<React.ComponentProps<"div">, "children"> {
   children?:
     | React.ReactNode
-    | ((mode: "light" | "dark" | null) => React.ReactNode);
+    | ((props: {
+        resolvedMode: "light" | "dark" | null;
+        colors: Record<string, string>;
+      }) => React.ReactNode);
   theme?: Theme;
   unstyled?: boolean;
   ignorePreviewMode?: boolean;
@@ -77,7 +80,9 @@ export const ThemeProvider = ({
           suppressHydrationWarning
           {...props}
         >
-          {typeof children === "function" ? children(resolvedMode) : children}
+          {typeof children === "function"
+            ? children({ resolvedMode, colors: cssVars })
+            : children}
         </div>
       </PrimitivesProvider>
     </VariantsProvider>
