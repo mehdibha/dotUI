@@ -3,11 +3,7 @@
 import React from "react";
 import { ChevronDownIcon } from "lucide-react";
 import { useInView } from "motion/react";
-import {
-  UNSTABLE_Virtualizer as Virtualizer,
-  UNSTABLE_ListLayout as ListLayout,
-  useFilter,
-} from "react-aria-components";
+import { Virtualizer, ListLayout, useFilter } from "react-aria-components";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/core/button";
 import { CommandRoot } from "@/components/core/command";

@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @plugin "tailwindcss-animate";
-@plugin "tailwindcss-rac";
+@plugin "tailwindcss-react-aria-components";
 @import "./docs.css";
 @import "./themes.css";
 

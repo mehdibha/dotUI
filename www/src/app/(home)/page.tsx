@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { LayoutTemplateIcon } from "lucide-react";
 import { Link } from "react-aria-components";
 import { Announcement } from "@/components/announcement";
 import { Button } from "@/components/core/button";
@@ -27,7 +26,7 @@ export default function HomePage() {
             <span className="font-bold italic">unique</span> look.
           </h1>
           <p className="text-fg-muted text-balace mt-2 text-lg">
-            Over 40 components available in multiple variants ready to match
+            Over 40 components available in differents styles ready to match
             your brand identity.
           </p>
           <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
@@ -37,7 +36,7 @@ export default function HomePage() {
               size="lg"
               className="h-10"
             >
-              Create your library
+              Get started
             </Button>
             <Button
               href="/themes"
@@ -45,7 +44,7 @@ export default function HomePage() {
               size="lg"
               className="bg-bg-inverse/5 h-10"
             >
-              Explore docs
+              Explore themes
             </Button>
           </div>
         </section>

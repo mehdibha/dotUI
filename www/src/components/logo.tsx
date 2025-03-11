@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { siteConfig } from "@/config";
+import { Badge } from "./core/badge";
 
 export const Logo = ({
   extanded = true,
@@ -49,9 +50,12 @@ export const Logo = ({
         </g>
       </svg>
       {extanded && (
-        <div className="font-josefin group-data-collapsed/sidebar:opacity-0 mt-1.5 text-base font-bold leading-normal tracking-tighter transition-colors">
-          {siteConfig.global.name}
-        </div>
+        <>
+          <div className="font-josefin group-data-collapsed/sidebar:opacity-0 mt-1.5 text-base font-bold leading-normal tracking-tighter transition-colors">
+            {siteConfig.global.name}
+          </div>
+          <Badge className="border mt-0.5 px-2 group-data-collapsed/sidebar:opacity-0">beta</Badge>
+        </>
       )}
     </Link>
   );
