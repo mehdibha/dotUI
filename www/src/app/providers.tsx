@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { Provider as JotaiProvider } from "jotai";
 import { ThemeProvider } from "next-themes";
 import { RouterProvider } from "react-aria-components";
+import { PreviewModeProvider } from "@/components/mode-provider";
 
 declare module "react-aria-components" {
   interface RouterConfig {
@@ -13,7 +14,13 @@ declare module "react-aria-components" {
   }
 }
 
-export function Providers({ children }: { children: React.ReactNode }) {
+export function Providers({
+  defaultPreviewMode,
+  children,
+}: {
+  defaultPreviewMode: "light" | "dark" | null;
+  children: React.ReactNode;
+}) {
   const router = useRouter();
   return (
     <JotaiProvider>
@@ -24,9 +31,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
           enableSystem
           disableTransitionOnChange
         >
-          <div drawer-wrapper="" className="bg-bg">
+          <PreviewModeProvider defaultMode={defaultPreviewMode}>
             {children}
-          </div>
+          </PreviewModeProvider>
         </ThemeProvider>
       </RouterProvider>
     </JotaiProvider>

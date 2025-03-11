@@ -3,10 +3,10 @@
 import React from "react";
 import { MonitorIcon, MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
-import { Button } from "@/registry/ui/default/core/button";
-import { Item, ListBox } from "@/registry/ui/default/core/list-box";
-import { Overlay } from "@/registry/ui/default/core/overlay";
-import { SelectRoot } from "@/registry/ui/default/core/select";
+import { Button } from "@/components/core/button";
+import { ListBoxItem, ListBox } from "@/components/core/list-box";
+import { Popover } from "@/components/core/popover";
+import { SelectRoot } from "@/components/core/select";
 
 export const ThemeSwitcher = ({ children }: { children?: React.ReactNode }) => {
   const { theme, setTheme } = useTheme();
@@ -16,6 +16,7 @@ export const ThemeSwitcher = ({ children }: { children?: React.ReactNode }) => {
       selectedKey={theme}
       onSelectionChange={(key) => setTheme(key as string)}
       aria-label="Change Theme"
+      className="w-auto"
     >
       {children ?? (
         <Button
@@ -28,19 +29,19 @@ export const ThemeSwitcher = ({ children }: { children?: React.ReactNode }) => {
           <MoonIcon className="hidden dark:block" />
         </Button>
       )}
-      <Overlay placement="bottom right" type="popover">
+      <Popover placement="bottom right">
         <ListBox>
-          <Item id="system" prefix={<MonitorIcon />}>
+          <ListBoxItem id="system" prefix={<MonitorIcon />}>
             System
-          </Item>
-          <Item id="light" prefix={<SunIcon />}>
+          </ListBoxItem>
+          <ListBoxItem id="light" prefix={<SunIcon />}>
             Light
-          </Item>
-          <Item id="dark" prefix={<MoonIcon />}>
+          </ListBoxItem>
+          <ListBoxItem id="dark" prefix={<MoonIcon />}>
             Dark
-          </Item>
+          </ListBoxItem>
         </ListBox>
-      </Overlay>
+      </Popover>
     </SelectRoot>
   );
 };

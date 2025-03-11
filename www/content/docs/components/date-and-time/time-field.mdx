@@ -1,0 +1,268 @@
+---
+title: Time Field
+description: TimeFields allow users to enter and edit time values using a keyboard.
+links:
+  - label: Aria docs
+    href: https://react-spectrum.adobe.com/react-aria/TimeField.html
+  - label: Report an issue
+    href: https://github.com/mehdibha/dotUI/issues/new/choose
+  - label: Edit this page
+    href: https://github.com/mehdibha/dotUI/tree/main/content/components/dates/time-field.mdx?plain=1
+---
+
+<ComponentPreview
+  name="time-field/default"
+  preview={`<TimeField aria-label="Event time" />`}
+/>
+
+## Installation
+
+```package-install
+npx dotui-cli@latest add time-field
+```
+
+## Usage
+
+Use a `TimeField` to allow users to enter and edit time values using a keyboard.
+
+```tsx
+import { TimeField } from "@/components/core/time-field";
+
+<TimeField label="Event time" description="Please select your event time." />;
+```
+
+```tsx
+import { Label, Description } from "@/components/dynamic-core/field";
+import {
+  TimeFieldRoot,
+  TimeFieldInput,
+} from "@/components/dynamic-core/time-field";
+
+<TimeFieldRoot>
+  <Label>Meeting time</Label>
+  <TimeFieldInput />
+  <Description>Please select a time between 9 AM and 5 PM.</Description>
+  <FieldError />
+</TimeFieldRoot>;
+```
+
+## Uncontrolled
+
+An initial, uncontrolled value can be provided to the `TimeField` using the `defaultValue` prop.
+
+<ComponentPreview
+  name="time-field/uncontrolled"
+  preview={`<TimeField aria-label="Event time" defaultValue={new Time(11, 45)} />`}
+/>
+
+## Controlled
+
+Use the `value` and `onChange` props to control the value of the input.
+
+<ComponentPreview
+  name="time-field/controlled"
+  preview={`const [time, setTime] = React.useState(new Time(11, 45));
+return <TimeField aria-label="Event time" value={time} onChange={setTime} />`}
+/>
+
+## Options
+
+### Label
+
+A visual label can be provided for the `TimeField` using the `label` prop or a hidden label using `aria-label` prop.
+
+<ComponentPreview
+  name="time-field/label"
+  preview={`<TimeField label="Event time" />
+<TimeField aria-label="Event time" />`}
+/>
+
+### Size
+
+Use the `size` prop to control the size of the `TimeField`.<br/>
+The default variant is `"md"`.
+
+<ComponentPreview
+  name="time-field/sizes"
+  preview={`<TimeField label="small (sm)" size="sm" />
+  <TimeField label="medium (md)" size="md" />
+  <TimeField label="large (lg)" size="lg" />`}
+/>
+
+### Prefix and suffix
+
+To add additional context for the `TimeField`, such as an icon, use the `prefix` and `suffix` props.
+
+<ComponentPreview
+  name="time-field/prefix-and-suffix"
+  preview={`<TimeField aria-label="Event time" prefix={<TimerIcon />} />
+  <TimeField aria-label="Event time" suffix={<TimerIcon />} />`}
+/>
+
+### Description
+
+A description can be supplied to `TimeField` via the `description` prop. The description is always visible unless the `isInvalid` prop is `true` and an error message is provided.
+
+<ComponentPreview
+  name="time-field/description"
+  preview={`<TimeField label="Appointment" description="Please select a time between 9 AM and 5 PM." />`}
+/>
+
+### Error message
+
+An `errorMessage` can be supplied to `TimeField` via the `errorMessage` prop, which will be displayed when the `isInvalid` prop is set to `true`.
+
+<ComponentPreview
+  name="time-field/error-message"
+  preview={`<TimeField label="Meeting" isInvalid errorMessage="Meetings start every 15 minutes." />`}
+/>
+
+### Disabled
+
+Use the `isDisabled` prop to disable the TimeField.
+
+<ComponentPreview
+  name="time-field/disabled"
+  preview={`<TimeField label="Event time" isDisabled />`}
+/>
+
+### ReadOnly
+
+The `isReadOnly` boolean prop makes the TimeField's text content immutable. Unlike isDisabled, the TimeField remains focusable and the contents can still be copied.
+
+<ComponentPreview
+  name="time-field/read-only"
+  preview={`<TimeField label="Event time" value={new Time(11)} isReadOnly />`}
+/>
+
+### Required
+
+Use the `isRequired` prop to mark the TimeField as required.
+Use the `necessityIndicator` prop to control the visual style of the required state.
+
+<ComponentPreview
+  name="time-field/required"
+  preview={`<TimeField label="Event time" isRequired />
+<TimeField label="Event time" isRequired necessityIndicator="icon" />
+<TimeField label="Event time" isRequired necessityIndicator="label" />
+<TimeField label="Event time" necessityIndicator="label" />`}
+/>
+
+## Value options
+
+### Time zones
+
+TimeField is time zone aware when a `ZonedDateTime` object is provided as the value.
+
+<ComponentPreview
+  name="time-field/time-zones"
+  preview={`<TimeField
+    aria-label="Event time"
+    defaultValue={parseAbsoluteToLocal("2021-11-07T07:45:00Z")}
+  />`}
+/>
+
+### Granularity
+
+The `granularity` prop allows you to control the smallest unit that is displayed by TimeField.
+
+<ComponentPreview
+  name="time-field/granularity"
+  preview={`<TimeField
+    aria-label="Event time"
+    granularity="second"
+    defaultValue={parseAbsoluteToLocal("2021-04-07T18:45:22Z")}
+  />`}
+/>
+
+## Format Options
+
+### Placeholder value
+
+`placeholderValue` controls the default values of each segment when the user first interacts with them, e.g. using the up and down arrow keys.
+The default value is midnight.
+
+<ComponentPreview
+  name="time-field/placeholder"
+  preview={`<TimeField aria-label="Event time" placeholderValue={new Time(9)} />`}
+/>
+
+### Hide time zone
+
+Use the `hideTimeZone` prop to hide the time zone abbreviation.
+
+<ComponentPreview
+  name="time-field/hide-time-zone"
+  preview={`<TimeField
+    aria-label="Appointment time"
+    defaultValue={parseZonedDateTime("2022-11-07T10:45[America/Los_Angeles]")}
+    hideTimeZone
+  />`}
+/>
+
+### Hour cycle
+
+Use the `hourCycle` prop to control the hour cycle of the TimeField.
+
+<ComponentPreview
+  name="time-field/hour-cycle"
+  preview={`<TimeField aria-label="Appointment time" hourCycle={24} />`}
+/>
+
+## Composition
+
+If you need to customize things further, you can drop down to the composition level.
+
+<ComponentPreview
+  name="time-field/composition"
+  preview={`<TimeFieldRoot>
+    <Label>Meeting time</Label>
+    <TimeFieldInput />
+    <Description>Please select a time between 9 AM and 5 PM.</Description>
+    <FieldError />
+  </TimeFieldRoot>`}
+/>
+
+## API Reference
+
+| Prop                      | Type                                                                                                   | Default    | Description                                                                                                                                                                                                                           |
+| ------------------------- | ------------------------------------------------------------------------------------------------------ | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `hourCycle`               | `12 \| 24`                                                                                             | `'minute'` | Whether to display the time in 12 or 24 hour format. By default, this is determined by the user's locale.                                                                                                                             |
+| `granularity`             | `'hour' \| 'minute' \| 'second'`                                                                       | -          | Determines the smallest unit that is displayed in the time picker.                                                                                                                                                                    |
+| `hideTimeZone`            | `boolean`                                                                                              | -          | Whether to hide the time zone abbreviation.                                                                                                                                                                                           |
+| `shouldForceLeadingZeros` | `boolean`                                                                                              | -          | Whether to always show leading zeros in the hour field. By default, this is determined by the user's locale.                                                                                                                          |
+| `placeholderValue`        | `TimeValue`                                                                                            | -          | A placeholder time that influences the format of the placeholder shown when no value is selected. Defaults to 12:00 AM or 00:00 depending on the hour cycle.                                                                          |
+| `minValue`                | `TimeValue`                                                                                            | -          | The minimum allowed time that a user may select.                                                                                                                                                                                      |
+| `maxValue`                | `TimeValue`                                                                                            | -          | The maximum allowed time that a user may select.                                                                                                                                                                                      |
+| `isDisabled`              | `boolean`                                                                                              | -          | Whether the input is disabled.                                                                                                                                                                                                        |
+| `isReadOnly`              | `boolean`                                                                                              | -          | Whether the input can be selected but not changed by the user.                                                                                                                                                                        |
+| `isRequired`              | `boolean`                                                                                              | -          | Whether user input is required on the input before form submission.                                                                                                                                                                   |
+| `isInvalid`               | `boolean`                                                                                              | -          | Whether the input value is invalid.                                                                                                                                                                                                   |
+| `validate`                | `(value: MappedTimeValue<TimeValue>) => ValidationError  \| true  \| null  \| undefined`               | -          | A function that returns an error message if a given value is invalid. Validation errors are displayed to the user when the form is submitted if validationBehavior="native". For realtime validation, use the isInvalid prop instead. |
+| `autoFocus`               | `boolean`                                                                                              | -          | Whether the element should receive focus on render.                                                                                                                                                                                   |
+| `value`                   | `TimeValue \| null`                                                                                    | -          | The current value (controlled).                                                                                                                                                                                                       |
+| `defaultValue`            | `TimeValue \| null`                                                                                    | -          | The default value (uncontrolled).                                                                                                                                                                                                     |
+| `name`                    | `string`                                                                                               | -          | The name of the input element, used when submitting an HTML form.                                                                                                                                                                     |
+| `validationBehavior`      | `'native' \| 'aria'`                                                                                   | `'aria'`   | Whether to use native HTML form validation to prevent form submission when the value is missing or invalid, or mark the field as required or invalid via ARIA.                                                                        |
+| `children`                | `ReactNode \| (values: DateFieldRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -          | The children of the component. A function may be provided to alter the children based on component state.                                                                                                                             |
+| `className`               | `string`                                                                                               | -          | The CSS className for the element.                                                                                                                                                                                                    |
+| `style`                   | `CSSProperties \| (values: DateFieldRenderProps & {defaultStyle: CSSProperties}) => CSSProperties`     | -          | The inline style for the element. A function may be provided to compute the style based on component state.                                                                                                                           |
+
+| Event           | Type                                          | Description                                                     |
+| --------------- | --------------------------------------------- | --------------------------------------------------------------- |
+| `onChange`      | `(value: MappedTimeValue<TimeValue>) => void` | Handler that is called when the value changes.                  |
+| `onFocus`       | `(e: FocusEvent<Target>) => void`             | Handler that is called when the element receives focus.         |
+| `onBlur`        | `(e: FocusEvent<Target>) => void`             | Handler that is called when the element loses focus.            |
+| `onFocusChange` | `(isFocused: boolean) => void`                | Handler that is called when the element's focus status changes. |
+| `onKeyDown`     | `(e: KeyboardEvent) => void`                  | Handler that is called when a key is pressed.                   |
+| `onKeyUp`       | `(e: KeyboardEvent) => void`                  | Handler that is called when a key is released.                  |
+
+## Accessibility
+
+### Keyboard interactions
+
+| Key                      | Description                                                                                                                                                                                  |
+| ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Tab`                    | Places focus on the first segment. If a segment is already in focus, moves focus to the next segment. If last segment in in focus, moves focus to the next element in the page tab sequence. |
+| `ArrowRight` `ArrowLeft` | Moves focus between segments.                                                                                                                                                                |
+| `ArrowUp` `ArrowDown`    | Increments/decrements the value of the segment.                                                                                                                                              |

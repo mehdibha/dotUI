@@ -1,7 +1,34 @@
-import { type Registry } from "@dotui/registry/types";
-import { blocks } from "@/registry/blocks";
-import { core } from "@/registry/core";
-import { hooks } from "@/registry/hooks";
-import { themes } from "@/registry/themes";
+import { RegistryIndex } from "@dotui/schemas";
+import { base as _base } from "@/registry/registry-base";
+import { core as _core } from "@/registry/registry-core";
+import { hooks as _hooks } from "@/registry/registry-hooks";
+import { iconLibraries } from "@/registry/registry-icons";
+import { lib as _lib } from "@/registry/registry-lib";
+import { themes as _themes } from "@/registry/registry-themes";
 
-export const registry: Registry = [...core, ...hooks, ...themes, ...blocks];
+const base: RegistryIndex = [{ ..._base, type: "base" }];
+const core: RegistryIndex = _core.map((item) => ({ ...item, type: "core" }));
+const hooks: RegistryIndex = _hooks.map((item) => ({ ...item, type: "hook" }));
+const lib: RegistryIndex = _lib.map((item) => ({ ...item, type: "lib" }));
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const themes: RegistryIndex = _themes.map(({ variants, ...item }) => ({
+  ...item,
+  type: "theme",
+}));
+const iconLibs: RegistryIndex = Object.entries(iconLibraries).map(
+  ([, value]) =>
+    ({
+      name: value.name,
+      type: "icon-library",
+      dependencies: [value.package],
+    }) as const
+);
+
+export const registry: RegistryIndex = [
+  ...base,
+  ...core,
+  ...hooks,
+  ...lib,
+  ...themes,
+  ...iconLibs,
+];

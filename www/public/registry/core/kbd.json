@@ -1,0 +1,11 @@
+{
+  "name": "kbd",
+  "type": "core",
+  "files": [
+    {
+      "type": "core",
+      "content": "\"use client\";\n\nimport { Keyboard } from \"react-aria-components\";\nimport { tv } from \"tailwind-variants\";\n\nconst KbdStyles = tv({\n  base: \"text-fg-muted bg-bg inline-flex min-w-5 items-center justify-center rounded-md border p-1 text-xs leading-none\",\n});\n\ntype KbdProps = React.HTMLAttributes<HTMLElement>;\nconst Kbd = ({ className, ...props }: KbdProps) => {\n  return <Keyboard className={KbdStyles({ className })} {...props} />;\n};\n\nexport type { KbdProps };\nexport { Kbd, KbdStyles };\n",
+      "path": "core/kbd.tsx"
+    }
+  ]
+}

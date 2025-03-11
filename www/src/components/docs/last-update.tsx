@@ -1,0 +1,16 @@
+import { getGithubLastEdit } from "@/modules/docs/lib/get-github-last-edit";
+
+export async function PageLastUpdate({ path }: { path: string }) {
+  try {
+    const date = await getGithubLastEdit(path);
+    if (!date) return null;
+    return (
+      <p className="text-fg-muted text-sm">
+        Last updated on {date.toLocaleDateString()}
+      </p>
+    );
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+}

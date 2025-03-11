@@ -1,47 +1,37 @@
 "use client";
 
 import React from "react";
-import { useRouter } from "next/navigation";
 import { useDocsSearch } from "fumadocs-core/search/client";
-import { SortedResult } from "fumadocs-core/server";
+import type { SortedResult } from "fumadocs-core/server";
 import {
   ChevronsUpDownIcon,
   CornerDownLeftIcon,
   FileTextIcon,
   HashIcon,
-  Loader2Icon,
   SearchIcon,
-  TextIcon,
 } from "lucide-react";
 import { kekabCaseToTitle } from "@/lib/string";
-import { useCommandMenuInputRef } from "@/hooks/use-focus-command-menu";
-import {
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  CommandRoot,
-  CommandSeparator,
-  type CommandRootProps,
-} from "@/registry/ui/default/core/command";
-import { cn } from "@/registry/ui/default/lib/cn";
+import { Button } from "@/components/core/button";
+import { DialogRoot, Dialog } from "@/components/core/dialog";
+import { Loader } from "@/components/core/loader";
+import { MenuContent, MenuItem, MenuSection } from "@/components/core/menu";
+import { SearchFieldRoot } from "@/components/core/search-field";
+import { Command } from "@/registry/core/command_basic";
+import { Input, InputRoot } from "@/registry/core/input_basic";
 import { searchConfig } from "@/config";
 
-export const SearchCommand = ({
-  className,
-  animated,
-  onRunCommand,
-  context,
-  ...props
-}: CommandRootProps & {
-  animated?: boolean;
-  context?: boolean;
-  onRunCommand?: () => void;
-}) => {
-  const { search, setSearch, query } = useDocsSearch({ type: "fetch" });
-  const router = useRouter();
+interface SearchCommandProps {
+  keyboardShortcut?: boolean;
+  children: React.ReactNode;
+  onAction?: () => void;
+}
 
+export function SearchCommand({
+  keyboardShortcut,
+  children,
+  onAction,
+}: SearchCommandProps) {
+  const { search, setSearch, query } = useDocsSearch({ type: "fetch" });
   const results =
     search === "" || query.data === "empty"
       ? [
@@ -58,89 +48,51 @@ export const SearchCommand = ({
         ]
       : groupByCategory(query.data);
 
-  const runCommand = React.useCallback(
-    (command: () => unknown) => {
-      onRunCommand?.();
-      command();
-    },
-    [onRunCommand]
-  );
-
-  const inputRef = React.useRef<HTMLInputElement>(null);
-  const { setInputRef } = useCommandMenuInputRef();
-
-  React.useEffect(() => {
-    if (context && inputRef.current) setInputRef(inputRef);
-  }, [context, setInputRef]);
-
   return (
-    <CommandRoot
-      shouldFilter={false}
-      loop
-      className={cn(
-        animated && [
-          "relative overflow-visible rounded-lg shadow-md",
-          "after:animate-shine relative after:absolute after:-inset-px after:z-[-1] after:rounded-[inherit] after:bg-[linear-gradient(to_right,#343434_20%,#343434_40%,#707070_50%,#707070_55%,#343434_70%,#343434_100%)] after:bg-[250%_auto] after:content-['']",
-          // we fake border
-          "before:bg-border before:absolute before:-inset-px before:z-[-1] before:rounded-[inherit] before:content-['']",
-        ],
-        className
-      )}
-      {...props}
-    >
-      <CommandInput
-        ref={context ? inputRef : undefined}
-        value={search}
-        onValueChange={setSearch}
-        autoFocus
-        placeholder="Search a component, a block, a hook..."
-        icon={
-          query.isLoading ? (
-            <Loader2Icon className="animate-spin" />
-          ) : (
-            <SearchIcon />
-          )
-        }
-        wrapperClassName={cn(
-          "[&_svg]:text-fg-muted [&_svg]:size-4",
-          animated && "border-b-0"
-        )}
-      />
-      {animated && (
-        <CommandSeparator className="before:opacity-1 before:animate-loading before:delay-900 relative h-[2px] overflow-hidden before:absolute before:left-0 before:top-0 before:h-full before:w-1/2 before:bg-[linear-gradient(90deg,rgba(0,0,0,0)_0,#707070_50%,rgba(0,0,0,0)_100%)] before:opacity-0 before:content-['']" />
-      )}
-      <CommandList>
-        {query.data !== "empty" && (
-          <CommandEmpty>No results found</CommandEmpty>
-        )}
-        {results.map((group) => (
-          <CommandGroup key={group.id} heading={group.name}>
-            {group.results.map((item) => (
-              <CommandItem
-                key={item.id}
-                value={item.id}
-                onSelect={() => {
-                  runCommand(() => router.push(item.url));
-                }}
-                className="text-fg"
-              >
-                <div
-                  className={cn(
-                    "flex min-h-10 w-full flex-row items-center gap-3",
-                    item.type !== "page" && "ms-2 gap-2 border-s ps-4"
-                  )}
+    <SearchCommandDialog keyboardShortcut={keyboardShortcut} trigger={children}>
+      <Command inputValue={search} onInputChange={setSearch} className="h-72">
+        <div className="p-1">
+          <SearchFieldRoot placeholder="Search" autoFocus className="w-full">
+            <InputRoot className="focus-within:ring-1">
+              {query.isLoading ? <Loader /> : <SearchIcon />}
+              <Input />
+            </InputRoot>
+          </SearchFieldRoot>
+        </div>
+        <MenuContent
+          onAction={() => {
+            setSearch("");
+            onAction?.();
+          }}
+          className="h-full overflow-y-scroll py-1"
+        >
+          {results.map((group) => (
+            <MenuSection key={group.id} title={group.name}>
+              {group.results.map((item) => (
+                <MenuItem
+                  key={item.id}
+                  href={item.url}
+                  textValue={item.content}
+                  prefix={item.type === "page" ? <FileTextIcon /> : undefined}
+                  className={
+                    item.type === "page"
+                      ? "[&_svg]:text-fg-muted gap-3 py-2"
+                      : "py-0 pl-2.5"
+                  }
                 >
-                  <div className="text-fg-muted [&_svg]:size-4">
-                    {icons[item.type as keyof typeof icons]}
-                  </div>
-                  <p className="w-0 flex-1 truncate">{item.content}</p>
-                </div>
-              </CommandItem>
-            ))}
-          </CommandGroup>
-        ))}
-      </CommandList>
-      {!animated && (
+                  {item.type === "page" ? (
+                    item.content
+                  ) : (
+                    <div className="[&_svg]:text-fg-muted ml-2 flex items-center gap-3 border-l pl-4 [&_svg]:size-4">
+                      <HashIcon />
+                      <p className="flex-1 truncate py-2">{item.content}</p>
+                    </div>
+                  )}
+                </MenuItem>
+              ))}
+            </MenuSection>
+          ))}
+        </MenuContent>
         <div className="text-fg-muted flex items-center justify-end gap-4 rounded-b-[inherit] border-t p-3 text-xs [&_svg]:size-4">
           <div className="flex items-center gap-1">
             <ChevronsUpDownIcon />
@@ -151,10 +103,10 @@ export const SearchCommand = ({
             <span>Go</span>
           </div>
         </div>
-      )}
-    </CommandRoot>
+      </Command>
+    </SearchCommandDialog>
   );
-};
+}
 
 type GroupedResults = {
   id: string;
@@ -166,8 +118,8 @@ const groupByCategory = (results?: SortedResult[]): GroupedResults => {
   // eg url: /docs/components/buttons/button -> category: components
   if (!results) return [];
   const uniqueCategories = Array.from(
-    new Set(results.map((result) => result.url.split("/")[2]))
-  );
+    new Set(results.map((result) => result.url.split("/")[2]!))
+  ).filter(Boolean);
 
   const groupedResults: GroupedResults = uniqueCategories.map((category) => ({
     id: category,
@@ -178,8 +130,55 @@ const groupByCategory = (results?: SortedResult[]): GroupedResults => {
   return groupedResults;
 };
 
-const icons = {
-  text: <TextIcon />,
-  heading: <HashIcon />,
-  page: <FileTextIcon />,
+const SearchCommandDialog = ({
+  keyboardShortcut = false,
+  trigger,
+  children,
+}: {
+  keyboardShortcut?: boolean;
+  children: React.ReactNode;
+  trigger: React.ReactNode;
+}) => {
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    if (!keyboardShortcut) return;
+
+    const down = (e: KeyboardEvent) => {
+      if ((e.key === "k" && (e.metaKey || e.ctrlKey)) || e.key === "/") {
+        if (
+          (e.target instanceof HTMLElement && e.target.isContentEditable) ||
+          e.target instanceof HTMLInputElement ||
+          e.target instanceof HTMLTextAreaElement ||
+          e.target instanceof HTMLSelectElement
+        ) {
+          return;
+        }
+
+        e.preventDefault();
+        setIsOpen((open) => !open);
+      }
+    };
+
+    document.addEventListener("keydown", down);
+    return () => document.removeEventListener("keydown", down);
+  }, [keyboardShortcut]);
+
+  return (
+    <DialogRoot isOpen={isOpen} onOpenChange={setIsOpen}>
+      {trigger}
+      <Dialog className="p-0!">
+        {children}
+        <Button
+          slot="close"
+          variant="outline"
+          shape="rectangle"
+          size="sm"
+          className="absolute right-2 top-2 h-7 px-2 text-xs font-normal"
+        >
+          Esc
+        </Button>
+      </Dialog>
+    </DialogRoot>
+  );
 };

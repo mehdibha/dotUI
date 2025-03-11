@@ -1,0 +1,8 @@
+{
+  "name": "calendar",
+  "type": "core",
+  "variants": [
+    "basic",
+    "cal"
+  ]
+}

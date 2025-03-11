@@ -1,214 +1,560 @@
 [
   {
-    "name": "alert",
-    "type": "registry:core"
+    "name": "base",
+    "type": "base",
+    "deps": [
+      "tailwind-variants",
+      "react-aria-components",
+      "tailwindcss-react-aria-components"
+    ],
+    "registryDeps": [
+      "utils"
+    ]
   },
   {
-    "name": "aspect-ratio",
-    "type": "registry:core"
+    "name": "alert",
+    "type": "core",
+    "variants": [
+      "basic",
+      "notch",
+      "notch-2"
+    ]
+  },
+  {
+    "name": "alert_basic",
+    "type": "core"
+  },
+  {
+    "name": "alert_notch",
+    "type": "core"
+  },
+  {
+    "name": "alert_notch-2",
+    "type": "core"
   },
   {
     "name": "avatar",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "badge",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "breadcrumbs",
-    "type": "registry:core"
+    "type": "core",
+    "registryDeps": [
+      "focus-styles"
+    ]
   },
   {
     "name": "button",
-    "type": "registry:core"
+    "type": "core",
+    "variants": [
+      "basic",
+      "brutalist",
+      "ripple"
+    ]
+  },
+  {
+    "name": "button_basic",
+    "type": "core",
+    "registryDeps": [
+      "loader",
+      "focus-styles"
+    ]
+  },
+  {
+    "name": "button_brutalist",
+    "type": "core",
+    "registryDeps": [
+      "loader",
+      "focus-styles"
+    ]
+  },
+  {
+    "name": "button_ripple",
+    "type": "core",
+    "registryDeps": [
+      "loader",
+      "focus-styles"
+    ]
   },
   {
     "name": "calendar",
-    "type": "registry:core"
+    "type": "core",
+    "variants": [
+      "basic",
+      "cal"
+    ]
+  },
+  {
+    "name": "calendar_basic",
+    "type": "core",
+    "registryDeps": [
+      "button",
+      "text",
+      "focus-styles"
+    ]
+  },
+  {
+    "name": "calendar_cal",
+    "type": "core",
+    "registryDeps": [
+      "button",
+      "text",
+      "focus-styles"
+    ]
   },
   {
     "name": "checkbox",
-    "type": "registry:core"
+    "type": "core",
+    "registryDeps": [
+      "focus-styles"
+    ]
   },
   {
     "name": "checkbox-group",
-    "type": "registry:core"
+    "type": "core",
+    "registryDeps": [
+      "field",
+      "checkbox"
+    ]
   },
   {
     "name": "color-area",
-    "type": "registry:core"
+    "type": "core",
+    "registryDeps": [
+      "color-thumb"
+    ]
   },
   {
     "name": "color-field",
-    "type": "registry:core"
+    "type": "core",
+    "registryDeps": [
+      "field",
+      "input"
+    ]
   },
   {
     "name": "color-picker",
-    "type": "registry:core"
+    "type": "core",
+    "registryDeps": [
+      "button",
+      "color-area",
+      "color-field",
+      "color-slider",
+      "color-swatch",
+      "dialog",
+      "select"
+    ]
   },
   {
     "name": "color-slider",
-    "type": "registry:core"
+    "type": "core",
+    "registryDeps": [
+      "field",
+      "color-thum"
+    ]
   },
   {
     "name": "color-swatch",
-    "type": "registry:core"
+    "type": "core"
+  },
+  {
+    "name": "color-swatch-picker",
+    "type": "core",
+    "registryDeps": [
+      "focus-styles",
+      "color-swatch"
+    ]
   },
   {
     "name": "color-thumb",
-    "type": "registry:core"
+    "type": "core",
+    "registryDeps": [
+      "focus-styles"
+    ]
   },
   {
     "name": "combobox",
-    "type": "registry:core"
+    "type": "core",
+    "registryDeps": [
+      "field",
+      "button",
+      "input",
+      "list-box",
+      "overlay"
+    ]
+  },
+  {
+    "name": "command",
+    "type": "core"
   },
   {
     "name": "date-field",
-    "type": "registry:core"
+    "type": "core",
+    "registryDeps": [
+      "field",
+      "input",
+      "date-input"
+    ]
   },
   {
     "name": "date-input",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "date-picker",
-    "type": "registry:core"
+    "type": "core",
+    "registryDeps": [
+      "button",
+      "calendar",
+      "field",
+      "input",
+      "date-input",
+      "dialog"
+    ]
   },
   {
     "name": "date-range-picker",
-    "type": "registry:core"
+    "type": "core",
+    "registryDeps": [
+      "button",
+      "calendar",
+      "field",
+      "input",
+      "date-input",
+      "dialog"
+    ]
   },
   {
     "name": "dialog",
-    "type": "registry:core"
+    "type": "core",
+    "registryDeps": [
+      "overlay"
+    ]
+  },
+  {
+    "name": "drawer",
+    "type": "core"
   },
   {
     "name": "drop-zone",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "field",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "file-trigger",
-    "type": "registry:core"
+    "type": "core"
   },
   {
-    "name": "group",
-    "type": "registry:core"
+    "name": "form",
+    "type": "core",
+    "variants": [
+      "basic",
+      "react-hook-form"
+    ]
   },
   {
-    "name": "heading",
-    "type": "registry:core"
+    "name": "form_basic",
+    "type": "core"
+  },
+  {
+    "name": "form_react-hook-form",
+    "type": "core",
+    "deps": [
+      "react-hook-form"
+    ]
   },
   {
     "name": "input",
-    "type": "registry:core"
+    "type": "core",
+    "variants": [
+      "basic"
+    ]
+  },
+  {
+    "name": "input_basic",
+    "type": "core",
+    "deps": [
+      "@react-aria/utils",
+      "@react-stately/utils"
+    ],
+    "registryDeps": [
+      "focus-styles"
+    ]
   },
   {
     "name": "kbd",
-    "type": "registry:core"
-  },
-  {
-    "name": "link",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "list-box",
-    "type": "registry:core"
+    "type": "core",
+    "registryDeps": [
+      "text",
+      "focus-styles"
+    ]
+  },
+  {
+    "name": "loader",
+    "type": "core",
+    "variants": [
+      "dots",
+      "line",
+      "ring",
+      "tailspin",
+      "wave"
+    ]
+  },
+  {
+    "name": "loader_dots",
+    "type": "core"
+  },
+  {
+    "name": "loader_line",
+    "type": "core"
+  },
+  {
+    "name": "loader_ring",
+    "type": "core"
+  },
+  {
+    "name": "loader_tailspin",
+    "type": "core"
+  },
+  {
+    "name": "loader_wave",
+    "type": "core",
+    "deps": [
+      "motion"
+    ]
   },
   {
     "name": "menu",
-    "type": "registry:core"
+    "type": "core",
+    "registryDeps": [
+      "kbd",
+      "overlay",
+      "text"
+    ]
+  },
+  {
+    "name": "modal",
+    "type": "core"
   },
   {
     "name": "number-field",
-    "type": "registry:core"
+    "type": "core",
+    "registryDeps": [
+      "input",
+      "field",
+      "use-is-mobile"
+    ]
   },
   {
     "name": "overlay",
-    "type": "registry:core"
+    "type": "core",
+    "registryDeps": [
+      "modal",
+      "popover",
+      "drawer",
+      "use-is-mobile"
+    ]
   },
   {
-    "name": "progress",
-    "type": "registry:core"
+    "name": "popover",
+    "type": "core"
+  },
+  {
+    "name": "progress-bar",
+    "type": "core",
+    "registryDeps": [
+      "field"
+    ]
   },
   {
     "name": "radio-group",
-    "type": "registry:core"
-  },
-  {
-    "name": "range-calendar",
-    "type": "registry:core"
-  },
-  {
-    "name": "scroll-area",
-    "type": "registry:core"
+    "type": "core",
+    "registryDeps": [
+      "focus-styles",
+      "field"
+    ]
   },
   {
     "name": "search-field",
-    "type": "registry:core"
-  },
-  {
-    "name": "section",
-    "type": "registry:core"
+    "type": "core",
+    "registryDeps": [
+      "field",
+      "button"
+    ]
   },
   {
     "name": "select",
-    "type": "registry:core"
+    "type": "core",
+    "registryDeps": [
+      "button",
+      "field",
+      "list-box",
+      "popover"
+    ]
   },
   {
     "name": "separator",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "skeleton",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "slider",
-    "type": "registry:core"
+    "type": "core",
+    "deps": [
+      "@react-aria/utils"
+    ],
+    "registryDeps": [
+      "field",
+      "focus-styles"
+    ]
   },
   {
     "name": "switch",
-    "type": "registry:core"
+    "type": "core",
+    "registryDeps": [
+      "focus-styles"
+    ]
+  },
+  {
+    "name": "table",
+    "type": "core",
+    "registryDeps": [
+      "checkbox",
+      "focus-styles"
+    ]
   },
   {
     "name": "tabs",
-    "type": "registry:core"
+    "type": "core",
+    "variants": [
+      "basic",
+      "motion"
+    ]
+  },
+  {
+    "name": "tabs_basic",
+    "type": "core",
+    "registryDeps": [
+      "focus-styles"
+    ]
+  },
+  {
+    "name": "tabs_motion",
+    "type": "core",
+    "deps": [
+      "motion"
+    ],
+    "registryDeps": [
+      "focus-styles"
+    ]
+  },
+  {
+    "name": "tag-group",
+    "type": "core",
+    "registryDeps": [
+      "field",
+      "button",
+      "focus-styles"
+    ]
   },
   {
     "name": "text",
-    "type": "registry:core"
+    "type": "core"
   },
   {
     "name": "text-area",
-    "type": "registry:core"
+    "type": "core",
+    "registryDeps": [
+      "field",
+      "input"
+    ]
   },
   {
     "name": "text-field",
-    "type": "registry:core"
+    "type": "core",
+    "registryDeps": [
+      "field",
+      "input"
+    ]
   },
   {
     "name": "time-field",
-    "type": "registry:core"
+    "type": "core",
+    "registryDeps": [
+      "field",
+      "input",
+      "date-input"
+    ]
   },
   {
     "name": "toggle-button",
-    "type": "registry:core"
+    "type": "core",
+    "registryDeps": [
+      "focus-styles"
+    ]
+  },
+  {
+    "name": "toggle-button-group",
+    "type": "core",
+    "registryDeps": [
+      "toggle-button"
+    ]
   },
   {
     "name": "tooltip",
-    "type": "registry:core"
+    "type": "core",
+    "variants": [
+      "basic",
+      "motion"
+    ]
   },
   {
-    "name": "use-media-query",
-    "type": "registry:hook"
+    "name": "tooltip_basic",
+    "type": "core"
   },
   {
-    "name": "theme-default",
-    "type": "registry:theme"
+    "name": "tooltip_motion",
+    "type": "core",
+    "deps": [
+      "motion"
+    ]
+  },
+  {
+    "name": "use-is-mobile",
+    "type": "hook"
+  },
+  {
+    "name": "utils",
+    "type": "lib",
+    "deps": [
+      "clsx",
+      "tailwind-merge"
+    ]
+  },
+  {
+    "name": "focus-styles",
+    "type": "lib"
+  },
+  {
+    "name": "lucide-icons",
+    "type": "icon-library"
+  },
+  {
+    "name": "remix-icons",
+    "type": "icon-library"
   }
 ]

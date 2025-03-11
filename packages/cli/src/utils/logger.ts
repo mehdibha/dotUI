@@ -1,17 +1,24 @@
-import { highlight } from "@/utils/highlight";
+import pc from "picocolors";
+
+export const c = {
+  error: pc.red,
+  warn: pc.yellow,
+  info: pc.blue,
+  success: pc.green,
+};
 
 export const logger = {
   error(...args: unknown[]) {
-    console.log(highlight.error(args.join(" ")));
+    console.log(c.error(args.join(" ")));
   },
   warn(...args: unknown[]) {
-    console.log(highlight.warn(args.join(" ")));
+    console.log(c.warn(args.join(" ")));
   },
   info(...args: unknown[]) {
-    console.log(highlight.info(args.join(" ")));
+    console.log(c.info(args.join(" ")));
   },
   success(...args: unknown[]) {
-    console.log(highlight.success(args.join(" ")));
+    console.log(c.success(args.join(" ")));
   },
   log(...args: unknown[]) {
     console.log(args.join(" "));

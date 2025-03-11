@@ -16,7 +16,7 @@ links:
 ---
 
 <ComponentPreview
-  name="core/menu-basic"
+  name="menu/basic"
   preview={`<MenuRoot>
     <Button><MenuIcon /></Button>
     <Menu>
@@ -30,30 +30,9 @@ links:
 
 ## Installation
 
-<Tabs items={["CLI", "Manual"]}>
-  <Tab value="CLI">
-  
-  ```package-install
+```package-install
 npx dotui-cli@latest add menu
 ```
-
-  </Tab>
-  <Tab value="manual">
-  
-    <Steps>
-      <Step>Install the following dependencies:</Step>
-
-    ```package-install
-    react-aria-components
-    ```
-
-      <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name="core/menu" />
-      <Step>Update the import paths to match your project setup.</Step>
-    </Steps>
-
-  </Tab>
-</Tabs>
 
 ## Usage
 
@@ -66,7 +45,7 @@ Use `Menu` to display a list of actions or options that a user can choose.
 Use the `type` prop to set the overlay type. The default is `"popover"`. You can also set the mobile type using the `mobileType` prop (`"drawer"` by default).
 
 <ComponentPreview
-  name="core/menu-overlay-type"
+  name="menu/overlay-type"
   preview={`<MenuRoot>
     <Button><MenuIcon /></Button>
     <Menu type={type} mobileType={mobileType}>
@@ -83,7 +62,7 @@ Use the `type` prop to set the overlay type. The default is `"popover"`. You can
 Use the `placement` prop to set the position of the menu relative to the trigger button.
 
 <ComponentPreview
-  name="core/menu-placement"
+  name="menu/placement"
   preview={`<MenuRoot>
     <Button><MenuIcon /></Button>
     <Menu placement={placement}>
@@ -101,7 +80,7 @@ Use the `placement` prop to set the position of the menu relative to the trigger
 Set the `selectionMode` prop to `single` for single selection.
 
 <ComponentPreview
-  name="core/menu-single-selection"
+  name="menu/single-selection"
   preview={`const [selected, setSelected] = React.useState<Selection>(new Set(["center"]));
   return (
     <MenuRoot>
@@ -120,7 +99,7 @@ Set the `selectionMode` prop to `single` for single selection.
 Set the `selectionMode` prop to `multiple` for multiple selection.
 
 <ComponentPreview
-  name="core/menu-multiple-selection"
+  name="menu/multiple-selection"
   preview={`<MenuRoot>
     <Button>Panels</Button>
     <Menu selectionMode="multiple" defaultSelectedKeys={["sidebar", "searchbar", "console"]}>
@@ -139,7 +118,7 @@ Set the `selectionMode` prop to `multiple` for multiple selection.
 Use the `variant` prop to set the visual style of the menu item.
 
 <ComponentPreview
-  name="core/menu-item-variant"
+  name="menu/item-variant"
   preview={`<MenuRoot>
     <Button><MenuIcon /></Button>
     <Menu>
@@ -156,7 +135,7 @@ Use the `variant` prop to set the visual style of the menu item.
 MenuItems also support the `"label"` and `"description"` slots to separate primary and secondary content. You can also use the `Text` component to do the same behaviour.
 
 <ComponentPreview
-  name="core/menu-label-and-description"
+  name="menu/label-and-description"
   preview={`<MenuRoot>
     <Button><MenuIcon /></Button>
     <Menu>
@@ -172,7 +151,7 @@ MenuItems also support the `"label"` and `"description"` slots to separate prima
 To add additional context for the menu item, such as icons, use the `prefix` and `suffix` props.
 
 <ComponentPreview
-  name="core/menu-prefix-and-suffix"
+  name="menu/prefix-and-suffix"
   preview={`<MenuRoot>
     <Button><MenuIcon /></Button>
     <Menu>
@@ -188,7 +167,7 @@ To add additional context for the menu item, such as icons, use the `prefix` and
 Use the `shortcut` prop to add a keyboard shortcut to a menu item, or use the `Keyboard` component.
 
 <ComponentPreview
-  name="core/menu-shortcut"
+  name="menu/shortcut"
   preview={`<MenuRoot>
     <Button><MenuIcon /></Button>
     <Menu>
@@ -204,7 +183,7 @@ Use the `shortcut` prop to add a keyboard shortcut to a menu item, or use the `K
 Alternatively, items may be links to another page or website. This can be achieved by passing the href prop to the `<MenuItem>` component. Link items in a menu are not selectable.
 
 <ComponentPreview
-  name="core/menu-link-items"
+  name="menu/link-items"
   preview={`<MenuRoot>
     <Button>Social</Button>
     <Menu>
@@ -226,7 +205,7 @@ Alternatively, items may be links to another page or website. This can be achiev
 A MenuItem can be disabled with the `isDisabled` prop.
 
 <ComponentPreview
-  name="core/menu-disabled-items"
+  name="menu/disabled-items"
   preview={`<MenuRoot>
     <Button><MenuIcon /></Button>
     <Menu>
@@ -246,7 +225,7 @@ A MenuItem can be disabled with the `isDisabled` prop.
 By default, Menu opens by pressing the trigger element or activating it via the Space or Enter keys. This behavior can be changed by providing `"longPress"` to the `trigger` prop.
 
 <ComponentPreview
-  name="core/menu-long-press"
+  name="menu/long-press"
   preview={`<MenuRoot trigger="longPress">
     <Button><MenuIcon /></Button>
     <Menu>
@@ -263,7 +242,7 @@ Menu supports sections with headings in order to group items. Sections can be us
 A `Header` element may also be included to label the section or using the `title` prop on the `Section` component.
 
 <ComponentPreview
-  name="core/menu-section"
+  name="menu/section"
   preview={`<MenuRoot>
     <Button><MenuIcon /></Button>
     <Menu>
@@ -285,7 +264,7 @@ A `Header` element may also be included to label the section or using the `title
 Separators may be added between menu items or sections in order to create non-labeled groupings.
 
 <ComponentPreview
-  name="core/menu-separator"
+  name="menu/separator"
   preview={`<MenuRoot>
     <Button><MenuIcon /></Button>
     <Menu>
@@ -307,7 +286,7 @@ Separators may be added between menu items or sections in order to create non-la
 Submenus can be created by wrapping a `MenuItem` and a `Menu` in a `MenuSub`.
 
 <ComponentPreview
-  name="core/menu-submenus"
+  name="menu/submenus"
   preview={`<MenuRoot>
     <Button><MenuIcon /></Button>
     <Menu>
@@ -335,7 +314,7 @@ Submenus can be created by wrapping a `MenuItem` and a `Menu` in a `MenuSub`.
 The open state can be controlled via `isOpen` and `onOpenChange` props.
 
 <ComponentPreview
-  name="core/menu-controlled"
+  name="menu/controlled"
   preview={`const [isOpen, setOpen] = React.useState(false);
   return (
     <MenuRoot isOpen={isOpen} onOpenChange={setOpen}>
@@ -354,7 +333,7 @@ The open state can be controlled via `isOpen` and `onOpenChange` props.
 If you need to customize things further, you can drop down to the composition level.
 
 <ComponentPreview
-  name="core/menu-composition"
+  name="menu/composition"
   preview={`<MenuRoot>
     <Button>
       <MenuIcon />

@@ -1,14 +1,9 @@
 ---
 title: Breadcrumbs
 description: Breadcrumbs display a hierarchy of links to the current page or resource in an application.
-thumbnail:
-  image: /previews/components/core/breadcrumbs.jpeg
-  video: /previews/components/core/breadcrumbs.mp4
 links:
   - label: Aria docs
     href: https://react-spectrum.adobe.com/react-aria/Breadcrumbs.html
-  - label: Aria API Reference
-    href: https://react-spectrum.adobe.com/react-aria/Breadcrumbs.html#props
   - label: Report an issue
     href: https://github.com/mehdibha/dotUI/issues/new/choose
   - label: Edit this page
@@ -16,7 +11,7 @@ links:
 ---
 
 <ComponentPreview
-  name="core/breadcrumbs-basic"
+  name="breadcrumbs/basic"
   preview={`<Breadcrumbs>
     <Breadcrumb href="#">Home</Breadcrumb>
     <Breadcrumb href="#">Components</Breadcrumb>
@@ -26,34 +21,46 @@ links:
 
 ## Installation
 
-<Tabs items={["CLI", "Manual"]}>
-  <Tab value="CLI">
-  
-  ```package-install
+```package-install
 npx dotui-cli@latest add breadcrumbs
 ```
 
-  </Tab>
-  <Tab value="manual">
-  
-    <Steps>
-      <Step>Install the following dependencies:</Step>
+## Anatomy
 
-    ```package-install
-    react-aria-components
-    ```
+Breadcrumbs consist of a list of links, typically with a visual separator icon between each item. The last link represents the current page in the hierarchy, with the previous links representing the parent pages of the current page.
 
-      <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name="core/breadcrumbs" />
-      <Step>Update the import paths to match your project setup.</Step>
-    </Steps>
+```tsx
+import { Breadcrumbs, Breadcrumb } from "@/components/core/breadcrumbs";
 
-  </Tab>
-</Tabs>
+<Breadcrumbs>
+  <Breadcrumb href="#">Home</Breadcrumb>
+  <Breadcrumb href="#">Components</Breadcrumb>
+  <Breadcrumb>Breadcrumbs</Breadcrumb>
+</Breadcrumbs>;
+```
 
-## Usage
+```tsx
+import { ChevronRightIcon } from "your-icon-library";
+import {
+  Breadcrumbs,
+  BreadcrumbItem,
+  BreadcrumbLink,
+} from "@/components/core/breadcrumbs";
 
-Use `Breadcrumbs` to display a hierarchy of links to the current page or resource in an application.
+<Breadcrumbs>
+  <BreadcrumbItem>
+    <BreadcrumbLink href="#">Home</BreadcrumbLink>
+    <ChevronRightIcon />
+  </BreadcrumbItem>
+  <BreadcrumbItem>
+    <BreadcrumbLink href="#">Components</BreadcrumbLink>
+    <ChevronRightIcon />
+  </BreadcrumbItem>
+  <BreadcrumbItem>
+    <BreadcrumbLink>Breadcrumbs</BreadcrumbLink>
+  </BreadcrumbItem>
+</Breadcrumbs>;
+```
 
 ## Options
 
@@ -62,7 +69,7 @@ Use `Breadcrumbs` to display a hierarchy of links to the current page or resourc
 Use the `isDisabled` prop to disable the breadcrumbs.
 
 <ComponentPreview
-  name="core/breadcrumbs-disabled"
+  name="breadcrumbs/disabled"
   preview={`<Breadcrumbs isDisabled>
     <Breadcrumb href="#">Home</Breadcrumb>
     <Breadcrumb href="#">Components</Breadcrumb>
@@ -75,7 +82,7 @@ Use the `isDisabled` prop to disable the breadcrumbs.
 If you need to customize things further, you can drop down to the composition level.
 
 <ComponentPreview
-  name="core/breadcrumbs-composition"
+  name="breadcrumbs/composition"
   preview={`<Breadcrumbs>
     <BreadcrumbItem>
       <BreadcrumbLink href="#">Home</BreadcrumbLink>
@@ -97,7 +104,7 @@ If you need to customize things further, you can drop down to the composition le
 ### Icon
 
 <ComponentPreview
-  name="core/breadcrumbs-icon"
+  name="breadcrumbs/icon"
   preview={`<Breadcrumbs>
     <Breadcrumb href="#">
       <HomeIcon />
@@ -111,7 +118,7 @@ If you need to customize things further, you can drop down to the composition le
 ### Router integration
 
 <ComponentPreview
-  name="core/breadcrumbs-router-integration"
+  name="breadcrumbs/router-integration"
   preview={`const pathname = usePathname();
   const pathnames = pathname.split("/").filter((x) => x);
   return (
@@ -147,29 +154,40 @@ If you need to customize things further, you can drop down to the composition le
 
 ### Breadcrumb
 
-| Prop             | Type                                                                                              | Default | Description                                                                                               |
-| ---------------- | ------------------------------------------------------------------------------------------------- | ------- | --------------------------------------------------------------------------------------------------------- |
-| `id`             | `boolean`                                                                                         | -       | A unique id for the breadcrumb, which will be passed to onAction when the breadcrumb is pressed.          |
-| `isDisabled`     | `boolean`                                                                                         | -       | Whether the link is disabled.                                                                             |
-| `autoFocus`      | `boolean`                                                                                         | -       | Whether the element should receive focus on render.                                                       |
-| `href`           | `Href`                                                                                            | -       | A URL to link to.                                                                                         |
-| `hrefLang`       | `string`                                                                                          | -       | Hints at the human language of the linked URL.                                                            |
-| `target`         | `HTMLAttributeAnchorTarget`                                                                       | -       | The target window for the link.                                                                           |
-| `rel`            | `string`                                                                                          | -       | The relationship between the linked resource and the current page.                                        |
-| `download`       | `boolean \| string`                                                                               | -       | Causes the browser to download the linked URL. A string may be provided to suggest a file name.           |
-| `ping`           | `string`                                                                                          | -       | A space-separated list of URLs to ping when the link is followed.                                         |
-| `referrerPolicy` | `HTMLAttributeReferrerPolicy`                                                                     | -       | How much of the referrer to send when following the link.                                                 |
-| `routerOptions`  | `RouterOptions`                                                                                   | -       | Options for the configured client side router.                                                            |
-| `children`       | `ReactNode \| (values: LinkRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -       | The children of the component. A function may be provided to alter the children based on component state. |
-| `className`      | `string`                                                                                          | -       | The CSS className for the element.                                                                        |
-| `style`          | `CSSProperties`                                                                                   | -       | The inline style for the element.                                                                         |
+| Prop             | Type                                                                                                    | Default | Description                                                                                               |
+| ---------------- | ------------------------------------------------------------------------------------------------------- | ------- | --------------------------------------------------------------------------------------------------------- |
+| `id`             | `boolean`                                                                                               | -       | A unique id for the breadcrumb, which will be passed to onAction when the breadcrumb is pressed.          |
+| `isDisabled`     | `boolean`                                                                                               | -       | Whether the link is disabled.                                                                             |
+| `autoFocus`      | `boolean`                                                                                               | -       | Whether the element should receive focus on render.                                                       |
+| `href`           | `Href`                                                                                                  | -       | A URL to link to.                                                                                         |
+| `hrefLang`       | `string`                                                                                                | -       | Hints at the human language of the linked URL.                                                            |
+| `target`         | `HTMLAttributeAnchorTarget`                                                                             | -       | The target window for the link.                                                                           |
+| `rel`            | `string`                                                                                                | -       | The relationship between the linked resource and the current page.                                        |
+| `download`       | `boolean \| string`                                                                                     | -       | Causes the browser to download the linked URL. A string may be provided to suggest a file name.           |
+| `ping`           | `string`                                                                                                | -       | A space-separated list of URLs to ping when the link is followed.                                         |
+| `referrerPolicy` | `HTMLAttributeReferrerPolicy`                                                                           | -       | How much of the referrer to send when following the link.                                                 |
+| `routerOptions`  | `RouterOptions`                                                                                         | -       | Options for the configured client side router.                                                            |
+| `children`       | `ReactNode \| (values: BreadcrumbRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -       | The children of the component. A function may be provided to alter the children based on component state. |
+| `className`      | `string`                                                                                                | -       | The CSS className for the element.                                                                        |
+| `style`          | `CSSProperties`                                                                                         | -       | The inline style for the element.                                                                         |
 
-| Event      | Type                 | Description                                          |
-| ---------- | -------------------- | ---------------------------------------------------- |
-| `onAction` | `(key: Key) => void` | Handler that is called when a breadcrumb is clicked. |
+| Event           | Type                              | Description                                                                                                             |
+| --------------- | --------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `onPress`       | `(e: PressEvent) => void`         | Handler that is called when the press is released over the target.                                                      |
+| `onPressStart`  | `(e: PressEvent) => void`         | Handler that is called when a press interaction starts.                                                                 |
+| `onPressEnd`    | `(e: PressEvent) => void`         | Handler that is called when a press interaction ends, either over the target or when the pointer leaves the target.     |
+| `onPressChange` | `(isPressed: boolean) => void`    | Handler that is called when the press state changes.                                                                    |
+| `onPressUp`     | `(e: PressEvent) => void`         | Handler that is called when a press is released over the target, regardless of whether it started on the target or not. |
+| `onFocus`       | `(e: FocusEvent<Target>) => void` | Handler that is called when the element receives focus.                                                                 |
+| `onBlur`        | `(e: FocusEvent<Target>) => void` | Handler that is called when the element loses focus.                                                                    |
+| `onFocusChange` | `(isFocused: boolean) => void`    | Handler that is called when the element's focus status changes.                                                         |
+| `onKeyDown`     | `(e: KeyboardEvent) => void`      | Handler that is called when a key is pressed.                                                                           |
+| `onKeyUp`       | `(e: KeyboardEvent) => void`      | Handler that is called when a key is released.                                                                          |
+| `onHoverStart`  | `(e: HoverEvent) => void`         | Handler that is called when a hover interaction starts.                                                                 |
+| `onHoverEnd`    | `(e: HoverEvent) => void`         | Handler that is called when a hover interaction ends.                                                                   |
+| `onHoverChange` | `(isHovering: boolean) => void`   | Handler that is called when the hover state changes.                                                                    |
 
-| Data attribute                                     | Description                                                                  |
-| -------------------------------------------------- | ---------------------------------------------------------------------------- |
-| `[data-disabled]`                                  | Whether the color field is disabled.                                         |
-| `[data-invalid]`                                   | Whether the color field is invalid.                                          |
-| `[data-channel="hex \| hue \| saturation \| ..."]` | The color channel that this field edits, or "hex" if no channel prop is set. |
+| Data attribute    | Description                                     |
+| ----------------- | ----------------------------------------------- |
+| `[data-disabled]` | Whether the breadcrumb is disabled.             |
+| `[data-current]`  | Whether the breadcrumb is for the current page. |

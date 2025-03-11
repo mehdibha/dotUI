@@ -1,5 +1,21 @@
 import { Theme } from "@/types/theme";
 
+const defaultVariants = {
+  alert: "basic",
+  loader: "ring",
+  button: "basic",
+  calendar: "basic",
+  form: "react-hook-form",
+  checkbox: "basic",
+  "checkbox-group": "basic",
+  tooltip: "basic",
+  input: "basic",
+  modal: "basic",
+  popover: "basic",
+  drawer: "basic",
+  tabs: "basic",
+};
+
 export const dotUIThemes: Theme[] = [
   {
     id: "default",
@@ -10,6 +26,10 @@ export const dotUIThemes: Theme[] = [
       body: "josefin",
     },
     radius: 0.5,
+    iconLibrary: "lucide",
+    variants: {
+      ...defaultVariants,
+    },
     colors: {
       light: {
         neutral: {
@@ -180,6 +200,11 @@ export const dotUIThemes: Theme[] = [
       body: "inter",
     },
     radius: 0.5,
+    iconLibrary: "lucide",
+    variants: {
+      ...defaultVariants,
+      button: "button-03",
+    },
     colors: {
       light: {
         neutral: {
@@ -350,6 +375,11 @@ export const dotUIThemes: Theme[] = [
       body: "josefin",
     },
     radius: 0,
+    iconLibrary: "lucide",
+    variants: {
+      ...defaultVariants,
+      button: "button-03",
+    },
     colors: {
       light: {
         neutral: {

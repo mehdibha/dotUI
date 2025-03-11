@@ -1,14 +1,9 @@
 ---
 title: Tabs
 description: Tabs organize content into multiple sections and allow users to navigate between them
-thumbnail:
-  image: /previews/components/core/tabs.jpeg
-  video: /previews/components/core/tabs.mp4
 links:
   - label: Aria docs
     href: https://react-spectrum.adobe.com/react-aria/Tabs.html
-  - label: Aria API Reference
-    href: https://react-spectrum.adobe.com/react-aria/Tabs.html#props
   - label: Report an issue
     href: https://github.com/mehdibha/dotUI/issues/new/choose
   - label: Edit this page
@@ -16,132 +11,31 @@ links:
 ---
 
 <ComponentPreview
-  name="core/tabs-basic"
+  name="tabs/basic"
   preview={`<Tabs>
     <TabList>
       <Tab id="overview">Overview</Tab>
       <Tab id="usage">Usage</Tab>
       <Tab id="settings">Settings</Tab>
     </TabList>
-    <TabPanel id="overview"> You can view all your projects here. </TabPanel>
-    <TabPanel id="usage"> You can view your usage here. </TabPanel>
-    <TabPanel id="settings"> You can view your settings here. </TabPanel>
+    <TabPanel id="overview">Overview content</TabPanel>
+    <TabPanel id="usage">Usage content</TabPanel>
+    <TabPanel id="settings">Settings content</TabPanel>
   </Tabs>`}
 />
 
 ## Installation
 
-<Tabs items={["CLI", "Manual"]}>
-  <Tab value="CLI">
-  
-  ```package-install
+```package-install
 npx dotui-cli@latest add tabs
 ```
-
-  </Tab>
-  <Tab value="manual">
-  
-    <Steps>
-      <Step>Install the following dependencies:</Step>
-
-    ```package-install
-    react-aria-components
-    ```
-
-      <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name="core/tabs" />
-      <Step>Update the import paths to match your project setup.</Step>
-    </Steps>
-
-  </Tab>
-</Tabs>
-
-## Usage
-
-Use `Tabs` to organize content into multiple sections and allow users to navigate between them.
-
-- The content under the set of tabs should be related and form a coherent unit.
-
-## Options
-
-### Orientation
-
-Use the `orientation` prop to set the orientation of the tabs.
-
-<ComponentPreview
-  name="core/tabs-vertical"
-  preview={`<Tabs orientation="vertical">
-    <TabList>
-      <Tab id="overview">Overview</Tab>
-      <Tab id="usage">Usage</Tab>
-      <Tab id="settings">Settings</Tab>
-    </TabList>
-    <TabPanel id="overview">You can view all your projects here. </TabPanel>
-    <TabPanel id="usage"> You can view your usage here. </TabPanel>
-    <TabPanel id="settings"> You can view your settings here. </TabPanel>
-  </Tabs>`}
-/>
-
-### Disabled
-
-Use the `isDisabled` prop to disable the tabs.
-
-<ComponentPreview
-  name="core/tabs-disabled"
-  preview={`<Tabs isDisabled>
-    <TabList>
-      <Tab id="overview">Overview</Tab>
-      <Tab id="usage">Usage</Tab>
-      <Tab id="settings">Settings</Tab>
-    </TabList>
-    <TabPanel id="overview"> You can view all your projects here. </TabPanel>
-    <TabPanel id="usage"> You can view your usage here. </TabPanel>
-    <TabPanel id="settings"> You can view your settings here. </TabPanel>
-  </Tabs>`}
-/>
-
-An individual Tab can also be disabled with the `isDisabled` prop.
-
-<ComponentPreview
-  name="core/tabs-disabled-item"
-  preview={`<Tabs>
-    <TabList>
-      <Tab id="overview">Overview</Tab>
-      <Tab id="usage">Usage</Tab>
-      <Tab id="settings" isDisabled>
-        Settings
-      </Tab>
-    </TabList>
-    <TabPanel id="overview"> You can view all your projects here. </TabPanel>
-    <TabPanel id="usage"> You can view your usage here. </TabPanel>
-    <TabPanel id="settings"> You can view your settings here. </TabPanel>
-  </Tabs>`}
-/>
-
-### Keyboard activation
-
-Prevent keyboard activation of tabs by setting `keyboardActivation` prop to `'manual'`.
-
-<ComponentPreview
-  name="core/tabs-keyboard-activation"
-  preview={`<Tabs keyboardActivation="manual">
-    <TabList>
-      <Tab id="overview">Overview</Tab>
-      <Tab id="usage">Usage</Tab>
-      <Tab id="settings">Settings</Tab>
-    </TabList>
-    <TabPanel id="overview"> You can view all your projects here. </TabPanel>
-    <TabPanel id="usage"> You can view your usage here. </TabPanel>
-    <TabPanel id="settings"> You can view your settings here. </TabPanel>
-  </Tabs>`}
-/>
 
 ## Controlled
 
 Use the `selectedKey` and `onSelectionChange` props to control the selected tab.
 
 <ComponentPreview
-  name="core/tabs-controlled"
+  name="tabs/controlled"
   preview={`const [selectedTab, setSelectedTab] = React.useState<Key>("overview");
   return (
     <Tabs selectedKey={selectedTab} onSelectionChange={setSelectedTab}>
@@ -150,28 +44,114 @@ Use the `selectedKey` and `onSelectionChange` props to control the selected tab.
         <Tab id="usage">Usage</Tab>
         <Tab id="settings">Settings</Tab>
       </TabList>
-      <TabPanel id="overview"> You can view all your projects here. </TabPanel>
-      <TabPanel id="usage"> You can view your usage here. </TabPanel>
-      <TabPanel id="settings"> You can view your settings here. </TabPanel>
+      <TabPanel id="overview">Overview content</TabPanel>
+      <TabPanel id="usage">Usage content</TabPanel>
+      <TabPanel id="settings">Settings content</TabPanel>
     </Tabs>
   )`}
+/>
+
+## Options
+
+### Variant
+
+Use the `variant` prop to set the visual style of the tabs.
+
+<ComponentPreview
+  name="tabs/variant"
+  preview={`<Tabs variant="solid">
+    <TabList>
+      <Tab id="overview">Overview</Tab>
+      <Tab id="usage">Usage</Tab>
+      <Tab id="settings">Settings</Tab>
+    </TabList>
+    <TabPanel id="overview">Overview content</TabPanel>
+    <TabPanel id="usage">Usage content</TabPanel>
+    <TabPanel id="settings">Settings content</TabPanel>
+  </Tabs>`}
+/>
+
+### Orientation
+
+Use the `orientation` prop to set the orientation of the tabs.
+
+<ComponentPreview
+  name="tabs/vertical"
+  preview={`<Tabs orientation="vertical">
+    <TabList>
+      <Tab id="overview">Overview</Tab>
+      <Tab id="usage">Usage</Tab>
+      <Tab id="settings">Settings</Tab>
+    </TabList>
+    <TabPanel id="overview">Overview content</TabPanel>
+    <TabPanel id="usage">Usage content</TabPanel>
+    <TabPanel id="settings">Settings content</TabPanel>
+  </Tabs>`}
+/>
+
+### Disabled
+
+Use the `isDisabled` prop on `Tabs` or `Tab` to disable the entire tab list or individual tabs.
+
+<ComponentPreview
+  name="tabs/disabled"
+  preview={`<Tabs isDisabled> {/* All tabs disabled */}
+    <TabList>
+      <Tab id="overview">Overview</Tab>
+      <Tab id="usage">Usage</Tab>
+      <Tab id="settings">Settings</Tab>
+    </TabList>
+    <TabPanel id="overview">Overview content</TabPanel>
+    <TabPanel id="usage">Usage content</TabPanel>
+    <TabPanel id="settings">Settings content</TabPanel>
+  </Tabs>
+  
+  <Tabs>
+    <TabList>
+      <Tab id="overview">Overview</Tab>
+      <Tab id="usage">Usage</Tab>
+      <Tab id="settings" isDisabled>Settings</Tab> {/* Individual tab disabled */}
+    </TabList>
+    <TabPanel id="overview">Overview content</TabPanel>
+    <TabPanel id="usage">Usage content</TabPanel>
+    <TabPanel id="settings">Settings content</TabPanel>
+  </Tabs>`}
+/>
+
+### Keyboard activation
+
+Prevent keyboard activation of tabs by setting `keyboardActivation` prop to `'manual'`.
+
+<ComponentPreview
+  name="tabs/keyboard-activation"
+  preview={`<Tabs keyboardActivation="manual">
+    <TabList>
+      <Tab id="overview">Overview</Tab>
+      <Tab id="usage">Usage</Tab>
+      <Tab id="settings">Settings</Tab>
+    </TabList>
+    <TabPanel id="overview">Overview content</TabPanel>
+    <TabPanel id="usage">Usage content</TabPanel>
+    <TabPanel id="settings">Settings content</TabPanel>
+  </Tabs>`}
 />
 
 ## API Reference
 
 ### Tabs
 
-| Prop                 | Type                                                                                              | Default       | Description                                                                                                 |
-| -------------------- | ------------------------------------------------------------------------------------------------- | ------------- | ----------------------------------------------------------------------------------------------------------- |
-| `isDisabled`         | `boolean`                                                                                         | -             | Whether the TabList is disabled. Shows that a selection exists, but is not available in that circumstance.  |
-| `disabledKeys`       | `Iterable<Key>`                                                                                   | -             | The item keys that are disabled. These items cannot be selected, focused, or otherwise interacted with.     |
-| `selectedKey`        | `Key \| null`                                                                                     | -             | The currently selected key in the collection (controlled).                                                  |
-| `defaultSelectedKey` | `Key`                                                                                             | -             | The initial selected key in the collection (uncontrolled).                                                  |
-| `keyboardActivation` | `'automatic' \| 'manual'`                                                                         | `'automatic`  | Whether tabs are activated automatically on focus or manually.                                              |
-| `orientation`        | `'horizontal' \| 'vertical'`                                                                      | `'horizontal` | The orientation of the tabs.                                                                                |
-| `children`           | `ReactNode \| (values: TabsRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -             | The children of the component. A function may be provided to alter the children based on component state.   |
-| `className`          | `string`                                                                                          | -             | The CSS className for the element.                                                                          |
-| `style`              | `CSSProperties \| (values: TabsRenderProps & {defaultStyle: CSSProperties}) => CSSProperties`     | -             | The inline style for the element. A function may be provided to compute the style based on component state. |
+| Prop                 | Type                                                                                              | Default       | Description                                                                                                  |
+| -------------------- | ------------------------------------------------------------------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------ |
+| `variant`            | `'solid' \| 'underline'`                                                                          | `'underline'` | The visual style of the tabs.                                                                                |
+| `isDisabled`         | `boolean`                                                                                         | -             | Whether the TabList is disabled. Shows that a selection exists, but is not available in that circumstance.   |
+| `disabledKeys`       | `Iterable<Key>`                                                                                   | -             | The item keys that are disabled. These items cannot be selected, focused, or otherwise interacted with.      |
+| `selectedKey`        | `Key \| null`                                                                                     | -             | The currently selected key in the collection (controlled).                                                   |
+| `defaultSelectedKey` | `Key`                                                                                             | -             | The initial selected key in the collection (uncontrolled).                                                   |
+| `keyboardActivation` | `'automatic' \| 'manual'`                                                                         | `'automatic`  | Whether tabs are activated automatically on focus or manually.                                               |
+| `orientation`        | `'horizontal' \| 'vertical'`                                                                      | `'horizontal` | The orientation of the tabs.                                                                                 |
+| `children`           | `ReactNode \| (values: TabsRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -             | The children of the component. A function may be provided to alter the children based on component state.    |
+| `className`          | `string \| (values: TabsRenderProps & {defaultClassName: string \| undefined}) => string`         | -             | The CSS className for the element. A function may be provided to compute the style based on component state. |
+| `style`              | `CSSProperties \| (values: TabsRenderProps & {defaultStyle: CSSProperties}) => CSSProperties`     | -             | The inline style for the element. A function may be provided to compute the style based on component state.  |
 
 | Event               | Type                 | Description                                        |
 | ------------------- | -------------------- | -------------------------------------------------- |

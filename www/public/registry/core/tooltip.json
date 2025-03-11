@@ -1,0 +1,8 @@
+{
+  "name": "tooltip",
+  "type": "core",
+  "variants": [
+    "basic",
+    "motion"
+  ]
+}

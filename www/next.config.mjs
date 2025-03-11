@@ -12,10 +12,10 @@ const config = {
       },
       {
         protocol: "https",
-        hostname: "images.unsplash.com",
+        hostname: "ui.shadcn.com",
       },
     ],
-  },
+  }
 };
 
 export default withMDX(config);

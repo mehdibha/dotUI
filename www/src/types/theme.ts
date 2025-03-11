@@ -11,19 +11,6 @@ export type ColorShade = [
   string,
 ];
 
-type ColorRatios = [
-  number,
-  number,
-  number,
-  number,
-  number,
-  number,
-  number,
-  number,
-  number,
-  number,
-];
-
 export type BaseColors = {
   neutral: string;
   accent: string;
@@ -60,5 +47,11 @@ export type Theme = {
   };
   radius: number;
   defaultMode: "light" | "dark";
-  // iconLibrary: "lucide" | "phosphor";
+  iconLibrary: "lucide" | "remix";
+  variants: Record<string, string>;
 };
+
+export type registryVariants =
+  | "button" // includes Button, ToggleButton, ToggleButtonGroup
+  | "badge"
+  | "dialog";

@@ -1,13 +1,9 @@
 ---
 title: File Trigger
 description: Allows a user to access the file system with any pressable aria component.
-thumbnail:
-  image: /previews/components/core/file-trigger.jpeg
 links:
   - label: Aria docs
     href: https://react-spectrum.adobe.com/react-aria/FileTrigger.html
-  - label: Aria API Reference
-    href: https://react-spectrum.adobe.com/react-aria/FileTrigger.html#props
   - label: Report an issue
     href: https://github.com/mehdibha/dotUI/issues/new/choose
   - label: Edit this page
@@ -15,7 +11,7 @@ links:
 ---
 
 <ComponentPreview
-  name="core/file-trigger-default"
+  name="file-trigger/default"
   preview={`<FileTrigger>
     <Button prefix={<UploadIcon />}>Upload</Button>
 </FileTrigger>`}
@@ -23,78 +19,64 @@ links:
 
 ## Installation
 
-<Tabs items={["CLI", "Manual"]}>
-  <Tab value="CLI">
-  
-  ```package-install
+```package-install
 npx dotui-cli@latest add file-trigger
 ```
 
-  </Tab>
-  <Tab value="manual">
-  
-    <Steps>
-      <Step>Install the following dependencies:</Step>
-
-    ```package-install
-    react-aria-components
-    ```
-
-      <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name="core/file-trigger" />
-      <Step>Update the import paths to match your project setup.</Step>
-    </Steps>
-
-  </Tab>
-</Tabs>
-
-## Usage
+## Anatomy
 
 A `FileTrigger` wraps around a pressable child such as a button, and includes a visually hidden input element that allows the user to select files from their device.
 
-## Options
+```tsx
+import { Button } from "@/components/core/button";
+import { FileTrigger } from "@/components/core/file-trigger";
 
-### Accepted file types
+<FileTrigger>
+  <Button>Upload</Button>
+</FileTrigger>;
+```
+
+## Accepted file types
 
 By default, the file trigger will accept any file type. To support only certain file types, pass an array of the [mime type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types) of files via the `acceptedFileTypes` prop.
 
 <ComponentPreview
-  name="core/file-trigger-file-types"
+  name="file-trigger/file-types"
   preview={`<FileTrigger acceptedFileTypes={["image/*"]}>
     <Button prefix={<UploadIcon />}>Upload</Button>
 </FileTrigger>`}
 />
 
-### Multiple files
+## Multiple files
 
 A file trigger can accept multiple files by passsing the `allowsMultiple` prop.
 
 <ComponentPreview
-  name="core/file-trigger-multiple-files"
+  name="file-trigger/multiple-files"
   preview={`<FileTrigger allowMultiple>
     <Button prefix={<UploadIcon />}>Upload</Button>
 </FileTrigger>`}
 />
 
-### Directory selection
+## Directory selection
 
 To enable selecting directories instead of files, use the `acceptDirectory` property.<br/>
 This reflects the [webkitdirectory](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/webkitdirectory) HTML attribute and allows users to select directories and their contents. Please note that support for this feature varies from browser to browser.
 
 <ComponentPreview
-  name="core/file-trigger-directory-selection"
+  name="file-trigger/directory-selection"
   preview={`<FileTrigger acceptDirectory>
     <Button prefix={<UploadIcon />}>Upload</Button>
 </FileTrigger>`}
 />
 
-### Media capture
+## Media capture
 
 To specify the media capture mechanism to capture media on the spot, pass user for the user-facing camera or environment for the outward-facing camera via the defaultCamera prop.<br/>
 This behavior only works on mobile devices. On desktop devices, it will open the file system like normal. [Read more about capture](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/capture).
 
 <ComponentPreview
-  name="core/file-trigger-media-capture"
+  name="file-trigger/media-capture"
   preview={`<FileTrigger defaultCamera="environment">
     <Button prefix={<UploadIcon />}>Upload</Button>
 </FileTrigger>`}

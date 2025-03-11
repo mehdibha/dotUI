@@ -4,6 +4,7 @@
     "color-field",
     "color-slider",
     "color-swatch",
+    "color-swatch-picker",
     "color-picker"
   ]
 }

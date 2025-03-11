@@ -1,0 +1,7 @@
+{
+  "name": "input",
+  "type": "core",
+  "variants": [
+    "basic"
+  ]
+}
