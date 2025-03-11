@@ -12,12 +12,12 @@ import {
 } from "lucide-react";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
+import { useDebounce } from "@/hooks/use-debounce";
 import { useMounted } from "@/hooks/use-mounted";
 import { Button } from "@/components/core/button";
+import { Skeleton } from "@/components/core/skeleton";
 import { useSidebarContext } from "@/components/sidebar";
 import { useCurrentTheme } from "@/modules/themes/atoms/themes-atom";
-import { Skeleton } from "@/components/core/skeleton";
-import { useDebounce } from "@/hooks/use-debounce";
 
 const PreviewContext = React.createContext<{
   isOpen: boolean;
@@ -128,8 +128,8 @@ export function PreviewContent({
   const iframeRef = React.useRef<HTMLIFrameElement>(null);
   const [isLoading, setLoading] = React.useState(false);
   const [currentPathname, setCurrentPathname] = React.useState("");
-  const isMounted = useMounted()
-  const debouncedIsMounted = useDebounce(isMounted, 1500)
+  const isMounted = useMounted();
+  const debouncedIsMounted = useDebounce(isMounted, 1500);
 
   const reload = () => {
     if (iframeRef.current) {
@@ -247,9 +247,12 @@ export function PreviewContent({
           )}
         </div>
       </div>
-      <Skeleton show={!debouncedIsMounted} className="size-full rounded-[inherit]">
+      <Skeleton
+        show={!debouncedIsMounted}
+        className="size-full rounded-[inherit]"
+      >
         <iframe
-          ref={iframeRef} 
+          ref={iframeRef}
           src={`/preview/${themeName}`}
           className="rounded-{inherit] size-full"
           onLoad={() => {

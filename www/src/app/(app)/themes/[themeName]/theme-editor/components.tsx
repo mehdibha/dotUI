@@ -106,7 +106,7 @@ const Section = ({
 }) => {
   return (
     <div className="rounded-sm border">
-      <div className="bg-bg-muted/50 flex items-center justify-between gap-2 border-b pl-4 p-2">
+      <div className="bg-bg-muted/50 flex items-center justify-between gap-2 border-b p-2 pl-4">
         <div>
           <h3 className="text-base font-medium">{title}</h3>
           {description && (
@@ -119,7 +119,12 @@ const Section = ({
           className="flex w-auto flex-row items-center"
         >
           <Label>style:</Label>
-          <Button variant="outline" suffix={<ChevronDownIcon />} size="sm" className="bg-bg-inverse/5">
+          <Button
+            variant="outline"
+            suffix={<ChevronDownIcon />}
+            size="sm"
+            className="bg-bg-inverse/5"
+          >
             <SelectValue />
           </Button>
           <Popover>

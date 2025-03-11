@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { createDynamicComponent } from "@/modules/themes/lib/create-dynamic-component";
 import {
   Tabs as _Tabs,
   TabList as _TabList,
@@ -14,6 +13,7 @@ import type {
   TabProps,
   TabPanelProps,
 } from "@/registry/core/tabs_basic";
+import { createDynamicComponent } from "@/modules/themes/lib/create-dynamic-component";
 
 export const Tabs = createDynamicComponent<TabsProps>("tabs", "Tabs", _Tabs, {
   motion: React.lazy(() =>

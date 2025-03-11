@@ -2,7 +2,6 @@
 
 import React from "react";
 import { type DateValue } from "react-aria-components";
-import { createDynamicComponent } from "@/modules/themes/lib/create-dynamic-component";
 import {
   Calendar as _Calendar,
   CalendarRoot as _CalendarRoot,
@@ -27,6 +26,7 @@ import type {
   CalendarGridBodyProps,
   CalendarCellProps,
 } from "@/registry/core/calendar_basic";
+import { createDynamicComponent } from "@/modules/themes/lib/create-dynamic-component";
 
 export const Calendar = createDynamicComponent<CalendarProps<DateValue>>(
   "calendar",

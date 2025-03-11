@@ -23,12 +23,12 @@ import { useUserThemes } from "@/modules/themes/atoms/themes-atom";
 import { CreateThemeDialog } from "@/modules/themes/components/create-theme-dialog";
 import { Theme } from "@/modules/themes/types";
 import { PreviewContent } from "../../preview";
-import { ModeSwitch } from "./mode-switch";
 import { ThemeColors } from "./colors";
+import { ThemeComponents } from "./components";
 import { ThemeEditorContext } from "./context";
 import { ThemeIconography } from "./iconography";
+import { ModeSwitch } from "./mode-switch";
 import { ThemeTypography } from "./typography";
-import { ThemeComponents } from "./components";
 
 export function ThemeEditor({
   theme: themeProp,
@@ -75,7 +75,8 @@ export function ThemeEditor({
                 </CreateThemeDialog>
               }
             >
-              To adjust colors, fonts, radius, components and more, you need to clone the theme.
+              To adjust colors, fonts, radius, components and more, you need to
+              clone the theme.
             </Alert>
           )}
           <Section
@@ -102,7 +103,7 @@ export function ThemeEditor({
           <Section title="Iconography" description="Theme iconography">
             <ThemeIconography />
           </Section>
-          <Section title="Components" description="Theme components"> 
+          <Section title="Components" description="Theme components">
             <ThemeComponents />
           </Section>
         </ThemeEditorBody>

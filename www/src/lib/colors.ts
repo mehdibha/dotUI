@@ -2,7 +2,7 @@ import { contrast, type ColorTuple } from "@adobe/leonardo-contrast-colors";
 import { parseColor } from "react-aria-components";
 
 export const getContrastTextColor = (color: string): "white" | "black" => {
-  const colorValue = parseColor(color).toFormat("rgb")
+  const colorValue = parseColor(color).toFormat("rgb");
 
   const colorTuple: ColorTuple = [
     colorValue.getChannelValue("red"),
@@ -15,6 +15,6 @@ export const getContrastTextColor = (color: string): "white" | "black" => {
 
   const contrastText =
     contrastWithBlack > contrastWithWhite ? "black" : "white";
-    
+
   return contrastText;
 };

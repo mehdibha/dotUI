@@ -30,7 +30,6 @@ export default function Demo() {
               onAnimationComplete={() => {
                 setAnimating(false);
               }}
-              
               style={{ overflow: show ? "visible" : "hidden" }}
             >
               <div className="size-10 bg-red-500" />
@@ -38,9 +37,7 @@ export default function Demo() {
           )}
         </AnimatePresence>
       </div>
-      <p>
-        {isAnimating ? "animating" : "not animating"}
-      </p>
+      <p>{isAnimating ? "animating" : "not animating"}</p>
     </div>
   );
 }

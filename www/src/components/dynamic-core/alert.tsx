@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { createDynamicComponent } from "@/modules/themes/lib/create-dynamic-component";
 import {
   Alert as _Alert,
   AlertRoot as _AlertRoot,
@@ -14,6 +13,7 @@ import type {
   AlertTitleProps,
   AlertContentProps,
 } from "@/registry/core/alert_basic";
+import { createDynamicComponent } from "@/modules/themes/lib/create-dynamic-component";
 
 export const Alert = createDynamicComponent<AlertProps>(
   "alert",
