@@ -255,7 +255,7 @@ interface ColorItemProps {
   containerClassName?: string;
   className?: string;
   style?: React.CSSProperties;
-  colorValue: string;
+  colorValue?: string;
   colorName?: string;
   hoverAnimation?: boolean;
 }
@@ -263,7 +263,7 @@ function ColorItem({
   containerClassName,
   className,
   style,
-  colorValue,
+  colorValue = "#fff",
   colorName,
   hoverAnimation = false,
 }: ColorItemProps) {

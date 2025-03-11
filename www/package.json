@@ -57,7 +57,7 @@
     "remark-gfm": "^4.0.0",
     "sharp": "^0.33.2",
     "shiki": "^2.2.0",
-    "tailwind-merge": "^2.2.0",
+    "tailwind-merge": "^3.0.2",
     "tailwind-variants": "^1.0.0",
     "tsx": "^4.7.1",
     "unified": "^11.0.5",
@@ -80,7 +80,6 @@
     "rimraf": "^6.0.1",
     "tailwindcss": "4.0.0",
     "tailwindcss-animate": "^1.0.7",
-    "tailwindcss-rac": "workspace:*",
     "tailwindcss-react-aria-components": "^2.0.0",
     "typescript": "^5",
     "vfile": "^6.0.3"

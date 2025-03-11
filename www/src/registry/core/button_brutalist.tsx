@@ -69,9 +69,6 @@ const buttonStyles = tv(
       size: "md",
       shape: "rectangle",
     },
-  },
-  {
-    responsiveVariants: ["sm", "lg"],
   }
 );
 

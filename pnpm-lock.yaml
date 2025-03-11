@@ -4,11 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-patchedDependencies:
-  tailwind-variants:
-    hash: 3gftwx6tedpz3ddwa7homjsoma
-    path: patches/tailwind-variants.patch
-
 importers:
 
   .:
@@ -275,11 +270,11 @@ importers:
         specifier: ^2.2.0
         version: 2.2.0
       tailwind-merge:
-        specifier: ^2.2.0
-        version: 2.6.0
+        specifier: ^3.0.2
+        version: 3.0.2
       tailwind-variants:
         specifier: ^1.0.0
-        version: 1.0.0(patch_hash=3gftwx6tedpz3ddwa7homjsoma)(tailwindcss@4.0.0)
+        version: 1.0.0(tailwindcss@4.0.0)
       tsx:
         specifier: ^4.7.1
         version: 4.19.2
@@ -5665,9 +5660,6 @@ packages:
   supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
-
-  tailwind-merge@2.6.0:
-    resolution: {integrity: sha512-P+Vu1qXfzediirmHOC3xKGAYeZtPcV9g76X+xg2FD4tYgR71ewMA35Y3sCz3zhiN/dwefRpJX0yBcgwi1fXNQA==}
 
   tailwind-merge@3.0.2:
     resolution: {integrity: sha512-l7z+OYZ7mu3DTqrL88RiKrKIqO3NcpEO8V/Od04bNpvk0kiIFndGEoqfuzvj4yuhRkHKjRkII2z+KS2HfPcSxw==}
@@ -12930,11 +12922,9 @@ snapshots:
 
   supports-preserve-symlinks-flag@1.0.0: {}
 
-  tailwind-merge@2.6.0: {}
-
   tailwind-merge@3.0.2: {}
 
-  tailwind-variants@1.0.0(patch_hash=3gftwx6tedpz3ddwa7homjsoma)(tailwindcss@4.0.0):
+  tailwind-variants@1.0.0(tailwindcss@4.0.0):
     dependencies:
       tailwind-merge: 3.0.2
       tailwindcss: 4.0.0

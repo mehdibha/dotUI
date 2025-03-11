@@ -81,7 +81,14 @@ const MenuContent = <T extends object>({
   className,
   ...props
 }: MenuContentProps<T>) => {
-  return <AriaMenu className={menuStyles({ className })} {...props} />;
+  return (
+    <AriaMenu
+      className={composeRenderProps(className, (className) =>
+        menuStyles({ className })
+      )}
+      {...props}
+    />
+  );
 };
 
 const MenuSub = AriaSubmenuTrigger;
