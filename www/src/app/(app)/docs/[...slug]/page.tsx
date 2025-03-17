@@ -16,8 +16,6 @@ import { AdobeIcon } from "@/components/icons/adobe-icon";
 import { source } from "@/app/source";
 import { siteConfig } from "@/config";
 
-const config = siteConfig.global;
-
 export default async function Page({
   params,
 }: {
@@ -100,7 +98,7 @@ export async function generateMetadata({
         : undefined,
       type: "article",
       url: page.url,
-      images: [config.thumbnail],
+      images: [siteConfig.thumbnail],
     },
     twitter: {
       card: "summary_large_image",
@@ -108,8 +106,8 @@ export async function generateMetadata({
       description: page.data.description
         ? truncateOnWord(page.data.description, 148, true)
         : undefined,
-      images: [config.thumbnail],
-      creator: config.twitter.creator,
+      images: [siteConfig.thumbnail],
+      creator: siteConfig.twitter.creator,
     },
   };
 }

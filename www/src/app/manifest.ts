@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "dotUI",
     short_name: "dotui",
-    description: siteConfig.global.description,
+    description: siteConfig.description,
     start_url: "/",
     display: "standalone",
     background_color: "#010101",
