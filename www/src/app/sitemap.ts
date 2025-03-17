@@ -4,7 +4,7 @@ import { siteConfig } from "@/config";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const url = (path: string): string =>
-    new URL(path, siteConfig.global.url).toString();
+    new URL(path, siteConfig.url).toString();
 
   return [
     {

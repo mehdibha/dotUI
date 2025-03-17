@@ -52,7 +52,7 @@ export const Logo = ({
       {extanded && (
         <>
           <div className="font-josefin group-data-collapsed/sidebar:opacity-0 mt-1.5 text-base font-bold leading-normal tracking-tighter transition-colors">
-            {siteConfig.global.name}
+            {siteConfig.name}
           </div>
           <Badge className="group-data-collapsed/sidebar:opacity-0 mt-0.5 border px-2">
             beta

@@ -10,31 +10,29 @@ import { siteConfig } from "@/config";
 import { ThemeProvider } from "@/modules/themes/components/theme-provider";
 import { Providers } from "./providers";
 
-const config = siteConfig.global;
-
 export const metadata: Metadata = {
-  title: { default: config.title, template: `%s - ${config.name}` },
-  description: truncateOnWord(config.description, 148, true),
-  keywords: config.keywords,
-  authors: config.authors,
-  creator: config.creator,
+  title: { default: siteConfig.title, template: `%s - ${siteConfig.name}` },
+  description: truncateOnWord(siteConfig.description, 148, true),
+  keywords: siteConfig.keywords,
+  authors: siteConfig.authors,
+  creator: siteConfig.creator,
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: config.url,
-    title: config.title,
-    description: truncateOnWord(config.description, 148, true),
-    siteName: config.name,
-    images: [config.thumbnail],
+    url: siteConfig.url,
+    title: siteConfig.title,
+    description: truncateOnWord(siteConfig.description, 148, true),
+    siteName: siteConfig.name,
+    images: [siteConfig.thumbnail],
   },
   twitter: {
     card: "summary_large_image",
-    title: config.title,
-    description: truncateOnWord(config.description, 148, true),
-    images: [config.thumbnail],
-    creator: config.twitter.creator,
+    title: siteConfig.title,
+    description: truncateOnWord(siteConfig.description, 148, true),
+    images: [siteConfig.thumbnail],
+    creator: siteConfig.twitter.creator,
   },
-  metadataBase: new URL(config.url),
+  metadataBase: new URL(siteConfig.url),
 };
 
 export const viewport: Viewport = {
