@@ -3,6 +3,7 @@
 import React from "react";
 import { CheckIcon, CopyIcon } from "lucide-react";
 import { AnimatePresence, motion, Variants } from "motion/react";
+import { useMounted } from "@/hooks/use-mounted";
 import { Button } from "@/components/core/button";
 import { Skeleton } from "@/registry/core/skeleton_basic";
 import { Tabs, TabList, Tab } from "@/registry/core/tabs_motion";
@@ -13,7 +14,6 @@ import {
   MobileComponentsOverview,
 } from "@/modules/demos/components/components-overview";
 import { ThemeProvider } from "./theme-provider";
-import { useMounted } from "@/hooks/use-mounted";
 
 export const ThemesOverview = () => {
   const [currentThemeName, setCurrentThemeName] = React.useState<string>(
@@ -21,7 +21,7 @@ export const ThemesOverview = () => {
   );
   const [touched, setTouched] = React.useState<boolean>(false);
   const [copied, setCopied] = React.useState(false);
-  const isMounted = useMounted()
+  const isMounted = useMounted();
 
   const handleCopy = () => {
     void navigator.clipboard.writeText(

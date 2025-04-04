@@ -134,7 +134,11 @@ export default async function HomePage() {
                   variant="inverse"
                   content={contributor.login}
                 >
-                  <Link href={contributor.html_url} target="_blank" variant="unstyled">
+                  <Link
+                    href={contributor.html_url}
+                    target="_blank"
+                    variant="unstyled"
+                  >
                     <Avatar src={contributor.avatar_url} />
                   </Link>
                 </Tooltip>
