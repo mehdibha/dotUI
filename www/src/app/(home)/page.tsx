@@ -1,9 +1,8 @@
-"use client";
-
 import React from "react";
-import { Link } from "react-aria-components";
+import { getGitHubContributors } from "@/lib/github";
 import { Announcement } from "@/components/announcement";
 import { Button } from "@/components/core/button";
+import { Link } from "@/components/core/link";
 import { GitHubIcon } from "@/components/icons";
 import { AdobeIcon } from "@/components/icons/adobe-icon";
 import { ReactJsIcon } from "@/components/icons/reactjs-icon";
@@ -14,7 +13,9 @@ import { Tooltip } from "@/registry/core/tooltip_basic";
 import { siteConfig } from "@/config";
 import { ThemesOverview } from "@/modules/themes/components/themes-overview";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const contributors = await getGitHubContributors();
+
   return (
     <div>
       {/* Hero section */}
@@ -104,8 +105,6 @@ export default function HomePage() {
       {/* Call to action */}
       <section className="container max-w-2xl py-20 sm:py-32">
         <h2 className="text-pretty text-2xl font-medium tracking-tighter lg:text-3xl xl:text-4xl">
-          {/* Bringing <span className="text-fg-muted">singularity</span> to the
-          web.<br /> */}
           Fueled by your <span className="">stars</span>.
         </h2>
         <p className="text-fg-muted mt-2 text-base">
@@ -129,19 +128,17 @@ export default function HomePage() {
               />
             </svg>
             <div className="flex items-center gap-1">
-              <Tooltip variant="inverse" content="Mehdi BHA">
-                <Link href="https://github.com/mehdibha" target="_blank">
-                  <Avatar src="https://github.com/mehdibha.png" />
-                </Link>
-              </Tooltip>
-              <Tooltip variant="inverse" content="github-actions[bot]">
-                <Link
-                  href="https://github.com/features/actions"
-                  target="_blank"
+              {contributors.map((contributor) => (
+                <Tooltip
+                  key={contributor.login}
+                  variant="inverse"
+                  content={contributor.login}
                 >
-                  <Avatar shape="square" src="https://github.com/github.png" />
-                </Link>
-              </Tooltip>
+                  <Link href={contributor.html_url} target="_blank" variant="unstyled">
+                    <Avatar src={contributor.avatar_url} />
+                  </Link>
+                </Tooltip>
+              ))}
             </div>
           </div>
           <Button

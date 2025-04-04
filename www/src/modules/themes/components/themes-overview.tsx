@@ -13,6 +13,7 @@ import {
   MobileComponentsOverview,
 } from "@/modules/demos/components/components-overview";
 import { ThemeProvider } from "./theme-provider";
+import { useMounted } from "@/hooks/use-mounted";
 
 export const ThemesOverview = () => {
   const [currentThemeName, setCurrentThemeName] = React.useState<string>(
@@ -20,6 +21,7 @@ export const ThemesOverview = () => {
   );
   const [touched, setTouched] = React.useState<boolean>(false);
   const [copied, setCopied] = React.useState(false);
+  const isMounted = useMounted()
 
   const handleCopy = () => {
     void navigator.clipboard.writeText(
@@ -138,7 +140,7 @@ export const ThemesOverview = () => {
           </Tabs>
         </div>
       </div>
-      <Skeleton show={false} className="w-full rounded-md">
+      <Skeleton show={!isMounted} className="w-full rounded-md">
         <div className="relative w-full">
           <ThemeProvider
             theme={currentTheme}

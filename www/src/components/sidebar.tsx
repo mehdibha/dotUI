@@ -26,7 +26,7 @@ import { ScrollArea } from "@/components/core/scroll-area";
 import { Tooltip, TooltipProps } from "@/components/core/tooltip";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
 import { siteConfig } from "@/config";
-import { hasActive, isActive } from "@/modules/docs/lib/utils";
+import { hasActive, isActive } from "@/modules/docs/utils";
 import { Logo } from "./logo";
 import { SearchCommand } from "./search-command";
 import { ThemeSwitcher } from "./theme-switcher";

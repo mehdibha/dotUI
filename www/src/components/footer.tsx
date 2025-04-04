@@ -55,7 +55,7 @@ export const Footer = () => {
     <div className="border-t py-12">
       <div className="container flex flex-col items-start justify-between gap-10 lg:flex-row">
         <div className="space-y-1">
-          <Logo />
+          <Logo type="span" />
           <p className="text-fg-muted text-base">
             Bringing singularity to the web.
           </p>
