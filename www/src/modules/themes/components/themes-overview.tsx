@@ -3,6 +3,7 @@
 import React from "react";
 import { CheckIcon, CopyIcon } from "lucide-react";
 import { AnimatePresence, motion, Variants } from "motion/react";
+import { useMounted } from "@/hooks/use-mounted";
 import { Button } from "@/components/core/button";
 import { Skeleton } from "@/registry/core/skeleton_basic";
 import { Tabs, TabList, Tab } from "@/registry/core/tabs_motion";
@@ -20,6 +21,7 @@ export const ThemesOverview = () => {
   );
   const [touched, setTouched] = React.useState<boolean>(false);
   const [copied, setCopied] = React.useState(false);
+  const isMounted = useMounted();
 
   const handleCopy = () => {
     void navigator.clipboard.writeText(
@@ -138,7 +140,7 @@ export const ThemesOverview = () => {
           </Tabs>
         </div>
       </div>
-      <Skeleton show={false} className="w-full rounded-md">
+      <Skeleton show={!isMounted} className="w-full rounded-md">
         <div className="relative w-full">
           <ThemeProvider
             theme={currentTheme}

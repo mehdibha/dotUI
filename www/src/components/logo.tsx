@@ -1,20 +1,26 @@
-import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { Link } from "@/components/core/link";
 import { siteConfig } from "@/config";
 import { Badge } from "./core/badge";
 
 export const Logo = ({
   extanded = true,
   className,
+  type = "link",
 }: {
   extanded?: boolean;
   className?: string;
+  type?: "link" | "span";
 }) => {
+  const Elem = type === "link" ? Link : "span";
+
   return (
-    <Link
-      href="/"
+    <Elem
+      {...(type === "link" ? { href: "/", variant: "unstyled" } : {})}
       className={cn(
-        "flex items-center gap-2 rounded-sm opacity-100 transition-opacity duration-150 ease-out hover:opacity-80",
+        "flex items-center gap-2 rounded-sm",
+        type === "link" &&
+          "opacity-100 transition-opacity duration-150 ease-out hover:opacity-80",
         className
       )}
     >
@@ -59,6 +65,6 @@ export const Logo = ({
           </Badge>
         </>
       )}
-    </Link>
+    </Elem>
   );
 };

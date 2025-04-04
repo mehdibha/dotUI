@@ -36,6 +36,7 @@ export const ThemeProvider = ({
   ...props
 }: ThemeProviderProps) => {
   const { resolvedTheme } = useTheme();
+  console.log("resolvedTheme", resolvedTheme);
   const { mode: previewMode } = usePreviewMode();
   const resolvedMode: "light" | "dark" | null = // if preview mode is set, use it, otherwise use the current site mode
     theme?.foundations.dark && theme.foundations.light && previewMode
@@ -47,6 +48,8 @@ export const ThemeProvider = ({
       : theme?.foundations.dark
         ? "dark"
         : "light";
+
+  console.log("resolvedMode", resolvedMode);
 
   const cssVars = React.useMemo(() => {
     if (!theme || !resolvedMode) return {};
