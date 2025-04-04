@@ -64,7 +64,7 @@ export default async function Page({
         </div>
       </div>
       {page.data.toc && page.data.toc.length > 0 && (
-        <div className="pt-20">
+        <div className="pt-20 max-xl:hidden">
           <div className="sticky top-10 h-[calc(100svh-calc(var(--spacing)*10))]">
             <TableOfContents toc={page.data.toc as TocType} />
           </div>
