@@ -12,8 +12,8 @@ export default function manifest(): MetadataRoute.Manifest {
     theme_color: "#010101",
     icons: [
       {
-        src: "https://dotui.org/android-chrome-192x192.png",
-        sizes: "192x192",
+        src: "https://dotui.org/icon.png",
+        sizes: "214x214",
         type: "image/png",
         purpose: "maskable",
       },
