@@ -1,7 +1,6 @@
 import React from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { type TableOfContents as TocType } from "fumadocs-core/server";
 import { ExternalLinkIcon } from "lucide-react";
 import { truncateOnWord } from "@/lib/string";
 import { cn } from "@/lib/utils";
@@ -22,15 +21,18 @@ export default async function Page({
   params: Promise<{ slug: string[] }>;
 }) {
   const page = source.getPage((await params).slug);
+
   if (!page) notFound();
-  const MDXContent = page.data.body;
+
+  const { body: MdxContent, toc } = await page.data.load();
+  // const MDXContent = page.data.body;
 
   return (
     <div
       className={cn(
         "container w-full max-w-3xl xl:max-w-4xl",
-        page.data.toc &&
-          page.data.toc.length > 0 &&
+        toc &&
+          toc.length > 0 &&
           "grid grid-cols-1 gap-10 xl:max-w-5xl xl:grid-cols-[minmax(0,1fr)_minmax(180px,220px)]"
       )}
     >
@@ -56,17 +58,17 @@ export default async function Page({
           </div>
         )}
         <div className="mt-10 text-sm md:text-base">
-          <MDXContent components={mdxComponents} />
+          <MdxContent components={mdxComponents} />
         </div>
         <div className="mt-20 space-y-4">
           <PageLastUpdate path={page.file.path} />
           <DocsPager currentPathname={page.url} />
         </div>
       </div>
-      {page.data.toc && page.data.toc.length > 0 && (
+      {toc && toc.length > 0 && (
         <div className="pt-20 max-xl:hidden">
           <div className="sticky top-10 h-[calc(100svh-calc(var(--spacing)*10))]">
-            <TableOfContents toc={page.data.toc as TocType} />
+            <TableOfContents toc={toc} />
           </div>
         </div>
       )}

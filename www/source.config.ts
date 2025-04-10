@@ -16,8 +16,10 @@ import {
   type RemarkInstallOptions,
 } from "@/lib/mdx-plugins/remark-install";
 
-export const { docs, meta } = defineDocs({
+export const docs = defineDocs({
+  dir: "content/docs",
   docs: {
+    async: true,
     schema: frontmatterSchema.extend({
       links: z
         .array(
@@ -56,7 +58,8 @@ export default defineConfig({
       },
       inline: "tailing-curly-colon",
       defaultLanguage: "ts",
-      tab: true as any,
+      // @ts-expect-error tab should be boolean
+      tab: true,
     },
   },
 });
