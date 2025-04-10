@@ -14,9 +14,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     ...source.getPages().map<MetadataRoute.Sitemap[number]>((page) => ({
       url: url(page.url),
-      lastModified: page.data.lastModified
-        ? new Date(page.data.lastModified)
-        : undefined,
       changeFrequency: "weekly",
       priority: 0.8,
     })),
