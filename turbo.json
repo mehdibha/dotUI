@@ -1,8 +1,10 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalEnv": ["NODE_ENV"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
+      "env": ["ANALYZE"],
       "outputs": ["dist/**", ".next/**"]
     },
     "preview": {

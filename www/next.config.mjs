@@ -18,4 +18,6 @@ const config = {
   }
 };
 
-export default withMDX(config);
+
+
+export default withMDX(config)

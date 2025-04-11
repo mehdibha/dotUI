@@ -129,9 +129,7 @@ export const mdxComponents: MDXComponents = {
   ),
   InstallTab,
   InstallTabs,
-  ComponentPreview: (props: ComponentPreviewProps) => (
-    <ComponentPreview containerClassName="not-first:mt-4" {...props} />
-  ),
+  ComponentPreview: (props: ComponentPreviewProps) => null,
   Step: ({ className, ...props }: React.ComponentProps<"h3">) => (
     <h3
       className={cn(
