@@ -20,7 +20,7 @@
   "dependencies": {
     "@adobe/leonardo-contrast-colors": "^1.0.0",
     "@hookform/resolvers": "^3.10.0",
-    "@internationalized/date": "^3.7.0",
+    "@internationalized/date": "^3.8.0",
     "@next/bundle-analyzer": "^15.3.0",
     "@radix-ui/react-aspect-ratio": "^1.0.3",
     "@radix-ui/react-collapsible": "^1.0.3",
@@ -48,7 +48,7 @@
     "npm-to-yarn": "^3.0.0",
     "react": "19.0.0",
     "react-aria": "^3.33.0",
-    "react-aria-components": "^1.7.0",
+    "react-aria-components": "^1.8.0",
     "react-dom": "19.0.0",
     "react-hook-form": "^7.54.2",
     "react-resizable-panels": "^2.0.19",
