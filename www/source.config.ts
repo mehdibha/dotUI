@@ -16,8 +16,9 @@ import {
   type RemarkInstallOptions,
 } from "@/lib/mdx-plugins/remark-install";
 
-export const { docs, meta } = defineDocs({
+export const docs = defineDocs({
   docs: {
+    async: true,
     schema: frontmatterSchema.extend({
       links: z
         .array(

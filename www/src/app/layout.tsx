@@ -1,6 +1,5 @@
 import React from "react";
 import type { Metadata, Viewport } from "next";
-import { cookies } from "next/headers";
 import { Analytics } from "@vercel/analytics/react";
 import { truncateOnWord } from "@/lib/string";
 import { cn } from "@/lib/utils";
@@ -47,12 +46,6 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const cookieStore = await cookies();
-  const defaultMode = (cookieStore.get("preview-mode")?.value ?? null) as
-    | "light"
-    | "dark"
-    | null;
-
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -65,7 +58,8 @@ export default async function RootLayout({
         suppressHydrationWarning
       >
         <Analytics />
-        <Providers defaultPreviewMode={defaultMode}>
+        {/* TODO FIX THIS */}
+        <Providers defaultPreviewMode={"light"}>
           <div>
             <ThemeProvider id="custom-theme-portal" unstyled />
             {children}

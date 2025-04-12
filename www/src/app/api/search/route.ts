@@ -13,7 +13,8 @@ export const { GET } = createSearchAPI("advanced", {
     ...source.getPages().map((page) => ({
       title: page.data.title,
       structuredData: {
-        headings: page.data.structuredData.headings,
+        headings: [],
+        // headings: page.data.structuredData.headings,
         contents: [],
       },
       id: page.url,

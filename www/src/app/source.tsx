@@ -1,12 +1,11 @@
 import { createElement } from "react";
 import { loader } from "fumadocs-core/source";
-import { createMDXSource } from "fumadocs-mdx";
 import { icons } from "lucide-react";
-import { docs, meta } from "~/.source";
+import { docs } from "~/.source";
 
 export const source = loader({
   baseUrl: "/docs",
-  source: createMDXSource(docs, meta),
+  source: docs.toFumadocsSource(),
   icon: (icon) => {
     if (!icon) {
       return;
