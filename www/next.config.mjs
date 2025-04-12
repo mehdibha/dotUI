@@ -1,6 +1,11 @@
+import createBundleAnalyzer from "@next/bundle-analyzer";
 import { createMDX } from "fumadocs-mdx/next";
 
 const withMDX = createMDX();
+
+const withAnalyzer = createBundleAnalyzer({
+  enabled: process.env.ANALYZE === "true",
+});
 
 /** @type {import("next").NextConfig} */
 const config = {
@@ -15,9 +20,7 @@ const config = {
         hostname: "ui.shadcn.com",
       },
     ],
-  }
+  },
 };
 
-
-
-export default withMDX(config)
+export default withAnalyzer(withMDX(config));

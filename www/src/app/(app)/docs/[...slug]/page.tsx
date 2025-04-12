@@ -23,14 +23,16 @@ export default async function Page({
 }) {
   const page = source.getPage((await params).slug);
   if (!page) notFound();
-  const MDXContent = page.data.body;
+
+  const { body: MDXContent, toc } = await page.data.load();
+  // const MDXContent = page.data.body;
 
   return (
     <div
       className={cn(
         "container w-full max-w-3xl xl:max-w-4xl",
-        page.data.toc &&
-          page.data.toc.length > 0 &&
+        toc &&
+          toc.length > 0 &&
           "grid grid-cols-1 gap-10 xl:max-w-5xl xl:grid-cols-[minmax(0,1fr)_minmax(180px,220px)]"
       )}
     >
@@ -63,10 +65,10 @@ export default async function Page({
           <DocsPager currentPathname={page.url} />
         </div>
       </div>
-      {page.data.toc && page.data.toc.length > 0 && (
+      {toc && toc.length > 0 && (
         <div className="pt-20 max-xl:hidden">
           <div className="sticky top-10 h-[calc(100svh-calc(var(--spacing)*10))]">
-            <TableOfContents toc={page.data.toc as TocType} />
+            <TableOfContents toc={toc as TocType} />
           </div>
         </div>
       )}
