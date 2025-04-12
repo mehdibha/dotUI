@@ -4,7 +4,8 @@ import { createMDX } from "fumadocs-mdx/next";
 const withMDX = createMDX();
 
 const withAnalyzer = createBundleAnalyzer({
-  enabled: process.env.ANALYZE === "true",
+  enabled: false,
+  // enabled: process.env.ANALYZE === "true",
 });
 
 /** @type {import("next").NextConfig} */
