@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "extends": "none",
+  "name": "forest",
+  "homepage": "https://dotui.org/r/themes/forest",
+  "items": [
+    {
+      "name": "focus-styles",
+      "type": "registry:lib",
+      "files": [
+        {
+          "path": "src/registry/lib/focus-styles.ts",
+          "target": "lib/utils.tsx",
+          "type": "registry:lib"
+        }
+      ]
+    }
+  ]
+}

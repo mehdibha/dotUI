@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "extends": "none",
+  "name": "brutalist",
+  "homepage": "https://dotui.org/r/themes/brutalist",
+  "items": [
+    {
+      "name": "focus-styles",
+      "type": "registry:lib",
+      "files": [
+        {
+          "path": "src/registry/lib/focus-styles.ts",
+          "target": "lib/utils.tsx",
+          "type": "registry:lib"
+        }
+      ]
+    }
+  ]
+}

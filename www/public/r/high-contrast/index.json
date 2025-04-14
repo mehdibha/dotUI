@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "extends": "none",
+  "name": "high-contrast",
+  "homepage": "https://dotui.org/r/themes/high-contrast",
+  "items": [
+    {
+      "name": "focus-styles",
+      "type": "registry:lib",
+      "files": [
+        {
+          "path": "src/registry/lib/focus-styles.ts",
+          "target": "lib/utils.tsx",
+          "type": "registry:lib"
+        }
+      ]
+    }
+  ]
+}
