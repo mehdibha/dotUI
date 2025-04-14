@@ -5,29 +5,11 @@
   "homepage": "https://dotui.org/themes/minimalist",
   "items": [
     {
-      "name": "base",
-      "type": "registry:style",
-      "dependecies": [
-        "tailwind-variants",
-        "react-aria-components",
-        "tailwindcss-react-aria-components"
-      ],
-      "registryDependencies": [
-        "utils",
-        "focus-styles"
-      ],
-      "files": []
-    },
-    {
-      "name": "utils",
+      "name": "focus-styles",
       "type": "registry:lib",
-      "dependencies": [
-        "clsx",
-        "tailwind-merge"
-      ],
       "files": [
         {
-          "path": "src/registry/lib/utils.tsx",
+          "path": "src/registry/lib/focus-styles.ts",
           "target": "lib/utils.tsx",
           "type": "registry:lib"
         }

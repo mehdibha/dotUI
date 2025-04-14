@@ -1,0 +1,15 @@
+{
+  "name": "utils",
+  "type": "registry:lib",
+  "dependencies": [
+    "clsx",
+    "tailwind-merge"
+  ],
+  "files": [
+    {
+      "path": "src/registry/lib/utils.tsx",
+      "target": "lib/utils.tsx",
+      "type": "registry:lib"
+    }
+  ]
+}

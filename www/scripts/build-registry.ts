@@ -5,6 +5,7 @@ import { rimraf } from "rimraf";
 import { themes } from "@/registry/registry-themes";
 
 const REGISTRY_PATH = path.join(process.cwd(), "public/r");
+const REGISTRY_URL = "https://dotui.org/r";
 
 const setup = async () => {
   const targetPath = REGISTRY_PATH;
@@ -19,47 +20,67 @@ const buildRegistry = async () => {
 
   console.log("Building registry...");
 
+  // Build base
+  const basePath = path.join(REGISTRY_PATH, "base.json");
+  const basePayload = {
+    name: "base",
+    type: "registry:style",
+    dependecies: [
+      "tailwind-variants",
+      "react-aria-components",
+      "tailwindcss-react-aria-components",
+    ],
+    registryDependencies: [`${REGISTRY_URL}/utils`],
+    files: [],
+  };
+
+  await fs.writeFile(basePath, JSON.stringify(basePayload, null, 2), "utf8");
+
+  // Build utils
+  const utilsPath = path.join(REGISTRY_PATH, "utils.json");
+  const utilsPayload = {
+    name: "utils",
+    type: "registry:lib",
+    dependencies: ["clsx", "tailwind-merge"],
+    files: [
+      {
+        path: "src/registry/lib/utils.tsx",
+        target: "lib/utils.tsx",
+        type: "registry:lib",
+      },
+    ],
+  };
+
+  await fs.writeFile(utilsPath, JSON.stringify(utilsPayload, null, 2), "utf8");
+
   await Promise.all(
     themes.map(async (theme) => {
       const targetPath = path.join(REGISTRY_PATH, theme.name);
       await fs.mkdir(targetPath, { recursive: true });
 
-      const payload: any = {
+      const indexPayload = {
         $schema: "https://ui.shadcn.com/schema/registry.json",
         extends: "none",
         name: theme.name,
         homepage: `https://dotui.org/themes/${theme.name}`,
-        items: [],
-      };
-
-      payload.items.push({
-        name: "base",
-        type: "registry:style",
-        dependecies: [
-          "tailwind-variants",
-          "react-aria-components",
-          "tailwindcss-react-aria-components",
-        ],
-        registryDependencies: ["utils", "focus-styles"],
-        files: [],
-      });
-
-      payload.items.push({
-        name: "utils",
-        type: "registry:lib",
-        dependencies: ["clsx", "tailwind-merge"],
-        files: [
+        items: [
           {
-            path: "src/registry/lib/utils.tsx",
-            target: "lib/utils.tsx",
+            name: "focus-styles",
             type: "registry:lib",
+            files: [
+              {
+                path: "src/registry/lib/focus-styles.ts",
+                target: "lib/utils.tsx",
+                type: "registry:lib",
+              },
+            ],
           },
         ],
-      });
+      };
 
       await fs.writeFile(
         path.join(targetPath, "index.json"),
-        JSON.stringify(payload, null, 2),
+        JSON.stringify(indexPayload, null, 2),
         "utf8"
       );
 

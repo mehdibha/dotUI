@@ -1,0 +1,13 @@
+{
+  "name": "base",
+  "type": "registry:style",
+  "dependecies": [
+    "tailwind-variants",
+    "react-aria-components",
+    "tailwindcss-react-aria-components"
+  ],
+  "registryDependencies": [
+    "https://dotui.org/r/utils"
+  ],
+  "files": []
+}
