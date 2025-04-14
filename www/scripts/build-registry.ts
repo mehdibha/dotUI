@@ -70,8 +70,8 @@ const buildRegistry = async () => {
             "shadcn@latest",
             "build",
             "-o",
-            `./public/registry/${theme.name}`,
-            `./public/registry/${theme.name}/index.json`,
+            `./public/r/${theme.name}`,
+            `./public/r/${theme.name}/index.json`,
           ],
           {
             stdio: "ignore",
