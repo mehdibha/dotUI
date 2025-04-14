@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "extends": "none",
+  "name": "forest",
+  "homepage": "https://dotui.org/themes/forest",
+  "items": [
+    {
+      "name": "base",
+      "type": "registry:style",
+      "dependecies": [
+        "tailwind-variants",
+        "react-aria-components",
+        "tailwindcss-react-aria-components"
+      ],
+      "registryDependencies": [
+        "utils",
+        "focus-styles"
+      ],
+      "files": []
+    },
+    {
+      "name": "utils",
+      "type": "registry:lib",
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ],
+      "files": [
+        {
+          "path": "src/registry/lib/utils.tsx",
+          "target": "lib/utils.tsx",
+          "type": "registry:lib"
+        }
+      ]
+    }
+  ]
+}
