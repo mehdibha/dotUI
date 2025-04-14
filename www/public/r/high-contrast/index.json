@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "extends": "none",
   "name": "high-contrast",
-  "homepage": "https://dotui.org/themes/high-contrast",
+  "homepage": "https://dotui.org/r/themes/high-contrast",
   "items": [
     {
       "name": "focus-styles",

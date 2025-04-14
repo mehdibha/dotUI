@@ -5,7 +5,10 @@ import { rimraf } from "rimraf";
 import { themes } from "@/registry/registry-themes";
 
 const REGISTRY_PATH = path.join(process.cwd(), "public/r");
-const REGISTRY_URL = "https://dotui.org/r";
+const REGISTRY_URL =
+  process.env.NODE_ENV === "production"
+    ? "https://dotui.org/r"
+    : "http://localhost:3000/r";
 
 const setup = async () => {
   const targetPath = REGISTRY_PATH;
@@ -42,13 +45,6 @@ const buildRegistry = async () => {
     name: "utils",
     type: "registry:lib",
     dependencies: ["clsx", "tailwind-merge"],
-    files: [
-      {
-        path: "src/registry/lib/utils.tsx",
-        target: "lib/utils.tsx",
-        type: "registry:lib",
-      },
-    ],
   };
 
   await fs.writeFile(utilsPath, JSON.stringify(utilsPayload, null, 2), "utf8");
@@ -62,7 +58,7 @@ const buildRegistry = async () => {
         $schema: "https://ui.shadcn.com/schema/registry.json",
         extends: "none",
         name: theme.name,
-        homepage: `https://dotui.org/themes/${theme.name}`,
+        homepage: `${REGISTRY_URL}/themes/${theme.name}`,
         items: [
           {
             name: "focus-styles",
