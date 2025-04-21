@@ -1,8 +1,11 @@
-import { execa } from "execa";
+import { exec } from "child_process"
 import { existsSync, promises as fs } from "node:fs";
 import path from "path";
 import { rimraf } from "rimraf";
 import { themes } from "@/registry/registry-themes";
+
+// Add pnpm to PATH
+process.env.PATH = `${process.env.PATH}:/usr/local/bin`;
 
 const REGISTRY_PATH = path.join(process.cwd(), "public/r");
 const REGISTRY_URL =
@@ -80,24 +83,20 @@ const buildRegistry = async () => {
         "utf8"
       );
 
-      try {
-        await execa(
-          "pnpm dlx",
-          [
-            "shadcn@latest",
-            "build",
-            "-o",
-            `./public/r/${theme.name}`,
-            `./public/r/${theme.name}/index.json`,
-          ],
-          {
-            stdio: "ignore",
+      await new Promise((resolve, reject) => {
+        const process = exec(
+          `pnpm dlx shadcn@latest build -o ./public/r/${theme.name} ./public/r/${theme.name}/index.json`
+        )
+    
+        process.on("exit", (code) => {
+          if (code === 0) {
+            resolve(undefined)
+          } else {
+            reject(new Error(`Process exited with code ${code}`))
           }
-        );
-      } catch (error) {
-        console.error(`❌ Failed to build registry for theme: ${theme.name}`);
-        console.error(error);
-      }
+        })
+      })
+
     })
   );
 
@@ -107,7 +106,6 @@ const buildRegistry = async () => {
 const run = async () => {
   try {
     await buildRegistry();
-
     console.log("✅ Done!");
   } catch (error) {
     console.error(error);

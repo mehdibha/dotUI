@@ -14,18 +14,21 @@ import {
   MobileComponentsOverview,
 } from "@/modules/demos/components/components-overview";
 import { ThemeProvider } from "./theme-provider";
+import { useInView } from "motion/react"
 
 export const ThemesOverview = () => {
   const [currentThemeName, setCurrentThemeName] = React.useState<string>(
     (themes[0] as unknown as Theme).name
   );
+  const ref = React.useRef(null)
+  const isInView = useInView(ref)
   const [touched, setTouched] = React.useState<boolean>(false);
   const [copied, setCopied] = React.useState(false);
   const isMounted = useMounted();
 
   const handleCopy = () => {
     void navigator.clipboard.writeText(
-      `npx dotui-cli init ${currentThemeName}`
+      `npx shadcn@latest init https://dotui.org/r/${currentThemeName}/base.json`
     );
     setCopied(true);
     setTimeout(() => {
@@ -37,7 +40,7 @@ export const ThemesOverview = () => {
 
   React.useEffect(() => {
     const interval = setInterval(() => {
-      if (touched) return;
+      if (touched || !isInView) return;
       const currentIndex = themes.findIndex(
         (theme) => theme.name === currentThemeName
       );
@@ -49,7 +52,7 @@ export const ThemesOverview = () => {
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [currentThemeName, touched]);
+  }, [currentThemeName, touched, isInView]);
 
   return (
     <div className="flex flex-col items-center gap-10 md:gap-4">
@@ -64,7 +67,7 @@ export const ThemesOverview = () => {
           <pre>
             <code>
               <motion.span layout transition={{ duration: 0.5 }}>
-                <span className="text-[#F69D50]">npx</span> dotui-cli init{" "}
+                <span className="text-[#F69D50]">npx</span> shadcn@latest init https://dotui.org/r/
               </motion.span>
               <AnimatePresence mode="popLayout">
                 <motion.span
@@ -73,10 +76,14 @@ export const ThemesOverview = () => {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.5 }}
+                  className="text-[#F69D50]"
                 >
                   {currentThemeName}
                 </motion.span>
               </AnimatePresence>
+              <motion.span layout transition={{ duration: 0.5 }}>
+                /base.json
+              </motion.span>
             </code>
           </pre>
           <motion.div layout>
@@ -96,7 +103,7 @@ export const ThemesOverview = () => {
           </motion.div>
         </div>
         <div className="relative flex flex-col items-end gap-2">
-          <div className="xs:block absolute right-0 top-0 hidden translate-x-[calc(100%-30px)] translate-y-[calc(-100%-30px)]">
+          <div className="xl:block absolute right-0 top-0 hidden translate-x-[calc(100%+40px)] translate-y-[calc(-100%-30px)]">
             <div>
               <svg
                 width="30"
@@ -118,6 +125,7 @@ export const ThemesOverview = () => {
             </div>
           </div>
           <Tabs
+            ref={ref}
             variant="solid"
             selectedKey={currentThemeName}
             onSelectionChange={(key) => {

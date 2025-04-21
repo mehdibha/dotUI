@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "extends": "none",
   "name": "retro",
-  "homepage": "https://dotui.org/r/themes/retro",
+  "homepage": "http://localhost:3000/r/themes/retro",
   "items": [
     {
       "name": "focus-styles",

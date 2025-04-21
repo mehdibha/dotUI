@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "extends": "none",
   "name": "material",
-  "homepage": "https://dotui.org/r/themes/material",
+  "homepage": "http://localhost:3000/r/themes/material",
   "items": [
     {
       "name": "focus-styles",

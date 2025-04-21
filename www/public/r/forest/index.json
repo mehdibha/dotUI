@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "extends": "none",
   "name": "forest",
-  "homepage": "https://dotui.org/r/themes/forest",
+  "homepage": "http://localhost:3000/r/themes/forest",
   "items": [
     {
       "name": "focus-styles",

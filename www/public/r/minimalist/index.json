@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "extends": "none",
   "name": "minimalist",
-  "homepage": "https://dotui.org/r/themes/minimalist",
+  "homepage": "http://localhost:3000/r/themes/minimalist",
   "items": [
     {
       "name": "focus-styles",

@@ -7,7 +7,7 @@
     "tailwindcss-react-aria-components"
   ],
   "registryDependencies": [
-    "https://dotui.org/r/utils"
+    "http://localhost:3000/r/utils"
   ],
   "files": []
 }
