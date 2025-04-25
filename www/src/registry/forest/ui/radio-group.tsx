@@ -13,7 +13,7 @@ import {
   createOptionalScopedContext,
   createScopedContext,
 } from "@/registry/forest/lib/utils";
-import { HelpText, Label } from "@/registry/forest/ui/field_basic";
+import { HelpText, Label } from "@/registry/forest/ui/field";
 
 const radioStyles = tv({
   slots: {

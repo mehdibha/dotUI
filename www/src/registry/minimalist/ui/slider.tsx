@@ -14,7 +14,7 @@ import {
 import { tv, type VariantProps } from "tailwind-variants";
 import { focusRing } from "@/registry/minimalist/lib/focus-styles";
 import { createScopedContext } from "@/registry/minimalist/lib/utils";
-import { Description, Label } from "@/registry/minimalist/ui/field_basic";
+import { Description, Label } from "@/registry/minimalist/ui/field";
 
 const sliderStyles = tv({
   slots: {

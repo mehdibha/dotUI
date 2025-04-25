@@ -16,8 +16,8 @@ import {
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
 import { focusRing } from "@/registry/brutalist/lib/focus-styles";
-import { Loader } from "@/registry/brutalist/ui/loader_ring";
-import { Text } from "@/registry/brutalist/ui/text_basic";
+import { Loader } from "@/registry/brutalist/ui/loader";
+import { Text } from "@/registry/brutalist/ui/text";
 
 const listBoxStyles = tv({
   base: [

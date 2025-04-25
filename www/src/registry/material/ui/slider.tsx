@@ -14,7 +14,7 @@ import {
 import { tv, type VariantProps } from "tailwind-variants";
 import { focusRing } from "@/registry/material/lib/focus-styles";
 import { createScopedContext } from "@/registry/material/lib/utils";
-import { Description, Label } from "@/registry/material/ui/field_basic";
+import { Description, Label } from "@/registry/material/ui/field";
 
 const sliderStyles = tv({
   slots: {

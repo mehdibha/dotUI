@@ -7,17 +7,17 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import { Button } from "@/registry/high-contrast/ui/button";
 import {
   Label,
   HelpText,
   type FieldProps,
-} from "@/registry/high-contrast/ui/field_basic";
+} from "@/registry/high-contrast/ui/field";
 import {
   InputRoot,
   Input,
   type InputRootProps,
-} from "@/registry/high-contrast/ui/input_basic";
-import { Button } from "./button_basic";
+} from "@/registry/high-contrast/ui/input";
 
 const searchFieldtyles = tv({
   base: "group flex w-48 flex-col items-start gap-2 empty:[&_button[slot='clear']]:hidden [&_input]:[&::-webkit-search-cancel-button]:appearance-none [&_input]:[&::-webkit-search-decoration]:appearance-none",

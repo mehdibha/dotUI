@@ -3,7 +3,7 @@ import {
   TimeFieldRoot,
   TimeFieldInput,
 } from "@/components/dynamic-core/time-field";
-import { FieldError } from "@/registry/core/field_basic";
+import { FieldError } from "@/components/dynamic-core/field";
 
 export default function Demo() {
   return (

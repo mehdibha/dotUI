@@ -23,7 +23,7 @@ import { tv, VariantProps } from "tailwind-variants";
 import { focusRing } from "@/registry/material/lib/focus-styles";
 import { cn } from "@/registry/material/lib/utils";
 import { createScopedContext } from "@/registry/material/lib/utils";
-import { Checkbox } from "@/registry/material/ui/checkbox_basic";
+import { Checkbox } from "@/registry/material/ui/checkbox";
 
 const tableStyles = tv({
   slots: {

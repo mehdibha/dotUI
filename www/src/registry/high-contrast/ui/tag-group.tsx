@@ -12,12 +12,12 @@ import {
 } from "react-aria-components";
 import { tv, VariantProps } from "tailwind-variants";
 import { focusRing } from "@/registry/high-contrast/lib/focus-styles";
-import { Button } from "@/registry/high-contrast/ui/button_basic";
+import { Button } from "@/registry/high-contrast/ui/button";
 import {
   HelpText,
   Label,
   type FieldProps,
-} from "@/registry/high-contrast/ui/field_basic";
+} from "@/registry/high-contrast/ui/field";
 
 const tagGroupStyles = tv({
   slots: {

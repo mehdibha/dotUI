@@ -13,7 +13,7 @@ import {
   createOptionalScopedContext,
   createScopedContext,
 } from "@/registry/retro/lib/utils";
-import { HelpText, Label } from "@/registry/retro/ui/field_basic";
+import { HelpText, Label } from "@/registry/retro/ui/field";
 
 const radioStyles = tv({
   slots: {

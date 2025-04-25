@@ -12,12 +12,12 @@ import {
 } from "react-aria-components";
 import { tv, VariantProps } from "tailwind-variants";
 import { focusRing } from "@/registry/minimalist/lib/focus-styles";
-import { Button } from "@/registry/minimalist/ui/button_basic";
+import { Button } from "@/registry/minimalist/ui/button";
 import {
   HelpText,
   Label,
   type FieldProps,
-} from "@/registry/minimalist/ui/field_basic";
+} from "@/registry/minimalist/ui/field";
 
 const tagGroupStyles = tv({
   slots: {

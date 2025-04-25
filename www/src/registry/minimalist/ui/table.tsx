@@ -23,7 +23,7 @@ import { tv, VariantProps } from "tailwind-variants";
 import { focusRing } from "@/registry/minimalist/lib/focus-styles";
 import { cn } from "@/registry/minimalist/lib/utils";
 import { createScopedContext } from "@/registry/minimalist/lib/utils";
-import { Checkbox } from "@/registry/minimalist/ui/checkbox_basic";
+import { Checkbox } from "@/registry/minimalist/ui/checkbox";
 
 const tableStyles = tv({
   slots: {

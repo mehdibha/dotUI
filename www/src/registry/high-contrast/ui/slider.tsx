@@ -14,7 +14,7 @@ import {
 import { tv, type VariantProps } from "tailwind-variants";
 import { focusRing } from "@/registry/high-contrast/lib/focus-styles";
 import { createScopedContext } from "@/registry/high-contrast/lib/utils";
-import { Description, Label } from "@/registry/high-contrast/ui/field_basic";
+import { Description, Label } from "@/registry/high-contrast/ui/field";
 
 const sliderStyles = tv({
   slots: {

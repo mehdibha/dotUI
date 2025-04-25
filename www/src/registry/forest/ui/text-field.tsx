@@ -6,16 +6,12 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import {
-  Label,
-  HelpText,
-  type FieldProps,
-} from "@/registry/forest/ui/field_basic";
+import { Label, HelpText, type FieldProps } from "@/registry/forest/ui/field";
 import {
   InputRoot,
   Input,
   type InputRootProps,
-} from "@/registry/forest/ui/input_basic";
+} from "@/registry/forest/ui/input";
 
 const textFieldStyles = tv({
   base: "flex w-48 flex-col items-start gap-2",

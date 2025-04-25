@@ -16,8 +16,8 @@ import {
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
 import { focusRing } from "@/registry/retro/lib/focus-styles";
-import { Loader } from "@/registry/retro/ui/loader_ring";
-import { Text } from "@/registry/retro/ui/text_basic";
+import { Loader } from "@/registry/retro/ui/loader";
+import { Text } from "@/registry/retro/ui/text";
 
 const listBoxStyles = tv({
   base: [

@@ -14,7 +14,7 @@ import {
 import { tv, type VariantProps } from "tailwind-variants";
 import { focusRing } from "@/registry/brutalist/lib/focus-styles";
 import { createScopedContext } from "@/registry/brutalist/lib/utils";
-import { Description, Label } from "@/registry/brutalist/ui/field_basic";
+import { Description, Label } from "@/registry/brutalist/ui/field";
 
 const sliderStyles = tv({
   slots: {

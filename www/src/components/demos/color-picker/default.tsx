@@ -1,4 +1,4 @@
-import { ColorPicker } from "@/registry/core/color-picker_basic";
+import { ColorPicker } from "@/components/dynamic-core/color-picker";
 
 export default function Demo() {
   return <ColorPicker />;

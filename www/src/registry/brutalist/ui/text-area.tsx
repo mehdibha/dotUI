@@ -10,12 +10,12 @@ import {
   Label,
   HelpText,
   type FieldProps,
-} from "@/registry/brutalist/ui/field_basic";
+} from "@/registry/brutalist/ui/field";
 import {
   InputRoot,
   TextAreaInput,
   type InputRootProps,
-} from "@/registry/brutalist/ui/input_basic";
+} from "@/registry/brutalist/ui/input";
 
 const textAreaStyles = tv({
   base: "flex w-48 flex-col items-start gap-2",

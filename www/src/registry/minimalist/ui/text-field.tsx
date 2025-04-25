@@ -10,12 +10,12 @@ import {
   Label,
   HelpText,
   type FieldProps,
-} from "@/registry/minimalist/ui/field_basic";
+} from "@/registry/minimalist/ui/field";
 import {
   InputRoot,
   Input,
   type InputRootProps,
-} from "@/registry/minimalist/ui/input_basic";
+} from "@/registry/minimalist/ui/input";
 
 const textFieldStyles = tv({
   base: "flex w-48 flex-col items-start gap-2",

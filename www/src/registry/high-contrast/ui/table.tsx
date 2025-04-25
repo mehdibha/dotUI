@@ -23,7 +23,7 @@ import { tv, VariantProps } from "tailwind-variants";
 import { focusRing } from "@/registry/high-contrast/lib/focus-styles";
 import { cn } from "@/registry/high-contrast/lib/utils";
 import { createScopedContext } from "@/registry/high-contrast/lib/utils";
-import { Checkbox } from "@/registry/high-contrast/ui/checkbox_basic";
+import { Checkbox } from "@/registry/high-contrast/ui/checkbox";
 
 const tableStyles = tv({
   slots: {

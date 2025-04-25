@@ -4,7 +4,7 @@ import React from "react";
 import { Button } from "@/components/dynamic-core/button";
 import { DialogRoot, DialogContent } from "@/components/dynamic-core/dialog";
 import { Radio, RadioGroup } from "@/components/dynamic-core/radio-group";
-import { Overlay } from "@/registry/core/overlay_basic";
+import { Overlay } from "@/components/dynamic-core/overlay";
 
 type Type = "modal" | "drawer" | "popover";
 

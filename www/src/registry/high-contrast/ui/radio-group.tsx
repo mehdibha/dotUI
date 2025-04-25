@@ -16,7 +16,7 @@ import {
   createOptionalScopedContext,
   createScopedContext,
 } from "@/registry/high-contrast/lib/utils";
-import { HelpText, Label } from "@/registry/high-contrast/ui/field_basic";
+import { HelpText, Label } from "@/registry/high-contrast/ui/field";
 
 const radioStyles = tv({
   slots: {

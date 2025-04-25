@@ -8,7 +8,7 @@ import { Dialog, DialogRoot } from "@/components/dynamic-core/dialog";
 import {
   ColorSwatchPicker,
   ColorSwatchPickerItem,
-} from "@/registry/core/color-swatch-picker_basic";
+} from "@/components/dynamic-core/color-swatch-picker";
 
 export default function Demo() {
   return (

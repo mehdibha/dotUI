@@ -8,12 +8,16 @@ import {
   type TimeFieldProps as AriaTimeFieldProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import { DateInput, DateSegment } from "@/registry/high-contrast/ui/date-input";
 import {
-  DateInput,
-  DateSegment,
-} from "@/registry/high-contrast/ui/date-input_basic";
-import { HelpText, Label, type FieldProps } from "./field_basic";
-import { InputRoot, type InputRootProps } from "./input_basic";
+  HelpText,
+  Label,
+  type FieldProps,
+} from "@/registry/high-contrast/ui/field";
+import {
+  InputRoot,
+  type InputRootProps,
+} from "@/registry/high-contrast/ui/input";
 
 const timeFieldStyles = tv({
   base: "flex w-32 flex-col items-start gap-2",

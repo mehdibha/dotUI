@@ -23,7 +23,7 @@ import { tv, VariantProps } from "tailwind-variants";
 import { focusRing } from "@/registry/brutalist/lib/focus-styles";
 import { cn } from "@/registry/brutalist/lib/utils";
 import { createScopedContext } from "@/registry/brutalist/lib/utils";
-import { Checkbox } from "@/registry/brutalist/ui/checkbox_basic";
+import { Checkbox } from "@/registry/brutalist/ui/checkbox";
 
 const tableStyles = tv({
   slots: {

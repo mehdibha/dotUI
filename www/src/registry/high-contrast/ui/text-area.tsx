@@ -10,12 +10,12 @@ import {
   Label,
   HelpText,
   type FieldProps,
-} from "@/registry/high-contrast/ui/field_basic";
+} from "@/registry/high-contrast/ui/field";
 import {
   InputRoot,
   TextAreaInput,
   type InputRootProps,
-} from "@/registry/high-contrast/ui/input_basic";
+} from "@/registry/high-contrast/ui/input";
 
 const textAreaStyles = tv({
   base: "flex w-48 flex-col items-start gap-2",

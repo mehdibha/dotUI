@@ -12,8 +12,8 @@ import {
 } from "react-aria-components";
 import { tv, VariantProps } from "tailwind-variants";
 import { focusRing } from "@/reg/lib/focus-styles";
-import { Button } from "@/reg/ui/button_basic";
-import { HelpText, Label, type FieldProps } from "@/reg/ui/field_basic";
+import { Button } from "@/reg/ui/button.basic";
+import { HelpText, Label, type FieldProps } from "@/reg/ui/field.basic";
 
 const tagGroupStyles = tv({
   slots: {

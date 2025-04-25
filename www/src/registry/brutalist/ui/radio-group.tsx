@@ -16,7 +16,7 @@ import {
   createOptionalScopedContext,
   createScopedContext,
 } from "@/registry/brutalist/lib/utils";
-import { HelpText, Label } from "@/registry/brutalist/ui/field_basic";
+import { HelpText, Label } from "@/registry/brutalist/ui/field";
 
 const radioStyles = tv({
   slots: {

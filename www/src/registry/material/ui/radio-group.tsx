@@ -16,7 +16,7 @@ import {
   createOptionalScopedContext,
   createScopedContext,
 } from "@/registry/material/lib/utils";
-import { HelpText, Label } from "@/registry/material/ui/field_basic";
+import { HelpText, Label } from "@/registry/material/ui/field";
 
 const radioStyles = tv({
   slots: {

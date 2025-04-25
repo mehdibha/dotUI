@@ -7,17 +7,17 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import { Button } from "@/registry/minimalist/ui/button";
 import {
   Label,
   HelpText,
   type FieldProps,
-} from "@/registry/minimalist/ui/field_basic";
+} from "@/registry/minimalist/ui/field";
 import {
   InputRoot,
   Input,
   type InputRootProps,
-} from "@/registry/minimalist/ui/input_basic";
-import { Button } from "./button_basic";
+} from "@/registry/minimalist/ui/input";
 
 const searchFieldtyles = tv({
   base: "group flex w-48 flex-col items-start gap-2 empty:[&_button[slot='clear']]:hidden [&_input]:[&::-webkit-search-cancel-button]:appearance-none [&_input]:[&::-webkit-search-decoration]:appearance-none",

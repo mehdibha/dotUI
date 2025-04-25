@@ -16,7 +16,7 @@ import {
   createOptionalScopedContext,
   createScopedContext,
 } from "@/registry/minimalist/lib/utils";
-import { HelpText, Label } from "@/registry/minimalist/ui/field_basic";
+import { HelpText, Label } from "@/registry/minimalist/ui/field";
 
 const radioStyles = tv({
   slots: {

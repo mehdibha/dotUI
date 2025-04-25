@@ -1,5 +1,5 @@
 import React from "react";
-import { themes } from "@/registry/registry-themes";
+import { themes } from "@/reg/registry-themes";
 import { ThemeProvider } from "@/modules/themes/components/theme-provider";
 import { ThemeUpdater } from "./theme-updater";
 

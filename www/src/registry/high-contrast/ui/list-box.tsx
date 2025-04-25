@@ -16,8 +16,8 @@ import {
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
 import { focusRing } from "@/registry/high-contrast/lib/focus-styles";
-import { Loader } from "@/registry/high-contrast/ui/loader_ring";
-import { Text } from "@/registry/high-contrast/ui/text_basic";
+import { Loader } from "@/registry/high-contrast/ui/loader";
+import { Text } from "@/registry/high-contrast/ui/text";
 
 const listBoxStyles = tv({
   base: [
