@@ -1,12 +1,12 @@
 "use client";
 
 import React from "react";
+import { createDynamicComponent } from "@/modules/themes";
 import {
   Button as _Button,
   ButtonProvider as _ButtonProvider,
   ButtonProps,
-} from "@/registry/core/button_basic";
-import { createDynamicComponent } from "@/modules/themes";
+} from "@/reg/ui/button.basic";
 
 export const Button = createDynamicComponent<ButtonProps>(
   "button",
@@ -14,17 +14,17 @@ export const Button = createDynamicComponent<ButtonProps>(
   _Button,
   {
     basic: React.lazy(() =>
-      import("@/registry/core/button_basic").then((mod) => ({
+      import("@/reg/ui/button.basic").then((mod) => ({
         default: mod.Button,
       }))
     ),
     brutalist: React.lazy(() =>
-      import("@/registry/core/button_brutalist").then((mod) => ({
+      import("@/reg/ui/button.brutalist").then((mod) => ({
         default: mod.Button,
       }))
     ),
     ripple: React.lazy(() =>
-      import("@/registry/core/button_ripple").then((mod) => ({
+      import("@/reg/ui/button.ripple").then((mod) => ({
         default: mod.Button,
       }))
     ),
@@ -37,17 +37,17 @@ export const ButtonProvider = createDynamicComponent(
   _ButtonProvider,
   {
     basic: React.lazy(() =>
-      import("@/registry/core/button_basic").then((mod) => ({
+      import("@/reg/ui/button.basic").then((mod) => ({
         default: mod.ButtonProvider,
       }))
     ),
     brutalist: React.lazy(() =>
-      import("@/registry/core/button_brutalist").then((mod) => ({
+      import("@/reg/ui/button.brutalist").then((mod) => ({
         default: mod.ButtonProvider,
       }))
     ),
     ripple: React.lazy(() =>
-      import("@/registry/core/button_ripple").then((mod) => ({
+      import("@/reg/ui/button.ripple").then((mod) => ({
         default: mod.ButtonProvider,
       }))
     ),

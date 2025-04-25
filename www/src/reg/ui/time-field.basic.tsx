@@ -8,9 +8,9 @@ import {
   type TimeFieldProps as AriaTimeFieldProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { DateInput, DateSegment } from "@/reg/ui/date-input_basic";
-import { HelpText, Label, type FieldProps } from "./field_basic";
-import { InputRoot, type InputRootProps } from "./input_basic";
+import { DateInput, DateSegment } from "@/reg/ui/date-input.basic";
+import { HelpText, Label, type FieldProps } from "@/reg/ui/field.basic";
+import { InputRoot, type InputRootProps } from "@/reg/ui/input.basic";
 
 const timeFieldStyles = tv({
   base: "flex w-32 flex-col items-start gap-2",

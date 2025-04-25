@@ -1,1 +1,1 @@
-export * from "@/registry/core/search-field_basic";
+export * from "@/reg/ui/search-field.basic";

@@ -11,21 +11,18 @@ import {
   ListBoxItemProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import {
-  Button,
-  type ButtonProps,
-} from "@/registry/high-contrast/ui/button_basic";
+import { Button, type ButtonProps } from "@/registry/high-contrast/ui/button";
 import {
   HelpText,
   Label,
   type FieldProps,
-} from "@/registry/high-contrast/ui/field_basic";
+} from "@/registry/high-contrast/ui/field";
 import {
   ListBoxItem,
   ListBox,
   type ListBoxProps,
-} from "@/registry/high-contrast/ui/list-box_basic";
-import { Popover } from "@/registry/high-contrast/ui/popover_basic";
+} from "@/registry/high-contrast/ui/list-box";
+import { Popover } from "@/registry/high-contrast/ui/popover";
 
 const selectStyles = tv({
   slots: {

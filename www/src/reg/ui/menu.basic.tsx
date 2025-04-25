@@ -17,9 +17,9 @@ import {
   type MenuSectionProps as AriaMenuSectionProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { Kbd } from "@/reg/ui/kbd_basic";
-import { Overlay, type OverlayProps } from "@/reg/ui/overlay_basic";
-import { Text } from "@/reg/ui/text_basic";
+import { Kbd } from "@/reg/ui/kbd.basic";
+import { Overlay, type OverlayProps } from "@/reg/ui/overlay.basic";
+import { Text } from "@/reg/ui/text.basic";
 
 const menuStyles = tv({
   base: [

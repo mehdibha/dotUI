@@ -16,8 +16,8 @@ import { DialogRoot, Dialog } from "@/components/core/dialog";
 import { Loader } from "@/components/core/loader";
 import { MenuContent, MenuItem, MenuSection } from "@/components/core/menu";
 import { SearchFieldRoot } from "@/components/core/search-field";
-import { Command } from "@/registry/core/command_basic";
-import { Input, InputRoot } from "@/registry/core/input_basic";
+import { Command } from "@/components/core/command";
+import { Input, InputRoot } from "@/components/core/input";
 import { searchConfig } from "@/config";
 
 interface SearchCommandProps {

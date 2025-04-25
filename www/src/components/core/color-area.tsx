@@ -1,1 +1,1 @@
-export * from "@/registry/core/color-area_basic";
+export * from "@/reg/ui/color-area.basic";

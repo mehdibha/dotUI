@@ -76,7 +76,10 @@ const buildRegistry = async () => {
             const fileContent = transformContent(rawFileContent, t.name, [
               importTransformer,
             ]);
-            await fs.writeFile(path.join(stylePath, file.target), fileContent);
+            await fs.writeFile(
+              path.join(stylePath, file?.target ?? ""),
+              fileContent
+            );
             indexPayload.items.push(
               transformRegistryItem({ ...style, name: item.name }, t.name)
             );
@@ -90,7 +93,10 @@ const buildRegistry = async () => {
             const fileContent = transformContent(rawFileContent, t.name, [
               importTransformer,
             ]);
-            await fs.writeFile(path.join(stylePath, file.target), fileContent);
+            await fs.writeFile(
+              path.join(stylePath, file?.target ?? ""),
+              fileContent
+            );
             indexPayload.items.push(transformRegistryItem(item, t.name));
           }
         }
@@ -169,6 +175,7 @@ function transformRegistryItem(item: RegistryItemProps, styleName: string) {
     );
     return {
       ...file,
+      target: undefined,
       path: newFilePath,
     };
   });

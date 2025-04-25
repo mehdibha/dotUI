@@ -1,1 +1,1 @@
-export * from "@/registry/core/toggle-button_basic";
+export * from "@/reg/ui/toggle-button.basic";

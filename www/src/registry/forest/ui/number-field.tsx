@@ -13,17 +13,13 @@ import {
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import { useIsMobile } from "@/registry/forest/hooks/use-is-mobile";
-import { Button } from "@/registry/forest/ui/button_basic";
-import {
-  Label,
-  HelpText,
-  type FieldProps,
-} from "@/registry/forest/ui/field_basic";
+import { Button } from "@/registry/forest/ui/button";
+import { Label, HelpText, type FieldProps } from "@/registry/forest/ui/field";
 import {
   InputRoot,
   Input,
   type InputRootProps,
-} from "@/registry/forest/ui/input_basic";
+} from "@/registry/forest/ui/input";
 
 // TODO: update registry
 

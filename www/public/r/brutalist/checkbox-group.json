@@ -10,8 +10,7 @@
     {
       "path": "src/registry/brutalist/ui/checkbox-group.tsx",
       "content": "\"use client\";\n\nimport {\n  CheckboxGroup as AriaCheckboxGroup,\n  composeRenderProps,\n  type ValidationResult,\n} from \"react-aria-components\";\nimport { tv, VariantProps } from \"tailwind-variants\";\nimport { CheckboxProvider, checkboxStyles } from \"@/registry/brutalist/ui/checkbox\";\nimport { Label, HelpText } from \"@/registry/brutalist/ui/field\";\n\nconst checkboxGroupStyles = tv({\n  base: \"flex flex-col gap-2\",\n});\n\ninterface CheckboxGroupProps extends CheckboxGroupRootProps {\n  label?: string;\n  description?: string;\n  errorMessage?: string | ((validation: ValidationResult) => string);\n}\n\nconst CheckboxGroup = ({\n  label,\n  description,\n  errorMessage,\n  children,\n  ...props\n}: CheckboxGroupProps) => {\n  return (\n    <CheckboxGroupRoot {...props}>\n      {composeRenderProps(children, (children) => (\n        <>\n          {label && <Label>{label}</Label>}\n          {children}\n          <HelpText description={description} errorMessage={errorMessage} />\n        </>\n      ))}\n    </CheckboxGroupRoot>\n  );\n};\n\ninterface CheckboxGroupRootProps\n  extends React.ComponentProps<typeof AriaCheckboxGroup>,\n    VariantProps<typeof checkboxGroupStyles>,\n    VariantProps<typeof checkboxStyles> {}\n\nconst CheckboxGroupRoot = ({\n  variant,\n  className,\n  ...props\n}: CheckboxGroupRootProps) => {\n  return (\n    <CheckboxProvider variant={variant}>\n      <AriaCheckboxGroup\n        className={composeRenderProps(className, (className) =>\n          checkboxGroupStyles({ className })\n        )}\n        {...props}\n      />\n    </CheckboxProvider>\n  );\n};\n\nexport type { CheckboxGroupProps, CheckboxGroupRootProps };\nexport { CheckboxGroup, CheckboxGroupRoot };\n",
-      "type": "registry:ui",
-      "target": "ui/checkbox-group.tsx"
+      "type": "registry:ui"
     }
   ]
 }

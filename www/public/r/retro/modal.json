@@ -6,8 +6,7 @@
     {
       "path": "src/registry/retro/ui/modal.tsx",
       "content": "\"use client\";\r\n\r\nimport React from \"react\";\r\nimport {\r\n  composeRenderProps,\r\n  Modal as AriaModal,\r\n  ModalOverlay as AriaModalOverlay,\r\n} from \"react-aria-components\";\r\nimport { tv } from \"tailwind-variants\";\r\n\r\nconst modalStyles = tv({\r\n  slots: {\r\n    underlay:\r\n      \"h-(--visual-viewport-height) exiting:opacity-0 entering:opacity-0 bg-bg-inverse/40 dark:bg-bg/40 fixed left-0 top-0 z-50 flex w-screen items-center justify-center opacity-100 duration-200 ease-[cubic-bezier(0.165,0.84,0.44,1)] will-change-[opacity]\",\r\n    overlay:\r\n      \"bg-bg entering:scale-95 exiting:scale-95 relative z-50 w-full max-w-lg scale-100 border shadow-lg duration-200 ease-[cubic-bezier(0.165,0.84,0.44,1)] will-change-transform sm:rounded-lg md:w-full\",\r\n  },\r\n});\r\n\r\nconst { underlay, overlay } = modalStyles();\r\n\r\ninterface ModalProps extends React.ComponentProps<typeof AriaModal> {}\r\nconst Modal = ({ className, isDismissable = true, ...props }: ModalProps) => (\r\n  <AriaModalOverlay\r\n    isDismissable={isDismissable}\r\n    className={composeRenderProps(className, (className) =>\r\n      underlay({ className })\r\n    )}\r\n    {...props}\r\n  >\r\n    <AriaModal\r\n      isDismissable={isDismissable}\r\n      className={composeRenderProps(className, (className) =>\r\n        overlay({ className })\r\n      )}\r\n      {...props}\r\n    />\r\n  </AriaModalOverlay>\r\n);\r\n\r\nexport type { ModalProps };\r\nexport { Modal };\r\n",
-      "type": "registry:ui",
-      "target": "ui/modal.tsx"
+      "type": "registry:ui"
     }
   ]
 }

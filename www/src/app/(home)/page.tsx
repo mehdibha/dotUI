@@ -8,8 +8,8 @@ import { AdobeIcon } from "@/components/icons/adobe-icon";
 import { ReactJsIcon } from "@/components/icons/reactjs-icon";
 import { TailwindIcon } from "@/components/icons/tailwindcss-icon";
 import { TypescriptIcon } from "@/components/icons/typescript-icon";
-import { Avatar } from "@/registry/core/avatar_basic";
-import { Tooltip } from "@/registry/core/tooltip_basic";
+import { Avatar } from "@/components/core/avatar";
+import { Tooltip } from "@/components/core/tooltip";
 import { siteConfig } from "@/config";
 import { ThemesOverview } from "@/modules/themes/components/themes-overview";
 

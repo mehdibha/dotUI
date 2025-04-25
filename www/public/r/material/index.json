@@ -11,7 +11,8 @@
       "dependencies": [
         "tailwind-variants",
         "react-aria-components",
-        "tailwindcss-react-aria-components"
+        "tailwindcss-react-aria-components",
+        "lucide-react"
       ],
       "registryDependencies": [
         "http://localhost:3000/r/material/utils.json",
@@ -26,8 +27,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/alert.tsx",
-          "target": "ui/alert.tsx"
+          "path": "src/registry/material/ui/alert.tsx"
         }
       ]
     },
@@ -37,8 +37,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/avatar.tsx",
-          "target": "ui/avatar.tsx"
+          "path": "src/registry/material/ui/avatar.tsx"
         }
       ]
     },
@@ -48,8 +47,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/badge.tsx",
-          "target": "ui/badge.tsx"
+          "path": "src/registry/material/ui/badge.tsx"
         }
       ]
     },
@@ -62,8 +60,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/breadcrumbs.tsx",
-          "target": "ui/breadcrumbs.tsx"
+          "path": "src/registry/material/ui/breadcrumbs.tsx"
         }
       ]
     },
@@ -77,8 +74,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/button.tsx",
-          "target": "ui/button.tsx"
+          "path": "src/registry/material/ui/button.tsx"
         }
       ]
     },
@@ -93,8 +89,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/calendar.tsx",
-          "target": "ui/calendar.tsx"
+          "path": "src/registry/material/ui/calendar.tsx"
         }
       ]
     },
@@ -107,8 +102,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/checkbox.tsx",
-          "target": "ui/checkbox.tsx"
+          "path": "src/registry/material/ui/checkbox.tsx"
         }
       ]
     },
@@ -122,8 +116,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/checkbox-group.tsx",
-          "target": "ui/checkbox-group.tsx"
+          "path": "src/registry/material/ui/checkbox-group.tsx"
         }
       ]
     },
@@ -136,8 +129,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/color-area.tsx",
-          "target": "ui/color-area.tsx"
+          "path": "src/registry/material/ui/color-area.tsx"
         }
       ]
     },
@@ -151,8 +143,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/color-field.tsx",
-          "target": "ui/color-field.tsx"
+          "path": "src/registry/material/ui/color-field.tsx"
         }
       ]
     },
@@ -171,8 +162,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/color-picker.tsx",
-          "target": "ui/color-picker.tsx"
+          "path": "src/registry/material/ui/color-picker.tsx"
         }
       ]
     },
@@ -186,8 +176,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/color-slider.tsx",
-          "target": "ui/color-slider.tsx"
+          "path": "src/registry/material/ui/color-slider.tsx"
         }
       ]
     },
@@ -197,8 +186,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/color-swatch.tsx",
-          "target": "ui/color-swatch.tsx"
+          "path": "src/registry/material/ui/color-swatch.tsx"
         }
       ]
     },
@@ -212,8 +200,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/color-swatch-picker.tsx",
-          "target": "ui/color-swatch-picker.tsx"
+          "path": "src/registry/material/ui/color-swatch-picker.tsx"
         }
       ]
     },
@@ -226,8 +213,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/color-thumb.tsx",
-          "target": "ui/color-thumb.tsx"
+          "path": "src/registry/material/ui/color-thumb.tsx"
         }
       ]
     },
@@ -244,8 +230,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/combobox.tsx",
-          "target": "ui/combobox.tsx"
+          "path": "src/registry/material/ui/combobox.tsx"
         }
       ]
     },
@@ -255,8 +240,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/command.tsx",
-          "target": "ui/command.tsx"
+          "path": "src/registry/material/ui/command.tsx"
         }
       ]
     },
@@ -271,8 +255,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/date-field.tsx",
-          "target": "ui/date-field.tsx"
+          "path": "src/registry/material/ui/date-field.tsx"
         }
       ]
     },
@@ -282,8 +265,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/date-input.tsx",
-          "target": "ui/date-input.tsx"
+          "path": "src/registry/material/ui/date-input.tsx"
         }
       ]
     },
@@ -301,8 +283,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/date-picker.tsx",
-          "target": "ui/date-picker.tsx"
+          "path": "src/registry/material/ui/date-picker.tsx"
         }
       ]
     },
@@ -320,8 +301,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/date-range-picker.tsx",
-          "target": "ui/date-range-picker.tsx"
+          "path": "src/registry/material/ui/date-range-picker.tsx"
         }
       ]
     },
@@ -334,8 +314,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/dialog.tsx",
-          "target": "ui/dialog.tsx"
+          "path": "src/registry/material/ui/dialog.tsx"
         }
       ]
     },
@@ -345,8 +324,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/drawer.tsx",
-          "target": "ui/drawer.tsx"
+          "path": "src/registry/material/ui/drawer.tsx"
         }
       ]
     },
@@ -356,8 +334,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/drop-zone.tsx",
-          "target": "ui/drop-zone.tsx"
+          "path": "src/registry/material/ui/drop-zone.tsx"
         }
       ]
     },
@@ -367,8 +344,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/field.tsx",
-          "target": "ui/field.tsx"
+          "path": "src/registry/material/ui/field.tsx"
         }
       ]
     },
@@ -378,8 +354,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/file-trigger.tsx",
-          "target": "ui/file-trigger.tsx"
+          "path": "src/registry/material/ui/file-trigger.tsx"
         }
       ]
     },
@@ -389,8 +364,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/form.tsx",
-          "target": "ui/form.tsx"
+          "path": "src/registry/material/ui/form.tsx"
         }
       ]
     },
@@ -407,8 +381,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/input.tsx",
-          "target": "ui/input.tsx"
+          "path": "src/registry/material/ui/input.tsx"
         }
       ]
     },
@@ -418,8 +391,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/kbd.tsx",
-          "target": "ui/kbd.tsx"
+          "path": "src/registry/material/ui/kbd.tsx"
         }
       ]
     },
@@ -433,8 +405,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/list-box.tsx",
-          "target": "ui/list-box.tsx"
+          "path": "src/registry/material/ui/list-box.tsx"
         }
       ]
     },
@@ -444,8 +415,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/loader.tsx",
-          "target": "ui/loader.tsx"
+          "path": "src/registry/material/ui/loader.tsx"
         }
       ]
     },
@@ -460,8 +430,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/menu.tsx",
-          "target": "ui/menu.tsx"
+          "path": "src/registry/material/ui/menu.tsx"
         }
       ]
     },
@@ -471,8 +440,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/modal.tsx",
-          "target": "ui/modal.tsx"
+          "path": "src/registry/material/ui/modal.tsx"
         }
       ]
     },
@@ -487,8 +455,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/number-field.tsx",
-          "target": "ui/number-field.tsx"
+          "path": "src/registry/material/ui/number-field.tsx"
         }
       ]
     },
@@ -504,8 +471,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/overlay.tsx",
-          "target": "ui/overlay.tsx"
+          "path": "src/registry/material/ui/overlay.tsx"
         }
       ]
     },
@@ -515,8 +481,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/popover.tsx",
-          "target": "ui/popover.tsx"
+          "path": "src/registry/material/ui/popover.tsx"
         }
       ]
     },
@@ -529,8 +494,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/progress-bar.tsx",
-          "target": "ui/progress-bar.tsx"
+          "path": "src/registry/material/ui/progress-bar.tsx"
         }
       ]
     },
@@ -544,8 +508,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/radio-group.tsx",
-          "target": "ui/radio-group.tsx"
+          "path": "src/registry/material/ui/radio-group.tsx"
         }
       ]
     },
@@ -559,8 +522,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/search-field.tsx",
-          "target": "ui/search-field.tsx"
+          "path": "src/registry/material/ui/search-field.tsx"
         }
       ]
     },
@@ -576,8 +538,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/select.tsx",
-          "target": "ui/select.tsx"
+          "path": "src/registry/material/ui/select.tsx"
         }
       ]
     },
@@ -587,8 +548,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/separator.tsx",
-          "target": "ui/separator.tsx"
+          "path": "src/registry/material/ui/separator.tsx"
         }
       ]
     },
@@ -598,8 +558,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/skeleton.tsx",
-          "target": "ui/skeleton.tsx"
+          "path": "src/registry/material/ui/skeleton.tsx"
         }
       ]
     },
@@ -616,8 +575,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/slider.tsx",
-          "target": "ui/slider.tsx"
+          "path": "src/registry/material/ui/slider.tsx"
         }
       ]
     },
@@ -630,8 +588,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/switch.tsx",
-          "target": "ui/switch.tsx"
+          "path": "src/registry/material/ui/switch.tsx"
         }
       ]
     },
@@ -645,8 +602,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/table.tsx",
-          "target": "ui/table.tsx"
+          "path": "src/registry/material/ui/table.tsx"
         }
       ]
     },
@@ -659,8 +615,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/tabs.tsx",
-          "target": "ui/tabs.tsx"
+          "path": "src/registry/material/ui/tabs.tsx"
         }
       ]
     },
@@ -675,8 +630,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/tag-group.tsx",
-          "target": "ui/tag-group.tsx"
+          "path": "src/registry/material/ui/tag-group.tsx"
         }
       ]
     },
@@ -686,8 +640,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/text.tsx",
-          "target": "ui/text.tsx"
+          "path": "src/registry/material/ui/text.tsx"
         }
       ]
     },
@@ -701,8 +654,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/text-area.tsx",
-          "target": "ui/text-area.tsx"
+          "path": "src/registry/material/ui/text-area.tsx"
         }
       ]
     },
@@ -716,8 +668,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/text-field.tsx",
-          "target": "ui/text-field.tsx"
+          "path": "src/registry/material/ui/text-field.tsx"
         }
       ]
     },
@@ -732,8 +683,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/time-field.tsx",
-          "target": "ui/time-field.tsx"
+          "path": "src/registry/material/ui/time-field.tsx"
         }
       ]
     },
@@ -746,8 +696,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/toggle-button.tsx",
-          "target": "ui/toggle-button.tsx"
+          "path": "src/registry/material/ui/toggle-button.tsx"
         }
       ]
     },
@@ -760,8 +709,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/toggle-button-group.tsx",
-          "target": "ui/toggle-button-group.tsx"
+          "path": "src/registry/material/ui/toggle-button-group.tsx"
         }
       ]
     },
@@ -771,8 +719,7 @@
       "files": [
         {
           "type": "registry:ui",
-          "path": "src/registry/material/ui/tooltip.tsx",
-          "target": "ui/tooltip.tsx"
+          "path": "src/registry/material/ui/tooltip.tsx"
         }
       ]
     },
@@ -782,8 +729,7 @@
       "files": [
         {
           "type": "registry:hook",
-          "path": "src/registry/material/hooks/use-is-mobile.ts",
-          "target": "hooks/use-is-mobile.ts"
+          "path": "src/registry/material/hooks/use-is-mobile.ts"
         }
       ]
     },
@@ -797,8 +743,7 @@
       "files": [
         {
           "path": "src/registry/material/lib/utils.tsx",
-          "type": "registry:lib",
-          "target": "lib/utils.tsx"
+          "type": "registry:lib"
         }
       ]
     },
@@ -808,8 +753,7 @@
       "files": [
         {
           "path": "src/registry/material/lib/focus-styles.ts",
-          "type": "registry:lib",
-          "target": "lib/focus-styles.ts"
+          "type": "registry:lib"
         }
       ]
     }

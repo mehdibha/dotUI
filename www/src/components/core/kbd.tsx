@@ -1,1 +1,1 @@
-export * from "@/registry/core/kbd_basic";
+export * from "@/reg/ui/kbd.basic";

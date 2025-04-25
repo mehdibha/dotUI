@@ -10,8 +10,7 @@
     {
       "path": "src/registry/minimalist/ui/text-area.tsx",
       "content": "\"use client\";\n\nimport * as React from \"react\";\nimport {\n  TextField as AriaTextField,\n  composeRenderProps,\n} from \"react-aria-components\";\nimport { tv } from \"tailwind-variants\";\nimport { Label, HelpText, type FieldProps } from \"@/registry/minimalist/ui/field_basic\";\nimport {\n  InputRoot,\n  TextAreaInput,\n  type InputRootProps,\n} from \"@/registry/minimalist/ui/input_basic\";\n\nconst textAreaStyles = tv({\n  base: \"flex w-48 flex-col items-start gap-2\",\n});\n\ninterface TextAreaProps\n  extends TextAreaRootProps,\n    Pick<InputRootProps, \"prefix\" | \"suffix\">,\n    FieldProps {}\n\nconst TextArea = ({\n  label,\n  description,\n  errorMessage,\n  prefix,\n  suffix,\n  ...props\n}: TextAreaProps) => {\n  return (\n    <TextAreaRoot {...props}>\n      {label && <Label>{label}</Label>}\n      <InputRoot prefix={prefix} suffix={suffix} multiline>\n        <TextAreaInput />\n      </InputRoot>\n      <HelpText description={description} errorMessage={errorMessage} />\n    </TextAreaRoot>\n  );\n};\n\ninterface TextAreaRootProps extends React.ComponentProps<typeof AriaTextField> {\n  placeholder?: string;\n}\nconst TextAreaRoot = ({ className, ...props }: TextAreaRootProps) => {\n  return (\n    <AriaTextField\n      className={composeRenderProps(className, (className) =>\n        textAreaStyles({ className })\n      )}\n      {...props}\n    />\n  );\n};\n\nexport type { TextAreaProps, TextAreaRootProps };\nexport { TextArea, TextAreaRoot };\n",
-      "type": "registry:ui",
-      "target": "ui/text-area.tsx"
+      "type": "registry:ui"
     }
   ]
 }

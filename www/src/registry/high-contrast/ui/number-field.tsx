@@ -13,17 +13,17 @@ import {
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import { useIsMobile } from "@/registry/high-contrast/hooks/use-is-mobile";
-import { Button } from "@/registry/high-contrast/ui/button_basic";
+import { Button } from "@/registry/high-contrast/ui/button";
 import {
   Label,
   HelpText,
   type FieldProps,
-} from "@/registry/high-contrast/ui/field_basic";
+} from "@/registry/high-contrast/ui/field";
 import {
   InputRoot,
   Input,
   type InputRootProps,
-} from "@/registry/high-contrast/ui/input_basic";
+} from "@/registry/high-contrast/ui/input";
 
 // TODO: update registry
 

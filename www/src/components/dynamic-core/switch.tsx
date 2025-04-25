@@ -1,1 +1,1 @@
-export * from "@/registry/core/switch_basic";
+export * from "@/reg/ui/switch.basic";

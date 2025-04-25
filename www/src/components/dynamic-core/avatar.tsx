@@ -1,1 +1,1 @@
-export * from "@/registry/core/avatar_basic";
+export * from "@/reg/ui/avatar.basic";

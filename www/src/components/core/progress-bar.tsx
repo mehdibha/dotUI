@@ -1,1 +1,1 @@
-export * from "@/registry/core/progress-bar_basic";
+export * from "@/reg/ui/progress-bar.basic";

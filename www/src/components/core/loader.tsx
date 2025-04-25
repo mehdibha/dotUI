@@ -1,1 +1,1 @@
-export * from "@/registry/core/loader_ring";
+export * from "@/reg/ui/loader.ring";

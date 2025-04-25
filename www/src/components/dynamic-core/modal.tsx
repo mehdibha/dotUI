@@ -1,1 +1,1 @@
-export * from "@/registry/core/modal_basic";
+export * from "@/reg/ui/modal.basic";

@@ -1,1 +1,1 @@
-export * from "@/registry/core/select_basic";
+export * from "@/reg/ui/select.basic";

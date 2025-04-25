@@ -11,14 +11,14 @@ import {
   ListBoxItemProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { Button, type ButtonProps } from "@/reg/ui/button_basic";
-import { HelpText, Label, type FieldProps } from "@/reg/ui/field_basic";
+import { Button, type ButtonProps } from "@/reg/ui/button.basic";
+import { HelpText, Label, type FieldProps } from "@/reg/ui/field.basic";
 import {
   ListBoxItem,
   ListBox,
   type ListBoxProps,
-} from "@/reg/ui/list-box_basic";
-import { Popover } from "@/reg/ui/popover_basic";
+} from "@/reg/ui/list-box.basic";
+import { Popover } from "@/reg/ui/popover.basic";
 
 const selectStyles = tv({
   slots: {

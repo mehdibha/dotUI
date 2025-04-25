@@ -1,1 +1,1 @@
-export * from "@/registry/core/tag-group_basic";
+export * from "@/reg/ui/tag-group.basic";

@@ -13,17 +13,13 @@ import {
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import { useIsMobile } from "@/registry/retro/hooks/use-is-mobile";
-import { Button } from "@/registry/retro/ui/button_basic";
-import {
-  Label,
-  HelpText,
-  type FieldProps,
-} from "@/registry/retro/ui/field_basic";
+import { Button } from "@/registry/retro/ui/button";
+import { Label, HelpText, type FieldProps } from "@/registry/retro/ui/field";
 import {
   InputRoot,
   Input,
   type InputRootProps,
-} from "@/registry/retro/ui/input_basic";
+} from "@/registry/retro/ui/input";
 
 // TODO: update registry
 

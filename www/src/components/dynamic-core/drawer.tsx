@@ -1,1 +1,1 @@
-export * from "@/registry/core/drawer_basic";
+export * from "@/reg/ui/drawer.basic";

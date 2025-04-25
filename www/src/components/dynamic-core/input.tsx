@@ -1,1 +1,1 @@
-export * from "@/registry/core/input_basic";
+export * from "@/reg/ui/input.basic";

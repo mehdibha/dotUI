@@ -1,1 +1,1 @@
-export * from "@/registry/core/time-field_basic";
+export * from "@/reg/ui/time-field.basic";

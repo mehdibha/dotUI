@@ -1,1 +1,1 @@
-export * from "@/registry/core/alert_basic";
+export * from "@/reg/ui/alert.basic";

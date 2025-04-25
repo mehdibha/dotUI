@@ -5,9 +5,9 @@ import { CheckIcon, CopyIcon } from "lucide-react";
 import { AnimatePresence, motion, Variants } from "motion/react";
 import { useMounted } from "@/hooks/use-mounted";
 import { Button } from "@/components/core/button";
-import { Skeleton } from "@/registry/core/skeleton_basic";
-import { Tabs, TabList, Tab } from "@/registry/core/tabs_motion";
-import { themes } from "@/registry/registry-themes";
+import { Skeleton } from "@/reg/ui/skeleton.basic";
+import { Tabs, TabList, Tab } from "@/reg/ui/tabs.motion";
+import { themes } from "@/reg/registry-themes";
 import { Theme } from "@/types/theme";
 import {
   ComponentsOverview,

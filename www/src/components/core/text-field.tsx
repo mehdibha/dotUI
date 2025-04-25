@@ -1,1 +1,1 @@
-export * from "@/registry/core/text-field_basic";
+export * from "@/reg/ui/text-field.basic";

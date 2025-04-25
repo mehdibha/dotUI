@@ -13,9 +13,9 @@ import {
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import { useIsMobile } from "@/reg/hooks/use-is-mobile";
-import { Button } from "@/reg/ui/button_basic";
-import { Label, HelpText, type FieldProps } from "@/reg/ui/field_basic";
-import { InputRoot, Input, type InputRootProps } from "@/reg/ui/input_basic";
+import { Button } from "@/reg/ui/button.basic";
+import { Label, HelpText, type FieldProps } from "@/reg/ui/field.basic";
+import { InputRoot, Input, type InputRootProps } from "@/reg/ui/input.basic";
 
 // TODO: update registry
 

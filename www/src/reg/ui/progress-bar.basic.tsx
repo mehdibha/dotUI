@@ -7,7 +7,7 @@ import {
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
 import { createScopedContext } from "@/reg/lib/utils";
-import { Description, Label } from "@/reg/ui/field_basic";
+import { Description, Label } from "@/reg/ui/field.basic";
 
 const progressStyles = tv({
   slots: {

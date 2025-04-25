@@ -13,17 +13,17 @@ import {
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import { useIsMobile } from "@/registry/brutalist/hooks/use-is-mobile";
-import { Button } from "@/registry/brutalist/ui/button_basic";
+import { Button } from "@/registry/brutalist/ui/button";
 import {
   Label,
   HelpText,
   type FieldProps,
-} from "@/registry/brutalist/ui/field_basic";
+} from "@/registry/brutalist/ui/field";
 import {
   InputRoot,
   Input,
   type InputRootProps,
-} from "@/registry/brutalist/ui/input_basic";
+} from "@/registry/brutalist/ui/input";
 
 // TODO: update registry
 

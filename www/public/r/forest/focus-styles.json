@@ -6,8 +6,7 @@
     {
       "path": "src/registry/forest/lib/focus-styles.ts",
       "content": "import { tv } from \"tailwind-variants\";\n\nexport const focusRing = tv({\n  base: \"ring-border-focus focus-visible:ring-offset-bg outline-hidden ring-0 focus-visible:ring-2 focus-visible:ring-offset-2\",\n});\n\nexport const focusRingGroup = tv({\n  base: \"ring-border-focus group-focus-visible:ring-offset-bg outline-hidden ring-0 group-focus-visible:ring-2 group-focus-visible:ring-offset-2\",\n});\n\nexport const focusInput = tv({\n  base: \"focus-within:ring-border-focus ring-0 focus-within:ring-2\",\n});\n",
-      "type": "registry:lib",
-      "target": "lib/focus-styles.ts"
+      "type": "registry:lib"
     }
   ]
 }

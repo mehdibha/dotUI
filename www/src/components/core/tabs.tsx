@@ -1,1 +1,1 @@
-export * from "@/registry/core/tabs_motion";
+export * from "@/reg/ui/tabs.motion";

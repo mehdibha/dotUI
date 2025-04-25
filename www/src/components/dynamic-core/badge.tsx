@@ -1,1 +1,1 @@
-export * from "@/registry/core/badge_basic";
+export * from "@/reg/ui/badge.basic";

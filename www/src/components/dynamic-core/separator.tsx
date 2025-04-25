@@ -1,1 +1,1 @@
-export * from "@/registry/core/separator_basic";
+export * from "@/reg/ui/separator.basic";

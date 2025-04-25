@@ -1,1 +1,1 @@
-export * from "@/registry/core/date-input_basic";
+export * from "@/reg/ui/date-input.basic";

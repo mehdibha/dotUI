@@ -6,7 +6,8 @@
   "dependencies": [
     "tailwind-variants",
     "react-aria-components",
-    "tailwindcss-react-aria-components"
+    "tailwindcss-react-aria-components",
+    "lucide-react"
   ],
   "registryDependencies": [
     "http://localhost:3000/r/retro/utils.json",

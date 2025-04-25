@@ -13,17 +13,17 @@ import {
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import { useIsMobile } from "@/registry/minimalist/hooks/use-is-mobile";
-import { Button } from "@/registry/minimalist/ui/button_basic";
+import { Button } from "@/registry/minimalist/ui/button";
 import {
   Label,
   HelpText,
   type FieldProps,
-} from "@/registry/minimalist/ui/field_basic";
+} from "@/registry/minimalist/ui/field";
 import {
   InputRoot,
   Input,
   type InputRootProps,
-} from "@/registry/minimalist/ui/input_basic";
+} from "@/registry/minimalist/ui/input";
 
 // TODO: update registry
 
