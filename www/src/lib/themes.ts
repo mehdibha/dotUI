@@ -1,5 +1,16 @@
 import { Theme } from "@/types/theme";
 
+
+export const createTheme = (theme: Theme) => {
+  return {
+    ...theme,
+    variants: {
+      ...defaultVariants,
+      ...theme.variants,
+    },
+  };
+};
+
 const defaultVariants = {
   alert: "basic",
   loader: "ring",

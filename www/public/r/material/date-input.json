@@ -1,0 +1,13 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "date-input",
+  "type": "registry:ui",
+  "files": [
+    {
+      "path": "src/registry/material/ui/date-input.tsx",
+      "content": "\"use client\";\n\nimport React from \"react\";\nimport {\n  DateInput as AriaDateInput,\n  DateSegment as AriaDateSegment,\n  composeRenderProps,\n} from \"react-aria-components\";\nimport { tv } from \"tailwind-variants\";\n\nconst dateInputStyles = tv({\n  slots: {\n    input: [\n      \"text-fg placeholder:text-fg-muted disabled:text-fg-disabled flex flex-1 items-center justify-start disabled:cursor-default\",\n    ],\n    segment:\n      \"focus:bg-bg-accent focus:text-fg-onAccent type-literal:px-0 placeholder-shown:not-data-disabled:not-data-focused:text-fg-muted disabled:text-fg-disabled outline-hidden select-none rounded px-0.5 focus:caret-transparent\",\n  },\n});\n\nconst { input, segment } = dateInputStyles();\n\ninterface DateInputProps extends React.ComponentProps<typeof AriaDateInput> {}\nconst DateInput = ({ className, ...props }: DateInputProps) => {\n  return (\n    <AriaDateInput\n      className={composeRenderProps(className, (className) =>\n        input({ className })\n      )}\n      {...props}\n    />\n  );\n};\n\ninterface DateSegmentProps\n  extends React.ComponentProps<typeof AriaDateSegment> {}\nconst DateSegment = ({ className, ...props }: DateSegmentProps) => {\n  return (\n    <AriaDateSegment\n      className={composeRenderProps(className, (className) =>\n        segment({ className })\n      )}\n      {...props}\n    />\n  );\n};\n\nexport type { DateInputProps, DateSegmentProps };\nexport { DateInput, DateSegment };\n",
+      "type": "registry:ui",
+      "target": "ui/date-input.tsx"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text-field",
+  "type": "registry:ui",
+  "registryDependencies": [
+    "http://localhost:3000/r/minimalist/field.json",
+    "http://localhost:3000/r/minimalist/input.json"
+  ],
+  "files": [
+    {
+      "path": "src/registry/minimalist/ui/text-field.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport {\n  TextField as AriaTextField,\n  composeRenderProps,\n} from \"react-aria-components\";\nimport { tv } from \"tailwind-variants\";\nimport { Label, HelpText, type FieldProps } from \"@/registry/minimalist/ui/field_basic\";\nimport { InputRoot, Input, type InputRootProps } from \"@/registry/minimalist/ui/input_basic\";\n\nconst textFieldStyles = tv({\n  base: \"flex w-48 flex-col items-start gap-2\",\n});\n\ninterface TextFieldProps\n  extends TextFieldRootProps,\n    Pick<InputRootProps, \"size\" | \"prefix\" | \"suffix\">,\n    FieldProps {\n  inputRef?: React.RefObject<HTMLInputElement>;\n}\n\nconst TextField = ({\n  label,\n  description,\n  errorMessage,\n  prefix,\n  suffix,\n  size,\n  inputRef,\n  ...props\n}: TextFieldProps) => {\n  return (\n    <TextFieldRoot {...props}>\n      {label && <Label>{label}</Label>}\n      <TextFieldInput\n        inputRef={inputRef}\n        size={size}\n        prefix={prefix}\n        suffix={suffix}\n      />\n      <HelpText description={description} errorMessage={errorMessage} />\n    </TextFieldRoot>\n  );\n};\n\ninterface TextFieldRootProps\n  extends React.ComponentProps<typeof AriaTextField> {\n  placeholder?: string;\n}\nconst TextFieldRoot = ({ className, ...props }: TextFieldRootProps) => {\n  return (\n    <AriaTextField\n      className={composeRenderProps(className, (className) =>\n        textFieldStyles({ className })\n      )}\n      {...props}\n    />\n  );\n};\n\ninterface TextFieldInputProps extends InputRootProps {\n  inputRef?: React.RefObject<HTMLInputElement>;\n}\nconst TextFieldInput = ({ inputRef, ...props }: TextFieldInputProps) => {\n  return (\n    <InputRoot {...props}>\n      <Input ref={inputRef} />\n    </InputRoot>\n  );\n};\n\nexport type { TextFieldProps, TextFieldRootProps, TextFieldInputProps };\nexport { TextField, TextFieldRoot, TextFieldInput };\n",
+      "type": "registry:ui",
+      "target": "ui/text-field.tsx"
+    }
+  ]
+}

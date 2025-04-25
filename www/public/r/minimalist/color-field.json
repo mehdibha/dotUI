@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "color-field",
+  "type": "registry:ui",
+  "registryDependencies": [
+    "http://localhost:3000/r/minimalist/field.json",
+    "http://localhost:3000/r/minimalist/input.json"
+  ],
+  "files": [
+    {
+      "path": "src/registry/minimalist/ui/color-field.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport {\n  ColorField as AriaColorField,\n  composeRenderProps,\n} from \"react-aria-components\";\nimport { tv } from \"tailwind-variants\";\nimport { Label, HelpText, type FieldProps } from \"@/registry/minimalist/ui/field\";\nimport { InputRoot, Input, type InputRootProps } from \"@/registry/minimalist/ui/input\";\n\nconst colorFieldStyles = tv({\n  base: \"flex w-48 flex-col items-start gap-2\",\n});\n\ninterface ColorFieldProps\n  extends ColorFieldRootProps,\n    Pick<InputRootProps, \"size\" | \"prefix\" | \"suffix\">,\n    FieldProps {\n  inputRef?: React.RefObject<HTMLInputElement>;\n}\n\nconst ColorField = ({\n  label,\n  description,\n  errorMessage,\n  prefix,\n  suffix,\n  size,\n  inputRef,\n  ...props\n}: ColorFieldProps) => {\n  return (\n    <ColorFieldRoot {...props}>\n      {label && <Label>{label}</Label>}\n      <ColorFieldInput\n        inputRef={inputRef}\n        size={size}\n        prefix={prefix}\n        suffix={suffix}\n      />\n      <HelpText description={description} errorMessage={errorMessage} />\n    </ColorFieldRoot>\n  );\n};\n\ninterface ColorFieldRootProps\n  extends React.ComponentProps<typeof AriaColorField> {\n  placeholder?: string;\n}\nconst ColorFieldRoot = ({ className, ...props }: ColorFieldRootProps) => {\n  return (\n    <AriaColorField\n      className={composeRenderProps(className, (className) =>\n        colorFieldStyles({ className })\n      )}\n      {...props}\n    />\n  );\n};\n\ninterface ColorFieldInputProps extends InputRootProps {\n  inputRef?: React.RefObject<HTMLInputElement>;\n}\nconst ColorFieldInput = ({ inputRef, ...props }: ColorFieldInputProps) => {\n  return (\n    <InputRoot {...props}>\n      <Input ref={inputRef} />\n    </InputRoot>\n  );\n};\n\nexport type { ColorFieldProps, ColorFieldRootProps, ColorFieldInputProps };\nexport { ColorField, ColorFieldRoot, ColorFieldInput };\n",
+      "type": "registry:ui",
+      "target": "ui/color-field.tsx"
+    }
+  ]
+}

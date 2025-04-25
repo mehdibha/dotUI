@@ -1,0 +1,13 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text",
+  "type": "registry:ui",
+  "files": [
+    {
+      "path": "src/registry/brutalist/ui/text.tsx",
+      "content": "\"use client\";\n\nimport {\n  Text as AriaText,\n  type TextProps as AriaTextProps,\n} from \"react-aria-components\";\nimport { type VariantProps, tv } from \"tailwind-variants\";\n\nconst textStyles = tv({\n  base: \"text-sm\",\n  variants: {\n    slot: {\n      label: \"font-bold\",\n      description: \"text-fg-muted\",\n      errorMessage: \"text-fg-danger\",\n    },\n  },\n});\n\ninterface TextProps\n  extends Omit<AriaTextProps, \"slot\">,\n    VariantProps<typeof textStyles> {}\nconst Text = ({ slot, className, ...props }: TextProps) => {\n  return (\n    <AriaText\n      slot={slot}\n      className={textStyles({ slot, className })}\n      {...props}\n    />\n  );\n};\n\nexport type { textStyles };\nexport { Text };\n",
+      "type": "registry:ui",
+      "target": "ui/text.tsx"
+    }
+  ]
+}

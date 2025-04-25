@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "overlay",
+  "type": "registry:ui",
+  "registryDependencies": [
+    "http://localhost:3000/r/forest/modal.json",
+    "http://localhost:3000/r/forest/popover.json",
+    "http://localhost:3000/r/forest/drawer.json",
+    "http://localhost:3000/r/forest/use-is-mobile.json"
+  ],
+  "files": [
+    {
+      "path": "src/registry/forest/ui/overlay.tsx",
+      "content": "\"use client\";\n\nimport { useIsMobile } from \"@/registry/forest/hooks/use-is-mobile\";\nimport { Drawer, DrawerProps } from \"@/registry/forest/ui/drawer\";\nimport { Modal, ModalProps } from \"@/registry/forest/ui/modal\";\nimport { Popover, PopoverProps } from \"@/registry/forest/ui/popover\";\n\ntype Type = \"modal\" | \"popover\" | \"drawer\";\n\ntype CommonProps =\n  | \"isDismissable\"\n  | \"isOpen\"\n  | \"defaultOpen\"\n  | \"onOpenChange\"\n  | \"isKeyboardDismissDisabled\"\n  | \"shouldCloseOnInteractOutside\";\n\ninterface OverlayProps extends Pick<ModalProps, CommonProps> {\n  children?: React.ReactNode;\n  type?: Type;\n  mobileType?: Type | null;\n  popoverProps?: Omit<PopoverProps, \"children\" | CommonProps>;\n  modalProps?: Omit<ModalProps, \"children\" | CommonProps>;\n  drawerProps?: Omit<DrawerProps, \"children\" | CommonProps>;\n}\n\nfunction Overlay({\n  type = \"modal\",\n  mobileType = \"drawer\",\n  modalProps,\n  popoverProps,\n  drawerProps,\n  ...props\n}: OverlayProps) {\n  const isMobile = useIsMobile();\n  const resolvedType = mobileType ? (isMobile ? mobileType : type) : type;\n\n  if (resolvedType === \"modal\") {\n    return <Modal {...modalProps} {...props} />;\n  }\n\n  if (resolvedType === \"popover\") {\n    return <Popover {...popoverProps} {...props} />;\n  }\n\n  if (resolvedType === \"drawer\") {\n    return <Drawer {...drawerProps} {...props} />;\n  }\n}\n\nexport type { OverlayProps };\nexport { Overlay };\n",
+      "type": "registry:ui",
+      "target": "ui/overlay.tsx"
+    }
+  ]
+}

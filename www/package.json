@@ -70,7 +70,6 @@
   },
   "devDependencies": {
     "@dotui/eslint-config": "workspace:^",
-    "@dotui/schemas": "workspace:*",
     "@dotui/ts-config": "workspace:*",
     "@tailwindcss/postcss": "4.0.0",
     "@types/estree": "^1.0.6",

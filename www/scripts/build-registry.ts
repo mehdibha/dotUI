@@ -1,11 +1,12 @@
-import { exec } from "child_process"
+import { execa } from "execa";
 import { existsSync, promises as fs } from "node:fs";
 import path from "path";
 import { rimraf } from "rimraf";
-import { themes } from "@/registry/registry-themes";
-
-// Add pnpm to PATH
-process.env.PATH = `${process.env.PATH}:/usr/local/bin`;
+import { siteConfig } from "@/config";
+import { registry } from "@/reg";
+import { base } from "@/reg/registry-base";
+import { themes } from "@/reg/registry-themes";
+import { hasStyles, RegistryItemProps, RegistryItem } from "@/reg/types";
 
 const REGISTRY_PATH = path.join(process.cwd(), "public/r");
 const REGISTRY_URL =
@@ -13,98 +14,175 @@ const REGISTRY_URL =
     ? "https://dotui.org/r"
     : "http://localhost:3000/r";
 
+const SHADCN_REGISTRY_PATH = path.join(process.cwd(), "src/registry");
+const INTERNAL_REGISTRY_PATH = path.join(process.cwd(), "src/reg");
+
 const setup = async () => {
-  const targetPath = REGISTRY_PATH;
-  rimraf.sync(targetPath);
-  if (!existsSync(targetPath)) {
-    await fs.mkdir(targetPath, { recursive: true });
+  // clean up src/registry
+  rimraf.sync(SHADCN_REGISTRY_PATH);
+  if (!existsSync(SHADCN_REGISTRY_PATH)) {
+    await fs.mkdir(SHADCN_REGISTRY_PATH, { recursive: true });
+  }
+
+  // clean up public/r
+  rimraf.sync(REGISTRY_PATH);
+  if (!existsSync(REGISTRY_PATH)) {
+    await fs.mkdir(REGISTRY_PATH, { recursive: true });
   }
 };
 
 const buildRegistry = async () => {
-  await setup();
-
-  console.log("Building registry...");
-
-  // Build base
-  const basePath = path.join(REGISTRY_PATH, "base.json");
-  const basePayload = {
-    name: "base",
-    type: "registry:style",
-    dependecies: [
-      "tailwind-variants",
-      "react-aria-components",
-      "tailwindcss-react-aria-components",
-    ],
-    registryDependencies: [`${REGISTRY_URL}/utils`],
-    files: [],
-  };
-
-  await fs.writeFile(basePath, JSON.stringify(basePayload, null, 2), "utf8");
-
-  // Build utils
-  const utilsPath = path.join(REGISTRY_PATH, "utils.json");
-  const utilsPayload = {
-    name: "utils",
-    type: "registry:lib",
-    dependencies: ["clsx", "tailwind-merge"],
-  };
-
-  await fs.writeFile(utilsPath, JSON.stringify(utilsPayload, null, 2), "utf8");
-
   await Promise.all(
-    themes.map(async (theme) => {
-      const targetPath = path.join(REGISTRY_PATH, theme.name);
-      await fs.mkdir(targetPath, { recursive: true });
-
-      const indexPayload = {
+    themes.map(async (t) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const indexPayload: any = {
         $schema: "https://ui.shadcn.com/schema/registry.json",
         extends: "none",
-        name: theme.name,
-        homepage: `${REGISTRY_URL}/themes/${theme.name}`,
-        items: [
-          {
-            name: "focus-styles",
-            type: "registry:lib",
-            files: [
-              {
-                path: "src/registry/lib/focus-styles.ts",
-                target: "lib/utils.tsx",
-                type: "registry:lib",
-              },
-            ],
-          },
-        ],
+        name: t.name,
+        homepage: `${REGISTRY_URL}/themes/${t.name}`,
+        items: [],
       };
 
-      await fs.writeFile(
-        path.join(targetPath, "index.json"),
-        JSON.stringify(indexPayload, null, 2),
-        "utf8"
-      );
+      indexPayload.items.push(transformRegistryItem(base, t.name));
 
-      await new Promise((resolve, reject) => {
-        const process = exec(
-          `pnpm dlx shadcn@latest build -o ./public/r/${theme.name} ./public/r/${theme.name}/index.json`
-        )
-    
-        process.on("exit", (code) => {
-          if (code === 0) {
-            resolve(undefined)
-          } else {
-            reject(new Error(`Process exited with code ${code}`))
+      // create public/r/{styleName} folder
+      const publicStylePath = path.join(REGISTRY_PATH, t.name);
+      await fs.mkdir(publicStylePath, { recursive: true });
+
+      // create registry/{styleName} folder
+      const stylePath = path.join(SHADCN_REGISTRY_PATH, t.name);
+      await fs.mkdir(stylePath, { recursive: true });
+
+      // create registry/{styleName} folder
+      const uiPath = path.join(stylePath, "ui");
+      await fs.mkdir(uiPath, { recursive: true });
+
+      // create registry/{styleName}/hooks folder
+      const hooksPath = path.join(stylePath, "hooks");
+      await fs.mkdir(hooksPath, { recursive: true });
+
+      // create registry/{styleName}/lib folder
+      const libPath = path.join(stylePath, "lib");
+      await fs.mkdir(libPath, { recursive: true });
+
+      for (const item of registry) {
+        if (hasStyles(item)) {
+          const style = item.styles[0]!;
+          for (const file of style.files) {
+            const rawFileContent = await fs.readFile(
+              path.join(INTERNAL_REGISTRY_PATH, file.path),
+              "utf-8"
+            );
+            const fileContent = transformContent(rawFileContent, t.name, [
+              importTransformer,
+            ]);
+            await fs.writeFile(path.join(stylePath, file.target), fileContent);
+            indexPayload.items.push(
+              transformRegistryItem({ ...style, name: item.name }, t.name)
+            );
           }
-        })
-      })
+        } else {
+          for (const file of item.files) {
+            const rawFileContent = await fs.readFile(
+              path.join(INTERNAL_REGISTRY_PATH, file.path),
+              "utf-8"
+            );
+            const fileContent = transformContent(rawFileContent, t.name, [
+              importTransformer,
+            ]);
+            await fs.writeFile(path.join(stylePath, file.target), fileContent);
+            indexPayload.items.push(transformRegistryItem(item, t.name));
+          }
+        }
 
+        // create public/r/{styleName}/index.json
+        await fs.writeFile(
+          path.join(REGISTRY_PATH, `${t.name}/index.json`),
+          JSON.stringify(indexPayload, null, 2)
+        );
+      }
+
+      // run shadcn script
+      await execa(
+        "pnpm",
+        [
+          "dlx",
+          "shadcn@latest",
+          "build",
+          "-o",
+          `./public/r/${t.name}`,
+          `./public/r/${t.name}/index.json`,
+        ],
+        {
+          stdio: "ignore",
+        }
+      );
     })
   );
-
-  console.log(`✅ Successfully built ${themes.length} styles.`);
 };
+
+type Transformer = (content: string, styleName: string) => string;
+
+function transformContent(
+  content: string,
+  styleName: string,
+  transformers: Transformer[]
+): string {
+  return transformers.reduce(
+    (acc, transformer) => transformer(acc, styleName),
+    content
+  );
+}
+
+export const importTransformer: Transformer = (content, styleName) => {
+  return content.replace(/from\s+["']@\/reg\/([^"']+)["']/g, (_, path) => {
+    const parts = path.split("/");
+    const fileName = parts.pop()!;
+
+    const [componentName, componentStyleName] = fileName.split(".");
+
+    const newPath = componentStyleName
+      ? `@/registry/${styleName}/${parts.join("/")}/${componentName}`
+      : `@/registry/${styleName}/${[...parts, fileName].join("/")}`;
+
+    return `from "${newPath}"`;
+  });
+};
+
+function transformRegistryItem(item: RegistryItemProps, styleName: string) {
+  // transform registryDependencies
+  const registryDependencies = item.registryDependencies?.map((dependency) => {
+    return `${REGISTRY_URL}/${styleName}/${dependency}.json`;
+  });
+
+  // transform files
+  const files = item.files.map((file) => {
+    const filePath = file.path;
+    const parts = filePath.split("/");
+    const fileName = parts.pop()!;
+    const [componentName, , fileExtension] = fileName.split(".");
+    const newFileName = fileExtension
+      ? `${componentName}.${fileExtension}`
+      : fileName;
+    const newFilePath = ["src/registry", styleName, ...parts, newFileName].join(
+      "/"
+    );
+    return {
+      ...file,
+      path: newFilePath,
+    };
+  });
+
+  return {
+    ...item,
+    files,
+    registryDependencies,
+  };
+}
 
 const run = async () => {
   try {
+    await setup();
     await buildRegistry();
     console.log("✅ Done!");
   } catch (error) {

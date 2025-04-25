@@ -1,0 +1,16 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "toggle-button-group",
+  "type": "registry:ui",
+  "registryDependencies": [
+    "http://localhost:3000/r/minimalist/toggle-button.json"
+  ],
+  "files": [
+    {
+      "path": "src/registry/minimalist/ui/toggle-button-group.tsx",
+      "content": "\"use client\";\n\nimport {\n  ToggleButtonGroup as AriaToggleButtonGroup,\n  composeRenderProps,\n} from \"react-aria-components\";\nimport { tv, type VariantProps } from \"tailwind-variants\";\nimport {\n  ToggleButtonProvider,\n  toggleButtonStyles,\n} from \"@/registry/minimalist/ui/toggle-button_basic\";\n\nconst toggleGroupStyles = tv({\n  base: \"isolate inline-flex items-center [&_button]:rounded-none [&_button]:first:rounded-s-md [&_button]:last:rounded-e-md\",\n  variants: {\n    orientation: {\n      horizontal: \"flex-row\",\n      vertical: \"flex-col\",\n    },\n  },\n});\n\ninterface ToggleButtonGroupProps\n  extends React.ComponentProps<typeof AriaToggleButtonGroup>,\n    VariantProps<typeof toggleButtonStyles> {}\n\nconst ToggleButtonGroup = ({\n  variant,\n  size,\n  shape,\n  orientation = \"horizontal\",\n  className,\n  ...props\n}: ToggleButtonGroupProps) => {\n  return (\n    <ToggleButtonProvider variant={variant} size={size} shape={shape}>\n      <AriaToggleButtonGroup\n        orientation={orientation}\n        className={composeRenderProps(className, (className, renderProps) =>\n          toggleGroupStyles({\n            ...renderProps,\n            orientation,\n            className,\n          })\n        )}\n        {...props}\n      />\n    </ToggleButtonProvider>\n  );\n};\n\nexport type { ToggleButtonGroupProps };\nexport { ToggleButtonGroup };\n",
+      "type": "registry:ui",
+      "target": "ui/toggle-button-group.tsx"
+    }
+  ]
+}

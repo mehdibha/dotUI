@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "date-field",
+  "type": "registry:ui",
+  "registryDependencies": [
+    "http://localhost:3000/r/forest/field.json",
+    "http://localhost:3000/r/forest/input.json",
+    "http://localhost:3000/r/forest/date-input.json"
+  ],
+  "files": [
+    {
+      "path": "src/registry/forest/ui/date-field.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport {\n  DateField as AriaDateField,\n  composeRenderProps,\n  type DateValue,\n  type DateFieldProps as AriaDateFieldProps,\n} from \"react-aria-components\";\nimport { tv } from \"tailwind-variants\";\nimport { DateInput, DateSegment } from \"@/registry/forest/ui/date-input\";\nimport { HelpText, Label, type FieldProps } from \"@/registry/forest/ui/field\";\nimport { InputRoot, type InputRootProps } from \"@/registry/forest/ui/input\";\n\nconst dateFieldStyles = tv({\n  base: \"flex w-32 flex-col items-start gap-2\",\n});\n\ninterface DateFieldProps<T extends DateValue>\n  extends DateFieldRootProps<T>,\n    Pick<InputRootProps, \"size\" | \"prefix\" | \"suffix\">,\n    FieldProps {}\n\nconst DateField = <T extends DateValue>({\n  label,\n  description,\n  errorMessage,\n  prefix,\n  suffix,\n  size,\n  ...props\n}: DateFieldProps<T>) => {\n  return (\n    <DateFieldRoot {...props}>\n      {label && <Label>{label}</Label>}\n      <DateFieldInput prefix={prefix} suffix={suffix} size={size} />\n      <HelpText description={description} errorMessage={errorMessage} />\n    </DateFieldRoot>\n  );\n};\n\ninterface DateFieldRootProps<T extends DateValue>\n  extends AriaDateFieldProps<T> {\n  ref?: React.RefObject<HTMLDivElement>;\n}\nconst DateFieldRoot = <T extends DateValue>({\n  className,\n  ...props\n}: DateFieldRootProps<T>) => {\n  return (\n    <AriaDateField\n      className={composeRenderProps(className, (className) =>\n        dateFieldStyles({ className })\n      )}\n      {...props}\n    />\n  );\n};\n\ninterface DateFieldInputProps extends InputRootProps {}\nconst DateFieldInput = (props: DateFieldInputProps) => {\n  return (\n    <InputRoot {...props}>\n      <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>\n    </InputRoot>\n  );\n};\n\nexport type { DateFieldProps, DateFieldRootProps, DateFieldInputProps };\nexport { DateField, DateFieldRoot, DateFieldInput };\n",
+      "type": "registry:ui",
+      "target": "ui/date-field.tsx"
+    }
+  ]
+}

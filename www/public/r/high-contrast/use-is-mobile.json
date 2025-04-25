@@ -1,0 +1,13 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-is-mobile",
+  "type": "registry:hook",
+  "files": [
+    {
+      "path": "src/registry/high-contrast/hooks/use-is-mobile.ts",
+      "content": "import * as React from \"react\";\n\nexport function useIsMobile() {\n  const [isMobile, setMobile] = React.useState(false);\n\n  React.useEffect(() => {\n    function onChange(event: MediaQueryListEvent) {\n      setMobile(event.matches);\n    }\n\n    const result = matchMedia(\"(max-width: 640px)\");\n    result.addEventListener(\"change\", onChange);\n    setMobile(result.matches);\n\n    return () => result.removeEventListener(\"change\", onChange);\n  }, []);\n\n  return isMobile;\n}\n",
+      "type": "registry:hook",
+      "target": "hooks/use-is-mobile.ts"
+    }
+  ]
+}
