@@ -10,9 +10,9 @@ import {
   DialogHeading,
   DialogDescription,
 } from "@/components/dynamic-core/dialog";
+import { Overlay } from "@/components/dynamic-core/overlay";
 import { TextArea } from "@/components/dynamic-core/text-area";
 import { TextField } from "@/components/dynamic-core/text-field";
-import { Overlay } from "@/components/dynamic-core/overlay";
 
 export default function Demo() {
   return (

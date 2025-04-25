@@ -12,12 +12,12 @@ import {
 } from "lucide-react";
 import { kekabCaseToTitle } from "@/lib/string";
 import { Button } from "@/components/core/button";
+import { Command } from "@/components/core/command";
 import { DialogRoot, Dialog } from "@/components/core/dialog";
+import { Input, InputRoot } from "@/components/core/input";
 import { Loader } from "@/components/core/loader";
 import { MenuContent, MenuItem, MenuSection } from "@/components/core/menu";
 import { SearchFieldRoot } from "@/components/core/search-field";
-import { Command } from "@/components/core/command";
-import { Input, InputRoot } from "@/components/core/input";
 import { searchConfig } from "@/config";
 
 interface SearchCommandProps {

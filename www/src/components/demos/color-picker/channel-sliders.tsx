@@ -6,12 +6,12 @@ import {
   ColorPickerRoot,
   ColorPickerButton,
 } from "@/components/dynamic-core/color-picker";
-import { Dialog, DialogRoot } from "@/components/dynamic-core/dialog";
 import { ColorSlider } from "@/components/dynamic-core/color-slider";
+import { Dialog, DialogRoot } from "@/components/dynamic-core/dialog";
 import { Select, SelectItem } from "@/components/dynamic-core/select";
 
 export default function Demo() {
-  const [space, setSpace] = React.useState<ColorSpace>("rgb");  
+  const [space, setSpace] = React.useState<ColorSpace>("rgb");
   return (
     <ColorPickerRoot defaultValue="#5100FF">
       <DialogRoot>

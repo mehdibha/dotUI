@@ -294,9 +294,6 @@ importers:
       '@dotui/eslint-config':
         specifier: workspace:^
         version: link:../packages/config/eslint
-      '@dotui/schemas':
-        specifier: workspace:*
-        version: link:../packages/schemas
       '@dotui/ts-config':
         specifier: workspace:*
         version: link:../packages/config/ts-config

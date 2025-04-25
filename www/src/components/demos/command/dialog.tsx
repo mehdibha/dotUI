@@ -1,11 +1,11 @@
 "use client";
 
 import { useFilter } from "react-aria-components";
+import { Button } from "@/components/dynamic-core/button";
 import { Command } from "@/components/dynamic-core/command";
+import { Dialog, DialogRoot } from "@/components/dynamic-core/dialog";
 import { MenuContent, MenuItem } from "@/components/dynamic-core/menu";
 import { SearchField } from "@/components/dynamic-core/search-field";
-import { Button } from "@/components/dynamic-core/button";
-import { Dialog, DialogRoot } from "@/components/dynamic-core/dialog";
 
 export default function Demo() {
   const { contains } = useFilter({ sensitivity: "base" });

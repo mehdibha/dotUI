@@ -3,8 +3,8 @@
 import React from "react";
 import { Button } from "@/components/dynamic-core/button";
 import { DialogRoot, DialogContent } from "@/components/dynamic-core/dialog";
-import { Radio, RadioGroup } from "@/components/dynamic-core/radio-group";
 import { Overlay } from "@/components/dynamic-core/overlay";
+import { Radio, RadioGroup } from "@/components/dynamic-core/radio-group";
 
 type Type = "modal" | "drawer" | "popover";
 

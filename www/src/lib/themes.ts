@@ -1,6 +1,5 @@
 import { Theme } from "@/types/theme";
 
-
 export const createTheme = (theme: Theme) => {
   return {
     ...theme,

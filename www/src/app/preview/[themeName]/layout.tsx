@@ -1,6 +1,6 @@
 import React from "react";
-import { themes } from "@/reg/registry-themes";
 import { ThemeProvider } from "@/modules/themes/components/theme-provider";
+import { themes } from "@/reg/registry-themes";
 import { ThemeUpdater } from "./theme-updater";
 
 export default async function PreviewLayout({

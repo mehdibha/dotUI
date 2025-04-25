@@ -1,15 +1,15 @@
 import React from "react";
 import { getGitHubContributors } from "@/lib/github";
 import { Announcement } from "@/components/announcement";
+import { Avatar } from "@/components/core/avatar";
 import { Button } from "@/components/core/button";
 import { Link } from "@/components/core/link";
+import { Tooltip } from "@/components/core/tooltip";
 import { GitHubIcon } from "@/components/icons";
 import { AdobeIcon } from "@/components/icons/adobe-icon";
 import { ReactJsIcon } from "@/components/icons/reactjs-icon";
 import { TailwindIcon } from "@/components/icons/tailwindcss-icon";
 import { TypescriptIcon } from "@/components/icons/typescript-icon";
-import { Avatar } from "@/components/core/avatar";
-import { Tooltip } from "@/components/core/tooltip";
 import { siteConfig } from "@/config";
 import { ThemesOverview } from "@/modules/themes/components/themes-overview";
 

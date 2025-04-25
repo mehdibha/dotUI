@@ -4,8 +4,8 @@ import * as React from "react";
 import { MoonIcon, SunIcon } from "lucide-react";
 import { motion, Transition } from "motion/react";
 import { Switch as AriaSwitch } from "react-aria-components";
-import { cn } from "@/lib/utils";
 import { focusRingGroup } from "@/lib/focus-styles";
+import { cn } from "@/lib/utils";
 
 const TRANSITION: Transition = { type: "spring", bounce: 0.05, duration: 0.2 };
 

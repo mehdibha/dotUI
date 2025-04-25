@@ -4,11 +4,11 @@ import {
   ColorPickerRoot,
 } from "@/components/dynamic-core/color-picker";
 import { ColorSwatch } from "@/components/dynamic-core/color-swatch";
-import { Dialog, DialogRoot } from "@/components/dynamic-core/dialog";
 import {
   ColorSwatchPicker,
   ColorSwatchPickerItem,
 } from "@/components/dynamic-core/color-swatch-picker";
+import { Dialog, DialogRoot } from "@/components/dynamic-core/dialog";
 
 export default function Demo() {
   return (

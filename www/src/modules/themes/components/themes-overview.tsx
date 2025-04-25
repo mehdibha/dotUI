@@ -3,25 +3,25 @@
 import React from "react";
 import { CheckIcon, CopyIcon } from "lucide-react";
 import { AnimatePresence, motion, Variants } from "motion/react";
+import { useInView } from "motion/react";
 import { useMounted } from "@/hooks/use-mounted";
 import { Button } from "@/components/core/button";
-import { Skeleton } from "@/reg/ui/skeleton.basic";
-import { Tabs, TabList, Tab } from "@/reg/ui/tabs.motion";
-import { themes } from "@/reg/registry-themes";
 import { Theme } from "@/types/theme";
 import {
   ComponentsOverview,
   MobileComponentsOverview,
 } from "@/modules/demos/components/components-overview";
+import { themes } from "@/reg/registry-themes";
+import { Skeleton } from "@/reg/ui/skeleton.basic";
+import { Tabs, TabList, Tab } from "@/reg/ui/tabs.motion";
 import { ThemeProvider } from "./theme-provider";
-import { useInView } from "motion/react"
 
 export const ThemesOverview = () => {
   const [currentThemeName, setCurrentThemeName] = React.useState<string>(
     (themes[0] as unknown as Theme).name
   );
-  const ref = React.useRef(null)
-  const isInView = useInView(ref)
+  const ref = React.useRef(null);
+  const isInView = useInView(ref);
   const [touched, setTouched] = React.useState<boolean>(false);
   const [copied, setCopied] = React.useState(false);
   const isMounted = useMounted();
@@ -67,7 +67,8 @@ export const ThemesOverview = () => {
           <pre>
             <code>
               <motion.span layout transition={{ duration: 0.5 }}>
-                <span className="text-[#F69D50]">npx</span> shadcn@latest init https://dotui.org/r/
+                <span className="text-[#F69D50]">npx</span> shadcn@latest init
+                https://dotui.org/r/
               </motion.span>
               <AnimatePresence mode="popLayout">
                 <motion.span
@@ -103,7 +104,7 @@ export const ThemesOverview = () => {
           </motion.div>
         </div>
         <div className="relative flex flex-col items-end gap-2">
-          <div className="xl:block absolute right-0 top-0 hidden translate-x-[calc(100%+40px)] translate-y-[calc(-100%-30px)]">
+          <div className="absolute right-0 top-0 hidden translate-x-[calc(100%+40px)] translate-y-[calc(-100%-30px)] xl:block">
             <div>
               <svg
                 width="30"

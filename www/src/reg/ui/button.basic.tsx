@@ -9,9 +9,9 @@ import {
   type LinkProps as AriaLinkProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { Loader } from "@/reg/ui/loader.ring";
 import { focusRing } from "@/reg/lib/focus-styles";
 import { createOptionalScopedContext } from "@/reg/lib/utils";
+import { Loader } from "@/reg/ui/loader.ring";
 
 const buttonStyles = tv({
   extend: focusRing,
