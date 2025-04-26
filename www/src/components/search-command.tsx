@@ -18,7 +18,6 @@ import { Input, InputRoot } from "@/components/core/input";
 import { Loader } from "@/components/core/loader";
 import { MenuContent, MenuItem, MenuSection } from "@/components/core/menu";
 import { SearchFieldRoot } from "@/components/core/search-field";
-import { searchConfig } from "@/config";
 
 interface SearchCommandProps {
   keyboardShortcut?: boolean;
@@ -33,20 +32,7 @@ export function SearchCommand({
 }: SearchCommandProps) {
   const { search, setSearch, query } = useDocsSearch({ type: "fetch" });
   const results =
-    search === "" || query.data === "empty"
-      ? [
-          {
-            id: "suggestions",
-            name: "Suggestions",
-            results: searchConfig.defaultResults.map((elem) => ({
-              id: elem.href,
-              content: elem.name,
-              url: elem.href,
-              type: "page",
-            })),
-          },
-        ]
-      : groupByCategory(query.data);
+    search === "" || query.data === "empty" ? [] : groupByCategory(query.data);
 
   return (
     <SearchCommandDialog keyboardShortcut={keyboardShortcut} trigger={children}>

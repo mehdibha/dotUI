@@ -40,12 +40,12 @@ export default async function HomePage() {
               Get started
             </Button>
             <Button
-              href="/themes"
-              variant="outline"
+              href="/styles"
+              variant="default"
               size="lg"
-              className="bg-bg-inverse/5 h-10"
+              className="h-10"
             >
-              Explore themes
+              Explore styles
             </Button>
           </div>
         </section>
@@ -149,9 +149,8 @@ export default async function HomePage() {
             href={siteConfig.links.github}
             target="_blank"
             prefix={<GitHubIcon />}
-            variant="outline"
             size="lg"
-            className="bg-bg-inverse/5 h-12"
+            className="h-12"
           >
             Star on GitHub
           </Button>

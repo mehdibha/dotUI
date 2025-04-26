@@ -32,12 +32,3 @@ export const siteConfig = {
     creatorGithub: "https://github.com/mehdibha",
   },
 };
-
-export const searchConfig = {
-  defaultResults: [
-    { name: "Installation", href: "/docs/getting-started/installation" },
-    { name: "Themes", href: "/themes" },
-    { name: "Button", href: "/docs/components/buttons/button" },
-    { name: "TextField", href: "/docs/components/inputs/text-field" },
-  ],
-};

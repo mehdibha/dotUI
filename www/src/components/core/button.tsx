@@ -1,1 +1,1 @@
-export * from "@/reg/ui/button.basic";
+export * from "@/reg/ui/button.basic-2";

@@ -55,54 +55,82 @@ export const ThemesOverview = () => {
   }, [currentThemeName, touched, isInView]);
 
   return (
-    <div className="flex flex-col items-center gap-10 md:gap-4">
-      <div className="container relative flex max-w-screen-2xl flex-col items-center gap-6">
-        <div className="text-fg-muted relative flex items-center gap-2 py-2 pl-4 pr-2 font-mono text-xs">
-          <motion.div
-            layout
-            initial={false}
-            transition={{ duration: 0.5 }}
-            className="absolute inset-0 z-[-1] rounded-md border bg-[#f5f5f5] dark:bg-[#19191d]"
-          />
-          <pre>
-            <code>
-              <motion.span layout transition={{ duration: 0.5 }}>
-                <span className="text-[#F69D50]">npx</span> shadcn@latest init
-                https://dotui.org/r/
-              </motion.span>
-              <AnimatePresence mode="popLayout">
-                <motion.span
-                  key={currentTheme.name}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="text-[#F69D50]"
-                >
-                  {currentThemeName}
-                </motion.span>
-              </AnimatePresence>
-              <motion.span layout transition={{ duration: 0.5 }}>
-                /base.json
-              </motion.span>
-            </code>
-          </pre>
-          <motion.div layout>
-            <Button
-              variant="quiet"
-              shape="square"
-              size="sm"
-              onPress={handleCopy}
-              className="text-fg-muted z-20 bg-[#f5f5f5] dark:bg-[#19191d] [&_svg]:size-3.5"
-            >
-              {copied ? (
-                <CheckIcon className="animate-in fade-in duration-75" />
-              ) : (
-                <CopyIcon className="animate-in fade-in duration-75" />
-              )}
-            </Button>
-          </motion.div>
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-col-reverse items-center gap-4 xl:flex-row xl:items-end">
+        <Tabs
+          ref={ref}
+          variant="solid"
+          selectedKey={currentThemeName}
+          onSelectionChange={(key) => {
+            setCurrentThemeName(key as string);
+            setCopied(false);
+            setTouched(true);
+          }}
+        >
+          <TabList className="flex-wrap justify-center bg-transparent">
+            {themes.map((theme) => (
+              <Tab
+                key={theme.name}
+                id={theme.name}
+                className="h-8 rounded-full px-4 text-sm"
+              >
+                {theme.name}
+              </Tab>
+            ))}
+          </TabList>
+        </Tabs>
+        <div className="flex flex-1 items-center justify-center">
+          <div className="text-fg-muted relative flex items-center gap-2 py-2 pl-4 pr-2 font-mono text-xs">
+            <motion.div
+              layout
+              initial={false}
+              transition={{ duration: 0.5 }}
+              className="absolute inset-0 z-[-1] rounded-md border bg-bg-neutral"
+            />
+            <pre >
+              <code className="max-sm:flex max-sm:max-w-[60vw]">
+                <span className="truncate">
+                  <motion.span layout transition={{ duration: 0.5 }}>
+                    <span className="text-[#F69D50]">npx</span> shadcn@latest
+                    init https://dotui.org/r/
+                  </motion.span>
+                  <AnimatePresence mode="popLayout">
+                    <motion.span
+                      key={currentTheme.name}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.5 }}
+                      className="text-[#F69D50]"
+                    >
+                      {currentThemeName}
+                    </motion.span>
+                  </AnimatePresence>
+                  <motion.span layout transition={{ duration: 0.5 }}>
+                    /base.json
+                  </motion.span>
+                </span>
+              </code>
+            </pre>
+            <motion.div layout>
+              <Button
+                variant="quiet"
+                shape="square"
+                size="sm"
+                onPress={handleCopy}
+                className="text-fg-muted z-20 bg-[#f5f5f5] dark:bg-[#19191d] [&_svg]:size-3.5"
+              >
+                {copied ? (
+                  <CheckIcon className="animate-in fade-in duration-75" />
+                ) : (
+                  <CopyIcon className="animate-in fade-in duration-75" />
+                )}
+              </Button>
+            </motion.div>
+          </div>
         </div>
+      </div>
+      {/* <div className="container relative flex max-w-screen-2xl flex-col items-center gap-6">
         <div className="relative flex flex-col items-end gap-2">
           <div className="absolute right-0 top-0 hidden translate-x-[calc(100%+40px)] translate-y-[calc(-100%-30px)] xl:block">
             <div>
@@ -148,7 +176,7 @@ export const ThemesOverview = () => {
             </TabList>
           </Tabs>
         </div>
-      </div>
+      </div> */}
       <Skeleton show={!isMounted} className="w-full rounded-md">
         <div className="relative w-full">
           <ThemeProvider

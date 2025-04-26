@@ -6,10 +6,9 @@ export function Announcement() {
     <Button
       href="/docs/getting-started/introduction"
       prefix={<LayoutTemplateIcon />}
-      variant="outline"
-      className="bg-bg-inverse/5 text-fg-muted mb-3 h-7 rounded-lg text-xs [&_svvg]:size-4"
+      className="text-fg-muted mb-3 h-7 rounded-lg text-xs [&_svvg]:size-4"
     >
-      Introducing dotUI beta
+      Shadcn CLI support is here! 
     </Button>
   );
 }

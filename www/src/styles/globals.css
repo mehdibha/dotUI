@@ -78,10 +78,10 @@
 }
 
 .dark {
-  --neutral-100: hsl(240, 6%, 2%);
-  --neutral-200: hsl(240, 6%, 13%);
-  --neutral-300: hsl(240, 6%, 19%);
-  --neutral-400: hsl(240, 6%, 25%);
+  --neutral-100: hsl(240, 6%, 3%);
+  --neutral-200: hsl(240, 6%, 10%);
+  --neutral-300: hsl(240, 6%, 17%);
+  --neutral-400: hsl(240, 6%, 23%);
   --neutral-500: hsl(240, 6%, 33%);
   --neutral-600: hsl(240, 6%, 47%);
   --neutral-700: hsl(240, 6%, 55%);
@@ -160,9 +160,9 @@
   --color-bg-inverse: var(--neutral-1000);
   --color-bg-disabled: var(--neutral-200);
 
-  --color-bg-neutral: var(--neutral-300);
-  --color-bg-neutral-hover: var(--neutral-400);
-  --color-bg-neutral-active: var(--neutral-500);
+  --color-bg-neutral: var(--neutral-200);
+  --color-bg-neutral-hover: var(--neutral-300);
+  --color-bg-neutral-active: var(--neutral-400);
 
   --color-bg-primary: var(--neutral-1000);
   --color-bg-primary-hover: var(--neutral-900);
