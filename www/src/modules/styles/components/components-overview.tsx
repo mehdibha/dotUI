@@ -258,7 +258,7 @@ export const MobileComponentsOverview = ({
           className="!w-full"
         />
       </div>
-      <div className="min-[35rem]:col-span-3 col-span-10 row-span-2 flex justify-between">
+      <div className="col-span-10 row-span-2 flex justify-between min-[560px]:col-span-3">
         <RadioGroup>
           <Radio value="email">
             <span className="truncate">Email</span>
@@ -269,11 +269,11 @@ export const MobileComponentsOverview = ({
           <Radio value="notification">
             <span className="truncate">Push notification</span>
           </Radio>
-          <Radio value="none" className="min-[35rem]:flex hidden">
+          <Radio value="none" className="hidden min-[560px]:flex">
             None
           </Radio>
         </RadioGroup>
-        <div className="min-[35rem]:hidden flex flex-col items-end gap-3">
+        <div className="flex flex-col items-end gap-3 min-[560px]:hidden">
           <Switch>
             <span className="truncate">Focus mode</span>
           </Switch>
@@ -284,7 +284,7 @@ export const MobileComponentsOverview = ({
           />
         </div>
       </div>
-      <div className="min-[35rem]:col-span-7 col-span-10 flex flex-wrap items-center justify-end gap-3">
+      <div className="col-span-10 flex flex-wrap items-center justify-end gap-3 min-[560px]:col-span-7">
         <Button variant={globalVariant}>Button</Button>
         <ToggleButton aria-label="pin" variant={globalVariant}>
           <PinIcon />
@@ -308,7 +308,7 @@ export const MobileComponentsOverview = ({
           <SelectItem>ElevenLabs</SelectItem>
         </Select>
       </div>
-      <div className="min-[35rem]:flex col-span-7 hidden items-center justify-end gap-3">
+      <div className="col-span-7 hidden items-center justify-end gap-3 min-[560px]:flex">
         <Avatar
           src="https://github.com/mehdibha.png"
           alt="@mehdibha"
