@@ -198,7 +198,7 @@ export const SidebarProvider = ({
 }) => {
   const pathname = usePathname();
   const [isCollapsed, setCollapsed] = React.useState(
-    pathname.startsWith("/themes")
+    pathname.startsWith("/styles")
   );
   return (
     <SidebarContext value={{ isCollapsed, setCollapsed }}>
@@ -230,7 +230,7 @@ const SidebarSearchButton = ({ isCollapsed }: { isCollapsed: boolean }) => {
         }
         isDisabled={!isCollapsed}
       >
-        <SidebarButton variant="outline" className="bg-bg-inverse/5">
+        <SidebarButton variant="default">
           <SearchIcon />
           <div className="flex flex-1 flex-row items-center justify-between">
             <span>Search </span>
