@@ -1,6 +1,6 @@
-import { Button } from "@/components/dynamic-core/button";
-import { Menu, MenuItem, MenuRoot } from "@/components/dynamic-core/menu";
-import { Separator } from "@/components/dynamic-core/separator";
+import { Button } from "@/components/dynamic-ui/button";
+import { Menu, MenuItem, MenuRoot } from "@/components/dynamic-ui/menu";
+import { Separator } from "@/components/dynamic-ui/separator";
 
 export default function Demo() {
   return (

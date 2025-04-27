@@ -2,7 +2,7 @@
 
 import React from "react";
 import { type Color, parseColor } from "react-aria-components";
-import { ColorField } from "@/components/dynamic-core/color-field";
+import { ColorField } from "@/components/dynamic-ui/color-field";
 
 export default function Demo() {
   const [color, setColor] = React.useState<Color | null>(parseColor("#7f007f"));

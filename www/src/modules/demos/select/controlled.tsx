@@ -2,7 +2,7 @@
 
 import React from "react";
 import type { Key } from "react-aria-components";
-import { Select, SelectItem } from "@/components/dynamic-core/select";
+import { Select, SelectItem } from "@/components/dynamic-ui/select";
 
 export default function Demo() {
   const [provider, setProvider] = React.useState<Key>("eleven-labs");

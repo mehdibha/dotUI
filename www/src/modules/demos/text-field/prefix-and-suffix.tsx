@@ -2,9 +2,9 @@
 
 import React from "react";
 import { XCircleIcon } from "lucide-react";
-import { Button } from "@/components/dynamic-core/button";
-import { TextField } from "@/components/dynamic-core/text-field";
-import { Tooltip } from "@/components/dynamic-core/tooltip";
+import { Button } from "@/components/dynamic-ui/button";
+import { TextField } from "@/components/dynamic-ui/text-field";
+import { Tooltip } from "@/components/dynamic-ui/tooltip";
 
 export default function Demo() {
   const [inputValue, setInputValue] = React.useState("Hello world!");

@@ -2,9 +2,9 @@
 
 import React from "react";
 import { PenSquareIcon } from "lucide-react";
-import { Button } from "@/components/dynamic-core/button";
-import { NumberField } from "@/components/dynamic-core/number-field";
-import { Tooltip } from "@/components/dynamic-core/tooltip";
+import { Button } from "@/components/dynamic-ui/button";
+import { NumberField } from "@/components/dynamic-ui/number-field";
+import { Tooltip } from "@/components/dynamic-ui/tooltip";
 
 export default function Demo() {
   const [containerPadding, setContainerPadding] = React.useState(12);

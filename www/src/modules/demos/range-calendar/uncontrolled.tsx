@@ -2,7 +2,7 @@
 
 import React from "react";
 import { parseDate } from "@internationalized/date";
-import { RangeCalendar } from "@/components/dynamic-core/calendar";
+import { RangeCalendar } from "@/components/dynamic-ui/calendar";
 
 export default function Demo() {
   return (

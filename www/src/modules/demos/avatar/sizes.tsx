@@ -1,4 +1,4 @@
-import { Avatar } from "@/components/dynamic-core/avatar";
+import { Avatar } from "@/components/dynamic-ui/avatar";
 
 export default function Demo() {
   return (

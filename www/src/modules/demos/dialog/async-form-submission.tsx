@@ -2,14 +2,14 @@
 
 import React from "react";
 import { Form } from "react-aria-components";
-import { Button } from "@/components/dynamic-core/button";
+import { Button } from "@/components/dynamic-ui/button";
 import {
   DialogRoot,
   Dialog,
   DialogFooter,
   DialogBody,
-} from "@/components/dynamic-core/dialog";
-import { TextField } from "@/components/dynamic-core/text-field";
+} from "@/components/dynamic-ui/dialog";
+import { TextField } from "@/components/dynamic-ui/text-field";
 
 export default function DialogDemo() {
   const [isPending, setIsPending] = React.useState(false);

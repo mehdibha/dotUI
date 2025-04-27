@@ -1,4 +1,4 @@
-import { SearchField } from "@/components/dynamic-core/search-field";
+import { SearchField } from "@/components/dynamic-ui/search-field";
 
 export default function Demo() {
   return (

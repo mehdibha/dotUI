@@ -2,8 +2,8 @@
 
 import React from "react";
 import type { Selection } from "react-aria-components";
-import { Button } from "@/components/dynamic-core/button";
-import { Menu, MenuItem, MenuRoot } from "@/components/dynamic-core/menu";
+import { Button } from "@/components/dynamic-ui/button";
+import { Menu, MenuItem, MenuRoot } from "@/components/dynamic-ui/menu";
 
 export default function Demo() {
   const [selected, setSelected] = React.useState<Selection>(

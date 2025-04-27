@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert } from "@/components/dynamic-core/alert";
+import { Alert } from "@/components/dynamic-ui/alert";
 
 export default function Demo() {
   return (

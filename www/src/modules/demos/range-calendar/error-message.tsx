@@ -3,7 +3,7 @@
 import React from "react";
 import { today, getLocalTimeZone } from "@internationalized/date";
 import { type DateRange } from "react-aria-components";
-import { RangeCalendar } from "@/components/dynamic-core/calendar";
+import { RangeCalendar } from "@/components/dynamic-ui/calendar";
 
 export default function Demo() {
   const [range, setRange] = React.useState<DateRange | null>({

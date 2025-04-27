@@ -1,6 +1,6 @@
 "use client";
 
-import { DatePicker } from "@/components/dynamic-core/date-picker";
+import { DatePicker } from "@/components/dynamic-ui/date-picker";
 
 export default function Demo() {
   return (

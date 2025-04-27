@@ -2,16 +2,16 @@
 
 import React from "react";
 import { PenSquareIcon } from "lucide-react";
-import { Button } from "@/components/dynamic-core/button";
+import { Button } from "@/components/dynamic-ui/button";
 import {
   DialogRoot,
   Dialog,
   DialogBody,
   DialogFooter,
-} from "@/components/dynamic-core/dialog";
-import { Radio, RadioGroup } from "@/components/dynamic-core/radio-group";
-import { TextArea } from "@/components/dynamic-core/text-area";
-import { TextField } from "@/components/dynamic-core/text-field";
+} from "@/components/dynamic-ui/dialog";
+import { Radio, RadioGroup } from "@/components/dynamic-ui/radio-group";
+import { TextArea } from "@/components/dynamic-ui/text-area";
+import { TextField } from "@/components/dynamic-ui/text-field";
 
 type Type = "modal" | "drawer" | "popover";
 

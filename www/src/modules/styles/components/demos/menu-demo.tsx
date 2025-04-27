@@ -1,7 +1,7 @@
 import React from "react";
 import { CopyIcon, TrashIcon, EditIcon } from "lucide-react";
-import { Button } from "@/components/dynamic-core/button";
-import { Menu, MenuItem, MenuRoot } from "@/components/dynamic-core/menu";
+import { Button } from "@/components/dynamic-ui/button";
+import { Menu, MenuItem, MenuRoot } from "@/components/dynamic-ui/menu";
 
 export function MenuDemo() {
   return (

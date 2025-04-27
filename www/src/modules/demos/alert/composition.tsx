@@ -3,8 +3,8 @@ import {
   AlertContent,
   AlertRoot,
   AlertTitle,
-} from "@/components/dynamic-core/alert";
-import { Button } from "@/components/dynamic-core/button";
+} from "@/components/dynamic-ui/alert";
+import { Button } from "@/components/dynamic-ui/button";
 
 export default function AlertDemo() {
   return (

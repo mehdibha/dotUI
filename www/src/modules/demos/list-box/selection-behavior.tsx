@@ -1,4 +1,4 @@
-import { ListBox, ListBoxItem } from "@/components/dynamic-core/list-box";
+import { ListBox, ListBoxItem } from "@/components/dynamic-ui/list-box";
 
 export default function Demo() {
   return (

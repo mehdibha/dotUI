@@ -2,8 +2,8 @@
 
 import * as React from "react";
 import { RotateCwIcon } from "lucide-react";
-import { Button } from "@/components/dynamic-core/button";
-import { ProgressBar } from "@/components/dynamic-core/progress-bar";
+import { Button } from "@/components/dynamic-ui/button";
+import { ProgressBar } from "@/components/dynamic-ui/progress-bar";
 
 export default function Demo() {
   const [key, setKey] = React.useState(0);

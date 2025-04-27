@@ -3,10 +3,10 @@
 import React from "react";
 import { MinusIcon, PlusIcon } from "lucide-react";
 import { Group } from "react-aria-components";
-import { Button } from "@/components/dynamic-core/button";
-import { Description, Label } from "@/components/dynamic-core/field";
-import { Input, InputRoot } from "@/components/dynamic-core/input";
-import { NumberFieldRoot } from "@/components/dynamic-core/number-field";
+import { Button } from "@/components/dynamic-ui/button";
+import { Description, Label } from "@/components/dynamic-ui/field";
+import { Input, InputRoot } from "@/components/dynamic-ui/input";
+import { NumberFieldRoot } from "@/components/dynamic-ui/number-field";
 
 export default function Demo() {
   return (

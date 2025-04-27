@@ -1,5 +1,5 @@
-import { Button } from "@/components/dynamic-core/button";
-import { TextArea } from "@/components/dynamic-core/text-area";
+import { Button } from "@/components/dynamic-ui/button";
+import { TextArea } from "@/components/dynamic-ui/text-area";
 
 export function TextAreaDemo() {
   return (

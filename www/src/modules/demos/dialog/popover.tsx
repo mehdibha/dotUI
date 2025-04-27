@@ -3,11 +3,11 @@
 import React from "react";
 import { InfoIcon } from "lucide-react";
 import type { Key } from "react-aria-components";
-import { Button } from "@/components/dynamic-core/button";
-import { DialogRoot, Dialog } from "@/components/dynamic-core/dialog";
-import { NumberField } from "@/components/dynamic-core/number-field";
-import { Select, SelectItem } from "@/components/dynamic-core/select";
-import { Switch } from "@/components/dynamic-core/switch";
+import { Button } from "@/components/dynamic-ui/button";
+import { DialogRoot, Dialog } from "@/components/dynamic-ui/dialog";
+import { NumberField } from "@/components/dynamic-ui/number-field";
+import { Select, SelectItem } from "@/components/dynamic-ui/select";
+import { Switch } from "@/components/dynamic-ui/switch";
 
 export default function Demo() {
   const [placement, setPlacement] = React.useState<Key>("top");

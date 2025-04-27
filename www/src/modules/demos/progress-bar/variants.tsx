@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ProgressBar } from "@/components/dynamic-core/progress-bar";
+import { ProgressBar } from "@/components/dynamic-ui/progress-bar";
 
 const variants = ["primary", "success", "accent", "danger", "warning"] as const;
 

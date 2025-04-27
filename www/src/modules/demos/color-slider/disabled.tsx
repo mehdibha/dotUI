@@ -1,4 +1,4 @@
-import { ColorSlider } from "@/components/dynamic-core/color-slider";
+import { ColorSlider } from "@/components/dynamic-ui/color-slider";
 
 export default function Demo() {
   return (

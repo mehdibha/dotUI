@@ -1,4 +1,4 @@
-import { TextArea } from "@/components/dynamic-core/text-area";
+import { TextArea } from "@/components/dynamic-ui/text-area";
 
 export default function Demo() {
   return (

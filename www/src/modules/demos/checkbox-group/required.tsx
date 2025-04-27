@@ -1,6 +1,6 @@
 import React from "react";
-import { Checkbox } from "@/components/dynamic-core/checkbox";
-import { CheckboxGroup } from "@/components/dynamic-core/checkbox-group";
+import { Checkbox } from "@/components/dynamic-ui/checkbox";
+import { CheckboxGroup } from "@/components/dynamic-ui/checkbox-group";
 
 export default function Demo() {
   return (

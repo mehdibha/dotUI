@@ -6,7 +6,7 @@ import {
   ProgressBarIndicator,
   ProgressBarRoot,
   ProgressBarValueLabel,
-} from "@/components/dynamic-core/progress-bar";
+} from "@/components/dynamic-ui/progress-bar";
 
 export default function Demo() {
   return (

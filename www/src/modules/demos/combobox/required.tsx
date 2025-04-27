@@ -1,5 +1,5 @@
 import React from "react";
-import { Combobox, ComboboxItem } from "@/components/dynamic-core/combobox";
+import { Combobox, ComboboxItem } from "@/components/dynamic-ui/combobox";
 
 export default function Demo() {
   return (

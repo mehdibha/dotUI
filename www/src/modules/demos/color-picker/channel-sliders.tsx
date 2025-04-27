@@ -5,10 +5,10 @@ import { getColorChannels, type ColorSpace } from "react-aria-components";
 import {
   ColorPickerRoot,
   ColorPickerButton,
-} from "@/components/dynamic-core/color-picker";
-import { ColorSlider } from "@/components/dynamic-core/color-slider";
-import { Dialog, DialogRoot } from "@/components/dynamic-core/dialog";
-import { Select, SelectItem } from "@/components/dynamic-core/select";
+} from "@/components/dynamic-ui/color-picker";
+import { ColorSlider } from "@/components/dynamic-ui/color-slider";
+import { Dialog, DialogRoot } from "@/components/dynamic-ui/dialog";
+import { Select, SelectItem } from "@/components/dynamic-ui/select";
 
 export default function Demo() {
   const [space, setSpace] = React.useState<ColorSpace>("rgb");

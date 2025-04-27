@@ -2,9 +2,9 @@
 
 import React from "react";
 import { PenSquareIcon } from "lucide-react";
-import { Button } from "@/components/dynamic-core/button";
-import { Switch } from "@/components/dynamic-core/switch";
-import { Tooltip } from "@/components/dynamic-core/tooltip";
+import { Button } from "@/components/dynamic-ui/button";
+import { Switch } from "@/components/dynamic-ui/switch";
+import { Tooltip } from "@/components/dynamic-ui/tooltip";
 
 export default function Demo() {
   const [shouldFlip, setShouldFlip] = React.useState(false);

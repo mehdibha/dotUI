@@ -1,11 +1,11 @@
 import { MenuIcon } from "lucide-react";
-import { Button } from "@/components/dynamic-core/button";
+import { Button } from "@/components/dynamic-ui/button";
 import {
   Menu,
   MenuItem,
   MenuRoot,
   MenuSub,
-} from "@/components/dynamic-core/menu";
+} from "@/components/dynamic-ui/menu";
 
 export default function Demo() {
   return (

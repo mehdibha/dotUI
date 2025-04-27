@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/components/dynamic-core/button";
-import { ButtonGroup } from "@/components/dynamic-core/button-group";
+import { Button } from "@/components/dynamic-ui/button";
+import { ButtonGroup } from "@/components/dynamic-ui/button-group";
 
 export default function Demo() {
   return (

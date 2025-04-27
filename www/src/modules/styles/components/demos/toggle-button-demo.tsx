@@ -5,7 +5,7 @@ import {
   ItalicIcon,
   PinIcon,
 } from "lucide-react";
-import { ToggleButton } from "@/components/dynamic-core/toggle-button";
+import { ToggleButton } from "@/components/dynamic-ui/toggle-button";
 
 export function ToggleButtonDemo() {
   return (

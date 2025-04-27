@@ -1,12 +1,12 @@
 "use client";
 
 import React from "react";
-import { Button } from "@/components/dynamic-core/button";
+import { Button } from "@/components/dynamic-ui/button";
 import {
   DialogRoot,
   Dialog,
   DialogFooter,
-} from "@/components/dynamic-core/dialog";
+} from "@/components/dynamic-ui/dialog";
 
 export default function Demo() {
   return (

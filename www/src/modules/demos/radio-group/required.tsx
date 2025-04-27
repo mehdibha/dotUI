@@ -1,5 +1,5 @@
 import React from "react";
-import { RadioGroup, Radio } from "@/components/dynamic-core/radio-group";
+import { RadioGroup, Radio } from "@/components/dynamic-ui/radio-group";
 
 export default function Demo() {
   return (

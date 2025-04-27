@@ -3,7 +3,7 @@ import {
   SwitchIndicator,
   SwitchRoot,
   SwitchThumb,
-} from "@/components/dynamic-core/switch";
+} from "@/components/dynamic-ui/switch";
 
 export default function Demo() {
   return (

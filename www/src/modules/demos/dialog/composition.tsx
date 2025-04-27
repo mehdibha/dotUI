@@ -1,6 +1,6 @@
 import React from "react";
 import { PenSquareIcon } from "lucide-react";
-import { Button } from "@/components/dynamic-core/button";
+import { Button } from "@/components/dynamic-ui/button";
 import {
   DialogRoot,
   DialogContent,
@@ -9,10 +9,10 @@ import {
   DialogHeader,
   DialogHeading,
   DialogDescription,
-} from "@/components/dynamic-core/dialog";
-import { Overlay } from "@/components/dynamic-core/overlay";
-import { TextArea } from "@/components/dynamic-core/text-area";
-import { TextField } from "@/components/dynamic-core/text-field";
+} from "@/components/dynamic-ui/dialog";
+import { Overlay } from "@/components/dynamic-ui/overlay";
+import { TextArea } from "@/components/dynamic-ui/text-area";
+import { TextField } from "@/components/dynamic-ui/text-field";
 
 export default function Demo() {
   return (

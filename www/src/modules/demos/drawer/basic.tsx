@@ -1,7 +1,7 @@
 import React from "react";
-import { Button } from "@/components/dynamic-core/button";
-import { DialogRoot, DialogContent } from "@/components/dynamic-core/dialog";
-import { Drawer } from "@/components/dynamic-core/drawer";
+import { Button } from "@/components/dynamic-ui/button";
+import { DialogRoot, DialogContent } from "@/components/dynamic-ui/dialog";
+import { Drawer } from "@/components/dynamic-ui/drawer";
 
 export default function Demo() {
   return (

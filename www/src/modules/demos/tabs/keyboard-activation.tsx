@@ -1,4 +1,4 @@
-import { Tabs, TabList, TabPanel, Tab } from "@/components/dynamic-core/tabs";
+import { Tabs, TabList, TabPanel, Tab } from "@/components/dynamic-ui/tabs";
 
 export default function Demo() {
   return (

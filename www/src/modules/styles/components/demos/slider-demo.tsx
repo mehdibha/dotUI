@@ -1,5 +1,5 @@
 import React from "react";
-import { Slider } from "@/components/dynamic-core/slider";
+import { Slider } from "@/components/dynamic-ui/slider";
 
 export function SliderDemo() {
   return (

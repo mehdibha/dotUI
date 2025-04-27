@@ -2,8 +2,8 @@
 
 import React from "react";
 import { MenuIcon } from "lucide-react";
-import { Button } from "@/components/dynamic-core/button";
-import { Menu, MenuItem, MenuRoot } from "@/components/dynamic-core/menu";
+import { Button } from "@/components/dynamic-ui/button";
+import { Menu, MenuItem, MenuRoot } from "@/components/dynamic-ui/menu";
 
 export default function Demo() {
   const [isOpen, setOpen] = React.useState(false);

@@ -2,7 +2,7 @@
 
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { Heading } from "react-aria-components";
-import { Button } from "@/components/dynamic-core/button";
+import { Button } from "@/components/dynamic-ui/button";
 import {
   CalendarHeader,
   CalendarGrid,
@@ -10,8 +10,8 @@ import {
   CalendarHeaderCell,
   CalendarGridBody,
   CalendarCell,
-} from "@/components/dynamic-core/calendar";
-import { RangeCalendarRoot } from "@/components/dynamic-core/calendar";
+} from "@/components/dynamic-ui/calendar";
+import { RangeCalendarRoot } from "@/components/dynamic-ui/calendar";
 
 export default function Demo() {
   return (

@@ -1,12 +1,12 @@
 import { Volume1Icon, Volume2Icon } from "lucide-react";
-import { Label, Description } from "@/components/dynamic-core/field";
+import { Label, Description } from "@/components/dynamic-ui/field";
 import {
   SliderFiller,
   SliderRoot,
   SliderThumb,
   SliderTrack,
   SliderValueLabel,
-} from "@/components/dynamic-core/slider";
+} from "@/components/dynamic-ui/slider";
 
 export default function Demo() {
   return (

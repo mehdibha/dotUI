@@ -4,25 +4,25 @@ import { MenuIcon, PinIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Link } from "@/components/ui/link";
 import { RadioGroup, Radio } from "@/components/ui/radio-group";
-import { Alert } from "@/components/dynamic-core/alert";
-import { Avatar } from "@/components/dynamic-core/avatar";
-import { Button } from "@/components/dynamic-core/button";
-import { RangeCalendar } from "@/components/dynamic-core/calendar";
-import { Checkbox } from "@/components/dynamic-core/checkbox";
-import { ColorPicker } from "@/components/dynamic-core/color-picker";
-import { ColorSlider } from "@/components/dynamic-core/color-slider";
-import { Combobox, ComboboxItem } from "@/components/dynamic-core/combobox";
-import { DatePicker } from "@/components/dynamic-core/date-picker";
+import { Alert } from "@/components/dynamic-ui/alert";
+import { Avatar } from "@/components/dynamic-ui/avatar";
+import { Button } from "@/components/dynamic-ui/button";
+import { RangeCalendar } from "@/components/dynamic-ui/calendar";
+import { Checkbox } from "@/components/dynamic-ui/checkbox";
+import { ColorPicker } from "@/components/dynamic-ui/color-picker";
+import { ColorSlider } from "@/components/dynamic-ui/color-slider";
+import { Combobox, ComboboxItem } from "@/components/dynamic-ui/combobox";
+import { DatePicker } from "@/components/dynamic-ui/date-picker";
 // import { DropZone, DropZoneLabel } from "@/components/dynamic-core/drop-zone";
-import { ListBox, ListBoxItem } from "@/components/dynamic-core/list-box";
-import { Menu, MenuItem, MenuRoot } from "@/components/dynamic-core/menu";
-import { NumberField } from "@/components/dynamic-core/number-field";
-import { ProgressBar } from "@/components/dynamic-core/progress-bar";
-import { SearchField } from "@/components/dynamic-core/search-field";
-import { Select, SelectItem } from "@/components/dynamic-core/select";
-import { Separator } from "@/components/dynamic-core/separator";
-import { Slider } from "@/components/dynamic-core/slider";
-import { Switch } from "@/components/dynamic-core/switch";
+import { ListBox, ListBoxItem } from "@/components/dynamic-ui/list-box";
+import { Menu, MenuItem, MenuRoot } from "@/components/dynamic-ui/menu";
+import { NumberField } from "@/components/dynamic-ui/number-field";
+import { ProgressBar } from "@/components/dynamic-ui/progress-bar";
+import { SearchField } from "@/components/dynamic-ui/search-field";
+import { Select, SelectItem } from "@/components/dynamic-ui/select";
+import { Separator } from "@/components/dynamic-ui/separator";
+import { Slider } from "@/components/dynamic-ui/slider";
+import { Switch } from "@/components/dynamic-ui/switch";
 import {
   TableRoot,
   TableBody,
@@ -30,11 +30,11 @@ import {
   TableCell,
   TableRow,
   TableHeader,
-} from "@/components/dynamic-core/table";
-import { Tabs, Tab, TabList, TabPanel } from "@/components/dynamic-core/tabs";
-import { TextField } from "@/components/dynamic-core/text-field";
-import { TimeField } from "@/components/dynamic-core/time-field";
-import { ToggleButton } from "@/components/dynamic-core/toggle-button";
+} from "@/components/dynamic-ui/table";
+import { Tabs, Tab, TabList, TabPanel } from "@/components/dynamic-ui/tabs";
+import { TextField } from "@/components/dynamic-ui/text-field";
+import { TimeField } from "@/components/dynamic-ui/time-field";
+import { ToggleButton } from "@/components/dynamic-ui/toggle-button";
 import { GitHubIcon, TwitterIcon, GoogleIcon } from "@/components/icons";
 // import BadgeVariants from "@/components/demos/badge/variants";
 import FileTriggerDemo from "@/modules/demos/file-trigger/default";

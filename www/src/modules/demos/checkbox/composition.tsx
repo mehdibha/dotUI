@@ -1,7 +1,7 @@
 import {
   CheckboxRoot,
   CheckboxIndicator,
-} from "@/components/dynamic-core/checkbox";
+} from "@/components/dynamic-ui/checkbox";
 
 export default function Demo() {
   return (

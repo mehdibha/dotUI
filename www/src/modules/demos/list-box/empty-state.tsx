@@ -1,6 +1,6 @@
 "use client";
 
-import { ListBox } from "@/components/dynamic-core/list-box";
+import { ListBox } from "@/components/dynamic-ui/list-box";
 
 export default function Demo() {
   return (

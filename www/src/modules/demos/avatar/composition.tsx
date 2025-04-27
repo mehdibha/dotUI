@@ -5,7 +5,7 @@ import {
   AvatarImage,
   AvatarFallback,
   AvatarPlaceholder,
-} from "@/components/dynamic-core/avatar";
+} from "@/components/dynamic-ui/avatar";
 
 export default function Demo() {
   return (

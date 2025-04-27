@@ -8,7 +8,7 @@ import {
   today,
 } from "@internationalized/date";
 import { useLocale } from "react-aria";
-import { Calendar } from "@/components/dynamic-core/calendar";
+import { Calendar } from "@/components/dynamic-ui/calendar";
 
 export default function Demo() {
   const now = today(getLocalTimeZone());

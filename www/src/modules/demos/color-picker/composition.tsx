@@ -1,10 +1,10 @@
-import { Button } from "@/components/dynamic-core/button";
+import { Button } from "@/components/dynamic-ui/button";
 import {
   ColorPickerEditor,
   ColorPickerRoot,
-} from "@/components/dynamic-core/color-picker";
-import { ColorSwatch } from "@/components/dynamic-core/color-swatch";
-import { Dialog, DialogRoot } from "@/components/dynamic-core/dialog";
+} from "@/components/dynamic-ui/color-picker";
+import { ColorSwatch } from "@/components/dynamic-ui/color-swatch";
+import { Dialog, DialogRoot } from "@/components/dynamic-ui/dialog";
 
 export default function Demo() {
   return (

@@ -3,7 +3,7 @@
 import React from "react";
 import { parseDate } from "@internationalized/date";
 import type { DateValue } from "react-aria-components";
-import { DatePicker } from "@/components/dynamic-core/date-picker";
+import { DatePicker } from "@/components/dynamic-ui/date-picker";
 
 export default function Demo() {
   const [value, setValue] = React.useState<DateValue | null>(

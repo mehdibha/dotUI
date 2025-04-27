@@ -4,8 +4,8 @@ import React from "react";
 import {
   DateFieldInput,
   DateFieldRoot,
-} from "@/components/dynamic-core/date-field";
-import { Description, Label } from "@/components/dynamic-core/field";
+} from "@/components/dynamic-ui/date-field";
+import { Description, Label } from "@/components/dynamic-ui/field";
 
 export default function Demo() {
   return (

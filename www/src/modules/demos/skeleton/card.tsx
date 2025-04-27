@@ -1,4 +1,4 @@
-import { Skeleton } from "@/components/dynamic-core/skeleton";
+import { Skeleton } from "@/components/dynamic-ui/skeleton";
 
 export default function Demo() {
   return (

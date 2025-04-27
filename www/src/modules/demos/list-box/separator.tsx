@@ -1,5 +1,5 @@
-import { ListBox, ListBoxItem } from "@/components/dynamic-core/list-box";
-import { Separator } from "@/components/dynamic-core/separator";
+import { ListBox, ListBoxItem } from "@/components/dynamic-ui/list-box";
+import { Separator } from "@/components/dynamic-ui/separator";
 
 export default function Demo() {
   return (

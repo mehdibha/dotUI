@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Radio, RadioGroup } from "@/components/dynamic-core/radio-group";
+import { Radio, RadioGroup } from "@/components/dynamic-ui/radio-group";
 import {
   TableRoot,
   TableHeader,
@@ -9,7 +9,7 @@ import {
   TableRow,
   TableColumn,
   TableCell,
-} from "@/components/dynamic-core/table";
+} from "@/components/dynamic-ui/table";
 
 const columns: Column[] = [
   { name: "Name", id: "name", isRowHeader: true },

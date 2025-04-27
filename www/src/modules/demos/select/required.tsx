@@ -1,5 +1,5 @@
 import React from "react";
-import { Select, SelectItem } from "@/components/dynamic-core/select";
+import { Select, SelectItem } from "@/components/dynamic-ui/select";
 
 export default function Demo() {
   return (

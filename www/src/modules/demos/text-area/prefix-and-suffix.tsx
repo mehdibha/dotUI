@@ -2,9 +2,9 @@
 
 import React from "react";
 import { BoldIcon, ItalicIcon } from "lucide-react";
-import { Button } from "@/components/dynamic-core/button";
-import { TextArea } from "@/components/dynamic-core/text-area";
-import { ToggleButton } from "@/components/dynamic-core/toggle-button";
+import { Button } from "@/components/dynamic-ui/button";
+import { TextArea } from "@/components/dynamic-ui/text-area";
+import { ToggleButton } from "@/components/dynamic-ui/toggle-button";
 
 export default function Demo() {
   const [inputValue, setInputValue] = React.useState("");

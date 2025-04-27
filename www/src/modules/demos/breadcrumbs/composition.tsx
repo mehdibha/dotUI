@@ -3,7 +3,7 @@ import {
   Breadcrumbs,
   BreadcrumbItem,
   BreadcrumbLink,
-} from "@/components/dynamic-core/breadcrumbs";
+} from "@/components/dynamic-ui/breadcrumbs";
 
 export default function Demo() {
   return (

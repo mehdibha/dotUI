@@ -1,5 +1,5 @@
 import { EyeOffIcon } from "lucide-react";
-import { TextField } from "@/components/dynamic-core/text-field";
+import { TextField } from "@/components/dynamic-ui/text-field";
 
 export function TextFieldDemo() {
   return (

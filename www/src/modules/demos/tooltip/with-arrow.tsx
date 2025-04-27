@@ -1,6 +1,6 @@
 import { PlusIcon } from "lucide-react";
-import { Button } from "@/components/dynamic-core/button";
-import { Tooltip } from "@/components/dynamic-core/tooltip";
+import { Button } from "@/components/dynamic-ui/button";
+import { Tooltip } from "@/components/dynamic-ui/tooltip";
 
 export default function TooltipDemo() {
   return (

@@ -1,6 +1,6 @@
 import React from "react";
 import { FileIcon, FolderIcon, ImageIcon } from "lucide-react";
-import { ListBox, ListBoxItem } from "@/components/dynamic-core/list-box";
+import { ListBox, ListBoxItem } from "@/components/dynamic-ui/list-box";
 
 export function ListBoxDemo() {
   return (

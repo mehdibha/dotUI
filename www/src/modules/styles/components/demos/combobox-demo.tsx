@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Combobox, ComboboxItem } from "@/components/dynamic-core/combobox";
+import { Combobox, ComboboxItem } from "@/components/dynamic-ui/combobox";
 
 export function ComboboxDemo() {
   return (

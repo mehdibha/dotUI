@@ -1,4 +1,4 @@
-import { Separator } from "@/components/dynamic-core/separator";
+import { Separator } from "@/components/dynamic-ui/separator";
 
 export default function Demo() {
   return (

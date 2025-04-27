@@ -1,9 +1,9 @@
-import { Label, Description } from "@/components/dynamic-core/field";
-import { FieldError } from "@/components/dynamic-core/field";
+import { Label, Description } from "@/components/dynamic-ui/field";
+import { FieldError } from "@/components/dynamic-ui/field";
 import {
   TimeFieldRoot,
   TimeFieldInput,
-} from "@/components/dynamic-core/time-field";
+} from "@/components/dynamic-ui/time-field";
 
 export default function Demo() {
   return (

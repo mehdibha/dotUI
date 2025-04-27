@@ -4,7 +4,7 @@ import React from "react";
 import { today, isWeekend, getLocalTimeZone } from "@internationalized/date";
 import { useLocale } from "react-aria";
 import { type DateValue } from "react-aria-components";
-import { Calendar } from "@/components/dynamic-core/calendar";
+import { Calendar } from "@/components/dynamic-ui/calendar";
 
 export default function Demo() {
   const [date, setDate] = React.useState<DateValue>(today(getLocalTimeZone()));

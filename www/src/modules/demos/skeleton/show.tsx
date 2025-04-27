@@ -1,5 +1,5 @@
-import { Button } from "@/components/dynamic-core/button";
-import { Skeleton } from "@/components/dynamic-core/skeleton";
+import { Button } from "@/components/dynamic-ui/button";
+import { Skeleton } from "@/components/dynamic-ui/skeleton";
 
 export default function Demo() {
   return (

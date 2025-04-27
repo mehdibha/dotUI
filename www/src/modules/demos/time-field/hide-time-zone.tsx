@@ -1,7 +1,7 @@
 "use client";
 
 import { parseZonedDateTime } from "@internationalized/date";
-import { TimeField } from "@/components/dynamic-core/time-field";
+import { TimeField } from "@/components/dynamic-ui/time-field";
 
 export default function Demo() {
   return (

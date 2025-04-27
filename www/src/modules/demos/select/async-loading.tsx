@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useAsyncList } from "react-stately";
-import { Select, SelectItem } from "@/components/dynamic-core/select";
+import { Select, SelectItem } from "@/components/dynamic-ui/select";
 
 interface Character {
   name: string;

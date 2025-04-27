@@ -1,8 +1,8 @@
 import React from "react";
 import { SearchIcon } from "lucide-react";
-import { Description, Label } from "@/components/dynamic-core/field";
-import { Input, InputRoot } from "@/components/dynamic-core/input";
-import { SearchFieldRoot } from "@/components/dynamic-core/search-field";
+import { Description, Label } from "@/components/dynamic-ui/field";
+import { Input, InputRoot } from "@/components/dynamic-ui/input";
+import { SearchFieldRoot } from "@/components/dynamic-ui/search-field";
 
 export default function Demo() {
   return (

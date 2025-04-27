@@ -3,7 +3,7 @@
 import React from "react";
 import { parseDate } from "@internationalized/date";
 import type { DateValue } from "react-aria-components";
-import { DateField } from "@/components/dynamic-core/date-field";
+import { DateField } from "@/components/dynamic-ui/date-field";
 
 export default function Demo() {
   const [value, setValue] = React.useState<DateValue | null>(

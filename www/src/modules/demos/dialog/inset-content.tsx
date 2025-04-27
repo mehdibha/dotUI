@@ -1,13 +1,13 @@
 import React from "react";
 import { PenSquareIcon } from "lucide-react";
-import { Button } from "@/components/dynamic-core/button";
+import { Button } from "@/components/dynamic-ui/button";
 import {
   DialogRoot,
   Dialog,
   DialogBody,
   DialogFooter,
   DialogInset,
-} from "@/components/dynamic-core/dialog";
+} from "@/components/dynamic-ui/dialog";
 
 export default function Demo() {
   return (

@@ -1,5 +1,5 @@
 import { ArrowRightIcon, SendIcon } from "lucide-react";
-import { Button } from "@/components/dynamic-core/button";
+import { Button } from "@/components/dynamic-ui/button";
 
 export function ButtonDemo() {
   return (

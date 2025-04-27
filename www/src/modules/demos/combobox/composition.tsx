@@ -1,15 +1,8 @@
 import React from "react";
-import {
-  ComboboxRoot,
-  ComboboxInput,
-} from "@/components/dynamic-core/combobox";
-import {
-  Description,
-  FieldError,
-  Label,
-} from "@/components/dynamic-core/field";
-import { ListBoxItem, ListBox } from "@/components/dynamic-core/list-box";
-import { Overlay } from "@/components/dynamic-core/overlay";
+import { ComboboxRoot, ComboboxInput } from "@/components/dynamic-ui/combobox";
+import { Description, FieldError, Label } from "@/components/dynamic-ui/field";
+import { ListBoxItem, ListBox } from "@/components/dynamic-ui/list-box";
+import { Overlay } from "@/components/dynamic-ui/overlay";
 
 export default function Demo() {
   return (
