@@ -2,9 +2,7 @@ import { existsSync, promises as fs } from "node:fs";
 import path from "node:path";
 import { rimraf } from "rimraf";
 import { accentColors } from "@/modules/styles";
-import {
-  createThemeCssVars,
-} from "@/modules/styles/lib/create-theme";
+import { createThemeCssVars } from "@/modules/styles/lib/create-theme";
 
 // import { iconLibraries, icons } from "@/registry/registry-icons";
 
