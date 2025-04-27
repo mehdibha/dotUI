@@ -5,7 +5,7 @@ import { CheckIcon, CopyIcon } from "lucide-react";
 import { AnimatePresence, motion, Variants } from "motion/react";
 import { useInView } from "motion/react";
 import { useMounted } from "@/hooks/use-mounted";
-import { Button } from "@/components/core/button";
+import { Button } from "@/components/ui/button";
 import {
   ComponentsOverview,
   MobileComponentsOverview,

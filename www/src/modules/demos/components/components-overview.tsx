@@ -2,8 +2,8 @@
 
 import { MenuIcon, PinIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Link } from "@/components/core/link";
-import { RadioGroup, Radio } from "@/components/core/radio-group";
+import { Link } from "@/components/ui/link";
+import { RadioGroup, Radio } from "@/components/ui/radio-group";
 // import BadgeVariants from "@/components/demos/badge/variants";
 import FileTriggerDemo from "@/components/demos/file-trigger/default";
 import { Alert } from "@/components/dynamic-core/alert";

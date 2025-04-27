@@ -14,8 +14,8 @@ import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import { useDebounce } from "@/hooks/use-debounce";
 import { useMounted } from "@/hooks/use-mounted";
-import { Button } from "@/components/core/button";
-import { Skeleton } from "@/components/core/skeleton";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useSidebarContext } from "@/components/sidebar";
 import { useCurrentTheme } from "@/modules/styles/atoms/styles-atom";
 

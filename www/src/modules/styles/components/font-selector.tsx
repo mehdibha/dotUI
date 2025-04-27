@@ -5,16 +5,12 @@ import { ChevronDownIcon } from "lucide-react";
 import { useInView } from "motion/react";
 import { Virtualizer, ListLayout, useFilter } from "react-aria-components";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/core/button";
-import { CommandRoot } from "@/components/core/command";
-import { DialogRoot, Dialog } from "@/components/core/dialog";
-import {
-  ListBox,
-  ListBoxItem,
-  ListBoxSection,
-} from "@/components/core/list-box";
-import { SearchField } from "@/components/core/search-field";
-import { Select, SelectItem } from "@/components/core/select";
+import { Button } from "@/components/ui/button";
+import { CommandRoot } from "@/components/ui/command";
+import { DialogRoot, Dialog } from "@/components/ui/dialog";
+import { ListBox, ListBoxItem, ListBoxSection } from "@/components/ui/list-box";
+import { SearchField } from "@/components/ui/search-field";
+import { Select, SelectItem } from "@/components/ui/select";
 import { FontLoader } from "@/modules/styles/components/font-loader";
 import {
   sansSerifFonts,

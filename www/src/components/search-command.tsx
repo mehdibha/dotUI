@@ -11,13 +11,13 @@ import {
   SearchIcon,
 } from "lucide-react";
 import { kekabCaseToTitle } from "@/lib/string";
-import { Button } from "@/components/core/button";
-import { Command } from "@/components/core/command";
-import { DialogRoot, Dialog } from "@/components/core/dialog";
-import { Input, InputRoot } from "@/components/core/input";
-import { Loader } from "@/components/core/loader";
-import { MenuContent, MenuItem, MenuSection } from "@/components/core/menu";
-import { SearchFieldRoot } from "@/components/core/search-field";
+import { Button } from "@/components/ui/button";
+import { Command } from "@/components/ui/command";
+import { DialogRoot, Dialog } from "@/components/ui/dialog";
+import { Input, InputRoot } from "@/components/ui/input";
+import { Loader } from "@/components/ui/loader";
+import { MenuContent, MenuItem, MenuSection } from "@/components/ui/menu";
+import { SearchFieldRoot } from "@/components/ui/search-field";
 
 interface SearchCommandProps {
   keyboardShortcut?: boolean;

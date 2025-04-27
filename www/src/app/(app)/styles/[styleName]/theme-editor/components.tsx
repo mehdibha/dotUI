@@ -1,9 +1,9 @@
 import { ChevronDownIcon } from "lucide-react";
-import { Button } from "@/components/core/button";
-import { Label } from "@/components/core/field";
-import { ListBox } from "@/components/core/list-box";
-import { Popover } from "@/components/core/popover";
-import { SelectRoot, SelectItem, SelectValue } from "@/components/core/select";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/field";
+import { ListBox } from "@/components/ui/list-box";
+import { Popover } from "@/components/ui/popover";
+import { SelectRoot, SelectItem, SelectValue } from "@/components/ui/select";
 import { ButtonDemo } from "@/modules/styles/components/demos/button-demo";
 import { CalendarDemo } from "@/modules/styles/components/demos/calendar-demo";
 import { CheckboxDemo } from "@/modules/styles/components/demos/checkbox-demo";

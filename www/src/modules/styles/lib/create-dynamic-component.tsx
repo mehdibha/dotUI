@@ -1,6 +1,6 @@
 import React from "react";
 import { Primitives } from "@dotui/schemas";
-import { Skeleton } from "@/components/core/skeleton";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useCurrentTheme } from "@/modules/styles/atoms/styles-atom";
 import { useLocalPrimitives } from "@/modules/styles/contexts/primitives-context";
 

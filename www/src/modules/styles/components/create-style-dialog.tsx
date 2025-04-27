@@ -6,16 +6,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useControlledState } from "@react-stately/utils";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Alert } from "@/components/core/alert";
-import { Button } from "@/components/core/button";
+import { Alert } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogBody,
   DialogFooter,
   DialogRoot,
-} from "@/components/core/dialog";
-import { Form, FormControl } from "@/components/core/form";
-import { TextField } from "@/components/core/text-field";
+} from "@/components/ui/dialog";
+import { Form, FormControl } from "@/components/ui/form";
+import { TextField } from "@/components/ui/text-field";
 import { useUserThemes } from "@/modules/styles/atoms/styles-atom";
 
 const formSchema = z.object({

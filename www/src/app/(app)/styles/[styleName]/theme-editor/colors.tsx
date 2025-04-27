@@ -2,17 +2,17 @@ import React from "react";
 import { CheckIcon } from "lucide-react";
 import { AnimatePresence, motion, Transition } from "motion/react";
 import { cn } from "@/lib/utils";
-import { ColorPicker } from "@/components/core/color-picker";
-import { Label } from "@/components/core/field";
-import { RadioGroup, Radio } from "@/components/core/radio-group";
-import { Skeleton } from "@/components/core/skeleton";
+import { ColorPicker } from "@/components/ui/color-picker";
+import { Label } from "@/components/ui/field";
+import { RadioGroup, Radio } from "@/components/ui/radio-group";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Slider,
   SliderRoot,
   SliderTrack,
   SliderThumb,
   type SliderProps,
-} from "@/components/core/slider";
+} from "@/components/ui/slider";
 import {
   TableRoot,
   TableHeader,
@@ -20,7 +20,7 @@ import {
   TableBody,
   TableRow,
   TableCell,
-} from "@/components/core/table";
+} from "@/components/ui/table";
 import { ThemeProvider } from "@/modules/styles/components/style-provider";
 import { Theme } from "@/modules/styles/types";
 import { Collapsible } from "./collapsible";

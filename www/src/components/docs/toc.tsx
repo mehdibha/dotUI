@@ -8,7 +8,7 @@ import {
 import * as TocPrimitive from "fumadocs-core/toc";
 import { cn } from "@/lib/utils";
 import { useTocThumb } from "@/hooks/use-toc-thumb";
-import { ScrollArea } from "@/components/core/scroll-area";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export const TableOfContents = ({ toc }: { toc: TocType }) => {
   if (toc.length === 0) return null;

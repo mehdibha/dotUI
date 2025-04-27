@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { RadioGroup, Radio } from "@/components/core/radio-group";
+import { RadioGroup, Radio } from "@/components/ui/radio-group";
 import { Button } from "@/components/dynamic-core/button";
 import { DialogRoot, DialogContent } from "@/components/dynamic-core/dialog";
 import { Drawer } from "@/components/dynamic-core/drawer";

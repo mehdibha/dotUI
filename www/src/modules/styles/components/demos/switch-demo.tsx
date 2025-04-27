@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch } from "@/components/core/switch";
+import { Switch } from "@/components/ui/switch";
 
 export function SwitchDemo() {
   return (

@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { Badge, BadgeProps } from "@/components/core/badge";
+import { Badge, BadgeProps } from "@/components/ui/badge";
 
 export function BadgePalette({
   className,

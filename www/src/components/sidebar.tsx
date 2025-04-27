@@ -15,15 +15,15 @@ import {
 } from "lucide-react";
 import { motion, Transition } from "motion/react";
 import { cn } from "@/lib/utils";
-import { Button, ButtonProps } from "@/components/core/button";
+import { Button, ButtonProps } from "@/components/ui/button";
 import {
   CollapsibleRoot,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/core/collapsible";
-import { Kbd } from "@/components/core/kbd";
-import { ScrollArea } from "@/components/core/scroll-area";
-import { Tooltip, TooltipProps } from "@/components/core/tooltip";
+} from "@/components/ui/collapsible";
+import { Kbd } from "@/components/ui/kbd";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Tooltip, TooltipProps } from "@/components/ui/tooltip";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
 import { siteConfig } from "@/config";
 import { hasActive, isActive } from "@/modules/docs/utils";

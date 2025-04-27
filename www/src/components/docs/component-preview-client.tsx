@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useHorizontalResize } from "@/hooks/use-horizontal-resize";
-import { Skeleton } from "@/components/core/skeleton";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export const Loader = ({ children }: { children: React.ReactNode }) => {
   const [isMounted, setIsMounted] = React.useState(false);

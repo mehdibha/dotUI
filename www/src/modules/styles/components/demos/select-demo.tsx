@@ -1,5 +1,5 @@
 import React from "react";
-import { Select, SelectItem } from "@/components/core/select";
+import { Select, SelectItem } from "@/components/ui/select";
 
 export function SelectDemo() {
   return (

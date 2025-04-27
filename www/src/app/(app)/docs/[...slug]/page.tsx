@@ -5,7 +5,7 @@ import { type TableOfContents as TocType } from "fumadocs-core/server";
 import { ExternalLinkIcon } from "lucide-react";
 import { truncateOnWord } from "@/lib/string";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/core/button";
+import { Button } from "@/components/ui/button";
 import { Breadcrumbs } from "@/components/docs/breadcrumbs";
 import { DocsPager } from "@/components/docs/docs-pager";
 import { PageLastUpdate } from "@/components/docs/last-update";

@@ -7,7 +7,7 @@ import {
   Breadcrumbs as Breadcrumbs_,
   BreadcrumbsProps,
   Breadcrumb,
-} from "@/components/core/breadcrumbs";
+} from "@/components/ui/breadcrumbs";
 
 export const Breadcrumbs = <T extends object>({
   tree,

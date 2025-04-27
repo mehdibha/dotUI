@@ -1,10 +1,10 @@
 import React from "react";
 import { getGitHubContributors } from "@/lib/github";
+import { Avatar } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Link } from "@/components/ui/link";
+import { Tooltip } from "@/components/ui/tooltip";
 import { Announcement } from "@/components/announcement";
-import { Avatar } from "@/components/core/avatar";
-import { Button } from "@/components/core/button";
-import { Link } from "@/components/core/link";
-import { Tooltip } from "@/components/core/tooltip";
 import { GitHubIcon } from "@/components/icons";
 import { AdobeIcon } from "@/components/icons/adobe-icon";
 import { ReactJsIcon } from "@/components/icons/reactjs-icon";

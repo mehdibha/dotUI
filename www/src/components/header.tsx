@@ -4,13 +4,13 @@ import React from "react";
 import Link from "next/link";
 import { SearchIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/core/button";
+import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config";
-import { Kbd } from "./core/kbd";
 import { GitHubIcon, TwitterIcon } from "./icons";
 import { Logo } from "./logo";
 import { SearchCommand } from "./search-command";
 import { ThemeSwitcher } from "./theme-switcher";
+import { Kbd } from "./ui/kbd";
 
 export function Header({ className }: { className?: string }) {
   return (

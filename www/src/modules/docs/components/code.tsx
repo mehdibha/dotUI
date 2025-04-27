@@ -2,8 +2,8 @@ import React from "react";
 import { CheckIcon, CopyIcon } from "lucide-react";
 import type { BundledLanguage } from "shiki";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/core/button";
-import { Skeleton } from "@/components/core/skeleton";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { codeToHtml } from "@/modules/docs/actions/code-to-html";
 
 interface CodeProps extends Omit<React.ComponentProps<"div">, "children"> {

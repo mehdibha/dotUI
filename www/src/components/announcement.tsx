@@ -1,5 +1,5 @@
 import { LayoutTemplateIcon } from "lucide-react";
-import { Button } from "@/components/core/button";
+import { Button } from "@/components/ui/button";
 
 export function Announcement() {
   return (

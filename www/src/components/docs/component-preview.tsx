@@ -3,7 +3,7 @@ import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { SlidersHorizontalIcon } from "lucide-react";
 import { getFileSource } from "@/lib/get-file-source";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/core/button";
+import { Button } from "@/components/ui/button";
 import { CodeBlock } from "@/components/docs/code-block";
 import { Index } from "@/__registry__/demos";
 import { CurrentThemeProvider } from "@/modules/styles/components/current-style-provider";
