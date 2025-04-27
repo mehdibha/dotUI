@@ -1,1 +1,1 @@
-export * from "@/reg/ui/tooltip.basic";
+export * from "@/modules/registry/ui/tooltip.basic";

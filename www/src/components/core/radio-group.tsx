@@ -1,1 +1,1 @@
-export * from "@/reg/ui/radio-group.basic";
+export * from "@/modules/registry/ui/radio-group.basic";

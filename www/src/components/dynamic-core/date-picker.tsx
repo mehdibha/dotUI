@@ -1,1 +1,1 @@
-export * from "@/reg/ui/date-picker.basic";
+export * from "@/modules/registry/ui/date-picker.basic";

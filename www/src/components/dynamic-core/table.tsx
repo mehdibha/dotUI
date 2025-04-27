@@ -1,1 +1,1 @@
-export * from "@/reg/ui/table.basic";
+export * from "@/modules/registry/ui/table.basic";

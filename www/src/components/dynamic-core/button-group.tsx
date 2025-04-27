@@ -1,1 +1,1 @@
-export * from "@/reg/ui/button-group.basic";
+export * from "@/modules/registry/ui/button-group.basic";

@@ -1,19 +1,19 @@
 "use client";
 
 import React from "react";
-import { createDynamicComponent } from "@/modules/styles/lib/create-dynamic-component";
 import {
   Tooltip as _Tooltip,
   TooltipRoot as _TooltipRoot,
   TooltipContent as _TooltipContent,
   TooltipArrow as _TooltipArrow,
-} from "@/reg/ui/tooltip.basic";
+} from "@/modules/registry/ui/tooltip.basic";
 import type {
   TooltipProps,
   TooltipRootProps,
   TooltipContentProps,
   TooltipArrowProps,
-} from "@/reg/ui/tooltip.basic";
+} from "@/modules/registry/ui/tooltip.basic";
+import { createDynamicComponent } from "@/modules/styles/lib/create-dynamic-component";
 
 export const Tooltip = createDynamicComponent<TooltipProps>(
   "tooltip",
@@ -22,7 +22,7 @@ export const Tooltip = createDynamicComponent<TooltipProps>(
   {
     tooltip_framer: React.lazy(() =>
       // @ts-expect-error - motion modify the props
-      import("@/reg/ui/tooltip.motion").then((mod) => ({
+      import("@/modules/registry/ui/tooltip.motion").then((mod) => ({
         default: mod.Tooltip,
       }))
     ),
@@ -35,7 +35,7 @@ export const TooltipRoot = createDynamicComponent<TooltipRootProps>(
   _TooltipRoot,
   {
     tooltip_framer: React.lazy(() =>
-      import("@/reg/ui/tooltip.motion").then((mod) => ({
+      import("@/modules/registry/ui/tooltip.motion").then((mod) => ({
         default: mod.TooltipRoot,
       }))
     ),
@@ -49,7 +49,7 @@ export const TooltipContent = createDynamicComponent<TooltipContentProps>(
   {
     tooltip_framer: React.lazy(() =>
       // @ts-expect-error - motion modify the props
-      import("@/reg/ui/tooltip.motion").then((mod) => ({
+      import("@/modules/registry/ui/tooltip.motion").then((mod) => ({
         default: mod.TooltipContent,
       }))
     ),
@@ -62,7 +62,7 @@ export const TooltipArrow = createDynamicComponent<TooltipArrowProps>(
   _TooltipArrow,
   {
     tooltip_framer: React.lazy(() =>
-      import("@/reg/ui/tooltip.motion").then((mod) => ({
+      import("@/modules/registry/ui/tooltip.motion").then((mod) => ({
         default: mod.TooltipArrow,
       }))
     ),

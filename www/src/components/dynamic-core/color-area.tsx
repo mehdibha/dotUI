@@ -1,1 +1,1 @@
-export * from "@/reg/ui/color-area.basic";
+export * from "@/modules/registry/ui/color-area.basic";

@@ -1,1 +1,1 @@
-export * from "@/reg/ui/toggle-button.basic";
+export * from "@/modules/registry/ui/toggle-button.basic";

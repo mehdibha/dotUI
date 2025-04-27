@@ -2,10 +2,14 @@ import { execa } from "execa";
 import { existsSync, promises as fs } from "node:fs";
 import path from "path";
 import { rimraf } from "rimraf";
-import { registry } from "@/reg";
-import { base } from "@/reg/registry-base";
-import { styles } from "@/reg/registry-styles";
-import { hasStyles, RegistryItemProps, RegistryItem } from "@/reg/types";
+import { registry } from "@/modules/registry";
+import { base } from "@/modules/registry/registry-base";
+import { styles } from "@/modules/registry/registry-styles";
+import {
+  hasStyles,
+  RegistryItemProps,
+  RegistryItem,
+} from "@/modules/registry/types";
 
 const REGISTRY_PATH = path.join(process.cwd(), "public/r");
 const REGISTRY_URL =

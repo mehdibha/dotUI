@@ -1,1 +1,1 @@
-export * from "@/reg/ui/search-field.basic";
+export * from "@/modules/registry/ui/search-field.basic";

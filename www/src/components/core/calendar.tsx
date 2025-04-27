@@ -1,1 +1,1 @@
-export * from "@/reg/ui/calendar.basic";
+export * from "@/modules/registry/ui/calendar.basic";

@@ -7,7 +7,7 @@ import {
   TableRow,
   TableColumn,
   TableCell,
-} from "@/reg/ui/table.basic";
+} from "@/modules/registry/ui/table.basic";
 
 const columns: Column[] = [
   { name: "Name", id: "name", isRowHeader: true },

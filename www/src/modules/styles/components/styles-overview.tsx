@@ -6,14 +6,14 @@ import { AnimatePresence, motion, Variants } from "motion/react";
 import { useInView } from "motion/react";
 import { useMounted } from "@/hooks/use-mounted";
 import { Button } from "@/components/core/button";
-import { Theme } from "@/modules/styles/types";
 import {
   ComponentsOverview,
   MobileComponentsOverview,
 } from "@/modules/demos/components/components-overview";
-import { styles } from "@/reg/registry-styles";
-import { Skeleton } from "@/reg/ui/skeleton.basic";
-import { Tabs, TabList, Tab } from "@/reg/ui/tabs.motion";
+import { styles } from "@/modules/registry/registry-styles";
+import { Skeleton } from "@/modules/registry/ui/skeleton.basic";
+import { Tabs, TabList, Tab } from "@/modules/registry/ui/tabs.motion";
+import { Theme } from "@/modules/styles/types";
 import { ThemeProvider } from "./style-provider";
 
 export const ThemesOverview = () => {

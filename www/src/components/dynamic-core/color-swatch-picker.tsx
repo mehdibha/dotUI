@@ -1,1 +1,1 @@
-export * from "@/reg/ui/color-swatch-picker.basic";
+export * from "@/modules/registry/ui/color-swatch-picker.basic";

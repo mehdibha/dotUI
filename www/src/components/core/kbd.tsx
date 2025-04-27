@@ -1,1 +1,1 @@
-export * from "@/reg/ui/kbd.basic";
+export * from "@/modules/registry/ui/kbd.basic";

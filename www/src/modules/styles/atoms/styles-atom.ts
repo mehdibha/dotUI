@@ -1,8 +1,8 @@
 import { useAtom } from "jotai";
 import { withImmer } from "jotai-immer";
 import { atomWithStorage } from "jotai/utils";
+import { styles } from "@/modules/registry/registry-styles";
 import { Theme } from "@/modules/styles/types";
-import { styles } from "@/reg/registry-styles";
 
 type State = {
   userThemes: Theme[];

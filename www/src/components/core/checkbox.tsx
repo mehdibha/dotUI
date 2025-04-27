@@ -1,1 +1,1 @@
-export * from "@/reg/ui/checkbox.basic";
+export * from "@/modules/registry/ui/checkbox.basic";

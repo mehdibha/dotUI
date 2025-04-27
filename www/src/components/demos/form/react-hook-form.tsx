@@ -11,7 +11,7 @@ import { DatePicker } from "@/components/dynamic-core/date-picker";
 import { RadioGroup, Radio } from "@/components/dynamic-core/radio-group";
 import { Select, SelectItem } from "@/components/dynamic-core/select";
 import { TextField } from "@/components/dynamic-core/text-field";
-import { Form, FormControl } from "@/reg/ui/form.react-hook-form";
+import { Form, FormControl } from "@/modules/registry/ui/form.react-hook-form";
 
 const FormSchema = z.object({
   name: z.string().min(2),

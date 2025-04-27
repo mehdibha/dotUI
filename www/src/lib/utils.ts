@@ -1,1 +1,1 @@
-export * from "@/reg/lib/utils";
+export * from "@/modules/registry/lib/utils";

@@ -1,1 +1,1 @@
-export * from "@/reg/lib/focus-styles";
+export * from "@/modules/registry/lib/focus-styles";

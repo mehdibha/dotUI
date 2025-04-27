@@ -1,1 +1,1 @@
-export * from "@/reg/ui/drop-zone.basic";
+export * from "@/modules/registry/ui/drop-zone.basic";

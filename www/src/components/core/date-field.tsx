@@ -1,1 +1,1 @@
-export * from "@/reg/ui/date-field.basic";
+export * from "@/modules/registry/ui/date-field.basic";

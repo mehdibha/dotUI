@@ -2,7 +2,6 @@
 @plugin "tailwindcss-animate";
 @plugin "tailwindcss-react-aria-components";
 @import "./docs.css";
-@import "./themes.css";
 
 @variant dark (&:where(.dark, .dark *));
 

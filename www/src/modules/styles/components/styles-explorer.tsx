@@ -8,8 +8,8 @@ import { useMounted } from "@/hooks/use-mounted";
 import { Button } from "@/components/core/button";
 import { Menu, MenuItem, MenuRoot } from "@/components/core/menu";
 import { SearchField } from "@/components/core/search-field";
+import { styles } from "@/modules/registry/registry-styles";
 import { useUserThemes } from "@/modules/styles/atoms/styles-atom";
-import { styles } from "@/reg/registry-styles";
 import { CreateThemeDialog } from "./create-style-dialog";
 import { StyleCard } from "./style-card";
 

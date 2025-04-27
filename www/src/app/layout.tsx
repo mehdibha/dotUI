@@ -1,9 +1,9 @@
 import React from "react";
 import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/react";
+import { fontMono, fontSans, josefinSans } from "@/lib/fonts";
 import { truncateOnWord } from "@/lib/string";
 import { cn } from "@/lib/utils";
-import { fontMono, fontSans, josefinSans } from "@/lib/fonts";
 import "@/styles/globals.css";
 import { siteConfig } from "@/config";
 import { ThemeProvider } from "@/modules/styles/components/style-provider";
