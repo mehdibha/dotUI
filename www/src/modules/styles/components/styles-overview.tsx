@@ -6,7 +6,7 @@ import { AnimatePresence, motion, Variants } from "motion/react";
 import { useInView } from "motion/react";
 import { useMounted } from "@/hooks/use-mounted";
 import { Button } from "@/components/core/button";
-import { Theme } from "@/types/theme";
+import { Theme } from "@/modules/styles/types";
 import {
   ComponentsOverview,
   MobileComponentsOverview,
