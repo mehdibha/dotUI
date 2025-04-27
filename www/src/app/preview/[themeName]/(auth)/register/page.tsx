@@ -2,7 +2,7 @@ import { Link } from "@/components/ui/link";
 import { Button } from "@/components/dynamic-core/button";
 import { TextField } from "@/components/dynamic-core/text-field";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
-import { GoogleIcon } from "@/components/icons/google-icon";
+import { GoogleIcon } from "@/components/icons";
 
 export default function RegisterPage() {
   return (

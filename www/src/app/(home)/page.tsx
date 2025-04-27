@@ -6,10 +6,12 @@ import { Link } from "@/components/ui/link";
 import { Tooltip } from "@/components/ui/tooltip";
 import { Announcement } from "@/components/announcement";
 import { GitHubIcon } from "@/components/icons";
-import { AdobeIcon } from "@/components/icons/adobe-icon";
-import { ReactJsIcon } from "@/components/icons/reactjs-icon";
-import { TailwindIcon } from "@/components/icons/tailwindcss-icon";
-import { TypescriptIcon } from "@/components/icons/typescript-icon";
+import {
+  AdobeIcon,
+  ReactJsIcon,
+  TailwindIcon,
+  TypescriptIcon,
+} from "@/components/icons";
 import { siteConfig } from "@/config";
 import { ThemesOverview } from "@/modules/styles/components/styles-overview";
 
