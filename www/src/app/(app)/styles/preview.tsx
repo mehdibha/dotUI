@@ -253,7 +253,7 @@ export function PreviewContent({
       >
         <iframe
           ref={iframeRef}
-          src={`/preview/${themeName}`}
+          src={`/preview/app-01/${themeName}`}
           className="rounded-{inherit] size-full"
           onLoad={() => {
             setLoading(false);
