@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { fontMono, fontSans, josefinSans } from "@/styles/fonts";
 import "@/styles/globals.css";
 import { siteConfig } from "@/config";
-import { ThemeProvider } from "@/modules/themes/components/theme-provider";
+import { ThemeProvider } from "@/modules/styles/components/style-provider";
 import { Providers } from "./providers";
 
 export const metadata: Metadata = {

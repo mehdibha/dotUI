@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useCurrentTheme } from "@/modules/themes/atoms/themes-atom";
+import { useCurrentTheme } from "@/modules/styles/atoms/styles-atom";
 import { ThemeProvider, type ThemeProviderProps } from "./style-provider";
 
 export const CurrentThemeProvider = ({

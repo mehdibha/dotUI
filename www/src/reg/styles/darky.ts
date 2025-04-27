@@ -1,4 +1,4 @@
-import { Theme } from "@/modules/themes/types";
+import { Theme } from "@/modules/styles/types";
 
 export const darkyTheme: Theme = {
   name: "darky",

@@ -4,10 +4,10 @@ import React from "react";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
 import { usePreviewMode } from "@/components/mode-provider";
-import { PrimitivesProvider } from "@/modules/themes/contexts/primitives-context";
-import { VariantsProvider } from "@/modules/themes/contexts/variants-context";
-import { createThemeCssVars } from "@/modules/themes/lib/create-theme";
-import type { Theme } from "@/modules/themes/types";
+import { PrimitivesProvider } from "@/modules/styles/contexts/primitives-context";
+import { VariantsProvider } from "@/modules/styles/contexts/variants-context";
+import { createThemeCssVars } from "@/modules/styles/lib/create-theme";
+import type { Theme } from "@/modules/styles/types";
 import { FontLoader } from "./font-loader";
 
 export interface ThemeProviderProps

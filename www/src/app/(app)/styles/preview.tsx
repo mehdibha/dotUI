@@ -17,7 +17,7 @@ import { useMounted } from "@/hooks/use-mounted";
 import { Button } from "@/components/core/button";
 import { Skeleton } from "@/components/core/skeleton";
 import { useSidebarContext } from "@/components/sidebar";
-import { useCurrentTheme } from "@/modules/themes/atoms/themes-atom";
+import { useCurrentTheme } from "@/modules/styles/atoms/styles-atom";
 
 const PreviewContext = React.createContext<{
   isOpen: boolean;

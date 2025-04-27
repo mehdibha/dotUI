@@ -1,8 +1,8 @@
 import React from "react";
 import { Primitives } from "@dotui/schemas";
 import { Skeleton } from "@/components/core/skeleton";
-import { useCurrentTheme } from "@/modules/themes/atoms/themes-atom";
-import { useLocalPrimitives } from "@/modules/themes/contexts/primitives-context";
+import { useCurrentTheme } from "@/modules/styles/atoms/styles-atom";
+import { useLocalPrimitives } from "@/modules/styles/contexts/primitives-context";
 
 type Registry<T> = Record<
   string,

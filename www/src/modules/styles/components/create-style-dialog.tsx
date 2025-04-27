@@ -16,7 +16,7 @@ import {
 } from "@/components/core/dialog";
 import { Form, FormControl } from "@/components/core/form";
 import { TextField } from "@/components/core/text-field";
-import { useUserThemes } from "@/modules/themes/atoms/themes-atom";
+import { useUserThemes } from "@/modules/styles/atoms/styles-atom";
 
 const formSchema = z.object({
   name: z.string().min(2),

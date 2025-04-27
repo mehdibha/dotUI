@@ -1,11 +1,11 @@
 import { existsSync, promises as fs } from "node:fs";
 import path from "node:path";
 import { rimraf } from "rimraf";
-import { accentColors } from "@/modules/themes";
+import { accentColors } from "@/modules/styles";
 import {
   createTheme,
   createThemeCssVars,
-} from "@/modules/themes/lib/create-theme";
+} from "@/modules/styles/lib/create-theme";
 
 // import { iconLibraries, icons } from "@/registry/registry-icons";
 

@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/core/button";
 import { CodeBlock } from "@/components/docs/code-block";
 import { Index } from "@/__registry__/demos";
-import { CurrentThemeProvider } from "@/modules/themes/components/current-theme-provider";
+import { CurrentThemeProvider } from "@/modules/styles/components/current-style-provider";
 import {
   ComponentWrapper,
   Loader,

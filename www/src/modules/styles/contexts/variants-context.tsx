@@ -1,5 +1,5 @@
 import React from "react";
-import { Variants } from "@/modules/themes/types";
+import { Variants } from "@/modules/styles/types";
 
 const DEFAULT_VARIANTS: Variants = {
   global: "accent",

@@ -21,8 +21,8 @@ import {
   TableRow,
   TableCell,
 } from "@/components/core/table";
-import { ThemeProvider } from "@/modules/themes/components/theme-provider";
-import { Theme } from "@/modules/themes/types";
+import { ThemeProvider } from "@/modules/styles/components/style-provider";
+import { Theme } from "@/modules/styles/types";
 import { Collapsible } from "./collapsible";
 import { useThemeEditorContext } from "./context";
 

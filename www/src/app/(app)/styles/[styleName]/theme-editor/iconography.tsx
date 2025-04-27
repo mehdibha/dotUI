@@ -1,4 +1,4 @@
-import { IconsDemo } from "@/modules/themes/components/demos/icons-demo";
+import { IconsDemo } from "@/modules/styles/components/demos/icons-demo";
 
 export function ThemeIconography() {
   return (

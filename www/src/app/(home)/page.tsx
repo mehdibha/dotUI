@@ -11,7 +11,7 @@ import { ReactJsIcon } from "@/components/icons/reactjs-icon";
 import { TailwindIcon } from "@/components/icons/tailwindcss-icon";
 import { TypescriptIcon } from "@/components/icons/typescript-icon";
 import { siteConfig } from "@/config";
-import { ThemesOverview } from "@/modules/themes/components/themes-overview";
+import { ThemesOverview } from "@/modules/styles/components/styles-overview";
 
 export default async function HomePage() {
   const contributors = await getGitHubContributors();

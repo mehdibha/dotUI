@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { createDynamicComponent } from "@/modules/themes";
+import { createDynamicComponent } from "@/modules/styles";
 import {
   Button as _Button,
   ButtonProvider as _ButtonProvider,

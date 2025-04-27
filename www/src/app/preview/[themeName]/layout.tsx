@@ -1,6 +1,6 @@
 import React from "react";
-import { ThemeProvider } from "@/modules/themes/components/theme-provider";
-import { themes } from "@/reg/registry-themes";
+import { ThemeProvider } from "@/modules/styles/components/style-provider";
+import { styles } from "@/reg/registry-styles";
 import { ThemeUpdater } from "./theme-updater";
 
 export default async function PreviewLayout({
@@ -8,11 +8,11 @@ export default async function PreviewLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ themeName: string }>;
+  params: Promise<{ styleName: string }>;
 }) {
-  const { themeName } = await params;
+  const { styleName } = await params;
   return (
-    <ThemeProvider theme={themes.find((theme) => theme.name === themeName)}>
+    <ThemeProvider theme={styles.find((style) => style.name === styleName)}>
       <ThemeUpdater />
       <div className="min-h-screen">{children}</div>
     </ThemeProvider>

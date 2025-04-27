@@ -5,7 +5,7 @@ import {
 } from "@adobe/leonardo-contrast-colors";
 import { RegistryTheme } from "@dotui/schemas";
 import { getContrastTextColor } from "@/lib/colors";
-import { Colors, Theme } from "@/modules/themes/types";
+import { Colors, Theme } from "@/modules/styles/types";
 
 export const createTheme = (theme: Theme): RegistryTheme => {
   const { foundations, ...propreties } = theme;

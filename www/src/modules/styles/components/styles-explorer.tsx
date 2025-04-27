@@ -9,12 +9,12 @@ import { Button } from "@/components/core/button";
 import { Menu, MenuItem, MenuRoot } from "@/components/core/menu";
 import { SearchField } from "@/components/core/search-field";
 import { useUserThemes } from "@/modules/styles/atoms/styles-atom";
-import { themes } from "@/reg/registry-styles";
+import { styles } from "@/reg/registry-styles";
 import { CreateThemeDialog } from "./create-style-dialog";
 import { StyleCard } from "./style-card";
 
 type Filter = "light" | "dark" | "light-dark" | "all";
-type Theme = (typeof themes)[number];
+type Theme = (typeof styles)[number];
 
 const FILTER_OPTIONS: Array<{ id: Filter; label: string }> = [
   { id: "all", label: "All" },
@@ -75,8 +75,8 @@ export function StylesExplorer({ className }: { className?: string }) {
   const { contains } = useFilter({ sensitivity: "base" });
 
   const filteredThemes = React.useMemo(() => {
-    const searchFiltered = themes.filter((theme) =>
-      contains(theme.name, searchInput)
+    const searchFiltered = styles.filter((style) =>
+      contains(style.name, searchInput)
     );
     return filterThemes(searchFiltered, filter);
   }, [searchInput, filter, contains]);
@@ -132,7 +132,7 @@ export function StylesExplorer({ className }: { className?: string }) {
         />
       ) : (
         <ThemeGrid
-          themes={themes.slice(0, 3)}
+          themes={styles.slice(0, 3)}
           currentThemeName={currentThemeName}
           className="mt-2"
         />

@@ -1,8 +1,8 @@
 import { useAtom } from "jotai";
 import { withImmer } from "jotai-immer";
 import { atomWithStorage } from "jotai/utils";
-import { Theme } from "@/modules/themes/types";
-import { themes } from "@/reg/registry-themes";
+import { Theme } from "@/modules/styles/types";
+import { styles } from "@/reg/registry-styles";
 
 type State = {
   userThemes: Theme[];
@@ -19,7 +19,7 @@ const themesAtom = withImmer(
 export const useUserThemes = () => {
   const [state, setState] = useAtom(themesAtom);
 
-  const allThemes = [...state.userThemes, ...themes];
+  const allThemes = [...state.userThemes, ...styles];
 
   const createTheme = async (
     themeName: string,
@@ -81,7 +81,7 @@ export const useCurrentTheme = (): { currentTheme: Theme } => {
   const [state] = useAtom(themesAtom);
   const { currentTheme: currentThemeName } = state;
 
-  const allThemes = [...state.userThemes, ...themes];
+  const allThemes = [...state.userThemes, ...styles];
 
   const currentTheme = allThemes.find((t) => t.name === currentThemeName)!;
 

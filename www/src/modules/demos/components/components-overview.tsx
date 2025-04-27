@@ -38,7 +38,7 @@ import { TextField } from "@/components/dynamic-core/text-field";
 import { TimeField } from "@/components/dynamic-core/time-field";
 import { ToggleButton } from "@/components/dynamic-core/toggle-button";
 import { GitHubIcon, TwitterIcon, GoogleIcon } from "@/components/icons";
-import { useLocalVariants } from "@/modules/themes/contexts/variants-context";
+import { useLocalVariants } from "@/modules/styles/contexts/variants-context";
 
 export function ComponentsOverview({ className }: { className?: string }) {
   const { variants } = useLocalVariants();

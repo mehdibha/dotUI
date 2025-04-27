@@ -1,22 +1,22 @@
 import React from "react";
-import { themes } from "@/reg/registry-themes";
+import { styles } from "@/reg/registry-styles";
 import { ThemeEditor } from "./theme-editor";
 import { ThemeTableOfContents } from "./toc";
 
 export default async function ThemePage({
   params,
 }: {
-  params: Promise<{ themeName: string }>;
+  params: Promise<{ styleName: string }>;
 }) {
-  const themeName = (await params).themeName;
+  const styleName = (await params).styleName;
 
-  const theme = themes.find((theme) => theme.name === themeName);
-  const isEditable = !theme;
+  const style = styles.find((style) => style.name === styleName);
+  const isEditable = !style;
 
   return (
     <div className="mx-auto flex max-w-5xl lg:px-8 lg:pt-10">
       <div className="relative mx-auto min-h-[2000px] max-w-3xl flex-1">
-        <ThemeEditor theme={theme ?? themeName} isEditable={isEditable} />
+        <ThemeEditor theme={style ?? styleName} isEditable={isEditable} />
       </div>
       <ThemeTableOfContents />
     </div>
@@ -24,7 +24,7 @@ export default async function ThemePage({
 }
 
 export function generateStaticParams() {
-  return themes.map((theme) => ({
-    themeName: theme.name,
+  return styles.map((style) => ({
+    styleName: style.name,
   }));
 }

@@ -2,10 +2,9 @@ import { execa } from "execa";
 import { existsSync, promises as fs } from "node:fs";
 import path from "path";
 import { rimraf } from "rimraf";
-import { siteConfig } from "@/config";
 import { registry } from "@/reg";
 import { base } from "@/reg/registry-base";
-import { themes } from "@/reg/registry-themes";
+import { styles } from "@/reg/registry-styles";
 import { hasStyles, RegistryItemProps, RegistryItem } from "@/reg/types";
 
 const REGISTRY_PATH = path.join(process.cwd(), "public/r");
@@ -33,7 +32,7 @@ const setup = async () => {
 
 const buildRegistry = async () => {
   await Promise.all(
-    themes.map(async (t) => {
+    styles.map(async (t) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const indexPayload: any = {
         $schema: "https://ui.shadcn.com/schema/registry.json",

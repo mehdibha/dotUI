@@ -19,9 +19,9 @@ import { Skeleton } from "@/components/core/skeleton";
 import { ToggleButton } from "@/components/core/toggle-button";
 import { Tooltip } from "@/components/core/tooltip";
 import { usePreviewMode } from "@/components/mode-provider";
-import { useUserThemes } from "@/modules/themes/atoms/themes-atom";
-import { CreateThemeDialog } from "@/modules/themes/components/create-theme-dialog";
-import { Theme } from "@/modules/themes/types";
+import { useUserThemes } from "@/modules/styles/atoms/styles-atom";
+import { CreateThemeDialog } from "@/modules/styles/components/create-style-dialog";
+import { Theme } from "@/modules/styles/types";
 import { PreviewContent } from "../../preview";
 import { ThemeColors } from "./colors";
 import { ThemeComponents } from "./components";
@@ -129,11 +129,11 @@ export function ThemeEditorHeader({
   return (
     <div className="max-lg:bg-bg max-lg:sticky max-lg:top-[57px] max-lg:z-10 max-lg:border-b max-lg:p-4">
       <Link
-        href="/themes"
+        href="/styles"
         className="text-fg-muted hover:text-fg flex cursor-pointer items-center gap-1 text-sm"
       >
         <ArrowLeftIcon className="size-4" />
-        <span>themes</span>
+        <span>styles</span>
       </Link>
       <div className="flex items-center justify-between">
         <h2 className="text-3xl font-semibold tracking-tight">

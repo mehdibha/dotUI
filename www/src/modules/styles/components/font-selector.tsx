@@ -15,14 +15,14 @@ import {
 } from "@/components/core/list-box";
 import { SearchField } from "@/components/core/search-field";
 import { Select, SelectItem } from "@/components/core/select";
-import { FontLoader } from "@/modules/themes/components/font-loader";
+import { FontLoader } from "@/modules/styles/components/font-loader";
 import {
   sansSerifFonts,
   monoFonts,
   serifFonts,
   displayFonts,
   handwritingFonts,
-} from "@/modules/themes/lib/google-fonts";
+} from "@/modules/styles/lib/google-fonts";
 
 export const FontSelector = ({
   label,

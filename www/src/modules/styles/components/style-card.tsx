@@ -10,8 +10,8 @@ import { Button } from "@/components/core/button";
 import { DialogRoot, Dialog, DialogFooter } from "@/components/core/dialog";
 import { Menu, MenuItem, MenuRoot } from "@/components/core/menu";
 import { Skeleton } from "@/components/core/skeleton";
-import { ThemeProvider } from "@/modules/themes/components/theme-provider";
-import { type Theme } from "@/modules/themes/types";
+import { ThemeProvider } from "@/modules/styles/components/style-provider";
+import { type Theme } from "@/modules/styles/types";
 import { CreateThemeDialog } from "./create-style-dialog";
 
 export function StyleCard({

@@ -1,4 +1,4 @@
-import { FontSelector } from "@/modules/themes/components/font-selector";
+import { FontSelector } from "@/modules/styles/components/font-selector";
 
 export function ThemeTypography() {
   return (

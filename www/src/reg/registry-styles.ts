@@ -1,12 +1,12 @@
-import type { Theme } from "@/modules/themes/types";
-import { brutalistTheme } from "@/reg/themes/brutalist";
-import { forestTheme } from "@/reg/themes/forest";
-import { highContrastTheme } from "@/reg/themes/high-contrast";
-import { materialTheme } from "@/reg/themes/material";
-import { minimalistTheme } from "@/reg/themes/minimalist";
-import { retroTheme } from "@/reg/themes/retro";
+import type { Theme } from "@/modules/styles/types";
+import { brutalistTheme } from "@/reg/styles/brutalist";
+import { forestTheme } from "@/reg/styles/forest";
+import { highContrastTheme } from "@/reg/styles/high-contrast";
+import { materialTheme } from "@/reg/styles/material";
+import { minimalistTheme } from "@/reg/styles/minimalist";
+import { retroTheme } from "@/reg/styles/retro";
 
-export const themes: Theme[] = [
+export const styles: Theme[] = [
   minimalistTheme,
   materialTheme,
   forestTheme,

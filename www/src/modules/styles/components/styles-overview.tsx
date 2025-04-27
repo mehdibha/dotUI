@@ -11,14 +11,14 @@ import {
   ComponentsOverview,
   MobileComponentsOverview,
 } from "@/modules/demos/components/components-overview";
-import { themes } from "@/reg/registry-themes";
+import { styles } from "@/reg/registry-styles";
 import { Skeleton } from "@/reg/ui/skeleton.basic";
 import { Tabs, TabList, Tab } from "@/reg/ui/tabs.motion";
 import { ThemeProvider } from "./style-provider";
 
 export const ThemesOverview = () => {
   const [currentThemeName, setCurrentThemeName] = React.useState<string>(
-    (themes[0] as unknown as Theme).name
+    (styles[0] as unknown as Theme).name
   );
   const ref = React.useRef(null);
   const isInView = useInView(ref);
@@ -36,18 +36,18 @@ export const ThemesOverview = () => {
     }, 1000);
   };
 
-  const currentTheme = themes.find((theme) => theme.name === currentThemeName)!;
+  const currentTheme = styles.find((style) => style.name === currentThemeName)!;
 
   React.useEffect(() => {
     const interval = setInterval(() => {
       if (touched || !isInView) return;
-      const currentIndex = themes.findIndex(
-        (theme) => theme.name === currentThemeName
+      const currentIndex = styles.findIndex(
+        (style) => style.name === currentThemeName
       );
-      const nextIndex = (currentIndex + 1) % themes.length;
-      const nextTheme = themes[nextIndex];
-      if (nextTheme) {
-        setCurrentThemeName(nextTheme.name);
+      const nextIndex = (currentIndex + 1) % styles.length;
+      const nextStyle = styles[nextIndex];
+      if (nextStyle) {
+        setCurrentThemeName(nextStyle.name);
       }
     }, 5000);
 
@@ -68,13 +68,13 @@ export const ThemesOverview = () => {
           }}
         >
           <TabList className="flex-wrap justify-center bg-transparent">
-            {themes.map((theme) => (
+            {styles.map((style) => (
               <Tab
-                key={theme.name}
-                id={theme.name}
+                key={style.name}
+                id={style.name}
                 className="h-8 rounded-full px-4 text-sm"
               >
-                {theme.name}
+                {style.name}
               </Tab>
             ))}
           </TabList>
