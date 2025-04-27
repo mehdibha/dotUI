@@ -39,12 +39,7 @@ export default async function HomePage() {
             >
               Get started
             </Button>
-            <Button
-              href="/styles"
-              variant="default"
-              size="lg"
-              className="h-10"
-            >
+            <Button href="/styles" variant="default" size="lg" className="h-10">
               Explore styles
             </Button>
           </div>
