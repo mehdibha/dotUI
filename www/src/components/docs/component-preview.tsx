@@ -1,7 +1,7 @@
 import React from "react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { SlidersHorizontalIcon } from "lucide-react";
-import { getFileSource } from "@/lib/get-file-source";
+import { getFileSource } from "@/modules/docs/lib/get-file-source";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { CodeBlock } from "@/components/docs/code-block";

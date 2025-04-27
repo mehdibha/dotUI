@@ -4,8 +4,6 @@ import { MenuIcon, PinIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Link } from "@/components/ui/link";
 import { RadioGroup, Radio } from "@/components/ui/radio-group";
-// import BadgeVariants from "@/components/demos/badge/variants";
-import FileTriggerDemo from "@/components/demos/file-trigger/default";
 import { Alert } from "@/components/dynamic-core/alert";
 import { Avatar } from "@/components/dynamic-core/avatar";
 import { Button } from "@/components/dynamic-core/button";
@@ -38,6 +36,8 @@ import { TextField } from "@/components/dynamic-core/text-field";
 import { TimeField } from "@/components/dynamic-core/time-field";
 import { ToggleButton } from "@/components/dynamic-core/toggle-button";
 import { GitHubIcon, TwitterIcon, GoogleIcon } from "@/components/icons";
+// import BadgeVariants from "@/components/demos/badge/variants";
+import FileTriggerDemo from "@/modules/demos/file-trigger/default";
 import { useLocalVariants } from "@/modules/styles/contexts/variants-context";
 
 export function ComponentsOverview({ className }: { className?: string }) {

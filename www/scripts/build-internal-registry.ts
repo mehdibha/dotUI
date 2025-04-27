@@ -3,7 +3,6 @@ import path from "node:path";
 import { rimraf } from "rimraf";
 import { accentColors } from "@/modules/styles";
 import {
-  createTheme,
   createThemeCssVars,
 } from "@/modules/styles/lib/create-theme";
 
