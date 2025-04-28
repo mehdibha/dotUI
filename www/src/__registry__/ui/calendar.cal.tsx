@@ -23,10 +23,10 @@ import type {
   RangeCalendarProps as AriaRangeCalendarProps,
 } from "react-aria-components";
 import { tv, VariantProps } from "tailwind-variants";
+import { Button } from "@/components/dynamic-ui/button";
+import { ButtonGroup } from "@/components/dynamic-ui/button-group";
+import { Text } from "@/components/dynamic-ui/text";
 import { focusRing } from "@/modules/registry/lib/focus-styles";
-import { Button } from "@/modules/registry/ui/button.basic";
-import { Text } from "@/modules/registry/ui/text.basic";
-import { ButtonGroup } from "@/modules/registry/ui/button-group.basic";
 
 const calendarStyles = tv({
   slots: {

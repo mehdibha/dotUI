@@ -23,15 +23,14 @@ import type {
   RangeCalendarProps as AriaRangeCalendarProps,
 } from "react-aria-components";
 import { tv, VariantProps } from "tailwind-variants";
+import { Button } from "@/components/dynamic-ui/button";
+import { Text } from "@/components/dynamic-ui/text";
 import { focusRing } from "@/modules/registry/lib/focus-styles";
-import { Button } from "@/modules/registry/ui/button.basic";
-import { Text } from "@/modules/registry/ui/text.basic";
-import { ButtonGroup } from "@/modules/registry/ui/button-group.basic";
 
 const calendarStyles = tv({
   slots: {
     root: "flex flex-col gap-4",
-    header: "text-fg-muted flex items-center justify-between gap-2 pl-2.5",
+    header: "flex items-center justify-between gap-2",
     grid: "w-full border-collapse",
     gridHeader: "",
     gridHeaderCell: "text-fg-muted text-xs font-normal",
@@ -129,15 +128,13 @@ const Calendar = <T extends DateValue>({
       {({ isInvalid }) => (
         <>
           <CalendarHeader>
+            <Button slot="previous" variant="outline" shape="square" size="sm">
+              <ChevronLeftIcon />
+            </Button>
             <AriaHeading className="text-sm font-medium" />
-            <ButtonGroup variant="quiet" shape="square" size="sm">
-              <Button slot="previous">
-                <ChevronLeftIcon />
-              </Button>
-              <Button slot="next">
-                <ChevronRightIcon />
-              </Button>
-            </ButtonGroup>
+            <Button slot="next" variant="outline" shape="square" size="sm">
+              <ChevronRightIcon />
+            </Button>
           </CalendarHeader>
           <div className="flex items-start gap-4">
             {Array.from({ length: visibleMonths }).map((_, index) => (
@@ -296,18 +293,23 @@ interface CalendarCellProps
   extends React.ComponentProps<typeof AriaCalendarCell>,
     Omit<VariantProps<typeof calendarCellStyles>, "range"> {}
 const CalendarCell = ({
-  variant,
+  variant = "accent",
   children,
   className,
   ...props
 }: CalendarCellProps) => {
   const rangeCalendarState = React.use(AriaRangeCalendarStateContext);
   const range = !!rangeCalendarState;
+
   return (
     <AriaCalendarCell
       {...props}
       className={composeRenderProps(className, (className) =>
-        cellRoot({ variant, range, className })
+        cellRoot({
+          range,
+          variant,
+          className,
+        })
       )}
     >
       {composeRenderProps(
@@ -345,8 +347,8 @@ const CalendarCell = ({
             data-selection-end={isSelectionEnd || undefined}
             data-selection-start={isSelectionStart || undefined}
             className={cell({
-              variant,
               range,
+              variant,
             })}
           >
             {formattedDate}
@@ -362,6 +364,7 @@ export type {
   CalendarRootProps,
   RangeCalendarProps,
   RangeCalendarRootProps,
+  CalendarHeaderProps,
   CalendarGridProps,
   CalendarGridHeaderProps,
   CalendarHeaderCellProps,
