@@ -37,7 +37,7 @@ import { TimeField } from "@/components/dynamic-ui/time-field";
 import { ToggleButton } from "@/components/dynamic-ui/toggle-button";
 import { GitHubIcon, TwitterIcon, GoogleIcon } from "@/components/icons";
 // import BadgeVariants from "@/components/demos/badge/variants";
-import FileTriggerDemo from "@/modules/demos/file-trigger/default";
+import FileTriggerDemo from "@/modules/docs/demos/file-trigger/default";
 import { useLocalVariants } from "@/modules/styles/contexts/variants-context";
 
 export function ComponentsOverview({ className }: { className?: string }) {

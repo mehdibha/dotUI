@@ -10,2085 +10,2371 @@ export const Index: Record<
   }
 > = {
   "alert/action": {
-    files: ["modules/demos/alert/action.tsx"],
-    component: React.lazy(() => import("@/modules/demos/alert/action")),
+    files: ["modules/docs/demos/alert/action.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/alert/action")),
   },
   "alert/composition": {
-    files: ["modules/demos/alert/composition.tsx"],
-    component: React.lazy(() => import("@/modules/demos/alert/composition")),
+    files: ["modules/docs/demos/alert/composition.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/alert/composition")
+    ),
   },
   "alert/content": {
-    files: ["modules/demos/alert/content.tsx"],
-    component: React.lazy(() => import("@/modules/demos/alert/content")),
+    files: ["modules/docs/demos/alert/content.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/alert/content")),
   },
   "alert/custom-icon": {
-    files: ["modules/demos/alert/custom-icon.tsx"],
-    component: React.lazy(() => import("@/modules/demos/alert/custom-icon")),
+    files: ["modules/docs/demos/alert/custom-icon.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/alert/custom-icon")
+    ),
   },
   "alert/default": {
-    files: ["modules/demos/alert/default.tsx"],
-    component: React.lazy(() => import("@/modules/demos/alert/default")),
+    files: ["modules/docs/demos/alert/default.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/alert/default")),
   },
   "alert/title": {
-    files: ["modules/demos/alert/title.tsx"],
-    component: React.lazy(() => import("@/modules/demos/alert/title")),
+    files: ["modules/docs/demos/alert/title.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/alert/title")),
   },
   "alert/variants": {
-    files: ["modules/demos/alert/variants.tsx"],
-    component: React.lazy(() => import("@/modules/demos/alert/variants")),
+    files: ["modules/docs/demos/alert/variants.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/alert/variants")),
   },
   "avatar/composition": {
-    files: ["modules/demos/avatar/composition.tsx"],
-    component: React.lazy(() => import("@/modules/demos/avatar/composition")),
+    files: ["modules/docs/demos/avatar/composition.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/avatar/composition")
+    ),
   },
   "avatar/default": {
-    files: ["modules/demos/avatar/default.tsx"],
-    component: React.lazy(() => import("@/modules/demos/avatar/default")),
+    files: ["modules/docs/demos/avatar/default.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/avatar/default")),
   },
   "avatar/shape": {
-    files: ["modules/demos/avatar/shape.tsx"],
-    component: React.lazy(() => import("@/modules/demos/avatar/shape")),
+    files: ["modules/docs/demos/avatar/shape.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/avatar/shape")),
   },
   "avatar/sizes": {
-    files: ["modules/demos/avatar/sizes.tsx"],
-    component: React.lazy(() => import("@/modules/demos/avatar/sizes")),
+    files: ["modules/docs/demos/avatar/sizes.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/avatar/sizes")),
   },
   "badge/default": {
-    files: ["modules/demos/badge/default.tsx"],
-    component: React.lazy(() => import("@/modules/demos/badge/default")),
+    files: ["modules/docs/demos/badge/default.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/badge/default")),
   },
   "badge/icon": {
-    files: ["modules/demos/badge/icon.tsx"],
-    component: React.lazy(() => import("@/modules/demos/badge/icon")),
+    files: ["modules/docs/demos/badge/icon.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/badge/icon")),
   },
   "badge/sizes": {
-    files: ["modules/demos/badge/sizes.tsx"],
-    component: React.lazy(() => import("@/modules/demos/badge/sizes")),
+    files: ["modules/docs/demos/badge/sizes.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/badge/sizes")),
   },
   "badge/variants": {
-    files: ["modules/demos/badge/variants.tsx"],
-    component: React.lazy(() => import("@/modules/demos/badge/variants")),
+    files: ["modules/docs/demos/badge/variants.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/badge/variants")),
   },
   "breadcrumbs/basic": {
-    files: ["modules/demos/breadcrumbs/basic.tsx"],
-    component: React.lazy(() => import("@/modules/demos/breadcrumbs/basic")),
+    files: ["modules/docs/demos/breadcrumbs/basic.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/breadcrumbs/basic")
+    ),
   },
   "breadcrumbs/composition": {
-    files: ["modules/demos/breadcrumbs/composition.tsx"],
+    files: ["modules/docs/demos/breadcrumbs/composition.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/breadcrumbs/composition")
+      () => import("@/modules/docs/demos/breadcrumbs/composition")
     ),
   },
   "breadcrumbs/disabled": {
-    files: ["modules/demos/breadcrumbs/disabled.tsx"],
-    component: React.lazy(() => import("@/modules/demos/breadcrumbs/disabled")),
+    files: ["modules/docs/demos/breadcrumbs/disabled.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/breadcrumbs/disabled")
+    ),
   },
   "breadcrumbs/icon": {
-    files: ["modules/demos/breadcrumbs/icon.tsx"],
-    component: React.lazy(() => import("@/modules/demos/breadcrumbs/icon")),
+    files: ["modules/docs/demos/breadcrumbs/icon.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/breadcrumbs/icon")
+    ),
   },
   "breadcrumbs/router-integration": {
-    files: ["modules/demos/breadcrumbs/router-integration.tsx"],
+    files: ["modules/docs/demos/breadcrumbs/router-integration.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/breadcrumbs/router-integration")
+      () => import("@/modules/docs/demos/breadcrumbs/router-integration")
     ),
   },
   "button/default": {
-    files: ["modules/demos/button/default.tsx"],
-    component: React.lazy(() => import("@/modules/demos/button/default")),
+    files: ["modules/docs/demos/button/default.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/button/default")),
   },
   "button/disabled": {
-    files: ["modules/demos/button/disabled.tsx"],
-    component: React.lazy(() => import("@/modules/demos/button/disabled")),
+    files: ["modules/docs/demos/button/disabled.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/button/disabled")),
   },
   "button/link-button": {
-    files: ["modules/demos/button/link-button.tsx"],
-    component: React.lazy(() => import("@/modules/demos/button/link-button")),
+    files: ["modules/docs/demos/button/link-button.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/button/link-button")
+    ),
   },
   "button/loading": {
-    files: ["modules/demos/button/loading.tsx"],
-    component: React.lazy(() => import("@/modules/demos/button/loading")),
+    files: ["modules/docs/demos/button/loading.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/button/loading")),
   },
   "button/prefix-and-suffix": {
-    files: ["modules/demos/button/prefix-and-suffix.tsx"],
+    files: ["modules/docs/demos/button/prefix-and-suffix.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/button/prefix-and-suffix")
+      () => import("@/modules/docs/demos/button/prefix-and-suffix")
     ),
   },
   "button/shapes": {
-    files: ["modules/demos/button/shapes.tsx"],
-    component: React.lazy(() => import("@/modules/demos/button/shapes")),
+    files: ["modules/docs/demos/button/shapes.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/button/shapes")),
   },
   "button/sizes": {
-    files: ["modules/demos/button/sizes.tsx"],
-    component: React.lazy(() => import("@/modules/demos/button/sizes")),
+    files: ["modules/docs/demos/button/sizes.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/button/sizes")),
   },
   "button/variants": {
-    files: ["modules/demos/button/variants.tsx"],
-    component: React.lazy(() => import("@/modules/demos/button/variants")),
+    files: ["modules/docs/demos/button/variants.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/button/variants")),
   },
   "button-group/default": {
-    files: ["modules/demos/button-group/default.tsx"],
-    component: React.lazy(() => import("@/modules/demos/button-group/default")),
+    files: ["modules/docs/demos/button-group/default.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/button-group/default")
+    ),
   },
   "calendar/composition": {
-    files: ["modules/demos/calendar/composition.tsx"],
-    component: React.lazy(() => import("@/modules/demos/calendar/composition")),
+    files: ["modules/docs/demos/calendar/composition.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/calendar/composition")
+    ),
   },
   "calendar/controlled": {
-    files: ["modules/demos/calendar/controlled.tsx"],
-    component: React.lazy(() => import("@/modules/demos/calendar/controlled")),
+    files: ["modules/docs/demos/calendar/controlled.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/calendar/controlled")
+    ),
   },
   "calendar/default": {
-    files: ["modules/demos/calendar/default.tsx"],
-    component: React.lazy(() => import("@/modules/demos/calendar/default")),
+    files: ["modules/docs/demos/calendar/default.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/calendar/default")
+    ),
   },
   "calendar/disabled": {
-    files: ["modules/demos/calendar/disabled.tsx"],
-    component: React.lazy(() => import("@/modules/demos/calendar/disabled")),
+    files: ["modules/docs/demos/calendar/disabled.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/calendar/disabled")
+    ),
   },
   "calendar/error-message": {
-    files: ["modules/demos/calendar/error-message.tsx"],
+    files: ["modules/docs/demos/calendar/error-message.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/calendar/error-message")
+      () => import("@/modules/docs/demos/calendar/error-message")
     ),
   },
   "calendar/page-behaviour": {
-    files: ["modules/demos/calendar/page-behaviour.tsx"],
+    files: ["modules/docs/demos/calendar/page-behaviour.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/calendar/page-behaviour")
+      () => import("@/modules/docs/demos/calendar/page-behaviour")
     ),
   },
   "calendar/read-only": {
-    files: ["modules/demos/calendar/read-only.tsx"],
-    component: React.lazy(() => import("@/modules/demos/calendar/read-only")),
+    files: ["modules/docs/demos/calendar/read-only.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/calendar/read-only")
+    ),
   },
   "calendar/uncontrolled": {
-    files: ["modules/demos/calendar/uncontrolled.tsx"],
+    files: ["modules/docs/demos/calendar/uncontrolled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/calendar/uncontrolled")
+      () => import("@/modules/docs/demos/calendar/uncontrolled")
     ),
   },
   "calendar/unvailable-dates": {
-    files: ["modules/demos/calendar/unvailable-dates.tsx"],
+    files: ["modules/docs/demos/calendar/unvailable-dates.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/calendar/unvailable-dates")
+      () => import("@/modules/docs/demos/calendar/unvailable-dates")
     ),
   },
   "calendar/validation": {
-    files: ["modules/demos/calendar/validation.tsx"],
-    component: React.lazy(() => import("@/modules/demos/calendar/validation")),
+    files: ["modules/docs/demos/calendar/validation.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/calendar/validation")
+    ),
   },
   "calendar/variant": {
-    files: ["modules/demos/calendar/variant.tsx"],
-    component: React.lazy(() => import("@/modules/demos/calendar/variant")),
+    files: ["modules/docs/demos/calendar/variant.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/calendar/variant")
+    ),
   },
   "calendar/visible-months": {
-    files: ["modules/demos/calendar/visible-months.tsx"],
+    files: ["modules/docs/demos/calendar/visible-months.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/calendar/visible-months")
+      () => import("@/modules/docs/demos/calendar/visible-months")
     ),
   },
   "checkbox/card": {
-    files: ["modules/demos/checkbox/card.tsx"],
-    component: React.lazy(() => import("@/modules/demos/checkbox/card")),
+    files: ["modules/docs/demos/checkbox/card.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/checkbox/card")),
   },
   "checkbox/composition": {
-    files: ["modules/demos/checkbox/composition.tsx"],
-    component: React.lazy(() => import("@/modules/demos/checkbox/composition")),
+    files: ["modules/docs/demos/checkbox/composition.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/checkbox/composition")
+    ),
   },
   "checkbox/controlled": {
-    files: ["modules/demos/checkbox/controlled.tsx"],
-    component: React.lazy(() => import("@/modules/demos/checkbox/controlled")),
+    files: ["modules/docs/demos/checkbox/controlled.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/checkbox/controlled")
+    ),
   },
   "checkbox/default": {
-    files: ["modules/demos/checkbox/default.tsx"],
-    component: React.lazy(() => import("@/modules/demos/checkbox/default")),
+    files: ["modules/docs/demos/checkbox/default.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/checkbox/default")
+    ),
   },
   "checkbox/disabled": {
-    files: ["modules/demos/checkbox/disabled.tsx"],
-    component: React.lazy(() => import("@/modules/demos/checkbox/disabled")),
+    files: ["modules/docs/demos/checkbox/disabled.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/checkbox/disabled")
+    ),
   },
   "checkbox/indeterminate": {
-    files: ["modules/demos/checkbox/indeterminate.tsx"],
+    files: ["modules/docs/demos/checkbox/indeterminate.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/checkbox/indeterminate")
+      () => import("@/modules/docs/demos/checkbox/indeterminate")
     ),
   },
   "checkbox/read-only": {
-    files: ["modules/demos/checkbox/read-only.tsx"],
-    component: React.lazy(() => import("@/modules/demos/checkbox/read-only")),
+    files: ["modules/docs/demos/checkbox/read-only.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/checkbox/read-only")
+    ),
   },
   "checkbox/uncontrolled": {
-    files: ["modules/demos/checkbox/uncontrolled.tsx"],
+    files: ["modules/docs/demos/checkbox/uncontrolled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/checkbox/uncontrolled")
+      () => import("@/modules/docs/demos/checkbox/uncontrolled")
     ),
   },
   "checkbox/variants": {
-    files: ["modules/demos/checkbox/variants.tsx"],
-    component: React.lazy(() => import("@/modules/demos/checkbox/variants")),
+    files: ["modules/docs/demos/checkbox/variants.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/checkbox/variants")
+    ),
   },
   "checkbox-group/cards": {
-    files: ["modules/demos/checkbox-group/cards.tsx"],
-    component: React.lazy(() => import("@/modules/demos/checkbox-group/cards")),
+    files: ["modules/docs/demos/checkbox-group/cards.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/checkbox-group/cards")
+    ),
   },
   "checkbox-group/composition": {
-    files: ["modules/demos/checkbox-group/composition.tsx"],
+    files: ["modules/docs/demos/checkbox-group/composition.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/checkbox-group/composition")
+      () => import("@/modules/docs/demos/checkbox-group/composition")
     ),
   },
   "checkbox-group/controlled": {
-    files: ["modules/demos/checkbox-group/controlled.tsx"],
+    files: ["modules/docs/demos/checkbox-group/controlled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/checkbox-group/controlled")
+      () => import("@/modules/docs/demos/checkbox-group/controlled")
     ),
   },
   "checkbox-group/default": {
-    files: ["modules/demos/checkbox-group/default.tsx"],
+    files: ["modules/docs/demos/checkbox-group/default.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/checkbox-group/default")
+      () => import("@/modules/docs/demos/checkbox-group/default")
     ),
   },
   "checkbox-group/description": {
-    files: ["modules/demos/checkbox-group/description.tsx"],
+    files: ["modules/docs/demos/checkbox-group/description.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/checkbox-group/description")
+      () => import("@/modules/docs/demos/checkbox-group/description")
     ),
   },
   "checkbox-group/disabled": {
-    files: ["modules/demos/checkbox-group/disabled.tsx"],
+    files: ["modules/docs/demos/checkbox-group/disabled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/checkbox-group/disabled")
+      () => import("@/modules/docs/demos/checkbox-group/disabled")
     ),
   },
   "checkbox-group/error-message": {
-    files: ["modules/demos/checkbox-group/error-message.tsx"],
+    files: ["modules/docs/demos/checkbox-group/error-message.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/checkbox-group/error-message")
+      () => import("@/modules/docs/demos/checkbox-group/error-message")
     ),
   },
   "checkbox-group/label": {
-    files: ["modules/demos/checkbox-group/label.tsx"],
-    component: React.lazy(() => import("@/modules/demos/checkbox-group/label")),
+    files: ["modules/docs/demos/checkbox-group/label.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/checkbox-group/label")
+    ),
   },
   "checkbox-group/read-only": {
-    files: ["modules/demos/checkbox-group/read-only.tsx"],
+    files: ["modules/docs/demos/checkbox-group/read-only.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/checkbox-group/read-only")
+      () => import("@/modules/docs/demos/checkbox-group/read-only")
     ),
   },
   "checkbox-group/required": {
-    files: ["modules/demos/checkbox-group/required.tsx"],
+    files: ["modules/docs/demos/checkbox-group/required.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/checkbox-group/required")
+      () => import("@/modules/docs/demos/checkbox-group/required")
     ),
   },
   "checkbox-group/uncontrolled": {
-    files: ["modules/demos/checkbox-group/uncontrolled.tsx"],
+    files: ["modules/docs/demos/checkbox-group/uncontrolled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/checkbox-group/uncontrolled")
+      () => import("@/modules/docs/demos/checkbox-group/uncontrolled")
     ),
   },
   "color-area/channels": {
-    files: ["modules/demos/color-area/channels.tsx"],
-    component: React.lazy(() => import("@/modules/demos/color-area/channels")),
+    files: ["modules/docs/demos/color-area/channels.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/color-area/channels")
+    ),
   },
   "color-area/composition": {
-    files: ["modules/demos/color-area/composition.tsx"],
+    files: ["modules/docs/demos/color-area/composition.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/color-area/composition")
+      () => import("@/modules/docs/demos/color-area/composition")
     ),
   },
   "color-area/controlled": {
-    files: ["modules/demos/color-area/controlled.tsx"],
+    files: ["modules/docs/demos/color-area/controlled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/color-area/controlled")
+      () => import("@/modules/docs/demos/color-area/controlled")
     ),
   },
   "color-area/default": {
-    files: ["modules/demos/color-area/default.tsx"],
-    component: React.lazy(() => import("@/modules/demos/color-area/default")),
+    files: ["modules/docs/demos/color-area/default.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/color-area/default")
+    ),
   },
   "color-area/disabled": {
-    files: ["modules/demos/color-area/disabled.tsx"],
-    component: React.lazy(() => import("@/modules/demos/color-area/disabled")),
+    files: ["modules/docs/demos/color-area/disabled.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/color-area/disabled")
+    ),
   },
   "color-area/uncontrolled": {
-    files: ["modules/demos/color-area/uncontrolled.tsx"],
+    files: ["modules/docs/demos/color-area/uncontrolled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/color-area/uncontrolled")
+      () => import("@/modules/docs/demos/color-area/uncontrolled")
     ),
   },
   "color-field/color-channel": {
-    files: ["modules/demos/color-field/color-channel.tsx"],
+    files: ["modules/docs/demos/color-field/color-channel.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/color-field/color-channel")
+      () => import("@/modules/docs/demos/color-field/color-channel")
     ),
   },
   "color-field/composition": {
-    files: ["modules/demos/color-field/composition.tsx"],
+    files: ["modules/docs/demos/color-field/composition.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/color-field/composition")
+      () => import("@/modules/docs/demos/color-field/composition")
     ),
   },
   "color-field/controlled": {
-    files: ["modules/demos/color-field/controlled.tsx"],
+    files: ["modules/docs/demos/color-field/controlled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/color-field/controlled")
+      () => import("@/modules/docs/demos/color-field/controlled")
     ),
   },
   "color-field/default": {
-    files: ["modules/demos/color-field/default.tsx"],
-    component: React.lazy(() => import("@/modules/demos/color-field/default")),
+    files: ["modules/docs/demos/color-field/default.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/color-field/default")
+    ),
   },
   "color-field/description": {
-    files: ["modules/demos/color-field/description.tsx"],
+    files: ["modules/docs/demos/color-field/description.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/color-field/description")
+      () => import("@/modules/docs/demos/color-field/description")
     ),
   },
   "color-field/disabled": {
-    files: ["modules/demos/color-field/disabled.tsx"],
-    component: React.lazy(() => import("@/modules/demos/color-field/disabled")),
+    files: ["modules/docs/demos/color-field/disabled.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/color-field/disabled")
+    ),
   },
   "color-field/error-message": {
-    files: ["modules/demos/color-field/error-message.tsx"],
+    files: ["modules/docs/demos/color-field/error-message.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/color-field/error-message")
+      () => import("@/modules/docs/demos/color-field/error-message")
     ),
   },
   "color-field/form": {
-    files: ["modules/demos/color-field/form.tsx"],
-    component: React.lazy(() => import("@/modules/demos/color-field/form")),
+    files: ["modules/docs/demos/color-field/form.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/color-field/form")
+    ),
   },
   "color-field/label": {
-    files: ["modules/demos/color-field/label.tsx"],
-    component: React.lazy(() => import("@/modules/demos/color-field/label")),
+    files: ["modules/docs/demos/color-field/label.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/color-field/label")
+    ),
   },
   "color-field/prefix-and-suffix": {
-    files: ["modules/demos/color-field/prefix-and-suffix.tsx"],
+    files: ["modules/docs/demos/color-field/prefix-and-suffix.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/color-field/prefix-and-suffix")
+      () => import("@/modules/docs/demos/color-field/prefix-and-suffix")
     ),
   },
   "color-field/read-only": {
-    files: ["modules/demos/color-field/read-only.tsx"],
+    files: ["modules/docs/demos/color-field/read-only.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/color-field/read-only")
+      () => import("@/modules/docs/demos/color-field/read-only")
     ),
   },
   "color-field/required": {
-    files: ["modules/demos/color-field/required.tsx"],
-    component: React.lazy(() => import("@/modules/demos/color-field/required")),
+    files: ["modules/docs/demos/color-field/required.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/color-field/required")
+    ),
   },
   "color-field/sizes": {
-    files: ["modules/demos/color-field/sizes.tsx"],
-    component: React.lazy(() => import("@/modules/demos/color-field/sizes")),
+    files: ["modules/docs/demos/color-field/sizes.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/color-field/sizes")
+    ),
   },
   "color-field/uncontrolled": {
-    files: ["modules/demos/color-field/uncontrolled.tsx"],
+    files: ["modules/docs/demos/color-field/uncontrolled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/color-field/uncontrolled")
+      () => import("@/modules/docs/demos/color-field/uncontrolled")
     ),
   },
   "color-picker/channel-sliders": {
-    files: ["modules/demos/color-picker/channel-sliders.tsx"],
+    files: ["modules/docs/demos/color-picker/channel-sliders.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/color-picker/channel-sliders")
+      () => import("@/modules/docs/demos/color-picker/channel-sliders")
     ),
   },
   "color-picker/composition": {
-    files: ["modules/demos/color-picker/composition.tsx"],
+    files: ["modules/docs/demos/color-picker/composition.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/color-picker/composition")
+      () => import("@/modules/docs/demos/color-picker/composition")
     ),
   },
   "color-picker/controlled": {
-    files: ["modules/demos/color-picker/controlled.tsx"],
+    files: ["modules/docs/demos/color-picker/controlled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/color-picker/controlled")
+      () => import("@/modules/docs/demos/color-picker/controlled")
     ),
   },
   "color-picker/default": {
-    files: ["modules/demos/color-picker/default.tsx"],
-    component: React.lazy(() => import("@/modules/demos/color-picker/default")),
+    files: ["modules/docs/demos/color-picker/default.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/color-picker/default")
+    ),
   },
   "color-picker/options": {
-    files: ["modules/demos/color-picker/options.tsx"],
-    component: React.lazy(() => import("@/modules/demos/color-picker/options")),
+    files: ["modules/docs/demos/color-picker/options.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/color-picker/options")
+    ),
   },
   "color-picker/swatches": {
-    files: ["modules/demos/color-picker/swatches.tsx"],
+    files: ["modules/docs/demos/color-picker/swatches.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/color-picker/swatches")
+      () => import("@/modules/docs/demos/color-picker/swatches")
     ),
   },
   "color-picker/uncontrolled": {
-    files: ["modules/demos/color-picker/uncontrolled.tsx"],
+    files: ["modules/docs/demos/color-picker/uncontrolled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/color-picker/uncontrolled")
+      () => import("@/modules/docs/demos/color-picker/uncontrolled")
     ),
   },
   "color-slider/channel": {
-    files: ["modules/demos/color-slider/channel.tsx"],
-    component: React.lazy(() => import("@/modules/demos/color-slider/channel")),
+    files: ["modules/docs/demos/color-slider/channel.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/color-slider/channel")
+    ),
   },
   "color-slider/composition": {
-    files: ["modules/demos/color-slider/composition.tsx"],
+    files: ["modules/docs/demos/color-slider/composition.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/color-slider/composition")
+      () => import("@/modules/docs/demos/color-slider/composition")
     ),
   },
   "color-slider/controlled": {
-    files: ["modules/demos/color-slider/controlled.tsx"],
+    files: ["modules/docs/demos/color-slider/controlled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/color-slider/controlled")
+      () => import("@/modules/docs/demos/color-slider/controlled")
     ),
   },
   "color-slider/default": {
-    files: ["modules/demos/color-slider/default.tsx"],
-    component: React.lazy(() => import("@/modules/demos/color-slider/default")),
+    files: ["modules/docs/demos/color-slider/default.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/color-slider/default")
+    ),
   },
   "color-slider/disabled": {
-    files: ["modules/demos/color-slider/disabled.tsx"],
+    files: ["modules/docs/demos/color-slider/disabled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/color-slider/disabled")
+      () => import("@/modules/docs/demos/color-slider/disabled")
     ),
   },
   "color-slider/label": {
-    files: ["modules/demos/color-slider/label.tsx"],
-    component: React.lazy(() => import("@/modules/demos/color-slider/label")),
+    files: ["modules/docs/demos/color-slider/label.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/color-slider/label")
+    ),
   },
   "color-slider/uncontrolled": {
-    files: ["modules/demos/color-slider/uncontrolled.tsx"],
+    files: ["modules/docs/demos/color-slider/uncontrolled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/color-slider/uncontrolled")
+      () => import("@/modules/docs/demos/color-slider/uncontrolled")
     ),
   },
   "color-slider/vertical": {
-    files: ["modules/demos/color-slider/vertical.tsx"],
+    files: ["modules/docs/demos/color-slider/vertical.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/color-slider/vertical")
+      () => import("@/modules/docs/demos/color-slider/vertical")
     ),
   },
   "color-swatch/default": {
-    files: ["modules/demos/color-swatch/default.tsx"],
-    component: React.lazy(() => import("@/modules/demos/color-swatch/default")),
+    files: ["modules/docs/demos/color-swatch/default.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/color-swatch/default")
+    ),
   },
   "color-swatch-picker/basic": {
-    files: ["modules/demos/color-swatch-picker/basic.tsx"],
+    files: ["modules/docs/demos/color-swatch-picker/basic.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/color-swatch-picker/basic")
+      () => import("@/modules/docs/demos/color-swatch-picker/basic")
     ),
   },
   "color-swatch-picker/controlled": {
-    files: ["modules/demos/color-swatch-picker/controlled.tsx"],
+    files: ["modules/docs/demos/color-swatch-picker/controlled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/color-swatch-picker/controlled")
+      () => import("@/modules/docs/demos/color-swatch-picker/controlled")
     ),
   },
   "color-swatch-picker/disabled": {
-    files: ["modules/demos/color-swatch-picker/disabled.tsx"],
+    files: ["modules/docs/demos/color-swatch-picker/disabled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/color-swatch-picker/disabled")
+      () => import("@/modules/docs/demos/color-swatch-picker/disabled")
     ),
   },
   "combobox/async-loading": {
-    files: ["modules/demos/combobox/async-loading.tsx"],
+    files: ["modules/docs/demos/combobox/async-loading.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/combobox/async-loading")
+      () => import("@/modules/docs/demos/combobox/async-loading")
     ),
   },
   "combobox/basic": {
-    files: ["modules/demos/combobox/basic.tsx"],
-    component: React.lazy(() => import("@/modules/demos/combobox/basic")),
+    files: ["modules/docs/demos/combobox/basic.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/combobox/basic")),
   },
   "combobox/composition": {
-    files: ["modules/demos/combobox/composition.tsx"],
-    component: React.lazy(() => import("@/modules/demos/combobox/composition")),
+    files: ["modules/docs/demos/combobox/composition.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/combobox/composition")
+    ),
   },
   "combobox/controlled": {
-    files: ["modules/demos/combobox/controlled.tsx"],
-    component: React.lazy(() => import("@/modules/demos/combobox/controlled")),
+    files: ["modules/docs/demos/combobox/controlled.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/combobox/controlled")
+    ),
   },
   "combobox/custom-value": {
-    files: ["modules/demos/combobox/custom-value.tsx"],
+    files: ["modules/docs/demos/combobox/custom-value.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/combobox/custom-value")
+      () => import("@/modules/docs/demos/combobox/custom-value")
     ),
   },
   "combobox/description": {
-    files: ["modules/demos/combobox/description.tsx"],
-    component: React.lazy(() => import("@/modules/demos/combobox/description")),
+    files: ["modules/docs/demos/combobox/description.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/combobox/description")
+    ),
   },
   "combobox/disabled": {
-    files: ["modules/demos/combobox/disabled.tsx"],
-    component: React.lazy(() => import("@/modules/demos/combobox/disabled")),
+    files: ["modules/docs/demos/combobox/disabled.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/combobox/disabled")
+    ),
   },
   "combobox/label": {
-    files: ["modules/demos/combobox/label.tsx"],
-    component: React.lazy(() => import("@/modules/demos/combobox/label")),
+    files: ["modules/docs/demos/combobox/label.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/combobox/label")),
   },
   "combobox/loading": {
-    files: ["modules/demos/combobox/loading.tsx"],
-    component: React.lazy(() => import("@/modules/demos/combobox/loading")),
+    files: ["modules/docs/demos/combobox/loading.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/combobox/loading")
+    ),
   },
   "combobox/required": {
-    files: ["modules/demos/combobox/required.tsx"],
-    component: React.lazy(() => import("@/modules/demos/combobox/required")),
+    files: ["modules/docs/demos/combobox/required.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/combobox/required")
+    ),
   },
   "combobox/sections": {
-    files: ["modules/demos/combobox/sections.tsx"],
-    component: React.lazy(() => import("@/modules/demos/combobox/sections")),
+    files: ["modules/docs/demos/combobox/sections.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/combobox/sections")
+    ),
   },
   "combobox/uncontrolled": {
-    files: ["modules/demos/combobox/uncontrolled.tsx"],
+    files: ["modules/docs/demos/combobox/uncontrolled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/combobox/uncontrolled")
+      () => import("@/modules/docs/demos/combobox/uncontrolled")
     ),
   },
   "combobox/validation": {
-    files: ["modules/demos/combobox/validation.tsx"],
-    component: React.lazy(() => import("@/modules/demos/combobox/validation")),
+    files: ["modules/docs/demos/combobox/validation.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/combobox/validation")
+    ),
   },
   "command/basic": {
-    files: ["modules/demos/command/basic.tsx"],
-    component: React.lazy(() => import("@/modules/demos/command/basic")),
+    files: ["modules/docs/demos/command/basic.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/command/basic")),
   },
   "command/dialog": {
-    files: ["modules/demos/command/dialog.tsx"],
-    component: React.lazy(() => import("@/modules/demos/command/dialog")),
+    files: ["modules/docs/demos/command/dialog.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/command/dialog")),
   },
   "date-field/composition": {
-    files: ["modules/demos/date-field/composition.tsx"],
+    files: ["modules/docs/demos/date-field/composition.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-field/composition")
+      () => import("@/modules/docs/demos/date-field/composition")
     ),
   },
   "date-field/controlled": {
-    files: ["modules/demos/date-field/controlled.tsx"],
+    files: ["modules/docs/demos/date-field/controlled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-field/controlled")
+      () => import("@/modules/docs/demos/date-field/controlled")
     ),
   },
   "date-field/default": {
-    files: ["modules/demos/date-field/default.tsx"],
-    component: React.lazy(() => import("@/modules/demos/date-field/default")),
+    files: ["modules/docs/demos/date-field/default.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/date-field/default")
+    ),
   },
   "date-field/description": {
-    files: ["modules/demos/date-field/description.tsx"],
+    files: ["modules/docs/demos/date-field/description.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-field/description")
+      () => import("@/modules/docs/demos/date-field/description")
     ),
   },
   "date-field/disabled": {
-    files: ["modules/demos/date-field/disabled.tsx"],
-    component: React.lazy(() => import("@/modules/demos/date-field/disabled")),
+    files: ["modules/docs/demos/date-field/disabled.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/date-field/disabled")
+    ),
   },
   "date-field/error-message": {
-    files: ["modules/demos/date-field/error-message.tsx"],
+    files: ["modules/docs/demos/date-field/error-message.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-field/error-message")
+      () => import("@/modules/docs/demos/date-field/error-message")
     ),
   },
   "date-field/granularity": {
-    files: ["modules/demos/date-field/granularity.tsx"],
+    files: ["modules/docs/demos/date-field/granularity.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-field/granularity")
+      () => import("@/modules/docs/demos/date-field/granularity")
     ),
   },
   "date-field/hide-time-zone": {
-    files: ["modules/demos/date-field/hide-time-zone.tsx"],
+    files: ["modules/docs/demos/date-field/hide-time-zone.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-field/hide-time-zone")
+      () => import("@/modules/docs/demos/date-field/hide-time-zone")
     ),
   },
   "date-field/hour-cycle": {
-    files: ["modules/demos/date-field/hour-cycle.tsx"],
+    files: ["modules/docs/demos/date-field/hour-cycle.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-field/hour-cycle")
+      () => import("@/modules/docs/demos/date-field/hour-cycle")
     ),
   },
   "date-field/label": {
-    files: ["modules/demos/date-field/label.tsx"],
-    component: React.lazy(() => import("@/modules/demos/date-field/label")),
+    files: ["modules/docs/demos/date-field/label.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/date-field/label")
+    ),
   },
   "date-field/placeholder": {
-    files: ["modules/demos/date-field/placeholder.tsx"],
+    files: ["modules/docs/demos/date-field/placeholder.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-field/placeholder")
+      () => import("@/modules/docs/demos/date-field/placeholder")
     ),
   },
   "date-field/prefix-and-suffix": {
-    files: ["modules/demos/date-field/prefix-and-suffix.tsx"],
+    files: ["modules/docs/demos/date-field/prefix-and-suffix.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-field/prefix-and-suffix")
+      () => import("@/modules/docs/demos/date-field/prefix-and-suffix")
     ),
   },
   "date-field/read-only": {
-    files: ["modules/demos/date-field/read-only.tsx"],
-    component: React.lazy(() => import("@/modules/demos/date-field/read-only")),
+    files: ["modules/docs/demos/date-field/read-only.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/date-field/read-only")
+    ),
   },
   "date-field/required": {
-    files: ["modules/demos/date-field/required.tsx"],
-    component: React.lazy(() => import("@/modules/demos/date-field/required")),
+    files: ["modules/docs/demos/date-field/required.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/date-field/required")
+    ),
   },
   "date-field/sizes": {
-    files: ["modules/demos/date-field/sizes.tsx"],
-    component: React.lazy(() => import("@/modules/demos/date-field/sizes")),
+    files: ["modules/docs/demos/date-field/sizes.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/date-field/sizes")
+    ),
   },
   "date-field/time-zones": {
-    files: ["modules/demos/date-field/time-zones.tsx"],
+    files: ["modules/docs/demos/date-field/time-zones.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-field/time-zones")
+      () => import("@/modules/docs/demos/date-field/time-zones")
     ),
   },
   "date-field/uncontrolled": {
-    files: ["modules/demos/date-field/uncontrolled.tsx"],
+    files: ["modules/docs/demos/date-field/uncontrolled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-field/uncontrolled")
+      () => import("@/modules/docs/demos/date-field/uncontrolled")
     ),
   },
   "date-picker/composition": {
-    files: ["modules/demos/date-picker/composition.tsx"],
+    files: ["modules/docs/demos/date-picker/composition.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-picker/composition")
+      () => import("@/modules/docs/demos/date-picker/composition")
     ),
   },
   "date-picker/controlled": {
-    files: ["modules/demos/date-picker/controlled.tsx"],
+    files: ["modules/docs/demos/date-picker/controlled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-picker/controlled")
+      () => import("@/modules/docs/demos/date-picker/controlled")
     ),
   },
   "date-picker/default": {
-    files: ["modules/demos/date-picker/default.tsx"],
-    component: React.lazy(() => import("@/modules/demos/date-picker/default")),
+    files: ["modules/docs/demos/date-picker/default.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/date-picker/default")
+    ),
   },
   "date-picker/description": {
-    files: ["modules/demos/date-picker/description.tsx"],
+    files: ["modules/docs/demos/date-picker/description.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-picker/description")
+      () => import("@/modules/docs/demos/date-picker/description")
     ),
   },
   "date-picker/disabled": {
-    files: ["modules/demos/date-picker/disabled.tsx"],
-    component: React.lazy(() => import("@/modules/demos/date-picker/disabled")),
+    files: ["modules/docs/demos/date-picker/disabled.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/date-picker/disabled")
+    ),
   },
   "date-picker/error-message": {
-    files: ["modules/demos/date-picker/error-message.tsx"],
+    files: ["modules/docs/demos/date-picker/error-message.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-picker/error-message")
+      () => import("@/modules/docs/demos/date-picker/error-message")
     ),
   },
   "date-picker/granularity": {
-    files: ["modules/demos/date-picker/granularity.tsx"],
+    files: ["modules/docs/demos/date-picker/granularity.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-picker/granularity")
+      () => import("@/modules/docs/demos/date-picker/granularity")
     ),
   },
   "date-picker/hide-time-zone": {
-    files: ["modules/demos/date-picker/hide-time-zone.tsx"],
+    files: ["modules/docs/demos/date-picker/hide-time-zone.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-picker/hide-time-zone")
+      () => import("@/modules/docs/demos/date-picker/hide-time-zone")
     ),
   },
   "date-picker/hour-cycle": {
-    files: ["modules/demos/date-picker/hour-cycle.tsx"],
+    files: ["modules/docs/demos/date-picker/hour-cycle.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-picker/hour-cycle")
+      () => import("@/modules/docs/demos/date-picker/hour-cycle")
     ),
   },
   "date-picker/label": {
-    files: ["modules/demos/date-picker/label.tsx"],
-    component: React.lazy(() => import("@/modules/demos/date-picker/label")),
+    files: ["modules/docs/demos/date-picker/label.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/date-picker/label")
+    ),
   },
   "date-picker/placeholder": {
-    files: ["modules/demos/date-picker/placeholder.tsx"],
+    files: ["modules/docs/demos/date-picker/placeholder.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-picker/placeholder")
+      () => import("@/modules/docs/demos/date-picker/placeholder")
     ),
   },
   "date-picker/prefix": {
-    files: ["modules/demos/date-picker/prefix.tsx"],
-    component: React.lazy(() => import("@/modules/demos/date-picker/prefix")),
+    files: ["modules/docs/demos/date-picker/prefix.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/date-picker/prefix")
+    ),
   },
   "date-picker/read-only": {
-    files: ["modules/demos/date-picker/read-only.tsx"],
+    files: ["modules/docs/demos/date-picker/read-only.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-picker/read-only")
+      () => import("@/modules/docs/demos/date-picker/read-only")
     ),
   },
   "date-picker/required": {
-    files: ["modules/demos/date-picker/required.tsx"],
-    component: React.lazy(() => import("@/modules/demos/date-picker/required")),
+    files: ["modules/docs/demos/date-picker/required.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/date-picker/required")
+    ),
   },
   "date-picker/sizes": {
-    files: ["modules/demos/date-picker/sizes.tsx"],
-    component: React.lazy(() => import("@/modules/demos/date-picker/sizes")),
+    files: ["modules/docs/demos/date-picker/sizes.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/date-picker/sizes")
+    ),
   },
   "date-picker/time-zones": {
-    files: ["modules/demos/date-picker/time-zones.tsx"],
+    files: ["modules/docs/demos/date-picker/time-zones.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-picker/time-zones")
+      () => import("@/modules/docs/demos/date-picker/time-zones")
     ),
   },
   "date-picker/uncontrolled": {
-    files: ["modules/demos/date-picker/uncontrolled.tsx"],
+    files: ["modules/docs/demos/date-picker/uncontrolled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-picker/uncontrolled")
+      () => import("@/modules/docs/demos/date-picker/uncontrolled")
     ),
   },
   "date-range-picker/composition": {
-    files: ["modules/demos/date-range-picker/composition.tsx"],
+    files: ["modules/docs/demos/date-range-picker/composition.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-range-picker/composition")
+      () => import("@/modules/docs/demos/date-range-picker/composition")
     ),
   },
   "date-range-picker/controlled": {
-    files: ["modules/demos/date-range-picker/controlled.tsx"],
+    files: ["modules/docs/demos/date-range-picker/controlled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-range-picker/controlled")
+      () => import("@/modules/docs/demos/date-range-picker/controlled")
     ),
   },
   "date-range-picker/default": {
-    files: ["modules/demos/date-range-picker/default.tsx"],
+    files: ["modules/docs/demos/date-range-picker/default.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-range-picker/default")
+      () => import("@/modules/docs/demos/date-range-picker/default")
     ),
   },
   "date-range-picker/description": {
-    files: ["modules/demos/date-range-picker/description.tsx"],
+    files: ["modules/docs/demos/date-range-picker/description.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-range-picker/description")
+      () => import("@/modules/docs/demos/date-range-picker/description")
     ),
   },
   "date-range-picker/disabled": {
-    files: ["modules/demos/date-range-picker/disabled.tsx"],
+    files: ["modules/docs/demos/date-range-picker/disabled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-range-picker/disabled")
+      () => import("@/modules/docs/demos/date-range-picker/disabled")
     ),
   },
   "date-range-picker/error-message": {
-    files: ["modules/demos/date-range-picker/error-message.tsx"],
+    files: ["modules/docs/demos/date-range-picker/error-message.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-range-picker/error-message")
+      () => import("@/modules/docs/demos/date-range-picker/error-message")
     ),
   },
   "date-range-picker/granularity": {
-    files: ["modules/demos/date-range-picker/granularity.tsx"],
+    files: ["modules/docs/demos/date-range-picker/granularity.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-range-picker/granularity")
+      () => import("@/modules/docs/demos/date-range-picker/granularity")
     ),
   },
   "date-range-picker/hide-time-zone": {
-    files: ["modules/demos/date-range-picker/hide-time-zone.tsx"],
+    files: ["modules/docs/demos/date-range-picker/hide-time-zone.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-range-picker/hide-time-zone")
+      () => import("@/modules/docs/demos/date-range-picker/hide-time-zone")
     ),
   },
   "date-range-picker/hour-cycle": {
-    files: ["modules/demos/date-range-picker/hour-cycle.tsx"],
+    files: ["modules/docs/demos/date-range-picker/hour-cycle.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-range-picker/hour-cycle")
+      () => import("@/modules/docs/demos/date-range-picker/hour-cycle")
     ),
   },
   "date-range-picker/label": {
-    files: ["modules/demos/date-range-picker/label.tsx"],
+    files: ["modules/docs/demos/date-range-picker/label.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-range-picker/label")
+      () => import("@/modules/docs/demos/date-range-picker/label")
     ),
   },
   "date-range-picker/loading": {
-    files: ["modules/demos/date-range-picker/loading.tsx"],
+    files: ["modules/docs/demos/date-range-picker/loading.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-range-picker/loading")
+      () => import("@/modules/docs/demos/date-range-picker/loading")
     ),
   },
   "date-range-picker/placeholder": {
-    files: ["modules/demos/date-range-picker/placeholder.tsx"],
+    files: ["modules/docs/demos/date-range-picker/placeholder.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-range-picker/placeholder")
+      () => import("@/modules/docs/demos/date-range-picker/placeholder")
     ),
   },
   "date-range-picker/prefix": {
-    files: ["modules/demos/date-range-picker/prefix.tsx"],
+    files: ["modules/docs/demos/date-range-picker/prefix.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-range-picker/prefix")
+      () => import("@/modules/docs/demos/date-range-picker/prefix")
     ),
   },
   "date-range-picker/read-only": {
-    files: ["modules/demos/date-range-picker/read-only.tsx"],
+    files: ["modules/docs/demos/date-range-picker/read-only.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-range-picker/read-only")
+      () => import("@/modules/docs/demos/date-range-picker/read-only")
     ),
   },
   "date-range-picker/required": {
-    files: ["modules/demos/date-range-picker/required.tsx"],
+    files: ["modules/docs/demos/date-range-picker/required.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-range-picker/required")
+      () => import("@/modules/docs/demos/date-range-picker/required")
     ),
   },
   "date-range-picker/sizes": {
-    files: ["modules/demos/date-range-picker/sizes.tsx"],
+    files: ["modules/docs/demos/date-range-picker/sizes.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-range-picker/sizes")
+      () => import("@/modules/docs/demos/date-range-picker/sizes")
     ),
   },
   "date-range-picker/time-zones": {
-    files: ["modules/demos/date-range-picker/time-zones.tsx"],
+    files: ["modules/docs/demos/date-range-picker/time-zones.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-range-picker/time-zones")
+      () => import("@/modules/docs/demos/date-range-picker/time-zones")
     ),
   },
   "date-range-picker/uncontrolled": {
-    files: ["modules/demos/date-range-picker/uncontrolled.tsx"],
+    files: ["modules/docs/demos/date-range-picker/uncontrolled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/date-range-picker/uncontrolled")
+      () => import("@/modules/docs/demos/date-range-picker/uncontrolled")
     ),
   },
   "dialog/alert-dialog": {
-    files: ["modules/demos/dialog/alert-dialog.tsx"],
-    component: React.lazy(() => import("@/modules/demos/dialog/alert-dialog")),
+    files: ["modules/docs/demos/dialog/alert-dialog.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/dialog/alert-dialog")
+    ),
   },
   "dialog/async-form-submission": {
-    files: ["modules/demos/dialog/async-form-submission.tsx"],
+    files: ["modules/docs/demos/dialog/async-form-submission.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/dialog/async-form-submission")
+      () => import("@/modules/docs/demos/dialog/async-form-submission")
     ),
   },
   "dialog/basic": {
-    files: ["modules/demos/dialog/basic.tsx"],
-    component: React.lazy(() => import("@/modules/demos/dialog/basic")),
+    files: ["modules/docs/demos/dialog/basic.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/dialog/basic")),
   },
   "dialog/composition": {
-    files: ["modules/demos/dialog/composition.tsx"],
-    component: React.lazy(() => import("@/modules/demos/dialog/composition")),
+    files: ["modules/docs/demos/dialog/composition.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/dialog/composition")
+    ),
   },
   "dialog/controlled": {
-    files: ["modules/demos/dialog/controlled.tsx"],
-    component: React.lazy(() => import("@/modules/demos/dialog/controlled")),
+    files: ["modules/docs/demos/dialog/controlled.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/dialog/controlled")
+    ),
   },
   "dialog/description": {
-    files: ["modules/demos/dialog/description.tsx"],
-    component: React.lazy(() => import("@/modules/demos/dialog/description")),
+    files: ["modules/docs/demos/dialog/description.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/dialog/description")
+    ),
   },
   "dialog/dismissable": {
-    files: ["modules/demos/dialog/dismissable.tsx"],
-    component: React.lazy(() => import("@/modules/demos/dialog/dismissable")),
+    files: ["modules/docs/demos/dialog/dismissable.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/dialog/dismissable")
+    ),
   },
   "dialog/drawer": {
-    files: ["modules/demos/dialog/drawer.tsx"],
-    component: React.lazy(() => import("@/modules/demos/dialog/drawer")),
+    files: ["modules/docs/demos/dialog/drawer.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/dialog/drawer")),
   },
   "dialog/inset-content": {
-    files: ["modules/demos/dialog/inset-content.tsx"],
-    component: React.lazy(() => import("@/modules/demos/dialog/inset-content")),
+    files: ["modules/docs/demos/dialog/inset-content.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/dialog/inset-content")
+    ),
   },
   "dialog/nested": {
-    files: ["modules/demos/dialog/nested.tsx"],
-    component: React.lazy(() => import("@/modules/demos/dialog/nested")),
+    files: ["modules/docs/demos/dialog/nested.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/dialog/nested")),
   },
   "dialog/popover": {
-    files: ["modules/demos/dialog/popover.tsx"],
-    component: React.lazy(() => import("@/modules/demos/dialog/popover")),
+    files: ["modules/docs/demos/dialog/popover.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/dialog/popover")),
   },
   "dialog/title": {
-    files: ["modules/demos/dialog/title.tsx"],
-    component: React.lazy(() => import("@/modules/demos/dialog/title")),
+    files: ["modules/docs/demos/dialog/title.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/dialog/title")),
   },
   "dialog/types": {
-    files: ["modules/demos/dialog/types.tsx"],
-    component: React.lazy(() => import("@/modules/demos/dialog/types")),
+    files: ["modules/docs/demos/dialog/types.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/dialog/types")),
   },
   "drawer/basic": {
-    files: ["modules/demos/drawer/basic.tsx"],
-    component: React.lazy(() => import("@/modules/demos/drawer/basic")),
+    files: ["modules/docs/demos/drawer/basic.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/drawer/basic")),
   },
   "drawer/placement": {
-    files: ["modules/demos/drawer/placement.tsx"],
-    component: React.lazy(() => import("@/modules/demos/drawer/placement")),
+    files: ["modules/docs/demos/drawer/placement.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/drawer/placement")
+    ),
   },
   "drop-zone/basic": {
-    files: ["modules/demos/drop-zone/basic.tsx"],
-    component: React.lazy(() => import("@/modules/demos/drop-zone/basic")),
+    files: ["modules/docs/demos/drop-zone/basic.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/drop-zone/basic")),
   },
   "drop-zone/disabled": {
-    files: ["modules/demos/drop-zone/disabled.tsx"],
-    component: React.lazy(() => import("@/modules/demos/drop-zone/disabled")),
+    files: ["modules/docs/demos/drop-zone/disabled.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/drop-zone/disabled")
+    ),
   },
   "drop-zone/events": {
-    files: ["modules/demos/drop-zone/events.tsx"],
-    component: React.lazy(() => import("@/modules/demos/drop-zone/events")),
+    files: ["modules/docs/demos/drop-zone/events.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/drop-zone/events")
+    ),
   },
   "drop-zone/file-trigger": {
-    files: ["modules/demos/drop-zone/file-trigger.tsx"],
+    files: ["modules/docs/demos/drop-zone/file-trigger.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/drop-zone/file-trigger")
+      () => import("@/modules/docs/demos/drop-zone/file-trigger")
     ),
   },
   "drop-zone/label": {
-    files: ["modules/demos/drop-zone/label.tsx"],
-    component: React.lazy(() => import("@/modules/demos/drop-zone/label")),
+    files: ["modules/docs/demos/drop-zone/label.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/drop-zone/label")),
   },
   "drop-zone/visual-feedback": {
-    files: ["modules/demos/drop-zone/visual-feedback.tsx"],
+    files: ["modules/docs/demos/drop-zone/visual-feedback.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/drop-zone/visual-feedback")
+      () => import("@/modules/docs/demos/drop-zone/visual-feedback")
     ),
   },
   "file-trigger/default": {
-    files: ["modules/demos/file-trigger/default.tsx"],
-    component: React.lazy(() => import("@/modules/demos/file-trigger/default")),
+    files: ["modules/docs/demos/file-trigger/default.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/file-trigger/default")
+    ),
   },
   "file-trigger/directory-selection": {
-    files: ["modules/demos/file-trigger/directory-selection.tsx"],
+    files: ["modules/docs/demos/file-trigger/directory-selection.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/file-trigger/directory-selection")
+      () => import("@/modules/docs/demos/file-trigger/directory-selection")
     ),
   },
   "file-trigger/file-types": {
-    files: ["modules/demos/file-trigger/file-types.tsx"],
+    files: ["modules/docs/demos/file-trigger/file-types.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/file-trigger/file-types")
+      () => import("@/modules/docs/demos/file-trigger/file-types")
     ),
   },
   "file-trigger/media-capture": {
-    files: ["modules/demos/file-trigger/media-capture.tsx"],
+    files: ["modules/docs/demos/file-trigger/media-capture.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/file-trigger/media-capture")
+      () => import("@/modules/docs/demos/file-trigger/media-capture")
     ),
   },
   "file-trigger/multiple-files": {
-    files: ["modules/demos/file-trigger/multiple-files.tsx"],
+    files: ["modules/docs/demos/file-trigger/multiple-files.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/file-trigger/multiple-files")
+      () => import("@/modules/docs/demos/file-trigger/multiple-files")
     ),
   },
   "form/basic": {
-    files: ["modules/demos/form/basic.tsx"],
-    component: React.lazy(() => import("@/modules/demos/form/basic")),
+    files: ["modules/docs/demos/form/basic.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/form/basic")),
   },
   "form/react-aria": {
-    files: ["modules/demos/form/react-aria.tsx"],
-    component: React.lazy(() => import("@/modules/demos/form/react-aria")),
+    files: ["modules/docs/demos/form/react-aria.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/form/react-aria")),
   },
   "form/react-hook-form": {
-    files: ["modules/demos/form/react-hook-form.tsx"],
-    component: React.lazy(() => import("@/modules/demos/form/react-hook-form")),
+    files: ["modules/docs/demos/form/react-hook-form.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/form/react-hook-form")
+    ),
   },
   "list-box/async-loading": {
-    files: ["modules/demos/list-box/async-loading.tsx"],
+    files: ["modules/docs/demos/list-box/async-loading.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/list-box/async-loading")
+      () => import("@/modules/docs/demos/list-box/async-loading")
     ),
   },
   "list-box/basic": {
-    files: ["modules/demos/list-box/basic.tsx"],
-    component: React.lazy(() => import("@/modules/demos/list-box/basic")),
+    files: ["modules/docs/demos/list-box/basic.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/list-box/basic")),
   },
   "list-box/composition": {
-    files: ["modules/demos/list-box/composition.tsx"],
-    component: React.lazy(() => import("@/modules/demos/list-box/composition")),
+    files: ["modules/docs/demos/list-box/composition.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/list-box/composition")
+    ),
   },
   "list-box/contact-list": {
-    files: ["modules/demos/list-box/contact-list.tsx"],
+    files: ["modules/docs/demos/list-box/contact-list.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/list-box/contact-list")
+      () => import("@/modules/docs/demos/list-box/contact-list")
     ),
   },
   "list-box/controlled": {
-    files: ["modules/demos/list-box/controlled.tsx"],
-    component: React.lazy(() => import("@/modules/demos/list-box/controlled")),
+    files: ["modules/docs/demos/list-box/controlled.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/list-box/controlled")
+    ),
   },
   "list-box/disabled-items": {
-    files: ["modules/demos/list-box/disabled-items.tsx"],
+    files: ["modules/docs/demos/list-box/disabled-items.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/list-box/disabled-items")
+      () => import("@/modules/docs/demos/list-box/disabled-items")
     ),
   },
   "list-box/empty-state": {
-    files: ["modules/demos/list-box/empty-state.tsx"],
-    component: React.lazy(() => import("@/modules/demos/list-box/empty-state")),
+    files: ["modules/docs/demos/list-box/empty-state.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/list-box/empty-state")
+    ),
   },
   "list-box/grid": {
-    files: ["modules/demos/list-box/grid.tsx"],
-    component: React.lazy(() => import("@/modules/demos/list-box/grid")),
+    files: ["modules/docs/demos/list-box/grid.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/list-box/grid")),
   },
   "list-box/horizontal": {
-    files: ["modules/demos/list-box/horizontal.tsx"],
-    component: React.lazy(() => import("@/modules/demos/list-box/horizontal")),
+    files: ["modules/docs/demos/list-box/horizontal.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/list-box/horizontal")
+    ),
   },
   "list-box/image-grid": {
-    files: ["modules/demos/list-box/image-grid.tsx"],
-    component: React.lazy(() => import("@/modules/demos/list-box/image-grid")),
+    files: ["modules/docs/demos/list-box/image-grid.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/list-box/image-grid")
+    ),
   },
   "list-box/item-variant": {
-    files: ["modules/demos/list-box/item-variant.tsx"],
+    files: ["modules/docs/demos/list-box/item-variant.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/list-box/item-variant")
+      () => import("@/modules/docs/demos/list-box/item-variant")
     ),
   },
   "list-box/label-and-description": {
-    files: ["modules/demos/list-box/label-and-description.tsx"],
+    files: ["modules/docs/demos/list-box/label-and-description.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/list-box/label-and-description")
+      () => import("@/modules/docs/demos/list-box/label-and-description")
     ),
   },
   "list-box/links": {
-    files: ["modules/demos/list-box/links.tsx"],
-    component: React.lazy(() => import("@/modules/demos/list-box/links")),
+    files: ["modules/docs/demos/list-box/links.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/list-box/links")),
   },
   "list-box/loading": {
-    files: ["modules/demos/list-box/loading.tsx"],
-    component: React.lazy(() => import("@/modules/demos/list-box/loading")),
+    files: ["modules/docs/demos/list-box/loading.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/list-box/loading")
+    ),
   },
   "list-box/prefix-and-suffix": {
-    files: ["modules/demos/list-box/prefix-and-suffix.tsx"],
+    files: ["modules/docs/demos/list-box/prefix-and-suffix.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/list-box/prefix-and-suffix")
+      () => import("@/modules/docs/demos/list-box/prefix-and-suffix")
     ),
   },
   "list-box/sections": {
-    files: ["modules/demos/list-box/sections.tsx"],
-    component: React.lazy(() => import("@/modules/demos/list-box/sections")),
+    files: ["modules/docs/demos/list-box/sections.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/list-box/sections")
+    ),
   },
   "list-box/selection-behavior": {
-    files: ["modules/demos/list-box/selection-behavior.tsx"],
+    files: ["modules/docs/demos/list-box/selection-behavior.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/list-box/selection-behavior")
+      () => import("@/modules/docs/demos/list-box/selection-behavior")
     ),
   },
   "list-box/selection-mode": {
-    files: ["modules/demos/list-box/selection-mode.tsx"],
+    files: ["modules/docs/demos/list-box/selection-mode.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/list-box/selection-mode")
+      () => import("@/modules/docs/demos/list-box/selection-mode")
     ),
   },
   "list-box/separator": {
-    files: ["modules/demos/list-box/separator.tsx"],
-    component: React.lazy(() => import("@/modules/demos/list-box/separator")),
+    files: ["modules/docs/demos/list-box/separator.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/list-box/separator")
+    ),
   },
   "list-box/uncontrolled": {
-    files: ["modules/demos/list-box/uncontrolled.tsx"],
+    files: ["modules/docs/demos/list-box/uncontrolled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/list-box/uncontrolled")
+      () => import("@/modules/docs/demos/list-box/uncontrolled")
     ),
   },
   "menu/basic": {
-    files: ["modules/demos/menu/basic.tsx"],
-    component: React.lazy(() => import("@/modules/demos/menu/basic")),
+    files: ["modules/docs/demos/menu/basic.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/menu/basic")),
   },
   "menu/composition": {
-    files: ["modules/demos/menu/composition.tsx"],
-    component: React.lazy(() => import("@/modules/demos/menu/composition")),
+    files: ["modules/docs/demos/menu/composition.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/menu/composition")
+    ),
   },
   "menu/controlled": {
-    files: ["modules/demos/menu/controlled.tsx"],
-    component: React.lazy(() => import("@/modules/demos/menu/controlled")),
+    files: ["modules/docs/demos/menu/controlled.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/menu/controlled")),
   },
   "menu/disabled-items": {
-    files: ["modules/demos/menu/disabled-items.tsx"],
-    component: React.lazy(() => import("@/modules/demos/menu/disabled-items")),
+    files: ["modules/docs/demos/menu/disabled-items.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/menu/disabled-items")
+    ),
   },
   "menu/item-variant": {
-    files: ["modules/demos/menu/item-variant.tsx"],
-    component: React.lazy(() => import("@/modules/demos/menu/item-variant")),
+    files: ["modules/docs/demos/menu/item-variant.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/menu/item-variant")
+    ),
   },
   "menu/label-and-description": {
-    files: ["modules/demos/menu/label-and-description.tsx"],
+    files: ["modules/docs/demos/menu/label-and-description.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/menu/label-and-description")
+      () => import("@/modules/docs/demos/menu/label-and-description")
     ),
   },
   "menu/link-items": {
-    files: ["modules/demos/menu/link-items.tsx"],
-    component: React.lazy(() => import("@/modules/demos/menu/link-items")),
+    files: ["modules/docs/demos/menu/link-items.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/menu/link-items")),
   },
   "menu/long-press": {
-    files: ["modules/demos/menu/long-press.tsx"],
-    component: React.lazy(() => import("@/modules/demos/menu/long-press")),
+    files: ["modules/docs/demos/menu/long-press.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/menu/long-press")),
   },
   "menu/multiple-selection": {
-    files: ["modules/demos/menu/multiple-selection.tsx"],
+    files: ["modules/docs/demos/menu/multiple-selection.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/menu/multiple-selection")
+      () => import("@/modules/docs/demos/menu/multiple-selection")
     ),
   },
   "menu/overlay-type": {
-    files: ["modules/demos/menu/overlay-type.tsx"],
-    component: React.lazy(() => import("@/modules/demos/menu/overlay-type")),
+    files: ["modules/docs/demos/menu/overlay-type.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/menu/overlay-type")
+    ),
   },
   "menu/placement": {
-    files: ["modules/demos/menu/placement.tsx"],
-    component: React.lazy(() => import("@/modules/demos/menu/placement")),
+    files: ["modules/docs/demos/menu/placement.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/menu/placement")),
   },
   "menu/prefix-and-suffix": {
-    files: ["modules/demos/menu/prefix-and-suffix.tsx"],
+    files: ["modules/docs/demos/menu/prefix-and-suffix.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/menu/prefix-and-suffix")
+      () => import("@/modules/docs/demos/menu/prefix-and-suffix")
     ),
   },
   "menu/section": {
-    files: ["modules/demos/menu/section.tsx"],
-    component: React.lazy(() => import("@/modules/demos/menu/section")),
+    files: ["modules/docs/demos/menu/section.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/menu/section")),
   },
   "menu/separator": {
-    files: ["modules/demos/menu/separator.tsx"],
-    component: React.lazy(() => import("@/modules/demos/menu/separator")),
+    files: ["modules/docs/demos/menu/separator.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/menu/separator")),
   },
   "menu/shortcut": {
-    files: ["modules/demos/menu/shortcut.tsx"],
-    component: React.lazy(() => import("@/modules/demos/menu/shortcut")),
+    files: ["modules/docs/demos/menu/shortcut.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/menu/shortcut")),
   },
   "menu/single-selection": {
-    files: ["modules/demos/menu/single-selection.tsx"],
+    files: ["modules/docs/demos/menu/single-selection.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/menu/single-selection")
+      () => import("@/modules/docs/demos/menu/single-selection")
     ),
   },
   "menu/submenus": {
-    files: ["modules/demos/menu/submenus.tsx"],
-    component: React.lazy(() => import("@/modules/demos/menu/submenus")),
+    files: ["modules/docs/demos/menu/submenus.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/menu/submenus")),
   },
   "modal/basic": {
-    files: ["modules/demos/modal/basic.tsx"],
-    component: React.lazy(() => import("@/modules/demos/modal/basic")),
+    files: ["modules/docs/demos/modal/basic.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/modal/basic")),
   },
   "number-field/composition": {
-    files: ["modules/demos/number-field/composition.tsx"],
+    files: ["modules/docs/demos/number-field/composition.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/number-field/composition")
+      () => import("@/modules/docs/demos/number-field/composition")
     ),
   },
   "number-field/controlled": {
-    files: ["modules/demos/number-field/controlled.tsx"],
+    files: ["modules/docs/demos/number-field/controlled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/number-field/controlled")
+      () => import("@/modules/docs/demos/number-field/controlled")
     ),
   },
   "number-field/default": {
-    files: ["modules/demos/number-field/default.tsx"],
-    component: React.lazy(() => import("@/modules/demos/number-field/default")),
+    files: ["modules/docs/demos/number-field/default.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/number-field/default")
+    ),
   },
   "number-field/description": {
-    files: ["modules/demos/number-field/description.tsx"],
+    files: ["modules/docs/demos/number-field/description.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/number-field/description")
+      () => import("@/modules/docs/demos/number-field/description")
     ),
   },
   "number-field/disabled": {
-    files: ["modules/demos/number-field/disabled.tsx"],
+    files: ["modules/docs/demos/number-field/disabled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/number-field/disabled")
+      () => import("@/modules/docs/demos/number-field/disabled")
     ),
   },
   "number-field/error-message": {
-    files: ["modules/demos/number-field/error-message.tsx"],
+    files: ["modules/docs/demos/number-field/error-message.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/number-field/error-message")
+      () => import("@/modules/docs/demos/number-field/error-message")
     ),
   },
   "number-field/format-options": {
-    files: ["modules/demos/number-field/format-options.tsx"],
+    files: ["modules/docs/demos/number-field/format-options.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/number-field/format-options")
+      () => import("@/modules/docs/demos/number-field/format-options")
     ),
   },
   "number-field/label": {
-    files: ["modules/demos/number-field/label.tsx"],
-    component: React.lazy(() => import("@/modules/demos/number-field/label")),
+    files: ["modules/docs/demos/number-field/label.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/number-field/label")
+    ),
   },
   "number-field/read-only": {
-    files: ["modules/demos/number-field/read-only.tsx"],
+    files: ["modules/docs/demos/number-field/read-only.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/number-field/read-only")
+      () => import("@/modules/docs/demos/number-field/read-only")
     ),
   },
   "number-field/required": {
-    files: ["modules/demos/number-field/required.tsx"],
+    files: ["modules/docs/demos/number-field/required.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/number-field/required")
+      () => import("@/modules/docs/demos/number-field/required")
     ),
   },
   "number-field/sizes": {
-    files: ["modules/demos/number-field/sizes.tsx"],
-    component: React.lazy(() => import("@/modules/demos/number-field/sizes")),
+    files: ["modules/docs/demos/number-field/sizes.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/number-field/sizes")
+    ),
   },
   "number-field/uncontrolled": {
-    files: ["modules/demos/number-field/uncontrolled.tsx"],
+    files: ["modules/docs/demos/number-field/uncontrolled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/number-field/uncontrolled")
+      () => import("@/modules/docs/demos/number-field/uncontrolled")
     ),
   },
   "overlay/basic": {
-    files: ["modules/demos/overlay/basic.tsx"],
-    component: React.lazy(() => import("@/modules/demos/overlay/basic")),
+    files: ["modules/docs/demos/overlay/basic.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/overlay/basic")),
   },
   "overlay/type": {
-    files: ["modules/demos/overlay/type.tsx"],
-    component: React.lazy(() => import("@/modules/demos/overlay/type")),
+    files: ["modules/docs/demos/overlay/type.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/overlay/type")),
   },
   "popover/basic": {
-    files: ["modules/demos/popover/basic.tsx"],
-    component: React.lazy(() => import("@/modules/demos/popover/basic")),
+    files: ["modules/docs/demos/popover/basic.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/popover/basic")),
   },
   "progress-bar/composition": {
-    files: ["modules/demos/progress-bar/composition.tsx"],
+    files: ["modules/docs/demos/progress-bar/composition.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/progress-bar/composition")
+      () => import("@/modules/docs/demos/progress-bar/composition")
     ),
   },
   "progress-bar/custom-value-label": {
-    files: ["modules/demos/progress-bar/custom-value-label.tsx"],
+    files: ["modules/docs/demos/progress-bar/custom-value-label.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/progress-bar/custom-value-label")
+      () => import("@/modules/docs/demos/progress-bar/custom-value-label")
     ),
   },
   "progress-bar/default": {
-    files: ["modules/demos/progress-bar/default.tsx"],
-    component: React.lazy(() => import("@/modules/demos/progress-bar/default")),
+    files: ["modules/docs/demos/progress-bar/default.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/progress-bar/default")
+    ),
   },
   "progress-bar/duration": {
-    files: ["modules/demos/progress-bar/duration.tsx"],
+    files: ["modules/docs/demos/progress-bar/duration.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/progress-bar/duration")
+      () => import("@/modules/docs/demos/progress-bar/duration")
     ),
   },
   "progress-bar/format-options": {
-    files: ["modules/demos/progress-bar/format-options.tsx"],
+    files: ["modules/docs/demos/progress-bar/format-options.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/progress-bar/format-options")
+      () => import("@/modules/docs/demos/progress-bar/format-options")
     ),
   },
   "progress-bar/indeterminate": {
-    files: ["modules/demos/progress-bar/indeterminate.tsx"],
+    files: ["modules/docs/demos/progress-bar/indeterminate.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/progress-bar/indeterminate")
+      () => import("@/modules/docs/demos/progress-bar/indeterminate")
     ),
   },
   "progress-bar/label": {
-    files: ["modules/demos/progress-bar/label.tsx"],
-    component: React.lazy(() => import("@/modules/demos/progress-bar/label")),
+    files: ["modules/docs/demos/progress-bar/label.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/progress-bar/label")
+    ),
   },
   "progress-bar/min-max-values": {
-    files: ["modules/demos/progress-bar/min-max-values.tsx"],
+    files: ["modules/docs/demos/progress-bar/min-max-values.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/progress-bar/min-max-values")
+      () => import("@/modules/docs/demos/progress-bar/min-max-values")
     ),
   },
   "progress-bar/shape": {
-    files: ["modules/demos/progress-bar/shape.tsx"],
-    component: React.lazy(() => import("@/modules/demos/progress-bar/shape")),
+    files: ["modules/docs/demos/progress-bar/shape.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/progress-bar/shape")
+    ),
   },
   "progress-bar/sizes": {
-    files: ["modules/demos/progress-bar/sizes.tsx"],
-    component: React.lazy(() => import("@/modules/demos/progress-bar/sizes")),
+    files: ["modules/docs/demos/progress-bar/sizes.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/progress-bar/sizes")
+    ),
   },
   "progress-bar/value-label": {
-    files: ["modules/demos/progress-bar/value-label.tsx"],
+    files: ["modules/docs/demos/progress-bar/value-label.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/progress-bar/value-label")
+      () => import("@/modules/docs/demos/progress-bar/value-label")
     ),
   },
   "progress-bar/variants": {
-    files: ["modules/demos/progress-bar/variants.tsx"],
+    files: ["modules/docs/demos/progress-bar/variants.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/progress-bar/variants")
+      () => import("@/modules/docs/demos/progress-bar/variants")
     ),
   },
   "radio-group/cards": {
-    files: ["modules/demos/radio-group/cards.tsx"],
-    component: React.lazy(() => import("@/modules/demos/radio-group/cards")),
+    files: ["modules/docs/demos/radio-group/cards.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/radio-group/cards")
+    ),
   },
   "radio-group/composition": {
-    files: ["modules/demos/radio-group/composition.tsx"],
+    files: ["modules/docs/demos/radio-group/composition.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/radio-group/composition")
+      () => import("@/modules/docs/demos/radio-group/composition")
     ),
   },
   "radio-group/controlled": {
-    files: ["modules/demos/radio-group/controlled.tsx"],
+    files: ["modules/docs/demos/radio-group/controlled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/radio-group/controlled")
+      () => import("@/modules/docs/demos/radio-group/controlled")
     ),
   },
   "radio-group/default": {
-    files: ["modules/demos/radio-group/default.tsx"],
-    component: React.lazy(() => import("@/modules/demos/radio-group/default")),
+    files: ["modules/docs/demos/radio-group/default.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/radio-group/default")
+    ),
   },
   "radio-group/description": {
-    files: ["modules/demos/radio-group/description.tsx"],
+    files: ["modules/docs/demos/radio-group/description.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/radio-group/description")
+      () => import("@/modules/docs/demos/radio-group/description")
     ),
   },
   "radio-group/disabled": {
-    files: ["modules/demos/radio-group/disabled.tsx"],
-    component: React.lazy(() => import("@/modules/demos/radio-group/disabled")),
+    files: ["modules/docs/demos/radio-group/disabled.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/radio-group/disabled")
+    ),
   },
   "radio-group/error-message": {
-    files: ["modules/demos/radio-group/error-message.tsx"],
+    files: ["modules/docs/demos/radio-group/error-message.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/radio-group/error-message")
+      () => import("@/modules/docs/demos/radio-group/error-message")
     ),
   },
   "radio-group/label": {
-    files: ["modules/demos/radio-group/label.tsx"],
-    component: React.lazy(() => import("@/modules/demos/radio-group/label")),
+    files: ["modules/docs/demos/radio-group/label.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/radio-group/label")
+    ),
   },
   "radio-group/orientation": {
-    files: ["modules/demos/radio-group/orientation.tsx"],
+    files: ["modules/docs/demos/radio-group/orientation.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/radio-group/orientation")
+      () => import("@/modules/docs/demos/radio-group/orientation")
     ),
   },
   "radio-group/read-only": {
-    files: ["modules/demos/radio-group/read-only.tsx"],
+    files: ["modules/docs/demos/radio-group/read-only.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/radio-group/read-only")
+      () => import("@/modules/docs/demos/radio-group/read-only")
     ),
   },
   "radio-group/required": {
-    files: ["modules/demos/radio-group/required.tsx"],
-    component: React.lazy(() => import("@/modules/demos/radio-group/required")),
+    files: ["modules/docs/demos/radio-group/required.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/radio-group/required")
+    ),
   },
   "radio-group/uncontrolled": {
-    files: ["modules/demos/radio-group/uncontrolled.tsx"],
+    files: ["modules/docs/demos/radio-group/uncontrolled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/radio-group/uncontrolled")
+      () => import("@/modules/docs/demos/radio-group/uncontrolled")
     ),
   },
   "range-calendar/composition": {
-    files: ["modules/demos/range-calendar/composition.tsx"],
+    files: ["modules/docs/demos/range-calendar/composition.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/range-calendar/composition")
+      () => import("@/modules/docs/demos/range-calendar/composition")
     ),
   },
   "range-calendar/controlled": {
-    files: ["modules/demos/range-calendar/controlled.tsx"],
+    files: ["modules/docs/demos/range-calendar/controlled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/range-calendar/controlled")
+      () => import("@/modules/docs/demos/range-calendar/controlled")
     ),
   },
   "range-calendar/default": {
-    files: ["modules/demos/range-calendar/default.tsx"],
+    files: ["modules/docs/demos/range-calendar/default.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/range-calendar/default")
+      () => import("@/modules/docs/demos/range-calendar/default")
     ),
   },
   "range-calendar/disabled": {
-    files: ["modules/demos/range-calendar/disabled.tsx"],
+    files: ["modules/docs/demos/range-calendar/disabled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/range-calendar/disabled")
+      () => import("@/modules/docs/demos/range-calendar/disabled")
     ),
   },
   "range-calendar/error-message": {
-    files: ["modules/demos/range-calendar/error-message.tsx"],
+    files: ["modules/docs/demos/range-calendar/error-message.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/range-calendar/error-message")
+      () => import("@/modules/docs/demos/range-calendar/error-message")
     ),
   },
   "range-calendar/non-contiguous-ranges": {
-    files: ["modules/demos/range-calendar/non-contiguous-ranges.tsx"],
+    files: ["modules/docs/demos/range-calendar/non-contiguous-ranges.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/range-calendar/non-contiguous-ranges")
+      () => import("@/modules/docs/demos/range-calendar/non-contiguous-ranges")
     ),
   },
   "range-calendar/page-behaviour": {
-    files: ["modules/demos/range-calendar/page-behaviour.tsx"],
+    files: ["modules/docs/demos/range-calendar/page-behaviour.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/range-calendar/page-behaviour")
+      () => import("@/modules/docs/demos/range-calendar/page-behaviour")
     ),
   },
   "range-calendar/read-only": {
-    files: ["modules/demos/range-calendar/read-only.tsx"],
+    files: ["modules/docs/demos/range-calendar/read-only.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/range-calendar/read-only")
+      () => import("@/modules/docs/demos/range-calendar/read-only")
     ),
   },
   "range-calendar/uncontrolled": {
-    files: ["modules/demos/range-calendar/uncontrolled.tsx"],
+    files: ["modules/docs/demos/range-calendar/uncontrolled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/range-calendar/uncontrolled")
+      () => import("@/modules/docs/demos/range-calendar/uncontrolled")
     ),
   },
   "range-calendar/unvailable-dates": {
-    files: ["modules/demos/range-calendar/unvailable-dates.tsx"],
+    files: ["modules/docs/demos/range-calendar/unvailable-dates.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/range-calendar/unvailable-dates")
+      () => import("@/modules/docs/demos/range-calendar/unvailable-dates")
     ),
   },
   "range-calendar/validation": {
-    files: ["modules/demos/range-calendar/validation.tsx"],
+    files: ["modules/docs/demos/range-calendar/validation.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/range-calendar/validation")
+      () => import("@/modules/docs/demos/range-calendar/validation")
     ),
   },
   "range-calendar/variant": {
-    files: ["modules/demos/range-calendar/variant.tsx"],
+    files: ["modules/docs/demos/range-calendar/variant.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/range-calendar/variant")
+      () => import("@/modules/docs/demos/range-calendar/variant")
     ),
   },
   "range-calendar/visible-months": {
-    files: ["modules/demos/range-calendar/visible-months.tsx"],
+    files: ["modules/docs/demos/range-calendar/visible-months.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/range-calendar/visible-months")
+      () => import("@/modules/docs/demos/range-calendar/visible-months")
     ),
   },
   "search-field/composition": {
-    files: ["modules/demos/search-field/composition.tsx"],
+    files: ["modules/docs/demos/search-field/composition.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/search-field/composition")
+      () => import("@/modules/docs/demos/search-field/composition")
     ),
   },
   "search-field/controlled": {
-    files: ["modules/demos/search-field/controlled.tsx"],
+    files: ["modules/docs/demos/search-field/controlled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/search-field/controlled")
+      () => import("@/modules/docs/demos/search-field/controlled")
     ),
   },
   "search-field/default": {
-    files: ["modules/demos/search-field/default.tsx"],
-    component: React.lazy(() => import("@/modules/demos/search-field/default")),
+    files: ["modules/docs/demos/search-field/default.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/search-field/default")
+    ),
   },
   "search-field/description": {
-    files: ["modules/demos/search-field/description.tsx"],
+    files: ["modules/docs/demos/search-field/description.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/search-field/description")
+      () => import("@/modules/docs/demos/search-field/description")
     ),
   },
   "search-field/disabled": {
-    files: ["modules/demos/search-field/disabled.tsx"],
+    files: ["modules/docs/demos/search-field/disabled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/search-field/disabled")
+      () => import("@/modules/docs/demos/search-field/disabled")
     ),
   },
   "search-field/error-message": {
-    files: ["modules/demos/search-field/error-message.tsx"],
+    files: ["modules/docs/demos/search-field/error-message.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/search-field/error-message")
+      () => import("@/modules/docs/demos/search-field/error-message")
     ),
   },
   "search-field/form": {
-    files: ["modules/demos/search-field/form.tsx"],
-    component: React.lazy(() => import("@/modules/demos/search-field/form")),
+    files: ["modules/docs/demos/search-field/form.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/search-field/form")
+    ),
   },
   "search-field/label": {
-    files: ["modules/demos/search-field/label.tsx"],
-    component: React.lazy(() => import("@/modules/demos/search-field/label")),
+    files: ["modules/docs/demos/search-field/label.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/search-field/label")
+    ),
   },
   "search-field/read-only": {
-    files: ["modules/demos/search-field/read-only.tsx"],
+    files: ["modules/docs/demos/search-field/read-only.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/search-field/read-only")
+      () => import("@/modules/docs/demos/search-field/read-only")
     ),
   },
   "search-field/required": {
-    files: ["modules/demos/search-field/required.tsx"],
+    files: ["modules/docs/demos/search-field/required.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/search-field/required")
+      () => import("@/modules/docs/demos/search-field/required")
     ),
   },
   "search-field/sizes": {
-    files: ["modules/demos/search-field/sizes.tsx"],
-    component: React.lazy(() => import("@/modules/demos/search-field/sizes")),
+    files: ["modules/docs/demos/search-field/sizes.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/search-field/sizes")
+    ),
   },
   "search-field/uncontrolled": {
-    files: ["modules/demos/search-field/uncontrolled.tsx"],
+    files: ["modules/docs/demos/search-field/uncontrolled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/search-field/uncontrolled")
+      () => import("@/modules/docs/demos/search-field/uncontrolled")
     ),
   },
   "select/async-loading": {
-    files: ["modules/demos/select/async-loading.tsx"],
-    component: React.lazy(() => import("@/modules/demos/select/async-loading")),
+    files: ["modules/docs/demos/select/async-loading.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/select/async-loading")
+    ),
   },
   "select/basic": {
-    files: ["modules/demos/select/basic.tsx"],
-    component: React.lazy(() => import("@/modules/demos/select/basic")),
+    files: ["modules/docs/demos/select/basic.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/select/basic")),
   },
   "select/composition": {
-    files: ["modules/demos/select/composition.tsx"],
-    component: React.lazy(() => import("@/modules/demos/select/composition")),
+    files: ["modules/docs/demos/select/composition.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/select/composition")
+    ),
   },
   "select/controlled": {
-    files: ["modules/demos/select/controlled.tsx"],
-    component: React.lazy(() => import("@/modules/demos/select/controlled")),
+    files: ["modules/docs/demos/select/controlled.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/select/controlled")
+    ),
   },
   "select/description": {
-    files: ["modules/demos/select/description.tsx"],
-    component: React.lazy(() => import("@/modules/demos/select/description")),
+    files: ["modules/docs/demos/select/description.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/select/description")
+    ),
   },
   "select/disabled": {
-    files: ["modules/demos/select/disabled.tsx"],
-    component: React.lazy(() => import("@/modules/demos/select/disabled")),
+    files: ["modules/docs/demos/select/disabled.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/select/disabled")),
   },
   "select/label": {
-    files: ["modules/demos/select/label.tsx"],
-    component: React.lazy(() => import("@/modules/demos/select/label")),
+    files: ["modules/docs/demos/select/label.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/select/label")),
   },
   "select/links": {
-    files: ["modules/demos/select/links.tsx"],
-    component: React.lazy(() => import("@/modules/demos/select/links")),
+    files: ["modules/docs/demos/select/links.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/select/links")),
   },
   "select/loading": {
-    files: ["modules/demos/select/loading.tsx"],
-    component: React.lazy(() => import("@/modules/demos/select/loading")),
+    files: ["modules/docs/demos/select/loading.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/select/loading")),
   },
   "select/placeholder": {
-    files: ["modules/demos/select/placeholder.tsx"],
-    component: React.lazy(() => import("@/modules/demos/select/placeholder")),
+    files: ["modules/docs/demos/select/placeholder.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/select/placeholder")
+    ),
   },
   "select/required": {
-    files: ["modules/demos/select/required.tsx"],
-    component: React.lazy(() => import("@/modules/demos/select/required")),
+    files: ["modules/docs/demos/select/required.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/select/required")),
   },
   "select/sections": {
-    files: ["modules/demos/select/sections.tsx"],
-    component: React.lazy(() => import("@/modules/demos/select/sections")),
+    files: ["modules/docs/demos/select/sections.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/select/sections")),
   },
   "select/uncontrolled": {
-    files: ["modules/demos/select/uncontrolled.tsx"],
-    component: React.lazy(() => import("@/modules/demos/select/uncontrolled")),
+    files: ["modules/docs/demos/select/uncontrolled.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/select/uncontrolled")
+    ),
   },
   "select/validation": {
-    files: ["modules/demos/select/validation.tsx"],
-    component: React.lazy(() => import("@/modules/demos/select/validation")),
+    files: ["modules/docs/demos/select/validation.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/select/validation")
+    ),
   },
   "separator/card": {
-    files: ["modules/demos/separator/card.tsx"],
-    component: React.lazy(() => import("@/modules/demos/separator/card")),
+    files: ["modules/docs/demos/separator/card.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/separator/card")),
   },
   "separator/orientation": {
-    files: ["modules/demos/separator/orientation.tsx"],
+    files: ["modules/docs/demos/separator/orientation.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/separator/orientation")
+      () => import("@/modules/docs/demos/separator/orientation")
     ),
   },
   "skeleton/api-simulation": {
-    files: ["modules/demos/skeleton/api-simulation.tsx"],
+    files: ["modules/docs/demos/skeleton/api-simulation.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/skeleton/api-simulation")
+      () => import("@/modules/docs/demos/skeleton/api-simulation")
     ),
   },
   "skeleton/card": {
-    files: ["modules/demos/skeleton/card.tsx"],
-    component: React.lazy(() => import("@/modules/demos/skeleton/card")),
+    files: ["modules/docs/demos/skeleton/card.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/skeleton/card")),
   },
   "skeleton/children": {
-    files: ["modules/demos/skeleton/children.tsx"],
-    component: React.lazy(() => import("@/modules/demos/skeleton/children")),
+    files: ["modules/docs/demos/skeleton/children.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/skeleton/children")
+    ),
   },
   "skeleton/fixed-size-children": {
-    files: ["modules/demos/skeleton/fixed-size-children.tsx"],
+    files: ["modules/docs/demos/skeleton/fixed-size-children.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/skeleton/fixed-size-children")
+      () => import("@/modules/docs/demos/skeleton/fixed-size-children")
     ),
   },
   "skeleton/show": {
-    files: ["modules/demos/skeleton/show.tsx"],
-    component: React.lazy(() => import("@/modules/demos/skeleton/show")),
+    files: ["modules/docs/demos/skeleton/show.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/skeleton/show")),
   },
   "slider/composition": {
-    files: ["modules/demos/slider/composition.tsx"],
-    component: React.lazy(() => import("@/modules/demos/slider/composition")),
+    files: ["modules/docs/demos/slider/composition.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/slider/composition")
+    ),
   },
   "slider/controlled": {
-    files: ["modules/demos/slider/controlled.tsx"],
-    component: React.lazy(() => import("@/modules/demos/slider/controlled")),
+    files: ["modules/docs/demos/slider/controlled.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/slider/controlled")
+    ),
   },
   "slider/default": {
-    files: ["modules/demos/slider/default.tsx"],
-    component: React.lazy(() => import("@/modules/demos/slider/default")),
+    files: ["modules/docs/demos/slider/default.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/slider/default")),
   },
   "slider/description": {
-    files: ["modules/demos/slider/description.tsx"],
-    component: React.lazy(() => import("@/modules/demos/slider/description")),
+    files: ["modules/docs/demos/slider/description.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/slider/description")
+    ),
   },
   "slider/disabled": {
-    files: ["modules/demos/slider/disabled.tsx"],
-    component: React.lazy(() => import("@/modules/demos/slider/disabled")),
+    files: ["modules/docs/demos/slider/disabled.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/slider/disabled")),
   },
   "slider/format-options": {
-    files: ["modules/demos/slider/format-options.tsx"],
+    files: ["modules/docs/demos/slider/format-options.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/slider/format-options")
+      () => import("@/modules/docs/demos/slider/format-options")
     ),
   },
   "slider/label": {
-    files: ["modules/demos/slider/label.tsx"],
-    component: React.lazy(() => import("@/modules/demos/slider/label")),
+    files: ["modules/docs/demos/slider/label.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/slider/label")),
   },
   "slider/range": {
-    files: ["modules/demos/slider/range.tsx"],
-    component: React.lazy(() => import("@/modules/demos/slider/range")),
+    files: ["modules/docs/demos/slider/range.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/slider/range")),
   },
   "slider/sizes": {
-    files: ["modules/demos/slider/sizes.tsx"],
-    component: React.lazy(() => import("@/modules/demos/slider/sizes")),
+    files: ["modules/docs/demos/slider/sizes.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/slider/sizes")),
   },
   "slider/step": {
-    files: ["modules/demos/slider/step.tsx"],
-    component: React.lazy(() => import("@/modules/demos/slider/step")),
+    files: ["modules/docs/demos/slider/step.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/slider/step")),
   },
   "slider/uncontrolled": {
-    files: ["modules/demos/slider/uncontrolled.tsx"],
-    component: React.lazy(() => import("@/modules/demos/slider/uncontrolled")),
+    files: ["modules/docs/demos/slider/uncontrolled.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/slider/uncontrolled")
+    ),
   },
   "slider/value-label": {
-    files: ["modules/demos/slider/value-label.tsx"],
-    component: React.lazy(() => import("@/modules/demos/slider/value-label")),
+    files: ["modules/docs/demos/slider/value-label.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/slider/value-label")
+    ),
   },
   "slider/value-scale": {
-    files: ["modules/demos/slider/value-scale.tsx"],
-    component: React.lazy(() => import("@/modules/demos/slider/value-scale")),
+    files: ["modules/docs/demos/slider/value-scale.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/slider/value-scale")
+    ),
   },
   "slider/vertical": {
-    files: ["modules/demos/slider/vertical.tsx"],
-    component: React.lazy(() => import("@/modules/demos/slider/vertical")),
+    files: ["modules/docs/demos/slider/vertical.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/slider/vertical")),
   },
   "switch/card": {
-    files: ["modules/demos/switch/card.tsx"],
-    component: React.lazy(() => import("@/modules/demos/switch/card")),
+    files: ["modules/docs/demos/switch/card.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/switch/card")),
   },
   "switch/composition": {
-    files: ["modules/demos/switch/composition.tsx"],
-    component: React.lazy(() => import("@/modules/demos/switch/composition")),
+    files: ["modules/docs/demos/switch/composition.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/switch/composition")
+    ),
   },
   "switch/controlled": {
-    files: ["modules/demos/switch/controlled.tsx"],
-    component: React.lazy(() => import("@/modules/demos/switch/controlled")),
+    files: ["modules/docs/demos/switch/controlled.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/switch/controlled")
+    ),
   },
   "switch/default": {
-    files: ["modules/demos/switch/default.tsx"],
-    component: React.lazy(() => import("@/modules/demos/switch/default")),
+    files: ["modules/docs/demos/switch/default.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/switch/default")),
   },
   "switch/disabled": {
-    files: ["modules/demos/switch/disabled.tsx"],
-    component: React.lazy(() => import("@/modules/demos/switch/disabled")),
+    files: ["modules/docs/demos/switch/disabled.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/switch/disabled")),
   },
   "switch/label": {
-    files: ["modules/demos/switch/label.tsx"],
-    component: React.lazy(() => import("@/modules/demos/switch/label")),
+    files: ["modules/docs/demos/switch/label.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/switch/label")),
   },
   "switch/sizes": {
-    files: ["modules/demos/switch/sizes.tsx"],
-    component: React.lazy(() => import("@/modules/demos/switch/sizes")),
+    files: ["modules/docs/demos/switch/sizes.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/switch/sizes")),
   },
   "switch/uncontrolled": {
-    files: ["modules/demos/switch/uncontrolled.tsx"],
-    component: React.lazy(() => import("@/modules/demos/switch/uncontrolled")),
+    files: ["modules/docs/demos/switch/uncontrolled.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/switch/uncontrolled")
+    ),
   },
   "table/basic": {
-    files: ["modules/demos/table/basic.tsx"],
-    component: React.lazy(() => import("@/modules/demos/table/basic")),
+    files: ["modules/docs/demos/table/basic.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/table/basic")),
   },
   "table/column-resizing": {
-    files: ["modules/demos/table/column-resizing.tsx"],
+    files: ["modules/docs/demos/table/column-resizing.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/table/column-resizing")
+      () => import("@/modules/docs/demos/table/column-resizing")
     ),
   },
   "table/controlled": {
-    files: ["modules/demos/table/controlled.tsx"],
-    component: React.lazy(() => import("@/modules/demos/table/controlled")),
+    files: ["modules/docs/demos/table/controlled.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/table/controlled")
+    ),
   },
   "table/disabled-rows": {
-    files: ["modules/demos/table/disabled-rows.tsx"],
-    component: React.lazy(() => import("@/modules/demos/table/disabled-rows")),
+    files: ["modules/docs/demos/table/disabled-rows.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/table/disabled-rows")
+    ),
   },
   "table/disallow-empty-selection": {
-    files: ["modules/demos/table/disallow-empty-selection.tsx"],
+    files: ["modules/docs/demos/table/disallow-empty-selection.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/table/disallow-empty-selection")
+      () => import("@/modules/docs/demos/table/disallow-empty-selection")
     ),
   },
   "table/dynamic-collection": {
-    files: ["modules/demos/table/dynamic-collection.tsx"],
+    files: ["modules/docs/demos/table/dynamic-collection.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/table/dynamic-collection")
+      () => import("@/modules/docs/demos/table/dynamic-collection")
     ),
   },
   "table/empty-state": {
-    files: ["modules/demos/table/empty-state.tsx"],
-    component: React.lazy(() => import("@/modules/demos/table/empty-state")),
+    files: ["modules/docs/demos/table/empty-state.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/table/empty-state")
+    ),
   },
   "table/links": {
-    files: ["modules/demos/table/links.tsx"],
-    component: React.lazy(() => import("@/modules/demos/table/links")),
+    files: ["modules/docs/demos/table/links.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/table/links")),
   },
   "table/reordable": {
-    files: ["modules/demos/table/reordable.tsx"],
-    component: React.lazy(() => import("@/modules/demos/table/reordable")),
+    files: ["modules/docs/demos/table/reordable.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/table/reordable")),
   },
   "table/row-action": {
-    files: ["modules/demos/table/row-action.tsx"],
-    component: React.lazy(() => import("@/modules/demos/table/row-action")),
+    files: ["modules/docs/demos/table/row-action.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/table/row-action")
+    ),
   },
   "table/selection-behavior": {
-    files: ["modules/demos/table/selection-behavior.tsx"],
+    files: ["modules/docs/demos/table/selection-behavior.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/table/selection-behavior")
+      () => import("@/modules/docs/demos/table/selection-behavior")
     ),
   },
   "table/selection-mode": {
-    files: ["modules/demos/table/selection-mode.tsx"],
-    component: React.lazy(() => import("@/modules/demos/table/selection-mode")),
+    files: ["modules/docs/demos/table/selection-mode.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/table/selection-mode")
+    ),
   },
   "table/selection-variant": {
-    files: ["modules/demos/table/selection-variant.tsx"],
+    files: ["modules/docs/demos/table/selection-variant.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/table/selection-variant")
+      () => import("@/modules/docs/demos/table/selection-variant")
     ),
   },
   "table/selection": {
-    files: ["modules/demos/table/selection.tsx"],
-    component: React.lazy(() => import("@/modules/demos/table/selection")),
+    files: ["modules/docs/demos/table/selection.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/table/selection")),
   },
   "table/sorting": {
-    files: ["modules/demos/table/sorting.tsx"],
-    component: React.lazy(() => import("@/modules/demos/table/sorting")),
+    files: ["modules/docs/demos/table/sorting.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/table/sorting")),
   },
   "table/static-row-action": {
-    files: ["modules/demos/table/static-row-action.tsx"],
+    files: ["modules/docs/demos/table/static-row-action.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/table/static-row-action")
+      () => import("@/modules/docs/demos/table/static-row-action")
     ),
   },
   "table/uncontrolled": {
-    files: ["modules/demos/table/uncontrolled.tsx"],
-    component: React.lazy(() => import("@/modules/demos/table/uncontrolled")),
+    files: ["modules/docs/demos/table/uncontrolled.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/table/uncontrolled")
+    ),
   },
   "table/variants": {
-    files: ["modules/demos/table/variants.tsx"],
-    component: React.lazy(() => import("@/modules/demos/table/variants")),
+    files: ["modules/docs/demos/table/variants.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/table/variants")),
   },
   "tabs/basic": {
-    files: ["modules/demos/tabs/basic.tsx"],
-    component: React.lazy(() => import("@/modules/demos/tabs/basic")),
+    files: ["modules/docs/demos/tabs/basic.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/tabs/basic")),
   },
   "tabs/controlled": {
-    files: ["modules/demos/tabs/controlled.tsx"],
-    component: React.lazy(() => import("@/modules/demos/tabs/controlled")),
+    files: ["modules/docs/demos/tabs/controlled.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/tabs/controlled")),
   },
   "tabs/disabled": {
-    files: ["modules/demos/tabs/disabled.tsx"],
-    component: React.lazy(() => import("@/modules/demos/tabs/disabled")),
+    files: ["modules/docs/demos/tabs/disabled.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/tabs/disabled")),
   },
   "tabs/keyboard-activation": {
-    files: ["modules/demos/tabs/keyboard-activation.tsx"],
+    files: ["modules/docs/demos/tabs/keyboard-activation.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/tabs/keyboard-activation")
+      () => import("@/modules/docs/demos/tabs/keyboard-activation")
     ),
   },
   "tabs/variant": {
-    files: ["modules/demos/tabs/variant.tsx"],
-    component: React.lazy(() => import("@/modules/demos/tabs/variant")),
+    files: ["modules/docs/demos/tabs/variant.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/tabs/variant")),
   },
   "tabs/vertical": {
-    files: ["modules/demos/tabs/vertical.tsx"],
-    component: React.lazy(() => import("@/modules/demos/tabs/vertical")),
+    files: ["modules/docs/demos/tabs/vertical.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/tabs/vertical")),
   },
   "tag-group/default": {
-    files: ["modules/demos/tag-group/default.tsx"],
-    component: React.lazy(() => import("@/modules/demos/tag-group/default")),
+    files: ["modules/docs/demos/tag-group/default.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/tag-group/default")
+    ),
   },
   "text-area/composition": {
-    files: ["modules/demos/text-area/composition.tsx"],
+    files: ["modules/docs/demos/text-area/composition.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/text-area/composition")
+      () => import("@/modules/docs/demos/text-area/composition")
     ),
   },
   "text-area/controlled": {
-    files: ["modules/demos/text-area/controlled.tsx"],
-    component: React.lazy(() => import("@/modules/demos/text-area/controlled")),
+    files: ["modules/docs/demos/text-area/controlled.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/text-area/controlled")
+    ),
   },
   "text-area/default": {
-    files: ["modules/demos/text-area/default.tsx"],
-    component: React.lazy(() => import("@/modules/demos/text-area/default")),
+    files: ["modules/docs/demos/text-area/default.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/text-area/default")
+    ),
   },
   "text-area/description": {
-    files: ["modules/demos/text-area/description.tsx"],
+    files: ["modules/docs/demos/text-area/description.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/text-area/description")
+      () => import("@/modules/docs/demos/text-area/description")
     ),
   },
   "text-area/disabled": {
-    files: ["modules/demos/text-area/disabled.tsx"],
-    component: React.lazy(() => import("@/modules/demos/text-area/disabled")),
+    files: ["modules/docs/demos/text-area/disabled.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/text-area/disabled")
+    ),
   },
   "text-area/error-message": {
-    files: ["modules/demos/text-area/error-message.tsx"],
+    files: ["modules/docs/demos/text-area/error-message.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/text-area/error-message")
+      () => import("@/modules/docs/demos/text-area/error-message")
     ),
   },
   "text-area/form": {
-    files: ["modules/demos/text-area/form.tsx"],
-    component: React.lazy(() => import("@/modules/demos/text-area/form")),
+    files: ["modules/docs/demos/text-area/form.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/text-area/form")),
   },
   "text-area/label": {
-    files: ["modules/demos/text-area/label.tsx"],
-    component: React.lazy(() => import("@/modules/demos/text-area/label")),
+    files: ["modules/docs/demos/text-area/label.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/text-area/label")),
   },
   "text-area/prefix-and-suffix": {
-    files: ["modules/demos/text-area/prefix-and-suffix.tsx"],
+    files: ["modules/docs/demos/text-area/prefix-and-suffix.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/text-area/prefix-and-suffix")
+      () => import("@/modules/docs/demos/text-area/prefix-and-suffix")
     ),
   },
   "text-area/read-only": {
-    files: ["modules/demos/text-area/read-only.tsx"],
-    component: React.lazy(() => import("@/modules/demos/text-area/read-only")),
+    files: ["modules/docs/demos/text-area/read-only.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/text-area/read-only")
+    ),
   },
   "text-area/required": {
-    files: ["modules/demos/text-area/required.tsx"],
-    component: React.lazy(() => import("@/modules/demos/text-area/required")),
+    files: ["modules/docs/demos/text-area/required.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/text-area/required")
+    ),
   },
   "text-area/uncontrolled": {
-    files: ["modules/demos/text-area/uncontrolled.tsx"],
+    files: ["modules/docs/demos/text-area/uncontrolled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/text-area/uncontrolled")
+      () => import("@/modules/docs/demos/text-area/uncontrolled")
     ),
   },
   "text-field/composition": {
-    files: ["modules/demos/text-field/composition.tsx"],
+    files: ["modules/docs/demos/text-field/composition.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/text-field/composition")
+      () => import("@/modules/docs/demos/text-field/composition")
     ),
   },
   "text-field/controlled": {
-    files: ["modules/demos/text-field/controlled.tsx"],
+    files: ["modules/docs/demos/text-field/controlled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/text-field/controlled")
+      () => import("@/modules/docs/demos/text-field/controlled")
     ),
   },
   "text-field/default": {
-    files: ["modules/demos/text-field/default.tsx"],
-    component: React.lazy(() => import("@/modules/demos/text-field/default")),
+    files: ["modules/docs/demos/text-field/default.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/text-field/default")
+    ),
   },
   "text-field/description": {
-    files: ["modules/demos/text-field/description.tsx"],
+    files: ["modules/docs/demos/text-field/description.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/text-field/description")
+      () => import("@/modules/docs/demos/text-field/description")
     ),
   },
   "text-field/disabled": {
-    files: ["modules/demos/text-field/disabled.tsx"],
-    component: React.lazy(() => import("@/modules/demos/text-field/disabled")),
+    files: ["modules/docs/demos/text-field/disabled.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/text-field/disabled")
+    ),
   },
   "text-field/error-message": {
-    files: ["modules/demos/text-field/error-message.tsx"],
+    files: ["modules/docs/demos/text-field/error-message.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/text-field/error-message")
+      () => import("@/modules/docs/demos/text-field/error-message")
     ),
   },
   "text-field/label": {
-    files: ["modules/demos/text-field/label.tsx"],
-    component: React.lazy(() => import("@/modules/demos/text-field/label")),
+    files: ["modules/docs/demos/text-field/label.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/text-field/label")
+    ),
   },
   "text-field/prefix-and-suffix": {
-    files: ["modules/demos/text-field/prefix-and-suffix.tsx"],
+    files: ["modules/docs/demos/text-field/prefix-and-suffix.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/text-field/prefix-and-suffix")
+      () => import("@/modules/docs/demos/text-field/prefix-and-suffix")
     ),
   },
   "text-field/read-only": {
-    files: ["modules/demos/text-field/read-only.tsx"],
-    component: React.lazy(() => import("@/modules/demos/text-field/read-only")),
+    files: ["modules/docs/demos/text-field/read-only.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/text-field/read-only")
+    ),
   },
   "text-field/required": {
-    files: ["modules/demos/text-field/required.tsx"],
-    component: React.lazy(() => import("@/modules/demos/text-field/required")),
+    files: ["modules/docs/demos/text-field/required.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/text-field/required")
+    ),
   },
   "text-field/sizes": {
-    files: ["modules/demos/text-field/sizes.tsx"],
-    component: React.lazy(() => import("@/modules/demos/text-field/sizes")),
+    files: ["modules/docs/demos/text-field/sizes.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/text-field/sizes")
+    ),
   },
   "text-field/uncontrolled": {
-    files: ["modules/demos/text-field/uncontrolled.tsx"],
+    files: ["modules/docs/demos/text-field/uncontrolled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/text-field/uncontrolled")
+      () => import("@/modules/docs/demos/text-field/uncontrolled")
     ),
   },
   "time-field/composition": {
-    files: ["modules/demos/time-field/composition.tsx"],
+    files: ["modules/docs/demos/time-field/composition.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/time-field/composition")
+      () => import("@/modules/docs/demos/time-field/composition")
     ),
   },
   "time-field/controlled": {
-    files: ["modules/demos/time-field/controlled.tsx"],
+    files: ["modules/docs/demos/time-field/controlled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/time-field/controlled")
+      () => import("@/modules/docs/demos/time-field/controlled")
     ),
   },
   "time-field/default": {
-    files: ["modules/demos/time-field/default.tsx"],
-    component: React.lazy(() => import("@/modules/demos/time-field/default")),
+    files: ["modules/docs/demos/time-field/default.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/time-field/default")
+    ),
   },
   "time-field/description": {
-    files: ["modules/demos/time-field/description.tsx"],
+    files: ["modules/docs/demos/time-field/description.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/time-field/description")
+      () => import("@/modules/docs/demos/time-field/description")
     ),
   },
   "time-field/disabled": {
-    files: ["modules/demos/time-field/disabled.tsx"],
-    component: React.lazy(() => import("@/modules/demos/time-field/disabled")),
+    files: ["modules/docs/demos/time-field/disabled.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/time-field/disabled")
+    ),
   },
   "time-field/error-message": {
-    files: ["modules/demos/time-field/error-message.tsx"],
+    files: ["modules/docs/demos/time-field/error-message.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/time-field/error-message")
+      () => import("@/modules/docs/demos/time-field/error-message")
     ),
   },
   "time-field/granularity": {
-    files: ["modules/demos/time-field/granularity.tsx"],
+    files: ["modules/docs/demos/time-field/granularity.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/time-field/granularity")
+      () => import("@/modules/docs/demos/time-field/granularity")
     ),
   },
   "time-field/hide-time-zone": {
-    files: ["modules/demos/time-field/hide-time-zone.tsx"],
+    files: ["modules/docs/demos/time-field/hide-time-zone.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/time-field/hide-time-zone")
+      () => import("@/modules/docs/demos/time-field/hide-time-zone")
     ),
   },
   "time-field/hour-cycle": {
-    files: ["modules/demos/time-field/hour-cycle.tsx"],
+    files: ["modules/docs/demos/time-field/hour-cycle.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/time-field/hour-cycle")
+      () => import("@/modules/docs/demos/time-field/hour-cycle")
     ),
   },
   "time-field/label": {
-    files: ["modules/demos/time-field/label.tsx"],
-    component: React.lazy(() => import("@/modules/demos/time-field/label")),
+    files: ["modules/docs/demos/time-field/label.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/time-field/label")
+    ),
   },
   "time-field/placeholder": {
-    files: ["modules/demos/time-field/placeholder.tsx"],
+    files: ["modules/docs/demos/time-field/placeholder.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/time-field/placeholder")
+      () => import("@/modules/docs/demos/time-field/placeholder")
     ),
   },
   "time-field/prefix-and-suffix": {
-    files: ["modules/demos/time-field/prefix-and-suffix.tsx"],
+    files: ["modules/docs/demos/time-field/prefix-and-suffix.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/time-field/prefix-and-suffix")
+      () => import("@/modules/docs/demos/time-field/prefix-and-suffix")
     ),
   },
   "time-field/read-only": {
-    files: ["modules/demos/time-field/read-only.tsx"],
-    component: React.lazy(() => import("@/modules/demos/time-field/read-only")),
+    files: ["modules/docs/demos/time-field/read-only.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/time-field/read-only")
+    ),
   },
   "time-field/required": {
-    files: ["modules/demos/time-field/required.tsx"],
-    component: React.lazy(() => import("@/modules/demos/time-field/required")),
+    files: ["modules/docs/demos/time-field/required.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/time-field/required")
+    ),
   },
   "time-field/sizes": {
-    files: ["modules/demos/time-field/sizes.tsx"],
-    component: React.lazy(() => import("@/modules/demos/time-field/sizes")),
+    files: ["modules/docs/demos/time-field/sizes.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/time-field/sizes")
+    ),
   },
   "time-field/time-zones": {
-    files: ["modules/demos/time-field/time-zones.tsx"],
+    files: ["modules/docs/demos/time-field/time-zones.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/time-field/time-zones")
+      () => import("@/modules/docs/demos/time-field/time-zones")
     ),
   },
   "time-field/uncontrolled": {
-    files: ["modules/demos/time-field/uncontrolled.tsx"],
+    files: ["modules/docs/demos/time-field/uncontrolled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/time-field/uncontrolled")
+      () => import("@/modules/docs/demos/time-field/uncontrolled")
     ),
   },
   "toggle-button/controlled": {
-    files: ["modules/demos/toggle-button/controlled.tsx"],
+    files: ["modules/docs/demos/toggle-button/controlled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/toggle-button/controlled")
+      () => import("@/modules/docs/demos/toggle-button/controlled")
     ),
   },
   "toggle-button/default": {
-    files: ["modules/demos/toggle-button/default.tsx"],
+    files: ["modules/docs/demos/toggle-button/default.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/toggle-button/default")
+      () => import("@/modules/docs/demos/toggle-button/default")
     ),
   },
   "toggle-button/disabled": {
-    files: ["modules/demos/toggle-button/disabled.tsx"],
+    files: ["modules/docs/demos/toggle-button/disabled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/toggle-button/disabled")
+      () => import("@/modules/docs/demos/toggle-button/disabled")
     ),
   },
   "toggle-button/shapes": {
-    files: ["modules/demos/toggle-button/shapes.tsx"],
-    component: React.lazy(() => import("@/modules/demos/toggle-button/shapes")),
+    files: ["modules/docs/demos/toggle-button/shapes.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/toggle-button/shapes")
+    ),
   },
   "toggle-button/sizes": {
-    files: ["modules/demos/toggle-button/sizes.tsx"],
-    component: React.lazy(() => import("@/modules/demos/toggle-button/sizes")),
+    files: ["modules/docs/demos/toggle-button/sizes.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/toggle-button/sizes")
+    ),
   },
   "toggle-button/uncontrolled": {
-    files: ["modules/demos/toggle-button/uncontrolled.tsx"],
+    files: ["modules/docs/demos/toggle-button/uncontrolled.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/toggle-button/uncontrolled")
+      () => import("@/modules/docs/demos/toggle-button/uncontrolled")
     ),
   },
   "toggle-button/variants": {
-    files: ["modules/demos/toggle-button/variants.tsx"],
+    files: ["modules/docs/demos/toggle-button/variants.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/toggle-button/variants")
+      () => import("@/modules/docs/demos/toggle-button/variants")
     ),
   },
   "toggle-button-group/default": {
-    files: ["modules/demos/toggle-button-group/default.tsx"],
+    files: ["modules/docs/demos/toggle-button-group/default.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/toggle-button-group/default")
+      () => import("@/modules/docs/demos/toggle-button-group/default")
     ),
   },
   "tooltip/arrow": {
-    files: ["modules/demos/tooltip/arrow.tsx"],
-    component: React.lazy(() => import("@/modules/demos/tooltip/arrow")),
+    files: ["modules/docs/demos/tooltip/arrow.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/tooltip/arrow")),
   },
   "tooltip/composition": {
-    files: ["modules/demos/tooltip/composition.tsx"],
-    component: React.lazy(() => import("@/modules/demos/tooltip/composition")),
+    files: ["modules/docs/demos/tooltip/composition.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/tooltip/composition")
+    ),
   },
   "tooltip/container-padding": {
-    files: ["modules/demos/tooltip/container-padding.tsx"],
+    files: ["modules/docs/demos/tooltip/container-padding.tsx"],
     component: React.lazy(
-      () => import("@/modules/demos/tooltip/container-padding")
+      () => import("@/modules/docs/demos/tooltip/container-padding")
     ),
   },
   "tooltip/default": {
-    files: ["modules/demos/tooltip/default.tsx"],
-    component: React.lazy(() => import("@/modules/demos/tooltip/default")),
+    files: ["modules/docs/demos/tooltip/default.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/tooltip/default")),
   },
   "tooltip/delay": {
-    files: ["modules/demos/tooltip/delay.tsx"],
-    component: React.lazy(() => import("@/modules/demos/tooltip/delay")),
+    files: ["modules/docs/demos/tooltip/delay.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/tooltip/delay")),
   },
   "tooltip/flip": {
-    files: ["modules/demos/tooltip/flip.tsx"],
-    component: React.lazy(() => import("@/modules/demos/tooltip/flip")),
+    files: ["modules/docs/demos/tooltip/flip.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/tooltip/flip")),
   },
   "tooltip/offset": {
-    files: ["modules/demos/tooltip/offset.tsx"],
-    component: React.lazy(() => import("@/modules/demos/tooltip/offset")),
+    files: ["modules/docs/demos/tooltip/offset.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/tooltip/offset")),
   },
   "tooltip/placement": {
-    files: ["modules/demos/tooltip/placement.tsx"],
-    component: React.lazy(() => import("@/modules/demos/tooltip/placement")),
+    files: ["modules/docs/demos/tooltip/placement.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/tooltip/placement")
+    ),
   },
   "tooltip/variant": {
-    files: ["modules/demos/tooltip/variant.tsx"],
-    component: React.lazy(() => import("@/modules/demos/tooltip/variant")),
+    files: ["modules/docs/demos/tooltip/variant.tsx"],
+    component: React.lazy(() => import("@/modules/docs/demos/tooltip/variant")),
   },
   "tooltip/with-arrow": {
-    files: ["modules/demos/tooltip/with-arrow.tsx"],
-    component: React.lazy(() => import("@/modules/demos/tooltip/with-arrow")),
+    files: ["modules/docs/demos/tooltip/with-arrow.tsx"],
+    component: React.lazy(
+      () => import("@/modules/docs/demos/tooltip/with-arrow")
+    ),
   },
 };

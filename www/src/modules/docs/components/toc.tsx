@@ -7,7 +7,7 @@ import {
 } from "fumadocs-core/server";
 import * as TocPrimitive from "fumadocs-core/toc";
 import { cn } from "@/lib/utils";
-import { useTocThumb } from "@/hooks/use-toc-thumb";
+import { useTocThumb } from "@/modules/docs/hooks/use-toc-thumb";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 export const TableOfContents = ({ toc }: { toc: TocType }) => {
