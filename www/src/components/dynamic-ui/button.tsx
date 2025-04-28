@@ -5,6 +5,7 @@ import {
   Button as _Button,
   ButtonProvider as _ButtonProvider,
   ButtonProps,
+  buttonStyles,
 } from "@/modules/registry/ui/button.basic";
 import { createDynamicComponent } from "@/modules/styles/lib/create-dynamic-component";
 
@@ -53,3 +54,6 @@ export const ButtonProvider = createDynamicComponent(
     ),
   }
 );
+
+export { buttonStyles };
+export type { ButtonProps };
