@@ -1,1 +1,1 @@
-export * from "@/modules/registry/ui/list-box.basic";
+export * from "@/__registry__/ui/list-box.basic";

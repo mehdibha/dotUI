@@ -1,1 +1,1 @@
-export * from "@/modules/registry/ui/badge.basic";
+export * from "@/__registry__/ui/badge.basic";

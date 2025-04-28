@@ -1,1 +1,1 @@
-export * from "@/modules/registry/ui/ripple";
+export * from "@/__registry__/ui/ripple";

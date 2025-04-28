@@ -1,1 +1,1 @@
-export * from "@/modules/registry/ui/form.basic";
+export * from "@/__registry__/ui/form.basic";

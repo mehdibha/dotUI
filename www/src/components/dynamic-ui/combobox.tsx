@@ -1,1 +1,1 @@
-export * from "@/modules/registry/ui/combobox.basic";
+export * from "@/__registry__/ui/combobox.basic";

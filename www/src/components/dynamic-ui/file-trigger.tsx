@@ -1,1 +1,1 @@
-export * from "@/modules/registry/ui/file-trigger.basic";
+export * from "@/__registry__/ui/file-trigger.basic";

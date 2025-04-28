@@ -13,7 +13,7 @@ import {
   CalendarHeaderCell as _CalendarHeaderCell,
   CalendarGridBody as _CalendarGridBody,
   CalendarCell as _CalendarCell,
-} from "@/modules/registry/ui/calendar.basic";
+} from "@/__registry__/ui/calendar.basic";
 import type {
   CalendarProps,
   CalendarRootProps,
@@ -25,7 +25,7 @@ import type {
   CalendarHeaderCellProps,
   CalendarGridBodyProps,
   CalendarCellProps,
-} from "@/modules/registry/ui/calendar.basic";
+} from "@/__registry__/ui/calendar.basic";
 import { createDynamicComponent } from "@/modules/styles/lib/create-dynamic-component";
 
 export const Calendar = createDynamicComponent<CalendarProps<DateValue>>(
@@ -34,7 +34,7 @@ export const Calendar = createDynamicComponent<CalendarProps<DateValue>>(
   _Calendar,
   {
     cal: React.lazy(() =>
-      import("@/modules/registry/ui/calendar.cal").then((mod) => ({
+      import("@/__registry__/ui/calendar.cal").then((mod) => ({
         default: mod.Calendar,
       }))
     ),
@@ -45,7 +45,7 @@ export const RangeCalendar = createDynamicComponent<
   RangeCalendarProps<DateValue>
 >("calendar", "RangeCalendar", _RangeCalendar, {
   cal: React.lazy(() =>
-    import("@/modules/registry/ui/calendar.cal").then((mod) => ({
+    import("@/__registry__/ui/calendar.cal").then((mod) => ({
       default: mod.RangeCalendar,
     }))
   ),
@@ -55,7 +55,7 @@ export const CalendarRoot = createDynamicComponent<
   CalendarRootProps<DateValue>
 >("calendar", "CalendarRoot", _CalendarRoot, {
   cal: React.lazy(() =>
-    import("@/modules/registry/ui/calendar.cal").then((mod) => ({
+    import("@/__registry__/ui/calendar.cal").then((mod) => ({
       default: mod.CalendarRoot,
     }))
   ),
@@ -65,7 +65,7 @@ export const RangeCalendarRoot = createDynamicComponent<
   RangeCalendarRootProps<DateValue>
 >("calendar", "RangeCalendarRoot", _RangeCalendarRoot, {
   cal: React.lazy(() =>
-    import("@/modules/registry/ui/calendar.cal").then((mod) => ({
+    import("@/__registry__/ui/calendar.cal").then((mod) => ({
       default: mod.RangeCalendarRoot,
     }))
   ),
@@ -77,7 +77,7 @@ export const CalendarHeader = createDynamicComponent<CalendarHeaderProps>(
   _CalendarHeader,
   {
     cal: React.lazy(() =>
-      import("@/modules/registry/ui/calendar.cal").then((mod) => ({
+      import("@/__registry__/ui/calendar.cal").then((mod) => ({
         default: mod.CalendarHeader,
       }))
     ),
@@ -90,7 +90,7 @@ export const CalendarGrid = createDynamicComponent<CalendarGridProps>(
   _CalendarGrid,
   {
     cal: React.lazy(() =>
-      import("@/modules/registry/ui/calendar.cal").then((mod) => ({
+      import("@/__registry__/ui/calendar.cal").then((mod) => ({
         default: mod.CalendarGrid,
       }))
     ),
@@ -104,7 +104,7 @@ export const CalendarGridHeader =
     _CalendarGridHeader,
     {
       cal: React.lazy(() =>
-        import("@/modules/registry/ui/calendar.cal").then((mod) => ({
+        import("@/__registry__/ui/calendar.cal").then((mod) => ({
           default: mod.CalendarGridHeader,
         }))
       ),
@@ -118,7 +118,7 @@ export const CalendarHeaderCell =
     _CalendarHeaderCell,
     {
       cal: React.lazy(() =>
-        import("@/modules/registry/ui/calendar.cal").then((mod) => ({
+        import("@/__registry__/ui/calendar.cal").then((mod) => ({
           default: mod.CalendarHeaderCell,
         }))
       ),
@@ -131,7 +131,7 @@ export const CalendarGridBody = createDynamicComponent<CalendarGridBodyProps>(
   _CalendarGridBody,
   {
     cal: React.lazy(() =>
-      import("@/modules/registry/ui/calendar.cal").then((mod) => ({
+      import("@/__registry__/ui/calendar.cal").then((mod) => ({
         default: mod.CalendarGridBody,
       }))
     ),
@@ -144,7 +144,7 @@ export const CalendarCell = createDynamicComponent<CalendarCellProps>(
   _CalendarCell,
   {
     cal: React.lazy(() =>
-      import("@/modules/registry/ui/calendar.cal").then((mod) => ({
+      import("@/__registry__/ui/calendar.cal").then((mod) => ({
         default: mod.CalendarCell,
       }))
     ),
