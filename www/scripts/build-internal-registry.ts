@@ -65,10 +65,25 @@ async function buildDemos() {
   await fs.writeFile(path.join(targetPath, "demos.tsx"), index, "utf8");
 }
 
+// get all files in src/modules/registry/ui and place them in __registry__/ui and transform all the imports starting with @/modules/registry/ui/ to @/components/dynamic-ui/
+async function buildDynamicComponents() {
+  const targetPath = path.join(INTERNAL_REGISTRY_PATH, "ui");
+  const sourcePath = path.join(process.cwd(), "src/modules/registry/ui");
+  const files = await fs.readdir(sourcePath);
+
+  for (const file of files) {
+    const filePath = path.join(sourcePath, file);
+    const content = await fs.readFile(filePath, "utf8");
+    const newContent = content.replace(/@\/modules\/registry\/ui\//g, "@/components/dynamic-ui/");
+    await fs.writeFile(path.join(targetPath, file), newContent, "utf8");
+  }
+}
+
 async function run() {
   try {
     await setup();
     await buildDemos();
+    await buildDynamicComponents();
     console.log("✅ Done!");
   } catch (error) {
     console.error(error);
