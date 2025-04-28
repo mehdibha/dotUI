@@ -13,10 +13,16 @@ export const PrimitivesProvider = ({
   children?: React.ReactNode;
 }) => {
   return (
-    <PrimitivesContext.Provider value={{ primitives: primitives ?? {} }}>
+    <PrimitivesContext.Provider
+      value={{ primitives: { ...defaultPrimitives, ...primitives } }}
+    >
       {children}
     </PrimitivesContext.Provider>
   );
 };
 
 export const useLocalPrimitives = () => React.useContext(PrimitivesContext);
+
+const defaultPrimitives: Primitives = {
+  button: "basic",
+};

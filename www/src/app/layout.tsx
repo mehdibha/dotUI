@@ -6,7 +6,6 @@ import { truncateOnWord } from "@/lib/string";
 import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
 import { siteConfig } from "@/config";
-import { ThemeProvider } from "@/modules/styles/components/style-provider";
 import { Providers } from "./providers";
 
 export const metadata: Metadata = {
@@ -61,7 +60,6 @@ export default async function RootLayout({
         {/* TODO FIX THIS */}
         <Providers defaultPreviewMode={"light"}>
           <div>
-            <ThemeProvider id="custom-theme-portal" unstyled />
             {children}
           </div>
         </Providers>

@@ -24,6 +24,9 @@ export const createDynamicComponent = <Props extends {}>(
     const shouldWrapWithSuspense = true;
 
     if (!resolvedPrimitive) {
+      console.log(
+        `component ${componentName} went fallback because of ${primitiveName}`
+      );
       return <FallbackComponent {...props} />; // No need to wrap it inside Suspense, default component should always be imported normally
     }
 
@@ -31,7 +34,7 @@ export const createDynamicComponent = <Props extends {}>(
 
     if (!LazyComponent)
       throw new Error(
-        `Component ${componentName} not found in registry of ${primitiveName}`
+        `Component ${componentName} not found in registry of ${primitiveName}:${resolvedPrimitive}`
       );
 
     if (shouldWrapWithSuspense) {

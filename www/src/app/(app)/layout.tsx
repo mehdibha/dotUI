@@ -1,11 +1,13 @@
+import React from "react";
 import { Footer } from "@/components/footer";
 import { MobileNav } from "@/components/mobile-nav";
-import { Sidebar, SidebarProvider } from "@/components/sidebar";
+import { Sidebar } from "@/components/sidebar";
 import { source } from "@/app/source";
+import { Providers } from "./providers";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
-    <SidebarProvider>
+    <Providers>
       <div className="relative flex min-h-screen w-full flex-col lg:flex-row">
         <MobileNav items={source.pageTree.children} className="lg:hidden" />
         <Sidebar items={source.pageTree.children} className="hidden lg:flex" />
@@ -20,6 +22,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           </div>
         </main>
       </div>
-    </SidebarProvider>
+    </Providers>
   );
 }
