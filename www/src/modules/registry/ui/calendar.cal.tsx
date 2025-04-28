@@ -24,9 +24,9 @@ import type {
 } from "react-aria-components";
 import { tv, VariantProps } from "tailwind-variants";
 import { focusRing } from "@/modules/registry/lib/focus-styles";
+import { ButtonGroup } from "@/modules/registry/ui/button-group.basic";
 import { Button } from "@/modules/registry/ui/button.basic";
 import { Text } from "@/modules/registry/ui/text.basic";
-import { ButtonGroup } from "@/modules/registry/ui/button-group.basic";
 
 const calendarStyles = tv({
   slots: {
