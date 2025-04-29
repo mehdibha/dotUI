@@ -11,6 +11,7 @@ import {
   ReactJsIcon,
   TailwindIcon,
   TypescriptIcon,
+  ShadcnIcon,
 } from "@/components/icons";
 import { siteConfig } from "@/config";
 import { ThemesOverview } from "@/modules/styles/components/styles-overview";
@@ -59,6 +60,11 @@ export default async function HomePage() {
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8">
             {[
               {
+                label: "Shadcn CLI",
+                icon: <ShadcnIcon className="size-7 sm:size-9" />,
+                href: "https://ui.shadcn.com/docs/cli",
+              },
+              {
                 label: "React 19",
                 icon: <ReactJsIcon className="size-7 sm:size-9" />,
                 href: "https://react.dev",
@@ -74,7 +80,7 @@ export default async function HomePage() {
                 href: "https://www.typescriptlang.org/",
               },
               {
-                label: "Tailwind CSS v4.0",
+                label: "Tailwind CSS v4",
                 icon: <TailwindIcon className="h-5 sm:h-7" />,
                 href: "https://tailwindcss.com",
               },
@@ -82,7 +88,7 @@ export default async function HomePage() {
               <Tooltip
                 key={index}
                 content={label}
-                delay={500}
+                delay={0}
                 closeDelay={0}
                 offset={10}
                 placement="top"
