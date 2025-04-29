@@ -58,7 +58,13 @@ export const ThemesOverview = () => {
 
   return (
     <>
-      <ThemeProvider ref={container} theme={currentTheme} />
+      {isMounted && (
+        <ThemeProvider
+          key={currentThemeName}
+          ref={container}
+          theme={currentTheme}
+        />
+      )}
       <div className="flex flex-col gap-6">
         <div className="flex flex-col-reverse items-center gap-4 xl:flex-row xl:items-end">
           <Tabs
