@@ -16,6 +16,7 @@ import {
 } from "@/modules/styles/components/components-overview";
 import { Theme } from "@/modules/styles/types";
 import { ThemeProvider } from "./style-provider";
+import { PreviewModeProvider } from "@/components/mode-provider";
 
 export const ThemesOverview = () => {
   const container = React.useRef(null);
@@ -58,13 +59,7 @@ export const ThemesOverview = () => {
 
   return (
     <>
-      {isMounted && (
-        <ThemeProvider
-          key={currentThemeName}
-          ref={container}
-          theme={currentTheme}
-        />
-      )}
+      {isMounted && <ThemeProvider ref={container} theme={currentTheme} ignorePreviewMode />}
       <div className="flex flex-col gap-6">
         <div className="flex flex-col-reverse items-center gap-4 xl:flex-row xl:items-end">
           <Tabs
@@ -142,12 +137,12 @@ export const ThemesOverview = () => {
         </div>
         <Skeleton show={!isMounted} className="w-full rounded-md">
           <div className="relative w-full">
-            <UNSAFE_PortalProvider getContainer={() => container.current}>
-              <ThemeProvider
-                theme={currentTheme}
-                ignorePreviewMode
-                className="relative w-full bg-transparent"
-              >
+            <ThemeProvider
+              theme={currentTheme}
+              ignorePreviewMode
+              className="relative w-full bg-transparent"
+            >
+              <UNSAFE_PortalProvider getContainer={() => container.current}>
                 <div className="bg-bg w-full rounded-md border">
                   <AnimatePresence mode="popLayout">
                     <motion.div
@@ -162,8 +157,8 @@ export const ThemesOverview = () => {
                     </motion.div>
                   </AnimatePresence>
                 </div>
-              </ThemeProvider>
-            </UNSAFE_PortalProvider>
+              </UNSAFE_PortalProvider>
+            </ThemeProvider>
           </div>
         </Skeleton>
       </div>

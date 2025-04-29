@@ -24,9 +24,6 @@ export const createDynamicComponent = <Props extends {}>(
     const shouldWrapWithSuspense = true;
 
     if (!resolvedPrimitive) {
-      console.log(
-        `component ${componentName} went fallback because of ${primitiveName}`
-      );
       return <FallbackComponent {...props} />; // No need to wrap it inside Suspense, default component should always be imported normally
     }
 
