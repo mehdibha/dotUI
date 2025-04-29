@@ -7,6 +7,7 @@ import { AnimatePresence, motion, Variants } from "motion/react";
 import { useInView } from "motion/react";
 import { useMounted } from "@/hooks/use-mounted";
 import { Button } from "@/components/ui/button";
+import { PreviewModeProvider } from "@/components/mode-provider";
 import { styles } from "@/modules/registry/registry-styles";
 import { Skeleton } from "@/modules/registry/ui/skeleton.basic";
 import { Tabs, TabList, Tab } from "@/modules/registry/ui/tabs.motion";
@@ -16,7 +17,6 @@ import {
 } from "@/modules/styles/components/components-overview";
 import { Theme } from "@/modules/styles/types";
 import { ThemeProvider } from "./style-provider";
-import { PreviewModeProvider } from "@/components/mode-provider";
 
 export const ThemesOverview = () => {
   const container = React.useRef(null);
@@ -59,7 +59,9 @@ export const ThemesOverview = () => {
 
   return (
     <>
-      {isMounted && <ThemeProvider ref={container} theme={currentTheme} ignorePreviewMode />}
+      {isMounted && (
+        <ThemeProvider ref={container} theme={currentTheme} ignorePreviewMode />
+      )}
       <div className="flex flex-col gap-6">
         <div className="flex flex-col-reverse items-center gap-4 xl:flex-row xl:items-end">
           <Tabs
