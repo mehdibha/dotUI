@@ -8,7 +8,6 @@ import { styles } from "@/modules/registry/registry-styles";
 import {
   hasStyles,
   RegistryItemProps,
-  RegistryItem,
 } from "@/modules/registry/types";
 
 const REGISTRY_PATH = path.join(process.cwd(), "public/r");
@@ -18,7 +17,7 @@ const REGISTRY_URL =
     : "http://localhost:3000/r";
 
 const SHADCN_REGISTRY_PATH = path.join(process.cwd(), "src/registry");
-const INTERNAL_REGISTRY_PATH = path.join(process.cwd(), "src/reg");
+const INTERNAL_REGISTRY_PATH = path.join(process.cwd(), "src/modules/registry");
 
 const setup = async () => {
   // clean up src/registry

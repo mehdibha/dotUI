@@ -1,0 +1,12 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "loader",
+  "type": "registry:ui",
+  "files": [
+    {
+      "path": "src/registry/material/ui/loader.tsx",
+      "content": "\"use client\";\r\n\r\nimport React from \"react\";\r\nimport { ProgressBar as AriaProgressBar } from \"react-aria-components\";\r\nimport type { ProgressBarProps } from \"react-aria-components\";\r\nimport { cn } from \"@/modules/registry/lib/utils\";\r\n\r\ninterface LoaderProps extends ProgressBarProps {\r\n  size?: number;\r\n}\r\n\r\nfunction Loader({ size = 20, className, ...props }: LoaderProps) {\r\n  return (\r\n    <AriaProgressBar\r\n      className={cn(\"relative items-center justify-center\", className)}\r\n      {...props}\r\n      isIndeterminate\r\n      style={\r\n        {\r\n          \"--size\": `${size}px`,\r\n          width: \"var(--size)\",\r\n          height: \"var(--size)\",\r\n        } as React.CSSProperties\r\n      }\r\n    >\r\n      {[...Array(8)].map((_, index) => {\r\n        const angle = (index / 8) * (2 * Math.PI);\r\n        const x = Math.cos(angle);\r\n        const y = Math.sin(angle);\r\n\r\n        return (\r\n          <div\r\n            key={index}\r\n            className=\"animate-dot-spinner absolute size-[20%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-current\"\r\n            style={{\r\n              animationDelay: `${index * 0.1}s`,\r\n              top: `${50 + y * 40}%`,\r\n              left: `${50 + x * 40}%`,\r\n            }}\r\n          ></div>\r\n        );\r\n      })}\r\n    </AriaProgressBar>\r\n  );\r\n}\r\n\r\nexport type { LoaderProps };\r\nexport { Loader };\r\n",
+      "type": "registry:ui"
+    }
+  ]
+}

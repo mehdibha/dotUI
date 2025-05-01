@@ -1,0 +1,12 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "skeleton",
+  "type": "registry:ui",
+  "files": [
+    {
+      "path": "src/registry/material/ui/skeleton.tsx",
+      "content": "// work in progress\n// Auto layout skeleton inspiration: https://x.com/devongovett/status/1838980741197447529\nimport { cn } from \"@/modules/registry/lib/utils\";\n\nfunction Skeleton({\n  className,\n  show = true,\n  ...props\n}: React.HTMLAttributes<HTMLDivElement> & {\n  show?: boolean;\n}) {\n  if (!show) return props.children;\n  return (\n    <div\n      className={cn(\n        \"bg-bg-muted relative block h-6 animate-pulse rounded-md\",\n        props.children && \"h-auto *:invisible\",\n        className\n      )}\n      {...props}\n    />\n  );\n}\n\nexport { Skeleton };\n",
+      "type": "registry:ui"
+    }
+  ]
+}

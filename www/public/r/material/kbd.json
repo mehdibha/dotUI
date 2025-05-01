@@ -1,0 +1,12 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "kbd",
+  "type": "registry:ui",
+  "files": [
+    {
+      "path": "src/registry/material/ui/kbd.tsx",
+      "content": "\"use client\";\n\nimport { Keyboard } from \"react-aria-components\";\nimport { tv } from \"tailwind-variants\";\n\nconst KbdStyles = tv({\n  base: \"text-fg-muted bg-bg inline-flex min-w-5 items-center justify-center rounded-sm border p-1 text-xs leading-none\",\n});\n\ntype KbdProps = React.HTMLAttributes<HTMLElement>;\nconst Kbd = ({ className, ...props }: KbdProps) => {\n  return <Keyboard className={KbdStyles({ className })} {...props} />;\n};\n\nexport type { KbdProps };\nexport { Kbd, KbdStyles };\n",
+      "type": "registry:ui"
+    }
+  ]
+}
