@@ -1,13 +1,12 @@
 import React from "react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
-import { SlidersHorizontalIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import { Index } from "@/__registry__/demos";
 import { CodeBlock } from "@/modules/docs/components/code-block";
 import { getFileSource } from "@/modules/docs/lib/get-file-source";
 import { CurrentThemeProvider } from "@/modules/styles/components/current-style-provider";
 import {
+  ComponentPreviewHeader,
   ComponentWrapper,
   Loader,
   ResizableContainer,
@@ -58,19 +57,12 @@ export const ComponentPreview = async ({
         <ResizableContainer resizable={resizable}>
           <Loader>
             <CurrentThemeProvider className="relative duration-300">
-              <Button
-                variant="quiet"
-                shape="square"
-                size="sm"
-                className="absolute right-2 top-2 z-10"
-              >
-                <SlidersHorizontalIcon />
-              </Button>
+              <ComponentPreviewHeader />
               <ScrollArea className="bg-bg text-fg">
                 <div
                   className={cn(
-                    "flex py-10",
-                    primary && "min-h-48 py-20",
+                    "flex pb-10 pt-14",
+                    primary && "min-h-48 pb-20 pt-24",
                     fullWidth
                       ? "px-8 lg:px-12"
                       : "flex items-center justify-center px-4"

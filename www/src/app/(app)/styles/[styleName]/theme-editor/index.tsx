@@ -19,6 +19,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { ToggleButton } from "@/components/ui/toggle-button";
 import { Tooltip } from "@/components/ui/tooltip";
 import { usePreviewMode } from "@/components/mode-provider";
+import { ThemeModeSwitch } from "@/components/theme-mode-switch";
 import { useUserThemes } from "@/modules/styles/atoms/styles-atom";
 import { CreateThemeDialog } from "@/modules/styles/components/create-style-dialog";
 import { Theme } from "@/modules/styles/types";
@@ -27,7 +28,6 @@ import { ThemeColors } from "./colors";
 import { ThemeComponents } from "./components";
 import { ThemeEditorContext } from "./context";
 import { ThemeIconography } from "./iconography";
-import { ModeSwitch } from "./mode-switch";
 import { ThemeTypography } from "./typography";
 
 export function ThemeEditor({
@@ -86,7 +86,7 @@ export function ThemeEditor({
               theme?.foundations.light &&
               theme?.foundations.dark &&
               previewMode && (
-                <ModeSwitch
+                <ThemeModeSwitch
                   isSelected={previewMode === "dark"}
                   onChange={(isSelected) =>
                     setPreviewMode(isSelected ? "dark" : "light")

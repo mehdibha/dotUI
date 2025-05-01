@@ -20,9 +20,9 @@ export default async function HomePage() {
   const contributors = await getGitHubContributors();
 
   return (
-    <div>
+    <div className="light">
       {/* Hero section */}
-      <div className="container max-w-screen-2xl">
+      <div className="container max-w-screen-2xl dark">
         <section className="max-w-3xl pb-20 pt-10 sm:pt-14">
           <Announcement />
           <h1 className="xs:text-3xl text-balance text-2xl tracking-tighter max-lg:font-medium md:text-4xl lg:text-5xl">

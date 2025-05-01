@@ -9,7 +9,7 @@ import { siteConfig } from "@/config";
 import { GitHubIcon, TwitterIcon } from "./icons";
 import { Logo } from "./logo";
 import { SearchCommand } from "./search-command";
-import { ThemeSwitcher } from "./theme-switcher";
+import { ThemeSwitcher } from "./site-theme-selector";
 import { Kbd } from "./ui/kbd";
 
 export function Header({ className }: { className?: string }) {

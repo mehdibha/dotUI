@@ -29,7 +29,7 @@ import { siteConfig } from "@/config";
 import { hasActive, isActive } from "@/modules/docs/utils";
 import { Logo } from "./logo";
 import { SearchCommand } from "./search-command";
-import { ThemeSwitcher } from "./theme-switcher";
+import { ThemeSwitcher } from "./site-theme-selector";
 
 export const Sidebar = ({
   className,

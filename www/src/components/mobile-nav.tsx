@@ -13,7 +13,7 @@ import { siteConfig } from "@/config";
 import { Logo } from "./logo";
 import { SearchCommand } from "./search-command";
 import { NodeList } from "./sidebar";
-import { ThemeSwitcher } from "./theme-switcher";
+import { ThemeSwitcher } from "./site-theme-selector";
 
 export const MobileNav = ({
   className,
