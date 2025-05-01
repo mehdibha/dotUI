@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "next build",
+    "build": "pnpm run build:registry && next build",
     "build:registry": "tsx ./scripts/build-registry.ts && prettier --log-level silent --write \"src/registry/**/*.{ts,tsx,mdx}\" --cache",
     "build:internal-registry": "tsx ./scripts/build-internal-registry.ts && prettier --log-level silent --write \"src/__registry__/**/*.{ts,tsx,mdx}\" --cache",
     "start": "next start",
