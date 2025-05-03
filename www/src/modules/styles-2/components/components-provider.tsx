@@ -7,5 +7,6 @@ export const ComponentsProvider = ({
   components: Components;
   children: React.ReactNode;
 }) => {
+  console.log(components);
   return <div>{children}</div>;
 };

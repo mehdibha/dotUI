@@ -8,7 +8,7 @@ import { useCurrentTheme } from "@/modules/styles/atoms/styles-atom";
 import { ThemeProvider } from "@/modules/styles/components/style-provider";
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  let container = React.useRef(null);
+  const container = React.useRef(null);
   const { currentTheme } = useCurrentTheme();
   const isMounted = useMounted();
 

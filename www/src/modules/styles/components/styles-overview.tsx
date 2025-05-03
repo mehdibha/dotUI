@@ -11,7 +11,6 @@ import {
   ComponentsOverview,
   MobileComponentsOverview,
 } from "@/components/components-overview";
-import { PreviewModeProvider } from "@/components/mode-provider";
 import { styles } from "@/modules/registry/registry-styles";
 import { Skeleton } from "@/modules/registry/ui/skeleton.basic";
 import { Tabs, TabList, Tab } from "@/modules/registry/ui/tabs.motion";

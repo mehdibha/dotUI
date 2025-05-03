@@ -7,6 +7,7 @@ export const FontsProvider = ({
   children: React.ReactNode;
   fonts: Fonts;
 }) => {
+  console.log(fonts);
   return children;
 };
 

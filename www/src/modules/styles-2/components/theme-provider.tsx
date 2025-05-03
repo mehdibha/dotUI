@@ -1,4 +1,4 @@
-import { Style, Theme } from "@/modules/styles-2/types";
+import { Theme } from "@/modules/styles-2/types";
 
 export const ThemeProvider = ({
   theme,
@@ -7,5 +7,6 @@ export const ThemeProvider = ({
   theme: Theme;
   children?: React.ReactNode;
 }) => {
+  console.log(theme);
   return <div>{children}</div>;
 };
