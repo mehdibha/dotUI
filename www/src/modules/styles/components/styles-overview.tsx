@@ -14,7 +14,7 @@ import { Tabs, TabList, Tab } from "@/modules/registry/ui/tabs.motion";
 import {
   ComponentsOverview,
   MobileComponentsOverview,
-} from "@/modules/styles/components/components-overview";
+} from "@/components/components-overview";
 import { Theme } from "@/modules/styles/types";
 import { ThemeProvider } from "./style-provider";
 

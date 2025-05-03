@@ -13,7 +13,6 @@ import { ColorPicker } from "@/components/dynamic-ui/color-picker";
 import { ColorSlider } from "@/components/dynamic-ui/color-slider";
 import { Combobox, ComboboxItem } from "@/components/dynamic-ui/combobox";
 import { DatePicker } from "@/components/dynamic-ui/date-picker";
-// import { DropZone, DropZoneLabel } from "@/components/dynamic-core/drop-zone";
 import { ListBox, ListBoxItem } from "@/components/dynamic-ui/list-box";
 import { Menu, MenuItem, MenuRoot } from "@/components/dynamic-ui/menu";
 import { NumberField } from "@/components/dynamic-ui/number-field";

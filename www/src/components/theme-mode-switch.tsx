@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { MoonIcon, SunIcon } from "lucide-react";
-import { motion, Transition } from "motion/react";
+import { LayoutGroup, motion, Transition } from "motion/react";
 import { Switch as AriaSwitch } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
 import { focusRingGroup } from "@/lib/focus-styles";
@@ -18,7 +18,7 @@ const themeModeSwitchStyles = tv({
       "group-selected:justify-end bg-bg text-fg-muted border-field flex cursor-pointer items-center justify-start border p-0.5 [&_svg]:size-4",
     ],
     iconContainer: "relative flex items-center justify-center px-3 py-2",
-    cursor: "bg-bg-inverse/10 absolute inset-0",
+    cursor: "block bg-bg-inverse/10 absolute inset-0",
   },
   variants: {
     size: {
@@ -42,7 +42,7 @@ const themeModeSwitchStyles = tv({
       },
       square: {
         container: "rounded-md",
-        cursor: "rounded-md",
+        cursor: "rounded-sm",
       },
     },
   },
@@ -66,11 +66,12 @@ export const ThemeModeSwitch = ({
     size,
     shape,
   });
+  const layoutId = React.useId();
 
   return (
     <AriaSwitch className={root()} {...props}>
       {({ isSelected }) => (
-        <>
+        <LayoutGroup id={layoutId}>
           <span className={cn(container(), className)}>
             <span className={cn(iconContainer(), "group-selected:text-fg")}>
               <MoonIcon />
@@ -96,7 +97,7 @@ export const ThemeModeSwitch = ({
               )}
             </span>
           </span>
-        </>
+        </LayoutGroup>
       )}
     </AriaSwitch>
   );

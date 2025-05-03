@@ -5,10 +5,7 @@ import { rimraf } from "rimraf";
 import { registry } from "@/modules/registry";
 import { base } from "@/modules/registry/registry-base";
 import { styles } from "@/modules/registry/registry-styles";
-import {
-  hasStyles,
-  RegistryItemProps,
-} from "@/modules/registry/types";
+import { hasStyles, RegistryItemProps } from "@/modules/registry/types";
 
 const REGISTRY_PATH = path.join(process.cwd(), "public/r");
 const REGISTRY_URL =
