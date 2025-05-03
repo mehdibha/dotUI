@@ -14,7 +14,7 @@
     "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache --log-level warn",
     "typecheck": "tsc --noEmit",
     "lint": "next lint --fix",
-    "lint:check": "next lint",
+    "lint:check": "next lint --max-warnings=0",
     "postinstall": "fumadocs-mdx"
   },
   "dependencies": {
