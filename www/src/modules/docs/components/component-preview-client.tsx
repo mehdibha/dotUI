@@ -68,7 +68,7 @@ export const ResizableContainer = ({
 export const ComponentPreviewHeader = () => {
   const { mode: previewMode, setMode: setPreviewMode } = usePreviewMode();
   const isMounted = useMounted();
-  
+
   return (
     <div className="absolute left-0 top-0 z-50 flex w-full items-center justify-between gap-2 p-2">
       <SelectRoot selectedKey="minimalist">

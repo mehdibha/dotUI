@@ -18,7 +18,7 @@ const themeModeSwitchStyles = tv({
       "group-selected:justify-end bg-bg text-fg-muted border-field flex cursor-pointer items-center justify-start border p-0.5 [&_svg]:size-4",
     ],
     iconContainer: "relative flex items-center justify-center px-3 py-2",
-    cursor: "block bg-bg-inverse/10 absolute inset-0",
+    cursor: "bg-bg-inverse/10 absolute inset-0 block",
   },
   variants: {
     size: {

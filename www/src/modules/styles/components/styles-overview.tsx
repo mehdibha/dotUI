@@ -7,14 +7,14 @@ import { AnimatePresence, motion, Variants } from "motion/react";
 import { useInView } from "motion/react";
 import { useMounted } from "@/hooks/use-mounted";
 import { Button } from "@/components/ui/button";
-import { PreviewModeProvider } from "@/components/mode-provider";
-import { styles } from "@/modules/registry/registry-styles";
-import { Skeleton } from "@/modules/registry/ui/skeleton.basic";
-import { Tabs, TabList, Tab } from "@/modules/registry/ui/tabs.motion";
 import {
   ComponentsOverview,
   MobileComponentsOverview,
 } from "@/components/components-overview";
+import { PreviewModeProvider } from "@/components/mode-provider";
+import { styles } from "@/modules/registry/registry-styles";
+import { Skeleton } from "@/modules/registry/ui/skeleton.basic";
+import { Tabs, TabList, Tab } from "@/modules/registry/ui/tabs.motion";
 import { Theme } from "@/modules/styles/types";
 import { ThemeProvider } from "./style-provider";
 
