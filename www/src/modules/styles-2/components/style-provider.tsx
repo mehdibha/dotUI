@@ -18,12 +18,10 @@ export const StyleProvider = ({
   ...props
 }: StyleProviderProps) => {
   return (
-    <div {...props}>
-      <ComponentsProvider components={style.components}>
-        <ThemeProvider theme={style.theme}>
-          <FontsProvider fonts={style.fonts}>{children}</FontsProvider>
-        </ThemeProvider>
-      </ComponentsProvider>
-    </div>
+    <ComponentsProvider components={style.components}>
+      <ThemeProvider theme={style.theme} {...props}>
+        <FontsProvider fonts={style.fonts}>{children}</FontsProvider>
+      </ThemeProvider>
+    </ComponentsProvider>
   );
 };

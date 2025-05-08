@@ -11,6 +11,7 @@ import {
   Loader,
   ResizableContainer,
 } from "./component-preview-client";
+import { CurrentStyleProvider } from "@/modules/styles-2/components/current-syle-provider";
 
 export interface ComponentPreviewProps {
   name: string;
@@ -56,7 +57,7 @@ export const ComponentPreview = async ({
       <div className="bg-bg-muted">
         <ResizableContainer resizable={resizable}>
           <Loader>
-            <CurrentThemeProvider className="relative duration-300">
+            <CurrentStyleProvider className="relative duration-300">
               <ComponentPreviewHeader />
               <ScrollArea className="bg-bg text-fg">
                 <div
@@ -79,7 +80,7 @@ export const ComponentPreview = async ({
                   </div>
                 </div>
               </ScrollArea>
-            </CurrentThemeProvider>
+            </CurrentStyleProvider>
           </Loader>
         </ResizableContainer>
       </div>

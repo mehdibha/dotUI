@@ -144,7 +144,7 @@ export const ThemesOverview = () => {
               className="relative w-full bg-transparent"
             >
               <UNSAFE_PortalProvider getContainer={() => container.current}>
-                <div className="bg-bg w-full rounded-md border">
+                <div className="bg-bg w-full rounded-md border shadow-md">
                   <AnimatePresence mode="popLayout">
                     <motion.div
                       key={currentThemeName}

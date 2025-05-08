@@ -1,3 +1,4 @@
+import { ComponentsContext } from "@/modules/styles-2/contexts/components-context";
 import { Components } from "@/modules/styles-2/types";
 
 export const ComponentsProvider = ({
@@ -7,6 +8,7 @@ export const ComponentsProvider = ({
   components: Components;
   children: React.ReactNode;
 }) => {
-  console.log(components);
-  return <div>{children}</div>;
+  return (
+    <ComponentsContext value={{ components }}>{children}</ComponentsContext>
+  );
 };

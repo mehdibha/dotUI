@@ -1,8 +1,7 @@
 import React from "react";
-import { Primitives } from "@dotui/schemas";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useCurrentTheme } from "@/modules/styles/atoms/styles-atom";
-import { useLocalPrimitives } from "@/modules/styles/contexts/primitives-context";
+import { useStyles } from "@/modules/styles-2/atoms/styles-atom";
+import { Components } from "@/modules/styles-2/types";
 
 type Registry<T> = Record<
   string,
@@ -10,28 +9,25 @@ type Registry<T> = Record<
 >;
 
 export const createDynamicComponent = <Props extends {}>(
-  primitiveName: keyof Primitives,
-  componentName: string,
+  componentName: keyof Components,
+  slotName: string,
   FallbackComponent: React.FC<Props>,
   registry: Registry<Props>
 ): React.FC<Props> => {
   const Component = (props: Props) => {
-    const { currentTheme } = useCurrentTheme();
-    const { primitives: localPrimitives } = useLocalPrimitives();
-    const currentThemePrimitive = currentTheme?.primitives?.[primitiveName];
-    const localPrimitive = localPrimitives[primitiveName];
-    const resolvedPrimitive = localPrimitive ?? currentThemePrimitive;
+    const { currentStyle } = useStyles();
+    const componentStyle = currentStyle.components[componentName];
     const shouldWrapWithSuspense = true;
 
-    if (!resolvedPrimitive) {
+    if (!componentStyle) {
       return <FallbackComponent {...props} />; // No need to wrap it inside Suspense, default component should always be imported normally
     }
 
-    const LazyComponent = registry[resolvedPrimitive];
+    const LazyComponent = registry[componentStyle];
 
     if (!LazyComponent)
       throw new Error(
-        `Component ${componentName} not found in registry of ${primitiveName}:${resolvedPrimitive}`
+        `Component ${componentName}/${slotName}/${componentStyle} not found in registry`
       );
 
     if (shouldWrapWithSuspense) {
@@ -51,7 +47,7 @@ export const createDynamicComponent = <Props extends {}>(
 
     return <LazyComponent {...props} />;
   };
-  Component.displayName = componentName;
+  Component.displayName = slotName;
 
   return Component;
 };
