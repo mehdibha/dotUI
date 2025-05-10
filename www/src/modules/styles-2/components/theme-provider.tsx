@@ -17,8 +17,7 @@ export const ThemeProvider = ({
   const styleProps = Object.entries({
     ...(currentMode === "light" ? theme.light : theme.dark),
     ...theme.theme,
-  })
-  .reduce(
+  }).reduce(
     (acc, [key, value]) => ({
       ...acc,
       [`--${key}`]: value,

@@ -110,14 +110,13 @@ const createThemeCSSVars = (
       {} as Record<string, string>
     );
 
-
   return cssVariables;
 };
 
 const hexToOklchString = (hex: string): string => {
-  const toOklch = converter('oklch');
+  const toOklch = converter("oklch");
   const color = toOklch(hex);
-  if (!color) return '';
+  if (!color) return "";
   const { l, c, h } = color;
   return `oklch(${l.toFixed(3)} ${c.toFixed(3)} ${h?.toFixed(3) ?? 0})`;
 };

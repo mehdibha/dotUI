@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { Index } from "@/__registry__/demos";
 import { CodeBlock } from "@/modules/docs/components/code-block";
 import { getFileSource } from "@/modules/docs/lib/get-file-source";
+import { CurrentStyleProvider } from "@/modules/styles-2/components/current-syle-provider";
 import { CurrentThemeProvider } from "@/modules/styles/components/current-style-provider";
 import {
   ComponentPreviewHeader,
@@ -11,7 +12,6 @@ import {
   Loader,
   ResizableContainer,
 } from "./component-preview-client";
-import { CurrentStyleProvider } from "@/modules/styles-2/components/current-syle-provider";
 
 export interface ComponentPreviewProps {
   name: string;
