@@ -9,9 +9,9 @@ import { ListBox } from "@/components/ui/list-box";
 import { Popover } from "@/components/ui/popover";
 import { SelectItem, SelectRoot, SelectValue } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
-import { usePreviewMode } from "@/components/mode-provider";
 import { ThemeModeSwitch } from "@/components/theme-mode-switch";
 import { styles } from "@/modules/registry/registry-styles";
+import { useStyles } from "@/modules/styles-2/atoms/styles-atom";
 
 export const Loader = ({ children }: { children: React.ReactNode }) => {
   const [isMounted, setIsMounted] = React.useState(false);
@@ -66,12 +66,17 @@ export const ResizableContainer = ({
 };
 
 export const ComponentPreviewHeader = () => {
-  const { mode: previewMode, setMode: setPreviewMode } = usePreviewMode();
+  // const { mode: previewMode, setMode: setPreviewMode } = usePreviewMode();
+  const { currentStyle, currentMode, setCurrentStyle, setCurrentMode } =
+    useStyles();
   const isMounted = useMounted();
 
   return (
     <div className="absolute left-0 top-0 z-50 flex w-full items-center justify-between gap-2 p-2">
-      <SelectRoot selectedKey="minimalist">
+      <SelectRoot
+        selectedKey={currentStyle.name}
+        onSelectionChange={(key) => setCurrentStyle(key as string)}
+      >
         <Button
           size="sm"
           suffix={<ChevronDownIcon className="text-fg-muted" />}
@@ -90,14 +95,14 @@ export const ComponentPreviewHeader = () => {
           </ListBox>
         </Popover>
       </SelectRoot>
-      {previewMode && isMounted && (
+      {isMounted && (
         <ThemeModeSwitch
           size="sm"
           shape="square"
           defaultSelected
-          isSelected={previewMode === "dark"}
+          isSelected={currentMode === "dark"}
           onChange={(isSelected) =>
-            setPreviewMode(isSelected ? "dark" : "light")
+            setCurrentMode(isSelected ? "dark" : "light")
           }
         />
       )}

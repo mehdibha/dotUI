@@ -3,7 +3,7 @@ import {
   Color as LeonardoColor,
   Theme as LeonardoTheme,
 } from "@adobe/leonardo-contrast-colors";
-import { converter, formatCss } from "culori";
+import { converter } from "culori";
 import {
   DEFAULT_CSS,
   DEFAULT_DARK_FOUNDATIONS,
@@ -12,11 +12,11 @@ import {
   DEFAULT_THEME,
 } from "@/modules/styles-2/constants/defaults";
 import {
+  ColorFoundations,
   Theme,
   ThemeFoundations,
   ThemeModeFoundations,
 } from "@/modules/styles-2/types";
-import { Colors } from "@/modules/styles/types";
 
 export const createTheme = (opts: ThemeFoundations): Theme => {
   const light = opts.light ? createThemeCSSVars(opts.light, "light") : {};
@@ -50,25 +50,26 @@ const createThemeCSSVars = (
       defaultFoundations.colors.neutral.ratios,
   });
 
-  const colorScales = Object.entries(defaultFoundations.colors).map(
-    ([name]) =>
-      new LeonardoColor({
-        name,
-        colorKeys:
-          foundations.colors[name as keyof Colors["palettes"]]?.baseColors ??
-          defaultFoundations.colors[name as keyof Colors["palettes"]]
-            .baseColors,
-        ratios:
-          foundations.colors[name as keyof Colors["palettes"]]?.ratios ??
-          defaultFoundations.colors[name as keyof Colors["palettes"]].ratios,
-      })
-  );
+  const colors = Object.entries(defaultFoundations.colors).map(([name]) => {
+    const props = {
+      name,
+      colorKeys:
+        foundations.colors[name as keyof ColorFoundations]?.baseColors ??
+        defaultFoundations.colors[name as keyof ColorFoundations]?.baseColors,
+      ratios:
+        foundations.colors[name as keyof ColorFoundations]?.ratios ??
+        defaultFoundations.colors[name as keyof ColorFoundations]?.ratios,
+    };
+    const color = new LeonardoColor(props);
+
+    return color;
+  });
 
   const lightness = foundations.lightness ?? defaultFoundations.lightness;
   const saturation = foundations.saturation ?? defaultFoundations.saturation;
 
   const generatedTheme = new LeonardoTheme({
-    colors: colorScales,
+    colors,
     backgroundColor: neutral,
     lightness,
     saturation,

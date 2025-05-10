@@ -7,8 +7,8 @@ import { minimalistTheme } from "./styles-2/minimalist";
 import { retroTheme } from "./styles-2/retro";
 
 export const styles: StyleFoudations[] = [
-  darkyTheme,
   forestTheme,
+  darkyTheme,
   highContrastTheme,
   materialTheme,
   minimalistTheme,

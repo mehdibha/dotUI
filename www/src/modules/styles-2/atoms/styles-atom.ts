@@ -1,3 +1,4 @@
+import React from "react";
 import { useAtom } from "jotai";
 import { withImmer } from "jotai-immer";
 import { atomWithStorage } from "jotai/utils";
@@ -12,20 +13,25 @@ type State = {
 
 const stylesAtom = withImmer(
   atomWithStorage<State>("new-styles", {
-    currentStyleName: "forest",
-    currentMode: "light",
+    currentStyleName: "minimalist",
+    currentMode: "dark",
     userStyles: [],
   })
 );
 
 export const useStyles = () => {
   const [state, setState] = useAtom(stylesAtom);
-
   const allStyles = [...state.userStyles, ...styles];
 
   const currentStyle = allStyles.find(
     (style) => (style.name = state.currentStyleName)
   )!;
+
+  const setCurrentMode = async (mode: "light" | "dark") => {
+    setState((draft) => {
+      draft.currentMode = mode;
+    });
+  };
 
   const setCurrentStyle = async (styleName: string) => {
     setState((draft) => {
@@ -55,8 +61,9 @@ export const useStyles = () => {
   };
 
   return {
-    currentStyle: currentStyle,
     currentMode: state.currentMode,
+    setCurrentMode,
+    currentStyle,
     setCurrentStyle,
     createStyle,
     updateStyle,
