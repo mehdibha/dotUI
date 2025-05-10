@@ -1,3 +1,5 @@
+import { CssColor } from "@adobe/leonardo-contrast-colors";
+
 export type Fonts = {
   heading: string;
   body: string;
@@ -6,9 +8,20 @@ export type Fonts = {
 export type IconLibrary = "lucide" | "remix-icons";
 
 export type Theme = {
+  theme: Record<string, string>;
   light: Record<string, string>;
   dark: Record<string, string>;
-  cssVars: Record<string, string>;
+  css?: {
+    [k: string]:
+      | string
+      | {
+          [k: string]:
+            | string
+            | {
+                [k: string]: string;
+              };
+        };
+  };
 };
 
 export type Components = {
@@ -72,9 +85,47 @@ export type Components = {
 
 export type Style = {
   name: string;
+  label?: string;
   description?: string;
   theme: Theme;
   iconLibrary: IconLibrary;
   fonts: Fonts;
   components: Components;
+};
+
+export type StyleFoudations = {
+  name: string;
+  label?: string;
+  theme: ThemeFoundations;
+  iconLibrary?: IconLibrary;
+  fonts?: Fonts;
+  components?: Partial<Components>;
+};
+
+export type ColorBase = {
+  baseColors: CssColor[];
+  ratios?: number[];
+};
+
+export type ColorFoundations = {
+  neutral?: ColorBase;
+  accent?: ColorBase;
+  success?: ColorBase;
+  warning?: ColorBase;
+  danger?: ColorBase;
+  info?: ColorBase;
+};
+
+export type ThemeModeFoundations = {
+  colors: ColorFoundations;
+  lightness?: number;
+  saturation?: number;
+};
+
+export type ThemeFoundations = {
+  light?: ThemeModeFoundations;
+  dark?: ThemeModeFoundations;
+  theme?: Record<string, string>;
+  css?: Theme["css"];
+  radius?: number;
 };

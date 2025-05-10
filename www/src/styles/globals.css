@@ -144,7 +144,7 @@
   --info-1000: hsl(210, 100%, 87%);
 }
 
-@theme {
+@theme inline {
   /* fonts */
   --font-josefin: var(--font-josefin);
   --font-sans: var(--font-geist-sans);

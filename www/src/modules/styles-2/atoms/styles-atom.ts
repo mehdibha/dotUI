@@ -1,18 +1,18 @@
 import { useAtom } from "jotai";
 import { withImmer } from "jotai-immer";
 import { atomWithStorage } from "jotai/utils";
-import { styles } from "@/modules/registry/registry-styles";
-import { Style } from "@/modules/styles-2/types";
+import { styles } from "@/modules/registry/registry-styles-2";
+import { StyleFoudations } from "@/modules/styles-2/types";
 
 type State = {
   currentStyleName: string;
   currentMode: "light" | "dark";
-  userStyles: Style[];
+  userStyles: StyleFoudations[];
 };
 
 const stylesAtom = withImmer(
   atomWithStorage<State>("new-styles", {
-    currentStyleName: "minimalist",
+    currentStyleName: "forest",
     currentMode: "light",
     userStyles: [],
   })
@@ -25,7 +25,7 @@ export const useStyles = () => {
 
   const currentStyle = allStyles.find(
     (style) => (style.name = state.currentStyleName)
-  );
+  )!;
 
   const setCurrentStyle = async (styleName: string) => {
     setState((draft) => {
@@ -33,13 +33,13 @@ export const useStyles = () => {
     });
   };
 
-  const createStyle = async (style: Style) => {
+  const createStyle = async (style: StyleFoudations) => {
     setState((draft) => {
       draft.userStyles.push(style);
     });
   };
 
-  const updateStyle = async (style: Style) => {
+  const updateStyle = async (style: StyleFoudations) => {
     setState((draft) => {
       const index = draft.userStyles.findIndex((s) => s.name === style.name);
       if (index !== -1) {
@@ -55,7 +55,8 @@ export const useStyles = () => {
   };
 
   return {
-    currentStyle: currentStyle as Style,
+    currentStyle: currentStyle,
+    currentMode: state.currentMode,
     setCurrentStyle,
     createStyle,
     updateStyle,

@@ -1,3 +1,4 @@
+import { useStyles } from "@/modules/styles-2/atoms/styles-atom";
 import { Theme } from "@/modules/styles-2/types";
 
 interface ThemeProviderProps
@@ -11,5 +12,23 @@ export const ThemeProvider = ({
   children,
   ...props
 }: ThemeProviderProps) => {
-  return <div {...props}>{children}</div>;
+  const { currentMode } = useStyles();
+
+  const styleProps = Object.entries({
+    ...(currentMode === "light" ? theme.light : theme.dark),
+    ...theme.theme,
+  })
+  .reduce(
+    (acc, [key, value]) => ({
+      ...acc,
+      [`--${key}`]: value,
+    }),
+    {}
+  );
+
+  return (
+    <div {...props} style={styleProps}>
+      {children}
+    </div>
+  );
 };
