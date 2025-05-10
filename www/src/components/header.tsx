@@ -4,27 +4,27 @@ import React from "react";
 import Link from "next/link";
 import { SearchIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/core/button";
+import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config";
-import { Kbd } from "./core/kbd";
 import { GitHubIcon, TwitterIcon } from "./icons";
 import { Logo } from "./logo";
 import { SearchCommand } from "./search-command";
-import { ThemeSwitcher } from "./theme-switcher";
+import { ThemeSwitcher } from "./site-theme-selector";
+import { Kbd } from "./ui/kbd";
 
 export function Header({ className }: { className?: string }) {
   return (
     <header
       className={cn("bg-bg sticky top-0 z-50 w-full border-b", className)}
     >
-      <div className="px-12.5 container relative flex h-14 max-w-screen-2xl items-center justify-between">
+      <div className="container relative flex h-14 max-w-screen-2xl items-center justify-between px-16">
         <div className="flex items-center gap-6">
           <Logo />
           <div className="flex items-center gap-3 text-sm">
             {[
               { label: "Docs", href: "/docs/getting-started/introduction" },
               { label: "Components", href: "/docs/components/buttons/button" },
-              { label: "Themes", href: "/themes" },
+              { label: "Styles", href: "/styles" },
             ].map((item) => (
               <Link
                 key={item.href}
@@ -40,7 +40,7 @@ export function Header({ className }: { className?: string }) {
           <SearchCommand keyboardShortcut>
             <Button
               size="sm"
-              variant="outline"
+              variant="default"
               prefix={<SearchIcon />}
               suffix={
                 <div className="flex items-center gap-0.5 text-xs">
@@ -48,7 +48,7 @@ export function Header({ className }: { className?: string }) {
                   <Kbd>K</Kbd>
                 </div>
               }
-              className="bg-bg-inverse/5 text-fg-muted gap-2 pl-3 pr-1"
+              className="text-fg-muted gap-2 pl-3 pr-1"
             >
               <span className="mr-6 flex-1">Search docs...</span>
             </Button>

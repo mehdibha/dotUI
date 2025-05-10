@@ -1,8 +1,0 @@
-{
-  "name": "tabs",
-  "type": "core",
-  "variants": [
-    "basic",
-    "motion"
-  ]
-}

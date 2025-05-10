@@ -5,16 +5,16 @@ import { type TableOfContents as TocType } from "fumadocs-core/server";
 import { ExternalLinkIcon } from "lucide-react";
 import { truncateOnWord } from "@/lib/string";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/core/button";
-import { Breadcrumbs } from "@/components/docs/breadcrumbs";
-import { DocsPager } from "@/components/docs/docs-pager";
-import { PageLastUpdate } from "@/components/docs/last-update";
-import { mdxComponents } from "@/components/docs/mdx-components";
-import { TableOfContents } from "@/components/docs/toc";
+import { Button } from "@/components/ui/button";
 import { GitHubIcon } from "@/components/icons";
-import { AdobeIcon } from "@/components/icons/adobe-icon";
+import { AdobeIcon } from "@/components/icons";
 import { source } from "@/app/source";
 import { siteConfig } from "@/config";
+import { Breadcrumbs } from "@/modules/docs/components/breadcrumbs";
+import { DocsPager } from "@/modules/docs/components/docs-pager";
+import { PageLastUpdate } from "@/modules/docs/components/last-update";
+import { mdxComponents } from "@/modules/docs/components/mdx-components";
+import { TableOfContents } from "@/modules/docs/components/toc";
 
 export default async function Page({
   params,

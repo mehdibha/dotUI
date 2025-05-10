@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "extends": "none",
+  "name": "base",
+  "type": "registry:style",
+  "dependencies": [
+    "tailwind-variants",
+    "react-aria-components",
+    "tailwindcss-react-aria-components",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "http://localhost:3000/r/material/utils.json",
+    "http://localhost:3000/r/material/focus-styles.json"
+  ],
+  "files": []
+}
