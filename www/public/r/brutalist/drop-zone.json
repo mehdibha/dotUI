@@ -1,0 +1,12 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "drop-zone",
+  "type": "registry:ui",
+  "files": [
+    {
+      "path": "src/registry/brutalist/ui/drop-zone.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport {\n  DropZone as AriaDropZone,\n  Text as AriaText,\n  composeRenderProps,\n} from \"react-aria-components\";\nimport { tv } from \"tailwind-variants\";\n\nconst dropZoneStyles = tv({\n  slots: {\n    dropzone:\n      \"drop-target:border-border-focus focus-visible:border-border-focus drop-target:bg-bg-accent-muted disabled:text-fg-disabled disabled:border-border-disabled flex w-60 flex-col items-center justify-center gap-2 rounded-md border-2 border-dashed p-6 text-sm\",\n    label: \"text-base\",\n  },\n});\n\nconst { dropzone, label } = dropZoneStyles();\n\ninterface DropZoneProps extends React.ComponentProps<typeof AriaDropZone> {}\nconst DropZone = ({ className, ...props }: DropZoneProps) => {\n  return (\n    <AriaDropZone\n      className={composeRenderProps(className, (className) =>\n        dropzone({ className })\n      )}\n      {...props}\n    />\n  );\n};\n\ninterface DropZoneLabelProps\n  extends Omit<React.ComponentProps<typeof AriaText>, \"slot\"> {}\nconst DropZoneLabel = ({ className, ...props }: DropZoneLabelProps) => {\n  return <AriaText slot=\"label\" className={label({ className })} {...props} />;\n};\n\nexport type { DropZoneProps, DropZoneLabelProps };\nexport { DropZone, DropZoneLabel };\n",
+      "type": "registry:ui"
+    }
+  ]
+}

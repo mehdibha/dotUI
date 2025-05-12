@@ -1,0 +1,12 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "color-swatch",
+  "type": "registry:ui",
+  "files": [
+    {
+      "path": "src/registry/material/ui/color-swatch.tsx",
+      "content": "\"use client\";\n\nimport {\n  ColorSwatch as AriaColorSwatch,\n  composeRenderProps,\n} from \"react-aria-components\";\nimport { tv } from \"tailwind-variants\";\n\nconst colorSwatchStyles = tv({\n  base: \"relative size-5 rounded-sm border\",\n});\n\ninterface ColorSwatchProps\n  extends React.ComponentProps<typeof AriaColorSwatch> {}\nconst ColorSwatch = ({ className, style, ...props }: ColorSwatchProps) => {\n  return (\n    <AriaColorSwatch\n      className={composeRenderProps(className, (className) =>\n        colorSwatchStyles({ className })\n      )}\n      style={composeRenderProps(style, (style, { color }) => ({\n        ...style,\n        background: `linear-gradient(${color}, ${color}),\n        repeating-conic-gradient(#CCC 0% 25%, white 0% 50%) 50% / 16px 16px`,\n      }))}\n      {...props}\n    />\n  );\n};\n\nexport type { ColorSwatchProps };\nexport { ColorSwatch };\n",
+      "type": "registry:ui"
+    }
+  ]
+}

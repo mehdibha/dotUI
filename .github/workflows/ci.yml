@@ -19,7 +19,7 @@ jobs:
           fetch-depth: 0
       - uses: ./.github/actions/setup
 
-      - run: pnpm lint
+      - run: pnpm lint:check
 
   format:
     runs-on: ubuntu-latest

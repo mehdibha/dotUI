@@ -1,12 +1,16 @@
-export const googleFonts = [
-  {
-    id: "inter",
-    name: "Inter",
-    url: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
-  },
-  {
-    id: "josefin",
-    name: "Josefin Sans",
-    url: "https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&display=swap",
-  },
-];
+import { Josefin_Sans, Geist_Mono, Geist } from "next/font/google";
+
+export const josefinSans = Josefin_Sans({
+  subsets: ["latin"],
+  variable: "--font-josefin",
+});
+
+export const fontSans = Geist({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
+
+export const fontMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+});
