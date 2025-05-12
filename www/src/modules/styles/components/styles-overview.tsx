@@ -14,13 +14,14 @@ import {
 import { styles } from "@/modules/registry/registry-styles";
 import { Skeleton } from "@/modules/registry/ui/skeleton.basic";
 import { Tabs, TabList, Tab } from "@/modules/registry/ui/tabs.motion";
-import { Theme } from "@/modules/styles/types";
-import { ThemeProvider } from "./style-provider";
+import { StyleProvider } from "@/modules/styles/components/style-provider";
+import { createStyle } from "../lib/create-style";
 
-export const ThemesOverview = () => {
+export const StylesOverview = () => {
   const container = React.useRef(null);
-  const [currentThemeName, setCurrentThemeName] = React.useState<string>(
-    (styles[0] as unknown as Theme).name
+  console.log(styles);
+  const [currentStyleName, setCurrentStyleName] = React.useState<string>(
+    styles[0]!.name
   );
   const ref = React.useRef(null);
   const isInView = useInView(ref);
@@ -30,7 +31,7 @@ export const ThemesOverview = () => {
 
   const handleCopy = () => {
     void navigator.clipboard.writeText(
-      `npx shadcn@latest init https://dotui.org/r/${currentThemeName}/base.json`
+      `npx shadcn@latest init https://dotui.org/r/${currentStyleName}/base.json`
     );
     setCopied(true);
     setTimeout(() => {
@@ -38,37 +39,41 @@ export const ThemesOverview = () => {
     }, 1000);
   };
 
-  const currentTheme = styles.find((style) => style.name === currentThemeName)!;
+  const currentStyleFoundations = styles.find(
+    (style) => style.name === currentStyleName
+  )!;
+
+  const currentStyle = React.useMemo(() => {
+    return createStyle(currentStyleFoundations);
+  }, [currentStyleFoundations]);
 
   React.useEffect(() => {
     const interval = setInterval(() => {
       if (touched || !isInView) return;
       const currentIndex = styles.findIndex(
-        (style) => style.name === currentThemeName
+        (style) => style.name === currentStyleName
       );
       const nextIndex = (currentIndex + 1) % styles.length;
       const nextStyle = styles[nextIndex];
       if (nextStyle) {
-        setCurrentThemeName(nextStyle.name);
+        setCurrentStyleName(nextStyle.name);
       }
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [currentThemeName, touched, isInView]);
+  }, [currentStyleName, touched, isInView]);
 
   return (
     <>
-      {isMounted && (
-        <ThemeProvider ref={container} theme={currentTheme} ignorePreviewMode />
-      )}
+      {/* {isMounted && <StyleProvider ref={container} style={currentStyle} />} */}
       <div className="flex flex-col gap-6">
         <div className="flex flex-col-reverse items-center gap-4 xl:flex-row xl:items-end">
           <Tabs
             ref={ref}
             variant="solid"
-            selectedKey={currentThemeName}
+            selectedKey={currentStyleName}
             onSelectionChange={(key) => {
-              setCurrentThemeName(key as string);
+              setCurrentStyleName(key as string);
               setCopied(false);
               setTouched(true);
             }}
@@ -102,14 +107,14 @@ export const ThemesOverview = () => {
                     </motion.span>
                     <AnimatePresence mode="popLayout">
                       <motion.span
-                        key={currentTheme.name}
+                        key={currentStyle.name}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.5 }}
                         className="text-[#F69D50]"
                       >
-                        {currentThemeName}
+                        {currentStyleName}
                       </motion.span>
                     </AnimatePresence>
                     <motion.span layout transition={{ duration: 0.5 }}>
@@ -138,16 +143,16 @@ export const ThemesOverview = () => {
         </div>
         <Skeleton show={!isMounted} className="w-full rounded-md">
           <div className="relative w-full">
-            <ThemeProvider
-              theme={currentTheme}
-              ignorePreviewMode
+            <StyleProvider
+              style={currentStyle}
+              mode="site"
               className="relative w-full bg-transparent"
             >
               <UNSAFE_PortalProvider getContainer={() => container.current}>
                 <div className="bg-bg w-full rounded-md border shadow-md">
                   <AnimatePresence mode="popLayout">
                     <motion.div
-                      key={currentThemeName}
+                      key={currentStyleName}
                       variants={variants}
                       initial="hidden"
                       animate="show"
@@ -159,7 +164,7 @@ export const ThemesOverview = () => {
                   </AnimatePresence>
                 </div>
               </UNSAFE_PortalProvider>
-            </ThemeProvider>
+            </StyleProvider>
           </div>
         </Skeleton>
       </div>

@@ -1,11 +1,11 @@
-import { Theme } from "@/modules/styles/types";
+import { StyleFoudations } from "@/modules/styles/types";
 
-export const darkyTheme: Theme = {
+export const darkyTheme: StyleFoudations = {
   name: "darky",
   label: "Darky",
-  foundations: {
+  theme: {
     light: {
-      palettes: {
+      colors: {
         neutral: {
           baseColors: ["#fff"],
         },
@@ -15,7 +15,7 @@ export const darkyTheme: Theme = {
       },
     },
     dark: {
-      palettes: {
+      colors: {
         neutral: {
           baseColors: ["#000"],
         },
@@ -24,12 +24,9 @@ export const darkyTheme: Theme = {
         },
       },
     },
-    overrides: {
-      "--color-bg-muted": "var(--color-neutral-100)",
-      "--color-bg": "var(--color-neutral-200)",
+    theme: {
+      "color-bg-muted": "var(--color-neutral-100)",
+      "color-bg": "var(--color-neutral-200)",
     },
-  },
-  variants: {
-    global: "primary",
   },
 };

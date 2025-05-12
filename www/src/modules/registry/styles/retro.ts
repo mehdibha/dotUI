@@ -1,11 +1,11 @@
-import { Theme } from "@/modules/styles/types";
+import { StyleFoudations } from "@/modules/styles/types";
 
-export const retroTheme: Theme = {
+export const retroTheme: StyleFoudations = {
   name: "retro",
   label: "Retro",
-  foundations: {
+  theme: {
     light: {
-      palettes: {
+      colors: {
         neutral: {
           baseColors: ["#E79D13"],
           // ratios: [1.5, 1.8, 2, 2.5, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
@@ -17,8 +17,5 @@ export const retroTheme: Theme = {
       lightness: 98,
       saturation: 100,
     },
-  },
-  variants: {
-    global: "accent",
   },
 };

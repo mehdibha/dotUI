@@ -1,15 +1,15 @@
-import { Theme } from "@/modules/styles/types";
+import { StyleFoudations } from "@/modules/styles/types";
 
-export const brutalistTheme: Theme = {
+export const brutalistTheme: StyleFoudations = {
   name: "brutalist",
   label: "Brutalist",
   fonts: {
     heading: "Geist Mono",
     body: "Geist Mono",
   },
-  foundations: {
+  theme: {
     light: {
-      palettes: {
+      colors: {
         neutral: {
           baseColors: ["#fff"],
         },
@@ -19,10 +19,7 @@ export const brutalistTheme: Theme = {
       },
     },
   },
-  primitives: {
+  components: {
     button: "brutalist",
-  },
-  variants: {
-    global: "primary",
   },
 };

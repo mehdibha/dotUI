@@ -1,4 +1,4 @@
-import { Fonts } from "@/modules/styles-2/types";
+import { Fonts } from "@/modules/styles/types";
 
 export const FontsProvider = ({
   children,

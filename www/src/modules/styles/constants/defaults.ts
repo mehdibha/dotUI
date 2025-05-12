@@ -1,5 +1,5 @@
-import { Components, IconLibrary } from "@/modules/styles-2/types";
-import { ThemeModeFoundations } from "@/modules/styles-2/types";
+import { Components, IconLibrary, Preferences } from "@/modules/styles/types";
+import { ThemeModeFoundations } from "@/modules/styles/types";
 
 export const DEFAULT_COMPONENTS: Components = {
   alert: "basic",
@@ -214,4 +214,8 @@ export const DEFAULT_ICON_LIBRARY: IconLibrary = "lucide";
 export const DEFAULT_FONTS = {
   heading: "Inter",
   body: "Inter",
+};
+
+export const DEFAULT_PREFERENCES: Preferences = {
+  defaultColorScheme: "accent",
 };

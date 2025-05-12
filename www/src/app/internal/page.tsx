@@ -1,7 +1,7 @@
 "use client";
 
 import { useMounted } from "@/hooks/use-mounted";
-import { CurrentStyleProvider } from "@/modules/styles-2/components/current-syle-provider";
+import { CurrentStyleProvider } from "@/modules/styles/components/current-syle-provider";
 
 export default function InternalPage() {
   const isMounted = useMounted();

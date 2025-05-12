@@ -3,72 +3,77 @@ import {
   Color as LeonardoColor,
   Theme as LeonardoTheme,
 } from "@adobe/leonardo-contrast-colors";
-import { RegistryTheme } from "@dotui/schemas";
-import { getContrastTextColor } from "@/lib/colors";
-import { Colors, Theme } from "@/modules/styles/types";
+import { converter } from "culori";
+import {
+  DEFAULT_CSS,
+  DEFAULT_DARK_FOUNDATIONS,
+  DEFAULT_LIGHT_FOUNDATIONS,
+  DEFAULT_RADIUS_FACTOR,
+  DEFAULT_THEME,
+} from "@/modules/styles/constants/defaults";
+import {
+  ColorFoundations,
+  Theme,
+  ThemeFoundations,
+  ThemeModeFoundations,
+} from "@/modules/styles/types";
 
-export const createTheme = (theme: Theme): RegistryTheme => {
-  const { foundations, ...propreties } = theme;
+export const createTheme = (opts: ThemeFoundations): Theme => {
+  const light = opts.light ? createThemeCSSVars(opts.light, "light") : {};
+  const dark = opts.dark ? createThemeCSSVars(opts.dark, "dark") : {};
+  const theme = { ...DEFAULT_THEME, ...opts.theme };
+  const css = { ...DEFAULT_CSS, ...opts.css };
+  const radius = opts.radius ?? DEFAULT_RADIUS_FACTOR;
 
   return {
-    ...defaultTheme,
-    ...propreties,
-    css: {
-      colors: {
-        ...(foundations.light
-          ? { light: createThemeCssVars(foundations, "light") }
-          : {}),
-        ...(foundations.dark
-          ? { dark: createThemeCssVars(foundations, "dark") }
-          : {}),
-      },
-    },
+    light: { "radius-factor": radius.toString(), ...light },
+    dark,
+    theme,
+    css,
   };
 };
 
-export const createThemeCssVars = (
-  foundations: Theme["foundations"],
-  mode: "light" | "dark",
-  createForegrounds: boolean = false
-): Record<string, string> => {
-  const resolvedMode = mode;
-  if (!foundations[mode]) throw new Error(`No ${mode} mode found in theme`);
-  const themeFoundations = foundations[resolvedMode]!;
-  const defaultFoundations = defaultColorsFoundations[resolvedMode];
+const createThemeCSSVars = (
+  foundations: ThemeModeFoundations,
+  mode: "light" | "dark"
+) => {
+  const defaultFoundations =
+    mode === "light" ? DEFAULT_LIGHT_FOUNDATIONS : DEFAULT_DARK_FOUNDATIONS;
 
   const neutral = new LeonardoBgColor({
     name: "neutral",
-    colorKeys: themeFoundations.palettes.neutral.baseColors,
+    colorKeys:
+      foundations.colors.neutral?.baseColors ??
+      defaultFoundations.colors.neutral.baseColors,
     ratios:
-      themeFoundations.palettes.neutral.ratios ??
-      defaultFoundations.palettes.neutral.ratios,
+      foundations.colors.neutral?.ratios ??
+      defaultFoundations.colors.neutral.ratios,
   });
 
-  const colorScales = Object.entries(defaultFoundations.palettes).map(
-    ([name]) =>
-      new LeonardoColor({
-        name,
-        colorKeys:
-          themeFoundations.palettes[name as keyof Colors["palettes"]]
-            ?.baseColors ??
-          defaultFoundations.palettes[name as keyof Colors["palettes"]]
-            .baseColors,
-        ratios:
-          themeFoundations.palettes[name as keyof Colors["palettes"]]?.ratios ??
-          defaultFoundations.palettes[name as keyof Colors["palettes"]].ratios,
-      })
-  );
+  const colors = Object.entries(defaultFoundations.colors).map(([name]) => {
+    const props = {
+      name,
+      colorKeys:
+        foundations.colors[name as keyof ColorFoundations]?.baseColors ??
+        defaultFoundations.colors[name as keyof ColorFoundations]?.baseColors,
+      ratios:
+        foundations.colors[name as keyof ColorFoundations]?.ratios ??
+        defaultFoundations.colors[name as keyof ColorFoundations]?.ratios,
+    };
+    const color = new LeonardoColor(props);
 
-  const lightness = themeFoundations.lightness ?? defaultFoundations.lightness;
-  const saturation =
-    themeFoundations.saturation ?? defaultFoundations.saturation;
+    return color;
+  });
+
+  const lightness = foundations.lightness ?? defaultFoundations.lightness;
+  const saturation = foundations.saturation ?? defaultFoundations.saturation;
 
   const generatedTheme = new LeonardoTheme({
-    colors: colorScales,
+    colors,
     backgroundColor: neutral,
     lightness,
     saturation,
-    output: "HSL",
+    output: "HEX",
   });
 
   const cssVariables = generatedTheme.contrastColors
@@ -77,14 +82,16 @@ export const createThemeCssVars = (
         return color.values.map((item, index) => {
           const scale = (index + 1) * 100;
           const entries: [string, string][] = [
-            [`--${color.name}-${scale}`, item.value],
+            [`${color.name}-${scale}`, hexToOklchString(item.value)],
           ];
 
-          if (createForegrounds) {
-            const bgColor = item.value;
-            const fg = getContrastTextColor(bgColor.replace("deg", ""));
-            entries.push([`--${color.name}-${scale}-fg`, fg]);
-          }
+          // TODO: CREATE FOREGROUNDS DYNAMICALLY
+
+          // if (createForegrounds) {
+          //   const bgColor = item.value;
+          //   const fg = getContrastTextColor(bgColor.replace("deg", ""));
+          //   entries.push([`--${color.name}-${scale}-fg`, fg]);
+          // }
 
           return entries;
         });
@@ -107,70 +114,10 @@ export const createThemeCssVars = (
   return cssVariables;
 };
 
-const defaultColorsFoundations = {
-  light: {
-    saturation: 100,
-    lightness: 97,
-    palettes: {
-      neutral: {
-        baseColors: ["#000000"],
-        ratios: [1.05, 1.25, 1.7, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
-      },
-      accent: {
-        baseColors: ["#0091FF"],
-        ratios: [1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
-      },
-      success: {
-        baseColors: ["#1A9338"],
-        ratios: [1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
-      },
-      warning: {
-        baseColors: ["#E79D13"],
-        ratios: [1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
-      },
-      danger: {
-        baseColors: ["#D93036"],
-        ratios: [1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
-      },
-      info: {
-        baseColors: ["#0091FF"],
-        ratios: [1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
-      },
-    },
-  },
-  dark: {
-    saturation: 100,
-    lightness: 0,
-    palettes: {
-      neutral: {
-        baseColors: ["#ffffff"],
-        ratios: [1, 1.25, 1.7, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
-      },
-      accent: {
-        baseColors: ["#0091FF"],
-        ratios: [1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
-      },
-      success: {
-        baseColors: ["#1A9338"],
-        ratios: [1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
-      },
-      warning: {
-        baseColors: ["#E79D13"],
-        ratios: [1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
-      },
-      danger: {
-        baseColors: ["#D93036"],
-        ratios: [1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
-      },
-      info: {
-        baseColors: ["#0091FF"],
-        ratios: [1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
-      },
-    },
-  },
-} as const satisfies Theme["foundations"];
-
-const defaultTheme: Omit<RegistryTheme, "name" | "label" | "css"> = {
-  iconLibrary: "lucide-icons",
-  primitives: {},
+const hexToOklchString = (hex: string): string => {
+  const toOklch = converter("oklch");
+  const color = toOklch(hex);
+  if (!color) return "";
+  const { l, c, h } = color;
+  return `oklch(${l.toFixed(3)} ${c.toFixed(3)} ${h?.toFixed(3) ?? 0})`;
 };

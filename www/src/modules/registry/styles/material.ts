@@ -1,11 +1,11 @@
-import { Theme } from "@/modules/styles/types";
+import { StyleFoudations } from "@/modules/styles/types";
 
-export const materialTheme: Theme = {
+export const materialTheme: StyleFoudations = {
   name: "material",
   label: "Material",
-  foundations: {
+  theme: {
     light: {
-      palettes: {
+      colors: {
         neutral: {
           baseColors: ["#fff"],
         },
@@ -15,7 +15,7 @@ export const materialTheme: Theme = {
       },
     },
     dark: {
-      palettes: {
+      colors: {
         neutral: {
           baseColors: ["#000"],
         },
@@ -29,7 +29,7 @@ export const materialTheme: Theme = {
     heading: "Inter",
     body: "Inter",
   },
-  primitives: {
+  components: {
     button: "ripple",
   },
 };

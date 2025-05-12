@@ -1,5 +1,5 @@
 import React from "react";
-import { Components } from "@/modules/styles-2/types";
+import { Components } from "@/modules/styles/types";
 
 const defaultComponents: Components = {
   button: "basic",

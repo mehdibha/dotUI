@@ -1,15 +1,15 @@
-import { Theme } from "@/modules/styles/types";
+import { StyleFoudations } from "@/modules/styles/types";
 
-export const minimalistTheme: Theme = {
+export const minimalistTheme: StyleFoudations = {
   name: "minimalist",
   label: "Minimalist",
   fonts: {
     heading: "Inter",
     body: "Inter",
   },
-  foundations: {
+  theme: {
     light: {
-      palettes: {
+      colors: {
         neutral: {
           baseColors: ["#fff"],
         },
@@ -19,7 +19,7 @@ export const minimalistTheme: Theme = {
       },
     },
     dark: {
-      palettes: {
+      colors: {
         neutral: {
           baseColors: ["#000"],
         },
@@ -28,8 +28,5 @@ export const minimalistTheme: Theme = {
         },
       },
     },
-  },
-  variants: {
-    global: "primary",
   },
 };

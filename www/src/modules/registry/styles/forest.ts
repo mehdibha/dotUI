@@ -1,11 +1,11 @@
-import { Theme } from "@/modules/styles/types";
+import { StyleFoudations } from "@/modules/styles/types";
 
-export const forestTheme: Theme = {
+export const forestTheme: StyleFoudations = {
   name: "forest",
   label: "Forest",
-  foundations: {
+  theme: {
     light: {
-      palettes: {
+      colors: {
         neutral: {
           baseColors: ["#fff"],
         },
@@ -15,7 +15,8 @@ export const forestTheme: Theme = {
       },
     },
     dark: {
-      palettes: {
+      lightness: 10,
+      colors: {
         neutral: {
           baseColors: ["#000"],
         },
@@ -23,7 +24,6 @@ export const forestTheme: Theme = {
           baseColors: ["#3d7b42"],
         },
       },
-      lightness: 10,
     },
   },
 };

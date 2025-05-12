@@ -1,11 +1,11 @@
-import { Theme } from "@/modules/styles/types";
+import { StyleFoudations } from "@/modules/styles/types";
 
-export const highContrastTheme: Theme = {
+export const highContrastTheme: StyleFoudations = {
   name: "high-contrast",
   label: "High contrast",
-  foundations: {
+  theme: {
     light: {
-      palettes: {
+      colors: {
         neutral: {
           baseColors: ["#fff"],
         },
@@ -15,7 +15,7 @@ export const highContrastTheme: Theme = {
       },
     },
     dark: {
-      palettes: {
+      colors: {
         neutral: {
           baseColors: ["#000"],
         },
@@ -24,12 +24,9 @@ export const highContrastTheme: Theme = {
         },
       },
     },
-    overrides: {
-      "--color-border": "var(--color-neutral-500)",
-      "--color-border-field": "var(--color-neutral-600)",
+    theme: {
+      "color-border": "var(--color-neutral-500)",
+      "color-border-field": "var(--color-neutral-600)",
     },
-  },
-  variants: {
-    global: "primary",
   },
 };

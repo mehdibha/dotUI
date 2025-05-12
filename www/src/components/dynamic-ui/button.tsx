@@ -14,11 +14,6 @@ export const Button = createDynamicComponent<ButtonProps>(
   "Button",
   _Button,
   {
-    basic: React.lazy(() =>
-      import("@/__registry__/ui/button.basic").then((mod) => ({
-        default: mod.Button,
-      }))
-    ),
     brutalist: React.lazy(() =>
       import("@/__registry__/ui/button.brutalist").then((mod) => ({
         default: mod.Button,
@@ -37,11 +32,6 @@ export const ButtonProvider = createDynamicComponent(
   "ButtonProvider",
   _ButtonProvider,
   {
-    basic: React.lazy(() =>
-      import("@/__registry__/ui/button.basic").then((mod) => ({
-        default: mod.ButtonProvider,
-      }))
-    ),
     brutalist: React.lazy(() =>
       import("@/__registry__/ui/button.brutalist").then((mod) => ({
         default: mod.ButtonProvider,

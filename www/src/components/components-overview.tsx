@@ -35,13 +35,13 @@ import { TextField } from "@/components/dynamic-ui/text-field";
 import { TimeField } from "@/components/dynamic-ui/time-field";
 import { ToggleButton } from "@/components/dynamic-ui/toggle-button";
 import { GitHubIcon, TwitterIcon, GoogleIcon } from "@/components/icons";
-// import BadgeVariants from "@/components/demos/badge/variants";
 import FileTriggerDemo from "@/modules/docs/demos/file-trigger/default";
-import { useLocalVariants } from "@/modules/styles/contexts/variants-context";
+import { useCurrentStyle } from "@/modules/styles/components/style-provider";
 
 export function ComponentsOverview({ className }: { className?: string }) {
-  const { variants } = useLocalVariants();
-  const globalVariant = variants.global;
+  const { preferences } = useCurrentStyle();
+  const defaultColorScheme = preferences.defaultColorScheme;
+
   return (
     <div className={cn("grid grid-cols-10 gap-8 p-4 sm:p-8", className)}>
       <div className="col-span-10 xl:col-span-6">
@@ -49,7 +49,7 @@ export function ComponentsOverview({ className }: { className?: string }) {
           label="Progress"
           showValueLabel
           defaultValue={50}
-          variant={globalVariant}
+          variant={defaultColorScheme}
           className="!w-full"
         />
       </div>
@@ -75,8 +75,8 @@ export function ComponentsOverview({ className }: { className?: string }) {
       </div>
       <div className="col-span-6 row-span-2 flex flex-col items-end justify-between gap-2 lg:col-span-8 lg:row-span-1 lg:flex-row lg:items-center xl:col-span-5 xl:justify-start">
         <div className="flex items-center gap-2">
-          <Button variant={globalVariant}>Button</Button>
-          <ToggleButton aria-label="pin" variant={globalVariant}>
+          <Button variant={defaultColorScheme}>Button</Button>
+          <ToggleButton aria-label="pin" variant={defaultColorScheme}>
             <PinIcon />
           </ToggleButton>
           <MenuRoot>
@@ -143,7 +143,7 @@ export function ComponentsOverview({ className }: { className?: string }) {
         <ProgressBar
           label="Loading..."
           value={75}
-          variant={globalVariant}
+          variant={defaultColorScheme}
           className="hidden w-full lg:flex"
         />
       </div>
@@ -176,7 +176,7 @@ export function ComponentsOverview({ className }: { className?: string }) {
         <ProgressBar
           label="Loading..."
           value={75}
-          variant={globalVariant}
+          variant={defaultColorScheme}
           className="w-full lg:hidden"
         />
       </div>
@@ -231,7 +231,7 @@ export function ComponentsOverview({ className }: { className?: string }) {
         <ProgressBar
           label="Loading..."
           duration="30s"
-          variant={globalVariant}
+          variant={defaultColorScheme}
           className="w-full"
         />
         <BadgeVariants /> */}
@@ -244,8 +244,8 @@ export const MobileComponentsOverview = ({
 }: {
   className?: string;
 }) => {
-  const { variants } = useLocalVariants();
-  const globalVariant = variants.global;
+  const { preferences } = useCurrentStyle();
+  const defaultColorScheme = preferences.defaultColorScheme;
   return (
     <div className={cn("grid grid-cols-10 gap-3 p-4", className)}>
       <div className="col-span-10">
@@ -253,7 +253,7 @@ export const MobileComponentsOverview = ({
           label="Progress"
           showValueLabel
           defaultValue={50}
-          variant={globalVariant}
+          variant={defaultColorScheme}
           className="!w-full"
         />
       </div>
@@ -284,8 +284,8 @@ export const MobileComponentsOverview = ({
         </div>
       </div>
       <div className="col-span-10 flex flex-wrap items-center justify-end gap-3 min-[560px]:col-span-7">
-        <Button variant={globalVariant}>Button</Button>
-        <ToggleButton aria-label="pin" variant={globalVariant}>
+        <Button variant={defaultColorScheme}>Button</Button>
+        <ToggleButton aria-label="pin" variant={defaultColorScheme}>
           <PinIcon />
         </ToggleButton>
         <span className="flex-1" />
@@ -333,8 +333,8 @@ export const MobileComponentsOverview = ({
 };
 
 function Login() {
-  const { variants } = useLocalVariants();
-  const globalVariant = variants.global;
+  const { preferences } = useCurrentStyle();
+  const defaultColorScheme = preferences.defaultColorScheme;
   return (
     <div className="bg-bg-muted w-full rounded-lg border p-8">
       <h1 className="text-2xl font-semibold leading-none tracking-tight">
@@ -375,7 +375,11 @@ function Login() {
         </div>
       </div>
       <TextField label="Email address" type="email" className="w-full" />
-      <Button variant={globalVariant} className="mt-4 w-full" type="submit">
+      <Button
+        variant={defaultColorScheme}
+        className="mt-4 w-full"
+        type="submit"
+      >
         Continue with email
       </Button>
       <p className="text-fg-muted mt-4 text-sm">
@@ -389,8 +393,8 @@ function Login() {
 }
 
 function Register() {
-  const { variants } = useLocalVariants();
-  const globalVariant = variants.global;
+  const { preferences } = useCurrentStyle();
+  const defaultColorScheme = preferences.defaultColorScheme;
   return (
     <div className="bg-bg-muted w-full rounded-lg border p-8">
       <h1 className="text-2xl font-semibold leading-none tracking-tight">
@@ -432,7 +436,7 @@ function Register() {
         </div>
       </div>
       <TextField label="Email address" className="w-full" />
-      <Button variant={globalVariant} className="mt-4 w-full">
+      <Button variant={defaultColorScheme} className="mt-4 w-full">
         Sign up with email
       </Button>
       <p className="text-fg-muted mt-4 text-sm">

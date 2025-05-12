@@ -14,7 +14,7 @@ import {
   ShadcnIcon,
 } from "@/components/icons";
 import { siteConfig } from "@/config";
-import { ThemesOverview } from "@/modules/styles/components/styles-overview";
+import { StylesOverview } from "@/modules/styles/components/styles-overview";
 
 export default async function HomePage() {
   const contributors = await getGitHubContributors();
@@ -50,7 +50,7 @@ export default async function HomePage() {
       </div>
       {/* Components overview */}
       <section className="container max-w-screen-2xl">
-        <ThemesOverview />
+        <StylesOverview />
       </section>
       <section className="shadow-xs mt-10 border-y py-12">
         <div className="container flex flex-col items-center justify-center gap-5 lg:gap-10">
