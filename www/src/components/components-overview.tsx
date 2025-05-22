@@ -36,9 +36,10 @@ import { TimeField } from "@/components/dynamic-ui/time-field";
 import { ToggleButton } from "@/components/dynamic-ui/toggle-button";
 import { GitHubIcon, TwitterIcon, GoogleIcon } from "@/components/icons";
 import FileTriggerDemo from "@/modules/docs/demos/file-trigger/default";
+import { usePreferences } from "@/modules/styles/contexts/preferences-context";
 
 export function ComponentsOverview({ className }: { className?: string }) {
-  const defaultColorScheme = "primary";
+  const { defaultColorScheme } = usePreferences();
 
   return (
     <div className={cn("grid grid-cols-10 gap-8 p-4 sm:p-8", className)}>
@@ -242,7 +243,8 @@ export const MobileComponentsOverview = ({
 }: {
   className?: string;
 }) => {
-  const defaultColorScheme = "primary";
+  const { defaultColorScheme } = usePreferences();
+
   return (
     <div className={cn("grid grid-cols-10 gap-3 p-4", className)}>
       <div className="col-span-10">
@@ -330,7 +332,8 @@ export const MobileComponentsOverview = ({
 };
 
 function Login() {
-  const defaultColorScheme = "primary";
+  const { defaultColorScheme } = usePreferences();
+
   return (
     <div className="bg-bg-muted w-full rounded-lg border p-8">
       <h1 className="text-2xl font-semibold leading-none tracking-tight">
@@ -389,7 +392,8 @@ function Login() {
 }
 
 function Register() {
-  const defaultColorScheme = "primary";
+  const { defaultColorScheme } = usePreferences();
+
   return (
     <div className="bg-bg-muted w-full rounded-lg border p-8">
       <h1 className="text-2xl font-semibold leading-none tracking-tight">

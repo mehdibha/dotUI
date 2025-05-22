@@ -31,4 +31,7 @@ export const primerTheme: Style = createStyle({
       },
     },
   },
+  preferences: {
+    defaultColorScheme: "primary"
+  }
 });

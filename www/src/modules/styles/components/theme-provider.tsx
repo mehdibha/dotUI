@@ -32,7 +32,7 @@ export const ThemeProvider = ({
   );
 
   return (
-    <div {...props} style={styleProps}>
+    <div className="bg-bg text-fg" {...props} style={styleProps}>
       {children}
     </div>
   );

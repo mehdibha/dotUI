@@ -31,4 +31,7 @@ export const geistTheme: Style = createStyle({
       },
     },
   },
+  preferences: {
+    defaultColorScheme: "primary"
+  }
 });

@@ -59,7 +59,9 @@ export const StylesOverview = () => {
 
   return (
     <>
-      {isMounted && <StyleProvider ref={container} style={currentStyle} />}
+      {isMounted && (
+        <StyleProvider ref={container} style={currentStyle} mode="site" />
+      )}
       <div className="flex flex-col gap-6">
         <div className="flex flex-col-reverse items-center gap-4 min-[1450px]:flex-row min-[1450px]:items-end">
           <Tabs
@@ -79,7 +81,7 @@ export const StylesOverview = () => {
                   <Tab
                     key={style.name}
                     id={style.name}
-                    className="h-8 rounded-full px-4 text-sm flex items-center gap-2"
+                    className="flex h-8 items-center gap-2 rounded-full px-4 text-sm"
                   >
                     {Icon && <Icon className="size-4" />}
                     {style.name}

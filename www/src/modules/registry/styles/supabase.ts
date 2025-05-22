@@ -16,19 +16,21 @@ export const supabaseTheme: Style = createStyle({
           baseColors: ["#fff"],
         },
         accent: {
-          baseColors: ["#0091FF"],
+          baseColors: ["#00623A"],
         },
       },
     },
     dark: {
       colors: {
         neutral: {
-          baseColors: ["#000"],
+          baseColors: ["#121212"],
+          ratios: [1, 1.08, 1.4, 2, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
         },
         accent: {
-          baseColors: ["#0091FF"],
+          baseColors: ["#00623A"],
         },
       },
+      lightness: 4,
     },
   },
 });

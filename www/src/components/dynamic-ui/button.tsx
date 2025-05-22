@@ -14,6 +14,11 @@ export const Button = createDynamicComponent<ButtonProps>(
   "Button",
   _Button,
   {
+    "basic-outline": React.lazy(() =>
+      import("@/__registry__/ui/button.basic-outline").then((mod) => ({
+        default: mod.Button,
+      }))
+    ),
     brutalist: React.lazy(() =>
       import("@/__registry__/ui/button.brutalist").then((mod) => ({
         default: mod.Button,
@@ -32,6 +37,11 @@ export const ButtonProvider = createDynamicComponent(
   "ButtonProvider",
   _ButtonProvider,
   {
+    "basic-outline": React.lazy(() =>
+      import("@/__registry__/ui/button.basic-outline").then((mod) => ({
+        default: mod.ButtonProvider,
+      }))
+    ),
     brutalist: React.lazy(() =>
       import("@/__registry__/ui/button.brutalist").then((mod) => ({
         default: mod.ButtonProvider,

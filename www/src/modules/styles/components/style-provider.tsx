@@ -2,6 +2,7 @@
 
 import React from "react";
 import { ComponentsProvider } from "@/modules/styles/contexts/components-context";
+import { PreferencesProvider } from "@/modules/styles/contexts/preferences-context";
 import { Style } from "@/modules/styles/types";
 import { FontsProvider } from "./fonts-provider";
 import { ThemeProvider, ThemeProviderProps } from "./theme-provider";
@@ -19,12 +20,13 @@ export const StyleProvider = ({
   mode,
   ...props
 }: StyleProviderProps) => {
-  return children
   return (
-    <ComponentsProvider components={style.components}>
-      <ThemeProvider theme={style.theme} mode={mode} {...props}>
-        <FontsProvider fonts={style.fonts}>{children}</FontsProvider>
-      </ThemeProvider>
-    </ComponentsProvider>
+    <PreferencesProvider preferences={style.preferences}>
+      <ComponentsProvider components={style.components}>
+        <ThemeProvider theme={style.theme} mode={mode} {...props}>
+          <FontsProvider fonts={style.fonts}>{children}</FontsProvider>
+        </ThemeProvider>
+      </ComponentsProvider>
+    </PreferencesProvider>
   );
 };

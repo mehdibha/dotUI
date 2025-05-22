@@ -16,10 +16,8 @@ export const CurrentStyleProvider = ({
 
   if (!isMounted) return children;
 
-  const style = createStyle(currentStyle);
-
   return (
-    <StyleProvider style={style} {...props}>
+    <StyleProvider style={currentStyle} {...props}>
       {children}
     </StyleProvider>
   );

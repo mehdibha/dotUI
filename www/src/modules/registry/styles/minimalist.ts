@@ -31,4 +31,7 @@ export const minimalistTheme: Style = createStyle({
       },
     },
   },
+  preferences: {
+    defaultColorScheme: "primary"
+  }
 });
