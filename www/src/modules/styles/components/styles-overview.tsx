@@ -11,11 +11,11 @@ import {
   ComponentsOverview,
   MobileComponentsOverview,
 } from "@/components/components-overview";
+import * as Icons from "@/components/icons";
 import { styles } from "@/modules/registry/registry-styles";
 import { Skeleton } from "@/modules/registry/ui/skeleton.basic";
 import { Tabs, TabList, Tab } from "@/modules/registry/ui/tabs.motion";
 import { StyleProvider } from "@/modules/styles/components/style-provider";
-import { createStyle } from "../lib/create-style";
 
 export const StylesOverview = () => {
   const container = React.useRef(null);
@@ -39,13 +39,7 @@ export const StylesOverview = () => {
     }, 1000);
   };
 
-  const currentStyleFoundations = styles.find(
-    (style) => style.name === currentStyleName
-  )!;
-
-  const currentStyle = React.useMemo(() => {
-    return createStyle(currentStyleFoundations);
-  }, [currentStyleFoundations]);
+  const currentStyle = styles.find((style) => style.name === currentStyleName)!;
 
   React.useEffect(() => {
     const interval = setInterval(() => {
@@ -65,9 +59,9 @@ export const StylesOverview = () => {
 
   return (
     <>
-      {/* {isMounted && <StyleProvider ref={container} style={currentStyle} />} */}
+      {isMounted && <StyleProvider ref={container} style={currentStyle} />}
       <div className="flex flex-col gap-6">
-        <div className="flex flex-col-reverse items-center gap-4 xl:flex-row xl:items-end">
+        <div className="flex flex-col-reverse items-center gap-4 min-[1450px]:flex-row min-[1450px]:items-end">
           <Tabs
             ref={ref}
             variant="solid"
@@ -79,15 +73,19 @@ export const StylesOverview = () => {
             }}
           >
             <TabList className="flex-wrap justify-center bg-transparent">
-              {styles.map((style) => (
-                <Tab
-                  key={style.name}
-                  id={style.name}
-                  className="h-8 rounded-full px-4 text-sm"
-                >
-                  {style.name}
-                </Tab>
-              ))}
+              {styles.map((style) => {
+                const Icon = Icons[style.icon as keyof typeof Icons];
+                return (
+                  <Tab
+                    key={style.name}
+                    id={style.name}
+                    className="h-8 rounded-full px-4 text-sm flex items-center gap-2"
+                  >
+                    {Icon && <Icon className="size-4" />}
+                    {style.name}
+                  </Tab>
+                );
+              })}
             </TabList>
           </Tabs>
           <div className="flex flex-1 items-center justify-center">

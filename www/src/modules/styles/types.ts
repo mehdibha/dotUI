@@ -87,26 +87,7 @@ export type Preferences = {
   defaultColorScheme: "accent" | "primary";
 };
 
-export type Style = {
-  name: string;
-  label?: string;
-  description?: string;
-  theme: Theme;
-  iconLibrary: IconLibrary;
-  fonts: Fonts;
-  components: Components;
-  preferences: Preferences;
-};
 
-export type StyleFoudations = {
-  name: string;
-  label?: string;
-  theme: ThemeFoundations;
-  iconLibrary?: IconLibrary;
-  fonts?: Fonts;
-  components?: Partial<Components>;
-  preferences?: Partial<Preferences>;
-};
 
 export type ColorBase = {
   baseColors: CssColor[];
@@ -134,4 +115,28 @@ export type ThemeFoundations = {
   theme?: Record<string, string>;
   css?: Theme["css"];
   radius?: number;
+};
+
+
+export type StyleFoundations = {
+  name: string;
+  label?: string;
+  icon?: string;
+  theme: ThemeFoundations;
+  iconLibrary?: IconLibrary;
+  fonts?: Fonts;
+  components?: Partial<Components>;
+  preferences?: Partial<Preferences>;
+};
+
+export type Style = {
+  name: string;
+  label?: string;
+  icon?: string;
+  description?: string;
+  theme: Theme;
+  iconLibrary: IconLibrary;
+  fonts: Fonts;
+  components: Components;
+  preferences: Preferences;
 };

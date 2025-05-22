@@ -58,7 +58,7 @@ export default async function RootLayout({
       >
         <Analytics />
         {/* TODO FIX THIS */}
-        <Providers defaultPreviewMode={"light"}>
+        <Providers defaultPreviewMode="light">
           <div>{children}</div>
         </Providers>
       </body>

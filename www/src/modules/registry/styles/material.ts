@@ -1,8 +1,10 @@
-import { StyleFoudations } from "@/modules/styles/types";
+import { createStyle } from "@/modules/styles/lib/create-style";
+import { Style } from "@/modules/styles/types";
 
-export const materialTheme: StyleFoudations = {
+export const materialTheme: Style = createStyle({
   name: "material",
   label: "Material",
+  icon: "MuiIcon",
   theme: {
     light: {
       colors: {
@@ -32,4 +34,4 @@ export const materialTheme: StyleFoudations = {
   components: {
     button: "ripple",
   },
-};
+});

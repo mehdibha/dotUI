@@ -19,6 +19,7 @@ export const StyleProvider = ({
   mode,
   ...props
 }: StyleProviderProps) => {
+  return children
   return (
     <ComponentsProvider components={style.components}>
       <ThemeProvider theme={style.theme} mode={mode} {...props}>

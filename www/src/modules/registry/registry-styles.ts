@@ -1,16 +1,18 @@
-import { StyleFoudations } from "@/modules/styles/types";
-import { darkyTheme } from "./styles/darky";
-import { forestTheme } from "./styles/forest";
-import { highContrastTheme } from "./styles/high-contrast";
+import { Style } from "@/modules/styles/types";
+import { geistTheme } from "./styles/geist";
+import { ghibliTheme } from "./styles/ghibli";
 import { materialTheme } from "./styles/material";
 import { minimalistTheme } from "./styles/minimalist";
-import { retroTheme } from "./styles/retro";
+import { polarisTheme } from "./styles/polaris";
+import { primerTheme } from "./styles/primer";
+import { supabaseTheme } from "./styles/supabase";
 
-export const styles: StyleFoudations[] = [
-  forestTheme,
-  darkyTheme,
-  highContrastTheme,
-  materialTheme,
+export const styles: Style[] = [
   minimalistTheme,
-  retroTheme,
+  materialTheme,
+  ghibliTheme,
+  primerTheme,
+  supabaseTheme,
+  geistTheme,
+  polarisTheme,
 ];

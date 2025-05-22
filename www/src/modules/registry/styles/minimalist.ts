@@ -1,8 +1,10 @@
-import { StyleFoudations } from "@/modules/styles/types";
+import { createStyle } from "@/modules/styles/lib/create-style";
+import { Style } from "@/modules/styles/types";
 
-export const minimalistTheme: StyleFoudations = {
+export const minimalistTheme: Style = createStyle({
   name: "minimalist",
   label: "Minimalist",
+  icon: "ShadcnIcon",
   fonts: {
     heading: "Inter",
     body: "Inter",
@@ -29,4 +31,4 @@ export const minimalistTheme: StyleFoudations = {
       },
     },
   },
-};
+});
