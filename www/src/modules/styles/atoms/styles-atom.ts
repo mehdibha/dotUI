@@ -24,7 +24,7 @@ export const useStyles = () => {
   const allStyles = [...state.userStyles, ...styles];
 
   const currentStyle = allStyles.find(
-    (style) => (style.name = state.currentStyleName)
+    (style) => (style.name === state.currentStyleName)
   )!;
 
   const setCurrentMode = async (mode: "light" | "dark") => {

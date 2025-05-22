@@ -1,7 +1,7 @@
 import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Components } from "@/modules/styles/types";
-import { useCurrentStyle } from "../components/style-provider";
+import { useCurrentComponents } from "../contexts/components-context";
 
 type Registry<T> = Record<
   string,
@@ -15,9 +15,9 @@ export const createDynamicComponent = <Props extends {}>(
   registry: Registry<Props>
 ): React.FC<Props> => {
   const Component = (props: Props) => {
-    const currentStyle = useCurrentStyle();
+    const components = useCurrentComponents();
 
-    const componentStyle = currentStyle.components[componentName];
+    const componentStyle = components[componentName];
     const shouldWrapWithSuspense = true;
 
     if (!componentStyle) {

@@ -4,7 +4,6 @@ import { cn } from "@/lib/utils";
 import { Index } from "@/__registry__/demos";
 import { CodeBlock } from "@/modules/docs/components/code-block";
 import { getFileSource } from "@/modules/docs/lib/get-file-source";
-import { CurrentThemeProvider } from "@/modules/styles/components/current-style-provider";
 import { CurrentStyleProvider } from "@/modules/styles/components/current-syle-provider";
 import {
   ComponentPreviewHeader,
