@@ -1,9 +1,9 @@
 import { createStyle } from "@/modules/styles/lib/create-style";
 import { Style } from "@/modules/styles/types";
 
-export const geistTheme: Style = createStyle({
-  name: "geist",
-  label: "Geist",
+export const brutalistTheme: Style = createStyle({
+  name: "brutalist",
+  label: "Brutalist",
   icon: "VercelIcon",
   fonts: {
     heading: "Inter",
@@ -20,16 +20,9 @@ export const geistTheme: Style = createStyle({
         },
       },
     },
-    dark: {
-      colors: {
-        neutral: {
-          baseColors: ["#000"],
-        },
-        accent: {
-          baseColors: ["#0091FF"],
-        },
-      },
-    },
+  },
+  components: {
+    button: "brutalist",
   },
   preferences: {
     defaultColorScheme: "primary"

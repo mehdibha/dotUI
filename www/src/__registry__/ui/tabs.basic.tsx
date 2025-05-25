@@ -42,8 +42,12 @@ const tabsStyles = tv({
         tab: "selected:bg-bg-inverse/10 disabled:bg-bg-disabled selected:shadow-sm rounded-sm px-3 py-1.5 font-medium",
       },
       underline: {
-        tab: "selected:border-bg-accent border-transparent p-2.5",
+        tab: "border-transparent p-2.5",
       },
+    },
+    color: {
+      primary: {},
+      accent: {},
     },
   },
   compoundVariants: [
@@ -63,6 +67,20 @@ const tabsStyles = tv({
         tab: "border-r-3 -mr-px",
       },
     },
+    {
+      color: "primary",
+      variant: "underline",
+      className: {
+        tab: "selected:border-bg-primary",
+      },
+    },
+    {
+      color: "accent",
+      variant: "underline",
+      className: {
+        tab: "selected:border-bg-accent",
+      },
+    },
   ],
 });
 
@@ -75,6 +93,7 @@ interface TabsProps
   extends React.ComponentProps<typeof AriaTabs>,
     VariantProps<typeof tabsStyles> {}
 const Tabs = ({
+  color = "accent",
   variant = "underline",
   className,
   children,
@@ -87,7 +106,7 @@ const Tabs = ({
     {...props}
   >
     {composeRenderProps(children, (children, { orientation }) => (
-      <TabsProvider orientation={orientation} variant={variant}>
+      <TabsProvider orientation={orientation} variant={variant} color={color}>
         {children}
       </TabsProvider>
     ))}
@@ -112,11 +131,11 @@ const TabList = <T extends object>({
 
 interface TabProps extends React.ComponentProps<typeof AriaTab> {}
 const Tab = ({ className, ...props }: TabProps) => {
-  const { orientation, variant } = useTabsContext("Tab");
+  const { orientation, variant, color } = useTabsContext("Tab");
   return (
     <AriaTab
       className={composeRenderProps(className, (className) =>
-        tab({ orientation, variant, className })
+        tab({ orientation, variant, color, className })
       )}
       {...props}
     />

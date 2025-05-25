@@ -1,5 +1,5 @@
 import { Style } from "@/modules/styles/types";
-import { geistTheme } from "./styles/geist";
+import { brutalistTheme } from "./styles/brutalist";
 import { ghibliTheme } from "./styles/ghibli";
 import { materialTheme } from "./styles/material";
 import { minimalistTheme } from "./styles/minimalist";
@@ -13,6 +13,6 @@ export const styles: Style[] = [
   ghibliTheme,
   primerTheme,
   supabaseTheme,
-  geistTheme,
+  brutalistTheme,
   polarisTheme,
 ];

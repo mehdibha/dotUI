@@ -19,12 +19,13 @@ export const materialTheme: Style = createStyle({
     dark: {
       colors: {
         neutral: {
-          baseColors: ["#000"],
+          baseColors: ["#101214"],
         },
         accent: {
-          baseColors: ["#0091FF"],
+          baseColors: ["#0273E6"],
         },
       },
+      lightness: 7,
     },
   },
   fonts: {

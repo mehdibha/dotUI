@@ -1,4 +1,5 @@
 import { useTheme } from "next-themes";
+import { cn } from "@/lib/utils";
 import { useStyles } from "@/modules/styles/atoms/styles-atom";
 import { Theme } from "@/modules/styles/types";
 
@@ -13,15 +14,29 @@ export const ThemeProvider = ({
   theme,
   mode = "storage",
   children,
+  className,
   ...props
 }: ThemeProviderProps) => {
   const { currentMode } = useStyles();
   const { resolvedTheme } = useTheme();
-  const resolvedMode =
+
+  // Check which modes are supported
+  const hasLightMode = Object.keys(theme.light).length > 0;
+  const hasDarkMode = Object.keys(theme.dark).length > 0;
+
+  // Determine the effective mode based on support
+  let effectiveMode =
     mode === "site" ? resolvedTheme : mode === "storage" ? currentMode : mode;
 
+  // If the requested mode isn't supported, fall back to the supported mode
+  if (effectiveMode === "light" && !hasLightMode && hasDarkMode) {
+    effectiveMode = "dark";
+  } else if (effectiveMode === "dark" && !hasDarkMode && hasLightMode) {
+    effectiveMode = "light";
+  }
+
   const styleProps = Object.entries({
-    ...(resolvedMode === "light" ? theme.light : theme.dark),
+    ...(effectiveMode === "light" ? theme.light : theme.dark),
     ...theme.theme,
   }).reduce(
     (acc, [key, value]) => ({
@@ -32,7 +47,15 @@ export const ThemeProvider = ({
   );
 
   return (
-    <div className="bg-bg text-fg" {...props} style={styleProps}>
+    <div
+      className={cn(
+        "bg-bg text-fg",
+        effectiveMode === "light" ? "light" : "dark",
+        className
+      )}
+      {...props}
+      style={styleProps}
+    >
       {children}
     </div>
   );

@@ -12,11 +12,9 @@ export default function InternalPage() {
     <div>
       <h1>Internal page</h1>
 
-      <CurrentStyleProvider>
-        <div className="bg-bg text-fg flex size-80 items-center justify-center">
-          Hello world
-        </div>
-      </CurrentStyleProvider>
+      <div style={{}}>
+        <div className="bg-bg-accent size-10" />
+      </div>
     </div>
   );
 }

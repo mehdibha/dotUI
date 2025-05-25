@@ -117,7 +117,7 @@ export function ComponentsOverview({ className }: { className?: string }) {
         <Alert title="Payment Information" className="hidden md:flex">
           Enter your payment method to complete your purchase.
         </Alert>
-        <Tabs>
+        <Tabs color={defaultColorScheme} >
           <TabList>
             <Tab id="login" className="w-1/2">
               Login
@@ -133,12 +133,12 @@ export function ComponentsOverview({ className }: { className?: string }) {
             <Register />
           </TabPanel>
         </Tabs>
-        <ColorSlider
+        {/* <ColorSlider
           label="Opacity"
           defaultValue="hsla(210, 64%, 35%, 0.7)"
           channel="alpha"
           className="hidden !w-full md:flex"
-        />
+        /> */}
         <ProgressBar
           label="Loading..."
           value={75}
@@ -150,7 +150,7 @@ export function ComponentsOverview({ className }: { className?: string }) {
         <Alert title="Payment Information" className="md:hidden">
           Enter your payment method to complete your purchase.
         </Alert>
-        <Checkbox defaultSelected>Notifications</Checkbox>
+        <Checkbox defaultSelected variant={defaultColorScheme}> Notifications</Checkbox>
         <SearchField aria-label="Search" className="w-full" />
         <Combobox
           label="Country"
@@ -223,17 +223,6 @@ export function ComponentsOverview({ className }: { className?: string }) {
           </TableBody>
         </TableRoot>
       </div>
-      {/* <DropZone>
-          <UploadIcon />
-          <DropZoneLabel>Drag and drop files here</DropZoneLabel>
-        </DropZone>
-        <ProgressBar
-          label="Loading..."
-          duration="30s"
-          variant={defaultColorScheme}
-          className="w-full"
-        />
-        <BadgeVariants /> */}
     </div>
   );
 }

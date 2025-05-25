@@ -13,20 +13,10 @@ export const ghibliTheme: Style = createStyle({
     light: {
       colors: {
         neutral: {
-          baseColors: ["#fff"],
+          baseColors: ["#f1dfbe"],
         },
         accent: {
-          baseColors: ["#0091FF"],
-        },
-      },
-    },
-    dark: {
-      colors: {
-        neutral: {
-          baseColors: ["#000"],
-        },
-        accent: {
-          baseColors: ["#0091FF"],
+          baseColors: ["#969A54"],
         },
       },
     },

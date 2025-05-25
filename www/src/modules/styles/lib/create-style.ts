@@ -8,7 +8,6 @@ import { Style, StyleFoundations } from "@/modules/styles/types";
 import { createTheme } from "./create-theme";
 
 export const createStyle = (opts: StyleFoundations): Style => {
-  console.log(opts);
   return {
     name: opts.name,
     icon: opts.icon,

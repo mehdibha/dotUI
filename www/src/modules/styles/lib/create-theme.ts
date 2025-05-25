@@ -19,14 +19,18 @@ import {
 } from "@/modules/styles/types";
 
 export const createTheme = (opts: ThemeFoundations): Theme => {
+  const radius = opts.radius ?? DEFAULT_RADIUS_FACTOR;
   const light = opts.light ? createThemeCSSVars(opts.light, "light") : {};
   const dark = opts.dark ? createThemeCSSVars(opts.dark, "dark") : {};
-  const theme = { ...DEFAULT_THEME, ...opts.theme };
+  const theme = {
+    "radius-factor": radius.toString(),
+    ...DEFAULT_THEME,
+    ...opts.theme,
+  };
   const css = { ...DEFAULT_CSS, ...opts.css };
-  const radius = opts.radius ?? DEFAULT_RADIUS_FACTOR;
 
   return {
-    light: { "radius-factor": radius.toString(), ...light },
+    light,
     dark,
     theme,
     css,

@@ -102,6 +102,7 @@ export const DEFAULT_THEME: Record<string, string> = {
   "color-bg-accent-hover": "var(--accent-600)",
   "color-bg-accent-active": "var(--accent-700)",
   "color-bg-accent-muted": "var(--accent-200)",
+  "color-bg-accent-muted-hover": "var(--accent-300)",
 
   "color-fg": "var(--neutral-1000)",
   "color-fg-muted": "var(--neutral-800)",
@@ -123,7 +124,8 @@ export const DEFAULT_THEME: Record<string, string> = {
 
   "color-border": "var(--neutral-300)",
   "color-border-hover": "var(--neutral-400)",
-  "color-border-active": "var(--neutral-500)",
+  "color-border-field": "var(--neutral-400)",
+  "color-border-control": "var(--neutral-700)",
   "color-border-disabled": "var(--neutral-300)",
   "color-border-focus": "var(--accent-500)",
 
@@ -133,14 +135,14 @@ export const DEFAULT_THEME: Record<string, string> = {
   "color-border-warning": "var(--warning-300)",
   "color-border-info": "var(--info-300)",
 
-  "color-radius-xs": "calc(0.125rem * var(--radius-factor))",
-  "color-radius-sm": "calc(0.25rem * var(--radius-factor))",
-  "color-radius-md": "calc(0.375rem * var(--radius-factor))",
-  "color-radius-lg": "calc(0.5rem * var(--radius-factor))",
-  "color-radius-xl": "calc(0.75rem * var(--radius-factor))",
-  "color-radius-2xl": "calc(1rem * var(--radius-factor))",
-  "color-radius-3xl": "calc(1.5rem * var(--radius-factor))",
-  "color-radius-4xl": "calc(2rem * var(--radius-factor))",
+  "radius-xs": "calc(0.125rem * var(--radius-factor))",
+  "radius-sm": "calc(0.25rem * var(--radius-factor))",
+  "radius-md": "calc(0.375rem * var(--radius-factor))",
+  "radius-lg": "calc(0.5rem * var(--radius-factor))",
+  "radius-xl": "calc(0.75rem * var(--radius-factor))",
+  "radius-2xl": "calc(1rem * var(--radius-factor))",
+  "radius-3xl": "calc(1.5rem * var(--radius-factor))",
+  "radius-4xl": "calc(2rem * var(--radius-factor))",
 };
 
 export const DEFAULT_CSS = {};

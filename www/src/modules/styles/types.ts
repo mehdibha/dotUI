@@ -29,7 +29,7 @@ export type Components = {
   avatar: "basic";
   badge: "basic";
   breadcrumbs: "basic";
-  button: "basic" | "basic-2" | "brutalist" | "ripple";
+  button: "basic" | "outline" | "brutalist" | "ripple";
   "button-group": "basic";
   calendar: "basic" | "cal";
   checkbox: "basic";
