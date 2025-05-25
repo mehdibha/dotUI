@@ -1,6 +1,7 @@
 import React from "react";
+import { notFound } from "next/navigation";
 import { styles } from "@/modules/registry/registry-styles";
-import { ThemeProvider } from "@/modules/styles/components/style-provider";
+import { StyleProvider } from "@/modules/styles/components/style-provider";
 import { ThemeUpdater } from "./theme-updater";
 
 export default async function PreviewLayout({
@@ -11,10 +12,16 @@ export default async function PreviewLayout({
   params: Promise<{ styleName: string }>;
 }) {
   const { styleName } = await params;
+  const style = styles.find((style) => style.name === styleName);
+
+  if (!style) {
+    notFound();
+  }
+  
   return (
-    <ThemeProvider theme={styles.find((style) => style.name === styleName)}>
+    <StyleProvider style={style}>
       <ThemeUpdater />
       <div className="min-h-screen">{children}</div>
-    </ThemeProvider>
+    </StyleProvider>
   );
 }

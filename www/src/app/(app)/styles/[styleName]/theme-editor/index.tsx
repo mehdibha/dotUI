@@ -20,7 +20,6 @@ import { ToggleButton } from "@/components/ui/toggle-button";
 import { Tooltip } from "@/components/ui/tooltip";
 import { usePreviewMode } from "@/components/mode-provider";
 import { ThemeModeSwitch } from "@/components/theme-mode-switch";
-import { useUserThemes } from "@/modules/styles/atoms/styles-atom";
 import { CreateThemeDialog } from "@/modules/styles/components/create-style-dialog";
 import { Theme } from "@/modules/styles/types";
 import { PreviewContent } from "../../preview";
@@ -41,7 +40,6 @@ export function ThemeEditor({
 
   const [isEditMode, setEditMode] = React.useState(true);
   const isMounted = useMounted();
-  const { userThemes } = useUserThemes();
 
   const theme: Theme | undefined =
     typeof themeProp === "string"

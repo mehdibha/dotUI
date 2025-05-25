@@ -17,7 +17,7 @@ import { useMounted } from "@/hooks/use-mounted";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSidebarContext } from "@/components/sidebar";
-import { useCurrentTheme } from "@/modules/styles/atoms/styles-atom";
+import { useStyles } from "@/modules/styles/atoms/styles-atom";
 
 const PreviewContext = React.createContext<{
   isOpen: boolean;
@@ -53,11 +53,11 @@ export const Preview = () => {
   const pathname = usePathname();
   const isOpen = pathname.startsWith("/styles/") && isPreviewOpen;
   const { isCollapsed } = useSidebarContext();
-  const { currentTheme } = useCurrentTheme();
+  const { currentStyle } = useStyles();
   const isMounted = useMounted();
   const params = useParams<{ styleName?: string }>();
 
-  const styleName = params?.styleName ?? currentTheme.name;
+  const styleName = params?.styleName ?? currentStyle.name;
 
   const previewWidth = Math.min(
     screen === "mobile" ? 430 : 768,

@@ -1,5 +1,7 @@
+import React from "react";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
+import { useMounted } from "@/hooks/use-mounted";
 import { useStyles } from "@/modules/styles/atoms/styles-atom";
 import { Theme } from "@/modules/styles/types";
 
@@ -18,6 +20,7 @@ export const ThemeProvider = ({
   ...props
 }: ThemeProviderProps) => {
   const { currentMode } = useStyles();
+  const isMounted = useMounted();
   const { resolvedTheme } = useTheme();
 
   // Check which modes are supported
@@ -35,22 +38,25 @@ export const ThemeProvider = ({
     effectiveMode = "light";
   }
 
-  const styleProps = Object.entries({
-    ...(effectiveMode === "light" ? theme.light : theme.dark),
-    ...theme.theme,
-  }).reduce(
-    (acc, [key, value]) => ({
-      ...acc,
-      [`--${key}`]: value,
-    }),
-    {}
-  );
+  const styleProps = React.useMemo(() => {
+    if (!isMounted) return {};
+    return Object.entries({
+      ...(effectiveMode === "light" ? theme.light : theme.dark),
+      ...theme.theme,
+    }).reduce(
+      (acc, [key, value]) => ({
+        ...acc,
+        [`--${key}`]: value,
+      }),
+      {}
+    );
+  }, [effectiveMode, theme, isMounted]);
 
   return (
     <div
       className={cn(
         "bg-bg text-fg",
-        effectiveMode === "light" ? "light" : "dark",
+        isMounted && effectiveMode === "light" ? "light" : "dark",
         className
       )}
       {...props}

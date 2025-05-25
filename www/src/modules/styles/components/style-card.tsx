@@ -10,18 +10,18 @@ import { Button } from "@/components/ui/button";
 import { DialogRoot, Dialog, DialogFooter } from "@/components/ui/dialog";
 import { Menu, MenuItem, MenuRoot } from "@/components/ui/menu";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ThemeProvider } from "@/modules/styles/components/style-provider";
-import { type Theme } from "@/modules/styles/types";
+import { StyleProvider } from "@/modules/styles/components/style-provider";
+import { type Style } from "@/modules/styles/types";
 import { CreateThemeDialog } from "./create-style-dialog";
 
 export function StyleCard({
-  theme,
+  style,
   isClonable = true,
   isCurrent = false,
   onDelete,
   onSetCurrent,
 }: {
-  theme: Theme;
+  style: Style;
   isCurrent?: boolean;
   isClonable?: boolean;
   onSetCurrent?: () => void;
@@ -33,23 +33,22 @@ export function StyleCard({
 
   return (
     <Skeleton show={!isMounted}>
-      <ThemeProvider
-        key={theme.name}
-        theme={theme}
-        unstyled
-        ignorePreviewMode
+      <StyleProvider
+        key={style.name}
+        style={style}
+        mode="site"
         className="text-fg relative"
       >
         <div className="bg-bg flex flex-col items-start justify-start gap-0 overflow-hidden rounded-md border">
           <Link
-            aria-label={`Open style ${theme.label}`}
-            href={`/styles/${theme.name}`}
+            aria-label={`Open style ${style.label}`}
+            href={`/styles/${style.name}`}
             className="z-1 absolute inset-0"
           />
           <div className="w-full p-2">
             <div className="flex w-full items-center justify-between">
               <h6 className="flex items-center gap-2 text-lg font-semibold">
-                <span>{theme.label}</span>
+                <span>{style.label}</span>
                 {isCurrent && <Badge className="border">current style</Badge>}
               </h6>
               <MenuRoot>
@@ -84,13 +83,6 @@ export function StyleCard({
                   )}
                 </Menu>
               </MenuRoot>
-              {isClonable && (
-                <CreateThemeDialog
-                  clonedThemeName={theme.name}
-                  isOpen={isCloneOpen}
-                  onOpenChange={setCloneOpen}
-                />
-              )}
               {onDelete && (
                 <DialogRoot isOpen={isOpen} onOpenChange={setOpen}>
                   <Dialog
@@ -110,7 +102,7 @@ export function StyleCard({
                 </DialogRoot>
               )}
             </div>
-            <p className="text-fg-muted block text-sm">
+            {/* <p className="text-fg-muted block text-sm">
               {theme.foundations.dark && theme.foundations.light ? (
                 <span>Light and dark mode.</span>
               ) : (
@@ -118,7 +110,7 @@ export function StyleCard({
                   {theme.foundations.dark ? "Dark" : "Light"} mode only.
                 </span>
               )}
-            </p>
+            </p> */}
           </div>
           <div className="grid w-full grid-cols-10">
             {[...Array(10)].map((_, i) => (
@@ -143,7 +135,7 @@ export function StyleCard({
             ))}
           </div>
         </div>
-      </ThemeProvider>
+      </StyleProvider>
     </Skeleton>
   );
 }
