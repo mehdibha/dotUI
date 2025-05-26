@@ -87,8 +87,6 @@ export type Preferences = {
   defaultColorScheme: "accent" | "primary";
 };
 
-
-
 export type ColorBase = {
   baseColors: CssColor[];
   ratios?: number[];
@@ -116,7 +114,6 @@ export type ThemeFoundations = {
   css?: Theme["css"];
   radius?: number;
 };
-
 
 export type StyleFoundations = {
   name: string;

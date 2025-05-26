@@ -25,6 +25,6 @@ export const brutalistTheme: Style = createStyle({
     button: "brutalist",
   },
   preferences: {
-    defaultColorScheme: "primary"
-  }
+    defaultColorScheme: "primary",
+  },
 });

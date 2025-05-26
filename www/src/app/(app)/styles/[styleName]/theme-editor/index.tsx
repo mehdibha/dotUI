@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+// import { notFound } from "next/navigation";
 import {
   ArrowLeftIcon,
   EllipsisVerticalIcon,
@@ -10,7 +10,7 @@ import {
   SaveIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useMounted } from "@/hooks/use-mounted";
+// import { useMounted } from "@/hooks/use-mounted";
 import { Alert } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogRoot } from "@/components/ui/dialog";
@@ -18,26 +18,26 @@ import { MenuRoot, Menu, MenuItem } from "@/components/ui/menu";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ToggleButton } from "@/components/ui/toggle-button";
 import { Tooltip } from "@/components/ui/tooltip";
-import { usePreviewMode } from "@/components/mode-provider";
-import { ThemeModeSwitch } from "@/components/theme-mode-switch";
+// import { usePreviewMode } from "@/components/mode-provider";
+// import { ThemeModeSwitch } from "@/components/theme-mode-switch";
 import { Theme } from "@/modules/styles/types";
 import { PreviewContent } from "../../preview";
-import { ThemeColors } from "./colors";
+// import { ThemeColors } from "./colors";
 import { ThemeEditorContext } from "./context";
 import { ThemeIconography } from "./iconography";
 import { ThemeTypography } from "./typography";
 
 export function ThemeEditor({
-  theme: themeProp,
+  // theme: themeProp,
   isEditable,
 }: {
   theme?: Theme | string;
   isEditable: boolean;
 }) {
-  const { mode: previewMode, setMode: setPreviewMode } = usePreviewMode();
+  // const { mode: previewMode, setMode: setPreviewMode } = usePreviewMode();
 
   const [isEditMode, setEditMode] = React.useState(true);
-  const isMounted = useMounted();
+  // const isMounted = useMounted();
 
   // const theme: Theme | undefined =
   //   typeof themeProp === "string"
@@ -103,14 +103,14 @@ export function ThemeEditor({
 }
 
 interface ThemeHeaderProps {
-  theme?: Theme;
+  // theme?: Theme;
   isLoading: boolean;
   isEditable: boolean;
   isEditMode: boolean;
   setEditMode: (value: boolean) => void;
 }
 export function ThemeEditorHeader({
-  theme,
+  // theme,
   isLoading,
   isEditable,
   isEditMode,

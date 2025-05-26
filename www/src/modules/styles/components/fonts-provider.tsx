@@ -2,7 +2,7 @@ import { Fonts } from "@/modules/styles/types";
 
 export const FontsProvider = ({
   children,
-  fonts,
+  // fonts,
 }: {
   children: React.ReactNode;
   fonts: Fonts;

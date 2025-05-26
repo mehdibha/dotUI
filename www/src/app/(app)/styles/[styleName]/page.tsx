@@ -9,9 +9,10 @@ export default async function ThemePage({
   params: Promise<{ styleName: string }>;
 }) {
   const styleName = (await params).styleName;
+  console.log(styleName);
 
-  const style = styles.find((style) => style.name === styleName);
-  const isEditable = !style;
+  // const style = styles.find((style) => style.name === styleName);
+  // const isEditable = !style;
 
   return (
     <div className="mx-auto flex max-w-5xl lg:px-8 lg:pt-10">

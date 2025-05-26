@@ -6,8 +6,8 @@ interface IconProps extends Partial<SVGProps<SVGSVGElement>> {
 }
 
 export const GitHubIcon = ({
-  color = "currentColor",
-  size = 24,
+  // color = "currentColor",
+  // size = 24,
   ...rest
 }: IconProps) => {
   return (
@@ -295,7 +295,7 @@ export const ShadcnIcon = ({ height = 50, ...rest }: IconProps) => {
   );
 };
 
-export const VercelIcon = ({ height = 50, ...rest }: IconProps) => {
+export const VercelIcon = ({ /* height = 50, */ ...rest }: IconProps) => {
   return (
     <svg
       width="76"
@@ -313,7 +313,7 @@ export const VercelIcon = ({ height = 50, ...rest }: IconProps) => {
   );
 };
 
-export const MuiIcon = ({ height = 50, ...rest }: IconProps) => {
+export const MuiIcon = ({ /* height = 50, */ ...rest }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -333,7 +333,7 @@ export const MuiIcon = ({ height = 50, ...rest }: IconProps) => {
   );
 };
 
-export const SupabaseIcon = ({ height = 50, ...rest }: IconProps) => {
+export const SupabaseIcon = ({ /* height = 50, */ ...rest }: IconProps) => {
   return (
     <svg
       width="109"

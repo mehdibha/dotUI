@@ -117,7 +117,7 @@ export function ComponentsOverview({ className }: { className?: string }) {
         <Alert title="Payment Information" className="hidden md:flex">
           Enter your payment method to complete your purchase.
         </Alert>
-        <Tabs color={defaultColorScheme} >
+        <Tabs color={defaultColorScheme}>
           <TabList>
             <Tab id="login" className="w-1/2">
               Login
@@ -150,7 +150,10 @@ export function ComponentsOverview({ className }: { className?: string }) {
         <Alert title="Payment Information" className="md:hidden">
           Enter your payment method to complete your purchase.
         </Alert>
-        <Checkbox defaultSelected variant={defaultColorScheme}> Notifications</Checkbox>
+        <Checkbox defaultSelected variant={defaultColorScheme}>
+          {" "}
+          Notifications
+        </Checkbox>
         <SearchField aria-label="Search" className="w-full" />
         <Combobox
           label="Country"

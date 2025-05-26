@@ -15,7 +15,7 @@ import { type Style } from "@/modules/styles/types";
 
 export function StyleCard({
   style,
-  isClonable = true,
+  // isClonable = true,
   isCurrent = false,
   onDelete,
   onSetCurrent,
@@ -28,7 +28,7 @@ export function StyleCard({
 }) {
   const isMounted = useMounted();
   const [isOpen, setOpen] = React.useState(false);
-  const [isCloneOpen, setCloneOpen] = React.useState(false);
+  // const [isCloneOpen, setCloneOpen] = React.useState(false);
 
   return (
     <Skeleton show={!isMounted}>
@@ -66,11 +66,11 @@ export function StyleCard({
                       Set current style
                     </MenuItem>
                   )}
-                  {isClonable && (
+                  {/* {isClonable && (
                     <MenuItem id="clone" onAction={() => setCloneOpen(true)}>
                       Clone
                     </MenuItem>
-                  )}
+                  )} */}
                   {onDelete && (
                     <MenuItem
                       id="delete"

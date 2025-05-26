@@ -1,7 +1,3 @@
-
 export function ThemeIconography() {
-  return (
-    <div>
-    </div>
-  );
+  return <div></div>;
 }

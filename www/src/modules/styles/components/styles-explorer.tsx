@@ -1,26 +1,26 @@
 "use client";
 
 import React from "react";
-import { ListFilterIcon } from "lucide-react";
+// import { ListFilterIcon } from "lucide-react";
 import { useFilter } from "react-aria-components";
 import { cn } from "@/lib/utils";
-import { useMounted } from "@/hooks/use-mounted";
-import { Button } from "@/components/ui/button";
-import { Menu, MenuItem, MenuRoot } from "@/components/ui/menu";
+// import { useMounted } from "@/hooks/use-mounted";
+// import { Button } from "@/components/ui/button";
+// import { Menu, MenuItem, MenuRoot } from "@/components/ui/menu";
 import { SearchField } from "@/components/ui/search-field";
 import { styles } from "@/modules/registry/registry-styles";
 import { useStyles } from "@/modules/styles/atoms/styles-atom";
 import { Style } from "@/modules/styles/types";
 import { StyleCard } from "./style-card";
 
-type Filter = "light" | "dark" | "light-dark" | "all";
+// type Filter = "light" | "dark" | "light-dark" | "all";
 
-const FILTER_OPTIONS: Array<{ id: Filter; label: string }> = [
-  { id: "all", label: "All" },
-  { id: "light-dark", label: "Light and dark" },
-  { id: "light", label: "Light only" },
-  { id: "dark", label: "Dark only" },
-];
+// const FILTER_OPTIONS: Array<{ id: Filter; label: string }> = [
+//   { id: "all", label: "All" },
+//   { id: "light-dark", label: "Light and dark" },
+//   { id: "light", label: "Light only" },
+//   { id: "dark", label: "Dark only" },
+// ];
 
 const StylesGrid: React.FC<{
   styles: Style[];
@@ -47,9 +47,8 @@ const StylesGrid: React.FC<{
 );
 
 export function StylesExplorer({ className }: { className?: string }) {
-  const isMounted = useMounted();
+  // const isMounted = useMounted();
   const { currentStyle, setCurrentStyle } = useStyles();
-  useStyles();
   const [searchInput, setSearchInput] = React.useState("");
   const { contains } = useFilter({ sensitivity: "base" });
 

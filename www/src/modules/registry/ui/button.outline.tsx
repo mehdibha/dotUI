@@ -19,21 +19,20 @@ const buttonStyles = tv({
   variants: {
     variant: {
       default:
-        "bg-bg-neutral hover:bg-bg-neutral-hover text-fg-onNeutral border hover:border-border-hover",
-      primary:
-        "bg-bg-primary hover:bg-bg-primary-hover text-fg-onPrimary",
+        "bg-bg-neutral hover:bg-bg-neutral-hover text-fg-onNeutral hover:border-border-hover border",
+      primary: "bg-bg-primary hover:bg-bg-primary-hover text-fg-onPrimary",
       quiet:
         "hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 text-fg bg-transparent",
       outline:
         "border-border-field hover:bg-bg-inverse/10 pressed:bg-bg-inverse/15 text-fg disabled:border-border-disabled border disabled:bg-transparent",
       accent:
-        "bg-bg-accent-muted hover:bg-bg-accent-muted-hover text-fg-onAccent border border-border-accent hover:border-border-accent-hover",
+        "bg-bg-accent-muted hover:bg-bg-accent-muted-hover text-fg-onAccent border-border-accent hover:border-border-accent-hover border",
       success:
-        "bg-bg-success-muted hover:bg-bg-success-muted-hover text-fg-onSuccess border border-border-success hover:border-border-success-hover",
+        "bg-bg-success-muted hover:bg-bg-success-muted-hover text-fg-onSuccess border-border-success hover:border-border-success-hover border",
       warning:
-        "bg-bg-warning-muted hover:bg-bg-warning-muted-hover text-fg-onWarning border border-border-warning hover:border-border-warning-hover",
+        "bg-bg-warning-muted hover:bg-bg-warning-muted-hover text-fg-onWarning border-border-warning hover:border-border-warning-hover border",
       danger:
-        "bg-bg-danger-muted hover:bg-bg-danger-muted-hover text-fg-onDanger border border-border-danger hover:border-border-danger-hover",
+        "bg-bg-danger-muted hover:bg-bg-danger-muted-hover text-fg-onDanger border-border-danger hover:border-border-danger-hover border",
     },
     size: {
       sm: "size-7 [&_svg]:size-4",

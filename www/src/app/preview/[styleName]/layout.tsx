@@ -17,7 +17,7 @@ export default async function PreviewLayout({
   if (!style) {
     notFound();
   }
-  
+
   return (
     <StyleProvider style={style}>
       <ThemeUpdater />
