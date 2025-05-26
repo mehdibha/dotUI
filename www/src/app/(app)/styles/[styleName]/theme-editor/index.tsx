@@ -20,11 +20,9 @@ import { ToggleButton } from "@/components/ui/toggle-button";
 import { Tooltip } from "@/components/ui/tooltip";
 import { usePreviewMode } from "@/components/mode-provider";
 import { ThemeModeSwitch } from "@/components/theme-mode-switch";
-import { CreateThemeDialog } from "@/modules/styles/components/create-style-dialog";
 import { Theme } from "@/modules/styles/types";
 import { PreviewContent } from "../../preview";
 import { ThemeColors } from "./colors";
-import { ThemeComponents } from "./components";
 import { ThemeEditorContext } from "./context";
 import { ThemeIconography } from "./iconography";
 import { ThemeTypography } from "./typography";
@@ -41,24 +39,24 @@ export function ThemeEditor({
   const [isEditMode, setEditMode] = React.useState(true);
   const isMounted = useMounted();
 
-  const theme: Theme | undefined =
-    typeof themeProp === "string"
-      ? userThemes.find((t) => t.name === themeProp)
-      : themeProp;
+  // const theme: Theme | undefined =
+  //   typeof themeProp === "string"
+  //     ? userThemes.find((t) => t.name === themeProp)
+  //     : themeProp;
 
-  const isLoading = !theme;
+  const isLoading = false;
 
-  if (isMounted && !theme) {
-    notFound();
-  }
+  // if (isMounted && !theme) {
+  //   notFound();
+  // }
 
   return (
     <ThemeEditorContext
-      value={{ isLoading, isEditMode: isEditable && isEditMode }}
+      value={{ isLoading: false, isEditMode: isEditable && isEditMode }}
     >
       <div className="[&_[data-slot=label]]:text-fg-muted [&_[data-slot=label]]:text-sm">
         <ThemeEditorHeader
-          theme={theme}
+          // theme={theme}
           isLoading={isLoading}
           isEditable={isEditable}
           isEditMode={isEditMode}
@@ -66,13 +64,7 @@ export function ThemeEditor({
         />
         <ThemeEditorBody>
           {!isEditable && (
-            <Alert
-              action={
-                <CreateThemeDialog clonedThemeName={theme?.name}>
-                  <Button variant="primary">Clone theme</Button>
-                </CreateThemeDialog>
-              }
-            >
+            <Alert>
               To adjust colors, fonts, radius, components and more, you need to
               clone the theme.
             </Alert>
@@ -80,20 +72,20 @@ export function ThemeEditor({
           <Section
             title="Colors"
             description="Theme color palette and variations"
-            action={
-              theme?.foundations.light &&
-              theme?.foundations.dark &&
-              previewMode && (
-                <ThemeModeSwitch
-                  isSelected={previewMode === "dark"}
-                  onChange={(isSelected) =>
-                    setPreviewMode(isSelected ? "dark" : "light")
-                  }
-                />
-              )
-            }
+            // action={
+            //   theme?.foundations.light &&
+            //   theme?.foundations.dark &&
+            //   previewMode && (
+            //     <ThemeModeSwitch
+            //       isSelected={previewMode === "dark"}
+            //       onChange={(isSelected) =>
+            //         setPreviewMode(isSelected ? "dark" : "light")
+            //       }
+            //     />
+            //   )
+            // }
           >
-            <ThemeColors theme={theme} />
+            {/* <ThemeColors theme={theme} /> */}
           </Section>
           <Section title="Typography" description="Theme typography">
             <ThemeTypography />
@@ -102,7 +94,7 @@ export function ThemeEditor({
             <ThemeIconography />
           </Section>
           <Section title="Components" description="Theme components">
-            <ThemeComponents />
+            {/* <ThemeComponents /> */}
           </Section>
         </ThemeEditorBody>
       </div>
@@ -136,7 +128,7 @@ export function ThemeEditorHeader({
       <div className="flex items-center justify-between">
         <h2 className="text-3xl font-semibold tracking-tight">
           <Skeleton show={isLoading}>
-            <span>{theme?.name ?? "Forest"}</span>
+            {/* <span>{theme?.name ?? "Forest"}</span> */}
           </Skeleton>
         </h2>
         <div className="flex items-center gap-2">

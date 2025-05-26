@@ -1,20 +1,8 @@
 import React from "react";
 import { Style } from "@/modules/styles/types";
+import { styles } from "@/modules/registry/registry-styles";
 
-const defaultStyle: Style = {
-  name: "default",
-  components: {},
-  iconLibrary: "lucide",
-  theme: {
-    light: {},
-    dark: {},
-    cssVars: {},
-  },
-  fonts: {
-    heading: "",
-    body: "",
-  },
-};
+const defaultStyle: Style = styles[0]!;
 
 export const StyleContext = React.createContext<{
   style: Style;

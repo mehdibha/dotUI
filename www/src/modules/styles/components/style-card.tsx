@@ -12,7 +12,6 @@ import { Menu, MenuItem, MenuRoot } from "@/components/ui/menu";
 import { Skeleton } from "@/components/ui/skeleton";
 import { StyleProvider } from "@/modules/styles/components/style-provider";
 import { type Style } from "@/modules/styles/types";
-import { CreateThemeDialog } from "./create-style-dialog";
 
 export function StyleCard({
   style,

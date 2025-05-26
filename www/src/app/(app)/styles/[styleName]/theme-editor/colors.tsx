@@ -21,7 +21,7 @@ import {
   TableRow,
   TableCell,
 } from "@/components/ui/table";
-import { ThemeProvider } from "@/modules/styles/components/style-provider";
+import "@/modules/styles/components/current-style-provider";
 import { Theme } from "@/modules/styles/types";
 import { Collapsible } from "./collapsible";
 import { useThemeEditorContext } from "./context";
@@ -51,7 +51,7 @@ export function ThemeColors({ theme }: { theme?: Theme }) {
           </div>
         </div>
       </Collapsible>
-      <ThemeProvider theme={theme} unstyled noBaseVars createForegrounds>
+      {/* <CurrentStyleProvider theme={theme} unstyled noBaseVars createForegrounds>
         {({ colors }) => (
           <>
             <p id="core-colors" className="mt-2 font-medium tracking-tight">
@@ -194,7 +194,6 @@ export function ThemeColors({ theme }: { theme?: Theme }) {
             </Collapsible>
             <Collapsible show={!isEditMode}>
               <div className="flex gap-1 pt-1">
-                {/* <Item className="bg-bg-info" /> */}
                 <ColorItem
                   className="bg-bg-success rounded-sm"
                   containerClassName="ml-0! mr-0!"
@@ -214,7 +213,6 @@ export function ThemeColors({ theme }: { theme?: Theme }) {
                 { name: "success", label: "Success" },
                 { name: "warning", label: "Warning" },
                 { name: "danger", label: "Danger" },
-                // { name: "info", label: "Info" },
               ].map((shade) => (
                 <div key={shade.name} className="flex items-center gap-2">
                   <p className="text-fg-muted w-[60px] text-sm">
@@ -246,7 +244,7 @@ export function ThemeColors({ theme }: { theme?: Theme }) {
             </div>
           </>
         )}
-      </ThemeProvider>
+      </CurrentStyleProvider> */}
     </div>
   );
 }

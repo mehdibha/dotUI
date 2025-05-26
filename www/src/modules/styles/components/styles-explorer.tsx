@@ -11,7 +11,6 @@ import { SearchField } from "@/components/ui/search-field";
 import { styles } from "@/modules/registry/registry-styles";
 import { useStyles } from "@/modules/styles/atoms/styles-atom";
 import { Style } from "@/modules/styles/types";
-import { CreateThemeDialog } from "./create-style-dialog";
 import { StyleCard } from "./style-card";
 
 type Filter = "light" | "dark" | "light-dark" | "all";
