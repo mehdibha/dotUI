@@ -7,7 +7,7 @@ export const ghibliTheme: Style = createStyle({
   icon: "GhibliIcon",
   fonts: {
     heading: "Inter",
-    body: "Inter",
+    body: "Poppins",
   },
   theme: {
     light: {

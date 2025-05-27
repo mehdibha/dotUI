@@ -2,12 +2,28 @@ import { Fonts } from "@/modules/styles/types";
 
 export const FontsProvider = ({
   children,
-  // fonts,
+  fonts,
 }: {
   children: React.ReactNode;
   fonts: Fonts;
 }) => {
-  return children;
+  return (
+    <>
+      <FontLoader font={fonts.heading} />
+      <FontLoader font={fonts.body} />
+      <div
+        className="font-body"
+        style={
+          {
+            "--font-heading": fonts.heading,
+            "--font-body": fonts.body,
+          } as React.CSSProperties
+        }
+      >
+        {children}
+      </div>
+    </>
+  );
 };
 
 export function FontLoader({ font }: { font: string | null | undefined }) {

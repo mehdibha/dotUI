@@ -4,7 +4,7 @@ import { Style } from "@/modules/styles/types";
 export const brutalistTheme: Style = createStyle({
   name: "brutalist",
   label: "Brutalist",
-  icon: "VercelIcon",
+  // icon: "VercelIcon",
   fonts: {
     heading: "Inter",
     body: "Inter",

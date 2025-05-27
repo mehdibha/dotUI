@@ -14,7 +14,7 @@ export const createStyle = (opts: StyleFoundations): Style => {
     label: opts.label,
     theme: createTheme(opts.theme),
     iconLibrary: opts.iconLibrary ?? DEFAULT_ICON_LIBRARY,
-    fonts: opts.fonts ?? DEFAULT_FONTS,
+    fonts: { ...DEFAULT_FONTS, ...opts.fonts },
     components: { ...DEFAULT_COMPONENTS, ...opts.components },
     preferences: { ...DEFAULT_PREFERENCES, ...opts.preferences },
   };
