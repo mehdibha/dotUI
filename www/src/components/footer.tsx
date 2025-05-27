@@ -16,6 +16,10 @@ const links = [
         label: "Components",
         href: "/docs/components/buttons/button",
       },
+      {
+        label: "Styles",
+        href: "/styles",
+      },
     ],
   },
   {
@@ -52,8 +56,8 @@ const links = [
 
 export const Footer = () => {
   return (
-    <div className="border-t py-12">
-      <div className="container flex flex-col items-start justify-between gap-10 lg:flex-row">
+    <div className="container max-w-screen-2xl border-t py-12">
+      <div className="flex flex-col items-start justify-between gap-10 lg:flex-row">
         <div className="space-y-1">
           <Logo type="span" />
           <p className="text-fg-muted text-base">
@@ -83,8 +87,8 @@ export const Footer = () => {
           ))}
         </div>
       </div>
-      <div className="container px-0 pt-6">
-        <p className="text-fg-muted container text-sm">
+      <div className="px-0 pt-6">
+        <p className="text-fg-muted text-sm">
           Built by{" "}
           <Link
             href="https://github.com/mehdibha"

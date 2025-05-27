@@ -1,0 +1,12 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "file-trigger",
+  "type": "registry:ui",
+  "files": [
+    {
+      "path": "src/registry/forest/ui/file-trigger.tsx",
+      "content": "\"use client\";\n\nimport { FileTrigger, type FileTriggerProps } from \"react-aria-components\";\n\nexport type { FileTriggerProps };\nexport { FileTrigger };\n",
+      "type": "registry:ui"
+    }
+  ]
+}

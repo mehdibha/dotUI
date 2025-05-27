@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "date-picker",
+  "type": "registry:ui",
+  "registryDependencies": [
+    "http://localhost:3000/r/retro/button.json",
+    "http://localhost:3000/r/retro/calendar.json",
+    "http://localhost:3000/r/retro/field.json",
+    "http://localhost:3000/r/retro/input.json",
+    "http://localhost:3000/r/retro/date-input.json",
+    "http://localhost:3000/r/retro/dialog.json"
+  ],
+  "files": [
+    {
+      "path": "src/registry/retro/ui/date-picker.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { CalendarIcon } from \"lucide-react\";\nimport {\n  DatePicker as AriaDatePicker,\n  type DatePickerProps as AriaDatePickerProps,\n  type DateValue,\n} from \"react-aria-components\";\nimport { tv, type VariantProps } from \"tailwind-variants\";\nimport { Button } from \"@/modules/registry/ui/button.basic\";\nimport { Calendar } from \"@/modules/registry/ui/calendar.basic\";\nimport { DateInput, DateSegment } from \"@/modules/registry/ui/date-input.basic\";\nimport { Dialog } from \"@/modules/registry/ui/dialog.basic\";\nimport {\n  Label,\n  HelpText,\n  type FieldProps,\n} from \"@/modules/registry/ui/field.basic\";\nimport { InputRoot, type inputStyles } from \"@/modules/registry/ui/input.basic\";\n\nconst datePickerStyles = tv({\n  base: \"flex w-48 flex-col items-start gap-2\",\n});\n\ninterface DatePickerProps<T extends DateValue>\n  extends DatePickerRootProps<T>,\n    Omit<FieldProps, \"children\">,\n    VariantProps<typeof inputStyles> {\n  prefix?: React.ReactNode;\n}\n\nconst DatePicker = <T extends DateValue>({\n  size,\n  label,\n  description,\n  errorMessage,\n  prefix,\n  ...props\n}: DatePickerProps<T>) => {\n  return (\n    <DatePickerRoot {...props}>\n      {label && <Label>{label}</Label>}\n      <InputRoot\n        size={size}\n        prefix={prefix}\n        // isInvalid={isInvalid}\n        className=\"pr-1\"\n      >\n        <DateInput className=\"flex-1\">\n          {(segment) => <DateSegment segment={segment} />}\n        </DateInput>\n        <Button\n          variant=\"default\"\n          size=\"sm\"\n          shape=\"square\"\n          className=\"my-1 size-7 rounded-sm\"\n        >\n          <CalendarIcon />\n        </Button>\n      </InputRoot>\n      <HelpText description={description} errorMessage={errorMessage} />\n      <Dialog type=\"popover\" mobileType=\"drawer\" className=\"flex\">\n        <Calendar className=\"mx-auto\" />\n      </Dialog>\n    </DatePickerRoot>\n  );\n};\n\ninterface DatePickerRootProps<T extends DateValue>\n  extends Omit<AriaDatePickerProps<T>, \"className\"> {\n  className?: string;\n}\nconst DatePickerRoot = <T extends DateValue>({\n  className,\n  ...props\n}: DatePickerRootProps<T>) => {\n  return (\n    <AriaDatePicker className={datePickerStyles({ className })} {...props} />\n  );\n};\n\nexport type { DatePickerProps, DatePickerRootProps };\nexport { DatePicker, DatePickerRoot };\n",
+      "type": "registry:ui"
+    }
+  ]
+}

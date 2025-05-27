@@ -1,17 +1,20 @@
 import React from "react";
 import { getGitHubContributors } from "@/lib/github";
+import { Avatar } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Link } from "@/components/ui/link";
+import { Tooltip } from "@/components/ui/tooltip";
 import { Announcement } from "@/components/announcement";
-import { Button } from "@/components/core/button";
-import { Link } from "@/components/core/link";
 import { GitHubIcon } from "@/components/icons";
-import { AdobeIcon } from "@/components/icons/adobe-icon";
-import { ReactJsIcon } from "@/components/icons/reactjs-icon";
-import { TailwindIcon } from "@/components/icons/tailwindcss-icon";
-import { TypescriptIcon } from "@/components/icons/typescript-icon";
-import { Avatar } from "@/registry/core/avatar_basic";
-import { Tooltip } from "@/registry/core/tooltip_basic";
+import {
+  AdobeIcon,
+  ReactJsIcon,
+  TailwindIcon,
+  TypescriptIcon,
+  ShadcnIcon,
+} from "@/components/icons";
 import { siteConfig } from "@/config";
-import { ThemesOverview } from "@/modules/themes/components/themes-overview";
+import { StylesOverview } from "@/modules/styles/components/styles-overview";
 
 export default async function HomePage() {
   const contributors = await getGitHubContributors();
@@ -39,20 +42,15 @@ export default async function HomePage() {
             >
               Get started
             </Button>
-            <Button
-              href="/themes"
-              variant="outline"
-              size="lg"
-              className="bg-bg-inverse/5 h-10"
-            >
-              Explore themes
+            <Button href="/styles" variant="default" size="lg" className="h-10">
+              Explore styles
             </Button>
           </div>
         </section>
       </div>
       {/* Components overview */}
       <section className="container max-w-screen-2xl">
-        <ThemesOverview />
+        <StylesOverview />
       </section>
       <section className="shadow-xs mt-10 border-y py-12">
         <div className="container flex flex-col items-center justify-center gap-5 lg:gap-10">
@@ -61,6 +59,11 @@ export default async function HomePage() {
           </h2>
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8">
             {[
+              {
+                label: "Shadcn CLI",
+                icon: <ShadcnIcon className="size-7 sm:size-9" />,
+                href: "https://ui.shadcn.com/docs/cli",
+              },
               {
                 label: "React 19",
                 icon: <ReactJsIcon className="size-7 sm:size-9" />,
@@ -77,7 +80,7 @@ export default async function HomePage() {
                 href: "https://www.typescriptlang.org/",
               },
               {
-                label: "Tailwind CSS v4.0",
+                label: "Tailwind CSS v4",
                 icon: <TailwindIcon className="h-5 sm:h-7" />,
                 href: "https://tailwindcss.com",
               },
@@ -85,7 +88,7 @@ export default async function HomePage() {
               <Tooltip
                 key={index}
                 content={label}
-                delay={500}
+                delay={0}
                 closeDelay={0}
                 offset={10}
                 placement="top"
@@ -149,9 +152,8 @@ export default async function HomePage() {
             href={siteConfig.links.github}
             target="_blank"
             prefix={<GitHubIcon />}
-            variant="outline"
             size="lg"
-            className="bg-bg-inverse/5 h-12"
+            className="h-12"
           >
             Star on GitHub
           </Button>

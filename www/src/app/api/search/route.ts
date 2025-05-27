@@ -3,8 +3,8 @@ import { source } from "@/app/source";
 
 const additionalPages = [
   {
-    title: "Themes",
-    url: "/themes",
+    title: "Styles",
+    url: "/styles",
   },
 ];
 

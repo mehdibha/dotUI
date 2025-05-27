@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
-import { Link } from "@/components/core/link";
+import { Link } from "@/components/ui/link";
 import { siteConfig } from "@/config";
-import { Badge } from "./core/badge";
+import { Badge } from "./ui/badge";
 
 export const Logo = ({
   extanded = true,

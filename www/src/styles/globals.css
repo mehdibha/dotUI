@@ -2,7 +2,6 @@
 @plugin "tailwindcss-animate";
 @plugin "tailwindcss-react-aria-components";
 @import "./docs.css";
-@import "./themes.css";
 
 @variant dark (&:where(.dark, .dark *));
 
@@ -78,10 +77,10 @@
 }
 
 .dark {
-  --neutral-100: hsl(240, 6%, 8%);
-  --neutral-200: hsl(240, 6%, 13%);
-  --neutral-300: hsl(240, 6%, 19%);
-  --neutral-400: hsl(240, 6%, 25%);
+  --neutral-100: hsl(240, 6%, 4%);
+  --neutral-200: hsl(240, 6%, 10%);
+  --neutral-300: hsl(240, 6%, 17%);
+  --neutral-400: hsl(240, 6%, 23%);
   --neutral-500: hsl(240, 6%, 33%);
   --neutral-600: hsl(240, 6%, 47%);
   --neutral-700: hsl(240, 6%, 55%);
@@ -160,9 +159,9 @@
   --color-bg-inverse: var(--neutral-1000);
   --color-bg-disabled: var(--neutral-200);
 
-  --color-bg-neutral: var(--neutral-300);
-  --color-bg-neutral-hover: var(--neutral-400);
-  --color-bg-neutral-active: var(--neutral-500);
+  --color-bg-neutral: var(--neutral-200);
+  --color-bg-neutral-hover: var(--neutral-300);
+  --color-bg-neutral-active: var(--neutral-400);
 
   --color-bg-primary: var(--neutral-1000);
   --color-bg-primary-hover: var(--neutral-900);
@@ -192,7 +191,8 @@
   --color-bg-accent: var(--accent-500);
   --color-bg-accent-hover: var(--accent-600);
   --color-bg-accent-active: var(--accent-700);
-  --color-bg-accent-muted: var(--accent-100);
+  --color-bg-accent-muted: var(--accent-300);
+  --color-bg-accent-muted-hover: var(--accent-400);
 
   --color-fg: var(--neutral-1000);
   --color-fg-muted: var(--neutral-800);
@@ -213,16 +213,22 @@
   --color-fg-onInfo: var(--neutral-1000);
 
   --color-border: var(--neutral-300);
+  --color-border-hover: var(--neutral-400);
   --color-border-field: var(--neutral-400);
   --color-border-control: var(--neutral-700);
   --color-border-disabled: var(--neutral-300);
   --color-border-focus: var(--accent-500);
 
   --color-border-success: var(--success-300);
+  --color-border-success-hover: var(--success-400);
   --color-border-accent: var(--accent-300);
+  --color-border-accent-hover: var(--accent-400);
   --color-border-danger: var(--danger-300);
+  --color-border-danger-hover: var(--danger-400);
   --color-border-warning: var(--warning-300);
+  --color-border-warning-hover: var(--warning-400);
   --color-border-info: var(--info-300);
+  --color-border-info-hover: var(--info-400);
 
   /* radius */
   --radius-xs: calc(0.125rem * var(--radius-factor));
