@@ -27,9 +27,9 @@ export const createDynamicComponent = <Props extends {}>(
     const LazyComponent = registry[componentStyle];
 
     if (!LazyComponent) {
-      console.warn(
-        `Component ${componentName}/${slotName}/${componentStyle} not found in registry`
-      );
+      // console.warn(
+      //   `Component ${componentName}/${slotName}/${componentStyle} not found in registry`
+      // );
       return <FallbackComponent {...props} />;
     }
 

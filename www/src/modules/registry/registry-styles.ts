@@ -16,3 +16,5 @@ export const styles: Style[] = [
   brutalistTheme,
   polarisTheme,
 ];
+
+export const OFFICIAL_STYLES = styles.map((style) => style.name);

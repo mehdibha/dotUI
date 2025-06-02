@@ -19,7 +19,6 @@ import { StyleProvider } from "@/modules/styles/components/style-provider";
 
 export const StylesOverview = () => {
   const container = React.useRef(null);
-  console.log(styles);
   const [currentStyleName, setCurrentStyleName] = React.useState<string>(
     styles[0]!.name
   );
