@@ -30,7 +30,7 @@ export const StylesOverview = () => {
 
   const handleCopy = () => {
     void navigator.clipboard.writeText(
-      `npx shadcn@latest init https://dotui.org/r/${currentStyleName}/base.json`
+      `npx shadcn@latest init https://dotui.org/r/${currentStyleName}/base`
     );
     setCopied(true);
     setTimeout(() => {
@@ -117,7 +117,7 @@ export const StylesOverview = () => {
                       </motion.span>
                     </AnimatePresence>
                     <motion.span layout transition={{ duration: 0.5 }}>
-                      /base.json
+                      /base
                     </motion.span>
                   </span>
                 </code>
