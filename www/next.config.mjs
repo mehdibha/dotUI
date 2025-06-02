@@ -22,6 +22,9 @@ const config = {
       },
     ],
   },
+  devIndicators: {
+    position: "bottom-right",
+  },
 };
 
 export default withAnalyzer(withMDX(config));
