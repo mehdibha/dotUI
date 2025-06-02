@@ -8,7 +8,7 @@ import { Select, SelectItem } from "@/components/dynamic-ui/select";
 import { Switch } from "@/components/dynamic-ui/switch";
 
 export default function Demo() {
-  const [placement, setPlacement] = React.useState<Key>("top");
+  const [placement, setPlacement] = React.useState<Key | null>("top");
   const [swipeable, setSwipeable] = React.useState<boolean>(true);
   return (
     <div className="flex w-full items-center">
