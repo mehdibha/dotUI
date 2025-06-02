@@ -12,9 +12,9 @@ import {
   MobileComponentsOverview,
 } from "@/components/components-overview";
 import * as Icons from "@/components/icons";
-import { styles } from "@/modules/registry/registry-styles";
-import { Skeleton } from "@/modules/registry/ui/skeleton.basic";
-import { Tabs, TabList, Tab } from "@/modules/registry/ui/tabs.motion";
+import { styles } from "@/registry/registry-styles";
+import { Skeleton } from "@/registry/ui/skeleton.basic";
+import { Tabs, TabList, Tab } from "@/registry/ui/tabs.motion";
 import { StyleProvider } from "@/modules/styles/components/style-provider";
 
 export const StylesOverview = () => {

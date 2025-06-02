@@ -11,11 +11,11 @@ import {
   PressEvent,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { useRipple } from "@/modules/registry/hooks/use-ripple";
-import { focusRing } from "@/modules/registry/lib/focus-styles";
-import { createOptionalScopedContext } from "@/modules/registry/lib/utils";
-import { Loader } from "@/modules/registry/ui/loader.ring";
-import { Ripple } from "@/modules/registry/ui/ripple";
+import { useRipple } from "@/registry/hooks/use-ripple";
+import { focusRing } from "@/registry/lib/focus-styles";
+import { createOptionalScopedContext } from "@/registry/lib/utils";
+import { Loader } from "@/registry/ui/loader.ring";
+import { Ripple } from "@/registry/ui/ripple";
 
 const buttonStyles = tv({
   extend: focusRing,

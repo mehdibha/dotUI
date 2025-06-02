@@ -13,8 +13,8 @@ import {
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
 import { Description, Label } from "@/components/dynamic-ui/field";
-import { focusRing } from "@/modules/registry/lib/focus-styles";
-import { createScopedContext } from "@/modules/registry/lib/utils";
+import { focusRing } from "@/registry/lib/focus-styles";
+import { createScopedContext } from "@/registry/lib/utils";
 
 const sliderStyles = tv({
   slots: {

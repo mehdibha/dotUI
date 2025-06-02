@@ -17,7 +17,7 @@ import {
 import { tv, type VariantProps } from "tailwind-variants";
 import { Loader } from "@/components/dynamic-ui/loader";
 import { Text } from "@/components/dynamic-ui/text";
-import { focusRing } from "@/modules/registry/lib/focus-styles";
+import { focusRing } from "@/registry/lib/focus-styles";
 
 const listBoxStyles = tv({
   base: [

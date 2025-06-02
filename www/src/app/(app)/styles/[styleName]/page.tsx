@@ -1,5 +1,5 @@
 import React from "react";
-import { styles } from "@/modules/registry/registry-styles";
+import { styles } from "@/registry/registry-styles";
 // import { ThemeEditor } from "./theme-editor";
 import { ThemeTableOfContents } from "./toc";
 

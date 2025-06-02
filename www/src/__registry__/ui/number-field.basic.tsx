@@ -23,7 +23,7 @@ import {
   Input,
   type InputRootProps,
 } from "@/components/dynamic-ui/input";
-import { useIsMobile } from "@/modules/registry/hooks/use-is-mobile";
+import { useIsMobile } from "@/registry/hooks/use-is-mobile";
 
 // TODO: update registry
 

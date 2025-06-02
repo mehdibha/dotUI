@@ -3,7 +3,7 @@
 import { Drawer, DrawerProps } from "@/components/dynamic-ui/drawer";
 import { Modal, ModalProps } from "@/components/dynamic-ui/modal";
 import { Popover, PopoverProps } from "@/components/dynamic-ui/popover";
-import { useIsMobile } from "@/modules/registry/hooks/use-is-mobile";
+import { useIsMobile } from "@/registry/hooks/use-is-mobile";
 
 type Type = "modal" | "popover" | "drawer";
 

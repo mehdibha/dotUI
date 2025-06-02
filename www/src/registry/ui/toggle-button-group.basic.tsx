@@ -8,7 +8,7 @@ import { tv, type VariantProps } from "tailwind-variants";
 import {
   ToggleButtonProvider,
   toggleButtonStyles,
-} from "@/modules/registry/ui/toggle-button.basic";
+} from "@/registry/ui/toggle-button.basic";
 
 const toggleGroupStyles = tv({
   base: "isolate inline-flex items-center [&_button]:rounded-none [&_button]:first:rounded-s-md [&_button]:last:rounded-e-md",

@@ -3,7 +3,7 @@
 import type { FC } from "react";
 import type { HTMLMotionProps } from "motion/react";
 import { AnimatePresence, motion } from "motion/react";
-import type { RippleType } from "@/modules/registry/hooks/use-ripple";
+import type { RippleType } from "@/registry/hooks/use-ripple";
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);

@@ -1,9 +1,9 @@
 "use client";
 
-import { useIsMobile } from "@/modules/registry/hooks/use-is-mobile";
-import { Drawer, DrawerProps } from "@/modules/registry/ui/drawer.basic";
-import { Modal, ModalProps } from "@/modules/registry/ui/modal.blur";
-import { Popover, PopoverProps } from "@/modules/registry/ui/popover.basic";
+import { useIsMobile } from "@/registry/hooks/use-is-mobile";
+import { Drawer, DrawerProps } from "@/registry/ui/drawer.basic";
+import { Modal, ModalProps } from "@/registry/ui/modal.blur";
+import { Popover, PopoverProps } from "@/registry/ui/popover.basic";
 
 type Type = "modal" | "popover" | "drawer";
 

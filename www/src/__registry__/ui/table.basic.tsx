@@ -21,9 +21,9 @@ import {
 } from "react-aria-components";
 import { tv, VariantProps } from "tailwind-variants";
 import { Checkbox } from "@/components/dynamic-ui/checkbox";
-import { focusRing } from "@/modules/registry/lib/focus-styles";
-import { cn } from "@/modules/registry/lib/utils";
-import { createScopedContext } from "@/modules/registry/lib/utils";
+import { focusRing } from "@/registry/lib/focus-styles";
+import { cn } from "@/registry/lib/utils";
+import { createScopedContext } from "@/registry/lib/utils";
 
 const tableStyles = tv({
   slots: {

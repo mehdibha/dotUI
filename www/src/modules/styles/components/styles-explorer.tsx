@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 // import { Button } from "@/components/ui/button";
 // import { Menu, MenuItem, MenuRoot } from "@/components/ui/menu";
 import { SearchField } from "@/components/ui/search-field";
-import { styles } from "@/modules/registry/registry-styles";
+import { styles } from "@/registry/registry-styles";
 import { useStyles } from "@/modules/styles/atoms/styles-atom";
 import { Style } from "@/modules/styles/types";
 import { StyleCard } from "./style-card";

@@ -10,8 +10,8 @@ import {
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
 import { Loader } from "@/components/dynamic-ui/loader";
-import { focusRing } from "@/modules/registry/lib/focus-styles";
-import { createOptionalScopedContext } from "@/modules/registry/lib/utils";
+import { focusRing } from "@/registry/lib/focus-styles";
+import { createOptionalScopedContext } from "@/registry/lib/utils";
 
 const buttonStyles = tv({
   extend: focusRing,

@@ -13,9 +13,9 @@ import {
 import { tv, type VariantProps } from "tailwind-variants";
 import { Loader } from "@/components/dynamic-ui/loader";
 import { Ripple } from "@/components/dynamic-ui/ripple";
-import { useRipple } from "@/modules/registry/hooks/use-ripple";
-import { focusRing } from "@/modules/registry/lib/focus-styles";
-import { createOptionalScopedContext } from "@/modules/registry/lib/utils";
+import { useRipple } from "@/registry/hooks/use-ripple";
+import { focusRing } from "@/registry/lib/focus-styles";
+import { createOptionalScopedContext } from "@/registry/lib/utils";
 
 const buttonStyles = tv({
   extend: focusRing,

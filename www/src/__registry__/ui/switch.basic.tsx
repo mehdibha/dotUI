@@ -6,8 +6,8 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { focusRing, focusRingGroup } from "@/modules/registry/lib/focus-styles";
-import { createScopedContext } from "@/modules/registry/lib/utils";
+import { focusRing, focusRingGroup } from "@/registry/lib/focus-styles";
+import { createScopedContext } from "@/registry/lib/utils";
 
 const switchStyles = tv({
   slots: {

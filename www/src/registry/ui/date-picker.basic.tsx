@@ -8,16 +8,12 @@ import {
   type DateValue,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { Button } from "@/modules/registry/ui/button.basic";
-import { Calendar } from "@/modules/registry/ui/calendar.basic";
-import { DateInput, DateSegment } from "@/modules/registry/ui/date-input.basic";
-import { Dialog } from "@/modules/registry/ui/dialog.basic";
-import {
-  Label,
-  HelpText,
-  type FieldProps,
-} from "@/modules/registry/ui/field.basic";
-import { InputRoot, type inputStyles } from "@/modules/registry/ui/input.basic";
+import { Button } from "@/registry/ui/button.basic";
+import { Calendar } from "@/registry/ui/calendar.basic";
+import { DateInput, DateSegment } from "@/registry/ui/date-input.basic";
+import { Dialog } from "@/registry/ui/dialog.basic";
+import { Label, HelpText, type FieldProps } from "@/registry/ui/field.basic";
+import { InputRoot, type inputStyles } from "@/registry/ui/input.basic";
 
 const datePickerStyles = tv({
   base: "flex w-48 flex-col items-start gap-2",

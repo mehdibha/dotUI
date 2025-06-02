@@ -20,10 +20,10 @@ import {
   type TableHeaderProps as AriaTableHeaderProps,
 } from "react-aria-components";
 import { tv, VariantProps } from "tailwind-variants";
-import { focusRing } from "@/modules/registry/lib/focus-styles";
-import { cn } from "@/modules/registry/lib/utils";
-import { createScopedContext } from "@/modules/registry/lib/utils";
-import { Checkbox } from "@/modules/registry/ui/checkbox.basic";
+import { focusRing } from "@/registry/lib/focus-styles";
+import { cn } from "@/registry/lib/utils";
+import { createScopedContext } from "@/registry/lib/utils";
+import { Checkbox } from "@/registry/ui/checkbox.basic";
 
 const tableStyles = tv({
   slots: {

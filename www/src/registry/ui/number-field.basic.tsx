@@ -12,18 +12,14 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { useIsMobile } from "@/modules/registry/hooks/use-is-mobile";
-import { Button } from "@/modules/registry/ui/button.basic";
-import {
-  Label,
-  HelpText,
-  type FieldProps,
-} from "@/modules/registry/ui/field.basic";
+import { useIsMobile } from "@/registry/hooks/use-is-mobile";
+import { Button } from "@/registry/ui/button.basic";
+import { Label, HelpText, type FieldProps } from "@/registry/ui/field.basic";
 import {
   InputRoot,
   Input,
   type InputRootProps,
-} from "@/modules/registry/ui/input.basic";
+} from "@/registry/ui/input.basic";
 
 // TODO: update registry
 

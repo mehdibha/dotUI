@@ -10,8 +10,8 @@ import {
   type TabListProps as AriaTabListProps,
 } from "react-aria-components";
 import { tv, VariantProps } from "tailwind-variants";
-import { focusRing } from "@/modules/registry/lib/focus-styles";
-import { createScopedContext } from "@/modules/registry/lib/utils";
+import { focusRing } from "@/registry/lib/focus-styles";
+import { createScopedContext } from "@/registry/lib/utils";
 
 const tabsStyles = tv({
   slots: {

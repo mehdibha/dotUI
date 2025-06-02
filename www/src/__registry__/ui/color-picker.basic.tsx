@@ -19,7 +19,7 @@ import {
   DialogRoot,
 } from "@/components/dynamic-ui/dialog";
 import { Select, SelectItem } from "@/components/dynamic-ui/select";
-import { cn } from "@/modules/registry/lib/utils";
+import { cn } from "@/registry/lib/utils";
 
 interface ColorPickerProps
   extends ColorPickerRootProps,

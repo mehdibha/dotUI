@@ -8,7 +8,7 @@ import { DatePicker } from "@/components/dynamic-ui/date-picker";
 import { RadioGroup, Radio } from "@/components/dynamic-ui/radio-group";
 import { Select, SelectItem } from "@/components/dynamic-ui/select";
 import { TextField } from "@/components/dynamic-ui/text-field";
-import { Form } from "@/modules/registry/ui/form.basic";
+import { Form } from "@/registry/ui/form.basic";
 
 export default function Demo() {
   return (

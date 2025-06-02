@@ -8,18 +8,14 @@ import {
   composeRenderProps,
   type ColorFormat,
 } from "react-aria-components";
-import { cn } from "@/modules/registry/lib/utils";
-import { Button, type ButtonProps } from "@/modules/registry/ui/button.basic";
-import { ColorArea } from "@/modules/registry/ui/color-area.basic";
-import { ColorField } from "@/modules/registry/ui/color-field.basic";
-import { ColorSlider } from "@/modules/registry/ui/color-slider.basic";
-import { ColorSwatch } from "@/modules/registry/ui/color-swatch.basic";
-import {
-  Dialog,
-  DialogProps,
-  DialogRoot,
-} from "@/modules/registry/ui/dialog.basic";
-import { Select, SelectItem } from "@/modules/registry/ui/select.basic";
+import { cn } from "@/registry/lib/utils";
+import { Button, type ButtonProps } from "@/registry/ui/button.basic";
+import { ColorArea } from "@/registry/ui/color-area.basic";
+import { ColorField } from "@/registry/ui/color-field.basic";
+import { ColorSlider } from "@/registry/ui/color-slider.basic";
+import { ColorSwatch } from "@/registry/ui/color-swatch.basic";
+import { Dialog, DialogProps, DialogRoot } from "@/registry/ui/dialog.basic";
+import { Select, SelectItem } from "@/registry/ui/select.basic";
 
 interface ColorPickerProps
   extends ColorPickerRootProps,

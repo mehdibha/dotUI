@@ -7,11 +7,11 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { focusRing, focusRingGroup } from "@/modules/registry/lib/focus-styles";
+import { focusRing, focusRingGroup } from "@/registry/lib/focus-styles";
 import {
   createScopedContext,
   createOptionalScopedContext,
-} from "@/modules/registry/lib/utils";
+} from "@/registry/lib/utils";
 
 const checkboxStyles = tv({
   slots: {

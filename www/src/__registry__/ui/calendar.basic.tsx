@@ -25,7 +25,7 @@ import type {
 import { tv, VariantProps } from "tailwind-variants";
 import { Button } from "@/components/dynamic-ui/button";
 import { Text } from "@/components/dynamic-ui/text";
-import { focusRing } from "@/modules/registry/lib/focus-styles";
+import { focusRing } from "@/registry/lib/focus-styles";
 
 const calendarStyles = tv({
   slots: {

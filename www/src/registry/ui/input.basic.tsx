@@ -14,7 +14,7 @@ import {
   useContextProps,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { focusInput } from "@/modules/registry/lib/focus-styles";
+import { focusInput } from "@/registry/lib/focus-styles";
 
 const inputStyles = tv({
   slots: {

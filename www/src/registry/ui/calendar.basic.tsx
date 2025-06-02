@@ -23,9 +23,9 @@ import type {
   RangeCalendarProps as AriaRangeCalendarProps,
 } from "react-aria-components";
 import { tv, VariantProps } from "tailwind-variants";
-import { focusRing } from "@/modules/registry/lib/focus-styles";
-import { Button } from "@/modules/registry/ui/button.basic";
-import { Text } from "@/modules/registry/ui/text.basic";
+import { focusRing } from "@/registry/lib/focus-styles";
+import { Button } from "@/registry/ui/button.basic";
+import { Text } from "@/registry/ui/text.basic";
 
 const calendarStyles = tv({
   slots: {

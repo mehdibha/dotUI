@@ -6,11 +6,8 @@ import {
   type ValidationResult,
 } from "react-aria-components";
 import { tv, VariantProps } from "tailwind-variants";
-import {
-  CheckboxProvider,
-  checkboxStyles,
-} from "@/modules/registry/ui/checkbox.basic";
-import { Label, HelpText } from "@/modules/registry/ui/field.basic";
+import { CheckboxProvider, checkboxStyles } from "@/registry/ui/checkbox.basic";
+import { Label, HelpText } from "@/registry/ui/field.basic";
 
 const checkboxGroupStyles = tv({
   base: "flex flex-col gap-2",

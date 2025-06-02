@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
-import { createScopedContext } from "@/modules/registry/lib/utils";
+import { createScopedContext } from "@/registry/lib/utils";
 
 const avatarStyles = tv({
   slots: {

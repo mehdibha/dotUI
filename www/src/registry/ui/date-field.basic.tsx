@@ -8,16 +8,9 @@ import {
   type DateFieldProps as AriaDateFieldProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { DateInput, DateSegment } from "@/modules/registry/ui/date-input.basic";
-import {
-  HelpText,
-  Label,
-  type FieldProps,
-} from "@/modules/registry/ui/field.basic";
-import {
-  InputRoot,
-  type InputRootProps,
-} from "@/modules/registry/ui/input.basic";
+import { DateInput, DateSegment } from "@/registry/ui/date-input.basic";
+import { HelpText, Label, type FieldProps } from "@/registry/ui/field.basic";
+import { InputRoot, type InputRootProps } from "@/registry/ui/input.basic";
 
 const dateFieldStyles = tv({
   base: "flex w-32 flex-col items-start gap-2",

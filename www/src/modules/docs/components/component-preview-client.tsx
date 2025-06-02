@@ -10,7 +10,7 @@ import { Popover } from "@/components/ui/popover";
 import { SelectItem, SelectRoot, SelectValue } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ThemeModeSwitch } from "@/components/theme-mode-switch";
-import { styles } from "@/modules/registry/registry-styles";
+import { styles } from "@/registry/registry-styles";
 import { useStyles } from "@/modules/styles/atoms/styles-atom";
 
 export const Loader = ({ children }: { children: React.ReactNode }) => {

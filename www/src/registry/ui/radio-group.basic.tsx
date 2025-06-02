@@ -8,12 +8,12 @@ import {
   type ValidationResult,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { focusRing, focusRingGroup } from "@/modules/registry/lib/focus-styles";
+import { focusRing, focusRingGroup } from "@/registry/lib/focus-styles";
 import {
   createOptionalScopedContext,
   createScopedContext,
-} from "@/modules/registry/lib/utils";
-import { HelpText, Label } from "@/modules/registry/ui/field.basic";
+} from "@/registry/lib/utils";
+import { HelpText, Label } from "@/registry/ui/field.basic";
 
 const radioStyles = tv({
   slots: {
