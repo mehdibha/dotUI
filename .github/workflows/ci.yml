@@ -19,7 +19,7 @@ jobs:
           fetch-depth: 0
       - uses: ./.github/actions/setup
 
-      - run: pnpm lint:check
+      - run: pnpm lint
 
   format:
     runs-on: ubuntu-latest
@@ -30,7 +30,7 @@ jobs:
           fetch-depth: 0
       - uses: ./.github/actions/setup
 
-      - run: pnpm format:check
+      - run: pnpm format
 
   tsc:
     runs-on: ubuntu-latest
