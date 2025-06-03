@@ -3,12 +3,12 @@
 import type { ValidationResult } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
-import { HelpText, Label } from "@/components/dynamic-ui/field";
 import { focusRing, focusRingGroup } from "@/registry/lib/focus-styles";
 import {
   createOptionalScopedContext,
   createScopedContext,
 } from "@/registry/lib/utils";
+import { HelpText, Label } from "@/registry/ui/field.basic";
 import {
   Radio as AriaRadio,
   RadioGroup as AriaRadioGroup,

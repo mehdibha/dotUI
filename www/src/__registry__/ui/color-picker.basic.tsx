@@ -1,20 +1,16 @@
 "use client";
 
-import type { ButtonProps } from "@/components/dynamic-ui/button";
+import type { ButtonProps } from "@/registry/ui/button.basic";
 import type { ColorFormat } from "react-aria-components";
 import React from "react";
-import { Button } from "@/components/dynamic-ui/button";
-import { ColorArea } from "@/components/dynamic-ui/color-area";
-import { ColorField } from "@/components/dynamic-ui/color-field";
-import { ColorSlider } from "@/components/dynamic-ui/color-slider";
-import { ColorSwatch } from "@/components/dynamic-ui/color-swatch";
-import {
-  Dialog,
-  DialogProps,
-  DialogRoot,
-} from "@/components/dynamic-ui/dialog";
-import { Select, SelectItem } from "@/components/dynamic-ui/select";
 import { cn } from "@/registry/lib/utils";
+import { Button } from "@/registry/ui/button.basic";
+import { ColorArea } from "@/registry/ui/color-area.basic";
+import { ColorField } from "@/registry/ui/color-field.basic";
+import { ColorSlider } from "@/registry/ui/color-slider.basic";
+import { ColorSwatch } from "@/registry/ui/color-swatch.basic";
+import { Dialog, DialogProps, DialogRoot } from "@/registry/ui/dialog.basic";
+import { Select, SelectItem } from "@/registry/ui/select.basic";
 import {
   ColorPicker as AriaColorPicker,
   ColorPickerStateContext,

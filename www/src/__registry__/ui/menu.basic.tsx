@@ -1,6 +1,6 @@
 "use client";
 
-import type { OverlayProps } from "@/components/dynamic-ui/overlay";
+import type { OverlayProps } from "@/registry/ui/overlay.basic";
 import type {
   MenuItemProps as AriaMenuItemProps,
   MenuProps as AriaMenuProps,
@@ -9,9 +9,9 @@ import type {
 } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
-import { Kbd } from "@/components/dynamic-ui/kbd";
-import { Overlay } from "@/components/dynamic-ui/overlay";
-import { Text } from "@/components/dynamic-ui/text";
+import { Kbd } from "@/registry/ui/kbd.basic";
+import { Overlay } from "@/registry/ui/overlay.basic";
+import { Text } from "@/registry/ui/text.basic";
 import { CheckIcon, ChevronRightIcon } from "lucide-react";
 import {
   Collection as AriaCollection,

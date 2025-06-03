@@ -4,7 +4,7 @@ import type { VariantProps } from "tailwind-variants";
 import {
   ToggleButtonProvider,
   toggleButtonStyles,
-} from "@/components/dynamic-ui/toggle-button";
+} from "@/registry/ui/toggle-button.basic";
 import {
   ToggleButtonGroup as AriaToggleButtonGroup,
   composeRenderProps,

@@ -6,11 +6,11 @@ import type {
 } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
-import { Loader } from "@/components/dynamic-ui/loader";
-import { Ripple } from "@/components/dynamic-ui/ripple";
 import { useRipple } from "@/registry/hooks/use-ripple";
 import { focusRing } from "@/registry/lib/focus-styles";
 import { createOptionalScopedContext } from "@/registry/lib/utils";
+import { Loader } from "@/registry/ui/loader.ring";
+import { Ripple } from "@/registry/ui/ripple";
 import { chain } from "@react-aria/utils";
 import {
   Button as AriaButton,

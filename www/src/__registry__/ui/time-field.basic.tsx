@@ -1,15 +1,15 @@
 "use client";
 
-import type { FieldProps } from "@/components/dynamic-ui/field";
-import type { InputRootProps } from "@/components/dynamic-ui/input";
+import type { FieldProps } from "@/registry/ui/field.basic";
+import type { InputRootProps } from "@/registry/ui/input.basic";
 import type {
   TimeFieldProps as AriaTimeFieldProps,
   TimeValue,
 } from "react-aria-components";
 import * as React from "react";
-import { DateInput, DateSegment } from "@/components/dynamic-ui/date-input";
-import { HelpText, Label } from "@/components/dynamic-ui/field";
-import { InputRoot } from "@/components/dynamic-ui/input";
+import { DateInput, DateSegment } from "@/registry/ui/date-input.basic";
+import { HelpText, Label } from "@/registry/ui/field.basic";
+import { InputRoot } from "@/registry/ui/input.basic";
 import {
   TimeField as AriaTimeField,
   composeRenderProps,

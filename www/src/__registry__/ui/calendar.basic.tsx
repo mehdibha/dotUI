@@ -6,9 +6,9 @@ import type {
   DateValue,
 } from "react-aria-components";
 import React from "react";
-import { Button } from "@/components/dynamic-ui/button";
-import { Text } from "@/components/dynamic-ui/text";
 import { focusRing } from "@/registry/lib/focus-styles";
+import { Button } from "@/registry/ui/button.basic";
+import { Text } from "@/registry/ui/text.basic";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import {
   Calendar as AriaCalendar,

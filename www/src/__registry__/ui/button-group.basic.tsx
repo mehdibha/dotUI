@@ -1,7 +1,7 @@
 "use client";
 
 import type { VariantProps } from "tailwind-variants";
-import { ButtonProvider, buttonStyles } from "@/components/dynamic-ui/button";
+import { ButtonProvider, buttonStyles } from "@/registry/ui/button.basic";
 import { ButtonContext as AriaButtonContext } from "react-aria-components";
 import { tv } from "tailwind-variants";
 

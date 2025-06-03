@@ -1,11 +1,8 @@
 "use client";
 
 import type { ValidationResult } from "react-aria-components";
-import {
-  CheckboxProvider,
-  checkboxStyles,
-} from "@/components/dynamic-ui/checkbox";
-import { HelpText, Label } from "@/components/dynamic-ui/field";
+import { CheckboxProvider, checkboxStyles } from "@/registry/ui/checkbox.basic";
+import { HelpText, Label } from "@/registry/ui/field.basic";
 import {
   CheckboxGroup as AriaCheckboxGroup,
   composeRenderProps,

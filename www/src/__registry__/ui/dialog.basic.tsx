@@ -1,8 +1,8 @@
 "use client";
 
-import type { OverlayProps } from "@/components/dynamic-ui/overlay";
+import type { OverlayProps } from "@/registry/ui/overlay.basic";
 import * as React from "react";
-import { Overlay } from "@/components/dynamic-ui/overlay";
+import { Overlay } from "@/registry/ui/overlay.basic";
 import {
   Dialog as AriaDialog,
   DialogTrigger as AriaDialogTrigger,

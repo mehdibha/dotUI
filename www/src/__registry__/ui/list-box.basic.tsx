@@ -7,9 +7,9 @@ import type {
 } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 import React from "react";
-import { Loader } from "@/components/dynamic-ui/loader";
-import { Text } from "@/components/dynamic-ui/text";
 import { focusRing } from "@/registry/lib/focus-styles";
+import { Loader } from "@/registry/ui/loader.ring";
+import { Text } from "@/registry/ui/text.basic";
 import { CheckIcon } from "lucide-react";
 import {
   Collection as AriaCollection,

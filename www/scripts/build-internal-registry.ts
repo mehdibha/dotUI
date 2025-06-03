@@ -73,7 +73,7 @@ async function buildDemos() {
 
 async function buildDynamicComponents() {
   const targetPath = path.join(INTERNAL_REGISTRY_PATH, "ui");
-  const sourcePath = path.join(process.cwd(), "src/modules/registry/ui");
+  const sourcePath = path.join(process.cwd(), "src/registry/ui");
   const files = await fs.readdir(sourcePath);
 
   for (const file of files) {

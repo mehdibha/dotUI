@@ -1,6 +1,6 @@
 "use client";
 
-import { ColorThumb } from "@/components/dynamic-ui/color-thumb";
+import { ColorThumb } from "@/registry/ui/color-thumb.basic";
 import {
   ColorArea as AriaColorArea,
   composeRenderProps,

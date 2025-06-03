@@ -6,9 +6,9 @@ import type {
   TableBodyProps as AriaTableBodyProps,
   TableHeaderProps as AriaTableHeaderProps,
 } from "react-aria-components";
-import { Checkbox } from "@/components/dynamic-ui/checkbox";
 import { focusRing } from "@/registry/lib/focus-styles";
 import { cn, createScopedContext } from "@/registry/lib/utils";
+import { Checkbox } from "@/registry/ui/checkbox.basic";
 import { ChevronDownIcon, ChevronUpIcon, GripVerticalIcon } from "lucide-react";
 import {
   Button as AriaButton,

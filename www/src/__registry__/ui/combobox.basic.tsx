@@ -1,17 +1,17 @@
 "use client";
 
-import type { FieldProps } from "@/components/dynamic-ui/field";
+import type { FieldProps } from "@/registry/ui/field.basic";
 import type { ComboBoxProps as AriaComboboxProps } from "react-aria-components";
 import * as React from "react";
-import { Button } from "@/components/dynamic-ui/button";
-import { HelpText, Label } from "@/components/dynamic-ui/field";
-import { Input, InputRoot } from "@/components/dynamic-ui/input";
+import { Button } from "@/registry/ui/button.basic";
+import { HelpText, Label } from "@/registry/ui/field.basic";
+import { Input, InputRoot } from "@/registry/ui/input.basic";
 import {
   ListBox,
   ListBoxItem,
   ListBoxItemProps,
-} from "@/components/dynamic-ui/list-box";
-import { Overlay } from "@/components/dynamic-ui/overlay";
+} from "@/registry/ui/list-box.basic";
+import { Overlay } from "@/registry/ui/overlay.basic";
 import { ChevronDownIcon } from "lucide-react";
 import { ComboBox as AriaCombobox } from "react-aria-components";
 import { tv } from "tailwind-variants";

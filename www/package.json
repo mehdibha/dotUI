@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "pnpm run build:registry && next build",
-    "clean": "git clean -xdf .cache .next .turbo node_modules",
+    "build": "next build",
+    "build:internal-registry": "tsx ./scripts/build-internal-registry.ts && prettier --log-level silent --write \"src/__registry__/**/*.{ts,tsx,mdx}\" --cache",    "clean": "git clean -xdf .cache .next .turbo node_modules",
     "dev": "next dev --turbopack",
     "format": "prettier --check . --ignore-path ../.gitignore",
     "format:fix": "prettier --write . --ignore-path ../.gitignore",

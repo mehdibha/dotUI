@@ -6,9 +6,9 @@ import type {
 } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
-import { Loader } from "@/components/dynamic-ui/loader";
 import { focusRing } from "@/registry/lib/focus-styles";
 import { createOptionalScopedContext } from "@/registry/lib/utils";
+import { Loader } from "@/registry/ui/loader.ring";
 import {
   Button as AriaButton,
   Link as AriaLink,

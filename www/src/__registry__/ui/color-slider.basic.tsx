@@ -1,7 +1,7 @@
 "use client";
 
-import { ColorThumb } from "@/components/dynamic-ui/color-thumb";
-import { Label } from "@/components/dynamic-ui/field";
+import { ColorThumb } from "@/registry/ui/color-thumb.basic";
+import { Label } from "@/registry/ui/field.basic";
 import {
   ColorSlider as AriaColorSlider,
   SliderOutput as AriaSliderOutput,
