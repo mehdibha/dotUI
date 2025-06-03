@@ -50,6 +50,28 @@ const config = {
         parser: "babel",
       },
     },
+    // Handle .mjs files with ES modules
+    {
+      files: "*.mjs",
+      options: {
+        parser: "babel",
+        importOrderParserPlugins: ["jsx", "decorators-legacy"],
+      },
+    },
+    // Skip import sorting for MDX files as they have mixed Markdown/JSX syntax
+    {
+      files: ["*.mdx", "*.md"],
+      options: {
+        plugins: ["prettier-plugin-tailwindcss"], // Only use tailwind plugin, skip import sorting
+      },
+    },
+    // Skip import sorting for generated files that might have parsing issues
+    {
+      files: ["**/.source/**/*", "**/generated/**/*"],
+      options: {
+        plugins: ["prettier-plugin-tailwindcss"], // Only use tailwind plugin, skip import sorting
+      },
+    },
   ],
 };
 
