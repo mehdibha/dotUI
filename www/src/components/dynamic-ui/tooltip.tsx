@@ -1,17 +1,17 @@
 "use client";
 
+import type {
+  TooltipArrowProps,
+  TooltipContentProps,
+  TooltipProps,
+  TooltipRootProps,
+} from "@/__registry__/ui/tooltip.basic";
 import React from "react";
 import {
   Tooltip as _Tooltip,
-  TooltipRoot as _TooltipRoot,
-  TooltipContent as _TooltipContent,
   TooltipArrow as _TooltipArrow,
-} from "@/__registry__/ui/tooltip.basic";
-import type {
-  TooltipProps,
-  TooltipRootProps,
-  TooltipContentProps,
-  TooltipArrowProps,
+  TooltipContent as _TooltipContent,
+  TooltipRoot as _TooltipRoot,
 } from "@/__registry__/ui/tooltip.basic";
 import { createDynamicComponent } from "@/modules/styles/lib/create-dynamic-component";
 

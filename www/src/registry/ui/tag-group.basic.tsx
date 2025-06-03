@@ -1,19 +1,22 @@
 "use client";
 
-import React from "react";
-import {
-  composeRenderProps,
-  TagGroup as AriaTagGroup,
-  TagList as AriaTagList,
-  Tag as AriaTag,
-  type TagGroupProps as AriaTagGroupProps,
-  type TagListProps as AriaTagListProps,
-  type TagProps as AriaTagProps,
+import type { FieldProps } from "@/registry/ui/field.basic";
+import type {
+  TagGroupProps as AriaTagGroupProps,
+  TagListProps as AriaTagListProps,
+  TagProps as AriaTagProps,
 } from "react-aria-components";
-import { tv, VariantProps } from "tailwind-variants";
+import React from "react";
 import { focusRing } from "@/registry/lib/focus-styles";
 import { Button } from "@/registry/ui/button.basic";
-import { HelpText, Label, type FieldProps } from "@/registry/ui/field.basic";
+import { HelpText, Label } from "@/registry/ui/field.basic";
+import {
+  Tag as AriaTag,
+  TagGroup as AriaTagGroup,
+  TagList as AriaTagList,
+  composeRenderProps,
+} from "react-aria-components";
+import { tv, VariantProps } from "tailwind-variants";
 
 const tagGroupStyles = tv({
   slots: {

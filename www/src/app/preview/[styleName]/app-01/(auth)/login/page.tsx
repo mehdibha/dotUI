@@ -1,13 +1,12 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Form } from "react-aria-components";
-import { Link } from "@/components/ui/link";
+import { useSimulateApiCall } from "@/app/preview/[styleName]/app-01/hooks/use-api";
 import { Button } from "@/components/dynamic-ui/button";
 import { TextField } from "@/components/dynamic-ui/text-field";
-import { GitHubIcon, TwitterIcon } from "@/components/icons";
-import { GoogleIcon } from "@/components/icons";
-import { useSimulateApiCall } from "@/app/preview/[styleName]/app-01/hooks/use-api";
+import { GitHubIcon, GoogleIcon, TwitterIcon } from "@/components/icons";
+import { Link } from "@/components/ui/link";
+import { Form } from "react-aria-components";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -32,7 +31,7 @@ export default function LoginPage() {
           loginWithEmail.simulateApiCall();
         }}
       >
-        <h1 className="text-2xl font-semibold leading-none tracking-tight">
+        <h1 className="text-2xl leading-none font-semibold tracking-tight">
           Login
         </h1>
         <p className="text-fg-muted mt-2 text-sm">

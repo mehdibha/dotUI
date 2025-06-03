@@ -1,6 +1,7 @@
 "use server";
 
-import { codeToHtml as shikiCodeToHtml, type BundledLanguage } from "shiki";
+import type { BundledLanguage } from "shiki";
+import { codeToHtml as shikiCodeToHtml } from "shiki";
 
 export const codeToHtml = async (
   code: string,

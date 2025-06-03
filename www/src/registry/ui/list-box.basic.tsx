@@ -1,23 +1,26 @@
 "use client";
 
-import React from "react";
-import { CheckIcon } from "lucide-react";
-import {
-  composeRenderProps,
-  ListBox as AriaListBox,
-  ListBoxItem as AriaListBoxItem,
-  ListBoxSection as AriaListBoxSection,
-  Collection as AriaCollection,
-  Header as AriaHeader,
-  type ListBoxProps as AriaListBoxProps,
-  type ListBoxItemProps as AriaListBoxItemProps,
-  type ListBoxSectionProps as AriaListBoxSectionProps,
-  ListStateContext,
+import type {
+  ListBoxItemProps as AriaListBoxItemProps,
+  ListBoxProps as AriaListBoxProps,
+  ListBoxSectionProps as AriaListBoxSectionProps,
 } from "react-aria-components";
-import { tv, type VariantProps } from "tailwind-variants";
+import type { VariantProps } from "tailwind-variants";
+import React from "react";
 import { focusRing } from "@/registry/lib/focus-styles";
 import { Loader } from "@/registry/ui/loader.ring";
 import { Text } from "@/registry/ui/text.basic";
+import { CheckIcon } from "lucide-react";
+import {
+  Collection as AriaCollection,
+  Header as AriaHeader,
+  ListBox as AriaListBox,
+  ListBoxItem as AriaListBoxItem,
+  ListBoxSection as AriaListBoxSection,
+  composeRenderProps,
+  ListStateContext,
+} from "react-aria-components";
+import { tv } from "tailwind-variants";
 
 const listBoxStyles = tv({
   base: [

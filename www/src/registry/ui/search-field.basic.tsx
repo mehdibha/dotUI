@@ -1,19 +1,17 @@
 "use client";
 
+import type { FieldProps } from "@/registry/ui/field.basic";
+import type { InputRootProps } from "@/registry/ui/input.basic";
 import * as React from "react";
+import { Button } from "@/registry/ui/button.basic";
+import { HelpText, Label } from "@/registry/ui/field.basic";
+import { Input, InputRoot } from "@/registry/ui/input.basic";
 import { SearchIcon, XIcon } from "lucide-react";
 import {
   SearchField as AriaSearchField,
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { Button } from "@/registry/ui/button.basic";
-import { Label, HelpText, type FieldProps } from "@/registry/ui/field.basic";
-import {
-  InputRoot,
-  Input,
-  type InputRootProps,
-} from "@/registry/ui/input.basic";
 
 const searchFieldtyles = tv({
   base: "group flex w-48 flex-col items-start gap-2 empty:[&_button[slot='clear']]:hidden [&_input]:[&::-webkit-search-cancel-button]:appearance-none [&_input]:[&::-webkit-search-decoration]:appearance-none",

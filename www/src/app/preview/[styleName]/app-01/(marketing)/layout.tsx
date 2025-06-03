@@ -1,5 +1,5 @@
-import { HexagonIcon } from "lucide-react";
 import { Button } from "@/components/dynamic-ui/button";
+import { HexagonIcon } from "lucide-react";
 
 export default function MarketingLayout({
   children,
@@ -7,7 +7,7 @@ export default function MarketingLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="max-w-(--breakpoint-lg) container">
+    <div className="container max-w-(--breakpoint-lg)">
       <Header />
       <main className="mt-16">{children}</main>
       <Footer />

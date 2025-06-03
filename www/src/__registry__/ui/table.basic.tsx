@@ -1,29 +1,30 @@
 "use client";
 
-import { ChevronDownIcon, ChevronUpIcon, GripVerticalIcon } from "lucide-react";
-import {
-  ResizableTableContainer as AriaResizableTableContainer,
-  Table as AriaTable,
-  TableHeader as AriaTableHeader,
-  TableBody as AriaTableBody,
-  Column as AriaColumn,
-  Collection as AriaCollection,
-  ColumnResizer as AriaColumnResizer,
-  Row as AriaRow,
-  Cell as AriaCell,
-  Button as AriaButton,
-  useTableOptions,
-  composeRenderProps,
-  type ResizableTableContainerProps as AriaResiableTableContainerProps,
-  type RowProps as AriaRowProps,
-  type TableBodyProps as AriaTableBodyProps,
-  type TableHeaderProps as AriaTableHeaderProps,
+import type {
+  ResizableTableContainerProps as AriaResiableTableContainerProps,
+  RowProps as AriaRowProps,
+  TableBodyProps as AriaTableBodyProps,
+  TableHeaderProps as AriaTableHeaderProps,
 } from "react-aria-components";
-import { tv, VariantProps } from "tailwind-variants";
 import { Checkbox } from "@/components/dynamic-ui/checkbox";
 import { focusRing } from "@/registry/lib/focus-styles";
-import { cn } from "@/registry/lib/utils";
-import { createScopedContext } from "@/registry/lib/utils";
+import { cn, createScopedContext } from "@/registry/lib/utils";
+import { ChevronDownIcon, ChevronUpIcon, GripVerticalIcon } from "lucide-react";
+import {
+  Button as AriaButton,
+  Cell as AriaCell,
+  Collection as AriaCollection,
+  Column as AriaColumn,
+  ColumnResizer as AriaColumnResizer,
+  ResizableTableContainer as AriaResizableTableContainer,
+  Row as AriaRow,
+  Table as AriaTable,
+  TableBody as AriaTableBody,
+  TableHeader as AriaTableHeader,
+  composeRenderProps,
+  useTableOptions,
+} from "react-aria-components";
+import { tv, VariantProps } from "tailwind-variants";
 
 const tableStyles = tv({
   slots: {
@@ -228,7 +229,7 @@ function TableRow<T extends object>({
             slot="drag"
             className={cn(
               focusRing(),
-              "rounded-xs text-fg-muted inline-flex items-center justify-center [&_svg]:size-4"
+              "text-fg-muted inline-flex items-center justify-center rounded-xs [&_svg]:size-4"
             )}
           >
             <GripVerticalIcon />

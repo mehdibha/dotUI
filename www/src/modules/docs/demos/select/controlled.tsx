@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
 import type { Key } from "react-aria-components";
+import React from "react";
 import { Select, SelectItem } from "@/components/dynamic-ui/select";
 
 export default function Demo() {

@@ -2,6 +2,13 @@
 
 import React from "react";
 import { useParams, usePathname } from "next/navigation";
+import { useSidebarContext } from "@/components/sidebar";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useDebounce } from "@/hooks/use-debounce";
+import { useMounted } from "@/hooks/use-mounted";
+import { cn } from "@/lib/utils";
+import { useStyles } from "@/modules/styles/atoms/styles-atom";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -11,13 +18,6 @@ import {
   SmartphoneIcon,
 } from "lucide-react";
 import { motion } from "motion/react";
-import { cn } from "@/lib/utils";
-import { useDebounce } from "@/hooks/use-debounce";
-import { useMounted } from "@/hooks/use-mounted";
-import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
-import { useSidebarContext } from "@/components/sidebar";
-import { useStyles } from "@/modules/styles/atoms/styles-atom";
 
 const PreviewContext = React.createContext<{
   isOpen: boolean;

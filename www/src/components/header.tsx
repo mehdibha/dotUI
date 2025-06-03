@@ -2,10 +2,11 @@
 
 import React from "react";
 import Link from "next/link";
-import { SearchIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config";
+import { cn } from "@/lib/utils";
+import { SearchIcon } from "lucide-react";
+
 import { GitHubIcon, TwitterIcon } from "./icons";
 import { Logo } from "./logo";
 import { SearchCommand } from "./search-command";
@@ -17,7 +18,7 @@ export function Header({ className }: { className?: string }) {
     <header
       className={cn("bg-bg sticky top-0 z-50 w-full border-b", className)}
     >
-      <div className="container relative flex h-14 max-w-screen-2xl items-center justify-between px-16">
+      <div className="relative container flex h-14 max-w-screen-2xl items-center justify-between px-16">
         <div className="flex items-center gap-6">
           <Logo />
           <div className="flex items-center gap-3 text-sm">
@@ -48,7 +49,7 @@ export function Header({ className }: { className?: string }) {
                   <Kbd>K</Kbd>
                 </div>
               }
-              className="text-fg-muted gap-2 pl-3 pr-1"
+              className="text-fg-muted gap-2 pr-1 pl-3"
             >
               <span className="mr-6 flex-1">Search docs...</span>
             </Button>

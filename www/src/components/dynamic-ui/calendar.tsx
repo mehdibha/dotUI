@@ -1,32 +1,32 @@
 "use client";
 
-import React from "react";
-import { type DateValue } from "react-aria-components";
-import {
-  Calendar as _Calendar,
-  CalendarRoot as _CalendarRoot,
-  RangeCalendar as _RangeCalendar,
-  RangeCalendarRoot as _RangeCalendarRoot,
-  CalendarHeader as _CalendarHeader,
-  CalendarGrid as _CalendarGrid,
-  CalendarGridHeader as _CalendarGridHeader,
-  CalendarHeaderCell as _CalendarHeaderCell,
-  CalendarGridBody as _CalendarGridBody,
-  CalendarCell as _CalendarCell,
-} from "@/__registry__/ui/calendar.basic";
 import type {
+  CalendarCellProps,
+  CalendarGridBodyProps,
+  CalendarGridHeaderProps,
+  CalendarGridProps,
+  CalendarHeaderCellProps,
+  CalendarHeaderProps,
   CalendarProps,
   CalendarRootProps,
   RangeCalendarProps,
   RangeCalendarRootProps,
-  CalendarHeaderProps,
-  CalendarGridProps,
-  CalendarGridHeaderProps,
-  CalendarHeaderCellProps,
-  CalendarGridBodyProps,
-  CalendarCellProps,
+} from "@/__registry__/ui/calendar.basic";
+import React from "react";
+import {
+  Calendar as _Calendar,
+  CalendarCell as _CalendarCell,
+  CalendarGrid as _CalendarGrid,
+  CalendarGridBody as _CalendarGridBody,
+  CalendarGridHeader as _CalendarGridHeader,
+  CalendarHeader as _CalendarHeader,
+  CalendarHeaderCell as _CalendarHeaderCell,
+  CalendarRoot as _CalendarRoot,
+  RangeCalendar as _RangeCalendar,
+  RangeCalendarRoot as _RangeCalendarRoot,
 } from "@/__registry__/ui/calendar.basic";
 import { createDynamicComponent } from "@/modules/styles/lib/create-dynamic-component";
+import { type DateValue } from "react-aria-components";
 
 export const Calendar = createDynamicComponent<CalendarProps<DateValue>>(
   "calendar",

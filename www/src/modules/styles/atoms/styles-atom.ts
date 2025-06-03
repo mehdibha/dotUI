@@ -1,8 +1,8 @@
 import React from "react";
+import { styles } from "@/registry/registry-styles";
 import { useAtom } from "jotai";
 import { withImmer } from "jotai-immer";
 import { atomWithStorage } from "jotai/utils";
-import { styles } from "@/registry/registry-styles";
 
 // import { StyleFoundations } from "@/modules/styles/types";
 

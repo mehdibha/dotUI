@@ -1,14 +1,15 @@
 "use client";
 
+import type { ToggleButtonProps as AriaToggleButtonProps } from "react-aria-components";
+import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
-import {
-  composeRenderProps,
-  ToggleButton as AriaToggleButton,
-  type ToggleButtonProps as AriaToggleButtonProps,
-} from "react-aria-components";
-import { tv, type VariantProps } from "tailwind-variants";
 import { focusRing } from "@/registry/lib/focus-styles";
 import { createOptionalScopedContext } from "@/registry/lib/utils";
+import {
+  ToggleButton as AriaToggleButton,
+  composeRenderProps,
+} from "react-aria-components";
+import { tv } from "tailwind-variants";
 
 const toggleButtonStyles = tv({
   extend: focusRing,

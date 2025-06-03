@@ -30,7 +30,7 @@ npx shadcn@latest add https://dotui.org/r/{style-name}/radio-group.json
 Use radio group to allow users to select a single option from a short list of related options.
 
 ```tsx
-import { RadioGroup, Radio } from "@/components/core/radio-group";
+import { Radio, RadioGroup } from "@/components/core/radio-group";
 
 <RadioGroup defaultValue="sm" label="Size" description="Select a product size.">
   <Radio value="sm">Small</Radio>
@@ -40,11 +40,11 @@ import { RadioGroup, Radio } from "@/components/core/radio-group";
 ```
 
 ```tsx
-import { Label, Description } from "@/components/core/field";
+import { Description, Label } from "@/components/core/field";
 import {
   RadioGroupRoot,
-  RadioRoot,
   RadioIndicator,
+  RadioRoot,
 } from "@/components/core/radio-group";
 
 <RadioGroupRoot defaultValue="sm">

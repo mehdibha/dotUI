@@ -1,4 +1,4 @@
-import { RadioGroup, Radio } from "@/components/dynamic-ui/radio-group";
+import { Radio, RadioGroup } from "@/components/dynamic-ui/radio-group";
 
 export default function Demo() {
   return (

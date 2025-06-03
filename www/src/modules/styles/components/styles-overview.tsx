@@ -1,21 +1,20 @@
 "use client";
 
 import React from "react";
-import { UNSAFE_PortalProvider } from "@react-aria/overlays";
-import { CheckIcon, CopyIcon } from "lucide-react";
-import { AnimatePresence, motion, Variants } from "motion/react";
-import { useInView } from "motion/react";
-import { useMounted } from "@/hooks/use-mounted";
-import { Button } from "@/components/ui/button";
 import {
   ComponentsOverview,
   MobileComponentsOverview,
 } from "@/components/components-overview";
 import * as Icons from "@/components/icons";
+import { Button } from "@/components/ui/button";
+import { useMounted } from "@/hooks/use-mounted";
+import { StyleProvider } from "@/modules/styles/components/style-provider";
 import { styles } from "@/registry/registry-styles";
 import { Skeleton } from "@/registry/ui/skeleton.basic";
-import { Tabs, TabList, Tab } from "@/registry/ui/tabs.motion";
-import { StyleProvider } from "@/modules/styles/components/style-provider";
+import { Tab, TabList, Tabs } from "@/registry/ui/tabs.motion";
+import { UNSAFE_PortalProvider } from "@react-aria/overlays";
+import { CheckIcon, CopyIcon } from "lucide-react";
+import { AnimatePresence, motion, useInView, Variants } from "motion/react";
 
 export const StylesOverview = () => {
   const container = React.useRef(null);
@@ -90,7 +89,7 @@ export const StylesOverview = () => {
             </TabList>
           </Tabs>
           <div className="flex flex-1 items-center justify-center">
-            <div className="text-fg-muted relative flex items-center gap-2 py-2 pl-4 pr-2 font-mono text-xs">
+            <div className="text-fg-muted relative flex items-center gap-2 py-2 pr-2 pl-4 font-mono text-xs">
               <motion.div
                 layout
                 initial={false}

@@ -1,17 +1,17 @@
 "use client";
 
 import React from "react";
-import { EllipsisIcon } from "lucide-react";
-import { Link } from "react-aria-components";
-import { useMounted } from "@/hooks/use-mounted";
 import { Alert } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { DialogRoot, Dialog, DialogFooter } from "@/components/ui/dialog";
+import { Dialog, DialogFooter, DialogRoot } from "@/components/ui/dialog";
 import { Menu, MenuItem, MenuRoot } from "@/components/ui/menu";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useMounted } from "@/hooks/use-mounted";
 import { StyleProvider } from "@/modules/styles/components/style-provider";
 import { type Style } from "@/modules/styles/types";
+import { EllipsisIcon } from "lucide-react";
+import { Link } from "react-aria-components";
 
 export function StyleCard({
   style,
@@ -42,7 +42,7 @@ export function StyleCard({
           <Link
             aria-label={`Open style ${style.label}`}
             href={`/styles/${style.name}`}
-            className="z-1 absolute inset-0"
+            className="absolute inset-0 z-1"
           />
           <div className="w-full p-2">
             <div className="flex w-full items-center justify-between">

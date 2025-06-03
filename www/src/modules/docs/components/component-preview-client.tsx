@@ -1,17 +1,17 @@
 "use client";
 
 import React from "react";
-import { ChevronDownIcon } from "lucide-react";
-import { useHorizontalResize } from "@/hooks/use-horizontal-resize";
-import { useMounted } from "@/hooks/use-mounted";
+import { ThemeModeSwitch } from "@/components/theme-mode-switch";
 import { Button } from "@/components/ui/button";
 import { ListBox } from "@/components/ui/list-box";
 import { Popover } from "@/components/ui/popover";
 import { SelectItem, SelectRoot, SelectValue } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ThemeModeSwitch } from "@/components/theme-mode-switch";
-import { styles } from "@/registry/registry-styles";
+import { useHorizontalResize } from "@/hooks/use-horizontal-resize";
+import { useMounted } from "@/hooks/use-mounted";
 import { useStyles } from "@/modules/styles/atoms/styles-atom";
+import { styles } from "@/registry/registry-styles";
+import { ChevronDownIcon } from "lucide-react";
 
 export const Loader = ({ children }: { children: React.ReactNode }) => {
   const [isMounted, setIsMounted] = React.useState(false);
@@ -58,7 +58,7 @@ export const ResizableContainer = ({
     >
       <div
         onMouseDown={handleMouseDown}
-        className="h-15 bg-bg-neutral hover:bg-bg-neutral-hover active:bg-bg-neutral-active absolute right-2 top-1/2 z-20 w-2 -translate-y-1/2 cursor-col-resize rounded-full shadow-sm"
+        className="bg-bg-neutral hover:bg-bg-neutral-hover active:bg-bg-neutral-active absolute top-1/2 right-2 z-20 h-15 w-2 -translate-y-1/2 cursor-col-resize rounded-full shadow-sm"
       />
       {children}
     </div>
@@ -72,7 +72,7 @@ export const ComponentPreviewHeader = () => {
   const isMounted = useMounted();
 
   return (
-    <div className="absolute left-0 top-0 z-50 flex w-full items-center justify-between gap-2 p-2">
+    <div className="absolute top-0 left-0 z-50 flex w-full items-center justify-between gap-2 p-2">
       <SelectRoot
         selectedKey={currentStyle.name}
         onSelectionChange={(key) => setCurrentStyle(key as string)}

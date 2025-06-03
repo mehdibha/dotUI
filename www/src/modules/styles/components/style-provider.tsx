@@ -4,6 +4,7 @@ import React from "react";
 import { ComponentsProvider } from "@/modules/styles/contexts/components-context";
 import { PreferencesProvider } from "@/modules/styles/contexts/preferences-context";
 import { Style } from "@/modules/styles/types";
+
 import { FontsProvider } from "./fonts-provider";
 import { ThemeProvider, ThemeProviderProps } from "./theme-provider";
 

@@ -2,13 +2,13 @@
 
 import React from "react";
 import {
-  TableRoot,
-  TableHeader,
   TableBody,
-  TableRow,
-  TableColumn,
   TableCell,
+  TableColumn,
   TableContainer,
+  TableHeader,
+  TableRoot,
+  TableRow,
 } from "@/registry/ui/table.basic";
 
 const columns: Column[] = [

@@ -1,14 +1,14 @@
 "use client";
 
 import * as React from "react";
+import { createScopedContext } from "@/registry/lib/utils";
 import {
+  OverlayArrow as AriaOverlayArrow,
   Tooltip as AriaTooltip,
   TooltipTrigger as AriaTooltipTrigger,
-  OverlayArrow as AriaOverlayArrow,
   composeRenderProps,
 } from "react-aria-components";
 import { tv, VariantProps } from "tailwind-variants";
-import { createScopedContext } from "@/registry/lib/utils";
 
 // TODO: Remove tailwindcss-animate an replace it with css transitions
 

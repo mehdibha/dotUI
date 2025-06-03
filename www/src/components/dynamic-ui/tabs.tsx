@@ -1,17 +1,17 @@
 "use client";
 
+import type {
+  TabListProps,
+  TabPanelProps,
+  TabProps,
+  TabsProps,
+} from "@/__registry__/ui/tabs.basic";
 import React from "react";
 import {
-  Tabs as _Tabs,
-  TabList as _TabList,
   Tab as _Tab,
+  TabList as _TabList,
   TabPanel as _TabPanel,
-} from "@/__registry__/ui/tabs.basic";
-import type {
-  TabsProps,
-  TabListProps,
-  TabProps,
-  TabPanelProps,
+  Tabs as _Tabs,
 } from "@/__registry__/ui/tabs.basic";
 import { createDynamicComponent } from "@/modules/styles/lib/create-dynamic-component";
 

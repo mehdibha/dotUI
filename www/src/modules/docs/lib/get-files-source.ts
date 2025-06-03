@@ -1,4 +1,4 @@
-import { lstatSync, existsSync, promises as fs } from "node:fs";
+import { existsSync, promises as fs, lstatSync } from "node:fs";
 import path from "path";
 
 export const getFilesSource = async (relativePath: string) => {

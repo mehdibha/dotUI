@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import { CheckIcon, CopyIcon } from "lucide-react";
-import { tv } from "tailwind-variants";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { CheckIcon, CopyIcon } from "lucide-react";
+import { tv } from "tailwind-variants";
 
 const codeStyles = tv({
   base: "bg-bg-muted relative rounded-md",
@@ -50,7 +50,7 @@ const CodeClient = ({
         variant="quiet"
         shape="square"
         size="sm"
-        className="absolute right-2 top-2 [&_svg]:size-3"
+        className="absolute top-2 right-2 [&_svg]:size-3"
         onPress={handleCopy}
       >
         {copied ? (

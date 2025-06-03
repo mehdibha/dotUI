@@ -1,7 +1,7 @@
 "use client";
 
-import { ProgressBar as AriaProgressBar } from "react-aria-components";
 import type { ProgressBarProps } from "react-aria-components";
+import { ProgressBar as AriaProgressBar } from "react-aria-components";
 
 interface LoaderProps extends ProgressBarProps {
   size?: number;

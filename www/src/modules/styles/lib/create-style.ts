@@ -5,6 +5,7 @@ import {
   DEFAULT_PREFERENCES,
 } from "@/modules/styles/constants/defaults";
 import { Style, StyleFoundations } from "@/modules/styles/types";
+
 import { createTheme } from "./create-theme";
 
 export const createStyle = (opts: StyleFoundations): Style => {

@@ -1,5 +1,6 @@
 import React from "react";
 import { codeToHtml } from "shiki";
+
 import { CodeClient } from "./code-client";
 
 interface CodeProps {

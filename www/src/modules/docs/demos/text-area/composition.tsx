@@ -1,6 +1,6 @@
 import React from "react";
 import { Description, Label } from "@/components/dynamic-ui/field";
-import { TextAreaInput, InputRoot } from "@/components/dynamic-ui/input";
+import { InputRoot, TextAreaInput } from "@/components/dynamic-ui/input";
 import { TextAreaRoot } from "@/components/dynamic-ui/text-area";
 
 export default function Demo() {

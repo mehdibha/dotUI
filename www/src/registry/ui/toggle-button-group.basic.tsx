@@ -1,14 +1,15 @@
 "use client";
 
-import {
-  ToggleButtonGroup as AriaToggleButtonGroup,
-  composeRenderProps,
-} from "react-aria-components";
-import { tv, type VariantProps } from "tailwind-variants";
+import type { VariantProps } from "tailwind-variants";
 import {
   ToggleButtonProvider,
   toggleButtonStyles,
 } from "@/registry/ui/toggle-button.basic";
+import {
+  ToggleButtonGroup as AriaToggleButtonGroup,
+  composeRenderProps,
+} from "react-aria-components";
+import { tv } from "tailwind-variants";
 
 const toggleGroupStyles = tv({
   base: "isolate inline-flex items-center [&_button]:rounded-none [&_button]:first:rounded-s-md [&_button]:last:rounded-e-md",

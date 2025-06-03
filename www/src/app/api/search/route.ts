@@ -1,5 +1,5 @@
-import { createSearchAPI } from "fumadocs-core/search/server";
 import { source } from "@/app/source";
+import { createSearchAPI } from "fumadocs-core/search/server";
 
 const additionalPages = [
   {

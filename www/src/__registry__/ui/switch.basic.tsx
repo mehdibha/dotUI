@@ -1,13 +1,14 @@
 "use client";
 
+import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
+import { focusRing, focusRingGroup } from "@/registry/lib/focus-styles";
+import { createScopedContext } from "@/registry/lib/utils";
 import {
   Switch as AriaSwitch,
   composeRenderProps,
 } from "react-aria-components";
-import { tv, type VariantProps } from "tailwind-variants";
-import { focusRing, focusRingGroup } from "@/registry/lib/focus-styles";
-import { createScopedContext } from "@/registry/lib/utils";
+import { tv } from "tailwind-variants";
 
 const switchStyles = tv({
   slots: {

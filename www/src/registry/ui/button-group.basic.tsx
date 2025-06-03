@@ -1,8 +1,9 @@
 "use client";
 
-import { ButtonContext as AriaButtonContext } from "react-aria-components";
-import { tv, type VariantProps } from "tailwind-variants";
+import type { VariantProps } from "tailwind-variants";
 import { ButtonProvider, buttonStyles } from "@/registry/ui/button.basic";
+import { ButtonContext as AriaButtonContext } from "react-aria-components";
+import { tv } from "tailwind-variants";
 
 const buttonGroupStyles = tv({
   base: "isolate inline-flex items-center [&_button]:rounded-none [&_button]:first:rounded-s-md [&_button]:last:rounded-e-md",

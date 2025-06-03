@@ -1,14 +1,15 @@
 "use client";
 
+import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
+import { createScopedContext } from "@/registry/lib/utils";
 import {
   AlertCircleIcon,
   AlertTriangleIcon,
   CheckCircle2Icon,
   InfoIcon,
 } from "lucide-react";
-import { tv, type VariantProps } from "tailwind-variants";
-import { createScopedContext } from "@/registry/lib/utils";
+import { tv } from "tailwind-variants";
 
 const alertStyles = tv({
   slots: {

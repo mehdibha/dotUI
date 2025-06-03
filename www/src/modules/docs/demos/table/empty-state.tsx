@@ -1,10 +1,10 @@
 "use client";
 
 import {
-  TableRoot,
-  TableHeader,
   TableBody,
   TableColumn,
+  TableHeader,
+  TableRoot,
 } from "@/registry/ui/table.basic";
 
 export default function Demo() {

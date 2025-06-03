@@ -1,19 +1,20 @@
 "use client";
 
+import type { ValidationResult } from "react-aria-components";
+import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
-import {
-  Radio as AriaRadio,
-  RadioGroup as AriaRadioGroup,
-  composeRenderProps,
-  type ValidationResult,
-} from "react-aria-components";
-import { tv, type VariantProps } from "tailwind-variants";
 import { HelpText, Label } from "@/components/dynamic-ui/field";
 import { focusRing, focusRingGroup } from "@/registry/lib/focus-styles";
 import {
   createOptionalScopedContext,
   createScopedContext,
 } from "@/registry/lib/utils";
+import {
+  Radio as AriaRadio,
+  RadioGroup as AriaRadioGroup,
+  composeRenderProps,
+} from "react-aria-components";
+import { tv } from "tailwind-variants";
 
 const radioStyles = tv({
   slots: {

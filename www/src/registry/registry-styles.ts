@@ -1,4 +1,5 @@
 import { Style } from "@/modules/styles/types";
+
 import { brutalistTheme } from "./styles/brutalist";
 import { ghibliTheme } from "./styles/ghibli";
 import { materialTheme } from "./styles/material";

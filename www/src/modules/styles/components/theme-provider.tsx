@@ -1,9 +1,9 @@
 import React from "react";
-import { useTheme } from "next-themes";
-import { cn } from "@/lib/utils";
 import { useMounted } from "@/hooks/use-mounted";
+import { cn } from "@/lib/utils";
 import { useStyles } from "@/modules/styles/atoms/styles-atom";
 import { Theme } from "@/modules/styles/types";
+import { useTheme } from "next-themes";
 
 export interface ThemeProviderProps
   extends Omit<React.ComponentProps<"div">, "children" | "style"> {

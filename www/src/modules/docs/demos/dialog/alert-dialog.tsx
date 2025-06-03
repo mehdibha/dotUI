@@ -3,9 +3,9 @@
 import React from "react";
 import { Button } from "@/components/dynamic-ui/button";
 import {
-  DialogRoot,
   Dialog,
   DialogFooter,
+  DialogRoot,
 } from "@/components/dynamic-ui/dialog";
 
 export default function Demo() {

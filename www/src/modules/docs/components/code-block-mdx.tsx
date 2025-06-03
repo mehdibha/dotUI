@@ -1,17 +1,12 @@
 "use client";
 
-import {
-  type HTMLAttributes,
-  type ReactNode,
-  forwardRef,
-  useCallback,
-  useRef,
-} from "react";
-import { Check, Copy } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { useCopyButton } from "@/hooks/use-copy-button";
+import type { HTMLAttributes, ReactNode } from "react";
+import { forwardRef, useCallback, useRef } from "react";
 import { Button, ButtonProps } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useCopyButton } from "@/hooks/use-copy-button";
+import { cn } from "@/lib/utils";
+import { Check, Copy } from "lucide-react";
 
 export type CodeBlockProps = HTMLAttributes<HTMLElement> & {
   icon?: ReactNode;
@@ -98,7 +93,7 @@ export const CodeBlock = forwardRef<HTMLElement, CodeBlockProps>(
         ) : (
           allowCopy && (
             <CopyButton
-              className="z-2 absolute right-2 top-2 backdrop-blur-sm"
+              className="absolute top-2 right-2 z-2 backdrop-blur-sm"
               onCopy={onCopy}
             />
           )

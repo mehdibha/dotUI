@@ -1,13 +1,13 @@
 "use client";
 
 import React from "react";
+import { ColorSwatch } from "@/components/dynamic-ui/color-swatch";
+import { focusRing } from "@/registry/lib/focus-styles";
+import { cn } from "@/registry/lib/utils";
 import {
   ColorSwatchPicker as AriaColorSwatchPicker,
   ColorSwatchPickerItem as AriaColorSwatchPickerItem,
 } from "react-aria-components";
-import { ColorSwatch } from "@/components/dynamic-ui/color-swatch";
-import { focusRing } from "@/registry/lib/focus-styles";
-import { cn } from "@/registry/lib/utils";
 
 interface ColorSwatchPickerProps
   extends React.ComponentProps<typeof AriaColorSwatchPicker> {}
@@ -36,10 +36,10 @@ const ColorSwatchPickerItem = ({
         <>
           <ColorSwatch className={cn("size-full rounded-[inherit]")} />
           {isSelected && (
-            <div className="border-bg outline-bg-inverse z-1 absolute inset-0 rounded-[inherit] border-2 outline-2" />
+            <div className="border-bg outline-bg-inverse absolute inset-0 z-1 rounded-[inherit] border-2 outline-2" />
           )}
           {isDisabled && (
-            <div className="z-1 bg-bg/90 absolute inset-0 rounded-[inherit]" />
+            <div className="bg-bg/90 absolute inset-0 z-1 rounded-[inherit]" />
           )}
         </>
       )}

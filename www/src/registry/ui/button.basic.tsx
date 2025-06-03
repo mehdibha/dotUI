@@ -1,17 +1,20 @@
 "use client";
 
-import * as React from "react";
-import {
-  composeRenderProps,
-  Button as AriaButton,
-  Link as AriaLink,
-  type ButtonProps as AriaButtonProps,
-  type LinkProps as AriaLinkProps,
+import type {
+  ButtonProps as AriaButtonProps,
+  LinkProps as AriaLinkProps,
 } from "react-aria-components";
-import { tv, type VariantProps } from "tailwind-variants";
+import type { VariantProps } from "tailwind-variants";
+import * as React from "react";
 import { focusRing } from "@/registry/lib/focus-styles";
 import { createOptionalScopedContext } from "@/registry/lib/utils";
 import { Loader } from "@/registry/ui/loader.ring";
+import {
+  Button as AriaButton,
+  Link as AriaLink,
+  composeRenderProps,
+} from "react-aria-components";
+import { tv } from "tailwind-variants";
 
 const buttonStyles = tv({
   extend: focusRing,
@@ -104,7 +107,7 @@ const Button = React.forwardRef(
               <Loader
                 data-slot="spinner"
                 aria-label="loading"
-                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
                 size={16}
               />
             )}

@@ -1,17 +1,17 @@
 "use client";
 
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import { Heading } from "react-aria-components";
 import { Button } from "@/components/dynamic-ui/button";
 import {
-  CalendarHeader,
-  CalendarGrid,
-  CalendarGridHeader,
-  CalendarHeaderCell,
-  CalendarGridBody,
   CalendarCell,
+  CalendarGrid,
+  CalendarGridBody,
+  CalendarGridHeader,
+  CalendarHeader,
+  CalendarHeaderCell,
+  RangeCalendarRoot,
 } from "@/components/dynamic-ui/calendar";
-import { RangeCalendarRoot } from "@/components/dynamic-ui/calendar";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { Heading } from "react-aria-components";
 
 export default function Demo() {
   return (

@@ -1,16 +1,20 @@
 "use client";
 
+import type { FieldProps } from "@/registry/ui/field.basic";
+import type { InputRootProps } from "@/registry/ui/input.basic";
+import type {
+  TimeFieldProps as AriaTimeFieldProps,
+  TimeValue,
+} from "react-aria-components";
 import * as React from "react";
+import { DateInput, DateSegment } from "@/registry/ui/date-input.basic";
+import { HelpText, Label } from "@/registry/ui/field.basic";
+import { InputRoot } from "@/registry/ui/input.basic";
 import {
   TimeField as AriaTimeField,
   composeRenderProps,
-  type TimeValue,
-  type TimeFieldProps as AriaTimeFieldProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { DateInput, DateSegment } from "@/registry/ui/date-input.basic";
-import { HelpText, Label, type FieldProps } from "@/registry/ui/field.basic";
-import { InputRoot, type InputRootProps } from "@/registry/ui/input.basic";
 
 const timeFieldStyles = tv({
   base: "flex w-32 flex-col items-start gap-2",

@@ -1,20 +1,20 @@
 import React from "react";
-import { ArrowUpRightIcon } from "lucide-react";
-import { MDXComponents } from "mdx/types";
-import { cn } from "@/lib/utils";
 import { Alert, AlertProps } from "@/components/ui/alert";
 import { Badge, BadgeProps } from "@/components/ui/badge";
 import { LinkProps, Link as NavLink } from "@/components/ui/link";
+import { cn } from "@/lib/utils";
+import { ArrowUpRightIcon } from "lucide-react";
+import { MDXComponents } from "mdx/types";
+
+import type { ComponentPreviewProps } from "./component-preview";
+import type { TabsProps } from "./tabs";
 import { BadgePalette } from "./badge-palette";
 import { Choice, Choices, ChoicesProps } from "./choices";
 import { Pre } from "./code-block-mdx";
-import {
-  ComponentPreview,
-  type ComponentPreviewProps,
-} from "./component-preview";
+import { ComponentPreview } from "./component-preview";
 import { InstallTab, InstallTabs } from "./install-tabs";
 import { Palette, PaletteProps } from "./palette";
-import { Tabs, Tab, type TabsProps } from "./tabs";
+import { Tab, Tabs } from "./tabs";
 
 export const mdxComponents: MDXComponents = {
   h1: createHeading(1, "font-heading mt-2 scroll-m-20 text-4xl font-bold"),
@@ -40,7 +40,7 @@ export const mdxComponents: MDXComponents = {
   >,
   p: ({ className, ...props }) => (
     <p
-      className={cn("not-first:mt-4 text-base leading-7", className)}
+      className={cn("text-base leading-7 not-first:mt-4", className)}
       {...props}
     />
   ),

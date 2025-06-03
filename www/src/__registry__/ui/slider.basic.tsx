@@ -1,20 +1,21 @@
 "use client";
 
+import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
+import { Description, Label } from "@/components/dynamic-ui/field";
+import { focusRing } from "@/registry/lib/focus-styles";
+import { createScopedContext } from "@/registry/lib/utils";
 import { useSlotId } from "@react-aria/utils";
 import {
-  composeRenderProps,
   Slider as AriaSlider,
   SliderOutput as AriaSliderOutput,
   SliderThumb as AriaSliderThumb,
   SliderTrack as AriaSliderTrack,
-  TextContext,
+  composeRenderProps,
   SliderStateContext,
+  TextContext,
 } from "react-aria-components";
-import { tv, type VariantProps } from "tailwind-variants";
-import { Description, Label } from "@/components/dynamic-ui/field";
-import { focusRing } from "@/registry/lib/focus-styles";
-import { createScopedContext } from "@/registry/lib/utils";
+import { tv } from "tailwind-variants";
 
 const sliderStyles = tv({
   slots: {

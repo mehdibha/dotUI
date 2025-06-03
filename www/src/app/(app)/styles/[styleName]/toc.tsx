@@ -2,9 +2,10 @@
 
 import React from "react";
 import { usePathname } from "next/navigation";
-import { AnimatePresence, motion } from "motion/react";
 import { useMounted } from "@/hooks/use-mounted";
 import { TableOfContents } from "@/modules/docs/components/toc";
+import { AnimatePresence, motion } from "motion/react";
+
 import { usePreviewContext } from "../preview";
 
 export function ThemeTableOfContents() {

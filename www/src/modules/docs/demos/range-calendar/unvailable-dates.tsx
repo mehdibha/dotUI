@@ -1,11 +1,8 @@
 "use client";
 
-import {
-  type DateValue,
-  getLocalTimeZone,
-  today,
-} from "@internationalized/date";
+import type { DateValue } from "@internationalized/date";
 import { RangeCalendar } from "@/components/dynamic-ui/calendar";
+import { getLocalTimeZone, today } from "@internationalized/date";
 
 export default function Demo() {
   const now = today(getLocalTimeZone());

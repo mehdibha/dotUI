@@ -1,21 +1,24 @@
 "use client";
 
-import * as React from "react";
-import { chain } from "@react-aria/utils";
-import {
-  composeRenderProps,
-  Button as AriaButton,
-  Link as AriaLink,
-  type ButtonProps as AriaButtonProps,
-  type LinkProps as AriaLinkProps,
-  PressEvent,
+import type {
+  ButtonProps as AriaButtonProps,
+  LinkProps as AriaLinkProps,
 } from "react-aria-components";
-import { tv, type VariantProps } from "tailwind-variants";
+import type { VariantProps } from "tailwind-variants";
+import * as React from "react";
 import { useRipple } from "@/registry/hooks/use-ripple";
 import { focusRing } from "@/registry/lib/focus-styles";
 import { createOptionalScopedContext } from "@/registry/lib/utils";
 import { Loader } from "@/registry/ui/loader.ring";
 import { Ripple } from "@/registry/ui/ripple";
+import { chain } from "@react-aria/utils";
+import {
+  Button as AriaButton,
+  Link as AriaLink,
+  composeRenderProps,
+  PressEvent,
+} from "react-aria-components";
+import { tv } from "tailwind-variants";
 
 const buttonStyles = tv({
   extend: focusRing,

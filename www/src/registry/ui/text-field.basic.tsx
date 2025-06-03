@@ -1,17 +1,15 @@
 "use client";
 
+import type { FieldProps } from "@/registry/ui/field.basic";
+import type { InputRootProps } from "@/registry/ui/input.basic";
 import * as React from "react";
+import { HelpText, Label } from "@/registry/ui/field.basic";
+import { Input, InputRoot } from "@/registry/ui/input.basic";
 import {
   TextField as AriaTextField,
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { Label, HelpText, type FieldProps } from "@/registry/ui/field.basic";
-import {
-  InputRoot,
-  Input,
-  type InputRootProps,
-} from "@/registry/ui/input.basic";
 
 const textFieldStyles = tv({
   base: "flex w-48 flex-col items-start gap-2",

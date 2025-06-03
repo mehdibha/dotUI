@@ -1,7 +1,7 @@
 "use client";
 
-import { parseAbsoluteToLocal } from "@internationalized/date";
 import { DatePicker } from "@/components/dynamic-ui/date-picker";
+import { parseAbsoluteToLocal } from "@internationalized/date";
 
 export default function Demo() {
   return (

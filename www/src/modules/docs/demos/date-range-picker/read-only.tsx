@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { parseAbsoluteToLocal } from "@internationalized/date";
 import { DateRangePicker } from "@/components/dynamic-ui/date-range-picker";
+import { parseAbsoluteToLocal } from "@internationalized/date";
 
 export default function Demo() {
   return (

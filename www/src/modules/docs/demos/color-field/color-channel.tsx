@@ -1,8 +1,9 @@
 "use client";
 
+import type { Color } from "react-aria-components";
 import React from "react";
-import { parseColor, type Color } from "react-aria-components";
 import { ColorField } from "@/components/dynamic-ui/color-field";
+import { parseColor } from "react-aria-components";
 
 export default function Demo() {
   const [color, setColor] = React.useState<Color | null>(parseColor("#7f007f"));

@@ -1,20 +1,19 @@
-import React from "react";
 import type { Metadata } from "next";
+import React from "react";
 import { notFound } from "next/navigation";
-import { type TableOfContents as TocType } from "fumadocs-core/server";
-import { ExternalLinkIcon } from "lucide-react";
+import { source } from "@/app/source";
+import { AdobeIcon, GitHubIcon } from "@/components/icons";
+import { Button } from "@/components/ui/button";
+import { siteConfig } from "@/config";
 import { truncateOnWord } from "@/lib/string";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { GitHubIcon } from "@/components/icons";
-import { AdobeIcon } from "@/components/icons";
-import { source } from "@/app/source";
-import { siteConfig } from "@/config";
 import { Breadcrumbs } from "@/modules/docs/components/breadcrumbs";
 import { DocsPager } from "@/modules/docs/components/docs-pager";
 import { PageLastUpdate } from "@/modules/docs/components/last-update";
 import { mdxComponents } from "@/modules/docs/components/mdx-components";
 import { TableOfContents } from "@/modules/docs/components/toc";
+import { type TableOfContents as TocType } from "fumadocs-core/server";
+import { ExternalLinkIcon } from "lucide-react";
 
 export default async function Page({
   params,
@@ -36,7 +35,7 @@ export default async function Page({
           "grid grid-cols-1 gap-10 xl:max-w-5xl xl:grid-cols-[minmax(0,1fr)_minmax(180px,220px)]"
       )}
     >
-      <div className="pb-24 pt-4 sm:pt-10 lg:pt-20">
+      <div className="pt-4 pb-24 sm:pt-10 lg:pt-20">
         <Breadcrumbs tree={source.pageTree} className="mb-2" />
         <h1 className="text-3xl font-bold lg:text-4xl">{page.data.title}</h1>
         <p className="text-fg-muted mt-2">{page.data.description}</p>

@@ -1,16 +1,18 @@
 "use client";
 
+import type {
+  BreadcrumbsProps as AriaBreadcrumbsProps,
+  LinkProps as AriaLinkProps,
+} from "react-aria-components";
+import { focusRing } from "@/registry/lib/focus-styles";
 import { ChevronRightIcon } from "lucide-react";
 import {
-  Breadcrumbs as AriaBreadcrumbs,
   Breadcrumb as AriaBreadcrumb,
+  Breadcrumbs as AriaBreadcrumbs,
   Link as AriaLink,
   composeRenderProps,
-  type BreadcrumbsProps as AriaBreadcrumbsProps,
-  type LinkProps as AriaLinkProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { focusRing } from "@/registry/lib/focus-styles";
 
 const breadcrumbsStyles = tv({
   slots: {

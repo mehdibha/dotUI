@@ -1,8 +1,16 @@
 "use client";
 
-import React from "react";
-import { useDocsSearch } from "fumadocs-core/search/client";
 import type { SortedResult } from "fumadocs-core/server";
+import React from "react";
+import { Button } from "@/components/ui/button";
+import { Command } from "@/components/ui/command";
+import { Dialog, DialogRoot } from "@/components/ui/dialog";
+import { Input, InputRoot } from "@/components/ui/input";
+import { Loader } from "@/components/ui/loader";
+import { MenuContent, MenuItem, MenuSection } from "@/components/ui/menu";
+import { SearchFieldRoot } from "@/components/ui/search-field";
+import { kekabCaseToTitle } from "@/lib/string";
+import { useDocsSearch } from "fumadocs-core/search/client";
 import {
   ChevronsUpDownIcon,
   CornerDownLeftIcon,
@@ -10,14 +18,6 @@ import {
   HashIcon,
   SearchIcon,
 } from "lucide-react";
-import { kekabCaseToTitle } from "@/lib/string";
-import { Button } from "@/components/ui/button";
-import { Command } from "@/components/ui/command";
-import { DialogRoot, Dialog } from "@/components/ui/dialog";
-import { Input, InputRoot } from "@/components/ui/input";
-import { Loader } from "@/components/ui/loader";
-import { MenuContent, MenuItem, MenuSection } from "@/components/ui/menu";
-import { SearchFieldRoot } from "@/components/ui/search-field";
 
 interface SearchCommandProps {
   keyboardShortcut?: boolean;
@@ -160,7 +160,7 @@ const SearchCommandDialog = ({
           variant="outline"
           shape="rectangle"
           size="sm"
-          className="absolute right-2 top-2 h-7 px-2 text-xs font-normal"
+          className="absolute top-2 right-2 h-7 px-2 text-xs font-normal"
         >
           Esc
         </Button>

@@ -1,16 +1,13 @@
 "use client";
 
-import { CheckIcon } from "lucide-react";
-import {
-  Tabs,
-  TabList,
-  TabPanel,
-  Tab,
-  type TabsProps as BaseProps,
-  type TabPanelProps,
+import type {
+  TabsProps as BaseProps,
+  TabPanelProps,
 } from "react-aria-components";
 import { focusRing } from "@/lib/focus-styles";
 import { cn } from "@/lib/utils";
+import { CheckIcon } from "lucide-react";
+import { Tab, TabList, TabPanel, Tabs } from "react-aria-components";
 
 export interface ChoicesProps extends Omit<BaseProps, "children"> {
   children: React.ReactNode;
@@ -44,7 +41,7 @@ export function Choices({ items, ...props }: ChoicesProps): React.ReactElement {
                 <p className="text-fg-muted mt-2 text-sm">{item.description}</p>
                 <div
                   className={cn(
-                    "border-border-control absolute right-2 top-2 flex size-4 shrink-0 items-center justify-center rounded-full border [&_svg]:size-3",
+                    "border-border-control absolute top-2 right-2 flex size-4 shrink-0 items-center justify-center rounded-full border [&_svg]:size-3",
                     isSelected && "bg-bg-accent text-fg-onAccent"
                   )}
                 >

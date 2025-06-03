@@ -1,23 +1,17 @@
 "use client";
 
+import type { FieldProps } from "@/components/dynamic-ui/field";
+import type { InputRootProps } from "@/components/dynamic-ui/input";
 import * as React from "react";
+import { Button } from "@/components/dynamic-ui/button";
+import { HelpText, Label } from "@/components/dynamic-ui/field";
+import { Input, InputRoot } from "@/components/dynamic-ui/input";
 import { SearchIcon, XIcon } from "lucide-react";
 import {
   SearchField as AriaSearchField,
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { Button } from "@/components/dynamic-ui/button";
-import {
-  Label,
-  HelpText,
-  type FieldProps,
-} from "@/components/dynamic-ui/field";
-import {
-  InputRoot,
-  Input,
-  type InputRootProps,
-} from "@/components/dynamic-ui/input";
 
 const searchFieldtyles = tv({
   base: "group flex w-48 flex-col items-start gap-2 empty:[&_button[slot='clear']]:hidden [&_input]:[&::-webkit-search-cancel-button]:appearance-none [&_input]:[&::-webkit-search-decoration]:appearance-none",

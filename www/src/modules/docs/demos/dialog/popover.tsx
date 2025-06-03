@@ -1,13 +1,13 @@
 "use client";
 
-import React from "react";
-import { InfoIcon } from "lucide-react";
 import type { Key } from "react-aria-components";
+import React from "react";
 import { Button } from "@/components/dynamic-ui/button";
-import { DialogRoot, Dialog } from "@/components/dynamic-ui/dialog";
+import { Dialog, DialogRoot } from "@/components/dynamic-ui/dialog";
 import { NumberField } from "@/components/dynamic-ui/number-field";
 import { Select, SelectItem } from "@/components/dynamic-ui/select";
 import { Switch } from "@/components/dynamic-ui/switch";
+import { InfoIcon } from "lucide-react";
 
 export default function Demo() {
   const [placement, setPlacement] = React.useState<Key | null>("top");

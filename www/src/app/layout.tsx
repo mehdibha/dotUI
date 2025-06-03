@@ -1,11 +1,14 @@
-import React from "react";
 import type { Metadata, Viewport } from "next";
-import { Analytics } from "@vercel/analytics/react";
+import React from "react";
 import { fontMono, fontSans, josefinSans } from "@/lib/fonts";
 import { truncateOnWord } from "@/lib/string";
 import { cn } from "@/lib/utils";
+import { Analytics } from "@vercel/analytics/react";
+
 import "@/styles/globals.css";
+
 import { siteConfig } from "@/config";
+
 import { Providers } from "./providers";
 
 export const metadata: Metadata = {

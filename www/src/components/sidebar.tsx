@@ -1,9 +1,22 @@
 "use client";
 
+import type { PageTree } from "fumadocs-core/server";
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import type { PageTree } from "fumadocs-core/server";
+import { GitHubIcon, TwitterIcon } from "@/components/icons";
+import { Button, ButtonProps } from "@/components/ui/button";
+import {
+  CollapsibleContent,
+  CollapsibleRoot,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { Kbd } from "@/components/ui/kbd";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Tooltip, TooltipProps } from "@/components/ui/tooltip";
+import { siteConfig } from "@/config";
+import { cn } from "@/lib/utils";
+import { hasActive, isActive } from "@/modules/docs/utils";
 import { useOnChange } from "fumadocs-core/utils/use-on-change";
 import {
   ChevronRightIcon,
@@ -14,19 +27,7 @@ import {
   SunIcon,
 } from "lucide-react";
 import { motion, Transition } from "motion/react";
-import { cn } from "@/lib/utils";
-import { Button, ButtonProps } from "@/components/ui/button";
-import {
-  CollapsibleRoot,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { Kbd } from "@/components/ui/kbd";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Tooltip, TooltipProps } from "@/components/ui/tooltip";
-import { GitHubIcon, TwitterIcon } from "@/components/icons";
-import { siteConfig } from "@/config";
-import { hasActive, isActive } from "@/modules/docs/utils";
+
 import { Logo } from "./logo";
 import { SearchCommand } from "./search-command";
 import { ThemeSwitcher } from "./site-theme-selector";
@@ -81,7 +82,7 @@ export const Sidebar = ({
         </div>
       </ScrollArea>
       <SidebarFooter>
-        <div className="group-data-collapsed/sidebar:flex-col flex items-center gap-1">
+        <div className="flex items-center gap-1 group-data-collapsed/sidebar:flex-col">
           <motion.div layout transition={transition}>
             <Button
               href={siteConfig.links.github}
@@ -107,7 +108,7 @@ export const Sidebar = ({
             </Button>
           </motion.div>
         </div>
-        <div className="group-data-collapsed/sidebar:flex-col flex items-center gap-1">
+        <div className="flex items-center gap-1 group-data-collapsed/sidebar:flex-col">
           <ThemeSwitcher>
             <motion.div layout transition={transition}>
               <Button
@@ -171,11 +172,11 @@ const SidebarRoot = ({
     >
       <div
         className={cn(
-          "transition-sidebar group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) w-(--sidebar-width) relative z-10 h-svh bg-transparent"
+          "transition-sidebar relative z-10 h-svh w-(--sidebar-width) bg-transparent group-data-collapsed/sidebar:w-(--sidebar-width-collapsed)"
         )}
       />
-      <div className="transition-sidebar bg-bg group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) [&_svg]:text-fg-muted w-(--sidebar-width) fixed inset-y-0 left-0 z-10 flex h-svh flex-col overflow-hidden [&_button]:font-normal">
-        <div className="w-(--sidebar-width) relative flex h-svh flex-1 translate-x-[-0.5px] flex-col overflow-hidden">
+      <div className="transition-sidebar bg-bg [&_svg]:text-fg-muted fixed inset-y-0 left-0 z-10 flex h-svh w-(--sidebar-width) flex-col overflow-hidden group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) [&_button]:font-normal">
+        <div className="relative flex h-svh w-(--sidebar-width) flex-1 translate-x-[-0.5px] flex-col overflow-hidden">
           {children}
         </div>
       </div>
@@ -416,12 +417,12 @@ const SidebarButton = ({
       variant="quiet"
       size="sm"
       className={cn(
-        "transition-sidebar group-data-collapsed/sidebar:w-8 hover:bg-bg-inverse/10 relative w-full overflow-hidden font-normal",
+        "transition-sidebar hover:bg-bg-inverse/10 relative w-full overflow-hidden font-normal group-data-collapsed/sidebar:w-8",
         className
       )}
       {...props}
     >
-      <div className="transition-sidebar group-data-collapsed/sidebar:left-2 absolute inset-2 flex w-[calc(var(--sidebar-width)-calc(var(--spacing)*8))] items-center justify-center gap-2 whitespace-nowrap [&>svg]:size-4">
+      <div className="transition-sidebar absolute inset-2 flex w-[calc(var(--sidebar-width)-calc(var(--spacing)*8))] items-center justify-center gap-2 whitespace-nowrap group-data-collapsed/sidebar:left-2 [&>svg]:size-4">
         {children}
       </div>
     </Button>
@@ -442,7 +443,7 @@ const StyledTooltip = (props: TooltipProps) => {
 
 const SidebarFooter = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) group-data-collapsed/sidebar:flex-col group-data-collapsed/sidebar:justify-end flex flex-row items-end justify-between gap-1 p-2">
+    <div className="flex flex-row items-end justify-between gap-1 p-2 group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) group-data-collapsed/sidebar:flex-col group-data-collapsed/sidebar:justify-end">
       {children}
     </div>
   );

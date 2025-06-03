@@ -5,14 +5,14 @@ import { Button } from "@/components/dynamic-ui/button";
 import { Checkbox } from "@/components/dynamic-ui/checkbox";
 import { Combobox } from "@/components/dynamic-ui/combobox";
 import { DatePicker } from "@/components/dynamic-ui/date-picker";
-import { RadioGroup, Radio } from "@/components/dynamic-ui/radio-group";
+import { Radio, RadioGroup } from "@/components/dynamic-ui/radio-group";
 import { Select, SelectItem } from "@/components/dynamic-ui/select";
 import { TextField } from "@/components/dynamic-ui/text-field";
 import { Form } from "@/registry/ui/form.basic";
 
 export default function Demo() {
   return (
-    <div className="w-sm bg-bg-muted space-y-4 rounded-lg border p-8">
+    <div className="bg-bg-muted w-sm space-y-4 rounded-lg border p-8">
       <h1 className="text-xl font-bold">Register</h1>
       <Form
         onSubmit={(e) => {

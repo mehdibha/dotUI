@@ -1,14 +1,14 @@
 "use client";
 
+import { ColorThumb } from "@/registry/ui/color-thumb.basic";
+import { Label } from "@/registry/ui/field.basic";
 import {
-  composeRenderProps,
   ColorSlider as AriaColorSlider,
   SliderOutput as AriaSliderOutput,
   SliderTrack as AriaSliderTrack,
+  composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { ColorThumb } from "@/registry/ui/color-thumb.basic";
-import { Label } from "@/registry/ui/field.basic";
 
 const colorSliderStyles = tv({
   slots: {

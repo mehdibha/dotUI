@@ -1,16 +1,17 @@
 "use client";
 
+import type { Variants } from "motion/react";
 import * as React from "react";
-import { AnimatePresence, motion, type Variants } from "motion/react";
+import { createScopedContext } from "@/registry/lib/utils";
+import { AnimatePresence, motion } from "motion/react";
 import {
+  OverlayArrow as AriaOverlayArrow,
   Tooltip as AriaTooltip,
   TooltipTrigger as AriaTooltipTrigger,
-  OverlayArrow as AriaOverlayArrow,
   composeRenderProps,
   TooltipTriggerStateContext,
 } from "react-aria-components";
 import { tv, VariantProps } from "tailwind-variants";
-import { createScopedContext } from "@/registry/lib/utils";
 
 const tooltipStyles = tv({
   slots: {

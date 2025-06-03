@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { type PressEvent } from "react-aria-components";
 
 export function useCopyButton(

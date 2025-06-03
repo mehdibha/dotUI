@@ -1,20 +1,21 @@
 "use client";
 
+import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
-import { mergeRefs, chain, mergeProps } from "@react-aria/utils";
+import { focusInput } from "@/registry/lib/focus-styles";
+import { chain, mergeProps, mergeRefs } from "@react-aria/utils";
 import { useControlledState } from "@react-stately/utils";
 import {
-  Provider,
-  composeRenderProps,
-  Input as AriaInput,
   Group as AriaGroup,
-  TextArea as AriaTextArea,
+  Input as AriaInput,
   InputContext as AriaInputContext,
+  TextArea as AriaTextArea,
   TextAreaContext as AriaTextAreaContext,
+  composeRenderProps,
+  Provider,
   useContextProps,
 } from "react-aria-components";
-import { tv, type VariantProps } from "tailwind-variants";
-import { focusInput } from "@/registry/lib/focus-styles";
+import { tv } from "tailwind-variants";
 
 const inputStyles = tv({
   slots: {

@@ -1,4 +1,5 @@
-import { contrast, type ColorTuple } from "@adobe/leonardo-contrast-colors";
+import type { ColorTuple } from "@adobe/leonardo-contrast-colors";
+import { contrast } from "@adobe/leonardo-contrast-colors";
 import { parseColor } from "react-aria-components";
 
 export const getContrastTextColor = (color: string): "white" | "black" => {

@@ -1,6 +1,7 @@
 import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Components } from "@/modules/styles/types";
+
 import { useCurrentComponents } from "../contexts/components-context";
 
 type Registry<T> = Record<

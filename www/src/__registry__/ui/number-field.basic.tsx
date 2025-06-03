@@ -1,6 +1,12 @@
 "use client";
 
+import type { FieldProps } from "@/components/dynamic-ui/field";
+import type { InputRootProps } from "@/components/dynamic-ui/input";
 import * as React from "react";
+import { Button } from "@/components/dynamic-ui/button";
+import { HelpText, Label } from "@/components/dynamic-ui/field";
+import { Input, InputRoot } from "@/components/dynamic-ui/input";
+import { useIsMobile } from "@/registry/hooks/use-is-mobile";
 import {
   ChevronDownIcon,
   ChevronUpIcon,
@@ -12,18 +18,6 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { Button } from "@/components/dynamic-ui/button";
-import {
-  Label,
-  HelpText,
-  type FieldProps,
-} from "@/components/dynamic-ui/field";
-import {
-  InputRoot,
-  Input,
-  type InputRootProps,
-} from "@/components/dynamic-ui/input";
-import { useIsMobile } from "@/registry/hooks/use-is-mobile";
 
 // TODO: update registry
 

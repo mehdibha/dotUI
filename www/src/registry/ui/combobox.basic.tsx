@@ -1,14 +1,10 @@
 "use client";
 
+import type { FieldProps } from "@/registry/ui/field.basic";
+import type { ComboBoxProps as AriaComboboxProps } from "react-aria-components";
 import * as React from "react";
-import { ChevronDownIcon } from "lucide-react";
-import {
-  ComboBox as AriaCombobox,
-  type ComboBoxProps as AriaComboboxProps,
-} from "react-aria-components";
-import { tv } from "tailwind-variants";
 import { Button } from "@/registry/ui/button.basic";
-import { Label, HelpText, type FieldProps } from "@/registry/ui/field.basic";
+import { HelpText, Label } from "@/registry/ui/field.basic";
 import { Input, InputRoot } from "@/registry/ui/input.basic";
 import {
   ListBox,
@@ -16,6 +12,9 @@ import {
   ListBoxItemProps,
 } from "@/registry/ui/list-box.basic";
 import { Overlay } from "@/registry/ui/overlay.basic";
+import { ChevronDownIcon } from "lucide-react";
+import { ComboBox as AriaCombobox } from "react-aria-components";
+import { tv } from "tailwind-variants";
 
 const comboboxStyles = tv({
   slots: {

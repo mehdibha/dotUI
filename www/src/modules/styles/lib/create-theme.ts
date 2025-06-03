@@ -1,10 +1,4 @@
 import {
-  BackgroundColor as LeonardoBgColor,
-  Color as LeonardoColor,
-  Theme as LeonardoTheme,
-} from "@adobe/leonardo-contrast-colors";
-import { converter } from "culori";
-import {
   DEFAULT_CSS,
   DEFAULT_DARK_FOUNDATIONS,
   DEFAULT_LIGHT_FOUNDATIONS,
@@ -17,6 +11,12 @@ import {
   ThemeFoundations,
   ThemeModeFoundations,
 } from "@/modules/styles/types";
+import {
+  BackgroundColor as LeonardoBgColor,
+  Color as LeonardoColor,
+  Theme as LeonardoTheme,
+} from "@adobe/leonardo-contrast-colors";
+import { converter } from "culori";
 
 export const createTheme = (opts: ThemeFoundations): Theme => {
   const radius = opts.radius ?? DEFAULT_RADIUS_FACTOR;

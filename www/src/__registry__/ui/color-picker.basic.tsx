@@ -1,14 +1,9 @@
 "use client";
 
+import type { ButtonProps } from "@/components/dynamic-ui/button";
+import type { ColorFormat } from "react-aria-components";
 import React from "react";
-import {
-  ColorPicker as AriaColorPicker,
-  ColorPickerStateContext,
-  getColorChannels,
-  composeRenderProps,
-  type ColorFormat,
-} from "react-aria-components";
-import { Button, type ButtonProps } from "@/components/dynamic-ui/button";
+import { Button } from "@/components/dynamic-ui/button";
 import { ColorArea } from "@/components/dynamic-ui/color-area";
 import { ColorField } from "@/components/dynamic-ui/color-field";
 import { ColorSlider } from "@/components/dynamic-ui/color-slider";
@@ -20,6 +15,12 @@ import {
 } from "@/components/dynamic-ui/dialog";
 import { Select, SelectItem } from "@/components/dynamic-ui/select";
 import { cn } from "@/registry/lib/utils";
+import {
+  ColorPicker as AriaColorPicker,
+  ColorPickerStateContext,
+  composeRenderProps,
+  getColorChannels,
+} from "react-aria-components";
 
 interface ColorPickerProps
   extends ColorPickerRootProps,

@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { CalendarDate } from "@internationalized/date";
 import { DatePicker } from "@/components/dynamic-ui/date-picker";
+import { CalendarDate } from "@internationalized/date";
 
 export default function Demo() {
   return (

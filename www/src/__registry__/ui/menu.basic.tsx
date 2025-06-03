@@ -1,25 +1,29 @@
 "use client";
 
+import type { OverlayProps } from "@/components/dynamic-ui/overlay";
+import type {
+  MenuItemProps as AriaMenuItemProps,
+  MenuProps as AriaMenuProps,
+  MenuSectionProps as AriaMenuSectionProps,
+  MenuTriggerProps as AriaMenuTriggerProps,
+} from "react-aria-components";
+import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
+import { Kbd } from "@/components/dynamic-ui/kbd";
+import { Overlay } from "@/components/dynamic-ui/overlay";
+import { Text } from "@/components/dynamic-ui/text";
 import { CheckIcon, ChevronRightIcon } from "lucide-react";
 import {
-  composeRenderProps,
-  Menu as AriaMenu,
-  MenuTrigger as AriaMenuTrigger,
-  MenuItem as AriaMenuItem,
-  SubmenuTrigger as AriaSubmenuTrigger,
-  MenuSection as AriaMenuSection,
-  Header as AriaHeader,
   Collection as AriaCollection,
-  type MenuItemProps as AriaMenuItemProps,
-  type MenuProps as AriaMenuProps,
-  type MenuTriggerProps as AriaMenuTriggerProps,
-  type MenuSectionProps as AriaMenuSectionProps,
+  Header as AriaHeader,
+  Menu as AriaMenu,
+  MenuItem as AriaMenuItem,
+  MenuSection as AriaMenuSection,
+  MenuTrigger as AriaMenuTrigger,
+  SubmenuTrigger as AriaSubmenuTrigger,
+  composeRenderProps,
 } from "react-aria-components";
-import { tv, type VariantProps } from "tailwind-variants";
-import { Kbd } from "@/components/dynamic-ui/kbd";
-import { Overlay, type OverlayProps } from "@/components/dynamic-ui/overlay";
-import { Text } from "@/components/dynamic-ui/text";
+import { tv } from "tailwind-variants";
 
 const menuStyles = tv({
   base: [

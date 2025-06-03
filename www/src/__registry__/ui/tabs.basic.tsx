@@ -1,17 +1,17 @@
 "use client";
 
+import type { TabListProps as AriaTabListProps } from "react-aria-components";
 import * as React from "react";
-import {
-  Tabs as AriaTabs,
-  TabList as AriaTabList,
-  Tab as AriaTab,
-  TabPanel as AriaTabPanel,
-  composeRenderProps,
-  type TabListProps as AriaTabListProps,
-} from "react-aria-components";
-import { tv, VariantProps } from "tailwind-variants";
 import { focusRing } from "@/registry/lib/focus-styles";
 import { createScopedContext } from "@/registry/lib/utils";
+import {
+  Tab as AriaTab,
+  TabList as AriaTabList,
+  TabPanel as AriaTabPanel,
+  Tabs as AriaTabs,
+  composeRenderProps,
+} from "react-aria-components";
+import { tv, VariantProps } from "tailwind-variants";
 
 const tabsStyles = tv({
   slots: {

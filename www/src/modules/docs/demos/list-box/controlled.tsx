@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
 import type { Selection } from "react-aria-components";
+import React from "react";
 import { ListBox, ListBoxItem } from "@/components/dynamic-ui/list-box";
 
 export default function Demo() {

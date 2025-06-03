@@ -1,10 +1,11 @@
 import React from "react";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
-import { cn } from "@/lib/utils";
 import { Index } from "@/__registry__/demos";
+import { cn } from "@/lib/utils";
 import { CodeBlock } from "@/modules/docs/components/code-block";
 import { getFileSource } from "@/modules/docs/lib/get-file-source";
 import { CurrentStyleProvider } from "@/modules/styles/components/current-style-provider";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
+
 import {
   ComponentPreviewHeader,
   ComponentWrapper,
@@ -61,8 +62,8 @@ export const ComponentPreview = async ({
               <ScrollArea className="bg-bg text-fg">
                 <div
                   className={cn(
-                    "flex pb-10 pt-14",
-                    primary && "min-h-48 pb-20 pt-24",
+                    "flex pt-14 pb-10",
+                    primary && "min-h-48 pt-24 pb-20",
                     fullWidth
                       ? "px-8 lg:px-12"
                       : "flex items-center justify-center px-4"

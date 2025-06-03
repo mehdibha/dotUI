@@ -1,12 +1,12 @@
 "use client";
 
-import { useMemo, useState, useCallback, useLayoutEffect } from "react";
-import { cn } from "@/lib/utils";
-import * as TabsPrimitive from "@/components/ui/tabs";
 import type {
   TabsProps as BaseProps,
   TabPanelProps,
 } from "@/components/ui/tabs";
+import { useCallback, useLayoutEffect, useMemo, useState } from "react";
+import * as TabsPrimitive from "@/components/ui/tabs";
+import { cn } from "@/lib/utils";
 
 type ChangeListener = (v: string) => void;
 const listeners = new Map<string, ChangeListener[]>();

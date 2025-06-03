@@ -1,14 +1,14 @@
 "use client";
 
-import React from "react";
 import type { SortDescriptor } from "react-aria-components";
+import React from "react";
 import {
-  TableRoot,
-  TableHeader,
   TableBody,
-  TableRow,
-  TableColumn,
   TableCell,
+  TableColumn,
+  TableHeader,
+  TableRoot,
+  TableRow,
 } from "@/registry/ui/table.basic";
 
 const columns: Column[] = [

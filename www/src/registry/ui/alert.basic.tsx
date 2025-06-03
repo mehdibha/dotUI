@@ -1,14 +1,15 @@
 "use client";
 
+import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
+import { createScopedContext } from "@/registry/lib/utils";
 import {
   AlertCircleIcon,
   AlertTriangleIcon,
   CheckCircle2Icon,
   InfoIcon,
 } from "lucide-react";
-import { tv, type VariantProps } from "tailwind-variants";
-import { createScopedContext } from "@/registry/lib/utils";
+import { tv } from "tailwind-variants";
 
 const alertStyles = tv({
   slots: {
@@ -69,7 +70,7 @@ function Alert({
   return (
     <AlertRoot variant={variant} {...props}>
       {resolvedIcon}
-      <div className="@sm:items-center @sm:flex-row flex flex-1 flex-col items-start gap-4">
+      <div className="flex flex-1 flex-col items-start gap-4 @sm:flex-row @sm:items-center">
         <div className="flex-1 space-y-0.5">
           {title && <AlertTitle>{title}</AlertTitle>}
           {children && <AlertContent>{children}</AlertContent>}

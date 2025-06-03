@@ -1,19 +1,22 @@
 "use client";
 
-import * as React from "react";
-import { CalendarIcon } from "lucide-react";
-import {
-  DatePicker as AriaDatePicker,
-  type DatePickerProps as AriaDatePickerProps,
-  type DateValue,
+import type { FieldProps } from "@/registry/ui/field.basic";
+import type { inputStyles } from "@/registry/ui/input.basic";
+import type {
+  DatePickerProps as AriaDatePickerProps,
+  DateValue,
 } from "react-aria-components";
-import { tv, type VariantProps } from "tailwind-variants";
+import type { VariantProps } from "tailwind-variants";
+import * as React from "react";
 import { Button } from "@/registry/ui/button.basic";
 import { Calendar } from "@/registry/ui/calendar.basic";
 import { DateInput, DateSegment } from "@/registry/ui/date-input.basic";
 import { Dialog } from "@/registry/ui/dialog.basic";
-import { Label, HelpText, type FieldProps } from "@/registry/ui/field.basic";
-import { InputRoot, type inputStyles } from "@/registry/ui/input.basic";
+import { HelpText, Label } from "@/registry/ui/field.basic";
+import { InputRoot } from "@/registry/ui/input.basic";
+import { CalendarIcon } from "lucide-react";
+import { DatePicker as AriaDatePicker } from "react-aria-components";
+import { tv } from "tailwind-variants";
 
 const datePickerStyles = tv({
   base: "flex w-48 flex-col items-start gap-2",

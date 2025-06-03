@@ -1,17 +1,17 @@
 "use client";
 
-import React from "react";
 import type {
+  AlertContentProps,
   AlertProps,
   AlertRootProps,
   AlertTitleProps,
-  AlertContentProps,
 } from "@/__registry__/ui/alert.basic";
+import React from "react";
 import {
   Alert as _Alert,
+  AlertContent as _AlertContent,
   AlertRoot as _AlertRoot,
   AlertTitle as _AlertTitle,
-  AlertContent as _AlertContent,
 } from "@/__registry__/ui/alert.basic";
 import { createDynamicComponent } from "@/modules/styles/lib/create-dynamic-component";
 

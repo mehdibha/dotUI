@@ -1,6 +1,6 @@
-import { toString } from "hast-util-to-string";
 import type { Root } from "mdast";
 import type { Transformer } from "unified";
+import { toString } from "hast-util-to-string";
 import { visit } from "unist-util-visit";
 
 // Walkaround for inline code to set default language
