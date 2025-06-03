@@ -122,7 +122,7 @@ const AvatarPlaceholder = ({ className, ...props }: AvatarPlaceholderProps) => {
 };
 
 type Status = "idle" | "loading" | "success" | "error";
-function useImageLoadingStatus(src?: string) {
+function useImageLoadingStatus(src?: string | Blob) {
   const [status, setStatus] = React.useState<Status>("idle");
 
   React.useLayoutEffect(() => {
@@ -130,18 +130,32 @@ function useImageLoadingStatus(src?: string) {
       setStatus("error");
       return;
     }
+
     let isMounted = true;
+    let objectUrl: string | null = null;
+
     const image = new window.Image();
     const updateStatus = (status: Status) => () => {
       if (!isMounted) return;
       setStatus(status);
     };
+
     setStatus("loading");
     image.onload = updateStatus("success");
     image.onerror = updateStatus("error");
-    image.src = src;
+
+    if (src instanceof Blob) {
+      objectUrl = URL.createObjectURL(src);
+      image.src = objectUrl;
+    } else {
+      image.src = src;
+    }
+
     return () => {
       isMounted = false;
+      if (objectUrl) {
+        URL.revokeObjectURL(objectUrl);
+      }
     };
   }, [src]);
 
