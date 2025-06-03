@@ -104,7 +104,7 @@ const groupByCategory = (results?: SortedResult[]): GroupedResults => {
   // eg url: /docs/components/buttons/button -> category: components
   if (!results) return [];
   const uniqueCategories = Array.from(
-    new Set(results.map((result) => result.url.split("/")[2]!))
+    new Set(results.map((result) => result.url.split("/")[2]!)),
   ).filter(Boolean);
 
   const groupedResults: GroupedResults = uniqueCategories.map((category) => ({

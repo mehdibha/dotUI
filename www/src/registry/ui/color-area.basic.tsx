@@ -8,7 +8,7 @@ import {
 import { tv } from "tailwind-variants";
 
 const colorAreaStyles = tv({
-  base: "disabled:[background:var(--color-bg-disabled)]! block size-48 min-w-20 rounded-md",
+  base: "block size-48 min-w-20 rounded-md disabled:[background:var(--color-bg-disabled)]!",
 });
 
 type ColorAreaProps = Omit<ColorAreaRootProps, "children">;
@@ -26,7 +26,7 @@ const ColorAreaRoot = ({ className, ...props }: ColorAreaRootProps) => {
   return (
     <AriaColorArea
       className={composeRenderProps(className, (className) =>
-        colorAreaStyles({ className })
+        colorAreaStyles({ className }),
       )}
       {...props}
     />

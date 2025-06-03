@@ -35,7 +35,7 @@ export type RegistryItem =
 export type Registry = RegistryItem[];
 
 export function hasStyles(
-  item: RegistryItem
+  item: RegistryItem,
 ): item is Extract<RegistryItem, { styles: RegistryItemProps[] }> {
   return "styles" in item;
 }

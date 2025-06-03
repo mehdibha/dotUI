@@ -223,7 +223,7 @@ const CalendarRoot = <T extends DateValue>({
   return (
     <AriaCalendar
       className={composeRenderProps(className, (className) =>
-        root({ standalone, className })
+        root({ standalone, className }),
       )}
       {...props}
     />
@@ -241,7 +241,7 @@ const RangeCalendarRoot = <T extends DateValue>({
   return (
     <AriaRangeCalendar
       className={composeRenderProps(className, (className) =>
-        root({ standalone, className })
+        root({ standalone, className }),
       )}
       {...props}
     />
@@ -307,7 +307,7 @@ const CalendarCell = ({
     <AriaCalendarCell
       {...props}
       className={composeRenderProps(className, (className) =>
-        cellRoot({ variant, range, className })
+        cellRoot({ variant, range, className }),
       )}
     >
       {composeRenderProps(
@@ -328,7 +328,7 @@ const CalendarCell = ({
             isSelectionEnd,
             isSelectionStart,
             formattedDate,
-          }
+          },
         ) => (
           <span
             data-rac=""
@@ -351,7 +351,7 @@ const CalendarCell = ({
           >
             {formattedDate}
           </span>
-        )
+        ),
       )}
     </AriaCalendarCell>
   );

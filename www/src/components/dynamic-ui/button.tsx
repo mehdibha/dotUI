@@ -17,19 +17,19 @@ export const Button = createDynamicComponent<ButtonProps>(
     outline: React.lazy(() =>
       import("@/__registry__/ui/button.outline").then((mod) => ({
         default: mod.Button,
-      }))
+      })),
     ),
     brutalist: React.lazy(() =>
       import("@/__registry__/ui/button.brutalist").then((mod) => ({
         default: mod.Button,
-      }))
+      })),
     ),
     ripple: React.lazy(() =>
       import("@/__registry__/ui/button.ripple").then((mod) => ({
         default: mod.Button,
-      }))
+      })),
     ),
-  }
+  },
 );
 
 export const ButtonProvider = createDynamicComponent(
@@ -40,19 +40,19 @@ export const ButtonProvider = createDynamicComponent(
     outline: React.lazy(() =>
       import("@/__registry__/ui/button.outline").then((mod) => ({
         default: mod.ButtonProvider,
-      }))
+      })),
     ),
     brutalist: React.lazy(() =>
       import("@/__registry__/ui/button.brutalist").then((mod) => ({
         default: mod.ButtonProvider,
-      }))
+      })),
     ),
     ripple: React.lazy(() =>
       import("@/__registry__/ui/button.ripple").then((mod) => ({
         default: mod.ButtonProvider,
-      }))
+      })),
     ),
-  }
+  },
 );
 
 export { buttonStyles };

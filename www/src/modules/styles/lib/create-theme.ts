@@ -39,7 +39,7 @@ export const createTheme = (opts: ThemeFoundations): Theme => {
 
 const createThemeCSSVars = (
   foundations: ThemeModeFoundations,
-  mode: "light" | "dark"
+  mode: "light" | "dark",
 ) => {
   const defaultFoundations =
     mode === "light" ? DEFAULT_LIGHT_FOUNDATIONS : DEFAULT_DARK_FOUNDATIONS;
@@ -112,7 +112,7 @@ const createThemeCSSVars = (
         });
         return { ...acc, ...result };
       },
-      {} as Record<string, string>
+      {} as Record<string, string>,
     );
 
   return cssVariables;

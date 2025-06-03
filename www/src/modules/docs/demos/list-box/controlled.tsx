@@ -6,7 +6,7 @@ import { ListBox, ListBoxItem } from "@/components/dynamic-ui/list-box";
 
 export default function Demo() {
   const [selected, setSelected] = React.useState<Selection>(
-    new Set(["nextjs", "remix", "astro"])
+    new Set(["nextjs", "remix", "astro"]),
   );
   return (
     <div className="flex flex-col items-center gap-6">

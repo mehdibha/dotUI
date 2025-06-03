@@ -22,7 +22,7 @@ import { tv } from "tailwind-variants";
 
 const buttonStyles = tv({
   extend: focusRing,
-  base: "disabled:bg-bg-disabled disabled:text-fg-disabled pending:cursor-default pending:bg-bg-disabled pending:text-fg-disabled pending:border pending:border-border-disabled relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 overflow-hidden whitespace-nowrap rounded-md text-sm font-medium leading-normal transition-colors disabled:cursor-default",
+  base: "disabled:bg-bg-disabled disabled:text-fg-disabled pending:cursor-default pending:bg-bg-disabled pending:text-fg-disabled pending:border pending:border-border-disabled relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-md text-sm leading-normal font-medium whitespace-nowrap transition-colors disabled:cursor-default",
   variants: {
     variant: {
       default: "bg-bg-neutral hover:bg-bg-neutral-hover text-fg-onNeutral",
@@ -104,7 +104,7 @@ const Button = React.forwardRef(
         onRipplePressHandler(e);
         // domRef.current && onRipplePressHandler(e);
       },
-      [onRipplePressHandler]
+      [onRipplePressHandler],
     );
 
     return (
@@ -129,7 +129,7 @@ const Button = React.forwardRef(
         ))}
       </Element>
     );
-  }
+  },
 );
 Button.displayName = "Button";
 

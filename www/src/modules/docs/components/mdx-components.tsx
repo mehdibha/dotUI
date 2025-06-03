@@ -20,20 +20,20 @@ export const mdxComponents: MDXComponents = {
   h1: createHeading(1, "font-heading mt-2 scroll-m-20 text-4xl font-bold"),
   h2: createHeading(
     2,
-    "font-heading mt-12 scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight first:mt-0"
+    "font-heading mt-12 scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight first:mt-0",
   ),
   h3: createHeading(
     3,
-    "font-heading mt-8 scroll-m-20 text-xl font-semibold tracking-tight"
+    "font-heading mt-8 scroll-m-20 text-xl font-semibold tracking-tight",
   ),
   h4: createHeading(
     4,
-    "font-heading mt-8 scroll-m-20 text-lg font-semibold tracking-tight"
+    "font-heading mt-8 scroll-m-20 text-lg font-semibold tracking-tight",
   ),
   h5: createHeading(5, "mt-8 scroll-m-20 text-lg font-semibold tracking-tight"),
   h6: createHeading(
     6,
-    "mt-8 scroll-m-20 text-base font-semibold tracking-tight"
+    "mt-8 scroll-m-20 text-base font-semibold tracking-tight",
   ),
   a: Link as unknown as React.ComponentType<
     React.AnchorHTMLAttributes<HTMLAnchorElement>
@@ -82,7 +82,7 @@ export const mdxComponents: MDXComponents = {
     <th
       className={cn(
         "border px-2 py-2 text-left font-bold sm:px-4 [&[align=center]]:text-center [&[align=right]]:text-right",
-        className
+        className,
       )}
       {...props}
     />
@@ -91,7 +91,7 @@ export const mdxComponents: MDXComponents = {
     <td
       className={cn(
         "border px-2 py-2 text-left sm:px-4 [&[align=center]]:text-center [&[align=right]]:text-right",
-        className
+        className,
       )}
       {...props}
     >
@@ -103,7 +103,7 @@ export const mdxComponents: MDXComponents = {
     <Pre
       className={cn(
         "not-first:mt-4 [&_code]:grid [&_code]:bg-transparent [&_code]:p-0 [&_code]:text-xs",
-        className
+        className,
       )}
       {...props}
     />
@@ -112,7 +112,7 @@ export const mdxComponents: MDXComponents = {
     <code
       className={cn(
         "bg-bg-muted w-full rounded-md p-1 font-mono text-sm",
-        className
+        className,
       )}
       {...props}
     >
@@ -136,7 +136,7 @@ export const mdxComponents: MDXComponents = {
     <h3
       className={cn(
         "font-heading mt-8 scroll-m-20 text-base font-semibold tracking-tight",
-        className
+        className,
       )}
       {...props}
     />
@@ -172,7 +172,7 @@ function createHeading(level: number, className?: string) {
 }
 
 function Link(
-  props: Omit<LinkProps, "children"> & { children: React.ReactNode }
+  props: Omit<LinkProps, "children"> & { children: React.ReactNode },
 ) {
   return (
     <NavLink

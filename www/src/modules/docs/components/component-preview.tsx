@@ -47,7 +47,7 @@ export const ComponentPreview = async ({
         fileName,
         code: content,
       };
-    }
+    },
   );
 
   return (
@@ -66,12 +66,12 @@ export const ComponentPreview = async ({
                     primary && "min-h-48 pt-24 pb-20",
                     fullWidth
                       ? "px-8 lg:px-12"
-                      : "flex items-center justify-center px-4"
+                      : "flex items-center justify-center px-4",
                   )}
                 >
                   <div
                     className={cn(
-                      fullWidth ? "w-full" : "flex items-center justify-center"
+                      fullWidth ? "w-full" : "flex items-center justify-center",
                     )}
                   >
                     <ComponentWrapper suspense={suspense}>

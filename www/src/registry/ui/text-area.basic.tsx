@@ -46,7 +46,7 @@ const TextAreaRoot = ({ className, ...props }: TextAreaRootProps) => {
   return (
     <AriaTextField
       className={composeRenderProps(className, (className) =>
-        textAreaStyles({ className })
+        textAreaStyles({ className }),
       )}
       {...props}
     />

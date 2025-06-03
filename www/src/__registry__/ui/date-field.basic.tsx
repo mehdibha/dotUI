@@ -54,7 +54,7 @@ const DateFieldRoot = <T extends DateValue>({
   return (
     <AriaDateField
       className={composeRenderProps(className, (className) =>
-        dateFieldStyles({ className })
+        dateFieldStyles({ className }),
       )}
       {...props}
     />

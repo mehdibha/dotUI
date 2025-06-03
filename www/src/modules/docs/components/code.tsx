@@ -62,7 +62,7 @@ type CodeText = string | MdCodeText | MdMultiCodeText;
 function parseChildren(
   children: CodeText,
   lang?: string,
-  code?: string
+  code?: string,
 ): { lang: string; code: string; title?: string } {
   if (typeof children === "string" || code) {
     return {

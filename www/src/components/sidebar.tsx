@@ -172,7 +172,7 @@ const SidebarRoot = ({
     >
       <div
         className={cn(
-          "transition-sidebar relative z-10 h-svh w-(--sidebar-width) bg-transparent group-data-collapsed/sidebar:w-(--sidebar-width-collapsed)"
+          "transition-sidebar relative z-10 h-svh w-(--sidebar-width) bg-transparent group-data-collapsed/sidebar:w-(--sidebar-width-collapsed)",
         )}
       />
       <div className="transition-sidebar bg-bg [&_svg]:text-fg-muted fixed inset-y-0 left-0 z-10 flex h-svh w-(--sidebar-width) flex-col overflow-hidden group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) [&_button]:font-normal">
@@ -199,7 +199,7 @@ export const SidebarProvider = ({
 }) => {
   const pathname = usePathname();
   const [isCollapsed, setCollapsed] = React.useState(
-    pathname.startsWith("/styles")
+    pathname.startsWith("/styles"),
   );
   return (
     <SidebarContext value={{ isCollapsed, setCollapsed }}>
@@ -321,7 +321,7 @@ function PageNode({
         "border-bg-bg-muted hover:text-fg text-fg-muted group block border-l py-1 pl-4 transition-colors",
         {
           "text-fg border-fg": active,
-        }
+        },
       )}
       onClick={onSelect}
       suppressHydrationWarning
@@ -347,7 +347,7 @@ function FolderNode({
     item.index !== undefined && isActive(item.index.url, pathname, false);
   const childActive = React.useMemo(
     () => hasActive(item.children, pathname),
-    [item.children, pathname]
+    [item.children, pathname],
   );
 
   const shouldExtend =
@@ -382,7 +382,7 @@ function FolderNode({
                 <ChevronRightIcon
                   className={cn(
                     "transition-transform ease-in-out",
-                    open && "rotate-90"
+                    open && "rotate-90",
                   )}
                 />
               </span>
@@ -418,7 +418,7 @@ const SidebarButton = ({
       size="sm"
       className={cn(
         "transition-sidebar hover:bg-bg-inverse/10 relative w-full overflow-hidden font-normal group-data-collapsed/sidebar:w-8",
-        className
+        className,
       )}
       {...props}
     >

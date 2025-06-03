@@ -24,7 +24,7 @@ export const useCurrentComponents = () => {
   const ctx = React.use(ComponentsContext);
   if (!ctx)
     throw new Error(
-      "useCurrentComponents must be used within ComponentsContext"
+      "useCurrentComponents must be used within ComponentsContext",
     );
   return ctx.components;
 };

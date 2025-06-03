@@ -19,7 +19,7 @@ const tabsStyles = tv({
     list: "flex",
     tab: [
       focusRing(),
-      "text-fg-muted hover:text-fg selected:[&:not([data-disabled])]:text-fg disabled:text-fg-disabled flex cursor-pointer items-center justify-center whitespace-nowrap text-sm transition-colors disabled:cursor-default",
+      "text-fg-muted hover:text-fg selected:[&:not([data-disabled])]:text-fg disabled:text-fg-disabled flex cursor-pointer items-center justify-center text-sm whitespace-nowrap transition-colors disabled:cursor-default",
     ],
     panel: focusRing(),
   },
@@ -56,7 +56,7 @@ const tabsStyles = tv({
       variant: "underline",
       className: {
         list: "border-b",
-        tab: "border-b-3 -mb-px",
+        tab: "-mb-px border-b-3",
       },
     },
     {
@@ -64,7 +64,7 @@ const tabsStyles = tv({
       variant: "underline",
       className: {
         list: "border-r",
-        tab: "border-r-3 -mr-px",
+        tab: "-mr-px border-r-3",
       },
     },
     {
@@ -101,7 +101,7 @@ const Tabs = ({
 }: TabsProps) => (
   <AriaTabs
     className={composeRenderProps(className, (className, { orientation }) =>
-      root({ orientation, className })
+      root({ orientation, className }),
     )}
     {...props}
   >
@@ -122,7 +122,7 @@ const TabList = <T extends object>({
   return (
     <AriaTabList
       className={composeRenderProps(className, (className) =>
-        list({ variant, orientation, className })
+        list({ variant, orientation, className }),
       )}
       {...props}
     />
@@ -135,7 +135,7 @@ const Tab = ({ className, ...props }: TabProps) => {
   return (
     <AriaTab
       className={composeRenderProps(className, (className) =>
-        tab({ orientation, variant, color, className })
+        tab({ orientation, variant, color, className }),
       )}
       {...props}
     />
@@ -148,7 +148,7 @@ const TabPanel = ({ className, ...props }: TabPanelProps) => {
   return (
     <AriaTabPanel
       className={composeRenderProps(className, (className) =>
-        panel({ orientation, variant, className })
+        panel({ orientation, variant, className }),
       )}
       {...props}
     />

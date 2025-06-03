@@ -28,7 +28,7 @@ export function PreviewModeProvider({
     defaultMode,
     {
       raw: true,
-    }
+    },
   );
 
   React.useEffect(() => {

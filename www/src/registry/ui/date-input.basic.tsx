@@ -14,7 +14,7 @@ const dateInputStyles = tv({
       "text-fg placeholder:text-fg-muted disabled:text-fg-disabled flex flex-1 items-center justify-start disabled:cursor-default",
     ],
     segment:
-      "focus:bg-bg-accent focus:text-fg-onAccent type-literal:px-0 placeholder-shown:not-data-disabled:not-data-focused:text-fg-muted disabled:text-fg-disabled outline-hidden select-none rounded px-0.5 focus:caret-transparent",
+      "focus:bg-bg-accent focus:text-fg-onAccent type-literal:px-0 placeholder-shown:not-data-disabled:not-data-focused:text-fg-muted disabled:text-fg-disabled rounded px-0.5 outline-hidden select-none focus:caret-transparent",
   },
 });
 
@@ -25,7 +25,7 @@ const DateInput = ({ className, ...props }: DateInputProps) => {
   return (
     <AriaDateInput
       className={composeRenderProps(className, (className) =>
-        input({ className })
+        input({ className }),
       )}
       {...props}
     />
@@ -38,7 +38,7 @@ const DateSegment = ({ className, ...props }: DateSegmentProps) => {
   return (
     <AriaDateSegment
       className={composeRenderProps(className, (className) =>
-        segment({ className })
+        segment({ className }),
       )}
       {...props}
     />

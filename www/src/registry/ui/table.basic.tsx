@@ -36,7 +36,7 @@ const tableStyles = tv({
     header: "sticky top-0 z-10",
     column: [
       focusRing(),
-      "allows-sorting:cursor-pointer text-fg-muted relative whitespace-nowrap px-3 py-2 text-left font-medium",
+      "allows-sorting:cursor-pointer text-fg-muted relative px-3 py-2 text-left font-medium whitespace-nowrap",
     ],
     resizer: [
       focusRing(),
@@ -45,7 +45,7 @@ const tableStyles = tv({
     body: "empty:text-center empty:italic",
     row: [
       focusRing(),
-      "data-href:cursor-pointer data-href:hover:bg-bg-muted data-action:cursor-pointer data-action:hover:bg-bg-muted disabled:text-fg-disabled data-[selection-mode=single]:hover:not-selected:bg-bg-muted data-[selection-mode=multiple]:hover:not-selected:bg-bg-muted selected:text-fg dragging:bg-bg relative transition-colors data-[selection-mode=multiple]:cursor-pointer data-[selection-mode=single]:cursor-pointer",
+      "data-href:hover:bg-bg-muted data-action:hover:bg-bg-muted disabled:text-fg-disabled data-[selection-mode=single]:hover:not-selected:bg-bg-muted data-[selection-mode=multiple]:hover:not-selected:bg-bg-muted selected:text-fg dragging:bg-bg relative transition-colors data-action:cursor-pointer data-href:cursor-pointer data-[selection-mode=multiple]:cursor-pointer data-[selection-mode=single]:cursor-pointer",
     ],
     cell: [focusRing(), "truncate px-3 py-2"],
   },
@@ -161,7 +161,7 @@ function TableColumn({
   return (
     <AriaColumn
       className={composeRenderProps(className, (className) =>
-        column({ variant, className })
+        column({ variant, className }),
       )}
       {...props}
     >
@@ -180,7 +180,7 @@ function TableColumn({
               <AriaColumnResizer className={resizer()} />
             )}
           </div>
-        )
+        ),
       )}
     </AriaColumn>
   );
@@ -198,7 +198,7 @@ const TableBody = <T extends object>({
     <AriaTableBody
       renderEmptyState={renderEmptyState}
       className={composeRenderProps(className, (className) =>
-        body({ variant, className })
+        body({ variant, className }),
       )}
       {...props}
     />
@@ -229,7 +229,7 @@ function TableRow<T extends object>({
             slot="drag"
             className={cn(
               focusRing(),
-              "text-fg-muted inline-flex items-center justify-center rounded-xs [&_svg]:size-4"
+              "text-fg-muted inline-flex items-center justify-center rounded-xs [&_svg]:size-4",
             )}
           >
             <GripVerticalIcon />
@@ -252,7 +252,7 @@ const TableCell = ({ className, ...props }: TableCellProps) => {
   return (
     <AriaCell
       className={composeRenderProps(className, (className) =>
-        cell({ variant, className })
+        cell({ variant, className }),
       )}
       {...props}
     />

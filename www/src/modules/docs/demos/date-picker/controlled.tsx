@@ -7,7 +7,7 @@ import { parseDate } from "@internationalized/date";
 
 export default function Demo() {
   const [value, setValue] = React.useState<DateValue | null>(
-    parseDate("2020-02-03")
+    parseDate("2020-02-03"),
   );
   return (
     <div className="flex flex-col items-center gap-4">

@@ -133,7 +133,7 @@ const ColorPickerEditor = ({
       <div
         className={cn(
           "flex flex-col gap-2",
-          colorFormat === "hex" && "flex-row"
+          colorFormat === "hex" && "flex-row",
         )}
       >
         {showFormatSelector && (

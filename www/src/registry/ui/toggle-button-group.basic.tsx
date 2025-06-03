@@ -42,7 +42,7 @@ const ToggleButtonGroup = ({
             ...renderProps,
             orientation,
             className,
-          })
+          }),
         )}
         {...props}
       />

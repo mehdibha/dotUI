@@ -21,12 +21,12 @@ const inputStyles = tv({
   slots: {
     root: [
       focusInput(),
-      "border-border-field bg-bg text-fg-muted shadow-xs inline-flex w-full cursor-text items-center justify-start gap-2 rounded-md border px-2 text-base transition-colors sm:text-sm [&_svg]:size-4",
+      "border-border-field bg-bg text-fg-muted inline-flex w-full cursor-text items-center justify-start gap-2 rounded-md border px-2 text-base shadow-xs transition-colors sm:text-sm [&_svg]:size-4",
       "has-[input[data-disabled]]:border-border-disabled has-[input[data-disabled]]:bg-bg-disabled has-[input[data-disabled]]:text-fg-disabled has-[input[data-disabled]]:cursor-default",
       "has-[input[data-invalid]]:border-border-danger focus-within:has-[input[data-invalid]]:border-border",
     ],
     input: [
-      "text-fg placeholder:text-fg-muted disabled:text-fg-disabled outline-hidden min-w-0 bg-transparent disabled:cursor-default",
+      "text-fg placeholder:text-fg-muted disabled:text-fg-disabled min-w-0 bg-transparent outline-hidden disabled:cursor-default",
     ],
   },
   variants: {
@@ -58,7 +58,7 @@ const Input = ({ className, ...props }: InputProps) => {
   return (
     <AriaInput
       className={composeRenderProps(className, (className) =>
-        input({ className })
+        input({ className }),
       )}
       {...props}
     />
@@ -76,7 +76,7 @@ const TextAreaInput = ({
   const [inputValue, setInputValue] = useControlledState(
     props.value,
     props.defaultValue ?? "",
-    () => {}
+    () => {},
   );
   const inputRef = React.useRef<HTMLTextAreaElement>(null);
 
@@ -106,7 +106,7 @@ const TextAreaInput = ({
     <AriaTextArea
       ref={mergeRefs(inputRef, ref)}
       className={composeRenderProps(className, (className) =>
-        input({ multiline: true, className })
+        input({ multiline: true, className }),
       )}
       onChange={chain(onChange, setInputValue)}
       {...props}
@@ -133,12 +133,12 @@ const InputRoot = ({
   const [inputContextProps, mergedInputRef] = useContextProps(
     {},
     inputRef as React.RefObject<HTMLInputElement>,
-    AriaInputContext
+    AriaInputContext,
   );
   const [textAreaContextProps, mergedTextAreaRef] = useContextProps(
     {},
     inputRef as React.RefObject<HTMLTextAreaElement>,
-    AriaTextAreaContext
+    AriaTextAreaContext,
   );
   const inputProps = { ...inputContextProps, ref: mergedInputRef };
   const textAreaProps = { ...textAreaContextProps, ref: mergedTextAreaRef };
@@ -157,7 +157,7 @@ const InputRoot = ({
     <AriaGroup
       role="presentation"
       className={composeRenderProps(className, (className) =>
-        root({ size, multiline, className })
+        root({ size, multiline, className }),
       )}
       {...mergeProps(props, { onPointerDown })}
     >

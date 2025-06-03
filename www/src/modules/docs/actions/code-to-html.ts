@@ -5,7 +5,7 @@ import { codeToHtml as shikiCodeToHtml } from "shiki";
 
 export const codeToHtml = async (
   code: string,
-  _options?: { lang?: BundledLanguage; structure?: "classic" | "inline" }
+  _options?: { lang?: BundledLanguage; structure?: "classic" | "inline" },
 ) => {
   const defaultOptions = { lang: "tsx", structure: "classic" } as const;
   const options = { ...defaultOptions, ..._options };

@@ -15,7 +15,7 @@ const stylesAtom = withImmer(
   atomWithStorage<State>("new-styles", {
     currentStyleName: "material",
     currentMode: "dark",
-  })
+  }),
 );
 
 export const useStyles = () => {
@@ -33,7 +33,7 @@ export const useStyles = () => {
 
   const currentStyle = React.useMemo(
     () => styles.find((style) => style.name === state.currentStyleName)!,
-    [state.currentStyleName]
+    [state.currentStyleName],
   );
 
   const setCurrentStyle = async (styleName: string) => {

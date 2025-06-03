@@ -58,7 +58,7 @@ const SearchFieldRoot = ({ className, ...props }: SearchFieldRootProps) => {
   return (
     <AriaSearchField
       className={composeRenderProps(className, (className) =>
-        searchFieldtyles({ className })
+        searchFieldtyles({ className }),
       )}
       {...props}
     />

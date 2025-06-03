@@ -106,7 +106,7 @@ const CheckboxRoot = (localProps: CheckboxRootProps) => {
   return (
     <AriaCheckbox
       className={composeRenderProps(className, (className) =>
-        root({ variant, appearance, className })
+        root({ variant, appearance, className }),
       )}
       {...props}
     >

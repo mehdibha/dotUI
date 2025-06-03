@@ -28,7 +28,7 @@ export function Choices({ items, ...props }: ChoicesProps): React.ReactElement {
             key={item.value}
             className={cn(
               focusRing(),
-              "selected:bg-bg-muted hover:bg-bg-muted/50 relative cursor-pointer rounded-md border p-4 transition-colors duration-100"
+              "selected:bg-bg-muted hover:bg-bg-muted/50 relative cursor-pointer rounded-md border p-4 transition-colors duration-100",
             )}
             id={item.value}
           >
@@ -42,7 +42,7 @@ export function Choices({ items, ...props }: ChoicesProps): React.ReactElement {
                 <div
                   className={cn(
                     "border-border-control absolute top-2 right-2 flex size-4 shrink-0 items-center justify-center rounded-full border [&_svg]:size-3",
-                    isSelected && "bg-bg-accent text-fg-onAccent"
+                    isSelected && "bg-bg-accent text-fg-onAccent",
                   )}
                 >
                   {isSelected && <CheckIcon />}

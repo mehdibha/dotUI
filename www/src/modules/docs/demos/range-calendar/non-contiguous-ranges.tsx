@@ -15,7 +15,7 @@ export default function Demo() {
   const isDateUnavailable = (date: DateValue) =>
     disabledRanges.some(
       (interval) =>
-        date.compare(interval[0]) >= 0 && date.compare(interval[1]) <= 0
+        date.compare(interval[0]) >= 0 && date.compare(interval[1]) <= 0,
     );
 
   return (

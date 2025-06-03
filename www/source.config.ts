@@ -23,7 +23,7 @@ export const docs = defineDocs({
           z.object({
             label: z.string(),
             href: z.string(),
-          })
+          }),
         )
         .optional(),
     }),

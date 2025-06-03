@@ -16,7 +16,7 @@ const ColorSwatch = ({ className, style, ...props }: ColorSwatchProps) => {
   return (
     <AriaColorSwatch
       className={composeRenderProps(className, (className) =>
-        colorSwatchStyles({ className })
+        colorSwatchStyles({ className }),
       )}
       style={composeRenderProps(style, (style, { color }) => ({
         ...style,

@@ -19,7 +19,7 @@ import { AnimatePresence, motion, useInView, Variants } from "motion/react";
 export const StylesOverview = () => {
   const container = React.useRef(null);
   const [currentStyleName, setCurrentStyleName] = React.useState<string>(
-    styles[0]!.name
+    styles[0]!.name,
   );
   const ref = React.useRef(null);
   const isInView = useInView(ref);
@@ -29,7 +29,7 @@ export const StylesOverview = () => {
 
   const handleCopy = () => {
     void navigator.clipboard.writeText(
-      `npx shadcn@latest init https://dotui.org/r/${currentStyleName}/base`
+      `npx shadcn@latest init https://dotui.org/r/${currentStyleName}/base`,
     );
     setCopied(true);
     setTimeout(() => {
@@ -43,7 +43,7 @@ export const StylesOverview = () => {
     const interval = setInterval(() => {
       if (touched || !isInView) return;
       const currentIndex = styles.findIndex(
-        (style) => style.name === currentStyleName
+        (style) => style.name === currentStyleName,
       );
       const nextIndex = (currentIndex + 1) % styles.length;
       const nextStyle = styles[nextIndex];

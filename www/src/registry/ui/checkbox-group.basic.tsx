@@ -53,7 +53,7 @@ const CheckboxGroupRoot = ({
     <CheckboxProvider variant={variant}>
       <AriaCheckboxGroup
         className={composeRenderProps(className, (className) =>
-          checkboxGroupStyles({ className })
+          checkboxGroupStyles({ className }),
         )}
         {...props}
       />

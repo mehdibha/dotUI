@@ -19,7 +19,7 @@ export const Tabs = createDynamicComponent<TabsProps>("tabs", "Tabs", _Tabs, {
   motion: React.lazy(() =>
     import("@/__registry__/ui/tabs.motion").then((mod) => ({
       default: mod.Tabs,
-    }))
+    })),
   ),
 });
 
@@ -31,16 +31,16 @@ export const TabList = createDynamicComponent<TabListProps<object>>(
     motion: React.lazy(() =>
       import("@/__registry__/ui/tabs.motion").then((mod) => ({
         default: mod.TabList,
-      }))
+      })),
     ),
-  }
+  },
 );
 
 export const Tab = createDynamicComponent<TabProps>("tabs", "Tab", _Tab, {
   motion: React.lazy(() =>
     import("@/__registry__/ui/tabs.motion").then((mod) => ({
       default: mod.Tab,
-    }))
+    })),
   ),
 });
 
@@ -52,7 +52,7 @@ export const TabPanel = createDynamicComponent<TabPanelProps>(
     motion: React.lazy(() =>
       import("@/__registry__/ui/tabs.motion").then((mod) => ({
         default: mod.TabPanel,
-      }))
+      })),
     ),
-  }
+  },
 );

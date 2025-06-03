@@ -23,7 +23,7 @@ export default function Demo() {
     isWeekend(date, locale) ||
     disabledRanges.some(
       (interval) =>
-        date.compare(interval[0]) >= 0 && date.compare(interval[1]) <= 0
+        date.compare(interval[0]) >= 0 && date.compare(interval[1]) <= 0,
     );
 
   return (

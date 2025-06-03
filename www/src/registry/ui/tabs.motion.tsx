@@ -20,7 +20,7 @@ const tabsStyles = tv({
     list: "flex",
     tab: [
       focusRing(),
-      "text-fg-muted hover:text-fg selected:[&:not([data-disabled])]:text-fg disabled:text-fg-disabled relative flex cursor-pointer items-center justify-center whitespace-nowrap text-sm transition-colors disabled:cursor-default",
+      "text-fg-muted hover:text-fg selected:[&:not([data-disabled])]:text-fg disabled:text-fg-disabled relative flex cursor-pointer items-center justify-center text-sm whitespace-nowrap transition-colors disabled:cursor-default",
     ],
     cursor: "bg-bg-accent absolute",
     panel: focusRing(),
@@ -88,7 +88,7 @@ const Tabs = ({
 }: TabsProps) => (
   <AriaTabs
     className={composeRenderProps(className, (className, { orientation }) =>
-      root({ orientation, className })
+      root({ orientation, className }),
     )}
     {...props}
   >
@@ -111,7 +111,7 @@ const TabList = <T extends object>({
     <LayoutGroup id={layoutId}>
       <AriaTabList
         className={composeRenderProps(className, (className) =>
-          list({ variant, orientation, className })
+          list({ variant, orientation, className }),
         )}
         {...props}
       />
@@ -125,7 +125,7 @@ const Tab = ({ children, className, ...props }: TabProps) => {
   return (
     <AriaTab
       className={composeRenderProps(className, (className) =>
-        tab({ orientation, variant, className })
+        tab({ orientation, variant, className }),
       )}
       {...props}
     >
@@ -152,7 +152,7 @@ const TabPanel = ({ className, ...props }: TabPanelProps) => {
   return (
     <AriaTabPanel
       className={composeRenderProps(className, (className) =>
-        panel({ orientation, variant, className })
+        panel({ orientation, variant, className }),
       )}
       {...props}
     />

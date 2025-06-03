@@ -88,7 +88,7 @@ const NumberFieldRoot = ({ className, ...props }: NumberFieldRootProps) => {
   return (
     <AriaNumberField
       className={composeRenderProps(className, (className) =>
-        root({ className })
+        root({ className }),
       )}
       {...props}
     />

@@ -21,7 +21,7 @@ function removeChangeListener(id: string, listener: ChangeListener): void {
   const list = listeners.get(id) ?? [];
   listeners.set(
     id,
-    list.filter((item) => item !== listener)
+    list.filter((item) => item !== listener),
   );
 }
 
@@ -78,7 +78,7 @@ export function InstallTabs({
         setValue(v);
       }
     },
-    [groupId, persist]
+    [groupId, persist],
   );
 
   return (
@@ -113,7 +113,7 @@ export function InstallTab({
       id={toValue(value)}
       className={cn(
         "mt-0 overflow-hidden text-xs [&>figure:only-child]:m-0 [&>figure:only-child]:rounded-none [&>figure:only-child]:border-none",
-        className
+        className,
       )}
       {...props}
     />

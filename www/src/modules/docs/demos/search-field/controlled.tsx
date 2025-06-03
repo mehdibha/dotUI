@@ -5,7 +5,7 @@ import { SearchField } from "@/components/dynamic-ui/search-field";
 
 export default function Demo() {
   const [inputValue, setInputValue] = React.useState(
-    "Is dotUI the next-gen ui lib?"
+    "Is dotUI the next-gen ui lib?",
   );
   return (
     <div className="flex flex-col items-center gap-4">

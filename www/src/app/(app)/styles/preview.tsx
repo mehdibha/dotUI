@@ -61,7 +61,7 @@ export const Preview = () => {
 
   const previewWidth = Math.min(
     screen === "mobile" ? 430 : 768,
-    isCollapsed ? 768 : 600
+    isCollapsed ? 768 : 600,
   );
   const containerWidth = isOpen ? previewWidth : 0;
 
@@ -155,7 +155,7 @@ export function PreviewContent({
       const iframeUrl =
         iframeRef.current.contentWindow.location.pathname.replace(
           "/preview",
-          ""
+          "",
         );
       if (iframeUrl && iframeUrl !== currentPathname) {
         setCurrentPathname(iframeUrl);
@@ -176,7 +176,7 @@ export function PreviewContent({
     <div
       className={cn(
         "bg-bg size-full overflow-hidden rounded-md border",
-        className
+        className,
       )}
     >
       <div className="bg-bg-muted flex items-center justify-between gap-2 border-b border-t-[inherit] p-1">

@@ -32,7 +32,7 @@ export default async function Page({
         "container w-full max-w-3xl xl:max-w-4xl",
         toc &&
           toc.length > 0 &&
-          "grid grid-cols-1 gap-10 xl:max-w-5xl xl:grid-cols-[minmax(0,1fr)_minmax(180px,220px)]"
+          "grid grid-cols-1 gap-10 xl:max-w-5xl xl:grid-cols-[minmax(0,1fr)_minmax(180px,220px)]",
       )}
     >
       <div className="pt-4 pb-24 sm:pt-10 lg:pt-20">

@@ -13,7 +13,7 @@ export interface DocGenerator {
    */
   run: (
     input: unknown,
-    context: Context
+    context: Context,
   ) => Awaitable<object | object[] | undefined>;
 
   onFile?: (tree: Root, file: VFile) => void;

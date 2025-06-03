@@ -48,7 +48,7 @@ export const ThemeProvider = ({
         ...acc,
         [`--${key}`]: value,
       }),
-      {}
+      {},
     );
   }, [effectiveMode, theme, isMounted]);
 
@@ -57,7 +57,7 @@ export const ThemeProvider = ({
       className={cn(
         "bg-bg text-fg",
         isMounted && effectiveMode === "light" ? "light" : "dark",
-        className
+        className,
       )}
       {...props}
       style={styleProps}

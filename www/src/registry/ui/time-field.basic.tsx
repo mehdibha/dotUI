@@ -56,7 +56,7 @@ const TimeFieldRoot = <T extends TimeValue>({
   return (
     <AriaTimeField
       className={composeRenderProps(className, (className) =>
-        timeFieldStyles({ className })
+        timeFieldStyles({ className }),
       )}
       {...props}
     />

@@ -103,7 +103,7 @@ function TooltipContent({
       <AriaTooltip
         offset={offset}
         className={composeRenderProps(className, (className) =>
-          content({ variant, className })
+          content({ variant, className }),
         )}
         {...props}
       />

@@ -29,7 +29,7 @@ const Link = ({ variant, ...props }: LinkProps) => {
     <AriaLink
       {...props}
       className={composeRenderProps(props.className, (className) =>
-        linkVariants({ variant, className })
+        linkVariants({ variant, className }),
       )}
     />
   );

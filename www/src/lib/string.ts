@@ -44,13 +44,13 @@ export const kebabCaseToCamelCase = (string: string): string => {
 export const truncateOnWord = (
   text: string,
   maxLength: number,
-  ellipsis = true
+  ellipsis = true,
 ) => {
   if (text.length <= maxLength) return text;
   let truncatedText = text.substring(0, maxLength);
   truncatedText = truncatedText.substring(
     0,
-    Math.min(truncatedText.length, truncatedText.lastIndexOf(" "))
+    Math.min(truncatedText.length, truncatedText.lastIndexOf(" ")),
   );
   if (ellipsis) truncatedText += "...";
   return truncatedText;

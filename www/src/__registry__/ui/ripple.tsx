@@ -32,7 +32,7 @@ export const Ripple: FC<RippleProps> = (props) => {
         const duration = clamp(
           0.01 * ripple.size,
           0.2,
-          ripple.size > 100 ? 0.75 : 0.5
+          ripple.size > 100 ? 0.75 : 0.5,
         );
 
         return (

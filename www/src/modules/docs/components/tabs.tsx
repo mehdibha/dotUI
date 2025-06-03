@@ -20,7 +20,7 @@ function removeChangeListener(id: string, listener: ChangeListener): void {
   const list = listeners.get(id) ?? [];
   listeners.set(
     id,
-    list.filter((item) => item !== listener)
+    list.filter((item) => item !== listener),
   );
 }
 
@@ -77,7 +77,7 @@ export function Tabs({
         setValue(v);
       }
     },
-    [groupId, persist]
+    [groupId, persist],
   );
 
   return (

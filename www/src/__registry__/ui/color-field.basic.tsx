@@ -54,7 +54,7 @@ const ColorFieldRoot = ({ className, ...props }: ColorFieldRootProps) => {
   return (
     <AriaColorField
       className={composeRenderProps(className, (className) =>
-        colorFieldStyles({ className })
+        colorFieldStyles({ className }),
       )}
       {...props}
     />

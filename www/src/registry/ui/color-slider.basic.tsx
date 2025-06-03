@@ -15,7 +15,7 @@ const colorSliderStyles = tv({
     root: "group flex flex-col gap-2",
     output: "text-fg-muted text-sm",
     track:
-      "disabled:[background:var(--color-bg-disabled)]! relative rounded-md before:absolute before:inset-0 before:z-[-1] before:rounded-[inherit] before:bg-[repeating-conic-gradient(#e6e6e6_0%_25%,_#fff_0%_50%)] before:bg-[length:16px_16px] before:bg-center before:content-['']",
+      "relative rounded-md before:absolute before:inset-0 before:z-[-1] before:rounded-[inherit] before:bg-[repeating-conic-gradient(#e6e6e6_0%_25%,_#fff_0%_50%)] before:bg-[length:16px_16px] before:bg-center before:content-[''] disabled:[background:var(--color-bg-disabled)]!",
     thumb: "",
   },
   variants: {
@@ -70,7 +70,7 @@ const ColorSliderRoot = ({ className, ...props }: ColorSliderRootProps) => {
   return (
     <AriaColorSlider
       className={composeRenderProps(className, (className, { orientation }) =>
-        root({ orientation, className })
+        root({ orientation, className }),
       )}
       {...props}
     />
@@ -86,7 +86,7 @@ const ColorSliderControl = ({
   return (
     <AriaSliderTrack
       className={composeRenderProps(className, (className, { orientation }) =>
-        track({ orientation, className })
+        track({ orientation, className }),
       )}
       {...props}
     >
@@ -101,7 +101,7 @@ const ColorSliderOutput = ({ className, ...props }: ColorSliderOutputProps) => {
   return (
     <AriaSliderOutput
       className={composeRenderProps(className, (className) =>
-        output({ className })
+        output({ className }),
       )}
       {...props}
     />

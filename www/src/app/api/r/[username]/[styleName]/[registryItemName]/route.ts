@@ -6,7 +6,7 @@ export async function GET(
     params,
   }: {
     params: { username: string; styleName: string; registryItemName: string };
-  }
+  },
 ) {
   try {
     const { username, styleName, registryItemName } = params;
@@ -21,7 +21,7 @@ export async function GET(
             "Content-Type": "application/json",
             "Cache-Control": "public, max-age=3600",
           },
-        }
+        },
       );
     }
 
@@ -33,7 +33,7 @@ export async function GET(
             "Content-Type": "application/json",
             "Cache-Control": "public, max-age=3600",
           },
-        }
+        },
       );
     }
 

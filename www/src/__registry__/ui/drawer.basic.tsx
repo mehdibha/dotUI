@@ -23,15 +23,15 @@ const drawerVariants = tv({
       },
       bottom: {
         overlay:
-          "top-(--visual-viewport-height) exiting:translate-y-0 entering:translate-y-0 max-h-[calc(var(--visual-viewport-height)-var(--drawer-margin))] min-h-20 w-screen -translate-y-full rounded-t-xl border-b-0 [&>[role=dialog]]:pb-[calc(max(calc(var(--spacing)*4),env(safe-area-inset-bottom)))]",
+          "exiting:translate-y-0 entering:translate-y-0 top-(--visual-viewport-height) max-h-[calc(var(--visual-viewport-height)-var(--drawer-margin))] min-h-20 w-screen -translate-y-full rounded-t-xl border-b-0 [&>[role=dialog]]:pb-[calc(max(calc(var(--spacing)*4),env(safe-area-inset-bottom)))]",
       },
       left: {
         overlay:
-          "entering:-translate-x-full exiting:-translate-x-full max-h-(--visual-viewport-height) h-(--visual-viewport-height) left-0 top-0 min-w-20 max-w-[calc(100vw-var(--drawer-margin))] translate-x-0 rounded-r-xl border-l-0 [&>[role=dialog]]:pb-[calc(max(calc(var(--spacing)*4),env(safe-area-inset-bottom)))]",
+          "entering:-translate-x-full exiting:-translate-x-full top-0 left-0 h-(--visual-viewport-height) max-h-(--visual-viewport-height) max-w-[calc(100vw-var(--drawer-margin))] min-w-20 translate-x-0 rounded-r-xl border-l-0 [&>[role=dialog]]:pb-[calc(max(calc(var(--spacing)*4),env(safe-area-inset-bottom)))]",
       },
       right: {
         overlay:
-          "entering:translate-x-full exiting:translate-x-full max-h-(--visual-viewport-height) h-(--visual-viewport-height) right-0 top-0 min-w-20 max-w-[calc(100vw-var(--drawer-margin))] translate-x-0 rounded-l-xl border-r-0 [&>[role=dialog]]:pb-[calc(max(calc(var(--spacing)*4),env(safe-area-inset-bottom)))]",
+          "entering:translate-x-full exiting:translate-x-full top-0 right-0 h-(--visual-viewport-height) max-h-(--visual-viewport-height) max-w-[calc(100vw-var(--drawer-margin))] min-w-20 translate-x-0 rounded-l-xl border-r-0 [&>[role=dialog]]:pb-[calc(max(calc(var(--spacing)*4),env(safe-area-inset-bottom)))]",
       },
     },
   },
@@ -61,7 +61,7 @@ function Drawer({
     >
       <AriaModal
         className={composeRenderProps(className, (className) =>
-          overlay({ placement, className })
+          overlay({ placement, className }),
         )}
         style={composeRenderProps(style, (style) => ({
           "--drawer-margin": "calc(var(--spacing)*24)",

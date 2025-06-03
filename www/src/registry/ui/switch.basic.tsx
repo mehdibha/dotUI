@@ -17,7 +17,7 @@ const switchStyles = tv({
       "group-disabled:border-border-disabled group-selected:group-disabled:border-none group-selected:group-disabled:bg-bg-disabled group-selected:bg-border-focus bg-bg-neutral inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors group-disabled:cursor-not-allowed group-disabled:border group-disabled:bg-transparent",
     ],
     thumb:
-      "group-disabled:bg-fg-disabled pointer-events-none block origin-right rounded-full bg-white shadow-lg ring-0 transition-all duration-200",
+      "group-disabled:bg-fg-disabled pointer-events-none block origin-right rounded-full bg-white ring-0 shadow-lg transition-all duration-200",
   },
   variants: {
     variant: {
@@ -41,7 +41,7 @@ const switchStyles = tv({
           "group-pressed:w-6 group-selected:ml-5 group-selected:group-pressed:ml-4 size-5",
       },
       lg: {
-        indicator: "w-13 h-7",
+        indicator: "h-7 w-13",
         thumb:
           "group-pressed:w-7 group-selected:ml-6 group-selected:group-pressed:ml-5 size-6",
       },
@@ -87,7 +87,7 @@ const SwitchRoot = ({
     <SwitchProvider variant={variant} size={size}>
       <AriaSwitch
         className={composeRenderProps(className, (className) =>
-          root({ variant, size, className })
+          root({ variant, size, className }),
         )}
         {...props}
       />

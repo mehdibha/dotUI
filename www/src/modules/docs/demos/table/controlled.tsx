@@ -26,7 +26,7 @@ const data: Item[] = [
 
 export default function Demo() {
   const [selectedKeys, setSelectedKeys] = React.useState<Selection>(
-    new Set([2, 3])
+    new Set([2, 3]),
   );
   return (
     <TableRoot

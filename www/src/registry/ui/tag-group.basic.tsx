@@ -29,7 +29,7 @@ const { root, list } = tagGroupStyles();
 
 const tagStyles = tv({
   extend: focusRing,
-  base: "ring-offset-background disabled:bg-bg-disabled disabled:text-fg-disabled inline-flex cursor-pointer items-center justify-center gap-2 rounded-md text-sm font-medium leading-normal transition-colors disabled:cursor-default",
+  base: "ring-offset-background disabled:bg-bg-disabled disabled:text-fg-disabled inline-flex cursor-pointer items-center justify-center gap-2 rounded-md text-sm leading-normal font-medium transition-colors disabled:cursor-default",
   variants: {
     variant: {
       default:
@@ -124,7 +124,7 @@ function TagList<T extends object>(props: TagListProps<T>) {
     <AriaTagList
       {...props}
       className={composeRenderProps(props.className, (className) =>
-        list({ className })
+        list({ className }),
       )}
     />
   );
@@ -141,7 +141,7 @@ function Tag(localProps: TagProps) {
     <AriaTag
       textValue={textValue}
       className={composeRenderProps(className, (className) =>
-        tagStyles({ variant, size, shape, className })
+        tagStyles({ variant, size, shape, className }),
       )}
       {...restProps}
     >

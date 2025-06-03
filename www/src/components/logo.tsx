@@ -22,7 +22,7 @@ export const Logo = ({
         "flex items-center gap-2 rounded-sm",
         type === "link" &&
           "opacity-100 transition-opacity duration-150 ease-out hover:opacity-80",
-        className
+        className,
       )}
     >
       <svg

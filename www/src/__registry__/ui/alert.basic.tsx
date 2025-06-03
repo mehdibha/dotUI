@@ -14,7 +14,7 @@ import { tv } from "tailwind-variants";
 const alertStyles = tv({
   slots: {
     root: "@container flex w-full items-center gap-4 rounded-lg border p-4 text-sm [&_svg]:size-4",
-    title: "text-base font-medium leading-normal tracking-tight",
+    title: "text-base leading-normal font-medium tracking-tight",
     content: "text-fg-muted",
   },
   variants: {

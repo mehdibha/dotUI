@@ -85,7 +85,7 @@ const SelectValue = <T extends object>({
   return (
     <AriaSelectValue
       className={composeRenderProps(className, (className) =>
-        selectValue({ className })
+        selectValue({ className }),
       )}
       {...props}
     />

@@ -28,7 +28,7 @@ const ColorSwatchPickerItem = ({
       className={cn(
         focusRing(),
         "relative size-8 cursor-pointer rounded-md transition-shadow focus:z-10 disabled:cursor-not-allowed",
-        className
+        className,
       )}
       {...props}
     >

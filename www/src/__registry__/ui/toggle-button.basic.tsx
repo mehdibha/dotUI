@@ -13,7 +13,7 @@ import { tv } from "tailwind-variants";
 
 const toggleButtonStyles = tv({
   extend: focusRing,
-  base: "disabled:bg-bg-disabled disabled:text-fg-disabled inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-md text-sm font-medium leading-normal transition-colors disabled:cursor-default",
+  base: "disabled:bg-bg-disabled disabled:text-fg-disabled inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-md text-sm leading-normal font-medium transition-colors disabled:cursor-default",
   variants: {
     variant: {
       quiet:
@@ -60,7 +60,7 @@ const toggleButtonStyles = tv({
 
 const [ToggleButtonProvider, useToggleButtonContext] =
   createOptionalScopedContext<VariantProps<typeof toggleButtonStyles>>(
-    "Button"
+    "Button",
   );
 
 interface ToggleButtonProps
@@ -74,7 +74,7 @@ interface ToggleButtonProps
 const ToggleButton = React.forwardRef(
   (
     localProps: ToggleButtonProps,
-    ref: React.ForwardedRef<HTMLButtonElement>
+    ref: React.ForwardedRef<HTMLButtonElement>,
   ) => {
     const contextProps = useToggleButtonContext();
     const props = { ...contextProps, ...localProps };
@@ -104,7 +104,7 @@ const ToggleButton = React.forwardRef(
         ))}
       </AriaToggleButton>
     );
-  }
+  },
 );
 ToggleButton.displayName = "ToggleButton";
 

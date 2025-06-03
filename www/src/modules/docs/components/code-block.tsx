@@ -56,7 +56,7 @@ const CodeBlock = async ({
         ),
         lang,
       };
-    })
+    }),
   );
 
   return (

@@ -16,7 +16,7 @@ import { tv } from "tailwind-variants";
 
 const breadcrumbsStyles = tv({
   slots: {
-    root: "text-fg-muted flex flex-wrap items-center gap-1.5 break-words text-sm [&_svg]:size-4",
+    root: "text-fg-muted flex flex-wrap items-center gap-1.5 text-sm break-words [&_svg]:size-4",
     item: "inline-flex items-center gap-1",
     link: [
       focusRing(),
@@ -57,7 +57,7 @@ interface BreadcrumbItemProps
 const BreadcrumbItem = ({ className, ...props }: BreadcrumbItemProps) => (
   <AriaBreadcrumb
     className={composeRenderProps(className, (className) =>
-      item({ className })
+      item({ className }),
     )}
     {...props}
   />
@@ -67,7 +67,7 @@ interface BreadcrumbLinkProps extends React.ComponentProps<typeof AriaLink> {}
 const BreadcrumbLink = ({ className, ...props }: BreadcrumbLinkProps) => (
   <AriaLink
     className={composeRenderProps(className, (className) =>
-      link({ className })
+      link({ className }),
     )}
     {...props}
   />

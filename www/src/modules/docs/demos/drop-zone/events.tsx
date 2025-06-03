@@ -17,9 +17,9 @@ export default function Demo() {
           const items = await Promise.all(
             e.items
               .filter(
-                (item) => item.kind === "text" && item.types.has("text/plain")
+                (item) => item.kind === "text" && item.types.has("text/plain"),
               )
-              .map((item) => (item as TextDropItem).getText("text/plain"))
+              .map((item) => (item as TextDropItem).getText("text/plain")),
           );
           alert(`You dropped ${items.join("\n")}`);
         }}

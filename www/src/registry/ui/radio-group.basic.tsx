@@ -77,7 +77,7 @@ const RadioRoot = (localProps: RadioRootProps) => {
     <VariantsProvider variant={variant}>
       <AriaRadio
         className={composeRenderProps(className, (className) =>
-          root({ variant, className })
+          root({ variant, className }),
         )}
         {...props}
       />
@@ -151,7 +151,7 @@ const RadioGroupRoot = ({
     <RadioProvider variant={variant}>
       <AriaRadioGroup
         className={composeRenderProps(className, (className) =>
-          radioGroupRoot({ className })
+          radioGroupRoot({ className }),
         )}
         {...props}
       />

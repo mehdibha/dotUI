@@ -55,7 +55,7 @@ export default async function RootLayout({
           "font-sans antialiased",
           josefinSans.variable,
           fontSans.variable,
-          fontMono.variable
+          fontMono.variable,
         )}
         suppressHydrationWarning
       >

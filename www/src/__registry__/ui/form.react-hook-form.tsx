@@ -19,7 +19,7 @@ type FormControlProps<
         isInvalid: boolean;
         isDisabled?: boolean;
         errorMessage?: string;
-      }
+      },
   ) => React.ReactElement;
 };
 

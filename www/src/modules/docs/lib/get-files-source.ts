@@ -17,7 +17,7 @@ export const getFilesSource = async (relativePath: string) => {
       });
     }
     code = code.sort((a) =>
-      a.title === `${path.basename(fullPath)}.tsx` ? -1 : 1
+      a.title === `${path.basename(fullPath)}.tsx` ? -1 : 1,
     );
   } else {
     // if file, get file content and name

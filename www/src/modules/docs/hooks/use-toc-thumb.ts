@@ -23,20 +23,20 @@ export function useTocThumb(containerRef: RefObject<HTMLElement>): TOCThumb {
 
       for (const item of active) {
         const element = container.querySelector<HTMLElement>(
-          `a[href="#${item}"]`
+          `a[href="#${item}"]`,
         );
         if (!element) continue;
 
         const styles = getComputedStyle(element);
         upper = Math.min(
           upper,
-          element.offsetTop + parseFloat(styles.paddingTop)
+          element.offsetTop + parseFloat(styles.paddingTop),
         );
         lower = Math.max(
           lower,
           element.offsetTop +
             element.clientHeight -
-            parseFloat(styles.paddingBottom)
+            parseFloat(styles.paddingBottom),
         );
       }
 

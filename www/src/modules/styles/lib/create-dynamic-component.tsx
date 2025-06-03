@@ -13,7 +13,7 @@ export const createDynamicComponent = <Props extends {}>(
   componentName: keyof Components,
   slotName: string,
   FallbackComponent: React.FC<Props>,
-  registry: Registry<Props>
+  registry: Registry<Props>,
 ): React.FC<Props> => {
   const Component = (props: Props) => {
     const components = useCurrentComponents();

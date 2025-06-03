@@ -21,7 +21,7 @@ export default function Demo() {
         {value
           ? formatter.formatRange(
               value.start.toDate(getLocalTimeZone()),
-              value.end.toDate(getLocalTimeZone())
+              value.end.toDate(getLocalTimeZone()),
             )
           : "--"}
       </p>

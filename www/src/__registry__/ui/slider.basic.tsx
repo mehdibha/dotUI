@@ -26,7 +26,7 @@ const sliderStyles = tv({
       "group-disabled:bg-bg-disabled pointer-events-none absolute rounded-full",
     thumb: [
       focusRing(),
-      "disabled:bg-bg-disabled disabled:border-bg left-[50%] top-[50%] rounded-full bg-white shadow-md transition-[width,height] disabled:border",
+      "disabled:bg-bg-disabled disabled:border-bg top-[50%] left-[50%] rounded-full bg-white shadow-md transition-[width,height] disabled:border",
     ],
     valueLabel: "text-fg-muted text-sm",
   },
@@ -132,7 +132,7 @@ const SliderRoot = ({
     <AriaSlider
       aria-describedby={descriptionId}
       className={composeRenderProps(className, (className, { orientation }) =>
-        root({ orientation, size, className })
+        root({ orientation, size, className }),
       )}
       {...props}
     >
@@ -162,7 +162,7 @@ const SliderTrack = ({ ...props }: SliderTrackProps) => {
   return (
     <AriaSliderTrack
       className={composeRenderProps(props.className, (className) =>
-        track({ orientation, size, className })
+        track({ orientation, size, className }),
       )}
       {...props}
     />
@@ -179,7 +179,7 @@ const SliderFiller = ({ className, style, ...props }: SliderFillerProps) => {
   const dimensionStyles = getFillerDimensions(
     values,
     orientation,
-    getThumbPercent
+    getThumbPercent,
   );
 
   return (
@@ -198,7 +198,7 @@ const SliderThumb = ({ className, ...props }: SliderThumbProps) => {
   return (
     <AriaSliderThumb
       className={composeRenderProps(className, (className) =>
-        thumb({ orientation, size, className })
+        thumb({ orientation, size, className }),
       )}
       {...props}
     />
@@ -215,7 +215,7 @@ const SliderValueLabel = ({
   return (
     <AriaSliderOutput
       className={composeRenderProps(className, (className) =>
-        valueLabel({ className })
+        valueLabel({ className }),
       )}
       {...props}
     >
@@ -223,7 +223,7 @@ const SliderValueLabel = ({
         children,
         (children, { state }) =>
           children ??
-          state.values.map((_, i) => state.getThumbValueLabel(i)).join(" - ")
+          state.values.map((_, i) => state.getThumbValueLabel(i)).join(" - "),
       )}
     </AriaSliderOutput>
   );
@@ -232,7 +232,7 @@ const SliderValueLabel = ({
 const getFillerDimensions = (
   values: number[],
   orientation: "horizontal" | "vertical",
-  getThumbPercent: (index: number) => number
+  getThumbPercent: (index: number) => number,
 ): React.CSSProperties => {
   if (values.length === 1 && orientation === "horizontal")
     return { width: `${getThumbPercent(0) * 100}%` };

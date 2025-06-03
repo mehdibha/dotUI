@@ -91,7 +91,7 @@ export function remarkInstall({
               value: command(value),
             } satisfies Code,
           ],
-        }))
+        })),
       );
 
       Object.assign(node, insert);

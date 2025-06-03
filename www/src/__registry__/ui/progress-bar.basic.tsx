@@ -115,7 +115,7 @@ const ProgressBarRoot = ({
   return (
     <AriaProgress
       className={composeRenderProps(className, (className) =>
-        root({ variant, className })
+        root({ variant, className }),
       )}
       isIndeterminate={
         isIndeterminate || (duration !== "0s" && duration !== "0ms")
@@ -135,7 +135,7 @@ const ProgressBarRoot = ({
           >
             {children}
           </ProgressBarProvider>
-        )
+        ),
       )}
     </AriaProgress>
   );

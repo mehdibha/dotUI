@@ -28,7 +28,7 @@ export const MobileNav = ({
     <header
       className={cn(
         "bg-bg/95 sticky top-0 z-50 block border-b backdrop-blur-sm",
-        className
+        className,
       )}
     >
       <div className="container flex h-14 w-full max-w-(--breakpoint-2xl) items-center justify-between gap-1 sm:gap-2">

@@ -138,7 +138,7 @@ function TooltipContent({
             offset={offset}
             variants={MOTION_VARIANTS}
             className={composeRenderProps(className, (className) =>
-              content({ variant, className })
+              content({ variant, className }),
             )}
             {...props}
           />

@@ -70,31 +70,31 @@ const buildRegistry = async () => {
           for (const file of style.files) {
             const rawFileContent = await fs.readFile(
               path.join(INTERNAL_REGISTRY_PATH, file.path),
-              "utf-8"
+              "utf-8",
             );
             const fileContent = transformContent(rawFileContent, t.name, [
               importTransformer,
             ]);
             await fs.writeFile(
               path.join(stylePath, file?.target ?? ""),
-              fileContent
+              fileContent,
             );
             indexPayload.items.push(
-              transformRegistryItem({ ...style, name: item.name }, t.name)
+              transformRegistryItem({ ...style, name: item.name }, t.name),
             );
           }
         } else {
           for (const file of item.files) {
             const rawFileContent = await fs.readFile(
               path.join(INTERNAL_REGISTRY_PATH, file.path),
-              "utf-8"
+              "utf-8",
             );
             const fileContent = transformContent(rawFileContent, t.name, [
               importTransformer,
             ]);
             await fs.writeFile(
               path.join(stylePath, file?.target ?? ""),
-              fileContent
+              fileContent,
             );
             indexPayload.items.push(transformRegistryItem(item, t.name));
           }
@@ -103,7 +103,7 @@ const buildRegistry = async () => {
         // create public/r/{styleName}/index.json
         await fs.writeFile(
           path.join(REGISTRY_PATH, `${t.name}/index.json`),
-          JSON.stringify(indexPayload, null, 2)
+          JSON.stringify(indexPayload, null, 2),
         );
       }
 
@@ -120,9 +120,9 @@ const buildRegistry = async () => {
         ],
         {
           stdio: "ignore",
-        }
+        },
       );
-    })
+    }),
   );
 };
 
@@ -131,11 +131,11 @@ type Transformer = (content: string, styleName: string) => string;
 function transformContent(
   content: string,
   styleName: string,
-  transformers: Transformer[]
+  transformers: Transformer[],
 ): string {
   return transformers.reduce(
     (acc, transformer) => transformer(acc, styleName),
-    content
+    content,
   );
 }
 
@@ -170,7 +170,7 @@ function transformRegistryItem(item: RegistryItemProps, styleName: string) {
       ? `${componentName}.${fileExtension}`
       : fileName;
     const newFilePath = ["src/registry", styleName, ...parts, newFileName].join(
-      "/"
+      "/",
     );
     return {
       ...file,
