@@ -1,45 +1,41 @@
 {
-  "$schema": "https://turbo.build/schema.json",
-  "globalEnv": ["NODE_ENV"],
+  "$schema": "https://turborepo.org/schema.json",
+  "ui": "tui",
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "env": ["ANALYZE"],
-      "outputs": ["dist/**", ".next/**"]
+      "outputs": [".cache/tsbuildinfo.json", "dist/**"]
     },
-    "preview": {
-      "env": ["NEXT_PUBLIC_APP_URL"],
-      "outputs": ["dist/**", ".next/**"]
-    },
-    "start": {
-      "dependsOn": ["^build"]
-    },
-    "lint": {
+    "dev": {
+      "dependsOn": ["^dev"],
       "cache": false,
-      "outputs": []
-    },
-    "lint:check": {
-      "cache": false,
-      "outputs": []
+      "persistent": false
     },
     "format": {
-      "cache": false,
-      "outputs": []
+      "outputs": [".cache/.prettiercache"],
+      "outputLogs": "new-only"
     },
-    "format:check": {
-      "cache": false,
-      "outputs": []
+    "lint": {
+      "dependsOn": ["^topo", "^build"],
+      "outputs": [".cache/.eslintcache"]
     },
-    "typecheck": {},
-    "dev": {
+    "typecheck": {
+      "dependsOn": ["^topo", "^build"],
+      "outputs": [".cache/tsbuildinfo.json"]
+    },
+    "clean": {
       "cache": false
     },
-    "check": {
+    "//#clean": {
       "cache": false
     },
-    "test": {
+    "push": {
       "cache": false,
-      "outputs": []
+      "interactive": true
+    },
+    "studio": {
+      "cache": false,
+      "persistent": true
     }
   }
 }

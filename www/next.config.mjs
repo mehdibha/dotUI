@@ -5,7 +5,6 @@ const withMDX = createMDX();
 
 const withAnalyzer = createBundleAnalyzer({
   enabled: false,
-  // enabled: process.env.ANALYZE === "true",
 });
 
 /** @type {import("next").NextConfig} */

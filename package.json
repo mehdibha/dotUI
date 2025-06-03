@@ -15,40 +15,29 @@
     "tailwind",
     "typescript"
   ],
+  "packageManager": "pnpm@10.9.0",
   "scripts": {
     "build": "turbo run build",
-    "build:cli": "turbo --filter=dotui-cli build",
-    "build:www": "pnpm --filter=www build",
-    "build:internal-registry": "pnpm --filter=www build:internal-registry",
-    "build:registry": "pnpm --filter=www build:registry",
-    "build:docs": "pnpm --filter=www build:docs",
     "dev": "turbo run dev --parallel",
-    "dev:cli": "turbo --filter=dotui-cli dev",
     "dev:www": "pnpm --filter=www dev",
     "start:www": "pnpm --filter=www start",
-    "start:cli": "pnpm --filter=dotui-cli start",
-    "lint": "turbo run lint && manypkg fix",
-    "lint:check": "turbo run lint:check && manypkg check",
-    "format": "turbo run format",
-    "format:check": "turbo run format:check",
-    "preview": "turbo run preview",
-    "typecheck": "turbo run typecheck",
-    "check": "turbo lint:check typecheck format:check",
-    "release": "changeset version",
-    "pub:beta": "pnpm --filter=dotui-cli pub:beta",
-    "pub:release": "pnpm --filter=dotui-cli pub:release"
+    "build:www": "pnpm --filter=www build",
+    "clean": "git clean -xdf node_modules",
+    "clean:workspaces": "turbo run clean",
+    "format": "turbo run format --continue -- --cache --cache-location .cache/.prettiercache",
+    "format:fix": "turbo run format --continue -- --write --cache --cache-location .cache/.prettiercache",
+    "lint": "turbo run lint --continue -- --cache --cache-location .cache/.eslintcache",
+    "lint:fix": "turbo run lint --continue -- --fix --cache --cache-location .cache/.eslintcache",
+    "lint:ws": "pnpm dlx sherif@latest",
+    "postinstall": "pnpm lint:ws",
+    "typecheck": "turbo run typecheck"
   },
-  "dependencies": {
-    "@changesets/changelog-github": "^0.4.8",
-    "@changesets/cli": "^2.26.1",
-    "@commitlint/cli": "^17.6.3",
-    "@commitlint/config-conventional": "^17.6.3",
-    "@dotui/eslint-config": "workspace:*",
-    "@manypkg/cli": "^0.21.4",
-    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
-    "prettier": "^3.4.2",
-    "prettier-plugin-tailwindcss": "^0.6.11",
-    "turbo": "^2.4.0"
+  "devDependencies": {
+    "@dotui/prettier-config": "workspace:*",
+    "@turbo/gen": "^2.5.1",
+    "prettier": "catalog:",
+    "turbo": "^2.5.1",
+    "typescript": "catalog:"
   },
-  "packageManager": "pnpm@10.9.0"
+  "prettier": "@dotui/prettier-config"
 }

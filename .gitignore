@@ -13,6 +13,9 @@ coverage
 out/
 next-env.d.ts
 
+# production
+build
+
 # misc
 .DS_Store
 *.pem
@@ -24,19 +27,6 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # local env files
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# turbo
-.turbo
-
-
-# production
-build
-
-# local env files
 .env
 .env*.local
 
@@ -44,4 +34,8 @@ build
 .vercel
 
 # typescript
-*.tsbuildinfo
+dist/
+.cache
+
+# turbo
+.turbo
