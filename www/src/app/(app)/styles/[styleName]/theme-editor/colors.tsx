@@ -54,124 +54,26 @@ export function ThemeColors({ style }: { style: Style }) {
           </div>
         </div>
       </Collapsible>
-      <CurrentStyleProvider>
-        <p id="core-colors" className="mt-2 font-medium tracking-tight">
-          Core colors
-        </p>
-        <Collapsible show={isEditMode}>
-          <div className="py-1">
-            <TableRoot
-              aria-label="Core colors"
-              variant="bordered"
-              className="w-full"
-            >
-              <TableHeader>
-                <TableColumn isRowHeader>Name</TableColumn>
-                <TableColumn>Base color</TableColumn>
-                <TableColumn className="w-full">Ratios</TableColumn>
-              </TableHeader>
-              <TableBody>
-                <TableRow>
-                  <TableCell>Neutral</TableCell>
-                  <TableCell>
-                    <ColorPicker size="sm" />
-                  </TableCell>
-                  <TableCell>
-                    <RatiosSlider
-                      aria-label="Ratios"
-                      defaultValue={[
-                        1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2,
-                        15.2,
-                      ]}
-                    />
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>Accent</TableCell>
-                  <TableCell>
-                    <ColorPicker size="sm" />
-                  </TableCell>
-                  <TableCell>
-                    <RatiosSlider
-                      aria-label="Ratios"
-                      defaultValue={[
-                        1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2,
-                        15.2,
-                      ]}
-                    />
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </TableRoot>
-          </div>
-        </Collapsible>
-        <Collapsible show={!isEditMode}>
-          <div className="flex gap-1 pt-1">
-            <ColorItem
-              colorName="Neutral"
-              className="bg-bg-neutral rounded-sm"
-              containerClassName=" ml-0! mr-0!"
-            />
-            <ColorItem
-              colorName="Accent"
-              className="bg-bg-accent rounded-sm"
-              containerClassName=" ml-0! mr-0!"
-            />
-          </div>
-        </Collapsible>
-        <div className="mt-1 space-y-1">
-          {[
-            { name: "neutral", label: "Neutral" },
-            { name: "accent", label: "Accent" },
-          ].map((shade) => (
-            <div key={shade.name} className="flex items-center gap-2">
-              <p className="text-fg-muted w-[60px] text-sm">{shade.label}</p>
-              <div className="flex flex-1">
-                {Array.from({ length: 10 }).map((_, i) => (
-                  <ColorItem
-                    key={i}
-                    style={{
-                      backgroundColor: `var(--${shade.name}-${(i + 1) * 100})`,
-                      color: `var(--${shade.name}-${(i + 1) * 100}-fg)`,
-                    }}
-                    colorName={`${shade.label} ${(i + 1) * 100}`}
-                    className="h-8 rounded-sm"
-                    containerClassName="not-last:-mr-28 not-first:-ml-28 h-8"
-                    hoverAnimation
-                    colorValue={
-                      style.theme[currentMode][
-                        `--${shade.name}-${(i + 1) * 100}`
-                      ]?.replace("deg", "") as string
-                    }
-                  />
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-        <p id="semantic-colors" className="mt-4 font-medium tracking-tight">
-          Semantic colors
-        </p>
-        <Collapsible show={isEditMode}>
-          <div className="py-1">
-            <TableRoot
-              aria-label="Core colors"
-              variant="bordered"
-              className="w-full"
-            >
-              <TableHeader>
-                <TableColumn isRowHeader>Name</TableColumn>
-                <TableColumn>Base color</TableColumn>
-                <TableColumn className="w-full">Ratios</TableColumn>
-              </TableHeader>
-              <TableBody>
-                {[
-                  { label: "Warning", name: "warning" },
-                  { label: "Danger", name: "danger" },
-                  { label: "Success", name: "success" },
-                ].map(({ label, name }) => (
-                  <TableRow key={name}>
-                    <TableCell>{label}</TableCell>
+      <div className="[&_[data-slot=label]]:!text-neutral-600 dark:[&_[data-slot=label]]:!text-neutral-400">
+        <CurrentStyleProvider className="bg-transparent">
+          <p data-slot="label" className="mt-2 font-medium tracking-tight">
+            Core colors
+          </p>
+          <Collapsible show={isEditMode}>
+            <div className="py-1">
+              <TableRoot
+                aria-label="Core colors"
+                variant="bordered"
+                className="w-full"
+              >
+                <TableHeader>
+                  <TableColumn isRowHeader>Name</TableColumn>
+                  <TableColumn>Base color</TableColumn>
+                  <TableColumn className="w-full">Ratios</TableColumn>
+                </TableHeader>
+                <TableBody>
+                  <TableRow>
+                    <TableCell>Neutral</TableCell>
                     <TableCell>
                       <ColorPicker size="sm" />
                     </TableCell>
@@ -185,59 +87,167 @@ export function ThemeColors({ style }: { style: Style }) {
                       />
                     </TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </TableRoot>
-          </div>
-        </Collapsible>
-        <Collapsible show={!isEditMode}>
-          <div className="flex gap-1 pt-1">
-            <ColorItem
-              className="bg-bg-success rounded-sm"
-              containerClassName="ml-0! mr-0!"
-            />
-            <ColorItem
-              className="bg-bg-warning rounded-sm"
-              containerClassName=" ml-0! mr-0!"
-            />
-            <ColorItem
-              className="bg-bg-danger rounded-sm"
-              containerClassName=" ml-0! mr-0!"
-            />
-          </div>
-        </Collapsible>
-        <div className="mt-1 space-y-1">
-          {[
-            { name: "success", label: "Success" },
-            { name: "warning", label: "Warning" },
-            { name: "danger", label: "Danger" },
-          ].map((shade) => (
-            <div key={shade.name} className="flex items-center gap-2">
-              <p className="text-fg-muted w-[60px] text-sm">{shade.label}</p>
-              <div className="flex flex-1">
-                {Array.from({ length: 10 }).map((_, i) => (
-                  <ColorItem
-                    key={i}
-                    style={{
-                      backgroundColor: `var(--${shade.name}-${(i + 1) * 100})`,
-                      color: `var(--${shade.name}-${(i + 1) * 100}-fg)`,
-                    }}
-                    colorName={`${shade.label} ${(i + 1) * 100}`}
-                    className="h-8 rounded-sm"
-                    containerClassName="not-last:-mr-28 not-first:-ml-28 h-8"
-                    hoverAnimation
-                    colorValue={
-                      style.theme[currentMode][
-                        `--${shade.name}-${(i + 1) * 100}`
-                      ]?.replace("deg", "") as string
-                    }
-                  />
-                ))}
-              </div>
+                  <TableRow>
+                    <TableCell>Accent</TableCell>
+                    <TableCell>
+                      <ColorPicker size="sm" />
+                    </TableCell>
+                    <TableCell>
+                      <RatiosSlider
+                        aria-label="Ratios"
+                        defaultValue={[
+                          1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2,
+                          15.2,
+                        ]}
+                      />
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </TableRoot>
             </div>
-          ))}
-        </div>
-      </CurrentStyleProvider>
+          </Collapsible>
+          <Collapsible show={!isEditMode}>
+            <div className="flex gap-1 pt-1">
+              <ColorItem
+                colorName="Neutral"
+                className="bg-bg-neutral rounded-sm"
+                containerClassName=" ml-0! mr-0!"
+              />
+              <ColorItem
+                colorName="Accent"
+                className="bg-bg-accent rounded-sm"
+                containerClassName=" ml-0! mr-0!"
+              />
+            </div>
+          </Collapsible>
+          <div className="mt-1 space-y-1">
+            {[
+              { name: "neutral", label: "Neutral" },
+              { name: "accent", label: "Accent" },
+            ].map((shade) => (
+              <div key={shade.name} className="flex items-center gap-2">
+                <p data-slot="label" className="text-fg-muted w-[60px] text-sm">
+                  {shade.label}
+                </p>
+                <div className="flex flex-1">
+                  {Array.from({ length: 10 }).map((_, i) => (
+                    <ColorItem
+                      key={i}
+                      style={{
+                        backgroundColor: `var(--${shade.name}-${(i + 1) * 100})`,
+                        color: `var(--${shade.name}-${(i + 1) * 100}-fg)`,
+                      }}
+                      colorName={`${shade.label} ${(i + 1) * 100}`}
+                      className="h-8 rounded-sm"
+                      containerClassName="not-last:-mr-28 not-first:-ml-28 h-8"
+                      hoverAnimation
+                      colorValue={
+                        style.theme[currentMode][
+                          `--${shade.name}-${(i + 1) * 100}`
+                        ]?.replace("deg", "") as string
+                      }
+                    />
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+          <p
+            id="semantic-colors"
+            data-slot="label"
+            className="mt-4 font-medium tracking-tight"
+          >
+            Semantic colors
+          </p>
+          <Collapsible show={isEditMode}>
+            <div className="py-1">
+              <TableRoot
+                aria-label="Core colors"
+                variant="bordered"
+                className="w-full"
+              >
+                <TableHeader>
+                  <TableColumn isRowHeader>Name</TableColumn>
+                  <TableColumn>Base color</TableColumn>
+                  <TableColumn className="w-full">Ratios</TableColumn>
+                </TableHeader>
+                <TableBody>
+                  {[
+                    { label: "Warning", name: "warning" },
+                    { label: "Danger", name: "danger" },
+                    { label: "Success", name: "success" },
+                  ].map(({ label, name }) => (
+                    <TableRow key={name}>
+                      <TableCell>{label}</TableCell>
+                      <TableCell>
+                        <ColorPicker size="sm" />
+                      </TableCell>
+                      <TableCell>
+                        <RatiosSlider
+                          aria-label="Ratios"
+                          defaultValue={[
+                            1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2,
+                            15.2,
+                          ]}
+                        />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </TableRoot>
+            </div>
+          </Collapsible>
+          <Collapsible show={!isEditMode}>
+            <div className="flex gap-1 pt-1">
+              <ColorItem
+                className="bg-bg-success rounded-sm"
+                containerClassName="ml-0! mr-0!"
+              />
+              <ColorItem
+                className="bg-bg-warning rounded-sm"
+                containerClassName=" ml-0! mr-0!"
+              />
+              <ColorItem
+                className="bg-bg-danger rounded-sm"
+                containerClassName=" ml-0! mr-0!"
+              />
+            </div>
+          </Collapsible>
+          <div className="mt-1 space-y-1">
+            {[
+              { name: "success", label: "Success" },
+              { name: "warning", label: "Warning" },
+              { name: "danger", label: "Danger" },
+            ].map((shade) => (
+              <div key={shade.name} className="flex items-center gap-2">
+                <p data-slot="label" className="text-fg-muted w-[60px] text-sm">
+                  {shade.label}
+                </p>
+                <div className="flex flex-1">
+                  {Array.from({ length: 10 }).map((_, i) => (
+                    <ColorItem
+                      key={i}
+                      style={{
+                        backgroundColor: `var(--${shade.name}-${(i + 1) * 100})`,
+                        color: `var(--${shade.name}-${(i + 1) * 100}-fg)`,
+                      }}
+                      colorName={`${shade.label} ${(i + 1) * 100}`}
+                      className="h-8 rounded-sm"
+                      containerClassName="not-last:-mr-28 not-first:-ml-28 h-8"
+                      hoverAnimation
+                      colorValue={
+                        style.theme[currentMode][
+                          `--${shade.name}-${(i + 1) * 100}`
+                        ]?.replace("deg", "") as string
+                      }
+                    />
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </CurrentStyleProvider>
+      </div>
     </div>
   );
 }

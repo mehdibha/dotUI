@@ -40,7 +40,7 @@ export function ThemeEditor({
     <ThemeEditorContext
       value={{ isLoading: false, isEditMode: isEditable && isEditMode }}
     >
-      <div className="[&_[data-slot=label]]:text-fg-muted [&_[data-slot=label]]:text-sm">
+      <div className="[&_[data-slot=label]]:text-sm">
         <ThemeEditorHeader
           style={style}
           isLoading={isLoading}
