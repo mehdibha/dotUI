@@ -2,7 +2,6 @@
 
 import React from "react";
 import Link from "next/link";
-// import { notFound } from "next/navigation";
 import {
   ArrowLeftIcon,
   EllipsisVerticalIcon,
@@ -10,7 +9,6 @@ import {
   SaveIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-// import { useMounted } from "@/hooks/use-mounted";
 import { Alert } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogRoot } from "@/components/ui/dialog";
@@ -18,37 +16,25 @@ import { MenuRoot, Menu, MenuItem } from "@/components/ui/menu";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ToggleButton } from "@/components/ui/toggle-button";
 import { Tooltip } from "@/components/ui/tooltip";
-// import { usePreviewMode } from "@/components/mode-provider";
-// import { ThemeModeSwitch } from "@/components/theme-mode-switch";
-import { Theme } from "@/modules/styles/types";
+import { ThemeModeSwitch } from "@/components/theme-mode-switch";
+import { useStyles } from "@/modules/styles/atoms/styles-atom";
+import { Style } from "@/modules/styles/types";
 import { PreviewContent } from "../../preview";
-// import { ThemeColors } from "./colors";
+import { ThemeColors } from "./colors";
 import { ThemeEditorContext } from "./context";
-import { ThemeIconography } from "./iconography";
 import { ThemeTypography } from "./typography";
 
 export function ThemeEditor({
-  // theme: themeProp,
+  style,
   isEditable,
 }: {
-  theme?: Theme | string;
+  style: Style;
   isEditable: boolean;
 }) {
-  // const { mode: previewMode, setMode: setPreviewMode } = usePreviewMode();
-
-  const [isEditMode, setEditMode] = React.useState(true);
-  // const isMounted = useMounted();
-
-  // const theme: Theme | undefined =
-  //   typeof themeProp === "string"
-  //     ? userThemes.find((t) => t.name === themeProp)
-  //     : themeProp;
+  const { currentMode, setCurrentMode } = useStyles();
+  const [isEditMode, setEditMode] = React.useState(false);
 
   const isLoading = false;
-
-  // if (isMounted && !theme) {
-  //   notFound();
-  // }
 
   return (
     <ThemeEditorContext
@@ -56,7 +42,7 @@ export function ThemeEditor({
     >
       <div className="[&_[data-slot=label]]:text-fg-muted [&_[data-slot=label]]:text-sm">
         <ThemeEditorHeader
-          // theme={theme}
+          style={style}
           isLoading={isLoading}
           isEditable={isEditable}
           isEditMode={isEditMode}
@@ -72,30 +58,26 @@ export function ThemeEditor({
           <Section
             title="Colors"
             description="Theme color palette and variations"
-            // action={
-            //   theme?.foundations.light &&
-            //   theme?.foundations.dark &&
-            //   previewMode && (
-            //     <ThemeModeSwitch
-            //       isSelected={previewMode === "dark"}
-            //       onChange={(isSelected) =>
-            //         setPreviewMode(isSelected ? "dark" : "light")
-            //       }
-            //     />
-            //   )
-            // }
+            action={
+              <ThemeModeSwitch
+                isSelected={currentMode === "dark"}
+                onChange={(isSelected) =>
+                  setCurrentMode(isSelected ? "dark" : "light")
+                }
+              />
+            }
           >
-            {/* <ThemeColors theme={theme} /> */}
+            <ThemeColors style={style} />
           </Section>
           <Section title="Typography" description="Theme typography">
             <ThemeTypography />
           </Section>
-          <Section title="Iconography" description="Theme iconography">
+          {/* <Section title="Iconography" description="Theme iconography">
             <ThemeIconography />
           </Section>
           <Section title="Components" description="Theme components">
-            {/* <ThemeComponents /> */}
-          </Section>
+            <ThemeComponents />
+          </Section> */}
         </ThemeEditorBody>
       </div>
     </ThemeEditorContext>
@@ -103,14 +85,14 @@ export function ThemeEditor({
 }
 
 interface ThemeHeaderProps {
-  // theme?: Theme;
+  style: Style;
   isLoading: boolean;
   isEditable: boolean;
   isEditMode: boolean;
   setEditMode: (value: boolean) => void;
 }
 export function ThemeEditorHeader({
-  // theme,
+  style,
   isLoading,
   isEditable,
   isEditMode,
@@ -128,7 +110,7 @@ export function ThemeEditorHeader({
       <div className="flex items-center justify-between">
         <h2 className="text-3xl font-semibold tracking-tight">
           <Skeleton show={isLoading}>
-            {/* <span>{theme?.name ?? "Forest"}</span> */}
+            <span>{style.name}</span>
           </Skeleton>
         </h2>
         <div className="flex items-center gap-2">

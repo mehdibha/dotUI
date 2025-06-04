@@ -21,11 +21,11 @@ function Loader({ size = 20, ...props }: LoaderProps) {
         } as React.CSSProperties
       }
     >
-      <div className="relative left-1/2 top-1/2 h-full w-full">
+      <div className="relative top-1/2 left-1/2 h-full w-full">
         {Array.from({ length: 12 }).map((_, i) => (
           <span
             key={i}
-            className="animate-line-spinner absolute left-[-10%] top-[-3.9%] h-[8%] w-[24%] rounded-sm bg-current"
+            className="animate-line-spinner absolute top-[-3.9%] left-[-10%] h-[8%] w-[24%] rounded-sm bg-current"
             style={{
               transform: `rotate(${i * 30}deg) translate(146%)`,
               animationDelay: `-${(12 - i) * 0.1}s`,

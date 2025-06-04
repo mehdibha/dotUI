@@ -23,9 +23,9 @@ export default async function HomePage() {
     <div>
       {/* Hero section */}
       <div className="container max-w-screen-2xl">
-        <section className="max-w-3xl pb-20 pt-10 sm:pt-14">
+        <section className="max-w-3xl pt-10 pb-20 sm:pt-14">
           <Announcement />
-          <h1 className="xs:text-3xl text-balance text-2xl tracking-tighter max-lg:font-medium md:text-4xl lg:text-5xl">
+          <h1 className="xs:text-3xl text-2xl tracking-tighter text-balance max-lg:font-medium md:text-4xl lg:text-5xl">
             Quickly build your component library with a{" "}
             <span className="font-bold italic">unique</span> look.
           </h1>
@@ -52,9 +52,9 @@ export default async function HomePage() {
       <section className="container max-w-screen-2xl">
         <StylesOverview />
       </section>
-      <section className="shadow-xs mt-10 border-y py-12">
+      <section className="mt-10 border-y py-12 shadow-xs">
         <div className="container flex flex-col items-center justify-center gap-5 lg:gap-10">
-          <h2 className="text-fg-muted xs:text-base text-pretty font-mono text-sm tracking-wide lg:text-base">
+          <h2 className="text-fg-muted xs:text-base font-mono text-sm tracking-wide text-pretty lg:text-base">
             Built on modern tools
           </h2>
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8">
@@ -95,7 +95,7 @@ export default async function HomePage() {
               >
                 <Link
                   target="_blank"
-                  className="grayscale-80 flex items-center justify-center opacity-60 transition-opacity hover:opacity-100 hover:grayscale-0"
+                  className="flex items-center justify-center opacity-60 grayscale-80 transition-opacity hover:opacity-100 hover:grayscale-0"
                   href={href}
                 >
                   {icon}
@@ -107,7 +107,7 @@ export default async function HomePage() {
       </section>
       {/* Call to action */}
       <section className="container max-w-2xl py-20 sm:py-32">
-        <h2 className="text-pretty text-2xl font-medium tracking-tighter lg:text-3xl xl:text-4xl">
+        <h2 className="text-2xl font-medium tracking-tighter text-pretty lg:text-3xl xl:text-4xl">
           Fueled by your <span className="">stars</span>.
         </h2>
         <p className="text-fg-muted mt-2 text-base">
@@ -121,7 +121,7 @@ export default async function HomePage() {
               viewBox="0 0 236 66"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className="-rotate-110 text-fg-muted"
+              className="text-fg-muted -rotate-110"
             >
               <path
                 fillRule="evenodd"

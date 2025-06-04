@@ -44,7 +44,7 @@ export function Choices({ items, ...props }: ChoicesProps): React.ReactElement {
                 <p className="text-fg-muted mt-2 text-sm">{item.description}</p>
                 <div
                   className={cn(
-                    "border-border-control absolute right-2 top-2 flex size-4 shrink-0 items-center justify-center rounded-full border [&_svg]:size-3",
+                    "border-border-control absolute top-2 right-2 flex size-4 shrink-0 items-center justify-center rounded-full border [&_svg]:size-3",
                     isSelected && "bg-bg-accent text-fg-onAccent"
                   )}
                 >

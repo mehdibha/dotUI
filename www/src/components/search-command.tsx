@@ -160,7 +160,7 @@ const SearchCommandDialog = ({
           variant="outline"
           shape="rectangle"
           size="sm"
-          className="absolute right-2 top-2 h-7 px-2 text-xs font-normal"
+          className="absolute top-2 right-2 h-7 px-2 text-xs font-normal"
         >
           Esc
         </Button>

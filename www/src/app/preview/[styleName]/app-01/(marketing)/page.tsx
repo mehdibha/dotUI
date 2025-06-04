@@ -5,10 +5,10 @@ export default function PreviewPage() {
     <div className="space-y-20">
       {/* Hero */}
       <div>
-        <h1 className="text-balance text-3xl font-semibold tracking-tighter">
+        <h1 className="text-3xl font-semibold tracking-tighter text-balance">
           Acme is a purpose-built tool for planning and building products
         </h1>
-        <p className="text-fg-muted mt-4 text-balance text-sm">
+        <p className="text-fg-muted mt-4 text-sm text-balance">
           Meet the system for modern software development. Streamline issues,
           projects, and product roadmaps.
         </p>

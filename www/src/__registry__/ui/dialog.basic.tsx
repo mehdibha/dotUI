@@ -14,7 +14,7 @@ import { Overlay, type OverlayProps } from "@/components/dynamic-ui/overlay";
 const dialogStyles = tv({
   slots: {
     content: [
-      "outline-hidden relative flex h-[inherit] max-h-[inherit] flex-col rounded-[inherit] p-4",
+      "relative flex h-[inherit] max-h-[inherit] flex-col rounded-[inherit] p-4 outline-hidden",
     ],
     header: "mb-4",
     heading: "text-lg font-medium",

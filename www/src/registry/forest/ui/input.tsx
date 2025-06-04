@@ -20,12 +20,12 @@ const inputStyles = tv({
   slots: {
     root: [
       focusInput(),
-      "border-border-field bg-bg text-fg-muted shadow-xs inline-flex w-full cursor-text items-center justify-start gap-2 rounded-md border px-2 text-base transition-colors sm:text-sm [&_svg]:size-4",
+      "border-border-field bg-bg text-fg-muted inline-flex w-full cursor-text items-center justify-start gap-2 rounded-md border px-2 text-base shadow-xs transition-colors sm:text-sm [&_svg]:size-4",
       "has-[input[data-disabled]]:border-border-disabled has-[input[data-disabled]]:bg-bg-disabled has-[input[data-disabled]]:text-fg-disabled has-[input[data-disabled]]:cursor-default",
       "has-[input[data-invalid]]:border-border-danger focus-within:has-[input[data-invalid]]:border-border",
     ],
     input: [
-      "text-fg placeholder:text-fg-muted disabled:text-fg-disabled outline-hidden min-w-0 bg-transparent disabled:cursor-default",
+      "text-fg placeholder:text-fg-muted disabled:text-fg-disabled min-w-0 bg-transparent outline-hidden disabled:cursor-default",
     ],
   },
   variants: {

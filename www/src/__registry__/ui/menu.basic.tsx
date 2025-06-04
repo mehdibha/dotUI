@@ -23,7 +23,7 @@ import { Text } from "@/components/dynamic-ui/text";
 
 const menuStyles = tv({
   base: [
-    "max-h[inherit] outline-hidden rounded-[inherit] p-1",
+    "max-h[inherit] rounded-[inherit] p-1 outline-hidden",
     "group-data-[type=drawer]/overlay:p-2",
     "[&_.separator]:-mx-1 [&_.separator]:my-1 [&_.separator]:w-auto",
   ],
@@ -31,7 +31,7 @@ const menuStyles = tv({
 
 const menuItemStyles = tv({
   base: [
-    "focus:bg-bg-inverse/10 disabled:text-fg-disabled outline-hidden flex cursor-pointer items-center gap-2 rounded-sm px-3 py-1.5 text-sm transition-colors disabled:pointer-events-none",
+    "focus:bg-bg-inverse/10 disabled:text-fg-disabled flex cursor-pointer items-center gap-2 rounded-sm px-3 py-1.5 text-sm outline-hidden transition-colors disabled:pointer-events-none",
     "selection-single:pl-0 selection-multiple:pl-0",
     "group-data-[type=drawer]/overlay:text-md group-data-[type=drawer]/overlay:py-3",
     "group-data-[type=modal]/overlay:text-md group-data-[type=modal]/overlay:py-2",

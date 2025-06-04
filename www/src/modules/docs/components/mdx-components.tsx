@@ -40,7 +40,7 @@ export const mdxComponents: MDXComponents = {
   >,
   p: ({ className, ...props }) => (
     <p
-      className={cn("not-first:mt-4 text-base leading-7", className)}
+      className={cn("text-base leading-7 not-first:mt-4", className)}
       {...props}
     />
   ),

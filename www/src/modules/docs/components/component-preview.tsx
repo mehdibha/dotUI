@@ -61,8 +61,8 @@ export const ComponentPreview = async ({
               <ScrollArea className="bg-bg text-fg">
                 <div
                   className={cn(
-                    "flex pb-10 pt-14",
-                    primary && "min-h-48 pb-20 pt-24",
+                    "flex pt-14 pb-10",
+                    primary && "min-h-48 pt-24 pb-20",
                     fullWidth
                       ? "px-8 lg:px-12"
                       : "flex items-center justify-center px-4"
