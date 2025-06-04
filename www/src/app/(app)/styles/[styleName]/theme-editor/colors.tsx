@@ -21,17 +21,16 @@ import {
   TableRow,
   TableCell,
 } from "@/components/ui/table";
+import { useStyles } from "@/modules/styles/atoms/styles-atom";
 import "@/modules/styles/components/current-style-provider";
 import { CurrentStyleProvider } from "@/modules/styles/components/current-style-provider";
 import { Style } from "@/modules/styles/types";
 import { Collapsible } from "./collapsible";
 import { useThemeEditorContext } from "./context";
-import { useStyles } from "@/modules/styles/atoms/styles-atom";
 
 export function ThemeColors({ style }: { style: Style }) {
   const { isEditMode } = useThemeEditorContext();
   const { currentMode } = useStyles();
-  
 
   return (
     <div>
@@ -140,10 +139,9 @@ export function ThemeColors({ style }: { style: Style }) {
                     containerClassName="not-last:-mr-28 not-first:-ml-28 h-8"
                     hoverAnimation
                     colorValue={
-                      style.theme[currentMode][`--${shade.name}-${(i + 1) * 100}`]?.replace(
-                        "deg",
-                        ""
-                      ) as string
+                      style.theme[currentMode][
+                        `--${shade.name}-${(i + 1) * 100}`
+                      ]?.replace("deg", "") as string
                     }
                   />
                 ))}
@@ -229,10 +227,9 @@ export function ThemeColors({ style }: { style: Style }) {
                     containerClassName="not-last:-mr-28 not-first:-ml-28 h-8"
                     hoverAnimation
                     colorValue={
-                      style.theme[currentMode][`--${shade.name}-${(i + 1) * 100}`]?.replace(
-                        "deg",
-                        ""
-                      ) as string
+                      style.theme[currentMode][
+                        `--${shade.name}-${(i + 1) * 100}`
+                      ]?.replace("deg", "") as string
                     }
                   />
                 ))}

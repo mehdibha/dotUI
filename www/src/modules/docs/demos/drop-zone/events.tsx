@@ -48,7 +48,7 @@ const Draggable = ({ text }: { text: string }) => {
         role="button"
         data-dragging={isDragging || undefined}
         tabIndex={0}
-        className="bg-bg-muted data-dragging:opacity-50 rounded-sm border p-2 transition-all hover:scale-105"
+        className="bg-bg-muted rounded-sm border p-2 transition-all hover:scale-105 data-dragging:opacity-50"
       >
         {text}
       </div>

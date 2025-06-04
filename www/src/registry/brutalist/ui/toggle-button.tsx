@@ -12,7 +12,7 @@ import { createOptionalScopedContext } from "@/modules/registry/lib/utils";
 
 const toggleButtonStyles = tv({
   extend: focusRing,
-  base: "disabled:bg-bg-disabled disabled:text-fg-disabled inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-md text-sm font-medium leading-normal transition-colors disabled:cursor-default",
+  base: "disabled:bg-bg-disabled disabled:text-fg-disabled inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-md text-sm leading-normal font-medium transition-colors disabled:cursor-default",
   variants: {
     variant: {
       quiet:

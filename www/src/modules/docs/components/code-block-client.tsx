@@ -61,7 +61,7 @@ const CodeBlockClient = ({
       {...props}
     >
       <CodeBlockHeader>
-        <div className="shrink-1 flex h-full w-[100px] flex-1 basis-0 items-end gap-2">
+        <div className="flex h-full w-[100px] flex-1 shrink-1 basis-0 items-end gap-2">
           {files.length > 0 && (
             <TabList>
               {files

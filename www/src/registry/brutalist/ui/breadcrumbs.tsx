@@ -14,7 +14,7 @@ import { focusRing } from "@/modules/registry/lib/focus-styles";
 
 const breadcrumbsStyles = tv({
   slots: {
-    root: "text-fg-muted flex flex-wrap items-center gap-1.5 break-words text-sm [&_svg]:size-4",
+    root: "text-fg-muted flex flex-wrap items-center gap-1.5 text-sm break-words [&_svg]:size-4",
     item: "inline-flex items-center gap-1",
     link: [
       focusRing(),

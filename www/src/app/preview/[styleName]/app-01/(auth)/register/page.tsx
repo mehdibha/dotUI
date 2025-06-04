@@ -7,7 +7,7 @@ import { GoogleIcon } from "@/components/icons";
 export default function RegisterPage() {
   return (
     <div className="bg-bg-muted w-full max-w-sm rounded-lg border p-8">
-      <h1 className="text-2xl font-semibold leading-none tracking-tight">
+      <h1 className="text-2xl leading-none font-semibold tracking-tight">
         Create an account
       </h1>
       <p className="text-fg-muted mt-2 text-sm">

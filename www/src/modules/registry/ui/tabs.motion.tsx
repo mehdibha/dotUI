@@ -20,7 +20,7 @@ const tabsStyles = tv({
     list: "flex",
     tab: [
       focusRing(),
-      "text-fg-muted hover:text-fg selected:[&:not([data-disabled])]:text-fg disabled:text-fg-disabled relative flex cursor-pointer items-center justify-center whitespace-nowrap text-sm transition-colors disabled:cursor-default",
+      "text-fg-muted hover:text-fg selected:[&:not([data-disabled])]:text-fg disabled:text-fg-disabled relative flex cursor-pointer items-center justify-center text-sm whitespace-nowrap transition-colors disabled:cursor-default",
     ],
     cursor: "bg-bg-accent absolute",
     panel: focusRing(),

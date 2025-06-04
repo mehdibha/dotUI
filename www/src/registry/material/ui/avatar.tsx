@@ -9,7 +9,7 @@ const avatarStyles = tv({
     root: "bg-bg relative inline-flex shrink-0 overflow-hidden align-middle",
     image: "aspect-square size-full",
     fallback:
-      "bg-bg-muted flex size-full select-none items-center justify-center",
+      "bg-bg-muted flex size-full items-center justify-center select-none",
     placeholder:
       "bg-bg-muted flex size-full h-full animate-pulse items-center justify-center",
   },

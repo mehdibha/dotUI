@@ -15,7 +15,7 @@ import { Loader } from "@/modules/registry/ui/loader.ring";
 
 const buttonStyles = tv({
   extend: focusRing,
-  base: "disabled:bg-bg-disabled disabled:text-fg-disabled pending:cursor-default pending:bg-bg-disabled pending:text-fg-disabled pending:border pending:border-border-disabled pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0 relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium leading-normal transition-all disabled:cursor-default",
+  base: "disabled:bg-bg-disabled disabled:text-fg-disabled pending:cursor-default pending:bg-bg-disabled pending:text-fg-disabled pending:border pending:border-border-disabled pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0 relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-md text-sm leading-normal font-medium whitespace-nowrap transition-all disabled:cursor-default",
   variants: {
     variant: {
       default:
@@ -103,7 +103,7 @@ const Button = React.forwardRef(
               <Loader
                 data-slot="spinner"
                 aria-label="loading"
-                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
                 size={16}
               />
             )}

@@ -90,7 +90,7 @@ export const StylesOverview = () => {
             </TabList>
           </Tabs>
           <div className="flex flex-1 items-center justify-center">
-            <div className="text-fg-muted relative flex items-center gap-2 py-2 pl-4 pr-2 font-mono text-xs">
+            <div className="text-fg-muted relative flex items-center gap-2 py-2 pr-2 pl-4 font-mono text-xs">
               <motion.div
                 layout
                 initial={false}

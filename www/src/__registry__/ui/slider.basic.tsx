@@ -25,7 +25,7 @@ const sliderStyles = tv({
       "group-disabled:bg-bg-disabled pointer-events-none absolute rounded-full",
     thumb: [
       focusRing(),
-      "disabled:bg-bg-disabled disabled:border-bg left-[50%] top-[50%] rounded-full bg-white shadow-md transition-[width,height] disabled:border",
+      "disabled:bg-bg-disabled disabled:border-bg top-[50%] left-[50%] rounded-full bg-white shadow-md transition-[width,height] disabled:border",
     ],
     valueLabel: "text-fg-muted text-sm",
   },

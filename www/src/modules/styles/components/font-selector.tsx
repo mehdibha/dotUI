@@ -48,7 +48,7 @@ export const FontSelector = ({
         <Dialog
           type="popover"
           popoverProps={{ placement: "bottom" }}
-          className="p-0! space-y-2"
+          className="space-y-2 p-0!"
         >
           {({ close }) => (
             <>
@@ -74,7 +74,7 @@ export const FontSelector = ({
                       onFontChange(([...keys][0] as string | null) ?? null);
                       close();
                     }}
-                    className="p-0! h-full w-full border-0"
+                    className="h-full w-full border-0 p-0!"
                   >
                     {[
                       { title: "Sans serif", items: sansSerifFonts },

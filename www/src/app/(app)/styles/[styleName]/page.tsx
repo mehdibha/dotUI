@@ -1,8 +1,8 @@
 import React from "react";
+import { notFound } from "next/navigation";
 import { styles } from "@/modules/registry/registry-styles";
 import { ThemeEditor } from "./theme-editor";
 import { ThemeTableOfContents } from "./toc";
-import { notFound } from "next/navigation";
 
 export default async function ThemePage({
   params,
@@ -13,7 +13,7 @@ export default async function ThemePage({
 
   const style = styles.find((style) => style.name === styleName);
 
-  if (!style) notFound()
+  if (!style) notFound();
 
   return (
     <div className="mx-auto flex max-w-5xl lg:px-8 lg:pt-10">

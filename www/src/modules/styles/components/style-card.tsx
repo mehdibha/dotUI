@@ -42,7 +42,7 @@ export function StyleCard({
           <Link
             aria-label={`Open style ${style.label}`}
             href={`/styles/${style.name}`}
-            className="z-1 absolute inset-0"
+            className="absolute inset-0 z-1"
           />
           <div className="w-full p-2">
             <div className="flex w-full items-center justify-between">

@@ -13,7 +13,7 @@ import { createScopedContext } from "@/modules/registry/lib/utils";
 const alertStyles = tv({
   slots: {
     root: "bg-bg-muted text-fg flex items-center gap-4 rounded-lg border-l-8 p-4 [&_svg]:size-4",
-    title: "mr-1 font-medium leading-normal tracking-tight",
+    title: "mr-1 leading-normal font-medium tracking-tight",
     content: "text-sm",
   },
   variants: {
