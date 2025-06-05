@@ -59,23 +59,23 @@ export function ThemeEditor({
               clone the theme.
             </Alert>
           )}
-          {/* <Section
+          <Section
             title="Colors"
             description="Theme color palette and variations"
-            action={
-              <ThemeModeSwitch
-                isSelected={currentMode === "dark"}
-                onChange={(isSelected) =>
-                  setCurrentMode(isSelected ? "dark" : "light")
-                }
-              />
-            }
+            // action={
+            //   <ThemeModeSwitch
+            //     isSelected={currentMode === "dark"}
+            //     onChange={(isSelected) =>
+            //       setCurrentMode(isSelected ? "dark" : "light")
+            //     }
+            //   />
+            // }
           >
-            <ThemeColors style={style} />
+            {/* <ThemeColors style={style} /> */}
           </Section>
           <Section title="Typography" description="Theme typography">
-            <ThemeTypography />
-          </Section> */}
+            {/* <ThemeTypography /> */}
+          </Section>
           {/* <Section title="Iconography" description="Theme iconography">
             <ThemeIconography />
           </Section>
