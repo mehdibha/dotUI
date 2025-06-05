@@ -66,7 +66,6 @@ export const ResizableContainer = ({
 };
 
 export const ComponentPreviewHeader = () => {
-  // const { mode: previewMode, setMode: setPreviewMode } = usePreviewMode();
   const { currentStyle, currentMode, setCurrentStyle, setCurrentMode } =
     useStyles();
   const isMounted = useMounted();
@@ -99,7 +98,6 @@ export const ComponentPreviewHeader = () => {
         <ThemeModeSwitch
           size="sm"
           shape="square"
-          defaultSelected
           isSelected={currentMode === "dark"}
           onChange={(isSelected) =>
             setCurrentMode(isSelected ? "dark" : "light")
