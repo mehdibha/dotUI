@@ -10,7 +10,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     source.getPages().map(async (page) => {
       const additionalProps = await page.data.load();
       return { ...additionalProps, ...page };
-    })
+    }),
   );
 
   return [

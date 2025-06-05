@@ -1,1 +1,1 @@
-export * from "@/modules/registry/ui/button.outline";
+export * from "@/registry/ui/button.outline";

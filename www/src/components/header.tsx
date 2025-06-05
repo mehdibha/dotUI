@@ -2,10 +2,11 @@
 
 import React from "react";
 import Link from "next/link";
-import { SearchIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config";
+import { cn } from "@/lib/utils";
+import { SearchIcon } from "lucide-react";
+
 import { GitHubIcon, TwitterIcon } from "./icons";
 import { Logo } from "./logo";
 import { SearchCommand } from "./search-command";

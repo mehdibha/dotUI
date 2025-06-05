@@ -1,9 +1,9 @@
 "use client";
 
-import React from "react";
-import { parseDate } from "@internationalized/date";
 import type { DateRange } from "react-aria-components";
+import React from "react";
 import { RangeCalendar } from "@/components/dynamic-ui/calendar";
+import { parseDate } from "@internationalized/date";
 
 export default function Demo() {
   const [value, setValue] = React.useState<DateRange>({

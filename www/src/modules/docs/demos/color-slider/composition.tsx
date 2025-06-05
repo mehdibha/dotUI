@@ -1,7 +1,7 @@
 import {
-  ColorSliderRoot,
   ColorSliderControl,
   ColorSliderOutput,
+  ColorSliderRoot,
 } from "@/components/dynamic-ui/color-slider";
 import { Label } from "@/components/dynamic-ui/field";
 

@@ -1,1 +1,1 @@
-export * from "@/modules/registry/ui/form.react-hook-form";
+export * from "@/registry/ui/form.react-hook-form";

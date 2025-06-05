@@ -1,8 +1,8 @@
 import React from "react";
-import { UploadIcon } from "lucide-react";
 import { Button } from "@/components/dynamic-ui/button";
 import { DropZone, DropZoneLabel } from "@/components/dynamic-ui/drop-zone";
 import { FileTrigger } from "@/components/dynamic-ui/file-trigger";
+import { UploadIcon } from "lucide-react";
 
 export default function Demo() {
   return (

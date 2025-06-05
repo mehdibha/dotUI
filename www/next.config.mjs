@@ -5,7 +5,6 @@ const withMDX = createMDX();
 
 const withAnalyzer = createBundleAnalyzer({
   enabled: false,
-  // enabled: process.env.ANALYZE === "true",
 });
 
 /** @type {import("next").NextConfig} */
@@ -21,6 +20,9 @@ const config = {
         hostname: "ui.shadcn.com",
       },
     ],
+  },
+  devIndicators: {
+    position: "bottom-right",
   },
 };
 

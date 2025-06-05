@@ -1,8 +1,8 @@
 import React from "react";
+import { styles } from "@/registry/registry-styles";
 import { useAtom } from "jotai";
 import { withImmer } from "jotai-immer";
 import { atomWithStorage } from "jotai/utils";
-import { styles } from "@/modules/registry/registry-styles";
 
 // import { StyleFoundations } from "@/modules/styles/types";
 
@@ -15,7 +15,7 @@ const stylesAtom = withImmer(
   atomWithStorage<State>("new-styles", {
     currentStyleName: "material",
     currentMode: "dark",
-  })
+  }),
 );
 
 export const useStyles = () => {
@@ -33,7 +33,7 @@ export const useStyles = () => {
 
   const currentStyle = React.useMemo(
     () => styles.find((style) => style.name === state.currentStyleName)!,
-    [state.currentStyleName]
+    [state.currentStyleName],
   );
 
   const setCurrentStyle = async (styleName: string) => {

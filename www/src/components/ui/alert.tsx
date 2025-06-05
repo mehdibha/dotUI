@@ -1,1 +1,1 @@
-export * from "@/modules/registry/ui/alert.basic";
+export * from "@/registry/ui/alert.basic";

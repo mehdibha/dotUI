@@ -1,1 +1,1 @@
-export * from "@/modules/registry/ui/loader.ring";
+export * from "@/registry/ui/loader.ring";

@@ -1,1 +1,1 @@
-export * from "@/modules/registry/ui/dialog.basic";
+export * from "@/registry/ui/dialog.basic";

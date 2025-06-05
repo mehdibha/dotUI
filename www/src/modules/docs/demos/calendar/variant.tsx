@@ -1,7 +1,7 @@
 "use client";
 
-import { parseDate } from "@internationalized/date";
 import { Calendar } from "@/components/dynamic-ui/calendar";
+import { parseDate } from "@internationalized/date";
 
 export default function Demo() {
   return (

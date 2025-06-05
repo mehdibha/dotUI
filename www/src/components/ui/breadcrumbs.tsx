@@ -1,1 +1,1 @@
-export * from "@/modules/registry/ui/breadcrumbs.basic";
+export * from "@/registry/ui/breadcrumbs.basic";

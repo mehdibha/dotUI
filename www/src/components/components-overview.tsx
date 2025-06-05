@@ -1,9 +1,5 @@
 "use client";
 
-import { MenuIcon, PinIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Link } from "@/components/ui/link";
-import { RadioGroup, Radio } from "@/components/ui/radio-group";
 import { Alert } from "@/components/dynamic-ui/alert";
 import { Avatar } from "@/components/dynamic-ui/avatar";
 import { Button } from "@/components/dynamic-ui/button";
@@ -23,20 +19,24 @@ import { Separator } from "@/components/dynamic-ui/separator";
 import { Slider } from "@/components/dynamic-ui/slider";
 import { Switch } from "@/components/dynamic-ui/switch";
 import {
-  TableRoot,
   TableBody,
-  TableColumn,
   TableCell,
-  TableRow,
+  TableColumn,
   TableHeader,
+  TableRoot,
+  TableRow,
 } from "@/components/dynamic-ui/table";
-import { Tabs, Tab, TabList, TabPanel } from "@/components/dynamic-ui/tabs";
+import { Tab, TabList, TabPanel, Tabs } from "@/components/dynamic-ui/tabs";
 import { TextField } from "@/components/dynamic-ui/text-field";
 import { TimeField } from "@/components/dynamic-ui/time-field";
 import { ToggleButton } from "@/components/dynamic-ui/toggle-button";
-import { GitHubIcon, TwitterIcon, GoogleIcon } from "@/components/icons";
+import { GitHubIcon, GoogleIcon, TwitterIcon } from "@/components/icons";
+import { Link } from "@/components/ui/link";
+import { Radio, RadioGroup } from "@/components/ui/radio-group";
+import { cn } from "@/lib/utils";
 import FileTriggerDemo from "@/modules/docs/demos/file-trigger/default";
 import { usePreferences } from "@/modules/styles/contexts/preferences-context";
+import { MenuIcon, PinIcon } from "lucide-react";
 
 export function ComponentsOverview({ className }: { className?: string }) {
   const { defaultColorScheme } = usePreferences();

@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import { BoldIcon, ItalicIcon } from "lucide-react";
 import { Button } from "@/components/dynamic-ui/button";
 import { TextArea } from "@/components/dynamic-ui/text-area";
 import { ToggleButton } from "@/components/dynamic-ui/toggle-button";
+import { BoldIcon, ItalicIcon } from "lucide-react";
 
 export default function Demo() {
   const [inputValue, setInputValue] = React.useState("");

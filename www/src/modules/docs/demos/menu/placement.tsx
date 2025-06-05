@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import { MenuIcon } from "lucide-react";
 import { Button } from "@/components/dynamic-ui/button";
 import { Menu, MenuItem, MenuRoot } from "@/components/dynamic-ui/menu";
 import { Select, SelectItem } from "@/components/dynamic-ui/select";
+import { MenuIcon } from "lucide-react";
 
 // TODO: finish example
 

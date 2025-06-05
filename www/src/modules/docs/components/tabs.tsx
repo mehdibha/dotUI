@@ -1,11 +1,11 @@
 "use client";
 
-import { useMemo, useState, useCallback, useLayoutEffect } from "react";
-import * as TabsPrimitive from "@/components/ui/tabs";
 import type {
   TabsProps as BaseProps,
   TabPanelProps,
 } from "@/components/ui/tabs";
+import { useCallback, useLayoutEffect, useMemo, useState } from "react";
+import * as TabsPrimitive from "@/components/ui/tabs";
 
 type ChangeListener = (v: string) => void;
 const listeners = new Map<string, ChangeListener[]>();
@@ -20,7 +20,7 @@ function removeChangeListener(id: string, listener: ChangeListener): void {
   const list = listeners.get(id) ?? [];
   listeners.set(
     id,
-    list.filter((item) => item !== listener)
+    list.filter((item) => item !== listener),
   );
 }
 
@@ -77,7 +77,7 @@ export function Tabs({
         setValue(v);
       }
     },
-    [groupId, persist]
+    [groupId, persist],
   );
 
   return (

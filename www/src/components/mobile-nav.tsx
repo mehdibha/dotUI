@@ -1,15 +1,16 @@
 "use client";
 
-import React from "react";
 import type { PageTree } from "fumadocs-core/server";
-import { AlignLeftIcon, PanelLeftCloseIcon, SearchIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
+import React from "react";
+import { GitHubIcon, TwitterIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogRoot } from "@/components/ui/dialog";
 import { Kbd } from "@/components/ui/kbd";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { GitHubIcon, TwitterIcon } from "@/components/icons";
 import { siteConfig } from "@/config";
+import { cn } from "@/lib/utils";
+import { AlignLeftIcon, PanelLeftCloseIcon, SearchIcon } from "lucide-react";
+
 import { Logo } from "./logo";
 import { SearchCommand } from "./search-command";
 import { NodeList } from "./sidebar";
@@ -27,7 +28,7 @@ export const MobileNav = ({
     <header
       className={cn(
         "bg-bg/95 sticky top-0 z-50 block border-b backdrop-blur-sm",
-        className
+        className,
       )}
     >
       <div className="container flex h-14 w-full max-w-(--breakpoint-2xl) items-center justify-between gap-1 sm:gap-2">

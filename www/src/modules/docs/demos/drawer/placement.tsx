@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import { RadioGroup, Radio } from "@/components/ui/radio-group";
 import { Button } from "@/components/dynamic-ui/button";
-import { DialogRoot, DialogContent } from "@/components/dynamic-ui/dialog";
+import { DialogContent, DialogRoot } from "@/components/dynamic-ui/dialog";
 import { Drawer } from "@/components/dynamic-ui/drawer";
+import { Radio, RadioGroup } from "@/components/ui/radio-group";
 
 export default function Demo() {
   const [placement, setPlacement] = React.useState("bottom");

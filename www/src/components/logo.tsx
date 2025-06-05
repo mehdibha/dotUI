@@ -1,6 +1,7 @@
-import { cn } from "@/lib/utils";
 import { Link } from "@/components/ui/link";
 import { siteConfig } from "@/config";
+import { cn } from "@/lib/utils";
+
 import { Badge } from "./ui/badge";
 
 export const Logo = ({
@@ -21,7 +22,7 @@ export const Logo = ({
         "flex items-center gap-2 rounded-sm",
         type === "link" &&
           "opacity-100 transition-opacity duration-150 ease-out hover:opacity-80",
-        className
+        className,
       )}
     >
       <svg
@@ -61,7 +62,7 @@ export const Logo = ({
             {siteConfig.name}
           </div>
           <Badge className="mt-0.5 border px-2 group-data-collapsed/sidebar:opacity-0">
-            preview
+            beta
           </Badge>
         </>
       )}

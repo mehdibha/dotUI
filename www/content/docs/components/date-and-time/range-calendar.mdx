@@ -28,8 +28,8 @@ npx shadcn@latest add https://dotui.org/r/{style-name}/range-calendar.json
 Use `RangeCalendar` to allow users to select a contiguous or non-contiguous range of dates.
 
 ```tsx
-import { parseDate } from "@internationalized/date";
 import { RangeCalendar } from "@/components/core/calendar";
+import { parseDate } from "@internationalized/date";
 
 <RangeCalendar
   aria-label="Trip dates"
@@ -41,19 +41,19 @@ import { RangeCalendar } from "@/components/core/calendar";
 ```
 
 ```tsx
-import { parseDate } from "@internationalized/date";
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { Button } from "@/components/core/button";
 import {
-  RangeCalendarRoot,
-  CalendarHeader,
-  CalendarGrid,
-  CalendarGridHeader,
-  CalendarHeaderCell,
-  CalendarGridBody,
   CalendarCell,
+  CalendarGrid,
+  CalendarGridBody,
+  CalendarGridHeader,
+  CalendarHeader,
+  CalendarHeaderCell,
+  RangeCalendarRoot,
 } from "@/components/core/calendar";
 import { Heading } from "@/registry/ui/default/core/heading";
+import { parseDate } from "@internationalized/date";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 
 <RangeCalendarRoot
   aria-label="Trip dates"

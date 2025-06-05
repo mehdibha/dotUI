@@ -2,14 +2,14 @@
 
 import React from "react";
 import {
-  TableRoot,
-  TableHeader,
   TableBody,
-  TableRow,
-  TableColumn,
   TableCell,
+  TableColumn,
   TableContainer,
-} from "@/modules/registry/ui/table.basic";
+  TableHeader,
+  TableRoot,
+  TableRow,
+} from "@/registry/ui/table.basic";
 
 const columns: Column[] = [
   { name: "Name", id: "name", isRowHeader: true },

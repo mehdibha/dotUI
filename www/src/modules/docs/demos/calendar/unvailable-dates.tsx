@@ -1,14 +1,14 @@
 "use client";
 
+import type { DateValue } from "@internationalized/date";
+import { Calendar } from "@/components/dynamic-ui/calendar";
 import {
   CalendarDate,
-  type DateValue,
   getLocalTimeZone,
   isWeekend,
   today,
 } from "@internationalized/date";
 import { useLocale } from "react-aria";
-import { Calendar } from "@/components/dynamic-ui/calendar";
 
 export default function Demo() {
   const now = today(getLocalTimeZone());
@@ -23,7 +23,7 @@ export default function Demo() {
     isWeekend(date, locale) ||
     disabledRanges.some(
       (interval) =>
-        date.compare(interval[0]) >= 0 && date.compare(interval[1]) <= 0
+        date.compare(interval[0]) >= 0 && date.compare(interval[1]) <= 0,
     );
 
   return (

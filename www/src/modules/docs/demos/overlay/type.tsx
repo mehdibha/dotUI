@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Button } from "@/components/dynamic-ui/button";
-import { DialogRoot, DialogContent } from "@/components/dynamic-ui/dialog";
+import { DialogContent, DialogRoot } from "@/components/dynamic-ui/dialog";
 import { Overlay } from "@/components/dynamic-ui/overlay";
 import { Radio, RadioGroup } from "@/components/dynamic-ui/radio-group";
 

@@ -1,7 +1,7 @@
 "use client";
 
-import { useAsyncList } from "react-stately";
 import { ListBox, ListBoxItem } from "@/components/dynamic-ui/list-box";
+import { useAsyncList } from "react-stately";
 
 interface Character {
   name: string;

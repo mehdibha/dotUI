@@ -1,1 +1,1 @@
-export * from "@/modules/registry/ui/progress-bar.basic";
+export * from "@/registry/ui/progress-bar.basic";

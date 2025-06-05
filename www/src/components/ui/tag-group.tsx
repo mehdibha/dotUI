@@ -1,1 +1,1 @@
-export * from "@/modules/registry/ui/tag-group.basic";
+export * from "@/registry/ui/tag-group.basic";

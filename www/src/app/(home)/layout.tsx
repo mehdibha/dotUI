@@ -1,7 +1,7 @@
+import { source } from "@/app/source";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { MobileNav } from "@/components/mobile-nav";
-import { source } from "@/app/source";
 
 export default function HomeLayout({
   children,

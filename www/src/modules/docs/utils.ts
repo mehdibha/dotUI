@@ -3,7 +3,7 @@ import type { PageTree } from "fumadocs-core/server";
 export function isActive(
   url: string,
   pathname: string,
-  nested = true
+  nested = true,
 ): boolean {
   return url === pathname || (nested && pathname.startsWith(`${url}/`));
 }

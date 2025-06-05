@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
 import type { Key } from "react-aria-components";
-import { Tabs, TabList, TabPanel, Tab } from "@/components/dynamic-ui/tabs";
+import React from "react";
+import { Tab, TabList, TabPanel, Tabs } from "@/components/dynamic-ui/tabs";
 
 export default function Demo() {
   const [selectedTab, setSelectedTab] = React.useState<Key>("overview");

@@ -1,14 +1,15 @@
 "use client";
 
+import type { ColorSpace } from "react-aria-components";
 import React from "react";
-import { getColorChannels, type ColorSpace } from "react-aria-components";
 import {
-  ColorPickerRoot,
   ColorPickerButton,
+  ColorPickerRoot,
 } from "@/components/dynamic-ui/color-picker";
 import { ColorSlider } from "@/components/dynamic-ui/color-slider";
 import { Dialog, DialogRoot } from "@/components/dynamic-ui/dialog";
 import { Select, SelectItem } from "@/components/dynamic-ui/select";
+import { getColorChannels } from "react-aria-components";
 
 export default function Demo() {
   const [space, setSpace] = React.useState<ColorSpace>("rgb");

@@ -30,7 +30,7 @@ npx shadcn@latest add https://dotui.org/r/{style-name}/breadcrumbs.json
 Breadcrumbs consist of a list of links, typically with a visual separator icon between each item. The last link represents the current page in the hierarchy, with the previous links representing the parent pages of the current page.
 
 ```tsx
-import { Breadcrumbs, Breadcrumb } from "@/components/core/breadcrumbs";
+import { Breadcrumb, Breadcrumbs } from "@/components/core/breadcrumbs";
 
 <Breadcrumbs>
   <Breadcrumb href="#">Home</Breadcrumb>
@@ -40,12 +40,12 @@ import { Breadcrumbs, Breadcrumb } from "@/components/core/breadcrumbs";
 ```
 
 ```tsx
-import { ChevronRightIcon } from "your-icon-library";
 import {
-  Breadcrumbs,
   BreadcrumbItem,
   BreadcrumbLink,
+  Breadcrumbs,
 } from "@/components/core/breadcrumbs";
+import { ChevronRightIcon } from "your-icon-library";
 
 <Breadcrumbs>
   <BreadcrumbItem>

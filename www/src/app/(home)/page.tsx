@@ -1,19 +1,19 @@
 import React from "react";
-import { getGitHubContributors } from "@/lib/github";
+import { Announcement } from "@/components/announcement";
+import {
+  AdobeIcon,
+  GitHubIcon,
+  ReactJsIcon,
+  ShadcnIcon,
+  TailwindIcon,
+  TypescriptIcon,
+} from "@/components/icons";
 import { Avatar } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/components/ui/link";
 import { Tooltip } from "@/components/ui/tooltip";
-import { Announcement } from "@/components/announcement";
-import { GitHubIcon } from "@/components/icons";
-import {
-  AdobeIcon,
-  ReactJsIcon,
-  TailwindIcon,
-  TypescriptIcon,
-  ShadcnIcon,
-} from "@/components/icons";
 import { siteConfig } from "@/config";
+import { getGitHubContributors } from "@/lib/github";
 import { StylesOverview } from "@/modules/styles/components/styles-overview";
 
 export default async function HomePage() {

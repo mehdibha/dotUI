@@ -42,7 +42,7 @@ A dialog consists of a container element and an optional title, description and 
 
 ```tsx
 import { Button } from "@/components/core/button";
-import { DialogRoot, Dialog } from "@/components/core/dialog";
+import { Dialog, DialogRoot } from "@/components/core/dialog";
 
 <DialogRoot>
   <Button>Open dialog</Button>
@@ -55,12 +55,12 @@ import { DialogRoot, Dialog } from "@/components/core/dialog";
 ```tsx
 import { Button } from "@/components/core/button";
 import {
-  DialogRoot,
-  DialogHeader
-  DialogHeading,
-  DialogDescription
   DialogContent,
-  DialogFooter
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogHeading,
+  DialogRoot,
 } from "@/components/core/dialog";
 import { Overlay } from "@/components/core/overlay";
 
@@ -72,9 +72,7 @@ import { Overlay } from "@/components/core/overlay";
         <DialogHeading>{/* Dialog title */}</DialogHeading>
         <DialogDescription>{/* Dialog description */}</DialogDescription>
       </DialogHeader>
-      <DialogBody>
-      {/* Dialog content */}
-      </DialogBody>
+      <DialogBody>{/* Dialog content */}</DialogBody>
       <DialogFooter>
         <Button slot="close">Cancel</Button>
         <Button>Save changes</Button>

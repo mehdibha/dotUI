@@ -3,7 +3,7 @@ import type { Expression, Program } from "estree";
 export function createElement(
   name: string,
   attributes: object[],
-  children?: unknown
+  children?: unknown,
 ): object {
   const element: Record<string, unknown> = {
     type: "mdxJsxFlowElement",

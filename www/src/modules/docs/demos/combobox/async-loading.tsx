@@ -1,7 +1,7 @@
 "use client";
 
-import { useAsyncList } from "react-stately";
 import { Combobox, ComboboxItem } from "@/components/dynamic-ui/combobox";
+import { useAsyncList } from "react-stately";
 
 interface Character {
   name: string;

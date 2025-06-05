@@ -49,13 +49,13 @@ Accessible forms start with clear, descriptive labels for each field. All dotUI 
 In addition, the components support help text, which associates additional context with a field such as a description or error message. The label and help text are announced by assistive technology such as screen readers when the user focuses the field.
 
 ```tsx
-import {TextField, Label, Input, Text} from 'react-aria-components';
+import { Input, Label, Text, TextField } from "react-aria-components";
 
 <TextField type="password">
   <Label>Password</Label>
   <Input />
   <Text slot="description">Password must be at least 8 characters.</Text>
-</TextField>c
+</TextField>;
 ```
 
 ### Built-in validation

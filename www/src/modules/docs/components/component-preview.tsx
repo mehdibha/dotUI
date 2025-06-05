@@ -1,10 +1,11 @@
 import React from "react";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
-import { cn } from "@/lib/utils";
 import { Index } from "@/__registry__/demos";
+import { cn } from "@/lib/utils";
 import { CodeBlock } from "@/modules/docs/components/code-block";
 import { getFileSource } from "@/modules/docs/lib/get-file-source";
 import { CurrentStyleProvider } from "@/modules/styles/components/current-style-provider";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
+
 import {
   ComponentPreviewHeader,
   ComponentWrapper,
@@ -46,7 +47,7 @@ export const ComponentPreview = async ({
         fileName,
         code: content,
       };
-    }
+    },
   );
 
   return (
@@ -65,12 +66,12 @@ export const ComponentPreview = async ({
                     primary && "min-h-48 pt-24 pb-20",
                     fullWidth
                       ? "px-8 lg:px-12"
-                      : "flex items-center justify-center px-4"
+                      : "flex items-center justify-center px-4",
                   )}
                 >
                   <div
                     className={cn(
-                      fullWidth ? "w-full" : "flex items-center justify-center"
+                      fullWidth ? "w-full" : "flex items-center justify-center",
                     )}
                   >
                     <ComponentWrapper suspense={suspense}>

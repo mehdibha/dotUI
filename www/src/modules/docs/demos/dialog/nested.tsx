@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Button } from "@/components/dynamic-ui/button";
-import { DialogRoot, Dialog } from "@/components/dynamic-ui/dialog";
+import { Dialog, DialogRoot } from "@/components/dynamic-ui/dialog";
 import { Radio, RadioGroup } from "@/components/dynamic-ui/radio-group";
 
 type Type = "modal" | "drawer" | "popover";

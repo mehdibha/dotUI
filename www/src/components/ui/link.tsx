@@ -1,13 +1,11 @@
 "use client";
 
+import type { LinkProps as AriaLinkProps } from "react-aria-components";
+import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
-import {
-  Link as AriaLink,
-  composeRenderProps,
-  type LinkProps as AriaLinkProps,
-} from "react-aria-components";
-import { tv, type VariantProps } from "tailwind-variants";
-import { focusRing } from "@/modules/registry/lib/focus-styles";
+import { focusRing } from "@/registry/lib/focus-styles";
+import { Link as AriaLink, composeRenderProps } from "react-aria-components";
+import { tv } from "tailwind-variants";
 
 const linkVariants = tv({
   extend: focusRing,
@@ -31,7 +29,7 @@ const Link = ({ variant, ...props }: LinkProps) => {
     <AriaLink
       {...props}
       className={composeRenderProps(props.className, (className) =>
-        linkVariants({ variant, className })
+        linkVariants({ variant, className }),
       )}
     />
   );

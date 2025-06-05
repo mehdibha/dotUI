@@ -1,7 +1,8 @@
 import React from "react";
 import { notFound } from "next/navigation";
-import { styles } from "@/modules/registry/registry-styles";
 import { StyleProvider } from "@/modules/styles/components/style-provider";
+import { styles } from "@/registry/registry-styles";
+
 import { ThemeUpdater } from "./theme-updater";
 
 export default async function PreviewLayout({

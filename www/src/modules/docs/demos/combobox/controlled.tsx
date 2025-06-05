@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
 import type { Key } from "react-aria-components";
+import React from "react";
 import { Combobox, ComboboxItem } from "@/components/dynamic-ui/combobox";
 
 export default function Demo() {
