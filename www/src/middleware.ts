@@ -26,7 +26,9 @@ export function middleware(request: NextRequest) {
   if (segments.length === 2) {
     const [styleName, registryItem] = segments;
 
-    if (OFFICIAL_STYLES.includes(styleName as (typeof OFFICIAL_STYLES)[number])) {
+    if (
+      OFFICIAL_STYLES.includes(styleName as (typeof OFFICIAL_STYLES)[number])
+    ) {
       const url = request.nextUrl.clone();
       url.pathname = `/api/r/dotui/${styleName}/${registryItem}`;
       return NextResponse.rewrite(url);
