@@ -13,7 +13,7 @@ import { Tooltip } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 // import { usePreviewMode } from "@/components/mode-provider";
 // import { ThemeModeSwitch } from "@/components/theme-mode-switch";
-import { Theme } from "@/modules/styles/types";
+import { Style } from "@/modules/styles/types";
 // import { notFound } from "next/navigation";
 import {
   ArrowLeftIcon,
@@ -23,9 +23,10 @@ import {
 } from "lucide-react";
 
 import { PreviewContent } from "../../preview";
-import { ThemeColors } from "./colors";
+// import { ThemeColors } from "./colors";
 import { ThemeEditorContext } from "./context";
-import { ThemeTypography } from "./typography";
+
+// import { ThemeTypography } from "./typography";
 
 export function ThemeEditor({
   style,
@@ -34,7 +35,7 @@ export function ThemeEditor({
   style: Style;
   isEditable: boolean;
 }) {
-  const { currentMode, setCurrentMode } = useStyles();
+  // const { currentMode, setCurrentMode } = useStyles();
   const [isEditMode, setEditMode] = React.useState(false);
 
   const isLoading = false;
@@ -58,7 +59,7 @@ export function ThemeEditor({
               clone the theme.
             </Alert>
           )}
-          <Section
+          {/* <Section
             title="Colors"
             description="Theme color palette and variations"
             action={
@@ -74,7 +75,7 @@ export function ThemeEditor({
           </Section>
           <Section title="Typography" description="Theme typography">
             <ThemeTypography />
-          </Section>
+          </Section> */}
           {/* <Section title="Iconography" description="Theme iconography">
             <ThemeIconography />
           </Section>
