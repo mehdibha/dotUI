@@ -9,6 +9,13 @@ const withAnalyzer = createBundleAnalyzer({
 
 /** @type {import("next").NextConfig} */
 const config = {
+  transpilePackages: [
+    "@dotui/api",
+    "@dotui/auth",
+    "@dotui/db",
+    "@dotui/ui",
+    "@dotui/validators",
+  ],
   images: {
     remotePatterns: [
       {
