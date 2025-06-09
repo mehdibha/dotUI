@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { PreviewModeProvider } from "@/components/mode-provider";
+import { TRPCReactProvider } from "@/trpc/react";
 import { Provider as JotaiProvider } from "jotai";
 import { ThemeProvider } from "next-themes";
 import { RouterProvider } from "react-aria-components";
@@ -32,7 +33,7 @@ export function Providers({
           disableTransitionOnChange
         >
           <PreviewModeProvider defaultMode={defaultPreviewMode}>
-            {children}
+            <TRPCReactProvider>{children}</TRPCReactProvider>
           </PreviewModeProvider>
         </ThemeProvider>
       </RouterProvider>

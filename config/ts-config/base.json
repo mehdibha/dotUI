@@ -9,15 +9,12 @@
     "resolveJsonModule": true,
     "moduleDetection": "force",
     "isolatedModules": true,
-
     "incremental": true,
     "disableSourceOfProjectReferenceRedirect": true,
     "tsBuildInfoFile": "${configDir}/.cache/tsbuildinfo.json",
-
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "checkJs": true,
-
     "module": "Preserve",
     "moduleResolution": "Bundler",
     "noEmit": true

@@ -10,9 +10,9 @@ export function initAuth(options: {
   baseUrl: string;
   productionUrl: string;
   secret: string | undefined;
-
-  discordClientId: string;
-  discordClientSecret: string;
+  
+  githubClientId: string;
+  githubClientSecret: string;
 }) {
   const config = {
     database: drizzleAdapter(db, {
@@ -31,10 +31,10 @@ export function initAuth(options: {
       expo(),
     ],
     socialProviders: {
-      discord: {
-        clientId: options.discordClientId,
-        clientSecret: options.discordClientSecret,
-        redirectURI: `${options.productionUrl}/api/auth/callback/discord`,
+      github: {
+        clientId: options.githubClientId,
+        clientSecret: options.githubClientSecret,
+        redirectURI: `${options.productionUrl}/api/auth/callback/github`,
       },
     },
     trustedOrigins: ["expo://"],
