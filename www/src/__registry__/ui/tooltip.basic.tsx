@@ -1,5 +1,6 @@
 "use client";
 
+import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
 import { createScopedContext } from "@/registry/lib/utils";
 import {
@@ -8,7 +9,6 @@ import {
   TooltipTrigger as AriaTooltipTrigger,
   composeRenderProps,
 } from "react-aria-components";
-import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
 
 // TODO: Remove tailwindcss-animate an replace it with css transitions

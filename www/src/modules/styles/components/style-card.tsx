@@ -1,5 +1,6 @@
 "use client";
 
+import type { Style } from "@/modules/styles/types";
 import React from "react";
 import { Alert } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
@@ -9,7 +10,6 @@ import { Menu, MenuItem, MenuRoot } from "@/components/ui/menu";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useMounted } from "@/hooks/use-mounted";
 import { StyleProvider } from "@/modules/styles/components/style-provider";
-import type {Style} from "@/modules/styles/types";
 import { EllipsisIcon } from "lucide-react";
 import { Link } from "react-aria-components";
 

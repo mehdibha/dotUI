@@ -5,6 +5,7 @@ import type {
   RangeCalendarProps as AriaRangeCalendarProps,
   DateValue,
 } from "react-aria-components";
+import type { VariantProps } from "tailwind-variants";
 import React from "react";
 import { focusRing } from "@/registry/lib/focus-styles";
 import { Button } from "@/registry/ui/button.basic";
@@ -25,7 +26,6 @@ import {
   composeRenderProps,
   useSlottedContext,
 } from "react-aria-components";
-import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
 
 const calendarStyles = tv({

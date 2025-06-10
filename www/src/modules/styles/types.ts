@@ -11,9 +11,10 @@ export interface Theme {
   theme: Record<string, string>;
   light: Record<string, string>;
   dark: Record<string, string>;
-  css?: Record<string, | string
-      | Record<string, | string
-            | Record<string, string>>>;
+  css?: Record<
+    string,
+    string | Record<string, string | Record<string, string>>
+  >;
 }
 
 export interface Components {

@@ -1,10 +1,13 @@
 "use client";
 
+import type {
+  TOCItemType,
+  TableOfContents as TocType,
+} from "fumadocs-core/server";
 import React from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { useTocThumb } from "@/modules/docs/hooks/use-toc-thumb";
-import type {TOCItemType, TableOfContents as TocType} from "fumadocs-core/server";
 import * as TocPrimitive from "fumadocs-core/toc";
 
 export const TableOfContents = ({ toc }: { toc: TocType }) => {

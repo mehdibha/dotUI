@@ -9,7 +9,6 @@ export default async function ThemePage({
 }: {
   params: Promise<{ styleName: string }>;
 }) {
-   
   const styleName = (await params).styleName;
 
   // const style = styles.find((style) => style.name === styleName);

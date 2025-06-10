@@ -1,23 +1,23 @@
-import React from "react";
 import type { AlertProps } from "@/components/ui/alert";
-import { Alert } from "@/components/ui/alert";
 import type { BadgeProps } from "@/components/ui/badge";
+import type { LinkProps } from "@/components/ui/link";
+import type { MDXComponents } from "mdx/types";
+import React from "react";
+import { Alert } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
-import type { LinkProps} from "@/components/ui/link";
 import { Link as NavLink } from "@/components/ui/link";
 import { cn } from "@/lib/utils";
 import { ArrowUpRightIcon } from "lucide-react";
-import type { MDXComponents } from "mdx/types";
 
+import type { ChoicesProps } from "./choices";
 import type { ComponentPreviewProps } from "./component-preview";
+import type { PaletteProps } from "./palette";
 import type { TabsProps } from "./tabs";
 import { BadgePalette } from "./badge-palette";
-import type { ChoicesProps } from "./choices";
 import { Choice, Choices } from "./choices";
 import { Pre } from "./code-block-mdx";
 import { ComponentPreview } from "./component-preview";
 import { InstallTab, InstallTabs } from "./install-tabs";
-import type { PaletteProps } from "./palette";
 import { Palette } from "./palette";
 import { Tab, Tabs } from "./tabs";
 

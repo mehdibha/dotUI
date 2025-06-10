@@ -1,6 +1,6 @@
+import type { Components } from "@/modules/styles/types";
 import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import type { Components } from "@/modules/styles/types";
 
 import { useCurrentComponents } from "../contexts/components-context";
 

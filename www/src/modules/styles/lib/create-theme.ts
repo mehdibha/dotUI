@@ -1,3 +1,9 @@
+import type {
+  ColorFoundations,
+  Theme,
+  ThemeFoundations,
+  ThemeModeFoundations,
+} from "@/modules/styles/types";
 import {
   DEFAULT_CSS,
   DEFAULT_DARK_FOUNDATIONS,
@@ -5,12 +11,6 @@ import {
   DEFAULT_RADIUS_FACTOR,
   DEFAULT_THEME,
 } from "@/modules/styles/constants/defaults";
-import type {
-  ColorFoundations,
-  Theme,
-  ThemeFoundations,
-  ThemeModeFoundations,
-} from "@/modules/styles/types";
 import {
   BackgroundColor as LeonardoBgColor,
   Color as LeonardoColor,

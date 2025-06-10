@@ -1,8 +1,8 @@
 "use client";
 
+import type { ButtonProps } from "@/components/ui/button";
 import type { HTMLAttributes, ReactNode } from "react";
 import { forwardRef, useCallback, useRef } from "react";
-import type { ButtonProps } from "@/components/ui/button";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useCopyButton } from "@/hooks/use-copy-button";

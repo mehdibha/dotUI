@@ -1,6 +1,7 @@
 "use client";
 
 import type { ButtonProps } from "@/registry/ui/button.basic";
+import type { DialogProps } from "@/registry/ui/dialog.basic";
 import type { ColorFormat } from "react-aria-components";
 import React from "react";
 import { cn } from "@/registry/lib/utils";
@@ -9,7 +10,6 @@ import { ColorArea } from "@/registry/ui/color-area.basic";
 import { ColorField } from "@/registry/ui/color-field.basic";
 import { ColorSlider } from "@/registry/ui/color-slider.basic";
 import { ColorSwatch } from "@/registry/ui/color-swatch.basic";
-import type { DialogProps} from "@/registry/ui/dialog.basic";
 import { Dialog, DialogRoot } from "@/registry/ui/dialog.basic";
 import { Select, SelectItem } from "@/registry/ui/select.basic";
 import {

@@ -1,8 +1,8 @@
+import type { Theme } from "@/modules/styles/types";
 import React from "react";
 import { useMounted } from "@/hooks/use-mounted";
 import { cn } from "@/lib/utils";
 import { useStyles } from "@/modules/styles/atoms/styles-atom";
-import type { Theme } from "@/modules/styles/types";
 import { useTheme } from "next-themes";
 
 export interface ThemeProviderProps

@@ -1,8 +1,7 @@
 "use client";
 
+import type { ButtonProps } from "@/__registry__/ui/button.basic";
 import React from "react";
-import type {
-  ButtonProps} from "@/__registry__/ui/button.basic";
 import {
   Button as _Button,
   ButtonProvider as _ButtonProvider,

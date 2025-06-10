@@ -1,5 +1,5 @@
-import { createStyle } from "@/modules/styles/lib/create-style";
 import type { Style } from "@/modules/styles/types";
+import { createStyle } from "@/modules/styles/lib/create-style";
 
 export const supabaseTheme: Style = createStyle({
   name: "supabase",

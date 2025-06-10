@@ -6,6 +6,7 @@ import type {
   TagListProps as AriaTagListProps,
   TagProps as AriaTagProps,
 } from "react-aria-components";
+import type { VariantProps } from "tailwind-variants";
 import React from "react";
 import { focusRing } from "@/registry/lib/focus-styles";
 import { Button } from "@/registry/ui/button.basic";
@@ -16,7 +17,6 @@ import {
   TagList as AriaTagList,
   composeRenderProps,
 } from "react-aria-components";
-import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
 
 const tagGroupStyles = tv({

@@ -6,8 +6,8 @@ import type { ListBoxProps } from "@/registry/ui/list-box.basic";
 import type {
   SelectProps as AriaSelectProps,
   SelectValueProps as AriaSelectValueProps,
-
-  ListBoxItemProps} from "react-aria-components";
+  ListBoxItemProps,
+} from "react-aria-components";
 import * as React from "react";
 import { Button } from "@/registry/ui/button.basic";
 import { HelpText, Label } from "@/registry/ui/field.basic";
@@ -17,7 +17,7 @@ import { ChevronDownIcon } from "lucide-react";
 import {
   Select as AriaSelect,
   SelectValue as AriaSelectValue,
-  composeRenderProps
+  composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 

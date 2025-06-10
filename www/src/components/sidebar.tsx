@@ -1,11 +1,13 @@
 "use client";
 
+import type { ButtonProps } from "@/components/ui/button";
+import type { TooltipProps } from "@/components/ui/tooltip";
 import type { PageTree } from "fumadocs-core/server";
+import type { Transition } from "motion/react";
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
-import type { ButtonProps } from "@/components/ui/button";
 import { Button } from "@/components/ui/button";
 import {
   CollapsibleContent,
@@ -14,7 +16,6 @@ import {
 } from "@/components/ui/collapsible";
 import { Kbd } from "@/components/ui/kbd";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import type { TooltipProps } from "@/components/ui/tooltip";
 import { Tooltip } from "@/components/ui/tooltip";
 import { siteConfig } from "@/config";
 import { cn } from "@/lib/utils";
@@ -28,7 +29,6 @@ import {
   SearchIcon,
   SunIcon,
 } from "lucide-react";
-import type { Transition } from "motion/react";
 import { motion } from "motion/react";
 
 import { Logo } from "./logo";

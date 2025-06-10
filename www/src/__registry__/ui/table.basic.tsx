@@ -6,6 +6,7 @@ import type {
   TableBodyProps as AriaTableBodyProps,
   TableHeaderProps as AriaTableHeaderProps,
 } from "react-aria-components";
+import type { VariantProps } from "tailwind-variants";
 import { focusRing } from "@/registry/lib/focus-styles";
 import { cn, createScopedContext } from "@/registry/lib/utils";
 import { Checkbox } from "@/registry/ui/checkbox.basic";
@@ -24,7 +25,6 @@ import {
   composeRenderProps,
   useTableOptions,
 } from "react-aria-components";
-import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
 
 const tableStyles = tv({

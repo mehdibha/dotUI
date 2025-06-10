@@ -1,5 +1,5 @@
+import type { PressEvent } from "react-aria-components";
 import { useCallback, useEffect, useRef, useState } from "react";
-import type {PressEvent} from "react-aria-components";
 
 export function useCopyButton(
   onCopy: () => void,

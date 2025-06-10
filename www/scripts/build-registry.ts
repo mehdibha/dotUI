@@ -1,9 +1,9 @@
 import { existsSync, promises as fs } from "node:fs";
 import path from "path";
+import type { RegistryItemProps } from "@/registry/types";
 import { registry } from "@/registry";
 import { base } from "@/registry/registry-base";
 import { styles } from "@/registry/registry-styles";
-import type { RegistryItemProps } from "@/registry/types";
 import { hasStyles } from "@/registry/types";
 import { execa } from "execa";
 import { rimraf } from "rimraf";
@@ -35,7 +35,6 @@ const setup = async () => {
 const buildRegistry = async () => {
   await Promise.all(
     styles.map(async (t) => {
-       
       const indexPayload: any = {
         $schema: "https://ui.shadcn.com/schema/registry.json",
         extends: "none",

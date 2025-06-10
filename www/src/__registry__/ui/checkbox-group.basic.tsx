@@ -1,14 +1,14 @@
 "use client";
 
-import type { ValidationResult } from "react-aria-components";
 import type { checkboxStyles } from "@/registry/ui/checkbox.basic";
+import type { ValidationResult } from "react-aria-components";
+import type { VariantProps } from "tailwind-variants";
 import { CheckboxProvider } from "@/registry/ui/checkbox.basic";
 import { HelpText, Label } from "@/registry/ui/field.basic";
 import {
   CheckboxGroup as AriaCheckboxGroup,
   composeRenderProps,
 } from "react-aria-components";
-import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
 
 const checkboxGroupStyles = tv({

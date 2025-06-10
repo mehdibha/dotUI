@@ -1,13 +1,8 @@
 "use client";
 
-import type { DateValue ,
-  CalendarDate} from "@internationalized/date";
+import type { CalendarDate, DateValue } from "@internationalized/date";
 import { Calendar } from "@/components/dynamic-ui/calendar";
-import {
-  getLocalTimeZone,
-  isWeekend,
-  today,
-} from "@internationalized/date";
+import { getLocalTimeZone, isWeekend, today } from "@internationalized/date";
 import { useLocale } from "react-aria";
 
 export default function Demo() {

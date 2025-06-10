@@ -1,5 +1,6 @@
 "use client";
 
+import type { Selection } from "react-aria-components";
 import React from "react";
 import {
   TableBody,
@@ -9,7 +10,6 @@ import {
   TableRoot,
   TableRow,
 } from "@/registry/ui/table.basic";
-import type {Selection} from "react-aria-components";
 
 const columns: Column[] = [
   { name: "Name", id: "name", isRowHeader: true },

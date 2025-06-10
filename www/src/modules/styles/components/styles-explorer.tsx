@@ -1,5 +1,6 @@
 "use client";
 
+import type { Style } from "@/modules/styles/types";
 import React from "react";
 // import { useMounted } from "@/hooks/use-mounted";
 // import { Button } from "@/components/ui/button";
@@ -7,7 +8,6 @@ import React from "react";
 import { SearchField } from "@/components/ui/search-field";
 import { cn } from "@/lib/utils";
 import { useStyles } from "@/modules/styles/atoms/styles-atom";
-import type { Style } from "@/modules/styles/types";
 import { styles } from "@/registry/registry-styles";
 // import { ListFilterIcon } from "lucide-react";
 import { useFilter } from "react-aria-components";

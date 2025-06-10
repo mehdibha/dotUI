@@ -1,9 +1,9 @@
 "use client";
 
+import type { TextDropItem } from "react-aria-components";
 import React from "react";
 import { DropZone, DropZoneLabel } from "@/components/dynamic-ui/drop-zone";
 import { useDrag } from "react-aria";
-import type { TextDropItem } from "react-aria-components";
 
 export default function Demo() {
   return (

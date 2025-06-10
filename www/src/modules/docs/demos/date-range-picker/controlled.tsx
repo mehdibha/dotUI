@@ -1,10 +1,10 @@
 "use client";
 
+import type { DateRange } from "react-aria-components";
 import React from "react";
 import { DateRangePicker } from "@/components/dynamic-ui/date-range-picker";
 import { getLocalTimeZone, parseDate } from "@internationalized/date";
 import { useDateFormatter } from "react-aria";
-import type {DateRange} from "react-aria-components";
 
 export default function Demo() {
   const [value, setValue] = React.useState<DateRange | null>({

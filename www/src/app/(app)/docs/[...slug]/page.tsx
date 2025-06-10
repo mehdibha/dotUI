@@ -1,3 +1,4 @@
+import type { TableOfContents as TocType } from "fumadocs-core/server";
 import type { Metadata } from "next";
 import React from "react";
 import { notFound } from "next/navigation";
@@ -12,7 +13,6 @@ import { DocsPager } from "@/modules/docs/components/docs-pager";
 import { PageLastUpdate } from "@/modules/docs/components/last-update";
 import { mdxComponents } from "@/modules/docs/components/mdx-components";
 import { TableOfContents } from "@/modules/docs/components/toc";
-import type {TableOfContents as TocType} from "fumadocs-core/server";
 import { ExternalLinkIcon } from "lucide-react";
 
 export default async function Page({

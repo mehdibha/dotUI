@@ -1,6 +1,7 @@
 "use client";
 
 import type { Variants } from "motion/react";
+import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
 import { createScopedContext } from "@/registry/lib/utils";
 import { AnimatePresence, motion } from "motion/react";
@@ -11,7 +12,6 @@ import {
   composeRenderProps,
   TooltipTriggerStateContext,
 } from "react-aria-components";
-import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
 
 const tooltipStyles = tv({
