@@ -1,5 +1,5 @@
 import { createStyle } from "@/modules/styles/lib/create-style";
-import { Style } from "@/modules/styles/types";
+import type { Style } from "@/modules/styles/types";
 
 export const polarisTheme: Style = createStyle({
   name: "polaris",

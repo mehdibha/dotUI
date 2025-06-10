@@ -5,7 +5,8 @@ import * as React from "react";
 import { focusRingGroup } from "@/lib/focus-styles";
 import { cn } from "@/lib/utils";
 import { MoonIcon, SunIcon } from "lucide-react";
-import { LayoutGroup, motion, Transition } from "motion/react";
+import type { Transition } from "motion/react";
+import { LayoutGroup, motion } from "motion/react";
 import { Switch as AriaSwitch } from "react-aria-components";
 import { tv } from "tailwind-variants";
 

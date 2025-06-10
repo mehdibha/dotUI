@@ -12,7 +12,7 @@ import { DocsPager } from "@/modules/docs/components/docs-pager";
 import { PageLastUpdate } from "@/modules/docs/components/last-update";
 import { mdxComponents } from "@/modules/docs/components/mdx-components";
 import { TableOfContents } from "@/modules/docs/components/toc";
-import { type TableOfContents as TocType } from "fumadocs-core/server";
+import type {TableOfContents as TocType} from "fumadocs-core/server";
 import { ExternalLinkIcon } from "lucide-react";
 
 export default async function Page({
@@ -67,7 +67,7 @@ export default async function Page({
       {toc && toc.length > 0 && (
         <div className="pt-20 max-xl:hidden">
           <div className="sticky top-10 h-[calc(100svh-calc(var(--spacing)*10))]">
-            <TableOfContents toc={toc as TocType} />
+            <TableOfContents toc={toc} />
           </div>
         </div>
       )}

@@ -1,4 +1,4 @@
-import { RegistryItemProps } from "./types";
+import type { RegistryItemProps } from "./types";
 
 export const base: RegistryItemProps = {
   name: "base",

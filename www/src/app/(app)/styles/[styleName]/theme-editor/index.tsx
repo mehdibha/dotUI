@@ -13,7 +13,7 @@ import { Tooltip } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 // import { usePreviewMode } from "@/components/mode-provider";
 // import { ThemeModeSwitch } from "@/components/theme-mode-switch";
-import { Style } from "@/modules/styles/types";
+import type { Style } from "@/modules/styles/types";
 // import { notFound } from "next/navigation";
 import {
   ArrowLeftIcon,

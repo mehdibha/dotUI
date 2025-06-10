@@ -7,7 +7,7 @@ import React from "react";
 import { SearchField } from "@/components/ui/search-field";
 import { cn } from "@/lib/utils";
 import { useStyles } from "@/modules/styles/atoms/styles-atom";
-import { Style } from "@/modules/styles/types";
+import type { Style } from "@/modules/styles/types";
 import { styles } from "@/registry/registry-styles";
 // import { ListFilterIcon } from "lucide-react";
 import { useFilter } from "react-aria-components";

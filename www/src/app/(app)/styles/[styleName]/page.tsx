@@ -9,7 +9,7 @@ export default async function ThemePage({
 }: {
   params: Promise<{ styleName: string }>;
 }) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+   
   const styleName = (await params).styleName;
 
   // const style = styles.find((style) => style.name === styleName);

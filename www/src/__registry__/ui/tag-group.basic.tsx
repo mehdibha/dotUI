@@ -16,7 +16,8 @@ import {
   TagList as AriaTagList,
   composeRenderProps,
 } from "react-aria-components";
-import { tv, VariantProps } from "tailwind-variants";
+import type { VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const tagGroupStyles = tv({
   slots: {

@@ -14,7 +14,8 @@ import { Skeleton } from "@/registry/ui/skeleton.basic";
 import { Tab, TabList, Tabs } from "@/registry/ui/tabs.motion";
 import { UNSAFE_PortalProvider } from "@react-aria/overlays";
 import { CheckIcon, CopyIcon } from "lucide-react";
-import { AnimatePresence, motion, useInView, Variants } from "motion/react";
+import type { Variants } from "motion/react";
+import { AnimatePresence, motion, useInView } from "motion/react";
 
 export const StylesOverview = () => {
   const container = React.useRef(null);

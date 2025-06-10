@@ -1,6 +1,6 @@
 import type { VFile } from "vfile";
-import { type BlockContent, type Code, type Root } from "mdast";
-import { type Transformer } from "unified";
+import type {BlockContent, Code, Root} from "mdast";
+import type {Transformer} from "unified";
 import { visit } from "unist-util-visit";
 
 type Awaitable<T> = T | Promise<T>;

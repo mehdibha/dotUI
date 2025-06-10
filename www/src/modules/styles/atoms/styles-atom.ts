@@ -4,12 +4,10 @@ import { useAtom } from "jotai";
 import { withImmer } from "jotai-immer";
 import { atomWithStorage } from "jotai/utils";
 
-// import { StyleFoundations } from "@/modules/styles/types";
-
-type State = {
+interface State {
   currentStyleName: string;
   currentMode: "light" | "dark";
-};
+}
 
 const stylesAtom = withImmer(
   atomWithStorage<State>("new-styles", {
@@ -25,7 +23,7 @@ export const useStyles = () => {
     return state.currentMode;
   }, [state.currentMode]);
 
-  const setCurrentMode = async (mode: "light" | "dark") => {
+  const setCurrentMode = (mode: "light" | "dark") => {
     setState((draft) => {
       draft.currentMode = mode;
     });
@@ -36,7 +34,7 @@ export const useStyles = () => {
     [state.currentStyleName],
   );
 
-  const setCurrentStyle = async (styleName: string) => {
+  const setCurrentStyle = (styleName: string) => {
     setState((draft) => {
       draft.currentStyleName = styleName;
     });

@@ -68,12 +68,12 @@ export default function Demo() {
   );
 }
 
-type Item = {
+interface Item {
   id: number;
   name: string;
   date: string;
   type: string;
-};
+}
 
 interface Column {
   id: keyof Omit<Item, "id">;

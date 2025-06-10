@@ -1,4 +1,4 @@
-import { Registry } from "./types";
+import type { Registry } from "./types";
 
 export const lib: Registry = [
   {

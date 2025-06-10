@@ -1,9 +1,12 @@
 "use client";
 
+import type { DrawerProps } from "@/registry/ui/drawer.basic";
+import type { ModalProps } from "@/registry/ui/modal.blur";
+import type { PopoverProps } from "@/registry/ui/popover.basic";
 import { useIsMobile } from "@/registry/hooks/use-is-mobile";
-import { Drawer, DrawerProps } from "@/registry/ui/drawer.basic";
-import { Modal, ModalProps } from "@/registry/ui/modal.blur";
-import { Popover, PopoverProps } from "@/registry/ui/popover.basic";
+import { Drawer } from "@/registry/ui/drawer.basic";
+import { Modal } from "@/registry/ui/modal.blur";
+import { Popover } from "@/registry/ui/popover.basic";
 
 type Type = "modal" | "popover" | "drawer";
 
@@ -35,10 +38,6 @@ function Overlay({
   const isMobile = useIsMobile();
   const resolvedType = mobileType ? (isMobile ? mobileType : type) : type;
 
-  if (resolvedType === "modal") {
-    return <Modal {...modalProps} {...props} />;
-  }
-
   if (resolvedType === "popover") {
     return <Popover {...popoverProps} {...props} />;
   }
@@ -46,6 +45,8 @@ function Overlay({
   if (resolvedType === "drawer") {
     return <Drawer {...drawerProps} {...props} />;
   }
+
+  return <Modal {...modalProps} {...props} />;
 }
 
 export type { OverlayProps };

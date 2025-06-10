@@ -1,4 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
+import type { NextRequest} from "next/server";
+import { NextResponse } from "next/server";
 
 const OFFICIAL_STYLES = [
   "minimalist",
@@ -25,7 +26,7 @@ export function middleware(request: NextRequest) {
     const [styleName, registryItem] = segments;
 
     if (
-      OFFICIAL_STYLES.includes(styleName as (typeof OFFICIAL_STYLES)[number])
+      OFFICIAL_STYLES.includes(styleName!)
     ) {
       const url = request.nextUrl.clone();
       url.pathname = `/api/r/dotui/${styleName}/${registryItem}`;

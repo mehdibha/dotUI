@@ -1,16 +1,17 @@
 import type { PressEvent } from "react-aria-components";
-import React, { useCallback, useState } from "react";
+import type React from "react";
+import { useCallback, useState } from "react";
 
 function getUniqueID(prefix: string) {
   return `${prefix}-${Math.floor(Math.random() * 1000000)}`;
 }
 
-export type RippleType = {
+export interface RippleType {
   key: React.Key;
   x: number;
   y: number;
   size: number;
-};
+}
 
 export interface UseRippleProps {}
 

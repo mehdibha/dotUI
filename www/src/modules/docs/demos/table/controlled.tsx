@@ -9,7 +9,7 @@ import {
   TableRoot,
   TableRow,
 } from "@/registry/ui/table.basic";
-import { type Selection } from "react-aria-components";
+import type {Selection} from "react-aria-components";
 
 const columns: Column[] = [
   { name: "Name", id: "name", isRowHeader: true },
@@ -53,12 +53,12 @@ export default function Demo() {
   );
 }
 
-type Item = {
+interface Item {
   id: number;
   name: string;
   date: string;
   type: string;
-};
+}
 
 interface Column {
   id: keyof Omit<Item, "id">;

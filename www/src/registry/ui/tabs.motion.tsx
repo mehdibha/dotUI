@@ -4,7 +4,8 @@ import type { TabListProps as AriaTabListProps } from "react-aria-components";
 import * as React from "react";
 import { focusRing } from "@/registry/lib/focus-styles";
 import { createScopedContext } from "@/registry/lib/utils";
-import { LayoutGroup, motion, Transition } from "motion/react";
+import type { Transition } from "motion/react";
+import { LayoutGroup, motion } from "motion/react";
 import {
   Tab as AriaTab,
   TabList as AriaTabList,
@@ -12,7 +13,8 @@ import {
   Tabs as AriaTabs,
   composeRenderProps,
 } from "react-aria-components";
-import { tv, VariantProps } from "tailwind-variants";
+import type { VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const tabsStyles = tv({
   slots: {

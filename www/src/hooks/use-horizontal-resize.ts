@@ -1,8 +1,8 @@
 import React from "react";
 
-type ResizeOptions = {
+interface ResizeOptions {
   minWidth?: number;
-};
+}
 
 export const useHorizontalResize = (options?: ResizeOptions) => {
   const { minWidth: minWidthProp = 300 } = options || {};

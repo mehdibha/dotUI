@@ -3,12 +3,14 @@ import path from "path";
 import { registry } from "@/registry";
 import { base } from "@/registry/registry-base";
 import { styles } from "@/registry/registry-styles";
-import { hasStyles, RegistryItemProps } from "@/registry/types";
+import type { RegistryItemProps } from "@/registry/types";
+import { hasStyles } from "@/registry/types";
 import { execa } from "execa";
 import { rimraf } from "rimraf";
 
 const REGISTRY_PATH = path.join(process.cwd(), "public/r");
 const REGISTRY_URL =
+  // eslint-disable-next-line no-restricted-properties
   process.env.NODE_ENV === "production"
     ? "https://dotui.org/r"
     : "http://localhost:3000/r";
@@ -33,7 +35,7 @@ const setup = async () => {
 const buildRegistry = async () => {
   await Promise.all(
     styles.map(async (t) => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+       
       const indexPayload: any = {
         $schema: "https://ui.shadcn.com/schema/registry.json",
         extends: "none",

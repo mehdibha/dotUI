@@ -246,13 +246,10 @@ const getFillerDimensions = (
       width: `${Math.abs(getThumbPercent(0) - getThumbPercent(1)) * 100}%`,
     };
 
-  if (orientation === "vertical")
-    return {
-      bottom: `${getThumbPercent(0) * 100}%`,
-      height: `${Math.abs(getThumbPercent(0) - getThumbPercent(1)) * 100}%`,
-    };
-
-  return {};
+  return {
+    bottom: `${getThumbPercent(0) * 100}%`,
+    height: `${Math.abs(getThumbPercent(0) - getThumbPercent(1)) * 100}%`,
+  };
 };
 
 export type { SliderProps };

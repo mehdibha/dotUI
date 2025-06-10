@@ -1,9 +1,10 @@
 "use client";
 
 import type { VariantProps } from "tailwind-variants";
+import type {
+  toggleButtonStyles} from "@/registry/ui/toggle-button.basic";
 import {
-  ToggleButtonProvider,
-  toggleButtonStyles,
+  ToggleButtonProvider
 } from "@/registry/ui/toggle-button.basic";
 import {
   ToggleButtonGroup as AriaToggleButtonGroup,

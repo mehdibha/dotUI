@@ -1,19 +1,24 @@
 import React from "react";
-import { Alert, AlertProps } from "@/components/ui/alert";
-import { Badge, BadgeProps } from "@/components/ui/badge";
-import { LinkProps, Link as NavLink } from "@/components/ui/link";
+import type { AlertProps } from "@/components/ui/alert";
+import { Alert } from "@/components/ui/alert";
+import type { BadgeProps } from "@/components/ui/badge";
+import { Badge } from "@/components/ui/badge";
+import type { LinkProps} from "@/components/ui/link";
+import { Link as NavLink } from "@/components/ui/link";
 import { cn } from "@/lib/utils";
 import { ArrowUpRightIcon } from "lucide-react";
-import { MDXComponents } from "mdx/types";
+import type { MDXComponents } from "mdx/types";
 
 import type { ComponentPreviewProps } from "./component-preview";
 import type { TabsProps } from "./tabs";
 import { BadgePalette } from "./badge-palette";
-import { Choice, Choices, ChoicesProps } from "./choices";
+import type { ChoicesProps } from "./choices";
+import { Choice, Choices } from "./choices";
 import { Pre } from "./code-block-mdx";
 import { ComponentPreview } from "./component-preview";
 import { InstallTab, InstallTabs } from "./install-tabs";
-import { Palette, PaletteProps } from "./palette";
+import type { PaletteProps } from "./palette";
+import { Palette } from "./palette";
 import { Tab, Tabs } from "./tabs";
 
 export const mdxComponents: MDXComponents = {

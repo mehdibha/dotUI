@@ -26,7 +26,7 @@ import {
   RangeCalendarRoot as _RangeCalendarRoot,
 } from "@/__registry__/ui/calendar.basic";
 import { createDynamicComponent } from "@/modules/styles/lib/create-dynamic-component";
-import { type DateValue } from "react-aria-components";
+import type {DateValue} from "react-aria-components";
 
 export const Calendar = createDynamicComponent<CalendarProps<DateValue>>(
   "calendar",

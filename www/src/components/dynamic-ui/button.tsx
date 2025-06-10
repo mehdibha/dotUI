@@ -1,10 +1,11 @@
 "use client";
 
 import React from "react";
+import type {
+  ButtonProps} from "@/__registry__/ui/button.basic";
 import {
   Button as _Button,
   ButtonProvider as _ButtonProvider,
-  ButtonProps,
   buttonStyles,
 } from "@/__registry__/ui/button.basic";
 import { createDynamicComponent } from "@/modules/styles/lib/create-dynamic-component";

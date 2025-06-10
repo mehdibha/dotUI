@@ -5,9 +5,9 @@ import type {
   ControllerRenderProps,
   FieldPath,
   UseControllerProps,
-} from "react-hook-form";
+ FieldValues } from "react-hook-form";
 import { Form } from "react-aria-components";
-import { Controller, FieldValues } from "react-hook-form";
+import { Controller } from "react-hook-form";
 
 type FormControlProps<
   TFieldValues extends FieldValues = FieldValues,

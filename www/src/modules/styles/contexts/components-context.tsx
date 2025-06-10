@@ -1,6 +1,6 @@
 import React from "react";
 import { DEFAULT_COMPONENTS } from "@/modules/styles/constants/defaults";
-import { Components } from "@/modules/styles/types";
+import type { Components } from "@/modules/styles/types";
 
 const ComponentsContext = React.createContext<{
   components: Components;

@@ -1,30 +1,22 @@
-import { CssColor } from "@adobe/leonardo-contrast-colors";
+import type { CssColor } from "@adobe/leonardo-contrast-colors";
 
-export type Fonts = {
+export interface Fonts {
   heading: string;
   body: string;
-};
+}
 
 export type IconLibrary = "lucide" | "remix-icons";
 
-export type Theme = {
+export interface Theme {
   theme: Record<string, string>;
   light: Record<string, string>;
   dark: Record<string, string>;
-  css?: {
-    [k: string]:
-      | string
-      | {
-          [k: string]:
-            | string
-            | {
-                [k: string]: string;
-              };
-        };
-  };
-};
+  css?: Record<string, | string
+      | Record<string, | string
+            | Record<string, string>>>;
+}
 
-export type Components = {
+export interface Components {
   alert: "basic" | "notch" | "notch-2";
   avatar: "basic";
   badge: "basic";
@@ -81,41 +73,41 @@ export type Components = {
   "toggle-button": "basic";
   "toggle-button-group": "basic";
   tooltip: "basic" | "motion";
-};
+}
 
-export type Preferences = {
+export interface Preferences {
   defaultColorScheme: "accent" | "primary";
-};
+}
 
-export type ColorBase = {
+export interface ColorBase {
   baseColors: CssColor[];
   ratios?: number[];
-};
+}
 
-export type ColorFoundations = {
+export interface ColorFoundations {
   neutral?: ColorBase;
   accent?: ColorBase;
   success?: ColorBase;
   warning?: ColorBase;
   danger?: ColorBase;
   info?: ColorBase;
-};
+}
 
-export type ThemeModeFoundations = {
+export interface ThemeModeFoundations {
   colors: ColorFoundations;
   lightness?: number;
   saturation?: number;
-};
+}
 
-export type ThemeFoundations = {
+export interface ThemeFoundations {
   light?: ThemeModeFoundations;
   dark?: ThemeModeFoundations;
   theme?: Record<string, string>;
   css?: Theme["css"];
   radius?: number;
-};
+}
 
-export type StyleFoundations = {
+export interface StyleFoundations {
   name: string;
   label?: string;
   icon?: string;
@@ -124,9 +116,9 @@ export type StyleFoundations = {
   fonts?: Fonts;
   components?: Partial<Components>;
   preferences?: Partial<Preferences>;
-};
+}
 
-export type Style = {
+export interface Style {
   name: string;
   label?: string;
   icon?: string;
@@ -136,4 +128,4 @@ export type Style = {
   fonts: Fonts;
   components: Components;
   preferences: Preferences;
-};
+}

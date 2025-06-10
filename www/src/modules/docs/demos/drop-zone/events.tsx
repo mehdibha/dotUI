@@ -3,7 +3,7 @@
 import React from "react";
 import { DropZone, DropZoneLabel } from "@/components/dynamic-ui/drop-zone";
 import { useDrag } from "react-aria";
-import { TextDropItem } from "react-aria-components";
+import type { TextDropItem } from "react-aria-components";
 
 export default function Demo() {
   return (

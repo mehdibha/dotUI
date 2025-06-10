@@ -11,7 +11,8 @@ import {
   Tabs as AriaTabs,
   composeRenderProps,
 } from "react-aria-components";
-import { tv, VariantProps } from "tailwind-variants";
+import type { VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const tabsStyles = tv({
   slots: {

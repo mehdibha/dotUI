@@ -23,7 +23,7 @@ function Loader({ size = 20, className, ...props }: LoaderProps) {
         } as React.CSSProperties
       }
     >
-      {[...Array(4)].map((_, index) => (
+      {Array.from({ length: 4 }).map((_, index) => (
         <motion.div
           key={index}
           className="h-full w-[2px] rounded-full bg-current"

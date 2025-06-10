@@ -23,7 +23,7 @@ function Loader({ size = 20, className, ...props }: LoaderProps) {
         } as React.CSSProperties
       }
     >
-      {[...Array(8)].map((_, index) => {
+      {Array.from({ length: 8 }).map((_, index) => {
         const angle = (index / 8) * (2 * Math.PI);
         const x = Math.cos(angle);
         const y = Math.sin(angle);

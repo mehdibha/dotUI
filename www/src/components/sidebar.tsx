@@ -5,7 +5,8 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
-import { Button, ButtonProps } from "@/components/ui/button";
+import type { ButtonProps } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   CollapsibleContent,
   CollapsibleRoot,
@@ -13,7 +14,8 @@ import {
 } from "@/components/ui/collapsible";
 import { Kbd } from "@/components/ui/kbd";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Tooltip, TooltipProps } from "@/components/ui/tooltip";
+import type { TooltipProps } from "@/components/ui/tooltip";
+import { Tooltip } from "@/components/ui/tooltip";
 import { siteConfig } from "@/config";
 import { cn } from "@/lib/utils";
 import { hasActive, isActive } from "@/modules/docs/utils";
@@ -26,7 +28,8 @@ import {
   SearchIcon,
   SunIcon,
 } from "lucide-react";
-import { motion, Transition } from "motion/react";
+import type { Transition } from "motion/react";
+import { motion } from "motion/react";
 
 import { Logo } from "./logo";
 import { SearchCommand } from "./search-command";

@@ -7,13 +7,13 @@ export type RegistryItemType =
   | "registry:page"
   | "registry:component";
 
-export type RegistryFile = {
+export interface RegistryFile {
   type: RegistryItemType;
   path: string;
   target: string;
-};
+}
 
-export type RegistryItemProps = {
+export interface RegistryItemProps {
   name: string;
   title?: string;
   extends?: string;
@@ -22,7 +22,7 @@ export type RegistryItemProps = {
   dependencies?: string[];
   registryDependencies?: string[];
   files: RegistryFile[];
-};
+}
 
 export type RegistryItem =
   | RegistryItemProps

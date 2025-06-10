@@ -1,4 +1,4 @@
-import { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
 import { source } from "@/app/source";
 import { siteConfig } from "@/config";
 

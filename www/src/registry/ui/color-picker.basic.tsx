@@ -9,7 +9,8 @@ import { ColorArea } from "@/registry/ui/color-area.basic";
 import { ColorField } from "@/registry/ui/color-field.basic";
 import { ColorSlider } from "@/registry/ui/color-slider.basic";
 import { ColorSwatch } from "@/registry/ui/color-swatch.basic";
-import { Dialog, DialogProps, DialogRoot } from "@/registry/ui/dialog.basic";
+import type { DialogProps} from "@/registry/ui/dialog.basic";
+import { Dialog, DialogRoot } from "@/registry/ui/dialog.basic";
 import { Select, SelectItem } from "@/registry/ui/select.basic";
 import {
   ColorPicker as AriaColorPicker,

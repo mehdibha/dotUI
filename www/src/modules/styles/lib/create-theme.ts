@@ -5,7 +5,7 @@ import {
   DEFAULT_RADIUS_FACTOR,
   DEFAULT_THEME,
 } from "@/modules/styles/constants/defaults";
-import {
+import type {
   ColorFoundations,
   Theme,
   ThemeFoundations,
@@ -103,7 +103,7 @@ const createThemeCSSVars = (
       return undefined;
     })
     .filter(Boolean)
-    .flatMap((color) => color as [string, string][][])
+    .flatMap((color) => color!)
     .reduce(
       (acc, curr) => {
         const result: Record<string, string> = {};

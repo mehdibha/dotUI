@@ -3,7 +3,8 @@
 import type {
   ButtonProps as AriaButtonProps,
   LinkProps as AriaLinkProps,
-} from "react-aria-components";
+
+  PressEvent} from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
 import { useRipple } from "@/registry/hooks/use-ripple";
@@ -15,8 +16,7 @@ import { chain } from "@react-aria/utils";
 import {
   Button as AriaButton,
   Link as AriaLink,
-  composeRenderProps,
-  PressEvent,
+  composeRenderProps
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
