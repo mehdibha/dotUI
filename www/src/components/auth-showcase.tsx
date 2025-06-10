@@ -14,7 +14,6 @@ export async function AuthShowcase() {
             const res = await auth.api.signInSocial({
               body: {
                 provider: "github",
-                callbackURL: "/",
               },
             });
             if (!res.url) {

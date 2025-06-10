@@ -7,7 +7,6 @@ import { Analytics } from "@vercel/analytics/react";
 
 import "@/styles/globals.css";
 
-import { AuthShowcase } from "@/components/auth-showcase";
 import { siteConfig } from "@/config";
 
 import { Providers } from "./providers";
@@ -61,10 +60,8 @@ export default async function RootLayout({
         suppressHydrationWarning
       >
         <Analytics />
-
         {/* TODO FIX THIS */}
         <Providers defaultPreviewMode="light">
-          <AuthShowcase />
           <div>{children}</div>
         </Providers>
       </body>
