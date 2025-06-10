@@ -1,9 +1,8 @@
 import type { NextRequest } from "next/server";
+import { auth } from "@/modules/auth/server";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 
 import { appRouter, createTRPCContext } from "@dotui/api";
-
-import { auth } from "@/modules/auth/server";
 
 /**
  * Configure basic CORS headers
