@@ -14,8 +14,6 @@ const OFFICIAL_STYLES = [
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  console.log("🚀 MIDDLEWARE HIT:", pathname);
-
   // Only handle /r/ routes
   if (!pathname.startsWith("/r/")) {
     return NextResponse.next();
