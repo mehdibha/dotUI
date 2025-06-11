@@ -1,12 +1,12 @@
 "use client";
 
-import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config";
 import { useMounted } from "@/hooks/use-mounted";
 import { cn } from "@/lib/utils";
 import { SignInModal } from "@/modules/auth/components/sign-in-modal";
+import { UserProfileMenu } from "@/modules/auth/components/user-profile-menu";
 import { authClient } from "@/modules/auth/lib/client";
 import { SearchIcon } from "lucide-react";
 
@@ -49,7 +49,6 @@ export function Header({ className }: { className?: string }) {
           <div className="animate-in fade-in flex items-center gap-2">
             <SearchCommand keyboardShortcut>
               <Button
-                size="sm"
                 variant="default"
                 prefix={<SearchIcon />}
                 suffix={
@@ -63,38 +62,31 @@ export function Header({ className }: { className?: string }) {
                 <span className="mr-6 flex-1">Search docs...</span>
               </Button>
             </SearchCommand>
-            <Button
-              href={siteConfig.links.github}
-              target="_blank"
-              variant="quiet"
-              size="sm"
-              shape="square"
-            >
-              <GitHubIcon />
-            </Button>
-            <Button
-              href={siteConfig.links.twitter}
-              target="_blank"
-              variant="quiet"
-              size="sm"
-              shape="square"
-            >
-              <TwitterIcon />
-            </Button>
-            <ThemeSwitcher />
             {session ? (
-              <Avatar
-                src={session?.user?.image ?? undefined}
-                fallback={session?.user?.name?.charAt(0)}
-                size="sm"
-                shape="square"
-              />
+              <UserProfileMenu />
             ) : (
-              <SignInModal>
-                <Button variant="primary" size="sm">
-                  Sign in
+              <>
+                <Button
+                  href={siteConfig.links.github}
+                  target="_blank"
+                  variant="quiet"
+                  shape="square"
+                >
+                  <GitHubIcon />
                 </Button>
-              </SignInModal>
+                <Button
+                  href={siteConfig.links.twitter}
+                  target="_blank"
+                  variant="quiet"
+                  shape="square"
+                >
+                  <TwitterIcon />
+                </Button>
+                <ThemeSwitcher />
+                <SignInModal>
+                  <Button variant="primary">Sign in</Button>
+                </SignInModal>
+              </>
             )}
           </div>
         )}

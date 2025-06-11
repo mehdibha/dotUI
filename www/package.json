@@ -59,7 +59,7 @@
     "npm-to-yarn": "^3.0.0",
     "react": "catalog:react19",
     "react-aria": "^3.40.0",
-    "react-aria-components": "^1.9.0",
+    "react-aria-components": "^1.10.1",
     "react-dom": "catalog:react19",
     "react-hook-form": "^7.54.2",
     "react-resizable-panels": "^2.0.19",

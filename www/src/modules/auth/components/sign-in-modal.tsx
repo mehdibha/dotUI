@@ -40,6 +40,7 @@ export function SignInModal({ children }: { children: React.ReactNode }) {
                   onPress={async () => {
                     await authClient.signIn.social({
                       provider: "github",
+                      callbackURL: "/",
                     });
                     close();
                   }}

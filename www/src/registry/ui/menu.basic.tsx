@@ -67,14 +67,16 @@ const MenuRoot = (props: MenuRootProps) => {
 type MenuProps<T> = MenuContentProps<T> & {
   type?: OverlayProps["type"];
   mobileType?: OverlayProps["mobileType"];
+  overlayProps?: OverlayProps;
 };
 const Menu = <T extends object>({
   type = "popover",
   mobileType = "drawer",
+  overlayProps,
   ...props
 }: MenuProps<T>) => {
   return (
-    <Overlay type={type} mobileType={mobileType}>
+    <Overlay type={type} mobileType={mobileType} {...overlayProps}>
       <MenuContent {...props} />
     </Overlay>
   );
@@ -118,7 +120,11 @@ const MenuItem = <T extends object>({
   ...props
 }: MenuItemProps<T>) => {
   return (
-    <AriaMenuItem className={menuItemStyles({ className, variant })} {...props}>
+    <AriaMenuItem
+      className={menuItemStyles({ className, variant })}
+      data-slot="menu-item"
+      {...props}
+    >
       {composeRenderProps(
         props.children,
         (children, { selectionMode, isSelected, hasSubmenu }) => (
@@ -131,7 +137,7 @@ const MenuItem = <T extends object>({
               </span>
             )}
             {prefix}
-            <span className="flex items-center gap-2">
+            <span className="flex flex-1 items-center gap-2">
               <span className="flex flex-1 flex-col">
                 {label && <Text slot="label">{label}</Text>}
                 {description && <Text slot="description">{description}</Text>}
