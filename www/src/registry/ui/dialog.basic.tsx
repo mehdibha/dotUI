@@ -18,7 +18,7 @@ const dialogStyles = tv({
       "relative flex h-[inherit] max-h-[inherit] flex-col rounded-[inherit] p-4 outline-hidden",
     ],
     header: "mb-4",
-    heading: "text-lg font-medium",
+    heading: "block text-lg font-medium",
     description: "text-fg-muted text-sm",
     body: "-mx-4 flex-1 space-y-2 overflow-y-auto px-4 py-2",
     inset: "bg-bg-muted -mx-4 border px-4 py-4",

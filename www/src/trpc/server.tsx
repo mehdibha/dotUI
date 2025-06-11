@@ -1,7 +1,7 @@
 import type { TRPCQueryOptions } from "@trpc/tanstack-react-query";
 import { cache } from "react";
 import { headers } from "next/headers";
-import { auth } from "@/modules/auth/server";
+import { auth } from "@/modules/auth/lib/server";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { createTRPCOptionsProxy } from "@trpc/tanstack-react-query";
 

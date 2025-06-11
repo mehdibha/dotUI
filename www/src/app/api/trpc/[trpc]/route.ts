@@ -1,5 +1,5 @@
 import type { NextRequest } from "next/server";
-import { auth } from "@/modules/auth/server";
+import { auth } from "@/modules/auth/lib/server";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 
 import { appRouter, createTRPCContext } from "@dotui/api";

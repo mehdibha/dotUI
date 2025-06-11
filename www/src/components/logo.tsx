@@ -62,7 +62,7 @@ export const Logo = ({
             {siteConfig.name}
           </div>
           <Badge className="mt-0.5 border px-2 group-data-collapsed/sidebar:opacity-0">
-            beta
+            preview
           </Badge>
         </>
       )}
