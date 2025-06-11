@@ -1,18 +1,20 @@
 
 # dotUI
 
-dotUI helps you quickly build a component library with a **unique look**.
+dotUI helps you quickly build a component library with a **unique style**.
 
 ![dotUI](https://dotui.org/images/thumbnail.png)
 
 ## How it works?
 
-> A theme defines **colors, fonts, icons, components styles, and more**.  
-
-Every project init requires a theme. You can choose from existing themes or create your own with our builder.
-
+1. You can start by choosing or creating your style
+2. Init the foundations
 ```bash
-npx dotui-cli init <theme-name>
+npx shadcn@latest init https://dotui.org/r/{styleName}/base
+```
+3. Add any component 
+```bash
+npx shadcn@latest add https://dotui.org/r/{styleName}/button
 ```
 
 <!-- CONTRIBUTING -->
@@ -30,13 +32,12 @@ npx dotui-cli init <theme-name>
 ### What's different from shadcn-ui
 
 shadcn-ui gives you a starting point to create your component library, but this starting point is the same for everyone.<br/>
-dotUI gives you a custom starting point based on the theme you've chosen or created.
+dotUI gives you a custom starting point based on the style you've chosen or created.
 
-- We use react-aria instead of radix-ui.
+- We use react-aria-components instead of radix-ui.
 - We use tailwind-variants instead of cva.
 - The color system is based on 6 color scales (neutral, accent, warning, info, danger and success).
 - All components offers the posssibility to use composition or not.
-- For each component, multiple styles are available.
 
 <!-- CONTRIBUTING -->
 
