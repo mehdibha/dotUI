@@ -1,7 +1,8 @@
 import type { Code, Root } from "mdast";
-import convert from "npm-to-yarn";
 import type { Transformer } from "unified";
+import convert from "npm-to-yarn";
 import { visit } from "unist-util-visit";
+
 import { createElement, expressionToAttribute } from "./utils";
 
 interface PackageManager {
@@ -90,7 +91,7 @@ export function remarkInstall({
               value: command(value),
             } satisfies Code,
           ],
-        }))
+        })),
       );
 
       Object.assign(node, insert);

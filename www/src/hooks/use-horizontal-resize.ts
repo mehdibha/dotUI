@@ -1,8 +1,8 @@
 import React from "react";
 
-type ResizeOptions = {
+interface ResizeOptions {
   minWidth?: number;
-};
+}
 
 export const useHorizontalResize = (options?: ResizeOptions) => {
   const { minWidth: minWidthProp = 300 } = options || {};
@@ -40,7 +40,7 @@ export const useHorizontalResize = (options?: ResizeOptions) => {
         const delta = e.clientX - startX.current;
         const newWidth = Math.min(
           Math.max(minWidth.current, startWidth.current + delta),
-          maxWidth.current
+          maxWidth.current,
         );
         setWidth(newWidth);
       };
@@ -56,7 +56,7 @@ export const useHorizontalResize = (options?: ResizeOptions) => {
       document.addEventListener("mousemove", handleMouseMove);
       document.addEventListener("mouseup", handleMouseUp);
     },
-    [minWidth]
+    [minWidth],
   );
 
   return {

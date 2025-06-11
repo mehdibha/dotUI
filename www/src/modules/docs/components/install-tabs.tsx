@@ -1,12 +1,12 @@
 "use client";
 
-import { useMemo, useState, useCallback, useLayoutEffect } from "react";
-import { cn } from "@/lib/utils";
-import * as TabsPrimitive from "@/components/ui/tabs";
 import type {
   TabsProps as BaseProps,
   TabPanelProps,
 } from "@/components/ui/tabs";
+import { useCallback, useLayoutEffect, useMemo, useState } from "react";
+import * as TabsPrimitive from "@/components/ui/tabs";
+import { cn } from "@/lib/utils";
 
 type ChangeListener = (v: string) => void;
 const listeners = new Map<string, ChangeListener[]>();
@@ -21,7 +21,7 @@ function removeChangeListener(id: string, listener: ChangeListener): void {
   const list = listeners.get(id) ?? [];
   listeners.set(
     id,
-    list.filter((item) => item !== listener)
+    list.filter((item) => item !== listener),
   );
 }
 
@@ -78,7 +78,7 @@ export function InstallTabs({
         setValue(v);
       }
     },
-    [groupId, persist]
+    [groupId, persist],
   );
 
   return (
@@ -113,7 +113,7 @@ export function InstallTab({
       id={toValue(value)}
       className={cn(
         "mt-0 overflow-hidden text-xs [&>figure:only-child]:m-0 [&>figure:only-child]:rounded-none [&>figure:only-child]:border-none",
-        className
+        className,
       )}
       {...props}
     />

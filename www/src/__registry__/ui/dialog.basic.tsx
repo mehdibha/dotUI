@@ -1,15 +1,16 @@
 "use client";
 
+import type { OverlayProps } from "@/registry/ui/overlay.basic";
 import * as React from "react";
+import { Overlay } from "@/registry/ui/overlay.basic";
 import {
-  composeRenderProps,
-  DialogTrigger as AriaDialogTrigger,
   Dialog as AriaDialog,
+  DialogTrigger as AriaDialogTrigger,
   Heading as AriaHeading,
   Text as AriaText,
+  composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { Overlay, type OverlayProps } from "@/components/dynamic-ui/overlay";
 
 const dialogStyles = tv({
   slots: {

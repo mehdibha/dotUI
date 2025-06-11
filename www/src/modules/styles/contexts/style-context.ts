@@ -1,6 +1,6 @@
+import type { Style } from "@/modules/styles/types";
 import React from "react";
-import { styles } from "@/modules/registry/registry-styles";
-import { Style } from "@/modules/styles/types";
+import { styles } from "@/registry/registry-styles";
 
 const defaultStyle: Style = styles[0]!;
 

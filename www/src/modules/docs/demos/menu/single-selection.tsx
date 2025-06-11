@@ -1,13 +1,13 @@
 "use client";
 
-import React from "react";
 import type { Selection } from "react-aria-components";
+import React from "react";
 import { Button } from "@/components/dynamic-ui/button";
 import { Menu, MenuItem, MenuRoot } from "@/components/dynamic-ui/menu";
 
 export default function Demo() {
   const [selected, setSelected] = React.useState<Selection>(
-    new Set(["center"])
+    new Set(["center"]),
   );
   return (
     <MenuRoot>

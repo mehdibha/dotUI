@@ -1,6 +1,6 @@
+import type { Components } from "@/modules/styles/types";
 import React from "react";
 import { DEFAULT_COMPONENTS } from "@/modules/styles/constants/defaults";
-import { Components } from "@/modules/styles/types";
 
 const ComponentsContext = React.createContext<{
   components: Components;
@@ -24,7 +24,7 @@ export const useCurrentComponents = () => {
   const ctx = React.use(ComponentsContext);
   if (!ctx)
     throw new Error(
-      "useCurrentComponents must be used within ComponentsContext"
+      "useCurrentComponents must be used within ComponentsContext",
     );
   return ctx.components;
 };

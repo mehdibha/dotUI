@@ -24,7 +24,7 @@ export const getGitHubContributors = async (): Promise<
         next: {
           revalidate: 120,
         },
-      }
+      },
     );
     if (!response?.ok) {
       return [];
@@ -48,7 +48,7 @@ export async function getGitHubStars(): Promise<string | null> {
         next: {
           revalidate: 60,
         },
-      }
+      },
     );
 
     if (!response?.ok) {
@@ -57,7 +57,7 @@ export async function getGitHubStars(): Promise<string | null> {
 
     const json = await response.json();
 
-    return parseInt(json["stargazers_count"]).toLocaleString();
+    return parseInt(json.stargazers_count).toLocaleString();
   } catch (error) {
     console.error(error);
     return null;

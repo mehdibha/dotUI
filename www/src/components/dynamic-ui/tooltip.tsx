@@ -1,17 +1,17 @@
 "use client";
 
+import type {
+  TooltipArrowProps,
+  TooltipContentProps,
+  TooltipProps,
+  TooltipRootProps,
+} from "@/__registry__/ui/tooltip.basic";
 import React from "react";
 import {
   Tooltip as _Tooltip,
-  TooltipRoot as _TooltipRoot,
-  TooltipContent as _TooltipContent,
   TooltipArrow as _TooltipArrow,
-} from "@/__registry__/ui/tooltip.basic";
-import type {
-  TooltipProps,
-  TooltipRootProps,
-  TooltipContentProps,
-  TooltipArrowProps,
+  TooltipContent as _TooltipContent,
+  TooltipRoot as _TooltipRoot,
 } from "@/__registry__/ui/tooltip.basic";
 import { createDynamicComponent } from "@/modules/styles/lib/create-dynamic-component";
 
@@ -24,9 +24,9 @@ export const Tooltip = createDynamicComponent<TooltipProps>(
       // @ts-expect-error - motion modify the props
       import("@/__registry__/ui/tooltip.motion").then((mod) => ({
         default: mod.Tooltip,
-      }))
+      })),
     ),
-  }
+  },
 );
 
 export const TooltipRoot = createDynamicComponent<TooltipRootProps>(
@@ -37,9 +37,9 @@ export const TooltipRoot = createDynamicComponent<TooltipRootProps>(
     tooltip_framer: React.lazy(() =>
       import("@/__registry__/ui/tooltip.motion").then((mod) => ({
         default: mod.TooltipRoot,
-      }))
+      })),
     ),
-  }
+  },
 );
 
 export const TooltipContent = createDynamicComponent<TooltipContentProps>(
@@ -51,9 +51,9 @@ export const TooltipContent = createDynamicComponent<TooltipContentProps>(
       // @ts-expect-error - motion modify the props
       import("@/__registry__/ui/tooltip.motion").then((mod) => ({
         default: mod.TooltipContent,
-      }))
+      })),
     ),
-  }
+  },
 );
 
 export const TooltipArrow = createDynamicComponent<TooltipArrowProps>(
@@ -64,7 +64,7 @@ export const TooltipArrow = createDynamicComponent<TooltipArrowProps>(
     tooltip_framer: React.lazy(() =>
       import("@/__registry__/ui/tooltip.motion").then((mod) => ({
         default: mod.TooltipArrow,
-      }))
+      })),
     ),
-  }
+  },
 );

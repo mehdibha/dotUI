@@ -1,4 +1,4 @@
-import { type SVGProps } from "react";
+import type { SVGProps } from "react";
 import { cn } from "@/lib/utils";
 
 interface IconProps extends Partial<SVGProps<SVGSVGElement>> {

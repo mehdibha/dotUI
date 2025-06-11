@@ -2,6 +2,13 @@
 
 import React from "react";
 import { useParams, usePathname } from "next/navigation";
+import { useSidebarContext } from "@/components/sidebar";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useDebounce } from "@/hooks/use-debounce";
+import { useMounted } from "@/hooks/use-mounted";
+import { cn } from "@/lib/utils";
+import { useStyles } from "@/modules/styles/atoms/styles-atom";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -11,13 +18,6 @@ import {
   SmartphoneIcon,
 } from "lucide-react";
 import { motion } from "motion/react";
-import { cn } from "@/lib/utils";
-import { useDebounce } from "@/hooks/use-debounce";
-import { useMounted } from "@/hooks/use-mounted";
-import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
-import { useSidebarContext } from "@/components/sidebar";
-import { useStyles } from "@/modules/styles/atoms/styles-atom";
 
 const PreviewContext = React.createContext<{
   isOpen: boolean;
@@ -61,7 +61,7 @@ export const Preview = () => {
 
   const previewWidth = Math.min(
     screen === "mobile" ? 430 : 768,
-    isCollapsed ? 768 : 600
+    isCollapsed ? 768 : 600,
   );
   const containerWidth = isOpen ? previewWidth : 0;
 
@@ -155,7 +155,7 @@ export function PreviewContent({
       const iframeUrl =
         iframeRef.current.contentWindow.location.pathname.replace(
           "/preview",
-          ""
+          "",
         );
       if (iframeUrl && iframeUrl !== currentPathname) {
         setCurrentPathname(iframeUrl);
@@ -176,7 +176,7 @@ export function PreviewContent({
     <div
       className={cn(
         "bg-bg size-full overflow-hidden rounded-md border",
-        className
+        className,
       )}
     >
       <div className="bg-bg-muted flex items-center justify-between gap-2 border-b border-t-[inherit] p-1">

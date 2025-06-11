@@ -1,4 +1,4 @@
-import { lstatSync, existsSync, promises as fs } from "node:fs";
+import { existsSync, promises as fs, lstatSync } from "node:fs";
 import path from "path";
 
 export const getFilesSource = async (relativePath: string) => {
@@ -17,7 +17,7 @@ export const getFilesSource = async (relativePath: string) => {
       });
     }
     code = code.sort((a) =>
-      a.title === `${path.basename(fullPath)}.tsx` ? -1 : 1
+      a.title === `${path.basename(fullPath)}.tsx` ? -1 : 1,
     );
   } else {
     // if file, get file content and name

@@ -1,12 +1,14 @@
 "use client";
 
+import type { Transition } from "motion/react";
+import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
-import { MoonIcon, SunIcon } from "lucide-react";
-import { LayoutGroup, motion, Transition } from "motion/react";
-import { Switch as AriaSwitch } from "react-aria-components";
-import { tv, type VariantProps } from "tailwind-variants";
 import { focusRingGroup } from "@/lib/focus-styles";
 import { cn } from "@/lib/utils";
+import { MoonIcon, SunIcon } from "lucide-react";
+import { LayoutGroup, motion } from "motion/react";
+import { Switch as AriaSwitch } from "react-aria-components";
+import { tv } from "tailwind-variants";
 
 const TRANSITION: Transition = { type: "spring", bounce: 0.05, duration: 0.2 };
 

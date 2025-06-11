@@ -1,9 +1,25 @@
 "use client";
 
+import type { ButtonProps } from "@/components/ui/button";
+import type { TooltipProps } from "@/components/ui/tooltip";
+import type { PageTree } from "fumadocs-core/server";
+import type { Transition } from "motion/react";
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import type { PageTree } from "fumadocs-core/server";
+import { GitHubIcon, TwitterIcon } from "@/components/icons";
+import { Button } from "@/components/ui/button";
+import {
+  CollapsibleContent,
+  CollapsibleRoot,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { Kbd } from "@/components/ui/kbd";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Tooltip } from "@/components/ui/tooltip";
+import { siteConfig } from "@/config";
+import { cn } from "@/lib/utils";
+import { hasActive, isActive } from "@/modules/docs/utils";
 import { useOnChange } from "fumadocs-core/utils/use-on-change";
 import {
   ChevronRightIcon,
@@ -13,20 +29,8 @@ import {
   SearchIcon,
   SunIcon,
 } from "lucide-react";
-import { motion, Transition } from "motion/react";
-import { cn } from "@/lib/utils";
-import { Button, ButtonProps } from "@/components/ui/button";
-import {
-  CollapsibleRoot,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { Kbd } from "@/components/ui/kbd";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Tooltip, TooltipProps } from "@/components/ui/tooltip";
-import { GitHubIcon, TwitterIcon } from "@/components/icons";
-import { siteConfig } from "@/config";
-import { hasActive, isActive } from "@/modules/docs/utils";
+import { motion } from "motion/react";
+
 import { Logo } from "./logo";
 import { SearchCommand } from "./search-command";
 import { ThemeSwitcher } from "./site-theme-selector";
@@ -171,7 +175,7 @@ const SidebarRoot = ({
     >
       <div
         className={cn(
-          "transition-sidebar relative z-10 h-svh w-(--sidebar-width) bg-transparent group-data-collapsed/sidebar:w-(--sidebar-width-collapsed)"
+          "transition-sidebar relative z-10 h-svh w-(--sidebar-width) bg-transparent group-data-collapsed/sidebar:w-(--sidebar-width-collapsed)",
         )}
       />
       <div className="transition-sidebar bg-bg [&_svg]:text-fg-muted fixed inset-y-0 left-0 z-10 flex h-svh w-(--sidebar-width) flex-col overflow-hidden group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) [&_button]:font-normal">
@@ -198,7 +202,7 @@ export const SidebarProvider = ({
 }) => {
   const pathname = usePathname();
   const [isCollapsed, setCollapsed] = React.useState(
-    pathname.startsWith("/styles")
+    pathname.startsWith("/styles"),
   );
   return (
     <SidebarContext value={{ isCollapsed, setCollapsed }}>
@@ -320,7 +324,7 @@ function PageNode({
         "border-bg-bg-muted hover:text-fg text-fg-muted group block border-l py-1 pl-4 transition-colors",
         {
           "text-fg border-fg": active,
-        }
+        },
       )}
       onClick={onSelect}
       suppressHydrationWarning
@@ -346,7 +350,7 @@ function FolderNode({
     item.index !== undefined && isActive(item.index.url, pathname, false);
   const childActive = React.useMemo(
     () => hasActive(item.children, pathname),
-    [item.children, pathname]
+    [item.children, pathname],
   );
 
   const shouldExtend =
@@ -381,7 +385,7 @@ function FolderNode({
                 <ChevronRightIcon
                   className={cn(
                     "transition-transform ease-in-out",
-                    open && "rotate-90"
+                    open && "rotate-90",
                   )}
                 />
               </span>
@@ -417,7 +421,7 @@ const SidebarButton = ({
       size="sm"
       className={cn(
         "transition-sidebar hover:bg-bg-inverse/10 relative w-full overflow-hidden font-normal group-data-collapsed/sidebar:w-8",
-        className
+        className,
       )}
       {...props}
     >

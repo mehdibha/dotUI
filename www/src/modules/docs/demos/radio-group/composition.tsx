@@ -1,5 +1,5 @@
 import { Description, FieldError, Label } from "@/components/dynamic-ui/field";
-import { RadioGroupRoot, Radio } from "@/components/dynamic-ui/radio-group";
+import { Radio, RadioGroupRoot } from "@/components/dynamic-ui/radio-group";
 
 export default function Demo() {
   return (

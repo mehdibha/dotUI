@@ -4,7 +4,7 @@ import React from "react";
 import { useTheme } from "next-themes";
 import { useLocalStorage } from "react-use";
 
-const PREVIEW_MODE_STORAGE_NAME: string = "preview-mode";
+const PREVIEW_MODE_STORAGE_NAME = "preview-mode";
 const PREVIEW_MODE_COOKIE_MAX_AGE = 60 * 60 * 24 * 30;
 
 const ModeProviderContext = React.createContext<{
@@ -28,7 +28,7 @@ export function PreviewModeProvider({
     defaultMode,
     {
       raw: true,
-    }
+    },
   );
 
   React.useEffect(() => {

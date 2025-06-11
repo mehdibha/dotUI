@@ -1,9 +1,9 @@
+import type { Theme } from "@/modules/styles/types";
 import React from "react";
-import { useTheme } from "next-themes";
-import { cn } from "@/lib/utils";
 import { useMounted } from "@/hooks/use-mounted";
+import { cn } from "@/lib/utils";
 import { useStyles } from "@/modules/styles/atoms/styles-atom";
-import { Theme } from "@/modules/styles/types";
+import { useTheme } from "next-themes";
 
 export interface ThemeProviderProps
   extends Omit<React.ComponentProps<"div">, "children" | "style"> {
@@ -48,7 +48,7 @@ export const ThemeProvider = ({
         ...acc,
         [`--${key}`]: value,
       }),
-      {}
+      {},
     );
   }, [effectiveMode, theme, isMounted]);
 
@@ -57,7 +57,7 @@ export const ThemeProvider = ({
       className={cn(
         "bg-bg text-fg",
         isMounted && effectiveMode === "light" ? "light" : "dark",
-        className
+        className,
       )}
       {...props}
       style={styleProps}

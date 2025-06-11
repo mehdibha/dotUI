@@ -1,4 +1,4 @@
-import { Josefin_Sans, Geist_Mono, Geist } from "next/font/google";
+import { Geist, Geist_Mono, Josefin_Sans } from "next/font/google";
 
 export const josefinSans = Josefin_Sans({
   subsets: ["latin"],

@@ -1,7 +1,7 @@
-import { type BlockContent, type Code, type Root } from "mdast";
-import { type Transformer } from "unified";
-import { visit } from "unist-util-visit";
+import type { BlockContent, Code, Root } from "mdast";
+import type { Transformer } from "unified";
 import type { VFile } from "vfile";
+import { visit } from "unist-util-visit";
 
 type Awaitable<T> = T | Promise<T>;
 
@@ -13,7 +13,7 @@ export interface DocGenerator {
    */
   run: (
     input: unknown,
-    context: Context
+    context: Context,
   ) => Awaitable<object | object[] | undefined>;
 
   onFile?: (tree: Root, file: VFile) => void;

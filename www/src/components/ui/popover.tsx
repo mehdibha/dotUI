@@ -1,1 +1,1 @@
-export * from "@/modules/registry/ui/popover.basic";
+export * from "@/registry/ui/popover.basic";

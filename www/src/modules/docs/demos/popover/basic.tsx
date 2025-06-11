@@ -1,12 +1,12 @@
 import React from "react";
-import { InfoIcon } from "lucide-react";
 import { Button } from "@/components/dynamic-ui/button";
 import {
   DialogContent,
-  DialogRoot,
   DialogHeading,
+  DialogRoot,
 } from "@/components/dynamic-ui/dialog";
 import { Popover } from "@/components/dynamic-ui/popover";
+import { InfoIcon } from "lucide-react";
 
 export default function Demo() {
   return (

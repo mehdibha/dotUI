@@ -1,1 +1,1 @@
-export * from "@/modules/registry/ui/color-slider.basic";
+export * from "@/registry/ui/color-slider.basic";

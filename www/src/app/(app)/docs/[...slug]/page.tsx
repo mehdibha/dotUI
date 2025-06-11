@@ -1,20 +1,19 @@
-import React from "react";
+import type { TableOfContents as TocType } from "fumadocs-core/server";
 import type { Metadata } from "next";
+import React from "react";
 import { notFound } from "next/navigation";
-import { type TableOfContents as TocType } from "fumadocs-core/server";
-import { ExternalLinkIcon } from "lucide-react";
+import { source } from "@/app/source";
+import { AdobeIcon, GitHubIcon } from "@/components/icons";
+import { Button } from "@/components/ui/button";
+import { siteConfig } from "@/config";
 import { truncateOnWord } from "@/lib/string";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { GitHubIcon } from "@/components/icons";
-import { AdobeIcon } from "@/components/icons";
-import { source } from "@/app/source";
-import { siteConfig } from "@/config";
 import { Breadcrumbs } from "@/modules/docs/components/breadcrumbs";
 import { DocsPager } from "@/modules/docs/components/docs-pager";
 import { PageLastUpdate } from "@/modules/docs/components/last-update";
 import { mdxComponents } from "@/modules/docs/components/mdx-components";
 import { TableOfContents } from "@/modules/docs/components/toc";
+import { ExternalLinkIcon } from "lucide-react";
 
 export default async function Page({
   params,
@@ -33,7 +32,7 @@ export default async function Page({
         "container w-full max-w-3xl xl:max-w-4xl",
         toc &&
           toc.length > 0 &&
-          "grid grid-cols-1 gap-10 xl:max-w-5xl xl:grid-cols-[minmax(0,1fr)_minmax(180px,220px)]"
+          "grid grid-cols-1 gap-10 xl:max-w-5xl xl:grid-cols-[minmax(0,1fr)_minmax(180px,220px)]",
       )}
     >
       <div className="pt-4 pb-24 sm:pt-10 lg:pt-20">
@@ -68,7 +67,7 @@ export default async function Page({
       {toc && toc.length > 0 && (
         <div className="pt-20 max-xl:hidden">
           <div className="sticky top-10 h-[calc(100svh-calc(var(--spacing)*10))]">
-            <TableOfContents toc={toc as TocType} />
+            <TableOfContents toc={toc} />
           </div>
         </div>
       )}

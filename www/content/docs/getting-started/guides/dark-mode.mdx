@@ -122,7 +122,7 @@ export function ThemeProvider({
   ...props
 }: ThemeProviderProps) {
   const [theme, setTheme] = useState<Theme>(
-    () => (localStorage.getItem(storageKey) as Theme) || defaultTheme
+    () => (localStorage.getItem(storageKey) as Theme) || defaultTheme,
   );
 
   useEffect(() => {
@@ -245,6 +245,7 @@ import {
   ThemeProvider,
   useTheme,
 } from "remix-themes";
+
 import { themeSessionResolver } from "./sessions.server";
 
 // Return the theme from the session storage using the loader
@@ -295,6 +296,7 @@ Create a file in `/routes/action.set-theme.ts`. Ensure that you pass the filenam
 
 ```tsx title="app/routes/action.set-theme.ts"
 import { createThemeAction } from "remix-themes";
+
 import { themeSessionResolver } from "./sessions.server";
 
 export const action = createThemeAction(themeSessionResolver);

@@ -1,20 +1,21 @@
 "use client";
 
+import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
+import { focusRing } from "@/registry/lib/focus-styles";
+import { createScopedContext } from "@/registry/lib/utils";
+import { Description, Label } from "@/registry/ui/field.basic";
 import { useSlotId } from "@react-aria/utils";
 import {
-  composeRenderProps,
   Slider as AriaSlider,
   SliderOutput as AriaSliderOutput,
   SliderThumb as AriaSliderThumb,
   SliderTrack as AriaSliderTrack,
-  TextContext,
+  composeRenderProps,
   SliderStateContext,
+  TextContext,
 } from "react-aria-components";
-import { tv, type VariantProps } from "tailwind-variants";
-import { Description, Label } from "@/components/dynamic-ui/field";
-import { focusRing } from "@/modules/registry/lib/focus-styles";
-import { createScopedContext } from "@/modules/registry/lib/utils";
+import { tv } from "tailwind-variants";
 
 const sliderStyles = tv({
   slots: {
@@ -131,7 +132,7 @@ const SliderRoot = ({
     <AriaSlider
       aria-describedby={descriptionId}
       className={composeRenderProps(className, (className, { orientation }) =>
-        root({ orientation, size, className })
+        root({ orientation, size, className }),
       )}
       {...props}
     >
@@ -161,7 +162,7 @@ const SliderTrack = ({ ...props }: SliderTrackProps) => {
   return (
     <AriaSliderTrack
       className={composeRenderProps(props.className, (className) =>
-        track({ orientation, size, className })
+        track({ orientation, size, className }),
       )}
       {...props}
     />
@@ -178,7 +179,7 @@ const SliderFiller = ({ className, style, ...props }: SliderFillerProps) => {
   const dimensionStyles = getFillerDimensions(
     values,
     orientation,
-    getThumbPercent
+    getThumbPercent,
   );
 
   return (
@@ -197,7 +198,7 @@ const SliderThumb = ({ className, ...props }: SliderThumbProps) => {
   return (
     <AriaSliderThumb
       className={composeRenderProps(className, (className) =>
-        thumb({ orientation, size, className })
+        thumb({ orientation, size, className }),
       )}
       {...props}
     />
@@ -214,7 +215,7 @@ const SliderValueLabel = ({
   return (
     <AriaSliderOutput
       className={composeRenderProps(className, (className) =>
-        valueLabel({ className })
+        valueLabel({ className }),
       )}
       {...props}
     >
@@ -222,7 +223,7 @@ const SliderValueLabel = ({
         children,
         (children, { state }) =>
           children ??
-          state.values.map((_, i) => state.getThumbValueLabel(i)).join(" - ")
+          state.values.map((_, i) => state.getThumbValueLabel(i)).join(" - "),
       )}
     </AriaSliderOutput>
   );
@@ -231,7 +232,7 @@ const SliderValueLabel = ({
 const getFillerDimensions = (
   values: number[],
   orientation: "horizontal" | "vertical",
-  getThumbPercent: (index: number) => number
+  getThumbPercent: (index: number) => number,
 ): React.CSSProperties => {
   if (values.length === 1 && orientation === "horizontal")
     return { width: `${getThumbPercent(0) * 100}%` };

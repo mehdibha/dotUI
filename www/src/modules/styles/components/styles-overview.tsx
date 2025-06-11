@@ -1,26 +1,26 @@
 "use client";
 
+import type { Variants } from "motion/react";
 import React from "react";
-import { UNSAFE_PortalProvider } from "@react-aria/overlays";
-import { CheckIcon, CopyIcon } from "lucide-react";
-import { AnimatePresence, motion, Variants } from "motion/react";
-import { useInView } from "motion/react";
-import { useMounted } from "@/hooks/use-mounted";
-import { Button } from "@/components/ui/button";
 import {
   ComponentsOverview,
   MobileComponentsOverview,
 } from "@/components/components-overview";
 import * as Icons from "@/components/icons";
-import { styles } from "@/modules/registry/registry-styles";
-import { Skeleton } from "@/modules/registry/ui/skeleton.basic";
-import { Tabs, TabList, Tab } from "@/modules/registry/ui/tabs.motion";
+import { Button } from "@/components/ui/button";
+import { useMounted } from "@/hooks/use-mounted";
 import { StyleProvider } from "@/modules/styles/components/style-provider";
+import { styles } from "@/registry/registry-styles";
+import { Skeleton } from "@/registry/ui/skeleton.basic";
+import { Tab, TabList, Tabs } from "@/registry/ui/tabs.motion";
+import { UNSAFE_PortalProvider } from "@react-aria/overlays";
+import { CheckIcon, CopyIcon } from "lucide-react";
+import { AnimatePresence, motion, useInView } from "motion/react";
 
 export const StylesOverview = () => {
   const container = React.useRef(null);
   const [currentStyleName, setCurrentStyleName] = React.useState<string>(
-    styles[0]!.name
+    styles[0]!.name,
   );
   const ref = React.useRef(null);
   const isInView = useInView(ref);
@@ -30,7 +30,7 @@ export const StylesOverview = () => {
 
   const handleCopy = () => {
     void navigator.clipboard.writeText(
-      `npx shadcn@latest init https://dotui.org/r/${currentStyleName}/base.json`
+      `npx shadcn@latest init https://dotui.org/r/${currentStyleName}/base`,
     );
     setCopied(true);
     setTimeout(() => {
@@ -44,7 +44,7 @@ export const StylesOverview = () => {
     const interval = setInterval(() => {
       if (touched || !isInView) return;
       const currentIndex = styles.findIndex(
-        (style) => style.name === currentStyleName
+        (style) => style.name === currentStyleName,
       );
       const nextIndex = (currentIndex + 1) % styles.length;
       const nextStyle = styles[nextIndex];
@@ -117,7 +117,7 @@ export const StylesOverview = () => {
                       </motion.span>
                     </AnimatePresence>
                     <motion.span layout transition={{ duration: 0.5 }}>
-                      /base.json
+                      /base
                     </motion.span>
                   </span>
                 </code>

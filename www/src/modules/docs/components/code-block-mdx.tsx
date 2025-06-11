@@ -1,17 +1,13 @@
 "use client";
 
-import {
-  type HTMLAttributes,
-  type ReactNode,
-  forwardRef,
-  useCallback,
-  useRef,
-} from "react";
-import { Check, Copy } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { useCopyButton } from "@/hooks/use-copy-button";
-import { Button, ButtonProps } from "@/components/ui/button";
+import type { ButtonProps } from "@/components/ui/button";
+import type { HTMLAttributes, ReactNode } from "react";
+import { forwardRef, useCallback, useRef } from "react";
+import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useCopyButton } from "@/hooks/use-copy-button";
+import { cn } from "@/lib/utils";
+import { Check, Copy } from "lucide-react";
 
 export type CodeBlockProps = HTMLAttributes<HTMLElement> & {
   icon?: ReactNode;
@@ -32,7 +28,7 @@ export const Pre = forwardRef<HTMLPreElement, HTMLAttributes<HTMLPreElement>>(
         </pre>
       </CodeBlock>
     );
-  }
+  },
 );
 
 Pre.displayName = "Pre";
@@ -47,7 +43,7 @@ export const CodeBlock = forwardRef<HTMLElement, CodeBlockProps>(
       className,
       ...props
     },
-    ref
+    ref,
   ) => {
     const areaRef = useRef<HTMLDivElement>(null);
     const onCopy = useCallback(() => {
@@ -70,7 +66,7 @@ export const CodeBlock = forwardRef<HTMLElement, CodeBlockProps>(
           "not-prose fd-codeblock bg-fd-secondary/50 bg-bg-muted/30 group relative my-6 overflow-hidden rounded-lg border text-sm",
           keepBackground &&
             "bg-[var(--shiki-light-bg)] dark:bg-[var(--shiki-dark-bg)]",
-          className
+          className,
         )}
         {...props}
       >
@@ -108,7 +104,7 @@ export const CodeBlock = forwardRef<HTMLElement, CodeBlockProps>(
         </ScrollArea>
       </figure>
     );
-  }
+  },
 );
 
 CodeBlock.displayName = "CodeBlock";
@@ -128,7 +124,7 @@ function CopyButton({
       className={cn(
         "transition-all group-hover:opacity-100 [&_svg]:size-3.5",
         !checked && "opacity-0",
-        className
+        className,
       )}
       aria-label="Copy Text"
       onPress={onClick}

@@ -1,15 +1,15 @@
 "use client";
 
+import type { Selection } from "react-aria-components";
 import React from "react";
-import { type Selection } from "react-aria-components";
 import {
-  TableRoot,
-  TableHeader,
   TableBody,
-  TableRow,
-  TableColumn,
   TableCell,
-} from "@/modules/registry/ui/table.basic";
+  TableColumn,
+  TableHeader,
+  TableRoot,
+  TableRow,
+} from "@/registry/ui/table.basic";
 
 const columns: Column[] = [
   { name: "Name", id: "name", isRowHeader: true },
@@ -26,7 +26,7 @@ const data: Item[] = [
 
 export default function Demo() {
   const [selectedKeys, setSelectedKeys] = React.useState<Selection>(
-    new Set([2, 3])
+    new Set([2, 3]),
   );
   return (
     <TableRoot
@@ -53,12 +53,12 @@ export default function Demo() {
   );
 }
 
-type Item = {
+interface Item {
   id: number;
   name: string;
   date: string;
   type: string;
-};
+}
 
 interface Column {
   id: keyof Omit<Item, "id">;

@@ -1,8 +1,8 @@
-import { useState, useRef, useEffect, useCallback } from "react";
-import { type PressEvent } from "react-aria-components";
+import type { PressEvent } from "react-aria-components";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export function useCopyButton(
-  onCopy: () => void
+  onCopy: () => void,
 ): [checked: boolean, onClick: (e: PressEvent) => void] {
   const [checked, setChecked] = useState(false);
   const timeoutRef = useRef<number | null>(null);

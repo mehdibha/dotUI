@@ -1,9 +1,9 @@
 "use client";
 
+import type { TextDropItem } from "react-aria-components";
 import React from "react";
-import { useDrag } from "react-aria";
-import { TextDropItem } from "react-aria-components";
 import { DropZone, DropZoneLabel } from "@/components/dynamic-ui/drop-zone";
+import { useDrag } from "react-aria";
 
 export default function Demo() {
   return (
@@ -17,9 +17,9 @@ export default function Demo() {
           const items = await Promise.all(
             e.items
               .filter(
-                (item) => item.kind === "text" && item.types.has("text/plain")
+                (item) => item.kind === "text" && item.types.has("text/plain"),
               )
-              .map((item) => (item as TextDropItem).getText("text/plain"))
+              .map((item) => (item as TextDropItem).getText("text/plain")),
           );
           alert(`You dropped ${items.join("\n")}`);
         }}

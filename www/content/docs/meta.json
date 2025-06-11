@@ -1,4 +1,9 @@
 {
   "title": "Docs",
-  "pages": ["getting-started", "components", "[Palette][Styles](/styles)"]
+  "pages": [
+    "getting-started",
+    "components",
+    "[Blocks][Blocks](/blocks)",
+    "[Palette][Styles](/styles)"
+  ]
 }

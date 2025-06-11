@@ -1,6 +1,6 @@
+import type { Preferences } from "@/modules/styles/types";
 import react from "react";
 import { DEFAULT_PREFERENCES } from "@/modules/styles/constants/defaults";
-import { Preferences } from "@/modules/styles/types";
 
 const PreferencesContext = react.createContext<{
   preferences: Preferences;

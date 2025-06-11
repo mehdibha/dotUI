@@ -1,5 +1,5 @@
-import { ShieldIcon } from "lucide-react";
 import { Badge } from "@/components/dynamic-ui/badge";
+import { ShieldIcon } from "lucide-react";
 
 export default function Demo() {
   return (

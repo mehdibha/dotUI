@@ -254,8 +254,8 @@
   --animate-collapsible-up: collapsible-up 0.15s ease-out;
   --animate-line-spinner: line-spinner 1.2s linear infinite;
   --animate-dot-spinner: dot-spinner 0.8s linear infinite;
-  --animate-progress-indeterminate: progress-grow var(--progress-duration) 1
-      both normal,
+  --animate-progress-indeterminate:
+    progress-grow var(--progress-duration) 1 both normal,
     progress-pulse 1s ease var(--progress-duration) infinite normal none running;
 }
 

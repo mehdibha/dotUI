@@ -1,9 +1,9 @@
 "use client";
 
+import type { DateValue } from "react-aria-components";
 import React from "react";
-import { parseDate } from "@internationalized/date";
-import { DateValue } from "react-aria-components";
 import { Calendar } from "@/components/dynamic-ui/calendar";
+import { parseDate } from "@internationalized/date";
 
 export default function Demo() {
   const [value, setValue] = React.useState<DateValue>(parseDate("2025-01-01"));

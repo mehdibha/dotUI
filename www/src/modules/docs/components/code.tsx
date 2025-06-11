@@ -1,5 +1,6 @@
 import React from "react";
 import { codeToHtml } from "shiki";
+
 import { CodeClient } from "./code-client";
 
 interface CodeProps {
@@ -43,25 +44,25 @@ const Code = async ({
   );
 };
 
-type MdCodeText = {
+interface MdCodeText {
   type: "code";
   props: { className?: string; children: string };
-};
+}
 
-type MdMultiCodeText = {
+interface MdMultiCodeText {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
   type: Function;
   props: {
     children: MdCodeText[];
   };
-};
+}
 
 type CodeText = string | MdCodeText | MdMultiCodeText;
 
 function parseChildren(
   children: CodeText,
   lang?: string,
-  code?: string
+  code?: string,
 ): { lang: string; code: string; title?: string } {
   if (typeof children === "string" || code) {
     return {
@@ -81,7 +82,6 @@ function parseChildren(
   }
 
   if (typeof children === "object") {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const files = React.Children.toArray(children as any).map((file: any) => {
       const code = file.props?.children;
       const className = file.props?.className;

@@ -1,9 +1,9 @@
-import {
-  BackgroundColor as LeonardoBgColor,
-  Color as LeonardoColor,
-  Theme as LeonardoTheme,
-} from "@adobe/leonardo-contrast-colors";
-import { converter } from "culori";
+import type {
+  ColorFoundations,
+  Theme,
+  ThemeFoundations,
+  ThemeModeFoundations,
+} from "@/modules/styles/types";
 import {
   DEFAULT_CSS,
   DEFAULT_DARK_FOUNDATIONS,
@@ -12,11 +12,11 @@ import {
   DEFAULT_THEME,
 } from "@/modules/styles/constants/defaults";
 import {
-  ColorFoundations,
-  Theme,
-  ThemeFoundations,
-  ThemeModeFoundations,
-} from "@/modules/styles/types";
+  BackgroundColor as LeonardoBgColor,
+  Color as LeonardoColor,
+  Theme as LeonardoTheme,
+} from "@adobe/leonardo-contrast-colors";
+import { converter } from "culori";
 
 export const createTheme = (opts: ThemeFoundations): Theme => {
   const radius = opts.radius ?? DEFAULT_RADIUS_FACTOR;
@@ -39,7 +39,7 @@ export const createTheme = (opts: ThemeFoundations): Theme => {
 
 const createThemeCSSVars = (
   foundations: ThemeModeFoundations,
-  mode: "light" | "dark"
+  mode: "light" | "dark",
 ) => {
   const defaultFoundations =
     mode === "light" ? DEFAULT_LIGHT_FOUNDATIONS : DEFAULT_DARK_FOUNDATIONS;
@@ -103,7 +103,7 @@ const createThemeCSSVars = (
       return undefined;
     })
     .filter(Boolean)
-    .flatMap((color) => color as [string, string][][])
+    .flatMap((color) => color!)
     .reduce(
       (acc, curr) => {
         const result: Record<string, string> = {};
@@ -112,7 +112,7 @@ const createThemeCSSVars = (
         });
         return { ...acc, ...result };
       },
-      {} as Record<string, string>
+      {} as Record<string, string>,
     );
 
   return cssVariables;

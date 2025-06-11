@@ -1,6 +1,7 @@
+import type { Components } from "@/modules/styles/types";
 import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Components } from "@/modules/styles/types";
+
 import { useCurrentComponents } from "../contexts/components-context";
 
 type Registry<T> = Record<
@@ -12,7 +13,7 @@ export const createDynamicComponent = <Props extends {}>(
   componentName: keyof Components,
   slotName: string,
   FallbackComponent: React.FC<Props>,
-  registry: Registry<Props>
+  registry: Registry<Props>,
 ): React.FC<Props> => {
   const Component = (props: Props) => {
     const components = useCurrentComponents();
@@ -27,9 +28,9 @@ export const createDynamicComponent = <Props extends {}>(
     const LazyComponent = registry[componentStyle];
 
     if (!LazyComponent) {
-      console.warn(
-        `Component ${componentName}/${slotName}/${componentStyle} not found in registry`
-      );
+      // console.warn(
+      //   `Component ${componentName}/${slotName}/${componentStyle} not found in registry`
+      // );
       return <FallbackComponent {...props} />;
     }
 

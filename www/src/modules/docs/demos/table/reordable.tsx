@@ -1,15 +1,15 @@
 "use client";
 
+import {
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRoot,
+  TableRow,
+} from "@/registry/ui/table.basic";
 import { useDragAndDrop } from "react-aria-components";
 import { useListData } from "react-stately";
-import {
-  TableRoot,
-  TableHeader,
-  TableBody,
-  TableRow,
-  TableColumn,
-  TableCell,
-} from "@/modules/registry/ui/table.basic";
 
 const columns: Column[] = [
   { name: "Name", id: "name", isRowHeader: true },
@@ -64,12 +64,12 @@ export default function Demo() {
   );
 }
 
-type Item = {
+interface Item {
   id: number;
   name: string;
   date: string;
   type: string;
-};
+}
 
 interface Column {
   id: keyof Omit<Item, "id">;

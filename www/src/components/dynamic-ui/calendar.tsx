@@ -1,30 +1,30 @@
 "use client";
 
-import React from "react";
-import { type DateValue } from "react-aria-components";
-import {
-  Calendar as _Calendar,
-  CalendarRoot as _CalendarRoot,
-  RangeCalendar as _RangeCalendar,
-  RangeCalendarRoot as _RangeCalendarRoot,
-  CalendarHeader as _CalendarHeader,
-  CalendarGrid as _CalendarGrid,
-  CalendarGridHeader as _CalendarGridHeader,
-  CalendarHeaderCell as _CalendarHeaderCell,
-  CalendarGridBody as _CalendarGridBody,
-  CalendarCell as _CalendarCell,
-} from "@/__registry__/ui/calendar.basic";
 import type {
+  CalendarCellProps,
+  CalendarGridBodyProps,
+  CalendarGridHeaderProps,
+  CalendarGridProps,
+  CalendarHeaderCellProps,
+  CalendarHeaderProps,
   CalendarProps,
   CalendarRootProps,
   RangeCalendarProps,
   RangeCalendarRootProps,
-  CalendarHeaderProps,
-  CalendarGridProps,
-  CalendarGridHeaderProps,
-  CalendarHeaderCellProps,
-  CalendarGridBodyProps,
-  CalendarCellProps,
+} from "@/__registry__/ui/calendar.basic";
+import type { DateValue } from "react-aria-components";
+import React from "react";
+import {
+  Calendar as _Calendar,
+  CalendarCell as _CalendarCell,
+  CalendarGrid as _CalendarGrid,
+  CalendarGridBody as _CalendarGridBody,
+  CalendarGridHeader as _CalendarGridHeader,
+  CalendarHeader as _CalendarHeader,
+  CalendarHeaderCell as _CalendarHeaderCell,
+  CalendarRoot as _CalendarRoot,
+  RangeCalendar as _RangeCalendar,
+  RangeCalendarRoot as _RangeCalendarRoot,
 } from "@/__registry__/ui/calendar.basic";
 import { createDynamicComponent } from "@/modules/styles/lib/create-dynamic-component";
 
@@ -36,9 +36,9 @@ export const Calendar = createDynamicComponent<CalendarProps<DateValue>>(
     cal: React.lazy(() =>
       import("@/__registry__/ui/calendar.cal").then((mod) => ({
         default: mod.Calendar,
-      }))
+      })),
     ),
-  }
+  },
 );
 
 export const RangeCalendar = createDynamicComponent<
@@ -47,7 +47,7 @@ export const RangeCalendar = createDynamicComponent<
   cal: React.lazy(() =>
     import("@/__registry__/ui/calendar.cal").then((mod) => ({
       default: mod.RangeCalendar,
-    }))
+    })),
   ),
 });
 
@@ -57,7 +57,7 @@ export const CalendarRoot = createDynamicComponent<
   cal: React.lazy(() =>
     import("@/__registry__/ui/calendar.cal").then((mod) => ({
       default: mod.CalendarRoot,
-    }))
+    })),
   ),
 });
 
@@ -67,7 +67,7 @@ export const RangeCalendarRoot = createDynamicComponent<
   cal: React.lazy(() =>
     import("@/__registry__/ui/calendar.cal").then((mod) => ({
       default: mod.RangeCalendarRoot,
-    }))
+    })),
   ),
 });
 
@@ -79,9 +79,9 @@ export const CalendarHeader = createDynamicComponent<CalendarHeaderProps>(
     cal: React.lazy(() =>
       import("@/__registry__/ui/calendar.cal").then((mod) => ({
         default: mod.CalendarHeader,
-      }))
+      })),
     ),
-  }
+  },
 );
 
 export const CalendarGrid = createDynamicComponent<CalendarGridProps>(
@@ -92,9 +92,9 @@ export const CalendarGrid = createDynamicComponent<CalendarGridProps>(
     cal: React.lazy(() =>
       import("@/__registry__/ui/calendar.cal").then((mod) => ({
         default: mod.CalendarGrid,
-      }))
+      })),
     ),
-  }
+  },
 );
 
 export const CalendarGridHeader =
@@ -106,9 +106,9 @@ export const CalendarGridHeader =
       cal: React.lazy(() =>
         import("@/__registry__/ui/calendar.cal").then((mod) => ({
           default: mod.CalendarGridHeader,
-        }))
+        })),
       ),
-    }
+    },
   );
 
 export const CalendarHeaderCell =
@@ -120,9 +120,9 @@ export const CalendarHeaderCell =
       cal: React.lazy(() =>
         import("@/__registry__/ui/calendar.cal").then((mod) => ({
           default: mod.CalendarHeaderCell,
-        }))
+        })),
       ),
-    }
+    },
   );
 
 export const CalendarGridBody = createDynamicComponent<CalendarGridBodyProps>(
@@ -133,9 +133,9 @@ export const CalendarGridBody = createDynamicComponent<CalendarGridBodyProps>(
     cal: React.lazy(() =>
       import("@/__registry__/ui/calendar.cal").then((mod) => ({
         default: mod.CalendarGridBody,
-      }))
+      })),
     ),
-  }
+  },
 );
 
 export const CalendarCell = createDynamicComponent<CalendarCellProps>(
@@ -146,7 +146,7 @@ export const CalendarCell = createDynamicComponent<CalendarCellProps>(
     cal: React.lazy(() =>
       import("@/__registry__/ui/calendar.cal").then((mod) => ({
         default: mod.CalendarCell,
-      }))
+      })),
     ),
-  }
+  },
 );

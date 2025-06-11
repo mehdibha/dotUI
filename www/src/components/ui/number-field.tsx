@@ -1,1 +1,1 @@
-export * from "@/modules/registry/ui/number-field.basic";
+export * from "@/registry/ui/number-field.basic";

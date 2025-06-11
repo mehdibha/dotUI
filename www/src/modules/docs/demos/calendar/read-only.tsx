@@ -1,7 +1,7 @@
 "use client";
 
-import { getLocalTimeZone, today } from "@internationalized/date";
 import { Calendar } from "@/components/dynamic-ui/calendar";
+import { getLocalTimeZone, today } from "@internationalized/date";
 
 export default function Demo() {
   return (

@@ -1,11 +1,13 @@
 "use client";
 
+import type { Style } from "@/modules/styles/types";
 import React from "react";
 import { ComponentsProvider } from "@/modules/styles/contexts/components-context";
 import { PreferencesProvider } from "@/modules/styles/contexts/preferences-context";
-import { Style } from "@/modules/styles/types";
+
+import type { ThemeProviderProps } from "./theme-provider";
 import { FontsProvider } from "./fonts-provider";
-import { ThemeProvider, ThemeProviderProps } from "./theme-provider";
+import { ThemeProvider } from "./theme-provider";
 
 export interface StyleProviderProps
   extends Omit<React.ComponentProps<"div">, "children" | "style"> {

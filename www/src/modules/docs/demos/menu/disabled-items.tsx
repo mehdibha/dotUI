@@ -1,6 +1,6 @@
-import { MenuIcon, PlusSquareIcon } from "lucide-react";
 import { Button } from "@/components/dynamic-ui/button";
 import { Menu, MenuItem, MenuRoot } from "@/components/dynamic-ui/menu";
+import { MenuIcon, PlusSquareIcon } from "lucide-react";
 
 export default function Demo() {
   return (

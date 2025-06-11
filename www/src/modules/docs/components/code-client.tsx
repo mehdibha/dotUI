@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import { CheckIcon, CopyIcon } from "lucide-react";
-import { tv } from "tailwind-variants";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { CheckIcon, CopyIcon } from "lucide-react";
+import { tv } from "tailwind-variants";
 
 const codeStyles = tv({
   base: "bg-bg-muted relative rounded-md",

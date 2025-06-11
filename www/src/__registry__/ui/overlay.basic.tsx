@@ -1,9 +1,12 @@
 "use client";
 
-import { Drawer, DrawerProps } from "@/components/dynamic-ui/drawer";
-import { Modal, ModalProps } from "@/components/dynamic-ui/modal";
-import { Popover, PopoverProps } from "@/components/dynamic-ui/popover";
-import { useIsMobile } from "@/modules/registry/hooks/use-is-mobile";
+import type { DrawerProps } from "@/registry/ui/drawer.basic";
+import type { ModalProps } from "@/registry/ui/modal.blur";
+import type { PopoverProps } from "@/registry/ui/popover.basic";
+import { useIsMobile } from "@/registry/hooks/use-is-mobile";
+import { Drawer } from "@/registry/ui/drawer.basic";
+import { Modal } from "@/registry/ui/modal.blur";
+import { Popover } from "@/registry/ui/popover.basic";
 
 type Type = "modal" | "popover" | "drawer";
 

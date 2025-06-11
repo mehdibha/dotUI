@@ -1,5 +1,9 @@
-import { Components, IconLibrary, Preferences } from "@/modules/styles/types";
-import { ThemeModeFoundations } from "@/modules/styles/types";
+import type {
+  Components,
+  IconLibrary,
+  Preferences,
+  ThemeModeFoundations,
+} from "@/modules/styles/types";
 
 export const DEFAULT_COMPONENTS: Components = {
   alert: "basic",

@@ -1,7 +1,7 @@
-import { MenuIcon } from "lucide-react";
 import { Button } from "@/components/dynamic-ui/button";
 import { MenuContent, MenuItem, MenuRoot } from "@/components/dynamic-ui/menu";
 import { Overlay } from "@/components/dynamic-ui/overlay";
+import { MenuIcon } from "lucide-react";
 
 export default function Demo() {
   return (

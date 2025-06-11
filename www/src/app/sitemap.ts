@@ -1,4 +1,4 @@
-import { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
 import { source } from "@/app/source";
 import { siteConfig } from "@/config";
 
@@ -10,7 +10,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     source.getPages().map(async (page) => {
       const additionalProps = await page.data.load();
       return { ...additionalProps, ...page };
-    })
+    }),
   );
 
   return [

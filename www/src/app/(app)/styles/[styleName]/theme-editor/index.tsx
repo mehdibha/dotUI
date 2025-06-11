@@ -1,28 +1,32 @@
 "use client";
 
+// import { usePreviewMode } from "@/components/mode-provider";
+// import { ThemeModeSwitch } from "@/components/theme-mode-switch";
+import type { Style } from "@/modules/styles/types";
 import React from "react";
 import Link from "next/link";
+// import { useMounted } from "@/hooks/use-mounted";
+import { Alert } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogRoot } from "@/components/ui/dialog";
+import { Menu, MenuItem, MenuRoot } from "@/components/ui/menu";
+import { Skeleton } from "@/components/ui/skeleton";
+import { ToggleButton } from "@/components/ui/toggle-button";
+import { Tooltip } from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
+// import { notFound } from "next/navigation";
 import {
   ArrowLeftIcon,
   EllipsisVerticalIcon,
   PenIcon,
   SaveIcon,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Alert } from "@/components/ui/alert";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogRoot } from "@/components/ui/dialog";
-import { MenuRoot, Menu, MenuItem } from "@/components/ui/menu";
-import { Skeleton } from "@/components/ui/skeleton";
-import { ToggleButton } from "@/components/ui/toggle-button";
-import { Tooltip } from "@/components/ui/tooltip";
-import { ThemeModeSwitch } from "@/components/theme-mode-switch";
-import { useStyles } from "@/modules/styles/atoms/styles-atom";
-import { Style } from "@/modules/styles/types";
+
 import { PreviewContent } from "../../preview";
-import { ThemeColors } from "./colors";
+// import { ThemeColors } from "./colors";
 import { ThemeEditorContext } from "./context";
-import { ThemeTypography } from "./typography";
+
+// import { ThemeTypography } from "./typography";
 
 export function ThemeEditor({
   style,
@@ -31,7 +35,7 @@ export function ThemeEditor({
   style: Style;
   isEditable: boolean;
 }) {
-  const { currentMode, setCurrentMode } = useStyles();
+  // const { currentMode, setCurrentMode } = useStyles();
   const [isEditMode, setEditMode] = React.useState(false);
 
   const isLoading = false;
@@ -58,19 +62,19 @@ export function ThemeEditor({
           <Section
             title="Colors"
             description="Theme color palette and variations"
-            action={
-              <ThemeModeSwitch
-                isSelected={currentMode === "dark"}
-                onChange={(isSelected) =>
-                  setCurrentMode(isSelected ? "dark" : "light")
-                }
-              />
-            }
+            // action={
+            //   <ThemeModeSwitch
+            //     isSelected={currentMode === "dark"}
+            //     onChange={(isSelected) =>
+            //       setCurrentMode(isSelected ? "dark" : "light")
+            //     }
+            //   />
+            // }
           >
-            <ThemeColors style={style} />
+            {/* <ThemeColors style={style} /> */}
           </Section>
           <Section title="Typography" description="Theme typography">
-            <ThemeTypography />
+            {/* <ThemeTypography /> */}
           </Section>
           {/* <Section title="Iconography" description="Theme iconography">
             <ThemeIconography />

@@ -5,7 +5,7 @@ import { TextArea } from "@/components/dynamic-ui/text-area";
 
 export default function Demo() {
   const [inputValue, setInputValue] = React.useState(
-    "Roses are red, violets are blue."
+    "Roses are red, violets are blue.",
   );
   return (
     <div className="flex flex-col items-center gap-4">

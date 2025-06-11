@@ -1,1 +1,1 @@
-export * from "@/modules/registry/ui/avatar.basic";
+export * from "@/registry/ui/avatar.basic";

@@ -1,6 +1,8 @@
-import { codeToHtml } from "shiki";
 import type { BundledLanguage } from "shiki";
-import { CodeBlockClient, type CodeBlockRootProps } from "./code-block-client";
+import { codeToHtml } from "shiki";
+
+import type { CodeBlockRootProps } from "./code-block-client";
+import { CodeBlockClient } from "./code-block-client";
 
 interface CodeBlockProps extends CodeBlockRootProps {
   files: {
@@ -54,7 +56,7 @@ const CodeBlock = async ({
         ),
         lang,
       };
-    })
+    }),
   );
 
   return (

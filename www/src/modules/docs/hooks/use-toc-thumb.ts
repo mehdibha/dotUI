@@ -1,4 +1,5 @@
-import { type RefObject, useEffect, useState } from "react";
+import type { RefObject } from "react";
+import { useEffect, useState } from "react";
 import * as Primitive from "fumadocs-core/toc";
 
 export type TOCThumb = [top: number, height: number];
@@ -22,20 +23,20 @@ export function useTocThumb(containerRef: RefObject<HTMLElement>): TOCThumb {
 
       for (const item of active) {
         const element = container.querySelector<HTMLElement>(
-          `a[href="#${item}"]`
+          `a[href="#${item}"]`,
         );
         if (!element) continue;
 
         const styles = getComputedStyle(element);
         upper = Math.min(
           upper,
-          element.offsetTop + parseFloat(styles.paddingTop)
+          element.offsetTop + parseFloat(styles.paddingTop),
         );
         lower = Math.max(
           lower,
           element.offsetTop +
             element.clientHeight -
-            parseFloat(styles.paddingBottom)
+            parseFloat(styles.paddingBottom),
         );
       }
 

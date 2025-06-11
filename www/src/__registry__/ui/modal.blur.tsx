@@ -2,9 +2,9 @@
 
 import React from "react";
 import {
-  composeRenderProps,
   Modal as AriaModal,
   ModalOverlay as AriaModalOverlay,
+  composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
@@ -24,14 +24,14 @@ const Modal = ({ className, isDismissable = true, ...props }: ModalProps) => (
   <AriaModalOverlay
     isDismissable={isDismissable}
     className={composeRenderProps(className, (className) =>
-      underlay({ className })
+      underlay({ className }),
     )}
     {...props}
   >
     <AriaModal
       isDismissable={isDismissable}
       className={composeRenderProps(className, (className) =>
-        overlay({ className })
+        overlay({ className }),
       )}
       {...props}
     />

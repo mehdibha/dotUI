@@ -2,7 +2,9 @@
 
 import { useMounted } from "@/hooks/use-mounted";
 import { useStyles } from "@/modules/styles/atoms/styles-atom";
-import { StyleProvider, StyleProviderProps } from "./style-provider";
+
+import type { StyleProviderProps } from "./style-provider";
+import { StyleProvider } from "./style-provider";
 
 interface CurrentStyleProviderProps extends Omit<StyleProviderProps, "style"> {}
 

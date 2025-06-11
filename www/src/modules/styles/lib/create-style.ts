@@ -1,10 +1,11 @@
+import type { Style, StyleFoundations } from "@/modules/styles/types";
 import {
   DEFAULT_COMPONENTS,
   DEFAULT_FONTS,
   DEFAULT_ICON_LIBRARY,
   DEFAULT_PREFERENCES,
 } from "@/modules/styles/constants/defaults";
-import { Style, StyleFoundations } from "@/modules/styles/types";
+
 import { createTheme } from "./create-theme";
 
 export const createStyle = (opts: StyleFoundations): Style => {
