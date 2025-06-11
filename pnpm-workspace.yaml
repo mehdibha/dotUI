@@ -27,6 +27,3 @@ onlyBuiltDependencies:
   - esbuild
   - msw
   - sharp
-
-patchedDependencies:
-  better-auth: patches/better-auth.patch
