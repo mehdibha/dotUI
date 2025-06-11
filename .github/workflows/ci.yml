@@ -42,14 +42,3 @@ jobs:
       - uses: ./.github/actions/setup
 
       - run: pnpm typecheck
-      
-  build-www:
-    runs-on: ubuntu-latest
-    name: Build www
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: ./.github/actions/setup
-
-      - run: pnpm build:www
