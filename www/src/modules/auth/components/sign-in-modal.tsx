@@ -14,42 +14,41 @@ import { Overlay } from "@/components/ui/overlay";
 import { authClient } from "../lib/client";
 
 export function SignInModal({ children }: { children: React.ReactNode }) {
+  const [isPending, setPending] = React.useState(false);
   return (
     <DialogRoot>
       {children}
       <Overlay modalProps={{ className: "max-w-sm" }}>
         <DialogContent>
-          {({ close }) => (
-            <>
-              <DialogHeader>
-                <DialogHeading className="font-heading text-center text-2xl font-semibold tracking-tighter">
-                  Sign in to dotUI
-                </DialogHeading>
-                <DialogDescription className="block text-center">
-                  Sign in to your account to continue
-                </DialogDescription>
-              </DialogHeader>
-              <DialogBody>
-                {/* <Button size="lg" prefix={<GoogleIcon />} className="w-full">
-                  Continue with Google
-                </Button> */}
-                <Button
-                  prefix={<GitHubIcon />}
-                  size="lg"
-                  className="w-full"
-                  onPress={async () => {
-                    await authClient.signIn.social({
-                      provider: "github",
-                      callbackURL: "/",
-                    });
-                    close();
-                  }}
-                >
-                  Continue with GitHub
-                </Button>
-              </DialogBody>
-            </>
-          )}
+          <DialogHeader>
+            <DialogHeading className="font-heading text-center text-2xl font-semibold tracking-tighter">
+              Sign in to dotUI
+            </DialogHeading>
+            <DialogDescription className="block text-center">
+              Sign in to your account to continue
+            </DialogDescription>
+          </DialogHeader>
+          <DialogBody>
+            <Button
+              prefix={<GitHubIcon />}
+              size="lg"
+              className="w-full"
+              isPending={isPending}
+              onPress={async () => {
+                try {
+                  setPending(true);
+                  await authClient.signIn.social({
+                    provider: "github",
+                    callbackURL: "/",
+                  });
+                } catch (error) {
+                  console.log(error);
+                }
+              }}
+            >
+              Continue with GitHub
+            </Button>
+          </DialogBody>
         </DialogContent>
       </Overlay>
     </DialogRoot>
