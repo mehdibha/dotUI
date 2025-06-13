@@ -3,6 +3,7 @@ import { Avatar } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Menu, MenuItem, MenuRoot, MenuSub } from "@/components/ui/menu";
 import { Separator } from "@/components/ui/separator";
+import { siteConfig } from "@/config";
 import { authClient } from "@/modules/auth/lib/client";
 import {
   ContrastIcon,
@@ -37,15 +38,29 @@ export function UserProfileMenu() {
         }}
         className="[&_[data-slot=menu-item]]:text-fg-muted [&_svg]:text-fg"
       >
-        <MenuItem suffix={<GitHubIcon />}>GitHub</MenuItem>
-        <MenuItem suffix={<TwitterIcon />}>X</MenuItem>
+        <MenuItem
+          suffix={<GitHubIcon />}
+          href={siteConfig.links.github}
+          target="_blank"
+        >
+          GitHub
+        </MenuItem>
+        <MenuItem
+          suffix={<TwitterIcon />}
+          href={siteConfig.links.twitter}
+          target="_blank"
+        >
+          X
+        </MenuItem>
         <Separator />
         <MenuSub>
           <MenuItem>Theme mode</MenuItem>
           <Menu
             selectionMode="single"
             selectedKeys={theme ? [theme] : undefined}
-            onSelectionChange={(key) => setTheme(key as string)}
+            onSelectionChange={(key) => {
+              setTheme([...key][0] as string);
+            }}
             overlayProps={{
               popoverProps: {
                 className: "w-32",
