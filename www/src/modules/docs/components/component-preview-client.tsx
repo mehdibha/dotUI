@@ -71,7 +71,7 @@ export const ComponentPreviewHeader = () => {
   const isMounted = useMounted();
 
   return (
-    <div className="absolute top-0 left-0 z-50 flex w-full items-center justify-between gap-2 p-2">
+    <div className="absolute top-0 left-0 z-20 flex w-full items-center justify-between gap-2 p-2">
       <SelectRoot
         selectedKey={currentStyle.name}
         onSelectionChange={(key) => setCurrentStyle(key as string)}

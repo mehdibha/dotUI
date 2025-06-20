@@ -1,0 +1,44 @@
+{
+  "name": "@dotui/style-engine",
+  "version": "0.0.1",
+  "description": "Shared style system logic and types",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts",
+      "default": "./dist/types.js"
+    },
+    "./constants": {
+      "types": "./dist/constants.d.ts",
+      "default": "./dist/constants.js"
+    },
+    "./generators": {
+      "types": "./dist/generators/index.d.ts",
+      "default": "./dist/generators/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@adobe/leonardo-contrast-colors": "^1.0.0",
+    "culori": "^4.0.1",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@dotui/eslint-config": "workspace:*",
+    "@dotui/prettier-config": "workspace:*",
+    "@dotui/ts-config": "workspace:*",
+    "eslint": "catalog:",
+    "prettier": "catalog:",
+    "typescript": "catalog:"
+  },
+  "prettier": "@dotui/prettier-config"
+}
