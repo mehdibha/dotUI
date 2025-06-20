@@ -1,5 +1,7 @@
 import React from "react";
-import { Button } from "@/components/dynamic-ui/button";
+import { PenSquareIcon } from "lucide-react";
+
+import { Button } from "@dotui/ui/components/button";
 import {
   DialogBody,
   DialogContent,
@@ -8,11 +10,10 @@ import {
   DialogHeader,
   DialogHeading,
   DialogRoot,
-} from "@/components/dynamic-ui/dialog";
-import { Overlay } from "@/components/dynamic-ui/overlay";
-import { TextArea } from "@/components/dynamic-ui/text-area";
-import { TextField } from "@/components/dynamic-ui/text-field";
-import { PenSquareIcon } from "lucide-react";
+} from "@dotui/ui/components/dialog";
+import { Overlay } from "@dotui/ui/components/overlay";
+import { TextArea } from "@dotui/ui/components/text-area";
+import { TextField } from "@dotui/ui/components/text-field";
 
 export default function Demo() {
   return (

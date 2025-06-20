@@ -1,7 +1,7 @@
 import {
   ColorSwatchPicker,
   ColorSwatchPickerItem,
-} from "@/components/dynamic-ui/color-swatch-picker";
+} from "@dotui/ui/components/color-swatch-picker";
 
 export default function Demo() {
   return (

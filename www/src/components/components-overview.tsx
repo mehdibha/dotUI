@@ -1,23 +1,23 @@
 "use client";
 
-import { Alert } from "@/components/dynamic-ui/alert";
-import { Avatar } from "@/components/dynamic-ui/avatar";
-import { Button } from "@/components/dynamic-ui/button";
-import { RangeCalendar } from "@/components/dynamic-ui/calendar";
-import { Checkbox } from "@/components/dynamic-ui/checkbox";
-import { ColorPicker } from "@/components/dynamic-ui/color-picker";
-import { ColorSlider } from "@/components/dynamic-ui/color-slider";
-import { Combobox, ComboboxItem } from "@/components/dynamic-ui/combobox";
-import { DatePicker } from "@/components/dynamic-ui/date-picker";
-import { ListBox, ListBoxItem } from "@/components/dynamic-ui/list-box";
-import { Menu, MenuItem, MenuRoot } from "@/components/dynamic-ui/menu";
-import { NumberField } from "@/components/dynamic-ui/number-field";
-import { ProgressBar } from "@/components/dynamic-ui/progress-bar";
-import { SearchField } from "@/components/dynamic-ui/search-field";
-import { Select, SelectItem } from "@/components/dynamic-ui/select";
-import { Separator } from "@/components/dynamic-ui/separator";
-import { Slider } from "@/components/dynamic-ui/slider";
-import { Switch } from "@/components/dynamic-ui/switch";
+import { Alert } from "@dotui/ui/components/alert";
+import { Avatar } from "@dotui/ui/components/avatar";
+import { Button } from "@dotui/ui/components/button";
+import { RangeCalendar } from "@dotui/ui/components/calendar";
+import { Checkbox } from "@dotui/ui/components/checkbox";
+import { ColorPicker } from "@dotui/ui/components/color-picker";
+import { ColorSlider } from "@dotui/ui/components/color-slider";
+import { Combobox, ComboboxItem } from "@dotui/ui/components/combobox";
+import { DatePicker } from "@dotui/ui/components/date-picker";
+import { ListBox, ListBoxItem } from "@dotui/ui/components/list-box";
+import { Menu, MenuItem, MenuRoot } from "@dotui/ui/components/menu";
+import { NumberField } from "@dotui/ui/components/number-field";
+import { ProgressBar } from "@dotui/ui/components/progress-bar";
+import { SearchField } from "@dotui/ui/components/search-field";
+import { Select, SelectItem } from "@dotui/ui/components/select";
+import { Separator } from "@dotui/ui/components/separator";
+import { Slider } from "@dotui/ui/components/slider";
+import { Switch } from "@dotui/ui/components/switch";
 import {
   TableBody,
   TableCell,
@@ -25,11 +25,11 @@ import {
   TableHeader,
   TableRoot,
   TableRow,
-} from "@/components/dynamic-ui/table";
-import { Tab, TabList, TabPanel, Tabs } from "@/components/dynamic-ui/tabs";
-import { TextField } from "@/components/dynamic-ui/text-field";
-import { TimeField } from "@/components/dynamic-ui/time-field";
-import { ToggleButton } from "@/components/dynamic-ui/toggle-button";
+} from "@dotui/ui/components/table";
+import { Tab, TabList, TabPanel, Tabs } from "@dotui/ui/components/tabs";
+import { TextField } from "@dotui/ui/components/text-field";
+import { TimeField } from "@dotui/ui/components/time-field";
+import { ToggleButton } from "@dotui/ui/components/toggle-button";
 import { GitHubIcon, GoogleIcon, TwitterIcon } from "@/components/icons";
 import { Link } from "@/components/link";
 import { cn } from "@/lib/utils";

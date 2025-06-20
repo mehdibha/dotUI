@@ -1,7 +1,8 @@
-import { Button } from "@/components/dynamic-ui/button";
-import { TextField } from "@/components/dynamic-ui/text-field";
 import { GitHubIcon, GoogleIcon, TwitterIcon } from "@/components/icons";
 import { Link } from "@/components/link";
+
+import { Button } from "@dotui/ui/components/button";
+import { TextField } from "@dotui/ui/components/text-field";
 
 export default function RegisterPage() {
   return (

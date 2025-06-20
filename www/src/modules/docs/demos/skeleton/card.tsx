@@ -1,4 +1,4 @@
-import { Skeleton } from "@/components/dynamic-ui/skeleton";
+import { Skeleton } from "@dotui/ui/components/skeleton";
 
 export default function Demo() {
   return (

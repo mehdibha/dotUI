@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
-import { ColorArea } from "@/components/dynamic-ui/color-area";
 import { parseColor } from "react-aria-components";
+
+import { ColorArea } from "@dotui/ui/components/color-area";
 
 export default function Demo() {
   const [value, setValue] = React.useState(parseColor("hsl(0, 100%, 50%)"));

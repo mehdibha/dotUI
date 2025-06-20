@@ -1,7 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { ProgressBar } from "@/components/dynamic-ui/progress-bar";
+
+import { ProgressBar } from "@dotui/ui/components/progress-bar";
 
 export default function Demo() {
   return (

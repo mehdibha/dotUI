@@ -1,9 +1,10 @@
 "use client";
 
 import * as React from "react";
-import { Button } from "@/components/dynamic-ui/button";
-import { ProgressBar } from "@/components/dynamic-ui/progress-bar";
 import { RotateCwIcon } from "lucide-react";
+
+import { Button } from "@dotui/ui/components/button";
+import { ProgressBar } from "@dotui/ui/components/progress-bar";
 
 export default function Demo() {
   const [key, setKey] = React.useState(0);

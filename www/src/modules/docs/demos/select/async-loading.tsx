@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
-import { Select, SelectItem } from "@/components/dynamic-ui/select";
 import { useAsyncList } from "react-stately";
+
+import { Select, SelectItem } from "@dotui/ui/components/select";
 
 interface Character {
   name: string;

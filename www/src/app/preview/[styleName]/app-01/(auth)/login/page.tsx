@@ -2,11 +2,12 @@
 
 import { useRouter } from "next/navigation";
 import { useSimulateApiCall } from "@/app/preview/[styleName]/app-01/hooks/use-api";
-import { Button } from "@/components/dynamic-ui/button";
-import { TextField } from "@/components/dynamic-ui/text-field";
 import { GitHubIcon, GoogleIcon, TwitterIcon } from "@/components/icons";
 import { Link } from "@/components/link";
 import { Form } from "react-aria-components";
+
+import { Button } from "@dotui/ui/components/button";
+import { TextField } from "@dotui/ui/components/text-field";
 
 export default function LoginPage() {
   const router = useRouter();

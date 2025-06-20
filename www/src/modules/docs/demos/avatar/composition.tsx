@@ -1,11 +1,12 @@
 import React from "react";
+import { User2Icon } from "lucide-react";
+
 import {
   AvatarFallback,
   AvatarImage,
   AvatarPlaceholder,
   AvatarRoot,
-} from "@/components/dynamic-ui/avatar";
-import { User2Icon } from "lucide-react";
+} from "@dotui/ui/components/avatar";
 
 export default function Demo() {
   return (

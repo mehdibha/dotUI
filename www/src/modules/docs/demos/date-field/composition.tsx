@@ -1,11 +1,9 @@
 "use client";
 
 import React from "react";
-import {
-  DateFieldInput,
-  DateFieldRoot,
-} from "@/components/dynamic-ui/date-field";
-import { Description, Label } from "@/components/dynamic-ui/field";
+
+import { DateFieldInput, DateFieldRoot } from "@dotui/ui/components/date-field";
+import { Description, Label } from "@dotui/ui/components/field";
 
 export default function Demo() {
   return (

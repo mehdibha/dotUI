@@ -1,6 +1,6 @@
-import { Checkbox } from "@/components/dynamic-ui/checkbox";
-import { CheckboxGroupRoot } from "@/components/dynamic-ui/checkbox-group";
-import { Description, FieldError, Label } from "@/components/dynamic-ui/field";
+import { Checkbox } from "@dotui/ui/components/checkbox";
+import { CheckboxGroupRoot } from "@dotui/ui/components/checkbox-group";
+import { Description, FieldError, Label } from "@dotui/ui/components/field";
 
 export default function Demo() {
   return (

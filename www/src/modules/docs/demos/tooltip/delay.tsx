@@ -1,10 +1,11 @@
 "use client";
 
 import React from "react";
-import { Button } from "@/components/dynamic-ui/button";
-import { NumberField } from "@/components/dynamic-ui/number-field";
-import { Tooltip } from "@/components/dynamic-ui/tooltip";
 import { PenSquareIcon } from "lucide-react";
+
+import { Button } from "@dotui/ui/components/button";
+import { NumberField } from "@dotui/ui/components/number-field";
+import { Tooltip } from "@dotui/ui/components/tooltip";
 
 export default function Demo() {
   const [delay, setDelay] = React.useState(700);

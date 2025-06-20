@@ -1,14 +1,15 @@
 "use client";
 
 import React from "react";
-import { Button } from "@/components/dynamic-ui/button";
-import { Checkbox } from "@/components/dynamic-ui/checkbox";
-import { Combobox } from "@/components/dynamic-ui/combobox";
-import { DatePicker } from "@/components/dynamic-ui/date-picker";
-import { Radio, RadioGroup } from "@/components/dynamic-ui/radio-group";
-import { Select, SelectItem } from "@/components/dynamic-ui/select";
-import { TextField } from "@/components/dynamic-ui/text-field";
 import { Form } from "@/registry/ui/form.basic";
+
+import { Button } from "@dotui/ui/components/button";
+import { Checkbox } from "@dotui/ui/components/checkbox";
+import { Combobox } from "@dotui/ui/components/combobox";
+import { DatePicker } from "@dotui/ui/components/date-picker";
+import { Radio, RadioGroup } from "@dotui/ui/components/radio-group";
+import { Select, SelectItem } from "@dotui/ui/components/select";
+import { TextField } from "@dotui/ui/components/text-field";
 
 export default function Demo() {
   return (

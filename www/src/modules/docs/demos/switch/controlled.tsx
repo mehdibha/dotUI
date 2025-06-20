@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { Switch } from "@/components/dynamic-ui/switch";
+
+import { Switch } from "@dotui/ui/components/switch";
 
 export default function Demo() {
   const [isSelected, setSelected] = React.useState(true);

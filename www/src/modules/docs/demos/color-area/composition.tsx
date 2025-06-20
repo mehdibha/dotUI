@@ -1,5 +1,5 @@
-import { ColorAreaRoot } from "@/components/dynamic-ui/color-area";
-import { ColorThumb } from "@/components/dynamic-ui/color-thumb";
+import { ColorAreaRoot } from "@dotui/ui/components/color-area";
+import { ColorThumb } from "@dotui/ui/components/color-thumb";
 
 export default function Demo() {
   return (

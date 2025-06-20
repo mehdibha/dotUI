@@ -1,9 +1,7 @@
 import React from "react";
-import { Description, Label } from "@/components/dynamic-ui/field";
-import {
-  TextFieldInput,
-  TextFieldRoot,
-} from "@/components/dynamic-ui/text-field";
+
+import { Description, Label } from "@dotui/ui/components/field";
+import { TextFieldInput, TextFieldRoot } from "@dotui/ui/components/text-field";
 
 export default function Demo() {
   return (

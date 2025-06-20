@@ -1,6 +1,9 @@
 "use client";
 
-import { Button } from "@/components/dynamic-ui/button";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { Heading } from "react-aria-components";
+
+import { Button } from "@dotui/ui/components/button";
 import {
   CalendarCell,
   CalendarGrid,
@@ -9,9 +12,7 @@ import {
   CalendarHeader,
   CalendarHeaderCell,
   RangeCalendarRoot,
-} from "@/components/dynamic-ui/calendar";
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import { Heading } from "react-aria-components";
+} from "@dotui/ui/components/calendar";
 
 export default function Demo() {
   return (

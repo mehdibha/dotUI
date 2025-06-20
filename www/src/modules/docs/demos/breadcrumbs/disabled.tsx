@@ -1,4 +1,4 @@
-import { Breadcrumb, Breadcrumbs } from "@/components/dynamic-ui/breadcrumbs";
+import { Breadcrumb, Breadcrumbs } from "@dotui/ui/components/breadcrumbs";
 
 export default function Demo() {
   return (

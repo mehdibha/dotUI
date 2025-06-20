@@ -1,6 +1,7 @@
-import { Button } from "@/components/dynamic-ui/button";
-import { Tooltip } from "@/components/dynamic-ui/tooltip";
 import { SquarePenIcon } from "lucide-react";
+
+import { Button } from "@dotui/ui/components/button";
+import { Tooltip } from "@dotui/ui/components/tooltip";
 
 export default function Demo() {
   return (

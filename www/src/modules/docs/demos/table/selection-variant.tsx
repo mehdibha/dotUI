@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { Radio, RadioGroup } from "@/components/dynamic-ui/radio-group";
+
+import { Radio, RadioGroup } from "@dotui/ui/components/radio-group";
 import {
   TableBody,
   TableCell,
@@ -9,7 +10,7 @@ import {
   TableHeader,
   TableRoot,
   TableRow,
-} from "@/components/dynamic-ui/table";
+} from "@dotui/ui/components/table";
 
 const columns: Column[] = [
   { name: "Name", id: "name", isRowHeader: true },

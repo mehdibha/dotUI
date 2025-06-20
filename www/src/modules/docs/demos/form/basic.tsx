@@ -1,9 +1,10 @@
 "use client";
 
 import React from "react";
-import { Button } from "@/components/dynamic-ui/button";
-import { Form } from "@/components/dynamic-ui/form";
-import { TextField } from "@/components/dynamic-ui/text-field";
+
+import { Button } from "@dotui/ui/components/button";
+import { Form } from "@dotui/ui/components/form";
+import { TextField } from "@dotui/ui/components/text-field";
 
 export default function Demo() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {

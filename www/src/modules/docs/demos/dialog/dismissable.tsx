@@ -1,17 +1,18 @@
 "use client";
 
 import React from "react";
-import { Button } from "@/components/dynamic-ui/button";
+import { PenSquareIcon } from "lucide-react";
+
+import { Button } from "@dotui/ui/components/button";
 import {
   Dialog,
   DialogBody,
   DialogFooter,
   DialogRoot,
-} from "@/components/dynamic-ui/dialog";
-import { Switch } from "@/components/dynamic-ui/switch";
-import { TextArea } from "@/components/dynamic-ui/text-area";
-import { TextField } from "@/components/dynamic-ui/text-field";
-import { PenSquareIcon } from "lucide-react";
+} from "@dotui/ui/components/dialog";
+import { Switch } from "@dotui/ui/components/switch";
+import { TextArea } from "@dotui/ui/components/text-area";
+import { TextField } from "@dotui/ui/components/text-field";
 
 export default function Demo() {
   const [isDismissable, setDismissable] = React.useState(false);

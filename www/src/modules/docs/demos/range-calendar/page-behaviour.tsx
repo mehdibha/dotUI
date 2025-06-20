@@ -1,4 +1,4 @@
-import { RangeCalendar } from "@/components/dynamic-ui/calendar";
+import { RangeCalendar } from "@dotui/ui/components/calendar";
 
 export default function Demo() {
   return (

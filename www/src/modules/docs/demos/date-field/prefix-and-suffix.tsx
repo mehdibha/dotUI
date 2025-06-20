@@ -1,5 +1,6 @@
-import { DateField } from "@/components/dynamic-ui/date-field";
 import { CalendarIcon } from "lucide-react";
+
+import { DateField } from "@dotui/ui/components/date-field";
 
 export default function Demo() {
   return (

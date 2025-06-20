@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { Slider } from "@/components/dynamic-ui/slider";
+
+import { Slider } from "@dotui/ui/components/slider";
 
 export default function Demo() {
   const [value, setValue] = React.useState(50);

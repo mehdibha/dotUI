@@ -1,14 +1,15 @@
 import React from "react";
-import { Button } from "@/components/dynamic-ui/button";
+import { PenSquareIcon } from "lucide-react";
+
+import { Button } from "@dotui/ui/components/button";
 import {
   Dialog,
   DialogBody,
   DialogFooter,
   DialogRoot,
-} from "@/components/dynamic-ui/dialog";
-import { TextArea } from "@/components/dynamic-ui/text-area";
-import { TextField } from "@/components/dynamic-ui/text-field";
-import { PenSquareIcon } from "lucide-react";
+} from "@dotui/ui/components/dialog";
+import { TextArea } from "@dotui/ui/components/text-area";
+import { TextField } from "@dotui/ui/components/text-field";
 
 export default function Demo() {
   return (

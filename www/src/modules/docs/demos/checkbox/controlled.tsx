@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { Checkbox } from "@/components/dynamic-ui/checkbox";
+
+import { Checkbox } from "@dotui/ui/components/checkbox";
 
 export default function Demo() {
   const [checked, setChecked] = React.useState(false);

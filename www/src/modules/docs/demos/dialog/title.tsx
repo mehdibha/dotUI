@@ -1,7 +1,8 @@
 import React from "react";
-import { Button } from "@/components/dynamic-ui/button";
-import { Dialog, DialogRoot } from "@/components/dynamic-ui/dialog";
-import { TextField } from "@/components/dynamic-ui/text-field";
+
+import { Button } from "@dotui/ui/components/button";
+import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
+import { TextField } from "@dotui/ui/components/text-field";
 
 export default function Demo() {
   return (

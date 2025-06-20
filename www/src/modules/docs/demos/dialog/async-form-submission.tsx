@@ -1,15 +1,16 @@
 "use client";
 
 import React from "react";
-import { Button } from "@/components/dynamic-ui/button";
+import { Form } from "react-aria-components";
+
+import { Button } from "@dotui/ui/components/button";
 import {
   Dialog,
   DialogBody,
   DialogFooter,
   DialogRoot,
-} from "@/components/dynamic-ui/dialog";
-import { TextField } from "@/components/dynamic-ui/text-field";
-import { Form } from "react-aria-components";
+} from "@dotui/ui/components/dialog";
+import { TextField } from "@dotui/ui/components/text-field";
 
 export default function DialogDemo() {
   const [isPending, setIsPending] = React.useState(false);

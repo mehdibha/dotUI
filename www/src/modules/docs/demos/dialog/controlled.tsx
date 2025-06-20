@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
-import { Button } from "@/components/dynamic-ui/button";
-import { Dialog, DialogRoot } from "@/components/dynamic-ui/dialog";
+
+import { Button } from "@dotui/ui/components/button";
+import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
 
 export default function Demo() {
   const [isOpen, setOpen] = React.useState(false);

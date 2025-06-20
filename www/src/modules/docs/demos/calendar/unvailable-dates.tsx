@@ -1,9 +1,10 @@
 "use client";
 
 import type { CalendarDate, DateValue } from "@internationalized/date";
-import { Calendar } from "@/components/dynamic-ui/calendar";
 import { getLocalTimeZone, isWeekend, today } from "@internationalized/date";
 import { useLocale } from "react-aria";
+
+import { Calendar } from "@dotui/ui/components/calendar";
 
 export default function Demo() {
   const now = today(getLocalTimeZone());

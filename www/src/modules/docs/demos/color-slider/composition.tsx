@@ -2,8 +2,8 @@ import {
   ColorSliderControl,
   ColorSliderOutput,
   ColorSliderRoot,
-} from "@/components/dynamic-ui/color-slider";
-import { Label } from "@/components/dynamic-ui/field";
+} from "@dotui/ui/components/color-slider";
+import { Label } from "@dotui/ui/components/field";
 
 export default function Demo() {
   return (

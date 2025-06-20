@@ -1,4 +1,4 @@
-import { Avatar } from "@/components/dynamic-ui/avatar";
+import { Avatar } from "@dotui/ui/components/avatar";
 
 export default function Demo() {
   return (

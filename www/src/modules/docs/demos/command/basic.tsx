@@ -1,9 +1,10 @@
 "use client";
 
-import { Command } from "@/components/dynamic-ui/command";
-import { MenuContent, MenuItem } from "@/components/dynamic-ui/menu";
-import { SearchField } from "@/components/dynamic-ui/search-field";
 import { useFilter } from "react-aria-components";
+
+import { Command } from "@dotui/ui/components/command";
+import { MenuContent, MenuItem } from "@dotui/ui/components/menu";
+import { SearchField } from "@dotui/ui/components/search-field";
 
 export default function Demo() {
   const { contains } = useFilter({ sensitivity: "base" });

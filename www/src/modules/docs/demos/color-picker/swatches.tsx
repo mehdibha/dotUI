@@ -1,14 +1,14 @@
-import { Button } from "@/components/dynamic-ui/button";
+import { Button } from "@dotui/ui/components/button";
 import {
   ColorPickerEditor,
   ColorPickerRoot,
-} from "@/components/dynamic-ui/color-picker";
-import { ColorSwatch } from "@/components/dynamic-ui/color-swatch";
+} from "@dotui/ui/components/color-picker";
+import { ColorSwatch } from "@dotui/ui/components/color-swatch";
 import {
   ColorSwatchPicker,
   ColorSwatchPickerItem,
-} from "@/components/dynamic-ui/color-swatch-picker";
-import { Dialog, DialogRoot } from "@/components/dynamic-ui/dialog";
+} from "@dotui/ui/components/color-swatch-picker";
+import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
 
 export default function Demo() {
   return (

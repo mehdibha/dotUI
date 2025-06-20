@@ -2,8 +2,9 @@
 
 import type { Color } from "react-aria-components";
 import React from "react";
-import { ColorPicker } from "@/components/dynamic-ui/color-picker";
 import { parseColor } from "react-aria-components";
+
+import { ColorPicker } from "@dotui/ui/components/color-picker";
 
 export default function Demo() {
   const [value, setValue] = React.useState<Color>(

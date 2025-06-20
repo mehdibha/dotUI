@@ -1,5 +1,6 @@
-import { ToggleButton } from "@/components/dynamic-ui/toggle-button";
 import { PinIcon } from "lucide-react";
+
+import { ToggleButton } from "@dotui/ui/components/toggle-button";
 
 const sizes = ["sm", "md", "lg"] as const;
 

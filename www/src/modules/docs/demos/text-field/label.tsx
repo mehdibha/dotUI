@@ -1,4 +1,4 @@
-import { TextField } from "@/components/dynamic-ui/text-field";
+import { TextField } from "@dotui/ui/components/text-field";
 
 export default function Demo() {
   return (

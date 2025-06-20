@@ -2,14 +2,15 @@
 
 import type { ColorSpace } from "react-aria-components";
 import React from "react";
+import { getColorChannels } from "react-aria-components";
+
 import {
   ColorPickerButton,
   ColorPickerRoot,
-} from "@/components/dynamic-ui/color-picker";
-import { ColorSlider } from "@/components/dynamic-ui/color-slider";
-import { Dialog, DialogRoot } from "@/components/dynamic-ui/dialog";
-import { Select, SelectItem } from "@/components/dynamic-ui/select";
-import { getColorChannels } from "react-aria-components";
+} from "@dotui/ui/components/color-picker";
+import { ColorSlider } from "@dotui/ui/components/color-slider";
+import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
+import { Select, SelectItem } from "@dotui/ui/components/select";
 
 export default function Demo() {
   const [space, setSpace] = React.useState<ColorSpace>("rgb");

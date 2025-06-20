@@ -2,8 +2,9 @@
 
 import type { TextDropItem } from "react-aria-components";
 import React from "react";
-import { DropZone, DropZoneLabel } from "@/components/dynamic-ui/drop-zone";
 import { useDrag } from "react-aria";
+
+import { DropZone, DropZoneLabel } from "@dotui/ui/components/drop-zone";
 
 export default function Demo() {
   return (

@@ -2,10 +2,11 @@
 
 import type { Key } from "react-aria-components";
 import React from "react";
-import { Button } from "@/components/dynamic-ui/button";
-import { Dialog, DialogRoot } from "@/components/dynamic-ui/dialog";
-import { Select, SelectItem } from "@/components/dynamic-ui/select";
-import { Switch } from "@/components/dynamic-ui/switch";
+
+import { Button } from "@dotui/ui/components/button";
+import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
+import { Select, SelectItem } from "@dotui/ui/components/select";
+import { Switch } from "@dotui/ui/components/switch";
 
 export default function Demo() {
   const [placement, setPlacement] = React.useState<Key | null>("top");

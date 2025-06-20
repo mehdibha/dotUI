@@ -1,7 +1,8 @@
 import React from "react";
-import { Button } from "@/components/dynamic-ui/button";
-import { DialogContent, DialogRoot } from "@/components/dynamic-ui/dialog";
-import { Overlay } from "@/components/dynamic-ui/overlay";
+
+import { Button } from "@dotui/ui/components/button";
+import { DialogContent, DialogRoot } from "@dotui/ui/components/dialog";
+import { Overlay } from "@dotui/ui/components/overlay";
 
 export default function Demo() {
   return (

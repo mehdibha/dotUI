@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
-import { Checkbox } from "@/components/dynamic-ui/checkbox";
-import { CheckboxGroup } from "@/components/dynamic-ui/checkbox-group";
+
+import { Checkbox } from "@dotui/ui/components/checkbox";
+import { CheckboxGroup } from "@dotui/ui/components/checkbox-group";
 
 export default function Demo() {
   const [frameworks, setFrameworks] = React.useState(["nextjs"]);

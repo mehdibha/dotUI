@@ -1,6 +1,7 @@
 import React from "react";
-import { Combobox, ComboboxItem } from "@/components/dynamic-ui/combobox";
-import { ListBoxSection } from "@/components/dynamic-ui/list-box";
+
+import { Combobox, ComboboxItem } from "@dotui/ui/components/combobox";
+import { ListBoxSection } from "@dotui/ui/components/list-box";
 
 export default function Demo() {
   return (

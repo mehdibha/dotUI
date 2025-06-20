@@ -2,7 +2,7 @@ import {
   ListBox,
   ListBoxItem,
   ListBoxSection,
-} from "@/components/dynamic-ui/list-box";
+} from "@dotui/ui/components/list-box";
 
 export default function Demo() {
   return (

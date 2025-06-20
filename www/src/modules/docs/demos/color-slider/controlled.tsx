@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
-import { ColorSlider } from "@/components/dynamic-ui/color-slider";
 import { parseColor } from "react-aria-components";
+
+import { ColorSlider } from "@dotui/ui/components/color-slider";
 
 export default function Demo() {
   const [value, setValue] = React.useState(parseColor("hsl(0, 100%, 50%)"));

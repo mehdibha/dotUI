@@ -1,5 +1,6 @@
 import React from "react";
-import { Select, SelectItem } from "@/components/dynamic-ui/select";
+
+import { Select, SelectItem } from "@dotui/ui/components/select";
 
 export default function Demo() {
   return (

@@ -1,4 +1,4 @@
-import { SearchField } from "@/components/dynamic-ui/search-field";
+import { SearchField } from "@dotui/ui/components/search-field";
 
 export default function Demo() {
   return (

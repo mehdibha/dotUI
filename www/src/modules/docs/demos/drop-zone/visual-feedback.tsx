@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { DropZone } from "@/components/dynamic-ui/drop-zone";
+
+import { DropZone } from "@dotui/ui/components/drop-zone";
 
 export default function Demo() {
   const [dropped, setDropped] = React.useState(false);

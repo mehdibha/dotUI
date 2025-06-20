@@ -1,7 +1,8 @@
 "use client";
 
-import { RangeCalendar } from "@/components/dynamic-ui/calendar";
 import { parseDate } from "@internationalized/date";
+
+import { RangeCalendar } from "@dotui/ui/components/calendar";
 
 export default function Demo() {
   return (

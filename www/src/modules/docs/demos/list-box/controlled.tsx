@@ -2,7 +2,8 @@
 
 import type { Selection } from "react-aria-components";
 import React from "react";
-import { ListBox, ListBoxItem } from "@/components/dynamic-ui/list-box";
+
+import { ListBox, ListBoxItem } from "@dotui/ui/components/list-box";
 
 export default function Demo() {
   const [selected, setSelected] = React.useState<Selection>(

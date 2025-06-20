@@ -1,7 +1,4 @@
-import {
-  CheckboxIndicator,
-  CheckboxRoot,
-} from "@/components/dynamic-ui/checkbox";
+import { CheckboxIndicator, CheckboxRoot } from "@dotui/ui/components/checkbox";
 
 export default function Demo() {
   return (

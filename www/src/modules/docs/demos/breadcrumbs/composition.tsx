@@ -1,9 +1,10 @@
+import { ArrowRightCircleIcon } from "lucide-react";
+
 import {
   BreadcrumbItem,
   BreadcrumbLink,
   Breadcrumbs,
-} from "@/components/dynamic-ui/breadcrumbs";
-import { ArrowRightCircleIcon } from "lucide-react";
+} from "@dotui/ui/components/breadcrumbs";
 
 export default function Demo() {
   return (

@@ -1,12 +1,13 @@
-import { Description, Label } from "@/components/dynamic-ui/field";
+import { Volume1Icon, Volume2Icon } from "lucide-react";
+
+import { Description, Label } from "@dotui/ui/components/field";
 import {
   SliderFiller,
   SliderRoot,
   SliderThumb,
   SliderTrack,
   SliderValueLabel,
-} from "@/components/dynamic-ui/slider";
-import { Volume1Icon, Volume2Icon } from "lucide-react";
+} from "@dotui/ui/components/slider";
 
 export default function Demo() {
   return (

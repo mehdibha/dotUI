@@ -1,4 +1,4 @@
-import { Separator } from "@/components/dynamic-ui/separator";
+import { Separator } from "@dotui/ui/components/separator";
 
 export default function Demo() {
   return (

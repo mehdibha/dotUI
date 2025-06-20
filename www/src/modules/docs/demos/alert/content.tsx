@@ -1,4 +1,4 @@
-import { Alert } from "@/components/dynamic-ui/alert";
+import { Alert } from "@dotui/ui/components/alert";
 
 export default function AlertDemo() {
   return (

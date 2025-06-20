@@ -1,8 +1,5 @@
-import { Description, FieldError, Label } from "@/components/dynamic-ui/field";
-import {
-  TimeFieldInput,
-  TimeFieldRoot,
-} from "@/components/dynamic-ui/time-field";
+import { Description, FieldError, Label } from "@dotui/ui/components/field";
+import { TimeFieldInput, TimeFieldRoot } from "@dotui/ui/components/time-field";
 
 export default function Demo() {
   return (
