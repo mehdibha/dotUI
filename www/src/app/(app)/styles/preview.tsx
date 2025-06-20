@@ -3,8 +3,6 @@
 import React from "react";
 import { useParams, usePathname } from "next/navigation";
 import { useSidebarContext } from "@/components/sidebar";
-import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
 import { useDebounce } from "@/hooks/use-debounce";
 import { useMounted } from "@/hooks/use-mounted";
 import { cn } from "@/lib/utils";
@@ -18,6 +16,9 @@ import {
   SmartphoneIcon,
 } from "lucide-react";
 import { motion } from "motion/react";
+
+import { Button } from "@dotui/ui/components/button";
+import { Skeleton } from "@dotui/ui/components/skeleton";
 
 const PreviewContext = React.createContext<{
   isOpen: boolean;

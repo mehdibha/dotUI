@@ -2,8 +2,9 @@
 
 import type { Selection } from "react-aria-components";
 import React from "react";
-import { Button } from "@/components/dynamic-ui/button";
-import { Menu, MenuItem, MenuRoot } from "@/components/dynamic-ui/menu";
+
+import { Button } from "@dotui/ui/components/button";
+import { Menu, MenuItem, MenuRoot } from "@dotui/ui/components/menu";
 
 export default function Demo() {
   const [selected, setSelected] = React.useState<Selection>(

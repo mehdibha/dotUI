@@ -2,11 +2,12 @@
 
 import type { Color } from "react-aria-components";
 import React from "react";
+import { parseColor } from "react-aria-components";
+
 import {
   ColorSwatchPicker,
   ColorSwatchPickerItem,
-} from "@/components/dynamic-ui/color-swatch-picker";
-import { parseColor } from "react-aria-components";
+} from "@dotui/ui/components/color-swatch-picker";
 
 export default function Demo() {
   const [value, setValue] = React.useState<Color>(parseColor("#f80"));

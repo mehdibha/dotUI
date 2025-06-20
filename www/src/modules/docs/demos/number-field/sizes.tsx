@@ -1,4 +1,4 @@
-import { NumberField } from "@/components/dynamic-ui/number-field";
+import { NumberField } from "@dotui/ui/components/number-field";
 
 export default function Demo() {
   return (

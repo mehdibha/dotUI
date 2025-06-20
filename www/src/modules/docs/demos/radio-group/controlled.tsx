@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { Radio, RadioGroup } from "@/components/dynamic-ui/radio-group";
+
+import { Radio, RadioGroup } from "@dotui/ui/components/radio-group";
 
 export default function Demo() {
   const [size, setSize] = React.useState("sm");

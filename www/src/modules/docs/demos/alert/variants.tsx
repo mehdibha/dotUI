@@ -1,5 +1,6 @@
 import React from "react";
-import { Alert } from "@/components/dynamic-ui/alert";
+
+import { Alert } from "@dotui/ui/components/alert";
 
 export default function Demo() {
   return (

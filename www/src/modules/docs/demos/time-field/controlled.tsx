@@ -2,8 +2,9 @@
 
 import type { TimeValue } from "react-aria-components";
 import React from "react";
-import { TimeField } from "@/components/dynamic-ui/time-field";
 import { Time } from "@internationalized/date";
+
+import { TimeField } from "@dotui/ui/components/time-field";
 
 export default function Demo() {
   const [time, setTime] = React.useState<TimeValue | null>(new Time(11, 45));

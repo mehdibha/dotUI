@@ -1,10 +1,11 @@
 "use client";
 
 import React from "react";
-import { Button } from "@/components/dynamic-ui/button";
-import { DialogContent, DialogRoot } from "@/components/dynamic-ui/dialog";
-import { Drawer } from "@/components/dynamic-ui/drawer";
-import { Radio, RadioGroup } from "@/components/ui/radio-group";
+
+import { Button } from "@dotui/ui/components/button";
+import { DialogContent, DialogRoot } from "@dotui/ui/components/dialog";
+import { Drawer } from "@dotui/ui/components/drawer";
+import { Radio, RadioGroup } from "@dotui/ui/components/radio-group";
 
 export default function Demo() {
   const [placement, setPlacement] = React.useState("bottom");

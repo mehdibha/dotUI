@@ -2,8 +2,9 @@
 
 import type { DateValue } from "react-aria-components";
 import React from "react";
-import { DateField } from "@/components/dynamic-ui/date-field";
 import { parseDate } from "@internationalized/date";
+
+import { DateField } from "@dotui/ui/components/date-field";
 
 export default function Demo() {
   const [value, setValue] = React.useState<DateValue | null>(

@@ -2,13 +2,6 @@
 
 import type { SortedResult } from "fumadocs-core/server";
 import React from "react";
-import { Button } from "@/components/ui/button";
-import { Command } from "@/components/ui/command";
-import { Dialog, DialogRoot } from "@/components/ui/dialog";
-import { Input, InputRoot } from "@/components/ui/input";
-import { Loader } from "@/components/ui/loader";
-import { MenuContent, MenuItem, MenuSection } from "@/components/ui/menu";
-import { SearchFieldRoot } from "@/components/ui/search-field";
 import { kekabCaseToTitle } from "@/lib/string";
 import { useDocsSearch } from "fumadocs-core/search/client";
 import {
@@ -18,6 +11,14 @@ import {
   HashIcon,
   SearchIcon,
 } from "lucide-react";
+
+import { Button } from "@dotui/ui/components/button";
+import { Command } from "@dotui/ui/components/command";
+import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
+import { Input, InputRoot } from "@dotui/ui/components/input";
+import { Loader } from "@dotui/ui/components/loader";
+import { MenuContent, MenuItem, MenuSection } from "@dotui/ui/components/menu";
+import { SearchFieldRoot } from "@dotui/ui/components/search-field";
 
 interface SearchCommandProps {
   keyboardShortcut?: boolean;

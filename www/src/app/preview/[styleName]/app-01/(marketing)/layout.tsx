@@ -1,5 +1,6 @@
-import { Button } from "@/components/dynamic-ui/button";
 import { HexagonIcon } from "lucide-react";
+
+import { Button } from "@dotui/ui/components/button";
 
 export default function MarketingLayout({
   children,

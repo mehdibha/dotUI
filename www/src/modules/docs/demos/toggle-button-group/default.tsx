@@ -1,5 +1,5 @@
-import { ToggleButton } from "@/components/dynamic-ui/toggle-button";
-import { ToggleButtonGroup } from "@/components/dynamic-ui/toggle-button-group";
+import { ToggleButton } from "@dotui/ui/components/toggle-button";
+import { ToggleButtonGroup } from "@dotui/ui/components/toggle-button-group";
 
 export default function Demo() {
   return (

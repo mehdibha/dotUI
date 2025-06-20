@@ -1,6 +1,7 @@
-import type { BadgeProps } from "@/components/ui/badge";
-import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+
+import type { BadgeProps } from "@dotui/ui/components/badge";
+import { Badge } from "@dotui/ui/components/badge";
 
 export function BadgePalette({
   className,

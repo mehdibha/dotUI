@@ -4,7 +4,6 @@ import React from "react";
 import { notFound } from "next/navigation";
 import { source } from "@/app/source";
 import { AdobeIcon, GitHubIcon } from "@/components/icons";
-import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config";
 import { truncateOnWord } from "@/lib/string";
 import { cn } from "@/lib/utils";
@@ -14,6 +13,8 @@ import { PageLastUpdate } from "@/modules/docs/components/last-update";
 import { mdxComponents } from "@/modules/docs/components/mdx-components";
 import { TableOfContents } from "@/modules/docs/components/toc";
 import { ExternalLinkIcon } from "lucide-react";
+
+import { Button } from "@dotui/ui/components/button";
 
 export default async function Page({
   params,

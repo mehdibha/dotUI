@@ -1,4 +1,4 @@
-import { Button } from "@/components/dynamic-ui/button";
+import { Button } from "@dotui/ui/components/button";
 
 const variants = [
   "default",

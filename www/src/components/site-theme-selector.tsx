@@ -1,12 +1,13 @@
 "use client";
 
 import React from "react";
-import { Button } from "@/components/ui/button";
-import { ListBox, ListBoxItem } from "@/components/ui/list-box";
-import { Popover } from "@/components/ui/popover";
-import { SelectRoot } from "@/components/ui/select";
 import { MonitorIcon, MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
+
+import { Button } from "@dotui/ui/components/button";
+import { ListBox, ListBoxItem } from "@dotui/ui/components/list-box";
+import { Popover } from "@dotui/ui/components/popover";
+import { SelectRoot } from "@dotui/ui/components/select";
 
 export const ThemeSwitcher = ({ children }: { children?: React.ReactNode }) => {
   const { theme, setTheme } = useTheme();

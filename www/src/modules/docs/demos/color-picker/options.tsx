@@ -1,5 +1,5 @@
-import { ColorPicker } from "@/components/dynamic-ui/color-picker";
-import { ColorSwatch } from "@/components/dynamic-ui/color-swatch";
+import { ColorPicker } from "@dotui/ui/components/color-picker";
+import { ColorSwatch } from "@dotui/ui/components/color-swatch";
 
 export default function Demo() {
   return (

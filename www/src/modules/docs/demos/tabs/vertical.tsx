@@ -1,4 +1,4 @@
-import { Tab, TabList, TabPanel, Tabs } from "@/components/dynamic-ui/tabs";
+import { Tab, TabList, TabPanel, Tabs } from "@dotui/ui/components/tabs";
 
 export default function Demo() {
   return (

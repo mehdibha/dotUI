@@ -8,13 +8,14 @@ import {
   TailwindIcon,
   TypescriptIcon,
 } from "@/components/icons";
-import { Avatar } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Link } from "@/components/ui/link";
-import { Tooltip } from "@/components/ui/tooltip";
+import { Link } from "@/components/link";
 import { siteConfig } from "@/config";
 import { getGitHubContributors } from "@/lib/github";
 import { StylesOverview } from "@/modules/styles/components/styles-overview";
+
+import { Avatar } from "@dotui/ui/components/avatar";
+import { Button } from "@dotui/ui/components/button";
+import { Tooltip } from "@dotui/ui/components/tooltip";
 
 export default async function HomePage() {
   const contributors = await getGitHubContributors();

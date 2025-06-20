@@ -1,7 +1,8 @@
-import { Button } from "@/components/dynamic-ui/button";
-import { Kbd } from "@/components/dynamic-ui/kbd";
-import { TooltipContent, TooltipRoot } from "@/components/dynamic-ui/tooltip";
 import { PenSquareIcon } from "lucide-react";
+
+import { Button } from "@dotui/ui/components/button";
+import { Kbd } from "@dotui/ui/components/kbd";
+import { TooltipContent, TooltipRoot } from "@dotui/ui/components/tooltip";
 
 export default function Demo() {
   return (

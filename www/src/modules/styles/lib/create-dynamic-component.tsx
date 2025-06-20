@@ -1,6 +1,7 @@
 import type { Components } from "@/modules/styles/types";
 import React from "react";
-import { Skeleton } from "@/components/ui/skeleton";
+
+import { Skeleton } from "@dotui/ui/components/skeleton";
 
 import { useCurrentComponents } from "../contexts/components-context";
 

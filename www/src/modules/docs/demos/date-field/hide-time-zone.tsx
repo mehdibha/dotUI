@@ -1,7 +1,8 @@
 "use client";
 
-import { DateField } from "@/components/dynamic-ui/date-field";
 import { parseZonedDateTime } from "@internationalized/date";
+
+import { DateField } from "@dotui/ui/components/date-field";
 
 export default function Demo() {
   return (

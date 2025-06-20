@@ -7,7 +7,6 @@ import {
   MobileComponentsOverview,
 } from "@/components/components-overview";
 import * as Icons from "@/components/icons";
-import { Button } from "@/components/ui/button";
 import { useMounted } from "@/hooks/use-mounted";
 import { StyleProvider } from "@/modules/styles/components/style-provider";
 import { styles } from "@/registry/registry-styles";
@@ -16,6 +15,8 @@ import { Tab, TabList, Tabs } from "@/registry/ui/tabs.motion";
 import { UNSAFE_PortalProvider } from "@react-aria/overlays";
 import { CheckIcon, CopyIcon } from "lucide-react";
 import { AnimatePresence, motion, useInView } from "motion/react";
+
+import { Button } from "@dotui/ui/components/button";
 
 export const StylesOverview = () => {
   const container = React.useRef(null);

@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { TextArea } from "@/components/dynamic-ui/text-area";
+
+import { TextArea } from "@dotui/ui/components/text-area";
 
 export default function Demo() {
   return (

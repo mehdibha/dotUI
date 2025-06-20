@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config";
 import { useMounted } from "@/hooks/use-mounted";
 import { cn } from "@/lib/utils";
@@ -10,12 +9,13 @@ import { UserProfileMenu } from "@/modules/auth/components/user-profile-menu";
 import { authClient } from "@/modules/auth/lib/client";
 import { SearchIcon } from "lucide-react";
 
+import { Button } from "@dotui/ui/components/button";
+import { Kbd } from "@dotui/ui/components/kbd";
+
 import { GitHubIcon, TwitterIcon } from "./icons";
 import { Logo } from "./logo";
 import { SearchCommand } from "./search-command";
 import { ThemeSwitcher } from "./site-theme-selector";
-import { Avatar } from "./ui/avatar";
-import { Kbd } from "./ui/kbd";
 
 export function Header({ className }: { className?: string }) {
   const { data: session, isPending } = authClient.useSession();

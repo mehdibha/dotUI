@@ -1,12 +1,6 @@
 "use client";
 
 import React from "react";
-import { Button } from "@/components/ui/button";
-import { CommandRoot } from "@/components/ui/command";
-import { Dialog, DialogRoot } from "@/components/ui/dialog";
-import { ListBox, ListBoxItem, ListBoxSection } from "@/components/ui/list-box";
-import { SearchField } from "@/components/ui/search-field";
-import { Select, SelectItem } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import { FontLoader } from "@/modules/styles/components/font-loader";
 import {
@@ -19,6 +13,17 @@ import {
 import { ChevronDownIcon } from "lucide-react";
 import { useInView } from "motion/react";
 import { ListLayout, useFilter, Virtualizer } from "react-aria-components";
+
+import { Button } from "@dotui/ui/components/button";
+import { CommandRoot } from "@dotui/ui/components/command";
+import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
+import {
+  ListBox,
+  ListBoxItem,
+  ListBoxSection,
+} from "@dotui/ui/components/list-box";
+import { SearchField } from "@dotui/ui/components/search-field";
+import { Select, SelectItem } from "@dotui/ui/components/select";
 
 export const FontSelector = ({
   label,

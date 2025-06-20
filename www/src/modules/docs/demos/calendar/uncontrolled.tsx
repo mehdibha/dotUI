@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
-import { Calendar } from "@/components/dynamic-ui/calendar";
 import { parseDate } from "@internationalized/date";
+
+import { Calendar } from "@dotui/ui/components/calendar";
 
 export default function Demo() {
   return (
