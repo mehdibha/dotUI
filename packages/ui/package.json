@@ -4,27 +4,23 @@
   "version": "0.1.0",
   "type": "module",
   "main": "dist/index.js",
-  "module": "dist/index.mjs",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js",
+      "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
     "./components/*": {
-      "import": "./dist/components/*.mjs",
-      "require": "./dist/components/*.js",
+      "import": "./dist/components/*.js",
       "types": "./dist/components/*.d.ts"
     },
     "./hooks/*": {
-      "import": "./dist/hooks/*.mjs",
-      "require": "./dist/hooks/*.js",
+      "import": "./dist/hooks/*.js",
       "types": "./dist/hooks/*.d.ts"
     },
     "./lib/*": {
-      "import": "./dist/lib/*.mjs",
-      "require": "./dist/lib/*.js",
+      "import": "./dist/lib/*.js",
       "types": "./dist/lib/*.d.ts"
     }
   },
