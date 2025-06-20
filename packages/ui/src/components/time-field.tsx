@@ -1,1 +1,1 @@
-export * from "@dotui/ui/__registry__/components/time-field/basic";
+export * from "@/__registry__/components/time-field/basic";

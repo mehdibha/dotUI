@@ -3,20 +3,48 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts",
-    "./components/*": "./src/components/*.tsx"
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./components/*": {
+      "import": "./dist/components/*.mjs",
+      "require": "./dist/components/*.js",
+      "types": "./dist/components/*.d.ts"
+    },
+    "./hooks/*": {
+      "import": "./dist/hooks/*.mjs",
+      "require": "./dist/hooks/*.js",
+      "types": "./dist/hooks/*.d.ts"
+    },
+    "./lib/*": {
+      "import": "./dist/lib/*.mjs",
+      "require": "./dist/lib/*.js",
+      "types": "./dist/lib/*.d.ts"
+    }
   },
+  "files": [
+    "dist"
+  ],
   "license": "MIT",
   "scripts": {
+    "build": "tsup",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "dev": "tsup --watch",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
     "@dotui/registry": "workspace:*",
-    "@dotui/style-engine": "workspace:*",
+    "@dotui/style-engine": "workspace:*"
+  },
+  "peerDependencies": {
     "react": "catalog:react19",
     "react-dom": "catalog:react19"
   },
@@ -26,6 +54,7 @@
     "@dotui/ts-config": "workspace:*",
     "eslint": "catalog:",
     "prettier": "catalog:",
+    "tsup": "^8.5.0",
     "typescript": "catalog:"
   },
   "prettier": "@dotui/prettier-config"

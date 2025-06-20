@@ -1,1 +1,1 @@
-export * from "@dotui/ui/__registry__/components/tabs/basic";
+export * from "@/__registry__/components/tabs/basic";

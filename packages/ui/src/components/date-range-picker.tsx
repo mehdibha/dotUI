@@ -1,1 +1,1 @@
-export * from "@dotui/ui/__registry__/components/date-range-picker/basic";
+export * from "@/__registry__/components/date-range-picker/basic";

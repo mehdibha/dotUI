@@ -1,5 +1,5 @@
 import React from "react";
-import { Skeleton } from "@dotui/ui/components/skeleton";
+import { Skeleton } from "@/components/skeleton";
 
 import type { Variants } from "@dotui/style-engine/types";
 

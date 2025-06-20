@@ -1,1 +1,1 @@
-export * from "@dotui/ui/__registry__/components/loader/ring";
+export * from "@/__registry__/components/loader/ring";

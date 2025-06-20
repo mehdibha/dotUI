@@ -1,13 +1,14 @@
 {
-  "extends": "@dotui/ts-config/internal-package.json",
+  "extends": "@dotui/ts-config/base.json",
   "compilerOptions": {
-    "baseUrl": ".",
     "lib": ["ES2022", "dom", "dom.iterable"],
     "jsx": "preserve",
+    "jsxImportSource": "react",
+    "baseUrl": ".",
     "paths": {
-      "@dotui/ui/*": ["./src/*"]
+      "@/*": ["./src/*"],
     }
   },
-  "include": ["src", "__registry__"],
-  "exclude": ["node_modules"]
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
 }
