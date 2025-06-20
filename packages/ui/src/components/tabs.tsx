@@ -56,3 +56,5 @@ export const TabPanel = createDynamicComponent<TabPanelProps>(
     ),
   },
 );
+
+export type { TabsProps, TabListProps, TabProps, TabPanelProps };

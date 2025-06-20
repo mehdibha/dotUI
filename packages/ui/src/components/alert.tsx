@@ -85,3 +85,5 @@ export const AlertContent = createDynamicComponent<AlertContentProps>(
     ),
   },
 );
+
+export type { AlertProps, AlertRootProps, AlertTitleProps, AlertContentProps };

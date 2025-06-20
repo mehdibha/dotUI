@@ -68,3 +68,10 @@ export const TooltipArrow = createDynamicComponent<TooltipArrowProps>(
     ),
   },
 );
+
+export type {
+  TooltipProps,
+  TooltipRootProps,
+  TooltipContentProps,
+  TooltipArrowProps,
+};
