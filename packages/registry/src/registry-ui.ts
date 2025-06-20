@@ -1,6 +1,6 @@
 import type { Registry } from "./types";
 
-export const ui: Registry = [
+export const ui = [
   {
     name: "alert",
     type: "registry:ui",
@@ -1138,4 +1138,4 @@ export const ui: Registry = [
       },
     ],
   },
-];
+] as const satisfies Registry;

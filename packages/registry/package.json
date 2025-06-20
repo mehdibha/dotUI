@@ -7,6 +7,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./src/index.ts"
+    },
+    "./registry-ui": {
+      "types": "./dist/registry-ui.d.ts",
+      "default": "./src/registry-ui.ts"
     }
   },
   "license": "MIT",
