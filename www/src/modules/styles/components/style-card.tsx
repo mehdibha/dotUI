@@ -2,16 +2,17 @@
 
 import type { Style } from "@/modules/styles/types";
 import React from "react";
-import { Alert } from "@/components/ui/alert";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogFooter, DialogRoot } from "@/components/ui/dialog";
-import { Menu, MenuItem, MenuRoot } from "@/components/ui/menu";
-import { Skeleton } from "@/components/ui/skeleton";
 import { useMounted } from "@/hooks/use-mounted";
 import { StyleProvider } from "@/modules/styles/components/style-provider";
 import { EllipsisIcon } from "lucide-react";
 import { Link } from "react-aria-components";
+
+import { Alert } from "@dotui/ui/components/alert";
+import { Badge } from "@dotui/ui/components/badge";
+import { Button } from "@dotui/ui/components/button";
+import { Dialog, DialogFooter, DialogRoot } from "@dotui/ui/components/dialog";
+import { Menu, MenuItem, MenuRoot } from "@dotui/ui/components/menu";
+import { Skeleton } from "@dotui/ui/components/skeleton";
 
 export function StyleCard({
   style,

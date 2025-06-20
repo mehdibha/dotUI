@@ -1,13 +1,14 @@
 "use client";
 
-import type { BreadcrumbsProps } from "@/components/ui/breadcrumbs";
 import type { PageTree } from "fumadocs-core/server";
 import { usePathname } from "next/navigation";
+import { useBreadcrumb } from "fumadocs-core/breadcrumb";
+
+import type { BreadcrumbsProps } from "@dotui/ui/components/breadcrumbs";
 import {
   Breadcrumb,
   Breadcrumbs as Breadcrumbs_,
-} from "@/components/ui/breadcrumbs";
-import { useBreadcrumb } from "fumadocs-core/breadcrumb";
+} from "@dotui/ui/components/breadcrumbs";
 
 export const Breadcrumbs = <T extends object>({
   tree,

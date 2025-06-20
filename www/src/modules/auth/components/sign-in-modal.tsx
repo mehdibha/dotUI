@@ -1,6 +1,7 @@
 import React from "react";
 import { GitHubIcon } from "@/components/icons";
-import { Button } from "@/components/ui/button";
+
+import { Button } from "@dotui/ui/components/button";
 import {
   DialogBody,
   DialogContent,
@@ -8,8 +9,8 @@ import {
   DialogHeader,
   DialogHeading,
   DialogRoot,
-} from "@/components/ui/dialog";
-import { Overlay } from "@/components/ui/overlay";
+} from "@dotui/ui/components/dialog";
+import { Overlay } from "@dotui/ui/components/overlay";
 
 import { authClient } from "../lib/client";
 

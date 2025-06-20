@@ -2,16 +2,21 @@
 
 import React from "react";
 import { ThemeModeSwitch } from "@/components/theme-mode-switch";
-import { Button } from "@/components/ui/button";
-import { ListBox } from "@/components/ui/list-box";
-import { Popover } from "@/components/ui/popover";
-import { SelectItem, SelectRoot, SelectValue } from "@/components/ui/select";
-import { Skeleton } from "@/components/ui/skeleton";
 import { useHorizontalResize } from "@/hooks/use-horizontal-resize";
 import { useMounted } from "@/hooks/use-mounted";
 import { useStyles } from "@/modules/styles/atoms/styles-atom";
 import { styles } from "@/registry/registry-styles";
 import { ChevronDownIcon } from "lucide-react";
+
+import { Button } from "@dotui/ui/components/button";
+import { ListBox } from "@dotui/ui/components/list-box";
+import { Popover } from "@dotui/ui/components/popover";
+import {
+  SelectItem,
+  SelectRoot,
+  SelectValue,
+} from "@dotui/ui/components/select";
+import { Skeleton } from "@dotui/ui/components/skeleton";
 
 export const Loader = ({ children }: { children: React.ReactNode }) => {
   const [isMounted, setIsMounted] = React.useState(false);

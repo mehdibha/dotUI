@@ -1,17 +1,18 @@
 import React from "react";
+
 // import { CheckIcon } from "lucide-react";
 // import { AnimatePresence, motion, Transition } from "motion/react";
 // import { cn } from "@/lib/utils";
-// import { ColorPicker } from "@/components/ui/color-picker";
-// import { Label } from "@/components/ui/field";
-import { Radio, RadioGroup } from "@/components/ui/radio-group";
-// import { Skeleton } from "@/components/ui/skeleton";
+// import { ColorPicker } from "@dotui/ui/components/color-picker";
+// import { Label } from "@dotui/ui/components/field";
+import { Radio, RadioGroup } from "@dotui/ui/components/radio-group";
+// import { Skeleton } from "@dotui/ui/components/skeleton";
 import {
   Slider, // SliderRoot,
   // SliderTrack,
   // SliderThumb,
   // type SliderProps,
-} from "@/components/ui/slider";
+} from "@dotui/ui/components/slider";
 
 // import {
 //   TableRoot,
@@ -20,7 +21,7 @@ import {
 //   TableBody,
 //   TableRow,
 //   TableCell,
-// } from "@/components/ui/table";
+// } from "@dotui/ui/components/table";
 import "@/modules/styles/components/current-style-provider";
 
 // import { Theme } from "@/modules/styles/types";

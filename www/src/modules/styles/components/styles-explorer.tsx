@@ -2,15 +2,16 @@
 
 import type { Style } from "@/modules/styles/types";
 import React from "react";
-// import { useMounted } from "@/hooks/use-mounted";
-// import { Button } from "@/components/ui/button";
-// import { Menu, MenuItem, MenuRoot } from "@/components/ui/menu";
-import { SearchField } from "@/components/ui/search-field";
 import { cn } from "@/lib/utils";
 import { useStyles } from "@/modules/styles/atoms/styles-atom";
 import { styles } from "@/registry/registry-styles";
 // import { ListFilterIcon } from "lucide-react";
 import { useFilter } from "react-aria-components";
+
+// import { useMounted } from "@/hooks/use-mounted";
+// import { Button } from "@dotui/ui/components/button";
+// import { Menu, MenuItem, MenuRoot } from "@dotui/ui/components/menu";
+import { SearchField } from "@dotui/ui/components/search-field";
 
 import { StyleCard } from "./style-card";
 

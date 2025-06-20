@@ -5,14 +5,6 @@
 import type { Style } from "@/modules/styles/types";
 import React from "react";
 import Link from "next/link";
-// import { useMounted } from "@/hooks/use-mounted";
-import { Alert } from "@/components/ui/alert";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogRoot } from "@/components/ui/dialog";
-import { Menu, MenuItem, MenuRoot } from "@/components/ui/menu";
-import { Skeleton } from "@/components/ui/skeleton";
-import { ToggleButton } from "@/components/ui/toggle-button";
-import { Tooltip } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 // import { notFound } from "next/navigation";
 import {
@@ -21,6 +13,15 @@ import {
   PenIcon,
   SaveIcon,
 } from "lucide-react";
+
+// import { useMounted } from "@/hooks/use-mounted";
+import { Alert } from "@dotui/ui/components/alert";
+import { Button } from "@dotui/ui/components/button";
+import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
+import { Menu, MenuItem, MenuRoot } from "@dotui/ui/components/menu";
+import { Skeleton } from "@dotui/ui/components/skeleton";
+import { ToggleButton } from "@dotui/ui/components/toggle-button";
+import { Tooltip } from "@dotui/ui/components/tooltip";
 
 import { PreviewContent } from "../../preview";
 // import { ThemeColors } from "./colors";

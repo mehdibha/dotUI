@@ -5,7 +5,7 @@ import { useSimulateApiCall } from "@/app/preview/[styleName]/app-01/hooks/use-a
 import { Button } from "@/components/dynamic-ui/button";
 import { TextField } from "@/components/dynamic-ui/text-field";
 import { GitHubIcon, GoogleIcon, TwitterIcon } from "@/components/icons";
-import { Link } from "@/components/ui/link";
+import { Link } from "@/components/link";
 import { Form } from "react-aria-components";
 
 export default function LoginPage() {

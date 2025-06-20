@@ -3,13 +3,14 @@
 import type { PageTree } from "fumadocs-core/server";
 import React from "react";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogRoot } from "@/components/ui/dialog";
-import { Kbd } from "@/components/ui/kbd";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { ScrollArea } from "@/components/scroll-area";
 import { siteConfig } from "@/config";
 import { cn } from "@/lib/utils";
 import { AlignLeftIcon, PanelLeftCloseIcon, SearchIcon } from "lucide-react";
+
+import { Button } from "@dotui/ui/components/button";
+import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
+import { Kbd } from "@dotui/ui/components/kbd";
 
 import { Logo } from "./logo";
 import { SearchCommand } from "./search-command";

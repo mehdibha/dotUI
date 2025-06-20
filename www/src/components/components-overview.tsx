@@ -31,12 +31,13 @@ import { TextField } from "@/components/dynamic-ui/text-field";
 import { TimeField } from "@/components/dynamic-ui/time-field";
 import { ToggleButton } from "@/components/dynamic-ui/toggle-button";
 import { GitHubIcon, GoogleIcon, TwitterIcon } from "@/components/icons";
-import { Link } from "@/components/ui/link";
-import { Radio, RadioGroup } from "@/components/ui/radio-group";
+import { Link } from "@/components/link";
 import { cn } from "@/lib/utils";
 import FileTriggerDemo from "@/modules/docs/demos/file-trigger/default";
 import { usePreferences } from "@/modules/styles/contexts/preferences-context";
 import { MenuIcon, PinIcon } from "lucide-react";
+
+import { Radio, RadioGroup } from "@dotui/ui/components/radio-group";
 
 export function ComponentsOverview({ className }: { className?: string }) {
   const { defaultColorScheme } = usePreferences();
