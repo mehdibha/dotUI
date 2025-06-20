@@ -1,1 +1,1 @@
-export * from "@/__registry__/ui/avatar.basic";
+export * from "@/__registry__/components/avatar/basic";

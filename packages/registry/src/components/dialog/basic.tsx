@@ -1,8 +1,8 @@
 "use client";
 
-import type { OverlayProps } from "@/ui/overlay.basic";
+import type { OverlayProps } from "@/components/overlay/basic";
 import * as React from "react";
-import { Overlay } from "@/ui/overlay.basic";
+import { Overlay } from "@/components/overlay/basic";
 import {
   Dialog as AriaDialog,
   DialogTrigger as AriaDialogTrigger,

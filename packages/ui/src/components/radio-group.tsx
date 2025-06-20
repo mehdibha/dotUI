@@ -1,1 +1,1 @@
-export * from "@/__registry__/ui/radio-group.basic";
+export * from "@/__registry__/components/radio-group/basic";

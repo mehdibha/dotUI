@@ -1,1 +1,1 @@
-export * from "@/__registry__/ui/breadcrumbs.basic";
+export * from "@/__registry__/components/breadcrumbs/basic";

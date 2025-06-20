@@ -1,7 +1,7 @@
 "use client";
 
-import { ColorThumb } from "@/ui/color-thumb.basic";
-import { Label } from "@/ui/field.basic";
+import { ColorThumb } from "@/components/color-thumb/basic";
+import { Label } from "@/components/field/basic";
 import {
   ColorSlider as AriaColorSlider,
   SliderOutput as AriaSliderOutput,

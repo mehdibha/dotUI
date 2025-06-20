@@ -7,9 +7,9 @@ import type {
   TableHeaderProps as AriaTableHeaderProps,
 } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
+import { Checkbox } from "@/components/checkbox/basic";
 import { focusRing } from "@/lib/focus-styles";
 import { cn, createScopedContext } from "@/lib/utils";
-import { Checkbox } from "@/ui/checkbox.basic";
 import { ChevronDownIcon, ChevronUpIcon, GripVerticalIcon } from "lucide-react";
 import {
   Button as AriaButton,

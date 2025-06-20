@@ -1,1 +1,1 @@
-export * from "@/__registry__/ui/color-swatch-picker.basic";
+export * from "@/__registry__/components/color-swatch-picker/basic";

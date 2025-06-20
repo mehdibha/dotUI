@@ -6,7 +6,11 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "default": "./src/index.ts"
+      "default": "./dist/index.ts"
+    },
+    "./components/*": {
+      "types": "./dist/components/*.d.ts",
+      "default": "./dist/components/*.tsx"
     }
   },
   "license": "MIT",
@@ -20,6 +24,7 @@
   },
   "dependencies": {
     "@dotui/registry": "workspace:*",
+    "@dotui/style-engine": "workspace:*",
     "react": "catalog:react19",
     "react-dom": "catalog:react19"
   },

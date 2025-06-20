@@ -1,1 +1,1 @@
-export * from "@/__registry__/ui/dialog.basic";
+export * from "@/__registry__/components/dialog/basic";

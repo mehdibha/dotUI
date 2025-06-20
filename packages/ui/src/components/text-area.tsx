@@ -1,1 +1,1 @@
-export * from "@/__registry__/ui/text-area.basic";
+export * from "@/__registry__/components/text-area/basic";

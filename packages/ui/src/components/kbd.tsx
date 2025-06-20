@@ -1,1 +1,1 @@
-export * from "@/__registry__/ui/kbd.basic";
+export * from "@/__registry__/components/kbd/basic";

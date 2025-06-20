@@ -1,63 +1,74 @@
-export interface ColorScale {
-  baseColors: string[];
-  contrastRatios?: number[];
+export interface Fonts {
+  heading: string;
+  body: string;
 }
 
-export interface ColorPalette {
-  neutral: ColorScale;
-  accent: ColorScale;
-  success: ColorScale;
-  warning: ColorScale;
-  danger: ColorScale;
-  info: ColorScale;
+export type IconLibrary = "lucide" | "remix-icons";
+
+export interface Variants {
+  alert: "basic" | "notch" | "notch-2";
+  avatar: "basic";
+  badge: "basic";
+  breadcrumbs: "basic";
+  button: "basic" | "outline" | "brutalist" | "ripple";
+  "button-group": "basic";
+  calendar: "basic" | "cal";
+  checkbox: "basic";
+  "checkbox-group": "basic";
+  "color-area": "basic";
+  "color-field": "basic";
+  "color-picker": "basic";
+  "color-slider": "basic";
+  "color-swatch": "basic";
+  "color-swatch-picker": "basic";
+  "color-thumb": "basic";
+  combobox: "basic";
+  command: "basic";
+  "date-field": "basic";
+  "date-input": "basic";
+  "date-picker": "basic";
+  "date-range-picker": "basic";
+  dialog: "basic";
+  drawer: "basic";
+  "drop-zone": "basic";
+  field: "basic";
+  "file-trigger": "basic";
+  form: "basic" | "react-hook-form";
+  input: "basic";
+  kbd: "basic";
+  "list-box": "basic";
+  loader: "dots" | "line" | "ring" | "tailspin" | "wave";
+  menu: "basic";
+  modal: "basic" | "blur";
+  "number-field": "basic";
+  overlay: "basic";
+  popover: "basic";
+  "progress-bar": "basic";
+  "radio-group": "basic";
+  ripple: "basic";
+  "search-field": "basic";
+  select: "basic";
+  separator: "basic";
+  skeleton: "basic";
+  slider: "basic";
+  switch: "basic";
+  table: "basic";
+  tabs: "basic" | "motion";
+  "tag-group": "basic";
+  text: "basic";
+  "text-area": "basic";
+  "text-field": "basic";
+  "time-field": "basic";
+  "toggle-button": "basic";
+  "toggle-button-group": "basic";
+  tooltip: "basic" | "motion";
 }
 
-export interface ColorMode {
-  lightness: number;
-  saturation: number;
-  palette: ColorPalette;
-}
-
-export interface ThemeDefinition {
-  borderRadius?: number;
-  lightMode?: ColorMode;
-  darkMode?: ColorMode;
-  semanticTokens?: Record<string, string>;
-  customProperties?: Record<
-    string,
-    string | Record<string, string | Record<string, string>>
-  >;
-}
-
-export interface TypographyScale {
-  headingFont: string;
-  bodyFont: string;
-}
-
-export interface StyleDefinition {
-  typography: TypographyScale;
-  theme: ThemeDefinition;
-  registryVariants: Record<string, string>;
-  designTokens: Record<string, string>;
-  iconLibrary?: string;
-}
-
-export interface ComputedTheme {
-  light: Record<string, string>;
-  dark: Record<string, string>;
-  theme: Record<string, string>;
-  css: Record<string, string | Record<string, string | Record<string, string>>>;
-}
-
-export interface ComputedStyle {
+export interface Style {
   name: string;
-  label: string;
-  icon?: string;
-  theme: ComputedTheme;
-  typography: TypographyScale;
-  registryVariants: Record<string, string>;
-  designTokens: Record<string, string>;
-  iconLibrary?: string;
+  label?: string;
+  description?: string;
+  iconLibrary: IconLibrary;
+  fonts: Fonts;
+  variants: Variants;
 }
-
-export type CssColor = string;

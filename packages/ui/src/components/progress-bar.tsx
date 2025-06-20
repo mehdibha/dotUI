@@ -1,1 +1,1 @@
-export * from "@/__registry__/ui/progress-bar.basic";
+export * from "@/__registry__/components/progress-bar/basic";

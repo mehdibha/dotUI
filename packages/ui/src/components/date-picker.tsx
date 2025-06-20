@@ -1,1 +1,1 @@
-export * from "@/__registry__/ui/date-picker.basic";
+export * from "@/__registry__/components/date-picker/basic";

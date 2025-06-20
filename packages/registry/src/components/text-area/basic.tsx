@@ -1,10 +1,10 @@
 "use client";
 
-import type { FieldProps } from "@/ui/field.basic";
-import type { InputRootProps } from "@/ui/input.basic";
+import type { FieldProps } from "@/components/field/basic";
+import type { InputRootProps } from "@/components/input/basic";
 import * as React from "react";
-import { HelpText, Label } from "@/ui/field.basic";
-import { InputRoot, TextAreaInput } from "@/ui/input.basic";
+import { HelpText, Label } from "@/components/field/basic";
+import { InputRoot, TextAreaInput } from "@/components/input/basic";
 import {
   TextField as AriaTextField,
   composeRenderProps,

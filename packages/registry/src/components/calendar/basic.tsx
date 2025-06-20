@@ -7,9 +7,9 @@ import type {
 } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 import React from "react";
+import { Button } from "@/components/button/basic";
+import { Text } from "@/components/text/basic";
 import { focusRing } from "@/lib/focus-styles";
-import { Button } from "@/ui/button.basic";
-import { Text } from "@/ui/text.basic";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import {
   Calendar as AriaCalendar,

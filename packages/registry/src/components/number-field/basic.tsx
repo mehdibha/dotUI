@@ -1,12 +1,12 @@
 "use client";
 
-import type { FieldProps } from "@/ui/field.basic";
-import type { InputRootProps } from "@/ui/input.basic";
+import type { FieldProps } from "@/components/field/basic";
+import type { InputRootProps } from "@/components/input/basic";
 import * as React from "react";
+import { Button } from "@/components/button/basic";
+import { HelpText, Label } from "@/components/field/basic";
+import { Input, InputRoot } from "@/components/input/basic";
 import { useIsMobile } from "@/hooks/use-is-mobile";
-import { Button } from "@/ui/button.basic";
-import { HelpText, Label } from "@/ui/field.basic";
-import { Input, InputRoot } from "@/ui/input.basic";
 import {
   ChevronDownIcon,
   ChevronUpIcon,

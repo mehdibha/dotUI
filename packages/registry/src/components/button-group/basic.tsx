@@ -1,8 +1,8 @@
 "use client";
 
-import type { buttonStyles } from "@/ui/button.basic";
+import type { buttonStyles } from "@/components/button/basic";
 import type { VariantProps } from "tailwind-variants";
-import { ButtonProvider } from "@/ui/button.basic";
+import { ButtonProvider } from "@/components/button/basic";
 import { ButtonContext as AriaButtonContext } from "react-aria-components";
 import { tv } from "tailwind-variants";
 

@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
+import { ColorSwatch } from "@/components/color-swatch/basic";
 import { focusRing } from "@/lib/focus-styles";
 import { cn } from "@/lib/utils";
-import { ColorSwatch } from "@/ui/color-swatch.basic";
 import {
   ColorSwatchPicker as AriaColorSwatchPicker,
   ColorSwatchPickerItem as AriaColorSwatchPickerItem,

@@ -1,6 +1,5 @@
 {
   "extends": "@dotui/ts-config/internal-package.json",
-  "include": ["src"],
   "compilerOptions": {
     "lib": ["ES2022", "dom", "dom.iterable"],
     "jsx": "preserve",
@@ -13,5 +12,6 @@
     "plugins": [{ "name": "next" }],
     "module": "esnext"
   },
+  "include": ["src", "scripts"],
   "exclude": ["node_modules"]
 }

@@ -1,12 +1,12 @@
 "use client";
 
-import type { DrawerProps } from "@/ui/drawer.basic";
-import type { ModalProps } from "@/ui/modal.blur";
-import type { PopoverProps } from "@/ui/popover.basic";
+import type { DrawerProps } from "@/components/drawer/basic";
+import type { ModalProps } from "@/components/modal/blur";
+import type { PopoverProps } from "@/components/popover/basic";
+import { Drawer } from "@/components/drawer/basic";
+import { Modal } from "@/components/modal/blur";
+import { Popover } from "@/components/popover/basic";
 import { useIsMobile } from "@/hooks/use-is-mobile";
-import { Drawer } from "@/ui/drawer.basic";
-import { Modal } from "@/ui/modal.blur";
-import { Popover } from "@/ui/popover.basic";
 
 type Type = "modal" | "popover" | "drawer";
 

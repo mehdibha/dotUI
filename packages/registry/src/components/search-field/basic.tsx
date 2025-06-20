@@ -1,11 +1,11 @@
 "use client";
 
-import type { FieldProps } from "@/ui/field.basic";
-import type { InputRootProps } from "@/ui/input.basic";
+import type { FieldProps } from "@/components/field/basic";
+import type { InputRootProps } from "@/components/input/basic";
 import * as React from "react";
-import { Button } from "@/ui/button.basic";
-import { HelpText, Label } from "@/ui/field.basic";
-import { Input, InputRoot } from "@/ui/input.basic";
+import { Button } from "@/components/button/basic";
+import { HelpText, Label } from "@/components/field/basic";
+import { Input, InputRoot } from "@/components/input/basic";
 import { SearchIcon, XIcon } from "lucide-react";
 import {
   SearchField as AriaSearchField,

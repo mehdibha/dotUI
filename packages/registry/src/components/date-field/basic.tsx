@@ -1,15 +1,15 @@
 "use client";
 
-import type { FieldProps } from "@/ui/field.basic";
-import type { InputRootProps } from "@/ui/input.basic";
+import type { FieldProps } from "@/components/field/basic";
+import type { InputRootProps } from "@/components/input/basic";
 import type {
   DateFieldProps as AriaDateFieldProps,
   DateValue,
 } from "react-aria-components";
 import * as React from "react";
-import { DateInput, DateSegment } from "@/ui/date-input.basic";
-import { HelpText, Label } from "@/ui/field.basic";
-import { InputRoot } from "@/ui/input.basic";
+import { DateInput, DateSegment } from "@/components/date-input/basic";
+import { HelpText, Label } from "@/components/field/basic";
+import { InputRoot } from "@/components/input/basic";
 import {
   DateField as AriaDateField,
   composeRenderProps,

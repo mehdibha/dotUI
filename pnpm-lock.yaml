@@ -342,6 +342,9 @@ importers:
       '@dotui/registry':
         specifier: workspace:*
         version: link:../registry
+      '@dotui/style-engine':
+        specifier: workspace:*
+        version: link:../style-engine
       react:
         specifier: catalog:react19
         version: 19.0.0
@@ -407,6 +410,9 @@ importers:
       '@dotui/db':
         specifier: workspace:*
         version: link:../packages/db
+      '@dotui/ui':
+        specifier: workspace:*
+        version: link:../packages/ui
       '@dotui/validators':
         specifier: workspace:*
         version: link:../packages/validators
@@ -557,9 +563,6 @@ importers:
       tailwind-variants:
         specifier: ^1.0.0
         version: 1.0.0(tailwindcss@4.1.9)
-      tsx:
-        specifier: ^4.7.1
-        version: 4.20.1
       unified:
         specifier: ^11.0.5
         version: 11.0.5
@@ -624,9 +627,6 @@ importers:
       prettier:
         specifier: 'catalog:'
         version: 3.5.3
-      rimraf:
-        specifier: ^6.0.1
-        version: 6.0.1
       tailwindcss:
         specifier: ^4.1.8
         version: 4.1.9

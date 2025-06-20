@@ -1,6 +1,6 @@
 "use client";
 
-import type { FieldProps } from "@/ui/field.basic";
+import type { FieldProps } from "@/components/field/basic";
 import type {
   TagGroupProps as AriaTagGroupProps,
   TagListProps as AriaTagListProps,
@@ -8,9 +8,9 @@ import type {
 } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 import React from "react";
+import { Button } from "@/components/button/basic";
+import { HelpText, Label } from "@/components/field/basic";
 import { focusRing } from "@/lib/focus-styles";
-import { Button } from "@/ui/button.basic";
-import { HelpText, Label } from "@/ui/field.basic";
 import {
   Tag as AriaTag,
   TagGroup as AriaTagGroup,

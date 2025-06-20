@@ -1,1 +1,1 @@
-export * from "@/__registry__/ui/toggle-button-group.basic";
+export * from "@/__registry__/components/toggle-button-group/basic";

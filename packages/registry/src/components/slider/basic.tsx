@@ -2,9 +2,9 @@
 
 import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
+import { Description, Label } from "@/components/field/basic";
 import { focusRing } from "@/lib/focus-styles";
 import { createScopedContext } from "@/lib/utils";
-import { Description, Label } from "@/ui/field.basic";
 import { useSlotId } from "@react-aria/utils";
 import {
   Slider as AriaSlider,

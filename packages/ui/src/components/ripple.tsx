@@ -1,1 +1,1 @@
-export * from "@/__registry__/ui/ripple";
+export * from "@/__registry__/components/ripple";

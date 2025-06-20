@@ -1,17 +1,17 @@
 "use client";
 
-import type { ButtonProps } from "@/ui/button.basic";
-import type { DialogProps } from "@/ui/dialog.basic";
+import type { ButtonProps } from "@/components/button/basic";
+import type { DialogProps } from "@/components/dialog/basic";
 import type { ColorFormat } from "react-aria-components";
 import React from "react";
+import { Button } from "@/components/button/basic";
+import { ColorArea } from "@/components/color-area/basic";
+import { ColorField } from "@/components/color-field/basic";
+import { ColorSlider } from "@/components/color-slider/basic";
+import { ColorSwatch } from "@/components/color-swatch/basic";
+import { Dialog, DialogRoot } from "@/components/dialog/basic";
+import { Select, SelectItem } from "@/components/select/basic";
 import { cn } from "@/lib/utils";
-import { Button } from "@/ui/button.basic";
-import { ColorArea } from "@/ui/color-area.basic";
-import { ColorField } from "@/ui/color-field.basic";
-import { ColorSlider } from "@/ui/color-slider.basic";
-import { ColorSwatch } from "@/ui/color-swatch.basic";
-import { Dialog, DialogRoot } from "@/ui/dialog.basic";
-import { Select, SelectItem } from "@/ui/select.basic";
 import {
   ColorPicker as AriaColorPicker,
   ColorPickerStateContext,

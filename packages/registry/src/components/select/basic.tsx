@@ -1,18 +1,18 @@
 "use client";
 
-import type { ButtonProps } from "@/ui/button.basic";
-import type { FieldProps } from "@/ui/field.basic";
-import type { ListBoxProps } from "@/ui/list-box.basic";
+import type { ButtonProps } from "@/components/button/basic";
+import type { FieldProps } from "@/components/field/basic";
+import type { ListBoxProps } from "@/components/list-box/basic";
 import type {
   SelectProps as AriaSelectProps,
   SelectValueProps as AriaSelectValueProps,
   ListBoxItemProps,
 } from "react-aria-components";
 import * as React from "react";
-import { Button } from "@/ui/button.basic";
-import { HelpText, Label } from "@/ui/field.basic";
-import { ListBox, ListBoxItem } from "@/ui/list-box.basic";
-import { Popover } from "@/ui/popover.basic";
+import { Button } from "@/components/button/basic";
+import { HelpText, Label } from "@/components/field/basic";
+import { ListBox, ListBoxItem } from "@/components/list-box/basic";
+import { Popover } from "@/components/popover/basic";
 import { ChevronDownIcon } from "lucide-react";
 import {
   Select as AriaSelect,

@@ -3,9 +3,9 @@
 import type { ValidationResult } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
+import { HelpText, Label } from "@/components/field/basic";
 import { focusRing, focusRingGroup } from "@/lib/focus-styles";
 import { createOptionalScopedContext, createScopedContext } from "@/lib/utils";
-import { HelpText, Label } from "@/ui/field.basic";
 import {
   Radio as AriaRadio,
   RadioGroup as AriaRadioGroup,

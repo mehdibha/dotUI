@@ -1,1 +1,1 @@
-export * from "@/__registry__/ui/time-field.basic";
+export * from "@/__registry__/components/time-field/basic";

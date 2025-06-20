@@ -1,8 +1,8 @@
 "use client";
 
-import type { toggleButtonStyles } from "@/ui/toggle-button.basic";
+import type { toggleButtonStyles } from "@/components/toggle-button/basic";
 import type { VariantProps } from "tailwind-variants";
-import { ToggleButtonProvider } from "@/ui/toggle-button.basic";
+import { ToggleButtonProvider } from "@/components/toggle-button/basic";
 import {
   ToggleButtonGroup as AriaToggleButtonGroup,
   composeRenderProps,

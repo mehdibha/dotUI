@@ -1,19 +1,19 @@
 "use client";
 
-import type { FieldProps } from "@/ui/field.basic";
-import type { inputStyles } from "@/ui/input.basic";
+import type { FieldProps } from "@/components/field/basic";
+import type { inputStyles } from "@/components/input/basic";
 import type {
   DateRangePickerProps as AriaDateRangePickerProps,
   DateValue,
 } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
-import { Button } from "@/ui/button.basic";
-import { RangeCalendar } from "@/ui/calendar.basic";
-import { DateInput, DateSegment } from "@/ui/date-input.basic";
-import { Dialog } from "@/ui/dialog.basic";
-import { HelpText, Label } from "@/ui/field.basic";
-import { InputRoot } from "@/ui/input.basic";
+import { Button } from "@/components/button/basic";
+import { RangeCalendar } from "@/components/calendar/basic";
+import { DateInput, DateSegment } from "@/components/date-input/basic";
+import { Dialog } from "@/components/dialog/basic";
+import { HelpText, Label } from "@/components/field/basic";
+import { InputRoot } from "@/components/input/basic";
 import { CalendarIcon } from "lucide-react";
 import { DateRangePicker as AriaDateRangePicker } from "react-aria-components";
 import { tv } from "tailwind-variants";

@@ -2,8 +2,8 @@
 
 import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
+import { Description, Label } from "@/components/field/basic";
 import { createScopedContext } from "@/lib/utils";
-import { Description, Label } from "@/ui/field.basic";
 import {
   ProgressBar as AriaProgress,
   composeRenderProps,
