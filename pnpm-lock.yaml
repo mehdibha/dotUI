@@ -268,6 +268,15 @@ importers:
 
   packages/registry:
     dependencies:
+      '@dotui/style-engine':
+        specifier: workspace:*
+        version: link:../style-engine
+      react:
+        specifier: catalog:react19
+        version: 19.0.0
+      react-dom:
+        specifier: catalog:react19
+        version: 19.0.0(react@19.0.0)
       zod:
         specifier: 'catalog:'
         version: 3.25.61
@@ -287,6 +296,12 @@ importers:
       prettier:
         specifier: 'catalog:'
         version: 3.5.3
+      rimraf:
+        specifier: ^6.0.1
+        version: 6.0.1
+      tsx:
+        specifier: ^4.20.1
+        version: 4.20.1
       typescript:
         specifier: 'catalog:'
         version: 5.8.3
@@ -324,9 +339,15 @@ importers:
 
   packages/ui:
     dependencies:
-      zod:
-        specifier: 'catalog:'
-        version: 3.25.61
+      '@dotui/registry':
+        specifier: workspace:*
+        version: link:../registry
+      react:
+        specifier: catalog:react19
+        version: 19.0.0
+      react-dom:
+        specifier: catalog:react19
+        version: 19.0.0(react@19.0.0)
     devDependencies:
       '@dotui/eslint-config':
         specifier: workspace:*

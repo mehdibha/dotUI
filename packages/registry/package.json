@@ -16,17 +16,14 @@
     "dev": "tsc",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint",
-    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false",
+    "build-registry": "tsx scripts/build-registry.ts"
   },
   "dependencies": {
     "@dotui/style-engine": "workspace:*",
-    "react": "catalog:",
-    "react-dom": "catalog:",
+    "react": "catalog:react19",
+    "react-dom": "catalog:react19",
     "zod": "catalog:"
-  },
-  "peerDependencies": {
-    "react": ">=18",
-    "react-dom": ">=18"
   },
   "devDependencies": {
     "@dotui/eslint-config": "workspace:*",
@@ -34,6 +31,8 @@
     "@dotui/ts-config": "workspace:*",
     "eslint": "catalog:",
     "prettier": "catalog:",
+    "rimraf": "^6.0.1",
+    "tsx": "^4.20.1",
     "typescript": "catalog:"
   },
   "prettier": "@dotui/prettier-config"

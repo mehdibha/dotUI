@@ -1,0 +1,76 @@
+"use client";
+
+import type { FieldProps } from "@/ui/field.basic";
+import type { InputRootProps } from "@/ui/input.basic";
+import * as React from "react";
+import { HelpText, Label } from "@/ui/field.basic";
+import { Input, InputRoot } from "@/ui/input.basic";
+import {
+  ColorField as AriaColorField,
+  composeRenderProps,
+} from "react-aria-components";
+import { tv } from "tailwind-variants";
+
+const colorFieldStyles = tv({
+  base: "flex w-48 flex-col items-start gap-2",
+});
+
+interface ColorFieldProps
+  extends ColorFieldRootProps,
+    Pick<InputRootProps, "size" | "prefix" | "suffix">,
+    FieldProps {
+  inputRef?: React.RefObject<HTMLInputElement>;
+}
+
+const ColorField = ({
+  label,
+  description,
+  errorMessage,
+  prefix,
+  suffix,
+  size,
+  inputRef,
+  ...props
+}: ColorFieldProps) => {
+  return (
+    <ColorFieldRoot {...props}>
+      {label && <Label>{label}</Label>}
+      <ColorFieldInput
+        inputRef={inputRef}
+        size={size}
+        prefix={prefix}
+        suffix={suffix}
+      />
+      <HelpText description={description} errorMessage={errorMessage} />
+    </ColorFieldRoot>
+  );
+};
+
+interface ColorFieldRootProps
+  extends React.ComponentProps<typeof AriaColorField> {
+  placeholder?: string;
+}
+const ColorFieldRoot = ({ className, ...props }: ColorFieldRootProps) => {
+  return (
+    <AriaColorField
+      className={composeRenderProps(className, (className) =>
+        colorFieldStyles({ className }),
+      )}
+      {...props}
+    />
+  );
+};
+
+interface ColorFieldInputProps extends InputRootProps {
+  inputRef?: React.RefObject<HTMLInputElement>;
+}
+const ColorFieldInput = ({ inputRef, ...props }: ColorFieldInputProps) => {
+  return (
+    <InputRoot {...props}>
+      <Input ref={inputRef} />
+    </InputRoot>
+  );
+};
+
+export type { ColorFieldProps, ColorFieldRootProps, ColorFieldInputProps };
+export { ColorField, ColorFieldRoot, ColorFieldInput };

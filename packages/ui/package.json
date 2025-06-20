@@ -20,12 +20,8 @@
   },
   "dependencies": {
     "@dotui/registry": "workspace:*",
-    "react": "catalog:",
-    "react-dom": "catalog:"
-  },
-  "peerDependencies": {
-    "react": ">=18",
-    "react-dom": ">=18"
+    "react": "catalog:react19",
+    "react-dom": "catalog:react19"
   },
   "devDependencies": {
     "@dotui/eslint-config": "workspace:*",

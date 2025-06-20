@@ -1,9 +1,14 @@
-import baseConfig from "@dotui/eslint-config/base";
+import baseConfig, { restrictEnvAccess } from "@dotui/eslint-config/base";
+import nextjsConfig from "@dotui/eslint-config/nextjs";
+import reactConfig from "@dotui/eslint-config/react";
 
 /** @type {import('typescript-eslint').Config} */
 export default [
   {
-    ignores: ["dist/**"],
+    ignores: [".next/**"],
   },
   ...baseConfig,
+  ...reactConfig,
+  ...nextjsConfig,
+  ...restrictEnvAccess,
 ];
