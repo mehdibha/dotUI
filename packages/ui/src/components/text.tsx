@@ -1,1 +1,1 @@
-export * from "@/__registry__/components/text/basic";
+export * from "@dotui/ui/__registry__/components/text/basic";

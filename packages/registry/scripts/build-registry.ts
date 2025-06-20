@@ -20,7 +20,7 @@ const IMPORT_TRANSFORMATIONS: ImportTransformation[] = [
   {
     pattern: /from\s+["']@\/components\/([a-zA-Z-]+)\/[a-zA-Z-]+["']/g,
     replacer: (match, componentName) => {
-      return `from "@/components/${componentName}"`;
+      return `from "@dotui/ui/components/${componentName}"`;
     },
   },
   // Transform registry imports to UI package imports

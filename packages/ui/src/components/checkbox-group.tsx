@@ -1,1 +1,1 @@
-export * from "@/__registry__/components/checkbox-group/basic";
+export * from "@dotui/ui/__registry__/components/checkbox-group/basic";
