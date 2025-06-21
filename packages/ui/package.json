@@ -3,35 +3,20 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "src/index.ts",
+  "module": "src/index.ts",
+  "types": "src/index.ts",
   "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    },
-    "./components/*": {
-      "import": "./dist/components/*.js",
-      "types": "./dist/components/*.d.ts"
-    },
-    "./hooks/*": {
-      "import": "./dist/hooks/*.js",
-      "types": "./dist/hooks/*.d.ts"
-    },
-    "./lib/*": {
-      "import": "./dist/lib/*.js",
-      "types": "./dist/lib/*.d.ts"
-    }
+    ".": "./src/index.ts",
+    "./components/*": "./src/components/*.tsx",
+    "./hooks/*": "./src/hooks/*.ts",
+    "./lib/focus-styles": "./src/lib/focus-styles.ts",
+    "./lib/utils": "./src/lib/utils.ts",
+    "./globals.css": "./src/globals.css"
   },
-  "files": [
-    "dist"
-  ],
   "license": "MIT",
   "scripts": {
-    "build": "tsup",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
-    "dev": "tsup --watch",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
@@ -50,7 +35,6 @@
     "@dotui/ts-config": "workspace:*",
     "eslint": "catalog:",
     "prettier": "catalog:",
-    "tsup": "^8.5.0",
     "typescript": "catalog:"
   },
   "prettier": "@dotui/prettier-config"
