@@ -1,6 +1,6 @@
 "use client";
 
-import { Form, FormControl } from "@/registry/ui/form.react-hook-form";
+import { Form, FormControl } from "@dotui/ui/components/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { parseDate } from "@internationalized/date";
 import { useForm } from "react-hook-form";

@@ -7,7 +7,7 @@ import {
   TableHeader,
   TableRoot,
   TableRow,
-} from "@/registry/ui/table.basic";
+} from "@dotui/ui/components/table";
 import { useDragAndDrop } from "react-aria-components";
 import { useListData } from "react-stately";
 

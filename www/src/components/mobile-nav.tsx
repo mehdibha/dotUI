@@ -5,12 +5,12 @@ import React from "react";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
 import { ScrollArea } from "@/components/scroll-area";
 import { siteConfig } from "@/config";
-import { cn } from "@/lib/utils";
 import { AlignLeftIcon, PanelLeftCloseIcon, SearchIcon } from "lucide-react";
 
 import { Button } from "@dotui/ui/components/button";
 import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
 import { Kbd } from "@dotui/ui/components/kbd";
+import { cn } from "@dotui/ui/lib/utils";
 
 import { Logo } from "./logo";
 import { SearchCommand } from "./search-command";

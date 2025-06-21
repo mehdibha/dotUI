@@ -1,8 +1,9 @@
 import type { Transition } from "motion/react";
 import React from "react";
-import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "motion/react";
 import { useMeasure } from "react-use";
+
+import { cn } from "@dotui/ui/lib/utils";
 
 const TRANSITION: Transition = {
   type: "spring",

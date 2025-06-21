@@ -2,7 +2,7 @@ import React from "react";
 
 // import { CheckIcon } from "lucide-react";
 // import { AnimatePresence, motion, Transition } from "motion/react";
-// import { cn } from "@/lib/utils";
+// import { cn } from "@dotui/ui/lib/utils";
 // import { ColorPicker } from "@dotui/ui/components/color-picker";
 // import { Label } from "@dotui/ui/components/field";
 import { Radio, RadioGroup } from "@dotui/ui/components/radio-group";

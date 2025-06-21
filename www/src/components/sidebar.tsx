@@ -13,7 +13,6 @@ import {
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
 import { ScrollArea } from "@/components/scroll-area";
 import { siteConfig } from "@/config";
-import { cn } from "@/lib/utils";
 import { hasActive, isActive } from "@/modules/docs/utils";
 import { useOnChange } from "fumadocs-core/utils/use-on-change";
 import {
@@ -31,6 +30,7 @@ import type { TooltipProps } from "@dotui/ui/components/tooltip";
 import { Button } from "@dotui/ui/components/button";
 import { Kbd } from "@dotui/ui/components/kbd";
 import { Tooltip } from "@dotui/ui/components/tooltip";
+import { cn } from "@dotui/ui/lib/utils";
 
 import { Logo } from "./logo";
 import { SearchCommand } from "./search-command";

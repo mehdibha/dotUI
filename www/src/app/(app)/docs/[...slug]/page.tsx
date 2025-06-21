@@ -1,12 +1,9 @@
-import type { TableOfContents as TocType } from "fumadocs-core/server";
 import type { Metadata } from "next";
-import React from "react";
 import { notFound } from "next/navigation";
 import { source } from "@/app/source";
 import { AdobeIcon, GitHubIcon } from "@/components/icons";
 import { siteConfig } from "@/config";
 import { truncateOnWord } from "@/lib/string";
-import { cn } from "@/lib/utils";
 import { Breadcrumbs } from "@/modules/docs/components/breadcrumbs";
 import { DocsPager } from "@/modules/docs/components/docs-pager";
 import { PageLastUpdate } from "@/modules/docs/components/last-update";
@@ -15,6 +12,7 @@ import { TableOfContents } from "@/modules/docs/components/toc";
 import { ExternalLinkIcon } from "lucide-react";
 
 import { Button } from "@dotui/ui/components/button";
+import { cn } from "@dotui/ui/lib/utils";
 
 export default async function Page({
   params,

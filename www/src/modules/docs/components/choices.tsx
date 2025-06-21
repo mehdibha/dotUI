@@ -4,10 +4,11 @@ import type {
   TabsProps as BaseProps,
   TabPanelProps,
 } from "react-aria-components";
-import { focusRing } from "@/lib/focus-styles";
-import { cn } from "@/lib/utils";
+import { focusRing } from "@dotui/ui/lib/focus-styles";
 import { CheckIcon } from "lucide-react";
 import { Tab, TabList, TabPanel, Tabs } from "react-aria-components";
+
+import { cn } from "@dotui/ui/lib/utils";
 
 export interface ChoicesProps extends Omit<BaseProps, "children"> {
   children: React.ReactNode;

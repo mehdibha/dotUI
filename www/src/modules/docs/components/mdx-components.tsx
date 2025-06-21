@@ -2,13 +2,13 @@ import type { LinkProps } from "@/components/link";
 import type { MDXComponents } from "mdx/types";
 import React from "react";
 import { Link as NavLink } from "@/components/link";
-import { cn } from "@/lib/utils";
 import { ArrowUpRightIcon } from "lucide-react";
 
 import type { AlertProps } from "@dotui/ui/components/alert";
 import type { BadgeProps } from "@dotui/ui/components/badge";
 import { Alert } from "@dotui/ui/components/alert";
 import { Badge } from "@dotui/ui/components/badge";
+import { cn } from "@dotui/ui/lib/utils";
 
 import type { ChoicesProps } from "./choices";
 import type { ComponentPreviewProps } from "./component-preview";

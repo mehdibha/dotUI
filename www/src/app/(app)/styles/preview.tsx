@@ -5,8 +5,7 @@ import { useParams, usePathname } from "next/navigation";
 import { useSidebarContext } from "@/components/sidebar";
 import { useDebounce } from "@/hooks/use-debounce";
 import { useMounted } from "@/hooks/use-mounted";
-import { cn } from "@/lib/utils";
-import { useStyles } from "@/modules/styles/atoms/styles-atom";
+// import { useStyles } from "@/modules/styles/atoms/styles-atom";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -19,6 +18,7 @@ import { motion } from "motion/react";
 
 import { Button } from "@dotui/ui/components/button";
 import { Skeleton } from "@dotui/ui/components/skeleton";
+import { cn } from "@dotui/ui/lib/utils";
 
 const PreviewContext = React.createContext<{
   isOpen: boolean;
@@ -54,11 +54,11 @@ export const Preview = () => {
   const pathname = usePathname();
   const isOpen = pathname.startsWith("/styles/") && isPreviewOpen;
   const { isCollapsed } = useSidebarContext();
-  const { currentStyle } = useStyles();
+  // const { currentStyle } = useStyles();
   const isMounted = useMounted();
   const params = useParams<{ styleName?: string }>();
 
-  const styleName = params?.styleName ?? currentStyle.name;
+  // const styleName = params?.styleName ?? currentStyle.name;
 
   const previewWidth = Math.min(
     screen === "mobile" ? 430 : 768,
@@ -107,7 +107,7 @@ export const Preview = () => {
           transition={{ type: "spring", bounce: 0, duration: 0.25 }}
           className="h-full p-4 pl-0"
         >
-          <PreviewContent themeName={styleName} />
+          {/* <PreviewContent themeName={styleName} /> */}
         </motion.div>
       </motion.div>
     </>

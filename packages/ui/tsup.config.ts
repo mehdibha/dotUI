@@ -7,13 +7,11 @@ export default defineConfig({
     "src/hooks/**/*.{ts,tsx}",
     "src/lib/**/*.{ts,tsx}",
   ],
-  banner: {
-    js: `"use client";`,
-  },
   format: ["esm"],
   dts: true,
   sourcemap: true,
   clean: true,
+  splitting: false,
   external: [
     "react",
     "react-dom",

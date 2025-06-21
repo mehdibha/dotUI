@@ -2,10 +2,9 @@
 
 // import { usePreviewMode } from "@/components/mode-provider";
 // import { ThemeModeSwitch } from "@/components/theme-mode-switch";
-import type { Style } from "@/modules/styles/types";
+import type { Style } from "@dotui/style-engine/types";
 import React from "react";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
 // import { notFound } from "next/navigation";
 import {
   ArrowLeftIcon,
@@ -22,6 +21,7 @@ import { Menu, MenuItem, MenuRoot } from "@dotui/ui/components/menu";
 import { Skeleton } from "@dotui/ui/components/skeleton";
 import { ToggleButton } from "@dotui/ui/components/toggle-button";
 import { Tooltip } from "@dotui/ui/components/tooltip";
+import { cn } from "@dotui/ui/lib/utils";
 
 import { PreviewContent } from "../../preview";
 // import { ThemeColors } from "./colors";

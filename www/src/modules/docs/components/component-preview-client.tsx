@@ -1,21 +1,21 @@
 "use client";
 
 import React from "react";
-import { ThemeModeSwitch } from "@/components/theme-mode-switch";
+// import { ThemeModeSwitch } from "@/components/theme-mode-switch";
 import { useHorizontalResize } from "@/hooks/use-horizontal-resize";
 import { useMounted } from "@/hooks/use-mounted";
-import { useStyles } from "@/modules/styles/atoms/styles-atom";
-import { styles } from "@/registry/registry-styles";
-import { ChevronDownIcon } from "lucide-react";
+// import { useStyles } from "@/modules/styles/atoms/styles-atom";
+// import { styles } from "@/registry/registry-styles";
+// import { ChevronDownIcon } from "lucide-react";
 
-import { Button } from "@dotui/ui/components/button";
-import { ListBox } from "@dotui/ui/components/list-box";
-import { Popover } from "@dotui/ui/components/popover";
-import {
-  SelectItem,
-  SelectRoot,
-  SelectValue,
-} from "@dotui/ui/components/select";
+// import { Button } from "@dotui/ui/components/button";
+// import { ListBox } from "@dotui/ui/components/list-box";
+// import { Popover } from "@dotui/ui/components/popover";
+// import {
+//   SelectItem,
+//   SelectRoot,
+//   SelectValue,
+// } from "@dotui/ui/components/select";
 import { Skeleton } from "@dotui/ui/components/skeleton";
 
 export const Loader = ({ children }: { children: React.ReactNode }) => {
@@ -71,13 +71,13 @@ export const ResizableContainer = ({
 };
 
 export const ComponentPreviewHeader = () => {
-  const { currentStyle, currentMode, setCurrentStyle, setCurrentMode } =
-    useStyles();
+  // const { currentStyle, currentMode, setCurrentStyle, setCurrentMode } =
+  //   useStyles();
   const isMounted = useMounted();
 
   return (
     <div className="absolute top-0 left-0 z-20 flex w-full items-center justify-between gap-2 p-2">
-      <SelectRoot
+      {/* <SelectRoot
         selectedKey={currentStyle.name}
         onSelectionChange={(key) => setCurrentStyle(key as string)}
       >
@@ -108,7 +108,7 @@ export const ComponentPreviewHeader = () => {
             setCurrentMode(isSelected ? "dark" : "light")
           }
         />
-      )}
+      )} */}
     </div>
   );
 };

@@ -1,8 +1,8 @@
 import { Link } from "@/components/link";
 import { siteConfig } from "@/config";
-import { cn } from "@/lib/utils";
 
 import { Badge } from "@dotui/ui/components/badge";
+import { cn } from "@dotui/ui/lib/utils";
 
 export const Logo = ({
   extanded = true,

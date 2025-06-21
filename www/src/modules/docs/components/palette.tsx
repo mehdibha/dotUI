@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@dotui/ui/lib/utils";
 
 export interface PaletteProps extends React.ComponentProps<"div"> {
   baseColor:

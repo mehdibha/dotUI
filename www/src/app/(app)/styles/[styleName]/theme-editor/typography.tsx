@@ -1,11 +1,11 @@
-import { FontSelector } from "@/modules/styles/components/font-selector";
+// import { FontSelector } from "@/modules/styles/components/font-selector";
 
 export function ThemeTypography() {
   return (
     <div>
       <div className="grid grid-cols-2 gap-4 pt-1">
-        <FontSelector label="Heading" font={null} onFontChange={() => {}} />
-        <FontSelector label="Body" font={null} onFontChange={() => {}} />
+        {/* <FontSelector label="Heading" font={null} onFontChange={() => {}} />
+        <FontSelector label="Body" font={null} onFontChange={() => {}} /> */}
       </div>
       <div className="font-heading mt-3 space-y-1 font-bold tracking-tight">
         <p className="text-5xl">Heading 5XL</p>

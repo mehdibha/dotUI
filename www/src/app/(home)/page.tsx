@@ -9,9 +9,9 @@ import {
   TypescriptIcon,
 } from "@/components/icons";
 import { Link } from "@/components/link";
+import { StylesOverview } from "@/components/styles-overview";
 import { siteConfig } from "@/config";
 import { getGitHubContributors } from "@/lib/github";
-import { StylesOverview } from "@/modules/styles/components/styles-overview";
 
 import { Avatar } from "@dotui/ui/components/avatar";
 import { Button } from "@dotui/ui/components/button";

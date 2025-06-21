@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { siteConfig } from "@/config";
 import { useMounted } from "@/hooks/use-mounted";
-import { cn } from "@/lib/utils";
 import { SignInModal } from "@/modules/auth/components/sign-in-modal";
 import { UserProfileMenu } from "@/modules/auth/components/user-profile-menu";
 import { authClient } from "@/modules/auth/lib/client";
@@ -11,6 +10,7 @@ import { SearchIcon } from "lucide-react";
 
 import { Button } from "@dotui/ui/components/button";
 import { Kbd } from "@dotui/ui/components/kbd";
+import { cn } from "@dotui/ui/lib/utils";
 
 import { GitHubIcon, TwitterIcon } from "./icons";
 import { Logo } from "./logo";

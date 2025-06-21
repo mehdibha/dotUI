@@ -2,8 +2,9 @@ import type { Metadata, Viewport } from "next";
 import React from "react";
 import { fontMono, fontSans, josefinSans } from "@/lib/fonts";
 import { truncateOnWord } from "@/lib/string";
-import { cn } from "@/lib/utils";
 import { Analytics } from "@vercel/analytics/react";
+
+import { cn } from "@dotui/ui/lib/utils";
 
 import "@/styles/globals.css";
 

@@ -1,10 +1,10 @@
 import React from "react";
-import { Index } from "@/__registry__/demos";
-import { cn } from "@/lib/utils";
+import { Index } from "@/components/__demos__";
 import { CodeBlock } from "@/modules/docs/components/code-block";
 import { getFileSource } from "@/modules/docs/lib/get-file-source";
-import { CurrentStyleProvider } from "@/modules/styles/components/current-style-provider";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
+
+import { cn } from "@dotui/ui/lib/utils";
 
 import {
   ComponentPreviewHeader,
@@ -57,7 +57,7 @@ export const ComponentPreview = async ({
       <div className="bg-bg-muted">
         <ResizableContainer resizable={resizable}>
           <Loader>
-            <CurrentStyleProvider className="relative duration-300">
+            <div className="relative duration-300">
               <ComponentPreviewHeader />
               <ScrollArea className="bg-bg text-fg">
                 <div
@@ -80,7 +80,7 @@ export const ComponentPreview = async ({
                   </div>
                 </div>
               </ScrollArea>
-            </CurrentStyleProvider>
+            </div>
           </Loader>
         </ResizableContainer>
       </div>

@@ -6,9 +6,10 @@ import type {
 } from "fumadocs-core/server";
 import React from "react";
 import { ScrollArea } from "@/components/scroll-area";
-import { cn } from "@/lib/utils";
 import { useTocThumb } from "@/modules/docs/hooks/use-toc-thumb";
 import * as TocPrimitive from "fumadocs-core/toc";
+
+import { cn } from "@dotui/ui/lib/utils";
 
 export const TableOfContents = ({ toc }: { toc: TocType }) => {
   if (toc.length === 0) return null;

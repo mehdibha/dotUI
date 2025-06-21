@@ -7,7 +7,7 @@ import {
   TableHeader,
   TableRoot,
   TableRow,
-} from "@/registry/ui/table.basic";
+} from "@dotui/ui/components/table";
 
 export default function Demo() {
   return (

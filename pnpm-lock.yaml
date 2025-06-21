@@ -413,6 +413,9 @@ importers:
       '@dotui/db':
         specifier: workspace:*
         version: link:../packages/db
+      '@dotui/style-engine':
+        specifier: workspace:*
+        version: link:../packages/style-engine
       '@dotui/ui':
         specifier: workspace:*
         version: link:../packages/ui
@@ -630,6 +633,9 @@ importers:
       prettier:
         specifier: 'catalog:'
         version: 3.5.3
+      rimraf:
+        specifier: ^6.0.1
+        version: 6.0.1
       tailwindcss:
         specifier: ^4.1.8
         version: 4.1.9

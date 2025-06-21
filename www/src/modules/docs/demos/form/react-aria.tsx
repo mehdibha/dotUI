@@ -1,8 +1,6 @@
 "use client";
 
-import React from "react";
-import { Form } from "@/registry/ui/form.basic";
-
+import { Form } from "@dotui/ui/components/form";
 import { Button } from "@dotui/ui/components/button";
 import { Checkbox } from "@dotui/ui/components/checkbox";
 import { Combobox } from "@dotui/ui/components/combobox";

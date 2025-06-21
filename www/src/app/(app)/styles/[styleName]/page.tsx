@@ -1,5 +1,5 @@
 import React from "react";
-import { styles } from "@/registry/registry-styles";
+// import { styles } from "@/registry/registry-styles";
 
 // import { ThemeEditor } from "./theme-editor";
 import { ThemeTableOfContents } from "./toc";
@@ -9,8 +9,7 @@ export default async function ThemePage({
 }: {
   params: Promise<{ styleName: string }>;
 }) {
-  const styleName = (await params).styleName;
-
+  // const styleName = (await params).styleName;
   // const style = styles.find((style) => style.name === styleName);
   // const isEditable = !style;
 
@@ -24,8 +23,8 @@ export default async function ThemePage({
   );
 }
 
-export function generateStaticParams() {
-  return styles.map((style) => ({
-    styleName: style.name,
-  }));
-}
+// export function generateStaticParams() {
+//   return styles.map((style) => ({
+//     styleName: style.name,
+//   }));
+// }

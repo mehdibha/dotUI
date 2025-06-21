@@ -1,5 +1,10 @@
 "use client";
 
+import { GitHubIcon, GoogleIcon, TwitterIcon } from "@/components/icons";
+import { Link } from "@/components/link";
+import FileTriggerDemo from "@/modules/docs/demos/file-trigger/default";
+import { MenuIcon, PinIcon } from "lucide-react";
+
 import { Alert } from "@dotui/ui/components/alert";
 import { Avatar } from "@dotui/ui/components/avatar";
 import { Button } from "@dotui/ui/components/button";
@@ -13,6 +18,7 @@ import { ListBox, ListBoxItem } from "@dotui/ui/components/list-box";
 import { Menu, MenuItem, MenuRoot } from "@dotui/ui/components/menu";
 import { NumberField } from "@dotui/ui/components/number-field";
 import { ProgressBar } from "@dotui/ui/components/progress-bar";
+import { Radio, RadioGroup } from "@dotui/ui/components/radio-group";
 import { SearchField } from "@dotui/ui/components/search-field";
 import { Select, SelectItem } from "@dotui/ui/components/select";
 import { Separator } from "@dotui/ui/components/separator";
@@ -30,17 +36,10 @@ import { Tab, TabList, TabPanel, Tabs } from "@dotui/ui/components/tabs";
 import { TextField } from "@dotui/ui/components/text-field";
 import { TimeField } from "@dotui/ui/components/time-field";
 import { ToggleButton } from "@dotui/ui/components/toggle-button";
-import { GitHubIcon, GoogleIcon, TwitterIcon } from "@/components/icons";
-import { Link } from "@/components/link";
-import { cn } from "@/lib/utils";
-import FileTriggerDemo from "@/modules/docs/demos/file-trigger/default";
-import { usePreferences } from "@/modules/styles/contexts/preferences-context";
-import { MenuIcon, PinIcon } from "lucide-react";
-
-import { Radio, RadioGroup } from "@dotui/ui/components/radio-group";
+import { cn } from "@dotui/ui/lib/utils";
 
 export function ComponentsOverview({ className }: { className?: string }) {
-  const { defaultColorScheme } = usePreferences();
+  const defaultColorScheme = "primary";
 
   return (
     <div className={cn("grid grid-cols-10 gap-8 p-4 sm:p-8", className)}>
@@ -236,7 +235,7 @@ export const MobileComponentsOverview = ({
 }: {
   className?: string;
 }) => {
-  const { defaultColorScheme } = usePreferences();
+  const defaultColorScheme = "primary";
 
   return (
     <div className={cn("grid grid-cols-10 gap-3 p-4", className)}>
@@ -325,7 +324,7 @@ export const MobileComponentsOverview = ({
 };
 
 function Login() {
-  const { defaultColorScheme } = usePreferences();
+  const defaultColorScheme = "primary";
 
   return (
     <div className="bg-bg-muted w-full rounded-lg border p-8">
@@ -385,7 +384,7 @@ function Login() {
 }
 
 function Register() {
-  const { defaultColorScheme } = usePreferences();
+  const defaultColorScheme = "primary";
 
   return (
     <div className="bg-bg-muted w-full rounded-lg border p-8">
