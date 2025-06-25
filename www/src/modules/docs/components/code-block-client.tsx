@@ -1,17 +1,18 @@
 "use client";
 
-import type { ScrollAreaProps } from "@/components/scroll-area";
-import type { Key } from "react-aria-components";
 import React from "react";
-import { ScrollArea } from "@/components/scroll-area";
 import { CheckIcon, CopyIcon } from "lucide-react";
 import { tv } from "tailwind-variants";
+import type { ScrollAreaProps } from "@/components/scroll-area";
+import type { Key } from "react-aria-components";
 
-import type { ButtonProps } from "@dotui/ui/components/button";
-import type { TabsProps } from "@dotui/ui/components/tabs";
 import { Button } from "@dotui/ui/components/button";
 import { Tab, TabList, TabPanel, Tabs } from "@dotui/ui/components/tabs";
 import { cn } from "@dotui/ui/lib/utils";
+import type { ButtonProps } from "@dotui/ui/components/button";
+import type { TabsProps } from "@dotui/ui/components/tabs";
+
+import { ScrollArea } from "@/components/scroll-area";
 
 const codeBlockStyles = tv({
   slots: {

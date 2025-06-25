@@ -1,8 +1,8 @@
 "use client";
 
-import type { Color } from "react-aria-components";
 import React from "react";
 import { parseColor } from "react-aria-components";
+import type { Color } from "react-aria-components";
 
 import { ColorField } from "@dotui/ui/components/color-field";
 

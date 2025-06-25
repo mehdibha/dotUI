@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
-import { cn } from "@dotui/ui/lib/utils";
 import * as CollapsiblePrimitive from "@radix-ui/react-collapsible";
+
+import { cn } from "@dotui/ui/lib/utils";
 
 const CollapsibleRoot = CollapsiblePrimitive.Root;
 

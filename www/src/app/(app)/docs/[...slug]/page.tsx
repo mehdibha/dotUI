@@ -1,5 +1,10 @@
-import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { ExternalLinkIcon } from "lucide-react";
+import type { Metadata } from "next";
+
+import { Button } from "@dotui/ui/components/button";
+import { cn } from "@dotui/ui/lib/utils";
+
 import { source } from "@/app/source";
 import { AdobeIcon, GitHubIcon } from "@/components/icons";
 import { siteConfig } from "@/config";
@@ -9,10 +14,6 @@ import { DocsPager } from "@/modules/docs/components/docs-pager";
 import { PageLastUpdate } from "@/modules/docs/components/last-update";
 import { mdxComponents } from "@/modules/docs/components/mdx-components";
 import { TableOfContents } from "@/modules/docs/components/toc";
-import { ExternalLinkIcon } from "lucide-react";
-
-import { Button } from "@dotui/ui/components/button";
-import { cn } from "@dotui/ui/lib/utils";
 
 export default async function Page({
   params,

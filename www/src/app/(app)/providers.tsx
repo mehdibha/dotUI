@@ -1,11 +1,12 @@
 "use client";
 
 import React from "react";
-import { SidebarProvider } from "@/components/sidebar";
-import { useMounted } from "@/hooks/use-mounted";
 // import { useStyles } from "@/modules/styles/atoms/styles-atom";
 // import { CurrentStyleProvider } from "@/modules/styles/components/current-style-provider";
 import { UNSAFE_PortalProvider } from "@react-aria/overlays";
+
+import { SidebarProvider } from "@/components/sidebar";
+import { useMounted } from "@/hooks/use-mounted";
 
 // import { StyleProvider } from "@/modules/styles/components/style-provider";
 

@@ -1,12 +1,12 @@
 "use client";
 
-import type { DrawerProps } from "@dotui/ui/components/drawer";
-import type { ModalProps } from "@dotui/ui/components/modal";
-import type { PopoverProps } from "@dotui/ui/components/popover";
 import { Drawer } from "@dotui/ui/components/drawer";
 import { Modal } from "@dotui/ui/components/modal";
 import { Popover } from "@dotui/ui/components/popover";
 import { useIsMobile } from "@dotui/ui/hooks/use-is-mobile";
+import type { DrawerProps } from "@dotui/ui/components/drawer";
+import type { ModalProps } from "@dotui/ui/components/modal";
+import type { PopoverProps } from "@dotui/ui/components/popover";
 
 type Type = "modal" | "popover" | "drawer";
 

@@ -1,10 +1,10 @@
 "use client";
 
-import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
 import { tv } from "tailwind-variants";
+import type { VariantProps } from "tailwind-variants";
 
-import { createScopedContext } from "@dotui/ui/lib/utils";
+import { createScopedContext } from "@/lib/utils";
 
 const avatarStyles = tv({
   slots: {

@@ -1,6 +1,5 @@
 "use client";
 
-import type { ColorFormat } from "react-aria-components";
 import React from "react";
 import {
   ColorPicker as AriaColorPicker,
@@ -8,9 +7,8 @@ import {
   composeRenderProps,
   getColorChannels,
 } from "react-aria-components";
+import type { ColorFormat } from "react-aria-components";
 
-import type { ButtonProps } from "@dotui/ui/components/button";
-import type { DialogProps } from "@dotui/ui/components/dialog";
 import { Button } from "@dotui/ui/components/button";
 import { ColorArea } from "@dotui/ui/components/color-area";
 import { ColorField } from "@dotui/ui/components/color-field";
@@ -18,7 +16,10 @@ import { ColorSlider } from "@dotui/ui/components/color-slider";
 import { ColorSwatch } from "@dotui/ui/components/color-swatch";
 import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
 import { Select, SelectItem } from "@dotui/ui/components/select";
-import { cn } from "@dotui/ui/lib/utils";
+import type { ButtonProps } from "@dotui/ui/components/button";
+import type { DialogProps } from "@dotui/ui/components/dialog";
+
+import { cn } from "@/lib/utils";
 
 interface ColorPickerProps
   extends ColorPickerRootProps,

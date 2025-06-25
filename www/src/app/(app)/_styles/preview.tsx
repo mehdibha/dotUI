@@ -2,9 +2,6 @@
 
 import React from "react";
 import { useParams, usePathname } from "next/navigation";
-import { useSidebarContext } from "@/components/sidebar";
-import { useDebounce } from "@/hooks/use-debounce";
-import { useMounted } from "@/hooks/use-mounted";
 // import { useStyles } from "@/modules/styles/atoms/styles-atom";
 import {
   ChevronLeftIcon,
@@ -19,6 +16,10 @@ import { motion } from "motion/react";
 import { Button } from "@dotui/ui/components/button";
 import { Skeleton } from "@dotui/ui/components/skeleton";
 import { cn } from "@dotui/ui/lib/utils";
+
+import { useSidebarContext } from "@/components/sidebar";
+import { useDebounce } from "@/hooks/use-debounce";
+import { useMounted } from "@/hooks/use-mounted";
 
 const PreviewContext = React.createContext<{
   isOpen: boolean;

@@ -1,11 +1,5 @@
 "use client";
 
-import type {
-  CalendarProps as AriaCalendarProps,
-  RangeCalendarProps as AriaRangeCalendarProps,
-  DateValue,
-} from "react-aria-components";
-import type { VariantProps } from "tailwind-variants";
 import React from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import {
@@ -24,6 +18,12 @@ import {
   useSlottedContext,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type {
+  CalendarProps as AriaCalendarProps,
+  RangeCalendarProps as AriaRangeCalendarProps,
+  DateValue,
+} from "react-aria-components";
+import type { VariantProps } from "tailwind-variants";
 
 import { Button } from "@dotui/ui/components/button";
 import { ButtonGroup } from "@dotui/ui/components/button-group";

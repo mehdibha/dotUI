@@ -1,8 +1,8 @@
 "use client";
 
-import type { ColorSpace } from "react-aria-components";
 import React from "react";
 import { getColorChannels } from "react-aria-components";
+import type { ColorSpace } from "react-aria-components";
 
 import {
   ColorPickerButton,

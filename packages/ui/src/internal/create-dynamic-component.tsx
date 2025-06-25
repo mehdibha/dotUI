@@ -1,7 +1,7 @@
 import React from "react";
 
-import type { Variants } from "@dotui/style-engine/types";
 import { Skeleton } from "@dotui/ui/components/skeleton";
+import type { Variants } from "@dotui/style-engine/types";
 
 import { useVariant } from "./variants-provider";
 

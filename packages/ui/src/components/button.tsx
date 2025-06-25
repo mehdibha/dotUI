@@ -2,13 +2,13 @@
 
 import React from "react";
 
-import type { ButtonProps } from "../registry/components/button/basic";
 import { createDynamicComponent } from "../internal/create-dynamic-component";
 import {
   Button as _Button,
   ButtonProvider as _ButtonProvider,
   buttonStyles,
 } from "../registry/components/button/basic";
+import type { ButtonProps } from "../registry/components/button/basic";
 
 export const Button = createDynamicComponent<ButtonProps>(
   "button",

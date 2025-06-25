@@ -1,6 +1,3 @@
-import { GitHubIcon, TwitterIcon } from "@/components/icons";
-import { siteConfig } from "@/config";
-import { authClient } from "@/modules/auth/lib/client";
 import {
   ContrastIcon,
   LogOutIcon,
@@ -14,6 +11,10 @@ import { Avatar } from "@dotui/ui/components/avatar";
 import { Button } from "@dotui/ui/components/button";
 import { Menu, MenuItem, MenuRoot, MenuSub } from "@dotui/ui/components/menu";
 import { Separator } from "@dotui/ui/components/separator";
+
+import { GitHubIcon, TwitterIcon } from "@/components/icons";
+import { siteConfig } from "@/config";
+import { authClient } from "@/modules/auth/lib/client";
 
 export function UserProfileMenu() {
   const { data: session } = authClient.useSession();

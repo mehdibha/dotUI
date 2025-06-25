@@ -1,7 +1,7 @@
 "use client";
 
-import type { DateValue } from "@internationalized/date";
 import { getLocalTimeZone, today } from "@internationalized/date";
+import type { DateValue } from "@internationalized/date";
 
 import { RangeCalendar } from "@dotui/ui/components/calendar";
 

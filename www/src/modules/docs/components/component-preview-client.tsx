@@ -1,9 +1,7 @@
 "use client";
 
 import React from "react";
-// import { ThemeModeSwitch } from "@/components/theme-mode-switch";
-import { useHorizontalResize } from "@/hooks/use-horizontal-resize";
-import { useMounted } from "@/hooks/use-mounted";
+
 // import { useStyles } from "@/modules/styles/atoms/styles-atom";
 // import { styles } from "@/registry/registry-styles";
 // import { ChevronDownIcon } from "lucide-react";
@@ -17,6 +15,10 @@ import { useMounted } from "@/hooks/use-mounted";
 //   SelectValue,
 // } from "@dotui/ui/components/select";
 import { Skeleton } from "@dotui/ui/components/skeleton";
+
+// import { ThemeModeSwitch } from "@/components/theme-mode-switch";
+import { useHorizontalResize } from "@/hooks/use-horizontal-resize";
+import { useMounted } from "@/hooks/use-mounted";
 
 export const Loader = ({ children }: { children: React.ReactNode }) => {
   const [isMounted, setIsMounted] = React.useState(false);

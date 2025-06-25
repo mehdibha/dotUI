@@ -2,9 +2,9 @@
 
 import React from "react";
 
-import type { LoaderProps } from "../registry/components/loader/ring";
 import { createDynamicComponent } from "../internal/create-dynamic-component";
 import { Loader as _Loader } from "../registry/components/loader/ring";
+import type { LoaderProps } from "../registry/components/loader/ring";
 
 export const Loader = createDynamicComponent<LoaderProps>(
   "loader",

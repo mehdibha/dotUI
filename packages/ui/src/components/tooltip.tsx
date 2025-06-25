@@ -2,18 +2,18 @@
 
 import React from "react";
 
-import type {
-  TooltipArrowProps,
-  TooltipContentProps,
-  TooltipProps,
-  TooltipRootProps,
-} from "../registry/components/tooltip/basic";
 import { createDynamicComponent } from "../internal/create-dynamic-component";
 import {
   Tooltip as _Tooltip,
   TooltipArrow as _TooltipArrow,
   TooltipContent as _TooltipContent,
   TooltipRoot as _TooltipRoot,
+} from "../registry/components/tooltip/basic";
+import type {
+  TooltipArrowProps,
+  TooltipContentProps,
+  TooltipProps,
+  TooltipRootProps,
 } from "../registry/components/tooltip/basic";
 
 export const Tooltip = createDynamicComponent<TooltipProps>(

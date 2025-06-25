@@ -1,9 +1,9 @@
 "use client";
 
-import type { DateRange } from "react-aria-components";
 import React from "react";
 import { getLocalTimeZone, parseDate } from "@internationalized/date";
 import { useDateFormatter } from "react-aria";
+import type { DateRange } from "react-aria-components";
 
 import { DateRangePicker } from "@dotui/ui/components/date-range-picker";
 

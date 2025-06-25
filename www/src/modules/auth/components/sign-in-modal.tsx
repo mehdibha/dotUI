@@ -1,5 +1,4 @@
 import React from "react";
-import { GitHubIcon } from "@/components/icons";
 
 import { Button } from "@dotui/ui/components/button";
 import {
@@ -12,6 +11,7 @@ import {
 } from "@dotui/ui/components/dialog";
 import { Overlay } from "@dotui/ui/components/overlay";
 
+import { GitHubIcon } from "@/components/icons";
 import { authClient } from "../lib/client";
 
 export function SignInModal({ children }: { children: React.ReactNode }) {

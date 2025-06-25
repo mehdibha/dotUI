@@ -1,10 +1,5 @@
 "use client";
 
-import type {
-  ButtonProps as AriaButtonProps,
-  LinkProps as AriaLinkProps,
-} from "react-aria-components";
-import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
 import {
   Button as AriaButton,
@@ -12,10 +7,16 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type {
+  ButtonProps as AriaButtonProps,
+  LinkProps as AriaLinkProps,
+} from "react-aria-components";
+import type { VariantProps } from "tailwind-variants";
 
 import { Loader } from "@dotui/ui/components/loader";
 import { focusRing } from "@dotui/ui/lib/focus-styles";
-import { createOptionalScopedContext } from "@dotui/ui/lib/utils";
+
+import { createOptionalScopedContext } from "@/lib/utils";
 
 const buttonStyles = tv({
   extend: focusRing,

@@ -1,7 +1,8 @@
 "use client";
 
-import type { SortDescriptor } from "react-aria-components";
 import React from "react";
+import type { SortDescriptor } from "react-aria-components";
+
 import {
   TableBody,
   TableCell,

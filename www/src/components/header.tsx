@@ -1,17 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { siteConfig } from "@/config";
-import { useMounted } from "@/hooks/use-mounted";
-import { SignInModal } from "@/modules/auth/components/sign-in-modal";
-import { UserProfileMenu } from "@/modules/auth/components/user-profile-menu";
-import { authClient } from "@/modules/auth/lib/client";
 import { SearchIcon } from "lucide-react";
 
 import { Button } from "@dotui/ui/components/button";
 import { Kbd } from "@dotui/ui/components/kbd";
 import { cn } from "@dotui/ui/lib/utils";
 
+import { siteConfig } from "@/config";
+import { useMounted } from "@/hooks/use-mounted";
+import { SignInModal } from "@/modules/auth/components/sign-in-modal";
+import { UserProfileMenu } from "@/modules/auth/components/user-profile-menu";
+import { authClient } from "@/modules/auth/lib/client";
 import { GitHubIcon, TwitterIcon } from "./icons";
 import { Logo } from "./logo";
 import { SearchCommand } from "./search-command";
@@ -86,7 +86,9 @@ export function Header({ className }: { className?: string }) {
                 </Button>
                 <ThemeSwitcher />
                 <SignInModal>
-                  <Button variant="primary" size="sm">Sign in</Button>
+                  <Button variant="primary" size="sm">
+                    Sign in
+                  </Button>
                 </SignInModal>
               </>
             )}

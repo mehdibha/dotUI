@@ -1,6 +1,6 @@
+import { useCallback, useState } from "react";
 import type React from "react";
 import type { PressEvent } from "react-aria-components";
-import { useCallback, useState } from "react";
 
 function getUniqueID(prefix: string) {
   return `${prefix}-${Math.floor(Math.random() * 1000000)}`;

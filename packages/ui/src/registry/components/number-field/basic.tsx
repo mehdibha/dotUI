@@ -13,12 +13,12 @@ import {
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
-import type { FieldProps } from "@dotui/ui/components/field";
-import type { InputRootProps } from "@dotui/ui/components/input";
 import { Button } from "@dotui/ui/components/button";
 import { HelpText, Label } from "@dotui/ui/components/field";
 import { Input, InputRoot } from "@dotui/ui/components/input";
 import { useIsMobile } from "@dotui/ui/hooks/use-is-mobile";
+import type { FieldProps } from "@dotui/ui/components/field";
+import type { InputRootProps } from "@dotui/ui/components/input";
 
 // TODO: update registry
 

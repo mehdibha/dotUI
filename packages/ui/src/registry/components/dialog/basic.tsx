@@ -10,8 +10,8 @@ import {
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
-import type { OverlayProps } from "@dotui/ui/components/overlay";
 import { Overlay } from "@dotui/ui/components/overlay";
+import type { OverlayProps } from "@dotui/ui/components/overlay";
 
 const dialogStyles = tv({
   slots: {

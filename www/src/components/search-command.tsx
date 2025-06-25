@@ -1,8 +1,6 @@
 "use client";
 
-import type { SortedResult } from "fumadocs-core/server";
 import React from "react";
-import { kekabCaseToTitle } from "@/lib/string";
 import { useDocsSearch } from "fumadocs-core/search/client";
 import {
   ChevronsUpDownIcon,
@@ -11,6 +9,7 @@ import {
   HashIcon,
   SearchIcon,
 } from "lucide-react";
+import type { SortedResult } from "fumadocs-core/server";
 
 import { Button } from "@dotui/ui/components/button";
 import { Command } from "@dotui/ui/components/command";
@@ -19,6 +18,8 @@ import { Input, InputRoot } from "@dotui/ui/components/input";
 import { Loader } from "@dotui/ui/components/loader";
 import { MenuContent, MenuItem, MenuSection } from "@dotui/ui/components/menu";
 import { SearchFieldRoot } from "@dotui/ui/components/search-field";
+
+import { kekabCaseToTitle } from "@/lib/string";
 
 interface SearchCommandProps {
   keyboardShortcut?: boolean;

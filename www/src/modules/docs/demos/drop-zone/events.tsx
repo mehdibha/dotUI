@@ -1,8 +1,8 @@
 "use client";
 
-import type { TextDropItem } from "react-aria-components";
 import React from "react";
 import { useDrag } from "react-aria";
+import type { TextDropItem } from "react-aria-components";
 
 import { DropZone, DropZoneLabel } from "@dotui/ui/components/drop-zone";
 

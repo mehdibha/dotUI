@@ -1,7 +1,7 @@
-import type { Code, Root } from "mdast";
-import type { Transformer } from "unified";
 import convert from "npm-to-yarn";
 import { visit } from "unist-util-visit";
+import type { Code, Root } from "mdast";
+import type { Transformer } from "unified";
 
 import { createElement, expressionToAttribute } from "./utils";
 

@@ -1,8 +1,8 @@
-import { GitHubIcon, GoogleIcon, TwitterIcon } from "@/components/icons";
-import { Link } from "@/components/link";
-
 import { Button } from "@dotui/ui/components/button";
 import { TextField } from "@dotui/ui/components/text-field";
+
+import { GitHubIcon, GoogleIcon, TwitterIcon } from "@/components/icons";
+import { Link } from "@/components/link";
 
 export default function RegisterPage() {
   return (

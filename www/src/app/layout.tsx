@@ -1,15 +1,15 @@
-import type { Metadata, Viewport } from "next";
 import React from "react";
-import { fontMono, fontSans, josefinSans } from "@/lib/fonts";
-import { truncateOnWord } from "@/lib/string";
 import { Analytics } from "@vercel/analytics/react";
+import type { Metadata, Viewport } from "next";
 
 import { cn } from "@dotui/ui/lib/utils";
+
+import { fontMono, fontSans, josefinSans } from "@/lib/fonts";
+import { truncateOnWord } from "@/lib/string";
 
 import "@dotui/ui/globals.css";
 
 import { siteConfig } from "@/config";
-
 import { Providers } from "./providers";
 
 export const metadata: Metadata = {

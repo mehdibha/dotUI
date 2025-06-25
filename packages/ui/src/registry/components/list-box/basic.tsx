@@ -1,11 +1,5 @@
 "use client";
 
-import type {
-  ListBoxItemProps as AriaListBoxItemProps,
-  ListBoxProps as AriaListBoxProps,
-  ListBoxSectionProps as AriaListBoxSectionProps,
-} from "react-aria-components";
-import type { VariantProps } from "tailwind-variants";
 import React from "react";
 import { CheckIcon } from "lucide-react";
 import {
@@ -18,6 +12,12 @@ import {
   ListStateContext,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type {
+  ListBoxItemProps as AriaListBoxItemProps,
+  ListBoxProps as AriaListBoxProps,
+  ListBoxSectionProps as AriaListBoxSectionProps,
+} from "react-aria-components";
+import type { VariantProps } from "tailwind-variants";
 
 import { Loader } from "@dotui/ui/components/loader";
 import { Text } from "@dotui/ui/components/text";

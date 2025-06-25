@@ -1,4 +1,9 @@
 import React from "react";
+
+import { Avatar } from "@dotui/ui/components/avatar";
+import { Button } from "@dotui/ui/components/button";
+import { Tooltip } from "@dotui/ui/components/tooltip";
+
 import { Announcement } from "@/components/announcement";
 import {
   AdobeIcon,
@@ -12,10 +17,6 @@ import { Link } from "@/components/link";
 import { StylesOverview } from "@/components/styles-overview";
 import { siteConfig } from "@/config";
 import { getGitHubContributors } from "@/lib/github";
-
-import { Avatar } from "@dotui/ui/components/avatar";
-import { Button } from "@dotui/ui/components/button";
-import { Tooltip } from "@dotui/ui/components/tooltip";
 
 export default async function HomePage() {
   const contributors = await getGitHubContributors();

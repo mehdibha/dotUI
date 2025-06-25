@@ -2,18 +2,18 @@
 
 import React from "react";
 
-import type {
-  AlertContentProps,
-  AlertProps,
-  AlertRootProps,
-  AlertTitleProps,
-} from "../registry/components/alert/basic";
 import { createDynamicComponent } from "../internal/create-dynamic-component";
 import {
   Alert as _Alert,
   AlertContent as _AlertContent,
   AlertRoot as _AlertRoot,
   AlertTitle as _AlertTitle,
+} from "../registry/components/alert/basic";
+import type {
+  AlertContentProps,
+  AlertProps,
+  AlertRootProps,
+  AlertTitleProps,
 } from "../registry/components/alert/basic";
 
 export const Alert = createDynamicComponent<AlertProps>(

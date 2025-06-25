@@ -1,7 +1,5 @@
 "use client";
 
-import type { ValidationResult } from "react-aria-components";
-import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
 import {
   Radio as AriaRadio,
@@ -9,13 +7,13 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type { ValidationResult } from "react-aria-components";
+import type { VariantProps } from "tailwind-variants";
 
 import { HelpText, Label } from "@dotui/ui/components/field";
 import { focusRing, focusRingGroup } from "@dotui/ui/lib/focus-styles";
-import {
-  createOptionalScopedContext,
-  createScopedContext,
-} from "@dotui/ui/lib/utils";
+
+import { createOptionalScopedContext, createScopedContext } from "@/lib/utils";
 
 const radioStyles = tv({
   slots: {

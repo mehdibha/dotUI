@@ -1,9 +1,9 @@
 "use client";
 
-import type { DateValue } from "react-aria-components";
 import React from "react";
 import { getLocalTimeZone, isWeekend, today } from "@internationalized/date";
 import { useLocale } from "react-aria";
+import type { DateValue } from "react-aria-components";
 
 import { Calendar } from "@dotui/ui/components/calendar";
 

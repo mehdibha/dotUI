@@ -1,19 +1,8 @@
 "use client";
 
-import type { PageTree } from "fumadocs-core/server";
-import type { Transition } from "motion/react";
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  CollapsibleContent,
-  CollapsibleRoot,
-  CollapsibleTrigger,
-} from "@/components/collapsible";
-import { GitHubIcon, TwitterIcon } from "@/components/icons";
-import { ScrollArea } from "@/components/scroll-area";
-import { siteConfig } from "@/config";
-import { hasActive, isActive } from "@/modules/docs/utils";
 import { useOnChange } from "fumadocs-core/utils/use-on-change";
 import {
   ChevronRightIcon,
@@ -24,14 +13,25 @@ import {
   SunIcon,
 } from "lucide-react";
 import { motion } from "motion/react";
+import type { PageTree } from "fumadocs-core/server";
+import type { Transition } from "motion/react";
 
-import type { ButtonProps } from "@dotui/ui/components/button";
-import type { TooltipProps } from "@dotui/ui/components/tooltip";
 import { Button } from "@dotui/ui/components/button";
 import { Kbd } from "@dotui/ui/components/kbd";
 import { Tooltip } from "@dotui/ui/components/tooltip";
 import { cn } from "@dotui/ui/lib/utils";
+import type { ButtonProps } from "@dotui/ui/components/button";
+import type { TooltipProps } from "@dotui/ui/components/tooltip";
 
+import {
+  CollapsibleContent,
+  CollapsibleRoot,
+  CollapsibleTrigger,
+} from "@/components/collapsible";
+import { GitHubIcon, TwitterIcon } from "@/components/icons";
+import { ScrollArea } from "@/components/scroll-area";
+import { siteConfig } from "@/config";
+import { hasActive, isActive } from "@/modules/docs/utils";
 import { Logo } from "./logo";
 import { SearchCommand } from "./search-command";
 import { ThemeSwitcher } from "./site-theme-selector";

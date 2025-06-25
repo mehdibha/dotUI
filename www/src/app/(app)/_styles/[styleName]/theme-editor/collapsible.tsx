@@ -1,7 +1,7 @@
-import type { Transition } from "motion/react";
 import React from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useMeasure } from "react-use";
+import type { Transition } from "motion/react";
 
 import { cn } from "@dotui/ui/lib/utils";
 

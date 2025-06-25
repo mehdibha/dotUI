@@ -1,14 +1,15 @@
 "use client";
 
-import type { HTMLAttributes, ReactNode } from "react";
 import { forwardRef, useCallback, useRef } from "react";
-import { ScrollArea } from "@/components/scroll-area";
-import { useCopyButton } from "@/hooks/use-copy-button";
 import { Check, Copy } from "lucide-react";
+import type { HTMLAttributes, ReactNode } from "react";
 
-import type { ButtonProps } from "@dotui/ui/components/button";
 import { Button } from "@dotui/ui/components/button";
 import { cn } from "@dotui/ui/lib/utils";
+import type { ButtonProps } from "@dotui/ui/components/button";
+
+import { ScrollArea } from "@/components/scroll-area";
+import { useCopyButton } from "@/hooks/use-copy-button";
 
 export type CodeBlockProps = HTMLAttributes<HTMLElement> & {
   icon?: ReactNode;

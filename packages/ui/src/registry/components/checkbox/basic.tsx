@@ -1,6 +1,5 @@
 "use client";
 
-import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
 import { CheckIcon, MinusIcon } from "lucide-react";
 import {
@@ -8,12 +7,11 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type { VariantProps } from "tailwind-variants";
 
 import { focusRing, focusRingGroup } from "@dotui/ui/lib/focus-styles";
-import {
-  createOptionalScopedContext,
-  createScopedContext,
-} from "@dotui/ui/lib/utils";
+
+import { createOptionalScopedContext, createScopedContext } from "@/lib/utils";
 
 const checkboxStyles = tv({
   slots: {

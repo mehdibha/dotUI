@@ -1,8 +1,5 @@
 "use client";
 
-import { GitHubIcon, GoogleIcon, TwitterIcon } from "@/components/icons";
-import { Link } from "@/components/link";
-import FileTriggerDemo from "@/modules/docs/demos/file-trigger/default";
 import { MenuIcon, PinIcon } from "lucide-react";
 
 import { Alert } from "@dotui/ui/components/alert";
@@ -37,6 +34,10 @@ import { TextField } from "@dotui/ui/components/text-field";
 import { TimeField } from "@dotui/ui/components/time-field";
 import { ToggleButton } from "@dotui/ui/components/toggle-button";
 import { cn } from "@dotui/ui/lib/utils";
+
+import { GitHubIcon, GoogleIcon, TwitterIcon } from "@/components/icons";
+import { Link } from "@/components/link";
+import FileTriggerDemo from "@/modules/docs/demos/file-trigger/default";
 
 export function ComponentsOverview({ className }: { className?: string }) {
   const defaultColorScheme = "primary";

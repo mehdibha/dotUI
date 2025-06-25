@@ -1,12 +1,5 @@
 "use client";
 
-import type {
-  MenuItemProps as AriaMenuItemProps,
-  MenuProps as AriaMenuProps,
-  MenuSectionProps as AriaMenuSectionProps,
-  MenuTriggerProps as AriaMenuTriggerProps,
-} from "react-aria-components";
-import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
 import { CheckIcon, ChevronRightIcon } from "lucide-react";
 import {
@@ -20,11 +13,18 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type {
+  MenuItemProps as AriaMenuItemProps,
+  MenuProps as AriaMenuProps,
+  MenuSectionProps as AriaMenuSectionProps,
+  MenuTriggerProps as AriaMenuTriggerProps,
+} from "react-aria-components";
+import type { VariantProps } from "tailwind-variants";
 
-import type { OverlayProps } from "@dotui/ui/components/overlay";
 import { Kbd } from "@dotui/ui/components/kbd";
 import { Overlay } from "@dotui/ui/components/overlay";
 import { Text } from "@dotui/ui/components/text";
+import type { OverlayProps } from "@dotui/ui/components/overlay";
 
 const menuStyles = tv({
   base: [

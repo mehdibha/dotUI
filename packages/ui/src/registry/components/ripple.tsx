@@ -1,8 +1,8 @@
 "use client";
 
+import { AnimatePresence, motion } from "motion/react";
 import type { HTMLMotionProps } from "motion/react";
 import type { FC } from "react";
-import { AnimatePresence, motion } from "motion/react";
 
 import type { RippleType } from "@dotui/ui/hooks/use-ripple";
 

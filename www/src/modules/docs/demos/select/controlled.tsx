@@ -1,7 +1,7 @@
 "use client";
 
-import type { Key } from "react-aria-components";
 import React from "react";
+import type { Key } from "react-aria-components";
 
 import { Select, SelectItem } from "@dotui/ui/components/select";
 

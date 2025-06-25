@@ -1,8 +1,8 @@
 "use client";
 
-import type { ColorThumbProps as AriaColorThumbProps } from "react-aria-components";
 import { ColorThumb as AriaColorThumb } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type { ColorThumbProps as AriaColorThumbProps } from "react-aria-components";
 
 import { focusRing } from "@dotui/ui/lib/focus-styles";
 

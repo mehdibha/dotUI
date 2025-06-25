@@ -1,8 +1,8 @@
 "use client";
 
-import type { DateRange } from "react-aria-components";
 import React from "react";
 import { getLocalTimeZone, today } from "@internationalized/date";
+import type { DateRange } from "react-aria-components";
 
 import { RangeCalendar } from "@dotui/ui/components/calendar";
 

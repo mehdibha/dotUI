@@ -1,7 +1,7 @@
 "use client";
 
-import type { Selection } from "react-aria-components";
 import React from "react";
+import type { Selection } from "react-aria-components";
 
 import { Button } from "@dotui/ui/components/button";
 import { Menu, MenuItem, MenuRoot } from "@dotui/ui/components/menu";

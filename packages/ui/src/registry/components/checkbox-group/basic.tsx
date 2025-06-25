@@ -1,16 +1,16 @@
 "use client";
 
-import type { ValidationResult } from "react-aria-components";
-import type { VariantProps } from "tailwind-variants";
 import {
   CheckboxGroup as AriaCheckboxGroup,
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type { ValidationResult } from "react-aria-components";
+import type { VariantProps } from "tailwind-variants";
 
-import type { checkboxStyles } from "@dotui/ui/components/checkbox";
 import { CheckboxProvider } from "@dotui/ui/components/checkbox";
 import { HelpText, Label } from "@dotui/ui/components/field";
+import type { checkboxStyles } from "@dotui/ui/components/checkbox";
 
 const checkboxGroupStyles = tv({
   base: "flex flex-col gap-2",

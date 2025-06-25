@@ -2,18 +2,18 @@
 
 import React from "react";
 
-import type {
-  TabListProps,
-  TabPanelProps,
-  TabProps,
-  TabsProps,
-} from "../registry/components/tabs/basic";
 import { createDynamicComponent } from "../internal/create-dynamic-component";
 import {
   Tab as _Tab,
   TabList as _TabList,
   TabPanel as _TabPanel,
   Tabs as _Tabs,
+} from "../registry/components/tabs/basic";
+import type {
+  TabListProps,
+  TabPanelProps,
+  TabProps,
+  TabsProps,
 } from "../registry/components/tabs/basic";
 
 export const Tabs = createDynamicComponent<TabsProps>("tabs", "Tabs", _Tabs, {

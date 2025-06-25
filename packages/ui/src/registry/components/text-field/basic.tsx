@@ -7,10 +7,10 @@ import {
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
-import type { FieldProps } from "@dotui/ui/components/field";
-import type { InputRootProps } from "@dotui/ui/components/input";
 import { HelpText, Label } from "@dotui/ui/components/field";
 import { Input, InputRoot } from "@dotui/ui/components/input";
+import type { FieldProps } from "@dotui/ui/components/field";
+import type { InputRootProps } from "@dotui/ui/components/input";
 
 const textFieldStyles = tv({
   base: "flex w-48 flex-col items-start gap-2",

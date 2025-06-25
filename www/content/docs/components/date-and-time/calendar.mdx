@@ -28,8 +28,9 @@ npx shadcn@latest add https://dotui.org/r/{style-name}/calendar.json
 Use `Calendar` to allow users to select a single date.
 
 ```tsx
-import { Calendar } from "@/components/core/calendar";
 import { parseDate } from "@internationalized/date";
+
+import { Calendar } from "@/components/core/calendar";
 
 <Calendar
   aria-label="Appointment date"
@@ -38,6 +39,9 @@ import { parseDate } from "@internationalized/date";
 ```
 
 ```tsx
+import { parseDate } from "@internationalized/date";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+
 import { Button } from "@/components/core/button";
 import {
   CalendarCell,
@@ -49,8 +53,6 @@ import {
   CalendarRoot,
 } from "@/components/core/calendar";
 import { Heading } from "@/registry/ui/default/core/heading";
-import { parseDate } from "@internationalized/date";
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 
 <CalendarRoot
   aria-label="Appointment date"

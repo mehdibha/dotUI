@@ -1,8 +1,8 @@
 "use client";
 
-import type { Key } from "react-aria-components";
 import React from "react";
 import { InfoIcon } from "lucide-react";
+import type { Key } from "react-aria-components";
 
 import { Button } from "@dotui/ui/components/button";
 import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";

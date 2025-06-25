@@ -1,7 +1,8 @@
 "use client";
 
-import type { Selection } from "react-aria-components";
 import React from "react";
+import type { Selection } from "react-aria-components";
+
 import {
   TableBody,
   TableCell,

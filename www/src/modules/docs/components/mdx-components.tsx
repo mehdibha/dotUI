@@ -1,19 +1,15 @@
+import React from "react";
+import { ArrowUpRightIcon } from "lucide-react";
 import type { LinkProps } from "@/components/link";
 import type { MDXComponents } from "mdx/types";
-import React from "react";
-import { Link as NavLink } from "@/components/link";
-import { ArrowUpRightIcon } from "lucide-react";
 
-import type { AlertProps } from "@dotui/ui/components/alert";
-import type { BadgeProps } from "@dotui/ui/components/badge";
 import { Alert } from "@dotui/ui/components/alert";
 import { Badge } from "@dotui/ui/components/badge";
 import { cn } from "@dotui/ui/lib/utils";
+import type { AlertProps } from "@dotui/ui/components/alert";
+import type { BadgeProps } from "@dotui/ui/components/badge";
 
-import type { ChoicesProps } from "./choices";
-import type { ComponentPreviewProps } from "./component-preview";
-import type { PaletteProps } from "./palette";
-import type { TabsProps } from "./tabs";
+import { Link as NavLink } from "@/components/link";
 import { BadgePalette } from "./badge-palette";
 import { Choice, Choices } from "./choices";
 import { Pre } from "./code-block-mdx";
@@ -21,6 +17,10 @@ import { ComponentPreview } from "./component-preview";
 import { InstallTab, InstallTabs } from "./install-tabs";
 import { Palette } from "./palette";
 import { Tab, Tabs } from "./tabs";
+import type { ChoicesProps } from "./choices";
+import type { ComponentPreviewProps } from "./component-preview";
+import type { PaletteProps } from "./palette";
+import type { TabsProps } from "./tabs";
 
 export const mdxComponents: MDXComponents = {
   h1: createHeading(1, "font-heading mt-2 scroll-m-20 text-4xl font-bold"),

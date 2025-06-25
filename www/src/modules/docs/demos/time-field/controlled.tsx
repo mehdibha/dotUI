@@ -1,8 +1,8 @@
 "use client";
 
-import type { TimeValue } from "react-aria-components";
 import React from "react";
 import { Time } from "@internationalized/date";
+import type { TimeValue } from "react-aria-components";
 
 import { TimeField } from "@dotui/ui/components/time-field";
 
