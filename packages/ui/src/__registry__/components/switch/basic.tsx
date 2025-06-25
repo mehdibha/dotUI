@@ -5,13 +5,14 @@
 
 import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
-import { focusRing, focusRingGroup } from "@/lib/focus-styles";
-import { createScopedContext } from "@/lib/utils";
 import {
   Switch as AriaSwitch,
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+
+import { focusRing, focusRingGroup } from "@dotui/ui/lib/focus-styles";
+import { createScopedContext } from "@dotui/ui/lib/utils";
 
 const switchStyles = tv({
   slots: {

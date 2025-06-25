@@ -3,23 +3,24 @@
 
 "use client";
 
-import type { FieldProps } from "@/components/field";
-import type { inputStyles } from "@/components/input";
 import type {
   DatePickerProps as AriaDatePickerProps,
   DateValue,
 } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
-import { Button } from "@/components/button";
-import { Calendar } from "@/components/calendar";
-import { DateInput, DateSegment } from "@/components/date-input";
-import { Dialog } from "@/components/dialog";
-import { HelpText, Label } from "@/components/field";
-import { InputRoot } from "@/components/input";
 import { CalendarIcon } from "lucide-react";
 import { DatePicker as AriaDatePicker } from "react-aria-components";
 import { tv } from "tailwind-variants";
+
+import type { FieldProps } from "@dotui/ui/components/field";
+import type { inputStyles } from "@dotui/ui/components/input";
+import { Button } from "@dotui/ui/components/button";
+import { Calendar } from "@dotui/ui/components/calendar";
+import { DateInput, DateSegment } from "@dotui/ui/components/date-input";
+import { Dialog } from "@dotui/ui/components/dialog";
+import { HelpText, Label } from "@dotui/ui/components/field";
+import { InputRoot } from "@dotui/ui/components/input";
 
 const datePickerStyles = tv({
   base: "flex w-48 flex-col items-start gap-2",

@@ -3,7 +3,6 @@
 
 "use client";
 
-import type { OverlayProps } from "@/components/overlay";
 import type {
   MenuItemProps as AriaMenuItemProps,
   MenuProps as AriaMenuProps,
@@ -12,9 +11,6 @@ import type {
 } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
-import { Kbd } from "@/components/kbd";
-import { Overlay } from "@/components/overlay";
-import { Text } from "@/components/text";
 import { CheckIcon, ChevronRightIcon } from "lucide-react";
 import {
   Collection as AriaCollection,
@@ -27,6 +23,11 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+
+import type { OverlayProps } from "@dotui/ui/components/overlay";
+import { Kbd } from "@dotui/ui/components/kbd";
+import { Overlay } from "@dotui/ui/components/overlay";
+import { Text } from "@dotui/ui/components/text";
 
 const menuStyles = tv({
   base: [

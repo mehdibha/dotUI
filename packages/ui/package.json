@@ -11,7 +11,7 @@
     "./components/*": "./src/components/*.tsx",
     "./hooks/*": "./src/hooks/*.ts",
     "./lib/focus-styles": "./src/lib/focus-styles.ts",
-    "./lib/utils": "./src/lib/utils.ts",
+    "./lib/utils": "./src/lib/utils.tsx",
     "./globals.css": "./src/globals.css"
   },
   "license": "MIT",

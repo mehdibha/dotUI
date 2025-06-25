@@ -6,8 +6,6 @@
 import type { TabListProps as AriaTabListProps } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
-import { focusRing } from "@/lib/focus-styles";
-import { createScopedContext } from "@/lib/utils";
 import {
   Tab as AriaTab,
   TabList as AriaTabList,
@@ -16,6 +14,9 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+
+import { focusRing } from "@dotui/ui/lib/focus-styles";
+import { createScopedContext } from "@dotui/ui/lib/utils";
 
 const tabsStyles = tv({
   slots: {

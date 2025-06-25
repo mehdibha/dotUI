@@ -6,7 +6,6 @@
 import type { Variants } from "motion/react";
 import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
-import { createScopedContext } from "@/lib/utils";
 import { AnimatePresence, motion } from "motion/react";
 import {
   OverlayArrow as AriaOverlayArrow,
@@ -16,6 +15,8 @@ import {
   TooltipTriggerStateContext,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+
+import { createScopedContext } from "@dotui/ui/lib/utils";
 
 const tooltipStyles = tv({
   slots: {

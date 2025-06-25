@@ -6,15 +6,19 @@
 import type { ValidationResult } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
-import { HelpText, Label } from "@/components/field";
-import { focusRing, focusRingGroup } from "@/lib/focus-styles";
-import { createOptionalScopedContext, createScopedContext } from "@/lib/utils";
 import {
   Radio as AriaRadio,
   RadioGroup as AriaRadioGroup,
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+
+import { HelpText, Label } from "@dotui/ui/components/field";
+import { focusRing, focusRingGroup } from "@dotui/ui/lib/focus-styles";
+import {
+  createOptionalScopedContext,
+  createScopedContext,
+} from "@dotui/ui/lib/utils";
 
 const radioStyles = tv({
   slots: {

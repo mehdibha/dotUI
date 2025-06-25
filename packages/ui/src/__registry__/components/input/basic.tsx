@@ -5,7 +5,6 @@
 
 import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
-import { focusInput } from "@/lib/focus-styles";
 import { chain, mergeProps, mergeRefs } from "@react-aria/utils";
 import { useControlledState } from "@react-stately/utils";
 import {
@@ -19,6 +18,8 @@ import {
   useContextProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+
+import { focusInput } from "@dotui/ui/lib/focus-styles";
 
 const inputStyles = tv({
   slots: {

@@ -3,16 +3,17 @@
 
 "use client";
 
-import type { FieldProps } from "@/components/field";
-import type { InputRootProps } from "@/components/input";
 import * as React from "react";
-import { HelpText, Label } from "@/components/field";
-import { Input, InputRoot } from "@/components/input";
 import {
   ColorField as AriaColorField,
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+
+import type { FieldProps } from "@dotui/ui/components/field";
+import type { InputRootProps } from "@dotui/ui/components/input";
+import { HelpText, Label } from "@dotui/ui/components/field";
+import { Input, InputRoot } from "@dotui/ui/components/input";
 
 const colorFieldStyles = tv({
   base: "flex w-48 flex-col items-start gap-2",

@@ -4,14 +4,7 @@
   "version": "0.1.0",
   "type": "module",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./src/index.ts"
-    },
-    "./registry-ui": {
-      "types": "./dist/registry-ui.d.ts",
-      "default": "./src/registry-ui.ts"
-    }
+    "./components/*": "./src/components/*.tsx"
   },
   "license": "MIT",
   "scripts": {

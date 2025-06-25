@@ -7,7 +7,6 @@ import type {
   BreadcrumbsProps as AriaBreadcrumbsProps,
   LinkProps as AriaLinkProps,
 } from "react-aria-components";
-import { focusRing } from "@/lib/focus-styles";
 import { ChevronRightIcon } from "lucide-react";
 import {
   Breadcrumb as AriaBreadcrumb,
@@ -16,6 +15,8 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+
+import { focusRing } from "@dotui/ui/lib/focus-styles";
 
 const breadcrumbsStyles = tv({
   slots: {

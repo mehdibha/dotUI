@@ -4,13 +4,14 @@
 "use client";
 
 import React from "react";
-import { ColorSwatch } from "@/components/color-swatch";
-import { focusRing } from "@/lib/focus-styles";
-import { cn } from "@/lib/utils";
 import {
   ColorSwatchPicker as AriaColorSwatchPicker,
   ColorSwatchPickerItem as AriaColorSwatchPickerItem,
 } from "react-aria-components";
+
+import { ColorSwatch } from "@dotui/ui/components/color-swatch";
+import { focusRing } from "@dotui/ui/lib/focus-styles";
+import { cn } from "@dotui/ui/lib/utils";
 
 interface ColorSwatchPickerProps
   extends React.ComponentProps<typeof AriaColorSwatchPicker> {}

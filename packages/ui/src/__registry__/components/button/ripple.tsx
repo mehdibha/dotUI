@@ -10,11 +10,6 @@ import type {
 } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
-import { Loader } from "@/components/loader";
-import { Ripple } from "@/components/ripple";
-import { useRipple } from "@/hooks/use-ripple";
-import { focusRing } from "@/lib/focus-styles";
-import { createOptionalScopedContext } from "@/lib/utils";
 import { chain } from "@react-aria/utils";
 import {
   Button as AriaButton,
@@ -22,6 +17,12 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+
+import { Loader } from "@dotui/ui/components/loader";
+import { Ripple } from "@dotui/ui/components/ripple";
+import { useRipple } from "@dotui/ui/hooks/use-ripple";
+import { focusRing } from "@dotui/ui/lib/focus-styles";
+import { createOptionalScopedContext } from "@dotui/ui/lib/utils";
 
 const buttonStyles = tv({
   extend: focusRing,

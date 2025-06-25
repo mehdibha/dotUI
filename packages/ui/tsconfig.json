@@ -6,7 +6,7 @@
     "jsxImportSource": "react",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@dotui/ui/*": ["./src/*"]
     }
   },
   "include": ["src"],

@@ -3,13 +3,7 @@
 
 "use client";
 
-import type { FieldProps } from "@/components/field";
-import type { InputRootProps } from "@/components/input";
 import * as React from "react";
-import { Button } from "@/components/button";
-import { HelpText, Label } from "@/components/field";
-import { Input, InputRoot } from "@/components/input";
-import { useIsMobile } from "@/hooks/use-is-mobile";
 import {
   ChevronDownIcon,
   ChevronUpIcon,
@@ -21,6 +15,13 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+
+import type { FieldProps } from "@dotui/ui/components/field";
+import type { InputRootProps } from "@dotui/ui/components/input";
+import { Button } from "@dotui/ui/components/button";
+import { HelpText, Label } from "@dotui/ui/components/field";
+import { Input, InputRoot } from "@dotui/ui/components/input";
+import { useIsMobile } from "@dotui/ui/hooks/use-is-mobile";
 
 // TODO: update registry
 

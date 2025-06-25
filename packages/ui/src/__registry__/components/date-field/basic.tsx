@@ -3,21 +3,22 @@
 
 "use client";
 
-import type { FieldProps } from "@/components/field";
-import type { InputRootProps } from "@/components/input";
 import type {
   DateFieldProps as AriaDateFieldProps,
   DateValue,
 } from "react-aria-components";
 import * as React from "react";
-import { DateInput, DateSegment } from "@/components/date-input";
-import { HelpText, Label } from "@/components/field";
-import { InputRoot } from "@/components/input";
 import {
   DateField as AriaDateField,
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+
+import type { FieldProps } from "@dotui/ui/components/field";
+import type { InputRootProps } from "@dotui/ui/components/input";
+import { DateInput, DateSegment } from "@dotui/ui/components/date-input";
+import { HelpText, Label } from "@dotui/ui/components/field";
+import { InputRoot } from "@dotui/ui/components/input";
 
 const dateFieldStyles = tv({
   base: "flex w-32 flex-col items-start gap-2",

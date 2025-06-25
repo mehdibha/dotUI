@@ -3,19 +3,12 @@
 
 "use client";
 
-import type { ButtonProps } from "@/components/button";
-import type { FieldProps } from "@/components/field";
-import type { ListBoxProps } from "@/components/list-box";
 import type {
   SelectProps as AriaSelectProps,
   SelectValueProps as AriaSelectValueProps,
   ListBoxItemProps,
 } from "react-aria-components";
 import * as React from "react";
-import { Button } from "@/components/button";
-import { HelpText, Label } from "@/components/field";
-import { ListBox, ListBoxItem } from "@/components/list-box";
-import { Popover } from "@/components/popover";
 import { ChevronDownIcon } from "lucide-react";
 import {
   Select as AriaSelect,
@@ -23,6 +16,14 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+
+import type { ButtonProps } from "@dotui/ui/components/button";
+import type { FieldProps } from "@dotui/ui/components/field";
+import type { ListBoxProps } from "@dotui/ui/components/list-box";
+import { Button } from "@dotui/ui/components/button";
+import { HelpText, Label } from "@dotui/ui/components/field";
+import { ListBox, ListBoxItem } from "@dotui/ui/components/list-box";
+import { Popover } from "@dotui/ui/components/popover";
 
 const selectStyles = tv({
   slots: {

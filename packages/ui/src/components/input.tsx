@@ -1,1 +1,1 @@
-export * from "@/__registry__/components/input/basic";
+export * from "../__registry__/components/input/basic";

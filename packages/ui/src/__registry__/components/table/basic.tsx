@@ -10,9 +10,6 @@ import type {
   TableHeaderProps as AriaTableHeaderProps,
 } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
-import { Checkbox } from "@/components/checkbox";
-import { focusRing } from "@/lib/focus-styles";
-import { cn, createScopedContext } from "@/lib/utils";
 import { ChevronDownIcon, ChevronUpIcon, GripVerticalIcon } from "lucide-react";
 import {
   Button as AriaButton,
@@ -29,6 +26,10 @@ import {
   useTableOptions,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+
+import { Checkbox } from "@dotui/ui/components/checkbox";
+import { focusRing } from "@dotui/ui/lib/focus-styles";
+import { cn, createScopedContext } from "@dotui/ui/lib/utils";
 
 const tableStyles = tv({
   slots: {

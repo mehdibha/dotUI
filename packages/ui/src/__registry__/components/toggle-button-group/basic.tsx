@@ -3,14 +3,15 @@
 
 "use client";
 
-import type { toggleButtonStyles } from "@/components/toggle-button";
 import type { VariantProps } from "tailwind-variants";
-import { ToggleButtonProvider } from "@/components/toggle-button";
 import {
   ToggleButtonGroup as AriaToggleButtonGroup,
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+
+import type { toggleButtonStyles } from "@dotui/ui/components/toggle-button";
+import { ToggleButtonProvider } from "@dotui/ui/components/toggle-button";
 
 const toggleGroupStyles = tv({
   base: "isolate inline-flex items-center [&_button]:rounded-none [&_button]:first:rounded-s-md [&_button]:last:rounded-e-md",

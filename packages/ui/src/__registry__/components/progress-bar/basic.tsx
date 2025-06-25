@@ -5,13 +5,14 @@
 
 import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
-import { Description, Label } from "@/components/field";
-import { createScopedContext } from "@/lib/utils";
 import {
   ProgressBar as AriaProgress,
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+
+import { Description, Label } from "@dotui/ui/components/field";
+import { createScopedContext } from "@dotui/ui/lib/utils";
 
 const progressStyles = tv({
   slots: {

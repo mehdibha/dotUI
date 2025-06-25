@@ -1,9 +1,10 @@
 "use client";
 
-import type { RippleType } from "@/hooks/use-ripple";
 import type { HTMLMotionProps } from "motion/react";
 import type { FC } from "react";
 import { AnimatePresence, motion } from "motion/react";
+
+import type { RippleType } from "@dotui/ui/hooks/use-ripple";
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);

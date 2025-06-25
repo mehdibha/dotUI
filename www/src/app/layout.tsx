@@ -6,7 +6,7 @@ import { Analytics } from "@vercel/analytics/react";
 
 import { cn } from "@dotui/ui/lib/utils";
 
-import "@/styles/globals.css";
+import "@dotui/ui/globals.css";
 
 import { siteConfig } from "@/config";
 

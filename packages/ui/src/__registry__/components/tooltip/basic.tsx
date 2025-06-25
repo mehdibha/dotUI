@@ -5,7 +5,6 @@
 
 import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
-import { createScopedContext } from "@/lib/utils";
 import {
   OverlayArrow as AriaOverlayArrow,
   Tooltip as AriaTooltip,
@@ -13,6 +12,8 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+
+import { createScopedContext } from "@dotui/ui/lib/utils";
 
 // TODO: Remove tailwindcss-animate an replace it with css transitions
 

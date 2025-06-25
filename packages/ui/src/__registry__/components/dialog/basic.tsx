@@ -3,9 +3,7 @@
 
 "use client";
 
-import type { OverlayProps } from "@/components/overlay";
 import * as React from "react";
-import { Overlay } from "@/components/overlay";
 import {
   Dialog as AriaDialog,
   DialogTrigger as AriaDialogTrigger,
@@ -14,6 +12,9 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+
+import type { OverlayProps } from "@dotui/ui/components/overlay";
+import { Overlay } from "@dotui/ui/components/overlay";
 
 const dialogStyles = tv({
   slots: {

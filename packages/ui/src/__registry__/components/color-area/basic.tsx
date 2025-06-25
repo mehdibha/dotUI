@@ -3,12 +3,13 @@
 
 "use client";
 
-import { ColorThumb } from "@/components/color-thumb";
 import {
   ColorArea as AriaColorArea,
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+
+import { ColorThumb } from "@dotui/ui/components/color-thumb";
 
 const colorAreaStyles = tv({
   base: "block size-48 min-w-20 rounded-md disabled:[background:var(--color-bg-disabled)]!",

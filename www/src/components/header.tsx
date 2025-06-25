@@ -57,6 +57,7 @@ export function Header({ className }: { className?: string }) {
                     <Kbd>K</Kbd>
                   </div>
                 }
+                size="sm"
                 className="text-fg-muted gap-2 pr-1 pl-3"
               >
                 <span className="mr-6 flex-1">Search docs...</span>
@@ -79,12 +80,13 @@ export function Header({ className }: { className?: string }) {
                   target="_blank"
                   variant="quiet"
                   shape="square"
+                  size="sm"
                 >
                   <TwitterIcon />
                 </Button>
                 <ThemeSwitcher />
                 <SignInModal>
-                  <Button variant="primary">Sign in</Button>
+                  <Button variant="primary" size="sm">Sign in</Button>
                 </SignInModal>
               </>
             )}

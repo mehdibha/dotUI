@@ -3,7 +3,6 @@
 
 "use client";
 
-import type { FieldProps } from "@/components/field";
 import type {
   TagGroupProps as AriaTagGroupProps,
   TagListProps as AriaTagListProps,
@@ -11,9 +10,6 @@ import type {
 } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 import React from "react";
-import { Button } from "@/components/button";
-import { HelpText, Label } from "@/components/field";
-import { focusRing } from "@/lib/focus-styles";
 import {
   Tag as AriaTag,
   TagGroup as AriaTagGroup,
@@ -21,6 +17,11 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+
+import type { FieldProps } from "@dotui/ui/components/field";
+import { Button } from "@dotui/ui/components/button";
+import { HelpText, Label } from "@dotui/ui/components/field";
+import { focusRing } from "@dotui/ui/lib/focus-styles";
 
 const tagGroupStyles = tv({
   slots: {

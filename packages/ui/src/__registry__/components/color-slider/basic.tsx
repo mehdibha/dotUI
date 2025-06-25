@@ -3,8 +3,6 @@
 
 "use client";
 
-import { ColorThumb } from "@/components/color-thumb";
-import { Label } from "@/components/field";
 import {
   ColorSlider as AriaColorSlider,
   SliderOutput as AriaSliderOutput,
@@ -12,6 +10,9 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+
+import { ColorThumb } from "@dotui/ui/components/color-thumb";
+import { Label } from "@dotui/ui/components/field";
 
 const colorSliderStyles = tv({
   slots: {

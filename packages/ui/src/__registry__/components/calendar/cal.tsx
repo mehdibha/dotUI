@@ -10,10 +10,6 @@ import type {
 } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 import React from "react";
-import { ButtonGroup } from "@/components/button-group";
-import { Button } from "@/components/button";
-import { Text } from "@/components/text";
-import { focusRing } from "@/lib/focus-styles";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import {
   Calendar as AriaCalendar,
@@ -31,6 +27,11 @@ import {
   useSlottedContext,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+
+import { Button } from "@dotui/ui/components/button";
+import { ButtonGroup } from "@dotui/ui/components/button-group";
+import { Text } from "@dotui/ui/components/text";
+import { focusRing } from "@dotui/ui/lib/focus-styles";
 
 const calendarStyles = tv({
   slots: {

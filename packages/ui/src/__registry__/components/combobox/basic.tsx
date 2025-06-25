@@ -3,18 +3,19 @@
 
 "use client";
 
-import type { FieldProps } from "@/components/field";
-import type { ListBoxItemProps } from "@/components/list-box";
 import type { ComboBoxProps as AriaComboboxProps } from "react-aria-components";
 import * as React from "react";
-import { Button } from "@/components/button";
-import { HelpText, Label } from "@/components/field";
-import { Input, InputRoot } from "@/components/input";
-import { ListBox, ListBoxItem } from "@/components/list-box";
-import { Overlay } from "@/components/overlay";
 import { ChevronDownIcon } from "lucide-react";
 import { ComboBox as AriaCombobox } from "react-aria-components";
 import { tv } from "tailwind-variants";
+
+import type { FieldProps } from "@dotui/ui/components/field";
+import type { ListBoxItemProps } from "@dotui/ui/components/list-box";
+import { Button } from "@dotui/ui/components/button";
+import { HelpText, Label } from "@dotui/ui/components/field";
+import { Input, InputRoot } from "@dotui/ui/components/input";
+import { ListBox, ListBoxItem } from "@dotui/ui/components/list-box";
+import { Overlay } from "@dotui/ui/components/overlay";
 
 const comboboxStyles = tv({
   slots: {

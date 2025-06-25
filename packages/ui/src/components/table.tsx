@@ -1,1 +1,1 @@
-export * from "@/__registry__/components/table/basic";
+export * from "../__registry__/components/table/basic";

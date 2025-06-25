@@ -10,9 +10,6 @@ import type {
 } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 import React from "react";
-import { Loader } from "@/components/loader";
-import { Text } from "@/components/text";
-import { focusRing } from "@/lib/focus-styles";
 import { CheckIcon } from "lucide-react";
 import {
   Collection as AriaCollection,
@@ -24,6 +21,10 @@ import {
   ListStateContext,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+
+import { Loader } from "@dotui/ui/components/loader";
+import { Text } from "@dotui/ui/components/text";
+import { focusRing } from "@dotui/ui/lib/focus-styles";
 
 const listBoxStyles = tv({
   base: [

@@ -410,6 +410,9 @@ importers:
       '@dotui/db':
         specifier: workspace:*
         version: link:../packages/db
+      '@dotui/registry':
+        specifier: workspace:*
+        version: link:../packages/registry
       '@dotui/style-engine':
         specifier: workspace:*
         version: link:../packages/style-engine

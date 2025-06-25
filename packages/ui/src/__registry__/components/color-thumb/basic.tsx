@@ -4,9 +4,10 @@
 "use client";
 
 import type { ColorThumbProps as AriaColorThumbProps } from "react-aria-components";
-import { focusRing } from "@/lib/focus-styles";
 import { ColorThumb as AriaColorThumb } from "react-aria-components";
 import { tv } from "tailwind-variants";
+
+import { focusRing } from "@dotui/ui/lib/focus-styles";
 
 const colorThumbStyles = tv({
   extend: focusRing,
