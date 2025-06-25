@@ -53,7 +53,7 @@ const BlockViewToolbar = ({ name }: BlockViewToolbarProps) => {
 };
 
 const BlockViewView = () => {
-  return <div className="bg-bg-muted flex-1 rounded-lg border"></div>;
+  return <div className="flex-1 rounded-lg border bg-bg-muted"></div>;
 };
 
 const BlockViewCode = () => {

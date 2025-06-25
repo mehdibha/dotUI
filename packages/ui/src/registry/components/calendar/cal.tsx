@@ -33,16 +33,16 @@ import { focusRing } from "@dotui/ui/lib/focus-styles";
 const calendarStyles = tv({
   slots: {
     root: "flex flex-col gap-4",
-    header: "text-fg-muted flex items-center justify-between gap-2 pl-2.5",
+    header: "flex items-center justify-between gap-2 pl-2.5 text-fg-muted",
     grid: "w-full border-collapse",
     gridHeader: "",
-    gridHeaderCell: "text-fg-muted text-xs font-normal",
+    gridHeaderCell: "text-xs font-normal text-fg-muted",
     gridBody: "",
   },
   variants: {
     standalone: {
       true: {
-        root: "bg-bg rounded-md border p-3",
+        root: "rounded-md border bg-bg p-3",
       },
     },
   },
@@ -51,10 +51,10 @@ const calendarStyles = tv({
 const calendarCellStyles = tv({
   slots: {
     cellRoot:
-      "outside-month:hidden selection-start:rounded-l-md selection-end:rounded-r-md outline-none",
+      "outline-none outside-month:hidden selection-start:rounded-l-md selection-end:rounded-r-md",
     cell: [
       focusRing(),
-      "hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 hover:unavailable:bg-transparent unavailable:cursor-default unavailable:text-fg-disabled disabled:text-fg-disabled unavailable:not-data-disabled:line-through my-1 flex size-8 cursor-pointer items-center justify-center rounded-md text-sm transition-colors read-only:cursor-default hover:read-only:bg-transparent disabled:cursor-default disabled:bg-transparent",
+      "my-1 flex size-8 cursor-pointer items-center justify-center rounded-md text-sm transition-colors read-only:cursor-default hover:bg-bg-inverse/10 hover:read-only:bg-transparent disabled:cursor-default disabled:bg-transparent disabled:text-fg-disabled unavailable:cursor-default unavailable:text-fg-disabled unavailable:not-data-disabled:line-through hover:unavailable:bg-transparent pressed:bg-bg-inverse/20",
     ],
   },
   variants: {
@@ -65,7 +65,7 @@ const calendarCellStyles = tv({
     range: {
       true: {
         cellRoot:
-          "selected:bg-bg-inverse/10 selected:invalid:bg-bg-danger-muted selected: selected:invalid:text-fg-danger",
+          "selected: selected:bg-bg-inverse/10 selected:invalid:bg-bg-danger-muted selected:invalid:text-fg-danger",
         cell: "selection-start:invalid:bg-bg-danger selection-start:invalid:text-fg-onDanger selection-end:invalid:bg-bg-danger selection-end:invalid:text-fg-onDanger",
       },
       false: {

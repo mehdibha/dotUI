@@ -23,7 +23,7 @@ export function Header({ className }: { className?: string }) {
 
   return (
     <header
-      className={cn("bg-bg sticky top-0 z-50 w-full border-b", className)}
+      className={cn("sticky top-0 z-50 w-full border-b bg-bg", className)}
     >
       <div className="relative container flex h-14 max-w-screen-2xl items-center justify-between px-16">
         <div className="flex items-center gap-6">
@@ -38,7 +38,7 @@ export function Header({ className }: { className?: string }) {
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-fg-muted hover:text-fg px-0.5 transition-colors"
+                className="px-0.5 text-fg-muted transition-colors hover:text-fg"
               >
                 {item.label}
               </Link>
@@ -46,7 +46,7 @@ export function Header({ className }: { className?: string }) {
           </div>
         </div>
         {isMounted && !isPending && (
-          <div className="animate-in fade-in flex items-center gap-2">
+          <div className="flex items-center gap-2 animate-in fade-in">
             <SearchCommand keyboardShortcut>
               <Button
                 variant="default"
@@ -58,7 +58,7 @@ export function Header({ className }: { className?: string }) {
                   </div>
                 }
                 size="sm"
-                className="text-fg-muted gap-2 pr-1 pl-3"
+                className="gap-2 pr-1 pl-3 text-fg-muted"
               >
                 <span className="mr-6 flex-1">Search docs...</span>
               </Button>

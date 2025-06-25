@@ -23,14 +23,14 @@ const sliderStyles = tv({
   slots: {
     root: "group flex flex-col gap-2",
     track:
-      "bg-bg-neutral disabled:bg-bg-disabled relative grow cursor-pointer rounded-full disabled:cursor-default",
+      "relative grow cursor-pointer rounded-full bg-bg-neutral disabled:cursor-default disabled:bg-bg-disabled",
     filler:
-      "group-disabled:bg-bg-disabled pointer-events-none absolute rounded-full",
+      "pointer-events-none absolute rounded-full group-disabled:bg-bg-disabled",
     thumb: [
       focusRing(),
-      "disabled:bg-bg-disabled disabled:border-bg top-[50%] left-[50%] rounded-full bg-white shadow-md transition-[width,height] disabled:border",
+      "top-[50%] left-[50%] rounded-full bg-white shadow-md transition-[width,height] disabled:border disabled:border-bg disabled:bg-bg-disabled",
     ],
-    valueLabel: "text-fg-muted text-sm",
+    valueLabel: "text-sm text-fg-muted",
   },
   variants: {
     variant: {
@@ -55,16 +55,16 @@ const sliderStyles = tv({
     },
     size: {
       sm: {
-        thumb: "dragging:size-4 size-3",
-        track: "orientation-vertical:w-1 orientation-horizontal:h-1",
+        thumb: "size-3 dragging:size-4",
+        track: "orientation-horizontal:h-1 orientation-vertical:w-1",
       },
       md: {
-        thumb: "dragging:size-5 size-4",
-        track: "orientation-vertical:w-2 orientation-horizontal:h-2",
+        thumb: "size-4 dragging:size-5",
+        track: "orientation-horizontal:h-2 orientation-vertical:w-2",
       },
       lg: {
-        thumb: "dragging:size-6 size-5",
-        track: "orientation-vertical:w-3 orientation-horizontal:h-3",
+        thumb: "size-5 dragging:size-6",
+        track: "orientation-horizontal:h-3 orientation-vertical:w-3",
       },
     },
   },

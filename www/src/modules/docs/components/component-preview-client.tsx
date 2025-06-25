@@ -65,7 +65,7 @@ export const ResizableContainer = ({
     >
       <div
         onMouseDown={handleMouseDown}
-        className="bg-bg-neutral hover:bg-bg-neutral-hover active:bg-bg-neutral-active absolute top-1/2 right-2 z-20 h-15 w-2 -translate-y-1/2 cursor-col-resize rounded-full shadow-sm"
+        className="absolute top-1/2 right-2 z-20 h-15 w-2 -translate-y-1/2 cursor-col-resize rounded-full bg-bg-neutral shadow-sm hover:bg-bg-neutral-hover active:bg-bg-neutral-active"
       />
       {children}
     </div>

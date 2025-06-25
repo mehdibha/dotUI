@@ -22,7 +22,7 @@ export function SignInModal({ children }: { children: React.ReactNode }) {
       <Overlay modalProps={{ className: "max-w-sm" }}>
         <DialogContent>
           <DialogHeader>
-            <DialogHeading className="font-heading text-center text-2xl font-semibold tracking-tighter">
+            <DialogHeading className="text-center font-heading text-2xl font-semibold tracking-tighter">
               Sign in to dotUI
             </DialogHeading>
             <DialogDescription className="block text-center">

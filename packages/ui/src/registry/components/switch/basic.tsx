@@ -14,12 +14,12 @@ import { createScopedContext } from "@/lib/utils";
 
 const switchStyles = tv({
   slots: {
-    root: "disabled:text-fg-disabled group flex items-center justify-start gap-3",
+    root: "group flex items-center justify-start gap-3 disabled:text-fg-disabled",
     indicator: [
-      "group-disabled:border-border-disabled group-selected:group-disabled:border-none group-selected:group-disabled:bg-bg-disabled group-selected:bg-border-focus bg-bg-neutral inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors group-disabled:cursor-not-allowed group-disabled:border group-disabled:bg-transparent",
+      "inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent bg-bg-neutral transition-colors group-disabled:cursor-not-allowed group-disabled:border group-disabled:border-border-disabled group-disabled:bg-transparent group-selected:bg-border-focus group-selected:group-disabled:border-none group-selected:group-disabled:bg-bg-disabled",
     ],
     thumb:
-      "group-disabled:bg-fg-disabled pointer-events-none block origin-right rounded-full bg-white shadow-lg ring-0 transition-all duration-200",
+      "pointer-events-none block origin-right rounded-full bg-white shadow-lg ring-0 transition-all duration-200 group-disabled:bg-fg-disabled",
   },
   variants: {
     variant: {
@@ -27,7 +27,7 @@ const switchStyles = tv({
       card: {
         root: [
           focusRing(),
-          "selected:bg-bg-muted disabled:selected:bg-bg-disabled disabled:border-border-disabled cursor-pointer flex-row-reverse justify-between gap-4 rounded-md border p-4 transition-colors",
+          "cursor-pointer flex-row-reverse justify-between gap-4 rounded-md border p-4 transition-colors disabled:border-border-disabled selected:bg-bg-muted disabled:selected:bg-bg-disabled",
         ],
       },
     },
@@ -35,17 +35,17 @@ const switchStyles = tv({
       sm: {
         indicator: "h-5 w-9",
         thumb:
-          "group-pressed:w-5 group-selected:ml-4 group-selected:group-pressed:ml-3 size-4",
+          "size-4 group-pressed:w-5 group-selected:ml-4 group-selected:group-pressed:ml-3",
       },
       md: {
         indicator: "h-6 w-11",
         thumb:
-          "group-pressed:w-6 group-selected:ml-5 group-selected:group-pressed:ml-4 size-5",
+          "size-5 group-pressed:w-6 group-selected:ml-5 group-selected:group-pressed:ml-4",
       },
       lg: {
         indicator: "h-7 w-13",
         thumb:
-          "group-pressed:w-7 group-selected:ml-6 group-selected:group-pressed:ml-5 size-6",
+          "size-6 group-pressed:w-7 group-selected:ml-6 group-selected:group-pressed:ml-5",
       },
     },
   },

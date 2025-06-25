@@ -24,18 +24,18 @@ import { createOptionalScopedContext } from "@/lib/utils";
 
 const buttonStyles = tv({
   extend: focusRing,
-  base: "disabled:bg-bg-disabled disabled:text-fg-disabled pending:cursor-default pending:bg-bg-disabled pending:text-fg-disabled pending:border pending:border-border-disabled relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-md text-sm leading-normal font-medium whitespace-nowrap transition-colors disabled:cursor-default",
+  base: "relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-md text-sm leading-normal font-medium whitespace-nowrap transition-colors disabled:cursor-default disabled:bg-bg-disabled disabled:text-fg-disabled pending:cursor-default pending:border pending:border-border-disabled pending:bg-bg-disabled pending:text-fg-disabled",
   variants: {
     variant: {
-      default: "bg-bg-neutral hover:bg-bg-neutral-hover text-fg-onNeutral",
-      primary: "bg-bg-primary hover:bg-bg-primary-hover text-fg-onPrimary",
-      quiet: "hover:bg-bg-inverse/10 text-fg bg-transparent",
+      default: "bg-bg-neutral text-fg-onNeutral hover:bg-bg-neutral-hover",
+      primary: "bg-bg-primary text-fg-onPrimary hover:bg-bg-primary-hover",
+      quiet: "bg-transparent text-fg hover:bg-bg-inverse/10",
       outline:
-        "border-border-field hover:bg-bg-inverse/10 text-fg disabled:border-border-disabled border disabled:bg-transparent",
-      accent: "bg-bg-accent hover:bg-bg-accent-hover text-fg-onAccent",
-      success: "bg-bg-success hover:bg-bg-success-hover text-fg-onSuccess",
-      warning: "bg-bg-warning hover:bg-bg-warning-hover text-fg-onWarning",
-      danger: "bg-bg-danger hover:bg-bg-danger-hover text-fg-onDanger",
+        "border border-border-field text-fg hover:bg-bg-inverse/10 disabled:border-border-disabled disabled:bg-transparent",
+      accent: "bg-bg-accent text-fg-onAccent hover:bg-bg-accent-hover",
+      success: "bg-bg-success text-fg-onSuccess hover:bg-bg-success-hover",
+      warning: "bg-bg-warning text-fg-onWarning hover:bg-bg-warning-hover",
+      danger: "bg-bg-danger text-fg-onDanger hover:bg-bg-danger-hover",
     },
     size: {
       sm: "size-8 [&_svg]:size-4",

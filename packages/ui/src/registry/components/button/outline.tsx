@@ -20,24 +20,24 @@ import { createOptionalScopedContext } from "@/lib/utils";
 
 const buttonStyles = tv({
   extend: focusRing,
-  base: "disabled:bg-bg-disabled disabled:text-fg-disabled pending:cursor-default pending:bg-bg-disabled pending:text-fg-disabled pending:border pending:border-border-disabled pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0 relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-md text-sm leading-normal font-medium whitespace-nowrap transition-all disabled:cursor-default",
+  base: "relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-md text-sm leading-normal font-medium whitespace-nowrap transition-all disabled:cursor-default disabled:bg-bg-disabled disabled:text-fg-disabled pending:cursor-default pending:border pending:border-border-disabled pending:bg-bg-disabled pending:text-fg-disabled pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0",
   variants: {
     variant: {
       default:
-        "bg-bg-neutral hover:bg-bg-neutral-hover text-fg-onNeutral hover:border-border-hover border",
-      primary: "bg-bg-primary hover:bg-bg-primary-hover text-fg-onPrimary",
+        "border bg-bg-neutral text-fg-onNeutral hover:border-border-hover hover:bg-bg-neutral-hover",
+      primary: "bg-bg-primary text-fg-onPrimary hover:bg-bg-primary-hover",
       quiet:
-        "hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 text-fg bg-transparent",
+        "bg-transparent text-fg hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20",
       outline:
-        "border-border-field hover:bg-bg-inverse/10 pressed:bg-bg-inverse/15 text-fg disabled:border-border-disabled border disabled:bg-transparent",
+        "border border-border-field text-fg hover:bg-bg-inverse/10 disabled:border-border-disabled disabled:bg-transparent pressed:bg-bg-inverse/15",
       accent:
-        "bg-bg-accent-muted hover:bg-bg-accent-muted-hover text-fg-onAccent border-border-accent hover:border-border-accent-hover border",
+        "border border-border-accent bg-bg-accent-muted text-fg-onAccent hover:border-border-accent-hover hover:bg-bg-accent-muted-hover",
       success:
-        "bg-bg-success-muted hover:bg-bg-success-muted-hover text-fg-onSuccess border-border-success hover:border-border-success-hover border",
+        "hover:bg-bg-success-muted-hover border border-border-success bg-bg-success-muted text-fg-onSuccess hover:border-border-success-hover",
       warning:
-        "bg-bg-warning-muted hover:bg-bg-warning-muted-hover text-fg-onWarning border-border-warning hover:border-border-warning-hover border",
+        "hover:bg-bg-warning-muted-hover border border-border-warning bg-bg-warning-muted text-fg-onWarning hover:border-border-warning-hover",
       danger:
-        "bg-bg-danger-muted hover:bg-bg-danger-muted-hover text-fg-onDanger border-border-danger hover:border-border-danger-hover border",
+        "hover:bg-bg-danger-muted-hover border border-border-danger bg-bg-danger-muted text-fg-onDanger hover:border-border-danger-hover",
     },
     size: {
       sm: "size-7 [&_svg]:size-4",

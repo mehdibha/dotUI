@@ -17,11 +17,11 @@ import { createOptionalScopedContext, createScopedContext } from "@/lib/utils";
 
 const radioStyles = tv({
   slots: {
-    root: "disabled:text-fg-disabled invalid:text-fg-danger group flex cursor-pointer flex-row items-center gap-2 disabled:cursor-default",
+    root: "group flex cursor-pointer flex-row items-center gap-2 invalid:text-fg-danger disabled:cursor-default disabled:text-fg-disabled",
     indicator: [
       focusRing(),
-      "border-border-control group-selected:border-bg-primary group-selected:border-4 relative size-4 shrink-0 rounded-full border transition-all duration-100",
-      "group-disabled:border-border-disabled selected:group-disabled:bg-bg-disabled indeterminate:group-disabled:bg-bg-disabled",
+      "relative size-4 shrink-0 rounded-full border border-border-control transition-all duration-100 group-selected:border-4 group-selected:border-bg-primary",
+      "group-disabled:border-border-disabled indeterminate:group-disabled:bg-bg-disabled selected:group-disabled:bg-bg-disabled",
       "group-invalid:border-border-danger group-invalid:selected:border-bg-danger",
     ],
   },
@@ -33,7 +33,7 @@ const radioStyles = tv({
       card: {
         root: [
           focusRing(),
-          "selected:bg-bg-muted disabled:selected:bg-bg-disabled disabled:border-border-disabled flex-row-reverse gap-4 rounded-md border p-4 transition-colors",
+          "flex-row-reverse gap-4 rounded-md border p-4 transition-colors disabled:border-border-disabled selected:bg-bg-muted disabled:selected:bg-bg-disabled",
         ],
       },
     },

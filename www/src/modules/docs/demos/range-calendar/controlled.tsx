@@ -18,7 +18,7 @@ export default function Demo() {
         value={value}
         onChange={setValue}
       />
-      <p className="text-fg-muted text-sm">
+      <p className="text-sm text-fg-muted">
         Start date: {value.start.toString()}
         <br />
         End date: {value.end.toString()}

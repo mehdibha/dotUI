@@ -27,11 +27,11 @@ export default async function HomePage() {
       <div className="container max-w-screen-2xl">
         <section className="max-w-3xl pt-10 pb-20 sm:pt-14">
           <Announcement />
-          <h1 className="xs:text-3xl text-2xl tracking-tighter text-balance max-lg:font-medium md:text-4xl lg:text-5xl">
+          <h1 className="text-2xl tracking-tighter text-balance max-lg:font-medium xs:text-3xl md:text-4xl lg:text-5xl">
             Quickly build your component library with a{" "}
             <span className="font-bold italic">unique</span> look.
           </h1>
-          <p className="text-fg-muted text-balace mt-2 text-lg">
+          <p className="text-balace mt-2 text-lg text-fg-muted">
             Over 40 components available in differents styles ready to match
             your brand identity.
           </p>
@@ -56,7 +56,7 @@ export default async function HomePage() {
       </section>
       <section className="mt-10 border-y py-12 shadow-xs">
         <div className="container flex flex-col items-center justify-center gap-5 lg:gap-10">
-          <h2 className="text-fg-muted xs:text-base font-mono text-sm tracking-wide text-pretty lg:text-base">
+          <h2 className="font-mono text-sm tracking-wide text-pretty text-fg-muted xs:text-base lg:text-base">
             Built on modern tools
           </h2>
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8">
@@ -112,7 +112,7 @@ export default async function HomePage() {
         <h2 className="text-2xl font-medium tracking-tighter text-pretty lg:text-3xl xl:text-4xl">
           Fueled by your <span className="">stars</span>.
         </h2>
-        <p className="text-fg-muted mt-2 text-base">
+        <p className="mt-2 text-base text-fg-muted">
           Our contributors are working hard to make the web a more singular
           place.
         </p>
@@ -123,7 +123,7 @@ export default async function HomePage() {
               viewBox="0 0 236 66"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className="text-fg-muted -rotate-110"
+              className="-rotate-110 text-fg-muted"
             >
               <path
                 fillRule="evenodd"

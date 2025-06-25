@@ -26,12 +26,12 @@ import { focusRing } from "@dotui/ui/lib/focus-styles";
 const listBoxStyles = tv({
   base: [
     focusRing(),
-    "orientation-horizontal:flex-row orientation-horizontal:w-auto layout-grid:grid layout-grid:grid-cols-2 layout-grid:w-auto empty:text-fg-muted flex flex-col overflow-auto p-1 outline-hidden empty:min-h-24 empty:items-center empty:justify-center empty:text-sm empty:italic",
+    "flex flex-col overflow-auto p-1 outline-hidden empty:min-h-24 empty:items-center empty:justify-center empty:text-sm empty:text-fg-muted empty:italic layout-grid:grid layout-grid:w-auto layout-grid:grid-cols-2 orientation-horizontal:w-auto orientation-horizontal:flex-row",
     "[&_.separator]:-mx-1 [&_.separator]:my-1 [&_.separator]:w-auto",
   ],
   variants: {
     standalone: {
-      true: "bg-bg max-h-60 w-48 overflow-y-auto rounded-md border",
+      true: "max-h-60 w-48 overflow-y-auto rounded-md border bg-bg",
       false: "max-h-[inherit] rounded-[inherit]",
     },
   },
@@ -39,7 +39,7 @@ const listBoxStyles = tv({
 
 const listBoxItemStyles = tv({
   base: [
-    "disabled:pointer-default hover:bg-bg-inverse/10 focus:bg-bg-inverse/10 pressed:bg-bg-inverse/15 disabled:text-fg-disabled flex h-8 cursor-pointer items-center rounded-sm px-3 py-1.5 text-sm outline-hidden transition-colors disabled:cursor-default",
+    "disabled:pointer-default flex h-8 cursor-pointer items-center rounded-sm px-3 py-1.5 text-sm outline-hidden transition-colors hover:bg-bg-inverse/10 focus:bg-bg-inverse/10 disabled:cursor-default disabled:text-fg-disabled pressed:bg-bg-inverse/15",
     "selection-single:pl-0 selection-multiple:pl-0",
     "[&_svg]:size-4",
   ],
@@ -122,7 +122,7 @@ const ListBoxItem = <T extends object>({
             {selectionMode !== "none" && (
               <span className="flex w-8 shrink-0 items-center justify-center">
                 {isSelected && (
-                  <CheckIcon aria-hidden className="text-fg-accent size-4" />
+                  <CheckIcon aria-hidden className="size-4 text-fg-accent" />
                 )}
               </span>
             )}
@@ -158,7 +158,7 @@ const ListBoxSection = <T extends object>({
       {...props}
     >
       {title && (
-        <AriaHeader className="text-fg-muted mb-1 pl-3 text-xs">
+        <AriaHeader className="mb-1 pl-3 text-xs text-fg-muted">
           {title}
         </AriaHeader>
       )}

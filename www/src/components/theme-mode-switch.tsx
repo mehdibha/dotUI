@@ -18,10 +18,10 @@ const themeModeSwitchStyles = tv({
     root: "group",
     container: [
       focusRingGroup(),
-      "group-selected:justify-end bg-bg text-fg-muted border-field flex cursor-pointer items-center justify-start border p-0.5 [&_svg]:size-4",
+      "border-field flex cursor-pointer items-center justify-start border bg-bg p-0.5 text-fg-muted group-selected:justify-end [&_svg]:size-4",
     ],
     iconContainer: "relative flex items-center justify-center px-3 py-2",
-    cursor: "bg-bg-inverse/10 absolute inset-0 block",
+    cursor: "absolute inset-0 block bg-bg-inverse/10",
   },
   variants: {
     size: {

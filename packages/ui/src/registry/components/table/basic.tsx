@@ -34,21 +34,21 @@ const tableStyles = tv({
     container: "w-full overflow-auto",
     root: [
       "relative table min-h-24 w-auto border-separate border-spacing-0 cursor-default text-sm",
-      "[&_.react-aria-DropIndicator]:outline-bg-accent [&_.react-aria-DropIndicator]:translate-z-0 [&_.react-aria-DropIndicator]:outline",
+      "[&_.react-aria-DropIndicator]:translate-z-0 [&_.react-aria-DropIndicator]:outline [&_.react-aria-DropIndicator]:outline-bg-accent",
     ],
     header: "sticky top-0 z-10",
     column: [
       focusRing(),
-      "allows-sorting:cursor-pointer text-fg-muted relative px-3 py-2 text-left font-medium whitespace-nowrap",
+      "relative px-3 py-2 text-left font-medium whitespace-nowrap text-fg-muted allows-sorting:cursor-pointer",
     ],
     resizer: [
       focusRing(),
-      "resizing:before:bg-bg-accent before:bg-border-field resizing:before:w-0.5 absolute right-0 box-content h-5 w-px cursor-col-resize px-2 before:block before:h-5 before:w-px before:transition-colors before:content-['']",
+      "absolute right-0 box-content h-5 w-px cursor-col-resize px-2 before:block before:h-5 before:w-px before:bg-border-field before:transition-colors before:content-[''] resizing:before:w-0.5 resizing:before:bg-bg-accent",
     ],
     body: "empty:text-center empty:italic",
     row: [
       focusRing(),
-      "data-href:hover:bg-bg-muted data-action:hover:bg-bg-muted disabled:text-fg-disabled data-[selection-mode=single]:hover:not-selected:bg-bg-muted data-[selection-mode=multiple]:hover:not-selected:bg-bg-muted selected:text-fg dragging:bg-bg relative transition-colors data-action:cursor-pointer data-href:cursor-pointer data-[selection-mode=multiple]:cursor-pointer data-[selection-mode=single]:cursor-pointer",
+      "relative transition-colors disabled:text-fg-disabled data-action:cursor-pointer data-action:hover:bg-bg-muted data-href:cursor-pointer data-href:hover:bg-bg-muted data-[selection-mode=multiple]:cursor-pointer data-[selection-mode=multiple]:hover:not-selected:bg-bg-muted data-[selection-mode=single]:cursor-pointer data-[selection-mode=single]:hover:not-selected:bg-bg-muted selected:text-fg dragging:bg-bg",
     ],
     cell: [focusRing(), "truncate px-3 py-2"],
   },
@@ -61,8 +61,8 @@ const tableStyles = tv({
         cell: "border-b group-last/row:border-b-0",
       },
       solid: {
-        container: "bg-bg-inverse/5 rounded-lg p-2",
-        header: "text-fg-muted border-y",
+        container: "rounded-lg bg-bg-inverse/5 p-2",
+        header: "border-y text-fg-muted",
         body: "text-fg",
         column: "bg-bg-inverse/5 first:rounded-l-sm last:rounded-r-sm",
       },
@@ -175,9 +175,9 @@ function TableColumn({
             <span className="flex-1 truncate">{children}</span>
             {allowsSorting &&
               (sortDirection === "ascending" ? (
-                <ChevronUpIcon aria-hidden className="text-fg-muted size-3" />
+                <ChevronUpIcon aria-hidden className="size-3 text-fg-muted" />
               ) : (
-                <ChevronDownIcon aria-hidden className="text-fg-muted size-3" />
+                <ChevronDownIcon aria-hidden className="size-3 text-fg-muted" />
               ))}
             {allowsResizing && !props.width && (
               <AriaColumnResizer className={resizer()} />
@@ -232,7 +232,7 @@ function TableRow<T extends object>({
             slot="drag"
             className={cn(
               focusRing(),
-              "text-fg-muted inline-flex items-center justify-center rounded-xs [&_svg]:size-4",
+              "inline-flex items-center justify-center rounded-xs text-fg-muted [&_svg]:size-4",
             )}
           >
             <GripVerticalIcon />

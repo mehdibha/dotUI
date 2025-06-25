@@ -31,17 +31,17 @@ const { root, list } = tagGroupStyles();
 
 const tagStyles = tv({
   extend: focusRing,
-  base: "ring-offset-background disabled:bg-bg-disabled disabled:text-fg-disabled inline-flex cursor-pointer items-center justify-center gap-2 rounded-md text-sm leading-normal font-medium transition-colors disabled:cursor-default",
+  base: "ring-offset-background inline-flex cursor-pointer items-center justify-center gap-2 rounded-md text-sm leading-normal font-medium transition-colors disabled:cursor-default disabled:bg-bg-disabled disabled:text-fg-disabled",
   variants: {
     variant: {
       default:
-        "bg-bg-neutral hover:bg-bg-neutral-hover pressed:bg-bg-neutral-active text-fg-onNeutral selected:bg-bg-primary selected:text-fg-onPrimary",
+        "bg-bg-neutral text-fg-onNeutral hover:bg-bg-neutral-hover pressed:bg-bg-neutral-active selected:bg-bg-primary selected:text-fg-onPrimary",
       quiet:
-        "hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 text-fg selected:bg-bg-primary selected:text-fg-onPrimary bg-transparent",
+        "bg-transparent text-fg hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 selected:bg-bg-primary selected:text-fg-onPrimary",
       outline:
-        "border-border-field bg-bg-inverse/5 hover:bg-bg-inverse/10 pressed:bg-bg-inverse/15 pressed:border-transparent text-fg selected:bg-bg-primary selected:border-transparent selected:text-fg-onPrimary border",
+        "border border-border-field bg-bg-inverse/5 text-fg hover:bg-bg-inverse/10 pressed:border-transparent pressed:bg-bg-inverse/15 selected:border-transparent selected:bg-bg-primary selected:text-fg-onPrimary",
       accent:
-        "border-border-field hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 pressed:border-transparent text-fg selected:bg-bg-accent selected:border-transparent selected:hover:bg-bg-accent-hover selected:pressed:bg-bg-accent-active selected:text-fg-onAccent border bg-transparent",
+        "border border-border-field bg-transparent text-fg hover:bg-bg-inverse/10 pressed:border-transparent pressed:bg-bg-inverse/20 selected:border-transparent selected:bg-bg-accent selected:text-fg-onAccent selected:hover:bg-bg-accent-hover selected:pressed:bg-bg-accent-active",
     },
     size: {
       sm: "size-8 [&_svg]:size-4",

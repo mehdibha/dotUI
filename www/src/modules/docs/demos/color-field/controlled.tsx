@@ -11,7 +11,7 @@ export default function Demo() {
   return (
     <div className="flex flex-col items-center gap-4">
       <ColorField label="Color" value={color} onChange={setColor} />
-      <p className="text-fg-muted text-sm">
+      <p className="text-sm text-fg-muted">
         Current color value: {color?.toString("hex")}
       </p>
     </div>

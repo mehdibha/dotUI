@@ -6,7 +6,7 @@ import { DropZone } from "@dotui/ui/components/drop-zone";
 export default function Demo() {
   return (
     <DropZone>
-      <UploadIcon className="text-fg-muted size-5" />
+      <UploadIcon className="size-5 text-fg-muted" />
     </DropZone>
   );
 }

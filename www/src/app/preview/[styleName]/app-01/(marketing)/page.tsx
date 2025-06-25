@@ -8,7 +8,7 @@ export default function PreviewPage() {
         <h1 className="text-3xl font-semibold tracking-tighter text-balance">
           Acme is a purpose-built tool for planning and building products
         </h1>
-        <p className="text-fg-muted mt-4 text-sm text-balance">
+        <p className="mt-4 text-sm text-balance text-fg-muted">
           Meet the system for modern software development. Streamline issues,
           projects, and product roadmaps.
         </p>
@@ -23,20 +23,20 @@ export default function PreviewPage() {
       </div>
       {/* Brands */}
       <div className="text-center">
-        <h2 className="text-fg-muted text-base tracking-tighter">
+        <h2 className="text-base tracking-tighter text-fg-muted">
           Powering the world&apos;s best product teams.
         </h2>
         <div className="grid grid-cols-4 grid-rows-2 gap-4"></div>
       </div>
       {/* Features */}
       <div className="grid h-[700px] grid-cols-3 grid-rows-4 gap-4">
-        <div className="bg-bg-muted col-span-1 row-span-1 rounded-lg"></div>
-        <div className="bg-bg-muted col-span-1 row-span-2 rounded-lg"></div>
-        <div className="bg-bg-muted col-span-1 row-span-1 rounded-lg"></div>
-        <div className="bg-bg-muted col-span-1 row-span-2 rounded-lg"></div>
-        <div className="bg-bg-muted col-span-1 row-span-1 rounded-lg"></div>
-        <div className="bg-bg-muted col-span-1 row-span-1 rounded-lg"></div>
-        <div className="bg-bg-muted col-span-1 row-span-1 rounded-lg"></div>
+        <div className="col-span-1 row-span-1 rounded-lg bg-bg-muted"></div>
+        <div className="col-span-1 row-span-2 rounded-lg bg-bg-muted"></div>
+        <div className="col-span-1 row-span-1 rounded-lg bg-bg-muted"></div>
+        <div className="col-span-1 row-span-2 rounded-lg bg-bg-muted"></div>
+        <div className="col-span-1 row-span-1 rounded-lg bg-bg-muted"></div>
+        <div className="col-span-1 row-span-1 rounded-lg bg-bg-muted"></div>
+        <div className="col-span-1 row-span-1 rounded-lg bg-bg-muted"></div>
       </div>
     </div>
   );

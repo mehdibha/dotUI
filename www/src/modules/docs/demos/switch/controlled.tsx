@@ -11,7 +11,7 @@ export default function Demo() {
       <Switch isSelected={isSelected} onChange={setSelected}>
         Focus mode
       </Switch>
-      <p className="text-fg-muted text-xs">
+      <p className="text-xs text-fg-muted">
         You are {!isSelected && "not"} on{" "}
         <span className="font-bold">focus mode</span>.
       </p>

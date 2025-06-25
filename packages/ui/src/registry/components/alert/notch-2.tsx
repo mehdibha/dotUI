@@ -14,7 +14,7 @@ import { createScopedContext } from "@/lib/utils";
 
 const alertStyles = tv({
   slots: {
-    root: "text-fg flex items-center gap-4 rounded-lg border-l-8 p-4 [&_svg]:size-4",
+    root: "flex items-center gap-4 rounded-lg border-l-8 p-4 text-fg [&_svg]:size-4",
     title: "mr-1 leading-normal font-medium tracking-tight",
     content: "text-sm",
   },
@@ -22,16 +22,16 @@ const alertStyles = tv({
     variant: {
       neutral: { root: "border-bg-primary bg-bg-muted" },
       success: {
-        root: "bg-bg-success-muted border-bg-success text-fg-success",
+        root: "border-bg-success bg-bg-success-muted text-fg-success",
       },
       warning: {
-        root: "bg-bg-warning-muted border-bg-warning text-fg-warning",
+        root: "border-bg-warning bg-bg-warning-muted text-fg-warning",
       },
       danger: {
-        root: "bg-bg-danger-muted border-bg-danger text-fg-danger",
+        root: "border-bg-danger bg-bg-danger-muted text-fg-danger",
       },
       info: {
-        root: "bg-bg-info-muted border-bg-info text-fg-info",
+        root: "border-bg-info bg-bg-info-muted text-fg-info",
       },
     },
   },

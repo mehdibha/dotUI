@@ -19,7 +19,7 @@ export default function Demo() {
         description="Report an issue or create a feature request."
       >
         <DialogBody>
-          <DialogInset className="bg-bg-muted !my-4">
+          <DialogInset className="!my-4 bg-bg-muted">
             Content within the inset.
           </DialogInset>
           <p className="mt-4">Content outside the inset.</p>

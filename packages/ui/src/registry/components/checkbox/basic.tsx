@@ -15,24 +15,24 @@ import { createOptionalScopedContext, createScopedContext } from "@/lib/utils";
 
 const checkboxStyles = tv({
   slots: {
-    root: "invalid:text-fg-danger disabled:text-fg-disabled group flex cursor-pointer flex-row items-center gap-2 disabled:cursor-default",
+    root: "group flex cursor-pointer flex-row items-center gap-2 invalid:text-fg-danger disabled:cursor-default disabled:text-fg-disabled",
     indicator: [
-      "border-border-control flex size-4 shrink-0 cursor-pointer items-center justify-center rounded-sm border",
-      "group-selected:border-transparent bg-transparent text-transparent transition-colors duration-75 group-indeterminate:border-transparent",
+      "flex size-4 shrink-0 cursor-pointer items-center justify-center rounded-sm border border-border-control",
+      "bg-transparent text-transparent transition-colors duration-75 group-indeterminate:border-transparent group-selected:border-transparent",
       "group-read-only:cursor-default",
-      "group-disabled:border-border-disabled group-selected:group-disabled:text-fg-disabled group-selected:group-disabled:bg-bg-disabled group-indeterminate:group-disabled:bg-bg-disabled group-disabled:cursor-default",
-      "group-invalid:border-border-danger group-invalid:group-selected:bg-bg-danger-muted group-invalid:group-selected:text-fg-onMutedDanger",
+      "group-disabled:cursor-default group-disabled:border-border-disabled group-indeterminate:group-disabled:bg-bg-disabled group-selected:group-disabled:bg-bg-disabled group-selected:group-disabled:text-fg-disabled",
+      "group-invalid:group-selected:text-fg-onMutedDanger group-invalid:border-border-danger group-invalid:group-selected:bg-bg-danger-muted",
     ],
   },
   variants: {
     variant: {
       primary: {
         indicator:
-          "group-selected:bg-bg-primary group-selected:text-fg-onPrimary group-indeterminate:bg-bg-primary group-indeterminate:text-fg-onPrimary",
+          "group-indeterminate:bg-bg-primary group-indeterminate:text-fg-onPrimary group-selected:bg-bg-primary group-selected:text-fg-onPrimary",
       },
       accent: {
         indicator:
-          "group-selected:bg-bg-accent group-selected:text-fg-onAccent group-indeterminate:bg-bg-Accent group-indeterminate:text-fg-onAccent",
+          "group-indeterminate:bg-bg-Accent group-indeterminate:text-fg-onAccent group-selected:bg-bg-accent group-selected:text-fg-onAccent",
       },
     },
     appearance: {
@@ -42,7 +42,7 @@ const checkboxStyles = tv({
       card: {
         root: [
           focusRing(),
-          "disabled:selected:bg-bg-disabled disabled:border-border-disabled flex-row-reverse justify-between gap-4 rounded-md border p-4 transition-colors",
+          "flex-row-reverse justify-between gap-4 rounded-md border p-4 transition-colors disabled:border-border-disabled disabled:selected:bg-bg-disabled",
         ],
       },
     },

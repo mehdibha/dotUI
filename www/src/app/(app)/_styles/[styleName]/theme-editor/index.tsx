@@ -104,10 +104,10 @@ export function ThemeEditorHeader({
   setEditMode,
 }: ThemeHeaderProps) {
   return (
-    <div className="max-lg:bg-bg max-lg:sticky max-lg:top-[57px] max-lg:z-10 max-lg:border-b max-lg:p-4">
+    <div className="max-lg:sticky max-lg:top-[57px] max-lg:z-10 max-lg:border-b max-lg:bg-bg max-lg:p-4">
       <Link
         href="/styles"
-        className="text-fg-muted hover:text-fg flex cursor-pointer items-center gap-1 text-sm"
+        className="flex cursor-pointer items-center gap-1 text-sm text-fg-muted hover:text-fg"
       >
         <ArrowLeftIcon className="size-4" />
         <span>styles</span>
@@ -185,7 +185,7 @@ function Section({
         <div>
           <h2 className="text-2xl font-semibold tracking-tight">{title}</h2>
           {description && (
-            <p className="text-fg-muted text-sm">{description}</p>
+            <p className="text-sm text-fg-muted">{description}</p>
           )}
         </div>
         {action}

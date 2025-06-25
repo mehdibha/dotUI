@@ -79,8 +79,8 @@ export const Sidebar = ({
         }}
         className="flex-1 pt-4"
       >
-        <div className="transition-sidebar grid w-full min-w-0 p-2 pt-0">
-          <div className="transition-sidebar flex w-full min-w-0 flex-col">
+        <div className="grid w-full min-w-0 p-2 pt-0 transition-sidebar">
+          <div className="flex w-full min-w-0 flex-col transition-sidebar">
             <NodeList items={items} />
           </div>
         </div>
@@ -176,10 +176,10 @@ const SidebarRoot = ({
     >
       <div
         className={cn(
-          "transition-sidebar relative z-10 h-svh w-(--sidebar-width) bg-transparent group-data-collapsed/sidebar:w-(--sidebar-width-collapsed)",
+          "relative z-10 h-svh w-(--sidebar-width) bg-transparent transition-sidebar group-data-collapsed/sidebar:w-(--sidebar-width-collapsed)",
         )}
       />
-      <div className="transition-sidebar bg-bg [&_svg]:text-fg-muted fixed inset-y-0 left-0 z-10 flex h-svh w-(--sidebar-width) flex-col overflow-hidden group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) [&_button]:font-normal">
+      <div className="fixed inset-y-0 left-0 z-10 flex h-svh w-(--sidebar-width) flex-col overflow-hidden bg-bg transition-sidebar group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) [&_button]:font-normal [&_svg]:text-fg-muted">
         <div className="relative flex h-svh w-(--sidebar-width) flex-1 translate-x-[-0.5px] flex-col overflow-hidden">
           {children}
         </div>
@@ -319,9 +319,9 @@ function PageNode({
     <Link
       href={url}
       className={cn(
-        "border-bg-bg-muted hover:text-fg text-fg-muted group block border-l py-1 pl-4 transition-colors",
+        "border-bg-bg-muted group block border-l py-1 pl-4 text-fg-muted transition-colors hover:text-fg",
         {
-          "text-fg border-fg": active,
+          "border-fg text-fg": active,
         },
       )}
       onClick={onSelect}
@@ -399,7 +399,7 @@ function FolderNode({
 
   return (
     <>
-      <h3 className="category text-fg-muted py-1 pl-4 font-mono text-xs tracking-widest">
+      <h3 className="category py-1 pl-4 font-mono text-xs tracking-widest text-fg-muted">
         {item.name}
       </h3>
       <NodeList items={item.children} level={level} onSelect={onSelect} />
@@ -418,12 +418,12 @@ const SidebarButton = ({
       variant="quiet"
       size="sm"
       className={cn(
-        "transition-sidebar hover:bg-bg-inverse/10 relative w-full overflow-hidden font-normal group-data-collapsed/sidebar:w-8",
+        "relative w-full overflow-hidden font-normal transition-sidebar group-data-collapsed/sidebar:w-8 hover:bg-bg-inverse/10",
         className,
       )}
       {...props}
     >
-      <div className="transition-sidebar absolute inset-2 flex w-[calc(var(--sidebar-width)-calc(var(--spacing)*8))] items-center justify-center gap-2 whitespace-nowrap group-data-collapsed/sidebar:left-2 [&>svg]:size-4">
+      <div className="absolute inset-2 flex w-[calc(var(--sidebar-width)-calc(var(--spacing)*8))] items-center justify-center gap-2 whitespace-nowrap transition-sidebar group-data-collapsed/sidebar:left-2 [&>svg]:size-4">
         {children}
       </div>
     </Button>

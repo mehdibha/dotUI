@@ -17,14 +17,14 @@ import { createScopedContext } from "@/lib/utils";
 const tooltipStyles = tv({
   slots: {
     content:
-      "group/tooltip text-fg entering:animate-in entering:fade-in entering:placement-bottom:slide-in-from-top-0.5 entering:placement-top:slide-in-from-bottom-0.5 entering:placement-left:slide-in-from-right-0.5 entering:placement-right:slide-in-from-left-0.5 exiting:animate-out exiting:fade-out exiting:placement-bottom:slide-out-to-top-0.5 exiting:placement-top:slide-out-to-bottom-0.5 exiting:placement-left:slide-out-to-right-0.5 exiting:placement-right:slide-out-to-left-0.5 entering:ease-out exiting:ease-out entering:duration-150 exiting:duration-100 z-50 rounded-md px-3 py-1.5 text-sm shadow-md",
+      "group/tooltip z-50 rounded-md px-3 py-1.5 text-sm text-fg shadow-md entering:duration-150 entering:ease-out entering:animate-in entering:fade-in entering:placement-left:slide-in-from-right-0.5 entering:placement-right:slide-in-from-left-0.5 entering:placement-top:slide-in-from-bottom-0.5 entering:placement-bottom:slide-in-from-top-0.5 exiting:duration-100 exiting:ease-out exiting:animate-out exiting:fade-out exiting:placement-left:slide-out-to-right-0.5 exiting:placement-right:slide-out-to-left-0.5 exiting:placement-top:slide-out-to-bottom-0.5 exiting:placement-bottom:slide-out-to-top-0.5",
     arrow:
       "group-placement-left/tooltip:-rotate-90 group-placement-right/tooltip:rotate-90 group-placement-bottom/tooltip:rotate-180",
   },
   variants: {
     variant: {
       default: {
-        content: "bg-bg-muted border",
+        content: "border bg-bg-muted",
         arrow: "fill-bg-muted stroke-border",
       },
       inverse: {

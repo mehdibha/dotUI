@@ -11,13 +11,13 @@ import { tv } from "tailwind-variants";
 const popoverStyles = tv({
   slots: {
     popover: [
-      "bg-bg group min-w-(--trigger-width) rounded-md border shadow-md ease-[cubic-bezier(0.165,0.84,0.44,1)]",
-      "placement-bottom:origin-top placement-top:origin-bottom placement-left:origin-right placement-right:origin-left",
-      "entering:opacity-0 exiting:opacity-0 opacity-100 duration-150 will-change-[transform,opacity]",
-      "entering:placement-bottom:-translate-y-2 exiting:placement-bottom:-translate-y-2 entering:placement-top:translate-y-2 exiting:placement-top:translate-y-2 entering:placement-right:-translate-x-2 exiting:placement-right:-translate-x-2 entering:placement-left:translate-x-2 exiting:placement-left:translate-x-2 translate-0",
+      "group min-w-(--trigger-width) rounded-md border bg-bg shadow-md ease-[cubic-bezier(0.165,0.84,0.44,1)]",
+      "placement-left:origin-right placement-right:origin-left placement-top:origin-bottom placement-bottom:origin-top",
+      "opacity-100 duration-150 will-change-[transform,opacity] entering:opacity-0 exiting:opacity-0",
+      "translate-0 entering:placement-left:translate-x-2 entering:placement-right:-translate-x-2 entering:placement-top:translate-y-2 entering:placement-bottom:-translate-y-2 exiting:placement-left:translate-x-2 exiting:placement-right:-translate-x-2 exiting:placement-top:translate-y-2 exiting:placement-bottom:-translate-y-2",
     ],
     arrow:
-      "stroke-border fill-bg group-placement-left:-rotate-90 group-placement-right:rotate-90 group-placement-bottom:rotate-180 stroke-1",
+      "fill-bg stroke-border stroke-1 group-placement-left:-rotate-90 group-placement-right:rotate-90 group-placement-bottom:rotate-180",
   },
 });
 

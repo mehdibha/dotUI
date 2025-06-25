@@ -21,7 +21,7 @@ export default function BlocksLayout({
       <h2 className="text-4xl font-semibold tracking-tighter text-balance">
         Blocks that don’t lock you in.
       </h2>
-      <p className="text-fg-muted mt-2 text-base">
+      <p className="mt-2 text-base text-fg-muted">
         Modern UI blocks available in infinite styles.
       </p>
       <div className="mt-16">

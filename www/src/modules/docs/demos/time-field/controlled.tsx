@@ -11,7 +11,7 @@ export default function Demo() {
   return (
     <div className="flex flex-col items-center gap-4">
       <TimeField aria-label="Event time" value={time} onChange={setTime} />
-      <p className="text-fg-muted text-sm">selected time: {time?.toString()}</p>
+      <p className="text-sm text-fg-muted">selected time: {time?.toString()}</p>
     </div>
   );
 }

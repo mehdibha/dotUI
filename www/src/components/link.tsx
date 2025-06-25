@@ -9,7 +9,7 @@ import { focusRing } from "@dotui/ui/lib/focus-styles";
 
 const linkVariants = tv({
   extend: focusRing,
-  base: "disabled:text-fg-disabled inline-flex items-center gap-1 transition-colors",
+  base: "inline-flex items-center gap-1 transition-colors disabled:text-fg-disabled",
   variants: {
     variant: {
       accent: "text-fg-accent hover:text-[#5e9fe0]",

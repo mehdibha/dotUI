@@ -36,7 +36,7 @@ export default function Demo() {
   });
 
   return (
-    <div className="bg-bg-muted w-sm space-y-4 rounded-lg border p-8">
+    <div className="w-sm space-y-4 rounded-lg border bg-bg-muted p-8">
       <h1 className="text-xl font-bold">Register</h1>
       <Form
         onSubmit={handleSubmit((data) => {

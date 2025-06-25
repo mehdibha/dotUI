@@ -88,7 +88,7 @@ export const Preview = () => {
             variant="default"
             size="sm"
             onPress={() => setOpen(true)}
-            className="bg-bg-inverse/5 border"
+            className="border bg-bg-inverse/5"
           >
             Preview
           </Button>
@@ -177,11 +177,11 @@ export function PreviewContent({
   return (
     <div
       className={cn(
-        "bg-bg size-full overflow-hidden rounded-md border",
+        "size-full overflow-hidden rounded-md border bg-bg",
         className,
       )}
     >
-      <div className="bg-bg-muted flex items-center justify-between gap-2 border-b border-t-[inherit] p-1">
+      <div className="flex items-center justify-between gap-2 border-b border-t-[inherit] bg-bg-muted p-1">
         <div className="flex w-32 items-center gap-3">
           <div className="flex items-center gap-1">
             {collapsible && (

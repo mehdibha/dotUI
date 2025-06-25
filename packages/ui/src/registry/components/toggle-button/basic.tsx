@@ -15,15 +15,15 @@ import { createOptionalScopedContext } from "@/lib/utils";
 
 const toggleButtonStyles = tv({
   extend: focusRing,
-  base: "disabled:bg-bg-disabled disabled:text-fg-disabled inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-md text-sm leading-normal font-medium transition-colors disabled:cursor-default",
+  base: "inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-md text-sm leading-normal font-medium transition-colors disabled:cursor-default disabled:bg-bg-disabled disabled:text-fg-disabled",
   variants: {
     variant: {
       quiet:
-        "hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 text-fg selected:bg-bg-primary selected:text-fg-onPrimary selected:hover:bg-bg-primary-hover selected:pressed:bg-bg-primary-active bg-transparent",
+        "bg-transparent text-fg hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 selected:bg-bg-primary selected:text-fg-onPrimary selected:hover:bg-bg-primary-hover selected:pressed:bg-bg-primary-active",
       primary:
-        "border-border-field hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 pressed:border-transparent text-fg selected:bg-bg-primary selected:border-transparent selected:text-fg-onPrimary selected:hover:bg-bg-primary-hover selected:pressed:bg-bg-primary-active border bg-transparent",
+        "border border-border-field bg-transparent text-fg hover:bg-bg-inverse/10 pressed:border-transparent pressed:bg-bg-inverse/20 selected:border-transparent selected:bg-bg-primary selected:text-fg-onPrimary selected:hover:bg-bg-primary-hover selected:pressed:bg-bg-primary-active",
       accent:
-        "border-border-field hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 pressed:border-transparent text-fg selected:bg-bg-accent selected:border-transparent selected:hover:bg-bg-accent-hover selected:pressed:bg-bg-accent-active selected:text-fg-onAccent border bg-transparent",
+        "border border-border-field bg-transparent text-fg hover:bg-bg-inverse/10 pressed:border-transparent pressed:bg-bg-inverse/20 selected:border-transparent selected:bg-bg-accent selected:text-fg-onAccent selected:hover:bg-bg-accent-hover selected:pressed:bg-bg-accent-active",
     },
     size: {
       sm: "size-8 [&_svg]:size-4",

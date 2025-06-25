@@ -18,7 +18,7 @@ const codeBlockStyles = tv({
   slots: {
     root: "block w-fit max-w-full rounded-md border",
     header:
-      "bg-bg-muted flex h-10 items-center justify-between rounded-t-[inherit] border-b pr-2",
+      "flex h-10 items-center justify-between rounded-t-[inherit] border-b bg-bg-muted pr-2",
     body: "bg-bg-muted/30 p-4 text-xs",
     code: "text-xs",
   },
@@ -78,7 +78,7 @@ const CodeBlockClient = ({
             <Button
               variant="outline"
               size="sm"
-              className="bg-bg-inverse/5 h-7 text-xs"
+              className="h-7 bg-bg-inverse/5 text-xs"
               onPress={handleExpand}
             >
               {isExpanded ? "Collapse" : "Expand"} code
@@ -150,7 +150,7 @@ const CodeBlockCopyButton = ({ code, ...props }: CodeBlockCopyButtonProps) => {
       shape="square"
       variant="outline"
       onPress={handleCopy}
-      className="bg-bg-inverse/5 size-7 [&_svg]:size-3"
+      className="size-7 bg-bg-inverse/5 [&_svg]:size-3"
       {...props}
     >
       {copied ? (

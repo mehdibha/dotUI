@@ -28,7 +28,7 @@ export const MobileNav = ({
   return (
     <header
       className={cn(
-        "bg-bg/95 sticky top-0 z-50 block border-b backdrop-blur-sm",
+        "sticky top-0 z-50 block border-b bg-bg/95 backdrop-blur-sm",
         className,
       )}
     >
@@ -62,7 +62,7 @@ export const MobileNav = ({
                       <Button
                         prefix={<SearchIcon />}
                         variant="outline"
-                        className="bg-bg-inverse/5 text-fg-muted w-full"
+                        className="w-full bg-bg-inverse/5 text-fg-muted"
                       >
                         <span className="flex-1 text-left">Search docs...</span>
                       </Button>
@@ -126,7 +126,7 @@ export const MobileNav = ({
                 <Kbd>K</Kbd>
               </div>
             }
-            className="bg-bg-inverse/5 text-fg-muted gap-2 pr-1 pl-3 max-sm:flex-1"
+            className="gap-2 bg-bg-inverse/5 pr-1 pl-3 text-fg-muted max-sm:flex-1"
           >
             <span className="mr-6 flex-1 text-left">Search docs...</span>
           </Button>

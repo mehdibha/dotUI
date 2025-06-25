@@ -64,14 +64,14 @@ export function SearchCommand({
                   prefix={item.type === "page" ? <FileTextIcon /> : undefined}
                   className={
                     item.type === "page"
-                      ? "[&_svg]:text-fg-muted gap-3 py-2"
+                      ? "gap-3 py-2 [&_svg]:text-fg-muted"
                       : "py-0 pl-2.5"
                   }
                 >
                   {item.type === "page" ? (
                     item.content
                   ) : (
-                    <div className="[&_svg]:text-fg-muted ml-2 flex items-center gap-3 border-l pl-4 [&_svg]:size-4">
+                    <div className="ml-2 flex items-center gap-3 border-l pl-4 [&_svg]:size-4 [&_svg]:text-fg-muted">
                       <HashIcon />
                       <p className="flex-1 truncate py-2">{item.content}</p>
                     </div>
@@ -81,7 +81,7 @@ export function SearchCommand({
             </MenuSection>
           ))}
         </MenuContent>
-        <div className="text-fg-muted flex items-center justify-end gap-4 rounded-b-[inherit] border-t p-3 text-xs [&_svg]:size-4">
+        <div className="flex items-center justify-end gap-4 rounded-b-[inherit] border-t p-3 text-xs text-fg-muted [&_svg]:size-4">
           <div className="flex items-center gap-1">
             <ChevronsUpDownIcon />
             <span>Navigate</span>
