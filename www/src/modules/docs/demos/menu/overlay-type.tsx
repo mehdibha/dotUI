@@ -1,11 +1,12 @@
 "use client";
 
-import type { OverlayProps } from "@/components/dynamic-ui/overlay";
 import React from "react";
-import { Button } from "@/components/dynamic-ui/button";
-import { Menu, MenuItem, MenuRoot } from "@/components/dynamic-ui/menu";
-import { Radio, RadioGroup } from "@/components/dynamic-ui/radio-group";
 import { MenuIcon } from "lucide-react";
+
+import { Button } from "@dotui/ui/components/button";
+import { Menu, MenuItem, MenuRoot } from "@dotui/ui/components/menu";
+import { Radio, RadioGroup } from "@dotui/ui/components/radio-group";
+import type { OverlayProps } from "@dotui/ui/components/overlay";
 
 export default function Demo() {
   const [type, setType] = React.useState("popover");

@@ -1,5 +1,6 @@
-import { Button } from "@/components/dynamic-ui/button";
 import { HexagonIcon } from "lucide-react";
+
+import { Button } from "@dotui/ui/components/button";
 
 export default function MarketingLayout({
   children,
@@ -17,7 +18,7 @@ export default function MarketingLayout({
 
 const Header = () => {
   return (
-    <div className="bg-bg-muted/50 sticky top-4 mx-auto flex w-full items-center gap-4 rounded-lg border px-4 py-2 backdrop-blur-lg">
+    <div className="sticky top-4 mx-auto flex w-full items-center gap-4 rounded-lg border bg-bg-muted/50 px-4 py-2 backdrop-blur-lg">
       {/* Logo */}
       <div className="flex items-center gap-2">
         <HexagonIcon />

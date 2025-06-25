@@ -1,9 +1,10 @@
 "use client";
 
 import React from "react";
-import { ColorFieldRoot } from "@/components/dynamic-ui/color-field";
-import { Description, FieldError, Label } from "@/components/dynamic-ui/field";
-import { Input, InputRoot } from "@/components/dynamic-ui/input";
+
+import { ColorFieldRoot } from "@dotui/ui/components/color-field";
+import { Description, FieldError, Label } from "@dotui/ui/components/field";
+import { Input, InputRoot } from "@dotui/ui/components/input";
 
 export default function Demo() {
   return (

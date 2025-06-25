@@ -1,12 +1,13 @@
 "use client";
 
 import React from "react";
-import { Button } from "@/components/dynamic-ui/button";
-import { Description, Label } from "@/components/dynamic-ui/field";
-import { Input, InputRoot } from "@/components/dynamic-ui/input";
-import { NumberFieldRoot } from "@/components/dynamic-ui/number-field";
 import { MinusIcon, PlusIcon } from "lucide-react";
 import { Group } from "react-aria-components";
+
+import { Button } from "@dotui/ui/components/button";
+import { Description, Label } from "@dotui/ui/components/field";
+import { Input, InputRoot } from "@dotui/ui/components/input";
+import { NumberFieldRoot } from "@dotui/ui/components/number-field";
 
 export default function Demo() {
   return (

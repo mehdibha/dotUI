@@ -1,21 +1,21 @@
 "use client";
 
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { SearchIcon } from "lucide-react";
+
+import { Button } from "@dotui/ui/components/button";
+import { Kbd } from "@dotui/ui/components/kbd";
+import { cn } from "@dotui/ui/lib/utils";
+
 import { siteConfig } from "@/config";
 import { useMounted } from "@/hooks/use-mounted";
-import { cn } from "@/lib/utils";
 import { SignInModal } from "@/modules/auth/components/sign-in-modal";
 import { UserProfileMenu } from "@/modules/auth/components/user-profile-menu";
 import { authClient } from "@/modules/auth/lib/client";
-import { SearchIcon } from "lucide-react";
-
 import { GitHubIcon, TwitterIcon } from "./icons";
 import { Logo } from "./logo";
 import { SearchCommand } from "./search-command";
 import { ThemeSwitcher } from "./site-theme-selector";
-import { Avatar } from "./ui/avatar";
-import { Kbd } from "./ui/kbd";
 
 export function Header({ className }: { className?: string }) {
   const { data: session, isPending } = authClient.useSession();
@@ -23,7 +23,7 @@ export function Header({ className }: { className?: string }) {
 
   return (
     <header
-      className={cn("bg-bg sticky top-0 z-50 w-full border-b", className)}
+      className={cn("sticky top-0 z-50 w-full border-b bg-bg", className)}
     >
       <div className="relative container flex h-14 max-w-screen-2xl items-center justify-between px-16">
         <div className="flex items-center gap-6">
@@ -38,7 +38,7 @@ export function Header({ className }: { className?: string }) {
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-fg-muted hover:text-fg px-0.5 transition-colors"
+                className="px-0.5 text-fg-muted transition-colors hover:text-fg"
               >
                 {item.label}
               </Link>
@@ -46,7 +46,7 @@ export function Header({ className }: { className?: string }) {
           </div>
         </div>
         {isMounted && !isPending && (
-          <div className="animate-in fade-in flex items-center gap-2">
+          <div className="flex items-center gap-2 animate-in fade-in">
             <SearchCommand keyboardShortcut>
               <Button
                 variant="default"
@@ -57,7 +57,8 @@ export function Header({ className }: { className?: string }) {
                     <Kbd>K</Kbd>
                   </div>
                 }
-                className="text-fg-muted gap-2 pr-1 pl-3"
+                size="sm"
+                className="gap-2 pr-1 pl-3 text-fg-muted"
               >
                 <span className="mr-6 flex-1">Search docs...</span>
               </Button>
@@ -79,12 +80,15 @@ export function Header({ className }: { className?: string }) {
                   target="_blank"
                   variant="quiet"
                   shape="square"
+                  size="sm"
                 >
                   <TwitterIcon />
                 </Button>
                 <ThemeSwitcher />
                 <SignInModal>
-                  <Button variant="primary">Sign in</Button>
+                  <Button variant="primary" size="sm">
+                    Sign in
+                  </Button>
                 </SignInModal>
               </>
             )}

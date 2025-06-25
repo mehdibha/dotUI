@@ -1,9 +1,10 @@
 "use client";
 
-import type { DateValue } from "react-aria-components";
 import React from "react";
-import { DatePicker } from "@/components/dynamic-ui/date-picker";
 import { parseDate } from "@internationalized/date";
+import type { DateValue } from "react-aria-components";
+
+import { DatePicker } from "@dotui/ui/components/date-picker";
 
 export default function Demo() {
   const [value, setValue] = React.useState<DateValue | null>(
@@ -12,7 +13,7 @@ export default function Demo() {
   return (
     <div className="flex flex-col items-center gap-4">
       <DatePicker label="Meeting date" value={value} onChange={setValue} />
-      <p className="text-fg-muted text-sm">
+      <p className="text-sm text-fg-muted">
         selected date: {value?.toString()}
       </p>
     </div>

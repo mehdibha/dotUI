@@ -1,11 +1,12 @@
 import React from "react";
-import { DropZone } from "@/components/dynamic-ui/drop-zone";
 import { UploadIcon } from "lucide-react";
+
+import { DropZone } from "@dotui/ui/components/drop-zone";
 
 export default function Demo() {
   return (
     <DropZone>
-      <UploadIcon className="text-fg-muted size-5" />
+      <UploadIcon className="size-5 text-fg-muted" />
     </DropZone>
   );
 }

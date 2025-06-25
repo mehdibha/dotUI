@@ -1,9 +1,10 @@
 import React from "react";
-import { Button } from "@/components/dynamic-ui/button";
-import { ListBox, ListBoxItem } from "@/components/dynamic-ui/list-box";
-import { Overlay } from "@/components/dynamic-ui/overlay";
-import { SelectRoot, SelectValue } from "@/components/dynamic-ui/select";
 import { ChevronsUpDownIcon } from "lucide-react";
+
+import { Button } from "@dotui/ui/components/button";
+import { ListBox, ListBoxItem } from "@dotui/ui/components/list-box";
+import { Overlay } from "@dotui/ui/components/overlay";
+import { SelectRoot, SelectValue } from "@dotui/ui/components/select";
 
 export default function Demo() {
   return (

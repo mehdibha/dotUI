@@ -1,10 +1,3 @@
-import { GitHubIcon, TwitterIcon } from "@/components/icons";
-import { Avatar } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Menu, MenuItem, MenuRoot, MenuSub } from "@/components/ui/menu";
-import { Separator } from "@/components/ui/separator";
-import { siteConfig } from "@/config";
-import { authClient } from "@/modules/auth/lib/client";
 import {
   ContrastIcon,
   LogOutIcon,
@@ -13,6 +6,15 @@ import {
   SunIcon,
 } from "lucide-react";
 import { useTheme } from "next-themes";
+
+import { Avatar } from "@dotui/ui/components/avatar";
+import { Button } from "@dotui/ui/components/button";
+import { Menu, MenuItem, MenuRoot, MenuSub } from "@dotui/ui/components/menu";
+import { Separator } from "@dotui/ui/components/separator";
+
+import { GitHubIcon, TwitterIcon } from "@/components/icons";
+import { siteConfig } from "@/config";
+import { authClient } from "@/modules/auth/lib/client";
 
 export function UserProfileMenu() {
   const { data: session } = authClient.useSession();

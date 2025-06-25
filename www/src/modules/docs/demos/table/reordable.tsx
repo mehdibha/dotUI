@@ -1,5 +1,8 @@
 "use client";
 
+import { useDragAndDrop } from "react-aria-components";
+import { useListData } from "react-stately";
+
 import {
   TableBody,
   TableCell,
@@ -7,9 +10,7 @@ import {
   TableHeader,
   TableRoot,
   TableRow,
-} from "@/registry/ui/table.basic";
-import { useDragAndDrop } from "react-aria-components";
-import { useListData } from "react-stately";
+} from "@dotui/ui/components/table";
 
 const columns: Column[] = [
   { name: "Name", id: "name", isRowHeader: true },

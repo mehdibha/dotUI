@@ -1,7 +1,7 @@
-import type { Root } from "mdast";
-import type { Transformer } from "unified";
 import { toString } from "hast-util-to-string";
 import { visit } from "unist-util-visit";
+import type { Root } from "mdast";
+import type { Transformer } from "unified";
 
 // Walkaround for inline code to set default language
 export default function remarkInlineCode(): Transformer<Root, Root> {

@@ -1,11 +1,12 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { PreviewModeProvider } from "@/components/mode-provider";
-import { TRPCReactProvider } from "@/trpc/react";
 import { Provider as JotaiProvider } from "jotai";
 import { ThemeProvider } from "next-themes";
 import { RouterProvider } from "react-aria-components";
+
+import { PreviewModeProvider } from "@/components/mode-provider";
+import { TRPCReactProvider } from "@/trpc/react";
 
 declare module "react-aria-components" {
   interface RouterConfig {

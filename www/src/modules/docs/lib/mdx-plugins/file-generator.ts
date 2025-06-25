@@ -1,7 +1,7 @@
 import * as fs from "node:fs/promises";
 import * as path from "node:path";
-import type { Code, Paragraph } from "mdast";
 import { z } from "zod";
+import type { Code, Paragraph } from "mdast";
 
 import type { DocGenerator } from "./remark-docgen";
 

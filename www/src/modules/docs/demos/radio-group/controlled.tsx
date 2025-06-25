@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { Radio, RadioGroup } from "@/components/dynamic-ui/radio-group";
+
+import { Radio, RadioGroup } from "@dotui/ui/components/radio-group";
 
 export default function Demo() {
   const [size, setSize] = React.useState("sm");
@@ -16,7 +17,7 @@ export default function Demo() {
         <Radio value="md">Medium</Radio>
         <Radio value="lg">Large</Radio>
       </RadioGroup>
-      <p className="text-fg-muted text-xs">{`You selected: ${size}`}</p>
+      <p className="text-xs text-fg-muted">{`You selected: ${size}`}</p>
     </div>
   );
 }

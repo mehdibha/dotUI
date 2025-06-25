@@ -1,12 +1,13 @@
 "use client";
 
+import { useCallback, useLayoutEffect, useMemo, useState } from "react";
+
+import * as TabsPrimitive from "@dotui/ui/components/tabs";
+import { cn } from "@dotui/ui/lib/utils";
 import type {
   TabsProps as BaseProps,
   TabPanelProps,
-} from "@/components/ui/tabs";
-import { useCallback, useLayoutEffect, useMemo, useState } from "react";
-import * as TabsPrimitive from "@/components/ui/tabs";
-import { cn } from "@/lib/utils";
+} from "@dotui/ui/components/tabs";
 
 type ChangeListener = (v: string) => void;
 const listeners = new Map<string, ChangeListener[]>();
@@ -87,7 +88,7 @@ export function InstallTabs({
       onSelectionChange={(v) => onValueChange(v as string)}
       className="install-tabs mt-4 rounded-md border"
     >
-      <TabsPrimitive.TabList className="bg-bg-muted rounded-t-[inherit]">
+      <TabsPrimitive.TabList className="rounded-t-[inherit] bg-bg-muted">
         {values.map((v, i) => (
           <TabsPrimitive.Tab key={v} id={v}>
             {items[i]}

@@ -1,5 +1,6 @@
-import { ListBox, ListBoxItem } from "@/components/dynamic-ui/list-box";
 import { CopyIcon, PlusSquareIcon, SquarePenIcon } from "lucide-react";
+
+import { ListBox, ListBoxItem } from "@dotui/ui/components/list-box";
 
 export default function Demo() {
   return (

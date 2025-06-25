@@ -2,9 +2,10 @@ import "server-only";
 
 import { cache } from "react";
 import { headers } from "next/headers";
-import { env } from "@/env";
 
 import { initAuth } from "@dotui/auth";
+
+import { env } from "@/env";
 
 const baseUrl =
   env.VERCEL_ENV === "production"

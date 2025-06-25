@@ -1,11 +1,11 @@
-import { Separator } from "@/components/dynamic-ui/separator";
+import { Separator } from "@dotui/ui/components/separator";
 
 export default function Demo() {
   return (
     <div className="space-y-2 rounded-md border p-4">
       <div>
         <h3 className="font-bold">dotUI</h3>
-        <p className="text-fg-muted text-sm">
+        <p className="text-sm text-fg-muted">
           Tools for building high-quality, accessible UI.
         </p>
       </div>

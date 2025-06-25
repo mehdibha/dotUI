@@ -1,14 +1,15 @@
 "use client";
 
-import type { Transition } from "motion/react";
-import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
-import { focusRingGroup } from "@/lib/focus-styles";
-import { cn } from "@/lib/utils";
 import { MoonIcon, SunIcon } from "lucide-react";
 import { LayoutGroup, motion } from "motion/react";
 import { Switch as AriaSwitch } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type { Transition } from "motion/react";
+import type { VariantProps } from "tailwind-variants";
+
+import { focusRingGroup } from "@dotui/ui/lib/focus-styles";
+import { cn } from "@dotui/ui/lib/utils";
 
 const TRANSITION: Transition = { type: "spring", bounce: 0.05, duration: 0.2 };
 
@@ -17,10 +18,10 @@ const themeModeSwitchStyles = tv({
     root: "group",
     container: [
       focusRingGroup(),
-      "group-selected:justify-end bg-bg text-fg-muted border-field flex cursor-pointer items-center justify-start border p-0.5 [&_svg]:size-4",
+      "border-field flex cursor-pointer items-center justify-start border bg-bg p-0.5 text-fg-muted group-selected:justify-end [&_svg]:size-4",
     ],
     iconContainer: "relative flex items-center justify-center px-3 py-2",
-    cursor: "bg-bg-inverse/10 absolute inset-0 block",
+    cursor: "absolute inset-0 block bg-bg-inverse/10",
   },
   variants: {
     size: {

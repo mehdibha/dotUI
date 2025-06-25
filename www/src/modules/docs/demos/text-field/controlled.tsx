@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { TextField } from "@/components/dynamic-ui/text-field";
+
+import { TextField } from "@dotui/ui/components/text-field";
 
 export default function Demo() {
   const [inputValue, setInputValue] = React.useState("Hello world!");
@@ -13,7 +14,7 @@ export default function Demo() {
           setInputValue(text);
         }}
       />
-      <p className="text-fg-muted text-sm">mirrored text: {inputValue}</p>
+      <p className="text-sm text-fg-muted">mirrored text: {inputValue}</p>
     </div>
   );
 }

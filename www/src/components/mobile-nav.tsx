@@ -1,16 +1,17 @@
 "use client";
 
-import type { PageTree } from "fumadocs-core/server";
 import React from "react";
-import { GitHubIcon, TwitterIcon } from "@/components/icons";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogRoot } from "@/components/ui/dialog";
-import { Kbd } from "@/components/ui/kbd";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { siteConfig } from "@/config";
-import { cn } from "@/lib/utils";
 import { AlignLeftIcon, PanelLeftCloseIcon, SearchIcon } from "lucide-react";
+import type { PageTree } from "fumadocs-core/server";
 
+import { Button } from "@dotui/ui/components/button";
+import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
+import { Kbd } from "@dotui/ui/components/kbd";
+import { cn } from "@dotui/ui/lib/utils";
+
+import { GitHubIcon, TwitterIcon } from "@/components/icons";
+import { ScrollArea } from "@/components/scroll-area";
+import { siteConfig } from "@/config";
 import { Logo } from "./logo";
 import { SearchCommand } from "./search-command";
 import { NodeList } from "./sidebar";
@@ -27,7 +28,7 @@ export const MobileNav = ({
   return (
     <header
       className={cn(
-        "bg-bg/95 sticky top-0 z-50 block border-b backdrop-blur-sm",
+        "sticky top-0 z-50 block border-b bg-bg/95 backdrop-blur-sm",
         className,
       )}
     >
@@ -61,7 +62,7 @@ export const MobileNav = ({
                       <Button
                         prefix={<SearchIcon />}
                         variant="outline"
-                        className="bg-bg-inverse/5 text-fg-muted w-full"
+                        className="w-full bg-bg-inverse/5 text-fg-muted"
                       >
                         <span className="flex-1 text-left">Search docs...</span>
                       </Button>
@@ -125,7 +126,7 @@ export const MobileNav = ({
                 <Kbd>K</Kbd>
               </div>
             }
-            className="bg-bg-inverse/5 text-fg-muted gap-2 pr-1 pl-3 max-sm:flex-1"
+            className="gap-2 bg-bg-inverse/5 pr-1 pl-3 text-fg-muted max-sm:flex-1"
           >
             <span className="mr-6 flex-1 text-left">Search docs...</span>
           </Button>

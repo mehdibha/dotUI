@@ -1,7 +1,11 @@
+import { BlockView } from "@/components/block-view";
+
 export default function BlocksPage() {
   return (
-    <div className="p-10">
-      <h2 className="w-fit text-3xl font-semibold tracking-tight">Blocks</h2>
+    <div>
+      <BlockView name="Simple login form" />
+      <BlockView name="Simple register form" />
+      <BlockView name="Simple password reset form" />
     </div>
   );
 }

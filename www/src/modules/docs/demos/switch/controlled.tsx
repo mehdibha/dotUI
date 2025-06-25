@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { Switch } from "@/components/dynamic-ui/switch";
+
+import { Switch } from "@dotui/ui/components/switch";
 
 export default function Demo() {
   const [isSelected, setSelected] = React.useState(true);
@@ -10,7 +11,7 @@ export default function Demo() {
       <Switch isSelected={isSelected} onChange={setSelected}>
         Focus mode
       </Switch>
-      <p className="text-fg-muted text-xs">
+      <p className="text-xs text-fg-muted">
         You are {!isSelected && "not"} on{" "}
         <span className="font-bold">focus mode</span>.
       </p>

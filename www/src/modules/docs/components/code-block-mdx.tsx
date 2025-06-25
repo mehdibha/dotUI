@@ -1,13 +1,15 @@
 "use client";
 
-import type { ButtonProps } from "@/components/ui/button";
-import type { HTMLAttributes, ReactNode } from "react";
 import { forwardRef, useCallback, useRef } from "react";
-import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { useCopyButton } from "@/hooks/use-copy-button";
-import { cn } from "@/lib/utils";
 import { Check, Copy } from "lucide-react";
+import type { HTMLAttributes, ReactNode } from "react";
+
+import { Button } from "@dotui/ui/components/button";
+import { cn } from "@dotui/ui/lib/utils";
+import type { ButtonProps } from "@dotui/ui/components/button";
+
+import { ScrollArea } from "@/components/scroll-area";
+import { useCopyButton } from "@/hooks/use-copy-button";
 
 export type CodeBlockProps = HTMLAttributes<HTMLElement> & {
   icon?: ReactNode;
@@ -63,7 +65,7 @@ export const CodeBlock = forwardRef<HTMLElement, CodeBlockProps>(
       <figure
         ref={ref}
         className={cn(
-          "not-prose fd-codeblock bg-fd-secondary/50 bg-bg-muted/30 group relative my-6 overflow-hidden rounded-lg border text-sm",
+          "not-prose fd-codeblock bg-fd-secondary/50 group relative my-6 overflow-hidden rounded-lg border bg-bg-muted/30 text-sm",
           keepBackground &&
             "bg-[var(--shiki-light-bg)] dark:bg-[var(--shiki-dark-bg)]",
           className,
@@ -71,7 +73,7 @@ export const CodeBlock = forwardRef<HTMLElement, CodeBlockProps>(
         {...props}
       >
         {title ? (
-          <div className="bg-bg-muted flex flex-row items-center gap-2 border-b px-4 py-1.5">
+          <div className="flex flex-row items-center gap-2 border-b bg-bg-muted px-4 py-1.5">
             {icon ? (
               <div
                 className="text-fd-muted-foreground [&_svg]:size-3.5"

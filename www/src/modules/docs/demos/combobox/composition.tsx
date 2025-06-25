@@ -1,8 +1,9 @@
 import React from "react";
-import { ComboboxInput, ComboboxRoot } from "@/components/dynamic-ui/combobox";
-import { Description, FieldError, Label } from "@/components/dynamic-ui/field";
-import { ListBox, ListBoxItem } from "@/components/dynamic-ui/list-box";
-import { Overlay } from "@/components/dynamic-ui/overlay";
+
+import { ComboboxInput, ComboboxRoot } from "@dotui/ui/components/combobox";
+import { Description, FieldError, Label } from "@dotui/ui/components/field";
+import { ListBox, ListBoxItem } from "@dotui/ui/components/list-box";
+import { Overlay } from "@dotui/ui/components/overlay";
 
 export default function Demo() {
   return (

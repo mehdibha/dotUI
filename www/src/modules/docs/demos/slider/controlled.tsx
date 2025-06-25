@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { Slider } from "@/components/dynamic-ui/slider";
+
+import { Slider } from "@dotui/ui/components/slider";
 
 export default function Demo() {
   const [value, setValue] = React.useState(50);
@@ -12,8 +13,8 @@ export default function Demo() {
         value={value}
         onChange={(value) => setValue(value as number)}
       />
-      <span className="text-fg-muted text-sm">
-        Value: <span className="text-fg font-semibold">{value}</span>
+      <span className="text-sm text-fg-muted">
+        Value: <span className="font-semibold text-fg">{value}</span>
       </span>
     </div>
   );

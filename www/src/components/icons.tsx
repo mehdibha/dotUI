@@ -1,5 +1,6 @@
 import type { SVGProps } from "react";
-import { cn } from "@/lib/utils";
+
+import { cn } from "@dotui/ui/lib/utils";
 
 interface IconProps extends Partial<SVGProps<SVGSVGElement>> {
   size?: string | number;

@@ -1,9 +1,10 @@
 "use client";
 
-import type { DateRange } from "react-aria-components";
 import React from "react";
-import { RangeCalendar } from "@/components/dynamic-ui/calendar";
 import { getLocalTimeZone, today } from "@internationalized/date";
+import type { DateRange } from "react-aria-components";
+
+import { RangeCalendar } from "@dotui/ui/components/calendar";
 
 export default function Demo() {
   const [range, setRange] = React.useState<DateRange | null>({

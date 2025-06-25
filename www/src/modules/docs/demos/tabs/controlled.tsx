@@ -1,8 +1,9 @@
 "use client";
 
-import type { Key } from "react-aria-components";
 import React from "react";
-import { Tab, TabList, TabPanel, Tabs } from "@/components/dynamic-ui/tabs";
+import type { Key } from "react-aria-components";
+
+import { Tab, TabList, TabPanel, Tabs } from "@dotui/ui/components/tabs";
 
 export default function Demo() {
   const [selectedTab, setSelectedTab] = React.useState<Key>("overview");
@@ -18,8 +19,8 @@ export default function Demo() {
         <TabPanel id="usage">Usage content</TabPanel>
         <TabPanel id="settings">Settings content</TabPanel>
       </Tabs>
-      <p className="text-fg-muted text-sm">
-        Selected tab: <span className="text-fg font-bold">{selectedTab}</span>
+      <p className="text-sm text-fg-muted">
+        Selected tab: <span className="font-bold text-fg">{selectedTab}</span>
       </p>
     </div>
   );

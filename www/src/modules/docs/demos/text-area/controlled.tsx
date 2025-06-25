@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { TextArea } from "@/components/dynamic-ui/text-area";
+
+import { TextArea } from "@dotui/ui/components/text-area";
 
 export default function Demo() {
   const [inputValue, setInputValue] = React.useState(
@@ -16,7 +17,7 @@ export default function Demo() {
           setInputValue(text);
         }}
       />
-      <p className="text-fg-muted text-sm">mirrored text: {inputValue}</p>
+      <p className="text-sm text-fg-muted">mirrored text: {inputValue}</p>
     </div>
   );
 }

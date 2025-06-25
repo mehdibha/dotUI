@@ -1,9 +1,10 @@
 "use client";
 
 import React from "react";
-import { Button } from "@/components/dynamic-ui/button";
-import { Menu, MenuItem, MenuRoot } from "@/components/dynamic-ui/menu";
 import { MenuIcon } from "lucide-react";
+
+import { Button } from "@dotui/ui/components/button";
+import { Menu, MenuItem, MenuRoot } from "@dotui/ui/components/menu";
 
 export default function Demo() {
   const [isOpen, setOpen] = React.useState(false);
@@ -19,7 +20,7 @@ export default function Demo() {
           <MenuItem>Log out</MenuItem>
         </Menu>
       </MenuRoot>
-      <p className="text-fg-muted text-sm">
+      <p className="text-sm text-fg-muted">
         state: {isOpen ? "open" : "closed"}
       </p>
     </div>

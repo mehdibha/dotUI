@@ -1,11 +1,12 @@
 "use client";
 
-import { Button } from "@/components/dynamic-ui/button";
-import { Command } from "@/components/dynamic-ui/command";
-import { Dialog, DialogRoot } from "@/components/dynamic-ui/dialog";
-import { MenuContent, MenuItem } from "@/components/dynamic-ui/menu";
-import { SearchField } from "@/components/dynamic-ui/search-field";
 import { useFilter } from "react-aria-components";
+
+import { Button } from "@dotui/ui/components/button";
+import { Command } from "@dotui/ui/components/command";
+import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
+import { MenuContent, MenuItem } from "@dotui/ui/components/menu";
+import { SearchField } from "@dotui/ui/components/search-field";
 
 export default function Demo() {
   const { contains } = useFilter({ sensitivity: "base" });

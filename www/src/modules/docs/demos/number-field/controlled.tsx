@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { NumberField } from "@/components/dynamic-ui/number-field";
+
+import { NumberField } from "@dotui/ui/components/number-field";
 
 export default function Demo() {
   const [inputValue, setInputValue] = React.useState(69);
@@ -14,7 +15,7 @@ export default function Demo() {
           setInputValue(value);
         }}
       />
-      <p className="text-fg-muted text-sm">mirrored number: {inputValue}</p>
+      <p className="text-sm text-fg-muted">mirrored number: {inputValue}</p>
     </div>
   );
 }

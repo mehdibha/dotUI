@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { Checkbox } from "@/components/dynamic-ui/checkbox";
+
+import { Checkbox } from "@dotui/ui/components/checkbox";
 
 export default function Demo() {
   const [checked, setChecked] = React.useState(false);
@@ -10,7 +11,7 @@ export default function Demo() {
       <Checkbox isSelected={checked} onChange={setChecked}>
         I accept the terms and conditions
       </Checkbox>
-      <p className="text-fg-muted text-xs">
+      <p className="text-xs text-fg-muted">
         <span className="font-bold">Checked:</span> {checked ? "true" : "false"}
       </p>
     </div>

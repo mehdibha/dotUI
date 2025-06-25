@@ -1,9 +1,10 @@
 "use client";
 
-import type { DateValue } from "react-aria-components";
 import React from "react";
-import { DateField } from "@/components/dynamic-ui/date-field";
 import { parseDate } from "@internationalized/date";
+import type { DateValue } from "react-aria-components";
+
+import { DateField } from "@dotui/ui/components/date-field";
 
 export default function Demo() {
   const [value, setValue] = React.useState<DateValue | null>(
@@ -12,7 +13,7 @@ export default function Demo() {
   return (
     <div className="flex flex-col items-center gap-4">
       <DateField aria-label="Event date" value={value} onChange={setValue} />
-      <p className="text-fg-muted text-sm">
+      <p className="text-sm text-fg-muted">
         selected date: {value ? value.toString() : "none"}
       </p>
     </div>

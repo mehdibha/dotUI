@@ -1,6 +1,7 @@
 import React from "react";
-import { ListBoxSection } from "@/components/dynamic-ui/list-box";
-import { Select, SelectItem } from "@/components/dynamic-ui/select";
+
+import { ListBoxSection } from "@dotui/ui/components/list-box";
+import { Select, SelectItem } from "@dotui/ui/components/select";
 
 export default function Demo() {
   return (

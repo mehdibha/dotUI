@@ -1,17 +1,24 @@
 "use client";
 
 import React from "react";
-import { ThemeModeSwitch } from "@/components/theme-mode-switch";
-import { Button } from "@/components/ui/button";
-import { ListBox } from "@/components/ui/list-box";
-import { Popover } from "@/components/ui/popover";
-import { SelectItem, SelectRoot, SelectValue } from "@/components/ui/select";
-import { Skeleton } from "@/components/ui/skeleton";
+
+// import { useStyles } from "@/modules/styles/atoms/styles-atom";
+// import { styles } from "@/registry/registry-styles";
+// import { ChevronDownIcon } from "lucide-react";
+
+// import { Button } from "@dotui/ui/components/button";
+// import { ListBox } from "@dotui/ui/components/list-box";
+// import { Popover } from "@dotui/ui/components/popover";
+// import {
+//   SelectItem,
+//   SelectRoot,
+//   SelectValue,
+// } from "@dotui/ui/components/select";
+import { Skeleton } from "@dotui/ui/components/skeleton";
+
+// import { ThemeModeSwitch } from "@/components/theme-mode-switch";
 import { useHorizontalResize } from "@/hooks/use-horizontal-resize";
 import { useMounted } from "@/hooks/use-mounted";
-import { useStyles } from "@/modules/styles/atoms/styles-atom";
-import { styles } from "@/registry/registry-styles";
-import { ChevronDownIcon } from "lucide-react";
 
 export const Loader = ({ children }: { children: React.ReactNode }) => {
   const [isMounted, setIsMounted] = React.useState(false);
@@ -58,7 +65,7 @@ export const ResizableContainer = ({
     >
       <div
         onMouseDown={handleMouseDown}
-        className="bg-bg-neutral hover:bg-bg-neutral-hover active:bg-bg-neutral-active absolute top-1/2 right-2 z-20 h-15 w-2 -translate-y-1/2 cursor-col-resize rounded-full shadow-sm"
+        className="absolute top-1/2 right-2 z-20 h-15 w-2 -translate-y-1/2 cursor-col-resize rounded-full bg-bg-neutral shadow-sm hover:bg-bg-neutral-hover active:bg-bg-neutral-active"
       />
       {children}
     </div>
@@ -66,13 +73,13 @@ export const ResizableContainer = ({
 };
 
 export const ComponentPreviewHeader = () => {
-  const { currentStyle, currentMode, setCurrentStyle, setCurrentMode } =
-    useStyles();
+  // const { currentStyle, currentMode, setCurrentStyle, setCurrentMode } =
+  //   useStyles();
   const isMounted = useMounted();
 
   return (
-    <div className="absolute top-0 left-0 z-50 flex w-full items-center justify-between gap-2 p-2">
-      <SelectRoot
+    <div className="absolute top-0 left-0 z-20 flex w-full items-center justify-between gap-2 p-2">
+      {/* <SelectRoot
         selectedKey={currentStyle.name}
         onSelectionChange={(key) => setCurrentStyle(key as string)}
       >
@@ -103,7 +110,7 @@ export const ComponentPreviewHeader = () => {
             setCurrentMode(isSelected ? "dark" : "light")
           }
         />
-      )}
+      )} */}
     </div>
   );
 };

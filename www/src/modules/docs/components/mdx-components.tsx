@@ -1,18 +1,15 @@
-import type { AlertProps } from "@/components/ui/alert";
-import type { BadgeProps } from "@/components/ui/badge";
-import type { LinkProps } from "@/components/ui/link";
-import type { MDXComponents } from "mdx/types";
 import React from "react";
-import { Alert } from "@/components/ui/alert";
-import { Badge } from "@/components/ui/badge";
-import { Link as NavLink } from "@/components/ui/link";
-import { cn } from "@/lib/utils";
 import { ArrowUpRightIcon } from "lucide-react";
+import type { LinkProps } from "@/components/link";
+import type { MDXComponents } from "mdx/types";
 
-import type { ChoicesProps } from "./choices";
-import type { ComponentPreviewProps } from "./component-preview";
-import type { PaletteProps } from "./palette";
-import type { TabsProps } from "./tabs";
+import { Alert } from "@dotui/ui/components/alert";
+import { Badge } from "@dotui/ui/components/badge";
+import { cn } from "@dotui/ui/lib/utils";
+import type { AlertProps } from "@dotui/ui/components/alert";
+import type { BadgeProps } from "@dotui/ui/components/badge";
+
+import { Link as NavLink } from "@/components/link";
 import { BadgePalette } from "./badge-palette";
 import { Choice, Choices } from "./choices";
 import { Pre } from "./code-block-mdx";
@@ -20,6 +17,10 @@ import { ComponentPreview } from "./component-preview";
 import { InstallTab, InstallTabs } from "./install-tabs";
 import { Palette } from "./palette";
 import { Tab, Tabs } from "./tabs";
+import type { ChoicesProps } from "./choices";
+import type { ComponentPreviewProps } from "./component-preview";
+import type { PaletteProps } from "./palette";
+import type { TabsProps } from "./tabs";
 
 export const mdxComponents: MDXComponents = {
   h1: createHeading(1, "font-heading mt-2 scroll-m-20 text-4xl font-bold"),
@@ -60,7 +61,7 @@ export const mdxComponents: MDXComponents = {
   ),
   blockquote: ({ className, ...props }) => (
     <blockquote
-      className={cn("*:text-fg-muted mt-6 border-l-2 pl-6 italic", className)}
+      className={cn("mt-6 border-l-2 pl-6 italic *:text-fg-muted", className)}
       {...props}
     />
   ),
@@ -116,7 +117,7 @@ export const mdxComponents: MDXComponents = {
   code: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
     <code
       className={cn(
-        "bg-bg-muted w-full rounded-md p-1 font-mono text-sm",
+        "w-full rounded-md bg-bg-muted p-1 font-mono text-sm",
         className,
       )}
       {...props}
@@ -140,7 +141,7 @@ export const mdxComponents: MDXComponents = {
   Step: ({ className, ...props }: React.ComponentProps<"h3">) => (
     <h3
       className={cn(
-        "font-heading mt-8 scroll-m-20 text-base font-semibold tracking-tight",
+        "mt-8 scroll-m-20 font-heading text-base font-semibold tracking-tight",
         className,
       )}
       {...props}
@@ -148,7 +149,7 @@ export const mdxComponents: MDXComponents = {
   ),
   Steps: ({ ...props }: React.ComponentProps<"div">) => (
     <div
-      className="[&>h3]:step mb-12 ml-4 border-l pl-8 [counter-reset:step]"
+      className="mb-12 ml-4 border-l pl-8 [counter-reset:step] [&>h3]:step"
       {...props}
     />
   ),

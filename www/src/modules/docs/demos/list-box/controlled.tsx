@@ -1,8 +1,9 @@
 "use client";
 
-import type { Selection } from "react-aria-components";
 import React from "react";
-import { ListBox, ListBoxItem } from "@/components/dynamic-ui/list-box";
+import type { Selection } from "react-aria-components";
+
+import { ListBox, ListBoxItem } from "@dotui/ui/components/list-box";
 
 export default function Demo() {
   const [selected, setSelected] = React.useState<Selection>(
@@ -21,7 +22,7 @@ export default function Demo() {
         <ListBoxItem id="astro">Astro</ListBoxItem>
         <ListBoxItem id="gatsby">Gatsby</ListBoxItem>
       </ListBox>
-      <p className="text-fg-muted text-sm">
+      <p className="text-sm text-fg-muted">
         Selected items:{" "}
         <span className="font-semibold">
           {selected === "all" ? "all" : Array.from(selected).join(", ")}

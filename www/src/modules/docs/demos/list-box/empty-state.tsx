@@ -1,6 +1,6 @@
 "use client";
 
-import { ListBox } from "@/components/dynamic-ui/list-box";
+import { ListBox } from "@dotui/ui/components/list-box";
 
 export default function Demo() {
   return (

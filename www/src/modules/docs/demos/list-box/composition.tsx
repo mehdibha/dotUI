@@ -1,5 +1,5 @@
-import { ListBox, ListBoxItem } from "@/components/dynamic-ui/list-box";
-import { Text } from "@/components/dynamic-ui/text";
+import { ListBox, ListBoxItem } from "@dotui/ui/components/list-box";
+import { Text } from "@dotui/ui/components/text";
 
 export default function Demo() {
   return (

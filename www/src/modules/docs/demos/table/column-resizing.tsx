@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+
 import {
   TableBody,
   TableCell,
@@ -9,7 +10,7 @@ import {
   TableHeader,
   TableRoot,
   TableRow,
-} from "@/registry/ui/table.basic";
+} from "@dotui/ui/components/table";
 
 const columns: Column[] = [
   { name: "Name", id: "name", isRowHeader: true },

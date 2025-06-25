@@ -1,6 +1,6 @@
-import { Button } from "@/components/dynamic-ui/button";
-import { Menu, MenuItem, MenuRoot } from "@/components/dynamic-ui/menu";
-import { Separator } from "@/components/dynamic-ui/separator";
+import { Button } from "@dotui/ui/components/button";
+import { Menu, MenuItem, MenuRoot } from "@dotui/ui/components/menu";
+import { Separator } from "@dotui/ui/components/separator";
 
 export default function Demo() {
   return (

@@ -1,8 +1,9 @@
 "use client";
 
-import type { Key } from "react-aria-components";
 import React from "react";
-import { Select, SelectItem } from "@/components/dynamic-ui/select";
+import type { Key } from "react-aria-components";
+
+import { Select, SelectItem } from "@dotui/ui/components/select";
 
 export default function Demo() {
   const [provider, setProvider] = React.useState<Key | null>("eleven-labs");
@@ -14,8 +15,8 @@ export default function Demo() {
         <SelectItem id="together-ai">Together AI</SelectItem>
         <SelectItem id="eleven-labs">ElevenLabs</SelectItem>
       </Select>
-      <p className="text-fg-muted text-sm">
-        Selected provider: <span className="text-fg font-bold">{provider}</span>
+      <p className="text-sm text-fg-muted">
+        Selected provider: <span className="font-bold text-fg">{provider}</span>
       </p>
     </div>
   );

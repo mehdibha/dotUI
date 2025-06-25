@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
-import { Checkbox } from "@/components/dynamic-ui/checkbox";
-import { CheckboxGroup } from "@/components/dynamic-ui/checkbox-group";
+
+import { Checkbox } from "@dotui/ui/components/checkbox";
+import { CheckboxGroup } from "@dotui/ui/components/checkbox-group";
 
 export default function Demo() {
   const [frameworks, setFrameworks] = React.useState(["nextjs"]);
@@ -17,7 +18,7 @@ export default function Demo() {
         <Checkbox value="remix">Remix</Checkbox>
         <Checkbox value="gatsby">Gatsby</Checkbox>
       </CheckboxGroup>
-      <p className="text-fg-muted text-xs">
+      <p className="text-xs text-fg-muted">
         {frameworks.length === 0
           ? "You haven't selected any frameworks."
           : `You selected ${frameworks.join(", ")}.`}

@@ -5,7 +5,7 @@ export async function PageLastUpdate({ path }: { path: string }) {
     const date = await getGithubLastEdit(path);
     if (!date) return null;
     return (
-      <p className="text-fg-muted text-sm">
+      <p className="text-sm text-fg-muted">
         Last updated on {date.toLocaleDateString()}
       </p>
     );

@@ -1,7 +1,9 @@
-import { source } from "@/app/source";
-import { Button } from "@/components/ui/button";
 import { findNeighbour } from "fumadocs-core/server";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+
+import { Button } from "@dotui/ui/components/button";
+
+import { source } from "@/app/source";
 
 export const DocsPager = ({ currentPathname }: { currentPathname: string }) => {
   const { previous, next } = findNeighbour(source.pageTree, currentPathname);

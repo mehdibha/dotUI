@@ -1,7 +1,8 @@
 "use client";
 
-import { DatePicker } from "@/components/dynamic-ui/date-picker";
 import { parseZonedDateTime } from "@internationalized/date";
+
+import { DatePicker } from "@dotui/ui/components/date-picker";
 
 export default function Demo() {
   return (

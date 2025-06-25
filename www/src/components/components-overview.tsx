@@ -1,23 +1,26 @@
 "use client";
 
-import { Alert } from "@/components/dynamic-ui/alert";
-import { Avatar } from "@/components/dynamic-ui/avatar";
-import { Button } from "@/components/dynamic-ui/button";
-import { RangeCalendar } from "@/components/dynamic-ui/calendar";
-import { Checkbox } from "@/components/dynamic-ui/checkbox";
-import { ColorPicker } from "@/components/dynamic-ui/color-picker";
-import { ColorSlider } from "@/components/dynamic-ui/color-slider";
-import { Combobox, ComboboxItem } from "@/components/dynamic-ui/combobox";
-import { DatePicker } from "@/components/dynamic-ui/date-picker";
-import { ListBox, ListBoxItem } from "@/components/dynamic-ui/list-box";
-import { Menu, MenuItem, MenuRoot } from "@/components/dynamic-ui/menu";
-import { NumberField } from "@/components/dynamic-ui/number-field";
-import { ProgressBar } from "@/components/dynamic-ui/progress-bar";
-import { SearchField } from "@/components/dynamic-ui/search-field";
-import { Select, SelectItem } from "@/components/dynamic-ui/select";
-import { Separator } from "@/components/dynamic-ui/separator";
-import { Slider } from "@/components/dynamic-ui/slider";
-import { Switch } from "@/components/dynamic-ui/switch";
+import { MenuIcon, PinIcon } from "lucide-react";
+
+import { Alert } from "@dotui/ui/components/alert";
+import { Avatar } from "@dotui/ui/components/avatar";
+import { Button } from "@dotui/ui/components/button";
+import { RangeCalendar } from "@dotui/ui/components/calendar";
+import { Checkbox } from "@dotui/ui/components/checkbox";
+import { ColorPicker } from "@dotui/ui/components/color-picker";
+import { ColorSlider } from "@dotui/ui/components/color-slider";
+import { Combobox, ComboboxItem } from "@dotui/ui/components/combobox";
+import { DatePicker } from "@dotui/ui/components/date-picker";
+import { ListBox, ListBoxItem } from "@dotui/ui/components/list-box";
+import { Menu, MenuItem, MenuRoot } from "@dotui/ui/components/menu";
+import { NumberField } from "@dotui/ui/components/number-field";
+import { ProgressBar } from "@dotui/ui/components/progress-bar";
+import { Radio, RadioGroup } from "@dotui/ui/components/radio-group";
+import { SearchField } from "@dotui/ui/components/search-field";
+import { Select, SelectItem } from "@dotui/ui/components/select";
+import { Separator } from "@dotui/ui/components/separator";
+import { Slider } from "@dotui/ui/components/slider";
+import { Switch } from "@dotui/ui/components/switch";
 import {
   TableBody,
   TableCell,
@@ -25,21 +28,19 @@ import {
   TableHeader,
   TableRoot,
   TableRow,
-} from "@/components/dynamic-ui/table";
-import { Tab, TabList, TabPanel, Tabs } from "@/components/dynamic-ui/tabs";
-import { TextField } from "@/components/dynamic-ui/text-field";
-import { TimeField } from "@/components/dynamic-ui/time-field";
-import { ToggleButton } from "@/components/dynamic-ui/toggle-button";
+} from "@dotui/ui/components/table";
+import { Tab, TabList, TabPanel, Tabs } from "@dotui/ui/components/tabs";
+import { TextField } from "@dotui/ui/components/text-field";
+import { TimeField } from "@dotui/ui/components/time-field";
+import { ToggleButton } from "@dotui/ui/components/toggle-button";
+import { cn } from "@dotui/ui/lib/utils";
+
 import { GitHubIcon, GoogleIcon, TwitterIcon } from "@/components/icons";
-import { Link } from "@/components/ui/link";
-import { Radio, RadioGroup } from "@/components/ui/radio-group";
-import { cn } from "@/lib/utils";
+import { Link } from "@/components/link";
 import FileTriggerDemo from "@/modules/docs/demos/file-trigger/default";
-import { usePreferences } from "@/modules/styles/contexts/preferences-context";
-import { MenuIcon, PinIcon } from "lucide-react";
 
 export function ComponentsOverview({ className }: { className?: string }) {
-  const { defaultColorScheme } = usePreferences();
+  const defaultColorScheme = "primary";
 
   return (
     <div className={cn("grid grid-cols-10 gap-8 p-4 sm:p-8", className)}>
@@ -235,7 +236,7 @@ export const MobileComponentsOverview = ({
 }: {
   className?: string;
 }) => {
-  const { defaultColorScheme } = usePreferences();
+  const defaultColorScheme = "primary";
 
   return (
     <div className={cn("grid grid-cols-10 gap-3 p-4", className)}>
@@ -291,7 +292,7 @@ export const MobileComponentsOverview = ({
             <MenuItem>Log out</MenuItem>
           </Menu>
         </MenuRoot>
-        <Select className="xs:flex-auto flex-1">
+        <Select className="flex-1 xs:flex-auto">
           <SelectItem>Perplexity</SelectItem>
           <SelectItem>Replicate</SelectItem>
           <SelectItem>Together AI</SelectItem>
@@ -324,14 +325,14 @@ export const MobileComponentsOverview = ({
 };
 
 function Login() {
-  const { defaultColorScheme } = usePreferences();
+  const defaultColorScheme = "primary";
 
   return (
-    <div className="bg-bg-muted w-full rounded-lg border p-8">
+    <div className="w-full rounded-lg border bg-bg-muted p-8">
       <h1 className="text-2xl leading-none font-semibold tracking-tight">
         Login
       </h1>
-      <p className="text-fg-muted mt-2 text-sm">
+      <p className="mt-2 text-sm text-fg-muted">
         Enter your email below to login to your account
       </p>
       <div className="mt-4 flex items-center gap-2">
@@ -362,7 +363,7 @@ function Login() {
           <span className="w-full border-t" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-bg-muted text-fg-muted px-2">Or</span>
+          <span className="bg-bg-muted px-2 text-fg-muted">Or</span>
         </div>
       </div>
       <TextField label="Email address" type="email" className="w-full" />
@@ -373,7 +374,7 @@ function Login() {
       >
         Continue with email
       </Button>
-      <p className="text-fg-muted mt-4 text-sm">
+      <p className="mt-4 text-sm text-fg-muted">
         Don&apos;t have an account?{" "}
         <Link variant="quiet" href="/preview/register">
           Register
@@ -384,14 +385,14 @@ function Login() {
 }
 
 function Register() {
-  const { defaultColorScheme } = usePreferences();
+  const defaultColorScheme = "primary";
 
   return (
-    <div className="bg-bg-muted w-full rounded-lg border p-8">
+    <div className="w-full rounded-lg border bg-bg-muted p-8">
       <h1 className="text-2xl leading-none font-semibold tracking-tight">
         Create an account
       </h1>
-      <p className="text-fg-muted mt-2 text-sm">
+      <p className="mt-2 text-sm text-fg-muted">
         Enter your email below to create your account
       </p>
       <div className="mt-4 flex items-center gap-2">
@@ -423,14 +424,14 @@ function Register() {
           <span className="w-full border-t" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-bg-muted text-fg-muted px-2">Or</span>
+          <span className="bg-bg-muted px-2 text-fg-muted">Or</span>
         </div>
       </div>
       <TextField label="Email address" className="w-full" />
       <Button variant={defaultColorScheme} className="mt-4 w-full">
         Sign up with email
       </Button>
-      <p className="text-fg-muted mt-4 text-sm">
+      <p className="mt-4 text-sm text-fg-muted">
         Already have an account?{" "}
         <Link variant="quiet" href="/preview/login">
           Login

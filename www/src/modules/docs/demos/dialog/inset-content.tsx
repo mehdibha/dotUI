@@ -1,13 +1,14 @@
 import React from "react";
-import { Button } from "@/components/dynamic-ui/button";
+import { PenSquareIcon } from "lucide-react";
+
+import { Button } from "@dotui/ui/components/button";
 import {
   Dialog,
   DialogBody,
   DialogFooter,
   DialogInset,
   DialogRoot,
-} from "@/components/dynamic-ui/dialog";
-import { PenSquareIcon } from "lucide-react";
+} from "@dotui/ui/components/dialog";
 
 export default function Demo() {
   return (
@@ -18,7 +19,7 @@ export default function Demo() {
         description="Report an issue or create a feature request."
       >
         <DialogBody>
-          <DialogInset className="bg-bg-muted !my-4">
+          <DialogInset className="!my-4 bg-bg-muted">
             Content within the inset.
           </DialogInset>
           <p className="mt-4">Content outside the inset.</p>

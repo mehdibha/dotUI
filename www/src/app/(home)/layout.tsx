@@ -13,12 +13,12 @@ export default function HomeLayout({
       <Header className="hidden lg:block" />
       <MobileNav items={source.pageTree.children} className="lg:hidden" />
       <div className="mx-auto min-h-screen max-w-screen-2xl sm:grid sm:grid-cols-[20px_1fr_20px] md:grid-cols-[30px_1fr_30px]">
-        <div className="diagonal-pattern hidden sm:block" />
+        <div className="hidden diagonal-pattern sm:block" />
         <div>
           <div className="min-h-[70vh]">{children}</div>
           <Footer />
         </div>
-        <div className="diagonal-pattern hidden sm:block" />
+        <div className="hidden diagonal-pattern sm:block" />
       </div>
     </div>
   );

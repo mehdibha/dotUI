@@ -1,4 +1,5 @@
-import { ListBox, ListBoxItem } from "@/components/dynamic-ui/list-box";
+import { ListBox, ListBoxItem } from "@dotui/ui/components/list-box";
+
 import { DiscordIcon, GitHubIcon, TwitterIcon } from "@/components/icons";
 
 export default function Demo() {

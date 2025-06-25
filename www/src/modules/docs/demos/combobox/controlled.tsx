@@ -1,8 +1,9 @@
 "use client";
 
-import type { Key } from "react-aria-components";
 import React from "react";
-import { Combobox, ComboboxItem } from "@/components/dynamic-ui/combobox";
+import type { Key } from "react-aria-components";
+
+import { Combobox, ComboboxItem } from "@dotui/ui/components/combobox";
 
 export default function Demo() {
   const [country, setCountry] = React.useState<Key | null>("tn");
@@ -21,10 +22,10 @@ export default function Demo() {
         <ComboboxItem id="us">United States</ComboboxItem>
         <ComboboxItem id="uk">United Kingdom</ComboboxItem>
       </Combobox>
-      <p className="text-fg-muted text-sm">
+      <p className="text-sm text-fg-muted">
         {country ? (
           <>
-            You selected: <span className="text-fg font-bold">{country}</span>
+            You selected: <span className="font-bold text-fg">{country}</span>
           </>
         ) : (
           "Select a country."

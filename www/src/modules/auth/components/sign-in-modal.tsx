@@ -1,6 +1,6 @@
 import React from "react";
-import { GitHubIcon } from "@/components/icons";
-import { Button } from "@/components/ui/button";
+
+import { Button } from "@dotui/ui/components/button";
 import {
   DialogBody,
   DialogContent,
@@ -8,9 +8,10 @@ import {
   DialogHeader,
   DialogHeading,
   DialogRoot,
-} from "@/components/ui/dialog";
-import { Overlay } from "@/components/ui/overlay";
+} from "@dotui/ui/components/dialog";
+import { Overlay } from "@dotui/ui/components/overlay";
 
+import { GitHubIcon } from "@/components/icons";
 import { authClient } from "../lib/client";
 
 export function SignInModal({ children }: { children: React.ReactNode }) {
@@ -21,7 +22,7 @@ export function SignInModal({ children }: { children: React.ReactNode }) {
       <Overlay modalProps={{ className: "max-w-sm" }}>
         <DialogContent>
           <DialogHeader>
-            <DialogHeading className="font-heading text-center text-2xl font-semibold tracking-tighter">
+            <DialogHeading className="text-center font-heading text-2xl font-semibold tracking-tighter">
               Sign in to dotUI
             </DialogHeading>
             <DialogDescription className="block text-center">

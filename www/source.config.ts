@@ -1,11 +1,3 @@
-import type { RemarkInstallOptions } from "@/modules/docs/lib/mdx-plugins/remark-install";
-import { fileGenerator } from "@/modules/docs/lib/mdx-plugins/file-generator";
-import {
-  remarkDocGen,
-  RemarkDocGenOptions,
-} from "@/modules/docs/lib/mdx-plugins/remark-docgen";
-import remarkInlineCode from "@/modules/docs/lib/mdx-plugins/remark-inline-code";
-import { remarkInstall } from "@/modules/docs/lib/mdx-plugins/remark-install";
 import {
   defineConfig,
   defineDocs,
@@ -13,6 +5,15 @@ import {
   metaSchema,
 } from "fumadocs-mdx/config";
 import { z } from "zod";
+import type { RemarkInstallOptions } from "@/modules/docs/lib/mdx-plugins/remark-install";
+
+import { fileGenerator } from "@/modules/docs/lib/mdx-plugins/file-generator";
+import {
+  remarkDocGen,
+  RemarkDocGenOptions,
+} from "@/modules/docs/lib/mdx-plugins/remark-docgen";
+import remarkInlineCode from "@/modules/docs/lib/mdx-plugins/remark-inline-code";
+import { remarkInstall } from "@/modules/docs/lib/mdx-plugins/remark-install";
 
 export const docs = defineDocs({
   docs: {

@@ -1,9 +1,10 @@
 import React from "react";
+
 import {
   SwitchIndicator,
   SwitchRoot,
   SwitchThumb,
-} from "@/components/dynamic-ui/switch";
+} from "@dotui/ui/components/switch";
 
 export default function Demo() {
   return (

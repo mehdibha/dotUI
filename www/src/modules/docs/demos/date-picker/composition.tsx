@@ -1,15 +1,16 @@
 "use client";
 
 import React from "react";
-import { Button } from "@/components/dynamic-ui/button";
-import { Calendar } from "@/components/dynamic-ui/calendar";
-import { DateInput, DateSegment } from "@/components/dynamic-ui/date-input";
-import { DatePickerRoot } from "@/components/dynamic-ui/date-picker";
-import { DialogContent } from "@/components/dynamic-ui/dialog";
-import { Description, FieldError, Label } from "@/components/dynamic-ui/field";
-import { InputRoot } from "@/components/dynamic-ui/input";
-import { Overlay } from "@/components/dynamic-ui/overlay";
 import { CalendarIcon } from "lucide-react";
+
+import { Button } from "@dotui/ui/components/button";
+import { Calendar } from "@dotui/ui/components/calendar";
+import { DateInput, DateSegment } from "@dotui/ui/components/date-input";
+import { DatePickerRoot } from "@dotui/ui/components/date-picker";
+import { DialogContent } from "@dotui/ui/components/dialog";
+import { Description, FieldError, Label } from "@dotui/ui/components/field";
+import { InputRoot } from "@dotui/ui/components/input";
+import { Overlay } from "@dotui/ui/components/overlay";
 
 export default function Demo() {
   return (
