@@ -23,7 +23,6 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "@dotui/registry": "workspace:*",
     "@dotui/style-engine": "workspace:*"
   },
   "peerDependencies": {
