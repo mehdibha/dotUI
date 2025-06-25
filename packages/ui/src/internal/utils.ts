@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ui } from "@dotui/registry/registry-ui";
+import { ui } from "@/registry/registry-ui";
 
 export const getComponentVariants = (componentName: string) => {
   const component = ui.find((c) => c.name === componentName);
