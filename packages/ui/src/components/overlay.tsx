@@ -1,1 +1,1 @@
-export * from "../__registry__/components/overlay/basic";
+export * from "../registry/components/overlay/basic";

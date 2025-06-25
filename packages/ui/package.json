@@ -12,7 +12,8 @@
     "./hooks/*": "./src/hooks/*.ts",
     "./lib/focus-styles": "./src/lib/focus-styles.ts",
     "./lib/utils": "./src/lib/utils.tsx",
-    "./globals.css": "./src/globals.css"
+    "./globals.css": "./src/globals.css",
+    "./registry/components/tabs/motion": "./src/registry/components/tabs/motion.tsx"
   },
   "license": "MIT",
   "scripts": {

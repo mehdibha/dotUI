@@ -1,1 +1,1 @@
-export * from "../__registry__/components/popover/basic";
+export * from "../registry/components/popover/basic";

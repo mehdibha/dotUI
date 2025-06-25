@@ -1,1 +1,1 @@
-export * from "../__registry__/components/file-trigger/basic";
+export * from "../registry/components/file-trigger/basic";

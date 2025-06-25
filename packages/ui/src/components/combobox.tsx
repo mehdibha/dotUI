@@ -1,1 +1,1 @@
-export * from "../__registry__/components/combobox/basic";
+export * from "../registry/components/combobox/basic";

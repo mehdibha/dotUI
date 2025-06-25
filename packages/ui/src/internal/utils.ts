@@ -21,7 +21,7 @@ export const createDynamicVariants = <Props extends {}>(
   return variants.reduce(
     (acc, variant) => {
       acc[variant] = React.lazy(() =>
-        import(`@/__registry__/components/${componentName}/${variant}`).then(
+        import(`@/registry/components/${componentName}/${variant}`).then(
           (mod) => ({
             default: mod[componentSlot],
           }),

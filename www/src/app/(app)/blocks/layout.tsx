@@ -1,7 +1,13 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { Tab, TabList, TabPanel, Tabs } from "@/components/ui/tabs.motion";
+
+import {
+  Tab,
+  TabList,
+  TabPanel,
+  Tabs,
+} from "@dotui/ui/registry/components/tabs/motion";
 
 export default function BlocksLayout({
   children,
@@ -36,7 +42,9 @@ export default function BlocksLayout({
               </Tab>
             ))}
           </TabList>
-          <TabPanel id={pathname} className="mt-4">{children}</TabPanel>
+          <TabPanel id={pathname} className="mt-4">
+            {children}
+          </TabPanel>
         </Tabs>
       </div>
     </div>

@@ -1,1 +1,1 @@
-export * from "../__registry__/components/switch/basic";
+export * from "../registry/components/switch/basic";

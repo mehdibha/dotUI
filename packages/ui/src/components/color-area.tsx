@@ -1,1 +1,1 @@
-export * from "../__registry__/components/color-area/basic";
+export * from "../registry/components/color-area/basic";

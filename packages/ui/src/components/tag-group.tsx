@@ -1,1 +1,1 @@
-export * from "../__registry__/components/tag-group/basic";
+export * from "../registry/components/tag-group/basic";
