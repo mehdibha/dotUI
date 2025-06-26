@@ -1,11 +1,11 @@
 import React from "react";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
-
-import { cn } from "@dotui/ui/lib/utils";
-
-import { Index } from "@/components/__demos__";
 import { CodeBlock } from "@/modules/docs/components/code-block";
 import { getFileSource } from "@/modules/docs/lib/get-file-source";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
+
+import { Index } from "@dotui/ui/__registry__/demos";
+import { cn } from "@dotui/ui/lib/utils";
+
 import {
   ComponentPreviewHeader,
   ComponentWrapper,
@@ -39,16 +39,16 @@ export const ComponentPreview = async ({
 
   // @ts-expect-error TODO fix later
   const Component = demoItem.component;
-  // @ts-expect-error TODO fix later
-  const code: { fileName: string; code: string }[] = demoItem.files.map(
-    (file: string) => {
-      const { fileName, content } = getFileSource(file);
-      return {
-        fileName,
-        code: content,
-      };
-    },
-  );
+
+  // const code: { fileName: string; code: string }[] = demoItem.files.map(
+  //   (file: string) => {
+  //     const { fileName, content } = getFileSource(file);
+  //     return {
+  //       fileName,
+  //       code: content,
+  //     };
+  //   },
+  // );
 
   return (
     <div
@@ -84,7 +84,7 @@ export const ComponentPreview = async ({
           </Loader>
         </ResizableContainer>
       </div>
-      <CodeBlock
+      {/* <CodeBlock
         files={code.map((file) => ({
           fileName: file.fileName,
           code: file.code,
@@ -93,7 +93,7 @@ export const ComponentPreview = async ({
         preview={preview}
         className={"w-full rounded-t-none border-x-0 border-b-0"}
         expandable={expandable}
-      />
+      /> */}
     </div>
   );
 };

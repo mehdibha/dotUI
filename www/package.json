@@ -4,10 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build:demos": "pnpm jiti scripts/build-demos.ts",
-    "build": "pnpm build:demos && pnpm with-env next build",
+    "build": "pnpm with-env next build",
     "clean": "git clean -xdf .cache .next .turbo node_modules",
-    "dev": "pnpm build:demos && pnpm with-env next dev --turbopack",
+    "dev": "pnpm with-env next dev --turbopack",
     "format": "prettier --check . --ignore-path ../.gitignore",
     "format:fix": "prettier --write . --ignore-path ../.gitignore",
     "lint": "eslint",
