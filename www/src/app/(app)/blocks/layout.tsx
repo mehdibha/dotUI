@@ -17,7 +17,7 @@ export default function BlocksLayout({
   const pathname = usePathname();
 
   return (
-    <div className="p-10">
+    <div className="container max-w-screen-2xl p-14">
       <h2 className="text-4xl font-semibold tracking-tighter text-balance">
         Blocks that don’t lock you in.
       </h2>
@@ -42,7 +42,7 @@ export default function BlocksLayout({
               </Tab>
             ))}
           </TabList>
-          <TabPanel id={pathname} className="mt-4">
+          <TabPanel id={pathname} className="mt-6">
             {children}
           </TabPanel>
         </Tabs>
