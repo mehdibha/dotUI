@@ -1,5 +1,6 @@
 "use client";
 
+import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
 import {
   AlertCircleIcon,
@@ -8,13 +9,12 @@ import {
   InfoIcon,
 } from "lucide-react";
 import { tv } from "tailwind-variants";
-import type { VariantProps } from "tailwind-variants";
 
-import { createScopedContext } from "@/lib/utils";
+import { createScopedContext } from "@dotui/ui/lib/utils";
 
 const alertStyles = tv({
   slots: {
-    root: "flex items-center gap-4 rounded-lg border-l-8 bg-bg-muted p-4 text-fg [&_svg]:size-4",
+    root: "bg-bg-muted text-fg flex items-center gap-4 rounded-lg border-l-8 p-4 [&_svg]:size-4",
     title: "mr-1 leading-normal font-medium tracking-tight",
     content: "text-sm",
   },

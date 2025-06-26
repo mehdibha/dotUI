@@ -2,7 +2,7 @@ import { promises as fs } from "fs";
 import path from "path";
 import { rimraf } from "rimraf";
 
-import { registryBlocks } from "@/registry/registry-blocks";
+import { registryBlocks } from "@dotui/ui/registry/registry-blocks";
 
 const REGISTRY_DIR = path.join(process.cwd(), "src/__registry__");
 
@@ -34,7 +34,7 @@ export const Index: Record<
         return `registry/${filePath}`;
       }) || [];
 
-    let componentPath = `@/registry/blocks/${block.name}`;
+    let componentPath = `@dotui/ui/registry/blocks/${block.name}`;
 
     if (block.files && block.files.length > 0) {
       const files = block.files.map((file) =>
@@ -42,7 +42,7 @@ export const Index: Record<
       );
       if (files?.length && files[0]) {
         const firstFilePath = files[0].path.replace(/\.tsx?$/, "");
-        componentPath = `@/registry/${firstFilePath}`;
+        componentPath = `@dotui/ui/registry/${firstFilePath}`;
       }
     }
 

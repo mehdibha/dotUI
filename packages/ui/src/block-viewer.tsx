@@ -1,4 +1,4 @@
-import { Index } from "@/__registry__/blocks";
+import { Index } from "@dotui/ui/__registry__/blocks";
 
 export function BlockViewer({ name }: { name: string }) {
   const block = Index[name];

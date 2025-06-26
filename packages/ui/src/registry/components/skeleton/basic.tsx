@@ -1,6 +1,6 @@
 // work in progress
 // Auto layout skeleton inspiration: https://x.com/devongovett/status/1838980741197447529
-import { cn } from "@/lib/utils";
+import { cn } from "@dotui/ui/lib/utils";
 
 function Skeleton({
   className,
@@ -13,7 +13,7 @@ function Skeleton({
   return (
     <div
       className={cn(
-        "relative block h-6 animate-pulse rounded-md bg-bg-muted",
+        "bg-bg-muted relative block h-6 animate-pulse rounded-md",
         props.children && "h-auto *:invisible",
         className,
       )}

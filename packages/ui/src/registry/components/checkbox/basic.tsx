@@ -1,5 +1,6 @@
 "use client";
 
+import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
 import { CheckIcon, MinusIcon } from "lucide-react";
 import {
@@ -7,20 +8,21 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import type { VariantProps } from "tailwind-variants";
 
 import { focusRing, focusRingGroup } from "@dotui/ui/lib/focus-styles";
-
-import { createOptionalScopedContext, createScopedContext } from "@/lib/utils";
+import {
+  createOptionalScopedContext,
+  createScopedContext,
+} from "@dotui/ui/lib/utils";
 
 const checkboxStyles = tv({
   slots: {
-    root: "group flex cursor-pointer flex-row items-center gap-2 invalid:text-fg-danger disabled:cursor-default disabled:text-fg-disabled",
+    root: "group invalid:text-fg-danger disabled:text-fg-disabled flex cursor-pointer flex-row items-center gap-2 disabled:cursor-default",
     indicator: [
-      "flex size-4 shrink-0 cursor-pointer items-center justify-center rounded-sm border border-border-control",
-      "bg-transparent text-transparent transition-colors duration-75 group-indeterminate:border-transparent group-selected:border-transparent",
+      "border-border-control flex size-4 shrink-0 cursor-pointer items-center justify-center rounded-sm border",
+      "group-selected:border-transparent bg-transparent text-transparent transition-colors duration-75 group-indeterminate:border-transparent",
       "group-read-only:cursor-default",
-      "group-disabled:cursor-default group-disabled:border-border-disabled group-indeterminate:group-disabled:bg-bg-disabled group-selected:group-disabled:bg-bg-disabled group-selected:group-disabled:text-fg-disabled",
+      "group-disabled:border-border-disabled group-indeterminate:group-disabled:bg-bg-disabled group-selected:group-disabled:bg-bg-disabled group-selected:group-disabled:text-fg-disabled group-disabled:cursor-default",
       "group-invalid:group-selected:text-fg-onMutedDanger group-invalid:border-border-danger group-invalid:group-selected:bg-bg-danger-muted",
     ],
   },
@@ -42,7 +44,7 @@ const checkboxStyles = tv({
       card: {
         root: [
           focusRing(),
-          "flex-row-reverse justify-between gap-4 rounded-md border p-4 transition-colors disabled:border-border-disabled disabled:selected:bg-bg-disabled",
+          "disabled:border-border-disabled disabled:selected:bg-bg-disabled flex-row-reverse justify-between gap-4 rounded-md border p-4 transition-colors",
         ],
       },
     },

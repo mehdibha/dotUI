@@ -8,8 +8,7 @@ import {
 
 import { ColorSwatch } from "@dotui/ui/components/color-swatch";
 import { focusRing } from "@dotui/ui/lib/focus-styles";
-
-import { cn } from "@/lib/utils";
+import { cn } from "@dotui/ui/lib/utils";
 
 interface ColorSwatchPickerProps
   extends React.ComponentProps<typeof AriaColorSwatchPicker> {}
@@ -38,10 +37,10 @@ const ColorSwatchPickerItem = ({
         <>
           <ColorSwatch className={cn("size-full rounded-[inherit]")} />
           {isSelected && (
-            <div className="absolute inset-0 z-1 rounded-[inherit] border-2 border-bg outline-2 outline-bg-inverse" />
+            <div className="border-bg outline-bg-inverse absolute inset-0 z-1 rounded-[inherit] border-2 outline-2" />
           )}
           {isDisabled && (
-            <div className="absolute inset-0 z-1 rounded-[inherit] bg-bg/90" />
+            <div className="bg-bg/90 absolute inset-0 z-1 rounded-[inherit]" />
           )}
         </>
       )}

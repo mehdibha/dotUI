@@ -6,7 +6,8 @@
     "jsxImportSource": "react",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*", "../packages/ui/src/*"],
+      "@/*": ["./src/*"],
+      "@dotui/ui/*": ["../packages/ui/src/*"],
       "~/*": ["./*"]
     },
     "plugins": [{ "name": "next" }],

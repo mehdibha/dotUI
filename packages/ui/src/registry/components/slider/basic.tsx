@@ -1,5 +1,6 @@
 "use client";
 
+import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
 import { useSlotId } from "@react-aria/utils";
 import {
@@ -12,25 +13,23 @@ import {
   TextContext,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import type { VariantProps } from "tailwind-variants";
 
 import { Description, Label } from "@dotui/ui/components/field";
 import { focusRing } from "@dotui/ui/lib/focus-styles";
-
-import { createScopedContext } from "@/lib/utils";
+import { createScopedContext } from "@dotui/ui/lib/utils";
 
 const sliderStyles = tv({
   slots: {
     root: "group flex flex-col gap-2",
     track:
-      "relative grow cursor-pointer rounded-full bg-bg-neutral disabled:cursor-default disabled:bg-bg-disabled",
+      "bg-bg-neutral disabled:bg-bg-disabled relative grow cursor-pointer rounded-full disabled:cursor-default",
     filler:
-      "pointer-events-none absolute rounded-full group-disabled:bg-bg-disabled",
+      "group-disabled:bg-bg-disabled pointer-events-none absolute rounded-full",
     thumb: [
       focusRing(),
-      "top-[50%] left-[50%] rounded-full bg-white shadow-md transition-[width,height] disabled:border disabled:border-bg disabled:bg-bg-disabled",
+      "disabled:border-bg disabled:bg-bg-disabled top-[50%] left-[50%] rounded-full bg-white shadow-md transition-[width,height] disabled:border",
     ],
-    valueLabel: "text-sm text-fg-muted",
+    valueLabel: "text-fg-muted text-sm",
   },
   variants: {
     variant: {
@@ -55,15 +54,15 @@ const sliderStyles = tv({
     },
     size: {
       sm: {
-        thumb: "size-3 dragging:size-4",
+        thumb: "dragging:size-4 size-3",
         track: "orientation-horizontal:h-1 orientation-vertical:w-1",
       },
       md: {
-        thumb: "size-4 dragging:size-5",
+        thumb: "dragging:size-5 size-4",
         track: "orientation-horizontal:h-2 orientation-vertical:w-2",
       },
       lg: {
-        thumb: "size-5 dragging:size-6",
+        thumb: "dragging:size-6 size-5",
         track: "orientation-horizontal:h-3 orientation-vertical:w-3",
       },
     },

@@ -1,5 +1,10 @@
 "use client";
 
+import type {
+  ButtonProps as AriaButtonProps,
+  LinkProps as AriaLinkProps,
+} from "react-aria-components";
+import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
 import {
   Button as AriaButton,
@@ -7,30 +12,24 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import type {
-  ButtonProps as AriaButtonProps,
-  LinkProps as AriaLinkProps,
-} from "react-aria-components";
-import type { VariantProps } from "tailwind-variants";
 
 import { Loader } from "@dotui/ui/components/loader";
 import { focusRing } from "@dotui/ui/lib/focus-styles";
-
-import { createOptionalScopedContext } from "@/lib/utils";
+import { createOptionalScopedContext } from "@dotui/ui/lib/utils";
 
 const buttonStyles = tv({
   extend: focusRing,
   base: [
-    "inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-md text-sm leading-normal font-medium whitespace-nowrap transition-all disabled:cursor-default disabled:bg-bg-disabled disabled:text-fg-disabled pending:cursor-default pending:border pending:border-border-disabled pending:bg-bg-disabled pending:text-fg-disabled",
+    "disabled:bg-bg-disabled disabled:text-fg-disabled pending:cursor-default pending:border pending:border-border-disabled pending:bg-bg-disabled pending:text-fg-disabled inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-md text-sm leading-normal font-medium whitespace-nowrap transition-all disabled:cursor-default",
     "shadow-brutalism hover:translate-x-(--box-shadow-x) hover:translate-y-(--box-shadow-y) hover:shadow-none",
   ],
   variants: {
     variant: {
       default: "bg-bg-neutral text-fg-onNeutral",
       primary: "bg-bg-primary text-fg-onPrimary",
-      quiet: "bg-transparent text-fg",
+      quiet: "text-fg bg-transparent",
       outline:
-        "border border-border-field text-fg hover:bg-bg-inverse/10 disabled:border-border-disabled disabled:bg-transparent pressed:bg-bg-inverse/15",
+        "border-border-field text-fg hover:bg-bg-inverse/10 disabled:border-border-disabled pressed:bg-bg-inverse/15 border disabled:bg-transparent",
       accent:
         "bg-bg-accent text-fg-onAccent hover:bg-bg-accent-hover pressed:bg-bg-accent-active",
       success:

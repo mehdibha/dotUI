@@ -1,5 +1,6 @@
 "use client";
 
+import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
 import {
   AlertCircleIcon,
@@ -8,9 +9,8 @@ import {
   InfoIcon,
 } from "lucide-react";
 import { tv } from "tailwind-variants";
-import type { VariantProps } from "tailwind-variants";
 
-import { createScopedContext } from "@/lib/utils";
+import { createScopedContext } from "@dotui/ui/lib/utils";
 
 const alertStyles = tv({
   slots: {
@@ -20,18 +20,18 @@ const alertStyles = tv({
   },
   variants: {
     variant: {
-      neutral: { root: "border bg-bg-muted text-fg" },
+      neutral: { root: "bg-bg-muted text-fg border" },
       success: {
-        root: "border border-border-success bg-bg-success-muted text-fg-success",
+        root: "border-border-success bg-bg-success-muted text-fg-success border",
       },
       warning: {
-        root: "border border-border-warning bg-bg-warning-muted text-fg-warning",
+        root: "border-border-warning bg-bg-warning-muted text-fg-warning border",
       },
       danger: {
-        root: "border border-border-danger bg-bg-danger-muted text-fg-danger",
+        root: "border-border-danger bg-bg-danger-muted text-fg-danger border",
       },
       info: {
-        root: "border border-border-info bg-bg-info-muted text-fg-info",
+        root: "border-border-info bg-bg-info-muted text-fg-info border",
       },
     },
   },
