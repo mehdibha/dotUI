@@ -1,8 +1,19 @@
 "use client";
 
+import type { PageTree } from "fumadocs-core/server";
+import type { Transition } from "motion/react";
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import {
+  CollapsibleContent,
+  CollapsibleRoot,
+  CollapsibleTrigger,
+} from "@/components/collapsible";
+import { GitHubIcon, TwitterIcon } from "@/components/icons";
+import { ScrollArea } from "@/components/scroll-area";
+import { siteConfig } from "@/config";
+import { hasActive, isActive } from "@/modules/docs/utils";
 import { useOnChange } from "fumadocs-core/utils/use-on-change";
 import {
   ChevronRightIcon,
@@ -13,25 +24,14 @@ import {
   SunIcon,
 } from "lucide-react";
 import { motion } from "motion/react";
-import type { PageTree } from "fumadocs-core/server";
-import type { Transition } from "motion/react";
 
+import type { ButtonProps } from "@dotui/ui/components/button";
+import type { TooltipProps } from "@dotui/ui/components/tooltip";
 import { Button } from "@dotui/ui/components/button";
 import { Kbd } from "@dotui/ui/components/kbd";
 import { Tooltip } from "@dotui/ui/components/tooltip";
 import { cn } from "@dotui/ui/lib/utils";
-import type { ButtonProps } from "@dotui/ui/components/button";
-import type { TooltipProps } from "@dotui/ui/components/tooltip";
 
-import {
-  CollapsibleContent,
-  CollapsibleRoot,
-  CollapsibleTrigger,
-} from "@/components/collapsible";
-import { GitHubIcon, TwitterIcon } from "@/components/icons";
-import { ScrollArea } from "@/components/scroll-area";
-import { siteConfig } from "@/config";
-import { hasActive, isActive } from "@/modules/docs/utils";
 import { Logo } from "./logo";
 import { SearchCommand } from "./search-command";
 import { ThemeSwitcher } from "./site-theme-selector";
@@ -79,8 +79,8 @@ export const Sidebar = ({
         }}
         className="flex-1 pt-4"
       >
-        <div className="grid w-full min-w-0 p-2 pt-0 transition-sidebar">
-          <div className="flex w-full min-w-0 flex-col transition-sidebar">
+        <div className="transition-sidebar grid w-full min-w-0 p-2 pt-0">
+          <div className="transition-sidebar flex w-full min-w-0 flex-col">
             <NodeList items={items} />
           </div>
         </div>
@@ -176,10 +176,10 @@ const SidebarRoot = ({
     >
       <div
         className={cn(
-          "relative z-10 h-svh w-(--sidebar-width) bg-transparent transition-sidebar group-data-collapsed/sidebar:w-(--sidebar-width-collapsed)",
+          "transition-sidebar relative z-10 h-svh w-(--sidebar-width) bg-transparent group-data-collapsed/sidebar:w-(--sidebar-width-collapsed)",
         )}
       />
-      <div className="fixed inset-y-0 left-0 z-10 flex h-svh w-(--sidebar-width) flex-col overflow-hidden bg-bg transition-sidebar group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) [&_button]:font-normal [&_svg]:text-fg-muted">
+      <div className="bg-bg transition-sidebar [&_svg]:text-fg-muted fixed inset-y-0 left-0 z-10 flex h-svh w-(--sidebar-width) flex-col overflow-hidden group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) [&_button]:font-normal">
         <div className="relative flex h-svh w-(--sidebar-width) flex-1 translate-x-[-0.5px] flex-col overflow-hidden">
           {children}
         </div>
@@ -257,10 +257,11 @@ export function NodeList({
   items,
   level = 0,
   onSelect,
+  className,
   ...props
 }: NodeListProps): React.ReactElement {
   return (
-    <div {...props}>
+    <div className={cn("flex flex-col gap-0.5", className)} {...props}>
       {items.map((item, i) => {
         const id = `${item.type}_${i.toString()}`;
 
@@ -319,7 +320,7 @@ function PageNode({
     <Link
       href={url}
       className={cn(
-        "border-bg-bg-muted group block border-l py-1 pl-4 text-fg-muted transition-colors hover:text-fg",
+        "border-bg-bg-muted group text-fg-muted hover:text-fg block border-l py-1 pl-4 transition-colors",
         {
           "border-fg text-fg": active,
         },
@@ -361,7 +362,7 @@ function FolderNode({
 
   if (level === 1) {
     return (
-      <CollapsibleRoot open={isCollapsed ? false : open}>
+      <CollapsibleRoot open={isCollapsed ? false : open} className="contents">
         <StyledTooltip content={item.name} isDisabled={!isCollapsed}>
           <CollapsibleTrigger asChild>
             <SidebarButton
@@ -399,7 +400,7 @@ function FolderNode({
 
   return (
     <>
-      <h3 className="category py-1 pl-4 font-mono text-xs tracking-widest text-fg-muted">
+      <h3 className="category text-fg-muted py-1 pl-4 font-mono text-xs tracking-widest">
         {item.name}
       </h3>
       <NodeList items={item.children} level={level} onSelect={onSelect} />
@@ -418,12 +419,12 @@ const SidebarButton = ({
       variant="quiet"
       size="sm"
       className={cn(
-        "relative w-full overflow-hidden font-normal transition-sidebar group-data-collapsed/sidebar:w-8 hover:bg-bg-inverse/10",
+        "transition-sidebar hover:bg-bg-inverse/10 relative w-full overflow-hidden font-normal group-data-collapsed/sidebar:w-8",
         className,
       )}
       {...props}
     >
-      <div className="absolute inset-2 flex w-[calc(var(--sidebar-width)-calc(var(--spacing)*8))] items-center justify-center gap-2 whitespace-nowrap transition-sidebar group-data-collapsed/sidebar:left-2 [&>svg]:size-4">
+      <div className="transition-sidebar absolute inset-2 flex w-[calc(var(--sidebar-width)-calc(var(--spacing)*8))] items-center justify-center gap-2 whitespace-nowrap group-data-collapsed/sidebar:left-2 [&>svg]:size-4">
         {children}
       </div>
     </Button>
