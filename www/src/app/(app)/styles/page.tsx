@@ -18,6 +18,11 @@ export default function BlocksPage() {
       <p className="text-fg-muted mt-2 text-base">
         Choose a style to get started or create your own.
       </p>
+      <div className="mt-6 flex items-center gap-2">
+        <Button variant="primary">Create style</Button>
+        <Button variant="default">Browse styles</Button>
+      </div>
+
       <h2 className="mt-16 text-2xl font-semibold tracking-tight">
         Featured styles
       </h2>

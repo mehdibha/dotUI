@@ -39,9 +39,9 @@ const buttonStyles = tv({
         "hover:bg-bg-danger-muted-hover border-border-danger bg-bg-danger-muted text-fg-onDanger hover:border-border-danger-hover border",
     },
     size: {
-      sm: "size-7 [&_svg]:size-4",
-      md: "size-8 [&_svg]:size-4",
-      lg: "size-9 [&_svg]:size-5",
+      sm: "size-8 [&_svg]:size-4",
+      md: "size-9 [&_svg]:size-4",
+      lg: "size-10 [&_svg]:size-5",
     },
     shape: {
       rectangle: "",
