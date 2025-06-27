@@ -65,9 +65,6 @@ export interface Variants {
 }
 
 export interface StyleDefinition {
-  name: string;
-  label?: string;
-  description?: string;
   iconLibrary: IconLibrary;
   fonts: Fonts;
   variants: Variants;

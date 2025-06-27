@@ -5,7 +5,11 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
-    "./types": "./src/types.ts"
+    "./types": "./src/types.ts",
+    "./schemas": "./src/schemas.ts",
+    "./constants": "./src/constants/index.ts",
+    "./presets": "./src/presets.ts",
+    "./google-fonts": "./src/constants/google-fonts.ts"
   },
   "scripts": {
     "build": "tsc",

@@ -26,6 +26,7 @@
     "lint": "eslint",
     "push": "pnpm with-env drizzle-kit push",
     "studio": "pnpm with-env drizzle-kit studio",
+    "seed": "pnpm with-env tsx src/seed.ts",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false",
     "with-env": "dotenv -e ../../.env --"
   },
@@ -47,6 +48,7 @@
     "eslint": "catalog:",
     "pg": "^8.16.0",
     "prettier": "catalog:",
+    "tsx": "^4.15.6",
     "typescript": "catalog:"
   },
   "prettier": "@dotui/prettier-config"
