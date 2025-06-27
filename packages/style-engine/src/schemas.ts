@@ -1,12 +1,5 @@
 import { z } from "zod/v4";
 
-import type { Fonts, StyleDefinition, Variants } from "./types";
-import {
-  DEFAULT_FONTS,
-  DEFAULT_STYLE_DEFINITION,
-  DEFAULT_VARIANTS,
-} from "./constants/defaults";
-
 export const iconLibrarySchema = z.enum(["lucide", "remix-icons"]);
 
 export const fontsSchema = z.object({
@@ -80,14 +73,3 @@ export const styleDefinitionSchema = z.object({
   fonts: fontsSchema,
   variants: variantsSchema,
 });
-
-// Re-export defaults for convenience
-export { DEFAULT_FONTS as defaultFonts };
-export { DEFAULT_VARIANTS as defaultVariants };
-export { DEFAULT_STYLE_DEFINITION as defaultStyleDefinition };
-
-// Re-export utility functions
-export {
-  mergeWithDefaults,
-  getDifferencesFromDefaults,
-} from "./constants/defaults";

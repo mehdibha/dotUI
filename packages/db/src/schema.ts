@@ -4,7 +4,6 @@ import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod/v4";
 
 import type { Fonts, Variants } from "@dotui/style-engine/types";
-import { DEFAULT_ICON_LIBRARY } from "@dotui/style-engine/constants";
 
 export const user = pgTable("user", (t) => ({
   id: t.text().primaryKey(),
@@ -71,7 +70,7 @@ export const style = pgTable("style", (t) => ({
   iconLibrary: t
     .varchar("icon_library", { length: 20 })
     .notNull()
-    .default(DEFAULT_ICON_LIBRARY as string),
+    .default("lucide"),
   fonts: t.jsonb("fonts").$type<Partial<Fonts>>(),
   variants: t.jsonb("variants").$type<Partial<Variants>>(),
   userId: t

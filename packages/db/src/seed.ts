@@ -1,7 +1,5 @@
 import { eq } from "drizzle-orm";
 
-import { DEFAULT_STYLES } from "@dotui/style-engine/constants";
-
 import { db } from "./client";
 import { style, user } from "./schema";
 
@@ -12,6 +10,21 @@ interface DefaultStyle {
   fonts: Record<string, string> | null;
   variants: Record<string, string> | null;
 }
+
+const DEFAULT_STYLES: DefaultStyle[] = [
+  {
+    name: "minimalist",
+    description: "Default style",
+    iconLibrary: "lucide",
+    fonts: {
+      heading: "Inter",
+      body: "Inter",
+    },
+    variants: {
+      button: "basic",
+    },
+  },
+];
 
 async function findOrCreateUser() {
   const email = "hello@mehdibha.com";
@@ -64,13 +77,11 @@ async function seedFeaturedStyles(userId: string) {
     return existingFeaturedStyles;
   }
 
-  const stylesToInsert = (DEFAULT_STYLES as DefaultStyle[]).map(
-    (featuredStyle) => ({
-      ...featuredStyle,
-      userId,
-      isFeatured: true,
-    }),
-  );
+  const stylesToInsert = DEFAULT_STYLES.map((featuredStyle) => ({
+    ...featuredStyle,
+    userId,
+    isFeatured: true,
+  }));
 
   const insertedStyles = await db
     .insert(style)
