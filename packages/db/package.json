@@ -48,7 +48,7 @@
     "eslint": "catalog:",
     "pg": "^8.16.0",
     "prettier": "catalog:",
-    "tsx": "^4.15.6",
+    "tsx": "catalog:",
     "typescript": "catalog:"
   },
   "prettier": "@dotui/prettier-config"

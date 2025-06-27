@@ -86,63 +86,63 @@ export const DEFAULT_STYLE_DEFINITION: StyleDefinition = {
   variants: DEFAULT_VARIANTS,
 };
 
-export function mergeWithDefaults(partial: {
-  iconLibrary?: IconLibrary;
-  fonts?: Partial<Fonts>;
-  variants?: Partial<Variants>;
-}): StyleDefinition {
-  return {
-    iconLibrary: partial.iconLibrary ?? DEFAULT_ICON_LIBRARY,
-    fonts: {
-      ...DEFAULT_FONTS,
-      ...partial.fonts,
-    },
-    variants: {
-      ...DEFAULT_VARIANTS,
-      ...partial.variants,
-    },
-  };
-}
+// export function mergeWithDefaults(partial: {
+//   iconLibrary?: IconLibrary;
+//   fonts?: Partial<Fonts>;
+//   variants?: Partial<Variants>;
+// }): StyleDefinition {
+//   return {
+//     iconLibrary: partial.iconLibrary ?? DEFAULT_ICON_LIBRARY,
+//     fonts: {
+//       ...DEFAULT_FONTS,
+//       ...partial.fonts,
+//     },
+//     variants: {
+//       ...DEFAULT_VARIANTS,
+//       ...partial.variants,
+//     },
+//   };
+// }
 
-export function getDifferencesFromDefaults(style: StyleDefinition): {
-  iconLibrary?: IconLibrary;
-  fonts?: Partial<Fonts>;
-  variants?: Partial<Variants>;
-} {
-  const result: {
-    iconLibrary?: IconLibrary;
-    fonts?: Partial<Fonts>;
-    variants?: Partial<Variants>;
-  } = {};
+// export function getDifferencesFromDefaults(style: StyleDefinition): {
+//   iconLibrary?: IconLibrary;
+//   fonts?: Partial<Fonts>;
+//   variants?: Partial<Variants>;
+// } {
+//   const result: {
+//     iconLibrary?: IconLibrary;
+//     fonts?: Partial<Fonts>;
+//     variants?: Partial<Variants>;
+//   } = {};
 
-  // Only include iconLibrary if different from default
-  if (style.iconLibrary !== DEFAULT_ICON_LIBRARY) {
-    result.iconLibrary = style.iconLibrary;
-  }
+//   // Only include iconLibrary if different from default
+//   if (style.iconLibrary !== DEFAULT_ICON_LIBRARY) {
+//     result.iconLibrary = style.iconLibrary;
+//   }
 
-  // Only include font properties that differ from defaults
-  const fontDiffs: Partial<Fonts> = {};
-  if (style.fonts.heading !== DEFAULT_FONTS.heading) {
-    fontDiffs.heading = style.fonts.heading;
-  }
-  if (style.fonts.body !== DEFAULT_FONTS.body) {
-    fontDiffs.body = style.fonts.body;
-  }
-  if (Object.keys(fontDiffs).length > 0) {
-    result.fonts = fontDiffs;
-  }
+//   // Only include font properties that differ from defaults
+//   const fontDiffs: Partial<Fonts> = {};
+//   if (style.fonts.heading !== DEFAULT_FONTS.heading) {
+//     fontDiffs.heading = style.fonts.heading;
+//   }
+//   if (style.fonts.body !== DEFAULT_FONTS.body) {
+//     fontDiffs.body = style.fonts.body;
+//   }
+//   if (Object.keys(fontDiffs).length > 0) {
+//     result.fonts = fontDiffs;
+//   }
 
-  // Only include variant properties that differ from defaults
-  const variantDiffs: Partial<Variants> = {};
-  for (const [key, value] of Object.entries(style.variants)) {
-    const defaultValue = DEFAULT_VARIANTS[key as keyof Variants];
-    if (value !== defaultValue) {
-      (variantDiffs as any)[key] = value;
-    }
-  }
-  if (Object.keys(variantDiffs).length > 0) {
-    result.variants = variantDiffs;
-  }
+//   // Only include variant properties that differ from defaults
+//   const variantDiffs: Partial<Variants> = {};
+//   for (const [key, value] of Object.entries(style.variants)) {
+//     const defaultValue = DEFAULT_VARIANTS[key as keyof Variants];
+//     if (value !== defaultValue) {
+//       (variantDiffs as any)[key] = value;
+//     }
+//   }
+//   if (Object.keys(variantDiffs).length > 0) {
+//     result.variants = variantDiffs;
+//   }
 
-  return result;
-}
+//   return result;
+// }

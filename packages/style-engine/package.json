@@ -2,19 +2,35 @@
   "name": "@dotui/style-engine",
   "version": "0.0.1",
   "description": "Shared style system logic and types",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "exports": {
-    "./types": "./src/types.ts",
-    "./schemas": "./src/schemas.ts",
-    "./constants": "./src/constants/index.ts",
-    "./presets": "./src/presets.ts",
-    "./google-fonts": "./src/constants/google-fonts.ts"
+    "./types": {
+      "types": "./dist/types.d.ts",
+      "import": "./src/types.ts"
+    },
+    "./schemas": {
+      "types": "./dist/schemas.d.ts",
+      "import": "./src/schemas.ts"
+    },
+    "./constants": {
+      "types": "./dist/constants/index.d.ts",
+      "import": "./src/constants/index.ts"
+    },
+    "./presets": {
+      "types": "./dist/presets.d.ts",
+      "import": "./src/presets.ts"
+    },
+    "./google-fonts": {
+      "types": "./dist/constants/google-fonts.d.ts",
+      "import": "./src/constants/google-fonts.ts"
+    }
   },
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
     "@adobe/leonardo-contrast-colors": "^1.0.0",

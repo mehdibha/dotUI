@@ -1,60 +1,100 @@
-import { db } from "./client";
-import { Style } from "./schema";
+import { eq } from "drizzle-orm";
 
-const officialStyles: Omit<
-  typeof Style.$inferInsert,
-  "id" | "createdAt" | "updatedAt"
->[] = [
-  {
-    name: "Minimalist",
-    description: "A minimalist style",
-    iconLibrary: "lucide",
-    fonts: null,
-    variants: null,
-  },
-  {
-    name: "Brutalist",
-    description: "A bold, brutalist design system",
-    iconLibrary: "lucide",
-    fonts: null,
-    variants: {
-      button: "brutalist",
-      modal: "blur",
-      tabs: "motion",
-      tooltip: "motion",
-    },
-  },
-  {
-    name: "Remix Icons",
-    description: "Using Remix Icons instead of Lucide",
-    iconLibrary: "remix-icons",
-    fonts: null,
-    variants: null,
-  },
-];
+import { DEFAULT_STYLES } from "@dotui/style-engine/constants";
+
+import { db } from "./client";
+import { style, user } from "./schema";
+
+interface DefaultStyle {
+  name: string;
+  description: string;
+  iconLibrary: string;
+  fonts: Record<string, string> | null;
+  variants: Record<string, string> | null;
+}
+
+async function findOrCreateUser() {
+  const email = "hello@mehdibha.com";
+
+  const existingUser = await db
+    .select()
+    .from(user)
+    .where(eq(user.email, email))
+    .limit(1);
+
+  if (existingUser.length > 0) {
+    const userRecord = existingUser[0];
+    if (!userRecord) {
+      throw new Error("User record is undefined");
+    }
+    console.log(`👤 Found existing user: ${userRecord.name} (${email})`);
+    return userRecord;
+  }
+
+  const newUser = {
+    id: `user_${Date.now()}`,
+    name: "Mehdi Benhadjali",
+    email,
+    emailVerified: true,
+    role: "admin",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
+
+  const createdUsers = await db.insert(user).values(newUser).returning();
+
+  const createdUser = createdUsers[0];
+  if (!createdUser) {
+    throw new Error("Failed to create user");
+  }
+
+  console.log(`👤 Created new user: ${createdUser.name} (${email})`);
+  return createdUser;
+}
+
+async function seedFeaturedStyles(userId: string) {
+  const existingFeaturedStyles = await db
+    .select()
+    .from(style)
+    .where(eq(style.isFeatured, true))
+    .limit(1);
+
+  if (existingFeaturedStyles.length > 0) {
+    console.log("ℹ️  Featured styles already exist. Skipping creation.");
+    return existingFeaturedStyles;
+  }
+
+  const stylesToInsert = (DEFAULT_STYLES as DefaultStyle[]).map(
+    (featuredStyle) => ({
+      ...featuredStyle,
+      userId,
+      isFeatured: true,
+    }),
+  );
+
+  const insertedStyles = await db
+    .insert(style)
+    .values(stylesToInsert)
+    .returning();
+
+  console.log(`✨ Created ${insertedStyles.length} featured styles`);
+  return insertedStyles;
+}
 
 async function seed() {
-  console.log("🌱 Seeding database with official styles...");
+  console.log("🌱 Seeding database...");
 
   try {
-    if (officialStyles.length === 0) {
-      console.log(
-        "ℹ️  No styles to seed. Add styles to the officialStyles array first.",
-      );
-      return;
-    }
-
-    await db.delete(Style);
-    console.log("✅ Cleared existing styles");
-
-    const result = await db.insert(Style).values(officialStyles).returning();
-    console.log(`✅ Inserted ${result.length} official styles:`);
-
-    result.forEach((style) => {
-      console.log(`   - ${style.name}: ${style.description}`);
-    });
+    const userRecord = await findOrCreateUser();
+    const insertedStyles = await seedFeaturedStyles(userRecord.id);
 
     console.log("🎉 Seeding complete!");
+    console.log(`   User: ${userRecord.name} (${userRecord.email})`);
+    console.log(`   Featured Styles: ${insertedStyles.length}`);
+
+    insertedStyles.forEach((style) => {
+      console.log(`   - ${style.name}: ${style.description}`);
+    });
   } catch (error) {
     console.error("❌ Error seeding database:", error);
     process.exit(1);
@@ -62,7 +102,7 @@ async function seed() {
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
-  seed();
+  void seed();
 }
 
-export { seed, officialStyles };
+export { seed };

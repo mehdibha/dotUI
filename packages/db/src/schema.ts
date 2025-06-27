@@ -12,6 +12,10 @@ export const user = pgTable("user", (t) => ({
   email: t.text().notNull().unique(),
   emailVerified: t.boolean().notNull(),
   image: t.text(),
+  role: t.text().notNull().default("user"),
+  banned: t.boolean().default(false),
+  banReason: t.text(),
+  banExpires: t.timestamp(),
   createdAt: t.timestamp().notNull(),
   updatedAt: t.timestamp().notNull(),
 }));
@@ -24,6 +28,7 @@ export const session = pgTable("session", (t) => ({
   updatedAt: t.timestamp().notNull(),
   ipAddress: t.text(),
   userAgent: t.text(),
+  impersonatedBy: t.text(),
   userId: t
     .text()
     .notNull()
@@ -62,6 +67,7 @@ export const style = pgTable("style", (t) => ({
   id: t.uuid().notNull().primaryKey().defaultRandom(),
   name: t.varchar({ length: 256 }).notNull(),
   description: t.text(),
+  isFeatured: t.boolean("is_featured").notNull().default(false),
   iconLibrary: t
     .varchar("icon_library", { length: 20 })
     .notNull()
@@ -81,6 +87,7 @@ export const style = pgTable("style", (t) => ({
 export const createStyleSchema = createInsertSchema(style)
   .omit({
     id: true,
+    isFeatured: true,
     createdAt: true,
     updatedAt: true,
   })
@@ -88,5 +95,3 @@ export const createStyleSchema = createInsertSchema(style)
     name: z.string().min(1).max(256),
     description: z.string().max(500).optional(),
   });
-
-export * from "./auth-schema";
