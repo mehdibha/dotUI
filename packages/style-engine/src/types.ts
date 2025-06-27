@@ -64,7 +64,7 @@ export interface Variants {
   tooltip: "basic" | "motion";
 }
 
-export interface Style {
+export interface StyleDefinition {
   name: string;
   label?: string;
   description?: string;

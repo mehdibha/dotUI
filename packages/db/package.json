@@ -30,6 +30,7 @@
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
+    "@dotui/style-engine": "workspace:*",
     "@neondatabase/serverless": "^0.10.1",
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.44.1",

@@ -219,6 +219,9 @@ importers:
 
   packages/db:
     dependencies:
+      '@dotui/style-engine':
+        specifier: workspace:*
+        version: link:../style-engine
       '@neondatabase/serverless':
         specifier: ^0.10.1
         version: 0.10.4
