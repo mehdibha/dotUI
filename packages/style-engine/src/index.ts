@@ -31,9 +31,3 @@ export function createStyle(rawStyle: RawStyle | null): Style | null {
 
   return style;
 }
-
-export function randomName(): { name: string } {
-  return {
-    name: "mehdi",
-  };
-}
