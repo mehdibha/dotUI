@@ -302,6 +302,9 @@ importers:
       prettier:
         specifier: 'catalog:'
         version: 3.6.1
+      shadcn:
+        specifier: ^2.7.0
+        version: 2.7.0(@types/node@22.15.33)(typescript@5.8.3)
       typescript:
         specifier: 'catalog:'
         version: 5.8.3

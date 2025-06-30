@@ -7,7 +7,8 @@
     "./schemas": "./src/schemas.ts",
     "./constants": "./src/constants/index.ts",
     "./presets": "./src/presets.ts",
-    "./google-fonts": "./src/constants/google-fonts.ts"
+    "./google-fonts": "./src/constants/google-fonts.ts",
+    "./shadcn-registry": "./src/shadcn-registry/index.ts"
   },
   "scripts": {
     "build": "tsc",
@@ -28,6 +29,7 @@
     "@dotui/ts-config": "workspace:*",
     "eslint": "catalog:",
     "prettier": "catalog:",
+    "shadcn": "^2.7.0",
     "typescript": "catalog:"
   },
   "prettier": "@dotui/prettier-config"

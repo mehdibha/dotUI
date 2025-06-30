@@ -1,6 +1,6 @@
-import type { Registry } from "./types";
+import type { Registry } from "shadcn/registry";
 
-export const ui = [
+export const ui: Registry["items"] = [
   {
     name: "alert",
     type: "registry:ui",
@@ -1138,4 +1138,4 @@ export const ui = [
       },
     ],
   },
-] as const satisfies Registry;
+]

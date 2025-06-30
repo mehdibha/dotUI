@@ -8,7 +8,6 @@ export const base: RegistryItemProps = {
     "tailwind-variants",
     "react-aria-components",
     "tailwindcss-react-aria-components",
-    "lucide-react", // remove should by dynamic
   ],
   registryDependencies: ["utils", "focus-styles"],
   files: [],
