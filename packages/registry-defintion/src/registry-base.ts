@@ -1,4 +1,4 @@
-import { RegistryItem } from "shadcn/registry";
+import type { RegistryItem } from "shadcn/registry";
 
 export const base: RegistryItem = {
   name: "base",

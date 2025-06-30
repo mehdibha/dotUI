@@ -1,22 +1,23 @@
 import type { RegistryItem } from "shadcn/registry";
 
+import { base } from "@dotui/registry-definition/registry-base";
+
+import { updateRegistryDependencies } from "../helpers/update-registry-deps";
 import type { Style } from "../../types";
 
-export function generateBaseRegistry(style: Style): RegistryItem {
-  const styleName = style.name;
+export function generateBaseRegistry(options: {
+  baseUrl: string;
+  style: Style;
+}): RegistryItem {
+  const { baseUrl, style } = options;
 
-  return {
-    $schema: "https://ui.shadcn.com/schema/registry-item.json",
-    extends: "none",
-    name: "base",
-    type: "registry:style",
-    title: `${styleName} Base`,
-    description: `Base configuration for ${styleName} style`,
-    dependencies: [
-      "tailwind-variants",
-      "react-aria-components",
-      "tailwindcss-react-aria-components",
-    ],
-    registryDependencies: ["utils", "focus-styles"],
-  };
+  const registryItem = base;
+
+  console.log(registryItem);
+
+  updateRegistryDependencies(registryItem, baseUrl, style);
+
+  console.log(registryItem);
+
+  return registryItem;
 }

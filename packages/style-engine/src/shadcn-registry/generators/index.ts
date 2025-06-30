@@ -14,7 +14,7 @@ export async function buildItemRegistry(
   },
 ): Promise<RegistryItem | null> {
   if (registryItemName === "base") {
-    return generateBaseRegistry(options.style);
+    return generateBaseRegistry(options);
   }
 
   if (registryItemName === "theme") {

@@ -2,8 +2,13 @@ import type { RegistryItem } from "shadcn/registry";
 
 import type { Style } from "../../types";
 
-export function generateThemeRegistry(style: Style): RegistryItem {
+export function generateThemeRegistry(options: {
+  baseUrl: string;
+  style: Style;
+}): RegistryItem {
+  const { style } = options;
   const { name: styleName } = style;
+
   return {
     $schema: "https://ui.shadcn.com/schema/registry-item.json",
     name: "theme",
