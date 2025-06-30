@@ -2,7 +2,7 @@ import type { RegistryItem } from "shadcn/registry";
 
 import type { Style } from "../../types";
 
-export function generateThemeRegistry(options: {
+export function generateRegistryTheme(options: {
   baseUrl: string;
   style: Style;
 }): RegistryItem {

@@ -39,7 +39,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "avatar",
+    name: "avatar:basic",
     type: "registry:ui",
     files: [
       {
@@ -50,7 +50,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "badge",
+    name: "badge:basic",
     type: "registry:ui",
     files: [
       {
@@ -61,7 +61,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "breadcrumbs",
+    name: "breadcrumbs:basic",
     type: "registry:ui",
     registryDependencies: ["focus-styles"],
     files: [
@@ -143,7 +143,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "checkbox",
+    name: "checkbox:basic",
     type: "registry:ui",
     registryDependencies: ["focus-styles"],
     files: [
@@ -155,7 +155,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "checkbox-group",
+    name: "checkbox-group:basic",
     type: "registry:ui",
     registryDependencies: ["field", "checkbox"],
     files: [
@@ -167,7 +167,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "color-area",
+    name: "color-area:basic",
     type: "registry:ui",
     registryDependencies: ["color-thumb"],
     files: [
@@ -179,7 +179,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "color-field",
+    name: "color-field:basic",
     type: "registry:ui",
     registryDependencies: ["field", "input"],
     files: [
@@ -191,7 +191,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "color-picker",
+    name: "color-picker:basic",
     type: "registry:ui",
     registryDependencies: [
       "button",
@@ -211,9 +211,9 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "color-slider",
+    name: "color-slider:basic",
     type: "registry:ui",
-    registryDependencies: ["field", "color-thum"],
+    registryDependencies: ["field", "color-thumb"],
     files: [
       {
         type: "registry:ui",
@@ -223,7 +223,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "color-swatch",
+    name: "color-swatch:basic",
     type: "registry:ui",
     files: [
       {
@@ -234,7 +234,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "color-swatch-picker",
+    name: "color-swatch-picker:basic",
     type: "registry:ui",
     registryDependencies: ["focus-styles", "color-swatch"],
     files: [
@@ -246,7 +246,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "color-thumb",
+    name: "color-thumb:basic",
     type: "registry:ui",
     registryDependencies: ["focus-styles"],
     files: [
@@ -258,7 +258,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "combobox",
+    name: "combobox:basic",
     type: "registry:ui",
     registryDependencies: ["field", "button", "input", "list-box", "overlay"],
     files: [
@@ -270,7 +270,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "command",
+    name: "command:basic",
     type: "registry:ui",
     files: [
       {
@@ -281,7 +281,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "date-field",
+    name: "date-field:basic",
     type: "registry:ui",
     registryDependencies: ["field", "input", "date-input"],
     files: [
@@ -293,7 +293,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "date-input",
+    name: "date-input:basic",
     type: "registry:ui",
     files: [
       {
@@ -304,7 +304,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "date-picker",
+    name: "date-picker:basic",
     type: "registry:ui",
     registryDependencies: [
       "button",
@@ -323,7 +323,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "date-range-picker",
+    name: "date-range-picker:basic",
     type: "registry:ui",
     registryDependencies: [
       "button",
@@ -342,7 +342,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "dialog",
+    name: "dialog:basic",
     type: "registry:ui",
     registryDependencies: ["overlay"],
     files: [
@@ -354,7 +354,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "drawer",
+    name: "drawer:basic",
     type: "registry:ui",
     files: [
       {
@@ -365,7 +365,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "drop-zone",
+    name: "drop-zone:basic",
     type: "registry:ui",
     files: [
       {
@@ -376,7 +376,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "field",
+    name: "field:basic",
     type: "registry:ui",
     files: [
       {
@@ -387,7 +387,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "file-trigger",
+    name: "file-trigger:basic",
     type: "registry:ui",
     files: [
       {
@@ -421,7 +421,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "input",
+    name: "input:basic",
     type: "registry:ui",
     dependencies: ["@react-aria/utils", "@react-stately/utils"],
     registryDependencies: ["focus-styles"],
@@ -434,7 +434,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "kbd",
+    name: "kbd:basic",
     type: "registry:ui",
     files: [
       {
@@ -445,7 +445,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "list-box",
+    name: "list-box:basic",
     type: "registry:ui",
     registryDependencies: ["text", "focus-styles"],
     files: [
@@ -513,7 +513,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "menu",
+    name: "menu:basic",
     type: "registry:ui",
     registryDependencies: ["kbd", "overlay", "text"],
     files: [
@@ -525,7 +525,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "modal",
+    name: "modal:basic",
     type: "registry:ui",
     files: [
       {
@@ -536,7 +536,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "number-field",
+    name: "number-field:basic",
     type: "registry:ui",
     registryDependencies: ["input", "field", "use-is-mobile"],
     files: [
@@ -548,7 +548,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "overlay",
+    name: "overlay:basic",
     type: "registry:ui",
     registryDependencies: ["modal", "popover", "drawer", "use-is-mobile"],
     files: [
@@ -560,7 +560,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "popover",
+    name: "popover:basic",
     type: "registry:ui",
     files: [
       {
@@ -571,7 +571,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "progress-bar",
+    name: "progress-bar:basic",
     type: "registry:ui",
     registryDependencies: ["field"],
     files: [
@@ -583,7 +583,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "radio-group",
+    name: "radio-group:basic",
     type: "registry:ui",
     registryDependencies: ["focus-styles", "field"],
     files: [
@@ -595,7 +595,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "search-field",
+    name: "search-field:basic",
     type: "registry:ui",
     registryDependencies: ["field", "button"],
     files: [
@@ -607,7 +607,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "select",
+    name: "select:basic",
     type: "registry:ui",
     registryDependencies: ["button", "field", "list-box", "popover"],
     files: [
@@ -619,7 +619,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "separator",
+    name: "separator:basic",
     type: "registry:ui",
     files: [
       {
@@ -630,7 +630,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "skeleton",
+    name: "skeleton:basic",
     type: "registry:ui",
     files: [
       {
@@ -641,7 +641,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "slider",
+    name: "slider:basic",
     type: "registry:ui",
     dependencies: ["@react-aria/utils"],
     registryDependencies: ["field", "focus-styles"],
@@ -654,7 +654,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "switch",
+    name: "switch:basic",
     type: "registry:ui",
     registryDependencies: ["focus-styles"],
     files: [
@@ -666,7 +666,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "table",
+    name: "table:basic",
     type: "registry:ui",
     registryDependencies: ["checkbox", "focus-styles"],
     files: [
@@ -703,7 +703,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "tag-group",
+    name: "tag-group:basic",
     type: "registry:ui",
     registryDependencies: ["field", "button", "focus-styles"],
     files: [
@@ -715,7 +715,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "text",
+    name: "text:basic",
     type: "registry:ui",
     files: [
       {
@@ -726,7 +726,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "text-area",
+    name: "text-area:basic",
     type: "registry:ui",
     registryDependencies: ["field", "input"],
     files: [
@@ -738,7 +738,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "text-field",
+    name: "text-field:basic",
     type: "registry:ui",
     registryDependencies: ["field", "input"],
     files: [
@@ -750,7 +750,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "time-field",
+    name: "time-field:basic",
     type: "registry:ui",
     registryDependencies: ["field", "input", "date-input"],
     files: [
@@ -762,7 +762,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "toggle-button",
+    name: "toggle-button:basic",
     type: "registry:ui",
     registryDependencies: ["focus-styles"],
     files: [
@@ -774,7 +774,7 @@ export const ui: Registry["items"] = [
     ],
   },
   {
-    name: "toggle-button-group",
+    name: "toggle-button-group:basic",
     type: "registry:ui",
     registryDependencies: ["toggle-button"],
     files: [

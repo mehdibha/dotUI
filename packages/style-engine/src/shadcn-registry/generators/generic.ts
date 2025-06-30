@@ -7,7 +7,7 @@ import { updateFiles } from "../helpers/update-files";
 import { updateRegistryDependencies } from "../helpers/update-registry-deps";
 import type { Style } from "../../types";
 
-export const generateRegistryItem = async (
+export const generateGenericRegistryItem = async (
   registryItemName: string,
   options: {
     registryBasePath: string;
@@ -27,15 +27,15 @@ export const generateRegistryItem = async (
     name = `${registryItemName}:${variant}`;
   }
 
-  const registryItem = registry.find((item) => item.name === name);
+  let registryItem = registry.find((item) => item.name === name);
 
   if (!registryItem) {
+    console.log(`Registry item ${name} not found.`);
     return null;
   }
 
+  registryItem = updateRegistryDependencies(registryItem, baseUrl, style);
   registryItem.name = registryItemName;
-
-  updateRegistryDependencies(registryItem, baseUrl, style);
 
   await updateFiles(registryItem, registryBasePath);
 

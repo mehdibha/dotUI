@@ -1,20 +1,35 @@
-import fs from "node:fs/promises";
-import path from "node:path";
 import type { RegistryItem } from "shadcn/registry";
+
+import { transform } from "../transformers";
+import { transformImport } from "../transformers/transform-imports";
+import type { Style } from "../../types";
 
 export const updateFiles = async (
   registryItem: RegistryItem,
-  registryBasePath: string,
+  options: {
+    registryBasePath: string;
+    baseUrl: string;
+    style: Style;
+  },
 ): Promise<void> => {
   if (!registryItem.files) {
     return;
   }
 
   for (const file of registryItem.files) {
-    const content = await fs.readFile(
-      path.resolve(registryBasePath, file.path),
-      "utf-8",
+    if (!file.content) {
+      continue;
+    }
+
+    const transformedContent = await transform(
+      {
+        filename: file.path,
+        raw: file.content,
+        style: options.style,
+      },
+      [transformImport],
     );
-    file.content = content;
+
+    file.content = transformedContent;
   }
 };

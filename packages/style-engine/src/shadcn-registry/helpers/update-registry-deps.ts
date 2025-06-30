@@ -6,10 +6,11 @@ export const updateRegistryDependencies = (
   registryItem: RegistryItem,
   baseUrl: string,
   style: Style,
-): void => {
-  registryItem.registryDependencies = registryItem.registryDependencies?.map(
-    (dep) => {
-      return `${baseUrl}/${style.slug}/${dep}`;
-    },
-  );
+): RegistryItem => {
+  return {
+    ...registryItem,
+    registryDependencies: registryItem.registryDependencies?.map(
+      (dep) => `${baseUrl}/${style.slug}/${dep}`,
+    ),
+  };
 };
