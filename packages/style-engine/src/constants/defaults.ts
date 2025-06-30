@@ -1,4 +1,4 @@
-import type { Fonts, IconLibrary, StyleDefinition, Variants } from "../types";
+import type { Fonts, IconLibrary, Variants } from "../types";
 
 export const DEFAULT_ICON_LIBRARY: IconLibrary = "lucide";
 
@@ -78,12 +78,6 @@ export const DEFAULT_VARIANTS: Variants = {
   text: "basic",
   "tag-group": "basic",
   kbd: "basic",
-};
-
-export const DEFAULT_STYLE_DEFINITION: StyleDefinition = {
-  iconLibrary: DEFAULT_ICON_LIBRARY,
-  fonts: DEFAULT_FONTS,
-  variants: DEFAULT_VARIANTS,
 };
 
 // export function mergeWithDefaults(partial: {

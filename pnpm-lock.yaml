@@ -145,6 +145,9 @@ importers:
       '@dotui/db':
         specifier: workspace:*
         version: link:../db
+      '@dotui/style-engine':
+        specifier: workspace:*
+        version: link:../style-engine
       '@trpc/server':
         specifier: 'catalog:'
         version: 11.4.2(typescript@5.8.3)

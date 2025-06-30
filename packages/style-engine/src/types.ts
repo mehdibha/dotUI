@@ -67,8 +67,8 @@ export interface Variants {
 export interface Style {
   name: string;
   slug: string;
-  description: string;
+  description: string | null;
   iconLibrary: IconLibrary;
   fonts: Fonts;
-  variants: Record<string, string>;
+  variants: Variants;
 }

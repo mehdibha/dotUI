@@ -1,6 +1,6 @@
 import type { RegistryItem } from "shadcn/registry";
 
-import type { Style } from "@dotui/style-engine/types";
+import type { Style } from "../../types";
 
 export function generateBaseRegistry(style: Style): RegistryItem {
   const styleName = style.name;

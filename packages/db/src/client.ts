@@ -8,4 +8,4 @@ if (!process.env.DATABASE_URL) {
 }
 
 const sql = neon(process.env.DATABASE_URL);
-export const db = drizzle({ client: sql, schema, casing: "snake_case" });
+export const db = drizzle({ client: sql, schema, casing: "snake_case" ,});

@@ -3,6 +3,7 @@ import type { TRPCRouterRecord } from "@trpc/server";
 
 import { eq } from "@dotui/db";
 import { style } from "@dotui/db/schema";
+import { createStyle } from "@dotui/style-engine";
 
 import { publicProcedure } from "../trpc";
 
@@ -22,9 +23,15 @@ export const styleRouter = {
     }),
   bySlug: publicProcedure
     .input(z.object({ slug: z.string() }))
-    .query(({ ctx, input }) => {
-      return ctx.db.query.style.findFirst({
+    .query(async ({ ctx, input }) => {
+      const rawStyle = await ctx.db.query.style.findFirst({
         where: eq(style.slug, input.slug),
       });
+
+      if (!rawStyle) {
+        return undefined;
+      }
+
+      return createStyle(rawStyle);
     }),
 } satisfies TRPCRouterRecord;

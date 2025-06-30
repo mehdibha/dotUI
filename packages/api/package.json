@@ -21,6 +21,7 @@
   "dependencies": {
     "@dotui/auth": "workspace:*",
     "@dotui/db": "workspace:*",
+    "@dotui/style-engine": "workspace:*",
     "@trpc/server": "catalog:",
     "superjson": "2.2.2",
     "zod": "catalog:"

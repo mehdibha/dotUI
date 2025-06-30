@@ -3,12 +3,18 @@
   "version": "0.0.1",
   "description": "Shared style system logic and types",
   "exports": {
-    "./types": "./src/types.ts",
-    "./schemas": "./src/schemas.ts",
-    "./constants": "./src/constants/index.ts",
-    "./presets": "./src/presets.ts",
-    "./google-fonts": "./src/constants/google-fonts.ts",
-    "./shadcn-registry": "./src/shadcn-registry/index.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./src/index.ts"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts",
+      "default": "./src/types.ts"
+    },
+    "./shadcn-registry": {
+      "types": "./dist/shadcn-registry/index.d.ts",
+      "default": "./src/shadcn-registry/index.ts"
+    }
   },
   "scripts": {
     "build": "tsc",
