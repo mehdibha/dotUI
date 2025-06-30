@@ -1,30 +1,8 @@
 import { eq } from "drizzle-orm";
 
 import { db } from "./client";
+import { DEFAULT_STYLES } from "./constants";
 import { style, user } from "./schema";
-
-interface DefaultStyle {
-  name: string;
-  description: string;
-  iconLibrary: string;
-  fonts: Record<string, string> | null;
-  variants: Record<string, string> | null;
-}
-
-const DEFAULT_STYLES: DefaultStyle[] = [
-  {
-    name: "minimalist",
-    description: "Default style",
-    iconLibrary: "lucide",
-    fonts: {
-      heading: "Inter",
-      body: "Inter",
-    },
-    variants: {
-      button: "basic",
-    },
-  },
-];
 
 async function findOrCreateUser() {
   const email = "hello@mehdibha.com";
@@ -66,18 +44,24 @@ async function findOrCreateUser() {
 }
 
 async function seedFeaturedStyles(userId: string) {
-  const existingFeaturedStyles = await db
+  const existingStyles = await db
     .select()
     .from(style)
-    .where(eq(style.isFeatured, true))
-    .limit(1);
+    .where(eq(style.userId, userId));
 
-  if (existingFeaturedStyles.length > 0) {
-    console.log("ℹ️  Featured styles already exist. Skipping creation.");
-    return existingFeaturedStyles;
+  const existingSlugs = new Set(existingStyles.map((s) => s.slug));
+  const missingStyles = DEFAULT_STYLES.filter(
+    (featuredStyle) => !existingSlugs.has(featuredStyle.slug),
+  );
+
+  if (missingStyles.length === 0) {
+    console.log(
+      "ℹ️  All featured styles already exist for this user. Skipping creation.",
+    );
+    return existingStyles;
   }
 
-  const stylesToInsert = DEFAULT_STYLES.map((featuredStyle) => ({
+  const stylesToInsert = missingStyles.map((featuredStyle) => ({
     ...featuredStyle,
     userId,
     isFeatured: true,
@@ -88,8 +72,8 @@ async function seedFeaturedStyles(userId: string) {
     .values(stylesToInsert)
     .returning();
 
-  console.log(`✨ Created ${insertedStyles.length} featured styles`);
-  return insertedStyles;
+  console.log(`✨ Created ${insertedStyles.length} missing featured styles`);
+  return [...existingStyles, ...insertedStyles];
 }
 
 async function seed() {

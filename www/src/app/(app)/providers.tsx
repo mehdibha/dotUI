@@ -17,9 +17,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
       {/* {isMounted && <CurrentStyleProvider ref={container} />} */}
-      <UNSAFE_PortalProvider getContainer={() => container.current}>
         {children}
-      </UNSAFE_PortalProvider>
+      {/* <UNSAFE_PortalProvider getContainer={() => container.current}>
+      </UNSAFE_PortalProvider> */}
     </SidebarProvider>
   );
 }

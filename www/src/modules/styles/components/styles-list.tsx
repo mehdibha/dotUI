@@ -1,11 +1,31 @@
-// "use client";
+"use client";
 
-// import { useTRPC } from "@/trpc/react";
-// import { useSuspenseQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
-// export function StylesList() {
-//   const trpc = useTRPC();
-//   const { data: posts } = useSuspenseQuery(trpc.post.all.queryOptions());
+import { cn } from "@dotui/ui/lib/utils";
 
-//   return <div>StylesList</div>;
-// }
+import { useTRPC } from "@/trpc/react";
+import { StyleCard } from "./style-card";
+
+export function StylesList(props: React.ComponentProps<"div">) {
+  const trpc = useTRPC();
+  const { data: styles, isSuccess } = useSuspenseQuery(
+    trpc.style.all.queryOptions({
+      isFeatured: true,
+    }),
+  );
+
+  if (!isSuccess) {
+    return (
+      <div className="relative flex w-full flex-col gap-4">loading...</div>
+    );
+  }
+
+  return (
+    <div className={cn("grid grid-cols-2 gap-4", props.className)}>
+      {styles.map((style) => (
+        <StyleCard key={style.id} style={style} />
+      ))}
+    </div>
+  );
+}

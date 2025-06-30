@@ -65,6 +65,7 @@ export const verification = pgTable("verification", (t) => ({
 export const style = pgTable("style", (t) => ({
   id: t.uuid().notNull().primaryKey().defaultRandom(),
   name: t.varchar({ length: 256 }).notNull(),
+  slug: t.varchar({ length: 256 }).notNull().unique(),
   description: t.text(),
   isFeatured: t.boolean("is_featured").notNull().default(false),
   iconLibrary: t

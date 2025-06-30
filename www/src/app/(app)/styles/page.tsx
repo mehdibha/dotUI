@@ -9,23 +9,27 @@ import { Button } from "@dotui/ui/components/button";
 import { TextField } from "@dotui/ui/components/text-field";
 import { ToggleButton } from "@dotui/ui/components/toggle-button";
 
-export default function BlocksPage() {
+import { StylesList } from "@/modules/styles/components/styles-list";
+
+export default function StylesPage() {
   return (
     <div className="p-10">
       <h2 className="w-fit text-3xl font-semibold tracking-tight">
         Find your style or make your own.
       </h2>
-      <p className="text-fg-muted mt-2 text-base">
+      <p className="mt-2 text-base text-fg-muted">
         Choose a style to get started or create your own.
       </p>
       <div className="mt-6 flex items-center gap-2">
         <Button variant="primary">Create style</Button>
         <Button variant="default">Browse styles</Button>
       </div>
-
       <h2 className="mt-16 text-2xl font-semibold tracking-tight">
         Featured styles
       </h2>
+      <StylesList className="mt-6" />
+
+      {/* 
       <div className="mt-6 grid grid-cols-2 gap-2">
         {[
           {
@@ -82,7 +86,7 @@ export default function BlocksPage() {
             </div>
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 }
