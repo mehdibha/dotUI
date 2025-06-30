@@ -2,7 +2,7 @@ import path from "node:path";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-import { buildItemRegistry } from "@dotui/style-engine/shadcn-registry";
+import { buildRegistryItem } from "@dotui/style-engine/shadcn-registry";
 
 import { env } from "@/env";
 import { caller } from "@/trpc/server";
@@ -43,7 +43,7 @@ export async function GET(
       return NextResponse.json({ error: "Style not found" }, { status: 404 });
     }
 
-    const registryItem = await buildItemRegistry(registryItemName, {
+    const registryItem = await buildRegistryItem(registryItemName, {
       style,
       registryBasePath,
       baseUrl:

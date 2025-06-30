@@ -28,7 +28,7 @@
     "@adobe/leonardo-contrast-colors": "^1.0.0",
     "@dotui/registry-definition": "workspace:*",
     "culori": "^4.0.1",
-    "ts-morph": "^26.0.0",
+    "ts-morph": "^18.0.0",
     "zod": "catalog:"
   },
   "devDependencies": {

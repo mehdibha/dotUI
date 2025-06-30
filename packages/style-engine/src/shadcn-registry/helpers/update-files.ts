@@ -1,3 +1,5 @@
+import { promises as fs } from "fs";
+import path from "path";
 import type { RegistryItem } from "shadcn/registry";
 
 import { transform } from "../transformers";
@@ -11,19 +13,31 @@ export const updateFiles = async (
     baseUrl: string;
     style: Style;
   },
-): Promise<void> => {
+): Promise<RegistryItem> => {
   if (!registryItem.files) {
-    return;
+    return registryItem;
   }
 
   for (const file of registryItem.files) {
+    // Load file content from filesystem if not already present
+    if (!file.content && file.path) {
+      try {
+        const filePath = path.join(options.registryBasePath, file.path);
+        const content = await fs.readFile(filePath, "utf-8");
+        file.content = content;
+      } catch (error) {
+        console.error(`Failed to read file ${file.path}:`, error);
+        continue;
+      }
+    }
+
     if (!file.content) {
       continue;
     }
 
     const transformedContent = await transform(
       {
-        filename: file.path,
+        filename: `${options.registryBasePath}/${file.path}`,
         raw: file.content,
         style: options.style,
       },
@@ -32,4 +46,6 @@ export const updateFiles = async (
 
     file.content = transformedContent;
   }
+
+  return registryItem;
 };
