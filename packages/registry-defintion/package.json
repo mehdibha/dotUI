@@ -1,5 +1,5 @@
 {
-  "name": "@dotui/ui",
+  "name": "@dotui/registry-definition",
   "private": true,
   "version": "0.1.0",
   "type": "module",
@@ -8,26 +8,22 @@
   "types": "src/index.ts",
   "exports": {
     ".": "./src/index.ts",
-    "./components/*": "./src/components/*.tsx",
-    "./hooks/*": "./src/hooks/*.ts",
-    "./lib/focus-styles": "./src/lib/focus-styles.ts",
-    "./lib/utils": "./src/lib/utils.tsx",
-    "./globals.css": "./src/globals.css",
-    "./block-viewer": "./src/block-viewer.tsx",
-    "./registry/components/tabs/motion": "./src/registry/components/tabs/motion.tsx",
-    "./registry-blocks": "./src/registry/registry-blocks.ts"
+    "./types": "./src/types.ts",
+    "./registry-ui": "./src/registry-ui.ts",
+    "./registry-base": "./src/registry-base.ts",
+    "./registry-blocks": "./src/registry-blocks.ts",
+    "./registry-hooks": "./src/registry-hooks.ts",
+    "./registry-lib": "./src/registry-lib.ts",
+    "./registry-icons": "./src/registry-icons.ts"
   },
   "license": "MIT",
   "scripts": {
-    "build:registry": "tsx scripts/build-registry.ts",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "@dotui/style-engine": "workspace:*",
-    "rimraf": "^6.0.1",
     "shadcn": "catalog:"
   },
   "peerDependencies": {
@@ -40,7 +36,6 @@
     "@dotui/ts-config": "workspace:*",
     "eslint": "catalog:",
     "prettier": "catalog:",
-    "tsx": "catalog:",
     "typescript": "catalog:"
   },
   "prettier": "@dotui/prettier-config"

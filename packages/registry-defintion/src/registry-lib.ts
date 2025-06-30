@@ -1,6 +1,6 @@
-import type { Registry } from "./types";
+import type { Registry } from "shadcn/registry";
 
-export const lib: Registry = [
+export const lib: Registry["items"] = [
   {
     name: "utils",
     type: "registry:lib",

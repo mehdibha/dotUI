@@ -20,4 +20,11 @@ export const styleRouter = {
         where: eq(style.isFeatured, input.isFeatured ?? true),
       });
     }),
+  bySlug: publicProcedure
+    .input(z.object({ slug: z.string() }))
+    .query(({ ctx, input }) => {
+      return ctx.db.query.style.findFirst({
+        where: eq(style.slug, input.slug),
+      });
+    }),
 } satisfies TRPCRouterRecord;

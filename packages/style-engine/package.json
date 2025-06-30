@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@adobe/leonardo-contrast-colors": "^1.0.0",
+    "@dotui/registry-definition": "workspace:*",
     "culori": "^4.0.1",
     "zod": "catalog:"
   },
@@ -29,7 +30,7 @@
     "@dotui/ts-config": "workspace:*",
     "eslint": "catalog:",
     "prettier": "catalog:",
-    "shadcn": "^2.7.0",
+    "shadcn": "catalog:",
     "typescript": "catalog:"
   },
   "prettier": "@dotui/prettier-config"

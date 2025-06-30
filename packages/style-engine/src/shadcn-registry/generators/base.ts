@@ -1,5 +1,6 @@
-import type { Style } from "../../types";
-import type { RegistryItem } from "../types";
+import type { RegistryItem } from "shadcn/registry";
+
+import type { Style } from "@dotui/style-engine/types";
 
 export function generateBaseRegistry(style: Style): RegistryItem {
   const styleName = style.name;
@@ -19,13 +20,3 @@ export function generateBaseRegistry(style: Style): RegistryItem {
     registryDependencies: ["utils", "focus-styles"],
   };
 }
-
-// function getBaseDependencies(style: Style): string[] {
-//   const baseDeps = [
-//     "tailwind-variants",
-//     "react-aria-components",
-//     "tailwindcss-react-aria-components",
-//   ];
-
-//   return baseDeps;
-// }

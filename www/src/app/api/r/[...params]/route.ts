@@ -1,11 +1,9 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-import { and, eq } from "@dotui/db";
-import { db } from "@dotui/db/client";
-import { style, user } from "@dotui/db/schema";
 import { buildItemRegistry } from "@dotui/style-engine/shadcn-registry";
-import type { Style } from "@dotui/style-engine/types";
+
+import { caller } from "@/trpc/server";
 
 export async function GET(
   _: NextRequest,
@@ -18,27 +16,24 @@ export async function GET(
       // console.error(routeParams);
       return NextResponse.json(
         {
-          error: "Invalid URL format. Expected /r/{styleSlug}/{componentName}",
+          error: "Invalid URL format. Expected /r/{styleSlug}/{registryItem}",
         },
         { status: 400 },
       );
     }
 
-    const [styleSlug, componentName] = routeParams as [string, string];
+    const [styleSlug, registryItemName] = routeParams as [string, string];
 
-    const styleRecord = await db
-      .select()
-      .from(style)
-      .where(eq(style.slug, styleSlug))
-      .limit(1);
+    const style = await caller.style.bySlug({
+      slug: styleSlug,
+    });
 
-    if (!styleRecord || styleRecord.length === 0) {
+    if (!style) {
       return NextResponse.json({ error: "Style not found" }, { status: 404 });
     }
 
-    const foundStyle = styleRecord[0] as Style;
-
-    const registryItem = buildItemRegistry(componentName, foundStyle);
+    
+    const registryItem = buildItemRegistry(registryItemName, style);
 
     const response = NextResponse.json(registryItem);
 

@@ -70,5 +70,5 @@ export interface Style {
   description: string;
   iconLibrary: IconLibrary;
   fonts: Fonts;
-  variants: Variants;
+  variants: Record<string, string>;
 }

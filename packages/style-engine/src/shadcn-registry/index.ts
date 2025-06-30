@@ -1,13 +1,23 @@
 import type { RegistryItem } from "shadcn/registry";
-import { registry } from "@dotui/ui/registry";
+
+import {
+  generateBaseRegistry,
+  generateRegistryItem,
+  generateThemeRegistry,
+} from "./generators";
 import type { Style } from "../types";
 
 export function buildItemRegistry(
   registryItemName: string,
   style: Style,
 ): RegistryItem | null {
+  if (registryItemName === "base") {
+    return generateBaseRegistry(style);
+  }
 
+  if (registryItemName === "theme") {
+    return generateThemeRegistry(style);
+  }
 
-
-  return null;
+  return generateRegistryItem(registryItemName, style);
 }

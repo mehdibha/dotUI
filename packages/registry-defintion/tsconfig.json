@@ -1,11 +1,5 @@
 {
   "extends": "@dotui/ts-config/internal-package.json",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@dotui/style-engine": ["./src"]
-    }
-  },
   "include": ["src"],
   "exclude": ["node_modules"]
 }

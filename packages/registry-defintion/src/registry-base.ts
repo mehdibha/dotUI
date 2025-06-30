@@ -1,6 +1,6 @@
-import type { RegistryItemProps } from "./types";
+import { RegistryItem } from "shadcn/registry";
 
-export const base: RegistryItemProps = {
+export const base: RegistryItem = {
   name: "base",
   type: "registry:style",
   extends: "none",
