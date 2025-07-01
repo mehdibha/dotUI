@@ -36,9 +36,8 @@ export function StyleSelector(
         variant="default"
         suffix={<ChevronDownIcon />}
         {...props.buttonProps}
-        className={cn("text-fg-muted", props.className)}
       >
-        <SelectValue />
+        <span className="text-fg-muted">Style:</span> <SelectValue />
       </Button>
       <HelpText />
       <Popover>

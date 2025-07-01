@@ -10,9 +10,7 @@ import {
   Tabs,
 } from "@dotui/ui/registry/components/tabs/motion";
 
-import { StyleSelector } from "@/modules/styles/components/style-selector";
-
-export default function BlocksLayout({
+export default function StylesLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -21,25 +19,22 @@ export default function BlocksLayout({
 
   return (
     <div className="container max-w-screen-2xl p-14">
-      <h2 className="text-4xl font-semibold tracking-tighter text-balance">
-        Blocks that don’t lock you in.
+      <h2 className="w-fit text-3xl font-semibold tracking-tight">
+        Find your style or make your own.
       </h2>
       <p className="mt-2 text-base text-fg-muted">
-        Modern UI blocks available in infinite styles.
+        Choose a style to get started or create your own.
       </p>
       <div className="mt-6 flex items-center gap-2">
-        <Button variant="primary">Add your block</Button>
-        <StyleSelector
-          buttonProps={{ className: "px-4" }}
-        />
+        <Button variant="primary">Create style</Button>
+        <Button>Browse styles</Button>
       </div>
       <div className="mt-16">
         <Tabs variant="solid" selectedKey={pathname}>
           <TabList className="flex-wrap bg-transparent p-0">
             {[
-              { href: "/blocks", label: "Featured" },
-              { href: "/blocks/authentication", label: "Authentication" },
-              { href: "/blocks/marketing", label: "Marketing" },
+              { href: "/styles", label: "Featured" },
+              { href: "/styles/community", label: "Community" },
             ].map((tab) => (
               <Tab
                 key={tab.href}

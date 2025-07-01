@@ -2,20 +2,22 @@ import { BlockView } from "@/components/block-view";
 
 export const dynamicParams = false;
 
+const categories = [
+  { slug: "featured", label: "Featured" },
+  { slug: "authentication", label: "Authentication" },
+  { slug: "marketing", label: "Marketing" },
+];
+
 export async function generateStaticParams() {
-  return [
-    { slug: "featured" },
-    { slug: "authentication" },
-    { slug: "marketing" },
-  ].map((category) => ({
-    categories: [category.slug],
+  return categories.map((category) => ({
+    category: category.slug,
   }));
 }
 
 export default async function BlocksPage({
   params,
 }: {
-  params: { categories?: string[] };
+  params: { category?: string };
 }) {
   return (
     <div>
