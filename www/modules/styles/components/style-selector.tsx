@@ -12,11 +12,12 @@ import {
   SelectRoot,
   SelectValue,
 } from "@dotui/ui/components/select";
-import { cn } from "@dotui/ui/lib/utils";
 import type { ButtonProps } from "@dotui/ui/components/button";
 import type { SelectRootProps } from "@dotui/ui/components/select";
 
+import { authClient } from "@/modules/auth/lib/client";
 import { useTRPC } from "@/trpc/react";
+import { Session } from "@dotui/auth";
 
 export function StyleSelector(
   props: SelectRootProps<any> & {
@@ -30,8 +31,18 @@ export function StyleSelector(
     }),
   );
 
+  const { data, } = authClient.useSession();
+
   return (
-    <SelectRoot selectedKey="minimalist" {...props}>
+    <SelectRoot
+      selectedKey={data?.user.selectedStyle}
+      onSelectionChange={(key) => {
+        authClient.updateUser({
+          selectedStyle: key as string,
+        });
+      }}
+      {...props}
+    >
       <Button
         variant="default"
         suffix={<ChevronDownIcon />}

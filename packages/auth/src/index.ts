@@ -18,6 +18,37 @@ export function initAuth(options: {
     }),
     baseURL: options.baseUrl,
     secret: options.secret,
+    user: {
+      additionalFields: {
+        selectedStyle: {
+          type: "string",
+          required: false,
+          defaultValue: "minimalist",
+        },
+        role: {
+          type: "string",
+          required: false,
+          defaultValue: "user",
+          input: false,
+        },
+        banned: {
+          type: "boolean",
+          required: false,
+          defaultValue: false,
+          input: false,
+        },
+        banReason: {
+          type: "string",
+          required: false,
+          input: false,
+        },
+        banExpires: {
+          type: "date",
+          required: false,
+          input: false,
+        },
+      },
+    },
     plugins: [
       oAuthProxy({
         currentURL: options.baseUrl,

@@ -2,8 +2,8 @@
 
 import React from "react";
 
-import { createStyle } from "@dotui/style-engine";
-import type { Style, StyleDefinition } from "@dotui/style-engine/types";
+import { Skeleton } from "@dotui/ui/components/skeleton";
+import type { Style } from "@dotui/style-engine/types";
 
 import { ThemeProvider } from "./theme-provider";
 import { VariantsProvider } from "./variants-provider";
@@ -20,7 +20,6 @@ export const StyleProvider = ({
   mode,
   style,
   children,
-  ...props
 }: StyleProviderProps) => {
   return (
     <StyleContext value={style}>

@@ -128,13 +128,17 @@ export const DEFAULT_STYLES: Omit<
       dark: {
         colors: {
           neutral: {
-            baseColors: ["#000"],
+            baseColors: ["#101214"],
           },
           accent: {
-            baseColors: ["#0091FF"],
+            baseColors: ["#0273E6"],
           },
         },
+        lightness: 7,
       },
+    },
+    variants: {
+      button: "ripple",
     },
   },
   {
@@ -144,7 +148,7 @@ export const DEFAULT_STYLES: Omit<
     iconLibrary: "lucide",
     fonts: {
       heading: "Inter",
-      body: "Inter",
+      body: "Poppins",
     },
     theme: {
       light: {
@@ -190,6 +194,9 @@ export const DEFAULT_STYLES: Omit<
         },
       },
     },
+    variants: {
+      button: "brutalist",
+    },
   },
   {
     name: "Darky",
@@ -201,16 +208,6 @@ export const DEFAULT_STYLES: Omit<
       body: "Inter",
     },
     theme: {
-      light: {
-        colors: {
-          neutral: {
-            baseColors: ["#fff"],
-          },
-          accent: {
-            baseColors: ["#0091FF"],
-          },
-        },
-      },
       dark: {
         colors: {
           neutral: {
@@ -236,17 +233,7 @@ export const DEFAULT_STYLES: Omit<
       light: {
         colors: {
           neutral: {
-            baseColors: ["#fff"],
-          },
-          accent: {
-            baseColors: ["#0091FF"],
-          },
-        },
-      },
-      dark: {
-        colors: {
-          neutral: {
-            baseColors: ["#000"],
+            baseColors: ["#F5F5DC"],
           },
           accent: {
             baseColors: ["#0091FF"],

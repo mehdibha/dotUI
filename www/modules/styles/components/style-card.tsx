@@ -74,9 +74,9 @@ export function StyleCard(props: {
             Explore style
           </Button>
         </div>
-        <div className="min-w-[220px] space-y-4">
+        <div className="space-y-2">
           <TextField placeholder="Email" className="w-full" />
-          <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center gap-2">
             <Button variant="accent" prefix={<UserRoundPlusIcon />}>
               Invite
             </Button>
