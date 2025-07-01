@@ -1,7 +1,8 @@
+// TODO: fix this
+import { DiscordIcon, GitHubIcon, TwitterIcon } from "@/components/icons";
+
 import { Button } from "@dotui/ui/components/button";
 import { Menu, MenuItem, MenuRoot } from "@dotui/ui/components/menu";
-
-import { DiscordIcon, GitHubIcon, TwitterIcon } from "@/components/icons";
 
 export default function Demo() {
   return (

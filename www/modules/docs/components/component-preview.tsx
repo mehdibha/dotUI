@@ -1,11 +1,11 @@
 import React from "react";
-import { CodeBlock } from "@/modules/docs/components/code-block";
-import { getFileSource } from "@/modules/docs/lib/get-file-source";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 
 import { Index } from "@dotui/ui/__registry__/demos";
 import { cn } from "@dotui/ui/lib/utils";
 
+import { CodeBlock } from "@/modules/docs/components/code-block";
+import { getFileSource } from "@/modules/docs/lib/get-file-source";
 import {
   ComponentPreviewHeader,
   ComponentWrapper,
