@@ -3,7 +3,6 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { ChevronDownIcon } from "lucide-react";
 
-import type { ButtonProps } from "@dotui/ui/components/button";
 import { Button } from "@dotui/ui/components/button";
 import { HelpText } from "@dotui/ui/components/field";
 import { ListBox, ListBoxSection } from "@dotui/ui/components/list-box";
@@ -14,6 +13,7 @@ import {
   SelectValue,
 } from "@dotui/ui/components/select";
 import { cn } from "@dotui/ui/lib/utils";
+import type { ButtonProps } from "@dotui/ui/components/button";
 import type { SelectRootProps } from "@dotui/ui/components/select";
 
 import { useTRPC } from "@/trpc/react";
