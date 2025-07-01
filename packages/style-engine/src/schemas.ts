@@ -1,6 +1,6 @@
 import { z } from "zod/v4";
 
-export const iconLibrarySchema = z.enum(["lucide", "remix-icons"]);
+export const iconLibrarySchema = z.enum(["lucide", "remix"]);
 
 export const fontsSchema = z.object({
   heading: z.string().min(1),

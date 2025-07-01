@@ -3,7 +3,7 @@ import { pgTable } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod/v4";
 
-import type { Fonts, Variants } from "@dotui/style-engine/types";
+import type { Fonts, ThemeDefinition, Variants } from "@dotui/style-engine/types";
 
 export const user = pgTable("user", (t) => ({
   id: t.text().primaryKey(),
@@ -74,6 +74,7 @@ export const style = pgTable("style", (t) => ({
     .default("lucide"),
   fonts: t.jsonb("fonts").$type<Partial<Fonts>>(),
   variants: t.jsonb("variants").$type<Partial<Variants>>(),
+  theme: t.jsonb("theme").$type<ThemeDefinition>().notNull().default({}),
   userId: t
     .text("user_id")
     .notNull()

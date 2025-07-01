@@ -4,6 +4,7 @@ import path from "path";
 import { Project, ScriptKind } from "ts-morph";
 import type { SourceFile } from "ts-morph";
 
+import { transformIcons } from "./transform-icons";
 import { transformImport } from "./transform-imports";
 import type { Style } from "../../types";
 
@@ -30,7 +31,7 @@ async function createTempSourceFile(filename: string) {
 
 export async function transform(
   opts: TransformOpts,
-  transformers: Transformer[] = [transformImport],
+  transformers: Transformer[] = [transformImport, transformIcons],
 ) {
   const tempFile = await createTempSourceFile(opts.filename);
   const sourceFile = project.createSourceFile(tempFile, opts.raw, {

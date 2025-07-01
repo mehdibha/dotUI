@@ -10,7 +10,7 @@ export const DEFAULT_STYLES: Omit<
     name: "Minimalist",
     slug: "minimalist",
     description: "A minimalist style.",
-    iconLibrary: "lucide",
+    iconLibrary: "remix",
     fonts: {
       heading: "Inter",
       body: "Inter",
@@ -18,15 +18,59 @@ export const DEFAULT_STYLES: Omit<
     variants: {
       button: "basic",
     },
+    theme: {
+      light: {
+        colors: {
+          neutral: {
+            baseColors: ["#fff"],
+          },
+          accent: {
+            baseColors: ["#0091FF"],
+          },
+        },
+      },
+      dark: {
+        colors: {
+          neutral: {
+            baseColors: ["#000"],
+          },
+          accent: {
+            baseColors: ["#0091FF"],
+          },
+        },
+      },
+    },
   },
   {
     name: "Modern",
     slug: "modern",
     description: "A modern style.",
-    iconLibrary: "lucide",
+    iconLibrary: "remix",
     fonts: {
       heading: "Inter",
       body: "Inter",
+    },
+    theme: {
+      light: {
+        colors: {
+          neutral: {
+            baseColors: ["#fff"],
+          },
+          accent: {
+            baseColors: ["#0091FF"],
+          },
+        },
+      },
+      dark: {
+        colors: {
+          neutral: {
+            baseColors: ["#000"],
+          },
+          accent: {
+            baseColors: ["#0091FF"],
+          },
+        },
+      },
     },
   },
   {
@@ -38,6 +82,28 @@ export const DEFAULT_STYLES: Omit<
       heading: "Inter",
       body: "Inter",
     },
+    theme: {
+      light: {
+        colors: {
+          neutral: {
+            baseColors: ["#fff"],
+          },
+          accent: {
+            baseColors: ["#0091FF"],
+          },
+        },
+      },
+      dark: {
+        colors: {
+          neutral: {
+            baseColors: ["#000"],
+          },
+          accent: {
+            baseColors: ["#0091FF"],
+          },
+        },
+      },
+    },
   },
   {
     name: "Material",
@@ -47,6 +113,28 @@ export const DEFAULT_STYLES: Omit<
     fonts: {
       heading: "Inter",
       body: "Inter",
+    },
+    theme: {
+      light: {
+        colors: {
+          neutral: {
+            baseColors: ["#fff"],
+          },
+          accent: {
+            baseColors: ["#0091FF"],
+          },
+        },
+      },
+      dark: {
+        colors: {
+          neutral: {
+            baseColors: ["#000"],
+          },
+          accent: {
+            baseColors: ["#0091FF"],
+          },
+        },
+      },
     },
   },
   {
@@ -58,6 +146,18 @@ export const DEFAULT_STYLES: Omit<
       heading: "Inter",
       body: "Inter",
     },
+    theme: {
+      light: {
+        colors: {
+          neutral: {
+            baseColors: ["#f1dfbe"],
+          },
+          accent: {
+            baseColors: ["#969A54"],
+          },
+        },
+      },
+    },
   },
   {
     name: "Brutalist",
@@ -67,6 +167,28 @@ export const DEFAULT_STYLES: Omit<
     fonts: {
       heading: "Inter",
       body: "Inter",
+    },
+    theme: {
+      light: {
+        colors: {
+          neutral: {
+            baseColors: ["#fff"],
+          },
+          accent: {
+            baseColors: ["#0091FF"],
+          },
+        },
+      },
+      dark: {
+        colors: {
+          neutral: {
+            baseColors: ["#000"],
+          },
+          accent: {
+            baseColors: ["#0091FF"],
+          },
+        },
+      },
     },
   },
   {
@@ -78,6 +200,28 @@ export const DEFAULT_STYLES: Omit<
       heading: "Inter",
       body: "Inter",
     },
+    theme: {
+      light: {
+        colors: {
+          neutral: {
+            baseColors: ["#fff"],
+          },
+          accent: {
+            baseColors: ["#0091FF"],
+          },
+        },
+      },
+      dark: {
+        colors: {
+          neutral: {
+            baseColors: ["#000"],
+          },
+          accent: {
+            baseColors: ["#0091FF"],
+          },
+        },
+      },
+    },
   },
   {
     name: "Claude",
@@ -88,6 +232,28 @@ export const DEFAULT_STYLES: Omit<
       heading: "Inter",
       body: "Inter",
     },
+    theme: {
+      light: {
+        colors: {
+          neutral: {
+            baseColors: ["#fff"],
+          },
+          accent: {
+            baseColors: ["#0091FF"],
+          },
+        },
+      },
+      dark: {
+        colors: {
+          neutral: {
+            baseColors: ["#000"],
+          },
+          accent: {
+            baseColors: ["#0091FF"],
+          },
+        },
+      },
+    },
   },
   {
     name: "Vercel",
@@ -97,6 +263,28 @@ export const DEFAULT_STYLES: Omit<
     fonts: {
       heading: "Inter",
       body: "Inter",
+    },
+    theme: {
+      light: {
+        colors: {
+          neutral: {
+            baseColors: ["#fff"],
+          },
+          accent: {
+            baseColors: ["#0091FF"],
+          },
+        },
+      },
+      dark: {
+        colors: {
+          neutral: {
+            baseColors: ["#000"],
+          },
+          accent: {
+            baseColors: ["#0091FF"],
+          },
+        },
+      },
     },
   },
 ];

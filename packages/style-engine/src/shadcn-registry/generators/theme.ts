@@ -1,5 +1,6 @@
 import type { RegistryItem } from "shadcn/registry";
 
+import { createTheme } from "../../theme";
 import type { Style } from "../../types";
 
 export function generateRegistryTheme(options: {
@@ -12,17 +13,10 @@ export function generateRegistryTheme(options: {
   return {
     $schema: "https://ui.shadcn.com/schema/registry-item.json",
     name: "theme",
+    extends: "none",
     type: "registry:theme",
-    title: `${styleName} Theme`,
+    title: `${styleName} theme`,
     description: `Color theme for ${styleName} style`,
-    files: [
-      {
-        path: `registry/${styleName}/theme/colors.css`,
-        type: "registry:file",
-        target: "app/globals.css",
-      },
-    ],
-    cssVars: {},
-    css: {},
+    ...createTheme(style.theme),
   };
 }

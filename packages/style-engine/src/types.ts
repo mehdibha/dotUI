@@ -1,9 +1,52 @@
+import type { CssColor } from "@adobe/leonardo-contrast-colors";
+
+type Css = Record<
+  string,
+  string | Record<string, string | Record<string, string>>
+>;
+export interface ColorBase {
+  baseColors: CssColor[];
+  ratios?: number[];
+}
+
+export interface ColorDefinition {
+  neutral?: ColorBase;
+  accent?: ColorBase;
+  success?: ColorBase;
+  warning?: ColorBase;
+  danger?: ColorBase;
+  info?: ColorBase;
+}
+
+export interface ThemeModeDefinition {
+  colors: ColorDefinition;
+  lightness?: number;
+  saturation?: number;
+}
+
+export interface ThemeDefinition {
+  light?: ThemeModeDefinition;
+  dark?: ThemeModeDefinition;
+  theme?: Record<string, string>;
+  css?: Css;
+  radius?: number;
+}
+
+export interface Theme {
+  css: Css;
+  cssVars: {
+    light: Record<string, string>;
+    dark: Record<string, string>;
+    theme: Record<string, string>;
+  };
+}
+
 export interface Fonts {
   heading: string;
   body: string;
 }
 
-export type IconLibrary = "lucide" | "remix-icons";
+export type IconLibrary = "lucide" | "remix";
 
 export interface Variants {
   alert: "basic" | "notch" | "notch-2";
@@ -71,4 +114,5 @@ export interface Style {
   iconLibrary: IconLibrary;
   fonts: Fonts;
   variants: Variants;
+  theme: ThemeDefinition
 }
