@@ -3,7 +3,8 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { ChevronDownIcon } from "lucide-react";
 
-import { Button, ButtonProps } from "@dotui/ui/components/button";
+import type { ButtonProps } from "@dotui/ui/components/button";
+import { Button } from "@dotui/ui/components/button";
 import { HelpText } from "@dotui/ui/components/field";
 import { ListBox, ListBoxSection } from "@dotui/ui/components/list-box";
 import { Popover } from "@dotui/ui/components/popover";

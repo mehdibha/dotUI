@@ -1,6 +1,7 @@
 {
   "name": "@dotui/style-engine",
   "version": "0.0.1",
+  "type": "module",
   "description": "Shared style system logic and types",
   "exports": {
     ".": {

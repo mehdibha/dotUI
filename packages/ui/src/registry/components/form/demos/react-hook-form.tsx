@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { parseDate } from "@internationalized/date";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { z } from "zod/v4";
 
 import { Button } from "@dotui/ui/components/button";
 import { Checkbox } from "@dotui/ui/components/checkbox";
@@ -20,10 +20,10 @@ const FormSchema = z.object({
   gender: z.enum(["male", "female", "other"]),
   "birth-date": z.string(),
   referral: z.string({
-    required_error: "Please select a method.",
+    error: "Please select a method.",
   }),
   language: z.string({
-    required_error: "Please select a language.",
+    error: "Please select a language.",
   }),
   terms: z.boolean().refine((val) => val === true, {
     message: "You must accept the terms and conditions",
