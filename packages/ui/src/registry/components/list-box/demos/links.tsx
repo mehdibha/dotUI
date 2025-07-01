@@ -1,7 +1,7 @@
 // TODO: fix this
-import { DiscordIcon, GitHubIcon, TwitterIcon } from "@/components/icons";
-
 import { ListBox, ListBoxItem } from "@dotui/ui/components/list-box";
+
+import { DiscordIcon, GitHubIcon, TwitterIcon } from "@/components/icons";
 
 export default function Demo() {
   return (

@@ -1,19 +1,19 @@
 "use client";
 
-import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
 import { tv } from "tailwind-variants";
+import type { VariantProps } from "tailwind-variants";
 
 import { createScopedContext } from "@dotui/ui/lib/utils";
 
 const avatarStyles = tv({
   slots: {
-    root: "bg-bg relative inline-flex shrink-0 overflow-hidden align-middle",
+    root: "relative inline-flex shrink-0 overflow-hidden bg-bg align-middle",
     image: "aspect-square size-full",
     fallback:
-      "bg-bg-muted flex size-full items-center justify-center select-none",
+      "flex size-full items-center justify-center bg-bg-muted select-none",
     placeholder:
-      "bg-bg-muted flex size-full h-full animate-pulse items-center justify-center",
+      "flex size-full h-full animate-pulse items-center justify-center bg-bg-muted",
   },
   variants: {
     size: {

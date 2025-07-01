@@ -1,11 +1,5 @@
 "use client";
 
-import type {
-  ButtonProps as AriaButtonProps,
-  LinkProps as AriaLinkProps,
-  PressEvent,
-} from "react-aria-components";
-import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
 import { chain } from "@react-aria/utils";
 import {
@@ -14,6 +8,12 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type {
+  ButtonProps as AriaButtonProps,
+  LinkProps as AriaLinkProps,
+  PressEvent,
+} from "react-aria-components";
+import type { VariantProps } from "tailwind-variants";
 
 import { Loader } from "@dotui/ui/components/loader";
 import { Ripple } from "@dotui/ui/components/ripple";
@@ -23,14 +23,14 @@ import { createOptionalScopedContext } from "@dotui/ui/lib/utils";
 
 const buttonStyles = tv({
   extend: focusRing,
-  base: "disabled:bg-bg-disabled disabled:text-fg-disabled pending:cursor-default pending:border pending:border-border-disabled pending:bg-bg-disabled pending:text-fg-disabled relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-md text-sm leading-normal font-medium whitespace-nowrap transition-colors disabled:cursor-default",
+  base: "relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-md text-sm leading-normal font-medium whitespace-nowrap transition-colors disabled:cursor-default disabled:bg-bg-disabled disabled:text-fg-disabled pending:cursor-default pending:border pending:border-border-disabled pending:bg-bg-disabled pending:text-fg-disabled",
   variants: {
     variant: {
       default: "bg-bg-neutral text-fg-onNeutral hover:bg-bg-neutral-hover",
       primary: "bg-bg-primary text-fg-onPrimary hover:bg-bg-primary-hover",
-      quiet: "text-fg hover:bg-bg-inverse/10 bg-transparent",
+      quiet: "bg-transparent text-fg hover:bg-bg-inverse/10",
       outline:
-        "border-border-field text-fg hover:bg-bg-inverse/10 disabled:border-border-disabled border disabled:bg-transparent",
+        "border border-border-field text-fg hover:bg-bg-inverse/10 disabled:border-border-disabled disabled:bg-transparent",
       accent: "bg-bg-accent text-fg-onAccent hover:bg-bg-accent-hover",
       success: "bg-bg-success text-fg-onSuccess hover:bg-bg-success-hover",
       warning: "bg-bg-warning text-fg-onWarning hover:bg-bg-warning-hover",

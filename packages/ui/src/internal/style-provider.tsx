@@ -2,11 +2,11 @@
 
 import React from "react";
 
+import { createStyle } from "@dotui/style-engine";
 import type { Style, StyleDefinition } from "@dotui/style-engine/types";
 
-import { VariantsProvider } from "./variants-provider";
 import { ThemeProvider } from "./theme-provider";
-import { createStyle } from "@dotui/style-engine";
+import { VariantsProvider } from "./variants-provider";
 
 const StyleContext = React.createContext<Style | null>(null);
 

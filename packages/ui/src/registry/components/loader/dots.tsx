@@ -1,8 +1,8 @@
 "use client";
 
-import type { ProgressBarProps } from "react-aria-components";
 import React from "react";
 import { ProgressBar as AriaProgressBar } from "react-aria-components";
+import type { ProgressBarProps } from "react-aria-components";
 
 import { cn } from "@dotui/ui/lib/utils";
 
@@ -32,7 +32,7 @@ function Loader({ size = 20, className, ...props }: LoaderProps) {
         return (
           <div
             key={index}
-            className="animate-dot-spinner absolute size-[20%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-current"
+            className="absolute size-[20%] -translate-x-1/2 -translate-y-1/2 animate-dot-spinner rounded-full bg-current"
             style={{
               animationDelay: `${index * 0.1}s`,
               top: `${50 + y * 40}%`,

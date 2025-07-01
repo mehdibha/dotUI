@@ -35,15 +35,15 @@ export const generateGenericRegistryItem = async (
   }
 
   registryItem = updateRegistryDependencies(registryItem, baseUrl, style);
-  
+
   registryItem = await updateFiles(registryItem, {
     registryBasePath,
     baseUrl,
     style,
   });
-  
+
   registryItem.name = registryItemName;
-  
+
   const result = registryItemSchema.safeParse(registryItem);
 
   if (!result.success) {

@@ -1,12 +1,12 @@
 "use client";
 
-import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
 import {
   ProgressBar as AriaProgress,
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type { VariantProps } from "tailwind-variants";
 
 import { Description, Label } from "@dotui/ui/components/field";
 import { createScopedContext } from "@dotui/ui/lib/utils";
@@ -16,7 +16,7 @@ const progressStyles = tv({
     root: "flex w-60 flex-col gap-2",
     indicator: "relative h-2.5 w-full overflow-hidden rounded-full",
     filler: [
-      "bg-fg h-full w-full min-w-14 flex-1 origin-left transition-transform",
+      "h-full w-full min-w-14 flex-1 origin-left bg-fg transition-transform",
       "indeterminate:animate-progress-indeterminate indeterminate:[mask-image:linear-gradient(75deg,rgb(0,0,0)_30%,rgba(0,0,0,0.65)_80%)] indeterminate:[mask-size:200%] indeterminate:[-webkit-mask-image:linear-gradient(75deg,rgb(0,0,0)_30%,rgba(0,0,0,0.65)_80%)] indeterminate:[-webkit-mask-size:200%]",
     ],
     valueLabel: "text-sm",

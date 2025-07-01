@@ -1,6 +1,5 @@
 "use client";
 
-import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
 import { useSlotId } from "@react-aria/utils";
 import {
@@ -13,6 +12,7 @@ import {
   TextContext,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type { VariantProps } from "tailwind-variants";
 
 import { Description, Label } from "@dotui/ui/components/field";
 import { focusRing } from "@dotui/ui/lib/focus-styles";
@@ -22,14 +22,14 @@ const sliderStyles = tv({
   slots: {
     root: "group flex flex-col gap-2",
     track:
-      "bg-bg-neutral disabled:bg-bg-disabled relative grow cursor-pointer rounded-full disabled:cursor-default",
+      "relative grow cursor-pointer rounded-full bg-bg-neutral disabled:cursor-default disabled:bg-bg-disabled",
     filler:
-      "group-disabled:bg-bg-disabled pointer-events-none absolute rounded-full",
+      "pointer-events-none absolute rounded-full group-disabled:bg-bg-disabled",
     thumb: [
       focusRing(),
-      "disabled:border-bg disabled:bg-bg-disabled top-[50%] left-[50%] rounded-full bg-white shadow-md transition-[width,height] disabled:border",
+      "top-[50%] left-[50%] rounded-full bg-white shadow-md transition-[width,height] disabled:border disabled:border-bg disabled:bg-bg-disabled",
     ],
-    valueLabel: "text-fg-muted text-sm",
+    valueLabel: "text-sm text-fg-muted",
   },
   variants: {
     variant: {
@@ -54,15 +54,15 @@ const sliderStyles = tv({
     },
     size: {
       sm: {
-        thumb: "dragging:size-4 size-3",
+        thumb: "size-3 dragging:size-4",
         track: "orientation-horizontal:h-1 orientation-vertical:w-1",
       },
       md: {
-        thumb: "dragging:size-5 size-4",
+        thumb: "size-4 dragging:size-5",
         track: "orientation-horizontal:h-2 orientation-vertical:w-2",
       },
       lg: {
-        thumb: "dragging:size-6 size-5",
+        thumb: "size-5 dragging:size-6",
         track: "orientation-horizontal:h-3 orientation-vertical:w-3",
       },
     },

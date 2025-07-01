@@ -1,8 +1,8 @@
 "use client";
 
-import type { ProgressBarProps } from "react-aria-components";
 import { motion } from "motion/react";
 import { ProgressBar as AriaProgressBar } from "react-aria-components";
+import type { ProgressBarProps } from "react-aria-components";
 
 import { cn } from "@dotui/ui/lib/utils";
 

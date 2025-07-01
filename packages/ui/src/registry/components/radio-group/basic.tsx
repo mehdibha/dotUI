@@ -1,7 +1,5 @@
 "use client";
 
-import type { ValidationResult } from "react-aria-components";
-import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
 import {
   Radio as AriaRadio,
@@ -9,6 +7,8 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type { ValidationResult } from "react-aria-components";
+import type { VariantProps } from "tailwind-variants";
 
 import { HelpText, Label } from "@dotui/ui/components/field";
 import { focusRing, focusRingGroup } from "@dotui/ui/lib/focus-styles";
@@ -19,10 +19,10 @@ import {
 
 const radioStyles = tv({
   slots: {
-    root: "group invalid:text-fg-danger disabled:text-fg-disabled flex cursor-pointer flex-row items-center gap-2 disabled:cursor-default",
+    root: "group flex cursor-pointer flex-row items-center gap-2 invalid:text-fg-danger disabled:cursor-default disabled:text-fg-disabled",
     indicator: [
       focusRing(),
-      "border-border-control group-selected:border-4 group-selected:border-bg-primary relative size-4 shrink-0 rounded-full border transition-all duration-100",
+      "relative size-4 shrink-0 rounded-full border border-border-control transition-all duration-100 group-selected:border-4 group-selected:border-bg-primary",
       "group-disabled:border-border-disabled indeterminate:group-disabled:bg-bg-disabled selected:group-disabled:bg-bg-disabled",
       "group-invalid:border-border-danger group-invalid:selected:border-bg-danger",
     ],
@@ -35,7 +35,7 @@ const radioStyles = tv({
       card: {
         root: [
           focusRing(),
-          "disabled:border-border-disabled selected:bg-bg-muted disabled:selected:bg-bg-disabled flex-row-reverse gap-4 rounded-md border p-4 transition-colors",
+          "flex-row-reverse gap-4 rounded-md border p-4 transition-colors disabled:border-border-disabled selected:bg-bg-muted disabled:selected:bg-bg-disabled",
         ],
       },
     },

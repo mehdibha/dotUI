@@ -1,7 +1,5 @@
 "use client";
 
-import type { Variants } from "motion/react";
-import type { VariantProps } from "tailwind-variants";
 import * as React from "react";
 import { AnimatePresence, motion } from "motion/react";
 import {
@@ -12,20 +10,22 @@ import {
   TooltipTriggerStateContext,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type { Variants } from "motion/react";
+import type { VariantProps } from "tailwind-variants";
 
 import { createScopedContext } from "@dotui/ui/lib/utils";
 
 const tooltipStyles = tv({
   slots: {
     content:
-      "group/tooltip text-fg placement-left:origin-right placement-right:origin-left placement-top:origin-bottom placement-bottom:origin-top z-50 rounded-md px-3 py-1.5 text-sm shadow-md",
+      "group/tooltip z-50 rounded-md px-3 py-1.5 text-sm text-fg shadow-md placement-left:origin-right placement-right:origin-left placement-top:origin-bottom placement-bottom:origin-top",
     arrow:
       "group-placement-left/tooltip:-rotate-90 group-placement-right/tooltip:rotate-90 group-placement-bottom/tooltip:rotate-180",
   },
   variants: {
     variant: {
       default: {
-        content: "bg-bg-muted border",
+        content: "border bg-bg-muted",
         arrow: "fill-bg-muted stroke-border",
       },
       inverse: {

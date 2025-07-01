@@ -7,7 +7,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
-      "@dotui/ui/*": ["../packages/ui/src/*"],
+      "@dotui/ui/*": ["../packages/ui/src/*"]
     },
     "plugins": [{ "name": "next" }],
     "module": "esnext"

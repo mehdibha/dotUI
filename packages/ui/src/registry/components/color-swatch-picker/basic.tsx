@@ -37,10 +37,10 @@ const ColorSwatchPickerItem = ({
         <>
           <ColorSwatch className={cn("size-full rounded-[inherit]")} />
           {isSelected && (
-            <div className="border-bg outline-bg-inverse absolute inset-0 z-1 rounded-[inherit] border-2 outline-2" />
+            <div className="absolute inset-0 z-1 rounded-[inherit] border-2 border-bg outline-2 outline-bg-inverse" />
           )}
           {isDisabled && (
-            <div className="bg-bg/90 absolute inset-0 z-1 rounded-[inherit]" />
+            <div className="absolute inset-0 z-1 rounded-[inherit] bg-bg/90" />
           )}
         </>
       )}
