@@ -1,14 +1,15 @@
 import { sql } from "drizzle-orm";
 import { pgTable } from "drizzle-orm/pg-core";
+import { createInsertSchema } from "drizzle-zod";
+import { z } from "zod/v4";
 
 import type {
   Fonts,
   ThemeDefinition,
   Variants,
 } from "@dotui/style-engine/types";
+
 import { user } from "./auth-schema";
-import { createInsertSchema } from "drizzle-zod";
-import { z } from "zod/v4";
 
 export const style = pgTable("style", (t) => ({
   id: t.uuid().notNull().primaryKey().defaultRandom(),
@@ -46,6 +47,3 @@ export const createStyleSchema = createInsertSchema(style)
   });
 
 export * from "./auth-schema";
-
-
-

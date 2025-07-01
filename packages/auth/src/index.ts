@@ -22,7 +22,7 @@ export function initAuth(options: {
       additionalFields: {
         selectedStyle: {
           type: "string",
-          required: false,
+          required: true,
           defaultValue: "minimalist",
         },
         role: {

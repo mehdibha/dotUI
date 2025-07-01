@@ -3,6 +3,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { ChevronDownIcon } from "lucide-react";
 
+import { Session } from "@dotui/auth";
 import { Button } from "@dotui/ui/components/button";
 import { HelpText } from "@dotui/ui/components/field";
 import { ListBox, ListBoxSection } from "@dotui/ui/components/list-box";
@@ -17,7 +18,6 @@ import type { SelectRootProps } from "@dotui/ui/components/select";
 
 import { authClient } from "@/modules/auth/lib/client";
 import { useTRPC } from "@/trpc/react";
-import { Session } from "@dotui/auth";
 
 export function StyleSelector(
   props: SelectRootProps<any> & {
@@ -31,7 +31,7 @@ export function StyleSelector(
     }),
   );
 
-  const { data, } = authClient.useSession();
+  const { data } = authClient.useSession();
 
   return (
     <SelectRoot

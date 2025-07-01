@@ -29,9 +29,7 @@ export default function BlocksLayout({
       </p>
       <div className="mt-6 flex items-center gap-2">
         <Button variant="primary">Add your block</Button>
-        <StyleSelector
-          buttonProps={{ className: "px-4" }}
-        />
+        <StyleSelector buttonProps={{ className: "px-4" }} />
       </div>
       <div className="mt-16">
         <Tabs variant="solid" selectedKey={pathname}>

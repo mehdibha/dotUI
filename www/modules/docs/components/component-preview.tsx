@@ -4,8 +4,7 @@ import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { Index } from "@dotui/ui/__registry__/demos";
 import { cn } from "@dotui/ui/lib/utils";
 
-import { CodeBlock } from "@/modules/docs/components/code-block";
-import { getFileSource } from "@/modules/docs/lib/get-file-source";
+import { CurrentStyleProvider } from "@/modules/styles/components/current-style-provider";
 import {
   ComponentPreviewHeader,
   ComponentWrapper,
@@ -57,30 +56,34 @@ export const ComponentPreview = async ({
       <div className="bg-bg-muted">
         <ResizableContainer resizable={resizable}>
           <Loader>
-            <div className="relative duration-300">
-              <ComponentPreviewHeader />
-              <ScrollArea className="bg-bg text-fg">
-                <div
-                  className={cn(
-                    "flex pt-14 pb-10",
-                    primary && "min-h-48 pt-24 pb-20",
-                    fullWidth
-                      ? "px-8 lg:px-12"
-                      : "flex items-center justify-center px-4",
-                  )}
-                >
+            <CurrentStyleProvider>
+              <div className="relative duration-300">
+                <ComponentPreviewHeader />
+                <ScrollArea className="bg-bg text-fg">
                   <div
                     className={cn(
-                      fullWidth ? "w-full" : "flex items-center justify-center",
+                      "flex pt-14 pb-10",
+                      primary && "min-h-48 pt-24 pb-20",
+                      fullWidth
+                        ? "px-8 lg:px-12"
+                        : "flex items-center justify-center px-4",
                     )}
                   >
-                    <ComponentWrapper suspense={suspense}>
-                      <Component />
-                    </ComponentWrapper>
+                    <div
+                      className={cn(
+                        fullWidth
+                          ? "w-full"
+                          : "flex items-center justify-center",
+                      )}
+                    >
+                      <ComponentWrapper suspense={suspense}>
+                        <Component />
+                      </ComponentWrapper>
+                    </div>
                   </div>
-                </div>
-              </ScrollArea>
-            </div>
+                </ScrollArea>
+              </div>
+            </CurrentStyleProvider>
           </Loader>
         </ResizableContainer>
       </div>
