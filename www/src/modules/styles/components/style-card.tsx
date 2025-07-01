@@ -36,11 +36,8 @@ export function StyleCard(props: {
 }) {
   return (
     <StyleProvider
-      style={{
-        variants: {
-          button: "brutalist",
-        },
-      }}
+      mode="dark"
+      style={props.style}
     >
       <div
         key={props.style.name}

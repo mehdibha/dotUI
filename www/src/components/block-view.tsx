@@ -1,12 +1,9 @@
 import React from "react";
-import { ChevronsUpDownIcon, CopyIcon } from "lucide-react";
+import { CopyIcon } from "lucide-react";
 
+import { registryBlocks } from "@dotui/registry-definition/registry-blocks";
 import { BlockViewer } from "@dotui/ui/block-viewer";
 import { Button } from "@dotui/ui/components/button";
-import { ListBox, ListBoxItem } from "@dotui/ui/components/list-box";
-import { Overlay } from "@dotui/ui/components/overlay";
-import { SelectRoot, SelectValue } from "@dotui/ui/components/select";
-import { registryBlocks } from "@dotui/ui/registry-blocks";
 
 import { ThemeModeSwitch } from "@/components/theme-mode-switch";
 
@@ -41,21 +38,6 @@ const BlockViewToolbar = ({ title }: BlockViewToolbarProps) => {
           <CopyIcon />
         </Button>
         <ThemeModeSwitch size="sm" shape="square" />
-        <SelectRoot defaultSelectedKey="minimalist">
-          <Button
-            variant="outline"
-            suffix={<ChevronsUpDownIcon className="text-fg-muted" />}
-          >
-            Style: <SelectValue />
-          </Button>
-          <Overlay type="popover">
-            <ListBox>
-              <ListBoxItem id="minimalist">minimalist</ListBoxItem>
-              <ListBoxItem id="modern">modern</ListBoxItem>
-              <ListBoxItem id="retro">retro</ListBoxItem>
-            </ListBox>
-          </Overlay>
-        </SelectRoot>
       </div>
     </div>
   );

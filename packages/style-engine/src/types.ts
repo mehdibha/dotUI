@@ -107,6 +107,16 @@ export interface Variants {
   tooltip: "basic" | "motion";
 }
 
+export interface StyleDefinition {
+  name: string;
+  slug: string;
+  description: string | null;
+  iconLibrary?: string;
+  fonts?: Partial<Fonts> | null;
+  variants?: Partial<Variants> | null;
+  theme?: ThemeDefinition | null;
+}
+
 export interface Style {
   name: string;
   slug: string;
@@ -114,5 +124,5 @@ export interface Style {
   iconLibrary: IconLibrary;
   fonts: Fonts;
   variants: Variants;
-  theme: ThemeDefinition
+  theme: Theme;
 }

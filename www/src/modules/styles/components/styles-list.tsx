@@ -24,7 +24,7 @@ export function StylesList(props: React.ComponentProps<"div">) {
   return (
     <div className={cn("grid grid-cols-2 gap-4", props.className)}>
       {styles.map((style) => (
-        <StyleCard key={style.id} style={style} />
+        <StyleCard key={style.name} style={style} />
       ))}
     </div>
   );

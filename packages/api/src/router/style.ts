@@ -16,10 +16,16 @@ export const styleRouter = {
         offset: z.number().optional(),
       }),
     )
-    .query(({ ctx, input }) => {
-      return ctx.db.query.style.findMany({
+    .query(async ({ ctx, input }) => {
+      const styles = await ctx.db.query.style.findMany({
         where: eq(style.isFeatured, input.isFeatured ?? true),
       });
+
+      const result = styles.map((style) => {
+        return createStyle(style);
+      });
+
+      return result;
     }),
   bySlug: publicProcedure
     .input(z.object({ slug: z.string() }))

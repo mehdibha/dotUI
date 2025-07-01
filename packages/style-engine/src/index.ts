@@ -1,34 +1,21 @@
-import { DEFAULT_FONTS, DEFAULT_VARIANTS } from "./constants";
-import type { Fonts, IconLibrary, Style, ThemeDefinition, Variants } from "./types";
+import {
+  DEFAULT_FONTS,
+  DEFAULT_ICON_LIBRARY,
+  DEFAULT_VARIANTS,
+} from "./constants";
+import { createTheme } from "./theme";
+import type { IconLibrary, Style, StyleDefinition } from "./types";
 
-interface RawStyle {
-  id: string;
-  name: string;
-  createdAt: Date;
-  updatedAt: Date | null;
-  userId: string;
-  slug: string;
-  description: string | null;
-  isFeatured: boolean;
-  iconLibrary: string;
-  fonts: Partial<Fonts> | null;
-  variants: Partial<Variants> | null;
-  theme: ThemeDefinition;
-}
-
-export function createStyle(rawStyle: RawStyle | null): Style | null {
-  if (!rawStyle) {
-    return null;
-  }
-
+export function createStyle(styleDefinition: StyleDefinition): Style {
   const style: Style = {
-    name: rawStyle.name,
-    slug: rawStyle.slug,
-    description: rawStyle.description,
-    iconLibrary: rawStyle.iconLibrary as IconLibrary,
-    fonts: { ...DEFAULT_FONTS, ...rawStyle.fonts } as Fonts,
-    variants: { ...DEFAULT_VARIANTS, ...rawStyle.variants } as Variants,
-    theme: rawStyle.theme,
+    name: styleDefinition.name,
+    slug: styleDefinition.slug,
+    description: styleDefinition.description,
+    iconLibrary: (styleDefinition.iconLibrary ??
+      DEFAULT_ICON_LIBRARY) as IconLibrary,
+    fonts: { ...DEFAULT_FONTS, ...styleDefinition.fonts },
+    variants: { ...DEFAULT_VARIANTS, ...styleDefinition.variants },
+    theme: createTheme(styleDefinition.theme ?? {}),
   };
 
   return style;

@@ -2,8 +2,13 @@ import { sql } from "drizzle-orm";
 import { pgTable } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod/v4";
+import type { AnyPgColumn } from "drizzle-orm/pg-core";
 
-import type { Fonts, ThemeDefinition, Variants } from "@dotui/style-engine/types";
+import type {
+  Fonts,
+  ThemeDefinition,
+  Variants,
+} from "@dotui/style-engine/types";
 
 export const user = pgTable("user", (t) => ({
   id: t.text().primaryKey(),
@@ -15,8 +20,34 @@ export const user = pgTable("user", (t) => ({
   banned: t.boolean().default(false),
   banReason: t.text(),
   banExpires: t.timestamp(),
+  selectedStyle: t
+    .text()
+    .references((): AnyPgColumn => style.id, { onDelete: "set null" }),
   createdAt: t.timestamp().notNull(),
   updatedAt: t.timestamp().notNull(),
+}));
+
+export const style = pgTable("style", (t) => ({
+  id: t.uuid().notNull().primaryKey().defaultRandom(),
+  name: t.varchar({ length: 256 }).notNull(),
+  slug: t.varchar({ length: 256 }).notNull().unique(),
+  description: t.text(),
+  isFeatured: t.boolean("is_featured").notNull().default(false),
+  iconLibrary: t
+    .varchar("icon_library", { length: 20 })
+    .notNull()
+    .default("lucide"),
+  fonts: t.jsonb("fonts").$type<Partial<Fonts>>(),
+  variants: t.jsonb("variants").$type<Partial<Variants>>(),
+  theme: t.jsonb("theme").$type<ThemeDefinition>().notNull().default({}),
+  userId: t
+    .text("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  createdAt: t.timestamp().defaultNow().notNull(),
+  updatedAt: t
+    .timestamp({ mode: "date", withTimezone: true })
+    .$onUpdateFn(() => sql`now()`),
 }));
 
 export const session = pgTable("session", (t) => ({
@@ -60,29 +91,6 @@ export const verification = pgTable("verification", (t) => ({
   expiresAt: t.timestamp().notNull(),
   createdAt: t.timestamp(),
   updatedAt: t.timestamp(),
-}));
-
-export const style = pgTable("style", (t) => ({
-  id: t.uuid().notNull().primaryKey().defaultRandom(),
-  name: t.varchar({ length: 256 }).notNull(),
-  slug: t.varchar({ length: 256 }).notNull().unique(),
-  description: t.text(),
-  isFeatured: t.boolean("is_featured").notNull().default(false),
-  iconLibrary: t
-    .varchar("icon_library", { length: 20 })
-    .notNull()
-    .default("lucide"),
-  fonts: t.jsonb("fonts").$type<Partial<Fonts>>(),
-  variants: t.jsonb("variants").$type<Partial<Variants>>(),
-  theme: t.jsonb("theme").$type<ThemeDefinition>().notNull().default({}),
-  userId: t
-    .text("user_id")
-    .notNull()
-    .references(() => user.id, { onDelete: "cascade" }),
-  createdAt: t.timestamp().defaultNow().notNull(),
-  updatedAt: t
-    .timestamp({ mode: "date", withTimezone: true })
-    .$onUpdateFn(() => sql`now()`),
 }));
 
 export const createStyleSchema = createInsertSchema(style)

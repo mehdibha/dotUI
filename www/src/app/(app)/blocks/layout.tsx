@@ -9,6 +9,8 @@ import {
   Tabs,
 } from "@dotui/ui/registry/components/tabs/motion";
 
+import { StyleSelector } from "@/modules/styles/components/style-selector";
+
 export default function BlocksLayout({
   children,
 }: {
@@ -24,6 +26,10 @@ export default function BlocksLayout({
       <p className="mt-2 text-base text-fg-muted">
         Modern UI blocks available in infinite styles.
       </p>
+      <StyleSelector
+        className="mt-2"
+        buttonProps={{ size: "lg", className: "px-4" }}
+      />
       <div className="mt-16">
         <Tabs variant="solid" selectedKey={pathname}>
           <TabList className="flex-wrap bg-transparent p-0">

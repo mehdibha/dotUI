@@ -403,6 +403,9 @@ importers:
       '@dotui/db':
         specifier: workspace:*
         version: link:../packages/db
+      '@dotui/registry-definition':
+        specifier: workspace:*
+        version: link:../packages/registry-defintion
       '@dotui/style-engine':
         specifier: workspace:*
         version: link:../packages/style-engine
