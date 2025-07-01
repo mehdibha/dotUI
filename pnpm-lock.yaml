@@ -351,6 +351,9 @@ importers:
 
   packages/ui:
     dependencies:
+      '@dotui/registry-definition':
+        specifier: workspace:*
+        version: link:../registry-defintion
       '@dotui/style-engine':
         specifier: workspace:*
         version: link:../style-engine

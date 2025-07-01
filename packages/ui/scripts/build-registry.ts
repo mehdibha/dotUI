@@ -3,7 +3,7 @@ import { existsSync } from "node:fs";
 import path from "path";
 import { rimraf } from "rimraf";
 
-import { registryBlocks } from "@dotui/ui/registry/registry-blocks";
+import { registryBlocks } from "@dotui/registry-definition/registry-blocks";
 
 const REGISTRY_DIR = path.join(process.cwd(), "src/__registry__");
 

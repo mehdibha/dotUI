@@ -26,6 +26,7 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
+    "@dotui/registry-definition": "workspace:*",
     "@dotui/style-engine": "workspace:*",
     "rimraf": "^6.0.1",
     "shadcn": "catalog:"

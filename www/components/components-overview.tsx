@@ -37,7 +37,6 @@ import { cn } from "@dotui/ui/lib/utils";
 
 import { GitHubIcon, GoogleIcon, TwitterIcon } from "@/components/icons";
 import { Link } from "@/components/link";
-import FileTriggerDemo from "@/modules/docs/demos/file-trigger/default";
 
 export function ComponentsOverview({ className }: { className?: string }) {
   const defaultColorScheme = "primary";
@@ -109,7 +108,7 @@ export function ComponentsOverview({ className }: { className?: string }) {
         </div>
       </div>
       <div className="col-span-10 flex items-center justify-end gap-2 lg:col-span-8 xl:col-span-3">
-        <FileTriggerDemo />
+        {/* <FileTriggerDemo /> */}
         <ColorPicker defaultValue="#5100FF" />
         <TimeField aria-label="Event time" />
         <DatePicker className="" />
@@ -313,7 +312,7 @@ export const MobileComponentsOverview = ({
         <DatePicker className="w-full" />
       </div>
       <div className="col-span-10 flex flex-wrap items-center gap-3">
-        <FileTriggerDemo />
+        {/* <FileTriggerDemo /> */}
         <ColorPicker defaultValue="#5100FF" className="flex-1" />
         <TimeField aria-label="Event time" className="flex-1" />
       </div>
