@@ -60,7 +60,7 @@ export default async function Page({
           <MDXContent components={mdxComponents} />
         </div>
         <div className="mt-20 space-y-4">
-          <PageLastUpdate path={page.file.path} />
+          {/* <PageLastUpdate path={page.path} /> */}
           <DocsPager currentPathname={page.url} />
         </div>
       </div>

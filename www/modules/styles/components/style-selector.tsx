@@ -1,6 +1,6 @@
 "use client";
 
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { ChevronDownIcon } from "lucide-react";
 
 import { Session } from "@dotui/auth";
@@ -16,6 +16,7 @@ import {
 import type { ButtonProps } from "@dotui/ui/components/button";
 import type { SelectRootProps } from "@dotui/ui/components/select";
 
+import { useMounted } from "@/hooks/use-mounted";
 import { authClient } from "@/modules/auth/lib/client";
 import { useTRPC } from "@/trpc/react";
 
@@ -24,14 +25,28 @@ export function StyleSelector(
     buttonProps?: ButtonProps;
   },
 ) {
+  const isMounted = useMounted();
   const trpc = useTRPC();
-  const { data: styles } = useSuspenseQuery(
-    trpc.style.all.queryOptions({
+  const { data: styles } = useQuery({
+    ...trpc.style.all.queryOptions({
       isFeatured: true,
     }),
-  );
+    enabled: isMounted,
+  });
 
   const { data } = authClient.useSession();
+
+  if (!isMounted || !styles) {
+    return (
+      <Button
+        variant="default"
+        suffix={<ChevronDownIcon />}
+        {...props.buttonProps}
+      >
+        <span className="text-fg-muted">Style:</span> Loading...
+      </Button>
+    );
+  }
 
   return (
     <SelectRoot

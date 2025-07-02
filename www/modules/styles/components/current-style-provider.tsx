@@ -1,10 +1,11 @@
 "use client";
 
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 import { StyleProvider } from "@dotui/ui";
 import { Skeleton } from "@dotui/ui/components/skeleton";
 
+import { useMounted } from "@/hooks/use-mounted";
 import { authClient } from "@/modules/auth/lib/client";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 import { useTRPC } from "@/trpc/react";
@@ -14,6 +15,7 @@ export function CurrentStyleProvider({
 }: {
   children: React.ReactNode;
 }) {
+  const isMounted = useMounted();
   const session = authClient.useSession();
   const { currentMode, currentStyleSlug } = usePreferences();
 
@@ -22,13 +24,14 @@ export function CurrentStyleProvider({
     : currentStyleSlug;
 
   const trpc = useTRPC();
-  const { data: style, isSuccess } = useSuspenseQuery(
-    trpc.style.bySlug.queryOptions({
+  const { data: style, isSuccess } = useQuery({
+    ...trpc.style.bySlug.queryOptions({
       slug: selectedStyle,
     }),
-  );
+    enabled: isMounted,
+  });
 
-  if (!isSuccess || !style) {
+  if (!isSuccess || !style || !isMounted) {
     return <Skeleton>{children}</Skeleton>;
   }
 

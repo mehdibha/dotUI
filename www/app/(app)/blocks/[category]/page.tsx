@@ -3,7 +3,6 @@ import { BlockView } from "@/components/block-view";
 export const dynamicParams = false;
 
 const categories = [
-  { slug: "featured", label: "Featured" },
   { slug: "authentication", label: "Authentication" },
   { slug: "marketing", label: "Marketing" },
 ];

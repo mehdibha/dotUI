@@ -1,5 +1,4 @@
 import { StylesList } from "@/modules/styles/components/styles-list";
-import { prefetch, trpc } from "@/trpc/server";
 
 export const dynamicParams = false;
 
@@ -16,11 +15,5 @@ export default async function CategoryStylesPage({
 }: {
   params: { category?: string };
 }) {
-  prefetch(
-    trpc.style.all.queryOptions({
-      isFeatured: true,
-    }),
-  );
-
   return <StylesList />;
 }
