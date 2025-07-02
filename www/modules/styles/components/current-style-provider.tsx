@@ -10,11 +10,9 @@ import { authClient } from "@/modules/auth/lib/client";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 import { useTRPC } from "@/trpc/react";
 
-export function CurrentStyleProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export function CurrentStyleProvider(
+  props: Omit<React.ComponentProps<"div">, "style">,
+) {
   const isMounted = useMounted();
   const session = authClient.useSession();
   const { currentMode, currentStyleSlug } = usePreferences();
@@ -24,20 +22,21 @@ export function CurrentStyleProvider({
     : currentStyleSlug;
 
   const trpc = useTRPC();
-  const { data: style, isSuccess } = useQuery({
+  const { data: style } = useQuery({
     ...trpc.style.bySlug.queryOptions({
       slug: selectedStyle,
     }),
     enabled: isMounted,
+    placeholderData: (prev) => prev,
   });
 
-  if (!isSuccess || !style || !isMounted) {
-    return <Skeleton>{children}</Skeleton>;
+  if (!style || !isMounted) {
+    return <Skeleton>{props.children}</Skeleton>;
   }
 
   return (
-    <StyleProvider mode={currentMode} style={style}>
-      {children}
+    <StyleProvider mode={currentMode} style={style} {...props}>
+      {props.children}
     </StyleProvider>
   );
 }

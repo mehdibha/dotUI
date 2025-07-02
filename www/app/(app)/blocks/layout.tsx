@@ -1,15 +1,8 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-
 import { Button } from "@dotui/ui/components/button";
-import {
-  Tab,
-  TabList,
-  TabPanel,
-  Tabs,
-} from "@dotui/ui/registry/components/tabs/motion";
 
+import { BlocksNav } from "@/modules/blocks/components/blocks-nav";
 import { StyleSelector } from "@/modules/styles/components/style-selector";
 
 export default function BlocksLayout({
@@ -17,8 +10,6 @@ export default function BlocksLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const pathname = usePathname();
-
   return (
     <div className="container max-w-screen-2xl p-14">
       <h2 className="text-4xl font-semibold tracking-tighter text-balance">
@@ -31,29 +22,7 @@ export default function BlocksLayout({
         <Button variant="primary">Add your block</Button>
         <StyleSelector buttonProps={{ className: "px-4" }} />
       </div>
-      <div className="mt-16">
-        <Tabs variant="solid" selectedKey={pathname}>
-          <TabList className="flex-wrap bg-transparent p-0">
-            {[
-              { href: "/blocks", label: "Featured" },
-              { href: "/blocks/authentication", label: "Authentication" },
-              { href: "/blocks/marketing", label: "Marketing" },
-            ].map((tab) => (
-              <Tab
-                key={tab.href}
-                id={tab.href}
-                href={tab.href}
-                className="flex h-7 items-center gap-2 rounded-full px-4 text-sm"
-              >
-                {tab.label}
-              </Tab>
-            ))}
-          </TabList>
-          <TabPanel id={pathname} className="mt-6">
-            {children}
-          </TabPanel>
-        </Tabs>
-      </div>
+      <BlocksNav className="mt-16">{children}</BlocksNav>
     </div>
   );
 }

@@ -1,12 +1,14 @@
 import React from "react";
 
 import type { Theme } from "@dotui/style-engine/types";
+import { cn } from "@dotui/ui/lib/utils";
 
 export const ThemeProvider = ({
   mode,
   theme,
   children,
-}: {
+  ...props
+}: React.ComponentProps<"div"> & {
   mode: "light" | "dark";
   theme: Theme;
   children: React.ReactNode;
@@ -28,7 +30,7 @@ export const ThemeProvider = ({
   }, [theme, mode]);
 
   return (
-    <div style={cssVars} className="bg-bg">
+    <div style={cssVars} {...props} className={cn("bg-bg text-fg", props.className)}>
       {children}
     </div>
   );

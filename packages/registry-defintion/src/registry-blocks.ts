@@ -1,5 +1,10 @@
 import type { Registry } from "shadcn/registry";
 
+export const blocksCategories: { name: string; slug: string }[] = [
+  { name: "Authentication", slug: "authentication" },
+  { name: "Marketing", slug: "marketing" },
+];
+
 export const registryBlocks: Registry["items"] = [
   {
     name: "login-01",
@@ -17,25 +22,24 @@ export const registryBlocks: Registry["items"] = [
         type: "registry:component",
       },
     ],
-    categories: ["authentication", "login"],
+    categories: ["authentication"],
   },
   {
-    name: "calendar-01",
-    description: "A simple calendar.",
+    name: "register-01",
+    description: "A simple register form.",
     type: "registry:block",
-    registryDependencies: ["calendar"],
+    registryDependencies: ["button", "text-field"],
     files: [
       {
-        path: "blocks/calendar-01.tsx",
+        path: "blocks/register-01/page.tsx",
+        target: "app/register/page.tsx",
+        type: "registry:page",
+      },
+      {
+        path: "blocks/register-01/components/register-form.tsx",
         type: "registry:component",
       },
     ],
-    categories: ["calendar", "date"],
-    meta: {
-      iframeHeight: "600px",
-      container:
-        "w-full bg-surface min-h-svh flex px-4 py-12 items-start md:py-20 justify-center min-w-0",
-      mobile: "component",
-    },
+    categories: ["authentication"],
   },
 ];

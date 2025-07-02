@@ -1,11 +1,16 @@
+"use client";
+
 import React from "react";
 import { CopyIcon } from "lucide-react";
 
 import { registryBlocks } from "@dotui/registry-definition/registry-blocks";
 import { BlockViewer } from "@dotui/ui/block-viewer";
 import { Button } from "@dotui/ui/components/button";
+import { Skeleton } from "@dotui/ui/components/skeleton";
 
 import { ThemeModeSwitch } from "@/components/theme-mode-switch";
+import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
+import { CurrentStyleProvider } from "@/modules/styles/components/current-style-provider";
 
 interface BlockViewProps {
   name: string;
@@ -30,6 +35,8 @@ interface BlockViewToolbarProps {
   title?: string;
 }
 const BlockViewToolbar = ({ title }: BlockViewToolbarProps) => {
+  const { currentMode, setCurrentMode } = usePreferences();
+
   return (
     <div className="flex items-center justify-between">
       <h2 className="text-lg font-medium tracking-tight">{title}</h2>
@@ -37,7 +44,15 @@ const BlockViewToolbar = ({ title }: BlockViewToolbarProps) => {
         <Button variant="outline" size="sm" shape="square">
           <CopyIcon />
         </Button>
-        <ThemeModeSwitch size="sm" shape="square" />
+
+        <ThemeModeSwitch
+          size="sm"
+          shape="square"
+          isSelected={currentMode === "dark"}
+          onChange={(isSelected) =>
+            setCurrentMode(isSelected ? "dark" : "light")
+          }
+        />
       </div>
     </div>
   );
@@ -45,11 +60,11 @@ const BlockViewToolbar = ({ title }: BlockViewToolbarProps) => {
 
 const BlockViewView = ({ name }: { name: string }) => {
   return (
-    <div className="flex-1 rounded-lg border">
-      <React.Suspense fallback={<div>Loading...</div>}>
+    <CurrentStyleProvider className="flex-1 rounded-lg border">
+      <React.Suspense fallback={<Skeleton className="h-full w-full" />}>
         <BlockViewer name={name} />
       </React.Suspense>
-    </div>
+    </CurrentStyleProvider>
   );
 };
 

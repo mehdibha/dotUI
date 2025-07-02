@@ -7,6 +7,7 @@ import type { Style } from "@dotui/style-engine/types";
 
 import { ThemeProvider } from "./theme-provider";
 import { VariantsProvider } from "./variants-provider";
+import { FontsProvider } from "./fonts-provider";
 
 const StyleContext = React.createContext<Style | null>(null);
 
@@ -20,13 +21,16 @@ export const StyleProvider = ({
   mode,
   style,
   children,
+  ...props
 }: StyleProviderProps) => {
   return (
     <StyleContext value={style}>
       <VariantsProvider variants={style.variants}>
-        <ThemeProvider mode={mode} theme={style.theme}>
-          {children}
-        </ThemeProvider>
+        <FontsProvider fonts={style.fonts}>
+          <ThemeProvider mode={mode} theme={style.theme} {...props}>
+            {children}
+          </ThemeProvider>
+        </FontsProvider>
       </VariantsProvider>
     </StyleContext>
   );

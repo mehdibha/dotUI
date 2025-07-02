@@ -1,14 +1,14 @@
-import { BlockView } from "@/components/block-view";
+import {
+  blocksCategories,
+  registryBlocks,
+} from "@dotui/registry-definition/registry-blocks";
+
+import { BlockView } from "@/modules/blocks/components/block-view";
 
 export const dynamicParams = false;
 
-const categories = [
-  { slug: "authentication", label: "Authentication" },
-  { slug: "marketing", label: "Marketing" },
-];
-
 export async function generateStaticParams() {
-  return categories.map((category) => ({
+  return blocksCategories.map((category) => ({
     category: category.slug,
   }));
 }
@@ -16,13 +16,17 @@ export async function generateStaticParams() {
 export default async function BlocksPage({
   params,
 }: {
-  params: { category?: string };
+  params: { category: string };
 }) {
+  const blocks = registryBlocks.filter((block) =>
+    block.categories?.includes(params.category),
+  );
+
   return (
     <div>
-      <BlockView name="Simple login form" />
-      <BlockView name="Simple register form" />
-      <BlockView name="Simple password reset form" />
+      {blocks.map((block) => (
+        <BlockView key={block.name} name={block.name} />
+      ))}
     </div>
   );
 }

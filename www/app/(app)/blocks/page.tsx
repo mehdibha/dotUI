@@ -1,6 +1,6 @@
-import { BlockView } from "@/components/block-view";
+import { BlockView } from "@/modules/blocks/components/block-view";
 
-const FEATURED_BLOCKS = ["login-01", "calendar-01"];
+const FEATURED_BLOCKS = ["login-01", "register-01"];
 
 export default function BlocksPage() {
   return (
