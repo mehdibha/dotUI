@@ -9,7 +9,6 @@ import { cn } from "@dotui/ui/lib/utils";
 
 import { siteConfig } from "@/config";
 import { useMounted } from "@/hooks/use-mounted";
-import { SignInModal } from "@/modules/auth/components/sign-in-modal";
 import { UserProfileMenu } from "@/modules/auth/components/user-profile-menu";
 import { authClient } from "@/modules/auth/lib/client";
 import { GitHubIcon, TwitterIcon } from "./icons";
@@ -85,11 +84,9 @@ export function Header({ className }: { className?: string }) {
                   <TwitterIcon />
                 </Button>
                 <ThemeSwitcher />
-                <SignInModal>
-                  <Button variant="primary" size="sm">
-                    Sign in
-                  </Button>
-                </SignInModal>
+                <Button variant="primary" href="/login" size="sm">
+                  Sign in
+                </Button>
               </>
             )}
           </div>

@@ -23,9 +23,7 @@ interface ModalProps extends React.ComponentProps<typeof AriaModal> {}
 const Modal = ({ className, isDismissable = true, ...props }: ModalProps) => (
   <AriaModalOverlay
     isDismissable={isDismissable}
-    className={composeRenderProps(className, (className) =>
-      underlay({ className }),
-    )}
+    className={composeRenderProps(className, (className) => underlay({}))}
     {...props}
   >
     <AriaModal

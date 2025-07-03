@@ -2,7 +2,6 @@ import type { Registry } from "shadcn/registry";
 
 export const blocksCategories: { name: string; slug: string }[] = [
   { name: "Authentication", slug: "authentication" },
-  { name: "Marketing", slug: "marketing" },
 ];
 
 export const registryBlocks: Registry["items"] = [

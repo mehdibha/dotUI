@@ -18,11 +18,11 @@ export default function BlocksLayout({
       <p className="mt-2 text-base text-fg-muted">
         Modern UI blocks available in infinite styles.
       </p>
-      <div className="mt-6 flex items-center gap-2">
+      <div className="sticky top-0 z-30 flex items-center gap-2 bg-bg h-18">
         <Button variant="primary">Add your block</Button>
         <StyleSelector buttonProps={{ className: "px-4" }} />
       </div>
-      <BlocksNav className="mt-16">{children}</BlocksNav>
+      <BlocksNav className="mt-0">{children}</BlocksNav>
     </div>
   );
 }

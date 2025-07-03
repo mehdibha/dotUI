@@ -19,7 +19,7 @@ export function BlocksNav({
 
   return (
     <Tabs variant="solid" selectedKey={pathname} {...props}>
-      <TabList className="flex-wrap bg-transparent p-0">
+      <TabList className="sticky top-18 mt-10 z-20 flex-wrap bg-bg pt-0 pb-4">
         {[
           { href: "/blocks", label: "Featured" },
           ...blocksCategories.map((category) => ({
@@ -37,7 +37,7 @@ export function BlocksNav({
           </Tab>
         ))}
       </TabList>
-      <TabPanel id={pathname} className="mt-6">
+      <TabPanel id={pathname} className="">
         {children}
       </TabPanel>
     </Tabs>
