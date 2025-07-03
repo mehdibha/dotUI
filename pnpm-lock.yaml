@@ -279,13 +279,6 @@ importers:
         version: 5.8.3
 
   packages/registry-defintion:
-    dependencies:
-      react:
-        specifier: catalog:react19
-        version: 19.0.0
-      react-dom:
-        specifier: catalog:react19
-        version: 19.0.0(react@19.0.0)
     devDependencies:
       '@dotui/eslint-config':
         specifier: workspace:*
@@ -363,9 +356,6 @@ importers:
       react-dom:
         specifier: catalog:react19
         version: 19.0.0(react@19.0.0)
-      rimraf:
-        specifier: ^6.0.1
-        version: 6.0.1
     devDependencies:
       '@dotui/eslint-config':
         specifier: workspace:*
@@ -382,6 +372,9 @@ importers:
       prettier:
         specifier: 'catalog:'
         version: 3.6.1
+      rimraf:
+        specifier: ^6.0.1
+        version: 6.0.1
       shadcn:
         specifier: 'catalog:'
         version: 2.7.0(@types/node@22.15.33)(typescript@5.8.3)
