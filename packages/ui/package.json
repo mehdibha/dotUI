@@ -28,8 +28,7 @@
   "dependencies": {
     "@dotui/registry-definition": "workspace:*",
     "@dotui/style-engine": "workspace:*",
-    "rimraf": "^6.0.1",
-    "shadcn": "catalog:"
+    "rimraf": "^6.0.1"
   },
   "peerDependencies": {
     "react": "catalog:react19",
@@ -41,6 +40,7 @@
     "@dotui/ts-config": "workspace:*",
     "eslint": "catalog:",
     "prettier": "catalog:",
+    "shadcn": "catalog:",
     "tsx": "catalog:",
     "typescript": "catalog:"
   },

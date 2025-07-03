@@ -43,6 +43,23 @@ const config = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  webpack: (config, { dev, isServer }) => {
+    config.ignoreWarnings = [
+      ...(config.ignoreWarnings || []),
+      /Critical dependency: the request of a dependency is an expression/,
+      /require\.extensions is not supported by webpack/,
+      {
+        module: /node_modules\/cosmiconfig/,
+      },
+      {
+        module: /node_modules\/shadcn/,
+      },
+      {
+        module: /node_modules\/tsconfig-paths/,
+      },
+    ];
+    return config;
+  },
 };
 
 export default withAnalyzer(withMDX(config));

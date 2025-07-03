@@ -24,7 +24,6 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "shadcn": "catalog:"
   },
   "peerDependencies": {
     "react": "catalog:react19",
@@ -36,6 +35,7 @@
     "@dotui/ts-config": "workspace:*",
     "eslint": "catalog:",
     "prettier": "catalog:",
+    "shadcn": "catalog:",
     "typescript": "catalog:"
   },
   "prettier": "@dotui/prettier-config"
