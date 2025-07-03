@@ -1,17 +1,17 @@
-"use client";
-
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import { ArrowLeftIcon } from "lucide-react";
 
 import { Button } from "@dotui/ui/components/button";
 
 import { LoginForm } from "@/modules/auth/components/login-form";
+import { getSession } from "@/modules/auth/lib/server";
 
-export default function Page() {
-  const router = useRouter();
-  const handleBack = () => {
-    router.back();
-  };
+export default async function Page() {
+  const session = await getSession();
+
+  if (session?.user) {
+    redirect("/");
+  }
 
   return (
     <div className="relative flex min-h-svh w-full items-center justify-center p-6 md:p-10">

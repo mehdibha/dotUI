@@ -24,7 +24,7 @@ const createContext = cache(async () => {
   });
 });
 
-const getQueryClient = cache(createQueryClient);
+export const getQueryClient = cache(createQueryClient);
 
 export const trpc = createTRPCOptionsProxy<AppRouter>({
   router: appRouter,
@@ -41,14 +41,14 @@ export function HydrateClient(props: { children: React.ReactNode }) {
   );
 }
 
-export function prefetch<T extends ReturnType<TRPCQueryOptions<any>>>(
+export async function prefetch<T extends ReturnType<TRPCQueryOptions<any>>>(
   queryOptions: T,
 ) {
   const queryClient = getQueryClient();
   if (queryOptions.queryKey[1]?.type === "infinite") {
-    void queryClient.prefetchInfiniteQuery(queryOptions as any);
+    return queryClient.prefetchInfiniteQuery(queryOptions as any);
   } else {
-    void queryClient.prefetchQuery(queryOptions);
+    return queryClient.prefetchQuery(queryOptions);
   }
 }
 

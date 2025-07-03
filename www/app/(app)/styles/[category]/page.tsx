@@ -1,4 +1,5 @@
 import { StylesList } from "@/modules/styles/components/styles-list";
+import { HydrateClient, prefetch, trpc } from "@/trpc/server";
 
 export const dynamicParams = false;
 
@@ -15,5 +16,10 @@ export default async function CategoryStylesPage({
 }: {
   params: { category?: string };
 }) {
-  return <StylesList />;
+  await prefetch(trpc.style.all.queryOptions({ isFeatured: true }));
+  return (
+    <HydrateClient>
+      <StylesList />
+    </HydrateClient>
+  );
 }
