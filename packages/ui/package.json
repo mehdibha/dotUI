@@ -27,8 +27,7 @@
   },
   "dependencies": {
     "@dotui/registry-definition": "workspace:*",
-    "@dotui/style-engine": "workspace:*",
-    "rimraf": "^6.0.1"
+    "@dotui/style-engine": "workspace:*"
   },
   "peerDependencies": {
     "react": "catalog:react19",
@@ -38,6 +37,7 @@
     "@dotui/eslint-config": "workspace:*",
     "@dotui/prettier-config": "workspace:*",
     "@dotui/ts-config": "workspace:*",
+    "rimraf": "^6.0.1",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "shadcn": "catalog:",

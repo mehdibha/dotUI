@@ -23,11 +23,6 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
-  "dependencies": {},
-  "peerDependencies": {
-    "react": "catalog:react19",
-    "react-dom": "catalog:react19"
-  },
   "devDependencies": {
     "@dotui/eslint-config": "workspace:*",
     "@dotui/prettier-config": "workspace:*",
