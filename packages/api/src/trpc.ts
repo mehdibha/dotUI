@@ -10,8 +10,8 @@ import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { z, ZodError } from "zod/v4";
 
-import type { Auth } from "@dotui/auth";
 import { db } from "@dotui/db/client";
+import type { Auth } from "@dotui/auth";
 
 /**
  * 1. CONTEXT
@@ -59,12 +59,6 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
     },
   }),
 });
-
-/**
- * Create a server-side caller
- * @see https://trpc.io/docs/server/server-side-calls
- */
-export const createCallerFactory = t.createCallerFactory;
 
 /**
  * 3. ROUTER & PROCEDURE (THE IMPORTANT BIT)
