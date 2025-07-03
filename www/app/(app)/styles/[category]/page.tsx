@@ -14,7 +14,7 @@ export async function generateStaticParams() {
 export default async function CategoryStylesPage({
   params,
 }: {
-  params: { category?: string };
+  params: Promise<{ category?: string }>;
 }) {
   await prefetch(trpc.style.all.queryOptions({ isFeatured: true }));
   return (

@@ -23,8 +23,7 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "peerDependencies": {
     "react": "catalog:react19",
     "react-dom": "catalog:react19"

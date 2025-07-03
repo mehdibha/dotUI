@@ -32,7 +32,7 @@ export const createDynamicComponent = <Props extends {}>(
       return (
         <React.Suspense
           fallback={
-            <Skeleton >
+            <Skeleton>
               <DefaultComponent {...props} />
             </Skeleton>
           }

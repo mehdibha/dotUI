@@ -5,9 +5,9 @@ import React from "react";
 import { Skeleton } from "@dotui/ui/components/skeleton";
 import type { Style } from "@dotui/style-engine/types";
 
+import { FontsProvider } from "./fonts-provider";
 import { ThemeProvider } from "./theme-provider";
 import { VariantsProvider } from "./variants-provider";
-import { FontsProvider } from "./fonts-provider";
 
 const StyleContext = React.createContext<Style | null>(null);
 

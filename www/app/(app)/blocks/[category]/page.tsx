@@ -16,10 +16,11 @@ export async function generateStaticParams() {
 export default async function BlocksPage({
   params,
 }: {
-  params: { category: string };
+  params: Promise<{ category: string }>;
 }) {
+  const { category } = await params;
   const blocks = registryBlocks.filter((block) =>
-    block.categories?.includes(params.category),
+    block.categories?.includes(category),
   );
 
   return (
