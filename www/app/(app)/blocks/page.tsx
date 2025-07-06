@@ -1,12 +1,11 @@
 import { BlockView } from "@/modules/blocks/components/block-view";
-import { HydrateClient, prefetch, trpc } from "@/trpc/server";
+import { featuredBlocks } from "@dotui/registry-definition/registry-blocks";
 
-const FEATURED_BLOCKS = ["login-01", "register-01"];
 
 export default function BlocksPage() {
   return (
     <div className="space-y-6">
-      {FEATURED_BLOCKS.map((block) => (
+      {featuredBlocks.map((block) => (
         <div key={block}>
           <BlockView name={block} />
         </div>

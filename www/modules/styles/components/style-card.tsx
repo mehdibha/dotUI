@@ -66,13 +66,16 @@ export function StyleCard(props: {
               return null;
             })}
           </div>
-          <Button
-            variant="default"
-            suffix={<SquareArrowOutUpRightIcon />}
-            className="mt-5 h-8 text-sm"
-          >
-            Explore style
-          </Button>
+          <div className="mt-5">
+            <Button
+              href={`/style/${props.style.slug}`}
+              variant="default"
+              suffix={<SquareArrowOutUpRightIcon />}
+              className="h-8 text-sm"
+            >
+              Explore style
+            </Button>
+          </div>
         </div>
         <div className="space-y-2">
           <TextField placeholder="Email" className="w-full" />

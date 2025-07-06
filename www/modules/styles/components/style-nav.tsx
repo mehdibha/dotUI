@@ -1,10 +1,9 @@
 "use client";
 
 import React from "react";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { useIntersection } from "react-use";
 
-import { blocksCategories } from "@dotui/registry-definition/registry-blocks";
 import { cn } from "@dotui/ui/lib/utils";
 import {
   Tab,
@@ -14,12 +13,11 @@ import {
 } from "@dotui/ui/registry/components/tabs/motion";
 import type { TabsProps } from "@dotui/ui/components/tabs";
 
-import { StyleSelector } from "@/modules/styles/components/style-selector";
-
-export function BlocksNav({
+export function StyleNav({
   children,
   ...props
 }: { children: React.ReactNode } & TabsProps) {
+  const { style } = useParams<{ style: string }>();
   const pathname = usePathname();
   const sentinelRef = React.useRef<HTMLDivElement>(null);
   const intersection = useIntersection(
@@ -44,11 +42,11 @@ export function BlocksNav({
       >
         <TabList className="bg-transparent py-4 px-0">
           {[
-            { href: "/blocks", label: "Featured" },
-            ...blocksCategories.map((category) => ({
-              href: `/blocks/${category.slug}`,
-              label: category.name,
-            })),
+            { href: `/style/${style}`, label: "Overview" },
+            { href: `/style/${style}/colors`, label: "Colors" },
+            { href: `/style/${style}/typography`, label: "Typography" },
+            { href: `/style/${style}/iconography`, label: "Iconography" },
+            { href: `/style/${style}/components`, label: "Components" },
           ].map((tab) => (
             <Tab
               key={tab.href}

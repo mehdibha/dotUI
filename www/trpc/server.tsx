@@ -24,6 +24,16 @@ const createContext = cache(async () => {
   });
 });
 
+const createBuildTimeContext = cache(async () => {
+  const heads = new Headers();
+  heads.set("x-trpc-source", "build");
+
+  return createTRPCContext({
+    headers: heads,
+    auth,
+  });
+});
+
 export const getQueryClient = cache(createQueryClient);
 
 export const trpc = createTRPCOptionsProxy<AppRouter>({
@@ -53,3 +63,5 @@ export async function prefetch<T extends ReturnType<TRPCQueryOptions<any>>>(
 }
 
 export const caller = appRouter.createCaller(createContext);
+
+export const buildTimeCaller = appRouter.createCaller(createBuildTimeContext);

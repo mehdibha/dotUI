@@ -1,19 +1,25 @@
 "use client";
 
 import React from "react";
-import { useParams, usePathname } from "next/navigation";
-// import { useStyles } from "@/modules/styles/atoms/styles-atom";
+import { useParams } from "next/navigation";
 import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
   ChevronsRightIcon,
+  ChevronsUpDownIcon,
   MonitorIcon,
-  RotateCwIcon,
   SmartphoneIcon,
 } from "lucide-react";
 import { motion } from "motion/react";
 
+import { featuredBlocks } from "@dotui/registry-definition/registry-blocks";
 import { Button } from "@dotui/ui/components/button";
+import { ListBox } from "@dotui/ui/components/list-box";
+import { Popover } from "@dotui/ui/components/popover";
+import {
+  Select,
+  SelectItem,
+  SelectRoot,
+  SelectValue,
+} from "@dotui/ui/components/select";
 import { Skeleton } from "@dotui/ui/components/skeleton";
 import { cn } from "@dotui/ui/lib/utils";
 
@@ -51,19 +57,13 @@ export function PreviewProvider({ children }: { children: React.ReactNode }) {
 export const usePreviewContext = () => React.useContext(PreviewContext);
 
 export const Preview = () => {
-  const { isOpen: isPreviewOpen, setOpen, screen } = usePreviewContext();
-  const pathname = usePathname();
-  const isOpen = pathname.startsWith("/styles/") && isPreviewOpen;
+  const { isOpen, setOpen, screen } = usePreviewContext();
   const { isCollapsed } = useSidebarContext();
-  // const { currentStyle } = useStyles();
   const isMounted = useMounted();
-  const params = useParams<{ styleName?: string }>();
-
-  // const styleName = params?.styleName ?? currentStyle.name;
 
   const previewWidth = Math.min(
-    screen === "mobile" ? 430 : 768,
-    isCollapsed ? 768 : 600,
+    screen === "mobile" ? 430 : 1000,
+    isCollapsed ? 1000 : 600,
   );
   const containerWidth = isOpen ? previewWidth : 0;
 
@@ -104,11 +104,11 @@ export const Preview = () => {
         inert={!isOpen || undefined}
       >
         <motion.div
-          animate={{ width: previewWidth }}
+          animate={{ width: containerWidth }}
           transition={{ type: "spring", bounce: 0, duration: 0.25 }}
           className="h-full p-4 pl-0"
         >
-          {/* <PreviewContent themeName={styleName} /> */}
+          <PreviewContent themeName="het" />
         </motion.div>
       </motion.div>
     </>
@@ -127,52 +127,15 @@ export function PreviewContent({
   collapsible?: boolean;
 }) {
   const { setOpen, screen, setScreen } = usePreviewContext();
-  const iframeRef = React.useRef<HTMLIFrameElement>(null);
-  const [isLoading, setLoading] = React.useState(false);
-  const [currentPathname, setCurrentPathname] = React.useState("");
-  const isMounted = useMounted();
-  const debouncedIsMounted = useDebounce(isMounted, 1500);
-
-  const reload = () => {
-    if (iframeRef.current) {
-      setLoading(true);
-      iframeRef.current.contentWindow?.location.reload();
-    }
-  };
-
-  const goBack = () => {
-    if (iframeRef.current) {
-      iframeRef.current.contentWindow?.history.back();
-    }
-  };
-
-  const goForward = () => {
-    if (iframeRef.current) {
-      iframeRef.current.contentWindow?.history.forward();
-    }
-  };
-
-  const updateUrl = React.useCallback(() => {
-    if (iframeRef.current && iframeRef.current.contentWindow) {
-      const iframeUrl =
-        iframeRef.current.contentWindow.location.pathname.replace(
-          "/preview",
-          "",
-        );
-      if (iframeUrl && iframeUrl !== currentPathname) {
-        setCurrentPathname(iframeUrl);
-      }
-    }
-  }, [currentPathname]);
+  const { style } = useParams<{ style: string }>();
+  const [currentBlockName, setCurrentBlockName] = React.useState<string>(
+    featuredBlocks[0],
+  );
+  const [isLoading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    // Poll for URL changes every second
-    const urlCheckInterval = setInterval(() => {
-      updateUrl();
-    }, 1000);
-
-    return () => clearInterval(urlCheckInterval);
-  }, [updateUrl]);
+    setLoading(true);
+  }, [currentBlockName]);
 
   return (
     <div
@@ -181,7 +144,7 @@ export function PreviewContent({
         className,
       )}
     >
-      <div className="flex items-center justify-between gap-2 border-b border-t-[inherit] bg-bg-muted p-1">
+      <div className="flex items-center justify-between gap-2 border-b border-t-[inherit] px-1 py-1">
         <div className="flex w-32 items-center gap-3">
           <div className="flex items-center gap-1">
             {collapsible && (
@@ -195,44 +158,34 @@ export function PreviewContent({
                 <ChevronsRightIcon />
               </Button>
             )}
-            <Button
-              onPress={goBack}
-              variant="quiet"
-              shape="square"
-              size="sm"
-              className="size-7"
-            >
-              <ChevronLeftIcon />
-            </Button>
-            <Button
-              onPress={goForward}
-              variant="quiet"
-              shape="square"
-              size="sm"
-              className="size-7"
-            >
-              <ChevronRightIcon />
-            </Button>
-            <Button
-              onPress={reload}
-              isDisabled={isLoading}
-              variant="quiet"
-              shape="square"
-              size="sm"
-              className="size-7"
-            >
-              <RotateCwIcon className={cn(isLoading && "animate-spin")} />
-            </Button>
           </div>
         </div>
-        <Button
-          href={`/preview${currentPathname}`}
-          className="h-7 rounded-sm text-sm font-normal"
-          variant="quiet"
-          size="sm"
+        <SelectRoot
+          onSelectionChange={(key) => setCurrentBlockName(key as string)}
+          selectedKey={currentBlockName}
         >
-          acme.com{currentPathname}
-        </Button>
+          <Button
+            size="sm"
+            suffix={<ChevronsUpDownIcon />}
+            className="h-7 w-28 justify-center rounded-sm text-fg-muted"
+          >
+            <SelectValue className="flex-0" />
+          </Button>
+          <Popover>
+            <ListBox
+              items={featuredBlocks.map((block) => ({
+                key: block,
+                label: block,
+              }))}
+            >
+              {(item) => (
+                <SelectItem key={item.key} id={item.key}>
+                  {item.label}
+                </SelectItem>
+              )}
+            </ListBox>
+          </Popover>
+        </SelectRoot>
         <div className="flex w-32 justify-end">
           {resizable && (
             <Button
@@ -249,19 +202,21 @@ export function PreviewContent({
           )}
         </div>
       </div>
-      <Skeleton
-        show={!debouncedIsMounted}
-        className="size-full rounded-[inherit]"
+      <div
+        className={cn(
+          "size-full",
+          isLoading && "relative block animate-pulse rounded-md bg-bg-muted",
+        )}
       >
         <iframe
-          ref={iframeRef}
-          src={`/preview/${themeName}/app-01`}
-          className="rounded-{inherit] size-full"
-          onLoad={() => {
-            setLoading(false);
-          }}
+          src={`/block-view/${style}/${currentBlockName}`}
+          onLoad={() => setLoading(false)}
+          className={cn(
+            "rounded-{inherit] size-full",
+            isLoading && "opacity-0",
+          )}
         />
-      </Skeleton>
+      </div>
     </div>
   );
 }
