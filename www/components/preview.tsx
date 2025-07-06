@@ -7,6 +7,7 @@ import {
   ChevronsUpDownIcon,
   MonitorIcon,
   SmartphoneIcon,
+  TabletIcon,
 } from "lucide-react";
 import { motion } from "motion/react";
 
@@ -15,23 +16,20 @@ import { Button } from "@dotui/ui/components/button";
 import { ListBox } from "@dotui/ui/components/list-box";
 import { Popover } from "@dotui/ui/components/popover";
 import {
-  Select,
   SelectItem,
   SelectRoot,
   SelectValue,
 } from "@dotui/ui/components/select";
-import { Skeleton } from "@dotui/ui/components/skeleton";
 import { cn } from "@dotui/ui/lib/utils";
 
 import { useSidebarContext } from "@/components/sidebar";
-import { useDebounce } from "@/hooks/use-debounce";
 import { useMounted } from "@/hooks/use-mounted";
 
 const PreviewContext = React.createContext<{
   isOpen: boolean;
   setOpen: (isOpen: boolean) => void;
-  screen: "desktop" | "mobile";
-  setScreen: (screen: "desktop" | "mobile") => void;
+  screen: "desktop" | "mobile" | "tablet";
+  setScreen: (screen: "desktop" | "mobile" | "tablet") => void;
 }>({
   isOpen: false,
   setOpen: () => {},
@@ -41,7 +39,9 @@ const PreviewContext = React.createContext<{
 
 export function PreviewProvider({ children }: { children: React.ReactNode }) {
   const [isOpen, setOpen] = React.useState(false);
-  const [screen, setScreen] = React.useState<"desktop" | "mobile">("desktop");
+  const [screen, setScreen] = React.useState<"desktop" | "mobile" | "tablet">(
+    "tablet",
+  );
 
   React.useEffect(() => {
     setOpen(true);
@@ -62,7 +62,7 @@ export const Preview = () => {
   const isMounted = useMounted();
 
   const previewWidth = Math.min(
-    screen === "mobile" ? 430 : 1000,
+    screen === "mobile" ? 430 : screen === "tablet" ? 768 : 1000,
     isCollapsed ? 1000 : 600,
   );
   const containerWidth = isOpen ? previewWidth : 0;
@@ -108,7 +108,7 @@ export const Preview = () => {
           transition={{ type: "spring", bounce: 0, duration: 0.25 }}
           className="h-full p-4 pl-0"
         >
-          <PreviewContent themeName="het" />
+          <PreviewContent />
         </motion.div>
       </motion.div>
     </>
@@ -116,12 +116,10 @@ export const Preview = () => {
 };
 
 export function PreviewContent({
-  themeName,
   className,
   resizable = true,
   collapsible = true,
 }: {
-  themeName: string;
   className?: string;
   resizable?: boolean;
   collapsible?: boolean;
@@ -131,11 +129,11 @@ export function PreviewContent({
   const [currentBlockName, setCurrentBlockName] = React.useState<string>(
     featuredBlocks[0],
   );
-  const [isLoading, setLoading] = React.useState(true);
+  const [isLoading, setLoading] = React.useState(false);
 
-  React.useEffect(() => {
-    setLoading(true);
-  }, [currentBlockName]);
+  // React.useEffect(() => {
+  //   setLoading(true);
+  // }, [currentBlockName]);
 
   return (
     <div
@@ -194,10 +192,18 @@ export function PreviewContent({
               size="sm"
               className="size-7"
               onPress={() =>
-                setScreen(screen === "desktop" ? "mobile" : "desktop")
+                setScreen(
+                  screen === "desktop"
+                    ? "mobile"
+                    : screen === "mobile"
+                      ? "tablet"
+                      : "desktop",
+                )
               }
             >
-              {screen === "desktop" ? <MonitorIcon /> : <SmartphoneIcon />}
+              {screen === "desktop" && <MonitorIcon />}
+              {screen === "mobile" && <SmartphoneIcon />}
+              {screen === "tablet" && <TabletIcon />}
             </Button>
           )}
         </div>
@@ -208,14 +214,14 @@ export function PreviewContent({
           isLoading && "relative block animate-pulse rounded-md bg-bg-muted",
         )}
       >
-        <iframe
+        {/* <iframe
           src={`/block-view/${style}/${currentBlockName}`}
           onLoad={() => setLoading(false)}
           className={cn(
             "rounded-{inherit] size-full",
             isLoading && "opacity-0",
           )}
-        />
+        /> */}
       </div>
     </div>
   );

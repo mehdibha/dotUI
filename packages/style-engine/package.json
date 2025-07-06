@@ -15,6 +15,10 @@
     "./shadcn-registry": {
       "types": "./dist/shadcn-registry/index.d.ts",
       "default": "./src/shadcn-registry/index.ts"
+    },
+    "./constants": {
+      "types": "./dist/constants/index.d.ts",
+      "default": "./src/constants/index.ts"
     }
   },
   "scripts": {

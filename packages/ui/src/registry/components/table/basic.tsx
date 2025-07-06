@@ -32,7 +32,7 @@ const tableStyles = tv({
   slots: {
     container: "w-full overflow-auto",
     root: [
-      "relative table min-h-24 w-auto border-separate border-spacing-0 cursor-default text-sm",
+      "relative table min-h-24 w-full border-separate border-spacing-0 cursor-default text-sm",
       "[&_.react-aria-DropIndicator]:translate-z-0 [&_.react-aria-DropIndicator]:outline [&_.react-aria-DropIndicator]:outline-bg-accent",
     ],
     header: "sticky top-0 z-10",
