@@ -99,8 +99,11 @@ const [TableProvider, useTableContext] = createScopedContext<
 interface TableRootProps
   extends Omit<React.ComponentProps<typeof AriaTable>, "className" | "style">,
     Pick<AriaResiableTableContainerProps, "className" | "style">,
-    VariantProps<typeof tableStyles> {}
+    VariantProps<typeof tableStyles> {
+  resizable?: boolean;
+}
 const TableRoot = ({
+  resizable,
   className,
   style,
   variant,
@@ -114,7 +117,12 @@ const TableRoot = ({
       selectionVariant={selectionVariant}
       globalAction={!!onRowAction}
     >
-      <TableContainer variant={variant} className={className} style={style}>
+      <TableContainer
+        variant={variant}
+        className={className}
+        style={style}
+        resizable={resizable}
+      >
         {/* TODO: FIX THIS SHIT */}
         <AriaTable
           className={root({ variant })}

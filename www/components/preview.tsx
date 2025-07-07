@@ -129,11 +129,11 @@ export function PreviewContent({
   const [currentBlockName, setCurrentBlockName] = React.useState<string>(
     featuredBlocks[0],
   );
-  const [isLoading, setLoading] = React.useState(false);
+  const [isLoading, setLoading] = React.useState(true);
 
-  // React.useEffect(() => {
-  //   setLoading(true);
-  // }, [currentBlockName]);
+  React.useEffect(() => {
+    setLoading(true);
+  }, [currentBlockName]);
 
   return (
     <div
@@ -214,14 +214,14 @@ export function PreviewContent({
           isLoading && "relative block animate-pulse rounded-md bg-bg-muted",
         )}
       >
-        {/* <iframe
+        <iframe
           src={`/block-view/${style}/${currentBlockName}`}
           onLoad={() => setLoading(false)}
           className={cn(
             "rounded-{inherit] size-full",
             isLoading && "opacity-0",
           )}
-        /> */}
+        />
       </div>
     </div>
   );
