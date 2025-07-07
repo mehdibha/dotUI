@@ -215,7 +215,7 @@ const tokens: Token[] = DESIGN_TOKENS.filter(
     !token.name.includes("-muted"),
 )
   .map((token) => {
-    const match = token.defaultValue.match(/var\(--([a-z]+)-(\d+)\)/);
+    const match = /var\(--([a-z]+)-(\d+)\)/.exec(token.defaultValue);
 
     if (!match || !match[1] || !match[2]) {
       return null;
