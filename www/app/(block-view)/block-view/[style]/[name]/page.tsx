@@ -13,7 +13,7 @@ export const generateStaticParams = async () => {
   return styles.flatMap((style) =>
     registryBlocks.map((block) => ({
       style: style.slug,
-      name: block.name,  
+      name: block.name,
     })),
   );
 };

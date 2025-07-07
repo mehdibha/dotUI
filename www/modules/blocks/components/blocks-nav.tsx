@@ -42,7 +42,7 @@ export function BlocksNav({
           isSticky && "border-b border-border",
         )}
       >
-        <TabList className="bg-transparent py-4 px-0">
+        <TabList className="bg-transparent px-0 py-4">
           {[
             { href: "/blocks", label: "Featured" },
             ...blocksCategories.map((category) => ({

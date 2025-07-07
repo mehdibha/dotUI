@@ -30,7 +30,7 @@ export default async function StylePage({
         <div className="container max-w-5xl py-10">
           <Link
             href="/styles"
-            className="text-sm text-fg-muted hover:text-fg flex items-center gap-1"
+            className="flex items-center gap-1 text-sm text-fg-muted hover:text-fg"
           >
             <ArrowLeftIcon className="size-4" /> styles
           </Link>
