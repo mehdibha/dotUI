@@ -26,6 +26,7 @@ import {
 } from "@dotui/ui/components/table";
 import { Tooltip } from "@dotui/ui/components/tooltip";
 
+import { usePreviewContext } from "@/components/preview";
 import { ThemeModeSwitch } from "@/components/theme-mode-switch";
 import { useMounted } from "@/hooks/use-mounted";
 
@@ -43,6 +44,7 @@ const semanticColors = [
 
 export default function ColorsPage() {
   const isMounted = useMounted();
+  const { isAnimating } = usePreviewContext();
 
   return (
     <div>
@@ -138,59 +140,78 @@ export default function ColorsPage() {
         ))}
       </div>
       <p className="mt-6 text-base font-semibold">Tokens</p>
-      <Skeleton show={!isMounted}>
-        <TableRoot resizable aria-label="Tokens" className="mt-2 -mr-6 w-full">
-          <TableHeader>
-            <TableColumn id="name" isRowHeader>
-              Variable name
-            </TableColumn>
-            <TableColumn id="description">Description</TableColumn>
-            <TableColumn id="value">Value</TableColumn>
-          </TableHeader>
-          <TableBody
-            items={tokens.map((token) => ({ id: token.name, ...token }))}
-          >
-            {(token) => (
-              <TableRow>
-                <TableCell>{token.name}</TableCell>
-                <TableCell>{token.description}</TableCell>
-                <TableCell>
-                  <SelectRoot defaultSelectedKey={token.value}>
-                    <Button
-                      size="sm"
-                      suffix={<ChevronsUpDownIcon className="text-fg-muted" />}
-                      className="w-40"
-                    >
-                      <SelectValue />
-                    </Button>
-                    <Popover>
-                      <ListBox items={token.items}>
-                        {(item) => (
-                          <ListBoxItem
-                            key={item.name}
-                            id={item.name}
-                            className="flex items-center gap-2"
-                            prefix={
-                              <span
-                                className="size-4 rounded-sm border"
-                                style={{
-                                  backgroundColor: item.value,
-                                }}
-                              />
+      <div className="mt-2 space-y-8">
+        {Object.entries(tokensByCategory).map(([category, categoryTokens]) => (
+          <div key={category}>
+            <h3 className="mb-3 text-sm font-medium text-fg-muted">
+              {tokenCategories[category as keyof typeof tokenCategories]}
+            </h3>
+            <Skeleton show={!isMounted}>
+              <TableRoot
+                aria-label={`${tokenCategories[category as keyof typeof tokenCategories]} Tokens`}
+                className="-mr-6 w-full"
+              >
+                <TableHeader>
+                  <TableColumn id="name" isRowHeader className="pl-0">
+                    Variable name
+                  </TableColumn>
+                  <TableColumn id="description">Description</TableColumn>
+                  <TableColumn id="value" className="pr-0">
+                    Value
+                  </TableColumn>
+                </TableHeader>
+                <TableBody
+                  items={categoryTokens.map((token) => ({
+                    id: token.name,
+                    ...token,
+                  }))}
+                >
+                  {(token) => (
+                    <TableRow>
+                      <TableCell className="pl-0">{token.name}</TableCell>
+                      <TableCell>{token.description}</TableCell>
+                      <TableCell className="pr-0">
+                        <SelectRoot defaultSelectedKey={token.value}>
+                          <Button
+                            size="sm"
+                            suffix={
+                              <ChevronsUpDownIcon className="text-fg-muted" />
                             }
+                            className="w-40"
                           >
-                            {item.label}
-                          </ListBoxItem>
-                        )}
-                      </ListBox>
-                    </Popover>
-                  </SelectRoot>
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </TableRoot>
-      </Skeleton>
+                            <SelectValue />
+                          </Button>
+                          <Popover>
+                            <ListBox items={token.items}>
+                              {(item) => (
+                                <ListBoxItem
+                                  key={item.name}
+                                  id={item.name}
+                                  className="flex items-center gap-2"
+                                  prefix={
+                                    <span
+                                      className="size-4 rounded-sm border"
+                                      style={{
+                                        backgroundColor: item.value,
+                                      }}
+                                    />
+                                  }
+                                >
+                                  {item.label}
+                                </ListBoxItem>
+                              )}
+                            </ListBox>
+                          </Popover>
+                        </SelectRoot>
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </TableRoot>
+            </Skeleton>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -206,35 +227,49 @@ interface Token {
   }[];
 }
 
-const tokens: Token[] = DESIGN_TOKENS.filter(
-  (token) =>
-    token.name.startsWith("color") &&
-    !token.name.includes("-fg-on") &&
-    !token.name.includes("-hover") &&
-    !token.name.includes("-active") &&
-    !token.name.includes("-muted"),
-)
-  .map((token) => {
-    const match = /var\(--([a-z]+)-(\d+)\)/.exec(token.defaultValue);
+const tokenCategories = {
+  background: "Backgrounds",
+  foreground: "Foregrounds",
+  border: "Borders",
+} as const;
 
-    if (!match || !match[1] || !match[2]) {
-      return null;
-    }
+const colorCategories = ["background", "foreground", "border"] as const;
 
-    const baseColor = match[1];
-    const shade = match[2];
+const tokensByCategory = Object.fromEntries(
+  colorCategories.map((category) => [
+    category,
+    DESIGN_TOKENS.filter(
+      (token) =>
+        token.category === category &&
+        token.name.startsWith("color") &&
+        !token.name.includes("-fg-on") &&
+        !token.name.includes("-hover") &&
+        !token.name.includes("-active") &&
+        !token.name.includes("-muted"),
+    )
+      .map((token) => {
+        const match = /var\(--([a-z]+)-(\d+)\)/.exec(token.defaultValue);
 
-    const items = Array.from({ length: 10 }, (_, index) => ({
-      name: `${baseColor}-${(index + 1) * 100}`,
-      label: `${baseColor.charAt(0).toUpperCase() + baseColor.slice(1)} ${(index + 1) * 100}`,
-      value: `var(--${baseColor}-${(index + 1) * 100})`,
-    }));
+        if (!match || !match[1] || !match[2]) {
+          return null;
+        }
 
-    return {
-      name: token.name,
-      value: `${baseColor}-${shade}`,
-      description: token.description,
-      items,
-    };
-  })
-  .filter((token): token is Token => token !== null);
+        const baseColor = match[1];
+        const shade = match[2];
+
+        const items = Array.from({ length: 10 }, (_, index) => ({
+          name: `${baseColor}-${(index + 1) * 100}`,
+          label: `${baseColor.charAt(0).toUpperCase() + baseColor.slice(1)} ${(index + 1) * 100}`,
+          value: `var(--${baseColor}-${(index + 1) * 100})`,
+        }));
+
+        return {
+          name: token.name,
+          value: `${baseColor}-${shade}`,
+          description: token.description,
+          items,
+        };
+      })
+      .filter((token): token is Token => token !== null),
+  ]),
+);

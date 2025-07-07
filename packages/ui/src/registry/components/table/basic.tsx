@@ -49,7 +49,7 @@ const tableStyles = tv({
       focusRing(),
       "relative transition-colors disabled:text-fg-disabled data-action:cursor-pointer data-action:hover:bg-bg-muted data-href:cursor-pointer data-href:hover:bg-bg-muted data-[selection-mode=multiple]:cursor-pointer data-[selection-mode=multiple]:hover:not-selected:bg-bg-muted data-[selection-mode=single]:cursor-pointer data-[selection-mode=single]:hover:not-selected:bg-bg-muted selected:text-fg dragging:bg-bg",
     ],
-    cell: [focusRing(), "truncate px-3 py-2"],
+    cell: [focusRing(), "px-3 py-2"],
   },
   variants: {
     variant: {
@@ -170,6 +170,7 @@ function TableColumn({
   const { variant } = useTableContext("TableColumn");
   return (
     <AriaColumn
+      data-slot="table-column"
       className={composeRenderProps(className, (className) =>
         column({ variant, className }),
       )}
@@ -261,6 +262,7 @@ const TableCell = ({ className, ...props }: TableCellProps) => {
   const { variant } = useTableContext("TableCell");
   return (
     <AriaCell
+      data-slot="table-cell"
       className={composeRenderProps(className, (className) =>
         cell({ variant, className }),
       )}

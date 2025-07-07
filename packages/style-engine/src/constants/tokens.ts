@@ -448,14 +448,6 @@ export const DESIGN_TOKENS: Token[] = [
   },
 ];
 
-export const TOKEN_CATEGORIES = {
-  background: "Background Colors",
-  foreground: "Foreground Colors",
-  border: "Border Colors",
-  typography: "Typography",
-  spacing: "Spacing & Layout",
-} as const;
-
 export const getTokensByCategory = (category: TokenCategory): Token[] => {
   return DESIGN_TOKENS.filter((token) => token.category === category);
 };

@@ -30,11 +30,15 @@ const PreviewContext = React.createContext<{
   setOpen: (isOpen: boolean) => void;
   screen: "desktop" | "mobile" | "tablet";
   setScreen: (screen: "desktop" | "mobile" | "tablet") => void;
+  isAnimating: boolean;
+  setAnimating: (isAnimating: boolean) => void;
 }>({
   isOpen: false,
   setOpen: () => {},
   screen: "desktop",
   setScreen: () => {},
+  isAnimating: false,
+  setAnimating: () => {},
 });
 
 export function PreviewProvider({ children }: { children: React.ReactNode }) {
@@ -42,13 +46,16 @@ export function PreviewProvider({ children }: { children: React.ReactNode }) {
   const [screen, setScreen] = React.useState<"desktop" | "mobile" | "tablet">(
     "tablet",
   );
+  const [isAnimating, setAnimating] = React.useState(false);
 
   React.useEffect(() => {
     setOpen(true);
   }, []);
 
   return (
-    <PreviewContext.Provider value={{ isOpen, setOpen, screen, setScreen }}>
+    <PreviewContext.Provider
+      value={{ isOpen, setOpen, screen, setScreen, isAnimating, setAnimating }}
+    >
       {children}
     </PreviewContext.Provider>
   );
@@ -57,7 +64,7 @@ export function PreviewProvider({ children }: { children: React.ReactNode }) {
 export const usePreviewContext = () => React.useContext(PreviewContext);
 
 export const Preview = () => {
-  const { isOpen, setOpen, screen } = usePreviewContext();
+  const { isOpen, setOpen, screen, setAnimating } = usePreviewContext();
   const { isCollapsed } = useSidebarContext();
   const isMounted = useMounted();
 
@@ -101,6 +108,8 @@ export const Preview = () => {
         transition={{ type: "spring", bounce: 0, duration: 0.25 }}
         className="h-full overflow-hidden"
         aria-hidden={!isOpen}
+        onAnimationStart={() => setAnimating(true)}
+        onAnimationComplete={() => setAnimating(false)}
         inert={!isOpen || undefined}
       >
         <motion.div
