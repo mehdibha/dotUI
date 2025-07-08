@@ -5,7 +5,8 @@ import { useParams } from "next/navigation";
 import {
   ChevronsRightIcon,
   ChevronsUpDownIcon,
-  MonitorIcon,
+  ExternalLinkIcon,
+  MaximizeIcon,
   SmartphoneIcon,
   TabletIcon,
 } from "lucide-react";
@@ -20,6 +21,7 @@ import {
   SelectRoot,
   SelectValue,
 } from "@dotui/ui/components/select";
+import { Tooltip } from "@dotui/ui/components/tooltip";
 import { cn } from "@dotui/ui/lib/utils";
 
 import { useSidebarContext } from "@/components/sidebar";
@@ -28,14 +30,14 @@ import { useMounted } from "@/hooks/use-mounted";
 const PreviewContext = React.createContext<{
   isOpen: boolean;
   setOpen: (isOpen: boolean) => void;
-  screen: "desktop" | "mobile" | "tablet";
-  setScreen: (screen: "desktop" | "mobile" | "tablet") => void;
+  screen: "mobile" | "tablet";
+  setScreen: (screen: "mobile" | "tablet") => void;
   isAnimating: boolean;
   setAnimating: (isAnimating: boolean) => void;
 }>({
   isOpen: false,
   setOpen: () => {},
-  screen: "desktop",
+  screen: "mobile",
   setScreen: () => {},
   isAnimating: false,
   setAnimating: () => {},
@@ -43,9 +45,7 @@ const PreviewContext = React.createContext<{
 
 export function PreviewProvider({ children }: { children: React.ReactNode }) {
   const [isOpen, setOpen] = React.useState(false);
-  const [screen, setScreen] = React.useState<"desktop" | "mobile" | "tablet">(
-    "tablet",
-  );
+  const [screen, setScreen] = React.useState<"mobile" | "tablet">("tablet");
   const [isAnimating, setAnimating] = React.useState(false);
 
   React.useEffect(() => {
@@ -69,7 +69,7 @@ export const Preview = () => {
   const isMounted = useMounted();
 
   const previewWidth = Math.min(
-    screen === "mobile" ? 430 : screen === "tablet" ? 768 : 1000,
+    screen === "mobile" ? 430 : 768,
     isCollapsed ? 1000 : 600,
   );
   const containerWidth = isOpen ? previewWidth : 0;
@@ -126,11 +126,9 @@ export const Preview = () => {
 
 export function PreviewContent({
   className,
-  resizable = true,
   collapsible = true,
 }: {
   className?: string;
-  resizable?: boolean;
   collapsible?: boolean;
 }) {
   const { setOpen, screen, setScreen } = usePreviewContext();
@@ -193,28 +191,34 @@ export function PreviewContent({
             </ListBox>
           </Popover>
         </SelectRoot>
-        <div className="flex w-32 justify-end">
-          {resizable && (
+        <div className="flex w-32 justify-end gap-0.5">
+          <Tooltip
+            content={screen === "mobile" ? "Mobile" : "Tablet"}
+            delay={0}
+          >
             <Button
               variant="quiet"
               shape="square"
               size="sm"
               className="size-7"
               onPress={() =>
-                setScreen(
-                  screen === "desktop"
-                    ? "mobile"
-                    : screen === "mobile"
-                      ? "tablet"
-                      : "desktop",
-                )
+                setScreen(screen === "mobile" ? "tablet" : "mobile")
               }
             >
-              {screen === "desktop" && <MonitorIcon />}
               {screen === "mobile" && <SmartphoneIcon />}
               {screen === "tablet" && <TabletIcon />}
             </Button>
-          )}
+          </Tooltip>
+          <Tooltip content="Open in new tab" delay={0}>
+            <Button variant="quiet" shape="square" size="sm" className="size-7">
+              <ExternalLinkIcon />
+            </Button>
+          </Tooltip>
+          <Tooltip content="Maximize" delay={0}>
+            <Button variant="quiet" shape="square" size="sm" className="size-7">
+              <MaximizeIcon />
+            </Button>
+          </Tooltip>
         </div>
       </div>
       <div

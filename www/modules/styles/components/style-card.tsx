@@ -1,5 +1,7 @@
 import {
+  BookmarkIcon,
   CloudDownloadIcon,
+  HeartIcon,
   LayoutGridIcon,
   ListIcon,
   SquareArrowOutUpRightIcon,
@@ -7,6 +9,7 @@ import {
 } from "lucide-react";
 
 import { StyleProvider } from "@dotui/ui";
+import { Avatar } from "@dotui/ui/components/avatar";
 import { Button } from "@dotui/ui/components/button";
 import { TextField } from "@dotui/ui/components/text-field";
 import { ToggleButton } from "@dotui/ui/components/toggle-button";
@@ -56,7 +59,6 @@ export function StyleCard(props: {
                     key={keyword}
                     content={icon.label}
                     delay={0}
-                    placement="bottom"
                     className="text-xs"
                   >
                     <Link href={icon.href}>{icon.icon}</Link>
@@ -66,7 +68,12 @@ export function StyleCard(props: {
               return null;
             })}
           </div>
-          <div className="mt-5">
+          <div className="mt-8 flex items-center gap-2">
+            <Tooltip content="@mehdibha">
+              <Link>
+                <Avatar src="https://github.com/mehdibha.png" size="sm" />
+              </Link>
+            </Tooltip>
             <Button
               href={`/style/${props.style.slug}`}
               variant="default"
@@ -75,6 +82,9 @@ export function StyleCard(props: {
             >
               Explore style
             </Button>
+            <ToggleButton variant="primary" shape="square" className="size-8">
+              <HeartIcon />
+            </ToggleButton>
           </div>
         </div>
         <div className="space-y-2">

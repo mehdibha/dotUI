@@ -26,7 +26,7 @@ export default async function StylePage({
 
   return (
     <PreviewProvider>
-      <div className="relative grid grid-cols-[1fr_auto] max-xl:grid-cols-1">
+      <div className="relative grid grid-cols-[1fr_auto] max-xl:grid-cols-1 [&_[data-slot='label']]:text-sm [&_[data-slot='label']]:font-medium [&_[data-slot='label']]:text-fg-muted">
         <div className="container max-w-5xl py-10">
           <Link
             href="/styles"

@@ -22,11 +22,12 @@ export function StyleNav({
     <Tabs variant="solid" selectedKey={pathname} {...props}>
       <TabList className="flex-wrap bg-transparent px-0 py-4">
         {[
-          { href: `/style/${style}`, label: "Overview" },
-          { href: `/style/${style}/colors`, label: "Colors" },
+          { href: `/style/${style}`, label: "Colors" },
+          { href: `/style/${style}/layout`, label: "Layout" },
           { href: `/style/${style}/typography`, label: "Typography" },
-          { href: `/style/${style}/iconography`, label: "Iconography" },
           { href: `/style/${style}/components`, label: "Components" },
+          { href: `/style/${style}/effects`, label: "Effects" },
+          { href: `/style/${style}/icons`, label: "Icons" },
         ].map((tab) => (
           <Tab
             key={tab.href}
