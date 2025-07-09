@@ -40,4 +40,33 @@ export const styleRouter = {
 
       return createStyle(rawStyle);
     }),
+  // create: protectedProcedure
+  //   .input(createStyleSchema)
+  //   .mutation(async ({ ctx, input }) => {
+  //     const [newStyle] = await ctx.db
+  //       .insert(style)
+  //       .values({
+  //         ...input,
+  //         userId: ctx.session.user.id,
+  //       })
+  //       .returning();
+
+  //     return createStyle(newStyle);
+  //   }),
+  // update: protectedProcedure
+  //   .input(
+  //     z.object({
+  //       id: z.string().uuid(),
+  //       data: createStyleSchema.partial().omit({ userId: true }),
+  //     }),
+  //   )
+  //   .mutation(async ({ ctx, input }) => {
+  //     const [updatedStyle] = await ctx.db
+  //       .update(style)
+  //       .set(input.data)
+  //       .where(eq(style.id, input.id))
+  //       .returning();
+
+  //     return createStyle(updatedStyle);
+  //   }),
 } satisfies TRPCRouterRecord;

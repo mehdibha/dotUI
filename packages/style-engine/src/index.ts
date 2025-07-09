@@ -20,3 +20,5 @@ export function createStyle(styleDefinition: StyleDefinition): Style {
 
   return style;
 }
+
+export { createTheme };

@@ -24,6 +24,7 @@ import {
   DialogFooter,
   DialogRoot,
 } from "@dotui/ui/components/dialog";
+import { FormControl } from "@dotui/ui/components/form";
 import { ListBox, ListBoxItem } from "@dotui/ui/components/list-box";
 import { Loader } from "@dotui/ui/components/loader";
 import { Menu, MenuItem, MenuRoot } from "@dotui/ui/components/menu";
@@ -32,14 +33,16 @@ import { SearchField } from "@dotui/ui/components/search-field";
 import { Select, SelectItem } from "@dotui/ui/components/select";
 import { Slider } from "@dotui/ui/components/slider";
 import { Switch } from "@dotui/ui/components/switch";
-import { Tag, TagGroup } from "@dotui/ui/components/tag-group";
 import { TextArea } from "@dotui/ui/components/text-area";
 import { TextField } from "@dotui/ui/components/text-field";
 import { ToggleButton } from "@dotui/ui/components/toggle-button";
 import { Tooltip } from "@dotui/ui/components/tooltip";
 import { cn } from "@dotui/ui/lib/utils";
 
+import { useStyleForm } from "@/modules/styles/lib/form-context";
+
 interface SectionProps extends React.ComponentProps<"div"> {
+  name: string;
   title: string;
   variants: { id: string; label: string }[];
   defaultVariant: string;
@@ -47,14 +50,15 @@ interface SectionProps extends React.ComponentProps<"div"> {
 }
 
 const Section = ({
+  name,
   title,
   variants,
-  defaultVariant,
   previewClassName,
   children,
   className,
   ...props
 }: SectionProps) => {
+  const { form } = useStyleForm();
   return (
     <div className={cn(className)} {...props}>
       <p
@@ -62,13 +66,24 @@ const Section = ({
       >
         {title}
       </p>
-      <Select className="mt-2" defaultSelectedKey={defaultVariant}>
-        {variants.map((variant) => (
-          <SelectItem key={variant.id} id={variant.id}>
-            {variant.label}
-          </SelectItem>
-        ))}
-      </Select>
+      <FormControl
+        name={`variants.${name}`}
+        control={form.control}
+        render={({ value, onChange, ...props }) => (
+          <Select
+            className="mt-2"
+            selectedKey={value}
+            onSelectionChange={onChange}
+            {...props}
+          >
+            {variants.map((variant) => (
+              <SelectItem key={variant.id} id={variant.id}>
+                {variant.label}
+              </SelectItem>
+            ))}
+          </Select>
+        )}
+      />
       <div
         className={cn(
           "mt-2 flex items-center justify-center gap-2 rounded-md border bg-bg-muted/50 p-4",
@@ -85,6 +100,7 @@ export default function StyleComponentsPage() {
   return (
     <div>
       <Section
+        name="loader"
         title="Loader"
         variants={[
           { id: "dots", label: "Dots" },
@@ -101,6 +117,7 @@ export default function StyleComponentsPage() {
       </Section>
 
       <Section
+        name="focus-style"
         title="Focus style"
         variants={[{ id: "basic", label: "Basic" }]}
         defaultVariant="basic"
@@ -122,6 +139,7 @@ export default function StyleComponentsPage() {
       </Section>
 
       <Section
+        name="buttons"
         title="Buttons"
         variants={[
           { id: "basic", label: "Basic" },
@@ -183,6 +201,7 @@ export default function StyleComponentsPage() {
       </Section>
 
       <Section
+        name="inputs"
         title="Inputs"
         variants={[
           { id: "basic", label: "Basic" },
@@ -231,6 +250,7 @@ export default function StyleComponentsPage() {
       </Section>
 
       <Section
+        name="pickers"
         title="Pickers"
         variants={[{ id: "basic", label: "Basic" }]}
         defaultVariant="basic"
@@ -253,6 +273,7 @@ export default function StyleComponentsPage() {
       </Section>
 
       <Section
+        name="selection"
         title="Selection"
         variants={[{ id: "basic", label: "Basic" }]}
         defaultVariant="basic"
@@ -265,6 +286,7 @@ export default function StyleComponentsPage() {
       </Section>
 
       <Section
+        name="calendars"
         title="Calendars"
         variants={[{ id: "basic", label: "Basic" }]}
         defaultVariant="basic"
@@ -279,6 +301,7 @@ export default function StyleComponentsPage() {
       </Section>
 
       <Section
+        name="list-box-and-menu"
         title="ListBox and menu"
         variants={[{ id: "basic", label: "Basic" }]}
         defaultVariant="basic"
@@ -317,6 +340,7 @@ export default function StyleComponentsPage() {
         </MenuRoot>
       </Section>
       <Section
+        name="overlays"
         title="Overlays"
         variants={[{ id: "basic", label: "Basic" }]}
         defaultVariant="basic"
@@ -360,6 +384,7 @@ export default function StyleComponentsPage() {
         </DialogRoot>
       </Section>
       <Section
+        name="checkboxes"
         title="Checkboxes"
         variants={[{ id: "basic", label: "Basic" }]}
         defaultVariant="basic"
@@ -372,6 +397,7 @@ export default function StyleComponentsPage() {
         </Checkbox>
       </Section>
       <Section
+        name="radios"
         title="Radios"
         variants={[{ id: "basic", label: "Basic" }]}
         defaultVariant="basic"
@@ -389,6 +415,7 @@ export default function StyleComponentsPage() {
         </RadioGroup>
       </Section>
       <Section
+        name="switch"
         title="Switch"
         variants={[{ id: "basic", label: "Basic" }]}
         defaultVariant="basic"
@@ -403,6 +430,7 @@ export default function StyleComponentsPage() {
         </div>
       </Section>
       <Section
+        name="slider"
         title="Slider"
         variants={[{ id: "basic", label: "Basic" }]}
         defaultVariant="basic"
@@ -411,6 +439,7 @@ export default function StyleComponentsPage() {
         <Slider defaultValue={50} aria-label="Basic slider" />
       </Section>
       <Section
+        name="badge-and-tag-group"
         title="Badge & TagGroup"
         variants={[{ id: "basic", label: "Basic" }]}
         defaultVariant="basic"
@@ -431,6 +460,7 @@ export default function StyleComponentsPage() {
         </div>
       </Section>
       <Section
+        name="tooltip"
         title="Tooltip"
         variants={[{ id: "basic", label: "Basic" }]}
         defaultVariant="basic"

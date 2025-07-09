@@ -1,4 +1,5 @@
 import {
+  CssColor,
   BackgroundColor as LeonardoBgColor,
   Color as LeonardoColor,
   Theme as LeonardoTheme,
@@ -50,9 +51,8 @@ const createThemeCSSVars = (
 
   const neutral = new LeonardoBgColor({
     name: "neutral",
-    colorKeys:
-      foundations.colors.neutral?.baseColors ??
-      defaultDefinition.colors.neutral.baseColors,
+    colorKeys: (foundations.colors.neutral?.baseColors ??
+      defaultDefinition.colors.neutral.baseColors) as CssColor[],
     ratios:
       foundations.colors.neutral?.ratios ??
       defaultDefinition.colors.neutral.ratios,
@@ -61,9 +61,10 @@ const createThemeCSSVars = (
   const colors = Object.entries(defaultDefinition.colors).map(([name]) => {
     const props = {
       name,
-      colorKeys:
-        foundations.colors[name as keyof ColorDefinition]?.baseColors ??
-        defaultDefinition.colors[name as keyof ColorDefinition].baseColors,
+      colorKeys: (foundations.colors[name as keyof ColorDefinition]
+        ?.baseColors ??
+        defaultDefinition.colors[name as keyof ColorDefinition]
+          .baseColors) as CssColor[],
       ratios:
         foundations.colors[name as keyof ColorDefinition]?.ratios ??
         defaultDefinition.colors[name as keyof ColorDefinition].ratios,

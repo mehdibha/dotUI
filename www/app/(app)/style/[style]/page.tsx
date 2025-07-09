@@ -7,11 +7,13 @@ import {
   SunIcon,
 } from "lucide-react";
 import { Button as AriaButton } from "react-aria-components";
+import { useFieldArray } from "react-hook-form";
 
 import { DESIGN_TOKENS } from "@dotui/style-engine/constants";
 import { Button } from "@dotui/ui/components/button";
 import { ColorPicker } from "@dotui/ui/components/color-picker";
 import { ColorSwatch } from "@dotui/ui/components/color-swatch";
+import { FormControl } from "@dotui/ui/components/form";
 import { ListBox, ListBoxItem } from "@dotui/ui/components/list-box";
 import { Popover } from "@dotui/ui/components/popover";
 import { SelectRoot, SelectValue } from "@dotui/ui/components/select";
@@ -26,84 +28,129 @@ import {
   TableRow,
 } from "@dotui/ui/components/table";
 import { Tooltip } from "@dotui/ui/components/tooltip";
+import { createTheme } from "@dotui/style-engine";
 
-import { usePreviewContext } from "@/components/preview";
 import { ThemeModeSwitch } from "@/components/theme-mode-switch";
 import { useMounted } from "@/hooks/use-mounted";
+import { useStyleForm } from "@/modules/styles/lib/form-context";
 
 const baseColors = [
   { name: "neutral", label: "Neutral", color: "#000000" },
   { name: "accent", label: "Accent", color: "#0b36a3" },
-];
+] as const;
 
 const semanticColors = [
   { name: "success", label: "Success", color: "#008000" },
   { name: "danger", label: "Danger", color: "#ff0000" },
   { name: "warning", label: "Warning", color: "#ffa500" },
   { name: "info", label: "Info", color: "#0000ff" },
-];
+] as const;
 
 export default function ColorsPage() {
   const isMounted = useMounted();
+  const { form } = useStyleForm();
+
+  const currentMode = "light";
+
+  const theme = createTheme({
+    light: form.watch("colors.light"),
+  });
 
   return (
     <div>
       <p className="text-base font-semibold">Mode</p>
       <div className="mt-2 flex items-start justify-between">
-        <SelectRoot defaultSelectedKey="light-dark">
-          <Button suffix={<ChevronsUpDownIcon />}>
-            <SelectValue />
-          </Button>
-          <Popover>
-            <ListBox>
-              <ListBoxItem id="light-dark" prefix={<ContrastIcon />}>
-                light/dark
-              </ListBoxItem>
-              <ListBoxItem id="light" prefix={<SunIcon />}>
-                light only
-              </ListBoxItem>
-              <ListBoxItem id="dark" prefix={<MoonIcon />}>
-                dark only
-              </ListBoxItem>
-            </ListBox>
-          </Popover>
-        </SelectRoot>
+        <FormControl
+          name="colors.mode"
+          control={form.control}
+          render={({ value, onChange, ...props }) => (
+            <SelectRoot
+              selectedKey={value}
+              onSelectionChange={onChange}
+              {...props}
+            >
+              <Button suffix={<ChevronsUpDownIcon />}>
+                <SelectValue />
+              </Button>
+              <Popover>
+                <ListBox>
+                  <ListBoxItem id="light-dark" prefix={<ContrastIcon />}>
+                    light/dark
+                  </ListBoxItem>
+                  <ListBoxItem id="light" prefix={<SunIcon />}>
+                    light only
+                  </ListBoxItem>
+                  <ListBoxItem id="dark" prefix={<MoonIcon />}>
+                    dark only
+                  </ListBoxItem>
+                </ListBox>
+              </Popover>
+            </SelectRoot>
+          )}
+        />
         <ThemeModeSwitch />
       </div>
       <p className="mt-6 text-base font-semibold">Color adjustments</p>
       <div className="mt-2 grid grid-cols-2 gap-3">
-        <Slider
-          label="Lightness"
-          getValueLabel={(value) => `${value}%`}
-          defaultValue={3}
-          minValue={0}
-          maxValue={100}
-          className="col-span-2 w-full"
+        <FormControl
+          name={`colors.${currentMode}.lightness`}
+          control={form.control}
+          render={({ value, onChange, ...props }) => (
+            <Slider
+              label="Lightness"
+              getValueLabel={(value) => `${value}%`}
+              minValue={0}
+              maxValue={100}
+              defaultValue={3}
+              className="col-span-2 w-full"
+              {...props}
+            />
+          )}
         />
-        <Slider
-          label="Contrast"
-          getValueLabel={(value) => `${value}%`}
-          minValue={0}
-          maxValue={500}
-          defaultValue={100}
-          className="w-full"
+        <FormControl
+          name={`colors.${currentMode}.saturation`}
+          control={form.control}
+          render={({ value, onChange, ...props }) => (
+            <Slider
+              label="Saturation"
+              getValueLabel={(value) => `${value}%`}
+              minValue={0}
+              maxValue={100}
+              defaultValue={100}
+              className="w-full"
+              {...props}
+            />
+          )}
         />
-        <Slider
-          label="Saturation"
-          getValueLabel={(value) => `${value}%`}
-          minValue={0}
-          maxValue={100}
-          defaultValue={100}
-          className="w-full"
+        <FormControl
+          name={`colors.${currentMode}.contrast`}
+          control={form.control}
+          render={({ value, onChange, ...props }) => (
+            <Slider
+              label="Contrast"
+              getValueLabel={(value) => `${value}%`}
+              minValue={0}
+              maxValue={500}
+              defaultValue={100}
+              className="w-full"
+              {...props}
+            />
+          )}
         />
       </div>
       <p className="mt-6 text-base font-semibold">Base colors</p>
       <div className="mt-2 flex items-center gap-2">
         {baseColors.map((color) => (
-          <ColorPicker key={color.name} defaultValue={color.color}>
-            <ColorSwatch />
-            {color.label}
-          </ColorPicker>
+          <FormControl
+            name={`colors.${currentMode}.palettes.${color.name}.baseColors[0]`}
+            control={form.control}
+            render={(props) => (
+              <ColorPicker {...props}>
+                <ColorSwatch />
+                {color.label}
+              </ColorPicker>
+            )}
+          />
         ))}
       </div>
       <div className="mt-3 space-y-2">
@@ -131,16 +178,17 @@ export default function ColorsPage() {
       </div>
       <p className="mt-6 text-base font-semibold">Semantic colors</p>
       <div className="mt-2 flex items-center gap-2">
-        {[
-          { name: "success", label: "Success", color: "#008000" },
-          { name: "danger", label: "Danger", color: "#ff0000" },
-          { name: "warning", label: "Warning", color: "#ffa500" },
-          { name: "info", label: "Info", color: "#0000ff" },
-        ].map((color) => (
-          <ColorPicker key={color.name} defaultValue={color.color}>
-            <ColorSwatch />
-            {color.label}
-          </ColorPicker>
+        {semanticColors.map((color) => (
+          <FormControl
+            name={`colors.${currentMode}.palettes.${color.name}.keyColor`}
+            control={form.control}
+            render={(props) => (
+              <ColorPicker {...props}>
+                <ColorSwatch />
+                {color.label}
+              </ColorPicker>
+            )}
+          />
         ))}
       </div>
       <div className="mt-3 space-y-2">

@@ -1,11 +1,9 @@
-import type { CssColor } from "@adobe/leonardo-contrast-colors";
-
 type Css = Record<
   string,
   string | Record<string, string | Record<string, string>>
 >;
 export interface ColorBase {
-  baseColors: CssColor[];
+  baseColors: string[];
   ratios?: number[];
 }
 
@@ -22,6 +20,7 @@ export interface ThemeModeDefinition {
   colors: ColorDefinition;
   lightness?: number;
   saturation?: number;
+  contrast?: number;
 }
 
 export interface ThemeDefinition {
