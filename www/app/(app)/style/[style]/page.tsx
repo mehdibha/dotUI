@@ -45,7 +45,6 @@ const semanticColors = [
 
 export default function ColorsPage() {
   const isMounted = useMounted();
-  const { isAnimating } = usePreviewContext();
 
   return (
     <div>

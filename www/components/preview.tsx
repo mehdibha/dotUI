@@ -210,7 +210,14 @@ export function PreviewContent({
             </Button>
           </Tooltip>
           <Tooltip content="Open in new tab" delay={0}>
-            <Button variant="quiet" shape="square" size="sm" className="size-7">
+            <Button
+              href={`/block-view/${style}/${currentBlockName}`}
+              target="_blank"
+              variant="quiet"
+              shape="square"
+              size="sm"
+              className="size-7"
+            >
               <ExternalLinkIcon />
             </Button>
           </Tooltip>

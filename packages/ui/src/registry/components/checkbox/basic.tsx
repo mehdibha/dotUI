@@ -65,10 +65,6 @@ const checkboxStyles = tv({
       },
     },
   ],
-  defaultVariants: {
-    variant: "primary",
-    appearance: "default",
-  },
 });
 
 const { root, indicator } = checkboxStyles();
@@ -100,7 +96,12 @@ interface CheckboxRootProps
 
 const CheckboxRoot = (localProps: CheckboxRootProps) => {
   const contextProps = useCheckboxContext();
-  const { variant, appearance, className, ...props } = {
+  const {
+    variant = "primary",
+    appearance = "default",
+    className,
+    ...props
+  } = {
     ...contextProps,
     ...localProps,
   };

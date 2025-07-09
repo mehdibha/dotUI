@@ -12,17 +12,31 @@ import {
   SendIcon,
 } from "lucide-react";
 
+import { Badge } from "@dotui/ui/components/badge";
 import { Button } from "@dotui/ui/components/button";
 import { Calendar, RangeCalendar } from "@dotui/ui/components/calendar";
+import { Checkbox } from "@dotui/ui/components/checkbox";
 import { Combobox, ComboboxItem } from "@dotui/ui/components/combobox";
 import { DatePicker } from "@dotui/ui/components/date-picker";
+import {
+  Dialog,
+  DialogBody,
+  DialogFooter,
+  DialogRoot,
+} from "@dotui/ui/components/dialog";
 import { ListBox, ListBoxItem } from "@dotui/ui/components/list-box";
 import { Loader } from "@dotui/ui/components/loader";
+import { Menu, MenuItem, MenuRoot } from "@dotui/ui/components/menu";
+import { Radio, RadioGroup } from "@dotui/ui/components/radio-group";
 import { SearchField } from "@dotui/ui/components/search-field";
 import { Select, SelectItem } from "@dotui/ui/components/select";
+import { Slider } from "@dotui/ui/components/slider";
+import { Switch } from "@dotui/ui/components/switch";
+import { Tag, TagGroup } from "@dotui/ui/components/tag-group";
 import { TextArea } from "@dotui/ui/components/text-area";
 import { TextField } from "@dotui/ui/components/text-field";
 import { ToggleButton } from "@dotui/ui/components/toggle-button";
+import { Tooltip } from "@dotui/ui/components/tooltip";
 import { cn } from "@dotui/ui/lib/utils";
 
 interface SectionProps extends React.ComponentProps<"div"> {
@@ -261,12 +275,11 @@ export default function StyleComponentsPage() {
             start: parseDate("2020-02-03"),
             end: parseDate("2020-02-12"),
           }}
-          className="w-full"
         />
       </Section>
 
       <Section
-        title="ListBox"
+        title="ListBox and menu"
         variants={[{ id: "basic", label: "Basic" }]}
         defaultVariant="basic"
         previewClassName="gap-4"
@@ -293,6 +306,139 @@ export default function StyleComponentsPage() {
             <ComboboxItem>United Kingdom</ComboboxItem>
           </Combobox>
         </div>
+        <MenuRoot>
+          <Button>Menu</Button>
+          <Menu>
+            <MenuItem>Account settings</MenuItem>
+            <MenuItem>Create team</MenuItem>
+            <MenuItem>Command menu</MenuItem>
+            <MenuItem>Log out</MenuItem>
+          </Menu>
+        </MenuRoot>
+      </Section>
+      <Section
+        title="Overlays"
+        variants={[{ id: "basic", label: "Basic" }]}
+        defaultVariant="basic"
+        previewClassName="gap-4"
+      >
+        <DialogRoot>
+          <Button>Popover</Button>
+          <Dialog title="Popover" type="popover">
+            <DialogBody>some content</DialogBody>
+            <DialogFooter>
+              <Button slot="close">Cancel</Button>
+              <Button variant="primary" slot="close">
+                Save changes
+              </Button>
+            </DialogFooter>
+          </Dialog>
+        </DialogRoot>
+        <DialogRoot>
+          <Button>Modal</Button>
+          <Dialog title="Modal" type="modal">
+            <DialogBody>some content</DialogBody>
+            <DialogFooter>
+              <Button slot="close">Cancel</Button>
+              <Button variant="primary" slot="close">
+                Save changes
+              </Button>
+            </DialogFooter>
+          </Dialog>
+        </DialogRoot>
+        <DialogRoot>
+          <Button>Drawer</Button>
+          <Dialog title="Drawer" type="drawer">
+            <DialogBody>some content</DialogBody>
+            <DialogFooter>
+              <Button slot="close">Cancel</Button>
+              <Button variant="primary" slot="close">
+                Save changes
+              </Button>
+            </DialogFooter>
+          </Dialog>
+        </DialogRoot>
+      </Section>
+      <Section
+        title="Checkboxes"
+        variants={[{ id: "basic", label: "Basic" }]}
+        defaultVariant="basic"
+        previewClassName="gap-4"
+      >
+        <Checkbox aria-label="Basic checkbox" />
+        <Checkbox defaultSelected>Hello world</Checkbox>
+        <Checkbox appearance="card" defaultSelected>
+          Hello world
+        </Checkbox>
+      </Section>
+      <Section
+        title="Radios"
+        variants={[{ id: "basic", label: "Basic" }]}
+        defaultVariant="basic"
+        previewClassName="flex-col gap-4"
+      >
+        <RadioGroup>
+          <Radio value="option-1">Option 1</Radio>
+          <Radio value="option-2">Option 2</Radio>
+          <Radio value="option-3">Option 3</Radio>
+        </RadioGroup>
+        <RadioGroup variant="card" orientation="horizontal">
+          <Radio value="option-1">Option 1</Radio>
+          <Radio value="option-2">Option 2</Radio>
+          <Radio value="option-3">Option 3</Radio>
+        </RadioGroup>
+      </Section>
+      <Section
+        title="Switch"
+        variants={[{ id: "basic", label: "Basic" }]}
+        defaultVariant="basic"
+        previewClassName="flex-col gap-4"
+      >
+        <div className="flex items-center gap-4">
+          <Switch aria-label="Basic switch" />
+          <Switch defaultSelected>Notifications</Switch>
+          <Switch variant="card" defaultSelected>
+            Dark mode
+          </Switch>
+        </div>
+      </Section>
+      <Section
+        title="Slider"
+        variants={[{ id: "basic", label: "Basic" }]}
+        defaultVariant="basic"
+        previewClassName="flex-col gap-4"
+      >
+        <Slider defaultValue={50} aria-label="Basic slider" />
+      </Section>
+      <Section
+        title="Badge & TagGroup"
+        variants={[{ id: "basic", label: "Basic" }]}
+        defaultVariant="basic"
+        previewClassName="flex-col gap-4"
+      >
+        <div className="flex items-center gap-4">
+          <Badge>Default</Badge>
+          <Badge variant="accent">Accent</Badge>
+          <Badge variant="success">Success</Badge>
+          <Badge variant="warning">Warning</Badge>
+          <Badge variant="danger">Danger</Badge>
+          <Badge variant="info">Info</Badge>
+        </div>
+        <div className="flex items-center gap-4">
+          <Badge size="sm">Small</Badge>
+          <Badge size="md">Medium</Badge>
+          <Badge size="lg">Large</Badge>
+        </div>
+      </Section>
+      <Section
+        title="Tooltip"
+        variants={[{ id: "basic", label: "Basic" }]}
+        defaultVariant="basic"
+        previewClassName="gap-4"
+      >
+        <Tooltip content="This is a tooltip">
+          <Button>Hover me</Button>
+        </Tooltip>
       </Section>
     </div>
   );

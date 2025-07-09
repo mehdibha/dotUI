@@ -69,11 +69,11 @@ export function StyleCard(props: {
             })}
           </div>
           <div className="mt-8 flex items-center gap-2">
-            <Tooltip content="@mehdibha">
+            {/* <Tooltip content="@mehdibha">
               <Link>
                 <Avatar src="https://github.com/mehdibha.png" size="sm" />
               </Link>
-            </Tooltip>
+            </Tooltip> */}
             <Button
               href={`/style/${props.style.slug}`}
               variant="default"
@@ -82,9 +82,9 @@ export function StyleCard(props: {
             >
               Explore style
             </Button>
-            <ToggleButton variant="primary" shape="square" className="size-8">
+            {/* <ToggleButton variant="primary" shape="square" className="size-8">
               <HeartIcon />
-            </ToggleButton>
+            </ToggleButton> */}
           </div>
         </div>
         <div className="space-y-2">
