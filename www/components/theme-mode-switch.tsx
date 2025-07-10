@@ -79,7 +79,7 @@ export const ThemeModeSwitch = ({
             <span className={cn(iconContainer(), "group-selected:text-fg")}>
               <MoonIcon />
               <motion.span layout />
-              {isSelected && (
+              {!isSelected && (
                 <motion.span
                   layoutDependency={false}
                   layoutId="mode-siwtch-cursor"
@@ -90,7 +90,7 @@ export const ThemeModeSwitch = ({
             </span>
             <span className={cn(iconContainer(), "group-not-selected:text-fg")}>
               <SunIcon />
-              {!isSelected && (
+              {isSelected && (
                 <motion.span
                   layoutDependency={false}
                   layoutId="mode-siwtch-cursor"

@@ -55,18 +55,59 @@ const sliderStyles = tv({
     size: {
       sm: {
         thumb: "size-3 dragging:size-4",
-        track: "orientation-horizontal:h-1 orientation-vertical:w-1",
       },
       md: {
         thumb: "size-4 dragging:size-5",
-        track: "orientation-horizontal:h-2 orientation-vertical:w-2",
       },
       lg: {
         thumb: "size-5 dragging:size-6",
-        track: "orientation-horizontal:h-3 orientation-vertical:w-3",
       },
     },
   },
+  compoundVariants: [
+    {
+      size: "sm",
+      orientation: "horizontal",
+      className: {
+        track: "h-1",
+      },
+    },
+    {
+      size: "sm",
+      orientation: "vertical",
+      className: {
+        track: "w-1",
+      },
+    },
+    {
+      size: "md",
+      orientation: "horizontal",
+      className: {
+        track: "h-2",
+      },
+    },
+    {
+      size: "md",
+      orientation: "vertical",
+      className: {
+        track: "w-2",
+      },
+    },
+    {
+      size: "lg",
+      orientation: "horizontal",
+      className: {
+        track: "h-3",
+      },
+    },
+    {
+      size: "lg",
+      orientation: "vertical",
+      className: {
+        track: "w-3",
+      },
+    },
+  ],
   defaultVariants: {
     variant: "accent",
     size: "md",
@@ -158,11 +199,11 @@ const SliderRoot = ({
 
 interface SliderTrackProps
   extends React.ComponentProps<typeof AriaSliderTrack> {}
-const SliderTrack = ({ ...props }: SliderTrackProps) => {
+const SliderTrack = ({ className, ...props }: SliderTrackProps) => {
   const { orientation, size } = useSliderContext("SliderTrack");
   return (
     <AriaSliderTrack
-      className={composeRenderProps(props.className, (className) =>
+      className={composeRenderProps(className, (className) =>
         track({ orientation, size, className }),
       )}
       {...props}

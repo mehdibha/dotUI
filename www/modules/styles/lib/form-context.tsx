@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useMemo } from "react";
 import {
   BackgroundColor as LeonardoBgColor,
   Color as LeonardoColor,
@@ -11,6 +11,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod/v4";
 import type { ContrastColor, CssColor } from "@adobe/leonardo-contrast-colors";
 import type { UseFormReturn } from "react-hook-form";
+
+import { usePreferences } from "../atoms/preferences-atom";
 
 const colorPaletteSchema = z.object({
   colorKeys: z
@@ -103,6 +105,7 @@ interface StyleFormProviderProps {
 }
 
 export function StyleFormProvider({ children }: StyleFormProviderProps) {
+  const { currentMode } = usePreferences();
   const form = useForm<StyleFormData>({
     resolver: zodResolver(createStyleSchema),
     defaultValues: {
@@ -118,39 +121,27 @@ export function StyleFormProvider({ children }: StyleFormProviderProps) {
           colors: {
             neutral: {
               colorKeys: [{ id: 0, color: "#000000" }],
-              ratios: [
-                1.05, 1.25, 1.7, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2,
-              ],
+              ratios: [1.05, 1.25, 1.7, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
             },
             accent: {
               colorKeys: [{ id: 0, color: "#0091FF" }],
-              ratios: [
-                1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2,
-              ],
+              ratios: [1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
             },
             success: {
               colorKeys: [{ id: 0, color: "#1A9338" }],
-              ratios: [
-                1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2,
-              ],
+              ratios: [1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
             },
             warning: {
               colorKeys: [{ id: 0, color: "#E79D13" }],
-              ratios: [
-                1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2,
-              ],
+              ratios: [1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
             },
             danger: {
               colorKeys: [{ id: 0, color: "#D93036" }],
-              ratios: [
-                1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2,
-              ],
+              ratios: [1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
             },
             info: {
               colorKeys: [{ id: 0, color: "#0091FF" }],
-              ratios: [
-                1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2,
-              ],
+              ratios: [1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
             },
           },
         },
@@ -161,39 +152,27 @@ export function StyleFormProvider({ children }: StyleFormProviderProps) {
           colors: {
             neutral: {
               colorKeys: [{ id: 0, color: "#ffffff" }],
-              ratios: [
-                1.05, 1.25, 1.7, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2,
-              ],
+              ratios: [1.05, 1.25, 1.7, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
             },
             accent: {
               colorKeys: [{ id: 0, color: "#0091FF" }],
-              ratios: [
-                1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2,
-              ],
+              ratios: [1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
             },
             success: {
               colorKeys: [{ id: 0, color: "#1A9338" }],
-              ratios: [
-                1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2,
-              ],
+              ratios: [1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
             },
             warning: {
               colorKeys: [{ id: 0, color: "#E79D13" }],
-              ratios: [
-                1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2,
-              ],
+              ratios: [1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
             },
             danger: {
               colorKeys: [{ id: 0, color: "#D93036" }],
-              ratios: [
-                1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2,
-              ],
+              ratios: [1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
             },
             info: {
               colorKeys: [{ id: 0, color: "#0091FF" }],
-              ratios: [
-                1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2,
-              ],
+              ratios: [1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
             },
           },
         },
@@ -245,50 +224,110 @@ export function StyleFormProvider({ children }: StyleFormProviderProps) {
     },
   });
 
-  const colors = form.watch("colors.light");
+  const neutralColorKeys = form
+    .watch(`colors.${currentMode}.colors.neutral.colorKeys`)
+    .map((color) => color.color) as CssColor[];
+  const neutralRatios = form.watch(
+    `colors.${currentMode}.colors.neutral.ratios`,
+  );
+  const lightness = form.watch(`colors.${currentMode}.lightness`);
+  const saturation = form.watch(`colors.${currentMode}.saturation`);
+  const contrast = form.watch(`colors.${currentMode}.contrast`) / 100;
 
-  const lightness = form.watch("colors.light.lightness");
+  const accentColorKeys = form
+    .watch(`colors.${currentMode}.colors.accent.colorKeys`)
+    .map((color) => color.color) as CssColor[];
+  const accentRatios = form.watch(`colors.${currentMode}.colors.accent.ratios`);
+  const successColorKeys = form
+    .watch(`colors.${currentMode}.colors.success.colorKeys`)
+    .map((color) => color.color) as CssColor[];
+  const successRatios = form.watch(
+    `colors.${currentMode}.colors.success.ratios`,
+  );
+  const warningColorKeys = form
+    .watch(`colors.${currentMode}.colors.warning.colorKeys`)
+    .map((color) => color.color) as CssColor[];
+  const warningRatios = form.watch(
+    `colors.${currentMode}.colors.warning.ratios`,
+  );
+  const dangerColorKeys = form
+    .watch(`colors.${currentMode}.colors.danger.colorKeys`)
+    .map((color) => color.color) as CssColor[];
+  const dangerRatios = form
+    .watch(`colors.${currentMode}.colors.danger.ratios`)
+    .map((ratio) => ratio);
+  const infoColorKeys = form
+    .watch(`colors.${currentMode}.colors.info.colorKeys`)
+    .map((color) => color.color) as CssColor[];
+  const infoRatios = form.watch(`colors.${currentMode}.colors.info.ratios`);
 
-  console.log({ lightness });
-
-  const saturation = form.watch("colors.light.saturation");
-
-  const generatedTheme = React.useMemo(() => {
+  const generatedTheme = useMemo(() => {
     const neutral = new LeonardoBgColor({
       name: "neutral",
-      colorKeys: form
-        .watch("colors.light.colors.neutral.colorKeys")
-        .map((color) => color.color) as CssColor[],
-      ratios: form.watch("colors.light.colors.neutral.ratios"),
+      colorKeys: neutralColorKeys,
+      ratios: neutralRatios,
     });
 
-    const colors = (
-      ["neutral", "accent", "success", "warning", "danger", "info"] as const
-    ).map((name) => {
-      const props = {
-        name,
-        colorKeys: form
-          .watch(`colors.light.colors.${name}.colorKeys`)
-          .map((color) => color.color) as CssColor[],
-        ratios: form.watch(`colors.light.colors.${name}.ratios`),
-      };
-      const color = new LeonardoColor(props);
+    const colors = [
+      {
+        name: "neutral",
+        colorKeys: neutralColorKeys,
+        ratios: neutralRatios,
+      },
+      {
+        name: "accent",
+        colorKeys: accentColorKeys,
+        ratios: accentRatios,
+      },
+      {
+        name: "success",
+        colorKeys: successColorKeys,
+        ratios: successRatios,
+      },
+      {
+        name: "warning",
+        colorKeys: warningColorKeys,
+        ratios: warningRatios,
+      },
+      {
+        name: "danger",
+        colorKeys: dangerColorKeys,
+        ratios: dangerRatios,
+      },
+      {
+        name: "info",
+        colorKeys: infoColorKeys,
+        ratios: infoRatios,
+      },
+    ].map((color) => new LeonardoColor(color));
 
-      return color;
-    });
-
-    const contrast = form.watch("colors.light.contrast");
-
-    const generatedTheme = new LeonardoTheme({
+    const theme = new LeonardoTheme({
       backgroundColor: neutral,
       colors,
       lightness,
       saturation,
-      // contrast,
+      contrast,
       output: "HEX",
     });
-    return generatedTheme.contrastColors.slice(1) as ContrastColor[];
-  }, [form, lightness, saturation]);
+
+    return theme.contrastColors.slice(1) as ContrastColor[];
+  }, [
+    neutralColorKeys,
+    neutralRatios,
+    lightness,
+    saturation,
+    contrast,
+    accentColorKeys,
+    accentRatios,
+    successColorKeys,
+    successRatios,
+    warningColorKeys,
+    warningRatios,
+    dangerColorKeys,
+    dangerRatios,
+    infoColorKeys,
+    infoRatios,
+  ]);
 
   const value: StyleFormContextType = {
     form,
@@ -296,10 +335,5 @@ export function StyleFormProvider({ children }: StyleFormProviderProps) {
     generatedTheme,
   };
 
-  return (
-    <StyleFormContext value={value}>
-      {lightness}
-      {children}
-    </StyleFormContext>
-  );
+  return <StyleFormContext value={value}>{children}</StyleFormContext>;
 }

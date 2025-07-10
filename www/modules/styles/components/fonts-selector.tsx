@@ -31,12 +31,12 @@ export const FontSelector = ({
   font,
   onFontChange,
   className,
-  ...props
 }: {
   label: string;
-  font: string | null;
-  onFontChange: (font: string | null) => void;
-} & React.ComponentProps<"div">) => {
+  font: string;
+  onFontChange: (font: string) => void;
+  className?: string;
+}) => {
   const { contains } = useFilter({ sensitivity: "base" });
 
   const layout = React.useMemo(() => {
@@ -44,7 +44,7 @@ export const FontSelector = ({
   }, []);
 
   return (
-    <div className={cn("flex flex-col gap-2", className)} {...props}>
+    <div className={cn("flex flex-col gap-2", className)}>
       <Label>{label}</Label>
       <DialogRoot>
         <Button>
@@ -79,7 +79,7 @@ export const FontSelector = ({
                     selectionMode="single"
                     selectedKeys={font ? [font] : []}
                     onSelectionChange={(keys) => {
-                      onFontChange(([...keys][0] as string | null) ?? null);
+                      onFontChange(([...keys][0] as string) ?? "");
                       close();
                     }}
                     className="h-full w-full border-0 p-0!"

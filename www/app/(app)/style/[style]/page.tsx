@@ -28,6 +28,7 @@ import { Tooltip } from "@dotui/ui/components/tooltip";
 
 import { ThemeModeSwitch } from "@/components/theme-mode-switch";
 import { useMounted } from "@/hooks/use-mounted";
+import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 import { useStyleForm } from "@/modules/styles/lib/form-context";
 import { ColorKeys } from "./key-colors";
 
@@ -46,8 +47,7 @@ const semanticColors = [
 export default function ColorsPage() {
   const isMounted = useMounted();
   const { form, generatedTheme } = useStyleForm();
-
-  const currentMode = "light";
+  const { currentMode, setCurrentMode } = usePreferences();
 
   return (
     <div>
@@ -81,61 +81,77 @@ export default function ColorsPage() {
             </SelectRoot>
           )}
         />
-        <ThemeModeSwitch />
+        <Skeleton show={!isMounted}>
+          <ThemeModeSwitch
+            isSelected={currentMode === "light"}
+            onChange={(isSelected) => {
+              setCurrentMode(isSelected ? "light" : "dark");
+            }}
+          />
+        </Skeleton>
       </div>
       <p className="mt-6 text-base font-semibold">Color adjustments</p>
       <div className="mt-2 grid grid-cols-2 gap-3">
         <FormControl
-          name={`colors.light.lightness`}
+          key={`${currentMode}-lightness`}
+          name={`colors.${currentMode}.lightness`}
           control={form.control}
-          render={({ value, onChange, ...props }) => (
-            <Slider
-              label="Lightness"
-              getValueLabel={(value) => `${value}%`}
-              minValue={0}
-              maxValue={100}
-              className="col-span-2 w-full"
-              {...props}
-            />
-          )}
+          render={(props) => {
+            return (
+              <Skeleton show={!isMounted}>
+                <Slider
+                  label="Lightness"
+                  getValueLabel={(value) => `${value}%`}
+                  minValue={0}
+                  maxValue={100}
+                  className="col-span-2 w-full"
+                  {...props}
+                />
+              </Skeleton>
+            );
+          }}
         />
         <FormControl
+          key={`${currentMode}-saturation`}
           name={`colors.${currentMode}.saturation`}
           control={form.control}
-          render={({ value, onChange, ...props }) => (
-            <Slider
-              label="Saturation"
-              getValueLabel={(value) => `${value}%`}
-              minValue={0}
-              maxValue={100}
-              className="w-full"
-              {...props}
-            />
+          render={(props) => (
+            <Skeleton show={!isMounted}>
+              <Slider
+                label="Saturation"
+                getValueLabel={(value) => `${value}%`}
+                minValue={0}
+                maxValue={100}
+                className="w-full"
+                {...props}
+              />
+            </Skeleton>
           )}
         />
         <FormControl
+          key={`${currentMode}-contrast`}
           name={`colors.${currentMode}.contrast`}
           control={form.control}
-          render={({ value, onChange, ...props }) => (
-            <Slider
-              label="Contrast"
-              getValueLabel={(value) => `${value}%`}
-              minValue={0}
-              maxValue={500}
-              className="w-full"
-              {...props}
-            />
+          render={(props) => (
+            <Skeleton show={!isMounted}>
+              <Slider
+                label="Contrast"
+                getValueLabel={(value) => `${value}%`}
+                minValue={0}
+                maxValue={500}
+                className="w-full"
+                {...props}
+              />
+            </Skeleton>
           )}
         />
       </div>
       <p className="mt-6 text-base font-semibold">Base colors</p>
       <div className="mt-2 flex items-center gap-2">
         {baseColors.map((color) => (
-          <ColorKeys
-            key={color.name}
-            name={color.name}
-            currentMode={currentMode}
-          />
+          <Skeleton key={color.name} show={!isMounted}>
+            <ColorKeys name={color.name} currentMode={currentMode} />
+          </Skeleton>
         ))}
       </div>
       <div className="mt-3 space-y-2">
@@ -147,10 +163,12 @@ export default function ColorsPage() {
                 .find((elem) => elem.name === color.name)
                 ?.values.map((color, index) => (
                   <Tooltip key={index} content={color.name} delay={0}>
-                    <AriaButton
-                      className="h-8 flex-1 rounded-sm border"
-                      style={{ backgroundColor: color.value }}
-                    />
+                    <Skeleton show={!isMounted} className="flex-1">
+                      <AriaButton
+                        className="h-8 flex-1 rounded-sm border"
+                        style={{ backgroundColor: color.value }}
+                      />
+                    </Skeleton>
                   </Tooltip>
                 ))}
             </div>
@@ -160,11 +178,9 @@ export default function ColorsPage() {
       <p className="mt-6 text-base font-semibold">Semantic colors</p>
       <div className="mt-2 flex items-center gap-2">
         {semanticColors.map((color) => (
-          <ColorKeys
-            key={color.name}
-            name={color.name}
-            currentMode={currentMode}
-          />
+          <Skeleton key={color.name} show={!isMounted}>
+            <ColorKeys name={color.name} currentMode={currentMode} />
+          </Skeleton>
         ))}
       </div>
       <div className="mt-3 space-y-2">
@@ -180,12 +196,14 @@ export default function ColorsPage() {
                     content={`${color.name}-${(index + 1) * 100}`}
                     delay={0}
                   >
-                    <AriaButton
-                      className="h-8 flex-1 rounded-sm border"
-                      style={{
-                        backgroundColor: color.value,
-                      }}
-                    />
+                    <Skeleton show={!isMounted}>
+                      <AriaButton
+                        className="h-8 flex-1 rounded-sm border"
+                        style={{
+                          backgroundColor: color.value,
+                        }}
+                      />
+                    </Skeleton>
                   </Tooltip>
                 ))}
             </div>
