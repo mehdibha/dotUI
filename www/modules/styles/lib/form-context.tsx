@@ -1,13 +1,26 @@
 "use client";
 
 import React, { createContext, useContext } from "react";
+import {
+  BackgroundColor as LeonardoBgColor,
+  Color as LeonardoColor,
+  Theme as LeonardoTheme,
+} from "@adobe/leonardo-contrast-colors";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod/v4";
+import type { ContrastColor, CssColor } from "@adobe/leonardo-contrast-colors";
 import type { UseFormReturn } from "react-hook-form";
 
 const colorPaletteSchema = z.object({
-  baseColors: z.array(z.string()),
+  colorKeys: z
+    .array(
+      z.object({
+        id: z.number(),
+        color: z.string(),
+      }),
+    )
+    .min(1),
   ratios: z.array(z.number().min(0).max(1)),
   overrides: z.record(z.string(), z.string()),
 });
@@ -71,6 +84,7 @@ type StyleFormData = z.infer<typeof createStyleSchema>;
 interface StyleFormContextType {
   form: UseFormReturn<StyleFormData>;
   resetForm: () => void;
+  generatedTheme: ContrastColor[];
 }
 
 const StyleFormContext = createContext<StyleFormContextType | null>(null);
@@ -98,42 +112,42 @@ export function StyleFormProvider({ children }: StyleFormProviderProps) {
       colors: {
         mode: "light-dark",
         light: {
-          lightness: 3,
+          lightness: 97,
           saturation: 100,
           contrast: 100,
           colors: {
             neutral: {
-              baseColors: ["#000000"],
+              colorKeys: [{ id: 0, color: "#000000" }],
               ratios: [
                 1.05, 1.25, 1.7, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2,
               ],
             },
             accent: {
-              baseColors: ["#0091FF"],
+              colorKeys: [{ id: 0, color: "#0091FF" }],
               ratios: [
                 1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2,
               ],
             },
             success: {
-              baseColors: ["#1A9338"],
+              colorKeys: [{ id: 0, color: "#1A9338" }],
               ratios: [
                 1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2,
               ],
             },
             warning: {
-              baseColors: ["#E79D13"],
+              colorKeys: [{ id: 0, color: "#E79D13" }],
               ratios: [
                 1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2,
               ],
             },
             danger: {
-              baseColors: ["#D93036"],
+              colorKeys: [{ id: 0, color: "#D93036" }],
               ratios: [
                 1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2,
               ],
             },
             info: {
-              baseColors: ["#0091FF"],
+              colorKeys: [{ id: 0, color: "#0091FF" }],
               ratios: [
                 1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2,
               ],
@@ -144,6 +158,44 @@ export function StyleFormProvider({ children }: StyleFormProviderProps) {
           lightness: 3,
           saturation: 100,
           contrast: 100,
+          colors: {
+            neutral: {
+              colorKeys: [{ id: 0, color: "#ffffff" }],
+              ratios: [
+                1.05, 1.25, 1.7, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2,
+              ],
+            },
+            accent: {
+              colorKeys: [{ id: 0, color: "#0091FF" }],
+              ratios: [
+                1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2,
+              ],
+            },
+            success: {
+              colorKeys: [{ id: 0, color: "#1A9338" }],
+              ratios: [
+                1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2,
+              ],
+            },
+            warning: {
+              colorKeys: [{ id: 0, color: "#E79D13" }],
+              ratios: [
+                1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2,
+              ],
+            },
+            danger: {
+              colorKeys: [{ id: 0, color: "#D93036" }],
+              ratios: [
+                1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2,
+              ],
+            },
+            info: {
+              colorKeys: [{ id: 0, color: "#0091FF" }],
+              ratios: [
+                1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2,
+              ],
+            },
+          },
         },
       },
       layout: {
@@ -193,10 +245,61 @@ export function StyleFormProvider({ children }: StyleFormProviderProps) {
     },
   });
 
+  const colors = form.watch("colors.light");
+
+  const lightness = form.watch("colors.light.lightness");
+
+  console.log({ lightness });
+
+  const saturation = form.watch("colors.light.saturation");
+
+  const generatedTheme = React.useMemo(() => {
+    const neutral = new LeonardoBgColor({
+      name: "neutral",
+      colorKeys: form
+        .watch("colors.light.colors.neutral.colorKeys")
+        .map((color) => color.color) as CssColor[],
+      ratios: form.watch("colors.light.colors.neutral.ratios"),
+    });
+
+    const colors = (
+      ["neutral", "accent", "success", "warning", "danger", "info"] as const
+    ).map((name) => {
+      const props = {
+        name,
+        colorKeys: form
+          .watch(`colors.light.colors.${name}.colorKeys`)
+          .map((color) => color.color) as CssColor[],
+        ratios: form.watch(`colors.light.colors.${name}.ratios`),
+      };
+      const color = new LeonardoColor(props);
+
+      return color;
+    });
+
+    const contrast = form.watch("colors.light.contrast");
+
+    const generatedTheme = new LeonardoTheme({
+      backgroundColor: neutral,
+      colors,
+      lightness,
+      saturation,
+      // contrast,
+      output: "HEX",
+    });
+    return generatedTheme.contrastColors.slice(1) as ContrastColor[];
+  }, [form, lightness, saturation]);
+
   const value: StyleFormContextType = {
     form,
     resetForm: () => form.reset(),
+    generatedTheme,
   };
 
-  return <StyleFormContext value={value}>{children}</StyleFormContext>;
+  return (
+    <StyleFormContext value={value}>
+      {lightness}
+      {children}
+    </StyleFormContext>
+  );
 }

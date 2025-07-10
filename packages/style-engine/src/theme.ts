@@ -1,10 +1,10 @@
 import {
-  CssColor,
   BackgroundColor as LeonardoBgColor,
   Color as LeonardoColor,
   Theme as LeonardoTheme,
 } from "@adobe/leonardo-contrast-colors";
 import { converter } from "culori";
+import type { CssColor } from "@adobe/leonardo-contrast-colors";
 
 import {
   DEFAULT_CSS,

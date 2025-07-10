@@ -7,12 +7,9 @@ import {
   SunIcon,
 } from "lucide-react";
 import { Button as AriaButton } from "react-aria-components";
-import { useFieldArray } from "react-hook-form";
 
 import { DESIGN_TOKENS } from "@dotui/style-engine/constants";
 import { Button } from "@dotui/ui/components/button";
-import { ColorPicker } from "@dotui/ui/components/color-picker";
-import { ColorSwatch } from "@dotui/ui/components/color-swatch";
 import { FormControl } from "@dotui/ui/components/form";
 import { ListBox, ListBoxItem } from "@dotui/ui/components/list-box";
 import { Popover } from "@dotui/ui/components/popover";
@@ -28,11 +25,11 @@ import {
   TableRow,
 } from "@dotui/ui/components/table";
 import { Tooltip } from "@dotui/ui/components/tooltip";
-import { createTheme } from "@dotui/style-engine";
 
 import { ThemeModeSwitch } from "@/components/theme-mode-switch";
 import { useMounted } from "@/hooks/use-mounted";
 import { useStyleForm } from "@/modules/styles/lib/form-context";
+import { ColorKeys } from "./key-colors";
 
 const baseColors = [
   { name: "neutral", label: "Neutral", color: "#000000" },
@@ -48,13 +45,9 @@ const semanticColors = [
 
 export default function ColorsPage() {
   const isMounted = useMounted();
-  const { form } = useStyleForm();
+  const { form, generatedTheme } = useStyleForm();
 
   const currentMode = "light";
-
-  const theme = createTheme({
-    light: form.watch("colors.light"),
-  });
 
   return (
     <div>
@@ -93,7 +86,7 @@ export default function ColorsPage() {
       <p className="mt-6 text-base font-semibold">Color adjustments</p>
       <div className="mt-2 grid grid-cols-2 gap-3">
         <FormControl
-          name={`colors.${currentMode}.lightness`}
+          name={`colors.light.lightness`}
           control={form.control}
           render={({ value, onChange, ...props }) => (
             <Slider
@@ -101,7 +94,6 @@ export default function ColorsPage() {
               getValueLabel={(value) => `${value}%`}
               minValue={0}
               maxValue={100}
-              defaultValue={3}
               className="col-span-2 w-full"
               {...props}
             />
@@ -116,7 +108,6 @@ export default function ColorsPage() {
               getValueLabel={(value) => `${value}%`}
               minValue={0}
               maxValue={100}
-              defaultValue={100}
               className="w-full"
               {...props}
             />
@@ -131,7 +122,6 @@ export default function ColorsPage() {
               getValueLabel={(value) => `${value}%`}
               minValue={0}
               maxValue={500}
-              defaultValue={100}
               className="w-full"
               {...props}
             />
@@ -141,15 +131,10 @@ export default function ColorsPage() {
       <p className="mt-6 text-base font-semibold">Base colors</p>
       <div className="mt-2 flex items-center gap-2">
         {baseColors.map((color) => (
-          <FormControl
-            name={`colors.${currentMode}.palettes.${color.name}.baseColors[0]`}
-            control={form.control}
-            render={(props) => (
-              <ColorPicker {...props}>
-                <ColorSwatch />
-                {color.label}
-              </ColorPicker>
-            )}
+          <ColorKeys
+            key={color.name}
+            name={color.name}
+            currentMode={currentMode}
           />
         ))}
       </div>
@@ -158,20 +143,16 @@ export default function ColorsPage() {
           <div key={color.name} className="flex items-center gap-2">
             <p className="w-16 text-sm text-fg-muted">{color.label}</p>
             <div className="flex flex-1 items-center gap-1">
-              {Array.from({ length: 10 }).map((_, index) => (
-                <Tooltip
-                  key={index}
-                  content={`${color.name}-${(index + 1) * 100}`}
-                  delay={0}
-                >
-                  <AriaButton
-                    className="h-8 flex-1 rounded-sm border"
-                    style={{
-                      backgroundColor: `var(--${color.name}-${(index + 1) * 100})`,
-                    }}
-                  />
-                </Tooltip>
-              ))}
+              {generatedTheme
+                .find((elem) => elem.name === color.name)
+                ?.values.map((color, index) => (
+                  <Tooltip key={index} content={color.name} delay={0}>
+                    <AriaButton
+                      className="h-8 flex-1 rounded-sm border"
+                      style={{ backgroundColor: color.value }}
+                    />
+                  </Tooltip>
+                ))}
             </div>
           </div>
         ))}
@@ -179,15 +160,10 @@ export default function ColorsPage() {
       <p className="mt-6 text-base font-semibold">Semantic colors</p>
       <div className="mt-2 flex items-center gap-2">
         {semanticColors.map((color) => (
-          <FormControl
-            name={`colors.${currentMode}.palettes.${color.name}.keyColor`}
-            control={form.control}
-            render={(props) => (
-              <ColorPicker {...props}>
-                <ColorSwatch />
-                {color.label}
-              </ColorPicker>
-            )}
+          <ColorKeys
+            key={color.name}
+            name={color.name}
+            currentMode={currentMode}
           />
         ))}
       </div>
@@ -196,20 +172,22 @@ export default function ColorsPage() {
           <div key={color.name} className="flex items-center gap-2">
             <p className="w-16 text-sm text-fg-muted">{color.label}</p>
             <div className="flex flex-1 items-center gap-1">
-              {Array.from({ length: 10 }).map((_, index) => (
-                <Tooltip
-                  key={index}
-                  content={`${color.name}-${(index + 1) * 100}`}
-                  delay={0}
-                >
-                  <AriaButton
-                    className="h-8 flex-1 rounded-sm border"
-                    style={{
-                      backgroundColor: `var(--${color.name}-${(index + 1) * 100})`,
-                    }}
-                  />
-                </Tooltip>
-              ))}
+              {generatedTheme
+                .find((elem) => elem.name === color.name)
+                ?.values.map((color, index) => (
+                  <Tooltip
+                    key={index}
+                    content={`${color.name}-${(index + 1) * 100}`}
+                    delay={0}
+                  >
+                    <AriaButton
+                      className="h-8 flex-1 rounded-sm border"
+                      style={{
+                        backgroundColor: color.value,
+                      }}
+                    />
+                  </Tooltip>
+                ))}
             </div>
           </div>
         ))}

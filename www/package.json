@@ -90,6 +90,7 @@
     "@types/react": "catalog:react19",
     "@types/react-dom": "catalog:react19",
     "autoprefixer": "^10.4.14",
+    "babel-plugin-react-compiler": "19.1.0-rc.2",
     "dotenv-cli": "^8.0.0",
     "eslint": "catalog:",
     "jiti": "^2.4.2",

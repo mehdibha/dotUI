@@ -50,7 +50,7 @@ export function StyleCard(props: {
           <p className="mt-0.5 text-sm text-fg-muted">
             {props.style.description}
           </p>
-          <div className="mt-2 flex items-center gap-4">
+          {/* <div className="mt-2 flex items-center gap-4">
             {keywords.map((keyword) => {
               const icon = icons[keyword as keyof typeof icons];
               if (icon) {
@@ -67,8 +67,8 @@ export function StyleCard(props: {
               }
               return null;
             })}
-          </div>
-          <div className="mt-8 flex items-center gap-2">
+          </div> */}
+          <div className="mt-4 flex items-center gap-2">
             {/* <Tooltip content="@mehdibha">
               <Link>
                 <Avatar src="https://github.com/mehdibha.png" size="sm" />
@@ -108,7 +108,7 @@ export function StyleCard(props: {
               <CloudDownloadIcon />
             </Button>
           </div>
-          <TextField placeholder="Email" className="w-full" />
+          {/* <TextField placeholder="Email" className="w-full" /> */}
         </div>
       </div>
     </StyleProvider>
