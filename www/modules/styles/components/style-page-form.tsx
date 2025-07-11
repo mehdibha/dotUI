@@ -2,7 +2,11 @@
 
 import { useStyleForm } from "@/modules/styles/lib/form-context";
 
-export default function StyleForm({ children }: { children: React.ReactNode }) {
+export default function StylePageForm({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const { form } = useStyleForm();
 
   return (

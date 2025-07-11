@@ -96,6 +96,7 @@ interface StyleFormContextType {
   resetForm: () => void;
   generatedTheme: ContrastColor[];
   generatedStyle: Style;
+  isSuccess: boolean;
 }
 
 const StyleFormContext = createContext<StyleFormContextType | null>(null);
@@ -116,8 +117,9 @@ interface StyleFormProviderProps {
 export function StyleFormProvider({ children }: StyleFormProviderProps) {
   const { currentMode } = usePreferences();
   const { style: slug } = useParams<{ style: string }>();
+
   const trpc = useTRPC();
-  const { data: style } = useQuery(
+  const { data: style, isSuccess } = useQuery(
     trpc.style.bySlug.queryOptions({
       slug,
     }),
@@ -240,6 +242,159 @@ export function StyleFormProvider({ children }: StyleFormProviderProps) {
         tooltip: "basic",
       },
     },
+    values: style
+      ? {
+          name: style.name,
+          slug: "minimalist",
+          description: "",
+          colors: {
+            mode: "light-dark",
+            light: {
+              lightness: 97,
+              saturation: 100,
+              contrast: 100,
+              colors: {
+                neutral: {
+                  colorKeys: [{ id: 0, color: "#000000" }],
+                  ratios: [
+                    1.05, 1.25, 1.7, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
+                  ],
+                  overrides: {},
+                },
+                accent: {
+                  colorKeys: [{ id: 0, color: "#0091FF" }],
+                  ratios: [
+                    1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
+                  ],
+                  overrides: {},
+                },
+                success: {
+                  colorKeys: [{ id: 0, color: "#1A9338" }],
+                  ratios: [
+                    1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
+                  ],
+                  overrides: {},
+                },
+                warning: {
+                  colorKeys: [{ id: 0, color: "#E79D13" }],
+                  ratios: [
+                    1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
+                  ],
+                  overrides: {},
+                },
+                danger: {
+                  colorKeys: [{ id: 0, color: "#D93036" }],
+                  ratios: [
+                    1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
+                  ],
+                  overrides: {},
+                },
+                info: {
+                  colorKeys: [{ id: 0, color: "#0091FF" }],
+                  ratios: [
+                    1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
+                  ],
+                  overrides: {},
+                },
+              },
+            },
+            dark: {
+              lightness: 3,
+              saturation: 100,
+              contrast: 100,
+              colors: {
+                neutral: {
+                  colorKeys: [{ id: 0, color: "#ffffff" }],
+                  ratios: [
+                    1.05, 1.25, 1.7, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
+                  ],
+                  overrides: {},
+                },
+                accent: {
+                  colorKeys: [{ id: 0, color: "#0091FF" }],
+                  ratios: [
+                    1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
+                  ],
+                  overrides: {},
+                },
+                success: {
+                  colorKeys: [{ id: 0, color: "#1A9338" }],
+                  ratios: [
+                    1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
+                  ],
+                  overrides: {},
+                },
+                warning: {
+                  colorKeys: [{ id: 0, color: "#E79D13" }],
+                  ratios: [
+                    1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
+                  ],
+                  overrides: {},
+                },
+                danger: {
+                  colorKeys: [{ id: 0, color: "#D93036" }],
+                  ratios: [
+                    1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
+                  ],
+                  overrides: {},
+                },
+                info: {
+                  colorKeys: [{ id: 0, color: "#0091FF" }],
+                  ratios: [
+                    1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
+                  ],
+                  overrides: {},
+                },
+              },
+            },
+            theme: {},
+          },
+          layout: {
+            radius: 1,
+            spacing: 0.25,
+          },
+          typography: {
+            fonts: {
+              heading: "Inter",
+              body: "Inter",
+            },
+            letterSpacing: 0,
+          },
+          effects: {
+            backgroundPattern: "none",
+            texture: "none",
+            shadows: {
+              color: "#000000",
+              opacity: 0.1,
+              blurRadius: 10,
+              offsetX: 0,
+              offsetY: 1,
+              spread: 0,
+            },
+          },
+          icons: {
+            library: "lucide",
+            strokeWidth: 1.5,
+          },
+          variants: {
+            loader: "ring",
+            "focus-style": "basic",
+            buttons: "basic",
+            inputs: "basic",
+            pickers: "basic",
+            selection: "basic",
+            calendars: "basic",
+            "list-box-and-menu": "basic",
+            overlays: "basic",
+            checkboxes: "basic",
+            radios: "basic",
+            switch: "basic",
+            slider: "basic",
+            "badge-and-tag-group": "basic",
+            tooltip: "basic",
+          },
+        }
+      : undefined,
   });
 
   const neutralColorKeys = form
@@ -403,6 +558,7 @@ export function StyleFormProvider({ children }: StyleFormProviderProps) {
     resetForm: () => form.reset(),
     generatedTheme,
     generatedStyle,
+    isSuccess,
   };
 
   return <StyleFormContext value={value}>{children}</StyleFormContext>;

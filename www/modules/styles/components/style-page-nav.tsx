@@ -11,7 +11,7 @@ import {
 } from "@dotui/ui/registry/components/tabs/motion";
 import type { TabsProps } from "@dotui/ui/components/tabs";
 
-export function StyleNav({
+export function StylePageNav({
   children,
   ...props
 }: { children: React.ReactNode } & TabsProps) {

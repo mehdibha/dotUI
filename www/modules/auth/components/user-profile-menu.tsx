@@ -1,9 +1,4 @@
-import {
-  LogOutIcon,
-  MonitorIcon,
-  MoonIcon,
-  SunIcon,
-} from "lucide-react";
+import { LogOutIcon, MonitorIcon, MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 
 import { Avatar } from "@dotui/ui/components/avatar";

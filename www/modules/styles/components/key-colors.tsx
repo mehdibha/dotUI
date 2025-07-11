@@ -8,7 +8,7 @@ import {
 } from "@adobe/leonardo-contrast-colors";
 import { PlusIcon, Trash2Icon } from "lucide-react";
 import { useFieldArray } from "react-hook-form";
-import type { ContrastColor, CssColor } from "@adobe/leonardo-contrast-colors";
+import type { CssColor } from "@adobe/leonardo-contrast-colors";
 
 import { Button } from "@dotui/ui/components/button";
 import {
