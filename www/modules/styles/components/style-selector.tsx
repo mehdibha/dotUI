@@ -17,8 +17,8 @@ import type { ButtonProps } from "@dotui/ui/components/button";
 import type { SelectRootProps } from "@dotui/ui/components/select";
 
 import { useMounted } from "@/hooks/use-mounted";
+import { useTRPC } from "@/lib/trpc/react";
 import { authClient } from "@/modules/auth/lib/client";
-import { useTRPC } from "@/trpc/react";
 
 export function StyleSelector(
   props: SelectRootProps<any> & {

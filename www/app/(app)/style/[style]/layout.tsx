@@ -3,9 +3,14 @@ import { notFound } from "next/navigation";
 import { ArrowLeftIcon } from "lucide-react";
 
 import { Preview, PreviewProvider } from "@/components/preview";
+import {
+  buildTimeCaller,
+  getQueryClient,
+  prefetch,
+  trpc,
+} from "@/lib/trpc/server";
 import { StyleNav } from "@/modules/styles/components/style-nav";
 import { StyleFormProvider } from "@/modules/styles/lib/form-context";
-import { buildTimeCaller, getQueryClient, prefetch, trpc } from "@/trpc/server";
 import { StyleActions } from "./actions";
 import StyleForm from "./form";
 
@@ -18,11 +23,7 @@ export const generateStaticParams = async () => {
   }));
 };
 
-export default async function Layout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <PreviewProvider>
       <StyleFormProvider>
@@ -44,8 +45,8 @@ export default async function Layout({
                   <StyleActions />
                 </div>
               </div>
+              <StyleNav className="mt-2">{children}</StyleNav>
             </StyleForm>
-            <StyleNav className="mt-2">{children}</StyleNav>
           </div>
           <div className="sticky top-0 flex h-[100svh] items-start max-xl:hidden">
             <Preview />

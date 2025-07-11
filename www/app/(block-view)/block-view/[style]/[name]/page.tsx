@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { registryBlocks } from "@dotui/registry-definition/registry-blocks";
 import { BlockViewer } from "@dotui/ui/block-viewer";
 
-import { buildTimeCaller, getQueryClient, trpc } from "@/trpc/server";
+import { buildTimeCaller, getQueryClient, trpc } from "@/lib/trpc/server";
 import { StyleProvider } from "./style-provider";
 
 export const generateStaticParams = async () => {

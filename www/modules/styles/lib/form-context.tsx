@@ -18,7 +18,7 @@ import { DEFAULT_THEME, DEFAULT_VARIANTS } from "@dotui/style-engine/constants";
 import type { Style } from "@dotui/style-engine/types";
 
 import { useDebounce } from "@/hooks/use-debounce";
-import { useTRPC } from "@/trpc/react";
+import { useTRPC } from "@/lib/trpc/react";
 import { useLiveStyleProducer } from "../atoms/live-style-atom";
 import { usePreferences } from "../atoms/preferences-atom";
 

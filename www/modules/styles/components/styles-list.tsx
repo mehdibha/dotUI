@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { cn } from "@dotui/ui/lib/utils";
 
-import { useTRPC } from "@/trpc/react";
+import { useTRPC } from "@/lib/trpc/react";
 import { StyleCard } from "./style-card";
 
 export function StylesList(props: React.ComponentProps<"div">) {

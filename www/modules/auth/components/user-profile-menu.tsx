@@ -1,5 +1,4 @@
 import {
-  ContrastIcon,
   LogOutIcon,
   MonitorIcon,
   MoonIcon,

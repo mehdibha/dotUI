@@ -5,7 +5,7 @@ import type { NextRequest } from "next/server";
 import { buildRegistryItem } from "@dotui/style-engine/shadcn-registry";
 
 import { env } from "@/env";
-import { caller } from "@/trpc/server";
+import { caller } from "@/lib/trpc/server";
 
 const registryBasePath = path.resolve(
   process.cwd(),

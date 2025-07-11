@@ -1,5 +1,5 @@
+import { HydrateClient, prefetch, trpc } from "@/lib/trpc/server";
 import { StylesList } from "@/modules/styles/components/styles-list";
-import { HydrateClient, prefetch, trpc } from "@/trpc/server";
 
 export const dynamicParams = false;
 

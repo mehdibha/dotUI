@@ -3,20 +3,10 @@
 import React from "react";
 
 import { Button } from "@dotui/ui/components/button";
-import {
-  DialogBody,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogHeading,
-  DialogRoot,
-} from "@dotui/ui/components/dialog";
-import { Overlay } from "@dotui/ui/components/overlay";
 
 import { GitHubIcon } from "@/components/icons";
 import { Link } from "@/components/link";
-import { authClient } from "../lib/client";
+import { authClient } from "@/modules/auth/lib/client";
 
 export function LoginForm() {
   const [isPending, setPending] = React.useState(false);

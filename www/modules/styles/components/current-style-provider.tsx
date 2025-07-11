@@ -6,9 +6,9 @@ import { StyleProvider } from "@dotui/ui";
 import { Skeleton } from "@dotui/ui/components/skeleton";
 
 import { useMounted } from "@/hooks/use-mounted";
+import { useTRPC } from "@/lib/trpc/react";
 import { authClient } from "@/modules/auth/lib/client";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
-import { useTRPC } from "@/trpc/react";
 
 export function CurrentStyleProvider(
   props: Omit<React.ComponentProps<"div">, "style">,

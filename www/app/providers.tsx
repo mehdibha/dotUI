@@ -6,7 +6,7 @@ import { ThemeProvider } from "next-themes";
 import { RouterProvider } from "react-aria-components";
 
 import { PreviewModeProvider } from "@/components/mode-provider";
-import { TRPCReactProvider } from "@/trpc/react";
+import { TRPCReactProvider } from "@/lib/trpc/react";
 
 declare module "react-aria-components" {
   interface RouterConfig {
