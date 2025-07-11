@@ -1,7 +1,6 @@
 "use client";
 
-import { Form } from "react-aria-components";
-import { Controller } from "react-hook-form";
+import { Controller, Form } from "react-hook-form";
 import type {
   ControllerFieldState,
   ControllerRenderProps,

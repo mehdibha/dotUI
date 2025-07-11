@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useMemo } from "react";
+import { useParams } from "next/navigation";
 import {
   BackgroundColor as LeonardoBgColor,
   Color as LeonardoColor,
@@ -12,6 +13,11 @@ import { z } from "zod/v4";
 import type { ContrastColor, CssColor } from "@adobe/leonardo-contrast-colors";
 import type { UseFormReturn } from "react-hook-form";
 
+import { DEFAULT_THEME, DEFAULT_VARIANTS } from "@dotui/style-engine/constants";
+import type { Style } from "@dotui/style-engine/types";
+
+import { useDebounce } from "@/hooks/use-debounce";
+import { useLiveStyleProducer } from "../atoms/live-style-atom";
 import { usePreferences } from "../atoms/preferences-atom";
 
 const colorPaletteSchema = z.object({
@@ -81,12 +87,13 @@ const createStyleSchema = z.object({
   variants: z.record(z.string(), z.string()),
 });
 
-type StyleFormData = z.infer<typeof createStyleSchema>;
+export type StyleFormData = z.infer<typeof createStyleSchema>;
 
 interface StyleFormContextType {
   form: UseFormReturn<StyleFormData>;
   resetForm: () => void;
   generatedTheme: ContrastColor[];
+  generatedStyle: Style;
 }
 
 const StyleFormContext = createContext<StyleFormContextType | null>(null);
@@ -106,6 +113,9 @@ interface StyleFormProviderProps {
 
 export function StyleFormProvider({ children }: StyleFormProviderProps) {
   const { currentMode } = usePreferences();
+  const { style: styleSlug } = useParams<{ style: string }>();
+  const { updateLiveStyle } = useLiveStyleProducer(styleSlug);
+
   const form = useForm<StyleFormData>({
     resolver: zodResolver(createStyleSchema),
     defaultValues: {
@@ -263,39 +273,39 @@ export function StyleFormProvider({ children }: StyleFormProviderProps) {
 
   const generatedTheme = useMemo(() => {
     const neutral = new LeonardoBgColor({
-      name: "neutral",
+      name: "neutral-",
       colorKeys: neutralColorKeys,
       ratios: neutralRatios,
     });
 
     const colors = [
       {
-        name: "neutral",
+        name: "neutral-",
         colorKeys: neutralColorKeys,
         ratios: neutralRatios,
       },
       {
-        name: "accent",
+        name: "accent-",
         colorKeys: accentColorKeys,
         ratios: accentRatios,
       },
       {
-        name: "success",
+        name: "success-",
         colorKeys: successColorKeys,
         ratios: successRatios,
       },
       {
-        name: "warning",
+        name: "warning-",
         colorKeys: warningColorKeys,
         ratios: warningRatios,
       },
       {
-        name: "danger",
+        name: "danger-",
         colorKeys: dangerColorKeys,
         ratios: dangerRatios,
       },
       {
-        name: "info",
+        name: "info-",
         colorKeys: infoColorKeys,
         ratios: infoRatios,
       },
@@ -310,7 +320,16 @@ export function StyleFormProvider({ children }: StyleFormProviderProps) {
       output: "HEX",
     });
 
-    return theme.contrastColors.slice(1) as ContrastColor[];
+    return (theme.contrastColors.slice(1) as ContrastColor[]).map((color) => {
+      return {
+        name: color.name.replace("-", ""),
+        values: color.values.map((value) => ({
+          name: value.name,
+          contrast: value.contrast,
+          value: value.value,
+        })),
+      };
+    });
   }, [
     neutralColorKeys,
     neutralRatios,
@@ -329,10 +348,53 @@ export function StyleFormProvider({ children }: StyleFormProviderProps) {
     infoRatios,
   ]);
 
+  const generatedStyle: Style = {
+    name: "",
+    slug: "",
+    description: "",
+    iconLibrary: "lucide",
+    fonts: {
+      heading: "Inter",
+      body: "Inter",
+    },
+    variants: DEFAULT_VARIANTS,
+    theme: {
+      css: {},
+      cssVars: {
+        light: generatedTheme.reduce(
+          (acc, colorGroup) => {
+            colorGroup.values.forEach((colorValue) => {
+              acc[`--${colorValue.name}`] = colorValue.value;
+            });
+            return acc;
+          },
+          {} as Record<string, string>,
+        ),
+        dark: generatedTheme.reduce(
+          (acc, colorGroup) => {
+            colorGroup.values.forEach((colorValue) => {
+              acc[`${colorValue.name}`] = colorValue.value;
+            });
+            return acc;
+          },
+          {} as Record<string, string>,
+        ),
+        theme: DEFAULT_THEME,
+      },
+    },
+  };
+
+  const debouncedLiveStyleData = useDebounce(generatedStyle, 10);
+
+  React.useEffect(() => {
+    updateLiveStyle(debouncedLiveStyleData);
+  }, [debouncedLiveStyleData, updateLiveStyle]);
+
   const value: StyleFormContextType = {
     form,
     resetForm: () => form.reset(),
     generatedTheme,
+    generatedStyle,
   };
 
   return <StyleFormContext value={value}>{children}</StyleFormContext>;

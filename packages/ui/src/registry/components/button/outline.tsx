@@ -19,7 +19,7 @@ import { createOptionalScopedContext } from "@dotui/ui/lib/utils";
 
 const buttonStyles = tv({
   extend: focusRing,
-  base: "relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-md text-sm leading-normal font-medium whitespace-nowrap transition-all disabled:cursor-default disabled:bg-bg-disabled disabled:text-fg-disabled pending:cursor-default pending:border pending:border-border-disabled pending:bg-bg-disabled pending:text-fg-disabled pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0",
+  base: "relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-md text-sm leading-normal font-medium whitespace-nowrap transition-all disabled:cursor-default disabled:border-border-disabled disabled:bg-bg-disabled disabled:text-fg-disabled pending:cursor-default pending:border disabled:border pending:border-border-disabled pending:bg-bg-disabled pending:text-fg-disabled pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0",
   variants: {
     variant: {
       default:
@@ -28,7 +28,7 @@ const buttonStyles = tv({
       quiet:
         "bg-transparent text-fg hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20",
       outline:
-        "border border-border-field text-fg hover:bg-bg-inverse/10 disabled:border-border-disabled disabled:bg-transparent pressed:bg-bg-inverse/15",
+        "border border-border-field text-fg hover:bg-bg-inverse/10 pressed:bg-bg-inverse/15",
       accent:
         "border border-border-accent bg-bg-accent-muted text-fg-onAccent hover:border-border-accent-hover hover:bg-bg-accent-muted-hover",
       success:

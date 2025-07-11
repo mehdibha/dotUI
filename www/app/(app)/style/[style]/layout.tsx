@@ -1,6 +1,12 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeftIcon } from "lucide-react";
+import {
+  ArrowLeftIcon,
+  CodeIcon,
+  RocketIcon,
+  RotateCcwIcon,
+  SettingsIcon,
+} from "lucide-react";
 
 import { Button } from "@dotui/ui/components/button";
 
@@ -8,6 +14,8 @@ import { Preview, PreviewProvider } from "@/components/preview";
 import { StyleNav } from "@/modules/styles/components/style-nav";
 import { StyleFormProvider } from "@/modules/styles/lib/form-context";
 import { getQueryClient, trpc } from "@/trpc/server";
+import { StyleActions } from "./actions";
+import StyleForm from "./form";
 
 export default async function StylePage({
   children,
@@ -38,12 +46,18 @@ export default async function StylePage({
             >
               <ArrowLeftIcon className="size-4" /> styles
             </Link>
-            <div className="flex items-center justify-between">
-              <h1 className="mt-1 text-2xl font-bold">{style.name}</h1>
-              <Button>Save</Button>
-            </div>
-            <p className="text-sm text-gray-500">{style.description}</p>
-            <StyleNav className="mt-6">{children}</StyleNav>
+            <StyleForm>
+              <div className="flex items-start justify-between">
+                <div>
+                  <h1 className="mt-1 text-2xl font-bold">{style.name}</h1>
+                  <p className="text-sm text-fg-muted">{style.description}</p>
+                </div>
+                <div className="flex items-center gap-1">
+                  <StyleActions />
+                </div>
+              </div>
+            </StyleForm>
+            <StyleNav className="mt-2">{children}</StyleNav>
           </div>
           <div className="sticky top-0 flex h-[100svh] items-start max-xl:hidden">
             <Preview />
