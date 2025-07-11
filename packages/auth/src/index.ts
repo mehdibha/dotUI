@@ -1,7 +1,7 @@
-import type { BetterAuthOptions } from "better-auth";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { oAuthProxy } from "better-auth/plugins";
+import type { BetterAuthOptions } from "better-auth";
 
 import { db } from "@dotui/db/client";
 
@@ -18,6 +18,37 @@ export function initAuth(options: {
     }),
     baseURL: options.baseUrl,
     secret: options.secret,
+    user: {
+      additionalFields: {
+        selectedStyle: {
+          type: "string",
+          required: true,
+          defaultValue: "minimalist",
+        },
+        role: {
+          type: "string",
+          required: false,
+          defaultValue: "user",
+          input: false,
+        },
+        banned: {
+          type: "boolean",
+          required: false,
+          defaultValue: false,
+          input: false,
+        },
+        banReason: {
+          type: "string",
+          required: false,
+          input: false,
+        },
+        banExpires: {
+          type: "date",
+          required: false,
+          input: false,
+        },
+      },
+    },
     plugins: [
       oAuthProxy({
         currentURL: options.baseUrl,

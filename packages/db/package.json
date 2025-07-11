@@ -26,10 +26,12 @@
     "lint": "eslint",
     "push": "pnpm with-env drizzle-kit push",
     "studio": "pnpm with-env drizzle-kit studio",
+    "seed": "pnpm with-env tsx src/seed.ts",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false",
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
+    "@dotui/style-engine": "workspace:*",
     "@neondatabase/serverless": "^0.10.1",
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.44.1",
@@ -46,6 +48,7 @@
     "eslint": "catalog:",
     "pg": "^8.16.0",
     "prettier": "catalog:",
+    "tsx": "catalog:",
     "typescript": "catalog:"
   },
   "prettier": "@dotui/prettier-config"

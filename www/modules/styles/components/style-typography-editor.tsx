@@ -1,0 +1,58 @@
+"use client";
+
+import { FormControl } from "@dotui/ui/components/form";
+import { Skeleton } from "@dotui/ui/components/skeleton";
+import { Slider } from "@dotui/ui/components/slider";
+
+import { FontSelector } from "@/modules/styles/components/fonts-selector";
+import { useStyleForm } from "@/modules/styles/lib/form-context";
+
+export function StyleTypographyEditor() {
+  const { form, isSuccess } = useStyleForm();
+
+  return (
+    <div className="min-h-[200svh]">
+      <p className="mt-6 text-base font-semibold">Font family</p>
+      <Skeleton show={!isSuccess}>
+        <FormControl
+          name="typography.fonts.heading"
+          control={form.control}
+          render={({ value, onChange }) => (
+            <FontSelector
+              label="Heading font"
+              font={value}
+              onFontChange={onChange}
+              className="mt-2"
+            />
+          )}
+        />
+      </Skeleton>
+      <Skeleton show={!isSuccess}>
+        <FormControl
+          name="typography.fonts.body"
+          control={form.control}
+          render={({ value, onChange }) => (
+            <FontSelector
+              label="Body font"
+              font={value}
+              onFontChange={onChange}
+              className="mt-2"
+            />
+          )}
+        />
+      </Skeleton>
+      <p className="mt-6 text-base font-semibold">Letter spacing</p>
+      <Skeleton show={!isSuccess}>
+        <Slider
+          label="Letter spacing"
+          defaultValue={0}
+          minValue={-0.1}
+          maxValue={0.1}
+          step={0.025}
+          getValueLabel={(value) => `${value}em`}
+          className="mt-2 w-full"
+        />
+      </Skeleton>
+    </div>
+  );
+}
