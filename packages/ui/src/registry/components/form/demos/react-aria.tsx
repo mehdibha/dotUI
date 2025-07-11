@@ -1,10 +1,11 @@
 "use client";
 
+import { Form } from "react-aria-components";
+
 import { Button } from "@dotui/ui/components/button";
 import { Checkbox } from "@dotui/ui/components/checkbox";
 import { Combobox } from "@dotui/ui/components/combobox";
 import { DatePicker } from "@dotui/ui/components/date-picker";
-import { Form } from "@dotui/ui/components/form";
 import { Radio, RadioGroup } from "@dotui/ui/components/radio-group";
 import { Select, SelectItem } from "@dotui/ui/components/select";
 import { TextField } from "@dotui/ui/components/text-field";

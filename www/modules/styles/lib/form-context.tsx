@@ -8,6 +8,7 @@ import {
   Theme as LeonardoTheme,
 } from "@adobe/leonardo-contrast-colors";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { z } from "zod/v4";
 import type { ContrastColor, CssColor } from "@adobe/leonardo-contrast-colors";
@@ -17,6 +18,7 @@ import { DEFAULT_THEME, DEFAULT_VARIANTS } from "@dotui/style-engine/constants";
 import type { Style } from "@dotui/style-engine/types";
 
 import { useDebounce } from "@/hooks/use-debounce";
+import { useTRPC } from "@/trpc/react";
 import { useLiveStyleProducer } from "../atoms/live-style-atom";
 import { usePreferences } from "../atoms/preferences-atom";
 
@@ -113,14 +115,20 @@ interface StyleFormProviderProps {
 
 export function StyleFormProvider({ children }: StyleFormProviderProps) {
   const { currentMode } = usePreferences();
-  const { style: styleSlug } = useParams<{ style: string }>();
-  const { updateLiveStyle } = useLiveStyleProducer(styleSlug);
+  const { style: slug } = useParams<{ style: string }>();
+  const trpc = useTRPC();
+  const { data: style } = useQuery(
+    trpc.style.bySlug.queryOptions({
+      slug,
+    }),
+  );
+  const { updateLiveStyle } = useLiveStyleProducer(slug);
 
   const form = useForm<StyleFormData>({
     resolver: zodResolver(createStyleSchema),
     defaultValues: {
-      name: "",
-      slug: "",
+      name: "Minimalist",
+      slug: "minimalist",
       description: "",
       colors: {
         mode: "light-dark",
@@ -349,8 +357,8 @@ export function StyleFormProvider({ children }: StyleFormProviderProps) {
   ]);
 
   const generatedStyle: Style = {
-    name: "",
-    slug: "",
+    name: "styleTest",
+    slug: "style-test",
     description: "",
     iconLibrary: "lucide",
     fonts: {

@@ -1,40 +1,28 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import {
-  ArrowLeftIcon,
-  CodeIcon,
-  RocketIcon,
-  RotateCcwIcon,
-  SettingsIcon,
-} from "lucide-react";
-
-import { Button } from "@dotui/ui/components/button";
+import { ArrowLeftIcon } from "lucide-react";
 
 import { Preview, PreviewProvider } from "@/components/preview";
 import { StyleNav } from "@/modules/styles/components/style-nav";
 import { StyleFormProvider } from "@/modules/styles/lib/form-context";
-import { getQueryClient, trpc } from "@/trpc/server";
+import { buildTimeCaller, getQueryClient, prefetch, trpc } from "@/trpc/server";
 import { StyleActions } from "./actions";
 import StyleForm from "./form";
 
-export default async function StylePage({
+export const generateStaticParams = async () => {
+  const styles = await buildTimeCaller.style.all({
+    isFeatured: true,
+  });
+  return styles.map((style) => ({
+    style: style.slug,
+  }));
+};
+
+export default async function Layout({
   children,
-  params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ style: string }>;
 }) {
-  const { style: styleSlug } = await params;
-
-  const queryClient = getQueryClient();
-  const style = await queryClient.fetchQuery(
-    trpc.style.bySlug.queryOptions({ slug: styleSlug }),
-  );
-
-  if (!style) {
-    notFound();
-  }
-
   return (
     <PreviewProvider>
       <StyleFormProvider>
@@ -49,8 +37,8 @@ export default async function StylePage({
             <StyleForm>
               <div className="flex items-start justify-between">
                 <div>
-                  <h1 className="mt-1 text-2xl font-bold">{style.name}</h1>
-                  <p className="text-sm text-fg-muted">{style.description}</p>
+                  {/* <h1 className="mt-1 text-2xl font-bold">{style.name}</h1>
+                  <p className="text-sm text-fg-muted">{style.description}</p> */}
                 </div>
                 <div className="flex items-center gap-1">
                   <StyleActions />

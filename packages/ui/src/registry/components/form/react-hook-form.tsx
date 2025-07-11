@@ -1,6 +1,6 @@
 "use client";
 
-import { Controller, Form } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import type {
   ControllerFieldState,
   ControllerRenderProps,
@@ -46,4 +46,4 @@ function FormControl<
   );
 }
 
-export { Form, FormControl };
+export { FormControl };

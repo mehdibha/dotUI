@@ -9,7 +9,7 @@ import { Button } from "@dotui/ui/components/button";
 import { Checkbox } from "@dotui/ui/components/checkbox";
 import { Combobox } from "@dotui/ui/components/combobox";
 import { DatePicker } from "@dotui/ui/components/date-picker";
-import { Form, FormControl } from "@dotui/ui/components/form";
+import { FormControl } from "@dotui/ui/components/form";
 import { Radio, RadioGroup } from "@dotui/ui/components/radio-group";
 import { Select, SelectItem } from "@dotui/ui/components/select";
 import { TextField } from "@dotui/ui/components/text-field";
@@ -38,7 +38,7 @@ export default function Demo() {
   return (
     <div className="w-sm space-y-4 rounded-lg border bg-bg-muted p-8">
       <h1 className="text-xl font-bold">Register</h1>
-      <Form
+      <form
         onSubmit={handleSubmit((data) => {
           alert(JSON.stringify(data, null, 2));
         })}
@@ -130,7 +130,7 @@ export default function Demo() {
         <div className="flex justify-end">
           <Button type="submit">Register</Button>
         </div>
-      </Form>
+      </form>
     </div>
   );
 }

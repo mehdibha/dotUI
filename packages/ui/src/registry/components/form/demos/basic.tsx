@@ -1,10 +1,9 @@
-
 "use client";
 
 import React from "react";
+import { Form } from "react-aria-components";
 
 import { Button } from "@dotui/ui/components/button";
-import { Form } from "@dotui/ui/components/form";
 import { TextField } from "@dotui/ui/components/text-field";
 
 export default function Demo() {
