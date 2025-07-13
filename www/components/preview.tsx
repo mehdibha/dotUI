@@ -27,46 +27,16 @@ import { cn } from "@dotui/ui/lib/utils";
 import { useSidebarContext } from "@/components/sidebar";
 import { useMounted } from "@/hooks/use-mounted";
 
-const PreviewContext = React.createContext<{
-  isOpen: boolean;
-  setOpen: (isOpen: boolean) => void;
-  screen: "mobile" | "tablet";
-  setScreen: (screen: "mobile" | "tablet") => void;
-  isAnimating: boolean;
-  setAnimating: (isAnimating: boolean) => void;
-}>({
-  isOpen: false,
-  setOpen: () => {},
-  screen: "mobile",
-  setScreen: () => {},
-  isAnimating: false,
-  setAnimating: () => {},
-});
-
-export function PreviewProvider({ children }: { children: React.ReactNode }) {
+export const Preview = () => {
   const [isOpen, setOpen] = React.useState(false);
   const [screen, setScreen] = React.useState<"mobile" | "tablet">("tablet");
   const [isAnimating, setAnimating] = React.useState(false);
+  const { isCollapsed } = useSidebarContext();
+  const isMounted = useMounted();
 
   React.useEffect(() => {
     setOpen(true);
   }, []);
-
-  return (
-    <PreviewContext.Provider
-      value={{ isOpen, setOpen, screen, setScreen, isAnimating, setAnimating }}
-    >
-      {children}
-    </PreviewContext.Provider>
-  );
-}
-
-export const usePreviewContext = () => React.useContext(PreviewContext);
-
-export const Preview = () => {
-  const { isOpen, setOpen, screen, setAnimating } = usePreviewContext();
-  const { isCollapsed } = useSidebarContext();
-  const isMounted = useMounted();
 
   const previewWidth = Math.min(
     screen === "mobile" ? 430 : 768,
@@ -117,7 +87,11 @@ export const Preview = () => {
           transition={{ type: "spring", bounce: 0, duration: 0.25 }}
           className="h-full p-4 pl-0"
         >
-          <PreviewContent />
+          <PreviewContent
+            setOpen={setOpen}
+            screen={screen}
+            setScreen={setScreen}
+          />
         </motion.div>
       </motion.div>
     </>
@@ -127,11 +101,16 @@ export const Preview = () => {
 export function PreviewContent({
   className,
   collapsible = true,
+  setOpen,
+  screen,
+  setScreen,
 }: {
   className?: string;
   collapsible?: boolean;
+  setOpen: (isOpen: boolean) => void;
+  screen: "mobile" | "tablet";
+  setScreen: (screen: "mobile" | "tablet") => void;
 }) {
-  const { setOpen, screen, setScreen } = usePreviewContext();
   const { style } = useParams<{ style: string }>();
   const [currentBlockName, setCurrentBlockName] = React.useState<string>(
     featuredBlocks[0],
