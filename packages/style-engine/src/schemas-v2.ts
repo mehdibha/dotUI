@@ -1,8 +1,15 @@
 import { z } from "zod/v4";
 
-import { DESIGN_TOKENS } from "@dotui/registry-definition/registry-tokens";
+import { COLOR_TOKENS } from "@dotui/registry-definition/registry-tokens";
 
 // ---------------------------------  Defintions  ----------------------------------- //
+
+// Icons
+export const iconLibrarySchema = z.enum(["lucide", "remix"]);
+export const iconsDefinitionSchema = z.object({
+  library: iconLibrarySchema,
+  strokeWidth: z.number().min(0.5).max(3),
+});
 
 // Colors
 export const colorScaleSchema = z.object({
@@ -18,7 +25,9 @@ export const colorScaleSchema = z.object({
   overrides: z.record(z.string(), z.string()),
 });
 
+export const modeSchema = z.enum(["light", "dark"]);
 export const modeDefinitionSchema = z.object({
+  mode: modeSchema,
   lightness: z.number().min(0).max(100),
   saturation: z.number().min(0).max(100),
   contrast: z.number().min(0).max(500),
@@ -39,48 +48,37 @@ export const colorTokenSchema = z.object({
   value: z.string(),
 });
 
-type ColorTokenNames = Extract<
-  (typeof DESIGN_TOKENS)[number],
-  { categories: readonly string[] }
->["name"];
-
-// This approach will work better for type inference
-const colorTokens = DESIGN_TOKENS.filter((token) =>
-  token.categories.includes("color"),
-) as const;
-
 export const colorTokensSchema = z.object(
-  Object.fromEntries(
-    colorTokens.map((token) => [token.name, colorTokenSchema]),
-  ) as Record<(typeof colorTokens)[number]["name"], typeof colorTokenSchema>,
+  COLOR_TOKENS.reduce(
+    (acc, token) => {
+      acc[token.name] = colorTokenSchema;
+      return acc;
+    },
+    {} as Record<
+      (typeof COLOR_TOKENS)[number]["name"],
+      typeof colorTokenSchema
+    >,
+  ),
 );
 
-// keep this for testing
-type ColorTokens = z.infer<typeof colorTokensSchema>;
-const colorTokensTest: ColorTokens = {
-  "color-1": {
-    name: "color-1",
-    value: "#000000",
-  },
-};
+// layout
+export const radiusSchema = z.number().min(0).max(2);
+export const spacingSchema = z.number().min(0.1).max(0.35);
 
-export const themeDefinitionSchema = z.object({
-  colors: z.object({
-    mode: z.enum(["light-dark", "light-only", "dark-only"]),
-    light: modeDefinitionSchema,
-    dark: modeDefinitionSchema,
-    tokens: colorTokensSchema,
-  }),
-  radius: z.number().min(0).max(2),
-  spacing: z.number().min(0.1).max(0.35),
-  fonts: z.object({
-    heading: z.string().min(1),
-    body: z.string().min(1),
-  }),
-  letterSpacing: z.number().min(0).max(0.1),
-  backgroundPattern: z.string(),
-  texture: z.string(),
-  shadows: z.object({
+// typography
+export const fontsSchema = z.object({
+  heading: z.string().min(2),
+  body: z.string().min(2),
+});
+export const letterSpacingSchema = z.number().min(-0.05).max(0.1);
+
+// effects
+export const backgroundPatternSchema = z.enum(["none"]);
+export const textureSchema = z.enum(["none"]);
+export const shadowPresetSchema = z.enum(["default"]);
+export const shadowsSchema = z.union([
+  shadowPresetSchema,
+  z.object({
     color: z.string(),
     opacity: z.number().min(0).max(1),
     blurRadius: z.number().min(0).max(100),
@@ -88,28 +86,23 @@ export const themeDefinitionSchema = z.object({
     offsetY: z.number().min(0).max(100),
     spread: z.number().min(0).max(100),
   }),
-});
-
-export const minimizedThemeSchema = z.object({
-  colors: z.object({
-    mode: z.enum(["light-dark", "light-only", "dark-only"]),
-    light: modeDefinitionSchema,
-    dark: modeDefinitionSchema,
-    // tokens:
-  }),
-});
-
-// Icons
-export const iconLibrarySchema = z.enum([
-  "lucide",
-  "heroicons",
-  "material-icons",
-  "custom",
 ]);
-export const iconsDefinitionSchema = z.object({
-  library: iconLibrarySchema,
-  strokeWidth: z.number().min(0.5).max(3),
+
+// theme
+export const themeDefinitionSchema = z.object({
+  colors: z.object({
+    modes: z.array(modeDefinitionSchema).min(1),
+    tokens: colorTokensSchema,
+  }),
+  radius: radiusSchema,
+  spacing: spacingSchema,
+  fonts: fontsSchema,
+  letterSpacing: letterSpacingSchema,
+  backgroundPattern: backgroundPatternSchema,
+  texture: textureSchema,
+  shadows: shadowsSchema,
 });
+
 
 // Variants
 export const variantsDefinitionSchema = z.object({
@@ -137,9 +130,35 @@ export const styleDefinitionSchema = z.object({
   variants: variantsDefinitionSchema,
 });
 
+// ---------------------------------  Minimized definitions  ----------------------------------- //
+
+export const minimizedColorTokensSchema = colorTokensSchema.partial();
+
+export const minimizedThemeDefinitionSchema = z.object({
+  colors: z.object({
+    modes: z.array(modeDefinitionSchema).min(1),
+    tokens: colorTokensSchema.partial(),
+  }),
+  radius: radiusSchema.optional(),
+  spacing: spacingSchema.optional(),
+  fonts: fontsSchema.partial().optional(),
+  letterSpacing: letterSpacingSchema.optional(),
+  backgroundPattern: backgroundPatternSchema.optional(),
+  texture: textureSchema.optional(),
+  shadows: shadowsSchema.optional(),
+});
+
+export const minimizedVariantsDefinitionSchema = variantsDefinitionSchema.partial();
+
+export const minimizedStyleDefinitionSchema = z.object({
+  theme: minimizedThemeDefinitionSchema,
+  icons: iconsDefinitionSchema,
+  variants: minimizedVariantsDefinitionSchema,
+});
+
 // ---------------------------------  Processed  ----------------------------------- //
 
-const CssSchema = z.record(
+export const CssSchema = z.record(
   z.string(),
   z.union([
     z.string(),
@@ -152,71 +171,75 @@ const CssSchema = z.record(
 
 // Theme will include all the cssVars and css need for colors, radius, spacing, fonts, backgroundPattern, texture and shadows.
 export const themeSchema = z.object({
-  css: CssSchema,
+  css: CssSchema.optional(),
   cssVars: z.object({
     light: z.record(z.string(), z.string()),
-    dark: z.record(z.string(), z.string()),
+    dark: z.record(z.string(), z.string()).optional(),
     theme: z.record(z.string(), z.string()),
   }),
 });
 
 export const variantsSchema = z.object({
-  alert: z.enum(["basic", "notch", "notch-2"]).optional(),
-  avatar: z.enum(["basic"]).optional(),
-  badge: z.enum(["basic"]).optional(),
-  breadcrumbs: z.enum(["basic"]).optional(),
-  button: z.enum(["basic", "outline", "brutalist", "ripple"]).optional(),
-  "button-group": z.enum(["basic"]).optional(),
-  calendar: z.enum(["basic", "cal"]).optional(),
-  checkbox: z.enum(["basic"]).optional(),
-  "checkbox-group": z.enum(["basic"]).optional(),
-  "color-area": z.enum(["basic"]).optional(),
-  "color-field": z.enum(["basic"]).optional(),
-  "color-picker": z.enum(["basic"]).optional(),
-  "color-slider": z.enum(["basic"]).optional(),
-  "color-swatch": z.enum(["basic"]).optional(),
-  "color-swatch-picker": z.enum(["basic"]).optional(),
-  "color-thumb": z.enum(["basic"]).optional(),
-  combobox: z.enum(["basic"]).optional(),
-  command: z.enum(["basic"]).optional(),
-  "date-field": z.enum(["basic"]).optional(),
-  "date-input": z.enum(["basic"]).optional(),
-  "date-picker": z.enum(["basic"]).optional(),
-  "date-range-picker": z.enum(["basic"]).optional(),
-  dialog: z.enum(["basic"]).optional(),
-  drawer: z.enum(["basic"]).optional(),
-  "drop-zone": z.enum(["basic"]).optional(),
-  field: z.enum(["basic"]).optional(),
-  "file-trigger": z.enum(["basic"]).optional(),
-  form: z.enum(["basic", "react-hook-form"]).optional(),
-  input: z.enum(["basic"]).optional(),
-  kbd: z.enum(["basic"]).optional(),
-  "list-box": z.enum(["basic"]).optional(),
-  loader: z.enum(["dots", "line", "ring", "tailspin", "wave"]).optional(),
-  menu: z.enum(["basic"]).optional(),
-  modal: z.enum(["basic", "blur"]).optional(),
-  "number-field": z.enum(["basic"]).optional(),
-  overlay: z.enum(["basic"]).optional(),
-  popover: z.enum(["basic"]).optional(),
-  "progress-bar": z.enum(["basic"]).optional(),
-  "radio-group": z.enum(["basic"]).optional(),
-  ripple: z.enum(["basic"]).optional(),
-  "search-field": z.enum(["basic"]).optional(),
-  select: z.enum(["basic"]).optional(),
-  separator: z.enum(["basic"]).optional(),
-  skeleton: z.enum(["basic"]).optional(),
-  slider: z.enum(["basic"]).optional(),
-  switch: z.enum(["basic"]).optional(),
-  table: z.enum(["basic"]).optional(),
-  tabs: z.enum(["basic", "motion"]).optional(),
-  "tag-group": z.enum(["basic"]).optional(),
-  text: z.enum(["basic"]).optional(),
-  "text-area": z.enum(["basic"]).optional(),
-  "text-field": z.enum(["basic"]).optional(),
-  "time-field": z.enum(["basic"]).optional(),
-  "toggle-button": z.enum(["basic"]).optional(),
-  "toggle-button-group": z.enum(["basic"]).optional(),
-  tooltip: z.enum(["basic", "motion"]).optional(),
+  // components
+  alert: z.enum(["basic", "notch", "notch-2"]),
+  avatar: z.enum(["basic"]),
+  badge: z.enum(["basic"]),
+  breadcrumbs: z.enum(["basic"]),
+  button: z.enum(["basic", "outline", "brutalist", "ripple"]),
+  "button-group": z.enum(["basic"]),
+  calendar: z.enum(["basic", "cal"]),
+  checkbox: z.enum(["basic"]),
+  "checkbox-group": z.enum(["basic"]),
+  "color-area": z.enum(["basic"]),
+  "color-field": z.enum(["basic"]),
+  "color-picker": z.enum(["basic"]),
+  "color-slider": z.enum(["basic"]),
+  "color-swatch": z.enum(["basic"]),
+  "color-swatch-picker": z.enum(["basic"]),
+  "color-thumb": z.enum(["basic"]),
+  combobox: z.enum(["basic"]),
+  command: z.enum(["basic"]),
+  "date-field": z.enum(["basic"]),
+  "date-input": z.enum(["basic"]),
+  "date-picker": z.enum(["basic"]),
+  "date-range-picker": z.enum(["basic"]),
+  dialog: z.enum(["basic"]),
+  drawer: z.enum(["basic"]),
+  "drop-zone": z.enum(["basic"]),
+  field: z.enum(["basic"]),
+  "file-trigger": z.enum(["basic"]),
+  form: z.enum(["basic", "react-hook-form"]),
+  input: z.enum(["basic"]),
+  kbd: z.enum(["basic"]),
+  "list-box": z.enum(["basic"]),
+  loader: z.enum(["dots", "line", "ring", "tailspin", "wave"]),
+  menu: z.enum(["basic"]),
+  modal: z.enum(["basic", "blur"]),
+  "number-field": z.enum(["basic"]),
+  overlay: z.enum(["basic"]),
+  popover: z.enum(["basic"]),
+  "progress-bar": z.enum(["basic"]),
+  "radio-group": z.enum(["basic"]),
+  ripple: z.enum(["basic"]),
+  "search-field": z.enum(["basic"]),
+  select: z.enum(["basic"]),
+  separator: z.enum(["basic"]),
+  skeleton: z.enum(["basic"]),
+  slider: z.enum(["basic"]),
+  switch: z.enum(["basic"]),
+  table: z.enum(["basic"]),
+  tabs: z.enum(["basic", "motion"]),
+  "tag-group": z.enum(["basic"]),
+  text: z.enum(["basic"]),
+  "text-area": z.enum(["basic"]),
+  "text-field": z.enum(["basic"]),
+  "time-field": z.enum(["basic"]),
+  "toggle-button": z.enum(["basic"]),
+  "toggle-button-group": z.enum(["basic"]),
+  tooltip: z.enum(["basic", "motion"]),
+
+  // lib
+  "focus-style": z.enum(["basic"]),
 });
 
 export const styleSchema = z.object({

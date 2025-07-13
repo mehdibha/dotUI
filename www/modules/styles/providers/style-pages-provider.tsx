@@ -9,6 +9,9 @@ import { z } from "zod/v4";
 import type { UseFormReturn } from "react-hook-form";
 
 import { useTRPC } from "@/lib/trpc/react";
+import { styleDefinitionSchema } from "@dotui/style-engine/schemas-v2";
+
+// const formV2Schema = styleDefintionSchema;
 
 const formSchema = z.object({
   name: z.string().min(1),

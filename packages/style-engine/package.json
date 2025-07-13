@@ -19,6 +19,14 @@
     "./constants": {
       "types": "./dist/constants/index.d.ts",
       "default": "./src/constants/index.ts"
+    },
+    "./schemas-v2": {
+      "types": "./dist/schemas-v2/index.d.ts",
+      "default": "./src/schemas-v2/index.ts"
+    },
+    "./types-v2": {
+      "types": "./dist/types-v2/index.d.ts",
+      "default": "./src/types-v2/index.ts"
     }
   },
   "scripts": {

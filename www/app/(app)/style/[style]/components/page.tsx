@@ -40,6 +40,7 @@ import { Tooltip } from "@dotui/ui/components/tooltip";
 import { cn } from "@dotui/ui/lib/utils";
 
 import { useStyleForm } from "@/modules/styles/lib/form-context";
+import { DateRangePicker } from "@dotui/ui/components/date-range-picker";
 
 interface SectionProps extends React.ComponentProps<"div"> {
   name: string;
@@ -270,6 +271,7 @@ export default function StyleComponentsPage() {
           <ComboboxItem id="united-kingdom">United Kingdom</ComboboxItem>
         </Combobox>
         <DatePicker className="w-full" />
+        <DateRangePicker className="w-full" />
       </Section>
 
       <Section
