@@ -1,6 +1,16 @@
+import { Button } from "@dotui/ui/components/button";
+import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
+
 import { StyleColorsEditor } from "@/modules/styles/components/style-colors-editor";
 
 export default function StyleColorsPage() {
-  return <div>COLOR PAGE</div>;
-  return <StyleColorsEditor />;
+  return (
+    <>
+      <DialogRoot>
+        <Button>hello</Button>
+        <Dialog>content</Dialog>
+      </DialogRoot>
+      <StyleColorsEditor />
+    </>
+  );
 }

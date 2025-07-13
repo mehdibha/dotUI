@@ -28,31 +28,40 @@ import { TextField } from "@dotui/ui/components/text-field";
 import { Tooltip } from "@dotui/ui/components/tooltip";
 import { cn } from "@dotui/ui/lib/utils";
 
-import { useStyleForm } from "@/modules/styles/lib/form-context";
+import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
 
 export function ColorKeys({
-  currentMode,
+  currentModeIndex,
   name,
+  colorScale = "baseScales",
 }: {
-  currentMode: "light" | "dark";
+  currentModeIndex: number;
   name: "neutral" | "accent" | "success" | "warning" | "danger" | "info";
+  colorScale?: "baseScales" | "semanticScales";
 }) {
   const { form } = useStyleForm();
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
-    name: `colors.${currentMode}.colors.${name}.colorKeys`,
+    name: `theme.colors.modes.${currentModeIndex}.${colorScale}.${name}.colorKeys`,
   });
 
   const colorKeys = form
-    .watch(`colors.${currentMode}.colors.${name}.colorKeys`)
+    .watch(
+      `theme.colors.modes.${currentModeIndex}.${colorScale}.${name}.colorKeys`,
+    )
     .map((color) => color.color) as CssColor[];
   const ratios = Array.from({ length: 19 }, (_, i) => i + 1);
-  const lightness = form.watch(`colors.${currentMode}.lightness`);
-  const saturation = form.watch(`colors.${currentMode}.saturation`);
-  const contrast = form.watch(`colors.${currentMode}.contrast`) / 100;
+  const lightness = form.watch(
+    `theme.colors.modes.${currentModeIndex}.lightness`,
+  );
+  const saturation = form.watch(
+    `theme.colors.modes.${currentModeIndex}.saturation`,
+  );
+  const contrast =
+    form.watch(`theme.colors.modes.${currentModeIndex}.contrast`) / 100;
   const neutralColorKeys = form.watch(
-    `colors.${currentMode}.colors.neutral.colorKeys`,
+    `theme.colors.modes.${currentModeIndex}.baseScales.neutral.colorKeys`,
   );
 
   const dynamicGradient = useMemo(() => {
@@ -112,7 +121,7 @@ export function ColorKeys({
               <div key={field.id} className="flex items-center">
                 <FormControl
                   control={form.control}
-                  name={`colors.${currentMode}.colors.${name}.colorKeys.${index}.color`}
+                  name={`theme.colors.modes.${currentModeIndex}.${colorScale}.${name}.colorKeys.${index}.color`}
                   render={({ onChange, ...props }) => {
                     return (
                       <ColorPickerRoot
@@ -162,7 +171,7 @@ export function ColorKeys({
           </div>
           <p className="text-sm text-fg-muted">Ratios</p>
           <FormControl
-            name={`colors.${currentMode}.colors.${name}.ratios`}
+            name={`theme.colors.modes.${currentModeIndex}.${colorScale}.${name}.ratios`}
             control={form.control}
             render={(props) => (
               <div className="flex flex-1 items-start gap-4">

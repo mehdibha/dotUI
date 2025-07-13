@@ -7,6 +7,7 @@ import {
   SunIcon,
 } from "lucide-react";
 import { Button as AriaButton } from "react-aria-components";
+import { useFieldArray } from "react-hook-form";
 
 import { DESIGN_TOKENS } from "@dotui/style-engine/constants";
 import { Button } from "@dotui/ui/components/button";
@@ -35,7 +36,7 @@ import { Tooltip } from "@dotui/ui/components/tooltip";
 
 import { ThemeModeSwitch } from "@/components/theme-mode-switch";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
-import { useStyleForm } from "@/modules/styles/lib/form-context";
+import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
 import { EditorSection } from "./editor-section";
 import { ColorKeys } from "./key-colors";
 
@@ -52,16 +53,26 @@ const semanticColors = [
 ] as const;
 
 export function StyleColorsEditor() {
-  const { form, generatedTheme, isSuccess, resolvedMode } = useStyleForm();
+  const { form, isSuccess } = useStyleForm();
   const { currentMode, setCurrentMode } = usePreferences();
+
+  // TODO: support multiple themes in the future (e.g. light/dark/high-contrast/)
+  const { fields: colorModes } = useFieldArray({
+    control: form.control,
+    name: "theme.colors.modes",
+  });
+
+  const currentModeIndex = colorModes.findIndex(
+    (mode) => mode.mode === currentMode,
+  );
 
   return (
     <div>
       <EditorSection title="Mode">
         <div className="mt-2 flex items-start justify-between">
-          <Skeleton show={!isSuccess}>
+          {/* <Skeleton show={!isSuccess}>
             <FormControl
-              name="colors.mode"
+              name="colors.mode."
               control={form.control}
               render={({ value, onChange, ...props }) => (
                 <SelectRoot
@@ -88,9 +99,9 @@ export function StyleColorsEditor() {
                 </SelectRoot>
               )}
             />
-          </Skeleton>
+          </Skeleton> */}
           <Skeleton show={!isSuccess}>
-            {form.watch("colors.mode") === "light-dark" && (
+            {colorModes.length > 1 && (
               <ThemeModeSwitch
                 isSelected={currentMode === "light"}
                 onChange={(isSelected) => {
@@ -104,110 +115,117 @@ export function StyleColorsEditor() {
 
       <EditorSection title="Color adjustments">
         <div className="mt-2 grid grid-cols-2 gap-3">
-          <FormControl
-            key={`${resolvedMode}-lightness`}
-            name={`colors.${resolvedMode}.lightness`}
-            control={form.control}
-            render={(props) => {
-              return (
-                <SliderRoot
-                  {...props}
-                  minValue={0}
-                  maxValue={100}
-                  className="col-span-2 w-full"
-                >
-                  <div className="flex items-center justify-between gap-2">
-                    <Label>Lightness</Label>
-                    <SliderValueLabel>
-                      {({ state }) => (
-                        <Skeleton show={!isSuccess}>
-                          {`${state.values[0]}%`}
-                        </Skeleton>
-                      )}
-                    </SliderValueLabel>
-                  </div>
-                  <Skeleton show={!isSuccess}>
-                    <SliderTrack>
-                      <SliderFiller />
-                      <SliderThumb />
-                    </SliderTrack>
-                  </Skeleton>
-                </SliderRoot>
-              );
-            }}
-          />
-          <FormControl
-            key={`${resolvedMode}-saturation`}
-            name={`colors.${resolvedMode}.saturation`}
-            control={form.control}
-            render={(props) => (
-              <SliderRoot
-                {...props}
-                minValue={0}
-                maxValue={100}
-                className="w-full"
-              >
-                <div className="flex items-center justify-between gap-2">
-                  <Label>Saturation</Label>
-                  <SliderValueLabel>
-                    {({ state }) => (
-                      <Skeleton show={!isSuccess}>
-                        {`${state.values[0]}%`}
-                      </Skeleton>
-                    )}
-                  </SliderValueLabel>
-                </div>
-                <Skeleton show={!isSuccess}>
-                  <SliderTrack>
-                    <SliderFiller />
-                    <SliderThumb />
-                  </SliderTrack>
-                </Skeleton>
-              </SliderRoot>
-            )}
-          />
-          <FormControl
-            key={`${resolvedMode}-contrast`}
-            name={`colors.${resolvedMode}.contrast`}
-            control={form.control}
-            render={(props) => (
-              <SliderRoot
-                {...props}
-                minValue={0}
-                maxValue={500}
-                className="w-full"
-              >
-                <div className="flex items-center justify-between gap-2">
-                  <Label>Contrast</Label>
-                  <SliderValueLabel>
-                    {({ state }) => (
-                      <Skeleton show={!isSuccess}>
-                        {`${state.values[0]}%`}
-                      </Skeleton>
-                    )}
-                  </SliderValueLabel>
-                </div>
-                <Skeleton show={!isSuccess}>
-                  <SliderTrack>
-                    <SliderFiller />
-                    <SliderThumb />
-                  </SliderTrack>
-                </Skeleton>
-              </SliderRoot>
-            )}
-          />
+          {currentModeIndex !== -1 && (
+            <>
+              <FormControl
+                key={`${currentMode}-lightness`}
+                name={`theme.colors.modes.${currentModeIndex}.lightness`}
+                control={form.control}
+                render={(props) => (
+                  <SliderRoot
+                    {...props}
+                    minValue={0}
+                    maxValue={100}
+                    className="col-span-2 w-full"
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <Label>Lightness</Label>
+                      <SliderValueLabel>
+                        {({ state }) => (
+                          <Skeleton show={!isSuccess}>
+                            {`${state.values[0]}%`}
+                          </Skeleton>
+                        )}
+                      </SliderValueLabel>
+                    </div>
+                    <Skeleton show={!isSuccess}>
+                      <SliderTrack>
+                        <SliderFiller />
+                        <SliderThumb />
+                      </SliderTrack>
+                    </Skeleton>
+                  </SliderRoot>
+                )}
+              />
+              <FormControl
+                key={`${currentMode}-saturation`}
+                name={`theme.colors.modes.${currentModeIndex}.saturation`}
+                control={form.control}
+                render={(props) => (
+                  <SliderRoot
+                    {...props}
+                    minValue={0}
+                    maxValue={100}
+                    className="w-full"
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <Label>Saturation</Label>
+                      <SliderValueLabel>
+                        {({ state }) => (
+                          <Skeleton show={!isSuccess}>
+                            {`${state.values[0]}%`}
+                          </Skeleton>
+                        )}
+                      </SliderValueLabel>
+                    </div>
+                    <Skeleton show={!isSuccess}>
+                      <SliderTrack>
+                        <SliderFiller />
+                        <SliderThumb />
+                      </SliderTrack>
+                    </Skeleton>
+                  </SliderRoot>
+                )}
+              />
+              <FormControl
+                key={`${currentMode}-contrast`}
+                name={`theme.colors.modes.${currentModeIndex}.contrast`}
+                control={form.control}
+                render={(props) => (
+                  <SliderRoot
+                    {...props}
+                    minValue={0}
+                    maxValue={500}
+                    className="w-full"
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <Label>Contrast</Label>
+                      <SliderValueLabel>
+                        {({ state }) => (
+                          <Skeleton show={!isSuccess}>
+                            {`${state.values[0]}%`}
+                          </Skeleton>
+                        )}
+                      </SliderValueLabel>
+                    </div>
+                    <Skeleton show={!isSuccess}>
+                      <SliderTrack>
+                        <SliderFiller />
+                        <SliderThumb />
+                      </SliderTrack>
+                    </Skeleton>
+                  </SliderRoot>
+                )}
+              />
+            </>
+          )}
         </div>
       </EditorSection>
 
       <EditorSection title="Base colors">
         <div className="mt-2 flex items-center gap-2">
-          {baseColors.map((color) => (
-            <Skeleton key={color.name} show={!isSuccess}>
-              <ColorKeys name={color.name} currentMode={resolvedMode} />
-            </Skeleton>
-          ))}
+          {currentModeIndex !== -1 &&
+            baseColors.map((color) => (
+              <Skeleton key={color.name} show={!isSuccess}>
+                <ColorKeys
+                  name={color.name}
+                  currentModeIndex={currentModeIndex}
+                  colorScale="baseScales"
+                />
+              </Skeleton>
+            ))}
         </div>
-        <div className="mt-3 space-y-2">
+        {/* <div className="mt-3 space-y-2">
           {baseColors.map((color) => (
             <div key={color.name} className="flex items-center gap-2">
               <p className="w-16 text-sm text-fg-muted">{color.label}</p>
@@ -227,18 +245,23 @@ export function StyleColorsEditor() {
               </div>
             </div>
           ))}
-        </div>
+        </div> */}
       </EditorSection>
 
       <EditorSection title="Semantic colors">
         <div className="mt-2 flex items-center gap-2">
-          {semanticColors.map((color) => (
-            <Skeleton key={color.name} show={!isSuccess}>
-              <ColorKeys name={color.name} currentMode={resolvedMode} />
-            </Skeleton>
-          ))}
+          {currentModeIndex !== -1 &&
+            semanticColors.map((color) => (
+              <Skeleton key={color.name} show={!isSuccess}>
+                <ColorKeys
+                  name={color.name}
+                  currentModeIndex={currentModeIndex}
+                  colorScale="semanticScales"
+                />
+              </Skeleton>
+            ))}
         </div>
-        <div className="mt-3 space-y-2">
+        {/* <div className="mt-3 space-y-2">
           {semanticColors.map((color) => (
             <div key={color.name} className="flex items-center gap-2">
               <p className="w-16 text-sm text-fg-muted">{color.label}</p>
@@ -264,10 +287,10 @@ export function StyleColorsEditor() {
               </div>
             </div>
           ))}
-        </div>
+        </div> */}
       </EditorSection>
 
-      <EditorSection title="Tokens">
+      {/* <EditorSection title="Tokens">
         <div className="mt-2 space-y-8">
           {Object.entries(tokensByCategory).map(
             ([category, categoryTokens]) => (
@@ -342,7 +365,7 @@ export function StyleColorsEditor() {
             ),
           )}
         </div>
-      </EditorSection>
+      </EditorSection> */}
     </div>
   );
 }
