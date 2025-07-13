@@ -19,7 +19,7 @@ import { Menu, MenuItem, MenuRoot } from "@dotui/ui/components/menu";
 import { Skeleton } from "@dotui/ui/components/skeleton";
 import { Tooltip } from "@dotui/ui/components/tooltip";
 
-import { useStyleForm } from "../lib/form-context";
+import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
 import { PublishStyleModal } from "./publish-style-modal";
 import { StylePageCodeModal } from "./style-page-code-modal";
 

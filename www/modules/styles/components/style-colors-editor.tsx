@@ -10,12 +10,19 @@ import { Button as AriaButton } from "react-aria-components";
 
 import { DESIGN_TOKENS } from "@dotui/style-engine/constants";
 import { Button } from "@dotui/ui/components/button";
+import { Label } from "@dotui/ui/components/field";
 import { FormControl } from "@dotui/ui/components/form";
 import { ListBox, ListBoxItem } from "@dotui/ui/components/list-box";
 import { Popover } from "@dotui/ui/components/popover";
 import { SelectRoot, SelectValue } from "@dotui/ui/components/select";
 import { Skeleton } from "@dotui/ui/components/skeleton";
-import { Slider } from "@dotui/ui/components/slider";
+import {
+  SliderFiller,
+  SliderRoot,
+  SliderThumb,
+  SliderTrack,
+  SliderValueLabel,
+} from "@dotui/ui/components/slider";
 import {
   TableBody,
   TableCell,
@@ -29,6 +36,7 @@ import { Tooltip } from "@dotui/ui/components/tooltip";
 import { ThemeModeSwitch } from "@/components/theme-mode-switch";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 import { useStyleForm } from "@/modules/styles/lib/form-context";
+import { EditorSection } from "./editor-section";
 import { ColorKeys } from "./key-colors";
 
 const baseColors = [
@@ -44,245 +52,297 @@ const semanticColors = [
 ] as const;
 
 export function StyleColorsEditor() {
-  const { form, generatedTheme, isSuccess } = useStyleForm();
+  const { form, generatedTheme, isSuccess, resolvedMode } = useStyleForm();
   const { currentMode, setCurrentMode } = usePreferences();
 
   return (
     <div>
-      <p className="text-base font-semibold">Mode</p>
-      <div className="mt-2 flex items-start justify-between">
-        <Skeleton show={!isSuccess}>
-          <FormControl
-            name="colors.mode"
-            control={form.control}
-            render={({ value, onChange, ...props }) => (
-              <SelectRoot
-                selectedKey={value}
-                onSelectionChange={onChange}
-                {...props}
-              >
-                <Button suffix={<ChevronsUpDownIcon />}>
-                  <SelectValue />
-                </Button>
-                <Popover>
-                  <ListBox>
-                    <ListBoxItem id="light-dark" prefix={<ContrastIcon />}>
-                      light/dark
-                    </ListBoxItem>
-                    <ListBoxItem id="light" prefix={<SunIcon />}>
-                      light only
-                    </ListBoxItem>
-                    <ListBoxItem id="dark" prefix={<MoonIcon />}>
-                      dark only
-                    </ListBoxItem>
-                  </ListBox>
-                </Popover>
-              </SelectRoot>
+      <EditorSection title="Mode">
+        <div className="mt-2 flex items-start justify-between">
+          <Skeleton show={!isSuccess}>
+            <FormControl
+              name="colors.mode"
+              control={form.control}
+              render={({ value, onChange, ...props }) => (
+                <SelectRoot
+                  selectedKey={value}
+                  onSelectionChange={onChange}
+                  {...props}
+                >
+                  <Button suffix={<ChevronsUpDownIcon />}>
+                    <SelectValue />
+                  </Button>
+                  <Popover>
+                    <ListBox>
+                      <ListBoxItem id="light-dark" prefix={<ContrastIcon />}>
+                        light/dark
+                      </ListBoxItem>
+                      <ListBoxItem id="light" prefix={<SunIcon />}>
+                        light only
+                      </ListBoxItem>
+                      <ListBoxItem id="dark" prefix={<MoonIcon />}>
+                        dark only
+                      </ListBoxItem>
+                    </ListBox>
+                  </Popover>
+                </SelectRoot>
+              )}
+            />
+          </Skeleton>
+          <Skeleton show={!isSuccess}>
+            {form.watch("colors.mode") === "light-dark" && (
+              <ThemeModeSwitch
+                isSelected={currentMode === "light"}
+                onChange={(isSelected) => {
+                  setCurrentMode(isSelected ? "light" : "dark");
+                }}
+              />
             )}
-          />
-        </Skeleton>
-        <Skeleton show={!isSuccess}>
-          <ThemeModeSwitch
-            isSelected={currentMode === "light"}
-            onChange={(isSelected) => {
-              setCurrentMode(isSelected ? "light" : "dark");
-            }}
-          />
-        </Skeleton>
-      </div>
-      <p className="mt-6 text-base font-semibold">Color adjustments</p>
-      <div className="mt-2 grid grid-cols-2 gap-3">
-        <Skeleton show={!isSuccess}>
+          </Skeleton>
+        </div>
+      </EditorSection>
+
+      <EditorSection title="Color adjustments">
+        <div className="mt-2 grid grid-cols-2 gap-3">
           <FormControl
-            key={`${currentMode}-lightness`}
-            name={`colors.${currentMode}.lightness`}
+            key={`${resolvedMode}-lightness`}
+            name={`colors.${resolvedMode}.lightness`}
             control={form.control}
             render={(props) => {
               return (
-                <Slider
-                  label="Lightness"
-                  getValueLabel={(value) => `${value}%`}
+                <SliderRoot
+                  {...props}
                   minValue={0}
                   maxValue={100}
                   className="col-span-2 w-full"
-                  {...props}
-                />
+                >
+                  <div className="flex items-center justify-between gap-2">
+                    <Label>Lightness</Label>
+                    <SliderValueLabel>
+                      {({ state }) => (
+                        <Skeleton show={!isSuccess}>
+                          {`${state.values[0]}%`}
+                        </Skeleton>
+                      )}
+                    </SliderValueLabel>
+                  </div>
+                  <Skeleton show={!isSuccess}>
+                    <SliderTrack>
+                      <SliderFiller />
+                      <SliderThumb />
+                    </SliderTrack>
+                  </Skeleton>
+                </SliderRoot>
               );
             }}
           />
-        </Skeleton>
-        <Skeleton show={!isSuccess}>
           <FormControl
-            key={`${currentMode}-saturation`}
-            name={`colors.${currentMode}.saturation`}
+            key={`${resolvedMode}-saturation`}
+            name={`colors.${resolvedMode}.saturation`}
             control={form.control}
             render={(props) => (
-              <Slider
-                label="Saturation"
-                getValueLabel={(value) => `${value}%`}
+              <SliderRoot
+                {...props}
                 minValue={0}
                 maxValue={100}
                 className="w-full"
-                {...props}
-              />
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <Label>Saturation</Label>
+                  <SliderValueLabel>
+                    {({ state }) => (
+                      <Skeleton show={!isSuccess}>
+                        {`${state.values[0]}%`}
+                      </Skeleton>
+                    )}
+                  </SliderValueLabel>
+                </div>
+                <Skeleton show={!isSuccess}>
+                  <SliderTrack>
+                    <SliderFiller />
+                    <SliderThumb />
+                  </SliderTrack>
+                </Skeleton>
+              </SliderRoot>
             )}
           />
-        </Skeleton>
-        <Skeleton show={!isSuccess}>
           <FormControl
-            key={`${currentMode}-contrast`}
-            name={`colors.${currentMode}.contrast`}
+            key={`${resolvedMode}-contrast`}
+            name={`colors.${resolvedMode}.contrast`}
             control={form.control}
             render={(props) => (
-              <Slider
-                label="Contrast"
-                getValueLabel={(value) => `${value}%`}
+              <SliderRoot
+                {...props}
                 minValue={0}
                 maxValue={500}
                 className="w-full"
-                {...props}
-              />
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <Label>Contrast</Label>
+                  <SliderValueLabel>
+                    {({ state }) => (
+                      <Skeleton show={!isSuccess}>
+                        {`${state.values[0]}%`}
+                      </Skeleton>
+                    )}
+                  </SliderValueLabel>
+                </div>
+                <Skeleton show={!isSuccess}>
+                  <SliderTrack>
+                    <SliderFiller />
+                    <SliderThumb />
+                  </SliderTrack>
+                </Skeleton>
+              </SliderRoot>
             )}
           />
-        </Skeleton>
-      </div>
-      <p className="mt-6 text-base font-semibold">Base colors</p>
-      <div className="mt-2 flex items-center gap-2">
-        {baseColors.map((color) => (
-          <Skeleton key={color.name} show={!isSuccess}>
-            <ColorKeys name={color.name} currentMode={currentMode} />
-          </Skeleton>
-        ))}
-      </div>
-      <div className="mt-3 space-y-2">
-        {baseColors.map((color) => (
-          <div key={color.name} className="flex items-center gap-2">
-            <p className="w-16 text-sm text-fg-muted">{color.label}</p>
-            <div className="flex flex-1 items-center gap-1">
-              {generatedTheme
-                .find((elem) => elem.name === color.name)
-                ?.values.map((color, index) => (
-                  <Tooltip key={index} content={color.name} delay={0}>
-                    <Skeleton show={!isSuccess} className="flex-1">
-                      <AriaButton
-                        className="h-8 flex-1 rounded-sm border"
-                        style={{ backgroundColor: color.value }}
-                      />
-                    </Skeleton>
-                  </Tooltip>
-                ))}
-            </div>
-          </div>
-        ))}
-      </div>
-      <p className="mt-6 text-base font-semibold">Semantic colors</p>
-      <div className="mt-2 flex items-center gap-2">
-        {semanticColors.map((color) => (
-          <Skeleton key={color.name} show={!isSuccess}>
-            <ColorKeys name={color.name} currentMode={currentMode} />
-          </Skeleton>
-        ))}
-      </div>
-      <div className="mt-3 space-y-2">
-        {semanticColors.map((color) => (
-          <div key={color.name} className="flex items-center gap-2">
-            <p className="w-16 text-sm text-fg-muted">{color.label}</p>
-            <div className="flex flex-1 items-center gap-1">
-              {generatedTheme
-                .find((elem) => elem.name === color.name)
-                ?.values.map((color, index) => (
-                  <Tooltip
-                    key={index}
-                    content={`${color.name}-${(index + 1) * 100}`}
-                    delay={0}
-                  >
-                    <Skeleton show={!isSuccess}>
-                      <AriaButton
-                        className="h-8 flex-1 rounded-sm border"
-                        style={{
-                          backgroundColor: color.value,
-                        }}
-                      />
-                    </Skeleton>
-                  </Tooltip>
-                ))}
-            </div>
-          </div>
-        ))}
-      </div>
-      <p className="mt-6 text-base font-semibold">Tokens</p>
-      <div className="mt-2 space-y-8">
-        {Object.entries(tokensByCategory).map(([category, categoryTokens]) => (
-          <div key={category}>
-            <h3 className="mb-3 text-sm font-medium text-fg-muted">
-              {tokenCategories[category as keyof typeof tokenCategories]}
-            </h3>
-            <Skeleton show={!isSuccess}>
-              <TableRoot
-                aria-label={`${tokenCategories[category as keyof typeof tokenCategories]} Tokens`}
-                className="-mr-6 w-full"
-              >
-                <TableHeader>
-                  <TableColumn id="name" isRowHeader className="pl-0">
-                    Variable name
-                  </TableColumn>
-                  <TableColumn id="description">Description</TableColumn>
-                  <TableColumn id="value" className="pr-0">
-                    Value
-                  </TableColumn>
-                </TableHeader>
-                <TableBody
-                  items={categoryTokens.map((token) => ({
-                    id: token.name,
-                    ...token,
-                  }))}
-                >
-                  {(token) => (
-                    <TableRow>
-                      <TableCell className="pl-0">{token.name}</TableCell>
-                      <TableCell>{token.description}</TableCell>
-                      <TableCell className="pr-0">
-                        <SelectRoot defaultSelectedKey={token.value}>
-                          <Button
-                            size="sm"
-                            suffix={
-                              <ChevronsUpDownIcon className="text-fg-muted" />
-                            }
-                            className="w-40"
-                          >
-                            <SelectValue />
-                          </Button>
-                          <Popover>
-                            <ListBox items={token.items}>
-                              {(item) => (
-                                <ListBoxItem
-                                  key={item.name}
-                                  id={item.name}
-                                  className="flex items-center gap-2"
-                                  prefix={
-                                    <span
-                                      className="size-4 rounded-sm border"
-                                      style={{
-                                        backgroundColor: item.value,
-                                      }}
-                                    />
-                                  }
-                                >
-                                  {item.label}
-                                </ListBoxItem>
-                              )}
-                            </ListBox>
-                          </Popover>
-                        </SelectRoot>
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </TableBody>
-              </TableRoot>
+        </div>
+      </EditorSection>
+
+      <EditorSection title="Base colors">
+        <div className="mt-2 flex items-center gap-2">
+          {baseColors.map((color) => (
+            <Skeleton key={color.name} show={!isSuccess}>
+              <ColorKeys name={color.name} currentMode={resolvedMode} />
             </Skeleton>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+        <div className="mt-3 space-y-2">
+          {baseColors.map((color) => (
+            <div key={color.name} className="flex items-center gap-2">
+              <p className="w-16 text-sm text-fg-muted">{color.label}</p>
+              <div className="flex flex-1 items-center gap-1">
+                {generatedTheme
+                  .find((elem) => elem.name === color.name)
+                  ?.values.map((color, index) => (
+                    <Tooltip key={index} content={color.name} delay={0}>
+                      <Skeleton show={!isSuccess} className="flex-1">
+                        <AriaButton
+                          className="h-8 flex-1 rounded-sm border"
+                          style={{ backgroundColor: color.value }}
+                        />
+                      </Skeleton>
+                    </Tooltip>
+                  ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </EditorSection>
+
+      <EditorSection title="Semantic colors">
+        <div className="mt-2 flex items-center gap-2">
+          {semanticColors.map((color) => (
+            <Skeleton key={color.name} show={!isSuccess}>
+              <ColorKeys name={color.name} currentMode={resolvedMode} />
+            </Skeleton>
+          ))}
+        </div>
+        <div className="mt-3 space-y-2">
+          {semanticColors.map((color) => (
+            <div key={color.name} className="flex items-center gap-2">
+              <p className="w-16 text-sm text-fg-muted">{color.label}</p>
+              <div className="flex flex-1 items-center gap-1">
+                {generatedTheme
+                  .find((elem) => elem.name === color.name)
+                  ?.values.map((color, index) => (
+                    <Tooltip
+                      key={index}
+                      content={`${color.name}-${(index + 1) * 100}`}
+                      delay={0}
+                    >
+                      <Skeleton show={!isSuccess}>
+                        <AriaButton
+                          className="h-8 flex-1 rounded-sm border"
+                          style={{
+                            backgroundColor: color.value,
+                          }}
+                        />
+                      </Skeleton>
+                    </Tooltip>
+                  ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </EditorSection>
+
+      <EditorSection title="Tokens">
+        <div className="mt-2 space-y-8">
+          {Object.entries(tokensByCategory).map(
+            ([category, categoryTokens]) => (
+              <div key={category}>
+                <h3 className="mb-3 text-sm font-medium text-fg-muted">
+                  {tokenCategories[category as keyof typeof tokenCategories]}
+                </h3>
+                <Skeleton show={!isSuccess}>
+                  <TableRoot
+                    aria-label={`${tokenCategories[category as keyof typeof tokenCategories]} Tokens`}
+                    className="-mr-6 w-full"
+                  >
+                    <TableHeader>
+                      <TableColumn id="name" isRowHeader className="pl-0">
+                        Variable name
+                      </TableColumn>
+                      <TableColumn id="description">Description</TableColumn>
+                      <TableColumn id="value" className="pr-0">
+                        Value
+                      </TableColumn>
+                    </TableHeader>
+                    <TableBody
+                      items={categoryTokens.map((token) => ({
+                        id: token.name,
+                        ...token,
+                      }))}
+                    >
+                      {(token) => (
+                        <TableRow>
+                          <TableCell className="pl-0">{token.name}</TableCell>
+                          <TableCell>{token.description}</TableCell>
+                          <TableCell className="pr-0">
+                            <SelectRoot defaultSelectedKey={token.value}>
+                              <Button
+                                size="sm"
+                                suffix={
+                                  <ChevronsUpDownIcon className="text-fg-muted" />
+                                }
+                                className="w-40"
+                              >
+                                <SelectValue />
+                              </Button>
+                              <Popover>
+                                <ListBox items={token.items}>
+                                  {(item) => (
+                                    <ListBoxItem
+                                      key={item.name}
+                                      id={item.name}
+                                      className="flex items-center gap-2"
+                                      prefix={
+                                        <span
+                                          className="size-4 rounded-sm border"
+                                          style={{
+                                            backgroundColor: item.value,
+                                          }}
+                                        />
+                                      }
+                                    >
+                                      {item.label}
+                                    </ListBoxItem>
+                                  )}
+                                </ListBox>
+                              </Popover>
+                            </SelectRoot>
+                          </TableCell>
+                        </TableRow>
+                      )}
+                    </TableBody>
+                  </TableRoot>
+                </Skeleton>
+              </div>
+            ),
+          )}
+        </div>
+      </EditorSection>
     </div>
   );
 }

@@ -61,7 +61,7 @@ const createStyleSchema = z.object({
   }),
   layout: z.object({
     radius: z.number().min(0).max(2),
-    spacing: z.number().min(0.1).max(0.35).step(0.05),
+    spacing: z.number().min(0.1).max(0.35),
   }),
   typography: z.object({
     fonts: z.object({
@@ -97,6 +97,7 @@ interface StyleFormContextType {
   generatedTheme: ContrastColor[];
   generatedStyle: Style;
   isSuccess: boolean;
+  resolvedMode: "light" | "dark";
 }
 
 const StyleFormContext = createContext<StyleFormContextType | null>(null);
@@ -397,42 +398,49 @@ export function StyleFormProvider({ children }: StyleFormProviderProps) {
       : undefined,
   });
 
+  const colorMode = form.watch("colors.mode");
+  const resolvedMode = "dark"
+
+  console.log("resolvedMode", resolvedMode);
+
   const neutralColorKeys = form
-    .watch(`colors.${currentMode}.colors.neutral.colorKeys`)
+    .watch(`colors.${resolvedMode}.colors.neutral.colorKeys`)
     .map((color) => color.color) as CssColor[];
   const neutralRatios = form.watch(
-    `colors.${currentMode}.colors.neutral.ratios`,
+    `colors.${resolvedMode}.colors.neutral.ratios`,
   );
-  const lightness = form.watch(`colors.${currentMode}.lightness`);
-  const saturation = form.watch(`colors.${currentMode}.saturation`);
-  const contrast = form.watch(`colors.${currentMode}.contrast`) / 100;
+  const lightness = form.watch(`colors.${resolvedMode}.lightness`);
+  const saturation = form.watch(`colors.${resolvedMode}.saturation`);
+  const contrast = form.watch(`colors.${resolvedMode}.contrast`) / 100;
 
   const accentColorKeys = form
-    .watch(`colors.${currentMode}.colors.accent.colorKeys`)
+    .watch(`colors.${resolvedMode}.colors.accent.colorKeys`)
     .map((color) => color.color) as CssColor[];
-  const accentRatios = form.watch(`colors.${currentMode}.colors.accent.ratios`);
+  const accentRatios = form.watch(
+    `colors.${resolvedMode}.colors.accent.ratios`,
+  );
   const successColorKeys = form
-    .watch(`colors.${currentMode}.colors.success.colorKeys`)
+    .watch(`colors.${resolvedMode}.colors.success.colorKeys`)
     .map((color) => color.color) as CssColor[];
   const successRatios = form.watch(
-    `colors.${currentMode}.colors.success.ratios`,
+    `colors.${resolvedMode}.colors.success.ratios`,
   );
   const warningColorKeys = form
-    .watch(`colors.${currentMode}.colors.warning.colorKeys`)
+    .watch(`colors.${resolvedMode}.colors.warning.colorKeys`)
     .map((color) => color.color) as CssColor[];
   const warningRatios = form.watch(
-    `colors.${currentMode}.colors.warning.ratios`,
+    `colors.${resolvedMode}.colors.warning.ratios`,
   );
   const dangerColorKeys = form
-    .watch(`colors.${currentMode}.colors.danger.colorKeys`)
+    .watch(`colors.${resolvedMode}.colors.danger.colorKeys`)
     .map((color) => color.color) as CssColor[];
   const dangerRatios = form
-    .watch(`colors.${currentMode}.colors.danger.ratios`)
+    .watch(`colors.${resolvedMode}.colors.danger.ratios`)
     .map((ratio) => ratio);
   const infoColorKeys = form
-    .watch(`colors.${currentMode}.colors.info.colorKeys`)
+    .watch(`colors.${resolvedMode}.colors.info.colorKeys`)
     .map((color) => color.color) as CssColor[];
-  const infoRatios = form.watch(`colors.${currentMode}.colors.info.ratios`);
+  const infoRatios = form.watch(`colors.${resolvedMode}.colors.info.ratios`);
 
   const generatedTheme = useMemo(() => {
     const neutral = new LeonardoBgColor({
@@ -559,6 +567,7 @@ export function StyleFormProvider({ children }: StyleFormProviderProps) {
     generatedTheme,
     generatedStyle,
     isSuccess,
+    resolvedMode,
   };
 
   return <StyleFormContext value={value}>{children}</StyleFormContext>;

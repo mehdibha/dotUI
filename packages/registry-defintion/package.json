@@ -7,17 +7,47 @@
   "module": "src/index.ts",
   "types": "src/index.ts",
   "exports": {
-    ".": "./src/index.ts",
-    "./types": "./src/types.ts",
-    "./registry-ui": "./src/registry-ui.ts",
-    "./registry-base": "./src/registry-base.ts",
-    "./registry-blocks": "./src/registry-blocks.ts",
-    "./registry-hooks": "./src/registry-hooks.ts",
-    "./registry-lib": "./src/registry-lib.ts",
-    "./registry-icons": "./src/registry-icons.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./src/index.ts"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts",
+      "default": "./src/types.ts"
+    },
+    "./registry-ui": {
+      "types": "./dist/registry-ui.d.ts",
+      "default": "./src/registry-ui.ts"
+    },
+    "./registry-base": {
+      "types": "./dist/registry-base.d.ts",
+      "default": "./src/registry-base.ts"
+    },
+    "./registry-blocks": {
+      "types": "./dist/registry-blocks.d.ts",
+      "default": "./src/registry-blocks.ts"
+    },
+    "./registry-hooks": {
+      "types": "./dist/registry-hooks.d.ts",
+      "default": "./src/registry-hooks.ts"
+    },
+    "./registry-lib": {
+      "types": "./dist/registry-lib.d.ts",
+      "default": "./src/registry-lib.ts"
+    },
+    "./registry-icons": {
+      "types": "./dist/registry-icons.d.ts",
+      "default": "./src/registry-icons.ts"
+    },
+    "./registry-tokens": {
+      "types": "./dist/registry-tokens.d.ts",
+      "default": "./src/registry-tokens.ts"
+    }
   },
   "license": "MIT",
   "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint",

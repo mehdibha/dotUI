@@ -11,7 +11,7 @@ import {
   InstallTab,
   InstallTabs,
 } from "@/modules/docs/components/install-tabs";
-import { useStyleForm } from "../lib/form-context";
+import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
 
 const packageManagers: ("npm" | "pnpm" | "yarn" | "bun")[] = [
   "npm",

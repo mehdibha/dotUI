@@ -1,8 +1,8 @@
 import { Preview } from "@/components/preview";
 import { buildTimeCaller } from "@/lib/trpc/server";
-import StylePageForm from "@/modules/styles/components/style-page-form";
 import { StylePageHeader } from "@/modules/styles/components/style-page-header";
 import { StylePageNav } from "@/modules/styles/components/style-page-nav";
+import StylePageForm from "@/modules/styles/providers/style-pages-provider";
 import { Providers } from "./providers";
 
 export const generateStaticParams = async () => {

@@ -41,6 +41,7 @@ import { Tooltip } from "@dotui/ui/components/tooltip";
 import { cn } from "@dotui/ui/lib/utils";
 
 import { useStyleForm } from "@/modules/styles/lib/form-context";
+import { EditorSection } from "./editor-section";
 
 interface SectionProps extends React.ComponentProps<"div"> {
   name: string;
@@ -49,7 +50,7 @@ interface SectionProps extends React.ComponentProps<"div"> {
   previewClassName?: string;
 }
 
-const Section = ({
+const ComponentSection = ({
   name,
   title,
   variants,
@@ -60,12 +61,7 @@ const Section = ({
   const { form, isSuccess } = useStyleForm();
 
   return (
-    <div className={cn(className)}>
-      <p
-        className={cn("text-base font-semibold", title !== "Loader" && "mt-6")}
-      >
-        {title}
-      </p>
+    <EditorSection title={title} className={className}>
       <Skeleton show={!isSuccess}>
         <FormControl
           name={`variants.${name}`}
@@ -94,14 +90,14 @@ const Section = ({
       >
         {children}
       </div>
-    </div>
+    </EditorSection>
   );
 };
 
 export function StyleComponentsEditor() {
   return (
     <div>
-      <Section
+      <ComponentSection
         name="loader"
         title="Loader"
         variants={[
@@ -115,9 +111,9 @@ export function StyleComponentsEditor() {
       >
         <Loader />
         <Button isPending>Submit</Button>
-      </Section>
+      </ComponentSection>
 
-      <Section
+      <ComponentSection
         name="focus-style"
         title="Focus style"
         variants={[{ id: "basic", label: "Basic" }]}
@@ -136,9 +132,9 @@ export function StyleComponentsEditor() {
           <Button>Button</Button>
           <TextField placeholder="hello@mehdibha.com" />
         </div>
-      </Section>
+      </ComponentSection>
 
-      <Section
+      <ComponentSection
         name="buttons"
         title="Buttons"
         variants={[
@@ -197,9 +193,9 @@ export function StyleComponentsEditor() {
             <BookmarkIcon />
           </ToggleButton>
         </div>
-      </Section>
+      </ComponentSection>
 
-      <Section
+      <ComponentSection
         name="inputs"
         title="Inputs"
         variants={[
@@ -245,9 +241,9 @@ export function StyleComponentsEditor() {
           description="Type your description"
           className="col-span-2 w-full"
         />
-      </Section>
+      </ComponentSection>
 
-      <Section
+      <ComponentSection
         name="pickers"
         title="Pickers"
         variants={[{ id: "basic", label: "Basic" }]}
@@ -267,9 +263,9 @@ export function StyleComponentsEditor() {
           <ComboboxItem id="united-kingdom">United Kingdom</ComboboxItem>
         </Combobox>
         <DatePicker className="w-full" />
-      </Section>
+      </ComponentSection>
 
-      <Section
+      <ComponentSection
         name="selection"
         title="Selection"
         variants={[{ id: "basic", label: "Basic" }]}
@@ -279,9 +275,9 @@ export function StyleComponentsEditor() {
           <SelectItem id="option-2">Option 2</SelectItem>
           <SelectItem id="option-3">Option 3</SelectItem>
         </Select>
-      </Section>
+      </ComponentSection>
 
-      <Section
+      <ComponentSection
         name="calendars"
         title="Calendars"
         variants={[{ id: "basic", label: "Basic" }]}
@@ -293,9 +289,9 @@ export function StyleComponentsEditor() {
             end: parseDate("2020-02-12"),
           }}
         />
-      </Section>
+      </ComponentSection>
 
-      <Section
+      <ComponentSection
         name="list-box-and-menu"
         title="ListBox and menu"
         variants={[{ id: "basic", label: "Basic" }]}
@@ -332,8 +328,9 @@ export function StyleComponentsEditor() {
             <MenuItem>Log out</MenuItem>
           </Menu>
         </MenuRoot>
-      </Section>
-      <Section
+      </ComponentSection>
+
+      <ComponentSection
         name="overlays"
         title="Overlays"
         variants={[{ id: "basic", label: "Basic" }]}
@@ -375,8 +372,9 @@ export function StyleComponentsEditor() {
             </DialogFooter>
           </Dialog>
         </DialogRoot>
-      </Section>
-      <Section
+      </ComponentSection>
+
+      <ComponentSection
         name="checkboxes"
         title="Checkboxes"
         variants={[{ id: "basic", label: "Basic" }]}
@@ -387,8 +385,9 @@ export function StyleComponentsEditor() {
         <Checkbox appearance="card" defaultSelected>
           Hello world
         </Checkbox>
-      </Section>
-      <Section
+      </ComponentSection>
+
+      <ComponentSection
         name="radios"
         title="Radios"
         variants={[{ id: "basic", label: "Basic" }]}
@@ -404,8 +403,9 @@ export function StyleComponentsEditor() {
           <Radio value="option-2">Option 2</Radio>
           <Radio value="option-3">Option 3</Radio>
         </RadioGroup>
-      </Section>
-      <Section
+      </ComponentSection>
+
+      <ComponentSection
         name="switch"
         title="Switch"
         variants={[{ id: "basic", label: "Basic" }]}
@@ -418,16 +418,18 @@ export function StyleComponentsEditor() {
             Dark mode
           </Switch>
         </div>
-      </Section>
-      <Section
+      </ComponentSection>
+
+      <ComponentSection
         name="slider"
         title="Slider"
         variants={[{ id: "basic", label: "Basic" }]}
         previewClassName="flex-col gap-4"
       >
         <Slider defaultValue={50} aria-label="Basic slider" />
-      </Section>
-      <Section
+      </ComponentSection>
+
+      <ComponentSection
         name="badge-and-tag-group"
         title="Badge & TagGroup"
         variants={[{ id: "basic", label: "Basic" }]}
@@ -446,8 +448,9 @@ export function StyleComponentsEditor() {
           <Badge size="md">Medium</Badge>
           <Badge size="lg">Large</Badge>
         </div>
-      </Section>
-      <Section
+      </ComponentSection>
+
+      <ComponentSection
         name="tooltip"
         title="Tooltip"
         variants={[{ id: "basic", label: "Basic" }]}
@@ -456,7 +459,7 @@ export function StyleComponentsEditor() {
         <Tooltip content="This is a tooltip">
           <Button>Hover me</Button>
         </Tooltip>
-      </Section>
+      </ComponentSection>
     </div>
   );
 }
