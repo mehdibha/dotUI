@@ -37,12 +37,13 @@ import { Tooltip } from "@dotui/ui/components/tooltip";
 import { ThemeModeSwitch } from "@/components/theme-mode-switch";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
+import { ColorScale } from "./color-scale";
 import { EditorSection } from "./editor-section";
 import { ColorKeys } from "./key-colors";
 
 const baseColors = [
-  { name: "neutral", label: "Neutral", color: "#000000" },
-  { name: "accent", label: "Accent", color: "#0b36a3" },
+  { name: "neutral", label: "Neutral" },
+  { name: "accent", label: "Accent" },
 ] as const;
 
 const semanticColors = [
@@ -214,80 +215,46 @@ export function StyleColorsEditor() {
 
       <EditorSection title="Base colors">
         <div className="mt-2 flex items-center gap-2">
-          {currentModeIndex !== -1 &&
-            baseColors.map((color) => (
-              <Skeleton key={color.name} show={!isSuccess}>
-                <ColorKeys
-                  name={color.name}
-                  currentModeIndex={currentModeIndex}
-                  colorScale="baseScales"
-                />
-              </Skeleton>
-            ))}
-        </div>
-        {/* <div className="mt-3 space-y-2">
           {baseColors.map((color) => (
-            <div key={color.name} className="flex items-center gap-2">
-              <p className="w-16 text-sm text-fg-muted">{color.label}</p>
-              <div className="flex flex-1 items-center gap-1">
-                {generatedTheme
-                  .find((elem) => elem.name === color.name)
-                  ?.values.map((color, index) => (
-                    <Tooltip key={index} content={color.name} delay={0}>
-                      <Skeleton show={!isSuccess} className="flex-1">
-                        <AriaButton
-                          className="h-8 flex-1 rounded-sm border"
-                          style={{ backgroundColor: color.value }}
-                        />
-                      </Skeleton>
-                    </Tooltip>
-                  ))}
-              </div>
-            </div>
+            <Skeleton key={color.name} show={!isSuccess}>
+              <ColorKeys
+                name={color.name}
+                currentModeIndex={currentModeIndex}
+              />
+            </Skeleton>
           ))}
-        </div> */}
+        </div>
+        <div className="mt-3 space-y-2">
+          {baseColors.map((color) => (
+            <ColorScale
+              key={color.name}
+              name={color.name}
+              label={color.label}
+            />
+          ))}
+        </div>
       </EditorSection>
 
       <EditorSection title="Semantic colors">
         <div className="mt-2 flex items-center gap-2">
-          {currentModeIndex !== -1 &&
-            semanticColors.map((color) => (
-              <Skeleton key={color.name} show={!isSuccess}>
-                <ColorKeys
-                  name={color.name}
-                  currentModeIndex={currentModeIndex}
-                  colorScale="semanticScales"
-                />
-              </Skeleton>
-            ))}
-        </div>
-        {/* <div className="mt-3 space-y-2">
           {semanticColors.map((color) => (
-            <div key={color.name} className="flex items-center gap-2">
-              <p className="w-16 text-sm text-fg-muted">{color.label}</p>
-              <div className="flex flex-1 items-center gap-1">
-                {generatedTheme
-                  .find((elem) => elem.name === color.name)
-                  ?.values.map((color, index) => (
-                    <Tooltip
-                      key={index}
-                      content={`${color.name}-${(index + 1) * 100}`}
-                      delay={0}
-                    >
-                      <Skeleton show={!isSuccess}>
-                        <AriaButton
-                          className="h-8 flex-1 rounded-sm border"
-                          style={{
-                            backgroundColor: color.value,
-                          }}
-                        />
-                      </Skeleton>
-                    </Tooltip>
-                  ))}
-              </div>
-            </div>
+            <Skeleton key={color.name} show={!isSuccess}>
+              <ColorKeys
+                name={color.name}
+                currentModeIndex={currentModeIndex}
+              />
+            </Skeleton>
           ))}
-        </div> */}
+        </div>
+        <div className="mt-3 space-y-2">
+          {semanticColors.map((color) => (
+            <ColorScale
+              key={color.name}
+              name={color.name}
+              label={color.label}
+            />
+          ))}
+        </div>
       </EditorSection>
 
       {/* <EditorSection title="Tokens">

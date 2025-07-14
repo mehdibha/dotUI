@@ -33,22 +33,20 @@ import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
 export function ColorKeys({
   currentModeIndex,
   name,
-  colorScale = "baseScales",
 }: {
   currentModeIndex: number;
   name: "neutral" | "accent" | "success" | "warning" | "danger" | "info";
-  colorScale?: "baseScales" | "semanticScales";
 }) {
   const { form } = useStyleForm();
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
-    name: `theme.colors.modes.${currentModeIndex}.${colorScale}.${name}.colorKeys`,
+    name: `theme.colors.modes.${currentModeIndex}.scales.${name}.colorKeys`,
   });
 
   const colorKeys = form
     .watch(
-      `theme.colors.modes.${currentModeIndex}.${colorScale}.${name}.colorKeys`,
+      `theme.colors.modes.${currentModeIndex}.scales.${name}.colorKeys`,
     )
     .map((color) => color.color) as CssColor[];
   const ratios = Array.from({ length: 19 }, (_, i) => i + 1);
@@ -61,7 +59,7 @@ export function ColorKeys({
   const contrast =
     form.watch(`theme.colors.modes.${currentModeIndex}.contrast`) / 100;
   const neutralColorKeys = form.watch(
-    `theme.colors.modes.${currentModeIndex}.baseScales.neutral.colorKeys`,
+    `theme.colors.modes.${currentModeIndex}.scales.neutral.colorKeys`,
   );
 
   const dynamicGradient = useMemo(() => {
@@ -121,7 +119,7 @@ export function ColorKeys({
               <div key={field.id} className="flex items-center">
                 <FormControl
                   control={form.control}
-                  name={`theme.colors.modes.${currentModeIndex}.${colorScale}.${name}.colorKeys.${index}.color`}
+                  name={`theme.colors.modes.${currentModeIndex}.scales.${name}.colorKeys.${index}.color`}
                   render={({ onChange, ...props }) => {
                     return (
                       <ColorPickerRoot
@@ -171,7 +169,7 @@ export function ColorKeys({
           </div>
           <p className="text-sm text-fg-muted">Ratios</p>
           <FormControl
-            name={`theme.colors.modes.${currentModeIndex}.${colorScale}.${name}.ratios`}
+            name={`theme.colors.modes.${currentModeIndex}.scales.${name}.ratios`}
             control={form.control}
             render={(props) => (
               <div className="flex flex-1 items-start gap-4">

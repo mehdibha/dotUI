@@ -172,18 +172,14 @@ export const createRadiusVars = (radius: Radius): Theme => {
 export const createModeCssVars = (
   modeDefinition: ModeDefinition,
 ): Record<string, string> => {
-  const { neutral: neutralScale, ...restBaseScales } =
-    modeDefinition.baseScales;
+  const { neutral: neutralScale, ...restScales } = modeDefinition.scales;
   const neutral = new LeonardoBgColor({
     name: "neutral",
     colorKeys: neutralScale.colorKeys.map((color) => color.color) as CssColor[],
     ratios: neutralScale.ratios,
   });
 
-  const colors = Object.entries({
-    ...modeDefinition.semanticScales,
-    ...restBaseScales,
-  }).map(([name, val]) => {
+  const colors = Object.entries(restScales).map(([name, val]) => {
     const props = {
       name,
       colorKeys: val.colorKeys.map((color) => color.color) as CssColor[],

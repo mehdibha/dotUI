@@ -43,9 +43,9 @@ const config = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  experimental: {
-    reactCompiler: true,
-  },
+  // experimental: {
+  //   reactCompiler: true,
+  // },
   webpack: (config, { dev, isServer }) => {
     config.ignoreWarnings = [
       ...(config.ignoreWarnings || []),

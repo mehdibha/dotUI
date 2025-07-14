@@ -109,7 +109,7 @@ const fakeData: StyleFormData = {
           lightness: 97,
           saturation: 100,
           contrast: 100,
-          baseScales: {
+          scales: {
             neutral: {
               colorKeys: [{ id: 0, color: "#000000" }],
               ratios: [1.05, 1.25, 1.7, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
@@ -120,8 +120,6 @@ const fakeData: StyleFormData = {
               ratios: [1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
               overrides: {},
             },
-          },
-          semanticScales: {
             success: {
               colorKeys: [{ id: 0, color: "#1A9338" }],
               ratios: [1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
@@ -149,7 +147,7 @@ const fakeData: StyleFormData = {
           lightness: 3,
           saturation: 100,
           contrast: 100,
-          baseScales: {
+          scales: {
             neutral: {
               colorKeys: [{ id: 0, color: "#ffffff" }],
               ratios: [1.05, 1.25, 1.7, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
@@ -160,8 +158,6 @@ const fakeData: StyleFormData = {
               ratios: [1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
               overrides: {},
             },
-          },
-          semanticScales: {
             success: {
               colorKeys: [{ id: 0, color: "#1A9338" }],
               ratios: [1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],

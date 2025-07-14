@@ -31,11 +31,9 @@ export const modeDefinitionSchema = z.object({
   lightness: z.number().min(0).max(100),
   saturation: z.number().min(0).max(100),
   contrast: z.number().min(0).max(500),
-  baseScales: z.object({
+  scales: z.object({
     neutral: colorScaleSchema,
     accent: colorScaleSchema,
-  }),
-  semanticScales: z.object({
     success: colorScaleSchema,
     warning: colorScaleSchema,
     danger: colorScaleSchema,
@@ -103,7 +101,6 @@ export const themeDefinitionSchema = z.object({
   shadows: shadowsSchema,
 });
 
-
 // Variants
 export const variantsDefinitionSchema = z.object({
   alert: z.enum(["basic", "notch", "notch-2"]),
@@ -148,7 +145,8 @@ export const minimizedThemeDefinitionSchema = z.object({
   shadows: shadowsSchema.optional(),
 });
 
-export const minimizedVariantsDefinitionSchema = variantsDefinitionSchema.partial();
+export const minimizedVariantsDefinitionSchema =
+  variantsDefinitionSchema.partial();
 
 export const minimizedStyleDefinitionSchema = z.object({
   theme: minimizedThemeDefinitionSchema,
