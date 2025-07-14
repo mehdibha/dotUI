@@ -1,14 +1,18 @@
 "use client";
 
+import React from "react";
 import {
+  CheckIcon,
   ChevronsUpDownIcon,
   ContrastIcon,
   MoonIcon,
   SunIcon,
+  XIcon,
 } from "lucide-react";
 import { Button as AriaButton } from "react-aria-components";
 import { useFieldArray } from "react-hook-form";
 
+import { COLOR_TOKENS } from "@dotui/registry-definition/registry-tokens";
 import { DESIGN_TOKENS } from "@dotui/style-engine/constants";
 import { Button } from "@dotui/ui/components/button";
 import { Label } from "@dotui/ui/components/field";
@@ -32,6 +36,7 @@ import {
   TableRoot,
   TableRow,
 } from "@dotui/ui/components/table";
+import { TextField } from "@dotui/ui/components/text-field";
 import { Tooltip } from "@dotui/ui/components/tooltip";
 
 import { ThemeModeSwitch } from "@/components/theme-mode-switch";
@@ -66,6 +71,21 @@ export function StyleColorsEditor() {
   const currentModeIndex = colorModes.findIndex(
     (mode) => mode.mode === currentMode,
   );
+
+  const formTokens = form.watch("theme.colors.tokens");
+  const tokens = Object.entries(
+    formTokens as Record<string, { name: string; value: string }>,
+  );
+  // const tokens = Object.entries(formTokens).map(([name, value]) => {
+  //   const registryToken = COLOR_TOKENS.find((token) => token.name === name);
+  //   return {
+  //     name,
+  //     value: value,
+  //     description: registryToken?.description || "",
+  //     categories: registryToken?.categories || [],
+  //     defaultValue: registryToken?.defaultValue || "",
+  // //   }
+  // });
 
   return (
     <div>
@@ -257,17 +277,34 @@ export function StyleColorsEditor() {
         </div>
       </EditorSection>
 
-      {/* <EditorSection title="Tokens">
+      <EditorSection title="Tokens">
         <div className="mt-2 space-y-8">
-          {Object.entries(tokensByCategory).map(
-            ([category, categoryTokens]) => (
-              <div key={category}>
+          {(
+            [
+              { label: "Backgrounds", name: "background" },
+              { label: "Foregrounds", name: "foreground" },
+              { label: "Borders", name: "border" },
+            ] as const
+          ).map((category) => {
+            const categoryTokens = COLOR_TOKENS.filter((token) =>
+              (token.categories as unknown as string[]).includes(category.name),
+            ).map((token) => ({
+              name: formTokens[token.name]
+                .name as (typeof COLOR_TOKENS)[number]["name"],
+              description: token.description,
+              value: formTokens[token.name].value,
+            }));
+
+            if (categoryTokens.length === 0) return null;
+
+            return (
+              <div key={category.name}>
                 <h3 className="mb-3 text-sm font-medium text-fg-muted">
-                  {tokenCategories[category as keyof typeof tokenCategories]}
+                  {category.label}
                 </h3>
                 <Skeleton show={!isSuccess}>
                   <TableRoot
-                    aria-label={`${tokenCategories[category as keyof typeof tokenCategories]} Tokens`}
+                    aria-label={`${category.label} Tokens`}
                     className="-mr-6 w-full"
                   >
                     <TableHeader>
@@ -287,41 +324,13 @@ export function StyleColorsEditor() {
                     >
                       {(token) => (
                         <TableRow>
-                          <TableCell className="pl-0">{token.name}</TableCell>
-                          <TableCell>{token.description}</TableCell>
+                          <TableCell className="pl-0">
+                            <ColorTokenVariableName token={token} />
+                          </TableCell>
+                          {/* <TableCell>{token.description}</TableCell> */}
+                          <TableCell>description</TableCell>
                           <TableCell className="pr-0">
-                            <SelectRoot defaultSelectedKey={token.value}>
-                              <Button
-                                size="sm"
-                                suffix={
-                                  <ChevronsUpDownIcon className="text-fg-muted" />
-                                }
-                                className="w-40"
-                              >
-                                <SelectValue />
-                              </Button>
-                              <Popover>
-                                <ListBox items={token.items}>
-                                  {(item) => (
-                                    <ListBoxItem
-                                      key={item.name}
-                                      id={item.name}
-                                      className="flex items-center gap-2"
-                                      prefix={
-                                        <span
-                                          className="size-4 rounded-sm border"
-                                          style={{
-                                            backgroundColor: item.value,
-                                          }}
-                                        />
-                                      }
-                                    >
-                                      {item.label}
-                                    </ListBoxItem>
-                                  )}
-                                </ListBox>
-                              </Popover>
-                            </SelectRoot>
+                            <ColorTokenValue token={token} />
                           </TableCell>
                         </TableRow>
                       )}
@@ -329,68 +338,109 @@ export function StyleColorsEditor() {
                   </TableRoot>
                 </Skeleton>
               </div>
-            ),
-          )}
+            );
+          })}
         </div>
-      </EditorSection> */}
+      </EditorSection>
     </div>
   );
 }
 
-interface Token {
-  name: string;
-  value: string;
-  description: string;
-  items: {
-    name: string;
-    label: string;
-    value: string;
-  }[];
-}
+const ColorTokenVariableName = ({
+  token,
+}: {
+  token: { name: (typeof COLOR_TOKENS)[number]["name"]; value: string };
+}) => {
+  const { form } = useStyleForm();
+  const [isEditMode, setEditMode] = React.useState(false);
 
-const tokenCategories = {
-  background: "Backgrounds",
-  foreground: "Foregrounds",
-  border: "Borders",
-} as const;
+  if (isEditMode) {
+    return (
+      <FormControl
+        name={`theme.colors.tokens.${token.name}.name`}
+        control={form.control}
+        render={({ value, onChange, ...props }) => (
+          <TextField
+            size="sm"
+            autoFocus
+            value={value}
+            onChange={onChange}
+            {...props}
+          />
+        )}
+      />
+    );
+  }
 
-const colorCategories = ["background", "foreground", "border"] as const;
+  return (
+    <Button
+      size="sm"
+      className="font-mono text-xs"
+      onClick={() => setEditMode(true)}
+    >
+      {token.name}
+    </Button>
+  );
+};
 
-const tokensByCategory = Object.fromEntries(
-  colorCategories.map((category) => [
-    category,
-    DESIGN_TOKENS.filter(
-      (token) =>
-        token.category === category &&
-        token.name.startsWith("color") &&
-        !token.name.includes("-fg-on") &&
-        !token.name.includes("-hover") &&
-        !token.name.includes("-active") &&
-        !token.name.includes("-muted"),
-    )
-      .map((token) => {
-        const match = /var\(--([a-z]+)-(\d+)\)/.exec(token.defaultValue);
+const ColorTokenValue = ({
+  token,
+}: {
+  token: { name: (typeof COLOR_TOKENS)[number]["name"]; value: string };
+}) => {
+  const { form } = useStyleForm();
 
-        if (!match || !match[1] || !match[2]) {
-          return null;
-        }
+  const [color] = token.value
+    .replace("var(--", "")
+    .replace(")", "")
+    .split("-") as [string, string];
 
-        const baseColor = match[1];
-        const shade = match[2];
+  const items = Array.from({ length: 10 }, (_, i) => ({
+    label: `${color.charAt(0).toUpperCase() + color.slice(1)} ${(i + 1) * 100}`,
+    value: `var(--${color}-${(i + 1) * 100})`,
+  }));
 
-        const items = Array.from({ length: 10 }, (_, index) => ({
-          name: `${baseColor}-${(index + 1) * 100}`,
-          label: `${baseColor.charAt(0).toUpperCase() + baseColor.slice(1)} ${(index + 1) * 100}`,
-          value: `var(--${baseColor}-${(index + 1) * 100})`,
-        }));
+  console.log({
+    value: form.watch(`theme.colors.tokens.${token.name}.value`),
+    items,
+  });
 
-        return {
-          name: token.name,
-          value: `${baseColor}-${shade}`,
-          description: token.description,
-          items,
-        };
-      })
-      .filter((token): token is Token => token !== null),
-  ]),
-);
+  return (
+    <FormControl
+      name={`theme.colors.tokens.${token.name}.value`}
+      control={form.control}
+      render={({ value, onChange, ...props }) => (
+        <SelectRoot selectedKey={value} onSelectionChange={onChange} {...props}>
+          <Button
+            size="sm"
+            suffix={<ChevronsUpDownIcon className="text-fg-muted" />}
+            className="w-40"
+          >
+            <SelectValue />
+          </Button>
+          <Popover>
+            <ListBox items={items}>
+              {(item) => (
+                <ListBoxItem
+                  key={item.name}
+                  id={item.value}
+                  className="flex items-center gap-2"
+                  prefix={
+                    <span
+                      className="size-4 rounded-sm border"
+                      style={{
+                        backgroundColor: item.value,
+                      }}
+                    />
+                  }
+                >
+                  {item.label}
+                </ListBoxItem>
+              )}
+            </ListBox>
+          </Popover>
+        </SelectRoot>
+      )}
+    />
+  );
+};

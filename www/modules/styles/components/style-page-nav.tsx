@@ -18,16 +18,6 @@ export function StylePageNav({
   const { style } = useParams<{ style: string }>();
   const pathname = usePathname();
 
-  console.log("🔄 StylePageNav rerender", {
-    style,
-    pathname,
-    timestamp: new Date().toISOString(),
-  });
-
-  React.useEffect(() => {
-    console.log("📍 StylePageNav mounted/updated", { style, pathname });
-  });
-
   return (
     <Tabs variant="solid" selectedKey={pathname} {...props}>
       <TabList className="flex-wrap bg-transparent px-0 py-4">
