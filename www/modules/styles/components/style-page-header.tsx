@@ -24,6 +24,7 @@ import { Skeleton } from "@dotui/ui/components/skeleton";
 import { TextField } from "@dotui/ui/components/text-field";
 import { Tooltip } from "@dotui/ui/components/tooltip";
 
+import { AutoResizeTextField } from "@/components/auto-resize-input";
 import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
 import { PublishStyleModal } from "./publish-style-modal";
 import { StylePageCodeModal } from "./style-page-code-modal";
@@ -50,49 +51,92 @@ export function StylePageHeader() {
 function StylePageHeaderName() {
   const { form, isSuccess } = useStyleForm();
   const [isEditMode, setEditMode] = React.useState(false);
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  const containerRef = React.useRef<HTMLDivElement>(null);
+
+  const onDismiss = React.useCallback(() => {
+    form.resetField("name");
+    setEditMode(false);
+  }, [form]);
+
+  React.useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(e.target as Node) &&
+        inputRef.current
+      ) {
+        onDismiss();
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [onDismiss]);
+
+  React.useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isEditMode) {
+        onDismiss();
+      }
+    };
+    const handleEnter = (e: KeyboardEvent) => {
+      if (e.key === "Enter" && isEditMode) {
+        setEditMode(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleEscape);
+    document.addEventListener("keydown", handleEnter);
+    return () => {
+      document.removeEventListener("keydown", handleEscape);
+      document.removeEventListener("keydown", handleEnter);
+    };
+  }, [onDismiss, isEditMode]);
 
   return (
     <Skeleton show={!isSuccess}>
       <FormControl
         name="name"
         control={form.control}
-        render={({ value, onChange, ...props }) =>
+        render={(props) =>
           isEditMode ? (
-            <div className="flex items-center gap-2">
-              <TextField
-                size="sm"
+            <div ref={containerRef} className="flex items-center gap-2">
+              <AutoResizeTextField
+                inputRef={inputRef}
                 autoFocus
-                value={value}
-                onChange={onChange}
+                className="text-2xl leading-none font-bold"
                 {...props}
               />
               <Button
                 size="sm"
                 shape="square"
                 variant="quiet"
-                onClick={() => setEditMode(false)}
+                className="size-7"
+                onPress={() => setEditMode(false)}
               >
-                <CheckIcon />
+                <CheckIcon className="text-fg-success" />
               </Button>
               <Button
                 size="sm"
                 shape="square"
                 variant="quiet"
-                onClick={() => {
+                className="size-7"
+                onPress={() => {
                   form.resetField("name");
                   setEditMode(false);
                 }}
               >
-                <XIcon />
+                <XIcon className="text-fg-danger" />
               </Button>
             </div>
           ) : (
             <div className="flex items-center gap-2">
-              <h1 className="text-2xl leading-none font-bold">{value}</h1>
+              <h1 className="text-2xl leading-none font-bold">{props.value}</h1>
               <Button
                 size="sm"
                 variant="quiet"
                 shape="square"
+                className="size-7 text-fg-muted [&_svg]:size-3.5"
                 onClick={() => setEditMode(true)}
               >
                 <PencilIcon />

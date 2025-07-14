@@ -5,7 +5,7 @@ import { Skeleton } from "@dotui/ui/components/skeleton";
 import { Slider } from "@dotui/ui/components/slider";
 
 import { FontSelector } from "@/modules/styles/components/fonts-selector";
-import { useStyleForm } from "@/modules/styles/lib/form-context";
+import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
 import { EditorSection } from "./editor-section";
 
 export function StyleTypographyEditor() {
@@ -16,7 +16,7 @@ export function StyleTypographyEditor() {
       <EditorSection title="Font family">
         <Skeleton show={!isSuccess}>
           <FormControl
-            name="typography.fonts.heading"
+            name="theme.fonts.heading"
             control={form.control}
             render={({ value, onChange }) => (
               <FontSelector
@@ -30,7 +30,7 @@ export function StyleTypographyEditor() {
         </Skeleton>
         <Skeleton show={!isSuccess}>
           <FormControl
-            name="typography.fonts.body"
+            name="theme.fonts.body"
             control={form.control}
             render={({ value, onChange }) => (
               <FontSelector

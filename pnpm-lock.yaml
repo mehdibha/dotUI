@@ -385,31 +385,6 @@ importers:
         specifier: 'catalog:'
         version: 5.8.3
 
-  packages/validators:
-    dependencies:
-      zod:
-        specifier: 'catalog:'
-        version: 3.25.67
-    devDependencies:
-      '@dotui/eslint-config':
-        specifier: workspace:*
-        version: link:../../config/eslint
-      '@dotui/prettier-config':
-        specifier: workspace:*
-        version: link:../../config/prettier
-      '@dotui/ts-config':
-        specifier: workspace:*
-        version: link:../../config/ts-config
-      eslint:
-        specifier: 'catalog:'
-        version: 9.29.0(jiti@2.4.2)
-      prettier:
-        specifier: 'catalog:'
-        version: 3.6.1
-      typescript:
-        specifier: 'catalog:'
-        version: 5.8.3
-
   www:
     dependencies:
       '@adobe/leonardo-contrast-colors':

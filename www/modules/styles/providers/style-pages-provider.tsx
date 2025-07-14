@@ -12,6 +12,8 @@ import { COLOR_TOKENS } from "@dotui/registry-definition/registry-tokens";
 import { styleDefinitionSchema } from "@dotui/style-engine/schemas-v2";
 
 import { useTRPC } from "@/lib/trpc/react";
+import { useDebounce } from "@/hooks/use-debounce";
+import { useLiveStyleProducer } from "../atoms/live-style-atom";
 
 const formSchema = styleDefinitionSchema.extend({
   name: z.string().min(1),
@@ -46,6 +48,7 @@ export function StylePagesProvider({
   children: React.ReactNode;
 }) {
   const { style: slug } = useParams<{ style: string }>();
+  const { updateLiveStyle } = useLiveStyleProducer(slug);
 
   const trpc = useTRPC();
   const {
@@ -65,11 +68,15 @@ export function StylePagesProvider({
     values: style ? fakeData : undefined,
   });
 
-  const tokens = form.watch("theme.colors.tokens");
+  const debouncedLiveStyleData = useDebounce(form.watch(), 10);
 
   React.useEffect(() => {
-    console.log("tokens", tokens);
-  }, [tokens]);
+    updateLiveStyle(debouncedLiveStyleData);
+    console.log("debouncedLiveStyleData", debouncedLiveStyleData);
+  }, [debouncedLiveStyleData, updateLiveStyle]);
+
+  const test = form.watch();
+  console.log("test", test);
 
   return (
     <StyleFormContext.Provider

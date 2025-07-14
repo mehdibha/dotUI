@@ -24,7 +24,6 @@ import {
   SliderThumb,
   SliderTrack,
 } from "@dotui/ui/components/slider";
-import { TextField } from "@dotui/ui/components/text-field";
 import { Tooltip } from "@dotui/ui/components/tooltip";
 import { cn } from "@dotui/ui/lib/utils";
 

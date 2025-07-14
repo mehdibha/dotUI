@@ -1,4 +1,4 @@
-import type { Fonts } from "@dotui/style-engine/types";
+import type { Fonts } from "@dotui/style-engine/types-v2";
 
 export const FontsProvider = ({
   children,

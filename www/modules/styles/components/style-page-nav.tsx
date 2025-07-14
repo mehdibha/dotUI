@@ -17,7 +17,7 @@ export function StylePageNav({
 }: { children: React.ReactNode } & TabsProps) {
   const { style } = useParams<{ style: string }>();
   const pathname = usePathname();
-
+ 
   return (
     <Tabs variant="solid" selectedKey={pathname} {...props}>
       <TabList className="flex-wrap bg-transparent px-0 py-4">

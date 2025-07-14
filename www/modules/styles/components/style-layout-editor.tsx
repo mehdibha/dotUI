@@ -4,7 +4,7 @@ import { FormControl } from "@dotui/ui/components/form";
 import { Skeleton } from "@dotui/ui/components/skeleton";
 import { Slider } from "@dotui/ui/components/slider";
 
-import { useStyleForm } from "@/modules/styles/lib/form-context";
+import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
 import { EditorSection } from "./editor-section";
 
 export function StyleLayoutEditor() {
@@ -15,7 +15,7 @@ export function StyleLayoutEditor() {
       <EditorSection title="Border radius">
         <Skeleton show={!isSuccess}>
           <FormControl
-            name="layout.radius"
+            name="theme.radius"
             control={form.control}
             render={(props) => (
               <Slider
@@ -33,7 +33,7 @@ export function StyleLayoutEditor() {
       <EditorSection title="Spacing">
         <Skeleton show={!isSuccess}>
           <FormControl
-            name="layout.spacing"
+            name="theme.spacing"
             control={form.control}
             render={(props) => (
               <Slider

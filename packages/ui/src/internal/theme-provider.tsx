@@ -1,37 +1,38 @@
 import React from "react";
 
+import { createTheme } from "@dotui/style-engine/lib";
 import { cn } from "@dotui/ui/lib/utils";
-import type { Theme } from "@dotui/style-engine/types";
+import type { ThemeDefinition } from "@dotui/style-engine/types-v2";
 
 export const ThemeProvider = ({
   mode,
-  theme,
+  theme: themeDefinition,
   children,
   ...props
 }: React.ComponentProps<"div"> & {
   mode: "light" | "dark";
-  theme: Theme;
+  theme: ThemeDefinition;
   children: React.ReactNode;
 }) => {
-  const cssVars = React.useMemo(() => {
-    const addPrefix = (obj: Record<string, any>) => {
-      return Object.fromEntries(
-        Object.entries(obj).map(([key, value]) => [
-          key.startsWith("--") ? key : `--${key}`,
-          value,
-        ]),
-      );
+  const { cssVars } = React.useMemo(
+    () => createTheme(themeDefinition),
+    [themeDefinition],
+  );
+
+  const allCssVars = React.useMemo(() => {
+    const vars = {
+      ...(cssVars.dark ? cssVars[mode] : cssVars.light),
+      ...cssVars.theme,
     };
 
-    return {
-      ...addPrefix(theme.cssVars.theme),
-      ...addPrefix(theme.cssVars[mode]),
-    };
-  }, [theme, mode]);
+    return Object.fromEntries(
+      Object.entries(vars).map(([key, value]) => [`--${key}`, value]),
+    );
+  }, [cssVars, mode]);
 
   return (
     <div
-      style={cssVars}
+      style={allCssVars}
       {...props}
       className={cn("bg-bg text-fg", props.className)}
     >

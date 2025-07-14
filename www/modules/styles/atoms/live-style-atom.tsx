@@ -3,9 +3,9 @@ import { useAtom } from "jotai";
 import { withImmer } from "jotai-immer";
 import { atomWithStorage } from "jotai/utils";
 
-import type { Style } from "@dotui/style-engine/types";
+import type { StyleDefinition } from "@dotui/style-engine/types-v2";
 
-type LiveStyleState = Record<string, Style>;
+type LiveStyleState = Record<string, StyleDefinition>;
 
 const liveStyleAtom = withImmer(
   atomWithStorage<LiveStyleState>("live-styles", {}),
@@ -19,7 +19,7 @@ export const useLiveStyle = (styleSlug: string) => {
   }, [state, styleSlug]);
 
   const updateLiveStyle = React.useCallback(
-    (style: Style) => {
+    (style: StyleDefinition) => {
       setState((draft) => {
         draft[styleSlug] = style;
       });

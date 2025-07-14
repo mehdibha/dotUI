@@ -1,16 +1,24 @@
 import React from "react";
 
-import type { Variants } from "@dotui/style-engine/types";
+import { createVariants } from "@dotui/style-engine/lib";
+import type {
+  Variants,
+  VariantsDefinition,
+} from "@dotui/style-engine/types-v2";
 
 const VariantsContext = React.createContext<Variants | null>(null);
 
 export const VariantsProvider = ({
   children,
-  variants,
+  variants: variantsDefinition,
 }: {
   children: React.ReactNode;
-  variants: Variants;
+  variants: VariantsDefinition;
 }) => {
+  const variants = React.useMemo(() => {
+    return createVariants(variantsDefinition);
+  }, [variantsDefinition]);
+
   return <VariantsContext value={variants}>{children}</VariantsContext>;
 };
 

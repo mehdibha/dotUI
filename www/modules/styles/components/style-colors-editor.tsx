@@ -4,18 +4,15 @@ import React from "react";
 import {
   CheckIcon,
   ChevronsUpDownIcon,
-  ContrastIcon,
-  MoonIcon,
+  InfoIcon,
   PencilIcon,
-  SunIcon,
   XIcon,
 } from "lucide-react";
-import { Button as AriaButton } from "react-aria-components";
 import { useFieldArray } from "react-hook-form";
 
 import { COLOR_TOKENS } from "@dotui/registry-definition/registry-tokens";
-import { DESIGN_TOKENS } from "@dotui/style-engine/constants";
 import { Button } from "@dotui/ui/components/button";
+import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
 import { Label } from "@dotui/ui/components/field";
 import { FormControl } from "@dotui/ui/components/form";
 import { ListBox, ListBoxItem } from "@dotui/ui/components/list-box";
@@ -37,9 +34,8 @@ import {
   TableRoot,
   TableRow,
 } from "@dotui/ui/components/table";
-import { TextField } from "@dotui/ui/components/text-field";
-import { Tooltip } from "@dotui/ui/components/tooltip";
 
+import { AutoResizeTextField } from "@/components/auto-resize-input";
 import { ThemeModeSwitch } from "@/components/theme-mode-switch";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
@@ -285,7 +281,6 @@ const Tokens = () => {
           <TableColumn id="name" isRowHeader className="pl-0">
             Variable name
           </TableColumn>
-          <TableColumn id="description">Description</TableColumn>
           <TableColumn id="value" className="pr-0">
             Value
           </TableColumn>
@@ -298,9 +293,11 @@ const Tokens = () => {
             return (
               <TableRow key={token.id} id={index}>
                 <TableCell className="pl-0.5">
-                  <ColorTokenVariableName index={index} />
+                  <ColorTokenVariableName
+                    index={index}
+                    description={tokenDef?.description}
+                  />
                 </TableCell>
-                <TableCell>{tokenDef?.description}</TableCell>
                 <TableCell className="pr-0">
                   <ColorTokenValue index={index} />
                 </TableCell>
@@ -313,57 +310,133 @@ const Tokens = () => {
   );
 };
 
-const ColorTokenVariableName = ({ index }: { index: number }) => {
+const ColorTokenVariableName = ({
+  index,
+  description,
+}: {
+  index: number;
+  description?: string;
+}) => {
   const { form } = useStyleForm();
   const [isEditMode, setEditMode] = React.useState(false);
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  const containerRef = React.useRef<HTMLDivElement>(null);
+
+  const onDismiss = React.useCallback(() => {
+    // form.resetField("name");
+    setEditMode(false);
+  }, []);
+
+  React.useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(e.target as Node) &&
+        inputRef.current
+      ) {
+        onDismiss();
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [onDismiss]);
+
+  React.useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isEditMode) {
+        onDismiss();
+      }
+    };
+    const handleEnter = (e: KeyboardEvent) => {
+      if (e.key === "Enter" && isEditMode) {
+        setEditMode(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleEscape);
+    document.addEventListener("keydown", handleEnter);
+    return () => {
+      document.removeEventListener("keydown", handleEscape);
+      document.removeEventListener("keydown", handleEnter);
+    };
+  }, [onDismiss, isEditMode]);
 
   return (
     <FormControl
       name={`theme.colors.tokens.${index}.name`}
       control={form.control}
-      render={(props) =>
-        isEditMode ? (
-          <div className="flex items-center gap-1">
-            <TextField size="sm" autoFocus className="w-full" {...props} />
-            <div className="flex items-center gap-0.5">
+      render={(props) => (
+        <div className="flex items-center gap-2">
+          <div className="rounded-full bg-bg-muted p-1 pl-3">
+            {isEditMode ? (
+              <div ref={containerRef} className="flex items-center gap-1">
+                <AutoResizeTextField
+                  inputRef={inputRef}
+                  autoFocus
+                  className="font-mono text-xs"
+                  {...props}
+                />
+                <div className="flex items-center gap-0.5">
+                  <Button
+                    size="sm"
+                    shape="circle"
+                    variant="quiet"
+                    onPress={() => setEditMode(false)}
+                    className="size-6"
+                  >
+                    <CheckIcon className="text-fg-success" />
+                  </Button>
+                  <Button
+                    size="sm"
+                    shape="circle"
+                    variant="quiet"
+                    onPress={() => {
+                      form.resetField(`theme.colors.tokens.${index}.name`);
+                      setEditMode(false);
+                    }}
+                    className="size-6"
+                  >
+                    <XIcon className="text-fg-danger" />
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <div className="flex items-center gap-1">
+                <h1 className="truncate border-b font-mono text-xs whitespace-nowrap">
+                  {props.value}
+                </h1>
+                <Button
+                  size="sm"
+                  shape="circle"
+                  variant="quiet"
+                  onPress={() => setEditMode(true)}
+                  className="size-6 [&_svg]:size-3"
+                >
+                  <PencilIcon className="text-fg-muted" />
+                </Button>
+              </div>
+            )}
+          </div>
+          {description && (
+            <DialogRoot>
               <Button
                 size="sm"
-                shape="square"
+                shape="circle"
                 variant="quiet"
-                onPress={() => setEditMode(false)}
-                className="size-6"
+                className="size-6 [&_svg]:size-3"
               >
-                <CheckIcon className="text-fg-success" />
+                <InfoIcon />
               </Button>
-              <Button
-                size="sm"
-                shape="square"
-                variant="quiet"
-                onPress={() => {
-                  form.resetField(`theme.colors.tokens.${index}.name`);
-                  setEditMode(false);
-                }}
-                className="size-6"
+              <Dialog
+                type="popover"
+                popoverProps={{ placement: "top", className: "max-w-64" }}
               >
-                <XIcon className="text-fg-danger" />
-              </Button>
-            </div>
-          </div>
-        ) : (
-          <div className="flex items-center gap-1">
-            <h1 className="font-mono text-xs">{props.value}</h1>
-            <Button
-              size="sm"
-              shape="square"
-              variant="quiet"
-              onPress={() => setEditMode(true)}
-              className="size-6"
-            >
-              <PencilIcon className="text-fg-muted" size={16} />
-            </Button>
-          </div>
-        )
-      }
+                <p className="text-sm">{description}</p>
+              </Dialog>
+            </DialogRoot>
+          )}
+        </div>
+      )}
     />
   );
 };
@@ -400,6 +473,7 @@ const ColorTokenValue = ({ index }: { index: number }) => {
           <SelectRoot
             selectedKey={value}
             onSelectionChange={onChange}
+            className="w-full"
             {...props}
           >
             <Button

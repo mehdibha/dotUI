@@ -18,6 +18,7 @@ import { Calendar, RangeCalendar } from "@dotui/ui/components/calendar";
 import { Checkbox } from "@dotui/ui/components/checkbox";
 import { Combobox, ComboboxItem } from "@dotui/ui/components/combobox";
 import { DatePicker } from "@dotui/ui/components/date-picker";
+import { DateRangePicker } from "@dotui/ui/components/date-range-picker";
 import {
   Dialog,
   DialogBody,
@@ -39,34 +40,39 @@ import { TextField } from "@dotui/ui/components/text-field";
 import { ToggleButton } from "@dotui/ui/components/toggle-button";
 import { Tooltip } from "@dotui/ui/components/tooltip";
 import { cn } from "@dotui/ui/lib/utils";
+import type { VariantsDefinition } from "@dotui/style-engine/types-v2";
 
-import { useStyleForm } from "@/modules/styles/lib/form-context";
-import { EditorSection } from "./editor-section";
+import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
 
 interface SectionProps extends React.ComponentProps<"div"> {
-  name: string;
+  name: keyof VariantsDefinition;
   title: string;
   variants: { id: string; label: string }[];
   previewClassName?: string;
 }
 
-const ComponentSection = ({
+const Section = ({
   name,
   title,
   variants,
   previewClassName,
   children,
   className,
+  ...props
 }: SectionProps) => {
   const { form, isSuccess } = useStyleForm();
-
   return (
-    <EditorSection title={title} className={className}>
-      <Skeleton show={!isSuccess}>
-        <FormControl
-          name={`variants.${name}`}
-          control={form.control}
-          render={({ value, onChange, ...props }) => (
+    <div className={cn(className)} {...props}>
+      <p
+        className={cn("text-base font-semibold", title !== "Loader" && "mt-6")}
+      >
+        {title}
+      </p>
+      <FormControl
+        name={`variants.${name}`}
+        control={form.control}
+        render={({ value, onChange, ...props }) => (
+          <Skeleton show={!isSuccess}>
             <Select
               className="mt-2"
               selectedKey={value}
@@ -79,9 +85,9 @@ const ComponentSection = ({
                 </SelectItem>
               ))}
             </Select>
-          )}
-        />
-      </Skeleton>
+          </Skeleton>
+        )}
+      />
       <div
         className={cn(
           "mt-2 flex items-center justify-center gap-2 rounded-md border bg-bg-muted/50 p-4",
@@ -90,14 +96,14 @@ const ComponentSection = ({
       >
         {children}
       </div>
-    </EditorSection>
+    </div>
   );
 };
 
 export function StyleComponentsEditor() {
   return (
     <div>
-      <ComponentSection
+      <Section
         name="loader"
         title="Loader"
         variants={[
@@ -111,9 +117,9 @@ export function StyleComponentsEditor() {
       >
         <Loader />
         <Button isPending>Submit</Button>
-      </ComponentSection>
+      </Section>
 
-      <ComponentSection
+      <Section
         name="focus-style"
         title="Focus style"
         variants={[{ id: "basic", label: "Basic" }]}
@@ -132,9 +138,9 @@ export function StyleComponentsEditor() {
           <Button>Button</Button>
           <TextField placeholder="hello@mehdibha.com" />
         </div>
-      </ComponentSection>
+      </Section>
 
-      <ComponentSection
+      <Section
         name="buttons"
         title="Buttons"
         variants={[
@@ -193,9 +199,9 @@ export function StyleComponentsEditor() {
             <BookmarkIcon />
           </ToggleButton>
         </div>
-      </ComponentSection>
+      </Section>
 
-      <ComponentSection
+      <Section
         name="inputs"
         title="Inputs"
         variants={[
@@ -241,9 +247,9 @@ export function StyleComponentsEditor() {
           description="Type your description"
           className="col-span-2 w-full"
         />
-      </ComponentSection>
+      </Section>
 
-      <ComponentSection
+      <Section
         name="pickers"
         title="Pickers"
         variants={[{ id: "basic", label: "Basic" }]}
@@ -263,9 +269,10 @@ export function StyleComponentsEditor() {
           <ComboboxItem id="united-kingdom">United Kingdom</ComboboxItem>
         </Combobox>
         <DatePicker className="w-full" />
-      </ComponentSection>
+        <DateRangePicker className="w-full" />
+      </Section>
 
-      <ComponentSection
+      <Section
         name="selection"
         title="Selection"
         variants={[{ id: "basic", label: "Basic" }]}
@@ -275,9 +282,9 @@ export function StyleComponentsEditor() {
           <SelectItem id="option-2">Option 2</SelectItem>
           <SelectItem id="option-3">Option 3</SelectItem>
         </Select>
-      </ComponentSection>
+      </Section>
 
-      <ComponentSection
+      <Section
         name="calendars"
         title="Calendars"
         variants={[{ id: "basic", label: "Basic" }]}
@@ -289,9 +296,9 @@ export function StyleComponentsEditor() {
             end: parseDate("2020-02-12"),
           }}
         />
-      </ComponentSection>
+      </Section>
 
-      <ComponentSection
+      <Section
         name="list-box-and-menu"
         title="ListBox and menu"
         variants={[{ id: "basic", label: "Basic" }]}
@@ -328,9 +335,8 @@ export function StyleComponentsEditor() {
             <MenuItem>Log out</MenuItem>
           </Menu>
         </MenuRoot>
-      </ComponentSection>
-
-      <ComponentSection
+      </Section>
+      <Section
         name="overlays"
         title="Overlays"
         variants={[{ id: "basic", label: "Basic" }]}
@@ -372,9 +378,8 @@ export function StyleComponentsEditor() {
             </DialogFooter>
           </Dialog>
         </DialogRoot>
-      </ComponentSection>
-
-      <ComponentSection
+      </Section>
+      <Section
         name="checkboxes"
         title="Checkboxes"
         variants={[{ id: "basic", label: "Basic" }]}
@@ -385,9 +390,8 @@ export function StyleComponentsEditor() {
         <Checkbox appearance="card" defaultSelected>
           Hello world
         </Checkbox>
-      </ComponentSection>
-
-      <ComponentSection
+      </Section>
+      <Section
         name="radios"
         title="Radios"
         variants={[{ id: "basic", label: "Basic" }]}
@@ -403,9 +407,8 @@ export function StyleComponentsEditor() {
           <Radio value="option-2">Option 2</Radio>
           <Radio value="option-3">Option 3</Radio>
         </RadioGroup>
-      </ComponentSection>
-
-      <ComponentSection
+      </Section>
+      <Section
         name="switch"
         title="Switch"
         variants={[{ id: "basic", label: "Basic" }]}
@@ -418,18 +421,16 @@ export function StyleComponentsEditor() {
             Dark mode
           </Switch>
         </div>
-      </ComponentSection>
-
-      <ComponentSection
+      </Section>
+      <Section
         name="slider"
         title="Slider"
         variants={[{ id: "basic", label: "Basic" }]}
         previewClassName="flex-col gap-4"
       >
         <Slider defaultValue={50} aria-label="Basic slider" />
-      </ComponentSection>
-
-      <ComponentSection
+      </Section>
+      <Section
         name="badge-and-tag-group"
         title="Badge & TagGroup"
         variants={[{ id: "basic", label: "Basic" }]}
@@ -448,9 +449,8 @@ export function StyleComponentsEditor() {
           <Badge size="md">Medium</Badge>
           <Badge size="lg">Large</Badge>
         </div>
-      </ComponentSection>
-
-      <ComponentSection
+      </Section>
+      <Section
         name="tooltip"
         title="Tooltip"
         variants={[{ id: "basic", label: "Basic" }]}
@@ -459,7 +459,7 @@ export function StyleComponentsEditor() {
         <Tooltip content="This is a tooltip">
           <Button>Hover me</Button>
         </Tooltip>
-      </ComponentSection>
+      </Section>
     </div>
   );
 }

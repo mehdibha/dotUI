@@ -25,8 +25,12 @@
       "default": "./src/schemas-v2.ts"
     },
     "./types-v2": {
-      "types": "./dist/types-v2/index.d.ts",
-      "default": "./src/types-v2/index.ts"
+      "types": "./dist/types-v2.d.ts",
+      "default": "./src/types-v2.ts"
+    },
+    "./lib": {
+      "types": "./dist/lib.d.ts",
+      "default": "./src/lib.ts"
     }
   },
   "scripts": {

@@ -7,7 +7,7 @@ import { Select, SelectItem } from "@dotui/ui/components/select";
 import { Skeleton } from "@dotui/ui/components/skeleton";
 import { Slider } from "@dotui/ui/components/slider";
 
-import { useStyleForm } from "@/modules/styles/lib/form-context";
+import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
 import { EditorSection } from "./editor-section";
 
 export function StyleEffectsEditor() {
@@ -18,7 +18,7 @@ export function StyleEffectsEditor() {
       <EditorSection title="Patterns">
         <Skeleton show={!isSuccess}>
           <FormControl
-            name="effects.backgroundPattern"
+            name="theme.backgroundPattern"
             control={form.control}
             render={(props) => (
               <Select
@@ -37,7 +37,7 @@ export function StyleEffectsEditor() {
         </Skeleton>
         <Skeleton show={!isSuccess}>
           <FormControl
-            name="effects.texture"
+            name="theme.texture"
             control={form.control}
             render={(props) => (
               <Select
@@ -57,7 +57,7 @@ export function StyleEffectsEditor() {
       <EditorSection title="Shadows">
         <Skeleton show={!isSuccess}>
           <FormControl
-            name="effects.shadows.color"
+            name="theme.shadows.color"
             control={form.control}
             render={(props) => (
               <ColorPicker className="mt-2 w-full" {...props}>
@@ -70,7 +70,7 @@ export function StyleEffectsEditor() {
         <div className="mt-2 grid grid-cols-2 gap-3">
           <Skeleton show={!isSuccess}>
             <FormControl
-              name="effects.shadows.opacity"
+              name="theme.shadows.opacity"
               control={form.control}
               render={(props) => (
                 <Slider
@@ -88,7 +88,7 @@ export function StyleEffectsEditor() {
           </Skeleton>
           <Skeleton show={!isSuccess}>
             <FormControl
-              name="effects.shadows.blurRadius"
+              name="theme.shadows.blurRadius"
               control={form.control}
               render={(props) => (
                 <Slider
@@ -106,7 +106,7 @@ export function StyleEffectsEditor() {
           </Skeleton>
           <Skeleton show={!isSuccess}>
             <FormControl
-              name="effects.shadows.spread"
+              name="theme.shadows.spread"
               control={form.control}
               render={(props) => (
                 <Slider
@@ -124,7 +124,7 @@ export function StyleEffectsEditor() {
           </Skeleton>
           <Skeleton show={!isSuccess}>
             <FormControl
-              name="effects.shadows.offsetX"
+              name="theme.shadows.offsetX"
               control={form.control}
               render={(props) => (
                 <Slider
@@ -142,7 +142,7 @@ export function StyleEffectsEditor() {
           </Skeleton>
           <Skeleton show={!isSuccess}>
             <FormControl
-              name="effects.shadows.offsetY"
+              name="theme.shadows.offsetY"
               control={form.control}
               render={(props) => (
                 <Slider

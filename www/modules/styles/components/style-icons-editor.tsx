@@ -2,6 +2,7 @@
 
 import * as Lucide from "lucide-react";
 
+import { iconLibraries } from "@dotui/registry-definition/registry-icons";
 import { Button } from "@dotui/ui/components/button";
 import { Label } from "@dotui/ui/components/field";
 import { FormControl } from "@dotui/ui/components/form";
@@ -11,7 +12,7 @@ import { SelectRoot, SelectValue } from "@dotui/ui/components/select";
 import { Slider } from "@dotui/ui/components/slider";
 import { Skeleton } from "@dotui/ui/registry/components/skeleton/basic";
 
-import { useStyleForm } from "@/modules/styles/lib/form-context";
+import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
 import { EditorSection } from "./editor-section";
 
 export function StyleIconsEditor() {
@@ -37,12 +38,11 @@ export function StyleIconsEditor() {
                 </Button>
                 <Popover>
                   <ListBox>
-                    <ListBoxItem id="lucide">lucide</ListBoxItem>
-                    <ListBoxItem id="heroicons">heroicons</ListBoxItem>
-                    <ListBoxItem id="phosphor">phosphor</ListBoxItem>
-                    <ListBoxItem id="tabler">tabler</ListBoxItem>
-                    <ListBoxItem id="radix">radix</ListBoxItem>
-                    <ListBoxItem id="geist">geist</ListBoxItem>
+                    {Object.entries(iconLibraries).map(([id, library]) => (
+                      <ListBoxItem key={id} id={id}>
+                        {library.name}
+                      </ListBoxItem>
+                    ))}
                   </ListBox>
                 </Popover>
               </SelectRoot>

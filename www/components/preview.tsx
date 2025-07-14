@@ -30,7 +30,6 @@ import { useMounted } from "@/hooks/use-mounted";
 export const Preview = () => {
   const [isOpen, setOpen] = React.useState(false);
   const [screen, setScreen] = React.useState<"mobile" | "tablet">("tablet");
-  const [isAnimating, setAnimating] = React.useState(false);
   const { isCollapsed } = useSidebarContext();
   const isMounted = useMounted();
 
@@ -78,8 +77,6 @@ export const Preview = () => {
         transition={{ type: "spring", bounce: 0, duration: 0.25 }}
         className="h-full overflow-hidden"
         aria-hidden={!isOpen}
-        onAnimationStart={() => setAnimating(true)}
-        onAnimationComplete={() => setAnimating(false)}
         inert={!isOpen || undefined}
       >
         <motion.div
@@ -128,7 +125,7 @@ export function PreviewContent({
         className,
       )}
     >
-      <div className="flex items-center justify-between gap-2 border-b border-t-[inherit] px-1 py-1">
+      <div className="flex bg-bg-muted/50 items-center justify-between gap-2 border-b border-t-[inherit] px-1 py-1">
         <div className="flex w-32 items-center gap-3">
           <div className="flex items-center gap-1">
             {collapsible && (

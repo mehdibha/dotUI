@@ -2,19 +2,18 @@
 
 import React from "react";
 
-import { Skeleton } from "@dotui/ui/components/skeleton";
-import type { Style } from "@dotui/style-engine/types";
+import type { StyleDefinition } from "@dotui/style-engine/types-v2";
 
 import { FontsProvider } from "./fonts-provider";
 import { ThemeProvider } from "./theme-provider";
 import { VariantsProvider } from "./variants-provider";
 
-const StyleContext = React.createContext<Style | null>(null);
+const StyleContext = React.createContext<StyleDefinition | null>(null);
 
 export interface StyleProviderProps
   extends Omit<React.ComponentProps<"div">, "style"> {
   mode: "light" | "dark";
-  style: Style;
+  style: StyleDefinition;
 }
 
 export const StyleProvider = ({
@@ -26,7 +25,7 @@ export const StyleProvider = ({
   return (
     <StyleContext value={style}>
       <VariantsProvider variants={style.variants}>
-        <FontsProvider fonts={style.fonts}>
+        <FontsProvider fonts={style.theme.fonts}>
           <ThemeProvider mode={mode} theme={style.theme} {...props}>
             {children}
           </ThemeProvider>
