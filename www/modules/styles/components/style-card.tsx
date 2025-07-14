@@ -38,7 +38,7 @@ export function StyleCard(props: {
   style: RouterOutputs["style"]["all"][number];
 }) {
   return (
-    <StyleProvider mode="dark" style={props.style}>
+    // <StyleProvider mode="dark" style={props.style}>
       <div
         key={props.style.name}
         className="flex items-end justify-between gap-4 rounded-sm border p-6"
@@ -111,6 +111,6 @@ export function StyleCard(props: {
           {/* <TextField placeholder="Email" className="w-full" /> */}
         </div>
       </div>
-    </StyleProvider>
+    // </StyleProvider>
   );
 }

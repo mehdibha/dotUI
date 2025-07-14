@@ -93,6 +93,7 @@ export function ColorScale({ name, label }: ColorScaleProps) {
     saturation,
     contrast,
   ]);
+  
 
   return (
     <div className="flex items-center gap-2">

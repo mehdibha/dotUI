@@ -11,8 +11,8 @@ import type { UseFormReturn } from "react-hook-form";
 import { COLOR_TOKENS } from "@dotui/registry-definition/registry-tokens";
 import { styleDefinitionSchema } from "@dotui/style-engine/schemas-v2";
 
-import { useTRPC } from "@/lib/trpc/react";
 import { useDebounce } from "@/hooks/use-debounce";
+import { useTRPC } from "@/lib/trpc/react";
 import { useLiveStyleProducer } from "../atoms/live-style-atom";
 
 const formSchema = styleDefinitionSchema.extend({
@@ -68,15 +68,21 @@ export function StylePagesProvider({
     values: style ? fakeData : undefined,
   });
 
-  const debouncedLiveStyleData = useDebounce(form.watch(), 10);
+  const watchedValues = form.watch();
 
-  React.useEffect(() => {
-    updateLiveStyle(debouncedLiveStyleData);
-    console.log("debouncedLiveStyleData", debouncedLiveStyleData);
-  }, [debouncedLiveStyleData, updateLiveStyle]);
+  // React.useEffect(() => {
+    // updateLiveStyle(structuredClone(watchedValues));
+  // }, [watchedValues, updateLiveStyle]);
 
-  const test = form.watch();
-  console.log("test", test);
+  // const debouncedLiveStyleData = useDebounce(form.watch(), 10);
+
+  // React.useEffect(() => {
+  //   updateLiveStyle(debouncedLiveStyleData);
+  //   console.log("debouncedLiveStyleData", debouncedLiveStyleData);
+  // }, [debouncedLiveStyleData, updateLiveStyle]);
+
+  // const test = form.watch();
+  // console.log("test", test);
 
   return (
     <StyleFormContext.Provider
