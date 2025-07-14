@@ -15,7 +15,7 @@ export function EditorSection({
   return (
     <div className={cn("not-first:mt-6", className)} {...props}>
       <p className="text-base font-semibold">{title}</p>
-      
+
       {children}
     </div>
   );

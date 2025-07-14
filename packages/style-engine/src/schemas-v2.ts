@@ -1,7 +1,5 @@
 import { z } from "zod/v4";
 
-import { COLOR_TOKENS } from "@dotui/registry-definition/registry-tokens";
-
 // ---------------------------------  Defintions  ----------------------------------- //
 
 // Icons
@@ -42,23 +40,12 @@ export const modeDefinitionSchema = z.object({
 });
 
 export const colorTokenSchema = z.object({
+  id: z.string(),
   name: z.string(),
   value: z.string(),
 });
 
-export const colorTokensSchema = z.object(
-  COLOR_TOKENS.reduce(
-    (acc, token) => {
-      const tokenId = token.name;
-      acc[tokenId] = colorTokenSchema;
-      return acc;
-    },
-    {} as Record<
-      (typeof COLOR_TOKENS)[number]["name"],
-      typeof colorTokenSchema
-    >,
-  ),
-);
+export const colorTokensSchema = z.array(colorTokenSchema);
 
 // layout
 export const radiusSchema = z.number().min(0).max(2);
@@ -130,12 +117,12 @@ export const styleDefinitionSchema = z.object({
 
 // ---------------------------------  Minimized definitions  ----------------------------------- //
 
-export const minimizedColorTokensSchema = colorTokensSchema.partial();
+export const minimizedColorTokensSchema = colorTokensSchema.optional();
 
 export const minimizedThemeDefinitionSchema = z.object({
   colors: z.object({
     modes: z.array(modeDefinitionSchema).min(1),
-    tokens: colorTokensSchema.partial(),
+    tokens: colorTokensSchema.optional(),
   }),
   radius: radiusSchema.optional(),
   spacing: spacingSchema.optional(),

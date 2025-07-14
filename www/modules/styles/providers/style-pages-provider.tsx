@@ -65,6 +65,12 @@ export function StylePagesProvider({
     values: style ? fakeData : undefined,
   });
 
+  const tokens = form.watch("theme.colors.tokens");
+
+  React.useEffect(() => {
+    console.log("tokens", tokens);
+  }, [tokens]);
+
   return (
     <StyleFormContext.Provider
       value={{ form, resolvedMode: "light", isLoading, isError, isSuccess }}
@@ -181,19 +187,11 @@ const fakeData: StyleFormData = {
           },
         },
       ],
-      tokens: COLOR_TOKENS.reduce(
-        (acc, token) => {
-          acc[token.name] = {
-            name: token.name,
-            value: token.defaultValue,
-          };
-          return acc;
-        },
-        {} as Record<
-          (typeof COLOR_TOKENS)[number]["name"],
-          { name: string; value: string }
-        >,
-      ),
+      tokens: COLOR_TOKENS.map((token) => ({
+        id: token.name,
+        name: token.name,
+        value: token.defaultValue,
+      })),
     },
     radius: 1,
     spacing: 0.25,

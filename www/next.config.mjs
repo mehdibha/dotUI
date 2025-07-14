@@ -15,12 +15,7 @@ await jiti.import("./env");
 
 /** @type {import("next").NextConfig} */
 const config = {
-  transpilePackages: [
-    "@dotui/api",
-    "@dotui/auth",
-    "@dotui/db",
-    "@dotui/ui",
-  ],
+  transpilePackages: ["@dotui/api", "@dotui/auth", "@dotui/db", "@dotui/ui"],
   images: {
     remotePatterns: [
       {
@@ -42,9 +37,9 @@ const config = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  // experimental: {
-  //   reactCompiler: true,
-  // },
+  experimental: {
+    reactCompiler: true,
+  },
   webpack: (config, { dev, isServer }) => {
     config.ignoreWarnings = [
       ...(config.ignoreWarnings || []),

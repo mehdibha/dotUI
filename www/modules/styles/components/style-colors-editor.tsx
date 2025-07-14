@@ -272,78 +272,54 @@ export function StyleColorsEditor() {
 
 const Tokens = () => {
   const { form, isSuccess } = useStyleForm();
-  const formTokens = form.watch("theme.colors.tokens");
+
+  const { fields: tokenFields } = useFieldArray({
+    control: form.control,
+    name: "theme.colors.tokens",
+  });
 
   return (
-    <div className="mt-2 space-y-8">
-      {(
-        [
-          { label: "Backgrounds", name: "background" },
-          { label: "Foregrounds", name: "foreground" },
-          { label: "Borders", name: "border" },
-        ] as const
-      ).map((category) => {
-        const categoryTokens = COLOR_TOKENS.filter((token) =>
-          (token.categories as unknown as string[]).includes(category.name),
-        ).map((token) => ({
-          id: token.name,
-          description: token.description,
-        }));
+    <Skeleton show={!isSuccess}>
+      <TableRoot aria-label="Tokens" className="-mr-6 w-full">
+        <TableHeader>
+          <TableColumn id="name" isRowHeader className="pl-0">
+            Variable name
+          </TableColumn>
+          <TableColumn id="description">Description</TableColumn>
+          <TableColumn id="value" className="pr-0">
+            Value
+          </TableColumn>
+        </TableHeader>
+        <TableBody>
+          {tokenFields.map((token, index) => {
+            const tokenId = form.watch(`theme.colors.tokens.${index}.id`);
+            const tokenDef = COLOR_TOKENS.find((def) => def.name === tokenId);
 
-        if (categoryTokens.length === 0) return null;
-
-        return (
-          <div key={category.name}>
-            <h3 className="mb-3 text-sm font-medium text-fg-muted">
-              {category.label}
-            </h3>
-            <Skeleton show={!isSuccess}>
-              <TableRoot
-                aria-label={`${category.label} Tokens`}
-                className="-mr-6 w-full"
-              >
-                <TableHeader>
-                  <TableColumn id="name" isRowHeader className="pl-0">
-                    Variable name
-                  </TableColumn>
-                  <TableColumn id="description">Description</TableColumn>
-                  <TableColumn id="value" className="pr-0">
-                    Value
-                  </TableColumn>
-                </TableHeader>
-                <TableBody items={categoryTokens}>
-                  {(token) => (
-                    <TableRow>
-                      <TableCell className="pl-0.5">
-                        <ColorTokenVariableName id={token.id} />
-                      </TableCell>
-                      <TableCell>description</TableCell>
-                      <TableCell className="pr-0">
-                        <ColorTokenValue id={token.id} />
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </TableBody>
-              </TableRoot>
-            </Skeleton>
-          </div>
-        );
-      })}
-    </div>
+            return (
+              <TableRow key={token.id} id={index}>
+                <TableCell className="pl-0.5">
+                  <ColorTokenVariableName index={index} />
+                </TableCell>
+                <TableCell>{tokenDef?.description}</TableCell>
+                <TableCell className="pr-0">
+                  <ColorTokenValue index={index} />
+                </TableCell>
+              </TableRow>
+            );
+          })}
+        </TableBody>
+      </TableRoot>
+    </Skeleton>
   );
 };
 
-const ColorTokenVariableName = ({
-  id,
-}: {
-  id: (typeof COLOR_TOKENS)[number]["name"];
-}) => {
+const ColorTokenVariableName = ({ index }: { index: number }) => {
   const { form } = useStyleForm();
   const [isEditMode, setEditMode] = React.useState(false);
 
   return (
     <FormControl
-      name={`theme.colors.tokens.${id}.name`}
+      name={`theme.colors.tokens.${index}.name`}
       control={form.control}
       render={(props) =>
         isEditMode ? (
@@ -364,7 +340,7 @@ const ColorTokenVariableName = ({
                 shape="square"
                 variant="quiet"
                 onPress={() => {
-                  form.resetField(`theme.colors.tokens.${id}.name`);
+                  form.resetField(`theme.colors.tokens.${index}.name`);
                   setEditMode(false);
                 }}
                 className="size-6"
@@ -392,11 +368,7 @@ const ColorTokenVariableName = ({
   );
 };
 
-const ColorTokenValue = ({
-  id,
-}: {
-  id: (typeof COLOR_TOKENS)[number]["name"];
-}) => {
+const ColorTokenValue = ({ index }: { index: number }) => {
   const { form } = useStyleForm();
 
   // const [color] = token.value
@@ -411,7 +383,7 @@ const ColorTokenValue = ({
 
   return (
     <FormControl
-      name={`theme.colors.tokens.${id}.value`}
+      name={`theme.colors.tokens.${index}.value`}
       control={form.control}
       render={({ value, onChange, ...props }) => {
         const [color] = value
@@ -441,7 +413,6 @@ const ColorTokenValue = ({
               <ListBox items={items}>
                 {(item) => (
                   <ListBoxItem
-                    key={item.value}
                     id={item.value}
                     className="flex items-center gap-2"
                     prefix={
