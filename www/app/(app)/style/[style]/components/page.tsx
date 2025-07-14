@@ -98,6 +98,7 @@ const Section = ({
 };
 
 export default function StyleComponentsPage() {
+  return null;
   return (
     <div>
       <Section

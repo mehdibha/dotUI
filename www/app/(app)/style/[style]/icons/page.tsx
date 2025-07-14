@@ -13,6 +13,7 @@ import { Slider } from "@dotui/ui/components/slider";
 import { useStyleForm } from "@/modules/styles/lib/form-context";
 
 export default function IconographyPage() {
+  return null;
   const { form } = useStyleForm();
 
   return (
