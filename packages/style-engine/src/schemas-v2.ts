@@ -49,7 +49,8 @@ export const colorTokenSchema = z.object({
 export const colorTokensSchema = z.object(
   COLOR_TOKENS.reduce(
     (acc, token) => {
-      acc[token.name] = colorTokenSchema;
+      const tokenId = token.name;
+      acc[tokenId] = colorTokenSchema;
       return acc;
     },
     {} as Record<

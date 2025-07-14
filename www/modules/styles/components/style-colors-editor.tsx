@@ -287,10 +287,7 @@ const Tokens = () => {
           (token.categories as unknown as string[]).includes(category.name),
         ).map((token) => ({
           id: token.name,
-          name: formTokens[token.name]
-            .name as (typeof COLOR_TOKENS)[number]["name"],
           description: token.description,
-          value: formTokens[token.name].value,
         }));
 
         if (categoryTokens.length === 0) return null;
@@ -318,11 +315,11 @@ const Tokens = () => {
                   {(token) => (
                     <TableRow>
                       <TableCell className="pl-0.5">
-                        <ColorTokenVariableName token={token} />
+                        <ColorTokenVariableName id={token.id} />
                       </TableCell>
                       <TableCell>description</TableCell>
                       <TableCell className="pr-0">
-                        <ColorTokenValue token={token} />
+                        <ColorTokenValue id={token.id} />
                       </TableCell>
                     </TableRow>
                   )}
@@ -337,19 +334,19 @@ const Tokens = () => {
 };
 
 const ColorTokenVariableName = ({
-  token,
+  id,
 }: {
-  token: { name: (typeof COLOR_TOKENS)[number]["name"]; value: string };
+  id: (typeof COLOR_TOKENS)[number]["name"];
 }) => {
   const { form } = useStyleForm();
   const [isEditMode, setEditMode] = React.useState(false);
 
-  if (isEditMode) {
-    return (
-      <FormControl
-        name={`theme.colors.tokens.${token.name}.name`}
-        control={form.control}
-        render={(props) => (
+  return (
+    <FormControl
+      name={`theme.colors.tokens.${id}.name`}
+      control={form.control}
+      render={(props) =>
+        isEditMode ? (
           <div className="flex items-center gap-1">
             <TextField size="sm" autoFocus className="w-full" {...props} />
             <div className="flex items-center gap-0.5">
@@ -367,7 +364,7 @@ const ColorTokenVariableName = ({
                 shape="square"
                 variant="quiet"
                 onPress={() => {
-                  form.resetField(`theme.colors.tokens.${token.name}.name`);
+                  form.resetField(`theme.colors.tokens.${id}.name`);
                   setEditMode(false);
                 }}
                 className="size-6"
@@ -376,80 +373,94 @@ const ColorTokenVariableName = ({
               </Button>
             </div>
           </div>
-        )}
-      />
-    );
-  }
-
-  return (
-    <div className="flex items-center gap-1">
-      <h1 className="font-mono text-xs">{token.name}</h1>
-      <Button
-        size="sm"
-        shape="square"
-        variant="quiet"
-        onPress={() => setEditMode(true)}
-        className="size-6"
-      >
-        <PencilIcon className="text-fg-muted" size={16} />
-      </Button>
-    </div>
+        ) : (
+          <div className="flex items-center gap-1">
+            <h1 className="font-mono text-xs">{props.value}</h1>
+            <Button
+              size="sm"
+              shape="square"
+              variant="quiet"
+              onPress={() => setEditMode(true)}
+              className="size-6"
+            >
+              <PencilIcon className="text-fg-muted" size={16} />
+            </Button>
+          </div>
+        )
+      }
+    />
   );
 };
 
 const ColorTokenValue = ({
-  token,
+  id,
 }: {
-  token: { name: (typeof COLOR_TOKENS)[number]["name"]; value: string };
+  id: (typeof COLOR_TOKENS)[number]["name"];
 }) => {
   const { form } = useStyleForm();
 
-  const [color] = token.value
-    .replace("var(--", "")
-    .replace(")", "")
-    .split("-") as [string, string];
+  // const [color] = token.value
+  //   .replace("var(--", "")
+  //   .replace(")", "")
+  //   .split("-") as [string, string];
 
-  const items = Array.from({ length: 10 }, (_, i) => ({
-    label: `${color.charAt(0).toUpperCase() + color.slice(1)} ${(i + 1) * 100}`,
-    value: `var(--${color}-${(i + 1) * 100})`,
-  }));
+  // const items = Array.from({ length: 10 }, (_, i) => ({
+  //   label: `${color.charAt(0).toUpperCase() + color.slice(1)} ${(i + 1) * 100}`,
+  //   value: `var(--${color}-${(i + 1) * 100})`,
+  // }));
 
   return (
     <FormControl
-      name={`theme.colors.tokens.${token.name}.value`}
+      name={`theme.colors.tokens.${id}.value`}
       control={form.control}
-      render={({ value, onChange, ...props }) => (
-        <SelectRoot selectedKey={value} onSelectionChange={onChange} {...props}>
-          <Button
-            size="sm"
-            suffix={<ChevronsUpDownIcon className="text-fg-muted" />}
-            className="w-40"
+      render={({ value, onChange, ...props }) => {
+        const [color] = value
+          .replace("var(--", "")
+          .replace(")", "")
+          .split("-") as [string, string];
+
+        const items = Array.from({ length: 10 }, (_, i) => ({
+          label: `${color.charAt(0).toUpperCase() + color.slice(1)} ${(i + 1) * 100}`,
+          value: `var(--${color}-${(i + 1) * 100})`,
+        }));
+
+        return (
+          <SelectRoot
+            selectedKey={value}
+            onSelectionChange={onChange}
+            {...props}
           >
-            <SelectValue />
-          </Button>
-          <Popover>
-            <ListBox items={items}>
-              {(item) => (
-                <ListBoxItem
-                  key={item.value}
-                  id={item.value}
-                  className="flex items-center gap-2"
-                  prefix={
-                    <span
-                      className="size-4 rounded-sm border"
-                      style={{
-                        backgroundColor: item.value,
-                      }}
-                    />
-                  }
-                >
-                  {item.label}
-                </ListBoxItem>
-              )}
-            </ListBox>
-          </Popover>
-        </SelectRoot>
-      )}
+            <Button
+              size="sm"
+              suffix={<ChevronsUpDownIcon className="text-fg-muted" />}
+              className="w-40"
+            >
+              <SelectValue />
+            </Button>
+            <Popover>
+              <ListBox items={items}>
+                {(item) => (
+                  <ListBoxItem
+                    key={item.value}
+                    id={item.value}
+                    className="flex items-center gap-2"
+                    prefix={
+                      <span
+                        className="size-4 rounded-sm border"
+                        style={{
+                          backgroundColor: item.value,
+                        }}
+                      />
+                    }
+                  >
+                    {item.label}
+                  </ListBoxItem>
+                )}
+              </ListBox>
+            </Popover>
+          </SelectRoot>
+        );
+      }}
     />
   );
 };

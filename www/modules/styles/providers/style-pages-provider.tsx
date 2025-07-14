@@ -183,7 +183,10 @@ const fakeData: StyleFormData = {
       ],
       tokens: COLOR_TOKENS.reduce(
         (acc, token) => {
-          acc[token.name] = { name: token.name, value: token.defaultValue };
+          acc[token.name] = {
+            name: token.name,
+            value: token.defaultValue,
+          };
           return acc;
         },
         {} as Record<
