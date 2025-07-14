@@ -1,8 +1,10 @@
 "use client";
 
+import React from "react";
 import Link from "next/link";
 import {
   ArrowLeftIcon,
+  CheckIcon,
   CodeIcon,
   CopyIcon,
   EllipsisIcon,
@@ -12,11 +14,14 @@ import {
   SaveIcon,
   StarIcon,
   Trash2Icon,
+  XIcon,
 } from "lucide-react";
 
 import { Button } from "@dotui/ui/components/button";
+import { FormControl } from "@dotui/ui/components/form";
 import { Menu, MenuItem, MenuRoot } from "@dotui/ui/components/menu";
 import { Skeleton } from "@dotui/ui/components/skeleton";
+import { TextField } from "@dotui/ui/components/text-field";
 import { Tooltip } from "@dotui/ui/components/tooltip";
 
 import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
@@ -24,10 +29,6 @@ import { PublishStyleModal } from "./publish-style-modal";
 import { StylePageCodeModal } from "./style-page-code-modal";
 
 export function StylePageHeader() {
-  const { form, isSuccess } = useStyleForm();
-
-  const name = form.watch("name");
-
   return (
     <div>
       <Link
@@ -37,14 +38,70 @@ export function StylePageHeader() {
         <ArrowLeftIcon className="size-4" /> styles
       </Link>
       <div className="mt-2 flex items-center justify-between">
-        <Skeleton show={!isSuccess}>
-          <h1 className="text-2xl leading-none font-bold">{name}</h1>
-        </Skeleton>
+        <StylePageHeaderName />
         <div className="flex items-center gap-1">
           <StylePageHeaderActions />
         </div>
       </div>
     </div>
+  );
+}
+
+function StylePageHeaderName() {
+  const { form, isSuccess } = useStyleForm();
+  const [isEditMode, setEditMode] = React.useState(false);
+
+  return (
+    <Skeleton show={!isSuccess}>
+      <FormControl
+        name="name"
+        control={form.control}
+        render={({ value, onChange, ...props }) =>
+          isEditMode ? (
+            <div className="flex items-center gap-2">
+              <TextField
+                size="sm"
+                autoFocus
+                value={value}
+                onChange={onChange}
+                {...props}
+              />
+              <Button
+                size="sm"
+                shape="square"
+                variant="quiet"
+                onClick={() => setEditMode(false)}
+              >
+                <CheckIcon />
+              </Button>
+              <Button
+                size="sm"
+                shape="square"
+                variant="quiet"
+                onClick={() => {
+                  form.resetField("name");
+                  setEditMode(false);
+                }}
+              >
+                <XIcon />
+              </Button>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2">
+              <h1 className="text-2xl leading-none font-bold">{value}</h1>
+              <Button
+                size="sm"
+                variant="quiet"
+                shape="square"
+                onClick={() => setEditMode(true)}
+              >
+                <PencilIcon />
+              </Button>
+            </div>
+          )
+        }
+      />
+    </Skeleton>
   );
 }
 

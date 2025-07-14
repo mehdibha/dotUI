@@ -65,8 +65,6 @@ export function StylePagesProvider({
     values: style ? fakeData : undefined,
   });
 
-  console.log(form.watch());
-
   return (
     <StyleFormContext.Provider
       value={{ form, resolvedMode: "light", isLoading, isError, isSuccess }}
