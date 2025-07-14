@@ -1,5 +1,6 @@
-import type * as schemas from "./schemas-v2";
 import type { z } from "zod/v4";
+
+import type * as schemas from "./schemas-v2";
 
 // utils
 export type Css = z.infer<typeof schemas.CssSchema>;
@@ -11,7 +12,9 @@ export type IconsDefinition = z.infer<typeof schemas.iconsDefinitionSchema>;
 // colors
 export type ColorScale = z.infer<typeof schemas.colorScaleSchema>;
 export type ModeDefinition = z.infer<typeof schemas.modeDefinitionSchema>;
-export type MinimizedColorTokens =  z.infer<typeof schemas.minimizedColorTokensSchema>;
+export type MinimizedColorTokens = z.infer<
+  typeof schemas.minimizedColorTokensSchema
+>;
 export type ColorTokens = z.infer<typeof schemas.colorTokensSchema>;
 
 // layout
@@ -38,7 +41,9 @@ export type Theme = z.infer<typeof schemas.themeSchema>;
 export type MinimizedVariantsDefinition = z.infer<
   typeof schemas.minimizedVariantsDefinitionSchema
 >;
-export type VariantsDefinition = z.infer<typeof schemas.variantsDefinitionSchema>;
+export type VariantsDefinition = z.infer<
+  typeof schemas.variantsDefinitionSchema
+>;
 export type Variants = z.infer<typeof schemas.variantsSchema>;
 
 // style

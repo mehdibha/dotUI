@@ -45,9 +45,7 @@ export function ColorKeys({
   });
 
   const colorKeys = form
-    .watch(
-      `theme.colors.modes.${currentModeIndex}.scales.${name}.colorKeys`,
-    )
+    .watch(`theme.colors.modes.${currentModeIndex}.scales.${name}.colorKeys`)
     .map((color) => color.color) as CssColor[];
   const ratios = Array.from({ length: 19 }, (_, i) => i + 1);
   const lightness = form.watch(

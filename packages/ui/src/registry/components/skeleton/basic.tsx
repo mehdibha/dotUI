@@ -14,7 +14,7 @@ function Skeleton({
     <div
       className={cn(
         "relative block h-6 animate-pulse rounded-md bg-bg-muted",
-        props.children && "h-auto *:invisible text-transparent",
+        props.children && "h-auto text-transparent *:invisible",
         className,
       )}
       {...props}

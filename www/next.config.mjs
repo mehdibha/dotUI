@@ -20,7 +20,6 @@ const config = {
     "@dotui/auth",
     "@dotui/db",
     "@dotui/ui",
-    "@dotui/validators",
   ],
   images: {
     remotePatterns: [

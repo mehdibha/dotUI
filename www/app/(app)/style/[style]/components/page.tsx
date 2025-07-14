@@ -18,6 +18,7 @@ import { Calendar, RangeCalendar } from "@dotui/ui/components/calendar";
 import { Checkbox } from "@dotui/ui/components/checkbox";
 import { Combobox, ComboboxItem } from "@dotui/ui/components/combobox";
 import { DatePicker } from "@dotui/ui/components/date-picker";
+import { DateRangePicker } from "@dotui/ui/components/date-range-picker";
 import {
   Dialog,
   DialogBody,
@@ -40,7 +41,6 @@ import { Tooltip } from "@dotui/ui/components/tooltip";
 import { cn } from "@dotui/ui/lib/utils";
 
 import { useStyleForm } from "@/modules/styles/lib/form-context";
-import { DateRangePicker } from "@dotui/ui/components/date-range-picker";
 
 interface SectionProps extends React.ComponentProps<"div"> {
   name: string;

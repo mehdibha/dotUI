@@ -20,10 +20,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <div className="relative grid grid-cols-[1fr_auto] max-xl:grid-cols-1 [&_[data-slot='label']]:text-sm [&_[data-slot='label']]:font-medium [&_[data-slot='label']]:text-fg-muted">
         <div className="container max-w-5xl py-10">
           <StylePageForm>
-          <StylePageHeader />
-          <StylePageNav className="mt-2">
-            {children}
-            </StylePageNav>
+            <StylePageHeader />
+            <StylePageNav className="mt-2">{children}</StylePageNav>
           </StylePageForm>
         </div>
         <div className="sticky top-0 flex h-[100svh] items-start max-xl:hidden">

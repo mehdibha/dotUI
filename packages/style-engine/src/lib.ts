@@ -94,7 +94,9 @@ const createMinimizedStyleDefinition = (
 
 // ---------------------------- Defintions -> Processed ---------------------------- //
 
-const createShadowsThemeVars = (background: Shadows): Record<string, string> => {
+const createShadowsThemeVars = (
+  background: Shadows,
+): Record<string, string> => {
   return {};
 };
 
@@ -302,7 +304,7 @@ export const createTheme = (themeDefinition: ThemeDefinition): Theme => {
         ...radiusThemeVars,
         ...spacingThemeVars,
         ...fontsThemeVars,
-        ...shadowsThemeVars
+        ...shadowsThemeVars,
       },
     },
   };

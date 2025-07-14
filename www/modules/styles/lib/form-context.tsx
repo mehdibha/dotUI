@@ -399,7 +399,7 @@ export function StyleFormProvider({ children }: StyleFormProviderProps) {
   });
 
   const colorMode = form.watch("colors.mode");
-  const resolvedMode = "dark"
+  const resolvedMode = "dark";
 
   console.log("resolvedMode", resolvedMode);
 
