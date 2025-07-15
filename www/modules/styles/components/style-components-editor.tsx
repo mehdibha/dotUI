@@ -40,7 +40,7 @@ import { TextField } from "@dotui/ui/components/text-field";
 import { ToggleButton } from "@dotui/ui/components/toggle-button";
 import { Tooltip } from "@dotui/ui/components/tooltip";
 import { cn } from "@dotui/ui/lib/utils";
-import type { VariantsDefinition } from "@dotui/style-engine/types-v2";
+import type { VariantsDefinition } from "@dotui/style-engine/types";
 
 import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
 

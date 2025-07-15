@@ -8,10 +8,19 @@ export type Css = z.infer<typeof schemas.CssSchema>;
 // icons
 export type IconLibrary = z.infer<typeof schemas.iconLibrarySchema>;
 export type IconsDefinition = z.infer<typeof schemas.iconsDefinitionSchema>;
+export type MinimizedIconsDefinition = z.infer<
+  typeof schemas.minimizedIconsDefinitionSchema
+>;
 
 // colors
 export type ColorScale = z.infer<typeof schemas.colorScaleSchema>;
 export type ModeDefinition = z.infer<typeof schemas.modeDefinitionSchema>;
+export type MinimizedColorScale = z.infer<
+  typeof schemas.minimizedColorScaleSchema
+>;
+export type MinimizedModeDefinition = z.infer<
+  typeof schemas.minimizedModeDefinitionSchema
+>;
 export type MinimizedColorTokens = z.infer<
   typeof schemas.minimizedColorTokensSchema
 >;

@@ -4,7 +4,7 @@ import { generateRegistryAll } from "./generators/all";
 import { generateRegistryBase } from "./generators/base";
 import { generateGenericRegistryItem } from "./generators/generic";
 import { generateRegistryTheme } from "./generators/theme";
-import type { Style } from "../types-v2";
+import type { Style } from "../types";
 
 export async function buildRegistryItem(
   registryItemName: string,

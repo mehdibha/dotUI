@@ -42,3 +42,14 @@ jobs:
       - uses: ./.github/actions/setup
 
       - run: pnpm typecheck
+
+  test:
+    runs-on: ubuntu-latest
+    name: Run tests
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/setup
+
+      - run: pnpm test

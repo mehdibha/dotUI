@@ -42,6 +42,22 @@
     "./registry-tokens": {
       "types": "./dist/registry-tokens.d.ts",
       "default": "./src/registry-tokens.ts"
+    },
+    "./registry-textures": {
+      "types": "./dist/registry-textures.d.ts",
+      "default": "./src/registry-textures.ts"
+    },
+    "./registry-shadows": {
+      "types": "./dist/registry-shadows.d.ts",
+      "default": "./src/registry-shadows.ts"
+    },
+    "./registry-bg-patterns": {
+      "types": "./dist/registry-bg-patterns.d.ts",
+      "default": "./src/registry-bg-patterns.ts"
+    },
+    "./registry-fonts": {
+      "types": "./dist/registry-fonts.d.ts",
+      "default": "./src/registry-fonts.ts"
     }
   },
   "license": "MIT",

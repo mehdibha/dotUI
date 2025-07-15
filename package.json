@@ -31,14 +31,18 @@
     "lint:fix": "turbo run lint --continue -- --fix --cache --cache-location .cache/.eslintcache",
     "lint:ws": "pnpm dlx sherif@latest",
     "postinstall": "pnpm lint:ws",
-    "typecheck": "turbo run typecheck"
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test"
   },
   "devDependencies": {
     "@dotui/prettier-config": "workspace:*",
     "@turbo/gen": "^2.5.1",
+    "@vitest/coverage-v8": "^2.0.5",
     "prettier": "catalog:",
     "turbo": "^2.5.1",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^2.0.5"
   },
   "prettier": "@dotui/prettier-config"
 }

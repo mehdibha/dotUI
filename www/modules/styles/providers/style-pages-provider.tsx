@@ -9,9 +9,8 @@ import { z } from "zod/v4";
 import type { UseFormReturn } from "react-hook-form";
 
 import { COLOR_TOKENS } from "@dotui/registry-definition/registry-tokens";
-import { styleDefinitionSchema } from "@dotui/style-engine/schemas-v2";
+import { styleDefinitionSchema } from "@dotui/style-engine/schemas";
 
-import { useDebounce } from "@/hooks/use-debounce";
 import { useTRPC } from "@/lib/trpc/react";
 import { useLiveStyleProducer } from "../atoms/live-style-atom";
 
@@ -68,10 +67,10 @@ export function StylePagesProvider({
     values: style ? fakeData : undefined,
   });
 
-  const watchedValues = form.watch();
+  // const watchedValues = form.watch();
 
   // React.useEffect(() => {
-    // updateLiveStyle(structuredClone(watchedValues));
+  // updateLiveStyle(structuredClone(watchedValues));
   // }, [watchedValues, updateLiveStyle]);
 
   // const debouncedLiveStyleData = useDebounce(form.watch(), 10);
@@ -128,76 +127,100 @@ const fakeData: StyleFormData = {
           lightness: 97,
           saturation: 100,
           contrast: 100,
-          scales: {
-            neutral: {
+          scales: [
+            {
+              id: "neutral",
+              name: "Neutral",
               colorKeys: [{ id: 0, color: "#000000" }],
               ratios: [1.05, 1.25, 1.7, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
               overrides: {},
             },
-            accent: {
+            {
+              id: "accent",
+              name: "Accent",
               colorKeys: [{ id: 0, color: "#0091FF" }],
               ratios: [1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
               overrides: {},
             },
-            success: {
+            {
+              id: "success",
+              name: "Success",
               colorKeys: [{ id: 0, color: "#1A9338" }],
               ratios: [1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
               overrides: {},
             },
-            warning: {
+            {
+              id: "warning",
+              name: "Warning",
               colorKeys: [{ id: 0, color: "#E79D13" }],
               ratios: [1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
               overrides: {},
             },
-            danger: {
+            {
+              id: "danger",
+              name: "Danger",
               colorKeys: [{ id: 0, color: "#D93036" }],
               ratios: [1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
               overrides: {},
             },
-            info: {
+            {
+              id: "info",
+              name: "Info",
               colorKeys: [{ id: 0, color: "#0091FF" }],
               ratios: [1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
               overrides: {},
             },
-          },
+          ],
         },
         {
           mode: "dark",
           lightness: 3,
           saturation: 100,
           contrast: 100,
-          scales: {
-            neutral: {
+          scales: [
+            {
+              id: "neutral",
+              name: "Neutral",
               colorKeys: [{ id: 0, color: "#ffffff" }],
               ratios: [1.05, 1.25, 1.7, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
               overrides: {},
             },
-            accent: {
+            {
+              id: "accent",
+              name: "Accent",
               colorKeys: [{ id: 0, color: "#0091FF" }],
               ratios: [1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
               overrides: {},
             },
-            success: {
+            {
+              id: "success",
+              name: "Success",
               colorKeys: [{ id: 0, color: "#1A9338" }],
               ratios: [1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
               overrides: {},
             },
-            warning: {
+            {
+              id: "warning",
+              name: "Warning",
               colorKeys: [{ id: 0, color: "#E79D13" }],
               ratios: [1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
               overrides: {},
             },
-            danger: {
+            {
+              id: "danger",
+              name: "Danger",
               colorKeys: [{ id: 0, color: "#D93036" }],
               ratios: [1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
               overrides: {},
             },
-            info: {
+            {
+              id: "info",
+              name: "Info",
               colorKeys: [{ id: 0, color: "#0091FF" }],
               ratios: [1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
               overrides: {},
             },
-          },
+          ],
         },
       ],
       tokens: COLOR_TOKENS.map((token) => ({

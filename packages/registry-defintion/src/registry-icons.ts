@@ -1,20 +1,28 @@
-export const iconLibraries = {
-  lucide: {
-    name: "lucide-icons",
+interface IconLibrary {
+  name: string;
+  label: string;
+  package: string;
+  import: string;
+}
+
+export const iconLibraries = [
+  {
+    name: "lucide",
+    label: "Lucide icons",
     package: "lucide-react",
     import: "lucide-react",
   },
-  remix: {
-    name: "remix-icons",
+  {
+    name: "remix",
+    label: "Remix icons",
     package: "@remixicon/react",
     import: "@remixicon/react",
   },
-} as const;
+] as const satisfies IconLibrary[];
 
-export const icons: Record<
-  string,
-  Record<keyof typeof iconLibraries, string>
-> = {
+type IconLibraryName = (typeof iconLibraries)[number]["name"];
+
+export const icons: Record<string, Record<IconLibraryName, string>> = {
   Loader2Icon: {
     lucide: "Loader2Icon",
     remix: "RiLoader4Line",

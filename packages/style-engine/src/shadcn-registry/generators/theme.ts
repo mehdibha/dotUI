@@ -1,8 +1,6 @@
 import type { RegistryItem } from "shadcn/registry";
 
-import { createTheme } from "../../lib";
-import { updateRegistryDependencies } from "../helpers/update-registry-deps";
-import type { Style } from "../../types-v2";
+import type { Style } from "../../types";
 
 export function generateRegistryTheme(options: {
   baseUrl: string;
@@ -18,6 +16,6 @@ export function generateRegistryTheme(options: {
     type: "registry:theme",
     title: `${styleName} theme`,
     description: `Color theme for ${styleName} style`,
-    ...createTheme(style.theme),
+    ...style.theme,
   };
 }

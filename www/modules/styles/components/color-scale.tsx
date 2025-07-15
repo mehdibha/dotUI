@@ -20,11 +20,13 @@ import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
 import { usePreferences } from "../atoms/preferences-atom";
 
 interface ColorScaleProps {
-  name: "neutral" | "accent" | "success" | "danger" | "warning" | "info";
+  name: string;
   label: string;
+  scaleIndex: number;
+  neutralIndex: number;
 }
 
-export function ColorScale({ name, label }: ColorScaleProps) {
+export function ColorScale({ name, label, scaleIndex, neutralIndex }: ColorScaleProps) {
   const { form, isSuccess } = useStyleForm();
 
   const { currentMode } = usePreferences();
@@ -42,13 +44,13 @@ export function ColorScale({ name, label }: ColorScaleProps) {
     form.watch(`theme.colors.modes.${currentModeIndex}.contrast`) / 100;
 
   const neutralScale = form.watch(
-    `theme.colors.modes.${currentModeIndex}.scales.neutral`,
+    `theme.colors.modes.${currentModeIndex}.scales.${neutralIndex}`,
   );
   const neutralColorKeys = neutralScale.colorKeys;
   const neutralRatios = neutralScale.ratios;
 
   const currentScale = form.watch(
-    `theme.colors.modes.${currentModeIndex}.scales.${name}`,
+    `theme.colors.modes.${currentModeIndex}.scales.${scaleIndex}`,
   );
   const currentColorKeys = currentScale.colorKeys;
   const currentRatios = currentScale.ratios;

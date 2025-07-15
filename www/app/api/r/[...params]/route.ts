@@ -2,6 +2,7 @@ import path from "node:path";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
+import { createStyle } from "@dotui/style-engine";
 import { buildRegistryItem } from "@dotui/style-engine/shadcn-registry";
 
 import { env } from "@/env";
@@ -44,7 +45,7 @@ export async function GET(
     }
 
     const registryItem = await buildRegistryItem(registryItemName, {
-      style,
+      style: createStyle(style),
       registryBasePath,
       baseUrl:
         env.NODE_ENV === "development"

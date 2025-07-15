@@ -1,9 +1,13 @@
 import { z } from "zod/v4";
 
+import { registryBackgroundPatterns } from "@dotui/registry-definition/registry-bg-patterns";
+import { iconLibraries } from "@dotui/registry-definition/registry-icons";
+import { registryTextures } from "@dotui/registry-definition/registry-textures";
+
 // ---------------------------------  Defintions  ----------------------------------- //
 
 // Icons
-export const iconLibrarySchema = z.enum(["lucide", "remix"]);
+export const iconLibrarySchema = z.enum(iconLibraries.map((lib) => lib.name));
 export const iconsDefinitionSchema = z.object({
   library: iconLibrarySchema,
   strokeWidth: z.number().min(0.5).max(3),
@@ -11,6 +15,8 @@ export const iconsDefinitionSchema = z.object({
 
 // Colors
 export const colorScaleSchema = z.object({
+  id: z.string().min(1),
+  name: z.string().min(1),
   colorKeys: z
     .array(
       z.object({
@@ -19,24 +25,38 @@ export const colorScaleSchema = z.object({
       }),
     )
     .min(1),
-  ratios: z.array(z.number().min(0).max(1)),
+  ratios: z.array(z.number().min(0)),
   overrides: z.record(z.string(), z.string()),
 });
 
 export const modeSchema = z.enum(["light", "dark"]);
+const requiredScaleIds = [
+  "neutral",
+  "accent",
+  "success",
+  "warning",
+  "danger",
+  "info",
+];
+
 export const modeDefinitionSchema = z.object({
   mode: modeSchema,
   lightness: z.number().min(0).max(100),
   saturation: z.number().min(0).max(100),
   contrast: z.number().min(0).max(500),
-  scales: z.object({
-    neutral: colorScaleSchema,
-    accent: colorScaleSchema,
-    success: colorScaleSchema,
-    warning: colorScaleSchema,
-    danger: colorScaleSchema,
-    info: colorScaleSchema,
-  }),
+  scales: z
+    .array(colorScaleSchema)
+    .min(6)
+    .refine(
+      (scales) => {
+        const scaleIds = scales.map((scale) => scale.id);
+        return requiredScaleIds.every((id) => scaleIds.includes(id));
+      },
+      {
+        message:
+          "Must include all required scale IDs: neutral, accent, success, warning, danger, info",
+      },
+    ),
 });
 
 export const colorTokenSchema = z.object({
@@ -59,8 +79,14 @@ export const fontsSchema = z.object({
 export const letterSpacingSchema = z.number().min(-0.05).max(0.1);
 
 // effects
-export const backgroundPatternSchema = z.enum(["none"]);
-export const textureSchema = z.enum(["none"]);
+export const backgroundPatternSchema = z.enum([
+  "none",
+  ...registryBackgroundPatterns.map((bgPattern) => bgPattern.slug),
+]);
+export const textureSchema = z.enum([
+  "none",
+  ...registryTextures.map((texture) => texture.slug),
+]);
 export const shadowPresetSchema = z.enum(["default"]);
 export const shadowsSchema = z.union([
   shadowPresetSchema,
@@ -122,9 +148,25 @@ export const styleDefinitionSchema = z.object({
 
 export const minimizedColorTokensSchema = colorTokensSchema.optional();
 
+export const minimizedColorScaleSchema = z.object({
+  id: z.string().min(1),
+  name: z.string().min(1).optional(),
+  colorKeys: z.array(z.string()).min(1).optional(),
+  ratios: z.array(z.number().min(0)).optional(),
+  overrides: z.record(z.string(), z.string()).optional(),
+});
+
+export const minimizedModeDefinitionSchema = z.object({
+  mode: modeSchema,
+  lightness: z.number().min(0).max(100).optional(),
+  saturation: z.number().min(0).max(100).optional(),
+  contrast: z.number().min(0).max(500).optional(),
+  scales: z.array(minimizedColorScaleSchema).optional(),
+});
+
 export const minimizedThemeDefinitionSchema = z.object({
   colors: z.object({
-    modes: z.array(modeDefinitionSchema).min(1),
+    modes: z.array(minimizedModeDefinitionSchema),
     tokens: colorTokensSchema.optional(),
   }),
   radius: radiusSchema.optional(),
@@ -139,13 +181,17 @@ export const minimizedThemeDefinitionSchema = z.object({
 export const minimizedVariantsDefinitionSchema =
   variantsDefinitionSchema.partial();
 
+export const minimizedIconsDefinitionSchema = iconsDefinitionSchema
+  .partial()
+  .optional();
+
 export const minimizedStyleDefinitionSchema = z.object({
   name: z.string().min(2),
   slug: z.string().min(2),
-  description: z.string().min(2).optional(),
+  description: z.string().min(2).optional().nullable(),
   theme: minimizedThemeDefinitionSchema,
-  icons: iconsDefinitionSchema,
-  variants: minimizedVariantsDefinitionSchema,
+  icons: minimizedIconsDefinitionSchema.optional().nullable(),
+  variants: minimizedVariantsDefinitionSchema.optional().nullable(),
 });
 
 // ---------------------------------  Processed  ----------------------------------- //

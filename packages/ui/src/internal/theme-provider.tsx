@@ -1,8 +1,8 @@
 import React from "react";
 
-import { createTheme } from "@dotui/style-engine/lib";
+import { createTheme } from "@dotui/style-engine";
 import { cn } from "@dotui/ui/lib/utils";
-import type { ThemeDefinition } from "@dotui/style-engine/types-v2";
+import type { ThemeDefinition } from "@dotui/style-engine/types";
 
 type Mode = "light" | "dark";
 

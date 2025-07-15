@@ -3,7 +3,7 @@ import { useAtom } from "jotai";
 import { withImmer } from "jotai-immer";
 import { atomWithStorage } from "jotai/utils";
 
-import type { StyleDefinition } from "@dotui/style-engine/types-v2";
+import type { StyleDefinition } from "@dotui/style-engine/types";
 
 type LiveStyleState = Record<string, StyleDefinition>;
 

@@ -1,15 +1,23 @@
-import type { SourceFile } from "ts-morph";
+// import type { SourceFile } from "ts-morph";
 
 import {
   iconLibraries,
   icons,
 } from "@dotui/registry-definition/registry-icons";
 
+import type { IconLibrary } from "../../types";
 import type { Transformer } from "./index";
 
 export const transformIcons: Transformer = ({ sourceFile, style }) => {
-  const targetIconLibrary = style.iconLibrary === "remix" ? "remix" : "lucide";
-  const targetLibraryConfig = iconLibraries[targetIconLibrary];
+  const targetIconLibrary =
+    style.icons.library === "remix" ? "remix" : "lucide";
+  const targetLibraryConfig = iconLibraries.find(
+    (lib) => lib.name === targetIconLibrary,
+  );
+
+  if (!targetLibraryConfig) {
+    throw new Error(`Icon library ${targetIconLibrary} not found`);
+  }
 
   const importDeclarations = sourceFile.getImportDeclarations();
 
@@ -18,81 +26,27 @@ export const transformIcons: Transformer = ({ sourceFile, style }) => {
     const moduleSpecifierValue = moduleSpecifier.getText().slice(1, -1);
 
     const isIconImport = Object.values(iconLibraries).some(
-      (lib) =>
-        lib.package === moduleSpecifierValue ||
-        lib.import === moduleSpecifierValue,
+      (lib) => lib.package === moduleSpecifierValue,
     );
 
     if (isIconImport) {
-      importDeclaration.setModuleSpecifier(targetLibraryConfig.package);
+      moduleSpecifier.replaceWithText(`"${targetLibraryConfig.package}"`);
 
       const namedImports = importDeclaration.getNamedImports();
-
       for (const namedImport of namedImports) {
         const importName = namedImport.getName();
-        const aliasName = namedImport.getAliasNode()?.getText();
-
-        const targetIconName = findTargetIconName(
-          importName,
-          targetIconLibrary,
-        );
-
-        if (targetIconName && targetIconName !== importName) {
-          if (aliasName) {
-            namedImport.setName(targetIconName);
-          } else {
-            namedImport.setName(targetIconName);
+        const targetIconName = icons[importName as IconLibrary];
+        if (targetIconName) {
+          const targetIcon = targetIconName[targetIconLibrary];
+          if (targetIcon) {
+            namedImport.setName(targetIcon);
           }
         }
       }
-
-      if (!_useSemicolon(sourceFile)) {
-        const newText = importDeclaration.getText().replace(";", "");
-        importDeclaration.replaceWithText(newText);
-      }
     }
   }
 
-  sourceFile.forEachDescendant((node) => {
-    if (node.getKindName() === "Identifier") {
-      const identifierText = node.getText();
-      const targetIconName = findTargetIconName(
-        identifierText,
-        targetIconLibrary,
-      );
-
-      if (targetIconName && targetIconName !== identifierText) {
-        const parent = node.getParent();
-        if (parent && node.getKindName() === "Identifier") {
-          node.replaceWithText(targetIconName);
-        }
-      }
-    }
+  return new Promise((resolve) => {
+    resolve(sourceFile);
   });
-
-  return Promise.resolve(sourceFile);
 };
-
-function findTargetIconName(
-  currentIconName: string,
-  targetLibrary: "lucide" | "remix",
-): string | null {
-  for (const [_iconKey, iconMappings] of Object.entries(icons)) {
-    const currentLibrary = targetLibrary === "lucide" ? "remix" : "lucide";
-
-    if (iconMappings[currentLibrary] === currentIconName) {
-      return iconMappings[targetLibrary];
-    }
-
-    if (iconMappings[targetLibrary] === currentIconName) {
-      return currentIconName;
-    }
-  }
-
-  return null;
-}
-
-function _useSemicolon(sourceFile: SourceFile) {
-  const firstImport = sourceFile.getImportDeclarations()[0];
-  return firstImport?.getText().endsWith(";") ?? false;
-}

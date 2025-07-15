@@ -1,10 +1,7 @@
 import React from "react";
 
-import { createVariants } from "@dotui/style-engine/lib";
-import type {
-  Variants,
-  VariantsDefinition,
-} from "@dotui/style-engine/types-v2";
+import { createVariants } from "@dotui/style-engine";
+import type { Variants, VariantsDefinition } from "@dotui/style-engine/types";
 
 const VariantsContext = React.createContext<Variants | null>(null);
 

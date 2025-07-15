@@ -317,152 +317,17 @@ export const DEFAULT_STYLES: Omit<
   {
     name: "Minimalist",
     slug: "minimalist",
-    description: "",
     theme: {
       colors: {
         modes: [
           {
             mode: "light",
-            lightness: 97,
-            saturation: 100,
-            contrast: 100,
-            scales: {
-              neutral: {
-                colorKeys: [{ id: 0, color: "#000000" }],
-                ratios: [
-                  1.05, 1.25, 1.7, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
-                ],
-                overrides: {},
-              },
-              accent: {
-                colorKeys: [{ id: 0, color: "#0091FF" }],
-                ratios: [
-                  1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
-                ],
-                overrides: {},
-              },
-              success: {
-                colorKeys: [{ id: 0, color: "#1A9338" }],
-                ratios: [
-                  1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
-                ],
-                overrides: {},
-              },
-              warning: {
-                colorKeys: [{ id: 0, color: "#E79D13" }],
-                ratios: [
-                  1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
-                ],
-                overrides: {},
-              },
-              danger: {
-                colorKeys: [{ id: 0, color: "#D93036" }],
-                ratios: [
-                  1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
-                ],
-                overrides: {},
-              },
-              info: {
-                colorKeys: [{ id: 0, color: "#0091FF" }],
-                ratios: [
-                  1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
-                ],
-                overrides: {},
-              },
-            },
           },
           {
             mode: "dark",
-            lightness: 3,
-            saturation: 100,
-            contrast: 100,
-            scales: {
-              neutral: {
-                colorKeys: [{ id: 0, color: "#ffffff" }],
-                ratios: [
-                  1.05, 1.25, 1.7, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
-                ],
-                overrides: {},
-              },
-              accent: {
-                colorKeys: [{ id: 0, color: "#0091FF" }],
-                ratios: [
-                  1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
-                ],
-                overrides: {},
-              },
-              success: {
-                colorKeys: [{ id: 0, color: "#1A9338" }],
-                ratios: [
-                  1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
-                ],
-                overrides: {},
-              },
-              warning: {
-                colorKeys: [{ id: 0, color: "#E79D13" }],
-                ratios: [
-                  1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
-                ],
-                overrides: {},
-              },
-              danger: {
-                colorKeys: [{ id: 0, color: "#D93036" }],
-                ratios: [
-                  1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
-                ],
-                overrides: {},
-              },
-              info: {
-                colorKeys: [{ id: 0, color: "#0091FF" }],
-                ratios: [
-                  1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
-                ],
-                overrides: {},
-              },
-            },
           },
         ],
-        tokens: DEFAULT_COLOR_TOKENS,
       },
-      radius: 1,
-      spacing: 0.25,
-      fonts: {
-        heading: "Inter",
-        body: "Inter",
-      },
-      letterSpacing: 0,
-      backgroundPattern: "none",
-      texture: "none",
-      shadows: {
-        color: "#000000",
-        opacity: 0.1,
-        blurRadius: 10,
-        offsetX: 0,
-        offsetY: 1,
-        spread: 0,
-      },
-    },
-    icons: {
-      library: "lucide",
-      strokeWidth: 1.5,
-    },
-    variants: {
-      alert: "basic",
-      buttons: "basic",
-      loader: "ring",
-      "focus-style": "basic",
-      inputs: "basic",
-      pickers: "basic",
-      selection: "basic",
-      calendars: "basic",
-      "list-box-and-menu": "basic",
-      overlays: "basic",
-      checkboxes: "basic",
-      radios: "basic",
-      switch: "basic",
-      slider: "basic",
-      "badge-and-tag-group": "basic",
-      tooltip: "basic",
     },
   },
   {
@@ -474,78 +339,9 @@ export const DEFAULT_STYLES: Omit<
         modes: [
           {
             mode: "light",
-            lightness: 97,
-            saturation: 100,
-            contrast: 100,
-            scales: {
-              neutral: {
-                colorKeys: [{ id: 0, color: "#000000" }],
-                ratios: [
-                  1.05, 1.25, 1.7, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
-                ],
-                overrides: {},
-              },
-              accent: {
-                colorKeys: [{ id: 0, color: "#0091FF" }],
-                ratios: [
-                  1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
-                ],
-                overrides: {},
-              },
-              success: {
-                colorKeys: [{ id: 0, color: "#1A9338" }],
-                ratios: [
-                  1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
-                ],
-                overrides: {},
-              },
-              warning: {
-                colorKeys: [{ id: 0, color: "#E79D13" }],
-                ratios: [
-                  1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
-                ],
-                overrides: {},
-              },
-              danger: {
-                colorKeys: [{ id: 0, color: "#D93036" }],
-                ratios: [
-                  1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
-                ],
-                overrides: {},
-              },
-              info: {
-                colorKeys: [{ id: 0, color: "#0091FF" }],
-                ratios: [
-                  1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
-                ],
-                overrides: {},
-              },
-            },
           },
         ],
-        tokens: DEFAULT_COLOR_TOKENS,
       },
-      radius: 1,
-      spacing: 0.25,
-      fonts: {
-        heading: "Inter",
-        body: "Inter",
-      },
-      letterSpacing: 0,
-      backgroundPattern: "none",
-      texture: "none",
-      shadows: {
-        color: "#000000",
-        opacity: 0.1,
-        blurRadius: 10,
-        offsetX: 0,
-        offsetY: 1,
-        spread: 0,
-      },
-    },
-    icons: {
-      library: "lucide",
-      strokeWidth: 1.5,
     },
     variants: {
       buttons: "brutalist",
@@ -563,50 +359,62 @@ export const DEFAULT_STYLES: Omit<
             lightness: 97,
             saturation: 100,
             contrast: 100,
-            scales: {
-              neutral: {
-                colorKeys: [{ id: 0, color: "#000000" }],
-                ratios: [
-                  1.05, 1.25, 1.7, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
-                ],
-                overrides: {},
-              },
-              accent: {
-                colorKeys: [{ id: 0, color: "#0091FF" }],
+            scales: [
+              {
+                id: "neutral",
+                name: "Neutral",
+                colorKeys: ["#000000"],
                 ratios: [
                   1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
                 ],
                 overrides: {},
               },
-              success: {
-                colorKeys: [{ id: 0, color: "#1A9338" }],
+              {
+                id: "accent",
+                name: "Accent",
+                colorKeys: ["#0091FF"],
                 ratios: [
                   1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
                 ],
                 overrides: {},
               },
-              warning: {
-                colorKeys: [{ id: 0, color: "#E79D13" }],
+              {
+                id: "success",
+                name: "Success",
+                colorKeys: ["#1A9338"],
                 ratios: [
                   1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
                 ],
                 overrides: {},
               },
-              danger: {
-                colorKeys: [{ id: 0, color: "#D93036" }],
+              {
+                id: "warning",
+                name: "Warning",
+                colorKeys: ["#E79D13"],
                 ratios: [
                   1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
                 ],
                 overrides: {},
               },
-              info: {
-                colorKeys: [{ id: 0, color: "#0091FF" }],
+              {
+                id: "danger",
+                name: "Danger",
+                colorKeys: ["#D93036"],
                 ratios: [
                   1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
                 ],
                 overrides: {},
               },
-            },
+              {
+                id: "info",
+                name: "Info",
+                colorKeys: ["#0091FF"],
+                ratios: [
+                  1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
+                ],
+                overrides: {},
+              },
+            ],
           },
         ],
         tokens: DEFAULT_COLOR_TOKENS,
@@ -649,50 +457,62 @@ export const DEFAULT_STYLES: Omit<
             lightness: 97,
             saturation: 100,
             contrast: 100,
-            scales: {
-              neutral: {
-                colorKeys: [{ id: 0, color: "#f1dfbe" }],
+            scales: [
+              {
+                id: "neutral",
+                name: "Neutral",
+                colorKeys: ["#f1dfbe"],
                 ratios: [
                   1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
                 ],
                 overrides: {},
               },
-              accent: {
-                colorKeys: [{ id: 0, color: "#969A54" }],
+              {
+                id: "accent",
+                name: "Accent",
+                colorKeys: ["#969A54"],
                 ratios: [
                   1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
                 ],
                 overrides: {},
               },
-              success: {
-                colorKeys: [{ id: 0, color: "#1A9338" }],
+              {
+                id: "success",
+                name: "Success",
+                colorKeys: ["#1A9338"],
                 ratios: [
                   1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
                 ],
                 overrides: {},
               },
-              warning: {
-                colorKeys: [{ id: 0, color: "#E79D13" }],
+              {
+                id: "warning",
+                name: "Warning",
+                colorKeys: ["#E79D13"],
                 ratios: [
                   1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
                 ],
                 overrides: {},
               },
-              danger: {
-                colorKeys: [{ id: 0, color: "#D93036" }],
+              {
+                id: "danger",
+                name: "Danger",
+                colorKeys: ["#D93036"],
                 ratios: [
                   1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
                 ],
                 overrides: {},
               },
-              info: {
-                colorKeys: [{ id: 0, color: "#0091FF" }],
+              {
+                id: "info",
+                name: "Info",
+                colorKeys: ["#0091FF"],
                 ratios: [
                   1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2,
                 ],
                 overrides: {},
               },
-            },
+            ],
           },
         ],
         tokens: DEFAULT_COLOR_TOKENS,

@@ -11,7 +11,7 @@ import {
   monoFonts,
   sansSerifFonts,
   serifFonts,
-} from "@dotui/style-engine/constants";
+} from "@dotui/registry-definition/registry-fonts";
 import { FontLoader } from "@dotui/ui";
 import { Button } from "@dotui/ui/components/button";
 import { CommandRoot } from "@dotui/ui/components/command";

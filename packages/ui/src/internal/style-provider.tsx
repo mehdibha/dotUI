@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import type { StyleDefinition } from "@dotui/style-engine/types-v2";
+import type { StyleDefinition } from "@dotui/style-engine/types";
 
 import { FontsProvider } from "./fonts-provider";
 import { ThemeProvider } from "./theme-provider";
@@ -23,6 +23,7 @@ export const StyleProvider = ({
   ...props
 }: StyleProviderProps) => {
   const modes = style.theme.colors.modes.map((mode) => mode.mode);
+
   return (
     <StyleContext value={style}>
       <VariantsProvider variants={style.variants}>

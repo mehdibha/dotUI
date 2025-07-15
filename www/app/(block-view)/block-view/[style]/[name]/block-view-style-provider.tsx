@@ -3,7 +3,7 @@
 import React from "react";
 
 import { StyleProvider } from "@dotui/ui";
-import type { StyleDefinition } from "@dotui/style-engine/types-v2";
+import type { StyleDefinition } from "@dotui/style-engine/types";
 
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 

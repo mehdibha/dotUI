@@ -4,7 +4,7 @@ import { base } from "@dotui/registry-definition/registry-base";
 import { iconLibraries } from "@dotui/registry-definition/registry-icons";
 
 import { updateRegistryDependencies } from "../helpers/update-registry-deps";
-import type { Style } from "../../types-v2";
+import type { Style } from "../../types";
 
 export function generateRegistryBase(options: {
   baseUrl: string;
@@ -14,14 +14,13 @@ export function generateRegistryBase(options: {
 
   let registryItem = base;
 
-  // Update registry dependencies
   registryItem = updateRegistryDependencies(base, baseUrl, style);
 
-  // Add icon library to dependencies
-  const iconLibrary =
-    style.iconLibrary in iconLibraries
-      ? iconLibraries[style.iconLibrary as keyof typeof iconLibraries]
-      : iconLibraries.lucide;
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const iconLibrary = iconLibraries.find(
+    (lib) => lib.name === style.icons.library,
+  )!;
+
   registryItem.dependencies = [
     ...(registryItem.dependencies ?? []),
     iconLibrary.package,

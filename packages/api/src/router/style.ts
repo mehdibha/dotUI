@@ -3,7 +3,7 @@ import type { TRPCRouterRecord } from "@trpc/server";
 
 import { eq } from "@dotui/db";
 import { style } from "@dotui/db/schema";
-import { createStyleDefinition } from "@dotui/style-engine/lib";
+import { restoreStyleDefinitionDefaults } from "@dotui/style-engine";
 
 import { publicProcedure } from "../trpc";
 
@@ -22,12 +22,7 @@ export const styleRouter = {
       });
 
       const result = styles.map((style) => {
-        return {
-          name: style.name,
-          slug: style.slug,
-          description: style.description,
-          ...createStyleDefinition(style),
-        };
+        return restoreStyleDefinitionDefaults(style);
       });
 
       return result;
@@ -43,6 +38,6 @@ export const styleRouter = {
         return undefined;
       }
 
-      return createStyleDefinition(rawStyle);
+      return restoreStyleDefinitionDefaults(rawStyle);
     }),
 } satisfies TRPCRouterRecord;

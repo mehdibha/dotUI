@@ -69,6 +69,13 @@ export function StyleColorsEditor() {
     (mode) => mode.mode === currentMode,
   );
 
+  const { fields: colorScales } = useFieldArray({
+    name: `theme.colors.modes.${currentModeIndex}.scales`,
+    control: form.control,
+  });
+
+  const neutralIndex = colorScales.findIndex((s) => s.id === "neutral");
+
   return (
     <div>
       <EditorSection title="Mode">
@@ -217,45 +224,87 @@ export function StyleColorsEditor() {
 
       <EditorSection title="Base colors">
         <div className="mt-2 flex items-center gap-2">
-          {baseColors.map((color) => (
-            <Skeleton key={color.name} show={!isSuccess}>
-              <ColorKeys
-                name={color.name}
-                currentModeIndex={currentModeIndex}
-              />
-            </Skeleton>
-          ))}
+          {baseColors.map((color) => {
+            const scaleIndex = colorScales.findIndex(
+              (s) => s.id === color.name,
+            );
+
+            const scale = colorScales[scaleIndex]!;
+
+            return (
+              <Skeleton key={scale.id} show={!isSuccess}>
+                <ColorKeys
+                  id={color.name}
+                  name={scale.name as "neutral" | "accent"}
+                  currentModeIndex={currentModeIndex}
+                  neutralIndex={neutralIndex}
+                  scaleIndex={scaleIndex}
+                />
+              </Skeleton>
+            );
+          })}
         </div>
         <div className="mt-3 space-y-2">
-          {baseColors.map((color) => (
-            <ColorScale
-              key={color.name}
-              name={color.name}
-              label={color.label}
-            />
-          ))}
+          {baseColors.map((color) => {
+            const scaleIndex = colorScales.findIndex(
+              (s) => s.id === color.name,
+            );
+
+            const scale = colorScales[scaleIndex]!;
+
+            return (
+              <ColorScale
+                key={color.name}
+                name={scale.name}
+                label={color.label}
+                scaleIndex={scaleIndex}
+                neutralIndex={neutralIndex}
+              />
+            );
+          })}
         </div>
       </EditorSection>
 
       <EditorSection title="Semantic colors">
         <div className="mt-2 flex items-center gap-2">
-          {semanticColors.map((color) => (
-            <Skeleton key={color.name} show={!isSuccess}>
-              <ColorKeys
-                name={color.name}
-                currentModeIndex={currentModeIndex}
-              />
-            </Skeleton>
-          ))}
+          {semanticColors.map((color) => {
+            const scaleIndex = colorScales.findIndex(
+              (s) => s.id === color.name,
+            );
+
+            const scale = colorScales[scaleIndex]!;
+
+            return (
+              <Skeleton key={color.name} show={!isSuccess}>
+                <ColorKeys
+                  id={color.name}
+                  name={scale.name}
+                  currentModeIndex={currentModeIndex}
+                  neutralIndex={neutralIndex}
+                  scaleIndex={scaleIndex}
+                />
+              </Skeleton>
+            );
+          })}
         </div>
         <div className="mt-3 space-y-2">
-          {semanticColors.map((color) => (
-            <ColorScale
-              key={color.name}
-              name={color.name}
-              label={color.label}
-            />
-          ))}
+          {semanticColors.map((color) => {
+            const scaleIndex = colorScales.findIndex(
+              (s) => s.id === color.name,
+            );
+
+            const scale = colorScales[scaleIndex]!;
+
+            return (
+              <ColorScale
+                key={color.name}
+                name={scale.name}
+                label={color.label}
+                scaleIndex={scaleIndex}
+                neutralIndex={neutralIndex}
+              />
+            );
+          })}
         </div>
       </EditorSection>
 
