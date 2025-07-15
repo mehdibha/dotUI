@@ -4,7 +4,7 @@ import { base } from "@dotui/registry-definition/registry-base";
 import { iconLibraries } from "@dotui/registry-definition/registry-icons";
 
 import { updateRegistryDependencies } from "../helpers/update-registry-deps";
-import type { Style } from "../../types";
+import type { Style } from "../../types-v2";
 
 export function generateRegistryBase(options: {
   baseUrl: string;

@@ -1,7 +1,8 @@
 import type { RegistryItem } from "shadcn/registry";
 
-import { createTheme } from "../../theme";
-import type { Style } from "../../types";
+import { createTheme } from "../../lib";
+import { updateRegistryDependencies } from "../helpers/update-registry-deps";
+import type { Style } from "../../types-v2";
 
 export function generateRegistryTheme(options: {
   baseUrl: string;

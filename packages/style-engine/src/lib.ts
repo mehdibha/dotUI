@@ -1,9 +1,13 @@
+/* eslint-disable */
+
+
 import {
   BackgroundColor as LeonardoBgColor,
   Color as LeonardoColor,
   Theme as LeonardoTheme,
 } from "@adobe/leonardo-contrast-colors";
 import type { CssColor } from "@adobe/leonardo-contrast-colors";
+
 
 import {
   COLOR_TOKENS,
@@ -41,9 +45,7 @@ import type {
   ThemeDefinition,
   Variants,
   VariantsDefinition,
-} from "./types-v2";
-
-/* eslint-disable */
+} from "./types";
 
 // ---------------------------- Minimized definitions -> Definitions ---------------------------- //
 
@@ -67,12 +69,12 @@ const createThemeDefinition = (
     value: token.defaultValue,
   }));
 
-  const providedTokens = colors.tokens || [];
+  const providedTokens = colors.tokens ?? [];
   const mergedTokens = defaultTokens.map((defaultToken) => {
     const providedToken = providedTokens.find(
       (token) => token.id === defaultToken.id,
     );
-    return providedToken || defaultToken;
+    return providedToken ?? defaultToken;
   });
 
   return {
@@ -83,8 +85,8 @@ const createThemeDefinition = (
     radius,
     spacing,
     fonts: {
-      heading: fonts.heading || DEFAULT_FONTS.heading,
-      body: fonts.body || DEFAULT_FONTS.body,
+      heading: fonts.heading ?? DEFAULT_FONTS.heading,
+      body: fonts.body ?? DEFAULT_FONTS.body,
     },
     letterSpacing,
     backgroundPattern,
@@ -108,13 +110,13 @@ export const createStyleDefinition = (
   const {
     theme: minimizedThemeDefinition,
     variants: minimizedVariantsDefinition,
-    icons,
+    ...restProps
   } = minimizedStyleDefinition;
 
   return {
     theme: createThemeDefinition(minimizedThemeDefinition),
     variants: createVariantsDefinition(minimizedVariantsDefinition),
-    icons,
+    ...restProps,
   };
 };
 

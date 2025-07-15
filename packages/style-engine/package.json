@@ -5,32 +5,24 @@
   "description": "Shared style system logic and types",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./src/index.ts"
+      "types": "./dist/lib.d.ts",
+      "default": "./src/lib.ts"
     },
     "./types": {
       "types": "./dist/types.d.ts",
       "default": "./src/types.ts"
+    },
+    "./schemas": {
+      "types": "./dist/schemas.d.ts",
+      "default": "./src/schemas.ts"
     },
     "./shadcn-registry": {
       "types": "./dist/shadcn-registry/index.d.ts",
       "default": "./src/shadcn-registry/index.ts"
     },
     "./constants": {
-      "types": "./dist/constants/index.d.ts",
-      "default": "./src/constants/index.ts"
-    },
-    "./schemas-v2": {
-      "types": "./dist/schemas-v2.d.ts",
-      "default": "./src/schemas-v2.ts"
-    },
-    "./types-v2": {
-      "types": "./dist/types-v2.d.ts",
-      "default": "./src/types-v2.ts"
-    },
-    "./lib": {
-      "types": "./dist/lib.d.ts",
-      "default": "./src/lib.ts"
+      "types": "./dist/constants.d.ts",
+      "default": "./src/constants.ts"
     }
   },
   "scripts": {

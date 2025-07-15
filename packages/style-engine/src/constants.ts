@@ -1,10 +1,10 @@
 import type {
   Fonts,
   IconLibrary,
-  ThemeModeDefinition,
+  ModeDefinition,
   Variants,
-} from "../types";
-import type { VariantsDefinition } from "../types-v2";
+  VariantsDefinition,
+} from "./types";
 
 export const DEFAULT_RADIUS_FACTOR = 1;
 
@@ -115,6 +115,7 @@ export const DEFAULT_VARIANTS: Variants = {
   text: "basic",
   "tag-group": "basic",
   kbd: "basic",
+  "focus-style": "basic",
 };
 
 export const DEFAULT_CSS = {
@@ -129,67 +130,83 @@ export const DEFAULT_CSS = {
   },
 };
 
-export const DEFAULT_LIGHT_FOUNDATIONS = {
+export const DEFAULT_LIGHT_MODE: ModeDefinition = {
+  mode: "light",
   lightness: 97,
   saturation: 100,
-  colors: {
+  contrast: 100,
+  scales: {
     neutral: {
-      baseColors: ["#000000"],
+      colorKeys: [{ id: 0, color: "#000000" }],
       ratios: [1.05, 1.25, 1.7, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
+      overrides: {},
     },
     accent: {
-      baseColors: ["#0091FF"],
+      colorKeys: [{ id: 0, color: "#0091FF" }],
       ratios: [1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
+      overrides: {},
     },
     success: {
-      baseColors: ["#1A9338"],
+      colorKeys: [{ id: 0, color: "#1A9338" }],
       ratios: [1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
+      overrides: {},
     },
     warning: {
-      baseColors: ["#E79D13"],
+      colorKeys: [{ id: 0, color: "#E79D13" }],
       ratios: [1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
+      overrides: {},
     },
     danger: {
-      baseColors: ["#D93036"],
+      colorKeys: [{ id: 0, color: "#D93036" }],
       ratios: [1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
+      overrides: {},
     },
     info: {
-      baseColors: ["#0091FF"],
+      colorKeys: [{ id: 0, color: "#0091FF" }],
       ratios: [1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
+      overrides: {},
     },
   },
-} as const satisfies ThemeModeDefinition;
+};
 
-export const DEFAULT_DARK_FOUNDATIONS = {
+export const DEFAULT_DARK_MODE: ModeDefinition = {
+  mode: "dark",
   lightness: 0,
   saturation: 100,
-  colors: {
+  contrast: 100,
+  scales: {
     neutral: {
-      baseColors: ["#ffffff"],
+      colorKeys: [{ id: 0, color: "#ffffff" }],
       ratios: [1, 1.25, 1.7, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
+      overrides: {},
     },
     accent: {
-      baseColors: ["#0091FF"],
+      colorKeys: [{ id: 0, color: "#0091FF" }],
       ratios: [1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
+      overrides: {},
     },
     success: {
-      baseColors: ["#1A9338"],
+      colorKeys: [{ id: 0, color: "#1A9338" }],
       ratios: [1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
+      overrides: {},
     },
     warning: {
-      baseColors: ["#E79D13"],
+      colorKeys: [{ id: 0, color: "#E79D13" }],
       ratios: [1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
+      overrides: {},
     },
     danger: {
-      baseColors: ["#D93036"],
+      colorKeys: [{ id: 0, color: "#D93036" }],
       ratios: [1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
+      overrides: {},
     },
     info: {
-      baseColors: ["#0091FF"],
+      colorKeys: [{ id: 0, color: "#0091FF" }],
       ratios: [1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
+      overrides: {},
     },
   },
-} as const satisfies ThemeModeDefinition;
+};
 
 export const DEFAULT_THEME: Record<string, string> = {
   "font-body": "var(--font-body)",

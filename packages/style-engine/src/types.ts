@@ -1,127 +1,54 @@
-type Css = Record<
-  string,
-  string | Record<string, string | Record<string, string>>
+import type { z } from "zod/v4";
+
+import type * as schemas from "./schemas";
+
+// utils
+export type Css = z.infer<typeof schemas.CssSchema>;
+
+// icons
+export type IconLibrary = z.infer<typeof schemas.iconLibrarySchema>;
+export type IconsDefinition = z.infer<typeof schemas.iconsDefinitionSchema>;
+
+// colors
+export type ColorScale = z.infer<typeof schemas.colorScaleSchema>;
+export type ModeDefinition = z.infer<typeof schemas.modeDefinitionSchema>;
+export type MinimizedColorTokens = z.infer<
+  typeof schemas.minimizedColorTokensSchema
 >;
-export interface ColorBase {
-  baseColors: string[];
-  ratios?: number[];
-}
+export type ColorTokens = z.infer<typeof schemas.colorTokensSchema>;
 
-export interface ColorDefinition {
-  neutral?: ColorBase;
-  accent?: ColorBase;
-  success?: ColorBase;
-  warning?: ColorBase;
-  danger?: ColorBase;
-  info?: ColorBase;
-}
+// layout
+export type Radius = z.infer<typeof schemas.radiusSchema>;
+export type Spacing = z.infer<typeof schemas.spacingSchema>;
 
-export interface ThemeModeDefinition {
-  colors: ColorDefinition;
-  lightness?: number;
-  saturation?: number;
-  contrast?: number;
-}
+// typography
+export type Fonts = z.infer<typeof schemas.fontsSchema>;
+export type LetterSpacing = z.infer<typeof schemas.letterSpacingSchema>;
 
-export interface ThemeDefinition {
-  light?: ThemeModeDefinition;
-  dark?: ThemeModeDefinition;
-  theme?: Record<string, string>;
-  css?: Css;
-  radius?: number;
-}
+// effects
+export type BackgroundPattern = z.infer<typeof schemas.backgroundPatternSchema>;
+export type Texture = z.infer<typeof schemas.textureSchema>;
+export type Shadows = z.infer<typeof schemas.shadowsSchema>;
 
-export interface Theme {
-  css: Css;
-  cssVars: {
-    light: Record<string, string>;
-    dark: Record<string, string>;
-    theme: Record<string, string>;
-  };
-}
+// theme
+export type MinimizedThemeDefinition = z.infer<
+  typeof schemas.minimizedThemeDefinitionSchema
+>;
+export type ThemeDefinition = z.infer<typeof schemas.themeDefinitionSchema>;
+export type Theme = z.infer<typeof schemas.themeSchema>;
 
-export interface Fonts {
-  heading: string;
-  body: string;
-}
+// variants
+export type MinimizedVariantsDefinition = z.infer<
+  typeof schemas.minimizedVariantsDefinitionSchema
+>;
+export type VariantsDefinition = z.infer<
+  typeof schemas.variantsDefinitionSchema
+>;
+export type Variants = z.infer<typeof schemas.variantsSchema>;
 
-export type IconLibrary = "lucide" | "remix";
-
-export interface Variants {
-  alert: "basic" | "notch" | "notch-2";
-  avatar: "basic";
-  badge: "basic";
-  breadcrumbs: "basic";
-  button: "basic" | "outline" | "brutalist" | "ripple";
-  "button-group": "basic";
-  calendar: "basic" | "cal";
-  checkbox: "basic";
-  "checkbox-group": "basic";
-  "color-area": "basic";
-  "color-field": "basic";
-  "color-picker": "basic";
-  "color-slider": "basic";
-  "color-swatch": "basic";
-  "color-swatch-picker": "basic";
-  "color-thumb": "basic";
-  combobox: "basic";
-  command: "basic";
-  "date-field": "basic";
-  "date-input": "basic";
-  "date-picker": "basic";
-  "date-range-picker": "basic";
-  dialog: "basic";
-  drawer: "basic";
-  "drop-zone": "basic";
-  field: "basic";
-  "file-trigger": "basic";
-  form: "basic" | "react-hook-form";
-  input: "basic";
-  kbd: "basic";
-  "list-box": "basic";
-  loader: "dots" | "line" | "ring" | "tailspin" | "wave";
-  menu: "basic";
-  modal: "basic" | "blur";
-  "number-field": "basic";
-  overlay: "basic";
-  popover: "basic";
-  "progress-bar": "basic";
-  "radio-group": "basic";
-  ripple: "basic";
-  "search-field": "basic";
-  select: "basic";
-  separator: "basic";
-  skeleton: "basic";
-  slider: "basic";
-  switch: "basic";
-  table: "basic";
-  tabs: "basic" | "motion";
-  "tag-group": "basic";
-  text: "basic";
-  "text-area": "basic";
-  "text-field": "basic";
-  "time-field": "basic";
-  "toggle-button": "basic";
-  "toggle-button-group": "basic";
-  tooltip: "basic" | "motion";
-}
-
-export interface StyleDefinition {
-  name: string;
-  slug: string;
-  description: string | null;
-  iconLibrary?: string;
-  fonts?: Partial<Fonts> | null;
-  variants?: Partial<Variants> | null;
-  theme?: ThemeDefinition | null;
-}
-
-export interface Style {
-  name: string;
-  slug: string;
-  description: string | null;
-  iconLibrary: IconLibrary;
-  fonts: Fonts;
-  variants: Variants;
-  theme: Theme;
-}
+// style
+export type MinimizedStyleDefinition = z.infer<
+  typeof schemas.minimizedStyleDefinitionSchema
+>;
+export type StyleDefinition = z.infer<typeof schemas.styleDefinitionSchema>;
+export type Style = z.infer<typeof schemas.styleSchema>;

@@ -5,7 +5,7 @@ import { registry } from "@dotui/registry-definition";
 
 import { updateFiles } from "../helpers/update-files";
 import { updateRegistryDependencies } from "../helpers/update-registry-deps";
-import type { Style } from "../../types";
+import type { Style } from "../../types-v2";
 
 export const generateGenericRegistryItem = async (
   registryItemName: string,
