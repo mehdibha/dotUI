@@ -4,13 +4,17 @@ import { createTheme } from "@dotui/style-engine/lib";
 import { cn } from "@dotui/ui/lib/utils";
 import type { ThemeDefinition } from "@dotui/style-engine/types-v2";
 
+type Mode = "light" | "dark";
+
 export const ThemeProvider = ({
+  modes,
   mode,
   theme: themeDefinition,
   children,
   ...props
 }: React.ComponentProps<"div"> & {
-  mode: "light" | "dark";
+  modes: Mode[];
+  mode?: Mode;
   theme: ThemeDefinition;
   children: React.ReactNode;
 }) => {
@@ -20,15 +24,21 @@ export const ThemeProvider = ({
   );
 
   const allCssVars = React.useMemo(() => {
+    if (!mode) {
+      return {};
+    }
+
     const vars = {
-      ...(cssVars.dark ? cssVars[mode] : cssVars.light),
+      ...(modes.includes("light") && modes.includes("dark")
+        ? cssVars[mode]
+        : cssVars.light),
       ...cssVars.theme,
     };
 
     return Object.fromEntries(
       Object.entries(vars).map(([key, value]) => [`--${key}`, value]),
     );
-  }, [cssVars, mode]);
+  }, [cssVars, modes, mode]);
 
   return (
     <div

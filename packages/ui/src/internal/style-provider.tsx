@@ -12,7 +12,7 @@ const StyleContext = React.createContext<StyleDefinition | null>(null);
 
 export interface StyleProviderProps
   extends Omit<React.ComponentProps<"div">, "style"> {
-  mode: "light" | "dark";
+  mode?: "light" | "dark";
   style: StyleDefinition;
 }
 
@@ -22,11 +22,17 @@ export const StyleProvider = ({
   children,
   ...props
 }: StyleProviderProps) => {
+  const modes = style.theme.colors.modes.map((mode) => mode.mode);
   return (
     <StyleContext value={style}>
       <VariantsProvider variants={style.variants}>
         <FontsProvider fonts={style.theme.fonts}>
-          <ThemeProvider mode={mode} theme={style.theme} {...props}>
+          <ThemeProvider
+            modes={modes}
+            mode={mode}
+            theme={style.theme}
+            {...props}
+          >
             {children}
           </ThemeProvider>
         </FontsProvider>

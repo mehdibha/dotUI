@@ -1,23 +1,22 @@
 import {
-  BookmarkIcon,
   CloudDownloadIcon,
-  HeartIcon,
   LayoutGridIcon,
   ListIcon,
   SquareArrowOutUpRightIcon,
   UserRoundPlusIcon,
 } from "lucide-react";
+import { useTheme } from "next-themes";
 
 import { StyleProvider } from "@dotui/ui";
-import { Avatar } from "@dotui/ui/components/avatar";
 import { Button } from "@dotui/ui/components/button";
+import { Skeleton } from "@dotui/ui/components/skeleton";
 import { TextField } from "@dotui/ui/components/text-field";
 import { ToggleButton } from "@dotui/ui/components/toggle-button";
-import { Tooltip } from "@dotui/ui/components/tooltip";
 import type { RouterOutputs } from "@dotui/api";
 
 import { AdobeIcon, MotionIcon } from "@/components/icons";
-import { Link } from "@/components/link";
+import { useMounted } from "@/hooks/use-mounted";
+import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 
 const keywords = ["react-aria-components", "motion"];
 
@@ -37,10 +36,14 @@ const icons = {
 export function StyleCard(props: {
   style: RouterOutputs["style"]["all"][number];
 }) {
+  const { resolvedTheme } = useTheme();
+  const isMounted = useMounted();
+
   return (
-    // <StyleProvider mode="dark" style={props.style}>
-      <div
-        key={props.style.name}
+    <Skeleton show={!isMounted}>
+      <StyleProvider
+        mode={resolvedTheme as "light" | "dark" | undefined}
+        style={props.style}
         className="flex items-end justify-between gap-4 rounded-sm border p-6"
       >
         <div>
@@ -110,7 +113,7 @@ export function StyleCard(props: {
           </div>
           {/* <TextField placeholder="Email" className="w-full" /> */}
         </div>
-      </div>
-    // </StyleProvider>
+      </StyleProvider>
+    </Skeleton>
   );
 }

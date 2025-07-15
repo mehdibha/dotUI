@@ -5,9 +5,22 @@ import {
 } from "@adobe/leonardo-contrast-colors";
 import type { CssColor } from "@adobe/leonardo-contrast-colors";
 
-import { RADIUS_TOKENS } from "@dotui/registry-definition/registry-tokens";
+import {
+  COLOR_TOKENS,
+  RADIUS_TOKENS,
+} from "@dotui/registry-definition/registry-tokens";
 
-import { DEFAULT_VARIANTS } from "./constants";
+import {
+  DEFAULT_BACKGROUND_PATTERN,
+  DEFAULT_FONTS,
+  DEFAULT_LETTER_SPACING,
+  DEFAULT_RADIUS_FACTOR,
+  DEFAULT_SHADOWS,
+  DEFAULT_SPACING,
+  DEFAULT_TEXTURE,
+  DEFAULT_VARIANTS,
+  DEFAULT_VARIANTS_DEFINITION,
+} from "./constants";
 import type {
   BackgroundPattern,
   ColorTokens,
@@ -37,16 +50,59 @@ import type {
 const createThemeDefinition = (
   minimizedThemeDefinition: MinimizedThemeDefinition,
 ): ThemeDefinition => {
-  return {} as ThemeDefinition;
+  const {
+    colors,
+    radius = DEFAULT_RADIUS_FACTOR,
+    spacing = DEFAULT_SPACING,
+    fonts = DEFAULT_FONTS,
+    letterSpacing = DEFAULT_LETTER_SPACING,
+    backgroundPattern = DEFAULT_BACKGROUND_PATTERN,
+    texture = DEFAULT_TEXTURE,
+    shadows = DEFAULT_SHADOWS,
+  } = minimizedThemeDefinition;
+
+  const defaultTokens: ColorTokens = COLOR_TOKENS.map((token) => ({
+    id: token.name,
+    name: token.name,
+    value: token.defaultValue,
+  }));
+
+  const providedTokens = colors.tokens || [];
+  const mergedTokens = defaultTokens.map((defaultToken) => {
+    const providedToken = providedTokens.find(
+      (token) => token.id === defaultToken.id,
+    );
+    return providedToken || defaultToken;
+  });
+
+  return {
+    colors: {
+      modes: colors.modes,
+      tokens: mergedTokens,
+    },
+    radius,
+    spacing,
+    fonts: {
+      heading: fonts.heading || DEFAULT_FONTS.heading,
+      body: fonts.body || DEFAULT_FONTS.body,
+    },
+    letterSpacing,
+    backgroundPattern,
+    texture,
+    shadows,
+  };
 };
 
 const createVariantsDefinition = (
   minimizedVariantsDefinition: MinimizedVariantsDefinition,
 ): VariantsDefinition => {
-  return {} as VariantsDefinition;
+  return {
+    ...DEFAULT_VARIANTS_DEFINITION,
+    ...minimizedVariantsDefinition,
+  };
 };
 
-const createStyleDefinition = (
+export const createStyleDefinition = (
   minimizedStyleDefinition: MinimizedStyleDefinition,
 ): StyleDefinition => {
   const {

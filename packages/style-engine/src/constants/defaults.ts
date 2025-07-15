@@ -4,14 +4,44 @@ import type {
   ThemeModeDefinition,
   Variants,
 } from "../types";
+import type { VariantsDefinition } from "../types-v2";
 
 export const DEFAULT_RADIUS_FACTOR = 1;
+
+export const DEFAULT_SPACING = 0.25;
+
+export const DEFAULT_LETTER_SPACING = 0;
+
+export const DEFAULT_BACKGROUND_PATTERN = "none";
+
+export const DEFAULT_TEXTURE = "none";
+
+export const DEFAULT_SHADOWS = "default";
 
 export const DEFAULT_ICON_LIBRARY: IconLibrary = "lucide";
 
 export const DEFAULT_FONTS: Fonts = {
   heading: "Inter",
   body: "Inter",
+};
+
+export const DEFAULT_VARIANTS_DEFINITION: VariantsDefinition = {
+  alert: "basic",
+  buttons: "basic",
+  loader: "ring",
+  "focus-style": "basic",
+  inputs: "basic",
+  pickers: "basic",
+  selection: "basic",
+  calendars: "basic",
+  "list-box-and-menu": "basic",
+  overlays: "basic",
+  checkboxes: "basic",
+  radios: "basic",
+  switch: "basic",
+  slider: "basic",
+  "badge-and-tag-group": "basic",
+  tooltip: "basic",
 };
 
 export const DEFAULT_VARIANTS: Variants = {

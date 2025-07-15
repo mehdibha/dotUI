@@ -3,7 +3,7 @@ import type { TRPCRouterRecord } from "@trpc/server";
 
 import { eq } from "@dotui/db";
 import { style } from "@dotui/db/schema";
-import { createStyle } from "@dotui/style-engine";
+import { createStyleDefinition } from "@dotui/style-engine/lib";
 
 import { publicProcedure } from "../trpc";
 
@@ -22,7 +22,12 @@ export const styleRouter = {
       });
 
       const result = styles.map((style) => {
-        return createStyle(style);
+        return {
+          name: style.name,
+          slug: style.slug,
+          description: style.description,
+          ...createStyleDefinition(style),
+        };
       });
 
       return result;
@@ -38,35 +43,6 @@ export const styleRouter = {
         return undefined;
       }
 
-      return createStyle(rawStyle);
+      return createStyleDefinition(rawStyle);
     }),
-  // create: protectedProcedure
-  //   .input(createStyleSchema)
-  //   .mutation(async ({ ctx, input }) => {
-  //     const [newStyle] = await ctx.db
-  //       .insert(style)
-  //       .values({
-  //         ...input,
-  //         userId: ctx.session.user.id,
-  //       })
-  //       .returning();
-
-  //     return createStyle(newStyle);
-  //   }),
-  // update: protectedProcedure
-  //   .input(
-  //     z.object({
-  //       id: z.string().uuid(),
-  //       data: createStyleSchema.partial().omit({ userId: true }),
-  //     }),
-  //   )
-  //   .mutation(async ({ ctx, input }) => {
-  //     const [updatedStyle] = await ctx.db
-  //       .update(style)
-  //       .set(input.data)
-  //       .where(eq(style.id, input.id))
-  //       .returning();
-
-  //     return createStyle(updatedStyle);
-  //   }),
 } satisfies TRPCRouterRecord;
