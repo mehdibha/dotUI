@@ -11,17 +11,11 @@ const withAnalyzer = createBundleAnalyzer({
 const jiti = createJiti(import.meta.url);
 
 // Import env files to validate at build time. Use jiti so we can load .ts files in here.
-await jiti.import("./src/env");
+await jiti.import("./env");
 
 /** @type {import("next").NextConfig} */
 const config = {
-  transpilePackages: [
-    "@dotui/api",
-    "@dotui/auth",
-    "@dotui/db",
-    "@dotui/ui",
-    "@dotui/validators",
-  ],
+  transpilePackages: ["@dotui/api", "@dotui/auth", "@dotui/db", "@dotui/ui"],
   images: {
     remotePatterns: [
       {
@@ -42,6 +36,26 @@ const config = {
   },
   typescript: {
     ignoreBuildErrors: true,
+  },
+  // experimental: {
+  //   reactCompiler: true,
+  // },
+  webpack: (config, { dev, isServer }) => {
+    config.ignoreWarnings = [
+      ...(config.ignoreWarnings || []),
+      /Critical dependency: the request of a dependency is an expression/,
+      /require\.extensions is not supported by webpack/,
+      {
+        module: /node_modules\/cosmiconfig/,
+      },
+      {
+        module: /node_modules\/shadcn/,
+      },
+      {
+        module: /node_modules\/tsconfig-paths/,
+      },
+    ];
+    return config;
   },
 };
 
