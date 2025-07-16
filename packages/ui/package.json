@@ -19,7 +19,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "build:registry": "tsx scripts/build-registry.ts",
+    "build:registry": "tsx scripts/build-registry.ts && prettier --log-level silent --write \"src/__registry__/**/*.{ts,tsx}\" --cache",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint",

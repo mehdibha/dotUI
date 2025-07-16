@@ -20,7 +20,7 @@ export const iconLibraries = [
   },
 ] as const satisfies IconLibrary[];
 
-type IconLibraryName = (typeof iconLibraries)[number]["name"];
+export type IconLibraryName = (typeof iconLibraries)[number]["name"];
 
 export const icons: Record<string, Record<IconLibraryName, string>> = {
   Loader2Icon: {
