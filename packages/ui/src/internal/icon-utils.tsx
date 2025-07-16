@@ -7,7 +7,24 @@ import type { iconLibraries } from "@dotui/registry-definition/registry-icons";
 import { Skeleton } from "../components/skeleton";
 import { useCurrentStyle } from "./style-provider";
 
-type IconComponent = React.ComponentType<React.SVGProps<SVGSVGElement>>;
+interface CommonIconProps extends React.RefAttributes<any> {
+  className?: string;
+  width?: string | number;
+  height?: string | number;
+  size?: string | number;
+  style?: React.CSSProperties;
+  fill?: string;
+  stroke?: string;
+  strokeWidth?: string | number;
+  onClick?: (event: React.MouseEvent<any>) => void;
+  onMouseEnter?: (event: React.MouseEvent<any>) => void;
+  onMouseLeave?: (event: React.MouseEvent<any>) => void;
+  "aria-label"?: string;
+  "aria-hidden"?: React.AriaAttributes["aria-hidden"];
+  role?: string;
+}
+
+type IconComponent = React.ComponentType<CommonIconProps>;
 type IconLibraryName = (typeof iconLibraries)[number]["name"];
 
 type IconMapping = {
@@ -16,6 +33,8 @@ type IconMapping = {
   Exclude<IconLibraryName, "lucide">,
   React.LazyExoticComponent<IconComponent>
 >;
+
+export type { CommonIconProps };
 
 export function createIcon(iconMapping: IconMapping): IconComponent {
   const IconComponent: IconComponent = React.forwardRef<
