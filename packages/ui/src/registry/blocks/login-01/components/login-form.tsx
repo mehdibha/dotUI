@@ -2,11 +2,12 @@
 
 import { Button } from "@dotui/ui/components/button";
 import { TextField } from "@dotui/ui/components/text-field";
+import { GitHubIcon, GoogleIcon, TwitterIcon } from "@dotui/ui/icons";
 
 export function LoginForm() {
   return (
     <div className="w-full max-w-sm rounded-lg border bg-bg-muted p-8">
-      <h1 className="text-2xl leading-none font-semibold tracking-tight">
+      <h1 className="font-heading text-2xl leading-none font-semibold tracking-tight">
         Login
       </h1>
       <p className="mt-2 text-sm text-fg-muted">
@@ -18,21 +19,21 @@ export function LoginForm() {
           className="flex-1"
           aria-label="Sign in with google"
         >
-          Google
+          <GoogleIcon />
         </Button>
         <Button
           variant="outline"
           className="flex-1"
           aria-label="Sign in with X"
         >
-          X
+          <TwitterIcon />
         </Button>
         <Button
           variant="outline"
           className="flex-1"
           aria-label="Sign in with github"
         >
-          GitHub
+          <GitHubIcon />
         </Button>
       </div>
       <div className="relative my-4">

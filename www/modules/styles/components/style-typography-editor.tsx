@@ -14,34 +14,36 @@ export function StyleTypographyEditor() {
   return (
     <div className="min-h-[200svh]">
       <EditorSection title="Font family">
-        <Skeleton show={!isSuccess}>
-          <FormControl
-            name="theme.fonts.heading"
-            control={form.control}
-            render={({ value, onChange }) => (
-              <FontSelector
-                label="Heading font"
-                font={value}
-                onFontChange={onChange}
-                className="mt-2"
-              />
-            )}
-          />
-        </Skeleton>
-        <Skeleton show={!isSuccess}>
-          <FormControl
-            name="theme.fonts.body"
-            control={form.control}
-            render={({ value, onChange }) => (
-              <FontSelector
-                label="Body font"
-                font={value}
-                onFontChange={onChange}
-                className="mt-2"
-              />
-            )}
-          />
-        </Skeleton>
+        <div className="space-y-3 mt-3">
+          <Skeleton show={!isSuccess}>
+            <FormControl
+              name="theme.fonts.heading"
+              control={form.control}
+              render={({ value, onChange }) => (
+                <FontSelector
+                  label="Heading font"
+                  font={value}
+                  onFontChange={onChange}
+                  className="mt-2"
+                />
+              )}
+            />
+          </Skeleton>
+          <Skeleton show={!isSuccess}>
+            <FormControl
+              name="theme.fonts.body"
+              control={form.control}
+              render={({ value, onChange }) => (
+                <FontSelector
+                  label="Body font"
+                  font={value}
+                  onFontChange={onChange}
+                  className="mt-2"
+                />
+              )}
+            />
+          </Skeleton>
+        </div>
       </EditorSection>
 
       <EditorSection title="Letter spacing">

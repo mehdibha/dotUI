@@ -1,5 +1,7 @@
 import React from "react";
 
+import { registryBackgroundPatterns } from "@dotui/registry-definition/registry-bg-patterns";
+import { registryTextures } from "@dotui/registry-definition/registry-textures";
 import { createTheme } from "@dotui/style-engine";
 import { cn } from "@dotui/ui/lib/utils";
 import type { ThemeDefinition } from "@dotui/style-engine/types";
@@ -29,6 +31,7 @@ export const ThemeProvider = ({
     }
 
     const vars = {
+      "radius-factor": cssVars?.light?.["radius-factor"],
       ...(modes.includes("light") && modes.includes("dark")
         ? cssVars[mode]
         : cssVars.light),
@@ -40,13 +43,65 @@ export const ThemeProvider = ({
     );
   }, [cssVars, modes, mode]);
 
+  const texture = themeDefinition.texture
+    ? registryTextures.find((t) => t.slug === themeDefinition.texture)
+    : null;
+
+  const backgroundPattern = themeDefinition.backgroundPattern
+    ? registryBackgroundPatterns.find(
+        (p) => p.slug === themeDefinition.backgroundPattern,
+      )
+    : null;
+
+  const styleProp = React.useMemo(() => {
+    return {
+      letterSpacing: `${themeDefinition.letterSpacing}em !important`,
+      "--font-heading": themeDefinition.fonts.heading,
+      "--font-body": themeDefinition.fonts.body,
+      ...allCssVars,
+    };
+  }, [themeDefinition.letterSpacing, allCssVars, themeDefinition.fonts]);
+
   return (
-    <div
-      style={allCssVars}
-      {...props}
-      className={cn("bg-bg text-fg", props.className)}
-    >
-      {children}
-    </div>
+    <>
+      <FontLoader font={themeDefinition.fonts.heading} />
+      <FontLoader font={themeDefinition.fonts.body} />
+      <div
+        style={styleProp}
+        {...props}
+        className={cn("relative bg-bg text-fg", props.className)}
+      >
+        {texture && (
+          <div style={transformCssToJSXStyle(texture.css[".texture"])} />
+        )}
+        {backgroundPattern && (
+          <div
+            style={transformCssToJSXStyle(backgroundPattern.css[".bg-pattern"])}
+          />
+        )}
+        {children}
+      </div>
+    </>
   );
 };
+
+const transformCssToJSXStyle = (css: Record<string, string>) => {
+  return Object.fromEntries(
+    Object.entries(css).map(([key, value]) => [
+      key.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase()),
+      value,
+    ]),
+  );
+};
+
+export function FontLoader({ font }: { font: string | null | undefined }) {
+  if (!font) return null;
+  const googleFontUrl = generateGoogleFontUrl(font);
+  return <link href={googleFontUrl} rel="stylesheet" />;
+}
+
+function generateGoogleFontUrl(font: string) {
+  const familyName = font.replace(/\s+/g, "+");
+
+  return `https://fonts.googleapis.com/css?family=${familyName}`;
+}

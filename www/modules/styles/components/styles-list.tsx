@@ -10,7 +10,7 @@ import { StyleCard } from "./style-card";
 
 export function StylesList(props: React.ComponentProps<"div">) {
   const trpc = useTRPC();
-  const { data: styles, isSuccess } = useQuery({
+  const { data: styles } = useQuery({
     ...trpc.style.all.queryOptions({
       isFeatured: true,
     }),

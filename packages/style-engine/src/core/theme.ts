@@ -58,7 +58,7 @@ export const createTheme = (themeDefinition: ThemeDefinition): Theme => {
   return {
     css: merge(letterSpacingCss, textureCss, backgroundPatternCss),
     cssVars: {
-      light: { ...lightCssVars, ...radiusLightVars },
+      light: { ...radiusLightVars, ...lightCssVars },
       dark: { ...darkCssVars },
       theme: {
         ...colorThemeVars,

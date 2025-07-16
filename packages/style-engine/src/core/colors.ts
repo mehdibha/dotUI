@@ -22,14 +22,14 @@ export const createModeCssVars = (
   const neutral = new LeonardoBgColor({
     name: "neutral",
     colorKeys: neutralScale.colorKeys.map((color) => color.color) as CssColor[],
-    ratios: neutralScale.ratios,
+    ratios: [...neutralScale.ratios],
   });
 
   const colors = modeDefinition.scales.map((scale) => {
     const props = {
       name: scale.id,
       colorKeys: scale.colorKeys.map((color) => color.color) as CssColor[],
-      ratios: scale.ratios,
+      ratios: [...scale.ratios],
     };
     const color = new LeonardoColor(props);
     return color;
@@ -42,7 +42,6 @@ export const createModeCssVars = (
     saturation: modeDefinition.saturation,
     contrast: modeDefinition.contrast / 100,
     output: "HEX",
-    formula: "wcag3",
   });
 
   const cssVars = generatedTheme.contrastColors

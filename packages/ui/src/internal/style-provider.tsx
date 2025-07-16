@@ -4,7 +4,6 @@ import React from "react";
 
 import type { StyleDefinition } from "@dotui/style-engine/types";
 
-import { FontsProvider } from "./fonts-provider";
 import { ThemeProvider } from "./theme-provider";
 import { VariantsProvider } from "./variants-provider";
 
@@ -27,16 +26,9 @@ export const StyleProvider = ({
   return (
     <StyleContext value={style}>
       <VariantsProvider variants={style.variants}>
-        <FontsProvider fonts={style.theme.fonts}>
-          <ThemeProvider
-            modes={modes}
-            mode={mode}
-            theme={style.theme}
-            {...props}
-          >
-            {children}
-          </ThemeProvider>
-        </FontsProvider>
+        <ThemeProvider modes={modes} mode={mode} theme={style.theme} {...props}>
+          {children}
+        </ThemeProvider>
       </VariantsProvider>
     </StyleContext>
   );

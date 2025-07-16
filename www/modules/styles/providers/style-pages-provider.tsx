@@ -4,13 +4,14 @@ import React from "react";
 import { useParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { z } from "zod/v4";
 import type { UseFormReturn } from "react-hook-form";
 
 import { COLOR_TOKENS } from "@dotui/registry-definition/registry-tokens";
 import { styleDefinitionSchema } from "@dotui/style-engine/schemas";
 
+import { useDebounce } from "@/hooks/use-debounce";
 import { useTRPC } from "@/lib/trpc/react";
 import { useLiveStyleProducer } from "../atoms/live-style-atom";
 
@@ -64,24 +65,19 @@ export function StylePagesProvider({
   const form = useForm<StyleFormData>({
     resolver: zodResolver(formSchema),
     defaultValues: fakeData,
-    values: style ? fakeData : undefined,
+    values: style ?? undefined,
   });
 
-  // const watchedValues = form.watch();
+  const watchedValues = useWatch({ control: form.control }) as
+    | StyleFormData
+    | undefined;
+  const debouncedWatchedValues = useDebounce(watchedValues, 10);
 
-  // React.useEffect(() => {
-  // updateLiveStyle(structuredClone(watchedValues));
-  // }, [watchedValues, updateLiveStyle]);
-
-  // const debouncedLiveStyleData = useDebounce(form.watch(), 10);
-
-  // React.useEffect(() => {
-  //   updateLiveStyle(debouncedLiveStyleData);
-  //   console.log("debouncedLiveStyleData", debouncedLiveStyleData);
-  // }, [debouncedLiveStyleData, updateLiveStyle]);
-
-  // const test = form.watch();
-  // console.log("test", test);
+  React.useEffect(() => {
+    if (debouncedWatchedValues) {
+      updateLiveStyle(debouncedWatchedValues);
+    }
+  }, [debouncedWatchedValues, updateLiveStyle]);
 
   return (
     <StyleFormContext.Provider

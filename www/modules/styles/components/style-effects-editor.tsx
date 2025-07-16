@@ -1,5 +1,7 @@
 "use client";
 
+import { registryBackgroundPatterns } from "@dotui/registry-definition/registry-bg-patterns";
+import { registryTextures } from "@dotui/registry-definition/registry-textures";
 import { ColorPicker } from "@dotui/ui/components/color-picker";
 import { ColorSwatch } from "@dotui/ui/components/color-swatch";
 import { FormControl } from "@dotui/ui/components/form";
@@ -16,42 +18,52 @@ export function StyleEffectsEditor() {
   return (
     <div>
       <EditorSection title="Patterns">
-        <Skeleton show={!isSuccess}>
-          <FormControl
-            name="theme.backgroundPattern"
-            control={form.control}
-            render={(props) => (
-              <Select
-                label="Background pattern"
-                defaultSelectedKey="none"
-                className="mt-2"
-                {...props}
-              >
-                <SelectItem id="none">None</SelectItem>
-                <SelectItem id="dots">Dots</SelectItem>
-                <SelectItem id="lines">Lines</SelectItem>
-                <SelectItem id="squares">Squares</SelectItem>
-              </Select>
-            )}
-          />
-        </Skeleton>
-        <Skeleton show={!isSuccess}>
-          <FormControl
-            name="theme.texture"
-            control={form.control}
-            render={(props) => (
-              <Select
-                label="Texture"
-                defaultSelectedKey="none"
-                className="mt-2"
-                {...props}
-              >
-                <SelectItem id="none">None</SelectItem>
-                <SelectItem id="none">None</SelectItem>
-              </Select>
-            )}
-          />
-        </Skeleton>
+        <div className="mt-4 space-y-4">
+          <Skeleton show={!isSuccess}>
+            <FormControl
+              name="theme.backgroundPattern"
+              control={form.control}
+              render={({ value, onChange, ...props }) => (
+                <Select
+                  label="Background pattern"
+                  className="mt-2"
+                  selectedKey={value}
+                  onSelectionChange={onChange}
+                  {...props}
+                >
+                  <SelectItem id="none">None</SelectItem>
+                  {registryBackgroundPatterns.map((pattern) => (
+                    <SelectItem key={pattern.slug} id={pattern.slug}>
+                      {pattern.name}
+                    </SelectItem>
+                  ))}
+                </Select>
+              )}
+            />
+          </Skeleton>
+          <Skeleton show={!isSuccess}>
+            <FormControl
+              name="theme.texture"
+              control={form.control}
+              render={({ value, onChange, ...props }) => (
+                <Select
+                  label="Texture"
+                  className="mt-2"
+                  selectedKey={value}
+                  onSelectionChange={onChange}
+                  {...props}
+                >
+                  <SelectItem id="none">None</SelectItem>
+                  {registryTextures.map((texture) => (
+                    <SelectItem key={texture.slug} id={texture.slug}>
+                      {texture.name}
+                    </SelectItem>
+                  ))}
+                </Select>
+              )}
+            />
+          </Skeleton>
+        </div>
       </EditorSection>
 
       <EditorSection title="Shadows">

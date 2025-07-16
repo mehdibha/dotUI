@@ -22,6 +22,7 @@ export function StyleLayoutEditor() {
                 label="Radius factor"
                 minValue={0}
                 maxValue={2}
+                step={0.1}
                 className="mt-2 w-full"
                 {...props}
               />
@@ -38,9 +39,9 @@ export function StyleLayoutEditor() {
             render={(props) => (
               <Slider
                 label="Spacing"
-                minValue={0.1}
-                maxValue={0.35}
-                step={0.05}
+                minValue={0.2}
+                maxValue={0.3}
+                step={0.01}
                 getValueLabel={(value) => `${value}rem`}
                 className="mt-2 w-full"
                 {...props}

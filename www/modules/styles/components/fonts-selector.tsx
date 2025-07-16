@@ -95,7 +95,7 @@ export const FontSelector = ({
                         {items.map((font) => (
                           <ListBoxItem
                             key={font}
-                            id={font.trim().toLowerCase()}
+                            id={font}
                             textValue={font}
                             className="font-body"
                             style={

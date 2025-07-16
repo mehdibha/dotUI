@@ -1,10 +1,16 @@
 import { COLOR_TOKENS } from "@dotui/registry-definition/registry-tokens";
 
 import {
+  DEFAULT_BACKGROUND_PATTERN,
   DEFAULT_DARK_MODE,
+  DEFAULT_FONTS,
   DEFAULT_ICON_LIBRARY,
   DEFAULT_ICON_STROKE_WIDTH,
   DEFAULT_LIGHT_MODE,
+  DEFAULT_RADIUS_FACTOR,
+  DEFAULT_SHADOWS,
+  DEFAULT_SPACING,
+  DEFAULT_TEXTURE,
   DEFAULT_VARIANTS_DEFINITION,
 } from "../constants";
 import type {
@@ -108,14 +114,14 @@ const restoreThemeDefinitionDefaults = (
       tokens: minimizedTheme.colors.tokens ?? [],
     },
     fonts: {
-      heading: minimizedTheme.fonts?.heading ?? "Inter",
-      body: minimizedTheme.fonts?.body ?? "Inter",
+      heading: minimizedTheme.fonts?.heading ?? DEFAULT_FONTS.heading,
+      body: minimizedTheme.fonts?.body ?? DEFAULT_FONTS.body,
     },
-    spacing: minimizedTheme.spacing ?? 1,
-    shadows: minimizedTheme.shadows ?? "default",
-    radius: minimizedTheme.radius ?? 1,
-    texture: minimizedTheme.texture ?? "none",
-    backgroundPattern: minimizedTheme.backgroundPattern ?? "none",
+    spacing: minimizedTheme.spacing ?? DEFAULT_SPACING,
+    shadows: minimizedTheme.shadows ?? DEFAULT_SHADOWS,
+    radius: minimizedTheme.radius ?? DEFAULT_RADIUS_FACTOR,
+    texture: minimizedTheme.texture ?? DEFAULT_TEXTURE,
+    backgroundPattern: minimizedTheme.backgroundPattern ?? DEFAULT_BACKGROUND_PATTERN,
     letterSpacing: minimizedTheme.letterSpacing ?? 0,
   };
 };

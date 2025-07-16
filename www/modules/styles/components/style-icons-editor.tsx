@@ -21,55 +21,60 @@ export function StyleIconsEditor() {
   return (
     <div>
       <EditorSection title="Iconography">
-        <Skeleton show={!isSuccess}>
-          <FormControl
-            name="icons.library"
-            control={form.control}
-            render={({ value, onChange, ...props }) => (
-              <SelectRoot
-                selectedKey={value}
-                onSelectionChange={onChange}
-                {...props}
-                className="mt-2 w-full"
-              >
-                <Label>Icon library</Label>
-                <Button suffix={<Lucide.ChevronDownIcon />} className="w-full">
-                  <SelectValue />
-                </Button>
-                <Popover>
-                  <ListBox>
-                    {Object.entries(iconLibraries).map(([id, library]) => (
-                      <ListBoxItem key={id} id={id}>
-                        {library.name}
-                      </ListBoxItem>
-                    ))}
-                  </ListBox>
-                </Popover>
-              </SelectRoot>
-            )}
-          />
-        </Skeleton>
+        <div className="mt-4 space-y-4">
+          <Skeleton show={!isSuccess}>
+            <FormControl
+              name="icons.library"
+              control={form.control}
+              render={({ value, onChange, ...props }) => (
+                <SelectRoot
+                  selectedKey={value}
+                  onSelectionChange={onChange}
+                  {...props}
+                  className="mt-2 w-full"
+                >
+                  <Label>Icon library</Label>
+                  <Button
+                    suffix={<Lucide.ChevronDownIcon />}
+                    className="w-full"
+                  >
+                    <SelectValue />
+                  </Button>
+                  <Popover>
+                    <ListBox>
+                      {iconLibraries.map((library) => (
+                        <ListBoxItem key={library.name} id={library.name}>
+                          {library.label}
+                        </ListBoxItem>
+                      ))}
+                    </ListBox>
+                  </Popover>
+                </SelectRoot>
+              )}
+            />
+          </Skeleton>
 
-        <Skeleton show={!isSuccess}>
-          <FormControl
-            name="icons.strokeWidth"
-            control={form.control}
-            render={(props) => (
-              <Slider
-                label="Stroke width"
-                defaultValue={1.5}
-                minValue={0.5}
-                maxValue={3}
-                step={0.1}
-                getValueLabel={(value) => `${value}px`}
-                className="mt-2 w-full"
-                {...props}
-              />
-            )}
-          />
-        </Skeleton>
+          <Skeleton show={!isSuccess}>
+            <FormControl
+              name="icons.strokeWidth"
+              control={form.control}
+              render={(props) => (
+                <Slider
+                  label="Stroke width"
+                  defaultValue={1.5}
+                  minValue={0.5}
+                  maxValue={3}
+                  step={0.1}
+                  getValueLabel={(value) => `${value}px`}
+                  className="mt-2 w-full"
+                  {...props}
+                />
+              )}
+            />
+          </Skeleton>
+        </div>
 
-        <Label>Icons</Label>
+        <Label className="mt-6">Icons</Label>
         <div className="mt-2 rounded-md border bg-bg-muted/50 p-4">
           <div className="grid max-h-[168px] [grid-template-columns:repeat(auto-fill,minmax(36px,1fr))] [grid-template-rows:repeat(auto-fill,minmax(36px,1fr))] gap-2 overflow-hidden rounded-md [&_svg]:size-6">
             {Object.entries(Lucide)

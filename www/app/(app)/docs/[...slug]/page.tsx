@@ -36,12 +36,12 @@ export default async function Page({
       )}
     >
       <div className="pt-4 pb-24 sm:pt-10 lg:pt-20">
-        <Breadcrumbs tree={source.pageTree} className="mb-2" />
+        {/* <Breadcrumbs tree={source.pageTree} className="mb-2" /> */}
         <h1 className="text-3xl font-bold lg:text-4xl">{page.data.title}</h1>
         <p className="mt-2 text-fg-muted">{page.data.description}</p>
         {page.data.links && page.data.links.length > 0 && (
           <div className="mt-4 flex flex-wrap gap-2">
-            {page.data.links.map((link, index) => (
+            {page.data.links.slice(0, 1).map((link, index) => (
               <Button
                 key={index}
                 href={link.href}
