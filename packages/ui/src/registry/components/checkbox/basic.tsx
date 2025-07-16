@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { CheckIcon, MinusIcon } from "lucide-react";
 import {
   Checkbox as AriaCheckbox,
   composeRenderProps,
@@ -9,6 +8,7 @@ import {
 import { tv } from "tailwind-variants";
 import type { VariantProps } from "tailwind-variants";
 
+import { CheckIcon, MinusIcon } from "@dotui/ui/icons";
 import { focusRing, focusRingGroup } from "@dotui/ui/lib/focus-styles";
 import {
   createOptionalScopedContext,

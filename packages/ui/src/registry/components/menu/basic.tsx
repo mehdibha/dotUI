@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { CheckIcon, ChevronRightIcon } from "lucide-react";
 import {
   Collection as AriaCollection,
   Header as AriaHeader,
@@ -24,6 +23,7 @@ import type { VariantProps } from "tailwind-variants";
 import { Kbd } from "@dotui/ui/components/kbd";
 import { Overlay } from "@dotui/ui/components/overlay";
 import { Text } from "@dotui/ui/components/text";
+import { CheckIcon, ChevronRightIcon } from "@dotui/ui/icons";
 import type { OverlayProps } from "@dotui/ui/components/overlay";
 
 const menuStyles = tv({

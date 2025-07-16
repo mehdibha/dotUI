@@ -1,10 +1,10 @@
 "use client";
 
 import * as React from "react";
-import { RotateCwIcon } from "lucide-react";
 
 import { Button } from "@dotui/ui/components/button";
 import { ProgressBar } from "@dotui/ui/components/progress-bar";
+import { RotateCwIcon } from "@dotui/ui/icons";
 
 export default function Demo() {
   const [key, setKey] = React.useState(0);

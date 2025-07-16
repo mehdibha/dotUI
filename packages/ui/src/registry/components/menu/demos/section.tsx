@@ -1,5 +1,3 @@
-import { MenuIcon } from "lucide-react";
-
 import { Button } from "@dotui/ui/components/button";
 import {
   Menu,
@@ -7,6 +5,7 @@ import {
   MenuRoot,
   MenuSection,
 } from "@dotui/ui/components/menu";
+import { MenuIcon } from "@dotui/ui/icons";
 
 export default function Demo() {
   return (

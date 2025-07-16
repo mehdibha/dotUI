@@ -1,5 +1,4 @@
 import React from "react";
-import { InfoIcon } from "lucide-react";
 
 import { Button } from "@dotui/ui/components/button";
 import {
@@ -8,6 +7,7 @@ import {
   DialogRoot,
 } from "@dotui/ui/components/dialog";
 import { Popover } from "@dotui/ui/components/popover";
+import { InfoIcon } from "@dotui/ui/icons";
 
 export default function Demo() {
   return (

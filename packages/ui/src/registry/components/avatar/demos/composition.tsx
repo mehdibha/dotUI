@@ -1,5 +1,4 @@
 import React from "react";
-import { User2Icon } from "lucide-react";
 
 import {
   AvatarFallback,
@@ -7,6 +6,7 @@ import {
   AvatarPlaceholder,
   AvatarRoot,
 } from "@dotui/ui/components/avatar";
+import { User2Icon } from "@dotui/ui/icons";
 
 export default function Demo() {
   return (

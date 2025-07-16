@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { ChevronDownIcon } from "lucide-react";
 import {
   Select as AriaSelect,
   SelectValue as AriaSelectValue,
@@ -18,6 +17,7 @@ import { Button } from "@dotui/ui/components/button";
 import { HelpText, Label } from "@dotui/ui/components/field";
 import { ListBox, ListBoxItem } from "@dotui/ui/components/list-box";
 import { Popover } from "@dotui/ui/components/popover";
+import { ChevronDownIcon } from "@dotui/ui/icons";
 import type { ButtonProps } from "@dotui/ui/components/button";
 import type { FieldProps } from "@dotui/ui/components/field";
 import type { ListBoxProps } from "@dotui/ui/components/list-box";

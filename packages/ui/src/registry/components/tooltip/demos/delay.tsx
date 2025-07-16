@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
-import { PenSquareIcon } from "lucide-react";
 
 import { Button } from "@dotui/ui/components/button";
 import { NumberField } from "@dotui/ui/components/number-field";
 import { Tooltip } from "@dotui/ui/components/tooltip";
+import { PenSquareIcon } from "@dotui/ui/icons";
 
 export default function Demo() {
   const [delay, setDelay] = React.useState(700);

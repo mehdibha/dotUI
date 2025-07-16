@@ -1,6 +1,5 @@
-import { PaletteIcon } from "lucide-react";
-
 import { ColorField } from "@dotui/ui/components/color-field";
+import { PaletteIcon } from "@dotui/ui/icons";
 
 export default function Demo() {
   return (

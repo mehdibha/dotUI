@@ -1,6 +1,5 @@
-import { HomeIcon } from "lucide-react";
-
 import { Breadcrumb, Breadcrumbs } from "@dotui/ui/components/breadcrumbs";
+import { HomeIcon } from "@dotui/ui/icons";
 
 export default function Demo() {
   return (

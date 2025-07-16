@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { CalendarIcon } from "lucide-react";
 
 import { Button } from "@dotui/ui/components/button";
 import { RangeCalendar } from "@dotui/ui/components/calendar";
@@ -11,6 +10,7 @@ import { DialogContent } from "@dotui/ui/components/dialog";
 import { Description, FieldError, Label } from "@dotui/ui/components/field";
 import { InputRoot } from "@dotui/ui/components/input";
 import { Overlay } from "@dotui/ui/components/overlay";
+import { CalendarIcon } from "@dotui/ui/icons";
 
 export default function Demo() {
   return (

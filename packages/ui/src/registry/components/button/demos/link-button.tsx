@@ -1,6 +1,5 @@
-import { LogInIcon } from "lucide-react";
-
 import { Button } from "@dotui/ui/components/button";
+import { LogInIcon } from "@dotui/ui/icons";
 
 export default function Demo() {
   return (

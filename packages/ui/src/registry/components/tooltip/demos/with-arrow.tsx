@@ -1,7 +1,6 @@
-import { PlusIcon } from "lucide-react";
-
 import { Button } from "@dotui/ui/components/button";
 import { Tooltip } from "@dotui/ui/components/tooltip";
+import { PlusIcon } from "@dotui/ui/icons";
 
 export default function TooltipDemo() {
   return (

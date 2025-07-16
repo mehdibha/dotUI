@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { CalendarIcon } from "lucide-react";
 import { DatePicker as AriaDatePicker } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import type {
@@ -16,6 +15,7 @@ import { DateInput, DateSegment } from "@dotui/ui/components/date-input";
 import { Dialog } from "@dotui/ui/components/dialog";
 import { HelpText, Label } from "@dotui/ui/components/field";
 import { InputRoot } from "@dotui/ui/components/input";
+import { CalendarIcon } from "@dotui/ui/icons";
 import type { FieldProps } from "@dotui/ui/components/field";
 import type { inputStyles } from "@dotui/ui/components/input";
 

@@ -1,11 +1,10 @@
-import { WalletIcon } from "lucide-react";
-
 import {
   AlertContent,
   AlertRoot,
   AlertTitle,
 } from "@dotui/ui/components/alert";
 import { Button } from "@dotui/ui/components/button";
+import { WalletIcon } from "@dotui/ui/icons";
 
 export default function AlertDemo() {
   return (

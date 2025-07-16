@@ -1,6 +1,5 @@
 "use client";
 
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { Heading } from "react-aria-components";
 
 import { Button } from "@dotui/ui/components/button";
@@ -13,6 +12,7 @@ import {
   CalendarHeaderCell,
   RangeCalendarRoot,
 } from "@dotui/ui/components/calendar";
+import { ChevronLeftIcon, ChevronRightIcon } from "@dotui/ui/icons";
 
 export default function Demo() {
   return (

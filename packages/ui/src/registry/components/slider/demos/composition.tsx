@@ -1,5 +1,3 @@
-import { Volume1Icon, Volume2Icon } from "lucide-react";
-
 import { Description, Label } from "@dotui/ui/components/field";
 import {
   SliderFiller,
@@ -8,6 +6,7 @@ import {
   SliderTrack,
   SliderValueLabel,
 } from "@dotui/ui/components/slider";
+import { Volume1Icon, Volume2Icon } from "@dotui/ui/icons";
 
 export default function Demo() {
   return (

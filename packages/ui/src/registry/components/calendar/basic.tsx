@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import {
   Calendar as AriaCalendar,
   CalendarCell as AriaCalendarCell,
@@ -27,6 +26,7 @@ import type { VariantProps } from "tailwind-variants";
 
 import { Button } from "@dotui/ui/components/button";
 import { Text } from "@dotui/ui/components/text";
+import { ChevronLeftIcon, ChevronRightIcon } from "@dotui/ui/icons";
 import { focusRing } from "@dotui/ui/lib/focus-styles";
 
 const calendarStyles = tv({

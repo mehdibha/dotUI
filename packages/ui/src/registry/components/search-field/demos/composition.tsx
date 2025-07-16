@@ -1,9 +1,9 @@
 import React from "react";
-import { SearchIcon } from "lucide-react";
 
 import { Description, Label } from "@dotui/ui/components/field";
 import { Input, InputRoot } from "@dotui/ui/components/input";
 import { SearchFieldRoot } from "@dotui/ui/components/search-field";
+import { SearchIcon } from "@dotui/ui/icons";
 
 export default function Demo() {
   return (

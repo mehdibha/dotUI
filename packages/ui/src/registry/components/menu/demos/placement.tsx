@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
-import { MenuIcon } from "lucide-react";
 
 import { Button } from "@dotui/ui/components/button";
 import { Menu, MenuItem, MenuRoot } from "@dotui/ui/components/menu";
 import { Select, SelectItem } from "@dotui/ui/components/select";
+import { MenuIcon } from "@dotui/ui/icons";
 
 // TODO: finish example
 

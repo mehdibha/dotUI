@@ -1,5 +1,4 @@
 import React from "react";
-import { PenSquareIcon } from "lucide-react";
 
 import { Button } from "@dotui/ui/components/button";
 import {
@@ -10,6 +9,7 @@ import {
 } from "@dotui/ui/components/dialog";
 import { TextArea } from "@dotui/ui/components/text-area";
 import { TextField } from "@dotui/ui/components/text-field";
+import { PenSquareIcon } from "@dotui/ui/icons";
 
 export default function Demo() {
   return (

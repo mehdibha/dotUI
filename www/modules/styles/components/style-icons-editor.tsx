@@ -1,7 +1,5 @@
 "use client";
 
-import * as Lucide from "lucide-react";
-
 import { iconLibraries } from "@dotui/registry-definition/registry-icons";
 import { Button } from "@dotui/ui/components/button";
 import { Label } from "@dotui/ui/components/field";
@@ -10,6 +8,7 @@ import { ListBox, ListBoxItem } from "@dotui/ui/components/list-box";
 import { Popover } from "@dotui/ui/components/popover";
 import { SelectRoot, SelectValue } from "@dotui/ui/components/select";
 import { Slider } from "@dotui/ui/components/slider";
+import * as Icons from "@dotui/ui/icons";
 import { Skeleton } from "@dotui/ui/registry/components/skeleton/basic";
 
 import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
@@ -34,10 +33,7 @@ export function StyleIconsEditor() {
                   className="mt-2 w-full"
                 >
                   <Label>Icon library</Label>
-                  <Button
-                    suffix={<Lucide.ChevronDownIcon />}
-                    className="w-full"
-                  >
+                  <Button suffix={<Icons.ChevronDownIcon />} className="w-full">
                     <SelectValue />
                   </Button>
                   <Popover>
@@ -77,7 +73,7 @@ export function StyleIconsEditor() {
         <Label className="mt-6">Icons</Label>
         <div className="mt-2 rounded-md border bg-bg-muted/50 p-4">
           <div className="grid max-h-[168px] [grid-template-columns:repeat(auto-fill,minmax(36px,1fr))] [grid-template-rows:repeat(auto-fill,minmax(36px,1fr))] gap-2 overflow-hidden rounded-md [&_svg]:size-6">
-            {Object.entries(Lucide)
+            {Object.entries(Icons)
               .filter(([name]) => name !== "index")
               .filter(([name]) => name.includes("Icon"))
               .slice(0, 100)

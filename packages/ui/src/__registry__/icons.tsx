@@ -336,6 +336,20 @@ export const ChevronsUpDownIcon = createIcon({
   ),
 });
 
+export const PenSquareIcon = createIcon({
+  lucide: Lucide.PenSquareIcon,
+  remix: React.lazy(() =>
+    import("@remixicon/react").then((mod) => ({ default: mod.RiEditBoxLine })),
+  ),
+});
+
+export const GripVerticalIcon = createIcon({
+  lucide: Lucide.GripVerticalIcon,
+  remix: React.lazy(() =>
+    import("@remixicon/react").then((mod) => ({ default: mod.RiDraggable })),
+  ),
+});
+
 export const registryIcons = {
   Loader2Icon,
   AlertCircleIcon,
@@ -381,6 +395,8 @@ export const registryIcons = {
   Volume1Icon,
   Volume2Icon,
   ChevronsUpDownIcon,
+  PenSquareIcon,
+  GripVerticalIcon,
 };
 
 export type RegistryIconName = keyof typeof registryIcons;

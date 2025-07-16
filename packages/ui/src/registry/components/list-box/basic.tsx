@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { CheckIcon } from "lucide-react";
 import {
   Collection as AriaCollection,
   Header as AriaHeader,
@@ -21,6 +20,7 @@ import type { VariantProps } from "tailwind-variants";
 
 import { Loader } from "@dotui/ui/components/loader";
 import { Text } from "@dotui/ui/components/text";
+import { CheckIcon } from "@dotui/ui/icons";
 import { focusRing } from "@dotui/ui/lib/focus-styles";
 
 const listBoxStyles = tv({

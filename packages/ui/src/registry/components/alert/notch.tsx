@@ -1,15 +1,15 @@
 "use client";
 
 import * as React from "react";
+import { tv } from "tailwind-variants";
+import type { VariantProps } from "tailwind-variants";
+
 import {
   AlertCircleIcon,
   AlertTriangleIcon,
   CheckCircle2Icon,
   InfoIcon,
-} from "lucide-react";
-import { tv } from "tailwind-variants";
-import type { VariantProps } from "tailwind-variants";
-
+} from "@dotui/ui/icons";
 import { createScopedContext } from "@dotui/ui/lib/utils";
 
 const alertStyles = tv({

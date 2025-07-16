@@ -1,13 +1,13 @@
 "use client";
 
 import React from "react";
-import { MinusIcon, PlusIcon } from "lucide-react";
 import { Group } from "react-aria-components";
 
 import { Button } from "@dotui/ui/components/button";
 import { Description, Label } from "@dotui/ui/components/field";
 import { Input, InputRoot } from "@dotui/ui/components/input";
 import { NumberFieldRoot } from "@dotui/ui/components/number-field";
+import { MinusIcon, PlusIcon } from "@dotui/ui/icons";
 
 export default function Demo() {
   return (

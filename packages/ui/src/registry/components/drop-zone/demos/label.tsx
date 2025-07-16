@@ -1,7 +1,7 @@
 import React from "react";
-import { UploadIcon } from "lucide-react";
 
 import { DropZone, DropZoneLabel } from "@dotui/ui/components/drop-zone";
+import { UploadIcon } from "@dotui/ui/icons";
 
 export default function Demo() {
   return (

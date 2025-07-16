@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { PenSquareIcon } from "lucide-react";
 
 import { Button } from "@dotui/ui/components/button";
 import {
@@ -13,6 +12,7 @@ import {
 import { Switch } from "@dotui/ui/components/switch";
 import { TextArea } from "@dotui/ui/components/text-area";
 import { TextField } from "@dotui/ui/components/text-field";
+import { PenSquareIcon } from "@dotui/ui/icons";
 
 export default function Demo() {
   const [isDismissable, setDismissable] = React.useState(false);

@@ -199,4 +199,12 @@ export const icons: Record<string, Record<IconLibraryName, string>> = {
     lucide: "ChevronsUpDownIcon",
     remix: "RiExpandUpDownLine",
   },
+  PenSquareIcon: {
+    lucide: "PenSquareIcon",
+    remix: "RiEditBoxLine",
+  },
+  GripVerticalIcon: {
+    lucide: "GripVerticalIcon",
+    remix: "RiDraggable",
+  },
 };

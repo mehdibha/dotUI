@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import { UploadIcon } from "lucide-react";
 
 import { Button } from "@dotui/ui/components/button";
 import { FileTrigger } from "@dotui/ui/components/file-trigger";
+import { UploadIcon } from "@dotui/ui/icons";
 
 export default function FileTriggerDemo() {
   const [file, setFile] = React.useState<string | null>(null);

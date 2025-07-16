@@ -1,6 +1,5 @@
-import { PinIcon } from "lucide-react";
-
 import { ToggleButton } from "@dotui/ui/components/toggle-button";
+import { PinIcon } from "@dotui/ui/icons";
 
 const variants = ["quiet", "primary", "accent"] as const;
 

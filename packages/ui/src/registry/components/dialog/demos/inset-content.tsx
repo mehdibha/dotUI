@@ -1,5 +1,4 @@
 import React from "react";
-import { PenSquareIcon } from "lucide-react";
 
 import { Button } from "@dotui/ui/components/button";
 import {
@@ -9,6 +8,7 @@ import {
   DialogInset,
   DialogRoot,
 } from "@dotui/ui/components/dialog";
+import { PenSquareIcon } from "@dotui/ui/icons";
 
 export default function Demo() {
   return (

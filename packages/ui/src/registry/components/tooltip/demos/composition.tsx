@@ -1,8 +1,7 @@
-import { PenSquareIcon } from "lucide-react";
-
 import { Button } from "@dotui/ui/components/button";
 import { Kbd } from "@dotui/ui/components/kbd";
 import { TooltipContent, TooltipRoot } from "@dotui/ui/components/tooltip";
+import { PenSquareIcon } from "@dotui/ui/icons";
 
 export default function Demo() {
   return (

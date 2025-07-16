@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
-import { MenuIcon } from "lucide-react";
 
 import { Button } from "@dotui/ui/components/button";
 import { Menu, MenuItem, MenuRoot } from "@dotui/ui/components/menu";
 import { Radio, RadioGroup } from "@dotui/ui/components/radio-group";
+import { MenuIcon } from "@dotui/ui/icons";
 import type { OverlayProps } from "@dotui/ui/components/overlay";
 
 export default function Demo() {

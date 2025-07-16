@@ -1,6 +1,5 @@
 "use client";
 
-import { ChevronRightIcon } from "lucide-react";
 import {
   Breadcrumb as AriaBreadcrumb,
   Breadcrumbs as AriaBreadcrumbs,
@@ -13,6 +12,7 @@ import type {
   LinkProps as AriaLinkProps,
 } from "react-aria-components";
 
+import { ChevronRightIcon } from "@dotui/ui/icons";
 import { focusRing } from "@dotui/ui/lib/focus-styles";
 
 const breadcrumbsStyles = tv({

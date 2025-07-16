@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { PinIcon } from "lucide-react";
+import { PinIcon } from "@dotui/ui/icons";
 
 import { ToggleButton } from "@dotui/ui/components/toggle-button";
 

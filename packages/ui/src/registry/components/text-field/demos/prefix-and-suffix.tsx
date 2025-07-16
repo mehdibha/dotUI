@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
-import { XCircleIcon } from "lucide-react";
 
 import { Button } from "@dotui/ui/components/button";
 import { TextField } from "@dotui/ui/components/text-field";
 import { Tooltip } from "@dotui/ui/components/tooltip";
+import { XCircleIcon } from "@dotui/ui/icons";
 
 export default function Demo() {
   const [inputValue, setInputValue] = React.useState("Hello world!");

@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
-import { PenSquareIcon } from "lucide-react";
 
 import { Button } from "@dotui/ui/components/button";
 import { Switch } from "@dotui/ui/components/switch";
 import { Tooltip } from "@dotui/ui/components/tooltip";
+import { PenSquareIcon } from "@dotui/ui/icons";
 
 export default function Demo() {
   const [shouldFlip, setShouldFlip] = React.useState(false);

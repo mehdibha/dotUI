@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { SearchIcon, XIcon } from "lucide-react";
 import {
   SearchField as AriaSearchField,
   composeRenderProps,
@@ -11,6 +10,7 @@ import { tv } from "tailwind-variants";
 import { Button } from "@dotui/ui/components/button";
 import { HelpText, Label } from "@dotui/ui/components/field";
 import { Input, InputRoot } from "@dotui/ui/components/input";
+import { SearchIcon, XIcon } from "@dotui/ui/icons";
 import type { FieldProps } from "@dotui/ui/components/field";
 import type { InputRootProps } from "@dotui/ui/components/input";
 

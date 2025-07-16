@@ -1,6 +1,5 @@
 "use client";
 
-import { ChevronDownIcon, ChevronUpIcon, GripVerticalIcon } from "lucide-react";
 import {
   Button as AriaButton,
   Cell as AriaCell,
@@ -25,6 +24,11 @@ import type {
 import type { VariantProps } from "tailwind-variants";
 
 import { Checkbox } from "@dotui/ui/components/checkbox";
+import {
+  ChevronDownIcon,
+  ChevronUpIcon,
+  GripVerticalIcon,
+} from "@dotui/ui/icons";
 import { focusRing } from "@dotui/ui/lib/focus-styles";
 import { cn, createScopedContext } from "@dotui/ui/lib/utils";
 

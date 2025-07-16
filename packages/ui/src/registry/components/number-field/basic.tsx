@@ -2,12 +2,6 @@
 
 import * as React from "react";
 import {
-  ChevronDownIcon,
-  ChevronUpIcon,
-  MinusIcon,
-  PlusIcon,
-} from "lucide-react";
-import {
   NumberField as AriaNumberField,
   composeRenderProps,
 } from "react-aria-components";
@@ -17,6 +11,12 @@ import { Button } from "@dotui/ui/components/button";
 import { HelpText, Label } from "@dotui/ui/components/field";
 import { Input, InputRoot } from "@dotui/ui/components/input";
 import { useIsMobile } from "@dotui/ui/hooks/use-is-mobile";
+import {
+  ChevronDownIcon,
+  ChevronUpIcon,
+  MinusIcon,
+  PlusIcon,
+} from "@dotui/ui/icons";
 import type { FieldProps } from "@dotui/ui/components/field";
 import type { InputRootProps } from "@dotui/ui/components/input";
 
