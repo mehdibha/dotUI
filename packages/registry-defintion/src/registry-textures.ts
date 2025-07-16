@@ -5,7 +5,7 @@ interface TextureRegistryItem {
   css: Record<string, Record<string, string>>;
 }
 
-export const registryTextures= [
+export const registryTextures = [
   {
     name: "Earthen haze",
     slug: "earthen-haze",
@@ -72,4 +72,4 @@ export const registryTextures= [
       },
     },
   },
-] as const satisfies TextureRegistryItem[]
+] as const satisfies TextureRegistryItem[];

@@ -40,7 +40,7 @@ export const mockMinimizedTheme: MinimizedThemeDefinition = {
   spacing: 0.3,
 };
 
-export const mochThemeDefintion: ThemeDefinition = {
+export const mockThemeDefinition: ThemeDefinition = {
   colors: {
     modes: [
       {

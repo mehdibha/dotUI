@@ -26,7 +26,12 @@ interface ColorScaleProps {
   neutralIndex: number;
 }
 
-export function ColorScale({ name, label, scaleIndex, neutralIndex }: ColorScaleProps) {
+export function ColorScale({
+  name,
+  label,
+  scaleIndex,
+  neutralIndex,
+}: ColorScaleProps) {
   const { form, isSuccess } = useStyleForm();
 
   const { currentMode } = usePreferences();
@@ -95,7 +100,6 @@ export function ColorScale({ name, label, scaleIndex, neutralIndex }: ColorScale
     saturation,
     contrast,
   ]);
-  
 
   return (
     <div className="flex items-center gap-2">

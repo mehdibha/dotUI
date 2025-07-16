@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { createDynamicComponent } from "../internal/create-dynamic-component";
+import { createDynamicComponent } from "../helpers/create-dynamic-component";
 import {
   Tooltip as _Tooltip,
   TooltipArrow as _TooltipArrow,

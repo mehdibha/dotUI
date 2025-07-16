@@ -4,7 +4,7 @@ import { registryBackgroundPatterns } from "@dotui/registry-definition/registry-
 import { iconLibraries } from "@dotui/registry-definition/registry-icons";
 import { registryTextures } from "@dotui/registry-definition/registry-textures";
 
-// ---------------------------------  Defintions  ----------------------------------- //
+// ---------------------------------  Definitions  ----------------------------------- //
 
 // Icons
 export const iconLibrarySchema = z.enum(iconLibraries.map((lib) => lib.name));

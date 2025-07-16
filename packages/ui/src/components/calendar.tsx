@@ -3,7 +3,7 @@
 import React from "react";
 import type { DateValue } from "react-aria-components";
 
-import { createDynamicComponent } from "../internal/create-dynamic-component";
+import { createDynamicComponent } from "../helpers/create-dynamic-component";
 import {
   Calendar as _Calendar,
   CalendarCell as _CalendarCell,

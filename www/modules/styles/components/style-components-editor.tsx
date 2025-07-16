@@ -12,6 +12,7 @@ import {
   SendIcon,
 } from "lucide-react";
 
+import { registryUi } from "@dotui/registry-definition/registry-ui";
 import { Badge } from "@dotui/ui/components/badge";
 import { Button } from "@dotui/ui/components/button";
 import { Calendar, RangeCalendar } from "@dotui/ui/components/calendar";
@@ -39,15 +40,35 @@ import { TextArea } from "@dotui/ui/components/text-area";
 import { TextField } from "@dotui/ui/components/text-field";
 import { ToggleButton } from "@dotui/ui/components/toggle-button";
 import { Tooltip } from "@dotui/ui/components/tooltip";
+import { StyleProvider } from "@dotui/ui/index";
 import { cn } from "@dotui/ui/lib/utils";
 import type { VariantsDefinition } from "@dotui/style-engine/types";
 
+import { useMounted } from "@/hooks/use-mounted";
 import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
+
+function getComponentVariants(
+  componentName: string,
+): { name: string; label: string }[] {
+  return registryUi
+    .filter((item) => item.name.startsWith(`${componentName}:`))
+    .map((item) => {
+      const variant = item.name.split(":")[1];
+      if (!variant) {
+        return null;
+      }
+      return {
+        name: variant,
+        label: variant.charAt(0).toUpperCase() + variant.slice(1),
+      };
+    })
+    .filter((variant) => variant !== null);
+}
 
 interface SectionProps extends React.ComponentProps<"div"> {
   name: keyof VariantsDefinition;
   title: string;
-  variants: { id: string; label: string }[];
+  variants: { name: string; label: string }[];
   previewClassName?: string;
 }
 
@@ -61,6 +82,9 @@ const Section = ({
   ...props
 }: SectionProps) => {
   const { form, isSuccess } = useStyleForm();
+  const isMounted = useMounted();
+
+  const style = form.watch();
   return (
     <div className={cn(className)} {...props}>
       <p
@@ -80,7 +104,7 @@ const Section = ({
               {...props}
             >
               {variants.map((variant) => (
-                <SelectItem key={variant.id} id={variant.id}>
+                <SelectItem key={variant.name} id={variant.name}>
                   {variant.label}
                 </SelectItem>
               ))}
@@ -88,14 +112,24 @@ const Section = ({
           </Skeleton>
         )}
       />
-      <div
+      <StyleProvider
+        style={style}
         className={cn(
           "mt-2 flex items-center justify-center gap-2 rounded-md border bg-bg-muted/50 p-4",
           previewClassName,
         )}
       >
         {children}
-      </div>
+      </StyleProvider>
+      {/* <StyleProvider
+        style={style}
+        className={cn(
+          "mt-2 flex items-center justify-center gap-2 rounded-md border bg-bg-muted/50 p-4",
+          previewClassName,
+        )}
+      >
+        {children}
+      </StyleProvider> */}
     </div>
   );
 };
@@ -106,13 +140,7 @@ export function StyleComponentsEditor() {
       <Section
         name="loader"
         title="Loader"
-        variants={[
-          { id: "dots", label: "Dots" },
-          { id: "lines", label: "Line" },
-          { id: "ring", label: "Ring" },
-          { id: "tailspin", label: "Tailspin" },
-          { id: "wave", label: "Wave" },
-        ]}
+        variants={getComponentVariants("loader")}
         previewClassName="gap-4"
       >
         <Loader />
@@ -122,7 +150,7 @@ export function StyleComponentsEditor() {
       <Section
         name="focus-style"
         title="Focus style"
-        variants={[{ id: "basic", label: "Basic" }]}
+        variants={[{ name: "basic", label: "Basic" }]}
         previewClassName="flex-col gap-4"
       >
         <div className="flex items-center gap-4">
@@ -143,12 +171,7 @@ export function StyleComponentsEditor() {
       <Section
         name="buttons"
         title="Buttons"
-        variants={[
-          { id: "basic", label: "Basic" },
-          { id: "brutalist", label: "Brutalist" },
-          { id: "outline", label: "Outline" },
-          { id: "ripple", label: "Ripple" },
-        ]}
+        variants={getComponentVariants("button")}
         previewClassName="flex-col"
       >
         <div className="flex items-center gap-2">
@@ -204,12 +227,7 @@ export function StyleComponentsEditor() {
       <Section
         name="inputs"
         title="Inputs"
-        variants={[
-          { id: "basic", label: "Basic" },
-          { id: "brutalist", label: "Brutalist" },
-          { id: "outline", label: "Outline" },
-          { id: "ripple", label: "Ripple" },
-        ]}
+        variants={getComponentVariants("input")}
         previewClassName="grid grid-cols-2 gap-3"
       >
         <TextField placeholder="hello@mehdibha.com" className="w-full" />
@@ -252,7 +270,7 @@ export function StyleComponentsEditor() {
       <Section
         name="pickers"
         title="Pickers"
-        variants={[{ id: "basic", label: "Basic" }]}
+        variants={getComponentVariants("combobox")}
         previewClassName="grid grid-cols-2 gap-2"
       >
         <Combobox
@@ -275,7 +293,7 @@ export function StyleComponentsEditor() {
       <Section
         name="selection"
         title="Selection"
-        variants={[{ id: "basic", label: "Basic" }]}
+        variants={getComponentVariants("select")}
       >
         <Select>
           <SelectItem id="option-1">Option 1</SelectItem>
@@ -287,7 +305,7 @@ export function StyleComponentsEditor() {
       <Section
         name="calendars"
         title="Calendars"
-        variants={[{ id: "basic", label: "Basic" }]}
+        variants={getComponentVariants("calendar")}
       >
         <Calendar defaultValue={parseDate("2020-02-03")} />
         <RangeCalendar
@@ -301,7 +319,7 @@ export function StyleComponentsEditor() {
       <Section
         name="list-box-and-menu"
         title="ListBox and menu"
-        variants={[{ id: "basic", label: "Basic" }]}
+        variants={getComponentVariants("list-box")}
         previewClassName="gap-4"
       >
         <ListBox>
@@ -339,7 +357,7 @@ export function StyleComponentsEditor() {
       <Section
         name="overlays"
         title="Overlays"
-        variants={[{ id: "basic", label: "Basic" }]}
+        variants={getComponentVariants("popover")}
         previewClassName="gap-4"
       >
         <DialogRoot>
@@ -382,7 +400,7 @@ export function StyleComponentsEditor() {
       <Section
         name="checkboxes"
         title="Checkboxes"
-        variants={[{ id: "basic", label: "Basic" }]}
+        variants={getComponentVariants("checkbox")}
         previewClassName="gap-4"
       >
         <Checkbox aria-label="Basic checkbox" />
@@ -394,7 +412,7 @@ export function StyleComponentsEditor() {
       <Section
         name="radios"
         title="Radios"
-        variants={[{ id: "basic", label: "Basic" }]}
+        variants={getComponentVariants("radio-group")}
         previewClassName="flex-col gap-4"
       >
         <RadioGroup>
@@ -411,7 +429,7 @@ export function StyleComponentsEditor() {
       <Section
         name="switch"
         title="Switch"
-        variants={[{ id: "basic", label: "Basic" }]}
+        variants={getComponentVariants("switch")}
         previewClassName="flex-col gap-4"
       >
         <div className="flex items-center gap-4">
@@ -425,7 +443,7 @@ export function StyleComponentsEditor() {
       <Section
         name="slider"
         title="Slider"
-        variants={[{ id: "basic", label: "Basic" }]}
+        variants={getComponentVariants("slider")}
         previewClassName="flex-col gap-4"
       >
         <Slider defaultValue={50} aria-label="Basic slider" />
@@ -433,7 +451,7 @@ export function StyleComponentsEditor() {
       <Section
         name="badge-and-tag-group"
         title="Badge & TagGroup"
-        variants={[{ id: "basic", label: "Basic" }]}
+        variants={getComponentVariants("badge")}
         previewClassName="flex-col gap-4"
       >
         <div className="flex items-center gap-4">
@@ -453,7 +471,7 @@ export function StyleComponentsEditor() {
       <Section
         name="tooltip"
         title="Tooltip"
-        variants={[{ id: "basic", label: "Basic" }]}
+        variants={getComponentVariants("tooltip")}
         previewClassName="gap-4"
       >
         <Tooltip content="This is a tooltip">

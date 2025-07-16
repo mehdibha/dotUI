@@ -125,7 +125,7 @@ export function PreviewContent({
         className,
       )}
     >
-      <div className="flex bg-bg-muted/50 items-center justify-between gap-2 border-b border-t-[inherit] px-1 py-1">
+      <div className="flex items-center justify-between gap-2 border-b border-t-[inherit] bg-bg-muted/50 px-1 py-1">
         <div className="flex w-32 items-center gap-3">
           <div className="flex items-center gap-1">
             {collapsible && (

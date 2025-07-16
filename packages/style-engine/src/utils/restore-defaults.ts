@@ -121,7 +121,8 @@ const restoreThemeDefinitionDefaults = (
     shadows: minimizedTheme.shadows ?? DEFAULT_SHADOWS,
     radius: minimizedTheme.radius ?? DEFAULT_RADIUS_FACTOR,
     texture: minimizedTheme.texture ?? DEFAULT_TEXTURE,
-    backgroundPattern: minimizedTheme.backgroundPattern ?? DEFAULT_BACKGROUND_PATTERN,
+    backgroundPattern:
+      minimizedTheme.backgroundPattern ?? DEFAULT_BACKGROUND_PATTERN,
     letterSpacing: minimizedTheme.letterSpacing ?? 0,
   };
 };

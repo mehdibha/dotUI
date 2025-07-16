@@ -1,5 +1,7 @@
 "use client";
 
+import { RiUserLine } from "@remixicon/react";
+
 import { Button } from "@dotui/ui/components/button";
 import { TextField } from "@dotui/ui/components/text-field";
 import { GitHubIcon, GoogleIcon, TwitterIcon } from "@dotui/ui/icons";

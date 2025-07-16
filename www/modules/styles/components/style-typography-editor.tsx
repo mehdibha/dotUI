@@ -14,7 +14,7 @@ export function StyleTypographyEditor() {
   return (
     <div className="min-h-[200svh]">
       <EditorSection title="Font family">
-        <div className="space-y-3 mt-3">
+        <div className="mt-3 space-y-3">
           <Skeleton show={!isSuccess}>
             <FormControl
               name="theme.fonts.heading"

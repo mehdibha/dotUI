@@ -1,6 +1,6 @@
 import type { RegistryItem } from "shadcn/registry";
 
-import { ui } from "@dotui/registry-definition/registry-ui";
+import { registryUi } from "@dotui/registry-definition/registry-ui";
 
 import { updateRegistryDependencies } from "../helpers/update-registry-deps";
 import type { Style } from "../../types";
@@ -12,7 +12,7 @@ export function generateRegistryAll(options: {
   const { baseUrl, style } = options;
 
   const registryDependencies = [
-    ...new Set(ui.map((item) => item.name.split(":")[0])),
+    ...new Set(registryUi.map((item) => item.name.split(":")[0])),
   ] as string[];
 
   let registryItem: RegistryItem = {

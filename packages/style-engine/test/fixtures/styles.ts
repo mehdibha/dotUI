@@ -1,7 +1,6 @@
-import { mochThemeDefintion, mockMinimizedTheme } from "./themes";
+import { mockMinimizedTheme, mockThemeDefinition } from "./themes";
 import type {
   MinimizedStyleDefinition,
-  Style,
   StyleDefinition,
 } from "../../src/types";
 
@@ -24,7 +23,7 @@ export const mockStyleDefinition: StyleDefinition = {
   name: "Test Theme",
   slug: "test-theme",
   description: "A test theme for unit testing",
-  theme: mochThemeDefintion,
+  theme: mockThemeDefinition,
   icons: {
     library: "lucide",
     strokeWidth: 1.5,

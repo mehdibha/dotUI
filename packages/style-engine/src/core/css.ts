@@ -79,7 +79,6 @@ export const createLetterSpacingThemeVars = (
 };
 
 export const createFontsThemeVars = (_fonts: Fonts): Record<string, string> => {
-  
   // const vars: Record<string, string> = {};
 
   // Object.entries(fonts).forEach(([key, value]) => {

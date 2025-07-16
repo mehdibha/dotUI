@@ -23,6 +23,7 @@
     "dev:www": "pnpm --filter=www dev",
     "start:www": "pnpm --filter=www start",
     "build:www": "pnpm --filter=www build",
+    "build:registry": "pnpm --filter=@dotui/ui build:registry",
     "clean": "git clean -xdf node_modules",
     "clean:workspaces": "turbo run clean",
     "format": "turbo run format --continue -- --cache --cache-location .cache/.prettiercache",

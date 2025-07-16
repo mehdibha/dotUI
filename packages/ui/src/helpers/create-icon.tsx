@@ -1,5 +1,3 @@
-"use client";
-
 import * as React from "react";
 
 import type { iconLibraries } from "@dotui/registry-definition/registry-icons";
@@ -51,7 +49,13 @@ export function createIcon(iconMapping: IconMapping): IconComponent {
     const iconLibrary = style.icons.library;
 
     if (iconLibrary === "lucide") {
-      return <LucideIcon ref={ref} {...props} />;
+      return (
+        <LucideIcon
+          ref={ref}
+          strokeWidth={style.icons.strokeWidth}
+          {...props}
+        />
+      );
     }
 
     const Icon = iconMapping[iconLibrary];
@@ -63,7 +67,7 @@ export function createIcon(iconMapping: IconMapping): IconComponent {
           </Skeleton>
         }
       >
-        <Icon ref={ref} {...props} />
+        <Icon ref={ref} strokeWidth={style.icons.strokeWidth} {...props} />
       </React.Suspense>
     );
   });
