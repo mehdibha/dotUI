@@ -22,7 +22,7 @@ export const Tabs = createDynamicComponent<TabsProps>("tabs", "Tabs", _Tabs, {
       default: mod.Tabs,
     })),
   ),
-});
+},true);
 
 export const TabList = createDynamicComponent<TabListProps<object>>(
   "tabs",

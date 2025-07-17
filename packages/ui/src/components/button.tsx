@@ -30,12 +30,8 @@ export const Button = createDynamicComponent<ButtonProps>(
         default: mod.Button,
       })),
     ),
-    enhanced: React.lazy(() =>
-      import("../registry/components/button/enhanced").then((mod) => ({
-        default: mod.Button,
-      })),
-    ),
   },
+  true,
 );
 
 export const ButtonProvider = createDynamicComponent(
@@ -55,11 +51,6 @@ export const ButtonProvider = createDynamicComponent(
     ),
     ripple: React.lazy(() =>
       import("../registry/components/button/ripple").then((mod) => ({
-        default: mod.ButtonProvider,
-      })),
-    ),
-    enhanced: React.lazy(() =>
-      import("../registry/components/button/enhanced").then((mod) => ({
         default: mod.ButtonProvider,
       })),
     ),

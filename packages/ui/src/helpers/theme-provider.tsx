@@ -12,12 +12,14 @@ export const ThemeProvider = ({
   modes,
   mode,
   theme: themeDefinition,
+  focusRing,
   children,
   ...props
 }: React.ComponentProps<"div"> & {
   modes: Mode[];
   mode?: Mode;
   theme: ThemeDefinition;
+  focusRing: string;
   children: React.ReactNode;
 }) => {
   const theme = React.useMemo(
@@ -69,7 +71,11 @@ export const ThemeProvider = ({
       <div
         style={styleProp}
         {...props}
-        className={cn("relative bg-bg font-body text-fg", props.className)}
+        data-focus-style={focusRing}
+        className={cn(
+          "relative bg-bg font-body text-fg",
+          props.className,
+        )}
       >
         {texture && (
           <div style={transformCssToJSXStyle(texture.css[".texture"])} />

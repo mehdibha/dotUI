@@ -30,7 +30,13 @@ export const StyleProvider = ({
   return (
     <StyleContext value={style}>
       <VariantsProvider variants={style.variants}>
-        <ThemeProvider modes={modes} mode={mode} theme={style.theme} {...props}>
+        <ThemeProvider
+          modes={modes}
+          mode={mode}
+          theme={style.theme}
+          focusRing={style.variants["focus-style"]}
+          {...props}
+        >
           {children}
         </ThemeProvider>
       </VariantsProvider>

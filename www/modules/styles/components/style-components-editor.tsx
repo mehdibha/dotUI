@@ -13,39 +13,34 @@ import {
 } from "lucide-react";
 
 import { registryUi } from "@dotui/registry-definition/registry-ui";
-import { Badge } from "@dotui/ui/components/badge";
+import { StyleProvider } from "@dotui/ui";
 import { Button } from "@dotui/ui/components/button";
 import { Calendar, RangeCalendar } from "@dotui/ui/components/calendar";
 import { Checkbox } from "@dotui/ui/components/checkbox";
 import { Combobox, ComboboxItem } from "@dotui/ui/components/combobox";
 import { DatePicker } from "@dotui/ui/components/date-picker";
 import { DateRangePicker } from "@dotui/ui/components/date-range-picker";
-import {
-  Dialog,
-  DialogBody,
-  DialogFooter,
-  DialogRoot,
-} from "@dotui/ui/components/dialog";
 import { FormControl } from "@dotui/ui/components/form";
 import { ListBox, ListBoxItem } from "@dotui/ui/components/list-box";
 import { Loader } from "@dotui/ui/components/loader";
-import { Menu, MenuItem, MenuRoot } from "@dotui/ui/components/menu";
-import { Radio, RadioGroup } from "@dotui/ui/components/radio-group";
+import { Popover } from "@dotui/ui/components/popover";
 import { SearchField } from "@dotui/ui/components/search-field";
-import { Select, SelectItem } from "@dotui/ui/components/select";
+import {
+  Select,
+  SelectItem,
+  SelectRoot,
+  SelectValue,
+} from "@dotui/ui/components/select";
 import { Skeleton } from "@dotui/ui/components/skeleton";
-import { Slider } from "@dotui/ui/components/slider";
-import { Switch } from "@dotui/ui/components/switch";
 import { TextArea } from "@dotui/ui/components/text-area";
 import { TextField } from "@dotui/ui/components/text-field";
 import { ToggleButton } from "@dotui/ui/components/toggle-button";
-import { Tooltip } from "@dotui/ui/components/tooltip";
-import { StyleProvider } from "@dotui/ui/index";
+import { ChevronsUpDownIcon } from "@dotui/ui/icons";
 import { cn } from "@dotui/ui/lib/utils";
 import type { VariantsDefinition } from "@dotui/style-engine/types";
 
-import { useMounted } from "@/hooks/use-mounted";
 import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
+import { usePreferences } from "../atoms/preferences-atom";
 
 function getComponentVariants(
   componentName: string,
@@ -70,21 +65,23 @@ interface SectionProps extends React.ComponentProps<"div"> {
   title: string;
   variants: { name: string; label: string }[];
   previewClassName?: string;
+  tokens?: string[];
 }
 
 const Section = ({
   name,
   title,
   variants,
+  tokens,
   previewClassName,
   children,
   className,
   ...props
 }: SectionProps) => {
   const { form, isSuccess } = useStyleForm();
-  const isMounted = useMounted();
-
+  const { currentMode } = usePreferences();
   const style = form.watch();
+
   return (
     <div className={cn(className)} {...props}>
       <p
@@ -112,15 +109,18 @@ const Section = ({
           </Skeleton>
         )}
       />
-      <StyleProvider
-        style={style}
-        className={cn(
-          "mt-2 flex items-center justify-center gap-2 rounded-md border bg-bg-muted/50 p-4",
-          previewClassName,
-        )}
-      >
-        {children}
-      </StyleProvider>
+      <Skeleton show={!isSuccess}>
+        <StyleProvider
+          mode={currentMode}
+          style={style}
+          className={cn(
+            "mt-2 flex items-center justify-center gap-2 rounded-md border px-4 py-8",
+            previewClassName,
+          )}
+        >
+          {children}
+        </StyleProvider>
+      </Skeleton>
     </div>
   );
 };
@@ -138,28 +138,33 @@ export function StyleComponentsEditor() {
         <Button isPending>Submit</Button>
       </Section>
 
-     <Section
+      <Section
         name="focus-style"
         title="Focus style"
-        variants={[{ name: "basic", label: "Basic" }]}
+        variants={[
+          { name: "basic", label: "Basic" },
+          { name: "minimal", label: "Minimal" },
+        ]}
+        tokens={["border-focus", "border-focus-muted"]}
         previewClassName="flex-col gap-4"
       >
-        <div className="flex items-center gap-4">
-          <Button className="ring-2 ring-offset-2 ring-offset-bg">
-            Button
-          </Button>
-          <TextField
-            placeholder="hello@mehdibha.com"
-            className="[&>*]:ring-2 [&>*]:ring-border-focus"
-          />
-        </div>
+        {/* <div className="flex items-center gap-4">
+          <Button className="focus-ring-demo">Button</Button>
+          <TextFieldRoot placeholder="hello@mehdibha.com">
+            <TextFieldInput className="focus-ring-input-demo" />
+          </TextFieldRoot>
+        </div> */}
         <div className="flex items-center gap-4">
           <Button>Button</Button>
           <TextField placeholder="hello@mehdibha.com" />
+          <Checkbox />
+          {/* <CheckboxRoot>
+            <CheckboxIndicator />
+          </CheckboxRoot> */}
         </div>
       </Section>
 
-    {/*    <Section
+      {/* <Section
         name="buttons"
         title="Buttons"
         variants={getComponentVariants("button")}
@@ -213,9 +218,9 @@ export function StyleComponentsEditor() {
             <BookmarkIcon />
           </ToggleButton>
         </div>
-      </Section>
+      </Section> */}
 
-      <Section
+      {/* <Section
         name="inputs"
         title="Inputs"
         variants={getComponentVariants("input")}
@@ -256,9 +261,9 @@ export function StyleComponentsEditor() {
           description="Type your description"
           className="col-span-2 w-full"
         />
-      </Section>
+      </Section> */}
 
-      <Section
+      {/* <Section
         name="pickers"
         title="Pickers"
         variants={getComponentVariants("combobox")}
@@ -279,19 +284,19 @@ export function StyleComponentsEditor() {
         </Combobox>
         <DatePicker className="w-full" />
         <DateRangePicker className="w-full" />
-      </Section>
+      </Section> */}
 
-      <Section
+      {/* <Section
         name="selection"
         title="Selection"
         variants={getComponentVariants("select")}
       >
-        <Select>
+        <Select defaultSelectedKey="option-1">
           <SelectItem id="option-1">Option 1</SelectItem>
           <SelectItem id="option-2">Option 2</SelectItem>
           <SelectItem id="option-3">Option 3</SelectItem>
         </Select>
-      </Section>
+      </Section> */}
 
       <Section
         name="calendars"
@@ -307,7 +312,7 @@ export function StyleComponentsEditor() {
         />
       </Section>
 
-      <Section
+      {/* <Section
         name="list-box-and-menu"
         title="ListBox and menu"
         variants={getComponentVariants("list-box")}
@@ -387,7 +392,9 @@ export function StyleComponentsEditor() {
             </DialogFooter>
           </Dialog>
         </DialogRoot>
-      </Section>
+      </Section> */}
+
+      {/* 
       <Section
         name="checkboxes"
         title="Checkboxes"

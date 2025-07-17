@@ -40,37 +40,56 @@ export const Calendar = createDynamicComponent<CalendarProps<DateValue>>(
       })),
     ),
   },
+  true,
 );
 
 export const RangeCalendar = createDynamicComponent<
   RangeCalendarProps<DateValue>
->("calendar", "RangeCalendar", _RangeCalendar, {
-  cal: React.lazy(() =>
-    import("../registry/components/calendar/cal").then((mod) => ({
-      default: mod.RangeCalendar,
-    })),
-  ),
-});
+>(
+  "calendar",
+  "RangeCalendar",
+  _RangeCalendar,
+  {
+    cal: React.lazy(() =>
+      import("../registry/components/calendar/cal").then((mod) => ({
+        default: mod.RangeCalendar,
+      })),
+    ),
+  },
+  true,
+);
 
 export const CalendarRoot = createDynamicComponent<
   CalendarRootProps<DateValue>
->("calendar", "CalendarRoot", _CalendarRoot, {
-  cal: React.lazy(() =>
-    import("../registry/components/calendar/cal").then((mod) => ({
-      default: mod.CalendarRoot,
-    })),
-  ),
-});
+>(
+  "calendar",
+  "CalendarRoot",
+  _CalendarRoot,
+  {
+    cal: React.lazy(() =>
+      import("../registry/components/calendar/cal").then((mod) => ({
+        default: mod.CalendarRoot,
+      })),
+    ),
+  },
+  true,
+);
 
 export const RangeCalendarRoot = createDynamicComponent<
   RangeCalendarRootProps<DateValue>
->("calendar", "RangeCalendarRoot", _RangeCalendarRoot, {
-  cal: React.lazy(() =>
-    import("../registry/components/calendar/cal").then((mod) => ({
-      default: mod.RangeCalendarRoot,
-    })),
-  ),
-});
+>(
+  "calendar",
+  "RangeCalendarRoot",
+  _RangeCalendarRoot,
+  {
+    cal: React.lazy(() =>
+      import("../registry/components/calendar/cal").then((mod) => ({
+        default: mod.RangeCalendarRoot,
+      })),
+    ),
+  },
+  true,
+);
 
 export const CalendarHeader = createDynamicComponent<CalendarHeaderProps>(
   "calendar",

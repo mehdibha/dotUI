@@ -7,6 +7,7 @@
 /* @import "tw-animate-css"; */
 
 @import "./docs.css";
+@import "./focus-styles.css";
 
 @variant dark (&:where(.dark, .dark *));
 
@@ -223,6 +224,7 @@
   --color-border-control: var(--neutral-700);
   --color-border-disabled: var(--neutral-300);
   --color-border-focus: var(--accent-500);
+  --color-border-focus-muted: var(--accent-300);
 
   --color-border-success: var(--success-300);
   --color-border-success-hover: var(--success-400);

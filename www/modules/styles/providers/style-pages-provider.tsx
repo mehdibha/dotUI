@@ -13,6 +13,7 @@ import { COLOR_TOKENS } from "@dotui/registry-definition/registry-tokens";
 import { styleDefinitionSchema } from "@dotui/style-engine/schemas";
 
 import { useDebounce } from "@/hooks/use-debounce";
+import { useMounted } from "@/hooks/use-mounted";
 import { useTRPC } from "@/lib/trpc/react";
 import { useLiveStyleProducer } from "../atoms/live-style-atom";
 
@@ -50,6 +51,7 @@ export function StylePagesProvider({
 }) {
   const { style: slug } = useParams<{ style: string }>();
   const { updateLiveStyle } = useLiveStyleProducer(slug);
+  const isMounted = useMounted();
 
   const trpc = useTRPC();
   const {
@@ -110,7 +112,7 @@ export default function StylePageForm({
       >
         {children}
       </form>
-      <DevTool control={form.control} />
+      {/* <DevTool control={form.control} /> */}
     </>
   );
 }

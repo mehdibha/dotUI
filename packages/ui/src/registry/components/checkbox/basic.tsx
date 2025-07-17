@@ -15,6 +15,8 @@ import {
   createScopedContext,
 } from "@dotui/ui/lib/utils";
 
+// TODO: Fix group naming (its causing conflicts with other components)
+
 const checkboxStyles = tv({
   slots: {
     root: "group flex cursor-pointer flex-row items-center gap-2 invalid:text-fg-danger disabled:cursor-default disabled:text-fg-disabled",
