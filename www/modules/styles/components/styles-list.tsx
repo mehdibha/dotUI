@@ -1,28 +1,21 @@
-"use client";
-
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
 
 import { cn } from "@dotui/ui/lib/utils";
+import type { RouterOutputs } from "@dotui/api";
 
-import { useTRPC } from "@/lib/trpc/react";
 import { StyleCard } from "./style-card";
 
-export function StylesList(props: React.ComponentProps<"div">) {
-  const trpc = useTRPC();
-  const { data: styles } = useQuery({
-    ...trpc.style.all.queryOptions({
-      isFeatured: true,
-    }),
-  });
-
-  if (!styles) {
-    return <div className="text-fg-muted">No styles found...</div>;
-  }
-
+export function StylesList({
+  styles,
+  ...props
+}: React.ComponentProps<"div"> & {
+  styles: RouterOutputs["style"]["all"];
+}) {
   return (
-    <div className={cn("grid grid-cols-2 gap-4", props.className)}>
-      {styles?.map((style) => (
+    <div
+      className={cn("grid grid-cols-1 gap-4 lg:grid-cols-2", props.className)}
+    >
+      {styles.map((style) => (
         <StyleCard key={style.name} style={style} />
       ))}
     </div>

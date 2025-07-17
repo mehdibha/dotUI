@@ -74,7 +74,7 @@ export function StylePagesProvider({
   const watchedValues = useWatch({ control: form.control }) as
     | StyleFormData
     | undefined;
-  const debouncedWatchedValues = useDebounce(watchedValues, 10);
+  const debouncedWatchedValues = useDebounce(watchedValues, 300);
 
   React.useEffect(() => {
     if (isSuccess && debouncedWatchedValues) {

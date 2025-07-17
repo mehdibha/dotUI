@@ -130,6 +130,7 @@ export function PreviewContent({
           <div className="flex items-center gap-1">
             {collapsible && (
               <Button
+                aria-label="Collapse preview"
                 variant="quiet"
                 shape="square"
                 size="sm"
@@ -142,6 +143,7 @@ export function PreviewContent({
           </div>
         </div>
         <SelectRoot
+          aria-label="Select block"
           onSelectionChange={(key) => setCurrentBlockName(key as string)}
           selectedKey={currentBlockName}
         >
@@ -173,6 +175,7 @@ export function PreviewContent({
             delay={0}
           >
             <Button
+              aria-label="Select view"
               variant="quiet"
               shape="square"
               size="sm"
@@ -187,6 +190,7 @@ export function PreviewContent({
           </Tooltip>
           <Tooltip content="Open in new tab" delay={0}>
             <Button
+              aria-label="Open in new tab"
               href={`/block-view/${style}/${currentBlockName}`}
               target="_blank"
               variant="quiet"
@@ -198,7 +202,13 @@ export function PreviewContent({
             </Button>
           </Tooltip>
           <Tooltip content="Maximize" delay={0}>
-            <Button variant="quiet" shape="square" size="sm" className="size-7">
+            <Button
+              aria-label="Maximize"
+              variant="quiet"
+              shape="square"
+              size="sm"
+              className="size-7"
+            >
               <MaximizeIcon />
             </Button>
           </Tooltip>

@@ -21,8 +21,13 @@ export const StyleProvider = ({
   children,
   ...props
 }: StyleProviderProps) => {
-  if (!style) {
-    return children;
+  const [isMounted, setMounted] = React.useState(false);
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!style || !isMounted) {
+    return <div {...props}>{children}</div>;
   }
 
   const modes = style.theme.colors.modes.map((mode) => mode.mode);

@@ -1,9 +1,9 @@
-import { HydrateClient, prefetch, trpc } from "@/lib/trpc/server";
+import { prefetch, trpc } from "@/lib/trpc/server";
 import { StylesList } from "@/modules/styles/components/styles-list";
 
 export const dynamicParams = false;
 
-const categories = [{ slug: "community", label: "Community" }];
+const categories: { slug: string; label: string }[] = [];
 
 export async function generateStaticParams() {
   return categories.map((category) => ({
@@ -17,9 +17,5 @@ export default async function CategoryStylesPage({
   params: Promise<{ category?: string }>;
 }) {
   await prefetch(trpc.style.all.queryOptions({ isFeatured: true }));
-  return (
-    <HydrateClient>
-      <StylesList />
-    </HydrateClient>
-  );
+  return <StylesList styles={[]} />;
 }

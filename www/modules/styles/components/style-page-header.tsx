@@ -21,7 +21,6 @@ import { Button } from "@dotui/ui/components/button";
 import { FormControl } from "@dotui/ui/components/form";
 import { Menu, MenuItem, MenuRoot } from "@dotui/ui/components/menu";
 import { Skeleton } from "@dotui/ui/components/skeleton";
-import { TextField } from "@dotui/ui/components/text-field";
 import { Tooltip } from "@dotui/ui/components/tooltip";
 
 import { AutoResizeTextField } from "@/components/auto-resize-input";
@@ -167,6 +166,7 @@ function StylePageHeaderActions() {
       </StylePageCodeModal>
       <Tooltip content="Reset" delay={0}>
         <Button
+          aria-label="Reset form"
           size="sm"
           shape="square"
           isDisabled={!form.formState.isDirty}
@@ -200,7 +200,7 @@ function StylePageHeaderActions() {
         </PublishStyleModal>
       )}
       <MenuRoot>
-        <Button size="sm" shape="square">
+        <Button aria-label="More actions" size="sm" shape="square">
           <EllipsisIcon />
         </Button>
         <Menu

@@ -32,10 +32,7 @@ export default function StylesLayout({
       <div className="mt-16">
         <Tabs variant="solid" selectedKey={pathname}>
           <TabList className="flex-wrap bg-transparent p-0">
-            {[
-              { href: "/styles", label: "Featured" },
-              { href: "/styles/community", label: "Community" },
-            ].map((tab) => (
+            {[{ href: "/styles", label: "Featured" }].map((tab) => (
               <Tab
                 key={tab.href}
                 id={tab.href}

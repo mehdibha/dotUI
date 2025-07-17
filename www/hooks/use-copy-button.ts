@@ -9,11 +9,11 @@ export function useCopyButton(
 
   const onClick: (e: PressEvent) => void = useCallback(() => {
     if (timeoutRef.current) window.clearTimeout(timeoutRef.current);
+    onCopy();
+    setChecked(true);
     timeoutRef.current = window.setTimeout(() => {
       setChecked(false);
     }, 1500);
-    onCopy();
-    setChecked(true);
   }, [onCopy]);
 
   // Avoid updates after being unmounted
