@@ -12,9 +12,11 @@ export const VariantsProvider = ({
   children: React.ReactNode;
   variants: VariantsDefinition;
 }) => {
-  const variants = React.useMemo(() => {
-    return createVariants(variantsDefinition);
-  }, [variantsDefinition]);
+  const variants = React.useMemo(
+    () => createVariants(variantsDefinition),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [JSON.stringify(variantsDefinition)],
+  );
 
   return <VariantsContext value={variants}>{children}</VariantsContext>;
 };

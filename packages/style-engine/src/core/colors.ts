@@ -83,7 +83,6 @@ export const createColorThemeVars = (
     },
     {} as Record<string, string>,
   );
-
   return cssThemeVars;
 };
 

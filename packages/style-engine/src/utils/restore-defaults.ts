@@ -111,7 +111,7 @@ const restoreThemeDefinitionDefaults = (
       modes: minimizedTheme.colors.modes.map((mode) =>
         restoreModeDefinitionDefaults(mode),
       ),
-      tokens: minimizedTheme.colors.tokens ?? [],
+      tokens: restoreTokensDefaults(minimizedTheme.colors.tokens ?? []),
     },
     fonts: {
       heading: minimizedTheme.fonts?.heading ?? DEFAULT_FONTS.heading,

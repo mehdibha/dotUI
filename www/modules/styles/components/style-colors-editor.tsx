@@ -123,7 +123,7 @@ export function StyleColorsEditor() {
         </div>
       </EditorSection>
 
-      <EditorSection title="Color adjustments">
+      {/* <EditorSection title="Color adjustments">
         <div className="mt-2 grid grid-cols-2 gap-3">
           {currentModeIndex !== -1 && (
             <>
@@ -310,7 +310,7 @@ export function StyleColorsEditor() {
 
       <EditorSection title="Tokens">
         <Tokens />
-      </EditorSection>
+      </EditorSection> */}
     </div>
   );
 }

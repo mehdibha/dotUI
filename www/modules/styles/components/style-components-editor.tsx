@@ -121,15 +121,6 @@ const Section = ({
       >
         {children}
       </StyleProvider>
-      {/* <StyleProvider
-        style={style}
-        className={cn(
-          "mt-2 flex items-center justify-center gap-2 rounded-md border bg-bg-muted/50 p-4",
-          previewClassName,
-        )}
-      >
-        {children}
-      </StyleProvider> */}
     </div>
   );
 };
@@ -147,7 +138,7 @@ export function StyleComponentsEditor() {
         <Button isPending>Submit</Button>
       </Section>
 
-      <Section
+     <Section
         name="focus-style"
         title="Focus style"
         variants={[{ name: "basic", label: "Basic" }]}
@@ -168,7 +159,7 @@ export function StyleComponentsEditor() {
         </div>
       </Section>
 
-      <Section
+    {/*    <Section
         name="buttons"
         title="Buttons"
         variants={getComponentVariants("button")}
@@ -477,7 +468,7 @@ export function StyleComponentsEditor() {
         <Tooltip content="This is a tooltip">
           <Button>Hover me</Button>
         </Tooltip>
-      </Section>
+      </Section> */}
     </div>
   );
 }

@@ -20,7 +20,7 @@ export const ThemeProvider = ({
   theme: ThemeDefinition;
   children: React.ReactNode;
 }) => {
-  const { cssVars } = React.useMemo(
+  const theme = React.useMemo(
     () => createTheme(themeDefinition),
     [themeDefinition],
   );
@@ -31,17 +31,17 @@ export const ThemeProvider = ({
     }
 
     const vars = {
-      "radius-factor": cssVars?.light?.["radius-factor"],
+      "radius-factor": theme.cssVars.light?.["radius-factor"],
       ...(modes.includes("light") && modes.includes("dark")
-        ? cssVars[mode]
-        : cssVars.light),
-      ...cssVars.theme,
+        ? theme.cssVars[mode]
+        : theme.cssVars.light),
+      ...theme.cssVars.theme,
     };
 
     return Object.fromEntries(
       Object.entries(vars).map(([key, value]) => [`--${key}`, value]),
     );
-  }, [cssVars, modes, mode]);
+  }, [theme, modes, mode]);
 
   const texture = themeDefinition.texture
     ? registryTextures.find((t) => t.slug === themeDefinition.texture)
@@ -69,7 +69,7 @@ export const ThemeProvider = ({
       <div
         style={styleProp}
         {...props}
-        className={cn("relative bg-bg text-fg", props.className)}
+        className={cn("relative bg-bg font-body text-fg", props.className)}
       >
         {texture && (
           <div style={transformCssToJSXStyle(texture.css[".texture"])} />

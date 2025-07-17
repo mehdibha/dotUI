@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useParams } from "next/navigation";
+import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
 import { useForm, useWatch } from "react-hook-form";
@@ -74,10 +75,10 @@ export function StylePagesProvider({
   const debouncedWatchedValues = useDebounce(watchedValues, 10);
 
   React.useEffect(() => {
-    if (debouncedWatchedValues) {
+    if (isSuccess && debouncedWatchedValues) {
       updateLiveStyle(debouncedWatchedValues);
     }
-  }, [debouncedWatchedValues, updateLiveStyle]);
+  }, [debouncedWatchedValues, updateLiveStyle, isSuccess]);
 
   return (
     <StyleFormContext.Provider
@@ -96,18 +97,21 @@ export default function StylePageForm({
   const { form } = useStyleForm();
 
   return (
-    <form
-      onSubmit={form.handleSubmit(
-        (data) => {
-          console.log("data", data);
-        },
-        (errors) => {
-          console.log("errors", errors);
-        },
-      )}
-    >
-      {children}
-    </form>
+    <>
+      <form
+        onSubmit={form.handleSubmit(
+          (data) => {
+            console.log("data", data);
+          },
+          (errors) => {
+            console.log("errors", errors);
+          },
+        )}
+      >
+        {children}
+      </form>
+      <DevTool control={form.control} />
+    </>
   );
 }
 

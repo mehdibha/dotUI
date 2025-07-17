@@ -10,8 +10,8 @@ interface IconProps extends Partial<SVGProps<SVGSVGElement>> {
 }
 
 export const GitHubIcon = ({
-  // color = "currentColor",
-  // size = 24,
+  color = "currentColor",
+  size = 24,
   ...rest
 }: IconProps) => {
   return (

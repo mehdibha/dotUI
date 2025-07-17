@@ -81,6 +81,7 @@
     "@dotui/eslint-config": "workspace:*",
     "@dotui/prettier-config": "workspace:*",
     "@dotui/ts-config": "workspace:*",
+    "@hookform/devtools": "^4.4.0",
     "@tailwindcss/postcss": "^4.1.8",
     "@types/culori": "^4.0.0",
     "@types/estree": "^1.0.6",
