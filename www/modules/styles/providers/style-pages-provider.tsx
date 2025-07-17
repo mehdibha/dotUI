@@ -16,6 +16,7 @@ import { useDebounce } from "@/hooks/use-debounce";
 import { useMounted } from "@/hooks/use-mounted";
 import { useTRPC } from "@/lib/trpc/react";
 import { useLiveStyleProducer } from "../atoms/live-style-atom";
+import { usePreferences } from "../atoms/preferences-atom";
 
 const formSchema = styleDefinitionSchema.extend({
   name: z.string().min(1),
@@ -50,6 +51,7 @@ export function StylePagesProvider({
   children: React.ReactNode;
 }) {
   const { style: slug } = useParams<{ style: string }>();
+  const { currentMode } = usePreferences();
   const { updateLiveStyle } = useLiveStyleProducer(slug);
   const isMounted = useMounted();
 
@@ -74,17 +76,24 @@ export function StylePagesProvider({
   const watchedValues = useWatch({ control: form.control }) as
     | StyleFormData
     | undefined;
-  const debouncedWatchedValues = useDebounce(watchedValues, 300);
+  const debouncedWatchedValues = useDebounce(watchedValues, 10);
+
+  const resolvedMode = React.useMemo(() => {
+    const modes = watchedValues?.theme.colors.modes;
+    if (!modes) return currentMode;
+    if (modes.length === 2) return currentMode;
+    return modes[0]!.mode;
+  }, [watchedValues, currentMode]);
 
   React.useEffect(() => {
-    if (isSuccess && debouncedWatchedValues) {
-      updateLiveStyle(debouncedWatchedValues);
+    if (isSuccess && watchedValues) {
+      updateLiveStyle(watchedValues);
     }
-  }, [debouncedWatchedValues, updateLiveStyle, isSuccess]);
+  }, [watchedValues, updateLiveStyle, isSuccess]);
 
   return (
     <StyleFormContext.Provider
-      value={{ form, resolvedMode: "light", isLoading, isError, isSuccess }}
+      value={{ form, resolvedMode, isLoading, isError, isSuccess }}
     >
       {children}
     </StyleFormContext.Provider>

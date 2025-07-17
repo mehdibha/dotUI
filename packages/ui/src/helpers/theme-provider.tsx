@@ -72,10 +72,7 @@ export const ThemeProvider = ({
         style={styleProp}
         {...props}
         data-focus-style={focusRing}
-        className={cn(
-          "relative bg-bg font-body text-fg",
-          props.className,
-        )}
+        className={cn("relative bg-bg font-body text-fg", props.className)}
       >
         {texture && (
           <div style={transformCssToJSXStyle(texture.css[".texture"])} />

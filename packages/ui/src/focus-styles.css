@@ -7,7 +7,7 @@
 }
 
 .focus-ring-group {
-  @apply ring-0 ring-border-focus outline-hidden group-focus-visible:ring-2 group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-bg
+  @apply ring-0 ring-border-focus outline-hidden group-focus-visible:ring-2 group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-bg;
 }
 
 @utility reset-default-focus-ring {
@@ -63,9 +63,9 @@
 /* Minimal demos */
 
 [data-focus-style="minimal"] .focus-ring-demo {
-  @apply  reset-default-focus-ring-demo ring-2 ring-border-focus-muted;
+  @apply reset-default-focus-ring-demo ring-2 ring-border-focus-muted;
 }
 
 [data-focus-style="minimal"] .focus-ring-input-demo {
-  @apply reset-default-focus-ring-input-demo border-border-focus ring-2 ring-border-focus-muted;
+  @apply border-border-focus reset-default-focus-ring-input-demo ring-2 ring-border-focus-muted;
 }

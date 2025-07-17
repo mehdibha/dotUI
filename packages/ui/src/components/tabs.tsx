@@ -16,13 +16,19 @@ import type {
   TabsProps,
 } from "../registry/components/tabs/basic";
 
-export const Tabs = createDynamicComponent<TabsProps>("tabs", "Tabs", _Tabs, {
-  motion: React.lazy(() =>
-    import("../registry/components/tabs/motion").then((mod) => ({
-      default: mod.Tabs,
-    })),
-  ),
-},true);
+export const Tabs = createDynamicComponent<TabsProps>(
+  "tabs",
+  "Tabs",
+  _Tabs,
+  {
+    motion: React.lazy(() =>
+      import("../registry/components/tabs/motion").then((mod) => ({
+        default: mod.Tabs,
+      })),
+    ),
+  },
+  true,
+);
 
 export const TabList = createDynamicComponent<TabListProps<object>>(
   "tabs",

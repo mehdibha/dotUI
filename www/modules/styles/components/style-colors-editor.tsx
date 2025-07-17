@@ -4,13 +4,19 @@ import React from "react";
 import {
   CheckIcon,
   ChevronsUpDownIcon,
+  ContrastIcon,
   InfoIcon,
+  MoonIcon,
   PencilIcon,
+  SunIcon,
   XIcon,
 } from "lucide-react";
 import { useFieldArray } from "react-hook-form";
+import { $ZodArray } from "zod/v4/core";
+import type { Key } from "react-aria-components";
 
 import { COLOR_TOKENS } from "@dotui/registry-definition/registry-tokens";
+import { DEFAULT_DARK_MODE, DEFAULT_LIGHT_MODE } from "@dotui/style-engine";
 import { Button } from "@dotui/ui/components/button";
 import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
 import { Label } from "@dotui/ui/components/field";
@@ -34,6 +40,7 @@ import {
   TableRoot,
   TableRow,
 } from "@dotui/ui/components/table";
+import type { ModeDefinition } from "@dotui/style-engine";
 
 import { AutoResizeTextField } from "@/components/auto-resize-input";
 import { ThemeModeSwitch } from "@/components/theme-mode-switch";
@@ -55,24 +62,77 @@ const semanticColors = [
   { name: "info", label: "Info", color: "#0000ff" },
 ] as const;
 
+type ModeConfig = "light-only" | "dark-only" | "light-dark";
+
 export function StyleColorsEditor() {
-  const { form, isSuccess } = useStyleForm();
+  const { form, resolvedMode, isSuccess } = useStyleForm();
   const { currentMode, setCurrentMode } = usePreferences();
 
   // TODO: support multiple themes in the future (e.g. light/dark/high-contrast/)
-  const { fields: colorModes } = useFieldArray({
+  const {
+    fields: colorModes,
+    append,
+    remove,
+  } = useFieldArray({
     control: form.control,
     name: "theme.colors.modes",
   });
 
-  const currentModeIndex = colorModes.findIndex(
-    (mode) => mode.mode === currentMode,
+  const modesConfig: ModeConfig = React.useMemo(
+    () =>
+      colorModes.length > 1
+        ? "light-dark"
+        : colorModes[0]!.mode === "light"
+          ? "light-only"
+          : "dark-only",
+    [colorModes],
   );
 
-  const { fields: colorScales } = useFieldArray({
-    name: `theme.colors.modes.${currentModeIndex}.scales`,
-    control: form.control,
-  });
+  const onModesConfigChange = React.useCallback(
+    (key: Key | null) => {
+      const targetMode = key as ModeConfig;
+
+      const currentModes = new Set(colorModes.map((mode) => mode.mode));
+      const modeConfigs: Record<
+        ModeConfig,
+        { required: ModeDefinition["mode"][]; remove: ModeDefinition["mode"][] }
+      > = {
+        "light-only": { required: ["light"], remove: ["dark"] },
+        "dark-only": { required: ["dark"], remove: ["light"] },
+        "light-dark": { required: ["light", "dark"], remove: [] },
+      };
+
+      const config = modeConfigs[targetMode];
+      if (!config) return;
+
+      const modesToAdd = config.required.filter(
+        (mode) => !currentModes.has(mode),
+      );
+      const modesToRemove = config.remove.filter((mode) =>
+        currentModes.has(mode),
+      );
+
+      modesToAdd.forEach((mode) => {
+        const defaultMode =
+          mode === "light" ? DEFAULT_LIGHT_MODE : DEFAULT_DARK_MODE;
+        append(defaultMode);
+      });
+
+      modesToRemove.forEach((mode) => {
+        const index = colorModes.findIndex((m) => m.mode === mode);
+        if (index !== -1) remove(index);
+      });
+    },
+    [append, remove, colorModes],
+  );
+
+  const currentModeIndex = colorModes.findIndex(
+    (mode) => mode.mode === resolvedMode,
+  );
+
+  const colorScales = form.watch(
+    `theme.colors.modes.${currentModeIndex}.scales`,
+  );
 
   const neutralIndex = colorScales.findIndex((s) => s.id === "neutral");
 
@@ -80,40 +140,36 @@ export function StyleColorsEditor() {
     <div>
       <EditorSection title="Mode">
         <div className="mt-2 flex items-start justify-between">
-          {/* <Skeleton show={!isSuccess}>
-            <FormControl
-              name="colors.mode."
-              control={form.control}
-              render={({ value, onChange, ...props }) => (
-                <SelectRoot
-                  selectedKey={value}
-                  onSelectionChange={onChange}
-                  {...props}
-                >
-                  <Button suffix={<ChevronsUpDownIcon />}>
-                    <SelectValue />
-                  </Button>
-                  <Popover>
-                    <ListBox>
-                      <ListBoxItem id="light-dark" prefix={<ContrastIcon />}>
-                        light/dark
-                      </ListBoxItem>
-                      <ListBoxItem id="light" prefix={<SunIcon />}>
-                        light only
-                      </ListBoxItem>
-                      <ListBoxItem id="dark" prefix={<MoonIcon />}>
-                        dark only
-                      </ListBoxItem>
-                    </ListBox>
-                  </Popover>
-                </SelectRoot>
-              )}
-            />
-          </Skeleton> */}
           <Skeleton show={!isSuccess}>
-            {colorModes.length > 1 && (
+            {
+              <SelectRoot
+                aria-label="Mode configuration"
+                selectedKey={modesConfig}
+                onSelectionChange={onModesConfigChange}
+              >
+                <Button suffix={<ChevronsUpDownIcon />}>
+                  <SelectValue />
+                </Button>
+                <Popover>
+                  <ListBox>
+                    <ListBoxItem id="light-dark" prefix={<ContrastIcon />}>
+                      light/dark
+                    </ListBoxItem>
+                    <ListBoxItem id="light-only" prefix={<SunIcon />}>
+                      light only
+                    </ListBoxItem>
+                    <ListBoxItem id="dark-only" prefix={<MoonIcon />}>
+                      dark only
+                    </ListBoxItem>
+                  </ListBox>
+                </Popover>
+              </SelectRoot>
+            }
+          </Skeleton>
+          <Skeleton show={!isSuccess}>
+            {modesConfig === "light-dark" && (
               <ThemeModeSwitch
-                isSelected={currentMode === "light"}
+                isSelected={resolvedMode === "light"}
                 onChange={(isSelected) => {
                   setCurrentMode(isSelected ? "light" : "dark");
                 }}
@@ -123,12 +179,11 @@ export function StyleColorsEditor() {
         </div>
       </EditorSection>
 
-      {/* <EditorSection title="Color adjustments">
+      <EditorSection title="Color adjustments">
         <div className="mt-2 grid grid-cols-2 gap-3">
           {currentModeIndex !== -1 && (
             <>
               <FormControl
-                key={`${currentMode}-lightness`}
                 name={`theme.colors.modes.${currentModeIndex}.lightness`}
                 control={form.control}
                 render={(props) => (
@@ -158,7 +213,6 @@ export function StyleColorsEditor() {
                 )}
               />
               <FormControl
-                key={`${currentMode}-saturation`}
                 name={`theme.colors.modes.${currentModeIndex}.saturation`}
                 control={form.control}
                 render={(props) => (
@@ -188,7 +242,6 @@ export function StyleColorsEditor() {
                 )}
               />
               <FormControl
-                key={`${currentMode}-contrast`}
                 name={`theme.colors.modes.${currentModeIndex}.contrast`}
                 control={form.control}
                 render={(props) => (
@@ -310,7 +363,7 @@ export function StyleColorsEditor() {
 
       <EditorSection title="Tokens">
         <Tokens />
-      </EditorSection> */}
+      </EditorSection>
     </div>
   );
 }
@@ -368,37 +421,48 @@ const ColorTokenVariableName = ({
 }) => {
   const { form } = useStyleForm();
   const [isEditMode, setEditMode] = React.useState(false);
+  const [localValue, setLocalValue] = React.useState("");
   const inputRef = React.useRef<HTMLInputElement>(null);
   const containerRef = React.useRef<HTMLDivElement>(null);
 
-  const onDismiss = React.useCallback(() => {
-    // form.resetField("name");
+  const handleEditStart = React.useCallback((initialValue: string) => {
+    setLocalValue(initialValue);
+    setEditMode(true);
+  }, []);
+
+  const handleCancel = React.useCallback(() => {
     setEditMode(false);
   }, []);
+
+  const handleSubmit = React.useCallback(() => {
+    form.setValue(`theme.colors.tokens.${index}.name`, localValue);
+    setEditMode(false);
+  }, [form, index, localValue]);
 
   React.useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (
         containerRef.current &&
         !containerRef.current.contains(e.target as Node) &&
-        inputRef.current
+        inputRef.current &&
+        isEditMode
       ) {
-        onDismiss();
+        handleCancel();
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [onDismiss]);
+  }, [handleCancel, isEditMode]);
 
   React.useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape" && isEditMode) {
-        onDismiss();
+        handleCancel();
       }
     };
     const handleEnter = (e: KeyboardEvent) => {
       if (e.key === "Enter" && isEditMode) {
-        setEditMode(false);
+        handleSubmit();
       }
     };
 
@@ -408,7 +472,7 @@ const ColorTokenVariableName = ({
       document.removeEventListener("keydown", handleEscape);
       document.removeEventListener("keydown", handleEnter);
     };
-  }, [onDismiss, isEditMode]);
+  }, [handleCancel, handleSubmit, isEditMode]);
 
   return (
     <FormControl
@@ -423,26 +487,26 @@ const ColorTokenVariableName = ({
                   inputRef={inputRef}
                   autoFocus
                   className="font-mono text-xs"
-                  {...props}
+                  value={localValue}
+                  onChange={setLocalValue}
                 />
                 <div className="flex items-center gap-0.5">
                   <Button
+                    aria-label="Save"
                     size="sm"
                     shape="circle"
                     variant="quiet"
-                    onPress={() => setEditMode(false)}
+                    onPress={handleSubmit}
                     className="size-6"
                   >
                     <CheckIcon className="text-fg-success" />
                   </Button>
                   <Button
+                    aria-label="Cancel"
                     size="sm"
                     shape="circle"
                     variant="quiet"
-                    onPress={() => {
-                      form.resetField(`theme.colors.tokens.${index}.name`);
-                      setEditMode(false);
-                    }}
+                    onPress={handleCancel}
                     className="size-6"
                   >
                     <XIcon className="text-fg-danger" />
@@ -458,7 +522,7 @@ const ColorTokenVariableName = ({
                   size="sm"
                   shape="circle"
                   variant="quiet"
-                  onPress={() => setEditMode(true)}
+                  onPress={() => handleEditStart(props.value)}
                   className="size-6 [&_svg]:size-3"
                 >
                   <PencilIcon className="text-fg-muted" />
