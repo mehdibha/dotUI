@@ -29,6 +29,7 @@ export type StyleFormData = z.infer<typeof formSchema>;
 interface StyleFormContextType {
   form: UseFormReturn<StyleFormData>;
   resolvedMode: "light" | "dark";
+  currentModeIndex: number;
   isLoading: boolean;
   isError: boolean;
   isSuccess: boolean;
@@ -53,7 +54,6 @@ export function StylePagesProvider({
   const { style: slug } = useParams<{ style: string }>();
   const { currentMode } = usePreferences();
   const { updateLiveStyle } = useLiveStyleProducer(slug);
-  const isMounted = useMounted();
 
   const trpc = useTRPC();
   const {
@@ -76,14 +76,21 @@ export function StylePagesProvider({
   const watchedValues = useWatch({ control: form.control }) as
     | StyleFormData
     | undefined;
-  const debouncedWatchedValues = useDebounce(watchedValues, 10);
+
+  const watchedModes = useWatch({
+    name: "theme.colors.modes",
+    control: form.control,
+  });
 
   const resolvedMode = React.useMemo(() => {
-    const modes = watchedValues?.theme.colors.modes;
-    if (!modes) return currentMode;
-    if (modes.length === 2) return currentMode;
-    return modes[0]!.mode;
-  }, [watchedValues, currentMode]);
+    if (!watchedModes) return currentMode;
+    if (watchedModes.length === 2) return currentMode;
+    return watchedModes[0]!.mode;
+  }, [watchedModes, currentMode]);
+
+  const currentModeIndex = watchedModes.findIndex(
+    (mode) => mode.mode === resolvedMode,
+  );
 
   React.useEffect(() => {
     if (isSuccess && watchedValues) {
@@ -93,7 +100,14 @@ export function StylePagesProvider({
 
   return (
     <StyleFormContext.Provider
-      value={{ form, resolvedMode, isLoading, isError, isSuccess }}
+      value={{
+        form,
+        resolvedMode,
+        currentModeIndex,
+        isLoading,
+        isError,
+        isSuccess,
+      }}
     >
       {children}
     </StyleFormContext.Provider>

@@ -13,15 +13,15 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         <MobileNav items={source.pageTree.children} className="lg:hidden" />
         <Sidebar items={source.pageTree.children} className="hidden lg:flex" />
         <main className="flex-1">
-          <div className="sm:grid sm:grid-cols-[20px_1fr_20px] md:grid-cols-[30px_1fr_30px]">
-            <div className="hidden diagonal-pattern sm:block" />
+          <div className="sm:grid ">
+            {/* <div className="hidden diagonal-pattern sm:block" /> */}
             <div>
               <div className="min-h-screen">
                 <Providers>{children}</Providers>
               </div>
               <Footer />
             </div>
-            <div className="hidden diagonal-pattern sm:block" />
+            {/* <div className="hidden diagonal-pattern sm:block" /> */}
           </div>
         </main>
       </div>

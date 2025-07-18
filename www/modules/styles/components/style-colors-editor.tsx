@@ -2,23 +2,17 @@
 
 import React from "react";
 import {
-  CheckIcon,
   ChevronsUpDownIcon,
   ContrastIcon,
-  InfoIcon,
   MoonIcon,
-  PencilIcon,
   SunIcon,
-  XIcon,
 } from "lucide-react";
 import { useFieldArray } from "react-hook-form";
-import { $ZodArray } from "zod/v4/core";
 import type { Key } from "react-aria-components";
 
 import { COLOR_TOKENS } from "@dotui/registry-definition/registry-tokens";
 import { DEFAULT_DARK_MODE, DEFAULT_LIGHT_MODE } from "@dotui/style-engine";
 import { Button } from "@dotui/ui/components/button";
-import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
 import { Label } from "@dotui/ui/components/field";
 import { FormControl } from "@dotui/ui/components/form";
 import { ListBox, ListBoxItem } from "@dotui/ui/components/list-box";
@@ -32,23 +26,15 @@ import {
   SliderTrack,
   SliderValueLabel,
 } from "@dotui/ui/components/slider";
-import {
-  TableBody,
-  TableCell,
-  TableColumn,
-  TableHeader,
-  TableRoot,
-  TableRow,
-} from "@dotui/ui/components/table";
 import type { ModeDefinition } from "@dotui/style-engine";
 
-import { AutoResizeTextField } from "@/components/auto-resize-input";
 import { ThemeModeSwitch } from "@/components/theme-mode-switch";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
 import { ColorScale } from "./color-scale";
 import { EditorSection } from "./editor-section";
 import { ColorKeys } from "./key-colors";
+import { ColorTokens } from "./style-color-tokens";
 
 const baseColors = [
   { name: "neutral", label: "Neutral" },
@@ -66,7 +52,7 @@ type ModeConfig = "light-only" | "dark-only" | "light-dark";
 
 export function StyleColorsEditor() {
   const { form, resolvedMode, isSuccess } = useStyleForm();
-  const { currentMode, setCurrentMode } = usePreferences();
+  const { setCurrentMode } = usePreferences();
 
   // TODO: support multiple themes in the future (e.g. light/dark/high-contrast/)
   const {
@@ -320,7 +306,7 @@ export function StyleColorsEditor() {
 
       <EditorSection title="Semantic colors">
         <div className="mt-2 flex items-center gap-2">
-          {semanticColors.map((color) => {
+          {/* {semanticColors.map((color) => {
             const scaleIndex = colorScales.findIndex(
               (s) => s.id === color.name,
             );
@@ -338,7 +324,7 @@ export function StyleColorsEditor() {
                 />
               </Skeleton>
             );
-          })}
+          })} */}
         </div>
         <div className="mt-3 space-y-2">
           {semanticColors.map((color) => {
@@ -361,264 +347,33 @@ export function StyleColorsEditor() {
         </div>
       </EditorSection>
 
-      <EditorSection title="Tokens">
-        <Tokens />
-      </EditorSection>
+      {/* <EditorSection title="Tokens">
+        <div className="mt-3 space-y-4">
+          {[
+            {
+              name: "Backgrounds",
+              category: "background" as const,
+            },
+            {
+              name: "Foregrounds",
+              category: "foreground" as const,
+            },
+            {
+              name: "Borders",
+              category: "border" as const,
+            },
+          ].map(({ name, category }) => (
+            <div key={name}>
+              <h3 className="text-sm font-medium">{name}</h3>
+              <ColorTokens
+                tokenIds={COLOR_TOKENS.filter((tk) =>
+                  tk.categories?.some((cat) => cat === category),
+                ).map((tk) => tk.name)}
+              />
+            </div>
+          ))}
+        </div>
+      </EditorSection> */}
     </div>
   );
 }
-
-const Tokens = () => {
-  const { form, isSuccess } = useStyleForm();
-
-  const { fields: tokenFields } = useFieldArray({
-    control: form.control,
-    name: "theme.colors.tokens",
-  });
-
-  return (
-    <Skeleton show={!isSuccess}>
-      <TableRoot aria-label="Tokens" className="-mr-6 w-full">
-        <TableHeader>
-          <TableColumn id="name" isRowHeader className="pl-0">
-            Variable name
-          </TableColumn>
-          <TableColumn id="value" className="pr-0">
-            Value
-          </TableColumn>
-        </TableHeader>
-        <TableBody>
-          {tokenFields.map((token, index) => {
-            const tokenId = form.watch(`theme.colors.tokens.${index}.id`);
-            const tokenDef = COLOR_TOKENS.find((def) => def.name === tokenId);
-
-            return (
-              <TableRow key={token.id} id={index}>
-                <TableCell className="pl-0.5">
-                  <ColorTokenVariableName
-                    index={index}
-                    description={tokenDef?.description}
-                  />
-                </TableCell>
-                <TableCell className="pr-0">
-                  <ColorTokenValue index={index} />
-                </TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </TableRoot>
-    </Skeleton>
-  );
-};
-
-const ColorTokenVariableName = ({
-  index,
-  description,
-}: {
-  index: number;
-  description?: string;
-}) => {
-  const { form } = useStyleForm();
-  const [isEditMode, setEditMode] = React.useState(false);
-  const [localValue, setLocalValue] = React.useState("");
-  const inputRef = React.useRef<HTMLInputElement>(null);
-  const containerRef = React.useRef<HTMLDivElement>(null);
-
-  const handleEditStart = React.useCallback((initialValue: string) => {
-    setLocalValue(initialValue);
-    setEditMode(true);
-  }, []);
-
-  const handleCancel = React.useCallback(() => {
-    setEditMode(false);
-  }, []);
-
-  const handleSubmit = React.useCallback(() => {
-    form.setValue(`theme.colors.tokens.${index}.name`, localValue);
-    setEditMode(false);
-  }, [form, index, localValue]);
-
-  React.useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(e.target as Node) &&
-        inputRef.current &&
-        isEditMode
-      ) {
-        handleCancel();
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [handleCancel, isEditMode]);
-
-  React.useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isEditMode) {
-        handleCancel();
-      }
-    };
-    const handleEnter = (e: KeyboardEvent) => {
-      if (e.key === "Enter" && isEditMode) {
-        handleSubmit();
-      }
-    };
-
-    document.addEventListener("keydown", handleEscape);
-    document.addEventListener("keydown", handleEnter);
-    return () => {
-      document.removeEventListener("keydown", handleEscape);
-      document.removeEventListener("keydown", handleEnter);
-    };
-  }, [handleCancel, handleSubmit, isEditMode]);
-
-  return (
-    <FormControl
-      name={`theme.colors.tokens.${index}.name`}
-      control={form.control}
-      render={(props) => (
-        <div className="flex items-center gap-2">
-          <div className="rounded-full bg-bg-muted p-1 pl-3">
-            {isEditMode ? (
-              <div ref={containerRef} className="flex items-center gap-1">
-                <AutoResizeTextField
-                  inputRef={inputRef}
-                  autoFocus
-                  className="font-mono text-xs"
-                  value={localValue}
-                  onChange={setLocalValue}
-                />
-                <div className="flex items-center gap-0.5">
-                  <Button
-                    aria-label="Save"
-                    size="sm"
-                    shape="circle"
-                    variant="quiet"
-                    onPress={handleSubmit}
-                    className="size-6"
-                  >
-                    <CheckIcon className="text-fg-success" />
-                  </Button>
-                  <Button
-                    aria-label="Cancel"
-                    size="sm"
-                    shape="circle"
-                    variant="quiet"
-                    onPress={handleCancel}
-                    className="size-6"
-                  >
-                    <XIcon className="text-fg-danger" />
-                  </Button>
-                </div>
-              </div>
-            ) : (
-              <div className="flex items-center gap-1">
-                <h1 className="truncate border-b font-mono text-xs whitespace-nowrap">
-                  {props.value}
-                </h1>
-                <Button
-                  size="sm"
-                  shape="circle"
-                  variant="quiet"
-                  onPress={() => handleEditStart(props.value)}
-                  className="size-6 [&_svg]:size-3"
-                >
-                  <PencilIcon className="text-fg-muted" />
-                </Button>
-              </div>
-            )}
-          </div>
-          {description && (
-            <DialogRoot>
-              <Button
-                size="sm"
-                shape="circle"
-                variant="quiet"
-                className="size-6 [&_svg]:size-3"
-              >
-                <InfoIcon />
-              </Button>
-              <Dialog
-                type="popover"
-                popoverProps={{ placement: "top", className: "max-w-64" }}
-              >
-                <p className="text-sm">{description}</p>
-              </Dialog>
-            </DialogRoot>
-          )}
-        </div>
-      )}
-    />
-  );
-};
-
-const ColorTokenValue = ({ index }: { index: number }) => {
-  const { form } = useStyleForm();
-
-  // const [color] = token.value
-  //   .replace("var(--", "")
-  //   .replace(")", "")
-  //   .split("-") as [string, string];
-
-  // const items = Array.from({ length: 10 }, (_, i) => ({
-  //   label: `${color.charAt(0).toUpperCase() + color.slice(1)} ${(i + 1) * 100}`,
-  //   value: `var(--${color}-${(i + 1) * 100})`,
-  // }));
-
-  return (
-    <FormControl
-      name={`theme.colors.tokens.${index}.value`}
-      control={form.control}
-      render={({ value, onChange, ...props }) => {
-        const [color] = value
-          .replace("var(--", "")
-          .replace(")", "")
-          .split("-") as [string, string];
-
-        const items = Array.from({ length: 10 }, (_, i) => ({
-          label: `${color.charAt(0).toUpperCase() + color.slice(1)} ${(i + 1) * 100}`,
-          value: `var(--${color}-${(i + 1) * 100})`,
-        }));
-
-        return (
-          <SelectRoot
-            selectedKey={value}
-            onSelectionChange={onChange}
-            className="w-full"
-            {...props}
-          >
-            <Button
-              size="sm"
-              suffix={<ChevronsUpDownIcon className="text-fg-muted" />}
-              className="w-40"
-            >
-              <SelectValue />
-            </Button>
-            <Popover>
-              <ListBox items={items}>
-                {(item) => (
-                  <ListBoxItem
-                    id={item.value}
-                    className="flex items-center gap-2"
-                    prefix={
-                      <span
-                        className="size-4 rounded-sm border"
-                        style={{
-                          backgroundColor: item.value,
-                        }}
-                      />
-                    }
-                  >
-                    {item.label}
-                  </ListBoxItem>
-                )}
-              </ListBox>
-            </Popover>
-          </SelectRoot>
-        );
-      }}
-    />
-  );
-};

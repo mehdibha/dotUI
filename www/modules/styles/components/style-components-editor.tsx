@@ -41,6 +41,7 @@ import type { VariantsDefinition } from "@dotui/style-engine/types";
 
 import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
 import { usePreferences } from "../atoms/preferences-atom";
+import { ColorTokens } from "./style-color-tokens";
 
 function getComponentVariants(
   componentName: string,
@@ -109,6 +110,15 @@ const Section = ({
           </Skeleton>
         )}
       />
+
+      {tokens && (
+        <ColorTokens
+          variant="bordered"
+          hideHeader
+          tokenIds={tokens}
+          className="mt-2"
+        />
+      )}
       <Skeleton show={!isSuccess}>
         <StyleProvider
           mode={currentMode}
@@ -145,7 +155,7 @@ export function StyleComponentsEditor() {
           { name: "basic", label: "Basic" },
           { name: "minimal", label: "Minimal" },
         ]}
-        tokens={["border-focus", "border-focus-muted"]}
+        tokens={["color-border-focus", "color-border-focus-muted"]}
         previewClassName="flex-col gap-4"
       >
         {/* <div className="flex items-center gap-4">

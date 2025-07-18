@@ -32,13 +32,11 @@ export function ColorScale({
   scaleIndex,
   neutralIndex,
 }: ColorScaleProps) {
-  const { form, isSuccess } = useStyleForm();
-
-  const { currentMode } = usePreferences();
+  const { form, isSuccess, resolvedMode } = useStyleForm();
 
   const currentModeIndex = form
     .watch("theme.colors.modes")
-    .findIndex((mode) => mode.mode === currentMode);
+    .findIndex((mode) => mode.mode === resolvedMode);
   const lightness = form.watch(
     `theme.colors.modes.${currentModeIndex}.lightness`,
   );

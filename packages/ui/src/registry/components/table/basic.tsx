@@ -34,7 +34,7 @@ import { cn, createScopedContext } from "@dotui/ui/lib/utils";
 
 const tableStyles = tv({
   slots: {
-    container: "w-full overflow-auto",
+    container: "w-auto overflow-auto",
     root: [
       "relative table min-h-24 w-full border-separate border-spacing-0 cursor-default text-sm",
       "[&_.react-aria-DropIndicator]:translate-z-0 [&_.react-aria-DropIndicator]:outline [&_.react-aria-DropIndicator]:outline-bg-accent",

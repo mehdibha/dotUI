@@ -354,6 +354,12 @@ export const COLOR_TOKENS = [
       "Border color for focused elements and accessibility indicators",
     categories: ["border"],
   },
+  {
+    name: "color-border-focus-muted",
+    defaultValue: "var(--accent-300)",
+    description: "Muted border color for focused elements and accessibility indicators",
+    categories: ["border"],
+  },
 
   {
     name: "color-border-success",
