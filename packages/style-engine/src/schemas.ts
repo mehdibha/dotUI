@@ -86,17 +86,20 @@ export const shadowsSchema = z.union([
   }),
 ]);
 
+export const activeModesSchema = z
+  .array(z.enum(["light", "dark"]).and(z.string()))
+  .refine((modes) => modes.length > 0, {
+    message: "At least one mode must be defined",
+  });
+
 // theme
 export const themeDefinitionSchema = z.object({
   colors: z.object({
-    modes: z
-      .object({
-        light: modeDefinitionSchema.optional(),
-        dark: modeDefinitionSchema.optional(),
-      })
-      .refine((colors) => colors.light ?? colors.dark, {
-        message: "At least one mode (light or dark) must be defined",
-      }),
+    activeModes: activeModesSchema,
+    modes: z.object({
+      light: modeDefinitionSchema,
+      dark: modeDefinitionSchema,
+    }),
     tokens: colorTokensSchema,
   }),
   radius: radiusSchema,
@@ -168,10 +171,11 @@ export const minimizedModeDefinitionSchema = z.object({
 
 export const minimizedThemeDefinitionSchema = z.object({
   colors: z.object({
+    activeModes: activeModesSchema.optional(),
     modes: z.object({
       light: minimizedModeDefinitionSchema.optional(),
       dark: minimizedModeDefinitionSchema.optional(),
-    }),
+    }).optional(),
     tokens: colorTokensSchema.optional(),
   }),
   radius: radiusSchema.optional(),

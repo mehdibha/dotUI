@@ -11,10 +11,7 @@ export const DEFAULT_STYLES: Omit<
     slug: "minimalist",
     theme: {
       colors: {
-        modes: {
-          light: {},
-          dark: {},
-        },
+        activeModes: ["light", "dark"],
       },
     },
   },
@@ -23,9 +20,7 @@ export const DEFAULT_STYLES: Omit<
     slug: "brutalist",
     theme: {
       colors: {
-        modes: {
-          light: {},
-        },
+        activeModes: ["light"],
       },
     },
     variants: {
@@ -37,6 +32,7 @@ export const DEFAULT_STYLES: Omit<
     slug: "material",
     theme: {
       colors: {
+        activeModes: ["light"],
         modes: {
           light: {
             lightness: 97,
@@ -126,6 +122,7 @@ export const DEFAULT_STYLES: Omit<
     slug: "ghibli",
     theme: {
       colors: {
+        activeModes: ["light"],
         modes: {
           light: {
             lightness: 97,

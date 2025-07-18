@@ -29,48 +29,35 @@ import { cn } from "@dotui/ui/lib/utils";
 
 import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
 
-export function ColorKeys({
-  id,
-  name,
-  currentModeIndex,
-  scaleIndex,
-  neutralIndex,
-}: {
-  id: string;
-  name: string;
-  currentModeIndex: number;
-  scaleIndex: number;
-  neutralIndex: number;
-}) {
-  const { form } = useStyleForm();
+export function ColorKeys({ scaleId }: { scaleId: string }) {
+  const { form, resolvedMode } = useStyleForm();
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
-    name: `theme.colors.modes.${currentModeIndex}.scales.${scaleIndex}.colorKeys`,
+    name: `theme.colors.modes.${resolvedMode}.scales.${scaleId}.colorKeys`,
   });
 
+  const name = form.watch(
+    `theme.colors.modes.${resolvedMode}.scales.${scaleId}.name`,
+  );
+  const neutralColorKeys = form
+    .watch(`theme.colors.modes.${resolvedMode}.scales.neutral.colorKeys`)
+    .map((color) => color.color) as CssColor[];
   const colorKeys = form
-    .watch(
-      `theme.colors.modes.${currentModeIndex}.scales.${scaleIndex}.colorKeys`,
-    )
+    .watch(`theme.colors.modes.${resolvedMode}.scales.${scaleId}.colorKeys`)
     .map((color) => color.color) as CssColor[];
   const ratios = Array.from({ length: 19 }, (_, i) => i + 1);
-  const lightness = form.watch(
-    `theme.colors.modes.${currentModeIndex}.lightness`,
-  );
+  const lightness = form.watch(`theme.colors.modes.${resolvedMode}.lightness`);
   const saturation = form.watch(
-    `theme.colors.modes.${currentModeIndex}.saturation`,
+    `theme.colors.modes.${resolvedMode}.saturation`,
   );
   const contrast =
-    form.watch(`theme.colors.modes.${currentModeIndex}.contrast`) / 100;
-  const neutralColorKeys = form.watch(
-    `theme.colors.modes.${currentModeIndex}.scales.${neutralIndex}.colorKeys`,
-  );
+    form.watch(`theme.colors.modes.${resolvedMode}.contrast`) / 100;
 
   const dynamicGradient = useMemo(() => {
     const neutral = new LeonardoBgColor({
       name: "neutral",
-      colorKeys: neutralColorKeys.map((color) => color.color) as CssColor[],
+      colorKeys: neutralColorKeys,
       ratios,
     });
 
@@ -95,12 +82,12 @@ export function ColorKeys({
       .map((value) => value.value)
       .join(", ")})`;
   }, [
-    ratios,
     colorKeys,
     lightness,
     saturation,
     contrast,
     neutralColorKeys,
+    ratios,
     name,
   ]);
 
@@ -124,7 +111,7 @@ export function ColorKeys({
               <div key={field.id} className="flex items-center">
                 <FormControl
                   control={form.control}
-                  name={`theme.colors.modes.${currentModeIndex}.scales.${scaleIndex}.colorKeys.${index}.color`}
+                  name={`theme.colors.modes.${resolvedMode}.scales.${scaleId}.colorKeys.${index}.color`}
                   render={({ onChange, ...props }) => {
                     return (
                       <ColorPickerRoot
@@ -174,15 +161,16 @@ export function ColorKeys({
           </div>
           <p className="text-sm text-fg-muted">Ratios</p>
           <FormControl
-            name={`theme.colors.modes.${currentModeIndex}.scales.${scaleIndex}.ratios`}
+            name={`theme.colors.modes.${resolvedMode}.scales.${scaleId}.ratios`}
             control={form.control}
             render={(props) => (
               <div className="flex flex-1 items-start gap-4">
                 <SliderRoot
+                  aria-label="Ratios"
                   orientation="vertical"
                   minValue={1}
                   maxValue={20}
-                  step={0.05}
+                  step={0.01}
                   className="h-full"
                   {...props}
                 >
@@ -207,6 +195,7 @@ export function ColorKeys({
                   {Array.from({ length: 10 }).map((_, index) => (
                     <NumberField
                       key={index}
+                      aria-label={`Ratio ${index + 1}`}
                       step={0.05}
                       minValue={1}
                       maxValue={20}

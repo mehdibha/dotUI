@@ -34,9 +34,7 @@ export const createRatiosObject = (
   );
 };
 
-export const createColorScales = (
-  modeDefinition: ModeDefinition,
-): ColorScale[] => {
+export const createColorScales = (modeDefinition: ModeDefinition) => {
   const neutralScale = modeDefinition.scales.neutral;
 
   const neutral = new LeonardoBgColor({

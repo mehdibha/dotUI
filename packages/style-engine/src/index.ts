@@ -20,3 +20,4 @@ export { createTheme } from "./core/theme";
 
 export { createVariants } from "./core/variants";
 export { createStyle } from "./core/style";
+export { createColorScales } from "./core/colors";

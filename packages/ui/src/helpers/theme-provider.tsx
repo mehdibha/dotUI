@@ -25,8 +25,7 @@ export const ThemeProvider = ({
     [themeDefinition],
   );
 
-  const hasLightAndDark =
-    themeDefinition.colors.modes.light && themeDefinition.colors.modes.dark;
+  const hasLightAndDark = themeDefinition.colors.activeModes.includes("light") && themeDefinition.colors.activeModes.includes("dark");
 
   const allCssVars = React.useMemo(() => {
     if (!mode && hasLightAndDark) {

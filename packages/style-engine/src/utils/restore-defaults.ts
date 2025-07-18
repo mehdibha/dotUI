@@ -101,19 +101,16 @@ const restoreThemeDefinitionDefaults = (
 ): ThemeDefinition => {
   return {
     colors: {
+      activeModes: minimizedTheme.colors.activeModes ?? ["light", "dark"],
       modes: {
-        light: minimizedTheme.colors.modes.light
-          ? restoreModeDefinitionDefaults(
-              minimizedTheme.colors.modes.light,
-              true,
-            )
-          : undefined,
-        dark: minimizedTheme.colors.modes.dark
-          ? restoreModeDefinitionDefaults(
-              minimizedTheme.colors.modes.dark,
-              false,
-            )
-          : undefined,
+        light: restoreModeDefinitionDefaults(
+          minimizedTheme.colors.modes?.light ?? {},
+          true,
+        ),
+        dark: restoreModeDefinitionDefaults(
+          minimizedTheme.colors.modes?.dark ?? {},
+          false,
+        ),
       },
       tokens: restoreTokensDefaults(minimizedTheme.colors.tokens ?? []),
     },

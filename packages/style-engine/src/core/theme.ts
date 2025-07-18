@@ -40,17 +40,16 @@ export const createTheme = (themeDefinition: ThemeDefinition): Theme => {
 
   const lightMode = colors.modes.light;
   const darkMode = colors.modes.dark;
+  const activeModes = colors.activeModes;
 
-  if (!lightMode && !darkMode) {
-    throw new Error("At least one mode is required");
-  }
-
-  const supportsLightAndDark = lightMode && darkMode;
+  const supportsLightAndDark =
+    activeModes.includes("light") && activeModes.includes("dark");
 
   const lightCssVars = supportsLightAndDark
     ? createModeCssVars(lightMode)
-    : // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      createModeCssVars((lightMode ?? darkMode)!);
+    : activeModes.includes("light")
+      ? createModeCssVars(lightMode)
+      : createModeCssVars(darkMode);
   const darkCssVars = supportsLightAndDark ? createModeCssVars(darkMode) : {};
 
   const colorThemeVars = createColorThemeVars(colors.tokens);

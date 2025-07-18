@@ -39,6 +39,7 @@ export const mockMinimizedTheme: MinimizedThemeDefinition = {
 
 export const mockThemeDefinition: ThemeDefinition = {
   colors: {
+    activeModes: ["light", "dark"],
     modes: {
       light: {
         lightness: 97,

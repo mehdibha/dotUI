@@ -7,9 +7,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
 import { useForm, useWatch } from "react-hook-form";
 import { z } from "zod/v4";
+import type { ContrastColor } from "@adobe/leonardo-contrast-colors";
 import type { UseFormReturn } from "react-hook-form";
 
 import { COLOR_TOKENS } from "@dotui/registry-definition/registry-tokens";
+import { ColorScale, createColorScales } from "@dotui/style-engine";
 import { styleDefinitionSchema } from "@dotui/style-engine/schemas";
 
 import { useTRPC } from "@/lib/trpc/react";
@@ -27,6 +29,7 @@ export type StyleFormData = z.infer<typeof formSchema>;
 interface StyleFormContextType {
   form: UseFormReturn<StyleFormData>;
   resolvedMode: "light" | "dark";
+  generatedTheme: ContrastColor[];
   isLoading: boolean;
   isError: boolean;
   isSuccess: boolean;
@@ -67,24 +70,36 @@ export function StylePagesProvider({
   const form = useForm<StyleFormData>({
     resolver: zodResolver(formSchema),
     defaultValues: fakeData,
-    // values: style ?? undefined,
+    values: style ?? undefined,
   });
 
   const watchedValues = useWatch({ control: form.control }) as
     | StyleFormData
     | undefined;
 
-  const watchedModes = useWatch({
-    name: "theme.colors.modes",
+  const watchedActiveModes = useWatch({
+    name: "theme.colors.activeModes",
     control: form.control,
   });
 
   const resolvedMode: "light" | "dark" = React.useMemo(() => {
-    if (!watchedModes.dark && !watchedModes.light) return currentMode;
-    if (watchedModes.light && watchedModes.dark) return currentMode;
-    if (watchedModes.light) return "light";
-    return "dark";
-  }, [watchedModes, currentMode]);
+    if (
+      watchedActiveModes.includes("light") &&
+      watchedActiveModes.includes("dark")
+    )
+      return currentMode;
+    return watchedActiveModes[0]!;
+  }, [watchedActiveModes, currentMode]);
+
+  const currentModeDefinition = useWatch({
+    name: `theme.colors.modes.${resolvedMode}`,
+    control: form.control,
+  });
+
+  const generatedTheme = React.useMemo(() => {
+    const theme = createColorScales(currentModeDefinition);
+    return theme;
+  }, [currentModeDefinition]);
 
   React.useEffect(() => {
     if (isSuccess && watchedValues) {
@@ -97,6 +112,7 @@ export function StylePagesProvider({
       value={{
         form,
         resolvedMode,
+        generatedTheme,
         isLoading,
         isError,
         isSuccess,
@@ -139,6 +155,7 @@ const fakeData: StyleFormData = {
   description: "",
   theme: {
     colors: {
+      activeModes: ["light", "dark"],
       modes: {
         light: {
           lightness: 97,
