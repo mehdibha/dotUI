@@ -12,9 +12,17 @@ import {
 } from "lucide-react";
 import { motion } from "motion/react";
 
-import { featuredBlocks } from "@dotui/registry-definition/registry-blocks";
+import {
+  blocksCategories,
+  featuredBlocks,
+  registryBlocks,
+} from "@dotui/registry-definition/registry-blocks";
 import { Button } from "@dotui/ui/components/button";
-import { ListBox } from "@dotui/ui/components/list-box";
+import {
+  ListBox,
+  ListBoxItem,
+  ListBoxSection,
+} from "@dotui/ui/components/list-box";
 import { Popover } from "@dotui/ui/components/popover";
 import {
   SelectItem,
@@ -109,9 +117,8 @@ export function PreviewContent({
   setScreen: (screen: "mobile" | "tablet") => void;
 }) {
   const { style } = useParams<{ style: string }>();
-  const [currentBlockName, setCurrentBlockName] = React.useState<string>(
-    featuredBlocks[0],
-  );
+  const [currentBlockName, setCurrentBlockName] =
+    React.useState<string>("overview-01");
   const [isLoading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
@@ -150,22 +157,36 @@ export function PreviewContent({
           <Button
             size="sm"
             suffix={<ChevronsUpDownIcon />}
-            className="h-7 w-28 justify-center rounded-sm text-fg-muted"
+            className="h-7 w-32 justify-center rounded-sm text-fg-muted"
           >
-            <SelectValue className="flex-0" />
+              <SelectValue className="flex-0" />
           </Button>
           <Popover>
             <ListBox
-              items={featuredBlocks.map((block) => ({
-                key: block,
-                label: block,
+              items={blocksCategories.map((category) => ({
+                key: category.slug,
+                label: category.name,
+                items: registryBlocks.filter((block) =>
+                  block?.categories?.includes(category.slug),
+                ),
               }))}
             >
-              {(item) => (
+              {(section) => (
+                <ListBoxSection
+                  id={section.key}
+                  title={section.label}
+                  items={section.items}
+                >
+                  {(item) => (
+                    <ListBoxItem id={item.name}>{item.name}</ListBoxItem>
+                  )}
+                </ListBoxSection>
+              )}
+              {/* {(item) => (
                 <SelectItem key={item.key} id={item.key}>
                   {item.label}
                 </SelectItem>
-              )}
+              )} */}
             </ListBox>
           </Popover>
         </SelectRoot>

@@ -3,6 +3,7 @@ import type { Registry } from "shadcn/registry";
 export const featuredBlocks = ["login-01", "register-01"] as const;
 
 export const blocksCategories: { name: string; slug: string }[] = [
+  { name: "Overview", slug: "overview" },
   { name: "Authentication", slug: "authentication" },
 ];
 
@@ -42,5 +43,19 @@ export const registryBlocks: Registry["items"] = [
       },
     ],
     categories: ["authentication"],
+  },
+  {
+    name: "overview-01",
+    description: "Components overview",
+    type: "registry:block",
+    registryDependencies: ["all"],
+    files: [
+      {
+        path: "blocks/overview-01/page.tsx",
+        target: "app/overview/page.tsx",
+        type: "registry:page",
+      },
+    ],
+    categories: ["overview"],
   },
 ];

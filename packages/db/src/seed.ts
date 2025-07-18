@@ -3,9 +3,11 @@ import { eq } from "drizzle-orm";
 import {
   createStyle,
   restoreStyleDefinitionDefaults,
+} from "@dotui/style-engine";
+import {
   styleDefinitionSchema,
   styleSchema,
-} from "@dotui/style-engine";
+} from "@dotui/style-engine/schemas";
 
 import { db } from "./client";
 import { DEFAULT_STYLES } from "./constants";

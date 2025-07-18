@@ -29,7 +29,7 @@ import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
 import { ColorScale } from "./color-scale";
 import { EditorSection } from "./editor-section";
-import { ColorKeys } from "./key-colors";
+import { ScaleEditor } from "./scale-editor";
 import { ColorTokens } from "./style-color-tokens";
 
 const baseColors = [
@@ -78,7 +78,7 @@ export function StyleColorsEditor() {
           {baseColors.map((color) => {
             return (
               <Skeleton key={color.name} show={!isSuccess}>
-                <ColorKeys scaleId={color.name} />
+                <ScaleEditor scaleId={color.name} />
               </Skeleton>
             );
           })}
@@ -106,25 +106,13 @@ export function StyleColorsEditor() {
 
       <EditorSection title="Semantic colors">
         <div className="mt-2 flex items-center gap-2">
-          {/* {semanticColors.map((color) => {
-            const scaleIndex = colorScales.findIndex(
-              (s) => s.id === color.name,
-            );
-
-            const scale = colorScales[scaleIndex]!;
-
+          {semanticColors.map((color) => {
             return (
               <Skeleton key={color.name} show={!isSuccess}>
-                <ColorKeys
-                  id={color.name}
-                  name={scale.name}
-                  currentModeIndex={currentModeIndex}
-                  neutralIndex={neutralIndex}
-                  scaleIndex={scaleIndex}
-                />
+                <ScaleEditor scaleId={color.name} />
               </Skeleton>
             );
-          })} */}
+          })}
         </div>
         <div className="mt-3 space-y-2">
           {/* {semanticColors.map((color) => {

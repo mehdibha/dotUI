@@ -27,4 +27,10 @@ export const Index: Record<
       () => import("@dotui/ui/registry/blocks/register-01/page"),
     ),
   },
+  "overview-01": {
+    files: ["registry/blocks/overview-01/page.tsx"],
+    component: React.lazy(
+      () => import("@dotui/ui/registry/blocks/overview-01/page"),
+    ),
+  },
 };
