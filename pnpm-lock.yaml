@@ -234,6 +234,9 @@ importers:
 
   packages/db:
     dependencies:
+      '@dotui/registry-definition':
+        specifier: workspace:*
+        version: link:../registry-defintion
       '@dotui/style-engine':
         specifier: workspace:*
         version: link:../style-engine

@@ -82,7 +82,7 @@ export const ComponentPreviewHeader = () => {
   return (
     <div className="absolute top-0 left-0 z-20 flex w-full items-center justify-between gap-2 p-2">
       {isMounted && (
-        <StyleSelector buttonProps={{ size: "sm", className: "h-7 text-xs" }} />
+        <StyleSelector buttonProps={{ size: "sm", className: "text-xs" }} />
       )}
       {isMounted && (
         <ThemeModeSwitch

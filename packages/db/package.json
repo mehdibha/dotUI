@@ -31,6 +31,7 @@
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
+    "@dotui/registry-definition": "workspace:*",
     "@dotui/style-engine": "workspace:*",
     "@neondatabase/serverless": "^0.10.1",
     "dotenv": "^16.4.5",

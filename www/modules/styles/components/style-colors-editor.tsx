@@ -55,77 +55,77 @@ export function StyleColorsEditor() {
   const { setCurrentMode } = usePreferences();
 
   // TODO: support multiple themes in the future (e.g. light/dark/high-contrast/)
-  const {
-    fields: colorModes,
-    append,
-    remove,
-  } = useFieldArray({
-    control: form.control,
-    name: "theme.colors.modes",
-  });
+  // const {
+  //   fields: colorModes,
+  //   append,
+  //   remove,
+  // } = useFieldArray({
+  //   control: form.control,
+  //   name: "theme.colors.modes",
+  // });
 
-  const modesConfig: ModeConfig = React.useMemo(
-    () =>
-      colorModes.length > 1
-        ? "light-dark"
-        : colorModes[0]!.mode === "light"
-          ? "light-only"
-          : "dark-only",
-    [colorModes],
-  );
+  // const modesConfig: ModeConfig = React.useMemo(
+  //   () =>
+  //     colorModes.length > 1
+  //       ? "light-dark"
+  //       : colorModes[0]!.mode === "light"
+  //         ? "light-only"
+  //         : "dark-only",
+  //   [colorModes],
+  // );
 
-  const onModesConfigChange = React.useCallback(
-    (key: Key | null) => {
-      const targetMode = key as ModeConfig;
+  // const onModesConfigChange = React.useCallback(
+  //   (key: Key | null) => {
+  //     const targetMode = key as ModeConfig;
 
-      const currentModes = new Set(colorModes.map((mode) => mode.mode));
-      const modeConfigs: Record<
-        ModeConfig,
-        { required: ModeDefinition["mode"][]; remove: ModeDefinition["mode"][] }
-      > = {
-        "light-only": { required: ["light"], remove: ["dark"] },
-        "dark-only": { required: ["dark"], remove: ["light"] },
-        "light-dark": { required: ["light", "dark"], remove: [] },
-      };
+  //     const currentModes = new Set(colorModes.map((mode) => mode.mode));
+  //     const modeConfigs: Record<
+  //       ModeConfig,
+  //       { required: ModeDefinition["mode"][]; remove: ModeDefinition["mode"][] }
+  //     > = {
+  //       "light-only": { required: ["light"], remove: ["dark"] },
+  //       "dark-only": { required: ["dark"], remove: ["light"] },
+  //       "light-dark": { required: ["light", "dark"], remove: [] },
+  //     };
 
-      const config = modeConfigs[targetMode];
-      if (!config) return;
+  //     const config = modeConfigs[targetMode];
+  //     if (!config) return;
 
-      const modesToAdd = config.required.filter(
-        (mode) => !currentModes.has(mode),
-      );
-      const modesToRemove = config.remove.filter((mode) =>
-        currentModes.has(mode),
-      );
+  //     const modesToAdd = config.required.filter(
+  //       (mode) => !currentModes.has(mode),
+  //     );
+  //     const modesToRemove = config.remove.filter((mode) =>
+  //       currentModes.has(mode),
+  //     );
 
-      modesToAdd.forEach((mode) => {
-        const defaultMode =
-          mode === "light" ? DEFAULT_LIGHT_MODE : DEFAULT_DARK_MODE;
-        append(defaultMode);
-      });
+  //     modesToAdd.forEach((mode) => {
+  //       const defaultMode =
+  //         mode === "light" ? DEFAULT_LIGHT_MODE : DEFAULT_DARK_MODE;
+  //       append(defaultMode);
+  //     });
 
-      modesToRemove.forEach((mode) => {
-        const index = colorModes.findIndex((m) => m.mode === mode);
-        if (index !== -1) remove(index);
-      });
-    },
-    [append, remove, colorModes],
-  );
+  //     modesToRemove.forEach((mode) => {
+  //       const index = colorModes.findIndex((m) => m.mode === mode);
+  //       if (index !== -1) remove(index);
+  //     });
+  //   },
+  //   [append, remove, colorModes],
+  // );
 
-  const currentModeIndex = colorModes.findIndex(
-    (mode) => mode.mode === resolvedMode,
-  );
+  // const currentModeIndex = colorModes.findIndex(
+  //   (mode) => mode.mode === resolvedMode,
+  // );
 
-  const colorScales = form.watch(
-    `theme.colors.modes.${currentModeIndex}.scales`,
-  );
+  // const colorScales = form.watch(
+  //   `theme.colors.modes.${currentModeIndex}.scales`,
+  // );
 
-  const neutralIndex = colorScales.findIndex((s) => s.id === "neutral");
+  // const neutralIndex = colorScales.findIndex((s) => s.id === "neutral");
 
   return (
     <div>
       <EditorSection title="Mode">
-        <div className="mt-2 flex items-start justify-between">
+        {/* <div className="mt-2 flex items-start justify-between">
           <Skeleton show={!isSuccess}>
             {
               <SelectRoot
@@ -162,11 +162,11 @@ export function StyleColorsEditor() {
               />
             )}
           </Skeleton>
-        </div>
+        </div> */}
       </EditorSection>
 
       <EditorSection title="Color adjustments">
-        <div className="mt-2 grid grid-cols-2 gap-3">
+        {/* <div className="mt-2 grid grid-cols-2 gap-3">
           {currentModeIndex !== -1 && (
             <>
               <FormControl
@@ -258,11 +258,11 @@ export function StyleColorsEditor() {
               />
             </>
           )}
-        </div>
+        </div> */}
       </EditorSection>
 
       <EditorSection title="Base colors">
-        <div className="mt-2 flex items-center gap-2">
+        {/* <div className="mt-2 flex items-center gap-2">
           {baseColors.map((color) => {
             const scaleIndex = colorScales.findIndex(
               (s) => s.id === color.name,
@@ -301,7 +301,7 @@ export function StyleColorsEditor() {
               />
             );
           })}
-        </div>
+        </div> */}
       </EditorSection>
 
       <EditorSection title="Semantic colors">
@@ -327,7 +327,7 @@ export function StyleColorsEditor() {
           })} */}
         </div>
         <div className="mt-3 space-y-2">
-          {semanticColors.map((color) => {
+          {/* {semanticColors.map((color) => {
             const scaleIndex = colorScales.findIndex(
               (s) => s.id === color.name,
             );
@@ -343,7 +343,7 @@ export function StyleColorsEditor() {
                 neutralIndex={neutralIndex}
               />
             );
-          })}
+          })} */}
         </div>
       </EditorSection>
 
@@ -377,3 +377,65 @@ export function StyleColorsEditor() {
     </div>
   );
 }
+
+const ModeConfig = () => {
+  const { form, resolvedMode, isSuccess } = useStyleForm();
+
+  const modes = form.watch("theme.colors.modes");
+  const modeConfig = React.useMemo(() => {
+    if (modes.light && modes.dark) return "light-dark";
+    if (modes.light) return "light-only";
+    return "dark-only";
+  }, [modes]);
+
+  const onModesConfigChange = React.useCallback(
+    (key: Key | null) => {
+      const targetMode = key as ModeConfig;
+
+      switch (targetMode) {
+        case "light-only":
+          form.setValue("theme.colors.modes.light", DEFAULT_LIGHT_MODE);
+          form.setValue("theme.colors.modes.dark", undefined);
+          break;
+        case "dark-only":
+          form.setValue("theme.colors.modes.light", undefined);
+          form.setValue("theme.colors.modes.dark", DEFAULT_DARK_MODE);
+          break;
+        case "light-dark":
+          form.setValue("theme.colors.modes.light", DEFAULT_LIGHT_MODE);
+          form.setValue("theme.colors.modes.dark", DEFAULT_DARK_MODE);
+          break;
+      }
+    },
+    [form],
+  );
+
+  return (
+    <Skeleton show={!isSuccess}>
+      {
+        <SelectRoot
+          aria-label="Mode configuration"
+          selectedKey={modeConfig}
+          onSelectionChange={onModesConfigChange}
+        >
+          <Button suffix={<ChevronsUpDownIcon />}>
+            <SelectValue />
+          </Button>
+          <Popover>
+            <ListBox>
+              <ListBoxItem id="light-dark" prefix={<ContrastIcon />}>
+                light/dark
+              </ListBoxItem>
+              <ListBoxItem id="light-only" prefix={<SunIcon />}>
+                light only
+              </ListBoxItem>
+              <ListBoxItem id="dark-only" prefix={<MoonIcon />}>
+                dark only
+              </ListBoxItem>
+            </ListBox>
+          </Popover>
+        </SelectRoot>
+      }
+    </Skeleton>
+  );
+};

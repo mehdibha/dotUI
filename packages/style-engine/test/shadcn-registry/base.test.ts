@@ -46,7 +46,9 @@ describe("generateRegistryBase", () => {
         description: null,
         theme: {
           colors: {
-            modes: [{ mode: "light" }],
+            modes: {
+              light: {},
+            },
           },
         },
         icons: {
@@ -71,7 +73,9 @@ describe("generateRegistryBase", () => {
         slug: "style-with-remix",
         theme: {
           colors: {
-            modes: [{ mode: "light" }],
+            modes: {
+              light: {},
+            },
           },
         },
         icons: {

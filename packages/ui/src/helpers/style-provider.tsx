@@ -30,13 +30,10 @@ export const StyleProvider = ({
     return <div {...props}>{children}</div>;
   }
 
-  const modes = style.theme.colors.modes.map((mode) => mode.mode);
-
   return (
     <StyleContext value={style}>
       <VariantsProvider variants={style.variants}>
         <ThemeProvider
-          modes={modes}
           mode={mode}
           theme={style.theme}
           focusRing={style.variants["focus-style"]}

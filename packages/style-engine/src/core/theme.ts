@@ -38,19 +38,19 @@ export const createTheme = (themeDefinition: ThemeDefinition): Theme => {
     cssVars: { light: radiusLightVars, theme: radiusThemeVars },
   } = createRadiusVars(radius);
 
-  const lightMode = colors.modes.find((mode) => mode.mode === "light");
-  const darkMode = colors.modes.find((mode) => mode.mode === "dark");
+  const lightMode = colors.modes.light;
+  const darkMode = colors.modes.dark;
 
-  const supportsLightAndDark = lightMode && darkMode;
-
-  if (!(colors.modes.length > 0)) {
+  if (!lightMode && !darkMode) {
     throw new Error("At least one mode is required");
   }
+
+  const supportsLightAndDark = lightMode && darkMode;
 
   const lightCssVars = supportsLightAndDark
     ? createModeCssVars(lightMode)
     : // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      createModeCssVars(colors.modes[0]!);
+      createModeCssVars((lightMode ?? darkMode)!);
   const darkCssVars = supportsLightAndDark ? createModeCssVars(darkMode) : {};
 
   const colorThemeVars = createColorThemeVars(colors.tokens);

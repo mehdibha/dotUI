@@ -1,8 +1,24 @@
 import { eq } from "drizzle-orm";
 
+import {
+  createStyle,
+  restoreStyleDefinitionDefaults,
+  styleDefinitionSchema,
+  styleSchema,
+} from "@dotui/style-engine";
+
 import { db } from "./client";
 import { DEFAULT_STYLES } from "./constants";
 import { style, user } from "./schema";
+
+async function validateDefaultStyles() {
+  for (const style of DEFAULT_STYLES) {
+    const restoredStyle = restoreStyleDefinitionDefaults(style);
+    await styleDefinitionSchema.parseAsync(restoredStyle);
+    const styleResult = createStyle(restoredStyle);
+    await styleSchema.parseAsync(styleResult);
+  }
+}
 
 async function findOrCreateUser() {
   const email = "hello@mehdibha.com";
@@ -18,7 +34,7 @@ async function findOrCreateUser() {
     if (!userRecord) {
       throw new Error("User record is undefined");
     }
-    console.log(`👤 Found existing user: ${userRecord.name} (${email})`);
+    console.log(`Found existing user: ${userRecord.name} (${email})`);
     return userRecord;
   }
 
@@ -56,9 +72,9 @@ async function seedFeaturedStyles(userId: string) {
 
   if (missingStyles.length === 0) {
     console.log(
-      "ℹ️  All featured styles already exist for this user. Skipping creation.",
+      "All featured styles already exist for this user. Skipping creation.",
     );
-    return existingStyles;
+    return [];
   }
 
   const stylesToInsert = missingStyles.map((featuredStyle) => ({
@@ -73,22 +89,24 @@ async function seedFeaturedStyles(userId: string) {
     .returning();
 
   console.log(`✨ Created ${insertedStyles.length} missing featured styles`);
-  return [...existingStyles, ...insertedStyles];
+  return insertedStyles;
 }
 
 async function seed() {
-  console.log("🌱 Seeding database...");
+  console.log("Seeding database...");
 
   try {
+    console.log("Validating styles...");
+    await validateDefaultStyles();
     const userRecord = await findOrCreateUser();
     const insertedStyles = await seedFeaturedStyles(userRecord.id);
 
-    console.log("🎉 Seeding complete!");
-    console.log(`   User: ${userRecord.name} (${userRecord.email})`);
-    console.log(`   Featured Styles: ${insertedStyles.length}`);
+    console.log("Seeding complete!");
+    console.log(`User: ${userRecord.name} (${userRecord.email})`);
+    console.log(`Inserted styles: ${insertedStyles.length}`);
 
     insertedStyles.forEach((style) => {
-      console.log(`   - ${style.name}: ${style.description}`);
+      console.log(` - ${style.name}`);
     });
   } catch (error) {
     console.error("❌ Error seeding database:", error);

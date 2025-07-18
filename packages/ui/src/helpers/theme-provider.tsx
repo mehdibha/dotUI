@@ -9,14 +9,12 @@ import type { ThemeDefinition } from "@dotui/style-engine/types";
 type Mode = "light" | "dark";
 
 export const ThemeProvider = ({
-  modes,
   mode,
   theme: themeDefinition,
   focusRing,
   children,
   ...props
 }: React.ComponentProps<"div"> & {
-  modes: Mode[];
   mode?: Mode;
   theme: ThemeDefinition;
   focusRing: string;
@@ -27,23 +25,24 @@ export const ThemeProvider = ({
     [themeDefinition],
   );
 
+  const hasLightAndDark =
+    themeDefinition.colors.modes.light && themeDefinition.colors.modes.dark;
+
   const allCssVars = React.useMemo(() => {
-    if (!mode) {
+    if (!mode && hasLightAndDark) {
       return {};
     }
 
     const vars = {
       "radius-factor": theme.cssVars.light?.["radius-factor"],
-      ...(modes.includes("light") && modes.includes("dark")
-        ? theme.cssVars[mode]
-        : theme.cssVars.light),
+      ...(hasLightAndDark ? theme.cssVars[mode!] : theme.cssVars.light),
       ...theme.cssVars.theme,
     };
 
     return Object.fromEntries(
       Object.entries(vars).map(([key, value]) => [`--${key}`, value]),
     );
-  }, [theme, modes, mode]);
+  }, [theme, mode, hasLightAndDark]);
 
   const texture = themeDefinition.texture
     ? registryTextures.find((t) => t.slug === themeDefinition.texture)

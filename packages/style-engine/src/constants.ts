@@ -132,103 +132,101 @@ export const DEFAULT_CSS = {
 };
 
 export const DEFAULT_LIGHT_MODE: ModeDefinition = {
-  mode: "light",
   lightness: 97,
   saturation: 100,
   contrast: 100,
-  scales: [
-    {
-      id: "neutral",
+  scales: {
+    neutral: {
       name: "Neutral",
       colorKeys: [{ id: 0, color: "#000000" }],
       ratios: [1.05, 1.25, 1.7, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
       overrides: {},
+      smooth: false,
     },
-    {
-      id: "accent",
+    accent: {
       name: "Accent",
       colorKeys: [{ id: 0, color: "#0091FF" }],
       ratios: [1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
       overrides: {},
+      smooth: false,
     },
-    {
-      id: "success",
+    success: {
       name: "Success",
       colorKeys: [{ id: 0, color: "#1A9338" }],
       ratios: [1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
       overrides: {},
+      smooth: false,
     },
-    {
-      id: "warning",
+    warning: {
       name: "Warning",
       colorKeys: [{ id: 0, color: "#E79D13" }],
       ratios: [1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
       overrides: {},
+      smooth: false,
     },
-    {
-      id: "danger",
+    danger: {
       name: "Danger",
       colorKeys: [{ id: 0, color: "#D93036" }],
       ratios: [1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
       overrides: {},
+      smooth: false,
     },
-    {
-      id: "info",
+    info: {
       name: "Info",
       colorKeys: [{ id: 0, color: "#0091FF" }],
       ratios: [1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
       overrides: {},
+      smooth: false,
     },
-  ],
+  },
 };
 
 export const DEFAULT_DARK_MODE: ModeDefinition = {
-  mode: "dark",
   lightness: 0,
   saturation: 100,
   contrast: 100,
-  scales: [
-    {
-      id: "neutral",
+  scales: {
+    neutral: {
       name: "Neutral",
       colorKeys: [{ id: 0, color: "#ffffff" }],
       ratios: [1, 1.25, 1.7, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
       overrides: {},
+      smooth: false,
     },
-    {
-      id: "accent",
+    accent: {
       name: "Accent",
       colorKeys: [{ id: 0, color: "#0091FF" }],
       ratios: [1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
       overrides: {},
+      smooth: false,
     },
-    {
-      id: "success",
+    success: {
       name: "Success",
       colorKeys: [{ id: 0, color: "#1A9338" }],
       ratios: [1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
       overrides: {},
+      smooth: false,
     },
-    {
-      id: "warning",
+    warning: {
       name: "Warning",
       colorKeys: [{ id: 0, color: "#E79D13" }],
       ratios: [1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
       overrides: {},
+      smooth: false,
     },
-    {
-      id: "danger",
+    danger: {
       name: "Danger",
       colorKeys: [{ id: 0, color: "#D93036" }],
       ratios: [1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
       overrides: {},
+      smooth: false,
     },
-    {
-      id: "info",
+    info: {
       name: "Info",
       colorKeys: [{ id: 0, color: "#0091FF" }],
       ratios: [1.25, 1.5, 1.8, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
       overrides: {},
+      smooth: false,
     },
-  ],
+  },
 };

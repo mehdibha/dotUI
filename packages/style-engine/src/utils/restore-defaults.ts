@@ -37,44 +37,37 @@ const restoreColorScaleDefaults = (
     : defaultScale.colorKeys;
 
   return {
-    id: minimizedScale.id,
     name: minimizedScale.name ?? defaultScale.name,
     colorKeys,
     ratios: minimizedScale.ratios ?? defaultScale.ratios,
+    smooth: minimizedScale.smooth ?? false,
     overrides: minimizedScale.overrides ?? defaultScale.overrides,
   };
 };
 
 const restoreModeDefinitionDefaults = (
   minimizedMode: MinimizedModeDefinition,
+  isLight: boolean,
 ): ModeDefinition => {
-  const defaultMode =
-    minimizedMode.mode === "light" ? DEFAULT_LIGHT_MODE : DEFAULT_DARK_MODE;
+  const defaultMode = isLight ? DEFAULT_LIGHT_MODE : DEFAULT_DARK_MODE;
 
-  const scales = defaultMode.scales.map((defaultScale) => {
-    const minimizedScale = minimizedMode.scales?.find(
-      (scale) => scale.id === defaultScale.id,
-    );
-    return minimizedScale
-      ? restoreColorScaleDefaults(minimizedScale, defaultScale)
-      : defaultScale;
-  });
+  const scales = { ...defaultMode.scales };
 
   if (minimizedMode.scales) {
-    const additionalScales = minimizedMode.scales.filter(
-      (scale) =>
-        !defaultMode.scales.some(
-          (defaultScale) => defaultScale.id === scale.id,
-        ),
+    Object.entries(minimizedMode.scales).forEach(
+      ([scaleId, minimizedScale]) => {
+        const defaultScale = defaultMode.scales[scaleId];
+        if (defaultScale) {
+          scales[scaleId as keyof typeof scales] = restoreColorScaleDefaults(
+            minimizedScale,
+            defaultScale,
+          );
+        }
+      },
     );
-
-    additionalScales.forEach((additionalScale) => {
-      scales.push(additionalScale as unknown as ColorScale);
-    });
   }
 
   return {
-    mode: minimizedMode.mode,
     lightness: minimizedMode.lightness ?? defaultMode.lightness,
     saturation: minimizedMode.saturation ?? defaultMode.saturation,
     contrast: minimizedMode.contrast ?? defaultMode.contrast,
@@ -108,9 +101,20 @@ const restoreThemeDefinitionDefaults = (
 ): ThemeDefinition => {
   return {
     colors: {
-      modes: minimizedTheme.colors.modes.map((mode) =>
-        restoreModeDefinitionDefaults(mode),
-      ),
+      modes: {
+        light: minimizedTheme.colors.modes.light
+          ? restoreModeDefinitionDefaults(
+              minimizedTheme.colors.modes.light,
+              true,
+            )
+          : undefined,
+        dark: minimizedTheme.colors.modes.dark
+          ? restoreModeDefinitionDefaults(
+              minimizedTheme.colors.modes.dark,
+              false,
+            )
+          : undefined,
+      },
       tokens: restoreTokensDefaults(minimizedTheme.colors.tokens ?? []),
     },
     fonts: {

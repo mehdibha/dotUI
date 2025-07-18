@@ -53,24 +53,11 @@ export const mockMinimizedStyleWithCustomScales: MinimizedStyleDefinition = {
   slug: "custom-theme",
   theme: {
     colors: {
-      modes: [
-        {
-          mode: "light",
-          scales: [
-            {
-              id: "brand",
-              name: "Brand Primary",
-              colorKeys: ["#8B5CF6"],
-              ratios: [1.2, 1.5, 2.0, 3.0],
-            },
-            {
-              id: "secondary",
-              name: "Secondary",
-              colorKeys: ["#F59E0B"],
-            },
-          ],
+      modes: {
+        light: {
+          scales: {},
         },
-      ],
+      },
     },
   },
   icons: {

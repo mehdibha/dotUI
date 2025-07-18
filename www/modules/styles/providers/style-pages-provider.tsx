@@ -12,8 +12,6 @@ import type { UseFormReturn } from "react-hook-form";
 import { COLOR_TOKENS } from "@dotui/registry-definition/registry-tokens";
 import { styleDefinitionSchema } from "@dotui/style-engine/schemas";
 
-import { useDebounce } from "@/hooks/use-debounce";
-import { useMounted } from "@/hooks/use-mounted";
 import { useTRPC } from "@/lib/trpc/react";
 import { useLiveStyleProducer } from "../atoms/live-style-atom";
 import { usePreferences } from "../atoms/preferences-atom";
@@ -29,7 +27,6 @@ export type StyleFormData = z.infer<typeof formSchema>;
 interface StyleFormContextType {
   form: UseFormReturn<StyleFormData>;
   resolvedMode: "light" | "dark";
-  currentModeIndex: number;
   isLoading: boolean;
   isError: boolean;
   isSuccess: boolean;
@@ -70,7 +67,7 @@ export function StylePagesProvider({
   const form = useForm<StyleFormData>({
     resolver: zodResolver(formSchema),
     defaultValues: fakeData,
-    values: style ?? undefined,
+    // values: style ?? undefined,
   });
 
   const watchedValues = useWatch({ control: form.control }) as
@@ -82,15 +79,12 @@ export function StylePagesProvider({
     control: form.control,
   });
 
-  const resolvedMode = React.useMemo(() => {
-    if (!watchedModes) return currentMode;
-    if (watchedModes.length === 2) return currentMode;
-    return watchedModes[0]!.mode;
+  const resolvedMode: "light" | "dark" = React.useMemo(() => {
+    if (!watchedModes.dark && !watchedModes.light) return currentMode;
+    if (watchedModes.light && watchedModes.dark) return currentMode;
+    if (watchedModes.light) return "light";
+    return "dark";
   }, [watchedModes, currentMode]);
-
-  const currentModeIndex = watchedModes.findIndex(
-    (mode) => mode.mode === resolvedMode,
-  );
 
   React.useEffect(() => {
     if (isSuccess && watchedValues) {
@@ -103,7 +97,6 @@ export function StylePagesProvider({
       value={{
         form,
         resolvedMode,
-        currentModeIndex,
         isLoading,
         isError,
         isSuccess,
@@ -146,108 +139,106 @@ const fakeData: StyleFormData = {
   description: "",
   theme: {
     colors: {
-      modes: [
-        {
-          mode: "light",
+      modes: {
+        light: {
           lightness: 97,
           saturation: 100,
           contrast: 100,
-          scales: [
-            {
-              id: "neutral",
-              name: "Neutral",
+          scales: {
+            neutral: {
+              name: "neutral",
               colorKeys: [{ id: 0, color: "#000000" }],
               ratios: [1.05, 1.25, 1.7, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
               overrides: {},
+              smooth: false,
             },
-            {
-              id: "accent",
-              name: "Accent",
+            accent: {
+              name: "accent",
               colorKeys: [{ id: 0, color: "#0091FF" }],
               ratios: [1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
               overrides: {},
+              smooth: false,
             },
-            {
-              id: "success",
-              name: "Success",
+            success: {
+              name: "success",
               colorKeys: [{ id: 0, color: "#1A9338" }],
               ratios: [1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
               overrides: {},
+              smooth: false,
             },
-            {
-              id: "warning",
-              name: "Warning",
+            warning: {
+              name: "warning",
               colorKeys: [{ id: 0, color: "#E79D13" }],
               ratios: [1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
               overrides: {},
+              smooth: false,
             },
-            {
-              id: "danger",
-              name: "Danger",
+            danger: {
+              name: "danger",
               colorKeys: [{ id: 0, color: "#D93036" }],
               ratios: [1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
               overrides: {},
+              smooth: false,
             },
-            {
-              id: "info",
-              name: "Info",
+            info: {
+              name: "info",
               colorKeys: [{ id: 0, color: "#0091FF" }],
               ratios: [1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
               overrides: {},
+              smooth: false,
             },
-          ],
+          },
         },
-        {
-          mode: "dark",
+        dark: {
           lightness: 3,
           saturation: 100,
           contrast: 100,
-          scales: [
-            {
-              id: "neutral",
-              name: "Neutral",
+          scales: {
+            neutral: {
+              name: "neutral",
               colorKeys: [{ id: 0, color: "#ffffff" }],
               ratios: [1.05, 1.25, 1.7, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
               overrides: {},
+              smooth: false,
             },
-            {
-              id: "accent",
-              name: "Accent",
+            accent: {
+              name: "accent",
               colorKeys: [{ id: 0, color: "#0091FF" }],
               ratios: [1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
               overrides: {},
+              smooth: false,
             },
-            {
-              id: "success",
-              name: "Success",
+            success: {
+              name: "success",
               colorKeys: [{ id: 0, color: "#1A9338" }],
               ratios: [1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
               overrides: {},
+              smooth: false,
             },
-            {
-              id: "warning",
-              name: "Warning",
+            warning: {
+              name: "warning",
               colorKeys: [{ id: 0, color: "#E79D13" }],
               ratios: [1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
               overrides: {},
+              smooth: false,
             },
-            {
-              id: "danger",
-              name: "Danger",
+            danger: {
+              name: "danger",
               colorKeys: [{ id: 0, color: "#D93036" }],
               ratios: [1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
               overrides: {},
+              smooth: false,
             },
-            {
-              id: "info",
-              name: "Info",
+            info: {
+              name: "info",
               colorKeys: [{ id: 0, color: "#0091FF" }],
               ratios: [1.25, 1.5, 1.8, 2.25, 3.15, 4.8, 6.35, 8.3, 13.2, 15.2],
               overrides: {},
+              smooth: false,
             },
-          ],
+          },
         },
-      ],
+      },
       tokens: COLOR_TOKENS.map((token) => ({
         id: token.name,
         name: token.name,

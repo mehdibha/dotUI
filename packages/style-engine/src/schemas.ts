@@ -15,7 +15,6 @@ export const iconsDefinitionSchema = z.object({
 
 // Colors
 export const colorScaleSchema = z.object({
-  id: z.string().min(1),
   name: z.string().min(1),
   colorKeys: z
     .array(
@@ -26,37 +25,24 @@ export const colorScaleSchema = z.object({
     )
     .min(1),
   ratios: z.array(z.number().min(0)),
+  smooth: z.boolean(),
   overrides: z.record(z.string(), z.string()),
 });
 
-export const modeSchema = z.enum(["light", "dark"]);
-const requiredScaleIds = [
-  "neutral",
-  "accent",
-  "success",
-  "warning",
-  "danger",
-  "info",
-];
-
 export const modeDefinitionSchema = z.object({
-  mode: modeSchema,
   lightness: z.number().min(0).max(100),
   saturation: z.number().min(0).max(100),
   contrast: z.number().min(0).max(500),
   scales: z
-    .array(colorScaleSchema)
-    .min(6)
-    .refine(
-      (scales) => {
-        const scaleIds = scales.map((scale) => scale.id);
-        return requiredScaleIds.every((id) => scaleIds.includes(id));
-      },
-      {
-        message:
-          "Must include all required scale IDs: neutral, accent, success, warning, danger, info",
-      },
-    ),
+    .object({
+      neutral: colorScaleSchema,
+      accent: colorScaleSchema,
+      success: colorScaleSchema,
+      warning: colorScaleSchema,
+      danger: colorScaleSchema,
+      info: colorScaleSchema,
+    })
+    .and(z.record(z.string(), colorScaleSchema)),
 });
 
 export const colorTokenSchema = z.object({
@@ -103,7 +89,14 @@ export const shadowsSchema = z.union([
 // theme
 export const themeDefinitionSchema = z.object({
   colors: z.object({
-    modes: z.array(modeDefinitionSchema).min(1),
+    modes: z
+      .object({
+        light: modeDefinitionSchema.optional(),
+        dark: modeDefinitionSchema.optional(),
+      })
+      .refine((colors) => colors.light ?? colors.dark, {
+        message: "At least one mode (light or dark) must be defined",
+      }),
     tokens: colorTokensSchema,
   }),
   radius: radiusSchema,
@@ -149,24 +142,36 @@ export const styleDefinitionSchema = z.object({
 export const minimizedColorTokensSchema = colorTokensSchema.optional();
 
 export const minimizedColorScaleSchema = z.object({
-  id: z.string().min(1),
   name: z.string().min(1).optional(),
   colorKeys: z.array(z.string()).min(1).optional(),
   ratios: z.array(z.number().min(0)).optional(),
+  smooth: z.boolean().optional(),
   overrides: z.record(z.string(), z.string()).optional(),
 });
 
 export const minimizedModeDefinitionSchema = z.object({
-  mode: modeSchema,
   lightness: z.number().min(0).max(100).optional(),
   saturation: z.number().min(0).max(100).optional(),
   contrast: z.number().min(0).max(500).optional(),
-  scales: z.array(minimizedColorScaleSchema).optional(),
+  scales: z
+    .object({
+      neutral: minimizedColorScaleSchema.optional(),
+      accent: minimizedColorScaleSchema.optional(),
+      success: minimizedColorScaleSchema.optional(),
+      warning: minimizedColorScaleSchema.optional(),
+      danger: minimizedColorScaleSchema.optional(),
+      info: minimizedColorScaleSchema.optional(),
+    })
+    .and(z.record(z.string(), minimizedColorScaleSchema))
+    .optional(),
 });
 
 export const minimizedThemeDefinitionSchema = z.object({
   colors: z.object({
-    modes: z.array(minimizedModeDefinitionSchema),
+    modes: z.object({
+      light: minimizedModeDefinitionSchema.optional(),
+      dark: minimizedModeDefinitionSchema.optional(),
+    }),
     tokens: colorTokensSchema.optional(),
   }),
   radius: radiusSchema.optional(),
