@@ -26,6 +26,14 @@ import {
   SliderThumb,
   SliderTrack,
 } from "@dotui/ui/components/slider";
+import {
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRoot,
+  TableRow,
+} from "@dotui/ui/components/table";
 import { Tooltip } from "@dotui/ui/components/tooltip";
 import { cn } from "@dotui/ui/lib/utils";
 
@@ -43,93 +51,10 @@ export function ColorKeys({ scaleId }: { scaleId: string }) {
   const name = form.watch(
     `theme.colors.modes.${resolvedMode}.scales.${scaleId}.name`,
   );
-  const neutralColorKeys = form
-    .watch(`theme.colors.modes.${resolvedMode}.scales.neutral.colorKeys`)
-    .map((color) => color.color) as CssColor[];
+
   const colorKeys = form
     .watch(`theme.colors.modes.${resolvedMode}.scales.${scaleId}.colorKeys`)
     .map((color) => color.color) as CssColor[];
-  const ratios = Array.from({ length: 19 }, (_, i) => i + 1);
-  const lightness = form.watch(`theme.colors.modes.${resolvedMode}.lightness`);
-  const saturation = form.watch(
-    `theme.colors.modes.${resolvedMode}.saturation`,
-  );
-  const contrast =
-    form.watch(`theme.colors.modes.${resolvedMode}.contrast`) / 100;
-
-  const currentRatios = form.watch(
-    `theme.colors.modes.${resolvedMode}.scales.${scaleId}.ratios`,
-  );
-
-  const generatedValues = useMemo(() => {
-    const neutral = new LeonardoBgColor({
-      name: "neutral",
-      colorKeys: neutralColorKeys,
-      ratios: Array.from({ length: 19 }, (_, i) => i + 1),
-    });
-
-    const currentColor = new LeonardoColor({
-      name,
-      colorKeys,
-      ratios: currentRatios,
-    });
-
-    const theme = new LeonardoTheme({
-      backgroundColor: neutral,
-      colors: [currentColor],
-      lightness,
-      saturation,
-      contrast,
-      output: "HEX",
-    });
-
-    return theme.contrastColors[1]?.values || [];
-  }, [
-    currentRatios,
-    neutralColorKeys,
-    colorKeys,
-    lightness,
-    saturation,
-    contrast,
-    name,
-  ]);
-
-  const dynamicGradient = useMemo(() => {
-    const neutral = new LeonardoBgColor({
-      name: "neutral",
-      colorKeys: neutralColorKeys,
-      ratios,
-    });
-
-    const currentColor = new LeonardoColor({
-      name,
-      colorKeys,
-      ratios,
-    });
-
-    const theme = new LeonardoTheme({
-      backgroundColor: neutral,
-      colors: [currentColor],
-      lightness,
-      saturation,
-      contrast,
-      output: "HEX",
-    });
-
-    const palette = theme.contrastColors[1]!;
-
-    return `linear-gradient(0deg, ${palette.values
-      .map((value) => value.value)
-      .join(", ")})`;
-  }, [
-    colorKeys,
-    lightness,
-    saturation,
-    contrast,
-    neutralColorKeys,
-    ratios,
-    name,
-  ]);
 
   return (
     <DialogRoot>
@@ -200,94 +125,193 @@ export function ColorKeys({ scaleId }: { scaleId: string }) {
             </Tooltip>
           </div>
           <p className="text-sm text-fg-muted">Ratios</p>
-          <FormControl
-            name={`theme.colors.modes.${resolvedMode}.scales.${scaleId}.ratios`}
-            control={form.control}
-            render={(props) => (
-              <div className="flex flex-1 items-start gap-4">
-                <SliderRoot
-                  aria-label="Ratios"
-                  orientation="vertical"
-                  minValue={1}
-                  maxValue={20}
-                  step={0.01}
-                  className="h-full"
-                  {...props}
-                >
-                  <SliderTrack
-                    className="w-40 rounded-sm"
-                    style={{ background: dynamicGradient }}
-                  >
-                    {({ state }) => (
-                      <>
-                        {state.values.map((_, i) => (
-                          <SliderThumb
-                            key={i}
-                            index={i}
-                            className="size-2 dragging:size-3"
-                          />
-                        ))}
-                      </>
-                    )}
-                  </SliderTrack>
-                </SliderRoot>
-                <div className="space-y-2">
-                  {Array.from({ length: 10 }).map((_, index) => {
-                    const generatedValue = generatedValues[index];
-                    const contrastRatio = generatedValue?.contrast || 0;
-                    const scaleName = SCALE_NUMBERRS[index]!;
-
-                    const getWcagRequirement = (index: number) => {
-                      if (index === 5) return 3.0;
-                      if (index >= 6 && index <= 9) return 4.5;
-                      return null;
-                    };
-
-                    const requiredContrast = getWcagRequirement(index);
-                    const meetsRequirement = requiredContrast
-                      ? contrastRatio >= requiredContrast
-                      : null;
-
-                    return (
-                      <div key={index} className="flex items-center gap-2">
-                        <span className="w-20 font-mono text-xs text-fg-muted mr-2">
-                          {`${name}-${scaleName}`}
-                        </span>
-                        <NumberField
-                          aria-label={`${name} ${scaleName} ratio`}
-                          step={0.05}
-                          minValue={1}
-                          maxValue={20}
-                          value={props.value[index]}
-                          onChange={(val) =>
-                            props.onChange(
-                              props.value.map((ratio, i) => {
-                                if (index === i) {
-                                  return val;
-                                }
-                                return ratio;
-                              }),
-                            )
-                          }
-                          className="w-20"
-                        />
-                        {requiredContrast && (
-                          <Badge
-                            variant={meetsRequirement ? "success" : "danger"}
-                            className="text-xs w-12"
-                          >
-                            {requiredContrast}:1
-                          </Badge>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-          />
+          <div className="flex flex-1 items-start gap-4">
+            <RatioSlider scaleId={scaleId} />
+            <RatioTable scaleId={scaleId} />
+          </div>
         </DialogBody>
       </Dialog>
     </DialogRoot>
   );
 }
+
+interface RatioSliderProps {
+  scaleId: string;
+}
+
+function RatioSlider({ scaleId }: RatioSliderProps) {
+  const { form, resolvedMode } = useStyleForm();
+
+  const name = form.watch(
+    `theme.colors.modes.${resolvedMode}.scales.${scaleId}.name`,
+  );
+  const neutralColorKeys = form
+    .watch(`theme.colors.modes.${resolvedMode}.scales.neutral.colorKeys`)
+    .map((color) => color.color) as CssColor[];
+  const colorKeys = form
+    .watch(`theme.colors.modes.${resolvedMode}.scales.${scaleId}.colorKeys`)
+    .map((color) => color.color) as CssColor[];
+  const ratios = Array.from({ length: 19 }, (_, i) => i + 1);
+  const lightness = form.watch(`theme.colors.modes.${resolvedMode}.lightness`);
+  const saturation = form.watch(
+    `theme.colors.modes.${resolvedMode}.saturation`,
+  );
+  const contrast =
+    form.watch(`theme.colors.modes.${resolvedMode}.contrast`) / 100;
+
+  const dynamicGradient = useMemo(() => {
+    const neutral = new LeonardoBgColor({
+      name: "neutral",
+      colorKeys: neutralColorKeys,
+      ratios,
+    });
+
+    const currentColor = new LeonardoColor({
+      name,
+      colorKeys,
+      ratios,
+    });
+
+    const theme = new LeonardoTheme({
+      backgroundColor: neutral,
+      colors: [currentColor],
+      lightness,
+      saturation,
+      contrast,
+      output: "HEX",
+    });
+
+    const palette = theme.contrastColors[1]!;
+
+    return `linear-gradient(0deg, ${palette.values
+      .map((value) => value.value)
+      .join(", ")})`;
+  }, [
+    colorKeys,
+    lightness,
+    saturation,
+    contrast,
+    neutralColorKeys,
+    ratios,
+    name,
+  ]);
+
+  return (
+    <FormControl
+      name={`theme.colors.modes.${resolvedMode}.scales.${scaleId}.ratios`}
+      control={form.control}
+      render={(props) => (
+        <SliderRoot
+          aria-label="Ratios"
+          orientation="vertical"
+          minValue={1}
+          maxValue={20}
+          step={0.01}
+          className="h-full"
+          {...props}
+        >
+          <SliderTrack
+            className="w-40 rounded-sm"
+            style={{ background: dynamicGradient }}
+          >
+            {({ state }) => (
+              <>
+                {state.values.map((_, i) => (
+                  <SliderThumb
+                    key={i}
+                    index={i}
+                    className="size-2 dragging:size-3"
+                  />
+                ))}
+              </>
+            )}
+          </SliderTrack>
+        </SliderRoot>
+      )}
+    />
+  );
+}
+
+interface RatioTableProps {
+  scaleId: string;
+}
+
+function RatioTable({ scaleId }: RatioTableProps) {
+  const { form, resolvedMode, generatedTheme } = useStyleForm();
+
+  const generatedScale = generatedTheme.find(
+    (scale) => scale.name === scaleId,
+  )?.values;
+
+  const scaleName = form.watch(
+    `theme.colors.modes.${resolvedMode}.scales.${scaleId}.name`,
+  );
+
+  return (
+    <div className="flex-1">
+      <TableRoot aria-label="Color ratios" variant="line">
+        <TableHeader>
+          <TableColumn id="token" isRowHeader>
+            Token
+          </TableColumn>
+          <TableColumn id="ratio">Ratio</TableColumn>
+          <TableColumn id="wcag">WCAG</TableColumn>
+        </TableHeader>
+        <TableBody>
+          {SCALE_NUMBERRS.map((scaleNameValue, index) => {
+            return (
+              <FormControl
+                name={`theme.colors.modes.${resolvedMode}.scales.${scaleId}.ratios.${index}`}
+                control={form.control}
+                render={(props) => {
+                  const requiredContrast = getWcagRequirement(index);
+                  const meetsRequirement = requiredContrast
+                    ? props.value >= requiredContrast
+                    : null;
+                  return (
+                    <TableRow key={scaleNameValue}>
+                      <TableCell>
+                        <div className="flex items-center gap-2">
+                          <ColorSwatch color={generatedScale?.[index]?.value} />
+                          <span className="font-mono text-xs text-fg-muted">
+                            {`${scaleName}-${scaleNameValue}`}
+                          </span>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <NumberField
+                          aria-label={`${scaleName} ${scaleNameValue} ratio`}
+                          step={0.05}
+                          minValue={1}
+                          maxValue={20}
+                          className="w-20"
+                          {...props}
+                        />
+                      </TableCell>
+                      <TableCell>
+                        {requiredContrast && (
+                          <Badge
+                            variant={meetsRequirement ? "success" : "danger"}
+                            className="w-12 text-xs"
+                          >
+                            {requiredContrast}:1
+                          </Badge>
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  );
+                }}
+              />
+            );
+          })}
+        </TableBody>
+      </TableRoot>
+    </div>
+  );
+}
+
+const getWcagRequirement = (index: number) => {
+  if (index === 5) return 3.0;
+  if (index >= 6 && index <= 9) return 4.5;
+  return null;
+};
