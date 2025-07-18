@@ -43,11 +43,6 @@ import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
 export function ColorKeys({ scaleId }: { scaleId: string }) {
   const { form, resolvedMode } = useStyleForm();
 
-  const { fields, append, remove } = useFieldArray({
-    control: form.control,
-    name: `theme.colors.modes.${resolvedMode}.scales.${scaleId}.colorKeys`,
-  });
-
   const name = form.watch(
     `theme.colors.modes.${resolvedMode}.scales.${scaleId}.name`,
   );
@@ -70,60 +65,7 @@ export function ColorKeys({ scaleId }: { scaleId: string }) {
         title={`${name.charAt(0).toUpperCase() + name.slice(1)} palette`}
       >
         <DialogBody className="flex flex-col">
-          <p className="text-sm text-fg-muted">Color keys</p>
-          <div className="flex items-center gap-2">
-            {fields.map((field, index) => (
-              <div key={field.id} className="flex items-center">
-                <FormControl
-                  control={form.control}
-                  name={`theme.colors.modes.${resolvedMode}.scales.${scaleId}.colorKeys.${index}.color`}
-                  render={({ onChange, ...props }) => {
-                    return (
-                      <ColorPickerRoot
-                        onChange={(value) => {
-                          onChange(value.toString("hex"));
-                        }}
-                        {...props}
-                      >
-                        <DialogRoot>
-                          <Button
-                            shape="square"
-                            className={cn(index > 0 && "rounded-r-none")}
-                          >
-                            <ColorSwatch />
-                          </Button>
-                          <Dialog type="popover" mobileType="drawer">
-                            <ColorPickerEditor />
-                          </Dialog>
-                        </DialogRoot>
-                      </ColorPickerRoot>
-                    );
-                  }}
-                />
-                {index > 0 && (
-                  <Button
-                    shape="square"
-                    className="rounded-l-none border-l-0"
-                    onPress={() => {
-                      remove(index);
-                    }}
-                  >
-                    <Trash2Icon />
-                  </Button>
-                )}
-              </div>
-            ))}
-            <Tooltip content="Add color">
-              <Button
-                shape="square"
-                onPress={() => {
-                  append({ id: fields.length, color: "#000000" });
-                }}
-              >
-                <PlusIcon />
-              </Button>
-            </Tooltip>
-          </div>
+          <ColorKeysEditor scaleId={scaleId} />
           <p className="text-sm text-fg-muted">Ratios</p>
           <div className="flex flex-1 items-start gap-4">
             <RatioSlider scaleId={scaleId} />
@@ -132,6 +74,78 @@ export function ColorKeys({ scaleId }: { scaleId: string }) {
         </DialogBody>
       </Dialog>
     </DialogRoot>
+  );
+}
+
+interface ColorKeysEditorProps {
+  scaleId: string;
+}
+
+function ColorKeysEditor({ scaleId }: ColorKeysEditorProps) {
+  const { form, resolvedMode } = useStyleForm();
+
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: `theme.colors.modes.${resolvedMode}.scales.${scaleId}.colorKeys`,
+  });
+
+  return (
+    <div>
+      <p className="text-sm text-fg-muted">Color keys</p>
+      <div className="flex items-center gap-2">
+        {fields.map((field, index) => (
+          <div key={field.id} className="flex items-center">
+            <FormControl
+              control={form.control}
+              name={`theme.colors.modes.${resolvedMode}.scales.${scaleId}.colorKeys.${index}.color`}
+              render={({ onChange, ...props }) => {
+                return (
+                  <ColorPickerRoot
+                    onChange={(value) => {
+                      onChange(value.toString("hex"));
+                    }}
+                    {...props}
+                  >
+                    <DialogRoot>
+                      <Button
+                        shape="square"
+                        className={cn(index > 0 && "rounded-r-none")}
+                      >
+                        <ColorSwatch />
+                      </Button>
+                      <Dialog type="popover" mobileType="drawer">
+                        <ColorPickerEditor />
+                      </Dialog>
+                    </DialogRoot>
+                  </ColorPickerRoot>
+                );
+              }}
+            />
+            {index > 0 && (
+              <Button
+                shape="square"
+                className="rounded-l-none border-l-0"
+                onPress={() => {
+                  remove(index);
+                }}
+              >
+                <Trash2Icon />
+              </Button>
+            )}
+          </div>
+        ))}
+        <Tooltip content="Add color">
+          <Button
+            shape="square"
+            onPress={() => {
+              append({ id: fields.length, color: "#000000" });
+            }}
+          >
+            <PlusIcon />
+          </Button>
+        </Tooltip>
+      </div>
+    </div>
   );
 }
 
