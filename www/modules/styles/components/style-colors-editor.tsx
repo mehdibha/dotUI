@@ -9,7 +9,6 @@ import {
 } from "lucide-react";
 
 import { COLOR_TOKENS } from "@dotui/registry-definition/registry-tokens";
-import { DEFAULT_DARK_MODE, DEFAULT_LIGHT_MODE } from "@dotui/style-engine";
 import { Button } from "@dotui/ui/components/button";
 import { Label } from "@dotui/ui/components/field";
 import { FormControl } from "@dotui/ui/components/form";
@@ -24,7 +23,6 @@ import {
   SliderTrack,
   SliderValueLabel,
 } from "@dotui/ui/components/slider";
-import type { ModeDefinition } from "@dotui/style-engine";
 
 import { ThemeModeSwitch } from "@/components/theme-mode-switch";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";

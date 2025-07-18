@@ -7,6 +7,7 @@ import type { CssColor } from "@adobe/leonardo-contrast-colors";
 
 import { RADIUS_TOKENS } from "@dotui/registry-definition/registry-tokens";
 
+import { SCALE_NUMBERRS } from "../constants";
 import type { ColorTokens, ModeDefinition, Radius, Theme } from "../types";
 
 export interface ColorScale {
@@ -22,11 +23,9 @@ export const createRatiosObject = (
   scaleId: string,
   ratios: number[],
 ): Record<string, number> => {
-  const scaleNumbers = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
-
   return ratios.reduce(
     (acc, ratio, index) => {
-      const scaleName = scaleNumbers[index] ?? (index + 1) * 100;
+      const scaleName = SCALE_NUMBERRS[index] ?? (index + 1) * 100;
       acc[`${scaleId}-${scaleName}`] = ratio;
       return acc;
     },

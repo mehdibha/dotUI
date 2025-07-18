@@ -131,6 +131,8 @@ export const DEFAULT_CSS = {
   },
 };
 
+export const SCALE_NUMBERRS = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900] as const;
+
 export const DEFAULT_LIGHT_MODE: ModeDefinition = {
   lightness: 97,
   saturation: 100,

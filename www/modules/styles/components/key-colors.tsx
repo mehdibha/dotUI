@@ -10,6 +10,8 @@ import { PlusIcon, Trash2Icon } from "lucide-react";
 import { useFieldArray } from "react-hook-form";
 import type { CssColor } from "@adobe/leonardo-contrast-colors";
 
+import { SCALE_NUMBERRS } from "@dotui/style-engine/constants";
+import { Badge } from "@dotui/ui/components/badge";
 import { Button } from "@dotui/ui/components/button";
 import {
   ColorPickerEditor,
@@ -27,6 +29,7 @@ import {
 import { Tooltip } from "@dotui/ui/components/tooltip";
 import { cn } from "@dotui/ui/lib/utils";
 
+import { getHighestWcagCompliance } from "@/lib/colors";
 import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
 
 export function ColorKeys({ scaleId }: { scaleId: string }) {
@@ -53,6 +56,43 @@ export function ColorKeys({ scaleId }: { scaleId: string }) {
   );
   const contrast =
     form.watch(`theme.colors.modes.${resolvedMode}.contrast`) / 100;
+
+  const currentRatios = form.watch(
+    `theme.colors.modes.${resolvedMode}.scales.${scaleId}.ratios`,
+  );
+
+  const generatedValues = useMemo(() => {
+    const neutral = new LeonardoBgColor({
+      name: "neutral",
+      colorKeys: neutralColorKeys,
+      ratios: Array.from({ length: 19 }, (_, i) => i + 1),
+    });
+
+    const currentColor = new LeonardoColor({
+      name,
+      colorKeys,
+      ratios: currentRatios,
+    });
+
+    const theme = new LeonardoTheme({
+      backgroundColor: neutral,
+      colors: [currentColor],
+      lightness,
+      saturation,
+      contrast,
+      output: "HEX",
+    });
+
+    return theme.contrastColors[1]?.values || [];
+  }, [
+    currentRatios,
+    neutralColorKeys,
+    colorKeys,
+    lightness,
+    saturation,
+    contrast,
+    name,
+  ]);
 
   const dynamicGradient = useMemo(() => {
     const neutral = new LeonardoBgColor({
@@ -192,27 +232,56 @@ export function ColorKeys({ scaleId }: { scaleId: string }) {
                   </SliderTrack>
                 </SliderRoot>
                 <div className="space-y-2">
-                  {Array.from({ length: 10 }).map((_, index) => (
-                    <NumberField
-                      key={index}
-                      aria-label={`Ratio ${index + 1}`}
-                      step={0.05}
-                      minValue={1}
-                      maxValue={20}
-                      value={props.value[index]}
-                      onChange={(val) =>
-                        props.onChange(
-                          props.value.map((ratio, i) => {
-                            if (index === i) {
-                              return val;
-                            }
-                            return ratio;
-                          }),
-                        )
-                      }
-                      className="w-20"
-                    />
-                  ))}
+                  {Array.from({ length: 10 }).map((_, index) => {
+                    const generatedValue = generatedValues[index];
+                    const contrastRatio = generatedValue?.contrast || 0;
+                    const scaleName = SCALE_NUMBERRS[index]!;
+
+                    const getWcagRequirement = (index: number) => {
+                      if (index === 5) return 3.0;
+                      if (index >= 6 && index <= 9) return 4.5;
+                      return null;
+                    };
+
+                    const requiredContrast = getWcagRequirement(index);
+                    const meetsRequirement = requiredContrast
+                      ? contrastRatio >= requiredContrast
+                      : null;
+
+                    return (
+                      <div key={index} className="flex items-center gap-2">
+                        <span className="w-20 font-mono text-xs text-fg-muted mr-2">
+                          {`${name}-${scaleName}`}
+                        </span>
+                        <NumberField
+                          aria-label={`${name} ${scaleName} ratio`}
+                          step={0.05}
+                          minValue={1}
+                          maxValue={20}
+                          value={props.value[index]}
+                          onChange={(val) =>
+                            props.onChange(
+                              props.value.map((ratio, i) => {
+                                if (index === i) {
+                                  return val;
+                                }
+                                return ratio;
+                              }),
+                            )
+                          }
+                          className="w-20"
+                        />
+                        {requiredContrast && (
+                          <Badge
+                            variant={meetsRequirement ? "success" : "danger"}
+                            className="text-xs w-12"
+                          >
+                            {requiredContrast}:1
+                          </Badge>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             )}
