@@ -14,6 +14,7 @@ import { COLOR_TOKENS } from "@dotui/registry-definition/registry-tokens";
 import { createColorScales } from "@dotui/style-engine";
 import { styleDefinitionSchema } from "@dotui/style-engine/schemas";
 
+import { useDebounce } from "@/hooks/use-debounce";
 import { useTRPC } from "@/lib/trpc/react";
 import { useLiveStyleProducer } from "../atoms/live-style-atom";
 import { usePreferences } from "../atoms/preferences-atom";
@@ -77,6 +78,7 @@ export function StylePagesProvider({
     | StyleFormData
     | undefined;
 
+  const debouncedWatchedValues = useDebounce(watchedValues, 30);
   const watchedActiveModes = useWatch({
     name: "theme.colors.activeModes",
     control: form.control,
@@ -102,10 +104,10 @@ export function StylePagesProvider({
   }, [currentModeDefinition]);
 
   React.useEffect(() => {
-    if (isSuccess && watchedValues) {
-      updateLiveStyle(watchedValues);
+    if (isSuccess && debouncedWatchedValues) {
+      updateLiveStyle(debouncedWatchedValues);
     }
-  }, [watchedValues, updateLiveStyle, isSuccess]);
+  }, [debouncedWatchedValues, updateLiveStyle, isSuccess]);
 
   return (
     <StyleFormContext.Provider
