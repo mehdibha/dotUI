@@ -26,8 +26,10 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
+    "@dotui/auto-contrast": "workspace:*",
     "@dotui/registry-definition": "workspace:*",
-    "@dotui/style-engine": "workspace:*"
+    "@dotui/style-engine": "workspace:*",
+    "tw-animate-css": "^1.3.5"
   },
   "peerDependencies": {
     "react": "catalog:react19",
