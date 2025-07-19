@@ -245,6 +245,10 @@ importers:
         version: 5.8.3
 
   packages/auto-contrast:
+    dependencies:
+      fast-glob:
+        specifier: ^3.3.3
+        version: 3.3.3
     devDependencies:
       '@dotui/ts-config':
         specifier: workspace:*
