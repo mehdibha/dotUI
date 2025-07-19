@@ -27,14 +27,14 @@ const buttonStyles = tv({
   variants: {
     variant: {
       default: "bg-bg-neutral text-fg-onNeutral hover:bg-bg-neutral-hover",
-      primary: "bg-bg-primary text-fg-onPrimary hover:bg-bg-primary-hover",
+      primary: "bg-bg-primary text-fg-on-primary hover:bg-bg-primary-hover",
       quiet: "bg-transparent text-fg hover:bg-bg-inverse/10",
       outline:
         "border border-border-field text-fg hover:bg-bg-inverse/10 disabled:border-border-disabled disabled:bg-transparent",
-      accent: "bg-bg-accent text-fg-onAccent hover:bg-bg-accent-hover",
-      success: "bg-bg-success text-fg-onSuccess hover:bg-bg-success-hover",
-      warning: "bg-bg-warning text-fg-onWarning hover:bg-bg-warning-hover",
-      danger: "bg-bg-danger text-fg-onDanger hover:bg-bg-danger-hover",
+      accent: "bg-bg-accent text-fg-on-accent hover:bg-bg-accent-hover",
+      success: "bg-bg-success text-fg-on-success hover:bg-bg-success-hover",
+      warning: "bg-bg-warning text-fg-on-warning hover:bg-bg-warning-hover",
+      danger: "bg-bg-danger text-fg-on-danger hover:bg-bg-danger-hover",
     },
     size: {
       sm: "size-8 [&_svg]:size-4",

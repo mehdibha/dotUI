@@ -7,8 +7,8 @@ import {
   Button as _Button,
   ButtonProvider as _ButtonProvider,
   buttonStyles,
-} from "../registry/components/button/outline";
-import type { ButtonProps } from "../registry/components/button/outline";
+} from "../registry/components/button/basic";
+import type { ButtonProps } from "../registry/components/button/basic";
 
 export const Button = createDynamicComponent<ButtonProps>(
   "button",
@@ -27,6 +27,11 @@ export const Button = createDynamicComponent<ButtonProps>(
     ),
     ripple: React.lazy(() =>
       import("../registry/components/button/ripple").then((mod) => ({
+        default: mod.Button,
+      })),
+    ),
+    outline: React.lazy(() =>
+      import("../registry/components/button/outline").then((mod) => ({
         default: mod.Button,
       })),
     ),
@@ -51,6 +56,11 @@ export const ButtonProvider = createDynamicComponent(
     ),
     ripple: React.lazy(() =>
       import("../registry/components/button/ripple").then((mod) => ({
+        default: mod.ButtonProvider,
+      })),
+    ),
+    outline: React.lazy(() =>
+      import("../registry/components/button/outline").then((mod) => ({
         default: mod.ButtonProvider,
       })),
     ),

@@ -2,35 +2,56 @@ import { findNeighbour } from "fumadocs-core/server";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 
 import { Button } from "@dotui/ui/components/button";
+import { Tooltip } from "@dotui/ui/components/tooltip";
 
 import { source } from "@/app/source";
 
-export const DocsPager = ({ currentPathname }: { currentPathname: string }) => {
+export const DocsPager = ({
+  variant = "label",
+  currentPathname,
+}: {
+  variant?: "tooltip" | "label";
+  currentPathname: string;
+}) => {
   const { previous, next } = findNeighbour(source.pageTree, currentPathname);
 
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between gap-2">
       {previous ? (
-        <Button
-          href={previous.url}
-          prefix={<ChevronLeftIcon />}
-          variant="quiet"
-          size="sm"
+        <Tooltip
+          content={previous.name}
+          isDisabled={variant === "label"}
+          delay={0}
         >
-          {previous.name}
-        </Button>
+          <Button
+            href={previous.url}
+            aria-label={
+              variant === "tooltip" ? `Go to previous page` : undefined
+            }
+            prefix={variant === "label" ? <ChevronLeftIcon /> : undefined}
+            shape={variant === "tooltip" ? "square" : undefined}
+            variant={variant === "tooltip" ? "default" : "quiet"}
+            size="sm"
+          >
+            {variant === "label" ? previous.name : <ChevronLeftIcon />}
+          </Button>
+        </Tooltip>
       ) : (
         <div />
       )}
       {next ? (
-        <Button
-          href={next.url}
-          suffix={<ChevronRightIcon />}
-          variant="quiet"
-          size="sm"
-        >
-          {next.name}
-        </Button>
+        <Tooltip content={next.name} isDisabled={variant === "label"} delay={0}>
+          <Button
+            href={next.url}
+            aria-label={variant === "tooltip" ? `Go to next page` : undefined}
+            suffix={variant === "label" ? <ChevronRightIcon /> : undefined}
+            shape={variant === "tooltip" ? "square" : undefined}
+            variant={variant === "tooltip" ? "default" : "quiet"}
+            size="sm"
+          >
+            {variant === "label" ? next.name : <ChevronRightIcon />}
+          </Button>
+        </Tooltip>
       ) : (
         <div />
       )}

@@ -35,13 +35,13 @@ const tagStyles = tv({
   variants: {
     variant: {
       default:
-        "bg-bg-neutral text-fg-onNeutral hover:bg-bg-neutral-hover pressed:bg-bg-neutral-active selected:bg-bg-primary selected:text-fg-onPrimary",
+        "bg-bg-neutral text-fg-onNeutral hover:bg-bg-neutral-hover pressed:bg-bg-neutral-active selected:bg-bg-primary selected:text-fg-on-primary",
       quiet:
-        "bg-transparent text-fg hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 selected:bg-bg-primary selected:text-fg-onPrimary",
+        "bg-transparent text-fg hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 selected:bg-bg-primary selected:text-fg-on-primary",
       outline:
-        "border border-border-field bg-bg-inverse/5 text-fg hover:bg-bg-inverse/10 pressed:border-transparent pressed:bg-bg-inverse/15 selected:border-transparent selected:bg-bg-primary selected:text-fg-onPrimary",
+        "border border-border-field bg-bg-inverse/5 text-fg hover:bg-bg-inverse/10 pressed:border-transparent pressed:bg-bg-inverse/15 selected:border-transparent selected:bg-bg-primary selected:text-fg-on-primary",
       accent:
-        "border border-border-field bg-transparent text-fg hover:bg-bg-inverse/10 pressed:border-transparent pressed:bg-bg-inverse/20 selected:border-transparent selected:bg-bg-accent selected:text-fg-onAccent selected:hover:bg-bg-accent-hover selected:pressed:bg-bg-accent-active",
+        "border border-border-field bg-transparent text-fg hover:bg-bg-inverse/10 pressed:border-transparent pressed:bg-bg-inverse/20 selected:border-transparent selected:bg-bg-accent selected:text-fg-on-accent selected:hover:bg-bg-accent-hover selected:pressed:bg-bg-accent-active",
     },
     size: {
       sm: "size-8 [&_svg]:size-4",

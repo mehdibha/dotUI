@@ -13,7 +13,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         <MobileNav items={source.pageTree.children} className="lg:hidden" />
         <Sidebar items={source.pageTree.children} className="hidden lg:flex" />
         <main className="flex-1">
-          <div className="sm:grid ">
+          <div className="sm:grid">
             {/* <div className="hidden diagonal-pattern sm:block" /> */}
             <div>
               <div className="min-h-screen">

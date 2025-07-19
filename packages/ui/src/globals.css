@@ -211,13 +211,13 @@
   --color-fg-info: var(--info-600);
   --color-fg-accent: var(--accent-600);
 
-  --color-fg-onNeutral: var(--neutral-900);
-  --color-fg-onPrimary: var(--neutral-50);
-  --color-fg-onAccent: var(--neutral-900);
-  --color-fg-onSuccess: var(--neutral-900);
-  --color-fg-onDanger: var(--neutral-900);
-  --color-fg-onWarning: var(--neutral-900);
-  --color-fg-onInfo: var(--neutral-900);
+  --color-fg-onNeutral: var(--on-neutral-100);
+  --color-fg-on-primary: var(--on-neutral-900);
+  --color-fg-on-accent: var(--on-accent-400);
+  --color-fg-on-success: var(--on-success-400);
+  --color-fg-on-danger: var(--on-danger-400);
+  --color-fg-on-warning: var(--on-warning-400);
+  --color-fg-on-info: var(--on-info-400);
 
   --color-border: var(--neutral-200);
   --color-border-hover: var(--neutral-300);

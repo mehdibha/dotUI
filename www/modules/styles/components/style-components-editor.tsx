@@ -223,7 +223,7 @@ export function StyleComponentsEditor() {
           <ToggleButton
             aria-label="Toggle book"
             variant="primary"
-            className="selected:[&_svg]:fill-fg-onPrimary"
+            className="selected:[&_svg]:fill-fg-on-primary"
           >
             <BookmarkIcon />
           </ToggleButton>

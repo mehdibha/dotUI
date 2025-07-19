@@ -159,7 +159,7 @@ export function PreviewContent({
             suffix={<ChevronsUpDownIcon />}
             className="h-7 w-32 justify-center rounded-sm text-fg-muted"
           >
-              <SelectValue className="flex-0" />
+            <SelectValue className="flex-0" />
           </Button>
           <Popover>
             <ListBox

@@ -45,7 +45,7 @@ export function Header({ className }: { className?: string }) {
           </div>
         </div>
         {isMounted && !isPending && (
-          <div className="flex items-center gap-2 animate-in fade-in">
+          <div className="flex animate-in items-center gap-2 fade-in">
             <SearchCommand keyboardShortcut>
               <Button
                 variant="default"

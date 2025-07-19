@@ -327,7 +327,7 @@ function PageNode({
         },
       )}
       onClick={onSelect}
-      suppressHydrationWarning
+      suppressHydration-warning
     >
       {name}
     </Link>

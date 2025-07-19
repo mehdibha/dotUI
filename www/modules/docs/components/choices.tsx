@@ -43,7 +43,7 @@ export function Choices({ items, ...props }: ChoicesProps): React.ReactElement {
                 <div
                   className={cn(
                     "absolute top-2 right-2 flex size-4 shrink-0 items-center justify-center rounded-full border border-border-control [&_svg]:size-3",
-                    isSelected && "bg-bg-accent text-fg-onAccent",
+                    isSelected && "bg-bg-accent text-fg-on-accent",
                   )}
                 >
                   {isSelected && <CheckIcon />}

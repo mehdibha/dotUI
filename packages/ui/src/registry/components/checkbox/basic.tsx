@@ -32,11 +32,11 @@ const checkboxStyles = tv({
     variant: {
       primary: {
         indicator:
-          "group-indeterminate:bg-bg-primary group-indeterminate:text-fg-onPrimary group-selected:bg-bg-primary group-selected:text-fg-onPrimary",
+          "group-indeterminate:bg-bg-primary group-indeterminate:text-fg-on-primary group-selected:bg-bg-primary group-selected:text-fg-on-primary",
       },
       accent: {
         indicator:
-          "group-indeterminate:bg-bg-Accent group-indeterminate:text-fg-onAccent group-selected:bg-bg-accent group-selected:text-fg-onAccent",
+          "group-indeterminate:bg-bg-Accent group-indeterminate:text-fg-on-accent group-selected:bg-bg-accent group-selected:text-fg-on-accent",
       },
     },
     appearance: {

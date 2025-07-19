@@ -5,7 +5,7 @@
 @import "tw-animate-css";
 
 @plugin "tailwindcss-react-aria-components";
-@plugin "@dotui/auto-contrast";
+@plugin "tailwindcss-auto-contrast";
 
 @import "./docs.css";
 @import "./focus-styles.css";
@@ -211,13 +211,13 @@
   --color-fg-info: var(--info-600);
   --color-fg-accent: var(--accent-600);
 
-  --color-fg-onNeutral: var(--neutral-900);
-  --color-fg-onPrimary: var(--neutral-50);
-  --color-fg-onAccent: var(--neutral-900);
-  --color-fg-onSuccess: var(--neutral-900);
-  --color-fg-onDanger: var(--neutral-900);
-  --color-fg-onWarning: var(--neutral-900);
-  --color-fg-onInfo: var(--neutral-900);
+  --color-fg-on-neutral: var(--neutral-900);
+  --color-fg-on-primary: var(--neutral-50);
+  --color-fg-on-accent: var(--neutral-900);
+  --color-fg-on-success: var(--neutral-900);
+  --color-fg-on-danger: var(--neutral-900);
+  --color-fg-on-warning: var(--neutral-900);
+  --color-fg-on-info: var(--neutral-900);
 
   --color-border: var(--neutral-200);
   --color-border-hover: var(--neutral-300);

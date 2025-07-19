@@ -19,7 +19,11 @@ export const BlockViewStyleProvider = ({
   const { liveStyle } = useLiveStyleConsumer(style.slug);
 
   return (
-    <StyleProvider style={liveStyle ?? style} mode={currentMode} className="min-h-screen">
+    <StyleProvider
+      style={liveStyle ?? style}
+      mode={currentMode}
+      className="min-h-screen"
+    >
       {children}
     </StyleProvider>
   );

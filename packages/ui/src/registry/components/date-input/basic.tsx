@@ -14,7 +14,7 @@ const dateInputStyles = tv({
       "flex flex-1 items-center justify-start text-fg placeholder:text-fg-muted disabled:cursor-default disabled:text-fg-disabled",
     ],
     segment:
-      "rounded px-0.5 outline-hidden select-none placeholder-shown:not-data-disabled:not-data-focused:text-fg-muted focus:bg-bg-accent focus:text-fg-onAccent focus:caret-transparent disabled:text-fg-disabled type-literal:px-0",
+      "rounded px-0.5 outline-hidden select-none placeholder-shown:not-data-disabled:not-data-focused:text-fg-muted focus:bg-bg-accent focus:text-fg-on-accent focus:caret-transparent disabled:text-fg-disabled type-literal:px-0",
   },
 });
 

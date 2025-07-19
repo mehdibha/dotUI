@@ -1,4 +1,6 @@
 import {
+  convertColorValue,
+  contrast as getContrast,
   BackgroundColor as LeonardoBgColor,
   Color as LeonardoColor,
   Theme as LeonardoTheme,
@@ -68,6 +70,27 @@ export const createColorScales = (modeDefinition: ModeDefinition) => {
   return scales;
 };
 
+export const getContrastColor = (colorValue: string): string => {
+  const colorTuple = convertColorValue(colorValue, "RGB", true) as unknown as {
+    r: number;
+    g: number;
+    b: number;
+  };
+
+  const rgbArray: [number, number, number] = [
+    colorTuple.r,
+    colorTuple.g,
+    colorTuple.b,
+  ];
+
+  const contrastWithBlack = getContrast(rgbArray, [0, 0, 0]);
+  const contrastWithWhite = getContrast(rgbArray, [255, 255, 255]);
+
+  return contrastWithBlack > contrastWithWhite
+    ? "hsl(0 0% 0%)"
+    : "hsl(0 0% 100%)";
+};
+
 export const createModeCssVars = (
   modeDefinition: ModeDefinition,
 ): Record<string, string> => {
@@ -75,7 +98,10 @@ export const createModeCssVars = (
 
   const cssVars = colorScales
     .flatMap((colorScale) =>
-      colorScale.values.map((value) => [value.name, value.value] as const),
+      colorScale.values.flatMap((value) => [
+        [value.name, value.value] as const,
+        [`on-${value.name}`, getContrastColor(value.value)] as const,
+      ]),
     )
     .reduce(
       (acc, [key, value]) => {

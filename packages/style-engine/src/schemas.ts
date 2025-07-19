@@ -172,10 +172,12 @@ export const minimizedModeDefinitionSchema = z.object({
 export const minimizedThemeDefinitionSchema = z.object({
   colors: z.object({
     activeModes: activeModesSchema.optional(),
-    modes: z.object({
-      light: minimizedModeDefinitionSchema.optional(),
-      dark: minimizedModeDefinitionSchema.optional(),
-    }).optional(),
+    modes: z
+      .object({
+        light: minimizedModeDefinitionSchema.optional(),
+        dark: minimizedModeDefinitionSchema.optional(),
+      })
+      .optional(),
     tokens: colorTokensSchema.optional(),
   }),
   radius: radiusSchema.optional(),

@@ -1,5 +1,5 @@
 {
-  "name": "@dotui/auto-contrast",
+  "name": "tailwindcss-auto-contrast",
   "version": "0.0.1",
   "description": "Tailwind CSS plugins for automatic contrast color generation",
   "main": "src/index.js",
@@ -12,6 +12,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/adobe/react-spectrum"
+  },
+  "dependencies": {
+    "fast-glob": "^3.3.3"
   },
   "peerDependencies": {
     "@tailwindcss/postcss": "catalog:",
@@ -28,8 +31,5 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "dependencies": {
-    "fast-glob": "^3.3.3"
   }
 }
