@@ -2,9 +2,9 @@
   "name": "@dotui/auto-contrast",
   "version": "0.0.1",
   "description": "Tailwind CSS plugins for automatic contrast color generation",
-  "exports": {
-    "css": "./src/css.css"
-  },
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "source": "src/index.js",
   "files": [
     "src"
   ],
