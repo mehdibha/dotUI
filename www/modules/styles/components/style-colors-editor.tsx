@@ -83,25 +83,11 @@ export function StyleColorsEditor() {
             );
           })}
         </div>
-        {/* <div className="mt-3 space-y-2">
+        <div className="mt-3 space-y-2">
           {baseColors.map((color) => {
-            const scaleIndex = colorScales.findIndex(
-              (s) => s.id === color.name,
-            );
-
-            const scale = colorScales[scaleIndex]!;
-
-            return (
-              <ColorScale
-                key={color.name}
-                name={scale.name}
-                label={color.label}
-                scaleIndex={scaleIndex}
-                neutralIndex={neutralIndex}
-              />
-            );
+            return <ColorScale key={color.name} scaleId={color.name} />;
           })}
-        </div> */}
+        </div>
       </EditorSection>
 
       <EditorSection title="Semantic colors">
@@ -115,27 +101,13 @@ export function StyleColorsEditor() {
           })}
         </div>
         <div className="mt-3 space-y-2">
-          {/* {semanticColors.map((color) => {
-            const scaleIndex = colorScales.findIndex(
-              (s) => s.id === color.name,
-            );
-
-            const scale = colorScales[scaleIndex]!;
-
-            return (
-              <ColorScale
-                key={color.name}
-                name={scale.name}
-                label={color.label}
-                scaleIndex={scaleIndex}
-                neutralIndex={neutralIndex}
-              />
-            );
-          })} */}
+          {semanticColors.map((color) => {
+            return <ColorScale key={color.name} scaleId={color.name} />;
+          })}
         </div>
       </EditorSection>
 
-      {/* <EditorSection title="Tokens">
+      <EditorSection title="Tokens">
         <div className="mt-3 space-y-4">
           {[
             {
@@ -161,7 +133,7 @@ export function StyleColorsEditor() {
             </div>
           ))}
         </div>
-      </EditorSection> */}
+      </EditorSection>
     </div>
   );
 }

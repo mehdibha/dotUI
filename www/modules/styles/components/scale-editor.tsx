@@ -13,6 +13,7 @@ import {
   Trash2Icon,
   XIcon,
 } from "lucide-react";
+import { Reorder } from "motion/react";
 import { useFieldArray } from "react-hook-form";
 import type { CssColor } from "@adobe/leonardo-contrast-colors";
 
@@ -51,7 +52,6 @@ import { cn } from "@dotui/ui/lib/utils";
 
 import { AutoResizeTextField } from "@/components/auto-resize-input";
 import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
-import { Reorder } from "motion/react";
 
 export function ScaleEditor({ scaleId }: { scaleId: string }) {
   const { form, resolvedMode } = useStyleForm();
@@ -414,13 +414,6 @@ function RatioTable({ scaleId }: RatioTableProps) {
           <TableColumn id="wcag">WCAG</TableColumn>
         </TableHeader>
         <TableBody>
-          {/* <Reorder.Group axis="y" values={items} onReorder={setItems}>
-            {items.map((item) => (
-              <Reorder.Item key={item} value={item}>
-                {item}
-              </Reorder.Item>
-            ))}
-          </Reorder.Group> */}
           {SCALE_NUMBERRS.map((scaleNameValue, index) => {
             return (
               <FormControl

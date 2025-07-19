@@ -42,7 +42,7 @@ export function StyleCard(props: {
           <div className="mt-4 flex items-center gap-2">
             <Button
               href={`/style/${props.style.slug}`}
-              variant="default"
+              variant="accent"
               suffix={<SquareArrowOutUpRightIcon />}
               className="h-8 text-sm"
             >
@@ -57,7 +57,7 @@ export function StyleCard(props: {
             className="w-full"
           />
           <div className="flex items-center gap-2">
-            <Button variant="accent" prefix={<UserRoundPlusIcon />}>
+            <Button variant="default" prefix={<UserRoundPlusIcon />}>
               Invite
             </Button>
             <div className="flex items-center">

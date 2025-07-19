@@ -32,7 +32,7 @@ import { AutoResizeTextField } from "@/components/auto-resize-input";
 import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
 
 export const ColorTokens = ({
-  variant = "solid",
+  variant = "line",
   hideHeader = false,
   className,
   tokenIds,
@@ -69,7 +69,7 @@ export const ColorTokens = ({
                 (token) => token.name === tokenId,
               );
               return (
-                <TableRow key={tokenId} id={index}>
+                <TableRow key={tokenId} id={tokenId}>
                   <TableCell>
                     <ColorTokenVariableName
                       index={index}

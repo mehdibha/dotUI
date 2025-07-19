@@ -20,101 +20,37 @@ import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
 import { usePreferences } from "../atoms/preferences-atom";
 
 interface ColorScaleProps {
-  name: string;
-  label: string;
-  scaleIndex: number;
-  neutralIndex: number;
+  scaleId: string;
 }
 
-export function ColorScale({
-  name,
-  label,
-  scaleIndex,
-  neutralIndex,
-}: ColorScaleProps) {
-  const { form, isSuccess, resolvedMode } = useStyleForm();
+export function ColorScale({ scaleId }: ColorScaleProps) {
+  const { form, isSuccess, resolvedMode, generatedTheme } = useStyleForm();
 
-  // const currentModeIndex = form
-  //   .watch("theme.colors.modes")
-  //   .findIndex((mode) => mode.mode === resolvedMode);
-  // const lightness = form.watch(
-  //   `theme.colors.modes.${currentModeIndex}.lightness`,
-  // );
-  // const saturation = form.watch(
-  //   `theme.colors.modes.${currentModeIndex}.saturation`,
-  // );
-  // const contrast =
-  //   form.watch(`theme.colors.modes.${currentModeIndex}.contrast`) / 100;
+  const scaleName = form.watch(
+    `theme.colors.modes.${resolvedMode}.scales.${scaleId}.name`,
+  );
 
-  // const neutralScale = form.watch(
-  //   `theme.colors.modes.${currentModeIndex}.scales.${neutralIndex}`,
-  // );
-  // const neutralColorKeys = neutralScale.colorKeys;
-  // const neutralRatios = neutralScale.ratios;
+  const scale = generatedTheme.find((scale) => scale.name === scaleId);
 
-  // const currentScale = form.watch(
-  //   `theme.colors.modes.${currentModeIndex}.scales.${scaleIndex}`,
-  // );
-  // const currentColorKeys = currentScale.colorKeys;
-  // const currentRatios = currentScale.ratios;
+  if (!scale) {
+    return null;
+  }
 
-  // const neutralColors = neutralColorKeys.map(
-  //   (color) => color.color,
-  // ) as CssColor[];
-  // const currentColors = currentColorKeys.map(
-  //   (color) => color.color,
-  // ) as CssColor[];
-
-  // const generatedTheme = React.useMemo(() => {
-  //   const neutralColor = new LeonardoBgColor({
-  //     name: "neutral",
-  //     colorKeys: neutralColors,
-  //     ratios: neutralRatios,
-  //   });
-
-  //   const currentColor = new LeonardoColor({
-  //     name,
-  //     colorKeys: currentColors,
-  //     ratios: currentRatios,
-  //   });
-
-  //   const [_, contrastColor] = new LeonardoTheme({
-  //     colors: [currentColor],
-  //     backgroundColor: neutralColor,
-  //     lightness,
-  //     saturation,
-  //     contrast,
-  //     output: "HEX",
-  //   }).contrastColors as [ContrastColorBackground, ContrastColor];
-
-  //   return contrastColor.values;
-  // }, [
-  //   name,
-  //   neutralColors,
-  //   neutralRatios,
-  //   currentColors,
-  //   currentRatios,
-  //   lightness,
-  //   saturation,
-  //   contrast,
-  // ]);
-
-  return null;
-  // return (
-  //   <div className="flex items-center gap-2">
-  //     <p className="w-16 text-sm text-fg-muted">{label}</p>
-  //     <div className="flex flex-1 items-center gap-1">
-  //       {generatedTheme.map((color, index) => (
-  //         <Tooltip key={index} content={color.name} delay={0}>
-  //           <Skeleton show={!isSuccess} className="flex-1">
-  //             <AriaButton
-  //               className="h-8 flex-1 rounded-sm border"
-  //               style={{ backgroundColor: color.value }}
-  //             />
-  //           </Skeleton>
-  //         </Tooltip>
-  //       ))}
-  //     </div>
-  //   </div>
-  // );
+  return (
+    <div className="flex items-center gap-2">
+      <p className="w-16 text-sm text-fg-muted">{`${scaleName.charAt(0).toUpperCase() + scaleName.slice(1)}`}</p>
+      <div className="flex flex-1 items-center gap-1">
+        {scale.values.map((color, index) => (
+          <Tooltip key={index} content={color.name} delay={0}>
+            <Skeleton show={!isSuccess} className="flex-1">
+              <AriaButton
+                className="h-8 flex-1 rounded-sm border"
+                style={{ backgroundColor: color.value }}
+              />
+            </Skeleton>
+          </Tooltip>
+        ))}
+      </div>
+    </div>
+  );
 }
