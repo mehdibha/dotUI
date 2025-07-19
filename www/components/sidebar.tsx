@@ -321,7 +321,7 @@ function PageNode({
     <Link
       href={url}
       className={cn(
-        "border-bg-bg-muted font-medium group block border-l py-1 pl-4 text-fg transition-colors hover:text-fg-muted",
+        "border-bg-bg-muted group block border-l py-1 pl-4 font-medium text-fg transition-colors hover:text-fg-muted",
         {
           "border-fg text-fg": active,
         },
@@ -420,7 +420,7 @@ const SidebarButton = ({
       variant="quiet"
       size="sm"
       className={cn(
-        "relative font-medium w-full overflow-hidden text-[0.8rem] transition-sidebar group-data-collapsed/sidebar:w-8 hover:bg-bg-inverse/10",
+        "relative w-full overflow-hidden text-[0.8rem] font-medium transition-sidebar group-data-collapsed/sidebar:w-8 hover:bg-bg-inverse/10",
         className,
       )}
       {...props}
