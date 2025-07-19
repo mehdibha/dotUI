@@ -180,7 +180,7 @@ const SidebarRoot = ({
           "relative z-10 h-svh w-(--sidebar-width) bg-transparent transition-sidebar group-data-collapsed/sidebar:w-(--sidebar-width-collapsed)",
         )}
       />
-      <div className="fixed inset-y-0 left-0 z-10 flex h-svh w-(--sidebar-width) flex-col overflow-hidden border-r bg-bg transition-sidebar group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) [&_button]:font-normal [&_svg]:text-fg-muted">
+      <div className="fixed inset-y-0 left-0 z-10 flex h-svh w-(--sidebar-width) flex-col overflow-hidden border-r bg-bg transition-sidebar group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) [&_svg]:text-fg-muted">
         <div className="relative flex h-svh w-(--sidebar-width) flex-1 translate-x-[-0.5px] flex-col overflow-hidden">
           {children}
         </div>
@@ -321,13 +321,13 @@ function PageNode({
     <Link
       href={url}
       className={cn(
-        "border-bg-bg-muted group block border-l py-1 pl-4 text-fg transition-colors hover:text-fg-muted",
+        "border-bg-bg-muted font-medium group block border-l py-1 pl-4 text-fg transition-colors hover:text-fg-muted",
         {
           "border-fg text-fg": active,
         },
       )}
       onClick={onSelect}
-      suppressHydration-warning
+      suppressHydrationWarning
     >
       {name}
     </Link>
@@ -420,14 +420,14 @@ const SidebarButton = ({
       variant="quiet"
       size="sm"
       className={cn(
-        "relative w-full overflow-hidden text-[0.8rem] font-medium transition-sidebar group-data-collapsed/sidebar:w-8 hover:bg-bg-inverse/10",
+        "relative font-medium w-full overflow-hidden text-[0.8rem] transition-sidebar group-data-collapsed/sidebar:w-8 hover:bg-bg-inverse/10",
         className,
       )}
       {...props}
     >
-      <div className="absolute inset-2 flex w-[calc(var(--sidebar-width)-calc(var(--spacing)*8))] items-center justify-center gap-2 whitespace-nowrap transition-sidebar group-data-collapsed/sidebar:left-2 [&>svg]:size-4">
+      <span className="absolute inset-2 flex w-[calc(var(--sidebar-width)-calc(var(--spacing)*8))] items-center justify-center gap-2 whitespace-nowrap transition-sidebar group-data-collapsed/sidebar:left-2 [&>svg]:size-4">
         {children}
-      </div>
+      </span>
     </Button>
   );
 };

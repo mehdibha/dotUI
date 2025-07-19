@@ -19,17 +19,17 @@ import { createOptionalScopedContext } from "@dotui/ui/lib/utils";
 
 const buttonStyles = tv({
   extend: focusRing,
-  base: "relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-md text-sm leading-normal font-medium whitespace-nowrap transition-all disabled:cursor-default disabled:bg-bg-disabled disabled:text-fg-disabled pending:cursor-default pending:border pending:border-border-disabled pending:bg-bg-disabled pending:text-fg-disabled pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0",
+  base: "disabled:bg-bg-disabled disabled:text-fg-disabled pending:cursor-default pending:border pending:border-border-disabled pending:bg-bg-disabled pending:text-fg-disabled pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0 relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium leading-normal transition-all disabled:cursor-default",
   variants: {
     variant: {
       default:
-        "bg-bg-neutral text-fg-onNeutral hover:bg-bg-neutral-hover pressed:bg-bg-neutral-active",
+        "bg-bg-neutral text-fg-on-neutral hover:bg-bg-neutral-hover pressed:bg-bg-neutral-active",
       primary:
         "bg-bg-primary text-fg-on-primary hover:bg-bg-primary-hover pressed:bg-bg-primary-active",
       quiet:
-        "bg-transparent text-fg hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20",
+        "text-fg hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 bg-transparent",
       outline:
-        "border border-border-field text-fg hover:bg-bg-inverse/10 disabled:border-border-disabled disabled:bg-transparent pressed:bg-bg-inverse/15",
+        "border-border-field text-fg hover:bg-bg-inverse/10 disabled:border-border-disabled pressed:bg-bg-inverse/15 border disabled:bg-transparent",
       accent:
         "bg-bg-accent text-fg-on-accent hover:bg-bg-accent-hover pressed:bg-bg-accent-active",
       success:
@@ -108,7 +108,7 @@ const Button = React.forwardRef(
               <Loader
                 data-slot="spinner"
                 aria-label="loading"
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
                 size={16}
               />
             )}

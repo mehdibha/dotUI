@@ -211,7 +211,7 @@
   --color-fg-info: var(--info-600);
   --color-fg-accent: var(--accent-600);
 
-  --color-fg-onNeutral: var(--on-neutral-100);
+  --color-fg-on-neutral: var(--on-neutral-100);
   --color-fg-on-primary: var(--on-neutral-900);
   --color-fg-on-accent: var(--on-accent-400);
   --color-fg-on-success: var(--on-success-400);

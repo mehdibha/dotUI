@@ -21,12 +21,7 @@ export const StyleProvider = ({
   children,
   ...props
 }: StyleProviderProps) => {
-  const [isMounted, setMounted] = React.useState(false);
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!style || !isMounted) {
+  if (!style) {
     return <div {...props}>{children}</div>;
   }
 
