@@ -6,11 +6,13 @@ import {
   SwitchIndicator as _SwitchIndicator,
   SwitchProvider as _SwitchProvider,
   SwitchRoot as _SwitchRoot,
+  SwitchThumb as _SwitchThumb,
 } from "../registry/components/switch/basic";
 import type {
   SwitchIndicatorProps,
   SwitchProps,
   SwitchRootProps,
+  SwitchThumbProps,
 } from "../registry/components/switch/basic";
 
 export const Switch = createDynamicComponent<SwitchProps>(
@@ -31,6 +33,13 @@ export const SwitchIndicator = createDynamicComponent<SwitchIndicatorProps>(
   "switch",
   "SwitchIndicator",
   _SwitchIndicator,
+  {},
+);
+
+export const SwitchThumb = createDynamicComponent<SwitchThumbProps>(
+  "switch",
+  "SwitchThumb",
+  _SwitchThumb,
   {},
 );
 
