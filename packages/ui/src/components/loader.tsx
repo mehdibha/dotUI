@@ -37,5 +37,4 @@ export const Loader = createDynamicComponent<LoaderProps>(
       })),
     ),
   },
-  true,
 );

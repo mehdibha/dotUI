@@ -36,7 +36,6 @@ export const Button = createDynamicComponent<ButtonProps>(
       })),
     ),
   },
-  true,
 );
 
 export const ButtonProvider = createDynamicComponent(

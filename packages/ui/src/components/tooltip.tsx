@@ -28,7 +28,6 @@ export const Tooltip = createDynamicComponent<TooltipProps>(
       })),
     ),
   },
-  true,
 );
 
 export const TooltipRoot = createDynamicComponent<TooltipRootProps>(
@@ -42,7 +41,6 @@ export const TooltipRoot = createDynamicComponent<TooltipRootProps>(
       })),
     ),
   },
-  true,
 );
 
 export const TooltipContent = createDynamicComponent<TooltipContentProps>(

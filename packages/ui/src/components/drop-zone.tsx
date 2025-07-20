@@ -1,1 +1,41 @@
-export * from "../registry/components/drop-zone/basic";
+"use client";
+
+import React from "react";
+
+import { createDynamicComponent } from "../helpers/create-dynamic-component";
+import {
+  DropZone as _DropZone,
+  DropZoneLabel as _DropZoneLabel,
+} from "../registry/components/drop-zone/basic";
+import type {
+  DropZoneLabelProps,
+  DropZoneProps,
+} from "../registry/components/drop-zone/basic";
+
+export const DropZone = createDynamicComponent<DropZoneProps>(
+  "drop-zone",
+  "DropZone",
+  _DropZone,
+  {
+    basic: React.lazy(() =>
+      import("../registry/components/drop-zone/basic").then((mod) => ({
+        default: mod.DropZone,
+      })),
+    ),
+  },
+);
+
+export const DropZoneLabel = createDynamicComponent<DropZoneLabelProps>(
+  "drop-zone",
+  "DropZoneLabel",
+  _DropZoneLabel,
+  {
+    basic: React.lazy(() =>
+      import("../registry/components/drop-zone/basic").then((mod) => ({
+        default: mod.DropZoneLabel,
+      })),
+    ),
+  },
+);
+
+export type { DropZoneProps, DropZoneLabelProps };

@@ -138,6 +138,7 @@ const DialogInset = ({ className, ...props }: DialogInsetProps) => {
 export type {
   DialogRootProps,
   DialogProps,
+  DialogBodyProps,
   DialogHeaderProps,
   DialogHeadingProps,
   DialogDescriptionProps,

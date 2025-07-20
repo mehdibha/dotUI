@@ -31,7 +31,6 @@ export const MenuRoot = createDynamicComponent<MenuRootProps>(
       })),
     ),
   },
-  true,
 );
 
 export const Menu = createDynamicComponent<MenuProps<object>>(

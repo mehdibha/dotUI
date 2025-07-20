@@ -7,9 +7,7 @@ import { Avatar } from "@dotui/ui/components/avatar";
 import { Button } from "@dotui/ui/components/button";
 import { RangeCalendar } from "@dotui/ui/components/calendar";
 import { Checkbox } from "@dotui/ui/components/checkbox";
-import { ColorPicker } from "@dotui/ui/components/color-picker";
 import { ColorSlider } from "@dotui/ui/components/color-slider";
-import { Combobox, ComboboxItem } from "@dotui/ui/components/combobox";
 import { DatePicker } from "@dotui/ui/components/date-picker";
 import { ListBox, ListBoxItem } from "@dotui/ui/components/list-box";
 import { Menu, MenuItem, MenuRoot } from "@dotui/ui/components/menu";
@@ -17,7 +15,6 @@ import { NumberField } from "@dotui/ui/components/number-field";
 import { ProgressBar } from "@dotui/ui/components/progress-bar";
 import { Radio, RadioGroup } from "@dotui/ui/components/radio-group";
 import { SearchField } from "@dotui/ui/components/search-field";
-import { Select, SelectItem } from "@dotui/ui/components/select";
 import { Separator } from "@dotui/ui/components/separator";
 import { Slider } from "@dotui/ui/components/slider";
 import { Switch } from "@dotui/ui/components/switch";
@@ -37,6 +34,9 @@ import { cn } from "@dotui/ui/lib/utils";
 
 import { GitHubIcon, GoogleIcon, TwitterIcon } from "@/components/icons";
 import { Link } from "@/components/link";
+import { Select, SelectItem } from "@dotui/ui/components/select";
+import { ColorPicker } from "@dotui/ui/components/color-picker";
+import { Combobox, ComboboxItem } from "@dotui/ui/components/combobox";
 
 export function ComponentsOverview({ className }: { className?: string }) {
   const defaultColorScheme = "primary";
@@ -89,12 +89,12 @@ export function ComponentsOverview({ className }: { className?: string }) {
               <MenuItem>Log out</MenuItem>
             </Menu>
           </MenuRoot>
-          {/* <Select aria-label="Select AI provider">
+          <Select aria-label="Select AI provider">
             <SelectItem>Perplexity</SelectItem>
             <SelectItem>Replicate</SelectItem>
             <SelectItem>Together AI</SelectItem>
             <SelectItem>ElevenLabs</SelectItem>
-          </Select> */}
+          </Select>
         </div>
         <div className="flex items-center gap-2 xl:hidden">
           <Switch aria-label="Toggle focus mode">
@@ -109,9 +109,9 @@ export function ComponentsOverview({ className }: { className?: string }) {
       </div>
       <div className="col-span-10 flex items-center justify-end gap-2 lg:col-span-8 xl:col-span-3">
         {/* <FileTriggerDemo /> */}
-        {/* <ColorPicker defaultValue="#5100FF" aria-label="Select color" /> */}
+        <ColorPicker defaultValue="#5100FF" aria-label="Select color" />
         <TimeField aria-label="Event time" />
-        {/* <DatePicker className="" aria-label="Select date" /> */}
+        <DatePicker className="" aria-label="Select date" />
       </div>
       <div className="col-span-5 flex flex-col gap-4 md:col-span-4 md:row-span-6 lg:col-span-3 lg:row-span-8">
         <Alert title="Payment Information" className="hidden md:flex">
@@ -133,12 +133,12 @@ export function ComponentsOverview({ className }: { className?: string }) {
             <Register />
           </TabPanel>
         </Tabs>
-        {/* <ColorSlider
+        <ColorSlider
           label="Opacity"
           defaultValue="hsla(210, 64%, 35%, 0.7)"
           channel="alpha"
           className="hidden !w-full md:flex"
-        /> */}
+        />
         <ProgressBar
           label="Loading..."
           value={75}
@@ -159,7 +159,7 @@ export function ComponentsOverview({ className }: { className?: string }) {
           Notifications
         </Checkbox>
         <SearchField aria-label="Search" className="w-full" />
-        {/* <Combobox
+        <Combobox
           label="Country"
           description="Please select a country."
           className="w-full"
@@ -171,7 +171,7 @@ export function ComponentsOverview({ className }: { className?: string }) {
           <ComboboxItem>Tunisia</ComboboxItem>
           <ComboboxItem>United states</ComboboxItem>
           <ComboboxItem>United Kingdom</ComboboxItem>
-        </Combobox> */}
+        </Combobox>
         <NumberField label="Width" defaultValue={1024} className="w-full" />
         <ColorSlider
           label="Opacity"

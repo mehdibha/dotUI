@@ -62,6 +62,7 @@
     "react-aria": "^3.40.0",
     "react-aria-components": "^1.10.1",
     "react-dom": "catalog:react19",
+    "react-error-boundary": "^6.0.0",
     "react-hook-form": "^7.54.2",
     "react-resizable-panels": "^2.0.19",
     "react-stately": "^3.38.0",

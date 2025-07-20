@@ -29,5 +29,5 @@ const Text = ({ slot, className, ...props }: TextProps) => {
   );
 };
 
-export type { textStyles };
+export type { TextProps };
 export { Text };

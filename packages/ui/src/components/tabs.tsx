@@ -27,7 +27,6 @@ export const Tabs = createDynamicComponent<TabsProps>(
       })),
     ),
   },
-  true,
 );
 
 export const TabList = createDynamicComponent<TabListProps<object>>(

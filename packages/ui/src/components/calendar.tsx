@@ -40,7 +40,6 @@ export const Calendar = createDynamicComponent<CalendarProps<DateValue>>(
       })),
     ),
   },
-  true,
 );
 
 export const RangeCalendar = createDynamicComponent<
@@ -56,7 +55,6 @@ export const RangeCalendar = createDynamicComponent<
       })),
     ),
   },
-  true,
 );
 
 export const CalendarRoot = createDynamicComponent<
@@ -72,7 +70,6 @@ export const CalendarRoot = createDynamicComponent<
       })),
     ),
   },
-  true,
 );
 
 export const RangeCalendarRoot = createDynamicComponent<
@@ -88,7 +85,6 @@ export const RangeCalendarRoot = createDynamicComponent<
       })),
     ),
   },
-  true,
 );
 
 export const CalendarHeader = createDynamicComponent<CalendarHeaderProps>(

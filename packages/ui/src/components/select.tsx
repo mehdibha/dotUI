@@ -27,7 +27,6 @@ export const SelectRoot = createDynamicComponent<SelectRootProps<object>>(
       })),
     ),
   },
-  true,
 );
 
 export const Select = createDynamicComponent<SelectProps<object>>(
@@ -41,7 +40,6 @@ export const Select = createDynamicComponent<SelectProps<object>>(
       })),
     ),
   },
-  true,
 );
 
 export const SelectValue = createDynamicComponent<SelectValueProps<object>>(

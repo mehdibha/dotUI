@@ -4,6 +4,7 @@ import React from "react";
 import { UNSAFE_PortalProvider } from "@react-aria/overlays";
 import { CheckIcon, CopyIcon } from "lucide-react";
 import { AnimatePresence, motion, useInView } from "motion/react";
+import { useTheme } from "next-themes";
 import type { Variants } from "motion/react";
 
 import { StyleProvider } from "@dotui/ui";
@@ -17,7 +18,7 @@ import {
   MobileComponentsOverview,
 } from "@/components/components-overview";
 import { useMounted } from "@/hooks/use-mounted";
-import { useTheme } from "next-themes";
+import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 
 export const StylesOverview = ({
   styles,
@@ -26,6 +27,7 @@ export const StylesOverview = ({
 }) => {
   const container = React.useRef(null);
   const { resolvedTheme } = useTheme();
+  const { currentMode } = usePreferences();
 
   const [currentStyleName, setCurrentStyleName] = React.useState<string>(
     styles[0]!.name,
@@ -46,7 +48,9 @@ export const StylesOverview = ({
     }, 1000);
   };
 
-  const currentStyle = styles.find((style) => style.name === currentStyleName)!;
+  const currentStyle = React.useMemo(() => {
+    return styles.find((style) => style.name === currentStyleName)!;
+  }, [currentStyleName, styles]);
 
   React.useEffect(() => {
     const interval = setInterval(() => {
@@ -67,7 +71,11 @@ export const StylesOverview = ({
   return (
     <>
       {isMounted && (
-        <StyleProvider ref={container} style={currentStyle} mode={resolvedTheme as "light" | "dark" | undefined}/>
+        <StyleProvider
+          ref={container}
+          style={currentStyle}
+          mode={resolvedTheme as "light" | "dark" | undefined}
+        />
       )}
       <div className="flex flex-col gap-6">
         <div className="flex flex-col-reverse items-center gap-4 min-[1450px]:flex-row min-[1450px]:items-end">
@@ -149,10 +157,9 @@ export const StylesOverview = ({
         <Skeleton show={false} className="w-full rounded-md">
           <div className="relative w-full">
             <StyleProvider
-              style={currentStyle}
+              style={isMounted ? currentStyle : undefined}
               mode={resolvedTheme as "light" | "dark" | undefined}
-              className="relative w-full bg-transparent"
-              suppressHydrationWarning
+              className="relative w-full"
             >
               <UNSAFE_PortalProvider getContainer={() => container.current}>
                 <div className="bg-bg w-full rounded-md border shadow-md">

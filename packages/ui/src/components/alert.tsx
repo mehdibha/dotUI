@@ -32,7 +32,6 @@ export const Alert = createDynamicComponent<AlertProps>(
       })),
     ),
   },
-  true,
 );
 
 export const AlertRoot = createDynamicComponent<AlertRootProps>(
@@ -51,7 +50,6 @@ export const AlertRoot = createDynamicComponent<AlertRootProps>(
       })),
     ),
   },
-  true,
 );
 
 export const AlertTitle = createDynamicComponent<AlertTitleProps>(
@@ -71,6 +69,7 @@ export const AlertTitle = createDynamicComponent<AlertTitleProps>(
     ),
   },
 );
+
 export const AlertContent = createDynamicComponent<AlertContentProps>(
   "alert",
   "AlertContent",
