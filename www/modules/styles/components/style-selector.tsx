@@ -3,7 +3,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { ChevronDownIcon } from "lucide-react";
 
-import { Session } from "@dotui/auth";
 import { Button } from "@dotui/ui/components/button";
 import { HelpText } from "@dotui/ui/components/field";
 import { ListBox, ListBoxSection } from "@dotui/ui/components/list-box";

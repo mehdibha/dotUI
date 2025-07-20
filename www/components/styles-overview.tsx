@@ -155,30 +155,26 @@ export const StylesOverview = ({
           </div>
         </div>
         <Skeleton show={false} className="w-full rounded-md">
-          <div className="relative w-full">
-            <StyleProvider
-              style={isMounted ? currentStyle : undefined}
-              mode={resolvedTheme as "light" | "dark" | undefined}
-              className="relative w-full"
-            >
-              <UNSAFE_PortalProvider getContainer={() => container.current}>
-                <div className="w-full rounded-md border bg-bg shadow-md">
-                  <AnimatePresence mode="popLayout">
-                    <motion.div
-                      key={currentStyleName}
-                      variants={variants}
-                      initial="hidden"
-                      animate="show"
-                      exit="hidden"
-                    >
-                      <ComponentsOverview className="hidden sm:grid" />
-                      <MobileComponentsOverview className="sm:hidden" />
-                    </motion.div>
-                  </AnimatePresence>
-                </div>
-              </UNSAFE_PortalProvider>
-            </StyleProvider>
-          </div>
+          <StyleProvider
+            style={isMounted ? currentStyle : undefined}
+            mode={resolvedTheme as "light" | "dark" | undefined}
+            className="relative w-full rounded-md border bg-bg shadow-md"
+          >
+            <UNSAFE_PortalProvider getContainer={() => container.current}>
+              <AnimatePresence mode="popLayout">
+                <motion.div
+                  key={currentStyleName}
+                  variants={variants}
+                  initial="hidden"
+                  animate="show"
+                  exit="hidden"
+                >
+                  <ComponentsOverview className="hidden sm:grid" />
+                  <MobileComponentsOverview className="sm:hidden" />
+                </motion.div>
+              </AnimatePresence>
+            </UNSAFE_PortalProvider>
+          </StyleProvider>
         </Skeleton>
       </div>
     </>

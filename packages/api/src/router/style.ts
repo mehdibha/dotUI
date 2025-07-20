@@ -3,7 +3,7 @@ import type { TRPCRouterRecord } from "@trpc/server";
 
 import { eq } from "@dotui/db";
 import { style } from "@dotui/db/schema";
-import { restoreStyleDefinitionDefaults } from "@dotui/style-engine";
+import { restoreStyleDefinitionDefaults } from "@dotui/style-engine/utils";
 
 import { publicProcedure } from "../trpc";
 

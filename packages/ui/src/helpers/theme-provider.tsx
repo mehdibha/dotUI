@@ -2,7 +2,7 @@ import React from "react";
 
 import { registryBackgroundPatterns } from "@dotui/registry-definition/registry-bg-patterns";
 import { registryTextures } from "@dotui/registry-definition/registry-textures";
-import { createTheme } from "@dotui/style-engine";
+import { createTheme } from "@dotui/style-engine/core";
 import { cn } from "@dotui/ui/lib/utils";
 import type { ThemeDefinition } from "@dotui/style-engine/types";
 

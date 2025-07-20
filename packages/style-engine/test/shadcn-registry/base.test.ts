@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
 
-import { createStyle, restoreStyleDefinitionDefaults } from "../../src";
+import { createStyle } from "../../src/core";
 import { generateRegistryBase } from "../../src/shadcn-registry/generators/base";
+import { restoreStyleDefinitionDefaults } from "../../src/utils";
 import { mockStyleDefinition } from "../fixtures/styles";
 
 describe("generateRegistryBase", () => {
