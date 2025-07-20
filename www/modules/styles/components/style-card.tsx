@@ -42,7 +42,7 @@ export function StyleCard(props: {
           <div className="mt-4 flex items-center gap-2">
             <Button
               href={`/style/${props.style.slug}`}
-              variant="accent"
+              variant="default"
               suffix={<SquareArrowOutUpRightIcon />}
               className="h-8 text-sm"
             >

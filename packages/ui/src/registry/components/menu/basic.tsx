@@ -17,6 +17,7 @@ import type {
   MenuProps as AriaMenuProps,
   MenuSectionProps as AriaMenuSectionProps,
   MenuTriggerProps as AriaMenuTriggerProps,
+  SubmenuTriggerProps as AriaSubmenuTriggerProps,
 } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 
@@ -28,7 +29,7 @@ import type { OverlayProps } from "@dotui/ui/components/overlay";
 
 const menuStyles = tv({
   base: [
-    "max-h[inherit] rounded-[inherit] p-1 outline-hidden",
+    "max-h[inherit] outline-hidden rounded-[inherit] p-1",
     "group-data-[type=drawer]/overlay:p-2",
     "[&_.separator]:-mx-1 [&_.separator]:my-1 [&_.separator]:w-auto",
   ],
@@ -36,7 +37,7 @@ const menuStyles = tv({
 
 const menuItemStyles = tv({
   base: [
-    "flex cursor-pointer items-center gap-2 rounded-sm px-3 py-1.5 text-sm outline-hidden transition-colors focus:bg-bg-inverse/10 disabled:pointer-events-none disabled:text-fg-disabled",
+    "outline-hidden focus:bg-bg-inverse/10 disabled:text-fg-disabled flex cursor-pointer items-center gap-2 rounded-sm px-3 py-1.5 text-sm transition-colors disabled:pointer-events-none",
     "selection-single:pl-0 selection-multiple:pl-0",
     "group-data-[type=drawer]/overlay:text-md group-data-[type=drawer]/overlay:py-3",
     "group-data-[type=modal]/overlay:text-md group-data-[type=modal]/overlay:py-2",
@@ -98,6 +99,7 @@ const MenuContent = <T extends object>({
   );
 };
 
+type MenuSubProps = AriaSubmenuTriggerProps;
 const MenuSub = AriaSubmenuTrigger;
 
 interface MenuItemProps<T>
@@ -133,7 +135,7 @@ const MenuItem = <T extends object>({
             {selectionMode !== "none" && (
               <span className="flex w-8 items-center justify-center">
                 {isSelected && (
-                  <CheckIcon aria-hidden className="size-4 text-fg-accent" />
+                  <CheckIcon aria-hidden className="text-fg-accent size-4" />
                 )}
               </span>
             )}
@@ -170,7 +172,7 @@ const MenuSection = <T extends object>({
   return (
     <AriaMenuSection className={menuSectionStyles({ className })} {...props}>
       {title && (
-        <AriaHeader className="mb-1 pl-3 text-xs text-fg-muted">
+        <AriaHeader className="text-fg-muted mb-1 pl-3 text-xs">
           {title}
         </AriaHeader>
       )}
@@ -179,5 +181,12 @@ const MenuSection = <T extends object>({
   );
 };
 
-export type { MenuProps, MenuRootProps };
-export { Menu, MenuRoot, MenuItem, MenuContent, MenuSub, MenuSection };
+export type {
+  MenuRootProps,
+  MenuProps,
+  MenuContentProps,
+  MenuItemProps,
+  MenuSectionProps,
+  MenuSubProps,
+};
+export { MenuRoot, Menu, MenuItem, MenuContent, MenuSub, MenuSection };

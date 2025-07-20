@@ -53,7 +53,7 @@ export function ComponentsOverview({ className }: { className?: string }) {
         />
       </div>
       <div className="col-span-3 hidden translate-y-3 justify-end gap-2 xl:col-span-2 xl:flex">
-        <Switch>
+        <Switch aria-label="Toggle focus mode">
           <span className="truncate">Focus mode</span>
         </Switch>
         <Avatar
@@ -63,7 +63,7 @@ export function ComponentsOverview({ className }: { className?: string }) {
         />
       </div>
       <div className="col-span-4 row-span-2 lg:col-span-2">
-        <RadioGroup>
+        <RadioGroup aria-label="Contact method">
           <Radio value="email">Email</Radio>
           <Radio value="phone">Phone (SMS)</Radio>
           <Radio value="notification">
@@ -79,7 +79,7 @@ export function ComponentsOverview({ className }: { className?: string }) {
             <PinIcon />
           </ToggleButton>
           <MenuRoot>
-            <Button shape="square">
+            <Button shape="square" aria-label="Open menu">
               <MenuIcon />
             </Button>
             <Menu>
@@ -89,15 +89,15 @@ export function ComponentsOverview({ className }: { className?: string }) {
               <MenuItem>Log out</MenuItem>
             </Menu>
           </MenuRoot>
-          <Select>
+          {/* <Select aria-label="Select AI provider">
             <SelectItem>Perplexity</SelectItem>
             <SelectItem>Replicate</SelectItem>
             <SelectItem>Together AI</SelectItem>
             <SelectItem>ElevenLabs</SelectItem>
-          </Select>
+          </Select> */}
         </div>
         <div className="flex items-center gap-2 xl:hidden">
-          <Switch>
+          <Switch aria-label="Toggle focus mode">
             <span className="truncate">Focus mode</span>
           </Switch>
           <Avatar
@@ -109,9 +109,9 @@ export function ComponentsOverview({ className }: { className?: string }) {
       </div>
       <div className="col-span-10 flex items-center justify-end gap-2 lg:col-span-8 xl:col-span-3">
         {/* <FileTriggerDemo /> */}
-        <ColorPicker defaultValue="#5100FF" />
+        {/* <ColorPicker defaultValue="#5100FF" aria-label="Select color" /> */}
         <TimeField aria-label="Event time" />
-        <DatePicker className="" />
+        {/* <DatePicker className="" aria-label="Select date" /> */}
       </div>
       <div className="col-span-5 flex flex-col gap-4 md:col-span-4 md:row-span-6 lg:col-span-3 lg:row-span-8">
         <Alert title="Payment Information" className="hidden md:flex">
@@ -150,12 +150,16 @@ export function ComponentsOverview({ className }: { className?: string }) {
         <Alert title="Payment Information" className="md:hidden">
           Enter your payment method to complete your purchase.
         </Alert>
-        <Checkbox defaultSelected variant={defaultColorScheme}>
+        <Checkbox
+          defaultSelected
+          variant={defaultColorScheme}
+          aria-label="Enable notifications"
+        >
           {" "}
           Notifications
         </Checkbox>
         <SearchField aria-label="Search" className="w-full" />
-        <Combobox
+        {/* <Combobox
           label="Country"
           description="Please select a country."
           className="w-full"
@@ -167,7 +171,7 @@ export function ComponentsOverview({ className }: { className?: string }) {
           <ComboboxItem>Tunisia</ComboboxItem>
           <ComboboxItem>United states</ComboboxItem>
           <ComboboxItem>United Kingdom</ComboboxItem>
-        </Combobox>
+        </Combobox> */}
         <NumberField label="Width" defaultValue={1024} className="w-full" />
         <ColorSlider
           label="Opacity"
@@ -183,7 +187,7 @@ export function ComponentsOverview({ className }: { className?: string }) {
         />
       </div>
       <div className="col-span-10 flex justify-between gap-8 md:col-span-6 lg:col-span-5 lg:row-span-3">
-        <ListBox className="max-h-none w-full">
+        <ListBox className="max-h-none w-full" aria-label="File operations">
           <ListBoxItem>New...</ListBoxItem>
           <ListBoxItem>Badges</ListBoxItem>
           <Separator />
@@ -194,7 +198,7 @@ export function ComponentsOverview({ className }: { className?: string }) {
           <ListBoxItem>Page setup…</ListBoxItem>
           <ListBoxItem>Print…</ListBoxItem>
         </ListBox>
-        <RangeCalendar />
+        <RangeCalendar aria-label="Select date range" />
       </div>
       <div className="col-span-10 row-span-6 lg:col-span-7">
         <TableRoot
@@ -249,7 +253,7 @@ export const MobileComponentsOverview = ({
         />
       </div>
       <div className="col-span-10 row-span-2 flex justify-between min-[560px]:col-span-3">
-        <RadioGroup>
+        <RadioGroup aria-label="Contact method">
           <Radio value="email">
             <span className="truncate">Email</span>
           </Radio>
@@ -264,7 +268,7 @@ export const MobileComponentsOverview = ({
           </Radio>
         </RadioGroup>
         <div className="flex flex-col items-end gap-3 min-[560px]:hidden">
-          <Switch>
+          <Switch aria-label="Toggle focus mode">
             <span className="truncate">Focus mode</span>
           </Switch>
           <Avatar
@@ -280,8 +284,8 @@ export const MobileComponentsOverview = ({
           <PinIcon />
         </ToggleButton>
         <span className="flex-1" />
-        <MenuRoot>
-          <Button shape="square">
+        {/* <MenuRoot>
+          <Button shape="square" aria-label="Open menu">
             <MenuIcon />
           </Button>
           <Menu>
@@ -290,13 +294,13 @@ export const MobileComponentsOverview = ({
             <MenuItem>Command menu</MenuItem>
             <MenuItem>Log out</MenuItem>
           </Menu>
-        </MenuRoot>
-        <Select className="flex-1 xs:flex-auto">
+        </MenuRoot> */}
+        {/* <Select className="xs:flex-auto flex-1" aria-label="Select AI provider">
           <SelectItem>Perplexity</SelectItem>
           <SelectItem>Replicate</SelectItem>
           <SelectItem>Together AI</SelectItem>
           <SelectItem>ElevenLabs</SelectItem>
-        </Select>
+        </Select> */}
       </div>
       <div className="col-span-7 hidden items-center justify-end gap-3 min-[560px]:flex">
         <Avatar
@@ -304,16 +308,20 @@ export const MobileComponentsOverview = ({
           alt="@mehdibha"
           fallback="M"
         />
-        <Switch>
+        <Switch aria-label="Toggle focus mode">
           <span className="truncate">Focus mode</span>
         </Switch>
       </div>
       <div className="col-span-10">
-        <DatePicker className="w-full" />
+        <DatePicker className="w-full" aria-label="Select date" />
       </div>
       <div className="col-span-10 flex flex-wrap items-center gap-3">
         {/* <FileTriggerDemo /> */}
-        <ColorPicker defaultValue="#5100FF" className="flex-1" />
+        {/* <ColorPicker
+          defaultValue="#5100FF"
+          className="flex-1"
+          aria-label="Select color"
+        /> */}
         <TimeField aria-label="Event time" className="flex-1" />
       </div>
       {/* <div className="col-span-5 flex justify-end">
@@ -327,11 +335,11 @@ function Login() {
   const defaultColorScheme = "primary";
 
   return (
-    <div className="w-full rounded-lg border bg-bg-muted p-8">
-      <h1 className="text-2xl leading-none font-semibold tracking-tight">
+    <div className="bg-bg-muted w-full rounded-lg border p-8">
+      <h1 className="text-2xl font-semibold leading-none tracking-tight">
         Login
       </h1>
-      <p className="mt-2 text-sm text-fg-muted">
+      <p className="text-fg-muted mt-2 text-sm">
         Enter your email below to login to your account
       </p>
       <div className="mt-4 flex items-center gap-2">
@@ -362,7 +370,7 @@ function Login() {
           <span className="w-full border-t" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-bg-muted px-2 text-fg-muted">Or</span>
+          <span className="bg-bg-muted text-fg-muted px-2">Or</span>
         </div>
       </div>
       <TextField label="Email address" type="email" className="w-full" />
@@ -373,7 +381,7 @@ function Login() {
       >
         Continue with email
       </Button>
-      <p className="mt-4 text-sm text-fg-muted">
+      <p className="text-fg-muted mt-4 text-sm">
         Don&apos;t have an account?{" "}
         <Link variant="quiet" href="/preview/register">
           Register
@@ -387,11 +395,11 @@ function Register() {
   const defaultColorScheme = "primary";
 
   return (
-    <div className="w-full rounded-lg border bg-bg-muted p-8">
-      <h1 className="text-2xl leading-none font-semibold tracking-tight">
+    <div className="bg-bg-muted w-full rounded-lg border p-8">
+      <h1 className="text-2xl font-semibold leading-none tracking-tight">
         Create an account
       </h1>
-      <p className="mt-2 text-sm text-fg-muted">
+      <p className="text-fg-muted mt-2 text-sm">
         Enter your email below to create your account
       </p>
       <div className="mt-4 flex items-center gap-2">
@@ -423,14 +431,14 @@ function Register() {
           <span className="w-full border-t" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-bg-muted px-2 text-fg-muted">Or</span>
+          <span className="bg-bg-muted text-fg-muted px-2">Or</span>
         </div>
       </div>
       <TextField label="Email address" className="w-full" />
       <Button variant={defaultColorScheme} className="mt-4 w-full">
         Sign up with email
       </Button>
-      <p className="mt-4 text-sm text-fg-muted">
+      <p className="text-fg-muted mt-4 text-sm">
         Already have an account?{" "}
         <Link variant="quiet" href="/preview/login">
           Login

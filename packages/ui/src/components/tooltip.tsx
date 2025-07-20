@@ -21,7 +21,7 @@ export const Tooltip = createDynamicComponent<TooltipProps>(
   "Tooltip",
   _Tooltip,
   {
-    tooltip_framer: React.lazy(() =>
+    motion: React.lazy(() =>
       // @ts-expect-error - motion modify the props
       import("../registry/components/tooltip/motion").then((mod) => ({
         default: mod.Tooltip,
@@ -36,7 +36,7 @@ export const TooltipRoot = createDynamicComponent<TooltipRootProps>(
   "TooltipRoot",
   _TooltipRoot,
   {
-    tooltip_framer: React.lazy(() =>
+    motion: React.lazy(() =>
       import("../registry/components/tooltip/motion").then((mod) => ({
         default: mod.TooltipRoot,
       })),
@@ -50,7 +50,7 @@ export const TooltipContent = createDynamicComponent<TooltipContentProps>(
   "TooltipContent",
   _TooltipContent,
   {
-    tooltip_framer: React.lazy(() =>
+    motion: React.lazy(() =>
       // @ts-expect-error - motion modify the props
       import("../registry/components/tooltip/motion").then((mod) => ({
         default: mod.TooltipContent,
@@ -64,7 +64,7 @@ export const TooltipArrow = createDynamicComponent<TooltipArrowProps>(
   "TooltipArrow",
   _TooltipArrow,
   {
-    tooltip_framer: React.lazy(() =>
+    motion: React.lazy(() =>
       import("../registry/components/tooltip/motion").then((mod) => ({
         default: mod.TooltipArrow,
       })),

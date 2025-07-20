@@ -338,52 +338,20 @@ const autoContrast = plugin(function ({ addBase, theme }) {
   const colorShadeVars = getContrastCssVars(cssVars);
   const contrastColors = generateContrastColors(colorShadeVars);
 
-  // 🐛 Debug specific color that might be wrong
-  const testColor = "hsl(35, 100%, 50%)";
-  console.log("=== DEBUGGING WARNING-400 COLOR ===");
-  console.log("Input color:", testColor);
-
-  const rgb = parseColorToRgb(testColor);
-  console.log("Parsed RGB:", rgb);
-
-  if (rgb) {
-    const colorLuminance = calculateLuminance(rgb.r, rgb.g, rgb.b);
-    console.log("Color luminance:", colorLuminance);
-
-    const contrastWithBlack = calculateContrastRatio(colorLuminance, 0);
-    const contrastWithWhite = calculateContrastRatio(colorLuminance, 1);
-
-    console.log("Contrast with BLACK:", contrastWithBlack.toFixed(2));
-    console.log("Contrast with WHITE:", contrastWithWhite.toFixed(2));
-    console.log(
-      "Higher contrast:",
-      contrastWithBlack > contrastWithWhite ? "BLACK" : "WHITE",
-    );
-
-    const contrastColor = getContrastColor(testColor);
-    console.log("Final result:", contrastColor);
-    console.log("Expected: black, Got:", contrastColor);
-  }
-  console.log("=== END DEBUG ===");
-
-  // Apply contrast colors for each theme
   Object.keys(contrastColors).forEach((themeName) => {
     const themeContrastVars = contrastColors[themeName];
 
     if (Object.keys(themeContrastVars).length > 0) {
-      // Convert to CSS variable format with -- prefix
       const cssVarsWithPrefix = {};
       Object.entries(themeContrastVars).forEach(([varName, value]) => {
         cssVarsWithPrefix[`--${varName}`] = value;
       });
 
       if (themeName === "light") {
-        // Apply to :root for light theme
         addBase({
           ":root": cssVarsWithPrefix,
         });
       } else {
-        // Apply to .{themeName} for other themes
         addBase({
           [`.${themeName}`]: cssVarsWithPrefix,
         });
