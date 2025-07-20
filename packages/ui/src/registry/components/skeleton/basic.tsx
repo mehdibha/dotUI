@@ -6,11 +6,7 @@ export type SkeletonProps = React.HTMLAttributes<HTMLDivElement> & {
   show?: boolean;
 };
 
-function Skeleton({
-  className,
-  show = true,
-  ...props
-}: SkeletonProps) {
+function Skeleton({ className, show = true, ...props }: SkeletonProps) {
   if (!show) return props.children;
   return (
     <div

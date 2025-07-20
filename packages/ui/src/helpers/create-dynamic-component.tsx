@@ -101,7 +101,7 @@ function Skeleton({
   return (
     <div
       className={cn(
-        "bg-bg-muted relative block h-6 animate-pulse rounded-md",
+        "relative block h-6 animate-pulse rounded-md bg-bg-muted",
         props.children && "h-auto text-transparent *:invisible",
         className,
       )}
@@ -120,8 +120,8 @@ function Error({
   variantName: string;
 }) {
   return (
-    <div className="border-border-danger flex items-center justify-center rounded-md border p-4">
-      <div className="border-border-danger bg-bg-danger-muted text-fg-danger flex items-start gap-2 rounded-md p-2 text-sm">
+    <div className="flex items-center justify-center rounded-md border border-border-danger p-4">
+      <div className="flex items-start gap-2 rounded-md border-border-danger bg-bg-danger-muted p-2 text-sm text-fg-danger">
         <AlertCircleIcon />
         <div>
           <span className="font-bold">Error rendering dynamic component:</span>

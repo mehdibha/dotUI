@@ -8,8 +8,7 @@ export const ColorSwatch = createDynamicComponent<ColorSwatchProps>(
   "color-swatch",
   "ColorSwatch",
   _ColorSwatch,
-  {
-  },
+  {},
 );
 
 export type { ColorSwatchProps };
