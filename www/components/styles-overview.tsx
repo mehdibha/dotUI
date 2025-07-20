@@ -104,12 +104,12 @@ export const StylesOverview = ({
             </TabList>
           </Tabs>
           <div className="flex flex-1 items-center justify-center">
-            <div className="text-fg-muted relative flex items-center gap-2 py-2 pl-4 pr-2 font-mono text-xs">
+            <div className="relative flex items-center gap-2 py-2 pr-2 pl-4 font-mono text-xs text-fg-muted">
               <motion.div
                 layout
                 initial={false}
                 transition={{ duration: 0.5 }}
-                className="bg-bg-neutral absolute inset-0 z-[-1] rounded-md border"
+                className="absolute inset-0 z-[-1] rounded-md border bg-bg-neutral"
               />
               <pre>
                 <code className="max-sm:flex max-sm:max-w-[60vw]">
@@ -142,12 +142,12 @@ export const StylesOverview = ({
                   shape="square"
                   size="sm"
                   onPress={handleCopy}
-                  className="text-fg-muted z-20 bg-[#f5f5f5] dark:bg-[#19191d] [&_svg]:size-3.5"
+                  className="z-20 bg-[#f5f5f5] text-fg-muted dark:bg-[#19191d] [&_svg]:size-3.5"
                 >
                   {copied ? (
-                    <CheckIcon className="animate-in fade-in duration-75" />
+                    <CheckIcon className="animate-in duration-75 fade-in" />
                   ) : (
-                    <CopyIcon className="animate-in fade-in duration-75" />
+                    <CopyIcon className="animate-in duration-75 fade-in" />
                   )}
                 </Button>
               </motion.div>
@@ -162,7 +162,7 @@ export const StylesOverview = ({
               className="relative w-full"
             >
               <UNSAFE_PortalProvider getContainer={() => container.current}>
-                <div className="bg-bg w-full rounded-md border shadow-md">
+                <div className="w-full rounded-md border bg-bg shadow-md">
                   <AnimatePresence mode="popLayout">
                     <motion.div
                       key={currentStyleName}

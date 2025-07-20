@@ -73,7 +73,7 @@ export const ThemeProvider = ({
         {...props}
         data-focus-style={focusRing}
         suppressHydrationWarning
-        className={cn("bg-bg font-body text-fg relative", props.className)}
+        className={cn("relative bg-bg font-body text-fg", props.className)}
       >
         {texture && (
           <div style={transformCssToJSXStyle(texture.css[".texture"])} />

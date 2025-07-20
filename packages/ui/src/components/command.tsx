@@ -8,18 +8,13 @@ import {
   CommandRoot as _CommandRoot,
 } from "../registry/components/command/basic";
 
-export const Command = createDynamicComponent(
-  "command",
-  "Command",
-  _Command,
-  {
-    basic: React.lazy(() =>
-      import("../registry/components/command/basic").then((mod) => ({
-        default: mod.Command,
-      })),
-    ),
-  },
-);
+export const Command = createDynamicComponent("command", "Command", _Command, {
+  basic: React.lazy(() =>
+    import("../registry/components/command/basic").then((mod) => ({
+      default: mod.Command,
+    })),
+  ),
+});
 
 export const CommandRoot = createDynamicComponent(
   "command",

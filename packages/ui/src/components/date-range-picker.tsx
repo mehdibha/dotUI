@@ -14,18 +14,13 @@ import type {
 
 export const DateRangePicker = createDynamicComponent<
   DateRangePickerProps<any>
->(
-  "date-range-picker",
-  "DateRangePicker",
-  _DateRangePicker,
-  {
-    basic: React.lazy(() =>
-      import("../registry/components/date-range-picker/basic").then((mod) => ({
-        default: mod.DateRangePicker,
-      })),
-    ),
-  },
-);
+>("date-range-picker", "DateRangePicker", _DateRangePicker, {
+  basic: React.lazy(() =>
+    import("../registry/components/date-range-picker/basic").then((mod) => ({
+      default: mod.DateRangePicker,
+    })),
+  ),
+});
 
 export const DateRangePickerRoot = createDynamicComponent<
   DateRangePickerRootProps<any>

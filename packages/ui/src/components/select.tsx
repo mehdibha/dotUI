@@ -67,4 +67,3 @@ export const SelectItem = createDynamicComponent<SelectItemProps<object>>(
     ),
   },
 );
-
