@@ -11,7 +11,7 @@ links:
 ---
 
 <ComponentPreview
-  name="number-field/default"
+  name="number-field/demos/default"
   preview={`<NumberField label="Width" defaultValue={1024} />`}
 />
 
@@ -32,7 +32,7 @@ Use a `NumberField` to allow a user to enter a number.
 The NumberField value can be formatted by using the `formatOptions` prop. formatOptions is compatible with the option parameter of [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat) and is applied based on the current locale.
 
 <ComponentPreview
-  name="number-field/format-options"
+  name="number-field/demos/format-options"
   preview={`<NumberField
     label="Decimal"
     defaultValue={0}
@@ -75,7 +75,7 @@ The NumberField value can be formatted by using the `formatOptions` prop. format
 Use the `size` prop to control the size of the `NumberField`. The default size is `"md"`.
 
 <ComponentPreview
-  name="number-field/sizes"
+  name="number-field/demos/sizes"
   preview={`<NumberField size="sm" />
 <NumberField size="md" />
 <NumberField size="lg" />`}
@@ -86,7 +86,7 @@ Use the `size` prop to control the size of the `NumberField`. The default size i
 A visual label can be provided for the `NumberField` using the `label` prop or a hidden label using `aria-label` prop.
 
 <ComponentPreview
-  name="number-field/label"
+  name="number-field/demos/label"
   preview={`<NumberField label="Width" />
 <NumberField aria-label="Width" />`}
 />
@@ -96,7 +96,7 @@ A visual label can be provided for the `NumberField` using the `label` prop or a
 A description can be supplied to a NumberField via the `description` prop. The description is always visible unless the `isInvalid` prop is set to `true` and an error message is provided.
 
 <ComponentPreview
-  name="number-field/description"
+  name="number-field/demos/description"
   preview={`<NumberField label="Width" description="Enter the desired width." />`}
 />
 
@@ -105,7 +105,7 @@ A description can be supplied to a NumberField via the `description` prop. The d
 An `errorMessage` can be supplied to a `NumberField`, which will be displayed when the `isInvalid` prop is set to `true`.
 
 <ComponentPreview
-  name="number-field/error-message"
+  name="number-field/demos/error-message"
   preview={`<NumberField
     label="Width"
     isInvalid
@@ -118,7 +118,7 @@ An `errorMessage` can be supplied to a `NumberField`, which will be displayed wh
 Use the `isDisabled` prop to disable the NumberField.
 
 <ComponentPreview
-  name="number-field/disabled"
+  name="number-field/demos/disabled"
   preview={`<NumberField isDisabled />`}
 />
 
@@ -127,7 +127,7 @@ Use the `isDisabled` prop to disable the NumberField.
 The `isReadOnly` boolean prop makes the NumberField's text content immutable. Unlike `isDisabled`, the NumberField remains focusable and the contents can still be copied.
 
 <ComponentPreview
-  name="number-field/read-only"
+  name="number-field/demos/read-only"
   preview={`<NumberField isReadOnly />`}
 />
 
@@ -137,7 +137,7 @@ Use the `isRequired` prop to mark the NumberField as required.
 Use the `necessityIndicator` prop to control the visual style of the required state.
 
 <ComponentPreview
-  name="number-field/required"
+  name="number-field/demos/required"
   preview={`<NumberField label="Width" isRequired />
 <NumberField label="Width" isRequired necessityIndicator="icon" />
 <NumberField label="Width" isRequired necessityIndicator="label" />
@@ -149,7 +149,7 @@ Use the `necessityIndicator` prop to control the visual style of the required st
 Use the `defaultValue` prop to set the default input value.
 
 <ComponentPreview
-  name="number-field/uncontrolled"
+  name="number-field/demos/uncontrolled"
   preview={`<NumberField defaultValue={80} />`}
 />
 
@@ -158,7 +158,7 @@ Use the `defaultValue` prop to set the default input value.
 Use the `value` and `onChange` props to control the value of the input.
 
 <ComponentPreview
-  name="number-field/controlled"
+  name="number-field/demos/controlled"
   preview={`const [value, setValue] = React.useState(69);
 return <NumberField value={value} onChange={setValue} />;`}
 />
@@ -168,7 +168,7 @@ return <NumberField value={value} onChange={setValue} />;`}
 If you need to customize things further, you can drop down to the composition level.
 
 <ComponentPreview
-  name="number-field/composition"
+  name="number-field/demos/composition"
   preview={`<NumberFieldRoot>
     <Label>Quantity</Label>
     <Group className="flex items-center gap-2">

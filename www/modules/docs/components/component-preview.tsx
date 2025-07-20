@@ -2,9 +2,12 @@ import React from "react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 
 import { Index } from "@dotui/ui/__registry__/demos";
+import { Alert } from "@dotui/ui/components/alert";
 import { cn } from "@dotui/ui/lib/utils";
 
+import { getFileSource } from "@/modules/docs/lib/get-file-source";
 import { CurrentStyleProvider } from "@/modules/styles/components/current-style-provider";
+import { CodeBlock } from "./code-block";
 import {
   ComponentPreviewHeader,
   ComponentWrapper,
@@ -36,18 +39,27 @@ export const ComponentPreview = async ({
 }: ComponentPreviewProps) => {
   const demoItem = Index[name];
 
-  // @ts-expect-error TODO fix later
+  if (!demoItem) {
+    return (
+      <div
+        className={cn("flex items-center justify-center", containerClassName)}
+      >
+        <Alert>Preview not found</Alert>
+      </div>
+    );
+  }
+
   const Component = demoItem.component;
 
-  // const code: { fileName: string; code: string }[] = demoItem.files.map(
-  //   (file: string) => {
-  //     const { fileName, content } = getFileSource(file);
-  //     return {
-  //       fileName,
-  //       code: content,
-  //     };
-  //   },
-  // );
+  const code: { fileName: string; code: string }[] = demoItem.files.map(
+    (file: string) => {
+      const { fileName, content } = getFileSource(file);
+      return {
+        fileName,
+        code: content,
+      };
+    },
+  );
 
   return (
     <div
@@ -62,8 +74,8 @@ export const ComponentPreview = async ({
                 <ScrollArea className="bg-bg text-fg">
                   <div
                     className={cn(
-                      "flex pt-14 pb-10",
-                      primary && "min-h-48 pt-24 pb-20",
+                      "flex pb-10 pt-14",
+                      primary && "min-h-48 pb-20 pt-24",
                       fullWidth
                         ? "px-8 lg:px-12"
                         : "flex items-center justify-center px-4",
@@ -87,7 +99,7 @@ export const ComponentPreview = async ({
           </Loader>
         </ResizableContainer>
       </div>
-      {/* <CodeBlock
+      <CodeBlock
         files={code.map((file) => ({
           fileName: file.fileName,
           code: file.code,
@@ -96,7 +108,7 @@ export const ComponentPreview = async ({
         preview={preview}
         className={"w-full rounded-t-none border-x-0 border-b-0"}
         expandable={expandable}
-      /> */}
+      />
     </div>
   );
 };

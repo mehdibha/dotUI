@@ -10,7 +10,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/colors/color-area.mdx?plain=1
 ---
 
-<ComponentPreview name="color-area/default" preview={`<ColorArea />`} />
+<ComponentPreview name="color-area/demos/default" preview={`<ColorArea />`} />
 
 ## Installation
 
@@ -40,7 +40,7 @@ import { ColorThumb } from "@/components/core/color-thumb";
 An initial, uncontrolled value can be provided to the `ColorArea` using the `defaultValue` prop.
 
 <ComponentPreview
-  name="color-area/uncontrolled"
+  name="color-area/demos/uncontrolled"
   preview={`<ColorArea defaultValue="hsl(30, 100%, 50%)" />`}
 />
 
@@ -49,7 +49,7 @@ An initial, uncontrolled value can be provided to the `ColorArea` using the `def
 Use the `value` and `onChange` props to control the value of the slider.
 
 <ComponentPreview
-  name="color-area/controlled"
+  name="color-area/demos/controlled"
   preview={`const [value, setValue] = React.useState(parseColor("hsl(0, 100%, 50%)"))
 return <ColorArea value={value} onChange={setValue} xChannel="saturation" yChannel="lightness" />`}
 />
@@ -59,7 +59,7 @@ return <ColorArea value={value} onChange={setValue} xChannel="saturation" yChann
 `xChannel` and `yChannel` props may be provided to specify which color channels the color area should display
 
 <ComponentPreview
-  name="color-area/channels"
+  name="color-area/demos/channels"
   preview={`<ColorArea xChannel="red" yChannel="blue" />`}
 />
 
@@ -70,7 +70,7 @@ return <ColorArea value={value} onChange={setValue} xChannel="saturation" yChann
 Use the `isDisabled` prop to disable the color area.
 
 <ComponentPreview
-  name="color-area/disabled"
+  name="color-area/demos/disabled"
   preview={`<ColorArea isDisabled />`}
 />
 
@@ -79,7 +79,7 @@ Use the `isDisabled` prop to disable the color area.
 If you need to customize things further, you can drop down to the composition level.
 
 <ComponentPreview
-  name="color-area/composition"
+  name="color-area/demos/composition"
   preview={`<ColorAreaRoot>
     <ColorThumb />
   </ColorAreaRoot>`}

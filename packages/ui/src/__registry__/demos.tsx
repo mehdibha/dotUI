@@ -9,122 +9,122 @@ export const Index: Record<
     component: React.LazyExoticComponent<React.ComponentType<object>>;
   }
 > = {
-  "alert/action": {
+  "alert/demos/action": {
     files: ["registry/components/alert/demos/action.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/alert/demos/action"),
     ),
   },
-  "alert/composition": {
+  "alert/demos/composition": {
     files: ["registry/components/alert/demos/composition.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/alert/demos/composition"),
     ),
   },
-  "alert/content": {
+  "alert/demos/content": {
     files: ["registry/components/alert/demos/content.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/alert/demos/content"),
     ),
   },
-  "alert/custom-icon": {
+  "alert/demos/custom-icon": {
     files: ["registry/components/alert/demos/custom-icon.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/alert/demos/custom-icon"),
     ),
   },
-  "alert/default": {
+  "alert/demos/default": {
     files: ["registry/components/alert/demos/default.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/alert/demos/default"),
     ),
   },
-  "alert/title": {
+  "alert/demos/title": {
     files: ["registry/components/alert/demos/title.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/alert/demos/title"),
     ),
   },
-  "alert/variants": {
+  "alert/demos/variants": {
     files: ["registry/components/alert/demos/variants.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/alert/demos/variants"),
     ),
   },
-  "avatar/composition": {
+  "avatar/demos/composition": {
     files: ["registry/components/avatar/demos/composition.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/avatar/demos/composition"),
     ),
   },
-  "avatar/default": {
+  "avatar/demos/default": {
     files: ["registry/components/avatar/demos/default.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/avatar/demos/default"),
     ),
   },
-  "avatar/shape": {
+  "avatar/demos/shape": {
     files: ["registry/components/avatar/demos/shape.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/avatar/demos/shape"),
     ),
   },
-  "avatar/sizes": {
+  "avatar/demos/sizes": {
     files: ["registry/components/avatar/demos/sizes.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/avatar/demos/sizes"),
     ),
   },
-  "badge/default": {
+  "badge/demos/default": {
     files: ["registry/components/badge/demos/default.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/badge/demos/default"),
     ),
   },
-  "badge/icon": {
+  "badge/demos/icon": {
     files: ["registry/components/badge/demos/icon.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/badge/demos/icon"),
     ),
   },
-  "badge/sizes": {
+  "badge/demos/sizes": {
     files: ["registry/components/badge/demos/sizes.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/badge/demos/sizes"),
     ),
   },
-  "badge/variants": {
+  "badge/demos/variants": {
     files: ["registry/components/badge/demos/variants.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/badge/demos/variants"),
     ),
   },
-  "breadcrumbs/basic": {
+  "breadcrumbs/demos/basic": {
     files: ["registry/components/breadcrumbs/demos/basic.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/breadcrumbs/demos/basic"),
     ),
   },
-  "breadcrumbs/composition": {
+  "breadcrumbs/demos/composition": {
     files: ["registry/components/breadcrumbs/demos/composition.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/breadcrumbs/demos/composition"),
     ),
   },
-  "breadcrumbs/disabled": {
+  "breadcrumbs/demos/disabled": {
     files: ["registry/components/breadcrumbs/demos/disabled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/breadcrumbs/demos/disabled"),
     ),
   },
-  "breadcrumbs/icon": {
+  "breadcrumbs/demos/icon": {
     files: ["registry/components/breadcrumbs/demos/icon.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/breadcrumbs/demos/icon"),
     ),
   },
-  "breadcrumbs/router-integration": {
+  "breadcrumbs/demos/router-integration": {
     files: ["registry/components/breadcrumbs/demos/router-integration.tsx"],
     component: React.lazy(
       () =>
@@ -133,62 +133,62 @@ export const Index: Record<
         ),
     ),
   },
-  "button/default": {
+  "button/demos/default": {
     files: ["registry/components/button/demos/default.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/button/demos/default"),
     ),
   },
-  "button/disabled": {
+  "button/demos/disabled": {
     files: ["registry/components/button/demos/disabled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/button/demos/disabled"),
     ),
   },
-  "button/link-button": {
+  "button/demos/link-button": {
     files: ["registry/components/button/demos/link-button.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/button/demos/link-button"),
     ),
   },
-  "button/loading": {
+  "button/demos/loading": {
     files: ["registry/components/button/demos/loading.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/button/demos/loading"),
     ),
   },
-  "button/prefix-and-suffix": {
+  "button/demos/prefix-and-suffix": {
     files: ["registry/components/button/demos/prefix-and-suffix.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/button/demos/prefix-and-suffix"),
     ),
   },
-  "button/shapes": {
+  "button/demos/shapes": {
     files: ["registry/components/button/demos/shapes.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/button/demos/shapes"),
     ),
   },
-  "button/sizes": {
+  "button/demos/sizes": {
     files: ["registry/components/button/demos/sizes.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/button/demos/sizes"),
     ),
   },
-  "button/variants": {
+  "button/demos/variants": {
     files: ["registry/components/button/demos/variants.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/button/demos/variants"),
     ),
   },
-  "button-group/default": {
+  "button-group/demos/default": {
     files: ["registry/components/button-group/demos/default.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/button-group/demos/default"),
     ),
   },
-  "calendar/calendar/composition": {
+  "calendar/demos/calendar/composition": {
     files: ["registry/components/calendar/demos/calendar/composition.tsx"],
     component: React.lazy(
       () =>
@@ -197,7 +197,7 @@ export const Index: Record<
         ),
     ),
   },
-  "calendar/calendar/controlled": {
+  "calendar/demos/calendar/controlled": {
     files: ["registry/components/calendar/demos/calendar/controlled.tsx"],
     component: React.lazy(
       () =>
@@ -206,14 +206,14 @@ export const Index: Record<
         ),
     ),
   },
-  "calendar/calendar/default": {
+  "calendar/demos/calendar/default": {
     files: ["registry/components/calendar/demos/calendar/default.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/calendar/demos/calendar/default"),
     ),
   },
-  "calendar/calendar/disabled": {
+  "calendar/demos/calendar/disabled": {
     files: ["registry/components/calendar/demos/calendar/disabled.tsx"],
     component: React.lazy(
       () =>
@@ -222,7 +222,7 @@ export const Index: Record<
         ),
     ),
   },
-  "calendar/calendar/error-message": {
+  "calendar/demos/calendar/error-message": {
     files: ["registry/components/calendar/demos/calendar/error-message.tsx"],
     component: React.lazy(
       () =>
@@ -231,7 +231,7 @@ export const Index: Record<
         ),
     ),
   },
-  "calendar/calendar/page-behaviour": {
+  "calendar/demos/calendar/page-behaviour": {
     files: ["registry/components/calendar/demos/calendar/page-behaviour.tsx"],
     component: React.lazy(
       () =>
@@ -240,7 +240,7 @@ export const Index: Record<
         ),
     ),
   },
-  "calendar/calendar/read-only": {
+  "calendar/demos/calendar/read-only": {
     files: ["registry/components/calendar/demos/calendar/read-only.tsx"],
     component: React.lazy(
       () =>
@@ -249,7 +249,7 @@ export const Index: Record<
         ),
     ),
   },
-  "calendar/calendar/uncontrolled": {
+  "calendar/demos/calendar/uncontrolled": {
     files: ["registry/components/calendar/demos/calendar/uncontrolled.tsx"],
     component: React.lazy(
       () =>
@@ -258,7 +258,7 @@ export const Index: Record<
         ),
     ),
   },
-  "calendar/calendar/unvailable-dates": {
+  "calendar/demos/calendar/unvailable-dates": {
     files: ["registry/components/calendar/demos/calendar/unvailable-dates.tsx"],
     component: React.lazy(
       () =>
@@ -267,7 +267,7 @@ export const Index: Record<
         ),
     ),
   },
-  "calendar/calendar/validation": {
+  "calendar/demos/calendar/validation": {
     files: ["registry/components/calendar/demos/calendar/validation.tsx"],
     component: React.lazy(
       () =>
@@ -276,14 +276,14 @@ export const Index: Record<
         ),
     ),
   },
-  "calendar/calendar/variant": {
+  "calendar/demos/calendar/variant": {
     files: ["registry/components/calendar/demos/calendar/variant.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/calendar/demos/calendar/variant"),
     ),
   },
-  "calendar/calendar/visible-months": {
+  "calendar/demos/calendar/visible-months": {
     files: ["registry/components/calendar/demos/calendar/visible-months.tsx"],
     component: React.lazy(
       () =>
@@ -292,7 +292,7 @@ export const Index: Record<
         ),
     ),
   },
-  "calendar/range-calendar/composition": {
+  "calendar/demos/range-calendar/composition": {
     files: [
       "registry/components/calendar/demos/range-calendar/composition.tsx",
     ],
@@ -303,7 +303,7 @@ export const Index: Record<
         ),
     ),
   },
-  "calendar/range-calendar/controlled": {
+  "calendar/demos/range-calendar/controlled": {
     files: ["registry/components/calendar/demos/range-calendar/controlled.tsx"],
     component: React.lazy(
       () =>
@@ -312,7 +312,7 @@ export const Index: Record<
         ),
     ),
   },
-  "calendar/range-calendar/default": {
+  "calendar/demos/range-calendar/default": {
     files: ["registry/components/calendar/demos/range-calendar/default.tsx"],
     component: React.lazy(
       () =>
@@ -321,7 +321,7 @@ export const Index: Record<
         ),
     ),
   },
-  "calendar/range-calendar/disabled": {
+  "calendar/demos/range-calendar/disabled": {
     files: ["registry/components/calendar/demos/range-calendar/disabled.tsx"],
     component: React.lazy(
       () =>
@@ -330,7 +330,7 @@ export const Index: Record<
         ),
     ),
   },
-  "calendar/range-calendar/error-message": {
+  "calendar/demos/range-calendar/error-message": {
     files: [
       "registry/components/calendar/demos/range-calendar/error-message.tsx",
     ],
@@ -341,7 +341,7 @@ export const Index: Record<
         ),
     ),
   },
-  "calendar/range-calendar/non-contiguous-ranges": {
+  "calendar/demos/range-calendar/non-contiguous-ranges": {
     files: [
       "registry/components/calendar/demos/range-calendar/non-contiguous-ranges.tsx",
     ],
@@ -352,7 +352,7 @@ export const Index: Record<
         ),
     ),
   },
-  "calendar/range-calendar/page-behaviour": {
+  "calendar/demos/range-calendar/page-behaviour": {
     files: [
       "registry/components/calendar/demos/range-calendar/page-behaviour.tsx",
     ],
@@ -363,7 +363,7 @@ export const Index: Record<
         ),
     ),
   },
-  "calendar/range-calendar/read-only": {
+  "calendar/demos/range-calendar/read-only": {
     files: ["registry/components/calendar/demos/range-calendar/read-only.tsx"],
     component: React.lazy(
       () =>
@@ -372,7 +372,7 @@ export const Index: Record<
         ),
     ),
   },
-  "calendar/range-calendar/uncontrolled": {
+  "calendar/demos/range-calendar/uncontrolled": {
     files: [
       "registry/components/calendar/demos/range-calendar/uncontrolled.tsx",
     ],
@@ -383,7 +383,7 @@ export const Index: Record<
         ),
     ),
   },
-  "calendar/range-calendar/unvailable-dates": {
+  "calendar/demos/range-calendar/unvailable-dates": {
     files: [
       "registry/components/calendar/demos/range-calendar/unvailable-dates.tsx",
     ],
@@ -394,7 +394,7 @@ export const Index: Record<
         ),
     ),
   },
-  "calendar/range-calendar/validation": {
+  "calendar/demos/range-calendar/validation": {
     files: ["registry/components/calendar/demos/range-calendar/validation.tsx"],
     component: React.lazy(
       () =>
@@ -403,7 +403,7 @@ export const Index: Record<
         ),
     ),
   },
-  "calendar/range-calendar/variant": {
+  "calendar/demos/range-calendar/variant": {
     files: ["registry/components/calendar/demos/range-calendar/variant.tsx"],
     component: React.lazy(
       () =>
@@ -412,7 +412,7 @@ export const Index: Record<
         ),
     ),
   },
-  "calendar/range-calendar/visible-months": {
+  "calendar/demos/range-calendar/visible-months": {
     files: [
       "registry/components/calendar/demos/range-calendar/visible-months.tsx",
     ],
@@ -423,68 +423,68 @@ export const Index: Record<
         ),
     ),
   },
-  "checkbox/card": {
+  "checkbox/demos/card": {
     files: ["registry/components/checkbox/demos/card.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/checkbox/demos/card"),
     ),
   },
-  "checkbox/composition": {
+  "checkbox/demos/composition": {
     files: ["registry/components/checkbox/demos/composition.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/checkbox/demos/composition"),
     ),
   },
-  "checkbox/controlled": {
+  "checkbox/demos/controlled": {
     files: ["registry/components/checkbox/demos/controlled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/checkbox/demos/controlled"),
     ),
   },
-  "checkbox/default": {
+  "checkbox/demos/default": {
     files: ["registry/components/checkbox/demos/default.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/checkbox/demos/default"),
     ),
   },
-  "checkbox/disabled": {
+  "checkbox/demos/disabled": {
     files: ["registry/components/checkbox/demos/disabled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/checkbox/demos/disabled"),
     ),
   },
-  "checkbox/indeterminate": {
+  "checkbox/demos/indeterminate": {
     files: ["registry/components/checkbox/demos/indeterminate.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/checkbox/demos/indeterminate"),
     ),
   },
-  "checkbox/read-only": {
+  "checkbox/demos/read-only": {
     files: ["registry/components/checkbox/demos/read-only.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/checkbox/demos/read-only"),
     ),
   },
-  "checkbox/uncontrolled": {
+  "checkbox/demos/uncontrolled": {
     files: ["registry/components/checkbox/demos/uncontrolled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/checkbox/demos/uncontrolled"),
     ),
   },
-  "checkbox/variants": {
+  "checkbox/demos/variants": {
     files: ["registry/components/checkbox/demos/variants.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/checkbox/demos/variants"),
     ),
   },
-  "checkbox-group/cards": {
+  "checkbox-group/demos/cards": {
     files: ["registry/components/checkbox-group/demos/cards.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/checkbox-group/demos/cards"),
     ),
   },
-  "checkbox-group/composition": {
+  "checkbox-group/demos/composition": {
     files: ["registry/components/checkbox-group/demos/composition.tsx"],
     component: React.lazy(
       () =>
@@ -493,21 +493,21 @@ export const Index: Record<
         ),
     ),
   },
-  "checkbox-group/controlled": {
+  "checkbox-group/demos/controlled": {
     files: ["registry/components/checkbox-group/demos/controlled.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/checkbox-group/demos/controlled"),
     ),
   },
-  "checkbox-group/default": {
+  "checkbox-group/demos/default": {
     files: ["registry/components/checkbox-group/demos/default.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/checkbox-group/demos/default"),
     ),
   },
-  "checkbox-group/description": {
+  "checkbox-group/demos/description": {
     files: ["registry/components/checkbox-group/demos/description.tsx"],
     component: React.lazy(
       () =>
@@ -516,14 +516,14 @@ export const Index: Record<
         ),
     ),
   },
-  "checkbox-group/disabled": {
+  "checkbox-group/demos/disabled": {
     files: ["registry/components/checkbox-group/demos/disabled.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/checkbox-group/demos/disabled"),
     ),
   },
-  "checkbox-group/error-message": {
+  "checkbox-group/demos/error-message": {
     files: ["registry/components/checkbox-group/demos/error-message.tsx"],
     component: React.lazy(
       () =>
@@ -532,27 +532,27 @@ export const Index: Record<
         ),
     ),
   },
-  "checkbox-group/label": {
+  "checkbox-group/demos/label": {
     files: ["registry/components/checkbox-group/demos/label.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/checkbox-group/demos/label"),
     ),
   },
-  "checkbox-group/read-only": {
+  "checkbox-group/demos/read-only": {
     files: ["registry/components/checkbox-group/demos/read-only.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/checkbox-group/demos/read-only"),
     ),
   },
-  "checkbox-group/required": {
+  "checkbox-group/demos/required": {
     files: ["registry/components/checkbox-group/demos/required.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/checkbox-group/demos/required"),
     ),
   },
-  "checkbox-group/uncontrolled": {
+  "checkbox-group/demos/uncontrolled": {
     files: ["registry/components/checkbox-group/demos/uncontrolled.tsx"],
     component: React.lazy(
       () =>
@@ -561,104 +561,104 @@ export const Index: Record<
         ),
     ),
   },
-  "color-area/channels": {
+  "color-area/demos/channels": {
     files: ["registry/components/color-area/demos/channels.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/color-area/demos/channels"),
     ),
   },
-  "color-area/composition": {
+  "color-area/demos/composition": {
     files: ["registry/components/color-area/demos/composition.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/color-area/demos/composition"),
     ),
   },
-  "color-area/controlled": {
+  "color-area/demos/controlled": {
     files: ["registry/components/color-area/demos/controlled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/color-area/demos/controlled"),
     ),
   },
-  "color-area/default": {
+  "color-area/demos/default": {
     files: ["registry/components/color-area/demos/default.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/color-area/demos/default"),
     ),
   },
-  "color-area/disabled": {
+  "color-area/demos/disabled": {
     files: ["registry/components/color-area/demos/disabled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/color-area/demos/disabled"),
     ),
   },
-  "color-area/uncontrolled": {
+  "color-area/demos/uncontrolled": {
     files: ["registry/components/color-area/demos/uncontrolled.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/color-area/demos/uncontrolled"),
     ),
   },
-  "color-field/color-channel": {
+  "color-field/demos/color-channel": {
     files: ["registry/components/color-field/demos/color-channel.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/color-field/demos/color-channel"),
     ),
   },
-  "color-field/composition": {
+  "color-field/demos/composition": {
     files: ["registry/components/color-field/demos/composition.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/color-field/demos/composition"),
     ),
   },
-  "color-field/controlled": {
+  "color-field/demos/controlled": {
     files: ["registry/components/color-field/demos/controlled.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/color-field/demos/controlled"),
     ),
   },
-  "color-field/default": {
+  "color-field/demos/default": {
     files: ["registry/components/color-field/demos/default.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/color-field/demos/default"),
     ),
   },
-  "color-field/description": {
+  "color-field/demos/description": {
     files: ["registry/components/color-field/demos/description.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/color-field/demos/description"),
     ),
   },
-  "color-field/disabled": {
+  "color-field/demos/disabled": {
     files: ["registry/components/color-field/demos/disabled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/color-field/demos/disabled"),
     ),
   },
-  "color-field/error-message": {
+  "color-field/demos/error-message": {
     files: ["registry/components/color-field/demos/error-message.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/color-field/demos/error-message"),
     ),
   },
-  "color-field/form": {
+  "color-field/demos/form": {
     files: ["registry/components/color-field/demos/form.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/color-field/demos/form"),
     ),
   },
-  "color-field/label": {
+  "color-field/demos/label": {
     files: ["registry/components/color-field/demos/label.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/color-field/demos/label"),
     ),
   },
-  "color-field/prefix-and-suffix": {
+  "color-field/demos/prefix-and-suffix": {
     files: ["registry/components/color-field/demos/prefix-and-suffix.tsx"],
     component: React.lazy(
       () =>
@@ -667,32 +667,32 @@ export const Index: Record<
         ),
     ),
   },
-  "color-field/read-only": {
+  "color-field/demos/read-only": {
     files: ["registry/components/color-field/demos/read-only.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/color-field/demos/read-only"),
     ),
   },
-  "color-field/required": {
+  "color-field/demos/required": {
     files: ["registry/components/color-field/demos/required.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/color-field/demos/required"),
     ),
   },
-  "color-field/sizes": {
+  "color-field/demos/sizes": {
     files: ["registry/components/color-field/demos/sizes.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/color-field/demos/sizes"),
     ),
   },
-  "color-field/uncontrolled": {
+  "color-field/demos/uncontrolled": {
     files: ["registry/components/color-field/demos/uncontrolled.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/color-field/demos/uncontrolled"),
     ),
   },
-  "color-picker/channel-sliders": {
+  "color-picker/demos/channel-sliders": {
     files: ["registry/components/color-picker/demos/channel-sliders.tsx"],
     component: React.lazy(
       () =>
@@ -701,110 +701,110 @@ export const Index: Record<
         ),
     ),
   },
-  "color-picker/composition": {
+  "color-picker/demos/composition": {
     files: ["registry/components/color-picker/demos/composition.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/color-picker/demos/composition"),
     ),
   },
-  "color-picker/controlled": {
+  "color-picker/demos/controlled": {
     files: ["registry/components/color-picker/demos/controlled.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/color-picker/demos/controlled"),
     ),
   },
-  "color-picker/default": {
+  "color-picker/demos/default": {
     files: ["registry/components/color-picker/demos/default.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/color-picker/demos/default"),
     ),
   },
-  "color-picker/options": {
+  "color-picker/demos/options": {
     files: ["registry/components/color-picker/demos/options.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/color-picker/demos/options"),
     ),
   },
-  "color-picker/swatches": {
+  "color-picker/demos/swatches": {
     files: ["registry/components/color-picker/demos/swatches.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/color-picker/demos/swatches"),
     ),
   },
-  "color-picker/uncontrolled": {
+  "color-picker/demos/uncontrolled": {
     files: ["registry/components/color-picker/demos/uncontrolled.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/color-picker/demos/uncontrolled"),
     ),
   },
-  "color-slider/channel": {
+  "color-slider/demos/channel": {
     files: ["registry/components/color-slider/demos/channel.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/color-slider/demos/channel"),
     ),
   },
-  "color-slider/composition": {
+  "color-slider/demos/composition": {
     files: ["registry/components/color-slider/demos/composition.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/color-slider/demos/composition"),
     ),
   },
-  "color-slider/controlled": {
+  "color-slider/demos/controlled": {
     files: ["registry/components/color-slider/demos/controlled.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/color-slider/demos/controlled"),
     ),
   },
-  "color-slider/default": {
+  "color-slider/demos/default": {
     files: ["registry/components/color-slider/demos/default.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/color-slider/demos/default"),
     ),
   },
-  "color-slider/disabled": {
+  "color-slider/demos/disabled": {
     files: ["registry/components/color-slider/demos/disabled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/color-slider/demos/disabled"),
     ),
   },
-  "color-slider/label": {
+  "color-slider/demos/label": {
     files: ["registry/components/color-slider/demos/label.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/color-slider/demos/label"),
     ),
   },
-  "color-slider/uncontrolled": {
+  "color-slider/demos/uncontrolled": {
     files: ["registry/components/color-slider/demos/uncontrolled.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/color-slider/demos/uncontrolled"),
     ),
   },
-  "color-slider/vertical": {
+  "color-slider/demos/vertical": {
     files: ["registry/components/color-slider/demos/vertical.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/color-slider/demos/vertical"),
     ),
   },
-  "color-swatch/default": {
+  "color-swatch/demos/default": {
     files: ["registry/components/color-swatch/demos/default.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/color-swatch/demos/default"),
     ),
   },
-  "color-swatch-picker/basic": {
+  "color-swatch-picker/demos/basic": {
     files: ["registry/components/color-swatch-picker/demos/basic.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/color-swatch-picker/demos/basic"),
     ),
   },
-  "color-swatch-picker/controlled": {
+  "color-swatch-picker/demos/controlled": {
     files: ["registry/components/color-swatch-picker/demos/controlled.tsx"],
     component: React.lazy(
       () =>
@@ -813,7 +813,7 @@ export const Index: Record<
         ),
     ),
   },
-  "color-swatch-picker/disabled": {
+  "color-swatch-picker/demos/disabled": {
     files: ["registry/components/color-swatch-picker/demos/disabled.tsx"],
     component: React.lazy(
       () =>
@@ -822,170 +822,170 @@ export const Index: Record<
         ),
     ),
   },
-  "combobox/async-loading": {
+  "combobox/demos/async-loading": {
     files: ["registry/components/combobox/demos/async-loading.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/combobox/demos/async-loading"),
     ),
   },
-  "combobox/basic": {
+  "combobox/demos/basic": {
     files: ["registry/components/combobox/demos/basic.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/combobox/demos/basic"),
     ),
   },
-  "combobox/composition": {
+  "combobox/demos/composition": {
     files: ["registry/components/combobox/demos/composition.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/combobox/demos/composition"),
     ),
   },
-  "combobox/controlled": {
+  "combobox/demos/controlled": {
     files: ["registry/components/combobox/demos/controlled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/combobox/demos/controlled"),
     ),
   },
-  "combobox/custom-value": {
+  "combobox/demos/custom-value": {
     files: ["registry/components/combobox/demos/custom-value.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/combobox/demos/custom-value"),
     ),
   },
-  "combobox/description": {
+  "combobox/demos/description": {
     files: ["registry/components/combobox/demos/description.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/combobox/demos/description"),
     ),
   },
-  "combobox/disabled": {
+  "combobox/demos/disabled": {
     files: ["registry/components/combobox/demos/disabled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/combobox/demos/disabled"),
     ),
   },
-  "combobox/label": {
+  "combobox/demos/label": {
     files: ["registry/components/combobox/demos/label.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/combobox/demos/label"),
     ),
   },
-  "combobox/loading": {
+  "combobox/demos/loading": {
     files: ["registry/components/combobox/demos/loading.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/combobox/demos/loading"),
     ),
   },
-  "combobox/required": {
+  "combobox/demos/required": {
     files: ["registry/components/combobox/demos/required.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/combobox/demos/required"),
     ),
   },
-  "combobox/sections": {
+  "combobox/demos/sections": {
     files: ["registry/components/combobox/demos/sections.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/combobox/demos/sections"),
     ),
   },
-  "combobox/uncontrolled": {
+  "combobox/demos/uncontrolled": {
     files: ["registry/components/combobox/demos/uncontrolled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/combobox/demos/uncontrolled"),
     ),
   },
-  "combobox/validation": {
+  "combobox/demos/validation": {
     files: ["registry/components/combobox/demos/validation.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/combobox/demos/validation"),
     ),
   },
-  "command/basic": {
+  "command/demos/basic": {
     files: ["registry/components/command/demos/basic.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/command/demos/basic"),
     ),
   },
-  "command/dialog": {
+  "command/demos/dialog": {
     files: ["registry/components/command/demos/dialog.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/command/demos/dialog"),
     ),
   },
-  "date-field/composition": {
+  "date-field/demos/composition": {
     files: ["registry/components/date-field/demos/composition.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/date-field/demos/composition"),
     ),
   },
-  "date-field/controlled": {
+  "date-field/demos/controlled": {
     files: ["registry/components/date-field/demos/controlled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/date-field/demos/controlled"),
     ),
   },
-  "date-field/default": {
+  "date-field/demos/default": {
     files: ["registry/components/date-field/demos/default.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/date-field/demos/default"),
     ),
   },
-  "date-field/description": {
+  "date-field/demos/description": {
     files: ["registry/components/date-field/demos/description.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/date-field/demos/description"),
     ),
   },
-  "date-field/disabled": {
+  "date-field/demos/disabled": {
     files: ["registry/components/date-field/demos/disabled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/date-field/demos/disabled"),
     ),
   },
-  "date-field/error-message": {
+  "date-field/demos/error-message": {
     files: ["registry/components/date-field/demos/error-message.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/date-field/demos/error-message"),
     ),
   },
-  "date-field/granularity": {
+  "date-field/demos/granularity": {
     files: ["registry/components/date-field/demos/granularity.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/date-field/demos/granularity"),
     ),
   },
-  "date-field/hide-time-zone": {
+  "date-field/demos/hide-time-zone": {
     files: ["registry/components/date-field/demos/hide-time-zone.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/date-field/demos/hide-time-zone"),
     ),
   },
-  "date-field/hour-cycle": {
+  "date-field/demos/hour-cycle": {
     files: ["registry/components/date-field/demos/hour-cycle.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/date-field/demos/hour-cycle"),
     ),
   },
-  "date-field/label": {
+  "date-field/demos/label": {
     files: ["registry/components/date-field/demos/label.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/date-field/demos/label"),
     ),
   },
-  "date-field/placeholder": {
+  "date-field/demos/placeholder": {
     files: ["registry/components/date-field/demos/placeholder.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/date-field/demos/placeholder"),
     ),
   },
-  "date-field/prefix-and-suffix": {
+  "date-field/demos/prefix-and-suffix": {
     files: ["registry/components/date-field/demos/prefix-and-suffix.tsx"],
     component: React.lazy(
       () =>
@@ -994,85 +994,85 @@ export const Index: Record<
         ),
     ),
   },
-  "date-field/read-only": {
+  "date-field/demos/read-only": {
     files: ["registry/components/date-field/demos/read-only.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/date-field/demos/read-only"),
     ),
   },
-  "date-field/required": {
+  "date-field/demos/required": {
     files: ["registry/components/date-field/demos/required.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/date-field/demos/required"),
     ),
   },
-  "date-field/sizes": {
+  "date-field/demos/sizes": {
     files: ["registry/components/date-field/demos/sizes.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/date-field/demos/sizes"),
     ),
   },
-  "date-field/time-zones": {
+  "date-field/demos/time-zones": {
     files: ["registry/components/date-field/demos/time-zones.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/date-field/demos/time-zones"),
     ),
   },
-  "date-field/uncontrolled": {
+  "date-field/demos/uncontrolled": {
     files: ["registry/components/date-field/demos/uncontrolled.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/date-field/demos/uncontrolled"),
     ),
   },
-  "date-picker/composition": {
+  "date-picker/demos/composition": {
     files: ["registry/components/date-picker/demos/composition.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/date-picker/demos/composition"),
     ),
   },
-  "date-picker/controlled": {
+  "date-picker/demos/controlled": {
     files: ["registry/components/date-picker/demos/controlled.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/date-picker/demos/controlled"),
     ),
   },
-  "date-picker/default": {
+  "date-picker/demos/default": {
     files: ["registry/components/date-picker/demos/default.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/date-picker/demos/default"),
     ),
   },
-  "date-picker/description": {
+  "date-picker/demos/description": {
     files: ["registry/components/date-picker/demos/description.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/date-picker/demos/description"),
     ),
   },
-  "date-picker/disabled": {
+  "date-picker/demos/disabled": {
     files: ["registry/components/date-picker/demos/disabled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/date-picker/demos/disabled"),
     ),
   },
-  "date-picker/error-message": {
+  "date-picker/demos/error-message": {
     files: ["registry/components/date-picker/demos/error-message.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/date-picker/demos/error-message"),
     ),
   },
-  "date-picker/granularity": {
+  "date-picker/demos/granularity": {
     files: ["registry/components/date-picker/demos/granularity.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/date-picker/demos/granularity"),
     ),
   },
-  "date-picker/hide-time-zone": {
+  "date-picker/demos/hide-time-zone": {
     files: ["registry/components/date-picker/demos/hide-time-zone.tsx"],
     component: React.lazy(
       () =>
@@ -1081,65 +1081,65 @@ export const Index: Record<
         ),
     ),
   },
-  "date-picker/hour-cycle": {
+  "date-picker/demos/hour-cycle": {
     files: ["registry/components/date-picker/demos/hour-cycle.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/date-picker/demos/hour-cycle"),
     ),
   },
-  "date-picker/label": {
+  "date-picker/demos/label": {
     files: ["registry/components/date-picker/demos/label.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/date-picker/demos/label"),
     ),
   },
-  "date-picker/placeholder": {
+  "date-picker/demos/placeholder": {
     files: ["registry/components/date-picker/demos/placeholder.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/date-picker/demos/placeholder"),
     ),
   },
-  "date-picker/prefix": {
+  "date-picker/demos/prefix": {
     files: ["registry/components/date-picker/demos/prefix.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/date-picker/demos/prefix"),
     ),
   },
-  "date-picker/read-only": {
+  "date-picker/demos/read-only": {
     files: ["registry/components/date-picker/demos/read-only.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/date-picker/demos/read-only"),
     ),
   },
-  "date-picker/required": {
+  "date-picker/demos/required": {
     files: ["registry/components/date-picker/demos/required.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/date-picker/demos/required"),
     ),
   },
-  "date-picker/sizes": {
+  "date-picker/demos/sizes": {
     files: ["registry/components/date-picker/demos/sizes.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/date-picker/demos/sizes"),
     ),
   },
-  "date-picker/time-zones": {
+  "date-picker/demos/time-zones": {
     files: ["registry/components/date-picker/demos/time-zones.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/date-picker/demos/time-zones"),
     ),
   },
-  "date-picker/uncontrolled": {
+  "date-picker/demos/uncontrolled": {
     files: ["registry/components/date-picker/demos/uncontrolled.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/date-picker/demos/uncontrolled"),
     ),
   },
-  "date-range-picker/composition": {
+  "date-range-picker/demos/composition": {
     files: ["registry/components/date-range-picker/demos/composition.tsx"],
     component: React.lazy(
       () =>
@@ -1148,7 +1148,7 @@ export const Index: Record<
         ),
     ),
   },
-  "date-range-picker/controlled": {
+  "date-range-picker/demos/controlled": {
     files: ["registry/components/date-range-picker/demos/controlled.tsx"],
     component: React.lazy(
       () =>
@@ -1157,14 +1157,14 @@ export const Index: Record<
         ),
     ),
   },
-  "date-range-picker/default": {
+  "date-range-picker/demos/default": {
     files: ["registry/components/date-range-picker/demos/default.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/date-range-picker/demos/default"),
     ),
   },
-  "date-range-picker/description": {
+  "date-range-picker/demos/description": {
     files: ["registry/components/date-range-picker/demos/description.tsx"],
     component: React.lazy(
       () =>
@@ -1173,7 +1173,7 @@ export const Index: Record<
         ),
     ),
   },
-  "date-range-picker/disabled": {
+  "date-range-picker/demos/disabled": {
     files: ["registry/components/date-range-picker/demos/disabled.tsx"],
     component: React.lazy(
       () =>
@@ -1182,7 +1182,7 @@ export const Index: Record<
         ),
     ),
   },
-  "date-range-picker/error-message": {
+  "date-range-picker/demos/error-message": {
     files: ["registry/components/date-range-picker/demos/error-message.tsx"],
     component: React.lazy(
       () =>
@@ -1191,7 +1191,7 @@ export const Index: Record<
         ),
     ),
   },
-  "date-range-picker/granularity": {
+  "date-range-picker/demos/granularity": {
     files: ["registry/components/date-range-picker/demos/granularity.tsx"],
     component: React.lazy(
       () =>
@@ -1200,7 +1200,7 @@ export const Index: Record<
         ),
     ),
   },
-  "date-range-picker/hide-time-zone": {
+  "date-range-picker/demos/hide-time-zone": {
     files: ["registry/components/date-range-picker/demos/hide-time-zone.tsx"],
     component: React.lazy(
       () =>
@@ -1209,7 +1209,7 @@ export const Index: Record<
         ),
     ),
   },
-  "date-range-picker/hour-cycle": {
+  "date-range-picker/demos/hour-cycle": {
     files: ["registry/components/date-range-picker/demos/hour-cycle.tsx"],
     component: React.lazy(
       () =>
@@ -1218,21 +1218,21 @@ export const Index: Record<
         ),
     ),
   },
-  "date-range-picker/label": {
+  "date-range-picker/demos/label": {
     files: ["registry/components/date-range-picker/demos/label.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/date-range-picker/demos/label"),
     ),
   },
-  "date-range-picker/loading": {
+  "date-range-picker/demos/loading": {
     files: ["registry/components/date-range-picker/demos/loading.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/date-range-picker/demos/loading"),
     ),
   },
-  "date-range-picker/placeholder": {
+  "date-range-picker/demos/placeholder": {
     files: ["registry/components/date-range-picker/demos/placeholder.tsx"],
     component: React.lazy(
       () =>
@@ -1241,14 +1241,14 @@ export const Index: Record<
         ),
     ),
   },
-  "date-range-picker/prefix": {
+  "date-range-picker/demos/prefix": {
     files: ["registry/components/date-range-picker/demos/prefix.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/date-range-picker/demos/prefix"),
     ),
   },
-  "date-range-picker/read-only": {
+  "date-range-picker/demos/read-only": {
     files: ["registry/components/date-range-picker/demos/read-only.tsx"],
     component: React.lazy(
       () =>
@@ -1257,7 +1257,7 @@ export const Index: Record<
         ),
     ),
   },
-  "date-range-picker/required": {
+  "date-range-picker/demos/required": {
     files: ["registry/components/date-range-picker/demos/required.tsx"],
     component: React.lazy(
       () =>
@@ -1266,14 +1266,14 @@ export const Index: Record<
         ),
     ),
   },
-  "date-range-picker/sizes": {
+  "date-range-picker/demos/sizes": {
     files: ["registry/components/date-range-picker/demos/sizes.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/date-range-picker/demos/sizes"),
     ),
   },
-  "date-range-picker/time-zones": {
+  "date-range-picker/demos/time-zones": {
     files: ["registry/components/date-range-picker/demos/time-zones.tsx"],
     component: React.lazy(
       () =>
@@ -1282,7 +1282,7 @@ export const Index: Record<
         ),
     ),
   },
-  "date-range-picker/uncontrolled": {
+  "date-range-picker/demos/uncontrolled": {
     files: ["registry/components/date-range-picker/demos/uncontrolled.tsx"],
     component: React.lazy(
       () =>
@@ -1291,13 +1291,13 @@ export const Index: Record<
         ),
     ),
   },
-  "dialog/alert-dialog": {
+  "dialog/demos/alert-dialog": {
     files: ["registry/components/dialog/demos/alert-dialog.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/dialog/demos/alert-dialog"),
     ),
   },
-  "dialog/async-form-submission": {
+  "dialog/demos/async-form-submission": {
     files: ["registry/components/dialog/demos/async-form-submission.tsx"],
     component: React.lazy(
       () =>
@@ -1306,129 +1306,129 @@ export const Index: Record<
         ),
     ),
   },
-  "dialog/basic": {
+  "dialog/demos/basic": {
     files: ["registry/components/dialog/demos/basic.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/dialog/demos/basic"),
     ),
   },
-  "dialog/composition": {
+  "dialog/demos/composition": {
     files: ["registry/components/dialog/demos/composition.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/dialog/demos/composition"),
     ),
   },
-  "dialog/controlled": {
+  "dialog/demos/controlled": {
     files: ["registry/components/dialog/demos/controlled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/dialog/demos/controlled"),
     ),
   },
-  "dialog/description": {
+  "dialog/demos/description": {
     files: ["registry/components/dialog/demos/description.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/dialog/demos/description"),
     ),
   },
-  "dialog/dismissable": {
+  "dialog/demos/dismissable": {
     files: ["registry/components/dialog/demos/dismissable.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/dialog/demos/dismissable"),
     ),
   },
-  "dialog/drawer": {
+  "dialog/demos/drawer": {
     files: ["registry/components/dialog/demos/drawer.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/dialog/demos/drawer"),
     ),
   },
-  "dialog/inset-content": {
+  "dialog/demos/inset-content": {
     files: ["registry/components/dialog/demos/inset-content.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/dialog/demos/inset-content"),
     ),
   },
-  "dialog/nested": {
+  "dialog/demos/nested": {
     files: ["registry/components/dialog/demos/nested.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/dialog/demos/nested"),
     ),
   },
-  "dialog/popover": {
+  "dialog/demos/popover": {
     files: ["registry/components/dialog/demos/popover.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/dialog/demos/popover"),
     ),
   },
-  "dialog/title": {
+  "dialog/demos/title": {
     files: ["registry/components/dialog/demos/title.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/dialog/demos/title"),
     ),
   },
-  "dialog/types": {
+  "dialog/demos/types": {
     files: ["registry/components/dialog/demos/types.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/dialog/demos/types"),
     ),
   },
-  "drawer/basic": {
+  "drawer/demos/basic": {
     files: ["registry/components/drawer/demos/basic.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/drawer/demos/basic"),
     ),
   },
-  "drawer/placement": {
+  "drawer/demos/placement": {
     files: ["registry/components/drawer/demos/placement.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/drawer/demos/placement"),
     ),
   },
-  "drop-zone/basic": {
+  "drop-zone/demos/basic": {
     files: ["registry/components/drop-zone/demos/basic.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/drop-zone/demos/basic"),
     ),
   },
-  "drop-zone/disabled": {
+  "drop-zone/demos/disabled": {
     files: ["registry/components/drop-zone/demos/disabled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/drop-zone/demos/disabled"),
     ),
   },
-  "drop-zone/events": {
+  "drop-zone/demos/events": {
     files: ["registry/components/drop-zone/demos/events.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/drop-zone/demos/events"),
     ),
   },
-  "drop-zone/file-trigger": {
+  "drop-zone/demos/file-trigger": {
     files: ["registry/components/drop-zone/demos/file-trigger.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/drop-zone/demos/file-trigger"),
     ),
   },
-  "drop-zone/label": {
+  "drop-zone/demos/label": {
     files: ["registry/components/drop-zone/demos/label.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/drop-zone/demos/label"),
     ),
   },
-  "drop-zone/visual-feedback": {
+  "drop-zone/demos/visual-feedback": {
     files: ["registry/components/drop-zone/demos/visual-feedback.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/drop-zone/demos/visual-feedback"),
     ),
   },
-  "file-trigger/default": {
+  "file-trigger/demos/default": {
     files: ["registry/components/file-trigger/demos/default.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/file-trigger/demos/default"),
     ),
   },
-  "file-trigger/directory-selection": {
+  "file-trigger/demos/directory-selection": {
     files: ["registry/components/file-trigger/demos/directory-selection.tsx"],
     component: React.lazy(
       () =>
@@ -1437,14 +1437,14 @@ export const Index: Record<
         ),
     ),
   },
-  "file-trigger/file-types": {
+  "file-trigger/demos/file-types": {
     files: ["registry/components/file-trigger/demos/file-types.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/file-trigger/demos/file-types"),
     ),
   },
-  "file-trigger/media-capture": {
+  "file-trigger/demos/media-capture": {
     files: ["registry/components/file-trigger/demos/media-capture.tsx"],
     component: React.lazy(
       () =>
@@ -1453,7 +1453,7 @@ export const Index: Record<
         ),
     ),
   },
-  "file-trigger/multiple-files": {
+  "file-trigger/demos/multiple-files": {
     files: ["registry/components/file-trigger/demos/multiple-files.tsx"],
     component: React.lazy(
       () =>
@@ -1462,93 +1462,93 @@ export const Index: Record<
         ),
     ),
   },
-  "form/basic": {
+  "form/demos/basic": {
     files: ["registry/components/form/demos/basic.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/form/demos/basic"),
     ),
   },
-  "form/react-aria": {
+  "form/demos/react-aria": {
     files: ["registry/components/form/demos/react-aria.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/form/demos/react-aria"),
     ),
   },
-  "form/react-hook-form": {
+  "form/demos/react-hook-form": {
     files: ["registry/components/form/demos/react-hook-form.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/form/demos/react-hook-form"),
     ),
   },
-  "list-box/async-loading": {
+  "list-box/demos/async-loading": {
     files: ["registry/components/list-box/demos/async-loading.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/list-box/demos/async-loading"),
     ),
   },
-  "list-box/basic": {
+  "list-box/demos/basic": {
     files: ["registry/components/list-box/demos/basic.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/list-box/demos/basic"),
     ),
   },
-  "list-box/composition": {
+  "list-box/demos/composition": {
     files: ["registry/components/list-box/demos/composition.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/list-box/demos/composition"),
     ),
   },
-  "list-box/contact-list": {
+  "list-box/demos/contact-list": {
     files: ["registry/components/list-box/demos/contact-list.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/list-box/demos/contact-list"),
     ),
   },
-  "list-box/controlled": {
+  "list-box/demos/controlled": {
     files: ["registry/components/list-box/demos/controlled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/list-box/demos/controlled"),
     ),
   },
-  "list-box/disabled-items": {
+  "list-box/demos/disabled-items": {
     files: ["registry/components/list-box/demos/disabled-items.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/list-box/demos/disabled-items"),
     ),
   },
-  "list-box/empty-state": {
+  "list-box/demos/empty-state": {
     files: ["registry/components/list-box/demos/empty-state.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/list-box/demos/empty-state"),
     ),
   },
-  "list-box/grid": {
+  "list-box/demos/grid": {
     files: ["registry/components/list-box/demos/grid.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/list-box/demos/grid"),
     ),
   },
-  "list-box/horizontal": {
+  "list-box/demos/horizontal": {
     files: ["registry/components/list-box/demos/horizontal.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/list-box/demos/horizontal"),
     ),
   },
-  "list-box/image-grid": {
+  "list-box/demos/image-grid": {
     files: ["registry/components/list-box/demos/image-grid.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/list-box/demos/image-grid"),
     ),
   },
-  "list-box/item-variant": {
+  "list-box/demos/item-variant": {
     files: ["registry/components/list-box/demos/item-variant.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/list-box/demos/item-variant"),
     ),
   },
-  "list-box/label-and-description": {
+  "list-box/demos/label-and-description": {
     files: ["registry/components/list-box/demos/label-and-description.tsx"],
     component: React.lazy(
       () =>
@@ -1557,19 +1557,19 @@ export const Index: Record<
         ),
     ),
   },
-  "list-box/links": {
+  "list-box/demos/links": {
     files: ["registry/components/list-box/demos/links.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/list-box/demos/links"),
     ),
   },
-  "list-box/loading": {
+  "list-box/demos/loading": {
     files: ["registry/components/list-box/demos/loading.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/list-box/demos/loading"),
     ),
   },
-  "list-box/prefix-and-suffix": {
+  "list-box/demos/prefix-and-suffix": {
     files: ["registry/components/list-box/demos/prefix-and-suffix.tsx"],
     component: React.lazy(
       () =>
@@ -1578,13 +1578,13 @@ export const Index: Record<
         ),
     ),
   },
-  "list-box/sections": {
+  "list-box/demos/sections": {
     files: ["registry/components/list-box/demos/sections.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/list-box/demos/sections"),
     ),
   },
-  "list-box/selection-behavior": {
+  "list-box/demos/selection-behavior": {
     files: ["registry/components/list-box/demos/selection-behavior.tsx"],
     component: React.lazy(
       () =>
@@ -1593,56 +1593,56 @@ export const Index: Record<
         ),
     ),
   },
-  "list-box/selection-mode": {
+  "list-box/demos/selection-mode": {
     files: ["registry/components/list-box/demos/selection-mode.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/list-box/demos/selection-mode"),
     ),
   },
-  "list-box/separator": {
+  "list-box/demos/separator": {
     files: ["registry/components/list-box/demos/separator.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/list-box/demos/separator"),
     ),
   },
-  "list-box/uncontrolled": {
+  "list-box/demos/uncontrolled": {
     files: ["registry/components/list-box/demos/uncontrolled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/list-box/demos/uncontrolled"),
     ),
   },
-  "menu/basic": {
+  "menu/demos/basic": {
     files: ["registry/components/menu/demos/basic.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/menu/demos/basic"),
     ),
   },
-  "menu/composition": {
+  "menu/demos/composition": {
     files: ["registry/components/menu/demos/composition.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/menu/demos/composition"),
     ),
   },
-  "menu/controlled": {
+  "menu/demos/controlled": {
     files: ["registry/components/menu/demos/controlled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/menu/demos/controlled"),
     ),
   },
-  "menu/disabled-items": {
+  "menu/demos/disabled-items": {
     files: ["registry/components/menu/demos/disabled-items.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/menu/demos/disabled-items"),
     ),
   },
-  "menu/item-variant": {
+  "menu/demos/item-variant": {
     files: ["registry/components/menu/demos/item-variant.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/menu/demos/item-variant"),
     ),
   },
-  "menu/label-and-description": {
+  "menu/demos/label-and-description": {
     files: ["registry/components/menu/demos/label-and-description.tsx"],
     component: React.lazy(
       () =>
@@ -1651,114 +1651,114 @@ export const Index: Record<
         ),
     ),
   },
-  "menu/link-items": {
+  "menu/demos/link-items": {
     files: ["registry/components/menu/demos/link-items.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/menu/demos/link-items"),
     ),
   },
-  "menu/long-press": {
+  "menu/demos/long-press": {
     files: ["registry/components/menu/demos/long-press.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/menu/demos/long-press"),
     ),
   },
-  "menu/multiple-selection": {
+  "menu/demos/multiple-selection": {
     files: ["registry/components/menu/demos/multiple-selection.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/menu/demos/multiple-selection"),
     ),
   },
-  "menu/overlay-type": {
+  "menu/demos/overlay-type": {
     files: ["registry/components/menu/demos/overlay-type.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/menu/demos/overlay-type"),
     ),
   },
-  "menu/placement": {
+  "menu/demos/placement": {
     files: ["registry/components/menu/demos/placement.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/menu/demos/placement"),
     ),
   },
-  "menu/prefix-and-suffix": {
+  "menu/demos/prefix-and-suffix": {
     files: ["registry/components/menu/demos/prefix-and-suffix.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/menu/demos/prefix-and-suffix"),
     ),
   },
-  "menu/section": {
+  "menu/demos/section": {
     files: ["registry/components/menu/demos/section.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/menu/demos/section"),
     ),
   },
-  "menu/separator": {
+  "menu/demos/separator": {
     files: ["registry/components/menu/demos/separator.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/menu/demos/separator"),
     ),
   },
-  "menu/shortcut": {
+  "menu/demos/shortcut": {
     files: ["registry/components/menu/demos/shortcut.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/menu/demos/shortcut"),
     ),
   },
-  "menu/single-selection": {
+  "menu/demos/single-selection": {
     files: ["registry/components/menu/demos/single-selection.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/menu/demos/single-selection"),
     ),
   },
-  "menu/submenus": {
+  "menu/demos/submenus": {
     files: ["registry/components/menu/demos/submenus.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/menu/demos/submenus"),
     ),
   },
-  "modal/basic": {
+  "modal/demos/basic": {
     files: ["registry/components/modal/demos/basic.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/modal/demos/basic"),
     ),
   },
-  "number-field/composition": {
+  "number-field/demos/composition": {
     files: ["registry/components/number-field/demos/composition.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/number-field/demos/composition"),
     ),
   },
-  "number-field/controlled": {
+  "number-field/demos/controlled": {
     files: ["registry/components/number-field/demos/controlled.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/number-field/demos/controlled"),
     ),
   },
-  "number-field/default": {
+  "number-field/demos/default": {
     files: ["registry/components/number-field/demos/default.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/number-field/demos/default"),
     ),
   },
-  "number-field/description": {
+  "number-field/demos/description": {
     files: ["registry/components/number-field/demos/description.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/number-field/demos/description"),
     ),
   },
-  "number-field/disabled": {
+  "number-field/demos/disabled": {
     files: ["registry/components/number-field/demos/disabled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/number-field/demos/disabled"),
     ),
   },
-  "number-field/error-message": {
+  "number-field/demos/error-message": {
     files: ["registry/components/number-field/demos/error-message.tsx"],
     component: React.lazy(
       () =>
@@ -1767,7 +1767,7 @@ export const Index: Record<
         ),
     ),
   },
-  "number-field/format-options": {
+  "number-field/demos/format-options": {
     files: ["registry/components/number-field/demos/format-options.tsx"],
     component: React.lazy(
       () =>
@@ -1776,64 +1776,64 @@ export const Index: Record<
         ),
     ),
   },
-  "number-field/label": {
+  "number-field/demos/label": {
     files: ["registry/components/number-field/demos/label.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/number-field/demos/label"),
     ),
   },
-  "number-field/read-only": {
+  "number-field/demos/read-only": {
     files: ["registry/components/number-field/demos/read-only.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/number-field/demos/read-only"),
     ),
   },
-  "number-field/required": {
+  "number-field/demos/required": {
     files: ["registry/components/number-field/demos/required.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/number-field/demos/required"),
     ),
   },
-  "number-field/sizes": {
+  "number-field/demos/sizes": {
     files: ["registry/components/number-field/demos/sizes.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/number-field/demos/sizes"),
     ),
   },
-  "number-field/uncontrolled": {
+  "number-field/demos/uncontrolled": {
     files: ["registry/components/number-field/demos/uncontrolled.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/number-field/demos/uncontrolled"),
     ),
   },
-  "overlay/basic": {
+  "overlay/demos/basic": {
     files: ["registry/components/overlay/demos/basic.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/overlay/demos/basic"),
     ),
   },
-  "overlay/type": {
+  "overlay/demos/type": {
     files: ["registry/components/overlay/demos/type.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/overlay/demos/type"),
     ),
   },
-  "popover/basic": {
+  "popover/demos/basic": {
     files: ["registry/components/popover/demos/basic.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/popover/demos/basic"),
     ),
   },
-  "progress-bar/composition": {
+  "progress-bar/demos/composition": {
     files: ["registry/components/progress-bar/demos/composition.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/progress-bar/demos/composition"),
     ),
   },
-  "progress-bar/custom-value-label": {
+  "progress-bar/demos/custom-value-label": {
     files: ["registry/components/progress-bar/demos/custom-value-label.tsx"],
     component: React.lazy(
       () =>
@@ -1842,19 +1842,19 @@ export const Index: Record<
         ),
     ),
   },
-  "progress-bar/default": {
+  "progress-bar/demos/default": {
     files: ["registry/components/progress-bar/demos/default.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/progress-bar/demos/default"),
     ),
   },
-  "progress-bar/duration": {
+  "progress-bar/demos/duration": {
     files: ["registry/components/progress-bar/demos/duration.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/progress-bar/demos/duration"),
     ),
   },
-  "progress-bar/format-options": {
+  "progress-bar/demos/format-options": {
     files: ["registry/components/progress-bar/demos/format-options.tsx"],
     component: React.lazy(
       () =>
@@ -1863,7 +1863,7 @@ export const Index: Record<
         ),
     ),
   },
-  "progress-bar/indeterminate": {
+  "progress-bar/demos/indeterminate": {
     files: ["registry/components/progress-bar/demos/indeterminate.tsx"],
     component: React.lazy(
       () =>
@@ -1872,13 +1872,13 @@ export const Index: Record<
         ),
     ),
   },
-  "progress-bar/label": {
+  "progress-bar/demos/label": {
     files: ["registry/components/progress-bar/demos/label.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/progress-bar/demos/label"),
     ),
   },
-  "progress-bar/min-max-values": {
+  "progress-bar/demos/min-max-values": {
     files: ["registry/components/progress-bar/demos/min-max-values.tsx"],
     component: React.lazy(
       () =>
@@ -1887,143 +1887,143 @@ export const Index: Record<
         ),
     ),
   },
-  "progress-bar/shape": {
+  "progress-bar/demos/shape": {
     files: ["registry/components/progress-bar/demos/shape.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/progress-bar/demos/shape"),
     ),
   },
-  "progress-bar/sizes": {
+  "progress-bar/demos/sizes": {
     files: ["registry/components/progress-bar/demos/sizes.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/progress-bar/demos/sizes"),
     ),
   },
-  "progress-bar/value-label": {
+  "progress-bar/demos/value-label": {
     files: ["registry/components/progress-bar/demos/value-label.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/progress-bar/demos/value-label"),
     ),
   },
-  "progress-bar/variants": {
+  "progress-bar/demos/variants": {
     files: ["registry/components/progress-bar/demos/variants.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/progress-bar/demos/variants"),
     ),
   },
-  "radio-group/cards": {
+  "radio-group/demos/cards": {
     files: ["registry/components/radio-group/demos/cards.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/radio-group/demos/cards"),
     ),
   },
-  "radio-group/composition": {
+  "radio-group/demos/composition": {
     files: ["registry/components/radio-group/demos/composition.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/radio-group/demos/composition"),
     ),
   },
-  "radio-group/controlled": {
+  "radio-group/demos/controlled": {
     files: ["registry/components/radio-group/demos/controlled.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/radio-group/demos/controlled"),
     ),
   },
-  "radio-group/default": {
+  "radio-group/demos/default": {
     files: ["registry/components/radio-group/demos/default.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/radio-group/demos/default"),
     ),
   },
-  "radio-group/description": {
+  "radio-group/demos/description": {
     files: ["registry/components/radio-group/demos/description.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/radio-group/demos/description"),
     ),
   },
-  "radio-group/disabled": {
+  "radio-group/demos/disabled": {
     files: ["registry/components/radio-group/demos/disabled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/radio-group/demos/disabled"),
     ),
   },
-  "radio-group/error-message": {
+  "radio-group/demos/error-message": {
     files: ["registry/components/radio-group/demos/error-message.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/radio-group/demos/error-message"),
     ),
   },
-  "radio-group/label": {
+  "radio-group/demos/label": {
     files: ["registry/components/radio-group/demos/label.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/radio-group/demos/label"),
     ),
   },
-  "radio-group/orientation": {
+  "radio-group/demos/orientation": {
     files: ["registry/components/radio-group/demos/orientation.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/radio-group/demos/orientation"),
     ),
   },
-  "radio-group/read-only": {
+  "radio-group/demos/read-only": {
     files: ["registry/components/radio-group/demos/read-only.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/radio-group/demos/read-only"),
     ),
   },
-  "radio-group/required": {
+  "radio-group/demos/required": {
     files: ["registry/components/radio-group/demos/required.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/radio-group/demos/required"),
     ),
   },
-  "radio-group/uncontrolled": {
+  "radio-group/demos/uncontrolled": {
     files: ["registry/components/radio-group/demos/uncontrolled.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/radio-group/demos/uncontrolled"),
     ),
   },
-  "search-field/composition": {
+  "search-field/demos/composition": {
     files: ["registry/components/search-field/demos/composition.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/search-field/demos/composition"),
     ),
   },
-  "search-field/controlled": {
+  "search-field/demos/controlled": {
     files: ["registry/components/search-field/demos/controlled.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/search-field/demos/controlled"),
     ),
   },
-  "search-field/default": {
+  "search-field/demos/default": {
     files: ["registry/components/search-field/demos/default.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/search-field/demos/default"),
     ),
   },
-  "search-field/description": {
+  "search-field/demos/description": {
     files: ["registry/components/search-field/demos/description.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/search-field/demos/description"),
     ),
   },
-  "search-field/disabled": {
+  "search-field/demos/disabled": {
     files: ["registry/components/search-field/demos/disabled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/search-field/demos/disabled"),
     ),
   },
-  "search-field/error-message": {
+  "search-field/demos/error-message": {
     files: ["registry/components/search-field/demos/error-message.tsx"],
     component: React.lazy(
       () =>
@@ -2032,160 +2032,160 @@ export const Index: Record<
         ),
     ),
   },
-  "search-field/form": {
+  "search-field/demos/form": {
     files: ["registry/components/search-field/demos/form.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/search-field/demos/form"),
     ),
   },
-  "search-field/label": {
+  "search-field/demos/label": {
     files: ["registry/components/search-field/demos/label.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/search-field/demos/label"),
     ),
   },
-  "search-field/read-only": {
+  "search-field/demos/read-only": {
     files: ["registry/components/search-field/demos/read-only.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/search-field/demos/read-only"),
     ),
   },
-  "search-field/required": {
+  "search-field/demos/required": {
     files: ["registry/components/search-field/demos/required.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/search-field/demos/required"),
     ),
   },
-  "search-field/sizes": {
+  "search-field/demos/sizes": {
     files: ["registry/components/search-field/demos/sizes.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/search-field/demos/sizes"),
     ),
   },
-  "search-field/uncontrolled": {
+  "search-field/demos/uncontrolled": {
     files: ["registry/components/search-field/demos/uncontrolled.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/search-field/demos/uncontrolled"),
     ),
   },
-  "select/async-loading": {
+  "select/demos/async-loading": {
     files: ["registry/components/select/demos/async-loading.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/select/demos/async-loading"),
     ),
   },
-  "select/basic": {
+  "select/demos/basic": {
     files: ["registry/components/select/demos/basic.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/select/demos/basic"),
     ),
   },
-  "select/composition": {
+  "select/demos/composition": {
     files: ["registry/components/select/demos/composition.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/select/demos/composition"),
     ),
   },
-  "select/controlled": {
+  "select/demos/controlled": {
     files: ["registry/components/select/demos/controlled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/select/demos/controlled"),
     ),
   },
-  "select/description": {
+  "select/demos/description": {
     files: ["registry/components/select/demos/description.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/select/demos/description"),
     ),
   },
-  "select/disabled": {
+  "select/demos/disabled": {
     files: ["registry/components/select/demos/disabled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/select/demos/disabled"),
     ),
   },
-  "select/label": {
+  "select/demos/label": {
     files: ["registry/components/select/demos/label.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/select/demos/label"),
     ),
   },
-  "select/links": {
+  "select/demos/links": {
     files: ["registry/components/select/demos/links.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/select/demos/links"),
     ),
   },
-  "select/loading": {
+  "select/demos/loading": {
     files: ["registry/components/select/demos/loading.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/select/demos/loading"),
     ),
   },
-  "select/placeholder": {
+  "select/demos/placeholder": {
     files: ["registry/components/select/demos/placeholder.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/select/demos/placeholder"),
     ),
   },
-  "select/required": {
+  "select/demos/required": {
     files: ["registry/components/select/demos/required.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/select/demos/required"),
     ),
   },
-  "select/sections": {
+  "select/demos/sections": {
     files: ["registry/components/select/demos/sections.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/select/demos/sections"),
     ),
   },
-  "select/uncontrolled": {
+  "select/demos/uncontrolled": {
     files: ["registry/components/select/demos/uncontrolled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/select/demos/uncontrolled"),
     ),
   },
-  "select/validation": {
+  "select/demos/validation": {
     files: ["registry/components/select/demos/validation.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/select/demos/validation"),
     ),
   },
-  "separator/card": {
+  "separator/demos/card": {
     files: ["registry/components/separator/demos/card.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/separator/demos/card"),
     ),
   },
-  "separator/orientation": {
+  "separator/demos/orientation": {
     files: ["registry/components/separator/demos/orientation.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/separator/demos/orientation"),
     ),
   },
-  "skeleton/api-simulation": {
+  "skeleton/demos/api-simulation": {
     files: ["registry/components/skeleton/demos/api-simulation.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/skeleton/demos/api-simulation"),
     ),
   },
-  "skeleton/card": {
+  "skeleton/demos/card": {
     files: ["registry/components/skeleton/demos/card.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/skeleton/demos/card"),
     ),
   },
-  "skeleton/children": {
+  "skeleton/demos/children": {
     files: ["registry/components/skeleton/demos/children.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/skeleton/demos/children"),
     ),
   },
-  "skeleton/fixed-size-children": {
+  "skeleton/demos/fixed-size-children": {
     files: ["registry/components/skeleton/demos/fixed-size-children.tsx"],
     component: React.lazy(
       () =>
@@ -2194,169 +2194,169 @@ export const Index: Record<
         ),
     ),
   },
-  "skeleton/show": {
+  "skeleton/demos/show": {
     files: ["registry/components/skeleton/demos/show.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/skeleton/demos/show"),
     ),
   },
-  "slider/composition": {
+  "slider/demos/composition": {
     files: ["registry/components/slider/demos/composition.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/slider/demos/composition"),
     ),
   },
-  "slider/controlled": {
+  "slider/demos/controlled": {
     files: ["registry/components/slider/demos/controlled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/slider/demos/controlled"),
     ),
   },
-  "slider/default": {
+  "slider/demos/default": {
     files: ["registry/components/slider/demos/default.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/slider/demos/default"),
     ),
   },
-  "slider/description": {
+  "slider/demos/description": {
     files: ["registry/components/slider/demos/description.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/slider/demos/description"),
     ),
   },
-  "slider/disabled": {
+  "slider/demos/disabled": {
     files: ["registry/components/slider/demos/disabled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/slider/demos/disabled"),
     ),
   },
-  "slider/format-options": {
+  "slider/demos/format-options": {
     files: ["registry/components/slider/demos/format-options.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/slider/demos/format-options"),
     ),
   },
-  "slider/label": {
+  "slider/demos/label": {
     files: ["registry/components/slider/demos/label.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/slider/demos/label"),
     ),
   },
-  "slider/range": {
+  "slider/demos/range": {
     files: ["registry/components/slider/demos/range.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/slider/demos/range"),
     ),
   },
-  "slider/sizes": {
+  "slider/demos/sizes": {
     files: ["registry/components/slider/demos/sizes.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/slider/demos/sizes"),
     ),
   },
-  "slider/step": {
+  "slider/demos/step": {
     files: ["registry/components/slider/demos/step.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/slider/demos/step"),
     ),
   },
-  "slider/uncontrolled": {
+  "slider/demos/uncontrolled": {
     files: ["registry/components/slider/demos/uncontrolled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/slider/demos/uncontrolled"),
     ),
   },
-  "slider/value-label": {
+  "slider/demos/value-label": {
     files: ["registry/components/slider/demos/value-label.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/slider/demos/value-label"),
     ),
   },
-  "slider/value-scale": {
+  "slider/demos/value-scale": {
     files: ["registry/components/slider/demos/value-scale.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/slider/demos/value-scale"),
     ),
   },
-  "slider/vertical": {
+  "slider/demos/vertical": {
     files: ["registry/components/slider/demos/vertical.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/slider/demos/vertical"),
     ),
   },
-  "switch/card": {
+  "switch/demos/card": {
     files: ["registry/components/switch/demos/card.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/switch/demos/card"),
     ),
   },
-  "switch/composition": {
+  "switch/demos/composition": {
     files: ["registry/components/switch/demos/composition.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/switch/demos/composition"),
     ),
   },
-  "switch/controlled": {
+  "switch/demos/controlled": {
     files: ["registry/components/switch/demos/controlled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/switch/demos/controlled"),
     ),
   },
-  "switch/default": {
+  "switch/demos/default": {
     files: ["registry/components/switch/demos/default.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/switch/demos/default"),
     ),
   },
-  "switch/disabled": {
+  "switch/demos/disabled": {
     files: ["registry/components/switch/demos/disabled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/switch/demos/disabled"),
     ),
   },
-  "switch/label": {
+  "switch/demos/label": {
     files: ["registry/components/switch/demos/label.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/switch/demos/label"),
     ),
   },
-  "switch/sizes": {
+  "switch/demos/sizes": {
     files: ["registry/components/switch/demos/sizes.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/switch/demos/sizes"),
     ),
   },
-  "switch/uncontrolled": {
+  "switch/demos/uncontrolled": {
     files: ["registry/components/switch/demos/uncontrolled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/switch/demos/uncontrolled"),
     ),
   },
-  "table/basic": {
+  "table/demos/basic": {
     files: ["registry/components/table/demos/basic.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/table/demos/basic"),
     ),
   },
-  "table/column-resizing": {
+  "table/demos/column-resizing": {
     files: ["registry/components/table/demos/column-resizing.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/table/demos/column-resizing"),
     ),
   },
-  "table/controlled": {
+  "table/demos/controlled": {
     files: ["registry/components/table/demos/controlled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/table/demos/controlled"),
     ),
   },
-  "table/disabled-rows": {
+  "table/demos/disabled-rows": {
     files: ["registry/components/table/demos/disabled-rows.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/table/demos/disabled-rows"),
     ),
   },
-  "table/disallow-empty-selection": {
+  "table/demos/disallow-empty-selection": {
     files: ["registry/components/table/demos/disallow-empty-selection.tsx"],
     component: React.lazy(
       () =>
@@ -2365,181 +2365,181 @@ export const Index: Record<
         ),
     ),
   },
-  "table/dynamic-collection": {
+  "table/demos/dynamic-collection": {
     files: ["registry/components/table/demos/dynamic-collection.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/table/demos/dynamic-collection"),
     ),
   },
-  "table/empty-state": {
+  "table/demos/empty-state": {
     files: ["registry/components/table/demos/empty-state.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/table/demos/empty-state"),
     ),
   },
-  "table/links": {
+  "table/demos/links": {
     files: ["registry/components/table/demos/links.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/table/demos/links"),
     ),
   },
-  "table/reordable": {
+  "table/demos/reordable": {
     files: ["registry/components/table/demos/reordable.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/table/demos/reordable"),
     ),
   },
-  "table/row-action": {
+  "table/demos/row-action": {
     files: ["registry/components/table/demos/row-action.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/table/demos/row-action"),
     ),
   },
-  "table/selection-behavior": {
+  "table/demos/selection-behavior": {
     files: ["registry/components/table/demos/selection-behavior.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/table/demos/selection-behavior"),
     ),
   },
-  "table/selection-mode": {
+  "table/demos/selection-mode": {
     files: ["registry/components/table/demos/selection-mode.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/table/demos/selection-mode"),
     ),
   },
-  "table/selection-variant": {
+  "table/demos/selection-variant": {
     files: ["registry/components/table/demos/selection-variant.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/table/demos/selection-variant"),
     ),
   },
-  "table/selection": {
+  "table/demos/selection": {
     files: ["registry/components/table/demos/selection.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/table/demos/selection"),
     ),
   },
-  "table/sorting": {
+  "table/demos/sorting": {
     files: ["registry/components/table/demos/sorting.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/table/demos/sorting"),
     ),
   },
-  "table/static-row-action": {
+  "table/demos/static-row-action": {
     files: ["registry/components/table/demos/static-row-action.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/table/demos/static-row-action"),
     ),
   },
-  "table/uncontrolled": {
+  "table/demos/uncontrolled": {
     files: ["registry/components/table/demos/uncontrolled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/table/demos/uncontrolled"),
     ),
   },
-  "table/variants": {
+  "table/demos/variants": {
     files: ["registry/components/table/demos/variants.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/table/demos/variants"),
     ),
   },
-  "tabs/basic": {
+  "tabs/demos/basic": {
     files: ["registry/components/tabs/demos/basic.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/tabs/demos/basic"),
     ),
   },
-  "tabs/controlled": {
+  "tabs/demos/controlled": {
     files: ["registry/components/tabs/demos/controlled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/tabs/demos/controlled"),
     ),
   },
-  "tabs/disabled": {
+  "tabs/demos/disabled": {
     files: ["registry/components/tabs/demos/disabled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/tabs/demos/disabled"),
     ),
   },
-  "tabs/keyboard-activation": {
+  "tabs/demos/keyboard-activation": {
     files: ["registry/components/tabs/demos/keyboard-activation.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/tabs/demos/keyboard-activation"),
     ),
   },
-  "tabs/variant": {
+  "tabs/demos/variant": {
     files: ["registry/components/tabs/demos/variant.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/tabs/demos/variant"),
     ),
   },
-  "tabs/vertical": {
+  "tabs/demos/vertical": {
     files: ["registry/components/tabs/demos/vertical.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/tabs/demos/vertical"),
     ),
   },
-  "tag-group/default": {
+  "tag-group/demos/default": {
     files: ["registry/components/tag-group/demos/default.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/tag-group/demos/default"),
     ),
   },
-  "text-area/composition": {
+  "text-area/demos/composition": {
     files: ["registry/components/text-area/demos/composition.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/text-area/demos/composition"),
     ),
   },
-  "text-area/controlled": {
+  "text-area/demos/controlled": {
     files: ["registry/components/text-area/demos/controlled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/text-area/demos/controlled"),
     ),
   },
-  "text-area/default": {
+  "text-area/demos/default": {
     files: ["registry/components/text-area/demos/default.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/text-area/demos/default"),
     ),
   },
-  "text-area/description": {
+  "text-area/demos/description": {
     files: ["registry/components/text-area/demos/description.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/text-area/demos/description"),
     ),
   },
-  "text-area/disabled": {
+  "text-area/demos/disabled": {
     files: ["registry/components/text-area/demos/disabled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/text-area/demos/disabled"),
     ),
   },
-  "text-area/error-message": {
+  "text-area/demos/error-message": {
     files: ["registry/components/text-area/demos/error-message.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/text-area/demos/error-message"),
     ),
   },
-  "text-area/form": {
+  "text-area/demos/form": {
     files: ["registry/components/text-area/demos/form.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/text-area/demos/form"),
     ),
   },
-  "text-area/label": {
+  "text-area/demos/label": {
     files: ["registry/components/text-area/demos/label.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/text-area/demos/label"),
     ),
   },
-  "text-area/prefix-and-suffix": {
+  "text-area/demos/prefix-and-suffix": {
     files: ["registry/components/text-area/demos/prefix-and-suffix.tsx"],
     component: React.lazy(
       () =>
@@ -2548,71 +2548,71 @@ export const Index: Record<
         ),
     ),
   },
-  "text-area/read-only": {
+  "text-area/demos/read-only": {
     files: ["registry/components/text-area/demos/read-only.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/text-area/demos/read-only"),
     ),
   },
-  "text-area/required": {
+  "text-area/demos/required": {
     files: ["registry/components/text-area/demos/required.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/text-area/demos/required"),
     ),
   },
-  "text-area/uncontrolled": {
+  "text-area/demos/uncontrolled": {
     files: ["registry/components/text-area/demos/uncontrolled.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/text-area/demos/uncontrolled"),
     ),
   },
-  "text-field/composition": {
+  "text-field/demos/composition": {
     files: ["registry/components/text-field/demos/composition.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/text-field/demos/composition"),
     ),
   },
-  "text-field/controlled": {
+  "text-field/demos/controlled": {
     files: ["registry/components/text-field/demos/controlled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/text-field/demos/controlled"),
     ),
   },
-  "text-field/default": {
+  "text-field/demos/default": {
     files: ["registry/components/text-field/demos/default.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/text-field/demos/default"),
     ),
   },
-  "text-field/description": {
+  "text-field/demos/description": {
     files: ["registry/components/text-field/demos/description.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/text-field/demos/description"),
     ),
   },
-  "text-field/disabled": {
+  "text-field/demos/disabled": {
     files: ["registry/components/text-field/demos/disabled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/text-field/demos/disabled"),
     ),
   },
-  "text-field/error-message": {
+  "text-field/demos/error-message": {
     files: ["registry/components/text-field/demos/error-message.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/text-field/demos/error-message"),
     ),
   },
-  "text-field/label": {
+  "text-field/demos/label": {
     files: ["registry/components/text-field/demos/label.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/text-field/demos/label"),
     ),
   },
-  "text-field/prefix-and-suffix": {
+  "text-field/demos/prefix-and-suffix": {
     files: ["registry/components/text-field/demos/prefix-and-suffix.tsx"],
     component: React.lazy(
       () =>
@@ -2621,104 +2621,104 @@ export const Index: Record<
         ),
     ),
   },
-  "text-field/read-only": {
+  "text-field/demos/read-only": {
     files: ["registry/components/text-field/demos/read-only.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/text-field/demos/read-only"),
     ),
   },
-  "text-field/required": {
+  "text-field/demos/required": {
     files: ["registry/components/text-field/demos/required.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/text-field/demos/required"),
     ),
   },
-  "text-field/sizes": {
+  "text-field/demos/sizes": {
     files: ["registry/components/text-field/demos/sizes.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/text-field/demos/sizes"),
     ),
   },
-  "text-field/uncontrolled": {
+  "text-field/demos/uncontrolled": {
     files: ["registry/components/text-field/demos/uncontrolled.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/text-field/demos/uncontrolled"),
     ),
   },
-  "time-field/composition": {
+  "time-field/demos/composition": {
     files: ["registry/components/time-field/demos/composition.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/time-field/demos/composition"),
     ),
   },
-  "time-field/controlled": {
+  "time-field/demos/controlled": {
     files: ["registry/components/time-field/demos/controlled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/time-field/demos/controlled"),
     ),
   },
-  "time-field/default": {
+  "time-field/demos/default": {
     files: ["registry/components/time-field/demos/default.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/time-field/demos/default"),
     ),
   },
-  "time-field/description": {
+  "time-field/demos/description": {
     files: ["registry/components/time-field/demos/description.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/time-field/demos/description"),
     ),
   },
-  "time-field/disabled": {
+  "time-field/demos/disabled": {
     files: ["registry/components/time-field/demos/disabled.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/time-field/demos/disabled"),
     ),
   },
-  "time-field/error-message": {
+  "time-field/demos/error-message": {
     files: ["registry/components/time-field/demos/error-message.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/time-field/demos/error-message"),
     ),
   },
-  "time-field/granularity": {
+  "time-field/demos/granularity": {
     files: ["registry/components/time-field/demos/granularity.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/time-field/demos/granularity"),
     ),
   },
-  "time-field/hide-time-zone": {
+  "time-field/demos/hide-time-zone": {
     files: ["registry/components/time-field/demos/hide-time-zone.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/time-field/demos/hide-time-zone"),
     ),
   },
-  "time-field/hour-cycle": {
+  "time-field/demos/hour-cycle": {
     files: ["registry/components/time-field/demos/hour-cycle.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/time-field/demos/hour-cycle"),
     ),
   },
-  "time-field/label": {
+  "time-field/demos/label": {
     files: ["registry/components/time-field/demos/label.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/time-field/demos/label"),
     ),
   },
-  "time-field/placeholder": {
+  "time-field/demos/placeholder": {
     files: ["registry/components/time-field/demos/placeholder.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/time-field/demos/placeholder"),
     ),
   },
-  "time-field/prefix-and-suffix": {
+  "time-field/demos/prefix-and-suffix": {
     files: ["registry/components/time-field/demos/prefix-and-suffix.tsx"],
     component: React.lazy(
       () =>
@@ -2727,70 +2727,70 @@ export const Index: Record<
         ),
     ),
   },
-  "time-field/read-only": {
+  "time-field/demos/read-only": {
     files: ["registry/components/time-field/demos/read-only.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/time-field/demos/read-only"),
     ),
   },
-  "time-field/required": {
+  "time-field/demos/required": {
     files: ["registry/components/time-field/demos/required.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/time-field/demos/required"),
     ),
   },
-  "time-field/sizes": {
+  "time-field/demos/sizes": {
     files: ["registry/components/time-field/demos/sizes.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/time-field/demos/sizes"),
     ),
   },
-  "time-field/time-zones": {
+  "time-field/demos/time-zones": {
     files: ["registry/components/time-field/demos/time-zones.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/time-field/demos/time-zones"),
     ),
   },
-  "time-field/uncontrolled": {
+  "time-field/demos/uncontrolled": {
     files: ["registry/components/time-field/demos/uncontrolled.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/time-field/demos/uncontrolled"),
     ),
   },
-  "toggle-button/controlled": {
+  "toggle-button/demos/controlled": {
     files: ["registry/components/toggle-button/demos/controlled.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/toggle-button/demos/controlled"),
     ),
   },
-  "toggle-button/default": {
+  "toggle-button/demos/default": {
     files: ["registry/components/toggle-button/demos/default.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/toggle-button/demos/default"),
     ),
   },
-  "toggle-button/disabled": {
+  "toggle-button/demos/disabled": {
     files: ["registry/components/toggle-button/demos/disabled.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/toggle-button/demos/disabled"),
     ),
   },
-  "toggle-button/shapes": {
+  "toggle-button/demos/shapes": {
     files: ["registry/components/toggle-button/demos/shapes.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/toggle-button/demos/shapes"),
     ),
   },
-  "toggle-button/sizes": {
+  "toggle-button/demos/sizes": {
     files: ["registry/components/toggle-button/demos/sizes.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/toggle-button/demos/sizes"),
     ),
   },
-  "toggle-button/uncontrolled": {
+  "toggle-button/demos/uncontrolled": {
     files: ["registry/components/toggle-button/demos/uncontrolled.tsx"],
     component: React.lazy(
       () =>
@@ -2799,14 +2799,14 @@ export const Index: Record<
         ),
     ),
   },
-  "toggle-button/variants": {
+  "toggle-button/demos/variants": {
     files: ["registry/components/toggle-button/demos/variants.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/toggle-button/demos/variants"),
     ),
   },
-  "toggle-button-group/default": {
+  "toggle-button-group/demos/default": {
     files: ["registry/components/toggle-button-group/demos/default.tsx"],
     component: React.lazy(
       () =>
@@ -2815,62 +2815,62 @@ export const Index: Record<
         ),
     ),
   },
-  "tooltip/arrow": {
+  "tooltip/demos/arrow": {
     files: ["registry/components/tooltip/demos/arrow.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/tooltip/demos/arrow"),
     ),
   },
-  "tooltip/composition": {
+  "tooltip/demos/composition": {
     files: ["registry/components/tooltip/demos/composition.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/tooltip/demos/composition"),
     ),
   },
-  "tooltip/container-padding": {
+  "tooltip/demos/container-padding": {
     files: ["registry/components/tooltip/demos/container-padding.tsx"],
     component: React.lazy(
       () =>
         import("@dotui/ui/registry/components/tooltip/demos/container-padding"),
     ),
   },
-  "tooltip/default": {
+  "tooltip/demos/default": {
     files: ["registry/components/tooltip/demos/default.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/tooltip/demos/default"),
     ),
   },
-  "tooltip/delay": {
+  "tooltip/demos/delay": {
     files: ["registry/components/tooltip/demos/delay.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/tooltip/demos/delay"),
     ),
   },
-  "tooltip/flip": {
+  "tooltip/demos/flip": {
     files: ["registry/components/tooltip/demos/flip.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/tooltip/demos/flip"),
     ),
   },
-  "tooltip/offset": {
+  "tooltip/demos/offset": {
     files: ["registry/components/tooltip/demos/offset.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/tooltip/demos/offset"),
     ),
   },
-  "tooltip/placement": {
+  "tooltip/demos/placement": {
     files: ["registry/components/tooltip/demos/placement.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/tooltip/demos/placement"),
     ),
   },
-  "tooltip/variant": {
+  "tooltip/demos/variant": {
     files: ["registry/components/tooltip/demos/variant.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/tooltip/demos/variant"),
     ),
   },
-  "tooltip/with-arrow": {
+  "tooltip/demos/with-arrow": {
     files: ["registry/components/tooltip/demos/with-arrow.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/tooltip/demos/with-arrow"),

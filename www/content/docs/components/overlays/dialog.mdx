@@ -11,7 +11,7 @@ links:
 ---
 
 <ComponentPreview
-  name="dialog/basic"
+  name="dialog/demos/basic"
   preview={`<DialogRoot>
     <Button prefix={<PenSquareIcon />}>Create issue</Button>
     <Dialog
@@ -96,7 +96,7 @@ Dialogs can be rendered as modals, popovers, or drawers using the `type` prop.
 By default, dialogs are displayed as drawers on mobile. You can override this behavior by setting the `mobileType` prop.
 
 <ComponentPreview
-  name="dialog/types"
+  name="dialog/demos/types"
   preview={`<DialogRoot>
     <Button>Create issue</Button>
     <Dialog type={type} mobileType={mobileType}>  {/* "modal", "popover", "drawer" */}
@@ -111,7 +111,7 @@ Use the `role="alertdialog"` prop on the `<Dialog>` element to make an alert dia
 If the `isDismissable` prop is not explicitly set, the dialog will be not dismissable.
 
 <ComponentPreview
-  name="dialog/alert-dialog"
+  name="dialog/demos/alert-dialog"
   preview={`<DialogRoot>
     <Button>Delete project</Button>
     <Dialog role="alertdialog">
@@ -125,7 +125,7 @@ If the `isDismissable` prop is not explicitly set, the dialog will be not dismis
 Dialogs are dismissable by default (except alert dialogs) allowing users to click outside to close the dialog.
 
 <ComponentPreview
-  name="dialog/dismissable"
+  name="dialog/demos/dismissable"
   preview={`<DialogRoot>
     <Button>Create issue</Button>
     <Dialog isDismissable={isDismissable}>
@@ -139,7 +139,7 @@ Dialogs are dismissable by default (except alert dialogs) allowing users to clic
 Use the `DialogInset` component to add inset content to the dialog.
 
 <ComponentPreview
-  name="dialog/inset-content"
+  name="dialog/demos/inset-content"
   preview={`<DialogRoot>
     <Button>Create issue</Button>
     <Dialog title=".." description="..">
@@ -159,7 +159,7 @@ Use the `DialogInset` component to add inset content to the dialog.
 Use the `isOpen` and `onOpenChange` props to control the dialog's open state.
 
 <ComponentPreview
-  name="dialog/controlled"
+  name="dialog/demos/controlled"
   preview={`const [isOpen, setOpen] = React.useState(false);
   return (
     <DialogRoot isOpen={isOpen} onOpenChange={setOpen}>
@@ -176,7 +176,7 @@ Use the `isOpen` and `onOpenChange` props to control the dialog's open state.
 If you need to customize things further, you can drop down to the composition level.
 
 <ComponentPreview
-  name="dialog/composition"
+  name="dialog/demos/composition"
   preview={`<DialogRoot>
     <Button>Create issue</Button>
     <Overlay>
@@ -204,13 +204,13 @@ If you need to customize things further, you can drop down to the composition le
 
 ### Async form submission
 
-<ComponentPreview name="dialog/async-form-submission" preview={``} />
+<ComponentPreview name="dialog/demos/async-form-submission" preview={``} />
 
 ### Nested dialog
 
 Dialogs support nesting, allowing you to open a dialog from within another dialog.
 
-<ComponentPreview name="dialog/nested" preview={``} />
+<ComponentPreview name="dialog/demos/nested" preview={``} />
 
 ## API Reference
 

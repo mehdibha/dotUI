@@ -11,7 +11,7 @@ links:
 ---
 
 <ComponentPreview
-  name="text-area/default"
+  name="text-area/demos/default"
   preview={`<TextArea label="Description" placeholder="Type your message here" />`}
 />
 
@@ -52,7 +52,7 @@ import { TextAreaRoot } from "@/components/core/text-field";
 A visual label can be provided for the `TextArea` using the label prop or a hidden label using `aria-label` prop.
 
 <ComponentPreview
-  name="text-area/label"
+  name="text-area/demos/label"
   preview={`<TextArea label="Description" />
   <TextArea aria-label="Description" />`}
 />
@@ -62,7 +62,7 @@ A visual label can be provided for the `TextArea` using the label prop or a hidd
 An `errorMessage` can be supplied to a TextField, which will be displayed when the `isInvalid` prop is set to `true`.
 
 <ComponentPreview
-  name="text-area/description"
+  name="text-area/demos/description"
   preview={`<TextArea label="Description" description="Type your description" />`}
 />
 
@@ -71,7 +71,7 @@ An `errorMessage` can be supplied to a TextField, which will be displayed when t
 An `errorMessage` can be supplied to a TextArea, which will be displayed when the `isInvalid` prop is set to `true`.
 
 <ComponentPreview
-  name="text-area/error-message"
+  name="text-area/demos/error-message"
   preview={`<TextArea 
     label="Comment"
     isInvalid
@@ -84,7 +84,7 @@ An `errorMessage` can be supplied to a TextArea, which will be displayed when th
 To add additional context for the `TextArea`, use the `prefix` and `suffix` props.
 
 <ComponentPreview
-  name="text-area/prefix-and-suffix"
+  name="text-area/demos/prefix-and-suffix"
   preview={`<TextArea
     label="Comment"
     placeholder="type something here"
@@ -98,7 +98,7 @@ To add additional context for the `TextArea`, use the `prefix` and `suffix` prop
 Use the `isDisabled` prop to disable the TextArea.
 
 <ComponentPreview
-  name="text-area/disabled"
+  name="text-area/demos/disabled"
   preview={`<TextArea isDisabled />`}
 />
 
@@ -107,7 +107,7 @@ Use the `isDisabled` prop to disable the TextArea.
 The `isReadOnly` boolean prop makes the TextArea's text content immutable. Unlike `isDisabled`, the text area remains focusable and the contents can still be copied.
 
 <ComponentPreview
-  name="text-area/read-only"
+  name="text-area/demos/read-only"
   preview={`<TextArea isReadOnly />`}
 />
 
@@ -117,7 +117,7 @@ Use the `isRequired` prop to mark the TextArea as required.
 Use the `necessityIndicator` prop to control the visual style of the required state.
 
 <ComponentPreview
-  name="text-area/required"
+  name="text-area/demos/required"
   preview={`<TextArea label="Description" isRequired necessityIndicator="icon" />`}
 />
 
@@ -126,7 +126,7 @@ Use the `necessityIndicator` prop to control the visual style of the required st
 Use the `defaultValue` prop to set the default input value.
 
 <ComponentPreview
-  name="text-area/uncontrolled"
+  name="text-area/demos/uncontrolled"
   preview={`<TextArea label="Essay" defaultValue="Roses are red, violets are blue." />`}
 />
 
@@ -135,7 +135,7 @@ Use the `defaultValue` prop to set the default input value.
 Use the `value` and `onChange` props to control the value of the input.
 
 <ComponentPreview
-  name="text-area/controlled"
+  name="text-area/demos/controlled"
   preview={`const [inputValue, setInputValue] = React.useState("Roses are red, violets are blue.");
   return (
     <TextArea
@@ -153,7 +153,7 @@ Use the `value` and `onChange` props to control the value of the input.
 If you need to customize things further, you can drop down to the composition level.
 
 <ComponentPreview
-  name="text-area/composition"
+  name="text-area/demos/composition"
   preview={`<TextAreaRoot>
     <Label>Comment</Label>
     <InputRoot>

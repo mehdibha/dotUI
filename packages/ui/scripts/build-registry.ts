@@ -77,10 +77,7 @@ async function processDirectory(
 
   for (const entry of entries) {
     if (entry.isFile() && entry.name.endsWith(".tsx")) {
-      const cleanRelativePath = relativePath
-        .replace("/demos/", "/")
-        .replace("/demos", "");
-      const demoName = `${cleanRelativePath}/${entry.name.replace(".tsx", "")}`;
+      const demoName = `${relativePath}/${entry.name.replace(".tsx", "")}`;
       const demoPath = `@dotui/ui/registry/components/${relativePath}/${entry.name.replace(".tsx", "")}`;
       const filePath = `registry/components/${relativePath}/${entry.name}`;
 

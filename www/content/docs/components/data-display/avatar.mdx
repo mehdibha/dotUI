@@ -9,7 +9,7 @@ links:
 ---
 
 <ComponentPreview
-  name="avatar/default"
+  name="avatar/demos/default"
   preview={`<Avatar src="https://github.com/mehdibha.png" alt="@mehdibha" fallback="M" />
   <Avatar src="https://githubbb.com/mehdibha.png" alt="@mehdibha" fallback="M" /> // invalid URL`}
 />
@@ -50,7 +50,7 @@ import {
 `Avatar` can be either a circle or a square using the `shape` prop.
 
 <ComponentPreview
-  name="avatar/shape"
+  name="avatar/demos/shape"
   preview={`<Avatar shape="square" />
 <Avatar shape="circle" />`}
 />
@@ -60,7 +60,7 @@ import {
 Use the `size` prop to control the size of the `Avatar`. The default variant is `md`.
 
 <ComponentPreview
-  name="avatar/sizes"
+  name="avatar/demos/sizes"
   preview={`<Avatar size="sm" />
   <Avatar size="md" />
   <Avatar size="lg" />`}
@@ -71,7 +71,7 @@ Use the `size` prop to control the size of the `Avatar`. The default variant is 
 If you need to customize things further, you can drop down to the composition level.
 
 <ComponentPreview
-  name="avatar/composition"
+  name="avatar/demos/composition"
   preview={`<AvatarRoot>
     <AvatarImage src="https://github.com/mehdibha.png" alt="@mehdibha" />
     <AvatarFallback>M</AvatarFallback>

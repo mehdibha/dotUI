@@ -11,7 +11,7 @@ links:
 ---
 
 <ComponentPreview
-  name="text-field/default"
+  name="text-field/demos/default"
   preview={`<TextField label="Email" placeholder="hello@mehdibha.com" />`}
 />
 
@@ -49,7 +49,7 @@ import { TextFieldInput, TextFieldRoot } from "@/components/core/text-field";
 A visual label can be provided for the `TextField` using the label prop, or a hidden label using `aria-label` prop.
 
 <ComponentPreview
-  name="text-field/label"
+  name="text-field/demos/label"
   preview={`<TextField label="Email" />
 <TextField aria-label="Email" />`}
 />
@@ -59,7 +59,7 @@ A visual label can be provided for the `TextField` using the label prop, or a hi
 A description can be supplied to `TextField` via the `description` prop. The description is always visible unless the `isInvalid` prop is `true` and an error message is provided.
 
 <ComponentPreview
-  name="text-field/description"
+  name="text-field/demos/description"
   preview={`<TextField label="Email" description="Enter your email." />`}
 />
 
@@ -68,7 +68,7 @@ A description can be supplied to `TextField` via the `description` prop. The des
 An `errorMessage` can be supplied to `TextField`, which will be displayed when the `isInvalid` prop is set to `true`.
 
 <ComponentPreview
-  name="text-field/error-message"
+  name="text-field/demos/error-message"
   preview={`<TextField
     label="Email"
     isInvalid
@@ -81,7 +81,7 @@ An `errorMessage` can be supplied to `TextField`, which will be displayed when t
 Use the `size` prop to control the size of the `TextField`. The default size is `"md"`.
 
 <ComponentPreview
-  name="text-field/sizes"
+  name="text-field/demos/sizes"
   preview={`<TextField size="sm" />
 <TextField size="md" />
 <TextField size="lg" />`}
@@ -92,7 +92,7 @@ Use the `size` prop to control the size of the `TextField`. The default size is 
 To add additional context for the `TextField`, use the `prefix` and `suffix` props.
 
 <ComponentPreview
-  name="text-field/prefix-and-suffix"
+  name="text-field/demos/prefix-and-suffix"
   preview={`<TextField prefix={<span>https://</span>} />
 <TextField suffix={<span>@dotui.org</span>} />
 <TextField suffix={<ClearButton />} />`}
@@ -103,7 +103,7 @@ To add additional context for the `TextField`, use the `prefix` and `suffix` pro
 Use the `isDisabled` prop to disable the TextField.
 
 <ComponentPreview
-  name="text-field/disabled"
+  name="text-field/demos/disabled"
   preview={`<TextField isDisabled />`}
 />
 
@@ -112,7 +112,7 @@ Use the `isDisabled` prop to disable the TextField.
 The `isReadOnly` boolean prop makes the TextField's text content immutable. Unlike `isDisabled`, the TextField remains focusable and the contents can still be copied.
 
 <ComponentPreview
-  name="text-field/read-only"
+  name="text-field/demos/read-only"
   preview={`<TextField isReadOnly />`}
 />
 
@@ -122,7 +122,7 @@ Use the `isRequired` prop to mark the TextField as required.
 Use the `necessityIndicator` prop to control the visual style of the required state.
 
 <ComponentPreview
-  name="text-field/required"
+  name="text-field/demos/required"
   preview={`<TextField label="Email" isRequired />
 <TextField label="Email" isRequired necessityIndicator="icon" />
 <TextField label="Email" isRequired necessityIndicator="label" />
@@ -134,7 +134,7 @@ Use the `necessityIndicator` prop to control the visual style of the required st
 Use the `defaultValue` prop to set the default input value.
 
 <ComponentPreview
-  name="text-field/uncontrolled"
+  name="text-field/demos/uncontrolled"
   preview={`<TextField label="Name" defaultValue="Mehdi" />`}
 />
 
@@ -143,7 +143,7 @@ Use the `defaultValue` prop to set the default input value.
 Use the `value` and `onChange` props to control the value of the input.
 
 <ComponentPreview
-  name="text-field/controlled"
+  name="text-field/demos/controlled"
   preview={`const [inputValue, setInputValue] = React.useState("Hello world!");
   return (
     <TextField
@@ -160,7 +160,7 @@ Use the `value` and `onChange` props to control the value of the input.
 If you need to customize things further, you can drop down to the composition level.
 
 <ComponentPreview
-  name="text-field/composition"
+  name="text-field/demos/composition"
   preview={`<TextFieldRoot>
     <Label>Email</Label>
     <TextFieldInput />

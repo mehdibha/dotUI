@@ -10,7 +10,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/layout/aspect-ratio.mdx?plain=1
 ---
 
-<ComponentPreview name="table/basic" />
+<ComponentPreview name="table/demos/basic" />
 
 ## Installation
 
@@ -62,13 +62,13 @@ import {
 
 Use the `variant` prop to change the appearance of the Table.
 
-<ComponentPreview name="table/variants" />
+<ComponentPreview name="table/demos/variants" />
 
 ## Dynamic collections
 
 The first example have shown static collections, where the data is hard coded. Dynamic collections, as shown below, can be used when the table data comes from an external data source such as an API, or updates over time. In the example below, both the columns and the rows are provided to the table via a render function. You can also make the columns static and only the rows dynamic.
 
-<ComponentPreview name="table/dynamic-collection" />
+<ComponentPreview name="table/demos/dynamic-collection" />
 
 ## Selection
 
@@ -76,37 +76,37 @@ The first example have shown static collections, where the data is hard coded. D
 
 By default, Table doesn't allow row selection but this can be enabled using the `selectionMode` prop.
 
-<ComponentPreview name="table/selection-mode" />
+<ComponentPreview name="table/demos/selection-mode" />
 
 ### Uncontrolled selection
 
 Use `defaultSelectedKeys` to provide a default set of selected rows. Note that the value of the selected keys must match the `id` prop of the row.
 
-<ComponentPreview name="table/uncontrolled" />
+<ComponentPreview name="table/demos/uncontrolled" />
 
 ### Controlled selection
 
 To programmatically control row selection, use the `selectedKeys` prop paired with the onSelectionChange callback. The `id` prop from the selected rows will be passed into the callback when the row is pressed, allowing you to update state accordingly.
 
-<ComponentPreview name="table/controlled" />
+<ComponentPreview name="table/demos/controlled" />
 
 ### Selection variant
 
 Use the `selectionVariant` prop to change the appearance of the selected rows.
 
-<ComponentPreview name="table/selection-variant" />
+<ComponentPreview name="table/demos/selection-variant" />
 
 ### Disallow empty selection
 
 Table also supports a `disallowEmptySelection` prop which forces the user to have at least one row in the Table selected at all times. In this mode, if a single row is selected and the user presses it, it will not be deselected.
 
-<ComponentPreview name="table/disallow-empty-selection" />
+<ComponentPreview name="table/demos/disallow-empty-selection" />
 
 ### Selection Behavior
 
 You can control how multiple selection should behave in the collection using the `selectionBehavior` prop.
 
-<ComponentPreview name="table/selection-behavior" />
+<ComponentPreview name="table/demos/selection-behavior" />
 
 ## Row options
 
@@ -114,17 +114,17 @@ You can control how multiple selection should behave in the collection using the
 
 Table supports row actions via the `onRowAction` prop
 
-<ComponentPreview name="table/row-action" />
+<ComponentPreview name="table/demos/row-action" />
 
 Rows may also have a row action specified by directly applying `onAction` on the Row itself. This may be especially convenient in static collections.
 
-<ComponentPreview name="table/static-row-action" />
+<ComponentPreview name="table/demos/static-row-action" />
 
 ### Link
 
 Table rows may also be links to another page or website. This can be achieved by passing the href prop to the `<TableRow>` component.
 
-<ComponentPreview name="table/links" />
+<ComponentPreview name="table/demos/links" />
 
 ### Disabled
 
@@ -140,31 +140,31 @@ A Row can be disabled with the `isDisabled` prop.
 
 In dynamic collections, it may be more convenient to use the `disabledKeys` prop at the Table level instead of `isDisabled` on individual rows.
 
-<ComponentPreview name="table/disabled-rows" />
+<ComponentPreview name="table/demos/disabled-rows" />
 
 ## Sorting
 
 Table supports sorting its data when a column header is pressed. To designate that a Column should support sorting, provide it with the `allowsSorting` prop.
 The Table accepts a `sortDescriptor` prop that defines the current column key to sort by and the sort direction (ascending/descending). When the user presses a sortable column header, the column's key and sort direction is passed into the `onSortChange` callback, allowing you to update the `sortDescriptor` appropriately.
 
-<ComponentPreview name="table/sorting" />
+<ComponentPreview name="table/demos/sorting" />
 
 ## Empty state
 
 Use the `renderEmptyState` prop to customize what the `TableBody` will display if there are no items.
 By default the `TableBody` will display a message saying `"No results found."`.
 
-<ComponentPreview name="table/empty-state" />
+<ComponentPreview name="table/demos/empty-state" />
 
 ## Column resizing
 
-<ComponentPreview name="table/column-resizing" />
+<ComponentPreview name="table/demos/column-resizing" />
 
 ## Drag and drop
 
 ### Reordable
 
-<ComponentPreview name="table/reordable" />
+<ComponentPreview name="table/demos/reordable" />
 
 ## API Reference
 

@@ -11,7 +11,7 @@ links:
 ---
 
 <ComponentPreview
-  name="radio-group/default"
+  name="radio-group/demos/default"
   preview={`<RadioGroup defaultValue="sm" label="Size">
     <Radio value="sm">Small</Radio>
     <Radio value="md">Medium</Radio>
@@ -72,7 +72,7 @@ import {
 RadioGroups are vertically oriented by default. The `orientation` prop can be used to change the orientation to `'horizontal'`.
 
 <ComponentPreview
-  name="radio-group/orientation"
+  name="radio-group/demos/orientation"
   preview={`<RadioGroup defaultValue="sm" label="Size" orientation="horizontal">
     <Radio value="sm" title="Small" description="Dimension: 128 x 128" />
     <Radio value="md" title="Medium" description="Dimension: 256 x 256" />
@@ -85,7 +85,7 @@ RadioGroups are vertically oriented by default. The `orientation` prop can be us
 Use the `variant` prop to control the visual style of the radio buttons.
 
 <ComponentPreview
-  name="radio-group/cards"
+  name="radio-group/demos/cards"
   preview={`<RadioGroup defaultValue="sm" label="Size" orientation="horizontal" variant="card">
     <Radio value="sm">
       <div className="flex flex-col gap-1">
@@ -113,7 +113,7 @@ Use the `variant` prop to control the visual style of the radio buttons.
 A visual label can be provided for the radio group using the `label` prop or a hidden label using `aria-label` prop.
 
 <ComponentPreview
-  name="radio-group/label"
+  name="radio-group/demos/label"
   preview={`<RadioGroup defaultValue="sm" label="Size">
     <Radio value="sm">Small</Radio>
     <Radio value="md">Medium</Radio>
@@ -131,7 +131,7 @@ A visual label can be provided for the radio group using the `label` prop or a h
 A description can be supplied to a radio group via the `description` prop. The description is always visible unless the `isInvalid` prop is `true` and an error message is provided.
 
 <ComponentPreview
-  name="radio-group/description"
+  name="radio-group/demos/description"
   preview={`<RadioGroup defaultValue="sm" label="Size" description="Select a product size.">
     <Radio value="sm">Small</Radio>
     <Radio value="md">Medium</Radio>
@@ -144,7 +144,7 @@ A description can be supplied to a radio group via the `description` prop. The d
 An `errorMessage` can be supplied to a `RadioGroup`, which will be displayed when the `isInvalid` prop is set to `true`.
 
 <ComponentPreview
-  name="radio-group/error-message"
+  name="radio-group/demos/error-message"
   preview={`<RadioGroup
     defaultValue={null}
     label="Size"
@@ -162,7 +162,7 @@ An `errorMessage` can be supplied to a `RadioGroup`, which will be displayed whe
 Use the `isDisabled` prop to disable the `RadioGroup` or a single `Radio`.
 
 <ComponentPreview
-  name="radio-group/disabled"
+  name="radio-group/demos/disabled"
   preview={`<RadioGroup label="Size" defaultValue="sm" isDisabled>
     <Radio value="sm">Small</Radio>
     <Radio value="md">Medium</Radio>
@@ -180,7 +180,7 @@ Use the `isDisabled` prop to disable the `RadioGroup` or a single `Radio`.
 The `isReadOnly` prop makes the selection immutable. Unlike isDisabled, the RadioGroup remains focusable.
 
 <ComponentPreview
-  name="radio-group/read-only"
+  name="radio-group/demos/read-only"
   preview={`<RadioGroup defaultValue="sm" label="Size" isReadOnly>
     <Radio value="sm">Small</Radio>
     <Radio value="md">Medium</Radio>
@@ -194,7 +194,7 @@ Use the `isRequired` prop to mark the radio group as required.
 Use the `necessityIndicator` prop to control the visual style of the required state.
 
 <ComponentPreview
-  name="radio-group/required"
+  name="radio-group/demos/required"
   preview={`<RadioGroup defaultValue="sm" label="Size" isRequired>
     <Radio value="sm">Small</Radio>
     <Radio value="lg">Large</Radio>
@@ -218,7 +218,7 @@ Use the `necessityIndicator` prop to control the visual style of the required st
 The `defaultValue` prop can be used to set the default state.
 
 <ComponentPreview
-  name="radio-group/uncontrolled"
+  name="radio-group/demos/uncontrolled"
   preview={`<RadioGroup defaultValue="sm" label="Size">
     <Radio value="sm">Small</Radio>
     <Radio value="md">Medium</Radio>
@@ -231,7 +231,7 @@ The `defaultValue` prop can be used to set the default state.
 Use the `value` and `onChange` props to control the value of the radio group.
 
 <ComponentPreview
-  name="radio-group/controlled"
+  name="radio-group/demos/controlled"
   preview={`const [size, setSize] = React.useState("sm");
   return (
     <RadioGroup label="Size" value={size} onChange={(value) => setSize(value)}>
@@ -247,7 +247,7 @@ Use the `value` and `onChange` props to control the value of the radio group.
 If you need to customize things further, you can drop down to the composition level.
 
 <ComponentPreview
-  name="radio-group/composition"
+  name="radio-group/demos/composition"
   preview={`<RadioGroupRoot defaultValue="sm">
     <Label>Size</Label>
     <Description>Please select a size.</Description>
