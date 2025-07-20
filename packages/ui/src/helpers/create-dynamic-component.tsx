@@ -27,35 +27,34 @@ export const createDynamicComponent = <Props extends {}>(
 
     const LazyComponent = variants[variantName];
 
-    if (!LazyComponent || disableSuspense) {
+    if (!LazyComponent) {
       return <DefaultComponent {...props} />;
+    }
+
+    if (disableSuspense) {
+      return (
+        <ErrorBoundary
+          fallback={
+            <Error
+              componentName={componentName}
+              slotName={slotName}
+              variantName={variantName}
+            />
+          }
+        >
+          <LazyComponent {...props} />
+        </ErrorBoundary>
+      );
     }
 
     return (
       <ErrorBoundary
         fallback={
-          <div className="flex items-center justify-center rounded-md border border-border-danger p-4">
-            <div className="flex items-start gap-2 rounded-md border-border-danger bg-bg-danger-muted p-2 text-sm text-fg-danger">
-              <AlertCircleIcon />
-              <div>
-                <span className="font-bold">
-                  Error rendering dynamic component:
-                </span>
-                <ul>
-                  <li>
-                    <span className="font-bold">component:</span>{" "}
-                    {componentName}
-                  </li>
-                  <li>
-                    <span className="font-bold">slot:</span> {slotName}
-                  </li>
-                  <li>
-                    <span className="font-bold">variant:</span> {variantName}
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
+          <Error
+            componentName={componentName}
+            slotName={slotName}
+            variantName={variantName}
+          />
         }
       >
         <React.Suspense
@@ -67,15 +66,9 @@ export const createDynamicComponent = <Props extends {}>(
             </Skeleton>
           }
         >
-          {/* @ts-expect-error: we need to disable suspense for the children or resolving the children before the root can cause errors */}
-          {props?.children ? (
-            <LazyComponent {...props}>
-              {/* @ts-expect-error: we need to disable suspense for the children or resolving the children before the root can cause errors */}
-              <DisableSuspense>{props.children}</DisableSuspense>
-            </LazyComponent>
-          ) : (
+          <DisableSuspense>
             <LazyComponent {...props} />
-          )}
+          </DisableSuspense>
         </React.Suspense>
       </ErrorBoundary>
     );
@@ -87,7 +80,7 @@ export const createDynamicComponent = <Props extends {}>(
 
 const DisableSuspenseContext = React.createContext<boolean>(false);
 
-const DisableSuspense = ({ children }: { children: React.ReactNode }) => {
+const DisableSuspense = ({ children }: { children?: React.ReactNode }) => {
   return (
     <DisableSuspenseContext value={true}>{children}</DisableSuspenseContext>
   );
@@ -108,11 +101,43 @@ function Skeleton({
   return (
     <div
       className={cn(
-        "relative block h-6 animate-pulse rounded-md bg-bg-muted",
+        "bg-bg-muted relative block h-6 animate-pulse rounded-md",
         props.children && "h-auto text-transparent *:invisible",
         className,
       )}
       {...props}
     />
+  );
+}
+
+function Error({
+  componentName,
+  slotName,
+  variantName,
+}: {
+  componentName: string;
+  slotName: string;
+  variantName: string;
+}) {
+  return (
+    <div className="border-border-danger flex items-center justify-center rounded-md border p-4">
+      <div className="border-border-danger bg-bg-danger-muted text-fg-danger flex items-start gap-2 rounded-md p-2 text-sm">
+        <AlertCircleIcon />
+        <div>
+          <span className="font-bold">Error rendering dynamic component:</span>
+          <ul>
+            <li>
+              <span className="font-bold">component:</span> {componentName}
+            </li>
+            <li>
+              <span className="font-bold">slot:</span> {slotName}
+            </li>
+            <li>
+              <span className="font-bold">variant:</span> {variantName}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
   );
 }

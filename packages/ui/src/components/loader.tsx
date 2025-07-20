@@ -21,11 +21,6 @@ export const Loader = createDynamicComponent<LoaderProps>(
         default: mod.Loader,
       })),
     ),
-    ring: React.lazy(() =>
-      import("../registry/components/loader/ring").then((mod) => ({
-        default: mod.Loader,
-      })),
-    ),
     tailspin: React.lazy(() =>
       import("../registry/components/loader/tailspin").then((mod) => ({
         default: mod.Loader,

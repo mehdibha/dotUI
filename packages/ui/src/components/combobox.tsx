@@ -1,7 +1,5 @@
 "use client";
 
-import React from "react";
-
 import { createDynamicComponent } from "../helpers/create-dynamic-component";
 import {
   Combobox as _Combobox,
@@ -22,13 +20,7 @@ export const Combobox = <T extends object = object>(
     "combobox",
     "Combobox",
     _Combobox,
-    {
-      basic: React.lazy(() =>
-        import("../registry/components/combobox/basic").then((mod) => ({
-          default: mod.Combobox,
-        })),
-      ),
-    },
+    {},
   );
 
   return <Component {...props} />;
@@ -41,13 +33,7 @@ export const ComboboxRoot = <T extends object = object>(
     "combobox",
     "ComboboxRoot",
     _ComboboxRoot,
-    {
-      basic: React.lazy(() =>
-        import("../registry/components/combobox/basic").then((mod) => ({
-          default: mod.ComboboxRoot,
-        })),
-      ),
-    },
+    {},
   );
 
   return <Component {...props} />;
@@ -57,13 +43,7 @@ export const ComboboxInput = createDynamicComponent(
   "combobox",
   "ComboboxInput",
   _ComboboxInput,
-  {
-    basic: React.lazy(() =>
-      import("../registry/components/combobox/basic").then((mod) => ({
-        default: mod.ComboboxInput,
-      })),
-    ),
-  },
+  {},
 );
 
 export const ComboboxItem = <T extends object = object>(
@@ -73,16 +53,9 @@ export const ComboboxItem = <T extends object = object>(
     "combobox",
     "ComboboxItem",
     _ComboboxItem,
-    {
-      basic: React.lazy(() =>
-        import("../registry/components/combobox/basic").then((mod) => ({
-          default: mod.ComboboxItem,
-        })),
-      ),
-    },
+    {},
   );
 
   return <Component {...props} />;
 };
-
 export type { ComboboxProps, ComboboxRootProps, ComboboxItemProps };

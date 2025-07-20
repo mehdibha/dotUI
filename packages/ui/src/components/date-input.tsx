@@ -16,26 +16,14 @@ export const DateInput = createDynamicComponent<DateInputProps>(
   "date-input",
   "DateInput",
   _DateInput,
-  {
-    basic: React.lazy(() =>
-      import("../registry/components/date-input/basic").then((mod) => ({
-        default: mod.DateInput,
-      })),
-    ),
-  },
+  {},
 );
 
 export const DateSegment = createDynamicComponent<DateSegmentProps>(
   "date-input",
   "DateSegment",
   _DateSegment,
-  {
-    basic: React.lazy(() =>
-      import("../registry/components/date-input/basic").then((mod) => ({
-        default: mod.DateSegment,
-      })),
-    ),
-  },
+  {},
 );
 
 export type { DateInputProps, DateSegmentProps };

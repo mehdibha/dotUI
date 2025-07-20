@@ -1,7 +1,5 @@
 "use client";
 
-import React from "react";
-
 import { createDynamicComponent } from "../helpers/create-dynamic-component";
 import {
   ToggleButton as _ToggleButton,
@@ -14,26 +12,14 @@ export const ToggleButton = createDynamicComponent<ToggleButtonProps>(
   "toggle-button",
   "ToggleButton",
   _ToggleButton,
-  {
-    basic: React.lazy(() =>
-      import("../registry/components/toggle-button/basic").then((mod) => ({
-        default: mod.ToggleButton,
-      })),
-    ),
-  },
+  {},
 );
 
 export const ToggleButtonProvider = createDynamicComponent(
   "toggle-button",
   "ToggleButtonProvider",
   _ToggleButtonProvider,
-  {
-    basic: React.lazy(() =>
-      import("../registry/components/toggle-button/basic").then((mod) => ({
-        default: mod.ToggleButtonProvider,
-      })),
-    ),
-  },
+  {},
 );
 
 export { toggleButtonStyles };

@@ -26,26 +26,14 @@ export const TableContainer = createDynamicComponent<TableContainerProps>(
   "table",
   "TableContainer",
   _TableContainer,
-  {
-    basic: React.lazy(() =>
-      import("../registry/components/table/basic").then((mod) => ({
-        default: mod.TableContainer,
-      })),
-    ),
-  },
+  {},
 );
 
 export const TableRoot = createDynamicComponent<TableRootProps>(
   "table",
   "TableRoot",
   _TableRoot,
-  {
-    basic: React.lazy(() =>
-      import("../registry/components/table/basic").then((mod) => ({
-        default: mod.TableRoot,
-      })),
-    ),
-  },
+  {},
 );
 
 export const TableHeader = <T extends object = object>(
@@ -55,13 +43,7 @@ export const TableHeader = <T extends object = object>(
     "table",
     "TableHeader",
     _TableHeader,
-    {
-      basic: React.lazy(() =>
-        import("../registry/components/table/basic").then((mod) => ({
-          default: mod.TableHeader,
-        })),
-      ),
-    },
+    {},
   );
 
   return <Component {...props} />;
@@ -74,13 +56,7 @@ export const TableBody = <T extends object = object>(
     "table",
     "TableBody",
     _TableBody,
-    {
-      basic: React.lazy(() =>
-        import("../registry/components/table/basic").then((mod) => ({
-          default: mod.TableBody,
-        })),
-      ),
-    },
+    {},
   );
 
   return <Component {...props} />;
@@ -90,13 +66,7 @@ export const TableColumn = createDynamicComponent<TableColumnProps>(
   "table",
   "TableColumn",
   _TableColumn,
-  {
-    basic: React.lazy(() =>
-      import("../registry/components/table/basic").then((mod) => ({
-        default: mod.TableColumn,
-      })),
-    ),
-  },
+  {},
 );
 
 export const TableRow = <T extends object = object>(
@@ -106,13 +76,7 @@ export const TableRow = <T extends object = object>(
     "table",
     "TableRow",
     _TableRow,
-    {
-      basic: React.lazy(() =>
-        import("../registry/components/table/basic").then((mod) => ({
-          default: mod.TableRow,
-        })),
-      ),
-    },
+    {},
   );
 
   return <Component {...props} />;
@@ -122,13 +86,7 @@ export const TableCell = createDynamicComponent<TableCellProps>(
   "table",
   "TableCell",
   _TableCell,
-  {
-    basic: React.lazy(() =>
-      import("../registry/components/table/basic").then((mod) => ({
-        default: mod.TableCell,
-      })),
-    ),
-  },
+  {},
 );
 
 export type {

@@ -116,4 +116,4 @@ export type {
   SwitchIndicatorProps,
   SwitchThumbProps,
 };
-export { Switch, SwitchRoot, SwitchIndicator, SwitchThumb };
+export { Switch, SwitchRoot, SwitchIndicator, SwitchThumb, SwitchProvider };

@@ -2,13 +2,15 @@
 // Auto layout skeleton inspiration: https://x.com/devongovett/status/1838980741197447529
 import { cn } from "@dotui/ui/lib/utils";
 
+export type SkeletonProps = React.HTMLAttributes<HTMLDivElement> & {
+  show?: boolean;
+};
+
 function Skeleton({
   className,
   show = true,
   ...props
-}: React.HTMLAttributes<HTMLDivElement> & {
-  show?: boolean;
-}) {
+}: SkeletonProps) {
   if (!show) return props.children;
   return (
     <div

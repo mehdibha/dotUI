@@ -1,7 +1,5 @@
 "use client";
 
-import React from "react";
-
 import { createDynamicComponent } from "../helpers/create-dynamic-component";
 import {
   Menu as _Menu,
@@ -24,13 +22,7 @@ export const MenuRoot = createDynamicComponent<MenuRootProps>(
   "menu",
   "MenuRoot",
   _MenuRoot,
-  {
-    basic: React.lazy(() =>
-      import("../registry/components/menu/basic").then((mod) => ({
-        default: mod.MenuRoot,
-      })),
-    ),
-  },
+  {},
 );
 
 export const Menu = <T extends object = object>(props: MenuProps<T>) => {
@@ -38,13 +30,7 @@ export const Menu = <T extends object = object>(props: MenuProps<T>) => {
     "menu",
     "Menu",
     _Menu,
-    {
-      basic: React.lazy(() =>
-        import("../registry/components/menu/basic").then((mod) => ({
-          default: mod.Menu,
-        })),
-      ),
-    },
+    {},
   );
 
   return <Component {...props} />;
@@ -57,13 +43,7 @@ export const MenuContent = <T extends object = object>(
     "menu",
     "MenuContent",
     _MenuContent,
-    {
-      basic: React.lazy(() =>
-        import("../registry/components/menu/basic").then((mod) => ({
-          default: mod.MenuContent,
-        })),
-      ),
-    },
+    {},
   );
 
   return <Component {...props} />;
@@ -76,13 +56,7 @@ export const MenuItem = <T extends object = object>(
     "menu",
     "MenuItem",
     _MenuItem,
-    {
-      basic: React.lazy(() =>
-        import("../registry/components/menu/basic").then((mod) => ({
-          default: mod.MenuItem,
-        })),
-      ),
-    },
+    {},
   );
 
   return <Component {...props} />;
@@ -95,13 +69,7 @@ export const MenuSection = <T extends object = object>(
     "menu",
     "MenuSection",
     _MenuSection,
-    {
-      basic: React.lazy(() =>
-        import("../registry/components/menu/basic").then((mod) => ({
-          default: mod.MenuSection,
-        })),
-      ),
-    },
+    {},
   );
 
   return <Component {...props} />;
@@ -111,11 +79,5 @@ export const MenuSub = createDynamicComponent<MenuSubProps>(
   "menu",
   "MenuSub",
   _MenuSub,
-  {
-    basic: React.lazy(() =>
-      import("../registry/components/menu/basic").then((mod) => ({
-        default: mod.MenuSub,
-      })),
-    ),
-  },
+  {},
 );

@@ -1,7 +1,5 @@
 "use client";
 
-import React from "react";
-
 import { createDynamicComponent } from "../helpers/create-dynamic-component";
 import {
   ListBox as _ListBox,
@@ -19,13 +17,7 @@ export const ListBox = <T extends object = object>(props: ListBoxProps<T>) => {
     "list-box",
     "ListBox",
     _ListBox,
-    {
-      basic: React.lazy(() =>
-        import("../registry/components/list-box/basic").then((mod) => ({
-          default: mod.ListBox,
-        })),
-      ),
-    },
+    {},
   );
 
   return <Component {...props} />;
@@ -38,13 +30,7 @@ export const ListBoxItem = <T extends object = object>(
     "list-box",
     "ListBoxItem",
     _ListBoxItem,
-    {
-      basic: React.lazy(() =>
-        import("../registry/components/list-box/basic").then((mod) => ({
-          default: mod.ListBoxItem,
-        })),
-      ),
-    },
+    {},
   );
 
   return <Component {...props} />;
@@ -57,13 +43,7 @@ export const ListBoxSection = <T extends object = object>(
     "list-box",
     "ListBoxSection",
     _ListBoxSection,
-    {
-      basic: React.lazy(() =>
-        import("../registry/components/list-box/basic").then((mod) => ({
-          default: mod.ListBoxSection,
-        })),
-      ),
-    },
+    {},
   );
 
   return <Component {...props} />;

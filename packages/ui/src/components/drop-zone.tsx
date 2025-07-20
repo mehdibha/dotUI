@@ -16,26 +16,14 @@ export const DropZone = createDynamicComponent<DropZoneProps>(
   "drop-zone",
   "DropZone",
   _DropZone,
-  {
-    basic: React.lazy(() =>
-      import("../registry/components/drop-zone/basic").then((mod) => ({
-        default: mod.DropZone,
-      })),
-    ),
-  },
+  {},
 );
 
 export const DropZoneLabel = createDynamicComponent<DropZoneLabelProps>(
   "drop-zone",
   "DropZoneLabel",
   _DropZoneLabel,
-  {
-    basic: React.lazy(() =>
-      import("../registry/components/drop-zone/basic").then((mod) => ({
-        default: mod.DropZoneLabel,
-      })),
-    ),
-  },
+  {},
 );
 
 export type { DropZoneProps, DropZoneLabelProps };

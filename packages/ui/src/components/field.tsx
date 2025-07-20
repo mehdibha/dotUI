@@ -21,52 +21,28 @@ export const Label = createDynamicComponent<LabelProps>(
   "field",
   "Label",
   _Label,
-  {
-    basic: React.lazy(() =>
-      import("../registry/components/field/basic").then((mod) => ({
-        default: mod.Label,
-      })),
-    ),
-  },
+  {},
 );
 
 export const Description = createDynamicComponent<DescriptionProps>(
   "field",
   "Description",
   _Description,
-  {
-    basic: React.lazy(() =>
-      import("../registry/components/field/basic").then((mod) => ({
-        default: mod.Description,
-      })),
-    ),
-  },
+  {},
 );
 
 export const FieldError = createDynamicComponent<FieldErrorProps>(
   "field",
   "FieldError",
   _FieldError,
-  {
-    basic: React.lazy(() =>
-      import("../registry/components/field/basic").then((mod) => ({
-        default: mod.FieldError,
-      })),
-    ),
-  },
+  {},
 );
 
 export const HelpText = createDynamicComponent<HelpTextProps>(
   "field",
   "HelpText",
   _HelpText,
-  {
-    basic: React.lazy(() =>
-      import("../registry/components/field/basic").then((mod) => ({
-        default: mod.HelpText,
-      })),
-    ),
-  },
+  {},
 );
 
 export type {

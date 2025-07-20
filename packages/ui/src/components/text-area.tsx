@@ -16,26 +16,14 @@ export const TextArea = createDynamicComponent<TextAreaProps>(
   "text-area",
   "TextArea",
   _TextArea,
-  {
-    basic: React.lazy(() =>
-      import("../registry/components/text-area/basic").then((mod) => ({
-        default: mod.TextArea,
-      })),
-    ),
-  },
+  {},
 );
 
 export const TextAreaRoot = createDynamicComponent<TextAreaRootProps>(
   "text-area",
   "TextAreaRoot",
   _TextAreaRoot,
-  {
-    basic: React.lazy(() =>
-      import("../registry/components/text-area/basic").then((mod) => ({
-        default: mod.TextAreaRoot,
-      })),
-    ),
-  },
+  {},
 );
 
 export type { TextAreaProps, TextAreaRootProps };

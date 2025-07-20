@@ -1,7 +1,5 @@
 "use client";
 
-import React from "react";
-
 import { createDynamicComponent } from "../helpers/create-dynamic-component";
 import {
   Select as _Select,
@@ -23,13 +21,7 @@ export const SelectRoot = <T extends object = object>(
     "select",
     "SelectRoot",
     _SelectRoot,
-    {
-      basic: React.lazy(() =>
-        import("../registry/components/select/basic").then((mod) => ({
-          default: mod.SelectRoot,
-        })),
-      ),
-    },
+    {},
   );
 
   return <Component {...props} />;
@@ -41,11 +33,11 @@ export const Select = <T extends object = object>(props: SelectProps<T>) => {
     "Select",
     _Select,
     {
-      basic: React.lazy(() =>
-        import("../registry/components/select/basic").then((mod) => ({
-          default: mod.Select,
-        })),
-      ),
+      // basic: React.lazy(() =>
+      //   import("../registry/components/select/basic").then((mod) => ({
+      //     default: mod.Select,
+      //   })),
+      // ),
     },
   );
 
@@ -59,13 +51,7 @@ export const SelectValue = <T extends object = object>(
     "select",
     "SelectValue",
     _SelectValue,
-    {
-      basic: React.lazy(() =>
-        import("../registry/components/select/basic").then((mod) => ({
-          default: mod.SelectValue,
-        })),
-      ),
-    },
+    {},
   );
 
   return <Component {...props} />;
@@ -78,13 +64,7 @@ export const SelectItem = <T extends object = object>(
     "select",
     "SelectItem",
     _SelectItem,
-    {
-      basic: React.lazy(() =>
-        import("../registry/components/select/basic").then((mod) => ({
-          default: mod.SelectItem,
-        })),
-      ),
-    },
+    {},
   );
 
   return <Component {...props} />;

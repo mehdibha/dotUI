@@ -1,16 +1,14 @@
 "use client";
 
-import React from "react";
-
 import { createDynamicComponent } from "../helpers/create-dynamic-component";
 import { Skeleton as _Skeleton } from "../registry/components/skeleton/basic";
+import type { SkeletonProps } from "../registry/components/skeleton/basic";
 
-export const Skeleton = createDynamicComponent<
-  React.HTMLAttributes<HTMLDivElement> & { show?: boolean }
->("skeleton", "Skeleton", _Skeleton, {
-  basic: React.lazy(() =>
-    import("../registry/components/skeleton/basic").then((mod) => ({
-      default: mod.Skeleton,
-    })),
-  ),
-});
+export const Skeleton = createDynamicComponent<SkeletonProps>(
+  "skeleton",
+  "Skeleton",
+  _Skeleton,
+  {},
+);
+
+export type { SkeletonProps };

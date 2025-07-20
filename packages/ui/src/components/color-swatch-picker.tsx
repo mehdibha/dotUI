@@ -1,7 +1,5 @@
 "use client";
 
-import React from "react";
-
 import { createDynamicComponent } from "../helpers/create-dynamic-component";
 import {
   ColorSwatchPicker as _ColorSwatchPicker,
@@ -16,15 +14,7 @@ export const ColorSwatchPicker = createDynamicComponent<ColorSwatchPickerProps>(
   "color-swatch-picker",
   "ColorSwatchPicker",
   _ColorSwatchPicker,
-  {
-    basic: React.lazy(() =>
-      import("../registry/components/color-swatch-picker/basic").then(
-        (mod) => ({
-          default: mod.ColorSwatchPicker,
-        }),
-      ),
-    ),
-  },
+  {},
 );
 
 export const ColorSwatchPickerItem =
@@ -32,15 +22,7 @@ export const ColorSwatchPickerItem =
     "color-swatch-picker",
     "ColorSwatchPickerItem",
     _ColorSwatchPickerItem,
-    {
-      basic: React.lazy(() =>
-        import("../registry/components/color-swatch-picker/basic").then(
-          (mod) => ({
-            default: mod.ColorSwatchPickerItem,
-          }),
-        ),
-      ),
-    },
+    {},
   );
 
 export type { ColorSwatchPickerProps, ColorSwatchPickerItemProps };
