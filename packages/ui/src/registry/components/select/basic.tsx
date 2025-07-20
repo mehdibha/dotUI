@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import {
+  Collection as AriaCollection,
   Select as AriaSelect,
   SelectValue as AriaSelectValue,
   composeRenderProps,
@@ -10,7 +11,6 @@ import { tv } from "tailwind-variants";
 import type {
   SelectProps as AriaSelectProps,
   SelectValueProps as AriaSelectValueProps,
-  ListBoxItemProps,
 } from "react-aria-components";
 
 import { Button } from "@dotui/ui/components/button";
@@ -20,7 +20,10 @@ import { Popover } from "@dotui/ui/components/popover";
 import { ChevronDownIcon } from "@dotui/ui/icons";
 import type { ButtonProps } from "@dotui/ui/components/button";
 import type { FieldProps } from "@dotui/ui/components/field";
-import type { ListBoxProps } from "@dotui/ui/components/list-box";
+import type {
+  ListBoxItemProps,
+  ListBoxProps,
+} from "@dotui/ui/components/list-box";
 
 const selectStyles = tv({
   slots: {

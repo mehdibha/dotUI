@@ -24,18 +24,22 @@ export const Tabs = createDynamicComponent<TabsProps>("tabs", "Tabs", _Tabs, {
   ),
 });
 
-export const TabList = createDynamicComponent<TabListProps<object>>(
-  "tabs",
-  "TabList",
-  _TabList,
-  {
-    motion: React.lazy(() =>
-      import("../registry/components/tabs/motion").then((mod) => ({
-        default: mod.TabList,
-      })),
-    ),
-  },
-);
+export const TabList = <T extends object = object>(props: TabListProps<T>) => {
+  const Component = createDynamicComponent<TabListProps<T>>(
+    "tabs",
+    "TabList",
+    _TabList,
+    {
+      motion: React.lazy(() =>
+        import("../registry/components/tabs/motion").then((mod) => ({
+          default: mod.TabList,
+        })),
+      ),
+    },
+  );
+
+  return <Component {...props} />;
+};
 
 export const Tab = createDynamicComponent<TabProps>("tabs", "Tab", _Tab, {
   motion: React.lazy(() =>

@@ -33,57 +33,79 @@ export const MenuRoot = createDynamicComponent<MenuRootProps>(
   },
 );
 
-export const Menu = createDynamicComponent<MenuProps<object>>(
-  "menu",
-  "Menu",
-  _Menu,
-  {
-    basic: React.lazy(() =>
-      import("../registry/components/menu/basic").then((mod) => ({
-        default: mod.Menu,
-      })),
-    ),
-  },
-);
+export const Menu = <T extends object = object>(props: MenuProps<T>) => {
+  const Component = createDynamicComponent<MenuProps<T>>(
+    "menu",
+    "Menu",
+    _Menu,
+    {
+      basic: React.lazy(() =>
+        import("../registry/components/menu/basic").then((mod) => ({
+          default: mod.Menu,
+        })),
+      ),
+    },
+  );
 
-export const MenuContent = createDynamicComponent<MenuContentProps<object>>(
-  "menu",
-  "MenuContent",
-  _MenuContent,
-  {
-    basic: React.lazy(() =>
-      import("../registry/components/menu/basic").then((mod) => ({
-        default: mod.MenuContent,
-      })),
-    ),
-  },
-);
+  return <Component {...props} />;
+};
 
-export const MenuItem = createDynamicComponent<MenuItemProps<object>>(
-  "menu",
-  "MenuItem",
-  _MenuItem,
-  {
-    basic: React.lazy(() =>
-      import("../registry/components/menu/basic").then((mod) => ({
-        default: mod.MenuItem,
-      })),
-    ),
-  },
-);
+export const MenuContent = <T extends object = object>(
+  props: MenuContentProps<T>,
+) => {
+  const Component = createDynamicComponent<MenuContentProps<T>>(
+    "menu",
+    "MenuContent",
+    _MenuContent,
+    {
+      basic: React.lazy(() =>
+        import("../registry/components/menu/basic").then((mod) => ({
+          default: mod.MenuContent,
+        })),
+      ),
+    },
+  );
 
-export const MenuSection = createDynamicComponent<MenuSectionProps<object>>(
-  "menu",
-  "MenuSection",
-  _MenuSection,
-  {
-    basic: React.lazy(() =>
-      import("../registry/components/menu/basic").then((mod) => ({
-        default: mod.MenuSection,
-      })),
-    ),
-  },
-);
+  return <Component {...props} />;
+};
+
+export const MenuItem = <T extends object = object>(
+  props: MenuItemProps<T>,
+) => {
+  const Component = createDynamicComponent<MenuItemProps<T>>(
+    "menu",
+    "MenuItem",
+    _MenuItem,
+    {
+      basic: React.lazy(() =>
+        import("../registry/components/menu/basic").then((mod) => ({
+          default: mod.MenuItem,
+        })),
+      ),
+    },
+  );
+
+  return <Component {...props} />;
+};
+
+export const MenuSection = <T extends object = object>(
+  props: MenuSectionProps<T>,
+) => {
+  const Component = createDynamicComponent<MenuSectionProps<T>>(
+    "menu",
+    "MenuSection",
+    _MenuSection,
+    {
+      basic: React.lazy(() =>
+        import("../registry/components/menu/basic").then((mod) => ({
+          default: mod.MenuSection,
+        })),
+      ),
+    },
+  );
+
+  return <Component {...props} />;
+};
 
 export const MenuSub = createDynamicComponent<MenuSubProps>(
   "menu",

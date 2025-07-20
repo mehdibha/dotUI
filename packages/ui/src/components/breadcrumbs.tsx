@@ -43,3 +43,10 @@ export const BreadcrumbLink = createDynamicComponent<BreadcrumbLinkProps>(
   _BreadcrumbLink,
   {},
 );
+
+export type {
+  BreadcrumbProps,
+  BreadcrumbItemProps,
+  BreadcrumbLinkProps,
+  BreadcrumbsProps,
+};

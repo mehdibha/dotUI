@@ -12,18 +12,24 @@ import type {
   TagProps,
 } from "../registry/components/tag-group/basic";
 
-export const TagGroup = createDynamicComponent<TagGroupProps<object>>(
-  "tag-group",
-  "TagGroup",
-  _TagGroup,
-  {
-    basic: React.lazy(() =>
-      import("../registry/components/tag-group/basic").then((mod) => ({
-        default: mod.TagGroup,
-      })),
-    ),
-  },
-);
+export const TagGroup = <T extends object = object>(
+  props: TagGroupProps<T>,
+) => {
+  const Component = createDynamicComponent<TagGroupProps<T>>(
+    "tag-group",
+    "TagGroup",
+    _TagGroup,
+    {
+      basic: React.lazy(() =>
+        import("../registry/components/tag-group/basic").then((mod) => ({
+          default: mod.TagGroup,
+        })),
+      ),
+    },
+  );
+
+  return <Component {...props} />;
+};
 
 export const Tag = createDynamicComponent<TagProps>("tag-group", "Tag", _Tag, {
   basic: React.lazy(() =>
