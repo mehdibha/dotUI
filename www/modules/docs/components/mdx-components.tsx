@@ -14,10 +14,7 @@ import { BadgePalette } from "./badge-palette";
 import { Choice, Choices } from "./choices";
 import { Pre } from "./code-block-mdx";
 import { ComponentPreview } from "./component-preview";
-import {
-  InstallTab,
-  InstallTabs,
-} from "./install-tabs";
+import { InstallTab, InstallTabs } from "./install-tabs";
 import { Palette } from "./palette";
 import { Tab, Tabs } from "./tabs";
 import type { ChoicesProps } from "./choices";
@@ -49,7 +46,7 @@ export const mdxComponents: MDXComponents = {
   >,
   p: ({ className, ...props }) => (
     <p
-      className={cn("not-first:mt-4 text-base leading-7", className)}
+      className={cn("text-base leading-7 not-first:mt-4", className)}
       {...props}
     />
   ),
@@ -64,7 +61,7 @@ export const mdxComponents: MDXComponents = {
   ),
   blockquote: ({ className, ...props }) => (
     <blockquote
-      className={cn("*:text-fg-muted mt-6 border-l-2 pl-6 italic", className)}
+      className={cn("mt-6 border-l-2 pl-6 italic *:text-fg-muted", className)}
       {...props}
     />
   ),
@@ -120,7 +117,7 @@ export const mdxComponents: MDXComponents = {
   code: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
     <code
       className={cn(
-        "bg-bg-muted w-full rounded-md p-1 font-mono text-sm",
+        "w-full rounded-md bg-bg-muted p-1 font-mono text-sm",
         className,
       )}
       {...props}
@@ -144,7 +141,7 @@ export const mdxComponents: MDXComponents = {
   Step: ({ className, ...props }: React.ComponentProps<"h3">) => (
     <h3
       className={cn(
-        "font-heading mt-8 scroll-m-20 text-base font-semibold tracking-tight",
+        "mt-8 scroll-m-20 font-heading text-base font-semibold tracking-tight",
         className,
       )}
       {...props}
@@ -152,7 +149,7 @@ export const mdxComponents: MDXComponents = {
   ),
   Steps: ({ ...props }: React.ComponentProps<"div">) => (
     <div
-      className="[&>h3]:step mb-12 ml-4 border-l pl-8 [counter-reset:step]"
+      className="mb-12 ml-4 border-l pl-8 [counter-reset:step] [&>h3]:step"
       {...props}
     />
   ),
