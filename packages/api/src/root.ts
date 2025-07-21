@@ -1,5 +1,5 @@
-import { authRouter } from "./router/auth";
-import { styleRouter } from "./router/style";
+import { authRouter } from "./routers/auth";
+import { styleRouter } from "./routers/style";
 import { createTRPCRouter } from "./trpc";
 
 export const appRouter = createTRPCRouter({
@@ -7,5 +7,4 @@ export const appRouter = createTRPCRouter({
   style: styleRouter,
 });
 
-// export type definition of API
 export type AppRouter = typeof appRouter;

@@ -5,3 +5,5 @@ export {
   restoreVariantsDefinitionDefaults,
   restoreStyleDefinitionDefaults,
 } from "./restore-defaults";
+
+export { minimizeStyleDefinition } from "./minimize-style";

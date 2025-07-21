@@ -132,9 +132,9 @@ export const variantsDefinitionSchema = z.object({
 });
 
 export const styleDefinitionSchema = z.object({
-  name: z.string().min(2),
-  slug: z.string().min(2),
-  description: z.string().min(2).optional(),
+  name: z.string().min(1),
+  slug: z.string().min(1),
+  description: z.string().min(1).optional(),
   theme: themeDefinitionSchema,
   icons: iconsDefinitionSchema,
   variants: variantsDefinitionSchema,

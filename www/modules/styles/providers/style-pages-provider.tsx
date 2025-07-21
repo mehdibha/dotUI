@@ -2,9 +2,8 @@
 
 import React from "react";
 import { useParams } from "next/navigation";
-import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useForm, useWatch } from "react-hook-form";
 import { z } from "zod/v4";
 import type { ContrastColor } from "@adobe/leonardo-contrast-colors";
@@ -15,7 +14,7 @@ import { createColorScales } from "@dotui/style-engine/core";
 import { styleDefinitionSchema } from "@dotui/style-engine/schemas";
 
 import { useDebounce } from "@/hooks/use-debounce";
-import { useTRPC } from "@/lib/trpc/react";
+import { useTRPC, useTRPCClient } from "@/lib/trpc/react";
 import { useLiveStyleProducer } from "../atoms/live-style-atom";
 import { usePreferences } from "../atoms/preferences-atom";
 
@@ -131,24 +130,72 @@ export default function StylePageForm({
   children: React.ReactNode;
 }) {
   const { form } = useStyleForm();
+  const { style: slug } = useParams<{ style: string }>();
+  const trpc = useTRPC();
+  const trpcClient = useTRPCClient();
+  const queryClient = useQueryClient();
 
-  return (
-    <>
-      <form
-        onSubmit={form.handleSubmit(
-          (data) => {
-            console.log("data", data);
-          },
-          (errors) => {
-            console.log("errors", errors);
-          },
-        )}
-      >
-        {children}
-      </form>
-      {/* <DevTool control={form.control} /> */}
-    </>
+  const updateStyleMutation = useMutation({
+    mutationFn: async (data: StyleFormData) => {
+      return await trpcClient.style.update.mutate({
+        ...data,
+        slug,
+      });
+    },
+    onMutate: async (variables) => {
+      await queryClient.cancelQueries({
+        queryKey: trpc.style.bySlug.queryKey({ slug }),
+      });
+
+      const previousStyle = queryClient.getQueryData(
+        trpc.style.bySlug.queryKey({ slug }),
+      );
+
+      queryClient.setQueryData(trpc.style.bySlug.queryKey({ slug }), {
+        ...variables,
+        slug,
+      });
+
+      return { previousStyle };
+    },
+    onError: (error: any, variables, context) => {
+      if (context?.previousStyle) {
+        queryClient.setQueryData(
+          trpc.style.bySlug.queryKey({ slug }),
+          context.previousStyle,
+        );
+      }
+      console.error("Failed to update style:", {
+        error: error.message || error,
+        data: variables,
+        slug,
+      });
+    },
+    onSuccess: () => {
+      console.log("✅ Style updated successfully:");
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: trpc.style.bySlug.queryKey({ slug }),
+      });
+    },
+  });
+
+  const handleSubmit = form.handleSubmit(
+    async (data) => {
+      try {
+        console.log("🔄 Submitting style update...");
+        await updateStyleMutation.mutateAsync(data);
+      } catch (error) {
+        console.error("Submission failed:", error);
+      }
+    },
+    (errors) => {
+      console.error("❌ Form validation errors:", errors);
+    },
   );
+
+  return <form onSubmit={handleSubmit}>{children}</form>;
 }
 
 const fakeData: StyleFormData = {
