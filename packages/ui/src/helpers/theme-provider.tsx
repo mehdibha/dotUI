@@ -70,7 +70,7 @@ export const ThemeProvider = ({
         style={styleProp}
         {...props}
         suppressHydrationWarning
-        className={cn("relative bg-bg font-body text-fg", props.className)}
+        className={cn("relative bg-bg font-body text-fg duration-150", props.className)}
       >
         {texture && (
           <div style={transformCssToJSXStyle(texture.css[".texture"])} />

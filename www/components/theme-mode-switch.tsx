@@ -20,22 +20,22 @@ const themeModeSwitchStyles = tv({
       focusRingGroup(),
       "border-field flex cursor-pointer items-center justify-start border bg-bg p-0.5 text-fg-muted group-selected:justify-end [&_svg]:size-4",
     ],
-    iconContainer: "relative flex items-center justify-center px-3 py-2",
+    iconContainer: "relative flex items-center justify-center size-full",
     cursor: "absolute inset-0 block bg-bg-inverse/10",
   },
   variants: {
     size: {
       sm: {
-        container: "[&_svg]:size-3",
-        iconContainer: "px-2 py-1.5",
+        container: "[&_svg]:size-3 h-8",
+        iconContainer: "px-2",
       },
       md: {
-        container: "[&_svg]:size-4",
-        iconContainer: "px-3 py-2",
+        container: "[&_svg]:size-4 h-9",
+        iconContainer: "px-3",
       },
       lg: {
-        container: "[&_svg]:size-5",
-        iconContainer: "px-4 py-2.5",
+        container: "[&_svg]:size-5 h-10",
+        iconContainer: "px-4",
       },
     },
     shape: {
