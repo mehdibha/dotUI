@@ -71,12 +71,19 @@ export const ThemeProvider = ({
         {...props}
         suppressHydrationWarning
         className={cn(
-          "relative bg-bg font-body text-fg duration-150",
+          "bg-bg font-body text-fg relative overflow-hidden duration-150",
           props.className,
         )}
       >
         {texture && (
-          <div style={transformCssToJSXStyle(texture.css[".texture"])} />
+          <div
+            style={{
+              ...transformCssToJSXStyle(texture.css[".texture"]),
+              position: "absolute",
+              width: "auto",
+              height: "auto",
+            }}
+          />
         )}
         {backgroundPattern && (
           <div

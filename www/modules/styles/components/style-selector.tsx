@@ -12,11 +12,9 @@ import {
   SelectRoot,
   SelectValue,
 } from "@dotui/ui/components/select";
-import { Skeleton } from "@dotui/ui/components/skeleton";
 import type { ButtonProps } from "@dotui/ui/components/button";
 import type { SelectRootProps } from "@dotui/ui/components/select";
 
-import { useMounted } from "@/hooks/use-mounted";
 import { useTRPC, useTRPCClient } from "@/lib/trpc/react";
 
 export function StyleSelector(
@@ -24,7 +22,6 @@ export function StyleSelector(
     buttonProps?: ButtonProps;
   },
 ) {
-  const isMounted = useMounted();
   const trpc = useTRPC();
   const trpcClient = useTRPCClient();
   const queryClient = useQueryClient();
@@ -37,12 +34,10 @@ export function StyleSelector(
     ...trpc.style.all.queryOptions({
       isFeatured: true,
     }),
-    enabled: isMounted,
   });
 
   const { data: currentStyle } = useQuery({
     ...trpc.style.getCurrentStyle.queryOptions(),
-    enabled: isMounted,
   });
 
   const updateStyleMutation = useMutation({
@@ -78,37 +73,36 @@ export function StyleSelector(
   });
 
   return (
-    <Skeleton show={isLoading}>
-      <SelectRoot
-        selectedKey={currentStyle}
-        onSelectionChange={(key) => {
-          updateStyleMutation.mutate({
-            styleId: key as string,
-          });
-        }}
-        {...props}
+    <SelectRoot
+      selectedKey={currentStyle}
+      onSelectionChange={(key) => {
+        updateStyleMutation.mutate({
+          styleId: key as string,
+        });
+      }}
+      {...props}
+    >
+      <Button
+        variant="default"
+        suffix={<ChevronDownIcon />}
+        {...props.buttonProps}
       >
-        <Button
-          variant="default"
-          suffix={<ChevronDownIcon />}
-          {...props.buttonProps}
-        >
-          <span className="text-fg-muted">Style:</span> <SelectValue />
-        </Button>
-        <HelpText />
-        <Popover>
-          <ListBox isLoading={isLoading}>
-            <ListBoxSection title="Featured">
-              {isSuccess &&
-                styles.map((style) => (
-                  <SelectItem key={style.slug} id={style.slug}>
-                    {style.name}
-                  </SelectItem>
-                ))}
-            </ListBoxSection>
-          </ListBox>
-        </Popover>
-      </SelectRoot>
-    </Skeleton>
+        <span className="text-fg-muted">Style:</span>{" "}
+        {isLoading ? <span>loading...</span> : <SelectValue />}
+      </Button>
+      <HelpText />
+      <Popover>
+        <ListBox isLoading={isLoading}>
+          <ListBoxSection title="Featured">
+            {isSuccess &&
+              styles.map((style) => (
+                <SelectItem key={style.slug} id={style.slug}>
+                  {style.name}
+                </SelectItem>
+              ))}
+          </ListBoxSection>
+        </ListBox>
+      </Popover>
+    </SelectRoot>
   );
 }

@@ -202,7 +202,6 @@ function StylePageHeaderActions() {
           size="sm"
           prefix={<SaveIcon />}
           isDisabled={!form.formState.isDirty}
-          className="border border-bg-primary hover:border-bg-primary-hover"
         >
           Save
         </Button>

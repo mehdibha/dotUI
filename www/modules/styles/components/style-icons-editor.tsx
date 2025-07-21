@@ -75,22 +75,17 @@ export function StyleIconsEditor() {
         </div>
 
         <Label className="mt-6">Icons</Label>
-        <StyleProvider style={form.watch()}>
-          <div className="mt-2 rounded-md border bg-bg-muted/50 p-4">
-            <div className="grid max-h-[168px] [grid-template-columns:repeat(auto-fill,minmax(36px,1fr))] [grid-template-rows:repeat(auto-fill,minmax(36px,1fr))] gap-2 overflow-hidden rounded-md [&_svg]:size-6">
-              {Object.entries(registryIcons)
-                .slice(0, 100)
-                .map(([name, IconComponent]) => {
-                  return (
-                    <div
-                      key={name}
-                      className="flex items-center justify-center"
-                    >
-                      <IconComponent />
-                    </div>
-                  );
-                })}
-            </div>
+        <StyleProvider style={form.watch()} className="p-4 border rounded-md">
+          <div className="grid max-h-[168px] gap-2 overflow-hidden [grid-template-columns:repeat(auto-fill,minmax(36px,1fr))] [grid-template-rows:repeat(auto-fill,minmax(36px,1fr))] [&_svg]:size-6">
+            {Object.entries(registryIcons)
+              .slice(0, 100)
+              .map(([name, IconComponent]) => {
+                return (
+                  <div key={name} className="flex items-center justify-center">
+                    <IconComponent />
+                  </div>
+                );
+              })}
           </div>
         </StyleProvider>
       </EditorSection>
