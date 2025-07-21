@@ -9,6 +9,8 @@ import { truncateOnWord } from "@/lib/string";
 
 import "@dotui/ui/globals.css";
 
+import { ToastProvider } from "@dotui/ui/components/toast";
+
 import { siteConfig } from "@/config";
 import { Providers } from "./providers";
 
@@ -69,6 +71,7 @@ export default async function RootLayout({
         <Analytics />
         {/* TODO FIX THIS */}
         <Providers defaultPreviewMode="light">
+          <ToastProvider />
           <div>{children}</div>
         </Providers>
       </body>

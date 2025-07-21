@@ -41,7 +41,6 @@
   "dependencies": {
     "@adobe/leonardo-contrast-colors": "^1.0.0",
     "@dotui/registry-definition": "workspace:*",
-    "culori": "^4.0.1",
     "deepmerge": "^4.3.1",
     "ts-morph": "^18.0.0",
     "zod": "catalog:"

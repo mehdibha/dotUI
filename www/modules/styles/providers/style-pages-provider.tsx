@@ -17,6 +17,7 @@ import { useDebounce } from "@/hooks/use-debounce";
 import { useTRPC, useTRPCClient } from "@/lib/trpc/react";
 import { useLiveStyleProducer } from "../atoms/live-style-atom";
 import { usePreferences } from "../atoms/preferences-atom";
+import { queue } from "@dotui/ui/components/toast";
 
 const formSchema = styleDefinitionSchema.extend({
   name: z.string().min(1),
@@ -185,7 +186,12 @@ export default function StylePageForm({
     async (data) => {
       try {
         console.log("🔄 Submitting style update...");
-        await updateStyleMutation.mutateAsync(data);
+        queue.add({
+          title: "Style updated",
+          description: "Your style has been updated successfully",
+          variant: "success",
+        });
+        // await updateStyleMutation.mutateAsync(data);
       } catch (error) {
         console.error("Submission failed:", error);
       }

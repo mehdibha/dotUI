@@ -286,6 +286,7 @@ export const variantsSchema = z.object({
   "toggle-button": z.enum(["basic"]),
   "toggle-button-group": z.enum(["basic"]),
   tooltip: z.enum(["basic", "motion"]),
+  toast: z.enum(["basic"]),
 
   // lib
   "focus-style": z.enum(["basic"]),

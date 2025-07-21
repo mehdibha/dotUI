@@ -120,6 +120,8 @@ export const DEFAULT_VARIANTS: Variants = {
   text: "basic",
   "tag-group": "basic",
   kbd: "basic",
+  toast: "basic",
+  
   "focus-style": "basic",
 };
 

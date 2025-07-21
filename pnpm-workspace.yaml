@@ -25,6 +25,8 @@ catalogs:
     react-dom: 19.0.0
     "@types/react": ^19.1.6
     "@types/react-dom": ^19.1.5
+  ui:
+    react-aria-components: ^1.5.0
 
 onlyBuiltDependencies:
   - "@tailwindcss/oxide"
