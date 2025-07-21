@@ -120,7 +120,7 @@ export const StylesOverview = ({
                     </motion.span>
                     <AnimatePresence mode="popLayout">
                       <motion.span
-                        key={currentStyle.name}
+                        key={currentStyle.slug}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
