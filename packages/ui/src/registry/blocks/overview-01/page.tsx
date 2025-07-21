@@ -1,9 +1,15 @@
 import React from "react";
 
 import { Button } from "@dotui/ui/components/button";
+import {
+  Dialog,
+  DialogDescription,
+  DialogHeader,
+  DialogHeading,
+  DialogRoot,
+} from "@dotui/ui/components/dialog";
 import { ExternalLinkIcon } from "@dotui/ui/icons";
 import { cn } from "@dotui/ui/lib/utils";
-import { LoginForm } from "@dotui/ui/registry/blocks/login-01/components/login-form";
 
 export default function Page() {
   return (
@@ -38,6 +44,19 @@ export default function Page() {
             </Button>
           </div>
         ))}
+      </Section>
+      <Section title="Modal" docs="/docs/components/overlays/modal">
+        <DialogRoot>
+          <Button>Open modal</Button>
+          <Dialog>
+            <DialogHeader>
+              <DialogHeading>This is a modal</DialogHeading>
+              <DialogDescription>
+                This is a modal description.
+              </DialogDescription>
+            </DialogHeader>
+          </Dialog>
+        </DialogRoot>
       </Section>
     </div>
   );

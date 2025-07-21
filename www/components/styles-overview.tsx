@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { UNSAFE_PortalProvider } from "@react-aria/overlays";
 import { CheckIcon, CopyIcon } from "lucide-react";
 import { AnimatePresence, motion, useInView } from "motion/react";
 import { useTheme } from "next-themes";
@@ -18,16 +17,13 @@ import {
   MobileComponentsOverview,
 } from "@/components/components-overview";
 import { useMounted } from "@/hooks/use-mounted";
-import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 
 export const StylesOverview = ({
   styles,
 }: {
   styles: RouterOutputs["style"]["all"];
 }) => {
-  const container = React.useRef(null);
   const { resolvedTheme } = useTheme();
-  const { currentMode } = usePreferences();
 
   const [currentStyleName, setCurrentStyleName] = React.useState<string>(
     styles[0]!.name,
@@ -70,13 +66,6 @@ export const StylesOverview = ({
 
   return (
     <>
-      {isMounted && (
-        <StyleProvider
-          ref={container}
-          style={currentStyle}
-          mode={resolvedTheme as "light" | "dark" | undefined}
-        />
-      )}
       <div className="flex flex-col gap-6">
         <div className="flex flex-col-reverse items-center gap-4 min-[1450px]:flex-row min-[1450px]:items-end">
           <Tabs
@@ -160,20 +149,18 @@ export const StylesOverview = ({
             mode={resolvedTheme as "light" | "dark" | undefined}
             className="relative w-full rounded-md border bg-bg shadow-md"
           >
-            <UNSAFE_PortalProvider getContainer={() => container.current}>
-              <AnimatePresence mode="popLayout">
-                <motion.div
-                  key={currentStyleName}
-                  variants={variants}
-                  initial="hidden"
-                  animate="show"
-                  exit="hidden"
-                >
-                  <ComponentsOverview className="hidden sm:grid" />
-                  <MobileComponentsOverview className="sm:hidden" />
-                </motion.div>
-              </AnimatePresence>
-            </UNSAFE_PortalProvider>
+            <AnimatePresence mode="popLayout">
+              <motion.div
+                key={currentStyleName}
+                variants={variants}
+                initial="hidden"
+                animate="show"
+                exit="hidden"
+              >
+                <ComponentsOverview className="hidden sm:grid" />
+                <MobileComponentsOverview className="sm:hidden" />
+              </motion.div>
+            </AnimatePresence>
           </StyleProvider>
         </Skeleton>
       </div>

@@ -4,7 +4,7 @@ import { registryBlocks } from "@dotui/registry-definition/registry-blocks";
 import { BlockViewer } from "@dotui/ui/block-viewer";
 
 import { buildTimeCaller, getQueryClient, trpc } from "@/lib/trpc/server";
-import { BlockViewStyleProvider } from "./block-view-style-provider";
+import { BlockProviders } from "./providers";
 
 export const generateStaticParams = async () => {
   const styles = await buildTimeCaller.style.all({
@@ -35,8 +35,8 @@ export default async function BlockViewPage({
   }
 
   return (
-    <BlockViewStyleProvider style={style}>
+    <BlockProviders style={style}>
       <BlockViewer name={name} />
-    </BlockViewStyleProvider>
+    </BlockProviders>
   );
 }

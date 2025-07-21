@@ -121,7 +121,7 @@ export const DEFAULT_VARIANTS: Variants = {
   "tag-group": "basic",
   kbd: "basic",
   toast: "basic",
-  
+
   "focus-style": "basic",
 };
 

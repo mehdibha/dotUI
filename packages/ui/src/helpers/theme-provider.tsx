@@ -12,10 +12,12 @@ export const ThemeProvider = ({
   mode,
   theme: themeDefinition,
   children,
+  unstyled,
   ...props
 }: React.ComponentProps<"div"> & {
   mode?: Mode;
   theme: ThemeDefinition;
+  unstyled?: boolean;
   children: React.ReactNode;
 }) => {
   const theme = React.useMemo(
@@ -71,11 +73,12 @@ export const ThemeProvider = ({
         {...props}
         suppressHydrationWarning
         className={cn(
-          "relative overflow-hidden bg-bg font-body text-fg duration-150",
+          !unstyled &&
+            "relative overflow-hidden bg-bg font-body text-fg duration-150",
           props.className,
         )}
       >
-        {texture && (
+        {texture && !unstyled && (
           <div
             style={{
               ...transformCssToJSXStyle(texture.css[".texture"]),
@@ -85,7 +88,7 @@ export const ThemeProvider = ({
             }}
           />
         )}
-        {backgroundPattern && (
+        {backgroundPattern && !unstyled && (
           <div
             style={transformCssToJSXStyle(backgroundPattern.css[".bg-pattern"])}
           />

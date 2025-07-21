@@ -169,7 +169,7 @@ function StylePageHeaderName() {
 }
 
 function StylePageHeaderActions() {
-  const { form, isLoading } = useStyleForm();
+  const { form } = useStyleForm();
 
   const handleReset = () => {
     form.reset();
@@ -202,7 +202,6 @@ function StylePageHeaderActions() {
           size="sm"
           prefix={<SaveIcon />}
           isDisabled={!form.formState.isDirty}
-          isPending={isLoading}
         >
           Save
         </Button>

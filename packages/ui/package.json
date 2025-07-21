@@ -32,8 +32,22 @@
     "tw-animate-css": "^1.3.5"
   },
   "peerDependencies": {
+    "@hookform/resolvers": "catalog:ui",
+    "@internationalized/date": "catalog:ui",
+    "@react-aria/utils": "catalog:ui",
+    "@react-stately/utils": "catalog:ui",
+    "@remixicon/react": "catalog:ui",
+    "clsx": "catalog:ui",
+    "lucide-react": "catalog:ui",
+    "motion": "catalog:ui",
     "react": "catalog:react19",
-    "react-dom": "catalog:react19"
+    "react-aria": "catalog:ui",
+    "react-aria-components": "catalog:ui",
+    "react-dom": "catalog:react19",
+    "react-hook-form": "catalog:ui",
+    "react-stately": "catalog:ui",
+    "tailwind-merge": "catalog:ui",
+    "tailwind-variants": "catalog:ui"
   },
   "devDependencies": {
     "@dotui/eslint-config": "workspace:*",

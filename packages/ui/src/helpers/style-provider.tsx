@@ -13,12 +13,14 @@ export interface StyleProviderProps
   extends Omit<React.ComponentProps<"div">, "style"> {
   mode?: "light" | "dark";
   style?: StyleDefinition;
+  unstyled?: boolean;
 }
 
 export const StyleProvider = ({
   mode,
   style,
   children,
+  unstyled,
   ...props
 }: StyleProviderProps) => {
   if (!style) {
@@ -32,6 +34,7 @@ export const StyleProvider = ({
           mode={mode}
           theme={style.theme}
           data-focus-style={style.variants["focus-style"]}
+          unstyled={unstyled}
           {...props}
         >
           {children}

@@ -12,12 +12,12 @@ import type { UseFormReturn } from "react-hook-form";
 import { COLOR_TOKENS } from "@dotui/registry-definition/registry-tokens";
 import { createColorScales } from "@dotui/style-engine/core";
 import { styleDefinitionSchema } from "@dotui/style-engine/schemas";
+import { toast } from "@dotui/ui/components/toast";
 
 import { useDebounce } from "@/hooks/use-debounce";
 import { useTRPC, useTRPCClient } from "@/lib/trpc/react";
 import { useLiveStyleProducer } from "../atoms/live-style-atom";
 import { usePreferences } from "../atoms/preferences-atom";
-import { queue } from "@dotui/ui/components/toast";
 
 const formSchema = styleDefinitionSchema.extend({
   name: z.string().min(1),
@@ -186,7 +186,7 @@ export default function StylePageForm({
     async (data) => {
       try {
         console.log("🔄 Submitting style update...");
-        queue.add({
+        toast.add({
           title: "Style updated",
           description: "Your style has been updated successfully",
           variant: "success",
