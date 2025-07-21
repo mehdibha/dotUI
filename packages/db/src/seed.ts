@@ -9,7 +9,7 @@ import { restoreStyleDefinitionDefaults } from "@dotui/style-engine/utils";
 
 import { db } from "./client";
 import { DEFAULT_STYLES } from "./constants";
-import { style, user } from "./schema";
+import { style, user } from "./schemas";
 
 async function validateDefaultStyles() {
   for (const style of DEFAULT_STYLES) {

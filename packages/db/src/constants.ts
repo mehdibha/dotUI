@@ -1,6 +1,6 @@
 import type { z } from "zod/v4";
 
-import type { createStyleSchema } from "./schema";
+import type { createStyleSchema } from "./schemas";
 
 export const DEFAULT_STYLES: Omit<
   z.infer<typeof createStyleSchema>,

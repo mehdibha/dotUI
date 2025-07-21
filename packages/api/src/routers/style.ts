@@ -2,7 +2,7 @@ import { z } from "zod/v4";
 import type { TRPCRouterRecord } from "@trpc/server";
 
 import { eq } from "@dotui/db";
-import { style, user } from "@dotui/db/schema";
+import { style, user } from "@dotui/db/schemas";
 import { styleDefinitionSchema } from "@dotui/style-engine/schemas";
 import {
   minimizeStyleDefinition,

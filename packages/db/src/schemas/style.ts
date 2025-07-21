@@ -1,6 +1,5 @@
 import { pgTable } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
-import { z } from "zod/v4";
 
 import type {
   MinimizedIconsDefinition,
@@ -8,8 +7,9 @@ import type {
   MinimizedVariantsDefinition,
 } from "@dotui/style-engine/types";
 
-import { user } from "./auth-schema";
+import { user } from "./auth";
 
+/** Tables **/
 export const style = pgTable("style", (t) => ({
   id: t.uuid().notNull().primaryKey().defaultRandom(),
   name: t.varchar({ length: 256 }).notNull(),
@@ -29,16 +29,10 @@ export const style = pgTable("style", (t) => ({
     .$onUpdateFn(() => new Date()),
 }));
 
-export const createStyleSchema = createInsertSchema(style)
-  .omit({
-    id: true,
-    isFeatured: true,
-    createdAt: true,
-    updatedAt: true,
-  })
-  .extend({
-    name: z.string().min(1).max(256),
-    description: z.string().max(500).optional(),
-  });
-
-export * from "./auth-schema";
+/** Validations **/
+export const createStyleSchema = createInsertSchema(style).omit({
+  id: true,
+  isFeatured: true,
+  createdAt: true,
+  updatedAt: true,
+});
