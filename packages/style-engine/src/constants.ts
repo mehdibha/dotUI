@@ -259,7 +259,7 @@ export const DEFAULT_THEME: ThemeDefinition = {
     body: DEFAULT_FONTS.body,
   },
   spacing: DEFAULT_SPACING,
-  
+
   shadows: DEFAULT_SHADOWS,
   radius: DEFAULT_RADIUS_FACTOR,
   texture: DEFAULT_TEXTURE,
