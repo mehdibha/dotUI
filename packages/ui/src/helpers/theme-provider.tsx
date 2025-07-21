@@ -11,13 +11,11 @@ type Mode = "light" | "dark";
 export const ThemeProvider = ({
   mode,
   theme: themeDefinition,
-  focusRing,
   children,
   ...props
 }: React.ComponentProps<"div"> & {
   mode?: Mode;
   theme: ThemeDefinition;
-  focusRing: string;
   children: React.ReactNode;
 }) => {
   const theme = React.useMemo(
@@ -71,7 +69,6 @@ export const ThemeProvider = ({
       <div
         style={styleProp}
         {...props}
-        data-focus-style={focusRing}
         suppressHydrationWarning
         className={cn("relative bg-bg font-body text-fg", props.className)}
       >

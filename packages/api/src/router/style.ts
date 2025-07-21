@@ -2,12 +2,31 @@ import { z } from "zod/v4";
 import type { TRPCRouterRecord } from "@trpc/server";
 
 import { eq } from "@dotui/db";
-import { style } from "@dotui/db/schema";
+import { style, user } from "@dotui/db/schema";
 import { restoreStyleDefinitionDefaults } from "@dotui/style-engine/utils";
 
-import { publicProcedure } from "../trpc";
+import { protectedProcedure, publicProcedure } from "../trpc";
 
 export const styleRouter = {
+  getCurrentStyle: protectedProcedure.query(({ ctx }) => {
+    return ctx.session.user.selectedStyle;
+  }),
+  updateCurrentStyle: protectedProcedure
+    .input(
+      z.object({
+        styleId: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db
+        .update(user)
+        .set({
+          selectedStyle: input.styleId,
+        })
+        .where(eq(user.id, ctx.session.user.id));
+
+      return ctx.session.user.selectedStyle;
+    }),
   all: publicProcedure
     .input(
       z.object({

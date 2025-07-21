@@ -63,40 +63,39 @@ export const ComponentPreview = async ({
 
   return (
     <div
-      className={cn("overflow-hidden rounded-md border", containerClassName)}
+      className={cn(
+        "relative overflow-hidden rounded-md border",
+        containerClassName,
+      )}
     >
       <div className="bg-bg-muted">
         <ResizableContainer resizable={resizable}>
-          <Loader>
-            <CurrentStyleProvider>
-              <div className="relative duration-300">
-                <ComponentPreviewHeader />
-                <ScrollArea className="bg-bg text-fg">
-                  <div
-                    className={cn(
-                      "flex pt-14 pb-10",
-                      primary && "min-h-48 pt-24 pb-20",
-                      fullWidth
-                        ? "px-8 lg:px-12"
-                        : "flex items-center justify-center px-4",
-                    )}
-                  >
-                    <div
-                      className={cn(
-                        fullWidth
-                          ? "w-full"
-                          : "flex items-center justify-center",
-                      )}
-                    >
-                      <ComponentWrapper suspense={suspense}>
-                        <Component />
-                      </ComponentWrapper>
-                    </div>
-                  </div>
-                </ScrollArea>
+          {/* <Loader> */}
+          <ComponentPreviewHeader  />
+          <CurrentStyleProvider>
+            <ScrollArea className="bg-bg text-fg">
+              <div
+                className={cn(
+                  "flex pb-10 pt-14",
+                  primary && "min-h-48 pb-20 pt-24",
+                  fullWidth
+                    ? "px-8 lg:px-12"
+                    : "flex items-center justify-center px-4",
+                )}
+              >
+                <div
+                  className={cn(
+                    fullWidth ? "w-full" : "flex items-center justify-center",
+                  )}
+                >
+                  <ComponentWrapper suspense={suspense}>
+                    <Component />
+                  </ComponentWrapper>
+                </div>
               </div>
-            </CurrentStyleProvider>
-          </Loader>
+            </ScrollArea>
+          </CurrentStyleProvider>
+          {/* </Loader> */}
         </ResizableContainer>
       </div>
       <CodeBlock

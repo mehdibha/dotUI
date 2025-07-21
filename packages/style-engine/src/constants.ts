@@ -1,7 +1,11 @@
+import { COLOR_TOKENS } from "@dotui/registry-definition/registry-tokens";
+
 import type {
+  ColorTokens,
   Fonts,
   IconLibrary,
   ModeDefinition,
+  ThemeDefinition,
   Variants,
   VariantsDefinition,
 } from "./types";
@@ -233,4 +237,32 @@ export const DEFAULT_DARK_MODE: ModeDefinition = {
       smooth: false,
     },
   },
+};
+
+export const DEFAULT_TOKENS: ColorTokens = COLOR_TOKENS.map((token) => ({
+  id: token.name,
+  name: token.name,
+  value: token.defaultValue,
+}));
+
+export const DEFAULT_THEME: ThemeDefinition = {
+  colors: {
+    activeModes: ["light", "dark"],
+    modes: {
+      light: DEFAULT_LIGHT_MODE,
+      dark: DEFAULT_DARK_MODE,
+    },
+    tokens: DEFAULT_TOKENS,
+  },
+  fonts: {
+    heading: DEFAULT_FONTS.heading,
+    body: DEFAULT_FONTS.body,
+  },
+  spacing: DEFAULT_SPACING,
+  
+  shadows: DEFAULT_SHADOWS,
+  radius: DEFAULT_RADIUS_FACTOR,
+  texture: DEFAULT_TEXTURE,
+  backgroundPattern: DEFAULT_BACKGROUND_PATTERN,
+  letterSpacing: DEFAULT_LETTER_SPACING,
 };

@@ -1,6 +1,6 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ChevronDownIcon } from "lucide-react";
 
 import { Button } from "@dotui/ui/components/button";
@@ -12,12 +12,12 @@ import {
   SelectRoot,
   SelectValue,
 } from "@dotui/ui/components/select";
+import { Skeleton } from "@dotui/ui/components/skeleton";
 import type { ButtonProps } from "@dotui/ui/components/button";
 import type { SelectRootProps } from "@dotui/ui/components/select";
 
 import { useMounted } from "@/hooks/use-mounted";
-import { useTRPC } from "@/lib/trpc/react";
-import { authClient } from "@/modules/auth/lib/client";
+import { useTRPC, useTRPCClient } from "@/lib/trpc/react";
 
 export function StyleSelector(
   props: SelectRootProps<any> & {
@@ -26,56 +26,89 @@ export function StyleSelector(
 ) {
   const isMounted = useMounted();
   const trpc = useTRPC();
-  const { data: styles } = useQuery({
+  const trpcClient = useTRPCClient();
+  const queryClient = useQueryClient();
+
+  const {
+    data: styles,
+    isLoading,
+    isSuccess,
+  } = useQuery({
     ...trpc.style.all.queryOptions({
       isFeatured: true,
     }),
     enabled: isMounted,
   });
 
-  const { data } = authClient.useSession();
+  const { data: currentStyle } = useQuery({
+    ...trpc.style.getCurrentStyle.queryOptions(),
+    enabled: isMounted,
+  });
 
-  if (!isMounted || !styles) {
-    return (
-      <Button
-        variant="default"
-        suffix={<ChevronDownIcon />}
-        {...props.buttonProps}
-      >
-        <span className="text-fg-muted">Style:</span> Loading...
-      </Button>
-    );
-  }
+  const updateStyleMutation = useMutation({
+    mutationFn: async (variables: { styleId: string }) => {
+      return await trpcClient.style.updateCurrentStyle.mutate(variables);
+    },
+    onMutate: async (variables) => {
+      await queryClient.cancelQueries({
+        queryKey: trpc.style.getCurrentStyle.queryKey(),
+      });
+      const previousStyle = queryClient.getQueryData(
+        trpc.style.getCurrentStyle.queryKey(),
+      );
+      queryClient.setQueryData(
+        trpc.style.getCurrentStyle.queryKey(),
+        variables.styleId,
+      );
+      return { previousStyle, newStyle: variables.styleId };
+    },
+    onError: (err, variables, context) => {
+      if (context?.previousStyle !== undefined) {
+        queryClient.setQueryData(
+          trpc.style.getCurrentStyle.queryKey(),
+          context.previousStyle,
+        );
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: trpc.style.getCurrentStyle.queryKey(),
+      });
+    },
+  });
 
   return (
-    <SelectRoot
-      selectedKey={data?.user.selectedStyle}
-      onSelectionChange={(key) => {
-        authClient.updateUser({
-          selectedStyle: key as string,
-        });
-      }}
-      {...props}
-    >
-      <Button
-        variant="default"
-        suffix={<ChevronDownIcon />}
-        {...props.buttonProps}
+    <Skeleton show={isLoading}>
+      <SelectRoot
+        selectedKey={currentStyle}
+        onSelectionChange={(key) => {
+          updateStyleMutation.mutate({
+            styleId: key as string,
+          });
+        }}
+        {...props}
       >
-        <span className="text-fg-muted">Style:</span> <SelectValue />
-      </Button>
-      <HelpText />
-      <Popover>
-        <ListBox>
-          <ListBoxSection title="Featured">
-            {styles.map((style) => (
-              <SelectItem key={style.slug} id={style.slug}>
-                {style.name}
-              </SelectItem>
-            ))}
-          </ListBoxSection>
-        </ListBox>
-      </Popover>
-    </SelectRoot>
+        <Button
+          variant="default"
+          suffix={<ChevronDownIcon />}
+          {...props.buttonProps}
+        >
+          <span className="text-fg-muted">Style:</span> <SelectValue />
+        </Button>
+        <HelpText />
+        <Popover>
+          <ListBox isLoading={isLoading}>
+            <ListBoxSection title="Featured">
+              {isSuccess &&
+                styles.map((style) => (
+                  <SelectItem key={style.slug} id={style.slug}>
+                    {style.name}
+                  </SelectItem>
+                ))}
+            </ListBoxSection>
+          </ListBox>
+        </Popover>
+      </SelectRoot>
+    </Skeleton>
   );
 }

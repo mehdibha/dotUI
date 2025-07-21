@@ -13,7 +13,8 @@
 @variant dark (&:where(.dark, .dark *));
 
 /* Base Colors */
-:root {
+:root,
+.light {
   --radius-factor: 1;
 
   --neutral-50: hsl(0, 0%, 98%);

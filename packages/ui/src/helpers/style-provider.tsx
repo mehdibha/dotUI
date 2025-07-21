@@ -31,7 +31,7 @@ export const StyleProvider = ({
         <ThemeProvider
           mode={mode}
           theme={style.theme}
-          focusRing={style.variants["focus-style"]}
+          data-focus-style={style.variants["focus-style"]}
           {...props}
         >
           {children}
