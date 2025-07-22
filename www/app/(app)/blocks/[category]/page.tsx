@@ -3,7 +3,7 @@ import {
   registryBlocks,
 } from "@dotui/registry-definition/registry-blocks";
 
-import { BlockView } from "@/modules/blocks/components/block-view";
+import { BlockView } from "@/modules/blocks/block-view";
 
 export const dynamicParams = false;
 

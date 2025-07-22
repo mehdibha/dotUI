@@ -7,6 +7,7 @@ import { StyleProvider } from "@dotui/ui";
 import { DisableSuspense } from "@dotui/ui/helpers/create-dynamic-component";
 import type { StyleDefinition } from "@dotui/style-engine/types";
 
+import { useMounted } from "@/hooks/use-mounted";
 import { useLiveStyleConsumer } from "@/modules/styles/atoms/live-style-atom";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 
@@ -20,11 +21,14 @@ export const BlockProviders = ({
   const overlayContainerRef = React.useRef(null);
 
   const { currentMode } = usePreferences();
+  const isMounted = useMounted();
   const { liveStyle } = useLiveStyleConsumer(styleProp.slug);
 
   const style = React.useMemo(() => {
     return liveStyle ?? styleProp;
   }, [liveStyle, styleProp]);
+
+  if (!isMounted || !style) return null;
 
   return (
     <>
@@ -33,6 +37,7 @@ export const BlockProviders = ({
         style={style}
         mode={currentMode}
         unstyled
+        className="text-fg"
       />
       <PortalProvider getContainer={() => overlayContainerRef.current}>
         <StyleProvider

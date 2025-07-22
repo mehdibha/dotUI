@@ -2,7 +2,7 @@
 
 import { Button } from "@dotui/ui/components/button";
 
-import { BlocksNav } from "@/modules/blocks/components/blocks-nav";
+import { BlocksNav } from "@/modules/blocks/blocks-nav";
 import { StyleSelector } from "@/modules/styles/components/style-selector";
 
 export default function BlocksLayout({

@@ -1,6 +1,6 @@
 import { featuredBlocks } from "@dotui/registry-definition/registry-blocks";
 
-import { BlockView } from "@/modules/blocks/components/block-view";
+import { BlockView } from "@/modules/blocks/block-view";
 
 export default function BlocksPage() {
   return (

@@ -34,7 +34,7 @@ export const statuses = [
   },
   {
     value: "in progress",
-    label: "In Progress",
+    label: "In progress",
     variant: "info",
     icon: RiProgress4Line,
   },
@@ -124,7 +124,7 @@ const columns: Column[] = [
   { name: "Status", id: "status" },
   { name: "Assignee", id: "assignee" },
   { name: "Story Points", id: "storyPoints" },
-  { name: "Actions", id: "actions" },
+  { name: "", id: "actions" },
 ];
 
 interface Item {
@@ -174,7 +174,7 @@ export const users: User[] = [
     name: "Steven Tey",
     avatar: "https://github.com/steventey.png",
   },
-];
+] as const;
 
 const data: Item[] = [
   {
@@ -218,7 +218,7 @@ const data: Item[] = [
     title: "Spike: Evaluate Redis vs Kafka for event streaming",
     priority: "P2",
     status: "in progress",
-    assignee: "leeerob",
+    assignee: "leerob",
     storyPoints: "8",
     type: "spike",
   },
@@ -293,27 +293,23 @@ export function Backlog() {
             <TableCell>
               {(() => {
                 const user = users.find((u) => u.username === item.assignee);
+                if (!user) return null;
                 return (
                   <div className="flex items-center space-x-2">
                     <img
-                      src={
-                        user?.avatar ||
-                        `https://ui-avatars.com/api/?name=${item.assignee}&size=24`
-                      }
-                      alt={user?.name || item.assignee}
+                      src={user.avatar}
+                      alt={user.name}
                       className="h-6 w-6 rounded-full object-cover"
                     />
-                    <span className="text-sm font-medium text-gray-900">
-                      {user?.name || item.assignee}
-                    </span>
+                    <span className="text-fg-muted">{user.name}</span>
                   </div>
                 );
               })()}
             </TableCell>
             <TableCell>
-              <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 text-xs font-bold text-blue-600">
+              <Badge size="sm" className="bg-bg-accent-muted text-fg-accent px-1">
                 {item.storyPoints}
-              </span>
+              </Badge>
             </TableCell>
             <TableCell>
               <MenuRoot>
