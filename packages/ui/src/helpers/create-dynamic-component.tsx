@@ -47,7 +47,7 @@ export const createDynamicComponent = <Props extends {}>(
         >
           <React.Suspense
             fallback={
-              <Skeleton show={!disableSkeleton} className="bg-red-500">
+              <Skeleton show={!disableSkeleton}>
                 <VariantsProvider variants={DEFAULT_VARIANTS_DEFINITION}>
                   <DefaultComponent {...props} />
                 </VariantsProvider>
@@ -78,7 +78,7 @@ export const createDynamicComponent = <Props extends {}>(
       >
         <React.Suspense
           fallback={
-            <Skeleton className="bg-red-500">
+            <Skeleton>
               <VariantsProvider variants={DEFAULT_VARIANTS_DEFINITION}>
                 <DefaultComponent {...props} />
               </VariantsProvider>
@@ -99,10 +99,12 @@ export const createDynamicComponent = <Props extends {}>(
 
 const DisableSuspenseContext = React.createContext<boolean>(false);
 
-const DisableSuspense = ({ children }: { children?: React.ReactNode }) => {
-  return (
-    <DisableSuspenseContext value={true}>{children}</DisableSuspenseContext>
-  );
+export const DisableSuspense = ({
+  children,
+}: {
+  children?: React.ReactNode;
+}) => {
+  return <DisableSuspenseContext value>{children}</DisableSuspenseContext>;
 };
 
 const useDisableSuspense = () => {

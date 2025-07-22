@@ -4,6 +4,7 @@ import React from "react";
 import { UNSAFE_PortalProvider as PortalProvider } from "react-aria";
 
 import { StyleProvider } from "@dotui/ui";
+import { DisableSuspense } from "@dotui/ui/helpers/create-dynamic-component";
 import type { StyleDefinition } from "@dotui/style-engine/types";
 
 import { useLiveStyleConsumer } from "@/modules/styles/atoms/live-style-atom";
