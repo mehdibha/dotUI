@@ -10,6 +10,8 @@ import {
   Tabs,
 } from "@dotui/ui/registry/components/tabs/motion";
 
+import { CreateStyleModal } from "@/modules/styles/components/create-style-modal";
+
 export default function StylesLayout({
   children,
 }: {
@@ -22,11 +24,13 @@ export default function StylesLayout({
       <h2 className="w-fit text-3xl font-semibold tracking-tight">
         Find your style or make your own.
       </h2>
-      <p className="mt-2 text-base text-fg-muted">
+      <p className="text-fg-muted mt-2 text-base">
         Choose a style to get started or create your own.
       </p>
       <div className="mt-6 flex items-center gap-2">
-        <Button variant="primary">Create style</Button>
+        <CreateStyleModal>
+          <Button variant="primary">Create style</Button>
+        </CreateStyleModal>
         <Button>Browse styles</Button>
       </div>
       <div className="mt-16">

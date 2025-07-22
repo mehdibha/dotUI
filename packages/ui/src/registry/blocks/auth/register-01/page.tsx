@@ -1,4 +1,4 @@
-import { RegisterForm } from "@dotui/ui/registry/blocks/register-01/components/register-form";
+import { RegisterForm } from "@dotui/ui/registry/blocks/auth/register-01/components/register-form";
 
 export default function Page() {
   return (

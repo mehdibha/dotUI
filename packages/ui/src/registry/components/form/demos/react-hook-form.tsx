@@ -16,7 +16,7 @@ import { TextField } from "@dotui/ui/components/text-field";
 
 const FormSchema = z.object({
   name: z.string().min(2),
-  email: z.string().email(),
+  email: z.email(),
   gender: z.enum(["male", "female", "other"]),
   "birth-date": z.string(),
   referral: z.string({
@@ -36,7 +36,7 @@ export default function Demo() {
   });
 
   return (
-    <div className="w-sm space-y-4 rounded-lg border bg-bg-muted p-8">
+    <div className="w-sm bg-bg-muted space-y-4 rounded-lg border p-8">
       <h1 className="text-xl font-bold">Register</h1>
       <form
         onSubmit={handleSubmit((data) => {

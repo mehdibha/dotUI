@@ -11,26 +11,38 @@ export const Index: Record<
 > = {
   "login-01": {
     files: [
-      "registry/blocks/login-01/page.tsx",
-      "registry/blocks/login-01/components/login-form.tsx",
+      "registry/blocks/auth/login-01/page.tsx",
+      "registry/blocks/auth/login-01/components/login-form.tsx",
     ],
     component: React.lazy(
-      () => import("@dotui/ui/registry/blocks/login-01/page"),
+      () => import("@dotui/ui/registry/blocks/auth/login-01/page"),
     ),
   },
   "register-01": {
     files: [
-      "registry/blocks/register-01/page.tsx",
-      "registry/blocks/register-01/components/register-form.tsx",
+      "registry/blocks/auth/register-01/page.tsx",
+      "registry/blocks/auth/register-01/components/register-form.tsx",
     ],
     component: React.lazy(
-      () => import("@dotui/ui/registry/blocks/register-01/page"),
+      () => import("@dotui/ui/registry/blocks/auth/register-01/page"),
     ),
   },
   "overview-01": {
-    files: ["registry/blocks/overview-01/page.tsx"],
+    files: ["registry/blocks/overview/overview-01/page.tsx"],
     component: React.lazy(
-      () => import("@dotui/ui/registry/blocks/overview-01/page"),
+      () => import("@dotui/ui/registry/blocks/overview/overview-01/page"),
+    ),
+  },
+  backlog: {
+    files: ["registry/blocks/tables/backlog/page.tsx"],
+    component: React.lazy(
+      () => import("@dotui/ui/registry/blocks/tables/backlog/page"),
+    ),
+  },
+  "invite-members": {
+    files: ["registry/blocks/invite-members/page.tsx"],
+    component: React.lazy(
+      () => import("@dotui/ui/registry/blocks/invite-members/page"),
     ),
   },
 };

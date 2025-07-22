@@ -186,12 +186,12 @@ export default function StylePageForm({
     async (data) => {
       try {
         console.log("🔄 Submitting style update...");
-        toast.add({
-          title: "Style updated",
-          description: "Your style has been updated successfully",
-          variant: "success",
-        });
-        // await updateStyleMutation.mutateAsync(data);
+        // toast.add({
+        //   title: "Style updated",
+        //   description: "Your style has been updated successfully",
+        //   variant: "success",
+        // });
+        await updateStyleMutation.mutateAsync(data);
       } catch (error) {
         console.error("Submission failed:", error);
       }

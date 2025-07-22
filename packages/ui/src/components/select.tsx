@@ -39,6 +39,7 @@ export const Select = <T extends object = object>(props: SelectProps<T>) => {
       //   })),
       // ),
     },
+    true,
   );
 
   return <Component {...props} />;

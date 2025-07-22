@@ -16,22 +16,25 @@ export const createDynamicComponent = <Props extends {}>(
     string,
     React.LazyExoticComponent<React.ComponentType<Props>>
   >,
+  disableSkeleton?: boolean,
 ): React.FC<Props> => {
   const Component = (props: Props) => {
     const variantName = useVariant(componentName);
     const disableSuspense = useDisableSuspense();
 
+    // If the variant is not defined, we are not in a preview
     if (!variantName) {
       return <DefaultComponent {...props} />;
     }
 
     const LazyComponent = variants[variantName];
 
+    // If LaeyComponent is not defined, its because it is the default variant
     if (!LazyComponent) {
-      return <DefaultComponent {...props} />;
-    }
+      if (disableSuspense) {
+        return <DefaultComponent {...props} />;
+      }
 
-    if (disableSuspense) {
       return (
         <ErrorBoundary
           fallback={
@@ -42,9 +45,25 @@ export const createDynamicComponent = <Props extends {}>(
             />
           }
         >
-          <LazyComponent {...props} />
+          <React.Suspense
+            fallback={
+              <Skeleton show={!disableSkeleton} className="bg-red-500">
+                <VariantsProvider variants={DEFAULT_VARIANTS_DEFINITION}>
+                  <DefaultComponent {...props} />
+                </VariantsProvider>
+              </Skeleton>
+            }
+          >
+            <DisableSuspense>
+              <DefaultComponent {...props} />
+            </DisableSuspense>
+          </React.Suspense>
         </ErrorBoundary>
       );
+    }
+
+    if (disableSuspense) {
+      return <LazyComponent {...props} />;
     }
 
     return (
@@ -59,7 +78,7 @@ export const createDynamicComponent = <Props extends {}>(
       >
         <React.Suspense
           fallback={
-            <Skeleton>
+            <Skeleton className="bg-red-500">
               <VariantsProvider variants={DEFAULT_VARIANTS_DEFINITION}>
                 <DefaultComponent {...props} />
               </VariantsProvider>
@@ -90,18 +109,16 @@ const useDisableSuspense = () => {
   return React.useContext(DisableSuspenseContext);
 };
 
-function Skeleton({
-  className,
-  show = true,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement> & {
+export type SkeletonProps = React.HTMLAttributes<HTMLDivElement> & {
   show?: boolean;
-}) {
+};
+
+function Skeleton({ className, show = true, ...props }: SkeletonProps) {
   if (!show) return props.children;
   return (
     <div
       className={cn(
-        "relative block h-6 animate-pulse rounded-md bg-bg-muted",
+        "bg-bg-muted relative block h-6 animate-pulse rounded-md",
         props.children && "h-auto text-transparent *:invisible",
         className,
       )}
@@ -120,8 +137,8 @@ function Error({
   variantName: string;
 }) {
   return (
-    <div className="flex items-center justify-center rounded-md border border-border-danger p-4">
-      <div className="flex items-start gap-2 rounded-md border-border-danger bg-bg-danger-muted p-2 text-sm text-fg-danger">
+    <div className="border-border-danger flex items-center justify-center rounded-md border p-4">
+      <div className="border-border-danger bg-bg-danger-muted text-fg-danger flex items-start gap-2 rounded-md p-2 text-sm">
         <AlertCircleIcon />
         <div>
           <span className="font-bold">Error rendering dynamic component:</span>

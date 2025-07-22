@@ -108,9 +108,7 @@ export const CurrentStylePortalProvider = ({
         style={style}
         unstyled
       />
-      <PortalProvider getContainer={() => container.current}>
-        {children}
-      </PortalProvider>
+      {children}
     </CurrentStyleContext.Provider>
   );
 };

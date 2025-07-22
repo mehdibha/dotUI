@@ -11,7 +11,7 @@ import {
 import { tv } from "tailwind-variants";
 
 const labelStyles = tv({
-  base: "inline-flex items-center gap-px leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:text-fg-disabled [&_svg]:size-3",
+  base: "inline-flex text-sm items-center gap-px leading-none peer-disabled:cursor-not-allowed peer-disabled:text-fg-disabled [&_svg]:size-3 text-fg-muted",
 });
 
 interface LabelProps extends React.ComponentProps<typeof AriaLabel> {}

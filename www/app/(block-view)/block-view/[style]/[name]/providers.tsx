@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { UNSAFE_PortalProvider } from "react-aria";
+import { UNSAFE_PortalProvider as PortalProvider } from "react-aria";
 
 import { StyleProvider } from "@dotui/ui";
 import type { StyleDefinition } from "@dotui/style-engine/types";
@@ -17,6 +17,7 @@ export const BlockProviders = ({
   children: React.ReactNode;
 }) => {
   const overlayContainerRef = React.useRef(null);
+
   const { currentMode } = usePreferences();
   const { liveStyle } = useLiveStyleConsumer(styleProp.slug);
 
@@ -30,8 +31,9 @@ export const BlockProviders = ({
         ref={overlayContainerRef}
         style={style}
         mode={currentMode}
+        unstyled
       />
-      <UNSAFE_PortalProvider getContainer={() => overlayContainerRef.current}>
+      <PortalProvider getContainer={() => overlayContainerRef.current}>
         <StyleProvider
           style={style}
           mode={currentMode}
@@ -39,7 +41,7 @@ export const BlockProviders = ({
         >
           {children}
         </StyleProvider>
-      </UNSAFE_PortalProvider>
+      </PortalProvider>
     </>
   );
 };

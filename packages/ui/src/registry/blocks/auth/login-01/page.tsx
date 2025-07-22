@@ -1,4 +1,4 @@
-import { LoginForm } from "@dotui/ui/registry/blocks/login-01/components/login-form";
+import { LoginForm } from "@dotui/ui/registry/blocks/auth/login-01/components/login-form";
 
 export default function Page() {
   return (
