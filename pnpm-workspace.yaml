@@ -10,7 +10,7 @@ catalog:
   tailwindcss: ^4.1.8
   "@tailwindcss/postcss": ^4.1.8
   postcss: ^8.4.31
-  zod: ^3.25.0
+  zod: ^4.0.5
   "@tanstack/react-query": ^5.80.2
   "@trpc/client": ^11.2.0
   "@trpc/tanstack-react-query": ^11.2.0

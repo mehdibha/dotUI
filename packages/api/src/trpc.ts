@@ -1,6 +1,6 @@
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
-import { z, ZodError } from "zod/v4";
+import { z, ZodError } from "zod";
 
 import { db } from "@dotui/db/client";
 import type { Auth } from "@dotui/auth";

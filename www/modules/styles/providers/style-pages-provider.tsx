@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useForm, useWatch } from "react-hook-form";
-import { z } from "zod/v4";
+import { z } from "zod";
 import type { ContrastColor } from "@adobe/leonardo-contrast-colors";
 import type { UseFormReturn } from "react-hook-form";
 

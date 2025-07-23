@@ -1,4 +1,4 @@
-import { z } from "zod/v4";
+import { z } from "zod";
 
 import { registryBackgroundPatterns } from "@dotui/registry-definition/registry-bg-patterns";
 import { iconLibraries } from "@dotui/registry-definition/registry-icons";
