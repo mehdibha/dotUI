@@ -2,6 +2,8 @@ import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import {
+  DEFAULT_ICON_LIBRARY,
+  DEFAULT_ICON_STROKE_WIDTH,
   DEFAULT_THEME,
   DEFAULT_VARIANTS_DEFINITION,
 } from "@dotui/style-engine/constants";
@@ -22,37 +24,26 @@ export function useCreateStyle() {
 
   return useMutation({
     mutationFn: async (data: CreateStyleInput) => {
-      // Generate slug from name
       const slug = data.name
         .toLowerCase()
         .replace(/[^a-z0-9]/g, "-")
         .replace(/-+/g, "-")
         .replace(/^-|-$/g, "");
+      // const trpc = useTRPC();
 
-      // Create style with default values based on preset
       const styleData: StyleDefinition = {
         name: data.name,
         slug,
         description: `${data.name} style`,
         theme: DEFAULT_THEME,
         icons: {
-          library: "lucide",
-          strokeWidth: 1.5,
+          library: DEFAULT_ICON_LIBRARY,
+          strokeWidth: DEFAULT_ICON_STROKE_WIDTH,
         },
         variants: DEFAULT_VARIANTS_DEFINITION,
       };
 
-      // Apply preset-specific modifications
-      if (data.preset === "brutalist") {
-        styleData.variants.buttons = "brutalist";
-        styleData.theme.colors.activeModes = ["light"];
-      }
-
-      // For now, we'll simulate the API call since the create endpoint might not exist yet
-      // In a real implementation, this would be:
-      // return await trpcClient.style.create.mutate(styleData);
-
-      // Simulated response
+      // const trpc = useTRPC();
       await new Promise((resolve) => setTimeout(resolve, 1000));
       return {
         ...styleData,

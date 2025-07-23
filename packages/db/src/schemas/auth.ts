@@ -1,4 +1,7 @@
 import { boolean, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import type { AnyPgColumn } from "drizzle-orm/pg-core";
+
+import { style } from "./style";
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -14,7 +17,9 @@ export const user = pgTable("user", {
   updatedAt: timestamp("updated_at")
     .$defaultFn(() => /* @__PURE__ */ new Date())
     .notNull(),
-  selectedStyle: text("selected_style").default("minimalist"),
+  selectedStyle: text("selected_style")
+    .default("minimalist")
+    .references((): AnyPgColumn => style.id),
   role: text("role").default("user"),
   banned: boolean("banned"),
   banReason: text("ban_reason"),
