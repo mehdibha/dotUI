@@ -1,0 +1,58 @@
+{
+  "name": "@dotui/style-engine",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "Shared style system logic and types",
+  "exports": {
+    "./core": {
+      "types": "./dist/core/index.d.ts",
+      "default": "./src/core/index.ts"
+    },
+    "./utils": {
+      "types": "./dist/utils/index.d.ts",
+      "default": "./src/utils/index.ts"
+    },
+    "./schemas": {
+      "types": "./dist/schemas.d.ts",
+      "default": "./src/schemas.ts"
+    },
+    "./shadcn-registry": {
+      "types": "./dist/shadcn-registry/index.d.ts",
+      "default": "./src/shadcn-registry/index.ts"
+    },
+    "./constants": {
+      "types": "./dist/constants.d.ts",
+      "default": "./src/constants.ts"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts",
+      "default": "./src/types.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@adobe/leonardo-contrast-colors": "^1.0.0",
+    "@dotui/registry-definition": "workspace:*",
+    "deepmerge": "^4.3.1",
+    "ts-morph": "^18.0.0",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@dotui/eslint-config": "workspace:*",
+    "@dotui/prettier-config": "workspace:*",
+    "@dotui/ts-config": "workspace:*",
+    "eslint": "catalog:",
+    "prettier": "catalog:",
+    "shadcn": "catalog:",
+    "typescript": "catalog:"
+  },
+  "prettier": "@dotui/prettier-config"
+}

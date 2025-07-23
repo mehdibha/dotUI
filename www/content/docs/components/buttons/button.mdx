@@ -4,20 +4,21 @@ description: A button allows a user to perform an action, with mouse, touch, and
 links:
   - label: Aria docs
     href: https://react-spectrum.adobe.com/react-aria/Button.html
-  - label: Aria API Reference
-    href: https://react-spectrum.adobe.com/react-aria/Button.html#props
   - label: Report an issue
     href: https://github.com/mehdibha/dotUI/issues/new/choose
   - label: Edit this page
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/buttons/button.mdx?plain=1
 ---
 
-<ComponentPreview name="button/default" preview={`<Button>button</Button>`} />
+<ComponentPreview
+  name="button/demos/default"
+  preview={`<Button>button</Button>`}
+/>
 
 ## Installation
 
 ```package-install
-npx shadcn@latest add https://dotui.org/r/{style-name}/button
+npx shadcn@latest add https://dotui.org/r/{{STYLE_NAME}}/button
 ```
 
 ## Usage
@@ -33,7 +34,7 @@ Use the `variant` prop to control the visual style of the button.<br/>
 The default variant is `"default"`.
 
 <ComponentPreview
-  name="button/variants"
+  name="button/demos/variants"
   preview={`<Button variant="default">default</Button>
 <Button variant="primary">primary</Button>
 <Button variant="outline">outline</Button>
@@ -50,7 +51,7 @@ Use the `size` prop to control the size of the button.<br/>
 The default size is `"md"`.
 
 <ComponentPreview
-  name="button/sizes"
+  name="button/demos/sizes"
   preview={`<Button size="sm">Button</Button>
 <Button size="md">Button</Button>
 <Button size="lg">Button</Button>`}
@@ -62,7 +63,7 @@ Use the `shape` prop to control the shape of the button. The default variant is 
 Icon-only buttons should include an `aria-label`.
 
 <ComponentPreview
-  name="button/shapes"
+  name="button/demos/shapes"
   preview={`<Button shape="square"><UplaodIcon /></UplaodIcon>
 <Button shape="circular"><UplaodIcon /></Button>`}
 />
@@ -72,7 +73,7 @@ Icon-only buttons should include an `aria-label`.
 To add additional context for a button label, such as a search icon next to the label for a search field submit, use the `prefix` and `suffix` props. Leading visuals always appear locked to the button label, even if the button is full width.
 
 <ComponentPreview
-  name="button/prefix-and-suffix"
+  name="button/demos/prefix-and-suffix"
   preview={`<Button prefix={<UplaodIcon />}>Upload</Button>
 <Button suffix={<UplaodIcon />}>Upload</Button>`}
 />
@@ -82,7 +83,7 @@ To add additional context for a button label, such as a search icon next to the 
 Use the `isPending` prop to control the loading state of the button, if you need to wait for a button's action to be completed.
 
 <ComponentPreview
-  name="button/loading"
+  name="button/demos/loading"
   preview={`<Button isPending>Button</Button>`}
 />
 
@@ -91,7 +92,7 @@ Use the `isPending` prop to control the loading state of the button, if you need
 Use the `isDisabled` prop to disable the button.
 
 <ComponentPreview
-  name="button/disabled"
+  name="button/demos/disabled"
   preview={`<Button isDisabled>Button</Button>`}
 />
 
@@ -100,7 +101,7 @@ Use the `isDisabled` prop to disable the button.
 To use a button as a link, use the `href` prop the button will automatically render a link that visually looks like a button.
 
 <ComponentPreview
-  name="button/link-button"
+  name="button/demos/link-button"
   preview={`<Button href="/login">Login</Button>`}
 />
 
