@@ -328,9 +328,11 @@ function generateContrastColors(colorShadeVars) {
 }
 
 const autoContrast = plugin(function ({ addBase, theme }) {
-  const cwd = process.cwd();
+  // TODO: temp fix for monorepo
+  // const cwd = process.cwd();
+  const cwd = path.resolve(process.cwd(), "../packages/ui");
   const cssFilePath = getTailwindCssFile(cwd);
-  const cssFilePathRelative = path.relative(cwd, cssFilePath);
+  const cssFilePathRelative = path.resolve(cwd, cssFilePath);
 
   const rawCss = fs.readFileSync(cssFilePathRelative, "utf8");
 
