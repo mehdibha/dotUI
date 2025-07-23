@@ -1,4 +1,5 @@
 import React from "react";
+import defaultMdxComponents from "fumadocs-ui/mdx";
 import { ArrowUpRightIcon } from "lucide-react";
 import type { LinkProps } from "@/components/link";
 import type { MDXComponents } from "mdx/types";
@@ -23,6 +24,7 @@ import type { PaletteProps } from "./palette";
 import type { TabsProps } from "./tabs";
 
 export const mdxComponents: MDXComponents = {
+  ...defaultMdxComponents,
   h1: createHeading(1, "font-heading mt-2 scroll-m-20 text-4xl font-bold"),
   h2: createHeading(
     2,
@@ -126,15 +128,13 @@ export const mdxComponents: MDXComponents = {
     </code>
   ),
   Tab,
-  Tabs: (props: TabsProps) => (
-    <Tabs {...props} className={cn("mt-4", props.className)} />
-  ),
+  Tabs,
   Choice,
   Choices: (props: ChoicesProps) => (
     <Choices {...props} className={cn("mt-4", props.className)} />
   ),
-  InstallTab,
   InstallTabs,
+  InstallTab,
   ComponentPreview: (props: ComponentPreviewProps) => (
     <ComponentPreview containerClassName="not-first:mt-4" {...props} />
   ),

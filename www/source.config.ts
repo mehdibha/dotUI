@@ -38,6 +38,7 @@ export const docs = defineDocs({
 
 export default defineConfig({
   mdxOptions: {
+    remarkNpmOptions: false,
     remarkPlugins: [
       [
         remarkInstall,
