@@ -62,7 +62,7 @@
     "react-stately": "catalog:ui",
     "remark-gfm": "^4.0.0",
     "sharp": "^0.33.2",
-    "shiki": "^3.2.2",
+    "shiki": "^3.8.1",
     "superjson": "2.2.2",
     "tailwind-merge": "catalog:ui",
     "tailwind-variants": "catalog:ui",
