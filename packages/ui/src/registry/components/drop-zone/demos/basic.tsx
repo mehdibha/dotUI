@@ -6,7 +6,7 @@ import { UploadIcon } from "@dotui/ui/icons";
 export default function Demo() {
   return (
     <DropZone>
-      <UploadIcon className="size-5 text-fg-muted" />
+      <UploadIcon className="text-fg-muted size-5" />
     </DropZone>
   );
 }

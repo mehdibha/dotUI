@@ -13,13 +13,13 @@ export default function BlocksLayout({
   return (
     <div className="pt-14">
       <div className="container px-14">
-        <h2 className="text-balance text-4xl font-semibold tracking-tighter">
+        <h2 className="text-4xl font-semibold tracking-tighter text-balance">
           Blocks that don’t lock you in.
         </h2>
-        <p className="text-fg-muted mt-2 text-base">
+        <p className="mt-2 text-base text-fg-muted">
           Modern UI blocks available in infinite styles.
         </p>
-        <div className="h-18 flex items-center gap-2">
+        <div className="flex h-18 items-center gap-2">
           <Button variant="primary">Add your block</Button>
           <StyleSelector buttonProps={{ className: "px-4" }} />
         </div>

@@ -11,7 +11,7 @@ import { tv } from "tailwind-variants";
 const dropZoneStyles = tv({
   slots: {
     dropzone:
-      "flex w-60 flex-col items-center justify-center gap-2 rounded-md border-2 border-dashed p-6 text-sm focus-visible:border-border-focus disabled:border-border-disabled disabled:text-fg-disabled drop-target:border-border-focus drop-target:bg-bg-accent-muted",
+      "focus-visible:border-border-focus disabled:border-border-disabled disabled:text-fg-disabled drop-target:border-border-focus drop-target:bg-bg-accent-muted flex w-60 flex-col items-center justify-center gap-2 rounded-md border-2 border-dashed p-6 text-sm",
     label: "text-base",
   },
 });

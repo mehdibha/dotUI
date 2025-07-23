@@ -307,7 +307,10 @@ export function Backlog() {
               })()}
             </TableCell>
             <TableCell>
-              <Badge size="sm" className="bg-bg-accent-muted text-fg-accent px-1">
+              <Badge
+                size="sm"
+                className="bg-bg-accent-muted text-fg-accent px-1"
+              >
                 {item.storyPoints}
               </Badge>
             </TableCell>

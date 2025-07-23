@@ -11,7 +11,7 @@ import {
 import { tv } from "tailwind-variants";
 
 const labelStyles = tv({
-  base: "inline-flex text-sm items-center gap-px leading-none peer-disabled:cursor-not-allowed peer-disabled:text-fg-disabled [&_svg]:size-3 text-fg-muted",
+  base: "peer-disabled:text-fg-disabled text-fg-muted inline-flex items-center gap-px text-sm leading-none peer-disabled:cursor-not-allowed [&_svg]:size-3",
 });
 
 interface LabelProps extends React.ComponentProps<typeof AriaLabel> {}
@@ -26,7 +26,7 @@ const Label = ({ className, ...props }: LabelProps) => {
 };
 
 const descriptionStyles = tv({
-  base: "text-xs text-fg-muted",
+  base: "text-fg-muted text-xs",
 });
 
 interface DescriptionProps
@@ -42,7 +42,7 @@ const Description = ({ className, ...props }: DescriptionProps) => {
 };
 
 const fieldErrorStyles = tv({
-  base: "text-xs text-fg-danger",
+  base: "text-fg-danger text-xs",
 });
 
 interface FieldErrorProps extends React.ComponentProps<typeof AriaFieldError> {}

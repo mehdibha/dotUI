@@ -15,8 +15,8 @@ export default function Demo() {
         <SelectItem id="together-ai">Together AI</SelectItem>
         <SelectItem id="eleven-labs">ElevenLabs</SelectItem>
       </Select>
-      <p className="text-sm text-fg-muted">
-        Selected provider: <span className="font-bold text-fg">{provider}</span>
+      <p className="text-fg-muted text-sm">
+        Selected provider: <span className="text-fg font-bold">{provider}</span>
       </p>
     </div>
   );

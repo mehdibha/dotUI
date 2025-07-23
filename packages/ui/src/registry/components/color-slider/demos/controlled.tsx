@@ -10,7 +10,7 @@ export default function Demo() {
   return (
     <div className="flex flex-col items-center gap-4">
       <ColorSlider value={value} onChange={setValue} channel="hue" />
-      <p className="text-xs text-fg-muted">Value: {value.toString("hex")}</p>
+      <p className="text-fg-muted text-xs">Value: {value.toString("hex")}</p>
     </div>
   );
 }

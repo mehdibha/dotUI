@@ -8,7 +8,7 @@ import { UploadIcon } from "@dotui/ui/icons";
 export default function Demo() {
   return (
     <DropZone className="space-y-1">
-      <UploadIcon className="size-5 text-fg-muted" />
+      <UploadIcon className="text-fg-muted size-5" />
       <DropZoneLabel>Drag and drop files here</DropZoneLabel>
       <FileTrigger>
         <Button>Select files</Button>

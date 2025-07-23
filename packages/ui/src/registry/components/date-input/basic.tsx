@@ -11,10 +11,10 @@ import { tv } from "tailwind-variants";
 const dateInputStyles = tv({
   slots: {
     input: [
-      "flex flex-1 items-center justify-start text-fg placeholder:text-fg-muted disabled:cursor-default disabled:text-fg-disabled",
+      "text-fg placeholder:text-fg-muted disabled:text-fg-disabled flex flex-1 items-center justify-start disabled:cursor-default",
     ],
     segment:
-      "rounded px-0.5 outline-hidden select-none placeholder-shown:not-data-disabled:not-data-focused:text-fg-muted focus:bg-bg-accent focus:text-fg-on-accent focus:caret-transparent disabled:text-fg-disabled type-literal:px-0",
+      "outline-hidden placeholder-shown:not-data-disabled:not-data-focused:text-fg-muted focus:bg-bg-accent focus:text-fg-on-accent disabled:text-fg-disabled type-literal:px-0 select-none rounded px-0.5 focus:caret-transparent",
   },
 });
 

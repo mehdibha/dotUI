@@ -33,16 +33,16 @@ import { focusRing } from "@dotui/ui/lib/focus-styles";
 const calendarStyles = tv({
   slots: {
     root: "flex flex-col gap-4",
-    header: "flex items-center justify-between gap-2 pl-2.5 text-fg-muted",
+    header: "text-fg-muted flex items-center justify-between gap-2 pl-2.5",
     grid: "w-full border-collapse",
     gridHeader: "",
-    gridHeaderCell: "text-xs font-normal text-fg-muted",
+    gridHeaderCell: "text-fg-muted text-xs font-normal",
     gridBody: "",
   },
   variants: {
     standalone: {
       true: {
-        root: "rounded-md border bg-bg p-3",
+        root: "bg-bg rounded-md border p-3",
       },
     },
   },
@@ -51,10 +51,10 @@ const calendarStyles = tv({
 const calendarCellStyles = tv({
   slots: {
     cellRoot:
-      "outline-none outside-month:hidden selection-start:rounded-l-md selection-end:rounded-r-md",
+      "outside-month:hidden selection-start:rounded-l-md selection-end:rounded-r-md outline-none",
     cell: [
       focusRing(),
-      "my-1 flex size-8 cursor-pointer items-center justify-center rounded-md text-sm transition-colors read-only:cursor-default hover:bg-bg-inverse/10 hover:read-only:bg-transparent disabled:cursor-default disabled:bg-transparent disabled:text-fg-disabled unavailable:cursor-default unavailable:text-fg-disabled unavailable:not-data-disabled:line-through hover:unavailable:bg-transparent pressed:bg-bg-inverse/20",
+      "hover:bg-bg-inverse/10 disabled:text-fg-disabled unavailable:cursor-default unavailable:text-fg-disabled unavailable:not-data-disabled:line-through hover:unavailable:bg-transparent pressed:bg-bg-inverse/20 my-1 flex size-8 cursor-pointer items-center justify-center rounded-md text-sm transition-colors read-only:cursor-default hover:read-only:bg-transparent disabled:cursor-default disabled:bg-transparent",
     ],
   },
   variants: {

@@ -21,7 +21,7 @@ const toastStyles = tv({
   slots: {
     region: [
       focusRing(),
-      "fixed right-4 bottom-4 flex flex-col-reverse gap-2 outline-none",
+      "fixed bottom-4 right-4 flex flex-col-reverse gap-2 outline-none",
     ],
     toast: "",
     content: "",
@@ -45,7 +45,7 @@ const Toaster = () => {
   return (
     <AriaToastRegion
       queue={queue}
-      className="fixed right-4 bottom-4 size-100 bg-red-500"
+      className="size-100 fixed bottom-4 right-4 bg-red-500"
     >
       {({ toast }) => (
         <AriaToast toast={toast} className="bg-blue-500 p-2">

@@ -13,7 +13,7 @@ export default function Demo() {
   return (
     <div className="flex flex-col items-center gap-4">
       <DatePicker label="Meeting date" value={value} onChange={setValue} />
-      <p className="text-sm text-fg-muted">
+      <p className="text-fg-muted text-sm">
         selected date: {value?.toString()}
       </p>
     </div>

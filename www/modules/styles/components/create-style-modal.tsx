@@ -130,10 +130,10 @@ export function CreateStyleModal({ children }: { children: React.ReactNode }) {
               />
             </div>
             <div className="mt-4 bg-transparent">
-              <p className="text-fg-muted text-sm">
+              <p className="text-sm text-fg-muted">
                 You can install it later with this command:
               </p>
-              <pre className="bg-bg-neutral mt-1 rounded-md border p-4 text-xs">
+              <pre className="mt-1 rounded-md border bg-bg-neutral p-4 text-xs">
                 <code className="truncate max-sm:flex max-sm:max-w-[60vw]">
                   <span className="text-[#F69D50]">npx</span> shadcn@latest init
                   https://dotui.org/r/

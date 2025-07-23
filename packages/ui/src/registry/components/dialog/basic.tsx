@@ -16,13 +16,13 @@ import type { OverlayProps } from "@dotui/ui/components/overlay";
 const dialogStyles = tv({
   slots: {
     content: [
-      "relative flex h-[inherit] max-h-[inherit] flex-col rounded-[inherit] p-6 outline-hidden",
+      "outline-hidden relative flex h-[inherit] max-h-[inherit] flex-col rounded-[inherit] p-6",
     ],
     header: "mb-4",
     heading: "block text-2xl font-medium",
-    description: "text-sm text-fg-muted",
+    description: "text-fg-muted text-sm",
     body: "-mx-6 flex-1 space-y-2 overflow-y-auto px-6 py-2",
-    inset: "-mx-6 border bg-bg-muted px-6 py-6",
+    inset: "bg-bg-muted -mx-6 border px-6 py-6",
     footer: "flex flex-col-reverse gap-2 pt-4 sm:flex-row sm:justify-end",
   },
 });

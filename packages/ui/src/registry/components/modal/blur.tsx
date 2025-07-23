@@ -11,9 +11,9 @@ import { tv } from "tailwind-variants";
 const modalStyles = tv({
   slots: {
     underlay:
-      "fixed top-0 left-0 z-50 flex h-(--visual-viewport-height) w-screen items-center justify-center bg-bg-inverse/40 opacity-100 backdrop-blur-xs transition-opacity duration-200 ease-[cubic-bezier(0.165,0.84,0.44,1)] will-change-[opacity] dark:bg-bg/40 entering:opacity-0 exiting:opacity-0",
+      "h-(--visual-viewport-height) bg-bg-inverse/40 backdrop-blur-xs dark:bg-bg/40 entering:opacity-0 exiting:opacity-0 fixed left-0 top-0 z-50 flex w-screen items-center justify-center opacity-100 transition-opacity duration-200 ease-[cubic-bezier(0.165,0.84,0.44,1)] will-change-[opacity]",
     overlay:
-      "relative z-50 w-full max-w-lg scale-100 border bg-bg shadow-lg duration-200 ease-[cubic-bezier(0.165,0.84,0.44,1)] will-change-transform sm:rounded-lg md:w-full entering:scale-95 exiting:scale-95",
+      "bg-bg entering:scale-95 exiting:scale-95 relative z-50 w-full max-w-lg scale-100 border shadow-lg duration-200 ease-[cubic-bezier(0.165,0.84,0.44,1)] will-change-transform sm:rounded-lg md:w-full",
   },
 });
 

@@ -26,8 +26,8 @@
   counter-increment: step;
 
   &:before {
-    @apply absolute inline-flex size-9 items-center justify-center rounded-xl border-4 border-bg bg-bg-muted text-center -indent-px font-mono text-sm font-medium text-fg-muted;
-    @apply mt-[-4px] ml-[-50px];
+    @apply border-bg bg-bg-muted text-fg-muted absolute inline-flex size-9 items-center justify-center rounded-xl border-4 text-center -indent-px font-mono text-sm font-medium;
+    @apply ml-[-50px] mt-[-4px];
     content: counter(step);
   }
 }
@@ -36,11 +36,11 @@
   @apply relative;
 
   &:before {
-    @apply absolute top-0 left-0 mt-2 -ml-1 h-2 w-2 rounded-full bg-border content-[''];
+    @apply bg-border absolute left-0 top-0 -ml-1 mt-2 h-2 w-2 rounded-full content-[''];
   }
 
   &:after {
-    @apply absolute top-3 left-0 h-3 w-px bg-border content-[''];
+    @apply bg-border absolute left-0 top-3 h-3 w-px content-[''];
   }
 }
 
@@ -52,7 +52,7 @@
 
 @utility diagonal-pattern {
   --pattern-fg: color-mix(in oklab, var(--color-fg) 7%, transparent);
-  @apply h-full border-x border-x-(--pattern-fg) bg-[image:repeating-linear-gradient(315deg,_var(--pattern-fg)_0,_var(--pattern-fg)_1px,_transparent_0,_transparent_50%)] bg-[size:10px_10px];
+  @apply border-x-(--pattern-fg) h-full border-x bg-[image:repeating-linear-gradient(315deg,_var(--pattern-fg)_0,_var(--pattern-fg)_1px,_transparent_0,_transparent_50%)] bg-[size:10px_10px];
 }
 
 .shiki,

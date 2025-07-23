@@ -62,7 +62,7 @@ export const Footer = () => {
         <div className="flex flex-col items-start justify-between gap-10 lg:flex-row">
           <div className="space-y-1">
             <Logo type="span" />
-            <p className="text-fg-muted text-base">
+            <p className="text-base text-fg-muted">
               Bringing singularity to the web.
             </p>
           </div>
@@ -75,7 +75,7 @@ export const Footer = () => {
                     <li key={index}>
                       <NavLink
                         href={link.href}
-                        className="text-fg-muted hover:text-fg transition-colors duration-200"
+                        className="text-fg-muted transition-colors duration-200 hover:text-fg"
                         target={
                           link.href.startsWith("http") ? "_blank" : undefined
                         }
@@ -90,7 +90,7 @@ export const Footer = () => {
           </div>
         </div>
         <div className="px-0 pt-6">
-          <p className="text-fg-muted text-sm">
+          <p className="text-sm text-fg-muted">
             Built by{" "}
             <Link
               href="https://github.com/mehdibha"

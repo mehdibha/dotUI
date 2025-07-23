@@ -8,11 +8,11 @@ import { GitHubIcon, GoogleIcon, TwitterIcon } from "@dotui/ui/icons";
 
 export function LoginForm() {
   return (
-    <div className="w-full max-w-sm rounded-lg border bg-bg-muted p-8">
-      <h1 className="font-heading text-2xl leading-none font-semibold tracking-tight">
+    <div className="bg-bg-muted w-full max-w-sm rounded-lg border p-8">
+      <h1 className="font-heading text-2xl font-semibold leading-none tracking-tight">
         Login
       </h1>
-      <p className="mt-2 text-sm text-fg-muted">
+      <p className="text-fg-muted mt-2 text-sm">
         Enter your email below to login to your account
       </p>
       <div className="mt-4 flex items-center gap-2">
@@ -43,14 +43,14 @@ export function LoginForm() {
           <span className="w-full border-t" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-bg-muted px-2 text-fg-muted">Or</span>
+          <span className="bg-bg-muted text-fg-muted px-2">Or</span>
         </div>
       </div>
       <TextField label="Email address" type="email" className="w-full" />
       <Button variant="primary" className="mt-4 w-full" type="submit">
         Continue with email
       </Button>
-      <p className="mt-4 text-sm text-fg-muted">
+      <p className="text-fg-muted mt-4 text-sm">
         Don&apos;t have an account? <span>Register</span>
       </p>
     </div>

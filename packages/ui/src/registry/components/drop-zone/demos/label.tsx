@@ -7,10 +7,10 @@ export default function Demo() {
   return (
     <div className="flex flex-col gap-4">
       <DropZone aria-label="drag and drop files here">
-        <UploadIcon className="size-5 text-fg-muted" />
+        <UploadIcon className="text-fg-muted size-5" />
       </DropZone>
       <DropZone>
-        <UploadIcon className="size-5 text-fg-muted" />
+        <UploadIcon className="text-fg-muted size-5" />
         <DropZoneLabel>Drag and drop files here</DropZoneLabel>
       </DropZone>
     </div>

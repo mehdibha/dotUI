@@ -20,7 +20,7 @@ export default function Demo() {
           <MenuItem>Log out</MenuItem>
         </Menu>
       </MenuRoot>
-      <p className="text-sm text-fg-muted">
+      <p className="text-fg-muted text-sm">
         state: {isOpen ? "open" : "closed"}
       </p>
     </div>

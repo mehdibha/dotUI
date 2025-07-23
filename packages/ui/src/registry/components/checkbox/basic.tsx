@@ -19,12 +19,12 @@ import {
 
 const checkboxStyles = tv({
   slots: {
-    root: "group flex cursor-pointer flex-row items-center gap-2 invalid:text-fg-danger disabled:cursor-default disabled:text-fg-disabled",
+    root: "invalid:text-fg-danger disabled:text-fg-disabled group flex cursor-pointer flex-row items-center gap-2 disabled:cursor-default",
     indicator: [
-      "flex size-4 shrink-0 cursor-pointer items-center justify-center rounded-sm border border-border-control",
-      "bg-transparent text-transparent transition-colors duration-75 group-indeterminate:border-transparent group-selected:border-transparent",
+      "border-border-control flex size-4 shrink-0 cursor-pointer items-center justify-center rounded-sm border",
+      "group-selected:border-transparent bg-transparent text-transparent transition-colors duration-75 group-indeterminate:border-transparent",
       "group-read-only:cursor-default",
-      "group-disabled:cursor-default group-disabled:border-border-disabled group-indeterminate:group-disabled:bg-bg-disabled group-selected:group-disabled:bg-bg-disabled group-selected:group-disabled:text-fg-disabled",
+      "group-disabled:border-border-disabled group-indeterminate:group-disabled:bg-bg-disabled group-selected:group-disabled:bg-bg-disabled group-selected:group-disabled:text-fg-disabled group-disabled:cursor-default",
       "group-invalid:group-selected:text-fg-onMutedDanger group-invalid:border-border-danger group-invalid:group-selected:bg-bg-danger-muted",
     ],
   },
@@ -46,7 +46,7 @@ const checkboxStyles = tv({
       card: {
         root: [
           focusRing(),
-          "flex-row-reverse justify-between gap-4 rounded-md border p-4 transition-colors disabled:border-border-disabled disabled:selected:bg-bg-disabled",
+          "disabled:border-border-disabled disabled:selected:bg-bg-disabled flex-row-reverse justify-between gap-4 rounded-md border p-4 transition-colors",
         ],
       },
     },

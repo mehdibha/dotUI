@@ -16,8 +16,8 @@ const progressStyles = tv({
     root: "flex w-60 flex-col gap-2",
     indicator: "relative h-2.5 w-full overflow-hidden rounded-full",
     filler: [
-      "h-full w-full min-w-14 flex-1 origin-left bg-fg transition-transform",
-      "indeterminate:animate-progress-indeterminate indeterminate:[mask-image:linear-gradient(75deg,rgb(0,0,0)_30%,rgba(0,0,0,0.65)_80%)] indeterminate:[mask-size:200%] indeterminate:[-webkit-mask-image:linear-gradient(75deg,rgb(0,0,0)_30%,rgba(0,0,0,0.65)_80%)] indeterminate:[-webkit-mask-size:200%]",
+      "bg-fg h-full w-full min-w-14 flex-1 origin-left transition-transform",
+      "indeterminate:animate-progress-indeterminate indeterminate:[-webkit-mask-image:linear-gradient(75deg,rgb(0,0,0)_30%,rgba(0,0,0,0.65)_80%)] indeterminate:[-webkit-mask-size:200%] indeterminate:[mask-image:linear-gradient(75deg,rgb(0,0,0)_30%,rgba(0,0,0,0.65)_80%)] indeterminate:[mask-size:200%]",
     ],
     valueLabel: "text-sm",
   },

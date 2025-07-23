@@ -26,13 +26,13 @@ export default function StylesLayout({
           <h2 className="w-fit text-3xl font-semibold tracking-tight">
             Find your style or make your own.
           </h2>
-          <p className="text-fg-muted mt-2 text-base">
+          <p className="mt-2 text-base text-fg-muted">
             Choose a style to get started or create your own.
           </p>
         </div>
-          <CreateStyleModal>
-            <Button variant="primary">Create style</Button>
-          </CreateStyleModal>
+        <CreateStyleModal>
+          <Button variant="primary">Create style</Button>
+        </CreateStyleModal>
         {/* <div className="flex items-center gap-2">
           <Button>Browse styles</Button>
         </div> */}

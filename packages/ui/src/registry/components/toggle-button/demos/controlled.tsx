@@ -16,7 +16,7 @@ export default function Demo() {
       >
         <PinIcon className="rotate-45" />
       </ToggleButton>
-      <span className="text-sm text-fg-muted">
+      <span className="text-fg-muted text-sm">
         state: {isSelected ? "On" : "Off"}
       </span>
     </div>
