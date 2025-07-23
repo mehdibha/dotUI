@@ -24,7 +24,7 @@ export function Header({ className }: { className?: string }) {
     <header
       className={cn("sticky top-0 z-50 w-full border-b bg-bg", className)}
     >
-      <div className="relative container flex h-14 max-w-screen-2xl items-center justify-between px-16">
+      <div className="relative container flex h-14 items-center justify-between">
         <div className="flex items-center gap-6">
           <Logo />
           <div className="flex items-center gap-3 text-sm">

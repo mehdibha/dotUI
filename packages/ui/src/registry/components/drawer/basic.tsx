@@ -11,7 +11,7 @@ import { tv } from "tailwind-variants";
 const drawerVariants = tv({
   slots: {
     underlay:
-      "fixed inset-0 z-50 before:fixed before:inset-0 before:bg-black/40 before:opacity-100 before:duration-500 before:ease-drawer before:content-[''] entering:before:opacity-0 exiting:before:opacity-0",
+      "group/overlay fixed inset-0 z-50 before:fixed before:inset-0 before:bg-black/40 before:opacity-100 before:duration-500 before:ease-drawer before:content-[''] entering:before:opacity-0 exiting:before:opacity-0",
     overlay:
       "fixed z-50 flex flex-col border bg-bg duration-500 ease-drawer will-change-transform",
   },
@@ -57,6 +57,7 @@ function Drawer({
     <AriaModalOverlay
       className={underlay()}
       isDismissable={isDismissable}
+      data-slot="drawer"
       {...props}
     >
       <AriaModal

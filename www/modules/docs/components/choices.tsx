@@ -29,7 +29,7 @@ export function Choices({ items, ...props }: ChoicesProps): React.ReactElement {
             key={item.value}
             className={cn(
               focusRing(),
-              "relative cursor-pointer rounded-md border p-4 transition-colors duration-100 hover:bg-bg-muted/50 selected:bg-bg-muted",
+              "hover:bg-bg-muted/50 selected:bg-bg-muted relative cursor-pointer rounded-md border p-4 transition-colors duration-100",
             )}
             id={item.value}
           >
@@ -37,12 +37,12 @@ export function Choices({ items, ...props }: ChoicesProps): React.ReactElement {
               <>
                 <div className="flex items-center gap-2 [&>svg]:size-6">
                   {item.icon}
-                  <span className="text-md font-semibold">{item.title}</span>
+                  <span className="text-base font-semibold">{item.title}</span>
                 </div>
-                <p className="mt-2 text-sm text-fg-muted">{item.description}</p>
+                <p className="text-fg-muted mt-2 text-sm">{item.description}</p>
                 <div
                   className={cn(
-                    "absolute top-2 right-2 flex size-4 shrink-0 items-center justify-center rounded-full border border-border-control [&_svg]:size-3",
+                    "border-border-control absolute right-2 top-2 flex size-4 shrink-0 items-center justify-center rounded-full border [&_svg]:size-3",
                     isSelected && "bg-bg-accent text-fg-on-accent",
                   )}
                 >

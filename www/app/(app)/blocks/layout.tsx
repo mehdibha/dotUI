@@ -12,7 +12,7 @@ export default function BlocksLayout({
 }) {
   return (
     <div className="pt-14">
-      <div className="container max-w-screen-2xl px-14">
+      <div className="container px-14">
         <h2 className="text-balance text-4xl font-semibold tracking-tighter">
           Blocks that don’t lock you in.
         </h2>

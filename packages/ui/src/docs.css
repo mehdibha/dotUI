@@ -1,11 +1,5 @@
 @utility container {
-  margin-left: auto;
-  margin-right: auto;
-  padding-inline: 1rem;
-
-  @media (width >= --theme(--breakpoint-sm)) {
-    padding-inline: 2rem;
-  }
+  @apply 3xl:max-w-screen-2xl mx-auto max-w-[1400px] px-4 lg:px-8;
 }
 
 @utility shiki {

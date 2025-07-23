@@ -36,13 +36,10 @@ const { root, selectValue } = selectStyles();
 
 interface SelectProps<T extends object>
   extends Omit<SelectRootProps<T>, "children">,
-    FieldProps {
-  children?: ListBoxProps<T>["children"];
-  dependencies?: ListBoxProps<T>["dependencies"];
-  items?: ListBoxProps<T>["items"];
-  isLoading?: ListBoxProps<T>["isLoading"];
-  variant?: ButtonProps["variant"];
-  size?: ButtonProps["size"];
+    FieldProps,
+    Pick<ListBoxProps<T>, "children" | "dependencies" | "items" | "isLoading">,
+    Pick<ButtonProps, "variant" | "size"> {
+  renderValue?: SelectValueProps<T>["children"];
 }
 const Select = <T extends object>({
   variant,
@@ -54,6 +51,7 @@ const Select = <T extends object>({
   dependencies,
   items,
   isLoading,
+  renderValue,
   ...props
 }: SelectProps<T>) => {
   return (
@@ -65,7 +63,7 @@ const Select = <T extends object>({
         suffix={<ChevronDownIcon />}
         className="w-full"
       >
-        <SelectValue />
+        <SelectValue>{renderValue}</SelectValue>
       </Button>
       <HelpText description={description} errorMessage={errorMessage} />
       <Popover>
@@ -92,7 +90,11 @@ const SelectValue = <T extends object>({
         selectValue({ className }),
       )}
       {...props}
-    />
+    >
+      {composeRenderProps(props.children, (children, { selectedText }) => (
+        <>{children ?? selectedText}</>
+      ))}
+    </AriaSelectValue>
   );
 };
 

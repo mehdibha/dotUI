@@ -13,7 +13,7 @@ import { cn } from "@dotui/ui/lib/utils";
 
 export default function Page() {
   return (
-    <div className="container max-w-screen-2xl space-y-4 py-10">
+    <div className="container space-y-4 py-10">
       <Section
         title="Button"
         docs="/docs/components/buttons/button"

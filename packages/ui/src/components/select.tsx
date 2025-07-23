@@ -32,13 +32,7 @@ export const Select = <T extends object = object>(props: SelectProps<T>) => {
     "select",
     "Select",
     _Select,
-    {
-      // basic: React.lazy(() =>
-      //   import("../registry/components/select/basic").then((mod) => ({
-      //     default: mod.Select,
-      //   })),
-      // ),
-    },
+    {},
     true,
   );
 

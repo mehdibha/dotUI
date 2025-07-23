@@ -21,7 +21,7 @@ export function BlocksNav({
 
   return (
     <Tabs variant="solid" selectedKey={pathname} {...props}>
-      <div className={cn("z-20 container max-w-screen-2xl bg-bg px-14")}>
+      <div className={cn("z-20 container bg-bg px-14")}>
         <TabList className="bg-transparent px-0 py-4">
           {[
             { href: "/blocks", label: "Featured" },
@@ -41,7 +41,7 @@ export function BlocksNav({
           ))}
         </TabList>
       </div>
-      <TabPanel id={pathname} className="container max-w-screen-2xl px-14">
+      <TabPanel id={pathname} className="container px-14">
         {children}
       </TabPanel>
     </Tabs>

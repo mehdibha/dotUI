@@ -26,7 +26,7 @@ export default async function HomePage() {
   return (
     <div>
       {/* Hero section */}
-      <div className="container max-w-screen-2xl">
+      <div className="container">
         <section className="max-w-3xl pt-10 pb-20 sm:pt-14">
           <Announcement />
           <h1 className="text-2xl tracking-tighter text-balance max-lg:font-medium xs:text-3xl md:text-4xl lg:text-5xl">
@@ -53,7 +53,7 @@ export default async function HomePage() {
         </section>
       </div>
       {/* Components overview */}
-      <section className="container max-w-screen-2xl">
+      <section className="container">
         <StylesOverview styles={feturedStyles} />
       </section>
       <section className="mt-10 border-y py-12 shadow-xs">

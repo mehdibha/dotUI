@@ -26,12 +26,12 @@ import { focusRing } from "@dotui/ui/lib/focus-styles";
 const listBoxStyles = tv({
   base: [
     focusRing(),
-    "flex flex-col overflow-auto p-1 outline-hidden empty:min-h-24 empty:items-center empty:justify-center empty:text-sm empty:text-fg-muted empty:italic layout-grid:grid layout-grid:w-auto layout-grid:grid-cols-2 orientation-horizontal:w-auto orientation-horizontal:flex-row",
+    "outline-hidden empty:text-fg-muted layout-grid:grid layout-grid:w-auto layout-grid:grid-cols-2 orientation-horizontal:w-auto orientation-horizontal:flex-row flex flex-col overflow-auto p-1 empty:min-h-24 empty:items-center empty:justify-center empty:text-sm empty:italic",
     "[&_.separator]:-mx-1 [&_.separator]:my-1 [&_.separator]:w-auto",
   ],
   variants: {
     standalone: {
-      true: "max-h-60 w-48 overflow-y-auto rounded-md border bg-bg",
+      true: "bg-bg max-h-60 w-48 overflow-y-auto rounded-md border",
       false: "max-h-[inherit] rounded-[inherit]",
     },
   },
@@ -39,8 +39,10 @@ const listBoxStyles = tv({
 
 const listBoxItemStyles = tv({
   base: [
-    "disabled:pointer-default flex h-8 cursor-pointer items-center rounded-sm px-3 py-1.5 text-sm outline-hidden transition-colors hover:bg-bg-inverse/10 focus:bg-bg-inverse/10 disabled:cursor-default disabled:text-fg-disabled pressed:bg-bg-inverse/15",
+    "outline-hidden focus:bg-bg-inverse/10 disabled:text-fg-disabled flex cursor-pointer items-center gap-2 rounded-sm px-3 py-1.5 text-sm transition-colors disabled:pointer-events-none",
     "selection-single:pl-0 selection-multiple:pl-0",
+    "group-data-[type=drawer]/overlay:py-3 group-data-[type=drawer]/overlay:text-lg",
+    "group-data-[type=modal]/overlay:py-2 group-data-[type=modal]/overlay:text-base",
     "[&_svg]:size-4",
   ],
   variants: {
@@ -122,16 +124,16 @@ const ListBoxItem = <T extends object>({
             {selectionMode !== "none" && (
               <span className="flex w-8 shrink-0 items-center justify-center">
                 {isSelected && (
-                  <CheckIcon aria-hidden className="size-4 text-fg-accent" />
+                  <CheckIcon aria-hidden className="text-fg-accent size-4" />
                 )}
               </span>
             )}
             <span className="flex items-center gap-3">
               {prefix}
               <span className="flex flex-1 flex-col">
+                {children}
                 {label && <Text slot="label">{label}</Text>}
                 {description && <Text slot="description">{description}</Text>}
-                {children}
               </span>
               {suffix}
             </span>
@@ -158,7 +160,7 @@ const ListBoxSection = <T extends object>({
       {...props}
     >
       {title && (
-        <AriaHeader className="mb-1 pl-3 text-xs text-fg-muted">
+        <AriaHeader className="text-fg-muted mb-1 pl-3 text-xs">
           {title}
         </AriaHeader>
       )}

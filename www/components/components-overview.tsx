@@ -187,7 +187,7 @@ export function ComponentsOverview({ className }: { className?: string }) {
         />
       </div>
       <div className="col-span-10 flex justify-between gap-8 md:col-span-6 lg:col-span-5 lg:row-span-3">
-        <ListBox className="max-h-none w-full" aria-label="File operations">
+        {/* <ListBox aria-label="File operations" className="max-h-none w-full" >
           <ListBoxItem>New...</ListBoxItem>
           <ListBoxItem>Badges</ListBoxItem>
           <Separator />
@@ -197,7 +197,7 @@ export function ComponentsOverview({ className }: { className?: string }) {
           <Separator />
           <ListBoxItem>Page setup…</ListBoxItem>
           <ListBoxItem>Print…</ListBoxItem>
-        </ListBox>
+        </ListBox> */}
         <RangeCalendar aria-label="Select date range" />
       </div>
       <div className="col-span-10 row-span-6 lg:col-span-7">

@@ -2,7 +2,7 @@ import { InviteMembers } from "@dotui/ui/registry/blocks/invite-members/componen
 
 export default function Page() {
   return (
-    <div className="container max-w-screen-2xl space-y-4 py-10">
+    <div className="container space-y-4 py-10">
       <InviteMembers />
     </div>
   );
