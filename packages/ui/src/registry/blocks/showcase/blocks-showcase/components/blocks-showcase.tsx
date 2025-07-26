@@ -10,19 +10,19 @@ import { Backlog } from "@dotui/ui/registry/blocks/tables/backlog/components/bac
 export function BlocksShowcase() {
   return (
     <div className="grid grid-cols-11 gap-4 p-6">
-      <Booking className="col-span-8" />
-      <Notifications className="col-span-3" />
-      <InviteMembers className="col-span-4" />
-      <Backlog className="col-span-7" />
-      <div className="col-span-11 grid grid-cols-11 items-start gap-4">
-        <AccountMenu className="col-span-2" />
-        <div className="col-span-6 flex items-start justify-between gap-4">
+      <Booking className="col-span-11 xl:col-span-8" />
+      <Notifications className="col-span-11 md:col-span-4 lg:col-span-5 xl:col-span-3" />
+      <InviteMembers className="col-span-11 md:col-span-7 lg:col-span-6 xl:col-span-4" />
+      <Backlog className="col-span-11 lg:col-span-8 xl:col-span-7" />
+      <AccountMenu className="max-lg:hidden lg:col-span-3 lg:block xl:hidden" />
+      <div className="col-span-11 grid grid-cols-11 gap-4 lg:items-start">
+        <AccountMenu className="col-span-5 lg:hidden xl:col-span-2 xl:block" />
+        <LoginForm className="col-span-6 lg:hidden" />
+        <div className="col-span-11 flex items-start gap-4 lg:col-span-7 xl:col-span-6">
           <ColorEditor />
-          <div className="flex flex-1 flex-col gap-4">
-            <TeamName />
-          </div>
+          <TeamName className="flex-1" />
         </div>
-        <LoginForm className="col-span-3" />
+        <LoginForm className="hidden lg:col-span-4 lg:block xl:col-span-3" />
       </div>
     </div>
   );

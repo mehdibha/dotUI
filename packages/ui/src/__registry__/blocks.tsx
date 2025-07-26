@@ -51,4 +51,22 @@ export const Index: Record<
       () => import("@dotui/ui/registry/blocks/application/account-menu/page"),
     ),
   },
+  booking: {
+    files: ["registry/blocks/calendars/booking/page.tsx"],
+    component: React.lazy(
+      () => import("@dotui/ui/registry/blocks/calendars/booking/page"),
+    ),
+  },
+  "blocks-showcase": {
+    files: ["registry/blocks/showcase/blocks-showcase/page.tsx"],
+    component: React.lazy(
+      () => import("@dotui/ui/registry/blocks/showcase/blocks-showcase/page"),
+    ),
+  },
+  booking: {
+    files: ["registry/blocks/calendars/booking/page.tsx"],
+    component: React.lazy(
+      () => import("@dotui/ui/registry/blocks/calendars/booking/page"),
+    ),
+  },
 };

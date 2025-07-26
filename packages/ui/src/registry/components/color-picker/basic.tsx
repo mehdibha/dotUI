@@ -124,14 +124,14 @@ const ColorPickerEditor = ({
           yChannel="brightness"
         />
         <ColorSlider
-          defaultValue={"#000000"}
+          defaultValue="#000000"
           orientation="vertical"
           colorSpace="hsb"
           channel="hue"
         />
         {showAlphaChannel && (
           <ColorSlider
-            defaultValue={"#000000"}
+            defaultValue="#000000"
             orientation="vertical"
             colorSpace="hsb"
             channel="alpha"

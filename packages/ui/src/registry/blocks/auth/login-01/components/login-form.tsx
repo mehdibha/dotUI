@@ -24,26 +24,14 @@ export function LoginForm(props: React.ComponentProps<"div">) {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="mt-4 flex items-center gap-2">
-          <Button
-            variant="outline"
-            className="flex-1"
-            aria-label="Sign in with google"
-          >
+        <div className="mt-4 flex items-center gap-2 [&_button]:flex-1">
+          <Button aria-label="Sign in with google">
             <GoogleIcon />
           </Button>
-          <Button
-            variant="outline"
-            className="flex-1"
-            aria-label="Sign in with X"
-          >
+          <Button aria-label="Sign in with X">
             <TwitterIcon />
           </Button>
-          <Button
-            variant="outline"
-            className="flex-1"
-            aria-label="Sign in with github"
-          >
+          <Button aria-label="Sign in with github">
             <GitHubIcon />
           </Button>
         </div>

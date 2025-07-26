@@ -14,7 +14,7 @@ import {
   TypescriptIcon,
 } from "@/components/icons";
 import { Link } from "@/components/link";
-import { StylesOverview } from "@/components/styles-overview";
+import { StylesShowcase } from "@/components/styles-showcase";
 import { siteConfig } from "@/config";
 import { getGitHubContributors } from "@/lib/github";
 import { caller } from "@/lib/trpc/server";
@@ -54,7 +54,7 @@ export default async function HomePage() {
       </div>
       {/* Components overview */}
       <section className="container">
-        <StylesOverview styles={feturedStyles} />
+        <StylesShowcase styles={feturedStyles} />
       </section>
       <section className="mt-10 border-y py-12 shadow-xs">
         <div className="container flex flex-col items-center justify-center gap-5 lg:gap-10">

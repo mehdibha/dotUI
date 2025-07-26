@@ -23,28 +23,28 @@ export function Notifications({
 }: React.ComponentProps<"div">) {
   return (
     <Card className={cn("gap-2 pb-0", className)} {...props}>
-      <CardHeader className="flex items-center justify-between">
+      <CardHeader className="has-data-[slot=card-action]:grid-cols-[1fr_minmax(0,auto)] flex min-w-0 items-center justify-between">
         <CardTitle className="flex items-center gap-2">
           Notifications
           <Badge size="sm" className="px-1.5">
             12
           </Badge>
         </CardTitle>
-        <CardAction>
-          <Button size="sm" variant="quiet">
-            Mark all as read
+        <CardAction className="min-w-0">
+          <Button size="sm" variant="quiet" className="min-w-0 shrink">
+            <span className="truncate">Mark all as read</span>
           </Button>
         </CardAction>
       </CardHeader>
-      <CardContent className="px-0">
-        <Tabs>
+      <CardContent className="flex-1 px-0">
+        <Tabs className="h-full">
           <TabList className="pl-6">
             <Tab id="all">All</Tab>
             <Tab id="unread">Unread</Tab>
             <Tab id="read">Read</Tab>
           </TabList>
-          <TabPanel id="all">
-            <ListBox className="max-h-70 w-full rounded-none border-0 bg-transparent p-0 [&_.separator]:my-0 [&_[data-slot=list-box-item]]:rounded-none">
+          <TabPanel id="all" className="h-full">
+            <ListBox className="max-h-68 w-full rounded-none border-0 bg-transparent p-0 [&_.separator]:my-0 [&_[data-slot=list-box-item]]:rounded-none">
               {notifications.map((notification, index) => (
                 <React.Fragment key={index}>
                   <Separator />

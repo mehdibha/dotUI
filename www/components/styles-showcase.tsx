@@ -10,16 +10,12 @@ import { StyleProvider } from "@dotui/ui";
 import { Button } from "@dotui/ui/components/button";
 import { Skeleton } from "@dotui/ui/components/skeleton";
 import { Tab, TabList, Tabs } from "@dotui/ui/components/tabs";
+import { BlocksShowcase } from "@dotui/ui/registry/blocks/showcase/blocks-showcase/components/blocks-showcase";
 import type { RouterOutputs } from "@dotui/api";
 
-import {
-  ComponentsOverview,
-  MobileComponentsOverview,
-} from "@/components/components-overview";
 import { useMounted } from "@/hooks/use-mounted";
-import { BlocksShowcase } from "@/modules/blocks/blocks-showcase";
 
-export const StylesOverview = ({
+export const StylesShowcase = ({
   styles,
 }: {
   styles: RouterOutputs["style"]["all"];
