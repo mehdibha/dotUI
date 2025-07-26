@@ -23,6 +23,7 @@ export const StyleProvider = ({
   unstyled,
   ...props
 }: StyleProviderProps) => {
+  return <div {...props}>{children}</div>;
   if (!style) {
     return <div {...props}>{children}</div>;
   }

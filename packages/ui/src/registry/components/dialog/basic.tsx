@@ -95,7 +95,13 @@ const Dialog = ({
 
 interface DialogContentProps extends React.ComponentProps<typeof AriaDialog> {}
 const DialogContent = ({ className, ...props }: DialogContentProps) => {
-  return <AriaDialog className={content({ className })} {...props} />;
+  return (
+    <AriaDialog
+      data-slot="dialog-content"
+      className={content({ className })}
+      {...props}
+    />
+  );
 };
 
 interface DialogHeaderProps extends React.ComponentProps<"header"> {}

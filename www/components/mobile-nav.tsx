@@ -12,6 +12,9 @@ import { cn } from "@dotui/ui/lib/utils";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
 import { ScrollArea } from "@/components/scroll-area";
 import { siteConfig } from "@/config";
+import { useMounted } from "@/hooks/use-mounted";
+import { UserProfileMenu } from "@/modules/auth/components/user-profile-menu";
+import { authClient } from "@/modules/auth/lib/client";
 import { Logo } from "./logo";
 import { SearchCommand } from "./search-command";
 import { NodeList } from "./sidebar";
@@ -25,6 +28,8 @@ export const MobileNav = ({
   items: PageTree.Node[];
 }) => {
   const [isOpen, setOpen] = React.useState(false);
+  const isMounted = useMounted();
+  const { data: session, isPending } = authClient.useSession();
   return (
     <header
       className={cn(
@@ -42,7 +47,7 @@ export const MobileNav = ({
             drawerProps={{
               placement: "left",
             }}
-            className="flex w-60 flex-col p-0"
+            className="flex w-60 flex-col p-0 !pb-[env(safe-area-inset-bottom)]"
           >
             {({ close }) => (
               <div className="z-50 flex h-full flex-col">
@@ -110,47 +115,38 @@ export const MobileNav = ({
             )}
           </Dialog>
         </DialogRoot>
-        <span className="hidden sm:block sm:flex-1" />
-        <SearchCommand
-          onAction={() => {
-            setOpen(false);
-          }}
-        >
-          <Button
-            size="sm"
-            variant="outline"
-            prefix={<SearchIcon />}
-            suffix={
-              <div className="flex items-center gap-0.5 text-xs max-sm:hidden">
-                <Kbd>Ctrl</Kbd>
-                <Kbd>K</Kbd>
-              </div>
-            }
-            className="gap-2 bg-bg-inverse/5 pr-1 pl-3 text-fg-muted max-sm:flex-1"
-          >
-            <span className="mr-6 flex-1 text-left">Search docs...</span>
-          </Button>
-        </SearchCommand>
-        <Button
-          href={siteConfig.links.github}
-          target="_blank"
-          size="sm"
-          shape="square"
-          variant="quiet"
-          aria-label="github"
-        >
-          <GitHubIcon />
-        </Button>
-        <Button
-          href={siteConfig.links.twitter}
-          target="_blank"
-          size="sm"
-          shape="square"
-          variant="quiet"
-          aria-label="twitter"
-        >
-          <TwitterIcon />
-        </Button>
+        {isMounted && !isPending && (
+          <div className="flex flex-1 animate-in items-center gap-2 fade-in">
+            <span className="hidden sm:block sm:flex-1" />
+            <SearchCommand
+              onAction={() => {
+                setOpen(false);
+              }}
+            >
+              <Button
+                size="sm"
+                variant="outline"
+                prefix={<SearchIcon />}
+                suffix={
+                  <div className="flex items-center gap-0.5 text-xs max-sm:hidden">
+                    <Kbd>Ctrl</Kbd>
+                    <Kbd>K</Kbd>
+                  </div>
+                }
+                className="gap-2 bg-bg-inverse/5 pr-1 pl-3 text-fg-muted max-sm:flex-1"
+              >
+                <span className="mr-6 flex-1 text-left">Search docs...</span>
+              </Button>
+            </SearchCommand>
+            {session ? (
+              <UserProfileMenu />
+            ) : (
+              <Button variant="primary" href="/login" size="sm">
+                Sign in
+              </Button>
+            )}
+          </div>
+        )}
       </div>
     </header>
   );

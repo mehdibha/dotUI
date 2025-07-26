@@ -17,6 +17,7 @@ import {
   MobileComponentsOverview,
 } from "@/components/components-overview";
 import { useMounted } from "@/hooks/use-mounted";
+import { BlocksShowcase } from "@/modules/blocks/blocks-showcase";
 
 export const StylesOverview = ({
   styles,
@@ -157,8 +158,9 @@ export const StylesOverview = ({
                 animate="show"
                 exit="hidden"
               >
-                <ComponentsOverview className="hidden sm:grid" />
-                <MobileComponentsOverview className="sm:hidden" />
+                <BlocksShowcase />
+                {/* <ComponentsOverview className="hidden sm:grid" />
+                <MobileComponentsOverview className="sm:hidden" /> */}
               </motion.div>
             </AnimatePresence>
           </StyleProvider>

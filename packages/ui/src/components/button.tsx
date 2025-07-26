@@ -7,19 +7,14 @@ import {
   Button as _Button,
   ButtonProvider as _ButtonProvider,
   buttonStyles,
-} from "../registry/components/button/basic";
-import type { ButtonProps } from "../registry/components/button/basic";
+} from "../registry/components/button/outline";
+import type { ButtonProps } from "../registry/components/button/outline";
 
 export const Button = createDynamicComponent<ButtonProps>(
   "button",
   "Button",
   _Button,
   {
-    basic: React.lazy(() =>
-      import("../registry/components/button/basic").then((mod) => ({
-        default: mod.Button,
-      })),
-    ),
     brutalist: React.lazy(() =>
       import("../registry/components/button/brutalist").then((mod) => ({
         default: mod.Button,
@@ -30,8 +25,8 @@ export const Button = createDynamicComponent<ButtonProps>(
         default: mod.Button,
       })),
     ),
-    outline: React.lazy(() =>
-      import("../registry/components/button/outline").then((mod) => ({
+    basic: React.lazy(() =>
+      import("../registry/components/button/basic").then((mod) => ({
         default: mod.Button,
       })),
     ),
@@ -43,11 +38,6 @@ export const ButtonProvider = createDynamicComponent(
   "ButtonProvider",
   _ButtonProvider,
   {
-    basic: React.lazy(() =>
-      import("../registry/components/button/basic").then((mod) => ({
-        default: mod.ButtonProvider,
-      })),
-    ),
     brutalist: React.lazy(() =>
       import("../registry/components/button/brutalist").then((mod) => ({
         default: mod.ButtonProvider,
@@ -58,8 +48,8 @@ export const ButtonProvider = createDynamicComponent(
         default: mod.ButtonProvider,
       })),
     ),
-    outline: React.lazy(() =>
-      import("../registry/components/button/outline").then((mod) => ({
+    basic: React.lazy(() =>
+      import("../registry/components/button/basic").then((mod) => ({
         default: mod.ButtonProvider,
       })),
     ),

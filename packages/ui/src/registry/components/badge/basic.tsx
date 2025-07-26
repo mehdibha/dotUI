@@ -6,8 +6,10 @@ const badgeStyles = tv({
   base: "inline-flex shrink-0 items-center justify-center gap-1 whitespace-nowrap rounded-md text-xs font-semibold transition-colors",
   variants: {
     variant: {
-      neutral: "bg-bg-muted text-fg",
-      accent: "bg-bg-accent-muted text-fg-accent",
+      neutral: "bg-bg-muted text-fg border",
+      accent: "bg-bg-accent",
+      "accent-muted":
+        "bg-bg-accent-muted text-fg-accent border-border-accent border",
       success: "bg-bg-success-muted text-fg-success",
       "success-muted": "bg-bg-success-muted text-fg-success",
       danger: "bg-bg-danger-muted text-fg-danger",

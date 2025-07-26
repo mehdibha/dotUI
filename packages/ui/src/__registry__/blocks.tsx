@@ -27,10 +27,10 @@ export const Index: Record<
       () => import("@dotui/ui/registry/blocks/auth/register-01/page"),
     ),
   },
-  "overview-01": {
-    files: ["registry/blocks/overview/overview-01/page.tsx"],
+  "all-components": {
+    files: ["registry/blocks/showcase/all-components/page.tsx"],
     component: React.lazy(
-      () => import("@dotui/ui/registry/blocks/overview/overview-01/page"),
+      () => import("@dotui/ui/registry/blocks/showcase/all-components/page"),
     ),
   },
   backlog: {
@@ -40,9 +40,15 @@ export const Index: Record<
     ),
   },
   "invite-members": {
-    files: ["registry/blocks/invite-members/page.tsx"],
+    files: ["registry/blocks/application/invite-members/page.tsx"],
     component: React.lazy(
-      () => import("@dotui/ui/registry/blocks/invite-members/page"),
+      () => import("@dotui/ui/registry/blocks/application/invite-members/page"),
+    ),
+  },
+  "account-menu": {
+    files: ["registry/blocks/application/account-menu/page.tsx"],
+    component: React.lazy(
+      () => import("@dotui/ui/registry/blocks/application/account-menu/page"),
     ),
   },
 };

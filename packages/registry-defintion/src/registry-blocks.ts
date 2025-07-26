@@ -3,9 +3,10 @@ import type { Registry } from "shadcn/registry";
 export const featuredBlocks = ["login-01", "register-01"] as const;
 
 export const blocksCategories: { name: string; slug: string }[] = [
-  { name: "Overview", slug: "overview" },
+  { name: "Showcase", slug: "showcase" },
   { name: "Authentication", slug: "authentication" },
-  { name: "Tables", slug: "table" },
+  { name: "Tables", slug: "tables" },
+  { name: "Application", slug: "application" },
 ];
 
 export const registryBlocks: Registry["items"] = [
@@ -46,18 +47,18 @@ export const registryBlocks: Registry["items"] = [
     categories: ["authentication"],
   },
   {
-    name: "overview-01",
+    name: "all-components",
     description: "Components overview",
     type: "registry:block",
     registryDependencies: ["all"],
     files: [
       {
-        path: "blocks/overview/overview-01/page.tsx",
-        target: "app/overview/page.tsx",
+        path: "blocks/showcase/all-components/page.tsx",
+        target: "app/all-components/page.tsx",
         type: "registry:page",
       },
     ],
-    categories: ["overview"],
+    categories: ["showcase"],
   },
   {
     name: "backlog",
@@ -80,11 +81,38 @@ export const registryBlocks: Registry["items"] = [
     registryDependencies: ["all"],
     files: [
       {
-        path: "blocks/invite-members/page.tsx",
-        target: "app/invite-members/page.tsx",
+        path: "blocks/application/invite-members/page.tsx",
+        target: "app/application/invite-members/page.tsx",
         type: "registry:page",
       },
     ],
-    categories: ["overview"],
+    categories: ["application"],
+  },
+  {
+    name: "account-menu",
+    description: "Account menu.",
+    type: "registry:block",
+    registryDependencies: ["all"],
+    files: [
+      {
+        path: "blocks/application/account-menu/page.tsx",
+        target: "app/application/account-menu/page.tsx",
+        type: "registry:page",
+      },
+    ],
+    categories: ["application"],
+  },
+  {
+    name: "booking",
+    description: "Booking calendar.",
+    type: "registry:block",
+    registryDependencies: ["all"],
+    files: [
+      {
+        path: "blocks/calendars/booking/page.tsx",
+        target: "app/calendars/booking/page.tsx",
+        type: "registry:page",
+      },
+    ],
   },
 ];

@@ -198,8 +198,8 @@
   --color-bg-accent: var(--accent-400);
   --color-bg-accent-hover: var(--accent-500);
   --color-bg-accent-active: var(--accent-600);
-  --color-bg-accent-muted: var(--accent-200);
-  --color-bg-accent-muted-hover: var(--accent-300);
+  --color-bg-accent-muted: var(--accent-50);
+  --color-bg-accent-muted-hover: var(--accent-100);
 
   --color-fg: var(--neutral-900);
   --color-fg-muted: var(--neutral-700);

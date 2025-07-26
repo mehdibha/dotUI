@@ -237,6 +237,7 @@ export const variantsSchema = z.object({
   button: z.enum(["basic", "outline", "brutalist", "ripple"]),
   "button-group": z.enum(["basic"]),
   calendar: z.enum(["basic", "cal"]),
+  card: z.enum(["basic"]),
   checkbox: z.enum(["basic"]),
   "checkbox-group": z.enum(["basic"]),
   "color-area": z.enum(["basic"]),

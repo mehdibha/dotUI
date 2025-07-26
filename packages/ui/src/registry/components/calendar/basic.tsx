@@ -335,6 +335,7 @@ const CalendarCell = ({
           },
         ) => (
           <span
+            data-slot="calendar-cell"
             data-rac=""
             data-focused={isFocused || undefined}
             data-selected={isSelected || undefined}

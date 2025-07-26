@@ -32,7 +32,7 @@ export const DEFAULT_FONTS: Fonts = {
 
 export const DEFAULT_VARIANTS_DEFINITION: VariantsDefinition = {
   alert: "basic",
-  buttons: "basic",
+  buttons: "outline",
   loader: "ring",
   "focus-style": "basic",
   inputs: "basic",
@@ -60,7 +60,7 @@ export const DEFAULT_VARIANTS: Variants = {
   menu: "basic",
   tabs: "basic",
 
-  button: "basic",
+  button: "outline",
   "button-group": "basic",
   "toggle-button": "basic",
   "toggle-button-group": "basic",
@@ -121,6 +121,8 @@ export const DEFAULT_VARIANTS: Variants = {
   "tag-group": "basic",
   kbd: "basic",
   toast: "basic",
+
+  card: "basic",
 
   "focus-style": "basic",
 };

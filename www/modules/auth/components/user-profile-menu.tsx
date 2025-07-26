@@ -1,10 +1,14 @@
+"use client";
+
 import { LogOutIcon, MonitorIcon, MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
+import { Button } from "react-aria-components";
 
 import { Avatar } from "@dotui/ui/components/avatar";
-import { Button } from "@dotui/ui/components/button";
 import { Menu, MenuItem, MenuRoot, MenuSub } from "@dotui/ui/components/menu";
 import { Separator } from "@dotui/ui/components/separator";
+import { focusRing } from "@dotui/ui/lib/focus-styles";
+import { cn } from "@dotui/ui/lib/utils";
 
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
 import { siteConfig } from "@/config";
@@ -16,7 +20,12 @@ export function UserProfileMenu() {
 
   return (
     <MenuRoot>
-      <Button shape="square" variant="quiet">
+      <Button
+        className={cn(
+          focusRing(),
+          "flex size-8 cursor-pointer items-center justify-center rounded-full outline-hidden",
+        )}
+      >
         <Avatar
           src={session?.user?.image ?? undefined}
           fallback={session?.user?.name?.charAt(0)}

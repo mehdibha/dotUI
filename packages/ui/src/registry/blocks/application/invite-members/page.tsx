@@ -1,4 +1,4 @@
-import { InviteMembers } from "@dotui/ui/registry/blocks/invite-members/components/invite-members";
+import { InviteMembers } from "@dotui/ui/registry/blocks/application/invite-members/components/invite-members";
 
 export default function Page() {
   return (

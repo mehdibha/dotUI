@@ -123,9 +123,15 @@ const ColorPickerEditor = ({
           xChannel="saturation"
           yChannel="brightness"
         />
-        <ColorSlider orientation="vertical" colorSpace="hsb" channel="hue" />
+        <ColorSlider
+          defaultValue={"#000000"}
+          orientation="vertical"
+          colorSpace="hsb"
+          channel="hue"
+        />
         {showAlphaChannel && (
           <ColorSlider
+            defaultValue={"#000000"}
             orientation="vertical"
             colorSpace="hsb"
             channel="alpha"

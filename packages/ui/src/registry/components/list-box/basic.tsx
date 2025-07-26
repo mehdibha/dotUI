@@ -112,6 +112,7 @@ const ListBoxItem = <T extends object>({
   return (
     <AriaListBoxItem
       {...props}
+      data-slot="list-box-item"
       textValue={textValue}
       className={composeRenderProps(props.className, (className) =>
         listBoxItemStyles({ variant, className }),
@@ -128,7 +129,7 @@ const ListBoxItem = <T extends object>({
                 )}
               </span>
             )}
-            <span className="flex items-center gap-3">
+            <span className="flex flex-1 items-center gap-3">
               {prefix}
               <span className="flex flex-1 flex-col">
                 {children}

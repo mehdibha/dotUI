@@ -27,7 +27,7 @@ import type {
 
 const selectStyles = tv({
   slots: {
-    root: "flex flex-col items-start gap-2",
+    root: "flex w-48 flex-col items-start gap-2",
     selectValue: "flex-1 text-left",
   },
 });

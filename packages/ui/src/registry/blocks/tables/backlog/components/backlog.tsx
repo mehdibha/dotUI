@@ -10,18 +10,28 @@ import {
   Circle,
   CircleDashedIcon,
   MoreHorizontal,
+  Settings2Icon,
   Zap,
 } from "lucide-react";
 
 import { Badge } from "@dotui/ui/components/badge";
 import { Button } from "@dotui/ui/components/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@dotui/ui/components/card";
 import { Menu, MenuItem, MenuRoot } from "@dotui/ui/components/menu";
+import { SearchField } from "@dotui/ui/components/search-field";
 import {
   TableBody,
   TableCell,
   TableColumn,
   TableHeader,
   TableRoot,
+  TableRootProps,
   TableRow,
 } from "@dotui/ui/components/table";
 
@@ -233,103 +243,135 @@ const data: Item[] = [
   },
 ];
 
-export function Backlog() {
+export function Backlog(props: React.ComponentProps<"div">) {
   return (
-    <TableRoot
-      aria-label="Development Team Backlog"
-      variant="bordered"
-      selectionMode="multiple"
-    >
-      <TableHeader columns={columns}>
-        {(column) => (
-          <TableColumn isRowHeader={column.isRowHeader}>
-            {column.name}
-          </TableColumn>
-        )}
-      </TableHeader>
-      <TableBody items={data}>
-        {(item) => (
-          <TableRow columns={columns}>
-            <TableCell>
-              {() => {
-                const type = types.find((t) => t.value === item.type);
-                if (!type) return null;
-                return (
-                  <div className="flex items-center gap-2">
-                    <Badge variant="neutral" size="sm" className="border">
-                      {type?.label || item.type}
-                    </Badge>
-                    <span className="truncate">{item.title}</span>
-                  </div>
-                );
-              }}
-            </TableCell>
-            <TableCell>
-              {(() => {
-                const priority = priorities.find(
-                  (p) => p.value === item.priority,
-                );
-                if (!priority) return null;
-                return (
-                  <Badge variant={priority.variant} size="sm">
-                    {priority.label}
+    <Card {...props}>
+      <CardHeader>
+        <CardTitle>Backlog</CardTitle>
+        <CardDescription>
+          Here's a list of your tasks for this month.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center gap-2">
+            <SearchField
+              size="sm"
+              aria-label="Filter tasks"
+              placeholder="Filter tasks"
+            />
+          </div>
+          <div className="flex items-center gap-2">
+            <Button size="sm" prefix={<Settings2Icon />}>
+              View
+            </Button>
+            <Button variant="primary" size="sm">
+              Add task
+            </Button>
+          </div>
+        </div>
+        <TableRoot
+          aria-label="Development Team Backlog"
+          variant="bordered"
+          selectionMode="multiple"
+          className="mt-4"
+        >
+          <TableHeader columns={columns}>
+            {(column) => (
+              <TableColumn isRowHeader={column.isRowHeader}>
+                {column.name}
+              </TableColumn>
+            )}
+          </TableHeader>
+          <TableBody items={data}>
+            {(item) => (
+              <TableRow columns={columns}>
+                <TableCell>
+                  {() => {
+                    const type = types.find((t) => t.value === item.type);
+                    if (!type) return null;
+                    return (
+                      <div className="flex items-center gap-2">
+                        <Badge variant="neutral" size="sm" className="border">
+                          {type?.label || item.type}
+                        </Badge>
+                        <span className="truncate">{item.title}</span>
+                      </div>
+                    );
+                  }}
+                </TableCell>
+                <TableCell>
+                  {(() => {
+                    const priority = priorities.find(
+                      (p) => p.value === item.priority,
+                    );
+                    if (!priority) return null;
+                    return (
+                      <Badge variant={priority.variant} size="sm">
+                        {priority.label}
+                      </Badge>
+                    );
+                  })()}
+                </TableCell>
+                <TableCell>
+                  {(() => {
+                    const status = statuses.find(
+                      (s) => s.value === item.status,
+                    );
+                    if (!status) return null;
+                    const StatusIcon = status.icon || Circle;
+                    return (
+                      <Badge variant={status.variant} size="sm">
+                        <StatusIcon />
+                        <span>{status?.label || item.status}</span>
+                      </Badge>
+                    );
+                  })()}
+                </TableCell>
+                <TableCell>
+                  {(() => {
+                    const user = users.find(
+                      (u) => u.username === item.assignee,
+                    );
+                    if (!user) return null;
+                    return (
+                      <div className="flex items-center space-x-2">
+                        <img
+                          src={user.avatar}
+                          alt={user.name}
+                          className="h-6 w-6 rounded-full object-cover"
+                        />
+                        <span className="text-fg-muted">{user.name}</span>
+                      </div>
+                    );
+                  })()}
+                </TableCell>
+                <TableCell>
+                  <Badge
+                    size="sm"
+                    className="bg-bg-accent-muted text-fg-accent px-1"
+                  >
+                    {item.storyPoints}
                   </Badge>
-                );
-              })()}
-            </TableCell>
-            <TableCell>
-              {(() => {
-                const status = statuses.find((s) => s.value === item.status);
-                if (!status) return null;
-                const StatusIcon = status.icon || Circle;
-                return (
-                  <Badge variant={status.variant} size="sm">
-                    <StatusIcon />
-                    <span>{status?.label || item.status}</span>
-                  </Badge>
-                );
-              })()}
-            </TableCell>
-            <TableCell>
-              {(() => {
-                const user = users.find((u) => u.username === item.assignee);
-                if (!user) return null;
-                return (
-                  <div className="flex items-center space-x-2">
-                    <img
-                      src={user.avatar}
-                      alt={user.name}
-                      className="h-6 w-6 rounded-full object-cover"
-                    />
-                    <span className="text-fg-muted">{user.name}</span>
-                  </div>
-                );
-              })()}
-            </TableCell>
-            <TableCell>
-              <Badge
-                size="sm"
-                className="bg-bg-accent-muted text-fg-accent px-1"
-              >
-                {item.storyPoints}
-              </Badge>
-            </TableCell>
-            <TableCell>
-              <MenuRoot>
-                <Button variant="quiet" size="sm" shape="square">
-                  <MoreHorizontal className="h-4 w-4" />
-                </Button>
-                <Menu>
-                  <MenuItem>Edit</MenuItem>
-                  <MenuItem>Duplicate</MenuItem>
-                  <MenuItem>Archive</MenuItem>
-                  <MenuItem variant="danger">Delete</MenuItem>
-                </Menu>
-              </MenuRoot>
-            </TableCell>
-          </TableRow>
-        )}
-      </TableBody>
-    </TableRoot>
+                </TableCell>
+                <TableCell>
+                  <MenuRoot>
+                    <Button variant="quiet" size="sm" shape="square">
+                      <MoreHorizontal className="h-4 w-4" />
+                    </Button>
+                    <Menu>
+                      <MenuItem>Edit</MenuItem>
+                      <MenuItem>Duplicate</MenuItem>
+                      <MenuItem>Archive</MenuItem>
+                      <MenuItem variant="danger">Delete</MenuItem>
+                    </Menu>
+                  </MenuRoot>
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </TableRoot>
+      </CardContent>
+    </Card>
   );
 }

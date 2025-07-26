@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ExternalLinkIcon, GlobeIcon, LockIcon } from "lucide-react";
-import {  useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Button } from "@dotui/ui/components/button";
@@ -73,7 +73,12 @@ export function CreateStyleModal({ children }: { children: React.ReactNode }) {
                 name="name"
                 control={form.control}
                 render={(props) => (
-                  <TextField label="Name" autoFocus className="w-full" {...props} />
+                  <TextField
+                    label="Name"
+                    autoFocus
+                    className="w-full"
+                    {...props}
+                  />
                 )}
               />
               <FormControl

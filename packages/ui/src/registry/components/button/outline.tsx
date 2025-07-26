@@ -30,13 +30,13 @@ const buttonStyles = tv({
       outline:
         "border-border-field text-fg hover:bg-bg-inverse/10 pressed:bg-bg-inverse/15 border",
       accent:
-        "border-border-accent bg-bg-accent-muted text-fg-on-accent hover:border-border-accent-hover hover:bg-bg-accent-muted-hover border",
+        "border-border-accent bg-bg-accent-muted text-fg hover:border-border-accent-hover hover:bg-bg-accent-muted-hover border",
       success:
-        "hover:bg-bg-success-muted-hover border-border-success bg-bg-success-muted text-fg-on-success hover:border-border-success-hover border",
+        "hover:bg-bg-success-muted-hover border-border-success bg-bg-success-muted hover:border-border-success-hover border",
       warning:
-        "hover:bg-bg-warning-muted-hover border-border-warning bg-bg-warning-muted text-fg-on-warning hover:border-border-warning-hover border",
+        "hover:bg-bg-warning-muted-hover border-border-warning bg-bg-warning-muted hover:border-border-warning-hover border",
       danger:
-        "hover:bg-bg-danger-muted-hover border-border-danger bg-bg-danger-muted text-fg-on-danger hover:border-border-danger-hover border",
+        "hover:bg-bg-danger-muted-hover border-border-danger bg-bg-danger-muted hover:border-border-danger-hover border",
     },
     size: {
       sm: "size-8 [&_svg]:size-4",
