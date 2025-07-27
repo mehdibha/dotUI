@@ -1,9 +1,9 @@
 import React from "react";
 
-import { source } from "@/app/source";
 import { Footer } from "@/components/footer";
 import { MobileNav } from "@/components/mobile-nav";
 import { Sidebar, SidebarProvider } from "@/components/sidebar";
+import { source } from "@/modules/docs/lib/source";
 import { Providers } from "./providers";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {

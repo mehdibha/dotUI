@@ -52,7 +52,7 @@ export function Booking({ className, ...props }: React.ComponentProps<"div">) {
       )}
       {...props}
     >
-      <div className="@max-3xl:flex @max-3xl:justify-between space-y-4 border-r p-6">
+      <div className="@max-3xl:flex @max-3xl:justify-between space-y-4 @3xl:border-r @max-3xl:border-b p-6">
         <div className="space-y-4">
           <div className="flex items-center gap-2">
             <Avatar src="https://github.com/mehdibha.png" />
@@ -83,11 +83,11 @@ export function Booking({ className, ...props }: React.ComponentProps<"div">) {
           className="border-0 bg-transparent p-0 [&_[data-slot='calendar-cell']]:size-12"
         />
       </div>
-      <div className="border-l p-6 pt-6">
-        <div className="">
+      <div className="@max-3xl:border-t @3xl:border-l pt-6">
+        <div className="px-6">
           <span className="font-semibold">Sat</span> 26
         </div>
-        <div className="mt-4 max-h-[320px] space-y-3 overflow-y-auto">
+        <div className="mt-4 max-h-[320px] space-y-3 overflow-y-auto px-6">
           <div className="@max-3xl:grid-cols-2 grid gap-1.5">
             {timeSlots.map(({ time: timeSlot, available }) => (
               <Button key={timeSlot} size="sm" className="w-full">

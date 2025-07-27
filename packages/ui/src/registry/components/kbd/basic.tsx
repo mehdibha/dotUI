@@ -4,7 +4,7 @@ import { Keyboard } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
 const KbdStyles = tv({
-  base: "bg-bg text-fg-muted inline-flex min-w-5 items-center justify-center rounded-sm border p-1 text-xs leading-none",
+  base: "bg-bg text-fg-muted font-body inline-flex min-w-5 items-center justify-center rounded-sm border p-1 text-xs leading-none",
 });
 
 type KbdProps = React.HTMLAttributes<HTMLElement>;

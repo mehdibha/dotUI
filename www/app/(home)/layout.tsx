@@ -1,7 +1,6 @@
-import { source } from "@/app/source";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
-import { MobileNav } from "@/components/mobile-nav";
+import { source } from "@/modules/docs/lib/source";
 
 export default function HomeLayout({
   children,
@@ -10,15 +9,14 @@ export default function HomeLayout({
 }) {
   return (
     <div>
-      <Header className="hidden lg:block" />
-      <MobileNav items={source.pageTree.children} className="lg:hidden" />
+      <Header items={source.pageTree.children} />
       <div className="mx-auto min-h-screen sm:grid sm:grid-cols-[20px_1fr_20px] md:grid-cols-[30px_1fr_30px]">
-        <div className="hidden diagonal-pattern sm:block" />
+        <div className="diagonal-pattern hidden sm:block" />
         <div>
           <div className="min-h-[70vh]">{children}</div>
           <Footer />
         </div>
-        <div className="hidden diagonal-pattern sm:block" />
+        <div className="diagonal-pattern hidden sm:block" />
       </div>
     </div>
   );

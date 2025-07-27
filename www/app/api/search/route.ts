@@ -1,6 +1,6 @@
 import { createSearchAPI } from "fumadocs-core/search/server";
 
-import { source } from "@/app/source";
+import { source } from "@/modules/docs/lib/source";
 
 const additionalPages = [
   {

@@ -23,13 +23,13 @@ export function UserProfileMenu() {
       <Button
         className={cn(
           focusRing(),
-          "flex size-8 cursor-pointer items-center justify-center rounded-full outline-hidden",
+          "flex size-7.5 rounded-full cursor-pointer items-center justify-center outline-hidden",
         )}
       >
         <Avatar
           src={session?.user?.image ?? undefined}
           fallback={session?.user?.name?.charAt(0)}
-          className="size-6"
+          className="size-full"
           shape="circle"
         />
       </Button>
@@ -43,21 +43,6 @@ export function UserProfileMenu() {
         }}
         className="[&_[data-slot=menu-item]]:text-fg-muted [&_svg]:text-fg"
       >
-        <MenuItem
-          suffix={<GitHubIcon />}
-          href={siteConfig.links.github}
-          target="_blank"
-        >
-          GitHub
-        </MenuItem>
-        <MenuItem
-          suffix={<TwitterIcon />}
-          href={siteConfig.links.twitter}
-          target="_blank"
-        >
-          X
-        </MenuItem>
-        <Separator />
         <MenuSub>
           <MenuItem>Theme mode</MenuItem>
           <Menu

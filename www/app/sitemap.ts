@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
-import { source } from "@/app/source";
 import { siteConfig } from "@/config";
+import { source } from "@/modules/docs/lib/source";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const url = (path: string): string =>

@@ -4,7 +4,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { Button } from "@dotui/ui/components/button";
 import { Tooltip } from "@dotui/ui/components/tooltip";
 
-import { source } from "@/app/source";
+import { source } from "@/modules/docs/lib/source";
 
 export const DocsPager = ({
   variant = "label",
