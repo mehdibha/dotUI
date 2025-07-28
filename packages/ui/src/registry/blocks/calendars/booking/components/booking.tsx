@@ -52,7 +52,7 @@ export function Booking({ className, ...props }: React.ComponentProps<"div">) {
       )}
       {...props}
     >
-      <div className="@max-3xl:flex @max-3xl:justify-between space-y-4 @3xl:border-r @max-3xl:border-b p-6">
+      <div className="@max-3xl:flex @max-3xl:justify-between @3xl:border-r @max-3xl:border-b space-y-4 p-6">
         <div className="space-y-4">
           <div className="flex items-center gap-2">
             <Avatar src="https://github.com/mehdibha.png" />

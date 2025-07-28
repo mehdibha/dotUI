@@ -35,13 +35,13 @@ export default async function Page({
           "grid grid-cols-1 gap-10 xl:max-w-5xl xl:grid-cols-[minmax(0,1fr)_minmax(180px,220px)]",
       )}
     >
-      <div className="pb-24 pt-4 sm:pt-10 lg:pt-20">
+      <div className="pt-4 pb-24 sm:pt-10 lg:pt-20">
         {/* <Breadcrumbs tree={source.pageTree} className="mb-2" /> */}
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-bold lg:text-4xl">{page.data.title}</h1>
           <DocsPager variant="tooltip" currentPathname={page.url} />
         </div>
-        <p className="text-fg-muted mt-2">{page.data.description}</p>
+        <p className="mt-2 text-fg-muted">{page.data.description}</p>
         {page.data.links && page.data.links.length > 0 && (
           <div className="mt-4 flex flex-wrap gap-2">
             {page.data.links.map((link, index) => (

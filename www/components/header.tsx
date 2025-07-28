@@ -30,12 +30,12 @@ export function Header({
 
   return (
     <header
-      className={cn("bg-bg sticky top-0 z-50 w-full border-b", className)}
+      className={cn("sticky top-0 z-50 w-full border-b bg-bg", className)}
     >
-      <div className="container relative flex h-14 items-center justify-between">
+      <div className="relative container flex h-14 items-center justify-between">
         <div className="flex items-center gap-3 md:gap-6">
           <MobileNav items={items} />
-          <Logo className="md:hidden" />
+          {/* <Logo className="md:hidden" /> */}
           <Logo className="max-md:hidden" />
           <div className="flex items-center gap-3 text-sm max-md:hidden">
             {[
@@ -47,7 +47,7 @@ export function Header({
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-fg-muted hover:text-fg px-0.5 transition-colors"
+                className="px-0.5 text-fg-muted transition-colors hover:text-fg"
               >
                 {item.label}
               </Link>
@@ -55,7 +55,7 @@ export function Header({
           </div>
         </div>
         {isMounted && !isPending && (
-          <div className="animate-in fade-in flex items-center gap-2">
+          <div className="flex animate-in items-center gap-2 fade-in">
             <SearchCommand keyboardShortcut>
               <Button
                 variant="default"
@@ -66,7 +66,7 @@ export function Header({
                   </div>
                 }
                 size="sm"
-                className="text-fg-muted gap-2 pl-3 pr-1 max-md:size-8 max-md:px-0"
+                className="gap-2 pr-1 pl-3 max-md:size-8 max-md:px-0 md:text-fg-muted"
               >
                 <SearchIcon className="md:hidden" />
                 <span className="mr-6 flex-1 max-md:hidden">

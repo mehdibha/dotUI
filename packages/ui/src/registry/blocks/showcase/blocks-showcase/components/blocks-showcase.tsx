@@ -18,7 +18,7 @@ export function BlocksShowcase() {
       <div className="col-span-11 grid grid-cols-11 gap-4 lg:items-start">
         <AccountMenu className="col-span-11 sm:col-span-5 lg:hidden xl:col-span-2 xl:block" />
         <LoginForm className="col-span-11 sm:col-span-6 lg:hidden" />
-        <div className="col-span-11 flex max-sm:flex-col max-sm:items-stretch items-start gap-4 lg:col-span-7 xl:col-span-6">
+        <div className="col-span-11 flex items-start gap-4 max-sm:flex-col max-sm:items-stretch lg:col-span-7 xl:col-span-6">
           <ColorEditor />
           <TeamName className="flex-1" />
         </div>

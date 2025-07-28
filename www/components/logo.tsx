@@ -27,7 +27,7 @@ export const Logo = ({
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 300 300"
-        className="rounded-xs size-5"
+        className="size-5 rounded-xs"
       >
         <defs>
           <clipPath id="a">
@@ -56,7 +56,7 @@ export const Logo = ({
         </g>
       </svg>
       {extanded && (
-        <div className="font-josefin group-data-collapsed/sidebar:opacity-0 mt-1.5 text-base font-bold leading-normal tracking-tighter transition-colors">
+        <div className="mt-1.5 font-josefin text-base leading-normal font-bold tracking-tighter transition-colors group-data-collapsed/sidebar:opacity-0">
           {siteConfig.name}
         </div>
       )}

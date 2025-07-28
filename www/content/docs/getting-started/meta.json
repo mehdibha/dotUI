@@ -4,9 +4,8 @@
   "pages": [
     "introduction",
     "installation",
-    "guides",
-    "design",
-    "community",
+    "dark-mode",
+    "color-system",
     "changelog"
   ]
 }
