@@ -21,8 +21,10 @@ import { ThemeSwitcher } from "./site-theme-selector";
 export function Header({
   className,
   items,
+  containerClassName,
 }: {
   className?: string;
+  containerClassName?: string;
   items: PageTree.Node[];
 }) {
   const { data: session, isPending } = authClient.useSession();
@@ -32,7 +34,12 @@ export function Header({
     <header
       className={cn("sticky top-0 z-50 w-full border-b bg-bg", className)}
     >
-      <div className="relative container flex h-14 items-center justify-between">
+      <div
+        className={cn(
+          "relative container flex h-14 items-center justify-between",
+          containerClassName,
+        )}
+      >
         <div className="flex items-center gap-3 md:gap-6">
           <MobileNav items={items} />
           {/* <Logo className="md:hidden" /> */}
