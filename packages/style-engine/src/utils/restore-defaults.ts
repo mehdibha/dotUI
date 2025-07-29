@@ -145,7 +145,6 @@ const restoreStyleDefinitionDefaults = ({
 }: MinimizedStyleDefinition): StyleDefinition => {
   return {
     ...props,
-    description: props.description ?? undefined,
     theme: restoreThemeDefinitionDefaults(theme),
     variants: restoreVariantsDefinitionDefaults(variants ?? {}),
     icons: {

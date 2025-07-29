@@ -29,7 +29,7 @@ export const createDynamicComponent = <Props extends {}>(
 
     const LazyComponent = variants[variantName];
 
-    // If LaeyComponent is not defined, its because it is the default variant
+    // If LazyComponent is not defined, its because it is the default variant
     if (!LazyComponent) {
       if (disableSuspense) {
         // return <DefaultComponent {...props} />;

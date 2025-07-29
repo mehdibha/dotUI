@@ -10,33 +10,14 @@ import { Skeleton } from "@dotui/ui/components/skeleton";
 
 import { useTRPC } from "@/lib/trpc/react";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
+import { useActiveStyle } from "@/modules/styles/hooks/use-active-style";
 
 export function ActiveStyleProvider(
   props: Omit<React.ComponentProps<"div">, "style">,
 ) {
-  const { currentMode, currentStyleSlug } = usePreferences();
   const container = useActiveStylePortalContext();
-
-  const trpc = useTRPC();
-
-  const { data: currentStyleFromAPI } = useQuery({
-    ...trpc.style.getActiveStyleId.queryOptions(),
-    retry: false,
-  });
-
-  const selectedStyle = currentStyleFromAPI || currentStyleSlug;
-
-  const {
-    data: style,
-    isLoading,
-    isError,
-  } = useQuery({
-    ...trpc.style.bySlug.queryOptions({
-      slug: selectedStyle,
-    }),
-    enabled: !!selectedStyle,
-    placeholderData: (prev) => prev,
-  });
+  const { activeMode } = usePreferences();
+  const { data: activeStyle, isLoading, isError } = useActiveStyle();
 
   if (isLoading) {
     return <Skeleton>{props.children}</Skeleton>;
@@ -54,7 +35,7 @@ export function ActiveStyleProvider(
   }
 
   return (
-    <StyleProvider mode={currentMode} style={style} {...props}>
+    <StyleProvider mode={activeMode} style={activeStyle} {...props}>
       <PortalProvider getContainer={() => container.current}>
         {props.children}
       </PortalProvider>
@@ -81,31 +62,15 @@ export const ActiveStylePortalProvider = ({
   children: React.ReactNode;
 }) => {
   const container = React.useRef<HTMLDivElement>(null);
-  const { currentMode, currentStyleSlug } = usePreferences();
-
-  const trpc = useTRPC();
-
-  const { data: currentStyleFromAPI } = useQuery({
-    ...trpc.style.getCurrentStyle.queryOptions(),
-    retry: false,
-  });
-
-  const selectedStyle = currentStyleFromAPI || currentStyleSlug;
-
-  const { data: style } = useQuery({
-    ...trpc.style.bySlug.queryOptions({
-      slug: selectedStyle,
-    }),
-    enabled: !!selectedStyle,
-    placeholderData: (prev) => prev,
-  });
+  const { activeMode } = usePreferences();
+  const { data: activeStyle } = useActiveStyle();
 
   return (
     <ActiveStyleContext.Provider value={container}>
       <StyleProvider
         ref={container}
-        mode={currentMode}
-        style={style}
+        mode={activeMode}
+        style={activeStyle}
         unstyled
       />
       {children}

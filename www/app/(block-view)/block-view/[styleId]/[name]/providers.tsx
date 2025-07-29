@@ -20,9 +20,9 @@ export const BlockProviders = ({
 }) => {
   const overlayContainerRef = React.useRef(null);
 
-  const { currentMode } = usePreferences();
+  const { activeMode } = usePreferences();
   const isMounted = useMounted();
-  const { liveStyle } = useLiveStyleConsumer(styleProp.slug);
+  const { liveStyle } = useLiveStyleConsumer(styleProp.id);
 
   const style = React.useMemo(() => {
     return liveStyle ?? styleProp;

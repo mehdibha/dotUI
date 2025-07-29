@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import type { TRPCRouterRecord } from "@trpc/server";
 
@@ -11,6 +12,13 @@ import {
 
 import { protectedProcedure, publicProcedure } from "../trpc";
 
+// Input validation schemas
+const uuidSchema = z.uuid("Invalid style ID format");
+const paginationSchema = z.object({
+  limit: z.number().min(1).max(100).default(10),
+  offset: z.number().min(0).default(0),
+});
+
 export const styleRouter = {
   getActiveStyleId: protectedProcedure.query(({ ctx }) => {
     return ctx.session.user.activeStyleId;
@@ -18,7 +26,7 @@ export const styleRouter = {
   updateActiveStyle: protectedProcedure
     .input(
       z.object({
-        styleId: z.string(),
+        styleId: uuidSchema,
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -29,54 +37,79 @@ export const styleRouter = {
         })
         .where(eq(user.id, ctx.session.user.id));
 
-      return ctx.session.user.activeStyleId;
+      return input.styleId;
     }),
-  update: protectedProcedure
-    .input(styleDefinitionSchema.extend({ id: z.string() }))
-    .mutation(async ({ ctx, input }) => {
-      const existingStyle = await ctx.db.query.style.findFirst({
-        where: eq(style.id, input.id),
-      });
-
-      if (!existingStyle) {
-        throw new Error("Style not found");
-      }
-
-      if (existingStyle.userId !== ctx.session.user.id) {
-        throw new Error("Unauthorized: You can only update your own styles");
-      }
-
-      const minimizedStyle = minimizeStyleDefinition(input);
-
-      const [updatedStyle] = await ctx.db
-        .update(style)
-        .set(minimizedStyle)
-        .where(eq(style.id, input.id))
-        .returning();
-
-      return updatedStyle;
-    }),
-  all: publicProcedure
-    .input(
-      z.object({
-        isFeatured: z.boolean().optional(),
-        limit: z.number().optional(),
-        offset: z.number().optional(),
-      }),
-    )
+  featured: publicProcedure
+    .input(paginationSchema)
     .query(async ({ ctx, input }) => {
       const styles = await ctx.db.query.style.findMany({
-        where: eq(style.isFeatured, input.isFeatured ?? true),
+        where: eq(style.isFeatured, true),
+        limit: input.limit,
+        offset: input.offset,
       });
 
       const result = styles.map((style) => {
-        return restoreStyleDefinitionDefaults(style);
+        return { ...style, ...restoreStyleDefinitionDefaults(style) };
       });
 
       return result;
     }),
+  byId: publicProcedure
+    .input(z.object({ id: uuidSchema }))
+    .query(async ({ ctx, input }) => {
+      const rawStyle = await ctx.db.query.style.findFirst({
+        where: eq(style.id, input.id),
+      });
+
+      if (!rawStyle) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Style not found",
+        });
+      }
+
+      return { ...rawStyle, ...restoreStyleDefinitionDefaults(rawStyle) };
+    }),
+  update: protectedProcedure
+    .input(styleDefinitionSchema.extend({ id: uuidSchema }))
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.db.transaction(async (tx) => {
+        const existingStyle = await tx.query.style.findFirst({
+          where: eq(style.id, input.id),
+        });
+
+        if (!existingStyle) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: `Style with ID '${input.id}' not found`,
+          });
+        }
+
+        if (existingStyle.userId !== ctx.session.user.id) {
+          throw new TRPCError({
+            code: "UNAUTHORIZED",
+            message: "You can only update your own styles",
+          });
+        }
+
+        const minimizedStyle = minimizeStyleDefinition(input);
+
+        const [updatedStyle] = await tx
+          .update(style)
+          .set(minimizedStyle)
+          .where(eq(style.id, input.id))
+          .returning();
+
+        return updatedStyle;
+      });
+    }),
   byNameAndUserId: publicProcedure
-    .input(z.object({ name: z.string(), userId: z.string() }))
+    .input(
+      z.object({
+        name: z.string().min(1, "Style name cannot be empty"),
+        userId: uuidSchema,
+      }),
+    )
     .query(async ({ ctx, input }) => {
       const rawStyle = await ctx.db.query.style.findFirst({
         where: and(eq(style.name, input.name), eq(style.userId, input.userId)),
@@ -86,6 +119,6 @@ export const styleRouter = {
         return undefined;
       }
 
-      return restoreStyleDefinitionDefaults(rawStyle);
+      return { ...rawStyle, ...restoreStyleDefinitionDefaults(rawStyle) };
     }),
 } satisfies TRPCRouterRecord;

@@ -19,7 +19,7 @@ import { useMounted } from "@/hooks/use-mounted";
 export const StylesShowcase = ({
   styles,
 }: {
-  styles: RouterOutputs["style"]["all"];
+  styles: RouterOutputs["style"]["featured"];
 }) => {
   const { resolvedTheme } = useTheme();
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -97,12 +97,12 @@ export const StylesShowcase = ({
             </TabList>
           </Tabs>
           <div className="flex flex-1 items-center justify-center">
-            <div className="relative flex items-center gap-2 py-2 pr-2 pl-4 font-mono text-xs text-fg-muted">
+            <div className="text-fg-muted relative flex items-center gap-2 py-2 pl-4 pr-2 font-mono text-xs">
               <motion.div
                 layout
                 initial={false}
                 transition={{ duration: 0.5 }}
-                className="absolute inset-0 z-[-1] rounded-md border bg-bg-neutral"
+                className="bg-bg-neutral absolute inset-0 z-[-1] rounded-md border"
               />
               <pre>
                 <code className="max-sm:flex max-sm:max-w-[60vw]">
@@ -113,7 +113,7 @@ export const StylesShowcase = ({
                     </motion.span>
                     <AnimatePresence mode="popLayout">
                       <motion.span
-                        key={currentStyle.slug}
+                        key={currentStyle.id}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
@@ -135,12 +135,12 @@ export const StylesShowcase = ({
                   shape="square"
                   size="sm"
                   onPress={handleCopy}
-                  className="z-20 bg-[#f5f5f5] text-fg-muted dark:bg-[#19191d] [&_svg]:size-3.5"
+                  className="text-fg-muted z-20 bg-[#f5f5f5] dark:bg-[#19191d] [&_svg]:size-3.5"
                 >
                   {copied ? (
-                    <CheckIcon className="animate-in duration-75 fade-in" />
+                    <CheckIcon className="animate-in fade-in duration-75" />
                   ) : (
-                    <CopyIcon className="animate-in duration-75 fade-in" />
+                    <CopyIcon className="animate-in fade-in duration-75" />
                   )}
                 </Button>
               </motion.div>
@@ -151,7 +151,7 @@ export const StylesShowcase = ({
           <StyleProvider
             style={isMounted ? currentStyle : undefined}
             mode={resolvedTheme as "light" | "dark" | undefined}
-            className="relative w-full rounded-xl border bg-bg shadow-md"
+            className="bg-bg relative w-full rounded-xl border shadow-md"
           >
             <PortalProvider getContainer={() => containerRef.current}>
               <AnimatePresence mode="popLayout">

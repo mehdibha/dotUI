@@ -21,7 +21,7 @@ export default function BlocksLayout({
         </p>
         <div className="flex h-18 items-center gap-2">
           <Button variant="primary">Add your block</Button>
-          <StyleSelector buttonProps={{ className: "px-4" }} />
+          {/* <StyleSelector buttonProps={{ className: "px-4" }} /> */}
         </div>
       </div>
       <BlocksNav className="mt-4">{children}</BlocksNav>

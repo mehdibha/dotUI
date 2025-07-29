@@ -1,4 +1,4 @@
-import { eq, sql } from "drizzle-orm";
+import { sql } from "drizzle-orm";
 import { pgTable, uniqueIndex } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
@@ -15,7 +15,7 @@ import { user } from "./auth";
 export const style = pgTable(
   "style",
   (t) => ({
-    id: t.text("id").primaryKey(),
+    id: t.uuid().notNull().primaryKey().defaultRandom(),
     name: t.text("name").notNull(),
     description: t.text(),
     visibility: t
@@ -28,17 +28,18 @@ export const style = pgTable(
     variants: t.jsonb("variants").$type<MinimizedVariantsDefinition>(),
     userId: t
       .text("user_id")
-      .references(() => user.id, { onDelete: "set null" }),
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
     createdAt: t.timestamp().defaultNow().notNull(),
     updatedAt: t
-    .timestamp({ mode: "date", withTimezone: true })
-    .$onUpdateFn(() => sql`now()`),
+      .timestamp({ mode: "date", withTimezone: true })
+      .$onUpdateFn(() => sql`now()`),
   }),
   (t) => ({
-    userNameUnique: uniqueIndex().on(t.userId, t.name),
-    publicNameUnique: uniqueIndex()
+    uniqueNamePerUser: uniqueIndex("unique_name_per_user").on(t.userId, t.name),
+    uniquePublic: uniqueIndex("unique_public_name")
       .on(t.name)
-      .where(eq(t.visibility, "public")),
+      .where(sql.raw(`visibility = 'public'`)),
   }),
 );
 

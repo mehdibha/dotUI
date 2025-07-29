@@ -6,18 +6,16 @@ import StylePageForm from "@/modules/styles/providers/style-pages-provider";
 import { Providers } from "./providers";
 
 export const generateStaticParams = async () => {
-  const styles = await buildTimeCaller.style.all({
-    isFeatured: true,
-  });
+  const styles = await buildTimeCaller.style.featured({});
   return styles.map((style) => ({
-    style: style.slug,
+    style: style.name,
   }));
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <Providers>
-      <div className="relative grid grid-cols-[1fr_auto] max-xl:grid-cols-1 [&_[data-slot='label']]:text-sm [&_[data-slot='label']]:font-medium [&_[data-slot='label']]:text-fg-muted">
+      <div className="[&_[data-slot='label']]:text-fg-muted relative grid grid-cols-[1fr_auto] max-xl:grid-cols-1 [&_[data-slot='label']]:text-sm [&_[data-slot='label']]:font-medium">
         <div className="container max-w-5xl py-10">
           <StylePageForm>
             <StylePageHeader />

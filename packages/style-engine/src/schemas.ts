@@ -6,12 +6,6 @@ import { registryTextures } from "@dotui/registry-definition/registry-textures";
 
 // ---------------------------------  Definitions  ----------------------------------- //
 
-export const styleNameSchema = z
-  .string()
-  .min(2)
-  .max(100)
-  .regex(/^[a-z0-9._-]+$/);
-
 // Icons
 export const iconLibrarySchema = z.enum(iconLibraries.map((lib) => lib.name));
 export const iconsDefinitionSchema = z.object({
@@ -138,8 +132,6 @@ export const variantsDefinitionSchema = z.object({
 });
 
 export const styleDefinitionSchema = z.object({
-  name: styleNameSchema,
-  description: z.string().min(1).optional(),
   theme: themeDefinitionSchema,
   icons: iconsDefinitionSchema,
   variants: variantsDefinitionSchema,
@@ -202,8 +194,6 @@ export const minimizedIconsDefinitionSchema = iconsDefinitionSchema
   .optional();
 
 export const minimizedStyleDefinitionSchema = z.object({
-  name: styleNameSchema,
-  description: z.string().min(2).optional().nullable(),
   theme: minimizedThemeDefinitionSchema,
   icons: minimizedIconsDefinitionSchema.optional().nullable(),
   variants: minimizedVariantsDefinitionSchema.optional().nullable(),
@@ -298,8 +288,6 @@ export const variantsSchema = z.object({
 });
 
 export const styleSchema = z.object({
-  name: styleNameSchema,
-  description: z.string().min(2).optional(),
   theme: themeSchema, // used in {styleName}/theme
   icons: iconsDefinitionSchema, // used in {styleName}/base and {styleName}/{componentName}
   variants: variantsSchema, // used in {styleName}/{componentName}

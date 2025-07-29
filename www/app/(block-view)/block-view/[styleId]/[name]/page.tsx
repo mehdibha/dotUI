@@ -7,12 +7,10 @@ import { buildTimeCaller, getQueryClient, trpc } from "@/lib/trpc/server";
 import { BlockProviders } from "./providers";
 
 export const generateStaticParams = async () => {
-  const styles = await buildTimeCaller.style.all({
-    isFeatured: true,
-  });
+  const styles = await buildTimeCaller.style.featured({});
   return styles.flatMap((style) =>
     registryBlocks.map((block) => ({
-      style: style.slug,
+      styleId: style.id,
       name: block.name,
     })),
   );
@@ -21,13 +19,13 @@ export const generateStaticParams = async () => {
 export default async function BlockViewPage({
   params,
 }: {
-  params: Promise<{ style: string; name: string }>;
+  params: Promise<{ styleId: string; name: string }>;
 }) {
-  const { style: styleSlug, name } = await params;
+  const { styleId, name } = await params;
 
   const queryClient = getQueryClient();
   const style = await queryClient.fetchQuery(
-    trpc.style.bySlug.queryOptions({ slug: styleSlug }),
+    trpc.style.byId.queryOptions({ id: styleId }),
   );
 
   if (!style) {

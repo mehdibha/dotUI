@@ -35,7 +35,7 @@ interface BlockViewToolbarProps {
   title?: string;
 }
 const BlockViewToolbar = ({ title }: BlockViewToolbarProps) => {
-  const { currentMode, setCurrentMode } = usePreferences();
+  const { activeMode, setActiveMode } = usePreferences();
 
   return (
     <div className="flex items-center justify-between">
@@ -48,9 +48,9 @@ const BlockViewToolbar = ({ title }: BlockViewToolbarProps) => {
         <ThemeModeSwitch
           size="sm"
           shape="square"
-          isSelected={currentMode === "dark"}
+          isSelected={activeMode === "dark"}
           onChange={(isSelected) =>
-            setCurrentMode(isSelected ? "dark" : "light")
+            setActiveMode(isSelected ? "dark" : "light")
           }
         />
       </div>

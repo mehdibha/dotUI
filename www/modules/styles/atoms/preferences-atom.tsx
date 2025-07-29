@@ -4,44 +4,44 @@ import { withImmer } from "jotai-immer";
 import { atomWithStorage } from "jotai/utils";
 
 interface State {
-  currentStyleSlug: string;
-  currentMode: "light" | "dark";
+  activeStyleId: string;
+  activeMode: "light" | "dark";
 }
 
 const preferencesAtom = withImmer(
   atomWithStorage<State>("user-preferences", {
-    currentStyleSlug: "minimalist",
-    currentMode: "dark",
+    activeStyleId: "minimalist",
+    activeMode: "dark",
   }),
 );
 
 export const usePreferences = () => {
   const [state, setState] = useAtom(preferencesAtom);
 
-  const currentMode = React.useMemo(() => {
-    return state.currentMode;
-  }, [state.currentMode]);
+  const activeMode = React.useMemo(() => {
+    return state.activeMode;
+  }, [state.activeMode]);
 
-  const setCurrentMode = (mode: "light" | "dark") => {
+  const setActiveMode = (mode: "light" | "dark") => {
     setState((draft) => {
-      draft.currentMode = mode;
+      draft.activeMode = mode;
     });
   };
 
-  const currentStyleSlug = React.useMemo(() => {
-    return state.currentStyleSlug;
-  }, [state.currentStyleSlug]);
+  const activeStyleId = React.useMemo(() => {
+    return state.activeStyleId;
+  }, [state.activeStyleId]);
 
-  const setCurrentStyleSlug = (styleSlug: string) => {
+  const setActiveStyleId = (styleSlug: string) => {
     setState((draft) => {
-      draft.currentStyleSlug = styleSlug;
+      draft.activeStyleId = styleSlug;
     });
   };
 
   return {
-    currentMode,
-    setCurrentMode,
-    currentStyleSlug,
-    setCurrentStyleSlug,
+    activeMode,
+    setActiveMode,
+    activeStyleId,
+    setActiveStyleId,
   };
 };

@@ -16,61 +16,62 @@ import type { ButtonProps } from "@dotui/ui/components/button";
 import type { SelectRootProps } from "@dotui/ui/components/select";
 
 import { useTRPC, useTRPCClient } from "@/lib/trpc/react";
+import { useActiveStyle } from "../hooks/use-active-style";
 
 export function StyleSelector(
   props: SelectRootProps<any> & {
     buttonProps?: ButtonProps;
   },
 ) {
-  const trpc = useTRPC();
-  const trpcClient = useTRPCClient();
-  const queryClient = useQueryClient();
+  const { data: activeStyle } = useActiveStyle();
+  const { data: styles } = useQuery(trpc.style.featured.queryOptions({}));
+  // const trpc = useTRPC();
+  // const trpcClient = useTRPCClient();
+  // const queryClient = useQueryClient();
 
-  const {
-    data: styles,
-    isLoading,
-    isSuccess,
-  } = useQuery({
-    ...trpc.style.all.queryOptions({
-      isFeatured: true,
-    }),
-  });
+  // const {
+  //   data: styles,
+  //   isLoading,
+  //   isSuccess,
+  // } = useQuery({
+  //   ...trpc.style.featured.queryOptions({}),
+  // });
 
-  const { data: currentStyle } = useQuery({
-    ...trpc.style.getCurrentStyle.queryOptions(),
-  });
+  // const { data: currentStyle } = useQuery({
+  //   ...trpc.style.getCurrentStyle.queryOptions(),
+  // });
 
-  const updateStyleMutation = useMutation({
-    mutationFn: async (variables: { styleId: string }) => {
-      return await trpcClient.style.updateCurrentStyle.mutate(variables);
-    },
-    onMutate: async (variables) => {
-      await queryClient.cancelQueries({
-        queryKey: trpc.style.getCurrentStyle.queryKey(),
-      });
-      const previousStyle = queryClient.getQueryData(
-        trpc.style.getCurrentStyle.queryKey(),
-      );
-      queryClient.setQueryData(
-        trpc.style.getCurrentStyle.queryKey(),
-        variables.styleId,
-      );
-      return { previousStyle, newStyle: variables.styleId };
-    },
-    onError: (err, variables, context) => {
-      if (context?.previousStyle !== undefined) {
-        queryClient.setQueryData(
-          trpc.style.getCurrentStyle.queryKey(),
-          context.previousStyle,
-        );
-      }
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({
-        queryKey: trpc.style.getCurrentStyle.queryKey(),
-      });
-    },
-  });
+  // const updateStyleMutation = useMutation({
+  //   mutationFn: async (variables: { styleId: string }) => {
+  //     return await trpcClient.style.updateCurrentStyle.mutate(variables);
+  //   },
+  //   onMutate: async (variables) => {
+  //     await queryClient.cancelQueries({
+  //       queryKey: trpc.style.getCurrentStyle.queryKey(),
+  //     });
+  //     const previousStyle = queryClient.getQueryData(
+  //       trpc.style.getCurrentStyle.queryKey(),
+  //     );
+  //     queryClient.setQueryData(
+  //       trpc.style.getCurrentStyle.queryKey(),
+  //       variables.styleId,
+  //     );
+  //     return { previousStyle, newStyle: variables.styleId };
+  //   },
+  //   onError: (err, variables, context) => {
+  //     if (context?.previousStyle !== undefined) {
+  //       queryClient.setQueryData(
+  //         trpc.style.getCurrentStyle.queryKey(),
+  //         context.previousStyle,
+  //       );
+  //     }
+  //   },
+  //   onSettled: () => {
+  //     queryClient.invalidateQueries({
+  //       queryKey: trpc.style.getCurrentStyle.queryKey(),
+  //     });
+  //   },
+  // });
 
   return (
     <SelectRoot

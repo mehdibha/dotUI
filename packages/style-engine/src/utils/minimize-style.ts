@@ -69,8 +69,6 @@ export const minimizeStyleDefinition = (
   style: StyleDefinition,
 ): MinimizedStyleDefinition => {
   const minimized: MinimizedStyleDefinition = {
-    name: style.name,
-    description: style.description,
     theme: minimizeThemeDefinition(style.theme),
     variants: minimizeVariantsDefinition(style.variants),
     icons: minimizeIconsDefinition(style.icons),
