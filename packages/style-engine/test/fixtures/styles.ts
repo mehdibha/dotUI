@@ -5,8 +5,7 @@ import type {
 } from "../../src/types";
 
 export const mockMinimizedStyle: MinimizedStyleDefinition = {
-  name: "Test Theme",
-  slug: "test-theme",
+  name: "test-theme",
   description: "A test theme for unit testing",
   theme: mockMinimizedTheme,
   icons: {
@@ -20,8 +19,7 @@ export const mockMinimizedStyle: MinimizedStyleDefinition = {
 };
 
 export const mockStyleDefinition: StyleDefinition = {
-  name: "Test Theme",
-  slug: "test-theme",
+  name: "test-theme",
   description: "A test theme for unit testing",
   theme: mockThemeDefinition,
   icons: {
@@ -49,8 +47,7 @@ export const mockStyleDefinition: StyleDefinition = {
 };
 
 export const mockMinimizedStyleWithCustomScales: MinimizedStyleDefinition = {
-  name: "Custom Theme",
-  slug: "custom-theme",
+  name: "custom-theme",
   theme: {
     colors: {
       modes: {

@@ -42,8 +42,7 @@ describe("generateRegistryBase", () => {
   it("should add lucide-react dependency when using lucide icons", () => {
     const styleWithLucide = createStyle(
       restoreStyleDefinitionDefaults({
-        name: "Style with Lucide",
-        slug: "style-with-lucide",
+        name: "style-with-lucide",
         description: null,
         theme: {
           colors: {
@@ -70,8 +69,7 @@ describe("generateRegistryBase", () => {
   it("should add @remixicon/react dependency when using remix icons", () => {
     const remixStyle = createStyle(
       restoreStyleDefinitionDefaults({
-        name: "Style with Remix",
-        slug: "style-with-remix",
+        name: "style-with-remix",
         theme: {
           colors: {
             modes: {
@@ -101,9 +99,9 @@ describe("generateRegistryBase", () => {
     });
 
     expect(result.registryDependencies).toEqual([
-      `${baseUrl}/${mockStyle.slug}/utils`,
-      `${baseUrl}/${mockStyle.slug}/focus-styles`,
-      `${baseUrl}/${mockStyle.slug}/theme`,
+      `${baseUrl}/${mockStyle.name}/utils`,
+      `${baseUrl}/${mockStyle.name}/focus-styles`,
+      `${baseUrl}/${mockStyle.name}/theme`,
     ]);
   });
 });

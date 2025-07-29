@@ -6,7 +6,7 @@ import { Alert } from "@dotui/ui/components/alert";
 import { cn } from "@dotui/ui/lib/utils";
 
 import { getFileSource } from "@/modules/docs/lib/get-file-source";
-import { CurrentStyleProvider } from "@/modules/styles/components/current-style-provider";
+import { ActiveStyleProvider } from "@/modules/styles/components/active-style-provider";
 import { CodeBlock } from "./code-block";
 import {
   ComponentPreviewHeader,
@@ -71,13 +71,13 @@ export const ComponentPreview = async ({
       <div className="bg-bg-muted">
         <ResizableContainer resizable={resizable}>
           {/* <Loader> */}
-          <CurrentStyleProvider>
+          <ActiveStyleProvider>
             <ComponentPreviewHeader />
             <ScrollArea className="bg-bg text-fg">
               <div
                 className={cn(
-                  "flex pt-14 pb-10",
-                  primary && "min-h-48 pt-24 pb-20",
+                  "flex pb-10 pt-14",
+                  primary && "min-h-48 pb-20 pt-24",
                   fullWidth
                     ? "px-8 lg:px-12"
                     : "flex items-center justify-center px-4",
@@ -94,7 +94,7 @@ export const ComponentPreview = async ({
                 </div>
               </div>
             </ScrollArea>
-          </CurrentStyleProvider>
+          </ActiveStyleProvider>
           {/* </Loader> */}
         </ResizableContainer>
       </div>

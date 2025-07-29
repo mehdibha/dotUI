@@ -47,7 +47,8 @@ export const createDynamicComponent = <Props extends {}>(
         >
           <React.Suspense
             fallback={
-              <Skeleton show={!disableSkeleton}>
+              // @ts-expect-error: we assume that the component has a className prop
+              <Skeleton show={!disableSkeleton} className={props?.className}>
                 <VariantsProvider variants={DEFAULT_VARIANTS_DEFINITION}>
                   <DefaultComponent {...props} />
                 </VariantsProvider>
@@ -78,7 +79,8 @@ export const createDynamicComponent = <Props extends {}>(
       >
         <React.Suspense
           fallback={
-            <Skeleton>
+            // @ts-expect-error: we assume that the component has a className prop
+            <Skeleton className={props?.className}>
               <VariantsProvider variants={DEFAULT_VARIANTS_DEFINITION}>
                 <DefaultComponent {...props} />
               </VariantsProvider>

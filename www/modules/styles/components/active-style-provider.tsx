@@ -11,11 +11,11 @@ import { Skeleton } from "@dotui/ui/components/skeleton";
 import { useTRPC } from "@/lib/trpc/react";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 
-export function CurrentStyleProvider(
+export function ActiveStyleProvider(
   props: Omit<React.ComponentProps<"div">, "style">,
 ) {
   const { currentMode, currentStyleSlug } = usePreferences();
-  const container = useCurrentStylePortalContext();
+  const container = useActiveStylePortalContext();
 
   const trpc = useTRPC();
 
@@ -62,11 +62,11 @@ export function CurrentStyleProvider(
   );
 }
 
-const CurrentStyleContext =
+const ActiveStyleContext =
   React.createContext<React.RefObject<HTMLDivElement | null> | null>(null);
 
-const useCurrentStylePortalContext = () => {
-  const context = React.useContext(CurrentStyleContext);
+const useActiveStylePortalContext = () => {
+  const context = React.useContext(ActiveStyleContext);
   if (!context) {
     throw new Error(
       "useCurrentStylePortalContext must be used within a CurrentStylePortalProvider",
@@ -75,7 +75,7 @@ const useCurrentStylePortalContext = () => {
   return context;
 };
 
-export const CurrentStylePortalProvider = ({
+export const ActiveStylePortalProvider = ({
   children,
 }: {
   children: React.ReactNode;
@@ -101,7 +101,7 @@ export const CurrentStylePortalProvider = ({
   });
 
   return (
-    <CurrentStyleContext.Provider value={container}>
+    <ActiveStyleContext.Provider value={container}>
       <StyleProvider
         ref={container}
         mode={currentMode}
@@ -109,6 +109,6 @@ export const CurrentStylePortalProvider = ({
         unstyled
       />
       {children}
-    </CurrentStyleContext.Provider>
+    </ActiveStyleContext.Provider>
   );
 };

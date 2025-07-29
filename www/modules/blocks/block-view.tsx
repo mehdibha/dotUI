@@ -10,7 +10,7 @@ import { Skeleton } from "@dotui/ui/components/skeleton";
 
 import { ThemeModeSwitch } from "@/components/theme-mode-switch";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
-import { CurrentStyleProvider } from "@/modules/styles/components/current-style-provider";
+import { ActiveStyleProvider } from "@/modules/styles/components/active-style-provider";
 
 interface BlockViewProps {
   name: string;
@@ -60,11 +60,11 @@ const BlockViewToolbar = ({ title }: BlockViewToolbarProps) => {
 
 const BlockViewView = ({ name }: { name: string }) => {
   return (
-    <CurrentStyleProvider className="flex-1 rounded-lg border">
+    <ActiveStyleProvider className="flex-1 rounded-lg border">
       <React.Suspense fallback={<Skeleton className="h-full w-full" />}>
         <BlockViewer name={name} />
       </React.Suspense>
-    </CurrentStyleProvider>
+    </ActiveStyleProvider>
   );
 };
 

@@ -65,9 +65,9 @@ async function seedFeaturedStyles(userId: string) {
     .from(style)
     .where(eq(style.userId, userId));
 
-  const existingSlugs = new Set(existingStyles.map((s) => s.slug));
+  const existingNames = new Set(existingStyles.map((s) => s.name));
   const missingStyles = DEFAULT_STYLES.filter(
-    (featuredStyle) => !existingSlugs.has(featuredStyle.slug),
+    (featuredStyle) => !existingNames.has(featuredStyle.name),
   );
 
   if (missingStyles.length === 0) {

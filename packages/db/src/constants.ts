@@ -7,8 +7,7 @@ export const DEFAULT_STYLES: Omit<
   "userId"
 >[] = [
   {
-    name: "Minimalist",
-    slug: "minimalist",
+    name: "minimalist",
     theme: {
       colors: {
         activeModes: ["light", "dark"],
@@ -16,8 +15,7 @@ export const DEFAULT_STYLES: Omit<
     },
   },
   {
-    name: "Brutalist",
-    slug: "brutalist",
+    name: "brutalist",
     theme: {
       colors: {
         activeModes: ["light"],
@@ -28,8 +26,7 @@ export const DEFAULT_STYLES: Omit<
     },
   },
   {
-    name: "Material",
-    slug: "material",
+    name: "material",
     theme: {
       colors: {
         activeModes: ["light"],
@@ -118,8 +115,7 @@ export const DEFAULT_STYLES: Omit<
     },
   },
   {
-    name: "Ghibli",
-    slug: "ghibli",
+    name: "ghibli",
     theme: {
       colors: {
         activeModes: ["light"],

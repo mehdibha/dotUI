@@ -12,10 +12,10 @@ import {
 import { protectedProcedure, publicProcedure } from "../trpc";
 
 export const styleRouter = {
-  getCurrentStyle: protectedProcedure.query(({ ctx }) => {
-    return ctx.session.user.selectedStyle;
+  getActiveStyle: protectedProcedure.query(({ ctx }) => {
+    return ctx.session.user.activeStyleId;
   }),
-  updateCurrentStyle: protectedProcedure
+  updateActiveStyle: protectedProcedure
     .input(
       z.object({
         styleId: z.string(),
@@ -25,7 +25,7 @@ export const styleRouter = {
       await ctx.db
         .update(user)
         .set({
-          selectedStyle: input.styleId,
+          activeStyleId: input.styleId,
         })
         .where(eq(user.id, ctx.session.user.id));
 

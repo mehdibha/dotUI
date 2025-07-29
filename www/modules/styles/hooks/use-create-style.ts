@@ -24,16 +24,9 @@ export function useCreateStyle() {
 
   return useMutation({
     mutationFn: async (data: CreateStyleInput) => {
-      const slug = data.name
-        .toLowerCase()
-        .replace(/[^a-z0-9]/g, "-")
-        .replace(/-+/g, "-")
-        .replace(/^-|-$/g, "");
-      // const trpc = useTRPC();
 
       const styleData: StyleDefinition = {
         name: data.name,
-        slug,
         description: `${data.name} style`,
         theme: DEFAULT_THEME,
         icons: {

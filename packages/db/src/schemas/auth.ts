@@ -17,9 +17,9 @@ export const user = pgTable("user", {
   updatedAt: timestamp("updated_at")
     .$defaultFn(() => /* @__PURE__ */ new Date())
     .notNull(),
-  selectedStyle: text("selected_style")
-    .default("minimalist")
-    .references((): AnyPgColumn => style.id),
+  activeStyleId: text("active_style_id").references(
+    (): AnyPgColumn => style.id,
+  ),
   role: text("role").default("user"),
   banned: boolean("banned"),
   banReason: text("ban_reason"),
