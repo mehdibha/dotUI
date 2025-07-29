@@ -1,4 +1,4 @@
-import { eq, relations } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import { pgTable, uniqueIndex } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
@@ -28,12 +28,11 @@ export const style = pgTable(
     variants: t.jsonb("variants").$type<MinimizedVariantsDefinition>(),
     userId: t
       .text("user_id")
-      .notNull()
-      .references(() => user.id, { onDelete: "cascade" }),
+      .references(() => user.id, { onDelete: "set null" }),
     createdAt: t.timestamp().defaultNow().notNull(),
     updatedAt: t
-      .timestamp({ mode: "date", withTimezone: true })
-      .$onUpdateFn(() => new Date()),
+    .timestamp({ mode: "date", withTimezone: true })
+    .$onUpdateFn(() => sql`now()`),
   }),
   (t) => ({
     userNameUnique: uniqueIndex().on(t.userId, t.name),
@@ -42,15 +41,6 @@ export const style = pgTable(
       .where(eq(t.visibility, "public")),
   }),
 );
-
-/** Relations **/
-export const styleRelations = relations(style, ({ one, many }) => ({
-  user: one(user, {
-    fields: [style.userId],
-    references: [user.id],
-  }),
-  usersWithActiveStyle: many(user),
-}));
 
 /** Validations **/
 export const createStyleSchema = createInsertSchema(style)
