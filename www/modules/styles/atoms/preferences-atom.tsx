@@ -4,13 +4,13 @@ import { withImmer } from "jotai-immer";
 import { atomWithStorage } from "jotai/utils";
 
 interface State {
-  activeStyleId: string;
+  activeStyleId: string | null;
   activeMode: "light" | "dark";
 }
 
 const preferencesAtom = withImmer(
   atomWithStorage<State>("user-preferences", {
-    activeStyleId: "minimalist",
+    activeStyleId: null,
     activeMode: "dark",
   }),
 );

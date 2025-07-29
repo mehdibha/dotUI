@@ -6,6 +6,7 @@ import {
 import { BlockView } from "@/modules/blocks/block-view";
 
 export const dynamicParams = false;
+export const dynamic = "force-static";
 
 export async function generateStaticParams() {
   return blocksCategories.map((category) => ({

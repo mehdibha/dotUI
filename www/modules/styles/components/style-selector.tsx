@@ -15,67 +15,22 @@ import {
 import type { ButtonProps } from "@dotui/ui/components/button";
 import type { SelectRootProps } from "@dotui/ui/components/select";
 
-import { useTRPC, useTRPCClient } from "@/lib/trpc/react";
-import { useActiveStyle } from "../hooks/use-active-style";
+import { useActiveStyle } from "@/modules/styles/hooks/use-active-style";
+import { useFeaturedStyles } from "@/modules/styles/hooks/use-featured-styles";
+import { useSetActiveStyle } from "../hooks/use-set-active-style";
 
 export function StyleSelector(
   props: SelectRootProps<any> & {
     buttonProps?: ButtonProps;
   },
 ) {
-  const { data: activeStyle } = useActiveStyle();
-  const { data: styles } = useQuery(trpc.style.featured.queryOptions({}));
-  // const trpc = useTRPC();
-  // const trpcClient = useTRPCClient();
-  // const queryClient = useQueryClient();
-
-  // const {
-  //   data: styles,
-  //   isLoading,
-  //   isSuccess,
-  // } = useQuery({
-  //   ...trpc.style.featured.queryOptions({}),
-  // });
-
-  // const { data: currentStyle } = useQuery({
-  //   ...trpc.style.getCurrentStyle.queryOptions(),
-  // });
-
-  // const updateStyleMutation = useMutation({
-  //   mutationFn: async (variables: { styleId: string }) => {
-  //     return await trpcClient.style.updateCurrentStyle.mutate(variables);
-  //   },
-  //   onMutate: async (variables) => {
-  //     await queryClient.cancelQueries({
-  //       queryKey: trpc.style.getCurrentStyle.queryKey(),
-  //     });
-  //     const previousStyle = queryClient.getQueryData(
-  //       trpc.style.getCurrentStyle.queryKey(),
-  //     );
-  //     queryClient.setQueryData(
-  //       trpc.style.getCurrentStyle.queryKey(),
-  //       variables.styleId,
-  //     );
-  //     return { previousStyle, newStyle: variables.styleId };
-  //   },
-  //   onError: (err, variables, context) => {
-  //     if (context?.previousStyle !== undefined) {
-  //       queryClient.setQueryData(
-  //         trpc.style.getCurrentStyle.queryKey(),
-  //         context.previousStyle,
-  //       );
-  //     }
-  //   },
-  //   onSettled: () => {
-  //     queryClient.invalidateQueries({
-  //       queryKey: trpc.style.getCurrentStyle.queryKey(),
-  //     });
-  //   },
-  // });
+  const activeStyleQuery = useActiveStyle();
+  const featuredStylesQuery = useFeaturedStyles();
+  const updateStyleMutation = useSetActiveStyle();
 
   return (
     <SelectRoot
-      selectedKey={currentStyle}
+      selectedKey={activeStyleQuery.data?.id}
       onSelectionChange={(key) => {
         updateStyleMutation.mutate({
           styleId: key as string,
@@ -89,15 +44,19 @@ export function StyleSelector(
         {...props.buttonProps}
       >
         <span className="text-fg-muted">Style:</span>{" "}
-        {isLoading ? <span>loading...</span> : <SelectValue />}
+        {activeStyleQuery.isLoading || featuredStylesQuery.isLoading ? (
+          <span>loading...</span>
+        ) : (
+          <SelectValue />
+        )}
       </Button>
       <HelpText />
       <Popover>
-        <ListBox isLoading={isLoading}>
+        <ListBox isLoading={activeStyleQuery.isLoading || featuredStylesQuery.isLoading}>
           <ListBoxSection title="Featured">
-            {isSuccess &&
-              styles.map((style) => (
-                <SelectItem key={style.slug} id={style.slug}>
+            {featuredStylesQuery.isSuccess &&
+              featuredStylesQuery.data?.map((style) => (
+                <SelectItem key={style.id} id={style.id}>
                   {style.name}
                 </SelectItem>
               ))}

@@ -13,7 +13,7 @@ import {
 import { protectedProcedure, publicProcedure } from "../trpc";
 
 // Input validation schemas
-const uuidSchema = z.uuid("Invalid style ID format");
+const uuidSchema = z.string().min(1)
 const paginationSchema = z.object({
   limit: z.number().min(1).max(100).default(10),
   offset: z.number().min(0).default(0),

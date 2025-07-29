@@ -26,7 +26,6 @@ export function BlockView({ name, ...props }: BlockViewProps) {
     <div className="flex min-h-[400px] flex-col gap-2">
       <BlockViewToolbar title={block.description} />
       <BlockViewView name={block.name} />
-      <BlockViewCode />
     </div>
   );
 }
@@ -60,14 +59,10 @@ const BlockViewToolbar = ({ title }: BlockViewToolbarProps) => {
 
 const BlockViewView = ({ name }: { name: string }) => {
   return (
-    <ActiveStyleProvider className="flex-1 rounded-lg border">
-      <React.Suspense fallback={<Skeleton className="h-full w-full" />}>
+    <ActiveStyleProvider className="flex-1 rounded-lg border h-[80vh] overflow-y-auto">
+      <React.Suspense fallback={"loading..."}>
         <BlockViewer name={name} />
       </React.Suspense>
     </ActiveStyleProvider>
   );
-};
-
-const BlockViewCode = () => {
-  return <div></div>;
 };

@@ -1,14 +1,12 @@
 "use client";
 
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
 import { UNSAFE_PortalProvider as PortalProvider } from "react-aria";
 
 import { StyleProvider } from "@dotui/ui";
 import { Alert } from "@dotui/ui/components/alert";
 import { Skeleton } from "@dotui/ui/components/skeleton";
 
-import { useTRPC } from "@/lib/trpc/react";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 import { useActiveStyle } from "@/modules/styles/hooks/use-active-style";
 
@@ -17,10 +15,10 @@ export function ActiveStyleProvider(
 ) {
   const container = useActiveStylePortalContext();
   const { activeMode } = usePreferences();
-  const { data: activeStyle, isLoading, isError } = useActiveStyle();
+  const { data: activeStyle, isPending, isError } = useActiveStyle();
 
-  if (isLoading) {
-    return <Skeleton>{props.children}</Skeleton>;
+  if (isPending) {
+    return <div>{props.children}</div>;
   }
 
   if (isError) {

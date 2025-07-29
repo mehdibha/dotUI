@@ -4,33 +4,49 @@ import { useTRPC } from "@/lib/trpc/react";
 import { authClient } from "@/modules/auth/lib/client";
 import { usePreferences } from "../atoms/preferences-atom";
 
-export function useActiveStyle() {
+export function useActiveStyleId() {
   const trpc = useTRPC();
 
   const { data: session } = authClient.useSession();
   const { activeStyleId: localActiveStyleId } = usePreferences();
 
-  const { data: authedActiveStyle } = useQuery({
-    ...trpc.style.getActiveStyleId.queryOptions(),
+  const { data: authedActiveStyleId } = useQuery({
+    ...trpc.style.getActive.queryOptions(),
     retry: false,
     enabled: !!session,
   });
 
   const { data: featuredStyles } = useQuery(
-    trpc.style.featured.queryOptions({
+    trpc.style.getFeatured.queryOptions({
       limit: 1,
     }),
   );
 
-  const activeStyleId =
-    authedActiveStyle || localActiveStyleId || featuredStyles?.[0]?.id;
+  return authedActiveStyleId || localActiveStyleId || featuredStyles?.[0]?.id;
+}
+
+export function useActiveStyle() {
+  const trpc = useTRPC();
+
+  const activeStyleId = useActiveStyleId();
 
   return useQuery({
-    ...trpc.style.byId.queryOptions({
-      id: activeStyleId,
+    ...trpc.style.getById.queryOptions({
+      id: activeStyleId!,
     }),
     enabled: !!activeStyleId,
     placeholderData: (prev) => prev,
   });
-
 }
+
+// export function useActiveStyleSuspense() {
+//   const trpc = useTRPC();
+
+//   const activeStyleId = useActiveStyleId();
+
+//   return useSuspenseQuery({
+//     ...trpc.style.getById.queryOptions({
+//       id: activeStyleId!,
+//     }),
+//   });
+// }
