@@ -20,10 +20,10 @@ const paginationSchema = z.object({
 });
 
 export const styleRouter = {
-  getActiveStyleId: protectedProcedure.query(({ ctx }) => {
+  getActive: protectedProcedure.query(({ ctx }) => {
     return ctx.session.user.activeStyleId;
   }),
-  updateActiveStyle: protectedProcedure
+  setActive: protectedProcedure
     .input(
       z.object({
         styleId: uuidSchema,
@@ -39,7 +39,7 @@ export const styleRouter = {
 
       return input.styleId;
     }),
-  featured: publicProcedure
+  getFeatured: publicProcedure
     .input(paginationSchema)
     .query(async ({ ctx, input }) => {
       const styles = await ctx.db.query.style.findMany({
@@ -54,7 +54,7 @@ export const styleRouter = {
 
       return result;
     }),
-  byId: publicProcedure
+  getById: publicProcedure
     .input(z.object({ id: uuidSchema }))
     .query(async ({ ctx, input }) => {
       const rawStyle = await ctx.db.query.style.findFirst({
@@ -69,6 +69,29 @@ export const styleRouter = {
       }
 
       return { ...rawStyle, ...restoreStyleDefinitionDefaults(rawStyle) };
+    }),
+  getbyNameAndUsername: publicProcedure
+    .input(
+      z.object({
+        name: z.string().min(1, "Style name cannot be empty"),
+        userId: uuidSchema,
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const rawStyle = await ctx.db.query.style.findFirst({
+        where: and(eq(style.name, input.name), eq(style.userId, input.userId)),
+      });
+
+      if (!rawStyle) {
+        return undefined;
+      }
+
+      return { ...rawStyle, ...restoreStyleDefinitionDefaults(rawStyle) };
+    }),
+  create: protectedProcedure
+    .input(styleDefinitionSchema)
+    .mutation(async ({ ctx, input }) => {
+      return;
     }),
   update: protectedProcedure
     .input(styleDefinitionSchema.extend({ id: uuidSchema }))
@@ -103,22 +126,9 @@ export const styleRouter = {
         return updatedStyle;
       });
     }),
-  byNameAndUserId: publicProcedure
-    .input(
-      z.object({
-        name: z.string().min(1, "Style name cannot be empty"),
-        userId: uuidSchema,
-      }),
-    )
-    .query(async ({ ctx, input }) => {
-      const rawStyle = await ctx.db.query.style.findFirst({
-        where: and(eq(style.name, input.name), eq(style.userId, input.userId)),
-      });
-
-      if (!rawStyle) {
-        return undefined;
-      }
-
-      return { ...rawStyle, ...restoreStyleDefinitionDefaults(rawStyle) };
+  delete: protectedProcedure
+    .input(z.object({ id: uuidSchema }))
+    .mutation(async ({ ctx, input }) => {
+      return;
     }),
 } satisfies TRPCRouterRecord;

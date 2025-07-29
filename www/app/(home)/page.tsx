@@ -19,9 +19,11 @@ import { siteConfig } from "@/config";
 import { getGitHubContributors } from "@/lib/github";
 import { caller } from "@/lib/trpc/server";
 
+export const dynamic = "force-static";
+
 export default async function HomePage() {
   const contributors = await getGitHubContributors();
-  const feturedStyles = await caller.style.featured({ limit: 6 });
+  const feturedStyles = await caller.style.getFeatured({ limit: 6 });
 
   return (
     <div>
