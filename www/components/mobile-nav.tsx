@@ -45,7 +45,7 @@ export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
           containerPadding: 0,
           offset: 12,
           className:
-            "size-full border-0 rounded-none bg-bg/90 backdrop-blur-md",
+            "size-full border-0 rounded-none bg-bg/95 backdrop-blur-md",
         }}
         className="overflow-y-auto pt-4"
       >
