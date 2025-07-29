@@ -1,4 +1,5 @@
-import { boolean, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import { relations } from "drizzle-orm";
+import { boolean, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 import type { AnyPgColumn } from "drizzle-orm/pg-core";
 
 import { style } from "./style";
@@ -19,6 +20,9 @@ export const user = pgTable("user", {
     .notNull(),
   activeStyleId: text("active_style_id").references(
     (): AnyPgColumn => style.id,
+    {
+      onDelete: "set null",
+    },
   ),
   role: text("role").default("user"),
   banned: boolean("banned"),
@@ -69,3 +73,28 @@ export const verification = pgTable("verification", {
     () => /* @__PURE__ */ new Date(),
   ),
 });
+
+// Relations
+export const userRelations = relations(user, ({ one, many }) => ({
+  activeStyle: one(style, {
+    fields: [user.activeStyleId],
+    references: [style.id],
+  }),
+  styles: many(style),
+  sessions: many(session),
+  accounts: many(account),
+}));
+
+export const sessionRelations = relations(session, ({ one }) => ({
+  user: one(user, {
+    fields: [session.userId],
+    references: [user.id],
+  }),
+}));
+
+export const accountRelations = relations(account, ({ one }) => ({
+  user: one(user, {
+    fields: [account.userId],
+    references: [user.id],
+  }),
+}));

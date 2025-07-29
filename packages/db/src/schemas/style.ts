@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { eq, relations } from "drizzle-orm";
 import { pgTable, uniqueIndex } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
@@ -15,11 +15,11 @@ import { user } from "./auth";
 export const style = pgTable(
   "style",
   (t) => ({
-    id: t.uuid().notNull().primaryKey().defaultRandom(),
-    name: t.varchar({ length: 100 }).notNull(),
+    id: t.text("id").primaryKey(),
+    name: t.text("name").notNull(),
     description: t.text(),
     visibility: t
-      .varchar("visibility", { length: 10 })
+      .text("visibility", { enum: ["public", "unlisted", "private"] })
       .notNull()
       .default("unlisted"),
     isFeatured: t.boolean("is_featured").notNull().default(false),
@@ -42,6 +42,15 @@ export const style = pgTable(
       .where(eq(t.visibility, "public")),
   }),
 );
+
+/** Relations **/
+export const styleRelations = relations(style, ({ one, many }) => ({
+  user: one(user, {
+    fields: [style.userId],
+    references: [user.id],
+  }),
+  usersWithActiveStyle: many(user),
+}));
 
 /** Validations **/
 export const createStyleSchema = createInsertSchema(style)
