@@ -20,10 +20,9 @@ export function initAuth(options: {
     secret: options.secret,
     user: {
       additionalFields: {
-        selectedStyle: {
+        activeStyleId: {
           type: "string",
-          required: true,
-          defaultValue: "minimalist",
+          required: false,
         },
         role: {
           type: "string",

@@ -20,7 +20,7 @@ export function ActiveStyleProvider(
   const trpc = useTRPC();
 
   const { data: currentStyleFromAPI } = useQuery({
-    ...trpc.style.getCurrentStyle.queryOptions(),
+    ...trpc.style.getActiveStyleId.queryOptions(),
     retry: false,
   });
 

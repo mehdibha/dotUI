@@ -1,7 +1,7 @@
 import { z } from "zod";
 import type { TRPCRouterRecord } from "@trpc/server";
 
-import { eq } from "@dotui/db";
+import { and, eq } from "@dotui/db";
 import { style, user } from "@dotui/db/schemas";
 import { styleDefinitionSchema } from "@dotui/style-engine/schemas";
 import {
@@ -12,7 +12,7 @@ import {
 import { protectedProcedure, publicProcedure } from "../trpc";
 
 export const styleRouter = {
-  getActiveStyle: protectedProcedure.query(({ ctx }) => {
+  getActiveStyleId: protectedProcedure.query(({ ctx }) => {
     return ctx.session.user.activeStyleId;
   }),
   updateActiveStyle: protectedProcedure
@@ -29,13 +29,13 @@ export const styleRouter = {
         })
         .where(eq(user.id, ctx.session.user.id));
 
-      return ctx.session.user.selectedStyle;
+      return ctx.session.user.activeStyleId;
     }),
   update: protectedProcedure
-    .input(styleDefinitionSchema)
+    .input(styleDefinitionSchema.extend({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
       const existingStyle = await ctx.db.query.style.findFirst({
-        where: eq(style.slug, input.slug),
+        where: eq(style.id, input.id),
       });
 
       if (!existingStyle) {
@@ -51,7 +51,7 @@ export const styleRouter = {
       const [updatedStyle] = await ctx.db
         .update(style)
         .set(minimizedStyle)
-        .where(eq(style.slug, input.slug))
+        .where(eq(style.id, input.id))
         .returning();
 
       return updatedStyle;
@@ -75,11 +75,11 @@ export const styleRouter = {
 
       return result;
     }),
-  bySlug: publicProcedure
-    .input(z.object({ slug: z.string() }))
+  byNameAndUserId: publicProcedure
+    .input(z.object({ name: z.string(), userId: z.string() }))
     .query(async ({ ctx, input }) => {
       const rawStyle = await ctx.db.query.style.findFirst({
-        where: eq(style.slug, input.slug),
+        where: and(eq(style.name, input.name), eq(style.userId, input.userId)),
       });
 
       if (!rawStyle) {
