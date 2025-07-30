@@ -11,7 +11,7 @@ import { ThemeModeSwitch } from "@/components/theme-mode-switch";
 import { useHorizontalResize } from "@/hooks/use-horizontal-resize";
 import { useMounted } from "@/hooks/use-mounted";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
-import { StyleSelector } from "@/modules/styles/components/style-selector";
+import { ActiveStyleSelector } from "@/modules/styles/components/active-style-selector";
 
 export const Loader = ({ children }: { children: React.ReactNode }) => {
   const [isMounted, setIsMounted] = React.useState(false);
@@ -58,7 +58,7 @@ export const ResizableContainer = ({
     >
       <div
         onMouseDown={handleMouseDown}
-        className="absolute top-1/2 right-2 z-20 h-15 w-2 -translate-y-1/2 cursor-col-resize rounded-full bg-bg-neutral shadow-sm hover:bg-bg-neutral-hover active:bg-bg-neutral-active"
+        className="h-15 bg-bg-neutral hover:bg-bg-neutral-hover active:bg-bg-neutral-active absolute right-2 top-1/2 z-20 w-2 -translate-y-1/2 cursor-col-resize rounded-full shadow-sm"
       />
       {children}
     </div>
@@ -66,22 +66,22 @@ export const ResizableContainer = ({
 };
 
 export const ComponentPreviewHeader = () => {
-  const { currentMode, setCurrentMode } = usePreferences();
+  const { activeMode, setActiveMode } = usePreferences();
   const style = useCurrentStyle();
   const isMounted = useMounted();
 
   return (
-    <div className="absolute top-0 left-0 z-20 flex w-full items-start justify-between gap-2 p-2">
+    <div className="absolute left-0 top-0 z-20 flex w-full items-start justify-between gap-2 p-2">
       <VariantsProvider variants={DEFAULT_VARIANTS_DEFINITION}>
-        <StyleSelector buttonProps={{ size: "sm", className: "text-xs" }} />
+        <ActiveStyleSelector buttonProps={{ size: "sm", className: "text-xs" }} />
       </VariantsProvider>
       {style && style.theme.colors.activeModes.length > 1 && isMounted && (
         <ThemeModeSwitch
           size="sm"
           shape="square"
-          isSelected={currentMode === "dark"}
+          isSelected={activeMode === "dark"}
           onChange={(isSelected) =>
-            setCurrentMode(isSelected ? "dark" : "light")
+            setActiveMode(isSelected ? "dark" : "light")
           }
         />
       )}

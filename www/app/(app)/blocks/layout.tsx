@@ -2,8 +2,15 @@
 
 import { Button } from "@dotui/ui/components/button";
 
+import {
+  PageActions,
+  PageHeader,
+  PageHeaderDescription,
+  PageHeaderHeading,
+  PageLayout,
+} from "@/components/page-layout";
 import { BlocksNav } from "@/modules/blocks/blocks-nav";
-import { StyleSelector } from "@/modules/styles/components/style-selector";
+import { ActiveStyleSelector } from "@/modules/styles/components/active-style-selector";
 
 export default function BlocksLayout({
   children,
@@ -11,20 +18,18 @@ export default function BlocksLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="pt-14">
-      <div className="container px-14">
-        <h2 className="text-4xl font-semibold tracking-tighter text-balance">
-          Blocks that don’t lock you in.
-        </h2>
-        <p className="mt-2 text-base text-fg-muted">
+    <PageLayout>
+      <PageHeader>
+        <PageHeaderHeading>Blocks that don’t lock you in.</PageHeaderHeading>
+        <PageHeaderDescription>
           Modern UI blocks available in infinite styles.
-        </p>
-        <div className="flex h-18 items-center gap-2">
-          <Button variant="primary">Add your block</Button>
-          <StyleSelector buttonProps={{ className: "px-4" }} />
-        </div>
-      </div>
-      <BlocksNav className="mt-4">{children}</BlocksNav>
-    </div>
+        </PageHeaderDescription>
+        <PageActions>
+          {/* <Button variant="primary">Add your block</Button> */}
+          <ActiveStyleSelector buttonProps={{ className: "px-4" }} />
+        </PageActions>
+      </PageHeader>
+      <BlocksNav className="mt-8">{children}</BlocksNav>
+    </PageLayout>
   );
 }

@@ -13,7 +13,7 @@ import {
 import { protectedProcedure, publicProcedure } from "../trpc";
 
 // Input validation schemas
-const uuidSchema = z.string().min(1)
+const uuidSchema = z.string().min(1);
 const paginationSchema = z.object({
   limit: z.number().min(1).max(100).default(10),
   offset: z.number().min(0).default(0),
@@ -53,6 +53,15 @@ export const styleRouter = {
       });
 
       return result;
+    }),
+  getByUsername: publicProcedure
+    .input(z.object({ username: z.string().min(1) }))
+    .query(async ({ ctx, input }) => {
+      const styles = await ctx.db.query.style.findMany({
+        where: eq(style.userId, input.username),
+      });
+
+      return styles;
     }),
   getById: publicProcedure
     .input(z.object({ id: uuidSchema }))

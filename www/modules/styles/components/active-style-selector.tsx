@@ -19,7 +19,7 @@ import { useActiveStyle } from "@/modules/styles/hooks/use-active-style";
 import { useFeaturedStyles } from "@/modules/styles/hooks/use-featured-styles";
 import { useSetActiveStyle } from "../hooks/use-set-active-style";
 
-export function StyleSelector(
+export function ActiveStyleSelector(
   props: SelectRootProps<any> & {
     buttonProps?: ButtonProps;
   },
@@ -44,15 +44,11 @@ export function StyleSelector(
         {...props.buttonProps}
       >
         <span className="text-fg-muted">Style:</span>{" "}
-        {activeStyleQuery.isLoading || featuredStylesQuery.isLoading ? (
-          <span>loading...</span>
-        ) : (
-          <SelectValue />
-        )}
+        {activeStyleQuery.isPending ? <span>loading...</span> : <SelectValue />}
       </Button>
       <HelpText />
       <Popover>
-        <ListBox isLoading={activeStyleQuery.isLoading || featuredStylesQuery.isLoading}>
+        <ListBox isLoading={featuredStylesQuery.isPending}>
           <ListBoxSection title="Featured">
             {featuredStylesQuery.isSuccess &&
               featuredStylesQuery.data?.map((style) => (

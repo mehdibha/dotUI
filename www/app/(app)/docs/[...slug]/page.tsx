@@ -35,7 +35,7 @@ export default async function Page({
           "grid grid-cols-1 gap-10 xl:max-w-5xl xl:grid-cols-[minmax(0,1fr)_minmax(180px,220px)]",
       )}
     >
-      <div className="pt-4 pb-24 sm:pt-10 lg:pt-20">
+      <div className="pb-24 pt-4 md:pt-10 lg:pt-20">
         {/* <Breadcrumbs tree={source.pageTree} className="mb-2" /> */}
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-bold lg:text-4xl">{page.data.title}</h1>

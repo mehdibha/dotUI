@@ -1,0 +1,34 @@
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
+
+import { useTRPC } from "@/lib/trpc/react";
+import { authClient } from "@/modules/auth/lib/client";
+import { usePreferences } from "../atoms/preferences-atom";
+
+export function useActiveStyleSuspense() {
+  const trpc = useTRPC();
+  const { data: session } = authClient.useSession();
+  const { activeStyleId: localActiveStyleId } = usePreferences();
+
+  const { data: featuredStyles } = useSuspenseQuery(
+    trpc.style.getFeatured.queryOptions({ limit: 1 }),
+  );
+
+  const { data: authedActiveStyleId } = useQuery({
+    ...trpc.style.getActive.queryOptions(),
+    retry: false,
+    enabled: !!session,
+  });
+
+  const activeStyleId =
+    authedActiveStyleId || localActiveStyleId || featuredStyles[0]?.id;
+
+  if (!activeStyleId) {
+    throw new Error("No active style available");
+  }
+
+  return useSuspenseQuery(
+    trpc.style.getById.queryOptions({
+      id: activeStyleId,
+    }),
+  );
+}

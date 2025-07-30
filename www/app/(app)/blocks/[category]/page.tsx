@@ -25,7 +25,7 @@ export default async function BlocksPage({
   );
 
   return (
-    <div>
+    <div className="space-y-6">
       {blocks.map((block) => (
         <BlockView key={block.name} name={block.name} />
       ))}
