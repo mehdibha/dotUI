@@ -57,11 +57,23 @@ export const styleRouter = {
   getByUsername: publicProcedure
     .input(z.object({ username: z.string().min(1) }))
     .query(async ({ ctx, input }) => {
-      const styles = await ctx.db.query.style.findMany({
-        where: eq(style.userId, input.username),
+      const userRecord = await ctx.db.query.user.findFirst({
+        where: eq(user.username, input.username),
       });
 
-      return styles;
+      if (!userRecord) {
+        return [];
+      }
+
+      const styles = await ctx.db.query.style.findMany({
+        where: eq(style.userId, userRecord.id),
+      });
+
+      const result = styles.map((style) => {
+        return { ...style, ...restoreStyleDefinitionDefaults(style) };
+      });
+
+      return result;
     }),
   getById: publicProcedure
     .input(z.object({ id: uuidSchema }))
@@ -97,11 +109,11 @@ export const styleRouter = {
 
       return { ...rawStyle, ...restoreStyleDefinitionDefaults(rawStyle) };
     }),
-  create: protectedProcedure
-    .input(styleDefinitionSchema)
-    .mutation(async ({ ctx, input }) => {
-      return;
-    }),
+  // create: protectedProcedure
+  //   .input(styleDefinitionSchema)
+  //   .mutation(async ({ ctx, input }) => {
+  //     return;
+  //   }),
   update: protectedProcedure
     .input(styleDefinitionSchema.extend({ id: uuidSchema }))
     .mutation(async ({ ctx, input }) => {
@@ -135,9 +147,9 @@ export const styleRouter = {
         return updatedStyle;
       });
     }),
-  delete: protectedProcedure
-    .input(z.object({ id: uuidSchema }))
-    .mutation(async ({ ctx, input }) => {
-      return;
-    }),
+  // delete: protectedProcedure
+  //   .input(z.object({ id: uuidSchema }))
+  //   .mutation(async ({ ctx, input }) => {
+  //     return;
+  //   }),
 } satisfies TRPCRouterRecord;

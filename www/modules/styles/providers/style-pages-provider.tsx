@@ -53,7 +53,7 @@ export function StylePagesProvider({
   children: React.ReactNode;
 }) {
   const { style: slug } = useParams<{ style: string }>();
-  const { currentMode } = usePreferences();
+  const { activeMode } = usePreferences();
   const { updateLiveStyle } = useLiveStyleProducer(slug);
 
   const trpc = useTRPC();
@@ -89,9 +89,9 @@ export function StylePagesProvider({
       watchedActiveModes.includes("light") &&
       watchedActiveModes.includes("dark")
     )
-      return currentMode;
+      return activeMode;
     return watchedActiveModes[0]!;
-  }, [watchedActiveModes, currentMode]);
+  }, [watchedActiveModes, activeMode]);
 
   const currentModeDefinition = useWatch({
     name: `theme.colors.modes.${resolvedMode}`,

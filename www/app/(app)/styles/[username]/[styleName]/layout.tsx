@@ -6,7 +6,7 @@ import StylePageForm from "@/modules/styles/providers/style-pages-provider";
 import { Providers } from "./providers";
 
 export const generateStaticParams = async () => {
-  const styles = await buildTimeCaller.style.featured({});
+  const styles = await buildTimeCaller.style.getFeatured({});
   return styles.map((style) => ({
     style: style.name,
   }));

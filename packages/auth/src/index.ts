@@ -18,6 +18,18 @@ export function initAuth(options: {
     }),
     baseURL: options.baseUrl,
     secret: options.secret,
+    logger: {
+      disabled: false,
+      level: "debug", // Show all logs including debug information
+      log: (level, message, ...args) => {
+        // Enhanced logging with timestamps and better formatting
+        const timestamp = new Date().toISOString();
+        console.log(
+          `[${timestamp}] [BETTER-AUTH] [${level.toUpperCase()}] ${message}`,
+          ...(args as unknown[]),
+        );
+      },
+    },
     user: {
       additionalFields: {
         username: {
@@ -63,13 +75,17 @@ export function initAuth(options: {
         clientId: options.githubClientId,
         clientSecret: options.githubClientSecret,
         redirectURI: `${options.productionUrl}/api/auth/callback/github`,
+        scope: ["user"],
         mapProfileToUser: (profile) => {
-          return {
-            username: profile.login,
+          console.log("Profile:", profile);
+          const mappedUser = {
+            username: profile.name,
             name: profile.name || profile.login,
             email: profile.email,
             image: profile.avatar_url,
           };
+
+          return mappedUser;
         },
       },
     },
