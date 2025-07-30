@@ -25,6 +25,8 @@
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint",
     "push": "pnpm with-env drizzle-kit push",
+    "generate": "pnpm with-env drizzle-kit generate",
+    "migrate": "pnpm with-env drizzle-kit migrate",
     "studio": "pnpm with-env drizzle-kit studio",
     "seed": "pnpm with-env tsx src/seed.ts",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false",

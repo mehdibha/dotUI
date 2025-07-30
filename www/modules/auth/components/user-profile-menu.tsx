@@ -6,12 +6,9 @@ import { Button } from "react-aria-components";
 
 import { Avatar } from "@dotui/ui/components/avatar";
 import { Menu, MenuItem, MenuRoot, MenuSub } from "@dotui/ui/components/menu";
-import { Separator } from "@dotui/ui/components/separator";
 import { focusRing } from "@dotui/ui/lib/focus-styles";
 import { cn } from "@dotui/ui/lib/utils";
 
-import { GitHubIcon, TwitterIcon } from "@/components/icons";
-import { siteConfig } from "@/config";
 import { authClient } from "@/modules/auth/lib/client";
 
 export function UserProfileMenu() {

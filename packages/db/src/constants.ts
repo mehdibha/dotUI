@@ -15,17 +15,6 @@ export const DEFAULT_STYLES: Omit<
     },
   },
   {
-    name: "brutalist",
-    theme: {
-      colors: {
-        activeModes: ["light"],
-      },
-    },
-    variants: {
-      buttons: "brutalist",
-    },
-  },
-  {
     name: "material",
     theme: {
       colors: {

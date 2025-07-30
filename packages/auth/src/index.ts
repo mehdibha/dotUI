@@ -20,6 +20,10 @@ export function initAuth(options: {
     secret: options.secret,
     user: {
       additionalFields: {
+        username: {
+          type: "string",
+          required: true,
+        },
         activeStyleId: {
           type: "string",
           required: false,
@@ -59,6 +63,14 @@ export function initAuth(options: {
         clientId: options.githubClientId,
         clientSecret: options.githubClientSecret,
         redirectURI: `${options.productionUrl}/api/auth/callback/github`,
+        mapProfileToUser: (profile) => {
+          return {
+            username: profile.login,
+            name: profile.name || profile.login,
+            email: profile.email,
+            image: profile.avatar_url,
+          };
+        },
       },
     },
   } satisfies BetterAuthOptions;

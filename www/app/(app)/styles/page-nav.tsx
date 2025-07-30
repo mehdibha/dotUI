@@ -8,15 +8,20 @@ export function StylesPageNav({ children }: { children: React.ReactNode }) {
   const session = authClient.useSession();
   const isMounted = useMounted();
 
+  console.log(session);
+
   const items = session?.data?.user
     ? [
-        { href: `/styles/${session.data.user.name}`, label: "Your styles" },
+        {
+          href: `/styles/${session.data.user.username}`,
+          label: "Your styles",
+        },
         { href: "/styles", label: "Featured" },
-        { href: "/community", label: "Community" },
+        { href: "/styles/community", label: "Community" },
       ]
     : [
-        { href: "/styles", label: "Featured" },
-        { href: "/community", label: "Community" },
+        // { href: "/styles", label: "Featured" },
+        // { href: "/community", label: "Community" },
       ];
 
   return (
