@@ -54,8 +54,15 @@ export const styleRouter = {
 
       return result;
     }),
-  getByUsername: publicProcedure
-    .input(z.object({ username: z.string().min(1) }))
+  getByPublicName: publicProcedure
+    .input(z.object({ name: z.string().min(1) }))
+    .query(async ({ ctx, input }) => {
+      return await ctx.db.query.style.findFirst({
+        where: and(eq(style.name, input.name), eq(style.visibility, "public")),
+      });
+    }),
+  getByNameAndUsername: publicProcedure
+    .input(z.object({ name: z.string().min(1), username: z.string().min(1) }))
     .query(async ({ ctx, input }) => {
       const userRecord = await ctx.db.query.user.findFirst({
         where: eq(user.username, input.username),
@@ -66,7 +73,7 @@ export const styleRouter = {
       }
 
       const styles = await ctx.db.query.style.findMany({
-        where: eq(style.userId, userRecord.id),
+        where: and(eq(style.userId, userRecord.id), eq(style.name, input.name)),
       });
 
       const result = styles.map((style) => {

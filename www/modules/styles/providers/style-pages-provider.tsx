@@ -52,21 +52,46 @@ export function StylePagesProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const { style: slug } = useParams<{ style: string }>();
+  const { slug } = useParams<{ slug: [string] | [string, string] }>();
+
+  let username: string | undefined;
+  let styleName: string;
+
+  if (slug.length === 1) {
+    styleName = slug[0];
+  } else {
+    username = slug[0];
+    styleName = slug[1];
+  }
+
   const { activeMode } = usePreferences();
-  const { updateLiveStyle } = useLiveStyleProducer(slug);
+  const { updateLiveStyle } = useLiveStyleProducer(slug.join("/"));
 
   const trpc = useTRPC();
-  const {
-    data: style,
-    isSuccess,
-    isLoading,
-    isError,
-  } = useQuery(
-    trpc.style.bySlug.queryOptions({
-      slug,
-    }),
+  const styleQueryByUsername = useQuery(
+    trpc.style.getByNameAndUsername.queryOptions(
+      {
+        name: styleName,
+        username: username!,
+      },
+      {
+        enabled: !!username,
+      },
+    ),
   );
+
+  const styleQueryByName = useQuery(
+    trpc.style.getByPublicName.queryOptions(
+      {
+        name: styleName,
+      },
+      {
+        enabled: !username,
+      },
+    ),
+  );
+
+  const style = styleQueryByUsername.data ?? styleQueryByName.data;
 
   const form = useForm<StyleFormData>({
     resolver: zodResolver(formSchema),

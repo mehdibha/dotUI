@@ -129,18 +129,4 @@ export const registryBlocks: Registry["items"] = [
     ],
     categories: ["showcase"],
   },
-  {
-    name: "booking",
-    description: "Booking calendar.",
-    type: "registry:block",
-    registryDependencies: ["all"],
-    files: [
-      {
-        path: "blocks/calendars/booking/page.tsx",
-        target: "app/calendars/booking/page.tsx",
-        type: "registry:page",
-      },
-    ],
-    categories: ["calendars"],
-  },
 ];

@@ -3,13 +3,17 @@ import superjson from "superjson";
 import { z, ZodError } from "zod";
 
 import { db } from "@dotui/db/client";
-import type { Auth } from "@dotui/auth";
+import type { Auth, Session } from "@dotui/auth";
 
 /**  CONTEXT  **/
 export const createTRPCContext = async (opts: {
   headers: Headers;
   auth: Auth;
-}) => {
+}): Promise<{
+  authApi: Auth["api"];
+  session: Session | null;
+  db: typeof db;
+}> => {
   const authApi = opts.auth.api;
   const session = await authApi.getSession({
     headers: opts.headers,

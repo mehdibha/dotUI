@@ -9,7 +9,7 @@ import {
 } from "@/components/page-layout";
 import { PageNav } from "@/components/page-nav";
 import { CreateStyleModal } from "@/modules/styles/components/create-style-modal";
-import { StylesPageNav } from "./page-nav";
+import { StylesPageNav } from "./styles-page-nav";
 
 export default function StylesLayout({
   children,

@@ -3,7 +3,7 @@ import { buildTimeCaller } from "@/lib/trpc/server";
 import { StylePageHeader } from "@/modules/styles/components/style-page-header";
 import { StylePageNav } from "@/modules/styles/components/style-page-nav";
 import StylePageForm from "@/modules/styles/providers/style-pages-provider";
-import { Providers } from "./providers";
+import { Providers } from "../providers";
 
 export const generateStaticParams = async () => {
   const styles = await buildTimeCaller.style.getFeatured({});
