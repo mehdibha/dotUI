@@ -19,7 +19,7 @@ import type { RouterOutputs } from "@dotui/api";
 import { useMounted } from "@/hooks/use-mounted";
 
 export function StyleCard(props: {
-  style: RouterOutputs["style"]["all"][number];
+  style: RouterOutputs["style"]["getFeatured"][number];
 }) {
   const { resolvedTheme } = useTheme();
   const isMounted = useMounted();
@@ -41,7 +41,7 @@ export function StyleCard(props: {
           </p>
           <div className="mt-4 flex items-center gap-2">
             <Button
-              href={`/style/${props.style.slug}`}
+              href={`/styles/${props.style.user.username}/${props.style.name}`}
               variant="default"
               suffix={<SquareArrowOutUpRightIcon />}
               className="h-8 text-sm"

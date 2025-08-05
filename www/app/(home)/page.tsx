@@ -1,5 +1,3 @@
-import React from "react";
-
 import { Avatar } from "@dotui/ui/components/avatar";
 import { Button } from "@dotui/ui/components/button";
 import { Tooltip } from "@dotui/ui/components/tooltip";
@@ -18,6 +16,7 @@ import { StylesShowcase } from "@/components/styles-showcase";
 import { siteConfig } from "@/config";
 import { getGitHubContributors } from "@/lib/github";
 import { caller } from "@/lib/trpc/server";
+import { Alert } from "@dotui/ui/components/alert";
 
 export const dynamic = "force-static";
 
@@ -56,7 +55,11 @@ export default async function HomePage() {
       </div>
       {/* Components overview */}
       <section className="container">
-        <StylesShowcase styles={feturedStyles} />
+        {feturedStyles.length > 0 ? (
+          <StylesShowcase styles={feturedStyles} />
+        ) : (
+          <Alert>No styles found.</Alert>
+        )}
       </section>
       <section className="shadow-xs mt-10 border-y py-12">
         <div className="container flex flex-col items-center justify-center gap-5 lg:gap-10">

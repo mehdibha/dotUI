@@ -1,7 +1,6 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { AnimatePresence, motion } from "motion/react";
 
 import { cn } from "@dotui/ui/lib/utils";
 import {
@@ -14,8 +13,6 @@ import {
 import { useMounted } from "@/hooks/use-mounted";
 import { authClient } from "@/modules/auth/lib/client";
 
-const MotionTabList = motion(TabList);
-
 export function StylesPageNav({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
@@ -25,7 +22,7 @@ export function StylesPageNav({ children }: { children: React.ReactNode }) {
   const items = session?.user
     ? [
         {
-          href: `/styles/${session.user.username}`,
+          href: `/styles/my-styles`,
           label: "Your styles",
         },
         { href: "/styles", label: "Featured" },

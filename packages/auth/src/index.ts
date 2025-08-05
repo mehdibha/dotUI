@@ -18,18 +18,6 @@ export function initAuth(options: {
     }),
     baseURL: options.baseUrl,
     secret: options.secret,
-    logger: {
-      disabled: false,
-      level: "debug", // Show all logs including debug information
-      log: (level, message, ...args) => {
-        // Enhanced logging with timestamps and better formatting
-        const timestamp = new Date().toISOString();
-        console.log(
-          `[${timestamp}] [BETTER-AUTH] [${level.toUpperCase()}] ${message}`,
-          ...(args as unknown[]),
-        );
-      },
-    },
     user: {
       additionalFields: {
         username: {
@@ -93,6 +81,7 @@ export function initAuth(options: {
 
   return betterAuth(config);
 }
+
 
 export type Auth = ReturnType<typeof initAuth>;
 export type Session = Auth["$Infer"]["Session"];

@@ -1,3 +1,4 @@
+import { relations } from "drizzle-orm";
 import { pgTable } from "drizzle-orm/pg-core";
 import type { AnyPgColumn } from "drizzle-orm/pg-core";
 
@@ -9,12 +10,16 @@ export const user = pgTable("user", (t) => ({
   email: t.text().notNull().unique(),
   emailVerified: t.boolean().notNull(),
   image: t.text(),
-  username: t.text().unique(),
+  username: t.text().notNull().unique(),
   activeStyleId: t
     .uuid()
     .references((): AnyPgColumn => style.id, { onDelete: "set null" }),
   createdAt: t.timestamp().notNull(),
   updatedAt: t.timestamp().notNull(),
+}));
+
+export const userRelations = relations(user, ({ many }) => ({
+  styles: many(style),
 }));
 
 export const session = pgTable("session", (t) => ({

@@ -1,4 +1,4 @@
-import { sql } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import { pgTable, uniqueIndex } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
@@ -28,6 +28,7 @@ export const style = pgTable(
     variants: t.jsonb("variants").$type<MinimizedVariantsDefinition>(),
     userId: t
       .text("user_id")
+      .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
     createdAt: t.timestamp().defaultNow().notNull(),
     updatedAt: t
@@ -41,6 +42,13 @@ export const style = pgTable(
       .where(sql.raw(`visibility = 'public'`)),
   }),
 );
+
+export const styleRelations = relations(style, ({ one }) => ({
+  user: one(user, {
+    fields: [style.userId],
+    references: [user.id],
+  }),
+}));
 
 /** Validations **/
 export const createStyleSchema = createInsertSchema(style)

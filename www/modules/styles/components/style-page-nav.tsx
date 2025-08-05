@@ -15,19 +15,31 @@ export function StylePageNav({
   children,
   ...props
 }: { children: React.ReactNode } & TabsProps) {
-  const { style } = useParams<{ style: string }>();
+  const { username, styleName } = useParams<{
+    username: string;
+    styleName: string;
+  }>();
   const pathname = usePathname();
 
   return (
     <Tabs variant="solid" selectedKey={pathname} {...props}>
       <TabList className="flex-wrap bg-transparent px-0 py-4">
         {[
-          { href: `/style/${style}`, label: "Colors" },
-          { href: `/style/${style}/layout`, label: "Layout" },
-          { href: `/style/${style}/typography`, label: "Typography" },
-          { href: `/style/${style}/components`, label: "Components" },
-          { href: `/style/${style}/effects`, label: "Effects" },
-          { href: `/style/${style}/icons`, label: "Icons" },
+          { href: `/styles/${username}/${styleName}`, label: "Colors" },
+          { href: `/styles/${username}/${styleName}/layout`, label: "Layout" },
+          {
+            href: `/styles/${username}/${styleName}/typography`,
+            label: "Typography",
+          },
+          {
+            href: `/styles/${username}/${styleName}/components`,
+            label: "Components",
+          },
+          {
+            href: `/styles/${username}/${styleName}/effects`,
+            label: "Effects",
+          },
+          { href: `/styles/${username}/${styleName}/icons`, label: "Icons" },
         ].map((tab) => (
           <Tab
             key={tab.href}

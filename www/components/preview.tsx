@@ -116,9 +116,12 @@ export function PreviewContent({
   screen: "mobile" | "tablet";
   setScreen: (screen: "mobile" | "tablet") => void;
 }) {
-  const { style } = useParams<{ style: string }>();
+  const { username, styleName } = useParams<{
+    username: string;
+    styleName: string;
+  }>();
   const [currentBlockName, setCurrentBlockName] =
-    React.useState<string>("overview-01");
+    React.useState<string>("login-01");
   const [isLoading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
@@ -157,7 +160,7 @@ export function PreviewContent({
           <Button
             size="sm"
             suffix={<ChevronsUpDownIcon />}
-            className="h-7 w-32 justify-center rounded-sm text-fg-muted"
+            className="h-7 min-w-32 justify-center rounded-sm text-fg-muted"
           >
             <SelectValue className="flex-0" />
           </Button>
@@ -212,7 +215,7 @@ export function PreviewContent({
           <Tooltip content="Open in new tab" delay={0}>
             <Button
               aria-label="Open in new tab"
-              href={`/block-view/${style}/${currentBlockName}`}
+              href={`/block-view/${username}/${styleName}/${currentBlockName}`}
               target="_blank"
               variant="quiet"
               shape="square"
@@ -242,7 +245,7 @@ export function PreviewContent({
         )}
       >
         <iframe
-          src={`/block-view/${style}/${currentBlockName}`}
+          src={`/block-view/${username}/${styleName}/${currentBlockName}`}
           onLoad={() => setLoading(false)}
           className={cn(
             "rounded-{inherit] size-full",
