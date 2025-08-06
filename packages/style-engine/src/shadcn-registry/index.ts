@@ -9,6 +9,7 @@ import type { Style } from "../types";
 export async function buildRegistryItem(
   registryItemName: string,
   options: {
+    styleName: string;
     registryBasePath: string;
     baseUrl: string;
     style: Style;

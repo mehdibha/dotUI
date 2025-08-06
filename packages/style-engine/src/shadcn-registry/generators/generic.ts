@@ -10,6 +10,7 @@ import type { Style } from "../../types";
 export const generateGenericRegistryItem = async (
   registryItemName: string,
   options: {
+    styleName: string;
     registryBasePath: string;
     baseUrl: string;
     style: Style;
@@ -34,7 +35,7 @@ export const generateGenericRegistryItem = async (
     return null;
   }
 
-  registryItem = updateRegistryDependencies(registryItem, baseUrl, style);
+  registryItem = updateRegistryDependencies(registryItem, options);
 
   registryItem = await updateFiles(registryItem, {
     registryBasePath,

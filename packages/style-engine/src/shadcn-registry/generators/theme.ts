@@ -3,12 +3,11 @@ import type { RegistryItem } from "shadcn/registry";
 import type { Style } from "../../types";
 
 export function generateRegistryTheme(options: {
-  name: string;
+  styleName: string;
   baseUrl: string;
   style: Style;
 }): RegistryItem {
-  const { style } = options;
-  const { name: styleName } = style;
+  const { styleName, style } = options;
 
   return {
     $schema: "https://ui.shadcn.com/schema/registry-item.json",

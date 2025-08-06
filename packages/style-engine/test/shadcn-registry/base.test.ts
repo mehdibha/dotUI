@@ -8,10 +8,12 @@ import { mockStyleDefinition } from "../fixtures/styles";
 describe("generateRegistryBase", () => {
   const baseUrl = "https://ui.example.com";
 
+  const styleName = "test-style";
   const mockStyle = createStyle(mockStyleDefinition);
 
   it("should generate a registry base with correct structure", () => {
     const result = generateRegistryBase({
+      styleName,
       baseUrl,
       style: mockStyle,
     });
@@ -29,6 +31,7 @@ describe("generateRegistryBase", () => {
 
   it("should include original base dependencies", () => {
     const result = generateRegistryBase({
+      styleName,
       baseUrl,
       style: mockStyle,
     });
@@ -59,6 +62,7 @@ describe("generateRegistryBase", () => {
     );
 
     const result = generateRegistryBase({
+      styleName,
       baseUrl,
       style: styleWithLucide,
     });
@@ -85,6 +89,7 @@ describe("generateRegistryBase", () => {
       }),
     );
     const result = generateRegistryBase({
+      styleName,
       baseUrl,
       style: remixStyle,
     });
@@ -94,14 +99,15 @@ describe("generateRegistryBase", () => {
 
   it("should update registry dependencies with correct base URL and style slug", () => {
     const result = generateRegistryBase({
+      styleName,
       baseUrl,
       style: mockStyle,
     });
 
     expect(result.registryDependencies).toEqual([
-      `${baseUrl}/${mockStyle.name}/utils`,
-      `${baseUrl}/${mockStyle.name}/focus-styles`,
-      `${baseUrl}/${mockStyle.name}/theme`,
+      `${baseUrl}/${styleName}/utils`,
+      `${baseUrl}/${styleName}/focus-styles`,
+      `${baseUrl}/${styleName}/theme`,
     ]);
   });
 });

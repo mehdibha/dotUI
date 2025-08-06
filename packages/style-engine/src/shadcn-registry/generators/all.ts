@@ -6,11 +6,11 @@ import { updateRegistryDependencies } from "../helpers/update-registry-deps";
 import type { Style } from "../../types";
 
 export function generateRegistryAll(options: {
-  name: string;
+  styleName: string;
   baseUrl: string;
   style: Style;
 }): RegistryItem {
-  const { name, baseUrl, style } = options;
+  const { styleName, baseUrl, style } = options;
 
   const registryDependencies = [
     ...new Set(registryUi.map((item) => item.name.split(":")[0])),
@@ -21,12 +21,16 @@ export function generateRegistryAll(options: {
     extends: "none",
     name: "all",
     type: "registry:ui",
-    title: `All ${name} components`,
-    description: `All components for ${name} style`,
+    title: `All ${styleName} components`,
+    description: `All components for ${styleName} style`,
     registryDependencies,
   };
 
-  registryItem = updateRegistryDependencies(registryItem, baseUrl, style);
+  registryItem = updateRegistryDependencies(registryItem, {
+    styleName,
+    baseUrl,
+    style,
+  });
 
   return registryItem;
 }

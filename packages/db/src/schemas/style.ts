@@ -24,8 +24,8 @@ export const style = pgTable(
       .default("unlisted"),
     isFeatured: t.boolean("is_featured").notNull().default(false),
     theme: t.jsonb("theme").$type<ThemeDefinition>().notNull(),
-    icons: t.jsonb("icons").$type<IconsDefinition>(),
-    variants: t.jsonb("variants").$type<VariantsDefinition>(),
+    icons: t.jsonb("icons").$type<IconsDefinition>().notNull(),
+    variants: t.jsonb("variants").$type<VariantsDefinition>().notNull(),
     userId: t
       .text("user_id")
       .notNull()

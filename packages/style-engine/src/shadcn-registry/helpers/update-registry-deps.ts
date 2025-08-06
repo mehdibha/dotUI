@@ -4,13 +4,18 @@ import type { Style } from "../../types";
 
 export const updateRegistryDependencies = (
   registryItem: RegistryItem,
-  baseUrl: string,
-  style: Style,
+  options: {
+    styleName: string;
+    baseUrl: string;
+    style: Style;
+  },
 ): RegistryItem => {
+  const { styleName, baseUrl } = options;
+
   return {
     ...registryItem,
     registryDependencies: registryItem.registryDependencies?.map(
-      (dep) => `${baseUrl}/${style.name}/${dep}`,
+      (dep) => `${baseUrl}/${styleName}/${dep}`,
     ),
   };
 };

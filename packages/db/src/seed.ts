@@ -5,7 +5,6 @@ import {
   styleDefinitionSchema,
   styleSchema,
 } from "@dotui/style-engine/schemas";
-import { restoreStyleDefinitionDefaults } from "@dotui/style-engine/utils";
 
 import { db } from "./client";
 import { DEFAULT_STYLES } from "./constants";
@@ -13,9 +12,8 @@ import { style, user } from "./schemas";
 
 async function validateDefaultStyles() {
   for (const style of DEFAULT_STYLES) {
-    const restoredStyle = restoreStyleDefinitionDefaults(style);
-    await styleDefinitionSchema.parseAsync(restoredStyle);
-    const styleResult = createStyle(restoredStyle);
+    await styleDefinitionSchema.parseAsync(style);
+    const styleResult = createStyle(style);
     await styleSchema.parseAsync(styleResult);
   }
 }
