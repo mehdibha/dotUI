@@ -137,12 +137,12 @@ const restoreVariantsDefinitionDefaults = (
   };
 };
 
-const restoreStyleDefinitionDefaults = ({
+const restoreStyleDefinitionDefaults = <T extends MinimizedStyleDefinition>({
   theme,
   variants,
   icons,
   ...props
-}: MinimizedStyleDefinition): StyleDefinition => {
+}: T): StyleDefinition & Omit<T, keyof MinimizedStyleDefinition> => {
   return {
     ...props,
     theme: restoreThemeDefinitionDefaults(theme),
@@ -151,7 +151,7 @@ const restoreStyleDefinitionDefaults = ({
       library: icons?.library ?? DEFAULT_ICON_LIBRARY,
       strokeWidth: icons?.strokeWidth ?? DEFAULT_ICON_STROKE_WIDTH,
     },
-  };
+  } as StyleDefinition & Omit<T, keyof MinimizedStyleDefinition>;
 };
 
 export {

@@ -15,7 +15,7 @@ export const DEFAULT_STYLES: Omit<
       },
     },
   }),
-  {
+  restoreStyleDefinitionDefaults({
     name: "material",
     theme: {
       colors: {
@@ -103,8 +103,8 @@ export const DEFAULT_STYLES: Omit<
     variants: {
       buttons: "ripple",
     },
-  },
-  {
+  }),
+  restoreStyleDefinitionDefaults({
     name: "ghibli",
     theme: {
       colors: {
@@ -190,5 +190,5 @@ export const DEFAULT_STYLES: Omit<
       strokeWidth: 1.5,
     },
     variants: {},
-  },
+  }),
 ];

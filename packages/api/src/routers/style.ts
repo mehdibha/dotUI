@@ -5,10 +5,6 @@ import type { TRPCRouterRecord } from "@trpc/server";
 import { and, eq } from "@dotui/db";
 import { style, user } from "@dotui/db/schemas";
 import { styleDefinitionSchema } from "@dotui/style-engine/schemas";
-import {
-  minimizeStyleDefinition,
-  restoreStyleDefinitionDefaults,
-} from "@dotui/style-engine/utils";
 
 import { protectedProcedure, publicProcedure } from "../trpc";
 
@@ -55,11 +51,7 @@ export const styleRouter = {
         },
       });
 
-      const result = styles.map((style) => {
-        return { ...style, ...restoreStyleDefinitionDefaults(style) };
-      });
-
-      return result;
+      return styles;
     }),
   getByPublicName: publicProcedure
     .input(z.object({ name: z.string().min(1) }))
@@ -71,18 +63,18 @@ export const styleRouter = {
   getById: publicProcedure
     .input(z.object({ id: uuidSchema }))
     .query(async ({ ctx, input }) => {
-      const rawStyle = await ctx.db.query.style.findFirst({
+      const styleRecord = await ctx.db.query.style.findFirst({
         where: eq(style.id, input.id),
       });
 
-      if (!rawStyle) {
+      if (!styleRecord) {
         throw new TRPCError({
           code: "NOT_FOUND",
           message: "Style not found",
         });
       }
 
-      return { ...rawStyle, ...restoreStyleDefinitionDefaults(rawStyle) };
+      return styleRecord;
     }),
   getByNameAndUsername: publicProcedure
     .input(
@@ -103,20 +95,18 @@ export const styleRouter = {
         });
       }
 
-      const rawStyle = await ctx.db.query.style.findFirst({
+      const styleRecord = await ctx.db.query.style.findFirst({
         where: and(eq(style.userId, userRecord.id), eq(style.name, input.name)),
       });
 
-      if (!rawStyle) {
+      if (!styleRecord) {
         throw new TRPCError({
           code: "NOT_FOUND",
           message: "Style not found",
         });
       }
 
-      console.log(JSON.stringify(restoreStyleDefinitionDefaults(rawStyle)));
-
-      return { ...rawStyle, ...restoreStyleDefinitionDefaults(rawStyle) };
+      return styleRecord;
     }),
   update: protectedProcedure
     .input(styleDefinitionSchema.extend({ id: uuidSchema }))
@@ -140,11 +130,9 @@ export const styleRouter = {
           });
         }
 
-        const minimizedStyle = minimizeStyleDefinition(input);
-
         const [updatedStyle] = await tx
           .update(style)
-          .set(minimizedStyle)
+          .set(input)
           .where(eq(style.id, input.id))
           .returning();
 
