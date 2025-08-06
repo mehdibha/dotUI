@@ -72,8 +72,6 @@ export function StylePagesProvider({
     }),
   );
 
-  // console.log(style);
-
   const form = useForm<StyleFormData>({
     resolver: zodResolver(formSchema),
     defaultValues: fakeData,

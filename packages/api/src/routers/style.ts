@@ -103,13 +103,9 @@ export const styleRouter = {
         });
       }
 
-      console.log(userRecord);
-
       const rawStyle = await ctx.db.query.style.findFirst({
         where: and(eq(style.userId, userRecord.id), eq(style.name, input.name)),
       });
-
-      console.log(rawStyle);
 
       if (!rawStyle) {
         throw new TRPCError({
@@ -117,6 +113,8 @@ export const styleRouter = {
           message: "Style not found",
         });
       }
+
+      console.log(JSON.stringify(restoreStyleDefinitionDefaults(rawStyle)));
 
       return { ...rawStyle, ...restoreStyleDefinitionDefaults(rawStyle) };
     }),

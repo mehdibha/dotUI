@@ -1,19 +1,20 @@
 import type { z } from "zod";
 
 import type { createStyleSchema } from "./schemas";
+import { restoreStyleDefinitionDefaults } from "@dotui/style-engine/utils";
 
 export const DEFAULT_STYLES: Omit<
   z.infer<typeof createStyleSchema>,
   "userId"
 >[] = [
-  {
+  restoreStyleDefinitionDefaults({
     name: "minimalist",
     theme: {
       colors: {
         activeModes: ["light", "dark"],
       },
     },
-  },
+  }),
   {
     name: "material",
     theme: {

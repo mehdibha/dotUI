@@ -4,9 +4,9 @@ import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
 import type {
-  MinimizedIconsDefinition,
-  MinimizedThemeDefinition,
-  MinimizedVariantsDefinition,
+  IconsDefinition,
+  ThemeDefinition,
+  VariantsDefinition,
 } from "@dotui/style-engine/types";
 
 import { user } from "./auth";
@@ -23,9 +23,9 @@ export const style = pgTable(
       .notNull()
       .default("unlisted"),
     isFeatured: t.boolean("is_featured").notNull().default(false),
-    theme: t.jsonb("theme").$type<MinimizedThemeDefinition>().notNull(),
-    icons: t.jsonb("icons").$type<MinimizedIconsDefinition>(),
-    variants: t.jsonb("variants").$type<MinimizedVariantsDefinition>(),
+    theme: t.jsonb("theme").$type<ThemeDefinition>().notNull(),
+    icons: t.jsonb("icons").$type<IconsDefinition>(),
+    variants: t.jsonb("variants").$type<VariantsDefinition>(),
     userId: t
       .text("user_id")
       .notNull()

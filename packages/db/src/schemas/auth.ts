@@ -11,6 +11,7 @@ export const user = pgTable("user", (t) => ({
   emailVerified: t.boolean().notNull(),
   image: t.text(),
   username: t.text().notNull().unique(),
+  role: t.text().notNull().default("user"),
   activeStyleId: t
     .uuid()
     .references((): AnyPgColumn => style.id, { onDelete: "set null" }),
