@@ -36,7 +36,7 @@ export async function GET(
 
     const [styleSlug, registryItemName] = routeParams as [string, string];
 
-    const style = await caller.style.bySlug({
+    const style = await caller.style.byPublicSlug({
       slug: styleSlug,
     });
 

@@ -38,7 +38,6 @@ interface BlockViewToolbarProps {
 const BlockViewToolbar = ({ name, title }: BlockViewToolbarProps) => {
   const { activeMode, setActiveMode } = usePreferences();
   const { data: activeStyle } = useActiveStyle();
-  const [isCopied, setIsCopied] = React.useState(false);
 
   return (
     <div className="flex items-center justify-between px-2">
