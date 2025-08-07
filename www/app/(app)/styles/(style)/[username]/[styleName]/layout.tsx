@@ -5,12 +5,13 @@ import { StylePageNav } from "@/modules/styles/components/style-page-nav";
 import StylePageForm from "@/modules/styles/providers/style-pages-provider";
 import { Providers } from "./providers";
 
-export const generateStaticParams = async () => {
-  const styles = await buildTimeCaller.style.getFeatured({});
-  return styles.map((style) => ({
-    style: style.name,
-  }));
-};
+// export const generateStaticParams = async () => {
+//   const styles = await buildTimeCaller.style.getFeatured({});
+//   return styles.map((style) => ({
+//     username: style.user.username,
+//     styleName: style.name,
+//   }));
+// };
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

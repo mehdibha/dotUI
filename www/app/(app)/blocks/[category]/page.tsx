@@ -3,11 +3,11 @@ import {
   registryBlocks,
 } from "@dotui/registry-definition/registry-blocks";
 
+import { HydrateClient, prefetch, trpc } from "@/lib/trpc/server";
 import { BlockView } from "@/modules/blocks/block-view";
 
 export const dynamicParams = false;
-// export const dynamic = "force-static";
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static";
 
 export async function generateStaticParams() {
   return blocksCategories.map((category) => ({
@@ -20,16 +20,20 @@ export default async function BlocksPage({
 }: {
   params: Promise<{ category: string }>;
 }) {
+  prefetch(trpc.style.getFeatured.queryOptions({}));
+
   const { category } = await params;
   const blocks = registryBlocks.filter((block) =>
     block.categories?.includes(category),
   );
 
   return (
-    <div className="space-y-6">
-      {blocks.map((block) => (
-        <BlockView key={block.name} name={block.name} />
-      ))}
-    </div>
+    <HydrateClient>
+      <div className="space-y-6">
+        {blocks.map((block) => (
+          <BlockView key={block.name} name={block.name} />
+        ))}
+      </div>
+    </HydrateClient>
   );
 }
