@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { CopyIcon, ExternalLinkIcon, TerminalIcon } from "lucide-react";
+import { ExternalLinkIcon, TerminalIcon } from "lucide-react";
 
 import { registryBlocks } from "@dotui/registry-definition/registry-blocks";
 import { BlockViewer } from "@dotui/ui/block-viewer";
@@ -11,7 +11,7 @@ import { Skeleton } from "@dotui/ui/components/skeleton";
 import { ThemeModeSwitch } from "@/components/theme-mode-switch";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 import { ActiveStyleProviderSuspense } from "@/modules/styles/components/active-style-provider-suspense";
-import { useActiveStyle } from "../styles/hooks/use-active-style";
+import { useActiveStyle } from "@/modules/styles/hooks/use-active-style";
 
 interface BlockViewProps {
   name: string;

@@ -3,10 +3,9 @@ import { featuredBlocks } from "@dotui/registry-definition/registry-blocks";
 import { HydrateClient, prefetch, trpc } from "@/lib/trpc/server";
 import { BlockView } from "@/modules/blocks/block-view";
 
-export const dynamic = "force-dynamic";
-
 export default function BlocksPage() {
   prefetch(trpc.style.getFeatured.queryOptions({}));
+  
   return (
     <HydrateClient>
       <div className="space-y-6">

@@ -25,7 +25,6 @@ export default function BlocksLayout({
           Modern UI blocks available in infinite styles.
         </PageHeaderDescription>
         <PageActions>
-          {/* <Button variant="primary">Add your block</Button> */}
           <ActiveStyleSelector buttonProps={{ className: "px-4" }} />
         </PageActions>
       </PageHeader>

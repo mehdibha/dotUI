@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 
 import { useTRPC } from "@/lib/trpc/react";
 import { authClient } from "@/modules/auth/lib/client";
@@ -39,14 +39,14 @@ export function useActiveStyle() {
   });
 }
 
-// export function useActiveStyleSuspense() {
-//   const trpc = useTRPC();
+export function useActiveStyleSuspense() {
+  const trpc = useTRPC();
 
-//   const activeStyleId = useActiveStyleId();
+  const activeStyleId = useActiveStyleId();
 
-//   return useSuspenseQuery({
-//     ...trpc.style.getById.queryOptions({
-//       id: activeStyleId!,
-//     }),
-//   });
-// }
+  return useSuspenseQuery({
+    ...trpc.style.getById.queryOptions({
+      id: activeStyleId!,
+    }),
+  });
+}
