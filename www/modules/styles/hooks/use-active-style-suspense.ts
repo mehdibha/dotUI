@@ -10,7 +10,7 @@ export function useActiveStyleSuspense() {
   const { activeStyleId: localActiveStyleId } = usePreferences();
 
   const { data: featuredStyles } = useSuspenseQuery(
-    trpc.style.getFeatured.queryOptions({ limit: 1 }),
+    trpc.style.getFeatured.queryOptions({}),
   );
 
   const { data: authedActiveStyleId } = useQuery({
