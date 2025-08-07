@@ -20,7 +20,7 @@ export function useActiveStyleSuspense() {
   });
 
   const activeStyleId =
-    authedActiveStyleId || localActiveStyleId || featuredStyles[0]?.id;
+    authedActiveStyleId || localActiveStyleId || featuredStyles?.[0]?.id;
 
   if (!activeStyleId) {
     throw new Error("No active style available");

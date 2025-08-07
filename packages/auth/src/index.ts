@@ -64,17 +64,6 @@ export function initAuth(options: {
         clientSecret: options.githubClientSecret,
         redirectURI: `${options.productionUrl}/api/auth/callback/github`,
         scope: ["user"],
-        mapProfileToUser: (profile) => {
-          console.log("Profile:", profile);
-          const mappedUser = {
-            username: profile.name,
-            name: profile.name || profile.login,
-            email: profile.email,
-            image: profile.avatar_url,
-          };
-
-          return mappedUser;
-        },
       },
     },
   } satisfies BetterAuthOptions;
