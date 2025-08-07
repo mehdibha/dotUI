@@ -1,7 +1,7 @@
+import type { BetterAuthOptions } from "better-auth";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { oAuthProxy } from "better-auth/plugins";
-import type { BetterAuthOptions } from "better-auth";
 
 import { db } from "@dotui/db/client";
 
@@ -22,7 +22,7 @@ export function initAuth(options: {
       additionalFields: {
         username: {
           type: "string",
-          required: true,
+          required: false,
         },
         activeStyleId: {
           type: "string",
@@ -62,8 +62,13 @@ export function initAuth(options: {
       github: {
         clientId: options.githubClientId,
         clientSecret: options.githubClientSecret,
-        redirectURI: `${options.productionUrl}/api/auth/callback/github`,
-        scope: ["user"],
+        redirectURI: `${options.baseUrl}/api/auth/callback/github`,
+        scope: ["user", "user:email"],
+        mapProfileToUser: (profile) => {
+          return {
+            username: profile.login,
+          };
+        },
       },
     },
   } satisfies BetterAuthOptions;
