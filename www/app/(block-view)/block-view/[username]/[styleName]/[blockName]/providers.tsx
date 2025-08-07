@@ -40,11 +40,7 @@ export const BlockProviders = ({
         className="text-fg"
       />
       <PortalProvider getContainer={() => overlayContainerRef.current}>
-        <StyleProvider
-          style={style}
-          mode={activeMode}
-          className="min-h-screen"
-        >
+        <StyleProvider style={style} mode={activeMode} className="min-h-screen">
           {children}
         </StyleProvider>
       </PortalProvider>

@@ -1,5 +1,4 @@
 export default async function InternalPage() {
-
   return (
     <div className="flex items-center justify-center p-10">
       <div className="light">

@@ -38,7 +38,7 @@ export function StylesPageNav({ children }: { children: React.ReactNode }) {
       <TabList
         className={cn(
           "flex-wrap bg-transparent p-0 opacity-0",
-          isMounted && !isPending && "animate-in fade-in opacity-100",
+          isMounted && !isPending && "animate-in opacity-100 fade-in",
         )}
       >
         {items.map((tab) => (

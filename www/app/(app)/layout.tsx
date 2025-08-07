@@ -14,9 +14,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         <Sidebar items={source.pageTree.children} className="hidden lg:flex" />
         <main className="flex-1">
           <div className="min-h-screen">
-            <Providers>
-              {children}
-            </Providers>
+            <Providers>{children}</Providers>
           </div>
           <Footer />
         </main>

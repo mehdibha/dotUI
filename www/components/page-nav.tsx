@@ -1,8 +1,8 @@
 "use client";
 
-import { cn } from "@dotui/ui/lib/utils";
 import { usePathname } from "next/navigation";
 
+import { cn } from "@dotui/ui/lib/utils";
 import {
   Tab,
   TabList,
@@ -13,7 +13,7 @@ import {
 export function PageNav({
   items,
   children,
-  fade
+  fade,
 }: {
   items: { href: string; label: string }[];
   children: React.ReactNode;

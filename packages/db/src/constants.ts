@@ -1,7 +1,8 @@
 import type { z } from "zod";
 
-import type { createStyleSchema } from "./schemas";
 import { restoreStyleDefinitionDefaults } from "@dotui/style-engine/utils";
+
+import type { createStyleSchema } from "./schemas";
 
 export const DEFAULT_STYLES: Omit<
   z.infer<typeof createStyleSchema>,

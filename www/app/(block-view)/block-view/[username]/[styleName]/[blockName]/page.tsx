@@ -7,13 +7,13 @@ import { buildTimeCaller, getQueryClient, trpc } from "@/lib/trpc/server";
 import { BlockProviders } from "./providers";
 
 // export const generateStaticParams = async () => {
-  // const styles = await buildTimeCaller.style.featured({});
-  // return styles.flatMap((style) =>
-  //   registryBlocks.map((block) => ({
-  //     styleId: style.id,
-  //     name: block.name,
-  //   })),
-  // );
+// const styles = await buildTimeCaller.style.featured({});
+// return styles.flatMap((style) =>
+//   registryBlocks.map((block) => ({
+//     styleId: style.id,
+//     name: block.name,
+//   })),
+// );
 // };
 
 export default async function BlockViewPage({

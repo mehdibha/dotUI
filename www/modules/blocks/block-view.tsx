@@ -42,7 +42,7 @@ const BlockViewToolbar = ({ name, title }: BlockViewToolbarProps) => {
 
   return (
     <div className="flex items-center justify-between px-2">
-      <h2 className="text-lg font-medium tracking-tight truncate">{title}</h2>
+      <h2 className="truncate text-lg font-medium tracking-tight">{title}</h2>
       <div className="flex items-center gap-2">
         <ThemeModeSwitch
           size="sm"
@@ -53,7 +53,7 @@ const BlockViewToolbar = ({ name, title }: BlockViewToolbarProps) => {
           }
         />
         <Button
-          className="max-w-[200px] font-mono [&_svg]:size-8 max-lg:hidden"
+          className="max-w-[200px] font-mono max-lg:hidden [&_svg]:size-8"
           prefix={<TerminalIcon />}
           size="sm"
         >
@@ -77,7 +77,7 @@ const BlockViewToolbar = ({ name, title }: BlockViewToolbarProps) => {
 const BlockViewView = ({ name }: { name: string }) => {
   return (
     <React.Suspense fallback={<Skeleton className="h-[600px]" />}>
-      <ActiveStyleProviderSuspense className="flex-1 overflow-y-auto max-h-[100vh] rounded-lg border">
+      <ActiveStyleProviderSuspense className="max-h-[100vh] flex-1 overflow-y-auto rounded-lg border">
         <BlockViewer name={name} />
       </ActiveStyleProviderSuspense>
     </React.Suspense>

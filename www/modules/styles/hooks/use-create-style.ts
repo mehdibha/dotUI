@@ -24,7 +24,6 @@ export function useCreateStyle() {
 
   return useMutation({
     mutationFn: async (data: CreateStyleInput) => {
-
       const styleData: StyleDefinition = {
         theme: DEFAULT_THEME,
         icons: {
@@ -38,7 +37,7 @@ export function useCreateStyle() {
         ...styleData,
         id: crypto.randomUUID(),
         name: data.name,
-        slug: data.name.toLowerCase().replace(/[^a-z0-9]/g, '-'),
+        slug: data.name.toLowerCase().replace(/[^a-z0-9]/g, "-"),
         description: `${data.name} style`,
         userId: "current-user",
         isFeatured: false,

@@ -11,7 +11,6 @@ export function generateRegistryBase(options: {
   baseUrl: string;
   style: Style;
 }): RegistryItem {
-
   let registryItem = base;
 
   registryItem = updateRegistryDependencies(base, options);

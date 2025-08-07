@@ -58,7 +58,7 @@ export const ResizableContainer = ({
     >
       <div
         onMouseDown={handleMouseDown}
-        className="h-15 bg-bg-neutral hover:bg-bg-neutral-hover active:bg-bg-neutral-active absolute right-2 top-1/2 z-20 w-2 -translate-y-1/2 cursor-col-resize rounded-full shadow-sm"
+        className="absolute top-1/2 right-2 z-20 h-15 w-2 -translate-y-1/2 cursor-col-resize rounded-full bg-bg-neutral shadow-sm hover:bg-bg-neutral-hover active:bg-bg-neutral-active"
       />
       {children}
     </div>
@@ -71,9 +71,11 @@ export const ComponentPreviewHeader = () => {
   const isMounted = useMounted();
 
   return (
-    <div className="absolute left-0 top-0 z-20 flex w-full items-start justify-between gap-2 p-2">
+    <div className="absolute top-0 left-0 z-20 flex w-full items-start justify-between gap-2 p-2">
       <VariantsProvider variants={DEFAULT_VARIANTS_DEFINITION}>
-        <ActiveStyleSelector buttonProps={{ size: "sm", className: "text-xs" }} />
+        <ActiveStyleSelector
+          buttonProps={{ size: "sm", className: "text-xs" }}
+        />
       </VariantsProvider>
       {style && style.theme.colors.activeModes.length > 1 && isMounted && (
         <ThemeModeSwitch
