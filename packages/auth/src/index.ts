@@ -62,7 +62,7 @@ export function initAuth(options: {
       github: {
         clientId: options.githubClientId,
         clientSecret: options.githubClientSecret,
-        redirectURI: `${options.baseUrl}/api/auth/callback/github`,
+        redirectURI: `${options.productionUrl}/api/auth/callback/github`,
         scope: ["user", "user:email"],
         mapProfileToUser: (profile) => {
           return {
