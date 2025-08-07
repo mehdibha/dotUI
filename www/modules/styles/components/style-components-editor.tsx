@@ -80,7 +80,7 @@ const Section = ({
   ...props
 }: SectionProps) => {
   const { form, isSuccess } = useStyleForm();
-  const { currentMode } = usePreferences();
+  const { activeMode } = usePreferences();
   const style = form.watch();
 
   return (
@@ -121,7 +121,7 @@ const Section = ({
       )}
       <Skeleton show={!isSuccess}>
         <StyleProvider
-          mode={currentMode}
+          mode={activeMode}
           style={style}
           className={cn(
             "mt-2 flex items-center justify-center gap-2 rounded-md border px-4 py-8",

@@ -21,7 +21,13 @@ import { usePreferences } from "../atoms/preferences-atom";
 const formSchema = styleDefinitionSchema.extend({
   name: z.string().min(1),
   slug: z.string().min(1),
-  description: z.string().optional(),
+  description: z.string().nullable().optional(),
+  id: z.string().optional(),
+  userId: z.string().optional(),
+  createdAt: z.date().optional(),
+  updatedAt: z.date().nullable().optional(),
+  isFeatured: z.boolean().optional(),
+  visibility: z.enum(["public", "unlisted", "private"]).optional(),
 });
 
 export type StyleFormData = z.infer<typeof formSchema>;
@@ -75,7 +81,7 @@ export function StylePagesProvider({
   const form = useForm<StyleFormData>({
     resolver: zodResolver(formSchema),
     defaultValues: fakeData,
-    values: style ?? undefined,
+    values: style ? { ...style, slug: style.name } : undefined,
   });
 
   const watchedValues = useWatch({ control: form.control }) as

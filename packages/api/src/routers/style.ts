@@ -60,6 +60,13 @@ export const styleRouter = {
         where: and(eq(style.name, input.name), eq(style.visibility, "public")),
       });
     }),
+  byPublicSlug: publicProcedure
+    .input(z.object({ slug: z.string().min(1) }))
+    .query(async ({ ctx, input }) => {
+      return await ctx.db.query.style.findFirst({
+        where: and(eq(style.name, input.slug), eq(style.visibility, "public")),
+      });
+    }),
   getById: publicProcedure
     .input(z.object({ id: uuidSchema }))
     .query(async ({ ctx, input }) => {

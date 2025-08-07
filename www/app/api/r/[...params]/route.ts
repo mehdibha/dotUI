@@ -45,6 +45,7 @@ export async function GET(
     }
 
     const registryItem = await buildRegistryItem(registryItemName, {
+      styleName: style.name,
       style: createStyle(style),
       registryBasePath,
       baseUrl:

@@ -26,8 +26,6 @@ export function useCreateStyle() {
     mutationFn: async (data: CreateStyleInput) => {
 
       const styleData: StyleDefinition = {
-        name: data.name,
-        description: `${data.name} style`,
         theme: DEFAULT_THEME,
         icons: {
           library: DEFAULT_ICON_LIBRARY,
@@ -36,15 +34,17 @@ export function useCreateStyle() {
         variants: DEFAULT_VARIANTS_DEFINITION,
       };
 
-      // const trpc = useTRPC();
-      await new Promise((resolve) => setTimeout(resolve, 1000));
       return {
         ...styleData,
         id: crypto.randomUUID(),
+        name: data.name,
+        slug: data.name.toLowerCase().replace(/[^a-z0-9]/g, '-'),
+        description: `${data.name} style`,
         userId: "current-user",
         isFeatured: false,
         createdAt: new Date(),
         updatedAt: new Date(),
+        visibility: "unlisted" as const,
       };
     },
     onSuccess: (data) => {

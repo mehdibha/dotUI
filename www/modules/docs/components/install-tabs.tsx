@@ -16,8 +16,8 @@ import { useTRPC } from "@/lib/trpc/react";
 const StyleNameWithSkeleton = () => {
   const trpc = useTRPC();
 
-  const { data: currentStyle, isLoading } = useQuery({
-    ...trpc.style.getCurrentStyle.queryOptions(),
+  const { data: activeStyleName, isLoading } = useQuery({
+    ...trpc.style.getActive.queryOptions(),
   });
 
   if (isLoading) {
@@ -28,7 +28,7 @@ const StyleNameWithSkeleton = () => {
     );
   }
 
-  return currentStyle || "{{STYLE_NAME}}";
+  return activeStyleName || "{{STYLE_NAME}}";
 };
 
 type ChangeListener = (v: string) => void;

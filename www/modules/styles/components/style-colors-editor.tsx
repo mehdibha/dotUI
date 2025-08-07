@@ -48,7 +48,7 @@ type ModeConfig = "light-only" | "dark-only" | "light-dark";
 
 export function StyleColorsEditor() {
   const { form, resolvedMode, isSuccess } = useStyleForm();
-  const { setCurrentMode } = usePreferences();
+  const { setActiveMode } = usePreferences();
 
   return (
     <div>
@@ -61,7 +61,7 @@ export function StyleColorsEditor() {
               <ThemeModeSwitch
                 isSelected={resolvedMode === "light"}
                 onChange={(isSelected) => {
-                  setCurrentMode(isSelected ? "light" : "dark");
+                  setActiveMode(isSelected ? "light" : "dark");
                 }}
               />
             )}

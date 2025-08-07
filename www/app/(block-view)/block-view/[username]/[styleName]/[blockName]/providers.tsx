@@ -15,14 +15,14 @@ export const BlockProviders = ({
   style: styleProp,
   children,
 }: {
-  style: StyleDefinition;
+  style: StyleDefinition & { id?: string };
   children: React.ReactNode;
 }) => {
   const overlayContainerRef = React.useRef(null);
 
   const { activeMode } = usePreferences();
   const isMounted = useMounted();
-  const { liveStyle } = useLiveStyleConsumer(styleProp.id);
+  const { liveStyle } = useLiveStyleConsumer(styleProp.id || "default");
 
   const style = React.useMemo(() => {
     return liveStyle ?? styleProp;
