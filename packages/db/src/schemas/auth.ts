@@ -1,16 +1,16 @@
+import type { AnyPgColumn } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 import { pgTable } from "drizzle-orm/pg-core";
-import type { AnyPgColumn } from "drizzle-orm/pg-core";
 
 import { style } from "./style";
 
 export const user = pgTable("user", (t) => ({
   id: t.text().primaryKey(),
   name: t.text().notNull(),
+  username: t.text().notNull().unique(),
   email: t.text().notNull().unique(),
   emailVerified: t.boolean().notNull(),
   image: t.text(),
-  username: t.text().notNull().unique(),
   role: t.text().notNull().default("user"),
   activeStyleId: t
     .uuid()
