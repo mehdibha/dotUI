@@ -1,7 +1,7 @@
-import type { BetterAuthOptions } from "better-auth";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { oAuthProxy } from "better-auth/plugins";
+import type { BetterAuthOptions } from "better-auth";
 
 import { db } from "@dotui/db/client";
 
