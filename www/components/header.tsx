@@ -48,7 +48,7 @@ export function Header({
             {[
               { label: "Docs", href: "/docs/getting-started/introduction" },
               { label: "Components", href: "/docs/components/buttons/button" },
-              { label: "Blocks", href: "/blocks" },
+              { label: "Blocks", href: "/blocks/featured" },
               { label: "Styles", href: "/styles" },
             ].map((item) => (
               <Link

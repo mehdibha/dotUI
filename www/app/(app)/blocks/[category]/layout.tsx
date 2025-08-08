@@ -25,7 +25,7 @@ export default function BlocksLayout({
           Modern UI blocks available in infinite styles.
         </PageHeaderDescription>
         <PageActions>
-          {/* <ActiveStyleSelector buttonProps={{ className: "px-4" }} /> */}
+          <ActiveStyleSelector buttonProps={{ className: "px-4" }} />
         </PageActions>
       </PageHeader>
       <BlocksNav className="mt-8">{children}</BlocksNav>

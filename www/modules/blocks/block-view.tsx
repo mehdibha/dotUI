@@ -1,8 +1,7 @@
 "use client";
 
 import React from "react";
-import { ExternalLinkIcon, TerminalIcon } from "lucide-react";
-import { ErrorBoundary } from "react-error-boundary";
+import { CopyIcon, ExternalLinkIcon, TerminalIcon } from "lucide-react";
 
 import { registryBlocks } from "@dotui/registry-definition/registry-blocks";
 import { BlockViewer } from "@dotui/ui/block-viewer";
@@ -10,9 +9,9 @@ import { Button } from "@dotui/ui/components/button";
 import { Skeleton } from "@dotui/ui/components/skeleton";
 
 import { ThemeModeSwitch } from "@/components/theme-mode-switch";
-import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
-import { ActiveStyleProviderSuspense } from "@/modules/styles/components/active-style-provider-suspense";
+import { ActiveStyleProvider } from "@/modules/styles/components/active-style-provider";
 import { useActiveStyle } from "@/modules/styles/hooks/use-active-style";
+import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 
 interface BlockViewProps {
   name: string;
@@ -76,12 +75,8 @@ const BlockViewToolbar = ({ name, title }: BlockViewToolbarProps) => {
 
 const BlockViewView = ({ name }: { name: string }) => {
   return (
-    <ErrorBoundary fallback={<div>Something went wrong</div>}>
-      <React.Suspense fallback={<Skeleton className="h-[600px]" />}>
-        <ActiveStyleProviderSuspense className="max-h-[100vh] flex-1 overflow-y-auto rounded-lg border">
-          <BlockViewer name={name} />
-        </ActiveStyleProviderSuspense>
-      </React.Suspense>
-    </ErrorBoundary>
+      <ActiveStyleProvider className="max-h-[100vh] flex-1 overflow-y-auto rounded-lg border">
+        <BlockViewer name={name} />
+      </ActiveStyleProvider>
   );
 };

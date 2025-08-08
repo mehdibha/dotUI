@@ -18,7 +18,7 @@ export function ActiveStyleProvider(
   const { data: activeStyle, isPending, isError } = useActiveStyle();
 
   if (isPending) {
-    return <div>{props.children}</div>;
+    return <Skeleton>{props.children}</Skeleton>;
   }
 
   if (isError) {

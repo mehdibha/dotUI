@@ -1,8 +1,7 @@
 import type { Registry } from "shadcn/registry";
 
-export const featuredBlocks = ["login-01", "register-01"] as const;
-
 export const blocksCategories: { name: string; slug: string }[] = [
+  { name: "Featured", slug: "featured" },
   { name: "Showcase", slug: "showcase" },
   { name: "Authentication", slug: "authentication" },
   { name: "Tables", slug: "tables" },
@@ -26,7 +25,7 @@ export const registryBlocks: Registry["items"] = [
         type: "registry:component",
       },
     ],
-    categories: ["authentication"],
+    categories: ["featured", "authentication"],
   },
   {
     name: "register-01",
@@ -44,7 +43,7 @@ export const registryBlocks: Registry["items"] = [
         type: "registry:component",
       },
     ],
-    categories: ["authentication"],
+    categories: ["featured", "authentication"],
   },
   {
     name: "all-components",

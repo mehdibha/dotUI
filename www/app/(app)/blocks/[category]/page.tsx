@@ -20,19 +20,16 @@ export default async function BlocksPage({
   params: Promise<{ category: string }>;
 }) {
   const { category } = await params;
-  prefetch(trpc.style.getFeatured.queryOptions({}));
 
   const blocks = registryBlocks.filter((block) =>
     block.categories?.includes(category),
   );
 
   return (
-    <HydrateClient>
-      <div className="space-y-6">
-        {blocks.map((block) => (
-          <BlockView key={block.name} name={block.name} />
-        ))}
-      </div>
-    </HydrateClient>
+    <div className="space-y-6">
+      {blocks.map((block) => (
+        <BlockView key={block.name} name={block.name} />
+      ))}
+    </div>
   );
 }
