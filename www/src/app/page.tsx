@@ -17,24 +17,25 @@ export default function Page() {
         </Item>
         <Item>
           <Badge variant="outline" className="bg-bg-inverse/5 mt-2">
-            status: beta
+            <span className="text-fg-muted">status:</span>{" "}
+            <span className="font-bold">preview</span>
           </Badge>
         </Item>
-        <Item>
+        {/* <Item>
           <p className="text-fg-muted mt-14 text-sm font-medium">
-            Coming soon.
+            Dropping soon.
           </p>
-        </Item>
+        </Item> */}
         <Item>
-          <h1 className="font-heading mt-6 text-balance text-xl font-bold tracking-tighter lg:text-2xl">
-            Who said your component library should be minimalist?
+          <h1 className="font-heading mt-14 text-balance text-xl font-bold tracking-tighter lg:text-2xl">
+            Dropping soon.
           </h1>
         </Item>
         <Item>
           <p className="text-fg-muted mt-3 text-balance text-sm">
             We&apos;re working hard to make your component library have a{" "}
-            <span className="font-bold">unique</span> look, we&apos; re highly
-            open to contributions and feedback.
+            <span className="font-bold">unique</span> look.
+            <br /> we&apos; re highly open to contributions and feedback.
           </p>
         </Item>
         <Item className="mt-6 flex items-center justify-center gap-2">
@@ -70,10 +71,9 @@ export default function Page() {
           </Button>
         </Item>
         <Item>
-          <p className="text-fg-muted mt-10">
-            I dont&apos;t care, i want see the{" "}
-            <Link href="https://next.dotui.org">beta version</Link>!
-          </p>
+          <Button variant="default" className="mt-12 border">
+            Beta access
+          </Button>
         </Item>
       </div>
     </Container>
