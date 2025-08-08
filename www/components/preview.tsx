@@ -14,7 +14,6 @@ import { motion } from "motion/react";
 
 import {
   blocksCategories,
-  featuredBlocks,
   registryBlocks,
 } from "@dotui/registry-definition/registry-blocks";
 import { Button } from "@dotui/ui/components/button";
@@ -185,11 +184,6 @@ export function PreviewContent({
                   )}
                 </ListBoxSection>
               )}
-              {/* {(item) => (
-                <SelectItem key={item.key} id={item.key}>
-                  {item.label}
-                </SelectItem>
-              )} */}
             </ListBox>
           </Popover>
         </SelectRoot>
