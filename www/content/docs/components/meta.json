@@ -3,15 +3,15 @@
   "icon": "Box",
   "pages": [
     "buttons",
-    "inputs",
+    "forms-and-inputs",
     "menus-and-selection",
-    "dates",
+    "date-and-time",
     "colors",
     "drag-and-drop",
     "feedback",
     "layout",
     "data-display",
     "navigation",
-    "overlay"
+    "overlays"
   ]
 }

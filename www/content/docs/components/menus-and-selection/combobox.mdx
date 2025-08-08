@@ -7,8 +7,6 @@ thumbnail:
 links:
   - label: Aria docs
     href: https://react-spectrum.adobe.com/react-aria/Combobox.html
-  - label: Aria API Reference
-    href: https://react-spectrum.adobe.com/react-aria/Combobox.html#props
   - label: Report an issue
     href: https://github.com/mehdibha/dotUI/issues/new/choose
   - label: Edit this page
@@ -16,7 +14,7 @@ links:
 ---
 
 <ComponentPreview
-  name="core/combobox-basic"
+  name="combobox/demos/basic"
   preview={`<Combobox>
     <Item>Canada</Item>
     <Item>France</Item>
@@ -30,30 +28,9 @@ links:
 
 ## Installation
 
-<Tabs items={["CLI", "Manual"]}>
-  <Tab value="CLI">
-  
-  ```package-install
-npx dotui-cli@latest add combobox
+```package-install
+npx shadcn@latest add https://dotui.org/r/{{STYLE_NAME}}/combobox.json
 ```
-
-  </Tab>
-  <Tab value="manual">
-  
-    <Steps>
-      <Step>Install the following dependencies:</Step>
-
-    ```package-install
-    react-aria-components
-    ```
-
-      <Step>Copy and paste the following code into your project.</Step>
-      <ComponentSource name="core/combobox" />
-      <Step>Update the import paths to match your project setup.</Step>
-    </Steps>
-
-  </Tab>
-</Tabs>
 
 ## Usage
 
@@ -66,7 +43,7 @@ Use `Combobox` to allow users to filter a list of options to items matching a qu
 A visual label can be provided for the combobox using the `label` prop, or a hidden label using `aria-label` prop.
 
 <ComponentPreview
-  name="core/combobox-label"
+  name="combobox/demos/label"
   preview={`<Combobox label="Country">
     <Item>Canada</Item>
     <Item>France</Item>
@@ -83,28 +60,8 @@ A visual label can be provided for the combobox using the `label` prop, or a hid
 A description can be supplied to the combobox via the `description` prop. The description is always visible unless the `validationState` is `“invalid”` and an error message is provided.
 
 <ComponentPreview
-  name="core/combobox-description"
+  name="combobox/demos/description"
   preview={`<Combobox label="Country" description="Please select a country.">
-    <Item>Canada</Item>
-    <Item>France</Item>
-    <Item>Germany</Item>
-    <Item>Spain</Item>
-    <Item>Tunisia</Item>
-    <Item>United states</Item>
-    <Item>United Kingdom</Item>
-  </Combobox>`}
-/>
-
-### Contextual help
-
-A `ContextualHelp` element may be placed next to the label to provide additional information or help about the `Combobox`
-
-<ComponentPreview
-  name="core/combobox-contextual-help"
-  preview={`<Combobox
-    label="Country"
-    contextualHelp={<ContextualHelp />}
-  >
     <Item>Canada</Item>
     <Item>France</Item>
     <Item>Germany</Item>
@@ -120,7 +77,7 @@ A `ContextualHelp` element may be placed next to the label to provide additional
 An `errorMessage` can be supplied to a `Combobox`, which will be displayed when the `isInvalid` prop is set to `true`.
 
 <ComponentPreview
-  name="core/combobox-validation"
+  name="combobox/demos/validation"
   preview={`<Combobox isInvalid errorMessage="Please select a country in the list.">
     <Item>Canada</Item>
     <Item>France</Item>
@@ -137,7 +94,7 @@ An `errorMessage` can be supplied to a `Combobox`, which will be displayed when 
 By default, `Combobox` doesn't allow users to specify a value that doesn't exist in the list of options and will revert the input value to the current selected value on blur. By specifying `allowsCustomValue`, this behavior is suppressed.
 
 <ComponentPreview
-  name="core/combobox-custom-value"
+  name="combobox/demos/custom-value"
   preview={`<Combobox allowsCustomValue>
     <Item>Canada</Item>
     <Item>France</Item>
@@ -154,7 +111,7 @@ By default, `Combobox` doesn't allow users to specify a value that doesn't exist
 The `isDisabled` prop can be used to disable the combobox.
 
 <ComponentPreview
-  name="core/combobox-disabled"
+  name="combobox/demos/disabled"
   preview={`<Combobox label="Favorite animal" isDisabled>
     <Item>Red Panda</Item>
     <Item>Cat</Item>
@@ -170,7 +127,7 @@ The `isDisabled` prop can be used to disable the combobox.
 Use the `isLoading` prop to indicate that the list is loading.
 
 <ComponentPreview
-  name="core/combobox-loading"
+  name="combobox/demos/loading"
   preview={`<Combobox label="Favorite Animal" isLoading>
     <Item>Red Panda</Item>
     <Item>Cat</Item>
@@ -187,7 +144,7 @@ Use the `isRequired` prop to mark the combobox as required.
 Use the `necessityIndicator` prop to control the visual style of the required state.
 
 <ComponentPreview
-  name="core/combobox-required"
+  name="combobox/demos/required"
   preview={`<Combobox label="Country" isRequired necessityIndicator="icon">
     <Item>Canada</Item>
     <Item>France</Item>
@@ -205,7 +162,7 @@ Combobox supports sections in order to group options. Sections can be used by wr
 Sections without a `title` must provide an aria-label for accessibility.
 
 <ComponentPreview
-  name="core/combobox-sections"
+  name="combobox/demos/sections"
   preview={`<Combobox>
     <Section title="Africa">
       <Item>Tunisia</Item>
@@ -239,7 +196,7 @@ See [Item options](/components/menus-and-selection/list-box#item-options) for mo
 Use `defaultSelectedKey` to provide a default set of selected item.
 
 <ComponentPreview
-  name="core/combobox-uncontrolled"
+  name="combobox/demos/uncontrolled"
   preview={`<Combobox aria-label="country" defaultSelectedKey="tn">
     <Item id="ca">Canada</Item>
     <Item id="fr">France</Item>
@@ -256,7 +213,7 @@ Use `defaultSelectedKey` to provide a default set of selected item.
 Use `selectedKey` to control the selected item.
 
 <ComponentPreview
-  name="core/combobox-controlled"
+  name="combobox/demos/controlled"
   preview={`const [country, setCountry] = React.useState<Key | null>("tn");
   return (
     <Combobox selectedKey={country} onSelectionChange={setCountry}>
@@ -276,7 +233,7 @@ Use `selectedKey` to control the selected item.
 If you need to customize things further, you can drop down to the composition level.
 
 <ComponentPreview
-  name="core/combobox-composition"
+  name="combobox/demos/composition"
   preview={`<ComboboxRoot>
     <Label>Framework</Label>
     <ComboboxTrigger />
@@ -300,7 +257,7 @@ If you need to customize things further, you can drop down to the composition le
 {/* prettier-ignore-start */}
 
 <ComponentPreview 
-  name="core/combobox-async-loading" 
+  name="combobox/demos/async-loading" 
   preview={`const list = useAsyncList<Character>({
     async load({ signal }) {
       const res = await fetch(\`https://pokeapi.co/api/v2/pokemon\`, { signal });

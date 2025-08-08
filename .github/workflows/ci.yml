@@ -30,7 +30,7 @@ jobs:
           fetch-depth: 0
       - uses: ./.github/actions/setup
 
-      - run: pnpm format:check
+      - run: pnpm format
 
   tsc:
     runs-on: ubuntu-latest
@@ -42,14 +42,14 @@ jobs:
       - uses: ./.github/actions/setup
 
       - run: pnpm typecheck
-      
-  build-www:
+
+  test:
     runs-on: ubuntu-latest
-    name: Build www
+    name: Run tests
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - uses: ./.github/actions/setup
 
-      - run: pnpm build:www
+      - run: pnpm test

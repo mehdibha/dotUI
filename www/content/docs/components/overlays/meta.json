@@ -1,0 +1,3 @@
+{
+  "pages": ["modal", "popover", "drawer", "overlay", "dialog", "tooltip"]
+}
