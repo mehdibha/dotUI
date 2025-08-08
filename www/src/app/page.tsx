@@ -2,7 +2,6 @@ import { Container, Item } from "@/components/fade-in";
 import { DiscordIcon, GitHubIcon, TwitterIcon } from "@/components/icons";
 import { Badge } from "@/registry/ui/default/core/badge";
 import { Button } from "@/registry/ui/default/core/button";
-import { Link } from "@/registry/ui/default/core/link";
 import { siteConfig } from "@/config";
 
 export default function Page() {
@@ -21,11 +20,6 @@ export default function Page() {
             <span className="font-bold">preview</span>
           </Badge>
         </Item>
-        {/* <Item>
-          <p className="text-fg-muted mt-14 text-sm font-medium">
-            Dropping soon.
-          </p>
-        </Item> */}
         <Item>
           <h1 className="font-heading mt-14 text-balance text-xl font-bold tracking-tighter lg:text-2xl">
             Dropping soon.
@@ -71,8 +65,12 @@ export default function Page() {
           </Button>
         </Item>
         <Item>
-          <Button variant="default" className="mt-12 border">
-            Beta access
+          <Button
+            href="https://next.dotui.org"
+            variant="default"
+            className="bg-bg-muted/80 mt-12 border"
+          >
+            Preview access
           </Button>
         </Item>
       </div>
