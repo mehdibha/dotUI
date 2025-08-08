@@ -31,7 +31,7 @@ export default async function Layout({
 
   return (
     <Providers>
-      <div className="[&_[data-slot='label']]:text-fg-muted relative grid grid-cols-[1fr_auto] max-xl:grid-cols-1 [&_[data-slot='label']]:text-sm [&_[data-slot='label']]:font-medium">
+      <div className="relative grid grid-cols-[1fr_auto] max-xl:grid-cols-1 [&_[data-slot='label']]:text-sm [&_[data-slot='label']]:font-medium [&_[data-slot='label']]:text-fg-muted">
         <div className="container max-w-5xl py-10">
           <StylePageForm>
             <StylePageHeader />
