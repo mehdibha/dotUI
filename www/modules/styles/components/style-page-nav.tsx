@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useParams, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 import {
   Tab,
@@ -15,11 +15,10 @@ export function StylePageNav({
   children,
   ...props
 }: { children: React.ReactNode } & TabsProps) {
-  const { username, styleName } = useParams<{
-    username: string;
-    styleName: string;
-  }>();
   const pathname = usePathname();
+  const segments = pathname.split("/");
+  const username = segments[2] ?? "";
+  const styleName = segments[3] ?? "";
 
   return (
     <Tabs variant="solid" selectedKey={pathname} {...props}>

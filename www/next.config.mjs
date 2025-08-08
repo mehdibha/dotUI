@@ -37,6 +37,31 @@ const config = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  async rewrites() {
+    return [
+      { source: "/styles/:username/:styleName", destination: "/styles/static" },
+      {
+        source: "/styles/:username/:styleName/layout",
+        destination: "/styles/static/layout",
+      },
+      {
+        source: "/styles/:username/:styleName/typography",
+        destination: "/styles/static/typography",
+      },
+      {
+        source: "/styles/:username/:styleName/components",
+        destination: "/styles/static/components",
+      },
+      {
+        source: "/styles/:username/:styleName/effects",
+        destination: "/styles/static/effects",
+      },
+      {
+        source: "/styles/:username/:styleName/icons",
+        destination: "/styles/static/icons",
+      },
+    ];
+  },
   experimental: {
     reactCompiler: true,
   },

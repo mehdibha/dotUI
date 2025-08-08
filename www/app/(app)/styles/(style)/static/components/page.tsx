@@ -3,3 +3,5 @@ import { StyleComponentsEditor } from "@/modules/styles/components/style-compone
 export default function ComponentsPage() {
   return <StyleComponentsEditor />;
 }
+
+

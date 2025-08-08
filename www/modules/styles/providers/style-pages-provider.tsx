@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useForm, useWatch } from "react-hook-form";
@@ -57,10 +57,10 @@ export function StylePagesProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const { username, styleName } = useParams<{
-    username: string;
-    styleName: string;
-  }>();
+  const pathname = usePathname();
+  const segments = pathname.split("/");
+  const username = segments[2] ?? "";
+  const styleName = segments[3] ?? "";
 
   const { activeMode } = usePreferences();
   const { updateLiveStyle } = useLiveStyleProducer(`${username}/${styleName}`);
@@ -141,7 +141,6 @@ export default function StylePageForm({
   children: React.ReactNode;
 }) {
   const { form } = useStyleForm();
-  const { style: slug } = useParams<{ style: string }>();
   const trpc = useTRPC();
   const trpcClient = useTRPCClient();
   const queryClient = useQueryClient();

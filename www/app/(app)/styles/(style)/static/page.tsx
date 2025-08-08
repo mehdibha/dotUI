@@ -3,3 +3,5 @@ import { StyleColorsEditor } from "@/modules/styles/components/style-colors-edit
 export default function StyleColorsPage() {
   return <StyleColorsEditor />;
 }
+
+

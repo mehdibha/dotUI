@@ -3,3 +3,5 @@ import { StyleEffectsEditor } from "@/modules/styles/components/style-effects-ed
 export default function EffectsPage() {
   return <StyleEffectsEditor />;
 }
+
+
