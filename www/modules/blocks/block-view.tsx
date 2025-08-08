@@ -9,9 +9,9 @@ import { Button } from "@dotui/ui/components/button";
 import { Skeleton } from "@dotui/ui/components/skeleton";
 
 import { ThemeModeSwitch } from "@/components/theme-mode-switch";
+import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 import { ActiveStyleProvider } from "@/modules/styles/components/active-style-provider";
 import { useActiveStyle } from "@/modules/styles/hooks/use-active-style";
-import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 
 interface BlockViewProps {
   name: string;
@@ -75,8 +75,8 @@ const BlockViewToolbar = ({ name, title }: BlockViewToolbarProps) => {
 
 const BlockViewView = ({ name }: { name: string }) => {
   return (
-      <ActiveStyleProvider className="max-h-[100vh] flex-1 overflow-y-auto rounded-lg border">
-        <BlockViewer name={name} />
-      </ActiveStyleProvider>
+    <ActiveStyleProvider className="max-h-[100vh] flex-1 overflow-y-auto rounded-lg border">
+      <BlockViewer name={name} />
+    </ActiveStyleProvider>
   );
 };

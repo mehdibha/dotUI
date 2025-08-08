@@ -10,8 +10,6 @@ import { ActiveStyleProvider } from "@/modules/styles/components/active-style-pr
 import { CodeBlock } from "./code-block";
 import {
   ComponentPreviewHeader,
-  ComponentWrapper,
-  Loader,
   ResizableContainer,
 } from "./component-preview-client";
 
@@ -70,7 +68,6 @@ export const ComponentPreview = async ({
     >
       <div className="bg-bg-muted">
         <ResizableContainer resizable={resizable}>
-          {/* <Loader> */}
           <ActiveStyleProvider>
             <ComponentPreviewHeader />
             <ScrollArea className="bg-bg text-fg">
@@ -88,14 +85,11 @@ export const ComponentPreview = async ({
                     fullWidth ? "w-full" : "flex items-center justify-center",
                   )}
                 >
-                  <ComponentWrapper suspense={suspense}>
-                    <Component />
-                  </ComponentWrapper>
+                  <Component />
                 </div>
               </div>
             </ScrollArea>
           </ActiveStyleProvider>
-          {/* </Loader> */}
         </ResizableContainer>
       </div>
       <CodeBlock

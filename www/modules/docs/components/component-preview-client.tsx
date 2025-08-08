@@ -13,30 +13,6 @@ import { useMounted } from "@/hooks/use-mounted";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 import { ActiveStyleSelector } from "@/modules/styles/components/active-style-selector";
 
-export const Loader = ({ children }: { children: React.ReactNode }) => {
-  const [isMounted, setIsMounted] = React.useState(false);
-  React.useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  return <Skeleton show={!isMounted}>{children}</Skeleton>;
-};
-
-export const ComponentWrapper = ({
-  suspense,
-  fallback = <Skeleton className="h-40" />,
-  children,
-}: {
-  suspense?: boolean;
-  fallback?: React.ReactNode;
-  children: React.ReactNode;
-}) => {
-  if (suspense) {
-    return <React.Suspense fallback={fallback}>{children}</React.Suspense>;
-  }
-  return children;
-};
-
 export const ResizableContainer = ({
   children,
   resizable,
