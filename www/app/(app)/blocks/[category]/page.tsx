@@ -19,9 +19,9 @@ export default async function BlocksPage({
 }: {
   params: Promise<{ category: string }>;
 }) {
+  const { category } = await params;
   prefetch(trpc.style.getFeatured.queryOptions({}));
 
-  const { category } = await params;
   const blocks = registryBlocks.filter((block) =>
     block.categories?.includes(category),
   );

@@ -6,17 +6,14 @@ import { usePreferences } from "../atoms/preferences-atom";
 
 export function useActiveStyleSuspense() {
   const trpc = useTRPC();
-  const { data: session } = authClient.useSession();
   const { activeStyleId: localActiveStyleId } = usePreferences();
 
   const { data: featuredStyles } = useSuspenseQuery(
     trpc.style.getFeatured.queryOptions({}),
   );
 
-  const { data: authedActiveStyleId } = useQuery({
+  const { data: authedActiveStyleId } = useSuspenseQuery({
     ...trpc.style.getActive.queryOptions(),
-    retry: false,
-    enabled: !!session,
   });
 
   const activeStyleId =

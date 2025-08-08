@@ -2,6 +2,7 @@
 
 import React from "react";
 import { ExternalLinkIcon, TerminalIcon } from "lucide-react";
+import { ErrorBoundary } from "react-error-boundary";
 
 import { registryBlocks } from "@dotui/registry-definition/registry-blocks";
 import { BlockViewer } from "@dotui/ui/block-viewer";
@@ -75,10 +76,12 @@ const BlockViewToolbar = ({ name, title }: BlockViewToolbarProps) => {
 
 const BlockViewView = ({ name }: { name: string }) => {
   return (
-    <React.Suspense fallback={<Skeleton className="h-[600px]" />}>
-      <ActiveStyleProviderSuspense className="max-h-[100vh] flex-1 overflow-y-auto rounded-lg border">
-        <BlockViewer name={name} />
-      </ActiveStyleProviderSuspense>
-    </React.Suspense>
+    <ErrorBoundary fallback={<div>Something went wrong</div>}>
+      <React.Suspense fallback={<Skeleton className="h-[600px]" />}>
+        <ActiveStyleProviderSuspense className="max-h-[100vh] flex-1 overflow-y-auto rounded-lg border">
+          <BlockViewer name={name} />
+        </ActiveStyleProviderSuspense>
+      </React.Suspense>
+    </ErrorBoundary>
   );
 };
