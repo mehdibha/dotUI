@@ -39,26 +39,29 @@ const config = {
   },
   async rewrites() {
     return [
-      { source: "/styles/:username/:styleName", destination: "/styles/static" },
+      {
+        source: "/styles/:username/:styleName",
+        destination: "/styles/style/colors",
+      },
       {
         source: "/styles/:username/:styleName/layout",
-        destination: "/styles/static/layout",
+        destination: "/styles/style/layout",
       },
       {
         source: "/styles/:username/:styleName/typography",
-        destination: "/styles/static/typography",
+        destination: "/styles/style/typography",
       },
       {
         source: "/styles/:username/:styleName/components",
-        destination: "/styles/static/components",
+        destination: "/styles/style/components",
       },
       {
         source: "/styles/:username/:styleName/effects",
-        destination: "/styles/static/effects",
+        destination: "/styles/style/effects",
       },
       {
         source: "/styles/:username/:styleName/icons",
-        destination: "/styles/static/icons",
+        destination: "/styles/style/icons",
       },
     ];
   },

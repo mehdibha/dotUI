@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import {
   ChevronsRightIcon,
   ChevronsUpDownIcon,
@@ -115,10 +115,11 @@ export function PreviewContent({
   screen: "mobile" | "tablet";
   setScreen: (screen: "mobile" | "tablet") => void;
 }) {
-  const { username, styleName } = useParams<{
-    username: string;
-    styleName: string;
-  }>();
+  const pathname = usePathname();
+  const segments = pathname.split("/");
+  const username = segments[2] ?? "";
+  const styleName = segments[3] ?? "";
+
   const [currentBlockName, setCurrentBlockName] =
     React.useState<string>("login-01");
   const [isLoading, setLoading] = React.useState(true);
