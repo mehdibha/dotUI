@@ -42,7 +42,7 @@ export function StyleCard(props: {
           <div className="mt-4 flex items-center gap-2">
             <Button
               href={`/styles/${props.style.user.username}/${props.style.name}`}
-              variant="default"
+              variant="primary"
               suffix={<SquareArrowOutUpRightIcon />}
               className="h-8 text-sm"
             >
@@ -85,3 +85,4 @@ export function StyleCard(props: {
     </Skeleton>
   );
 }
+

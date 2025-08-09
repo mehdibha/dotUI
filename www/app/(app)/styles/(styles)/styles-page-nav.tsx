@@ -34,11 +34,10 @@ export function StylesPageNav({ children }: { children: React.ReactNode }) {
       ];
 
   return (
-    <Tabs variant="solid" selectedKey={pathname} className="mt-10">
+    <Tabs variant="underline" selectedKey={pathname} className="mt- sticky top-0 z-10">
       <TabList
         className={cn(
-          "flex-wrap bg-transparent p-0 opacity-0",
-          isMounted && !isPending && "animate-in opacity-100 fade-in",
+          "-mx-28 px-26",
         )}
       >
         {items.map((tab) => (
@@ -47,7 +46,8 @@ export function StylesPageNav({ children }: { children: React.ReactNode }) {
             id={tab.href}
             href={tab.href}
             className={cn(
-              "flex h-7 items-center gap-2 rounded-full px-4 text-sm",
+              "flex h-7 items-center gap-2 px-4 text-sm pb-4 opacity-0",
+              isMounted && !isPending && "animate-in slide-in-from-bottom-1 opacity-100 fade-in",
             )}
           >
             {tab.label}

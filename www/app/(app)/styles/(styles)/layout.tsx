@@ -17,8 +17,8 @@ export default function StylesLayout({
   children: React.ReactNode;
 }) {
   return (
-    <PageLayout>
-      <PageHeader>
+    <PageLayout className="pt-12!">
+      {/* <PageHeader>
         <PageHeaderHeading>Find your style or make your own.</PageHeaderHeading>
         <PageHeaderDescription>
           Choose a style to get started or create your own.
@@ -28,7 +28,7 @@ export default function StylesLayout({
             <Button variant="primary">Create your style</Button>
           </CreateStyleModal>
         </PageActions>
-      </PageHeader>
+      </PageHeader> */}
       <StylesPageNav>{children}</StylesPageNav>
     </PageLayout>
   );
