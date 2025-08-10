@@ -1,0 +1,145 @@
+---
+title: Color Slider
+description: ColorSlider allow users to adjust an individual channel of a color value.
+links:
+  - label: Aria docs
+    href: https://react-spectrum.adobe.com/react-aria/ColorSlider.html
+  - label: Report an issue
+    href: https://github.com/mehdibha/dotUI/issues/new/choose
+  - label: Edit this page
+    href: https://github.com/mehdibha/dotUI/tree/main/content/components/colors/color-slider.mdx?plain=1
+---
+
+<ComponentPreview
+  name="color-slider/demos/default"
+  preview={`<ColorSlider channel="hue" defaultValue="hsl(200, 100%, 50%)" />`}
+/>
+
+## Installation
+
+```package-install
+npx shadcn@latest add @dotui/{{STYLE_NAME}}/color-slider.json
+```
+
+## Anatomy
+
+```tsx
+import { ColorSlider } from "@/components/core/color-slider";
+
+<ColorSlider label="Hue" channel="hue" defaultValue="#fff" />;
+```
+
+```tsx
+import {
+  ColorSliderControl,
+  ColorSliderOutput,
+  ColorSliderRoot,
+} from "@/components/dynamic-core/color-slider";
+import { Label } from "@/components/dynamic-core/field";
+
+<ColorSliderRoot defaultValue="#fff">
+  <div className="flex items-center justify-between">
+    <Label>Hue</Label>
+    <ColorSliderOutput />
+  </div>
+  <ColorSliderControl />
+</ColorSliderRoot>;
+```
+
+## Controlled
+
+Use the `value` and `onChange` props to control the value of the slider.
+
+<ComponentPreview
+  name="color-slider/demos/controlled"
+  preview={`const [value, setValue] = React.useState(parseColor("hsl(0, 100%, 50%)"));
+  return <ColorSlider value={value} onChange={setValue} channel="hue" />`}
+/>
+
+## Label
+
+Use the `label` prop to provide a label for the color slider.
+
+<ComponentPreview
+  name="color-slider/demos/label"
+  preview={`<ColorSlider label="Hue" channel="hue" defaultValue="hsl(200, 100%, 50%)" />`}
+/>
+
+## Channel
+
+`channel` prop may be provided to specify which color channel the color slider should display
+
+<ComponentPreview
+  name="color-slider/demos/channel"
+  preview={`<ColorSlider label="Opacity" defaultValue="#f00" channel="alpha" />`}
+/>
+
+## Options
+
+### Orientation
+
+`orientation` prop may be provided to specify the orientation of the color slider.
+
+<ComponentPreview
+  name="color-slider/demos/vertical"
+  preview={`<ColorSlider orientation="vertical" channel="hue" defaultValue="hsl(0, 100%, 50%)" />`}
+/>
+
+### Disabled
+
+Use the `isDisabled` prop to disable the color slider.
+
+<ComponentPreview
+  name="color-slider/demos/disabled"
+  preview={`<ColorSlider label="Opacity" defaultValue="#f00" channel="alpha" isDisabled />`}
+/>
+
+## Composition
+
+If you need to customize things further, you can drop down to the composition level.
+
+<ComponentPreview
+  name="color-slider/demos/composition"
+  preview={`<ColorSliderRoot channel="hue" defaultValue="hsl(0, 100%, 50%)">
+    <div className="flex items-center justify-between">
+      <Label>Hue</Label>
+      <ColorSliderOutput />
+    </div>
+    <ColorSliderControl />
+  </ColorSliderRoot>`}
+/>
+
+## API Reference
+
+| Prop           | Type                                                                                                     | Default        | Description                                                                                                                                                                 |
+| -------------- | -------------------------------------------------------------------------------------------------------- | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `channel*`     | `'hue' \| 'saturation' \| 'brightness' \| 'lightness' \| 'red' \| 'green' \| 'blue' \| 'alpha'`          | -              | The color channel that the slider manipulates.                                                                                                                              |
+| `colorSpace`   | `'rgb' \| 'hsl' \| 'hsb'`                                                                                | -              | The color space that the slider operates in. The channel must be in this color space. If not provided, this defaults to the color space of the color or defaultColor value. |
+| `orientation`  | `'horizontal' \| 'vertical'`                                                                             | `'horizontal'` | The orientation of the Slider.                                                                                                                                              |
+| `isDisabled`   | `boolean`                                                                                                | -              | Whether the whole Slider is disabled.                                                                                                                                       |
+| `value`        | `T`                                                                                                      | -              | The current value (controlled).                                                                                                                                             |
+| `defaultValue` | `T`                                                                                                      | -              | The default value (uncontrolled).                                                                                                                                           |
+| `name`         | `string`                                                                                                 | -              | The name of the input element, used when submitting an HTML form.                                                                                                           |
+| `children`     | `ReactNode \| (values: ColorSliderRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -              | The children of the component. A function may be provided to alter the children based on component state.                                                                   |
+| `className`    | `string`                                                                                                 | -              | The CSS className for the element.                                                                                                                                          |
+| `style`        | `CSSProperties \| (values: ColorSliderRenderProps & {defaultStyle: CSSProperties}) => CSSProperties`     | -              | The inline style for the element. A function may be provided to compute the style based on component state.                                                                 |
+
+| Event         | Type                     | Description                                                       |
+| ------------- | ------------------------ | ----------------------------------------------------------------- |
+| `onChange`    | `(value: Color) => void` | Handler that is called when the value changes, as the user drags. |
+| `onChangeEnd` | `(value: Color) => void` | Handler that is called when the user stops dragging.              |
+
+| Data attribute                                | Description                           |
+| --------------------------------------------- | ------------------------------------- |
+| `[data-orientation="horizontal \| vertical"]` | The orientation of the color slider.  |
+| `[data-disabled]`                             | Whether the color slider is disabled. |
+
+## Accessibility
+
+### Keyboard interactions
+
+| Key                                            | Description                                                                                                                             |
+| ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `Tab`                                          | Places focus on the handle. If the handle is already in focus, moves focus to the next handle or next element in the page tab sequence. |
+| `Shift+Tab`                                    | Places focus on the previous handle or previous element in the page tab sequence.                                                       |
+| `ArrowUp` `ArrowDown` `ArrowLeft` `ArrowRight` | Moves the handle up/down/left/right.                                                                                                    |

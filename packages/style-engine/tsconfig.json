@@ -1,0 +1,5 @@
+{
+  "extends": "@dotui/ts-config/internal-package.json",
+  "include": ["src", "test"],
+  "exclude": ["node_modules"]
+}

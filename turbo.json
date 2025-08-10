@@ -1,43 +1,59 @@
 {
-  "$schema": "https://turbo.build/schema.json",
+  "$schema": "https://turborepo.org/schema.json",
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**"]
+      "outputs": [".cache/tsbuildinfo.json", "dist/**"]
     },
-    "preview": {
-      "env": ["NEXT_PUBLIC_APP_URL"],
-      "outputs": ["dist/**", ".next/**"]
-    },
-    "start": {
-      "dependsOn": ["^build"]
-    },
-    "lint": {
+    "dev": {
+      "dependsOn": ["^dev"],
       "cache": false,
-      "outputs": []
-    },
-    "lint:check": {
-      "cache": false,
-      "outputs": []
+      "persistent": false
     },
     "format": {
-      "cache": false,
-      "outputs": []
+      "outputs": [".cache/.prettiercache"],
+      "outputLogs": "new-only"
     },
-    "format:check": {
-      "cache": false,
-      "outputs": []
+    "lint": {
+      "dependsOn": ["^build"],
+      "outputs": [".cache/.eslintcache"]
     },
-    "typecheck": {},
-    "dev": {
-      "cache": false
-    },
-    "check": {
-      "cache": false
+    "typecheck": {
+      "dependsOn": ["^build"],
+      "outputs": [".cache/tsbuildinfo.json"]
     },
     "test": {
       "cache": false,
       "outputs": []
+    },
+    "clean": {
+      "cache": false
+    },
+    "//#clean": {
+      "cache": false
+    },
+    "push": {
+      "cache": false,
+      "interactive": true
+    },
+    "studio": {
+      "cache": false,
+      "persistent": true
     }
-  }
+  },
+  "globalEnv": [
+    "DATABASE_URL",
+    "GITHUB_CLIENT_ID",
+    "GITHUB_CLIENT_SECRET",
+    "AUTH_SECRET",
+    "PORT"
+  ],
+  "globalPassThroughEnv": [
+    "NODE_ENV",
+    "CI",
+    "VERCEL",
+    "VERCEL_ENV",
+    "VERCEL_URL",
+    "npm_lifecycle_event"
+  ]
 }

@@ -1,0 +1,10 @@
+{
+  "title": "Getting started",
+  "pages": [
+    "introduction",
+    "installation",
+    "dark-mode",
+    "color-system",
+    "changelog"
+  ]
+}

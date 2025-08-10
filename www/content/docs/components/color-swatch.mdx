@@ -1,0 +1,36 @@
+---
+title: Color Swatch
+description: A ColorSwatch displays a preview of a selected color.
+---
+
+<ComponentPreview
+  name="color-swatch/demos/default"
+  preview={`<ColorSwatch color="#f00" />`}
+/>
+
+## Installation
+
+```package-install
+npx shadcn@latest add @dotui/{{STYLE_NAME}}/color-swatch.json
+```
+
+## Anatomy
+
+```tsx
+import { ColorSwatch } from "@/components/core/color-swatch";
+
+<ColorSwatch color="#f00" />;
+```
+
+## Usage
+
+Use a `ColorSwatch` to display a preview of a selected color.
+
+## API Reference
+
+| Prop        | Type                                                                                                     | Default | Description                                                                                                 |
+| ----------- | -------------------------------------------------------------------------------------------------------- | ------- | ----------------------------------------------------------------------------------------------------------- |
+| `color*`    | `string \| Color`                                                                                        | -       | The color value to display in the swatch.                                                                   |
+| `children`  | `ReactNode \| (values: ColorSwatchRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -       | The children of the component. A function may be provided to alter the children based on component state.   |
+| `className` | `string`                                                                                                 | -       | The CSS className for the element.                                                                          |
+| `style`     | `CSSProperties \| (values: ColorSwatchRenderProps & {defaultStyle: CSSProperties}) => CSSProperties`     | -       | The inline style for the element. A function may be provided to compute the style based on component state. |

@@ -1,30 +1,30 @@
 import {
-  defineDocs,
   defineConfig,
+  defineDocs,
   frontmatterSchema,
   metaSchema,
 } from "fumadocs-mdx/config";
 import { z } from "zod";
-import { fileGenerator } from "@/lib/mdx-plugins/file-generator";
+import type { RemarkInstallOptions } from "@/modules/docs/lib/mdx-plugins/remark-install";
+
+import { fileGenerator } from "@/modules/docs/lib/mdx-plugins/file-generator";
 import {
   remarkDocGen,
   RemarkDocGenOptions,
-} from "@/lib/mdx-plugins/remark-docgen";
-import remarkInlineCode from "@/lib/mdx-plugins/remark-inline-code";
-import {
-  remarkInstall,
-  type RemarkInstallOptions,
-} from "@/lib/mdx-plugins/remark-install";
+} from "@/modules/docs/lib/mdx-plugins/remark-docgen";
+import remarkInlineCode from "@/modules/docs/lib/mdx-plugins/remark-inline-code";
+import { remarkInstall } from "@/modules/docs/lib/mdx-plugins/remark-install";
 
-export const { docs, meta } = defineDocs({
+export const docs = defineDocs({
   docs: {
+    async: true,
     schema: frontmatterSchema.extend({
       links: z
         .array(
           z.object({
             label: z.string(),
             href: z.string(),
-          })
+          }),
         )
         .optional(),
     }),
@@ -38,6 +38,7 @@ export const { docs, meta } = defineDocs({
 
 export default defineConfig({
   mdxOptions: {
+    remarkNpmOptions: false,
     remarkPlugins: [
       [
         remarkInstall,

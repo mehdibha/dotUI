@@ -1,4 +1,5 @@
 {
   "title": "Docs",
-  "pages": ["getting-started", "components", "[Palette][Themes](/themes)"]
+  "root": true,
+  "pages": ["(root)", "components"]
 }

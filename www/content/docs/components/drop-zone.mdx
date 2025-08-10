@@ -1,0 +1,135 @@
+---
+title: Dropzone
+description: A drop zone is an area into which one or multiple objects can be dragged and dropped.
+links:
+  - label: Aria docs
+    href: https://react-spectrum.adobe.com/react-aria/DropZone.html
+  - label: Report an issue
+    href: https://github.com/mehdibha/dotUI/issues/new/choose
+  - label: Edit this page
+    href: https://github.com/mehdibha/dotUI/tree/main/content/components/drag-and-drop/drop-zone.mdx?plain=1
+---
+
+<ComponentPreview
+  name="drop-zone/demos/basic"
+  preview={`<DropZone><UploadIcon /></DropZone>`}
+/>
+
+## Installation
+
+```package-install
+npx shadcn@latest add @dotui/{{STYLE_NAME}}/drop-zone.json
+```
+
+## Label
+
+A visual label can be provided for the `DropZone` using the `<DropZoneLabel>` component, or a hidden label using `aria-label` prop.
+
+<ComponentPreview
+  name="drop-zone/demos/label"
+  preview={`<DropZone aria-label="drag and drop files here">
+    <UploadIcon />
+  </DropZone>
+  <DropZone>
+    <UploadIcon />
+    <DropZoneLabel>Drag and drop files here</DropZoneLabel>
+  </DropZone>`}
+/>
+
+## Events
+
+DropZone supports user interactions via mouse, keyboard, and touch. You can handle all of these via the `onDrop` prop. In addition, the `onDropEnter`, `onDropMove`, and `onDropExit` events are fired as the user interacts with the dropzone.
+
+<ComponentPreview
+  name="drop-zone/demos/events"
+  preview={`<Draggable text="Component A" />
+  <Draggable text="Component B" />
+  <DropZone
+    onDrop={async (e) => {
+      {/* handle drop event */}
+    }}
+  >
+    <DropZoneLabel>Droppable</DropZoneLabel>
+  </DropZone>`}
+/>
+
+## File trigger
+
+To allow the selection of files from the user's device, pass FileTrigger as a child of DropZone.
+
+<ComponentPreview
+  name="drop-zone/demos/file-trigger"
+  preview={`<DropZone>
+    <UploadIcon />
+    <DropZoneLabel>Drag and drop files here</DropZoneLabel>
+    <FileTrigger>
+      <Button>Select files</Button>
+    </FileTrigger>
+  </DropZone>`}
+/>
+
+## Visual feedback
+
+A dropzone displays visual feedback to the user when a drag hovers over the drop target by passing the `getDropOperation` function. If a drop target only supports data of specific types (e.g. images, videos, text, etc.), then it should implement the `getDropOperation` prop and return `"cancel"` for types that aren't supported. This will prevent visual feedback indicating that the drop target accepts the dragged data when this is not true.
+
+<ComponentPreview
+  name="drop-zone/demos/visual-feedback"
+  preview={`<DropZone
+    getDropOperation={(types) => (types.has("image/png") ? "copy" : "cancel")}
+  >
+    {dropped ? "Successful drop!" : "Drop files here"}
+  </DropZone>`}
+/>
+
+## Options
+
+### Disabled
+
+Use the `isDisabled` prop to disable the drop zone.
+
+<ComponentPreview
+  name="drop-zone/demos/disabled"
+  preview={`<DropZone isDisabled>
+    <UploadIcon />
+    <DropZoneLabel>Drag and drop files here</DropZoneLabel>
+  </DropZone>`}
+/>
+
+## API Reference
+
+### DropZone
+
+| Prop               | Type                                                                                                  | Default | Description                                                                                                                 |
+| ------------------ | ----------------------------------------------------------------------------------------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `getDropOperation` | `(types: DragTypes, allowedOperations: DropOperation[]) => DropOperation`                             | -       | A function returning the drop operation to be performed when items matching the given types are dropped on the drop target. |
+| `isDisabled`       | `boolean`                                                                                             | -       | Whether the drop target is disabled. If true, the drop target will not accept any drops.                                    |
+| `children`         | `ReactNode \| (values: DropZoneRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -       | The children of the component. A function may be provided to alter the children based on component state.                   |
+| `className`        | `string`                                                                                              | -       | The CSS className for the element.                                                                                          |
+| `style`            | `CSSProperties \| (values: DropZoneRenderProps & {defaultStyle: CSSProperties}) => CSSProperties`     | -       | The inline style for the element. A function may be provided to compute the style based on component state.                 |
+
+| Event           | Type                            | Description                                                               |
+| --------------- | ------------------------------- | ------------------------------------------------------------------------- |
+| `onDropEnter`   | `(e: DropEnterEvent) => void`   | Handler that is called when a valid drag enters the drop target.          |
+| `onDropMove`    | `(e: DropMoveEvent) => void`    | Handler that is called when a valid drag is moved within the drop target. |
+| `onDropExit`    | `(e: DropExitEvent) => void`    | Handler that is called when a valid drag exits the drop target.           |
+| `onDrop`        | `(e: DropEvent) => void`        | Handler that is called when a valid drag is dropped on the drop target.   |
+| `onHoverStart`  | `(e: HoverEvent) => void`       | Handler that is called when a hover interaction starts.                   |
+| `onHoverEnd`    | `(e: HoverEvent) => void`       | Handler that is called when a hover interaction ends.                     |
+| `onHoverChange` | `(isHovering: boolean) => void` | Handler that is called when the hover state changes.                      |
+
+| Data attribute         | Description                                                      |
+| ---------------------- | ---------------------------------------------------------------- |
+| `[data-hovered]`       | Whether the dropzone is currently hovered with a mouse.          |
+| `[data-focused]`       | Whether the dropzone is focused, either via a mouse or keyboard. |
+| `[data-focus-visible]` | Whether the dropzone is keyboard focused.                        |
+| `[data-drop-target]`   | Whether the dropzone is the drop target.                         |
+| `[data-disabled]`      | Whether the dropzone is disabled.                                |
+
+## Accessibilty
+
+### Keyboard interactions
+
+| Key     | Description                  |
+| ------- | ---------------------------- |
+| `Tab`   | Moves focus to the dropzone. |
+| `Enter` | Activates the dropzone.      |

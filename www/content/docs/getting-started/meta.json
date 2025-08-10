@@ -1,5 +1,0 @@
-{
-  "title": "Getting started",
-  "icon": "Book",
-  "pages": ["introduction", "installation", "guides","design", "api-reference",  "community", "changelog"]
-}

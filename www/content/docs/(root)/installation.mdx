@@ -1,0 +1,253 @@
+---
+title: Installation
+---
+
+## App requirements:
+
+- [React 19](https://react.dev)
+- [Tailwind CSS 4](https://tailwindcss.com/docs/v4-beta)
+- [Typescript 5](https://www.typescriptlang.org/)
+
+## Automatic installation
+
+<Steps>
+
+### Start a project
+
+<Choices
+  items={[
+    {
+      value: "nextjs",
+      title: "Next.js", 
+      description: "Server-side rendered React framework",
+    },
+    {
+      value: "vite",
+      title: "Vite",
+      description: "Fast modern build tool for web development",
+    },
+  ]}
+>
+
+<Choice id="nextjs">
+
+<Steps>
+
+<Step>Create a new Next.js project using `create-next-app`</Step>
+
+```package-install
+npx create-next-app@latest my-app --typescript --eslint
+```
+
+<Step>Add Tailwind and its configuration</Step>
+
+install Tailwind along with our tailwind dedicated PostCSS plugin
+
+```package-install
+tailwindcss@next @tailwindcss/postcss@next
+```
+
+Next, add the PostCSS plugin to your `postcss.config.js` file:
+
+```js title="postcss.config.mjs"
+export default {
+  plugins: {
+    "@tailwindcss/postcss": {},
+  },
+};
+```
+
+Finally, import Tailwind into your main CSS file:
+
+```css title="globals.css"
+@import "tailwindcss";
+```
+
+</Steps>
+
+</Choice>
+
+<Choice id="vite">
+
+<Steps>
+
+<Step>Create a new Vite project:</Step>
+
+```package-install
+npm create vite@latest my-project -- --template react-ts
+```
+
+<Step>Install Tailwind CSS</Step>
+
+Install Tailwind along with our tailwind dedicated Vite plugin:
+
+```package-install
+npm install -D tailwindcss@next @tailwindcss/vite@next
+```
+
+Next, add the Vite plugin to your `vite.config.ts` file:
+
+```ts title="vite.config.ts"
+import tailwindcss from "@tailwindcss/vite";
+import react from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
+
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+});
+```
+
+Finally, import Tailwind into your main CSS file:
+
+```css title="src/index.css"
+@import "tailwindcss";
+```
+
+<Step>Add import alias support:</Step>
+
+```package-install
+npm install -D tsconfig-paths
+```
+
+Update these files:
+
+<InstallTabs items={["tsconfig.json", "tsconfig.app.json", "vite.config.ts"]}>
+
+<InstallTab value="tsconfig.json">
+
+```json
+{
+  "compilerOptions": {
+    // ...
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+    // ...
+  }
+}
+```
+
+</InstallTab>
+
+<InstallTab value="tsconfig.app.json">
+
+```json
+{
+  "compilerOptions": {
+    // ...
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+    // ...
+  }
+}
+```
+
+</InstallTab>
+
+<InstallTab value="vite.config.ts">
+
+```ts
+import tailwindcss from "@tailwindcss/vite";
+import react from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
+import tsconfigPaths from "vite-tsconfig-paths";
+
+export default defineConfig({
+  plugins: [react(), tailwindcss(), tsconfigPaths()],
+});
+```
+
+</InstallTab>
+
+</InstallTabs>
+
+</Steps>
+
+</Choice>
+
+</Choices>
+
+### Run the CLI
+
+```package-install
+npx dotui-cli init
+```
+
+### Configure your project.
+
+You will be asked some questions to create your configuration file.
+
+```txt
+What is the alias for your components? @/components
+What is the alias for your core components? @/components/core
+Which alias for your lib? @/lib
+Which icon library do you want use? lucide-icons
+```
+
+### Customize your theme
+
+See our [theme builder](/themes) to create a **unique and accessible theme** for your project, or use one of our predefined themes.
+
+### You're done!
+
+</Steps>
+
+## Manual installation
+
+<Steps>
+
+### Add Tailwind CSS to your project.
+
+Follow the [Tailwind CSS v4 installation guide](https://tailwindcss.com/docs/v4-beta).
+
+### Configure the import alias
+
+```ts title="tsconfig.json"
+{
+  "compilerOptions": {
+    // ...
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+    // ...
+  }
+}
+```
+
+### Add required dependencies
+
+```package-install
+npm install tailwind-variants clsx tailwind-merge tailwindcss-animate tailwindcss-react-aria-components
+```
+
+### Add an icon library
+
+If you're using the default icon library, install `lucide-react`:
+
+```package-install
+npm install lucide-react
+```
+
+### Add helper functions
+
+```ts title="lib/cn.ts"
+import { clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+import type { ClassValue } from "clsx";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+```
+
+### Configure your theme
+
+See our [theme builder](/themes) to create a **unique and accessible theme** for your project, or use one of our predefined themes.
+
+### You're done!
+
+</Steps>
