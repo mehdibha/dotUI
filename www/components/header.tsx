@@ -46,8 +46,8 @@ export function Header({
           <Logo className="max-md:hidden" />
           <div className="flex items-center gap-3 text-sm max-md:hidden">
             {[
-              { label: "Docs", href: "/docs/getting-started/introduction" },
-              { label: "Components", href: "/docs/components/buttons/button" },
+              { label: "Docs", href: "/docs/introduction" },
+              { label: "Components", href: "/docs/components/button" },
               { label: "Blocks", href: "/blocks/featured" },
               { label: "Styles", href: "/styles" },
             ].map((item) => (

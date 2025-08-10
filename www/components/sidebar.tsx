@@ -6,8 +6,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useOnChange } from "fumadocs-core/utils/use-on-change";
 import {
+  BlocksIcon,
+  BookIcon,
+  BoxIcon,
   ChevronRightIcon,
+  LayoutIcon,
   MoonIcon,
+  PaletteIcon,
   PanelLeftCloseIcon,
   PanelLeftOpenIcon,
   SearchIcon,
@@ -24,11 +29,6 @@ import { cn } from "@dotui/ui/lib/utils";
 import type { ButtonProps } from "@dotui/ui/components/button";
 import type { TooltipProps } from "@dotui/ui/components/tooltip";
 
-import {
-  CollapsibleContent,
-  CollapsibleRoot,
-  CollapsibleTrigger,
-} from "@/components/collapsible";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
 import { ScrollArea } from "@/components/scroll-area";
 import { siteConfig } from "@/config";
@@ -78,9 +78,45 @@ export const Sidebar = ({
           maskImage:
             "linear-gradient(transparent 2px, white 16px, white calc(100% - 16px), transparent calc(100% - 2px))",
         }}
-        className="flex-1 pt-4"
+        className="flex-1 px-2 pt-4"
       >
-        <div className="grid w-full min-w-0 p-2 pt-0 transition-sidebar">
+        <div className="flex flex-col gap-0.5">
+          {[
+            {
+              icon: <BookIcon />,
+              name: "Docs",
+              url: "/docs/installation",
+            },
+            {
+              icon: <BoxIcon />,
+              name: "Components",
+              url: "/docs/components/button",
+            },
+            {
+              icon: <BlocksIcon />,
+              name: "Blocks",
+              url: "/blocks/featured",
+            },
+            {
+              icon: <PaletteIcon />,
+              name: "Styles",
+              url: "/styles",
+            },
+          ].map((item) => (
+            <SidebarButton
+              key={item.url}
+              shape="square"
+              variant="quiet"
+              size="sm"
+            >
+              {item.icon}
+              <span className="flex flex-1 flex-row items-center justify-between">
+                <span>{item.name}</span>
+              </span>
+            </SidebarButton>
+          ))}
+        </div>
+        <div className="mt-4 grid w-full min-w-0 p-2 pt-0 transition-sidebar group-data-collapsed/sidebar:opacity-0">
           <div className="flex w-full min-w-0 flex-col transition-sidebar">
             <NodeList items={items} />
           </div>
@@ -262,7 +298,7 @@ export function NodeList({
   ...props
 }: NodeListProps): React.ReactElement {
   return (
-    <div className={cn("flex flex-col gap-0.5", className)} {...props}>
+    <div className={cn("flex flex-col", className)} {...props}>
       {items.map((item, i) => {
         const id = `${item.type}_${i.toString()}`;
 
@@ -345,7 +381,6 @@ function FolderNode({
 }): React.ReactElement {
   const defaultOpenLevel = 0;
   const pathname = usePathname();
-  const { isCollapsed, setCollapsed } = useSidebarContext();
   const active =
     item.index !== undefined && isActive(item.index.url, pathname, false);
   const childActive = React.useMemo(
@@ -363,39 +398,10 @@ function FolderNode({
 
   if (level === 1) {
     return (
-      <CollapsibleRoot open={isCollapsed ? false : open} className="contents">
-        <StyledTooltip content={item.name} isDisabled={!isCollapsed}>
-          <CollapsibleTrigger asChild>
-            <SidebarButton
-              shape="square"
-              variant="quiet"
-              size="sm"
-              onPress={() => {
-                if (!isCollapsed) {
-                  setOpen(!open);
-                  return;
-                }
-                setOpen(true);
-                setCollapsed(false);
-              }}
-            >
-              {item.icon}
-              <span className="flex flex-1 flex-row items-center justify-between">
-                <span>{item.name}</span>
-                <ChevronRightIcon
-                  className={cn(
-                    "transition-transform ease-in-out",
-                    open && "rotate-90",
-                  )}
-                />
-              </span>
-            </SidebarButton>
-          </CollapsibleTrigger>
-        </StyledTooltip>
-        <CollapsibleContent className="pb-2 pl-4">
-          <NodeList items={item.children} level={level} onSelect={onSelect} />
-        </CollapsibleContent>
-      </CollapsibleRoot>
+      <div className="not-first:mt-8">
+        <p className="font mb-2 font-medium">{item.name}</p>
+        <NodeList items={item.children} level={level} onSelect={onSelect} />
+      </div>
     );
   }
 
