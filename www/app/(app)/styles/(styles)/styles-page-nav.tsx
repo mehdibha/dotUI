@@ -45,7 +45,7 @@ export function StylesPageNav({
       selectedKey={pathname}
       className={cn("", className)}
     >
-      <div className="border-b bg-bg sticky top-0 z-40 ">
+      <div className="border-b bg-bg sticky top-0 z-40">
         <TabList className={cn("container border-b-0")}>
           {items.map((tab) => (
             <Tab

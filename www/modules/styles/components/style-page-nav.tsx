@@ -21,36 +21,43 @@ export function StylePageNav({
   const styleName = segments[3] ?? "";
 
   return (
-    <Tabs variant="solid" selectedKey={pathname} {...props}>
-      <TabList className="flex-wrap bg-transparent px-0 py-4">
-        {[
-          { href: `/styles/${username}/${styleName}`, label: "Colors" },
-          { href: `/styles/${username}/${styleName}/layout`, label: "Layout" },
-          {
-            href: `/styles/${username}/${styleName}/typography`,
-            label: "Typography",
-          },
-          {
-            href: `/styles/${username}/${styleName}/components`,
-            label: "Components",
-          },
-          {
-            href: `/styles/${username}/${styleName}/effects`,
-            label: "Effects",
-          },
-          { href: `/styles/${username}/${styleName}/icons`, label: "Icons" },
-        ].map((tab) => (
-          <Tab
-            key={tab.href}
-            id={tab.href}
-            href={tab.href}
-            className="flex h-7 items-center gap-2 rounded-full px-4 text-sm"
-          >
-            {tab.label}
-          </Tab>
-        ))}
-      </TabList>
-      <TabPanel id={pathname}>{children}</TabPanel>
+    <Tabs variant="underline" selectedKey={pathname} {...props}>
+      <div className="bg-bg sticky top-0 z-40 border-b">
+        <TabList className="border-b-0 container max-w-4xl">
+          {[
+            { href: `/styles/${username}/${styleName}`, label: "Colors" },
+            {
+              href: `/styles/${username}/${styleName}/layout`,
+              label: "Layout",
+            },
+            {
+              href: `/styles/${username}/${styleName}/typography`,
+              label: "Typography",
+            },
+            {
+              href: `/styles/${username}/${styleName}/components`,
+              label: "Components",
+            },
+            {
+              href: `/styles/${username}/${styleName}/effects`,
+              label: "Effects",
+            },
+            { href: `/styles/${username}/${styleName}/icons`, label: "Icons" },
+          ].map((tab) => (
+            <Tab
+              key={tab.href}
+              id={tab.href}
+              href={tab.href}
+              className="flex h-7 items-center gap-2 rounded-full text-sm px-4 pb-5 pt-6"
+            >
+              {tab.label}
+            </Tab>
+          ))}
+        </TabList>
+      </div>
+      <TabPanel id={pathname} className="container max-w-4xl mt-6" >
+        {children}
+      </TabPanel>
     </Tabs>
   );
 }

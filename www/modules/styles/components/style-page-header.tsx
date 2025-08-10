@@ -30,7 +30,7 @@ import { StylePageCodeModal } from "./style-page-code-modal";
 
 export function StylePageHeader() {
   return (
-    <div>
+    <div className="container max-w-4xl">
       <Link
         href="/styles"
         className="flex items-center gap-1 text-sm text-fg-muted hover:text-fg"

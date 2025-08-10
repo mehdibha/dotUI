@@ -19,10 +19,9 @@ export function BlocksNav({
   const pathname = usePathname();
 
   return (
-    <Tabs variant="solid" selectedKey={pathname} {...props}>
+    <Tabs variant="underline" selectedKey={pathname} {...props}>
       <TabList className="flex-wrap bg-transparent px-0">
         {[
-          { href: "/blocks", label: "Featured" },
           ...blocksCategories.map((category) => ({
             href: `/blocks/${category.slug}`,
             label: category.name,
