@@ -27,7 +27,10 @@ export function StylesList({
   return (
     <div className={cn("", props.className)}>
       <div className="flex items-center justify-between gap-4">
-        <SearchField placeholder="Search styles..." className="flex-1 max-w-md" />
+        <SearchField
+          placeholder="Search styles..."
+          className="max-w-md flex-1"
+        />
         <ToggleButtonGroup
           selectedKeys={[view]}
           onSelectionChange={(value) =>
@@ -45,7 +48,7 @@ export function StylesList({
       <div
         className={cn(
           "mt-8 grid",
-          view === "grid" && "grid-cols-1 lg:grid-cols-2 gap-4",
+          view === "grid" && "grid-cols-1 gap-4 lg:grid-cols-2",
           view === "list" && "grid-cols-1 gap-8",
           props.className,
         )}

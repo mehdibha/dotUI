@@ -14,11 +14,11 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         <Sidebar items={source.pageTree.children} className="hidden lg:flex" />
         <main className="flex-1">
           <div className="min-h-screen sm:grid sm:grid-cols-[20px_1fr_20px] md:grid-cols-[30px_1fr_30px]">
-            <div className="diagonal-pattern hidden sm:block" />
+            <div className="hidden diagonal-pattern sm:block" />
             <div>
               <Providers>{children}</Providers>
             </div>
-            <div className="diagonal-pattern hidden sm:block" />
+            <div className="hidden diagonal-pattern sm:block" />
           </div>
           <Footer />
         </main>

@@ -36,7 +36,7 @@ export function StyleUIKit({
           <h2 className="font-heading text-3xl font-medium tracking-tight">
             {style.name}
           </h2>
-          <p className="text-fg-muted text-balance text-base">
+          <p className="text-base text-balance text-fg-muted">
             Inspired by shadcn/ui. Flat, high-contrast look with minimum
             styling. Great starting point that's easy to customize and adapt to
             your design system.

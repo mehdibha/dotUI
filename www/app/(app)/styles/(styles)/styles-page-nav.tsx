@@ -45,7 +45,7 @@ export function StylesPageNav({
       selectedKey={pathname}
       className={cn("", className)}
     >
-      <div className="border-b bg-bg sticky top-0 z-40">
+      <div className="sticky top-0 z-40 border-b bg-bg">
         <TabList className={cn("container border-b-0")}>
           {items.map((tab) => (
             <Tab
@@ -53,10 +53,10 @@ export function StylesPageNav({
               id={tab.href}
               href={tab.href}
               className={cn(
-                "flex h-7 items-center gap-2 px-4 pb-5 pt-6 text-sm opacity-0",
+                "flex h-7 items-center gap-2 px-4 pt-6 pb-5 text-sm opacity-0",
                 isMounted &&
                   !isPending &&
-                  "animate-in slide-in-from-bottom-1 fade-in opacity-100",
+                  "animate-in opacity-100 fade-in slide-in-from-bottom-1",
               )}
             >
               {tab.label}
@@ -64,7 +64,7 @@ export function StylesPageNav({
           ))}
         </TabList>
       </div>
-      <TabPanel id={pathname} className="mt-6 container">
+      <TabPanel id={pathname} className="container mt-6">
         {children}
       </TabPanel>
     </Tabs>

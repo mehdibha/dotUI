@@ -321,7 +321,7 @@ function PageNode({
     <Link
       href={url}
       className={cn(
-        "border-bg-bg-muted group block border-l py-1 pl-4 font-medium text-fg transition-colors text-fg-muted hover:text-fg",
+        "border-bg-bg-muted group block border-l py-1 pl-4 font-medium text-fg text-fg-muted transition-colors hover:text-fg",
         {
           "border-fg text-fg": active,
         },
