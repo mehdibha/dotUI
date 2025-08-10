@@ -1,6 +1,5 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { oAuthProxy } from "better-auth/plugins";
 import type { BetterAuthOptions } from "better-auth";
 
 import { db } from "@dotui/db/client";
@@ -52,18 +51,11 @@ export function initAuth(options: {
         },
       },
     },
-    plugins: [
-      oAuthProxy({
-        currentURL: options.baseUrl,
-        productionURL: options.productionUrl,
-      }),
-    ],
     socialProviders: {
       github: {
         clientId: options.githubClientId,
         clientSecret: options.githubClientSecret,
         redirectURI: `${options.productionUrl}/api/auth/callback/github`,
-        scope: ["user", "user:email"],
         mapProfileToUser: (profile) => {
           return {
             username: profile.login,
