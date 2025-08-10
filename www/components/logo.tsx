@@ -48,12 +48,10 @@ export const Logo = ({
       </svg>
       {extanded && (
         <div className="flex items-center gap-2">
-          <div className="font-josefin group-data-collapsed/sidebar:opacity-0 mt-1.5 text-base font-bold leading-normal tracking-tighter transition-colors">
+          <div className="mt-1.5 font-josefin text-base leading-normal font-bold tracking-tighter transition-colors group-data-collapsed/sidebar:opacity-0">
             {siteConfig.name}
           </div>
-          <Badge size="sm">
-            Preview
-          </Badge>
+          <Badge size="sm">Preview</Badge>
         </div>
       )}
     </Elem>

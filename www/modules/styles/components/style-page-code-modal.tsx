@@ -37,8 +37,8 @@ export function StylePageCodeModal({
           className: "max-h-[530px] max-w-xl p-2",
         }}
       >
-        <DialogBody className="-mx-6 px-6 pb-6 pt-0">
-          <div className="text-fg-muted [&>h3]:step [&>h3]:text-fg [&>h3]:not-first:mt-4 relative ml-4 border-l pl-8 text-sm [counter-reset:step] [&>h3]:text-base [&>h3]:font-bold">
+        <DialogBody className="-mx-6 px-6 pt-0 pb-6">
+          <div className="relative ml-4 border-l pl-8 text-sm text-fg-muted [counter-reset:step] [&>h3]:step [&>h3]:text-base [&>h3]:font-bold [&>h3]:text-fg [&>h3]:not-first:mt-4">
             <h3>Init your style</h3>
             <div>
               <InstallTabs items={packageManagers}>
@@ -73,7 +73,8 @@ export function StylePageCodeModal({
                         @dotui/
                         <span className="text-[#F69D50]">
                           {form.watch("slug")}
-                        </span>/button
+                        </span>
+                        /button
                       </code>
                     </pre>
                   </InstallTab>
