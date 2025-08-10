@@ -105,6 +105,7 @@ export const Sidebar = ({
           ].map((item) => (
             <SidebarButton
               key={item.url}
+              href={item.url}
               shape="square"
               variant="quiet"
               size="sm"
