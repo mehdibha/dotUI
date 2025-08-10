@@ -34,7 +34,7 @@ export function PageHeaderHeading({
   return (
     <h1
       className={cn(
-        "leading-tighter max-w-2xl text-balance text-2xl font-semibold tracking-tight lg:text-3xl lg:font-semibold lg:leading-[1.1] xl:text-4xl xl:tracking-tighter",
+        "leading-tighter max-w-2xl text-balance text-2xl font-semibold tracking-tight lg:text-3xl lg:leading-[1.1] xl:text-4xl xl:tracking-tighter",
         className,
       )}
       {...props}

@@ -42,7 +42,15 @@ export function StyleUIKit({
             your design system.
           </p>
         </div>
-          <Button variant="default" size="sm" suffix={<ArrowRightIcon />} className="w">Explore style</Button>
+        <Button
+          variant="default"
+          size="sm"
+          suffix={<ArrowRightIcon />}
+          href={`/styles/${style.user.username}/${style.name}`}
+          className="w"
+        >
+          Explore style
+        </Button>
       </div>
       <Skeleton show={!isMounted || !resolvedTheme}>
         <StyleProvider

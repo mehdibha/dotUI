@@ -44,9 +44,9 @@ export function StylesList({
       </div>
       <div
         className={cn(
-          "mt-8 grid gap-4",
-          view === "grid" && "grid-cols-1 lg:grid-cols-2",
-          view === "list" && "grid-cols-1",
+          "mt-8 grid",
+          view === "grid" && "grid-cols-1 lg:grid-cols-2 gap-4",
+          view === "list" && "grid-cols-1 gap-8",
           props.className,
         )}
       >
