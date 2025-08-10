@@ -92,7 +92,7 @@ export function CreateStyleModal({ children }: { children: React.ReactNode }) {
                     selectedKey={value}
                     onSelectionChange={onChange}
                     renderValue={({ selectedItem }) => (
-                      <div className="flex items-center gap-2 [&>svg]:text-fg-muted">
+                      <div className="[&>svg]:text-fg-muted flex items-center gap-2">
                         {selectedItem?.icon}
                         {selectedItem?.label}
                       </div>
@@ -135,13 +135,13 @@ export function CreateStyleModal({ children }: { children: React.ReactNode }) {
               />
             </div>
             <div className="mt-4 bg-transparent">
-              <p className="text-sm text-fg-muted">
+              <p className="text-fg-muted text-sm">
                 You can install it later with this command:
               </p>
-              <pre className="mt-1 rounded-md border bg-bg-neutral p-4 text-xs">
+              <pre className="bg-bg-neutral mt-1 rounded-md border p-4 text-xs">
                 <code className="truncate max-sm:flex max-sm:max-w-[60vw]">
                   <span className="text-[#F69D50]">npx</span> shadcn@latest init
-                  https://dotui.org/r/
+                  @dotui/
                   <span className="text-[#F69D50]">
                     {form.watch("name")
                       ? form

@@ -57,7 +57,7 @@ const BlockViewToolbar = ({ name, title }: BlockViewToolbarProps) => {
           size="sm"
         >
           <span className="truncate text-xs">
-            npx shadcn@latest add https://dotui.org/r/{activeStyle?.name}/{name}
+            npx shadcn@latest add @dotui/{activeStyle?.name}/{name}
           </span>
         </Button>
         <Button

@@ -1,4 +1,3 @@
-
 # dotUI
 
 dotUI helps you quickly build a component library with a **unique style**.
@@ -9,21 +8,24 @@ dotUI helps you quickly build a component library with a **unique style**.
 
 1. You can start by choosing or creating your style
 2. Init the foundations
+
 ```bash
-npx shadcn@latest init https://dotui.org/r/{styleName}/base
+npx shadcn@latest init @dotui/{styleName}/base
 ```
-3. Add any component 
+
+3. Add any component
+
 ```bash
-npx shadcn@latest add https://dotui.org/r/{styleName}/button
+npx shadcn@latest add @dotui/{styleName}/button
 ```
 
 <!-- CONTRIBUTING -->
 
 ## Requirements
 
-* React 19
-* Tailwind CSS 4.0
-* Typescript
+- React 19
+- Tailwind CSS 4.0
+- Typescript
 
 <!-- FAQ -->
 
