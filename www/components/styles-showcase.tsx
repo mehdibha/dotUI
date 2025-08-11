@@ -22,6 +22,7 @@ export const StylesShowcase = ({
 }: {
   styles: RouterOutputs["style"]["getFeatured"];
 }) => {
+  const IMAGE_VERSION = "2"; // bump to invalidate CDN/browser cache when screenshots change
   const { resolvedTheme } = useTheme();
   const containerRef = React.useRef<HTMLDivElement>(null);
   const [currentStyleName, setCurrentStyleName] = React.useState<string>(
@@ -170,14 +171,14 @@ export const StylesShowcase = ({
             </PortalProvider>
             <div className="max-lg:max-h-[80vh] max-lg:overflow-y-auto">
               <Image
-                src={`/images/showcase/${currentStyleName}-light.png`}
+                src={`/images/showcase/${currentStyleName}-light.png?v=${IMAGE_VERSION}`}
                 alt={currentStyleName}
                 width={1200}
                 height={900}
                 className="lg:hidden dark:hidden"
               />
               <Image
-                src={`/images/showcase/${currentStyleName}-dark.png`}
+                src={`/images/showcase/${currentStyleName}-dark.png?v=${IMAGE_VERSION}`}
                 alt={currentStyleName}
                 width={1200}
                 height={900}
