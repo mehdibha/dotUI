@@ -11,8 +11,8 @@ import type { Variants } from "motion/react";
 import { StyleProvider } from "@dotui/ui";
 import { Button } from "@dotui/ui/components/button";
 import { Skeleton } from "@dotui/ui/components/skeleton";
-import { Tab, TabList, Tabs } from "@dotui/ui/components/tabs";
 import { BlocksShowcase } from "@dotui/ui/registry/blocks/showcase/blocks-showcase/components/blocks-showcase";
+import { Tab, TabList, Tabs } from "@dotui/ui/registry/components/tabs/motion";
 import type { RouterOutputs } from "@dotui/api";
 
 import { useMounted } from "@/hooks/use-mounted";
