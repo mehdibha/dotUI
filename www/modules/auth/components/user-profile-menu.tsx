@@ -35,7 +35,7 @@ export function UserProfileMenu({
         <Button
           className={cn(
             focusRing(),
-            "size-7.5 outline-hidden flex cursor-pointer items-center justify-center rounded-full",
+            "flex size-7.5 cursor-pointer items-center justify-center rounded-full outline-hidden",
           )}
         >
           <Avatar
