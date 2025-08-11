@@ -11,25 +11,27 @@ import { cn } from "@dotui/ui/lib/utils";
 
 import { authClient } from "@/modules/auth/lib/client";
 
-export function UserProfileMenu() {
+export function UserProfileMenu({ children }: { children?: React.ReactNode }) {
   const { data: session } = authClient.useSession();
   const { theme, setTheme } = useTheme();
 
   return (
     <MenuRoot>
-      <Button
-        className={cn(
-          focusRing(),
-          "flex size-7.5 cursor-pointer items-center justify-center rounded-full outline-hidden",
-        )}
-      >
-        <Avatar
-          src={session?.user?.image ?? undefined}
-          fallback={session?.user?.name?.charAt(0)}
-          className="size-full"
-          shape="circle"
-        />
-      </Button>
+      {children ?? (
+        <Button
+          className={cn(
+            focusRing(),
+            "size-7.5 outline-hidden flex cursor-pointer items-center justify-center rounded-full",
+          )}
+        >
+          <Avatar
+            src={session?.user?.image ?? undefined}
+            fallback={session?.user?.name?.charAt(0)}
+            className="size-full"
+            shape="circle"
+          />
+        </Button>
+      )}
       <Menu
         overlayProps={{
           popoverProps: {
