@@ -1,48 +1,48 @@
 "use client";
 
 import React from "react";
-import { useDocsSearch } from "fumadocs-core/search/client";
 import {
+  ArrowRightIcon,
   ChevronsUpDownIcon,
+  CircleDashedIcon,
+  CircleIcon,
   CornerDownLeftIcon,
   FileTextIcon,
-  HashIcon,
   SearchIcon,
 } from "lucide-react";
-import type { SortedResult } from "fumadocs-core/server";
+import { useFilter } from "react-aria-components";
+import type { PageTree } from "fumadocs-core/server";
 
 import { Button } from "@dotui/ui/components/button";
 import { Command } from "@dotui/ui/components/command";
 import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
 import { Input, InputRoot } from "@dotui/ui/components/input";
-import { Loader } from "@dotui/ui/components/loader";
 import { MenuContent, MenuItem, MenuSection } from "@dotui/ui/components/menu";
 import { SearchFieldRoot } from "@dotui/ui/components/search-field";
 
-import { kekabCaseToTitle } from "@/lib/string";
-
 interface SearchCommandProps {
+  items: PageTree.Node[];
   keyboardShortcut?: boolean;
   children: React.ReactNode;
   onAction?: () => void;
 }
 
 export function SearchCommand({
+  items,
   keyboardShortcut,
   children,
   onAction,
 }: SearchCommandProps) {
-  const { search, setSearch, query } = useDocsSearch({ type: "fetch" });
-  const results =
-    search === "" || query.data === "empty" ? [] : groupByCategory(query.data);
+  const [search, setSearch] = React.useState("");
+  const { contains } = useFilter({ sensitivity: "base" });
 
   return (
     <SearchCommandDialog keyboardShortcut={keyboardShortcut} trigger={children}>
-      <Command inputValue={search} onInputChange={setSearch} className="h-72">
+      <Command filter={contains} className="h-72">
         <div className="p-1">
           <SearchFieldRoot placeholder="Search" autoFocus className="w-full">
             <InputRoot className="focus-within:ring-1">
-              {query.isLoading ? <Loader /> : <SearchIcon />}
+              <SearchIcon />
               <Input />
             </InputRoot>
           </SearchFieldRoot>
@@ -54,6 +54,66 @@ export function SearchCommand({
           }}
           className="h-full overflow-y-scroll py-1"
         >
+          <MenuSection title="Menu">
+            {[
+              {
+                label: "Docs",
+                href: "/docs/introduction",
+              },
+              {
+                label: "Components",
+                href: "/docs/components/button",
+              },
+              {
+                label: "Blocks",
+                href: "/blocks/featured",
+              },
+              {
+                label: "Styles",
+                href: "/styles",
+              },
+            ].map((item) => (
+              <MenuItem
+                key={item.href}
+                href={item.href}
+                textValue={item.label}
+                prefix={<ArrowRightIcon className="text-fg-muted!" />}
+              >
+                {item.label}
+              </MenuItem>
+            ))}
+          </MenuSection>
+          {items?.map((group, index) => {
+            if (group.type === "folder") {
+              return (
+                <MenuSection title={group.name} key={index}>
+                  {group.children.map((item, itemIndex) => {
+                    if (item.type === "page") {
+                      return (
+                        <MenuItem
+                          key={itemIndex}
+                          href={item.url}
+                          textValue={item.name as string}
+                          prefix={
+                            group.name === "Components" ? (
+                              <CircleDashedIcon className="text-fg-muted!" />
+                            ) : (
+                              <FileTextIcon className="text-fg-muted!" />
+                            )
+                          }
+                        >
+                          {item.name}
+                        </MenuItem>
+                      );
+                    }
+                    return null;
+                  })}
+                </MenuSection>
+              );
+            }
+            return null;
+          })}
+          {/* 
           {results.map((group) => (
             <MenuSection key={group.id} title={group.name}>
               {group.results.map((item) => (
@@ -64,14 +124,14 @@ export function SearchCommand({
                   prefix={item.type === "page" ? <FileTextIcon /> : undefined}
                   className={
                     item.type === "page"
-                      ? "gap-3 py-2 [&_svg]:text-fg-muted"
+                      ? "[&_svg]:text-fg-muted gap-3 py-2"
                       : "py-0 pl-2.5"
                   }
                 >
                   {item.type === "page" ? (
                     item.content
                   ) : (
-                    <div className="ml-2 flex items-center gap-3 border-l pl-4 [&_svg]:size-4 [&_svg]:text-fg-muted">
+                    <div className="[&_svg]:text-fg-muted ml-2 flex items-center gap-3 border-l pl-4 [&_svg]:size-4">
                       <HashIcon />
                       <p className="flex-1 truncate py-2">{item.content}</p>
                     </div>
@@ -79,7 +139,7 @@ export function SearchCommand({
                 </MenuItem>
               ))}
             </MenuSection>
-          ))}
+          ))} */}
         </MenuContent>
         <div className="flex items-center justify-end gap-4 rounded-b-[inherit] border-t p-3 text-xs text-fg-muted [&_svg]:size-4">
           <div className="flex items-center gap-1">
@@ -95,28 +155,6 @@ export function SearchCommand({
     </SearchCommandDialog>
   );
 }
-
-type GroupedResults = {
-  id: string;
-  name: string;
-  results: SortedResult[];
-}[];
-const groupByCategory = (results?: SortedResult[]): GroupedResults => {
-  // We will get the category from the url and group the results by category
-  // eg url: /docs/components/buttons/button -> category: components
-  if (!results) return [];
-  const uniqueCategories = Array.from(
-    new Set(results.map((result) => result.url.split("/")[2]!)),
-  ).filter(Boolean);
-
-  const groupedResults: GroupedResults = uniqueCategories.map((category) => ({
-    id: category,
-    name: kekabCaseToTitle(category),
-    results: results.filter((result) => result.url.split("/")[2] === category),
-  }));
-
-  return groupedResults;
-};
 
 const SearchCommandDialog = ({
   keyboardShortcut = false,

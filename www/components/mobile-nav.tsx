@@ -84,35 +84,6 @@ export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
                               {item.name}
                             </MobileLink>
                           );
-                        } else if (item.type === "folder") {
-                          return (
-                            <div
-                              key={itemIndex}
-                              className="flex flex-col gap-2 not-first:mt-3 first:mt-2"
-                            >
-                              <div className="text-sm font-medium text-fg-muted">
-                                {item.name}
-                              </div>
-                              <div className="flex flex-col gap-2">
-                                {item.children.map(
-                                  (nestedItem, nestedIndex) => {
-                                    if (nestedItem.type === "page") {
-                                      return (
-                                        <MobileLink
-                                          key={`${nestedItem.url}-${index}-${itemIndex}-${nestedIndex}`}
-                                          href={nestedItem.url}
-                                          onOpenChange={close}
-                                        >
-                                          {nestedItem.name}
-                                        </MobileLink>
-                                      );
-                                    }
-                                    return null;
-                                  },
-                                )}
-                              </div>
-                            </div>
-                          );
                         }
                         return null;
                       })}
