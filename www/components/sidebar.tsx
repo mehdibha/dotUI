@@ -9,8 +9,7 @@ import {
   BlocksIcon,
   BookIcon,
   BoxIcon,
-  ChevronRightIcon,
-  LayoutIcon,
+  LogInIcon,
   MoonIcon,
   PaletteIcon,
   PanelLeftCloseIcon,
@@ -22,6 +21,7 @@ import { motion } from "motion/react";
 import type { PageTree } from "fumadocs-core/server";
 import type { Transition } from "motion/react";
 
+import { Avatar } from "@dotui/ui/components/avatar";
 import { Button } from "@dotui/ui/components/button";
 import { Kbd } from "@dotui/ui/components/kbd";
 import { Tooltip } from "@dotui/ui/components/tooltip";
@@ -32,6 +32,10 @@ import type { TooltipProps } from "@dotui/ui/components/tooltip";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
 import { ScrollArea } from "@/components/scroll-area";
 import { siteConfig } from "@/config";
+import { useDebounce } from "@/hooks/use-debounce";
+import { useMounted } from "@/hooks/use-mounted";
+import { UserProfileMenu } from "@/modules/auth/components/user-profile-menu";
+import { authClient } from "@/modules/auth/lib/client";
 import { hasActive, isActive } from "@/modules/docs/utils";
 import { Logo } from "./logo";
 import { SearchCommand } from "./search-command";
@@ -45,6 +49,30 @@ export const Sidebar = ({
   items: PageTree.Node[];
 }) => {
   const { isCollapsed, setCollapsed } = useSidebarContext();
+  const debouncedIsCollapsed = useDebounce(isCollapsed, 250);
+  const isMounted = useMounted();
+  const { data: session, isPending } = authClient.useSession();
+
+  React.useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.key === "b" && (e.metaKey || e.ctrlKey)) {
+        if (
+          (e.target instanceof HTMLElement && e.target.isContentEditable) ||
+          e.target instanceof HTMLInputElement ||
+          e.target instanceof HTMLTextAreaElement ||
+          e.target instanceof HTMLSelectElement
+        ) {
+          return;
+        }
+
+        e.preventDefault();
+        setCollapsed(!isCollapsed);
+      }
+    };
+
+    document.addEventListener("keydown", down);
+    return () => document.removeEventListener("keydown", down);
+  }, [isCollapsed, setCollapsed]);
 
   const transition: Transition = {
     type: "spring",
@@ -52,22 +80,45 @@ export const Sidebar = ({
     bounce: 0,
   };
 
-  React.useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.ctrlKey && e.key === "b") {
-        e.preventDefault();
-        setCollapsed((prev) => !prev);
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [setCollapsed]);
-
   return (
     <SidebarRoot className={className}>
-      <div className="relative flex items-center p-3.5">
-        <Logo />
+      <div className="relative flex items-center p-2 pl-3.5">
+        <Logo
+          className={cn(
+            debouncedIsCollapsed &&
+              "group-data-collapsed/sidebar:group-hover/sidebar:opacity-0",
+          )}
+        />
+        <StyledTooltip
+          content={
+            <div className="flex items-center gap-2">
+              Toggle Sidebar
+              <div className="flex items-center gap-px text-[0.7rem] max-md:hidden">
+                <Kbd>⌘</Kbd>
+                <Kbd>B</Kbd>
+              </div>
+            </div>
+          }
+        >
+          <Button
+            variant="quiet"
+            shape="square"
+            size="sm"
+            onPress={() => setCollapsed(!isCollapsed)}
+            className="pointer-events-none absolute left-2 opacity-0 group-data-collapsed/sidebar:group-hover/sidebar:pointer-events-auto group-data-collapsed/sidebar:group-hover/sidebar:opacity-100"
+          >
+            {isCollapsed ? <PanelLeftOpenIcon /> : <PanelLeftCloseIcon />}
+          </Button>
+        </StyledTooltip>
+        <div className="flex w-[calc(var(--sidebar-width)-calc(var(--spacing)*6))] justify-end">
+          <Button
+            shape="square"
+            size="sm"
+            onPress={() => setCollapsed(!isCollapsed)}
+          >
+            {isCollapsed ? <PanelLeftOpenIcon /> : <PanelLeftCloseIcon />}
+          </Button>
+        </div>
       </div>
       <div className="-mb-1 px-2 pt-0">
         <SidebarSearchButton isCollapsed={isCollapsed} />
@@ -76,9 +127,10 @@ export const Sidebar = ({
         size="sm"
         style={{
           maskImage:
-            "linear-gradient(transparent 2px, white 16px, white calc(100% - 16px), transparent calc(100% - 2px))",
+            "linear-gradient(transparent 2px, white 8px, white calc(100% - 8px), transparent calc(100% - 2px))",
         }}
-        className="flex-1 px-2 pt-4"
+        className="flex-1 px-2 pt-2"
+        containerClassName="mt-1"
       >
         <div className="flex flex-col gap-0.5">
           {[
@@ -103,21 +155,29 @@ export const Sidebar = ({
               url: "/styles",
             },
           ].map((item) => (
-            <SidebarButton
+            <StyledTooltip
               key={item.url}
-              href={item.url}
-              shape="square"
-              variant="quiet"
-              size="sm"
+              content={item.name}
+              isDisabled={!isCollapsed}
             >
-              {item.icon}
-              <span className="flex flex-1 flex-row items-center justify-between">
-                <span>{item.name}</span>
-              </span>
-            </SidebarButton>
+              <SidebarButton
+                href={item.url}
+                shape="square"
+                variant="quiet"
+                size="sm"
+              >
+                {item.icon}
+                <span className="flex flex-1 flex-row items-center justify-between">
+                  <span>{item.name}</span>
+                </span>
+              </SidebarButton>
+            </StyledTooltip>
           ))}
         </div>
-        <div className="mt-4 grid w-full min-w-0 p-2 pt-0 transition-sidebar group-data-collapsed/sidebar:opacity-0">
+        <div
+          className="mt-4 grid w-full min-w-0 p-2 pt-0 transition-sidebar group-data-collapsed/sidebar:pointer-events-none group-data-collapsed/sidebar:opacity-0"
+          aria-hidden={isCollapsed}
+        >
           <div className="flex w-full min-w-0 flex-col transition-sidebar">
             <NodeList items={items} />
           </div>
@@ -137,18 +197,6 @@ export const Sidebar = ({
               <GitHubIcon />
             </Button>
           </motion.div>
-          <motion.div layout transition={transition}>
-            <Button
-              href={siteConfig.links.twitter}
-              target="_blank"
-              size="sm"
-              shape="square"
-              variant="quiet"
-              aria-label="twitter"
-            >
-              <TwitterIcon />
-            </Button>
-          </motion.div>
         </div>
         <div className="flex items-center gap-1 group-data-collapsed/sidebar:flex-col">
           <ThemeSwitcher>
@@ -164,29 +212,20 @@ export const Sidebar = ({
               </Button>
             </motion.div>
           </ThemeSwitcher>
-          <StyledTooltip
-            content={
-              <div className="flex items-center gap-2">
-                Toggle Sidebar
-                <div className="flex items-center gap-0.5">
-                  <Kbd>ctrl</Kbd>
-                  <Kbd>B</Kbd>
-                </div>
-              </div>
-            }
-            placement="right"
-          >
-            <motion.div layout transition={transition}>
-              <Button
-                shape="square"
-                size="sm"
-                variant="default"
-                onPress={() => setCollapsed(!isCollapsed)}
-              >
-                {isCollapsed ? <PanelLeftOpenIcon /> : <PanelLeftCloseIcon />}
-              </Button>
-            </motion.div>
-          </StyledTooltip>
+          {isMounted && !isPending && session?.user && (
+            <UserProfileMenu placement="top">
+              <motion.div layout transition={transition}>
+                <Button variant="quiet" shape="square" size="sm">
+                  <Avatar
+                    src={session?.user?.image ?? undefined}
+                    fallback={session?.user?.name?.charAt(0)}
+                    className="size-6"
+                    shape="circle"
+                  />
+                </Button>
+              </motion.div>
+            </UserProfileMenu>
+          )}
         </div>
       </SidebarFooter>
     </SidebarRoot>
@@ -208,7 +247,7 @@ const SidebarRoot = ({
       style={
         {
           "--sidebar-width": "230px",
-          "--sidebar-width-collapsed": "49px",
+          "--sidebar-width-collapsed": "48px",
         } as React.CSSProperties
       }
     >
@@ -239,7 +278,9 @@ export const SidebarProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [isCollapsed, setCollapsed] = React.useState(true);
+  const params = usePathname();
+  const isDocsPage = params.includes("/docs");
+  const [isCollapsed, setCollapsed] = React.useState(!isDocsPage);
   return (
     <SidebarContext value={{ isCollapsed, setCollapsed }}>
       {children}
@@ -257,7 +298,7 @@ export const useSidebarContext = () => {
 
 const SidebarSearchButton = ({ isCollapsed }: { isCollapsed: boolean }) => {
   return (
-    <SearchCommand keyboardShortcut>
+    <SearchCommand>
       <StyledTooltip
         content={
           <div className="flex items-center gap-2">
@@ -270,12 +311,12 @@ const SidebarSearchButton = ({ isCollapsed }: { isCollapsed: boolean }) => {
         }
         isDisabled={!isCollapsed}
       >
-        <SidebarButton variant="default">
+        <SidebarButton variant="default" className="group/searchbtn">
           <SearchIcon />
           <div className="flex flex-1 flex-row items-center justify-between">
             <span>Search </span>
             <div className="flex items-center gap-0.5 [&_kbd]:text-xs">
-              <Kbd>Ctrl</Kbd>
+              <Kbd>⌘</Kbd>
               <Kbd>K</Kbd>
             </div>
           </div>
@@ -363,6 +404,7 @@ function PageNode({
           "border-fg text-fg": active,
         },
       )}
+      tabIndex={isCollapsed ? -1 : 0}
       onClick={onSelect}
       suppressHydrationWarning
     >
@@ -427,7 +469,7 @@ const SidebarButton = ({
       variant="quiet"
       size="sm"
       className={cn(
-        "relative w-full overflow-hidden text-[0.8rem] font-medium transition-sidebar group-data-collapsed/sidebar:w-8 hover:bg-bg-inverse/10",
+        "relative w-full overflow-hidden text-[0.8rem] font-medium transition-sidebar group-data-collapsed/sidebar:w-8",
         className,
       )}
       {...props}
