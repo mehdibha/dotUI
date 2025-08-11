@@ -5,9 +5,9 @@ import { Button } from "@dotui/ui/components/button";
 
 export function Announcement() {
   return (
-    <Badge className="mb-3 h-7 rounded-lg text-xs">
+    <Badge variant="warning" className="mb-3 h-7 gap-2 rounded-lg text-xs">
       <AlertTriangleIcon />
-      Project under development
+      Under development
     </Badge>
   );
   // return (

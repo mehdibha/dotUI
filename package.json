@@ -45,5 +45,8 @@
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^2.0.5"
   },
-  "prettier": "@dotui/prettier-config"
+  "prettier": "@dotui/prettier-config",
+  "dependencies": {
+    "puppeteer": "^24.16.0"
+  }
 }

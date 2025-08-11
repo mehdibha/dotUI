@@ -13,6 +13,7 @@
     "preview": "next build && next start",
     "start": "pnpm with-env next start",
     "typecheck": "tsc --noEmit",
+    "capture-blocks": "pnpm with-env jiti ./scripts/capture-showcase-blocks.ts",
     "postinstall": "fumadocs-mdx",
     "with-env": "dotenv -e ../.env --"
   },
