@@ -2,6 +2,7 @@ import { existsSync, mkdirSync } from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import puppeteer from "puppeteer";
+import sharp from "sharp";
 
 import { buildTimeCaller } from "../lib/trpc/build";
 
@@ -22,9 +23,8 @@ async function captureScreenshots() {
 
   const browser = await puppeteer.launch({
     defaultViewport: {
-      width: 768,
+      width: 800,
       height: 900,
-      deviceScaleFactor: 2,
     },
   });
 
@@ -64,11 +64,27 @@ async function captureScreenshots() {
         }
       });
 
-      await page.screenshot({
-        path: screenshotPath as `${string}.png`,
+      // Take screenshot as buffer (full page), then crop with sharp and save
+      const buffer = await page.screenshot({
         type: "png",
         fullPage: true,
       });
+
+      const img = sharp(buffer as Buffer);
+      const meta = await img.metadata();
+
+      if (!meta.width || !meta.height) {
+        throw new Error("Failed to read screenshot dimensions");
+      }
+
+      const cropWidth = 30; // pixels on each side
+      const cropHeight = 40; // pixels on each side
+      const width = Math.max(1, meta.width - cropWidth * 2);
+      const height = Math.max(1, meta.height - cropHeight * 2);
+
+      await img
+        .extract({ left: cropWidth, top: cropHeight, width, height })
+        .toFile(screenshotPath as `${string}.png`);
     }
 
     await page.close();

@@ -49,7 +49,7 @@ export function Notifications({
             <Tab id="read">Read</Tab>
           </TabList>
           <TabPanel id="all" className="h-full">
-            <ListBox className="max-h-68 w-full rounded-none border-0 bg-transparent p-0 [&_.separator]:my-0 [&_[data-slot=list-box-item]]:rounded-none">
+            <ListBox className="max-h-full w-full rounded-none border-0 bg-transparent p-0 [&_.separator]:my-0 [&_[data-slot=list-box-item]]:rounded-none">
               {notifications.map((notification, index) => (
                 <React.Fragment key={index}>
                   <Separator />
