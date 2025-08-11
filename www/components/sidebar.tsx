@@ -70,7 +70,7 @@ export const Sidebar = ({
         <Logo />
       </div>
       <div className="-mb-1 px-2 pt-0">
-        <SidebarSearchButton isCollapsed={isCollapsed} />
+        <SidebarSearchButton items={items} isCollapsed={isCollapsed} />
       </div>
       <ScrollArea
         size="sm"
@@ -255,9 +255,15 @@ export const useSidebarContext = () => {
   return ctx;
 };
 
-const SidebarSearchButton = ({ isCollapsed }: { isCollapsed: boolean }) => {
+const SidebarSearchButton = ({
+  items,
+  isCollapsed,
+}: {
+  items: PageTree.Node[];
+  isCollapsed: boolean;
+}) => {
   return (
-    <SearchCommand keyboardShortcut>
+    <SearchCommand items={items} keyboardShortcut>
       <StyledTooltip
         content={
           <div className="flex items-center gap-2">
