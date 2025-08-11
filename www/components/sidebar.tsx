@@ -9,6 +9,7 @@ import {
   BlocksIcon,
   BookIcon,
   BoxIcon,
+  LogInIcon,
   MoonIcon,
   PaletteIcon,
   PanelLeftCloseIcon,
@@ -31,6 +32,8 @@ import type { TooltipProps } from "@dotui/ui/components/tooltip";
 import { GitHubIcon, TwitterIcon } from "@/components/icons";
 import { ScrollArea } from "@/components/scroll-area";
 import { siteConfig } from "@/config";
+import { useDebounce } from "@/hooks/use-debounce";
+import { useMounted } from "@/hooks/use-mounted";
 import { UserProfileMenu } from "@/modules/auth/components/user-profile-menu";
 import { authClient } from "@/modules/auth/lib/client";
 import { hasActive, isActive } from "@/modules/docs/utils";
@@ -46,7 +49,9 @@ export const Sidebar = ({
   items: PageTree.Node[];
 }) => {
   const { isCollapsed, setCollapsed } = useSidebarContext();
-  const { data: session } = authClient.useSession();
+  const debouncedIsCollapsed = useDebounce(isCollapsed, 250);
+  const isMounted = useMounted();
+  const { data: session, isPending } = authClient.useSession();
 
   const transition: Transition = {
     type: "spring",
@@ -54,28 +59,21 @@ export const Sidebar = ({
     bounce: 0,
   };
 
-  React.useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.ctrlKey && e.key === "b") {
-        e.preventDefault();
-        setCollapsed((prev) => !prev);
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [setCollapsed]);
-
   return (
     <SidebarRoot className={className}>
       <div className="relative flex items-center p-2 pl-3.5">
-        <Logo className="group-data-collapsed/sidebar:group-hover/sidebar:opacity-0" />
+        <Logo
+          className={cn(
+            debouncedIsCollapsed &&
+              "group-data-collapsed/sidebar:group-hover/sidebar:opacity-0",
+          )}
+        />
         <Button
           variant="quiet"
           shape="square"
           size="sm"
           onPress={() => setCollapsed(!isCollapsed)}
-          className="group-data-collapsed/sidebar:group-hover/sidebar:opacity-100 absolute left-2 opacity-0"
+          className="group-data-collapsed/sidebar:group-hover/sidebar:opacity-100 group-data-collapsed/sidebar:group-hover/sidebar:pointer-events-auto pointer-events-none absolute left-2 opacity-0"
         >
           {isCollapsed ? <PanelLeftOpenIcon /> : <PanelLeftCloseIcon />}
         </Button>
@@ -181,16 +179,20 @@ export const Sidebar = ({
               </Button>
             </motion.div>
           </ThemeSwitcher>
-          <UserProfileMenu>
-            <Button shape="square" size="sm">
-              <Avatar
-                src={session?.user?.image ?? undefined}
-                fallback={session?.user?.name?.charAt(0)}
-                className="size-6 size-full"
-                shape="circle"
-              />
-            </Button>
-          </UserProfileMenu>
+          {isMounted && !isPending && session?.user && (
+            <UserProfileMenu placement="top">
+              <motion.div layout transition={transition}>
+                <Button variant="quiet" shape="square" size="sm">
+                  <Avatar
+                    src={session?.user?.image ?? undefined}
+                    fallback={session?.user?.name?.charAt(0)}
+                    className="size-6"
+                    shape="circle"
+                  />
+                </Button>
+              </motion.div>
+            </UserProfileMenu>
+          )}
         </div>
       </SidebarFooter>
     </SidebarRoot>
@@ -259,23 +261,6 @@ export const useSidebarContext = () => {
     throw new Error("useSidebarContext must be used within SidebarProvider");
   }
   return ctx;
-};
-
-const SidebarToggle = ({ className, ...props }: ButtonProps) => {
-  return (
-    <div className="transition-sidebar group-data-collapsed/sidebar:left-2 group-data-collapsed/sidebar:opacity-0 absolute left-[calc(var(--sidebar-width)-theme(spacing.10))] z-10 duration-75 group-hover/sidebar:!opacity-100 has-[button:focus-visible]:opacity-100">
-      <Button
-        className={cn(
-          "touch:opacity-100 group-data-collapsed/sidebar:opacity-0 focus:group-data-collapsed/sidebar:opacity-100 focus-visible:group-data-collapsed/sidebar:opacity-100 opacity-100 transition-all duration-75 group-hover/sidebar:opacity-100",
-          className,
-        )}
-        shape="square"
-        size="sm"
-        variant="quiet"
-        {...props}
-      />
-    </div>
-  );
 };
 
 const SidebarSearchButton = ({ isCollapsed }: { isCollapsed: boolean }) => {
@@ -451,7 +436,7 @@ const SidebarButton = ({
       variant="quiet"
       size="sm"
       className={cn(
-        "transition-sidebar group-data-collapsed/sidebar:w-8 hover:bg-bg-inverse/10 relative w-full overflow-hidden text-[0.8rem] font-medium",
+        "transition-sidebar group-data-collapsed/sidebar:w-8 relative w-full overflow-hidden text-[0.8rem] font-medium",
         className,
       )}
       {...props}
