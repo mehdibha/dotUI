@@ -64,7 +64,7 @@ export function Header({
         </div>
         {isMounted && !isPending && (
           <div className="flex animate-in items-center gap-2 fade-in">
-            <SearchCommand keyboardShortcut>
+            <SearchCommand keyboardShortcut items={items}>
               <Button
                 variant="default"
                 suffix={
