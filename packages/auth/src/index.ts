@@ -3,6 +3,7 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import type { BetterAuthOptions } from "better-auth";
 
 import { db } from "@dotui/db/client";
+import { oAuthProxy } from "better-auth/plugins";
 
 export function initAuth(options: {
   baseUrl: string;
@@ -51,6 +52,12 @@ export function initAuth(options: {
         },
       },
     },
+    plugins: [
+      oAuthProxy({
+        currentURL: options.baseUrl,
+        productionURL: options.productionUrl,
+      }),
+    ],
     socialProviders: {
       github: {
         clientId: options.githubClientId,
