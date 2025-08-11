@@ -53,6 +53,27 @@ export const Sidebar = ({
   const isMounted = useMounted();
   const { data: session, isPending } = authClient.useSession();
 
+  React.useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.key === "b" && (e.metaKey || e.ctrlKey)) {
+        if (
+          (e.target instanceof HTMLElement && e.target.isContentEditable) ||
+          e.target instanceof HTMLInputElement ||
+          e.target instanceof HTMLTextAreaElement ||
+          e.target instanceof HTMLSelectElement
+        ) {
+          return;
+        }
+
+        e.preventDefault();
+        setCollapsed(!isCollapsed);
+      }
+    };
+
+    document.addEventListener("keydown", down);
+    return () => document.removeEventListener("keydown", down);
+  }, [isCollapsed, setCollapsed]);
+
   const transition: Transition = {
     type: "spring",
     duration: 0.2,
@@ -68,15 +89,27 @@ export const Sidebar = ({
               "group-data-collapsed/sidebar:group-hover/sidebar:opacity-0",
           )}
         />
-        <Button
-          variant="quiet"
-          shape="square"
-          size="sm"
-          onPress={() => setCollapsed(!isCollapsed)}
-          className="pointer-events-none absolute left-2 opacity-0 group-data-collapsed/sidebar:group-hover/sidebar:pointer-events-auto group-data-collapsed/sidebar:group-hover/sidebar:opacity-100"
+        <StyledTooltip
+          content={
+            <div className="flex items-center gap-2">
+              Toggle Sidebar
+              <div className="flex items-center gap-px text-[0.7rem] max-md:hidden">
+                <Kbd>⌘</Kbd>
+                <Kbd>B</Kbd>
+              </div>
+            </div>
+          }
         >
-          {isCollapsed ? <PanelLeftOpenIcon /> : <PanelLeftCloseIcon />}
-        </Button>
+          <Button
+            variant="quiet"
+            shape="square"
+            size="sm"
+            onPress={() => setCollapsed(!isCollapsed)}
+            className="pointer-events-none absolute left-2 opacity-0 group-data-collapsed/sidebar:group-hover/sidebar:pointer-events-auto group-data-collapsed/sidebar:group-hover/sidebar:opacity-100"
+          >
+            {isCollapsed ? <PanelLeftOpenIcon /> : <PanelLeftCloseIcon />}
+          </Button>
+        </StyledTooltip>
         <div className="flex w-[calc(var(--sidebar-width)-calc(var(--spacing)*6))] justify-end">
           <Button
             shape="square"
@@ -265,7 +298,7 @@ export const useSidebarContext = () => {
 
 const SidebarSearchButton = ({ isCollapsed }: { isCollapsed: boolean }) => {
   return (
-    <SearchCommand keyboardShortcut>
+    <SearchCommand>
       <StyledTooltip
         content={
           <div className="flex items-center gap-2">
@@ -278,12 +311,12 @@ const SidebarSearchButton = ({ isCollapsed }: { isCollapsed: boolean }) => {
         }
         isDisabled={!isCollapsed}
       >
-        <SidebarButton variant="default">
+        <SidebarButton variant="default" className="group/searchbtn">
           <SearchIcon />
           <div className="flex flex-1 flex-row items-center justify-between">
             <span>Search </span>
             <div className="flex items-center gap-0.5 [&_kbd]:text-xs">
-              <Kbd>Ctrl</Kbd>
+              <Kbd>⌘</Kbd>
               <Kbd>K</Kbd>
             </div>
           </div>
