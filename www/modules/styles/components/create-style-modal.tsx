@@ -18,6 +18,7 @@ import { FormControl } from "@dotui/ui/components/form";
 import { Select, SelectItem } from "@dotui/ui/components/select";
 import { TextField } from "@dotui/ui/components/text-field";
 import { TextArea } from "@dotui/ui/components/text-area";
+import { Alert } from "@dotui/ui/components/alert";
 
 import { useCreateStyle } from "../hooks/use-create-style";
 
@@ -57,6 +58,12 @@ export function CreateStyleModal({ children }: { children: React.ReactNode }) {
             <DialogHeading>Create a new style</DialogHeading>
           </DialogHeader>
           <DialogBody>
+            {createStyleMutation.isError && (
+              <Alert variant="danger" title="Failed to create style">
+                {createStyleMutation.error?.message ??
+                  "An error occurred while creating the style."}
+              </Alert>
+            )}
             <div className="flex items-end gap-2">
               <FormControl
                 name="name"
@@ -125,7 +132,7 @@ export function CreateStyleModal({ children }: { children: React.ReactNode }) {
               name="description"
               control={form.control}
               render={(props) => (
-                <TextArea label="Description" className="mt-3" {...props} />
+                <TextArea label="Description" className="mt-3 w-full" {...props} />
               )}
             />
             <div className="mt-4 bg-transparent">

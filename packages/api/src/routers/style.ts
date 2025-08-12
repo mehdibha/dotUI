@@ -5,6 +5,7 @@ import type { TRPCRouterRecord } from "@trpc/server";
 import { and, eq } from "@dotui/db";
 import { style, user } from "@dotui/db/schemas";
 import { styleDefinitionSchema } from "@dotui/style-engine/schemas";
+import { createStyleSchema } from "@dotui/db/schemas";
 
 import { protectedProcedure, publicProcedure } from "../trpc";
 
@@ -115,6 +116,26 @@ export const styleRouter = {
       }
 
       return styleRecord;
+    }),
+  create: protectedProcedure
+    .input(createStyleSchema)
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const [created] = await ctx.db
+          .insert(style)
+          .values({
+            ...input,
+            userId: ctx.session.user.id,
+          })
+          .returning();
+
+        return created;
+      } catch (err: any) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: err?.message ?? "Failed to create style",
+        });
+      }
     }),
   update: protectedProcedure
     .input(styleDefinitionSchema.extend({ id: uuidSchema }))
