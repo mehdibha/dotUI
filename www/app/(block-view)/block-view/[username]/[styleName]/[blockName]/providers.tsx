@@ -45,7 +45,7 @@ export const BlockProviders = ({
         <StyleProvider
           style={style}
           mode={activeMode}
-          className="min-h-screen flex items-center justify-center"
+          className="flex min-h-screen items-center justify-center"
         >
           {children}
         </StyleProvider>
