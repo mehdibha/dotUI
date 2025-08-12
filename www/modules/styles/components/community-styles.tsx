@@ -19,5 +19,11 @@ export function CommunityStyles() {
     return <StylesList skeleton />;
   }
 
-  return <StylesList styles={styles ?? []} skeleton={isLoading} />;
+  return (
+    <StylesList
+      styles={styles ?? []}
+      skeleton={isLoading}
+      defaultView="ui-kit"
+    />
+  );
 }
