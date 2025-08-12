@@ -214,7 +214,7 @@ function StylePageHeaderActions() {
         </Button>
       </Tooltip>
       {isUserAuthenticated ? (
-        false ? (
+        isUserStyle ? (
           <Button
             type="submit"
             variant="primary"
