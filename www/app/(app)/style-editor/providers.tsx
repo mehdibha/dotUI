@@ -1,5 +1,5 @@
-import { StylePagesProvider } from "@/modules/styles/providers/style-pages-provider";
+import { StyleEditorProvider } from "@/modules/styles/providers/style-editor-provider";
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  return <StylePagesProvider>{children}</StylePagesProvider>;
+  return <StyleEditorProvider>{children}</StyleEditorProvider>;
 }

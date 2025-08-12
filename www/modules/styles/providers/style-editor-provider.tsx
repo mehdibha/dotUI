@@ -52,7 +52,7 @@ export function useStyleForm() {
   return context;
 }
 
-export function StylePagesProvider({
+export function StyleEditorProvider({
   children,
 }: {
   children: React.ReactNode;

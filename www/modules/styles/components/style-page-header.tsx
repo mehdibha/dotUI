@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   ArrowLeftIcon,
   CheckIcon,
@@ -24,23 +25,23 @@ import { Skeleton } from "@dotui/ui/components/skeleton";
 import { Tooltip } from "@dotui/ui/components/tooltip";
 
 import { AutoResizeTextField } from "@/components/auto-resize-input";
-import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
+import { useMounted } from "@/hooks/use-mounted";
+import { SignInModal } from "@/modules/auth/components/sign-in-modal";
+import { authClient } from "@/modules/auth/lib/client";
+import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
 import { PublishStyleModal } from "./publish-style-modal";
 import { StylePageCodeModal } from "./style-page-code-modal";
-import { authClient } from "@/modules/auth/lib/client";
-import { usePathname } from "next/navigation";
-import { SignInModal } from "@/modules/auth/components/sign-in-modal";
 
 export function StylePageHeader() {
   return (
     <div className="container max-w-4xl">
       <Link
         href="/styles"
-        className="flex items-center gap-1 text-sm text-fg-muted hover:text-fg"
+        className="text-fg-muted hover:text-fg flex items-center gap-1 text-sm"
       >
         <ArrowLeftIcon className="size-4" /> styles
       </Link>
-      <div className="mt-2 flex items-center justify-between">
+      <div className="mt-1 flex items-center justify-between lg:mt-2">
         <StylePageHeaderName />
         <div className="flex items-center gap-1">
           <StylePageHeaderActions />
@@ -118,7 +119,7 @@ function StylePageHeaderName() {
           aria-label="Style name"
           inputRef={inputRef}
           autoFocus
-          className="text-2xl leading-none font-bold"
+          className="text-2xl font-bold leading-none"
           value={localValue}
           onChange={setLocalValue}
         />
@@ -153,13 +154,13 @@ function StylePageHeaderName() {
         control={form.control}
         render={(props) => (
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl leading-none font-bold">{props.value}</h1>
+            <h1 className="text-2xl font-bold leading-none">{props.value}</h1>
             <Button
               aria-label="Edit"
               size="sm"
               variant="quiet"
               shape="square"
-              className="size-7 text-fg-muted [&_svg]:size-3.5"
+              className="text-fg-muted size-7 [&_svg]:size-3.5"
               onPress={() => handleEditStart()}
             >
               <PencilIcon />
@@ -177,7 +178,8 @@ function StylePageHeaderActions() {
   const segments = pathname.split("/");
   const authorUsername = segments[2] ?? "";
 
-  const { data: session } = authClient.useSession();
+  const { data: session, isPending } = authClient.useSession();
+  const isMounted = useMounted();
 
   const handleReset = () => {
     form.reset();
@@ -194,7 +196,7 @@ function StylePageHeaderActions() {
   );
 
   return (
-    <>
+    <Skeleton show={!isMounted || isPending}>
       <StylePageCodeModal>
         <Button size="sm" prefix={<CodeIcon />}>
           Code
@@ -228,7 +230,7 @@ function StylePageHeaderActions() {
               size="sm"
               variant="primary"
               isDisabled={!form.formState.isDirty}
-              className="border border-bg-primary hover:border-bg-primary-hover"
+              className="border-bg-primary hover:border-bg-primary-hover border"
               prefix={<RocketIcon />}
             >
               Publish
@@ -238,7 +240,7 @@ function StylePageHeaderActions() {
       ) : (
         <SignInModal>
           <Button size="sm" variant="primary">
-            Sign in
+            Publish
           </Button>
         </SignInModal>
       )}
@@ -265,6 +267,6 @@ function StylePageHeaderActions() {
           )}
         </Menu>
       </MenuRoot>
-    </>
+    </Skeleton>
   );
 }

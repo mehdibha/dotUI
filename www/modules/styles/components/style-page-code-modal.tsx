@@ -1,17 +1,14 @@
 "use client";
 
-import { CodeIcon } from "lucide-react";
 import convert from "npm-to-yarn";
 
-import { Button } from "@dotui/ui/components/button";
 import { Dialog, DialogBody, DialogRoot } from "@dotui/ui/components/dialog";
-import { Tab, TabList, TabPanel, Tabs } from "@dotui/ui/components/tabs";
 
 import {
   InstallTab,
   InstallTabs,
 } from "@/modules/docs/components/install-tabs";
-import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
+import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
 
 const packageManagers: ("npm" | "pnpm" | "yarn" | "bun")[] = [
   "npm",
@@ -37,8 +34,8 @@ export function StylePageCodeModal({
           className: "max-h-[530px] max-w-xl p-2",
         }}
       >
-        <DialogBody className="-mx-6 px-6 pt-0 pb-6">
-          <div className="relative ml-4 border-l pl-8 text-sm text-fg-muted [counter-reset:step] [&>h3]:step [&>h3]:text-base [&>h3]:font-bold [&>h3]:text-fg [&>h3]:not-first:mt-4">
+        <DialogBody className="-mx-6 px-6 pb-6 pt-0">
+          <div className="text-fg-muted [&>h3]:step [&>h3]:text-fg [&>h3]:not-first:mt-4 relative ml-4 border-l pl-8 text-sm [counter-reset:step] [&>h3]:text-base [&>h3]:font-bold">
             <h3>Init your style</h3>
             <div>
               <InstallTabs items={packageManagers}>
@@ -69,7 +66,7 @@ export function StylePageCodeModal({
                   <InstallTab key={packageManager} value={packageManager}>
                     <pre className="p-4">
                       <code>
-                        {convert(`npx shadcn@latest add`, packageManager)}
+                        {convert(`npx shadcn@latest add`, packageManager)}{" "}
                         @dotui/
                         <span className="text-[#F69D50]">
                           {form.watch("slug")}

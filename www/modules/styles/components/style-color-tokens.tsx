@@ -29,7 +29,7 @@ import { cn } from "@dotui/ui/lib/utils";
 import type { TableRootProps } from "@dotui/ui/components/table";
 
 import { AutoResizeTextField } from "@/components/auto-resize-input";
-import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
+import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
 
 export const ColorTokens = ({
   variant = "line",
@@ -157,7 +157,7 @@ const ColorTokenVariableName = ({
       control={form.control}
       render={(props) => (
         <div className="flex items-center gap-2">
-          <div className="rounded-full bg-bg-muted p-1 pl-3">
+          <div className="bg-bg-muted rounded-full p-1 pl-3">
             {isEditMode ? (
               <div ref={containerRef} className="flex items-center gap-1">
                 <AutoResizeTextField
@@ -192,7 +192,7 @@ const ColorTokenVariableName = ({
               </div>
             ) : (
               <div className="flex items-center gap-1">
-                <h1 className="truncate border-b font-mono text-xs whitespace-nowrap">
+                <h1 className="truncate whitespace-nowrap border-b font-mono text-xs">
                   {props.value}
                 </h1>
                 <Button

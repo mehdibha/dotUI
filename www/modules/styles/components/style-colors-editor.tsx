@@ -26,7 +26,7 @@ import {
 
 import { ThemeModeSwitch } from "@/components/theme-mode-switch";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
-import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
+import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
 import { ColorScale } from "./color-scale";
 import { EditorSection } from "./editor-section";
 import { ScaleEditor } from "./scale-editor";
