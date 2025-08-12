@@ -35,12 +35,12 @@ export function StyleCard({
             shape="square"
             className="mt-1 size-6"
           />
-          <h2 className="font-heading text-3xl font-medium leading-none tracking-tight">
+          <h2 className="font-heading text-3xl leading-none font-medium tracking-tight">
             {style.name}
           </h2>
         </div>
         {style.description && (
-          <p className="text-fg-muted text-balance text-base">
+          <p className="text-base text-balance text-fg-muted">
             {style.description}
           </p>
         )}
@@ -57,7 +57,7 @@ export function StyleCard({
           ].map((item) => (
             <Badge
               key={item.label}
-              className="text-fg-muted [&_svg]:text-fg gap-2 rounded-full"
+              className="gap-2 rounded-full text-fg-muted [&_svg]:text-fg"
             >
               {item.icon}
               {item.label}
@@ -79,10 +79,10 @@ export function StyleCard({
             href={`/styles/${style.user.username}/${style.name}`}
             className={cn(
               focusRing(),
-              "bg-bg-muted/50 absolute inset-0 z-50 flex items-center justify-center opacity-0 duration-150 hover:opacity-100",
+              "absolute inset-0 z-50 flex items-center justify-center bg-bg-muted/50 opacity-0 duration-150 hover:opacity-100",
             )}
           >
-            <span className="bg-bg-primary text-fg-on-primary hover:bg-bg-primary-hover active:bg-bg-primary-active flex h-10 items-center justify-center rounded-md border px-4 text-base font-medium leading-normal tracking-tight duration-150">
+            <span className="flex h-10 items-center justify-center rounded-md border bg-bg-primary px-4 text-base leading-normal font-medium tracking-tight text-fg-on-primary duration-150 hover:bg-bg-primary-hover active:bg-bg-primary-active">
               Explore style
             </span>
           </Link>
