@@ -1,9 +1,7 @@
-import { StylesList } from "@/modules/styles/components/styles-list";
-import { caller } from "@/lib/trpc/server";
+import { MyStyles } from "@/modules/styles/components/my-styles-client";
 
 export const dynamic = "force-dynamic";
 
-export default async function MyStylesPage() {
-  const styles = await caller.style.getMine({});
-  return <StylesList styles={styles} />;
+export default function MyStylesPage() {
+  return <MyStyles />;
 }

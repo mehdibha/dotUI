@@ -54,7 +54,7 @@ export const styleRouter = {
 
       return styles;
     }),
-  getMine: protectedProcedure
+  getMyStyles: protectedProcedure
     .input(paginationSchema)
     .query(async ({ ctx, input }) => {
       const styles = await ctx.db.query.style.findMany({

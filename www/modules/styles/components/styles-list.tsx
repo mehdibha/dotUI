@@ -4,6 +4,7 @@ import React from "react";
 import { LayoutGridIcon, ListIcon } from "lucide-react";
 
 import { SearchField } from "@dotui/ui/components/search-field";
+import { Skeleton } from "@dotui/ui/components/skeleton";
 import { ToggleButton } from "@dotui/ui/components/toggle-button";
 import { ToggleButtonGroup } from "@dotui/ui/components/toggle-button-group";
 import { cn } from "@dotui/ui/lib/utils";
@@ -14,13 +15,38 @@ import { StyleUIKit } from "./style-ui-kit";
 
 export function StylesList({
   styles,
+  skeleton = false,
   ...props
 }: React.ComponentProps<"div"> & {
-  styles: RouterOutputs["style"]["getFeatured"];
+  styles?: RouterOutputs["style"]["getFeatured"];
+  skeleton?: boolean;
 }) {
   const [view, setView] = React.useState<"grid" | "list">("list");
 
-  if (styles.length === 0) {
+  if (skeleton) {
+    const placeholders = Array.from({ length: view === "grid" ? 6 : 3 });
+    return (
+      <div className={cn("", props.className)}>
+        <div
+          className={cn(
+            "grid",
+            view === "grid" && "grid-cols-1 gap-4 lg:grid-cols-2",
+            view === "list" && "grid-cols-1 gap-8",
+            props.className,
+          )}
+        >
+          {placeholders.map((_, idx) => (
+            <Skeleton
+              key={idx}
+              className={cn(view === "grid" ? "h-40" : "h-52")}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (!styles || styles.length === 0) {
     return <div>No styles found</div>;
   }
 
