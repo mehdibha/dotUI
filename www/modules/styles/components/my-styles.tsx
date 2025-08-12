@@ -1,6 +1,7 @@
 "use client";
 
-import { redirect } from "next/navigation";
+import React, { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 
 import { useMounted } from "@/hooks/use-mounted";
@@ -9,6 +10,7 @@ import { authClient } from "@/modules/auth/lib/client";
 import { StylesList } from "@/modules/styles/components/styles-list";
 
 export function MyStyles() {
+  const router = useRouter();
   const trpc = useTRPC();
   const isMounted = useMounted();
   const { data: session, isPending } = authClient.useSession();
@@ -19,13 +21,17 @@ export function MyStyles() {
     retry: false,
   });
 
-  if (isMounted && !isPending && !session?.user) {
-    redirect("/login");
-  }
+  React.useEffect(() => {
+    if (isMounted && !isPending && !session?.user) {
+      router.push("/login");
+    }
+  }, [isMounted, isPending, session?.user, router]);
 
-  if (!isMounted || isPending) {
-    return <StylesList skeleton />;
-  }
-
-  return <StylesList styles={styles ?? []} skeleton={isLoading} />;
+  return (
+    <StylesList
+      styles={styles ?? []}
+      skeleton={isLoading || !isMounted || isPending || !session?.user}
+      search
+    />
+  );
 }

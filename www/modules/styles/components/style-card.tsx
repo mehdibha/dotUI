@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
 
@@ -13,6 +14,7 @@ import { cn } from "@dotui/ui/lib/utils";
 import { BlocksShowcase } from "@dotui/ui/registry/blocks/showcase/blocks-showcase/components/blocks-showcase";
 import type { RouterOutputs } from "@dotui/api";
 
+import { useDebounce } from "@/hooks/use-debounce";
 import { useMounted } from "@/hooks/use-mounted";
 
 export function StyleCard({
@@ -22,6 +24,7 @@ export function StyleCard({
   style: RouterOutputs["style"]["getFeatured"][number];
   variant?: "ui-kit" | "card";
 }) {
+  const [isLoading, setLoading] = React.useState(true);
   const { resolvedTheme } = useTheme();
   const isMounted = useMounted();
 
@@ -79,21 +82,34 @@ export function StyleCard({
             href={`/styles/${style.user.username}/${style.name}`}
             className={cn(
               focusRing(),
-              "absolute inset-0 z-50 flex items-center justify-center bg-bg-muted/50 opacity-0 duration-150 hover:opacity-100",
+              "absolute inset-0 z-50 flex items-center justify-center bg-bg/30 opacity-0 duration-150 hover:opacity-100",
             )}
           >
             <span className="flex h-10 items-center justify-center rounded-md border bg-bg-primary px-4 text-base leading-normal font-medium tracking-tight text-fg-on-primary duration-150 hover:bg-bg-primary-hover active:bg-bg-primary-active">
-              Explore style
+              View style
             </span>
           </Link>
+
           {variant === "card" && (
-            <iframe
-              src={`/block-view/${style.user.username}/${style.name}/blocks-showcase`}
-              className="h-[1200px] min-w-[1400px] scale-50"
-            />
+            <div
+              className={cn(
+                "flex size-full items-center justify-center",
+                isLoading &&
+                  "relative block animate-pulse rounded-md bg-bg-muted",
+              )}
+            >
+              <iframe
+                onLoad={() => setLoading(false)}
+                src={`/block-view/${style.user.username}/${style.name}/blocks-showcase`}
+                className={cn(
+                  "h-[1200px] min-w-[1400px] scale-50",
+                  isLoading && "opacity-0",
+                )}
+              />
+            </div>
           )}
           {variant === "ui-kit" && (
-            <div inert>
+            <div inert className="w-[1600px] scale-90">
               <BlocksShowcase />
             </div>
           )}

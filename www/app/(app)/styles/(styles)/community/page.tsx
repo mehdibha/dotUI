@@ -1,5 +1,5 @@
-import { StylesList } from "@/modules/styles/components/styles-list";
+import { CommunityStyles } from "@/modules/styles/components/community-styles";
 
 export default function CommunityStylesPage() {
-  return <StylesList styles={[]} />;
+  return <CommunityStyles />;
 }
