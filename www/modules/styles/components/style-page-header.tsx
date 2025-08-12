@@ -27,6 +27,9 @@ import { AutoResizeTextField } from "@/components/auto-resize-input";
 import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
 import { PublishStyleModal } from "./publish-style-modal";
 import { StylePageCodeModal } from "./style-page-code-modal";
+import { authClient } from "@/modules/auth/lib/client";
+import { usePathname } from "next/navigation";
+import { SignInModal } from "@/modules/auth/components/sign-in-modal";
 
 export function StylePageHeader() {
   return (
@@ -170,12 +173,25 @@ function StylePageHeaderName() {
 
 function StylePageHeaderActions() {
   const { form } = useStyleForm();
+  const pathname = usePathname();
+  const segments = pathname.split("/");
+  const authorUsername = segments[2] ?? "";
+
+  const { data: session } = authClient.useSession();
 
   const handleReset = () => {
     form.reset();
   };
 
-  const isUserStyle = true;
+  const styleUserId = form.getValues("userId");
+  const isUserAuthenticated = Boolean(session?.user?.id);
+  const isUserStyle = Boolean(
+    isUserAuthenticated &&
+      ((styleUserId && session?.user?.id === styleUserId) ||
+        (session?.user?.username &&
+          authorUsername &&
+          session.user.username === authorUsername)),
+  );
 
   return (
     <>
@@ -195,28 +211,36 @@ function StylePageHeaderActions() {
           <RotateCcwIcon />
         </Button>
       </Tooltip>
-      {isUserStyle ? (
-        <Button
-          type="submit"
-          variant="primary"
-          size="sm"
-          prefix={<SaveIcon />}
-          isDisabled={!form.formState.isDirty}
-        >
-          Save
-        </Button>
-      ) : (
-        <PublishStyleModal>
+      {isUserAuthenticated ? (
+        isUserStyle ? (
           <Button
-            size="sm"
+            type="submit"
             variant="primary"
+            size="sm"
+            prefix={<SaveIcon />}
             isDisabled={!form.formState.isDirty}
-            className="border border-bg-primary hover:border-bg-primary-hover"
-            prefix={<RocketIcon />}
           >
-            Publish
+            Save
           </Button>
-        </PublishStyleModal>
+        ) : (
+          <PublishStyleModal>
+            <Button
+              size="sm"
+              variant="primary"
+              isDisabled={!form.formState.isDirty}
+              className="border border-bg-primary hover:border-bg-primary-hover"
+              prefix={<RocketIcon />}
+            >
+              Publish
+            </Button>
+          </PublishStyleModal>
+        )
+      ) : (
+        <SignInModal>
+          <Button size="sm" variant="primary">
+            Sign in
+          </Button>
+        </SignInModal>
       )}
       <MenuRoot>
         <Button aria-label="More actions" size="sm" shape="square">
