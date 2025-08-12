@@ -40,6 +40,7 @@ export function StylesList({
             "grid",
             view === "card" && "grid-cols-2 gap-4",
             view === "ui-kit" && "grid-cols-1 gap-8",
+            !search && "-mt-8",
             props.className,
           )}
         >
