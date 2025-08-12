@@ -109,7 +109,7 @@ export function StyleCard({
             </div>
           )}
           {variant === "ui-kit" && (
-            <div inert className="w-[1600px] scale-80">
+            <div inert className="w-[1600px] scale-90">
               <BlocksShowcase />
             </div>
           )}

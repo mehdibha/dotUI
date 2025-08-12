@@ -1,6 +1,7 @@
 "use client";
 
-import { redirect, useRouter } from "next/navigation";
+import React, { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 
 import { useMounted } from "@/hooks/use-mounted";
@@ -20,14 +21,16 @@ export function MyStyles() {
     retry: false,
   });
 
-  if (isMounted && !isPending && !session?.user) {
-    router.push("/login");
-  }
+  React.useEffect(() => {
+    if (isMounted && !isPending && !session?.user) {
+      router.push("/login");
+    }
+  }, [isMounted, isPending, session?.user, router]);
 
   return (
     <StylesList
       styles={styles ?? []}
-      skeleton={isLoading || !isMounted}
+      skeleton={isLoading || !isMounted || isPending || !session?.user}
       search
     />
   );
