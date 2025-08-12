@@ -41,27 +41,27 @@ const config = {
     return [
       {
         source: "/styles/:username/:styleName",
-        destination: "/styles/style/colors",
+        destination: "/style-editor/colors",
       },
       {
         source: "/styles/:username/:styleName/layout",
-        destination: "/styles/style/layout",
+        destination: "/style-editor/layout",
       },
       {
         source: "/styles/:username/:styleName/typography",
-        destination: "/styles/style/typography",
+        destination: "/style-editor/typography",
       },
       {
         source: "/styles/:username/:styleName/components",
-        destination: "/styles/style/components",
+        destination: "/style-editor/components",
       },
       {
         source: "/styles/:username/:styleName/effects",
-        destination: "/styles/style/effects",
+        destination: "/style-editor/effects",
       },
       {
         source: "/styles/:username/:styleName/icons",
-        destination: "/styles/style/icons",
+        destination: "/style-editor/icons",
       },
     ];
   },
