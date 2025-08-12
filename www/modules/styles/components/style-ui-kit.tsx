@@ -17,8 +17,10 @@ import { useMounted } from "@/hooks/use-mounted";
 
 export function StyleUIKit({
   style,
+  variant = "ui-kit",
 }: {
   style: RouterOutputs["style"]["getFeatured"][number];
+  variant?: "ui-kit" | "card";
 }) {
   const { resolvedTheme } = useTheme();
   const isMounted = useMounted();
@@ -68,7 +70,11 @@ export function StyleUIKit({
           key={resolvedTheme}
           mode={resolvedTheme as "light" | "dark" | undefined}
           style={style}
-          className="relative flex max-h-[min(80svh,500px)] items-center justify-center overflow-auto overflow-hidden rounded-sm border"
+          className={cn(
+            "relative flex max-h-[min(80svh,500px)] items-center justify-center rounded-sm border",
+            // Keep overflow-hidden always, as requested explicitly for card
+            "overflow-hidden",
+          )}
         >
           <Link
             href={`/styles/${style.user.username}/${style.name}`}
@@ -81,7 +87,7 @@ export function StyleUIKit({
               Explore style
             </span>
           </Link>
-          <div inert>
+          <div inert className={cn(variant === "card" && "scale-80")}> 
             <BlocksShowcase />
           </div>
         </StyleProvider>
