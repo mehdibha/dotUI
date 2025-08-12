@@ -19,9 +19,9 @@ import { FormControl } from "@dotui/ui/components/form";
 import { Select, SelectItem } from "@dotui/ui/components/select";
 import { TextArea } from "@dotui/ui/components/text-area";
 import { TextField } from "@dotui/ui/components/text-field";
+import { toast } from "@dotui/ui/components/toast";
 
 import { useCreateStyle } from "../hooks/use-create-style";
-import { toast } from "@dotui/ui/components/toast";
 
 const createStyleSchema = z.object({
   name: z
@@ -60,10 +60,14 @@ export function CreateStyleModal({ children }: { children: React.ReactNode }) {
           </DialogHeader>
           <DialogBody>
             {createStyleMutation.isError && (
-              <Alert variant="danger" title="Failed to create style">
-                {createStyleMutation.error?.message ??
-                  "An error occurred while creating the style."}
-              </Alert>
+              <Alert
+                variant="danger"
+                title={
+                  createStyleMutation.error?.message ??
+                  "An error occurred while creating the style."
+                }
+                className="text-xs font-normal"
+              />
             )}
             <div className="flex items-end gap-2">
               <FormControl

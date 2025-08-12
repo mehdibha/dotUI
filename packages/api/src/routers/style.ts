@@ -119,7 +119,21 @@ export const styleRouter = {
   create: protectedProcedure
     .input(createStyleSchema)
     .mutation(async ({ ctx, input }) => {
-      
+      // Prevent duplicate style names per user (also enforced by DB unique index)
+      const existing = await ctx.db.query.style.findFirst({
+        where: and(
+          eq(style.userId, ctx.session.user.id),
+          eq(style.name, input.name),
+        ),
+      });
+
+      if (existing) {
+        throw new TRPCError({
+          code: "CONFLICT",
+          message: ` Style ${input.name} already exists, please use a new name.`,
+        });
+      }
+
       const [created] = await ctx.db
         .insert(style)
         .values({
