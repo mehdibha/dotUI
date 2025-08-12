@@ -17,6 +17,7 @@ import {
 import { FormControl } from "@dotui/ui/components/form";
 import { Select, SelectItem } from "@dotui/ui/components/select";
 import { TextField } from "@dotui/ui/components/text-field";
+import { TextArea } from "@dotui/ui/components/text-area";
 
 import { useCreateStyle } from "../hooks/use-create-style";
 
@@ -25,8 +26,8 @@ const createStyleSchema = z.object({
     .string()
     .min(1, "Name is required")
     .min(2, "Name must be at least 2 characters"),
-  preset: z.string().min(1, "Preset is required"),
-  visibility: z.string().min(1, "Visibility is required"),
+  description: z.string().optional(),
+  visibility: z.enum(["public", "unlisted", "private"]),
 });
 
 type CreateStyleFormData = z.infer<typeof createStyleSchema>;
@@ -37,8 +38,8 @@ export function CreateStyleModal({ children }: { children: React.ReactNode }) {
   const form = useForm<CreateStyleFormData>({
     resolver: zodResolver(createStyleSchema),
     defaultValues: {
-      preset: "minimalist",
       name: "",
+      description: "",
       visibility: "unlisted",
     },
   });
@@ -56,20 +57,6 @@ export function CreateStyleModal({ children }: { children: React.ReactNode }) {
             <DialogHeading>Create a new style</DialogHeading>
           </DialogHeader>
           <DialogBody>
-            <FormControl
-              name="preset"
-              control={form.control}
-              render={({ value, onChange, ...props }) => (
-                <Select
-                  label="Style preset"
-                  selectedKey={value}
-                  onSelectionChange={onChange}
-                  {...props}
-                >
-                  <SelectItem id="minimalist">Minimalist</SelectItem>
-                </Select>
-              )}
-            />
             <div className="flex items-end gap-2">
               <FormControl
                 name="name"
@@ -134,6 +121,13 @@ export function CreateStyleModal({ children }: { children: React.ReactNode }) {
                 )}
               />
             </div>
+            <FormControl
+              name="description"
+              control={form.control}
+              render={(props) => (
+                <TextArea label="Description" className="mt-3" {...props} />
+              )}
+            />
             <div className="mt-4 bg-transparent">
               <p className="text-sm text-fg-muted">
                 You can install it later with this command:

@@ -14,7 +14,8 @@ import { useTRPCClient } from "@/lib/trpc/react";
 
 interface CreateStyleInput {
   name: string;
-  preset: string;
+  description?: string;
+  visibility?: "public" | "unlisted" | "private";
 }
 
 export function useCreateStyle() {
@@ -38,12 +39,12 @@ export function useCreateStyle() {
         id: crypto.randomUUID(),
         name: data.name,
         slug: data.name.toLowerCase().replace(/[^a-z0-9]/g, "-"),
-        description: `${data.name} style`,
+        description: data.description ?? "",
         userId: "current-user",
         isFeatured: false,
         createdAt: new Date(),
         updatedAt: new Date(),
-        visibility: "unlisted" as const,
+        visibility: data.visibility ?? "unlisted",
       };
     },
     onSuccess: (data) => {
