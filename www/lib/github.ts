@@ -30,7 +30,14 @@ export const getGitHubContributors = async (): Promise<
       return [];
     }
     const json = await response.json();
-    return json;
+    return [
+      ...json,
+      {
+        login: "Cursor agent",
+        avatar_url: "https://github.com/cursoragent.png",
+        html_url: "https://github.com/cursoragent",
+      },
+    ];
   } catch (error) {
     console.error(error);
     return [];
