@@ -1,5 +1,7 @@
-import { StylesList } from "@/modules/styles/components/styles-list";
+import { MyStyles } from "@/modules/styles/components/my-styles-client";
 
-export default function CommunityStylesPage() {
-  return <StylesList styles={[]} />;
+export const dynamic = "force-dynamic";
+
+export default function MyStylesPage() {
+  return <MyStyles />;
 }

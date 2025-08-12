@@ -54,6 +54,25 @@ export const styleRouter = {
 
       return styles;
     }),
+  getMyStyles: protectedProcedure
+    .input(paginationSchema)
+    .query(async ({ ctx, input }) => {
+      const styles = await ctx.db.query.style.findMany({
+        where: eq(style.userId, ctx.session.user.id),
+        limit: input.limit,
+        offset: input.offset,
+        with: {
+          user: {
+            columns: {
+              username: true,
+              image: true,
+            },
+          },
+        },
+      });
+
+      return styles;
+    }),
   getByPublicName: publicProcedure
     .input(z.object({ name: z.string().min(1) }))
     .query(async ({ ctx, input }) => {
