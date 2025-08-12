@@ -92,7 +92,7 @@ export function CreateStyleModal({ children }: { children: React.ReactNode }) {
                     selectedKey={value}
                     onSelectionChange={onChange}
                     renderValue={({ selectedItem }) => (
-                      <div className="[&>svg]:text-fg-muted flex items-center gap-2">
+                      <div className="flex items-center gap-2 [&>svg]:text-fg-muted">
                         {selectedItem?.icon}
                         {selectedItem?.label}
                       </div>
