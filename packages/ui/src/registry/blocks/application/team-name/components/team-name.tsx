@@ -25,7 +25,7 @@ export function TeamName({ className, ...props }: React.ComponentProps<"div">) {
       <CardContent>
         <TextField aria-label="Team Name" defaultValue="My Team" />
       </CardContent>
-      <CardFooter className="flex items-center justify-between">
+      <CardFooter className="flex items-center justify-between gap-4">
         <p className="text-fg-muted text-sm">
           Please use 32 characters at maximum.
         </p>

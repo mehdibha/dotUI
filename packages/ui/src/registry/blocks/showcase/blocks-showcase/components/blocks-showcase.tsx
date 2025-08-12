@@ -1,9 +1,9 @@
 import { AccountMenu } from "@dotui/ui/registry/blocks/application/account-menu/components/account-menu";
 import { ColorEditor } from "@dotui/ui/registry/blocks/application/color-editor/components/accent-color-editor";
 import { InviteMembers } from "@dotui/ui/registry/blocks/application/invite-members/components/invite-members";
-import { Notifications } from "@dotui/ui/registry/blocks/application/notifications-01/components/notifications";
+import { Notifications } from "@dotui/ui/registry/blocks/application/notifications/components/notifications";
 import { TeamName } from "@dotui/ui/registry/blocks/application/team-name/components/team-name";
-import { LoginForm } from "@dotui/ui/registry/blocks/auth/login-01/components/login-form";
+import { LoginForm } from "@dotui/ui/registry/blocks/auth/login/components/login-form";
 import { Booking } from "@dotui/ui/registry/blocks/calendars/booking/components/booking";
 import { Backlog } from "@dotui/ui/registry/blocks/tables/backlog/components/backlog";
 

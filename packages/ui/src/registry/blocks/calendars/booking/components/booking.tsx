@@ -1,46 +1,13 @@
 "use client";
 
-import {
-  ArrowRightIcon,
-  BookIcon,
-  ChevronRightIcon,
-  ClockIcon,
-  ContrastIcon,
-  LanguagesIcon,
-  LogOutIcon,
-  PlusCircleIcon,
-  Settings2Icon,
-  SettingsIcon,
-  User2Icon,
-  Users2Icon,
-} from "lucide-react";
+import { ClockIcon } from "lucide-react";
 
 import { Avatar } from "@dotui/ui/components/avatar";
-import { Badge } from "@dotui/ui/components/badge";
 import { Button } from "@dotui/ui/components/button";
 import { Calendar } from "@dotui/ui/components/calendar";
-import { Card, CardContent, CardHeader } from "@dotui/ui/components/card";
-import { Label } from "@dotui/ui/components/field";
-import {
-  ListBox,
-  ListBoxItem,
-  ListBoxSection,
-} from "@dotui/ui/components/list-box";
-import {
-  MenuContent,
-  MenuItem,
-  MenuRoot,
-  MenuSection,
-} from "@dotui/ui/components/menu";
-import { Overlay } from "@dotui/ui/components/overlay";
-import { Popover } from "@dotui/ui/components/popover";
-import { Select, SelectItem, SelectRoot } from "@dotui/ui/components/select";
-import { Separator } from "@dotui/ui/components/separator";
-import { Switch, SwitchRoot, SwitchThumb } from "@dotui/ui/components/switch";
-import { TextField } from "@dotui/ui/components/text-field";
-import { ToggleButton } from "@dotui/ui/components/toggle-button";
-import { ToggleButtonGroup } from "@dotui/ui/components/toggle-button-group";
-import { ExternalLinkIcon, GoogleIcon } from "@dotui/ui/icons";
+import { Card } from "@dotui/ui/components/card";
+import { Select, SelectItem } from "@dotui/ui/components/select";
+import { GoogleIcon } from "@dotui/ui/icons";
 import { cn } from "@dotui/ui/lib/utils";
 
 export function Booking({ className, ...props }: React.ComponentProps<"div">) {

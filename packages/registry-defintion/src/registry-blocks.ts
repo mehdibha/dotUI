@@ -6,58 +6,22 @@ export const blocksCategories: { name: string; slug: string }[] = [
   { name: "Authentication", slug: "authentication" },
   { name: "Tables", slug: "tables" },
   { name: "Application", slug: "application" },
+  { name: "Calendars", slug: "calendars" },
 ];
 
 export const registryBlocks: Registry["items"] = [
   {
-    name: "login-01",
+    name: "login",
     description: "A simple login form.",
     type: "registry:block",
     registryDependencies: ["button", "text-field"],
     files: [
       {
-        path: "blocks/auth/login-01/page.tsx",
-        target: "app/login/page.tsx",
-        type: "registry:page",
-      },
-      {
-        path: "blocks/auth/login-01/components/login-form.tsx",
+        path: "blocks/auth/login/components/login-form.tsx",
         type: "registry:component",
       },
     ],
     categories: ["featured", "authentication"],
-  },
-  {
-    name: "register-01",
-    description: "A simple register form.",
-    type: "registry:block",
-    registryDependencies: ["button", "text-field"],
-    files: [
-      {
-        path: "blocks/auth/register-01/page.tsx",
-        target: "app/register/page.tsx",
-        type: "registry:page",
-      },
-      {
-        path: "blocks/auth/register-01/components/register-form.tsx",
-        type: "registry:component",
-      },
-    ],
-    categories: ["featured", "authentication"],
-  },
-  {
-    name: "all-components",
-    description: "Components overview",
-    type: "registry:block",
-    registryDependencies: ["all"],
-    files: [
-      {
-        path: "blocks/showcase/all-components/page.tsx",
-        target: "app/all-components/page.tsx",
-        type: "registry:page",
-      },
-    ],
-    categories: ["showcase"],
   },
   {
     name: "backlog",
@@ -66,12 +30,11 @@ export const registryBlocks: Registry["items"] = [
     registryDependencies: ["all"],
     files: [
       {
-        path: "blocks/tables/backlog/page.tsx",
-        target: "app/table/page.tsx",
-        type: "registry:page",
+        path: "blocks/tables/backlog/components/backlog.tsx",
+        type: "registry:component",
       },
     ],
-    categories: ["table"],
+    categories: ["tables"],
   },
   {
     name: "invite-members",
@@ -80,9 +43,34 @@ export const registryBlocks: Registry["items"] = [
     registryDependencies: ["all"],
     files: [
       {
-        path: "blocks/application/invite-members/page.tsx",
-        target: "app/application/invite-members/page.tsx",
-        type: "registry:page",
+        path: "blocks/application/invite-members/components/invite-members.tsx",
+        type: "registry:component",
+      },
+    ],
+    categories: ["application"],
+  },
+  {
+    name: "team-name",
+    description: "Update your team's name.",
+    type: "registry:block",
+    registryDependencies: ["all"],
+    files: [
+      {
+        path: "blocks/application/team-name/components/team-name.tsx",
+        type: "registry:component",
+      },
+    ],
+    categories: ["application"],
+  },
+  {
+    name: "color-editor",
+    description: "Edit accent color.",
+    type: "registry:block",
+    registryDependencies: ["all"],
+    files: [
+      {
+        path: "blocks/application/color-editor/components/accent-color-editor.tsx",
+        type: "registry:component",
       },
     ],
     categories: ["application"],
@@ -94,9 +82,21 @@ export const registryBlocks: Registry["items"] = [
     registryDependencies: ["all"],
     files: [
       {
-        path: "blocks/application/account-menu/page.tsx",
-        target: "app/application/account-menu/page.tsx",
-        type: "registry:page",
+        path: "blocks/application/account-menu/components/account-menu.tsx",
+        type: "registry:component",
+      },
+    ],
+    categories: ["application"],
+  },
+  {
+    name: "notifications",
+    description: "Notifications panel.",
+    type: "registry:block",
+    registryDependencies: ["all"],
+    files: [
+      {
+        path: "blocks/application/notifications/components/notifications.tsx",
+        type: "registry:component",
       },
     ],
     categories: ["application"],
@@ -108,11 +108,11 @@ export const registryBlocks: Registry["items"] = [
     registryDependencies: ["all"],
     files: [
       {
-        path: "blocks/calendars/booking/page.tsx",
-        target: "app/calendars/booking/page.tsx",
-        type: "registry:page",
+        path: "blocks/calendars/booking/components/booking.tsx",
+        type: "registry:component",
       },
     ],
+    categories: ["calendars"],
   },
   {
     name: "blocks-showcase",
@@ -121,9 +121,8 @@ export const registryBlocks: Registry["items"] = [
     registryDependencies: ["all"],
     files: [
       {
-        path: "blocks/showcase/blocks-showcase/page.tsx",
-        target: "app/blocks-showcase/page.tsx",
-        type: "registry:page",
+        path: "blocks/showcase/blocks-showcase/components/blocks-showcase.tsx",
+        type: "registry:component",
       },
     ],
     categories: ["showcase"],

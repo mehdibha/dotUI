@@ -1,7 +1,5 @@
 "use client";
 
-import { RiUserLine } from "@remixicon/react";
-
 import { Button } from "@dotui/ui/components/button";
 import {
   Card,
@@ -12,10 +10,11 @@ import {
 } from "@dotui/ui/components/card";
 import { TextField } from "@dotui/ui/components/text-field";
 import { GitHubIcon, GoogleIcon, TwitterIcon } from "@dotui/ui/icons";
+import { cn } from "@dotui/ui/lib/utils";
 
 export function LoginForm(props: React.ComponentProps<"div">) {
   return (
-    <Card {...props}>
+    <Card {...props} className={cn("min-w-xs", props.className)}>
       <CardHeader>
         <CardTitle className="text-xl">Login to your account</CardTitle>
         <CardDescription>

@@ -23,7 +23,7 @@ export function Notifications({
   ...props
 }: React.ComponentProps<"div">) {
   return (
-    <Card className={cn("@container gap-2 pb-0", className)} {...props}>
+    <Card className={cn("gap-2 pb-0", className)} {...props}>
       <CardHeader className="has-data-[slot=card-action]:grid-cols-[1fr_minmax(0,auto)] flex min-w-0 items-center justify-between">
         <CardTitle className="flex items-center gap-2">
           Notifications
@@ -32,12 +32,8 @@ export function Notifications({
           </Badge>
         </CardTitle>
         <CardAction className="min-w-0">
-          <Button
-            size="sm"
-            className="@max-[270px]:size-8 @max-[270px]:px-0 min-w-0 shrink"
-          >
-            <span className="@max-[270px]:hidden">Mark all as read</span>
-            <CheckIcon className="@[270px]:hidden" />
+          <Button size="sm">
+            <span className="truncate">Mark all as read</span>
           </Button>
         </CardAction>
       </CardHeader>

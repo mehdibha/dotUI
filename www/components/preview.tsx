@@ -121,7 +121,7 @@ export function PreviewContent({
   const styleName = segments[3] ?? "";
 
   const [currentBlockName, setCurrentBlockName] =
-    React.useState<string>("login-01");
+    React.useState<string>("login");
   const [isLoading, setLoading] = React.useState(true);
 
   React.useEffect(() => {

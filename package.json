@@ -40,13 +40,11 @@
     "@turbo/gen": "^2.5.1",
     "@vitest/coverage-v8": "^2.0.5",
     "prettier": "catalog:",
+    "puppeteer": "^24.16.0",
     "turbo": "^2.5.1",
     "typescript": "catalog:",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^2.0.5"
   },
-  "prettier": "@dotui/prettier-config",
-  "dependencies": {
-    "puppeteer": "^24.16.0"
-  }
+  "prettier": "@dotui/prettier-config"
 }

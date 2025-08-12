@@ -108,10 +108,6 @@ catalogs:
 importers:
 
   .:
-    dependencies:
-      puppeteer:
-        specifier: ^24.16.0
-        version: 24.16.0(typescript@5.8.3)
     devDependencies:
       '@dotui/prettier-config':
         specifier: workspace:*
@@ -125,6 +121,9 @@ importers:
       prettier:
         specifier: 'catalog:'
         version: 3.6.1
+      puppeteer:
+        specifier: ^24.16.0
+        version: 24.16.0(typescript@5.8.3)
       turbo:
         specifier: ^2.5.1
         version: 2.5.4
