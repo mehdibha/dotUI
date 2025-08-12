@@ -10,7 +10,8 @@ const textStyles = tv({
   variants: {
     slot: {
       label: "font-bold",
-      description: "text-fg-muted",
+      description:
+        "text-fg-muted group-data-[disabled]/list-box-item:text-fg-disabled",
       errorMessage: "text-fg-danger",
     },
   },

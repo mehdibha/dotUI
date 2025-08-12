@@ -3,7 +3,7 @@ import { z } from "zod";
 import type { TRPCRouterRecord } from "@trpc/server";
 
 import { and, eq } from "@dotui/db";
-import { style, user } from "@dotui/db/schemas";
+import { createStyleSchema, style, user } from "@dotui/db/schemas";
 import { styleDefinitionSchema } from "@dotui/style-engine/schemas";
 
 import { protectedProcedure, publicProcedure } from "../trpc";
@@ -115,6 +115,34 @@ export const styleRouter = {
       }
 
       return styleRecord;
+    }),
+  create: protectedProcedure
+    .input(createStyleSchema)
+    .mutation(async ({ ctx, input }) => {
+      // Prevent duplicate style names per user (also enforced by DB unique index)
+      const existing = await ctx.db.query.style.findFirst({
+        where: and(
+          eq(style.userId, ctx.session.user.id),
+          eq(style.name, input.name),
+        ),
+      });
+
+      if (existing) {
+        throw new TRPCError({
+          code: "CONFLICT",
+          message: ` Style ${input.name} already exists, please use a new name.`,
+        });
+      }
+
+      const [created] = await ctx.db
+        .insert(style)
+        .values({
+          ...input,
+          userId: ctx.session.user.id,
+        })
+        .returning();
+
+      return created;
     }),
   update: protectedProcedure
     .input(styleDefinitionSchema.extend({ id: uuidSchema }))

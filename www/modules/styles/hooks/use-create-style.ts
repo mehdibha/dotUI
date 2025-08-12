@@ -11,16 +11,19 @@ import { toast } from "@dotui/ui/components/toast";
 import type { StyleDefinition } from "@dotui/style-engine/types";
 
 import { useTRPCClient } from "@/lib/trpc/react";
+import { authClient } from "@/modules/auth/lib/client";
 
 interface CreateStyleInput {
   name: string;
-  preset: string;
+  description?: string;
+  visibility?: "public" | "unlisted" | "private";
 }
 
 export function useCreateStyle() {
   const trpcClient = useTRPCClient();
   const queryClient = useQueryClient();
   const router = useRouter();
+  const { data: session } = authClient.useSession();
 
   return useMutation({
     mutationFn: async (data: CreateStyleInput) => {
@@ -33,41 +36,35 @@ export function useCreateStyle() {
         variants: DEFAULT_VARIANTS_DEFINITION,
       };
 
-      return {
+      const created = await trpcClient.style.create.mutate({
         ...styleData,
-        id: crypto.randomUUID(),
         name: data.name,
-        slug: data.name.toLowerCase().replace(/[^a-z0-9]/g, "-"),
-        description: `${data.name} style`,
-        userId: "current-user",
-        isFeatured: false,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        visibility: "unlisted" as const,
-      };
+        description: data.description ?? "",
+        visibility: data.visibility ?? "unlisted",
+      } as any);
+
+      return created;
     },
     onSuccess: (data) => {
-      toast.add({
-        title: "Style created successfully",
-        description: `${data.name} has been created.`,
-        variant: "success",
-      });
+      if (!data) return;
+      toast.add(
+        {
+          title: `Style ${data.name} created. Redirecting to style page.`,
+          variant: "info",
+        },
+        {
+          timeout: 5000,
+        },
+      );
 
       // Invalidate queries to refresh the styles list
       queryClient.invalidateQueries({
         queryKey: ["trpc", "style"],
       });
 
-      // Navigate to the created style
-      router.push(`/style/${data.slug}`);
-    },
-    onError: (error) => {
-      toast.add({
-        title: "Failed to create style",
-        description:
-          error.message || "An error occurred while creating the style.",
-        variant: "error",
-      });
+      // Navigate to the created style page
+      const username = session?.user?.username ?? "me";
+      router.push(`/styles/${username}/${data.name}`);
     },
   });
 }

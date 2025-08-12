@@ -5,6 +5,7 @@ import { ExternalLinkIcon, GlobeIcon, LockIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { Alert } from "@dotui/ui/components/alert";
 import { Button } from "@dotui/ui/components/button";
 import {
   Dialog,
@@ -16,7 +17,10 @@ import {
 } from "@dotui/ui/components/dialog";
 import { FormControl } from "@dotui/ui/components/form";
 import { Select, SelectItem } from "@dotui/ui/components/select";
+import { TextArea } from "@dotui/ui/components/text-area";
 import { TextField } from "@dotui/ui/components/text-field";
+import { toast } from "@dotui/ui/components/toast";
+import { cn } from "@dotui/ui/lib/utils";
 
 import { useCreateStyle } from "../hooks/use-create-style";
 
@@ -25,8 +29,8 @@ const createStyleSchema = z.object({
     .string()
     .min(1, "Name is required")
     .min(2, "Name must be at least 2 characters"),
-  preset: z.string().min(1, "Preset is required"),
-  visibility: z.string().min(1, "Visibility is required"),
+  description: z.string().optional(),
+  visibility: z.enum(["public", "unlisted", "private"]),
 });
 
 type CreateStyleFormData = z.infer<typeof createStyleSchema>;
@@ -37,8 +41,8 @@ export function CreateStyleModal({ children }: { children: React.ReactNode }) {
   const form = useForm<CreateStyleFormData>({
     resolver: zodResolver(createStyleSchema),
     defaultValues: {
-      preset: "minimalist",
       name: "",
+      description: "",
       visibility: "unlisted",
     },
   });
@@ -56,20 +60,16 @@ export function CreateStyleModal({ children }: { children: React.ReactNode }) {
             <DialogHeading>Create a new style</DialogHeading>
           </DialogHeader>
           <DialogBody>
-            <FormControl
-              name="preset"
-              control={form.control}
-              render={({ value, onChange, ...props }) => (
-                <Select
-                  label="Style preset"
-                  selectedKey={value}
-                  onSelectionChange={onChange}
-                  {...props}
-                >
-                  <SelectItem id="minimalist">Minimalist</SelectItem>
-                </Select>
-              )}
-            />
+            {createStyleMutation.isError && (
+              <Alert
+                variant="danger"
+                title={
+                  createStyleMutation.error?.message ??
+                  "An error occurred while creating the style."
+                }
+                className="text-xs font-normal"
+              />
+            )}
             <div className="flex items-end gap-2">
               <FormControl
                 name="name"
@@ -103,6 +103,7 @@ export function CreateStyleModal({ children }: { children: React.ReactNode }) {
                         label: "Private",
                         icon: <LockIcon />,
                         description: "Only you can view and access this style.",
+                        disabled: true,
                       },
                       {
                         value: "unlisted",
@@ -116,9 +117,11 @@ export function CreateStyleModal({ children }: { children: React.ReactNode }) {
                         label: "Public",
                         icon: <GlobeIcon />,
                         description: "Anyone can view this style.",
+                        disabled: true,
                       },
                     ]}
                     {...props}
+                    className={cn(form.formState.errors.name && "mb-6")}
                   >
                     {(item) => (
                       <SelectItem
@@ -127,6 +130,7 @@ export function CreateStyleModal({ children }: { children: React.ReactNode }) {
                         label={item.label}
                         textValue={item.value}
                         description={item.description}
+                        isDisabled={item.disabled}
                         className="[&>svg]:text-fg-muted!"
                       />
                     )}
@@ -134,11 +138,22 @@ export function CreateStyleModal({ children }: { children: React.ReactNode }) {
                 )}
               />
             </div>
-            <div className="mt-4 bg-transparent">
-              <p className="text-sm text-fg-muted">
+            <FormControl
+              name="description"
+              control={form.control}
+              render={(props) => (
+                <TextArea
+                  label="Description (optional)"
+                  className="mt-3 w-full"
+                  {...props}
+                />
+              )}
+            />
+            {/* <div className="mt-4 bg-transparent">
+              <p className="text-fg-muted text-sm">
                 You can install it later with this command:
               </p>
-              <pre className="mt-1 rounded-md border bg-bg-neutral p-4 text-xs">
+              <pre className="bg-bg-neutral mt-1 rounded-md border p-4 text-xs">
                 <code className="truncate max-sm:flex max-sm:max-w-[60vw]">
                   <span className="text-[#F69D50]">npx</span> shadcn@latest init
                   @dotui/
@@ -155,16 +170,16 @@ export function CreateStyleModal({ children }: { children: React.ReactNode }) {
                   /base
                 </code>
               </pre>
-            </div>
+            </div> */}
           </DialogBody>
           <DialogFooter>
             <Button slot="close">Cancel</Button>
             <Button
               variant="primary"
               type="submit"
-              isDisabled={createStyleMutation.isPending}
+              isPending={createStyleMutation.isPending}
             >
-              {createStyleMutation.isPending ? "Creating..." : "Create"}
+              Create
             </Button>
           </DialogFooter>
         </form>
