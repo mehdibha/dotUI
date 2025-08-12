@@ -209,7 +209,6 @@ export function StyleEditorForm({ children }: { children: React.ReactNode }) {
           { keepDirty: false },
         );
       }
-      console.log("✅ Style updated successfully");
     },
     onSettled: () => {
       queryClient.invalidateQueries({
