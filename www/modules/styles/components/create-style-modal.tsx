@@ -20,6 +20,7 @@ import { Select, SelectItem } from "@dotui/ui/components/select";
 import { TextArea } from "@dotui/ui/components/text-area";
 import { TextField } from "@dotui/ui/components/text-field";
 import { toast } from "@dotui/ui/components/toast";
+import { cn } from "@dotui/ui/lib/utils";
 
 import { useCreateStyle } from "../hooks/use-create-style";
 
@@ -120,6 +121,7 @@ export function CreateStyleModal({ children }: { children: React.ReactNode }) {
                       },
                     ]}
                     {...props}
+                    className={cn(form.formState.errors.name && "mb-6")}
                   >
                     {(item) => (
                       <SelectItem
