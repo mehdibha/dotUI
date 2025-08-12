@@ -28,7 +28,7 @@ export default function BlocksLayout({
           <ActiveStyleSelector buttonProps={{ className: "px-4" }} />
         </PageActions>
       </PageHeader>
-      <BlocksNav className="mt-8">{children}</BlocksNav>
+      <BlocksNav className="mt-6">{children}</BlocksNav>
     </PageLayout>
   );
 }

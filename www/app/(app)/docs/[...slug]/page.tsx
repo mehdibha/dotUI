@@ -3,12 +3,12 @@ import { ExternalLinkIcon } from "lucide-react";
 import type { Metadata } from "next";
 
 import { Button } from "@dotui/ui/components/button";
+import { AdobeIcon, GitHubIcon } from "@dotui/ui/icons";
 import { cn } from "@dotui/ui/lib/utils";
 
-import { AdobeIcon, GitHubIcon } from "@/components/icons";
 import { siteConfig } from "@/config";
 import { truncateOnWord } from "@/lib/string";
-import { Breadcrumbs } from "@/modules/docs/components/breadcrumbs";
+// import { Breadcrumbs } from "@/modules/docs/components/breadcrumbs";
 import { DocsPager } from "@/modules/docs/components/docs-pager";
 import { PageLastUpdate } from "@/modules/docs/components/last-update";
 import { mdxComponents } from "@/modules/docs/components/mdx-components";
@@ -63,7 +63,7 @@ export default async function Page({
           <MDXContent components={mdxComponents} />
         </div>
         <div className="mt-20 space-y-4">
-          {/* <PageLastUpdate path={page.path} /> */}
+          <PageLastUpdate path={page.path} />
           <DocsPager currentPathname={page.url} />
         </div>
       </div>

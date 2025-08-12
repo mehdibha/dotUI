@@ -26,10 +26,10 @@ export function StylesList({
 
   return (
     <div className={cn("", props.className)}>
-      <div className="flex items-center justify-between gap-4">
+      {/* <div className="flex items-center justify-end gap-4">
         <SearchField
           placeholder="Search styles..."
-          className="max-w-md flex-1"
+          className="flex-1"
         />
         <ToggleButtonGroup
           selectedKeys={[view]}
@@ -44,10 +44,10 @@ export function StylesList({
             <ListIcon />
           </ToggleButton>
         </ToggleButtonGroup>
-      </div>
+      </div> */}
       <div
         className={cn(
-          "mt-8 grid",
+          "grid",
           view === "grid" && "grid-cols-1 gap-4 lg:grid-cols-2",
           view === "list" && "grid-cols-1 gap-8",
           props.className,

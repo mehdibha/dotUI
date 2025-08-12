@@ -21,15 +21,18 @@ export default function StylesLayout({
       <PageHeader>
         <PageHeaderHeading>Find your style or make your own.</PageHeaderHeading>
         <PageHeaderDescription>
-          Choose a style to get started or create your own.
+          Try our hand-picked styles or create yours from scratch.
         </PageHeaderDescription>
         <PageActions>
           <CreateStyleModal>
             <Button variant="primary">Create your style</Button>
           </CreateStyleModal>
+          <Button variant="default" href="/docs/styles">
+            Documentation
+          </Button>
         </PageActions>
       </PageHeader>
-      <StylesPageNav className="mt-10">{children}</StylesPageNav>
+      <StylesPageNav className="mt-8">{children}</StylesPageNav>
     </PageLayout>
   );
 }

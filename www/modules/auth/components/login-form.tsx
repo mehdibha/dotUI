@@ -3,8 +3,8 @@
 import React from "react";
 
 import { Button } from "@dotui/ui/components/button";
+import { GitHubIcon } from "@dotui/ui/icons";
 
-import { GitHubIcon } from "@/components/icons";
 import { Link } from "@/components/link";
 import { authClient } from "@/modules/auth/lib/client";
 

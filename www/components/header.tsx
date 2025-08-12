@@ -7,13 +7,13 @@ import type { PageTree } from "fumadocs-core/server";
 import { Button } from "@dotui/ui/components/button";
 import { Kbd } from "@dotui/ui/components/kbd";
 import { useIsMobile } from "@dotui/ui/hooks/use-is-mobile";
+import { GitHubIcon } from "@dotui/ui/icons";
 import { cn } from "@dotui/ui/lib/utils";
 
 import { siteConfig } from "@/config";
 import { useMounted } from "@/hooks/use-mounted";
 import { UserProfileMenu } from "@/modules/auth/components/user-profile-menu";
 import { authClient } from "@/modules/auth/lib/client";
-import { GitHubIcon } from "./icons";
 import { Logo } from "./logo";
 import { MobileNav } from "./mobile-nav";
 import { SearchCommand } from "./search-command";

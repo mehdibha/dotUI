@@ -15,28 +15,26 @@ import {
   createScopedContext,
 } from "@dotui/ui/lib/utils";
 
-// TODO: Fix group naming (its causing conflicts with other components)
-
 const checkboxStyles = tv({
   slots: {
-    root: "invalid:text-fg-danger disabled:text-fg-disabled group flex cursor-pointer flex-row items-center gap-2 disabled:cursor-default",
+    root: "invalid:text-fg-danger disabled:text-fg-disabled group/checkbox flex cursor-pointer flex-row items-center gap-2 disabled:cursor-default",
     indicator: [
       "border-border-control flex size-4 shrink-0 cursor-pointer items-center justify-center rounded-sm border",
-      "group-selected:border-transparent bg-transparent text-transparent transition-colors duration-75 group-indeterminate:border-transparent",
-      "group-read-only:cursor-default",
-      "group-disabled:border-border-disabled group-indeterminate:group-disabled:bg-bg-disabled group-selected:group-disabled:bg-bg-disabled group-selected:group-disabled:text-fg-disabled group-disabled:cursor-default",
-      "group-invalid:group-selected:text-fg-onMutedDanger group-invalid:border-border-danger group-invalid:group-selected:bg-bg-danger-muted",
+      "group-selected/checkbox:border-transparent bg-transparent text-transparent transition-colors duration-75 group-indeterminate/checkbox:border-transparent",
+      "group-read-only/checkbox:cursor-default",
+      "group-disabled/checkbox:border-border-disabled group-indeterminate/checkbox:group-disabled/checkbox:bg-bg-disabled group-selected/checkbox:group-disabled/checkbox:bg-bg-disabled group-selected/checkbox:group-disabled/checkbox:text-fg-disabled group-disabled/checkbox:cursor-default",
+      "group-invalid/checkbox:group-selected/checkbox:text-fg-onMutedDanger group-invalid/checkbox:border-border-danger group-invalid/checkbox:group-selected/checkbox:bg-bg-danger-muted",
     ],
   },
   variants: {
     variant: {
       primary: {
         indicator:
-          "group-indeterminate:bg-bg-primary group-indeterminate:text-fg-on-primary group-selected:bg-bg-primary group-selected:text-fg-on-primary",
+          "group-indeterminate/checkbox:bg-bg-primary group-indeterminate/checkbox:text-fg-on-primary group-selected/checkbox:bg-bg-primary group-selected/checkbox:text-fg-on-primary",
       },
       accent: {
         indicator:
-          "group-indeterminate:bg-bg-Accent group-indeterminate:text-fg-on-accent group-selected:bg-bg-accent group-selected:text-fg-on-accent",
+          "group-indeterminate/checkbox:bg-bg-Accent group-indeterminate/checkbox:text-fg-on-accent group-selected/checkbox:bg-bg-accent group-selected/checkbox:text-fg-on-accent",
       },
     },
     appearance: {

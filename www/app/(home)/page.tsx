@@ -2,16 +2,16 @@ import { Alert } from "@dotui/ui/components/alert";
 import { Avatar } from "@dotui/ui/components/avatar";
 import { Button } from "@dotui/ui/components/button";
 import { Tooltip } from "@dotui/ui/components/tooltip";
-
-import { Announcement } from "@/components/announcement";
 import {
   AdobeIcon,
   GitHubIcon,
   ReactJsIcon,
   ShadcnIcon,
-  TailwindIcon,
+  TailwindExtendedIcon,
   TypescriptIcon,
-} from "@/components/icons";
+} from "@dotui/ui/icons";
+
+import { Announcement } from "@/components/announcement";
 import { Link } from "@/components/link";
 import { StylesShowcase } from "@/components/styles-showcase";
 import { siteConfig } from "@/config";
@@ -80,7 +80,7 @@ export default async function HomePage() {
               },
               {
                 label: "react-aria-components",
-                icon: <AdobeIcon className="size-7 sm:size-9" fill="#E1251B" />,
+                icon: <AdobeIcon className="size-7 sm:size-9" />,
                 href: "https://react-spectrum.adobe.com/react-aria/index.html",
               },
               {
@@ -90,7 +90,7 @@ export default async function HomePage() {
               },
               {
                 label: "Tailwind CSS v4",
-                icon: <TailwindIcon className="h-5 sm:h-7" />,
+                icon: <TailwindExtendedIcon className="h-5 sm:h-7" />,
                 href: "https://tailwindcss.com",
               },
             ].map(({ icon, label, href }, index) => (

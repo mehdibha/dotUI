@@ -25,11 +25,11 @@ import { Avatar } from "@dotui/ui/components/avatar";
 import { Button } from "@dotui/ui/components/button";
 import { Kbd } from "@dotui/ui/components/kbd";
 import { Tooltip } from "@dotui/ui/components/tooltip";
+import { GitHubIcon } from "@dotui/ui/icons";
 import { cn } from "@dotui/ui/lib/utils";
 import type { ButtonProps } from "@dotui/ui/components/button";
 import type { TooltipProps } from "@dotui/ui/components/tooltip";
 
-import { GitHubIcon, TwitterIcon } from "@/components/icons";
 import { ScrollArea } from "@/components/scroll-area";
 import { siteConfig } from "@/config";
 import { useDebounce } from "@/hooks/use-debounce";

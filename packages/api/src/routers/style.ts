@@ -46,6 +46,7 @@ export const styleRouter = {
           user: {
             columns: {
               username: true,
+              image: true,
             },
           },
         },

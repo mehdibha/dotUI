@@ -5,7 +5,7 @@ export function PageLayout({
   ...props
 }: React.ComponentProps<"div">) {
   return (
-    <div className={cn("pt-4 pb-14 md:pt-10 lg:pt-16", className)} {...props} />
+    <div className={cn("pt-4 pb-14 md:pt-10 lg:pt-14", className)} {...props} />
   );
 }
 
