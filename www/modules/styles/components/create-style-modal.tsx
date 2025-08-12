@@ -21,6 +21,7 @@ import { TextArea } from "@dotui/ui/components/text-area";
 import { TextField } from "@dotui/ui/components/text-field";
 import { toast } from "@dotui/ui/components/toast";
 import { cn } from "@dotui/ui/lib/utils";
+import type { StyleDefinition } from "@dotui/style-engine/types";
 
 import { useCreateStyle } from "../hooks/use-create-style";
 
@@ -35,7 +36,13 @@ const createStyleSchema = z.object({
 
 type CreateStyleFormData = z.infer<typeof createStyleSchema>;
 
-export function CreateStyleModal({ children }: { children: React.ReactNode }) {
+export function CreateStyleModal({
+  children,
+  initialStyle,
+}: {
+  children: React.ReactNode;
+  initialStyle?: Partial<StyleDefinition>;
+}) {
   const createStyleMutation = useCreateStyle();
 
   const form = useForm<CreateStyleFormData>({
@@ -47,142 +54,159 @@ export function CreateStyleModal({ children }: { children: React.ReactNode }) {
     },
   });
 
-  const onSubmit = (data: CreateStyleFormData) => {
-    createStyleMutation.mutate(data);
+  const onSubmit = (data: CreateStyleFormData, close: () => void) => {
+    createStyleMutation.mutate(
+      {
+        ...data,
+        styleOverrides: initialStyle,
+      },
+      {
+        onSuccess: () => {
+          close();
+        },
+      },
+    );
   };
 
   return (
     <DialogRoot>
       {children}
       <Dialog modalProps={{ className: "max-w-lg" }}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <DialogHeader>
-            <DialogHeading>Create a new style</DialogHeading>
-          </DialogHeader>
-          <DialogBody>
-            {createStyleMutation.isError && (
-              <Alert
-                variant="danger"
-                title={
-                  createStyleMutation.error?.message ??
-                  "An error occurred while creating the style."
-                }
-                className="text-xs font-normal"
-              />
-            )}
-            <div className="flex items-end gap-2">
+        {({ close }) => (
+          <form
+            onSubmit={form.handleSubmit((data) => {
+              onSubmit(data, close);
+            })}
+          >
+            <DialogHeader>
+              <DialogHeading>Create a new style</DialogHeading>
+            </DialogHeader>
+            <DialogBody>
+              {createStyleMutation.isError && (
+                <Alert
+                  variant="danger"
+                  title={
+                    createStyleMutation.error?.message ??
+                    "An error occurred while creating the style."
+                  }
+                  className="text-xs font-normal"
+                />
+              )}
+              <div className="flex items-end gap-2">
+                <FormControl
+                  name="name"
+                  control={form.control}
+                  render={(props) => (
+                    <TextField
+                      label="Name"
+                      autoFocus
+                      className="w-full"
+                      {...props}
+                    />
+                  )}
+                />
+                <FormControl
+                  name="visibility"
+                  control={form.control}
+                  render={({ value, onChange, ...props }) => (
+                    <Select
+                      aria-label="Visibility"
+                      selectedKey={value}
+                      onSelectionChange={onChange}
+                      renderValue={({ selectedItem }) => (
+                        <div className="flex items-center gap-2 [&>svg]:text-fg-muted">
+                          {selectedItem?.icon}
+                          {selectedItem?.label}
+                        </div>
+                      )}
+                      items={[
+                        {
+                          value: "private",
+                          label: "Private",
+                          icon: <LockIcon />,
+                          description:
+                            "Only you can view and access this style.",
+                          disabled: true,
+                        },
+                        {
+                          value: "unlisted",
+                          label: "Unlisted",
+                          icon: <ExternalLinkIcon />,
+                          description:
+                            "Anyone with the link can access this style.",
+                        },
+                        {
+                          value: "public",
+                          label: "Public",
+                          icon: <GlobeIcon />,
+                          description: "Anyone can view this style.",
+                          disabled: true,
+                        },
+                      ]}
+                      {...props}
+                      className={cn(form.formState.errors.name && "mb-6")}
+                    >
+                      {(item) => (
+                        <SelectItem
+                          id={item.value}
+                          prefix={item.icon}
+                          label={item.label}
+                          textValue={item.value}
+                          description={item.description}
+                          isDisabled={item.disabled}
+                          className="[&>svg]:text-fg-muted!"
+                        />
+                      )}
+                    </Select>
+                  )}
+                />
+              </div>
               <FormControl
-                name="name"
+                name="description"
                 control={form.control}
                 render={(props) => (
-                  <TextField
-                    label="Name"
-                    autoFocus
-                    className="w-full"
+                  <TextArea
+                    label="Description (optional)"
+                    className="mt-3 w-full"
                     {...props}
                   />
                 )}
               />
-              <FormControl
-                name="visibility"
-                control={form.control}
-                render={({ value, onChange, ...props }) => (
-                  <Select
-                    aria-label="Visibility"
-                    selectedKey={value}
-                    onSelectionChange={onChange}
-                    renderValue={({ selectedItem }) => (
-                      <div className="flex items-center gap-2 [&>svg]:text-fg-muted">
-                        {selectedItem?.icon}
-                        {selectedItem?.label}
-                      </div>
-                    )}
-                    items={[
-                      {
-                        value: "private",
-                        label: "Private",
-                        icon: <LockIcon />,
-                        description: "Only you can view and access this style.",
-                        disabled: true,
-                      },
-                      {
-                        value: "unlisted",
-                        label: "Unlisted",
-                        icon: <ExternalLinkIcon />,
-                        description:
-                          "Anyone with the link can access this style.",
-                      },
-                      {
-                        value: "public",
-                        label: "Public",
-                        icon: <GlobeIcon />,
-                        description: "Anyone can view this style.",
-                        disabled: true,
-                      },
-                    ]}
-                    {...props}
-                    className={cn(form.formState.errors.name && "mb-6")}
-                  >
-                    {(item) => (
-                      <SelectItem
-                        id={item.value}
-                        prefix={item.icon}
-                        label={item.label}
-                        textValue={item.value}
-                        description={item.description}
-                        isDisabled={item.disabled}
-                        className="[&>svg]:text-fg-muted!"
-                      />
-                    )}
-                  </Select>
-                )}
-              />
-            </div>
-            <FormControl
-              name="description"
-              control={form.control}
-              render={(props) => (
-                <TextArea
-                  label="Description (optional)"
-                  className="mt-3 w-full"
-                  {...props}
-                />
-              )}
-            />
-            {/* <div className="mt-4 bg-transparent">
+              {/* <div className="mt-4 bg-transparent">
               <p className="text-fg-muted text-sm">
-                You can install it later with this command:
+              You can install it later with this command:
               </p>
               <pre className="bg-bg-neutral mt-1 rounded-md border p-4 text-xs">
-                <code className="truncate max-sm:flex max-sm:max-w-[60vw]">
-                  <span className="text-[#F69D50]">npx</span> shadcn@latest init
-                  @dotui/
-                  <span className="text-[#F69D50]">
-                    {form.watch("name")
-                      ? form
-                          .watch("name")
-                          .toLowerCase()
-                          .replace(/[^a-z0-9]/g, "-")
-                          .replace(/-+/g, "-")
-                          .replace(/^-|-$/g, "") || "your-style"
-                      : "{style-name}"}
-                  </span>
-                  /base
-                </code>
+              <code className="truncate max-sm:flex max-sm:max-w-[60vw]">
+              <span className="text-[#F69D50]">npx</span> shadcn@latest init
+              @dotui/
+              <span className="text-[#F69D50]">
+              {form.watch("name")
+              ? form
+              .watch("name")
+              .toLowerCase()
+              .replace(/[^a-z0-9]/g, "-")
+              .replace(/-+/g, "-")
+              .replace(/^-|-$/g, "") || "your-style"
+              : "{style-name}"}
+              </span>
+              /base
+              </code>
               </pre>
-            </div> */}
-          </DialogBody>
-          <DialogFooter>
-            <Button slot="close">Cancel</Button>
-            <Button
-              variant="primary"
-              type="submit"
-              isPending={createStyleMutation.isPending}
-            >
-              Create
-            </Button>
-          </DialogFooter>
-        </form>
+              </div> */}
+            </DialogBody>
+            <DialogFooter>
+              <Button slot="close">Cancel</Button>
+              <Button
+                variant="primary"
+                type="submit"
+                isPending={createStyleMutation.isPending}
+              >
+                Create
+              </Button>
+            </DialogFooter>
+          </form>
+        )}
       </Dialog>
     </DialogRoot>
   );

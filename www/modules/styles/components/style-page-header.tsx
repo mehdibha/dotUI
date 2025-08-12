@@ -29,7 +29,7 @@ import { useMounted } from "@/hooks/use-mounted";
 import { SignInModal } from "@/modules/auth/components/sign-in-modal";
 import { authClient } from "@/modules/auth/lib/client";
 import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
-import { PublishStyleModal } from "./publish-style-modal";
+import { CreateStyleModal } from "./create-style-modal";
 import { StylePageCodeModal } from "./style-page-code-modal";
 
 export function StylePageHeader() {
@@ -37,7 +37,7 @@ export function StylePageHeader() {
     <div className="container max-w-4xl">
       <Link
         href="/styles"
-        className="text-fg-muted hover:text-fg flex items-center gap-1 text-sm"
+        className="flex items-center gap-1 text-sm text-fg-muted hover:text-fg"
       >
         <ArrowLeftIcon className="size-4" /> styles
       </Link>
@@ -119,7 +119,7 @@ function StylePageHeaderName() {
           aria-label="Style name"
           inputRef={inputRef}
           autoFocus
-          className="text-2xl font-bold leading-none"
+          className="text-2xl leading-none font-bold"
           value={localValue}
           onChange={setLocalValue}
         />
@@ -154,13 +154,13 @@ function StylePageHeaderName() {
         control={form.control}
         render={(props) => (
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold leading-none">{props.value}</h1>
+            <h1 className="text-2xl leading-none font-bold">{props.value}</h1>
             <Button
               aria-label="Edit"
               size="sm"
               variant="quiet"
               shape="square"
-              className="text-fg-muted size-7 [&_svg]:size-3.5"
+              className="size-7 text-fg-muted [&_svg]:size-3.5"
               onPress={() => handleEditStart()}
             >
               <PencilIcon />
@@ -214,7 +214,7 @@ function StylePageHeaderActions() {
         </Button>
       </Tooltip>
       {isUserAuthenticated ? (
-        isUserStyle ? (
+        false ? (
           <Button
             type="submit"
             variant="primary"
@@ -226,17 +226,23 @@ function StylePageHeaderActions() {
             Save
           </Button>
         ) : (
-          <PublishStyleModal>
+          <CreateStyleModal
+            initialStyle={{
+              theme: form.getValues("theme"),
+              icons: form.getValues("icons"),
+              variants: form.getValues("variants"),
+            }}
+          >
             <Button
               size="sm"
               variant="primary"
               isDisabled={!form.formState.isDirty}
-              className="border-bg-primary hover:border-bg-primary-hover border"
+              className="border border-bg-primary hover:border-bg-primary-hover"
               prefix={<RocketIcon />}
             >
               Publish
             </Button>
-          </PublishStyleModal>
+          </CreateStyleModal>
         )
       ) : (
         <SignInModal>

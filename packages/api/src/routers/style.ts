@@ -208,7 +208,7 @@ export const styleRouter = {
         .update(style)
         .set({
           ...input,
-          updatedAt: new Date()
+          updatedAt: new Date(),
         })
         .where(eq(style.id, input.id));
     }),
