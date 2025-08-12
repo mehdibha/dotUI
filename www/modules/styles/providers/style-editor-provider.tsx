@@ -35,6 +35,7 @@ export type StyleFormData = z.infer<typeof formSchema>;
 
 interface StyleFormContextType {
   form: UseFormReturn<StyleFormData>;
+  styleId: string;
   resolvedMode: "light" | "dark";
   generatedTheme: ContrastColor[];
   isLoading: boolean;
@@ -124,6 +125,7 @@ export function StyleEditorProvider({
     <StyleFormContext.Provider
       value={{
         form,
+        styleId: style?.id ?? "",
         resolvedMode,
         generatedTheme,
         isLoading,
@@ -137,56 +139,10 @@ export function StyleEditorProvider({
 }
 
 export function StyleEditorForm({ children }: { children: React.ReactNode }) {
-  const { form } = useStyleForm();
+  const { form, styleId } = useStyleForm();
   const trpc = useTRPC();
   const trpcClient = useTRPCClient();
   const queryClient = useQueryClient();
-
-  // const updateStyleMutation = useMutation({
-  //   mutationFn: async (data: StyleFormData) => {
-  //     return await trpcClient.style.update.mutate({
-  //       ...data,
-  //       slug,
-  //     });
-  //   },
-  //   onMutate: async (variables) => {
-  //     await queryClient.cancelQueries({
-  //       queryKey: trpc.style.bySlug.queryKey({ slug }),
-  //     });
-
-  //     const previousStyle = queryClient.getQueryData(
-  //       trpc.style.bySlug.queryKey({ slug }),
-  //     );
-
-  //     queryClient.setQueryData(trpc.style.bySlug.queryKey({ slug }), {
-  //       ...variables,
-  //       slug,
-  //     });
-
-  //     return { previousStyle };
-  //   },
-  //   onError: (error: any, variables, context) => {
-  //     if (context?.previousStyle) {
-  //       queryClient.setQueryData(
-  //         trpc.style.bySlug.queryKey({ slug }),
-  //         context.previousStyle,
-  //       );
-  //     }
-  //     console.error("Failed to update style:", {
-  //       error: error.message || error,
-  //       data: variables,
-  //       slug,
-  //     });
-  //   },
-  //   onSuccess: () => {
-  //     console.log("✅ Style updated successfully:");
-  //   },
-  //   onSettled: () => {
-  //     queryClient.invalidateQueries({
-  //       queryKey: trpc.style.bySlug.queryKey({ slug }),
-  //     });
-  //   },
-  // });
 
   const pathname = usePathname();
   const segments = pathname.split("/");
@@ -195,9 +151,9 @@ export function StyleEditorForm({ children }: { children: React.ReactNode }) {
 
   const updateStyleMutation = useMutation({
     mutationFn: async (data: StyleFormData) => {
-      if (!data.id) throw new Error("Missing style id");
+      if (!styleId) throw new Error("Missing style id");
       return await trpcClient.style.update.mutate({
-        id: data.id,
+        id: styleId,
         theme: data.theme,
         icons: data.icons,
         variants: data.variants,
