@@ -1,9 +1,5 @@
-import { caller } from "@/lib/trpc/server";
-import { StylesList } from "@/modules/styles/components/styles-list";
+import { CommunityStyles } from "@/modules/styles/components/community-styles";
 
-export const dynamic = "force-static";
-
-export default async function CommunityStylesPage() {
-  const styles = await caller.style.getPublicRecent({});
-  return <StylesList styles={styles} />;
+export default function CommunityStylesPage() {
+  return <CommunityStyles />;
 }

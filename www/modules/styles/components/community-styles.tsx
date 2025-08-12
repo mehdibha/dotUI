@@ -1,29 +1,21 @@
 "use client";
 
-import { redirect } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 
 import { useMounted } from "@/hooks/use-mounted";
 import { useTRPC } from "@/lib/trpc/react";
-import { authClient } from "@/modules/auth/lib/client";
 import { StylesList } from "@/modules/styles/components/styles-list";
 
-export function MyStyles() {
+export function CommunityStyles() {
   const trpc = useTRPC();
   const isMounted = useMounted();
-  const { data: session, isPending } = authClient.useSession();
 
   const { data: styles, isLoading } = useQuery({
-    ...trpc.style.getMyStyles.queryOptions({}),
-    enabled: !!session?.user,
+    ...trpc.style.getPublicRecent.queryOptions({}),
     retry: false,
   });
 
-  if (isMounted && !isPending && !session?.user) {
-    redirect("/login");
-  }
-
-  if (!isMounted || isPending) {
+  if (!isMounted) {
     return <StylesList skeleton />;
   }
 

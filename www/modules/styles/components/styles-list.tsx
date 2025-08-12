@@ -15,31 +15,47 @@ import { StyleCard } from "./style-card";
 export function StylesList({
   styles,
   skeleton = false,
+  search = false,
   ...props
 }: React.ComponentProps<"div"> & {
   styles?: RouterOutputs["style"]["getFeatured"];
   skeleton?: boolean;
+  search?: boolean;
 }) {
-  const [variant, setVariant] = React.useState<"ui-kit" | "card">("ui-kit");
+  const [variant, setVariant] = React.useState<"ui-kit" | "card">("card");
   const [query, setQuery] = React.useState("");
 
   if (skeleton) {
     const placeholders = Array.from({ length: variant === "card" ? 4 : 2 });
     return (
-      <div
-        className={cn(
-          "grid",
-          variant === "card" && "grid-cols-2 gap-4",
-          variant === "ui-kit" && "grid-cols-1 gap-8",
-          props.className,
-        )}
-      >
-        {placeholders.map((_, idx) => (
-          <Skeleton
-            key={idx}
-            className={cn(variant === "card" ? "h-40" : "h-52")}
-          />
-        ))}
+      <div className={cn("space-y-4", props.className)}>
+        <div className="flex items-center justify-end gap-4">
+          {search && <Skeleton className="h-10 flex-1" />}
+          <Skeleton className="h-10 w-20" />
+        </div>
+        <div
+          className={cn(
+            "grid",
+            variant === "card" && "grid-cols-2 gap-4",
+            variant === "ui-kit" && "grid-cols-1 gap-8",
+            props.className,
+          )}
+        >
+          {placeholders.map((_, index) => (
+            <div key={index} className="space-y-4">
+              <div className="flex items-center gap-2">
+                <Skeleton className="size-6" />
+                <Skeleton className="h-10 w-24" />
+              </div>
+              <div className="flex items-center gap-2">
+                {Array.from({ length: 2 }).map((_, idx) => (
+                  <Skeleton key={idx} className="h-6 w-32 rounded-full" />
+                ))}
+              </div>
+              <Skeleton className={cn(variant === "card" ? "h-72" : "h-120")} />
+            </div>
+          ))}
+        </div>
       </div>
     );
   }
@@ -61,16 +77,20 @@ export function StylesList({
   return (
     <div className={cn("", props.className)}>
       <div className="flex items-center justify-end gap-4">
-        <SearchField
-          placeholder="Search styles..."
-          className="flex-1"
-          onChange={(value) => setQuery(value?.toString() ?? "")}
-          value={query}
-        />
+        {search && (
+          <SearchField
+            placeholder="Search styles..."
+            className="flex-1"
+            onChange={(value) => setQuery(value?.toString() ?? "")}
+            value={query}
+          />
+        )}
         <ToggleButtonGroup
+          selectionMode="single"
           selectedKeys={[variant]}
+          disallowEmptySelection
           onSelectionChange={(value) =>
-            setVariant(([...value][0] as "ui-kit" | "card") ?? "ui-kit")
+            setVariant([...value][0] as "ui-kit" | "card")
           }
         >
           <ToggleButton id="card" variant="primary">
@@ -84,7 +104,7 @@ export function StylesList({
       <div
         className={cn(
           "mt-6 grid",
-          variant === "card" && "grid-cols-1 gap-4 md:grid-cols-2",
+          variant === "card" && "grid-cols-1 gap-6 md:grid-cols-2",
           variant === "ui-kit" && "grid-cols-1 gap-8",
           props.className,
         )}
