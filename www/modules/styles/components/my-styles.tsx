@@ -1,6 +1,6 @@
 "use client";
 
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 
 import { useMounted } from "@/hooks/use-mounted";
@@ -9,6 +9,7 @@ import { authClient } from "@/modules/auth/lib/client";
 import { StylesList } from "@/modules/styles/components/styles-list";
 
 export function MyStyles() {
+  const router = useRouter();
   const trpc = useTRPC();
   const isMounted = useMounted();
   const { data: session, isPending } = authClient.useSession();
@@ -20,7 +21,7 @@ export function MyStyles() {
   });
 
   if (isMounted && !isPending && !session?.user) {
-    redirect("/login");
+    router.push("/login");
   }
 
   return (
