@@ -5,6 +5,7 @@ import { ExternalLinkIcon, GlobeIcon, LockIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { Alert } from "@dotui/ui/components/alert";
 import { Button } from "@dotui/ui/components/button";
 import {
   Dialog,
@@ -16,11 +17,11 @@ import {
 } from "@dotui/ui/components/dialog";
 import { FormControl } from "@dotui/ui/components/form";
 import { Select, SelectItem } from "@dotui/ui/components/select";
-import { TextField } from "@dotui/ui/components/text-field";
 import { TextArea } from "@dotui/ui/components/text-area";
-import { Alert } from "@dotui/ui/components/alert";
+import { TextField } from "@dotui/ui/components/text-field";
 
 import { useCreateStyle } from "../hooks/use-create-style";
+import { toast } from "@dotui/ui/components/toast";
 
 const createStyleSchema = z.object({
   name: z
@@ -86,7 +87,7 @@ export function CreateStyleModal({ children }: { children: React.ReactNode }) {
                     selectedKey={value}
                     onSelectionChange={onChange}
                     renderValue={({ selectedItem }) => (
-                      <div className="flex items-center gap-2 [&>svg]:text-fg-muted">
+                      <div className="[&>svg]:text-fg-muted flex items-center gap-2">
                         {selectedItem?.icon}
                         {selectedItem?.label}
                       </div>
@@ -97,6 +98,7 @@ export function CreateStyleModal({ children }: { children: React.ReactNode }) {
                         label: "Private",
                         icon: <LockIcon />,
                         description: "Only you can view and access this style.",
+                        disabled: true,
                       },
                       {
                         value: "unlisted",
@@ -110,6 +112,7 @@ export function CreateStyleModal({ children }: { children: React.ReactNode }) {
                         label: "Public",
                         icon: <GlobeIcon />,
                         description: "Anyone can view this style.",
+                        disabled: true,
                       },
                     ]}
                     {...props}
@@ -121,6 +124,7 @@ export function CreateStyleModal({ children }: { children: React.ReactNode }) {
                         label={item.label}
                         textValue={item.value}
                         description={item.description}
+                        isDisabled={item.disabled}
                         className="[&>svg]:text-fg-muted!"
                       />
                     )}
@@ -132,14 +136,18 @@ export function CreateStyleModal({ children }: { children: React.ReactNode }) {
               name="description"
               control={form.control}
               render={(props) => (
-                <TextArea label="Description" className="mt-3 w-full" {...props} />
+                <TextArea
+                  label="Description (optional)"
+                  className="mt-3 w-full"
+                  {...props}
+                />
               )}
             />
-            <div className="mt-4 bg-transparent">
-              <p className="text-sm text-fg-muted">
+            {/* <div className="mt-4 bg-transparent">
+              <p className="text-fg-muted text-sm">
                 You can install it later with this command:
               </p>
-              <pre className="mt-1 rounded-md border bg-bg-neutral p-4 text-xs">
+              <pre className="bg-bg-neutral mt-1 rounded-md border p-4 text-xs">
                 <code className="truncate max-sm:flex max-sm:max-w-[60vw]">
                   <span className="text-[#F69D50]">npx</span> shadcn@latest init
                   @dotui/
@@ -156,16 +164,16 @@ export function CreateStyleModal({ children }: { children: React.ReactNode }) {
                   /base
                 </code>
               </pre>
-            </div>
+            </div> */}
           </DialogBody>
           <DialogFooter>
             <Button slot="close">Cancel</Button>
             <Button
               variant="primary"
               type="submit"
-              isDisabled={createStyleMutation.isPending}
+              isPending={createStyleMutation.isPending}
             >
-              {createStyleMutation.isPending ? "Creating..." : "Create"}
+              Create
             </Button>
           </DialogFooter>
         </form>

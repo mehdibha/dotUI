@@ -36,7 +36,6 @@ export function useCreateStyle() {
         variants: DEFAULT_VARIANTS_DEFINITION,
       };
 
-      // Call API to create the style
       const created = await trpcClient.style.create.mutate({
         ...styleData,
         name: data.name,
@@ -48,11 +47,15 @@ export function useCreateStyle() {
     },
     onSuccess: (data) => {
       if (!data) return;
-      toast.add({
-        title: "Style created successfully",
-        description: `${data.name} has been created.`,
-        variant: "success",
-      });
+      toast.add(
+        {
+          title: `Style ${data.name} created. Redirecting to style page.`,
+          variant: "info",
+        },
+        {
+          timeout: 5000,
+        },
+      );
 
       // Invalidate queries to refresh the styles list
       queryClient.invalidateQueries({
@@ -62,10 +65,6 @@ export function useCreateStyle() {
       // Navigate to the created style page
       const username = session?.user?.username ?? "me";
       router.push(`/styles/${username}/${data.name}`);
-    },
-    onError: (error) => {
-      // Do not show a toast on error; the UI will render an inline alert
-      console.error("Failed to create style", error);
     },
   });
 }
