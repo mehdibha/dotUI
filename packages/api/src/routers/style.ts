@@ -204,13 +204,14 @@ export const styleRouter = {
         });
       }
 
-      await ctx.db
+      return await ctx.db
         .update(style)
         .set({
           ...input,
           updatedAt: new Date(),
         })
-        .where(eq(style.id, input.id));
+        .where(eq(style.id, input.id))
+        .returning();
     }),
   // delete: protectedProcedure
   //   .input(z.object({ id: uuidSchema }))
