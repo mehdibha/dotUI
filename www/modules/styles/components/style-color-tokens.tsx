@@ -17,6 +17,7 @@ import { ListBox, ListBoxItem } from "@dotui/ui/components/list-box";
 import { Popover } from "@dotui/ui/components/popover";
 import { SelectRoot, SelectValue } from "@dotui/ui/components/select";
 import { Skeleton } from "@dotui/ui/components/skeleton";
+import { Combobox, ComboboxItem } from "@dotui/ui/components/combobox";
 import {
   TableBody,
   TableCell,
@@ -232,7 +233,7 @@ const ColorTokenVariableName = ({
 };
 
 const ColorTokenValue = ({ index }: { index: number }) => {
-  const { form } = useStyleForm();
+  const { form, generatedTheme } = useStyleForm();
 
   // const [color] = token.value
   //   .replace("var(--", "")
@@ -249,48 +250,92 @@ const ColorTokenValue = ({ index }: { index: number }) => {
       name={`theme.colors.tokens.${index}.value`}
       control={form.control}
       render={({ value, onChange, ...props }) => {
-        const [color] = value
-          .replace("var(--", "")
-          .replace(")", "")
-          .split("-") as [string, string];
+        const tokenRef = value
+          .replace(/^var\(--/, "")
+          .replace(/\)$/, "");
 
-        const items = Array.from({ length: 10 }, (_, i) => ({
-          label: `${color.charAt(0).toUpperCase() + color.slice(1)} ${(i + 1) * 100}`,
-          value: `var(--${color}-${(i + 1) * 100})`,
+        const hasOnPrefix = tokenRef.startsWith("on-");
+        const raw = hasOnPrefix ? tokenRef.slice(3) : tokenRef;
+        const lastDashIndex = raw.lastIndexOf("-");
+        const initialPalette =
+          lastDashIndex > -1 ? raw.slice(0, lastDashIndex) : raw;
+        
+
+        const palettes = generatedTheme.map((scale) => ({
+          id: scale.name,
+          label: scale.name.charAt(0).toUpperCase() + scale.name.slice(1),
         }));
 
+        const [selectedPalette, setSelectedPalette] = React.useState(
+          initialPalette,
+        );
+        const [isOnPrefix, setIsOnPrefix] = React.useState(hasOnPrefix);
+
+        React.useEffect(() => {
+          // Sync local state when external value changes (e.g., undo/redo or form reset)
+          setSelectedPalette(initialPalette);
+          setIsOnPrefix(hasOnPrefix);
+        }, [initialPalette, hasOnPrefix, value]);
+
+        const currentScale = generatedTheme.find(
+          (s) => s.name === selectedPalette,
+        );
+        const shades = currentScale
+          ? currentScale.values.map((v) => {
+              const idx = v.name.lastIndexOf("-");
+              return v.name.slice(idx + 1);
+            })
+          : [];
+
         return (
-          <SelectRoot
-            selectedKey={value}
-            onSelectionChange={onChange}
-            {...props}
-          >
+          <SelectRoot selectedKey={value} onSelectionChange={onChange} {...props}>
             <Button
               size="sm"
               suffix={<ChevronsUpDownIcon className="text-fg-muted" />}
-              className="w-40"
+              className="w-56"
             >
               <SelectValue />
             </Button>
-            <Popover>
-              <ListBox items={items}>
-                {(item) => (
-                  <ListBoxItem
-                    id={item.value}
-                    className="flex items-center gap-2"
-                    prefix={
-                      <span
-                        className="size-4 rounded-sm border"
-                        style={{
-                          backgroundColor: item.value,
-                        }}
-                      />
-                    }
-                  >
-                    {item.label}
-                  </ListBoxItem>
-                )}
-              </ListBox>
+            <Popover className="w-72 p-2">
+              <div className="space-y-2">
+                <Combobox
+                  aria-label="Palette"
+                  selectedKey={selectedPalette}
+                  onSelectionChange={(key) =>
+                    setSelectedPalette(String(key))
+                  }
+                  className="w-full"
+                >
+                  {palettes.map((p) => (
+                    <ComboboxItem key={p.id} id={p.id}>
+                      {p.label}
+                    </ComboboxItem>
+                  ))}
+                </Combobox>
+                <ListBox aria-label="Shades">
+                  {shades.map((shade) => {
+                    const baseVar = `var(--${selectedPalette}-${shade})`;
+                    const finalVar = isOnPrefix
+                      ? `var(--on-${selectedPalette}-${shade})`
+                      : baseVar;
+                    return (
+                      <ListBoxItem
+                        key={finalVar}
+                        id={finalVar}
+                        className="flex items-center gap-2"
+                        prefix={
+                          <span
+                            className="size-4 rounded-sm border"
+                            style={{ backgroundColor: baseVar }}
+                          />
+                        }
+                      >
+                        {`${selectedPalette.charAt(0).toUpperCase() + selectedPalette.slice(1)} ${shade}`}
+                      </ListBoxItem>
+                    );
+                  })}
+                </ListBox>
+              </div>
             </Popover>
           </SelectRoot>
         );
