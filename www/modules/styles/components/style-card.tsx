@@ -15,7 +15,7 @@ import type { RouterOutputs } from "@dotui/api";
 
 import { useMounted } from "@/hooks/use-mounted";
 
-export function StyleUIKit({
+export function StyleCard({
   style,
   variant = "ui-kit",
 }: {
@@ -35,12 +35,12 @@ export function StyleUIKit({
             shape="square"
             className="mt-1 size-6"
           />
-          <h2 className="font-heading text-3xl leading-none font-medium tracking-tight">
+          <h2 className="font-heading text-3xl font-medium leading-none tracking-tight">
             {style.name}
           </h2>
         </div>
         {style.description && (
-          <p className="text-base text-balance text-fg-muted">
+          <p className="text-fg-muted text-balance text-base">
             {style.description}
           </p>
         )}
@@ -57,7 +57,7 @@ export function StyleUIKit({
           ].map((item) => (
             <Badge
               key={item.label}
-              className="gap-2 rounded-full text-fg-muted [&_svg]:text-fg"
+              className="text-fg-muted [&_svg]:text-fg gap-2 rounded-full"
             >
               {item.icon}
               {item.label}
@@ -71,25 +71,32 @@ export function StyleUIKit({
           mode={resolvedTheme as "light" | "dark" | undefined}
           style={style}
           className={cn(
-            "relative flex max-h-[min(80svh,500px)] items-center justify-center rounded-sm border",
-            // Keep overflow-hidden always, as requested explicitly for card
-            "overflow-hidden",
+            "relative flex max-h-[min(80svh,500px)] items-center justify-center overflow-hidden rounded-sm border duration-0",
+            variant === "card" && "max-h-[300px]",
           )}
         >
           <Link
             href={`/styles/${style.user.username}/${style.name}`}
             className={cn(
               focusRing(),
-              "absolute inset-0 z-50 flex items-center justify-center bg-bg-muted/50 opacity-0 duration-150 hover:opacity-100",
+              "bg-bg-muted/50 absolute inset-0 z-50 flex items-center justify-center opacity-0 duration-150 hover:opacity-100",
             )}
           >
-            <span className="flex h-10 items-center justify-center rounded-md border bg-bg-primary px-4 text-base leading-normal font-medium tracking-tight text-fg-on-primary duration-150 hover:bg-bg-primary-hover active:bg-bg-primary-active">
+            <span className="bg-bg-primary text-fg-on-primary hover:bg-bg-primary-hover active:bg-bg-primary-active flex h-10 items-center justify-center rounded-md border px-4 text-base font-medium leading-normal tracking-tight duration-150">
               Explore style
             </span>
           </Link>
-          <div inert className={cn(variant === "card" && "scale-80")}> 
-            <BlocksShowcase />
-          </div>
+          {variant === "card" && (
+            <iframe
+              src={`/block-view/${style.user.username}/${style.name}/blocks-showcase`}
+              className="h-[1200px] min-w-[1400px] scale-50"
+            />
+          )}
+          {variant === "ui-kit" && (
+            <div inert>
+              <BlocksShowcase />
+            </div>
+          )}
         </StyleProvider>
       </Skeleton>
     </div>

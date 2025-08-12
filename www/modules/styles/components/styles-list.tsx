@@ -10,7 +10,7 @@ import { ToggleButtonGroup } from "@dotui/ui/components/toggle-button-group";
 import { cn } from "@dotui/ui/lib/utils";
 import type { RouterOutputs } from "@dotui/api";
 
-import { StyleUIKit } from "./style-ui-kit";
+import { StyleCard } from "./style-card";
 
 export function StylesList({
   styles,
@@ -24,24 +24,22 @@ export function StylesList({
   const [query, setQuery] = React.useState("");
 
   if (skeleton) {
-    const placeholders = Array.from({ length: variant === "card" ? 6 : 3 });
+    const placeholders = Array.from({ length: variant === "card" ? 4 : 2 });
     return (
-      <div className={cn("", props.className)}>
-        <div
-          className={cn(
-            "grid",
-            variant === "card" && "grid-cols-2 gap-4",
-            variant === "ui-kit" && "grid-cols-1 gap-8",
-            props.className,
-          )}
-        >
-          {placeholders.map((_, idx) => (
-            <Skeleton
-              key={idx}
-              className={cn(variant === "card" ? "h-40" : "h-52")}
-            />
-          ))}
-        </div>
+      <div
+        className={cn(
+          "grid",
+          variant === "card" && "grid-cols-2 gap-4",
+          variant === "ui-kit" && "grid-cols-1 gap-8",
+          props.className,
+        )}
+      >
+        {placeholders.map((_, idx) => (
+          <Skeleton
+            key={idx}
+            className={cn(variant === "card" ? "h-40" : "h-52")}
+          />
+        ))}
       </div>
     );
   }
@@ -62,7 +60,7 @@ export function StylesList({
 
   return (
     <div className={cn("", props.className)}>
-      <div className="mb-4 flex items-center justify-end gap-4">
+      <div className="flex items-center justify-end gap-4">
         <SearchField
           placeholder="Search styles..."
           className="flex-1"
@@ -85,14 +83,31 @@ export function StylesList({
       </div>
       <div
         className={cn(
-          "grid",
-          variant === "card" && "grid-cols-2 gap-4",
+          "mt-6 grid",
+          variant === "card" && "grid-cols-1 gap-4 md:grid-cols-2",
           variant === "ui-kit" && "grid-cols-1 gap-8",
           props.className,
         )}
       >
+        {skeleton && (
+          <>
+            {Array.from({ length: variant === "card" ? 4 : 2 }).map(
+              (_, idx) => (
+                <Skeleton
+                  key={idx}
+                  className={cn(variant === "card" ? "h-40" : "h-52")}
+                />
+              ),
+            )}
+          </>
+        )}
+        {(!styles || styles.length === 0) && (
+          <div className="flex items-center justify-center">
+            <p className="text-fg-muted text-sm">No styles found</p>
+          </div>
+        )}
         {filtered.map((style) => (
-          <StyleUIKit key={style.name} style={style} variant={variant} />
+          <StyleCard key={style.name} style={style} variant={variant} />
         ))}
       </div>
     </div>
