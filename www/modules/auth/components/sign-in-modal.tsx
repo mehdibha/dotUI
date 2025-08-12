@@ -2,7 +2,13 @@
 
 import React from "react";
 
-import { Dialog, DialogBody, DialogHeader, DialogHeading, DialogRoot } from "@dotui/ui/components/dialog";
+import {
+  Dialog,
+  DialogBody,
+  DialogHeader,
+  DialogHeading,
+  DialogRoot,
+} from "@dotui/ui/components/dialog";
 
 import { LoginForm } from "./login-form";
 

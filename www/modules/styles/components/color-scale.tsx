@@ -38,7 +38,7 @@ export function ColorScale({ scaleId }: ColorScaleProps) {
 
   return (
     <div className="flex items-center gap-2">
-      <p className="text-fg-muted w-16 text-sm">{`${scaleName.charAt(0).toUpperCase() + scaleName.slice(1)}`}</p>
+      <p className="w-16 text-sm text-fg-muted">{`${scaleName.charAt(0).toUpperCase() + scaleName.slice(1)}`}</p>
       <div className="flex flex-1 items-center gap-1">
         {scale.values.map((color, index) => (
           <Tooltip key={index} content={color.name} delay={0}>

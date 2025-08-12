@@ -77,7 +77,7 @@ export function ScaleEditor({ scaleId }: { scaleId: string }) {
         </DialogHeader>
         <DialogBody className="flex flex-col">
           <ColorKeysEditor scaleId={scaleId} />
-          <p className="text-fg-muted text-sm">Ratios</p>
+          <p className="text-sm text-fg-muted">Ratios</p>
           <div className="flex flex-1 items-start gap-4">
             <RatioSlider scaleId={scaleId} />
             <RatioTable scaleId={scaleId} />
@@ -166,7 +166,7 @@ function ScaleNameEditor({ scaleId }: ScaleNameEditorProps) {
           aria-label="Scale name"
           inputRef={inputRef}
           autoFocus
-          className="text-xl font-semibold leading-none"
+          className="text-xl leading-none font-semibold"
           value={localValue}
           onChange={setLocalValue}
         />
@@ -200,7 +200,7 @@ function ScaleNameEditor({ scaleId }: ScaleNameEditorProps) {
       control={form.control}
       render={(props) => (
         <div className="flex items-center gap-2">
-          <DialogHeading className="text-xl font-semibold leading-none">
+          <DialogHeading className="text-xl leading-none font-semibold">
             {props.value}
           </DialogHeading>
           <Button
@@ -208,7 +208,7 @@ function ScaleNameEditor({ scaleId }: ScaleNameEditorProps) {
             size="sm"
             variant="quiet"
             shape="square"
-            className="text-fg-muted size-6 [&_svg]:size-3"
+            className="size-6 text-fg-muted [&_svg]:size-3"
             onPress={() => handleEditStart()}
           >
             <PencilIcon />
@@ -233,7 +233,7 @@ function ColorKeysEditor({ scaleId }: ColorKeysEditorProps) {
 
   return (
     <div>
-      <p className="text-fg-muted text-sm">Color keys</p>
+      <p className="text-sm text-fg-muted">Color keys</p>
       <div className="mt-2 flex items-center gap-2">
         {fields.map((field, index) => (
           <div key={field.id} className="flex items-center">
@@ -376,7 +376,7 @@ function RatioSlider({ scaleId }: RatioSliderProps) {
                   <SliderThumb
                     key={i}
                     index={i}
-                    className="dragging:size-3 size-2"
+                    className="size-2 dragging:size-3"
                   />
                 ))}
               </>
@@ -430,7 +430,7 @@ function RatioTable({ scaleId }: RatioTableProps) {
                       <TableCell>
                         <div className="flex items-center gap-2">
                           <ColorSwatch color={generatedScale?.[index]?.value} />
-                          <span className="text-fg-muted font-mono text-xs">
+                          <span className="font-mono text-xs text-fg-muted">
                             {`${scaleName}-${scaleNameValue}`}
                           </span>
                         </div>
