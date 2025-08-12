@@ -11,7 +11,6 @@ import { cn } from "@dotui/ui/lib/utils";
 import type { RouterOutputs } from "@dotui/api";
 
 import { StyleCard } from "./style-card";
-import { StyleUIKit } from "./style-ui-kit";
 
 export function StylesList({
   styles,
@@ -21,27 +20,26 @@ export function StylesList({
   styles?: RouterOutputs["style"]["getFeatured"];
   skeleton?: boolean;
 }) {
-  const [view, setView] = React.useState<"grid" | "list">("list");
+  const [variant, setVariant] = React.useState<"ui-kit" | "card">("ui-kit");
+  const [query, setQuery] = React.useState("");
 
   if (skeleton) {
-    const placeholders = Array.from({ length: view === "grid" ? 6 : 3 });
+    const placeholders = Array.from({ length: variant === "card" ? 4 : 2 });
     return (
-      <div className={cn("", props.className)}>
-        <div
-          className={cn(
-            "grid",
-            view === "grid" && "grid-cols-1 gap-4 lg:grid-cols-2",
-            view === "list" && "grid-cols-1 gap-8",
-            props.className,
-          )}
-        >
-          {placeholders.map((_, idx) => (
-            <Skeleton
-              key={idx}
-              className={cn(view === "grid" ? "h-40" : "h-52")}
-            />
-          ))}
-        </div>
+      <div
+        className={cn(
+          "grid",
+          variant === "card" && "grid-cols-2 gap-4",
+          variant === "ui-kit" && "grid-cols-1 gap-8",
+          props.className,
+        )}
+      >
+        {placeholders.map((_, idx) => (
+          <Skeleton
+            key={idx}
+            className={cn(variant === "card" ? "h-40" : "h-52")}
+          />
+        ))}
       </div>
     );
   }
@@ -50,42 +48,67 @@ export function StylesList({
     return <div>No styles found</div>;
   }
 
+  const filtered = styles.filter((s) => {
+    const q = query.trim().toLowerCase();
+    if (!q) return true;
+    return (
+      s.name.toLowerCase().includes(q) ||
+      (s.description ?? "").toLowerCase().includes(q) ||
+      s.user.username.toLowerCase().includes(q)
+    );
+  });
+
   return (
     <div className={cn("", props.className)}>
-      {/* <div className="flex items-center justify-end gap-4">
+      <div className="flex items-center justify-end gap-4">
         <SearchField
           placeholder="Search styles..."
           className="flex-1"
+          onChange={(value) => setQuery(value?.toString() ?? "")}
+          value={query}
         />
         <ToggleButtonGroup
-          selectedKeys={[view]}
+          selectedKeys={[variant]}
           onSelectionChange={(value) =>
-            setView([...value][0] as "grid" | "list")
+            setVariant(([...value][0] as "ui-kit" | "card") ?? "ui-kit")
           }
         >
-          <ToggleButton id="grid" variant="primary">
+          <ToggleButton id="card" variant="primary">
             <LayoutGridIcon />
           </ToggleButton>
-          <ToggleButton id="list" variant="primary">
+          <ToggleButton id="ui-kit" variant="primary">
             <ListIcon />
           </ToggleButton>
         </ToggleButtonGroup>
-      </div> */}
+      </div>
       <div
         className={cn(
-          "grid",
-          view === "grid" && "grid-cols-1 gap-4 lg:grid-cols-2",
-          view === "list" && "grid-cols-1 gap-8",
+          "mt-6 grid",
+          variant === "card" && "grid-cols-1 gap-4 md:grid-cols-2",
+          variant === "ui-kit" && "grid-cols-1 gap-8",
           props.className,
         )}
       >
-        {styles.map((style) =>
-          view === "grid" ? (
-            <StyleCard key={style.name} style={style} />
-          ) : (
-            <StyleUIKit key={style.name} style={style} />
-          ),
+        {skeleton && (
+          <>
+            {Array.from({ length: variant === "card" ? 4 : 2 }).map(
+              (_, idx) => (
+                <Skeleton
+                  key={idx}
+                  className={cn(variant === "card" ? "h-40" : "h-52")}
+                />
+              ),
+            )}
+          </>
         )}
+        {(!styles || styles.length === 0) && (
+          <div className="flex items-center justify-center">
+            <p className="text-sm text-fg-muted">No styles found</p>
+          </div>
+        )}
+        {filtered.map((style) => (
+          <StyleCard key={style.name} style={style} variant={variant} />
+        ))}
       </div>
     </div>
   );
