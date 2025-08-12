@@ -12,6 +12,7 @@ import type { UseFormReturn } from "react-hook-form";
 import { COLOR_TOKENS } from "@dotui/registry-definition/registry-tokens";
 import { createColorScales } from "@dotui/style-engine/core";
 import { styleDefinitionSchema } from "@dotui/style-engine/schemas";
+import { toast } from "@dotui/ui/components/toast";
 
 import { useDebounce } from "@/hooks/use-debounce";
 import { useTRPC, useTRPCClient } from "@/lib/trpc/react";
@@ -135,11 +136,7 @@ export function StyleEditorProvider({
   );
 }
 
-export default function StylePageForm({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export function StyleEditorForm({ children }: { children: React.ReactNode }) {
   const { form } = useStyleForm();
   const trpc = useTRPC();
   const trpcClient = useTRPCClient();
@@ -191,16 +188,88 @@ export default function StylePageForm({
   //   },
   // });
 
+  const pathname = usePathname();
+  const segments = pathname.split("/");
+  const username = segments[2] ?? "";
+  const styleName = segments[3] ?? "";
+
+  const updateStyleMutation = useMutation({
+    mutationFn: async (data: StyleFormData) => {
+      if (!data.id) throw new Error("Missing style id");
+      return await trpcClient.style.update.mutate({
+        id: data.id,
+        theme: data.theme,
+        icons: data.icons,
+        variants: data.variants,
+      });
+    },
+    onMutate: async (variables: StyleFormData) => {
+      const queryKey = trpc.style.getByNameAndUsername.queryKey({
+        name: styleName,
+        username,
+      });
+
+      await queryClient.cancelQueries({ queryKey });
+
+      const previousStyle = queryClient.getQueryData(queryKey);
+
+      queryClient.setQueryData(queryKey, (old: any) => {
+        if (!old) return old;
+        return {
+          ...old,
+          theme: variables.theme,
+          icons: variables.icons,
+          variants: variables.variants,
+          updatedAt: new Date(),
+        };
+      });
+
+      return { previousStyle, queryKey } as const;
+    },
+    onError: (error: unknown, _variables, context) => {
+      if (context?.previousStyle) {
+        queryClient.setQueryData(context.queryKey, context.previousStyle);
+      }
+      toast.add({
+        title: "Failed to update style",
+        variant: "danger",
+      });
+    },
+    onSuccess: (updated: any) => {
+      const queryKey = trpc.style.getByNameAndUsername.queryKey({
+        name: styleName,
+        username,
+      });
+      queryClient.setQueryData(queryKey, updated);
+      if (updated) {
+        const nextValues = { ...updated, slug: updated.name } as StyleFormData;
+        form.reset(
+          {
+            ...nextValues,
+            description:
+              nextValues.description ?? form.getValues("description"),
+            userId: nextValues.userId ?? form.getValues("userId"),
+          },
+          { keepDirty: false },
+        );
+      }
+      console.log("✅ Style updated successfully");
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: trpc.style.getByNameAndUsername.queryKey({
+          name: styleName,
+          username,
+        }),
+      });
+    },
+  });
+
   const handleSubmit = form.handleSubmit(
     async (data) => {
       try {
         console.log("🔄 Submitting style update...");
-        // toast.add({
-        //   title: "Style updated",
-        //   description: "Your style has been updated successfully",
-        //   variant: "success",
-        // });
-        // await updateStyleMutation.mutateAsync(data);
+        await updateStyleMutation.mutateAsync(data);
       } catch (error) {
         console.error("Submission failed:", error);
       }
