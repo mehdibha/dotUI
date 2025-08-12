@@ -36,7 +36,7 @@ export default async function BlockViewPage({
   }
 
   return (
-    <BlockProviders style={style}>
+    <BlockProviders style={style} styleSlug={`${username}/${styleName}`}>
       <BlockViewer name={blockName} />
     </BlockProviders>
   );

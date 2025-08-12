@@ -13,16 +13,18 @@ import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 
 export const BlockProviders = ({
   style: styleProp,
+  styleSlug,
   children,
 }: {
   style: StyleDefinition & { id?: string };
+  styleSlug: string;
   children: React.ReactNode;
 }) => {
   const overlayContainerRef = React.useRef(null);
 
   const { activeMode } = usePreferences();
   const isMounted = useMounted();
-  const { liveStyle } = useLiveStyleConsumer(styleProp.id || "default");
+  const { liveStyle } = useLiveStyleConsumer(styleSlug);
 
   const style = React.useMemo(() => {
     return liveStyle ?? styleProp;
@@ -40,7 +42,11 @@ export const BlockProviders = ({
         className="text-fg"
       />
       <PortalProvider getContainer={() => overlayContainerRef.current}>
-        <StyleProvider style={style} mode={activeMode} className="min-h-screen">
+        <StyleProvider
+          style={style}
+          mode={activeMode}
+          className="flex min-h-screen items-center justify-center"
+        >
           {children}
         </StyleProvider>
       </PortalProvider>
