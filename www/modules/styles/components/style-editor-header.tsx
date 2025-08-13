@@ -17,6 +17,7 @@ import {
   Trash2Icon,
   XIcon,
 } from "lucide-react";
+import { Pressable } from "react-aria-components";
 
 import { Button } from "@dotui/ui/components/button";
 import { FormControl } from "@dotui/ui/components/form";
@@ -28,11 +29,12 @@ import { AutoResizeTextField } from "@/components/auto-resize-input";
 import { useMounted } from "@/hooks/use-mounted";
 import { SignInModal } from "@/modules/auth/components/sign-in-modal";
 import { authClient } from "@/modules/auth/lib/client";
+import { StyleEditorDeleteModal } from "@/modules/styles/components/style-editor-delete-modal";
 import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
 import { CreateStyleModal } from "./create-style-modal";
-import { StylePageCodeModal } from "./style-page-code-modal";
+import { StyleEditorCodeModal } from "./style-editor-code-modal";
 
-export function StylePageHeader() {
+export function StyleEditorHeader() {
   return (
     <div className="container max-w-4xl">
       <Link
@@ -42,16 +44,16 @@ export function StylePageHeader() {
         <ArrowLeftIcon className="size-4" /> styles
       </Link>
       <div className="mt-1 flex items-center justify-between lg:mt-2">
-        <StylePageHeaderName />
+        <StyleEditorHeaderName />
         <div className="flex items-center gap-1">
-          <StylePageHeaderActions />
+          <StyleEditorHeaderActions />
         </div>
       </div>
     </div>
   );
 }
 
-function StylePageHeaderName() {
+function StyleEditorHeaderName() {
   const { form, isSuccess } = useStyleForm();
   const value = form.watch("name");
 
@@ -172,7 +174,7 @@ function StylePageHeaderName() {
   );
 }
 
-function StylePageHeaderActions() {
+function StyleEditorHeaderActions() {
   const { form } = useStyleForm();
   const pathname = usePathname();
   const segments = pathname.split("/");
@@ -197,11 +199,11 @@ function StylePageHeaderActions() {
 
   return (
     <Skeleton show={!isMounted || isPending}>
-      <StylePageCodeModal>
+      <StyleEditorCodeModal>
         <Button size="sm" prefix={<CodeIcon />}>
           Code
         </Button>
-      </StylePageCodeModal>
+      </StyleEditorCodeModal>
       <Tooltip content="Reset" delay={0}>
         <Button
           aria-label="Reset form"
@@ -251,29 +253,30 @@ function StylePageHeaderActions() {
           </Button>
         </SignInModal>
       )}
-      <MenuRoot>
-        <Button aria-label="More actions" size="sm" shape="square">
-          <EllipsisIcon />
-        </Button>
-        <Menu
-          overlayProps={{
-            popoverProps: {
-              placement: "bottom right",
-            },
-          }}
-        >
-          <MenuItem prefix={<CopyIcon />}>Clone</MenuItem>
-          {isUserStyle && (
-            <>
-              <MenuItem prefix={<StarIcon />}>Favorite</MenuItem>
-              <MenuItem prefix={<PencilIcon />}>Rename</MenuItem>
-              <MenuItem variant="danger" prefix={<Trash2Icon />}>
-                Delete style
-              </MenuItem>
-            </>
-          )}
-        </Menu>
-      </MenuRoot>
+      {isUserStyle && (
+        <>
+          <MenuRoot>
+            <Button aria-label="More actions" size="sm" shape="square">
+              <EllipsisIcon />
+            </Button>
+            <Menu
+              overlayProps={{
+                popoverProps: {
+                  placement: "bottom right",
+                },
+              }}
+            >
+              <StyleEditorDeleteModal>
+                <Pressable>
+                  <MenuItem variant="danger" prefix={<Trash2Icon />}>
+                    Delete style
+                  </MenuItem>
+                </Pressable>
+              </StyleEditorDeleteModal>
+            </Menu>
+          </MenuRoot>
+        </>
+      )}
     </Skeleton>
   );
 }
