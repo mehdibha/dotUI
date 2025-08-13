@@ -240,7 +240,7 @@ export function PreviewContent({
         )}
       >
         <iframe
-          src={`/block-view/${username}/${styleName}/${currentBlockName}`}
+          src={`/block-view/${username}/${styleName}/${currentBlockName}?mode=true&live=true`}
           onLoad={() => setLoading(false)}
           className={cn(
             "rounded-{inherit] size-full",
