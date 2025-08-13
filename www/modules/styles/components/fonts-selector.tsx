@@ -5,13 +5,6 @@ import { ChevronDownIcon } from "lucide-react";
 import { useInView } from "motion/react";
 import { ListLayout, useFilter, Virtualizer } from "react-aria-components";
 
-import {
-  displayFonts,
-  handwritingFonts,
-  monoFonts,
-  sansSerifFonts,
-  serifFonts,
-} from "@dotui/registry-definition/registry-fonts";
 import { FontLoader } from "@dotui/ui";
 import { Button } from "@dotui/ui/components/button";
 import { CommandRoot } from "@dotui/ui/components/command";
@@ -25,6 +18,14 @@ import {
 import { SearchField } from "@dotui/ui/components/search-field";
 import { Select, SelectItem } from "@dotui/ui/components/select";
 import { cn } from "@dotui/ui/lib/utils";
+
+import {
+  displayFonts,
+  handwritingFonts,
+  monoFonts,
+  sansSerifFonts,
+  serifFonts,
+} from "../../../../packages/registry-definition/dist/registry-fonts";
 
 export const FontSelector = ({
   label,
@@ -56,7 +57,7 @@ export const FontSelector = ({
         <Dialog
           type="popover"
           popoverProps={{ placement: "bottom" }}
-          className="space-y-2 p-0!"
+          className="p-0! space-y-2"
         >
           {({ close }) => (
             <>
@@ -82,7 +83,7 @@ export const FontSelector = ({
                       onFontChange(([...keys][0] as string) ?? "");
                       close();
                     }}
-                    className="h-full w-full border-0 p-0!"
+                    className="p-0! h-full w-full border-0"
                   >
                     {[
                       { title: "Sans serif", items: sansSerifFonts },

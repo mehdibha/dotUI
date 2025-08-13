@@ -12,7 +12,6 @@ import {
   SendIcon,
 } from "lucide-react";
 
-import { registryUi } from "@dotui/registry-definition/registry-ui";
 import { StyleProvider } from "@dotui/ui";
 import { Button } from "@dotui/ui/components/button";
 import { Calendar, RangeCalendar } from "@dotui/ui/components/calendar";
@@ -40,6 +39,7 @@ import { cn } from "@dotui/ui/lib/utils";
 import type { VariantsDefinition } from "@dotui/style-engine/types";
 
 import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
+import { registryUi } from "../../../../packages/registry-definition/dist/registry-ui";
 import { usePreferences } from "../atoms/preferences-atom";
 import { ColorTokens } from "./style-color-tokens";
 

@@ -1,7 +1,6 @@
-import { registryBackgroundPatterns } from "@dotui/registry-definition/registry-bg-patterns";
+import { registryBackgroundPatterns } from "../../../registry-definition/dist/registry-bg-patterns";
 // import { registryShadows } from "@dotui/registry-definition/registry-shadows";
-import { registryTextures } from "@dotui/registry-definition/registry-textures";
-
+import { registryTextures } from "../../../registry-definition/dist/registry-textures";
 import type {
   BackgroundPattern,
   Css,

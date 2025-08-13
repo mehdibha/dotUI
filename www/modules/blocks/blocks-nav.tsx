@@ -3,7 +3,6 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 
-import { blocksCategories } from "@dotui/registry-definition/registry-blocks";
 import {
   Tab,
   TabList,
@@ -11,6 +10,8 @@ import {
   Tabs,
 } from "@dotui/ui/registry/components/tabs/motion";
 import type { TabsProps } from "@dotui/ui/components/tabs";
+
+import { blocksCategories } from "../../../packages/registry-definition/dist/registry-blocks";
 
 export function BlocksNav({
   children,
@@ -20,7 +21,7 @@ export function BlocksNav({
 
   return (
     <Tabs variant="underline" selectedKey={pathname} {...props}>
-      <div className="sticky top-0 z-40 border-b bg-bg">
+      <div className="bg-bg sticky top-0 z-40 border-b">
         <TabList className="container border-b-0">
           {[
             ...blocksCategories.map((category) => ({
@@ -32,7 +33,7 @@ export function BlocksNav({
               key={tab.href}
               id={tab.href}
               href={tab.href}
-              className="flex h-7 items-center gap-2 rounded-full px-4 pt-6 pb-5 text-sm"
+              className="flex h-7 items-center gap-2 rounded-full px-4 pb-5 pt-6 text-sm"
             >
               {tab.label}
             </Tab>

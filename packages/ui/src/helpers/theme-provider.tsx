@@ -1,10 +1,11 @@
 import React from "react";
 
-import { registryBackgroundPatterns } from "@dotui/registry-definition/registry-bg-patterns";
-import { registryTextures } from "@dotui/registry-definition/registry-textures";
 import { createTheme } from "@dotui/style-engine/core";
 import { cn } from "@dotui/ui/lib/utils";
 import type { ThemeDefinition } from "@dotui/style-engine/types";
+
+import { registryBackgroundPatterns } from "../../../registry-definition/dist/registry-bg-patterns";
+import { registryTextures } from "../../../registry-definition/dist/registry-textures";
 
 type Mode = "light" | "dark";
 

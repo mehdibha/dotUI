@@ -1,9 +1,8 @@
 import * as React from "react";
 
-import type { iconLibraries } from "@dotui/registry-definition/registry-icons";
-
 import { Skeleton } from "../components/skeleton";
 import { useCurrentStyle } from "./style-provider";
+import type { iconLibraries } from "../../../registry-definition/dist/registry-icons";
 
 interface CommonIconProps extends React.RefAttributes<any> {
   className?: string;

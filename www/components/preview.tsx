@@ -12,10 +12,6 @@ import {
 } from "lucide-react";
 import { motion } from "motion/react";
 
-import {
-  blocksCategories,
-  registryBlocks,
-} from "@dotui/registry-definition/registry-blocks";
 import { Button } from "@dotui/ui/components/button";
 import {
   ListBox,
@@ -33,6 +29,10 @@ import { cn } from "@dotui/ui/lib/utils";
 
 import { useSidebarContext } from "@/components/sidebar";
 import { useMounted } from "@/hooks/use-mounted";
+import {
+  blocksCategories,
+  registryBlocks,
+} from "../../packages/registry-definition/dist/registry-blocks";
 
 export const Preview = () => {
   const [isOpen, setOpen] = React.useState(false);
@@ -71,7 +71,7 @@ export const Preview = () => {
             variant="default"
             size="sm"
             onPress={() => setOpen(true)}
-            className="border bg-bg-inverse/5"
+            className="bg-bg-inverse/5 border"
           >
             Preview
           </Button>
@@ -131,11 +131,11 @@ export function PreviewContent({
   return (
     <div
       className={cn(
-        "size-full overflow-hidden rounded-md border bg-bg",
+        "bg-bg size-full overflow-hidden rounded-md border",
         className,
       )}
     >
-      <div className="flex items-center justify-between gap-2 border-b border-t-[inherit] bg-bg-muted/50 px-1 py-1">
+      <div className="bg-bg-muted/50 flex items-center justify-between gap-2 border-b border-t-[inherit] px-1 py-1">
         <div className="flex w-32 items-center gap-3">
           <div className="flex items-center gap-1">
             {collapsible && (
@@ -160,7 +160,7 @@ export function PreviewContent({
           <Button
             size="sm"
             suffix={<ChevronsUpDownIcon />}
-            className="h-7 min-w-32 justify-center rounded-sm text-fg-muted"
+            className="text-fg-muted h-7 min-w-32 justify-center rounded-sm"
           >
             <SelectValue className="flex-0" />
           </Button>
@@ -236,7 +236,7 @@ export function PreviewContent({
       <div
         className={cn(
           "size-full",
-          isLoading && "relative block animate-pulse rounded-md bg-bg-muted",
+          isLoading && "bg-bg-muted relative block animate-pulse rounded-md",
         )}
       >
         <iframe

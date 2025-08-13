@@ -1,5 +1,4 @@
-import { COLOR_TOKENS } from "@dotui/registry-definition/registry-tokens";
-
+import { COLOR_TOKENS } from "../../registry-definition/dist/registry-tokens";
 import type {
   ColorTokens,
   Fonts,

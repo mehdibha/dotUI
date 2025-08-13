@@ -1,8 +1,8 @@
 import { z } from "zod";
 
-import { registryBackgroundPatterns } from "@dotui/registry-definition/registry-bg-patterns";
-import { iconLibraries } from "@dotui/registry-definition/registry-icons";
-import { registryTextures } from "@dotui/registry-definition/registry-textures";
+import { registryBackgroundPatterns } from "../../registry-definition/dist/registry-bg-patterns";
+import { iconLibraries } from "../../registry-definition/dist/registry-icons";
+import { registryTextures } from "../../registry-definition/dist/registry-textures";
 
 // ---------------------------------  Definitions  ----------------------------------- //
 

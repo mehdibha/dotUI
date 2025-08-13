@@ -1,6 +1,5 @@
 "use client";
 
-import { iconLibraries } from "@dotui/registry-definition/registry-icons";
 import { registryIcons } from "@dotui/ui/__registry__/icons";
 import * as Icons from "@dotui/ui/__registry__/icons";
 import { Button } from "@dotui/ui/components/button";
@@ -14,6 +13,7 @@ import { StyleProvider } from "@dotui/ui/index";
 import { Skeleton } from "@dotui/ui/registry/components/skeleton/basic";
 
 import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
+import { iconLibraries } from "../../../../packages/registry-definition/dist/registry-icons";
 import { EditorSection } from "./editor-section";
 
 export function StyleIconsEditor() {
@@ -76,7 +76,7 @@ export function StyleIconsEditor() {
 
         <Label className="mt-6">Icons</Label>
         <StyleProvider style={form.watch()} className="rounded-md border p-4">
-          <div className="grid max-h-[168px] [grid-template-columns:repeat(auto-fill,minmax(36px,1fr))] [grid-template-rows:repeat(auto-fill,minmax(36px,1fr))] gap-2 overflow-hidden [&_svg]:size-6">
+          <div className="grid max-h-[168px] gap-2 overflow-hidden [grid-template-columns:repeat(auto-fill,minmax(36px,1fr))] [grid-template-rows:repeat(auto-fill,minmax(36px,1fr))] [&_svg]:size-6">
             {Object.entries(registryIcons)
               .slice(0, 100)
               .map(([name, IconComponent]) => {

@@ -8,7 +8,6 @@ import {
   SunIcon,
 } from "lucide-react";
 
-import { COLOR_TOKENS } from "@dotui/registry-definition/registry-tokens";
 import { Button } from "@dotui/ui/components/button";
 import { Label } from "@dotui/ui/components/field";
 import { FormControl } from "@dotui/ui/components/form";
@@ -27,6 +26,7 @@ import {
 import { ThemeModeSwitch } from "@/components/theme-mode-switch";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
+import { COLOR_TOKENS } from "../../../../packages/registry-definition/dist/registry-tokens";
 import { ColorScale } from "./color-scale";
 import { EditorSection } from "./editor-section";
 import { ScaleEditor } from "./scale-editor";

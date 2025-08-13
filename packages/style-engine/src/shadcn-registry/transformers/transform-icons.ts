@@ -3,8 +3,7 @@
 import {
   iconLibraries,
   icons,
-} from "@dotui/registry-definition/registry-icons";
-
+} from "../../../../registry-definition/dist/registry-icons";
 import type { IconLibrary } from "../../types";
 import type { Transformer } from "./index";
 

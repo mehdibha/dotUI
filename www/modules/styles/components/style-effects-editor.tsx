@@ -1,7 +1,5 @@
 "use client";
 
-import { registryBackgroundPatterns } from "@dotui/registry-definition/registry-bg-patterns";
-import { registryTextures } from "@dotui/registry-definition/registry-textures";
 import { ColorPicker } from "@dotui/ui/components/color-picker";
 import { ColorSwatch } from "@dotui/ui/components/color-swatch";
 import { FormControl } from "@dotui/ui/components/form";
@@ -10,6 +8,8 @@ import { Skeleton } from "@dotui/ui/components/skeleton";
 import { Slider } from "@dotui/ui/components/slider";
 
 import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
+import { registryBackgroundPatterns } from "../../../../packages/registry-definition/dist/registry-bg-patterns";
+import { registryTextures } from "../../../../packages/registry-definition/dist/registry-textures";
 import { EditorSection } from "./editor-section";
 
 export function StyleEffectsEditor() {
