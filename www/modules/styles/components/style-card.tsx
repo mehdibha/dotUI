@@ -14,7 +14,6 @@ import { cn } from "@dotui/ui/lib/utils";
 import { BlocksShowcase } from "@dotui/ui/registry/blocks/showcase/blocks-showcase/components/blocks-showcase";
 import type { RouterOutputs } from "@dotui/api";
 
-import { useDebounce } from "@/hooks/use-debounce";
 import { useMounted } from "@/hooks/use-mounted";
 
 export function StyleCard({

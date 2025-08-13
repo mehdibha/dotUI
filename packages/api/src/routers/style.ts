@@ -230,9 +230,32 @@ export const styleRouter = {
         return updatedStyle;
       });
     }),
-  // delete: protectedProcedure
-  //   .input(z.object({ id: uuidSchema }))
-  //   .mutation(async ({ ctx, input }) => {
-  //     return;
-  //   }),
+  delete: protectedProcedure
+    .input(z.object({ id: uuidSchema }))
+    .mutation(async ({ ctx, input }) => {
+      const existingStyle = await ctx.db.query.style.findFirst({
+        where: eq(style.id, input.id),
+      });
+
+      if (!existingStyle) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: `Style with ID '${input.id}' not found.`,
+        });
+      }
+
+      if (existingStyle.userId !== ctx.session.user.id) {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "You can only delete your own styles.",
+        });
+      }
+
+      const [deleted] = await ctx.db
+        .delete(style)
+        .where(eq(style.id, input.id))
+        .returning();
+
+      return deleted;
+    }),
 } satisfies TRPCRouterRecord;

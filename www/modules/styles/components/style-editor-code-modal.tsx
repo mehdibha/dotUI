@@ -17,7 +17,7 @@ const packageManagers: ("npm" | "pnpm" | "yarn" | "bun")[] = [
   "bun",
 ];
 
-export function StylePageCodeModal({
+export function StyleEditorCodeModal({
   children,
 }: {
   children: React.ReactNode;
