@@ -29,7 +29,7 @@ async function captureScreenshots() {
   });
 
   for (const style of featuredStyles) {
-    const pageUrl = `http://localhost:3000/block-view/${style.user.username}/${style.name}/blocks-showcase`;
+    const pageUrl = `http://localhost:3000/block-view/${style.user.username}/${style.name}/blocks-showcase?useActiveMode=false`;
 
     const page = await browser.newPage();
     await page.goto(pageUrl, {

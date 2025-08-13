@@ -210,7 +210,7 @@ export function PreviewContent({
           <Tooltip content="Open in new tab" delay={0}>
             <Button
               aria-label="Open in new tab"
-              href={`/block-view/${username}/${styleName}/${currentBlockName}`}
+              href={`/block-view/${username}/${styleName}/${currentBlockName}?useActiveMode=true`}
               target="_blank"
               variant="quiet"
               shape="square"
@@ -240,7 +240,7 @@ export function PreviewContent({
         )}
       >
         <iframe
-          src={`/block-view/${username}/${styleName}/${currentBlockName}`}
+          src={`/block-view/${username}/${styleName}/${currentBlockName}?useActiveMode=false`}
           onLoad={() => setLoading(false)}
           className={cn(
             "rounded-{inherit] size-full",

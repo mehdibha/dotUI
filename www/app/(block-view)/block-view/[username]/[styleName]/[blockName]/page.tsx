@@ -18,10 +18,13 @@ import { BlockProviders } from "./providers";
 
 export default async function BlockViewPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ username: string; styleName: string; blockName: string }>;
+  searchParams: Promise<{ useActiveMode?: string }>;
 }) {
   const { username, styleName, blockName } = await params;
+  const { useActiveMode } = await searchParams;
 
   const queryClient = getQueryClient();
   const style = await queryClient.fetchQuery(
@@ -36,7 +39,11 @@ export default async function BlockViewPage({
   }
 
   return (
-    <BlockProviders style={style} styleSlug={`${username}/${styleName}`}>
+    <BlockProviders
+      style={style}
+      styleSlug={`${username}/${styleName}`}
+      useActiveMode={useActiveMode === "true"}
+    >
       <BlockViewer name={blockName} />
     </BlockProviders>
   );
