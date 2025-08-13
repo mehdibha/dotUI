@@ -2,7 +2,8 @@
 
 import React from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   ArrowLeftIcon,
   CheckIcon,
@@ -18,23 +19,21 @@ import {
 } from "lucide-react";
 
 import { Button } from "@dotui/ui/components/button";
+import { Dialog, DialogFooter } from "@dotui/ui/components/dialog";
 import { FormControl } from "@dotui/ui/components/form";
 import { Menu, MenuItem, MenuRoot } from "@dotui/ui/components/menu";
 import { Skeleton } from "@dotui/ui/components/skeleton";
+import { toast } from "@dotui/ui/components/toast";
 import { Tooltip } from "@dotui/ui/components/tooltip";
 
 import { AutoResizeTextField } from "@/components/auto-resize-input";
 import { useMounted } from "@/hooks/use-mounted";
+import { useTRPCClient } from "@/lib/trpc/react";
 import { SignInModal } from "@/modules/auth/components/sign-in-modal";
 import { authClient } from "@/modules/auth/lib/client";
 import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
 import { CreateStyleModal } from "./create-style-modal";
 import { StylePageCodeModal } from "./style-page-code-modal";
-import { Dialog, DialogFooter } from "@dotui/ui/components/dialog";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useTRPCClient } from "@/lib/trpc/react";
-import { useRouter } from "next/navigation";
-import { toast } from "@dotui/ui/components/toast";
 
 export function StylePageHeader() {
   return (
@@ -209,7 +208,10 @@ function StylePageHeaderActions() {
       return await trpcClient.style.delete.mutate({ id: styleId });
     },
     onSuccess: async (deleted) => {
-      toast.add({ title: `Style ${deleted?.name ?? ""} deleted.`, variant: "success" });
+      toast.add({
+        title: `Style ${deleted?.name ?? ""} deleted.`,
+        variant: "success",
+      });
       await queryClient.invalidateQueries({ queryKey: ["trpc", "style"] });
       router.push("/styles/my-styles");
     },
@@ -304,7 +306,9 @@ function StylePageHeaderActions() {
             description="Are you sure you want to delete this style? This action is permanent and cannot be undone."
           >
             <DialogFooter>
-              <Button slot="close" variant="outline">Cancel</Button>
+              <Button slot="close" variant="outline">
+                Cancel
+              </Button>
               <Button
                 slot="close"
                 variant="danger"
