@@ -186,32 +186,33 @@ export const styleRouter = {
   update: protectedProcedure
     .input(styleDefinitionSchema.extend({ id: uuidSchema }))
     .mutation(async ({ ctx, input }) => {
-      const existingStyle = await ctx.db.query.style.findFirst({
-        where: eq(style.id, input.id),
+      return await ctx.db.transaction(async (tx) => {
+        const existingStyle = await tx.query.style.findFirst({
+          where: eq(style.id, input.id),
+        });
+
+        if (!existingStyle) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: `Style with ID '${input.id}' not found.`,
+          });
+        }
+
+        if (existingStyle.userId !== ctx.session.user.id) {
+          throw new TRPCError({
+            code: "UNAUTHORIZED",
+            message: "You can only update your own styles.",
+          });
+        }
+
+        const [updatedStyle] = await tx
+          .update(style)
+          .set({ ...input, updatedAt: new Date() })
+          .where(eq(style.id, input.id))
+          .returning();
+
+        return updatedStyle;
       });
-
-      if (!existingStyle) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: `Style with ID '${input.id}' not found.`,
-        });
-      }
-
-      if (existingStyle.userId !== ctx.session.user.id) {
-        throw new TRPCError({
-          code: "UNAUTHORIZED",
-          message: "You can only update your own styles.",
-        });
-      }
-
-      return await ctx.db
-        .update(style)
-        .set({
-          ...input,
-          updatedAt: new Date(),
-        })
-        .where(eq(style.id, input.id))
-        .returning();
     }),
   // delete: protectedProcedure
   //   .input(z.object({ id: uuidSchema }))
