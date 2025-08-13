@@ -157,6 +157,21 @@ export const styleRouter = {
   create: protectedProcedure
     .input(createStyleSchema)
     .mutation(async ({ ctx, input }) => {
+      // Ensure public style names are globally unique
+      if (input.visibility === "public") {
+        const existingPublic = await ctx.db.query.style.findFirst({
+          where: and(eq(style.name, input.name), eq(style.visibility, "public")),
+        });
+
+        if (existingPublic) {
+          throw new TRPCError({
+            code: "CONFLICT",
+            message: `Public style name '${input.name}' is already taken. Please choose another name.`,
+          });
+        }
+      }
+
+      // Ensure style names are unique per user regardless of visibility
       const existing = await ctx.db.query.style.findFirst({
         where: and(
           eq(style.userId, ctx.session.user.id),
