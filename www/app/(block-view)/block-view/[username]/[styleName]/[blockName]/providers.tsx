@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { UNSAFE_PortalProvider as PortalProvider } from "react-aria";
 import { useTheme } from "next-themes";
+import { UNSAFE_PortalProvider as PortalProvider } from "react-aria";
 
 import { StyleProvider } from "@dotui/ui";
 import { DisableSuspense } from "@dotui/ui/helpers/create-dynamic-component";
