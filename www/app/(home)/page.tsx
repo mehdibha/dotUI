@@ -19,6 +19,7 @@ import { getGitHubContributors } from "@/lib/github";
 import { caller } from "@/lib/trpc/server";
 
 export const dynamic = "force-static";
+export const revalidate = 60;
 
 export default async function HomePage() {
   const contributors = await getGitHubContributors();
