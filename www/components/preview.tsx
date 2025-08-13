@@ -71,7 +71,7 @@ export const Preview = () => {
             variant="default"
             size="sm"
             onPress={() => setOpen(true)}
-            className="bg-bg-inverse/5 border"
+            className="border bg-bg-inverse/5"
           >
             Preview
           </Button>
@@ -131,11 +131,11 @@ export function PreviewContent({
   return (
     <div
       className={cn(
-        "bg-bg size-full overflow-hidden rounded-md border",
+        "size-full overflow-hidden rounded-md border bg-bg",
         className,
       )}
     >
-      <div className="bg-bg-muted/50 flex items-center justify-between gap-2 border-b border-t-[inherit] px-1 py-1">
+      <div className="flex items-center justify-between gap-2 border-b border-t-[inherit] bg-bg-muted/50 px-1 py-1">
         <div className="flex w-32 items-center gap-3">
           <div className="flex items-center gap-1">
             {collapsible && (
@@ -160,7 +160,7 @@ export function PreviewContent({
           <Button
             size="sm"
             suffix={<ChevronsUpDownIcon />}
-            className="text-fg-muted h-7 min-w-32 justify-center rounded-sm"
+            className="h-7 min-w-32 justify-center rounded-sm text-fg-muted"
           >
             <SelectValue className="flex-0" />
           </Button>
@@ -236,7 +236,7 @@ export function PreviewContent({
       <div
         className={cn(
           "size-full",
-          isLoading && "bg-bg-muted relative block animate-pulse rounded-md",
+          isLoading && "relative block animate-pulse rounded-md bg-bg-muted",
         )}
       >
         <iframe
