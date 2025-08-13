@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ExternalLinkIcon, GlobeIcon, LockIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -29,10 +30,20 @@ const createStyleSchema = z.object({
   name: z
     .string()
     .min(1, "Name is required")
-    .min(2, "Name must be at least 2 characters"),
+    .min(2, "Name must be at least 2 characters")
+    .max(100, "Style name must be 100 characters or less")
+    .regex(
+      /^[a-z0-9._-]+$/,
+      "Style name must be lowercase and can only contain letters, digits, '.', '_' and '-'",
+    ),
   description: z.string().optional(),
   visibility: z.enum(["public", "unlisted", "private"]),
 });
+
+// Normalize spaces to dashes and uppercase to lowercase
+function normalizeStyleName(input: string): string {
+  return input.toLowerCase().replace(/\s+/g, "-");
+}
 
 type CreateStyleFormData = z.infer<typeof createStyleSchema>;
 
@@ -53,6 +64,8 @@ export function CreateStyleModal({
       visibility: "unlisted",
     },
   });
+
+  const [renamedTo, setRenamedTo] = React.useState<string | null>(null);
 
   const onSubmit = (data: CreateStyleFormData, close: () => void) => {
     createStyleMutation.mutate(
@@ -96,12 +109,18 @@ export function CreateStyleModal({
                 <FormControl
                   name="name"
                   control={form.control}
-                  render={(props) => (
+                  render={({ value, onChange, ...props }) => (
                     <TextField
                       label="Name"
                       autoFocus
                       className="w-full"
                       {...props}
+                      value={value}
+                      onChange={(val) => {
+                        const normalized = normalizeStyleName(val);
+                        onChange(normalized);
+                        setRenamedTo(normalized !== val ? normalized : null);
+                      }}
                     />
                   )}
                 />
@@ -171,6 +190,11 @@ export function CreateStyleModal({
                   />
                 )}
               />
+              {renamedTo && (
+                <Alert className="mt-3 text-xs font-normal">
+                  Your style will be renamed to "{renamedTo}"
+                </Alert>
+              )}
               {/* <div className="mt-4 bg-transparent">
               <p className="text-fg-muted text-sm">
               You can install it later with this command:
