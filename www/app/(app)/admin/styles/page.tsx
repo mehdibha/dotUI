@@ -1,9 +1,19 @@
 "use client";
 
 import React from "react";
-import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
 
-import { PageActions, PageHeader, PageHeaderDescription, PageHeaderHeading, PageLayout } from "@/components/page-layout";
+import {
+  PageActions,
+  PageHeader,
+  PageHeaderDescription,
+  PageHeaderHeading,
+  PageLayout,
+} from "@/components/page-layout";
 import { useMounted } from "@/hooks/use-mounted";
 import { useTRPCClient } from "@/lib/trpc/react";
 import { StylesList } from "@/modules/styles/components/styles-list";
@@ -17,7 +27,10 @@ export default function AdminStylesModerationPage() {
 
   const { data, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } =
     useInfiniteQuery({
-      queryKey: ["style.getPublicRecent", { type: "infinite", limit: PAGE_SIZE }],
+      queryKey: [
+        "style.getPublicRecent",
+        { type: "infinite", limit: PAGE_SIZE },
+      ],
       initialPageParam: 0,
       retry: false,
       queryFn: async ({ pageParam }) => {
@@ -26,7 +39,8 @@ export default function AdminStylesModerationPage() {
           limit: PAGE_SIZE,
           offset,
         });
-        const nextOffset = items.length === PAGE_SIZE ? offset + PAGE_SIZE : undefined;
+        const nextOffset =
+          items.length === PAGE_SIZE ? offset + PAGE_SIZE : undefined;
         return { items, nextOffset };
       },
       getNextPageParam: (lastPage) => lastPage.nextOffset,
@@ -37,12 +51,17 @@ export default function AdminStylesModerationPage() {
       return trpcClient.style.setFeatured.mutate(variables);
     },
     onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: ["style.getPublicRecent"] });
+      void queryClient.invalidateQueries({
+        queryKey: ["style.getPublicRecent"],
+      });
       void queryClient.invalidateQueries({ queryKey: ["style.getFeatured"] });
     },
   });
 
-  const styles = React.useMemo(() => data?.pages.flatMap((p) => p.items) ?? [], [data]);
+  const styles = React.useMemo(
+    () => data?.pages.flatMap((p) => p.items) ?? [],
+    [data],
+  );
 
   const sentinelRef = React.useRef<HTMLDivElement | null>(null);
   React.useEffect(() => {
@@ -52,7 +71,12 @@ export default function AdminStylesModerationPage() {
     const observer = new IntersectionObserver(
       (entries) => {
         const first = entries[0];
-        if (first && first.isIntersecting && hasNextPage && !isFetchingNextPage) {
+        if (
+          first &&
+          first.isIntersecting &&
+          hasNextPage &&
+          !isFetchingNextPage
+        ) {
           void fetchNextPage();
         }
       },
@@ -80,7 +104,9 @@ export default function AdminStylesModerationPage() {
           styles={styles}
           skeleton={isLoading && styles.length === 0}
           defaultView="ui-kit"
-          onToggleFeatured={(id, next) => setFeaturedMutation.mutate({ styleId: id, isFeatured: next })}
+          onToggleFeatured={(id, next) =>
+            setFeaturedMutation.mutate({ styleId: id, isFeatured: next })
+          }
         />
         <div ref={sentinelRef} />
         {isFetchingNextPage && <StylesList skeleton defaultView="ui-kit" />}

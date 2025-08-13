@@ -8,6 +8,7 @@ import { StyleProvider } from "@dotui/ui";
 import { Avatar } from "@dotui/ui/components/avatar";
 import { Badge } from "@dotui/ui/components/badge";
 import { Skeleton } from "@dotui/ui/components/skeleton";
+import { SwitchRoot } from "@dotui/ui/components/switch";
 import { AdobeIcon, TailwindIcon } from "@dotui/ui/icons";
 import { focusRing } from "@dotui/ui/lib/focus-styles";
 import { cn } from "@dotui/ui/lib/utils";
@@ -16,7 +17,6 @@ import type { RouterOutputs } from "@dotui/api";
 
 import { useDebounce } from "@/hooks/use-debounce";
 import { useMounted } from "@/hooks/use-mounted";
-import { SwitchRoot } from "@dotui/ui/components/switch";
 
 export function StyleCard({
   style,
