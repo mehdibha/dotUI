@@ -1,9 +1,10 @@
-import { HydrateClient, prefetch, trpc } from "@/lib/trpc/server";
-import { BlockView } from "@/modules/blocks/block-view";
 import {
   blocksCategories,
   registryBlocks,
-} from "../../../../../packages/registry-definition/dist/registry-blocks";
+} from "@dotui/registry-definition/registry-blocks";
+
+import { HydrateClient, prefetch, trpc } from "@/lib/trpc/server";
+import { BlockView } from "@/modules/blocks/block-view";
 
 export const dynamicParams = false;
 

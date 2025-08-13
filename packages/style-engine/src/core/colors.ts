@@ -7,7 +7,8 @@ import {
 } from "@adobe/leonardo-contrast-colors";
 import type { CssColor } from "@adobe/leonardo-contrast-colors";
 
-import { RADIUS_TOKENS } from "../../../registry-definition/dist/registry-tokens";
+import { RADIUS_TOKENS } from "@dotui/registry-definition/registry-tokens";
+
 import { SCALE_NUMBERRS } from "../constants";
 import type { ColorTokens, ModeDefinition, Radius, Theme } from "../types";
 

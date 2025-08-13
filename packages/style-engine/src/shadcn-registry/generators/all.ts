@@ -1,6 +1,7 @@
 import type { RegistryItem } from "shadcn/registry";
 
-import { registryUi } from "../../../../registry-definition/dist/registry-ui";
+import { registryUi } from "@dotui/registry-definition/registry-ui";
+
 import { updateRegistryDependencies } from "../helpers/update-registry-deps";
 import type { Style } from "../../types";
 

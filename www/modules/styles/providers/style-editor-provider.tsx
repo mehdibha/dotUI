@@ -9,13 +9,13 @@ import { z } from "zod";
 import type { ContrastColor } from "@adobe/leonardo-contrast-colors";
 import type { UseFormReturn } from "react-hook-form";
 
+import { COLOR_TOKENS } from "@dotui/registry-definition/registry-tokens";
 import { createColorScales } from "@dotui/style-engine/core";
 import { styleDefinitionSchema } from "@dotui/style-engine/schemas";
 import { toast } from "@dotui/ui/components/toast";
 
 import { useDebounce } from "@/hooks/use-debounce";
 import { useTRPC, useTRPCClient } from "@/lib/trpc/react";
-import { COLOR_TOKENS } from "../../../../packages/registry-definition/dist/registry-tokens";
 import { useLiveStyleProducer } from "../atoms/live-style-atom";
 import { usePreferences } from "../atoms/preferences-atom";
 

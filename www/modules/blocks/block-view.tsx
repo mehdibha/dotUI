@@ -3,6 +3,7 @@
 import React from "react";
 import { CopyIcon, ExternalLinkIcon, TerminalIcon } from "lucide-react";
 
+import { registryBlocks } from "@dotui/registry-definition/registry-blocks";
 import { BlockViewer } from "@dotui/ui/block-viewer";
 import { Button } from "@dotui/ui/components/button";
 import { Skeleton } from "@dotui/ui/components/skeleton";
@@ -11,7 +12,6 @@ import { ThemeModeSwitch } from "@/components/theme-mode-switch";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 import { ActiveStyleProvider } from "@/modules/styles/components/active-style-provider";
 import { useActiveStyle } from "@/modules/styles/hooks/use-active-style";
-import { registryBlocks } from "../../../packages/registry-definition/dist/registry-blocks";
 
 interface BlockViewProps {
   name: string;
