@@ -1,10 +1,11 @@
 "use client";
 
 import React from "react";
+import { useSearchParams } from "next/navigation";
+import { useTheme } from "next-themes";
 import { UNSAFE_PortalProvider as PortalProvider } from "react-aria";
 
 import { StyleProvider } from "@dotui/ui";
-import { DisableSuspense } from "@dotui/ui/helpers/create-dynamic-component";
 import type { StyleDefinition } from "@dotui/style-engine/types";
 
 import { useMounted } from "@/hooks/use-mounted";
@@ -22,29 +23,40 @@ export const BlockProviders = ({
 }) => {
   const overlayContainerRef = React.useRef(null);
 
+  const searchParams = useSearchParams();
+  const shouldUseActiveMode = Boolean(searchParams.get("mode"));
+  const shouldUseLiveStyle = Boolean(searchParams.get("live"));
+
   const { activeMode } = usePreferences();
   const isMounted = useMounted();
   const { liveStyle } = useLiveStyleConsumer(styleSlug);
+  const { resolvedTheme } = useTheme();
 
   const style = React.useMemo(() => {
-    return liveStyle ?? styleProp;
-  }, [liveStyle, styleProp]);
+    return shouldUseLiveStyle ? (liveStyle ?? styleProp) : styleProp;
+  }, [liveStyle, styleProp, shouldUseLiveStyle]);
 
   if (!isMounted || !style) return null;
+
+  const effectiveMode = shouldUseActiveMode
+    ? activeMode
+    : resolvedTheme === "dark"
+      ? "dark"
+      : "light";
 
   return (
     <>
       <StyleProvider
         ref={overlayContainerRef}
         style={style}
-        mode={activeMode}
+        mode={effectiveMode}
         unstyled
         className="text-fg"
       />
       <PortalProvider getContainer={() => overlayContainerRef.current}>
         <StyleProvider
           style={style}
-          mode={activeMode}
+          mode={effectiveMode}
           className="flex min-h-screen items-center justify-center"
         >
           {children}
