@@ -76,7 +76,7 @@ export const styleRouter = {
     .input(paginationSchema)
     .query(async ({ ctx, input }) => {
       const styles = await ctx.db.query.style.findMany({
-        where: eq(style.visibility, "public"),
+        where: and(eq(style.visibility, "public"), eq(style.isFeatured, false)),
         orderBy: (s, { desc }) => [desc(s.createdAt)],
         limit: input.limit,
         offset: input.offset,
