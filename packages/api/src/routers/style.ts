@@ -194,20 +194,20 @@ export const styleRouter = {
         if (!existingStyle) {
           throw new TRPCError({
             code: "NOT_FOUND",
-            message: `Style with ID '${input.id}' not found`,
+            message: `Style with ID '${input.id}' not found.`,
           });
         }
 
         if (existingStyle.userId !== ctx.session.user.id) {
           throw new TRPCError({
             code: "UNAUTHORIZED",
-            message: "You can only update your own styles",
+            message: "You can only update your own styles.",
           });
         }
 
         const [updatedStyle] = await tx
           .update(style)
-          .set(input)
+          .set({ ...input, updatedAt: new Date() })
           .where(eq(style.id, input.id))
           .returning();
 

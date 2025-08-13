@@ -13,7 +13,7 @@ import { Slider } from "@dotui/ui/components/slider";
 import { StyleProvider } from "@dotui/ui/index";
 import { Skeleton } from "@dotui/ui/registry/components/skeleton/basic";
 
-import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
+import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
 import { EditorSection } from "./editor-section";
 
 export function StyleIconsEditor() {

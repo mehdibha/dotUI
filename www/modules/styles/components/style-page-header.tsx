@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   ArrowLeftIcon,
   CheckIcon,
@@ -24,8 +25,11 @@ import { Skeleton } from "@dotui/ui/components/skeleton";
 import { Tooltip } from "@dotui/ui/components/tooltip";
 
 import { AutoResizeTextField } from "@/components/auto-resize-input";
-import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
-import { PublishStyleModal } from "./publish-style-modal";
+import { useMounted } from "@/hooks/use-mounted";
+import { SignInModal } from "@/modules/auth/components/sign-in-modal";
+import { authClient } from "@/modules/auth/lib/client";
+import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
+import { CreateStyleModal } from "./create-style-modal";
 import { StylePageCodeModal } from "./style-page-code-modal";
 
 export function StylePageHeader() {
@@ -37,7 +41,7 @@ export function StylePageHeader() {
       >
         <ArrowLeftIcon className="size-4" /> styles
       </Link>
-      <div className="mt-2 flex items-center justify-between">
+      <div className="mt-1 flex items-center justify-between lg:mt-2">
         <StylePageHeaderName />
         <div className="flex items-center gap-1">
           <StylePageHeaderActions />
@@ -170,15 +174,29 @@ function StylePageHeaderName() {
 
 function StylePageHeaderActions() {
   const { form } = useStyleForm();
+  const pathname = usePathname();
+  const segments = pathname.split("/");
+  const authorUsername = segments[2] ?? "";
+
+  const { data: session, isPending } = authClient.useSession();
+  const isMounted = useMounted();
 
   const handleReset = () => {
     form.reset();
   };
 
-  const isUserStyle = true;
+  const styleUserId = form.getValues("userId");
+  const isUserAuthenticated = Boolean(session?.user?.id);
+  const isUserStyle = Boolean(
+    isUserAuthenticated &&
+      ((styleUserId && session?.user?.id === styleUserId) ||
+        (session?.user?.username &&
+          authorUsername &&
+          session.user.username === authorUsername)),
+  );
 
   return (
-    <>
+    <Skeleton show={!isMounted || isPending}>
       <StylePageCodeModal>
         <Button size="sm" prefix={<CodeIcon />}>
           Code
@@ -195,28 +213,43 @@ function StylePageHeaderActions() {
           <RotateCcwIcon />
         </Button>
       </Tooltip>
-      {isUserStyle ? (
-        <Button
-          type="submit"
-          variant="primary"
-          size="sm"
-          prefix={<SaveIcon />}
-          isDisabled={!form.formState.isDirty}
-        >
-          Save
-        </Button>
-      ) : (
-        <PublishStyleModal>
+      {isUserAuthenticated ? (
+        isUserStyle ? (
           <Button
-            size="sm"
+            type="submit"
             variant="primary"
-            isDisabled={!form.formState.isDirty}
-            className="border border-bg-primary hover:border-bg-primary-hover"
-            prefix={<RocketIcon />}
+            size="sm"
+            prefix={<SaveIcon />}
+            isPending={form.formState.isSubmitting}
+            isDisabled={!form.formState.isDirty || form.formState.isSubmitting}
           >
+            Save
+          </Button>
+        ) : (
+          <CreateStyleModal
+            initialStyle={{
+              theme: form.getValues("theme"),
+              icons: form.getValues("icons"),
+              variants: form.getValues("variants"),
+            }}
+          >
+            <Button
+              size="sm"
+              variant="primary"
+              isDisabled={!form.formState.isDirty}
+              className="border border-bg-primary hover:border-bg-primary-hover"
+              prefix={<RocketIcon />}
+            >
+              Publish
+            </Button>
+          </CreateStyleModal>
+        )
+      ) : (
+        <SignInModal>
+          <Button size="sm" variant="primary">
             Publish
           </Button>
-        </PublishStyleModal>
+        </SignInModal>
       )}
       <MenuRoot>
         <Button aria-label="More actions" size="sm" shape="square">
@@ -241,6 +274,6 @@ function StylePageHeaderActions() {
           )}
         </Menu>
       </MenuRoot>
-    </>
+    </Skeleton>
   );
 }

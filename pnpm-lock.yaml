@@ -123,7 +123,7 @@ importers:
         version: 3.6.1
       puppeteer:
         specifier: ^24.16.0
-        version: 24.16.0(typescript@5.8.3)
+        version: 24.16.0(bufferutil@4.0.9)(typescript@5.8.3)
       turbo:
         specifier: ^2.5.1
         version: 2.5.4
@@ -298,18 +298,18 @@ importers:
       '@dotui/style-engine':
         specifier: workspace:*
         version: link:../style-engine
-      '@neondatabase/serverless':
-        specifier: ^0.10.1
-        version: 0.10.4
+      '@vercel/postgres':
+        specifier: ^0.10.0
+        version: 0.10.0
       dotenv:
         specifier: ^16.4.5
         version: 16.5.0
       drizzle-orm:
         specifier: ^0.44.1
-        version: 0.44.2(@neondatabase/serverless@0.10.4)(@types/pg@8.15.4)(kysely@0.28.2)(pg@8.16.2)
+        version: 0.44.2(@neondatabase/serverless@0.10.4)(@types/pg@8.15.4)(@vercel/postgres@0.10.0)(kysely@0.28.2)(pg@8.16.2)
       drizzle-zod:
         specifier: ^0.8.2
-        version: 0.8.2(drizzle-orm@0.44.2(@neondatabase/serverless@0.10.4)(@types/pg@8.15.4)(kysely@0.28.2)(pg@8.16.2))(zod@4.0.5)
+        version: 0.8.2(drizzle-orm@0.44.2(@neondatabase/serverless@0.10.4)(@types/pg@8.15.4)(@vercel/postgres@0.10.0)(kysely@0.28.2)(pg@8.16.2))(zod@4.0.5)
       zod:
         specifier: 'catalog:'
         version: 4.0.5
@@ -562,7 +562,7 @@ importers:
         version: 3.8.2
       '@next/bundle-analyzer':
         specifier: ^15.3.3
-        version: 15.3.4
+        version: 15.3.4(bufferutil@4.0.9)
       '@radix-ui/react-collapsible':
         specifier: ^1.0.3
         version: 1.1.11(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -2038,6 +2038,9 @@ packages:
 
   '@neondatabase/serverless@0.10.4':
     resolution: {integrity: sha512-2nZuh3VUO9voBauuh+IGYRhGU/MskWHt1IuZvHcJw6GLjDgtqj/KViKo7SIrLdGLdot7vFbiRRw+BgEy3wT9HA==}
+
+  '@neondatabase/serverless@0.9.5':
+    resolution: {integrity: sha512-siFas6gItqv6wD/pZnvdu34wEqgG3nSE6zWZdq5j2DEsa+VvX8i/5HXJOo06qrw5axPXn+lGCxeR+NLaSPIXug==}
 
   '@next/bundle-analyzer@15.3.4':
     resolution: {integrity: sha512-AN9H9S+4WaIIahyJBGe6arLj5kopvVZPLffAJsDhkbQPGqirYqaHhwO6vheytXtdq3xNjwJLpbmYNa5ZQnitSw==}
@@ -3694,6 +3697,10 @@ packages:
       vue-router:
         optional: true
 
+  '@vercel/postgres@0.10.0':
+    resolution: {integrity: sha512-fSD23DxGND40IzSkXjcFcxr53t3Tiym59Is0jSYIFpG4/0f0KO9SGtcp1sXiebvPaGe7N/tU05cH4yt2S6/IPg==}
+    engines: {node: '>=18.14'}
+
   '@vitest/coverage-v8@2.1.9':
     resolution: {integrity: sha512-Z2cOr0ksM00MpEfyVE8KXIYPEcBFxdbLSs56L8PO0QQMxt/6bDj45uQfxoc96v05KW3clk7vvgP0qfDit9DmfQ==}
     peerDependencies:
@@ -3990,6 +3997,10 @@ packages:
 
   buffer@6.0.3:
     resolution: {integrity: sha512-FTiCpNxtwiZZHEZbcbTIcZjERVICn9yq/pDFkTl95/AxzD1naBctN7YO68riM/gLSDY7sdrMby8hofADYuuqOA==}
+
+  bufferutil@4.0.9:
+    resolution: {integrity: sha512-WDtdLmJvAuNNPzByAYpRo2rF1Mmradw6gvWsQKf63476DDXmomT9zUiGypLcG4ibIM67vhAj8jJRdbmEws2Aqw==}
+    engines: {node: '>=6.14.2'}
 
   busboy@1.6.0:
     resolution: {integrity: sha512-8SFQbg/0hQ9xy3UNTB0YEnsNBbWfhf7RtnzpL7TkBiTBRfrQ9Fxcnz7VJsleJpyp6rVLvXiuORqjlHi5q+PYuA==}
@@ -6110,6 +6121,10 @@ packages:
   node-fetch@3.3.2:
     resolution: {integrity: sha512-dRB78srN/l6gqWulah9SrxeYnxeddIG30+GOqK/9OlLVyLg3HPnr6SqOWTWOXKRwC2eGYCkZ59NNuSgvSrpgOA==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+
+  node-gyp-build@4.8.4:
+    resolution: {integrity: sha512-LA4ZjwlnUblHVgq0oBF3Jl/6h/Nvs5fzBLwdEF4nuxnFdsfajde4WfxtJr3CaiH+F6ewcIB/q4jQ4UzPyid+CQ==}
+    hasBin: true
 
   node-plop@0.26.3:
     resolution: {integrity: sha512-Cov028YhBZ5aB7MdMWJEmwyBig43aGL5WT4vdoB28Oitau1zZAcHUn8Sgfk9HM33TqhtLJ9PlM/O0Mv+QpV/4Q==}
@@ -8807,10 +8822,15 @@ snapshots:
   '@neondatabase/serverless@0.10.4':
     dependencies:
       '@types/pg': 8.11.6
+    optional: true
 
-  '@next/bundle-analyzer@15.3.4':
+  '@neondatabase/serverless@0.9.5':
     dependencies:
-      webpack-bundle-analyzer: 4.10.1
+      '@types/pg': 8.11.6
+
+  '@next/bundle-analyzer@15.3.4(bufferutil@4.0.9)':
+    dependencies:
+      webpack-bundle-analyzer: 4.10.1(bufferutil@4.0.9)
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -10852,6 +10872,14 @@ snapshots:
       next: 15.3.4(babel-plugin-react-compiler@19.1.0-rc.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       react: 19.0.0
 
+  '@vercel/postgres@0.10.0':
+    dependencies:
+      '@neondatabase/serverless': 0.9.5
+      bufferutil: 4.0.9
+      ws: 8.18.3(bufferutil@4.0.9)
+    transitivePeerDependencies:
+      - utf-8-validate
+
   '@vitest/coverage-v8@2.1.9(vitest@2.1.9(@types/node@22.15.33)(lightningcss@1.30.1)(msw@2.10.2(@types/node@22.15.33)(typescript@5.8.3)))':
     dependencies:
       '@ampproject/remapping': 2.3.0
@@ -11214,6 +11242,10 @@ snapshots:
     dependencies:
       base64-js: 1.5.1
       ieee754: 1.2.1
+
+  bufferutil@4.0.9:
+    dependencies:
+      node-gyp-build: 4.8.4
 
   busboy@1.6.0:
     dependencies:
@@ -11606,16 +11638,17 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.44.2(@neondatabase/serverless@0.10.4)(@types/pg@8.15.4)(kysely@0.28.2)(pg@8.16.2):
+  drizzle-orm@0.44.2(@neondatabase/serverless@0.10.4)(@types/pg@8.15.4)(@vercel/postgres@0.10.0)(kysely@0.28.2)(pg@8.16.2):
     optionalDependencies:
       '@neondatabase/serverless': 0.10.4
       '@types/pg': 8.15.4
+      '@vercel/postgres': 0.10.0
       kysely: 0.28.2
       pg: 8.16.2
 
-  drizzle-zod@0.8.2(drizzle-orm@0.44.2(@neondatabase/serverless@0.10.4)(@types/pg@8.15.4)(kysely@0.28.2)(pg@8.16.2))(zod@4.0.5):
+  drizzle-zod@0.8.2(drizzle-orm@0.44.2(@neondatabase/serverless@0.10.4)(@types/pg@8.15.4)(@vercel/postgres@0.10.0)(kysely@0.28.2)(pg@8.16.2))(zod@4.0.5):
     dependencies:
-      drizzle-orm: 0.44.2(@neondatabase/serverless@0.10.4)(@types/pg@8.15.4)(kysely@0.28.2)(pg@8.16.2)
+      drizzle-orm: 0.44.2(@neondatabase/serverless@0.10.4)(@types/pg@8.15.4)(@vercel/postgres@0.10.0)(kysely@0.28.2)(pg@8.16.2)
       zod: 4.0.5
 
   dunder-proto@1.0.1:
@@ -13818,6 +13851,8 @@ snapshots:
       fetch-blob: 3.2.0
       formdata-polyfill: 4.0.10
 
+  node-gyp-build@4.8.4: {}
+
   node-plop@0.26.3:
     dependencies:
       '@babel/runtime-corejs3': 7.27.6
@@ -14246,27 +14281,27 @@ snapshots:
 
   punycode@2.3.1: {}
 
-  puppeteer-core@24.16.0:
+  puppeteer-core@24.16.0(bufferutil@4.0.9):
     dependencies:
       '@puppeteer/browsers': 2.10.6
       chromium-bidi: 7.2.0(devtools-protocol@0.0.1475386)
       debug: 4.4.1
       devtools-protocol: 0.0.1475386
       typed-query-selector: 2.12.0
-      ws: 8.18.3
+      ws: 8.18.3(bufferutil@4.0.9)
     transitivePeerDependencies:
       - bare-buffer
       - bufferutil
       - supports-color
       - utf-8-validate
 
-  puppeteer@24.16.0(typescript@5.8.3):
+  puppeteer@24.16.0(bufferutil@4.0.9)(typescript@5.8.3):
     dependencies:
       '@puppeteer/browsers': 2.10.6
       chromium-bidi: 7.2.0(devtools-protocol@0.0.1475386)
       cosmiconfig: 9.0.0(typescript@5.8.3)
       devtools-protocol: 0.0.1475386
-      puppeteer-core: 24.16.0
+      puppeteer-core: 24.16.0(bufferutil@4.0.9)
       typed-query-selector: 2.12.0
     transitivePeerDependencies:
       - bare-buffer
@@ -15617,7 +15652,7 @@ snapshots:
 
   web-streams-polyfill@3.3.3: {}
 
-  webpack-bundle-analyzer@4.10.1:
+  webpack-bundle-analyzer@4.10.1(bufferutil@4.0.9):
     dependencies:
       '@discoveryjs/json-ext': 0.5.7
       acorn: 8.15.0
@@ -15631,7 +15666,7 @@ snapshots:
       opener: 1.5.2
       picocolors: 1.1.1
       sirv: 2.0.4
-      ws: 7.5.10
+      ws: 7.5.10(bufferutil@4.0.9)
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -15710,9 +15745,13 @@ snapshots:
 
   wrappy@1.0.2: {}
 
-  ws@7.5.10: {}
+  ws@7.5.10(bufferutil@4.0.9):
+    optionalDependencies:
+      bufferutil: 4.0.9
 
-  ws@8.18.3: {}
+  ws@8.18.3(bufferutil@4.0.9):
+    optionalDependencies:
+      bufferutil: 4.0.9
 
   xtend@4.0.2: {}
 

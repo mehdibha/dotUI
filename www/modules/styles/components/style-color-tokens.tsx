@@ -29,7 +29,7 @@ import { cn } from "@dotui/ui/lib/utils";
 import type { TableRootProps } from "@dotui/ui/components/table";
 
 import { AutoResizeTextField } from "@/components/auto-resize-input";
-import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
+import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
 
 export const ColorTokens = ({
   variant = "line",

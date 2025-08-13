@@ -4,7 +4,7 @@ import { FormControl } from "@dotui/ui/components/form";
 import { Skeleton } from "@dotui/ui/components/skeleton";
 import { Slider } from "@dotui/ui/components/slider";
 
-import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
+import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
 import { EditorSection } from "./editor-section";
 
 export function StyleLayoutEditor() {

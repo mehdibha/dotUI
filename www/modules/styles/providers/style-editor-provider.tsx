@@ -12,6 +12,7 @@ import type { UseFormReturn } from "react-hook-form";
 import { COLOR_TOKENS } from "@dotui/registry-definition/registry-tokens";
 import { createColorScales } from "@dotui/style-engine/core";
 import { styleDefinitionSchema } from "@dotui/style-engine/schemas";
+import { toast } from "@dotui/ui/components/toast";
 
 import { useDebounce } from "@/hooks/use-debounce";
 import { useTRPC, useTRPCClient } from "@/lib/trpc/react";
@@ -34,6 +35,7 @@ export type StyleFormData = z.infer<typeof formSchema>;
 
 interface StyleFormContextType {
   form: UseFormReturn<StyleFormData>;
+  styleId: string;
   resolvedMode: "light" | "dark";
   generatedTheme: ContrastColor[];
   isLoading: boolean;
@@ -52,7 +54,7 @@ export function useStyleForm() {
   return context;
 }
 
-export function StylePagesProvider({
+export function StyleEditorProvider({
   children,
 }: {
   children: React.ReactNode;
@@ -123,6 +125,7 @@ export function StylePagesProvider({
     <StyleFormContext.Provider
       value={{
         form,
+        styleId: style?.id ?? "",
         resolvedMode,
         generatedTheme,
         isLoading,
@@ -135,72 +138,93 @@ export function StylePagesProvider({
   );
 }
 
-export default function StylePageForm({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const { form } = useStyleForm();
+export function StyleEditorForm({ children }: { children: React.ReactNode }) {
+  const { form, styleId } = useStyleForm();
   const trpc = useTRPC();
   const trpcClient = useTRPCClient();
   const queryClient = useQueryClient();
 
-  // const updateStyleMutation = useMutation({
-  //   mutationFn: async (data: StyleFormData) => {
-  //     return await trpcClient.style.update.mutate({
-  //       ...data,
-  //       slug,
-  //     });
-  //   },
-  //   onMutate: async (variables) => {
-  //     await queryClient.cancelQueries({
-  //       queryKey: trpc.style.bySlug.queryKey({ slug }),
-  //     });
+  const pathname = usePathname();
+  const segments = pathname.split("/");
+  const username = segments[2] ?? "";
+  const styleName = segments[3] ?? "";
 
-  //     const previousStyle = queryClient.getQueryData(
-  //       trpc.style.bySlug.queryKey({ slug }),
-  //     );
+  const updateStyleMutation = useMutation({
+    mutationFn: async (data: StyleFormData) => {
+      if (!styleId) throw new Error("Missing style id");
+      return await trpcClient.style.update.mutate({
+        id: styleId,
+        theme: data.theme,
+        icons: data.icons,
+        variants: data.variants,
+      });
+    },
+    onMutate: async (variables: StyleFormData) => {
+      const queryKey = trpc.style.getByNameAndUsername.queryKey({
+        name: styleName,
+        username,
+      });
 
-  //     queryClient.setQueryData(trpc.style.bySlug.queryKey({ slug }), {
-  //       ...variables,
-  //       slug,
-  //     });
+      await queryClient.cancelQueries({ queryKey });
 
-  //     return { previousStyle };
-  //   },
-  //   onError: (error: any, variables, context) => {
-  //     if (context?.previousStyle) {
-  //       queryClient.setQueryData(
-  //         trpc.style.bySlug.queryKey({ slug }),
-  //         context.previousStyle,
-  //       );
-  //     }
-  //     console.error("Failed to update style:", {
-  //       error: error.message || error,
-  //       data: variables,
-  //       slug,
-  //     });
-  //   },
-  //   onSuccess: () => {
-  //     console.log("✅ Style updated successfully:");
-  //   },
-  //   onSettled: () => {
-  //     queryClient.invalidateQueries({
-  //       queryKey: trpc.style.bySlug.queryKey({ slug }),
-  //     });
-  //   },
-  // });
+      const previousStyle = queryClient.getQueryData(queryKey);
+
+      queryClient.setQueryData(queryKey, (old: any) => {
+        if (!old) return old;
+        return {
+          ...old,
+          theme: variables.theme,
+          icons: variables.icons,
+          variants: variables.variants,
+          updatedAt: new Date(),
+        };
+      });
+
+      return { previousStyle, queryKey } as const;
+    },
+    onError: (error: unknown, _variables, context) => {
+      if (context?.previousStyle) {
+        queryClient.setQueryData(context.queryKey, context.previousStyle);
+      }
+      toast.add({
+        title: "Failed to update style",
+        variant: "danger",
+      });
+    },
+    onSuccess: (updated: any) => {
+      const queryKey = trpc.style.getByNameAndUsername.queryKey({
+        name: styleName,
+        username,
+      });
+      queryClient.setQueryData(queryKey, updated);
+      if (updated) {
+        const nextValues = { ...updated, slug: updated.name } as StyleFormData;
+        form.reset(
+          {
+            ...nextValues,
+            description:
+              nextValues.description ?? form.getValues("description"),
+            userId: nextValues.userId ?? form.getValues("userId"),
+          },
+          { keepDirty: false },
+        );
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: trpc.style.getByNameAndUsername.queryKey({
+          name: styleName,
+          username,
+        }),
+      });
+    },
+  });
 
   const handleSubmit = form.handleSubmit(
     async (data) => {
       try {
         console.log("🔄 Submitting style update...");
-        // toast.add({
-        //   title: "Style updated",
-        //   description: "Your style has been updated successfully",
-        //   variant: "success",
-        // });
-        // await updateStyleMutation.mutateAsync(data);
+        await updateStyleMutation.mutateAsync(data);
       } catch (error) {
         console.error("Submission failed:", error);
       }

@@ -1,4 +1,4 @@
-import { Globe2Icon, LockIcon } from "lucide-react";
+import { ExternalLinkIcon, Globe2Icon, LockIcon } from "lucide-react";
 
 import { Button } from "@dotui/ui/components/button";
 import {
@@ -8,6 +8,7 @@ import {
   DialogRoot,
 } from "@dotui/ui/components/dialog";
 import { Select, SelectItem } from "@dotui/ui/components/select";
+import { TextArea } from "@dotui/ui/components/text-area";
 import { TextField } from "@dotui/ui/components/text-field";
 
 export function PublishStyleModal({ children }: { children: React.ReactNode }) {
@@ -17,6 +18,7 @@ export function PublishStyleModal({ children }: { children: React.ReactNode }) {
       <Dialog
         title="Publish your style"
         description="Follow these steps to correctly publish your style."
+        modalProps={{ className: "max-w-lg" }}
       >
         <DialogBody className="-mx-6 space-y-2 px-6 pt-1 [&_[data-slot='label']]:text-sm">
           <TextField
@@ -37,10 +39,14 @@ export function PublishStyleModal({ children }: { children: React.ReactNode }) {
             <SelectItem id="public" prefix={<Globe2Icon />}>
               Public
             </SelectItem>
+            <SelectItem id="unlisted" prefix={<ExternalLinkIcon />}>
+              Unlisted
+            </SelectItem>
             <SelectItem id="private" isDisabled prefix={<LockIcon />}>
               Private
             </SelectItem>
           </Select>
+          <TextArea label="Description (optional)" className="w-full" />
         </DialogBody>
         <DialogFooter>
           <Button slot="close">Cancel</Button>

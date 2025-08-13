@@ -51,7 +51,7 @@ import { Tooltip } from "@dotui/ui/components/tooltip";
 import { cn } from "@dotui/ui/lib/utils";
 
 import { AutoResizeTextField } from "@/components/auto-resize-input";
-import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
+import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
 
 export function ScaleEditor({ scaleId }: { scaleId: string }) {
   const { form, resolvedMode } = useStyleForm();

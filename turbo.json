@@ -42,7 +42,7 @@
     }
   },
   "globalEnv": [
-    "DATABASE_URL",
+    "POSTGRES_URL",
     "GITHUB_CLIENT_ID",
     "GITHUB_CLIENT_SECRET",
     "AUTH_SECRET",

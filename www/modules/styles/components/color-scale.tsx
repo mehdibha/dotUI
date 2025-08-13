@@ -16,7 +16,7 @@ import type {
 import { Skeleton } from "@dotui/ui/components/skeleton";
 import { Tooltip } from "@dotui/ui/components/tooltip";
 
-import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
+import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
 import { usePreferences } from "../atoms/preferences-atom";
 
 interface ColorScaleProps {

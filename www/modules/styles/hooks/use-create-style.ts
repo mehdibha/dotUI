@@ -17,6 +17,7 @@ interface CreateStyleInput {
   name: string;
   description?: string;
   visibility?: "public" | "unlisted" | "private";
+  styleOverrides?: Partial<StyleDefinition>;
 }
 
 export function useCreateStyle() {
@@ -28,12 +29,14 @@ export function useCreateStyle() {
   return useMutation({
     mutationFn: async (data: CreateStyleInput) => {
       const styleData: StyleDefinition = {
-        theme: DEFAULT_THEME,
+        theme: data.styleOverrides?.theme ?? DEFAULT_THEME,
         icons: {
-          library: DEFAULT_ICON_LIBRARY,
-          strokeWidth: DEFAULT_ICON_STROKE_WIDTH,
+          library: data.styleOverrides?.icons?.library ?? DEFAULT_ICON_LIBRARY,
+          strokeWidth:
+            data.styleOverrides?.icons?.strokeWidth ??
+            DEFAULT_ICON_STROKE_WIDTH,
         },
-        variants: DEFAULT_VARIANTS_DEFINITION,
+        variants: data.styleOverrides?.variants ?? DEFAULT_VARIANTS_DEFINITION,
       };
 
       const created = await trpcClient.style.create.mutate({

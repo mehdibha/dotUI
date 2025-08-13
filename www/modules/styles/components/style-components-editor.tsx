@@ -39,7 +39,7 @@ import { ChevronsUpDownIcon } from "@dotui/ui/icons";
 import { cn } from "@dotui/ui/lib/utils";
 import type { VariantsDefinition } from "@dotui/style-engine/types";
 
-import { useStyleForm } from "@/modules/styles/providers/style-pages-provider";
+import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
 import { usePreferences } from "../atoms/preferences-atom";
 import { ColorTokens } from "./style-color-tokens";
 
