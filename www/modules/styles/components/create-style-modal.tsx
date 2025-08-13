@@ -23,21 +23,14 @@ import { TextField } from "@dotui/ui/components/text-field";
 import { toast } from "@dotui/ui/components/toast";
 import { cn } from "@dotui/ui/lib/utils";
 import type { StyleDefinition } from "@dotui/style-engine/types";
+import { createStyleSchema as dbCreateStyleSchema } from "@dotui/db/schemas";
 
 import { useCreateStyle } from "../hooks/use-create-style";
 
 const createStyleSchema = z.object({
-  name: z
-    .string()
-    .min(1, "Name is required")
-    .min(2, "Name must be at least 2 characters")
-    .max(100, "Style name must be 100 characters or less")
-    .regex(
-      /^[a-z0-9._-]+$/,
-      "Style name must be lowercase and can only contain letters, digits, '.', '_' and '-'",
-    ),
+  name: dbCreateStyleSchema.shape.name,
   description: z.string().optional(),
-  visibility: z.enum(["public", "unlisted", "private"]),
+  visibility: dbCreateStyleSchema.shape.visibility,
 });
 
 // Normalize spaces to dashes and uppercase to lowercase
@@ -182,11 +175,13 @@ export function CreateStyleModal({
               <FormControl
                 name="description"
                 control={form.control}
-                render={(props) => (
+                render={({ value, onChange, ...props }) => (
                   <TextArea
                     label="Description (optional)"
                     className="mt-3 w-full"
                     {...props}
+                    value={value ?? ""}
+                    onChange={onChange}
                   />
                 )}
               />
