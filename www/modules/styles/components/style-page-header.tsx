@@ -13,7 +13,6 @@ import {
   RocketIcon,
   RotateCcwIcon,
   SaveIcon,
-  StarIcon,
   Trash2Icon,
   XIcon,
 } from "lucide-react";
@@ -31,6 +30,11 @@ import { authClient } from "@/modules/auth/lib/client";
 import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
 import { CreateStyleModal } from "./create-style-modal";
 import { StylePageCodeModal } from "./style-page-code-modal";
+import { Dialog, DialogFooter } from "@dotui/ui/components/dialog";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useTRPCClient } from "@/lib/trpc/react";
+import { useRouter } from "next/navigation";
+import { toast } from "@dotui/ui/components/toast";
 
 export function StylePageHeader() {
   return (
@@ -173,13 +177,17 @@ function StylePageHeaderName() {
 }
 
 function StylePageHeaderActions() {
-  const { form } = useStyleForm();
+  const { form, styleId } = useStyleForm();
   const pathname = usePathname();
   const segments = pathname.split("/");
   const authorUsername = segments[2] ?? "";
 
   const { data: session, isPending } = authClient.useSession();
   const isMounted = useMounted();
+  const router = useRouter();
+  const trpcClient = useTRPCClient();
+  const queryClient = useQueryClient();
+  const [isDeleteOpen, setDeleteOpen] = React.useState(false);
 
   const handleReset = () => {
     form.reset();
@@ -194,6 +202,21 @@ function StylePageHeaderActions() {
           authorUsername &&
           session.user.username === authorUsername)),
   );
+
+  const deleteMutation = useMutation({
+    mutationFn: async () => {
+      if (!styleId) throw new Error("Missing style id");
+      return await trpcClient.style.delete.mutate({ id: styleId });
+    },
+    onSuccess: async (deleted) => {
+      toast.add({ title: `Style ${deleted?.name ?? ""} deleted.`, variant: "success" });
+      await queryClient.invalidateQueries({ queryKey: ["trpc", "style"] });
+      router.push("/styles/my-styles");
+    },
+    onError: () => {
+      toast.add({ title: "Failed to delete style", variant: "danger" });
+    },
+  });
 
   return (
     <Skeleton show={!isMounted || isPending}>
@@ -236,7 +259,6 @@ function StylePageHeaderActions() {
             <Button
               size="sm"
               variant="primary"
-              isDisabled={!form.formState.isDirty}
               className="border border-bg-primary hover:border-bg-primary-hover"
               prefix={<RocketIcon />}
             >
@@ -251,29 +273,50 @@ function StylePageHeaderActions() {
           </Button>
         </SignInModal>
       )}
-      <MenuRoot>
-        <Button aria-label="More actions" size="sm" shape="square">
-          <EllipsisIcon />
-        </Button>
-        <Menu
-          overlayProps={{
-            popoverProps: {
-              placement: "bottom right",
-            },
-          }}
-        >
-          <MenuItem prefix={<CopyIcon />}>Clone</MenuItem>
-          {isUserStyle && (
-            <>
-              <MenuItem prefix={<StarIcon />}>Favorite</MenuItem>
-              <MenuItem prefix={<PencilIcon />}>Rename</MenuItem>
-              <MenuItem variant="danger" prefix={<Trash2Icon />}>
+      {isUserStyle && (
+        <>
+          <MenuRoot>
+            <Button aria-label="More actions" size="sm" shape="square">
+              <EllipsisIcon />
+            </Button>
+            <Menu
+              overlayProps={{
+                popoverProps: {
+                  placement: "bottom right",
+                },
+              }}
+            >
+              <MenuItem prefix={<CopyIcon />}>Clone</MenuItem>
+              <MenuItem
+                variant="danger"
+                prefix={<Trash2Icon />}
+                onAction={() => setDeleteOpen(true)}
+              >
                 Delete style
               </MenuItem>
-            </>
-          )}
-        </Menu>
-      </MenuRoot>
+            </Menu>
+          </MenuRoot>
+          <Dialog
+            isOpen={isDeleteOpen}
+            onOpenChange={setDeleteOpen}
+            role="alertdialog"
+            title="Delete style"
+            description="Are you sure you want to delete this style? This action is permanent and cannot be undone."
+          >
+            <DialogFooter>
+              <Button slot="close" variant="outline">Cancel</Button>
+              <Button
+                slot="close"
+                variant="danger"
+                isPending={deleteMutation.isPending}
+                onPress={() => deleteMutation.mutate()}
+              >
+                Delete
+              </Button>
+            </DialogFooter>
+          </Dialog>
+        </>
+      )}
     </Skeleton>
   );
 }
