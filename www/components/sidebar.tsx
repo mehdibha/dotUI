@@ -154,6 +154,15 @@ export const Sidebar = ({
               name: "Styles",
               url: "/styles",
             },
+            ...(session?.user?.role === "admin"
+              ? ([
+                  {
+                    icon: <LogInIcon />, // reuse an icon available
+                    name: "Admin",
+                    url: "/admin",
+                  },
+                ] as const)
+              : ([] as const)),
           ].map((item) => (
             <StyledTooltip
               key={item.url}

@@ -16,13 +16,16 @@ import type { RouterOutputs } from "@dotui/api";
 
 import { useDebounce } from "@/hooks/use-debounce";
 import { useMounted } from "@/hooks/use-mounted";
+import { SwitchRoot } from "@dotui/ui/components/switch";
 
 export function StyleCard({
   style,
   variant = "ui-kit",
+  onToggleFeatured,
 }: {
   style: RouterOutputs["style"]["getFeatured"][number];
   variant?: "ui-kit" | "card";
+  onToggleFeatured?: (styleId: string, next: boolean) => void;
 }) {
   const [isLoading, setLoading] = React.useState(true);
   const { resolvedTheme } = useTheme();
@@ -42,6 +45,15 @@ export function StyleCard({
             {style.name}
           </h2>
         </div>
+        {onToggleFeatured && (
+          <div>
+            <span className="mr-2 text-sm text-fg-muted">Featured</span>
+            <SwitchRoot
+              isSelected={!!style.isFeatured}
+              onChange={(selected) => onToggleFeatured(style.id, selected)}
+            />
+          </div>
+        )}
         {style.description && (
           <p className="text-base text-balance text-fg-muted">
             {style.description}

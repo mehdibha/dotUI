@@ -6,7 +6,7 @@ import { and, eq } from "@dotui/db";
 import { createStyleSchema, style, user } from "@dotui/db/schemas";
 import { styleDefinitionSchema } from "@dotui/style-engine/schemas";
 
-import { protectedProcedure, publicProcedure } from "../trpc";
+import { adminProcedure, protectedProcedure, publicProcedure } from "../trpc";
 
 const uuidSchema = z.string().min(1);
 const paginationSchema = z.object({
@@ -229,6 +229,26 @@ export const styleRouter = {
 
         return updatedStyle;
       });
+    }),
+  setFeatured: adminProcedure
+    .input(
+      z.object({
+        styleId: uuidSchema,
+        isFeatured: z.boolean(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const [updated] = await ctx.db
+        .update(style)
+        .set({ isFeatured: input.isFeatured, updatedAt: new Date() })
+        .where(eq(style.id, input.styleId))
+        .returning({ id: style.id, isFeatured: style.isFeatured });
+
+      if (!updated) {
+        throw new TRPCError({ code: "NOT_FOUND", message: "Style not found" });
+      }
+
+      return updated;
     }),
   // delete: protectedProcedure
   //   .input(z.object({ id: uuidSchema }))

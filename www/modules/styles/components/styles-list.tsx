@@ -17,12 +17,14 @@ export function StylesList({
   styles,
   skeleton = false,
   search = false,
+  onToggleFeatured,
   ...props
 }: React.ComponentProps<"div"> & {
   styles?: RouterOutputs["style"]["getFeatured"];
   skeleton?: boolean;
   search?: boolean;
   defaultView?: "ui-kit" | "card";
+  onToggleFeatured?: (styleId: string, next: boolean) => void;
 }) {
   const [view, setView] = React.useState<"ui-kit" | "card">(defaultView);
   const [query, setQuery] = React.useState("");
@@ -129,7 +131,12 @@ export function StylesList({
           </div>
         )}
         {filtered.map((style) => (
-          <StyleCard key={style.name} style={style} variant={view} />
+          <StyleCard
+            key={style.name}
+            style={style}
+            variant={view}
+            onToggleFeatured={onToggleFeatured}
+          />
         ))}
       </div>
     </div>
