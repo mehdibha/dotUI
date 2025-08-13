@@ -20,7 +20,7 @@
 
 "📌 area: registry-definition":
   - changed-files:
-      - any-glob-to-any-file: ["packages/registry-defintion/**"]
+      - any-glob-to-any-file: ["packages/registry-definition/**"]
 
 "📌 area: tailwindcss-auto-contrast":
   - changed-files:
