@@ -160,7 +160,10 @@ export const styleRouter = {
       // Ensure public style names are globally unique
       if (input.visibility === "public") {
         const existingPublic = await ctx.db.query.style.findFirst({
-          where: and(eq(style.name, input.name), eq(style.visibility, "public")),
+          where: and(
+            eq(style.name, input.name),
+            eq(style.visibility, "public"),
+          ),
         });
 
         if (existingPublic) {
