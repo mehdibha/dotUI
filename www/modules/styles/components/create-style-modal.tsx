@@ -1,10 +1,12 @@
 "use client";
 
+import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ExternalLinkIcon, GlobeIcon, LockIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { createStyleSchema as dbCreateStyleSchema } from "@dotui/db/schemas";
 import { Alert } from "@dotui/ui/components/alert";
 import { Button } from "@dotui/ui/components/button";
 import {
@@ -29,10 +31,23 @@ const createStyleSchema = z.object({
   name: z
     .string()
     .min(1, "Name is required")
-    .min(2, "Name must be at least 2 characters"),
+    .min(2, "Name must be at least 2 characters")
+    .superRefine((val, ctx) => {
+      const normalized = normalizeStyleName(val);
+      const result = dbCreateStyleSchema.shape.name.safeParse(normalized);
+      if (!result.success) {
+        const message = result.error.issues[0]?.message ?? "Invalid style name";
+        ctx.addIssue({ code: z.ZodIssueCode.custom, message });
+      }
+    }),
   description: z.string().optional(),
-  visibility: z.enum(["public", "unlisted", "private"]),
+  visibility: dbCreateStyleSchema.shape.visibility,
 });
+
+// Normalize spaces to dashes and uppercase to lowercase
+function normalizeStyleName(input: string): string {
+  return input.toLowerCase().replace(/\s+/g, "-");
+}
 
 type CreateStyleFormData = z.infer<typeof createStyleSchema>;
 
@@ -53,11 +68,18 @@ export function CreateStyleModal({
       visibility: "unlisted",
     },
   });
+  const rawName = form.watch("name") ?? "";
+  const renamedTo = React.useMemo(() => {
+    const normalized = normalizeStyleName(rawName);
+    return normalized !== rawName ? normalized : null;
+  }, [rawName]);
 
   const onSubmit = (data: CreateStyleFormData, close: () => void) => {
+    const finalName = normalizeStyleName(data.name);
     createStyleMutation.mutate(
       {
         ...data,
+        name: finalName,
         styleOverrides: initialStyle,
       },
       {
@@ -96,12 +118,14 @@ export function CreateStyleModal({
                 <FormControl
                   name="name"
                   control={form.control}
-                  render={(props) => (
+                  render={({ value, onChange, ...props }) => (
                     <TextField
                       label="Name"
                       autoFocus
                       className="w-full"
                       {...props}
+                      value={value}
+                      onChange={onChange}
                     />
                   )}
                 />
@@ -163,14 +187,21 @@ export function CreateStyleModal({
               <FormControl
                 name="description"
                 control={form.control}
-                render={(props) => (
+                render={({ value, onChange, ...props }) => (
                   <TextArea
                     label="Description (optional)"
                     className="mt-3 w-full"
                     {...props}
+                    value={value ?? ""}
+                    onChange={onChange}
                   />
                 )}
               />
+              {renamedTo && (
+                <Alert className="mt-3 text-xs font-normal">
+                  Your style will be renamed to "{renamedTo}"
+                </Alert>
+              )}
               {/* <div className="mt-4 bg-transparent">
               <p className="text-fg-muted text-sm">
               You can install it later with this command:

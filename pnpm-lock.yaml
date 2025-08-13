@@ -294,7 +294,7 @@ importers:
     dependencies:
       '@dotui/registry-definition':
         specifier: workspace:*
-        version: link:../registry-defintion
+        version: link:../registry-definition
       '@dotui/style-engine':
         specifier: workspace:*
         version: link:../style-engine
@@ -348,7 +348,7 @@ importers:
         specifier: 'catalog:'
         version: 5.8.3
 
-  packages/registry-defintion:
+  packages/registry-definition:
     devDependencies:
       '@dotui/eslint-config':
         specifier: workspace:*
@@ -379,7 +379,7 @@ importers:
         version: 1.0.0
       '@dotui/registry-definition':
         specifier: workspace:*
-        version: link:../registry-defintion
+        version: link:../registry-definition
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
@@ -441,7 +441,7 @@ importers:
     dependencies:
       '@dotui/registry-definition':
         specifier: workspace:*
-        version: link:../registry-defintion
+        version: link:../registry-definition
       '@dotui/style-engine':
         specifier: workspace:*
         version: link:../style-engine
@@ -544,7 +544,7 @@ importers:
         version: link:../packages/db
       '@dotui/registry-definition':
         specifier: workspace:*
-        version: link:../packages/registry-defintion
+        version: link:../packages/registry-definition
       '@dotui/style-engine':
         specifier: workspace:*
         version: link:../packages/style-engine
