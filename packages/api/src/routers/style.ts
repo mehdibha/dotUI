@@ -8,7 +8,6 @@ import { styleDefinitionSchema } from "@dotui/style-engine/schemas";
 
 import { protectedProcedure, publicProcedure } from "../trpc";
 
-// Input validation schemas
 const uuidSchema = z.string().min(1);
 const paginationSchema = z.object({
   limit: z.number().min(1).max(100).default(10),
@@ -158,7 +157,6 @@ export const styleRouter = {
   create: protectedProcedure
     .input(createStyleSchema)
     .mutation(async ({ ctx, input }) => {
-      // Prevent duplicate style names per user (also enforced by DB unique index)
       const existing = await ctx.db.query.style.findFirst({
         where: and(
           eq(style.userId, ctx.session.user.id),

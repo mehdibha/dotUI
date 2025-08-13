@@ -140,7 +140,6 @@ export function CreateStyleModal({
                           label: "Public",
                           icon: <GlobeIcon />,
                           description: "Anyone can view this style.",
-                          disabled: true,
                         },
                       ]}
                       {...props}
