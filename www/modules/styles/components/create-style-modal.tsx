@@ -6,6 +6,7 @@ import { ExternalLinkIcon, GlobeIcon, LockIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { createStyleSchema as dbCreateStyleSchema } from "@dotui/db/schemas";
 import { Alert } from "@dotui/ui/components/alert";
 import { Button } from "@dotui/ui/components/button";
 import {
@@ -23,7 +24,6 @@ import { TextField } from "@dotui/ui/components/text-field";
 import { toast } from "@dotui/ui/components/toast";
 import { cn } from "@dotui/ui/lib/utils";
 import type { StyleDefinition } from "@dotui/style-engine/types";
-import { createStyleSchema as dbCreateStyleSchema } from "@dotui/db/schemas";
 
 import { useCreateStyle } from "../hooks/use-create-style";
 
