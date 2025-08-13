@@ -28,7 +28,18 @@ import { createStyleSchema as dbCreateStyleSchema } from "@dotui/db/schemas";
 import { useCreateStyle } from "../hooks/use-create-style";
 
 const createStyleSchema = z.object({
-  name: dbCreateStyleSchema.shape.name,
+  name: z
+    .string()
+    .min(1, "Name is required")
+    .min(2, "Name must be at least 2 characters")
+    .superRefine((val, ctx) => {
+      const normalized = normalizeStyleName(val);
+      const result = dbCreateStyleSchema.shape.name.safeParse(normalized);
+      if (!result.success) {
+        const message = result.error.issues[0]?.message ?? "Invalid style name";
+        ctx.addIssue({ code: z.ZodIssueCode.custom, message });
+      }
+    }),
   description: z.string().optional(),
   visibility: dbCreateStyleSchema.shape.visibility,
 });
@@ -57,13 +68,18 @@ export function CreateStyleModal({
       visibility: "unlisted",
     },
   });
-
-  const [renamedTo, setRenamedTo] = React.useState<string | null>(null);
+  const rawName = form.watch("name") ?? "";
+  const renamedTo = React.useMemo(() => {
+    const normalized = normalizeStyleName(rawName);
+    return normalized !== rawName ? normalized : null;
+  }, [rawName]);
 
   const onSubmit = (data: CreateStyleFormData, close: () => void) => {
+    const finalName = normalizeStyleName(data.name);
     createStyleMutation.mutate(
       {
         ...data,
+        name: finalName,
         styleOverrides: initialStyle,
       },
       {
@@ -109,11 +125,7 @@ export function CreateStyleModal({
                       className="w-full"
                       {...props}
                       value={value}
-                      onChange={(val) => {
-                        const normalized = normalizeStyleName(val);
-                        onChange(normalized);
-                        setRenamedTo(normalized !== val ? normalized : null);
-                      }}
+                      onChange={onChange}
                     />
                   )}
                 />
