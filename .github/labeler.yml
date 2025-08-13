@@ -1,0 +1,57 @@
+"📌 area: api":
+  - changed-files:
+      - any-glob-to-any-file: ["packages/api/**"]
+
+"📌 area: ui":
+  - changed-files:
+      - any-glob-to-any-file: ["packages/ui/**"]
+
+"📌 area: style-engine":
+  - changed-files:
+      - any-glob-to-any-file: ["packages/style-engine/**"]
+
+"📌 area: db":
+  - changed-files:
+      - any-glob-to-any-file: ["packages/db/**"]
+
+"📌 area: auth":
+  - changed-files:
+      - any-glob-to-any-file: ["packages/auth/**"]
+
+"📌 area: registry-definition":
+  - changed-files:
+      - any-glob-to-any-file: ["packages/registry-definition/**"]
+
+"📌 area: tailwindcss-auto-contrast":
+  - changed-files:
+      - any-glob-to-any-file: ["packages/tailwindcss-auto-contrast/**"]
+
+"🌐 area: www":
+  - changed-files:
+      - any-glob-to-any-file: ["www/**"]
+
+"📚 documentation":
+  - changed-files:
+      - any-glob-to-any-file: ["www/content/**", "**/*.md", "**/*.mdx"]
+
+"🧪 tests":
+  - changed-files:
+      - any-glob-to-any-file:
+          ["**/*.test.*", "**/__tests__/**", "vitest.config.ts"]
+
+"🔧 config":
+  - changed-files:
+      - any-glob-to-any-file:
+          [
+            "config/**",
+            "**/eslint.config.*",
+            "**/tsconfig*.json",
+            "turbo.json",
+            "pnpm-workspace.yaml",
+            "pnpm-lock.yaml",
+            "package.json",
+          ]
+
+"📌 area: ci":
+  - changed-files:
+      - any-glob-to-any-file: [".github/**"]
