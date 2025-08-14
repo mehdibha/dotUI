@@ -33,11 +33,11 @@ export function Header({
 
   return (
     <header
-      className={cn("sticky top-0 z-50 w-full border-b bg-bg", className)}
+      className={cn("bg-bg sticky top-0 z-50 w-full border-b", className)}
     >
       <div
         className={cn(
-          "relative container flex h-14 items-center justify-between",
+          "container relative flex h-14 items-center justify-between",
           containerClassName,
         )}
       >
@@ -49,13 +49,13 @@ export function Header({
             {[
               { label: "Docs", href: "/docs/introduction" },
               { label: "Components", href: "/docs/components/button" },
-              { label: "Blocks", href: "/blocks/featured" },
+              { label: "Blocks", href: "/blocks" },
               { label: "Styles", href: "/styles" },
             ].map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="px-0.5 text-fg-muted transition-colors hover:text-fg"
+                className="text-fg-muted hover:text-fg px-0.5 transition-colors"
               >
                 {item.label}
               </Link>
@@ -63,7 +63,7 @@ export function Header({
           </div>
         </div>
         {isMounted && !isPending && (
-          <div className="flex animate-in items-center gap-2 fade-in">
+          <div className="animate-in fade-in flex items-center gap-2">
             <SearchCommand keyboardShortcut items={items}>
               <Button
                 variant="default"
@@ -74,7 +74,7 @@ export function Header({
                   </div>
                 }
                 size="sm"
-                className="gap-2 pr-1 pl-3 max-md:size-8 max-md:px-0 md:text-fg-muted"
+                className="md:text-fg-muted gap-2 pl-3 pr-1 max-md:size-8 max-md:px-0"
               >
                 <SearchIcon className="md:hidden" />
                 <span className="mr-6 flex-1 max-md:hidden">

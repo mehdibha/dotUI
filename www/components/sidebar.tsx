@@ -105,7 +105,7 @@ export const Sidebar = ({
             shape="square"
             size="sm"
             onPress={() => setCollapsed(!isCollapsed)}
-            className="pointer-events-none absolute left-2 opacity-0 group-data-collapsed/sidebar:group-hover/sidebar:pointer-events-auto group-data-collapsed/sidebar:group-hover/sidebar:opacity-100"
+            className="group-data-collapsed/sidebar:group-hover/sidebar:pointer-events-auto group-data-collapsed/sidebar:group-hover/sidebar:opacity-100 pointer-events-none absolute left-2 opacity-0"
           >
             {isCollapsed ? <PanelLeftOpenIcon /> : <PanelLeftCloseIcon />}
           </Button>
@@ -147,7 +147,7 @@ export const Sidebar = ({
             {
               icon: <BlocksIcon />,
               name: "Blocks",
-              url: "/blocks/featured",
+              url: "/blocks",
             },
             {
               icon: <PaletteIcon />,
@@ -175,16 +175,16 @@ export const Sidebar = ({
           ))}
         </div>
         <div
-          className="mt-4 grid w-full min-w-0 p-2 pt-0 transition-sidebar group-data-collapsed/sidebar:pointer-events-none group-data-collapsed/sidebar:opacity-0"
+          className="transition-sidebar group-data-collapsed/sidebar:pointer-events-none group-data-collapsed/sidebar:opacity-0 mt-4 grid w-full min-w-0 p-2 pt-0"
           aria-hidden={isCollapsed}
         >
-          <div className="flex w-full min-w-0 flex-col transition-sidebar">
+          <div className="transition-sidebar flex w-full min-w-0 flex-col">
             <NodeList items={items} />
           </div>
         </div>
       </ScrollArea>
       <SidebarFooter>
-        <div className="flex items-center gap-1 group-data-collapsed/sidebar:flex-col">
+        <div className="group-data-collapsed/sidebar:flex-col flex items-center gap-1">
           <motion.div layout transition={transition}>
             <Button
               href={siteConfig.links.github}
@@ -198,7 +198,7 @@ export const Sidebar = ({
             </Button>
           </motion.div>
         </div>
-        <div className="flex items-center gap-1 group-data-collapsed/sidebar:flex-col">
+        <div className="group-data-collapsed/sidebar:flex-col flex items-center gap-1">
           <ThemeSwitcher>
             <motion.div layout transition={transition}>
               <Button
@@ -253,11 +253,11 @@ const SidebarRoot = ({
     >
       <div
         className={cn(
-          "relative z-10 h-svh w-(--sidebar-width) bg-transparent transition-sidebar group-data-collapsed/sidebar:w-(--sidebar-width-collapsed)",
+          "w-(--sidebar-width) transition-sidebar group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) relative z-10 h-svh bg-transparent",
         )}
       />
-      <div className="fixed inset-y-0 left-0 z-10 flex h-svh w-(--sidebar-width) flex-col overflow-hidden bg-bg-muted/10 transition-sidebar group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) [&_svg]:text-fg-muted">
-        <div className="relative flex h-svh w-(--sidebar-width) flex-1 translate-x-[-0.5px] flex-col overflow-hidden">
+      <div className="w-(--sidebar-width) bg-bg-muted/10 transition-sidebar group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) [&_svg]:text-fg-muted fixed inset-y-0 left-0 z-10 flex h-svh flex-col overflow-hidden">
+        <div className="w-(--sidebar-width) relative flex h-svh flex-1 translate-x-[-0.5px] flex-col overflow-hidden">
           {children}
         </div>
       </div>
@@ -405,7 +405,7 @@ function PageNode({
     <Link
       href={url}
       className={cn(
-        "border-bg-bg-muted group block border-l py-1 pl-4 font-medium text-fg text-fg-muted transition-colors hover:text-fg",
+        "border-bg-bg-muted text-fg text-fg-muted hover:text-fg group block border-l py-1 pl-4 font-medium transition-colors",
         {
           "border-fg text-fg": active,
         },
@@ -456,7 +456,7 @@ function FolderNode({
 
   return (
     <>
-      <h3 className="category py-1 pl-4 font-mono text-xs tracking-widest text-fg-muted">
+      <h3 className="category text-fg-muted py-1 pl-4 font-mono text-xs tracking-widest">
         {item.name}
       </h3>
       <NodeList items={item.children} level={level} onSelect={onSelect} />
@@ -475,12 +475,12 @@ const SidebarButton = ({
       variant="quiet"
       size="sm"
       className={cn(
-        "relative w-full overflow-hidden text-[0.8rem] font-medium transition-sidebar group-data-collapsed/sidebar:w-8",
+        "transition-sidebar group-data-collapsed/sidebar:w-8 relative w-full overflow-hidden text-[0.8rem] font-medium",
         className,
       )}
       {...props}
     >
-      <span className="absolute inset-2 flex w-[calc(var(--sidebar-width)-calc(var(--spacing)*8))] items-center justify-center gap-2 whitespace-nowrap transition-sidebar group-data-collapsed/sidebar:left-2 [&>svg]:size-4">
+      <span className="transition-sidebar group-data-collapsed/sidebar:left-2 absolute inset-2 flex w-[calc(var(--sidebar-width)-calc(var(--spacing)*8))] items-center justify-center gap-2 whitespace-nowrap [&>svg]:size-4">
         {children}
       </span>
     </Button>
@@ -501,7 +501,7 @@ const StyledTooltip = (props: TooltipProps) => {
 
 const SidebarFooter = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="flex flex-row items-end justify-between gap-1 p-2 group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) group-data-collapsed/sidebar:flex-col group-data-collapsed/sidebar:justify-end">
+    <div className="group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) group-data-collapsed/sidebar:flex-col group-data-collapsed/sidebar:justify-end flex flex-row items-end justify-between gap-1 p-2">
       {children}
     </div>
   );

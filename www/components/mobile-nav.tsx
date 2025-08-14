@@ -22,7 +22,7 @@ export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
         className={cn("md:hidden", "relative flex items-center justify-center")}
         aria-label="Toggle Menu"
       >
-        <div className="relative h-3.5 w-4 [&>span]:absolute [&>span]:left-0 [&>span]:block [&>span]:h-0.5 [&>span]:w-4 [&>span]:rounded-full [&>span]:bg-fg [&>span]:transition-all [&>span]:duration-150 [&>span]:ease-out">
+        <div className="[&>span]:bg-fg relative h-3.5 w-4 [&>span]:absolute [&>span]:left-0 [&>span]:block [&>span]:h-0.5 [&>span]:w-4 [&>span]:rounded-full [&>span]:transition-all [&>span]:duration-150 [&>span]:ease-out">
           <span
             className={cn(
               "top-0.25",
@@ -52,24 +52,26 @@ export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
         {({ close }) => (
           <div className="flex flex-col gap-12">
             <div className="space-y-2">
-              <div className="text-lg font-medium text-fg-muted">Menu</div>
+              <div className="text-fg-muted text-lg font-medium">Menu</div>
               <div className="flex flex-col gap-3">
-                <MobileLink href="/">Home</MobileLink>
-                <MobileLink href="/docs/getting-started/introduction">
-                  Docs
-                </MobileLink>
-                <MobileLink href="/docs/components/buttons/button">
-                  Components
-                </MobileLink>
-                <MobileLink href="/blocks">Blocks</MobileLink>
-                <MobileLink href="/styles">Styles</MobileLink>
+                {[
+                  { href: "/", label: "Home" },
+                  { href: "/docs/introduction", label: "Docs" },
+                  { href: "/docs/components/button", label: "Components" },
+                  { href: "/blocks", label: "Blocks" },
+                  { href: "/styles", label: "Styles" },
+                ].map((item) => (
+                  <MobileLink key={item.href} href={item.href}>
+                    {item.label}
+                  </MobileLink>
+                ))}
               </div>
             </div>
             {items?.map((group, index) => {
               if (group.type === "folder") {
                 return (
                   <div key={index} className="flex flex-col gap-3">
-                    <div className="text-lg font-medium text-fg-muted">
+                    <div className="text-fg-muted text-lg font-medium">
                       {group.name}
                     </div>
                     <div className="flex flex-col gap-3">
