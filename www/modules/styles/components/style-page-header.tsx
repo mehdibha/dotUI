@@ -37,7 +37,7 @@ export function StylePageHeader() {
     <div className="container max-w-4xl">
       <Link
         href="/styles"
-        className="flex items-center gap-1 text-sm text-fg-muted hover:text-fg"
+        className="text-fg-muted hover:text-fg flex items-center gap-1 text-sm"
       >
         <ArrowLeftIcon className="size-4" /> styles
       </Link>
@@ -119,7 +119,7 @@ function StylePageHeaderName() {
           aria-label="Style name"
           inputRef={inputRef}
           autoFocus
-          className="text-2xl leading-none font-bold"
+          className="text-2xl font-bold leading-none"
           value={localValue}
           onChange={setLocalValue}
         />
@@ -154,13 +154,13 @@ function StylePageHeaderName() {
         control={form.control}
         render={(props) => (
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl leading-none font-bold">{props.value}</h1>
+            <h1 className="text-2xl font-bold leading-none">{props.value}</h1>
             <Button
               aria-label="Edit"
               size="sm"
               variant="quiet"
               shape="square"
-              className="size-7 text-fg-muted [&_svg]:size-3.5"
+              className="text-fg-muted size-7 [&_svg]:size-3.5"
               onPress={() => handleEditStart()}
             >
               <PencilIcon />
@@ -237,7 +237,7 @@ function StylePageHeaderActions() {
               size="sm"
               variant="primary"
               isDisabled={!form.formState.isDirty}
-              className="border border-bg-primary hover:border-bg-primary-hover"
+              className="border-bg-primary hover:border-bg-primary-hover border"
               prefix={<RocketIcon />}
             >
               Publish

@@ -9,7 +9,7 @@ import { Button } from "@dotui/ui/components/button";
 import { ScrollArea } from "@/components/scroll-area";
 
 const codeStyles = tv({
-  base: "relative rounded-md bg-bg-muted",
+  base: "bg-bg-muted relative rounded-md",
   variants: {
     variant: {
       classic: "p-4 text-xs",
@@ -52,7 +52,7 @@ const CodeClient = ({
         variant="quiet"
         shape="square"
         size="sm"
-        className="absolute top-2 right-2 [&_svg]:size-3"
+        className="absolute right-2 top-2 [&_svg]:size-3"
         onPress={handleCopy}
       >
         {copied ? (

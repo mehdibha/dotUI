@@ -37,7 +37,7 @@ const TocItems = ({ toc }: { toc: TocType }) => {
       <div ref={viewportRef}>
         <div
           role="none"
-          className="absolute start-0 w-px bg-fg transition-all"
+          className="bg-fg absolute start-0 w-px transition-all"
           style={{
             top: pos[0],
             height: pos[1],
@@ -58,7 +58,7 @@ function TOCItem({ item }: { item: TOCItemType }): React.ReactElement {
     <TocPrimitive.TOCItem
       href={item.url}
       className={cn(
-        "py-1 text-sm [overflow-wrap:anywhere] text-fg-muted transition-colors first:pt-0 last:pb-0 data-[active=true]:text-fg",
+        "text-fg-muted data-[active=true]:text-fg py-1 text-sm transition-colors [overflow-wrap:anywhere] first:pt-0 last:pb-0",
         item.depth <= 2 && "pl-4",
         item.depth === 3 && "pl-8",
         item.depth >= 4 && "pl-12",

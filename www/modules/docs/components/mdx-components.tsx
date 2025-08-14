@@ -48,7 +48,7 @@ export const mdxComponents: MDXComponents = {
   >,
   p: ({ className, ...props }) => (
     <p
-      className={cn("text-base leading-7 not-first:mt-4", className)}
+      className={cn("not-first:mt-4 text-base leading-7", className)}
       {...props}
     />
   ),
@@ -63,7 +63,7 @@ export const mdxComponents: MDXComponents = {
   ),
   blockquote: ({ className, ...props }) => (
     <blockquote
-      className={cn("mt-6 border-l-2 pl-6 italic *:text-fg-muted", className)}
+      className={cn("*:text-fg-muted mt-6 border-l-2 pl-6 italic", className)}
       {...props}
     />
   ),
@@ -119,7 +119,7 @@ export const mdxComponents: MDXComponents = {
   code: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
     <code
       className={cn(
-        "w-full rounded-md bg-bg-muted p-1 font-mono text-sm",
+        "bg-bg-muted w-full rounded-md p-1 font-mono text-sm",
         className,
       )}
       {...props}
@@ -141,7 +141,7 @@ export const mdxComponents: MDXComponents = {
   Step: ({ className, ...props }: React.ComponentProps<"h3">) => (
     <h3
       className={cn(
-        "mt-8 scroll-m-20 font-heading text-base font-semibold tracking-tight",
+        "font-heading mt-8 scroll-m-20 text-base font-semibold tracking-tight",
         className,
       )}
       {...props}
@@ -149,7 +149,7 @@ export const mdxComponents: MDXComponents = {
   ),
   Steps: ({ ...props }: React.ComponentProps<"div">) => (
     <div
-      className="mb-12 ml-4 border-l pl-8 [counter-reset:step] [&>h3]:step"
+      className="[&>h3]:step mb-12 ml-4 border-l pl-8 [counter-reset:step]"
       {...props}
     />
   ),

@@ -5,7 +5,7 @@ export function PageLayout({
   ...props
 }: React.ComponentProps<"div">) {
   return (
-    <div className={cn("pt-4 pb-14 md:pt-10 lg:pt-14", className)} {...props} />
+    <div className={cn("pb-14 pt-4 md:pt-10 lg:pt-14", className)} {...props} />
   );
 }
 
@@ -28,7 +28,7 @@ export function PageHeaderHeading({
   return (
     <h1
       className={cn(
-        "leading-tighter max-w-2xl text-2xl font-semibold tracking-tight text-balance lg:text-3xl lg:leading-[1.1] xl:text-4xl xl:tracking-tighter",
+        "leading-tighter max-w-2xl text-balance text-2xl font-semibold tracking-tight lg:text-3xl lg:leading-[1.1] xl:text-4xl xl:tracking-tighter",
         className,
       )}
       {...props}
@@ -43,7 +43,7 @@ export function PageHeaderDescription({
   return (
     <p
       className={cn(
-        "mt-1 max-w-3xl text-base text-balance text-fg-muted sm:text-lg",
+        "text-fg-muted mt-1 max-w-3xl text-balance text-base sm:text-lg",
         className,
       )}
       {...props}

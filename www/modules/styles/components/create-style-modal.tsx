@@ -138,7 +138,7 @@ export function CreateStyleModal({
                       selectedKey={value}
                       onSelectionChange={onChange}
                       renderValue={({ selectedItem }) => (
-                        <div className="flex items-center gap-2 [&>svg]:text-fg-muted">
+                        <div className="[&>svg]:text-fg-muted flex items-center gap-2">
                           {selectedItem?.icon}
                           {selectedItem?.label}
                         </div>

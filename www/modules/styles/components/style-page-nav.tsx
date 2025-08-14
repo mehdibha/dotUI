@@ -22,7 +22,7 @@ export function StylePageNav({
 
   return (
     <Tabs variant="underline" selectedKey={pathname} {...props}>
-      <div className="sticky top-0 z-40 border-b bg-bg">
+      <div className="bg-bg sticky top-0 z-40 border-b">
         <TabList className="container max-w-4xl border-b-0">
           {[
             { href: `/styles/${username}/${styleName}`, label: "Colors" },
@@ -48,7 +48,7 @@ export function StylePageNav({
               key={tab.href}
               id={tab.href}
               href={tab.href}
-              className="flex h-7 items-center gap-2 rounded-full px-4 pt-6 pb-5 text-sm"
+              className="flex h-7 items-center gap-2 rounded-full px-4 pb-5 pt-6 text-sm"
             >
               {tab.label}
             </Tab>

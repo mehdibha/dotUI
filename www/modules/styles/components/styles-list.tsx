@@ -125,7 +125,7 @@ export function StylesList({
         )}
         {(!styles || styles.length === 0) && (
           <div className="flex items-center justify-center">
-            <p className="text-sm text-fg-muted">No styles found</p>
+            <p className="text-fg-muted text-sm">No styles found</p>
           </div>
         )}
         {filtered.map((style) => (

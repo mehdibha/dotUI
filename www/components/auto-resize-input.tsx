@@ -45,7 +45,7 @@ export const AutoResizeTextField = ({
       <UnstyledInput
         ref={mergeRefs(localInputRef, inputRef)}
         className={cn(
-          "min-w-[10px] border-fg focus:border-b focus:outline-none",
+          "border-fg min-w-[10px] focus:border-b focus:outline-none",
           className,
         )}
       />
