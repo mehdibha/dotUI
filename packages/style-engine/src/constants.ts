@@ -150,7 +150,7 @@ export const DEFAULT_LIGHT_MODE: ModeDefinition = {
   scales: {
     neutral: {
       name: "neutral",
-      colorKeys: [{ id: 0, color: "#000000" }],
+      colorKeys: [{ id: 0, color: "#ffffff" }],
       ratios: [1.05, 1.25, 1.7, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
       overrides: {},
       smooth: false,
@@ -200,7 +200,7 @@ export const DEFAULT_DARK_MODE: ModeDefinition = {
   scales: {
     neutral: {
       name: "neutral",
-      colorKeys: [{ id: 0, color: "#ffffff" }],
+      colorKeys: [{ id: 0, color: "#000000" }],
       ratios: [1, 1.25, 1.7, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
       overrides: {},
       smooth: false,
