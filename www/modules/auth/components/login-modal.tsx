@@ -39,7 +39,6 @@ export function LoginModal({ children }: { children: React.ReactNode }) {
             isPending={isPending}
             onPress={async () => {
               try {
-                console.log("pathname", pathname);
                 setPending(true);
                 await authClient.signIn.social({
                   provider: "github",
