@@ -327,39 +327,63 @@ function generateContrastColors(colorShadeVars) {
   return result;
 }
 
-const autoContrast = plugin(function ({ addBase, theme }) {
-  // TODO: temp fix for monorepo
-  // const cwd = process.cwd();
-  const cwd = path.resolve(process.cwd(), "../packages/ui");
-  const cssFilePath = getTailwindCssFile(cwd);
-  const cssFilePathRelative = path.resolve(cwd, cssFilePath);
+const autoContrast = plugin.withOptions((options = {}) => {
+  return function ({ addBase }) {
+    try {
+      const cwd = typeof options.cwd === "string" ? options.cwd : process.cwd();
 
-  const rawCss = fs.readFileSync(cssFilePathRelative, "utf8");
+      const discoveredCssFile = getTailwindCssFile(cwd);
+      const cssFilePath = options.cssFile || discoveredCssFile;
 
-  const cssVars = readCssVars(rawCss);
-  const colorShadeVars = getContrastCssVars(cssVars);
-  const contrastColors = generateContrastColors(colorShadeVars);
-
-  Object.keys(contrastColors).forEach((themeName) => {
-    const themeContrastVars = contrastColors[themeName];
-
-    if (Object.keys(themeContrastVars).length > 0) {
-      const cssVarsWithPrefix = {};
-      Object.entries(themeContrastVars).forEach(([varName, value]) => {
-        cssVarsWithPrefix[`--${varName}`] = value;
-      });
-
-      if (themeName === "light") {
-        addBase({
-          ":root": cssVarsWithPrefix,
-        });
-      } else {
-        addBase({
-          [`.${themeName}`]: cssVarsWithPrefix,
-        });
+      if (!cssFilePath) {
+        return;
       }
+
+      const absoluteCssPath = path.isAbsolute(cssFilePath)
+        ? cssFilePath
+        : path.resolve(cwd, cssFilePath);
+
+      let rawCss;
+      try {
+        rawCss = fs.readFileSync(absoluteCssPath, "utf8");
+      } catch (_error) {
+        return;
+      }
+
+      const cssVars = readCssVars(rawCss);
+      if (!cssVars) {
+        return;
+      }
+
+      const colorShadeVars = getContrastCssVars(cssVars);
+      const contrastColors = generateContrastColors(colorShadeVars);
+
+      Object.keys(contrastColors).forEach((themeName) => {
+        const themeContrastVars = contrastColors[themeName];
+        if (!themeContrastVars || Object.keys(themeContrastVars).length === 0) {
+          return;
+        }
+
+        const cssVarsWithPrefix = {};
+        Object.entries(themeContrastVars).forEach(([varName, value]) => {
+          cssVarsWithPrefix[`--${varName}`] = value;
+        });
+
+        if (themeName === "light") {
+          addBase({
+            ":root": cssVarsWithPrefix,
+          });
+        } else {
+          addBase({
+            [`.${themeName}`]: cssVarsWithPrefix,
+          });
+        }
+      });
+    } catch (_e) {
+      // Fail silently to avoid breaking Tailwind IntelliSense or builds
+      return;
     }
-  });
+  };
 });
 
 module.exports = autoContrast;
