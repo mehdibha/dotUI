@@ -21,10 +21,11 @@ import { FormControl } from "@dotui/ui/components/form";
 import { Select, SelectItem } from "@dotui/ui/components/select";
 import { TextArea } from "@dotui/ui/components/text-area";
 import { TextField } from "@dotui/ui/components/text-field";
-import { toast } from "@dotui/ui/components/toast";
 import { cn } from "@dotui/ui/lib/utils";
 import type { StyleDefinition } from "@dotui/style-engine/types";
 
+import { LoginModal } from "@/modules/auth/components/login-modal";
+import { authClient } from "@/modules/auth/lib/client";
 import { useCreateStyle } from "../hooks/use-create-style";
 
 const createStyleSchema = z.object({
@@ -53,6 +54,26 @@ function normalizeStyleName(input: string): string {
 type CreateStyleFormData = z.infer<typeof createStyleSchema>;
 
 export function CreateStyleModal({
+  children,
+  initialStyle,
+}: {
+  children: React.ReactNode;
+  initialStyle?: Partial<StyleDefinition>;
+}) {
+  const { data: session } = authClient.useSession();
+
+  if (!session) {
+    return <LoginModal>{children}</LoginModal>;
+  }
+
+  return (
+    <CreateStyleModalContent initialStyle={initialStyle}>
+      {children}
+    </CreateStyleModalContent>
+  );
+}
+
+export function CreateStyleModalContent({
   children,
   initialStyle,
 }: {

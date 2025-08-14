@@ -15,15 +15,15 @@ import { GitHubIcon } from "@dotui/ui/icons";
 
 import { Link } from "@/components/link";
 import { authClient } from "../lib/client";
+import { usePathname } from "next/navigation";
 
 export function LoginModal({
-  callbackURL = "/",
   children,
 }: {
-  callbackURL?: string;
   children: React.ReactNode;
 }) {
   const [isPending, setPending] = React.useState(false);
+  const pathname = usePathname();
 
   return (
     <DialogRoot>
@@ -46,7 +46,7 @@ export function LoginModal({
                 setPending(true);
                 await authClient.signIn.social({
                   provider: "github",
-                  callbackURL,
+                  callbackURL: pathname,
                 });
               } catch (error) {
                 console.log(error);

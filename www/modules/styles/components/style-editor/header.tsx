@@ -246,7 +246,7 @@ function StyleEditorHeaderActions() {
           </CreateStyleModal>
         )
       ) : (
-        <LoginModal callbackURL={pathname}>
+        <LoginModal>
           <Button size="sm" variant="primary">
             Publish
           </Button>
