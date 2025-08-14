@@ -4,7 +4,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { Button } from "@dotui/ui/components/button";
 import { Tooltip } from "@dotui/ui/components/tooltip";
 
-import { source } from "@/modules/docs/lib/source";
+import { docsSource } from "@/modules/docs/lib/source";
 
 export const DocsPager = ({
   variant = "label",
@@ -13,7 +13,10 @@ export const DocsPager = ({
   variant?: "tooltip" | "label";
   currentPathname: string;
 }) => {
-  const { previous, next } = findNeighbour(source.pageTree, currentPathname);
+  const { previous, next } = findNeighbour(
+    docsSource.pageTree,
+    currentPathname,
+  );
 
   return (
     <div className="flex items-center justify-between gap-2">

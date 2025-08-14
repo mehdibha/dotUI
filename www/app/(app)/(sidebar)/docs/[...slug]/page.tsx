@@ -8,23 +8,21 @@ import { cn } from "@dotui/ui/lib/utils";
 
 import { siteConfig } from "@/config";
 import { truncateOnWord } from "@/lib/string";
-// import { Breadcrumbs } from "@/modules/docs/components/breadcrumbs";
 import { DocsPager } from "@/modules/docs/components/docs-pager";
 import { PageLastUpdate } from "@/modules/docs/components/last-update";
 import { mdxComponents } from "@/modules/docs/components/mdx-components";
 import { TableOfContents } from "@/modules/docs/components/toc";
-import { source } from "@/modules/docs/lib/source";
+import { docsSource } from "@/modules/docs/lib/source";
 
 export default async function Page({
   params,
 }: {
   params: Promise<{ slug: string[] }>;
 }) {
-  const page = source.getPage((await params).slug);
+  const page = docsSource.getPage((await params).slug);
   if (!page) notFound();
 
   const { body: MDXContent, toc } = await page.data.load();
-  // const MDXContent = page.data.body;
 
   return (
     <div
@@ -36,7 +34,6 @@ export default async function Page({
       )}
     >
       <div className="pb-24 pt-4 md:pt-10 lg:pt-20">
-        {/* <Breadcrumbs tree={source.pageTree} className="mb-2" /> */}
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-bold lg:text-4xl">{page.data.title}</h1>
           <DocsPager variant="tooltip" currentPathname={page.url} />
@@ -89,7 +86,7 @@ export async function generateMetadata({
 }: {
   params: Promise<{ slug: string[] }>;
 }): Promise<Metadata> {
-  const page = source.getPage((await params).slug);
+  const page = docsSource.getPage((await params).slug);
   if (!page) notFound();
 
   return {
@@ -117,5 +114,5 @@ export async function generateMetadata({
 }
 
 export function generateStaticParams() {
-  return source.generateParams();
+  return docsSource.generateParams();
 }
