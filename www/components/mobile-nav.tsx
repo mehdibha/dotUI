@@ -61,7 +61,11 @@ export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
                   { href: "/blocks", label: "Blocks" },
                   { href: "/styles", label: "Styles" },
                 ].map((item) => (
-                  <MobileLink key={item.href} href={item.href}>
+                  <MobileLink
+                    key={item.href}
+                    href={item.href}
+                    onOpenChange={close}
+                  >
                     {item.label}
                   </MobileLink>
                 ))}
