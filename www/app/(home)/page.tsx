@@ -41,7 +41,7 @@ export default async function HomePage() {
           </p>
           <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
             <Button
-              href="/docs/getting-started/introduction"
+              href="/docs/introduction"
               variant="primary"
               size="lg"
               className="h-10"
