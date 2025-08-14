@@ -7,7 +7,7 @@ import { cn } from "@dotui/ui/lib/utils";
 import { fontMono, fontSans, josefinSans } from "@/lib/fonts";
 import { truncateOnWord } from "@/lib/string";
 
-import "@dotui/ui/globals.css";
+import "@/styles/globals.css";
 
 import { Toaster } from "@dotui/ui/components/toast";
 

@@ -8,7 +8,7 @@
 @plugin "tailwindcss-auto-contrast";
 
 @import "./docs.css";
-@import "./focus-styles.css";
+@import "@dotui/ui/focus-styles.css";
 
 @variant dark (&:where(.dark, .dark *));
 

@@ -417,6 +417,9 @@ importers:
       fast-glob:
         specifier: ^3.3.3
         version: 3.3.3
+      tailwindcss:
+        specifier: 'catalog:'
+        version: 4.1.10
     devDependencies:
       '@dotui/ts-config':
         specifier: workspace:*
@@ -430,9 +433,6 @@ importers:
       postcss:
         specifier: 'catalog:'
         version: 8.5.6
-      tailwindcss:
-        specifier: 'catalog:'
-        version: 4.1.10
       typescript:
         specifier: 'catalog:'
         version: 5.8.3
@@ -493,12 +493,6 @@ importers:
       tailwind-variants:
         specifier: catalog:ui
         version: 1.0.0(tailwindcss@4.1.10)
-      tailwindcss-auto-contrast:
-        specifier: workspace:*
-        version: link:../tailwindcss-auto-contrast
-      tw-animate-css:
-        specifier: ^1.3.5
-        version: 1.3.5
     devDependencies:
       '@dotui/eslint-config':
         specifier: workspace:*
@@ -756,9 +750,15 @@ importers:
       tailwindcss-animate:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@4.1.10)
+      tailwindcss-auto-contrast:
+        specifier: workspace:*
+        version: link:../packages/tailwindcss-auto-contrast
       tailwindcss-react-aria-components:
         specifier: ^2.0.0
         version: 2.0.0(tailwindcss@4.1.10)
+      tw-animate-css:
+        specifier: ^1.3.5
+        version: 1.3.5
       typescript:
         specifier: 'catalog:'
         version: 5.8.3

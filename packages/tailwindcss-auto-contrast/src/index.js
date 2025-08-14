@@ -1,4 +1,3 @@
-// TODO: This plugin needs a refactor. it's still wip
 const plugin = require("tailwindcss/plugin");
 const fg = require("fast-glob");
 const fs = require("fs");
@@ -135,7 +134,6 @@ function detectRootStylesheet({ cwd, cssFile, source, logLevel }) {
   for (const entry of allSources) {
     const normalized = normalizePath(entry);
 
-    // If absolute or relative file path
     const absFile = path.isAbsolute(normalized)
       ? normalized
       : path.resolve(cwd, normalized);
