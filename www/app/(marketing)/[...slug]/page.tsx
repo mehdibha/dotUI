@@ -7,7 +7,6 @@ import { cn } from "@dotui/ui/lib/utils";
 
 import { siteConfig } from "@/config";
 import { truncateOnWord } from "@/lib/string";
-import { DocsPager } from "@/modules/docs/components/docs-pager";
 import { PageLastUpdate } from "@/modules/docs/components/last-update";
 import { mdxComponents } from "@/modules/docs/components/mdx-components";
 import { TableOfContents } from "@/modules/docs/components/toc";
@@ -60,7 +59,6 @@ export default async function Page({
         </div>
         <div className="mt-20 space-y-4">
           <PageLastUpdate path={page.path} />
-          <DocsPager currentPathname={page.url} />
         </div>
       </div>
       {toc && toc.length > 0 && (
