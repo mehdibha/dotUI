@@ -26,7 +26,7 @@ export default async function BlocksPage({
 
   const blocks = registryBlocks.filter((block) =>
     block.categories?.includes(category),
-  )
+  );
 
   return (
     <div className="space-y-6">

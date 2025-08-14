@@ -148,56 +148,54 @@ export const StylesShowcase = ({
             </div>
           </div>
         </div>
-        <Skeleton show={false} className="w-full rounded-md">
-          <StyleProvider
-            style={isMounted ? currentStyle : undefined}
-            mode={resolvedTheme as "light" | "dark" | undefined}
-            className="relative w-full overflow-hidden rounded-xl border bg-bg shadow-md"
-          >
-            <PortalProvider getContainer={() => containerRef.current}>
-              <AnimatePresence mode="popLayout">
-                <motion.div
-                  key={currentStyleName}
-                  variants={variants}
-                  initial="hidden"
-                  animate="show"
-                  exit="hidden"
-                  className="max-lg:hidden"
-                >
-                  <BlocksShowcase />
-                </motion.div>
-              </AnimatePresence>
-            </PortalProvider>
-            <Image
-              src={`/images/showcase/${currentStyleName}-light.png`}
-              alt={currentStyleName}
-              width={1200}
-              height={900}
-              className="hidden sm:block lg:hidden dark:hidden"
-            />
-            <Image
-              src={`/images/showcase/${currentStyleName}-dark.png`}
-              alt={currentStyleName}
-              width={1200}
-              height={900}
-              className="hidden sm:block lg:hidden"
-            />
-            <Image
-              src={`/images/showcase/${currentStyleName}-light-mobile.png`}
-              alt={currentStyleName}
-              width={1200}
-              height={900}
-              className="block sm:hidden dark:hidden"
-            />
-            <Image
-              src={`/images/showcase/${currentStyleName}-dark-mobile.png`}
-              alt={currentStyleName}
-              width={1200}
-              height={900}
-              className="block sm:hidden"
-            />
-          </StyleProvider>
-        </Skeleton>
+        <StyleProvider
+          style={isMounted ? currentStyle : undefined}
+          mode={resolvedTheme as "light" | "dark" | undefined}
+          className="relative min-h-96 w-full overflow-hidden rounded-xl border bg-bg shadow-md"
+        >
+          <PortalProvider getContainer={() => containerRef.current}>
+            <AnimatePresence mode="popLayout">
+              <motion.div
+                key={currentStyleName}
+                variants={variants}
+                initial="hidden"
+                animate="show"
+                exit="hidden"
+                className="max-lg:hidden"
+              >
+                <BlocksShowcase />
+              </motion.div>
+            </AnimatePresence>
+          </PortalProvider>
+          <Image
+            src={`/images/showcase/${currentStyleName}-light.png`}
+            alt={currentStyleName}
+            width={1200}
+            height={900}
+            className="block max-sm:hidden dark:hidden"
+          />
+          <Image
+            src={`/images/showcase/${currentStyleName}-dark.png`}
+            alt={currentStyleName}
+            width={1200}
+            height={900}
+            className="hidden dark:sm:block"
+          />
+          <Image
+            src={`/images/showcase/${currentStyleName}-light-mobile.png`}
+            alt={currentStyleName}
+            width={1200}
+            height={900}
+            className="block sm:hidden dark:hidden"
+          />
+          <Image
+            src={`/images/showcase/${currentStyleName}-dark-mobile.png`}
+            alt={currentStyleName}
+            width={1200}
+            height={900}
+            className="hidden max-sm:dark:block"
+          />
+        </StyleProvider>
       </div>
     </>
   );

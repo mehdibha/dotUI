@@ -22,7 +22,7 @@ export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
         className={cn("md:hidden", "relative flex items-center justify-center")}
         aria-label="Toggle Menu"
       >
-        <div className="[&>span]:bg-fg relative h-3.5 w-4 [&>span]:absolute [&>span]:left-0 [&>span]:block [&>span]:h-0.5 [&>span]:w-4 [&>span]:rounded-full [&>span]:transition-all [&>span]:duration-150 [&>span]:ease-out">
+        <div className="relative h-3.5 w-4 [&>span]:absolute [&>span]:left-0 [&>span]:block [&>span]:h-0.5 [&>span]:w-4 [&>span]:rounded-full [&>span]:bg-fg [&>span]:transition-all [&>span]:duration-150 [&>span]:ease-out">
           <span
             className={cn(
               "top-0.25",
@@ -52,7 +52,7 @@ export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
         {({ close }) => (
           <div className="flex flex-col gap-12">
             <div className="space-y-2">
-              <div className="text-fg-muted text-lg font-medium">Menu</div>
+              <div className="text-lg font-medium text-fg-muted">Menu</div>
               <div className="flex flex-col gap-3">
                 {[
                   { href: "/", label: "Home" },
@@ -71,7 +71,7 @@ export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
               if (group.type === "folder") {
                 return (
                   <div key={index} className="flex flex-col gap-3">
-                    <div className="text-fg-muted text-lg font-medium">
+                    <div className="text-lg font-medium text-fg-muted">
                       {group.name}
                     </div>
                     <div className="flex flex-col gap-3">
