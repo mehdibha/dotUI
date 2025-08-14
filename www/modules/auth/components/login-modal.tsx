@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { usePathname } from "next/navigation";
 
 import { Button } from "@dotui/ui/components/button";
 import {
@@ -15,13 +16,8 @@ import { GitHubIcon } from "@dotui/ui/icons";
 
 import { Link } from "@/components/link";
 import { authClient } from "../lib/client";
-import { usePathname } from "next/navigation";
 
-export function LoginModal({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export function LoginModal({ children }: { children: React.ReactNode }) {
   const [isPending, setPending] = React.useState(false);
   const pathname = usePathname();
 
@@ -43,6 +39,7 @@ export function LoginModal({
             isPending={isPending}
             onPress={async () => {
               try {
+                console.log("pathname", pathname);
                 setPending(true);
                 await authClient.signIn.social({
                   provider: "github",
