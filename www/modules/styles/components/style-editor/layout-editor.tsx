@@ -5,14 +5,14 @@ import { Skeleton } from "@dotui/ui/components/skeleton";
 import { Slider } from "@dotui/ui/components/slider";
 
 import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
-import { EditorSection } from "./editor-section";
+import { StyleEditorSection } from "./section";
 
-export function StyleLayoutEditor() {
+export function LayoutEditor() {
   const { form, isSuccess } = useStyleForm();
 
   return (
     <div>
-      <EditorSection title="Border radius">
+      <StyleEditorSection title="Border radius">
         <Skeleton show={!isSuccess}>
           <FormControl
             name="theme.radius"
@@ -29,9 +29,9 @@ export function StyleLayoutEditor() {
             )}
           />
         </Skeleton>
-      </EditorSection>
+      </StyleEditorSection>
 
-      <EditorSection title="Spacing">
+      <StyleEditorSection title="Spacing">
         <Skeleton show={!isSuccess}>
           <FormControl
             name="theme.spacing"
@@ -49,7 +49,7 @@ export function StyleLayoutEditor() {
             )}
           />
         </Skeleton>
-      </EditorSection>
+      </StyleEditorSection>
     </div>
   );
 }

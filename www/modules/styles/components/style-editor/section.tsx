@@ -2,20 +2,19 @@
 
 import { cn } from "@dotui/ui/lib/utils";
 
-interface EditorSectionProps extends React.ComponentProps<"div"> {
+interface StyleEditorSectionProps extends React.ComponentProps<"div"> {
   title: string;
 }
 
-export function EditorSection({
+export function StyleEditorSection({
   title,
   children,
   className,
   ...props
-}: EditorSectionProps) {
+}: StyleEditorSectionProps) {
   return (
     <div className={cn("not-first:mt-6", className)} {...props}>
       <h2 className="text-base font-semibold">{title}</h2>
-
       {children}
     </div>
   );

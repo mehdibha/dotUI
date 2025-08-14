@@ -1,23 +1,11 @@
 "use client";
 
-import React from "react";
-import {
-  BackgroundColor as LeonardoBgColor,
-  Color as LeonardoColor,
-  Theme as LeonardoTheme,
-} from "@adobe/leonardo-contrast-colors";
 import { Button as AriaButton } from "react-aria-components";
-import type {
-  ContrastColor,
-  ContrastColorBackground,
-  CssColor,
-} from "@adobe/leonardo-contrast-colors";
 
 import { Skeleton } from "@dotui/ui/components/skeleton";
 import { Tooltip } from "@dotui/ui/components/tooltip";
 
 import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
-import { usePreferences } from "../atoms/preferences-atom";
 
 interface ColorScaleProps {
   scaleId: string;

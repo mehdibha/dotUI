@@ -13,7 +13,6 @@ import {
   Trash2Icon,
   XIcon,
 } from "lucide-react";
-import { Reorder } from "motion/react";
 import { useFieldArray } from "react-hook-form";
 import type { CssColor } from "@adobe/leonardo-contrast-colors";
 
@@ -53,7 +52,7 @@ import { cn } from "@dotui/ui/lib/utils";
 import { AutoResizeTextField } from "@/components/auto-resize-input";
 import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
 
-export function ScaleEditor({ scaleId }: { scaleId: string }) {
+export function ColorScaleEditor({ scaleId }: { scaleId: string }) {
   const { form, resolvedMode } = useStyleForm();
 
   const name = form.watch(

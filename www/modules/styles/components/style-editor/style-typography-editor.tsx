@@ -6,14 +6,14 @@ import { Slider } from "@dotui/ui/components/slider";
 
 import { FontSelector } from "@/modules/styles/components/fonts-selector";
 import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
-import { EditorSection } from "./editor-section";
+import { StyleEditorSection } from "./section";
 
-export function StyleTypographyEditor() {
+export function TypographyEditor() {
   const { form, isSuccess } = useStyleForm();
 
   return (
     <div className="min-h-[200svh]">
-      <EditorSection title="Font family">
+      <StyleEditorSection title="Font family">
         <div className="mt-3 space-y-3">
           <Skeleton show={!isSuccess}>
             <FormControl
@@ -44,9 +44,9 @@ export function StyleTypographyEditor() {
             />
           </Skeleton>
         </div>
-      </EditorSection>
+      </StyleEditorSection>
 
-      <EditorSection title="Letter spacing">
+      <StyleEditorSection title="Letter spacing">
         <Skeleton show={!isSuccess}>
           <Slider
             label="Letter spacing"
@@ -58,7 +58,7 @@ export function StyleTypographyEditor() {
             className="mt-2 w-full"
           />
         </Skeleton>
-      </EditorSection>
+      </StyleEditorSection>
     </div>
   );
 }

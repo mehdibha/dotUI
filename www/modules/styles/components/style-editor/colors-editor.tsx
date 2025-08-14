@@ -28,9 +28,9 @@ import { ThemeModeSwitch } from "@/components/theme-mode-switch";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
 import { ColorScale } from "./color-scale";
-import { EditorSection } from "./editor-section";
-import { ScaleEditor } from "./scale-editor";
-import { ColorTokens } from "./style-color-tokens";
+import { ColorScaleEditor } from "./color-scale-editor";
+import { ColorTokens } from "./color-tokens";
+import { StyleEditorSection } from "./section";
 
 const baseColors = [
   { name: "neutral", label: "Neutral" },
@@ -46,13 +46,13 @@ const semanticColors = [
 
 type ModeConfig = "light-only" | "dark-only" | "light-dark";
 
-export function StyleColorsEditor() {
+export function ColorsEditor() {
   const { form, resolvedMode, isSuccess } = useStyleForm();
   const { setActiveMode } = usePreferences();
 
   return (
     <div>
-      <EditorSection title="Mode">
+      <StyleEditorSection title="Mode">
         <div className="mt-2 flex items-start justify-between">
           <ModeConfig />
           <Skeleton show={!isSuccess}>
@@ -67,18 +67,18 @@ export function StyleColorsEditor() {
             )}
           </Skeleton>
         </div>
-      </EditorSection>
+      </StyleEditorSection>
 
-      <EditorSection title="Color adjustments">
+      <StyleEditorSection title="Color adjustments">
         <ColorAdjustments />
-      </EditorSection>
+      </StyleEditorSection>
 
-      <EditorSection title="Base colors">
+      <StyleEditorSection title="Base colors">
         <div className="mt-2 flex items-center gap-2">
           {baseColors.map((color) => {
             return (
               <Skeleton key={color.name} show={!isSuccess}>
-                <ScaleEditor scaleId={color.name} />
+                <ColorScaleEditor scaleId={color.name} />
               </Skeleton>
             );
           })}
@@ -88,14 +88,14 @@ export function StyleColorsEditor() {
             return <ColorScale key={color.name} scaleId={color.name} />;
           })}
         </div>
-      </EditorSection>
+      </StyleEditorSection>
 
-      <EditorSection title="Semantic colors">
+      <StyleEditorSection title="Semantic colors">
         <div className="mt-2 flex items-center gap-2">
           {semanticColors.map((color) => {
             return (
               <Skeleton key={color.name} show={!isSuccess}>
-                <ScaleEditor scaleId={color.name} />
+                <ColorScaleEditor scaleId={color.name} />
               </Skeleton>
             );
           })}
@@ -105,9 +105,9 @@ export function StyleColorsEditor() {
             return <ColorScale key={color.name} scaleId={color.name} />;
           })}
         </div>
-      </EditorSection>
+      </StyleEditorSection>
 
-      <EditorSection title="Tokens">
+      <StyleEditorSection title="Tokens">
         <div className="mt-3 space-y-4">
           {[
             {
@@ -133,7 +133,7 @@ export function StyleColorsEditor() {
             </div>
           ))}
         </div>
-      </EditorSection>
+      </StyleEditorSection>
     </div>
   );
 }

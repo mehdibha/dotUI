@@ -17,11 +17,7 @@ const packageManagers: ("npm" | "pnpm" | "yarn" | "bun")[] = [
   "bun",
 ];
 
-export function StylePageCodeModal({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export function CodeModal({ children }: { children: React.ReactNode }) {
   const { form } = useStyleForm();
 
   return (

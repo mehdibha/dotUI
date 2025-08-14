@@ -40,8 +40,8 @@ import { cn } from "@dotui/ui/lib/utils";
 import type { VariantsDefinition } from "@dotui/style-engine/types";
 
 import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
-import { usePreferences } from "../atoms/preferences-atom";
-import { ColorTokens } from "./style-color-tokens";
+import { usePreferences } from "../../atoms/preferences-atom";
+import { ColorTokens } from "./color-tokens";
 
 function getComponentVariants(
   componentName: string,
@@ -135,7 +135,7 @@ const Section = ({
   );
 };
 
-export function StyleComponentsEditor() {
+export function ComponentsEditor() {
   return (
     <div>
       <Section

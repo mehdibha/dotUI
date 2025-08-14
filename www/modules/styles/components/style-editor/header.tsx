@@ -1,4 +1,5 @@
 "use client";
+"use no memo";
 
 import React from "react";
 import Link from "next/link";
@@ -29,10 +30,10 @@ import { useMounted } from "@/hooks/use-mounted";
 import { SignInModal } from "@/modules/auth/components/sign-in-modal";
 import { authClient } from "@/modules/auth/lib/client";
 import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
-import { CreateStyleModal } from "./create-style-modal";
-import { StylePageCodeModal } from "./style-page-code-modal";
+import { CreateStyleModal } from "../create-style-modal";
+import { CodeModal } from "./code-modal";
 
-export function StylePageHeader() {
+export function StyleEditorHeader() {
   return (
     <div className="container max-w-4xl">
       <Link
@@ -42,16 +43,16 @@ export function StylePageHeader() {
         <ArrowLeftIcon className="size-4" /> styles
       </Link>
       <div className="mt-1 flex items-center justify-between lg:mt-2">
-        <StylePageHeaderName />
+        <StyleEditorHeaderName />
         <div className="flex items-center gap-1">
-          <StylePageHeaderActions />
+          <StyleEditorHeaderActions />
         </div>
       </div>
     </div>
   );
 }
 
-function StylePageHeaderName() {
+function StyleEditorHeaderName() {
   const { form, isSuccess } = useStyleForm();
   const value = form.watch("name");
 
@@ -172,7 +173,7 @@ function StylePageHeaderName() {
   );
 }
 
-function StylePageHeaderActions() {
+function StyleEditorHeaderActions() {
   const { form } = useStyleForm();
   const pathname = usePathname();
   const segments = pathname.split("/");
@@ -197,11 +198,11 @@ function StylePageHeaderActions() {
 
   return (
     <Skeleton show={!isMounted || isPending}>
-      <StylePageCodeModal>
+      <CodeModal>
         <Button size="sm" prefix={<CodeIcon />}>
           Code
         </Button>
-      </StylePageCodeModal>
+      </CodeModal>
       <Tooltip content="Reset" delay={0}>
         <Button
           aria-label="Reset form"
