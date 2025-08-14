@@ -2,7 +2,6 @@ import { existsSync, mkdirSync } from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import puppeteer from "puppeteer";
-import sharp from "sharp";
 
 import { buildTimeCaller } from "../lib/trpc/build";
 
@@ -25,11 +24,12 @@ async function captureScreenshots() {
     defaultViewport: {
       width: 800,
       height: 900,
+      deviceScaleFactor: 2,
     },
   });
 
   for (const style of featuredStyles) {
-    const pageUrl = `http://localhost:3000/block-view/${style.user.username}/${style.name}/blocks-showcase`;
+    const pageUrl = `http://localhost:3000/block-view/${style.user.username}/${style.name}/blocks-showcase?mode=true`;
 
     const page = await browser.newPage();
     await page.goto(pageUrl, {
@@ -39,11 +39,6 @@ async function captureScreenshots() {
     console.log(`- Capturing ${style.name}...`);
 
     for (const theme of ["light", "dark"]) {
-      const screenshotPath = path.join(
-        TARGET_PATH,
-        `${style.name}-${theme}.png`,
-      );
-
       // Set theme and reload page
       await page.evaluate((currentTheme) => {
         localStorage.setItem(
@@ -64,27 +59,27 @@ async function captureScreenshots() {
         }
       });
 
-      // Take screenshot as buffer (full page), then crop with sharp and save
-      const buffer = await page.screenshot({
-        type: "png",
-        fullPage: true,
-      });
+      // Capture for both normal (1400) and mobile (800)
+      const sizes: { width: number; suffix: string }[] = [
+        { width: 1400, suffix: "" },
+        { width: 800, suffix: "-mobile" },
+      ];
 
-      const img = sharp(buffer as Buffer);
-      const meta = await img.metadata();
+      for (const { width: viewportWidth, suffix } of sizes) {
+        await page.setViewport({ width: viewportWidth, height: 900 });
+        await new Promise((resolve) => setTimeout(resolve, 500));
 
-      if (!meta.width || !meta.height) {
-        throw new Error("Failed to read screenshot dimensions");
+        const screenshotPath = path.join(
+          TARGET_PATH,
+          `${style.name}-${theme}${suffix}.png`,
+        );
+
+        await page.screenshot({
+          path: screenshotPath as `${string}.png`,
+          type: "png",
+          fullPage: true,
+        });
       }
-
-      const cropWidth = 30; // pixels on each side
-      const cropHeight = 40; // pixels on each side
-      const width = Math.max(1, meta.width - cropWidth * 2);
-      const height = Math.max(1, meta.height - cropHeight * 2);
-
-      await img
-        .extract({ left: cropWidth, top: cropHeight, width, height })
-        .toFile(screenshotPath as `${string}.png`);
     }
 
     await page.close();

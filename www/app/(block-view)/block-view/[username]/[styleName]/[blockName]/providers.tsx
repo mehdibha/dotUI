@@ -36,13 +36,11 @@ export const BlockProviders = ({
     return shouldUseLiveStyle ? (liveStyle ?? styleProp) : styleProp;
   }, [liveStyle, styleProp, shouldUseLiveStyle]);
 
-  if (!isMounted || !style) return null;
+  if (!isMounted || !style || !resolvedTheme) return null;
 
   const effectiveMode = shouldUseActiveMode
     ? activeMode
-    : resolvedTheme === "dark"
-      ? "dark"
-      : "light";
+    : (resolvedTheme as "light" | "dark");
 
   return (
     <>

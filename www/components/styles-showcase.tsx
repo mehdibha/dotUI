@@ -22,7 +22,6 @@ export const StylesShowcase = ({
 }: {
   styles: RouterOutputs["style"]["getFeatured"];
 }) => {
-  const IMAGE_VERSION = "2"; // bump to invalidate CDN/browser cache when screenshots change
   const { resolvedTheme } = useTheme();
   const containerRef = React.useRef<HTMLDivElement>(null);
   const [currentStyleName, setCurrentStyleName] = React.useState<string>(
@@ -163,28 +162,40 @@ export const StylesShowcase = ({
                   initial="hidden"
                   animate="show"
                   exit="hidden"
-                  className="max-lg:hidden max-lg:max-h-[80vh] max-lg:overflow-y-auto"
+                  className="max-lg:hidden"
                 >
                   <BlocksShowcase />
                 </motion.div>
               </AnimatePresence>
             </PortalProvider>
-            <div className="max-lg:max-h-[80vh] max-lg:overflow-y-auto">
-              <Image
-                src={`/images/showcase/${currentStyleName}-light.png?v=${IMAGE_VERSION}`}
-                alt={currentStyleName}
-                width={1200}
-                height={900}
-                className="lg:hidden dark:hidden"
-              />
-              <Image
-                src={`/images/showcase/${currentStyleName}-dark.png?v=${IMAGE_VERSION}`}
-                alt={currentStyleName}
-                width={1200}
-                height={900}
-                className="hidden max-lg:dark:block"
-              />
-            </div>
+            <Image
+              src={`/images/showcase/${currentStyleName}-light.png`}
+              alt={currentStyleName}
+              width={1200}
+              height={900}
+              className="hidden sm:block lg:hidden dark:hidden"
+            />
+            <Image
+              src={`/images/showcase/${currentStyleName}-dark.png`}
+              alt={currentStyleName}
+              width={1200}
+              height={900}
+              className="hidden sm:block lg:hidden"
+            />
+            <Image
+              src={`/images/showcase/${currentStyleName}-light-mobile.png`}
+              alt={currentStyleName}
+              width={1200}
+              height={900}
+              className="block sm:hidden dark:hidden"
+            />
+            <Image
+              src={`/images/showcase/${currentStyleName}-dark-mobile.png`}
+              alt={currentStyleName}
+              width={1200}
+              height={900}
+              className="block sm:hidden"
+            />
           </StyleProvider>
         </Skeleton>
       </div>

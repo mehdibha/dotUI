@@ -37,45 +37,70 @@ export function Notifications({
           </Button>
         </CardAction>
       </CardHeader>
-      <CardContent className="flex-1 px-0">
-        <Tabs className="h-full">
-          <TabList className="pl-6">
+      <CardContent className="min-h-0 flex-1 px-0">
+        <Tabs className="flex h-full min-h-0 flex-col">
+          <TabList className="shrink-0 pl-6">
             <Tab id="all">All</Tab>
             <Tab id="unread">Unread</Tab>
             <Tab id="read">Read</Tab>
           </TabList>
-          <TabPanel id="all" className="h-full">
-            <ListBox className="max-h-full w-full rounded-none border-0 bg-transparent p-0 [&_.separator]:my-0 [&_[data-slot=list-box-item]]:rounded-none">
-              {notifications.map((notification, index) => (
-                <React.Fragment key={index}>
-                  <Separator />
-                  <ListBoxItem>
-                    <div className="flex items-start gap-3 py-2">
-                      <Avatar
-                        src={notification.user.avatar}
-                        fallback={notification.user.name
-                          .split(" ")
-                          .map((n) => n[0])
-                          .join("")}
-                        size="md"
-                      />
-                      <div className="flex-1">
-                        <p className="text-sm">
-                          <span className="font-medium">
-                            {notification.user.name}
-                          </span>{" "}
-                          <span>{notification.text}</span>
-                        </p>
-                        <p className="text-fg-muted mt-1 text-xs">
-                          {notification.timestamp}
-                        </p>
-                      </div>
-                    </div>
-                  </ListBoxItem>
-                </React.Fragment>
-              ))}
-            </ListBox>
-          </TabPanel>
+          {["all", "unread", "read"].map((tab) => (
+            <TabPanel
+              key={tab}
+              id={tab}
+              className="mt-0 min-h-0 flex-1 overflow-y-auto"
+            >
+              <ListBox className="max-h-none w-full rounded-none border-0 bg-transparent p-0 [&_.separator]:my-0 [&_[data-slot=list-box-item]]:rounded-none">
+                {notifications
+                  .filter((notification) => {
+                    if (tab === "all") return true;
+                    if (tab === "unread") return !notification.read;
+                    if (tab === "read") return notification.read;
+                  })
+                  .map((notification, index) => (
+                    <React.Fragment key={index}>
+                      <Separator />
+                      <ListBoxItem>
+                        <div className="flex items-start gap-3 py-2">
+                          <Avatar
+                            src={notification.user.avatar}
+                            fallback={notification.user.name
+                              .split(" ")
+                              .map((n) => n[0])
+                              .join("")}
+                            size="md"
+                          />
+                          <div className="flex-1">
+                            <p className="text-sm">
+                              <span className="font-medium">
+                                {notification.user.name}
+                              </span>{" "}
+                              {notification.content ? (
+                                notification.content
+                              ) : (
+                                <span>{notification.text}</span>
+                              )}
+                            </p>
+                            <div className="mt-1 flex items-start justify-between gap-2">
+                              <p className="text-fg-muted text-xs">
+                                {notification.timestamp}
+                              </p>
+                              {notification.action && (
+                                <div className="mt-2 flex justify-end">
+                                  <Button size="sm">
+                                    {notification.action.label}
+                                  </Button>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </ListBoxItem>
+                    </React.Fragment>
+                  ))}
+              </ListBox>
+            </TabPanel>
+          ))}
         </Tabs>
       </CardContent>
     </Card>
@@ -85,47 +110,95 @@ export function Notifications({
 const notifications = [
   {
     user: {
-      name: "Tony Reichert",
-      avatar:
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face",
+      name: "Guillermo Rauch",
+      avatar: "https://avatars.githubusercontent.com/rauchg",
     },
-    text: "requested to join your Acme organization.",
+    text: "starred your repository dotUI.",
+    content: (
+      <>
+        starred <span className="font-semibold">mehdibha/dotUI</span>.
+      </>
+    ),
+    read: false,
     timestamp: "2 hours ago",
   },
   {
     user: {
-      name: "Ben Berman",
-      avatar:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
+      name: "Lee Robinson",
+      avatar: "https://avatars.githubusercontent.com/leerob",
     },
-    text: "modified the Brand logo file.",
+    text: "invited you to the Vercel GitHub organization.",
+    content: (
+      <>
+        invited you to join <span className="font-semibold">Cursor</span> on
+        GitHub.
+      </>
+    ),
+    read: false,
+    action: { label: "View invite" },
     timestamp: "7 hours ago",
   },
   {
     user: {
-      name: "Jane Doe",
-      avatar:
-        "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face",
+      name: "Tim Neutkens",
+      avatar: "https://avatars.githubusercontent.com/timneutkens",
     },
-    text: "liked your post.",
+    text: "published a new release v14.2.0-canary on vercel/next.js.",
+    content: (
+      <>
+        published <span className="font-semibold">v14.2.0-canary</span> on
+        <span className="font-semibold"> vercel/next.js</span>.
+      </>
+    ),
+    read: false,
+    action: { label: "See release" },
     timestamp: "Yesterday",
   },
   {
     user: {
-      name: "John Smith",
-      avatar:
-        "https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=400&h=400&fit=crop&crop=face",
+      name: "Steven Tey",
+      avatar: "https://avatars.githubusercontent.com/steven-tey",
     },
-    text: "started following you.",
+    text: "opened a pull request: Improve docs.",
+    content: (
+      <>
+        opened <span className="font-semibold">PR</span>:
+        <span className="font-semibold"> Improve docs</span> in
+        <span className="font-semibold"> mehdibha/dotUI</span>.
+      </>
+    ),
+    read: true,
+    action: { label: "Review PR" },
     timestamp: "Yesterday",
   },
   {
     user: {
-      name: "Jacob Jones",
-      avatar:
-        "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400&h=400&fit=crop&crop=face",
+      name: "Shu Ding",
+      avatar: "https://avatars.githubusercontent.com/shuding",
     },
-    text: "mentioned you in a post.",
+    text: "starred your repository dotUI.",
+    content: (
+      <>
+        starred <span className="font-semibold">mehdibha/dotUI</span>.
+      </>
+    ),
+    read: true,
     timestamp: "2 days ago",
+  },
+  {
+    user: {
+      name: "Delba de Oliveira",
+      avatar: "https://avatars.githubusercontent.com/delbaoliveira",
+    },
+    text: "commented on issue: Add theme presets.",
+    content: (
+      <>
+        commented on <span className="font-semibold">#128</span>:
+        <span className="font-semibold"> Add theme presets</span>.
+      </>
+    ),
+    read: false,
+    action: { label: "Reply" },
+    timestamp: "3 days ago",
   },
 ];
