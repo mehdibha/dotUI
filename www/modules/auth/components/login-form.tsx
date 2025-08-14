@@ -17,12 +17,12 @@ export function LoginForm() {
         Log in to dotUI
       </h1>
       <p className="text-fg-muted mt-2 text-sm">
-        Enter your email below to login to your account
+        Sign in with your GitHub account to continue
       </p>
       <Button
         prefix={<GitHubIcon />}
         size="lg"
-        className="mt-8 w-full max-w-sm"
+        className="mt-6 w-full max-w-sm"
         isPending={isPending}
         onPress={async () => {
           try {
@@ -40,8 +40,8 @@ export function LoginForm() {
       </Button>
       <p className="text-fg-muted mt-4 text-sm">
         By continuing, you agree to our{" "}
-        <Link href="/terms">Terms of Service</Link> and{" "}
-        <Link href="/privacy">Privacy Policy</Link>.
+        <Link href="/terms-of-service">Terms of Service</Link> and{" "}
+        <Link href="/privacy-policy">Privacy Policy</Link>.
       </p>
     </div>
   );

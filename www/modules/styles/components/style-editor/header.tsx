@@ -27,7 +27,7 @@ import { Tooltip } from "@dotui/ui/components/tooltip";
 
 import { AutoResizeTextField } from "@/components/auto-resize-input";
 import { useMounted } from "@/hooks/use-mounted";
-import { SignInModal } from "@/modules/auth/components/sign-in-modal";
+import { LoginModal } from "@/modules/auth/components/login-modal";
 import { authClient } from "@/modules/auth/lib/client";
 import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
 import { CreateStyleModal } from "../create-style-modal";
@@ -246,11 +246,11 @@ function StyleEditorHeaderActions() {
           </CreateStyleModal>
         )
       ) : (
-        <SignInModal>
+        <LoginModal callbackURL={pathname}>
           <Button size="sm" variant="primary">
             Publish
           </Button>
-        </SignInModal>
+        </LoginModal>
       )}
       <MenuRoot>
         <Button aria-label="More actions" size="sm" shape="square">

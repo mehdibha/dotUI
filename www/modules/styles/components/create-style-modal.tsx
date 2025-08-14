@@ -32,6 +32,7 @@ const createStyleSchema = z.object({
     .string()
     .min(1, "Name is required")
     .min(2, "Name must be at least 2 characters")
+    // TODO: deprecated
     .superRefine((val, ctx) => {
       const normalized = normalizeStyleName(val);
       const result = dbCreateStyleSchema.shape.name.safeParse(normalized);
@@ -202,28 +203,6 @@ export function CreateStyleModal({
                   Your style will be renamed to "{renamedTo}"
                 </Alert>
               )}
-              {/* <div className="mt-4 bg-transparent">
-              <p className="text-fg-muted text-sm">
-              You can install it later with this command:
-              </p>
-              <pre className="bg-bg-neutral mt-1 rounded-md border p-4 text-xs">
-              <code className="truncate max-sm:flex max-sm:max-w-[60vw]">
-              <span className="text-[#F69D50]">npx</span> shadcn@latest init
-              @dotui/
-              <span className="text-[#F69D50]">
-              {form.watch("name")
-              ? form
-              .watch("name")
-              .toLowerCase()
-              .replace(/[^a-z0-9]/g, "-")
-              .replace(/-+/g, "-")
-              .replace(/^-|-$/g, "") || "your-style"
-              : "{style-name}"}
-              </span>
-              /base
-              </code>
-              </pre>
-              </div> */}
             </DialogBody>
             <DialogFooter>
               <Button slot="close">Cancel</Button>

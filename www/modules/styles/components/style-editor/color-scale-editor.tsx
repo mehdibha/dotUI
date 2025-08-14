@@ -70,7 +70,7 @@ export function ColorScaleEditor({ scaleId }: { scaleId: string }) {
         ))}
         {name.charAt(0).toUpperCase() + name.slice(1)}
       </Button>
-      <Dialog type="drawer" drawerProps={{ placement: "right" }}>
+      <Dialog type="drawer" drawerProps={{ placement: "left" }}>
         <DialogHeader>
           <ScaleNameEditor scaleId={scaleId} />
         </DialogHeader>
