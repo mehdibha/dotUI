@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@source "../../../www/**/*.{ts,tsx}";
+@source "../../packages/ui/**/*.{ts,tsx}";
 @source "../**/*.{ts,tsx}";
 
 @import "tw-animate-css";
@@ -8,7 +8,7 @@
 @plugin "tailwindcss-auto-contrast";
 
 @import "./docs.css";
-@import "./focus-styles.css";
+@import "@dotui/ui/focus-styles.css";
 
 @variant dark (&:where(.dark, .dark *));
 

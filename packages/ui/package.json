@@ -12,7 +12,7 @@
     "./hooks/*": "./src/hooks/*.ts",
     "./lib/focus-styles": "./src/lib/focus-styles.ts",
     "./lib/utils": "./src/lib/utils.tsx",
-    "./globals.css": "./src/globals.css",
+    "./focus-styles.css": "./src/focus-styles.css",
     "./block-viewer": "./src/block-viewer.tsx",
     "./registry/components/tabs/motion": "./src/registry/components/tabs/motion.tsx",
     "./registry-blocks": "./src/registry/registry-blocks.ts"
@@ -27,9 +27,7 @@
   },
   "dependencies": {
     "@dotui/registry-definition": "workspace:*",
-    "@dotui/style-engine": "workspace:*",
-    "tailwindcss-auto-contrast": "workspace:*",
-    "tw-animate-css": "^1.3.5"
+    "@dotui/style-engine": "workspace:*"
   },
   "peerDependencies": {
     "@hookform/resolvers": "catalog:ui",
