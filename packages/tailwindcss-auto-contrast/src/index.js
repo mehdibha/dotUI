@@ -92,7 +92,7 @@ function detectRootStylesheet({ cwd, cssFile, source, logLevel }) {
     if (!hasTailwindImport(raw)) {
       log(
         logLevel,
-        "The provided cssFile does not contain a Tailwind import (@import \"tailwindcss\").",
+        'The provided cssFile does not contain a Tailwind import (@import "tailwindcss").',
         `\n- Path: ${abs}`,
       );
     }
@@ -100,7 +100,9 @@ function detectRootStylesheet({ cwd, cssFile, source, logLevel }) {
   }
 
   // 2) Source search (directory, glob, or file)
-  const envCssFile = process.env.TW_AUTOCONTRAST_CSS_FILE || process.env.TAILWIND_AUTOCONTRAST_CSS_FILE;
+  const envCssFile =
+    process.env.TW_AUTOCONTRAST_CSS_FILE ||
+    process.env.TAILWIND_AUTOCONTRAST_CSS_FILE;
   if (envCssFile && !cssFile) {
     const abs = path.isAbsolute(envCssFile)
       ? envCssFile
@@ -109,7 +111,8 @@ function detectRootStylesheet({ cwd, cssFile, source, logLevel }) {
   }
 
   const envSourceRaw =
-    process.env.TW_AUTOCONTRAST_SOURCE || process.env.TAILWIND_AUTOCONTRAST_SOURCE;
+    process.env.TW_AUTOCONTRAST_SOURCE ||
+    process.env.TAILWIND_AUTOCONTRAST_SOURCE;
   const allSources = [
     ...toArray(source),
     ...(envSourceRaw ? envSourceRaw.split(",").map((s) => s.trim()) : []),
@@ -177,7 +180,7 @@ function detectRootStylesheet({ cwd, cssFile, source, logLevel }) {
 
   log(
     logLevel,
-    "Could not locate a Tailwind root stylesheet. The plugin looks for a CSS file that contains @import \"tailwindcss\".",
+    'Could not locate a Tailwind root stylesheet. The plugin looks for a CSS file that contains @import "tailwindcss".',
     `\n- Working directory: ${cwd}\n- You can set options.cssFile, options.source, or environment variables TW_AUTOCONTRAST_CSS_FILE / TW_AUTOCONTRAST_SOURCE.`,
   );
   return null;
@@ -187,8 +190,12 @@ function isColor(value) {
   if (!value || typeof value !== "string") return false;
   const trimmed = value.trim().toLowerCase();
   if (/^#([0-9a-f]{3}|[0-9a-f]{6}|[0-9a-f]{8})$/i.test(trimmed)) return true;
-  if (/^rgba?\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*(,\s*[\d.]+)?\s*\)$/i.test(trimmed)) return true;
-  if (/^hsla?\(\s*\d+\s*,\s*\d+%\s*,\s*\d+%\s*(,\s*[\d.]+)?\s*\)$/i.test(trimmed)) return true;
+  if (/^rgba?\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*(,\s*[\d.]+)?\s*\)$/i.test(trimmed))
+    return true;
+  if (
+    /^hsla?\(\s*\d+\s*,\s*\d+%\s*,\s*\d+%\s*(,\s*[\d.]+)?\s*\)$/i.test(trimmed)
+  )
+    return true;
   if (/^(lab|lch|color|oklab|oklch|hwb)\s*\(/i.test(trimmed)) return true;
   if (/^var\s*\(\s*--[\w-]+\s*(,.*?)?\s*\)$/i.test(trimmed)) return true;
   return false;
@@ -295,8 +302,14 @@ function getContrastColor(colorValue) {
   const colorLuminance = calculateLuminance(rgb.r, rgb.g, rgb.b);
   const blackLuminance = 0;
   const whiteLuminance = 1;
-  const contrastWithBlack = calculateContrastRatio(colorLuminance, blackLuminance);
-  const contrastWithWhite = calculateContrastRatio(colorLuminance, whiteLuminance);
+  const contrastWithBlack = calculateContrastRatio(
+    colorLuminance,
+    blackLuminance,
+  );
+  const contrastWithWhite = calculateContrastRatio(
+    colorLuminance,
+    whiteLuminance,
+  );
   return contrastWithBlack > contrastWithWhite ? "black" : "white";
 }
 
@@ -357,7 +370,7 @@ function readCssVars(rawCss) {
 function getContrastCssVars(cssVars) {
   const result = {};
   const validShades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
-  const colorShadePattern = /^(.*)-(\d+)$/;
+  const colorShadePattern = /^(.+)-(\d+)$/;
   Object.keys(cssVars).forEach((themeName) => {
     const themeVars = cssVars[themeName];
     const colorVars = {};
@@ -406,13 +419,20 @@ const autoContrast = plugin.withOptions((options = {}) => {
 
       const rawCss = readFileSafe(cssFilePath);
       if (rawCss == null) {
-        log(logLevel, "Failed to read the root stylesheet:", `\n- Path: ${cssFilePath}`);
+        log(
+          logLevel,
+          "Failed to read the root stylesheet:",
+          `\n- Path: ${cssFilePath}`,
+        );
         return;
       }
 
       const cssVars = readCssVars(rawCss);
       if (!cssVars) {
-        log(logLevel, "Failed to parse CSS variables from the root stylesheet.");
+        log(
+          logLevel,
+          "Failed to parse CSS variables from the root stylesheet.",
+        );
         return;
       }
 
