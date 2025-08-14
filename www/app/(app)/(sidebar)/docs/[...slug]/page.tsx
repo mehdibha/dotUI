@@ -14,6 +14,8 @@ import { mdxComponents } from "@/modules/docs/components/mdx-components";
 import { TableOfContents } from "@/modules/docs/components/toc";
 import { docsSource } from "@/modules/docs/lib/source";
 
+export const dynamicParams = false;
+
 export default async function Page({
   params,
 }: {
