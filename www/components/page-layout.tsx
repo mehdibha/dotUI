@@ -5,7 +5,7 @@ export function PageLayout({
   ...props
 }: React.ComponentProps<"div">) {
   return (
-    <div className={cn("pb-14 pt-4 md:pt-10 lg:pt-14", className)} {...props} />
+    <div className={cn("pb-14 pt-6 md:pt-10 lg:pt-14", className)} {...props} />
   );
 }
 
@@ -57,7 +57,10 @@ export function PageActions({
 }: React.ComponentProps<"div">) {
   return (
     <div
-      className={cn("mt-4 flex w-full items-center gap-2", className)}
+      className={cn(
+        "mt-4 flex w-full flex-col gap-2 sm:flex-row sm:items-center",
+        className,
+      )}
       {...props}
     />
   );

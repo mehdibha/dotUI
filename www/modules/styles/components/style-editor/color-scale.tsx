@@ -25,7 +25,7 @@ export function ColorScale({ scaleId }: ColorScaleProps) {
   }
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex flex-col gap-0.5 sm:flex-row sm:items-center sm:gap-2">
       <p className="text-fg-muted w-16 text-sm">{`${scaleName.charAt(0).toUpperCase() + scaleName.slice(1)}`}</p>
       <div className="flex flex-1 items-center gap-1">
         {scale.values.map((color, index) => (

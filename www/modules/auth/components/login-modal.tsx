@@ -12,6 +12,7 @@ import {
   DialogHeading,
   DialogRoot,
 } from "@dotui/ui/components/dialog";
+import { toast } from "@dotui/ui/components/toast";
 import { GitHubIcon } from "@dotui/ui/icons";
 
 import { Link } from "@/components/link";
@@ -45,7 +46,16 @@ export function LoginModal({ children }: { children: React.ReactNode }) {
                   callbackURL: pathname,
                 });
               } catch (error) {
-                console.log(error);
+                const message =
+                  (error as { message?: string })?.message ??
+                  "Something went wrong while signing in.";
+                toast.add({
+                  title: "Sign in failed",
+                  description: message,
+                  variant: "danger",
+                });
+              } finally {
+                setPending(false);
               }
             }}
           >

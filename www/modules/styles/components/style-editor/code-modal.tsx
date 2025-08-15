@@ -2,12 +2,8 @@
 
 import convert from "npm-to-yarn";
 
-import {
-  Dialog,
-  DialogBody,
-  DialogRoot,
-  DialogRootProps,
-} from "@dotui/ui/components/dialog";
+import { Dialog, DialogBody, DialogRoot } from "@dotui/ui/components/dialog";
+import type { DialogRootProps } from "@dotui/ui/components/dialog";
 
 import {
   InstallTab,

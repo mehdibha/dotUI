@@ -35,7 +35,7 @@ import { CreateStyleModal } from "../create-style-modal";
 import { CodeModal } from "./code-modal";
 
 export function StyleEditorHeader() {
-  const { form } = useStyleForm();
+  const { form, isLoading } = useStyleForm();
 
   return (
     <div className="container max-w-4xl">
@@ -46,9 +46,11 @@ export function StyleEditorHeader() {
         <ArrowLeftIcon className="size-4" /> styles
       </Link>
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold leading-none">
-          {form.watch("name")}
-        </h1>
+        <Skeleton show={isLoading}>
+          <h1 className="text-2xl font-bold leading-none">
+            {form.watch("name")}
+          </h1>
+        </Skeleton>
         <div className="flex items-center gap-1">
           <StyleEditorHeaderActions />
         </div>
