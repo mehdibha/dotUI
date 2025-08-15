@@ -4,7 +4,6 @@ import React from "react";
 
 import { DEFAULT_VARIANTS_DEFINITION } from "@dotui/style-engine/constants";
 import { useCurrentStyle } from "@dotui/ui";
-import { Skeleton } from "@dotui/ui/components/skeleton";
 import { VariantsProvider } from "@dotui/ui/helpers/variants-provider";
 
 import { ThemeModeSwitch } from "@/components/theme-mode-switch";

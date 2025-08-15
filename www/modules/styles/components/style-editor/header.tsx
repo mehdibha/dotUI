@@ -10,6 +10,7 @@ import {
   CodeIcon,
   CopyIcon,
   EllipsisIcon,
+  EyeIcon,
   PencilIcon,
   RocketIcon,
   RotateCcwIcon,
@@ -20,12 +21,12 @@ import {
 } from "lucide-react";
 
 import { Button } from "@dotui/ui/components/button";
-import { FormControl } from "@dotui/ui/components/form";
+import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
 import { Menu, MenuItem, MenuRoot } from "@dotui/ui/components/menu";
 import { Skeleton } from "@dotui/ui/components/skeleton";
 import { Tooltip } from "@dotui/ui/components/tooltip";
+import { cn } from "@dotui/ui/lib/utils";
 
-import { AutoResizeTextField } from "@/components/auto-resize-input";
 import { useMounted } from "@/hooks/use-mounted";
 import { LoginModal } from "@/modules/auth/components/login-modal";
 import { authClient } from "@/modules/auth/lib/client";
@@ -34,16 +35,20 @@ import { CreateStyleModal } from "../create-style-modal";
 import { CodeModal } from "./code-modal";
 
 export function StyleEditorHeader() {
+  const { form } = useStyleForm();
+
   return (
     <div className="container max-w-4xl">
       <Link
         href="/styles"
-        className="text-fg-muted hover:text-fg flex items-center gap-1 text-sm"
+        className="text-fg-muted hover:text-fg flex items-center gap-1 text-sm max-sm:hidden"
       >
         <ArrowLeftIcon className="size-4" /> styles
       </Link>
-      <div className="mt-1 flex items-center justify-between lg:mt-2">
-        <StyleEditorHeaderName />
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold leading-none">
+          {form.watch("name")}
+        </h1>
         <div className="flex items-center gap-1">
           <StyleEditorHeaderActions />
         </div>
@@ -52,129 +57,9 @@ export function StyleEditorHeader() {
   );
 }
 
-function StyleEditorHeaderName() {
-  const { form, isSuccess } = useStyleForm();
-  const value = form.watch("name");
-
-  const [isEditMode, setEditMode] = React.useState(false);
-  const [localValue, setLocalValue] = React.useState("");
-  const inputRef = React.useRef<HTMLInputElement>(null);
-  const containerRef = React.useRef<HTMLDivElement>(null);
-
-  const handleEditStart = React.useCallback(() => {
-    setLocalValue(value);
-    setEditMode(true);
-  }, [value]);
-
-  const handleSubmit = React.useCallback(() => {
-    form.setValue("name", localValue, {
-      shouldDirty: true,
-      shouldTouch: true,
-    });
-    setEditMode(false);
-  }, [form, localValue]);
-
-  const handleCancel = React.useCallback(() => {
-    setEditMode(false);
-  }, []);
-
-  React.useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(e.target as Node) &&
-        inputRef.current &&
-        isEditMode
-      ) {
-        handleCancel();
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [handleCancel, isEditMode]);
-
-  React.useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isEditMode) {
-        handleCancel();
-      }
-    };
-    const handleEnter = (e: KeyboardEvent) => {
-      if (e.key === "Enter" && isEditMode) {
-        handleSubmit();
-      }
-    };
-
-    document.addEventListener("keydown", handleEscape);
-    document.addEventListener("keydown", handleEnter);
-    return () => {
-      document.removeEventListener("keydown", handleEscape);
-      document.removeEventListener("keydown", handleEnter);
-    };
-  }, [handleCancel, handleSubmit, isEditMode]);
-
-  if (isEditMode) {
-    return (
-      <div ref={containerRef} className="flex items-center gap-2">
-        <AutoResizeTextField
-          aria-label="Style name"
-          inputRef={inputRef}
-          autoFocus
-          className="text-2xl font-bold leading-none"
-          value={localValue}
-          onChange={setLocalValue}
-        />
-        <Button
-          aria-label="Save"
-          size="sm"
-          shape="square"
-          variant="quiet"
-          className="size-7"
-          onPress={handleSubmit}
-        >
-          <CheckIcon className="text-fg-success" />
-        </Button>
-        <Button
-          aria-label="Cancel"
-          size="sm"
-          shape="square"
-          variant="quiet"
-          className="size-7"
-          onPress={handleCancel}
-        >
-          <XIcon className="text-fg-danger" />
-        </Button>
-      </div>
-    );
-  }
-
-  return (
-    <Skeleton show={!isSuccess}>
-      <FormControl
-        name="name"
-        control={form.control}
-        render={(props) => (
-          <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold leading-none">{props.value}</h1>
-            <Button
-              aria-label="Edit"
-              size="sm"
-              variant="quiet"
-              shape="square"
-              className="text-fg-muted size-7 [&_svg]:size-3.5"
-              onPress={() => handleEditStart()}
-            >
-              <PencilIcon />
-            </Button>
-          </div>
-        )}
-      />
-    </Skeleton>
-  );
-}
-
 function StyleEditorHeaderActions() {
   const { form } = useStyleForm();
+  const [isCodeModalOpen, setIsCodeModalOpen] = React.useState(false);
   const pathname = usePathname();
   const segments = pathname.split("/");
   const authorUsername = segments[2] ?? "";
@@ -198,11 +83,33 @@ function StyleEditorHeaderActions() {
 
   return (
     <Skeleton show={!isMounted || isPending}>
-      <CodeModal>
-        <Button size="sm" prefix={<CodeIcon />}>
+      <CodeModal isOpen={isCodeModalOpen} onOpenChange={setIsCodeModalOpen}>
+        <Button size="sm" prefix={<CodeIcon />} className="max-sm:hidden">
           Code
         </Button>
       </CodeModal>
+      <DialogRoot>
+        <Button
+          size="sm"
+          shape="square"
+          aria-label="Preview"
+          className="sm:hidden"
+        >
+          <EyeIcon />
+        </Button>
+        <Dialog type="drawer" className="p-0! overflow-hidden">
+          <Preview />
+          <Button
+            slot="close"
+            variant="quiet"
+            size="sm"
+            shape="square"
+            className="absolute right-1 top-1 size-7 rounded-lg"
+          >
+            <XIcon />
+          </Button>
+        </Dialog>
+      </DialogRoot>
       <Tooltip content="Reset" delay={0}>
         <Button
           aria-label="Reset form"
@@ -263,6 +170,12 @@ function StyleEditorHeaderActions() {
             },
           }}
         >
+          <MenuItem
+            prefix={<CodeIcon />}
+            onAction={() => setIsCodeModalOpen(true)}
+          >
+            Code
+          </MenuItem>
           <MenuItem prefix={<CopyIcon />}>Clone</MenuItem>
           {isUserStyle && (
             <>
@@ -278,3 +191,24 @@ function StyleEditorHeaderActions() {
     </Skeleton>
   );
 }
+
+const Preview = () => {
+  const [isLoading, setLoading] = React.useState(true);
+  const pathname = usePathname();
+  const segments = pathname.split("/");
+  const username = segments[2] ?? "";
+  const styleName = segments[3] ?? "";
+
+  return (
+    <Skeleton show={isLoading}>
+      <iframe
+        src={`/block-view/${username}/${styleName}/login?mode=true&live=true`}
+        onLoad={() => setLoading(false)}
+        className={cn(
+          "size-full h-[90vh] rounded-t-md",
+          isLoading && "opacity-0",
+        )}
+      />
+    </Skeleton>
+  );
+};
