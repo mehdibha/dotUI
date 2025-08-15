@@ -89,21 +89,26 @@ export const Preview = () => {
       <motion.div
         ref={containerRef}
         key="preview-container"
-        style={{ width: containerWidth ?? undefined }}
-        initial={{ width: 0 }}
-        animate={{ width: containerWidth }}
-        transition={{
-          type: isDragging ? "tween" : "spring",
-          bounce: 0,
-          duration: isDragging ? 0 : 0.25,
-        }}
+        style={{ width: containerWidth }}
+        // initial={{ width: 0 }}
+        {...(!isDragging
+          ? {
+              animate: { width: containerWidth },
+              transition: { type: "spring", bounce: 0, duration: 0.25 },
+            }
+          : {})}
         className="h-full overflow-hidden"
         aria-hidden={!isOpen}
         inert={!isOpen || undefined}
       >
         <motion.div
           style={{ width: previewWidth }}
-          transition={{ type: "spring", bounce: 0, duration: 0.25 }}
+          {...(!isDragging
+            ? {
+                animate: { width: previewWidth },
+                transition: { type: "spring", bounce: 0, duration: 0.25 },
+              }
+            : {})}
           className="h-full p-4 pl-0"
         >
           <PreviewContent setOpen={setOpen} setWidth={setWidth} />
@@ -210,7 +215,7 @@ export function PreviewContent({
               size="sm"
               className="size-7"
               onPress={() => {
-                setWidth(screen === "mobile" ? 430 : 768);
+                setWidth(screen === "mobile" ? 768 : 430);
                 setScreen(screen === "mobile" ? "tablet" : "mobile");
               }}
             >
