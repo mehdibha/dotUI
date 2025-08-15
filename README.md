@@ -12,7 +12,7 @@ Visit [https://dotui.org/docs](https://dotui.org/docs) to view the full document
 
 ## Community
 
-To build with us, ask, raise ideas, you can join the dotUI [Discord](https://discord.gg/DXpj5V2fU8) server.
+To build with us, ask questions, or raise ideas, join the dotUI [Discord](https://discord.gg/DXpj5V2fU8) server.
 
 ## Contributing
 
