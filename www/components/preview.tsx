@@ -40,7 +40,7 @@ export const Preview = () => {
   const { isCollapsed } = useSidebarContext();
   const { containerRef, width, setWidth, handleMouseDown, isDragging } =
     useHorizontalResize({
-      minWidth: 430,
+      minWidth: 320,
       maxWidth: 768,
       initialWidth: 768,
       edge: "left",
@@ -111,7 +111,7 @@ export const Preview = () => {
             : {})}
           className="h-full p-4 pl-0"
         >
-          <PreviewContent setOpen={setOpen} setWidth={setWidth} />
+          <PreviewContent setOpen={setOpen} setWidth={setWidth} currentWidth={previewWidth} />
         </motion.div>
       </motion.div>
     </>
@@ -123,13 +123,15 @@ export function PreviewContent({
   collapsible = true,
   setOpen,
   setWidth,
+  currentWidth
 }: {
   className?: string;
   collapsible?: boolean;
   setOpen: (isOpen: boolean) => void;
   setWidth: (width: number) => void;
+  currentWidth: number;
 }) {
-  const [screen, setScreen] = React.useState<"mobile" | "tablet">("tablet");
+  const isMobile = currentWidth < 480
   const pathname = usePathname();
   const segments = pathname.split("/");
   const username = segments[2] ?? "";
@@ -205,7 +207,7 @@ export function PreviewContent({
         </SelectRoot>
         <div className="flex w-32 justify-end gap-0.5">
           <Tooltip
-            content={screen === "mobile" ? "Mobile" : "Tablet"}
+            content={isMobile ? "Mobile" : "Tablet"}
             delay={0}
           >
             <Button
@@ -215,12 +217,10 @@ export function PreviewContent({
               size="sm"
               className="size-7"
               onPress={() => {
-                setWidth(screen === "mobile" ? 768 : 430);
-                setScreen(screen === "mobile" ? "tablet" : "mobile");
+                setWidth(isMobile ? 768 : 430);
               }}
             >
-              {screen === "mobile" && <SmartphoneIcon />}
-              {screen === "tablet" && <TabletIcon />}
+              {isMobile ? <SmartphoneIcon /> : <TabletIcon />}
             </Button>
           </Tooltip>
           <Tooltip content="Open in new tab" delay={0}>
