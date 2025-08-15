@@ -43,11 +43,14 @@ export const Preview = () => {
   // Resizable width state
   const [resizedWidth, setResizedWidth] = React.useState<number | null>(null);
   const [hasUserResized, setHasUserResized] = React.useState(false);
+  const [isDragging, setDragging] = React.useState(false);
   const containerRef = React.useRef<HTMLDivElement>(null);
   const isDraggingRef = React.useRef(false);
   const startXRef = React.useRef(0);
   const startWidthRef = React.useRef(0);
   const maxAllowedWidthRef = React.useRef(0);
+  const moveListenerRef = React.useRef<((e: MouseEvent) => void) | null>(null);
+  const upListenerRef = React.useRef<(() => void) | null>(null);
 
   React.useEffect(() => {
     setOpen(true);
@@ -66,7 +69,7 @@ export const Preview = () => {
     } else if (resizedWidth != null && resizedWidth > maxAllowedWidth) {
       setResizedWidth(maxAllowedWidth);
     }
-  }, [screen, isCollapsed]);
+  }, [screen, isCollapsed, hasUserResized, resizedWidth, defaultWidth, maxAllowedWidth]);
 
   const containerWidth = isOpen
     ? Math.min(resizedWidth ?? defaultWidth, maxAllowedWidth)
@@ -76,6 +79,7 @@ export const Preview = () => {
     e.preventDefault();
     if (!containerRef.current) return;
     isDraggingRef.current = true;
+    setDragging(true);
     startXRef.current = e.clientX;
     startWidthRef.current = containerRef.current.offsetWidth;
     setHasUserResized(true);
@@ -95,17 +99,42 @@ export const Preview = () => {
 
     const onMouseUp = () => {
       isDraggingRef.current = false;
+      setDragging(false);
       document.body.style.cursor = "";
       document.body.style.userSelect = "";
       document.removeEventListener("mousemove", onMouseMove);
       document.removeEventListener("mouseup", onMouseUp);
+      moveListenerRef.current = null;
+      upListenerRef.current = null;
     };
+
+    moveListenerRef.current = onMouseMove;
+    upListenerRef.current = onMouseUp;
 
     document.addEventListener("mousemove", onMouseMove);
     document.addEventListener("mouseup", onMouseUp);
   };
 
+  // Cleanup listeners if component unmounts during a drag
+  React.useEffect(() => {
+    return () => {
+      if (moveListenerRef.current) {
+        document.removeEventListener("mousemove", moveListenerRef.current);
+      }
+      if (upListenerRef.current) {
+        document.removeEventListener("mouseup", upListenerRef.current);
+      }
+      document.body.style.cursor = "";
+      document.body.style.userSelect = "";
+      isDraggingRef.current = false;
+    };
+  }, []);
+
   if (!isMounted) return null;
+
+  const transition = isDragging
+    ? { duration: 0 }
+    : { type: "spring", bounce: 0, duration: 0.25 };
 
   return (
     <>
@@ -136,7 +165,7 @@ export const Preview = () => {
         key="preview-container"
         initial={{ width: 0 }}
         animate={{ width: containerWidth }}
-        transition={{ type: "spring", bounce: 0, duration: 0.25 }}
+        transition={transition}
         className="h-full overflow-hidden relative group"
         aria-hidden={!isOpen}
         inert={!isOpen || undefined}
@@ -148,9 +177,8 @@ export const Preview = () => {
           onMouseDown={handleMouseDown}
           className="absolute left-0 top-0 z-10 h-full w-1.5 cursor-col-resize bg-transparent transition-colors group-hover:bg-fg/10"
         />
-        <motion.div
-          animate={{ width: containerWidth }}
-          transition={{ type: "spring", bounce: 0, duration: 0.25 }}
+        <div
+          style={{ width: containerWidth }}
           className="h-full p-4 pl-0"
         >
           <PreviewContent
@@ -160,7 +188,7 @@ export const Preview = () => {
               setScreen(next);
             }}
           />
-        </motion.div>
+        </div>
       </motion.div>
     </>
   );
