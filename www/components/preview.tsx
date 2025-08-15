@@ -40,7 +40,7 @@ export const Preview = () => {
   const { isCollapsed } = useSidebarContext();
   const { containerRef, width, setWidth, handleMouseDown, isDragging } =
     useHorizontalResize({
-      minWidth: 100,
+      minWidth: 430,
       maxWidth: 768,
       initialWidth: 768,
       edge: "left",
