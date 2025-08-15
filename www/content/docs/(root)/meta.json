@@ -1,10 +1,4 @@
 {
   "title": "Getting started",
-  "pages": [
-    "introduction",
-    "installation",
-    "dark-mode",
-    "color-system",
-    "changelog"
-  ]
+  "pages": ["index", "installation", "dark-mode", "color-system", "changelog"]
 }

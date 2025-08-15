@@ -56,7 +56,7 @@ export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
               <div className="flex flex-col gap-3">
                 {[
                   { href: "/", label: "Home" },
-                  { href: "/docs/introduction", label: "Docs" },
+                  { href: "/docs", label: "Docs" },
                   { href: "/docs/components/button", label: "Components" },
                   { href: "/blocks", label: "Blocks" },
                   { href: "/styles", label: "Styles" },
