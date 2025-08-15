@@ -40,12 +40,7 @@ export default async function HomePage() {
             your brand identity.
           </p>
           <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
-            <Button
-              href="/docs/introduction"
-              variant="primary"
-              size="lg"
-              className="h-10"
-            >
+            <Button href="/docs" variant="primary" size="lg" className="h-10">
               Get started
             </Button>
             <Button href="/styles" variant="default" size="lg" className="h-10">

@@ -58,7 +58,7 @@ export function SearchCommand({
             {[
               {
                 label: "Docs",
-                href: "/docs/introduction",
+                href: "/docs",
               },
               {
                 label: "Components",
