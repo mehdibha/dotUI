@@ -97,56 +97,6 @@ export const StylesShowcase = ({
               })}
             </TabList>
           </Tabs>
-          <div className="flex flex-1 items-center justify-center">
-            <div className="text-fg-muted relative flex items-center gap-2 py-2 pl-4 pr-2 font-mono text-xs">
-              <motion.div
-                layout
-                initial={false}
-                transition={{ duration: 0.5 }}
-                className="bg-bg-neutral absolute inset-0 z-[-1] rounded-md border"
-              />
-              <pre>
-                <code className="max-sm:flex max-sm:max-w-[60vw]">
-                  <span className="truncate">
-                    <motion.span layout transition={{ duration: 0.5 }}>
-                      <span className="text-[#F69D50]">npx</span> shadcn@latest
-                      init @dotui/
-                    </motion.span>
-                    <AnimatePresence mode="popLayout">
-                      <motion.span
-                        key={currentStyle.id}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.5 }}
-                        className="text-[#F69D50]"
-                      >
-                        {currentStyleName}
-                      </motion.span>
-                    </AnimatePresence>
-                    <motion.span layout transition={{ duration: 0.5 }}>
-                      /base
-                    </motion.span>
-                  </span>
-                </code>
-              </pre>
-              <motion.div layout>
-                <Button
-                  variant="quiet"
-                  shape="square"
-                  size="sm"
-                  onPress={handleCopy}
-                  className="text-fg-muted z-20 bg-[#f5f5f5] dark:bg-[#19191d] [&_svg]:size-3.5"
-                >
-                  {copied ? (
-                    <CheckIcon className="animate-in fade-in duration-75" />
-                  ) : (
-                    <CopyIcon className="animate-in fade-in duration-75" />
-                  )}
-                </Button>
-              </motion.div>
-            </div>
-          </div>
         </div>
         <StyleProvider
           style={isMounted ? currentStyle : undefined}
