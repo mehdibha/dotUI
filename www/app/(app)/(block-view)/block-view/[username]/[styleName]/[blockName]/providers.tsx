@@ -36,11 +36,18 @@ export const BlockProviders = ({
     return shouldUseLiveStyle ? (liveStyle ?? styleProp) : styleProp;
   }, [liveStyle, styleProp, shouldUseLiveStyle]);
 
-  if (!isMounted || !style || !resolvedTheme) return null;
-
   const effectiveMode = shouldUseActiveMode
     ? activeMode
     : (resolvedTheme as "light" | "dark");
+
+  React.useLayoutEffect(() => {
+    if (effectiveMode && isMounted && style && resolvedTheme) {
+      document.documentElement.style.colorScheme = effectiveMode;
+      document.documentElement.classList.remove("dark");
+    }
+  }, [effectiveMode, isMounted, style, resolvedTheme]);
+
+  if (!isMounted || !style || !resolvedTheme) return null;
 
   return (
     <>

@@ -60,9 +60,12 @@ export const ThemeProvider = ({
       letterSpacing: `${themeDefinition.letterSpacing}em !important`,
       "--font-heading": themeDefinition.fonts.heading,
       "--font-body": themeDefinition.fonts.body,
+      // Force native UI (including scrollbars) to render in the specified color scheme
+      // when a mode is provided. This ensures children inherit dark/light scrollbars.
+      ...(mode ? { colorScheme: mode } : {}),
       ...allCssVars,
     };
-  }, [themeDefinition.letterSpacing, allCssVars, themeDefinition.fonts]);
+  }, [themeDefinition.letterSpacing, allCssVars, themeDefinition.fonts, mode]);
 
   return (
     <>
