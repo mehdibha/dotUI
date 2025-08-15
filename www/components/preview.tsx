@@ -32,22 +32,27 @@ import { Tooltip } from "@dotui/ui/components/tooltip";
 import { cn } from "@dotui/ui/lib/utils";
 
 import { useSidebarContext } from "@/components/sidebar";
+import { useHorizontalResize } from "@/hooks/use-horizontal-resize";
 import { useMounted } from "@/hooks/use-mounted";
 
 export const Preview = () => {
   const [isOpen, setOpen] = React.useState(false);
-  const [screen, setScreen] = React.useState<"mobile" | "tablet">("tablet");
   const { isCollapsed } = useSidebarContext();
+  const { containerRef, width, setWidth, handleMouseDown, isDragging } =
+    useHorizontalResize({
+      minWidth: 100,
+      maxWidth: 768,
+      initialWidth: 768,
+      edge: "left",
+    });
+  const maxWidth = isCollapsed ? 768 : 600;
   const isMounted = useMounted();
 
   React.useEffect(() => {
     setOpen(true);
   }, []);
 
-  const previewWidth = Math.min(
-    screen === "mobile" ? 430 : 768,
-    isCollapsed ? 1000 : 600,
-  );
+  const previewWidth = Math.min(maxWidth, width ?? maxWidth);
   const containerWidth = isOpen ? previewWidth : 0;
 
   if (!isMounted) return null;
@@ -77,25 +82,31 @@ export const Preview = () => {
           </Button>
         </div>
       </motion.div>
+      <div
+        onMouseDown={handleMouseDown}
+        className="h-15 bg-bg-neutral hover:bg-bg-neutral-hover active:bg-bg-neutral-active absolute -left-3 top-1/2 z-20 w-2 -translate-y-1/2 cursor-col-resize rounded-full shadow-sm"
+      />
       <motion.div
+        ref={containerRef}
         key="preview-container"
+        style={{ width: containerWidth ?? undefined }}
         initial={{ width: 0 }}
         animate={{ width: containerWidth }}
-        transition={{ type: "spring", bounce: 0, duration: 0.25 }}
+        transition={{
+          type: isDragging ? "tween" : "spring",
+          bounce: 0,
+          duration: isDragging ? 0 : 0.25,
+        }}
         className="h-full overflow-hidden"
         aria-hidden={!isOpen}
         inert={!isOpen || undefined}
       >
         <motion.div
-          animate={{ width: containerWidth }}
+          style={{ width: previewWidth }}
           transition={{ type: "spring", bounce: 0, duration: 0.25 }}
           className="h-full p-4 pl-0"
         >
-          <PreviewContent
-            setOpen={setOpen}
-            screen={screen}
-            setScreen={setScreen}
-          />
+          <PreviewContent setOpen={setOpen} setWidth={setWidth} />
         </motion.div>
       </motion.div>
     </>
@@ -106,15 +117,14 @@ export function PreviewContent({
   className,
   collapsible = true,
   setOpen,
-  screen,
-  setScreen,
+  setWidth,
 }: {
   className?: string;
   collapsible?: boolean;
   setOpen: (isOpen: boolean) => void;
-  screen: "mobile" | "tablet";
-  setScreen: (screen: "mobile" | "tablet") => void;
+  setWidth: (width: number) => void;
 }) {
+  const [screen, setScreen] = React.useState<"mobile" | "tablet">("tablet");
   const pathname = usePathname();
   const segments = pathname.split("/");
   const username = segments[2] ?? "";
@@ -199,9 +209,10 @@ export function PreviewContent({
               shape="square"
               size="sm"
               className="size-7"
-              onPress={() =>
-                setScreen(screen === "mobile" ? "tablet" : "mobile")
-              }
+              onPress={() => {
+                setWidth(screen === "mobile" ? 430 : 768);
+                setScreen(screen === "mobile" ? "tablet" : "mobile");
+              }}
             >
               {screen === "mobile" && <SmartphoneIcon />}
               {screen === "tablet" && <TabletIcon />}
