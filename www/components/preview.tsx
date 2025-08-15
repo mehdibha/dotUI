@@ -40,15 +40,70 @@ export const Preview = () => {
   const { isCollapsed } = useSidebarContext();
   const isMounted = useMounted();
 
+  // Resizable width state
+  const [resizedWidth, setResizedWidth] = React.useState<number | null>(null);
+  const [hasUserResized, setHasUserResized] = React.useState(false);
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const isDraggingRef = React.useRef(false);
+  const startXRef = React.useRef(0);
+  const startWidthRef = React.useRef(0);
+  const maxAllowedWidthRef = React.useRef(0);
+
   React.useEffect(() => {
     setOpen(true);
   }, []);
 
-  const previewWidth = Math.min(
-    screen === "mobile" ? 430 : 768,
-    isCollapsed ? 1000 : 600,
-  );
-  const containerWidth = isOpen ? previewWidth : 0;
+  const maxAllowedWidth = isCollapsed ? 1000 : 600;
+  maxAllowedWidthRef.current = maxAllowedWidth;
+
+  const targetDeviceWidth = screen === "mobile" ? 430 : 768;
+  const defaultWidth = Math.min(targetDeviceWidth, maxAllowedWidth);
+
+  // Keep width within bounds on env changes
+  React.useEffect(() => {
+    if (!hasUserResized) {
+      setResizedWidth(defaultWidth);
+    } else if (resizedWidth != null && resizedWidth > maxAllowedWidth) {
+      setResizedWidth(maxAllowedWidth);
+    }
+  }, [screen, isCollapsed]);
+
+  const containerWidth = isOpen
+    ? Math.min(resizedWidth ?? defaultWidth, maxAllowedWidth)
+    : 0;
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (!containerRef.current) return;
+    isDraggingRef.current = true;
+    startXRef.current = e.clientX;
+    startWidthRef.current = containerRef.current.offsetWidth;
+    setHasUserResized(true);
+
+    document.body.style.cursor = "col-resize";
+    document.body.style.userSelect = "none";
+
+    const onMouseMove = (ev: MouseEvent) => {
+      if (!isDraggingRef.current) return;
+      const deltaX = ev.clientX - startXRef.current;
+      const nextWidth = Math.max(
+        0,
+        Math.min(startWidthRef.current - deltaX, maxAllowedWidthRef.current),
+      );
+      setResizedWidth(nextWidth);
+    };
+
+    const onMouseUp = () => {
+      isDraggingRef.current = false;
+      document.body.style.cursor = "";
+      document.body.style.userSelect = "";
+      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseup", onMouseUp);
+    };
+
+    document.addEventListener("mousemove", onMouseMove);
+    document.addEventListener("mouseup", onMouseUp);
+  };
 
   if (!isMounted) return null;
 
@@ -82,10 +137,17 @@ export const Preview = () => {
         initial={{ width: 0 }}
         animate={{ width: containerWidth }}
         transition={{ type: "spring", bounce: 0, duration: 0.25 }}
-        className="h-full overflow-hidden"
+        className="h-full overflow-hidden relative group"
         aria-hidden={!isOpen}
         inert={!isOpen || undefined}
+        ref={containerRef}
       >
+        {/* Resize handle */}
+        <div
+          aria-label="Resize preview"
+          onMouseDown={handleMouseDown}
+          className="absolute left-0 top-0 z-10 h-full w-1.5 cursor-col-resize bg-transparent transition-colors group-hover:bg-fg/10"
+        />
         <motion.div
           animate={{ width: containerWidth }}
           transition={{ type: "spring", bounce: 0, duration: 0.25 }}
@@ -94,7 +156,9 @@ export const Preview = () => {
           <PreviewContent
             setOpen={setOpen}
             screen={screen}
-            setScreen={setScreen}
+            setScreen={(next) => {
+              setScreen(next);
+            }}
           />
         </motion.div>
       </motion.div>
