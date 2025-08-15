@@ -14,16 +14,16 @@ import { StyleProvider } from "@dotui/ui/index";
 import { Skeleton } from "@dotui/ui/registry/components/skeleton/basic";
 
 import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
-import { EditorSection } from "./editor-section";
+import { StyleEditorSection } from "./section";
 
-export function StyleIconsEditor() {
+export function IconsEditor() {
   const { form, isSuccess } = useStyleForm();
 
   //  TODO: add icons effects such as glow effect with box-shadow
 
   return (
     <div>
-      <EditorSection title="Iconography">
+      <StyleEditorSection title="Iconography">
         <div className="mt-4 space-y-4">
           <Skeleton show={!isSuccess}>
             <FormControl
@@ -88,7 +88,7 @@ export function StyleIconsEditor() {
               })}
           </div>
         </StyleProvider>
-      </EditorSection>
+      </StyleEditorSection>
     </div>
   );
 }

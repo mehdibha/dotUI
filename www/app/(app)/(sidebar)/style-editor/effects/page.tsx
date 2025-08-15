@@ -1,5 +1,5 @@
-import { StyleEffectsEditor } from "@/modules/styles/components/style-effects-editor";
+import { EffectsEditor } from "@/modules/styles/components/style-editor/effects-editor";
 
 export default function EffectsPage() {
-  return <StyleEffectsEditor />;
+  return <EffectsEditor />;
 }

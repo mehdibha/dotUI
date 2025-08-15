@@ -21,10 +21,11 @@ import { FormControl } from "@dotui/ui/components/form";
 import { Select, SelectItem } from "@dotui/ui/components/select";
 import { TextArea } from "@dotui/ui/components/text-area";
 import { TextField } from "@dotui/ui/components/text-field";
-import { toast } from "@dotui/ui/components/toast";
 import { cn } from "@dotui/ui/lib/utils";
 import type { StyleDefinition } from "@dotui/style-engine/types";
 
+import { LoginModal } from "@/modules/auth/components/login-modal";
+import { authClient } from "@/modules/auth/lib/client";
 import { useCreateStyle } from "../hooks/use-create-style";
 
 const createStyleSchema = z.object({
@@ -32,6 +33,7 @@ const createStyleSchema = z.object({
     .string()
     .min(1, "Name is required")
     .min(2, "Name must be at least 2 characters")
+    // TODO: deprecated
     .superRefine((val, ctx) => {
       const normalized = normalizeStyleName(val);
       const result = dbCreateStyleSchema.shape.name.safeParse(normalized);
@@ -52,6 +54,26 @@ function normalizeStyleName(input: string): string {
 type CreateStyleFormData = z.infer<typeof createStyleSchema>;
 
 export function CreateStyleModal({
+  children,
+  initialStyle,
+}: {
+  children: React.ReactNode;
+  initialStyle?: Partial<StyleDefinition>;
+}) {
+  const { data: session } = authClient.useSession();
+
+  if (!session) {
+    return <LoginModal>{children}</LoginModal>;
+  }
+
+  return (
+    <CreateStyleModalContent initialStyle={initialStyle}>
+      {children}
+    </CreateStyleModalContent>
+  );
+}
+
+export function CreateStyleModalContent({
   children,
   initialStyle,
 }: {
@@ -202,28 +224,6 @@ export function CreateStyleModal({
                   Your style will be renamed to "{renamedTo}"
                 </Alert>
               )}
-              {/* <div className="mt-4 bg-transparent">
-              <p className="text-fg-muted text-sm">
-              You can install it later with this command:
-              </p>
-              <pre className="bg-bg-neutral mt-1 rounded-md border p-4 text-xs">
-              <code className="truncate max-sm:flex max-sm:max-w-[60vw]">
-              <span className="text-[#F69D50]">npx</span> shadcn@latest init
-              @dotui/
-              <span className="text-[#F69D50]">
-              {form.watch("name")
-              ? form
-              .watch("name")
-              .toLowerCase()
-              .replace(/[^a-z0-9]/g, "-")
-              .replace(/-+/g, "-")
-              .replace(/^-|-$/g, "") || "your-style"
-              : "{style-name}"}
-              </span>
-              /base
-              </code>
-              </pre>
-              </div> */}
             </DialogBody>
             <DialogFooter>
               <Button slot="close">Cancel</Button>

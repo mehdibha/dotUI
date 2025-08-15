@@ -3,6 +3,7 @@
 import React from "react";
 
 import { Button } from "@dotui/ui/components/button";
+import { toast } from "@dotui/ui/components/toast";
 import { GitHubIcon } from "@dotui/ui/icons";
 
 import { Link } from "@/components/link";
@@ -40,7 +41,16 @@ export function LoginForm() {
               callbackURL: "/",
             });
           } catch (error) {
-            console.log(error);
+            const message =
+              (error as { message?: string })?.message ??
+              "Something went wrong while signing in.";
+            toast.add({
+              title: "Sign in failed",
+              description: message,
+              variant: "danger",
+            });
+          } finally {
+            setPending(false);
           }
         }}
       >
@@ -48,8 +58,8 @@ export function LoginForm() {
       </Button>
       <p className="text-fg-muted mt-4 text-sm">
         By continuing, you agree to our{" "}
-        <Link href="/terms">Terms of Service</Link> and{" "}
-        <Link href="/privacy">Privacy Policy</Link>.
+        <Link href="/terms-of-service">Terms of Service</Link> and{" "}
+        <Link href="/privacy-policy">Privacy Policy</Link>.
       </p>
     </div>
   );

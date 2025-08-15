@@ -10,14 +10,14 @@ import { Skeleton } from "@dotui/ui/components/skeleton";
 import { Slider } from "@dotui/ui/components/slider";
 
 import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
-import { EditorSection } from "./editor-section";
+import { StyleEditorSection } from "./section";
 
-export function StyleEffectsEditor() {
+export function EffectsEditor() {
   const { form, isSuccess } = useStyleForm();
 
   return (
     <div>
-      <EditorSection title="Patterns">
+      <StyleEditorSection title="Patterns">
         <div className="mt-4 space-y-4">
           <Skeleton show={!isSuccess}>
             <FormControl
@@ -26,7 +26,7 @@ export function StyleEffectsEditor() {
               render={({ value, onChange, ...props }) => (
                 <Select
                   label="Background pattern"
-                  className="mt-2"
+                  className="mt-2 w-full"
                   selectedKey={value}
                   onSelectionChange={onChange}
                   {...props}
@@ -48,7 +48,7 @@ export function StyleEffectsEditor() {
               render={({ value, onChange, ...props }) => (
                 <Select
                   label="Texture"
-                  className="mt-2"
+                  className="mt-2 w-full"
                   selectedKey={value}
                   onSelectionChange={onChange}
                   {...props}
@@ -64,9 +64,9 @@ export function StyleEffectsEditor() {
             />
           </Skeleton>
         </div>
-      </EditorSection>
+      </StyleEditorSection>
 
-      <EditorSection title="Shadows">
+      <StyleEditorSection title="Shadows">
         <Skeleton show={!isSuccess}>
           <FormControl
             name="theme.shadows.color"
@@ -171,7 +171,7 @@ export function StyleEffectsEditor() {
             />
           </Skeleton>
         </div>
-      </EditorSection>
+      </StyleEditorSection>
     </div>
   );
 }

@@ -6,7 +6,6 @@ import type { PageTree } from "fumadocs-core/server";
 
 import { Button } from "@dotui/ui/components/button";
 import { Kbd } from "@dotui/ui/components/kbd";
-import { useIsMobile } from "@dotui/ui/hooks/use-is-mobile";
 import { GitHubIcon } from "@dotui/ui/icons";
 import { cn } from "@dotui/ui/lib/utils";
 

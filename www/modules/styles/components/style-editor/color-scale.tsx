@@ -1,23 +1,11 @@
 "use client";
 
-import React from "react";
-import {
-  BackgroundColor as LeonardoBgColor,
-  Color as LeonardoColor,
-  Theme as LeonardoTheme,
-} from "@adobe/leonardo-contrast-colors";
 import { Button as AriaButton } from "react-aria-components";
-import type {
-  ContrastColor,
-  ContrastColorBackground,
-  CssColor,
-} from "@adobe/leonardo-contrast-colors";
 
 import { Skeleton } from "@dotui/ui/components/skeleton";
 import { Tooltip } from "@dotui/ui/components/tooltip";
 
 import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
-import { usePreferences } from "../atoms/preferences-atom";
 
 interface ColorScaleProps {
   scaleId: string;
@@ -37,7 +25,7 @@ export function ColorScale({ scaleId }: ColorScaleProps) {
   }
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="@lg:flex-row @lg:items-center @lg:gap-2 flex flex-col gap-0.5">
       <p className="text-fg-muted w-16 text-sm">{`${scaleName.charAt(0).toUpperCase() + scaleName.slice(1)}`}</p>
       <div className="flex flex-1 items-center gap-1">
         {scale.values.map((color, index) => (

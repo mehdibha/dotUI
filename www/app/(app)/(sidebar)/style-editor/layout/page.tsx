@@ -1,5 +1,5 @@
-import { StyleLayoutEditor } from "@/modules/styles/components/style-layout-editor";
+import { LayoutEditor } from "@/modules/styles/components/style-editor/layout-editor";
 
 export default function LayoutPage() {
-  return <StyleLayoutEditor />;
+  return <LayoutEditor />;
 }

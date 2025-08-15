@@ -1,5 +1,5 @@
-import { StyleColorsEditor } from "@/modules/styles/components/style-colors-editor";
+import { ColorsEditor } from "@/modules/styles/components/style-editor/colors-editor";
 
 export default function StyleColorsPage() {
-  return <StyleColorsEditor />;
+  return <ColorsEditor />;
 }

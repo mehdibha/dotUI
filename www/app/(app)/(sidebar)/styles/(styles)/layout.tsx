@@ -7,7 +7,6 @@ import {
   PageHeaderHeading,
   PageLayout,
 } from "@/components/page-layout";
-import { PageNav } from "@/components/page-nav";
 import { CreateStyleModal } from "@/modules/styles/components/create-style-modal";
 import { StylesPageNav } from "./styles-page-nav";
 

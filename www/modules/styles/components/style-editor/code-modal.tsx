@@ -3,6 +3,7 @@
 import convert from "npm-to-yarn";
 
 import { Dialog, DialogBody, DialogRoot } from "@dotui/ui/components/dialog";
+import type { DialogRootProps } from "@dotui/ui/components/dialog";
 
 import {
   InstallTab,
@@ -17,15 +18,11 @@ const packageManagers: ("npm" | "pnpm" | "yarn" | "bun")[] = [
   "bun",
 ];
 
-export function StylePageCodeModal({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export function CodeModal({ children, ...props }: DialogRootProps) {
   const { form } = useStyleForm();
 
   return (
-    <DialogRoot>
+    <DialogRoot {...props}>
       {children}
       <Dialog
         title="Install your style"
