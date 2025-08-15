@@ -43,13 +43,13 @@ export function StyleEditorNav({
 
   return (
     <>
-      <div className="mt-4 sm:hidden">
+      <div className="@xl:hidden mt-4">
         <MenuRoot>
           <Button
             variant="quiet"
             prefix={selectedTab?.icon}
             suffix={<ChevronDownIcon />}
-            className="flex w-full rounded-none border-y text-left"
+            className="flex w-full rounded-none border-y text-left sm:px-6 lg:px-10"
           >
             <span className="flex-1">{selectedTab?.label}</span>
           </Button>
@@ -66,7 +66,7 @@ export function StyleEditorNav({
       <Tabs
         variant="underline"
         selectedKey={pathname}
-        className={cn("max-sm:hidden", className)}
+        className={cn("@max-xl:hidden", className)}
         {...props}
       >
         <div className="bg-bg sticky top-0 z-40 border-b">

@@ -45,7 +45,7 @@ export function StyleEditorHeader() {
       >
         <ArrowLeftIcon className="size-4" /> styles
       </Link>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-4">
         <Skeleton show={isLoading}>
           <h1 className="text-2xl font-bold leading-none">
             {form.watch("name")}
@@ -86,8 +86,12 @@ function StyleEditorHeaderActions() {
   return (
     <Skeleton show={!isMounted || isPending}>
       <CodeModal isOpen={isCodeModalOpen} onOpenChange={setIsCodeModalOpen}>
-        <Button size="sm" prefix={<CodeIcon />} className="max-sm:hidden">
-          Code
+        <Button
+          size="sm"
+          prefix={<CodeIcon />}
+          className="@max-md:px-0 @max-md:w-8 max-md:hidden"
+        >
+          <span className="@max-md:hidden">Code</span>
         </Button>
       </CodeModal>
       <DialogRoot>
@@ -95,7 +99,7 @@ function StyleEditorHeaderActions() {
           size="sm"
           shape="square"
           aria-label="Preview"
-          className="sm:hidden"
+          className="xl:hidden"
         >
           <EyeIcon />
         </Button>
