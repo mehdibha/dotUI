@@ -90,9 +90,9 @@ export const Preview = () => {
         ref={containerRef}
         key="preview-container"
         style={{ width: containerWidth }}
-        // initial={{ width: 0 }}
         {...(!isDragging
           ? {
+              initial: { width: 0 },
               animate: { width: containerWidth },
               transition: { type: "spring", bounce: 0, duration: 0.25 },
             }
