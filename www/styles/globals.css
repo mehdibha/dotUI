@@ -6,6 +6,7 @@
 
 @plugin "tailwindcss-react-aria-components";
 @plugin "tailwindcss-auto-contrast";
+@plugin "@tailwindcss/typography";
 
 @import "./docs.css";
 @import "@dotui/ui/focus-styles.css";

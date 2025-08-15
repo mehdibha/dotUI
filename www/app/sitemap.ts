@@ -1,18 +1,22 @@
 import type { MetadataRoute } from "next";
 
 import { siteConfig } from "@/config";
-import { source } from "@/modules/docs/lib/source";
+import { docsSource, marketingSource } from "@/modules/docs/lib/source";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const url = (path: string): string =>
     new URL(path, siteConfig.url).toString();
 
-  const pages = await Promise.all(
-    source.getPages().map(async (page) => {
+  const pages = await Promise.all([
+    ...docsSource.getPages().map(async (page) => {
       const additionalProps = await page.data.load();
       return { ...additionalProps, ...page };
     }),
-  );
+    ...marketingSource.getPages().map(async (page) => {
+      const additionalProps = await page.data.load();
+      return { ...additionalProps, ...page };
+    }),
+  ]);
 
   return [
     {

@@ -79,6 +79,7 @@
     "@dotui/ts-config": "workspace:*",
     "@hookform/devtools": "^4.4.0",
     "@tailwindcss/postcss": "catalog:",
+    "@tailwindcss/typography": "^0.5.16",
     "@types/estree": "^1.0.6",
     "@types/mdast": "^4.0.4",
     "@types/mdx": "^2.0.13",
