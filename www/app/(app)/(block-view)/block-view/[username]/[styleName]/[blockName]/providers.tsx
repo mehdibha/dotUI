@@ -41,9 +41,11 @@ export const BlockProviders = ({
     : (resolvedTheme as "light" | "dark");
 
   React.useLayoutEffect(() => {
-    document.documentElement.style.colorScheme = effectiveMode;
-    document.documentElement.classList.remove("dark");
-  }, [effectiveMode]);
+    if (effectiveMode && isMounted && style && resolvedTheme) {
+      document.documentElement.style.colorScheme = effectiveMode;
+      document.documentElement.classList.remove("dark");
+    }
+  }, [effectiveMode, isMounted, style, resolvedTheme]);
 
   if (!isMounted || !style || !resolvedTheme) return null;
 
