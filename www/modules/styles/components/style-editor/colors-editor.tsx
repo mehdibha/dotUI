@@ -74,7 +74,7 @@ export function ColorsEditor() {
       </StyleEditorSection>
 
       <StyleEditorSection title="Base colors">
-        <div className="@max-md:grid @max-md:grid-cols-2 mt-2 flex items-center gap-2">
+        <div className="@max-lg:grid @max-lg:grid-cols-2 mt-2 flex items-center gap-2">
           {baseColors.map((color) => {
             return (
               <Skeleton key={color.name} show={!isSuccess}>
@@ -91,7 +91,7 @@ export function ColorsEditor() {
       </StyleEditorSection>
 
       <StyleEditorSection title="Semantic colors">
-        <div className="@max-md:grid @max-md:grid-cols-2 mt-2 flex items-center gap-2">
+        <div className="@max-lg:grid @max-lg:grid-cols-2 mt-2 flex items-center gap-2">
           {semanticColors.map((color) => {
             return (
               <Skeleton key={color.name} show={!isSuccess}>
