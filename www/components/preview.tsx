@@ -111,7 +111,11 @@ export const Preview = () => {
             : {})}
           className="h-full p-4 pl-0"
         >
-          <PreviewContent setOpen={setOpen} setWidth={setWidth} currentWidth={previewWidth} />
+          <PreviewContent
+            setOpen={setOpen}
+            setWidth={setWidth}
+            currentWidth={previewWidth}
+          />
         </motion.div>
       </motion.div>
     </>
@@ -123,7 +127,7 @@ export function PreviewContent({
   collapsible = true,
   setOpen,
   setWidth,
-  currentWidth
+  currentWidth,
 }: {
   className?: string;
   collapsible?: boolean;
@@ -131,7 +135,7 @@ export function PreviewContent({
   setWidth: (width: number) => void;
   currentWidth: number;
 }) {
-  const isMobile = currentWidth < 480
+  const isMobile = currentWidth < 480;
   const pathname = usePathname();
   const segments = pathname.split("/");
   const username = segments[2] ?? "";
@@ -206,10 +210,7 @@ export function PreviewContent({
           </Popover>
         </SelectRoot>
         <div className="flex w-32 justify-end gap-0.5">
-          <Tooltip
-            content={isMobile ? "Mobile" : "Tablet"}
-            delay={0}
-          >
+          <Tooltip content={isMobile ? "Mobile" : "Tablet"} delay={0}>
             <Button
               aria-label="Select view"
               variant="quiet"

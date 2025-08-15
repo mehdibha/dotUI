@@ -96,7 +96,7 @@ const Section = ({
         render={({ value, onChange, ...props }) => (
           <Skeleton show={!isSuccess}>
             <Select
-              className="mt-2"
+              className="mt-2 w-full"
               selectedKey={value}
               onSelectionChange={onChange}
               {...props}

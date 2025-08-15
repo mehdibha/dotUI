@@ -26,7 +26,7 @@ export function EffectsEditor() {
               render={({ value, onChange, ...props }) => (
                 <Select
                   label="Background pattern"
-                  className="mt-2"
+                  className="mt-2 w-full"
                   selectedKey={value}
                   onSelectionChange={onChange}
                   {...props}
@@ -48,7 +48,7 @@ export function EffectsEditor() {
               render={({ value, onChange, ...props }) => (
                 <Select
                   label="Texture"
-                  className="mt-2"
+                  className="mt-2 w-full"
                   selectedKey={value}
                   onSelectionChange={onChange}
                   {...props}
