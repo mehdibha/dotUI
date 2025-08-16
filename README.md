@@ -4,7 +4,7 @@
 
 ## About dotUI
 
-dotUI helps you create a complete, **unique** design system. In seconds, it turns a few high‑level choices into a ready‑to‑ship component library—so your product looks like your brand, not a preset.
+dotUI helps you create a complete, **unique** design system in seconds. It turns a few high‑level choices into a ready‑to‑ship component library—so your product looks like your brand, not a preset.
 
 ## Documentation
 
