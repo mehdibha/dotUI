@@ -59,7 +59,7 @@ export async function GET(request: Request) {
             }
             tw="h-full w-8 border-r border-l border-[#3f3838]"
           />
-          <div tw="flex-1 flex flex-col justify-center p-12 pt-8">
+          <div tw="flex-1 flex flex-col justify-center p-12">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 100 100"
@@ -111,7 +111,7 @@ export async function GET(request: Request) {
             tw="h-full w-8 border-r border-l border-[#3f3838]"
           />
         </div>
-        <div tw="border-t border-[#3f3838] h-32"></div>
+        <div tw="border-t border-[#3f3838] h-24"></div>
       </div>
     ),
     {

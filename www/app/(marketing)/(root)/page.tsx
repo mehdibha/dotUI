@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+
 import { Alert } from "@dotui/ui/components/alert";
 import { Avatar } from "@dotui/ui/components/avatar";
 import { Button } from "@dotui/ui/components/button";
@@ -20,6 +22,10 @@ import { caller } from "@/lib/trpc/server";
 
 export const dynamic = "force-static";
 export const revalidate = 60;
+
+export const metadata: Metadata = {
+  title: { absolute: `${siteConfig.title} - ${siteConfig.description}` },
+};
 
 export default async function HomePage() {
   const contributors = await getGitHubContributors();

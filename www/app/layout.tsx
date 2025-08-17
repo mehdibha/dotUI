@@ -15,10 +15,6 @@ import { siteConfig } from "@/config";
 import { env } from "@/env";
 import { Providers } from "./providers";
 
-const ogTitle = "Ship unique.";
-const ogDescription =
-  "Build your design system in seconds, so your app look like your brand, not a preset.";
-
 export const metadata: Metadata = {
   title: { default: siteConfig.title, template: `%s - ${siteConfig.name}` },
   description: truncateOnWord(siteConfig.description, 148, true),
@@ -35,8 +31,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: `/og?title=${encodeURIComponent(
-          ogTitle,
-        )}&description=${encodeURIComponent(ogDescription)}`,
+          siteConfig.og.title,
+        )}&description=${encodeURIComponent(siteConfig.og.description)}`,
       },
     ],
   },
@@ -47,8 +43,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: `/og?title=${encodeURIComponent(
-          ogTitle,
-        )}&description=${encodeURIComponent(ogDescription)}`,
+          siteConfig.og.title,
+        )}&description=${encodeURIComponent(siteConfig.og.description)}`,
       },
     ],
     creator: siteConfig.twitter.creator,

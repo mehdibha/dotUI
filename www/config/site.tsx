@@ -4,7 +4,7 @@ export const siteConfig = {
   logo: "https://dotui.org/images/logo.png",
   title: "dotUI",
   description:
-    "Build your component library with a unique style. Powered by React, Tailwind CSS, and react-aria. Free and open source.",
+    "Build your design system in seconds, so your app look like your brand, not a preset.",
   keywords: [
     "dotUI",
     "Next.js",
@@ -24,6 +24,10 @@ export const siteConfig = {
   thumbnail: "https://dotui.org/images/thumbnail.png",
   twitter: {
     creator: "@mehdibha_",
+  },
+  og: {
+    title: "Ship unique.",
+    description: "Build your design system in seconds, so your app look like your brand, not a preset.",
   },
   links: {
     github: "https://github.com/mehdibha/dotUI",
