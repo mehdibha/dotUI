@@ -101,7 +101,13 @@ export async function generateMetadata({
         : undefined,
       type: "article",
       url: page.url,
-      images: [siteConfig.thumbnail],
+      images: [
+        {
+          url: `/og?title=${encodeURIComponent(
+            page.data.title,
+          )}${page.data.description ? `&description=${encodeURIComponent(page.data.description)}` : ""}`,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
@@ -109,7 +115,13 @@ export async function generateMetadata({
       description: page.data.description
         ? truncateOnWord(page.data.description, 148, true)
         : undefined,
-      images: [siteConfig.thumbnail],
+      images: [
+        {
+          url: `/og?title=${encodeURIComponent(
+            page.data.title,
+          )}${page.data.description ? `&description=${encodeURIComponent(page.data.description)}` : ""}`,
+        },
+      ],
       creator: siteConfig.twitter.creator,
     },
   };

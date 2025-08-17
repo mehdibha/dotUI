@@ -14,6 +14,10 @@ import { Toaster } from "@dotui/ui/components/toast";
 import { siteConfig } from "@/config";
 import { Providers } from "./providers";
 
+const ogTitle = "Ship unique.";
+const ogDescription =
+  "Build your design system in seconds, so your app look like your brand, not a preset.";
+
 export const metadata: Metadata = {
   title: { default: siteConfig.title, template: `%s - ${siteConfig.name}` },
   description: truncateOnWord(siteConfig.description, 148, true),
@@ -24,15 +28,15 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: siteConfig.url,
-    title: siteConfig.title,
-    description: truncateOnWord(siteConfig.description, 148, true),
+    title: ogTitle,
+    description: ogDescription,
     siteName: siteConfig.name,
     images: [siteConfig.thumbnail],
   },
   twitter: {
     card: "summary_large_image",
-    title: siteConfig.title,
-    description: truncateOnWord(siteConfig.description, 148, true),
+    title: ogTitle,
+    description: ogDescription,
     images: [siteConfig.thumbnail],
     creator: siteConfig.twitter.creator,
   },
@@ -53,12 +57,6 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      {/* <head>
-        <script
-          crossOrigin="anonymous"
-          src="//unpkg.com/react-scan/dist/auto.global.js"
-        />
-      </head> */}
       <body
         className={cn(
           "font-sans antialiased",

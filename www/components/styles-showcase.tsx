@@ -83,7 +83,7 @@ export const StylesShowcase = ({
               setTouched(true);
             }}
           >
-            <TabList className="flex-wrap justify-center bg-transparent">
+            <TabList className="flex-wrap justify-center bg-transparent hidden">
               {styles.map((style) => {
                 return (
                   <Tab

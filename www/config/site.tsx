@@ -4,7 +4,7 @@ export const siteConfig = {
   logo: "https://dotui.org/images/logo.png",
   title: "dotUI",
   description:
-    "Build your component library with a unique look and feel. Powered by React, Tailwind CSS, and react-aria. Free and open source.",
+    "Build your component library with a unique style. Powered by React, Tailwind CSS, and react-aria. Free and open source.",
   keywords: [
     "dotUI",
     "Next.js",
