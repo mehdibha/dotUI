@@ -12,6 +12,7 @@ import "@/styles/globals.css";
 import { Toaster } from "@dotui/ui/components/toast";
 
 import { siteConfig } from "@/config";
+import { env } from "@/env";
 import { Providers } from "./providers";
 
 const ogTitle = "Ship unique.";
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: siteConfig.url,
+    url: `https://${env.VERCEL_URL}`,
     title: siteConfig.title,
     description: truncateOnWord(siteConfig.description, 148, true),
     siteName: siteConfig.name,
@@ -52,7 +53,7 @@ export const metadata: Metadata = {
     ],
     creator: siteConfig.twitter.creator,
   },
-  metadataBase: new URL(siteConfig.url),
+  metadataBase: new URL(`https://${env.VERCEL_URL}`),
 };
 
 export const viewport: Viewport = {
