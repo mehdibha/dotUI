@@ -28,8 +28,8 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: siteConfig.url,
-    title: ogTitle,
-    description: ogDescription,
+    title: siteConfig.title,
+    description: truncateOnWord(siteConfig.description, 148, true),
     siteName: siteConfig.name,
     images: [
       {
@@ -41,8 +41,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: ogTitle,
-    description: ogDescription,
+    title: siteConfig.title,
+    description: truncateOnWord(siteConfig.description, 148, true),
     images: [
       {
         url: `/og?title=${encodeURIComponent(

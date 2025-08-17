@@ -1,5 +1,7 @@
+import { env } from "@/env";
+
 export const siteConfig = {
-  url: "https://dotui.org",
+  url: env.VERCEL_URL ? `https://${env.VERCEL_URL}` : "http://dotui.org",
   name: "dotUI",
   logo: "https://dotui.org/images/logo.png",
   title: "dotUI",
