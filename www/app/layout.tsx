@@ -53,7 +53,9 @@ export const metadata: Metadata = {
     ],
     creator: siteConfig.twitter.creator,
   },
-  metadataBase: new URL(env.VERCEL_URL ? `https://${env.VERCEL_URL}` : siteConfig.url),
+  metadataBase: new URL(
+    env.VERCEL_URL ? `https://${env.VERCEL_URL}` : siteConfig.url,
+  ),
 };
 
 export const viewport: Viewport = {
