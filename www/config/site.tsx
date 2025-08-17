@@ -27,7 +27,8 @@ export const siteConfig = {
   },
   og: {
     title: "Ship unique.",
-    description: "Build your design system in seconds, so your app look like your brand, not a preset.",
+    description:
+      "Build your design system in seconds, so your app look like your brand, not a preset.",
   },
   links: {
     github: "https://github.com/mehdibha/dotUI",
