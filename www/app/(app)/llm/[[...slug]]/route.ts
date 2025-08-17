@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-import { source } from "@/lib/source";
+import { docsSource } from "@/modules/docs/lib/source";
 
 export const revalidate = false;
 
@@ -11,13 +11,12 @@ export async function GET(
   { params }: { params: Promise<{ slug: string[] }> },
 ) {
   const slug = (await params).slug;
-  const page = source.getPage(slug);
+  const page = docsSource.getPage(slug);
 
   if (!page) {
     notFound();
   }
 
-  // @ts-expect-error - revisit fumadocs types.
   return new NextResponse(page.data.content, {
     headers: {
       "Content-Type": "text/markdown; charset=utf-8",
@@ -26,5 +25,5 @@ export async function GET(
 }
 
 export function generateStaticParams() {
-  return source.generateParams();
+  return docsSource.generateParams();
 }
