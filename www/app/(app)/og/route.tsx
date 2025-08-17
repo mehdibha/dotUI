@@ -111,7 +111,7 @@ export async function GET(request: Request) {
             tw="h-full w-8 border-r border-l border-[#3f3838]"
           />
         </div>
-        <div tw="border-t border-[#3f3838] h-24"></div>
+        <div tw="border-t border-[#3f3838] h-26"></div>
       </div>
     ),
     {
