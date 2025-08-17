@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: `https://${env.VERCEL_URL}`,
+    url: env.VERCEL_URL ? `https://${env.VERCEL_URL}` : siteConfig.url,
     title: siteConfig.title,
     description: truncateOnWord(siteConfig.description, 148, true),
     siteName: siteConfig.name,
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     ],
     creator: siteConfig.twitter.creator,
   },
-  metadataBase: new URL(`https://${env.VERCEL_URL}`),
+  metadataBase: new URL(env.VERCEL_URL ? `https://${env.VERCEL_URL}` : siteConfig.url),
 };
 
 export const viewport: Viewport = {
