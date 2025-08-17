@@ -31,13 +31,25 @@ export const metadata: Metadata = {
     title: ogTitle,
     description: ogDescription,
     siteName: siteConfig.name,
-    images: [siteConfig.thumbnail],
+    images: [
+      {
+        url: `/og?title=${encodeURIComponent(
+          ogTitle,
+        )}&description=${encodeURIComponent(ogDescription)}`,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: ogTitle,
     description: ogDescription,
-    images: [siteConfig.thumbnail],
+    images: [
+      {
+        url: `/og?title=${encodeURIComponent(
+          ogTitle,
+        )}&description=${encodeURIComponent(ogDescription)}`,
+      },
+    ],
     creator: siteConfig.twitter.creator,
   },
   metadataBase: new URL(siteConfig.url),
