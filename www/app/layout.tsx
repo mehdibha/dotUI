@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: env.VERCEL_URL ? `https://${env.VERCEL_URL}` : siteConfig.url,
-    title: siteConfig.title,
+    title: `${siteConfig.title} - ${siteConfig.description}`,
     description: truncateOnWord(siteConfig.description, 148, true),
     siteName: siteConfig.name,
     images: [
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: siteConfig.title,
+    title: `${siteConfig.title} - ${siteConfig.description}`,
     description: truncateOnWord(siteConfig.description, 148, true),
     images: [
       {
