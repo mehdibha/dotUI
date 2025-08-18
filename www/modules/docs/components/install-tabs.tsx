@@ -1,35 +1,13 @@
 "use client";
 
 import React, { useCallback, useLayoutEffect, useMemo, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
 
-import { Skeleton } from "@dotui/ui/components/skeleton";
 import * as TabsPrimitive from "@dotui/ui/components/tabs";
 import { cn } from "@dotui/ui/lib/utils";
 import type {
   TabsProps as BaseProps,
   TabPanelProps,
 } from "@dotui/ui/components/tabs";
-
-import { useTRPC } from "@/lib/trpc/react";
-
-const StyleNameWithSkeleton = () => {
-  const trpc = useTRPC();
-
-  const { data: activeStyleName, isLoading } = useQuery({
-    ...trpc.style.getActive.queryOptions(),
-  });
-
-  if (isLoading) {
-    return (
-      <Skeleton show className="inline-block h-4 w-20">
-        placeholder
-      </Skeleton>
-    );
-  }
-
-  return activeStyleName || "{{STYLE_NAME}}";
-};
 
 type ChangeListener = (v: string) => void;
 const listeners = new Map<string, ChangeListener[]>();
@@ -105,77 +83,6 @@ export function InstallTabs({
     [groupId, persist],
   );
 
-  const processedChildren = useMemo(() => {
-    if (!children) return null;
-
-    const replaceInContent = (content: any): any => {
-      if (typeof content === "string") {
-        // Replace {{STYLE_NAME}} with our component that handles loading states
-        if (content.includes("{{STYLE_NAME}}")) {
-          const parts = content.split(/(\{\{STYLE_NAME\}\})/g);
-          const elements = parts
-            .filter((part) => part !== "")
-            .map((part, index) => {
-              if (part === "{{STYLE_NAME}}") {
-                return <StyleNameWithSkeleton key={`style-${index}`} />;
-              }
-              return <span key={`text-${index}`}>{part}</span>;
-            });
-
-          return <span key="style-replacement">{elements}</span>;
-        }
-        return content;
-      }
-
-      if (Array.isArray(content)) {
-        return content.map((item, index) => {
-          const processed = replaceInContent(item);
-          // Ensure React elements in arrays have keys
-          if (React.isValidElement(processed) && processed.key === null) {
-            return React.cloneElement(processed, { key: `item-${index}` });
-          }
-          return processed;
-        });
-      }
-
-      if (React.isValidElement(content)) {
-        const element = content as React.ReactElement<any>;
-        const newProps: any = {};
-
-        // Process all props recursively
-        Object.keys(element.props || {}).forEach((key) => {
-          const processedProp = replaceInContent(element.props[key]);
-
-          // Ensure children arrays have proper keys
-          if (key === "children" && Array.isArray(processedProp)) {
-            newProps[key] = processedProp.map((child, index) => {
-              if (React.isValidElement(child) && child.key === null) {
-                return React.cloneElement(child, { key: `child-${index}` });
-              }
-              return child;
-            });
-          } else {
-            newProps[key] = processedProp;
-          }
-        });
-
-        return React.cloneElement(element, newProps);
-      }
-
-      if (typeof content === "object" && content !== null) {
-        const newObj: any = {};
-        Object.keys(content).forEach((key) => {
-          newObj[key] = replaceInContent(content[key]);
-        });
-        return newObj;
-      }
-
-      return content;
-    };
-
-    return replaceInContent(children);
-  }, [children]);
-
   return (
     <TabsPrimitive.Tabs
       selectedKey={value}
@@ -189,7 +96,7 @@ export function InstallTabs({
           </TabsPrimitive.Tab>
         ))}
       </TabsPrimitive.TabList>
-      {processedChildren}
+      {children}
     </TabsPrimitive.Tabs>
   );
 }

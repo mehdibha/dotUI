@@ -12,6 +12,7 @@ import "@/styles/globals.css";
 import { Toaster } from "@dotui/ui/components/toast";
 
 import { siteConfig } from "@/config";
+import { env } from "@/env";
 import { Providers } from "./providers";
 
 export const metadata: Metadata = {
@@ -23,20 +24,34 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: siteConfig.url,
-    title: siteConfig.title,
+    url: env.VERCEL_URL ? `https://${env.VERCEL_URL}` : siteConfig.url,
+    title: `${siteConfig.title} - ${siteConfig.description}`,
     description: truncateOnWord(siteConfig.description, 148, true),
     siteName: siteConfig.name,
-    images: [siteConfig.thumbnail],
+    images: [
+      {
+        url: `/og?title=${encodeURIComponent(
+          siteConfig.og.title,
+        )}&description=${encodeURIComponent(siteConfig.og.description)}`,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: siteConfig.title,
+    title: `${siteConfig.title} - ${siteConfig.description}`,
     description: truncateOnWord(siteConfig.description, 148, true),
-    images: [siteConfig.thumbnail],
+    images: [
+      {
+        url: `/og?title=${encodeURIComponent(
+          siteConfig.og.title,
+        )}&description=${encodeURIComponent(siteConfig.og.description)}`,
+      },
+    ],
     creator: siteConfig.twitter.creator,
   },
-  metadataBase: new URL(siteConfig.url),
+  metadataBase: new URL(
+    env.VERCEL_URL ? `https://${env.VERCEL_URL}` : siteConfig.url,
+  ),
 };
 
 export const viewport: Viewport = {
@@ -53,12 +68,6 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      {/* <head>
-        <script
-          crossOrigin="anonymous"
-          src="//unpkg.com/react-scan/dist/auto.global.js"
-        />
-      </head> */}
       <body
         className={cn(
           "font-sans antialiased",

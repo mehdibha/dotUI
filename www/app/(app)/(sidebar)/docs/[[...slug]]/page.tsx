@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { ExternalLinkIcon } from "lucide-react";
+import { AlignLeftIcon, ExternalLinkIcon } from "lucide-react";
 import type { Metadata } from "next";
 
 import { Button } from "@dotui/ui/components/button";
@@ -69,6 +69,10 @@ export default async function Page({
       {toc && toc.length > 0 && (
         <div className="pt-20 max-xl:hidden">
           <div className="sticky top-10 h-[calc(100svh-calc(var(--spacing)*10))]">
+            <div className="-ml-1.5 mb-3 flex items-center gap-2">
+              <AlignLeftIcon className="text-fg-muted size-4" />
+              <p className="text-fg-muted text-sm">On this page</p>
+            </div>
             <TableOfContents toc={toc} />
           </div>
         </div>
@@ -101,7 +105,13 @@ export async function generateMetadata({
         : undefined,
       type: "article",
       url: page.url,
-      images: [siteConfig.thumbnail],
+      images: [
+        {
+          url: `/og?title=${encodeURIComponent(
+            page.data.title,
+          )}${page.data.description ? `&description=${encodeURIComponent(page.data.description)}` : ""}`,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
@@ -109,7 +119,13 @@ export async function generateMetadata({
       description: page.data.description
         ? truncateOnWord(page.data.description, 148, true)
         : undefined,
-      images: [siteConfig.thumbnail],
+      images: [
+        {
+          url: `/og?title=${encodeURIComponent(
+            page.data.title,
+          )}${page.data.description ? `&description=${encodeURIComponent(page.data.description)}` : ""}`,
+        },
+      ],
       creator: siteConfig.twitter.creator,
     },
   };
