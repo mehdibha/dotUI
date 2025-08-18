@@ -32,50 +32,15 @@ export function CodeModal({ children, ...props }: DialogRootProps) {
         }}
       >
         <DialogBody className="-mx-6 px-6 pb-6 pt-0">
-          <div className="text-fg-muted [&>h3]:step [&>h3]:text-fg [&>h3]:not-first:mt-4 relative ml-4 border-l pl-8 text-sm [counter-reset:step] [&>h3]:text-base [&>h3]:font-bold">
-            <h3>Init your style</h3>
-            <div>
-              <InstallTabs items={packageManagers}>
-                {packageManagers.map((packageManager) => (
-                  <InstallTab key={packageManager} value={packageManager}>
-                    <pre className="p-4">
-                      <code>
-                        {convert(`npx shadcn@latest init`, packageManager)}{" "}
-                        @dotui/
-                        <span className="text-[#F69D50]">
-                          {form.watch("slug")}
-                        </span>
-                        /base
-                      </code>
-                    </pre>
-                  </InstallTab>
-                ))}
-              </InstallTabs>
-            </div>
-            <h3>You can now add your components</h3>
-            <div>
-              <p>
-                For example, to add the button component, you can run the
-                following command:
-              </p>
-              <InstallTabs items={packageManagers}>
-                {packageManagers.map((packageManager) => (
-                  <InstallTab key={packageManager} value={packageManager}>
-                    <pre className="p-4">
-                      <code>
-                        {convert(`npx shadcn@latest add`, packageManager)}{" "}
-                        @dotui/
-                        <span className="text-[#F69D50]">
-                          {form.watch("slug")}
-                        </span>
-                        /button
-                      </code>
-                    </pre>
-                  </InstallTab>
-                ))}
-              </InstallTabs>
-            </div>
-            <h3>You're done!</h3>
+          <h3>Update your components.json</h3>
+          <div>
+            <pre className="mt-4 rounded-md border p-4 text-xs">
+              <code>
+                "style": "
+                {form.watch("visibility") === "public" ? "mehdibha/" : ""}
+                {form.watch("name")}",
+              </code>
+            </pre>
           </div>
         </DialogBody>
       </Dialog>

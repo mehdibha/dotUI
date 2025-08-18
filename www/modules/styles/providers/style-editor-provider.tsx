@@ -125,6 +125,10 @@ export function StyleEditorProvider({
     <StyleFormContext.Provider
       value={{
         form,
+        slug:
+          style?.visibility === "public"
+            ? `${username}/${style?.name}`
+            : style?.name,
         styleId: style?.id ?? "",
         resolvedMode,
         generatedTheme,
