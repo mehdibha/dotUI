@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { ExternalLinkIcon } from "lucide-react";
+import { AlignLeftIcon, ExternalLinkIcon } from "lucide-react";
 import type { Metadata } from "next";
 
 import { Button } from "@dotui/ui/components/button";
@@ -69,6 +69,10 @@ export default async function Page({
       {toc && toc.length > 0 && (
         <div className="pt-20 max-xl:hidden">
           <div className="sticky top-10 h-[calc(100svh-calc(var(--spacing)*10))]">
+            <div className="flex items-center mb-3 gap-2 -ml-1.5">
+              <AlignLeftIcon className="size-4 text-fg-muted" />
+              <p className="text-sm text-fg-muted">On this page</p>
+            </div>
             <TableOfContents toc={toc} />
           </div>
         </div>
