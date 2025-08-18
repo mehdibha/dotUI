@@ -36,6 +36,7 @@ export type StyleFormData = z.infer<typeof formSchema>;
 interface StyleFormContextType {
   form: UseFormReturn<StyleFormData>;
   styleId: string;
+  slug: string;
   resolvedMode: "light" | "dark";
   generatedTheme: ContrastColor[];
   isLoading: boolean;
@@ -125,10 +126,9 @@ export function StyleEditorProvider({
     <StyleFormContext.Provider
       value={{
         form,
-        slug:
-          style?.visibility === "public"
-            ? `${username}/${style?.name}`
-            : style?.name,
+        slug: (style?.visibility === "public"
+          ? `${username}/${style?.name}`
+          : style?.name)!,
         styleId: style?.id ?? "",
         resolvedMode,
         generatedTheme,
