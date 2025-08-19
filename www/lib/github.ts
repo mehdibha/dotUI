@@ -1,5 +1,7 @@
 import { getGithubLastEdit as getGithubLastEdit_ } from "fumadocs-core/server";
 
+import { env } from "@/env";
+
 const OWNER = "mehdibha";
 const REPO = "dotUI";
 
@@ -7,41 +9,36 @@ export const getGithubLastEdit = async (path: string) => {
   return await getGithubLastEdit_({
     owner: OWNER,
     repo: REPO,
-    path: `content/${path}`,
+    path: `www/content/${path}`,
   });
 };
 
 export const getGitHubContributors = async (): Promise<
   { login: string; avatar_url: string; html_url: string }[]
 > => {
-  try {
-    const response = await fetch(
-      `https://api.github.com/repos/${OWNER}/${REPO}/contributors`,
-      {
-        headers: {
-          Accept: "application/vnd.github+json",
-        },
-        next: {
-          revalidate: 120,
-        },
+  const response = await fetch(
+    `https://api.github.com/repos/${OWNER}/${REPO}/contributors`,
+    {
+      headers: {
+        Accept: "application/vnd.github+json",
       },
-    );
-    if (!response?.ok) {
-      return [];
-    }
-    const json = await response.json();
-    return [
-      ...json,
-      {
-        login: "Cursor agent",
-        avatar_url: "https://github.com/cursoragent.png",
-        html_url: "https://github.com/cursoragent",
+      next: {
+        revalidate: 120,
       },
-    ];
-  } catch (error) {
-    console.error(error);
+    },
+  );
+  if (!response?.ok) {
     return [];
   }
+  const json = await response.json();
+  return [
+    ...json,
+    {
+      login: "Cursor agent",
+      avatar_url: "https://github.com/cursoragent.png",
+      html_url: "https://github.com/cursoragent",
+    },
+  ];
 };
 
 export async function getGitHubStars(): Promise<string | null> {

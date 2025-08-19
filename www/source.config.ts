@@ -60,6 +60,7 @@ export const marketing = defineDocs({
 });
 
 export default defineConfig({
+  lastModifiedTime: "git",
   mdxOptions: {
     remarkNpmOptions: false,
     remarkPlugins: [

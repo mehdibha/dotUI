@@ -24,7 +24,9 @@ export default async function Page({
   const page = docsSource.getPage((await params).slug);
   if (!page) notFound();
 
-  const { body: MDXContent, toc } = await page.data.load();
+  const { body: MDXContent, toc, lastModified } = await page.data.load();
+
+  console.log(lastModified);
 
   return (
     <div
@@ -62,7 +64,7 @@ export default async function Page({
           <MDXContent components={mdxComponents} />
         </div>
         <div className="mt-20 space-y-4">
-          <PageLastUpdate path={page.path} />
+          {lastModified && <PageLastUpdate date={lastModified} />}
           <DocsPager currentPathname={page.url} />
         </div>
       </div>
