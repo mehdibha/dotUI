@@ -34,28 +34,34 @@ const config = {
   async rewrites() {
     return [
       {
-        source: "/styles/:username/:styleName",
-        destination: "/style-editor/colors",
+        source: "/styles/:username/:stylename",
+        destination:
+          "/style-editor/colors?username=:username&stylename=:stylename",
       },
       {
-        source: "/styles/:username/:styleName/layout",
-        destination: "/style-editor/layout",
+        source: "/styles/:username/:stylename/layout",
+        destination:
+          "/style-editor/layout?username=:username&stylename=:stylename",
       },
       {
-        source: "/styles/:username/:styleName/typography",
-        destination: "/style-editor/typography",
+        source: "/styles/:username/:stylename/typography",
+        destination:
+          "/style-editor/typography?username=:username&stylename=:stylename",
       },
       {
-        source: "/styles/:username/:styleName/components",
-        destination: "/style-editor/components",
+        source: "/styles/:username/:stylename/components",
+        destination:
+          "/style-editor/components?username=:username&stylename=:stylename",
       },
       {
-        source: "/styles/:username/:styleName/effects",
-        destination: "/style-editor/effects",
+        source: "/styles/:username/:stylename/effects",
+        destination:
+          "/style-editor/effects?username=:username&stylename=:stylename",
       },
       {
-        source: "/styles/:username/:styleName/icons",
-        destination: "/style-editor/icons",
+        source: "/styles/:username/:stylename/icons",
+        destination:
+          "/style-editor/icons?username=:username&stylename=:stylename",
       },
     ];
   },

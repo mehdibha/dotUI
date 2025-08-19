@@ -16,7 +16,10 @@ import { env } from "@/env";
 import { Providers } from "./providers";
 
 export const metadata: Metadata = {
-  title: { default: siteConfig.title, template: `%s - ${siteConfig.name}` },
+  title: {
+    default: `${siteConfig.title} - ${siteConfig.description}`,
+    template: `%s - ${siteConfig.name}`,
+  },
   description: truncateOnWord(siteConfig.description, 148, true),
   keywords: siteConfig.keywords,
   authors: siteConfig.authors,

@@ -23,10 +23,16 @@ export function BlocksNav({
       <div className="bg-bg sticky top-0 z-40 border-b">
         <TabList className="container border-b-0">
           {[
-            ...blocksCategories.map((category) => ({
-              href: `/blocks/${category.slug}`,
-              label: category.name,
-            })),
+            {
+              href: "/blocks",
+              label: "Featured",
+            },
+            ...blocksCategories
+              .filter((category) => category.slug !== "featured")
+              .map((category) => ({
+                href: `/blocks/${category.slug}`,
+                label: category.name,
+              })),
           ].map((tab) => (
             <Tab
               key={tab.href}

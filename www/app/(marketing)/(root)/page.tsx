@@ -23,10 +23,6 @@ import { caller } from "@/lib/trpc/server";
 export const dynamic = "force-static";
 export const revalidate = 60;
 
-export const metadata: Metadata = {
-  title: { absolute: `${siteConfig.title} - ${siteConfig.description}` },
-};
-
 export default async function HomePage() {
   const contributors = await getGitHubContributors();
   const feturedStyles = await caller.style.getFeatured({ limit: 6 });

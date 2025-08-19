@@ -2,7 +2,7 @@ import React from "react";
 
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
-import { Sidebar, SidebarProvider } from "@/components/sidebar";
+import { Sidebar } from "@/components/sidebar";
 import { docsSource } from "@/modules/docs/lib/source";
 import { Providers } from "./providers";
 
