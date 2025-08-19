@@ -2,15 +2,12 @@
 
 import React from "react";
 import Image from "next/image";
-import { CheckIcon, CopyIcon } from "lucide-react";
 import { AnimatePresence, motion, useInView } from "motion/react";
 import { useTheme } from "next-themes";
 import { UNSAFE_PortalProvider as PortalProvider } from "react-aria";
 import type { Variants } from "motion/react";
 
 import { StyleProvider } from "@dotui/ui";
-import { Button } from "@dotui/ui/components/button";
-import { Skeleton } from "@dotui/ui/components/skeleton";
 import { BlocksShowcase } from "@dotui/ui/registry/blocks/showcase/blocks-showcase/components/blocks-showcase";
 import { Tab, TabList, Tabs } from "@dotui/ui/registry/components/tabs/motion";
 import type { RouterOutputs } from "@dotui/api";
@@ -122,28 +119,28 @@ export const StylesShowcase = ({
             alt={currentStyleName}
             width={1200}
             height={900}
-            className="block max-sm:hidden dark:hidden"
+            className="lg:hidden! block max-sm:hidden dark:hidden"
           />
           <Image
             src={`/images/showcase/${currentStyleName}-dark.png`}
             alt={currentStyleName}
             width={1200}
             height={900}
-            className="hidden dark:sm:block"
+            className="lg:hidden! hidden dark:sm:block"
           />
           <Image
             src={`/images/showcase/${currentStyleName}-light-mobile.png`}
             alt={currentStyleName}
             width={1200}
             height={900}
-            className="block sm:hidden dark:hidden"
+            className="lg:hidden! block sm:hidden dark:hidden"
           />
           <Image
             src={`/images/showcase/${currentStyleName}-dark-mobile.png`}
             alt={currentStyleName}
             width={1200}
             height={900}
-            className="hidden max-sm:dark:block"
+            className="lg:hidden! hidden max-sm:dark:block"
           />
         </StyleProvider>
       </div>
