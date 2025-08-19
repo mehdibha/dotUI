@@ -5,7 +5,7 @@ import { Separator } from "@dotui/ui/components/separator";
 export default function Demo() {
   return (
     <MenuRoot>
-      <Button variant="outline">File</Button>
+      <Button>File</Button>
       <Menu>
         <MenuItem>New...</MenuItem>
         <MenuItem>Badges</MenuItem>

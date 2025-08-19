@@ -14,7 +14,7 @@ export default function Demo() {
   return (
     <div className="flex items-center gap-14">
       <MenuRoot>
-        <Button variant="outline" shape="square">
+        <Button shape="square">
           <MenuIcon />
         </Button>
         <Menu

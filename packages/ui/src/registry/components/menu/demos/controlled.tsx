@@ -11,7 +11,7 @@ export default function Demo() {
   return (
     <div className="flex flex-col-reverse items-center gap-4">
       <MenuRoot isOpen={isOpen} onOpenChange={setOpen}>
-        <Button variant="outline" shape="square">
+        <Button shape="square">
           <MenuIcon />
         </Button>
         <Menu>

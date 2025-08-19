@@ -15,7 +15,7 @@ export default function Demo() {
     <div className="flex w-full items-center">
       <div className="flex flex-1 items-center justify-center">
         <DialogRoot>
-          <Button variant="outline">Open drawer</Button>
+          <Button>Open drawer</Button>
           <Dialog
             type="drawer"
             title="Help"

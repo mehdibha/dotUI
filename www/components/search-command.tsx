@@ -197,7 +197,6 @@ const SearchCommandDialog = ({
         {children}
         <Button
           slot="close"
-          variant="outline"
           shape="rectangle"
           size="sm"
           className="absolute right-2 top-2 h-7 px-2 text-xs font-normal"

@@ -6,7 +6,7 @@ import { MenuIcon } from "@dotui/ui/icons";
 export default function Demo() {
   return (
     <MenuRoot>
-      <Button variant="outline" shape="square">
+      <Button shape="square">
         <MenuIcon />
       </Button>
       <Overlay type="popover" mobileType="drawer">

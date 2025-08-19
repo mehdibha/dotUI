@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 
 import { COLOR_TOKENS } from "@dotui/registry-definition/registry-tokens";
+import { SCALE_NUMBERRS } from "@dotui/style-engine/constants";
 import { Button } from "@dotui/ui/components/button";
 import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
 import { FormControl } from "@dotui/ui/components/form";
@@ -70,13 +71,10 @@ export const ColorTokens = ({
               );
               return (
                 <TableRow key={tokenId} id={tokenId}>
-                  <TableCell>
-                    <ColorTokenVariableName
-                      index={index}
-                      description={tokenDef?.description}
-                    />
+                  <TableCell className="pl-0! w-40">
+                    <ColorTokenVariableName index={index} />
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="pr-0 w-52">
                     <ColorTokenValue index={index} />
                   </TableCell>
                 </TableRow>
@@ -89,13 +87,7 @@ export const ColorTokens = ({
   );
 };
 
-const ColorTokenVariableName = ({
-  index,
-  description,
-}: {
-  index: number;
-  description?: string;
-}) => {
+const ColorTokenVariableName = ({ index }: { index: number }) => {
   const { form } = useStyleForm();
   const [isEditMode, setEditMode] = React.useState(false);
   const [localValue, setLocalValue] = React.useState("");
@@ -207,24 +199,6 @@ const ColorTokenVariableName = ({
               </div>
             )}
           </div>
-          {description && (
-            <DialogRoot>
-              <Button
-                size="sm"
-                shape="circle"
-                variant="quiet"
-                className="size-6 [&_svg]:size-3"
-              >
-                <InfoIcon />
-              </Button>
-              <Dialog
-                type="popover"
-                popoverProps={{ placement: "top", className: "max-w-64" }}
-              >
-                <p className="text-sm">{description}</p>
-              </Dialog>
-            </DialogRoot>
-          )}
         </div>
       )}
     />
@@ -233,16 +207,6 @@ const ColorTokenVariableName = ({
 
 const ColorTokenValue = ({ index }: { index: number }) => {
   const { form } = useStyleForm();
-
-  // const [color] = token.value
-  //   .replace("var(--", "")
-  //   .replace(")", "")
-  //   .split("-") as [string, string];
-
-  // const items = Array.from({ length: 10 }, (_, i) => ({
-  //   label: `${color.charAt(0).toUpperCase() + color.slice(1)} ${(i + 1) * 100}`,
-  //   value: `var(--${color}-${(i + 1) * 100})`,
-  // }));
 
   return (
     <FormControl
@@ -254,23 +218,26 @@ const ColorTokenValue = ({ index }: { index: number }) => {
           .replace(")", "")
           .split("-") as [string, string];
 
-        const items = Array.from({ length: 10 }, (_, i) => ({
-          label: `${color.charAt(0).toUpperCase() + color.slice(1)} ${(i + 1) * 100}`,
-          value: `var(--${color}-${(i + 1) * 100})`,
+        const items = SCALE_NUMBERRS.map((scale) => ({
+          label: `${color.charAt(0).toUpperCase() + color.slice(1)} ${scale}`,
+          value: `var(--${color}-${scale})`,
         }));
 
         return (
           <SelectRoot
             selectedKey={value}
             onSelectionChange={onChange}
+            className="w-40"
             {...props}
           >
             <Button
               size="sm"
               suffix={<ChevronsUpDownIcon className="text-fg-muted" />}
-              className="w-40"
+              className="w-full"
             >
-              <SelectValue />
+              <SelectValue>
+                {({ defaultChildren }) => <>{defaultChildren}</>}
+              </SelectValue>
             </Button>
             <Popover>
               <ListBox items={items}>

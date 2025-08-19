@@ -76,7 +76,6 @@ const CodeBlockClient = ({
         <div className="flex items-center gap-2">
           {(preview || expandable) && (
             <Button
-              variant="outline"
               size="sm"
               className="bg-bg-inverse/5 h-7 text-xs"
               onPress={handleExpand}
@@ -148,7 +147,6 @@ const CodeBlockCopyButton = ({ code, ...props }: CodeBlockCopyButtonProps) => {
     <Button
       size="sm"
       shape="square"
-      variant="outline"
       onPress={handleCopy}
       className="bg-bg-inverse/5 size-7 [&_svg]:size-3"
       {...props}

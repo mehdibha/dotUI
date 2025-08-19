@@ -9,10 +9,7 @@ import { ChevronsUpDownIcon } from "@dotui/ui/icons";
 export default function Demo() {
   return (
     <SelectRoot>
-      <Button
-        variant="outline"
-        suffix={<ChevronsUpDownIcon className="text-fg-muted" />}
-      >
+      <Button suffix={<ChevronsUpDownIcon className="text-fg-muted" />}>
         <SelectValue />
       </Button>
       <Overlay type="popover">

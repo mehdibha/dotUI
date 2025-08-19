@@ -12,6 +12,8 @@ import type {
 
 export const DEFAULT_RADIUS_FACTOR = 1;
 
+export const DEFAULT_ACCENT_LEVEL = 1;
+
 export const DEFAULT_SPACING = 0.25;
 
 export const DEFAULT_LETTER_SPACING = 0;
@@ -60,7 +62,7 @@ export const DEFAULT_VARIANTS: Variants = {
   menu: "basic",
   tabs: "basic",
 
-  button: "outline",
+  button: "basic",
   "button-group": "basic",
   "toggle-button": "basic",
   "toggle-button-group": "basic",
@@ -257,6 +259,7 @@ export const DEFAULT_THEME: ThemeDefinition = {
       dark: DEFAULT_DARK_MODE,
     },
     tokens: DEFAULT_TOKENS,
+    accentLevel: DEFAULT_ACCENT_LEVEL,
   },
   fonts: {
     heading: DEFAULT_FONTS.heading,

@@ -13,10 +13,10 @@ export default function Demo() {
   return (
     <div className="flex w-full items-center gap-8">
       <DialogRoot>
-        <Button variant="outline">Dialog</Button>
+        <Button>Dialog</Button>
         <Dialog title="Dialog" type={type} mobileType={null}>
           <DialogRoot>
-            <Button variant="outline">Nested dialog</Button>
+            <Button>Nested dialog</Button>
             <Dialog
               title="Nested dialog"
               type={type}

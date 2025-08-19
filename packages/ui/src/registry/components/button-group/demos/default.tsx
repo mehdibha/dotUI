@@ -5,7 +5,7 @@ import { ButtonGroup } from "@dotui/ui/components/button-group";
 
 export default function Demo() {
   return (
-    <ButtonGroup variant="outline" size="sm">
+    <ButtonGroup size="sm">
       <Button>Button 1</Button>
       <Button>Button 2</Button>
       <Button>Button 3</Button>

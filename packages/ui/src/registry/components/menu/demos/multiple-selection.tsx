@@ -6,9 +6,7 @@ import { Menu, MenuItem, MenuRoot } from "@dotui/ui/components/menu";
 export default function Demo() {
   return (
     <MenuRoot>
-      <Button variant="outline" size="sm">
-        Panels
-      </Button>
+      <Button size="sm">Panels</Button>
       <Menu
         selectionMode="multiple"
         defaultSelectedKeys={["sidebar", "searchbar", "console"]}

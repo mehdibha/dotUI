@@ -183,7 +183,7 @@ export function ComponentsEditor() {
         <div className="flex items-center gap-2">
           <Button>Default</Button>
           <Button variant="accent">Accent</Button>
-          <Button variant="outline">Outline</Button>
+          <Button >Outline</Button>
           <Button variant="quiet">Quiet</Button>
         </div>
         <div className="flex items-center gap-2">
