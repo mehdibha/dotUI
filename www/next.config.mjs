@@ -41,7 +41,7 @@ const config = {
       {
         source: "/styles/:username/:stylename/layout",
         destination:
-          "/style-editor/layout?username=:username&stylename=:styleName",
+          "/style-editor/layout?username=:username&stylename=:stylename",
       },
       {
         source: "/styles/:username/:stylename/typography",
