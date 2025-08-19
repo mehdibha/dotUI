@@ -17,6 +17,7 @@ import { TypographyEditor } from "@/modules/styles/components/style-editor/style
 import { ComponentsEditor } from "@/modules/styles/components/style-editor/components-editor";
 import { EffectsEditor } from "@/modules/styles/components/style-editor/effects-editor";
 import { IconsEditor } from "@/modules/styles/components/style-editor/icons-editor";
+import { colorsPlugin } from "../domains/colors";
 
 function wrapAsSingleSection(
 	id: string,
@@ -33,13 +34,7 @@ function wrapAsSingleSection(
 }
 
 export const editorPlugins: EditorPlugin[] = [
-	{
-		id: "colors",
-		label: "Colors",
-		route: (u, s) => `/styles/${u}/${s}`,
-		icon: <PaletteIcon />,
-		sections: wrapAsSingleSection("colors-root", "Colors", ColorsEditor),
-	},
+	{ ...colorsPlugin, icon: <PaletteIcon /> },
 	{
 		id: "layout",
 		label: "Layout",
@@ -84,4 +79,3 @@ export const editorPlugins: EditorPlugin[] = [
 		sections: wrapAsSingleSection("icons-root", "Icons", IconsEditor),
 	},
 ];
-
