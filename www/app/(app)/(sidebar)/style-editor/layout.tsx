@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+
 import { Preview } from "@/components/preview";
 import { StyleEditorHeader } from "@/modules/styles/components/style-editor/header";
 import { StyleEditorNav } from "@/modules/styles/components/style-editor/nav";
