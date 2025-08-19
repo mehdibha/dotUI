@@ -108,7 +108,7 @@ export function ColorsEditor() {
         </div>
       </StyleEditorSection>
 
-      <StyleEditorSection title="Accent level">
+      <StyleEditorSection title="Accent emphasis">
         <AccentLevelEditor />
       </StyleEditorSection>
 
