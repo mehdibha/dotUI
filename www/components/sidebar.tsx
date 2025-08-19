@@ -17,7 +17,7 @@ import {
   SearchIcon,
   SunIcon,
 } from "lucide-react";
-import { motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import type { PageTree } from "fumadocs-core/server";
 import type { Transition } from "motion/react";
 
@@ -184,49 +184,72 @@ export const Sidebar = ({
         </div>
       </ScrollArea>
       <SidebarFooter>
-        <div className="group-data-collapsed/sidebar:flex-col flex items-center gap-1">
-          <motion.div layout transition={transition}>
-            <Button
-              href={siteConfig.links.github}
-              target="_blank"
-              size="sm"
-              shape="square"
-              variant="quiet"
-              aria-label="github"
-            >
-              <GitHubIcon />
-            </Button>
-          </motion.div>
-        </div>
-        <div className="group-data-collapsed/sidebar:flex-col flex items-center gap-1">
-          <ThemeSwitcher>
+        <div className="group-data-collapsed/sidebar:flex-col group-data-collapsed/sidebar:justify-end flex flex-row items-start justify-between gap-1">
+          <div className="group-data-collapsed/sidebar:flex-col flex items-center gap-1">
             <motion.div layout transition={transition}>
               <Button
+                href={siteConfig.links.github}
+                target="_blank"
                 size="sm"
-                variant="quiet"
                 shape="square"
-                className="[&_svg]:size-[18px]"
+                variant="quiet"
+                aria-label="github"
               >
-                <SunIcon className="block dark:hidden" />
-                <MoonIcon className="hidden dark:block" />
+                <GitHubIcon />
               </Button>
             </motion.div>
-          </ThemeSwitcher>
-          {isMounted && !isPending && session?.user && (
-            <UserProfileMenu placement="top">
-              <motion.div layout transition={transition}>
-                <Button variant="quiet" shape="square" size="sm">
-                  <Avatar
-                    src={session?.user?.image ?? undefined}
-                    fallback={session?.user?.name?.charAt(0)}
-                    className="size-6"
-                    shape="circle"
-                  />
+          </div>
+          <div className="group-data-collapsed/sidebar:flex-col flex items-center gap-1">
+            <motion.div layout transition={transition}>
+              <ThemeSwitcher>
+                <Button
+                  size="sm"
+                  variant="quiet"
+                  shape="square"
+                  className="[&_svg]:size-[18px]"
+                >
+                  <SunIcon className="block dark:hidden" />
+                  <MoonIcon className="hidden dark:block" />
                 </Button>
-              </motion.div>
-            </UserProfileMenu>
-          )}
+              </ThemeSwitcher>
+            </motion.div>
+            {isMounted && !isPending && session?.user && (
+              <UserProfileMenu placement="top">
+                <motion.div layout transition={transition}>
+                  <Button variant="quiet" shape="square" size="sm">
+                    <Avatar
+                      src={session?.user?.image ?? undefined}
+                      fallback={session?.user?.name?.charAt(0)}
+                      className="size-6"
+                      shape="circle"
+                    />
+                  </Button>
+                </motion.div>
+              </UserProfileMenu>
+            )}
+          </div>
         </div>
+        <AnimatePresence>
+          {isMounted && !isPending && !session?.user && (
+            <motion.div
+              initial={{ opacity: 0.5, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={transition}
+            >
+              <StyledTooltip content="Login" isDisabled={!isCollapsed}>
+                <SidebarButton href="/login" variant="primary" size="sm">
+                  <motion.span layout transition={transition}>
+                    <LogInIcon className="text-fg-on-primary!" />
+                  </motion.span>
+                  <span className="group-data-collapsed/sidebar:flex-1 text-center">
+                    Login
+                  </span>
+                </SidebarButton>
+              </StyledTooltip>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </SidebarFooter>
     </SidebarRoot>
   );
@@ -405,7 +428,7 @@ function PageNode({
     <Link
       href={url}
       className={cn(
-        "border-bg-bg-muted text-fg text-fg-muted hover:text-fg group block border-l py-1 pl-4 font-medium transition-colors",
+        "border-bg-bg-muted text-fg-muted hover:text-fg group block border-l py-1 pl-4 font-medium transition-colors",
         {
           "border-fg text-fg": active,
         },
@@ -500,9 +523,5 @@ const StyledTooltip = (props: TooltipProps) => {
 };
 
 const SidebarFooter = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <div className="group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) group-data-collapsed/sidebar:flex-col group-data-collapsed/sidebar:justify-end flex flex-row items-end justify-between gap-1 p-2">
-      {children}
-    </div>
-  );
+  return <div className="flex flex-col gap-2 p-2">{children}</div>;
 };
