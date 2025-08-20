@@ -5,7 +5,7 @@ import { Select, SelectItem } from "@dotui/ui/components/select";
 export default function Demo() {
   return (
     <Select label="Project">
-      <SelectItem href="/create-project" target="_blank">
+      <SelectItem href="/create-project">
         Create new...
       </SelectItem>
       <SelectItem>DotUI</SelectItem>

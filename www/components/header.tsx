@@ -48,12 +48,14 @@ export function Header({
           {/* <Logo className="md:hidden" /> */}
           <Logo className="max-md:hidden" />
           <div className="flex items-center gap-3 text-sm max-md:hidden">
-            {[
-              { label: "Docs", href: "/docs" },
-              { label: "Components", href: "/docs/components/button" },
-              { label: "Blocks", href: "/blocks" },
-              { label: "Styles", href: "/styles" },
-            ].map((item) => (
+            {(
+              [
+                { label: "Docs", href: "/docs" },
+                { label: "Components", href: "/docs/components/button" },
+                { label: "Blocks", href: "/blocks" },
+                { label: "Styles", href: "/styles" },
+              ] as const
+            ).map((item) => (
               <Link
                 key={item.href}
                 href={item.href}

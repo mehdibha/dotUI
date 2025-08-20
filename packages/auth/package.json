@@ -21,16 +21,16 @@
     "@dotui/db": "workspace:*",
     "@t3-oss/env-nextjs": "^0.13.6",
     "better-auth": "1.3.4",
-    "next": "^15.3.3",
-    "react": "catalog:react19",
-    "react-dom": "catalog:react19",
+    "next": "catalog:next",
+    "react": "catalog:react",
+    "react-dom": "catalog:react",
     "zod": "catalog:"
   },
   "devDependencies": {
     "@dotui/eslint-config": "workspace:*",
     "@dotui/prettier-config": "workspace:*",
     "@dotui/ts-config": "workspace:*",
-    "@types/react": "catalog:react19",
+    "@types/react": "catalog:react",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:"

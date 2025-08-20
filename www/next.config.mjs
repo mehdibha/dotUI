@@ -10,6 +10,10 @@ await jiti.import("./env");
 /** @type {import("next").NextConfig} */
 const config = {
   transpilePackages: ["@dotui/api", "@dotui/auth", "@dotui/db", "@dotui/ui"],
+  typedRoutes: true,
+  experimental: {
+    reactCompiler: true,
+  },
   images: {
     remotePatterns: [
       {
@@ -25,12 +29,6 @@ const config = {
   devIndicators: {
     position: "bottom-right",
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
   async rewrites() {
     return [
       {
@@ -39,34 +37,12 @@ const config = {
           "/style-editor/colors?username=:username&stylename=:stylename",
       },
       {
-        source: "/styles/:username/:stylename/layout",
+        source:
+          "/styles/:username/:stylename/:section(colors|layout|typography|components|effects|icons)",
         destination:
-          "/style-editor/layout?username=:username&stylename=:stylename",
-      },
-      {
-        source: "/styles/:username/:stylename/typography",
-        destination:
-          "/style-editor/typography?username=:username&stylename=:stylename",
-      },
-      {
-        source: "/styles/:username/:stylename/components",
-        destination:
-          "/style-editor/components?username=:username&stylename=:stylename",
-      },
-      {
-        source: "/styles/:username/:stylename/effects",
-        destination:
-          "/style-editor/effects?username=:username&stylename=:stylename",
-      },
-      {
-        source: "/styles/:username/:stylename/icons",
-        destination:
-          "/style-editor/icons?username=:username&stylename=:stylename",
+          "/style-editor/:section?username=:username&stylename=:stylename",
       },
     ];
-  },
-  experimental: {
-    reactCompiler: true,
   },
   webpack: (config, { dev, isServer }) => {
     config.ignoreWarnings = [

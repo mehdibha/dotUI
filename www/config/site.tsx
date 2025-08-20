@@ -36,4 +36,4 @@ export const siteConfig = {
     discord: "https://discord.gg/DXpj5V2fU8",
     creatorGithub: "https://github.com/mehdibha",
   },
-};
+} as const
