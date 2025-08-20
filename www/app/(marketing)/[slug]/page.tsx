@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { ExternalLinkIcon } from "lucide-react";
-import type { Metadata } from "next";
+import type { Metadata, Route } from "next";
 
 import { Button } from "@dotui/ui/components/button";
 import { cn } from "@dotui/ui/lib/utils";
@@ -43,7 +43,7 @@ export default async function Page({
             {page.data.links.map((link, index) => (
               <Button
                 key={index}
-                href={link.href}
+                href={link.href as Route}
                 suffix={<ExternalLinkIcon />}
                 size="sm"
                 className="h-6 text-xs font-semibold [&_svg]:size-3"

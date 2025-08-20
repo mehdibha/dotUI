@@ -10,7 +10,7 @@
       "@dotui/ui/*": ["../packages/ui/src/*"]
     },
     "plugins": [{ "name": "next" }],
-    "module": "esnext"
+    "module": "esnext",
   },
   "include": [
     "next-env.d.ts",
@@ -19,5 +19,8 @@
     ".next/types/**/*.ts",
     "./scripts/**/*.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",
+    "../packages/ui/src/registry/components/breadcrumbs/demos/router-integration.tsx"
+  ]
 }

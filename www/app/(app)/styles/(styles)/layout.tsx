@@ -38,11 +38,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function StylesLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function StylesLayout({ children }: LayoutProps<"/styles">) {
   return (
     <PageLayout>
       <PageHeader>

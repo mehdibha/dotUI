@@ -7,8 +7,8 @@ import { docsSource } from "@/modules/docs/lib/source";
 export const revalidate = false;
 
 export async function GET(
-  _req: NextRequest,
-  { params }: { params: Promise<{ slug: string[] }> },
+  request: NextRequest,
+  { params }: RouteContext<"/llm/[[...slug]]">,
 ) {
   const slug = (await params).slug;
   const page = docsSource.getPage(slug);

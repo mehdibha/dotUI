@@ -33,11 +33,11 @@ export function StylesPageNav({
         },
         { href: "/styles", label: "Featured" },
         { href: "/styles/community", label: "Community" },
-      ]
+      ] as const
     : [
         { href: "/styles", label: "Featured" },
         { href: "/styles/community", label: "Community" },
-      ];
+      ] as const;
 
   return (
     <Tabs

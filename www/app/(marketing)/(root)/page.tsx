@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Route } from "next";
 
 import { Alert } from "@dotui/ui/components/alert";
 import { Avatar } from "@dotui/ui/components/avatar";
@@ -103,7 +103,7 @@ export default async function HomePage() {
                 <Link
                   target="_blank"
                   className="grayscale-80 flex items-center justify-center opacity-60 transition-opacity hover:opacity-100 hover:grayscale-0"
-                  href={href}
+                  href={href as Route}
                 >
                   {icon}
                 </Link>
@@ -145,7 +145,7 @@ export default async function HomePage() {
                   content={contributor.login}
                 >
                   <Link
-                    href={contributor.html_url}
+                    href={contributor.html_url as Route}
                     target="_blank"
                     variant="unstyled"
                   >

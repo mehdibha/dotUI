@@ -11,6 +11,7 @@ import {
   Tabs,
 } from "@dotui/ui/registry/components/tabs/motion";
 import type { TabsProps } from "@dotui/ui/components/tabs";
+import type { Route } from "next";
 
 export function BlocksNav({
   children,
@@ -37,7 +38,7 @@ export function BlocksNav({
             <Tab
               key={tab.href}
               id={tab.href}
-              href={tab.href}
+              href={tab.href as Route}
               className="flex h-7 items-center gap-2 rounded-full px-4 pb-5 pt-6 text-sm"
             >
               {tab.label}

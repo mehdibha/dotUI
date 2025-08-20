@@ -38,9 +38,7 @@ export const metadata: Metadata = {
 
 export default function BlocksLayout({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+}: LayoutProps<"/blocks">) {
   return (
     <PageLayout>
       <PageHeader>

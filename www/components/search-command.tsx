@@ -19,6 +19,7 @@ import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
 import { Input, InputRoot } from "@dotui/ui/components/input";
 import { MenuContent, MenuItem, MenuSection } from "@dotui/ui/components/menu";
 import { SearchFieldRoot } from "@dotui/ui/components/search-field";
+import type { Route } from "next";
 
 interface SearchCommandProps {
   items: PageTree.Node[];
@@ -55,7 +56,7 @@ export function SearchCommand({
           className="h-full overflow-y-scroll py-1"
         >
           <MenuSection title="Menu">
-            {[
+            {([
               {
                 label: "Docs",
                 href: "/docs",
@@ -72,7 +73,7 @@ export function SearchCommand({
                 label: "Styles",
                 href: "/styles",
               },
-            ].map((item) => (
+            ] as const).map((item) => (
               <MenuItem
                 key={item.href}
                 href={item.href}
@@ -92,7 +93,7 @@ export function SearchCommand({
                       return (
                         <MenuItem
                           key={itemIndex}
-                          href={item.url}
+                          href={item.url as Route}
                           textValue={item.name as string}
                           prefix={
                             group.name === "Components" ? (

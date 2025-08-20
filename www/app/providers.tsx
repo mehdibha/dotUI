@@ -7,18 +7,7 @@ import { Provider as JotaiProvider } from "jotai";
 import { ThemeProvider } from "next-themes";
 import { MenuItem, RouterProvider } from "react-aria-components";
 
-
 import { TRPCReactProvider } from "@/lib/trpc/react";
-import type { Route } from "next";
-
-declare module "react-aria-components" {
-  interface RouterConfig {
-    href: Route<string>;
-    routerOptions: NonNullable<
-      Parameters<ReturnType<typeof useRouter>["push"]>[1]
-    >;
-  }
-}
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const router = useRouter();

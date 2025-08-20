@@ -35,5 +35,5 @@ export const siteConfig = {
     twitter: "https://x.com/mehdibha_",
     discord: "https://discord.gg/DXpj5V2fU8",
     creatorGithub: "https://github.com/mehdibha",
-  },
-} as const
+  } as const,
+};
