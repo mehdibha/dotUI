@@ -26,18 +26,18 @@ export function StylesPageNav({
   const isMounted = useMounted();
 
   const items = session?.user
-    ? [
+    ? ([
         {
           href: `/styles/my-styles`,
           label: "Your styles",
         },
         { href: "/styles", label: "Featured" },
         { href: "/styles/community", label: "Community" },
-      ] as const
-    : [
+      ] as const)
+    : ([
         { href: "/styles", label: "Featured" },
         { href: "/styles/community", label: "Community" },
-      ] as const;
+      ] as const);
 
   return (
     <Tabs

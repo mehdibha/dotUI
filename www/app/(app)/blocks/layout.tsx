@@ -36,9 +36,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function BlocksLayout({
-  children,
-}: LayoutProps<"/blocks">) {
+export default function BlocksLayout({ children }: LayoutProps<"/blocks">) {
   return (
     <PageLayout>
       <PageHeader>

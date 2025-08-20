@@ -1,11 +1,11 @@
 import { findNeighbour } from "fumadocs-core/server";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import type { Route } from "next";
 
 import { Button } from "@dotui/ui/components/button";
 import { Tooltip } from "@dotui/ui/components/tooltip";
 
 import { docsSource } from "@/modules/docs/lib/source";
-import type { Route } from "next";
 
 export const DocsPager = ({
   variant = "label",

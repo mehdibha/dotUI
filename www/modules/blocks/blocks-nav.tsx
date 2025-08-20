@@ -2,6 +2,7 @@
 
 import React from "react";
 import { usePathname } from "next/navigation";
+import type { Route } from "next";
 
 import { blocksCategories } from "@dotui/registry-definition/registry-blocks";
 import {
@@ -11,7 +12,6 @@ import {
   Tabs,
 } from "@dotui/ui/registry/components/tabs/motion";
 import type { TabsProps } from "@dotui/ui/components/tabs";
-import type { Route } from "next";
 
 export function BlocksNav({
   children,

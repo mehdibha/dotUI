@@ -10,7 +10,7 @@
       "@dotui/ui/*": ["../packages/ui/src/*"]
     },
     "plugins": [{ "name": "next" }],
-    "module": "esnext",
+    "module": "esnext"
   },
   "include": [
     "next-env.d.ts",

@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   BoxesIcon,
@@ -23,7 +24,6 @@ import {
   Tabs,
 } from "@dotui/ui/registry/components/tabs/motion";
 import type { TabsProps } from "@dotui/ui/components/tabs";
-import Link from "next/link";
 
 export function StyleEditorNav({
   children,

@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { useFilter } from "react-aria-components";
 import type { PageTree } from "fumadocs-core/server";
+import type { Route } from "next";
 
 import { Button } from "@dotui/ui/components/button";
 import { Command } from "@dotui/ui/components/command";
@@ -19,7 +20,6 @@ import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
 import { Input, InputRoot } from "@dotui/ui/components/input";
 import { MenuContent, MenuItem, MenuSection } from "@dotui/ui/components/menu";
 import { SearchFieldRoot } from "@dotui/ui/components/search-field";
-import type { Route } from "next";
 
 interface SearchCommandProps {
   items: PageTree.Node[];
@@ -56,24 +56,26 @@ export function SearchCommand({
           className="h-full overflow-y-scroll py-1"
         >
           <MenuSection title="Menu">
-            {([
-              {
-                label: "Docs",
-                href: "/docs",
-              },
-              {
-                label: "Components",
-                href: "/docs/components/button",
-              },
-              {
-                label: "Blocks",
-                href: "/blocks",
-              },
-              {
-                label: "Styles",
-                href: "/styles",
-              },
-            ] as const).map((item) => (
+            {(
+              [
+                {
+                  label: "Docs",
+                  href: "/docs",
+                },
+                {
+                  label: "Components",
+                  href: "/docs/components/button",
+                },
+                {
+                  label: "Blocks",
+                  href: "/blocks",
+                },
+                {
+                  label: "Styles",
+                  href: "/styles",
+                },
+              ] as const
+            ).map((item) => (
               <MenuItem
                 key={item.href}
                 href={item.href}

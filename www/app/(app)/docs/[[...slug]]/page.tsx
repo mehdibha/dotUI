@@ -16,11 +16,7 @@ import { docsSource } from "@/modules/docs/lib/source";
 
 export const dynamicParams = false;
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ slug: string[] }>;
-}) {
+export default async function Page({ params }: PageProps<"/docs/[[...slug]]">) {
   const page = docsSource.getPage((await params).slug);
   if (!page) notFound();
 
@@ -91,9 +87,7 @@ const getIcon = (url: string) => {
 
 export async function generateMetadata({
   params,
-}: {
-  params: Promise<{ slug: string[] }>;
-}): Promise<Metadata> {
+}: PageProps<"/docs/[[...slug]]">): Promise<Metadata> {
   const page = docsSource.getPage((await params).slug);
   if (!page) notFound();
 

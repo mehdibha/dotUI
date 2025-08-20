@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import type { Route } from "next";
 
 import { cn } from "@dotui/ui/lib/utils";
 import {
@@ -9,7 +10,6 @@ import {
   TabPanel,
   Tabs,
 } from "@dotui/ui/registry/components/tabs/motion";
-import type { Route } from "next";
 
 export function PageNav({
   items,
