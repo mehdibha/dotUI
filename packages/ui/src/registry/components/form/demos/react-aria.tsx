@@ -69,7 +69,6 @@ export default function Demo() {
           name="referral"
           label="How did you hear about us?"
           isRequired
-          variant="outline"
           className="w-full"
         >
           <SelectItem id="linkedin">LinkedIn</SelectItem>

@@ -1,6 +1,7 @@
 import { COLOR_TOKENS } from "@dotui/registry-definition/registry-tokens";
 
 import {
+  DEFAULT_ACCENT_LEVEL,
   DEFAULT_BACKGROUND_PATTERN,
   DEFAULT_DARK_MODE,
   DEFAULT_FONTS,
@@ -112,6 +113,8 @@ const restoreThemeDefinitionDefaults = (
           false,
         ),
       },
+      accentLevel:
+        minimizedTheme.colors.accentLevel ?? DEFAULT_ACCENT_LEVEL,
       tokens: restoreTokensDefaults(minimizedTheme.colors.tokens ?? []),
     },
     fonts: {

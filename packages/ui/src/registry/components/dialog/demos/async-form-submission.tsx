@@ -43,9 +43,7 @@ export default function DialogDemo() {
               />
             </DialogBody>
             <DialogFooter>
-              <Button variant="outline" slot="close">
-                Cancel
-              </Button>
+              <Button slot="close">Cancel</Button>
               <Button type="submit" isPending={isPending} variant="primary">
                 Save changes
               </Button>

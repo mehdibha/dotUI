@@ -18,11 +18,11 @@ export default function Demo() {
   return (
     <RangeCalendarRoot aria-label="Trip dates">
       <CalendarHeader>
-        <Button slot="previous" variant="outline" shape="circle" size="sm">
+        <Button slot="previous" shape="circle" size="sm">
           <ChevronLeftIcon />
         </Button>
         <Heading className="text-sm" />
-        <Button slot="next" variant="outline" shape="circle" size="sm">
+        <Button slot="next" shape="circle" size="sm">
           <ChevronRightIcon />
         </Button>
       </CalendarHeader>

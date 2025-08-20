@@ -12,9 +12,7 @@ export default function Demo() {
   );
   return (
     <MenuRoot>
-      <Button variant="outline" size="sm">
-        Align
-      </Button>
+      <Button size="sm">Align</Button>
       <Menu
         selectionMode="single"
         selectedKeys={selected}

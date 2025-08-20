@@ -353,6 +353,7 @@ const fakeData: StyleFormData = {
         name: token.name,
         value: token.defaultValue,
       })),
+      accentLevel: 1,
     },
     radius: 1,
     spacing: 0.25,
