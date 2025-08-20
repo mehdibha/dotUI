@@ -50,7 +50,9 @@ export function ActiveStyleSelector(
       </Button>
       <HelpText />
       <Popover>
-        <ListBox isLoading={featuredStylesQuery.isPending || myStylesQuery.isPending}>
+        <ListBox
+          isLoading={featuredStylesQuery.isPending || myStylesQuery.isPending}
+        >
           {myStylesQuery.isSuccess && myStylesQuery.data?.length ? (
             <ListBoxSection title="My styles">
               {myStylesQuery.data?.map((style) => (

@@ -13,5 +13,3 @@ export function useMyStyles() {
     retry: false,
   });
 }
-
-
