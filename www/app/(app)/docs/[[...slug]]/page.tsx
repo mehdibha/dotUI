@@ -128,5 +128,8 @@ export async function generateMetadata({
 }
 
 export function generateStaticParams() {
-  return docsSource.generateParams();
+  const params = docsSource.generateParams();
+  return params.map((param) => ({
+    slug: Array.isArray(param.slug) ? param.slug : [param.slug],
+  }));
 }

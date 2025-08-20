@@ -25,5 +25,10 @@ export async function GET(
 }
 
 export function generateStaticParams() {
-  return docsSource.generateParams();
+  const params = docsSource.generateParams();
+  // Ensure we return the correct format for Next.js [[...slug]] catch-all route
+  // The slug should be an array of strings
+  return params.map((param) => ({
+    slug: Array.isArray(param.slug) ? param.slug : [param.slug],
+  }));
 }

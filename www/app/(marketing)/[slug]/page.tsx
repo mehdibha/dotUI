@@ -16,10 +16,8 @@ export const dynamicParams = false;
 
 export default async function Page({
   params,
-}: {
-  params: Promise<{ slug: string[] }>;
-}) {
-  const page = marketingSource.getPage((await params).slug);
+}: PageProps<"/mar">) {
+  const page = marketingSource.getPage([(await params).slug]);
   if (!page) notFound();
 
   const { body: MDXContent, toc, lastModified } = await page.data.load();
@@ -75,9 +73,9 @@ export default async function Page({
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string[] }>;
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const page = marketingSource.getPage((await params).slug);
+  const page = marketingSource.getPage([(await params).slug]);
   if (!page) notFound();
 
   return {
@@ -105,5 +103,8 @@ export async function generateMetadata({
 }
 
 export function generateStaticParams() {
-  return marketingSource.generateParams();
+  const params = marketingSource.generateParams();
+  return params.map((param) => ({
+    slug: Array.isArray(param.slug) ? param.slug[0] : param.slug,
+  }));
 }
