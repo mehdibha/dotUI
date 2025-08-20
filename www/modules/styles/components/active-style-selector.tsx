@@ -17,6 +17,7 @@ import type { SelectRootProps } from "@dotui/ui/components/select";
 
 import { useActiveStyle } from "@/modules/styles/hooks/use-active-style";
 import { useFeaturedStyles } from "@/modules/styles/hooks/use-featured-styles";
+import { useMyStyles } from "@/modules/styles/hooks/use-my-styles";
 import { useSetActiveStyle } from "../hooks/use-set-active-style";
 
 export function ActiveStyleSelector(
@@ -26,6 +27,7 @@ export function ActiveStyleSelector(
 ) {
   const activeStyleQuery = useActiveStyle();
   const featuredStylesQuery = useFeaturedStyles();
+  const myStylesQuery = useMyStyles();
   const updateStyleMutation = useSetActiveStyle();
 
   return (
@@ -48,7 +50,16 @@ export function ActiveStyleSelector(
       </Button>
       <HelpText />
       <Popover>
-        <ListBox isLoading={featuredStylesQuery.isPending}>
+        <ListBox isLoading={featuredStylesQuery.isPending || myStylesQuery.isPending}>
+          {myStylesQuery.isSuccess && myStylesQuery.data?.length ? (
+            <ListBoxSection title="My styles">
+              {myStylesQuery.data?.map((style) => (
+                <SelectItem key={style.id} id={style.id}>
+                  {style.name}
+                </SelectItem>
+              ))}
+            </ListBoxSection>
+          ) : null}
           <ListBoxSection title="Featured">
             {featuredStylesQuery.isSuccess &&
               featuredStylesQuery.data?.map((style) => (
