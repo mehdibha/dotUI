@@ -2,16 +2,7 @@
 
 import React from "react";
 import { usePathname } from "next/navigation";
-import {
-  BoxesIcon,
-  BoxIcon,
-  ChevronDownIcon,
-  LayoutTemplateIcon,
-  PaletteIcon,
-  ShapesIcon,
-  SparklesIcon,
-  TypeIcon,
-} from "lucide-react";
+import { ChevronDownIcon } from "lucide-react";
 
 import { Button } from "@dotui/ui/components/button";
 import { Menu, MenuItem, MenuRoot } from "@dotui/ui/components/menu";
@@ -23,6 +14,7 @@ import {
   Tabs,
 } from "@dotui/ui/registry/components/tabs/motion";
 import type { TabsProps } from "@dotui/ui/components/tabs";
+import { editorPlugins } from "@/modules/styles/editor/registry/registry";
 
 export function StyleEditorNav({
   children,
@@ -34,10 +26,13 @@ export function StyleEditorNav({
   const username = segments[2] ?? "";
   const styleName = segments[3] ?? "";
 
-  const menuItems = React.useMemo(
-    () => getMenuItems(username, styleName),
-    [username, styleName],
-  );
+  const menuItems = React.useMemo(() => {
+    return editorPlugins.map((plugin) => ({
+      href: plugin.route(username, styleName),
+      label: plugin.label,
+      icon: plugin.icon,
+    }));
+  }, [username, styleName]);
 
   const selectedTab = menuItems.find((item) => item.href === pathname);
 
@@ -91,35 +86,4 @@ export function StyleEditorNav({
   );
 }
 
-const getMenuItems = (username: string, styleName: string) => [
-  {
-    href: `/styles/${username}/${styleName}`,
-    label: "Colors",
-    icon: <PaletteIcon />,
-  },
-  {
-    href: `/styles/${username}/${styleName}/layout`,
-    label: "Layout",
-    icon: <LayoutTemplateIcon />,
-  },
-  {
-    href: `/styles/${username}/${styleName}/typography`,
-    label: "Typography",
-    icon: <TypeIcon />,
-  },
-  {
-    href: `/styles/${username}/${styleName}/components`,
-    label: "Components",
-    icon: <BoxIcon />,
-  },
-  {
-    href: `/styles/${username}/${styleName}/effects`,
-    label: "Effects",
-    icon: <SparklesIcon />,
-  },
-  {
-    href: `/styles/${username}/${styleName}/icons`,
-    label: "Icons",
-    icon: <ShapesIcon />,
-  },
-];
+// Menu items are now provided via the editor registry
