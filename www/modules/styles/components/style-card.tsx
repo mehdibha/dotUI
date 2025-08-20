@@ -100,7 +100,7 @@ export function StyleCard({
             >
               <iframe
                 onLoad={() => setLoading(false)}
-                src={`/block-view/${style.user.username}/${style.name}/blocks-showcase`}
+                src={`/view/${style.user.username}/${style.name}/blocks-showcase`}
                 className={cn(
                   "h-[1200px] min-w-[1400px] scale-50",
                   isLoading && "opacity-0",

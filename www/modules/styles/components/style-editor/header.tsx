@@ -208,7 +208,7 @@ const Preview = () => {
   return (
     <Skeleton show={isLoading}>
       <iframe
-        src={`/block-view/${username}/${styleName}/login?mode=true&live=true`}
+        src={`/view/${username}/${styleName}/login?mode=true&live=true`}
         onLoad={() => setLoading(false)}
         className={cn(
           "size-full h-[90vh] rounded-t-md",

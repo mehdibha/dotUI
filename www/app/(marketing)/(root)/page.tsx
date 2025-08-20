@@ -31,10 +31,10 @@ export default async function HomePage() {
     <div>
       {/* Hero section */}
       <div className="container">
-        <section className="max-w-3xl pb-20 pt-10 sm:pt-14">
+        <section className="max-w-3xl pb-20 pt-0 sm:pt-14">
           <Announcement />
           <h1 className="xs:text-3xl text-balance text-2xl tracking-tighter max-lg:font-medium md:text-4xl lg:text-5xl">
-            Quickly build your component library with a{" "}
+            Quickly build your design system with a{" "}
             <span className="font-bold italic">unique</span> look.
           </h1>
           <p className="text-balace text-fg-muted mt-2 text-lg">
