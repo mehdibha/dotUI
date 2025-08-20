@@ -1,5 +1,6 @@
 import { findNeighbour } from "fumadocs-core/server";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import type { Route } from "next";
 
 import { Button } from "@dotui/ui/components/button";
 import { Tooltip } from "@dotui/ui/components/tooltip";
@@ -27,7 +28,7 @@ export const DocsPager = ({
           delay={0}
         >
           <Button
-            href={previous.url}
+            href={previous.url as Route}
             aria-label={
               variant === "tooltip" ? `Go to previous page` : undefined
             }
@@ -45,7 +46,7 @@ export const DocsPager = ({
       {next ? (
         <Tooltip content={next.name} isDisabled={variant === "label"} delay={0}>
           <Button
-            href={next.url}
+            href={next.url as Route}
             aria-label={variant === "tooltip" ? `Go to next page` : undefined}
             suffix={variant === "label" ? <ChevronRightIcon /> : undefined}
             shape={variant === "tooltip" ? "square" : undefined}

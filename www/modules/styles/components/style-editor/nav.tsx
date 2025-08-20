@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   BoxesIcon,
@@ -91,35 +92,36 @@ export function StyleEditorNav({
   );
 }
 
-const getMenuItems = (username: string, styleName: string) => [
-  {
-    href: `/styles/${username}/${styleName}`,
-    label: "Colors",
-    icon: <PaletteIcon />,
-  },
-  {
-    href: `/styles/${username}/${styleName}/layout`,
-    label: "Layout",
-    icon: <LayoutTemplateIcon />,
-  },
-  {
-    href: `/styles/${username}/${styleName}/typography`,
-    label: "Typography",
-    icon: <TypeIcon />,
-  },
-  {
-    href: `/styles/${username}/${styleName}/components`,
-    label: "Components",
-    icon: <BoxIcon />,
-  },
-  {
-    href: `/styles/${username}/${styleName}/effects`,
-    label: "Effects",
-    icon: <SparklesIcon />,
-  },
-  {
-    href: `/styles/${username}/${styleName}/icons`,
-    label: "Icons",
-    icon: <ShapesIcon />,
-  },
-];
+const getMenuItems = (username: string, styleName: string) =>
+  [
+    {
+      href: `/styles/${username}/${styleName}`,
+      label: "Colors",
+      icon: <PaletteIcon />,
+    },
+    {
+      href: `/styles/${username}/${styleName}/layout`,
+      label: "Layout",
+      icon: <LayoutTemplateIcon />,
+    },
+    {
+      href: `/styles/${username}/${styleName}/typography`,
+      label: "Typography",
+      icon: <TypeIcon />,
+    },
+    {
+      href: `/styles/${username}/${styleName}/components`,
+      label: "Components",
+      icon: <BoxIcon />,
+    },
+    {
+      href: `/styles/${username}/${styleName}/effects`,
+      label: "Effects",
+      icon: <SparklesIcon />,
+    },
+    {
+      href: `/styles/${username}/${styleName}/icons`,
+      label: "Icons",
+      icon: <ShapesIcon />,
+    },
+  ] as const;

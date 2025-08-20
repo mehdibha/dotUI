@@ -19,9 +19,7 @@ export async function generateStaticParams() {
 
 export default async function BlocksPage({
   params,
-}: {
-  params: Promise<{ category: string }>;
-}) {
+}: PageProps<"/blocks/[category]">) {
   const { category } = await params;
 
   const blocks = registryBlocks.filter((block) =>

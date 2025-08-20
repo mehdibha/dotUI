@@ -1,4 +1,3 @@
-import React from "react";
 import NavLink from "next/link";
 import Link from "next/link";
 
@@ -53,7 +52,7 @@ const links = [
       },
     ],
   },
-];
+] as const;
 
 export const Footer = () => {
   return (

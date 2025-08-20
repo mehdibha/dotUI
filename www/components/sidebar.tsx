@@ -20,6 +20,7 @@ import {
 import { AnimatePresence, motion } from "motion/react";
 import type { PageTree } from "fumadocs-core/server";
 import type { Transition } from "motion/react";
+import type { Route } from "next";
 
 import { Avatar } from "@dotui/ui/components/avatar";
 import { Button } from "@dotui/ui/components/button";
@@ -133,28 +134,30 @@ export const Sidebar = ({
         containerClassName="mt-1"
       >
         <div className="flex flex-col gap-0.5">
-          {[
-            {
-              icon: <BookIcon />,
-              name: "Docs",
-              url: "/docs/installation",
-            },
-            {
-              icon: <BoxIcon />,
-              name: "Components",
-              url: "/docs/components/button",
-            },
-            {
-              icon: <BlocksIcon />,
-              name: "Blocks",
-              url: "/blocks",
-            },
-            {
-              icon: <PaletteIcon />,
-              name: "Styles",
-              url: "/styles",
-            },
-          ].map((item) => (
+          {(
+            [
+              {
+                icon: <BookIcon />,
+                name: "Docs",
+                url: "/docs/installation",
+              },
+              {
+                icon: <BoxIcon />,
+                name: "Components",
+                url: "/docs/components/button",
+              },
+              {
+                icon: <BlocksIcon />,
+                name: "Blocks",
+                url: "/blocks",
+              },
+              {
+                icon: <PaletteIcon />,
+                name: "Styles",
+                url: "/styles",
+              },
+            ] as const
+          ).map((item) => (
             <StyledTooltip
               key={item.url}
               content={item.name}
@@ -416,7 +419,7 @@ function PageNode({
   if (level === 1) {
     return (
       <StyledTooltip content={name} isDisabled={!isCollapsed}>
-        <SidebarButton href={url} onPress={onSelect}>
+        <SidebarButton href={url as Route} onPress={onSelect}>
           {icon}
           <span className="flex-1 text-left">{name}</span>
         </SidebarButton>
@@ -426,7 +429,7 @@ function PageNode({
 
   return (
     <Link
-      href={url}
+      href={url as Route}
       className={cn(
         "border-bg-bg-muted text-fg-muted hover:text-fg group block border-l py-1 pl-4 font-medium transition-colors",
         {

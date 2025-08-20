@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { AlignLeftIcon, ExternalLinkIcon } from "lucide-react";
-import type { Metadata } from "next";
+import type { Metadata, Route } from "next";
 
 import { Button } from "@dotui/ui/components/button";
 import { AdobeIcon, GitHubIcon } from "@dotui/ui/icons";
@@ -16,17 +16,11 @@ import { docsSource } from "@/modules/docs/lib/source";
 
 export const dynamicParams = false;
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ slug: string[] }>;
-}) {
+export default async function Page({ params }: PageProps<"/docs/[[...slug]]">) {
   const page = docsSource.getPage((await params).slug);
   if (!page) notFound();
 
   const { body: MDXContent, toc, lastModified } = await page.data.load();
-
-  console.log(lastModified);
 
   return (
     <div
@@ -48,7 +42,7 @@ export default async function Page({
             {page.data.links.map((link, index) => (
               <Button
                 key={index}
-                href={link.href}
+                href={link.href as Route}
                 prefix={getIcon(link.href)}
                 suffix={<ExternalLinkIcon />}
                 size="sm"
@@ -91,9 +85,7 @@ const getIcon = (url: string) => {
 
 export async function generateMetadata({
   params,
-}: {
-  params: Promise<{ slug: string[] }>;
-}): Promise<Metadata> {
+}: PageProps<"/docs/[[...slug]]">): Promise<Metadata> {
   const page = docsSource.getPage((await params).slug);
   if (!page) notFound();
 
@@ -134,5 +126,8 @@ export async function generateMetadata({
 }
 
 export function generateStaticParams() {
-  return docsSource.generateParams();
+  const params = docsSource.generateParams();
+  return params.map((param) => ({
+    slug: Array.isArray(param.slug) ? param.slug : [param.slug],
+  }));
 }

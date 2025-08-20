@@ -3,8 +3,8 @@
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { MenuIcon, PanelLeftCloseIcon, SearchIcon } from "lucide-react";
 import type { PageTree } from "fumadocs-core/server";
+import type { Route } from "next";
 import type { LinkProps } from "next/link";
 
 import { Button } from "@dotui/ui/components/button";
@@ -54,13 +54,15 @@ export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
             <div className="space-y-2">
               <div className="text-fg-muted text-lg font-medium">Menu</div>
               <div className="flex flex-col gap-3">
-                {[
-                  { href: "/", label: "Home" },
-                  { href: "/docs", label: "Docs" },
-                  { href: "/docs/components/button", label: "Components" },
-                  { href: "/blocks", label: "Blocks" },
-                  { href: "/styles", label: "Styles" },
-                ].map((item) => (
+                {(
+                  [
+                    { href: "/", label: "Home" },
+                    { href: "/docs", label: "Docs" },
+                    { href: "/docs/components/button", label: "Components" },
+                    { href: "/blocks", label: "Blocks" },
+                    { href: "/styles", label: "Styles" },
+                  ] as const
+                ).map((item) => (
                   <MobileLink
                     key={item.href}
                     href={item.href}
@@ -84,7 +86,7 @@ export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
                           return (
                             <MobileLink
                               key={itemIndex}
-                              href={item.url}
+                              href={item.url as Route}
                               onOpenChange={close}
                             >
                               {item.name}
@@ -106,13 +108,13 @@ export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
   );
 };
 
-function MobileLink({
+function MobileLink<T extends string>({
   href,
   onOpenChange,
   className,
   children,
   ...props
-}: LinkProps & {
+}: LinkProps<T> & {
   onOpenChange?: (open: boolean) => void;
   children: React.ReactNode;
   className?: string;
@@ -124,7 +126,7 @@ function MobileLink({
       onClick={() => {
         const hrefString =
           typeof href === "string" ? href : href.pathname || "";
-        router.push(hrefString);
+        router.push(hrefString as Route);
         onOpenChange?.(false);
       }}
       className={cn("text-2xl font-medium", className)}

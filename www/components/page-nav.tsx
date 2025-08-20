@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import type { Route } from "next";
 
 import { cn } from "@dotui/ui/lib/utils";
 import {
@@ -28,7 +29,7 @@ export function PageNav({
           <Tab
             key={tab.href}
             id={tab.href}
-            href={tab.href}
+            href={tab.href as Route}
             className={cn(
               "flex h-7 items-center gap-2 rounded-full px-4 text-sm",
               fade && "animate-in fade-in",

@@ -2,6 +2,7 @@
 
 import React from "react";
 import { usePathname } from "next/navigation";
+import type { Route } from "next";
 
 import { blocksCategories } from "@dotui/registry-definition/registry-blocks";
 import {
@@ -37,7 +38,7 @@ export function BlocksNav({
             <Tab
               key={tab.href}
               id={tab.href}
-              href={tab.href}
+              href={tab.href as Route}
               className="flex h-7 items-center gap-2 rounded-full px-4 pb-5 pt-6 text-sm"
             >
               {tab.label}
