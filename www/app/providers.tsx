@@ -20,7 +20,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   return (
     <JotaiProvider>
-      <RouterProvider navigate={router.push}>
+      <RouterProvider navigate={(path, options) => router.push(path as any, options)}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
