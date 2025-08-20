@@ -22,8 +22,6 @@ export default async function Page({ params }: PageProps<"/docs/[[...slug]]">) {
 
   const { body: MDXContent, toc, lastModified } = await page.data.load();
 
-  console.log(lastModified);
-
   return (
     <div
       className={cn(
