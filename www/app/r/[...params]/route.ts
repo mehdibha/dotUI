@@ -19,7 +19,7 @@ const registryBasePath = path.resolve(
 
 export async function GET(
   _: NextRequest,
-  { params }: { params: Promise<{ params: string[] }> },
+  { params }: RouteContext<"/r/[...params]">,
 ) {
   try {
     const { params: routeParams } = await params;

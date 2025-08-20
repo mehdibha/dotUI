@@ -14,9 +14,7 @@ import { marketingSource } from "@/modules/docs/lib/source";
 
 export const dynamicParams = false;
 
-export default async function Page({
-  params,
-}: PageProps<"/mar">) {
+export default async function Page({ params }: PageProps<"/[slug]">) {
   const page = marketingSource.getPage([(await params).slug]);
   if (!page) notFound();
 
