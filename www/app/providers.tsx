@@ -13,8 +13,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   return (
     <JotaiProvider>
-      <MenuItem href="/styles/mehdibha/minimalist/typography" />
-      <Link href="/styles/mehdibha/minimalist/typography" />
       <RouterProvider navigate={router.push}>
         <ThemeProvider
           attribute="class"
