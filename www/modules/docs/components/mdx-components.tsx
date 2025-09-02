@@ -21,7 +21,7 @@ import { Tab, Tabs } from "./tabs";
 import type { ChoicesProps } from "./choices";
 import type { ComponentPreviewProps } from "./component-preview";
 import type { PaletteProps } from "./palette";
-import type { TabsProps } from "./tabs";
+import { ComponentsList } from "./components-list";
 
 export const mdxComponents: MDXComponents = {
   ...defaultMdxComponents,
@@ -164,6 +164,7 @@ export const mdxComponents: MDXComponents = {
   ),
   BadgePalette: BadgePalette,
   Link,
+  ComponentsList,
 };
 
 function createHeading(level: number, className?: string) {
