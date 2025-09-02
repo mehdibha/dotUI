@@ -56,16 +56,16 @@ const links = [
 
 export const Footer = () => {
   return (
-    <div className="border-t">
-      <div className="container py-12">
-        <div className="flex flex-col items-start justify-between gap-10 lg:flex-row">
+    <div className="@container border-t">
+      <div className="container space-y-10 py-6 md:py-12">
+        <div className="@3xl:flex-row flex flex-col items-start justify-between gap-10">
           <div className="space-y-1">
             <Logo type="span" />
             <p className="text-fg-muted text-base">
               Bringing singularity to the web.
             </p>
           </div>
-          <div className="flex flex-wrap gap-6 text-sm sm:gap-16">
+          <div className="@2xl:gap-10 flex flex-wrap gap-6 text-sm">
             {links.map((group, index) => (
               <div key={index}>
                 <h2 className="font-bold">{group.label}</h2>
@@ -88,26 +88,24 @@ export const Footer = () => {
             ))}
           </div>
         </div>
-        <div className="px-0 pt-6">
-          <p className="text-fg-muted text-sm">
-            Built by{" "}
-            <Link
-              href="https://github.com/mehdibha"
-              target="_blank"
-              className="underline"
-            >
-              mehdibha
-            </Link>
-            . The source code is available on{" "}
-            <Link
-              href="https://github.com/mehdibha"
-              target="_blank"
-              className="underline"
-            >
-              GitHub.
-            </Link>
-          </p>
-        </div>
+        <p className="text-fg-muted text-sm">
+          Built by{" "}
+          <Link
+            href="https://github.com/mehdibha"
+            target="_blank"
+            className="underline"
+          >
+            mehdibha
+          </Link>
+          . The source code is available on{" "}
+          <Link
+            href="https://github.com/mehdibha"
+            target="_blank"
+            className="underline"
+          >
+            GitHub.
+          </Link>
+        </p>
       </div>
     </div>
   );

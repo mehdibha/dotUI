@@ -31,7 +31,7 @@ export default async function Page({ params }: PageProps<"/docs/[[...slug]]">) {
           "grid grid-cols-1 gap-10 xl:max-w-5xl xl:grid-cols-[minmax(0,1fr)_minmax(180px,220px)]",
       )}
     >
-      <div className="pb-24 pt-6 md:pt-10 lg:pt-20">
+      <div className="flex min-h-[calc(100svh-(var(--spacing)*14))] flex-col py-6 md:py-10 lg:min-h-screen lg:py-20">
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-bold lg:text-4xl">{page.data.title}</h1>
           <DocsPager variant="tooltip" currentPathname={page.url} />
@@ -54,7 +54,7 @@ export default async function Page({ params }: PageProps<"/docs/[[...slug]]">) {
             ))}
           </div>
         )}
-        <div className="mt-10 text-sm md:text-base">
+        <div className="mt-10 flex-1 text-sm md:text-base">
           <MDXContent components={mdxComponents} />
         </div>
         <div className="mt-20 space-y-4">

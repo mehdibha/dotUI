@@ -31,7 +31,7 @@ export default async function HomePage() {
     <div>
       {/* Hero section */}
       <div className="container">
-        <section className="max-w-3xl pb-20 pt-0 sm:pt-14">
+        <section className="mt-10 max-w-3xl sm:mt-14">
           <Announcement />
           <h1 className="xs:text-3xl text-balance text-2xl tracking-tighter max-lg:font-medium md:text-4xl lg:text-5xl">
             Quickly build your design system with a{" "}
@@ -51,8 +51,8 @@ export default async function HomePage() {
           </div>
         </section>
       </div>
-      {/* Components overview */}
-      <section className="container">
+      {/* Styles overview */}
+      <section className="container mt-10 sm:mt-20">
         {feturedStyles.length > 0 ? (
           <StylesShowcase styles={feturedStyles} />
         ) : (
