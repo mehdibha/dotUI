@@ -15,13 +15,13 @@ import { BadgePalette } from "./badge-palette";
 import { Choice, Choices } from "./choices";
 import { Pre } from "./code-block-mdx";
 import { ComponentPreview } from "./component-preview";
+import { ComponentsList } from "./components-list";
 import { InstallTab, InstallTabs } from "./install-tabs";
 import { Palette } from "./palette";
 import { Tab, Tabs } from "./tabs";
 import type { ChoicesProps } from "./choices";
 import type { ComponentPreviewProps } from "./component-preview";
 import type { PaletteProps } from "./palette";
-import { ComponentsList } from "./components-list";
 
 export const mdxComponents: MDXComponents = {
   ...defaultMdxComponents,

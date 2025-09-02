@@ -8,8 +8,6 @@ export function ComponentsList() {
     (page) => page.$id === "components",
   );
 
-
-
   if (components?.type !== "folder") {
     return;
   }
