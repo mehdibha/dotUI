@@ -45,13 +45,12 @@ export function Header({
       >
         <div className="flex items-center gap-3 md:gap-6">
           <MobileNav items={items} />
-          {/* <Logo className="md:hidden" /> */}
           <Logo className="max-md:hidden" />
           <div className="flex items-center gap-3 text-sm max-md:hidden">
             {(
               [
                 { label: "Docs", href: "/docs" },
-                { label: "Components", href: "/docs/components/button" },
+                { label: "Components", href: "/docs/components" },
                 { label: "Blocks", href: "/blocks" },
                 { label: "Styles", href: "/styles" },
               ] as const
