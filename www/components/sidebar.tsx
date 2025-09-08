@@ -144,7 +144,7 @@ export const Sidebar = ({
               {
                 icon: <BoxIcon />,
                 name: "Components",
-                url: "/docs/components/button",
+                url: "/docs/components",
               },
               {
                 icon: <BlocksIcon />,
