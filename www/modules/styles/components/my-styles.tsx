@@ -1,25 +1,19 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import { useRouter } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
 
 import { useMounted } from "@/hooks/use-mounted";
-import { useTRPC } from "@/lib/trpc/react";
 import { authClient } from "@/modules/auth/lib/client";
 import { StylesList } from "@/modules/styles/components/styles-list";
+import { useUserStyles } from "@/modules/styles/hooks/use-user-styles";
 
 export function MyStyles() {
   const router = useRouter();
-  const trpc = useTRPC();
   const isMounted = useMounted();
   const { data: session, isPending } = authClient.useSession();
 
-  const { data: styles, isLoading } = useQuery({
-    ...trpc.style.getMyStyles.queryOptions({}),
-    enabled: !!session?.user,
-    retry: false,
-  });
+  const { data: styles, isLoading } = useUserStyles();
 
   React.useEffect(() => {
     if (isMounted && !isPending && !session?.user) {
