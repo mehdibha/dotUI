@@ -85,6 +85,18 @@ export const registryUi: Registry["items"] = [
     ],
   },
   {
+    name: "button:outline",
+    type: "registry:ui",
+    registryDependencies: ["loader", "focus-styles"],
+    files: [
+      {
+        type: "registry:ui",
+        path: "components/button/outline.tsx",
+        target: "ui/button.tsx",
+      },
+    ],
+  },
+  {
     name: "button:brutalist",
     type: "registry:ui",
     registryDependencies: ["loader", "focus-styles"],
