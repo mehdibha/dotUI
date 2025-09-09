@@ -10,6 +10,11 @@ export const base: RegistryItem = {
     "tailwindcss-react-aria-components",
     "tw-animate-css",
   ],
+  css: {
+    "@plugin tailwindcss-react-aria-components": {},
+    "@plugin tailwindcss-auto-contrast": {},
+  },
+
   registryDependencies: ["utils", "focus-styles", "theme"],
   files: [],
 };
