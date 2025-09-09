@@ -49,7 +49,7 @@
     "turbo": "^2.5.1",
     "typescript": "catalog:",
     "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^2.0.5"
+    "vitest": "^3.2.4"
   },
   "prettier": "@dotui/prettier-config"
 }
