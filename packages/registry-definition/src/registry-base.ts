@@ -9,6 +9,7 @@ export const base: RegistryItem = {
     "react-aria-components@1.10.1",
     "tailwindcss-react-aria-components",
     "tw-animate-css",
+    "tailwindcss-autocontrast",
   ],
   css: {
     "@plugin tailwindcss-react-aria-components": {},
