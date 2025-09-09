@@ -1,4 +1,4 @@
-import type { Registry } from "shadcn/registry";
+import type { Registry } from "shadcn/schema";
 
 export const blocksCategories: { name: string; slug: string }[] = [
   { name: "Featured", slug: "featured" },

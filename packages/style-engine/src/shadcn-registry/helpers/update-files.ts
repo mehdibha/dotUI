@@ -1,6 +1,6 @@
 import { promises as fs } from "fs";
 import path from "path";
-import type { RegistryItem } from "shadcn/registry";
+import type { RegistryItem } from "shadcn/schema";
 
 import { transform } from "../transformers";
 import { transformIcons } from "../transformers/transform-icons";

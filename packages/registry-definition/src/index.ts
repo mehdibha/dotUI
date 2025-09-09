@@ -1,4 +1,4 @@
-import type { Registry } from "shadcn/registry";
+import type { Registry } from "shadcn/schema";
 
 import { base } from "./registry-base";
 import { hooks } from "./registry-hooks";
