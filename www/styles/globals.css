@@ -5,7 +5,7 @@
 @import "tw-animate-css";
 
 @plugin "tailwindcss-react-aria-components";
-@plugin "tailwindcss-auto-contrast";
+@plugin "tailwindcss-autocontrast";
 @plugin "@tailwindcss/typography";
 
 @import "./docs.css";
