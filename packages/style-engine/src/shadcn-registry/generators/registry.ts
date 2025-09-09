@@ -1,8 +1,8 @@
 import type { Registry } from "shadcn/schema";
 
-import { base } from "@dotui/registry-definition/registry-base";
-import { iconLibraries } from "@dotui/registry-definition/registry-icons";
-
+import { generateRegistryAll } from "./all";
+import { generateRegistryBase } from "./base";
+import { generateRegistryTheme } from "./theme";
 import type { Style } from "../../types";
 
 export function generateRegistry(options: {
@@ -13,6 +13,10 @@ export function generateRegistry(options: {
   return {
     name: "dotui",
     homepage: "https://dotui.org/",
-    items: [],
+    items: [
+      generateRegistryBase(options),
+      generateRegistryTheme(options),
+      generateRegistryAll(options),
+    ],
   };
 }
