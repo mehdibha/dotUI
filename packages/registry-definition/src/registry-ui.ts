@@ -131,6 +131,18 @@ export const registryUi: Registry["items"] = [
     ],
   },
   {
+    name: "card:basic",
+    type: "registry:ui",
+    files: [
+      {
+        type: "registry:ui",
+        path: "components/card/basic.tsx",
+        target: "ui/card.tsx",
+      },
+    ],
+    registryDependencies: ["button", "text", "focus-styles"],
+  },
+  {
     name: "calendar:basic",
     type: "registry:ui",
     registryDependencies: ["button", "text", "focus-styles"],

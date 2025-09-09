@@ -1,11 +1,8 @@
-// import type { SourceFile } from "ts-morph";
-
 import {
   iconLibraries,
   icons,
 } from "@dotui/registry-definition/registry-icons";
 
-import type { IconLibrary } from "../../types";
 import type { Transformer } from "./index";
 
 export const transformIcons: Transformer = ({ sourceFile, style }) => {
@@ -21,32 +18,56 @@ export const transformIcons: Transformer = ({ sourceFile, style }) => {
 
   const importDeclarations = sourceFile.getImportDeclarations();
 
-  for (const importDeclaration of importDeclarations) {
-    const moduleSpecifier = importDeclaration.getModuleSpecifier();
-    const moduleSpecifierValue = moduleSpecifier.getText().slice(1, -1);
-
-    const isIconImport = Object.values(iconLibraries).some(
-      (lib) => lib.package === moduleSpecifierValue,
+  function isKnownIconLibrary(modulePath: string) {
+    return iconLibraries.some(
+      (lib) => lib.package === modulePath || lib.import === modulePath,
     );
+  }
 
-    if (isIconImport) {
-      moduleSpecifier.replaceWithText(`"${targetLibraryConfig.package}"`);
+  function findLucideNameFromAny(importedName: string): string {
+    // If it's already a lucide name, it will exist as a key
+    if (Object.prototype.hasOwnProperty.call(icons, importedName))
+      return importedName;
+    // Otherwise, reverse-lookup from other libraries (e.g., remix)
+    for (const [lucideName, mapping] of Object.entries(icons)) {
+      if (Object.values(mapping).includes(importedName)) return lucideName;
+    }
+    return importedName;
+  }
 
-      const namedImports = importDeclaration.getNamedImports();
-      for (const namedImport of namedImports) {
-        const importName = namedImport.getName();
-        const targetIconName = icons[importName as IconLibrary];
-        if (targetIconName) {
-          const targetIcon = targetIconName[targetIconLibrary];
-          if (targetIcon) {
-            namedImport.setName(targetIcon);
-          }
-        }
+  for (const importDeclaration of importDeclarations) {
+    const moduleSpecifierText = importDeclaration.getModuleSpecifierValue();
+    const isAliasIcons = moduleSpecifierText === "@/icons";
+    const isDirectIconLib = isKnownIconLibrary(moduleSpecifierText);
+
+    if (!isAliasIcons && !isDirectIconLib) continue;
+
+    // Point to the selected icon library package
+    importDeclaration.setModuleSpecifier(targetLibraryConfig.package);
+
+    // Rewrite each named import to the target symbol, but alias back
+    for (const namedImport of importDeclaration.getNamedImports()) {
+      const aliasNode = namedImport.getAliasNode();
+      const originalLocalName = aliasNode
+        ? aliasNode.getText()
+        : namedImport.getName();
+      const lucideName = findLucideNameFromAny(originalLocalName);
+      const mapping = (icons as Record<string, Record<string, string>>)[
+        lucideName
+      ];
+      if (!mapping) continue;
+
+      const targetSymbol = mapping[targetIconLibrary];
+      if (!targetSymbol) continue;
+
+      namedImport.setName(targetSymbol);
+
+      // Preserve the local symbol used in the file to avoid changing usages
+      if (originalLocalName !== targetSymbol) {
+        namedImport.setAlias(originalLocalName);
       }
     }
   }
 
-  return new Promise((resolve) => {
-    resolve(sourceFile);
-  });
+  return Promise.resolve(sourceFile);
 };

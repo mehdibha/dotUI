@@ -14,7 +14,7 @@ export const registryBlocks: Registry["items"] = [
     name: "login",
     description: "A simple login form.",
     type: "registry:block",
-    registryDependencies: ["button", "text-field"],
+    registryDependencies: ["button", "text-field", "card"],
     files: [
       {
         path: "blocks/auth/login/components/login-form.tsx",
