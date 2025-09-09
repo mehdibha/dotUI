@@ -12,4 +12,4 @@
 
 "area: registry":
   - changed-files:
-      - any-glob-to-any-file: ["packages/ui/src/registry/**"]
+      - any-glob-to-any-file: ["packages/ui/src/registry/**", "packages/registry-definition/**"]
