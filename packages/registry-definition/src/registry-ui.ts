@@ -1,4 +1,4 @@
-import type { Registry } from "shadcn/registry";
+import type { Registry } from "shadcn/schema";
 
 export const registryUi: Registry["items"] = [
   {
@@ -85,6 +85,18 @@ export const registryUi: Registry["items"] = [
     ],
   },
   {
+    name: "button:outline",
+    type: "registry:ui",
+    registryDependencies: ["loader", "focus-styles"],
+    files: [
+      {
+        type: "registry:ui",
+        path: "components/button/outline.tsx",
+        target: "ui/button.tsx",
+      },
+    ],
+  },
+  {
     name: "button:brutalist",
     type: "registry:ui",
     registryDependencies: ["loader", "focus-styles"],
@@ -117,6 +129,18 @@ export const registryUi: Registry["items"] = [
         target: "hooks/use-ripple.ts",
       },
     ],
+  },
+  {
+    name: "card:basic",
+    type: "registry:ui",
+    files: [
+      {
+        type: "registry:ui",
+        path: "components/card/basic.tsx",
+        target: "ui/card.tsx",
+      },
+    ],
+    registryDependencies: ["button", "text", "focus-styles"],
   },
   {
     name: "calendar:basic",

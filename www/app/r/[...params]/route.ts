@@ -10,11 +10,7 @@ import { caller } from "@/lib/trpc/server";
 
 const registryBasePath = path.resolve(
   process.cwd(),
-  "..",
-  "packages",
-  "ui",
-  "src",
-  "registry",
+  "../packages/ui/src/registry",
 );
 
 export async function GET(
@@ -24,21 +20,40 @@ export async function GET(
   try {
     const { params: routeParams } = await params;
 
-    if (!routeParams || routeParams.length !== 2) {
-      // console.error(routeParams);
+    if (
+      !routeParams ||
+      (routeParams.length !== 2 && routeParams.length !== 3)
+    ) {
       return NextResponse.json(
         {
-          error: "Invalid URL format. Expected /r/{styleSlug}/{registryItem}",
+          error:
+            "Invalid URL format. Expected /r/{username}/{style}/{name} or /r/{style}/{name}",
         },
         { status: 400 },
       );
     }
 
-    const [styleSlug, registryItemName] = routeParams as [string, string];
+    let style;
+    let registryItemName;
 
-    const style = await caller.style.byPublicSlug({
-      slug: styleSlug,
-    });
+    if (routeParams.length === 3) {
+      const [username, styleName, name] = routeParams as [
+        string,
+        string,
+        string,
+      ];
+      registryItemName = name;
+      style = await caller.style.getByNameAndUsername({
+        name: styleName,
+        username: username,
+      });
+    } else {
+      const [styleName, name] = routeParams as [string, string];
+      registryItemName = name;
+      style = await caller.style.byPublicSlug({
+        slug: styleName,
+      });
+    }
 
     if (!style) {
       return NextResponse.json({ error: "Style not found" }, { status: 404 });
@@ -54,11 +69,17 @@ export async function GET(
           : "https://dotui.com/r",
     });
 
+    if (!registryItem) {
+      return NextResponse.json(
+        { error: "Registry item not found" },
+        { status: 404 },
+      );
+    }
+
     const response = NextResponse.json(registryItem);
 
     return response;
   } catch (error) {
-    console.error("Registry API error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 },

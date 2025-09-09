@@ -16,7 +16,7 @@ catalog:
   "@trpc/tanstack-react-query": ^11.2.0
   "@trpc/server": ^11.2.0
   tsx: ^4.19.2
-  shadcn: ^2.7.0
+  shadcn: ^3.2.1
   "@types/node": ^22.13.10
 
 catalogs:

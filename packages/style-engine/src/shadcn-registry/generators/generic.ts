@@ -1,5 +1,5 @@
-import { registryItemSchema } from "shadcn/registry";
-import type { RegistryItem } from "shadcn/registry";
+import { registryItemSchema } from "shadcn/schema";
+import type { RegistryItem } from "shadcn/schema";
 
 import { registry } from "@dotui/registry-definition";
 

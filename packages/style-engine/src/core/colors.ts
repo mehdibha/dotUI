@@ -98,10 +98,7 @@ export const createModeCssVars = (
 
   const cssVars = colorScales
     .flatMap((colorScale) =>
-      colorScale.values.flatMap((value) => [
-        [value.name, value.value] as const,
-        [`on-${value.name}`, getContrastColor(value.value)] as const,
-      ]),
+      colorScale.values.map((value) => [value.name, value.value] as const),
     )
     .reduce(
       (acc, [key, value]) => {

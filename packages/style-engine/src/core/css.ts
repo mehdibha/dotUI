@@ -20,8 +20,6 @@ export const createShadowsThemeVars = (
     if (shadows === "default") {
       return {};
     }
-
-    // const shadowPreset = registryShadows.find((s) => s.slug === shadows);
   }
   return {};
   // const { color, opacity, blurRadius, offsetX, offsetY, spread } = shadows;

@@ -1,4 +1,4 @@
-import type { RegistryItem } from "shadcn/registry";
+import type { RegistryItem } from "shadcn/schema";
 
 import type { Style } from "../../types";
 

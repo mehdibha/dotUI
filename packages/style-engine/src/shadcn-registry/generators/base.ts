@@ -1,4 +1,4 @@
-import type { RegistryItem } from "shadcn/registry";
+import type { RegistryItem } from "shadcn/schema";
 
 import { base } from "@dotui/registry-definition/registry-base";
 import { iconLibraries } from "@dotui/registry-definition/registry-icons";

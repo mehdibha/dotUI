@@ -1,4 +1,4 @@
-import type { RegistryItem } from "shadcn/registry";
+import type { RegistryItem } from "shadcn/schema";
 
 import type { Style } from "../../types";
 
@@ -17,5 +17,16 @@ export function generateRegistryTheme(options: {
     title: `${styleName} theme`,
     description: `Color theme for ${styleName} style`,
     ...style.theme,
+    css: {
+      "@layer base": {
+        "*": {
+          "border-color": "var(--color-border)",
+        },
+        body: {
+          "background-color": "var(--color-bg)",
+          color: "var(--color-fg)",
+        },
+      },
+    },
   };
 }
