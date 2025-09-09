@@ -66,7 +66,7 @@ export async function GET(
       baseUrl:
         env.NODE_ENV === "development"
           ? "http://localhost:3000/r"
-          : "https://dotui.com/r",
+          : "https://dotui.org/r",
     });
 
     if (!registryItem) {
