@@ -1,0 +1,22 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@3.1.1/schema.json",
+  "changelog": ["@changesets/changelog-github", { "repo": "mehdibha/dotui" }],
+  "commit": false,
+  "fixed": [],
+  "linked": [],
+  "access": "public",
+  "baseBranch": "main",
+  "updateInternalDependencies": "patch",
+  "ignore": [
+    "www",
+    "@dotui/eslint-config",
+    "@dotui/prettier-config",
+    "@dotui/ts-config",
+    "@dotui/api",
+    "@dotui/auth",
+    "@dotui/db",
+    "@dotui/registry-definition",
+    "@dotui/style-engine",
+    "@dotui/ui"
+  ]
+}

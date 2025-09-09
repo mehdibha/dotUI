@@ -1,6 +1,6 @@
 {
-  "name": "tailwindcss-auto-contrast",
-  "version": "0.0.1",
+  "name": "tailwindcss-autocontrast",
+  "version": "0.0.0",
   "description": "Tailwind CSS plugins for automatic contrast color generation",
   "main": "src/index.js",
   "types": "src/index.d.ts",
@@ -9,9 +9,15 @@
     "src"
   ],
   "sideEffects": false,
+  "scripts": {
+    "release": "changeset version",
+    "pub:beta": "npm publish --tag beta",
+    "pub:next": "npm publish --tag next",
+    "pub:release": "npm publish"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/adobe/react-spectrum"
+    "url": "https://github.com/mehdibha/dotui"
   },
   "dependencies": {
     "fast-glob": "^3.3.3"
@@ -20,13 +26,6 @@
     "@tailwindcss/postcss": "catalog:",
     "postcss": "catalog:",
     "tailwindcss": "catalog:"
-  },
-  "devDependencies": {
-    "@dotui/ts-config": "workspace:*",
-    "@tailwindcss/postcss": "catalog:",
-    "@types/node": "catalog:",
-    "postcss": "catalog:",
-    "typescript": "catalog:"
   },
   "publishConfig": {
     "access": "public"

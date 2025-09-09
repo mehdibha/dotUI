@@ -33,9 +33,14 @@
     "lint:ws": "pnpm dlx sherif@latest",
     "postinstall": "pnpm lint:ws",
     "typecheck": "turbo run typecheck",
-    "test": "turbo run test"
+    "test": "turbo run test",
+    "release": "changeset version",
+    "pub:beta": "pnpm --filter=tailwindcss-autocontrast pub:beta",
+    "pub:release": "pnpm --filter=tailwindcss-autocontrast pub:release"
   },
   "devDependencies": {
+    "@changesets/changelog-github": "^0.4.8",
+    "@changesets/cli": "^2.27.3",
     "@dotui/prettier-config": "workspace:*",
     "@turbo/gen": "^2.5.1",
     "@vitest/coverage-v8": "^2.0.5",
@@ -44,7 +49,7 @@
     "turbo": "^2.5.1",
     "typescript": "catalog:",
     "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^2.0.5"
+    "vitest": "^3.2.4"
   },
   "prettier": "@dotui/prettier-config"
 }

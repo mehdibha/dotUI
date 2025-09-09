@@ -61,7 +61,7 @@ function hasTailwindImport(rawCss) {
 }
 
 function log(level, message, detail) {
-  const prefix = "[tailwindcss-auto-contrast]";
+  const prefix = "[tailwindcss-autocontrast]";
   const body = detail ? `${message} ${detail}` : message;
   switch (level) {
     case "error":
@@ -461,7 +461,7 @@ const autoContrast = plugin.withOptions((options = {}) => {
     } catch (e) {
       log(
         "warn",
-        "An unexpected error occurred while running tailwindcss-auto-contrast. The plugin will continue silently.",
+        "An unexpected error occurred while running tailwindcss-autocontrast. The plugin will continue silently.",
         `\n- Error: ${e && e.message ? e.message : String(e)}`,
       );
       return;
