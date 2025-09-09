@@ -3,7 +3,7 @@
 import fs from "fs";
 import { exec } from "child_process";
 
-const pkgJsonPath = "cli/package.json";
+const pkgJsonPath = "packages/tailwindcss-autocontrast/package.json";
 try {
   const pkg = JSON.parse(fs.readFileSync(pkgJsonPath));
   exec("git rev-parse --short HEAD", (err, stdout) => {
