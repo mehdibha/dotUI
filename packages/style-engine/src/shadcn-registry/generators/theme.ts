@@ -6,7 +6,6 @@ export function generateRegistryTheme(options: {
   styleName: string;
   baseUrl: string;
   style: Style;
-  
 }): RegistryItem {
   const { styleName, style } = options;
 
