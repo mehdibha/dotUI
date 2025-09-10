@@ -26,7 +26,10 @@ import {
 
 import { ThemeModeSwitch } from "@/components/theme-mode-switch";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
-import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
+import {
+  useResolvedMode,
+  useStyleForm,
+} from "@/modules/styles/providers/style-editor-provider";
 import { ColorScale } from "./color-scale";
 import { ColorScaleEditor } from "./color-scale-editor";
 import { ColorTokens } from "./color-tokens";
@@ -47,7 +50,8 @@ const semanticColors = [
 type ModeConfig = "light-only" | "dark-only" | "light-dark";
 
 export function ColorsEditor() {
-  const { form, resolvedMode, isSuccess } = useStyleForm();
+  const { form, isSuccess } = useStyleForm();
+  const resolvedMode = useResolvedMode();
   const { setActiveMode } = usePreferences();
 
   return (
@@ -184,7 +188,8 @@ const ModeConfig = () => {
 };
 
 const ColorAdjustments = () => {
-  const { form, resolvedMode, isSuccess } = useStyleForm();
+  const { form, isSuccess } = useStyleForm();
+  const resolvedMode = useResolvedMode();
 
   return (
     <div className="mt-2 grid grid-cols-2 gap-3">

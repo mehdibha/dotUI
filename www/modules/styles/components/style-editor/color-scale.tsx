@@ -5,14 +5,20 @@ import { Button as AriaButton } from "react-aria-components";
 import { Skeleton } from "@dotui/ui/components/skeleton";
 import { Tooltip } from "@dotui/ui/components/tooltip";
 
-import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
+import {
+  useGeneratedTheme,
+  useResolvedMode,
+  useStyleForm,
+} from "@/modules/styles/providers/style-editor-provider";
 
 interface ColorScaleProps {
   scaleId: string;
 }
 
 export function ColorScale({ scaleId }: ColorScaleProps) {
-  const { form, isSuccess, resolvedMode, generatedTheme } = useStyleForm();
+  const { form, isSuccess } = useStyleForm();
+  const resolvedMode = useResolvedMode();
+  const generatedTheme = useGeneratedTheme();
 
   const scaleName = form.watch(
     `theme.colors.modes.${resolvedMode}.scales.${scaleId}.name`,

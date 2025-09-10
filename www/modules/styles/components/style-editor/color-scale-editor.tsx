@@ -50,10 +50,15 @@ import { Tooltip } from "@dotui/ui/components/tooltip";
 import { cn } from "@dotui/ui/lib/utils";
 
 import { AutoResizeTextField } from "@/components/auto-resize-input";
-import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
+import {
+  useGeneratedTheme,
+  useResolvedMode,
+  useStyleForm,
+} from "@/modules/styles/providers/style-editor-provider";
 
 export function ColorScaleEditor({ scaleId }: { scaleId: string }) {
-  const { form, resolvedMode } = useStyleForm();
+  const { form } = useStyleForm();
+  const resolvedMode = useResolvedMode();
 
   const name = form.watch(
     `theme.colors.modes.${resolvedMode}.scales.${scaleId}.name`,
@@ -92,7 +97,8 @@ interface ScaleNameEditorProps {
 }
 
 function ScaleNameEditor({ scaleId }: ScaleNameEditorProps) {
-  const { form, resolvedMode } = useStyleForm();
+  const { form } = useStyleForm();
+  const resolvedMode = useResolvedMode();
   const value = form.watch(
     `theme.colors.modes.${resolvedMode}.scales.${scaleId}.name`,
   );
@@ -223,7 +229,8 @@ interface ColorKeysEditorProps {
 }
 
 function ColorKeysEditor({ scaleId }: ColorKeysEditorProps) {
-  const { form, resolvedMode } = useStyleForm();
+  const { form } = useStyleForm();
+  const resolvedMode = useResolvedMode();
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
@@ -295,7 +302,8 @@ interface RatioSliderProps {
 }
 
 function RatioSlider({ scaleId }: RatioSliderProps) {
-  const { form, resolvedMode } = useStyleForm();
+  const { form } = useStyleForm();
+  const resolvedMode = useResolvedMode();
 
   const name = form.watch(
     `theme.colors.modes.${resolvedMode}.scales.${scaleId}.name`,
@@ -392,7 +400,9 @@ interface RatioTableProps {
 }
 
 function RatioTable({ scaleId }: RatioTableProps) {
-  const { form, resolvedMode, generatedTheme } = useStyleForm();
+  const { form } = useStyleForm();
+  const resolvedMode = useResolvedMode();
+  const generatedTheme = useGeneratedTheme();
 
   const generatedScale = generatedTheme.find(
     (scale) => scale.name === scaleId,

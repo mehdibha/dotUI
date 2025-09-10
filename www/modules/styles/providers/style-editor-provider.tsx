@@ -14,7 +14,7 @@ import { createColorScales } from "@dotui/style-engine/core";
 import { styleDefinitionSchema } from "@dotui/style-engine/schemas";
 import { toast } from "@dotui/ui/components/toast";
 
-import { useDebounce } from "@/hooks/use-debounce";
+import { useDebouncedCallback } from "@/hooks/use-debounced-callback";
 import { useTRPC, useTRPCClient } from "@/lib/trpc/react";
 import { useLiveStyleProducer } from "../atoms/live-style-atom";
 import { usePreferences } from "../atoms/preferences-atom";
@@ -37,8 +37,6 @@ interface StyleFormContextType {
   form: UseFormReturn<StyleFormData>;
   styleId: string;
   slug: string;
-  resolvedMode: "light" | "dark";
-  generatedTheme: ContrastColor[];
   isLoading: boolean;
   isError: boolean;
   isSuccess: boolean;
@@ -53,6 +51,20 @@ export function useStyleForm() {
     throw new Error("useStyleForm must be used within a StyleFormProvider");
   }
   return context;
+}
+
+const ResolvedModeContext = React.createContext<"light" | "dark" | null>(null);
+export function useResolvedMode() {
+  const value = React.useContext(ResolvedModeContext);
+  if (!value) throw new Error("useResolvedMode must be used within StyleEditorProvider");
+  return value;
+}
+
+const GeneratedThemeContext = React.createContext<ContrastColor[] | null>(null);
+export function useGeneratedTheme() {
+  const value = React.useContext(GeneratedThemeContext);
+  if (!value) throw new Error("useGeneratedTheme must be used within StyleEditorProvider");
+  return value;
 }
 
 export function StyleEditorProvider({
@@ -87,11 +99,12 @@ export function StyleEditorProvider({
     values: style ? { ...style, slug: style.name } : undefined,
   });
 
-  const watchedValues = useWatch({ control: form.control }) as
-    | StyleFormData
-    | undefined;
-
-  const debouncedWatchedValues = useDebounce(watchedValues, 30);
+  const publishLiveStyle = useDebouncedCallback(
+    (values: StyleFormData) => {
+      updateLiveStyle(values);
+    },
+    60,
+  );
   const watchedActiveModes = useWatch({
     name: "theme.colors.activeModes",
     control: form.control,
@@ -117,27 +130,34 @@ export function StyleEditorProvider({
   }, [currentModeDefinition]);
 
   React.useEffect(() => {
-    if (isSuccess && debouncedWatchedValues) {
-      updateLiveStyle(debouncedWatchedValues);
-    }
-  }, [debouncedWatchedValues, updateLiveStyle, isSuccess]);
+    if (!isSuccess) return;
+    const subscription = form.watch((values) => {
+      publishLiveStyle((values as StyleFormData) ?? form.getValues());
+    });
+    return () => subscription.unsubscribe();
+  }, [form, publishLiveStyle, isSuccess]);
+
+  const contextValue = React.useMemo(
+    () => ({
+      form,
+      slug: (style?.visibility === "public"
+        ? `${username}/${style?.name}`
+        : style?.name)!,
+      styleId: style?.id ?? "",
+      isLoading,
+      isError,
+      isSuccess,
+    }),
+    [form, style?.visibility, style?.name, style?.id, username, isLoading, isError, isSuccess],
+  );
 
   return (
-    <StyleFormContext.Provider
-      value={{
-        form,
-        slug: (style?.visibility === "public"
-          ? `${username}/${style?.name}`
-          : style?.name)!,
-        styleId: style?.id ?? "",
-        resolvedMode,
-        generatedTheme,
-        isLoading,
-        isError,
-        isSuccess,
-      }}
-    >
-      {children}
+    <StyleFormContext.Provider value={contextValue}>
+      <ResolvedModeContext.Provider value={resolvedMode}>
+        <GeneratedThemeContext.Provider value={generatedTheme}>
+          {children}
+        </GeneratedThemeContext.Provider>
+      </ResolvedModeContext.Provider>
     </StyleFormContext.Provider>
   );
 }
