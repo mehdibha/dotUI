@@ -153,34 +153,24 @@ export function PreviewContent({
     setLoading(true);
   }, [currentBlockName]);
 
+  // CSS-only fullscreen overlay; no Fullscreen API
   React.useEffect(() => {
-    const handleFullscreenChange = () => {
-      const isActive = document.fullscreenElement === containerRef.current;
-      setIsFullscreen(isActive);
-    };
-    document.addEventListener("fullscreenchange", handleFullscreenChange);
-    return () => {
-      document.removeEventListener("fullscreenchange", handleFullscreenChange);
-    };
-  }, []);
-
-  const toggleFullscreen = async () => {
-    try {
-      if (!isFullscreen) {
-        await containerRef.current?.requestFullscreen?.();
-      } else {
-        await document.exitFullscreen?.();
-      }
-    } catch (_) {
-      // ignore
+    const root = document.documentElement;
+    if (isFullscreen) {
+      root.classList.add("overflow-hidden");
+    } else {
+      root.classList.remove("overflow-hidden");
     }
-  };
+    return () => root.classList.remove("overflow-hidden");
+  }, [isFullscreen]);
 
   return (
     <div
       ref={containerRef}
       className={cn(
         "bg-bg size-full overflow-hidden rounded-md border",
+        isFullscreen &&
+          "fixed inset-0 z-50 rounded-none p-4 md:p-8 animate-in zoom-in-90",
         className,
       )}
     >
@@ -274,7 +264,7 @@ export function PreviewContent({
               shape="square"
               size="sm"
               className="size-7"
-              onPress={toggleFullscreen}
+              onPress={() => setIsFullscreen((v) => !v)}
             >
               {isFullscreen ? <MinimizeIcon /> : <MaximizeIcon />}
             </Button>
