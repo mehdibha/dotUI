@@ -28,6 +28,7 @@ import {
   SelectRoot,
   SelectValue,
 } from "@dotui/ui/components/select";
+import { Separator } from "@dotui/ui/components/separator";
 import { Tooltip } from "@dotui/ui/components/tooltip";
 import { cn } from "@dotui/ui/lib/utils";
 
@@ -157,59 +158,61 @@ export function PreviewContent({
       )}
     >
       <div className="bg-bg-muted/50 flex items-center justify-between gap-2 border-b border-t-[inherit] px-1 py-1">
-        <div className="flex w-32 items-center gap-3">
-          <div className="flex items-center gap-1">
-            {collapsible && (
-              <Button
-                aria-label="Collapse preview"
-                variant="quiet"
-                shape="square"
-                size="sm"
-                className="size-7"
-                onPress={() => setOpen(false)}
-              >
-                <ChevronsRightIcon />
-              </Button>
-            )}
-          </div>
-        </div>
-        <SelectRoot
-          aria-label="Select block"
-          onSelectionChange={(key) => setCurrentBlockName(key as string)}
-          selectedKey={currentBlockName}
-        >
-          <Button
-            size="sm"
-            suffix={<ChevronsUpDownIcon />}
-            className="text-fg-muted h-7 min-w-32 justify-center rounded-sm"
-          >
-            <SelectValue className="flex-0" />
-          </Button>
-          <Popover>
-            <ListBox
-              items={blocksCategories.map((category) => ({
-                key: category.slug,
-                label: category.name,
-                items: registryBlocks.filter((block) =>
-                  block?.categories?.includes(category.slug),
-                ),
-              }))}
+        <div className="flex items-center gap-1">
+          {collapsible && (
+            <Button
+              aria-label="Collapse preview"
+              variant="quiet"
+              shape="square"
+              size="sm"
+              className="size-7"
+              onPress={() => setOpen(false)}
             >
-              {(section) => (
-                <ListBoxSection
-                  id={section.key}
-                  title={section.label}
-                  items={section.items}
-                >
-                  {(item) => (
-                    <ListBoxItem id={item.name}>{item.name}</ListBoxItem>
-                  )}
-                </ListBoxSection>
-              )}
-            </ListBox>
-          </Popover>
-        </SelectRoot>
-        <div className="flex w-32 justify-end gap-0.5">
+              <ChevronsRightIcon />
+            </Button>
+          )}
+          <Separator orientation="vertical" className="h-4" />
+          <SelectRoot
+            aria-label="Select block"
+            onSelectionChange={(key) => setCurrentBlockName(key as string)}
+            selectedKey={currentBlockName}
+          >
+            <Button
+              variant="link"
+              size="sm"
+              suffix={<ChevronsUpDownIcon className="size-3.5!" />}
+              className="text-fg-muted h-7 justify-center gap-1 rounded-sm px-2"
+            >
+              <SelectValue className="flex-0" />
+            </Button>
+            <Popover>
+              <ListBox
+                items={blocksCategories
+                  .filter((category) => category.slug !== "featured")
+                  .map((category) => ({
+                    key: category.slug,
+                    label: category.name,
+                    items: registryBlocks.filter((block) =>
+                      block?.categories?.includes(category.slug),
+                    ),
+                  }))}
+              >
+                {(section) => (
+                  <ListBoxSection
+                    id={section.key}
+                    title={section.label}
+                    items={section.items}
+                  >
+                    {(item) => (
+                      <ListBoxItem id={item.name}>{item.name}</ListBoxItem>
+                    )}
+                  </ListBoxSection>
+                )}
+              </ListBox>
+            </Popover>
+          </SelectRoot>
+        </div>
+        <div className="flex gap-0.5">
           <Tooltip content={isMobile ? "Mobile" : "Tablet"} delay={0}>
             <Button
               aria-label="Select view"
