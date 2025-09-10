@@ -7,8 +7,9 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export type SlotsToClassNames<T extends (...args: any[]) => any> =
-  Partial<Record<keyof ReturnType<T>, ClassValue>>;
+export type SlotsToClassNames<T extends (...args: any[]) => any> = Partial<
+  Record<keyof ReturnType<T>, ClassValue>
+>;
 
 export function createScopedContext<ContextValueType extends object | null>(
   rootComponentName: string,
