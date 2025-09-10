@@ -7,6 +7,7 @@ import {
   ChevronsUpDownIcon,
   ExternalLinkIcon,
   MaximizeIcon,
+  MinimizeIcon,
   SmartphoneIcon,
   TabletIcon,
 } from "lucide-react";
@@ -136,6 +137,8 @@ export function PreviewContent({
   setWidth: (width: number) => void;
   currentWidth: number;
 }) {
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const [isFullscreen, setIsFullscreen] = React.useState(false);
   const isMobile = currentWidth < 480;
   const pathname = usePathname();
   const segments = pathname.split("/");
@@ -150,8 +153,32 @@ export function PreviewContent({
     setLoading(true);
   }, [currentBlockName]);
 
+  React.useEffect(() => {
+    const handleFullscreenChange = () => {
+      const isActive = document.fullscreenElement === containerRef.current;
+      setIsFullscreen(isActive);
+    };
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+    };
+  }, []);
+
+  const toggleFullscreen = async () => {
+    try {
+      if (!isFullscreen) {
+        await containerRef.current?.requestFullscreen?.();
+      } else {
+        await document.exitFullscreen?.();
+      }
+    } catch (_) {
+      // ignore
+    }
+  };
+
   return (
     <div
+      ref={containerRef}
       className={cn(
         "bg-bg size-full overflow-hidden rounded-md border",
         className,
@@ -240,15 +267,16 @@ export function PreviewContent({
               <ExternalLinkIcon />
             </Button>
           </Tooltip>
-          <Tooltip content="Maximize" delay={0}>
+          <Tooltip content={isFullscreen ? "Exit fullscreen" : "Fullscreen"} delay={0}>
             <Button
-              aria-label="Maximize"
+              aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
               variant="quiet"
               shape="square"
               size="sm"
               className="size-7"
+              onPress={toggleFullscreen}
             >
-              <MaximizeIcon />
+              {isFullscreen ? <MinimizeIcon /> : <MaximizeIcon />}
             </Button>
           </Tooltip>
         </div>
