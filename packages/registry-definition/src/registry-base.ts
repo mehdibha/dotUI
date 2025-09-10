@@ -13,7 +13,7 @@ export const base: RegistryItem = {
   ],
   css: {
     "@plugin tailwindcss-react-aria-components": {},
-    "@plugin tailwindcss-auto-contrast": {},
+    "@plugin tailwindcss-autocontrast": {},
   },
 
   registryDependencies: ["utils", "focus-styles", "theme"],
