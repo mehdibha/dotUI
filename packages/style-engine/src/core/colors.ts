@@ -93,12 +93,20 @@ export const getContrastColor = (colorValue: string): string => {
 
 export const createModeCssVars = (
   modeDefinition: ModeDefinition,
+  generateContrastColors = true,
 ): Record<string, string> => {
   const colorScales = createColorScales(modeDefinition);
 
   const cssVars = colorScales
     .flatMap((colorScale) =>
-      colorScale.values.map((value) => [value.name, value.value] as const),
+      colorScale.values.flatMap((value) =>
+        [
+          [value.name, value.value] as const,
+          generateContrastColors
+            ? ([`on-${value.name}`, getContrastColor(value.value)] as const)
+            : [],
+        ].filter(Boolean),
+      ),
     )
     .reduce(
       (acc, [key, value]) => {

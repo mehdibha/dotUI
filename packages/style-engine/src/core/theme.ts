@@ -15,7 +15,10 @@ import {
 } from "./css";
 import type { Theme, ThemeDefinition } from "../types";
 
-export const createTheme = (themeDefinition: ThemeDefinition): Theme => {
+export const createTheme = (
+  themeDefinition: ThemeDefinition,
+  generateContrastColors = true,
+): Theme => {
   const {
     colors,
     radius,
@@ -46,11 +49,13 @@ export const createTheme = (themeDefinition: ThemeDefinition): Theme => {
     activeModes.includes("light") && activeModes.includes("dark");
 
   const lightCssVars = supportsLightAndDark
-    ? createModeCssVars(lightMode)
+    ? createModeCssVars(lightMode, generateContrastColors)
     : activeModes.includes("light")
-      ? createModeCssVars(lightMode)
-      : createModeCssVars(darkMode);
-  const darkCssVars = supportsLightAndDark ? createModeCssVars(darkMode) : {};
+      ? createModeCssVars(lightMode, generateContrastColors)
+      : createModeCssVars(darkMode, generateContrastColors);
+  const darkCssVars = supportsLightAndDark
+    ? createModeCssVars(darkMode, generateContrastColors)
+    : {};
 
   const colorThemeVars = createColorThemeVars(colors.tokens);
 

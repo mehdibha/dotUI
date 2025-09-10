@@ -64,7 +64,7 @@ export async function GET(
 
     const registryItem = await buildRegistryItem(registryItemName, {
       styleName: styleSlug,
-      style: createStyle(style),
+      style: createStyle(style, false),
       registryBasePath,
       baseUrl:
         env.NODE_ENV === "development"
