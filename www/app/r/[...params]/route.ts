@@ -34,6 +34,7 @@ export async function GET(
     }
 
     let style;
+    let styleSlug;
     let registryItemName;
 
     if (routeParams.length === 3) {
@@ -43,6 +44,7 @@ export async function GET(
         string,
       ];
       registryItemName = name;
+      styleSlug = `${username}/${styleName}`;
       style = await caller.style.getByNameAndUsername({
         name: styleName,
         username: username,
@@ -50,6 +52,7 @@ export async function GET(
     } else {
       const [styleName, name] = routeParams as [string, string];
       registryItemName = name;
+      styleSlug = styleName;
       style = await caller.style.byPublicSlug({
         slug: styleName,
       });
@@ -60,7 +63,7 @@ export async function GET(
     }
 
     const registryItem = await buildRegistryItem(registryItemName, {
-      styleName: style.name,
+      styleName: styleSlug,
       style: createStyle(style),
       registryBasePath,
       baseUrl:
