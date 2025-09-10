@@ -11,9 +11,6 @@ await jiti.import("./env");
 const config = {
   transpilePackages: ["@dotui/api", "@dotui/auth", "@dotui/db", "@dotui/ui"],
   typedRoutes: true,
-  experimental: {
-    reactCompiler: true,
-  },
   images: {
     remotePatterns: [
       {
