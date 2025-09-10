@@ -7,6 +7,7 @@ import {
   ChevronsUpDownIcon,
   ExternalLinkIcon,
   MaximizeIcon,
+  MinimizeIcon,
   SmartphoneIcon,
   TabletIcon,
 } from "lucide-react";
@@ -17,6 +18,7 @@ import {
   registryBlocks,
 } from "@dotui/registry-definition/registry-blocks";
 import { Button } from "@dotui/ui/components/button";
+import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
 import {
   ListBox,
   ListBoxItem,
@@ -136,6 +138,8 @@ export function PreviewContent({
   setWidth: (width: number) => void;
   currentWidth: number;
 }) {
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const [isFullscreen, setIsFullscreen] = React.useState(false);
   const isMobile = currentWidth < 480;
   const pathname = usePathname();
   const segments = pathname.split("/");
@@ -150,13 +154,16 @@ export function PreviewContent({
     setLoading(true);
   }, [currentBlockName]);
 
-  return (
-    <div
-      className={cn(
-        "bg-bg size-full overflow-hidden rounded-md border",
-        className,
-      )}
-    >
+  function PreviewToolbar({
+    onToggleDevice,
+    onOpenNewTab,
+    onEnterFullscreen,
+  }: {
+    onToggleDevice: () => void;
+    onOpenNewTab: () => void;
+    onEnterFullscreen?: () => void;
+  }) {
+    return (
       <div className="bg-bg-muted/50 flex items-center justify-between gap-2 border-b border-t-[inherit] px-1 py-1">
         <div className="flex items-center gap-1">
           {collapsible && (
@@ -220,9 +227,7 @@ export function PreviewContent({
               shape="square"
               size="sm"
               className="size-7"
-              onPress={() => {
-                setWidth(isMobile ? 768 : 430);
-              }}
+              onPress={onToggleDevice}
             >
               {isMobile ? <SmartphoneIcon /> : <TabletIcon />}
             </Button>
@@ -230,29 +235,38 @@ export function PreviewContent({
           <Tooltip content="Open in new tab" delay={0}>
             <Button
               aria-label="Open in new tab"
-              href={`/view/${username}/${styleName}/${currentBlockName}`}
               target="_blank"
               variant="quiet"
               shape="square"
               size="sm"
               className="size-7"
+              href={`/view/${username}/${styleName}/${currentBlockName}`}
+              onPress={onOpenNewTab}
             >
               <ExternalLinkIcon />
             </Button>
           </Tooltip>
-          <Tooltip content="Maximize" delay={0}>
-            <Button
-              aria-label="Maximize"
-              variant="quiet"
-              shape="square"
-              size="sm"
-              className="size-7"
-            >
-              <MaximizeIcon />
-            </Button>
-          </Tooltip>
+          {onEnterFullscreen && (
+            <Tooltip content="Fullscreen" delay={0}>
+              <Button
+                aria-label="Enter fullscreen"
+                variant="quiet"
+                shape="square"
+                size="sm"
+                className="size-7"
+                onPress={onEnterFullscreen}
+              >
+                <MaximizeIcon />
+              </Button>
+            </Tooltip>
+          )}
         </div>
       </div>
+    );
+  }
+
+  function PreviewFrame() {
+    return (
       <div
         className={cn(
           "size-full",
@@ -268,6 +282,161 @@ export function PreviewContent({
           )}
         />
       </div>
+    );
+  }
+
+  function PreviewPane({
+    showFullscreenAction,
+  }: {
+    showFullscreenAction?: boolean;
+  }) {
+    return (
+      <div className="bg-bg relative size-full overflow-hidden border">
+        <PreviewToolbar
+          onToggleDevice={() => setWidth(isMobile ? 768 : 430)}
+          onOpenNewTab={() => {}}
+          onEnterFullscreen={
+            showFullscreenAction ? () => setIsFullscreen(true) : undefined
+          }
+        />
+        <PreviewFrame />
+      </div>
+    );
+  }
+
+  return (
+    <div
+      ref={containerRef}
+      className={cn(
+        "bg-bg relative size-full overflow-hidden rounded-md border",
+        className,
+      )}
+    >
+      <PreviewToolbar
+        onToggleDevice={() => setWidth(isMobile ? 768 : 430)}
+        onOpenNewTab={() => {}}
+        onEnterFullscreen={() => setIsFullscreen(true)}
+      />
+      <PreviewFrame />
+
+      {/* Fullscreen via modal */}
+      <DialogRoot isOpen={isFullscreen} onOpenChange={setIsFullscreen}>
+        <Dialog
+          type="modal"
+          mobileType="modal"
+          modalProps={{
+            className:
+              "w-screen h-(--visual-viewport-height) max-w-none rounded-none border-0",
+          }}
+          className="p-0! h-full overflow-hidden rounded-none"
+          isDismissable
+        >
+          <div className="bg-bg relative size-full overflow-hidden border">
+            <div className="bg-bg-muted/50 flex items-center justify-between gap-2 border-b border-t-[inherit] px-1 py-1">
+              <div className="flex items-center gap-1">
+                {collapsible && (
+                  <Button
+                    aria-label="Collapse preview"
+                    variant="quiet"
+                    shape="square"
+                    size="sm"
+                    className="size-7"
+                    onPress={() => setOpen(false)}
+                  >
+                    <ChevronsRightIcon />
+                  </Button>
+                )}
+                <Separator orientation="vertical" className="h-4" />
+                <SelectRoot
+                  aria-label="Select block"
+                  onSelectionChange={(key) =>
+                    setCurrentBlockName(key as string)
+                  }
+                  selectedKey={currentBlockName}
+                >
+                  <Button
+                    variant="link"
+                    size="sm"
+                    suffix={<ChevronsUpDownIcon className="size-3.5!" />}
+                    className="text-fg-muted h-7 justify-center gap-1 rounded-sm px-2"
+                  >
+                    <SelectValue className="flex-0" />
+                  </Button>
+                  <Popover>
+                    <ListBox
+                      items={blocksCategories
+                        .filter((category) => category.slug !== "featured")
+                        .map((category) => ({
+                          key: category.slug,
+                          label: category.name,
+                          items: registryBlocks.filter((block) =>
+                            block?.categories?.includes(category.slug),
+                          ),
+                        }))}
+                    >
+                      {(section) => (
+                        <ListBoxSection
+                          id={section.key}
+                          title={section.label}
+                          items={section.items}
+                        >
+                          {(item) => (
+                            <ListBoxItem id={item.name}>
+                              {item.name}
+                            </ListBoxItem>
+                          )}
+                        </ListBoxSection>
+                      )}
+                    </ListBox>
+                  </Popover>
+                </SelectRoot>
+              </div>
+              <div className="flex gap-0.5">
+                <Tooltip content={isMobile ? "Mobile" : "Tablet"} delay={0}>
+                  <Button
+                    aria-label="Select view"
+                    variant="quiet"
+                    shape="square"
+                    size="sm"
+                    className="size-7"
+                    onPress={() => {
+                      setWidth(isMobile ? 768 : 430);
+                    }}
+                  >
+                    {isMobile ? <SmartphoneIcon /> : <TabletIcon />}
+                  </Button>
+                </Tooltip>
+                <Tooltip content="Open in new tab" delay={0}>
+                  <Button
+                    aria-label="Open in new tab"
+                    href={`/view/${username}/${styleName}/${currentBlockName}`}
+                    target="_blank"
+                    variant="quiet"
+                    shape="square"
+                    size="sm"
+                    className="size-7"
+                  >
+                    <ExternalLinkIcon />
+                  </Button>
+                </Tooltip>
+                <Tooltip content="Exit fullscreen" delay={0}>
+                  <Button
+                    aria-label="Exit fullscreen"
+                    variant="quiet"
+                    shape="square"
+                    size="sm"
+                    className="size-7"
+                    onPress={() => setIsFullscreen(false)}
+                  >
+                    <MinimizeIcon />
+                  </Button>
+                </Tooltip>
+              </div>
+            </div>
+            <PreviewFrame />
+          </div>
+        </Dialog>
+      </DialogRoot>
     </div>
   );
 }
