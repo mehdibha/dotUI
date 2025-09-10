@@ -27,6 +27,7 @@ const buttonStyles = tv({
       primary: "bg-bg-primary text-fg-on-primary hover:bg-bg-primary-hover",
       quiet:
         "text-fg hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 bg-transparent",
+      link: "text-fg underline-offset-4 hover:underline",
       outline:
         "border-border-field text-fg hover:bg-bg-inverse/10 pressed:bg-bg-inverse/15 border",
       accent:
