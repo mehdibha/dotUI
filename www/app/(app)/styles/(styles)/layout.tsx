@@ -48,7 +48,7 @@ export default function StylesLayout({ children }: LayoutProps<"/styles">) {
           <CreateStyleModal>
             <Button variant="primary">Create your style</Button>
           </CreateStyleModal>
-          <Button variant="default" href="/docs/styles">
+          <Button variant="default" href="/docs">
             Documentation
           </Button>
         </PageActions>
