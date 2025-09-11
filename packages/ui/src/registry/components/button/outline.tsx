@@ -30,8 +30,6 @@ const buttonStyles = tv({
       link: "text-fg underline-offset-4 hover:underline",
       outline:
         "border-border-field text-fg hover:bg-bg-inverse/10 pressed:bg-bg-inverse/15 border",
-      accent:
-        "border-border-accent bg-bg-accent-muted text-fg hover:border-border-accent-hover hover:bg-bg-accent-muted-hover border",
       success:
         "hover:bg-bg-success-muted-hover border-border-success bg-bg-success-muted hover:border-border-success-hover border",
       warning:

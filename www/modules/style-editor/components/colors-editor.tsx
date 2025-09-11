@@ -30,7 +30,7 @@ import { ThemeModeSwitch } from "@/components/theme-mode-switch";
 import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
 import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
-import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
+import { AccentLevelEditor } from "./accent-emphasis-editor";
 import { ColorScale } from "./color-scale";
 import { ColorScaleEditor } from "./color-scale-editor";
 import { ColorTokens } from "./color-tokens";
@@ -135,6 +135,10 @@ export function ColorsEditor() {
               return <ColorScale key={color.name} scaleId={color.name} />;
             })}
           </div>
+        </StyleEditorSection>
+
+        <StyleEditorSection title="Accent emphasis">
+          <AccentLevelEditor />
         </StyleEditorSection>
 
         <StyleEditorSection key={`${resolvedMode}-tokens`} title="Tokens">

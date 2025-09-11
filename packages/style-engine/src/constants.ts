@@ -26,6 +26,8 @@ export const DEFAULT_SHADOWS = "default";
 export const DEFAULT_ICON_LIBRARY: IconLibrary = "lucide";
 export const DEFAULT_ICON_STROKE_WIDTH = 2;
 
+export const DEFAULT_ACCENT_EMPHASIS_LEVEL = 1;
+
 export const DEFAULT_FONTS: Fonts = {
   heading: "Inter",
   body: "Inter",
@@ -258,6 +260,7 @@ export const DEFAULT_THEME: ThemeDefinition = {
       dark: DEFAULT_DARK_MODE,
     },
     tokens: DEFAULT_TOKENS,
+    accentEmphasisLevel: DEFAULT_ACCENT_EMPHASIS_LEVEL,
   },
   fonts: {
     heading: DEFAULT_FONTS.heading,

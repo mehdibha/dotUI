@@ -1,5 +1,3 @@
-import type { Metadata } from "next";
-
 import { DraftStyleSync } from "@/modules/style-editor/components/draft-style-sync";
 import { Preview } from "@/modules/style-editor/components/preview";
 import { StyleEditorForm } from "@/modules/style-editor/components/style-editor-form";
