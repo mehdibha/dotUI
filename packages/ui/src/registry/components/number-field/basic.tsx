@@ -68,11 +68,19 @@ const NumberField = ({
     <NumberFieldRoot {...props}>
       {label && <Label>{label}</Label>}
       <InputRoot size={size} className={inputRoot({ isMobile })}>
-        <Button slot="decrement" className={decrement({ isMobile })}>
+        <Button
+          variant="quiet"
+          slot="decrement"
+          className={decrement({ isMobile })}
+        >
           {isMobile ? <MinusIcon /> : <ChevronDownIcon />}
         </Button>
         <Input className={input()} />
-        <Button slot="increment" className={increment({ isMobile })}>
+        <Button
+          variant="quiet"
+          slot="increment"
+          className={increment({ isMobile })}
+        >
           {isMobile ? <PlusIcon /> : <ChevronUpIcon />}
         </Button>
       </InputRoot>

@@ -38,14 +38,23 @@ export function StyleEditorForm({ children }: { children: React.ReactNode }) {
   const handleSubmit = form.handleSubmit(
     async (data) => {
       try {
-        console.log("🔄 Submitting style update...");
         await updateStyleMutation.mutateAsync(data);
       } catch (error) {
-        console.error("Submission failed:", error);
+        toast.add({
+          title: "Failed to update style: " + JSON.stringify(error),
+          variant: "danger",
+        });
       }
     },
     (errors) => {
-      console.error("❌ Form validation errors:", errors);
+      toast.add({
+        title: "Failed to update style: " + JSON.stringify(errors),
+        description: Object.values(errors)
+          .map((error) => error?.message)
+          .filter(Boolean)
+          .join("\n"),
+        variant: "danger",
+      });
     },
   );
 

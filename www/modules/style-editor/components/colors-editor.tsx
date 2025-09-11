@@ -76,10 +76,6 @@ export function ColorsEditor() {
     return activeModes[0]!;
   }, [activeMode, activeModes, supportsLightDark]);
 
-  if (!supportsLightDark) {
-    return null;
-  }
-
   return (
     <ColorEditorProvider
       resolvedMode={resolvedMode}
