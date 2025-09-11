@@ -100,7 +100,7 @@ function StyleEditorHeaderActions() {
           <EyeIcon />
         </Button>
         <Dialog type="drawer" className="p-0! overflow-hidden">
-          <PreviewFrame />
+          <PreviewFrame block="login" />
           <Button
             slot="close"
             variant="quiet"

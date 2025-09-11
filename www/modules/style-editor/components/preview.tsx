@@ -43,10 +43,10 @@ export const Preview = () => {
   return (
     <PreviewRoot>
       <PreviewToolbar />
-      <PreviewFrame />
+      <PreviewContent />
       <PreviewModal>
         <PreviewToolbar fullScreen />
-        <PreviewFrame />
+        <PreviewContent />
       </PreviewModal>
     </PreviewRoot>
   );
@@ -272,8 +272,12 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
   );
 }
 
-export function PreviewFrame() {
+function PreviewContent() {
   const { block } = usePreviewContext("PreviewFrame");
+  return <PreviewFrame block={block} />;
+}
+
+export const PreviewFrame = ({ block }: { block: string }) => {
   const { slug } = useStyleEditorParams();
   const [isLoading, setLoading] = React.useState(true);
 
@@ -295,7 +299,7 @@ export function PreviewFrame() {
       />
     </div>
   );
-}
+};
 
 const PreviewModal = ({ children }: { children: React.ReactNode }) => {
   const { isFullscreen } = usePreviewContext("PreviewModal");
