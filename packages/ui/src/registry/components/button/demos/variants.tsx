@@ -8,7 +8,6 @@ const variants = [
   "success",
   "warning",
   "danger",
-  "accent",
 ] as const;
 
 export default function Demo() {
