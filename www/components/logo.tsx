@@ -51,7 +51,7 @@ export const Logo = ({
           <div className="font-josefin group-data-collapsed/sidebar:opacity-0 mt-1.5 text-base font-bold leading-normal tracking-tighter transition-colors">
             {siteConfig.name}
           </div>
-          {/* <Badge size="sm">Preview</Badge> */}
+          <Badge size="sm">Preview</Badge>
         </div>
       )}
     </Elem>
