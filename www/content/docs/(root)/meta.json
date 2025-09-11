@@ -1,4 +1,9 @@
 {
   "title": "Getting started",
-  "pages": ["index", "installation", "changelog"]
+  "pages": [
+    "index",
+    "installation",
+    "[Public roadmap](https://github.com/users/mehdibha/projects/1)",
+    "changelog"
+  ]
 }

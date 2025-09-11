@@ -429,6 +429,7 @@ function PageNode({
 
   return (
     <Link
+      target={url.startsWith("https") ? "_blank" : undefined}
       href={url as Route}
       className={cn(
         "border-bg-bg-muted text-fg-muted hover:text-fg group block border-l py-1 pl-4 font-medium transition-colors",
