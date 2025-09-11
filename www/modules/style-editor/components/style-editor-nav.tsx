@@ -1,10 +1,8 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  BoxesIcon,
   BoxIcon,
   ChevronDownIcon,
   LayoutTemplateIcon,
@@ -25,15 +23,15 @@ import {
 } from "@dotui/ui/registry/components/tabs/motion";
 import type { TabsProps } from "@dotui/ui/components/tabs";
 
+import { useStyleEditorParams } from "../hooks/use-style-editor-params";
+
 export function StyleEditorNav({
   children,
   className,
   ...props
 }: { children: React.ReactNode } & TabsProps) {
   const pathname = usePathname();
-  const segments = pathname.split("/");
-  const username = segments[2] ?? "";
-  const styleName = segments[3] ?? "";
+  const { username, style: styleName } = useStyleEditorParams();
 
   const menuItems = React.useMemo(
     () => getMenuItems(username, styleName),
@@ -70,7 +68,7 @@ export function StyleEditorNav({
         className={cn("@max-xl:hidden", className)}
         {...props}
       >
-        <div className="bg-bg sticky top-0 z-40 border-b">
+        <div className="bg-bg sticky top-0 z-10 border-b">
           <TabList className="container max-w-4xl border-b-0">
             {menuItems.map((tab) => (
               <Tab

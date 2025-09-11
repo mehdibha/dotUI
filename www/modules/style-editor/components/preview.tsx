@@ -104,21 +104,16 @@ export const PreviewRoot = ({ children }: { children: React.ReactNode }) => {
         key="preview-button"
         initial={{ width: 0 }}
         animate={{
-          width: isOpen ? 0 : 110,
-          marginLeft: isOpen ? 0 : -110,
+          width: isOpen ? 0 : 102,
+          marginLeft: isOpen ? 0 : -102,
         }}
         transition={{ type: "spring", bounce: 0, duration: 0.25 }}
-        className="flex justify-start overflow-hidden"
+        className="bg-b flex justify-start overflow-hidden"
         aria-hidden={isOpen}
         inert={isOpen || undefined}
       >
-        <div style={{ width: 110 }} className="p-4">
-          <Button
-            variant="default"
-            size="sm"
-            onPress={() => setOpen(true)}
-            className="bg-bg-inverse/5 border"
-          >
+        <div style={{ width: 102 }} className="pr-6 pt-6">
+          <Button variant="default" size="sm" onPress={() => setOpen(true)}>
             Preview
           </Button>
         </div>

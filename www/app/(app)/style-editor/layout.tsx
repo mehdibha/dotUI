@@ -18,7 +18,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <StyleEditorNav className="mt-2">{children}</StyleEditorNav>
           </StyleEditorForm>
         </div>
-        <div className="sticky top-0 flex h-[100svh] items-start max-xl:hidden">
+        <div className="sticky top-0 z-20 flex h-[100svh] items-start max-xl:hidden">
           <Preview />
         </div>
       </div>
