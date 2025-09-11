@@ -315,15 +315,12 @@ function RatioSlider({ scaleId }: RatioSliderProps) {
   const neutralColorKeys = useWatch({
     control: form.control,
     name: `theme.colors.modes.${resolvedMode}.scales.neutral.colorKeys`,
-  });
+  }).map((color) => color.color) as CssColor[];
   const colorKeys = useWatch({
     control: form.control,
     name: `theme.colors.modes.${resolvedMode}.scales.${scaleId}.colorKeys`,
-  });
-  const ratios = useWatch({
-    control: form.control,
-    name: `theme.colors.modes.${resolvedMode}.scales.${scaleId}.ratios`,
-  });
+  }).map((color) => color.color) as CssColor[];
+  const ratios = Array.from({ length: 19 }, (_, i) => i + 1);
   const lightness = useWatch({
     control: form.control,
     name: `theme.colors.modes.${resolvedMode}.lightness`,
@@ -340,13 +337,13 @@ function RatioSlider({ scaleId }: RatioSliderProps) {
   const dynamicGradient = useMemo(() => {
     const neutral = new LeonardoBgColor({
       name: "neutral",
-      colorKeys: colorKeys.map((color) => color.color) as CssColor[],
+      colorKeys: neutralColorKeys,
       ratios,
     });
 
     const currentColor = new LeonardoColor({
       name,
-      colorKeys: colorKeys.map((color) => color.color) as CssColor[],
+      colorKeys,
       ratios,
     });
 
@@ -355,16 +352,26 @@ function RatioSlider({ scaleId }: RatioSliderProps) {
       colors: [currentColor],
       lightness,
       saturation,
-      contrast,
+      contrast: contrast / 100,
       output: "HEX",
     });
+
+    console.log({ theme });
 
     const palette = theme.contrastColors[1]!;
 
     return `linear-gradient(0deg, ${palette.values
       .map((value) => value.value)
       .join(", ")})`;
-  }, [colorKeys, lightness, saturation, contrast, ratios, name]);
+  }, [
+    neutralColorKeys,
+    ratios,
+    name,
+    colorKeys,
+    lightness,
+    saturation,
+    contrast,
+  ]);
 
   return (
     <FormControl
@@ -376,7 +383,7 @@ function RatioSlider({ scaleId }: RatioSliderProps) {
           orientation="vertical"
           minValue={1}
           maxValue={20}
-          step={0.01}
+          step={0.05}
           className="h-full"
           {...props}
         >

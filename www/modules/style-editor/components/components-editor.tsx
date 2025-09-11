@@ -111,14 +111,7 @@ const Section = ({
         )}
       />
 
-      {tokens && (
-        <ColorTokens
-          variant="bordered"
-          hideHeader
-          tokenIds={tokens}
-          className="mt-2"
-        />
-      )}
+      {tokens && <ColorTokens hideHeader tokenIds={tokens} className="mt-2" />}
       <Skeleton show={!isSuccess}>
         <DraftStyleProvider
           className={cn(

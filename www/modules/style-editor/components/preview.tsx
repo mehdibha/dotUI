@@ -108,7 +108,7 @@ export const PreviewRoot = ({ children }: { children: React.ReactNode }) => {
           marginLeft: isOpen ? 0 : -102,
         }}
         transition={{ type: "spring", bounce: 0, duration: 0.25 }}
-        className="bg-b flex justify-start overflow-hidden"
+        className="flex justify-start overflow-hidden"
         aria-hidden={isOpen}
         inert={isOpen || undefined}
       >
