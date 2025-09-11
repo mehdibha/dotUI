@@ -3,7 +3,7 @@
 import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ExternalLinkIcon, GlobeIcon, LockIcon } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
 
 import { createStyleSchema as dbCreateStyleSchema } from "@dotui/db/schemas";
@@ -90,7 +90,12 @@ export function CreateStyleModalContent({
       visibility: "unlisted",
     },
   });
-  const rawName = form.watch("name") ?? "";
+
+  const rawName = useWatch({
+    control: form.control,
+    name: "name",
+  });
+
   const renamedTo = React.useMemo(() => {
     const normalized = normalizeStyleName(rawName);
     return normalized !== rawName ? normalized : null;

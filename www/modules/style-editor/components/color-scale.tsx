@@ -1,22 +1,41 @@
 "use client";
 
+import React from "react";
 import { Button as AriaButton } from "react-aria-components";
+import { useWatch } from "react-hook-form";
 
+import { createColorScales } from "@dotui/style-engine/core";
 import { Skeleton } from "@dotui/ui/components/skeleton";
 import { Tooltip } from "@dotui/ui/components/tooltip";
 
-import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
+import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
+import { useEditorStyle } from "../hooks/use-editor-style";
+import { useColorEditorContext } from "./colors-editor";
 
 interface ColorScaleProps {
   scaleId: string;
 }
 
+// TODO: Optimisation: instead of generating all the theme, we should only generate the scale we need
 export function ColorScale({ scaleId }: ColorScaleProps) {
-  const { form, isSuccess, resolvedMode, generatedTheme } = useStyleForm();
+  const form = useStyleEditorForm();
+  const { isSuccess } = useEditorStyle();
+  const { resolvedMode } = useColorEditorContext("ColorScale");
 
-  const scaleName = form.watch(
-    `theme.colors.modes.${resolvedMode}.scales.${scaleId}.name`,
-  );
+  const scaleName = useWatch({
+    control: form.control,
+    name: `theme.colors.modes.${resolvedMode}.scales.${scaleId}.name`,
+  });
+
+  const currentModeDefinition = useWatch({
+    name: `theme.colors.modes.${resolvedMode}`,
+    control: form.control,
+  });
+
+  const generatedTheme = React.useMemo(() => {
+    const theme = createColorScales(currentModeDefinition);
+    return theme;
+  }, [currentModeDefinition]);
 
   const scale = generatedTheme.find((scale) => scale.name === scaleId);
 

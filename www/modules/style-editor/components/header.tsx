@@ -19,6 +19,7 @@ import {
   Trash2Icon,
   XIcon,
 } from "lucide-react";
+import { useWatch } from "react-hook-form";
 
 import { Button } from "@dotui/ui/components/button";
 import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
@@ -39,6 +40,10 @@ import { CodeModal } from "./code-modal";
 export function StyleEditorHeader() {
   const form = useStyleEditorForm();
   const { isLoading } = useEditorStyle();
+  const name = useWatch({
+    control: form.control,
+    name: "name",
+  });
 
   return (
     <div className="container max-w-4xl">
@@ -50,9 +55,7 @@ export function StyleEditorHeader() {
       </Link>
       <div className="flex items-center justify-between gap-4">
         <Skeleton show={isLoading}>
-          <h1 className="text-2xl font-bold leading-none">
-            {form.watch("name")}
-          </h1>
+          <h1 className="text-2xl font-bold leading-none">{name}</h1>
         </Skeleton>
         <div className="flex items-center gap-1">
           <StyleEditorHeaderActions />

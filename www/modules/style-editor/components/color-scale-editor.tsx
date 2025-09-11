@@ -17,6 +17,7 @@ import { useFieldArray, useWatch } from "react-hook-form";
 import type { CssColor } from "@adobe/leonardo-contrast-colors";
 
 import { SCALE_NUMBERRS } from "@dotui/style-engine/constants";
+import { createColorScales } from "@dotui/style-engine/core";
 import { Badge } from "@dotui/ui/components/badge";
 import { Button } from "@dotui/ui/components/button";
 import {
@@ -51,7 +52,6 @@ import { cn } from "@dotui/ui/lib/utils";
 
 import { AutoResizeTextField } from "@/components/auto-resize-input";
 import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
-import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
 import { useColorEditorContext } from "./colors-editor";
 
 export function ColorScaleEditor({ scaleId }: { scaleId: string }) {
@@ -85,7 +85,7 @@ export function ColorScaleEditor({ scaleId }: { scaleId: string }) {
           <p className="text-fg-muted text-sm">Ratios</p>
           <div className="flex flex-1 items-start gap-4">
             <RatioSlider scaleId={scaleId} />
-            {/* <RatioTable scaleId={scaleId} /> */}
+            <RatioTable scaleId={scaleId} />
           </div>
         </DialogBody>
       </Dialog>
@@ -407,15 +407,27 @@ interface RatioTableProps {
 }
 
 function RatioTable({ scaleId }: RatioTableProps) {
-  const { form, resolvedMode, generatedTheme } = useStyleForm();
+  const form = useStyleEditorForm();
+  const { resolvedMode } = useColorEditorContext("RatioTable");
+
+  const currentModeDefinition = useWatch({
+    name: `theme.colors.modes.${resolvedMode}`,
+    control: form.control,
+  });
+
+  const generatedTheme = React.useMemo(() => {
+    const theme = createColorScales(currentModeDefinition);
+    return theme;
+  }, [currentModeDefinition]);
 
   const generatedScale = generatedTheme.find(
     (scale) => scale.name === scaleId,
   )?.values;
 
-  const scaleName = form.watch(
-    `theme.colors.modes.${resolvedMode}.scales.${scaleId}.name`,
-  );
+  const scaleName = useWatch({
+    control: form.control,
+    name: `theme.colors.modes.${resolvedMode}.scales.${scaleId}.name`,
+  });
 
   return (
     <div className="flex-1">

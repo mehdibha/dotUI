@@ -74,7 +74,7 @@ export function ColorsEditor() {
       return activeMode;
     }
     return activeModes[0]!;
-  }, [activeModes, activeMode, supportsLightDark]);
+  }, [activeMode, activeModes, supportsLightDark]);
 
   if (!supportsLightDark) {
     return null;
@@ -97,7 +97,10 @@ export function ColorsEditor() {
           <ColorAdjustments />
         </StyleEditorSection>
 
-        <StyleEditorSection title="Base colors">
+        <StyleEditorSection
+          key={`${resolvedMode}-base-colors`}
+          title="Base colors"
+        >
           <div className="@max-lg:grid @max-lg:grid-cols-2 mt-2 flex items-center gap-2">
             {baseColors.map((color) => {
               return (
@@ -107,14 +110,17 @@ export function ColorsEditor() {
               );
             })}
           </div>
-          {/* <div className="mt-3 space-y-2">
+          <div className="mt-3 space-y-2">
             {baseColors.map((color) => {
               return <ColorScale key={color.name} scaleId={color.name} />;
             })}
-          </div> */}
+          </div>
         </StyleEditorSection>
 
-        <StyleEditorSection title="Semantic colors">
+        <StyleEditorSection
+          key={`${resolvedMode}-semantic-colors`}
+          title="Semantic colors"
+        >
           <div className="@max-lg:grid @max-lg:grid-cols-2 mt-2 flex items-center gap-2">
             {semanticColors.map((color) => {
               return (
@@ -124,14 +130,14 @@ export function ColorsEditor() {
               );
             })}
           </div>
-          {/* <div className="mt-3 space-y-2">
+          <div className="mt-3 space-y-2">
             {semanticColors.map((color) => {
               return <ColorScale key={color.name} scaleId={color.name} />;
             })}
-          </div> */}
+          </div>
         </StyleEditorSection>
 
-        <StyleEditorSection title="Tokens">
+        <StyleEditorSection key={`${resolvedMode}-tokens`} title="Tokens">
           <div className="mt-3 space-y-4">
             {[
               {
