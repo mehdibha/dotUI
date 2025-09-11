@@ -356,8 +356,6 @@ function RatioSlider({ scaleId }: RatioSliderProps) {
       output: "HEX",
     });
 
-    console.log({ theme });
-
     const palette = theme.contrastColors[1]!;
 
     return `linear-gradient(0deg, ${palette.values
