@@ -1,25 +1,38 @@
 "use client";
 
-import convert from "npm-to-yarn";
+// import convert from "npm-to-yarn";
+import { useWatch } from "react-hook-form";
 
 import { Dialog, DialogBody, DialogRoot } from "@dotui/ui/components/dialog";
 import type { DialogRootProps } from "@dotui/ui/components/dialog";
 
-import {
-  InstallTab,
-  InstallTabs,
-} from "@/modules/docs/components/install-tabs";
-import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
+import { useStyleEditorForm } from "../context/style-editor-provider";
 
-const packageManagers: ("npm" | "pnpm" | "yarn" | "bun")[] = [
-  "npm",
-  "pnpm",
-  "yarn",
-  "bun",
-];
+// import {
+//   InstallTab,
+//   InstallTabs,
+// } from "@/modules/docs/components/install-tabs";
+// import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
+
+// const packageManagers: ("npm" | "pnpm" | "yarn" | "bun")[] = [
+//   "npm",
+//   "pnpm",
+//   "yarn",
+//   "bun",
+// ];
 
 export function CodeModal({ children, ...props }: DialogRootProps) {
-  const { form } = useStyleForm();
+  const form = useStyleEditorForm();
+
+  const visibility = useWatch({
+    control: form.control,
+    name: "visibility",
+  });
+
+  const styleName = useWatch({
+    control: form.control,
+    name: "name",
+  });
 
   return (
     <DialogRoot {...props}>
@@ -36,9 +49,8 @@ export function CodeModal({ children, ...props }: DialogRootProps) {
           <div>
             <pre className="mt-4 rounded-md border p-4 text-xs">
               <code>
-                "style": "
-                {form.watch("visibility") === "public" ? "mehdibha/" : ""}
-                {form.watch("name")}",
+                "style": "{visibility === "public" ? "mehdibha/" : ""}
+                {styleName}",
               </code>
             </pre>
           </div>

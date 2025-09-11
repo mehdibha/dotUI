@@ -4,11 +4,13 @@ import { FormControl } from "@dotui/ui/components/form";
 import { Skeleton } from "@dotui/ui/components/skeleton";
 import { Slider } from "@dotui/ui/components/slider";
 
-import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
+import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
+import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
 import { StyleEditorSection } from "./section";
 
 export function LayoutEditor() {
-  const { form, isSuccess } = useStyleForm();
+  const { isSuccess } = useEditorStyle();
+  const form = useStyleEditorForm();
 
   return (
     <div>

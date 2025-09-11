@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { ComponentsEditor } from "@/modules/styles/components/style-editor/components-editor";
+import { ComponentsEditor } from "@/modules/style-editor/components/components-editor";
 
 export async function generateMetadata({
   searchParams,

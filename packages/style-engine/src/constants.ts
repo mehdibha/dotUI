@@ -5,6 +5,7 @@ import type {
   Fonts,
   IconLibrary,
   ModeDefinition,
+  StyleDefinition,
   ThemeDefinition,
   Variants,
   VariantsDefinition,
@@ -269,4 +270,13 @@ export const DEFAULT_THEME: ThemeDefinition = {
   texture: DEFAULT_TEXTURE,
   backgroundPattern: DEFAULT_BACKGROUND_PATTERN,
   letterSpacing: DEFAULT_LETTER_SPACING,
+};
+
+export const DEFAULT_STYLE: StyleDefinition = {
+  theme: DEFAULT_THEME,
+  icons: {
+    library: DEFAULT_ICON_LIBRARY,
+    strokeWidth: DEFAULT_ICON_STROKE_WIDTH,
+  },
+  variants: DEFAULT_VARIANTS_DEFINITION,
 };

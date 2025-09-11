@@ -6,7 +6,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   ArrowLeftIcon,
-  CheckIcon,
   CodeIcon,
   CopyIcon,
   EllipsisIcon,
@@ -19,23 +18,31 @@ import {
   Trash2Icon,
   XIcon,
 } from "lucide-react";
+import { useWatch } from "react-hook-form";
 
 import { Button } from "@dotui/ui/components/button";
 import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
 import { Menu, MenuItem, MenuRoot } from "@dotui/ui/components/menu";
 import { Skeleton } from "@dotui/ui/components/skeleton";
 import { Tooltip } from "@dotui/ui/components/tooltip";
-import { cn } from "@dotui/ui/lib/utils";
 
 import { useMounted } from "@/hooks/use-mounted";
 import { LoginModal } from "@/modules/auth/components/login-modal";
 import { authClient } from "@/modules/auth/lib/client";
-import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
-import { CreateStyleModal } from "../create-style-modal";
+import { CreateStyleModal } from "@/modules/styles/components/create-style-modal";
+import { useStyleEditorForm } from "../context/style-editor-provider";
+import { useEditorStyle } from "../hooks/use-editor-style";
 import { CodeModal } from "./code-modal";
+import { PreviewFrame } from "./preview";
 
 export function StyleEditorHeader() {
-  const { form, isLoading } = useStyleForm();
+  const { isLoading } = useEditorStyle();
+  const form = useStyleEditorForm();
+
+  const styleName = useWatch({
+    control: form.control,
+    name: "name",
+  });
 
   return (
     <div className="container max-w-4xl">
@@ -47,9 +54,7 @@ export function StyleEditorHeader() {
       </Link>
       <div className="flex items-center justify-between gap-4">
         <Skeleton show={isLoading}>
-          <h1 className="text-2xl font-bold leading-none">
-            {form.watch("name")}
-          </h1>
+          <h1 className="text-2xl font-bold leading-none">{styleName}</h1>
         </Skeleton>
         <div className="flex items-center gap-1">
           <StyleEditorHeaderActions />
@@ -60,11 +65,9 @@ export function StyleEditorHeader() {
 }
 
 function StyleEditorHeaderActions() {
-  const { form } = useStyleForm();
+  const form = useStyleEditorForm();
   const [isCodeModalOpen, setIsCodeModalOpen] = React.useState(false);
-  const pathname = usePathname();
-  const segments = pathname.split("/");
-  const authorUsername = segments[2] ?? "";
+  const { data, isLoading } = useEditorStyle();
 
   const { data: session, isPending } = authClient.useSession();
   const isMounted = useMounted();
@@ -73,18 +76,11 @@ function StyleEditorHeaderActions() {
     form.reset();
   };
 
-  const styleUserId = form.getValues("userId");
-  const isUserAuthenticated = Boolean(session?.user?.id);
-  const isUserStyle = Boolean(
-    isUserAuthenticated &&
-      ((styleUserId && session?.user?.id === styleUserId) ||
-        (session?.user?.username &&
-          authorUsername &&
-          session.user.username === authorUsername)),
-  );
+  const isUserAuthenticated = session && session.user;
+  const isUserStyle = isUserAuthenticated && session.user.id === data?.userId;
 
   return (
-    <Skeleton show={!isMounted || isPending}>
+    <Skeleton show={!isMounted || isPending || isLoading}>
       <CodeModal isOpen={isCodeModalOpen} onOpenChange={setIsCodeModalOpen}>
         <Button
           size="sm"
@@ -104,7 +100,7 @@ function StyleEditorHeaderActions() {
           <EyeIcon />
         </Button>
         <Dialog type="drawer" className="p-0! overflow-hidden">
-          <Preview />
+          <PreviewFrame />
           <Button
             slot="close"
             variant="quiet"
@@ -197,24 +193,3 @@ function StyleEditorHeaderActions() {
     </Skeleton>
   );
 }
-
-const Preview = () => {
-  const [isLoading, setLoading] = React.useState(true);
-  const pathname = usePathname();
-  const segments = pathname.split("/");
-  const username = segments[2] ?? "";
-  const styleName = segments[3] ?? "";
-
-  return (
-    <Skeleton show={isLoading}>
-      <iframe
-        src={`/view/${username}/${styleName}/login?mode=true&live=true`}
-        onLoad={() => setLoading(false)}
-        className={cn(
-          "size-full h-[90vh] rounded-t-md",
-          isLoading && "opacity-0",
-        )}
-      />
-    </Skeleton>
-  );
-};

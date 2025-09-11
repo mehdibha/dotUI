@@ -8,6 +8,7 @@ import {
   PencilIcon,
   XIcon,
 } from "lucide-react";
+import { useWatch } from "react-hook-form";
 
 import { COLOR_TOKENS } from "@dotui/registry-definition/registry-tokens";
 import { Button } from "@dotui/ui/components/button";
@@ -29,7 +30,8 @@ import { cn } from "@dotui/ui/lib/utils";
 import type { TableRootProps } from "@dotui/ui/components/table";
 
 import { AutoResizeTextField } from "@/components/auto-resize-input";
-import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
+import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
+import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
 
 export const ColorTokens = ({
   variant = "line",
@@ -41,9 +43,13 @@ export const ColorTokens = ({
   tokenIds: string[];
   hideHeader?: boolean;
 }) => {
-  const { isSuccess, form } = useStyleForm();
+  const { isSuccess } = useEditorStyle();
+  const form = useStyleEditorForm();
 
-  const formTokens = form.watch("theme.colors.tokens");
+  const formTokens = useWatch({
+    control: form.control,
+    name: "theme.colors.tokens",
+  });
 
   return (
     <>
@@ -96,7 +102,7 @@ const ColorTokenVariableName = ({
   index: number;
   description?: string;
 }) => {
-  const { form } = useStyleForm();
+  const form = useStyleEditorForm();
   const [isEditMode, setEditMode] = React.useState(false);
   const [localValue, setLocalValue] = React.useState("");
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -232,7 +238,7 @@ const ColorTokenVariableName = ({
 };
 
 const ColorTokenValue = ({ index }: { index: number }) => {
-  const { form } = useStyleForm();
+  const form = useStyleEditorForm();
 
   // const [color] = token.value
   //   .replace("var(--", "")

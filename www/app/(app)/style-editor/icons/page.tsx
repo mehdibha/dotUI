@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { IconsEditor } from "@/modules/styles/components/style-editor/icons-editor";
+import { IconsEditor } from "@/modules/style-editor/components/icons-editor";
 
 export async function generateMetadata({
   searchParams,

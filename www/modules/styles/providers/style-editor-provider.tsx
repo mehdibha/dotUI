@@ -16,7 +16,7 @@ import { toast } from "@dotui/ui/components/toast";
 
 import { useDebounce } from "@/hooks/use-debounce";
 import { useTRPC, useTRPCClient } from "@/lib/trpc/react";
-import { useLiveStyleProducer } from "../atoms/live-style-atom";
+import { useLiveStyleProducer } from "../../style-editor/atoms/live-style-atom";
 import { usePreferences } from "../atoms/preferences-atom";
 
 const formSchema = styleDefinitionSchema.extend({
