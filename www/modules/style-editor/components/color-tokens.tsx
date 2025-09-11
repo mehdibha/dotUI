@@ -8,8 +8,10 @@ import {
   PencilIcon,
   XIcon,
 } from "lucide-react";
+import { useWatch } from "react-hook-form";
 
 import { COLOR_TOKENS } from "@dotui/registry-definition/registry-tokens";
+import { SCALE_NUMBERRS } from "@dotui/style-engine/constants";
 import { Button } from "@dotui/ui/components/button";
 import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
 import { FormControl } from "@dotui/ui/components/form";
@@ -29,7 +31,8 @@ import { cn } from "@dotui/ui/lib/utils";
 import type { TableRootProps } from "@dotui/ui/components/table";
 
 import { AutoResizeTextField } from "@/components/auto-resize-input";
-import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
+import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
+import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
 
 export const ColorTokens = ({
   variant = "line",
@@ -41,9 +44,13 @@ export const ColorTokens = ({
   tokenIds: string[];
   hideHeader?: boolean;
 }) => {
-  const { isSuccess, form } = useStyleForm();
+  const { isSuccess } = useEditorStyle();
+  const form = useStyleEditorForm();
 
-  const formTokens = form.watch("theme.colors.tokens");
+  const formTokens = useWatch({
+    control: form.control,
+    name: "theme.colors.tokens",
+  });
 
   return (
     <>
@@ -63,25 +70,29 @@ export const ColorTokens = ({
             </TableColumn>
           </TableHeader>
           <TableBody>
-            {tokenIds.map((tokenId) => {
-              const tokenDef = COLOR_TOKENS.find((def) => def.name === tokenId);
-              const index = formTokens.findIndex(
-                (token) => token.name === tokenId,
-              );
-              return (
-                <TableRow key={tokenId} id={tokenId}>
-                  <TableCell>
-                    <ColorTokenVariableName
-                      index={index}
-                      description={tokenDef?.description}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <ColorTokenValue index={index} />
-                  </TableCell>
-                </TableRow>
-              );
-            })}
+            {tokenIds
+              .filter((tokenId) => !tokenId.startsWith("color-fg-on"))
+              .map((tokenId) => {
+                const tokenDef = COLOR_TOKENS.find(
+                  (def) => def.name === tokenId,
+                );
+                const index = formTokens.findIndex(
+                  (token) => token.name === tokenId,
+                );
+                return (
+                  <TableRow key={tokenId} id={tokenId}>
+                    <TableCell className="pl-0">
+                      <ColorTokenVariableName
+                        index={index}
+                        description={tokenDef?.description}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <ColorTokenValue index={index} />
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
           </TableBody>
         </TableRoot>
       </Skeleton>
@@ -96,7 +107,7 @@ const ColorTokenVariableName = ({
   index: number;
   description?: string;
 }) => {
-  const { form } = useStyleForm();
+  const form = useStyleEditorForm();
   const [isEditMode, setEditMode] = React.useState(false);
   const [localValue, setLocalValue] = React.useState("");
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -156,7 +167,7 @@ const ColorTokenVariableName = ({
       name={`theme.colors.tokens.${index}.name`}
       control={form.control}
       render={(props) => (
-        <div className="flex items-center gap-2">
+        <div className="w-70 flex items-center gap-2">
           <div className="bg-bg-muted rounded-full p-1 pl-3">
             {isEditMode ? (
               <div ref={containerRef} className="flex items-center gap-1">
@@ -232,17 +243,7 @@ const ColorTokenVariableName = ({
 };
 
 const ColorTokenValue = ({ index }: { index: number }) => {
-  const { form } = useStyleForm();
-
-  // const [color] = token.value
-  //   .replace("var(--", "")
-  //   .replace(")", "")
-  //   .split("-") as [string, string];
-
-  // const items = Array.from({ length: 10 }, (_, i) => ({
-  //   label: `${color.charAt(0).toUpperCase() + color.slice(1)} ${(i + 1) * 100}`,
-  //   value: `var(--${color}-${(i + 1) * 100})`,
-  // }));
+  const form = useStyleEditorForm();
 
   return (
     <FormControl
@@ -254,9 +255,9 @@ const ColorTokenValue = ({ index }: { index: number }) => {
           .replace(")", "")
           .split("-") as [string, string];
 
-        const items = Array.from({ length: 10 }, (_, i) => ({
-          label: `${color.charAt(0).toUpperCase() + color.slice(1)} ${(i + 1) * 100}`,
-          value: `var(--${color}-${(i + 1) * 100})`,
+        const items = SCALE_NUMBERRS.map((scale, i) => ({
+          label: `${color.charAt(0).toUpperCase() + color.slice(1)} ${scale}`,
+          value: `var(--${color}-${scale})`,
         }));
 
         return (
@@ -270,7 +271,9 @@ const ColorTokenValue = ({ index }: { index: number }) => {
               suffix={<ChevronsUpDownIcon className="text-fg-muted" />}
               className="w-40"
             >
-              <SelectValue />
+              <SelectValue>
+                {({ defaultChildren }) => <>{defaultChildren}</>}
+              </SelectValue>
             </Button>
             <Popover>
               <ListBox items={items}>

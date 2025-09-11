@@ -147,6 +147,7 @@ export const mockThemeDefinition: ThemeDefinition = {
         },
       },
     },
+    accentEmphasisLevel: 1,
     tokens: [
       { id: "color-bg", name: "color-bg", value: "var(--neutral-50)" },
       {

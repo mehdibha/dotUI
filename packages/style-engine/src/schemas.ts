@@ -101,6 +101,7 @@ export const themeDefinitionSchema = z.object({
       dark: modeDefinitionSchema,
     }),
     tokens: colorTokensSchema,
+    accentEmphasisLevel: z.number().min(0).max(3),
   }),
   radius: radiusSchema,
   spacing: spacingSchema,
@@ -176,6 +177,7 @@ export const minimizedThemeDefinitionSchema = z.object({
       })
       .optional(),
     tokens: colorTokensSchema.optional(),
+    accentEmphasisLevel: z.number().min(0).max(3).optional(),
   }),
   radius: radiusSchema.optional(),
   spacing: spacingSchema.optional(),

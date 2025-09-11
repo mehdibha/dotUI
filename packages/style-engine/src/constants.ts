@@ -5,6 +5,7 @@ import type {
   Fonts,
   IconLibrary,
   ModeDefinition,
+  StyleDefinition,
   ThemeDefinition,
   Variants,
   VariantsDefinition,
@@ -24,6 +25,8 @@ export const DEFAULT_SHADOWS = "default";
 
 export const DEFAULT_ICON_LIBRARY: IconLibrary = "lucide";
 export const DEFAULT_ICON_STROKE_WIDTH = 2;
+
+export const DEFAULT_ACCENT_EMPHASIS_LEVEL = 1;
 
 export const DEFAULT_FONTS: Fonts = {
   heading: "Inter",
@@ -257,6 +260,7 @@ export const DEFAULT_THEME: ThemeDefinition = {
       dark: DEFAULT_DARK_MODE,
     },
     tokens: DEFAULT_TOKENS,
+    accentEmphasisLevel: DEFAULT_ACCENT_EMPHASIS_LEVEL,
   },
   fonts: {
     heading: DEFAULT_FONTS.heading,
@@ -269,4 +273,13 @@ export const DEFAULT_THEME: ThemeDefinition = {
   texture: DEFAULT_TEXTURE,
   backgroundPattern: DEFAULT_BACKGROUND_PATTERN,
   letterSpacing: DEFAULT_LETTER_SPACING,
+};
+
+export const DEFAULT_STYLE: StyleDefinition = {
+  theme: DEFAULT_THEME,
+  icons: {
+    library: DEFAULT_ICON_LIBRARY,
+    strokeWidth: DEFAULT_ICON_STROKE_WIDTH,
+  },
+  variants: DEFAULT_VARIANTS_DEFINITION,
 };

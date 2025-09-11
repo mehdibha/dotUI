@@ -39,8 +39,9 @@ import { ChevronsUpDownIcon } from "@dotui/ui/icons";
 import { cn } from "@dotui/ui/lib/utils";
 import type { VariantsDefinition } from "@dotui/style-engine/types";
 
-import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
-import { usePreferences } from "../../atoms/preferences-atom";
+import { DraftStyleProvider } from "@/modules/style-editor/components/draft-style-provider";
+import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
+import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
 import { ColorTokens } from "./color-tokens";
 
 function getComponentVariants(
@@ -79,9 +80,8 @@ const Section = ({
   className,
   ...props
 }: SectionProps) => {
-  const { form, isSuccess } = useStyleForm();
-  const { activeMode } = usePreferences();
-  const style = form.watch();
+  const form = useStyleEditorForm();
+  const { isSuccess } = useEditorStyle();
 
   return (
     <div className={cn(className)} {...props}>
@@ -111,25 +111,16 @@ const Section = ({
         )}
       />
 
-      {tokens && (
-        <ColorTokens
-          variant="bordered"
-          hideHeader
-          tokenIds={tokens}
-          className="mt-2"
-        />
-      )}
+      {tokens && <ColorTokens hideHeader tokenIds={tokens} className="mt-2" />}
       <Skeleton show={!isSuccess}>
-        <StyleProvider
-          mode={activeMode}
-          style={style}
+        <DraftStyleProvider
           className={cn(
             "mt-2 flex items-center justify-center gap-2 rounded-md border px-4 py-8",
             previewClassName,
           )}
         >
           {children}
-        </StyleProvider>
+        </DraftStyleProvider>
       </Skeleton>
     </div>
   );

@@ -13,10 +13,11 @@ import {
   Trash2Icon,
   XIcon,
 } from "lucide-react";
-import { useFieldArray } from "react-hook-form";
+import { useFieldArray, useWatch } from "react-hook-form";
 import type { CssColor } from "@adobe/leonardo-contrast-colors";
 
 import { SCALE_NUMBERRS } from "@dotui/style-engine/constants";
+import { createColorScales } from "@dotui/style-engine/core";
 import { Badge } from "@dotui/ui/components/badge";
 import { Button } from "@dotui/ui/components/button";
 import {
@@ -50,23 +51,28 @@ import { Tooltip } from "@dotui/ui/components/tooltip";
 import { cn } from "@dotui/ui/lib/utils";
 
 import { AutoResizeTextField } from "@/components/auto-resize-input";
-import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
+import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
+import { useColorEditorContext } from "./colors-editor";
 
 export function ColorScaleEditor({ scaleId }: { scaleId: string }) {
-  const { form, resolvedMode } = useStyleForm();
+  const form = useStyleEditorForm();
+  const { resolvedMode } = useColorEditorContext("ColorScaleEditor");
 
-  const name = form.watch(
-    `theme.colors.modes.${resolvedMode}.scales.${scaleId}.name`,
-  );
-  const colorKeys = form
-    .watch(`theme.colors.modes.${resolvedMode}.scales.${scaleId}.colorKeys`)
-    .map((color) => color.color) as CssColor[];
+  const name = useWatch({
+    control: form.control,
+    name: `theme.colors.modes.${resolvedMode}.scales.${scaleId}.name`,
+  });
+
+  const colorKeys = useWatch({
+    control: form.control,
+    name: `theme.colors.modes.${resolvedMode}.scales.${scaleId}.colorKeys`,
+  });
 
   return (
     <DialogRoot>
       <Button>
         {colorKeys.map((color, index) => (
-          <ColorSwatch key={index} color={color} />
+          <ColorSwatch key={index} color={color.color} />
         ))}
         {name.charAt(0).toUpperCase() + name.slice(1)}
       </Button>
@@ -92,10 +98,12 @@ interface ScaleNameEditorProps {
 }
 
 function ScaleNameEditor({ scaleId }: ScaleNameEditorProps) {
-  const { form, resolvedMode } = useStyleForm();
-  const value = form.watch(
-    `theme.colors.modes.${resolvedMode}.scales.${scaleId}.name`,
-  );
+  const form = useStyleEditorForm();
+  const { resolvedMode } = useColorEditorContext("ScaleNameEditor");
+  const value = useWatch({
+    control: form.control,
+    name: `theme.colors.modes.${resolvedMode}.scales.${scaleId}.name`,
+  });
 
   const [isEditMode, setEditMode] = React.useState(false);
   const [localValue, setLocalValue] = React.useState("");
@@ -223,7 +231,8 @@ interface ColorKeysEditorProps {
 }
 
 function ColorKeysEditor({ scaleId }: ColorKeysEditorProps) {
-  const { form, resolvedMode } = useStyleForm();
+  const form = useStyleEditorForm();
+  const { resolvedMode } = useColorEditorContext("ColorKeysEditor");
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
@@ -295,24 +304,35 @@ interface RatioSliderProps {
 }
 
 function RatioSlider({ scaleId }: RatioSliderProps) {
-  const { form, resolvedMode } = useStyleForm();
+  const form = useStyleEditorForm();
+  const { resolvedMode } = useColorEditorContext("RatioSlider");
 
-  const name = form.watch(
-    `theme.colors.modes.${resolvedMode}.scales.${scaleId}.name`,
-  );
-  const neutralColorKeys = form
-    .watch(`theme.colors.modes.${resolvedMode}.scales.neutral.colorKeys`)
-    .map((color) => color.color) as CssColor[];
-  const colorKeys = form
-    .watch(`theme.colors.modes.${resolvedMode}.scales.${scaleId}.colorKeys`)
-    .map((color) => color.color) as CssColor[];
+  const name = useWatch({
+    control: form.control,
+    name: `theme.colors.modes.${resolvedMode}.scales.${scaleId}.name`,
+  });
+
+  const neutralColorKeys = useWatch({
+    control: form.control,
+    name: `theme.colors.modes.${resolvedMode}.scales.neutral.colorKeys`,
+  }).map((color) => color.color) as CssColor[];
+  const colorKeys = useWatch({
+    control: form.control,
+    name: `theme.colors.modes.${resolvedMode}.scales.${scaleId}.colorKeys`,
+  }).map((color) => color.color) as CssColor[];
   const ratios = Array.from({ length: 19 }, (_, i) => i + 1);
-  const lightness = form.watch(`theme.colors.modes.${resolvedMode}.lightness`);
-  const saturation = form.watch(
-    `theme.colors.modes.${resolvedMode}.saturation`,
-  );
-  const contrast =
-    form.watch(`theme.colors.modes.${resolvedMode}.contrast`) / 100;
+  const lightness = useWatch({
+    control: form.control,
+    name: `theme.colors.modes.${resolvedMode}.lightness`,
+  });
+  const saturation = useWatch({
+    control: form.control,
+    name: `theme.colors.modes.${resolvedMode}.saturation`,
+  });
+  const contrast = useWatch({
+    control: form.control,
+    name: `theme.colors.modes.${resolvedMode}.contrast`,
+  });
 
   const dynamicGradient = useMemo(() => {
     const neutral = new LeonardoBgColor({
@@ -332,7 +352,7 @@ function RatioSlider({ scaleId }: RatioSliderProps) {
       colors: [currentColor],
       lightness,
       saturation,
-      contrast,
+      contrast: contrast / 100,
       output: "HEX",
     });
 
@@ -342,13 +362,13 @@ function RatioSlider({ scaleId }: RatioSliderProps) {
       .map((value) => value.value)
       .join(", ")})`;
   }, [
+    neutralColorKeys,
+    ratios,
+    name,
     colorKeys,
     lightness,
     saturation,
     contrast,
-    neutralColorKeys,
-    ratios,
-    name,
   ]);
 
   return (
@@ -361,7 +381,7 @@ function RatioSlider({ scaleId }: RatioSliderProps) {
           orientation="vertical"
           minValue={1}
           maxValue={20}
-          step={0.01}
+          step={0.05}
           className="h-full"
           {...props}
         >
@@ -392,15 +412,27 @@ interface RatioTableProps {
 }
 
 function RatioTable({ scaleId }: RatioTableProps) {
-  const { form, resolvedMode, generatedTheme } = useStyleForm();
+  const form = useStyleEditorForm();
+  const { resolvedMode } = useColorEditorContext("RatioTable");
+
+  const currentModeDefinition = useWatch({
+    name: `theme.colors.modes.${resolvedMode}`,
+    control: form.control,
+  });
+
+  const generatedTheme = React.useMemo(() => {
+    const theme = createColorScales(currentModeDefinition);
+    return theme;
+  }, [currentModeDefinition]);
 
   const generatedScale = generatedTheme.find(
     (scale) => scale.name === scaleId,
   )?.values;
 
-  const scaleName = form.watch(
-    `theme.colors.modes.${resolvedMode}.scales.${scaleId}.name`,
-  );
+  const scaleName = useWatch({
+    control: form.control,
+    name: `theme.colors.modes.${resolvedMode}.scales.${scaleId}.name`,
+  });
 
   return (
     <div className="flex-1">

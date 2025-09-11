@@ -7,6 +7,7 @@ import {
   MoonIcon,
   SunIcon,
 } from "lucide-react";
+import { useWatch } from "react-hook-form";
 
 import { COLOR_TOKENS } from "@dotui/registry-definition/registry-tokens";
 import { Button } from "@dotui/ui/components/button";
@@ -23,10 +24,13 @@ import {
   SliderTrack,
   SliderValueLabel,
 } from "@dotui/ui/components/slider";
+import { createScopedContext } from "@dotui/ui/lib/utils";
 
 import { ThemeModeSwitch } from "@/components/theme-mode-switch";
+import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
+import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
-import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
+import { AccentLevelEditor } from "./accent-emphasis-editor";
 import { ColorScale } from "./color-scale";
 import { ColorScaleEditor } from "./color-scale-editor";
 import { ColorTokens } from "./color-tokens";
@@ -46,100 +50,128 @@ const semanticColors = [
 
 type ModeConfig = "light-only" | "dark-only" | "light-dark";
 
+const [ColorEditorProvider, useColorEditorContext] = createScopedContext<{
+  resolvedMode: "light" | "dark";
+  supportsLightDark: boolean;
+}>("ColorEditor");
+
+export { useColorEditorContext };
+
 export function ColorsEditor() {
-  const { form, resolvedMode, isSuccess } = useStyleForm();
-  const { setActiveMode } = usePreferences();
+  const form = useStyleEditorForm();
+  const { isSuccess } = useEditorStyle();
+  const { activeMode } = usePreferences();
+  const activeModes = useWatch({
+    control: form.control,
+    name: "theme.colors.activeModes",
+  });
+
+  const supportsLightDark =
+    activeModes.includes("light") && activeModes.includes("dark");
+
+  const resolvedMode = React.useMemo(() => {
+    if (supportsLightDark) {
+      return activeMode;
+    }
+    return activeModes[0]!;
+  }, [activeMode, activeModes, supportsLightDark]);
 
   return (
-    <div>
-      <StyleEditorSection title="Mode">
-        <div className="mt-2 flex items-start justify-between">
-          <ModeConfig />
-          <Skeleton show={!isSuccess}>
-            {form.watch("theme.colors.activeModes").join("-") ===
-              "light-dark" && (
-              <ThemeModeSwitch
-                isSelected={resolvedMode === "light"}
-                onChange={(isSelected) => {
-                  setActiveMode(isSelected ? "light" : "dark");
-                }}
-              />
-            )}
-          </Skeleton>
-        </div>
-      </StyleEditorSection>
+    <ColorEditorProvider
+      resolvedMode={resolvedMode}
+      supportsLightDark={supportsLightDark}
+    >
+      <div>
+        <StyleEditorSection title="Mode">
+          <div className="mt-2 flex items-start justify-between">
+            <ModeConfig />
+            <ModeSwitch />
+          </div>
+        </StyleEditorSection>
 
-      <StyleEditorSection title="Color adjustments">
-        <ColorAdjustments />
-      </StyleEditorSection>
+        <StyleEditorSection title="Color adjustments">
+          <ColorAdjustments />
+        </StyleEditorSection>
 
-      <StyleEditorSection title="Base colors">
-        <div className="@max-lg:grid @max-lg:grid-cols-2 mt-2 flex items-center gap-2">
-          {baseColors.map((color) => {
-            return (
-              <Skeleton key={color.name} show={!isSuccess}>
-                <ColorScaleEditor scaleId={color.name} />
-              </Skeleton>
-            );
-          })}
-        </div>
-        <div className="mt-3 space-y-2">
-          {baseColors.map((color) => {
-            return <ColorScale key={color.name} scaleId={color.name} />;
-          })}
-        </div>
-      </StyleEditorSection>
+        <StyleEditorSection
+          key={`${resolvedMode}-base-colors`}
+          title="Base colors"
+        >
+          <div className="@max-lg:grid @max-lg:grid-cols-2 mt-2 flex items-center gap-2">
+            {baseColors.map((color) => {
+              return (
+                <Skeleton key={color.name} show={!isSuccess}>
+                  <ColorScaleEditor scaleId={color.name} />
+                </Skeleton>
+              );
+            })}
+          </div>
+          <div className="mt-3 space-y-2">
+            {baseColors.map((color) => {
+              return <ColorScale key={color.name} scaleId={color.name} />;
+            })}
+          </div>
+        </StyleEditorSection>
 
-      <StyleEditorSection title="Semantic colors">
-        <div className="@max-lg:grid @max-lg:grid-cols-2 mt-2 flex items-center gap-2">
-          {semanticColors.map((color) => {
-            return (
-              <Skeleton key={color.name} show={!isSuccess}>
-                <ColorScaleEditor scaleId={color.name} />
-              </Skeleton>
-            );
-          })}
-        </div>
-        <div className="mt-3 space-y-2">
-          {semanticColors.map((color) => {
-            return <ColorScale key={color.name} scaleId={color.name} />;
-          })}
-        </div>
-      </StyleEditorSection>
+        <StyleEditorSection
+          key={`${resolvedMode}-semantic-colors`}
+          title="Semantic colors"
+        >
+          <div className="@max-lg:grid @max-lg:grid-cols-2 mt-2 flex items-center gap-2">
+            {semanticColors.map((color) => {
+              return (
+                <Skeleton key={color.name} show={!isSuccess}>
+                  <ColorScaleEditor scaleId={color.name} />
+                </Skeleton>
+              );
+            })}
+          </div>
+          <div className="mt-3 space-y-2">
+            {semanticColors.map((color) => {
+              return <ColorScale key={color.name} scaleId={color.name} />;
+            })}
+          </div>
+        </StyleEditorSection>
 
-      <StyleEditorSection title="Tokens">
-        <div className="mt-3 space-y-4">
-          {[
-            {
-              name: "Backgrounds",
-              category: "background" as const,
-            },
-            {
-              name: "Foregrounds",
-              category: "foreground" as const,
-            },
-            {
-              name: "Borders",
-              category: "border" as const,
-            },
-          ].map(({ name, category }) => (
-            <div key={name}>
-              <h3 className="text-sm font-medium">{name}</h3>
-              <ColorTokens
-                tokenIds={COLOR_TOKENS.filter((tk) =>
-                  tk.categories?.some((cat) => cat === category),
-                ).map((tk) => tk.name)}
-              />
-            </div>
-          ))}
-        </div>
-      </StyleEditorSection>
-    </div>
+        <StyleEditorSection title="Accent emphasis">
+          <AccentLevelEditor />
+        </StyleEditorSection>
+
+        <StyleEditorSection key={`${resolvedMode}-tokens`} title="Tokens">
+          <div className="mt-3 space-y-4">
+            {[
+              {
+                name: "Backgrounds",
+                category: "background" as const,
+              },
+              {
+                name: "Foregrounds",
+                category: "foreground" as const,
+              },
+              {
+                name: "Borders",
+                category: "border" as const,
+              },
+            ].map(({ name, category }) => (
+              <div key={name}>
+                <h3 className="text-sm font-medium">{name}</h3>
+                <ColorTokens
+                  tokenIds={COLOR_TOKENS.filter((tk) =>
+                    tk.categories?.some((cat) => cat === category),
+                  ).map((tk) => tk.name)}
+                />
+              </div>
+            ))}
+          </div>
+        </StyleEditorSection>
+      </div>
+    </ColorEditorProvider>
   );
 }
 
 const ModeConfig = () => {
-  const { form, isSuccess } = useStyleForm();
+  const { isSuccess } = useEditorStyle();
+  const form = useStyleEditorForm();
 
   return (
     <Skeleton show={!isSuccess}>
@@ -183,8 +215,32 @@ const ModeConfig = () => {
   );
 };
 
+const ModeSwitch = () => {
+  const { isSuccess } = useEditorStyle();
+  const { setActiveMode } = usePreferences();
+  const { resolvedMode, supportsLightDark } =
+    useColorEditorContext("ModeSwitch");
+
+  if (!supportsLightDark) {
+    return null;
+  }
+
+  return (
+    <Skeleton show={!isSuccess}>
+      <ThemeModeSwitch
+        isSelected={resolvedMode === "light"}
+        onChange={(isSelected) => {
+          setActiveMode(isSelected ? "light" : "dark");
+        }}
+      />
+    </Skeleton>
+  );
+};
+
 const ColorAdjustments = () => {
-  const { form, resolvedMode, isSuccess } = useStyleForm();
+  const form = useStyleEditorForm();
+  const { isSuccess } = useEditorStyle();
+  const { resolvedMode } = useColorEditorContext("ColorAdjustments");
 
   return (
     <div className="mt-2 grid grid-cols-2 gap-3">

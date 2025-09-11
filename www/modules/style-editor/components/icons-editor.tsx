@@ -10,16 +10,18 @@ import { ListBox, ListBoxItem } from "@dotui/ui/components/list-box";
 import { Popover } from "@dotui/ui/components/popover";
 import { SelectRoot, SelectValue } from "@dotui/ui/components/select";
 import { Slider } from "@dotui/ui/components/slider";
-import { StyleProvider } from "@dotui/ui/index";
 import { Skeleton } from "@dotui/ui/registry/components/skeleton/basic";
 
-import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
+import { useStyleEditorForm } from "../context/style-editor-provider";
+import { useEditorStyle } from "../hooks/use-editor-style";
+import { DraftStyleProvider } from "./draft-style-provider";
 import { StyleEditorSection } from "./section";
 
-export function IconsEditor() {
-  const { form, isSuccess } = useStyleForm();
+//  TODO: add icons effects such as glow effect with box-shadow
 
-  //  TODO: add icons effects such as glow effect with box-shadow
+export function IconsEditor() {
+  const form = useStyleEditorForm();
+  const { isSuccess } = useEditorStyle();
 
   return (
     <div>
@@ -75,7 +77,7 @@ export function IconsEditor() {
         </div>
 
         <Label className="mt-6">Icons</Label>
-        <StyleProvider style={form.watch()} className="rounded-md border p-4">
+        <DraftStyleProvider className="rounded-md border p-4">
           <div className="grid max-h-[168px] gap-2 overflow-hidden [grid-template-columns:repeat(auto-fill,minmax(36px,1fr))] [grid-template-rows:repeat(auto-fill,minmax(36px,1fr))] [&_svg]:size-6">
             {Object.entries(registryIcons)
               .slice(0, 100)
@@ -87,7 +89,7 @@ export function IconsEditor() {
                 );
               })}
           </div>
-        </StyleProvider>
+        </DraftStyleProvider>
       </StyleEditorSection>
     </div>
   );

@@ -75,7 +75,7 @@ const BlockViewToolbar = ({ name, title }: BlockViewToolbarProps) => {
 
 const BlockViewView = ({ name }: { name: string }) => {
   return (
-    <ActiveStyleProvider className="flex flex-1 items-center justify-center rounded-lg border p-16">
+    <ActiveStyleProvider className="flex flex-1 items-center justify-center rounded-lg border py-8">
       <BlockViewer name={name} />
     </ActiveStyleProvider>
   );

@@ -9,7 +9,8 @@ import { StyleProvider } from "@dotui/ui";
 import type { StyleDefinition } from "@dotui/style-engine/types";
 
 import { useMounted } from "@/hooks/use-mounted";
-import { useLiveStyleConsumer } from "@/modules/styles/atoms/live-style-atom";
+import { useDraftStyleConsumer } from "@/modules/style-editor/atoms/draft-style-atom";
+import { useLiveStyleConsumer } from "@/modules/style-editor/atoms/live-style-atom";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 
 export const BlockProviders = ({
@@ -29,12 +30,12 @@ export const BlockProviders = ({
 
   const { activeMode } = usePreferences();
   const isMounted = useMounted();
-  const { liveStyle } = useLiveStyleConsumer(styleSlug);
+  const { draftStyle } = useDraftStyleConsumer(styleSlug);
   const { resolvedTheme } = useTheme();
 
   const style = React.useMemo(() => {
-    return shouldUseLiveStyle ? (liveStyle ?? styleProp) : styleProp;
-  }, [liveStyle, styleProp, shouldUseLiveStyle]);
+    return shouldUseLiveStyle ? (draftStyle ?? styleProp) : styleProp;
+  }, [draftStyle, styleProp, shouldUseLiveStyle]);
 
   const effectiveMode = shouldUseActiveMode
     ? activeMode
