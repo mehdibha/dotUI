@@ -358,7 +358,7 @@ function RatioSlider({ scaleId }: RatioSliderProps) {
 
     const palette = theme.contrastColors[1]!;
 
-    return `linear-gradient(0deg, ${palette.values
+    return `linear-gradient(180deg, ${palette.values
       .map((value) => value.value)
       .join(", ")})`;
   }, [
