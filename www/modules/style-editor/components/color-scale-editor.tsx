@@ -375,13 +375,20 @@ function RatioSlider({ scaleId }: RatioSliderProps) {
     <FormControl
       name={`theme.colors.modes.${resolvedMode}.scales.${scaleId}.ratios`}
       control={form.control}
-      render={(props) => (
+      render={({ value, onChange, ...props }) => (
         <SliderRoot
           aria-label="Ratios"
           orientation="vertical"
           minValue={1}
           maxValue={20}
           step={0.05}
+          value={value.map((v: number) => 21 - v)}
+          onChange={(invertedValues) => {
+            const originalValues = (invertedValues as number[]).map(
+              (v) => 21 - v,
+            );
+            onChange(originalValues);
+          }}
           className="h-full"
           {...props}
         >
