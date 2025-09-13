@@ -29,7 +29,7 @@ catalogs:
     next: ^15.5.0
     '@next/bundle-analyzer': ^15.5.0
   ui:
-    react-aria-components: ^1.12.1
+    react-aria-components: ^1.12.2
     tailwind-variants: ^1.0.0
     clsx: ^2.1.0
     tailwind-merge: ^3.0.2
