@@ -115,7 +115,7 @@ const TooltipRoot = ({
 const MotionTooltip = motion.create(AriaTooltip);
 
 interface TooltipContentProps
-  extends Omit<React.ComponentProps<typeof AriaTooltip>, "children" | "style">,
+  extends Omit<React.ComponentProps<typeof MotionTooltip>, "children" | "style">,
     VariantProps<typeof tooltipStyles> {
   children?: React.ReactNode;
   style?: React.CSSProperties;

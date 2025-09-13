@@ -9,7 +9,6 @@ import {
 import { tv } from "tailwind-variants";
 import type {
   BreadcrumbsProps as AriaBreadcrumbsProps,
-  LinkProps as AriaLinkProps,
 } from "react-aria-components";
 
 import { ChevronRightIcon } from "@dotui/ui/icons";
@@ -37,9 +36,8 @@ const Breadcrumbs = <T extends object>({
   return <AriaBreadcrumbs className={root({ className })} {...props} />;
 };
 
-interface BreadcrumbProps
-  extends React.ComponentProps<typeof BreadcrumbItem>,
-    Omit<AriaLinkProps, "children" | "className" | "style"> {}
+type BreadcrumbProps = BreadcrumbItemProps &
+  Omit<BreadcrumbLinkProps, "children">;
 const Breadcrumb = ({ ref, children, ...props }: BreadcrumbProps) => {
   return (
     <BreadcrumbItem ref={ref} {...props}>
