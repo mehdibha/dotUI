@@ -77,14 +77,13 @@ const buttonStyles = tv({
 const [ButtonProvider, useButtonContext] =
   createOptionalScopedContext<VariantProps<typeof buttonStyles>>("Button");
 
-interface ButtonProps
-  extends Omit<AriaButtonProps, "className">,
-    Omit<AriaLinkProps, "className" | "children" | "style">,
-    VariantProps<typeof buttonStyles> {
-  className?: string;
-  prefix?: React.ReactNode;
-  suffix?: React.ReactNode;
-}
+type ButtonProps = Omit<AriaButtonProps, "className"> &
+  Omit<AriaLinkProps, "className" | "children" | "style"> &
+  VariantProps<typeof buttonStyles> & {
+    className?: string;
+    prefix?: React.ReactNode;
+    suffix?: React.ReactNode;
+  };
 
 const Button = React.forwardRef(
   (localProps: ButtonProps, ref: React.ForwardedRef<HTMLButtonElement>) => {

@@ -6,7 +6,7 @@ export const base: RegistryItem = {
   extends: "none",
   dependencies: [
     "tailwind-variants",
-    "react-aria-components@1.10.1",
+    "react-aria-components",
     "tailwindcss-react-aria-components",
     "tw-animate-css",
     "tailwindcss-autocontrast",

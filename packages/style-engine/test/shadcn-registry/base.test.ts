@@ -37,7 +37,7 @@ describe("generateRegistryBase", () => {
     });
 
     expect(result.dependencies).toContain("tailwind-variants");
-    expect(result.dependencies).toContain("react-aria-components@1.10.1");
+    expect(result.dependencies).toContain("react-aria-components");
     expect(result.dependencies).toContain("tailwindcss-react-aria-components");
     expect(result.dependencies).toContain("tw-animate-css");
   });
