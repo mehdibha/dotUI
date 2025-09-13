@@ -7,9 +7,7 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import type {
-  BreadcrumbsProps as AriaBreadcrumbsProps,
-} from "react-aria-components";
+import type { BreadcrumbsProps as AriaBreadcrumbsProps } from "react-aria-components";
 
 import { ChevronRightIcon } from "@dotui/ui/icons";
 import { focusRing } from "@dotui/ui/lib/focus-styles";
