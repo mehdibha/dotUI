@@ -10,7 +10,7 @@ import { Backlog } from "@dotui/ui/registry/blocks/tables/backlog/components/bac
 export function BlocksShowcase() {
   return (
     <div className="grid grid-cols-11 gap-4 p-4 md:p-6">
-      <Booking className="col-span-1b1 xl:col-span-8" />
+      <Booking className="h-90 col-span-11 xl:col-span-8" />
       <Notifications className="!h-90 xl:h-102 col-span-11 md:col-span-5 xl:col-span-3" />
       <InviteMembers className="col-span-11 md:col-span-6 lg:col-span-6 xl:col-span-4" />
       <Backlog className="col-span-11 lg:col-span-8 xl:col-span-7" />
