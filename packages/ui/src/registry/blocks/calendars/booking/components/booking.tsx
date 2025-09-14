@@ -14,7 +14,7 @@ export function Booking({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <Card
       className={cn(
-        "@max-3xl:flex @max-3xl:flex-col grid grid-cols-[1fr_auto_1fr] gap-0 p-0",
+        "@max-3xl:flex @max-3xl:flex-col grid grid-cols-[1fr_auto_1fr] gap-0 p-0 h-90",
         className,
       )}
       {...props}
@@ -54,7 +54,7 @@ export function Booking({ className, ...props }: React.ComponentProps<"div">) {
         <div className="px-6">
           <span className="font-semibold">Sat</span> 26
         </div>
-        <div className="mt-4 flex-1 space-y-3 overflow-y-auto px-6">
+        <div className="mt-4 flex-1 space-y-3 overflow-y-auto px-6 pb-4">
           <div className="@max-3xl:grid-cols-2 grid gap-1.5">
             {timeSlots.map(({ time: timeSlot, available }) => (
               <Button key={timeSlot} size="sm" className="w-full">

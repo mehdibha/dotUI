@@ -17,6 +17,11 @@ export const registryBlocks: Registry["items"] = [
     registryDependencies: ["button", "text-field", "card"],
     files: [
       {
+        path: "blocks/auth/login/page.tsx",
+        target: "/app/login/page.tsx",
+        type: "registry:page",
+      },
+      {
         path: "blocks/auth/login/components/login-form.tsx",
         type: "registry:component",
       },
@@ -120,6 +125,11 @@ export const registryBlocks: Registry["items"] = [
     type: "registry:block",
     registryDependencies: ["all"],
     files: [
+      {
+        path: "blocks/showcase/blocks-showcase/page.tsx",
+        type: "registry:page",
+        target: "/app/blocks-showcase/page.tsx",
+      },
       {
         path: "blocks/showcase/blocks-showcase/components/blocks-showcase.tsx",
         type: "registry:component",

@@ -1,12 +1,11 @@
 "use client";
 
 import React from "react";
-import { CopyIcon, ExternalLinkIcon, TerminalIcon } from "lucide-react";
+import { CheckIcon, ExternalLinkIcon, TerminalIcon } from "lucide-react";
 
 import { registryBlocks } from "@dotui/registry-definition/registry-blocks";
 import { BlockViewer } from "@dotui/ui/block-viewer";
 import { Button } from "@dotui/ui/components/button";
-import { Skeleton } from "@dotui/ui/components/skeleton";
 
 import { ThemeModeSwitch } from "@/components/theme-mode-switch";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
@@ -38,6 +37,15 @@ interface BlockViewToolbarProps {
 const BlockViewToolbar = ({ name, title }: BlockViewToolbarProps) => {
   const { activeMode, setActiveMode } = usePreferences();
   const { data: activeStyle } = useActiveStyle();
+  const [isCopied, setCopied] = React.useState(false);
+
+  const handleCopy = () => {
+    void navigator.clipboard.writeText(`npx shadcn@latest add @dotui/${name}`);
+    setCopied(true);
+    setTimeout(() => {
+      setCopied(false);
+    }, 1000);
+  };
 
   return (
     <div className="flex items-center justify-between px-2">
@@ -52,17 +60,30 @@ const BlockViewToolbar = ({ name, title }: BlockViewToolbarProps) => {
           }
         />
         <Button
-          className="max-w-[200px] font-mono max-lg:hidden [&_svg]:size-8"
-          prefix={<TerminalIcon />}
+          className="[&_svg]:text-fg-muted font-mono max-lg:hidden [&_svg]:size-4"
+          prefix={
+            isCopied ? (
+              <CheckIcon className="animate-in fade-in" />
+            ) : (
+              <TerminalIcon className="animate-in fade-in" />
+            )
+          }
+          onPress={handleCopy}
           size="sm"
         >
           <span className="truncate text-xs">
-            npx shadcn@latest add @dotui/{activeStyle?.name}/{name}
+            npx shadcn@latest add @dotui/{name}
           </span>
         </Button>
         <Button
           variant="primary"
           size="sm"
+          target={activeStyle ? "_blank" : undefined}
+          href={
+            activeStyle
+              ? `/view/${activeStyle.user.username}/${activeStyle.name}/${name}`
+              : undefined
+          }
           prefix={<ExternalLinkIcon />}
           className="max-lg:hidden"
         >
@@ -75,7 +96,7 @@ const BlockViewToolbar = ({ name, title }: BlockViewToolbarProps) => {
 
 const BlockViewView = ({ name }: { name: string }) => {
   return (
-    <ActiveStyleProvider className="flex flex-1 items-center justify-center rounded-lg border py-8">
+    <ActiveStyleProvider className="flex flex-1 items-center justify-center rounded-lg border">
       <BlockViewer name={name} />
     </ActiveStyleProvider>
   );

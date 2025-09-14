@@ -14,7 +14,7 @@ import { cn } from "@dotui/ui/lib/utils";
 
 export function LoginForm(props: React.ComponentProps<"div">) {
   return (
-    <Card {...props} className={cn("min-w-xs", props.className)}>
+    <Card {...props} className={cn("w-full max-w-xs", props.className)}>
       <CardHeader>
         <CardTitle className="text-xl">Login to your account</CardTitle>
         <CardDescription>
@@ -46,6 +46,7 @@ export function LoginForm(props: React.ComponentProps<"div">) {
           Continue with email
         </Button>
         <p className="text-fg-muted mt-4 text-sm">
+          {/* TODO */}
           Don&apos;t have an account? <span>Register</span>
         </p>
       </CardContent>
