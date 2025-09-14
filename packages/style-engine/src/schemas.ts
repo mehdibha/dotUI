@@ -130,6 +130,7 @@ export const variantsDefinitionSchema = z.object({
   slider: z.enum(["basic"]),
   "badge-and-tag-group": z.enum(["basic"]),
   tooltip: z.enum(["basic"]),
+  link: z.enum(["basic"]),
 });
 
 export const styleDefinitionSchema = z.object({
@@ -257,6 +258,7 @@ export const variantsSchema = z.object({
   form: z.enum(["basic", "react-hook-form"]),
   input: z.enum(["basic"]),
   kbd: z.enum(["basic"]),
+  link: z.enum(["basic"]),
   "list-box": z.enum(["basic"]),
   loader: z.enum(["dots", "line", "ring", "tailspin", "wave"]),
   menu: z.enum(["basic"]),

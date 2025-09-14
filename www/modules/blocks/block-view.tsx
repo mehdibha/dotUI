@@ -2,22 +2,21 @@
 
 import React from "react";
 import { CheckIcon, ExternalLinkIcon, TerminalIcon } from "lucide-react";
+import type { RegistryItem } from "shadcn/schema";
 
 import { registryBlocks } from "@dotui/registry-definition/registry-blocks";
-import { BlockViewer } from "@dotui/ui/block-viewer";
 import { Button } from "@dotui/ui/components/button";
+import { Skeleton } from "@dotui/ui/components/skeleton";
+import { cn } from "@dotui/ui/lib/utils";
 
 import { ThemeModeSwitch } from "@/components/theme-mode-switch";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
-import { ActiveStyleProvider } from "@/modules/styles/components/active-style-provider";
 import { useActiveStyle } from "@/modules/styles/hooks/use-active-style";
 
 interface BlockViewProps {
-  name: string;
+  block?: RegistryItem;
 }
-export function BlockView({ name, ...props }: BlockViewProps) {
-  const block = registryBlocks.find((block) => block.name === name);
-
+export function BlockView({ block }: BlockViewProps) {
   if (!block) {
     return <div>Block not found</div>;
   }
@@ -25,7 +24,7 @@ export function BlockView({ name, ...props }: BlockViewProps) {
   return (
     <div className="flex flex-col gap-2">
       <BlockViewToolbar name={block.name} title={block.description} />
-      <BlockViewView name={block.name} />
+      <BlockViewView block={block} />
     </div>
   );
 }
@@ -94,10 +93,28 @@ const BlockViewToolbar = ({ name, title }: BlockViewToolbarProps) => {
   );
 };
 
-const BlockViewView = ({ name }: { name: string }) => {
+const BlockViewView = ({ block }: { block: RegistryItem }) => {
+  const { data: activeStyle } = useActiveStyle();
+  const [isLoading, setLoading] = React.useState(true);
+
   return (
-    <ActiveStyleProvider className="flex flex-1 items-center justify-center rounded-lg border">
-      <BlockViewer name={name} />
-    </ActiveStyleProvider>
+    <div
+      className={cn(
+        "bg-bg-muted overflow-hidden rounded-lg border",
+        isLoading && "animate-pulse",
+      )}
+    >
+      <iframe
+        src={
+          activeStyle
+            ? `/view/${activeStyle?.user.username}/${activeStyle?.name}/${block.name}`
+            : undefined
+        }
+        onLoad={() => setLoading(false)}
+        onError={() => setLoading(false)}
+        style={{ height: block.meta?.containerHeight }}
+        className="w-full"
+      />
+    </div>
   );
 };
