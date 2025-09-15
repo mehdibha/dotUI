@@ -197,7 +197,7 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
           >
             <SelectValue className="flex-0" />
           </Button>
-          <Popover>
+          <Popover className="min-w-36">
             <ListBox
               items={blocksCategories
                 .filter((category) => category.slug !== "featured")

@@ -12,11 +12,12 @@ export const Index: Record<
   }
 > = {
   login: {
-    files: ["registry/blocks/auth/login/components/login-form.tsx"],
+    files: [
+      "registry/blocks/auth/login/page.tsx",
+      "registry/blocks/auth/login/components/login-form.tsx",
+    ],
     component: React.lazy(async () => {
-      const mod = await import(
-        "@dotui/ui/registry/blocks/auth/login/components/login-form"
-      );
+      const mod = await import("@dotui/ui/registry/blocks/auth/login/page");
       const exportName =
         Object.keys(mod).find(
           (key) =>
@@ -133,11 +134,12 @@ export const Index: Record<
   },
   "blocks-showcase": {
     files: [
+      "registry/blocks/showcase/blocks-showcase/page.tsx",
       "registry/blocks/showcase/blocks-showcase/components/blocks-showcase.tsx",
     ],
     component: React.lazy(async () => {
       const mod = await import(
-        "@dotui/ui/registry/blocks/showcase/blocks-showcase/components/blocks-showcase"
+        "@dotui/ui/registry/blocks/showcase/blocks-showcase/page"
       );
       const exportName =
         Object.keys(mod).find(

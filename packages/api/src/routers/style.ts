@@ -111,6 +111,14 @@ export const styleRouter = {
     .query(async ({ ctx, input }) => {
       const styleRecord = await ctx.db.query.style.findFirst({
         where: eq(style.id, input.id),
+        with: {
+          user: {
+            columns: {
+              username: true,
+              image: true,
+            },
+          },
+        },
       });
 
       if (!styleRecord) {

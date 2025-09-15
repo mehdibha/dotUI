@@ -10,7 +10,7 @@ export default async function BlocksPage(props: PageProps<"/blocks">) {
   return (
     <div className="space-y-6">
       {blocks.map((block) => (
-        <BlockView key={block.name} name={block.name} />
+        <BlockView key={block.name} block={block} />
       ))}
     </div>
   );

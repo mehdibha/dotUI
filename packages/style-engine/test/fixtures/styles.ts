@@ -39,6 +39,7 @@ export const mockStyleDefinition: StyleDefinition = {
     slider: "basic",
     "badge-and-tag-group": "basic",
     tooltip: "basic",
+    link: "basic",
   },
 };
 

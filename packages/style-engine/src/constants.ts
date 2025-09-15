@@ -50,6 +50,7 @@ export const DEFAULT_VARIANTS_DEFINITION: VariantsDefinition = {
   slider: "basic",
   "badge-and-tag-group": "basic",
   tooltip: "basic",
+  link: "basic",
 };
 
 export const DEFAULT_VARIANTS: Variants = {
@@ -62,6 +63,7 @@ export const DEFAULT_VARIANTS: Variants = {
   breadcrumbs: "basic",
   menu: "basic",
   tabs: "basic",
+  link: "basic",
 
   button: "outline",
   "button-group": "basic",
