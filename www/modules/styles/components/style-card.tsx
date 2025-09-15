@@ -28,8 +28,8 @@ export function StyleCard({
   const isMounted = useMounted();
 
   return (
-    <div className="space-y-5">
-      <div className="max-w-xl space-y-3">
+    <div className="space-y-3">
+      <div className="max-w-xl space-y-2">
         <div className="flex items-center gap-3">
           <Avatar
             src={style?.user?.image ?? ""}
@@ -37,7 +37,7 @@ export function StyleCard({
             shape="square"
             className="mt-1 size-6"
           />
-          <h2 className="font-heading text-3xl font-medium leading-none tracking-tight">
+          <h2 className="font-heading text-xl font-medium leading-none tracking-tight lg:text-2xl">
             {style.name}
           </h2>
         </div>
@@ -74,7 +74,7 @@ export function StyleCard({
           style={style}
           className={cn(
             "relative flex max-h-[min(80svh,500px)] items-center justify-center overflow-hidden rounded-sm border duration-0",
-            variant === "card" && "max-h-[300px]",
+            variant === "card" && "h-[250px] min-[550px]:max-md:h-[300px]",
           )}
         >
           <Link
@@ -85,14 +85,14 @@ export function StyleCard({
             )}
           >
             <span className="bg-bg-primary text-fg-on-primary hover:bg-bg-primary-hover active:bg-bg-primary-active flex h-10 items-center justify-center rounded-md border px-4 text-base font-medium leading-normal tracking-tight duration-150">
-              View style
+              Open in editor
             </span>
           </Link>
 
           {variant === "card" && (
             <div
               className={cn(
-                "flex size-full items-center justify-center",
+                "flex size-full",
                 isLoading &&
                   "bg-bg-muted relative block animate-pulse rounded-md",
               )}
@@ -101,7 +101,7 @@ export function StyleCard({
                 onLoad={() => setLoading(false)}
                 src={`/view/${style.user.username}/${style.name}/blocks-showcase`}
                 className={cn(
-                  "h-[1200px] min-w-[1400px] scale-50",
+                  "scale-40 absolute -left-2 -top-2 h-[1200px] min-w-[1400px] origin-top-left min-[550px]:max-md:scale-50",
                   isLoading && "opacity-0",
                 )}
               />

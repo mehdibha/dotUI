@@ -68,11 +68,7 @@ export function CommunityStyles() {
 
   return (
     <div className="space-y-6">
-      <StylesList
-        styles={styles}
-        skeleton={isLoading && styles.length === 0}
-        defaultView="ui-kit"
-      />
+      <StylesList styles={styles} skeleton={isLoading && styles.length === 0} />
       <div ref={sentinelRef} />
       {isFetchingNextPage && <StylesList skeleton defaultView="ui-kit" />}
     </div>
