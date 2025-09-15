@@ -24,37 +24,30 @@ export function StylesList({
   search?: boolean;
   defaultView?: "ui-kit" | "card";
 }) {
-  const [view, setView] = React.useState<"ui-kit" | "card">(defaultView);
   const [query, setQuery] = React.useState("");
 
   if (skeleton) {
-    const placeholders = Array.from({ length: view === "card" ? 4 : 2 });
+    const placeholders = Array.from({ length: 3 });
     return (
       <div className={cn("space-y-4", props.className)}>
-        <div className="flex items-center gap-4">
-          {search && <Skeleton className="h-10 flex-1" />}
-        </div>
-        <div
-          className={cn(
-            "grid",
-            view === "card" && "grid-cols-3 gap-4",
-            view === "ui-kit" && "grid-cols-1 gap-8",
-            !search && "-mt-8",
-            props.className,
-          )}
-        >
+        {search && (
+          <div className="flex items-center gap-4">
+            <Skeleton className="h-9 flex-1" />
+          </div>
+        )}
+        <div className={cn("grid grid-cols-3 gap-6", props.className)}>
           {placeholders.map((_, index) => (
-            <div key={index} className="space-y-4">
+            <div key={index} className="space-y-3">
               <div className="flex items-center gap-2">
                 <Skeleton className="size-6" />
-                <Skeleton className="h-10 w-24" />
+                <Skeleton className="h-6 w-24" />
               </div>
               <div className="flex items-center gap-2">
                 {Array.from({ length: 2 }).map((_, idx) => (
                   <Skeleton key={idx} className="h-6 w-32 rounded-full" />
                 ))}
               </div>
-              <Skeleton className={cn(view === "card" ? "h-72" : "h-120")} />
+              <Skeleton className="h-64" />
             </div>
           ))}
         </div>
@@ -92,8 +85,7 @@ export function StylesList({
         className={cn(
           "grid",
           search && "mt-4",
-          view === "card" && "grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3",
-          view === "ui-kit" && "grid-cols-1 gap-8",
+          "grid-cols-3 gap-6",
           props.className,
         )}
       >
@@ -103,7 +95,7 @@ export function StylesList({
           </div>
         )}
         {filtered.map((style) => (
-          <StyleCard key={style.name} style={style} variant={view} />
+          <StyleCard key={style.name} style={style} variant="card" />
         ))}
       </div>
     </div>
