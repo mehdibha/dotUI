@@ -27,11 +27,13 @@ export function AccountMenu({
 }: React.ComponentProps<"div">) {
   return (
     <Card className={cn("min-w-56 gap-0 py-0", className)} {...props}>
-      <CardHeader className="flex items-center border-b !py-3 px-4">
+      <CardHeader className="flex w-full items-center border-b !py-3 px-4">
         <Avatar src="https://github.com/mehdibha.png" size="sm" />
-        <div className="text-sm">
+        <div className="w-full text-sm">
           <p className="font-semibold">mehdibha</p>
-          <p className="text-fg-muted">hello@mehdibha.com</p>
+          <p className="text-fg-muted">
+            <span className="truncate">hello@mehdibha.com</span>
+          </p>
         </div>
       </CardHeader>
       <CardContent className="p-0">
