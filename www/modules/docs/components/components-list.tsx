@@ -33,12 +33,7 @@ export function ComponentsList({
   );
 
   return (
-    <div
-      className={cn(
-        "grid grid-cols-1 gap-1",
-        className,
-      )}
-    >
+    <div className={cn("grid grid-cols-1 gap-1", className)}>
       {list.map((component) => (
         <Link
           key={component.$id}

@@ -164,7 +164,7 @@ export const mdxComponents: MDXComponents = {
   ),
   BadgePalette: BadgePalette,
   Link,
-  ComponentsList: (props: { category: string}) => (
+  ComponentsList: (props: { category: string }) => (
     <ComponentsList className="mt-4" {...props} />
   ),
 };
