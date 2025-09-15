@@ -37,7 +37,7 @@ export function AccountMenu({
         </div>
       </CardHeader>
       <CardContent className="p-0">
-        <ListBox className="h-full max-h-none w-full rounded-none border-0 bg-transparent [&_[data-slot='list-box-item']]:text-sm">
+        <ListBox aria-label="Account Menu" className="h-full max-h-none w-full rounded-none border-0 bg-transparent [&_[data-slot='list-box-item']]:text-sm">
           <ListBoxItem prefix={<User2Icon />}>Profile</ListBoxItem>
           <ListBoxItem prefix={<SettingsIcon />}>Settings</ListBoxItem>
           <ListBoxItem prefix={<BookIcon />}>Documentation</ListBoxItem>
