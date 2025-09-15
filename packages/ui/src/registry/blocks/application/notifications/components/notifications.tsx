@@ -47,7 +47,10 @@ export function Notifications({
               id={tab}
               className="mt-0 min-h-0 flex-1 overflow-y-auto"
             >
-              <ListBox aria-label="Notifications" className="max-h-none w-full rounded-none border-0 bg-transparent p-0 [&_.separator]:my-0 [&_[data-slot=list-box-item]]:rounded-none">
+              <ListBox
+                aria-label="Notifications"
+                className="max-h-none w-full rounded-none border-0 bg-transparent p-0 [&_.separator]:my-0 [&_[data-slot=list-box-item]]:rounded-none"
+              >
                 {notifications
                   .filter((notification) => {
                     if (tab === "all") return true;

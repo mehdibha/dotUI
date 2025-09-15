@@ -23,7 +23,7 @@ const toastStyles = tv({
     ],
     toast: "bg-bg relative w-[min(380px,90vw)] rounded-lg border p-4 shadow-lg",
     content: "flex flex-col gap-1",
-    title: "text-base text-sm",
+    title: "text-base",
     description: "text-fg-muted text-sm",
     actions: "",
     close: "absolute right-3 top-3 size-7",

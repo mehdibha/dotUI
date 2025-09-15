@@ -65,7 +65,10 @@ export function LoginForm(props: React.ComponentProps<"div">) {
         </Button>
         <p className="text-fg-muted mt-4 text-sm">
           {/* TODO */}
-          Don&apos;t have an account? <Link href="#">Register</Link>
+          Don&apos;t have an account?{" "}
+          <Link href="#" variant="quiet">
+            register
+          </Link>
         </p>
       </CardContent>
     </Card>
