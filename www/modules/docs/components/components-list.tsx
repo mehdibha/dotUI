@@ -3,7 +3,11 @@ import type { Route } from "next";
 
 import { docsSource } from "@/modules/docs/lib/source";
 
-export function ComponentsList() {
+interface ComponentsListProps {
+  category?: string;
+}
+
+export function ComponentsList({ category }: ComponentsListProps) {
   const components = docsSource.pageTree.children.find(
     (page) => page.$id === "components",
   );
@@ -16,9 +20,16 @@ export function ComponentsList() {
     (component) => component.type === "page",
   );
 
+  const filteredList = category
+    ? list.filter((component) => {
+        const frontmatter = component.data?.frontmatter;
+        return frontmatter?.category === category;
+      })
+    : list;
+
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 md:gap-x-8 lg:gap-x-16 lg:gap-y-6 xl:gap-x-20">
-      {list.map((component) => (
+      {filteredList.map((component) => (
         <Link
           key={component.$id}
           href={component.url as Route}
