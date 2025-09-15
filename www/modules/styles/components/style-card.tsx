@@ -85,7 +85,7 @@ export function StyleCard({
             )}
           >
             <span className="bg-bg-primary text-fg-on-primary hover:bg-bg-primary-hover active:bg-bg-primary-active flex h-10 items-center justify-center rounded-md border px-4 text-base font-medium leading-normal tracking-tight duration-150">
-              View style
+              Open in editor
             </span>
           </Link>
 
