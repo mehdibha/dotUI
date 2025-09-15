@@ -38,34 +38,24 @@ export function CodeModal({ children, ...props }: DialogRootProps) {
       >
         <DialogBody className="-mx-6 px-9 pb-8 pt-0">
           <div className="[&>h3]:step [&>h3]:text-fg-muted relative border-l pl-8 [counter-reset:step] [&>h3]:mt-4">
-            <h3>Add dotUI registry to components.json</h3>
+            <h3>Update your components.json</h3>
             <div className="">
               <pre className="bg-bg-muted/50 mt-4 rounded-md border p-4 text-xs">
                 <code>
-                  {`"registries": {
+                  {`"style": "${slug}",
+"registries": {
   "@dotui": "https://dotui.org/r/{style}/{name}"
 }`}
                 </code>
               </pre>
             </div>
-            <h3>Update your style</h3>
-            <div>
-              <pre className="bg-bg-muted/50 mt-4 rounded-md border p-4 text-xs">
-                <code>"style": "{slug}"</code>
-              </pre>
-            </div>
             <h3>Init your style</h3>
             <div>
               <pre className="bg-bg-muted/50 mt-4 rounded-md border p-4 text-xs">
-                <code>pnpm dlx shadcn@latest add @dotui/{slug}</code>
+                <code>pnpm dlx shadcn@latest add @dotui/base</code>
               </pre>
             </div>
             <h3>You're done!</h3>
-            <div>
-              <pre className="bg-bg-muted/50 mt-4 rounded-md border p-4 text-xs">
-                <code>pnpm dlx shadcn@latest add @dotui/{slug}</code>
-              </pre>
-            </div>
           </div>
         </DialogBody>
       </Dialog>
