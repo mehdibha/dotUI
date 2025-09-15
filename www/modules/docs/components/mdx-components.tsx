@@ -164,7 +164,9 @@ export const mdxComponents: MDXComponents = {
   ),
   BadgePalette: BadgePalette,
   Link,
-  ComponentsList,
+  ComponentsList: (props: { category: string}) => (
+    <ComponentsList className="mt-4" {...props} />
+  ),
 };
 
 function createHeading(level: number, className?: string) {

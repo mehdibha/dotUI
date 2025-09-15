@@ -1,13 +1,17 @@
 import Link from "next/link";
 import type { Route } from "next";
 
+import { cn } from "@dotui/ui/lib/utils";
+
 import { docsSource } from "@/modules/docs/lib/source";
 
-interface ComponentsListProps {
-  category?: string;
-}
-
-export function ComponentsList({ category }: ComponentsListProps) {
+export function ComponentsList({
+  category,
+  className,
+}: {
+  category: string;
+  className?: string;
+}) {
   const components = docsSource.pageTree.children.find(
     (page) => page.$id === "components",
   );
@@ -16,20 +20,26 @@ export function ComponentsList({ category }: ComponentsListProps) {
     return;
   }
 
-  const list = components.children.filter(
+  const componentsCategory = components.children.find(
+    (page) => page.$id === `components/(${category})`,
+  );
+
+  if (componentsCategory?.type !== "folder") {
+    return;
+  }
+
+  const list = componentsCategory.children.filter(
     (component) => component.type === "page",
   );
 
-  const filteredList = category
-    ? list.filter((component) => {
-        const frontmatter = component.data?.frontmatter;
-        return frontmatter?.category === category;
-      })
-    : list;
-
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 md:gap-x-8 lg:gap-x-16 lg:gap-y-6 xl:gap-x-20">
-      {filteredList.map((component) => (
+    <div
+      className={cn(
+        "grid grid-cols-1 gap-1",
+        className,
+      )}
+    >
+      {list.map((component) => (
         <Link
           key={component.$id}
           href={component.url as Route}
