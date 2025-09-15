@@ -31,14 +31,13 @@ export function StylesList({
     const placeholders = Array.from({ length: view === "card" ? 4 : 2 });
     return (
       <div className={cn("space-y-4", props.className)}>
-        <div className="flex items-center justify-end gap-4">
+        <div className="flex items-center gap-4">
           {search && <Skeleton className="h-10 flex-1" />}
-          <Skeleton className="h-10 w-20" />
         </div>
         <div
           className={cn(
             "grid",
-            view === "card" && "grid-cols-2 gap-4",
+            view === "card" && "grid-cols-3 gap-4",
             view === "ui-kit" && "grid-cols-1 gap-8",
             !search && "-mt-8",
             props.className,
@@ -88,41 +87,16 @@ export function StylesList({
             value={query}
           />
         )}
-        <ToggleButtonGroup
-          selectionMode="single"
-          selectedKeys={[view]}
-          disallowEmptySelection
-          onSelectionChange={(value) =>
-            setView([...value][0] as "ui-kit" | "card")
-          }
-        >
-          <ToggleButton id="card" variant="primary">
-            <LayoutGridIcon />
-          </ToggleButton>
-          <ToggleButton id="ui-kit" variant="primary">
-            <ListIcon />
-          </ToggleButton>
-        </ToggleButtonGroup>
       </div>
       <div
         className={cn(
-          "-mt-4 grid",
-          search && "mt-6",
-          view === "card" && "grid-cols-1 gap-6 md:grid-cols-2",
+          "grid",
+          search && "mt-4",
+          view === "card" && "grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3",
           view === "ui-kit" && "grid-cols-1 gap-8",
           props.className,
         )}
       >
-        {skeleton && (
-          <>
-            {Array.from({ length: view === "card" ? 4 : 2 }).map((_, idx) => (
-              <Skeleton
-                key={idx}
-                className={cn(view === "card" ? "h-40" : "h-52")}
-              />
-            ))}
-          </>
-        )}
         {(!styles || styles.length === 0) && (
           <div className="flex items-center justify-center">
             <p className="text-fg-muted text-sm">No styles found</p>
