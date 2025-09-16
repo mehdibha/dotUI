@@ -17,17 +17,17 @@
 :root {
   --radius-factor: 1;
 
-  --neutral-50: oklch(98.48% 0.00 0);
-  --neutral-100: oklch(95.42% 0.00 0);
-  --neutral-200: oklch(92.34% 0.00 0);
-  --neutral-300: oklch(88.45% 0.00 0);
-  --neutral-400: oklch(84.52% 0.00 0);
-  --neutral-500: oklch(51.03% 0.00 0);
-  --neutral-600: oklch(46.49% 0.00 0);
-  --neutral-700: oklch(39.94% 0.00 0);
-  --neutral-800: oklch(28.01% 0.00 0);
-  --neutral-900: oklch(23.76% 0.00 0);
-  
+  --neutral-50: oklch(98.48% 0 0);
+  --neutral-100: oklch(95.42% 0 0);
+  --neutral-200: oklch(92.34% 0 0);
+  --neutral-300: oklch(88.45% 0 0);
+  --neutral-400: oklch(84.52% 0 0);
+  --neutral-500: oklch(51.03% 0 0);
+  --neutral-600: oklch(46.49% 0 0);
+  --neutral-700: oklch(39.94% 0 0);
+  --neutral-800: oklch(28.01% 0 0);
+  --neutral-900: oklch(23.76% 0 0);
+
   --accent-50: oklch(89.55% 0.05 248);
   --accent-100: oklch(83.63% 0.09 249);
   --accent-200: oklch(77.92% 0.12 250);
@@ -45,20 +45,20 @@
   --success-300: oklch(70.95% 0.12 149);
   --success-400: oklch(61.55% 0.14 147);
   --success-500: oklch(52.01% 0.11 148);
-  --success-600: oklch(45.38% 0.10 148);
+  --success-600: oklch(45.38% 0.1 148);
   --success-700: oklch(39.66% 0.08 148);
   --success-800: oklch(27.48% 0.05 148);
   --success-900: oklch(22.43% 0.04 149);
 
   --warning-50: oklch(89.44% 0.09 76);
-  --warning-100: oklch(84.20% 0.13 73);
+  --warning-100: oklch(84.2% 0.13 73);
   --warning-200: oklch(79.51% 0.16 69);
-  --warning-300: oklch(74.00% 0.17 64);
+  --warning-300: oklch(74% 0.17 64);
   --warning-400: oklch(64.71% 0.14 65);
-  --warning-500: oklch(54.20% 0.12 65);
-  --warning-600: oklch(46.79% 0.10 66);
+  --warning-500: oklch(54.2% 0.12 65);
+  --warning-600: oklch(46.79% 0.1 66);
   --warning-700: oklch(41.69% 0.09 67);
-  --warning-800: oklch(28.20% 0.06 70);
+  --warning-800: oklch(28.2% 0.06 70);
   --warning-900: oklch(23.86% 0.05 75);
 
   --danger-50: oklch(89.95% 0.04 16);
@@ -66,11 +66,11 @@
   --danger-200: oklch(79.18% 0.09 17);
   --danger-300: oklch(73.67% 0.12 18);
   --danger-400: oklch(65.24% 0.16 21);
-  --danger-500: oklch(55.60% 0.20 25);
+  --danger-500: oklch(55.6% 0.2 25);
   --danger-600: oklch(48.76% 0.17 25);
   --danger-700: oklch(41.87% 0.14 24);
-  --danger-800: oklch(29.89% 0.10 23);
-  --danger-900: oklch(25.00% 0.08 23);
+  --danger-800: oklch(29.89% 0.1 23);
+  --danger-900: oklch(25% 0.08 23);
 
   --info-50: oklch(89.55% 0.05 248);
   --info-100: oklch(83.63% 0.09 249);
@@ -85,34 +85,34 @@
 }
 
 .dark {
-  --neutral-50: oklch(14.33% 0.00 286);
+  --neutral-50: oklch(14.33% 0 286);
   --neutral-100: oklch(21.02% 0.01 286);
-  --neutral-200: oklch(28.20% 0.01 286);
-  --neutral-300: oklch(34.00% 0.01 286);
+  --neutral-200: oklch(28.2% 0.01 286);
+  --neutral-300: oklch(34% 0.01 286);
   --neutral-400: oklch(43.17% 0.02 286);
   --neutral-500: oklch(55.24% 0.02 286);
   --neutral-600: oklch(62.25% 0.02 286);
   --neutral-700: oklch(75.34% 0.01 286);
   --neutral-800: oklch(87.88% 0.01 286);
-  --neutral-900: oklch(98.36% 0.00 286);
+  --neutral-900: oklch(98.36% 0 286);
 
   --accent-50: oklch(23.06% 0.04 251);
   --accent-100: oklch(29.18% 0.05 252);
   --accent-200: oklch(40.01% 0.08 250);
-  --accent-300: oklch(50.36% 0.10 249);
-  --accent-400: oklch(56.90% 0.12 251);
+  --accent-300: oklch(50.36% 0.1 249);
+  --accent-400: oklch(56.9% 0.12 251);
   --accent-500: oklch(62.63% 0.11 250);
   --accent-600: oklch(68.37% 0.12 250);
   --accent-700: oklch(75.56% 0.13 250);
   --accent-800: oklch(84.47% 0.08 249);
-  --accent-900: oklch(88.70% 0.06 248);
+  --accent-900: oklch(88.7% 0.06 248);
 
   --success-50: oklch(21.17% 0.04 148);
   --success-100: oklch(28.81% 0.06 148);
   --success-200: oklch(33.74% 0.07 148);
   --success-300: oklch(38.51% 0.08 148);
   --success-400: oklch(62.59% 0.14 147);
-  --success-500: oklch(66.70% 0.15 147);
+  --success-500: oklch(66.7% 0.15 147);
   --success-600: oklch(71.03% 0.15 148);
   --success-700: oklch(79.89% 0.08 150);
   --success-800: oklch(83.89% 0.06 150);
@@ -130,10 +130,10 @@
   --warning-900: oklch(89.44% 0.09 76);
 
   --danger-50: oklch(23.99% 0.07 22);
-  --danger-100: oklch(30.83% 0.10 24);
+  --danger-100: oklch(30.83% 0.1 24);
   --danger-200: oklch(35.52% 0.12 24);
   --danger-300: oklch(40.97% 0.14 24);
-  --danger-400: oklch(49.70% 0.17 25);
+  --danger-400: oklch(49.7% 0.17 25);
   --danger-500: oklch(57.53% 0.21 25);
   --danger-600: oklch(63.02% 0.18 22);
   --danger-700: oklch(71.01% 0.13 19);
@@ -143,13 +143,13 @@
   --info-50: oklch(23.06% 0.04 251);
   --info-100: oklch(29.18% 0.05 252);
   --info-200: oklch(40.01% 0.08 250);
-  --info-300: oklch(50.36% 0.10 249);
-  --info-400: oklch(56.90% 0.12 251);
+  --info-300: oklch(50.36% 0.1 249);
+  --info-400: oklch(56.9% 0.12 251);
   --info-500: oklch(62.63% 0.11 250);
   --info-600: oklch(68.37% 0.12 250);
   --info-700: oklch(75.56% 0.13 250);
   --info-800: oklch(84.47% 0.08 249);
-  --info-900: oklch(88.70% 0.06 248);
+  --info-900: oklch(88.7% 0.06 248);
 }
 
 @theme {
