@@ -175,7 +175,8 @@
 
   /* colors */
   --color-bg: var(--neutral-50);
-  --color-bg-muted: var(--neutral-100);
+  --color-bg-card: var(--neutral-100);
+  --color-bg-muted: var(--neutral-200);
   --color-bg-inverse: var(--neutral-950);
   --color-bg-disabled: var(--neutral-200);
 

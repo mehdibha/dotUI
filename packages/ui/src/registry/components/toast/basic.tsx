@@ -30,7 +30,7 @@ const toastStyles = tv({
   },
   variants: {
     variant: {
-      neutral: { toast: "border-border bg-bg-muted/50" },
+      neutral: { toast: "border-border bg-bg-card" },
       success: {
         toast: "border-border-success bg-bg-success",
         title: "text-fg-success",

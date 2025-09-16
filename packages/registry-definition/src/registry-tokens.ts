@@ -21,8 +21,14 @@ export const COLOR_TOKENS = [
     categories: ["background"],
   },
   {
-    name: "color-bg-muted",
+    name: "color-bg-card",
     defaultValue: "var(--neutral-100)",
+    description: "Card background color for main content areas",
+    categories: ["background"],
+  },
+  {
+    name: "color-bg-muted",
+    defaultValue: "var(--neutral-200)",
     description: "Muted background color for secondary content areas",
     categories: ["background"],
   },

@@ -29,7 +29,7 @@ export function Choices({ items, ...props }: ChoicesProps): React.ReactElement {
             key={item.value}
             className={cn(
               focusRing(),
-              "hover:bg-bg-muted/50 selected:bg-bg-muted relative cursor-pointer rounded-md border p-4 transition-colors duration-100",
+              "hover:bg-bg-card selected:bg-bg-muted relative cursor-pointer rounded-md border p-4 transition-colors duration-100",
             )}
             id={item.value}
           >

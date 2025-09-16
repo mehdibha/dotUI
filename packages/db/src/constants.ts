@@ -49,27 +49,27 @@ export const DEFAULT_STYLES: Omit<
       buttons: "ripple",
     },
   }),
-  restoreStyleDefinitionDefaults({
-    name: "ghibli",
-    theme: {
-      colors: {
-        activeModes: ["light"],
-        modes: {
-          light: {
-            scales: {
-              neutral: {
-                colorKeys: ["#f1dfbe"],
-              },
-              accent: {
-                colorKeys: ["#969A54"],
-              },
-            },
-          },
-        },
-      },
-      fonts: {
-        body: "Poppins",
-      },
-    },
-  }),
+  // restoreStyleDefinitionDefaults({
+  //   name: "ghibli",
+  //   theme: {
+  //     colors: {
+  //       activeModes: ["light"],
+  //       modes: {
+  //         light: {
+  //           scales: {
+  //             neutral: {
+  //               colorKeys: ["#f1dfbe"],
+  //             },
+  //             accent: {
+  //               colorKeys: ["#969A54"],
+  //             },
+  //           },
+  //         },
+  //       },
+  //     },
+  //     fonts: {
+  //       body: "Poppins",
+  //     },
+  //   },
+  // }),
 ];
