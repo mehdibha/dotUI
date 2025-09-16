@@ -11,6 +11,7 @@ import { RADIUS_TOKENS } from "@dotui/registry-definition/registry-tokens";
 
 import { SCALE_NUMBERRS } from "../constants";
 import type { ColorTokens, ModeDefinition, Radius, Theme } from "../types";
+import Color from "colorjs.io";
 
 export interface ColorScale {
   name: string;
@@ -87,8 +88,8 @@ export const getContrastColor = (colorValue: string): string => {
   const contrastWithWhite = getContrast(rgbArray, [255, 255, 255]);
 
   return contrastWithBlack > contrastWithWhite
-    ? "hsl(0 0% 0%)"
-    : "hsl(0 0% 100%)";
+    ? "oklch(0% 0 0)"
+    : "oklch(100% 0 0)";
 };
 
 export const createModeCssVars = (
@@ -101,9 +102,23 @@ export const createModeCssVars = (
     .flatMap((colorScale) =>
       colorScale.values.flatMap((value) =>
         [
-          [value.name, value.value] as const,
+          [
+            value.name,
+            (() => {
+              try {
+                return new Color(value.value).to("oklch").toString();
+              } catch (_e) {
+                // Fallback to original if conversion fails
+                return value.value;
+              }
+            })(),
+          ] as const,
           generateContrastColors
-            ? ([`on-${value.name}`, getContrastColor(value.value)] as const)
+            ? ([
+                `on-${value.name}`,
+                // getContrastColor already returns OKLCH
+                getContrastColor(value.value),
+              ] as const)
             : [],
         ].filter(Boolean),
       ),

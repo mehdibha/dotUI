@@ -16,7 +16,8 @@
     "typecheck": "pnpm with-env next typegen && tsc --noEmit",
     "capture-blocks": "pnpm with-env jiti ./scripts/capture-showcase-blocks.ts",
     "postinstall": "fumadocs-mdx",
-    "with-env": "dotenv -e ../.env --"
+    "with-env": "dotenv -e ../.env --",
+    "colors:oklch": "node ./scripts/convert-to-oklch.js"
   },
   "dependencies": {
     "@adobe/leonardo-contrast-colors": "^1.0.0",
@@ -90,6 +91,7 @@
     "@types/react-dom": "catalog:react",
     "autoprefixer": "^10.4.14",
     "babel-plugin-react-compiler": "19.1.0-rc.2",
+    "colorjs.io": "^0.5.2",
     "dotenv-cli": "^8.0.0",
     "eslint": "catalog:",
     "jiti": "^2.4.2",
