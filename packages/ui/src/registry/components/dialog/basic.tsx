@@ -22,7 +22,7 @@ const dialogStyles = tv({
     heading: "block text-2xl font-medium",
     description: "text-fg-muted text-sm",
     body: "-mx-6 flex-1 space-y-2 overflow-y-auto px-6 py-2",
-    inset: "bg-bg-muted -mx-6 border px-6 py-6",
+    inset: "bg-muted -mx-6 border px-6 py-6",
     footer: "flex flex-col-reverse gap-2 pt-4 sm:flex-row sm:justify-end",
   },
 });

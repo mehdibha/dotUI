@@ -6,7 +6,7 @@ import { GitHubIcon, GoogleIcon, TwitterIcon } from "@dotui/ui/icons";
 
 export function LoginForm() {
   return (
-    <div className="bg-bg-muted w-full max-w-sm rounded-lg border p-8">
+    <div className="bg-muted w-full max-w-sm rounded-lg border p-8">
       <h1 className="font-heading text-2xl font-semibold leading-none tracking-tight">
         Login
       </h1>
@@ -41,7 +41,7 @@ export function LoginForm() {
           <span className="w-full border-t" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-bg-muted text-fg-muted px-2">Or</span>
+          <span className="bg-muted text-fg-muted px-2">Or</span>
         </div>
       </div>
       <TextField label="Email address" type="email" className="w-full" />

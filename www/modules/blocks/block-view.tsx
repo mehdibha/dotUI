@@ -100,7 +100,7 @@ const BlockViewView = ({ block }: { block: RegistryItem }) => {
   return (
     <div
       className={cn(
-        "bg-bg-muted overflow-hidden rounded-lg border",
+        "bg-muted overflow-hidden rounded-lg border",
         isLoading && "animate-pulse",
       )}
     >

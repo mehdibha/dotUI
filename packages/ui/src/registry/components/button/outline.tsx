@@ -19,23 +19,22 @@ import { createOptionalScopedContext } from "@dotui/ui/lib/utils";
 
 const buttonStyles = tv({
   extend: focusRing,
-  base: "disabled:border-border-disabled disabled:bg-bg-disabled disabled:text-fg-disabled pending:cursor-default pending:border pending:border-border-disabled pending:bg-bg-disabled pending:text-fg-disabled pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0 relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium leading-normal transition-all disabled:cursor-default disabled:border",
+  base: "disabled:border-border-disabled disabled:bg-disabled disabled:text-fg-disabled pending:cursor-default pending:border pending:border-border-disabled pending:bg-disabled pending:text-fg-disabled pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0 relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium leading-normal transition-all disabled:cursor-default disabled:border",
   variants: {
     variant: {
       default:
-        "bg-bg-neutral text-fg-on-neutral hover:border-border-hover hover:bg-bg-neutral-hover border",
-      primary: "bg-bg-primary text-fg-on-primary hover:bg-bg-primary-hover",
-      quiet:
-        "text-fg hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 bg-transparent",
+        "bg-neutral text-fg-on-neutral hover:border-border-hover hover:bg-neutral-hover border",
+      primary: "bg-primary text-fg-on-primary hover:bg-primary-hover",
+      quiet: "text-fg hover:bg-inverse/10 pressed:bg-inverse/20 bg-transparent",
       link: "text-fg underline-offset-4 hover:underline",
       outline:
-        "border-border-field text-fg hover:bg-bg-inverse/10 pressed:bg-bg-inverse/15 border",
+        "border-border-field text-fg hover:bg-inverse/10 pressed:bg-inverse/15 border",
       success:
-        "hover:bg-bg-success-muted-hover border-border-success bg-bg-success-muted hover:border-border-success-hover border",
+        "hover:bg-success-muted-hover border-border-success bg-success-muted hover:border-border-success-hover border",
       warning:
-        "hover:bg-bg-warning-muted-hover border-border-warning bg-bg-warning-muted hover:border-border-warning-hover border",
+        "hover:bg-warning-muted-hover border-border-warning bg-warning-muted hover:border-border-warning-hover border",
       danger:
-        "hover:bg-bg-danger-muted-hover border-border-danger bg-bg-danger-muted hover:border-border-danger-hover border",
+        "hover:bg-danger-muted-hover border-border-danger bg-danger-muted hover:border-border-danger-hover border",
     },
     size: {
       sm: "size-8 [&_svg]:size-4",

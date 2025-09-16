@@ -66,7 +66,7 @@ export const ComponentPreview = async ({
         containerClassName,
       )}
     >
-      <div className="bg-bg-muted">
+      <div className="bg-muted">
         <ResizableContainer resizable={resizable}>
           <ActiveStyleProvider>
             <ComponentPreviewHeader />

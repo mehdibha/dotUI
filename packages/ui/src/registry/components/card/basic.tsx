@@ -3,7 +3,7 @@ import { tv } from "tailwind-variants";
 
 const cardStyles = tv({
   slots: {
-    root: "bg-bg-muted/50 text-fg flex flex-col gap-6 rounded-xl border py-6 shadow-sm",
+    root: "bg-card text-fg flex flex-col gap-6 rounded-xl border py-6 shadow-sm",
     header:
       "@container/card-header has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6 grid auto-rows-min grid-rows-[auto_auto] items-start gap-2 px-6",
     title: "font-semibold leading-none",

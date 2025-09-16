@@ -23,29 +23,29 @@ const toastStyles = tv({
     ],
     toast: "bg-bg relative w-[min(380px,90vw)] rounded-lg border p-4 shadow-lg",
     content: "flex flex-col gap-1",
-    title: "text-base text-sm",
+    title: "text-base",
     description: "text-fg-muted text-sm",
     actions: "",
     close: "absolute right-3 top-3 size-7",
   },
   variants: {
     variant: {
-      neutral: { toast: "border-border bg-bg-muted/50" },
+      neutral: { toast: "border-border bg-card" },
       success: {
-        toast: "border-border-success bg-bg-success",
+        toast: "border-border-success bg-success",
         title: "text-fg-success",
       },
       warning: {
-        toast: "border-border-warning bg-bg-warning",
+        toast: "border-border-warning bg-warning",
       },
       danger: {
-        toast: "border-border-danger bg-bg-danger",
+        toast: "border-border-danger bg-danger",
       },
       error: {
-        toast: "border-border-danger bg-bg-danger",
+        toast: "border-border-danger bg-danger",
       },
       info: {
-        toast: "border-border-info bg-bg-info",
+        toast: "border-border-info bg-info",
       },
     },
   },

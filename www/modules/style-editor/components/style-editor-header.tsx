@@ -149,7 +149,7 @@ function StyleEditorHeaderActions() {
               size="sm"
               variant="primary"
               isDisabled={!form.formState.isDirty}
-              className="border-bg-primary hover:border-bg-primary-hover border"
+              className="border-primary hover:border-primary-hover border"
               prefix={<RocketIcon />}
             >
               Publish

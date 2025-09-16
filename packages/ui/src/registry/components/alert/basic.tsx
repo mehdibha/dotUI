@@ -20,18 +20,18 @@ const alertStyles = tv({
   },
   variants: {
     variant: {
-      neutral: { root: "bg-bg-muted text-fg border" },
+      neutral: { root: "bg-muted text-fg border" },
       success: {
-        root: "border-border-success bg-bg-success-muted text-fg-success border",
+        root: "border-border-success bg-success-muted text-fg-success border",
       },
       warning: {
-        root: "border-border-warning bg-bg-warning-muted text-fg-warning border",
+        root: "border-border-warning bg-warning-muted text-fg-warning border",
       },
       danger: {
-        root: "border-border-danger bg-bg-danger-muted text-fg-danger border",
+        root: "border-border-danger bg-danger-muted text-fg-danger border",
       },
       info: {
-        root: "border-border-info bg-bg-info-muted text-fg-info border",
+        root: "border-border-info bg-info-muted text-fg-info border",
       },
     },
   },

@@ -2,9 +2,9 @@ import { CheckboxIndicator, CheckboxRoot } from "@dotui/ui/components/checkbox";
 
 export default function Demo() {
   return (
-    <CheckboxRoot className="selected:border-border-accent selected:bg-bg-accent-muted selected:text-fg-accent rounded-md border p-4 transition-colors">
+    <CheckboxRoot className="selected:border-border-accent selected:bg-accent-muted selected:text-fg-accent rounded-md border p-4 transition-colors">
       <span>I agree to the terms and conditions</span>
-      <CheckboxIndicator className="group-selected:bg-bg-accent group-selected:text-fg-on-accent" />
+      <CheckboxIndicator className="group-selected:bg-accent group-selected:text-fg-on-accent" />
     </CheckboxRoot>
   );
 }

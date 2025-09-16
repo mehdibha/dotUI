@@ -20,24 +20,24 @@ import { createOptionalScopedContext } from "@dotui/ui/lib/utils";
 const buttonStyles = tv({
   extend: focusRing,
   base: [
-    "disabled:bg-bg-disabled disabled:text-fg-disabled pending:cursor-default pending:border pending:border-border-disabled pending:bg-bg-disabled pending:text-fg-disabled inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium leading-normal transition-all disabled:cursor-default",
+    "disabled:bg-disabled disabled:text-fg-disabled pending:cursor-default pending:border pending:border-border-disabled pending:bg-disabled pending:text-fg-disabled inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium leading-normal transition-all disabled:cursor-default",
     "shadow-brutalism hover:translate-x-(--box-shadow-x) hover:translate-y-(--box-shadow-y) hover:shadow-none",
   ],
   variants: {
     variant: {
-      default: "bg-bg-neutral text-fg-on-neutral",
-      primary: "bg-bg-primary text-fg-on-primary",
+      default: "bg-neutral text-fg-on-neutral",
+      primary: "bg-primary text-fg-on-primary",
       quiet: "text-fg bg-transparent",
       outline:
-        "border-border-field text-fg hover:bg-bg-inverse/10 disabled:border-border-disabled pressed:bg-bg-inverse/15 border disabled:bg-transparent",
+        "border-border-field text-fg hover:bg-inverse/10 disabled:border-border-disabled pressed:bg-inverse/15 border disabled:bg-transparent",
       accent:
-        "bg-bg-accent text-fg-on-accent hover:bg-bg-accent-hover pressed:bg-bg-accent-active",
+        "bg-accent text-fg-on-accent hover:bg-accent-hover pressed:bg-accent-active",
       success:
-        "bg-bg-success text-fg-on-success hover:bg-bg-success-hover pressed:bg-bg-success-active",
+        "bg-success text-fg-on-success hover:bg-success-hover pressed:bg-success-active",
       warning:
-        "bg-bg-warning text-fg-on-warning hover:bg-bg-warning-hover pressed:bg-bg-warning-active",
+        "bg-warning text-fg-on-warning hover:bg-warning-hover pressed:bg-warning-active",
       danger:
-        "bg-bg-danger text-fg-on-danger hover:bg-bg-danger-hover pressed:bg-bg-danger-active",
+        "bg-danger text-fg-on-danger hover:bg-danger-hover pressed:bg-danger-active",
     },
     size: {
       sm: "size-8 [&_svg]:size-4",

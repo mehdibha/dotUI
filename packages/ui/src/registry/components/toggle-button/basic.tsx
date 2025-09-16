@@ -14,15 +14,15 @@ import { createOptionalScopedContext } from "@dotui/ui/lib/utils";
 
 const toggleButtonStyles = tv({
   extend: focusRing,
-  base: "disabled:bg-bg-disabled disabled:text-fg-disabled inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-md text-sm font-medium leading-normal transition-colors disabled:cursor-default",
+  base: "disabled:bg-disabled disabled:text-fg-disabled inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-md text-sm font-medium leading-normal transition-colors disabled:cursor-default",
   variants: {
     variant: {
       quiet:
-        "text-fg hover:bg-bg-inverse/10 pressed:bg-bg-inverse/20 selected:bg-bg-primary selected:text-fg-on-primary selected:hover:bg-bg-primary-hover selected:pressed:bg-bg-primary-active bg-transparent",
+        "text-fg hover:bg-inverse/10 pressed:bg-inverse/20 selected:bg-primary selected:text-fg-on-primary selected:hover:bg-primary-hover selected:pressed:bg-primary-active bg-transparent",
       primary:
-        "border-border-field text-fg hover:bg-bg-inverse/10 pressed:border-transparent pressed:bg-bg-inverse/20 selected:border-transparent selected:bg-bg-primary selected:text-fg-on-primary selected:hover:bg-bg-primary-hover selected:pressed:bg-bg-primary-active border bg-transparent",
+        "border-border-field text-fg hover:bg-inverse/10 pressed:border-transparent pressed:bg-inverse/20 selected:border-transparent selected:bg-primary selected:text-fg-on-primary selected:hover:bg-primary-hover selected:pressed:bg-primary-active border bg-transparent",
       accent:
-        "border-border-field text-fg hover:bg-bg-inverse/10 pressed:border-transparent pressed:bg-bg-inverse/20 selected:border-transparent selected:bg-bg-accent selected:text-fg-on-accent selected:hover:bg-bg-accent-hover selected:pressed:bg-bg-accent-active border bg-transparent",
+        "border-border-field text-fg hover:bg-inverse/10 pressed:border-transparent pressed:bg-inverse/20 selected:border-transparent selected:bg-accent selected:text-fg-on-accent selected:hover:bg-accent-hover selected:pressed:bg-accent-active border bg-transparent",
     },
     size: {
       sm: "size-8 [&_svg]:size-4",

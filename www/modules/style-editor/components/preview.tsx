@@ -120,7 +120,7 @@ export const PreviewRoot = ({ children }: { children: React.ReactNode }) => {
       </motion.div>
       <div
         onMouseDown={handleMouseDown}
-        className="h-15 bg-bg-neutral hover:bg-bg-neutral-hover active:bg-bg-neutral-active absolute -left-3 top-1/2 z-20 w-2 -translate-y-1/2 cursor-col-resize rounded-full shadow-sm"
+        className="h-15 bg-neutral hover:bg-neutral-hover active:bg-neutral-active absolute -left-3 top-1/2 z-20 w-2 -translate-y-1/2 cursor-col-resize rounded-full shadow-sm"
       />
       <motion.div
         ref={containerRef}
@@ -171,7 +171,7 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
   const isMobile = previewWidth < 480;
 
   return (
-    <div className="bg-bg-muted/50 flex items-center justify-between gap-2 border-b border-t-[inherit] px-1 py-1">
+    <div className="bg-card flex items-center justify-between gap-2 border-b border-t-[inherit] px-1 py-1">
       <div className="flex items-center gap-1">
         <Button
           aria-label="Collapse preview"
@@ -284,7 +284,7 @@ export const PreviewFrame = ({ block }: { block: string }) => {
     <div
       className={cn(
         "size-full",
-        isLoading && "bg-bg-muted relative block animate-pulse rounded-md",
+        isLoading && "bg-muted relative block animate-pulse rounded-md",
       )}
     >
       <iframe

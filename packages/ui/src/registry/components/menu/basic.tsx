@@ -37,7 +37,7 @@ const menuStyles = tv({
 
 const menuItemStyles = tv({
   base: [
-    "outline-hidden focus:bg-bg-inverse/10 disabled:text-fg-disabled flex cursor-pointer items-center gap-2 rounded-sm px-3 py-1.5 text-sm transition-colors disabled:pointer-events-none",
+    "outline-hidden focus:bg-inverse/10 disabled:text-fg-disabled flex cursor-pointer items-center gap-2 rounded-sm px-3 py-1.5 text-sm transition-colors disabled:pointer-events-none",
     "selection-single:pl-0 selection-multiple:pl-0",
     "group-data-[slot=drawer]/overlay:py-3 group-data-[slot=drawer]/overlay:text-base",
     "group-data-[slot=modal]/overlay:py-2 group-data-[slot=modal]/overlay:text-base",

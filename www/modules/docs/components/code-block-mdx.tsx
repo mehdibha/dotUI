@@ -65,7 +65,7 @@ export const CodeBlock = forwardRef<HTMLElement, CodeBlockProps>(
       <figure
         ref={ref}
         className={cn(
-          "not-prose fd-codeblock bg-fd-secondary/50 bg-bg-muted/30 group relative my-6 overflow-hidden rounded-lg border text-sm",
+          "not-prose fd-codeblock bg-fd-secondary/50 bg-muted/30 group relative my-6 overflow-hidden rounded-lg border text-sm",
           keepBackground &&
             "bg-[var(--shiki-light-bg)] dark:bg-[var(--shiki-dark-bg)]",
           className,
@@ -73,7 +73,7 @@ export const CodeBlock = forwardRef<HTMLElement, CodeBlockProps>(
         {...props}
       >
         {title ? (
-          <div className="bg-bg-muted flex flex-row items-center gap-2 border-b px-4 py-1.5">
+          <div className="bg-muted flex flex-row items-center gap-2 border-b px-4 py-1.5">
             {icon ? (
               <div
                 className="text-fd-muted-foreground [&_svg]:size-3.5"

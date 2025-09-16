@@ -56,7 +56,7 @@ export function LoginForm(props: React.ComponentProps<"div">) {
             <span className="w-full border-t" />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-bg-muted text-fg-muted px-2">Or</span>
+            <span className="bg-card text-fg-muted px-2">Or</span>
           </div>
         </div>
         <TextField label="Email address" type="email" className="w-full" />
@@ -65,7 +65,10 @@ export function LoginForm(props: React.ComponentProps<"div">) {
         </Button>
         <p className="text-fg-muted mt-4 text-sm">
           {/* TODO */}
-          Don&apos;t have an account? <Link href="#">Register</Link>
+          Don&apos;t have an account?{" "}
+          <Link href="#" variant="quiet">
+            register
+          </Link>
         </p>
       </CardContent>
     </Card>

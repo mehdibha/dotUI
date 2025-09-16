@@ -81,7 +81,7 @@ export const mdxComponents: MDXComponents = {
     </div>
   ),
   thead: ({ className, ...props }) => (
-    <thead className={cn("bg-bg-muted", className)} {...props} />
+    <thead className={cn("bg-muted", className)} {...props} />
   ),
   tr: ({ className, ...props }) => (
     <tr className={cn("m-0 border-t p-0 text-sm", className)} {...props} />
@@ -119,7 +119,7 @@ export const mdxComponents: MDXComponents = {
   code: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
     <code
       className={cn(
-        "bg-bg-muted w-full rounded-md p-1 font-mono text-sm",
+        "bg-muted w-full rounded-md p-1 font-mono text-sm",
         className,
       )}
       {...props}

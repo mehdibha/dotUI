@@ -11,7 +11,7 @@ function Skeleton({ className, show = true, ...props }: SkeletonProps) {
   return (
     <div
       className={cn(
-        "bg-bg-muted relative block h-6 animate-pulse rounded-md",
+        "bg-muted relative block h-6 animate-pulse rounded-md",
         props.children && "h-auto text-transparent *:invisible",
         className,
       )}

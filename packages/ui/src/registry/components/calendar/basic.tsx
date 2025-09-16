@@ -53,7 +53,7 @@ const calendarCellStyles = tv({
       "outside-month:hidden selection-start:rounded-l-md selection-end:rounded-r-md outline-none",
     cell: [
       focusRing(),
-      "hover:bg-bg-inverse/10 disabled:text-fg-disabled unavailable:cursor-default unavailable:text-fg-disabled unavailable:not-data-disabled:line-through hover:unavailable:bg-transparent pressed:bg-bg-inverse/20 my-1 flex size-8 cursor-pointer items-center justify-center rounded-md text-sm transition-colors read-only:cursor-default hover:read-only:bg-transparent disabled:cursor-default disabled:bg-transparent",
+      "hover:bg-inverse/10 disabled:text-fg-disabled unavailable:cursor-default unavailable:text-fg-disabled unavailable:not-data-disabled:line-through hover:unavailable:bg-transparent pressed:bg-inverse/20 my-1 flex size-8 cursor-pointer items-center justify-center rounded-md text-sm transition-colors read-only:cursor-default hover:read-only:bg-transparent disabled:cursor-default disabled:bg-transparent",
     ],
   },
   variants: {
@@ -64,11 +64,11 @@ const calendarCellStyles = tv({
     range: {
       true: {
         cellRoot:
-          "selected: selected:bg-bg-inverse/10 selected:invalid:bg-bg-danger-muted selected:invalid:text-fg-danger",
-        cell: "selection-start:invalid:bg-bg-danger selection-start:invalid:text-fg-on-danger selection-end:invalid:bg-bg-danger selection-end:invalid:text-fg-on-danger",
+          "selected: selected:bg-inverse/10 selected:invalid:bg-danger-muted selected:invalid:text-fg-danger",
+        cell: "selection-start:invalid:bg-danger selection-start:invalid:text-fg-on-danger selection-end:invalid:bg-danger selection-end:invalid:text-fg-on-danger",
       },
       false: {
-        cell: "selected:invalid:bg-bg-danger selected:invalid:text-fg-on-danger",
+        cell: "selected:invalid:bg-danger selected:invalid:text-fg-on-danger",
       },
     },
   },
@@ -77,28 +77,28 @@ const calendarCellStyles = tv({
       variant: "primary",
       range: false,
       className: {
-        cell: "selected:bg-bg-primary selected:text-fg-on-primary",
+        cell: "selected:bg-primary selected:text-fg-on-primary",
       },
     },
     {
       variant: "accent",
       range: false,
       className: {
-        cell: "selected:bg-bg-accent selected:text-fg-on-accent",
+        cell: "selected:bg-accent selected:text-fg-on-accent",
       },
     },
     {
       variant: "primary",
       range: true,
       className: {
-        cell: "selection-start:bg-bg-primary selection-start:text-fg-on-primary selection-end:bg-bg-primary selection-end:text-fg-on-primary",
+        cell: "selection-start:bg-primary selection-start:text-fg-on-primary selection-end:bg-primary selection-end:text-fg-on-primary",
       },
     },
     {
       variant: "accent",
       range: true,
       className: {
-        cell: "selection-start:bg-bg-accent selection-start:text-fg-on-accent selection-end:bg-bg-accent selection-end:text-fg-on-accent",
+        cell: "selection-start:bg-accent selection-start:text-fg-on-accent selection-end:bg-accent selection-end:text-fg-on-accent",
       },
     },
   ],

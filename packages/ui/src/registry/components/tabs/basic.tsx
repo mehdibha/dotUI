@@ -40,8 +40,8 @@ const tabsStyles = tv({
     },
     variant: {
       solid: {
-        list: "bg-bg-muted gap-1 rounded-lg p-1",
-        tab: "disabled:bg-bg-disabled selected:bg-bg-inverse/10 selected:shadow-sm rounded-sm px-3 py-1.5 font-medium",
+        list: "bg-muted gap-1 rounded-lg p-1",
+        tab: "disabled:bg-disabled selected:bg-inverse/10 selected:shadow-sm rounded-sm px-3 py-1.5 font-medium",
       },
       underline: {
         tab: "border-transparent p-2.5",
@@ -73,14 +73,14 @@ const tabsStyles = tv({
       color: "primary",
       variant: "underline",
       className: {
-        tab: "selected:border-bg-primary",
+        tab: "selected:border-primary",
       },
     },
     {
       color: "accent",
       variant: "underline",
       className: {
-        tab: "selected:border-bg-accent",
+        tab: "selected:border-accent",
       },
     },
   ],
