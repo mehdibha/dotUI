@@ -16,39 +16,39 @@ export const DEFAULT_STYLES: Omit<
       },
     },
   }),
-  restoreStyleDefinitionDefaults({
-    name: "material",
-    theme: {
-      colors: {
-        activeModes: ["light", "dark"],
-        modes: {
-          light: {
-            scales: {
-              neutral: {
-                colorKeys: ["#000000"],
-              },
-              accent: {
-                colorKeys: ["#0091FF"],
-              },
-            },
-          },
-          dark: {
-            scales: {
-              neutral: {
-                colorKeys: ["#ffffff"],
-              },
-              accent: {
-                colorKeys: ["#0091FF"],
-              },
-            },
-          },
-        },
-      },
-    },
-    variants: {
-      buttons: "ripple",
-    },
-  }),
+  // restoreStyleDefinitionDefaults({
+  //   name: "material",
+  //   theme: {
+  //     colors: {
+  //       activeModes: ["light", "dark"],
+  //       modes: {
+  //         light: {
+  //           scales: {
+  //             neutral: {
+  //               colorKeys: ["#000000"],
+  //             },
+  //             accent: {
+  //               colorKeys: ["#0091FF"],
+  //             },
+  //           },
+  //         },
+  //         dark: {
+  //           scales: {
+  //             neutral: {
+  //               colorKeys: ["#ffffff"],
+  //             },
+  //             accent: {
+  //               colorKeys: ["#0091FF"],
+  //             },
+  //           },
+  //         },
+  //       },
+  //     },
+  //   },
+  //   variants: {
+  //     buttons: "ripple",
+  //   },
+  // }),
   // restoreStyleDefinitionDefaults({
   //   name: "ghibli",
   //   theme: {
