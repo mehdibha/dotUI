@@ -51,5 +51,8 @@
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.2.4"
   },
-  "prettier": "@dotui/prettier-config"
+  "prettier": "@dotui/prettier-config",
+  "dependencies": {
+    "colorjs.io": "^0.5.2"
+  }
 }
