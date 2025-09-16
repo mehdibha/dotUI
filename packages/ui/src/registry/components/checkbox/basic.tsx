@@ -22,19 +22,19 @@ const checkboxStyles = tv({
       "border-border-control flex size-4 shrink-0 cursor-pointer items-center justify-center rounded-sm border",
       "group-selected/checkbox:border-transparent bg-transparent text-transparent transition-colors duration-75 group-indeterminate/checkbox:border-transparent",
       "group-read-only/checkbox:cursor-default",
-      "group-disabled/checkbox:border-border-disabled group-indeterminate/checkbox:group-disabled/checkbox:bg-bg-disabled group-selected/checkbox:group-disabled/checkbox:bg-bg-disabled group-selected/checkbox:group-disabled/checkbox:text-fg-disabled group-disabled/checkbox:cursor-default",
-      "group-invalid/checkbox:group-selected/checkbox:text-fg-onMutedDanger group-invalid/checkbox:border-border-danger group-invalid/checkbox:group-selected/checkbox:bg-bg-danger-muted",
+      "group-disabled/checkbox:border-border-disabled group-indeterminate/checkbox:group-disabled/checkbox:bg-disabled group-selected/checkbox:group-disabled/checkbox:bg-disabled group-selected/checkbox:group-disabled/checkbox:text-fg-disabled group-disabled/checkbox:cursor-default",
+      "group-invalid/checkbox:group-selected/checkbox:text-fg-onMutedDanger group-invalid/checkbox:border-border-danger group-invalid/checkbox:group-selected/checkbox:bg-danger-muted",
     ],
   },
   variants: {
     variant: {
       primary: {
         indicator:
-          "group-indeterminate/checkbox:bg-bg-primary group-indeterminate/checkbox:text-fg-on-primary group-selected/checkbox:bg-bg-primary group-selected/checkbox:text-fg-on-primary",
+          "group-indeterminate/checkbox:bg-primary group-indeterminate/checkbox:text-fg-on-primary group-selected/checkbox:bg-primary group-selected/checkbox:text-fg-on-primary",
       },
       accent: {
         indicator:
-          "group-indeterminate/checkbox:bg-bg-Accent group-indeterminate/checkbox:text-fg-on-accent group-selected/checkbox:bg-bg-accent group-selected/checkbox:text-fg-on-accent",
+          "group-indeterminate/checkbox:bg-accent group-indeterminate/checkbox:text-fg-on-accent group-selected/checkbox:bg-accent group-selected/checkbox:text-fg-on-accent",
       },
     },
     appearance: {
@@ -44,7 +44,7 @@ const checkboxStyles = tv({
       card: {
         root: [
           focusRing(),
-          "disabled:border-border-disabled disabled:selected:bg-bg-disabled flex-row-reverse justify-between gap-4 rounded-md border p-4 transition-colors",
+          "disabled:border-border-disabled disabled:selected:bg-disabled flex-row-reverse justify-between gap-4 rounded-md border p-4 transition-colors",
         ],
       },
     },
@@ -54,14 +54,14 @@ const checkboxStyles = tv({
       appearance: "card",
       variant: "primary",
       className: {
-        root: "selected:bg-bg-muted",
+        root: "selected:bg-muted",
       },
     },
     {
       appearance: "card",
       variant: "accent",
       className: {
-        root: "selected:bg-bg-accent-muted",
+        root: "selected:bg-accent-muted",
       },
     },
   ],

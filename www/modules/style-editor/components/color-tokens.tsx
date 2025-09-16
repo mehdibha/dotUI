@@ -168,7 +168,7 @@ const ColorTokenVariableName = ({
       control={form.control}
       render={(props) => (
         <div className="w-70 flex items-center gap-2">
-          <div className="bg-bg-muted rounded-full p-1 pl-3">
+          <div className="bg-muted rounded-full p-1 pl-3">
             {isEditMode ? (
               <div ref={containerRef} className="flex items-center gap-1">
                 <AutoResizeTextField

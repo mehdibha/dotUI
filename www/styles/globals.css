@@ -175,45 +175,45 @@
 
   /* colors */
   --color-bg: var(--neutral-50);
-  --color-bg-card: var(--neutral-100);
-  --color-bg-muted: var(--neutral-200);
-  --color-bg-inverse: var(--neutral-950);
-  --color-bg-disabled: var(--neutral-200);
+  --color-card: var(--neutral-100);
+  --color-muted: var(--neutral-200);
+  --color-inverse: var(--neutral-950);
+  --color-disabled: var(--neutral-200);
 
-  --color-bg-neutral: var(--neutral-200);
-  --color-bg-neutral-hover: var(--neutral-300);
-  --color-bg-neutral-active: var(--neutral-400);
+  --color-neutral: var(--neutral-200);
+  --color-neutral-hover: var(--neutral-300);
+  --color-neutral-active: var(--neutral-400);
 
-  --color-bg-primary: var(--neutral-950);
-  --color-bg-primary-hover: var(--neutral-900);
-  --color-bg-primary-active: var(--neutral-800);
-  --color-bg-primary-muted: var(--neutral-200);
+  --color-primary: var(--neutral-950);
+  --color-primary-hover: var(--neutral-900);
+  --color-primary-active: var(--neutral-800);
+  --color-primary-muted: var(--neutral-200);
 
-  --color-bg-success: var(--success-500);
-  --color-bg-success-hover: var(--success-600);
-  --color-bg-success-active: var(--success-700);
-  --color-bg-success-muted: var(--success-50);
+  --color-success: var(--success-500);
+  --color-success-hover: var(--success-600);
+  --color-success-active: var(--success-700);
+  --color-success-muted: var(--success-50);
 
-  --color-bg-danger: var(--danger-500);
-  --color-bg-danger-hover: var(--danger-600);
-  --color-bg-danger-active: var(--danger-700);
-  --color-bg-danger-muted: var(--danger-50);
+  --color-danger: var(--danger-500);
+  --color-danger-hover: var(--danger-600);
+  --color-danger-active: var(--danger-700);
+  --color-danger-muted: var(--danger-50);
 
-  --color-bg-warning: var(--warning-500);
-  --color-bg-warning-hover: var(--warning-600);
-  --color-bg-warning-active: var(--warning-700);
-  --color-bg-warning-muted: var(--warning-50);
+  --color-warning: var(--warning-500);
+  --color-warning-hover: var(--warning-600);
+  --color-warning-active: var(--warning-700);
+  --color-warning-muted: var(--warning-50);
 
-  --color-bg-info: var(--info-500);
-  --color-bg-info-hover: var(--info-600);
-  --color-bg-info-active: var(--info-700);
-  --color-bg-info-muted: var(--info-50);
+  --color-info: var(--info-500);
+  --color-info-hover: var(--info-600);
+  --color-info-active: var(--info-700);
+  --color-info-muted: var(--info-50);
 
-  --color-bg-accent: var(--accent-500);
-  --color-bg-accent-hover: var(--accent-600);
-  --color-bg-accent-active: var(--accent-700);
-  --color-bg-accent-muted: var(--accent-50);
-  --color-bg-accent-muted-hover: var(--accent-100);
+  --color-accent: var(--accent-500);
+  --color-accent-hover: var(--accent-600);
+  --color-accent-active: var(--accent-700);
+  --color-accent-muted: var(--accent-50);
+  --color-accent-muted-hover: var(--accent-100);
 
   --color-fg: var(--neutral-950);
   --color-fg-muted: var(--neutral-800);

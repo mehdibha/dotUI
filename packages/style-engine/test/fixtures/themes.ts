@@ -151,8 +151,8 @@ export const mockThemeDefinition: ThemeDefinition = {
     tokens: [
       { id: "color-bg", name: "color-bg", value: "var(--neutral-50)" },
       {
-        id: "color-bg-muted",
-        name: "color-bg-muted",
+        id: "color-muted",
+        name: "color-muted",
         value: "var(--neutral-100)",
       },
       { id: "color-fg", name: "color-fg", value: "var(--neutral-900)" },

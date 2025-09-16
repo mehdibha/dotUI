@@ -15,7 +15,7 @@ const switchStyles = tv({
   slots: {
     root: "disabled:text-fg-disabled group flex items-center justify-start gap-3",
     indicator: [
-      "bg-bg-neutral group-disabled:border-border-disabled group-selected:bg-border-focus group-selected:group-disabled:border-none group-selected:group-disabled:bg-bg-disabled inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors group-disabled:cursor-not-allowed group-disabled:border group-disabled:bg-transparent",
+      "bg-neutral group-disabled:border-border-disabled group-selected:bg-border-focus group-selected:group-disabled:border-none group-selected:group-disabled:bg-disabled inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors group-disabled:cursor-not-allowed group-disabled:border group-disabled:bg-transparent",
     ],
     thumb:
       "group-disabled:bg-fg-disabled pointer-events-none block origin-right rounded-full bg-white shadow-lg ring-0 transition-all duration-200",
@@ -26,7 +26,7 @@ const switchStyles = tv({
       card: {
         root: [
           focusRing(),
-          "disabled:border-border-disabled selected:bg-bg-muted disabled:selected:bg-bg-disabled cursor-pointer flex-row-reverse justify-between gap-4 rounded-md border p-4 transition-colors",
+          "disabled:border-border-disabled selected:bg-muted disabled:selected:bg-disabled cursor-pointer flex-row-reverse justify-between gap-4 rounded-md border p-4 transition-colors",
         ],
       },
     },

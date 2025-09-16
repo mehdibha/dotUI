@@ -14,24 +14,24 @@ import { createScopedContext } from "@dotui/ui/lib/utils";
 
 const alertStyles = tv({
   slots: {
-    root: "bg-bg-muted text-fg flex items-center gap-4 rounded-lg border-l-8 p-4 [&_svg]:size-4",
+    root: "bg-muted text-fg flex items-center gap-4 rounded-lg border-l-8 p-4 [&_svg]:size-4",
     title: "mr-1 font-medium leading-normal tracking-tight",
     content: "text-sm",
   },
   variants: {
     variant: {
-      neutral: { root: "border-bg-primary" },
+      neutral: { root: "border-primary" },
       success: {
-        root: "border-bg-success",
+        root: "border-success",
       },
       warning: {
-        root: "border-bg-warning",
+        root: "border-warning",
       },
       danger: {
-        root: "border-bg-danger",
+        root: "border-danger",
       },
       info: {
-        root: "border-bg-info",
+        root: "border-info",
       },
     },
   },

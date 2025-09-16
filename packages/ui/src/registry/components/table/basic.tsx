@@ -37,7 +37,7 @@ const tableStyles = tv({
     container: "w-auto overflow-auto",
     root: [
       "relative table min-h-24 w-full border-separate border-spacing-0 cursor-default text-sm",
-      "[&_.react-aria-DropIndicator]:translate-z-0 [&_.react-aria-DropIndicator]:outline-bg-accent [&_.react-aria-DropIndicator]:outline",
+      "[&_.react-aria-DropIndicator]:translate-z-0 [&_.react-aria-DropIndicator]:outline-accent [&_.react-aria-DropIndicator]:outline",
     ],
     header: "sticky top-0 z-10",
     column: [
@@ -46,12 +46,12 @@ const tableStyles = tv({
     ],
     resizer: [
       focusRing(),
-      "before:bg-border-field resizing:before:w-0.5 resizing:before:bg-bg-accent absolute right-0 box-content h-5 w-px cursor-col-resize px-2 before:block before:h-5 before:w-px before:transition-colors before:content-['']",
+      "before:bg-border-field resizing:before:w-0.5 resizing:before:bg-accent absolute right-0 box-content h-5 w-px cursor-col-resize px-2 before:block before:h-5 before:w-px before:transition-colors before:content-['']",
     ],
     body: "empty:text-center empty:italic",
     row: [
       focusRing(),
-      "disabled:text-fg-disabled data-action:cursor-pointer data-action:hover:bg-bg-muted data-href:cursor-pointer data-href:hover:bg-bg-muted data-[selection-mode=multiple]:hover:not-selected:bg-bg-muted data-[selection-mode=single]:hover:not-selected:bg-bg-muted selected:text-fg dragging:bg-bg relative transition-colors data-[selection-mode=multiple]:cursor-pointer data-[selection-mode=single]:cursor-pointer",
+      "disabled:text-fg-disabled data-action:cursor-pointer data-action:hover:bg-muted data-href:cursor-pointer data-href:hover:bg-muted data-[selection-mode=multiple]:hover:not-selected:bg-muted data-[selection-mode=single]:hover:not-selected:bg-muted selected:text-fg dragging:bg-bg relative transition-colors data-[selection-mode=multiple]:cursor-pointer data-[selection-mode=single]:cursor-pointer",
     ],
     cell: [focusRing(), "px-3 py-2"],
   },
@@ -64,10 +64,10 @@ const tableStyles = tv({
         cell: "border-b group-last/row:border-b-0",
       },
       solid: {
-        container: "bg-bg-inverse/5 rounded-lg p-2",
+        container: "bg-inverse/5 rounded-lg p-2",
         header: "text-fg-muted border-y",
         body: "text-fg",
-        column: "bg-bg-inverse/5 first:rounded-l-sm last:rounded-r-sm",
+        column: "bg-inverse/5 first:rounded-l-sm last:rounded-r-sm",
       },
       line: {
         column: "border-b",
@@ -78,10 +78,10 @@ const tableStyles = tv({
     },
     selectionVariant: {
       primary: {
-        row: "selected:bg-bg-primary-muted",
+        row: "selected:bg-primary-muted",
       },
       accent: {
-        row: "selected:bg-bg-accent-muted",
+        row: "selected:bg-accent-muted",
       },
     },
   },

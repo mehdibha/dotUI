@@ -56,7 +56,7 @@ export function LoginForm(props: React.ComponentProps<"div">) {
             <span className="w-full border-t" />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-bg-card text-fg-muted px-2">Or</span>
+            <span className="bg-card text-fg-muted px-2">Or</span>
           </div>
         </div>
         <TextField label="Email address" type="email" className="w-full" />

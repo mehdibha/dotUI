@@ -282,7 +282,7 @@ const SidebarRoot = ({
           "w-(--sidebar-width) transition-sidebar group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) relative z-10 h-svh bg-transparent",
         )}
       />
-      <div className="w-(--sidebar-width) bg-bg-muted/10 transition-sidebar group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) [&_svg]:text-fg-muted fixed inset-y-0 left-0 z-10 flex h-svh flex-col overflow-hidden">
+      <div className="w-(--sidebar-width) bg-muted/10 transition-sidebar group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) [&_svg]:text-fg-muted fixed inset-y-0 left-0 z-10 flex h-svh flex-col overflow-hidden">
         <div className="w-(--sidebar-width) relative flex h-svh flex-1 translate-x-[-0.5px] flex-col overflow-hidden">
           {children}
         </div>
@@ -432,7 +432,7 @@ function PageNode({
       target={url.startsWith("https") ? "_blank" : undefined}
       href={url as Route}
       className={cn(
-        "border-bg-bg-muted text-fg-muted hover:text-fg group block border-l py-1 pl-4 font-medium transition-colors",
+        "border-bg-muted text-fg-muted hover:text-fg group block border-l py-1 pl-4 font-medium transition-colors",
         {
           "border-fg text-fg": active,
         },

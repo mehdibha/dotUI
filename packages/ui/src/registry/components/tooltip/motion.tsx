@@ -25,12 +25,12 @@ const tooltipStyles = tv({
   variants: {
     variant: {
       default: {
-        content: "bg-bg-muted border",
-        arrow: "fill-bg-muted stroke-border",
+        content: "bg-muted border",
+        arrow: "fill-muted stroke-border",
       },
       inverse: {
-        content: "bg-bg-inverse text-fg-inverse",
-        arrow: "fill-bg-inverse",
+        content: "bg-inverse text-fg-inverse",
+        arrow: "fill-inverse",
       },
     },
   },

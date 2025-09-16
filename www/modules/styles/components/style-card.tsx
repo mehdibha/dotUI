@@ -84,7 +84,7 @@ export function StyleCard({
               "bg-bg/30 absolute inset-0 z-50 flex items-center justify-center opacity-0 duration-150 hover:opacity-100",
             )}
           >
-            <span className="bg-bg-primary text-fg-on-primary hover:bg-bg-primary-hover active:bg-bg-primary-active flex h-10 items-center justify-center rounded-md border px-4 text-base font-medium leading-normal tracking-tight duration-150">
+            <span className="bg-primary text-fg-on-primary hover:bg-primary-hover active:bg-primary-active flex h-10 items-center justify-center rounded-md border px-4 text-base font-medium leading-normal tracking-tight duration-150">
               Open in editor
             </span>
           </Link>
@@ -93,8 +93,7 @@ export function StyleCard({
             <div
               className={cn(
                 "flex size-full",
-                isLoading &&
-                  "bg-bg-muted relative block animate-pulse rounded-md",
+                isLoading && "bg-muted relative block animate-pulse rounded-md",
               )}
             >
               <iframe

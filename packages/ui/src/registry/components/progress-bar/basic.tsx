@@ -24,24 +24,24 @@ const progressStyles = tv({
   variants: {
     variant: {
       primary: {
-        indicator: "bg-bg-muted",
-        filler: "bg-bg-primary",
+        indicator: "bg-muted",
+        filler: "bg-primary",
       },
       accent: {
-        indicator: "bg-bg-accent-muted",
-        filler: "bg-bg-accent",
+        indicator: "bg-accent-muted",
+        filler: "bg-accent",
       },
       warning: {
-        indicator: "bg-bg-warning-muted",
-        filler: "bg-bg-warning",
+        indicator: "bg-warning-muted",
+        filler: "bg-warning",
       },
       danger: {
-        indicator: "bg-bg-danger-muted",
-        filler: "bg-bg-danger",
+        indicator: "bg-danger-muted",
+        filler: "bg-danger",
       },
       success: {
-        indicator: "bg-bg-success-muted",
-        filler: "bg-bg-success",
+        indicator: "bg-success-muted",
+        filler: "bg-success",
       },
     },
     size: {

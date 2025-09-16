@@ -199,14 +199,14 @@ export const DEFAULT_LIGHT_MODE: ModeDefinition = {
 };
 
 export const DEFAULT_DARK_MODE: ModeDefinition = {
-  lightness: 0,
+  lightness: 3,
   saturation: 100,
   contrast: 100,
   scales: {
     neutral: {
       name: "neutral",
       colorKeys: [{ id: 0, color: "#000000" }],
-      ratios: [1, 1.1, 1.25, 1.7, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
+      ratios: [1, 1.15, 1.25, 1.7, 2.23, 3.16, 4.78, 6.36, 8.28, 13.2, 15.2],
       overrides: {},
       smooth: false,
     },

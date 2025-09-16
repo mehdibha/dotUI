@@ -9,7 +9,7 @@ import { Button } from "@dotui/ui/components/button";
 import { ScrollArea } from "@/components/scroll-area";
 
 const codeStyles = tv({
-  base: "bg-bg-muted relative rounded-md",
+  base: "bg-muted relative rounded-md",
   variants: {
     variant: {
       classic: "p-4 text-xs",

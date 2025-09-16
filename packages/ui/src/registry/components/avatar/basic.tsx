@@ -10,10 +10,9 @@ const avatarStyles = tv({
   slots: {
     root: "bg-bg relative inline-flex shrink-0 overflow-hidden align-middle",
     image: "aspect-square size-full",
-    fallback:
-      "bg-bg-muted flex size-full select-none items-center justify-center",
+    fallback: "bg-muted flex size-full select-none items-center justify-center",
     placeholder:
-      "bg-bg-muted flex size-full h-full animate-pulse items-center justify-center",
+      "bg-muted flex size-full h-full animate-pulse items-center justify-center",
   },
   variants: {
     size: {

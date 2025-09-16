@@ -30,22 +30,22 @@ const toastStyles = tv({
   },
   variants: {
     variant: {
-      neutral: { toast: "border-border bg-bg-card" },
+      neutral: { toast: "border-border bg-card" },
       success: {
-        toast: "border-border-success bg-bg-success",
+        toast: "border-border-success bg-success",
         title: "text-fg-success",
       },
       warning: {
-        toast: "border-border-warning bg-bg-warning",
+        toast: "border-border-warning bg-warning",
       },
       danger: {
-        toast: "border-border-danger bg-bg-danger",
+        toast: "border-border-danger bg-danger",
       },
       error: {
-        toast: "border-border-danger bg-bg-danger",
+        toast: "border-border-danger bg-danger",
       },
       info: {
-        toast: "border-border-info bg-bg-info",
+        toast: "border-border-info bg-info",
       },
     },
   },

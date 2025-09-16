@@ -22,22 +22,22 @@ const sliderStyles = tv({
   slots: {
     root: "group flex flex-col gap-2",
     track:
-      "bg-bg-neutral disabled:bg-bg-disabled relative grow cursor-pointer rounded-full disabled:cursor-default",
+      "bg-neutral disabled:bg-disabled relative grow cursor-pointer rounded-full disabled:cursor-default",
     filler:
-      "group-disabled:bg-bg-disabled pointer-events-none absolute rounded-full",
+      "group-disabled:bg-disabled pointer-events-none absolute rounded-full",
     thumb: [
       focusRing(),
-      "disabled:border-bg disabled:bg-bg-disabled left-[50%] top-[50%] rounded-full bg-white shadow-md transition-[width,height] disabled:border",
+      "disabled:border-bg disabled:bg-disabled left-[50%] top-[50%] rounded-full bg-white shadow-md transition-[width,height] disabled:border",
     ],
     valueLabel: "text-fg-muted text-sm",
   },
   variants: {
     variant: {
       accent: {
-        filler: "bg-bg-accent",
+        filler: "bg-accent",
       },
       primary: {
-        filler: "bg-bg-primary",
+        filler: "bg-primary",
       },
     },
     orientation: {
