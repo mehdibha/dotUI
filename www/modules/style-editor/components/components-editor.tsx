@@ -13,29 +13,33 @@ import {
 } from "lucide-react";
 
 import { registryUi } from "@dotui/registry-definition/registry-ui";
-import { StyleProvider } from "@dotui/ui";
+import { Badge } from "@dotui/ui/components/badge";
 import { Button } from "@dotui/ui/components/button";
 import { Calendar, RangeCalendar } from "@dotui/ui/components/calendar";
 import { Checkbox } from "@dotui/ui/components/checkbox";
 import { Combobox, ComboboxItem } from "@dotui/ui/components/combobox";
 import { DatePicker } from "@dotui/ui/components/date-picker";
 import { DateRangePicker } from "@dotui/ui/components/date-range-picker";
+import {
+  Dialog,
+  DialogBody,
+  DialogFooter,
+  DialogRoot,
+} from "@dotui/ui/components/dialog";
 import { FormControl } from "@dotui/ui/components/form";
 import { ListBox, ListBoxItem } from "@dotui/ui/components/list-box";
 import { Loader } from "@dotui/ui/components/loader";
-import { Popover } from "@dotui/ui/components/popover";
+import { Menu, MenuItem, MenuRoot } from "@dotui/ui/components/menu";
+import { Radio, RadioGroup } from "@dotui/ui/components/radio-group";
 import { SearchField } from "@dotui/ui/components/search-field";
-import {
-  Select,
-  SelectItem,
-  SelectRoot,
-  SelectValue,
-} from "@dotui/ui/components/select";
+import { Select, SelectItem } from "@dotui/ui/components/select";
 import { Skeleton } from "@dotui/ui/components/skeleton";
+import { Slider } from "@dotui/ui/components/slider";
+import { Switch } from "@dotui/ui/components/switch";
 import { TextArea } from "@dotui/ui/components/text-area";
 import { TextField } from "@dotui/ui/components/text-field";
 import { ToggleButton } from "@dotui/ui/components/toggle-button";
-import { ChevronsUpDownIcon } from "@dotui/ui/icons";
+import { Tooltip } from "@dotui/ui/components/tooltip";
 import { cn } from "@dotui/ui/lib/utils";
 import type { VariantsDefinition } from "@dotui/style-engine/types";
 
@@ -149,23 +153,14 @@ export function ComponentsEditor() {
         tokens={["color-border-focus", "color-border-focus-muted"]}
         previewClassName="flex-col gap-4"
       >
-        {/* <div className="flex items-center gap-4">
-          <Button className="focus-ring-demo">Button</Button>
-          <TextFieldRoot placeholder="hello@mehdibha.com">
-            <TextFieldInput className="focus-ring-input-demo" />
-          </TextFieldRoot>
-        </div> */}
         <div className="flex items-center gap-4">
           <Button>Button</Button>
           <TextField placeholder="hello@mehdibha.com" />
           <Checkbox />
-          {/* <CheckboxRoot>
-            <CheckboxIndicator />
-          </CheckboxRoot> */}
         </div>
       </Section>
 
-      {/* <Section
+      <Section
         name="buttons"
         title="Buttons"
         variants={getComponentVariants("button")}
@@ -173,13 +168,13 @@ export function ComponentsEditor() {
       >
         <div className="flex items-center gap-2">
           <Button>Default</Button>
-          <Button variant="accent">Accent</Button>
+          {/* <Button variant="accent">Accent</Button> */}
           <Button variant="outline">Outline</Button>
           <Button variant="quiet">Quiet</Button>
         </div>
         <div className="flex items-center gap-2">
-          <Button variant="danger">Destructive</Button>
-          <Button variant="success">Secondary</Button>
+          <Button variant="danger">Danger</Button>
+          <Button variant="success">Success</Button>
           <Button variant="warning">Warning</Button>
         </div>
         <div className="flex items-center gap-2">
@@ -219,9 +214,9 @@ export function ComponentsEditor() {
             <BookmarkIcon />
           </ToggleButton>
         </div>
-      </Section> */}
+      </Section>
 
-      {/* <Section
+      <Section
         name="inputs"
         title="Inputs"
         variants={getComponentVariants("input")}
@@ -262,32 +257,28 @@ export function ComponentsEditor() {
           description="Type your description"
           className="col-span-2 w-full"
         />
-      </Section> */}
+      </Section>
 
-      {/* <Section
+      <Section
         name="pickers"
         title="Pickers"
         variants={getComponentVariants("combobox")}
         previewClassName="grid grid-cols-2 gap-2"
       >
-        <Combobox
-          aria-label="country"
-          defaultSelectedKey="tunisia"
-          className="w-full"
-        >
-          <ComboboxItem id="canada">Canada</ComboboxItem>
-          <ComboboxItem id="spain">Spain</ComboboxItem>
-          <ComboboxItem id="tunisia">Tunisia</ComboboxItem>
-          <ComboboxItem id="germany">Germany</ComboboxItem>
-          <ComboboxItem id="france">France</ComboboxItem>
-          <ComboboxItem id="united-states">United states</ComboboxItem>
-          <ComboboxItem id="united-kingdom">United Kingdom</ComboboxItem>
+        <Combobox aria-label="country">
+          <ComboboxItem>Canada</ComboboxItem>
+          <ComboboxItem>France</ComboboxItem>
+          <ComboboxItem>Germany</ComboboxItem>
+          <ComboboxItem>Spain</ComboboxItem>
+          <ComboboxItem>Tunisia</ComboboxItem>
+          <ComboboxItem>United states</ComboboxItem>
+          <ComboboxItem>United Kingdom</ComboboxItem>
         </Combobox>
         <DatePicker className="w-full" />
         <DateRangePicker className="w-full" />
-      </Section> */}
+      </Section>
 
-      {/* <Section
+      <Section
         name="selection"
         title="Selection"
         variants={getComponentVariants("select")}
@@ -297,7 +288,7 @@ export function ComponentsEditor() {
           <SelectItem id="option-2">Option 2</SelectItem>
           <SelectItem id="option-3">Option 3</SelectItem>
         </Select>
-      </Section> */}
+      </Section>
 
       <Section
         name="calendars"
@@ -313,7 +304,7 @@ export function ComponentsEditor() {
         />
       </Section>
 
-      {/* <Section
+      <Section
         name="list-box-and-menu"
         title="ListBox and menu"
         variants={getComponentVariants("list-box")}
@@ -393,9 +384,8 @@ export function ComponentsEditor() {
             </DialogFooter>
           </Dialog>
         </DialogRoot>
-      </Section> */}
+      </Section>
 
-      {/* 
       <Section
         name="checkboxes"
         title="Checkboxes"
@@ -408,6 +398,7 @@ export function ComponentsEditor() {
           Hello world
         </Checkbox>
       </Section>
+
       <Section
         name="radios"
         title="Radios"
@@ -476,7 +467,7 @@ export function ComponentsEditor() {
         <Tooltip content="This is a tooltip">
           <Button>Hover me</Button>
         </Tooltip>
-      </Section> */}
+      </Section>
     </div>
   );
 }
