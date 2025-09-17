@@ -12,7 +12,7 @@ export default function Demo() {
   );
   return (
     <MenuRoot>
-      <Button variant="outline" size="sm">
+      <Button variant="default" size="sm">
         Align
       </Button>
       <Menu

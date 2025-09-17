@@ -10,7 +10,7 @@ export default function Demo() {
   return (
     <SelectRoot>
       <Button
-        variant="outline"
+        variant="default"
         suffix={<ChevronsUpDownIcon className="text-fg-muted" />}
       >
         <SelectValue />

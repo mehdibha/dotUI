@@ -15,21 +15,21 @@ export function LoginForm() {
       </p>
       <div className="mt-4 flex items-center gap-2">
         <Button
-          variant="outline"
+          variant="default"
           className="flex-1"
           aria-label="Sign in with google"
         >
           <GoogleIcon />
         </Button>
         <Button
-          variant="outline"
+          variant="default"
           className="flex-1"
           aria-label="Sign in with X"
         >
           <TwitterIcon />
         </Button>
         <Button
-          variant="outline"
+          variant="default"
           className="flex-1"
           aria-label="Sign in with github"
         >

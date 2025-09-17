@@ -3,7 +3,6 @@ import { Button } from "@dotui/ui/components/button";
 const variants = [
   "default",
   "primary",
-  "outline",
   "quiet",
   "success",
   "warning",

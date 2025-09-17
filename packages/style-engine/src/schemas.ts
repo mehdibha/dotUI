@@ -231,7 +231,7 @@ export const variantsSchema = z.object({
   avatar: z.enum(["basic"]),
   badge: z.enum(["basic"]),
   breadcrumbs: z.enum(["basic"]),
-  button: z.enum(["basic", "outline", "brutalist", "ripple"]),
+  button: z.enum(["basic", "shine", "outline", "ripple"]),
   "button-group": z.enum(["basic"]),
   calendar: z.enum(["basic", "cal"]),
   card: z.enum(["basic"]),

@@ -10,7 +10,7 @@ import {
 export default function Demo() {
   return (
     <MenuRoot>
-      <Button variant="outline" shape="square" size="sm">
+      <Button variant="default" shape="square" size="sm">
         <MenuIcon />
       </Button>
       <Menu>
