@@ -269,10 +269,9 @@
   --breakpoint-xs: 30rem;
   --breakpoint-3xl: 120rem;
 
-  
   /* easing */
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
-  
+
   /* animations */
   --animate-accordion-down: accordion-down 0.15s ease-out;
   --animate-accordion-up: accordion-up 0.15s ease-out;
@@ -281,17 +280,19 @@
   --animate-line-spinner: line-spinner 1.2s linear infinite;
   --animate-dot-spinner: dot-spinner 0.8s linear infinite;
   --animate-progress-indeterminate:
-  progress-grow var(--progress-duration) 1 both normal,
-  progress-pulse 1s ease var(--progress-duration) infinite normal none running;
+    progress-grow var(--progress-duration) 1 both normal,
+    progress-pulse 1s ease var(--progress-duration) infinite normal none running;
 }
-
 
 /* :root {
   --color-shine: #ffffff;
 } */
 
 @theme inline {
-  --shadow-shine: inset 0px 0px 0px 1px color-mix(in srgb, var(--color-shine) 15%, transparent), inset 0px 1px 0px color-mix(in srgb, var(--color-shine) 30%, transparent);
+  --shadow-shine:
+    inset 0px 0px 0px 1px
+      color-mix(in srgb, var(--color-shine) 15%, transparent),
+    inset 0px 1px 0px color-mix(in srgb, var(--color-shine) 30%, transparent);
 }
 
 /* for specific variants */
