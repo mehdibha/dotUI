@@ -222,6 +222,7 @@
   --color-fg-muted: var(--neutral-800);
   --color-fg-inverse: var(--neutral-50);
   --color-fg-disabled: var(--neutral-500);
+  --color-fg-primary-disabled: var(--neutral-300);
   --color-fg-danger: var(--danger-700);
   --color-fg-warning: var(--warning-700);
   --color-fg-success: var(--success-700);
