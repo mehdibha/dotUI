@@ -1,16 +1,15 @@
 # dotUI
 
-## About dotUI
-
-dotUI helps you create a complete and **unique** design system in seconds. It turns a few high‑level choices into a ready‑to‑ship component library—so your product looks like your brand, not a preset.
+Create a **unique** design system in seconds. so your product looks like your brand, not a preset.
 
 ## Documentation
 
-Visit [https://dotui.org/docs](https://dotui.org/docs) to view the full documentation.
+To get started, check out the [dotUI documentation](https://dotui.org/docs).
 
 ## Community
 
-To build with us, ask questions, or raise ideas, join the dotUI [Discord](https://discord.gg/DXpj5V2fU8) server.
+- **Discord** For community support, questions, and tips, join our [Discord](https://discord.gg/DXpj5V2fU8).
+- **X** To stay up-to-date on new releases and announcements follow [@mehdibha](https://x.com/mehdibha_).
 
 ## Contributing
 
