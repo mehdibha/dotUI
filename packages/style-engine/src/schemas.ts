@@ -115,7 +115,7 @@ export const themeDefinitionSchema = z.object({
 // Variants
 export const variantsDefinitionSchema = z.object({
   alert: z.enum(["basic", "notch", "notch-2"]),
-  buttons: z.enum(["basic", "brutalist", "outline", "ripple"]),
+  buttons: z.enum(["basic", "shine", "outline", "ripple"]),
   loader: z.enum(["ring"]),
   "focus-style": z.enum(["basic"]),
   inputs: z.enum(["basic"]),

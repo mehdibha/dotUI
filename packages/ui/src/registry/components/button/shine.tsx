@@ -19,25 +19,20 @@ import { createOptionalScopedContext } from "@dotui/ui/lib/utils";
 
 const buttonStyles = tv({
   extend: focusRing,
-  base: [
-    "disabled:bg-disabled disabled:text-fg-disabled pending:cursor-default pending:border pending:border-border-disabled pending:bg-disabled pending:text-fg-disabled inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium leading-normal transition-all disabled:cursor-default",
-    "shadow-brutalism hover:translate-x-(--box-shadow-x) hover:translate-y-(--box-shadow-y) hover:shadow-none",
-  ],
+  base: "disabled:border-border-disabled disabled:bg-disabled disabled:text-fg-disabled pending:cursor-default pending:border pending:border-border-disabled pending:bg-disabled pending:text-fg-disabled pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0 relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium leading-normal transition-all disabled:cursor-default disabled:border",
   variants: {
     variant: {
-      default: "bg-neutral text-fg-on-neutral",
-      primary: "bg-primary text-fg-on-primary",
-      quiet: "text-fg bg-transparent",
-      outline:
-        "border-border-field text-fg hover:bg-inverse/10 disabled:border-border-disabled pressed:bg-inverse/15 border disabled:bg-transparent",
-      accent:
-        "bg-accent text-fg-on-accent hover:bg-accent-hover pressed:bg-accent-active",
+      default:
+        "bg-neutral text-fg-on-neutral hover:bg-neutral-hover shadow-shine [--color-shine:var(--neutral-800)]",
+      primary: "bg-primary text-fg-on-primary hover:bg-primary-hover shadow-shine [--color-shine:var(--neutral-500)]",
+      quiet: "text-fg hover:bg-inverse/10 pressed:bg-inverse/20 bg-transparent",
+      link: "text-fg underline-offset-4 hover:underline",
       success:
-        "bg-success text-fg-on-success hover:bg-success-hover pressed:bg-success-active",
+        "bg-success text-fg-on-success hover:bg-success-hover pressed:bg-success-active shadow-shine [--color-shine:var(--success-800)]",
       warning:
-        "bg-warning text-fg-on-warning hover:bg-warning-hover pressed:bg-warning-active",
+        "bg-warning text-fg-on-warning hover:bg-warning-hover pressed:bg-warning-active shadow-shine [--color-shine:var(--warning-800)]",
       danger:
-        "bg-danger text-fg-on-danger hover:bg-danger-hover pressed:bg-danger-active",
+        "bg-danger text-fg-on-danger hover:bg-danger-hover pressed:bg-danger-active shadow-shine [--color-shine:var(--danger-800)]",
     },
     size: {
       sm: "size-8 [&_svg]:size-4",
@@ -78,7 +73,7 @@ const [ButtonProvider, useButtonContext] =
   createOptionalScopedContext<VariantProps<typeof buttonStyles>>("Button");
 
 type ButtonProps = Omit<AriaButtonProps, "className"> &
-  Omit<AriaLinkProps, "className" | "children" | "style"> &
+  Omit<AriaLinkProps, "className" | "children" | "style" | "onAnimationEnd"> &
   VariantProps<typeof buttonStyles> & {
     className?: string;
     prefix?: React.ReactNode;
@@ -103,7 +98,14 @@ const Button = React.forwardRef(
       >
         {composeRenderProps(props.children, (children, { isPending }) => (
           <>
-            {isPending && <Loader aria-label="loading" size={16} />}
+            {isPending && (
+              <Loader
+                data-slot="spinner"
+                aria-label="loading"
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+                size={16}
+              />
+            )}
             {prefix}
             {typeof children === "string" ? (
               <span className="truncate">{children}</span>

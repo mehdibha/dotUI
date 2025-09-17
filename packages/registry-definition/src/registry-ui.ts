@@ -97,16 +97,21 @@ export const registryUi: Registry["items"] = [
     ],
   },
   {
-    name: "button:brutalist",
+    name: "button:shine",
     type: "registry:ui",
     registryDependencies: ["loader", "focus-styles"],
     files: [
       {
         type: "registry:ui",
-        path: "components/button/brutalist.tsx",
+        path: "components/button/shine.tsx",
         target: "ui/button.tsx",
       },
     ],
+    // cssVars: {
+    //   theme: {
+    //     "shadow-shine": "0px 32px 64px -16px #0000004c, 0px 16px 32px -8px #0000004c, 0px 8px 16px -4px #0000003d, 0px 4px 8px -2px #0000003d, 0px -8px 16px -1px #00000029, 0px 2px 4px -1px #0000003d, 0px 0px 0px 1px #000000, inset 0px 0px 0px 1px #ffffff14, inset 0px 1px 0px #ffffff33"
+    //   }
+    // }
   },
   {
     name: "button:ripple",

@@ -167,10 +167,10 @@ export function ComponentsEditor() {
         previewClassName="flex-col"
       >
         <div className="flex items-center gap-2">
-          <Button>Default</Button>
-          {/* <Button variant="accent">Accent</Button> */}
-          <Button variant="outline">Outline</Button>
+          <Button variant="default">Default</Button>
+          <Button variant="primary">Primary</Button>
           <Button variant="quiet">Quiet</Button>
+          <Button variant="link">Link</Button>
         </div>
         <div className="flex items-center gap-2">
           <Button variant="danger">Danger</Button>
