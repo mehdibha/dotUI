@@ -22,7 +22,7 @@ export const Loader = createDynamicComponent<LoaderProps>(
       })),
     ),
     line: React.lazy(() =>
-      import("../registry/components/loader/line").then((mod) => ({
+      import("../registry/components/loader/line-spinner").then((mod) => ({
         default: mod.Loader,
       })),
     ),

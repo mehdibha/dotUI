@@ -273,7 +273,10 @@
 /* animations */
 
 @theme inline {
-  --animate-loader-ring-stretch: loader-ring-stretch 2s ease-in-out infinite;
+  /* loader:ring-2 */
+  --animate-loader-ring-stretch: loader-ring-stretch
+    calc(var(--loader-speed) * 0.75) ease-in-out infinite;
+
   --animate-accordion-down: accordion-down 0.15s ease-out;
   --animate-accordion-up: accordion-up 0.15s ease-out;
   --animate-collapsible-down: collapsible-down 0.15s ease-out;
@@ -285,8 +288,7 @@
     progress-pulse 1s ease var(--progress-duration) infinite normal none running;
 }
 
-/* Loader: ring-2 */
-
+/* loader:ring-2 */
 @keyframes loader-ring-stretch {
   0% {
     stroke-dasharray: 0, 150;

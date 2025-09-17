@@ -1,6 +1,9 @@
 "use client";
 
-import { ProgressBar as AriaProgressBar } from "react-aria-components";
+import {
+  ProgressBar as AriaProgressBar,
+  composeRenderProps,
+} from "react-aria-components";
 import type { ProgressBarProps } from "react-aria-components";
 
 import { cn } from "@dotui/ui/lib/utils";
@@ -14,6 +17,7 @@ interface LoaderProps extends Omit<ProgressBarProps, "isIndeterminate"> {
 
 function Loader({
   className,
+  style,
   size = 20,
   stroke = 2,
   speed = 2,
@@ -25,14 +29,13 @@ function Loader({
   return (
     <AriaProgressBar
       data-slot="loader"
-      style={
-        {
-          "--loader-size": `${size}px`,
-          "--loader-speed": `${speed}s`,
-        } as React.CSSProperties
-      }
+      style={composeRenderProps(style, (style) => ({
+        ...style,
+        "--loader-size": `${size}px`,
+        "--loader-speed": `${speed}s`,
+      }))}
       className={cn(
-        "inline-flex h-[var(--loader-size)] w-[var(--loader-size)] shrink-0 items-center justify-center",
+        "inline-flex size-[var(--loader-size)] shrink-0 items-center justify-center",
         className,
       )}
       {...props}
