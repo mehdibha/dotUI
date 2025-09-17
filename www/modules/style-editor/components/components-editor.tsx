@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { parseDate } from "@internationalized/date";
 import {
   ArrowRightIcon,
@@ -131,6 +132,14 @@ const Section = ({
 };
 
 export function ComponentsEditor() {
+  const [isPending, setIsPending] = React.useState(false);
+
+  React.useEffect(() => {
+    if (isPending) {
+      setTimeout(() => setIsPending(false), 2000);
+    }
+  }, [isPending]);
+
   return (
     <div>
       <Section
@@ -141,6 +150,13 @@ export function ComponentsEditor() {
       >
         <Loader />
         <Button isPending>Submit</Button>
+        <Button
+          variant="primary"
+          isPending={isPending}
+          onPress={() => setIsPending(true)}
+        >
+          Submit
+        </Button>
       </Section>
 
       <Section

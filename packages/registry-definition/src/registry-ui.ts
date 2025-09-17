@@ -514,6 +514,17 @@ export const registryUi: Registry["items"] = [
     ],
   },
   {
+    name: "loader:ring-2",
+    type: "registry:ui",
+    files: [
+      {
+        type: "registry:ui",
+        path: "components/loader/ring-2.tsx",
+        target: "ui/loader.tsx",
+      },
+    ],
+  },
+  {
     name: "loader:tailspin",
     type: "registry:ui",
     files: [
