@@ -26,7 +26,10 @@ function Loader({
     <AriaProgressBar
       data-slot="loader"
       {...props}
-      className={cn("shrink-0 inline-flex items-center justify-center size-[var(--loader-size)]", className)}
+      className={cn(
+        "inline-flex size-[var(--loader-size)] shrink-0 items-center justify-center",
+        className,
+      )}
       isIndeterminate
       style={composeRenderProps(style, (style) => ({
         ...style,
@@ -35,7 +38,7 @@ function Loader({
         "--loader-stroke": `${stroke}px`,
       }))}
     >
-      <div className="relative flex items-center justify-start size-[var(--loader-size)]">
+      <div className="relative flex size-[var(--loader-size)] items-center justify-start">
         {Array.from({ length: 12 }).map((_, i) => (
           <span
             key={i}
