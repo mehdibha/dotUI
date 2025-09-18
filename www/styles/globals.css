@@ -272,7 +272,10 @@
 
   /* easing */
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+}
 
+
+@theme inline {
   /* animations */
   --animate-accordion-down: accordion-down 0.15s ease-out;
   --animate-accordion-up: accordion-up 0.15s ease-out;
@@ -280,14 +283,15 @@
   --animate-collapsible-up: collapsible-up 0.15s ease-out;
   --animate-line-spinner: line-spinner 1.2s linear infinite;
   --animate-dot-spinner: dot-spinner 0.8s linear infinite;
+  /* progress-bar */
   --animate-progress-indeterminate:
     progress-grow var(--progress-duration) 1 both normal,
     progress-pulse 1s ease var(--progress-duration) infinite normal none running;
-}
+  /* loader:ring-2 */
+  --animate-loader-ring-stretch: loader-ring-stretch
+    calc(var(--loader-speed) * 0.75) ease-in-out infinite;
 
-/* :root {
-  --color-shine: #ffffff;
-} */
+}
 
 @theme inline {
   --shadow-shine:
@@ -296,26 +300,22 @@
     inset 0px 1px 0px color-mix(in srgb, var(--color-shine) 30%, transparent);
 }
 
-/* for specific variants */
-@layer base {
-  :root {
-    --box-shadow-x: 4px;
-    --box-shadow-y: 4px;
-    --border-brutalism: #000;
+/* loader:ring-2 */
+@keyframes loader-ring-stretch {
+  0% {
+    stroke-dasharray: 0, 150;
+    stroke-dashoffset: 0;
   }
-
-  .dark {
-    --box-shadow-x: 4px;
-    --box-shadow-y: 4px;
-    --border-brutalism: #000;
+  50% {
+    stroke-dasharray: 75, 150;
+    stroke-dashoffset: -25;
+  }
+  100% {
+    stroke-dashoffset: -99;
   }
 }
 
-/* for specific variants */
-@theme {
-  --shadow-brutalism: var(--box-shadow-x) var(--box-shadow-y) 0px 0px
-    var(--border-brutalism);
-}
+/* Accordion */
 
 @keyframes accordion-down {
   from {
