@@ -274,7 +274,6 @@
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
 }
 
-
 @theme inline {
   /* animations */
   --animate-accordion-down: accordion-down 0.15s ease-out;
@@ -290,7 +289,6 @@
   /* loader:ring-2 */
   --animate-loader-ring-stretch: loader-ring-stretch
     calc(var(--loader-speed) * 0.75) ease-in-out infinite;
-
 }
 
 @theme inline {

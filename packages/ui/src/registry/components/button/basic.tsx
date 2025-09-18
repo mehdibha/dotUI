@@ -24,7 +24,8 @@ const buttonStyles = tv({
     variant: {
       default:
         "bg-neutral text-fg-on-neutral hover:border-border-hover hover:bg-neutral-hover border",
-      primary: "bg-primary text-fg-on-primary hover:bg-primary-hover disabled:border-0 [--color-disabled:var(--neutral-500)] [--color-fg-disabled:var(--neutral-300)]",
+      primary:
+        "bg-primary text-fg-on-primary hover:bg-primary-hover [--color-disabled:var(--neutral-500)] [--color-fg-disabled:var(--neutral-300)] disabled:border-0",
       quiet: "text-fg hover:bg-inverse/10 pressed:bg-inverse/20 bg-transparent",
       link: "text-fg underline-offset-4 hover:underline",
       success:
