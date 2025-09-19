@@ -54,7 +54,9 @@ export function StyleEditorHeader() {
       </Link>
       <div className="flex items-center justify-between gap-4">
         <Skeleton show={isLoading}>
-          <h1 className="text-lg lg:text-2xl font-bold leading-none truncate">{styleName}</h1>
+          <h1 className="truncate text-lg font-bold leading-none lg:text-2xl">
+            {styleName}
+          </h1>
         </Skeleton>
         <div className="flex items-center gap-1">
           <StyleEditorHeaderActions />

@@ -23,7 +23,7 @@ const buttonStyles = tv({
   variants: {
     variant: {
       subtle:
-        "bg-transparent text-fg hover:bg-inverse/10 pressed:bg-inverse/20",
+        "text-fg hover:bg-inverse/10 pressed:bg-inverse/20 bg-transparent",
       default:
         "bg-neutral text-fg-on-neutral hover:border-border-hover hover:bg-neutral-hover/50 border",
       primary:
