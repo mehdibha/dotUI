@@ -7,10 +7,13 @@ import {
   ExternalLinkIcon,
   MaximizeIcon,
   MinimizeIcon,
+  MoonIcon,
   SmartphoneIcon,
+  SunIcon,
   TabletIcon,
 } from "lucide-react";
 import { motion } from "motion/react";
+import { useWatch } from "react-hook-form";
 import type { Route } from "next";
 
 import {
@@ -31,13 +34,19 @@ import {
   SelectValue,
 } from "@dotui/ui/components/select";
 import { Separator } from "@dotui/ui/components/separator";
+import { Skeleton } from "@dotui/ui/components/skeleton";
+import { ToggleButton } from "@dotui/ui/components/toggle-button";
 import { Tooltip } from "@dotui/ui/components/tooltip";
 import { cn, createScopedContext } from "@dotui/ui/lib/utils";
 
 import { useSidebarContext } from "@/components/sidebar";
+import { ThemeModeSwitch } from "@/components/theme-mode-switch";
 import { useHorizontalResize } from "@/hooks/use-horizontal-resize";
 import { useMounted } from "@/hooks/use-mounted";
 import { useStyleEditorParams } from "@/modules/style-editor/hooks/use-style-editor-params";
+import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
+import { useStyleEditorForm } from "../context/style-editor-provider";
+import { useEditorStyle } from "../hooks/use-editor-style";
 
 export const Preview = () => {
   return (
@@ -158,6 +167,17 @@ export const PreviewRoot = ({ children }: { children: React.ReactNode }) => {
 };
 
 function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
+  const { isSuccess } = useEditorStyle();
+  const form = useStyleEditorForm();
+  const { activeMode, setActiveMode } = usePreferences();
+  const activeModes = useWatch({
+    control: form.control,
+    name: "theme.colors.activeModes",
+  });
+
+  const supportsLightDark =
+    activeModes.includes("light") && activeModes.includes("dark");
+
   const {
     previewWidth,
     setPreviewWidth,
@@ -188,6 +208,7 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
           aria-label="Select block"
           onSelectionChange={(key) => setBlock(key as string)}
           selectedKey={block}
+          className="w-auto"
         >
           <Button
             variant="link"
@@ -225,6 +246,23 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
         </SelectRoot>
       </div>
       <div className="flex gap-0.5">
+        {supportsLightDark && (
+          <Skeleton show={!isSuccess}>
+            <ToggleButton
+              isSelected={activeMode === "light"}
+              onChange={(isSelected) => {
+                setActiveMode(isSelected ? "light" : "dark");
+              }}
+              size="sm"
+              shape="square"
+              className="selected:bg-transparent selected:text-fg selected:hover:bg-inverse/10 selected:pressed:bg-inverse/20 size-7"
+            >
+              {({ isSelected }) => (
+                <>{isSelected ? <SunIcon /> : <MoonIcon />}</>
+              )}
+            </ToggleButton>
+          </Skeleton>
+        )}
         <Tooltip content={isMobile ? "Mobile" : "Tablet"} delay={0}>
           <Button
             aria-label="Select view"
