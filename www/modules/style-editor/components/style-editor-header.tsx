@@ -54,7 +54,7 @@ export function StyleEditorHeader() {
       </Link>
       <div className="flex items-center justify-between gap-4">
         <Skeleton show={isLoading}>
-          <h1 className="text-2xl font-bold leading-none">{styleName}</h1>
+          <h1 className="text-lg lg:text-2xl font-bold leading-none truncate">{styleName}</h1>
         </Skeleton>
         <div className="flex items-center gap-1">
           <StyleEditorHeaderActions />
@@ -85,7 +85,7 @@ function StyleEditorHeaderActions() {
         <Button
           size="sm"
           prefix={<CodeIcon />}
-          className="@max-md:px-0 @max-md:w-8 max-md:hidden"
+          className="@max-md:px-0 @max-md:w-8 @max-md:size-8"
         >
           <span className="@max-md:hidden">Code</span>
         </Button>
@@ -163,7 +163,7 @@ function StyleEditorHeaderActions() {
           </Button>
         </LoginModal>
       )}
-      <MenuRoot>
+      {/* <MenuRoot>
         <Button aria-label="More actions" size="sm" shape="square">
           <EllipsisIcon />
         </Button>
@@ -183,15 +183,13 @@ function StyleEditorHeaderActions() {
           <MenuItem prefix={<CopyIcon />}>Clone</MenuItem>
           {isUserStyle && (
             <>
-              <MenuItem prefix={<StarIcon />}>Favorite</MenuItem>
-              <MenuItem prefix={<PencilIcon />}>Rename</MenuItem>
               <MenuItem variant="danger" prefix={<Trash2Icon />}>
                 Delete style
               </MenuItem>
             </>
           )}
         </Menu>
-      </MenuRoot>
+      </MenuRoot> */}
     </Skeleton>
   );
 }
