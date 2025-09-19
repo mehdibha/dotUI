@@ -6,7 +6,7 @@ import { Menu, MenuItem, MenuRoot } from "@dotui/ui/components/menu";
 export default function Demo() {
   return (
     <MenuRoot>
-      <Button variant="outline" size="sm">
+      <Button variant="default" size="sm">
         Panels
       </Button>
       <Menu

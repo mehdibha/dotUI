@@ -35,7 +35,7 @@ export const DEFAULT_FONTS: Fonts = {
 
 export const DEFAULT_VARIANTS_DEFINITION: VariantsDefinition = {
   alert: "basic",
-  buttons: "outline",
+  buttons: "basic",
   loader: "ring",
   "focus-style": "basic",
   inputs: "basic",

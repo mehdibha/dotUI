@@ -128,11 +128,11 @@
   --success-950: hsl(130, 35%, 83%);
 
   --warning-50: hsl(35, 100%, 7%);
-  --warning-100: hsl(35, 100%, 15%);
+  --warning-100: hsl(35, 100%, 18%);
   --warning-200: hsl(34, 100%, 21%);
-  --warning-300: hsl(35, 96%, 19%);
-  --warning-400: hsl(35, 100%, 48%);
-  --warning-500: hsl(35, 100%, 50%);
+  --warning-300: hsl(35, 96%, 22%);
+  --warning-400: hsl(35, 100%, 38%);
+  --warning-500: hsl(35, 100%, 48%);
   --warning-600: hsl(35, 100%, 58%);
   --warning-700: hsl(35, 100%, 66%);
   --warning-800: hsl(35, 93%, 65%);
@@ -192,17 +192,20 @@
   --color-success: var(--success-500);
   --color-success-hover: var(--success-600);
   --color-success-active: var(--success-700);
-  --color-success-muted: var(--success-50);
+  --color-success-muted: var(--success-100);
+  --color-success-muted-hover: var(--success-200);
 
   --color-danger: var(--danger-500);
   --color-danger-hover: var(--danger-600);
   --color-danger-active: var(--danger-700);
-  --color-danger-muted: var(--danger-50);
+  --color-danger-muted: var(--danger-100);
+  --color-danger-muted-hover: var(--danger-200);
 
   --color-warning: var(--warning-500);
   --color-warning-hover: var(--warning-600);
   --color-warning-active: var(--warning-700);
-  --color-warning-muted: var(--warning-50);
+  --color-warning-muted: var(--warning-100);
+  --color-warning-muted-hover: var(--warning-200);
 
   --color-info: var(--info-500);
   --color-info-hover: var(--info-600);
@@ -219,6 +222,7 @@
   --color-fg-muted: var(--neutral-800);
   --color-fg-inverse: var(--neutral-50);
   --color-fg-disabled: var(--neutral-500);
+  --color-fg-primary-disabled: var(--neutral-300);
   --color-fg-danger: var(--danger-700);
   --color-fg-warning: var(--warning-700);
   --color-fg-success: var(--success-700);
@@ -268,7 +272,9 @@
 
   /* easing */
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+}
 
+@theme inline {
   /* animations */
   --animate-accordion-down: accordion-down 0.15s ease-out;
   --animate-accordion-up: accordion-up 0.15s ease-out;
@@ -276,31 +282,38 @@
   --animate-collapsible-up: collapsible-up 0.15s ease-out;
   --animate-line-spinner: line-spinner 1.2s linear infinite;
   --animate-dot-spinner: dot-spinner 0.8s linear infinite;
+  /* progress-bar */
   --animate-progress-indeterminate:
     progress-grow var(--progress-duration) 1 both normal,
     progress-pulse 1s ease var(--progress-duration) infinite normal none running;
+  /* loader:ring-2 */
+  --animate-loader-ring-stretch: loader-ring-stretch
+    calc(var(--loader-speed) * 0.75) ease-in-out infinite;
 }
 
-/* for specific variants */
-@layer base {
-  :root {
-    --box-shadow-x: 4px;
-    --box-shadow-y: 4px;
-    --border-brutalism: #000;
+@theme inline {
+  --shadow-shine:
+    inset 0px 0px 0px 1px
+      color-mix(in srgb, var(--color-shine) 15%, transparent),
+    inset 0px 1px 0px color-mix(in srgb, var(--color-shine) 30%, transparent);
+}
+
+/* loader:ring-2 */
+@keyframes loader-ring-stretch {
+  0% {
+    stroke-dasharray: 0, 150;
+    stroke-dashoffset: 0;
   }
-
-  .dark {
-    --box-shadow-x: 4px;
-    --box-shadow-y: 4px;
-    --border-brutalism: #000;
+  50% {
+    stroke-dasharray: 75, 150;
+    stroke-dashoffset: -25;
+  }
+  100% {
+    stroke-dashoffset: -99;
   }
 }
 
-/* for specific variants */
-@theme {
-  --shadow-brutalism: var(--box-shadow-x) var(--box-shadow-y) 0px 0px
-    var(--border-brutalism);
-}
+/* Accordion */
 
 @keyframes accordion-down {
   from {

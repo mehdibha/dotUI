@@ -26,12 +26,11 @@ const buttonStyles = tv({
   base: "disabled:bg-disabled disabled:text-fg-disabled pending:cursor-default pending:border pending:border-border-disabled pending:bg-disabled pending:text-fg-disabled relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 overflow-hidden whitespace-nowrap rounded-md text-sm font-medium leading-normal transition-colors disabled:cursor-default",
   variants: {
     variant: {
-      default: "bg-neutral text-fg-on-neutral hover:bg-neutral-hover",
+      default:
+        "bg-neutral text-fg-on-neutral hover:border-border-hover hover:bg-neutral-hover border",
       primary: "bg-primary text-fg-on-primary hover:bg-primary-hover",
       quiet: "text-fg hover:bg-inverse/10 bg-transparent",
-      outline:
-        "border-border-field text-fg hover:bg-inverse/10 disabled:border-border-disabled border disabled:bg-transparent",
-      accent: "bg-accent text-fg-on-accent hover:bg-accent-hover",
+      link: "text-fg underline-offset-4 hover:underline",
       success: "bg-success text-fg-on-success hover:bg-success-hover",
       warning: "bg-warning text-fg-on-warning hover:bg-warning-hover",
       danger: "bg-danger text-fg-on-danger hover:bg-danger-hover",
@@ -75,7 +74,7 @@ const [ButtonProvider, useButtonContext] =
   createOptionalScopedContext<VariantProps<typeof buttonStyles>>("Button");
 
 type ButtonProps = Omit<AriaButtonProps, "className"> &
-  Omit<AriaLinkProps, "className" | "children" | "style"> &
+  Omit<AriaLinkProps, "className" | "children" | "style" | "onAnimationEnd"> &
   VariantProps<typeof buttonStyles> & {
     className?: string;
     prefix?: React.ReactNode;

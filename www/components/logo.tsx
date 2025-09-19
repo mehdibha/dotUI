@@ -52,7 +52,7 @@ export const Logo = ({
             {siteConfig.name}
           </div>
           <Badge size="sm" className="mt-px">
-            Preview
+            beta
           </Badge>
         </div>
       )}

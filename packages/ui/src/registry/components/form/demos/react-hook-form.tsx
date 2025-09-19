@@ -109,7 +109,7 @@ export default function Demo() {
             <Select
               label="How did you hear about us?"
               selectedKey={value}
-              variant="outline"
+              variant="default"
               className="w-full"
               {...props}
             >

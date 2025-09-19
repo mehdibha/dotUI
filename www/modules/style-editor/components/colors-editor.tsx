@@ -217,9 +217,8 @@ const ModeConfig = () => {
 
 const ModeSwitch = () => {
   const { isSuccess } = useEditorStyle();
-  const { setActiveMode } = usePreferences();
-  const { resolvedMode, supportsLightDark } =
-    useColorEditorContext("ModeSwitch");
+  const { activeMode, setActiveMode } = usePreferences();
+  const { supportsLightDark } = useColorEditorContext("ModeSwitch");
 
   if (!supportsLightDark) {
     return null;
@@ -228,7 +227,7 @@ const ModeSwitch = () => {
   return (
     <Skeleton show={!isSuccess}>
       <ThemeModeSwitch
-        isSelected={resolvedMode === "light"}
+        isSelected={activeMode === "light"}
         onChange={(isSelected) => {
           setActiveMode(isSelected ? "light" : "dark");
         }}

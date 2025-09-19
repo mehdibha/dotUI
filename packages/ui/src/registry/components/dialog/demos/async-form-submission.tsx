@@ -43,7 +43,7 @@ export default function DialogDemo() {
               />
             </DialogBody>
             <DialogFooter>
-              <Button variant="outline" slot="close">
+              <Button variant="default" slot="close">
                 Cancel
               </Button>
               <Button type="submit" isPending={isPending} variant="primary">

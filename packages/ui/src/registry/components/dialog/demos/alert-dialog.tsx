@@ -15,7 +15,7 @@ export default function Demo() {
         description="Are you sure you want to delete this project? This action is permanent and cannot be undone."
       >
         <DialogFooter>
-          <Button slot="close" variant="outline">
+          <Button slot="close" variant="default">
             Cancel
           </Button>
           <Button slot="close" variant="danger">

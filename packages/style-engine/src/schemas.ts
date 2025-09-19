@@ -115,7 +115,7 @@ export const themeDefinitionSchema = z.object({
 // Variants
 export const variantsDefinitionSchema = z.object({
   alert: z.enum(["basic", "notch", "notch-2"]),
-  buttons: z.enum(["basic", "brutalist", "outline", "ripple"]),
+  buttons: z.enum(["basic", "shine", "outline", "ripple"]),
   loader: z.enum(["ring"]),
   "focus-style": z.enum(["basic"]),
   inputs: z.enum(["basic"]),
@@ -231,7 +231,7 @@ export const variantsSchema = z.object({
   avatar: z.enum(["basic"]),
   badge: z.enum(["basic"]),
   breadcrumbs: z.enum(["basic"]),
-  button: z.enum(["basic", "outline", "brutalist", "ripple"]),
+  button: z.enum(["basic", "shine", "outline", "ripple"]),
   "button-group": z.enum(["basic"]),
   calendar: z.enum(["basic", "cal"]),
   card: z.enum(["basic"]),

@@ -21,7 +21,7 @@ export function EffectsEditor() {
     <div>
       <StyleEditorSection title="Patterns">
         <div className="mt-4 space-y-4">
-          <Skeleton show={!isSuccess}>
+          {/* <Skeleton show={!isSuccess}>
             <FormControl
               name="theme.backgroundPattern"
               control={form.control}
@@ -42,7 +42,7 @@ export function EffectsEditor() {
                 </Select>
               )}
             />
-          </Skeleton>
+          </Skeleton> */}
           <Skeleton show={!isSuccess}>
             <FormControl
               name="theme.texture"
@@ -68,7 +68,7 @@ export function EffectsEditor() {
         </div>
       </StyleEditorSection>
 
-      <StyleEditorSection title="Shadows">
+      {/* <StyleEditorSection title="Shadows">
         <Skeleton show={!isSuccess}>
           <FormControl
             name="theme.shadows.color"
@@ -173,7 +173,7 @@ export function EffectsEditor() {
             />
           </Skeleton>
         </div>
-      </StyleEditorSection>
+      </StyleEditorSection> */}
     </div>
   );
 }

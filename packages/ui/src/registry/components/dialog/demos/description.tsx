@@ -7,7 +7,7 @@ import { TextField } from "@dotui/ui/components/text-field";
 export default function Demo() {
   return (
     <DialogRoot>
-      <Button variant="outline">Edit username</Button>
+      <Button variant="default">Edit username</Button>
       <Dialog
         title="Edit username"
         description="Make changes to your username."

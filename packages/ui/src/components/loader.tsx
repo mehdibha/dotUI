@@ -11,13 +11,18 @@ export const Loader = createDynamicComponent<LoaderProps>(
   "Loader",
   _Loader,
   {
+    "ring-2": React.lazy(() =>
+      import("../registry/components/loader/ring-2").then((mod) => ({
+        default: mod.Loader,
+      })),
+    ),
     dots: React.lazy(() =>
       import("../registry/components/loader/dots").then((mod) => ({
         default: mod.Loader,
       })),
     ),
     line: React.lazy(() =>
-      import("../registry/components/loader/line").then((mod) => ({
+      import("../registry/components/loader/line-spinner").then((mod) => ({
         default: mod.Loader,
       })),
     ),
