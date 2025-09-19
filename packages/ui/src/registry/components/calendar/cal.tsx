@@ -183,13 +183,15 @@ const RangeCalendar = <T extends DateValue>({
       {({ isInvalid }) => (
         <>
           <CalendarHeader>
-            <Button slot="previous" variant="default" shape="square" size="sm">
-              <ChevronLeftIcon />
-            </Button>
             <AriaHeading className="text-sm font-medium" />
-            <Button slot="next" variant="default" shape="square" size="sm">
-              <ChevronRightIcon />
-            </Button>
+            <ButtonGroup variant="quiet" shape="square" size="sm">
+              <Button slot="previous">
+                <ChevronLeftIcon />
+              </Button>
+              <Button slot="next">
+                <ChevronRightIcon />
+              </Button>
+            </ButtonGroup>
           </CalendarHeader>
           <div className="flex items-start gap-4">
             {Array.from({ length: visibleMonths }).map((_, index) => (
@@ -298,18 +300,23 @@ interface CalendarCellProps
   extends React.ComponentProps<typeof AriaCalendarCell>,
     Omit<VariantProps<typeof calendarCellStyles>, "range"> {}
 const CalendarCell = ({
-  variant,
+  variant = "accent",
   children,
   className,
   ...props
 }: CalendarCellProps) => {
   const rangeCalendarState = React.use(AriaRangeCalendarStateContext);
   const range = !!rangeCalendarState;
+
   return (
     <AriaCalendarCell
       {...props}
       className={composeRenderProps(className, (className) =>
-        cellRoot({ variant, range, className }),
+        cellRoot({
+          range,
+          variant,
+          className,
+        }),
       )}
     >
       {composeRenderProps(
@@ -333,6 +340,7 @@ const CalendarCell = ({
           },
         ) => (
           <span
+            data-slot="calendar-cell"
             data-rac=""
             data-focused={isFocused || undefined}
             data-selected={isSelected || undefined}
@@ -347,8 +355,8 @@ const CalendarCell = ({
             data-selection-end={isSelectionEnd || undefined}
             data-selection-start={isSelectionStart || undefined}
             className={cell({
-              variant,
               range,
+              variant,
             })}
           >
             {formattedDate}
@@ -364,6 +372,7 @@ export type {
   CalendarRootProps,
   RangeCalendarProps,
   RangeCalendarRootProps,
+  CalendarHeaderProps,
   CalendarGridProps,
   CalendarGridHeaderProps,
   CalendarHeaderCellProps,

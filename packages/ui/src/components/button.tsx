@@ -37,7 +37,23 @@ export const ButtonProvider = createDynamicComponent(
   "button",
   "ButtonProvider",
   _ButtonProvider,
-  {},
+  {
+    shine: React.lazy(() =>
+      import("../registry/components/button/shine").then((mod) => ({
+        default: mod.ButtonProvider,
+      })),
+    ),
+    outline: React.lazy(() =>
+      import("../registry/components/button/outline").then((mod) => ({
+        default: mod.ButtonProvider,
+      })),
+    ),
+    ripple: React.lazy(() =>
+      import("../registry/components/button/ripple").then((mod) => ({
+        default: mod.ButtonProvider,
+      })),
+    ),
+  },
 );
 
 export { buttonStyles };
