@@ -63,14 +63,14 @@ export function CommunityStyles() {
   }, [fetchNextPage, hasNextPage, isFetchingNextPage, isMounted]);
 
   if (!isMounted) {
-    return <StylesList skeleton defaultView="ui-kit" />;
+    return <StylesList skeleton />;
   }
 
   return (
     <div className="space-y-6">
       <StylesList styles={styles} skeleton={isLoading && styles.length === 0} />
       <div ref={sentinelRef} />
-      {isFetchingNextPage && <StylesList skeleton defaultView="ui-kit" />}
+      {isFetchingNextPage && <StylesList skeleton />}
     </div>
   );
 }
