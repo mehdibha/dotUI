@@ -4,14 +4,19 @@ import { InviteMembers } from "@dotui/ui/registry/blocks/application/invite-memb
 import { Notifications } from "@dotui/ui/registry/blocks/application/notifications/components/notifications";
 import { TeamName } from "@dotui/ui/registry/blocks/application/team-name/components/team-name";
 import { LoginForm } from "@dotui/ui/registry/blocks/auth/login/components/login-form";
-import { Booking } from "@dotui/ui/registry/blocks/calendars/booking/components/booking";
 import { Backlog } from "@dotui/ui/registry/blocks/tables/backlog/components/backlog";
+
+import { Booking } from "./booking";
+import { Filters } from "./filters";
 
 export function BlocksShowcase() {
   return (
     <div className="grid grid-cols-11 gap-4 p-4 md:p-6">
-      <Booking className="h-90 col-span-11 xl:col-span-8" />
-      <Notifications className="h-126 xl:h-90 col-span-11 md:col-span-5 xl:col-span-3" />
+      <div className="col-span-11 xl:col-span-8 flex gap-4">
+        <Booking className="w-80" />
+        <Filters className="flex-1" />
+      </div>
+      <Notifications className="h-118 col-span-11 md:col-span-5 xl:col-span-3" />
       <InviteMembers className="col-span-11 md:col-span-6 lg:col-span-6 xl:col-span-4" />
       <Backlog className="col-span-11 lg:col-span-8 xl:col-span-7" />
       <AccountMenu className="max-lg:hidden lg:col-span-3 lg:block xl:hidden" />

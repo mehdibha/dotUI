@@ -18,11 +18,13 @@ import { Description, Label } from "@dotui/ui/components/field";
 import { focusRing } from "@dotui/ui/lib/focus-styles";
 import { createScopedContext } from "@dotui/ui/lib/utils";
 
+// TODO: refactor to use grid in root
+
 const sliderStyles = tv({
   slots: {
-    root: "group flex flex-col gap-2",
+    root: "group flex flex-col gap-1",
     track:
-      "bg-neutral disabled:bg-disabled relative grow cursor-pointer rounded-full disabled:cursor-default",
+      "bg-neutral disabled:bg-disabled relative grow cursor-pointer rounded-full disabled:cursor-default my-1",
     filler:
       "group-disabled:bg-disabled pointer-events-none absolute rounded-full",
     thumb: [
@@ -144,6 +146,7 @@ const Slider = ({
           </SliderValueLabel>
         )}
       </div>
+      {description && <Description>{description}</Description>}
       <SliderTrack>
         {({ state }) => (
           <>
@@ -154,7 +157,6 @@ const Slider = ({
           </>
         )}
       </SliderTrack>
-      {description && <Description>{description}</Description>}
     </SliderRoot>
   );
 };

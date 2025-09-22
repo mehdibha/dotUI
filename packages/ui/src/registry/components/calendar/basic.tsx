@@ -50,7 +50,7 @@ const calendarStyles = tv({
 const calendarCellStyles = tv({
   slots: {
     cellRoot:
-      "outside-month:hidden selection-start:rounded-l-md selection-end:rounded-r-md outline-none",
+      "outside-month:hidden selection-start:rounded-l-md selection-end:rounded-r-md outline-none flex items-center justify-center",
     cell: [
       focusRing(),
       "hover:bg-inverse/10 disabled:text-fg-disabled unavailable:cursor-default unavailable:text-fg-disabled unavailable:not-data-disabled:line-through hover:unavailable:bg-transparent pressed:bg-inverse/20 my-1 flex size-8 cursor-pointer items-center justify-center rounded-md text-sm transition-colors read-only:cursor-default hover:read-only:bg-transparent disabled:cursor-default disabled:bg-transparent",

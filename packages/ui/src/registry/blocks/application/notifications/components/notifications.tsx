@@ -28,7 +28,7 @@ export function Notifications({
             12
           </Badge>
         </CardTitle>
-        <CardAction className="min-w-0">
+        <CardAction>
           <Button size="sm">
             <span className="truncate">Mark all as read</span>
           </Button>

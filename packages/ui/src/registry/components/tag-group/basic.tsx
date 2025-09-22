@@ -22,7 +22,7 @@ import type { FieldProps } from "@dotui/ui/components/field";
 
 const tagGroupStyles = tv({
   slots: {
-    root: "flex w-48 flex-col items-start gap-2",
+    root: "flex flex-col items-start gap-2",
     list: "flex w-full flex-wrap gap-1",
   },
 });
