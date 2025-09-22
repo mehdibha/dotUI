@@ -6,7 +6,7 @@
   "scripts": {
     "build": "pnpm with-env next build",
     "clean": "git clean -xdf .cache .next .turbo .source node_modules",
-    "dev": "pnpm with-env next dev --turbopack",
+    "dev": "pnpm with-env next dev --turbopack --port 4444",
     "typegen": "pnpm with-env next typegen",
     "format": "prettier --check . --ignore-path ../.gitignore",
     "format:fix": "prettier --write . --ignore-path ../.gitignore",
