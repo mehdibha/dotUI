@@ -12,6 +12,7 @@ import { useMounted } from "@/hooks/use-mounted";
 import { useDraftStyleConsumer } from "@/modules/style-editor/atoms/draft-style-atom";
 import { useLiveStyleConsumer } from "@/modules/style-editor/atoms/live-style-atom";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
+import { cn } from "@dotui/ui/lib/utils";
 
 export const BlockProviders = ({
   style: styleProp,
@@ -27,6 +28,7 @@ export const BlockProviders = ({
   const searchParams = useSearchParams();
   const shouldUseActiveMode = Boolean(searchParams.get("mode"));
   const shouldUseLiveStyle = Boolean(searchParams.get("live"));
+  const view = Boolean(searchParams.get("view"));
 
   const { activeMode } = usePreferences();
   const isMounted = useMounted();
@@ -63,7 +65,7 @@ export const BlockProviders = ({
         <StyleProvider
           style={style}
           mode={effectiveMode}
-          className="flex min-h-screen items-center justify-center"
+          className={cn("flex min-h-screen items-center justify-center", view && "p-4")}
         >
           {children}
         </StyleProvider>
