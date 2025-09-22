@@ -33,11 +33,6 @@ export const registryBlocks: Registry["items"] = [
     registryDependencies: ["all"],
     files: [
       {
-        path: "blocks/showcase/cards/page.tsx",
-        type: "registry:page",
-        target: "/app/cards/page.tsx",
-      },
-      {
         path: "blocks/showcase/cards/components/cards.tsx",
         type: "registry:component",
       },
