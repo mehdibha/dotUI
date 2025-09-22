@@ -22,8 +22,6 @@ const buttonStyles = tv({
   base: "disabled:border-border-disabled disabled:bg-disabled disabled:text-fg-disabled pending:cursor-default pending:border pending:border-border-disabled pending:bg-disabled pending:text-fg-disabled pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0 relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium leading-normal transition-all disabled:cursor-default disabled:border",
   variants: {
     variant: {
-      subtle:
-        "text-fg hover:bg-inverse/10 pressed:bg-inverse/20 bg-transparent",
       default:
         "bg-neutral text-fg-on-neutral hover:border-border-hover hover:bg-neutral-hover/50 border",
       primary:

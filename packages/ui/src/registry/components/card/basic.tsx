@@ -9,7 +9,7 @@ const cardStyles = tv({
     title: "font-semibold leading-none",
     description: "text-fg-muted text-sm",
     action: "col-start-2 row-span-2 row-start-1 self-start justify-self-end",
-    content: "px-6 flex-1",
+    content: "flex-1 px-6",
     footer: "[.border-t]:pt-6 flex items-center px-6",
   },
 });

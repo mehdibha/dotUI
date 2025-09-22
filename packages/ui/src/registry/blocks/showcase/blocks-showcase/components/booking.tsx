@@ -1,5 +1,7 @@
 "use client";
 
+import { parseDate } from "@internationalized/date";
+
 import { Button } from "@dotui/ui/components/button";
 import { Calendar } from "@dotui/ui/components/calendar";
 import {
@@ -12,7 +14,6 @@ import {
 } from "@dotui/ui/components/card";
 import { TimeField } from "@dotui/ui/components/time-field";
 import { cn } from "@dotui/ui/lib/utils";
-import { parseDate } from "@internationalized/date";
 
 export function Booking({ className, ...props }: React.ComponentProps<"div">) {
   return (
@@ -22,7 +23,10 @@ export function Booking({ className, ...props }: React.ComponentProps<"div">) {
         <CardDescription>Pick a time for your meeting.</CardDescription>
       </CardHeader>
       <CardContent className="space-y-3">
-        <Calendar className="border-0 bg-transparent p-0" defaultValue={parseDate("2025-09-23")} />
+        <Calendar
+          className="border-0 bg-transparent p-0"
+          defaultValue={parseDate("2025-09-23")}
+        />
         <div className="grid grid-cols-2 gap-2">
           <TimeField label="Start time" className="w-auto" />
           <TimeField label="End time" className="w-auto" />

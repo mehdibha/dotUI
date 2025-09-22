@@ -24,7 +24,7 @@ const sliderStyles = tv({
   slots: {
     root: "group flex flex-col gap-1",
     track:
-      "bg-neutral disabled:bg-disabled relative grow cursor-pointer rounded-full disabled:cursor-default my-1",
+      "bg-neutral disabled:bg-disabled relative my-1 grow cursor-pointer rounded-full disabled:cursor-default",
     filler:
       "group-disabled:bg-disabled pointer-events-none absolute rounded-full",
     thumb: [

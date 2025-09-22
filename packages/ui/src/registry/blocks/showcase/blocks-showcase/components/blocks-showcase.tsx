@@ -12,11 +12,11 @@ import { Filters } from "./filters";
 export function BlocksShowcase() {
   return (
     <div className="grid grid-cols-11 gap-4 p-4 md:p-6">
-      <div className="col-span-11 xl:col-span-8 flex gap-4">
+      <div className="col-span-11 flex gap-4 xl:col-span-8">
         <Booking className="w-80" />
         <Filters className="flex-1" />
       </div>
-      <Notifications className="[contain:size] col-span-11 md:col-span-5 xl:col-span-3" />
+      <Notifications className="col-span-11 [contain:size] md:col-span-5 xl:col-span-3" />
       <InviteMembers className="col-span-11 md:col-span-6 lg:col-span-6 xl:col-span-4" />
       <Backlog className="col-span-11 lg:col-span-8 xl:col-span-7" />
       <AccountMenu className="max-lg:hidden lg:col-span-3 lg:block xl:hidden" />
