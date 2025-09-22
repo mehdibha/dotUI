@@ -11,7 +11,7 @@ import { Skeleton } from "@dotui/ui/components/skeleton";
 import { AdobeIcon, TailwindIcon } from "@dotui/ui/icons";
 import { focusRing } from "@dotui/ui/lib/focus-styles";
 import { cn } from "@dotui/ui/lib/utils";
-import { BlocksShowcase } from "@dotui/ui/registry/blocks/showcase/blocks-showcase/components/blocks-showcase";
+import { Cards } from "@dotui/ui/registry/blocks/showcase/cards/components/cards";
 import type { RouterOutputs } from "@dotui/api";
 
 import { useMounted } from "@/hooks/use-mounted";
@@ -98,7 +98,7 @@ export function StyleCard({
             >
               <iframe
                 onLoad={() => setLoading(false)}
-                src={`/view/${style.user.username}/${style.name}/blocks-showcase`}
+                src={`/view/${style.user.username}/${style.name}/cards`}
                 className={cn(
                   "scale-40 absolute -left-2 -top-2 h-[1200px] min-w-[1400px] origin-top-left min-[550px]:max-md:scale-50",
                   isLoading && "opacity-0",
@@ -108,7 +108,7 @@ export function StyleCard({
           )}
           {variant === "ui-kit" && (
             <div inert className="w-[1600px] scale-90">
-              <BlocksShowcase />
+              <Cards />
             </div>
           )}
         </StyleProvider>

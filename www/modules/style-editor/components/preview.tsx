@@ -28,11 +28,7 @@ import {
   ListBoxSection,
 } from "@dotui/ui/components/list-box";
 import { Popover } from "@dotui/ui/components/popover";
-import {
-  SelectItem,
-  SelectRoot,
-  SelectValue,
-} from "@dotui/ui/components/select";
+import { SelectRoot, SelectValue } from "@dotui/ui/components/select";
 import { Separator } from "@dotui/ui/components/separator";
 import { Skeleton } from "@dotui/ui/components/skeleton";
 import { ToggleButton } from "@dotui/ui/components/toggle-button";
@@ -40,7 +36,6 @@ import { Tooltip } from "@dotui/ui/components/tooltip";
 import { cn, createScopedContext } from "@dotui/ui/lib/utils";
 
 import { useSidebarContext } from "@/components/sidebar";
-import { ThemeModeSwitch } from "@/components/theme-mode-switch";
 import { useHorizontalResize } from "@/hooks/use-horizontal-resize";
 import { useMounted } from "@/hooks/use-mounted";
 import { useStyleEditorParams } from "@/modules/style-editor/hooks/use-style-editor-params";
@@ -220,27 +215,11 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
           </Button>
           <Popover className="min-w-36">
             <ListBox
-              items={blocksCategories
-                .filter((category) => category.slug !== "featured")
-                .map((category) => ({
-                  key: category.slug,
-                  label: category.name,
-                  items: registryBlocks.filter((block) =>
-                    block?.categories?.includes(category.slug),
-                  ),
-                }))}
-            >
-              {(section) => (
-                <ListBoxSection
-                  id={section.key}
-                  title={section.label}
-                  items={section.items}
-                >
-                  {(item) => (
-                    <ListBoxItem id={item.name}>{item.name}</ListBoxItem>
-                  )}
-                </ListBoxSection>
+              items={registryBlocks.filter((block) =>
+                block?.categories?.includes("featured"),
               )}
+            >
+              {(item) => <ListBoxItem id={item.name}>{item.name}</ListBoxItem>}
             </ListBox>
           </Popover>
         </SelectRoot>

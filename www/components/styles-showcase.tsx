@@ -8,7 +8,7 @@ import { UNSAFE_PortalProvider as PortalProvider } from "react-aria";
 import type { Variants } from "motion/react";
 
 import { StyleProvider } from "@dotui/ui";
-import { BlocksShowcase } from "@dotui/ui/registry/blocks/showcase/blocks-showcase/components/blocks-showcase";
+import { Cards } from "@dotui/ui/registry/blocks/showcase/cards/components/cards";
 import { Tab, TabList, Tabs } from "@dotui/ui/registry/components/tabs/motion";
 import type { RouterOutputs } from "@dotui/api";
 
@@ -110,7 +110,7 @@ export const StylesShowcase = ({
                 exit="hidden"
                 className="max-lg:hidden"
               >
-                <BlocksShowcase />
+                <Cards />
               </motion.div>
             </AnimatePresence>
           </PortalProvider>
