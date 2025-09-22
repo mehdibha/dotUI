@@ -6,13 +6,13 @@ import { useTheme } from "next-themes";
 import { UNSAFE_PortalProvider as PortalProvider } from "react-aria";
 
 import { StyleProvider } from "@dotui/ui";
+import { cn } from "@dotui/ui/lib/utils";
 import type { StyleDefinition } from "@dotui/style-engine/types";
 
 import { useMounted } from "@/hooks/use-mounted";
 import { useDraftStyleConsumer } from "@/modules/style-editor/atoms/draft-style-atom";
 import { useLiveStyleConsumer } from "@/modules/style-editor/atoms/live-style-atom";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
-import { cn } from "@dotui/ui/lib/utils";
 
 export const BlockProviders = ({
   style: styleProp,
@@ -65,7 +65,10 @@ export const BlockProviders = ({
         <StyleProvider
           style={style}
           mode={effectiveMode}
-          className={cn("flex min-h-screen items-center justify-center", view && "p-4")}
+          className={cn(
+            "flex min-h-screen items-center justify-center",
+            view && "p-4",
+          )}
         >
           {children}
         </StyleProvider>
