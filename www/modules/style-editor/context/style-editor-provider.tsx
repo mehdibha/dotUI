@@ -22,9 +22,12 @@ export function StyleEditorProvider({
   const { data: style } = useEditorStyle();
 
   const form = useForm<StyleFormData>({
+    mode: "onSubmit",
+    reValidateMode: "onSubmit",
     resolver: zodResolver(styleEditorFormSchema),
     defaultValues: fakeData,
     values: style ?? undefined,
+    criteriaMode: "all",
   });
 
   return <FormProvider {...form}>{children}</FormProvider>;
