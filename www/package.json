@@ -12,7 +12,7 @@
     "format:fix": "prettier --write . --ignore-path ../.gitignore",
     "lint": "eslint",
     "preview": "next build && next start",
-    "start": "pnpm with-env next start",
+    "start": "pnpm with-env next start --port 4444",
     "typecheck": "pnpm with-env next typegen && tsc --noEmit",
     "capture-blocks": "pnpm with-env jiti ./scripts/capture-showcase-blocks.ts",
     "postinstall": "fumadocs-mdx",

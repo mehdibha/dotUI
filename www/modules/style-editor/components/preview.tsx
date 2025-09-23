@@ -77,11 +77,11 @@ export const PreviewRoot = ({ children }: { children: React.ReactNode }) => {
   const { containerRef, width, setWidth, handleMouseDown, isDragging } =
     useHorizontalResize({
       minWidth: 320,
-      maxWidth: 788,
-      initialWidth: 788,
+      maxWidth: 768,
+      initialWidth: 768,
       edge: "left",
     });
-  const maxWidth = isCollapsed ? 788 : 600;
+  const maxWidth = isCollapsed ? 768 : 600;
   const isMounted = useMounted();
 
   React.useEffect(() => {
