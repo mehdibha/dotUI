@@ -16,17 +16,10 @@ import { motion } from "motion/react";
 import { useWatch } from "react-hook-form";
 import type { Route } from "next";
 
-import {
-  blocksCategories,
-  registryBlocks,
-} from "@dotui/registry-definition/registry-blocks";
+import { registryBlocks } from "@dotui/registry-definition/registry-blocks";
 import { Button } from "@dotui/ui/components/button";
-import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
-import {
-  ListBox,
-  ListBoxItem,
-  ListBoxSection,
-} from "@dotui/ui/components/list-box";
+import { Dialog } from "@dotui/ui/components/dialog";
+import { ListBox, ListBoxItem } from "@dotui/ui/components/list-box";
 import { Popover } from "@dotui/ui/components/popover";
 import { SelectRoot, SelectValue } from "@dotui/ui/components/select";
 import { Separator } from "@dotui/ui/components/separator";
@@ -151,7 +144,9 @@ export const PreviewRoot = ({ children }: { children: React.ReactNode }) => {
           className="h-full p-4 pl-0"
         >
           <div
-            className={cn("bg-bg size-full overflow-hidden rounded-md border")}
+            className={cn(
+              "bg-bg flex size-full flex-col overflow-hidden rounded-md border",
+            )}
           >
             {children}
           </div>
@@ -262,7 +257,9 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
             shape="square"
             size="sm"
             className="size-7"
-            href={`/view/${slug}/${block}?mode=true&live=true` as Route}
+            href={
+              `/view/${slug}/${block}?mode=true&live=true&view=true` as Route
+            }
           >
             <ExternalLinkIcon />
           </Button>
@@ -289,7 +286,13 @@ function PreviewContent() {
   return <PreviewFrame block={block} />;
 }
 
-export const PreviewFrame = ({ block }: { block: string }) => {
+export const PreviewFrame = ({
+  block,
+  className,
+}: {
+  block: string;
+  className?: string;
+}) => {
   const { slug } = useStyleEditorParams();
   const [isLoading, setLoading] = React.useState(true);
 
@@ -300,12 +303,13 @@ export const PreviewFrame = ({ block }: { block: string }) => {
   return (
     <div
       className={cn(
-        "size-full",
+        "flex-1",
+        className,
         isLoading && "bg-muted relative block animate-pulse rounded-md",
       )}
     >
       <iframe
-        src={`/view/${slug}/${block}?mode=true&live=true`}
+        src={`/view/${slug}/${block}?mode=true&live=true&view=true`}
         onLoad={() => setLoading(false)}
         className={cn("rounded-{inherit] size-full", isLoading && "opacity-0")}
       />
@@ -316,19 +320,19 @@ export const PreviewFrame = ({ block }: { block: string }) => {
 const PreviewModal = ({ children }: { children: React.ReactNode }) => {
   const { isFullscreen } = usePreviewContext("PreviewModal");
   return (
-    <DialogRoot isOpen={isFullscreen}>
-      <Dialog
-        type="modal"
-        mobileType="modal"
-        modalProps={{
-          className:
-            "w-screen h-(--visual-viewport-height) max-w-none rounded-none border-0",
-        }}
-        className="p-0! h-full overflow-hidden rounded-none"
-        isDismissable
-      >
-        {children}
-      </Dialog>
-    </DialogRoot>
+    <Dialog
+      aria-label="Preview"
+      type="modal"
+      mobileType="modal"
+      modalProps={{
+        className:
+          "w-screen h-(--visual-viewport-height) max-w-none rounded-none border-0",
+      }}
+      className="p-0! h-full overflow-hidden rounded-none"
+      isDismissable
+      isOpen={isFullscreen}
+    >
+      {children}
+    </Dialog>
   );
 };

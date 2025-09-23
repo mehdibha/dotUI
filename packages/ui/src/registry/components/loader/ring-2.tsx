@@ -38,6 +38,7 @@ function Loader({
         "inline-flex size-[var(--loader-size)] shrink-0 items-center justify-center",
         className,
       )}
+      aria-label="loading..."
       {...props}
       isIndeterminate
     >

@@ -8,7 +8,7 @@ import { ChevronsUpDownIcon } from "@dotui/ui/icons";
 
 export default function Demo() {
   return (
-    <SelectRoot>
+    <SelectRoot aria-label="Provider">
       <Button
         variant="default"
         suffix={<ChevronsUpDownIcon className="text-fg-muted" />}

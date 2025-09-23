@@ -101,6 +101,7 @@ const Section = ({
         render={({ value, onChange, ...props }) => (
           <Skeleton show={!isSuccess}>
             <Select
+              aria-label="Select component variant"
               className="mt-2 w-full"
               selectedKey={value}
               onSelectionChange={onChange}
@@ -171,8 +172,12 @@ export function ComponentsEditor() {
       >
         <div className="flex items-center gap-4">
           <Button>Button</Button>
-          <TextField placeholder="hello@mehdibha.com" />
-          <Checkbox />
+          <TextField
+            aria-label="Email"
+            placeholder="hello@mehdibha.com"
+            form="none"
+          />
+          <Checkbox aria-label="Checkbox example" form="none" />
         </div>
       </Section>
 
@@ -236,42 +241,59 @@ export function ComponentsEditor() {
         name="inputs"
         title="Inputs"
         variants={getComponentVariants("input")}
-        previewClassName="grid grid-cols-2 gap-3"
+        previewClassName="grid grid-cols-2 gap-3 *:w-auto"
       >
-        <TextField placeholder="hello@mehdibha.com" className="w-full" />
         <TextField
+          form="none"
+          aria-label="Email"
+          placeholder="hello@mehdibha.com"
+          className="col-span-2"
+        />
+        <TextField
+          form="none"
           aria-label="Password"
           type="password"
           defaultValue="123456"
           suffix={<EyeOffIcon />}
-          className="w-full"
+          className="col-span-2"
         />
         <TextField
+          form="none"
           label="Email"
           description="Enter your email"
-          className="col-span-2 w-full"
+          className="col-span-2"
         />
         <TextField
+          form="none"
           aria-label="https://"
           prefix={<span>https://</span>}
-          className="w-full"
+          className="col-span-2"
         />
         <TextField
+          form="none"
           aria-label="@dotui.org"
           suffix={<span>@dotui.org</span>}
-          className="w-full"
+          className="col-span-2"
         />
         <TextField
+          form="none"
+          aria-label="Email"
           placeholder="Email"
           isInvalid
           errorMessage="This email is already taken."
-          className="col-span-2 w-full"
+          className="col-span-2"
         />
-        <SearchField placeholder="Search..." className="col-span-2 w-full" />
+        <SearchField
+          form="none"
+          aria-label="Search..."
+          placeholder="Search..."
+          className="col-span-2"
+        />
         <TextArea
+          form="none"
           label="Description"
           description="Type your description"
-          className="col-span-2 w-full"
+          className="col-span-2"
         />
       </Section>
 
@@ -279,9 +301,9 @@ export function ComponentsEditor() {
         name="pickers"
         title="Pickers"
         variants={getComponentVariants("combobox")}
-        previewClassName="grid grid-cols-2 gap-2"
+        previewClassName="flex flex-col gap-2 *:w-64 justify-center"
       >
-        <Combobox aria-label="country">
+        <Combobox aria-label="country" form="none">
           <ComboboxItem>Canada</ComboboxItem>
           <ComboboxItem>France</ComboboxItem>
           <ComboboxItem>Germany</ComboboxItem>
@@ -290,8 +312,8 @@ export function ComponentsEditor() {
           <ComboboxItem>United states</ComboboxItem>
           <ComboboxItem>United Kingdom</ComboboxItem>
         </Combobox>
-        <DatePicker className="w-full" />
-        <DateRangePicker className="w-full" />
+        <DatePicker aria-label="Basic date picker" form="none" />
+        <DateRangePicker aria-label="Basic date range picker" form="none" />
       </Section>
 
       <Section
@@ -299,7 +321,11 @@ export function ComponentsEditor() {
         title="Selection"
         variants={getComponentVariants("select")}
       >
-        <Select defaultSelectedKey="option-1">
+        <Select
+          aria-label="Basic select"
+          form="none"
+          defaultSelectedKey="option-1"
+        >
           <SelectItem id="option-1">Option 1</SelectItem>
           <SelectItem id="option-2">Option 2</SelectItem>
           <SelectItem id="option-3">Option 3</SelectItem>
@@ -326,19 +352,19 @@ export function ComponentsEditor() {
         variants={getComponentVariants("list-box")}
         previewClassName="gap-4"
       >
-        <ListBox>
+        <ListBox aria-label="Basic list box">
           <ListBoxItem>Next.js</ListBoxItem>
           <ListBoxItem>Remix</ListBoxItem>
           <ListBoxItem>Astro</ListBoxItem>
           <ListBoxItem>Gatsby</ListBoxItem>
         </ListBox>
         <div className="flex flex-col gap-2">
-          <Select className="w-48">
+          <Select className="w-48" aria-label="Basic select" form="none">
             <SelectItem id="option-1">Option 1</SelectItem>
             <SelectItem id="option-2">Option 2</SelectItem>
             <SelectItem id="option-3">Option 3</SelectItem>
           </Select>
-          <Combobox>
+          <Combobox aria-label="Country" form="none">
             <ComboboxItem>Canada</ComboboxItem>
             <ComboboxItem>France</ComboboxItem>
             <ComboboxItem>Germany</ComboboxItem>
@@ -348,7 +374,7 @@ export function ComponentsEditor() {
             <ComboboxItem>United Kingdom</ComboboxItem>
           </Combobox>
         </div>
-        <MenuRoot>
+        <MenuRoot aria-label="Basic menu">
           <Button>Menu</Button>
           <Menu>
             <MenuItem>Account settings</MenuItem>
@@ -408,9 +434,11 @@ export function ComponentsEditor() {
         variants={getComponentVariants("checkbox")}
         previewClassName="gap-4"
       >
-        <Checkbox aria-label="Basic checkbox" />
-        <Checkbox defaultSelected>Hello world</Checkbox>
-        <Checkbox appearance="card" defaultSelected>
+        <Checkbox aria-label="Basic checkbox" form="none" />
+        <Checkbox defaultSelected form="none">
+          Hello world
+        </Checkbox>
+        <Checkbox appearance="card" defaultSelected form="none">
           Hello world
         </Checkbox>
       </Section>
@@ -421,17 +449,28 @@ export function ComponentsEditor() {
         variants={getComponentVariants("radio-group")}
         previewClassName="flex-col gap-4"
       >
-        <RadioGroup>
+        <RadioGroup
+          aria-label="Basic radio group"
+          defaultValue="option-1"
+          form="none"
+        >
           <Radio value="option-1">Option 1</Radio>
           <Radio value="option-2">Option 2</Radio>
           <Radio value="option-3">Option 3</Radio>
         </RadioGroup>
-        <RadioGroup variant="card" orientation="horizontal">
+        <RadioGroup
+          variant="card"
+          orientation="horizontal"
+          aria-label="Card radio group"
+          defaultValue="option-1"
+          form="none"
+        >
           <Radio value="option-1">Option 1</Radio>
           <Radio value="option-2">Option 2</Radio>
           <Radio value="option-3">Option 3</Radio>
         </RadioGroup>
       </Section>
+
       <Section
         name="switch"
         title="Switch"
@@ -439,13 +478,14 @@ export function ComponentsEditor() {
         previewClassName="flex-col gap-4"
       >
         <div className="flex items-center gap-4">
-          <Switch aria-label="Basic switch" />
+          <Switch aria-label="Basic switch" form="none" />
           <Switch defaultSelected>Notifications</Switch>
-          <Switch variant="card" defaultSelected>
+          <Switch variant="card" defaultSelected form="none">
             Dark mode
           </Switch>
         </div>
       </Section>
+
       <Section
         name="slider"
         title="Slider"
@@ -454,6 +494,7 @@ export function ComponentsEditor() {
       >
         <Slider defaultValue={50} aria-label="Basic slider" />
       </Section>
+
       <Section
         name="badge-and-tag-group"
         title="Badge & TagGroup"
@@ -474,6 +515,7 @@ export function ComponentsEditor() {
           <Badge size="lg">Large</Badge>
         </div>
       </Section>
+
       <Section
         name="tooltip"
         title="Tooltip"

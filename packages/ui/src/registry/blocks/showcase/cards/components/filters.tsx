@@ -26,8 +26,9 @@ export function Filters({ className, ...props }: React.ComponentProps<"div">) {
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex flex-col gap-2">
-          <Label>Type of place</Label>
+          <Label id="type-of-place">Type of place</Label>
           <ToggleButtonGroup
+            aria-labelledby="type-of-place"
             selectionMode="single"
             variant="accent"
             shape="rectangle"

@@ -207,6 +207,7 @@ const ColorTokenVariableName = ({
                   {props.value}
                 </h1>
                 <Button
+                  aria-label="Edit variable name"
                   size="sm"
                   shape="circle"
                   variant="quiet"
@@ -221,6 +222,7 @@ const ColorTokenVariableName = ({
           {description && (
             <DialogRoot>
               <Button
+                aria-label="View variable description"
                 size="sm"
                 shape="circle"
                 variant="quiet"
@@ -262,6 +264,7 @@ const ColorTokenValue = ({ index }: { index: number }) => {
 
         return (
           <SelectRoot
+            aria-label="Select variable value"
             selectedKey={value}
             onSelectionChange={onChange}
             {...props}

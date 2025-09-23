@@ -6,6 +6,7 @@ import {
   Header as AriaHeader,
   ListBox as AriaListBox,
   ListBoxItem as AriaListBoxItem,
+  ListBoxLoadMoreItem as AriaListBoxLoadMoreItem,
   ListBoxSection as AriaListBoxSection,
   composeRenderProps,
   ListStateContext,
@@ -65,10 +66,12 @@ const listboxSectionStyles = tv({
 
 interface ListBoxProps<T> extends AriaListBoxProps<T> {
   isLoading?: boolean;
+  onLoadMore?: () => void;
 }
 const ListBox = <T extends object>({
   children,
   isLoading,
+  onLoadMore,
   ...props
 }: ListBoxProps<T>) => {
   const state = React.useContext(ListStateContext);
@@ -81,11 +84,9 @@ const ListBox = <T extends object>({
       )}
     >
       <AriaCollection items={props.items}>{children}</AriaCollection>
-      {isLoading && (
-        <AriaListBoxItem className="flex items-center justify-center py-1.5">
-          <Loader />
-        </AriaListBoxItem>
-      )}
+      <AriaListBoxLoadMoreItem isLoading={isLoading} onLoadMore={onLoadMore}>
+        <Loader />
+      </AriaListBoxLoadMoreItem>
     </AriaListBox>
   );
 };
@@ -108,6 +109,7 @@ const ListBoxItem = <T extends object>({
 }: ListBoxItemProps<T>) => {
   const textValue =
     props.textValue ||
+    label ||
     (typeof props.children === "string" ? props.children : undefined);
   return (
     <AriaListBoxItem

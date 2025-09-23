@@ -31,6 +31,7 @@ export function ActiveStyleSelector(
 
   return (
     <SelectRoot
+      aria-label="Active Style"
       selectedKey={activeStyleQuery.data?.id}
       onSelectionChange={(key) => {
         updateStyleMutation.mutate({

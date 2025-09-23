@@ -27,38 +27,27 @@ export const StylesShowcase = ({
   const ref = React.useRef(null);
   const isInView = useInView(ref);
   const [touched, setTouched] = React.useState<boolean>(false);
-  const [copied, setCopied] = React.useState(false);
   const isMounted = useMounted();
-
-  const handleCopy = () => {
-    void navigator.clipboard.writeText(
-      `npx shadcn@latest init @dotui/${currentStyleName}/base`,
-    );
-    setCopied(true);
-    setTimeout(() => {
-      setCopied(false);
-    }, 1000);
-  };
 
   const currentStyle = React.useMemo(() => {
     return styles.find((style) => style.name === currentStyleName)!;
   }, [currentStyleName, styles]);
 
-  React.useEffect(() => {
-    const interval = setInterval(() => {
-      if (touched || !isInView) return;
-      const currentIndex = styles.findIndex(
-        (style) => style.name === currentStyleName,
-      );
-      const nextIndex = (currentIndex + 1) % styles.length;
-      const nextStyle = styles[nextIndex];
-      if (nextStyle) {
-        setCurrentStyleName(nextStyle.name);
-      }
-    }, 5000);
+  // React.useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     if (touched || !isInView) return;
+  //     const currentIndex = styles.findIndex(
+  //       (style) => style.name === currentStyleName,
+  //     );
+  //     const nextIndex = (currentIndex + 1) % styles.length;
+  //     const nextStyle = styles[nextIndex];
+  //     if (nextStyle) {
+  //       setCurrentStyleName(nextStyle.name);
+  //     }
+  //   }, 5000);
 
-    return () => clearInterval(interval);
-  }, [currentStyleName, touched, isInView, styles]);
+  //   return () => clearInterval(interval);
+  // }, [currentStyleName, touched, isInView, styles]);
 
   return (
     <>
@@ -76,7 +65,6 @@ export const StylesShowcase = ({
             selectedKey={currentStyleName}
             onSelectionChange={(key) => {
               setCurrentStyleName(key as string);
-              setCopied(false);
               setTouched(true);
             }}
           >

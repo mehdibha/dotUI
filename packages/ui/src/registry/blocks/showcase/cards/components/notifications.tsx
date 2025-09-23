@@ -60,7 +60,7 @@ export function Notifications({
                   .map((notification, index) => (
                     <React.Fragment key={index}>
                       <Separator />
-                      <ListBoxItem>
+                      <ListBoxItem textValue={notification.text}>
                         <div className="flex items-start gap-3 py-2">
                           <Avatar
                             src={notification.user.avatar}

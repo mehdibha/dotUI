@@ -10,7 +10,10 @@ export default function Demo() {
   const { contains } = useFilter({ sensitivity: "base" });
   return (
     <Command filter={contains}>
-      <SearchField placeholder="Search commands..." />
+      <SearchField
+        aria-label="Search commands..."
+        placeholder="Search commands..."
+      />
       <MenuContent className="min-h-48">
         <MenuItem textValue="Create new file">Create new file...</MenuItem>
         <MenuItem textValue="Create new folder">Create new folder...</MenuItem>

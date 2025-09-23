@@ -26,6 +26,7 @@ function Loader({
   return (
     <AriaProgressBar
       data-slot="loader"
+      aria-label="loading..."
       className={cn(
         "inline-flex size-[var(--loader-size)] shrink-0 items-center justify-center",
         className,

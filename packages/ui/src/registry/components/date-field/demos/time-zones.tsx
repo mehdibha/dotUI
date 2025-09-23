@@ -1,6 +1,6 @@
 "use client";
 
-import { parseAbsoluteToLocal } from "@internationalized/date";
+import { parseZonedDateTime } from "@internationalized/date";
 
 import { DateField } from "@dotui/ui/components/date-field";
 
@@ -8,7 +8,7 @@ export default function Demo() {
   return (
     <DateField
       aria-label="Meeting time"
-      defaultValue={parseAbsoluteToLocal("2021-11-07T07:45:00Z")}
+      defaultValue={parseZonedDateTime("2022-11-07T00:45[America/Los_Angeles]")}
       className="w-auto"
     />
   );

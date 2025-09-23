@@ -22,7 +22,7 @@ const badgeStyles = tv({
     size: {
       sm: "px-2.5 py-0.5 [&_svg]:size-4",
       md: "px-3 py-1 [&_svg]:size-3.5",
-      lg: "px-4 py-2 text-sm [&_svg]:size-4",
+      lg: "px-4 py-1 text-sm [&_svg]:size-4",
     },
   },
   defaultVariants: {

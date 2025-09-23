@@ -3,26 +3,19 @@
 
 import React from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import {
   ArrowLeftIcon,
   CodeIcon,
-  CopyIcon,
-  EllipsisIcon,
   EyeIcon,
-  PencilIcon,
   RocketIcon,
   RotateCcwIcon,
   SaveIcon,
-  StarIcon,
-  Trash2Icon,
   XIcon,
 } from "lucide-react";
 import { useWatch } from "react-hook-form";
 
 import { Button } from "@dotui/ui/components/button";
 import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
-import { Menu, MenuItem, MenuRoot } from "@dotui/ui/components/menu";
 import { Skeleton } from "@dotui/ui/components/skeleton";
 import { Tooltip } from "@dotui/ui/components/tooltip";
 
@@ -103,7 +96,7 @@ function StyleEditorHeaderActions() {
         </Button>
         <Dialog type="drawer" className="p-0! overflow-hidden">
           <div className="h-[80vh]">
-            <PreviewFrame block="login" />
+            <PreviewFrame block="login" className="h-full" />
           </div>
           <Button
             slot="close"
@@ -165,33 +158,6 @@ function StyleEditorHeaderActions() {
           </Button>
         </LoginModal>
       )}
-      {/* <MenuRoot>
-        <Button aria-label="More actions" size="sm" shape="square">
-          <EllipsisIcon />
-        </Button>
-        <Menu
-          overlayProps={{
-            popoverProps: {
-              placement: "bottom right",
-            },
-          }}
-        >
-          <MenuItem
-            prefix={<CodeIcon />}
-            onAction={() => setIsCodeModalOpen(true)}
-          >
-            Code
-          </MenuItem>
-          <MenuItem prefix={<CopyIcon />}>Clone</MenuItem>
-          {isUserStyle && (
-            <>
-              <MenuItem variant="danger" prefix={<Trash2Icon />}>
-                Delete style
-              </MenuItem>
-            </>
-          )}
-        </Menu>
-      </MenuRoot> */}
     </Skeleton>
   );
 }

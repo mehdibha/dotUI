@@ -4,19 +4,19 @@ import { Text } from "@dotui/ui/components/text";
 export default function Demo() {
   return (
     <ListBox aria-label="Framework" selectionMode="multiple" className="w-60">
-      <ListBoxItem>
+      <ListBoxItem textValue="Next.js">
         <Text slot="label">Next.js</Text>
         <Text slot="description">
           React-based SSR and static site framework.
         </Text>
       </ListBoxItem>
-      <ListBoxItem>
+      <ListBoxItem textValue="Remix">
         <Text slot="label">Remix</Text>
         <Text slot="description">
           Full-stack framework with efficient data loading.
         </Text>
       </ListBoxItem>
-      <ListBoxItem>
+      <ListBoxItem textValue="Astro">
         <Text slot="label">Astro</Text>
         <Text slot="description">
           Lightweight static site builder for performance.

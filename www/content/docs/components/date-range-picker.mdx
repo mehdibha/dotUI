@@ -88,8 +88,8 @@ An `errorMessage` can be supplied to a `DateRangePicker`, which will be displaye
   name="date-range-picker/demos/time-zones"
   preview={`<DateRangePicker
     defaultValue={{
-      start: parseAbsoluteToLocal("2021-04-07T18:45:22Z"),
-      end: parseAbsoluteToLocal("2021-04-08T20:00:00Z"),
+      start: parseZonedDateTime("2022-11-07T00:45[America/Los_Angeles]"),
+      end: parseZonedDateTime("2022-11-08T11:15[America/Los_Angeles]"),
     }}
   />`}
 />

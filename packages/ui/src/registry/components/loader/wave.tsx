@@ -14,6 +14,7 @@ function Loader({ size = 20, className, ...props }: LoaderProps) {
   return (
     <AriaProgressBar
       className={cn("flex items-center justify-between", className)}
+      aria-label="loading..."
       {...props}
       isIndeterminate
       style={

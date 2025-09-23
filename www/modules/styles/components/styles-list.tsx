@@ -72,6 +72,7 @@ export function StylesList({
       <div className="flex items-center justify-end gap-4">
         {search && (
           <SearchField
+            aria-label="Search styles"
             placeholder="Search styles..."
             className="flex-1"
             onChange={(value) => setQuery(value?.toString() ?? "")}
