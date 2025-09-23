@@ -59,61 +59,53 @@ export const FontSelector = ({
           className="p-0! space-y-2"
         >
           {({ close }) => (
-            <>
-              <div className="p-2 pb-0">
-                <Select selectedKey="featured">
-                  <SelectItem id="featured">Featured fonts</SelectItem>
-                  <SelectItem id="all">All google fonts</SelectItem>
-                </Select>
+            <CommandRoot filter={contains} className="h-72">
+              <div className="p-2">
+                <SearchField
+                  placeholder="Search"
+                  autoFocus
+                  className="w-full"
+                />
               </div>
-              <CommandRoot filter={contains} className="h-72">
-                <div className="p-2">
-                  <SearchField
-                    placeholder="Search"
-                    autoFocus
-                    className="w-full"
-                  />
-                </div>
-                <Virtualizer layout={layout}>
-                  <ListBox
-                    selectionMode="single"
-                    selectedKeys={font ? [font] : []}
-                    onSelectionChange={(keys) => {
-                      onFontChange(([...keys][0] as string) ?? "");
-                      close();
-                    }}
-                    className="p-0! h-full w-full border-0"
-                  >
-                    {[
-                      { title: "Sans serif", items: sansSerifFonts },
-                      { title: "Serif", items: serifFonts },
-                      { title: "Mono", items: monoFonts },
-                      { title: "Display", items: displayFonts },
-                      { title: "Handwriting", items: handwritingFonts },
-                    ].map(({ title, items }) => (
-                      <ListBoxSection key={title} title={title}>
-                        {items.map((font) => (
-                          <ListBoxItem
-                            key={font}
-                            id={font}
-                            textValue={font}
-                            className="font-body"
-                            style={
-                              {
-                                "--font-body": font,
-                              } as React.CSSProperties
-                            }
-                          >
-                            {font}
-                            <FontLoaderInView font={font} />
-                          </ListBoxItem>
-                        ))}
-                      </ListBoxSection>
-                    ))}
-                  </ListBox>
-                </Virtualizer>
-              </CommandRoot>
-            </>
+              <Virtualizer layout={layout}>
+                <ListBox
+                  selectionMode="single"
+                  selectedKeys={font ? [font] : []}
+                  onSelectionChange={(keys) => {
+                    onFontChange(([...keys][0] as string) ?? "");
+                    close();
+                  }}
+                  className="p-0! h-full w-full border-0"
+                >
+                  {[
+                    { title: "Sans serif", items: sansSerifFonts },
+                    { title: "Serif", items: serifFonts },
+                    { title: "Mono", items: monoFonts },
+                    { title: "Display", items: displayFonts },
+                    { title: "Handwriting", items: handwritingFonts },
+                  ].map(({ title, items }) => (
+                    <ListBoxSection key={title} title={title}>
+                      {items.map((font) => (
+                        <ListBoxItem
+                          key={font}
+                          id={font}
+                          textValue={font}
+                          className="font-body"
+                          style={
+                            {
+                              "--font-body": font,
+                            } as React.CSSProperties
+                          }
+                        >
+                          {font}
+                          <FontLoaderInView font={font} />
+                        </ListBoxItem>
+                      ))}
+                    </ListBoxSection>
+                  ))}
+                </ListBox>
+              </Virtualizer>
+            </CommandRoot>
           )}
         </Dialog>
       </DialogRoot>
