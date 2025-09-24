@@ -33,6 +33,7 @@ import type { TableRootProps } from "@dotui/ui/components/table";
 import { AutoResizeTextField } from "@/components/auto-resize-input";
 import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
 import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
+import { useGeneratedScales } from "../hooks/use-generated-scales";
 
 export const ColorTokens = ({
   variant = "line",
@@ -247,21 +248,47 @@ const ColorTokenVariableName = ({
 const ColorTokenValue = ({ index }: { index: number }) => {
   const form = useStyleEditorForm();
 
+  const tokenValue = useWatch({
+    control: form.control,
+    name: `theme.colors.tokens.${index}.value`,
+  });
+
+  const color = React.useMemo(() => {
+    const [c] = (tokenValue ?? "")
+      .replace("var(--", "")
+      .replace(")", "")
+      .split("-") as [string, string];
+    return c;
+  }, [tokenValue]);
+
+  const generatedTheme = useGeneratedScales([color as any]);
+  const scale = React.useMemo(
+    () => generatedTheme.find((s) => s.name === color),
+    [generatedTheme, color],
+  );
+
+  const items = React.useMemo(
+    () =>
+      SCALE_NUMBERRS.map((scaleNumber) => {
+        const varRef = `var(--${color}-${scaleNumber})`;
+        const resolvedHex = scale?.values.find(
+          (v: { name: string; value: string }) =>
+            v.name === `${color}-${scaleNumber}`,
+        )?.value;
+        return {
+          label: `${color.charAt(0).toUpperCase() + color.slice(1)} ${scaleNumber}`,
+          value: varRef,
+          resolvedHex,
+        };
+      }),
+    [color, scale],
+  );
+
   return (
     <FormControl
       name={`theme.colors.tokens.${index}.value`}
       control={form.control}
       render={({ value, onChange, ...props }) => {
-        const [color] = value
-          .replace("var(--", "")
-          .replace(")", "")
-          .split("-") as [string, string];
-
-        const items = SCALE_NUMBERRS.map((scale, i) => ({
-          label: `${color.charAt(0).toUpperCase() + color.slice(1)} ${scale}`,
-          value: `var(--${color}-${scale})`,
-        }));
-
         return (
           <SelectRoot
             aria-label="Select variable value"
@@ -288,7 +315,8 @@ const ColorTokenValue = ({ index }: { index: number }) => {
                       <span
                         className="size-4 rounded-sm border"
                         style={{
-                          backgroundColor: item.value,
+                          backgroundColor:
+                            (item as any).resolvedHex ?? (item as any).value,
                         }}
                       />
                     }
@@ -304,3 +332,80 @@ const ColorTokenValue = ({ index }: { index: number }) => {
     />
   );
 };
+
+// const ColorTokenValue = ({ index }: { index: number }) => {
+//   const form = useStyleEditorForm();
+
+//   return (
+//     <FormControl
+//       name={`theme.colors.tokens.${index}.value`}
+//       control={form.control}
+//       render={({ value, onChange, ...props }) => {
+//         const [color] = value
+//           .replace("var(--", "")
+//           .replace(")", "")
+//           .split("-") as [string, string];
+
+//         const { byName } = useGeneratedScales({ scaleIds: color });
+//         const scaleDef = byName[color];
+
+//         const items = React.useMemo(
+//           () =>
+//             SCALE_NUMBERRS.map((scaleNumber) => {
+//               const varRef = `var(--${color}-${scaleNumber})`;
+//               const resolvedHex = scaleDef?.values.find(
+//                 (v: { name: string; value: string }) =>
+//                   v.name === `${color}-${scaleNumber}`,
+//               )?.value;
+//               return {
+//                 label: `${color.charAt(0).toUpperCase() + color.slice(1)} ${scaleNumber}`,
+//                 value: varRef,
+//                 resolvedHex,
+//               };
+//             }),
+//           [color, scaleDef],
+//         );
+
+//         return (
+//           <SelectRoot
+//             aria-label="Select variable value"
+//             selectedKey={value}
+//             onSelectionChange={onChange}
+//             {...props}
+//           >
+//             <Button
+//               size="sm"
+//               suffix={<ChevronsUpDownIcon className="text-fg-muted" />}
+//               className="w-40"
+//             >
+//               <SelectValue>
+//                 {({ defaultChildren }) => <>{defaultChildren}</>}
+//               </SelectValue>
+//             </Button>
+//             <Popover>
+//               <ListBox items={items}>
+//                 {(item) => (
+//                   <ListBoxItem
+//                     id={item.value}
+//                     className="flex items-center gap-2"
+//                     prefix={
+//                       <span
+//                         className="size-4 rounded-sm border"
+//                         style={{
+//                           backgroundColor:
+//                             (item as any).resolvedHex ?? (item as any).value,
+//                         }}
+//                       />
+//                     }
+//                   >
+//                     {item.label}
+//                   </ListBoxItem>
+//                 )}
+//               </ListBox>
+//             </Popover>
+//           </SelectRoot>
+//         );
+//       }}
+//     />
+//   );
+// };

@@ -52,11 +52,11 @@ import { cn } from "@dotui/ui/lib/utils";
 
 import { AutoResizeTextField } from "@/components/auto-resize-input";
 import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
-import { useColorEditorContext } from "./colors-editor";
+import { useResolvedModeState } from "@/modules/style-editor/hooks/use-resolved-mode";
 
 export function ColorScaleEditor({ scaleId }: { scaleId: string }) {
   const form = useStyleEditorForm();
-  const { resolvedMode } = useColorEditorContext("ColorScaleEditor");
+  const { resolvedMode } = useResolvedModeState();
 
   const name = useWatch({
     control: form.control,
@@ -99,7 +99,7 @@ interface ScaleNameEditorProps {
 
 function ScaleNameEditor({ scaleId }: ScaleNameEditorProps) {
   const form = useStyleEditorForm();
-  const { resolvedMode } = useColorEditorContext("ScaleNameEditor");
+  const { resolvedMode } = useResolvedModeState();
   const value = useWatch({
     control: form.control,
     name: `theme.colors.modes.${resolvedMode}.scales.${scaleId}.name`,
@@ -232,7 +232,7 @@ interface ColorKeysEditorProps {
 
 function ColorKeysEditor({ scaleId }: ColorKeysEditorProps) {
   const form = useStyleEditorForm();
-  const { resolvedMode } = useColorEditorContext("ColorKeysEditor");
+  const { resolvedMode } = useResolvedModeState();
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
@@ -305,7 +305,7 @@ interface RatioSliderProps {
 
 function RatioSlider({ scaleId }: RatioSliderProps) {
   const form = useStyleEditorForm();
-  const { resolvedMode } = useColorEditorContext("RatioSlider");
+  const { resolvedMode } = useResolvedModeState();
 
   const name = useWatch({
     control: form.control,
@@ -413,7 +413,7 @@ interface RatioTableProps {
 
 function RatioTable({ scaleId }: RatioTableProps) {
   const form = useStyleEditorForm();
-  const { resolvedMode } = useColorEditorContext("RatioTable");
+  const { resolvedMode } = useResolvedModeState();
 
   const currentModeDefinition = useWatch({
     name: `theme.colors.modes.${resolvedMode}`,

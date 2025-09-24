@@ -9,8 +9,11 @@ import { Skeleton } from "@dotui/ui/components/skeleton";
 import { Tooltip } from "@dotui/ui/components/tooltip";
 
 import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
-import { useEditorStyle } from "../hooks/use-editor-style";
-import { useColorEditorContext } from "./colors-editor";
+import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
+import { useResolvedModeState } from "@/modules/style-editor/hooks/use-resolved-mode";
+import { useGeneratedScales } from "../hooks/use-generated-scales";
+
+type ScaleId = "neutral" | "accent" | "success" | "warning" | "danger" | "info";
 
 interface ColorScaleProps {
   scaleId: string;
@@ -20,22 +23,14 @@ interface ColorScaleProps {
 export function ColorScale({ scaleId }: ColorScaleProps) {
   const form = useStyleEditorForm();
   const { isSuccess } = useEditorStyle();
-  const { resolvedMode } = useColorEditorContext("ColorScale");
+  const { resolvedMode } = useResolvedModeState();
 
   const scaleName = useWatch({
     control: form.control,
     name: `theme.colors.modes.${resolvedMode}.scales.${scaleId}.name`,
   });
 
-  const currentModeDefinition = useWatch({
-    name: `theme.colors.modes.${resolvedMode}`,
-    control: form.control,
-  });
-
-  const generatedTheme = React.useMemo(() => {
-    const theme = createColorScales(currentModeDefinition);
-    return theme;
-  }, [currentModeDefinition]);
+  const generatedTheme = useGeneratedScales([scaleId as ScaleId]);
 
   const scale = generatedTheme.find((scale) => scale.name === scaleId);
 
