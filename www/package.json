@@ -29,7 +29,6 @@
     "@fumadocs/mdx-remote": "^1.4.0",
     "@hookform/resolvers": "catalog:ui",
     "@internationalized/date": "catalog:ui",
-    "@next/bundle-analyzer": "^15.3.3",
     "@radix-ui/react-collapsible": "^1.0.3",
     "@radix-ui/react-scroll-area": "^1.0.5",
     "@react-aria/overlays": "^3.27.1",
