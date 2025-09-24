@@ -17,7 +17,7 @@ export async function GET(
     notFound();
   }
 
-  return new NextResponse(page.data.content, {
+  return new NextResponse(await page.data.getText("raw"), {
     headers: {
       "Content-Type": "text/markdown; charset=utf-8",
     },
