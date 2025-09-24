@@ -16,22 +16,22 @@ export function DraftStyleSync() {
 
   const watchedValues = useWatch({
     control: form.control,
-    name: ["theme", "variants", "icons"],
+    name: ["name", "theme", "variants", "icons"],
   });
 
-  const debouncedWatchedValues = useDebounce(watchedValues, 50);
+  const [name, theme, variants, icons] = useDebounce(watchedValues, 50);
 
   const { updateDraftStyle } = useDraftStyleProducer(slug);
 
   React.useEffect(() => {
-    if (isSuccess && debouncedWatchedValues) {
+    if (isSuccess && name !== "random-fake") {
       updateDraftStyle({
-        theme: debouncedWatchedValues[0],
-        variants: debouncedWatchedValues[1],
-        icons: debouncedWatchedValues[2],
+        theme,
+        variants,
+        icons,
       });
     }
-  }, [debouncedWatchedValues, updateDraftStyle, isSuccess]);
+  }, [name, theme, variants, icons, updateDraftStyle, isSuccess]);
 
   return null;
 }

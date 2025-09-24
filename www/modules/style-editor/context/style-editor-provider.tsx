@@ -44,6 +44,6 @@ export const useStyleEditorForm = () => {
 };
 
 const fakeData: StyleFormData = {
-  name: "random",
+  name: "random-fake",
   ...DEFAULT_STYLE,
 };

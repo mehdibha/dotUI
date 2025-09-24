@@ -41,7 +41,7 @@ export function StyleEditorHeader() {
     <div className="container max-w-4xl">
       <Link
         href="/styles"
-        className="text-fg-muted hover:text-fg flex items-center gap-1 text-sm max-sm:hidden"
+        className="text-fg-muted hover:text-fg inline-flex items-center gap-1 text-sm max-sm:hidden"
       >
         <ArrowLeftIcon className="size-4" /> styles
       </Link>
