@@ -51,6 +51,8 @@
     "@dotui/eslint-config": "workspace:*",
     "@dotui/prettier-config": "workspace:*",
     "@dotui/ts-config": "workspace:*",
+    "@tanstack/react-form": "^1.23.4",
+    "@tanstack/zod-form-adapter": "^0.42.1",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "rimraf": "^6.0.1",

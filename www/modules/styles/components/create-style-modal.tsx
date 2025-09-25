@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { ExternalLinkIcon, GlobeIcon, LockIcon } from "lucide-react";
-import { useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
+// import { parseDate } from "@internationalized/date";
+import { useForm } from "@tanstack/react-form";
 
 import { createStyleSchema as dbCreateStyleSchema } from "@dotui/db/schemas";
 import { Alert } from "@dotui/ui/components/alert";
@@ -82,24 +82,30 @@ export function CreateStyleModalContent({
 }) {
   const createStyleMutation = useCreateStyle();
 
-  const form = useForm<CreateStyleFormData>({
-    resolver: zodResolver(createStyleSchema),
+  const form = useForm({
     defaultValues: {
       name: "",
       description: "",
       visibility: "unlisted",
     },
+    onSubmit: ({ value, meta }) => {
+      onSubmit(value as CreateStyleFormData, (meta as unknown as () => void) ?? (() => {}));
+    },
   });
 
-  const rawName = useWatch({
-    control: form.control,
-    name: "name",
-  });
-
-  const renamedTo = React.useMemo(() => {
-    const normalized = normalizeStyleName(rawName);
-    return normalized !== rawName ? normalized : null;
-  }, [rawName]);
+  const RenamedTo = () => (
+    <form.Subscribe selector={(s) => s.values.name}>
+      {(rawName) => {
+        const normalized = normalizeStyleName(rawName ?? "");
+        const renamedTo = normalized !== rawName ? normalized : null;
+        return renamedTo ? (
+          <Alert className="mt-3 text-xs font-normal">
+            Your style will be renamed to "{renamedTo}"
+          </Alert>
+        ) : null;
+      }}
+    </form.Subscribe>
+  );
 
   const onSubmit = (data: CreateStyleFormData, close: () => void) => {
     const finalName = normalizeStyleName(data.name);
@@ -123,9 +129,10 @@ export function CreateStyleModalContent({
       <Dialog modalProps={{ className: "max-w-lg" }}>
         {({ close }) => (
           <form
-            onSubmit={form.handleSubmit((data) => {
-              onSubmit(data, close);
-            })}
+            onSubmit={(e) => {
+              e.preventDefault();
+              form.handleSubmit(close);
+            }}
           >
             <DialogHeader>
               <DialogHeading>Create a new style</DialogHeading>
@@ -143,22 +150,22 @@ export function CreateStyleModalContent({
               )}
               <div className="flex items-end gap-2">
                 <FormControl
+                  form={form}
                   name="name"
-                  control={form.control}
                   render={({ value, onChange, ...props }) => (
                     <TextField
                       label="Name"
                       autoFocus
                       className="w-full"
                       {...props}
-                      value={value}
+                      value={value ?? ""}
                       onChange={onChange}
                     />
                   )}
                 />
                 <FormControl
+                  form={form}
                   name="visibility"
-                  control={form.control}
                   render={({ value, onChange, ...props }) => (
                     <Select
                       aria-label="Visibility"
@@ -194,7 +201,6 @@ export function CreateStyleModalContent({
                         },
                       ]}
                       {...props}
-                      className={cn(form.formState.errors.name && "mb-6")}
                     >
                       {(item) => (
                         <SelectItem
@@ -212,8 +218,8 @@ export function CreateStyleModalContent({
                 />
               </div>
               <FormControl
+                form={form}
                 name="description"
-                control={form.control}
                 render={({ value, onChange, ...props }) => (
                   <TextArea
                     label="Description (optional)"
@@ -224,11 +230,7 @@ export function CreateStyleModalContent({
                   />
                 )}
               />
-              {renamedTo && (
-                <Alert className="mt-3 text-xs font-normal">
-                  Your style will be renamed to "{renamedTo}"
-                </Alert>
-              )}
+              <RenamedTo />
             </DialogBody>
             <DialogFooter>
               <Button slot="close">Cancel</Button>
