@@ -261,28 +261,27 @@ const ColorTokenValue = ({ index }: { index: number }) => {
     return c;
   }, [tokenValue]);
 
-  // const generatedTheme = useGeneratedScales([color as any], 10000);
-  // const scale = React.useMemo(
-  //   () => generatedTheme.find((s) => s.name === color),
-  //   [generatedTheme, color],
-  // );
+  const generatedTheme = useGeneratedScales([color as any]);
+  const scale = React.useMemo(
+    () => generatedTheme.find((s) => s.name === color),
+    [generatedTheme, color],
+  );
 
   const items = React.useMemo(
     () =>
       SCALE_NUMBERRS.map((scaleNumber) => {
         const varRef = `var(--${color}-${scaleNumber})`;
-        // const resolvedHex = scale?.values.find(
-        //   (v: { name: string; value: string }) =>
-        //     v.name === `${color}-${scaleNumber}`,
-        // )?.value;
+        const resolvedHex = scale?.values.find(
+          (v: { name: string; value: string }) =>
+            v.name === `${color}-${scaleNumber}`,
+        )?.value;
         return {
           label: `${color.charAt(0).toUpperCase() + color.slice(1)} ${scaleNumber}`,
           value: varRef,
-          resolvedHex: "#000000",
+          resolvedHex,
         };
       }),
-    [color],
-    // [color, scale],
+    [color, scale],
   );
 
   return (
