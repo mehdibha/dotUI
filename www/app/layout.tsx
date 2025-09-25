@@ -71,13 +71,12 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
+      {/* <head>
         <script
           crossOrigin="anonymous"
           src="//unpkg.com/react-scan/dist/auto.global.js"
         />
-        {/* rest of your scripts go under */}
-      </head>
+      </head> */}
       <body
         className={cn(
           "font-sans antialiased",
