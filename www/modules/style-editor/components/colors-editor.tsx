@@ -78,11 +78,11 @@ export function ColorsEditor() {
             );
           })}
         </div>
-        {/* <div className="mt-3 space-y-2">
+        <div className="mt-3 space-y-2">
           {baseColors.map((color) => {
             return <ColorScale key={color.name} scaleId={color.name} />;
           })}
-        </div> */}
+        </div>
       </StyleEditorSection>
 
       <StyleEditorSection
@@ -98,19 +98,19 @@ export function ColorsEditor() {
             );
           })}
         </div>
-        {/* <div className="mt-3 space-y-2">
+        <div className="mt-3 space-y-2">
           {semanticColors.map((color) => {
             return <ColorScale key={color.name} scaleId={color.name} />;
           })}
-        </div> */}
+        </div>
       </StyleEditorSection>
 
       <StyleEditorSection title="Accent emphasis">
         <AccentLevelEditor />
       </StyleEditorSection>
 
-      <StyleEditorSection key={`${resolvedMode}-tokens`} title="Tokens">
-        {/* <div className="mt-3 space-y-4">
+      {/* <StyleEditorSection key={`${resolvedMode}-tokens`} title="Tokens">
+        <div className="mt-3 space-y-4">
           {[
             {
               name: "Backgrounds",
@@ -134,8 +134,8 @@ export function ColorsEditor() {
               />
             </div>
           ))}
-        </div> */}
-      </StyleEditorSection>
+        </div>
+      </StyleEditorSection> */}
     </div>
   );
 }

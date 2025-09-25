@@ -71,6 +71,7 @@
     "tailwind-variants": "catalog:ui",
     "unified": "^11.0.5",
     "unist-util-visit": "^5.0.0",
+    "use-debounce": "^10.0.6",
     "zod": "catalog:",
     "zustand": "^4.5.2"
   },

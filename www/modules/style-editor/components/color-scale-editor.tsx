@@ -281,7 +281,6 @@ function ColorKeysEditor({ scaleId }: ColorKeysEditorProps) {
   );
 }
 
-
 function ControlledColorPicker({
   value: hexValue,
   onChange,

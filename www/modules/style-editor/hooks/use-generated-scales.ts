@@ -6,6 +6,7 @@ import { useWatch } from "react-hook-form";
 import { createColorScales } from "@dotui/style-engine/core";
 import type { ModeDefinition } from "@dotui/style-engine/types";
 
+import { useDebounce } from "@/hooks/use-debounce";
 import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
 import { useResolvedModeState } from "./use-resolved-mode";
 
@@ -58,15 +59,40 @@ export function useGeneratedScales(scaleIds?: ScaleId[]) {
     [ids, watched],
   );
 
+  const dLightness = useDebounce(lightness, 150);
+  const dSaturation = useDebounce(saturation, 150);
+  const dContrast = useDebounce(contrast, 150);
+
+  // Build a stable signature for scales and debounce that signature (not the object)
+  const scalesKey = React.useMemo(() => {
+    const minimal = Object.fromEntries(
+      ids.map((id) => {
+        const s = (scales as any)?.[id];
+        return [
+          id,
+          {
+            name: s?.name,
+            smooth: s?.smooth,
+            colorKeys: (s?.colorKeys ?? []).map((ck: any) => ck.color),
+            ratios: s?.ratios,
+          },
+        ];
+      }),
+    );
+    return JSON.stringify(minimal);
+  }, [ids, scales]);
+  const dScalesKey = useDebounce(scalesKey, 1000);
+
   const generatedTheme = React.useMemo(() => {
     const theme = createColorScales({
-      lightness,
-      saturation,
-      contrast,
-      scales,
+      lightness: dLightness,
+      saturation: dSaturation,
+      contrast: dContrast,
+      scales: scales,
     });
     return theme;
-  }, [lightness, saturation, contrast, scales]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dLightness, dSaturation, dContrast, dScalesKey]);
 
   return generatedTheme;
 }
