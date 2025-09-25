@@ -32,7 +32,8 @@ catalogs:
     tailwind-variants: ^1.0.0
     clsx: ^2.1.0
     tailwind-merge: ^3.0.2
-    '@hookform/resolvers': ^5.1.1
+    '@tanstack/react-form': ^1.23.4
+    '@tanstack/zod-form-adapter': ^0.42.1
     '@internationalized/date': ^3.9.0
     '@react-aria/utils': ^3.30.1
     '@react-stately/utils': ^3.10.8
@@ -40,7 +41,6 @@ catalogs:
     lucide-react: ^0.469.0
     motion: ^11.16.4
     react-aria: ^3.43.2
-    react-hook-form: ^7.54.2
     react-stately: ^3.41.0
 
 onlyBuiltDependencies:

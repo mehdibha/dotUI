@@ -1,9 +1,8 @@
 "use client";
 
 import React from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { ExternalLinkIcon, GlobeIcon, LockIcon } from "lucide-react";
-import { useForm, useWatch } from "react-hook-form";
+import { useForm } from "@tanstack/react-form";
 import { z } from "zod";
 
 import { createStyleSchema as dbCreateStyleSchema } from "@dotui/db/schemas";
@@ -82,19 +81,18 @@ export function CreateStyleModalContent({
 }) {
   const createStyleMutation = useCreateStyle();
 
-  const form = useForm<CreateStyleFormData>({
-    resolver: zodResolver(createStyleSchema),
+  const form = useForm({
     defaultValues: {
       name: "",
       description: "",
-      visibility: "unlisted",
+      visibility: "unlisted" as const,
+    },
+    onSubmit: async ({ value }) => {
+      // This will be handled by the form submission
     },
   });
 
-  const rawName = useWatch({
-    control: form.control,
-    name: "name",
-  });
+  const [rawName, setRawName] = React.useState("");
 
   const renamedTo = React.useMemo(() => {
     const normalized = normalizeStyleName(rawName);
@@ -123,9 +121,12 @@ export function CreateStyleModalContent({
       <Dialog modalProps={{ className: "max-w-lg" }}>
         {({ close }) => (
           <form
-            onSubmit={form.handleSubmit((data) => {
-              onSubmit(data, close);
-            })}
+            onSubmit={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              const values = form.state.values;
+              onSubmit(values, close);
+            }}
           >
             <DialogHeader>
               <DialogHeading>Create a new style</DialogHeading>
@@ -143,23 +144,40 @@ export function CreateStyleModalContent({
               )}
               <div className="flex items-end gap-2">
                 <FormControl
+                  form={form}
                   name="name"
-                  control={form.control}
-                  render={({ value, onChange, ...props }) => (
-                    <TextField
-                      label="Name"
-                      autoFocus
-                      className="w-full"
-                      {...props}
-                      value={value}
-                      onChange={onChange}
-                    />
-                  )}
+                  validators={{
+                    onChange: ({ value }) => {
+                      const result = createStyleSchema.shape.name.safeParse(value);
+                      return result.success ? undefined : result.error.issues[0]?.message;
+                    },
+                  }}
+                  render={({ value, onChange, ...props }) => {
+                    React.useEffect(() => {
+                      setRawName(value);
+                    }, [value]);
+                    return (
+                      <TextField
+                        label="Name"
+                        autoFocus
+                        className="w-full"
+                        {...props}
+                        value={value}
+                        onChange={onChange}
+                      />
+                    );
+                  }}
                 />
                 <FormControl
+                  form={form}
                   name="visibility"
-                  control={form.control}
-                  render={({ value, onChange, ...props }) => (
+                  validators={{
+                    onChange: ({ value }) => {
+                      const result = createStyleSchema.shape.visibility.safeParse(value);
+                      return result.success ? undefined : result.error.issues[0]?.message;
+                    },
+                  }}
+                  render={({ value, onChange, isInvalid, ...props }) => (
                     <Select
                       aria-label="Visibility"
                       selectedKey={value}
@@ -194,7 +212,7 @@ export function CreateStyleModalContent({
                         },
                       ]}
                       {...props}
-                      className={cn(form.formState.errors.name && "mb-6")}
+                      className={cn(isInvalid && "mb-6")}
                     >
                       {(item) => (
                         <SelectItem
@@ -212,8 +230,14 @@ export function CreateStyleModalContent({
                 />
               </div>
               <FormControl
+                form={form}
                 name="description"
-                control={form.control}
+                validators={{
+                  onChange: ({ value }) => {
+                    const result = createStyleSchema.shape.description.safeParse(value);
+                    return result.success ? undefined : result.error.issues[0]?.message;
+                  },
+                }}
                 render={({ value, onChange, ...props }) => (
                   <TextArea
                     label="Description (optional)"

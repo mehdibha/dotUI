@@ -30,7 +30,8 @@
     "@dotui/style-engine": "workspace:*"
   },
   "peerDependencies": {
-    "@hookform/resolvers": "catalog:ui",
+    "@tanstack/react-form": "catalog:ui",
+    "@tanstack/zod-form-adapter": "catalog:ui",
     "@internationalized/date": "catalog:ui",
     "@react-aria/utils": "catalog:ui",
     "@react-stately/utils": "catalog:ui",
@@ -42,7 +43,6 @@
     "react-aria": "catalog:ui",
     "react-aria-components": "catalog:ui",
     "react-dom": "catalog:react",
-    "react-hook-form": "catalog:ui",
     "react-stately": "catalog:ui",
     "tailwind-merge": "catalog:ui",
     "tailwind-variants": "catalog:ui"
