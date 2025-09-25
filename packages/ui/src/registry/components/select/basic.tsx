@@ -1,8 +1,6 @@
 "use client";
 
-import * as React from "react";
 import {
-  Collection as AriaCollection,
   Select as AriaSelect,
   SelectValue as AriaSelectValue,
   composeRenderProps,
