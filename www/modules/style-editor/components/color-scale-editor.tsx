@@ -13,6 +13,7 @@ import {
   Trash2Icon,
   XIcon,
 } from "lucide-react";
+import { parseColor } from "react-aria-components";
 import { useFieldArray, useWatch } from "react-hook-form";
 import type { CssColor } from "@adobe/leonardo-contrast-colors";
 
@@ -248,28 +249,9 @@ function ColorKeysEditor({ scaleId }: ColorKeysEditorProps) {
             <FormControl
               control={form.control}
               name={`theme.colors.modes.${resolvedMode}.scales.${scaleId}.colorKeys.${index}.color`}
-              render={({ onChange, ...props }) => {
-                return (
-                  <ColorPickerRoot
-                    onChange={(value) => {
-                      onChange(value.toString("hex"));
-                    }}
-                    {...props}
-                  >
-                    <DialogRoot>
-                      <Button
-                        shape="square"
-                        className={cn(index > 0 && "rounded-r-none")}
-                      >
-                        <ColorSwatch />
-                      </Button>
-                      <Dialog type="popover" mobileType="drawer">
-                        <ColorPickerEditor />
-                      </Dialog>
-                    </DialogRoot>
-                  </ColorPickerRoot>
-                );
-              }}
+              render={({ value, onChange }) => (
+                <ControlledColorPicker value={value} onChange={onChange} />
+              )}
             />
             {index > 0 && (
               <Button
@@ -296,6 +278,43 @@ function ColorKeysEditor({ scaleId }: ColorKeysEditorProps) {
         </Tooltip>
       </div>
     </div>
+  );
+}
+
+
+function ControlledColorPicker({
+  value: hexValue,
+  onChange,
+}: {
+  value: string;
+  onChange: (nextHex: string) => void;
+}) {
+  const [localValue, setLocalValue] = React.useState(parseColor(hexValue));
+
+  React.useEffect(() => {
+    const next = parseColor(hexValue);
+    if (next.toString("hex") !== localValue.toString("hex")) {
+      setLocalValue(next);
+    }
+  }, [hexValue, localValue]);
+
+  return (
+    <ColorPickerRoot
+      value={localValue}
+      onChange={(value) => {
+        setLocalValue(value);
+        onChange(value.toString("hex"));
+      }}
+    >
+      <DialogRoot>
+        <Button shape="square">
+          <ColorSwatch />
+        </Button>
+        <Dialog type="popover" mobileType="drawer">
+          <ColorPickerEditor />
+        </Dialog>
+      </DialogRoot>
+    </ColorPickerRoot>
   );
 }
 
