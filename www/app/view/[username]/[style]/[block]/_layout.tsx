@@ -11,10 +11,9 @@ import type { StyleDefinition } from "@dotui/style-engine/types";
 
 import { useMounted } from "@/hooks/use-mounted";
 import { useDraftStyleConsumer } from "@/modules/style-editor/atoms/draft-style-atom";
-import { useLiveStyleConsumer } from "@/modules/style-editor/atoms/live-style-atom";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 
-export const BlockProviders = ({
+export const BlockViewLayout = ({
   style: styleProp,
   styleSlug,
   children,
@@ -44,13 +43,19 @@ export const BlockProviders = ({
     : (resolvedTheme as "light" | "dark");
 
   React.useLayoutEffect(() => {
-    if (effectiveMode && isMounted && style && resolvedTheme) {
+    if (effectiveMode && style) {
       document.documentElement.style.colorScheme = effectiveMode;
-      document.documentElement.classList.remove("dark");
-    }
-  }, [effectiveMode, isMounted, style, resolvedTheme]);
+      if (effectiveMode === "light") {
+        document.documentElement.classList.remove("dark");
+      } else {
+        document.documentElement.classList.add("dark");
+      }
 
-  if (!isMounted || !style || !resolvedTheme) return null;
+      // TODO: We should also update the body color
+    }
+  }, [effectiveMode, style, resolvedTheme]);
+
+  if (!style || !effectiveMode || !isMounted) return null;
 
   return (
     <>

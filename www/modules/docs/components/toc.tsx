@@ -9,7 +9,7 @@ import type {
 
 import { cn } from "@dotui/ui/lib/utils";
 
-import { ScrollArea } from "@/components/scroll-area";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { useTocThumb } from "@/modules/docs/hooks/use-toc-thumb";
 
 export const TableOfContents = ({ toc }: { toc: TocType }) => {

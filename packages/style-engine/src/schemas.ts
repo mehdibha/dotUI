@@ -33,16 +33,14 @@ export const modeDefinitionSchema = z.object({
   lightness: z.number().min(0).max(100),
   saturation: z.number().min(0).max(100),
   contrast: z.number().min(0).max(500),
-  scales: z
-    .object({
-      neutral: colorScaleSchema,
-      accent: colorScaleSchema,
-      success: colorScaleSchema,
-      warning: colorScaleSchema,
-      danger: colorScaleSchema,
-      info: colorScaleSchema,
-    })
-    .and(z.record(z.string(), colorScaleSchema)),
+  scales: z.object({
+    neutral: colorScaleSchema,
+    accent: colorScaleSchema,
+    success: colorScaleSchema,
+    warning: colorScaleSchema,
+    danger: colorScaleSchema,
+    info: colorScaleSchema,
+  }),
 });
 
 export const colorTokenSchema = z.object({

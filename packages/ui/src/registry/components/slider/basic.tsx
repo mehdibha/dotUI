@@ -174,6 +174,7 @@ const SliderRoot = ({
   const descriptionId = useSlotId();
   return (
     <AriaSlider
+      data-slot="slider"
       aria-describedby={descriptionId}
       className={composeRenderProps(className, (className, { orientation }) =>
         root({ orientation, size, className }),
@@ -205,6 +206,7 @@ const SliderTrack = ({ className, ...props }: SliderTrackProps) => {
   const { orientation, size } = useSliderContext("SliderTrack");
   return (
     <AriaSliderTrack
+      data-slot="slider-track"
       className={composeRenderProps(className, (className) =>
         track({ orientation, size, className }),
       )}
@@ -228,6 +230,7 @@ const SliderFiller = ({ className, style, ...props }: SliderFillerProps) => {
 
   return (
     <div
+      data-slot="slider-filler"
       className={filler({ variant, orientation, size, className })}
       style={{ ...style, ...dimensionStyles }}
       {...props}
@@ -241,6 +244,7 @@ const SliderThumb = ({ className, ...props }: SliderThumbProps) => {
   const { orientation, size } = useSliderContext("SliderThumb");
   return (
     <AriaSliderThumb
+      data-slot="slider-thumb"
       className={composeRenderProps(className, (className) =>
         thumb({ orientation, size, className }),
       )}
@@ -258,6 +262,7 @@ const SliderValueLabel = ({
 }: SliderValueLabelProps) => {
   return (
     <AriaSliderOutput
+      data-slot="slider-value-label"
       className={composeRenderProps(className, (className) =>
         valueLabel({ className }),
       )}

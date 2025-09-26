@@ -1,11 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { NextProvider } from "fumadocs-core/framework/next";
 import { Provider as JotaiProvider } from "jotai";
 import { ThemeProvider } from "next-themes";
-import { MenuItem, RouterProvider } from "react-aria-components";
+import { RouterProvider } from "react-aria-components";
 
 import { TRPCReactProvider } from "@/lib/trpc/react";
 
@@ -21,7 +20,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
           disableTransitionOnChange
         >
           <NextProvider>
-            <TRPCReactProvider>{children}</TRPCReactProvider>
+            <TRPCReactProvider>
+              {children}
+            </TRPCReactProvider>
           </NextProvider>
         </ThemeProvider>
       </RouterProvider>

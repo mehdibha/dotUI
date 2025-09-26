@@ -8,7 +8,7 @@ import {
   PageHeaderDescription,
   PageHeaderHeading,
   PageLayout,
-} from "@/components/page-layout";
+} from "@/components/layout/page-layout";
 import { CreateStyleModal } from "@/modules/styles/components/create-style-modal";
 import { StylesPageNav } from "./styles-page-nav";
 

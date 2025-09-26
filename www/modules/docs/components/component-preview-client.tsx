@@ -6,7 +6,7 @@ import { DEFAULT_VARIANTS_DEFINITION } from "@dotui/style-engine/constants";
 import { useCurrentStyle } from "@dotui/ui";
 import { VariantsProvider } from "@dotui/ui/helpers/variants-provider";
 
-import { ThemeModeSwitch } from "@/components/theme-mode-switch";
+import { ThemeModeSwitch } from "@/components/ui/theme-mode-switch";
 import { useHorizontalResize } from "@/hooks/use-horizontal-resize";
 import { useMounted } from "@/hooks/use-mounted";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";

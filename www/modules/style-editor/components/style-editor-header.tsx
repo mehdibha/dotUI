@@ -15,6 +15,7 @@ import { Button } from "@dotui/ui/components/button";
 import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
 import { Skeleton } from "@dotui/ui/components/skeleton";
 import { Tooltip } from "@dotui/ui/components/tooltip";
+import { cn } from "@dotui/ui/lib/utils";
 
 import { LoginModal } from "@/modules/auth/components/login-modal";
 import { authClient } from "@/modules/auth/lib/client";
@@ -23,16 +24,19 @@ import { PreviewFrame } from "@/modules/style-editor/components/preview";
 import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
 import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
 import { CreateStyleModal } from "@/modules/styles/components/create-style-modal";
+import { useResolvedModeState } from "../hooks/use-resolved-mode";
 
 export function StyleEditorHeader() {
   return (
     <div className="container max-w-4xl">
-      <Link
-        href="/styles"
-        className="text-fg-muted hover:text-fg inline-flex items-center gap-1 text-sm max-sm:hidden"
-      >
-        <ArrowLeftIcon className="size-4" /> styles
-      </Link>
+      <div className="flex">
+        <Link
+          href="/styles"
+          className="text-fg-muted hover:text-fg inline-flex items-end gap-1 text-sm max-sm:hidden"
+        >
+          <ArrowLeftIcon className="size-4" /> styles
+        </Link>
+      </div>
       <div className="flex items-center justify-between gap-4">
         <StyleEditorHeaderName />
         <StyleEditorHeaderActions />
@@ -57,6 +61,7 @@ function StyleEditorHeaderName() {
 
 function StyleEditorHeaderActions() {
   const form = useStyleEditorForm();
+  const { resolvedMode } = useResolvedModeState();
   const { data, isPending: isEditorStylePending } = useEditorStyle();
 
   const { data: session, isPending: isSessionPending } =
@@ -87,19 +92,18 @@ function StyleEditorHeaderActions() {
         </Button>
         <Dialog type="drawer" className="p-0! overflow-hidden">
           <div className="h-[80vh]">
-            {/* TODO: Add preview frame */}
-            {/* <PreviewFrame block="login" className="h-full" /> */}
+            <PreviewFrame block="login" className="h-full" />
           </div>
-          <Button
-            slot="close"
-            variant="quiet"
-            size="sm"
-            shape="square"
-            className="absolute right-1 top-1 size-7 rounded-lg"
+          <div
+            className={cn(
+              "absolute right-1 top-1 size-7 rounded-lg",
+              resolvedMode === "dark" ? "dark" : "light",
+            )}
           >
-            {/* TODO: Make this mode friendly */}
-            <XIcon />
-          </Button>
+            <Button slot="close" variant="quiet" size="sm" shape="square">
+              <XIcon />
+            </Button>
+          </div>
         </Dialog>
       </DialogRoot>
       <form.AppForm>

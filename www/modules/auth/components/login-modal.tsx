@@ -15,7 +15,7 @@ import {
 import { toast } from "@dotui/ui/components/toast";
 import { GitHubIcon } from "@dotui/ui/icons";
 
-import { Link } from "@/components/link";
+import { Link } from "@dotui/ui/components/link";
 import { authClient } from "../lib/client";
 
 export function LoginModal({ children }: { children: React.ReactNode }) {

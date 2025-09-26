@@ -30,7 +30,7 @@ import {
 import { cn } from "@dotui/ui/lib/utils";
 import type { TableRootProps } from "@dotui/ui/components/table";
 
-import { AutoResizeTextField } from "@/components/auto-resize-input";
+import { AutoResizeTextField } from "@/components/ui/auto-resize-input";
 import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
 import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
 import { useGeneratedScales } from "../hooks/use-generated-scales";

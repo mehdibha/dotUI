@@ -13,8 +13,8 @@ import {
   TypescriptIcon,
 } from "@dotui/ui/icons";
 
-import { Announcement } from "@/components/announcement";
-import { Link } from "@/components/link";
+import { Announcement } from "@/components/marketing/announcement";
+import { Link } from "@dotui/ui/components/link";
 import { StylesShowcase } from "@/components/styles-showcase";
 import { siteConfig } from "@/config";
 import { getGitHubContributors } from "@/lib/github";
@@ -95,7 +95,6 @@ export default async function HomePage() {
               <Tooltip
                 key={index}
                 content={label}
-                close
                 offset={10}
                 placement="top"
               >

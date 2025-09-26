@@ -9,14 +9,14 @@ import { Kbd } from "@dotui/ui/components/kbd";
 import { GitHubIcon } from "@dotui/ui/icons";
 import { cn } from "@dotui/ui/lib/utils";
 
+import { MobileNav } from "@/components/layout/mobile-nav";
+import { Logo } from "@/components/logo";
+import { SearchCommand } from "@/components/search-command";
+import { ThemeSwitcher } from "@/components/site-theme-selector";
 import { siteConfig } from "@/config";
 import { useMounted } from "@/hooks/use-mounted";
 import { UserProfileMenu } from "@/modules/auth/components/user-profile-menu";
 import { authClient } from "@/modules/auth/lib/client";
-import { Logo } from "./logo";
-import { MobileNav } from "./mobile-nav";
-import { SearchCommand } from "./search-command";
-import { ThemeSwitcher } from "./site-theme-selector";
 
 export function Header({
   className,

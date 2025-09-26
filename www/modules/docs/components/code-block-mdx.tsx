@@ -8,7 +8,7 @@ import { Button } from "@dotui/ui/components/button";
 import { cn } from "@dotui/ui/lib/utils";
 import type { ButtonProps } from "@dotui/ui/components/button";
 
-import { ScrollArea } from "@/components/scroll-area";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { useCopyButton } from "@/hooks/use-copy-button";
 
 export type CodeBlockProps = HTMLAttributes<HTMLElement> & {

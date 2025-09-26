@@ -1,7 +1,7 @@
 import React from "react";
 import defaultMdxComponents from "fumadocs-ui/mdx";
 import { ArrowUpRightIcon } from "lucide-react";
-import type { LinkProps } from "@/components/link";
+import type { LinkProps } from "@dotui/ui/components/link";
 import type { MDXComponents } from "mdx/types";
 
 import { Alert } from "@dotui/ui/components/alert";
@@ -10,7 +10,7 @@ import { cn } from "@dotui/ui/lib/utils";
 import type { AlertProps } from "@dotui/ui/components/alert";
 import type { BadgeProps } from "@dotui/ui/components/badge";
 
-import { Link as NavLink } from "@/components/link";
+import { Link as NavLink } from "@dotui/ui/components/link";
 import { BadgePalette } from "./badge-palette";
 import { Choice, Choices } from "./choices";
 import { Pre } from "./code-block-mdx";

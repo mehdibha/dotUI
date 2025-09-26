@@ -23,9 +23,7 @@ const config = {
       },
     ],
   },
-  devIndicators: {
-    position: "bottom-right",
-  },
+  devIndicators: false,
   async rewrites() {
     return [
       {

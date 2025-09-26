@@ -31,16 +31,16 @@ import { cn } from "@dotui/ui/lib/utils";
 import type { ButtonProps } from "@dotui/ui/components/button";
 import type { TooltipProps } from "@dotui/ui/components/tooltip";
 
-import { ScrollArea } from "@/components/scroll-area";
+import { Logo } from "@/components/logo";
+import { SearchCommand } from "@/components/search-command";
+import { ThemeSwitcher } from "@/components/site-theme-selector";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { siteConfig } from "@/config";
 import { useDebounce } from "@/hooks/use-debounce";
 import { useMounted } from "@/hooks/use-mounted";
 import { UserProfileMenu } from "@/modules/auth/components/user-profile-menu";
 import { authClient } from "@/modules/auth/lib/client";
 import { hasActive, isActive } from "@/modules/docs/utils";
-import { Logo } from "./logo";
-import { SearchCommand } from "./search-command";
-import { ThemeSwitcher } from "./site-theme-selector";
 
 export const Sidebar = ({
   className,

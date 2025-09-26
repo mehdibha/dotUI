@@ -7,6 +7,7 @@ import type z from "zod/v4";
 import { createStyleSchema } from "@dotui/db/schemas";
 import { DEFAULT_STYLE } from "@dotui/style-engine/constants";
 import { useAppForm } from "@dotui/ui/components/form";
+import { SelectItem } from "@dotui/ui/components/select";
 import { toast } from "@dotui/ui/components/toast";
 
 import { useEditorStyle } from "../hooks/use-editor-style";
@@ -52,6 +53,7 @@ const useForm = () => {
     validators: {
       onChange: styleEditorFormSchema,
     },
+    
     onSubmit: async ({ formApi, value }) => {
       await updateStyleMutation.mutateAsync(value);
       await refetch();

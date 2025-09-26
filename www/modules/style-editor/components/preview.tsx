@@ -27,13 +27,13 @@ import { ToggleButton } from "@dotui/ui/components/toggle-button";
 import { Tooltip } from "@dotui/ui/components/tooltip";
 import { cn, createScopedContext } from "@dotui/ui/lib/utils";
 
-import { useSidebarContext } from "@/components/sidebar";
+import { useSidebarContext } from "@/components/layout/sidebar";
 import { useHorizontalResize } from "@/hooks/use-horizontal-resize";
 import { useMounted } from "@/hooks/use-mounted";
+import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
+import { useResolvedModeState } from "@/modules/style-editor/hooks/use-resolved-mode";
 import { useStyleEditorParams } from "@/modules/style-editor/hooks/use-style-editor-params";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
-import { useEditorStyle } from "../hooks/use-editor-style";
-import { useResolvedModeState } from "../hooks/use-resolved-mode";
 
 export const Preview = () => {
   return (

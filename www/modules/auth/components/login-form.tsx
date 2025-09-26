@@ -6,7 +6,7 @@ import { Button } from "@dotui/ui/components/button";
 import { toast } from "@dotui/ui/components/toast";
 import { GitHubIcon } from "@dotui/ui/icons";
 
-import { Link } from "@/components/link";
+import { Link } from "@dotui/ui/components/link";
 import { Logo } from "@/components/logo";
 import { authClient } from "@/modules/auth/lib/client";
 

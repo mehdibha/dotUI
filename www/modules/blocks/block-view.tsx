@@ -9,7 +9,7 @@ import { Button } from "@dotui/ui/components/button";
 import { Skeleton } from "@dotui/ui/components/skeleton";
 import { cn } from "@dotui/ui/lib/utils";
 
-import { ThemeModeSwitch } from "@/components/theme-mode-switch";
+import { ThemeModeSwitch } from "@/components/ui/theme-mode-switch";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 import { useActiveStyle } from "@/modules/styles/hooks/use-active-style";
 

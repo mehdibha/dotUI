@@ -144,6 +144,11 @@ export const DEFAULT_CSS = {
   },
 };
 
+export const SCALE_STEPS = [
+  50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950,
+] as const;
+
+// TODO: deprecated, remove after migration
 export const SCALE_NUMBERRS = [
   50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950,
 ] as const;
