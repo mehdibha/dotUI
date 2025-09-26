@@ -2,7 +2,10 @@
 
 import { cn } from "@dotui/ui/lib/utils";
 
-import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
+import {
+  useStyleEditorForm,
+  useSyncTheme,
+} from "@/modules/style-editor/context/style-editor-provider";
 import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
 import { useResolvedModeState } from "../../hooks/use-resolved-mode";
 
@@ -10,6 +13,7 @@ export const ColorAdjustments = () => {
   const form = useStyleEditorForm();
   const { isPending } = useEditorStyle();
   const { resolvedMode } = useResolvedModeState();
+  const syncTheme = useSyncTheme();
 
   return (
     <div
@@ -19,7 +23,15 @@ export const ColorAdjustments = () => {
           "[&_[data-slot='slider-filler']]:opacity-0 [&_[data-slot='slider-thumb']]:opacity-0 [&_[data-slot='slider-track']]:animate-pulse [&_[data-slot='slider-value-label']]:opacity-0",
       )}
     >
-      <form.AppField name={`theme.colors.modes.${resolvedMode}.lightness`}>
+      <form.AppField
+        name={`theme.colors.modes.${resolvedMode}.lightness`}
+        listeners={{
+          onChange: () => {
+            syncTheme();
+          },
+          onChangeDebounceMs: 150,
+        }}
+      >
         {(field) => (
           <field.Slider
             label="Lightness"
@@ -29,7 +41,15 @@ export const ColorAdjustments = () => {
           />
         )}
       </form.AppField>
-      <form.AppField name={`theme.colors.modes.${resolvedMode}.saturation`}>
+      <form.AppField
+        name={`theme.colors.modes.${resolvedMode}.saturation`}
+        listeners={{
+          onChange: () => {
+            syncTheme();
+          },
+          onChangeDebounceMs: 150,
+        }}
+      >
         {(field) => (
           <field.Slider
             label="Saturation"
@@ -39,7 +59,15 @@ export const ColorAdjustments = () => {
           />
         )}
       </form.AppField>
-      <form.AppField name={`theme.colors.modes.${resolvedMode}.contrast`}>
+      <form.AppField
+        name={`theme.colors.modes.${resolvedMode}.contrast`}
+        listeners={{
+          onChange: () => {
+            syncTheme();
+          },
+          onChangeDebounceMs: 150,
+        }}
+      >
         {(field) => (
           <field.Slider
             label="Contrast"

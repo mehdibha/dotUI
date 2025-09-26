@@ -8,4 +8,4 @@ export { createTheme } from "./theme";
 
 export { createVariants } from "./variants";
 export { createStyle } from "./style";
-export { createColorScales } from "./colors";
+export { createColorScales, createColorScalesV2 } from "./colors";

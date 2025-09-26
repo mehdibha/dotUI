@@ -24,6 +24,7 @@ import type {
   MinimizedThemeDefinition,
   MinimizedVariantsDefinition,
   ModeDefinition,
+  ScaleId,
   StyleDefinition,
   ThemeDefinition,
   VariantsDefinition,
@@ -57,13 +58,13 @@ const restoreModeDefinitionDefaults = (
   if (minimizedMode.scales) {
     Object.entries(minimizedMode.scales).forEach(
       ([scaleId, minimizedScale]) => {
-        const defaultScale = defaultMode.scales[scaleId];
-        if (defaultScale) {
-          scales[scaleId as keyof typeof scales] = restoreColorScaleDefaults(
-            minimizedScale,
-            defaultScale,
-          );
-        }
+        const test = defaultMode.scales;
+        console.log(test);
+        const defaultScale = defaultMode.scales[scaleId as ScaleId];
+        scales[scaleId as keyof typeof scales] = restoreColorScaleDefaults(
+          minimizedScale,
+          defaultScale,
+        );
       },
     );
   }

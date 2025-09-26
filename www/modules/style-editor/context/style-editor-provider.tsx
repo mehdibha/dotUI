@@ -1,16 +1,20 @@
 "use client";
 
 import React from "react";
-import type { FormApi } from "@tanstack/react-form";
+import type { ContrastColor } from "@adobe/leonardo-contrast-colors";
 import type z from "zod/v4";
 
 import { createStyleSchema } from "@dotui/db/schemas";
-import { DEFAULT_STYLE } from "@dotui/style-engine/constants";
+import {
+  DEFAULT_LIGHT_MODE,
+  DEFAULT_STYLE,
+} from "@dotui/style-engine/constants";
+import { createColorScalesV2 } from "@dotui/style-engine/core";
 import { useAppForm } from "@dotui/ui/components/form";
-import { SelectItem } from "@dotui/ui/components/select";
 import { toast } from "@dotui/ui/components/toast";
 
 import { useEditorStyle } from "../hooks/use-editor-style";
+import { useResolvedModeState } from "../hooks/use-resolved-mode";
 import { useStyleEditorParams } from "../hooks/use-style-editor-params";
 import { useUpdateStyleMutation } from "../hooks/use-update-style-mutation";
 
@@ -53,7 +57,7 @@ const useForm = () => {
     validators: {
       onChange: styleEditorFormSchema,
     },
-    
+
     onSubmit: async ({ formApi, value }) => {
       await updateStyleMutation.mutateAsync(value);
       await refetch();
@@ -74,7 +78,9 @@ export function StyleEditorProvider({
   const form = useForm();
 
   return (
-    <StyleEditorFormContext value={form}>{children}</StyleEditorFormContext>
+    <StyleEditorFormContext value={form}>
+      <GeneratedThemeProvider>{children}</GeneratedThemeProvider>
+    </StyleEditorFormContext>
   );
 }
 
@@ -86,4 +92,86 @@ export const useStyleEditorForm = () => {
     );
   }
   return context;
+};
+
+type GeneratedTheme = ContrastColor[];
+
+const defaultGeneratedTheme: GeneratedTheme = createColorScalesV2({
+  lightness: DEFAULT_LIGHT_MODE.lightness,
+  saturation: DEFAULT_LIGHT_MODE.saturation,
+  contrast: DEFAULT_LIGHT_MODE.contrast,
+  neutralScale: DEFAULT_LIGHT_MODE.scales.neutral,
+  scales: Object.values(DEFAULT_LIGHT_MODE.scales),
+});
+
+const GeneratedThemeContext = React.createContext<GeneratedTheme>(
+  defaultGeneratedTheme,
+);
+
+const SyncThemeContext = React.createContext<() => void>(() => {});
+
+export function GeneratedThemeProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const { isSuccess } = useEditorStyle();
+  const form = useStyleEditorForm();
+  const [generatedTheme, setGeneratedTheme] = React.useState<GeneratedTheme>(
+    defaultGeneratedTheme,
+  );
+  const { resolvedMode } = useResolvedModeState();
+
+  const syncTheme = React.useCallback(() => {
+    const generatedTheme = createColorScalesV2({
+      lightness: form.getFieldValue(
+        `theme.colors.modes.${resolvedMode}.lightness`,
+      ),
+      saturation: form.getFieldValue(
+        `theme.colors.modes.${resolvedMode}.saturation`,
+      ),
+      contrast: form.getFieldValue(
+        `theme.colors.modes.${resolvedMode}.contrast`,
+      ),
+      neutralScale: form.getFieldValue(
+        `theme.colors.modes.${resolvedMode}.scales.neutral`,
+      ),
+      scales: Object.values(
+        form.getFieldValue(`theme.colors.modes.${resolvedMode}.scales`),
+      ),
+    });
+    setGeneratedTheme(generatedTheme);
+  }, [form, resolvedMode]);
+
+  React.useEffect(() => {
+    syncTheme();
+  }, [isSuccess, syncTheme]);
+
+  return (
+    <SyncThemeContext value={syncTheme}>
+      <GeneratedThemeContext value={generatedTheme}>
+        {children}
+      </GeneratedThemeContext>
+    </SyncThemeContext>
+  );
+}
+
+export const useGeneratedTheme = () => {
+  const ctx = React.use(GeneratedThemeContext);
+  if (!ctx) {
+    throw new Error(
+      "useGeneratedTheme must be used within a GeneratedThemeProvider",
+    );
+  }
+  return ctx;
+};
+
+export const useSyncTheme = () => {
+  const ctx = React.use(SyncThemeContext);
+  if (!ctx) {
+    throw new Error(
+      "useSyncTheme must be used within a GeneratedThemeProvider",
+    );
+  }
+  return ctx;
 };

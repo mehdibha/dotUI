@@ -137,13 +137,6 @@ export const mockThemeDefinition: ThemeDefinition = {
             smooth: false,
             overrides: {},
           },
-          brand: {
-            name: "Brand",
-            colorKeys: [{ id: 0, color: "#8B5CF6" }],
-            ratios: [1.5, 2.0, 3.0, 4.0],
-            smooth: false,
-            overrides: {},
-          },
         },
       },
     },

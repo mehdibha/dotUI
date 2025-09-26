@@ -11,7 +11,7 @@ import {
 import { useWatch } from "react-hook-form";
 
 import { COLOR_TOKENS } from "@dotui/registry-definition/registry-tokens";
-import { SCALE_NUMBERRS } from "@dotui/style-engine/constants";
+import { SCALE_STEPS } from "@dotui/style-engine/constants";
 import { Button } from "@dotui/ui/components/button";
 import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
 import { FormControl } from "@dotui/ui/components/form";
@@ -33,7 +33,6 @@ import type { TableRootProps } from "@dotui/ui/components/table";
 import { AutoResizeTextField } from "@/components/ui/auto-resize-input";
 import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
 import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
-import { useGeneratedScales } from "../hooks/use-generated-scales";
 
 export const ColorTokens = ({
   variant = "line",
@@ -45,59 +44,39 @@ export const ColorTokens = ({
   tokenIds: string[];
   hideHeader?: boolean;
 }) => {
-  const { isSuccess } = useEditorStyle();
+  const { isPending } = useEditorStyle();
   const form = useStyleEditorForm();
 
-  const formTokens = useWatch({
-    control: form.control,
-    name: "theme.colors.tokens",
-  });
-
   return (
-    <>
-      <Skeleton show={!isSuccess}>
-        <TableRoot
-          aria-label="Tokens"
-          variant={variant}
-          className={cn("", className)}
-          {...props}
-        >
-          <TableHeader className={cn(hideHeader && "sr-only")}>
-            <TableColumn id="name" isRowHeader className="pl-0">
-              Variable name
-            </TableColumn>
-            <TableColumn id="value" className="pr-0">
-              Value
-            </TableColumn>
-          </TableHeader>
-          <TableBody>
-            {tokenIds
-              .filter((tokenId) => !tokenId.startsWith("color-fg-on"))
-              .map((tokenId) => {
-                const tokenDef = COLOR_TOKENS.find(
-                  (def) => def.name === tokenId,
-                );
-                const index = formTokens.findIndex(
-                  (token) => token.name === tokenId,
-                );
-                return (
-                  <TableRow key={tokenId} id={tokenId}>
-                    <TableCell className="pl-0">
-                      <ColorTokenVariableName
-                        index={index}
-                        description={tokenDef?.description}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <ColorTokenValue index={index} />
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-          </TableBody>
-        </TableRoot>
-      </Skeleton>
-    </>
+    <TableRoot
+      aria-label="Tokens"
+      variant={variant}
+      className={cn("", className)}
+      {...props}
+    >
+      <TableHeader className={cn(hideHeader && "sr-only")}>
+        <TableColumn id="name" isRowHeader className="pl-0">
+          Variable name
+        </TableColumn>
+        <TableColumn id="value" className="pr-0">
+          Value
+        </TableColumn>
+      </TableHeader>
+      <TableBody>
+        {tokenIds.map((tokenId) => {
+          const tokenDefinition = COLOR_TOKENS.find(
+            (def) => def.name === tokenId,
+          );
+          if (!tokenDefinition) return null;
+          return (
+            <TableRow key={tokenId} id={tokenId}>
+              <TableCell className="pl-0">{tokenDefinition.name}</TableCell>
+              <TableCell>{tokenDefinition.defaultValue}</TableCell>
+            </TableRow>
+          );
+        })}
+      </TableBody>
+    </TableRoot>
   );
 };
 
@@ -269,7 +248,7 @@ const ColorTokenValue = ({ index }: { index: number }) => {
 
   const items = React.useMemo(
     () =>
-      SCALE_NUMBERRS.map((scaleNumber) => {
+      SCALE_STEPS.map((scaleNumber) => {
         const varRef = `var(--${color}-${scaleNumber})`;
         const resolvedHex = scale?.values.find(
           (v: { name: string; value: string }) =>

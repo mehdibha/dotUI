@@ -13,11 +13,13 @@ export function EditableInput({
   onCancel,
   value,
   className,
+  as: As = "span",
 }: {
   onSubmit: (nextValue: string) => void;
   onCancel?: () => void;
   value: string;
   className?: string;
+  as?: React.ElementType;
 }) {
   const [isEditMode, setEditMode] = React.useState(false);
   const [localValue, setLocalValue] = React.useState("");
@@ -114,7 +116,7 @@ export function EditableInput({
 
   return (
     <div className={cn("flex items-center gap-2", className)}>
-      <span className="text-xl font-semibold leading-none">{value}</span>
+      <As className="text-xl font-semibold leading-none">{value}</As>
       <Button
         aria-label="Edit scale name"
         size="sm"

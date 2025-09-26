@@ -1,11 +1,19 @@
 "use client";
 
+import { COLOR_TOKENS } from "@dotui/registry-definition/registry-tokens";
+
+import { ColorAdjustments } from "@/modules/style-editor/components/colors-editor/color-adjustments";
+import { ColorScale } from "@/modules/style-editor/components/colors-editor/color-scale";
+import { ColorScaleEditor } from "@/modules/style-editor/components/colors-editor/color-scale-editor";
+import {
+  ModeConfig,
+  ModeSwitch,
+} from "@/modules/style-editor/components/colors-editor/mode-config";
+import { StyleEditorSection } from "@/modules/style-editor/components/section";
 import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
 import { useResolvedModeState } from "@/modules/style-editor/hooks/use-resolved-mode";
-import { StyleEditorSection } from "../section";
-import { ColorAdjustments } from "./color-adjustments";
-import { ColorScaleEditor } from "./color-scale-editor";
-import { ModeConfig, ModeSwitch } from "./mode-config";
+import { AccentEmphasisEditor } from "./accent-emphasis-editor";
+import { ColorTokens } from "./color-tokens";
 
 const baseColors = [
   { name: "neutral", label: "Neutral" },
@@ -51,11 +59,11 @@ export function ColorsEditor() {
             return <ColorScaleEditor key={color} scaleId={color} />;
           })}
         </div>
-        {/* <div className="mt-3 space-y-2">
+        <div className="mt-3 space-y-2">
           {baseColors.map((color) => {
             return <ColorScale key={color.name} scaleId={color.name} />;
           })}
-        </div> */}
+        </div>
       </StyleEditorSection>
 
       <StyleEditorSection
@@ -67,18 +75,18 @@ export function ColorsEditor() {
             return <ColorScaleEditor key={color} scaleId={color} />;
           })}
         </div>
-        {/* <div className="mt-3 space-y-2">
+        <div className="mt-3 space-y-2">
           {semanticColors.map((color) => {
             return <ColorScale key={color.name} scaleId={color.name} />;
           })}
-        </div> */}
+        </div>
       </StyleEditorSection>
 
-      {/* <StyleEditorSection title="Accent emphasis">
-        <AccentLevelEditor />
-      </StyleEditorSection> */}
+      <StyleEditorSection title="Accent emphasis">
+        <AccentEmphasisEditor />
+      </StyleEditorSection>
 
-      {/* <StyleEditorSection key={`${resolvedMode}-tokens`} title="Tokens">
+      <StyleEditorSection key={`${resolvedMode}-tokens`} title="Tokens">
         <div className="mt-3 space-y-4">
           {[
             {
@@ -104,7 +112,7 @@ export function ColorsEditor() {
             </div>
           ))}
         </div>
-      </StyleEditorSection> */}
+      </StyleEditorSection>
     </div>
   );
 }

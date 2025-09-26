@@ -1,6 +1,4 @@
-import { FormControl } from "@dotui/ui/components/form";
-import { Skeleton } from "@dotui/ui/components/skeleton";
-import { Slider } from "@dotui/ui/components/slider";
+import { cn } from "@dotui/ui/lib/utils";
 
 import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
 import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
@@ -39,12 +37,12 @@ const ACCENT_LEVEL_TOKEN_OVERRIDES: Record<
   },
 };
 
-export const AccentLevelEditor = () => {
-  const { isLoading } = useEditorStyle();
+export const AccentEmphasisEditor = () => {
+  const { isPending } = useEditorStyle();
   const form = useStyleEditorForm();
 
   const applyAccentLevel = (level: 0 | 1 | 2 | 3) => {
-    const tokens = form.getValues("theme.colors.tokens");
+    const tokens = form.getFieldValue("theme.colors.tokens");
     if (!tokens) return;
 
     const overrides = ACCENT_LEVEL_TOKEN_OVERRIDES[level] ?? {};
@@ -53,34 +51,31 @@ export const AccentLevelEditor = () => {
       return nextValue !== undefined ? { ...t, value: nextValue } : t;
     });
 
-    form.setValue("theme.colors.tokens", updatedTokens, {
-      shouldDirty: true,
-      shouldTouch: true,
-    });
+    form.setFieldValue("theme.colors.tokens", updatedTokens, {});
   };
 
   return (
-    <FormControl
-      control={form.control}
+    <form.AppField
       name="theme.colors.accentEmphasisLevel"
-      render={({ value, onChange, ...field }) => (
-        <Skeleton show={isLoading}>
-          <Slider
-            value={[typeof value === "number" ? value : 1]}
-            onChange={(vals) => {
-              const next = (vals as number[])[0] as 0 | 1 | 2 | 3;
-              onChange(next);
-              applyAccentLevel(next);
-            }}
-            {...field}
-            label="Accent emphasis"
-            minValue={0}
-            maxValue={3}
-            step={1}
-            className="w-full"
-          />
-        </Skeleton>
+      listeners={{
+        onChange: (value) => {
+          applyAccentLevel(value as unknown as 0 | 1 | 2 | 3);
+        },
+      }}
+    >
+      {(field) => (
+        <field.Slider
+          label="Accent emphasis"
+          minValue={0}
+          maxValue={3}
+          step={1}
+          className={cn(
+            "w-full",
+            isPending &&
+              "[&_[data-slot='slider-filler']]:opacity-0 [&_[data-slot='slider-thumb']]:opacity-0 [&_[data-slot='slider-track']]:animate-pulse [&_[data-slot='slider-value-label']]:opacity-0",
+          )}
+        />
       )}
-    />
+    </form.AppField>
   );
 };

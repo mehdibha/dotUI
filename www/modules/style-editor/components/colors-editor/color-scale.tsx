@@ -1,36 +1,24 @@
 "use client";
 
-import React from "react";
 import { Button as AriaButton } from "react-aria-components";
-import { useWatch } from "react-hook-form";
 
-import { createColorScales } from "@dotui/style-engine/core";
 import { Skeleton } from "@dotui/ui/components/skeleton";
 import { Tooltip } from "@dotui/ui/components/tooltip";
+import type { ScaleId } from "@dotui/style-engine/types";
 
-import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
+import {
+  useGeneratedTheme,
+  useStyleEditorForm,
+} from "@/modules/style-editor/context/style-editor-provider";
 import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
 import { useResolvedModeState } from "@/modules/style-editor/hooks/use-resolved-mode";
-import { useGeneratedScales } from "../hooks/use-generated-scales";
 
-type ScaleId = "neutral" | "accent" | "success" | "warning" | "danger" | "info";
-
-interface ColorScaleProps {
-  scaleId: string;
-}
-
-// TODO: Optimisation: instead of generating all the theme, we should only generate the scale we need
-export function ColorScale({ scaleId }: ColorScaleProps) {
+export function ColorScale({ scaleId }: { scaleId: ScaleId }) {
   const form = useStyleEditorForm();
   const { isSuccess } = useEditorStyle();
   const { resolvedMode } = useResolvedModeState();
 
-  const scaleName = useWatch({
-    control: form.control,
-    name: `theme.colors.modes.${resolvedMode}.scales.${scaleId}.name`,
-  });
-
-  const generatedTheme = useGeneratedScales([scaleId as ScaleId]);
+  const generatedTheme = useGeneratedTheme();
 
   const scale = generatedTheme.find((scale) => scale.name === scaleId);
 
@@ -40,11 +28,21 @@ export function ColorScale({ scaleId }: ColorScaleProps) {
 
   return (
     <div className="@lg:flex-row @lg:items-center @lg:gap-2 flex flex-col gap-0.5">
-      <p className="text-fg-muted w-16 text-sm">{`${scaleName.charAt(0).toUpperCase() + scaleName.slice(1)}`}</p>
+      <p className="text-fg-muted w-16 text-sm">
+        <form.Subscribe
+          selector={(state) =>
+            state.values.theme.colors.modes[resolvedMode].scales[scaleId].name
+          }
+        >
+          {(scaleName) =>
+            `${scaleName.charAt(0).toUpperCase() + scaleName.slice(1)}`
+          }
+        </form.Subscribe>
+      </p>
       <div className="flex flex-1 items-center gap-1">
         {scale.values.map((color, index) => (
           <Tooltip key={index} content={color.name}>
-            <Skeleton show={!isSuccess} className="flex-1">
+            <Skeleton show={!isSuccess} className="flex-1 h-8">
               <AriaButton
                 className="h-8 flex-1 rounded-sm border"
                 style={{ backgroundColor: color.value }}
