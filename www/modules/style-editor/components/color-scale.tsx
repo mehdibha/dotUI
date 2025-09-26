@@ -43,7 +43,7 @@ export function ColorScale({ scaleId }: ColorScaleProps) {
       <p className="text-fg-muted w-16 text-sm">{`${scaleName.charAt(0).toUpperCase() + scaleName.slice(1)}`}</p>
       <div className="flex flex-1 items-center gap-1">
         {scale.values.map((color, index) => (
-          <Tooltip key={index} content={color.name} delay={0}>
+          <Tooltip key={index} content={color.name}>
             <Skeleton show={!isSuccess} className="flex-1">
               <AriaButton
                 className="h-8 flex-1 rounded-sm border"

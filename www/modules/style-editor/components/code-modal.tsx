@@ -1,26 +1,9 @@
 "use client";
 
-// import convert from "npm-to-yarn";
-import { useWatch } from "react-hook-form";
-
 import { Dialog, DialogBody, DialogRoot } from "@dotui/ui/components/dialog";
 import type { DialogRootProps } from "@dotui/ui/components/dialog";
 
-import { useStyleEditorForm } from "../context/style-editor-provider";
 import { useStyleEditorParams } from "../hooks/use-style-editor-params";
-
-// import {
-//   InstallTab,
-//   InstallTabs,
-// } from "@/modules/docs/components/install-tabs";
-// import { useStyleForm } from "@/modules/styles/providers/style-editor-provider";
-
-// const packageManagers: ("npm" | "pnpm" | "yarn" | "bun")[] = [
-//   "npm",
-//   "pnpm",
-//   "yarn",
-//   "bun",
-// ];
 
 export function CodeModal({ children, ...props }: DialogRootProps) {
   const { slug } = useStyleEditorParams();

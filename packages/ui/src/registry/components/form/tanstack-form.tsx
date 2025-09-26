@@ -47,6 +47,35 @@ export const { fieldContext, formContext, useFieldContext, useFormContext } =
   createFormHookContexts();
 
 export const { useAppForm } = createFormHook({
+  fieldContext,
+  formContext,
+  formComponents: {
+    SubmitButton: (props: ButtonProps) => {
+      const form = useFormContext();
+      const [isSubmitting, isDirty] = useStore(form.store, (state) => [
+        state.isSubmitting,
+        state.isDirty,
+      ]);
+
+      return (
+        <Button
+          type="submit"
+          variant="primary"
+          isPending={isSubmitting}
+          isDisabled={!isDirty}
+          {...props}
+        />
+      );
+    },
+    ResetButton: (props: ButtonProps) => {
+      const form = useFormContext();
+      const isDirty = useStore(form.store, (state) => state.isDirty);
+
+      return (
+        <Button onPress={() => form.reset()} isDisabled={!isDirty} {...props} />
+      );
+    },
+  },
   fieldComponents: {
     TextField: (props: TextFieldProps) => {
       const field = useFieldContext<string>();
@@ -250,25 +279,4 @@ export const { useAppForm } = createFormHook({
       );
     },
   },
-  formComponents: {
-    SubmitButton: (props: ButtonProps) => {
-      const form = useFormContext();
-
-      const [isSubmitting, canSubmit] = useStore(form.store, (state) => [
-        state.isSubmitting,
-        state.canSubmit,
-      ]);
-      return (
-        <Button
-          type="submit"
-          variant="primary"
-          isPending={isSubmitting}
-          isDisabled={!canSubmit}
-          {...props}
-        />
-      );
-    },
-  },
-  fieldContext,
-  formContext,
 });

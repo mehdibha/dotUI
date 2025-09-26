@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useWatch } from "react-hook-form";
+import { useStore } from "@tanstack/react-form";
 
 import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
@@ -15,10 +15,10 @@ export function useResolvedModeState(): {
   const form = useStyleEditorForm();
   const { activeMode } = usePreferences();
 
-  const activeModes = useWatch({
-    control: form.control,
-    name: "theme.colors.activeModes",
-  });
+  const activeModes = useStore(
+    form.store,
+    (state) => state.values.theme.colors.activeModes,
+  );
 
   const supportsLightDark = React.useMemo(() => {
     return activeModes.includes("light") && activeModes.includes("dark");

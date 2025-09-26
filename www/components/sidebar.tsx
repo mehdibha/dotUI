@@ -516,13 +516,7 @@ const SidebarButton = ({
 
 const StyledTooltip = (props: TooltipProps) => {
   return (
-    <Tooltip
-      delay={0}
-      className="px-4 py-1"
-      placement="right"
-      showArrow
-      {...props}
-    />
+    <Tooltip className="px-4 py-1" placement="right" showArrow {...props} />
   );
 };
 

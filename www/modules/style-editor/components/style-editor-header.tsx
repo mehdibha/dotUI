@@ -1,7 +1,5 @@
 "use client";
-"use no memo";
 
-import React from "react";
 import Link from "next/link";
 import {
   ArrowLeftIcon,
@@ -12,31 +10,21 @@ import {
   SaveIcon,
   XIcon,
 } from "lucide-react";
-import { useWatch } from "react-hook-form";
 
 import { Button } from "@dotui/ui/components/button";
 import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
 import { Skeleton } from "@dotui/ui/components/skeleton";
 import { Tooltip } from "@dotui/ui/components/tooltip";
 
-import { useMounted } from "@/hooks/use-mounted";
 import { LoginModal } from "@/modules/auth/components/login-modal";
 import { authClient } from "@/modules/auth/lib/client";
+import { CodeModal } from "@/modules/style-editor/components/code-modal";
+import { PreviewFrame } from "@/modules/style-editor/components/preview";
+import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
+import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
 import { CreateStyleModal } from "@/modules/styles/components/create-style-modal";
-import { useStyleEditorForm } from "../context/style-editor-provider";
-import { useEditorStyle } from "../hooks/use-editor-style";
-import { CodeModal } from "./code-modal";
-import { PreviewFrame } from "./preview";
 
 export function StyleEditorHeader() {
-  const { isLoading } = useEditorStyle();
-  const form = useStyleEditorForm();
-
-  const styleName = useWatch({
-    control: form.control,
-    name: "name",
-  });
-
   return (
     <div className="container max-w-4xl">
       <Link
@@ -46,37 +34,40 @@ export function StyleEditorHeader() {
         <ArrowLeftIcon className="size-4" /> styles
       </Link>
       <div className="flex items-center justify-between gap-4">
-        <Skeleton show={isLoading}>
-          <h1 className="truncate text-lg font-bold leading-none lg:text-2xl">
-            {styleName}
-          </h1>
-        </Skeleton>
-        <div className="flex items-center gap-1">
-          <StyleEditorHeaderActions />
-        </div>
+        <StyleEditorHeaderName />
+        <StyleEditorHeaderActions />
       </div>
     </div>
   );
 }
 
+function StyleEditorHeaderName() {
+  const form = useStyleEditorForm();
+  const { isLoading } = useEditorStyle();
+  return (
+    <Skeleton show={isLoading}>
+      <h1 className="truncate text-lg font-bold leading-none lg:text-2xl">
+        <form.Subscribe selector={(state) => state.values.name}>
+          {(name) => name}
+        </form.Subscribe>
+      </h1>
+    </Skeleton>
+  );
+}
+
 function StyleEditorHeaderActions() {
   const form = useStyleEditorForm();
-  const [isCodeModalOpen, setIsCodeModalOpen] = React.useState(false);
-  const { data, isLoading } = useEditorStyle();
+  const { data, isPending: isEditorStylePending } = useEditorStyle();
 
-  const { data: session, isPending } = authClient.useSession();
-  const isMounted = useMounted();
-
-  const handleReset = () => {
-    form.reset();
-  };
+  const { data: session, isPending: isSessionPending } =
+    authClient.useSession();
 
   const isUserAuthenticated = session && session.user;
   const isUserStyle = isUserAuthenticated && session.user.id === data?.userId;
 
   return (
-    <Skeleton show={!isMounted || isPending || isLoading}>
-      <CodeModal isOpen={isCodeModalOpen} onOpenChange={setIsCodeModalOpen}>
+    <div className="flex items-center gap-1">
+      <CodeModal>
         <Button
           size="sm"
           prefix={<CodeIcon />}
@@ -96,7 +87,8 @@ function StyleEditorHeaderActions() {
         </Button>
         <Dialog type="drawer" className="p-0! overflow-hidden">
           <div className="h-[80vh]">
-            <PreviewFrame block="login" className="h-full" />
+            {/* TODO: Add preview frame */}
+            {/* <PreviewFrame block="login" className="h-full" /> */}
           </div>
           <Button
             slot="close"
@@ -105,59 +97,62 @@ function StyleEditorHeaderActions() {
             shape="square"
             className="absolute right-1 top-1 size-7 rounded-lg"
           >
+            {/* TODO: Make this mode friendly */}
             <XIcon />
           </Button>
         </Dialog>
       </DialogRoot>
-      <Tooltip content="Reset" delay={0}>
-        <Button
-          aria-label="Reset form"
-          size="sm"
-          shape="square"
-          isDisabled={!form.formState.isDirty}
-          onPress={handleReset}
-        >
-          <RotateCcwIcon />
-        </Button>
-      </Tooltip>
-      {isUserAuthenticated ? (
-        isUserStyle ? (
-          <Button
-            type="submit"
-            variant="primary"
-            size="sm"
-            prefix={<SaveIcon />}
-            isPending={form.formState.isSubmitting}
-            isDisabled={!form.formState.isDirty || form.formState.isSubmitting}
-          >
-            Save
-          </Button>
+      <form.AppForm>
+        <Tooltip content="Reset">
+          <form.ResetButton aria-label="Reset form" size="sm" shape="square">
+            <RotateCcwIcon />
+          </form.ResetButton>
+        </Tooltip>
+      </form.AppForm>
+      <Skeleton
+        show={isEditorStylePending || isSessionPending}
+        className="w-20"
+      >
+        {isUserAuthenticated ? (
+          isUserStyle ? (
+            <form.AppForm>
+              <form.SubmitButton size="sm" prefix={<SaveIcon />}>
+                Save
+              </form.SubmitButton>
+            </form.AppForm>
+          ) : (
+            <form.AppForm>
+              <CreateStyleModal
+                initialStyle={{
+                  theme: form.getFieldValue("theme"),
+                  icons: form.getFieldValue("icons"),
+                  variants: form.getFieldValue("variants"),
+                }}
+              >
+                <form.Subscribe selector={(state) => state.isDirty}>
+                  {(isDirty) => (
+                    <Button
+                      size="sm"
+                      variant="primary"
+                      isDisabled={!isDirty}
+                      className="border-primary hover:border-primary-hover border"
+                      prefix={<RocketIcon />}
+                    >
+                      Publish
+                    </Button>
+                  )}
+                </form.Subscribe>
+              </CreateStyleModal>
+            </form.AppForm>
+          )
         ) : (
-          <CreateStyleModal
-            initialStyle={{
-              theme: form.getValues("theme"),
-              icons: form.getValues("icons"),
-              variants: form.getValues("variants"),
-            }}
-          >
-            <Button
-              size="sm"
-              variant="primary"
-              isDisabled={!form.formState.isDirty}
-              className="border-primary hover:border-primary-hover border"
-              prefix={<RocketIcon />}
-            >
+          <LoginModal>
+            <Button size="sm" variant="primary">
               Publish
             </Button>
-          </CreateStyleModal>
-        )
-      ) : (
-        <LoginModal>
-          <Button size="sm" variant="primary">
-            Publish
-          </Button>
-        </LoginModal>
-      )}
-    </Skeleton>
+          </LoginModal>
+        )}
+      </Skeleton>
+    </div>
   );
 }

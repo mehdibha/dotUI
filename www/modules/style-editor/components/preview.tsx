@@ -13,7 +13,6 @@ import {
   TabletIcon,
 } from "lucide-react";
 import { motion } from "motion/react";
-import { useWatch } from "react-hook-form";
 import type { Route } from "next";
 
 import { registryBlocks } from "@dotui/registry-definition/registry-blocks";
@@ -33,8 +32,8 @@ import { useHorizontalResize } from "@/hooks/use-horizontal-resize";
 import { useMounted } from "@/hooks/use-mounted";
 import { useStyleEditorParams } from "@/modules/style-editor/hooks/use-style-editor-params";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
-import { useStyleEditorForm } from "../context/style-editor-provider";
 import { useEditorStyle } from "../hooks/use-editor-style";
+import { useResolvedModeState } from "../hooks/use-resolved-mode";
 
 export const Preview = () => {
   return (
@@ -158,15 +157,8 @@ export const PreviewRoot = ({ children }: { children: React.ReactNode }) => {
 
 function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
   const { isSuccess } = useEditorStyle();
-  const form = useStyleEditorForm();
   const { activeMode, setActiveMode } = usePreferences();
-  const activeModes = useWatch({
-    control: form.control,
-    name: "theme.colors.activeModes",
-  });
-
-  const supportsLightDark =
-    activeModes.includes("light") && activeModes.includes("dark");
+  const { supportsLightDark } = useResolvedModeState();
 
   const {
     previewWidth,
@@ -237,7 +229,7 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
             </ToggleButton>
           </Skeleton>
         )}
-        <Tooltip content={isMobile ? "Mobile" : "Tablet"} delay={0}>
+        <Tooltip content={isMobile ? "Mobile" : "Tablet"}>
           <Button
             aria-label="Select view"
             variant="quiet"
@@ -249,7 +241,7 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
             {isMobile ? <SmartphoneIcon /> : <TabletIcon />}
           </Button>
         </Tooltip>
-        <Tooltip content="Open in new tab" delay={0}>
+        <Tooltip content="Open in new tab">
           <Button
             aria-label="Open in new tab"
             target="_blank"
@@ -264,7 +256,7 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
             <ExternalLinkIcon />
           </Button>
         </Tooltip>
-        <Tooltip content="Fullscreen" delay={0}>
+        <Tooltip content="Fullscreen">
           <Button
             aria-label="Enter fullscreen"
             variant="quiet"

@@ -95,8 +95,7 @@ export default async function HomePage() {
               <Tooltip
                 key={index}
                 content={label}
-                delay={0}
-                closeDelay={0}
+                close
                 offset={10}
                 placement="top"
               >
