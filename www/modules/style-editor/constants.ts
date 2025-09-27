@@ -1,1 +1,1 @@
-export const ON_CHANGE_DEBOUNCE_MS = 5;
+export const ON_CHANGE_DEBOUNCE_MS = 50;

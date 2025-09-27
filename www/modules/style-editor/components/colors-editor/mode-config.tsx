@@ -4,17 +4,29 @@ import { SelectItem } from "@dotui/ui/components/select";
 import { Skeleton } from "@dotui/ui/components/skeleton";
 
 import { ThemeModeSwitch } from "@/components/ui/theme-mode-switch";
+import { useDraftStyleProducer } from "@/modules/style-editor/atoms/draft-style-atom";
+import { ON_CHANGE_DEBOUNCE_MS } from "@/modules/style-editor/constants";
 import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
 import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
+import { useResolvedModeState } from "@/modules/style-editor/hooks/use-resolved-mode";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
-import { useResolvedModeState } from "../../hooks/use-resolved-mode";
 
 export const ModeConfig = () => {
   const { isPending } = useEditorStyle();
   const form = useStyleEditorForm();
 
+  const updateDraftStyle = useDraftStyleProducer();
+
   return (
-    <form.AppField name="theme.colors.activeModes">
+    <form.AppField
+      name="theme.colors.activeModes"
+      listeners={{
+        onChange: () => {
+          updateDraftStyle();
+        },
+        onChangeDebounceMs: ON_CHANGE_DEBOUNCE_MS,
+      }}
+    >
       {(field) => (
         <Skeleton show={isPending}>
           <field.Select
