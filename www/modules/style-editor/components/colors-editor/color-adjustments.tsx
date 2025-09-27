@@ -2,19 +2,22 @@
 
 import { cn } from "@dotui/ui/lib/utils";
 
+import { useDraftStyleProducer } from "@/modules/style-editor/atoms/draft-style-atom";
+import { ON_CHANGE_DEBOUNCE_MS } from "@/modules/style-editor/constants";
 import {
   useStyleEditorForm,
   useSyncTheme,
 } from "@/modules/style-editor/context/style-editor-provider";
 import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
 import { useResolvedModeState } from "@/modules/style-editor/hooks/use-resolved-mode";
-import { ON_CHANGE_DEBOUNCE_MS } from "@/modules/style-editor/constants";
 
 export const ColorAdjustments = () => {
   const form = useStyleEditorForm();
   const { isPending } = useEditorStyle();
   const { resolvedMode } = useResolvedModeState();
+
   const syncTheme = useSyncTheme();
+  const updateDraftStyle = useDraftStyleProducer();
 
   return (
     <div
@@ -29,6 +32,7 @@ export const ColorAdjustments = () => {
         listeners={{
           onChange: () => {
             syncTheme();
+            updateDraftStyle();
           },
           onChangeDebounceMs: ON_CHANGE_DEBOUNCE_MS,
         }}

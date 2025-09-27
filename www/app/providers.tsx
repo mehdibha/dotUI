@@ -20,9 +20,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
           disableTransitionOnChange
         >
           <NextProvider>
-            <TRPCReactProvider>
-              {children}
-            </TRPCReactProvider>
+            <TRPCReactProvider>{children}</TRPCReactProvider>
           </NextProvider>
         </ThemeProvider>
       </RouterProvider>

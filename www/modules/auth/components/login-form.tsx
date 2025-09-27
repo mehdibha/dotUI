@@ -3,10 +3,10 @@
 import React from "react";
 
 import { Button } from "@dotui/ui/components/button";
+import { Link } from "@dotui/ui/components/link";
 import { toast } from "@dotui/ui/components/toast";
 import { GitHubIcon } from "@dotui/ui/icons";
 
-import { Link } from "@dotui/ui/components/link";
 import { Logo } from "@/components/logo";
 import { authClient } from "@/modules/auth/lib/client";
 

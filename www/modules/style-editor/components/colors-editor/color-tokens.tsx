@@ -1,12 +1,12 @@
 "use client";
 
-import React from "react";
 import { ChevronsUpDownIcon } from "lucide-react";
 
 import { COLOR_TOKENS } from "@dotui/registry-definition/registry-tokens";
 import { SCALE_STEPS } from "@dotui/style-engine/constants";
 import { ColorSwatch } from "@dotui/ui/components/color-swatch";
 import { SelectItem } from "@dotui/ui/components/select";
+import { Skeleton } from "@dotui/ui/components/skeleton";
 import {
   TableBody,
   TableCell,
@@ -25,7 +25,7 @@ import {
   useGeneratedTheme,
   useStyleEditorForm,
 } from "@/modules/style-editor/context/style-editor-provider";
-import { useGeneratedScales } from "@/modules/style-editor/hooks/use-generated-scales";
+import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
 
 export const ColorTokens = ({
   variant = "line",
@@ -37,8 +37,6 @@ export const ColorTokens = ({
   tokenIds: string[];
   hideHeader?: boolean;
 }) => {
-  const form = useStyleEditorForm();
-
   return (
     <TableRoot
       aria-label="Tokens"
@@ -67,7 +65,10 @@ export const ColorTokens = ({
                 )}
               </TableCell>
               <TableCell>
-                <TokenSelect tokenId={tokenId} colorScales={["neutral"]} />
+                <TokenSelect
+                  tokenId={tokenId}
+                  colorScales={tokenDefinition.scales}
+                />
               </TableCell>
             </TableRow>
           );
@@ -79,62 +80,68 @@ export const ColorTokens = ({
 
 const TokenName = ({ tokenId }: { tokenId: string }) => {
   const form = useStyleEditorForm();
+  const { isPending } = useEditorStyle();
 
   return (
-    <div className="bg-muted rounded-full p-1 pl-3">
-      <form.AppField name={`theme.colors.tokens.${tokenId}.name`}>
-        {(field) => (
-          <EditableInput
-            value={field.state.value}
-            onSubmit={(newVal) => field.handleChange(newVal)}
-            className="text-fg-muted !text-sm font-normal [&_[data-slot='button']]:rounded-full"
-          />
-        )}
-      </form.AppField>
-    </div>
+    <form.AppField name={`theme.colors.tokens.${tokenId}.name`}>
+      {(field) => (
+        <Skeleton show={isPending} className="rounded-full">
+          <div className="bg-muted rounded-full p-1 pl-3">
+            <EditableInput
+              value={field.state.value}
+              onSubmit={(newVal) => field.handleChange(newVal as any)}
+              className="text-fg-muted !text-sm font-normal [&_[data-slot='button']]:rounded-full"
+            />
+          </div>
+        </Skeleton>
+      )}
+    </form.AppField>
   );
 };
 
 const TokenSelect = ({
   tokenId,
-  colorScales,
+  colorScales = ["neutral", "accent", "success", "warning", "danger", "info"],
 }: {
   tokenId: string;
-  colorScales: ScaleId[];
+  colorScales?: (ScaleId | "..")[];
 }) => {
   const form = useStyleEditorForm();
   const generatedTheme = useGeneratedTheme();
+  const { isPending } = useEditorStyle();
 
   return (
     <form.AppField name={`theme.colors.tokens.${tokenId}.value`}>
       {(field) => {
-        const [scale, _step] = field.state.value
-          .replace("var(--", "")
-          .replace(")", "")
-          .split("-");
-
-        const colors = generatedTheme.find((s) => s.name === scale);
-
         return (
-          <field.Select
-            aria-label="Select variable value"
-            size="sm"
-            renderValue={({ defaultChildren }) => defaultChildren}
-            suffix={<ChevronsUpDownIcon className="text-fg-muted" />}
-            className="w-40"
-          >
-            {colorScales.flatMap((scale) =>
-              SCALE_STEPS.map((step, i) => (
-                <SelectItem
-                  key={`${scale}-${step}`}
-                  id={`var(--${scale}-${step})`}
-                  prefix={<ColorSwatch color={colors?.values[i]?.value} />}
-                >
-                  {`${scale.charAt(0).toUpperCase() + scale.slice(1)} ${step}`}
-                </SelectItem>
-              )),
-            )}
-          </field.Select>
+          <>
+            <Skeleton show={isPending} className="w-40">
+              <field.Select
+                aria-label="Select variable value"
+                size="sm"
+                renderValue={({ defaultChildren }) => defaultChildren}
+                suffix={<ChevronsUpDownIcon className="text-fg-muted" />}
+                className="w-40"
+              >
+                {colorScales
+                  .filter((scale) => scale !== "..")
+                  .flatMap((scale) => {
+                    const colors = generatedTheme.find((s) => s.name === scale);
+                    return SCALE_STEPS.map((step, i) => (
+                      <SelectItem
+                        key={`${scale}-${step}`}
+                        id={`var(--${scale}-${step})`}
+                        prefix={
+                          <ColorSwatch color={colors?.values[i]?.value} />
+                        }
+                      >
+                        {`${scale.charAt(0).toUpperCase() + scale.slice(1)} ${step}`}
+                      </SelectItem>
+                    ));
+                  })}
+              </field.Select>
+            </Skeleton>
+          </>
         );
       }}
     </form.AppField>

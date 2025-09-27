@@ -1,12 +1,10 @@
 import { cn } from "@dotui/ui/lib/utils";
 
+import { useDraftStyleProducer } from "@/modules/style-editor/atoms/draft-style-atom";
 import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
 import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
 
-const ACCENT_LEVEL_TOKEN_OVERRIDES: Record<
-  0 | 1 | 2 | 3,
-  Record<string, string>
-> = {
+const ACCENT_LEVEL_TOKEN_OVERRIDES: Record<number, Record<string, string>> = {
   0: {
     "color-primary": "var(--neutral-900)",
     "color-primary-hover": "var(--neutral-800)",
@@ -40,15 +38,18 @@ const ACCENT_LEVEL_TOKEN_OVERRIDES: Record<
 export const AccentEmphasisEditor = () => {
   const { isPending } = useEditorStyle();
   const form = useStyleEditorForm();
+  const updateDraftStyle = useDraftStyleProducer();
 
-  const applyAccentLevel = (level: 0 | 1 | 2 | 3) => {
+  const applyAccentLevel = (level: number) => {
     const overrides = ACCENT_LEVEL_TOKEN_OVERRIDES[level];
+
+    if (!overrides) return;
 
     for (const token in overrides) {
       if (!overrides[token]) return;
       form.setFieldValue(
         `theme.colors.tokens.${token}.value`,
-        overrides[token],
+        overrides[token] as any,
       );
     }
   };
@@ -57,8 +58,9 @@ export const AccentEmphasisEditor = () => {
     <form.AppField
       name="theme.colors.accentEmphasisLevel"
       listeners={{
-        onChange: (value) => {
-          applyAccentLevel(value as unknown as 0 | 1 | 2 | 3);
+        onChange: ({ value }) => {
+          applyAccentLevel(value);
+          updateDraftStyle();
         },
       }}
     >

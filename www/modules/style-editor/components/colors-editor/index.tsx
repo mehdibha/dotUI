@@ -10,7 +10,6 @@ import {
   ModeSwitch,
 } from "@/modules/style-editor/components/colors-editor/mode-config";
 import { StyleEditorSection } from "@/modules/style-editor/components/section";
-import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
 import { useResolvedModeState } from "@/modules/style-editor/hooks/use-resolved-mode";
 import { AccentEmphasisEditor } from "./accent-emphasis-editor";
 import { ColorTokens } from "./color-tokens";
@@ -28,7 +27,6 @@ const semanticColors = [
 ] as const;
 
 export function ColorsEditor() {
-  const { isSuccess } = useEditorStyle();
   const { resolvedMode } = useResolvedModeState();
 
   return (
@@ -39,15 +37,6 @@ export function ColorsEditor() {
           <ModeSwitch />
         </div>
       </StyleEditorSection>
-      {/* <Tabs>
-        <TabList className="-mt-4">
-          <Tab>Light</Tab>
-          <Tab>Dark</Tab>
-          <Tab>
-            <PlusCircleIcon className="size-4" />
-          </Tab>
-        </TabList>
-      </Tabs> */}
 
       <StyleEditorSection title="Color adjustments">
         <ColorAdjustments />
@@ -107,10 +96,7 @@ export function ColorsEditor() {
               <ColorTokens
                 tokenIds={Object.entries(COLOR_TOKENS)
                   .filter(([, token]) => token.categories?.includes(category))
-                  .filter(
-                    ([, token]) =>
-                      !token.defaultValue.startsWith("color-fg-on"),
-                  )
+                  .filter(([tokenId]) => !tokenId.startsWith("color-fg-on"))
                   .map(([key]) => key)}
               />
             </div>

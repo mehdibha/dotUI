@@ -10,13 +10,13 @@ import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 import { useResolvedModeState } from "../../hooks/use-resolved-mode";
 
 export const ModeConfig = () => {
-  const { isSuccess } = useEditorStyle();
+  const { isPending } = useEditorStyle();
   const form = useStyleEditorForm();
 
   return (
     <form.AppField name="theme.colors.activeModes">
       {(field) => (
-        <Skeleton show={!isSuccess}>
+        <Skeleton show={isPending}>
           <field.Select
             aria-label="Active modes"
             selectedKey={field.state.value.join("-")}
@@ -45,7 +45,7 @@ export const ModeConfig = () => {
 };
 
 export const ModeSwitch = () => {
-  const { isSuccess } = useEditorStyle();
+  const { isPending } = useEditorStyle();
   const { activeMode, setActiveMode } = usePreferences();
   const { supportsLightDark } = useResolvedModeState();
 
@@ -54,7 +54,7 @@ export const ModeSwitch = () => {
   }
 
   return (
-    <Skeleton show={!isSuccess}>
+    <Skeleton show={isPending}>
       <ThemeModeSwitch
         isSelected={activeMode === "light"}
         onChange={(isSelected) => {

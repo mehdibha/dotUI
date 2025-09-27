@@ -62,4 +62,10 @@ export type MinimizedStyleDefinition = z.infer<
 export type StyleDefinition = z.infer<typeof schemas.styleDefinitionSchema>;
 export type Style = z.infer<typeof schemas.styleSchema>;
 
-export type ScaleId = "neutral" | "accent" | "success" | "warning" | "danger" | "info";
+export type ScaleId =
+  | "neutral"
+  | "accent"
+  | "success"
+  | "warning"
+  | "danger"
+  | "info";

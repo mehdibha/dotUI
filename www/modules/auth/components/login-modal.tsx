@@ -12,10 +12,10 @@ import {
   DialogHeading,
   DialogRoot,
 } from "@dotui/ui/components/dialog";
+import { Link } from "@dotui/ui/components/link";
 import { toast } from "@dotui/ui/components/toast";
 import { GitHubIcon } from "@dotui/ui/icons";
 
-import { Link } from "@dotui/ui/components/link";
 import { authClient } from "../lib/client";
 
 export function LoginModal({ children }: { children: React.ReactNode }) {

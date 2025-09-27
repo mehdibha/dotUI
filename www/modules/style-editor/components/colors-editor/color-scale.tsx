@@ -42,7 +42,7 @@ export function ColorScale({ scaleId }: { scaleId: ScaleId }) {
       <div className="flex flex-1 items-center gap-1">
         {scale.values.map((color, index) => (
           <Tooltip key={index} content={color.name}>
-            <Skeleton show={!isSuccess} className="flex-1 h-8">
+            <Skeleton show={!isSuccess} className="h-8 flex-1">
               <AriaButton
                 className="h-8 flex-1 rounded-sm border"
                 style={{ backgroundColor: color.value }}
