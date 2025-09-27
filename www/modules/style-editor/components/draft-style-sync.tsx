@@ -1,9 +1,8 @@
 "use client";
 
 import React from "react";
-import { useWatch } from "react-hook-form";
+import { useStore } from "@tanstack/react-form";
 
-import { useDebounce } from "@/hooks/use-debounce";
 import { useDraftStyleProducer } from "@/modules/style-editor/atoms/draft-style-atom";
 import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
 import { useStyleEditorParams } from "@/modules/style-editor/hooks/use-style-editor-params";
@@ -14,24 +13,19 @@ export function DraftStyleSync() {
   const { isSuccess } = useEditorStyle();
   const form = useStyleEditorForm();
 
-  const watchedValues = useWatch({
-    control: form.control,
-    name: ["name", "theme", "variants", "icons"],
-  });
-
-  const [name, theme, variants, icons] = useDebounce(watchedValues, 50);
+  const name = useStore(form.store, (state) => state.values.name);
 
   const { updateDraftStyle } = useDraftStyleProducer(slug);
 
   React.useEffect(() => {
     if (isSuccess && name !== "random-fake") {
       updateDraftStyle({
-        theme,
-        variants,
-        icons,
+        theme: form.getFieldValue("theme"),
+        variants: form.getFieldValue("variants"),
+        icons: form.getFieldValue("icons"),
       });
     }
-  }, [name, theme, variants, icons, updateDraftStyle, isSuccess]);
+  }, [form, name, updateDraftStyle, isSuccess]);
 
   return null;
 }

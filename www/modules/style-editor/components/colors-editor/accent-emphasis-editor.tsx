@@ -42,16 +42,15 @@ export const AccentEmphasisEditor = () => {
   const form = useStyleEditorForm();
 
   const applyAccentLevel = (level: 0 | 1 | 2 | 3) => {
-    const tokens = form.getFieldValue("theme.colors.tokens");
-    if (!tokens) return;
+    const overrides = ACCENT_LEVEL_TOKEN_OVERRIDES[level];
 
-    const overrides = ACCENT_LEVEL_TOKEN_OVERRIDES[level] ?? {};
-    const updatedTokens = tokens.map((t) => {
-      const nextValue = overrides[t.name];
-      return nextValue !== undefined ? { ...t, value: nextValue } : t;
-    });
-
-    form.setFieldValue("theme.colors.tokens", updatedTokens, {});
+    for (const token in overrides) {
+      if (!overrides[token]) return;
+      form.setFieldValue(
+        `theme.colors.tokens.${token}.value`,
+        overrides[token],
+      );
+    }
   };
 
   return (
