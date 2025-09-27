@@ -26,120 +26,22 @@ export const Index: Record<
       return { default: mod.default || mod[exportName] };
     }),
   },
-  backlog: {
-    files: ["registry/blocks/tables/backlog/components/backlog.tsx"],
-    component: React.lazy(async () => {
-      const mod = await import(
-        "@dotui/ui/registry/blocks/tables/backlog/components/backlog"
-      );
-      const exportName =
-        Object.keys(mod).find(
-          (key) =>
-            typeof mod[key] === "function" || typeof mod[key] === "object",
-        ) || item.name;
-      return { default: mod.default || mod[exportName] };
-    }),
-  },
-  "invite-members": {
+  cards: {
     files: [
-      "registry/blocks/application/invite-members/components/invite-members.tsx",
+      "registry/blocks/showcase/cards/components/cards.tsx",
+      "registry/blocks/showcase/cards/components/account-menu.tsx",
+      "registry/blocks/showcase/cards/components/backlog.tsx",
+      "registry/blocks/showcase/cards/components/booking.tsx",
+      "registry/blocks/showcase/cards/components/color-editor.tsx",
+      "registry/blocks/showcase/cards/components/filters.tsx",
+      "registry/blocks/showcase/cards/components/invite-members.tsx",
+      "registry/blocks/showcase/cards/components/login-form.tsx",
+      "registry/blocks/showcase/cards/components/notifications.tsx",
+      "registry/blocks/showcase/cards/components/team-name.tsx",
     ],
     component: React.lazy(async () => {
       const mod = await import(
-        "@dotui/ui/registry/blocks/application/invite-members/components/invite-members"
-      );
-      const exportName =
-        Object.keys(mod).find(
-          (key) =>
-            typeof mod[key] === "function" || typeof mod[key] === "object",
-        ) || item.name;
-      return { default: mod.default || mod[exportName] };
-    }),
-  },
-  "team-name": {
-    files: ["registry/blocks/application/team-name/components/team-name.tsx"],
-    component: React.lazy(async () => {
-      const mod = await import(
-        "@dotui/ui/registry/blocks/application/team-name/components/team-name"
-      );
-      const exportName =
-        Object.keys(mod).find(
-          (key) =>
-            typeof mod[key] === "function" || typeof mod[key] === "object",
-        ) || item.name;
-      return { default: mod.default || mod[exportName] };
-    }),
-  },
-  "color-editor": {
-    files: [
-      "registry/blocks/application/color-editor/components/accent-color-editor.tsx",
-    ],
-    component: React.lazy(async () => {
-      const mod = await import(
-        "@dotui/ui/registry/blocks/application/color-editor/components/accent-color-editor"
-      );
-      const exportName =
-        Object.keys(mod).find(
-          (key) =>
-            typeof mod[key] === "function" || typeof mod[key] === "object",
-        ) || item.name;
-      return { default: mod.default || mod[exportName] };
-    }),
-  },
-  "account-menu": {
-    files: [
-      "registry/blocks/application/account-menu/components/account-menu.tsx",
-    ],
-    component: React.lazy(async () => {
-      const mod = await import(
-        "@dotui/ui/registry/blocks/application/account-menu/components/account-menu"
-      );
-      const exportName =
-        Object.keys(mod).find(
-          (key) =>
-            typeof mod[key] === "function" || typeof mod[key] === "object",
-        ) || item.name;
-      return { default: mod.default || mod[exportName] };
-    }),
-  },
-  notifications: {
-    files: [
-      "registry/blocks/application/notifications/components/notifications.tsx",
-    ],
-    component: React.lazy(async () => {
-      const mod = await import(
-        "@dotui/ui/registry/blocks/application/notifications/components/notifications"
-      );
-      const exportName =
-        Object.keys(mod).find(
-          (key) =>
-            typeof mod[key] === "function" || typeof mod[key] === "object",
-        ) || item.name;
-      return { default: mod.default || mod[exportName] };
-    }),
-  },
-  booking: {
-    files: ["registry/blocks/calendars/booking/components/booking.tsx"],
-    component: React.lazy(async () => {
-      const mod = await import(
-        "@dotui/ui/registry/blocks/calendars/booking/components/booking"
-      );
-      const exportName =
-        Object.keys(mod).find(
-          (key) =>
-            typeof mod[key] === "function" || typeof mod[key] === "object",
-        ) || item.name;
-      return { default: mod.default || mod[exportName] };
-    }),
-  },
-  "blocks-showcase": {
-    files: [
-      "registry/blocks/showcase/blocks-showcase/page.tsx",
-      "registry/blocks/showcase/blocks-showcase/components/blocks-showcase.tsx",
-    ],
-    component: React.lazy(async () => {
-      const mod = await import(
-        "@dotui/ui/registry/blocks/showcase/blocks-showcase/page"
+        "@dotui/ui/registry/blocks/showcase/cards/components/cards"
       );
       const exportName =
         Object.keys(mod).find(

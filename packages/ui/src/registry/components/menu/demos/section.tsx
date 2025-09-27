@@ -10,7 +10,7 @@ import { MenuIcon } from "@dotui/ui/icons";
 export default function Demo() {
   return (
     <MenuRoot>
-      <Button variant="outline" shape="square">
+      <Button variant="default" shape="square">
         <MenuIcon />
       </Button>
       <Menu>

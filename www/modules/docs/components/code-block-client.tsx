@@ -3,7 +3,7 @@
 import React from "react";
 import { CheckIcon, CopyIcon } from "lucide-react";
 import { tv } from "tailwind-variants";
-import type { ScrollAreaProps } from "@/components/scroll-area";
+import type { ScrollAreaProps } from "@/components/ui/scroll-area";
 import type { Key } from "react-aria-components";
 
 import { Button } from "@dotui/ui/components/button";
@@ -12,7 +12,7 @@ import { cn } from "@dotui/ui/lib/utils";
 import type { ButtonProps } from "@dotui/ui/components/button";
 import type { TabsProps } from "@dotui/ui/components/tabs";
 
-import { ScrollArea } from "@/components/scroll-area";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const codeBlockStyles = tv({
   slots: {
@@ -76,7 +76,7 @@ const CodeBlockClient = ({
         <div className="flex items-center gap-2">
           {(preview || expandable) && (
             <Button
-              variant="outline"
+              variant="default"
               size="sm"
               className="bg-inverse/5 h-7 text-xs"
               onPress={handleExpand}
@@ -148,7 +148,7 @@ const CodeBlockCopyButton = ({ code, ...props }: CodeBlockCopyButtonProps) => {
     <Button
       size="sm"
       shape="square"
-      variant="outline"
+      variant="default"
       onPress={handleCopy}
       className="bg-inverse/5 size-7 [&_svg]:size-3"
       {...props}

@@ -18,11 +18,13 @@ import { Description, Label } from "@dotui/ui/components/field";
 import { focusRing } from "@dotui/ui/lib/focus-styles";
 import { createScopedContext } from "@dotui/ui/lib/utils";
 
+// TODO: refactor to use grid in root
+
 const sliderStyles = tv({
   slots: {
-    root: "group flex flex-col gap-2",
+    root: "group flex flex-col gap-1",
     track:
-      "bg-neutral disabled:bg-disabled relative grow cursor-pointer rounded-full disabled:cursor-default",
+      "bg-neutral disabled:bg-disabled relative my-1 grow cursor-pointer rounded-full disabled:cursor-default",
     filler:
       "group-disabled:bg-disabled pointer-events-none absolute rounded-full",
     thumb: [
@@ -144,6 +146,7 @@ const Slider = ({
           </SliderValueLabel>
         )}
       </div>
+      {description && <Description>{description}</Description>}
       <SliderTrack>
         {({ state }) => (
           <>
@@ -154,7 +157,6 @@ const Slider = ({
           </>
         )}
       </SliderTrack>
-      {description && <Description>{description}</Description>}
     </SliderRoot>
   );
 };
@@ -172,6 +174,7 @@ const SliderRoot = ({
   const descriptionId = useSlotId();
   return (
     <AriaSlider
+      data-slot="slider"
       aria-describedby={descriptionId}
       className={composeRenderProps(className, (className, { orientation }) =>
         root({ orientation, size, className }),
@@ -203,6 +206,7 @@ const SliderTrack = ({ className, ...props }: SliderTrackProps) => {
   const { orientation, size } = useSliderContext("SliderTrack");
   return (
     <AriaSliderTrack
+      data-slot="slider-track"
       className={composeRenderProps(className, (className) =>
         track({ orientation, size, className }),
       )}
@@ -226,6 +230,7 @@ const SliderFiller = ({ className, style, ...props }: SliderFillerProps) => {
 
   return (
     <div
+      data-slot="slider-filler"
       className={filler({ variant, orientation, size, className })}
       style={{ ...style, ...dimensionStyles }}
       {...props}
@@ -239,6 +244,7 @@ const SliderThumb = ({ className, ...props }: SliderThumbProps) => {
   const { orientation, size } = useSliderContext("SliderThumb");
   return (
     <AriaSliderThumb
+      data-slot="slider-thumb"
       className={composeRenderProps(className, (className) =>
         thumb({ orientation, size, className }),
       )}
@@ -256,6 +262,7 @@ const SliderValueLabel = ({
 }: SliderValueLabelProps) => {
   return (
     <AriaSliderOutput
+      data-slot="slider-value-label"
       className={composeRenderProps(className, (className) =>
         valueLabel({ className }),
       )}

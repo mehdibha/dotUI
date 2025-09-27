@@ -12,9 +12,10 @@ export default function Demo() {
   const inputRef = React.useRef<HTMLInputElement>(null);
   return (
     <div className="space-y-2">
-      <TextField prefix={<span>https://</span>} />
-      <TextField suffix={<span>@dotui.org</span>} />
+      <TextField aria-label="Website" prefix={<span>https://</span>} />
+      <TextField aria-label="Email" suffix={<span>@dotui.org</span>} />
       <TextField
+        aria-label="Textfield with clear input"
         ref={inputRef}
         value={inputValue}
         onChange={setInputValue}

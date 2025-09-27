@@ -13,7 +13,6 @@ import type { RouterOutputs } from "@dotui/api";
 import { StyleCard } from "./style-card";
 
 export function StylesList({
-  defaultView = "card",
   styles,
   skeleton = false,
   search = false,
@@ -22,7 +21,6 @@ export function StylesList({
   styles?: RouterOutputs["style"]["getFeatured"];
   skeleton?: boolean;
   search?: boolean;
-  defaultView?: "ui-kit" | "card";
 }) {
   const [query, setQuery] = React.useState("");
 
@@ -70,10 +68,11 @@ export function StylesList({
   });
 
   return (
-    <div className={cn("", props.className)}>
+    <div className={cn("@container/styles-list", props.className)}>
       <div className="flex items-center justify-end gap-4">
         {search && (
           <SearchField
+            aria-label="Search styles"
             placeholder="Search styles..."
             className="flex-1"
             onChange={(value) => setQuery(value?.toString() ?? "")}
@@ -83,9 +82,8 @@ export function StylesList({
       </div>
       <div
         className={cn(
-          "grid",
+          "@3xl/styles-list:grid-cols-2 @5xl/styles-list:grid-cols-3 grid grid-cols-1 gap-6",
           search && "mt-4",
-          "grid-cols-3 gap-6",
           props.className,
         )}
       >
@@ -95,7 +93,7 @@ export function StylesList({
           </div>
         )}
         {filtered.map((style) => (
-          <StyleCard key={style.name} style={style} variant="card" />
+          <StyleCard key={style.name} style={style} />
         ))}
       </div>
     </div>

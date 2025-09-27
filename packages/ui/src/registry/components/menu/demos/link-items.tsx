@@ -5,7 +5,7 @@ import { DiscordIcon, GitHubIcon, TwitterIcon } from "@dotui/ui/icons";
 export default function Demo() {
   return (
     <MenuRoot>
-      <Button variant="outline" size="sm">
+      <Button variant="default" size="sm">
         Social
       </Button>
       <Menu>

@@ -3,6 +3,7 @@ import type { Metadata, Route } from "next";
 import { Alert } from "@dotui/ui/components/alert";
 import { Avatar } from "@dotui/ui/components/avatar";
 import { Button } from "@dotui/ui/components/button";
+import { Link } from "@dotui/ui/components/link";
 import { Tooltip } from "@dotui/ui/components/tooltip";
 import {
   AdobeIcon,
@@ -13,8 +14,7 @@ import {
   TypescriptIcon,
 } from "@dotui/ui/icons";
 
-import { Announcement } from "@/components/announcement";
-import { Link } from "@/components/link";
+import { Announcement } from "@/components/marketing/announcement";
 import { StylesShowcase } from "@/components/styles-showcase";
 import { siteConfig } from "@/config";
 import { getGitHubContributors } from "@/lib/github";
@@ -92,14 +92,7 @@ export default async function HomePage() {
                 href: "https://tailwindcss.com",
               },
             ].map(({ icon, label, href }, index) => (
-              <Tooltip
-                key={index}
-                content={label}
-                delay={0}
-                closeDelay={0}
-                offset={10}
-                placement="top"
-              >
+              <Tooltip key={index} content={label} offset={10} placement="top">
                 <Link
                   target="_blank"
                   className="grayscale-80 flex items-center justify-center opacity-60 transition-opacity hover:opacity-100 hover:grayscale-0"

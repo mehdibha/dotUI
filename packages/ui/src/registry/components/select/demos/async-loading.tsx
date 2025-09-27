@@ -21,7 +21,7 @@ export default function Demo() {
     },
   });
   return (
-    <Select isLoading={list.isLoading} items={list.items}>
+    <Select aria-label="Pokemon" isLoading={list.isLoading} items={list.items}>
       {(item) => <SelectItem id={item.name}>{item.name}</SelectItem>}
     </Select>
   );

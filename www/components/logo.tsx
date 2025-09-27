@@ -1,7 +1,8 @@
+import Link from "next/link";
+
 import { Badge } from "@dotui/ui/components/badge";
 import { cn } from "@dotui/ui/lib/utils";
 
-import { Link } from "@/components/link";
 import { siteConfig } from "@/config";
 
 export const Logo = ({
@@ -13,18 +14,8 @@ export const Logo = ({
   className?: string;
   type?: "link" | "span";
 }) => {
-  const Elem = type === "link" ? Link : "span";
-
-  return (
-    <Elem
-      {...(type === "link" ? { href: "/", variant: "unstyled" } : {})}
-      className={cn(
-        "flex items-center gap-2",
-        type === "link" &&
-          "opacity-100 transition-opacity duration-150 ease-out hover:opacity-80",
-        className,
-      )}
-    >
+  const content = (
+    <>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 100 100"
@@ -52,10 +43,28 @@ export const Logo = ({
             {siteConfig.name}
           </div>
           <Badge size="sm" className="mt-px">
-            Preview
+            beta
           </Badge>
         </div>
       )}
-    </Elem>
+    </>
+  );
+
+  if (type === "link") {
+    return (
+      <Link
+        href="/"
+        className={cn(
+          "flex items-center gap-2 opacity-100 transition-opacity duration-150 ease-out hover:opacity-80",
+          className,
+        )}
+      >
+        {content}
+      </Link>
+    );
+  }
+
+  return (
+    <span className={cn("flex items-center gap-2", className)}>{content}</span>
   );
 };

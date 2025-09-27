@@ -11,7 +11,7 @@ export const mockMinimizedStyle: MinimizedStyleDefinition = {
     strokeWidth: 1.5,
   },
   variants: {
-    buttons: "brutalist",
+    buttons: "shine",
     alert: "notch",
   },
 };
@@ -24,7 +24,7 @@ export const mockStyleDefinition: StyleDefinition = {
   },
   variants: {
     alert: "notch",
-    buttons: "brutalist",
+    buttons: "shine",
     loader: "ring",
     "focus-style": "basic",
     inputs: "basic",

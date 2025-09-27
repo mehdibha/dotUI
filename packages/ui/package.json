@@ -35,6 +35,7 @@
     "@react-aria/utils": "catalog:ui",
     "@react-stately/utils": "catalog:ui",
     "@remixicon/react": "catalog:ui",
+    "@tanstack/react-form": "catalog:ui",
     "clsx": "catalog:ui",
     "lucide-react": "catalog:ui",
     "motion": "catalog:ui",

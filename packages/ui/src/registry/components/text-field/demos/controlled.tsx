@@ -9,6 +9,7 @@ export default function Demo() {
   return (
     <div className="flex flex-col items-center gap-4">
       <TextField
+        aria-label="Controlled text field"
         value={inputValue}
         onChange={(text) => {
           setInputValue(text);

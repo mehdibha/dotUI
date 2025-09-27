@@ -50,7 +50,7 @@ const calendarStyles = tv({
 const calendarCellStyles = tv({
   slots: {
     cellRoot:
-      "outside-month:hidden selection-start:rounded-l-md selection-end:rounded-r-md outline-none",
+      "outside-month:hidden selection-start:rounded-l-md selection-end:rounded-r-md flex items-center justify-center outline-none",
     cell: [
       focusRing(),
       "hover:bg-inverse/10 disabled:text-fg-disabled unavailable:cursor-default unavailable:text-fg-disabled unavailable:not-data-disabled:line-through hover:unavailable:bg-transparent pressed:bg-inverse/20 my-1 flex size-8 cursor-pointer items-center justify-center rounded-md text-sm transition-colors read-only:cursor-default hover:read-only:bg-transparent disabled:cursor-default disabled:bg-transparent",
@@ -130,11 +130,11 @@ const Calendar = <T extends DateValue>({
       {({ isInvalid }) => (
         <>
           <CalendarHeader>
-            <Button slot="previous" variant="outline" shape="square" size="sm">
+            <Button slot="previous" variant="default" shape="square" size="sm">
               <ChevronLeftIcon />
             </Button>
             <AriaHeading className="text-sm font-medium" />
-            <Button slot="next" variant="outline" shape="square" size="sm">
+            <Button slot="next" variant="default" shape="square" size="sm">
               <ChevronRightIcon />
             </Button>
           </CalendarHeader>
@@ -180,11 +180,11 @@ const RangeCalendar = <T extends DateValue>({
       {({ isInvalid }) => (
         <>
           <CalendarHeader>
-            <Button slot="previous" variant="outline" shape="square" size="sm">
+            <Button slot="previous" variant="default" shape="square" size="sm">
               <ChevronLeftIcon />
             </Button>
             <AriaHeading className="text-sm font-medium" />
-            <Button slot="next" variant="outline" shape="square" size="sm">
+            <Button slot="next" variant="default" shape="square" size="sm">
               <ChevronRightIcon />
             </Button>
           </CalendarHeader>

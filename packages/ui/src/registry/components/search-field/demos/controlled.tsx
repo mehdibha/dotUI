@@ -10,7 +10,11 @@ export default function Demo() {
   );
   return (
     <div className="flex flex-col items-center gap-4">
-      <SearchField value={inputValue} onChange={setInputValue} />
+      <SearchField
+        aria-label="Search"
+        value={inputValue}
+        onChange={setInputValue}
+      />
       <p className="text-fg-muted text-sm">
         mirrored search text: {inputValue}
       </p>

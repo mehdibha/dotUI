@@ -1499,12 +1499,6 @@ export const Index: Record<
       () => import("@dotui/ui/registry/components/list-box/demos/composition"),
     ),
   },
-  "list-box/demos/contact-list": {
-    files: ["registry/components/list-box/demos/contact-list.tsx"],
-    component: React.lazy(
-      () => import("@dotui/ui/registry/components/list-box/demos/contact-list"),
-    ),
-  },
   "list-box/demos/controlled": {
     files: ["registry/components/list-box/demos/controlled.tsx"],
     component: React.lazy(
@@ -1534,12 +1528,6 @@ export const Index: Record<
     files: ["registry/components/list-box/demos/horizontal.tsx"],
     component: React.lazy(
       () => import("@dotui/ui/registry/components/list-box/demos/horizontal"),
-    ),
-  },
-  "list-box/demos/image-grid": {
-    files: ["registry/components/list-box/demos/image-grid.tsx"],
-    component: React.lazy(
-      () => import("@dotui/ui/registry/components/list-box/demos/image-grid"),
     ),
   },
   "list-box/demos/item-variant": {

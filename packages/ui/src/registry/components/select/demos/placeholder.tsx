@@ -4,7 +4,7 @@ import { Select, SelectItem } from "@dotui/ui/components/select";
 
 export default function Demo() {
   return (
-    <Select placeholder="Select a provider">
+    <Select aria-label="Provider" placeholder="Select a provider">
       <SelectItem>Perplexity</SelectItem>
       <SelectItem>Replicate</SelectItem>
       <SelectItem>Together AI</SelectItem>

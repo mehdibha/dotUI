@@ -24,6 +24,7 @@ import type {
   MinimizedThemeDefinition,
   MinimizedVariantsDefinition,
   ModeDefinition,
+  ScaleId,
   StyleDefinition,
   ThemeDefinition,
   VariantsDefinition,
@@ -57,13 +58,11 @@ const restoreModeDefinitionDefaults = (
   if (minimizedMode.scales) {
     Object.entries(minimizedMode.scales).forEach(
       ([scaleId, minimizedScale]) => {
-        const defaultScale = defaultMode.scales[scaleId];
-        if (defaultScale) {
-          scales[scaleId as keyof typeof scales] = restoreColorScaleDefaults(
-            minimizedScale,
-            defaultScale,
-          );
-        }
+        const defaultScale = defaultMode.scales[scaleId as ScaleId];
+        scales[scaleId as keyof typeof scales] = restoreColorScaleDefaults(
+          minimizedScale,
+          defaultScale,
+        );
       },
     );
   }
@@ -79,22 +78,18 @@ const restoreModeDefinitionDefaults = (
 const restoreTokensDefaults = (
   minimizedTokens: MinimizedColorTokens,
 ): ColorTokens => {
-  const defaultTokens: ColorTokens = COLOR_TOKENS.map((token) => ({
-    id: token.name,
-    name: token.name,
-    value: token.defaultValue,
-  }));
+  const defaultTokens: ColorTokens = Object.fromEntries(
+    Object.entries(COLOR_TOKENS).map(([key, value]) => [
+      key,
+      { name: key, value: value.defaultValue },
+    ]),
+  );
 
   if (!minimizedTokens) {
     return defaultTokens;
   }
 
-  const existingTokenIds = new Set(minimizedTokens.map((token) => token.id));
-  const missingTokens = defaultTokens.filter(
-    (defaultToken) => !existingTokenIds.has(defaultToken.id),
-  );
-
-  return [...minimizedTokens, ...missingTokens];
+  return { ...defaultTokens, ...minimizedTokens };
 };
 
 const restoreThemeDefinitionDefaults = (
@@ -113,7 +108,7 @@ const restoreThemeDefinitionDefaults = (
           false,
         ),
       },
-      tokens: restoreTokensDefaults(minimizedTheme.colors.tokens ?? []),
+      tokens: restoreTokensDefaults(minimizedTheme.colors.tokens ?? {}),
       accentEmphasisLevel:
         minimizedTheme.colors.accentEmphasisLevel ??
         DEFAULT_ACCENT_EMPHASIS_LEVEL,

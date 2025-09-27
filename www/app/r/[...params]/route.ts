@@ -68,7 +68,7 @@ export async function GET(
       registryBasePath,
       baseUrl:
         env.NODE_ENV === "development"
-          ? "http://localhost:3000/r"
+          ? "http://localhost:4444/r"
           : "https://dotui.org/r",
     });
 

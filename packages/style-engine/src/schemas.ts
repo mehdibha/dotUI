@@ -33,25 +33,22 @@ export const modeDefinitionSchema = z.object({
   lightness: z.number().min(0).max(100),
   saturation: z.number().min(0).max(100),
   contrast: z.number().min(0).max(500),
-  scales: z
-    .object({
-      neutral: colorScaleSchema,
-      accent: colorScaleSchema,
-      success: colorScaleSchema,
-      warning: colorScaleSchema,
-      danger: colorScaleSchema,
-      info: colorScaleSchema,
-    })
-    .and(z.record(z.string(), colorScaleSchema)),
+  scales: z.object({
+    neutral: colorScaleSchema,
+    accent: colorScaleSchema,
+    success: colorScaleSchema,
+    warning: colorScaleSchema,
+    danger: colorScaleSchema,
+    info: colorScaleSchema,
+  }),
 });
 
 export const colorTokenSchema = z.object({
-  id: z.string(),
   name: z.string(),
   value: z.string(),
 });
 
-export const colorTokensSchema = z.array(colorTokenSchema);
+export const colorTokensSchema = z.record(z.string(), colorTokenSchema);
 
 // layout
 export const radiusSchema = z.number().min(0).max(2);
@@ -115,7 +112,7 @@ export const themeDefinitionSchema = z.object({
 // Variants
 export const variantsDefinitionSchema = z.object({
   alert: z.enum(["basic", "notch", "notch-2"]),
-  buttons: z.enum(["basic", "brutalist", "outline", "ripple"]),
+  buttons: z.enum(["basic", "shine", "outline", "ripple"]),
   loader: z.enum(["ring"]),
   "focus-style": z.enum(["basic"]),
   inputs: z.enum(["basic"]),
@@ -231,7 +228,7 @@ export const variantsSchema = z.object({
   avatar: z.enum(["basic"]),
   badge: z.enum(["basic"]),
   breadcrumbs: z.enum(["basic"]),
-  button: z.enum(["basic", "outline", "brutalist", "ripple"]),
+  button: z.enum(["basic", "shine", "outline", "ripple"]),
   "button-group": z.enum(["basic"]),
   calendar: z.enum(["basic", "cal"]),
   card: z.enum(["basic"]),

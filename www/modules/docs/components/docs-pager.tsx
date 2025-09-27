@@ -22,11 +22,7 @@ export const DocsPager = ({
   return (
     <div className="flex items-center justify-between gap-2">
       {previous ? (
-        <Tooltip
-          content={previous.name}
-          isDisabled={variant === "label"}
-          delay={0}
-        >
+        <Tooltip content={previous.name} isDisabled={variant === "label"}>
           <Button
             href={previous.url as Route}
             aria-label={
@@ -44,7 +40,7 @@ export const DocsPager = ({
         <div />
       )}
       {next ? (
-        <Tooltip content={next.name} isDisabled={variant === "label"} delay={0}>
+        <Tooltip content={next.name} isDisabled={variant === "label"}>
           <Button
             href={next.url as Route}
             aria-label={variant === "tooltip" ? `Go to next page` : undefined}

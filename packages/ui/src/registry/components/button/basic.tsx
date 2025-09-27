@@ -19,18 +19,15 @@ import { createOptionalScopedContext } from "@dotui/ui/lib/utils";
 
 const buttonStyles = tv({
   extend: focusRing,
-  base: "disabled:bg-disabled disabled:text-fg-disabled pending:cursor-default pending:border pending:border-border-disabled pending:bg-disabled pending:text-fg-disabled pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0 relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium leading-normal transition-all disabled:cursor-default",
+  base: "disabled:border-border-disabled disabled:bg-disabled disabled:text-fg-disabled pending:cursor-default pending:border pending:border-border-disabled pending:bg-disabled pending:text-fg-disabled pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0 relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium leading-normal transition-all disabled:cursor-default disabled:border",
   variants: {
     variant: {
       default:
-        "bg-neutral text-fg-on-neutral hover:bg-neutral-hover pressed:bg-neutral-active",
+        "bg-neutral text-fg-on-neutral hover:border-border-hover hover:bg-neutral-hover/50 border",
       primary:
-        "bg-primary text-fg-on-primary hover:bg-primary-hover pressed:bg-primary-active",
+        "bg-primary text-fg-on-primary hover:bg-primary-hover [--color-disabled:var(--neutral-500)] [--color-fg-disabled:var(--neutral-300)] disabled:border-0",
       quiet: "text-fg hover:bg-inverse/10 pressed:bg-inverse/20 bg-transparent",
-      outline:
-        "border-border-field text-fg hover:bg-inverse/10 disabled:border-border-disabled pressed:bg-inverse/15 border disabled:bg-transparent",
-      accent:
-        "bg-accent text-fg-on-accent hover:bg-accent-hover pressed:bg-accent-active",
+      link: "text-fg underline-offset-4 hover:underline",
       success:
         "bg-success text-fg-on-success hover:bg-success-hover pressed:bg-success-active",
       warning:
@@ -77,7 +74,7 @@ const [ButtonProvider, useButtonContext] =
   createOptionalScopedContext<VariantProps<typeof buttonStyles>>("Button");
 
 type ButtonProps = Omit<AriaButtonProps, "className"> &
-  Omit<AriaLinkProps, "className" | "children" | "style"> &
+  Omit<AriaLinkProps, "className" | "children" | "style" | "onAnimationEnd"> &
   VariantProps<typeof buttonStyles> & {
     className?: string;
     prefix?: React.ReactNode;

@@ -13,6 +13,7 @@ interface LoaderProps extends ProgressBarProps {
 function Loader({ size = 20, className, ...props }: LoaderProps) {
   return (
     <AriaProgressBar
+      aria-label="loading..."
       className={cn("relative items-center justify-center", className)}
       {...props}
       isIndeterminate

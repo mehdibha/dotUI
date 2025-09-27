@@ -5,6 +5,9 @@ import { atomWithStorage } from "jotai/utils";
 
 import type { StyleDefinition } from "@dotui/style-engine/types";
 
+import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
+import { useStyleEditorParams } from "@/modules/style-editor/hooks/use-style-editor-params";
+
 type DraftStyleState = Record<string, StyleDefinition>;
 
 const draftStyleAtom = withImmer(
@@ -40,8 +43,12 @@ export const useDraftStyle = (styleSlug: string) => {
   };
 };
 
-export const useDraftStyleProducer = (styleSlug: string) => {
-  const { updateDraftStyle, clearDraftStyle } = useDraftStyle(styleSlug);
+export const useDraftStyleProducer = (styleSlug?: string) => {
+  const { slug } = useStyleEditorParams();
+  const form = useStyleEditorForm();
+  const { updateDraftStyle, clearDraftStyle } = useDraftStyle(
+    styleSlug ?? slug,
+  );
 
   React.useEffect(() => {
     return () => {
@@ -49,7 +56,12 @@ export const useDraftStyleProducer = (styleSlug: string) => {
     };
   }, [clearDraftStyle]);
 
-  return { updateDraftStyle };
+  return () =>
+    updateDraftStyle({
+      theme: form.getFieldValue("theme"),
+      variants: form.getFieldValue("variants"),
+      icons: form.getFieldValue("icons"),
+    });
 };
 
 export const useDraftStyleConsumer = (styleSlug: string) => {

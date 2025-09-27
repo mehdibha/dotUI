@@ -9,17 +9,14 @@ import type { CssColor } from "@adobe/leonardo-contrast-colors";
 
 import { RADIUS_TOKENS } from "@dotui/registry-definition/registry-tokens";
 
-import { SCALE_NUMBERRS } from "../constants";
-import type { ColorTokens, ModeDefinition, Radius, Theme } from "../types";
-
-export interface ColorScale {
-  name: string;
-  values: {
-    name: string;
-    contrast: number;
-    value: string;
-  }[];
-}
+import { SCALE_STEPS } from "../constants";
+import type {
+  ColorScale,
+  ColorTokens,
+  ModeDefinition,
+  Radius,
+  Theme,
+} from "../types";
 
 export const createRatiosObject = (
   scaleId: string,
@@ -27,7 +24,7 @@ export const createRatiosObject = (
 ): Record<string, number> => {
   return ratios.reduce(
     (acc, ratio, index) => {
-      const scaleName = SCALE_NUMBERRS[index] ?? (index + 1) * 100;
+      const scaleName = SCALE_STEPS[index] ?? (index + 1) * 100;
       acc[`${scaleId}-${scaleName}`] = ratio;
       return acc;
     },
@@ -62,6 +59,49 @@ export const createColorScales = (modeDefinition: ModeDefinition) => {
     lightness: modeDefinition.lightness,
     saturation: modeDefinition.saturation,
     contrast: modeDefinition.contrast / 100,
+    output: "HEX",
+  });
+
+  const [_, ...scales] = generatedTheme.contrastColors;
+
+  return scales;
+};
+
+export const createColorScalesV2 = ({
+  lightness,
+  saturation,
+  contrast,
+  neutralScale,
+  scales: _scales,
+}: {
+  lightness: number;
+  saturation: number;
+  contrast: number;
+  neutralScale: ColorScale;
+  scales: ColorScale[];
+}) => {
+  const neutral = new LeonardoBgColor({
+    name: "neutral",
+    colorKeys: neutralScale.colorKeys.map((color) => color.color) as CssColor[],
+    ratios: createRatiosObject("neutral", neutralScale.ratios),
+  });
+
+  const colors = _scales.map(
+    (scale) =>
+      new LeonardoColor({
+        name: scale.name,
+        colorKeys: scale.colorKeys.map((color) => color.color) as CssColor[],
+        ratios: createRatiosObject(scale.name, scale.ratios),
+        smooth: scale.smooth,
+      }),
+  );
+
+  const generatedTheme = new LeonardoTheme({
+    colors,
+    backgroundColor: neutral,
+    lightness: lightness,
+    saturation: saturation,
+    contrast: contrast / 100,
     output: "HEX",
   });
 
@@ -122,20 +162,21 @@ export const createModeCssVars = (
 export const createColorThemeVars = (
   tokensDefinition: ColorTokens,
 ): Record<string, string> => {
-  const cssThemeVars = tokensDefinition.reduce(
-    (acc, token) => {
-      acc[token.name] = token.value;
+  const cssThemeVars = Object.entries(tokensDefinition).reduce(
+    (acc, [key, value]) => {
+      acc[key] = value.value;
       return acc;
     },
     {} as Record<string, string>,
   );
+
   return cssThemeVars;
 };
 
 export const createRadiusVars = (radius: Radius): Theme => {
-  const themeCssVars = RADIUS_TOKENS.reduce(
-    (acc, token) => {
-      acc[token.name] = token.defaultValue;
+  const themeCssVars = Object.entries(RADIUS_TOKENS).reduce(
+    (acc, [key, value]) => {
+      acc[key] = value.defaultValue;
       return acc;
     },
     {} as Record<string, string>,

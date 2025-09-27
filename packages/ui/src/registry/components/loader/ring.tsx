@@ -1,28 +1,74 @@
 "use client";
 
-import { ProgressBar as AriaProgressBar } from "react-aria-components";
+import {
+  ProgressBar as AriaProgressBar,
+  composeRenderProps,
+} from "react-aria-components";
 import type { ProgressBarProps } from "react-aria-components";
+
+import { cn } from "@dotui/ui/lib/utils";
 
 interface LoaderProps extends ProgressBarProps {
   size?: number;
+  stroke?: number;
+  speed?: number;
+  strokeLength?: number;
 }
 
-function Loader({ size = 20, ...props }: LoaderProps) {
+function Loader({
+  className,
+  style,
+  size = 20,
+  stroke = 2,
+  strokeLength = 0.25,
+  speed = 0.8,
+  ...props
+}: LoaderProps) {
+  const centerPoint = size / 2;
+  const radius = Math.max(0, size / 2 - stroke / 2);
+
   return (
-    <AriaProgressBar {...props} isIndeterminate>
+    <AriaProgressBar
+      data-slot="loader"
+      style={composeRenderProps(style, (style) => ({
+        ...style,
+        "--loader-size": `${size}px`,
+        "--loader-speed": `${speed}s`,
+        "--loader-stroke": "2",
+        "--loader-dash": String(parseFloat(strokeLength + "") * 100),
+        "--loader-gap": String(100 - parseFloat(strokeLength + "") * 100),
+      }))}
+      className={cn(
+        "inline-flex size-[var(--loader-size)] shrink-0 items-center justify-center",
+        className,
+      )}
+      aria-label="loading..."
+      {...props}
+      isIndeterminate
+    >
       <svg
-        width={size}
+        className="size-[var(--loader-size)] origin-center animate-[spin_var(--loader-speed)_linear_infinite] overflow-visible will-change-transform"
+        viewBox={`${centerPoint} ${centerPoint} ${size} ${size}`}
         height={size}
-        viewBox="0 0 24 24"
-        className="block animate-spin"
+        width={size}
       >
-        <path
-          className="fill-current opacity-25"
-          d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z"
+        <circle
+          className="stroke-primary-muted transition-[stroke] duration-500 ease-out"
+          cx={size}
+          cy={size}
+          r={radius}
+          pathLength="100"
+          strokeWidth={`${stroke}px`}
+          fill="none"
         />
-        <path
-          className="fill-current"
-          d="M10.14,1.16a11,11,0,0,0-9,8.92A1.59,1.59,0,0,0,2.46,12,1.52,1.52,0,0,0,4.11,10.7a8,8,0,0,1,6.66-6.61A1.42,1.42,0,0,0,12,2.69h0A1.57,1.57,0,0,0,10.14,1.16Z"
+        <circle
+          className="stroke-primary fill-none transition-[stroke] duration-500 ease-out [stroke-dasharray:var(--loader-dash),_var(--loader-gap)] [stroke-dashoffset:0] [stroke-linecap:round]"
+          cx={size}
+          cy={size}
+          r={radius}
+          pathLength="100"
+          strokeWidth={`${stroke}px`}
+          fill="none"
         />
       </svg>
     </AriaProgressBar>
