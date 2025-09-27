@@ -162,20 +162,21 @@ export const createModeCssVars = (
 export const createColorThemeVars = (
   tokensDefinition: ColorTokens,
 ): Record<string, string> => {
-  const cssThemeVars = tokensDefinition.reduce(
-    (acc, token) => {
-      acc[token.name] = token.value;
+  const cssThemeVars = Object.entries(tokensDefinition).reduce(
+    (acc, [key, value]) => {
+      acc[key] = value.value;
       return acc;
     },
     {} as Record<string, string>,
   );
+
   return cssThemeVars;
 };
 
 export const createRadiusVars = (radius: Radius): Theme => {
-  const themeCssVars = RADIUS_TOKENS.reduce(
-    (acc, token) => {
-      acc[token.name] = token.defaultValue;
+  const themeCssVars = Object.entries(RADIUS_TOKENS).reduce(
+    (acc, [key, value]) => {
+      acc[key] = value.defaultValue;
       return acc;
     },
     {} as Record<string, string>,

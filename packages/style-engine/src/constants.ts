@@ -248,11 +248,12 @@ export const DEFAULT_DARK_MODE: ModeDefinition = {
   },
 };
 
-export const DEFAULT_TOKENS: ColorTokens = COLOR_TOKENS.map((token) => ({
-  id: token.name,
-  name: token.name,
-  value: token.defaultValue,
-}));
+export const DEFAULT_TOKENS: ColorTokens =  Object.fromEntries(
+  Object.entries(COLOR_TOKENS).map(([key, value]) => [key, {
+    name: key,
+    value: value.defaultValue,
+  }])
+)
 
 export const DEFAULT_THEME: ThemeDefinition = {
   colors: {

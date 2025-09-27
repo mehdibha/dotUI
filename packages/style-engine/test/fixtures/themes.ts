@@ -141,20 +141,12 @@ export const mockThemeDefinition: ThemeDefinition = {
       },
     },
     accentEmphasisLevel: 1,
-    tokens: [
-      { id: "color-bg", name: "color-bg", value: "var(--neutral-50)" },
-      {
-        id: "color-muted",
-        name: "color-muted",
-        value: "var(--neutral-100)",
-      },
-      { id: "color-fg", name: "color-fg", value: "var(--neutral-900)" },
-      {
-        id: "color-fg-muted",
-        name: "color-fg-muted",
-        value: "var(--neutral-700)",
-      },
-    ],
+    tokens: {
+      "color-bg": { name: "color-bg", value: "var(--neutral-50)" },
+      "color-muted": { name: "color-muted", value: "var(--neutral-100)" },
+      "color-fg": { name: "color-fg", value: "var(--neutral-900)" },
+      "color-fg-muted": { name: "color-fg-muted", value: "var(--neutral-700)" },
+    },
   },
   radius: 1.2,
   spacing: 0.3,

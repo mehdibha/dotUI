@@ -86,11 +86,12 @@ export function EditableInput({
           aria-label="Scale name"
           inputRef={inputRef}
           autoFocus
-          className="text-xl font-semibold leading-none"
+          className="leading-none"
           value={localValue}
           onChange={setLocalValue}
         />
         <Button
+          data-slot="button"
           aria-label="Save"
           size="sm"
           shape="square"
@@ -101,6 +102,7 @@ export function EditableInput({
           <CheckIcon className="text-fg-success" />
         </Button>
         <Button
+          data-slot="button"
           aria-label="Cancel"
           size="sm"
           shape="square"
@@ -116,8 +118,9 @@ export function EditableInput({
 
   return (
     <div className={cn("flex items-center gap-2", className)}>
-      <As className="text-xl font-semibold leading-none">{value}</As>
+      <As className="leading-none">{value}</As>
       <Button
+        data-slot="button"
         aria-label="Edit scale name"
         size="sm"
         shape="square"

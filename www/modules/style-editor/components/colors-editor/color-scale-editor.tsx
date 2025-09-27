@@ -35,7 +35,11 @@ import { cn } from "@dotui/ui/lib/utils";
 import type { ScaleId } from "@dotui/style-engine/types";
 
 import { EditableInput } from "@/components/ui/editable-input";
-import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
+import { ON_CHANGE_DEBOUNCE_MS } from "@/modules/style-editor/constants";
+import {
+  useStyleEditorForm,
+  useSyncTheme,
+} from "@/modules/style-editor/context/style-editor-provider";
 import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
 import { useResolvedModeState } from "@/modules/style-editor/hooks/use-resolved-mode";
 
@@ -108,6 +112,7 @@ function ScaleNameEditor({ scaleId }: { scaleId: ScaleId }) {
 function ColorKeysEditor({ scaleId }: { scaleId: ScaleId }) {
   const form = useStyleEditorForm();
   const { resolvedMode } = useResolvedModeState();
+  const syncTheme = useSyncTheme();
 
   return (
     <div>
@@ -115,6 +120,12 @@ function ColorKeysEditor({ scaleId }: { scaleId: ScaleId }) {
       <div className="mt-2 flex items-center gap-2">
         <form.AppField
           name={`theme.colors.modes.${resolvedMode}.scales.${scaleId}.colorKeys`}
+          listeners={{
+            onChange: () => {
+              syncTheme();
+            },
+            onChangeDebounceMs: ON_CHANGE_DEBOUNCE_MS,
+          }}
         >
           {(field) => {
             return (
@@ -173,6 +184,7 @@ function ColorKeysEditor({ scaleId }: { scaleId: ScaleId }) {
 function RatiosEditor({ scaleId }: { scaleId: ScaleId }) {
   const form = useStyleEditorForm();
   const { resolvedMode } = useResolvedModeState();
+  const syncTheme = useSyncTheme();
 
   const dynamicGradient = useDynamicGradient(scaleId);
 
@@ -190,6 +202,12 @@ function RatiosEditor({ scaleId }: { scaleId: ScaleId }) {
         <form.AppField
           mode="array"
           name={`theme.colors.modes.${resolvedMode}.scales.${scaleId}.ratios`}
+          listeners={{
+            onChange: () => {
+              syncTheme();
+            },
+            onChangeDebounceMs: ON_CHANGE_DEBOUNCE_MS,
+          }}
         >
           {(field) => {
             return (

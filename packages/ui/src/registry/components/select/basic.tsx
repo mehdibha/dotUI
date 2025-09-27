@@ -36,7 +36,7 @@ interface SelectProps<T extends object>
   extends Omit<SelectRootProps<T>, "children">,
     FieldProps,
     Pick<ListBoxProps<T>, "children" | "dependencies" | "items" | "isLoading">,
-    Pick<ButtonProps, "variant" | "size"> {
+    Pick<ButtonProps, "variant" | "size" | "suffix"> {
   renderValue?: SelectValueProps<T>["children"];
 }
 const Select = <T extends object>({
@@ -50,6 +50,7 @@ const Select = <T extends object>({
   items,
   isLoading,
   renderValue,
+  suffix,
   ...props
 }: SelectProps<T>) => {
   return (
@@ -58,7 +59,7 @@ const Select = <T extends object>({
       <Button
         variant={variant}
         size={size}
-        suffix={<ChevronDownIcon />}
+        suffix={suffix ?? <ChevronDownIcon />}
         className="w-full"
       >
         <SelectValue>{renderValue}</SelectValue>

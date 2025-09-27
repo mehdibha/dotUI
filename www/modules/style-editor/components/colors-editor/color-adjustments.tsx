@@ -7,7 +7,8 @@ import {
   useSyncTheme,
 } from "@/modules/style-editor/context/style-editor-provider";
 import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
-import { useResolvedModeState } from "../../hooks/use-resolved-mode";
+import { useResolvedModeState } from "@/modules/style-editor/hooks/use-resolved-mode";
+import { ON_CHANGE_DEBOUNCE_MS } from "@/modules/style-editor/constants";
 
 export const ColorAdjustments = () => {
   const form = useStyleEditorForm();
@@ -29,7 +30,7 @@ export const ColorAdjustments = () => {
           onChange: () => {
             syncTheme();
           },
-          onChangeDebounceMs: 150,
+          onChangeDebounceMs: ON_CHANGE_DEBOUNCE_MS,
         }}
       >
         {(field) => (
@@ -47,7 +48,7 @@ export const ColorAdjustments = () => {
           onChange: () => {
             syncTheme();
           },
-          onChangeDebounceMs: 150,
+          onChangeDebounceMs: ON_CHANGE_DEBOUNCE_MS,
         }}
       >
         {(field) => (
@@ -65,7 +66,7 @@ export const ColorAdjustments = () => {
           onChange: () => {
             syncTheme();
           },
-          onChangeDebounceMs: 150,
+          onChangeDebounceMs: ON_CHANGE_DEBOUNCE_MS,
         }}
       >
         {(field) => (

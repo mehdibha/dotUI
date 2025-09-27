@@ -28,7 +28,7 @@ const defaultValues: StyleFormData = {
 };
 
 const useForm = () => {
-  const { data: style, refetch } = useEditorStyle();
+  const { data: style, refetch, isError } = useEditorStyle();
   const { username, style: styleName } = useStyleEditorParams();
 
   const updateStyleMutation = useUpdateStyleMutation(

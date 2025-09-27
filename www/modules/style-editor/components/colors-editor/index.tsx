@@ -105,9 +105,13 @@ export function ColorsEditor() {
             <div key={name}>
               <h3 className="text-sm font-medium">{name}</h3>
               <ColorTokens
-                tokenIds={COLOR_TOKENS.filter((tk) =>
-                  tk.categories?.some((cat) => cat === category),
-                ).map((tk) => tk.name)}
+                tokenIds={Object.entries(COLOR_TOKENS)
+                  .filter(([, token]) => token.categories?.includes(category))
+                  .filter(
+                    ([, token]) =>
+                      !token.defaultValue.startsWith("color-fg-on"),
+                  )
+                  .map(([key]) => key)}
               />
             </div>
           ))}

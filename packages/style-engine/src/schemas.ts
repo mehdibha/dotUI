@@ -44,12 +44,11 @@ export const modeDefinitionSchema = z.object({
 });
 
 export const colorTokenSchema = z.object({
-  id: z.string(),
   name: z.string(),
   value: z.string(),
 });
 
-export const colorTokensSchema = z.array(colorTokenSchema);
+export const colorTokensSchema = z.record(z.string(), colorTokenSchema);
 
 // layout
 export const radiusSchema = z.number().min(0).max(2);

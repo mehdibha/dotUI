@@ -1,24 +1,12 @@
 "use client";
 
 import React from "react";
-import {
-  CheckIcon,
-  ChevronsUpDownIcon,
-  InfoIcon,
-  PencilIcon,
-  XIcon,
-} from "lucide-react";
-import { useWatch } from "react-hook-form";
+import { ChevronsUpDownIcon } from "lucide-react";
 
 import { COLOR_TOKENS } from "@dotui/registry-definition/registry-tokens";
 import { SCALE_STEPS } from "@dotui/style-engine/constants";
-import { Button } from "@dotui/ui/components/button";
-import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
-import { FormControl } from "@dotui/ui/components/form";
-import { ListBox, ListBoxItem } from "@dotui/ui/components/list-box";
-import { Popover } from "@dotui/ui/components/popover";
-import { SelectRoot, SelectValue } from "@dotui/ui/components/select";
-import { Skeleton } from "@dotui/ui/components/skeleton";
+import { ColorSwatch } from "@dotui/ui/components/color-swatch";
+import { SelectItem } from "@dotui/ui/components/select";
 import {
   TableBody,
   TableCell,
@@ -28,11 +16,16 @@ import {
   TableRow,
 } from "@dotui/ui/components/table";
 import { cn } from "@dotui/ui/lib/utils";
+import type { ScaleId } from "@dotui/style-engine/types";
 import type { TableRootProps } from "@dotui/ui/components/table";
 
-import { AutoResizeTextField } from "@/components/ui/auto-resize-input";
-import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
-import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
+import { ContextualHelp } from "@/components/ui/contextual-help";
+import { EditableInput } from "@/components/ui/editable-input";
+import {
+  useGeneratedTheme,
+  useStyleEditorForm,
+} from "@/modules/style-editor/context/style-editor-provider";
+import { useGeneratedScales } from "@/modules/style-editor/hooks/use-generated-scales";
 
 export const ColorTokens = ({
   variant = "line",
@@ -44,7 +37,6 @@ export const ColorTokens = ({
   tokenIds: string[];
   hideHeader?: boolean;
 }) => {
-  const { isPending } = useEditorStyle();
   const form = useStyleEditorForm();
 
   return (
@@ -64,14 +56,19 @@ export const ColorTokens = ({
       </TableHeader>
       <TableBody>
         {tokenIds.map((tokenId) => {
-          const tokenDefinition = COLOR_TOKENS.find(
-            (def) => def.name === tokenId,
-          );
+          const tokenDefinition = COLOR_TOKENS[tokenId];
           if (!tokenDefinition) return null;
           return (
             <TableRow key={tokenId} id={tokenId}>
-              <TableCell className="pl-0">{tokenDefinition.name}</TableCell>
-              <TableCell>{tokenDefinition.defaultValue}</TableCell>
+              <TableCell className="flex items-center gap-2 pl-0">
+                <TokenName tokenId={tokenId} />
+                {tokenDefinition.description && (
+                  <ContextualHelp>{tokenDefinition.description}</ContextualHelp>
+                )}
+              </TableCell>
+              <TableCell>
+                <TokenSelect tokenId={tokenId} colorScales={["neutral"]} />
+              </TableCell>
             </TableRow>
           );
         })}
@@ -80,234 +77,66 @@ export const ColorTokens = ({
   );
 };
 
-const ColorTokenVariableName = ({
-  index,
-  description,
-}: {
-  index: number;
-  description?: string;
-}) => {
+const TokenName = ({ tokenId }: { tokenId: string }) => {
   const form = useStyleEditorForm();
-  const [isEditMode, setEditMode] = React.useState(false);
-  const [localValue, setLocalValue] = React.useState("");
-  const inputRef = React.useRef<HTMLInputElement>(null);
-  const containerRef = React.useRef<HTMLDivElement>(null);
-
-  const handleEditStart = React.useCallback((initialValue: string) => {
-    setLocalValue(initialValue);
-    setEditMode(true);
-  }, []);
-
-  const handleCancel = React.useCallback(() => {
-    setEditMode(false);
-  }, []);
-
-  const handleSubmit = React.useCallback(() => {
-    form.setValue(`theme.colors.tokens.${index}.name`, localValue);
-    setEditMode(false);
-  }, [form, index, localValue]);
-
-  React.useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(e.target as Node) &&
-        inputRef.current &&
-        isEditMode
-      ) {
-        handleCancel();
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [handleCancel, isEditMode]);
-
-  React.useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isEditMode) {
-        handleCancel();
-      }
-    };
-    const handleEnter = (e: KeyboardEvent) => {
-      if (e.key === "Enter" && isEditMode) {
-        handleSubmit();
-      }
-    };
-
-    document.addEventListener("keydown", handleEscape);
-    document.addEventListener("keydown", handleEnter);
-    return () => {
-      document.removeEventListener("keydown", handleEscape);
-      document.removeEventListener("keydown", handleEnter);
-    };
-  }, [handleCancel, handleSubmit, isEditMode]);
 
   return (
-    <FormControl
-      name={`theme.colors.tokens.${index}.name`}
-      control={form.control}
-      render={(props) => (
-        <div className="w-70 flex items-center gap-2">
-          <div className="bg-muted rounded-full p-1 pl-3">
-            {isEditMode ? (
-              <div ref={containerRef} className="flex items-center gap-1">
-                <AutoResizeTextField
-                  inputRef={inputRef}
-                  autoFocus
-                  className="font-mono text-xs"
-                  value={localValue}
-                  onChange={setLocalValue}
-                />
-                <div className="flex items-center gap-0.5">
-                  <Button
-                    aria-label="Save"
-                    size="sm"
-                    shape="circle"
-                    variant="quiet"
-                    onPress={handleSubmit}
-                    className="size-6"
-                  >
-                    <CheckIcon className="text-fg-success" />
-                  </Button>
-                  <Button
-                    aria-label="Cancel"
-                    size="sm"
-                    shape="circle"
-                    variant="quiet"
-                    onPress={handleCancel}
-                    className="size-6"
-                  >
-                    <XIcon className="text-fg-danger" />
-                  </Button>
-                </div>
-              </div>
-            ) : (
-              <div className="flex items-center gap-1">
-                <h1 className="truncate whitespace-nowrap border-b font-mono text-xs">
-                  {props.value}
-                </h1>
-                <Button
-                  aria-label="Edit variable name"
-                  size="sm"
-                  shape="circle"
-                  variant="quiet"
-                  onPress={() => handleEditStart(props.value)}
-                  className="size-6 [&_svg]:size-3"
-                >
-                  <PencilIcon className="text-fg-muted" />
-                </Button>
-              </div>
-            )}
-          </div>
-          {description && (
-            <DialogRoot>
-              <Button
-                aria-label="View variable description"
-                size="sm"
-                shape="circle"
-                variant="quiet"
-                className="size-6 [&_svg]:size-3"
-              >
-                <InfoIcon />
-              </Button>
-              <Dialog
-                type="popover"
-                popoverProps={{ placement: "top", className: "max-w-64" }}
-              >
-                <p className="text-sm">{description}</p>
-              </Dialog>
-            </DialogRoot>
-          )}
-        </div>
-      )}
-    />
+    <div className="bg-muted rounded-full p-1 pl-3">
+      <form.AppField name={`theme.colors.tokens.${tokenId}.name`}>
+        {(field) => (
+          <EditableInput
+            value={field.state.value}
+            onSubmit={(newVal) => field.handleChange(newVal)}
+            className="text-fg-muted !text-sm font-normal [&_[data-slot='button']]:rounded-full"
+          />
+        )}
+      </form.AppField>
+    </div>
   );
 };
 
-const ColorTokenValue = ({ index }: { index: number }) => {
+const TokenSelect = ({
+  tokenId,
+  colorScales,
+}: {
+  tokenId: string;
+  colorScales: ScaleId[];
+}) => {
   const form = useStyleEditorForm();
-
-  const tokenValue = useWatch({
-    control: form.control,
-    name: `theme.colors.tokens.${index}.value`,
-  });
-
-  const color = React.useMemo(() => {
-    const [c] = (tokenValue ?? "")
-      .replace("var(--", "")
-      .replace(")", "")
-      .split("-") as [string, string];
-    return c;
-  }, [tokenValue]);
-
-  const generatedTheme = useGeneratedScales([color as any]);
-  const scale = React.useMemo(
-    () => generatedTheme.find((s) => s.name === color),
-    [generatedTheme, color],
-  );
-
-  const items = React.useMemo(
-    () =>
-      SCALE_STEPS.map((scaleNumber) => {
-        const varRef = `var(--${color}-${scaleNumber})`;
-        const resolvedHex = scale?.values.find(
-          (v: { name: string; value: string }) =>
-            v.name === `${color}-${scaleNumber}`,
-        )?.value;
-        return {
-          label: `${color.charAt(0).toUpperCase() + color.slice(1)} ${scaleNumber}`,
-          value: varRef,
-          resolvedHex,
-        };
-      }),
-    [color, scale],
-  );
+  const generatedTheme = useGeneratedTheme();
 
   return (
-    <FormControl
-      name={`theme.colors.tokens.${index}.value`}
-      control={form.control}
-      render={({ value, onChange, ...props }) => {
+    <form.AppField name={`theme.colors.tokens.${tokenId}.value`}>
+      {(field) => {
+        const [scale, _step] = field.state.value
+          .replace("var(--", "")
+          .replace(")", "")
+          .split("-");
+
+        const colors = generatedTheme.find((s) => s.name === scale);
+
         return (
-          <SelectRoot
+          <field.Select
             aria-label="Select variable value"
-            selectedKey={value}
-            onSelectionChange={onChange}
-            {...props}
+            size="sm"
+            renderValue={({ defaultChildren }) => defaultChildren}
+            suffix={<ChevronsUpDownIcon className="text-fg-muted" />}
+            className="w-40"
           >
-            <Button
-              size="sm"
-              suffix={<ChevronsUpDownIcon className="text-fg-muted" />}
-              className="w-40"
-            >
-              <SelectValue>
-                {({ defaultChildren }) => <>{defaultChildren}</>}
-              </SelectValue>
-            </Button>
-            <Popover>
-              <ListBox items={items}>
-                {(item) => (
-                  <ListBoxItem
-                    id={item.value}
-                    className="flex items-center gap-2"
-                    prefix={
-                      <span
-                        className="size-4 rounded-sm border"
-                        style={{
-                          backgroundColor:
-                            (item as any).resolvedHex ?? (item as any).value,
-                        }}
-                      />
-                    }
-                  >
-                    {item.label}
-                  </ListBoxItem>
-                )}
-              </ListBox>
-            </Popover>
-          </SelectRoot>
+            {colorScales.flatMap((scale) =>
+              SCALE_STEPS.map((step, i) => (
+                <SelectItem
+                  key={`${scale}-${step}`}
+                  id={`var(--${scale}-${step})`}
+                  prefix={<ColorSwatch color={colors?.values[i]?.value} />}
+                >
+                  {`${scale.charAt(0).toUpperCase() + scale.slice(1)} ${step}`}
+                </SelectItem>
+              )),
+            )}
+          </field.Select>
         );
       }}
-    />
+    </form.AppField>
   );
 };
