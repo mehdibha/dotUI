@@ -1,0 +1,15 @@
+{
+  "name": "avatar",
+  "type": "registry:ui",
+  "variants": {
+    "basic": {
+      "files": [
+        {
+          "type": "registry:ui",
+          "path": "ui/avatar/basic.tsx",
+          "target": "ui/avatar.tsx"
+        }
+      ]
+    }
+  }
+}

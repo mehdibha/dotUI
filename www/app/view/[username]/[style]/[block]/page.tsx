@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
 
-import { registryBlocks } from "@dotui/registry-definition/registry-blocks";
-import { BlockViewer } from "@dotui/ui/block-viewer";
+import { registryBlocks } from "@dotui/registry/blocks/registry";
 
 import { buildTimeCaller, getQueryClient, trpc } from "@/lib/trpc/server";
+import { BlockViewer } from "@/modules/blocks/block-viewer";
 import { BlockViewLayout } from "./_layout";
 
 export const generateStaticParams = async () => {

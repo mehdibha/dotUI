@@ -4,14 +4,9 @@ import React from "react";
 import { usePathname } from "next/navigation";
 import type { Route } from "next";
 
-import { blocksCategories } from "@dotui/registry-definition/registry-blocks";
-import {
-  Tab,
-  TabList,
-  TabPanel,
-  Tabs,
-} from "@dotui/ui/registry/components/tabs/motion";
-import type { TabsProps } from "@dotui/ui/components/tabs";
+import { blocksCategories } from "@dotui/registry/blocks/registry";
+import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs/motion";
+import type { TabsProps } from "@dotui/registry/ui/tabs";
 
 export function BlocksNav({
   children,

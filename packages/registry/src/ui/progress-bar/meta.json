@@ -1,0 +1,16 @@
+{
+  "name": "progress-bar",
+  "type": "registry:ui",
+  "variants": {
+    "basic": {
+      "files": [
+        {
+          "type": "registry:ui",
+          "path": "ui/progress-bar/basic.tsx",
+          "target": "ui/progress-bar.tsx"
+        }
+      ],
+      "registryDependencies": ["field"]
+    }
+  }
+}

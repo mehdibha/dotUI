@@ -1,0 +1,16 @@
+{
+  "name": "list-box",
+  "type": "registry:ui",
+  "variants": {
+    "basic": {
+      "files": [
+        {
+          "type": "registry:ui",
+          "path": "ui/list-box/basic.tsx",
+          "target": "ui/list-box.tsx"
+        }
+      ],
+      "registryDependencies": ["text", "focus-styles"]
+    }
+  }
+}

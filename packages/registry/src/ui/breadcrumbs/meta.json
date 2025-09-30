@@ -1,0 +1,16 @@
+{
+  "name": "breadcrumbs",
+  "type": "registry:ui",
+  "variants": {
+    "basic": {
+      "files": [
+        {
+          "type": "registry:ui",
+          "path": "ui/breadcrumbs/basic.tsx",
+          "target": "ui/breadcrumbs.tsx"
+        }
+      ],
+      "registryDependencies": ["focus-styles"]
+    }
+  }
+}

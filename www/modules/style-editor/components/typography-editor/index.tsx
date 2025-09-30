@@ -1,8 +1,8 @@
 "use client";
 
-import { Skeleton } from "@dotui/ui/components/skeleton";
-import { Slider } from "@dotui/ui/components/slider";
-import { cn } from "@dotui/ui/lib/utils";
+import { cn } from "@dotui/registry/lib/utils";
+import { Skeleton } from "@dotui/registry/ui/skeleton";
+import { Slider } from "@dotui/registry/ui/slider";
 
 import { StyleEditorSection } from "@/modules/style-editor/components/section";
 import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";

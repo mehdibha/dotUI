@@ -1,0 +1,16 @@
+{
+  "name": "toggle-button",
+  "type": "registry:ui",
+  "variants": {
+    "basic": {
+      "files": [
+        {
+          "type": "registry:ui",
+          "path": "ui/toggle-button/basic.tsx",
+          "target": "ui/toggle-button.tsx"
+        }
+      ],
+      "registryDependencies": ["focus-styles"]
+    }
+  }
+}

@@ -1,8 +1,8 @@
-import { Button } from "@dotui/ui/components/button";
-import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
-import { InfoIcon } from "@dotui/ui/icons";
-import { cn } from "@dotui/ui/lib/utils";
-import type { ButtonProps } from "@dotui/ui/components/button";
+import { InfoIcon } from "@dotui/registry/icons";
+import { cn } from "@dotui/registry/lib/utils";
+import { Button } from "@dotui/registry/ui/button";
+import { Dialog, DialogRoot } from "@dotui/registry/ui/dialog";
+import type { ButtonProps } from "@dotui/registry/ui/button";
 
 export function ContextualHelp({
   children,

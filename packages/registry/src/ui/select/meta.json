@@ -1,0 +1,16 @@
+{
+  "name": "select",
+  "type": "registry:ui",
+  "variants": {
+    "basic": {
+      "files": [
+        {
+          "type": "registry:ui",
+          "path": "ui/select/basic.tsx",
+          "target": "ui/select.tsx"
+        }
+      ],
+      "registryDependencies": ["button", "field", "list-box", "popover"]
+    }
+  }
+}

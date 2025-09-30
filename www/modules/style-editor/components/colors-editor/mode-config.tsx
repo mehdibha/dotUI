@@ -1,7 +1,7 @@
 import { ContrastIcon, MoonIcon, SunIcon } from "lucide-react";
 
-import { SelectItem } from "@dotui/ui/components/select";
-import { Skeleton } from "@dotui/ui/components/skeleton";
+import { SelectItem } from "@dotui/registry/ui/select";
+import { Skeleton } from "@dotui/registry/ui/skeleton";
 
 import { ThemeModeSwitch } from "@/components/ui/theme-mode-switch";
 import { useDraftStyleProducer } from "@/modules/style-editor/atoms/draft-style-atom";

@@ -1,0 +1,15 @@
+{
+  "name": "file-trigger",
+  "type": "registry:ui",
+  "variants": {
+    "basic": {
+      "files": [
+        {
+          "type": "registry:ui",
+          "path": "ui/file-trigger/basic.tsx",
+          "target": "ui/file-trigger.tsx"
+        }
+      ]
+    }
+  }
+}

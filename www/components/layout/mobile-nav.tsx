@@ -7,9 +7,9 @@ import type { PageTree } from "fumadocs-core/server";
 import type { Route } from "next";
 import type { LinkProps } from "next/link";
 
-import { Button } from "@dotui/ui/components/button";
-import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
-import { cn } from "@dotui/ui/lib/utils";
+import { cn } from "@dotui/registry/lib/utils";
+import { Button } from "@dotui/registry/ui/button";
+import { Dialog, DialogRoot } from "@dotui/registry/ui/dialog";
 
 export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
   const [isOpen, setIsOpen] = React.useState(false);

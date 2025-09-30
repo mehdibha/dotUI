@@ -5,26 +5,26 @@ import { ChevronDownIcon } from "lucide-react";
 import { useInView } from "motion/react";
 import { ListLayout, useFilter, Virtualizer } from "react-aria-components";
 
+import { FontLoader } from "@dotui/registry";
 import {
   displayFonts,
   handwritingFonts,
   monoFonts,
   sansSerifFonts,
   serifFonts,
-} from "@dotui/registry-definition/registry-fonts";
-import { FontLoader } from "@dotui/ui";
-import { Button } from "@dotui/ui/components/button";
-import { CommandRoot } from "@dotui/ui/components/command";
-import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
-import { Label } from "@dotui/ui/components/field";
+} from "@dotui/registry/fonts/registry";
+import { cn } from "@dotui/registry/lib/utils";
+import { Button } from "@dotui/registry/ui/button";
+import { CommandRoot } from "@dotui/registry/ui/command";
+import { Dialog, DialogRoot } from "@dotui/registry/ui/dialog";
+import { Label } from "@dotui/registry/ui/field";
 import {
   ListBox,
   ListBoxItem,
   ListBoxSection,
-} from "@dotui/ui/components/list-box";
-import { SearchField } from "@dotui/ui/components/search-field";
-import { Select, SelectItem } from "@dotui/ui/components/select";
-import { cn } from "@dotui/ui/lib/utils";
+} from "@dotui/registry/ui/list-box";
+import { SearchField } from "@dotui/registry/ui/search-field";
+import { Select, SelectItem } from "@dotui/registry/ui/select";
 
 export const FontSelector = ({
   label,

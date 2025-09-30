@@ -1,0 +1,15 @@
+{
+  "name": "modal",
+  "type": "registry:ui",
+  "variants": {
+    "basic": {
+      "files": [
+        {
+          "type": "registry:ui",
+          "path": "ui/modal/basic.tsx",
+          "target": "ui/modal.tsx"
+        }
+      ]
+    }
+  }
+}

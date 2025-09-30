@@ -1,0 +1,16 @@
+{
+  "name": "number-field",
+  "type": "registry:ui",
+  "variants": {
+    "basic": {
+      "files": [
+        {
+          "type": "registry:ui",
+          "path": "ui/number-field/basic.tsx",
+          "target": "ui/number-field.tsx"
+        }
+      ],
+      "registryDependencies": ["input", "field", "use-is-mobile"]
+    }
+  }
+}

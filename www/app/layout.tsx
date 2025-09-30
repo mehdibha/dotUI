@@ -2,14 +2,14 @@ import React from "react";
 import { Analytics } from "@vercel/analytics/react";
 import type { Metadata, Viewport } from "next";
 
-import { cn } from "@dotui/ui/lib/utils";
+import { cn } from "@dotui/registry/lib/utils";
 
 import { fontMono, fontSans, josefinSans } from "@/lib/fonts";
 import { truncateOnWord } from "@/lib/string";
 
 import "@/styles/globals.css";
 
-import { Toaster } from "@dotui/ui/components/toast";
+import { Toaster } from "@dotui/registry/ui/toast";
 
 import { siteConfig } from "@/config";
 import { env } from "@/env";

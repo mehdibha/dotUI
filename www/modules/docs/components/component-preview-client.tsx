@@ -2,9 +2,9 @@
 
 import React from "react";
 
-import { DEFAULT_VARIANTS_DEFINITION } from "@dotui/style-engine/constants";
-import { useCurrentStyle } from "@dotui/ui";
-import { VariantsProvider } from "@dotui/ui/helpers/variants-provider";
+import { useCurrentStyle } from "@dotui/registry";
+import { VariantsProvider } from "@dotui/registry/__internal__/helpers/variants-provider";
+import { DEFAULT_VARIANTS_DEFINITION } from "@dotui/registry/__style-system__/constants";
 
 import { ThemeModeSwitch } from "@/components/ui/theme-mode-switch";
 import { useHorizontalResize } from "@/hooks/use-horizontal-resize";

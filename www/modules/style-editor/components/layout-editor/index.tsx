@@ -1,6 +1,6 @@
 "use client";
 
-import { Skeleton } from "@dotui/ui/components/skeleton";
+import { Skeleton } from "@dotui/registry/ui/skeleton";
 
 import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
 import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";

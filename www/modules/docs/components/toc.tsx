@@ -7,7 +7,7 @@ import type {
   TableOfContents as TocType,
 } from "fumadocs-core/server";
 
-import { cn } from "@dotui/ui/lib/utils";
+import { cn } from "@dotui/registry/lib/utils";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useTocThumb } from "@/modules/docs/hooks/use-toc-thumb";

@@ -3,11 +3,11 @@
 import React from "react";
 import { LayoutGridIcon, ListIcon } from "lucide-react";
 
-import { SearchField } from "@dotui/ui/components/search-field";
-import { Skeleton } from "@dotui/ui/components/skeleton";
-import { ToggleButton } from "@dotui/ui/components/toggle-button";
-import { ToggleButtonGroup } from "@dotui/ui/components/toggle-button-group";
-import { cn } from "@dotui/ui/lib/utils";
+import { cn } from "@dotui/registry/lib/utils";
+import { SearchField } from "@dotui/registry/ui/search-field";
+import { Skeleton } from "@dotui/registry/ui/skeleton";
+import { ToggleButton } from "@dotui/registry/ui/toggle-button";
+import { ToggleButtonGroup } from "@dotui/registry/ui/toggle-button-group";
 import type { RouterOutputs } from "@dotui/api";
 
 import { StyleCard } from "./style-card";

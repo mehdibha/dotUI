@@ -9,7 +9,7 @@ import {
 } from "react-aria-components";
 import type { TextFieldProps } from "react-aria-components";
 
-import { cn } from "@dotui/ui/lib/utils";
+import { cn } from "@dotui/registry/lib/utils";
 
 export const AutoResizeTextField = ({
   onChange,

@@ -14,12 +14,12 @@ import { useFilter } from "react-aria-components";
 import type { PageTree } from "fumadocs-core/server";
 import type { Route } from "next";
 
-import { Button } from "@dotui/ui/components/button";
-import { Command } from "@dotui/ui/components/command";
-import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
-import { Input, InputRoot } from "@dotui/ui/components/input";
-import { MenuContent, MenuItem, MenuSection } from "@dotui/ui/components/menu";
-import { SearchFieldRoot } from "@dotui/ui/components/search-field";
+import { Button } from "@dotui/registry/ui/button";
+import { Command } from "@dotui/registry/ui/command";
+import { Dialog, DialogRoot } from "@dotui/registry/ui/dialog";
+import { Input, InputRoot } from "@dotui/registry/ui/input";
+import { MenuContent, MenuItem, MenuSection } from "@dotui/registry/ui/menu";
+import { SearchFieldRoot } from "@dotui/registry/ui/search-field";
 
 interface SearchCommandProps {
   items: PageTree.Node[];

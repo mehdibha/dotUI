@@ -6,11 +6,11 @@ import { tv } from "tailwind-variants";
 import type { ScrollAreaProps } from "@/components/ui/scroll-area";
 import type { Key } from "react-aria-components";
 
-import { Button } from "@dotui/ui/components/button";
-import { Tab, TabList, TabPanel, Tabs } from "@dotui/ui/components/tabs";
-import { cn } from "@dotui/ui/lib/utils";
-import type { ButtonProps } from "@dotui/ui/components/button";
-import type { TabsProps } from "@dotui/ui/components/tabs";
+import { cn } from "@dotui/registry/lib/utils";
+import { Button } from "@dotui/registry/ui/button";
+import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs";
+import type { ButtonProps } from "@dotui/registry/ui/button";
+import type { TabsProps } from "@dotui/registry/ui/tabs";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 

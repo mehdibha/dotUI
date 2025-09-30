@@ -1,18 +1,16 @@
 import type { Metadata, Route } from "next";
 
-import { Alert } from "@dotui/ui/components/alert";
-import { Avatar } from "@dotui/ui/components/avatar";
-import { Button } from "@dotui/ui/components/button";
-import { Link } from "@dotui/ui/components/link";
-import { Tooltip } from "@dotui/ui/components/tooltip";
-import {
-  AdobeIcon,
-  GitHubIcon,
-  ReactJsIcon,
-  ShadcnIcon,
-  TailwindExtendedIcon,
-  TypescriptIcon,
-} from "@dotui/ui/icons";
+import { AdobeIcon } from "@dotui/registry/components/icons/adobe";
+import { GitHubIcon } from "@dotui/registry/components/icons/github";
+import { ReactJsIcon } from "@dotui/registry/components/icons/react-js";
+import { ShadcnIcon } from "@dotui/registry/components/icons/shadcn";
+import { TailwindWordmark } from "@dotui/registry/components/icons/tailwind-wordmark";
+import { TypeScriptIcon } from "@dotui/registry/components/icons/typescript";
+import { Alert } from "@dotui/registry/ui/alert";
+import { Avatar } from "@dotui/registry/ui/avatar";
+import { Button } from "@dotui/registry/ui/button";
+import { Link } from "@dotui/registry/ui/link";
+import { Tooltip } from "@dotui/registry/ui/tooltip";
 
 import { Announcement } from "@/components/marketing/announcement";
 import { StylesShowcase } from "@/components/styles-showcase";
@@ -83,12 +81,12 @@ export default async function HomePage() {
               },
               {
                 label: "TypeScript 5",
-                icon: <TypescriptIcon className="size-7 sm:size-9" />,
+                icon: <TypeScriptIcon className="size-7 sm:size-9" />,
                 href: "https://www.typescriptlang.org/",
               },
               {
                 label: "Tailwind CSS v4",
-                icon: <TailwindExtendedIcon className="h-5 sm:h-7" />,
+                icon: <TailwindWordmark className="h-5 sm:h-7" />,
                 href: "https://tailwindcss.com",
               },
             ].map(({ icon, label, href }, index) => (

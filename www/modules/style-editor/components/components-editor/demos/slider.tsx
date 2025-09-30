@@ -1,4 +1,4 @@
-import { Slider } from "@dotui/ui/components/slider";
+import { Slider } from "@dotui/registry/ui/slider";
 
 import { getComponentVariants } from "@/modules/style-editor/components/components-editor/demos/utils";
 import { Section } from "@/modules/style-editor/components/components-editor/section";

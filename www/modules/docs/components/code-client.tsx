@@ -4,7 +4,7 @@ import React from "react";
 import { CheckIcon, CopyIcon } from "lucide-react";
 import { tv } from "tailwind-variants";
 
-import { Button } from "@dotui/ui/components/button";
+import { Button } from "@dotui/registry/ui/button";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@dotui/ui/lib/utils";
+import { cn } from "@dotui/registry/lib/utils";
 
 interface StyleEditorSectionProps extends React.ComponentProps<"div"> {
   title: string;

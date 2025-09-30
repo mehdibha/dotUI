@@ -1,0 +1,16 @@
+{
+  "name": "radio-group",
+  "type": "registry:ui",
+  "variants": {
+    "basic": {
+      "files": [
+        {
+          "type": "registry:ui",
+          "path": "ui/radio-group/basic.tsx",
+          "target": "ui/radio-group.tsx"
+        }
+      ],
+      "registryDependencies": ["focus-styles", "field"]
+    }
+  }
+}

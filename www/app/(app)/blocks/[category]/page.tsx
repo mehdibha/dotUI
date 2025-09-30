@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import {
   blocksCategories,
   registryBlocks,
-} from "@dotui/registry-definition/registry-blocks";
+} from "@dotui/registry/blocks/registry";
 
 import { BlockView } from "@/modules/blocks/block-view";
 

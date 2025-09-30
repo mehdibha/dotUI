@@ -1,6 +1,6 @@
 import { LayoutTemplateIcon } from "lucide-react";
 
-import { Button } from "@dotui/ui/components/button";
+import { Button } from "@dotui/registry/ui/button";
 
 export function Announcement() {
   return (

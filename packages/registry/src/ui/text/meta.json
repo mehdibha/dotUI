@@ -1,0 +1,15 @@
+{
+  "name": "text",
+  "type": "registry:ui",
+  "variants": {
+    "basic": {
+      "files": [
+        {
+          "type": "registry:ui",
+          "path": "ui/text/basic.tsx",
+          "target": "ui/text.tsx"
+        }
+      ]
+    }
+  }
+}

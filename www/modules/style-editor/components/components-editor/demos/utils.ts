@@ -1,4 +1,4 @@
-import { registryUi } from "@dotui/registry-definition/registry-ui";
+import { registryUi } from "@dotui/registry/ui/registry";
 
 export function getComponentVariants(
   componentName: string,

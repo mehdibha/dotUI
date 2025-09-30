@@ -7,8 +7,9 @@ import { useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
 
 import { createStyleSchema as dbCreateStyleSchema } from "@dotui/db/schemas";
-import { Alert } from "@dotui/ui/components/alert";
-import { Button } from "@dotui/ui/components/button";
+import { cn } from "@dotui/registry/lib/utils";
+import { Alert } from "@dotui/registry/ui/alert";
+import { Button } from "@dotui/registry/ui/button";
 import {
   Dialog,
   DialogBody,
@@ -16,13 +17,12 @@ import {
   DialogHeader,
   DialogHeading,
   DialogRoot,
-} from "@dotui/ui/components/dialog";
-import { FormControl } from "@dotui/ui/components/form";
-import { Select, SelectItem } from "@dotui/ui/components/select";
-import { TextArea } from "@dotui/ui/components/text-area";
-import { TextField } from "@dotui/ui/components/text-field";
-import { cn } from "@dotui/ui/lib/utils";
-import type { StyleDefinition } from "@dotui/style-engine/types";
+} from "@dotui/registry/ui/dialog";
+import { FormControl } from "@dotui/registry/ui/form";
+import { Select, SelectItem } from "@dotui/registry/ui/select";
+import { TextArea } from "@dotui/registry/ui/text-area";
+import { TextField } from "@dotui/registry/ui/text-field";
+import type { StyleDefinition } from "@dotui/registry/__style-system__/types";
 
 import { LoginModal } from "@/modules/auth/components/login-modal";
 import { authClient } from "@/modules/auth/lib/client";

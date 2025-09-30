@@ -3,7 +3,8 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 
-import { Button } from "@dotui/ui/components/button";
+import { GitHubIcon } from "@dotui/registry/components/icons/github";
+import { Button } from "@dotui/registry/ui/button";
 import {
   Dialog,
   DialogBody,
@@ -11,10 +12,9 @@ import {
   DialogHeader,
   DialogHeading,
   DialogRoot,
-} from "@dotui/ui/components/dialog";
-import { Link } from "@dotui/ui/components/link";
-import { toast } from "@dotui/ui/components/toast";
-import { GitHubIcon } from "@dotui/ui/icons";
+} from "@dotui/registry/ui/dialog";
+import { Link } from "@dotui/registry/ui/link";
+import { toast } from "@dotui/registry/ui/toast";
 
 import { authClient } from "../lib/client";
 

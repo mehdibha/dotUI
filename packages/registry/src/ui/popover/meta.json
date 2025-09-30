@@ -1,0 +1,15 @@
+{
+  "name": "popover",
+  "type": "registry:ui",
+  "variants": {
+    "basic": {
+      "files": [
+        {
+          "type": "registry:ui",
+          "path": "ui/popover/basic.tsx",
+          "target": "ui/popover.tsx"
+        }
+      ]
+    }
+  }
+}

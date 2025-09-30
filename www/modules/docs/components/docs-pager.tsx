@@ -2,8 +2,8 @@ import { findNeighbour } from "fumadocs-core/server";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import type { Route } from "next";
 
-import { Button } from "@dotui/ui/components/button";
-import { Tooltip } from "@dotui/ui/components/tooltip";
+import { Button } from "@dotui/registry/ui/button";
+import { Tooltip } from "@dotui/registry/ui/tooltip";
 
 import { docsSource } from "@/modules/docs/lib/source";
 

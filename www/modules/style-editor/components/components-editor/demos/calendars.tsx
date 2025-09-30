@@ -1,6 +1,6 @@
 import { parseDate } from "@internationalized/date";
 
-import { Calendar, RangeCalendar } from "@dotui/ui/components/calendar";
+import { Calendar, RangeCalendar } from "@dotui/registry/ui/calendar";
 
 import { getComponentVariants } from "@/modules/style-editor/components/components-editor/demos/utils";
 import { Section } from "@/modules/style-editor/components/components-editor/section";

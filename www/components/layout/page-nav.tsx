@@ -3,13 +3,8 @@
 import { usePathname } from "next/navigation";
 import type { Route } from "next";
 
-import { cn } from "@dotui/ui/lib/utils";
-import {
-  Tab,
-  TabList,
-  TabPanel,
-  Tabs,
-} from "@dotui/ui/registry/components/tabs/motion";
+import { cn } from "@dotui/registry/lib/utils";
+import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs/motion";
 
 export function PageNav({
   items,

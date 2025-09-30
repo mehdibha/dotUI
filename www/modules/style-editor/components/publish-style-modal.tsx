@@ -1,15 +1,15 @@
 import { ExternalLinkIcon, Globe2Icon, LockIcon } from "lucide-react";
 
-import { Button } from "@dotui/ui/components/button";
+import { Button } from "@dotui/registry/ui/button";
 import {
   Dialog,
   DialogBody,
   DialogFooter,
   DialogRoot,
-} from "@dotui/ui/components/dialog";
-import { Select, SelectItem } from "@dotui/ui/components/select";
-import { TextArea } from "@dotui/ui/components/text-area";
-import { TextField } from "@dotui/ui/components/text-field";
+} from "@dotui/registry/ui/dialog";
+import { Select, SelectItem } from "@dotui/registry/ui/select";
+import { TextArea } from "@dotui/registry/ui/text-area";
+import { TextField } from "@dotui/registry/ui/text-field";
 
 export function PublishStyleModal({ children }: { children: React.ReactNode }) {
   return (

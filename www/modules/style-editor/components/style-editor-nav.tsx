@@ -12,18 +12,13 @@ import {
   TypeIcon,
 } from "lucide-react";
 
-import { Button } from "@dotui/ui/components/button";
-import { Menu, MenuItem, MenuRoot } from "@dotui/ui/components/menu";
-import { cn } from "@dotui/ui/lib/utils";
-import {
-  Tab,
-  TabList,
-  TabPanel,
-  Tabs,
-} from "@dotui/ui/registry/components/tabs/motion";
-import type { TabsProps } from "@dotui/ui/components/tabs";
+import { cn } from "@dotui/registry/lib/utils";
+import { Button } from "@dotui/registry/ui/button";
+import { Menu, MenuItem, MenuRoot } from "@dotui/registry/ui/menu";
+import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs/motion";
+import type { TabsProps } from "@dotui/registry/ui/tabs";
 
-import { useStyleEditorParams } from "../hooks/use-style-editor-params";
+import { useStyleEditorParams } from "@/modules/style-editor/hooks/use-style-editor-params";
 
 export function StyleEditorNav({
   children,

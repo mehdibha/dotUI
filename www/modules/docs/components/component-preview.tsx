@@ -1,9 +1,9 @@
 import React from "react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 
-import { Index } from "@dotui/ui/__registry__/demos";
-import { Alert } from "@dotui/ui/components/alert";
-import { cn } from "@dotui/ui/lib/utils";
+import { Index } from "@dotui/registry/__internal__/demos";
+import { cn } from "@dotui/registry/lib/utils";
+import { Alert } from "@dotui/registry/ui/alert";
 
 import { getFileSource } from "@/modules/docs/lib/get-file-source";
 import { ActiveStyleProvider } from "@/modules/styles/components/active-style-provider";
@@ -32,7 +32,6 @@ export const ComponentPreview = async ({
   expandable = true,
   fullWidth = false,
   resizable = false,
-  suspense = false,
   primary = false,
 }: ComponentPreviewProps) => {
   const demoItem = Index[name];

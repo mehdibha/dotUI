@@ -22,14 +22,14 @@ import type { PageTree } from "fumadocs-core/server";
 import type { Transition } from "motion/react";
 import type { Route } from "next";
 
-import { Avatar } from "@dotui/ui/components/avatar";
-import { Button } from "@dotui/ui/components/button";
-import { Kbd } from "@dotui/ui/components/kbd";
-import { Tooltip } from "@dotui/ui/components/tooltip";
-import { GitHubIcon } from "@dotui/ui/icons";
-import { cn } from "@dotui/ui/lib/utils";
-import type { ButtonProps } from "@dotui/ui/components/button";
-import type { TooltipProps } from "@dotui/ui/components/tooltip";
+import { GitHubIcon } from "@dotui/registry/components/icons/github";
+import { cn } from "@dotui/registry/lib/utils";
+import { Avatar } from "@dotui/registry/ui/avatar";
+import { Button } from "@dotui/registry/ui/button";
+import { Kbd } from "@dotui/registry/ui/kbd";
+import { Tooltip } from "@dotui/registry/ui/tooltip";
+import type { ButtonProps } from "@dotui/registry/ui/button";
+import type { TooltipProps } from "@dotui/registry/ui/tooltip";
 
 import { Logo } from "@/components/logo";
 import { SearchCommand } from "@/components/search-command";

@@ -1,4 +1,4 @@
-import { Switch } from "@dotui/ui/components/switch";
+import { Switch } from "@dotui/registry/ui/switch";
 
 import { getComponentVariants } from "@/modules/style-editor/components/components-editor/demos/utils";
 import { Section } from "@/modules/style-editor/components/components-editor/section";

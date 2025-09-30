@@ -1,6 +1,6 @@
 "use client";
 
-import { COLOR_TOKENS } from "@dotui/registry-definition/registry-tokens";
+import { COLOR_TOKENS } from "@dotui/registry/tokens/registry";
 
 import { ColorAdjustments } from "@/modules/style-editor/components/colors-editor/color-adjustments";
 import { ColorScale } from "@/modules/style-editor/components/colors-editor/color-scale";

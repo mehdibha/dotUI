@@ -6,15 +6,10 @@ export const getFileSource = (filePath: string) => {
     process.cwd(),
     "..",
     "packages",
-    "ui",
+    "registry",
     "src",
     filePath,
   );
-
-  // console.log("filePath", filePath);
-  // console.log("fullPath", fullPath);
-
-  // return { fileName: "test", content: "test" };
   const fileContent = fs.readFileSync(fullPath, "utf-8");
 
   const fileName = path.basename(fullPath);

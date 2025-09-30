@@ -3,13 +3,13 @@ import defaultMdxComponents from "fumadocs-ui/mdx";
 import { ArrowUpRightIcon } from "lucide-react";
 import type { MDXComponents } from "mdx/types";
 
-import { Alert } from "@dotui/ui/components/alert";
-import { Badge } from "@dotui/ui/components/badge";
-import { Link as NavLink } from "@dotui/ui/components/link";
-import { cn } from "@dotui/ui/lib/utils";
-import type { AlertProps } from "@dotui/ui/components/alert";
-import type { BadgeProps } from "@dotui/ui/components/badge";
-import type { LinkProps } from "@dotui/ui/components/link";
+import { cn } from "@dotui/registry/lib/utils";
+import { Alert } from "@dotui/registry/ui/alert";
+import { Badge } from "@dotui/registry/ui/badge";
+import { Link as NavLink } from "@dotui/registry/ui/link";
+import type { AlertProps } from "@dotui/registry/ui/alert";
+import type { BadgeProps } from "@dotui/registry/ui/badge";
+import type { LinkProps } from "@dotui/registry/ui/link";
 
 import { BadgePalette } from "./badge-palette";
 import { Choice, Choices } from "./choices";

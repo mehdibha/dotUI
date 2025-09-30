@@ -1,7 +1,7 @@
 import Link from "next/link";
 
-import { Badge } from "@dotui/ui/components/badge";
-import { cn } from "@dotui/ui/lib/utils";
+import { cn } from "@dotui/registry/lib/utils";
+import { Badge } from "@dotui/registry/ui/badge";
 
 import { siteConfig } from "@/config";
 

@@ -1,5 +1,5 @@
-import { Button } from "@dotui/ui/components/button";
-import { Tooltip } from "@dotui/ui/components/tooltip";
+import { Button } from "@dotui/registry/ui/button";
+import { Tooltip } from "@dotui/registry/ui/tooltip";
 
 import { getComponentVariants } from "@/modules/style-editor/components/components-editor/demos/utils";
 import { Section } from "@/modules/style-editor/components/components-editor/section";

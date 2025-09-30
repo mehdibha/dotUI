@@ -1,0 +1,15 @@
+{
+  "name": "badge",
+  "type": "registry:ui",
+  "variants": {
+    "basic": {
+      "files": [
+        {
+          "type": "registry:ui",
+          "path": "ui/badge/basic.tsx",
+          "target": "ui/badge.tsx"
+        }
+      ]
+    }
+  }
+}

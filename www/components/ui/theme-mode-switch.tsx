@@ -8,8 +8,8 @@ import { tv } from "tailwind-variants";
 import type { Transition } from "motion/react";
 import type { VariantProps } from "tailwind-variants";
 
-import { focusRingGroup } from "@dotui/ui/lib/focus-styles";
-import { cn } from "@dotui/ui/lib/utils";
+import { focusRingGroup } from "@dotui/registry/lib/focus-styles";
+import { cn } from "@dotui/registry/lib/utils";
 
 const TRANSITION: Transition = { type: "spring", bounce: 0.05, duration: 0.2 };
 

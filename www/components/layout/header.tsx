@@ -4,10 +4,10 @@ import Link from "next/link";
 import { MoonIcon, SearchIcon, SunIcon } from "lucide-react";
 import type { PageTree } from "fumadocs-core/server";
 
-import { Button } from "@dotui/ui/components/button";
-import { Kbd } from "@dotui/ui/components/kbd";
-import { GitHubIcon } from "@dotui/ui/icons";
-import { cn } from "@dotui/ui/lib/utils";
+import { GitHubIcon } from "@dotui/registry/components/icons/github";
+import { cn } from "@dotui/registry/lib/utils";
+import { Button } from "@dotui/registry/ui/button";
+import { Kbd } from "@dotui/registry/ui/kbd";
 
 import { MobileNav } from "@/components/layout/mobile-nav";
 import { Logo } from "@/components/logo";

@@ -2,9 +2,10 @@ import { notFound } from "next/navigation";
 import { AlignLeftIcon, ExternalLinkIcon } from "lucide-react";
 import type { Metadata, Route } from "next";
 
-import { Button } from "@dotui/ui/components/button";
-import { AdobeIcon, GitHubIcon } from "@dotui/ui/icons";
-import { cn } from "@dotui/ui/lib/utils";
+import { AdobeIcon } from "@dotui/registry/components/icons/adobe";
+import { GitHubIcon } from "@dotui/registry/components/icons/github";
+import { cn } from "@dotui/registry/lib/utils";
+import { Button } from "@dotui/registry/ui/button";
 
 import { siteConfig } from "@/config";
 import { truncateOnWord } from "@/lib/string";

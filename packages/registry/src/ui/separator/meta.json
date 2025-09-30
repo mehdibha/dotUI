@@ -1,0 +1,15 @@
+{
+  "name": "separator",
+  "type": "registry:ui",
+  "variants": {
+    "basic": {
+      "files": [
+        {
+          "type": "registry:ui",
+          "path": "ui/separator/basic.tsx",
+          "target": "ui/separator.tsx"
+        }
+      ]
+    }
+  }
+}

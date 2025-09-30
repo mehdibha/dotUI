@@ -1,4 +1,4 @@
-import { Checkbox } from "@dotui/ui/components/checkbox";
+import { Checkbox } from "@dotui/registry/ui/checkbox";
 
 import { getComponentVariants } from "@/modules/style-editor/components/components-editor/demos/utils";
 import { Section } from "@/modules/style-editor/components/components-editor/section";

@@ -1,21 +1,10 @@
 "use client";
 
-import { iconLibraries } from "@dotui/registry-definition/registry-icons";
-import { registryIcons } from "@dotui/ui/__registry__/icons";
-import * as Icons from "@dotui/ui/__registry__/icons";
-import { Button } from "@dotui/ui/components/button";
-import { Label } from "@dotui/ui/components/field";
-import { FormControl } from "@dotui/ui/components/form";
-import { ListBox, ListBoxItem } from "@dotui/ui/components/list-box";
-import { Popover } from "@dotui/ui/components/popover";
-import {
-  SelectItem,
-  SelectRoot,
-  SelectValue,
-} from "@dotui/ui/components/select";
-import { Slider } from "@dotui/ui/components/slider";
-import { Skeleton } from "@dotui/ui/registry/components/skeleton/basic";
-import type { IconLibrary } from "@dotui/style-engine/types";
+import * as icons from "@dotui/registry/icons";
+import { iconLibraries } from "@dotui/registry/icons/registry";
+import { SelectItem } from "@dotui/registry/ui/select";
+import { Skeleton } from "@dotui/registry/ui/skeleton";
+import type { IconLibrary } from "@dotui/registry/__style-system__/types";
 
 import { useStyleEditorForm } from "../../context/style-editor-provider";
 import { useEditorStyle } from "../../hooks/use-editor-style";
@@ -71,7 +60,7 @@ export function IconsEditor() {
         </p>
         <DraftStyleProvider className="rounded-md border p-4">
           <div className="grid max-h-[168px] gap-2 overflow-hidden [grid-template-columns:repeat(auto-fill,minmax(36px,1fr))] [grid-template-rows:repeat(auto-fill,minmax(36px,1fr))] [&_svg]:size-6">
-            {Object.entries(registryIcons)
+            {Object.entries(icons)
               .slice(0, 100)
               .map(([name, IconComponent]) => {
                 return (

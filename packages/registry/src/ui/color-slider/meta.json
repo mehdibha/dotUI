@@ -1,0 +1,16 @@
+{
+  "name": "color-slider",
+  "type": "registry:ui",
+  "variants": {
+    "basic": {
+      "files": [
+        {
+          "type": "registry:ui",
+          "path": "ui/color-slider/basic.tsx",
+          "target": "ui/color-slider.tsx"
+        }
+      ],
+      "registryDependencies": ["field", "color-thumb"]
+    }
+  }
+}

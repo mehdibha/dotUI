@@ -15,17 +15,17 @@ import {
 import { motion } from "motion/react";
 import type { Route } from "next";
 
-import { registryBlocks } from "@dotui/registry-definition/registry-blocks";
-import { Button } from "@dotui/ui/components/button";
-import { Dialog } from "@dotui/ui/components/dialog";
-import { ListBox, ListBoxItem } from "@dotui/ui/components/list-box";
-import { Popover } from "@dotui/ui/components/popover";
-import { SelectRoot, SelectValue } from "@dotui/ui/components/select";
-import { Separator } from "@dotui/ui/components/separator";
-import { Skeleton } from "@dotui/ui/components/skeleton";
-import { ToggleButton } from "@dotui/ui/components/toggle-button";
-import { Tooltip } from "@dotui/ui/components/tooltip";
-import { cn, createScopedContext } from "@dotui/ui/lib/utils";
+import { registryBlocks } from "@dotui/registry/blocks/registry";
+import { cn, createScopedContext } from "@dotui/registry/lib/utils";
+import { Button } from "@dotui/registry/ui/button";
+import { Dialog } from "@dotui/registry/ui/dialog";
+import { ListBox, ListBoxItem } from "@dotui/registry/ui/list-box";
+import { Popover } from "@dotui/registry/ui/popover";
+import { SelectRoot, SelectValue } from "@dotui/registry/ui/select";
+import { Separator } from "@dotui/registry/ui/separator";
+import { Skeleton } from "@dotui/registry/ui/skeleton";
+import { ToggleButton } from "@dotui/registry/ui/toggle-button";
+import { Tooltip } from "@dotui/registry/ui/tooltip";
 
 import { useSidebarContext } from "@/components/layout/sidebar";
 import { useHorizontalResize } from "@/hooks/use-horizontal-resize";

@@ -10,18 +10,19 @@ import { useStore } from "@tanstack/react-form";
 import { PlusIcon, Trash2Icon } from "lucide-react";
 import type { CssColor } from "@adobe/leonardo-contrast-colors";
 
-import { SCALE_STEPS } from "@dotui/style-engine/constants";
-import { Badge } from "@dotui/ui/components/badge";
-import { Button } from "@dotui/ui/components/button";
-import { ColorSwatch } from "@dotui/ui/components/color-swatch";
+import { SCALE_STEPS } from "@dotui/registry/__style-system__/constants";
+import { cn } from "@dotui/registry/lib/utils";
+import { Badge } from "@dotui/registry/ui/badge";
+import { Button } from "@dotui/registry/ui/button";
+import { ColorSwatch } from "@dotui/registry/ui/color-swatch";
 import {
   Dialog,
   DialogBody,
   DialogHeader,
   DialogHeading,
   DialogRoot,
-} from "@dotui/ui/components/dialog";
-import { Skeleton } from "@dotui/ui/components/skeleton";
+} from "@dotui/registry/ui/dialog";
+import { Skeleton } from "@dotui/registry/ui/skeleton";
 import {
   TableBody,
   TableCell,
@@ -29,10 +30,9 @@ import {
   TableHeader,
   TableRoot,
   TableRow,
-} from "@dotui/ui/components/table";
-import { Tooltip } from "@dotui/ui/components/tooltip";
-import { cn } from "@dotui/ui/lib/utils";
-import type { ScaleId } from "@dotui/style-engine/types";
+} from "@dotui/registry/ui/table";
+import { Tooltip } from "@dotui/registry/ui/tooltip";
+import type { ScaleId } from "@dotui/registry/__style-system__/types";
 
 import { EditableInput } from "@/components/ui/editable-input";
 import { ON_CHANGE_DEBOUNCE_MS } from "@/modules/style-editor/constants";

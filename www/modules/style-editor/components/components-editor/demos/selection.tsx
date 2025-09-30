@@ -1,4 +1,4 @@
-import { Select, SelectItem } from "@dotui/ui/components/select";
+import { Select, SelectItem } from "@dotui/registry/ui/select";
 
 import { getComponentVariants } from "@/modules/style-editor/components/components-editor/demos/utils";
 import { Section } from "@/modules/style-editor/components/components-editor/section";

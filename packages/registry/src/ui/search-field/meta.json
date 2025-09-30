@@ -1,0 +1,16 @@
+{
+  "name": "search-field",
+  "type": "registry:ui",
+  "variants": {
+    "basic": {
+      "files": [
+        {
+          "type": "registry:ui",
+          "path": "ui/search-field/basic.tsx",
+          "target": "ui/search-field.tsx"
+        }
+      ],
+      "registryDependencies": ["field", "button"]
+    }
+  }
+}

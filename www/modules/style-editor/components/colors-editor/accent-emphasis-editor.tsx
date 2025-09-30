@@ -1,4 +1,4 @@
-import { cn } from "@dotui/ui/lib/utils";
+import { cn } from "@dotui/registry/lib/utils";
 
 import { useDraftStyleProducer } from "@/modules/style-editor/atoms/draft-style-atom";
 import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";

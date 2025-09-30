@@ -2,8 +2,8 @@ import { notFound } from "next/navigation";
 import { ExternalLinkIcon } from "lucide-react";
 import type { Metadata, Route } from "next";
 
-import { Button } from "@dotui/ui/components/button";
-import { cn } from "@dotui/ui/lib/utils";
+import { cn } from "@dotui/registry/lib/utils";
+import { Button } from "@dotui/registry/ui/button";
 
 import { siteConfig } from "@/config";
 import { truncateOnWord } from "@/lib/string";

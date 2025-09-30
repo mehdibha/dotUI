@@ -3,8 +3,8 @@
 import React from "react";
 import { CheckIcon, PencilIcon, XIcon } from "lucide-react";
 
-import { Button } from "@dotui/ui/components/button";
-import { cn } from "@dotui/ui/lib/utils";
+import { cn } from "@dotui/registry/lib/utils";
+import { Button } from "@dotui/registry/ui/button";
 
 import { AutoResizeTextField } from "@/components/ui/auto-resize-input";
 

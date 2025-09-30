@@ -1,0 +1,16 @@
+{
+  "name": "text-area",
+  "type": "registry:ui",
+  "variants": {
+    "basic": {
+      "files": [
+        {
+          "type": "registry:ui",
+          "path": "ui/text-area/basic.tsx",
+          "target": "ui/text-area.tsx"
+        }
+      ],
+      "registryDependencies": ["field", "input"]
+    }
+  }
+}

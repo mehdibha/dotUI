@@ -1,10 +1,10 @@
 "use client";
 
-import { FormControl } from "@dotui/ui/components/form";
-import { Select, SelectItem } from "@dotui/ui/components/select";
-import { Skeleton } from "@dotui/ui/components/skeleton";
-import { cn } from "@dotui/ui/lib/utils";
-import type { VariantsDefinition } from "@dotui/style-engine/types";
+import { cn } from "@dotui/registry/lib/utils";
+import { FormControl } from "@dotui/registry/ui/form";
+import { Select, SelectItem } from "@dotui/registry/ui/select";
+import { Skeleton } from "@dotui/registry/ui/skeleton";
+import type { VariantsDefinition } from "@dotui/registry/__style-system__/types";
 
 import { ColorTokens } from "@/modules/style-editor/components/colors-editor/color-tokens";
 import { DraftStyleProvider } from "@/modules/style-editor/components/draft-style-provider";

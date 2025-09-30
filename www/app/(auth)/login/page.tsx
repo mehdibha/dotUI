@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { ArrowLeftIcon } from "lucide-react";
 
-import { Button } from "@dotui/ui/components/button";
+import { Button } from "@dotui/registry/ui/button";
 
 import { LoginForm } from "@/modules/auth/components/login-form";
 import { getSession } from "@/modules/auth/lib/server";

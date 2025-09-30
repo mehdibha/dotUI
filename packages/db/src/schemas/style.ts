@@ -7,7 +7,7 @@ import type {
   IconsDefinition,
   ThemeDefinition,
   VariantsDefinition,
-} from "@dotui/style-engine/types";
+} from "@dotui/registry/__style-system__/types";
 
 import { user } from "./auth";
 

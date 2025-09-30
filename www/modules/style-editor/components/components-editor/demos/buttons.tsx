@@ -9,8 +9,8 @@ import {
   SendIcon,
 } from "lucide-react";
 
-import { Button } from "@dotui/ui/components/button";
-import { ToggleButton } from "@dotui/ui/components/toggle-button";
+import { Button } from "@dotui/registry/ui/button";
+import { ToggleButton } from "@dotui/registry/ui/toggle-button";
 
 import { getComponentVariants } from "@/modules/style-editor/components/components-editor/demos/utils";
 import { Section } from "@/modules/style-editor/components/components-editor/section";

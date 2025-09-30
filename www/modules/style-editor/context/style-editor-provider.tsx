@@ -8,10 +8,10 @@ import { createStyleSchema } from "@dotui/db/schemas";
 import {
   DEFAULT_LIGHT_MODE,
   DEFAULT_STYLE,
-} from "@dotui/style-engine/constants";
-import { createColorScalesV2 } from "@dotui/style-engine/core";
-import { useAppForm } from "@dotui/ui/components/form";
-import { toast } from "@dotui/ui/components/toast";
+} from "@dotui/registry/__style-system__/constants";
+import { createColorScalesV2 } from "@dotui/registry/__style-system__/core";
+import { useAppForm } from "@dotui/registry/ui/form";
+import { toast } from "@dotui/registry/ui/toast";
 
 import { useEditorStyle } from "../hooks/use-editor-style";
 import { useResolvedModeState } from "../hooks/use-resolved-mode";

@@ -11,11 +11,11 @@ import {
   XIcon,
 } from "lucide-react";
 
-import { Button } from "@dotui/ui/components/button";
-import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
-import { Skeleton } from "@dotui/ui/components/skeleton";
-import { Tooltip } from "@dotui/ui/components/tooltip";
-import { cn } from "@dotui/ui/lib/utils";
+import { cn } from "@dotui/registry/lib/utils";
+import { Button } from "@dotui/registry/ui/button";
+import { Dialog, DialogRoot } from "@dotui/registry/ui/dialog";
+import { Skeleton } from "@dotui/registry/ui/skeleton";
+import { Tooltip } from "@dotui/registry/ui/tooltip";
 
 import { LoginModal } from "@/modules/auth/components/login-modal";
 import { authClient } from "@/modules/auth/lib/client";

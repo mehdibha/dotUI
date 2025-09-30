@@ -1,4 +1,4 @@
-import { cn } from "@dotui/ui/lib/utils";
+import { cn } from "@dotui/registry/lib/utils";
 
 export function PageLayout({
   className,

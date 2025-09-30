@@ -2,12 +2,12 @@
 
 import React, { useCallback, useLayoutEffect, useMemo, useState } from "react";
 
-import * as TabsPrimitive from "@dotui/ui/components/tabs";
-import { cn } from "@dotui/ui/lib/utils";
+import { cn } from "@dotui/registry/lib/utils";
+import * as TabsPrimitive from "@dotui/registry/ui/tabs";
 import type {
   TabsProps as BaseProps,
   TabPanelProps,
-} from "@dotui/ui/components/tabs";
+} from "@dotui/registry/ui/tabs";
 
 type ChangeListener = (v: string) => void;
 const listeners = new Map<string, ChangeListener[]>();

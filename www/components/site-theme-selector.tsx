@@ -4,10 +4,10 @@ import React from "react";
 import { MonitorIcon, MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 
-import { Button } from "@dotui/ui/components/button";
-import { ListBox, ListBoxItem } from "@dotui/ui/components/list-box";
-import { Popover } from "@dotui/ui/components/popover";
-import { SelectRoot } from "@dotui/ui/components/select";
+import { Button } from "@dotui/registry/ui/button";
+import { ListBox, ListBoxItem } from "@dotui/registry/ui/list-box";
+import { Popover } from "@dotui/registry/ui/popover";
+import { SelectRoot } from "@dotui/registry/ui/select";
 
 export const ThemeSwitcher = ({ children }: { children?: React.ReactNode }) => {
   const { theme, setTheme } = useTheme();

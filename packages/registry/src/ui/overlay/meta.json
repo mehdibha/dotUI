@@ -1,0 +1,16 @@
+{
+  "name": "overlay",
+  "type": "registry:ui",
+  "variants": {
+    "basic": {
+      "files": [
+        {
+          "type": "registry:ui",
+          "path": "ui/overlay/basic.tsx",
+          "target": "ui/overlay.tsx"
+        }
+      ],
+      "registryDependencies": ["modal", "popover", "drawer", "use-is-mobile"]
+    }
+  }
+}

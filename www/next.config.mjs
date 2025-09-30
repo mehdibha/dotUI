@@ -9,7 +9,12 @@ await jiti.import("./env");
 
 /** @type {import("next").NextConfig} */
 const config = {
-  transpilePackages: ["@dotui/api", "@dotui/auth", "@dotui/db", "@dotui/ui"],
+  transpilePackages: [
+    "@dotui/api",
+    "@dotui/auth",
+    "@dotui/db",
+    "@dotui/registry",
+  ],
   typedRoutes: true,
   images: {
     remotePatterns: [

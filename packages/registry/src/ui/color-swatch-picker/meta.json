@@ -1,0 +1,16 @@
+{
+  "name": "color-swatch-picker",
+  "type": "registry:ui",
+  "variants": {
+    "basic": {
+      "files": [
+        {
+          "type": "registry:ui",
+          "path": "ui/color-swatch-picker/basic.tsx",
+          "target": "ui/color-swatch-picker.tsx"
+        }
+      ],
+      "registryDependencies": ["focus-styles", "color-swatch"]
+    }
+  }
+}

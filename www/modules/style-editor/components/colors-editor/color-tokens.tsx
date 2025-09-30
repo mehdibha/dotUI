@@ -2,11 +2,12 @@
 
 import { ChevronsUpDownIcon } from "lucide-react";
 
-import { COLOR_TOKENS } from "@dotui/registry-definition/registry-tokens";
-import { SCALE_STEPS } from "@dotui/style-engine/constants";
-import { ColorSwatch } from "@dotui/ui/components/color-swatch";
-import { SelectItem } from "@dotui/ui/components/select";
-import { Skeleton } from "@dotui/ui/components/skeleton";
+import { SCALE_STEPS } from "@dotui/registry/__style-system__/constants";
+import { cn } from "@dotui/registry/lib/utils";
+import { COLOR_TOKENS } from "@dotui/registry/tokens/registry";
+import { ColorSwatch } from "@dotui/registry/ui/color-swatch";
+import { SelectItem } from "@dotui/registry/ui/select";
+import { Skeleton } from "@dotui/registry/ui/skeleton";
 import {
   TableBody,
   TableCell,
@@ -14,10 +15,9 @@ import {
   TableHeader,
   TableRoot,
   TableRow,
-} from "@dotui/ui/components/table";
-import { cn } from "@dotui/ui/lib/utils";
-import type { ScaleId } from "@dotui/style-engine/types";
-import type { TableRootProps } from "@dotui/ui/components/table";
+} from "@dotui/registry/ui/table";
+import type { ScaleId } from "@dotui/registry/__style-system__/types";
+import type { TableRootProps } from "@dotui/registry/ui/table";
 
 import { ContextualHelp } from "@/components/ui/contextual-help";
 import { EditableInput } from "@/components/ui/editable-input";

@@ -2,10 +2,10 @@
 
 import React from "react";
 
-import { Button } from "@dotui/ui/components/button";
-import { Link } from "@dotui/ui/components/link";
-import { toast } from "@dotui/ui/components/toast";
-import { GitHubIcon } from "@dotui/ui/icons";
+import { GitHubIcon } from "@dotui/registry/components/icons/github";
+import { Button } from "@dotui/registry/ui/button";
+import { Link } from "@dotui/registry/ui/link";
+import { toast } from "@dotui/registry/ui/toast";
 
 import { Logo } from "@/components/logo";
 import { authClient } from "@/modules/auth/lib/client";

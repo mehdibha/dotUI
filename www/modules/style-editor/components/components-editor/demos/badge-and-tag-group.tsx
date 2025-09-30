@@ -1,4 +1,4 @@
-import { Badge } from "@dotui/ui/components/badge";
+import { Badge } from "@dotui/registry/ui/badge";
 
 import { getComponentVariants } from "@/modules/style-editor/components/components-editor/demos/utils";
 import { Section } from "@/modules/style-editor/components/components-editor/section";

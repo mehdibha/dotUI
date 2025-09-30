@@ -4,14 +4,12 @@ import React from "react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
 
-import { StyleProvider } from "@dotui/ui";
-import { Avatar } from "@dotui/ui/components/avatar";
-import { Badge } from "@dotui/ui/components/badge";
-import { Skeleton } from "@dotui/ui/components/skeleton";
-import { AdobeIcon, TailwindIcon } from "@dotui/ui/icons";
-import { focusRing } from "@dotui/ui/lib/focus-styles";
-import { cn } from "@dotui/ui/lib/utils";
-import { Cards } from "@dotui/ui/registry/blocks/showcase/cards/components/cards";
+import { AdobeIcon } from "@dotui/registry/components/icons/adobe";
+import { TailwindIcon } from "@dotui/registry/components/icons/tailwind";
+import { focusRing } from "@dotui/registry/lib/focus-styles";
+import { cn } from "@dotui/registry/lib/utils";
+import { Avatar } from "@dotui/registry/ui/avatar";
+import { Badge } from "@dotui/registry/ui/badge";
 import type { RouterOutputs } from "@dotui/api";
 
 import { useMounted } from "@/hooks/use-mounted";

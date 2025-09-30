@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@source "../../packages/ui/**/*.{ts,tsx}";
+@source "../../packages/registry/src//**/*.{ts,tsx}";
 @source "../**/*.{ts,tsx}";
 
 @import "tw-animate-css";
@@ -9,7 +9,7 @@
 @plugin "@tailwindcss/typography";
 
 @import "./docs.css";
-@import "@dotui/ui/focus-styles.css";
+@import "@dotui/registry/lib/focus-styles.css";
 
 @variant dark (&:where(.dark, .dark *));
 

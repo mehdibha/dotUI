@@ -1,7 +1,7 @@
 "use client";
 
-import { Dialog, DialogBody, DialogRoot } from "@dotui/ui/components/dialog";
-import type { DialogRootProps } from "@dotui/ui/components/dialog";
+import { Dialog, DialogBody, DialogRoot } from "@dotui/registry/ui/dialog";
+import type { DialogRootProps } from "@dotui/registry/ui/dialog";
 
 import { useStyleEditorParams } from "../hooks/use-style-editor-params";
 

@@ -1,0 +1,23 @@
+{
+  "name": "date-picker",
+  "type": "registry:ui",
+  "variants": {
+    "basic": {
+      "files": [
+        {
+          "type": "registry:ui",
+          "path": "ui/date-picker/basic.tsx",
+          "target": "ui/date-picker.tsx"
+        }
+      ],
+      "registryDependencies": [
+        "button",
+        "calendar",
+        "field",
+        "input",
+        "date-input",
+        "dialog"
+      ]
+    }
+  }
+}

@@ -1,9 +1,9 @@
 "use client";
 
-import { registryBackgroundPatterns } from "@dotui/registry-definition/registry-bg-patterns";
-import { registryTextures } from "@dotui/registry-definition/registry-textures";
-import { SelectItem } from "@dotui/ui/components/select";
-import { Skeleton } from "@dotui/ui/components/skeleton";
+import { registryBackgroundPatterns } from "@dotui/registry/background-patterns/registry";
+import { registryTextures } from "@dotui/registry/textures/registry";
+import { SelectItem } from "@dotui/registry/ui/select";
+import { Skeleton } from "@dotui/registry/ui/skeleton";
 
 import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
 import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";

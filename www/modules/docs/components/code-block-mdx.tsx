@@ -4,9 +4,9 @@ import { forwardRef, useCallback, useRef } from "react";
 import { Check, Copy } from "lucide-react";
 import type { HTMLAttributes, ReactNode } from "react";
 
-import { Button } from "@dotui/ui/components/button";
-import { cn } from "@dotui/ui/lib/utils";
-import type { ButtonProps } from "@dotui/ui/components/button";
+import { cn } from "@dotui/registry/lib/utils";
+import { Button } from "@dotui/registry/ui/button";
+import type { ButtonProps } from "@dotui/registry/ui/button";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useCopyButton } from "@/hooks/use-copy-button";

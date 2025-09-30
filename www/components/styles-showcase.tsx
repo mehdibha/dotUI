@@ -7,9 +7,9 @@ import { useTheme } from "next-themes";
 import { UNSAFE_PortalProvider as PortalProvider } from "react-aria";
 import type { Variants } from "motion/react";
 
-import { StyleProvider } from "@dotui/ui";
-import { Cards } from "@dotui/ui/registry/blocks/showcase/cards/components/cards";
-import { Tab, TabList, Tabs } from "@dotui/ui/registry/components/tabs/motion";
+import { StyleProvider } from "@dotui/registry";
+import { Cards } from "@dotui/registry/blocks/showcase/cards/components/cards";
+import { Tab, TabList, Tabs } from "@dotui/registry/ui/tabs/motion";
 import type { RouterOutputs } from "@dotui/api";
 
 import { useMounted } from "@/hooks/use-mounted";

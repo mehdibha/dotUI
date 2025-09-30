@@ -1,4 +1,4 @@
-import { registryBlocks } from "@dotui/registry-definition/registry-blocks";
+import { registryBlocks } from "@dotui/registry/blocks/registry";
 
 import { BlockView } from "@/modules/blocks/block-view";
 

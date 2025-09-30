@@ -4,10 +4,8 @@ import React from "react";
 import { CheckIcon, ExternalLinkIcon, TerminalIcon } from "lucide-react";
 import type { RegistryItem } from "shadcn/schema";
 
-import { registryBlocks } from "@dotui/registry-definition/registry-blocks";
-import { Button } from "@dotui/ui/components/button";
-import { Skeleton } from "@dotui/ui/components/skeleton";
-import { cn } from "@dotui/ui/lib/utils";
+import { cn } from "@dotui/registry/lib/utils";
+import { Button } from "@dotui/registry/ui/button";
 
 import { ThemeModeSwitch } from "@/components/ui/theme-mode-switch";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
@@ -16,6 +14,7 @@ import { useActiveStyle } from "@/modules/styles/hooks/use-active-style";
 interface BlockViewProps {
   block?: RegistryItem;
 }
+
 export function BlockView({ block }: BlockViewProps) {
   if (!block) {
     return <div>Block not found</div>;

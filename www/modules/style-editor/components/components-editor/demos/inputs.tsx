@@ -1,8 +1,8 @@
 import { EyeOffIcon } from "lucide-react";
 
-import { SearchField } from "@dotui/ui/components/search-field";
-import { TextArea } from "@dotui/ui/components/text-area";
-import { TextField } from "@dotui/ui/components/text-field";
+import { SearchField } from "@dotui/registry/ui/search-field";
+import { TextArea } from "@dotui/registry/ui/text-area";
+import { TextField } from "@dotui/registry/ui/text-field";
 
 import { getComponentVariants } from "@/modules/style-editor/components/components-editor/demos/utils";
 import { Section } from "@/modules/style-editor/components/components-editor/section";

@@ -1,8 +1,8 @@
-import { Button } from "@dotui/ui/components/button";
-import { Combobox, ComboboxItem } from "@dotui/ui/components/combobox";
-import { ListBox, ListBoxItem } from "@dotui/ui/components/list-box";
-import { Menu, MenuItem, MenuRoot } from "@dotui/ui/components/menu";
-import { Select, SelectItem } from "@dotui/ui/components/select";
+import { Button } from "@dotui/registry/ui/button";
+import { Combobox, ComboboxItem } from "@dotui/registry/ui/combobox";
+import { ListBox, ListBoxItem } from "@dotui/registry/ui/list-box";
+import { Menu, MenuItem, MenuRoot } from "@dotui/registry/ui/menu";
+import { Select, SelectItem } from "@dotui/registry/ui/select";
 
 import { getComponentVariants } from "@/modules/style-editor/components/components-editor/demos/utils";
 import { Section } from "@/modules/style-editor/components/components-editor/section";
