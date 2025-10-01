@@ -24,7 +24,9 @@ export const VariantsProvider = ({
   return <VariantsContext value={variants}>{children}</VariantsContext>;
 };
 
-export const useVariant = (componentName: keyof Variants) => {
+export const useVariant = <K extends keyof Variants>(
+  componentName: K,
+): Variants[K] | null => {
   const variants = React.useContext(VariantsContext);
   if (!variants) {
     return null;

@@ -1,6 +1,6 @@
 import type { RegistryItem } from "shadcn/schema";
 
-import { base } from "@dotui/registry/base/registry";
+import { registryBase } from "@dotui/registry/base/registry";
 import { iconLibraries } from "@dotui/registry/icons/registry";
 
 import { updateRegistryDependencies } from "../helpers/update-registry-deps";
@@ -11,9 +11,7 @@ export function generateRegistryBase(options: {
   baseUrl: string;
   style: Style;
 }): RegistryItem {
-  let registryItem = base;
-
-  registryItem = updateRegistryDependencies(base, options);
+  const registryItem = updateRegistryDependencies(registryBase[0], options);
 
   const iconLibrary = iconLibraries.find(
     (lib) => lib.name === options.style.icons.library,

@@ -8,26 +8,57 @@ import type { Variants } from "@dotui/registry/_style-system/types";
 
 import { useVariant, VariantsProvider } from "./variants-provider";
 
-export const createDynamicComponent = <Props extends {}>(
+// Type helper to ensure all non-"basic" variants are included
+type OmitBasic<T extends string> = T extends "basic" ? never : T;
+
+// Utility to create a properly typed variants object
+export type VariantsMap<Props, VariantKey extends string> = Record<
+  OmitBasic<VariantKey>,
+  React.LazyExoticComponent<React.ComponentType<Props>>
+>;
+
+/**
+ * Helper to safely extract className from props
+ * Returns undefined if className doesn't exist or isn't a string
+ */
+function getClassName(props: Record<string, unknown>): string | undefined {
+  if ("className" in props && typeof props.className === "string") {
+    return props.className;
+  }
+  return undefined;
+}
+
+export const createDynamicComponent = <
+  Props extends Record<string, any> = Record<string, unknown>,
+  VariantKey extends string = string,
+>(
   componentName: keyof Variants,
   slotName: string,
   DefaultComponent: React.FC<Props>,
-  variants: Record<
-    string,
-    React.LazyExoticComponent<React.ComponentType<Props>>
-  >,
+  variants: VariantsMap<Props, VariantKey>,
   disableSkeleton?: boolean,
 ): React.FC<Props> => {
   const Component = (props: Props) => {
-    const variantName = useVariant(componentName);
+    const rawVariantName = useVariant(componentName);
     const disableSuspense = useDisableSuspense();
 
     // If the variant is not defined, we are not in a preview
-    if (!variantName) {
+    if (!rawVariantName) {
       return <DefaultComponent {...props} />;
     }
 
-    const LazyComponent = variants[variantName];
+    // After null check, variantName is guaranteed to be a string enum value
+    // TypeScript infers complex union types from Variants, so we need to help it understand
+    // that this is just a string value at runtime
+    const variantName = rawVariantName as string;
+
+    // Extract className safely without type assertions
+    const className = getClassName(props);
+
+    // Type-safe variant lookup - we need to cast to OmitBasic<VariantKey>
+    // since the variants map excludes "basic"
+    const variantKey = variantName as OmitBasic<VariantKey>;
+    const LazyComponent = variants[variantKey];
 
     // If LazyComponent is not defined, its because it is the default variant
     if (!LazyComponent) {
@@ -39,7 +70,7 @@ export const createDynamicComponent = <Props extends {}>(
         <ErrorBoundary
           fallback={
             <Error
-              componentName={componentName}
+              componentName={String(componentName)}
               slotName={slotName}
               variantName={variantName}
             />
@@ -47,8 +78,7 @@ export const createDynamicComponent = <Props extends {}>(
         >
           <React.Suspense
             fallback={
-              // @ts-expect-error: we assume that the component has a className prop
-              <Skeleton show={!disableSkeleton} className={props?.className}>
+              <Skeleton show={!disableSkeleton} className={className}>
                 <VariantsProvider variants={DEFAULT_VARIANTS_DEFINITION}>
                   <DefaultComponent {...props} />
                 </VariantsProvider>
@@ -63,15 +93,23 @@ export const createDynamicComponent = <Props extends {}>(
       );
     }
 
+    // Render the lazy component
+    // LazyExoticComponent<ComponentType<Props>> is compatible with ComponentType<Props>
+    // but TypeScript needs explicit casting to understand the relationship
+    const renderLazy = () => {
+      const Component = LazyComponent as React.ComponentType<Props>;
+      return <Component {...props} />;
+    };
+
     if (disableSuspense) {
-      return <LazyComponent {...props} />;
+      return renderLazy();
     }
 
     return (
       <ErrorBoundary
         fallback={
           <Error
-            componentName={componentName}
+            componentName={String(componentName)}
             slotName={slotName}
             variantName={variantName}
           />
@@ -79,17 +117,14 @@ export const createDynamicComponent = <Props extends {}>(
       >
         <React.Suspense
           fallback={
-            // @ts-expect-error: we assume that the component has a className prop
-            <Skeleton className={props?.className}>
+            <Skeleton className={className}>
               <VariantsProvider variants={DEFAULT_VARIANTS_DEFINITION}>
                 <DefaultComponent {...props} />
               </VariantsProvider>
             </Skeleton>
           }
         >
-          <DisableSuspense>
-            <LazyComponent {...props} />
-          </DisableSuspense>
+          <DisableSuspense>{renderLazy()}</DisableSuspense>
         </React.Suspense>
       </ErrorBoundary>
     );

@@ -15,8 +15,9 @@ import type {
   AlertRootProps,
   AlertTitleProps,
 } from "./basic";
+import type { AlertVariant } from "./meta";
 
-export const Alert = createDynamicComponent<AlertProps>(
+export const Alert = createDynamicComponent<AlertProps, AlertVariant>(
   "alert",
   "Alert",
   _Alert,
@@ -34,7 +35,7 @@ export const Alert = createDynamicComponent<AlertProps>(
   },
 );
 
-export const AlertRoot = createDynamicComponent<AlertRootProps>(
+export const AlertRoot = createDynamicComponent<AlertRootProps, AlertVariant>(
   "alert",
   "AlertRoot",
   _AlertRoot,
@@ -52,7 +53,7 @@ export const AlertRoot = createDynamicComponent<AlertRootProps>(
   },
 );
 
-export const AlertTitle = createDynamicComponent<AlertTitleProps>(
+export const AlertTitle = createDynamicComponent<AlertTitleProps, AlertVariant>(
   "alert",
   "AlertTitle",
   _AlertTitle,
@@ -70,22 +71,20 @@ export const AlertTitle = createDynamicComponent<AlertTitleProps>(
   },
 );
 
-export const AlertContent = createDynamicComponent<AlertContentProps>(
-  "alert",
-  "AlertContent",
-  _AlertContent,
-  {
-    notch: React.lazy(() =>
-      import("./notch").then((mod) => ({
-        default: mod.AlertContent,
-      })),
-    ),
-    "notch-2": React.lazy(() =>
-      import("./notch-2").then((mod) => ({
-        default: mod.AlertContent,
-      })),
-    ),
-  },
-);
+export const AlertContent = createDynamicComponent<
+  AlertContentProps,
+  AlertVariant
+>("alert", "AlertContent", _AlertContent, {
+  notch: React.lazy(() =>
+    import("./notch").then((mod) => ({
+      default: mod.AlertContent,
+    })),
+  ),
+  "notch-2": React.lazy(() =>
+    import("./notch-2").then((mod) => ({
+      default: mod.AlertContent,
+    })),
+  ),
+});
 
 export type { AlertProps, AlertRootProps, AlertTitleProps, AlertContentProps };

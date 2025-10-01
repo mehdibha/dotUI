@@ -1,8 +1,68 @@
 import { z } from "zod";
 
-import { registryBackgroundPatterns } from "../background-patterns/registry";
-import { iconLibraries } from "../icons/registry";
-import { registryTextures } from "../textures/registry";
+import { registryBackgroundPatterns } from "@dotui/registry/background-patterns/registry";
+import { iconLibraries } from "@dotui/registry/icons/registry";
+import { focusStylesVariants } from "@dotui/registry/lib/focus-styles/meta";
+import { registry } from "@dotui/registry/registry";
+import { registryTextures } from "@dotui/registry/textures/registry";
+import { alertVariants } from "@dotui/registry/ui/alert/meta";
+import { avatarVariants } from "@dotui/registry/ui/avatar/meta";
+import { badgeVariants } from "@dotui/registry/ui/badge/meta";
+import { breadcrumbsVariants } from "@dotui/registry/ui/breadcrumbs/meta";
+import { buttonGroupVariants } from "@dotui/registry/ui/button-group/meta";
+import { buttonVariants } from "@dotui/registry/ui/button/meta";
+import { calendarVariants } from "@dotui/registry/ui/calendar/meta";
+import { cardVariants } from "@dotui/registry/ui/card/meta";
+import { checkboxGroupVariants } from "@dotui/registry/ui/checkbox-group/meta";
+import { checkboxVariants } from "@dotui/registry/ui/checkbox/meta";
+import { colorAreaVariants } from "@dotui/registry/ui/color-area/meta";
+import { colorFieldVariants } from "@dotui/registry/ui/color-field/meta";
+import { colorPickerVariants } from "@dotui/registry/ui/color-picker/meta";
+import { colorSliderVariants } from "@dotui/registry/ui/color-slider/meta";
+import { colorSwatchPickerVariants } from "@dotui/registry/ui/color-swatch-picker/meta";
+import { colorSwatchVariants } from "@dotui/registry/ui/color-swatch/meta";
+import { colorThumbVariants } from "@dotui/registry/ui/color-thumb/meta";
+import { comboboxVariants } from "@dotui/registry/ui/combobox/meta";
+import { commandVariants } from "@dotui/registry/ui/command/meta";
+import { dateFieldVariants } from "@dotui/registry/ui/date-field/meta";
+import { dateInputVariants } from "@dotui/registry/ui/date-input/meta";
+import { datePickerVariants } from "@dotui/registry/ui/date-picker/meta";
+import { dateRangePickerVariants } from "@dotui/registry/ui/date-range-picker/meta";
+import { dialogVariants } from "@dotui/registry/ui/dialog/meta";
+import { drawerVariants } from "@dotui/registry/ui/drawer/meta";
+import { dropZoneVariants } from "@dotui/registry/ui/drop-zone/meta";
+import { fieldVariants } from "@dotui/registry/ui/field/meta";
+import { fileTriggerVariants } from "@dotui/registry/ui/file-trigger/meta";
+import { formVariants } from "@dotui/registry/ui/form/meta";
+import { inputVariants } from "@dotui/registry/ui/input/meta";
+import { kbdVariants } from "@dotui/registry/ui/kbd/meta";
+import { linkVariants } from "@dotui/registry/ui/link/meta";
+import { listBoxVariants } from "@dotui/registry/ui/list-box/meta";
+import { loaderVariants } from "@dotui/registry/ui/loader/meta";
+import { menuVariants } from "@dotui/registry/ui/menu/meta";
+import { modalVariants } from "@dotui/registry/ui/modal/meta";
+import { numberFieldVariants } from "@dotui/registry/ui/number-field/meta";
+import { overlayVariants } from "@dotui/registry/ui/overlay/meta";
+import { popoverVariants } from "@dotui/registry/ui/popover/meta";
+import { progressBarVariants } from "@dotui/registry/ui/progress-bar/meta";
+import { radioGroupVariants } from "@dotui/registry/ui/radio-group/meta";
+import { searchFieldVariants } from "@dotui/registry/ui/search-field/meta";
+import { selectVariants } from "@dotui/registry/ui/select/meta";
+import { separatorVariants } from "@dotui/registry/ui/separator/meta";
+import { skeletonVariants } from "@dotui/registry/ui/skeleton/meta";
+import { sliderVariants } from "@dotui/registry/ui/slider/meta";
+import { switchVariants } from "@dotui/registry/ui/switch/meta";
+import { tableVariants } from "@dotui/registry/ui/table/meta";
+import { tabsVariants } from "@dotui/registry/ui/tabs/meta";
+import { tagGroupVariants } from "@dotui/registry/ui/tag-group/meta";
+import { textAreaVariants } from "@dotui/registry/ui/text-area/meta";
+import { textFieldVariants } from "@dotui/registry/ui/text-field/meta";
+import { textVariants } from "@dotui/registry/ui/text/meta";
+import { timeFieldVariants } from "@dotui/registry/ui/time-field/meta";
+import { toastVariants } from "@dotui/registry/ui/toast/meta";
+import { toggleButtonGroupVariants } from "@dotui/registry/ui/toggle-button-group/meta";
+import { toggleButtonVariants } from "@dotui/registry/ui/toggle-button/meta";
+import { tooltipVariants } from "@dotui/registry/ui/tooltip/meta";
 
 // ---------------------------------  Definitions  ----------------------------------- //
 
@@ -111,23 +171,25 @@ export const themeDefinitionSchema = z.object({
 
 // Variants
 export const variantsDefinitionSchema = z.object({
-  alert: z.enum(["basic", "notch", "notch-2"]),
-  buttons: z.enum(["basic", "shine", "outline", "ripple"]),
-  loader: z.enum(["ring"]),
-  "focus-style": z.enum(["basic"]),
-  inputs: z.enum(["basic"]),
-  pickers: z.enum(["basic"]),
-  selection: z.enum(["basic"]),
-  calendars: z.enum(["basic"]),
-  "list-box-and-menu": z.enum(["basic"]),
-  overlays: z.enum(["basic"]),
-  checkboxes: z.enum(["basic"]),
-  radios: z.enum(["basic"]),
-  switch: z.enum(["basic"]),
-  slider: z.enum(["basic"]),
-  "badge-and-tag-group": z.enum(["basic"]),
-  tooltip: z.enum(["basic"]),
-  link: z.enum(["basic"]),
+  alert: z.enum(alertVariants),
+  buttons: z.enum(buttonVariants),
+  calendars: z.enum(calendarVariants),
+  card: z.enum(cardVariants),
+  checkboxes: z.enum(checkboxVariants),
+  "focus-style": z.enum(focusStylesVariants),
+  inputs: z.enum(inputVariants),
+  link: z.enum(linkVariants),
+  "list-box-and-menu": z.enum(listBoxVariants),
+  loader: z.enum(loaderVariants),
+  overlays: z.enum(overlayVariants),
+  pickers: z.enum(selectVariants),
+  radios: z.enum(radioGroupVariants),
+  selection: z.enum(selectVariants),
+  skeleton: z.enum(skeletonVariants),
+  slider: z.enum(sliderVariants),
+  switch: z.enum(switchVariants),
+  "badge-and-tag-group": z.enum(badgeVariants),
+  tooltip: z.enum(tooltipVariants),
 });
 
 export const styleDefinitionSchema = z.object({
@@ -222,74 +284,77 @@ export const themeSchema = z.object({
   }),
 });
 
+/**
+ * Variants schema built statically from imported variant arrays
+ * This approach preserves full type information for perfect TypeScript inference
+ *
+ * Each UI component from the registry gets its own entry here, enabling
+ * proper autocomplete and type safety for all variants
+ */
 export const variantsSchema = z.object({
-  // components
-  alert: z.enum(["basic", "notch", "notch-2"]),
-  avatar: z.enum(["basic"]),
-  badge: z.enum(["basic"]),
-  breadcrumbs: z.enum(["basic"]),
-  button: z.enum(["basic", "shine", "outline", "ripple"]),
-  "button-group": z.enum(["basic"]),
-  calendar: z.enum(["basic", "cal"]),
-  card: z.enum(["basic"]),
-  checkbox: z.enum(["basic"]),
-  "checkbox-group": z.enum(["basic"]),
-  "color-area": z.enum(["basic"]),
-  "color-field": z.enum(["basic"]),
-  "color-picker": z.enum(["basic"]),
-  "color-slider": z.enum(["basic"]),
-  "color-swatch": z.enum(["basic"]),
-  "color-swatch-picker": z.enum(["basic"]),
-  "color-thumb": z.enum(["basic"]),
-  combobox: z.enum(["basic"]),
-  command: z.enum(["basic"]),
-  "date-field": z.enum(["basic"]),
-  "date-input": z.enum(["basic"]),
-  "date-picker": z.enum(["basic"]),
-  "date-range-picker": z.enum(["basic"]),
-  dialog: z.enum(["basic"]),
-  drawer: z.enum(["basic"]),
-  "drop-zone": z.enum(["basic"]),
-  field: z.enum(["basic"]),
-  "file-trigger": z.enum(["basic"]),
-  form: z.enum(["basic", "react-hook-form"]),
-  input: z.enum(["basic"]),
-  kbd: z.enum(["basic"]),
-  link: z.enum(["basic"]),
-  "list-box": z.enum(["basic"]),
-  loader: z.enum(["dots", "line", "ring", "tailspin", "wave"]),
-  menu: z.enum(["basic"]),
-  modal: z.enum(["basic", "blur"]),
-  "number-field": z.enum(["basic"]),
-  overlay: z.enum(["basic"]),
-  popover: z.enum(["basic"]),
-  "progress-bar": z.enum(["basic"]),
-  "radio-group": z.enum(["basic"]),
-  ripple: z.enum(["basic"]),
-  "search-field": z.enum(["basic"]),
-  select: z.enum(["basic"]),
-  separator: z.enum(["basic"]),
-  skeleton: z.enum(["basic"]),
-  slider: z.enum(["basic"]),
-  switch: z.enum(["basic"]),
-  table: z.enum(["basic"]),
-  tabs: z.enum(["basic", "motion"]),
-  "tag-group": z.enum(["basic"]),
-  text: z.enum(["basic"]),
-  "text-area": z.enum(["basic"]),
-  "text-field": z.enum(["basic"]),
-  "time-field": z.enum(["basic"]),
-  "toggle-button": z.enum(["basic"]),
-  "toggle-button-group": z.enum(["basic"]),
-  tooltip: z.enum(["basic", "motion"]),
-  toast: z.enum(["basic"]),
-
-  // lib
-  "focus-style": z.enum(["basic"]),
+  alert: z.enum(alertVariants),
+  avatar: z.enum(avatarVariants),
+  badge: z.enum(badgeVariants),
+  breadcrumbs: z.enum(breadcrumbsVariants),
+  button: z.enum(buttonVariants),
+  "button-group": z.enum(buttonGroupVariants),
+  calendar: z.enum(calendarVariants),
+  card: z.enum(cardVariants),
+  checkbox: z.enum(checkboxVariants),
+  "checkbox-group": z.enum(checkboxGroupVariants),
+  "color-area": z.enum(colorAreaVariants),
+  "color-field": z.enum(colorFieldVariants),
+  "color-picker": z.enum(colorPickerVariants),
+  "color-slider": z.enum(colorSliderVariants),
+  "color-swatch": z.enum(colorSwatchVariants),
+  "color-swatch-picker": z.enum(colorSwatchPickerVariants),
+  "color-thumb": z.enum(colorThumbVariants),
+  combobox: z.enum(comboboxVariants),
+  command: z.enum(commandVariants),
+  "date-field": z.enum(dateFieldVariants),
+  "date-input": z.enum(dateInputVariants),
+  "date-picker": z.enum(datePickerVariants),
+  "date-range-picker": z.enum(dateRangePickerVariants),
+  dialog: z.enum(dialogVariants),
+  drawer: z.enum(drawerVariants),
+  "drop-zone": z.enum(dropZoneVariants),
+  field: z.enum(fieldVariants),
+  "file-trigger": z.enum(fileTriggerVariants),
+  "focus-styles": z.enum(focusStylesVariants),
+  form: z.enum(formVariants),
+  input: z.enum(inputVariants),
+  kbd: z.enum(kbdVariants),
+  link: z.enum(linkVariants),
+  "list-box": z.enum(listBoxVariants),
+  loader: z.enum(loaderVariants),
+  menu: z.enum(menuVariants),
+  modal: z.enum(modalVariants),
+  "number-field": z.enum(numberFieldVariants),
+  overlay: z.enum(overlayVariants),
+  popover: z.enum(popoverVariants),
+  "progress-bar": z.enum(progressBarVariants),
+  "radio-group": z.enum(radioGroupVariants),
+  "search-field": z.enum(searchFieldVariants),
+  select: z.enum(selectVariants),
+  separator: z.enum(separatorVariants),
+  skeleton: z.enum(skeletonVariants),
+  slider: z.enum(sliderVariants),
+  switch: z.enum(switchVariants),
+  table: z.enum(tableVariants),
+  tabs: z.enum(tabsVariants),
+  "tag-group": z.enum(tagGroupVariants),
+  text: z.enum(textVariants),
+  "text-area": z.enum(textAreaVariants),
+  "text-field": z.enum(textFieldVariants),
+  "time-field": z.enum(timeFieldVariants),
+  toast: z.enum(toastVariants),
+  "toggle-button": z.enum(toggleButtonVariants),
+  "toggle-button-group": z.enum(toggleButtonGroupVariants),
+  tooltip: z.enum(tooltipVariants),
 });
 
 export const styleSchema = z.object({
-  theme: themeSchema, // used in {styleName}/theme
-  icons: iconsDefinitionSchema, // used in {styleName}/base and {styleName}/{componentName}
-  variants: variantsSchema, // used in {styleName}/{componentName}
+  theme: themeSchema,
+  icons: iconsDefinitionSchema,
+  variants: variantsSchema,
 });

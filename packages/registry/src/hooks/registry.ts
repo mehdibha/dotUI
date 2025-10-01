@@ -1,6 +1,6 @@
-import type { Registry } from "shadcn/schema";
+import type { RegistryItem } from "@dotui/registry/types";
 
-export const hooks: Registry["items"] = [
+export const registryHooks: RegistryItem[] = [
   {
     name: "use-is-mobile",
     type: "registry:hook",

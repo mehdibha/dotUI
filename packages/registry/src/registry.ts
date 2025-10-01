@@ -1,15 +1,15 @@
-import type { Registry } from "shadcn/schema";
+import type { RegistryItem } from "@dotui/registry/types";
 
-import { base } from "./base/registry";
+import { registryBase } from "./base/registry";
 import { registryBlocks } from "./blocks/registry";
-import { hooks } from "./hooks/registry";
-import { lib } from "./lib/registry";
+import { registryHooks } from "./hooks/registry";
+import { registryLib } from "./lib/registry";
 import { registryUi } from "./ui/registry";
 
-export const registry: Registry["items"] = [
-  base,
+export const registry: RegistryItem[] = [
+  ...registryBase,
   ...registryUi,
   ...registryBlocks,
-  ...hooks,
-  ...lib,
+  ...registryHooks,
+  ...registryLib,
 ];

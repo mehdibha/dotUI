@@ -36,7 +36,6 @@ export const DEFAULT_VARIANTS_DEFINITION: VariantsDefinition = {
   alert: "basic",
   buttons: "basic",
   loader: "ring",
-  "focus-style": "basic",
   inputs: "basic",
   pickers: "basic",
   selection: "basic",
@@ -50,6 +49,10 @@ export const DEFAULT_VARIANTS_DEFINITION: VariantsDefinition = {
   "badge-and-tag-group": "basic",
   tooltip: "basic",
   link: "basic",
+  card: "basic",
+  skeleton: "basic",
+
+  "focus-style": "basic",
 };
 
 export const DEFAULT_VARIANTS: Variants = {
@@ -119,7 +122,6 @@ export const DEFAULT_VARIANTS: Variants = {
   field: "basic",
 
   command: "basic",
-  ripple: "basic",
 
   text: "basic",
   "tag-group": "basic",
@@ -128,7 +130,7 @@ export const DEFAULT_VARIANTS: Variants = {
 
   card: "basic",
 
-  "focus-style": "basic",
+  "focus-styles": "basic",
 };
 
 export const DEFAULT_CSS = {
