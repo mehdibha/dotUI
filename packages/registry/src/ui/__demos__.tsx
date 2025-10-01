@@ -286,9 +286,7 @@ export const Index: Record<
     ),
   },
   "calendar/demos/range-calendar/non-contiguous-ranges": {
-    files: [
-      "registry/ui/calendar/demos/range-calendar/non-contiguous-ranges.tsx",
-    ],
+    files: ["ui/calendar/demos/range-calendar/non-contiguous-ranges.tsx"],
     component: React.lazy(
       () =>
         import(
