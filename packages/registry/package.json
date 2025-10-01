@@ -21,7 +21,7 @@
     "./style-system/utils": "./src/_style-system/utils/index.ts"
   },
   "scripts": {
-    "build:registry": "tsx scripts/build-registry.ts && prettier --log-level silent --write \"src/__registry__/**/*.{ts,tsx}\" --cache",
+    "build": "tsx scripts/build-registry.ts",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint",
