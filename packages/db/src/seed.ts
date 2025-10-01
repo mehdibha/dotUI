@@ -1,10 +1,10 @@
 import { eq } from "drizzle-orm";
 
-import { createStyle } from "@dotui/registry/__style-system__/core";
+import { createStyle } from "@dotui/registry/style-system/core";
 import {
   styleDefinitionSchema,
   styleSchema,
-} from "@dotui/registry/__style-system__/schemas";
+} from "@dotui/registry/style-system/schemas";
 
 import { db } from "./client";
 import { DEFAULT_STYLES } from "./constants";
