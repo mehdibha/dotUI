@@ -2,17 +2,11 @@
 
 import React from "react";
 import Link from "next/link";
-import { useTheme } from "next-themes";
 
-import { AdobeIcon } from "@dotui/registry/components/icons/adobe";
-import { TailwindIcon } from "@dotui/registry/components/icons/tailwind";
 import { focusRing } from "@dotui/registry/lib/focus-styles";
 import { cn } from "@dotui/registry/lib/utils";
 import { Avatar } from "@dotui/registry/ui/avatar";
-import { Badge } from "@dotui/registry/ui/badge";
 import type { RouterOutputs } from "@dotui/api";
-
-import { useMounted } from "@/hooks/use-mounted";
 
 export function StyleCard({
   style,
@@ -20,49 +14,9 @@ export function StyleCard({
   style: RouterOutputs["style"]["getFeatured"][number];
 }) {
   const [isLoading, setLoading] = React.useState(true);
-  const { resolvedTheme } = useTheme();
-  const isMounted = useMounted();
 
   return (
     <div className="@container/style-card space-y-3">
-      <div className="max-w-xl space-y-2">
-        <div className="flex items-center gap-3">
-          <Avatar
-            src={style?.user?.image ?? ""}
-            fallback={style?.user?.username?.slice(0, 2)}
-            shape="square"
-            className="mt-1 size-6"
-          />
-          <h2 className="font-heading text-xl font-medium leading-none tracking-tight lg:text-2xl">
-            {style.name}
-          </h2>
-        </div>
-        {style.description && (
-          <p className="text-fg-muted text-balance text-base">
-            {style.description}
-          </p>
-        )}
-        <div className="flex flex-wrap items-center gap-2">
-          {[
-            {
-              label: "tailwindcss",
-              icon: <TailwindIcon />,
-            },
-            {
-              label: "react-aria-components",
-              icon: <AdobeIcon fill="#E1251B" />,
-            },
-          ].map((item) => (
-            <Badge
-              key={item.label}
-              className="text-fg-muted [&_svg]:text-fg gap-2 rounded-full"
-            >
-              {item.icon}
-              {item.label}
-            </Badge>
-          ))}
-        </div>
-      </div>
       <div className="@2xl/style-card:h-[300px] relative flex h-[250px] max-h-[min(80svh,500px)] items-center justify-center overflow-hidden rounded-sm border duration-0 min-[550px]:max-md:h-[300px]">
         <Link
           href={`/styles/${style.user.username}/${style.name}`}
@@ -89,6 +43,20 @@ export function StyleCard({
               isLoading && "opacity-0",
             )}
           />
+        </div>
+      </div>
+      <div className="flex items-center justify-between gap-2 px-2">
+        <h2 className="font-heading text-xl font-medium leading-none tracking-tight">
+          {style.name}
+        </h2>
+        <div className="flex items-center gap-2">
+          <Avatar
+            src={style.user.image ?? ""}
+            fallback={style.user.username.slice(0, 2)}
+            shape="square"
+            className="mt-1 size-5"
+          />
+          <p>{style.user.username}</p>
         </div>
       </div>
     </div>

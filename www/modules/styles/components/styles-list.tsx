@@ -82,15 +82,13 @@ export function StylesList({
       </div>
       <div
         className={cn(
-          "@3xl/styles-list:grid-cols-2 @5xl/styles-list:grid-cols-3 grid grid-cols-1 gap-6",
-          search && "mt-4",
+          "@3xl/styles-list:grid-cols-2 @5xl/styles-list:grid-cols-3 grid grid-cols-1 gap-4",
+          search && "mt-6",
           props.className,
         )}
       >
-        {(!styles || styles.length === 0) && (
-          <div className="flex items-center justify-center">
-            <p className="text-fg-muted text-sm">No styles found</p>
-          </div>
+        {(!styles || styles.length === 0 || filtered.length === 0) && (
+          <p className="text-fg-muted text-sm">No styles found</p>
         )}
         {filtered.map((style) => (
           <StyleCard key={style.name} style={style} />
