@@ -2,8 +2,8 @@ import path from "node:path";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-import { buildRegistryItem } from "@dotui/registry/style-system/shadcn-registry";
 import { createStyle } from "@dotui/registry/style-system/core";
+import { buildRegistryItem } from "@dotui/registry/style-system/shadcn-registry";
 
 import { env } from "@/env";
 import { caller } from "@/lib/trpc/server";
