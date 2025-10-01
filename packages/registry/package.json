@@ -17,7 +17,6 @@
     "./style-system/constants": "./src/__style-system__/constants.ts",
     "./style-system/schemas": "./src/__style-system__/schemas.ts",
     "./style-system/types": "./src/__style-system__/types.ts"
-
   },
   "scripts": {
     "build:registry": "tsx scripts/build-registry.ts && prettier --log-level silent --write \"src/__registry__/**/*.{ts,tsx}\" --cache",
