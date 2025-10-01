@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { createDynamicComponent } from "@dotui/registry/__internal__/helpers/create-dynamic-component";
+import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
 import { TextArea as _TextArea, TextAreaRoot as _TextAreaRoot } from "./basic";
 import type { TextAreaProps, TextAreaRootProps } from "./basic";

@@ -1,10 +1,10 @@
 import React from "react";
 
-import { createVariants } from "@dotui/registry/__style-system__/core";
+import { createVariants } from "@dotui/registry/_style-system/core";
 import type {
   Variants,
   VariantsDefinition,
-} from "@dotui/registry/__style-system__/types";
+} from "@dotui/registry/_style-system/types";
 
 const VariantsContext = React.createContext<Variants | null>(null);
 

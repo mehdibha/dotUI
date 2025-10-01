@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import type { StyleDefinition } from "@dotui/registry/__style-system__/types";
+import type { StyleDefinition } from "@dotui/registry/_style-system/types";
 
 import { ThemeProvider } from "./theme-provider";
 import { VariantsProvider } from "./variants-provider";

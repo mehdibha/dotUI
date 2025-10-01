@@ -4,7 +4,7 @@ import * as icons from "@dotui/registry/icons";
 import { iconLibraries } from "@dotui/registry/icons/registry";
 import { SelectItem } from "@dotui/registry/ui/select";
 import { Skeleton } from "@dotui/registry/ui/skeleton";
-import type { IconLibrary } from "@dotui/registry/__style-system__/types";
+import type { IconLibrary } from "@dotui/registry/style-system/types";
 
 import { useStyleEditorForm } from "../../context/style-editor-provider";
 import { useEditorStyle } from "../../hooks/use-editor-style";

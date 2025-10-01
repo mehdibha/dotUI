@@ -4,7 +4,7 @@ import { cn } from "@dotui/registry/lib/utils";
 import { FormControl } from "@dotui/registry/ui/form";
 import { Select, SelectItem } from "@dotui/registry/ui/select";
 import { Skeleton } from "@dotui/registry/ui/skeleton";
-import type { VariantsDefinition } from "@dotui/registry/__style-system__/types";
+import type { VariantsDefinition } from "@dotui/registry/style-system/types";
 
 import { ColorTokens } from "@/modules/style-editor/components/colors-editor/color-tokens";
 import { DraftStyleProvider } from "@/modules/style-editor/components/draft-style-provider";

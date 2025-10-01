@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { createDynamicComponent } from "@dotui/registry/__internal__/helpers/create-dynamic-component";
+import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
 import { DateInput as _DateInput, DateSegment as _DateSegment } from "./basic";
 import type { DateInputProps, DateSegmentProps } from "./basic";

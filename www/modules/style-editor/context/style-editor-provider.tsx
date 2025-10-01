@@ -8,8 +8,8 @@ import { createStyleSchema } from "@dotui/db/schemas";
 import {
   DEFAULT_LIGHT_MODE,
   DEFAULT_STYLE,
-} from "@dotui/registry/__style-system__/constants";
-import { createColorScalesV2 } from "@dotui/registry/__style-system__/core";
+} from "@dotui/registry/style-system/constants";
+import { createColorScalesV2 } from "@dotui/registry/style-system/core";
 import { useAppForm } from "@dotui/registry/ui/form";
 import { toast } from "@dotui/registry/ui/toast";
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { createDynamicComponent } from "@dotui/registry/__internal__/helpers/create-dynamic-component";
+import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
 import { Badge as _Badge } from "./basic";
 import type { BadgeProps } from "./basic";

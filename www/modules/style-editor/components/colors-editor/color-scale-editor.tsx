@@ -10,8 +10,8 @@ import { useStore } from "@tanstack/react-form";
 import { PlusIcon, Trash2Icon } from "lucide-react";
 import type { CssColor } from "@adobe/leonardo-contrast-colors";
 
-import { SCALE_STEPS } from "@dotui/registry/__style-system__/constants";
 import { cn } from "@dotui/registry/lib/utils";
+import { SCALE_STEPS } from "@dotui/registry/style-system/constants";
 import { Badge } from "@dotui/registry/ui/badge";
 import { Button } from "@dotui/registry/ui/button";
 import { ColorSwatch } from "@dotui/registry/ui/color-swatch";
@@ -32,7 +32,7 @@ import {
   TableRow,
 } from "@dotui/registry/ui/table";
 import { Tooltip } from "@dotui/registry/ui/tooltip";
-import type { ScaleId } from "@dotui/registry/__style-system__/types";
+import type { ScaleId } from "@dotui/registry/style-system/types";
 
 import { EditableInput } from "@/components/ui/editable-input";
 import { ON_CHANGE_DEBOUNCE_MS } from "@/modules/style-editor/constants";

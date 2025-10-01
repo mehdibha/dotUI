@@ -2,8 +2,8 @@
 
 import { ChevronsUpDownIcon } from "lucide-react";
 
-import { SCALE_STEPS } from "@dotui/registry/__style-system__/constants";
 import { cn } from "@dotui/registry/lib/utils";
+import { SCALE_STEPS } from "@dotui/registry/style-system/constants";
 import { COLOR_TOKENS } from "@dotui/registry/tokens/registry";
 import { ColorSwatch } from "@dotui/registry/ui/color-swatch";
 import { SelectItem } from "@dotui/registry/ui/select";
@@ -16,7 +16,7 @@ import {
   TableRoot,
   TableRow,
 } from "@dotui/registry/ui/table";
-import type { ScaleId } from "@dotui/registry/__style-system__/types";
+import type { ScaleId } from "@dotui/registry/style-system/types";
 import type { TableRootProps } from "@dotui/registry/ui/table";
 
 import { ContextualHelp } from "@/components/ui/contextual-help";

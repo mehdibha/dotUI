@@ -1,6 +1,6 @@
 "use client";
 
-import { createDynamicComponent } from "@dotui/registry/__internal__/helpers/create-dynamic-component";
+import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
 import { Overlay as _Overlay } from "./basic";
 import type { OverlayProps } from "./basic";

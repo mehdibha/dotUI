@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { createDynamicComponent } from "../../__internal__/helpers/create-dynamic-component";
+import { createDynamicComponent } from "../../_helpers/create-dynamic-component";
 import {
   Alert as _Alert,
   AlertContent as _AlertContent,

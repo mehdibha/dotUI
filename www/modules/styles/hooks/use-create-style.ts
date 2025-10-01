@@ -6,9 +6,9 @@ import {
   DEFAULT_ICON_STROKE_WIDTH,
   DEFAULT_THEME,
   DEFAULT_VARIANTS_DEFINITION,
-} from "@dotui/registry/__style-system__/constants";
+} from "@dotui/registry/style-system/constants";
 import { toast } from "@dotui/registry/ui/toast";
-import type { StyleDefinition } from "@dotui/registry/__style-system__/types";
+import type { StyleDefinition } from "@dotui/registry/style-system/types";
 
 import { useTRPCClient } from "@/lib/trpc/react";
 import { authClient } from "@/modules/auth/lib/client";

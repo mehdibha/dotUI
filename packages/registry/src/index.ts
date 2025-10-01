@@ -1,7 +1,9 @@
-export {
-  StyleProvider,
-  useCurrentStyle,
-} from "./__internal__/helpers/style-provider";
-export { FontLoader } from "./__internal__/helpers/font-loader";
-export { type CommonIconProps } from "./__internal__/helpers/create-icon";
+export { StyleProvider, useCurrentStyle } from "./_helpers/style-provider";
+export { VariantsProvider } from "./_helpers/variants-provider";
+export type { StyleProviderProps } from "./_helpers/style-provider";
+
+export { FontLoader } from "./_helpers/font-loader";
+export { type CommonIconProps } from "./_helpers/create-icon";
 export { registry } from "./registry";
+
+export { buildRegistryItem } from "./_style-system/shadcn-registry";

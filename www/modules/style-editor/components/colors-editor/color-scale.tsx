@@ -4,7 +4,7 @@ import { Button as AriaButton } from "react-aria-components";
 
 import { Skeleton } from "@dotui/registry/ui/skeleton";
 import { Tooltip } from "@dotui/registry/ui/tooltip";
-import type { ScaleId } from "@dotui/registry/__style-system__/types";
+import type { ScaleId } from "@dotui/registry/style-system/types";
 
 import {
   useGeneratedTheme,

@@ -1,10 +1,10 @@
 import React from "react";
 
-import { createTheme } from "@dotui/registry/__style-system__/core";
+import { createTheme } from "@dotui/registry/_style-system/core";
 import { registryBackgroundPatterns } from "@dotui/registry/background-patterns/registry";
 import { cn } from "@dotui/registry/lib/utils";
 import { registryTextures } from "@dotui/registry/textures/registry";
-import type { ThemeDefinition } from "@dotui/registry/__style-system__/types";
+import type { ThemeDefinition } from "@dotui/registry/_style-system/types";
 
 type Mode = "light" | "dark";
 

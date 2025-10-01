@@ -1,6 +1,6 @@
 "use client";
 
-import { createDynamicComponent } from "@dotui/registry/__internal__/helpers/create-dynamic-component";
+import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
 import { ToggleButtonGroup as _ToggleButtonGroup } from "./basic";
 import type { ToggleButtonGroupProps } from "./basic";

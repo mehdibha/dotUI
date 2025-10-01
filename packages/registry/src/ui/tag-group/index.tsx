@@ -1,6 +1,6 @@
 "use client";
 
-import { createDynamicComponent } from "@dotui/registry/__internal__/helpers/create-dynamic-component";
+import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
 import { Tag as _Tag, TagGroup as _TagGroup } from "./basic";
 import type { TagGroupProps, TagProps } from "./basic";

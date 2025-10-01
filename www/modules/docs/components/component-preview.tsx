@@ -1,8 +1,8 @@
 import React from "react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 
-import { Index } from "@dotui/registry/__internal__/demos";
 import { cn } from "@dotui/registry/lib/utils";
+import { Index } from "@dotui/registry/ui/__demos__";
 import { Alert } from "@dotui/registry/ui/alert";
 
 import { getFileSource } from "@/modules/docs/lib/get-file-source";

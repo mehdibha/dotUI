@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { createDynamicComponent } from "@dotui/registry/__internal__/helpers/create-dynamic-component";
+import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
 import { Loader as _Loader } from "./ring";
 import type { LoaderProps } from "./ring";

@@ -1,7 +1,7 @@
 import { useStore } from "@tanstack/react-form";
 
 import { StyleProvider } from "@dotui/registry";
-import type { StyleProviderProps } from "@dotui/registry/__internal__/helpers/style-provider";
+import type { StyleProviderProps } from "@dotui/registry";
 
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 import { useStyleEditorForm } from "../context/style-editor-provider";

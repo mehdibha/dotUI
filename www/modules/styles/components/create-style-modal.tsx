@@ -22,7 +22,7 @@ import { FormControl } from "@dotui/registry/ui/form";
 import { Select, SelectItem } from "@dotui/registry/ui/select";
 import { TextArea } from "@dotui/registry/ui/text-area";
 import { TextField } from "@dotui/registry/ui/text-field";
-import type { StyleDefinition } from "@dotui/registry/__style-system__/types";
+import type { StyleDefinition } from "@dotui/registry/style-system/types";
 
 import { LoginModal } from "@/modules/auth/components/login-modal";
 import { authClient } from "@/modules/auth/lib/client";
