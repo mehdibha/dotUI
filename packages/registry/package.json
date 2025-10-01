@@ -14,6 +14,7 @@
     "./lib/utils": "./src/lib/utils.tsx",
     "./lib/focus-styles.css": "./src/lib/focus-styles/styles.css",
     "./style-system/core": "./src/_style-system/core/index.ts",
+    "./style-system/shadcn-registry": "./src/_style-system/shadcn-registry/index.ts",
     "./style-system/constants": "./src/_style-system/constants.ts",
     "./style-system/schemas": "./src/_style-system/schemas.ts",
     "./style-system/types": "./src/_style-system/types.ts",
