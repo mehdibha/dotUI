@@ -19,7 +19,6 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
-    "dev:ui": "pnpm --filter=@dotui/ui dev",
     "dev:www": "pnpm --filter=www dev",
     "start:www": "pnpm --filter=www start",
     "build:www": "pnpm --filter=www build",

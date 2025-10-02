@@ -2,7 +2,7 @@ import React from "react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 
 import { cn } from "@dotui/registry/lib/utils";
-import { Index } from "@dotui/registry/ui/__demos__";
+import { Index } from "@dotui/registry/ui/demos";
 import { Alert } from "@dotui/registry/ui/alert";
 
 import { getFileSource } from "@/modules/docs/lib/get-file-source";
