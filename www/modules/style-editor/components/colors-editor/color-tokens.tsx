@@ -61,7 +61,13 @@ export const ColorTokens = ({
               <TableCell className="flex items-center gap-2 pl-0">
                 <TokenName tokenId={tokenId} />
                 {tokenDefinition.description && (
-                  <ContextualHelp>{tokenDefinition.description}</ContextualHelp>
+                  <ContextualHelp
+                    dialogProps={{
+                      className: "text-sm",
+                    }}
+                  >
+                    {tokenDefinition.description}
+                  </ContextualHelp>
                 )}
               </TableCell>
               <TableCell>
@@ -83,19 +89,22 @@ const TokenName = ({ tokenId }: { tokenId: string }) => {
   const { isPending } = useEditorStyle();
 
   return (
-    <form.AppField name={`theme.colors.tokens.${tokenId}.name`}>
-      {(field) => (
+    <form.Subscribe
+      selector={(state) => state.values.theme.colors.tokens[tokenId]?.name}
+    >
+      {(name) => (
         <Skeleton show={isPending} className="rounded-full">
-          <div className="bg-muted rounded-full p-1 pl-3">
-            <EditableInput
+          <div className="bg-muted rounded-full p-1 px-3 font-medium">
+            {name}
+            {/* <EditableInput
               value={field.state.value}
               onSubmit={(newVal) => field.handleChange(newVal as any)}
               className="text-fg-muted !text-sm font-normal [&_[data-slot='button']]:rounded-full"
-            />
+            /> */}
           </div>
         </Skeleton>
       )}
-    </form.AppField>
+    </form.Subscribe>
   );
 };
 

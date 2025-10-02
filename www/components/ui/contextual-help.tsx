@@ -3,12 +3,17 @@ import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";
 import { Dialog, DialogRoot } from "@dotui/registry/ui/dialog";
 import type { ButtonProps } from "@dotui/registry/ui/button";
+import type { DialogProps } from "@dotui/registry/ui/dialog";
 
 export function ContextualHelp({
   children,
   className,
+  dialogProps,
   ...props
-}: Omit<ButtonProps, "children"> & { children: React.ReactNode }) {
+}: Omit<ButtonProps, "children"> & {
+  children: React.ReactNode;
+  dialogProps?: DialogProps;
+}) {
   return (
     <DialogRoot>
       <Button
@@ -23,7 +28,12 @@ export function ContextualHelp({
       <Dialog
         type="popover"
         mobileType="drawer"
-        popoverProps={{ placement: "top", className: "max-w-64" }}
+        {...dialogProps}
+        popoverProps={{
+          placement: "top",
+          ...dialogProps?.popoverProps,
+          className: cn("max-w-64", dialogProps?.popoverProps?.className),
+        }}
       >
         {children}
       </Dialog>
