@@ -78,7 +78,7 @@ export function ColorScaleEditor({ scaleId }: { scaleId: ScaleId }) {
         drawerProps={{ placement: "left", className: "min-w-72" }}
         className="!pb-0"
       >
-        <DialogHeader>
+        <DialogHeader className="mb-1">
           <ScaleNameEditor scaleId={scaleId} />
         </DialogHeader>
         <DialogBody className="flex flex-col pb-4">
@@ -95,18 +95,30 @@ function ScaleNameEditor({ scaleId }: { scaleId: ScaleId }) {
   const { resolvedMode } = useResolvedModeState();
 
   return (
-    <form.AppField
-      name={`theme.colors.modes.${resolvedMode}.scales.${scaleId}.name`}
-    >
-      {(field) => (
-        <EditableInput
-          as={DialogHeading}
-          value={field.state.value}
-          onSubmit={(newVal) => field.handleChange(newVal as any)}
-        />
-      )}
-    </form.AppField>
+    <DialogHeading>
+      <form.Subscribe
+        selector={(state) =>
+          state.values.theme.colors.modes[resolvedMode].scales[scaleId].name
+        }
+      >
+        {(name) => `${name} scale`}
+      </form.Subscribe>
+    </DialogHeading>
   );
+
+  // return (
+  //   <form.AppField
+  //     name={`theme.colors.modes.${resolvedMode}.scales.${scaleId}.name`}
+  //   >
+  //     {(field) => (
+  //       <EditableInput
+  //         as={DialogHeading}
+  //         value={field.state.value}
+  //         onSubmit={(newVal) => field.handleChange(newVal as any)}
+  //       />
+  //     )}
+  //   </form.AppField>
+  // );
 }
 
 function ColorKeysEditor({ scaleId }: { scaleId: ScaleId }) {
