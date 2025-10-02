@@ -58,17 +58,19 @@ export const ColorTokens = ({
           if (!tokenDefinition) return null;
           return (
             <TableRow key={tokenId} id={tokenId}>
-              <TableCell className="flex items-center gap-2 pl-0">
-                <TokenName tokenId={tokenId} />
-                {tokenDefinition.description && (
-                  <ContextualHelp
-                    dialogProps={{
-                      className: "text-sm",
-                    }}
-                  >
-                    {tokenDefinition.description}
-                  </ContextualHelp>
-                )}
+              <TableCell className="pl-0">
+                <div className="flex items-center gap-2">
+                  <TokenName tokenId={tokenId} />
+                  {tokenDefinition.description && (
+                    <ContextualHelp
+                      dialogProps={{
+                        className: "text-sm",
+                      }}
+                    >
+                      {tokenDefinition.description}
+                    </ContextualHelp>
+                  )}
+                </div>
               </TableCell>
               <TableCell>
                 <TokenSelect
