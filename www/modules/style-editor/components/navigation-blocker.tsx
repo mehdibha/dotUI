@@ -1,18 +1,14 @@
 "use client";
 
 import React from "react";
-import { Route } from "next";
 import { useRouter } from "next/navigation";
 import { useStore } from "@tanstack/react-form";
+import type { Route } from "next";
 
 import { Button } from "@dotui/registry/ui/button";
-import {
-  Dialog,
-  DialogBody,
-  DialogFooter,
-  DialogRoot,
-} from "@dotui/registry/ui/dialog";
+import { Dialog, DialogBody, DialogFooter } from "@dotui/registry/ui/dialog";
 
+import { env } from "@/env";
 import { useDraftStyle } from "../atoms/draft-style-atom";
 import { useStyleEditorForm } from "../context/style-editor-provider";
 
@@ -26,7 +22,7 @@ export function NavigationBlocker() {
   const isDirty = useStore(form.store, (state) => state.isDirty);
   const { clearDraft } = useDraftStyle();
 
-  const [isDialogOpen, setIsDialogOpen] = React.useState(false);
+  const [isOpen, setOpen] = React.useState(false);
   const [pendingNavigationUrl, setPendingNavigationUrl] = React.useState<
     string | null
   >(null);
@@ -34,7 +30,7 @@ export function NavigationBlocker() {
   // Block browser navigation (refresh, close tab, etc.)
   React.useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      if (isDirty) {
+      if (isDirty && env.NODE_ENV === "production") {
         e.preventDefault();
         e.returnValue = "";
       }
@@ -68,7 +64,7 @@ export function NavigationBlocker() {
         if (url.pathname !== currentUrl.pathname) {
           e.preventDefault();
           setPendingNavigationUrl(link.href);
-          setIsDialogOpen(true);
+          setOpen(true);
         }
       }
     };
@@ -87,12 +83,13 @@ export function NavigationBlocker() {
 
   const handleDiscardChanges = () => {
     clearDraft();
-    setIsDialogOpen(false);
+    setOpen(false);
     handleNavigation();
   };
 
   const handleSaveChanges = async () => {
     await form.handleSubmit();
+    setOpen(false);
     handleNavigation();
   };
 
@@ -101,8 +98,8 @@ export function NavigationBlocker() {
       role="alertdialog"
       isDismissable
       title="Unsaved changes"
-      isOpen={isDialogOpen}
-      onOpenChange={setIsDialogOpen}
+      isOpen={isOpen}
+      onOpenChange={setOpen}
     >
       <DialogBody>
         <p className="text-fg-muted text-sm">

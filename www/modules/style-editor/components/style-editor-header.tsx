@@ -19,12 +19,13 @@ import { Tooltip } from "@dotui/registry/ui/tooltip";
 
 import { LoginModal } from "@/modules/auth/components/login-modal";
 import { authClient } from "@/modules/auth/lib/client";
+import { useDraftStyle } from "@/modules/style-editor/atoms/draft-style-atom";
 import { CodeModal } from "@/modules/style-editor/components/code-modal";
 import { PreviewFrame } from "@/modules/style-editor/components/preview";
 import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
 import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
+import { useResolvedModeState } from "@/modules/style-editor/hooks/use-resolved-mode";
 import { CreateStyleModal } from "@/modules/styles/components/create-style-modal";
-import { useResolvedModeState } from "../hooks/use-resolved-mode";
 
 export function StyleEditorHeader() {
   return (
@@ -47,9 +48,9 @@ export function StyleEditorHeader() {
 
 function StyleEditorHeaderName() {
   const form = useStyleEditorForm();
-  const { isLoading } = useEditorStyle();
+  const { isPending } = useEditorStyle();
   return (
-    <Skeleton show={isLoading}>
+    <Skeleton show={isPending}>
       <h1 className="truncate text-lg font-bold leading-none lg:text-2xl">
         <form.Subscribe selector={(state) => state.values.name}>
           {(name) => name}
@@ -63,7 +64,7 @@ function StyleEditorHeaderActions() {
   const form = useStyleEditorForm();
   const { resolvedMode } = useResolvedModeState();
   const { data, isPending: isEditorStylePending } = useEditorStyle();
-
+  const { clearDraft } = useDraftStyle();
   const { data: session, isPending: isSessionPending } =
     authClient.useSession();
 
@@ -108,7 +109,15 @@ function StyleEditorHeaderActions() {
       </DialogRoot>
       <form.AppForm>
         <Tooltip content="Reset">
-          <form.ResetButton aria-label="Reset form" size="sm" shape="square">
+          <form.ResetButton
+            aria-label="Reset form"
+            size="sm"
+            shape="square"
+            onPress={() => {
+              form.reset();
+              clearDraft();
+            }}
+          >
             <RotateCcwIcon />
           </form.ResetButton>
         </Tooltip>

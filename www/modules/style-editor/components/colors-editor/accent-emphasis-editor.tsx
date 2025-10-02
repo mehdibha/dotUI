@@ -1,6 +1,7 @@
 import { cn } from "@dotui/registry/lib/utils";
 
 import { useDraftStyle } from "@/modules/style-editor/atoms/draft-style-atom";
+import { ON_CHANGE_DEBOUNCE_MS } from "@/modules/style-editor/constants";
 import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
 import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
 
@@ -62,6 +63,7 @@ export const AccentEmphasisEditor = () => {
           applyAccentLevel(value);
           saveDraft();
         },
+        onChangeDebounceMs: ON_CHANGE_DEBOUNCE_MS,
       }}
     >
       {(field) => (

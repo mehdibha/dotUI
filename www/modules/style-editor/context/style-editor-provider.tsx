@@ -14,11 +14,12 @@ import { createColorScales } from "@dotui/registry/style-system/core";
 import { useAppForm } from "@dotui/registry/ui/form";
 import { toast } from "@dotui/registry/ui/toast";
 
-import { NavigationBlocker } from "../components/navigation-blocker";
-import { useEditorStyle } from "../hooks/use-editor-style";
-import { useResolvedModeState } from "../hooks/use-resolved-mode";
-import { useStyleEditorParams } from "../hooks/use-style-editor-params";
-import { useUpdateStyleMutation } from "../hooks/use-update-style-mutation";
+import { NavigationBlocker } from "@/modules/style-editor/components/navigation-blocker";
+import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
+import { useResolvedModeState } from "@/modules/style-editor/hooks/use-resolved-mode";
+import { useStyleEditorParams } from "@/modules/style-editor/hooks/use-style-editor-params";
+import { useUpdateStyleMutation } from "@/modules/style-editor/hooks/use-update-style-mutation";
+import { useDraftStyle } from "../atoms/draft-style-atom";
 
 const styleEditorFormSchema = createStyleSchema.extend({});
 
@@ -50,6 +51,7 @@ const convertColorObjectsToStrings = (data: StyleFormData): StyleFormData => {
 const useForm = () => {
   const { data: style, refetch, isError } = useEditorStyle();
   const { username, style: styleName } = useStyleEditorParams();
+  const { saveDraft } = useDraftStyle();
 
   const updateStyleMutation = useUpdateStyleMutation(
     {
@@ -205,4 +207,22 @@ export const useSyncTheme = () => {
     );
   }
   return ctx;
+};
+
+export const StyleEditorForm = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  const form = useStyleEditorForm();
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        form.handleSubmit();
+      }}
+    >
+      {children}
+    </form>
+  );
 };
