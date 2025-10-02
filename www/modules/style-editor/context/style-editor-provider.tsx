@@ -2,6 +2,7 @@
 
 import React from "react";
 import type { ContrastColor } from "@adobe/leonardo-contrast-colors";
+import type { Color } from "react-aria-components";
 import type z from "zod/v4";
 
 import { createStyleSchema } from "@dotui/db/schemas";
@@ -9,10 +10,11 @@ import {
   DEFAULT_LIGHT_MODE,
   DEFAULT_STYLE,
 } from "@dotui/registry/style-system/constants";
-import { createColorScalesV2 } from "@dotui/registry/style-system/core";
+import { createColorScales } from "@dotui/registry/style-system/core";
 import { useAppForm } from "@dotui/registry/ui/form";
 import { toast } from "@dotui/registry/ui/toast";
 
+import { useDraftStyle } from "../atoms/draft-style-atom";
 import { useEditorStyle } from "../hooks/use-editor-style";
 import { useResolvedModeState } from "../hooks/use-resolved-mode";
 import { useStyleEditorParams } from "../hooks/use-style-editor-params";
@@ -25,6 +27,24 @@ export type StyleFormData = z.infer<typeof styleEditorFormSchema>;
 const defaultValues: StyleFormData = {
   name: "random-fake",
   ...DEFAULT_STYLE,
+};
+
+const convertColorObjectsToStrings = (data: StyleFormData): StyleFormData => {
+  const converted = structuredClone(data);
+
+  (["light", "dark"] as const).forEach((mode) => {
+    const modeData = converted.theme.colors.modes[mode];
+    (Object.keys(modeData.scales) as (keyof typeof modeData.scales)[]).forEach(
+      (scaleKey) => {
+        const scale = modeData.scales[scaleKey];
+        scale.colorKeys = scale.colorKeys.map((color: string | Color) =>
+          typeof color === "string" ? color : color.toString("hex"),
+        );
+      },
+    );
+  });
+
+  return converted;
 };
 
 const useForm = () => {
@@ -59,7 +79,9 @@ const useForm = () => {
     },
 
     onSubmit: async ({ formApi, value }) => {
-      await updateStyleMutation.mutateAsync(value);
+      // Convert Color objects to strings before submission
+      const convertedValue = convertColorObjectsToStrings(value);
+      await updateStyleMutation.mutateAsync(convertedValue);
       await refetch();
       formApi.reset();
     },
@@ -84,19 +106,27 @@ export function StyleEditorProvider({
   );
 }
 
-export const useStyleEditorForm = () => {
-  const context = React.useContext(StyleEditorFormContext);
-  if (!context) {
+// Overload signatures
+export function useStyleEditorForm(
+  disableWarning: true,
+): ReturnType<typeof useForm> | null;
+export function useStyleEditorForm(
+  disableWarning?: false,
+): ReturnType<typeof useForm>;
+
+export function useStyleEditorForm(disableWarning = false) {
+  const context = React.use(StyleEditorFormContext);
+  if (!context && !disableWarning) {
     throw new Error(
       "useStyleEditorForm must be used within a StyleEditorFormProvider",
     );
   }
   return context;
-};
+}
 
 type GeneratedTheme = ContrastColor[];
 
-const defaultGeneratedTheme: GeneratedTheme = createColorScalesV2({
+const defaultGeneratedTheme: GeneratedTheme = createColorScales({
   lightness: DEFAULT_LIGHT_MODE.lightness,
   saturation: DEFAULT_LIGHT_MODE.saturation,
   contrast: DEFAULT_LIGHT_MODE.contrast,
@@ -123,7 +153,7 @@ export function GeneratedThemeProvider({
   const { resolvedMode } = useResolvedModeState();
 
   const syncTheme = React.useCallback(() => {
-    const generatedTheme = createColorScalesV2({
+    const generatedTheme = createColorScales({
       lightness: form.getFieldValue(
         `theme.colors.modes.${resolvedMode}.lightness`,
       ),

@@ -10,7 +10,7 @@ import { cn } from "@dotui/registry/lib/utils";
 import type { StyleDefinition } from "@dotui/registry/style-system/types";
 
 import { useMounted } from "@/hooks/use-mounted";
-import { useDraftStyleConsumer } from "@/modules/style-editor/atoms/draft-style-atom";
+import { useDraftStyle } from "@/modules/style-editor/atoms/draft-style-atom";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 
 export const BlockViewLayout = ({
@@ -31,7 +31,7 @@ export const BlockViewLayout = ({
 
   const { activeMode } = usePreferences();
   const isMounted = useMounted();
-  const { draftStyle } = useDraftStyleConsumer(styleSlug);
+  const { draftStyle } = useDraftStyle(styleSlug);
   const { resolvedTheme } = useTheme();
 
   const style = React.useMemo(() => {

@@ -3,7 +3,6 @@ import { z } from "zod";
 import { registryBackgroundPatterns } from "@dotui/registry/background-patterns/registry";
 import { iconLibraries } from "@dotui/registry/icons/registry";
 import { focusStylesVariants } from "@dotui/registry/lib/focus-styles/meta";
-import { registry } from "@dotui/registry/registry";
 import { registryTextures } from "@dotui/registry/textures/registry";
 import { alertVariants } from "@dotui/registry/ui/alert/meta";
 import { avatarVariants } from "@dotui/registry/ui/avatar/meta";
@@ -76,14 +75,7 @@ export const iconsDefinitionSchema = z.object({
 // Colors
 export const colorScaleSchema = z.object({
   name: z.string().min(1),
-  colorKeys: z
-    .array(
-      z.object({
-        id: z.number(),
-        color: z.string(),
-      }),
-    )
-    .min(1),
+  colorKeys: z.array(z.string()).min(1),
   ratios: z.array(z.number().min(0)),
   smooth: z.boolean(),
   overrides: z.record(z.string(), z.string()),

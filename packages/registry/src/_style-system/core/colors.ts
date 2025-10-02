@@ -6,6 +6,7 @@ import {
   Theme as LeonardoTheme,
 } from "@adobe/leonardo-contrast-colors";
 import type { CssColor } from "@adobe/leonardo-contrast-colors";
+import type { Color } from "react-aria-components";
 
 import { RADIUS_TOKENS } from "../../tokens/registry";
 import { SCALE_STEPS } from "../constants";
@@ -16,6 +17,13 @@ import type {
   Radius,
   Theme,
 } from "../types";
+
+export const toColorString = (colorValue: string | Color): CssColor => {
+  if (typeof colorValue === "string") {
+    return colorValue as CssColor;
+  }
+  return colorValue.toString("hex") as CssColor;
+};
 
 export const createRatiosObject = (
   scaleId: string,
@@ -31,42 +39,7 @@ export const createRatiosObject = (
   );
 };
 
-export const createColorScales = (modeDefinition: ModeDefinition) => {
-  const neutralScale = modeDefinition.scales.neutral;
-
-  const neutral = new LeonardoBgColor({
-    name: "neutral",
-    colorKeys: neutralScale.colorKeys.map((color) => color.color) as CssColor[],
-    ratios: createRatiosObject("neutral", neutralScale.ratios),
-  });
-
-  const colors = Object.entries(modeDefinition.scales).map(
-    ([scaleId, scale]) => {
-      const color = new LeonardoColor({
-        name: scaleId,
-        colorKeys: scale.colorKeys.map((color) => color.color) as CssColor[],
-        ratios: createRatiosObject(scaleId, scale.ratios),
-        smooth: scale.smooth,
-      });
-      return color;
-    },
-  );
-
-  const generatedTheme = new LeonardoTheme({
-    colors,
-    backgroundColor: neutral,
-    lightness: modeDefinition.lightness,
-    saturation: modeDefinition.saturation,
-    contrast: modeDefinition.contrast / 100,
-    output: "HEX",
-  });
-
-  const [_, ...scales] = generatedTheme.contrastColors;
-
-  return scales;
-};
-
-export const createColorScalesV2 = ({
+export const createColorScales = ({
   lightness,
   saturation,
   contrast,
@@ -81,7 +54,7 @@ export const createColorScalesV2 = ({
 }) => {
   const neutral = new LeonardoBgColor({
     name: "neutral",
-    colorKeys: neutralScale.colorKeys.map((color) => color.color) as CssColor[],
+    colorKeys: neutralScale.colorKeys.map((color) => toColorString(color)),
     ratios: createRatiosObject("neutral", neutralScale.ratios),
   });
 
@@ -89,7 +62,7 @@ export const createColorScalesV2 = ({
     (scale) =>
       new LeonardoColor({
         name: scale.name,
-        colorKeys: scale.colorKeys.map((color) => color.color) as CssColor[],
+        colorKeys: scale.colorKeys.map((color) => toColorString(color)),
         ratios: createRatiosObject(scale.name, scale.ratios),
         smooth: scale.smooth,
       }),
@@ -134,7 +107,13 @@ export const createModeCssVars = (
   modeDefinition: ModeDefinition,
   generateContrastColors = true,
 ): Record<string, string> => {
-  const colorScales = createColorScales(modeDefinition);
+  const colorScales = createColorScales({
+    lightness: modeDefinition.lightness,
+    saturation: modeDefinition.saturation,
+    contrast: modeDefinition.contrast,
+    neutralScale: modeDefinition.scales.neutral,
+    scales: Object.values(modeDefinition.scales),
+  });
 
   const cssVars = colorScales
     .flatMap((colorScale) =>

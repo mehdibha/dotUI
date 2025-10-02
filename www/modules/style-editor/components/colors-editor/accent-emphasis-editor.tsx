@@ -1,6 +1,6 @@
 import { cn } from "@dotui/registry/lib/utils";
 
-import { useDraftStyleProducer } from "@/modules/style-editor/atoms/draft-style-atom";
+import { useDraftStyle } from "@/modules/style-editor/atoms/draft-style-atom";
 import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
 import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
 
@@ -38,7 +38,7 @@ const ACCENT_LEVEL_TOKEN_OVERRIDES: Record<number, Record<string, string>> = {
 export const AccentEmphasisEditor = () => {
   const { isPending } = useEditorStyle();
   const form = useStyleEditorForm();
-  const updateDraftStyle = useDraftStyleProducer();
+  const { saveDraft } = useDraftStyle();
 
   const applyAccentLevel = (level: number) => {
     const overrides = ACCENT_LEVEL_TOKEN_OVERRIDES[level];
@@ -60,7 +60,7 @@ export const AccentEmphasisEditor = () => {
       listeners={{
         onChange: ({ value }) => {
           applyAccentLevel(value);
-          updateDraftStyle();
+          saveDraft();
         },
       }}
     >

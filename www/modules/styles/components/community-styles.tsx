@@ -7,13 +7,13 @@ import { useMounted } from "@/hooks/use-mounted";
 import { useTRPCClient } from "@/lib/trpc/react";
 import { StylesList } from "@/modules/styles/components/styles-list";
 
-const PAGE_SIZE = 4;
+const PAGE_SIZE = 6;
 
 export function CommunityStyles() {
   const trpcClient = useTRPCClient();
   const isMounted = useMounted();
 
-  const { data, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } =
+  const { data, isPending, isFetchingNextPage, fetchNextPage, hasNextPage } =
     useInfiniteQuery({
       queryKey: [
         "style.getPublicRecent",
@@ -63,14 +63,14 @@ export function CommunityStyles() {
   }, [fetchNextPage, hasNextPage, isFetchingNextPage, isMounted]);
 
   if (!isMounted) {
-    return <StylesList skeleton />;
+    return <StylesList isLoading />;
   }
 
   return (
     <div className="space-y-6">
-      <StylesList styles={styles} skeleton={isLoading && styles.length === 0} />
+      <StylesList styles={styles} isLoading={isPending} />
       <div ref={sentinelRef} />
-      {isFetchingNextPage && <StylesList skeleton />}
+      {isFetchingNextPage && <StylesList isLoading />}
     </div>
   );
 }

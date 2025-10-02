@@ -2,7 +2,7 @@
 
 import { cn } from "@dotui/registry/lib/utils";
 
-import { useDraftStyleProducer } from "@/modules/style-editor/atoms/draft-style-atom";
+import { useDraftStyle } from "@/modules/style-editor/atoms/draft-style-atom";
 import { ON_CHANGE_DEBOUNCE_MS } from "@/modules/style-editor/constants";
 import {
   useStyleEditorForm,
@@ -21,7 +21,7 @@ export const ColorAdjustments = () => {
   const { resolvedMode } = useResolvedModeState();
 
   const syncTheme = useSyncTheme();
-  const updateDraftStyle = useDraftStyleProducer();
+  const { saveDraft } = useDraftStyle();
 
   return (
     <div
@@ -37,7 +37,7 @@ export const ColorAdjustments = () => {
         listeners={{
           onChange: () => {
             syncTheme();
-            updateDraftStyle();
+            saveDraft();
           },
           onChangeDebounceMs: ON_CHANGE_DEBOUNCE_MS,
         }}

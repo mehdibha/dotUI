@@ -26,6 +26,7 @@ import {
   useStyleEditorForm,
 } from "@/modules/style-editor/context/style-editor-provider";
 import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
+import { useDraftStyle } from "../../atoms/draft-style-atom";
 
 export const ColorTokens = ({
   variant = "line",
@@ -119,10 +120,18 @@ const TokenSelect = ({
 }) => {
   const form = useStyleEditorForm();
   const generatedTheme = useGeneratedTheme();
+  const { saveDraft } = useDraftStyle();
   const { isPending } = useEditorStyle();
 
   return (
-    <form.AppField name={`theme.colors.tokens.${tokenId}.value`}>
+    <form.AppField
+      name={`theme.colors.tokens.${tokenId}.value`}
+      listeners={{
+        onChange: () => {
+          saveDraft();
+        },
+      }}
+    >
       {(field) => {
         return (
           <>

@@ -4,7 +4,7 @@ import { SelectItem } from "@dotui/registry/ui/select";
 import { Skeleton } from "@dotui/registry/ui/skeleton";
 
 import { ThemeModeSwitch } from "@/components/ui/theme-mode-switch";
-import { useDraftStyleProducer } from "@/modules/style-editor/atoms/draft-style-atom";
+import { useDraftStyle } from "@/modules/style-editor/atoms/draft-style-atom";
 import { ON_CHANGE_DEBOUNCE_MS } from "@/modules/style-editor/constants";
 import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
 import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
@@ -15,14 +15,14 @@ export const ModeConfig = () => {
   const { isPending } = useEditorStyle();
   const form = useStyleEditorForm();
 
-  const updateDraftStyle = useDraftStyleProducer();
+  const { saveDraft } = useDraftStyle();
 
   return (
     <form.AppField
       name="theme.colors.activeModes"
       listeners={{
         onChange: () => {
-          updateDraftStyle();
+          saveDraft();
         },
         onChangeDebounceMs: ON_CHANGE_DEBOUNCE_MS,
       }}

@@ -9,9 +9,11 @@ import {
 import { useStore } from "@tanstack/react-form";
 import { PlusIcon, Trash2Icon } from "lucide-react";
 import type { CssColor } from "@adobe/leonardo-contrast-colors";
+import type { Color } from "react-aria-components";
 
 import { cn } from "@dotui/registry/lib/utils";
 import { SCALE_STEPS } from "@dotui/registry/style-system/constants";
+import { toColorString } from "@dotui/registry/style-system/core";
 import { Badge } from "@dotui/registry/ui/badge";
 import { Button } from "@dotui/registry/ui/button";
 import { ColorSwatch } from "@dotui/registry/ui/color-swatch";
@@ -42,6 +44,7 @@ import {
 } from "@/modules/style-editor/context/style-editor-provider";
 import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
 import { useResolvedModeState } from "@/modules/style-editor/hooks/use-resolved-mode";
+import { useDraftStyle } from "../../atoms/draft-style-atom";
 
 export function ColorScaleEditor({ scaleId }: { scaleId: ScaleId }) {
   const form = useStyleEditorForm();
@@ -60,7 +63,7 @@ export function ColorScaleEditor({ scaleId }: { scaleId: ScaleId }) {
           >
             {(colorKeys) =>
               colorKeys.map((color, index) => (
-                <ColorSwatch key={index} color={color.color} />
+                <ColorSwatch key={index} color={color} />
               ))
             }
           </form.Subscribe>
@@ -125,6 +128,7 @@ function ColorKeysEditor({ scaleId }: { scaleId: ScaleId }) {
   const form = useStyleEditorForm();
   const { resolvedMode } = useResolvedModeState();
   const syncTheme = useSyncTheme();
+  const { saveDraft } = useDraftStyle();
 
   return (
     <div>
@@ -132,12 +136,6 @@ function ColorKeysEditor({ scaleId }: { scaleId: ScaleId }) {
       <div className="mt-2 flex items-center gap-2">
         <form.AppField
           name={`theme.colors.modes.${resolvedMode}.scales.${scaleId}.colorKeys`}
-          listeners={{
-            onChange: () => {
-              syncTheme();
-            },
-            onChangeDebounceMs: ON_CHANGE_DEBOUNCE_MS,
-          }}
         >
           {(field) => {
             return (
@@ -146,7 +144,14 @@ function ColorKeysEditor({ scaleId }: { scaleId: ScaleId }) {
                   return (
                     <form.AppField
                       key={i}
-                      name={`theme.colors.modes.${resolvedMode}.scales.${scaleId}.colorKeys[${i}].color`}
+                      name={`theme.colors.modes.${resolvedMode}.scales.${scaleId}.colorKeys[${i}]`}
+                      listeners={{
+                        onChange: () => {
+                          syncTheme();
+                          saveDraft();
+                        },
+                        onChangeDebounceMs: ON_CHANGE_DEBOUNCE_MS,
+                      }}
                     >
                       {(subField) => (
                         <div className="flex items-center">
@@ -175,10 +180,7 @@ function ColorKeysEditor({ scaleId }: { scaleId: ScaleId }) {
                   <Button
                     shape="square"
                     onPress={() => {
-                      field.pushValue({
-                        id: field.state.value.length,
-                        color: "#000000",
-                      });
+                      field.pushValue("#000000");
                     }}
                   >
                     <PlusIcon />
@@ -197,7 +199,7 @@ function RatiosEditor({ scaleId }: { scaleId: ScaleId }) {
   const form = useStyleEditorForm();
   const { resolvedMode } = useResolvedModeState();
   const syncTheme = useSyncTheme();
-
+  const { saveDraft } = useDraftStyle();
   const dynamicGradient = useDynamicGradient(scaleId);
 
   useStore(
@@ -217,30 +219,27 @@ function RatiosEditor({ scaleId }: { scaleId: ScaleId }) {
           listeners={{
             onChange: () => {
               syncTheme();
+              saveDraft();
             },
             onChangeDebounceMs: ON_CHANGE_DEBOUNCE_MS,
           }}
         >
-          {(field) => {
-            return (
-              <>
-                <field.Slider
-                  aria-label="Ratios"
-                  orientation="vertical"
-                  minValue={1}
-                  maxValue={16}
-                  step={0.05}
-                  showValueLabel={false}
-                  className="[&_[data-slot='slider-thumb']]:dragging:size-4 h-auto [&_[data-slot='slider-filler']]:hidden [&_[data-slot='slider-thumb']]:size-3 [&_[data-slot='slider-track']]:w-40 [&_[data-slot='slider-track']]:rounded-sm [&_[data-slot='slider-track']]:[background:var(--dynamic-gradient)]"
-                  style={
-                    {
-                      "--dynamic-gradient": dynamicGradient,
-                    } as React.CSSProperties
-                  }
-                />
-              </>
-            );
-          }}
+          {(field) => (
+            <field.Slider
+              aria-label="Ratios"
+              orientation="vertical"
+              minValue={1}
+              maxValue={16}
+              step={0.05}
+              showValueLabel={false}
+              className="[&_[data-slot='slider-thumb']]:dragging:size-4 h-auto [&_[data-slot='slider-filler']]:hidden [&_[data-slot='slider-thumb']]:size-3 [&_[data-slot='slider-track']]:w-40 [&_[data-slot='slider-track']]:rounded-sm [&_[data-slot='slider-track']]:[background:var(--dynamic-gradient)]"
+              style={
+                {
+                  "--dynamic-gradient": dynamicGradient,
+                } as React.CSSProperties
+              }
+            />
+          )}
         </form.AppField>
         {/* Contrast ratios table */}
         <form.AppField
@@ -273,6 +272,13 @@ function RatiosEditor({ scaleId }: { scaleId: ScaleId }) {
                         <TableCell>
                           <form.AppField
                             name={`theme.colors.modes.${resolvedMode}.scales.${scaleId}.ratios[${i}]`}
+                            listeners={{
+                              onChange: () => {
+                                syncTheme();
+                                saveDraft();
+                              },
+                              onChangeDebounceMs: ON_CHANGE_DEBOUNCE_MS,
+                            }}
                           >
                             {(subField) => (
                               <subField.NumberField
@@ -341,13 +347,13 @@ const useDynamicGradient = (scaleId: ScaleId) => {
   const dynamicGradient = useMemo(() => {
     const neutral = new LeonardoBgColor({
       name: "neutral",
-      colorKeys: neutralColorKeys.map((color) => color.color) as CssColor[],
+      colorKeys: neutralColorKeys.map((color) => toColorString(color)),
       ratios,
     });
 
     const currentColor = new LeonardoColor({
       name: scaleId,
-      colorKeys: colorKeys.map((color) => color.color) as CssColor[],
+      colorKeys: colorKeys.map((color) => toColorString(color)),
       ratios,
     });
 

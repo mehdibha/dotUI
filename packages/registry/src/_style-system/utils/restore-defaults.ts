@@ -33,13 +33,9 @@ const restoreColorScaleDefaults = (
   minimizedScale: MinimizedColorScale,
   defaultScale: ColorScale,
 ): ColorScale => {
-  const colorKeys = minimizedScale.colorKeys
-    ? minimizedScale.colorKeys.map((color, index) => ({ id: index, color }))
-    : defaultScale.colorKeys;
-
   return {
     name: minimizedScale.name ?? defaultScale.name,
-    colorKeys,
+    colorKeys: minimizedScale.colorKeys ?? defaultScale.colorKeys,
     ratios: minimizedScale.ratios ?? defaultScale.ratios,
     smooth: minimizedScale.smooth ?? false,
     overrides: minimizedScale.overrides ?? defaultScale.overrides,

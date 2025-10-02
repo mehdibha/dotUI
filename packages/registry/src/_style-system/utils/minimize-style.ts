@@ -15,26 +15,13 @@ import type {
 } from "../types";
 
 const minimizeColorScale = (scale: ColorScale): MinimizedColorScale => {
-  return {
-    ...scale,
-    colorKeys: scale.colorKeys.map((key) => key.color),
-  };
+  return scale;
 };
 
 const minimizeModeDefinition = (
   mode: ModeDefinition,
 ): MinimizedModeDefinition => {
-  return {
-    ...mode,
-    scales: {
-      neutral: minimizeColorScale(mode.scales.neutral),
-      accent: minimizeColorScale(mode.scales.accent),
-      success: minimizeColorScale(mode.scales.success),
-      warning: minimizeColorScale(mode.scales.warning),
-      danger: minimizeColorScale(mode.scales.danger),
-      info: minimizeColorScale(mode.scales.info),
-    },
-  };
+  return mode;
 };
 
 const minimizeThemeDefinition = (

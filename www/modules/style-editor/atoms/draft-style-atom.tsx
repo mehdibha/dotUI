@@ -1,9 +1,14 @@
 import React from "react";
+import { produce } from "immer";
 import { useAtom } from "jotai";
 import { withImmer } from "jotai-immer";
 import { atomWithStorage } from "jotai/utils";
+import type { Color } from "react-aria-components";
 
-import type { StyleDefinition } from "@dotui/registry/style-system/types";
+import type {
+  StyleDefinition,
+  ThemeDefinition,
+} from "@dotui/registry/style-system/types";
 
 import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
 import { useStyleEditorParams } from "@/modules/style-editor/hooks/use-style-editor-params";
@@ -14,58 +19,55 @@ const draftStyleAtom = withImmer(
   atomWithStorage<DraftStyleState>("draft-styles", {}),
 );
 
-export const useDraftStyle = (styleSlug: string) => {
+const convertColorObjectsToStrings = (
+  theme: ThemeDefinition,
+): ThemeDefinition => {
+  return produce(theme, (draft) => {
+    (["light", "dark"] as const).forEach((mode) => {
+      const modeData = draft.colors.modes[mode];
+      (
+        Object.keys(modeData.scales) as (keyof typeof modeData.scales)[]
+      ).forEach((scaleKey) => {
+        const scale = modeData.scales[scaleKey];
+        scale.colorKeys = scale.colorKeys.map((colorKey: string | Color) =>
+          typeof colorKey === "string" ? colorKey : colorKey.toString("hex"),
+        );
+      });
+    });
+  });
+};
+
+export const useDraftStyle = (styleSlug?: string) => {
+  const { slug } = useStyleEditorParams();
+  const form = useStyleEditorForm(true);
   const [state, setState] = useAtom(draftStyleAtom);
 
-  const currentDraftStyle = React.useMemo(() => {
-    return state[styleSlug] || null;
-  }, [state, styleSlug]);
+  const finalSlug = styleSlug ?? slug;
 
-  const updateDraftStyle = React.useCallback(
-    (style: StyleDefinition) => {
-      setState((draft) => {
-        draft[styleSlug] = style;
-      });
-    },
-    [setState, styleSlug],
-  );
+  const draftStyle = React.useMemo(() => {
+    return state[finalSlug] || null;
+  }, [state, finalSlug]);
 
-  const clearDraftStyle = React.useCallback(() => {
+  const saveDraft = React.useCallback(() => {
+    if (!form) return;
     setState((draft) => {
-      delete draft[styleSlug];
+      draft[finalSlug] = {
+        theme: convertColorObjectsToStrings(form.getFieldValue("theme")),
+        variants: form.getFieldValue("variants"),
+        icons: form.getFieldValue("icons"),
+      };
     });
-  }, [setState, styleSlug]);
+  }, [setState, finalSlug, form]);
+
+  const clearDraft = React.useCallback(() => {
+    setState((draft) => {
+      delete draft[finalSlug];
+    });
+  }, [setState, finalSlug]);
 
   return {
-    draftStyle: currentDraftStyle,
-    updateDraftStyle,
-    clearDraftStyle,
+    draftStyle,
+    saveDraft,
+    clearDraft,
   };
-};
-
-export const useDraftStyleProducer = (styleSlug?: string) => {
-  const { slug } = useStyleEditorParams();
-  const form = useStyleEditorForm();
-  const { updateDraftStyle, clearDraftStyle } = useDraftStyle(
-    styleSlug ?? slug,
-  );
-
-  React.useEffect(() => {
-    return () => {
-      clearDraftStyle();
-    };
-  }, [clearDraftStyle]);
-
-  return () =>
-    updateDraftStyle({
-      theme: form.getFieldValue("theme"),
-      variants: form.getFieldValue("variants"),
-      icons: form.getFieldValue("icons"),
-    });
-};
-
-export const useDraftStyleConsumer = (styleSlug: string) => {
-  const { draftStyle } = useDraftStyle(styleSlug);
-
-  return { draftStyle };
 };
