@@ -14,7 +14,7 @@ import { createColorScales } from "@dotui/registry/style-system/core";
 import { useAppForm } from "@dotui/registry/ui/form";
 import { toast } from "@dotui/registry/ui/toast";
 
-import { useDraftStyle } from "../atoms/draft-style-atom";
+import { NavigationBlocker } from "../components/navigation-blocker";
 import { useEditorStyle } from "../hooks/use-editor-style";
 import { useResolvedModeState } from "../hooks/use-resolved-mode";
 import { useStyleEditorParams } from "../hooks/use-style-editor-params";
@@ -101,6 +101,7 @@ export function StyleEditorProvider({
 
   return (
     <StyleEditorFormContext value={form}>
+      <NavigationBlocker />
       <GeneratedThemeProvider>{children}</GeneratedThemeProvider>
     </StyleEditorFormContext>
   );
