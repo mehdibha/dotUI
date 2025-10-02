@@ -84,7 +84,7 @@ export const { useAppForm } = createFormHook({
           value={field.state.value}
           onChange={(value) => field.handleChange(value)}
           onBlur={field.handleBlur}
-          errorMessage={field.state.meta.errors?.[0]}
+          errorMessage={JSON.stringify(field.state.meta.errors?.[0]?.message)}
           isInvalid={field.state.meta.errors?.[0] !== undefined}
           {...props}
         />
@@ -97,7 +97,7 @@ export const { useAppForm } = createFormHook({
           value={field.state.value}
           onChange={(value) => field.handleChange(value)}
           onBlur={field.handleBlur}
-          errorMessage={field.state.meta.errors?.[0]}
+          errorMessage={field.state.meta.errors?.[0]?.message}
           isInvalid={field.state.meta.errors?.[0] !== undefined}
           {...props}
         />
@@ -110,7 +110,7 @@ export const { useAppForm } = createFormHook({
           value={field.state.value}
           onChange={(value) => field.handleChange(value)}
           onBlur={field.handleBlur}
-          errorMessage={field.state.meta.errors?.[0]}
+          errorMessage={field.state.meta.errors?.[0]?.message}
           isInvalid={field.state.meta.errors?.[0] !== undefined}
           {...props}
         />
@@ -146,7 +146,7 @@ export const { useAppForm } = createFormHook({
           value={field.state.value}
           onChange={(value) => field.handleChange(value)}
           onBlur={field.handleBlur}
-          errorMessage={field.state.meta.errors?.[0]}
+          errorMessage={field.state.meta.errors?.[0]?.message}
           isInvalid={field.state.meta.errors?.[0] !== undefined}
           {...props}
         />
@@ -170,7 +170,7 @@ export const { useAppForm } = createFormHook({
           selectedKey={field.state.value}
           onSelectionChange={(key) => field.handleChange(key)}
           onBlur={field.handleBlur}
-          errorMessage={field.state.meta.errors?.[0]}
+          errorMessage={field.state.meta.errors?.[0]?.message}
           isInvalid={field.state.meta.errors?.[0] !== undefined}
           {...props}
         />
@@ -183,7 +183,7 @@ export const { useAppForm } = createFormHook({
           selectedKey={field.state.value}
           onSelectionChange={(key) => field.handleChange(key)}
           onBlur={field.handleBlur}
-          errorMessage={field.state.meta.errors?.[0]}
+          errorMessage={field.state.meta.errors?.[0]?.message}
           isInvalid={field.state.meta.errors?.[0] !== undefined}
           {...props}
         />
@@ -196,7 +196,7 @@ export const { useAppForm } = createFormHook({
           value={field.state.value}
           onChange={(value) => field.handleChange(value)}
           onBlur={field.handleBlur}
-          errorMessage={field.state.meta.errors?.[0]}
+          errorMessage={field.state.meta.errors?.[0]?.message}
           isInvalid={field.state.meta.errors?.[0] !== undefined}
           {...props}
         />
@@ -209,7 +209,7 @@ export const { useAppForm } = createFormHook({
           value={field.state.value}
           onChange={(value) => field.handleChange(value)}
           onBlur={field.handleBlur}
-          errorMessage={field.state.meta.errors?.[0]}
+          errorMessage={field.state.meta.errors?.[0]?.message}
           isInvalid={field.state.meta.errors?.[0] !== undefined}
           {...props}
         />
@@ -222,7 +222,7 @@ export const { useAppForm } = createFormHook({
           value={field.state.value}
           onChange={(value) => field.handleChange(value)}
           onBlur={field.handleBlur}
-          errorMessage={field.state.meta.errors?.[0]}
+          errorMessage={field.state.meta.errors?.[0]?.message}
           isInvalid={field.state.meta.errors?.[0] !== undefined}
           {...props}
         />
@@ -235,7 +235,7 @@ export const { useAppForm } = createFormHook({
           value={field.state.value as any}
           onChange={(value) => field.handleChange(value)}
           onBlur={field.handleBlur}
-          errorMessage={field.state.meta.errors?.[0]}
+          errorMessage={field.state.meta.errors?.[0]?.message}
           isInvalid={field.state.meta.errors?.[0] !== undefined}
           {...props}
         />
@@ -248,7 +248,7 @@ export const { useAppForm } = createFormHook({
           value={field.state.value}
           onChange={(value) => field.handleChange(value)}
           onBlur={field.handleBlur}
-          errorMessage={field.state.meta.errors?.[0]}
+          errorMessage={field.state.meta.errors?.[0]?.message}
           isInvalid={field.state.meta.errors?.[0] !== undefined}
           {...props}
         />
@@ -261,7 +261,7 @@ export const { useAppForm } = createFormHook({
           value={field.state.value}
           onChange={(value) => field.handleChange(value)}
           onBlur={field.handleBlur}
-          errorMessage={field.state.meta.errors?.[0]}
+          errorMessage={field.state.meta.errors?.[0]?.message}
           isInvalid={field.state.meta.errors?.[0] !== undefined}
           {...props}
         />

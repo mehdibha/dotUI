@@ -45,7 +45,7 @@ export function StyleCard({
           />
         </div>
       </div>
-      <div className="flex items-center justify-between gap-2 px-2">
+      <div className="flex items-center justify-between gap-2 px-[2px]">
         <h2 className="font-heading text-xl font-medium leading-none tracking-tight">
           {style.name}
         </h2>

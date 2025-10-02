@@ -117,15 +117,13 @@ function StyleEditorHeaderActions() {
         show={isEditorStylePending || isSessionPending}
         className="w-20"
       >
-        {isUserAuthenticated ? (
-          isUserStyle ? (
-            <form.AppForm>
+        <form.AppForm>
+          {isUserAuthenticated ? (
+            isUserStyle ? (
               <form.SubmitButton size="sm" prefix={<SaveIcon />}>
                 Save
               </form.SubmitButton>
-            </form.AppForm>
-          ) : (
-            <form.AppForm>
+            ) : (
               <CreateStyleModal
                 initialStyle={{
                   theme: form.getFieldValue("theme"),
@@ -147,15 +145,15 @@ function StyleEditorHeaderActions() {
                   )}
                 </form.Subscribe>
               </CreateStyleModal>
-            </form.AppForm>
-          )
-        ) : (
-          <LoginModal>
-            <Button size="sm" variant="primary">
-              Publish
-            </Button>
-          </LoginModal>
-        )}
+            )
+          ) : (
+            <LoginModal>
+              <Button size="sm" variant="primary">
+                Publish
+              </Button>
+            </LoginModal>
+          )}
+        </form.AppForm>
       </Skeleton>
     </div>
   );

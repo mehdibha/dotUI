@@ -14,50 +14,17 @@ import { StyleCard } from "./style-card";
 
 export function StylesList({
   styles,
-  skeleton = false,
+  isLoading,
   search = false,
   ...props
 }: React.ComponentProps<"div"> & {
   styles?: RouterOutputs["style"]["getFeatured"];
-  skeleton?: boolean;
+  isLoading?: boolean;
   search?: boolean;
 }) {
   const [query, setQuery] = React.useState("");
 
-  if (skeleton) {
-    const placeholders = Array.from({ length: 3 });
-    return (
-      <div className={cn("space-y-4", props.className)}>
-        {search && (
-          <div className="flex items-center gap-4">
-            <Skeleton className="h-9 flex-1" />
-          </div>
-        )}
-        <div className={cn("grid grid-cols-3 gap-6", props.className)}>
-          {placeholders.map((_, index) => (
-            <div key={index} className="space-y-3">
-              <div className="flex items-center gap-2">
-                <Skeleton className="size-6" />
-                <Skeleton className="h-6 w-24" />
-              </div>
-              <div className="flex items-center gap-2">
-                {Array.from({ length: 2 }).map((_, idx) => (
-                  <Skeleton key={idx} className="h-6 w-32 rounded-full" />
-                ))}
-              </div>
-              <Skeleton className="h-64" />
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
-  if (!styles || styles.length === 0) {
-    return <div>No styles found</div>;
-  }
-
-  const filtered = styles.filter((s) => {
+  const filtered = (styles ?? []).filter((s) => {
     const q = query.trim().toLowerCase();
     if (!q) return true;
     return (
@@ -87,9 +54,23 @@ export function StylesList({
           props.className,
         )}
       >
-        {(!styles || styles.length === 0 || filtered.length === 0) && (
-          <p className="text-fg-muted text-sm">No styles found</p>
-        )}
+        {(!styles || styles.length === 0 || filtered.length === 0) &&
+          !isLoading && (
+            <p className="text-fg-muted text-sm">No styles found</p>
+          )}
+        {isLoading &&
+          Array.from({ length: 3 }).map((_, index) => (
+            <div key={index} className="space-y-3">
+              <Skeleton className="h-62" />
+              <div className="flex items-center justify-between gap-2 px-[2px]">
+                <Skeleton className="h-6 w-28" />
+                <div className="flex items-center gap-2">
+                  <Skeleton className="size-5" />
+                  <Skeleton className="h-5 w-20" />
+                </div>
+              </div>
+            </div>
+          ))}
         {filtered.map((style) => (
           <StyleCard key={style.name} style={style} />
         ))}

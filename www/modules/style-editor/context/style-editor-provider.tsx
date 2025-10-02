@@ -55,7 +55,7 @@ const useForm = () => {
   return useAppForm({
     defaultValues: style ?? defaultValues,
     validators: {
-      onChange: styleEditorFormSchema,
+      onSubmit: styleEditorFormSchema,
     },
 
     onSubmit: async ({ formApi, value }) => {
