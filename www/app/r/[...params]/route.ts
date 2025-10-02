@@ -10,7 +10,7 @@ import { caller } from "@/lib/trpc/server";
 
 const registryBasePath = path.resolve(
   process.cwd(),
-  "../packages/ui/src/registry",
+  "../packages/registry/src",
 );
 
 export async function GET(

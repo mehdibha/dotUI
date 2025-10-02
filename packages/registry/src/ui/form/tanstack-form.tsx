@@ -84,7 +84,7 @@ export const { useAppForm } = createFormHook({
           value={field.state.value}
           onChange={(value) => field.handleChange(value)}
           onBlur={field.handleBlur}
-          errorMessage={JSON.stringify(field.state.meta.errors?.[0]?.message)}
+          errorMessage={field.state.meta.errors?.[0]?.message}
           isInvalid={field.state.meta.errors?.[0] !== undefined}
           {...props}
         />

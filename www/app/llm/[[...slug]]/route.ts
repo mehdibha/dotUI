@@ -7,7 +7,7 @@ import { docsSource } from "@/modules/docs/lib/source";
 export const revalidate = false;
 
 export async function GET(
-  request: NextRequest,
+  _: NextRequest,
   { params }: RouteContext<"/llm/[[...slug]]">,
 ) {
   const slug = (await params).slug;
