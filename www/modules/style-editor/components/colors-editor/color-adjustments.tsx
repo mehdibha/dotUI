@@ -11,6 +11,10 @@ import {
 import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
 import { useResolvedModeState } from "@/modules/style-editor/hooks/use-resolved-mode";
 
+const clampLightnessByMode = (value: number, mode: "light" | "dark") => {
+  return mode === "dark" ? Math.min(value, 49) : Math.max(value, 51);
+};
+
 export const ColorAdjustments = () => {
   const form = useStyleEditorForm();
   const { isPending } = useEditorStyle();
@@ -28,6 +32,7 @@ export const ColorAdjustments = () => {
       )}
     >
       <form.AppField
+        key={`${resolvedMode}-lightness`}
         name={`theme.colors.modes.${resolvedMode}.lightness`}
         listeners={{
           onChange: () => {
@@ -40,6 +45,11 @@ export const ColorAdjustments = () => {
         {(field) => (
           <field.Slider
             label="Lightness"
+            onChange={(value) => {
+              field.handleChange(
+                clampLightnessByMode(value as number, resolvedMode),
+              );
+            }}
             minValue={0}
             maxValue={100}
             className="col-span-2 w-auto"
@@ -47,6 +57,7 @@ export const ColorAdjustments = () => {
         )}
       </form.AppField>
       <form.AppField
+        key={`${resolvedMode}-saturation`}
         name={`theme.colors.modes.${resolvedMode}.saturation`}
         listeners={{
           onChange: () => {
@@ -65,6 +76,7 @@ export const ColorAdjustments = () => {
         )}
       </form.AppField>
       <form.AppField
+        key={`${resolvedMode}-contrast`}
         name={`theme.colors.modes.${resolvedMode}.contrast`}
         listeners={{
           onChange: () => {
