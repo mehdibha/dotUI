@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { chain } from "@react-aria/utils";
+import { chain } from "react-aria";
 import {
   Button as AriaButton,
   Link as AriaLink,

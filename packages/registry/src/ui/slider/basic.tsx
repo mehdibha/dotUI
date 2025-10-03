@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { useSlotId } from "@react-aria/utils";
+import { useId } from "react-aria";
 import {
   Slider as AriaSlider,
   SliderOutput as AriaSliderOutput,
@@ -171,7 +171,7 @@ const SliderRoot = ({
   size,
   ...props
 }: SliderRootProps) => {
-  const descriptionId = useSlotId();
+  const descriptionId = useId();
   return (
     <AriaSlider
       data-slot="slider"

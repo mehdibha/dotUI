@@ -30,7 +30,6 @@
     "@radix-ui/react-collapsible": "^1.0.3",
     "@radix-ui/react-scroll-area": "^1.0.5",
     "@react-aria/overlays": "^3.27.1",
-    "@react-aria/utils": "catalog:ui",
     "@react-stately/utils": "catalog:ui",
     "@remixicon/react": "catalog:ui",
     "@t3-oss/env-nextjs": "^0.13.6",

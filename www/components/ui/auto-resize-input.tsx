@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { chain, mergeRefs } from "@react-aria/utils";
 import { useControlledState } from "@react-stately/utils";
+import { chain, mergeProps } from "react-aria";
 import {
   Input as UnstyledInput,
   TextField as UnstyledTextField,
@@ -43,10 +43,15 @@ export const AutoResizeTextField = ({
   return (
     <UnstyledTextField onChange={chain(onChange, setInputValue)} {...props}>
       <UnstyledInput
-        ref={mergeRefs(localInputRef, inputRef)}
-        className={cn(
-          "border-fg min-w-[10px] focus:border-b focus:outline-none",
-          className,
+        {...mergeProps(
+          {
+            ref: localInputRef,
+            className: cn(
+              "border-fg min-w-[10px] focus:border-b focus:outline-none",
+              className,
+            ),
+          },
+          { ref: inputRef },
         )}
       />
     </UnstyledTextField>

@@ -46,7 +46,6 @@
   "peerDependencies": {
     "@hookform/resolvers": "catalog:ui",
     "@internationalized/date": "catalog:ui",
-    "@react-aria/utils": "catalog:ui",
     "@react-stately/utils": "catalog:ui",
     "@remixicon/react": "catalog:ui",
     "@tanstack/react-form": "catalog:ui",

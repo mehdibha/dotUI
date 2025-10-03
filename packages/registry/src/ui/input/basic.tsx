@@ -1,8 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { chain, mergeProps, mergeRefs } from "@react-aria/utils";
 import { useControlledState } from "@react-stately/utils";
+import { chain, mergeProps } from "react-aria";
 import {
   Group as AriaGroup,
   Input as AriaInput,
@@ -105,7 +105,7 @@ const TextAreaInput = ({
 
   return (
     <AriaTextArea
-      ref={mergeRefs(inputRef, ref)}
+      ref={mergeProps(inputRef, ref)}
       className={composeRenderProps(className, (className) =>
         input({ multiline: true, className }),
       )}
