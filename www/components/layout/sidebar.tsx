@@ -330,7 +330,7 @@ const SidebarSearchButton = ({
   isCollapsed: boolean;
 }) => {
   return (
-    <SearchCommand items={items} keyboardShortcut>
+    <SearchCommand items={items}>
       <StyledTooltip
         content={
           <div className="flex items-center gap-2">

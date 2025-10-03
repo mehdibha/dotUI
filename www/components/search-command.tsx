@@ -5,12 +5,11 @@ import {
   ArrowRightIcon,
   ChevronsUpDownIcon,
   CircleDashedIcon,
-  CircleIcon,
   CornerDownLeftIcon,
   FileTextIcon,
   SearchIcon,
 } from "lucide-react";
-import { useFilter } from "react-aria-components";
+import { composeRenderProps, useFilter } from "react-aria-components";
 import type { PageTree } from "fumadocs-core/server";
 import type { Route } from "next";
 
@@ -41,7 +40,13 @@ export function SearchCommand({
     <SearchCommandDialog keyboardShortcut={keyboardShortcut} trigger={children}>
       <Command filter={contains} className="h-72">
         <div className="p-1">
-          <SearchFieldRoot placeholder="Search" autoFocus className="w-full">
+          <SearchFieldRoot
+            placeholder="Search"
+            autoFocus
+            value={search}
+            onChange={setSearch}
+            className="w-full"
+          >
             <InputRoot className="focus-within:ring-1">
               <SearchIcon />
               <Input />
@@ -116,33 +121,6 @@ export function SearchCommand({
             }
             return null;
           })}
-          {/* 
-          {results.map((group) => (
-            <MenuSection key={group.id} title={group.name}>
-              {group.results.map((item) => (
-                <MenuItem
-                  key={item.id}
-                  href={item.url}
-                  textValue={item.content}
-                  prefix={item.type === "page" ? <FileTextIcon /> : undefined}
-                  className={
-                    item.type === "page"
-                      ? "[&_svg]:text-fg-muted gap-3 py-2"
-                      : "py-0 pl-2.5"
-                  }
-                >
-                  {item.type === "page" ? (
-                    item.content
-                  ) : (
-                    <div className="[&_svg]:text-fg-muted ml-2 flex items-center gap-3 border-l pl-4 [&_svg]:size-4">
-                      <HashIcon />
-                      <p className="flex-1 truncate py-2">{item.content}</p>
-                    </div>
-                  )}
-                </MenuItem>
-              ))}
-            </MenuSection>
-          ))} */}
         </MenuContent>
         <div className="text-fg-muted flex items-center justify-end gap-4 rounded-b-[inherit] border-t p-3 text-xs [&_svg]:size-4">
           <div className="flex items-center gap-1">
@@ -165,9 +143,8 @@ const SearchCommandDialog = ({
   children,
 }: {
   keyboardShortcut?: boolean;
-  children: React.ReactNode;
   trigger: React.ReactNode;
-}) => {
+} & React.ComponentProps<typeof Dialog>) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
   React.useEffect(() => {
@@ -196,17 +173,28 @@ const SearchCommandDialog = ({
   return (
     <DialogRoot isOpen={isOpen} onOpenChange={setIsOpen}>
       {trigger}
-      <Dialog className="p-0!">
-        {children}
-        <Button
-          slot="close"
-          variant="default"
-          shape="rectangle"
-          size="sm"
-          className="absolute right-2 top-2 h-7 px-2 text-xs font-normal"
-        >
-          Esc
-        </Button>
+      <Dialog
+        className="p-0!"
+        modalProps={{
+          className: "duration-0 entering:scale-100 exiting:scale-100",
+          overlayClassName:
+            "duration-0 entering:opacity-100 exiting:opacity-100 backdrop-blur-[2px]",
+        }}
+      >
+        {composeRenderProps(children, (children) => (
+          <>
+            {children}
+            <Button
+              slot="close"
+              variant="default"
+              shape="rectangle"
+              size="sm"
+              className="absolute right-2 top-2 h-7 px-2 text-xs font-normal"
+            >
+              Esc
+            </Button>
+          </>
+        ))}
       </Dialog>
     </DialogRoot>
   );

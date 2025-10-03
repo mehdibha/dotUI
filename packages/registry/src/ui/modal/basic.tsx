@@ -8,8 +8,6 @@ import {
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
-import type { SlotsToClassNames } from "@dotui/registry/lib/utils";
-
 const modalStyles = tv({
   slots: {
     overlay:
@@ -22,21 +20,28 @@ const modalStyles = tv({
 const { overlay, modal } = modalStyles();
 
 interface ModalProps extends React.ComponentProps<typeof AriaModal> {
-  classNames?: SlotsToClassNames<typeof modalStyles>;
+  overlayClassName?: string;
 }
 
-const Modal = ({ className, isDismissable = true, ...props }: ModalProps) => (
+const Modal = ({
+  children,
+  className,
+  overlayClassName,
+  isDismissable = true,
+  ...props
+}: ModalProps) => (
   <AriaModalOverlay
     isDismissable={isDismissable}
-    className={overlay()}
+    className={overlay({ className: overlayClassName })}
     {...props}
   >
     <AriaModal
       className={composeRenderProps(className, (className) =>
         modal({ className }),
       )}
-      {...props}
-    />
+    >
+      {children}
+    </AriaModal>
   </AriaModalOverlay>
 );
 
