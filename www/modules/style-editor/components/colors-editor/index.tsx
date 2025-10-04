@@ -31,7 +31,10 @@ export function ColorsEditor() {
 
   return (
     <div className="space-y-4">
-      <StyleEditorSection title="Mode" className="flex items-start justify-between">
+      <StyleEditorSection
+        title="Mode"
+        className="flex items-start justify-between"
+      >
         <ModeConfig />
         <ModeSwitch />
       </StyleEditorSection>

@@ -20,48 +20,48 @@ export function TypographyEditor() {
   return (
     <div className="min-h-[200svh]">
       <StyleEditorSection title="Font family">
-          <form.AppField
-            name="theme.fonts.heading"
-            listeners={{
-              onChange: () => {
-                saveDraft();
-              },
-            }}
-          >
-            {(field) => (
-              <FontSelector
-                label="Heading font"
-                value={field.state.value}
-                onChange={(font) => field.handleChange(font as string)}
-                className={cn(
-                  "w-full",
-                  isPending &&
-                    "[&_[data-slot='button']]:animate-pulse [&_[data-slot='button']]:border-0 [&_[data-slot='button']]:*:invisible",
-                )}
-              />
-            )}
-          </form.AppField>
-          <form.AppField
-            name="theme.fonts.body"
-            listeners={{
-              onChange: () => {
-                saveDraft();
-              },
-            }}
-          >
-            {(field) => (
-              <FontSelector
-                label="Body font"
-                value={field.state.value}
-                onChange={(font) => field.handleChange(font as string)}
-                className={cn(
-                  "w-full",
-                  isPending &&
-                    "[&_[data-slot='button']]:animate-pulse [&_[data-slot='button']]:border-0 [&_[data-slot='button']]:*:invisible",
-                )}
-              />
-            )}
-          </form.AppField>
+        <form.AppField
+          name="theme.fonts.heading"
+          listeners={{
+            onChange: () => {
+              saveDraft();
+            },
+          }}
+        >
+          {(field) => (
+            <FontSelector
+              label="Heading font"
+              value={field.state.value}
+              onChange={(font) => field.handleChange(font as string)}
+              className={cn(
+                "w-full",
+                isPending &&
+                  "[&_[data-slot='button']]:animate-pulse [&_[data-slot='button']]:border-0 [&_[data-slot='button']]:*:invisible",
+              )}
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="theme.fonts.body"
+          listeners={{
+            onChange: () => {
+              saveDraft();
+            },
+          }}
+        >
+          {(field) => (
+            <FontSelector
+              label="Body font"
+              value={field.state.value}
+              onChange={(font) => field.handleChange(font as string)}
+              className={cn(
+                "w-full",
+                isPending &&
+                  "[&_[data-slot='button']]:animate-pulse [&_[data-slot='button']]:border-0 [&_[data-slot='button']]:*:invisible",
+              )}
+            />
+          )}
+        </form.AppField>
       </StyleEditorSection>
 
       <StyleEditorSection title="Font size">
