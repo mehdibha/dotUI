@@ -158,6 +158,7 @@ function ColorKeysEditor({ scaleId }: { scaleId: ScaleId }) {
                           <subField.ColorPicker
                             shape="square"
                             showValue={false}
+                            colorFormat="hsl"
                             className={cn(i > 0 && "rounded-r-none")}
                           />
                           {i > 0 && (

@@ -2,7 +2,6 @@
 
 import React from "react";
 import type { ContrastColor } from "@adobe/leonardo-contrast-colors";
-import type { Color } from "react-aria-components";
 import type z from "zod/v4";
 
 import { createStyleSchema } from "@dotui/db/schemas";
@@ -20,6 +19,7 @@ import { useResolvedModeState } from "@/modules/style-editor/hooks/use-resolved-
 import { useStyleEditorParams } from "@/modules/style-editor/hooks/use-style-editor-params";
 import { useUpdateStyleMutation } from "@/modules/style-editor/hooks/use-update-style-mutation";
 import { useDraftStyle } from "../atoms/draft-style-atom";
+import { convertThemeColorObjects } from "../lib/convert-theme-color-objects";
 
 const styleEditorFormSchema = createStyleSchema.extend({});
 
@@ -30,28 +30,9 @@ const defaultValues: StyleFormData = {
   ...DEFAULT_STYLE,
 };
 
-const convertColorObjectsToStrings = (data: StyleFormData): StyleFormData => {
-  const converted = structuredClone(data);
-
-  (["light", "dark"] as const).forEach((mode) => {
-    const modeData = converted.theme.colors.modes[mode];
-    (Object.keys(modeData.scales) as (keyof typeof modeData.scales)[]).forEach(
-      (scaleKey) => {
-        const scale = modeData.scales[scaleKey];
-        scale.colorKeys = scale.colorKeys.map((color: string | Color) =>
-          typeof color === "string" ? color : color.toString("hex"),
-        );
-      },
-    );
-  });
-
-  return converted;
-};
-
 const useForm = () => {
-  const { data: style, refetch, isError } = useEditorStyle();
+  const { data: style, refetch } = useEditorStyle();
   const { username, style: styleName } = useStyleEditorParams();
-  const { saveDraft } = useDraftStyle();
 
   const updateStyleMutation = useUpdateStyleMutation(
     {
@@ -60,11 +41,7 @@ const useForm = () => {
       username,
     },
     {
-      onSuccess: (updated) => {
-        // if (updated) {
-        //   form.reset(updated, { keepDirty: false });
-        // }
-      },
+      onSuccess: (updated) => {},
       onError: () => {
         toast.add({
           title: "Failed to update style",
@@ -81,9 +58,10 @@ const useForm = () => {
     },
 
     onSubmit: async ({ formApi, value }) => {
-      // Convert Color objects to strings before submission
-      const convertedValue = convertColorObjectsToStrings(value);
-      await updateStyleMutation.mutateAsync(convertedValue);
+      await updateStyleMutation.mutateAsync({
+        ...value,
+        theme: convertThemeColorObjects(value.theme),
+      });
       await refetch();
       formApi.reset();
     },
