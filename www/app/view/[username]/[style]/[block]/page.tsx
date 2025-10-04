@@ -7,7 +7,9 @@ import { BlockViewer } from "@/modules/blocks/block-viewer";
 import { BlockViewLayout } from "./_layout";
 
 export const generateStaticParams = async () => {
-  const styles = await buildTimeCaller.style.getFeatured({});
+  const styles = await buildTimeCaller.style.getPublicStyles({
+    featured: true,
+  });
 
   return styles.flatMap((style) =>
     registryBlocks.map((block) => ({
@@ -25,9 +27,8 @@ export default async function BlockViewPage({
 
   const queryClient = getQueryClient();
   const style = await queryClient.fetchQuery(
-    trpc.style.getByNameAndUsername.queryOptions({
-      username,
-      name: styleName,
+    trpc.style.getBySlug.queryOptions({
+      slug: `${username}/${styleName}`,
     }),
   );
 

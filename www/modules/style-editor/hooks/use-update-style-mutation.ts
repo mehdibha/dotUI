@@ -4,11 +4,7 @@ import type { StyleFormData } from "@/modules/style-editor/context/style-editor-
 import { useTRPC, useTRPCClient } from "@/lib/trpc/react";
 
 export const useUpdateStyleMutation = (
-  {
-    styleId,
-    name,
-    username,
-  }: { styleId?: string; name?: string; username?: string },
+  { styleId, slug }: { styleId?: string; slug?: string },
 
   callbacks?: {
     onSuccess?: (data: StyleFormData) => void;
@@ -21,7 +17,7 @@ export const useUpdateStyleMutation = (
 
   return useMutation({
     mutationFn: async (data: StyleFormData) => {
-      if (!styleId || !name || !username) throw new Error("Missing style id");
+      if (!styleId || !slug) throw new Error("Missing style id or slug");
       return await trpcClient.style.update.mutate({
         id: styleId,
         theme: data.theme,
@@ -30,10 +26,7 @@ export const useUpdateStyleMutation = (
       });
     },
     onMutate: async (variables: StyleFormData) => {
-      const queryKey = trpc.style.getByNameAndUsername.queryKey({
-        name,
-        username,
-      });
+      const queryKey = trpc.style.getBySlug.queryKey({ slug: slug! });
 
       await queryClient.cancelQueries({ queryKey });
 
@@ -59,21 +52,19 @@ export const useUpdateStyleMutation = (
       callbacks?.onError?.(error);
     },
     onSuccess: (updated) => {
-      const queryKey = trpc.style.getByNameAndUsername.queryKey({
-        name,
-        username,
+      const queryKey = trpc.style.getBySlug.queryKey({ slug: slug! });
+      // Merge with existing data to preserve user info
+      queryClient.setQueryData(queryKey, (old: any) => {
+        if (!old) return updated;
+        return { ...old, ...updated };
       });
-      queryClient.setQueryData(queryKey, updated);
       if (updated) {
         callbacks?.onSuccess?.(updated);
       }
     },
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: trpc.style.getByNameAndUsername.queryKey({
-          name,
-          username,
-        }),
+        queryKey: trpc.style.getBySlug.queryKey({ slug: slug! }),
       });
     },
   });

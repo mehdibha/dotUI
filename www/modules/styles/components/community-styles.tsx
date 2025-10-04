@@ -16,14 +16,14 @@ export function CommunityStyles() {
   const { data, isPending, isFetchingNextPage, fetchNextPage, hasNextPage } =
     useInfiniteQuery({
       queryKey: [
-        "style.getPublicRecent",
+        "style.getPublicStyles",
         { type: "infinite", limit: PAGE_SIZE },
       ],
       initialPageParam: 0,
       retry: false,
       queryFn: async ({ pageParam }) => {
         const offset = typeof pageParam === "number" ? pageParam : 0;
-        const items = await trpcClient.style.getPublicRecent.query({
+        const items = await trpcClient.style.getPublicStyles.query({
           limit: PAGE_SIZE,
           offset,
         });

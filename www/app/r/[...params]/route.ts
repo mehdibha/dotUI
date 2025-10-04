@@ -58,15 +58,14 @@ export async function GET(
       ];
       registryItemName = name;
       styleSlug = `${username}/${styleName}`;
-      style = await caller.style.getByNameAndUsername({
-        name: styleName,
-        username: username,
+      style = await caller.style.getBySlug({
+        slug: styleSlug,
       });
     } else {
       const [styleName, name] = routeParams as [string, string];
       registryItemName = name;
       styleSlug = styleName;
-      style = await caller.style.byPublicSlug({
+      style = await caller.style.getBySlug({
         slug: styleName,
       });
     }

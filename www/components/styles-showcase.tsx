@@ -17,7 +17,7 @@ import { useMounted } from "@/hooks/use-mounted";
 export const StylesShowcase = ({
   styles,
 }: {
-  styles: RouterOutputs["style"]["getFeatured"];
+  styles: RouterOutputs["style"]["getPublicStyles"];
 }) => {
   const { resolvedTheme } = useTheme();
   const containerRef = React.useRef<HTMLDivElement>(null);

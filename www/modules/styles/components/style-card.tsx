@@ -11,7 +11,7 @@ import type { RouterOutputs } from "@dotui/api";
 export function StyleCard({
   style,
 }: {
-  style: RouterOutputs["style"]["getFeatured"][number];
+  style: RouterOutputs["style"]["getPublicStyles"][number];
 }) {
   const [isLoading, setLoading] = React.useState(true);
 

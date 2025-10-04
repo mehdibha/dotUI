@@ -14,7 +14,9 @@ const TARGET_PATH = path.join(WWW_DIR, "public/images/showcase");
 // Capture screenshots.
 // ----------------------------------------------------------------------------
 async function captureScreenshots() {
-  const featuredStyles = await buildTimeCaller.style.getFeatured({});
+  const featuredStyles = await buildTimeCaller.style.getPublicStyles({
+    featured: true,
+  });
 
   if (!existsSync(TARGET_PATH)) {
     mkdirSync(TARGET_PATH, { recursive: true });

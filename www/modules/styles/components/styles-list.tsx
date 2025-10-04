@@ -18,21 +18,27 @@ export function StylesList({
   search = false,
   ...props
 }: React.ComponentProps<"div"> & {
-  styles?: RouterOutputs["style"]["getFeatured"];
+  styles?: RouterOutputs["style"]["getPublicStyles"];
   isLoading?: boolean;
   search?: boolean;
 }) {
   const [query, setQuery] = React.useState("");
 
-  const filtered = (styles ?? []).filter((s) => {
-    const q = query.trim().toLowerCase();
-    if (!q) return true;
-    return (
-      s.name.toLowerCase().includes(q) ||
-      (s.description ?? "").toLowerCase().includes(q) ||
-      s.user.username.toLowerCase().includes(q)
-    );
-  });
+  const filtered = (styles ?? []).filter(
+    (s: {
+      name: string;
+      description: string | null;
+      user: { username: string };
+    }) => {
+      const q = query.trim().toLowerCase();
+      if (!q) return true;
+      return (
+        s.name.toLowerCase().includes(q) ||
+        (s.description ?? "").toLowerCase().includes(q) ||
+        s.user.username.toLowerCase().includes(q)
+      );
+    },
+  );
 
   return (
     <div className={cn("@container/styles-list", props.className)}>
@@ -71,9 +77,11 @@ export function StylesList({
               </div>
             </div>
           ))}
-        {filtered.map((style) => (
-          <StyleCard key={style.name} style={style} />
-        ))}
+        {filtered.map(
+          (style: RouterOutputs["style"]["getPublicStyles"][number]) => (
+            <StyleCard key={style.name} style={style} />
+          ),
+        )}
       </div>
     </div>
   );

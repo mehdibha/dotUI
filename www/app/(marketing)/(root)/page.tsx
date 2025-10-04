@@ -23,7 +23,10 @@ export const revalidate = 60;
 
 export default async function HomePage() {
   const contributors = await getGitHubContributors();
-  const feturedStyles = await caller.style.getFeatured({ limit: 6 });
+  const feturedStyles = await caller.style.getPublicStyles({
+    featured: true,
+    limit: 6,
+  });
 
   return (
     <div>

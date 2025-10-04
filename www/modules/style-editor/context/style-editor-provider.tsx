@@ -32,13 +32,12 @@ const defaultValues: StyleFormData = {
 
 const useForm = () => {
   const { data: style, refetch } = useEditorStyle();
-  const { username, style: styleName } = useStyleEditorParams();
+  const { slug } = useStyleEditorParams();
 
   const updateStyleMutation = useUpdateStyleMutation(
     {
       styleId: style?.id,
-      name: styleName,
-      username,
+      slug,
     },
     {
       onSuccess: (updated) => {},
