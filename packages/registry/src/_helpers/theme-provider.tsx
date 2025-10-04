@@ -21,7 +21,7 @@ export const ThemeProvider = ({
   children: React.ReactNode;
 }) => {
   const theme = React.useMemo(
-    () => createTheme(themeDefinition),
+    () => createTheme(themeDefinition, true, "oklch"),
     [themeDefinition],
   );
 

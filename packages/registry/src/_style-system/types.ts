@@ -69,3 +69,5 @@ export type ScaleId =
   | "warning"
   | "danger"
   | "info";
+
+export type ColorFormat = "oklch" | "hex" | "hsl";

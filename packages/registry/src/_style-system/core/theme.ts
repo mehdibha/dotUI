@@ -13,11 +13,12 @@ import {
   createSpacingThemeVars,
   createTextureCss,
 } from "./css";
-import type { Theme, ThemeDefinition } from "../types";
+import type { ColorFormat, Theme, ThemeDefinition } from "../types";
 
 export const createTheme = (
   themeDefinition: ThemeDefinition,
   generateContrastColors = true,
+  colorFormat: ColorFormat = "oklch",
 ): Theme => {
   const {
     colors,
@@ -49,12 +50,12 @@ export const createTheme = (
     activeModes.includes("light") && activeModes.includes("dark");
 
   const lightCssVars = supportsLightAndDark
-    ? createModeCssVars(lightMode, generateContrastColors)
+    ? createModeCssVars(lightMode, generateContrastColors, colorFormat)
     : activeModes.includes("light")
-      ? createModeCssVars(lightMode, generateContrastColors)
-      : createModeCssVars(darkMode, generateContrastColors);
+      ? createModeCssVars(lightMode, generateContrastColors, colorFormat)
+      : createModeCssVars(darkMode, generateContrastColors, colorFormat);
   const darkCssVars = supportsLightAndDark
-    ? createModeCssVars(darkMode, generateContrastColors)
+    ? createModeCssVars(darkMode, generateContrastColors, colorFormat)
     : {};
 
   const colorThemeVars = createColorThemeVars(colors.tokens);

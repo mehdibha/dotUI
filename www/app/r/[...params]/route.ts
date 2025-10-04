@@ -4,6 +4,7 @@ import type { NextRequest } from "next/server";
 
 import { createStyle } from "@dotui/registry/style-system/core";
 import { buildRegistryItem } from "@dotui/registry/style-system/shadcn-registry";
+import type { ColorFormat } from "@dotui/registry/style-system/types";
 
 import { env } from "@/env";
 import { caller } from "@/lib/trpc/server";
@@ -14,11 +15,23 @@ const registryBasePath = path.resolve(
 );
 
 export async function GET(
-  _: NextRequest,
+  request: NextRequest,
   { params }: RouteContext<"/r/[...params]">,
 ) {
   try {
     const { params: routeParams } = await params;
+    const { searchParams } = new URL(request.url);
+
+    // Get color format from query params, default to "oklch"
+    const colorFormat = (searchParams.get("format") as ColorFormat) || "oklch";
+
+    // Validate color format
+    if (!["oklch", "hex", "hsl"].includes(colorFormat)) {
+      return NextResponse.json(
+        { error: "Invalid color format. Must be one of: oklch, hex, hsl" },
+        { status: 400 },
+      );
+    }
 
     if (
       !routeParams ||
@@ -64,12 +77,13 @@ export async function GET(
 
     const registryItem = await buildRegistryItem(registryItemName, {
       styleName: styleSlug,
-      style: createStyle(style, false),
+      style: createStyle(style, false, colorFormat),
       registryBasePath,
       baseUrl:
         env.NODE_ENV === "development"
           ? "http://localhost:4444/r"
           : "https://dotui.org/r",
+      colorFormat,
     });
 
     if (!registryItem) {

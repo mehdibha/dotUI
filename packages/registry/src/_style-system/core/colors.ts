@@ -5,12 +5,15 @@ import {
   Color as LeonardoColor,
   Theme as LeonardoTheme,
 } from "@adobe/leonardo-contrast-colors";
+import { converter, formatCss, formatHex, formatHsl } from "culori";
+import { parseColor } from "react-aria-components";
 import type { CssColor } from "@adobe/leonardo-contrast-colors";
 import type { Color } from "react-aria-components";
 
 import { RADIUS_TOKENS } from "../../tokens/registry";
 import { SCALE_STEPS } from "../constants";
 import type {
+  ColorFormat,
   ColorScale,
   ColorTokens,
   ModeDefinition,
@@ -23,6 +26,54 @@ export const toColorString = (colorValue: string | Color): CssColor => {
     return colorValue as CssColor;
   }
   return colorValue.toString("hex") as CssColor;
+};
+
+/**
+ * Converts a HEX color to the specified format.
+ * Leonardo only supports HEX output, so we convert post-generation.
+ */
+export const convertColorFormat = (
+  hexColor: string,
+  targetFormat: ColorFormat = "oklch",
+): string => {
+  if (targetFormat === "hex") {
+    return hexColor;
+  }
+
+  try {
+    if (targetFormat === "oklch") {
+      // Use culori for OKLCH conversion
+      const oklch = converter("oklch");
+      const converted = oklch(hexColor);
+      if (converted) {
+        // Round values for cleaner output
+        const l = Number(converted.l.toFixed(3));
+        const c = Number(converted.c.toFixed(3));
+        const h = converted.h ? Number(converted.h.toFixed(3)) : 0;
+        const alpha = converted.alpha !== undefined ? converted.alpha : 1;
+
+        if (alpha < 1) {
+          return `oklch(${l} ${c} ${h} / ${alpha})`;
+        }
+        return `oklch(${l} ${c} ${h})`;
+      }
+    }
+
+    if (targetFormat === "hsl") {
+      // Use react-aria for HSL conversion (it supports this)
+      const color = parseColor(hexColor);
+      return color.toString("hsl");
+    }
+  } catch (error) {
+    // If parsing fails, return the original color
+    console.warn(
+      `Failed to convert color ${hexColor} to ${targetFormat}:`,
+      error,
+    );
+    return hexColor;
+  }
+
+  return hexColor;
 };
 
 export const createRatiosObject = (
@@ -82,7 +133,10 @@ export const createColorScales = ({
   return scales;
 };
 
-export const getContrastColor = (colorValue: string): string => {
+export const getContrastColor = (
+  colorValue: string,
+  colorFormat: ColorFormat = "oklch",
+): string => {
   const colorTuple = convertColorValue(colorValue, "RGB", true) as unknown as {
     r: number;
     g: number;
@@ -98,14 +152,16 @@ export const getContrastColor = (colorValue: string): string => {
   const contrastWithBlack = getContrast(rgbArray, [0, 0, 0]);
   const contrastWithWhite = getContrast(rgbArray, [255, 255, 255]);
 
-  return contrastWithBlack > contrastWithWhite
-    ? "hsl(0 0% 0%)"
-    : "hsl(0 0% 100%)";
+  const isBlackBetter = contrastWithBlack > contrastWithWhite;
+  const hexColor = isBlackBetter ? "#000000" : "#ffffff";
+
+  return convertColorFormat(hexColor, colorFormat);
 };
 
 export const createModeCssVars = (
   modeDefinition: ModeDefinition,
   generateContrastColors = true,
+  colorFormat: ColorFormat = "oklch",
 ): Record<string, string> => {
   const colorScales = createColorScales({
     lightness: modeDefinition.lightness,
@@ -119,9 +175,12 @@ export const createModeCssVars = (
     .flatMap((colorScale) =>
       colorScale.values.flatMap((value) =>
         [
-          [value.name, value.value] as const,
+          [value.name, convertColorFormat(value.value, colorFormat)] as const,
           generateContrastColors
-            ? ([`on-${value.name}`, getContrastColor(value.value)] as const)
+            ? ([
+                `on-${value.name}`,
+                getContrastColor(value.value, colorFormat),
+              ] as const)
             : [],
         ].filter(Boolean),
       ),

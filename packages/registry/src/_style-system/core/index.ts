@@ -4,6 +4,7 @@ export {
   createRadiusVars,
   toColorString,
   createColorScales,
+  convertColorFormat,
 } from "./colors";
 
 export { createTheme } from "./theme";

@@ -65,6 +65,7 @@
     "@dotui/eslint-config": "workspace:*",
     "@dotui/prettier-config": "workspace:*",
     "@dotui/ts-config": "workspace:*",
+    "@types/culori": "^4.0.1",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "rimraf": "^6.0.1",
@@ -72,5 +73,8 @@
     "tsx": "catalog:",
     "typescript": "catalog:"
   },
-  "prettier": "@dotui/prettier-config"
+  "prettier": "@dotui/prettier-config",
+  "dependencies": {
+    "culori": "^4.0.2"
+  }
 }
