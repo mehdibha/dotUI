@@ -5,7 +5,7 @@ const utilsMeta = {
   type: "registry:lib",
   files: [
     {
-      path: "lib/utils.tsx",
+      path: "lib/utils/index.tsx",
       type: "registry:lib",
       target: "lib/utils.tsx",
     },

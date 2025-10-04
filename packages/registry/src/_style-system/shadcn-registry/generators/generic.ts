@@ -1,7 +1,7 @@
 import { registryItemSchema } from "shadcn/schema";
 import type { RegistryItem } from "shadcn/schema";
 
-import { registry } from "@dotui/registry/index";
+import { registry } from "@dotui/registry/registry";
 
 import { updateFiles } from "../helpers/update-files";
 import { updateRegistryDependencies } from "../helpers/update-registry-deps";
@@ -16,23 +16,32 @@ export const generateGenericRegistryItem = async (
     style: Style;
   },
 ): Promise<RegistryItem | null> => {
-  const { registryBasePath, baseUrl, style } = options;
+  const { registryBasePath, baseUrl, style, styleName } = options;
 
-  let name = registryItemName;
   const variant =
     registryItemName in style.variants
       ? style.variants[registryItemName as keyof typeof style.variants]
       : undefined;
 
-  if (variant) {
-    name = `${registryItemName}:${variant}`;
-  }
-
-  let registryItem = registry.find((item) => item.name === name);
+  let registryItem = registry.find((item) => item.name === registryItemName);
 
   if (!registryItem) {
     console.log(`Registry item ${name} not found.`);
     return null;
+  }
+
+  if (variant) {
+    if (!registryItem.variants) {
+      console.log(`Registry item ${registryItemName} does not have variants.`);
+      return null;
+    }
+
+    const { variants, ...rest } = registryItem;
+
+    registryItem = {
+      ...rest,
+      ...variants[variant],
+    };
   }
 
   registryItem = updateRegistryDependencies(registryItem, options);

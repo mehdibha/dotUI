@@ -57,21 +57,21 @@ export async function GET(
         slug: styleName,
       });
     }
-
+    
     if (!style) {
       return NextResponse.json({ error: "Style not found" }, { status: 404 });
     }
-
+    
     const registryItem = await buildRegistryItem(registryItemName, {
       styleName: styleSlug,
       style: createStyle(style, false),
       registryBasePath,
       baseUrl:
-        env.NODE_ENV === "development"
-          ? "http://localhost:4444/r"
-          : "https://dotui.org/r",
+      env.NODE_ENV === "development"
+      ? "http://localhost:4444/r"
+      : "https://dotui.org/r",
     });
-
+    
     if (!registryItem) {
       return NextResponse.json(
         { error: "Registry item not found" },

@@ -13,6 +13,7 @@ const sliderMeta = {
         },
       ],
       registryDependencies: ["field", "focus-styles"],
+      dependencies: ["react-aria"],
     },
   },
 } satisfies RegistryItem;

@@ -7,6 +7,8 @@ export const registryBase = [
     extends: "none",
     dependencies: [
       "tailwind-variants",
+      "clsx",
+      "tailwind-merge",
       "react-aria-components",
       "tailwindcss-react-aria-components",
       "tw-animate-css",

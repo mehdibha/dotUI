@@ -1,6 +1,6 @@
 "use client";
 
-import { ZapIcon } from "lucide-react";
+// import { ZapIcon } from "lucide-react";
 
 import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";
@@ -65,7 +65,7 @@ export function Filters({ className, ...props }: React.ComponentProps<"div">) {
         </TagGroup>
         <Switch variant="card" className="text-sm" defaultSelected>
           <span className="flex items-center gap-2">
-            <ZapIcon className="size-4" />
+            {/* <ZapIcon className="size-4" /> */}
             Instant booking
           </span>
         </Switch>

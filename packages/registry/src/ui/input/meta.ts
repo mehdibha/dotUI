@@ -13,7 +13,7 @@ const inputMeta = {
         },
       ],
       registryDependencies: ["focus-styles"],
-      dependencies: ["@react-stately/utils"],
+      dependencies: ["@react-stately/utils", "react-aria"],
     },
   },
 } satisfies RegistryItem;
