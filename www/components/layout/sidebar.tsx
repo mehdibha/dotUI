@@ -282,7 +282,7 @@ const SidebarRoot = ({
           "w-(--sidebar-width) transition-sidebar group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) relative z-10 h-svh bg-transparent",
         )}
       />
-      <div className="w-(--sidebar-width) bg-muted/10 transition-sidebar group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) [&_svg]:text-fg-muted fixed inset-y-0 left-0 z-10 flex h-svh flex-col overflow-hidden">
+      <div className="w-(--sidebar-width) bg-muted/10 border-r transition-sidebar group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) [&_svg]:text-fg-muted fixed inset-y-0 left-0 z-10 flex h-svh flex-col overflow-hidden">
         <div className="w-(--sidebar-width) relative flex h-svh flex-1 translate-x-[-0.5px] flex-col overflow-hidden">
           {children}
         </div>
