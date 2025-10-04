@@ -304,16 +304,17 @@ export const styleRouter = {
           });
         }
 
+        const { id, theme, icons, variants } = input;
+
         const [updatedStyle] = await tx
           .update(style)
           .set({
-            ...input,
-            // Preserve protected fields
-            userId: existingStyle.userId,
-            isFeatured: existingStyle.isFeatured,
-            createdAt: existingStyle.createdAt,
+            theme,
+            icons,
+            variants,
+            updatedAt: new Date(),
           })
-          .where(eq(style.id, input.id))
+          .where(eq(style.id, id))
           .returning();
 
         return updatedStyle;
