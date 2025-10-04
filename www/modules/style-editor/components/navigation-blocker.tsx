@@ -83,7 +83,7 @@ export function NavigationBlocker() {
 
     document.addEventListener("click", handleClick, true);
     return () => document.removeEventListener("click", handleClick, true);
-  }, [isDirty]);
+  }, [isDirty, slug]);
 
   const handleNavigation = () => {
     if (pendingNavigationUrl) {
