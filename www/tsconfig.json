@@ -21,6 +21,5 @@
   ],
   "exclude": [
     "node_modules",
-    "../packages/ui/src/registry/components/breadcrumbs/demos/router-integration.tsx"
   ]
 }
