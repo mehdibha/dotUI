@@ -1,5 +1,12 @@
 # tailwindcss-autocontrast
 
+## 0.0.2
+
+### Patch Changes
+
+- [#138](https://github.com/mehdibha/dotUI/pull/138) [`06977f65978d031b28fd43b987682b8815c47145`](https://github.com/mehdibha/dotUI/commit/06977f65978d031b28fd43b987682b8815c47145) Thanks [@mehdibha](https://github.com/mehdibha)! - ## Enhancement
+  - Support oklch format
+
 ## 0.0.1
 
 ### Patch Changes
