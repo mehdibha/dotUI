@@ -1,6 +1,6 @@
 {
   "name": "tailwindcss-autocontrast",
-  "version": "0.0.0-beta-20251004133241",
+  "version": "0.0.1",
   "description": "Tailwind CSS plugins for automatic contrast color generation",
   "type": "commonjs",
   "main": "src/index.js",
