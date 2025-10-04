@@ -18,7 +18,7 @@ export function TypographyEditor() {
   const { saveDraft } = useDraftStyle();
 
   return (
-    <div className="min-h-[200svh]">
+    <div className="space-y-4">
       <StyleEditorSection title="Font family">
         <form.AppField
           name="theme.fonts.heading"
@@ -36,7 +36,7 @@ export function TypographyEditor() {
               className={cn(
                 "w-full",
                 isPending &&
-                  "[&_[data-slot='button']]:animate-pulse [&_[data-slot='button']]:border-0 [&_[data-slot='button']]:*:invisible",
+                  "[&_[data-slot='button']]:!bg-bg-muted [&_[data-slot='button']]:pointer-events-none [&_[data-slot='button']]:animate-pulse [&_[data-slot='button']]:border-0 [&_[data-slot='button']]:*:invisible",
               )}
             />
           )}
@@ -57,7 +57,7 @@ export function TypographyEditor() {
               className={cn(
                 "w-full",
                 isPending &&
-                  "[&_[data-slot='button']]:animate-pulse [&_[data-slot='button']]:border-0 [&_[data-slot='button']]:*:invisible",
+                  "[&_[data-slot='button']]:!bg-bg-muted [&_[data-slot='button']]:pointer-events-none [&_[data-slot='button']]:animate-pulse [&_[data-slot='button']]:border-0 [&_[data-slot='button']]:*:invisible",
               )}
             />
           )}

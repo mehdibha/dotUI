@@ -53,7 +53,7 @@ function Loader({
         width={size}
       >
         <circle
-          className="stroke-primary-muted transition-[stroke] duration-500 ease-out"
+          className="stroke-[color-mix(in_oklab,currentColor_20%,transparent)] transition-[stroke] duration-500 ease-out"
           cx={size}
           cy={size}
           r={radius}
@@ -62,7 +62,7 @@ function Loader({
           fill="none"
         />
         <circle
-          className="stroke-primary fill-none transition-[stroke] duration-500 ease-out [stroke-dasharray:var(--loader-dash),_var(--loader-gap)] [stroke-dashoffset:0] [stroke-linecap:round]"
+          className="fill-none stroke-current transition-[stroke] duration-500 ease-out [stroke-dasharray:var(--loader-dash),_var(--loader-gap)] [stroke-dashoffset:0] [stroke-linecap:round]"
           cx={size}
           cy={size}
           r={radius}

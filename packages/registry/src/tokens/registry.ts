@@ -34,6 +34,12 @@ export const COLOR_TOKENS: Record<string, Token> = {
     categories: ["background"],
     scales: ["neutral", ".."],
   },
+  "color-popover": {
+    defaultValue: "var(--neutral-100)",
+    description: "Popover background color for main content areas",
+    categories: ["background"],
+    scales: ["neutral", ".."],
+  },
   "color-muted": {
     defaultValue: "var(--neutral-200)",
     description: "Muted background color for secondary content areas",

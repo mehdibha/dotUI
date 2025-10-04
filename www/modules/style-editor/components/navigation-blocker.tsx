@@ -6,11 +6,17 @@ import { useStore } from "@tanstack/react-form";
 import type { Route } from "next";
 
 import { Button } from "@dotui/registry/ui/button";
-import { Dialog, DialogBody, DialogFooter } from "@dotui/registry/ui/dialog";
+import {
+  Dialog,
+  DialogBody,
+  DialogFooter,
+  DialogHeading,
+} from "@dotui/registry/ui/dialog";
 
 import { env } from "@/env";
 import { useDraftStyle } from "../atoms/draft-style-atom";
 import { useStyleEditorForm } from "../context/style-editor-provider";
+import { useStyleEditorParams } from "../hooks/use-style-editor-params";
 
 /**
  * Blocks navigation when the form has unsaved changes.
@@ -21,6 +27,7 @@ export function NavigationBlocker() {
   const router = useRouter();
   const isDirty = useStore(form.store, (state) => state.isDirty);
   const { clearDraft } = useDraftStyle();
+  const { slug } = useStyleEditorParams();
 
   const [isOpen, setOpen] = React.useState(false);
   const [pendingNavigationUrl, setPendingNavigationUrl] = React.useState<
@@ -60,6 +67,11 @@ export function NavigationBlocker() {
         const url = new URL(link.href);
         const currentUrl = new URL(window.location.href);
 
+        if (url.pathname.startsWith(`/styles/${slug}`)) {
+          console.log("skipping", { currentUrl, slug });
+          return;
+        }
+
         // Only block if navigating to a different page
         if (url.pathname !== currentUrl.pathname) {
           e.preventDefault();
@@ -95,6 +107,7 @@ export function NavigationBlocker() {
 
   return (
     <Dialog
+      aria-label="Unsaved changes"
       role="alertdialog"
       isDismissable
       title="Unsaved changes"

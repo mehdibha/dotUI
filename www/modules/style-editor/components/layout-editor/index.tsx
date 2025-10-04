@@ -15,6 +15,7 @@ export function LayoutEditor() {
   return (
     <div
       className={cn(
+        "space-y-4",
         isPending &&
           "[&_[data-slot='slider-filler']]:opacity-0 [&_[data-slot='slider-thumb']]:opacity-0 [&_[data-slot='slider-track']]:animate-pulse [&_[data-slot='slider-value-label']]:opacity-0",
       )}
@@ -38,26 +39,26 @@ export function LayoutEditor() {
             />
           )}
         </form.AppField>
-        <StyleEditorSection title="Spacing">
-          <form.AppField
-            name="theme.spacing"
-            listeners={{
-              onChange: () => {
-                saveDraft();
-              },
-            }}
-          >
-            {(field) => (
-              <field.Slider
-                label="Spacing"
-                minValue={0.2}
-                maxValue={0.35}
-                step={0.01}
-                className="w-full"
-              />
-            )}
-          </form.AppField>
-        </StyleEditorSection>
+      </StyleEditorSection>
+      <StyleEditorSection title="Spacing">
+        <form.AppField
+          name="theme.spacing"
+          listeners={{
+            onChange: () => {
+              saveDraft();
+            },
+          }}
+        >
+          {(field) => (
+            <field.Slider
+              label="Spacing"
+              minValue={0.2}
+              maxValue={0.35}
+              step={0.01}
+              className="w-full"
+            />
+          )}
+        </form.AppField>
       </StyleEditorSection>
     </div>
   );

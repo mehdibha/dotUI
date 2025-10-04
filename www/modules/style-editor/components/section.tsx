@@ -15,9 +15,9 @@ export function StyleEditorSection({
   ...props
 }: StyleEditorSectionProps) {
   return (
-    <div className={cn("space-y-3", rootClassName)} {...props}>
+    <div className={cn("space-y-2", rootClassName)} {...props}>
       <h2 className="text-base font-semibold">{title}</h2>
-      <div className={cn("space-y-3", className)}>{children}</div>
+      <div className={cn("space-y-2", className)}>{children}</div>
     </div>
   );
 }

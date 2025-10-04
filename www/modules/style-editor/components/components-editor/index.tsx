@@ -9,6 +9,7 @@ import { Checkboxes } from "./demos/checkboxes";
 import { FocusStyles } from "./demos/focus-styles";
 import { Inputs } from "./demos/inputs";
 import { ListBoxAndMenu } from "./demos/list-box-and-menu";
+import { Loaders } from "./demos/loaders";
 import { Overlays } from "./demos/overlays";
 import { Pickers } from "./demos/pickers";
 import { Radios } from "./demos/radios";
@@ -28,6 +29,7 @@ export function ComponentsEditor() {
 
   return (
     <div>
+      <Loaders />
       <Buttons />
       <FocusStyles />
       <Inputs />

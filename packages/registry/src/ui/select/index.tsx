@@ -1,6 +1,9 @@
 "use client";
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
+import { Button } from "@dotui/registry/ui/button";
+import { ListBox } from "@dotui/registry/ui/list-box";
+import { Overlay } from "@dotui/registry/ui/overlay";
 
 import {
   Select as _Select,
@@ -28,7 +31,9 @@ export const SelectRoot = <T extends object = object>(
   return <Component {...props} />;
 };
 
-export const Select = <T extends object = object>(props: SelectProps<T>) => {
+export const SelectBase = <T extends object = object>(
+  props: SelectProps<T>,
+) => {
   const Component = createDynamicComponent<SelectProps<T>>(
     "select",
     "Select",
@@ -65,5 +70,14 @@ export const SelectItem = <T extends object = object>(
 
   return <Component {...props} />;
 };
+
+export const Select = Object.assign(SelectBase, {
+  Root: SelectRoot,
+  Value: SelectValue,
+  Item: SelectItem,
+  ListBox,
+  Overlay,
+  Button,
+});
 
 export type { SelectProps, SelectRootProps, SelectValueProps, SelectItemProps };

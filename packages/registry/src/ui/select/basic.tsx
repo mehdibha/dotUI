@@ -15,6 +15,7 @@ import { ChevronDownIcon } from "@dotui/registry/icons";
 import { Button } from "@dotui/registry/ui/button";
 import { HelpText, Label } from "@dotui/registry/ui/field";
 import { ListBox, ListBoxItem } from "@dotui/registry/ui/list-box";
+import { Overlay } from "@dotui/registry/ui/overlay";
 import { Popover } from "@dotui/registry/ui/popover";
 import type { ButtonProps } from "@dotui/registry/ui/button";
 import type { FieldProps } from "@dotui/registry/ui/field";
@@ -25,7 +26,7 @@ import type {
 
 const selectStyles = tv({
   slots: {
-    root: "flex w-48 flex-col items-start gap-2",
+    root: "flex w-48 flex-col items-start gap-2 [&_[data-slot='button']]:w-full",
     selectValue: "flex-1 text-left",
   },
 });
@@ -60,7 +61,6 @@ const SelectBase = <T extends object>({
         variant={variant}
         size={size}
         suffix={suffix ?? <ChevronDownIcon />}
-        className="w-full"
       >
         <SelectValue>{renderValue}</SelectValue>
       </Button>
@@ -113,8 +113,11 @@ const SelectItem = ListBoxItem;
 
 const Select = Object.assign(SelectBase, {
   Root: SelectRoot,
+  Button: Button,
   Value: SelectValue,
   Item: SelectItem,
+  ListBox: ListBox,
+  Overlay: Overlay,
 });
 
 export type { SelectProps, SelectRootProps, SelectItemProps, SelectValueProps };

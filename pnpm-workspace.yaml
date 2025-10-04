@@ -7,8 +7,8 @@ catalog:
   eslint: ^9.28.0
   prettier: ^3.5.3
   typescript: ^5.8.3
-  tailwindcss: ^4.1.8
-  '@tailwindcss/postcss': ^4.1.8
+  tailwindcss: ^4.1.14
+  '@tailwindcss/postcss': ^4.1.14
   postcss: ^8.4.31
   zod: ^4.0.5
   '@tanstack/react-query': ^5.80.2
@@ -29,7 +29,7 @@ catalogs:
     next: ^15.6.0-canary.26
   ui:
     react-aria-components: ^1.13.0
-    tailwind-variants: ^1.0.0
+    tailwind-variants: ^3.1.1
     clsx: ^2.1.0
     tailwind-merge: ^3.0.2
     '@hookform/resolvers': ^5.1.1

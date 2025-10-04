@@ -176,6 +176,7 @@
   /* colors */
   --color-bg: var(--neutral-50);
   --color-card: var(--neutral-100);
+  --color-popover: var(--neutral-100);
   --color-muted: var(--neutral-200);
   --color-inverse: var(--neutral-950);
   --color-disabled: var(--neutral-200);

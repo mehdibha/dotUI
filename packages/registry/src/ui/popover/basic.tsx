@@ -11,7 +11,7 @@ import { tv } from "tailwind-variants";
 const popoverStyles = tv({
   slots: {
     popover: [
-      "min-w-(--trigger-width) bg-bg group rounded-md border shadow-md ease-[cubic-bezier(0.165,0.84,0.44,1)]",
+      "min-w-(--trigger-width) bg-popover group rounded-md border shadow-md ease-[cubic-bezier(0.165,0.84,0.44,1)]",
       "placement-left:origin-right placement-right:origin-left placement-top:origin-bottom placement-bottom:origin-top",
       "entering:opacity-0 exiting:opacity-0 opacity-100 duration-150 will-change-[transform,opacity]",
       "translate-0 entering:placement-left:translate-x-2 entering:placement-right:-translate-x-2 entering:placement-top:translate-y-2 entering:placement-bottom:-translate-y-2 exiting:placement-left:translate-x-2 exiting:placement-right:-translate-x-2 exiting:placement-top:translate-y-2 exiting:placement-bottom:-translate-y-2",
