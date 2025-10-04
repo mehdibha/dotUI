@@ -26,7 +26,7 @@ export const generateGenericRegistryItem = async (
   let registryItem = registry.find((item) => item.name === registryItemName);
 
   if (!registryItem) {
-    console.log(`Registry item ${name} not found.`);
+    console.log(`Registry item ${registryItemName} not found.`);
     return null;
   }
 
