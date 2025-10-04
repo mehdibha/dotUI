@@ -132,7 +132,7 @@ export const styleRouter = {
       }
 
       // Check access permissions
-      const isOwner = ctx.session?.user?.id === styleRecord.userId;
+      const isOwner = ctx.session?.user.id === styleRecord.userId;
       const isPublicOrUnlisted = ["public", "unlisted"].includes(
         styleRecord.visibility,
       );
@@ -223,7 +223,7 @@ export const styleRouter = {
       }
 
       // Check access permissions
-      const isOwner = ctx.session?.user?.id === styleRecord.userId;
+      const isOwner = ctx.session?.user.id === styleRecord.userId;
       const isPublicOrUnlisted = ["public", "unlisted"].includes(
         styleRecord.visibility,
       );
