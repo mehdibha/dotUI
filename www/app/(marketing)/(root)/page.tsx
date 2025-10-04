@@ -12,8 +12,8 @@ import { Button } from "@dotui/registry/ui/button";
 import { Link } from "@dotui/registry/ui/link";
 import { Tooltip } from "@dotui/registry/ui/tooltip";
 
-import { Announcement } from "@/components/marketing/announcement";
 import { FeaturedStylesShowcase } from "@/components/featured-styles-showcase";
+import { Announcement } from "@/components/marketing/announcement";
 import { siteConfig } from "@/config";
 import { getGitHubContributors } from "@/lib/github";
 import { caller } from "@/lib/trpc/server";
