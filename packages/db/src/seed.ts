@@ -81,6 +81,7 @@ async function seedFeaturedStyles(userId: string) {
     ...featuredStyle,
     userId,
     isFeatured: true,
+    visibility: "public" as const,
   }));
 
   const insertedStyles = await db

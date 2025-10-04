@@ -13,7 +13,7 @@ import { Link } from "@dotui/registry/ui/link";
 import { Tooltip } from "@dotui/registry/ui/tooltip";
 
 import { Announcement } from "@/components/marketing/announcement";
-import { StylesShowcase } from "@/components/styles-showcase";
+import { FeaturedStylesShowcase } from "@/components/featured-styles-showcase";
 import { siteConfig } from "@/config";
 import { getGitHubContributors } from "@/lib/github";
 import { caller } from "@/lib/trpc/server";
@@ -55,7 +55,7 @@ export default async function HomePage() {
       {/* Styles overview */}
       <section className="container mt-10 sm:mt-20">
         {feturedStyles.length > 0 ? (
-          <StylesShowcase styles={feturedStyles} />
+          <FeaturedStylesShowcase styles={feturedStyles} />
         ) : (
           <Alert>No styles found.</Alert>
         )}

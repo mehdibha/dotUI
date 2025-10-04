@@ -14,7 +14,7 @@ import type { RouterOutputs } from "@dotui/api";
 
 import { useMounted } from "@/hooks/use-mounted";
 
-export const StylesShowcase = ({
+export const FeaturedStylesShowcase = ({
   styles,
 }: {
   styles: RouterOutputs["style"]["getPublicStyles"];
@@ -33,21 +33,21 @@ export const StylesShowcase = ({
     return styles.find((style) => style.name === currentStyleName)!;
   }, [currentStyleName, styles]);
 
-  // React.useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     if (touched || !isInView) return;
-  //     const currentIndex = styles.findIndex(
-  //       (style) => style.name === currentStyleName,
-  //     );
-  //     const nextIndex = (currentIndex + 1) % styles.length;
-  //     const nextStyle = styles[nextIndex];
-  //     if (nextStyle) {
-  //       setCurrentStyleName(nextStyle.name);
-  //     }
-  //   }, 5000);
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      if (touched || !isInView) return;
+      const currentIndex = styles.findIndex(
+        (style) => style.name === currentStyleName,
+      );
+      const nextIndex = (currentIndex + 1) % styles.length;
+      const nextStyle = styles[nextIndex];
+      if (nextStyle) {
+        setCurrentStyleName(nextStyle.name);
+      }
+    }, 5000);
 
-  //   return () => clearInterval(interval);
-  // }, [currentStyleName, touched, isInView, styles]);
+    return () => clearInterval(interval);
+  }, [currentStyleName, touched, isInView, styles]);
 
   return (
     <>
