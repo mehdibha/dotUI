@@ -61,8 +61,13 @@ const listBoxItemStyles = tv({
 });
 
 const listboxSectionStyles = tv({
-  base: "space-y-px pt-2",
+  slots: {
+    listboxSection: "space-y-px pt-2",
+    listboxHeading: "text-fg-muted mb-4 pl-3 text-xs",
+  },
 });
+
+const { listboxSection, listboxHeading } = listboxSectionStyles();
 
 interface ListBoxProps<T> extends AriaListBoxProps<T> {
   isLoading?: boolean;
@@ -158,15 +163,8 @@ const ListBoxSection = <T extends object>({
   ...props
 }: ListBoxSectionProps<T>) => {
   return (
-    <AriaListBoxSection
-      className={listboxSectionStyles({ className })}
-      {...props}
-    >
-      {title && (
-        <AriaHeader className="text-fg-muted mb-1 pl-3 text-xs">
-          {title}
-        </AriaHeader>
-      )}
+    <AriaListBoxSection className={listboxSection({ className })} {...props}>
+      {title && <AriaHeader className={listboxHeading()}>{title}</AriaHeader>}
       <AriaCollection items={props.items}>{children}</AriaCollection>
     </AriaListBoxSection>
   );

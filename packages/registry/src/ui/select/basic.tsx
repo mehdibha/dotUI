@@ -39,7 +39,7 @@ interface SelectProps<T extends object>
     Pick<ButtonProps, "variant" | "size" | "suffix"> {
   renderValue?: SelectValueProps<T>["children"];
 }
-const Select = <T extends object>({
+const SelectBase = <T extends object>({
   variant,
   size,
   label,
@@ -110,6 +110,12 @@ const SelectRoot = <T extends object>({
 
 interface SelectItemProps<T> extends ListBoxItemProps<T> {}
 const SelectItem = ListBoxItem;
+
+const Select = Object.assign(SelectBase, {
+  Root: SelectRoot,
+  Value: SelectValue,
+  Item: SelectItem,
+});
 
 export type { SelectProps, SelectRootProps, SelectItemProps, SelectValueProps };
 export { Select, SelectRoot, SelectItem, SelectValue };

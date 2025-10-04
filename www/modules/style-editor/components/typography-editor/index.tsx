@@ -1,9 +1,12 @@
 "use client";
 
+import { Key } from "react-aria";
+
 import { cn } from "@dotui/registry/lib/utils";
 import { Skeleton } from "@dotui/registry/ui/skeleton";
 import { Slider } from "@dotui/registry/ui/slider";
 
+import { useDraftStyle } from "@/modules/style-editor/atoms/draft-style-atom";
 import { StyleEditorSection } from "@/modules/style-editor/components/section";
 import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
 import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
@@ -12,37 +15,53 @@ import { FontSelector } from "@/modules/styles/components/fonts-selector";
 export function TypographyEditor() {
   const { isPending } = useEditorStyle();
   const form = useStyleEditorForm();
+  const { saveDraft } = useDraftStyle();
 
   return (
     <div className="min-h-[200svh]">
       <StyleEditorSection title="Font family">
-        <div className="mt-3 space-y-3">
-          <form.AppField name="theme.fonts.heading">
+          <form.AppField
+            name="theme.fonts.heading"
+            listeners={{
+              onChange: () => {
+                saveDraft();
+              },
+            }}
+          >
             {(field) => (
-              <Skeleton show={isPending}>
-                <FontSelector
-                  label="Heading font"
-                  font={field.state.value}
-                  onFontChange={(font) => field.handleChange(font)}
-                  className="mt-2"
-                />
-              </Skeleton>
+              <FontSelector
+                label="Heading font"
+                value={field.state.value}
+                onChange={(font) => field.handleChange(font as string)}
+                className={cn(
+                  "w-full",
+                  isPending &&
+                    "[&_[data-slot='button']]:animate-pulse [&_[data-slot='button']]:border-0 [&_[data-slot='button']]:*:invisible",
+                )}
+              />
             )}
           </form.AppField>
-
-          <form.AppField name="theme.fonts.body">
+          <form.AppField
+            name="theme.fonts.body"
+            listeners={{
+              onChange: () => {
+                saveDraft();
+              },
+            }}
+          >
             {(field) => (
-              <Skeleton show={isPending}>
-                <FontSelector
-                  label="Body font"
-                  font={field.state.value}
-                  onFontChange={(font) => field.handleChange(font)}
-                  className="mt-2"
-                />
-              </Skeleton>
+              <FontSelector
+                label="Body font"
+                value={field.state.value}
+                onChange={(font) => field.handleChange(font as string)}
+                className={cn(
+                  "w-full",
+                  isPending &&
+                    "[&_[data-slot='button']]:animate-pulse [&_[data-slot='button']]:border-0 [&_[data-slot='button']]:*:invisible",
+                )}
+              />
             )}
           </form.AppField>
-        </div>
       </StyleEditorSection>
 
       <StyleEditorSection title="Font size">
@@ -53,6 +72,7 @@ export function TypographyEditor() {
           maxValue={24}
           step={1}
           className={cn(
+            "w-full",
             isPending &&
               "[&_[data-slot='slider-filler']]:opacity-0 [&_[data-slot='slider-thumb']]:opacity-0 [&_[data-slot='slider-track']]:animate-pulse [&_[data-slot='slider-value-label']]:opacity-0",
           )}

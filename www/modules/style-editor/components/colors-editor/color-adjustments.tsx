@@ -26,7 +26,7 @@ export const ColorAdjustments = () => {
   return (
     <div
       className={cn(
-        "mt-2 grid grid-cols-2 gap-3",
+        "grid grid-cols-2 gap-3",
         isPending &&
           "[&_[data-slot='slider-filler']]:opacity-0 [&_[data-slot='slider-thumb']]:opacity-0 [&_[data-slot='slider-track']]:animate-pulse [&_[data-slot='slider-value-label']]:opacity-0",
       )}

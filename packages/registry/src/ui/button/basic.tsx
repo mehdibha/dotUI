@@ -93,6 +93,7 @@ const Button = React.forwardRef(
 
     return (
       <Element
+        data-slot="button"
         ref={ref}
         {...restProps}
         className={buttonStyles({ variant, size, shape, className })}

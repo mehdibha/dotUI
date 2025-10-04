@@ -53,7 +53,7 @@ export function LayoutEditor() {
                 minValue={0.2}
                 maxValue={0.35}
                 step={0.01}
-                className="mt-2 w-full"
+                className="w-full"
               />
             )}
           </form.AppField>

@@ -30,12 +30,10 @@ export function ColorsEditor() {
   const { resolvedMode } = useResolvedModeState();
 
   return (
-    <div>
-      <StyleEditorSection title="Mode">
-        <div className="mt-2 flex items-start justify-between">
-          <ModeConfig />
-          <ModeSwitch />
-        </div>
+    <div className="space-y-4">
+      <StyleEditorSection title="Mode" className="flex items-start justify-between">
+        <ModeConfig />
+        <ModeSwitch />
       </StyleEditorSection>
 
       <StyleEditorSection title="Color adjustments">
