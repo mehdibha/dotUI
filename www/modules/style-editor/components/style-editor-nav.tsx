@@ -93,9 +93,9 @@ const getMenuItems = (username: string, styleName: string) =>
       icon: <PaletteIcon />,
     },
     {
-      href: `/styles/${username}/${styleName}/layout`,
-      label: "Layout",
-      icon: <LayoutTemplateIcon />,
+      href: `/styles/${username}/${styleName}/components`,
+      label: "Components",
+      icon: <BoxIcon />,
     },
     {
       href: `/styles/${username}/${styleName}/typography`,
@@ -103,18 +103,18 @@ const getMenuItems = (username: string, styleName: string) =>
       icon: <TypeIcon />,
     },
     {
-      href: `/styles/${username}/${styleName}/components`,
-      label: "Components",
-      icon: <BoxIcon />,
-    },
-    {
-      href: `/styles/${username}/${styleName}/effects`,
-      label: "Effects",
-      icon: <SparklesIcon />,
+      href: `/styles/${username}/${styleName}/layout`,
+      label: "Layout",
+      icon: <LayoutTemplateIcon />,
     },
     {
       href: `/styles/${username}/${styleName}/icons`,
       label: "Icons",
       icon: <ShapesIcon />,
+    },
+    {
+      href: `/styles/${username}/${styleName}/effects`,
+      label: "Effects",
+      icon: <SparklesIcon />,
     },
   ] as const;

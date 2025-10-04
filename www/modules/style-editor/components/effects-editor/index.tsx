@@ -17,7 +17,7 @@ export function EffectsEditor() {
 
   return (
     <StyleEditorSection title="Patterns">
-      <form.AppField
+      {/* <form.AppField
         name="theme.backgroundPattern"
         listeners={{
           onChange: () => {
@@ -35,7 +35,7 @@ export function EffectsEditor() {
             ))}
           </field.Select>
         )}
-      </form.AppField>
+      </form.AppField> */}
 
       <form.AppField
         name="theme.texture"
