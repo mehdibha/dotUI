@@ -7,37 +7,33 @@ import {
   ExternalLinkIcon,
   MaximizeIcon,
   MinimizeIcon,
+  MoonIcon,
   SmartphoneIcon,
+  SunIcon,
   TabletIcon,
 } from "lucide-react";
 import { motion } from "motion/react";
 import type { Route } from "next";
 
-import {
-  blocksCategories,
-  registryBlocks,
-} from "@dotui/registry-definition/registry-blocks";
-import { Button } from "@dotui/ui/components/button";
-import { Dialog, DialogRoot } from "@dotui/ui/components/dialog";
-import {
-  ListBox,
-  ListBoxItem,
-  ListBoxSection,
-} from "@dotui/ui/components/list-box";
-import { Popover } from "@dotui/ui/components/popover";
-import {
-  SelectItem,
-  SelectRoot,
-  SelectValue,
-} from "@dotui/ui/components/select";
-import { Separator } from "@dotui/ui/components/separator";
-import { Tooltip } from "@dotui/ui/components/tooltip";
-import { cn, createScopedContext } from "@dotui/ui/lib/utils";
+import { registryBlocks } from "@dotui/registry/blocks/registry";
+import { cn, createScopedContext } from "@dotui/registry/lib/utils";
+import { Button } from "@dotui/registry/ui/button";
+import { Dialog } from "@dotui/registry/ui/dialog";
+import { ListBox, ListBoxItem } from "@dotui/registry/ui/list-box";
+import { Popover } from "@dotui/registry/ui/popover";
+import { SelectRoot, SelectValue } from "@dotui/registry/ui/select";
+import { Separator } from "@dotui/registry/ui/separator";
+import { Skeleton } from "@dotui/registry/ui/skeleton";
+import { ToggleButton } from "@dotui/registry/ui/toggle-button";
+import { Tooltip } from "@dotui/registry/ui/tooltip";
 
-import { useSidebarContext } from "@/components/sidebar";
+import { useSidebarContext } from "@/components/layout/sidebar";
 import { useHorizontalResize } from "@/hooks/use-horizontal-resize";
 import { useMounted } from "@/hooks/use-mounted";
+import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
+import { useResolvedModeState } from "@/modules/style-editor/hooks/use-resolved-mode";
 import { useStyleEditorParams } from "@/modules/style-editor/hooks/use-style-editor-params";
+import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 
 export const Preview = () => {
   return (
@@ -112,7 +108,7 @@ export const PreviewRoot = ({ children }: { children: React.ReactNode }) => {
         aria-hidden={isOpen}
         inert={isOpen || undefined}
       >
-        <div style={{ width: 102 }} className="pr-6 pt-6">
+        <div style={{ width: 102 }} className="pt-6 pr-6">
           <Button variant="default" size="sm" onPress={() => setOpen(true)}>
             Preview
           </Button>
@@ -120,7 +116,7 @@ export const PreviewRoot = ({ children }: { children: React.ReactNode }) => {
       </motion.div>
       <div
         onMouseDown={handleMouseDown}
-        className="h-15 bg-neutral hover:bg-neutral-hover active:bg-neutral-active absolute -left-3 top-1/2 z-20 w-2 -translate-y-1/2 cursor-col-resize rounded-full shadow-sm"
+        className="absolute top-1/2 -left-3 z-20 h-15 w-2 -translate-y-1/2 cursor-col-resize rounded-full bg-neutral shadow-sm hover:bg-neutral-hover active:bg-neutral-active"
       />
       <motion.div
         ref={containerRef}
@@ -147,7 +143,9 @@ export const PreviewRoot = ({ children }: { children: React.ReactNode }) => {
           className="h-full p-4 pl-0"
         >
           <div
-            className={cn("bg-bg size-full overflow-hidden rounded-md border")}
+            className={cn(
+              "flex size-full flex-col overflow-hidden rounded-md border bg-bg",
+            )}
           >
             {children}
           </div>
@@ -158,6 +156,10 @@ export const PreviewRoot = ({ children }: { children: React.ReactNode }) => {
 };
 
 function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
+  const { isSuccess } = useEditorStyle();
+  const { activeMode, setActiveMode } = usePreferences();
+  const { supportsLightDark } = useResolvedModeState();
+
   const {
     previewWidth,
     setPreviewWidth,
@@ -171,7 +173,7 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
   const isMobile = previewWidth < 480;
 
   return (
-    <div className="bg-card flex items-center justify-between gap-2 border-b border-t-[inherit] px-1 py-1">
+    <div className="flex items-center justify-between gap-2 border-b border-t-[inherit] bg-card px-1 py-1">
       <div className="flex items-center gap-1">
         <Button
           aria-label="Collapse preview"
@@ -188,44 +190,46 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
           aria-label="Select block"
           onSelectionChange={(key) => setBlock(key as string)}
           selectedKey={block}
+          className="w-auto"
         >
           <Button
             variant="link"
             size="sm"
             suffix={<ChevronsUpDownIcon className="size-3.5!" />}
-            className="text-fg-muted h-7 justify-center gap-1 rounded-sm px-2"
+            className="h-7 justify-center gap-1 rounded-sm px-2 text-fg-muted"
           >
             <SelectValue className="flex-0" />
           </Button>
           <Popover className="min-w-36">
             <ListBox
-              items={blocksCategories
-                .filter((category) => category.slug !== "featured")
-                .map((category) => ({
-                  key: category.slug,
-                  label: category.name,
-                  items: registryBlocks.filter((block) =>
-                    block?.categories?.includes(category.slug),
-                  ),
-                }))}
-            >
-              {(section) => (
-                <ListBoxSection
-                  id={section.key}
-                  title={section.label}
-                  items={section.items}
-                >
-                  {(item) => (
-                    <ListBoxItem id={item.name}>{item.name}</ListBoxItem>
-                  )}
-                </ListBoxSection>
+              items={registryBlocks.filter((block) =>
+                block?.categories?.includes("featured"),
               )}
+            >
+              {(item) => <ListBoxItem id={item.name}>{item.name}</ListBoxItem>}
             </ListBox>
           </Popover>
         </SelectRoot>
       </div>
       <div className="flex gap-0.5">
-        <Tooltip content={isMobile ? "Mobile" : "Tablet"} delay={0}>
+        {supportsLightDark && (
+          <Skeleton show={!isSuccess}>
+            <ToggleButton
+              isSelected={activeMode === "light"}
+              onChange={(isSelected) => {
+                setActiveMode(isSelected ? "light" : "dark");
+              }}
+              size="sm"
+              shape="square"
+              className="size-7 selected:bg-transparent selected:text-fg selected:hover:bg-inverse/10 selected:pressed:bg-inverse/20"
+            >
+              {({ isSelected }) => (
+                <>{isSelected ? <SunIcon /> : <MoonIcon />}</>
+              )}
+            </ToggleButton>
+          </Skeleton>
+        )}
+        <Tooltip content={isMobile ? "Mobile" : "Tablet"}>
           <Button
             aria-label="Select view"
             variant="quiet"
@@ -237,7 +241,7 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
             {isMobile ? <SmartphoneIcon /> : <TabletIcon />}
           </Button>
         </Tooltip>
-        <Tooltip content="Open in new tab" delay={0}>
+        <Tooltip content="Open in new tab">
           <Button
             aria-label="Open in new tab"
             target="_blank"
@@ -245,12 +249,14 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
             shape="square"
             size="sm"
             className="size-7"
-            href={`/view/${slug}/${block}?mode=true&live=true` as Route}
+            href={
+              `/view/${slug}/${block}?mode=true&live=true&view=true` as Route
+            }
           >
             <ExternalLinkIcon />
           </Button>
         </Tooltip>
-        <Tooltip content="Fullscreen" delay={0}>
+        <Tooltip content="Fullscreen">
           <Button
             aria-label="Enter fullscreen"
             variant="quiet"
@@ -272,7 +278,13 @@ function PreviewContent() {
   return <PreviewFrame block={block} />;
 }
 
-export const PreviewFrame = ({ block }: { block: string }) => {
+export const PreviewFrame = ({
+  block,
+  className,
+}: {
+  block: string;
+  className?: string;
+}) => {
   const { slug } = useStyleEditorParams();
   const [isLoading, setLoading] = React.useState(true);
 
@@ -283,12 +295,13 @@ export const PreviewFrame = ({ block }: { block: string }) => {
   return (
     <div
       className={cn(
-        "size-full",
-        isLoading && "bg-muted relative block animate-pulse rounded-md",
+        "flex-1",
+        className,
+        isLoading && "relative block animate-pulse rounded-md bg-muted",
       )}
     >
       <iframe
-        src={`/view/${slug}/${block}?mode=true&live=true`}
+        src={`/view/${slug}/${block}?mode=true&live=true&view=true`}
         onLoad={() => setLoading(false)}
         className={cn("rounded-{inherit] size-full", isLoading && "opacity-0")}
       />
@@ -299,19 +312,19 @@ export const PreviewFrame = ({ block }: { block: string }) => {
 const PreviewModal = ({ children }: { children: React.ReactNode }) => {
   const { isFullscreen } = usePreviewContext("PreviewModal");
   return (
-    <DialogRoot isOpen={isFullscreen}>
-      <Dialog
-        type="modal"
-        mobileType="modal"
-        modalProps={{
-          className:
-            "w-screen h-(--visual-viewport-height) max-w-none rounded-none border-0",
-        }}
-        className="p-0! h-full overflow-hidden rounded-none"
-        isDismissable
-      >
-        {children}
-      </Dialog>
-    </DialogRoot>
+    <Dialog
+      aria-label="Preview"
+      type="modal"
+      mobileType="modal"
+      modalProps={{
+        className:
+          "w-screen h-(--visual-viewport-height) max-w-none rounded-none border-0",
+      }}
+      className="h-full overflow-hidden rounded-none p-0!"
+      isDismissable
+      isOpen={isFullscreen}
+    >
+      {children}
+    </Dialog>
   );
 };

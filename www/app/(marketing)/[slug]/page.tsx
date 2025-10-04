@@ -2,8 +2,8 @@ import { notFound } from "next/navigation";
 import { ExternalLinkIcon } from "lucide-react";
 import type { Metadata, Route } from "next";
 
-import { Button } from "@dotui/ui/components/button";
-import { cn } from "@dotui/ui/lib/utils";
+import { cn } from "@dotui/registry/lib/utils";
+import { Button } from "@dotui/registry/ui/button";
 
 import { siteConfig } from "@/config";
 import { truncateOnWord } from "@/lib/string";
@@ -29,11 +29,11 @@ export default async function Page({ params }: PageProps<"/[slug]">) {
           "grid grid-cols-1 gap-10 xl:max-w-5xl xl:grid-cols-[minmax(0,1fr)_minmax(180px,220px)]",
       )}
     >
-      <div className="pb-24 pt-4 md:pt-10 lg:pt-16">
+      <div className="pt-4 pb-24 md:pt-10 lg:pt-16">
         <h1 className="text-2xl font-semibold lg:text-3xl">
           {page.data.title}
         </h1>
-        <p className="text-fg-muted mt-2">{page.data.description}</p>
+        <p className="mt-2 text-fg-muted">{page.data.description}</p>
         {page.data.links && page.data.links.length > 0 && (
           <div className="mt-4 flex flex-wrap gap-2">
             {page.data.links.map((link, index) => (

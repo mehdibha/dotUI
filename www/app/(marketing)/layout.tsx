@@ -1,5 +1,5 @@
-import { Footer } from "@/components/footer";
-import { Header } from "@/components/header";
+import { Footer } from "@/components/layout/footer";
+import { Header } from "@/components/layout/header";
 import { docsSource } from "@/modules/docs/lib/source";
 
 export default function HomeLayout({
@@ -11,12 +11,12 @@ export default function HomeLayout({
     <div>
       <Header items={docsSource.pageTree.children} />
       <div className="mx-auto min-h-screen sm:grid sm:grid-cols-[20px_1fr_20px] md:grid-cols-[30px_1fr_30px]">
-        <div className="diagonal-pattern hidden sm:block" />
+        <div className="hidden diagonal-pattern sm:block" />
         <div>
           <div className="min-h-[70vh]">{children}</div>
           <Footer />
         </div>
-        <div className="diagonal-pattern hidden sm:block" />
+        <div className="hidden diagonal-pattern sm:block" />
       </div>
     </div>
   );

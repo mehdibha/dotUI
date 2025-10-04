@@ -2,11 +2,11 @@
 
 import React from "react";
 
-import { Button } from "@dotui/ui/components/button";
-import { toast } from "@dotui/ui/components/toast";
-import { GitHubIcon } from "@dotui/ui/icons";
+import { GitHubIcon } from "@dotui/registry/components/icons/github";
+import { Button } from "@dotui/registry/ui/button";
+import { Link } from "@dotui/registry/ui/link";
+import { toast } from "@dotui/registry/ui/toast";
 
-import { Link } from "@/components/link";
 import { Logo } from "@/components/logo";
 import { authClient } from "@/modules/auth/lib/client";
 
@@ -20,10 +20,10 @@ export function LoginForm() {
           extanded={false}
           className="flex-col gap-2 [&_svg]:size-12 max-sm:[&_svg]:size-14"
         />
-        <h1 className="mt-6 text-3xl font-semibold leading-none tracking-tight sm:text-3xl">
+        <h1 className="mt-6 text-3xl leading-none font-semibold tracking-tight sm:text-3xl">
           Log in to dotUI
         </h1>
-        <p className="text-fg-muted mt-2 text-sm max-sm:hidden">
+        <p className="mt-2 text-sm text-fg-muted max-sm:hidden">
           Sign in with your GitHub account to continue.
         </p>
       </div>
@@ -56,7 +56,7 @@ export function LoginForm() {
       >
         Continue with GitHub
       </Button>
-      <p className="text-fg-muted mt-4 text-sm">
+      <p className="mt-4 text-sm text-fg-muted">
         By continuing, you agree to our{" "}
         <Link href="/terms-of-service">Terms of Service</Link> and{" "}
         <Link href="/privacy-policy">Privacy Policy</Link>.

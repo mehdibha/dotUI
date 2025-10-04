@@ -3,9 +3,9 @@
 import React from "react";
 import { UNSAFE_PortalProvider as PortalProvider } from "react-aria";
 
-import { StyleProvider } from "@dotui/ui";
-import { Alert } from "@dotui/ui/components/alert";
-import { Skeleton } from "@dotui/ui/components/skeleton";
+import { StyleProvider } from "@dotui/registry";
+import { Alert } from "@dotui/registry/ui/alert";
+import { Skeleton } from "@dotui/registry/ui/skeleton";
 
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 import { useActiveStyle } from "@/modules/styles/hooks/use-active-style";

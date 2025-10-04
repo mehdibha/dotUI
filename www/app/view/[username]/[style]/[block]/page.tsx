@@ -1,13 +1,15 @@
 import { notFound } from "next/navigation";
 
-import { registryBlocks } from "@dotui/registry-definition/registry-blocks";
-import { BlockViewer } from "@dotui/ui/block-viewer";
+import { registryBlocks } from "@dotui/registry/blocks/registry";
 
 import { buildTimeCaller, getQueryClient, trpc } from "@/lib/trpc/server";
-import { BlockProviders } from "./providers";
+import { BlockViewer } from "@/modules/blocks/block-viewer";
+import { BlockViewLayout } from "./_layout";
 
 export const generateStaticParams = async () => {
-  const styles = await buildTimeCaller.style.getFeatured({});
+  const styles = await buildTimeCaller.style.getPublicStyles({
+    featured: true,
+  });
 
   return styles.flatMap((style) =>
     registryBlocks.map((block) => ({
@@ -25,9 +27,8 @@ export default async function BlockViewPage({
 
   const queryClient = getQueryClient();
   const style = await queryClient.fetchQuery(
-    trpc.style.getByNameAndUsername.queryOptions({
-      username,
-      name: styleName,
+    trpc.style.getBySlug.queryOptions({
+      slug: `${username}/${styleName}`,
     }),
   );
 
@@ -36,8 +37,8 @@ export default async function BlockViewPage({
   }
 
   return (
-    <BlockProviders style={style} styleSlug={`${username}/${styleName}`}>
+    <BlockViewLayout style={style} styleSlug={`${username}/${styleName}`}>
       <BlockViewer name={blockName} />
-    </BlockProviders>
+    </BlockViewLayout>
   );
 }

@@ -11,7 +11,7 @@ const config = {
     "prettier-plugin-tailwindcss",
   ],
   tailwindStylesheet: fileURLToPath(
-    new URL("../../packages/ui/src/globals.css", import.meta.url),
+    new URL("../../www/styles/globals.css", import.meta.url),
   ),
   tailwindFunctions: ["cn", "tv"],
   importOrder: [

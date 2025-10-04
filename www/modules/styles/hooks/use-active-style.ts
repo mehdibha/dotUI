@@ -17,7 +17,8 @@ export function useActiveStyleId() {
   });
 
   const { data: featuredStyles } = useQuery(
-    trpc.style.getFeatured.queryOptions({
+    trpc.style.getPublicStyles.queryOptions({
+      featured: true,
       limit: 1,
     }),
   );

@@ -14,7 +14,9 @@ const TARGET_PATH = path.join(WWW_DIR, "public/images/showcase");
 // Capture screenshots.
 // ----------------------------------------------------------------------------
 async function captureScreenshots() {
-  const featuredStyles = await buildTimeCaller.style.getFeatured({});
+  const featuredStyles = await buildTimeCaller.style.getPublicStyles({
+    featured: true,
+  });
 
   if (!existsSync(TARGET_PATH)) {
     mkdirSync(TARGET_PATH, { recursive: true });
@@ -29,7 +31,7 @@ async function captureScreenshots() {
   });
 
   for (const style of featuredStyles) {
-    const pageUrl = `http://localhost:3000/view/${style.user.username}/${style.name}/blocks-showcase?mode=true`;
+    const pageUrl = `http://localhost:4444/view/${style.user.username}/${style.name}/cards?mode=true`;
 
     const page = await browser.newPage();
     await page.goto(pageUrl, {

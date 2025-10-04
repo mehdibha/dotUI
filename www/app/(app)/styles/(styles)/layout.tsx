@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { Button } from "@dotui/ui/components/button";
+import { Button } from "@dotui/registry/ui/button";
 
 import {
   PageActions,
@@ -8,9 +8,9 @@ import {
   PageHeaderDescription,
   PageHeaderHeading,
   PageLayout,
-} from "@/components/page-layout";
+} from "@/components/layout/page-layout";
 import { CreateStyleModal } from "@/modules/styles/components/create-style-modal";
-import { StylesPageNav } from "./styles-page-nav";
+import { StylesPageNav } from "@/modules/styles/components/styles-page-nav";
 
 const title = "Find your style or make your own.";
 const description = "Try our hand-picked styles or create yours from scratch.";

@@ -1,21 +1,23 @@
 "use client";
 
-import { cn } from "@dotui/ui/lib/utils";
+import { cn } from "@dotui/registry/lib/utils";
 
 interface StyleEditorSectionProps extends React.ComponentProps<"div"> {
   title: string;
+  rootClassName?: string;
 }
 
 export function StyleEditorSection({
   title,
   children,
+  rootClassName,
   className,
   ...props
 }: StyleEditorSectionProps) {
   return (
-    <div className={cn("not-first:mt-6", className)} {...props}>
+    <div className={cn("space-y-4", rootClassName)} {...props}>
       <h2 className="text-base font-semibold">{title}</h2>
-      {children}
+      <div className={cn("space-y-4", className)}>{children}</div>
     </div>
   );
 }

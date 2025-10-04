@@ -3,7 +3,8 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 
-import { Button } from "@dotui/ui/components/button";
+import { GitHubIcon } from "@dotui/registry/components/icons/github";
+import { Button } from "@dotui/registry/ui/button";
 import {
   Dialog,
   DialogBody,
@@ -11,11 +12,10 @@ import {
   DialogHeader,
   DialogHeading,
   DialogRoot,
-} from "@dotui/ui/components/dialog";
-import { toast } from "@dotui/ui/components/toast";
-import { GitHubIcon } from "@dotui/ui/icons";
+} from "@dotui/registry/ui/dialog";
+import { Link } from "@dotui/registry/ui/link";
+import { toast } from "@dotui/registry/ui/toast";
 
-import { Link } from "@/components/link";
 import { authClient } from "../lib/client";
 
 export function LoginModal({ children }: { children: React.ReactNode }) {
@@ -61,7 +61,7 @@ export function LoginModal({ children }: { children: React.ReactNode }) {
           >
             Continue with GitHub
           </Button>
-          <p className="text-fg-muted mt-4 text-sm">
+          <p className="mt-4 text-sm text-fg-muted">
             By continuing, you agree to our{" "}
             <Link href="/terms-of-service">Terms of Service</Link> and{" "}
             <Link href="/privacy-policy">Privacy Policy</Link>.

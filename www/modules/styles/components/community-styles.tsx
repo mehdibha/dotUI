@@ -7,23 +7,23 @@ import { useMounted } from "@/hooks/use-mounted";
 import { useTRPCClient } from "@/lib/trpc/react";
 import { StylesList } from "@/modules/styles/components/styles-list";
 
-const PAGE_SIZE = 4;
+const PAGE_SIZE = 6;
 
 export function CommunityStyles() {
   const trpcClient = useTRPCClient();
   const isMounted = useMounted();
 
-  const { data, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } =
+  const { data, isPending, isFetchingNextPage, fetchNextPage, hasNextPage } =
     useInfiniteQuery({
       queryKey: [
-        "style.getPublicRecent",
+        "style.getPublicStyles",
         { type: "infinite", limit: PAGE_SIZE },
       ],
       initialPageParam: 0,
       retry: false,
       queryFn: async ({ pageParam }) => {
         const offset = typeof pageParam === "number" ? pageParam : 0;
-        const items = await trpcClient.style.getPublicRecent.query({
+        const items = await trpcClient.style.getPublicStyles.query({
           limit: PAGE_SIZE,
           offset,
         });
@@ -63,14 +63,14 @@ export function CommunityStyles() {
   }, [fetchNextPage, hasNextPage, isFetchingNextPage, isMounted]);
 
   if (!isMounted) {
-    return <StylesList skeleton defaultView="ui-kit" />;
+    return <StylesList isLoading />;
   }
 
   return (
     <div className="space-y-6">
-      <StylesList styles={styles} skeleton={isLoading && styles.length === 0} />
+      <StylesList styles={styles} isLoading={isPending} />
       <div ref={sentinelRef} />
-      {isFetchingNextPage && <StylesList skeleton defaultView="ui-kit" />}
+      {isFetchingNextPage && <StylesList isLoading />}
     </div>
   );
 }

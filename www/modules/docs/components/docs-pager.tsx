@@ -2,8 +2,8 @@ import { findNeighbour } from "fumadocs-core/server";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import type { Route } from "next";
 
-import { Button } from "@dotui/ui/components/button";
-import { Tooltip } from "@dotui/ui/components/tooltip";
+import { Button } from "@dotui/registry/ui/button";
+import { Tooltip } from "@dotui/registry/ui/tooltip";
 
 import { docsSource } from "@/modules/docs/lib/source";
 
@@ -22,11 +22,7 @@ export const DocsPager = ({
   return (
     <div className="flex items-center justify-between gap-2">
       {previous ? (
-        <Tooltip
-          content={previous.name}
-          isDisabled={variant === "label"}
-          delay={0}
-        >
+        <Tooltip content={previous.name} isDisabled={variant === "label"}>
           <Button
             href={previous.url as Route}
             aria-label={
@@ -44,7 +40,7 @@ export const DocsPager = ({
         <div />
       )}
       {next ? (
-        <Tooltip content={next.name} isDisabled={variant === "label"} delay={0}>
+        <Tooltip content={next.name} isDisabled={variant === "label"}>
           <Button
             href={next.url as Route}
             aria-label={variant === "tooltip" ? `Go to next page` : undefined}

@@ -1,10 +1,10 @@
 import { eq } from "drizzle-orm";
 
-import { createStyle } from "@dotui/style-engine/core";
+import { createStyle } from "@dotui/registry/style-system/core";
 import {
   styleDefinitionSchema,
   styleSchema,
-} from "@dotui/style-engine/schemas";
+} from "@dotui/registry/style-system/schemas";
 
 import { db } from "./client";
 import { DEFAULT_STYLES } from "./constants";
@@ -81,6 +81,7 @@ async function seedFeaturedStyles(userId: string) {
     ...featuredStyle,
     userId,
     isFeatured: true,
+    visibility: "public" as const,
   }));
 
   const insertedStyles = await db

@@ -3,22 +3,22 @@
 import React from "react";
 import { CheckIcon, CopyIcon } from "lucide-react";
 import { tv } from "tailwind-variants";
-import type { ScrollAreaProps } from "@/components/scroll-area";
+import type { ScrollAreaProps } from "@/components/ui/scroll-area";
 import type { Key } from "react-aria-components";
 
-import { Button } from "@dotui/ui/components/button";
-import { Tab, TabList, TabPanel, Tabs } from "@dotui/ui/components/tabs";
-import { cn } from "@dotui/ui/lib/utils";
-import type { ButtonProps } from "@dotui/ui/components/button";
-import type { TabsProps } from "@dotui/ui/components/tabs";
+import { cn } from "@dotui/registry/lib/utils";
+import { Button } from "@dotui/registry/ui/button";
+import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs";
+import type { ButtonProps } from "@dotui/registry/ui/button";
+import type { TabsProps } from "@dotui/registry/ui/tabs";
 
-import { ScrollArea } from "@/components/scroll-area";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const codeBlockStyles = tv({
   slots: {
     root: "block w-fit max-w-full rounded-md border",
     header:
-      "bg-muted flex h-10 items-center justify-between rounded-t-[inherit] border-b pr-2",
+      "flex h-10 items-center justify-between rounded-t-[inherit] border-b bg-muted pr-2",
     body: "bg-muted/30 p-4 text-xs",
     code: "text-xs",
   },
@@ -60,7 +60,7 @@ const CodeBlockClient = ({
       {...props}
     >
       <CodeBlockHeader>
-        <div className="shrink-1 flex h-full w-[100px] flex-1 basis-0 items-end gap-2">
+        <div className="flex h-full w-[100px] flex-1 shrink-1 basis-0 items-end gap-2">
           {files.length > 0 && (
             <TabList>
               {files
@@ -76,9 +76,9 @@ const CodeBlockClient = ({
         <div className="flex items-center gap-2">
           {(preview || expandable) && (
             <Button
-              variant="outline"
+              variant="default"
               size="sm"
-              className="bg-inverse/5 h-7 text-xs"
+              className="h-7 bg-inverse/5 text-xs"
               onPress={handleExpand}
             >
               {isExpanded ? "Collapse" : "Expand"} code
@@ -148,9 +148,9 @@ const CodeBlockCopyButton = ({ code, ...props }: CodeBlockCopyButtonProps) => {
     <Button
       size="sm"
       shape="square"
-      variant="outline"
+      variant="default"
       onPress={handleCopy}
-      className="bg-inverse/5 size-7 [&_svg]:size-3"
+      className="size-7 bg-inverse/5 [&_svg]:size-3"
       {...props}
     >
       {copied ? (

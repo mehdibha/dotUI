@@ -4,14 +4,9 @@ import React from "react";
 import { usePathname } from "next/navigation";
 import type { Route } from "next";
 
-import { blocksCategories } from "@dotui/registry-definition/registry-blocks";
-import {
-  Tab,
-  TabList,
-  TabPanel,
-  Tabs,
-} from "@dotui/ui/registry/components/tabs/motion";
-import type { TabsProps } from "@dotui/ui/components/tabs";
+import { blocksCategories } from "@dotui/registry/blocks/registry";
+import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs/motion";
+import type { TabsProps } from "@dotui/registry/ui/tabs";
 
 export function BlocksNav({
   children,
@@ -21,7 +16,7 @@ export function BlocksNav({
 
   return (
     <Tabs variant="underline" selectedKey={pathname} {...props}>
-      <div className="bg-bg sticky top-0 z-40 border-b">
+      <div className="sticky top-0 z-40 border-b bg-bg">
         <TabList className="container border-b-0">
           {[
             {
@@ -39,7 +34,7 @@ export function BlocksNav({
               key={tab.href}
               id={tab.href}
               href={tab.href as Route}
-              className="flex h-7 items-center gap-2 rounded-full px-4 pb-5 pt-6 text-sm"
+              className="flex h-7 items-center gap-2 rounded-full px-4 pt-6 pb-5 text-sm"
             >
               {tab.label}
             </Tab>

@@ -3,6 +3,7 @@ const fg = require("fast-glob");
 const fs = require("fs");
 const path = require("path");
 const postcss = require("postcss");
+const { parse: parseColor, converter } = require("culori");
 
 const DEFAULT_IGNORE = [
   "**/node_modules/**",
@@ -204,6 +205,32 @@ function isColor(value) {
 function parseColorToRgb(colorValue) {
   if (!colorValue || typeof colorValue !== "string") return null;
   const trimmed = colorValue.trim();
+
+  // Try parsing with culori first (handles hex, rgb, hsl, oklch, etc.)
+  try {
+    const parsed = parseColor(trimmed);
+    if (parsed) {
+      // Convert to RGB using culori
+      const rgbConverter = converter("rgb");
+      const rgb = rgbConverter(parsed);
+      if (
+        rgb &&
+        typeof rgb.r === "number" &&
+        typeof rgb.g === "number" &&
+        typeof rgb.b === "number"
+      ) {
+        return {
+          r: Math.round(rgb.r * 255),
+          g: Math.round(rgb.g * 255),
+          b: Math.round(rgb.b * 255),
+        };
+      }
+    }
+  } catch (e) {
+    // Fall through to manual parsing
+  }
+
+  // Fallback to manual parsing for basic formats
   const hexMatch = trimmed.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
   if (hexMatch) {
     let hex = hexMatch[1];

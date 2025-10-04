@@ -1,21 +1,19 @@
 import type { Metadata, Route } from "next";
 
-import { Alert } from "@dotui/ui/components/alert";
-import { Avatar } from "@dotui/ui/components/avatar";
-import { Button } from "@dotui/ui/components/button";
-import { Tooltip } from "@dotui/ui/components/tooltip";
-import {
-  AdobeIcon,
-  GitHubIcon,
-  ReactJsIcon,
-  ShadcnIcon,
-  TailwindExtendedIcon,
-  TypescriptIcon,
-} from "@dotui/ui/icons";
+import { AdobeIcon } from "@dotui/registry/components/icons/adobe";
+import { GitHubIcon } from "@dotui/registry/components/icons/github";
+import { ReactJsIcon } from "@dotui/registry/components/icons/react-js";
+import { ShadcnIcon } from "@dotui/registry/components/icons/shadcn";
+import { TailwindWordmark } from "@dotui/registry/components/icons/tailwind-wordmark";
+import { TypeScriptIcon } from "@dotui/registry/components/icons/typescript";
+import { Alert } from "@dotui/registry/ui/alert";
+import { Avatar } from "@dotui/registry/ui/avatar";
+import { Button } from "@dotui/registry/ui/button";
+import { Link } from "@dotui/registry/ui/link";
+import { Tooltip } from "@dotui/registry/ui/tooltip";
 
-import { Announcement } from "@/components/announcement";
-import { Link } from "@/components/link";
-import { StylesShowcase } from "@/components/styles-showcase";
+import { FeaturedStylesShowcase } from "@/components/featured-styles-showcase";
+import { Announcement } from "@/components/marketing/announcement";
 import { siteConfig } from "@/config";
 import { getGitHubContributors } from "@/lib/github";
 import { caller } from "@/lib/trpc/server";
@@ -25,7 +23,10 @@ export const revalidate = 60;
 
 export default async function HomePage() {
   const contributors = await getGitHubContributors();
-  const feturedStyles = await caller.style.getFeatured({ limit: 6 });
+  const feturedStyles = await caller.style.getPublicStyles({
+    featured: true,
+    limit: 6,
+  });
 
   return (
     <div>
@@ -33,11 +34,11 @@ export default async function HomePage() {
       <div className="container">
         <section className="mt-10 max-w-3xl sm:mt-14">
           <Announcement />
-          <h1 className="xs:text-3xl text-balance text-2xl tracking-tighter max-lg:font-medium md:text-4xl lg:text-5xl">
+          <h1 className="text-2xl tracking-tighter text-balance max-lg:font-medium xs:text-3xl md:text-4xl lg:text-5xl">
             Quickly build your design system with a{" "}
             <span className="font-bold italic">unique</span> look.
           </h1>
-          <p className="text-balace text-fg-muted mt-2 text-lg">
+          <p className="text-balace mt-2 text-lg text-fg-muted">
             Over 40 components available in differents styles ready to match
             your brand identity.
           </p>
@@ -54,14 +55,14 @@ export default async function HomePage() {
       {/* Styles overview */}
       <section className="container mt-10 sm:mt-20">
         {feturedStyles.length > 0 ? (
-          <StylesShowcase styles={feturedStyles} />
+          <FeaturedStylesShowcase styles={feturedStyles} />
         ) : (
           <Alert>No styles found.</Alert>
         )}
       </section>
-      <section className="shadow-xs mt-10 border-y py-12">
+      <section className="mt-10 border-y py-12 shadow-xs">
         <div className="container flex flex-col items-center justify-center gap-5 lg:gap-10">
-          <h2 className="text-fg-muted xs:text-base text-pretty font-mono text-sm tracking-wide lg:text-base">
+          <h2 className="font-mono text-sm tracking-wide text-pretty text-fg-muted xs:text-base lg:text-base">
             Built on modern tools
           </h2>
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8">
@@ -83,26 +84,19 @@ export default async function HomePage() {
               },
               {
                 label: "TypeScript 5",
-                icon: <TypescriptIcon className="size-7 sm:size-9" />,
+                icon: <TypeScriptIcon className="size-7 sm:size-9" />,
                 href: "https://www.typescriptlang.org/",
               },
               {
                 label: "Tailwind CSS v4",
-                icon: <TailwindExtendedIcon className="h-5 sm:h-7" />,
+                icon: <TailwindWordmark className="h-5 sm:h-7" />,
                 href: "https://tailwindcss.com",
               },
             ].map(({ icon, label, href }, index) => (
-              <Tooltip
-                key={index}
-                content={label}
-                delay={0}
-                closeDelay={0}
-                offset={10}
-                placement="top"
-              >
+              <Tooltip key={index} content={label} offset={10} placement="top">
                 <Link
                   target="_blank"
-                  className="grayscale-80 flex items-center justify-center opacity-60 transition-opacity hover:opacity-100 hover:grayscale-0"
+                  className="flex items-center justify-center opacity-60 grayscale-80 transition-opacity hover:opacity-100 hover:grayscale-0"
                   href={href as Route}
                 >
                   {icon}
@@ -114,10 +108,10 @@ export default async function HomePage() {
       </section>
       {/* Call to action */}
       <section className="container max-w-2xl py-20 sm:py-32">
-        <h2 className="text-pretty text-2xl font-medium tracking-tighter lg:text-3xl xl:text-4xl">
+        <h2 className="text-2xl font-medium tracking-tighter text-pretty lg:text-3xl xl:text-4xl">
           Fueled by your <span className="">stars</span>.
         </h2>
-        <p className="text-fg-muted mt-2 text-base">
+        <p className="mt-2 text-base text-fg-muted">
           Our contributors are working hard to make the web a more singular
           place.
         </p>

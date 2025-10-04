@@ -2,16 +2,13 @@
 
 import { ChevronDownIcon } from "lucide-react";
 
-import { Button } from "@dotui/ui/components/button";
-import { ListBox, ListBoxSection } from "@dotui/ui/components/list-box";
-import { Popover } from "@dotui/ui/components/popover";
-import {
-  SelectItem,
-  SelectRoot,
-  SelectValue,
-} from "@dotui/ui/components/select";
-import type { ButtonProps } from "@dotui/ui/components/button";
-import type { SelectRootProps } from "@dotui/ui/components/select";
+import { cn } from "@dotui/registry/lib/utils";
+import { Button } from "@dotui/registry/ui/button";
+import { ListBox, ListBoxSection } from "@dotui/registry/ui/list-box";
+import { Popover } from "@dotui/registry/ui/popover";
+import { SelectItem, SelectRoot, SelectValue } from "@dotui/registry/ui/select";
+import type { ButtonProps } from "@dotui/registry/ui/button";
+import type { SelectRootProps } from "@dotui/registry/ui/select";
 
 import { useActiveStyle } from "@/modules/styles/hooks/use-active-style";
 import { useFeaturedStyles } from "@/modules/styles/hooks/use-featured-styles";
@@ -31,6 +28,7 @@ export function ActiveStyleSelector(
 
   return (
     <SelectRoot
+      aria-label="Active Style"
       selectedKey={activeStyleQuery.data?.id}
       onSelectionChange={(key) => {
         updateStyleMutation.mutate({
@@ -43,9 +41,16 @@ export function ActiveStyleSelector(
         variant="default"
         suffix={<ChevronDownIcon />}
         {...props.buttonProps}
+        className={cn(props.buttonProps?.className, "justify-start")}
       >
         <span className="text-fg-muted">Style:</span>{" "}
-        {activeStyleQuery.isPending ? <span>loading...</span> : <SelectValue />}
+        {activeStyleQuery.isPending ? (
+          <span>loading...</span>
+        ) : (
+          <span className="flex-1 truncate">
+            <SelectValue />
+          </span>
+        )}
       </Button>
       <Popover>
         <ListBox isLoading={featuredStylesQuery.isPending}>

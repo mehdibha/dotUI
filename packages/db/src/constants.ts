@@ -1,6 +1,6 @@
 import type { z } from "zod";
 
-import { restoreStyleDefinitionDefaults } from "@dotui/style-engine/utils";
+import { restoreStyleDefinitionDefaults } from "@dotui/registry/style-system/utils";
 
 import type { createStyleSchema } from "./schemas";
 

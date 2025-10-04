@@ -7,8 +7,8 @@ import type { PageTree } from "fumadocs-core/server";
 import {
   Breadcrumb,
   Breadcrumbs as Breadcrumbs_,
-} from "@dotui/ui/components/breadcrumbs";
-import type { BreadcrumbsProps } from "@dotui/ui/components/breadcrumbs";
+} from "@dotui/registry/ui/breadcrumbs";
+import type { BreadcrumbsProps } from "@dotui/registry/ui/breadcrumbs";
 
 export const Breadcrumbs = <T extends object>({
   tree,

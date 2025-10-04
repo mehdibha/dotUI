@@ -1,0 +1,124 @@
+"use client";
+
+import {
+  Select as AriaSelect,
+  SelectValue as AriaSelectValue,
+  composeRenderProps,
+} from "react-aria-components";
+import { tv } from "tailwind-variants";
+import type {
+  SelectProps as AriaSelectProps,
+  SelectValueProps as AriaSelectValueProps,
+} from "react-aria-components";
+
+import { ChevronDownIcon } from "@dotui/registry/icons";
+import { Button } from "@dotui/registry/ui/button";
+import { HelpText, Label } from "@dotui/registry/ui/field";
+import { ListBox, ListBoxItem } from "@dotui/registry/ui/list-box";
+import { Overlay } from "@dotui/registry/ui/overlay";
+import { Popover } from "@dotui/registry/ui/popover";
+import type { ButtonProps } from "@dotui/registry/ui/button";
+import type { FieldProps } from "@dotui/registry/ui/field";
+import type {
+  ListBoxItemProps,
+  ListBoxProps,
+} from "@dotui/registry/ui/list-box";
+
+const selectStyles = tv({
+  slots: {
+    root: "flex w-48 flex-col items-start gap-2 [&_[data-slot='button']]:w-full",
+    selectValue: "flex-1 text-left",
+  },
+});
+
+const { root, selectValue } = selectStyles();
+
+interface SelectProps<T extends object>
+  extends Omit<SelectRootProps<T>, "children">,
+    FieldProps,
+    Pick<ListBoxProps<T>, "children" | "dependencies" | "items" | "isLoading">,
+    Pick<ButtonProps, "variant" | "size" | "suffix"> {
+  renderValue?: SelectValueProps<T>["children"];
+}
+const SelectBase = <T extends object>({
+  variant,
+  size,
+  label,
+  description,
+  errorMessage,
+  children,
+  dependencies,
+  items,
+  isLoading,
+  renderValue,
+  suffix,
+  ...props
+}: SelectProps<T>) => {
+  return (
+    <SelectRoot {...props}>
+      {label && <Label>{label}</Label>}
+      <Button
+        variant={variant}
+        size={size}
+        suffix={suffix ?? <ChevronDownIcon />}
+      >
+        <SelectValue>{renderValue}</SelectValue>
+      </Button>
+      <HelpText description={description} errorMessage={errorMessage} />
+      <Popover>
+        <ListBox
+          isLoading={isLoading}
+          items={items}
+          dependencies={dependencies}
+        >
+          {children}
+        </ListBox>
+      </Popover>
+    </SelectRoot>
+  );
+};
+
+type SelectValueProps<T extends object> = AriaSelectValueProps<T>;
+const SelectValue = <T extends object>({
+  className,
+  ...props
+}: SelectValueProps<T>) => {
+  return (
+    <AriaSelectValue
+      className={composeRenderProps(className, (className) =>
+        selectValue({ className }),
+      )}
+      {...props}
+    >
+      {composeRenderProps(props.children, (children, { selectedText }) => (
+        <>{children ?? selectedText}</>
+      ))}
+    </AriaSelectValue>
+  );
+};
+
+interface SelectRootProps<T extends object>
+  extends Omit<AriaSelectProps<T>, "className"> {
+  className?: string;
+}
+const SelectRoot = <T extends object>({
+  className,
+  ...props
+}: SelectRootProps<T>) => {
+  return <AriaSelect className={root({ className })} {...props} />;
+};
+
+interface SelectItemProps<T> extends ListBoxItemProps<T> {}
+const SelectItem = ListBoxItem;
+
+const Select = Object.assign(SelectBase, {
+  Root: SelectRoot,
+  Button: Button,
+  Value: SelectValue,
+  Item: SelectItem,
+  ListBox: ListBox,
+  Overlay: Overlay,
+});
+
+export type { SelectProps, SelectRootProps, SelectItemProps, SelectValueProps };
+export { Select, SelectRoot, SelectItem, SelectValue };

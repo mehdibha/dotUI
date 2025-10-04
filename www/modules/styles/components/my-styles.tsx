@@ -24,7 +24,7 @@ export function MyStyles() {
   return (
     <StylesList
       styles={styles ?? []}
-      skeleton={isLoading || !isMounted || isPending || !session?.user}
+      isLoading={isLoading || !isMounted || isPending}
       search
     />
   );

@@ -4,5 +4,5 @@ import { useTRPC } from "@/lib/trpc/react";
 
 export function useFeaturedStyles() {
   const trpc = useTRPC();
-  return useQuery(trpc.style.getFeatured.queryOptions({}));
+  return useQuery(trpc.style.getPublicStyles.queryOptions({ featured: true }));
 }

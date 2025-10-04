@@ -2,6 +2,7 @@
   "name": "tailwindcss-autocontrast",
   "version": "0.0.1",
   "description": "Tailwind CSS plugins for automatic contrast color generation",
+  "type": "commonjs",
   "main": "src/index.js",
   "types": "src/index.d.ts",
   "source": "src/index.js",
@@ -10,6 +11,7 @@
   ],
   "sideEffects": false,
   "scripts": {
+    "test": "vitest run",
     "release": "changeset version",
     "pub:beta": "npm publish --tag beta",
     "pub:next": "npm publish --tag next",
@@ -20,12 +22,13 @@
     "url": "https://github.com/mehdibha/dotui"
   },
   "dependencies": {
+    "culori": "^4.0.2",
     "fast-glob": "^3.3.3"
   },
   "peerDependencies": {
-    "@tailwindcss/postcss": "catalog:",
-    "postcss": "catalog:",
-    "tailwindcss": "catalog:"
+    "@tailwindcss/postcss": "^4.0.0 ",
+    "postcss": "^8.0.0",
+    "tailwindcss": "^4.0.0"
   },
   "publishConfig": {
     "access": "public"

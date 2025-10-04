@@ -4,18 +4,18 @@ import { LogOutIcon, MonitorIcon, MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Button } from "react-aria-components";
 
-import { Avatar } from "@dotui/ui/components/avatar";
+import { focusRing } from "@dotui/registry/lib/focus-styles";
+import { cn } from "@dotui/registry/lib/utils";
+import { Avatar } from "@dotui/registry/ui/avatar";
 import {
   Menu,
   MenuContent,
   MenuItem,
   MenuRoot,
   MenuSub,
-} from "@dotui/ui/components/menu";
-import { Overlay } from "@dotui/ui/components/overlay";
-import { focusRing } from "@dotui/ui/lib/focus-styles";
-import { cn } from "@dotui/ui/lib/utils";
-import type { PopoverProps } from "@dotui/ui/components/popover";
+} from "@dotui/registry/ui/menu";
+import { Overlay } from "@dotui/registry/ui/overlay";
+import type { PopoverProps } from "@dotui/registry/ui/popover";
 
 import { authClient } from "@/modules/auth/lib/client";
 
@@ -35,7 +35,7 @@ export function UserProfileMenu({
         <Button
           className={cn(
             focusRing(),
-            "size-7.5 outline-hidden flex cursor-pointer items-center justify-center rounded-full",
+            "flex size-7.5 cursor-pointer items-center justify-center rounded-full outline-hidden",
           )}
         >
           <Avatar
@@ -55,7 +55,7 @@ export function UserProfileMenu({
           containerPadding: 8,
         }}
       >
-        <div className="px-4 pb-1 pt-3 text-sm">
+        <div className="px-4 pt-3 pb-1 text-sm">
           <p className="font-medium">{session?.user?.username}</p>
           <p className="text-fg-muted">{session?.user?.email}</p>
         </div>

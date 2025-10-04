@@ -7,7 +7,7 @@ import { docsSource } from "@/modules/docs/lib/source";
 export const revalidate = false;
 
 export async function GET(
-  request: NextRequest,
+  _: NextRequest,
   { params }: RouteContext<"/llm/[[...slug]]">,
 ) {
   const slug = (await params).slug;
@@ -17,7 +17,7 @@ export async function GET(
     notFound();
   }
 
-  return new NextResponse(page.data.content, {
+  return new NextResponse(await page.data.getText("raw"), {
     headers: {
       "Content-Type": "text/markdown; charset=utf-8",
     },

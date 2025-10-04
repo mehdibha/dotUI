@@ -12,18 +12,13 @@ import {
   TypeIcon,
 } from "lucide-react";
 
-import { Button } from "@dotui/ui/components/button";
-import { Menu, MenuItem, MenuRoot } from "@dotui/ui/components/menu";
-import { cn } from "@dotui/ui/lib/utils";
-import {
-  Tab,
-  TabList,
-  TabPanel,
-  Tabs,
-} from "@dotui/ui/registry/components/tabs/motion";
-import type { TabsProps } from "@dotui/ui/components/tabs";
+import { cn } from "@dotui/registry/lib/utils";
+import { Button } from "@dotui/registry/ui/button";
+import { Menu, MenuItem, MenuRoot } from "@dotui/registry/ui/menu";
+import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs/motion";
+import type { TabsProps } from "@dotui/registry/ui/tabs";
 
-import { useStyleEditorParams } from "../hooks/use-style-editor-params";
+import { useStyleEditorParams } from "@/modules/style-editor/hooks/use-style-editor-params";
 
 export function StyleEditorNav({
   children,
@@ -42,7 +37,7 @@ export function StyleEditorNav({
 
   return (
     <>
-      <div className="@xl:hidden mt-4">
+      <div className="mt-4 @lg:hidden">
         <MenuRoot>
           <Button
             variant="quiet"
@@ -65,17 +60,17 @@ export function StyleEditorNav({
       <Tabs
         variant="underline"
         selectedKey={pathname}
-        className={cn("@max-xl:hidden", className)}
+        className={cn("@max-lg:hidden", className)}
         {...props}
       >
-        <div className="bg-bg sticky top-0 z-10 border-b">
-          <TabList className="container max-w-4xl border-b-0">
+        <div className="sticky top-0 z-10 border-b bg-bg">
+          <TabList className="container max-w-4xl overflow-x-auto border-b-0">
             {menuItems.map((tab) => (
               <Tab
                 key={tab.href}
                 id={tab.href}
                 href={tab.href}
-                className="flex h-7 items-center gap-2 rounded-full px-4 pb-5 pt-6 text-sm"
+                className="flex h-7 items-center gap-2 rounded-full px-4 pt-6 pb-5 text-sm"
               >
                 {tab.label}
               </Tab>
@@ -98,9 +93,9 @@ const getMenuItems = (username: string, styleName: string) =>
       icon: <PaletteIcon />,
     },
     {
-      href: `/styles/${username}/${styleName}/layout`,
-      label: "Layout",
-      icon: <LayoutTemplateIcon />,
+      href: `/styles/${username}/${styleName}/components`,
+      label: "Components",
+      icon: <BoxIcon />,
     },
     {
       href: `/styles/${username}/${styleName}/typography`,
@@ -108,18 +103,18 @@ const getMenuItems = (username: string, styleName: string) =>
       icon: <TypeIcon />,
     },
     {
-      href: `/styles/${username}/${styleName}/components`,
-      label: "Components",
-      icon: <BoxIcon />,
-    },
-    {
-      href: `/styles/${username}/${styleName}/effects`,
-      label: "Effects",
-      icon: <SparklesIcon />,
+      href: `/styles/${username}/${styleName}/layout`,
+      label: "Layout",
+      icon: <LayoutTemplateIcon />,
     },
     {
       href: `/styles/${username}/${styleName}/icons`,
       label: "Icons",
       icon: <ShapesIcon />,
+    },
+    {
+      href: `/styles/${username}/${styleName}/effects`,
+      label: "Effects",
+      icon: <SparklesIcon />,
     },
   ] as const;

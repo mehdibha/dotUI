@@ -15,8 +15,6 @@
     "@dotui/api",
     "@dotui/auth",
     "@dotui/db",
-    "@dotui/registry-definition",
-    "@dotui/style-engine",
-    "@dotui/ui"
+    "@dotui/registry"
   ]
 }

@@ -7,8 +7,8 @@ import type {
   TabPanelProps,
 } from "react-aria-components";
 
-import { focusRing } from "@dotui/ui/lib/focus-styles";
-import { cn } from "@dotui/ui/lib/utils";
+import { focusRing } from "@dotui/registry/lib/focus-styles";
+import { cn } from "@dotui/registry/lib/utils";
 
 export interface ChoicesProps extends Omit<BaseProps, "children"> {
   children: React.ReactNode;
@@ -29,7 +29,7 @@ export function Choices({ items, ...props }: ChoicesProps): React.ReactElement {
             key={item.value}
             className={cn(
               focusRing(),
-              "hover:bg-card selected:bg-muted relative cursor-pointer rounded-md border p-4 transition-colors duration-100",
+              "relative cursor-pointer rounded-md border p-4 transition-colors duration-100 hover:bg-card selected:bg-muted",
             )}
             id={item.value}
           >
@@ -39,10 +39,10 @@ export function Choices({ items, ...props }: ChoicesProps): React.ReactElement {
                   {item.icon}
                   <span className="text-base font-semibold">{item.title}</span>
                 </div>
-                <p className="text-fg-muted mt-2 text-sm">{item.description}</p>
+                <p className="mt-2 text-sm text-fg-muted">{item.description}</p>
                 <div
                   className={cn(
-                    "border-border-control absolute right-2 top-2 flex size-4 shrink-0 items-center justify-center rounded-full border [&_svg]:size-3",
+                    "absolute top-2 right-2 flex size-4 shrink-0 items-center justify-center rounded-full border border-border-control [&_svg]:size-3",
                     isSelected && "bg-accent text-fg-on-accent",
                   )}
                 >

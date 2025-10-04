@@ -7,7 +7,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
-      "@dotui/ui/*": ["../packages/ui/src/*"]
+      "@dotui/registry/*": ["../packages/registry/src/*"]
     },
     "plugins": [{ "name": "next" }],
     "module": "esnext"
@@ -19,8 +19,5 @@
     ".next/types/**/*.ts",
     "./scripts/**/*.ts"
   ],
-  "exclude": [
-    "node_modules",
-    "../packages/ui/src/registry/components/breadcrumbs/demos/router-integration.tsx"
-  ]
+  "exclude": ["node_modules"]
 }

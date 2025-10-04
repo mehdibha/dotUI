@@ -3,7 +3,11 @@ import { useAtom } from "jotai";
 import { withImmer } from "jotai-immer";
 import { atomWithStorage } from "jotai/utils";
 
-import type { StyleDefinition } from "@dotui/style-engine/types";
+import type { StyleDefinition } from "@dotui/registry/style-system/types";
+
+import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
+import { useStyleEditorParams } from "@/modules/style-editor/hooks/use-style-editor-params";
+import { convertThemeColorObjects } from "@/modules/style-editor/lib/convert-theme-color-objects";
 
 type DraftStyleState = Record<string, StyleDefinition>;
 
@@ -11,49 +15,37 @@ const draftStyleAtom = withImmer(
   atomWithStorage<DraftStyleState>("draft-styles", {}),
 );
 
-export const useDraftStyle = (styleSlug: string) => {
+export const useDraftStyle = (styleSlug?: string) => {
+  const { slug } = useStyleEditorParams();
+  const form = useStyleEditorForm(true);
   const [state, setState] = useAtom(draftStyleAtom);
 
-  const currentDraftStyle = React.useMemo(() => {
-    return state[styleSlug] || null;
-  }, [state, styleSlug]);
+  const finalSlug = styleSlug ?? slug;
 
-  const updateDraftStyle = React.useCallback(
-    (style: StyleDefinition) => {
-      setState((draft) => {
-        draft[styleSlug] = style;
-      });
-    },
-    [setState, styleSlug],
-  );
+  const draftStyle = React.useMemo(() => {
+    return state[finalSlug] || null;
+  }, [state, finalSlug]);
 
-  const clearDraftStyle = React.useCallback(() => {
+  const saveDraft = React.useCallback(() => {
+    if (!form) return;
     setState((draft) => {
-      delete draft[styleSlug];
+      draft[finalSlug] = {
+        theme: convertThemeColorObjects(form.getFieldValue("theme")),
+        variants: form.getFieldValue("variants"),
+        icons: form.getFieldValue("icons"),
+      };
     });
-  }, [setState, styleSlug]);
+  }, [setState, finalSlug, form]);
+
+  const clearDraft = React.useCallback(() => {
+    setState((draft) => {
+      delete draft[finalSlug];
+    });
+  }, [setState, finalSlug]);
 
   return {
-    draftStyle: currentDraftStyle,
-    updateDraftStyle,
-    clearDraftStyle,
+    draftStyle,
+    saveDraft,
+    clearDraft,
   };
-};
-
-export const useDraftStyleProducer = (styleSlug: string) => {
-  const { updateDraftStyle, clearDraftStyle } = useDraftStyle(styleSlug);
-
-  React.useEffect(() => {
-    return () => {
-      clearDraftStyle();
-    };
-  }, [clearDraftStyle]);
-
-  return { updateDraftStyle };
-};
-
-export const useDraftStyleConsumer = (styleSlug: string) => {
-  const { draftStyle } = useDraftStyle(styleSlug);
-
-  return { draftStyle };
 };

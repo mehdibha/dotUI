@@ -1,9 +1,9 @@
 import React from "react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 
-import { Index } from "@dotui/ui/__registry__/demos";
-import { Alert } from "@dotui/ui/components/alert";
-import { cn } from "@dotui/ui/lib/utils";
+import { cn } from "@dotui/registry/lib/utils";
+import { Alert } from "@dotui/registry/ui/alert";
+import { Index } from "@dotui/registry/ui/demos";
 
 import { getFileSource } from "@/modules/docs/lib/get-file-source";
 import { ActiveStyleProvider } from "@/modules/styles/components/active-style-provider";
@@ -32,7 +32,6 @@ export const ComponentPreview = async ({
   expandable = true,
   fullWidth = false,
   resizable = false,
-  suspense = false,
   primary = false,
 }: ComponentPreviewProps) => {
   const demoItem = Index[name];
@@ -73,8 +72,8 @@ export const ComponentPreview = async ({
             <ScrollArea className="bg-bg text-fg">
               <div
                 className={cn(
-                  "flex pb-10 pt-14",
-                  primary && "min-h-48 pb-20 pt-24",
+                  "flex pt-14 pb-10",
+                  primary && "min-h-48 pt-24 pb-20",
                   fullWidth
                     ? "px-8 lg:px-12"
                     : "flex items-center justify-center px-4",

@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { ArrowLeftIcon } from "lucide-react";
 
-import { Button } from "@dotui/ui/components/button";
+import { Button } from "@dotui/registry/ui/button";
 
 import { LoginForm } from "@/modules/auth/components/login-form";
 import { getSession } from "@/modules/auth/lib/server";
@@ -15,7 +15,7 @@ export default async function Page() {
 
   return (
     <div className="relative flex min-h-svh w-full">
-      <div className="absolute left-4 top-4">
+      <div className="absolute top-4 left-4">
         <Button variant="quiet" prefix={<ArrowLeftIcon />} size="sm" href="/">
           Back to home
         </Button>

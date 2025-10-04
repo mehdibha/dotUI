@@ -6,7 +6,7 @@ import {
   PageHeaderDescription,
   PageHeaderHeading,
   PageLayout,
-} from "@/components/page-layout";
+} from "@/components/layout/page-layout";
 import { BlocksNav } from "@/modules/blocks/blocks-nav";
 import { ActiveStyleSelector } from "@/modules/styles/components/active-style-selector";
 
