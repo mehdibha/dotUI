@@ -33,16 +33,16 @@ import { Text } from "@dotui/registry/ui/text";
 const calendarStyles = tv({
   slots: {
     root: "flex flex-col gap-4",
-    header: "text-fg-muted flex items-center justify-between gap-2 pl-2.5",
+    header: "flex items-center justify-between gap-2 pl-2.5 text-fg-muted",
     grid: "w-full border-collapse",
     gridHeader: "",
-    gridHeaderCell: "text-fg-muted text-xs font-normal",
+    gridHeaderCell: "text-xs font-normal text-fg-muted",
     gridBody: "",
   },
   variants: {
     standalone: {
       true: {
-        root: "bg-bg rounded-md border p-3",
+        root: "rounded-md border bg-bg p-3",
       },
     },
   },
@@ -51,10 +51,10 @@ const calendarStyles = tv({
 const calendarCellStyles = tv({
   slots: {
     cellRoot:
-      "outside-month:hidden selection-start:rounded-l-md selection-end:rounded-r-md outline-none",
+      "outline-none outside-month:hidden selection-start:rounded-l-md selection-end:rounded-r-md",
     cell: [
       focusRing(),
-      "hover:bg-inverse/10 disabled:text-fg-disabled unavailable:cursor-default unavailable:text-fg-disabled unavailable:not-data-disabled:line-through hover:unavailable:bg-transparent pressed:bg-inverse/20 my-1 flex size-8 cursor-pointer items-center justify-center rounded-md text-sm transition-colors read-only:cursor-default hover:read-only:bg-transparent disabled:cursor-default disabled:bg-transparent",
+      "my-1 flex size-8 cursor-pointer items-center justify-center rounded-md text-sm transition-colors read-only:cursor-default hover:bg-inverse/10 hover:read-only:bg-transparent disabled:cursor-default disabled:bg-transparent disabled:text-fg-disabled unavailable:cursor-default unavailable:text-fg-disabled unavailable:not-data-disabled:line-through hover:unavailable:bg-transparent pressed:bg-inverse/20",
     ],
   },
   variants: {

@@ -145,7 +145,7 @@ export function CreateStyleModalContent({
                   <field.Select
                     aria-label="Visibility"
                     renderValue={({ selectedItem }: { selectedItem: any }) => (
-                      <div className="[&>svg]:text-fg-muted flex items-center gap-2">
+                      <div className="flex items-center gap-2 [&>svg]:text-fg-muted">
                         {selectedItem?.icon}
                         {selectedItem?.label}
                       </div>
@@ -183,7 +183,7 @@ export function CreateStyleModalContent({
                         textValue={item.value}
                         description={item.description}
                         isDisabled={item.disabled}
-                        className="[&>svg]:text-fg-muted! max-w-88"
+                        className="max-w-88 [&>svg]:text-fg-muted!"
                       />
                     )}
                   </field.Select>

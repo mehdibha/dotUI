@@ -17,14 +17,14 @@ import { createScopedContext } from "@dotui/registry/lib/utils";
 const tooltipStyles = tv({
   slots: {
     content:
-      "group/tooltip entering:placement-left:slide-in-from-right-0.5 entering:placement-right:slide-in-from-left-0.5 entering:placement-top:slide-in-from-bottom-0.5 entering:placement-bottom:slide-in-from-top-0.5 exiting:placement-left:slide-out-to-right-0.5 exiting:placement-right:slide-out-to-left-0.5 exiting:placement-top:slide-out-to-bottom-0.5 exiting:placement-bottom:slide-out-to-top-0.5 text-fg entering:animate-in entering:duration-150 entering:ease-out entering:fade-in exiting:animate-out exiting:duration-100 exiting:ease-out exiting:fade-out z-50 rounded-md px-3 py-1.5 text-sm shadow-md",
+      "group/tooltip entering:placement-left:slide-in-from-right-0.5 entering:placement-right:slide-in-from-left-0.5 entering:placement-top:slide-in-from-bottom-0.5 entering:placement-bottom:slide-in-from-top-0.5 exiting:placement-left:slide-out-to-right-0.5 exiting:placement-right:slide-out-to-left-0.5 exiting:placement-top:slide-out-to-bottom-0.5 exiting:placement-bottom:slide-out-to-top-0.5 z-50 rounded-md px-3 py-1.5 text-sm text-fg shadow-md entering:animate-in entering:duration-150 entering:ease-out entering:fade-in exiting:animate-out exiting:duration-100 exiting:ease-out exiting:fade-out",
     arrow:
       "group-placement-left/tooltip:-rotate-90 group-placement-right/tooltip:rotate-90 group-placement-bottom/tooltip:rotate-180",
   },
   variants: {
     variant: {
       default: {
-        content: "bg-muted border",
+        content: "border bg-muted",
         arrow: "fill-muted stroke-border",
       },
       inverse: {

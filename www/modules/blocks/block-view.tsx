@@ -58,7 +58,7 @@ const BlockViewToolbar = ({ name, title }: BlockViewToolbarProps) => {
           }
         />
         <Button
-          className="[&_svg]:text-fg-muted font-mono max-lg:hidden [&_svg]:size-4"
+          className="font-mono max-lg:hidden [&_svg]:size-4 [&_svg]:text-fg-muted"
           prefix={
             isCopied ? (
               <CheckIcon className="animate-in fade-in" />
@@ -99,7 +99,7 @@ const BlockViewView = ({ block }: { block: RegistryItem }) => {
   return (
     <div
       className={cn(
-        "bg-muted overflow-hidden rounded-lg border",
+        "overflow-hidden rounded-lg border bg-muted",
         isLoading && "animate-pulse",
       )}
     >

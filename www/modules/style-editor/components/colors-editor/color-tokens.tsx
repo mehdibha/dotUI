@@ -97,7 +97,7 @@ const TokenName = ({ tokenId }: { tokenId: string }) => {
     >
       {(name) => (
         <Skeleton show={isPending} className="rounded-full">
-          <div className="bg-muted rounded-full p-1 px-3 font-medium">
+          <div className="rounded-full bg-muted p-1 px-3 font-medium">
             {name}
             {/* <EditableInput
               value={field.state.value}

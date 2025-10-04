@@ -55,14 +55,14 @@ export function StylesList({
       </div>
       <div
         className={cn(
-          "@3xl/styles-list:grid-cols-2 @5xl/styles-list:grid-cols-3 grid grid-cols-1 gap-4",
+          "grid grid-cols-1 gap-4 @3xl/styles-list:grid-cols-2 @5xl/styles-list:grid-cols-3",
           search && "mt-6",
           props.className,
         )}
       >
         {(!styles || styles.length === 0 || filtered.length === 0) &&
           !isLoading && (
-            <p className="text-fg-muted text-sm">No styles found</p>
+            <p className="text-sm text-fg-muted">No styles found</p>
           )}
         {isLoading &&
           Array.from({ length: 3 }).map((_, index) => (

@@ -47,7 +47,7 @@ export const AutoResizeTextField = ({
           {
             ref: localInputRef,
             className: cn(
-              "border-fg min-w-[10px] focus:border-b focus:outline-none",
+              "min-w-[10px] border-fg focus:border-b focus:outline-none",
               className,
             ),
           },

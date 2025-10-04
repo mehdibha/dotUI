@@ -8,11 +8,11 @@ import { createScopedContext } from "@dotui/registry/lib/utils";
 
 const avatarStyles = tv({
   slots: {
-    root: "bg-bg relative inline-flex shrink-0 overflow-hidden align-middle",
+    root: "relative inline-flex shrink-0 overflow-hidden bg-bg align-middle",
     image: "aspect-square size-full",
-    fallback: "bg-muted flex size-full select-none items-center justify-center",
+    fallback: "flex size-full items-center justify-center bg-muted select-none",
     placeholder:
-      "bg-muted flex size-full h-full animate-pulse items-center justify-center",
+      "flex size-full h-full animate-pulse items-center justify-center bg-muted",
   },
   variants: {
     size: {

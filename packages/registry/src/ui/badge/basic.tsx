@@ -3,13 +3,13 @@ import { tv } from "tailwind-variants";
 import type { VariantProps } from "tailwind-variants";
 
 const badgeStyles = tv({
-  base: "inline-flex shrink-0 items-center justify-center gap-1 whitespace-nowrap rounded-md text-xs font-semibold transition-colors",
+  base: "inline-flex shrink-0 items-center justify-center gap-1 rounded-md text-xs font-semibold whitespace-nowrap transition-colors",
   variants: {
     variant: {
-      neutral: "bg-muted text-fg border",
+      neutral: "border bg-muted text-fg",
       accent: "bg-accent",
       "accent-muted":
-        "bg-accent-muted text-fg-accent border-border-accent border",
+        "border border-border-accent bg-accent-muted text-fg-accent",
       success: "bg-success-muted text-fg-success",
       "success-muted": "bg-success-muted text-fg-success",
       danger: "bg-danger-muted text-fg-danger",

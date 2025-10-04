@@ -23,9 +23,9 @@ const tabsStyles = tv({
     list: "flex",
     tab: [
       focusRing(),
-      "text-fg-muted hover:text-fg disabled:text-fg-disabled selected:[&:not([data-disabled])]:text-fg relative flex cursor-pointer items-center justify-center whitespace-nowrap text-sm transition-colors disabled:cursor-default",
+      "relative flex cursor-pointer items-center justify-center text-sm whitespace-nowrap text-fg-muted transition-colors hover:text-fg disabled:cursor-default disabled:text-fg-disabled selected:[&:not([data-disabled])]:text-fg",
     ],
-    cursor: "bg-accent absolute",
+    cursor: "absolute bg-accent",
     panel: focusRing(),
   },
   variants: {
@@ -43,12 +43,12 @@ const tabsStyles = tv({
     },
     variant: {
       solid: {
-        list: "bg-muted gap-1 rounded-lg p-1",
+        list: "gap-1 rounded-lg bg-muted p-1",
         tab: "rounded-sm px-3 py-1.5 font-medium",
-        cursor: "bg-inverse/10 inset-0 z-0 rounded-[inherit] shadow-sm",
+        cursor: "inset-0 z-0 rounded-[inherit] bg-inverse/10 shadow-sm",
       },
       underline: {
-        tab: "selected:border-accent border-transparent px-3 py-[7px]",
+        tab: "border-transparent px-3 py-[7px] selected:border-accent",
         cursor: "",
       },
     },

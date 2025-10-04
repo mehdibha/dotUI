@@ -2,6 +2,7 @@
 
 import { ChevronDownIcon } from "lucide-react";
 
+import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";
 import { ListBox, ListBoxSection } from "@dotui/registry/ui/list-box";
 import { Popover } from "@dotui/registry/ui/popover";
@@ -40,9 +41,16 @@ export function ActiveStyleSelector(
         variant="default"
         suffix={<ChevronDownIcon />}
         {...props.buttonProps}
+        className={cn(props.buttonProps?.className, "justify-start")}
       >
         <span className="text-fg-muted">Style:</span>{" "}
-        {activeStyleQuery.isPending ? <span>loading...</span> : <SelectValue />}
+        {activeStyleQuery.isPending ? (
+          <span>loading...</span>
+        ) : (
+          <span className="flex-1 truncate">
+            <SelectValue />
+          </span>
+        )}
       </Button>
       <Popover>
         <ListBox isLoading={featuredStylesQuery.isPending}>

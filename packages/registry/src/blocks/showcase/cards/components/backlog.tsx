@@ -349,7 +349,7 @@ export function Backlog(props: React.ComponentProps<"div">) {
                 <TableCell>
                   <Badge
                     size="sm"
-                    className="bg-accent-muted text-fg-accent px-1"
+                    className="bg-accent-muted px-1 text-fg-accent"
                   >
                     {item.storyPoints}
                   </Badge>

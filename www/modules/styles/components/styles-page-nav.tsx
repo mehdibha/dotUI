@@ -40,7 +40,7 @@ export function StylesPageNav({
       selectedKey={pathname}
       className={cn("", className)}
     >
-      <div className="bg-bg sticky top-0 z-40 border-b">
+      <div className="sticky top-0 z-40 border-b bg-bg">
         <TabList className={cn("container w-full overflow-x-auto border-b-0")}>
           {items.map((tab) => (
             <Tab
@@ -48,10 +48,10 @@ export function StylesPageNav({
               id={tab.href}
               href={tab.href}
               className={cn(
-                "flex h-7 items-center gap-2 px-4 pb-5 pt-6 text-sm opacity-0",
+                "flex h-7 items-center gap-2 px-4 pt-6 pb-5 text-sm opacity-0",
                 isMounted &&
                   !isPending &&
-                  "animate-in fade-in slide-in-from-bottom-1 opacity-100",
+                  "animate-in opacity-100 fade-in slide-in-from-bottom-1",
               )}
             >
               {tab.label}

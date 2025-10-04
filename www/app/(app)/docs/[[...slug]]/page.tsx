@@ -37,7 +37,7 @@ export default async function Page({ params }: PageProps<"/docs/[[...slug]]">) {
           <h1 className="text-3xl font-bold lg:text-4xl">{page.data.title}</h1>
           <DocsPager variant="tooltip" currentPathname={page.url} />
         </div>
-        <p className="text-fg-muted mt-2">{page.data.description}</p>
+        <p className="mt-2 text-fg-muted">{page.data.description}</p>
         {page.data.links && page.data.links.length > 0 && (
           <div className="mt-4 flex flex-wrap gap-2">
             {page.data.links.map((link, index) => (
@@ -66,9 +66,9 @@ export default async function Page({ params }: PageProps<"/docs/[[...slug]]">) {
       {toc && toc.length > 0 && (
         <div className="pt-20 max-xl:hidden">
           <div className="sticky top-10 h-[calc(100svh-calc(var(--spacing)*10))]">
-            <div className="-ml-1.5 mb-3 flex items-center gap-2">
-              <AlignLeftIcon className="text-fg-muted size-4" />
-              <p className="text-fg-muted text-sm">On this page</p>
+            <div className="mb-3 -ml-1.5 flex items-center gap-2">
+              <AlignLeftIcon className="size-4 text-fg-muted" />
+              <p className="text-sm text-fg-muted">On this page</p>
             </div>
             <TableOfContents toc={toc} />
           </div>

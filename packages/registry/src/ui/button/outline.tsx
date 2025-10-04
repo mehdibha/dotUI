@@ -19,22 +19,22 @@ import { Loader } from "@dotui/registry/ui/loader";
 
 const buttonStyles = tv({
   extend: focusRing,
-  base: "disabled:border-border-disabled disabled:bg-disabled disabled:text-fg-disabled pending:cursor-default pending:border pending:border-border-disabled pending:bg-disabled pending:text-fg-disabled pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0 relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium leading-normal transition-all disabled:cursor-default disabled:border",
+  base: "relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-md text-sm leading-normal font-medium whitespace-nowrap transition-all disabled:cursor-default disabled:border disabled:border-border-disabled disabled:bg-disabled disabled:text-fg-disabled pending:cursor-default pending:border pending:border-border-disabled pending:bg-disabled pending:text-fg-disabled pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0",
   variants: {
     variant: {
       default:
-        "bg-neutral text-fg-on-neutral hover:border-border-hover hover:bg-neutral-hover border",
+        "border bg-neutral text-fg-on-neutral hover:border-border-hover hover:bg-neutral-hover",
       primary: "bg-primary text-fg-on-primary hover:bg-primary-hover",
-      quiet: "text-fg hover:bg-inverse/10 pressed:bg-inverse/20 bg-transparent",
+      quiet: "bg-transparent text-fg hover:bg-inverse/10 pressed:bg-inverse/20",
       link: "text-fg underline-offset-4 hover:underline",
       outline:
-        "border-border-field text-fg hover:bg-inverse/10 pressed:bg-inverse/15 border",
+        "border border-border-field text-fg hover:bg-inverse/10 pressed:bg-inverse/15",
       success:
-        "hover:bg-success-muted-hover border-border-success bg-success-muted hover:border-border-success-hover border",
+        "border border-border-success bg-success-muted hover:border-border-success-hover hover:bg-success-muted-hover",
       warning:
-        "hover:bg-warning-muted-hover border-border-warning bg-warning-muted hover:border-border-warning-hover border",
+        "border border-border-warning bg-warning-muted hover:border-border-warning-hover hover:bg-warning-muted-hover",
       danger:
-        "hover:bg-danger-muted-hover border-border-danger bg-danger-muted hover:border-border-danger-hover border",
+        "border border-border-danger bg-danger-muted hover:border-border-danger-hover hover:bg-danger-muted-hover",
     },
     size: {
       sm: "size-8 [&_svg]:size-4",
@@ -104,7 +104,7 @@ const Button = React.forwardRef(
               <Loader
                 data-slot="spinner"
                 aria-label="loading"
-                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
                 size={16}
               />
             )}

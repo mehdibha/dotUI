@@ -15,7 +15,7 @@ export default function Demo() {
         xChannel="saturation"
         yChannel="lightness"
       />
-      <p className="text-fg-muted text-xs">
+      <p className="text-xs text-fg-muted">
         Selected color : {value.toString()}
       </p>
     </div>

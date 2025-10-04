@@ -115,7 +115,7 @@ export function NavigationBlocker() {
       onOpenChange={setOpen}
     >
       <DialogBody>
-        <p className="text-fg-muted text-sm">
+        <p className="text-sm text-fg-muted">
           You have unsaved changes. Are you sure you want to leave? Your changes
           will be lost.
         </p>

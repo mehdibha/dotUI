@@ -86,7 +86,7 @@ export const FeaturedStylesShowcase = ({
         <StyleProvider
           style={isMounted ? currentStyle : undefined}
           mode={resolvedTheme as "light" | "dark" | undefined}
-          className="bg-bg relative min-h-96 w-full overflow-hidden rounded-xl border shadow-md"
+          className="relative min-h-96 w-full overflow-hidden rounded-xl border bg-bg shadow-md"
         >
           <PortalProvider getContainer={() => containerRef.current}>
             <AnimatePresence mode="popLayout">
@@ -107,28 +107,28 @@ export const FeaturedStylesShowcase = ({
             alt={currentStyleName}
             width={1200}
             height={900}
-            className="lg:hidden! block max-sm:hidden dark:hidden"
+            className="block max-sm:hidden lg:hidden! dark:hidden"
           />
           <Image
             src={`/images/showcase/${currentStyleName}-dark.png`}
             alt={currentStyleName}
             width={1200}
             height={900}
-            className="lg:hidden! hidden dark:sm:block"
+            className="hidden lg:hidden! dark:sm:block"
           />
           <Image
             src={`/images/showcase/${currentStyleName}-light-mobile.png`}
             alt={currentStyleName}
             width={1200}
             height={900}
-            className="lg:hidden! block sm:hidden dark:hidden"
+            className="block sm:hidden lg:hidden! dark:hidden"
           />
           <Image
             src={`/images/showcase/${currentStyleName}-dark-mobile.png`}
             alt={currentStyleName}
             width={1200}
             height={900}
-            className="lg:hidden! hidden max-sm:dark:block"
+            className="hidden lg:hidden! max-sm:dark:block"
           />
         </StyleProvider>
       </div>

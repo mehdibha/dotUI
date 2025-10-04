@@ -33,7 +33,7 @@ export function StyleEditorHeader() {
       <div className="flex">
         <Link
           href="/styles"
-          className="text-fg-muted hover:text-fg inline-flex items-end gap-1 text-sm max-sm:hidden"
+          className="inline-flex items-end gap-1 text-sm text-fg-muted hover:text-fg max-sm:hidden"
         >
           <ArrowLeftIcon className="size-4" /> styles
         </Link>
@@ -51,7 +51,7 @@ function StyleEditorHeaderName() {
   const { isPending } = useEditorStyle();
   return (
     <Skeleton show={isPending}>
-      <h1 className="truncate text-lg font-bold leading-none lg:text-2xl">
+      <h1 className="truncate text-lg leading-none font-bold lg:text-2xl">
         <form.Subscribe selector={(state) => state.values.name}>
           {(name) => name}
         </form.Subscribe>
@@ -77,7 +77,7 @@ function StyleEditorHeaderActions() {
         <Button
           size="sm"
           prefix={<CodeIcon />}
-          className="@max-md:px-0 @max-md:w-8 @max-md:size-8"
+          className="@max-md:size-8 @max-md:w-8 @max-md:px-0"
         >
           <span className="@max-md:hidden">Code</span>
         </Button>
@@ -91,13 +91,13 @@ function StyleEditorHeaderActions() {
         >
           <EyeIcon />
         </Button>
-        <Dialog type="drawer" className="p-0! overflow-hidden">
+        <Dialog type="drawer" className="overflow-hidden p-0!">
           <div className="h-[80vh]">
             <PreviewFrame block="login" className="h-full" />
           </div>
           <div
             className={cn(
-              "absolute right-1 top-1 size-7 rounded-lg",
+              "absolute top-1 right-1 size-7 rounded-lg",
               resolvedMode === "dark" ? "dark" : "light",
             )}
           >
@@ -146,7 +146,7 @@ function StyleEditorHeaderActions() {
                       size="sm"
                       variant="primary"
                       isDisabled={!isDirty}
-                      className="border-primary hover:border-primary-hover border"
+                      className="border border-primary hover:border-primary-hover"
                       prefix={<RocketIcon />}
                     >
                       Publish

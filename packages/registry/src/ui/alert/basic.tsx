@@ -15,23 +15,23 @@ import { createScopedContext } from "@dotui/registry/lib/utils";
 const alertStyles = tv({
   slots: {
     root: "@container flex w-full items-center gap-4 rounded-lg border p-4 text-sm [&_svg]:size-4",
-    title: "text-base font-medium leading-normal tracking-tight",
+    title: "text-base leading-normal font-medium tracking-tight",
     content: "text-fg-muted",
   },
   variants: {
     variant: {
-      neutral: { root: "bg-muted text-fg border" },
+      neutral: { root: "border bg-muted text-fg" },
       success: {
-        root: "border-border-success bg-success-muted text-fg-success border",
+        root: "border border-border-success bg-success-muted text-fg-success",
       },
       warning: {
-        root: "border-border-warning bg-warning-muted text-fg-warning border",
+        root: "border border-border-warning bg-warning-muted text-fg-warning",
       },
       danger: {
-        root: "border-border-danger bg-danger-muted text-fg-danger border",
+        root: "border border-border-danger bg-danger-muted text-fg-danger",
       },
       info: {
-        root: "border-border-info bg-info-muted text-fg-info border",
+        root: "border border-border-info bg-info-muted text-fg-info",
       },
     },
   },
@@ -71,7 +71,7 @@ function Alert({
   return (
     <AlertRoot variant={variant} {...props}>
       {resolvedIcon}
-      <div className="@sm:flex-row @sm:items-center flex flex-1 flex-col items-start gap-4">
+      <div className="flex flex-1 flex-col items-start gap-4 @sm:flex-row @sm:items-center">
         <div className="flex-1 space-y-0.5">
           {title && <AlertTitle>{title}</AlertTitle>}
           {children && <AlertContent>{children}</AlertContent>}

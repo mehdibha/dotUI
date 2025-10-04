@@ -37,7 +37,7 @@ export function StyleEditorNav({
 
   return (
     <>
-      <div className="@lg:hidden mt-4">
+      <div className="mt-4 @lg:hidden">
         <MenuRoot>
           <Button
             variant="quiet"
@@ -63,14 +63,14 @@ export function StyleEditorNav({
         className={cn("@max-lg:hidden", className)}
         {...props}
       >
-        <div className="bg-bg sticky top-0 z-10 border-b">
+        <div className="sticky top-0 z-10 border-b bg-bg">
           <TabList className="container max-w-4xl overflow-x-auto border-b-0">
             {menuItems.map((tab) => (
               <Tab
                 key={tab.href}
                 id={tab.href}
                 href={tab.href}
-                className="flex h-7 items-center gap-2 rounded-full px-4 pb-5 pt-6 text-sm"
+                className="flex h-7 items-center gap-2 rounded-full px-4 pt-6 pb-5 text-sm"
               >
                 {tab.label}
               </Tab>

@@ -44,7 +44,7 @@ export function ColorsEditor() {
       </StyleEditorSection>
 
       <StyleEditorSection title="Base colors">
-        <div className="@max-lg:grid @max-lg:grid-cols-2 mt-2 flex items-center gap-2">
+        <div className="mt-2 flex items-center gap-2 @max-lg:grid @max-lg:grid-cols-2">
           {(["neutral", "accent"] as const).map((color) => {
             return <ColorScaleEditor key={color} scaleId={color} />;
           })}
@@ -60,7 +60,7 @@ export function ColorsEditor() {
         key={`${resolvedMode}-semantic-colors`}
         title="Semantic colors"
       >
-        <div className="@max-lg:grid @max-lg:grid-cols-2 mt-2 flex items-center gap-2">
+        <div className="mt-2 flex items-center gap-2 @max-lg:grid @max-lg:grid-cols-2">
           {(["success", "danger", "warning", "info"] as const).map((color) => {
             return <ColorScaleEditor key={color} scaleId={color} />;
           })}

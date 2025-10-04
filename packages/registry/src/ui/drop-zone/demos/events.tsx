@@ -49,11 +49,11 @@ const Draggable = ({ text }: { text: string }) => {
         role="button"
         data-dragging={isDragging || undefined}
         tabIndex={0}
-        className="bg-muted data-dragging:opacity-50 rounded-sm border p-2 transition-all hover:scale-105"
+        className="rounded-sm border bg-muted p-2 transition-all hover:scale-105 data-dragging:opacity-50"
       >
         {text}
       </div>
-      <span className="text-fg-muted text-xs">Drag me</span>
+      <span className="text-xs text-fg-muted">Drag me</span>
     </div>
   );
 };

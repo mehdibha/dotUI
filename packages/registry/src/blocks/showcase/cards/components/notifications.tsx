@@ -21,7 +21,7 @@ export function Notifications({
 }: React.ComponentProps<"div">) {
   return (
     <Card className={cn("gap-2 pb-0", className)} {...props}>
-      <CardHeader className="has-data-[slot=card-action]:grid-cols-[1fr_minmax(0,auto)] flex min-w-0 items-center justify-between">
+      <CardHeader className="flex min-w-0 items-center justify-between has-data-[slot=card-action]:grid-cols-[1fr_minmax(0,auto)]">
         <CardTitle className="flex items-center gap-2">
           Notifications
           <Badge size="sm" className="px-1.5">
@@ -82,7 +82,7 @@ export function Notifications({
                               )}
                             </p>
                             <div className="mt-1 flex items-start justify-between gap-2">
-                              <p className="text-fg-muted text-xs">
+                              <p className="text-xs text-fg-muted">
                                 {notification.timestamp}
                               </p>
                               {notification.action && (

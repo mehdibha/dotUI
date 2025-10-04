@@ -43,7 +43,7 @@ function Loader({
         {Array.from({ length: 12 }).map((_, i) => (
           <span
             key={i}
-            className="animate-line-spinner absolute left-[-10%] top-[-3.9%] h-[8%] w-[24%] rounded-sm bg-current"
+            className="absolute top-[-3.9%] left-[-10%] h-[8%] w-[24%] animate-line-spinner rounded-sm bg-current"
             style={{
               transform: `rotate(${i * 30}deg) translate(146%)`,
               animationDelay: `-${(12 - i) * 0.1}s`,

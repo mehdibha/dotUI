@@ -19,11 +19,11 @@ export function CodeModal({ children, ...props }: DialogRootProps) {
         }}
         className="pb-0"
       >
-        <DialogBody className="-mx-6 px-9 pb-8 pt-0">
-          <div className="[&>h3]:step [&>h3]:text-fg-muted relative border-l pl-8 [counter-reset:step] [&>h3]:mt-4">
+        <DialogBody className="-mx-6 px-9 pt-0 pb-8">
+          <div className="relative border-l pl-8 [counter-reset:step] [&>h3]:step [&>h3]:mt-4 [&>h3]:text-fg-muted">
             <h3>Update your components.json</h3>
             <div className="">
-              <pre className="bg-card mt-4 rounded-md border p-4 text-xs">
+              <pre className="mt-4 rounded-md border bg-card p-4 text-xs">
                 <code>
                   {`"style": "${slug}",
 "registries": {
@@ -34,7 +34,7 @@ export function CodeModal({ children, ...props }: DialogRootProps) {
             </div>
             <h3>Init your style</h3>
             <div>
-              <pre className="bg-card mt-4 rounded-md border p-4 text-xs">
+              <pre className="mt-4 rounded-md border bg-card p-4 text-xs">
                 <code>pnpm dlx shadcn@latest add @dotui/base</code>
               </pre>
             </div>

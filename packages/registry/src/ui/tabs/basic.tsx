@@ -21,7 +21,7 @@ const tabsStyles = tv({
     list: "flex",
     tab: [
       focusRing(),
-      "text-fg-muted hover:text-fg disabled:text-fg-disabled selected:[&:not([data-disabled])]:text-fg flex cursor-pointer items-center justify-center whitespace-nowrap text-sm transition-colors disabled:cursor-default",
+      "flex cursor-pointer items-center justify-center text-sm whitespace-nowrap text-fg-muted transition-colors hover:text-fg disabled:cursor-default disabled:text-fg-disabled selected:[&:not([data-disabled])]:text-fg",
     ],
     panel: focusRing(),
   },
@@ -40,8 +40,8 @@ const tabsStyles = tv({
     },
     variant: {
       solid: {
-        list: "bg-muted gap-1 rounded-lg p-1",
-        tab: "disabled:bg-disabled selected:bg-inverse/10 selected:shadow-sm rounded-sm px-3 py-1.5 font-medium",
+        list: "gap-1 rounded-lg bg-muted p-1",
+        tab: "rounded-sm px-3 py-1.5 font-medium disabled:bg-disabled selected:bg-inverse/10 selected:shadow-sm",
       },
       underline: {
         tab: "border-transparent p-2.5",
@@ -58,7 +58,7 @@ const tabsStyles = tv({
       variant: "underline",
       className: {
         list: "border-b",
-        tab: "border-b-3 -mb-px",
+        tab: "-mb-px border-b-3",
       },
     },
     {
@@ -66,7 +66,7 @@ const tabsStyles = tv({
       variant: "underline",
       className: {
         list: "border-r",
-        tab: "border-r-3 -mr-px",
+        tab: "-mr-px border-r-3",
       },
     },
     {

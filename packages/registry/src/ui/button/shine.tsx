@@ -19,21 +19,21 @@ import { Loader } from "@dotui/registry/ui/loader";
 
 const buttonStyles = tv({
   extend: focusRing,
-  base: "disabled:border-border-disabled disabled:bg-disabled disabled:text-fg-disabled pending:cursor-default pending:border pending:border-border-disabled pending:bg-disabled pending:text-fg-disabled pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0 relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium leading-normal transition-all disabled:cursor-default disabled:border",
+  base: "relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-md text-sm leading-normal font-medium whitespace-nowrap transition-all disabled:cursor-default disabled:border disabled:border-border-disabled disabled:bg-disabled disabled:text-fg-disabled pending:cursor-default pending:border pending:border-border-disabled pending:bg-disabled pending:text-fg-disabled pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0",
   variants: {
     variant: {
       default:
-        "bg-neutral text-fg-on-neutral hover:bg-neutral-hover shadow-shine [--color-shine:var(--neutral-800)]",
+        "bg-neutral text-fg-on-neutral shadow-shine [--color-shine:var(--neutral-800)] hover:bg-neutral-hover",
       primary:
-        "bg-primary text-fg-on-primary hover:bg-primary-hover shadow-shine [--color-shine:var(--neutral-500)]",
-      quiet: "text-fg hover:bg-inverse/10 pressed:bg-inverse/20 bg-transparent",
+        "bg-primary text-fg-on-primary shadow-shine [--color-shine:var(--neutral-500)] hover:bg-primary-hover",
+      quiet: "bg-transparent text-fg hover:bg-inverse/10 pressed:bg-inverse/20",
       link: "text-fg underline-offset-4 hover:underline",
       success:
-        "bg-success text-fg-on-success hover:bg-success-hover pressed:bg-success-active shadow-shine [--color-shine:var(--success-800)]",
+        "bg-success text-fg-on-success shadow-shine [--color-shine:var(--success-800)] hover:bg-success-hover pressed:bg-success-active",
       warning:
-        "bg-warning text-fg-on-warning hover:bg-warning-hover pressed:bg-warning-active shadow-shine [--color-shine:var(--warning-800)]",
+        "bg-warning text-fg-on-warning shadow-shine [--color-shine:var(--warning-800)] hover:bg-warning-hover pressed:bg-warning-active",
       danger:
-        "bg-danger text-fg-on-danger hover:bg-danger-hover pressed:bg-danger-active shadow-shine [--color-shine:var(--danger-800)]",
+        "bg-danger text-fg-on-danger shadow-shine [--color-shine:var(--danger-800)] hover:bg-danger-hover pressed:bg-danger-active",
     },
     size: {
       sm: "size-8 [&_svg]:size-4",
@@ -103,7 +103,7 @@ const Button = React.forwardRef(
               <Loader
                 data-slot="spinner"
                 aria-label="loading"
-                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
                 size={16}
               />
             )}

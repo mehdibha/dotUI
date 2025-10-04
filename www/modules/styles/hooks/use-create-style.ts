@@ -10,7 +10,7 @@ import {
 import { toast } from "@dotui/registry/ui/toast";
 import type { StyleDefinition } from "@dotui/registry/style-system/types";
 
-import { useTRPCClient } from "@/lib/trpc/react";
+import { useTRPC, useTRPCClient } from "@/lib/trpc/react";
 import { authClient } from "@/modules/auth/lib/client";
 
 interface CreateStyleInput {
@@ -21,6 +21,7 @@ interface CreateStyleInput {
 }
 
 export function useCreateStyle() {
+  const trpc = useTRPC();
   const trpcClient = useTRPCClient();
   const queryClient = useQueryClient();
   const router = useRouter();
@@ -62,7 +63,7 @@ export function useCreateStyle() {
 
       // Invalidate queries to refresh the styles list
       queryClient.invalidateQueries({
-        queryKey: ["trpc", "style"],
+        queryKey: trpc.style.getMyStyles.queryKey(),
       });
 
       // Navigate to the created style page

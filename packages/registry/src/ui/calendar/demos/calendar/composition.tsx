@@ -21,7 +21,7 @@ export default function Demo() {
         <Button slot="previous" variant="default" shape="circle" size="sm">
           <ChevronLeftIcon />
         </Button>
-        <Heading className="text-fg-muted text-sm" />
+        <Heading className="text-sm text-fg-muted" />
         <Button slot="next" variant="default" shape="circle" size="sm">
           <ChevronRightIcon />
         </Button>

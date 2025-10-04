@@ -35,7 +35,7 @@ export function UserProfileMenu({
         <Button
           className={cn(
             focusRing(),
-            "size-7.5 outline-hidden flex cursor-pointer items-center justify-center rounded-full",
+            "flex size-7.5 cursor-pointer items-center justify-center rounded-full outline-hidden",
           )}
         >
           <Avatar
@@ -55,7 +55,7 @@ export function UserProfileMenu({
           containerPadding: 8,
         }}
       >
-        <div className="px-4 pb-1 pt-3 text-sm">
+        <div className="px-4 pt-3 pb-1 text-sm">
           <p className="font-medium">{session?.user?.username}</p>
           <p className="text-fg-muted">{session?.user?.email}</p>
         </div>

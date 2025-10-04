@@ -61,7 +61,7 @@ export function LoginModal({ children }: { children: React.ReactNode }) {
           >
             Continue with GitHub
           </Button>
-          <p className="text-fg-muted mt-4 text-sm">
+          <p className="mt-4 text-sm text-fg-muted">
             By continuing, you agree to our{" "}
             <Link href="/terms-of-service">Terms of Service</Link> and{" "}
             <Link href="/privacy-policy">Privacy Policy</Link>.

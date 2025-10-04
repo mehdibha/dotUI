@@ -58,14 +58,14 @@ export const Footer = () => {
   return (
     <div className="@container border-t">
       <div className="container space-y-10 py-6 md:py-12">
-        <div className="@3xl:flex-row flex flex-col items-start justify-between gap-10">
+        <div className="flex flex-col items-start justify-between gap-10 @3xl:flex-row">
           <div className="space-y-1">
             <Logo type="span" />
-            <p className="text-fg-muted text-base">
+            <p className="text-base text-fg-muted">
               Bringing singularity to the web.
             </p>
           </div>
-          <div className="@2xl:gap-10 flex flex-wrap gap-6 text-sm">
+          <div className="flex flex-wrap gap-6 text-sm @2xl:gap-10">
             {links.map((group, index) => (
               <div key={index}>
                 <h2 className="font-bold">{group.label}</h2>
@@ -74,7 +74,7 @@ export const Footer = () => {
                     <li key={index}>
                       <NavLink
                         href={link.href}
-                        className="text-fg-muted hover:text-fg transition-colors duration-200"
+                        className="text-fg-muted transition-colors duration-200 hover:text-fg"
                         target={
                           link.href.startsWith("http") ? "_blank" : undefined
                         }
@@ -88,7 +88,7 @@ export const Footer = () => {
             ))}
           </div>
         </div>
-        <p className="text-fg-muted text-sm">
+        <p className="text-sm text-fg-muted">
           Built by{" "}
           <Link
             href="https://github.com/mehdibha"

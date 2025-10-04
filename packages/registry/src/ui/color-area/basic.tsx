@@ -9,7 +9,7 @@ import { tv } from "tailwind-variants";
 import { ColorThumb } from "@dotui/registry/ui/color-thumb";
 
 const colorAreaStyles = tv({
-  base: "disabled:[background:var(--color-disabled)]! block size-48 min-w-20 rounded-md",
+  base: "block size-48 min-w-20 rounded-md disabled:[background:var(--color-disabled)]!",
 });
 
 type ColorAreaProps = Omit<ColorAreaRootProps, "children">;

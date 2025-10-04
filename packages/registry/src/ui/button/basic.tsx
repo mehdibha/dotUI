@@ -19,14 +19,14 @@ import { Loader } from "@dotui/registry/ui/loader";
 
 const buttonStyles = tv({
   extend: focusRing,
-  base: "disabled:border-border-disabled disabled:bg-disabled disabled:text-fg-disabled pending:cursor-default pending:border pending:border-border-disabled pending:bg-disabled pending:text-fg-disabled pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0 relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium leading-normal transition-all disabled:cursor-default disabled:border",
+  base: "relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-md text-sm leading-normal font-medium whitespace-nowrap transition-all disabled:cursor-default disabled:border disabled:border-border-disabled disabled:bg-disabled disabled:text-fg-disabled pending:cursor-default pending:border pending:border-border-disabled pending:bg-disabled pending:text-fg-disabled pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0",
   variants: {
     variant: {
       default:
-        "bg-neutral text-fg-on-neutral hover:border-border-hover hover:bg-neutral-hover active:bg-neutral-active border",
+        "border bg-neutral text-fg-on-neutral hover:border-border-hover hover:bg-neutral-hover active:bg-neutral-active",
       primary:
-        "bg-primary text-fg-on-primary hover:bg-primary-hover pending:border-0 [--color-disabled:var(--neutral-500)] [--color-fg-disabled:var(--neutral-300)] disabled:border-0",
-      quiet: "text-fg hover:bg-inverse/10 pressed:bg-inverse/20 bg-transparent",
+        "bg-primary text-fg-on-primary [--color-disabled:var(--neutral-500)] [--color-fg-disabled:var(--neutral-300)] hover:bg-primary-hover disabled:border-0 pending:border-0",
+      quiet: "bg-transparent text-fg hover:bg-inverse/10 pressed:bg-inverse/20",
       link: "text-fg underline-offset-4 hover:underline",
       success:
         "bg-success text-fg-on-success hover:bg-success-hover pressed:bg-success-active",
@@ -104,7 +104,7 @@ const Button = React.forwardRef(
               <Loader
                 data-slot="spinner"
                 aria-label="loading"
-                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
                 size={16}
               />
             )}

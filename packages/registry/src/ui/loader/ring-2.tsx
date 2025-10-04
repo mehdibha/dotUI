@@ -58,7 +58,7 @@ function Loader({
           fill="none"
         />
         <circle
-          className="stroke-fg-muted animate-loader-ring-stretch fill-none transition-[stroke] duration-500 ease-out will-change-[stroke-dasharray,_stroke-dashoffset] [stroke-dasharray:1_200] [stroke-dashoffset:0] [stroke-linecap:round]"
+          className="animate-loader-ring-stretch fill-none stroke-fg-muted transition-[stroke] duration-500 ease-out will-change-[stroke-dasharray,_stroke-dashoffset] [stroke-dasharray:1_200] [stroke-dashoffset:0] [stroke-linecap:round]"
           cx={centerPoint}
           cy={centerPoint}
           r={radius}

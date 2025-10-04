@@ -23,13 +23,13 @@ import { Loader } from "@dotui/registry/ui/loader";
 
 const buttonStyles = tv({
   extend: focusRing,
-  base: "disabled:bg-disabled disabled:text-fg-disabled pending:cursor-default pending:border pending:border-border-disabled pending:bg-disabled pending:text-fg-disabled relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 overflow-hidden whitespace-nowrap rounded-md text-sm font-medium leading-normal transition-colors disabled:cursor-default",
+  base: "relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-md text-sm leading-normal font-medium whitespace-nowrap transition-colors disabled:cursor-default disabled:bg-disabled disabled:text-fg-disabled pending:cursor-default pending:border pending:border-border-disabled pending:bg-disabled pending:text-fg-disabled",
   variants: {
     variant: {
       default:
-        "bg-neutral text-fg-on-neutral hover:border-border-hover hover:bg-neutral-hover border",
+        "border bg-neutral text-fg-on-neutral hover:border-border-hover hover:bg-neutral-hover",
       primary: "bg-primary text-fg-on-primary hover:bg-primary-hover",
-      quiet: "text-fg hover:bg-inverse/10 bg-transparent",
+      quiet: "bg-transparent text-fg hover:bg-inverse/10",
       link: "text-fg underline-offset-4 hover:underline",
       success: "bg-success text-fg-on-success hover:bg-success-hover",
       warning: "bg-warning text-fg-on-warning hover:bg-warning-hover",

@@ -19,14 +19,14 @@ const toastStyles = tv({
   slots: {
     region: [
       focusRing(),
-      "fixed bottom-4 right-4 z-50 flex max-h-[calc(100vh-2rem)] flex-col gap-2 overflow-hidden outline-none",
+      "fixed right-4 bottom-4 z-50 flex max-h-[calc(100vh-2rem)] flex-col gap-2 overflow-hidden outline-none",
     ],
-    toast: "bg-bg relative w-[min(380px,90vw)] rounded-lg border p-4 shadow-lg",
+    toast: "relative w-[min(380px,90vw)] rounded-lg border bg-bg p-4 shadow-lg",
     content: "flex flex-col gap-1",
     title: "text-base",
-    description: "text-fg-muted text-sm",
+    description: "text-sm text-fg-muted",
     actions: "",
-    close: "absolute right-3 top-3 size-7",
+    close: "absolute top-3 right-3 size-7",
   },
   variants: {
     variant: {

@@ -11,7 +11,7 @@ export default function Demo() {
   return (
     <div className="flex flex-col items-center gap-6">
       <Calendar aria-label="Event date" value={value} onChange={setValue} />
-      <p className="text-fg-muted text-sm">
+      <p className="text-sm text-fg-muted">
         Selected date: {value?.toString()}
       </p>
     </div>

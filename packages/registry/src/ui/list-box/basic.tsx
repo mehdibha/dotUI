@@ -27,12 +27,12 @@ import { Text } from "@dotui/registry/ui/text";
 const listBoxStyles = tv({
   base: [
     focusRing(),
-    "outline-hidden empty:text-fg-muted layout-grid:grid layout-grid:w-auto layout-grid:grid-cols-2 orientation-horizontal:w-auto orientation-horizontal:flex-row flex flex-col overflow-auto p-1 empty:min-h-24 empty:items-center empty:justify-center empty:text-sm empty:italic",
+    "flex flex-col overflow-auto p-1 outline-hidden empty:min-h-24 empty:items-center empty:justify-center empty:text-sm empty:text-fg-muted empty:italic layout-grid:grid layout-grid:w-auto layout-grid:grid-cols-2 orientation-horizontal:w-auto orientation-horizontal:flex-row",
     "[&_.separator]:-mx-1 [&_.separator]:my-1 [&_.separator]:w-auto",
   ],
   variants: {
     standalone: {
-      true: "bg-bg max-h-60 w-48 overflow-y-auto rounded-md border",
+      true: "max-h-60 w-48 overflow-y-auto rounded-md border bg-bg",
       false: "max-h-[inherit] rounded-[inherit]",
     },
   },
@@ -40,7 +40,7 @@ const listBoxStyles = tv({
 
 const listBoxItemStyles = tv({
   base: [
-    "outline-hidden focus:bg-inverse/10 disabled:**:text-fg-disabled flex cursor-pointer items-center gap-2 rounded-sm px-3 py-1.5 text-sm transition-colors disabled:pointer-events-none",
+    "flex cursor-pointer items-center gap-2 rounded-sm px-3 py-1.5 text-sm outline-hidden transition-colors focus:bg-inverse/10 disabled:pointer-events-none disabled:**:text-fg-disabled",
     "selection-single:pl-0 selection-multiple:pl-0",
     "group-data-[type=drawer]/overlay:py-3 group-data-[type=drawer]/overlay:text-lg",
     "group-data-[type=modal]/overlay:py-2 group-data-[type=modal]/overlay:text-base",
@@ -63,7 +63,7 @@ const listBoxItemStyles = tv({
 const listboxSectionStyles = tv({
   slots: {
     listboxSection: "space-y-px pt-2",
-    listboxHeading: "text-fg-muted mb-4 pl-3 text-xs",
+    listboxHeading: "mb-4 pl-3 text-xs text-fg-muted",
   },
 });
 
@@ -132,7 +132,7 @@ const ListBoxItem = <T extends object>({
             {selectionMode !== "none" && (
               <span className="flex w-8 shrink-0 items-center justify-center">
                 {isSelected && (
-                  <CheckIcon aria-hidden className="text-fg-accent size-4" />
+                  <CheckIcon aria-hidden className="size-4 text-fg-accent" />
                 )}
               </span>
             )}

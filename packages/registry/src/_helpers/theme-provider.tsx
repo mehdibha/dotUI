@@ -77,7 +77,7 @@ export const ThemeProvider = ({
         suppressHydrationWarning
         className={cn(
           !unstyled &&
-            "bg-bg font-body text-fg relative isolate overflow-hidden duration-150",
+            "relative isolate overflow-hidden bg-bg font-body text-fg duration-150",
           props.className,
         )}
       >

@@ -37,11 +37,13 @@ export const styleRouter = {
         });
       }
 
-      // Verify user has access (must own it or it must be public)
+      // Verify user has access (must own it or it must be public/unlisted)
       const isOwner = styleRecord.userId === ctx.session.user.id;
-      const isPublic = styleRecord.visibility === "public";
+      const isPublicOrUnlisted = ["public", "unlisted"].includes(
+        styleRecord.visibility,
+      );
 
-      if (!isOwner && !isPublic) {
+      if (!isOwner && !isPublicOrUnlisted) {
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "You don't have access to this style",

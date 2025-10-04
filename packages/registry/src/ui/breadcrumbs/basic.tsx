@@ -14,11 +14,11 @@ import { focusRing } from "@dotui/registry/lib/focus-styles";
 
 const breadcrumbsStyles = tv({
   slots: {
-    root: "text-fg-muted flex flex-wrap items-center gap-1.5 break-words text-sm [&_svg]:size-4",
+    root: "flex flex-wrap items-center gap-1.5 text-sm break-words text-fg-muted [&_svg]:size-4",
     item: "inline-flex items-center gap-1",
     link: [
       focusRing(),
-      "disabled:not-current:text-fg-disabled current:text-fg hover:[&:is(a)]:text-fg inline-flex items-center gap-1 rounded px-0.5 leading-none transition-colors disabled:cursor-default",
+      "inline-flex items-center gap-1 rounded px-0.5 leading-none transition-colors disabled:cursor-default disabled:not-current:text-fg-disabled current:text-fg hover:[&:is(a)]:text-fg",
     ],
   },
 });

@@ -108,7 +108,7 @@ export const PreviewRoot = ({ children }: { children: React.ReactNode }) => {
         aria-hidden={isOpen}
         inert={isOpen || undefined}
       >
-        <div style={{ width: 102 }} className="pr-6 pt-6">
+        <div style={{ width: 102 }} className="pt-6 pr-6">
           <Button variant="default" size="sm" onPress={() => setOpen(true)}>
             Preview
           </Button>
@@ -116,7 +116,7 @@ export const PreviewRoot = ({ children }: { children: React.ReactNode }) => {
       </motion.div>
       <div
         onMouseDown={handleMouseDown}
-        className="h-15 bg-neutral hover:bg-neutral-hover active:bg-neutral-active absolute -left-3 top-1/2 z-20 w-2 -translate-y-1/2 cursor-col-resize rounded-full shadow-sm"
+        className="absolute top-1/2 -left-3 z-20 h-15 w-2 -translate-y-1/2 cursor-col-resize rounded-full bg-neutral shadow-sm hover:bg-neutral-hover active:bg-neutral-active"
       />
       <motion.div
         ref={containerRef}
@@ -144,7 +144,7 @@ export const PreviewRoot = ({ children }: { children: React.ReactNode }) => {
         >
           <div
             className={cn(
-              "bg-bg flex size-full flex-col overflow-hidden rounded-md border",
+              "flex size-full flex-col overflow-hidden rounded-md border bg-bg",
             )}
           >
             {children}
@@ -173,7 +173,7 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
   const isMobile = previewWidth < 480;
 
   return (
-    <div className="bg-card flex items-center justify-between gap-2 border-b border-t-[inherit] px-1 py-1">
+    <div className="flex items-center justify-between gap-2 border-b border-t-[inherit] bg-card px-1 py-1">
       <div className="flex items-center gap-1">
         <Button
           aria-label="Collapse preview"
@@ -196,7 +196,7 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
             variant="link"
             size="sm"
             suffix={<ChevronsUpDownIcon className="size-3.5!" />}
-            className="text-fg-muted h-7 justify-center gap-1 rounded-sm px-2"
+            className="h-7 justify-center gap-1 rounded-sm px-2 text-fg-muted"
           >
             <SelectValue className="flex-0" />
           </Button>
@@ -221,7 +221,7 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
               }}
               size="sm"
               shape="square"
-              className="selected:bg-transparent selected:text-fg selected:hover:bg-inverse/10 selected:pressed:bg-inverse/20 size-7"
+              className="size-7 selected:bg-transparent selected:text-fg selected:hover:bg-inverse/10 selected:pressed:bg-inverse/20"
             >
               {({ isSelected }) => (
                 <>{isSelected ? <SunIcon /> : <MoonIcon />}</>
@@ -297,7 +297,7 @@ export const PreviewFrame = ({
       className={cn(
         "flex-1",
         className,
-        isLoading && "bg-muted relative block animate-pulse rounded-md",
+        isLoading && "relative block animate-pulse rounded-md bg-muted",
       )}
     >
       <iframe
@@ -320,7 +320,7 @@ const PreviewModal = ({ children }: { children: React.ReactNode }) => {
         className:
           "w-screen h-(--visual-viewport-height) max-w-none rounded-none border-0",
       }}
-      className="p-0! h-full overflow-hidden rounded-none"
+      className="h-full overflow-hidden rounded-none p-0!"
       isDismissable
       isOpen={isFullscreen}
     >

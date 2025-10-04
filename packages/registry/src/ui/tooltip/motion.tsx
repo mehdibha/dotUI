@@ -18,14 +18,14 @@ import { createScopedContext } from "@dotui/registry/lib/utils";
 const tooltipStyles = tv({
   slots: {
     content:
-      "group/tooltip text-fg placement-left:origin-right placement-right:origin-left placement-top:origin-bottom placement-bottom:origin-top z-50 rounded-md px-3 py-1.5 text-sm shadow-md",
+      "group/tooltip z-50 rounded-md px-3 py-1.5 text-sm text-fg shadow-md placement-left:origin-right placement-right:origin-left placement-top:origin-bottom placement-bottom:origin-top",
     arrow:
       "group-placement-left/tooltip:-rotate-90 group-placement-right/tooltip:rotate-90 group-placement-bottom/tooltip:rotate-180",
   },
   variants: {
     variant: {
       default: {
-        content: "bg-muted border",
+        content: "border bg-muted",
         arrow: "fill-muted stroke-border",
       },
       inverse: {
