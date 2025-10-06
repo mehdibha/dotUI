@@ -24,6 +24,7 @@
     "@dotui/auth": "workspace:*",
     "@dotui/db": "workspace:*",
     "@dotui/registry": "workspace:*",
+    "@dotui/registry-v2": "workspace:*",
     "@fumadocs/mdx-remote": "^1.4.0",
     "@hookform/resolvers": "catalog:ui",
     "@internationalized/date": "catalog:ui",

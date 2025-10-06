@@ -1,0 +1,53 @@
+{
+  "name": "@dotui/registry-v2",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    "./ui/*": "./src/ui/*.tsx",
+    "./hooks/*": "./src/hooks/*.ts",
+    "./lib/*": "./src/lib/*.ts"
+  },
+  "scripts": {
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
+    "lint": "eslint",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+  },
+  "peerDependencies": {
+    "@hookform/resolvers": "catalog:ui",
+    "@internationalized/date": "catalog:ui",
+    "@react-stately/utils": "catalog:ui",
+    "@remixicon/react": "catalog:ui",
+    "@tanstack/react-form": "catalog:ui",
+    "clsx": "catalog:ui",
+    "lucide-react": "catalog:ui",
+    "motion": "catalog:ui",
+    "react": "catalog:react",
+    "react-aria": "catalog:ui",
+    "react-aria-components": "catalog:ui",
+    "react-dom": "catalog:react",
+    "react-hook-form": "catalog:ui",
+    "react-stately": "catalog:ui",
+    "tailwind-merge": "catalog:ui",
+    "tailwind-variants": "catalog:ui"
+  },
+  "devDependencies": {
+    "@dotui/eslint-config": "workspace:*",
+    "@dotui/prettier-config": "workspace:*",
+    "@dotui/ts-config": "workspace:*",
+    "@types/culori": "^4.0.1",
+    "eslint": "catalog:",
+    "prettier": "catalog:",
+    "rimraf": "^6.0.1",
+    "shadcn": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:"
+  },
+  "prettier": "@dotui/prettier-config",
+  "dependencies": {
+    "culori": "^4.0.2"
+  }
+}
