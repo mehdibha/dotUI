@@ -86,7 +86,9 @@ function AvatarRoot({ className, shape, size, ...props }: AvatarRootProps) {
   );
 }
 
-interface AvatarImageProps extends React.ComponentProps<"img"> {}
+interface AvatarImageProps extends Omit<React.ComponentProps<"img">, "src"> {
+  src?: string;
+}
 function AvatarImage({
   src,
   alt,
