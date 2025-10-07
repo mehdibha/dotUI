@@ -17,12 +17,12 @@ import {
 
 const checkboxStyles = tv({
   slots: {
-    root: "group/checkbox invalid:text-fg-danger disabled:text-fg-disabled flex cursor-pointer flex-row items-center gap-2 disabled:cursor-default",
+    root: "group/checkbox flex cursor-pointer flex-row items-center gap-2 invalid:text-fg-danger disabled:cursor-default disabled:text-fg-disabled",
     indicator: [
-      "border-border-control flex size-4 shrink-0 cursor-pointer items-center justify-center rounded-sm border",
-      "group-selected/checkbox:border-transparent bg-transparent text-transparent transition-colors duration-75 group-indeterminate/checkbox:border-transparent",
+      "flex size-4 shrink-0 cursor-pointer items-center justify-center rounded-sm border border-border-control",
+      "bg-transparent text-transparent transition-colors duration-75 group-indeterminate/checkbox:border-transparent group-selected/checkbox:border-transparent",
       "group-read-only/checkbox:cursor-default",
-      "group-disabled/checkbox:border-border-disabled group-indeterminate/checkbox:group-disabled/checkbox:bg-disabled group-selected/checkbox:group-disabled/checkbox:bg-disabled group-selected/checkbox:group-disabled/checkbox:text-fg-disabled group-disabled/checkbox:cursor-default",
+      "group-disabled/checkbox:cursor-default group-disabled/checkbox:border-border-disabled group-indeterminate/checkbox:group-disabled/checkbox:bg-disabled group-selected/checkbox:group-disabled/checkbox:bg-disabled group-selected/checkbox:group-disabled/checkbox:text-fg-disabled",
       "group-invalid/checkbox:group-selected/checkbox:text-fg-onMutedDanger group-invalid/checkbox:border-border-danger group-invalid/checkbox:group-selected/checkbox:bg-danger-muted",
     ],
   },
@@ -44,7 +44,7 @@ const checkboxStyles = tv({
       card: {
         root: [
           focusRing(),
-          "disabled:border-border-disabled disabled:selected:bg-disabled flex-row-reverse justify-between gap-4 rounded-md border p-4 transition-colors",
+          "flex-row-reverse justify-between gap-4 rounded-md border p-4 transition-colors disabled:border-border-disabled disabled:selected:bg-disabled",
         ],
       },
     },

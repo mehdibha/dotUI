@@ -1,37 +1,30 @@
-"use client";
-
 import * as React from "react";
-import {
-  AlertCircleIcon,
-  AlertTriangleIcon,
-  CheckCircle2Icon,
-  InfoIcon,
-} from "lucide-react";
 import { tv } from "tailwind-variants";
 import type { VariantProps } from "tailwind-variants";
 
-import { createScopedContext } from "@dotui/registry-v2/lib/utils";
-
-const alertStyles = tv({
+const alertVariants = tv({
   slots: {
-    root: "@container flex w-full items-center gap-4 rounded-lg border p-4 text-sm [&_svg]:size-4",
-    title: "text-base font-medium leading-normal tracking-tight",
-    content: "text-fg-muted",
+    base: "relative grid w-full grid-cols-[0_1fr] items-start gap-y-0.5 rounded-lg border bg-card px-4 py-3 text-sm has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] has-[>svg]:gap-x-3 [&>svg]:size-4 [&>svg]:translate-y-0.5 [&>svg]:text-current",
+    title: "col-start-2 line-clamp-1 min-h-4 font-medium tracking-tight",
+    description:
+      "text-muted-foreground col-start-2 grid justify-items-start gap-1 text-sm [&_p]:leading-relaxed",
   },
   variants: {
     variant: {
-      neutral: { root: "bg-muted text-fg border" },
-      success: {
-        root: "border-border-success bg-success-muted text-fg-success border",
-      },
-      warning: {
-        root: "border-border-warning bg-warning-muted text-fg-warning border",
+      neutral: {
+        base: "text-fg",
       },
       danger: {
-        root: "border-border-danger bg-danger-muted text-fg-danger border",
+        base: "bg-danger-muted text-fg-danger *:data-[slot=alert-description]:text-fg-danger/90 [&>svg]:text-current",
+      },
+      warning: {
+        base: "text-fg-warning *:data-[slot=alert-description]:text-fg-warning/90 [&>svg]:text-current",
       },
       info: {
-        root: "border-border-info bg-info-muted text-fg-info border",
+        base: "text-fg-info *:data-[slot=alert-description]:text-fg-info/90 [&>svg]:text-current",
+      },
+      success: {
+        base: "text-fg-success *:data-[slot=alert-description]:text-fg-success/90 [&>svg]:text-current",
       },
     },
   },
@@ -40,73 +33,43 @@ const alertStyles = tv({
   },
 });
 
-const { root, title, content } = alertStyles();
+const { base, title, description } = alertVariants();
 
-const [AlertProvider, useAlertContext] =
-  createScopedContext<VariantProps<typeof alertStyles>>("AlertRoot");
-
-const defaultIcons = {
-  neutral: <InfoIcon />,
-  danger: <AlertCircleIcon />,
-  success: <CheckCircle2Icon />,
-  warning: <AlertTriangleIcon />,
-  info: <InfoIcon />,
-};
-
-interface AlertProps extends AlertRootProps {
-  title?: string;
-  action?: React.ReactNode;
-  icon?: React.ReactNode | null;
-}
-
-function Alert({
-  variant = "neutral",
-  title,
-  action,
-  icon,
-  children,
+function AlertBase({
+  className,
+  variant,
   ...props
-}: AlertProps) {
-  const resolvedIcon = icon === undefined ? defaultIcons[variant] : icon;
+}: React.ComponentProps<"div"> & VariantProps<typeof alertVariants>) {
   return (
-    <AlertRoot variant={variant} {...props}>
-      {resolvedIcon}
-      <div className="@sm:flex-row @sm:items-center flex flex-1 flex-col items-start gap-4">
-        <div className="flex-1 space-y-0.5">
-          {title && <AlertTitle>{title}</AlertTitle>}
-          {children && <AlertContent>{children}</AlertContent>}
-        </div>
-        {action}
-      </div>
-    </AlertRoot>
+    <div
+      data-slot="alert"
+      role="alert"
+      className={base({ variant, className })}
+      {...props}
+    />
+  );
+}
+function AlertTitle({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div data-slot="alert-title" className={title({ className })} {...props} />
+  );
+}
+function AlertDescription({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="alert-description"
+      className={description({ className })}
+      {...props}
+    />
   );
 }
 
-interface AlertRootProps
-  extends React.ComponentProps<"div">,
-    VariantProps<typeof alertStyles> {}
+const Alert = Object.assign(AlertBase, {
+  Title: AlertTitle,
+  Description: AlertDescription,
+});
 
-function AlertRoot({ className, variant, ...props }: AlertRootProps) {
-  return (
-    <AlertProvider variant={variant}>
-      <div role="alert" className={root({ variant, className })} {...props} />
-    </AlertProvider>
-  );
-}
-
-interface AlertTitleProps extends React.ComponentProps<"h5"> {}
-
-function AlertTitle({ className, ...props }: AlertTitleProps) {
-  const { variant } = useAlertContext("AlertTitle");
-  return <h5 className={title({ variant, className })} {...props} />;
-}
-
-interface AlertContentProps extends React.ComponentProps<"p"> {}
-
-function AlertContent({ className, ...props }: AlertContentProps) {
-  const { variant } = useAlertContext("AlertTitle");
-  return <div className={content({ variant, className })} {...props} />;
-}
-
-export type { AlertProps, AlertRootProps, AlertTitleProps, AlertContentProps };
-export { Alert, AlertRoot, AlertTitle, AlertContent };
+export { Alert, AlertTitle, AlertDescription };

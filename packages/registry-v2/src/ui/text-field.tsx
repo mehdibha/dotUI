@@ -54,6 +54,7 @@ interface TextFieldRootProps
 const TextFieldRoot = ({ className, ...props }: TextFieldRootProps) => {
   return (
     <AriaTextField
+      data-slot="text-field"
       className={composeRenderProps(className, (className) =>
         textFieldStyles({ className }),
       )}

@@ -14,9 +14,9 @@ import { Label } from "@dotui/registry-v2/ui/field";
 const colorSliderStyles = tv({
   slots: {
     root: "group flex flex-col gap-2",
-    output: "text-fg-muted text-sm",
+    output: "text-sm text-fg-muted",
     track:
-      "disabled:[background:var(--color-disabled)]! relative rounded-md before:absolute before:inset-0 before:z-[-1] before:rounded-[inherit] before:bg-[repeating-conic-gradient(#e6e6e6_0%_25%,_#fff_0%_50%)] before:bg-[length:16px_16px] before:bg-center before:content-['']",
+      "relative rounded-md before:absolute before:inset-0 before:z-[-1] before:rounded-[inherit] before:bg-[repeating-conic-gradient(#e6e6e6_0%_25%,_#fff_0%_50%)] before:bg-[length:16px_16px] before:bg-center before:content-[''] disabled:[background:var(--color-disabled)]!",
     thumb: "",
   },
   variants: {

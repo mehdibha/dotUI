@@ -29,7 +29,7 @@ import type { OverlayProps } from "@dotui/registry-v2/ui/overlay";
 
 const menuStyles = tv({
   base: [
-    "max-h[inherit] outline-hidden rounded-[inherit] p-1",
+    "max-h[inherit] rounded-[inherit] p-1 outline-hidden",
     "group-data-[type=drawer]/overlay:p-2",
     "[&_.separator]:-mx-1 [&_.separator]:my-1 [&_.separator]:w-auto",
   ],
@@ -37,7 +37,7 @@ const menuStyles = tv({
 
 const menuItemStyles = tv({
   base: [
-    "outline-hidden focus:bg-inverse/10 disabled:text-fg-disabled flex cursor-pointer items-center gap-2 rounded-sm px-3 py-1.5 text-sm transition-colors disabled:pointer-events-none",
+    "flex cursor-pointer items-center gap-2 rounded-sm px-3 py-1.5 text-sm outline-hidden transition-colors focus:bg-inverse/10 disabled:pointer-events-none disabled:text-fg-disabled",
     "selection-single:pl-0 selection-multiple:pl-0",
     "group-data-[slot=drawer]/overlay:py-3 group-data-[slot=drawer]/overlay:text-base",
     "group-data-[slot=modal]/overlay:py-2 group-data-[slot=modal]/overlay:text-base",
@@ -135,7 +135,7 @@ const MenuItem = <T extends object>({
             {selectionMode !== "none" && (
               <span className="flex w-8 items-center justify-center">
                 {isSelected && (
-                  <CheckIcon aria-hidden className="text-fg-accent size-4" />
+                  <CheckIcon aria-hidden className="size-4 text-fg-accent" />
                 )}
               </span>
             )}
@@ -172,7 +172,7 @@ const MenuSection = <T extends object>({
   return (
     <AriaMenuSection className={menuSectionStyles({ className })} {...props}>
       {title && (
-        <AriaHeader className="text-fg-muted mb-1 pl-3 text-xs">
+        <AriaHeader className="mb-1 pl-3 text-xs text-fg-muted">
           {title}
         </AriaHeader>
       )}

@@ -24,7 +24,7 @@ const config = {
       },
       {
         protocol: "https",
-        hostname: "ui.shadcn.com",
+        hostname: "images.unsplash.com",
       },
     ],
   },

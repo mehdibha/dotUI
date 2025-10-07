@@ -34,6 +34,7 @@
     "@react-stately/utils": "catalog:ui",
     "@remixicon/react": "catalog:ui",
     "@t3-oss/env-nextjs": "^0.13.6",
+    "@tabler/icons-react": "^3.35.0",
     "@tanstack/react-form": "catalog:ui",
     "@tanstack/react-query": "catalog:",
     "@trpc/client": "catalog:",

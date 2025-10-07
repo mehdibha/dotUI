@@ -24,14 +24,14 @@ const sliderStyles = tv({
   slots: {
     root: "group flex flex-col gap-1",
     track:
-      "bg-neutral disabled:bg-disabled relative my-1 grow cursor-pointer rounded-full disabled:cursor-default",
+      "relative my-1 grow cursor-pointer rounded-full bg-neutral disabled:cursor-default disabled:bg-disabled",
     filler:
-      "group-disabled:bg-disabled pointer-events-none absolute rounded-full",
+      "pointer-events-none absolute rounded-full group-disabled:bg-disabled",
     thumb: [
       focusRing(),
-      "disabled:border-bg disabled:bg-disabled left-[50%] top-[50%] rounded-full bg-white shadow-md transition-[width,height] disabled:border",
+      "top-[50%] left-[50%] rounded-full bg-white shadow-md transition-[width,height] disabled:border disabled:border-bg disabled:bg-disabled",
     ],
-    valueLabel: "text-fg-muted text-sm",
+    valueLabel: "text-sm text-fg-muted",
   },
   variants: {
     variant: {
@@ -56,13 +56,13 @@ const sliderStyles = tv({
     },
     size: {
       sm: {
-        thumb: "dragging:size-4 size-3",
+        thumb: "size-3 dragging:size-4",
       },
       md: {
-        thumb: "dragging:size-5 size-4",
+        thumb: "size-4 dragging:size-5",
       },
       lg: {
-        thumb: "dragging:size-6 size-5",
+        thumb: "size-5 dragging:size-6",
       },
     },
   },

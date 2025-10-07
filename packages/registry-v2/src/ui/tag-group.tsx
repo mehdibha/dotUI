@@ -31,17 +31,17 @@ const { root, list } = tagGroupStyles();
 
 const tagStyles = tv({
   extend: focusRing,
-  base: "ring-offset-background disabled:bg-disabled disabled:text-fg-disabled inline-flex cursor-pointer items-center justify-center gap-2 rounded-md text-sm font-medium leading-normal transition-colors disabled:cursor-default",
+  base: "ring-offset-background inline-flex cursor-pointer items-center justify-center gap-2 rounded-md text-sm leading-normal font-medium transition-colors disabled:cursor-default disabled:bg-disabled disabled:text-fg-disabled",
   variants: {
     variant: {
       default:
         "bg-neutral text-fg-on-neutral hover:bg-neutral-hover pressed:bg-neutral-active selected:bg-primary selected:text-fg-on-primary",
       quiet:
-        "text-fg hover:bg-inverse/10 pressed:bg-inverse/20 selected:bg-primary selected:text-fg-on-primary bg-transparent",
+        "bg-transparent text-fg hover:bg-inverse/10 pressed:bg-inverse/20 selected:bg-primary selected:text-fg-on-primary",
       outline:
-        "border-border-field bg-inverse/5 text-fg hover:bg-inverse/10 pressed:border-transparent pressed:bg-inverse/15 selected:border-transparent selected:bg-primary selected:text-fg-on-primary border",
+        "border border-border-field bg-inverse/5 text-fg hover:bg-inverse/10 pressed:border-transparent pressed:bg-inverse/15 selected:border-transparent selected:bg-primary selected:text-fg-on-primary",
       accent:
-        "border-border-field text-fg hover:bg-inverse/10 pressed:border-transparent pressed:bg-inverse/20 selected:border-transparent selected:bg-accent selected:text-fg-on-accent selected:hover:bg-accent-hover selected:pressed:bg-accent-active border bg-transparent",
+        "border border-border-field bg-transparent text-fg hover:bg-inverse/10 pressed:border-transparent pressed:bg-inverse/20 selected:border-transparent selected:bg-accent selected:text-fg-on-accent selected:hover:bg-accent-hover selected:pressed:bg-accent-active",
     },
     size: {
       sm: "size-8 [&_svg]:size-4",
