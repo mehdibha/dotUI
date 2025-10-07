@@ -3,21 +3,12 @@ import { AlignLeftIcon } from "lucide-react";
 import { cn } from "@dotui/registry-v2/lib/utils";
 
 import { TableOfContents } from "@/modules/docs/components/toc";
-import { AccordionDemo } from "./accordion-demo";
-import { AlertDemo } from "./alert-demo";
-import { AvatarDemo } from "./avatar-demo";
-import { BadgeDemo } from "./badge-demo";
-import { ButtonDemo } from "./button-demo";
-import { ButtonGroupDemo } from "./button-group-demo";
-import { CalendarDemo } from "./calendar-demo";
-import { CardDemo } from "./card-demo";
-import { CheckboxDemo } from "./checkbox-demo";
-import { ComboboxDemo } from "./combobox-demo";
+import * as demos from "./demos";
 
 interface ContentItem {
   id: string;
   title: string;
-  preview: React.ComponentType | null;
+  preview: React.ComponentType;
 }
 
 interface ContentSection {
@@ -34,27 +25,27 @@ const content: ContentSection[] = [
       {
         id: "button",
         title: "Button",
-        preview: ButtonDemo,
+        preview: demos.ButtonDemo,
       },
       {
         id: "toggle-button",
         title: "ToggleButton",
-        preview: null,
+        preview: demos.ToggleButtonDemo,
       },
       {
         id: "toggle-button-group",
         title: "ToggleButtonGroup",
-        preview: null,
+        preview: demos.ToggleButtonGroupDemo,
       },
       {
         id: "file-trigger",
         title: "FileTrigger",
-        preview: null,
+        preview: demos.FileTriggerDemo,
       },
       {
         id: "button-group",
         title: "ButtonGroup",
-        preview: ButtonGroupDemo,
+        preview: demos.ButtonGroupDemo,
       },
     ],
   },
@@ -65,52 +56,52 @@ const content: ContentSection[] = [
       {
         id: "text-area",
         title: "TextArea",
-        preview: null,
+        preview: demos.TextAreaDemo,
       },
       {
         id: "text-field",
         title: "TextField",
-        preview: null,
+        preview: demos.TextFieldDemo,
       },
       {
         id: "search-field",
         title: "SearchField",
-        preview: null,
+        preview: demos.SearchFieldDemo,
       },
       {
         id: "number-field",
         title: "NumberField",
-        preview: null,
+        preview: demos.NumberFieldDemo,
       },
       {
         id: "checkbox",
         title: "Checkbox & CheckboxGroup",
-        preview: CheckboxDemo,
+        preview: demos.CheckboxDemo,
       },
       {
         id: "radio-group",
         title: "RadioGroup",
-        preview: null,
+        preview: demos.RadioGroupDemo,
       },
       {
         id: "switch",
         title: "Switch",
-        preview: null,
+        preview: demos.SwitchDemo,
       },
       {
         id: "slider",
         title: "Slider",
-        preview: null,
+        preview: demos.SliderDemo,
       },
       {
         id: "field",
         title: "Field",
-        preview: null,
+        preview: demos.FieldDemo,
       },
       {
         id: "form",
         title: "Form",
-        preview: null,
+        preview: demos.FormDemo,
       },
     ],
   },
@@ -121,17 +112,17 @@ const content: ContentSection[] = [
       {
         id: "combobox",
         title: "Combobox",
-        preview: ComboboxDemo,
+        preview: demos.ComboboxDemo,
       },
       {
         id: "select",
         title: "Select",
-        preview: null,
+        preview: demos.SelectDemo,
       },
       {
         id: "autocomplete",
         title: "Autocomplete",
-        preview: null,
+        preview: demos.AutocompleteDemo,
       },
     ],
   },
@@ -142,22 +133,22 @@ const content: ContentSection[] = [
       {
         id: "calendar",
         title: "Calendar",
-        preview: CalendarDemo,
+        preview: demos.CalendarDemo,
       },
       {
         id: "date-field",
         title: "DateField",
-        preview: null,
+        preview: demos.DateFieldDemo,
       },
       {
         id: "date-picker",
         title: "DatePicker",
-        preview: null,
+        preview: demos.DatePickerDemo,
       },
       {
         id: "time-field",
         title: "TimeField",
-        preview: null,
+        preview: demos.TimeFieldDemo,
       },
     ],
   },
@@ -168,27 +159,27 @@ const content: ContentSection[] = [
       {
         id: "alert",
         title: "Alert",
-        preview: AlertDemo,
+        preview: demos.AlertDemo,
       },
       {
         id: "progress-bar",
         title: "ProgressBar",
-        preview: null,
+        preview: demos.ProgressBarDemo,
       },
       {
         id: "toast",
         title: "Toast",
-        preview: null,
+        preview: demos.ToastDemo,
       },
       {
         id: "loader",
         title: "Loader",
-        preview: null,
+        preview: demos.LoaderDemo,
       },
       {
         id: "skeleton",
         title: "Skeleton",
-        preview: null,
+        preview: demos.SkeletonDemo,
       },
     ],
   },
@@ -199,22 +190,22 @@ const content: ContentSection[] = [
       {
         id: "list-box",
         title: "ListBox",
-        preview: null,
+        preview: demos.ListBoxDemo,
       },
       {
         id: "grid-list",
         title: "GridList",
-        preview: null,
+        preview: demos.GridListDemo,
       },
       {
         id: "tag-group",
         title: "TagGroup",
-        preview: null,
+        preview: demos.TagGroupDemo,
       },
       {
         id: "tree",
         title: "Tree",
-        preview: null,
+        preview: demos.TreeDemo,
       },
     ],
   },
@@ -225,27 +216,27 @@ const content: ContentSection[] = [
       {
         id: "link",
         title: "Link",
-        preview: null,
+        preview: demos.LinkDemo,
       },
       {
         id: "tabs",
         title: "Tabs",
-        preview: null,
+        preview: demos.TabsDemo,
       },
       {
         id: "breadcrumb",
         title: "Breadcrumb",
-        preview: null,
+        preview: demos.BreadcrumbDemo,
       },
       {
         id: "pagination",
         title: "Pagination",
-        preview: null,
+        preview: demos.PaginationDemo,
       },
       {
         id: "command",
         title: "Command",
-        preview: null,
+        preview: demos.CommandDemo,
       },
     ],
   },
@@ -256,32 +247,32 @@ const content: ContentSection[] = [
       {
         id: "dialog",
         title: "Dialog",
-        preview: null,
+        preview: demos.DialogDemo,
       },
       {
         id: "drawer",
         title: "Drawer",
-        preview: null,
+        preview: demos.DrawerDemo,
       },
       {
         id: "menu",
         title: "Menu",
-        preview: null,
+        preview: demos.MenuDemo,
       },
       {
         id: "modal",
         title: "Modal",
-        preview: null,
+        preview: demos.ModalDemo,
       },
       {
         id: "popover",
         title: "Popover",
-        preview: null,
+        preview: demos.PopoverDemo,
       },
       {
         id: "tooltip",
         title: "Tooltip",
-        preview: null,
+        preview: demos.TooltipDemo,
       },
     ],
   },
@@ -292,42 +283,42 @@ const content: ContentSection[] = [
       {
         id: "accordion",
         title: "Accordion",
-        preview: AccordionDemo,
+        preview: demos.AccordionDemo,
       },
       {
         id: "avatar",
         title: "Avatar",
-        preview: AvatarDemo,
+        preview: demos.AvatarDemo,
       },
       {
         id: "kbd",
         title: "Kbd",
-        preview: null,
+        preview: demos.KbdDemo,
       },
       {
         id: "badge",
         title: "Badge",
-        preview: BadgeDemo,
+        preview: demos.BadgeDemo,
       },
       {
         id: "table",
         title: "Table",
-        preview: null,
+        preview: demos.TableDemo,
       },
       {
         id: "card",
         title: "Card",
-        preview: CardDemo,
+        preview: demos.CardDemo,
       },
       {
         id: "separator",
         title: "Separator",
-        preview: null,
+        preview: demos.SeparatorDemo,
       },
       {
         id: "empty",
         title: "Empty",
-        preview: null,
+        preview: demos.EmptyDemo,
       },
     ],
   },
@@ -338,27 +329,27 @@ const content: ContentSection[] = [
       {
         id: "color-area",
         title: "ColorArea",
-        preview: null,
+        preview: demos.ColorAreaDemo,
       },
       {
         id: "color-field",
         title: "ColorField",
-        preview: null,
+        preview: demos.ColorFieldDemo,
       },
       {
         id: "color-picker",
         title: "ColorPicker",
-        preview: null,
+        preview: demos.ColorPickerDemo,
       },
       {
         id: "color-slider",
         title: "ColorSlider",
-        preview: null,
+        preview: demos.ColorSliderDemo,
       },
       {
         id: "color-swatch-picker",
         title: "ColorSwatchPicker",
-        preview: null,
+        preview: demos.ColorSwatchPickerDemo,
       },
     ],
   },
@@ -386,13 +377,7 @@ export default function InternalPage() {
           <Group key={section.id} id={section.id} title={section.title}>
             {section.items.map((item) => (
               <Section key={item.id} id={item.id} title={item.title}>
-                {item.preview ? (
-                  <item.preview />
-                ) : (
-                  <div className="text-muted-foreground text-sm">
-                    Working on it...
-                  </div>
-                )}
+                <item.preview />
               </Section>
             ))}
           </Group>
