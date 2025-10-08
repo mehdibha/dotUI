@@ -54,14 +54,14 @@ const content: ContentSection[] = [
     title: "Inputs, controls and form",
     items: [
       {
-        id: "text-area",
-        title: "TextArea",
-        preview: demos.TextAreaDemo,
-      },
-      {
         id: "text-field",
         title: "TextField",
         preview: demos.TextFieldDemo,
+      },
+      {
+        id: "text-area",
+        title: "TextArea",
+        preview: demos.TextAreaDemo,
       },
       {
         id: "search-field",
