@@ -46,6 +46,7 @@ interface TextAreaRootProps extends React.ComponentProps<typeof AriaTextField> {
 const TextAreaRoot = ({ className, ...props }: TextAreaRootProps) => {
   return (
     <AriaTextField
+      data-slot="text-area"
       className={composeRenderProps(className, (className) =>
         textAreaStyles({ className }),
       )}

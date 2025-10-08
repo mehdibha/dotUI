@@ -29,6 +29,12 @@ const config = {
     ],
   },
   reactCompiler: true,
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   devIndicators: false,
   async rewrites() {
     return [

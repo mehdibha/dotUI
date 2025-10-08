@@ -15,7 +15,6 @@ import type {
 import { Button } from "@dotui/registry-v2/ui/button";
 import { HelpText, Label } from "@dotui/registry-v2/ui/field";
 import { ListBox, ListBoxItem } from "@dotui/registry-v2/ui/list-box";
-import { Overlay } from "@dotui/registry-v2/ui/overlay";
 import { Popover } from "@dotui/registry-v2/ui/popover";
 import type { ButtonProps } from "@dotui/registry-v2/ui/button";
 import type { FieldProps } from "@dotui/registry-v2/ui/field";
@@ -57,13 +56,9 @@ const SelectBase = <T extends object>({
   return (
     <SelectRoot {...props}>
       {label && <Label>{label}</Label>}
-      <Button
-        variant={variant}
-        size={size}
-        suffix={suffix ?? <ChevronDownIcon />}
-      >
+      <SelectButton variant={variant} size={size} suffix={suffix}>
         <SelectValue>{renderValue}</SelectValue>
-      </Button>
+      </SelectButton>
       <HelpText description={description} errorMessage={errorMessage} />
       <Popover>
         <ListBox
@@ -76,6 +71,10 @@ const SelectBase = <T extends object>({
       </Popover>
     </SelectRoot>
   );
+};
+
+const SelectButton = (props: ButtonProps) => {
+  return <Button suffix={<ChevronDownIcon />} {...props} />;
 };
 
 type SelectValueProps<T extends object> = AriaSelectValueProps<T>;
@@ -113,11 +112,11 @@ const SelectItem = ListBoxItem;
 
 const Select = Object.assign(SelectBase, {
   Root: SelectRoot,
-  Button: Button,
+  Button: SelectButton,
   Value: SelectValue,
   Item: SelectItem,
   ListBox: ListBox,
-  Overlay: Overlay,
+  Popover: Popover,
 });
 
 export type { SelectProps, SelectRootProps, SelectItemProps, SelectValueProps };

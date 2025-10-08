@@ -34,6 +34,7 @@ interface DescriptionProps
 const Description = ({ className, ...props }: DescriptionProps) => {
   return (
     <AriaText
+      data-slot="description"
       slot="description"
       className={descriptionStyles({ className })}
       {...props}

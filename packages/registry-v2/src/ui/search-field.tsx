@@ -58,6 +58,7 @@ interface SearchFieldRootProps
 const SearchFieldRoot = ({ className, ...props }: SearchFieldRootProps) => {
   return (
     <AriaSearchField
+      data-slot="search-field"
       className={composeRenderProps(className, (className) =>
         searchFieldtyles({ className }),
       )}

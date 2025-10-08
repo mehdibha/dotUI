@@ -96,6 +96,7 @@ interface NumberFieldRootProps
 const NumberFieldRoot = ({ className, ...props }: NumberFieldRootProps) => {
   return (
     <AriaNumberField
+      data-slot="number-field"
       className={composeRenderProps(className, (className) =>
         root({ className }),
       )}
