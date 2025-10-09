@@ -14,6 +14,10 @@
 
 @variant dark (&:where(.dark, .dark *));
 
+@variant in-popover ([data-slot="popover"] &);
+@variant in-modal ([data-slot="modal"] &);
+@variant in-drawer ([data-slot="drawer"] &);
+
 /* Base Colors */
 :root {
   --radius-factor: 1;

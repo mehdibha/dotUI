@@ -3,6 +3,7 @@ import { AlignLeftIcon } from "lucide-react";
 import { cn } from "@dotui/registry-v2/lib/utils";
 
 import { TableOfContents } from "@/modules/docs/components/toc";
+import { ActiveStyleSelector } from "@/modules/styles/components/active-style-selector";
 import * as demos from "./demos";
 
 interface ContentItem {
@@ -106,9 +107,14 @@ const content: ContentSection[] = [
   //   ],
   // },
   // {
-  //   id: "pickers",
+  //   id: "pickers and menus",
   //   title: "Pickers",
   //   items: [
+  //  {
+  //   id: "menu",
+  //   title: "Menu",
+  //   preview: demos.MenuDemo,
+  // },
   //     {
   //       id: "combobox",
   //       title: "Combobox",
@@ -323,30 +329,25 @@ const content: ContentSection[] = [
     id: "overlays",
     title: "Overlays",
     items: [
-      // {
-      //   id: "dialog",
-      //   title: "Dialog",
-      //   preview: demos.DialogDemo,
-      // },
-      // {
-      //   id: "drawer",
-      //   title: "Drawer",
-      //   preview: demos.DrawerDemo,
-      // },
-      // {
-      //   id: "menu",
-      //   title: "Menu",
-      //   preview: demos.MenuDemo,
-      // },
-      // {
-      //   id: "modal",
-      //   title: "Modal",
-      //   preview: demos.ModalDemo,
-      // },
+      {
+        id: "dialog",
+        title: "Dialog",
+        preview: demos.DialogDemo,
+      },
+      {
+        id: "modal",
+        title: "Modal",
+        preview: demos.ModalDemo,
+      },
       {
         id: "popover",
         title: "Popover",
         preview: demos.PopoverDemo,
+      },
+      {
+        id: "drawer",
+        title: "Drawer",
+        preview: demos.DrawerDemo,
       },
       {
         id: "tooltip",
@@ -373,8 +374,16 @@ const toc = content.flatMap((section) => [
 
 export default function InternalPage() {
   return (
-    <div className="container xl:grid max-w-screen-2xl xl:grid-cols-[1fr_250px] xl:gap-12 py-10">
+    <div className="container max-w-screen-2xl py-10 xl:grid xl:grid-cols-[150px_1fr_250px] xl:gap-12">
+      <div className="max-xl:hidden" />
       <div className="space-y-12">
+        <div className="flex items-center justify-between">
+          <div className="space-y-2">
+            <h1 className="text-3xl font-bold lg:text-4xl">Playground</h1>
+            <p className="text-fg-muted">Internal page for testing the components.</p>
+          </div>
+          <ActiveStyleSelector className="w-44" />
+        </div>
         {content.map((section) => (
           <Group key={section.id} id={section.id} title={section.title}>
             {section.items.map((item) => (
@@ -386,7 +395,7 @@ export default function InternalPage() {
         ))}
       </div>
       <div className="max-xl:hidden">
-        <div className="sticky top-10 h-[calc(100svh-calc(var(--spacing)*20))]">
+        <div className="sticky top-6 h-[calc(100svh-calc(var(--spacing)*20))]">
           <div className="mb-3 -ml-1.5 flex items-center gap-2">
             <AlignLeftIcon className="size-4 text-fg-muted" />
             <p className="text-sm text-fg-muted">On this page</p>
@@ -410,8 +419,13 @@ const Section = ({
   className?: string;
 }) => {
   return (
-    <div id={id} className="flex scroll-mt-24 flex-col gap-2 space-y-2">
-      <h2 className="text-xl font-semibold">{title}</h2>
+    <div className="flex flex-col gap-2 space-y-2">
+      <h3
+        id={id}
+        className="mt-8 scroll-m-20 font-heading text-xl font-semibold tracking-tight first:mt-0"
+      >
+        {title}
+      </h3>
       <div className={cn("rounded-lg border bg-bg p-6", className)}>
         {children}
       </div>
@@ -429,8 +443,13 @@ const Group = ({
   children: React.ReactNode;
 }) => {
   return (
-    <div id={id} className="flex scroll-mt-20 flex-col gap-2">
-      <h2 className="w-full border-b pb-2 text-3xl font-semibold">{title}</h2>
+    <div className="flex flex-col gap-2">
+      <h2
+        id={id}
+        className="mt-12 scroll-m-20 border-b pb-2 font-heading text-2xl font-semibold tracking-tight first:mt-0"
+      >
+        {title}
+      </h2>
       <div className="mt-4 space-y-8">{children}</div>
     </div>
   );

@@ -45,9 +45,9 @@ export function ActiveStyleSelector(
       >
         <span className="text-fg-muted">Style:</span>{" "}
         {activeStyleQuery.isPending ? (
-          <span>loading...</span>
+          <span className="flex-1 truncate text-left">loading...</span>
         ) : (
-          <span className="flex-1 truncate">
+          <span className="flex-1 truncate text-left">
             <SelectValue />
           </span>
         )}

@@ -11,13 +11,18 @@ import { tv } from "tailwind-variants";
 const popoverStyles = tv({
   slots: {
     popover: [
-      "min-w-(--trigger-width) rounded-md border bg-popover shadow-md ease-out",
-      "origin-(--trigger-anchor-point)",
-      "opacity-100 duration-150 scale will-change-[transform,opacity,scale] entering:opacity-0 exiting:opacity-0 entering:scale-50 exiting:scale-50",
-      "translate-0 entering:placement-left:translate-x-2 entering:placement-right:-translate-x-2 entering:placement-top:translate-y-2 entering:placement-bottom:-translate-y-2 exiting:placement-left:translate-x-2 exiting:placement-right:-translate-x-2 exiting:placement-top:translate-y-2 exiting:placement-bottom:-translate-y-2",
+      "popover min-w-(--trigger-width) border origin-(--trigger-anchor-point) rounded-md bg-popover shadow-md forced-color-adjust-none z-50 w-72",
+
+      "transition-[transform,opacity,scale] duration-200 ease-out will-change-[transform,opacity,scale] [--slide-offset:calc(var(--spacing)*0.5)]",
+
+      "entering:scale-95 entering:transform-(--origin) entering:opacity-0",
+      "exiting:scale-95 exiting:transform-(--origin) exiting:opacity-0 exiting:duration-150",
+      "placement-left:[--origin:translateX(var(--slide-offset))] placement-right:[--origin:translateX(calc(var(--slide-offset)*-1))] placement-top:[--origin:translateY(var(--slide-offset))] placement-bottom:[--origin:translateY(calc(var(--slide-offset)*-1))]",
     ],
-    arrow:
-      "fill-bg stroke-border stroke-1 group-placement-left:-rotate-90 group-placement-right:rotate-90 group-placement-bottom:rotate-180",
+    arrow: [
+      "block [&>svg]:size-2.5 [&>svg]:fill-tooltip",
+      "placement-left:[&>svg]:-rotate-90 placement-right:[&>svg]:rotate-90 placement-bottom:[&>svg]:rotate-180",
+    ],
   },
 });
 
@@ -30,6 +35,7 @@ function Popover({ className, showArrow = false, ...props }: PopoverProps) {
   return (
     <AriaPopover
       data-slot="popover"
+      data-popover=""
       className={composeRenderProps(className, (className) =>
         popover({ className }),
       )}
