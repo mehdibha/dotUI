@@ -343,11 +343,11 @@ const content: ContentSection[] = [
       //   title: "Modal",
       //   preview: demos.ModalDemo,
       // },
-      // {
-      //   id: "popover",
-      //   title: "Popover",
-      //   preview: demos.PopoverDemo,
-      // },
+      {
+        id: "popover",
+        title: "Popover",
+        preview: demos.PopoverDemo,
+      },
       {
         id: "tooltip",
         title: "Tooltip",
@@ -373,7 +373,7 @@ const toc = content.flatMap((section) => [
 
 export default function InternalPage() {
   return (
-    <div className="container grid max-w-screen-2xl grid-cols-[1fr_250px] gap-12 py-10">
+    <div className="container xl:grid max-w-screen-2xl xl:grid-cols-[1fr_250px] xl:gap-12 py-10">
       <div className="space-y-12">
         {content.map((section) => (
           <Group key={section.id} id={section.id} title={section.title}>
@@ -410,9 +410,9 @@ const Section = ({
   className?: string;
 }) => {
   return (
-    <div id={id} className="flex scroll-mt-24 flex-col gap-2">
+    <div id={id} className="flex scroll-mt-24 flex-col gap-2 space-y-2">
       <h2 className="text-xl font-semibold">{title}</h2>
-      <div className={cn("space-y-4 rounded-lg border bg-bg p-6", className)}>
+      <div className={cn("rounded-lg border bg-bg p-6", className)}>
         {children}
       </div>
     </div>
@@ -431,7 +431,7 @@ const Group = ({
   return (
     <div id={id} className="flex scroll-mt-20 flex-col gap-2">
       <h2 className="w-full border-b pb-2 text-3xl font-semibold">{title}</h2>
-      <div className="mt-4 space-y-4">{children}</div>
+      <div className="mt-4 space-y-8">{children}</div>
     </div>
   );
 };

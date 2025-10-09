@@ -174,6 +174,9 @@
   --font-heading: var(--font-geist-sans);
   --font-body: var(--font-geist-sans);
 
+  --color-tooltip: var(--neutral-950);
+  --color-fg-on-tooltip: var(--on-neutral-950);
+
   /* colors */
   --color-bg: var(--neutral-50);
   --color-card: var(--neutral-100);

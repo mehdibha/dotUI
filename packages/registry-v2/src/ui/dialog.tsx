@@ -10,7 +10,10 @@ import {
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
+import { Drawer } from "@dotui/registry-v2/ui/drawer";
+import { Modal } from "@dotui/registry-v2/ui/modal";
 import { Overlay } from "@dotui/registry-v2/ui/overlay";
+import { Popover } from "@dotui/registry-v2/ui/popover";
 import type { OverlayProps } from "@dotui/registry-v2/ui/overlay";
 
 const dialogStyles = tv({
@@ -141,6 +144,34 @@ const DialogInset = ({ className, ...props }: DialogInsetProps) => {
   return <div className={inset({ className })} {...props} />;
 };
 
+/* -----------------------------------------------------------------------------------------------*/
+
+const CompoundDialog = Object.assign(DialogRoot, {
+  Header: DialogHeader,
+  Heading: DialogHeading,
+  Description: DialogDescription,
+  Content: DialogContent,
+  Body: DialogBody,
+  Footer: DialogFooter,
+  Inset: DialogInset,
+  Popover,
+  Modal,
+  Drawer,
+  Overlay,
+});
+
+export {
+  DialogRoot,
+  CompoundDialog as Dialog,
+  DialogHeader,
+  DialogHeading,
+  DialogDescription,
+  DialogContent,
+  DialogBody,
+  DialogFooter,
+  DialogInset,
+};
+
 export type {
   DialogRootProps,
   DialogProps,
@@ -151,15 +182,4 @@ export type {
   DialogContentProps,
   DialogFooterProps,
   DialogInsetProps,
-};
-export {
-  DialogRoot,
-  Dialog,
-  DialogHeader,
-  DialogHeading,
-  DialogDescription,
-  DialogContent,
-  DialogBody,
-  DialogFooter,
-  DialogInset,
 };

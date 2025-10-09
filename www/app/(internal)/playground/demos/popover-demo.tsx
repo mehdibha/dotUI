@@ -1,74 +1,76 @@
 "use client";
 
-import {
-  Button as AriaButton,
-  DialogTrigger,
-  Heading,
-} from "react-aria-components";
-
 import { Button } from "@dotui/registry-v2/ui/button";
-import { Popover } from "@dotui/registry-v2/ui/popover";
+import { Dialog } from "@dotui/registry-v2/ui/dialog";
+import { TextField } from "@dotui/registry-v2/ui/text-field";
 
 export function PopoverDemo() {
   return (
-    <div className="flex flex-wrap gap-4">
-      <DialogTrigger>
-        <Button>Open Popover</Button>
-        <Popover>
-          <div className="p-4">
-            <Heading className="mb-2 text-sm font-medium">
-              Popover Title
-            </Heading>
-            <p className="text-sm text-fg-muted">
-              This is a simple popover with some content.
-            </p>
-          </div>
-        </Popover>
-      </DialogTrigger>
+    <div className="flex flex-col flex-wrap items-center gap-4 py-10">
+      <Dialog>
+        <Button>Open popover</Button>
+        <Dialog.Popover>
+          <Dialog.Content>
+            <Dialog.Header>
+              <Dialog.Heading>Dimensions</Dialog.Heading>
+              <Dialog.Description>
+                Set the dimensions for the layer.
+              </Dialog.Description>
+            </Dialog.Header>
+            <Dialog.Body>
+              <TextField label="Width" defaultValue="100%" />
+              <TextField label="Height" defaultValue="200px" />
+            </Dialog.Body>
+            <Dialog.Footer>
+              <Button slot="close">Cancel</Button>
+              <Button variant="primary">Apply</Button>
+            </Dialog.Footer>
+          </Dialog.Content>
+        </Dialog.Popover>
+      </Dialog>
 
-      <DialogTrigger>
-        <Button>With Arrow</Button>
-        <Popover showArrow>
-          <div className="p-4">
-            <p className="text-sm">
-              This popover has an arrow pointing to the trigger.
-            </p>
-          </div>
-        </Popover>
-      </DialogTrigger>
-
-      <DialogTrigger>
-        <Button>Rich Content</Button>
-        <Popover>
-          <div className="w-80 p-4">
-            <Heading className="mb-3 text-base font-semibold">
-              Account Settings
-            </Heading>
-            <div className="space-y-2 text-sm">
-              <div className="flex justify-between">
-                <span className="text-fg-muted">Name:</span>
-                <span>John Doe</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-fg-muted">Email:</span>
-                <span>john@example.com</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-fg-muted">Plan:</span>
-                <span>Pro</span>
-              </div>
-            </div>
-            <div className="mt-4 flex gap-2">
-              <AriaButton className="flex-1 rounded-md bg-primary px-3 py-1.5 text-sm text-fg-on-primary">
-                Edit
-              </AriaButton>
-              <AriaButton className="flex-1 rounded-md border px-3 py-1.5 text-sm">
-                Cancel
-              </AriaButton>
-            </div>
-          </div>
-        </Popover>
-      </DialogTrigger>
+      <div className="grid gap-2 [grid-template-areas:'top-left_top_top-right'_'left-top_top_right-top'_'left_._right'_'left-bottom_._right-bottom'_'bottom-left_bottom_bottom-right']">
+        {(
+          [
+            "top left",
+            "top",
+            "top right",
+            "left",
+            "left top",
+            "left bottom",
+            "right",
+            "right top",
+            "right bottom",
+            "bottom left",
+            "bottom",
+            "bottom right",
+          ] as const
+        ).map((placement) => (
+          <Dialog key={placement}>
+            <Button style={{ gridArea: placement.replace(" ", "-") }}>
+              {placement}
+            </Button>
+            <Dialog.Popover placement={placement}>
+              <Dialog.Content>
+                <Dialog.Header>
+                  <Dialog.Heading>Dimensions</Dialog.Heading>
+                  <Dialog.Description>
+                    Set the dimensions for the layer.
+                  </Dialog.Description>
+                </Dialog.Header>
+                <Dialog.Body>
+                  <TextField label="Width" defaultValue="100%" />
+                  <TextField label="Height" defaultValue="200px" />
+                </Dialog.Body>
+                <Dialog.Footer>
+                  <Button slot="close">Cancel</Button>
+                  <Button variant="primary">Apply</Button>
+                </Dialog.Footer>
+              </Dialog.Content>
+            </Dialog.Popover>
+          </Dialog>
+        ))}
+      </div>
     </div>
   );
 }
