@@ -303,7 +303,8 @@ const content: ContentSection[] = [
       {
         id: "table",
         title: "Table",
-        preview: demos.TableDemo,
+        preview: null,
+        // preview: demos.TableDemo,
       },
       {
         id: "card",
@@ -377,7 +378,7 @@ export default function InternalPage() {
           <Group key={section.id} id={section.id} title={section.title}>
             {section.items.map((item) => (
               <Section key={item.id} id={item.id} title={item.title}>
-                <item.preview />
+                {item.preview ? <item.preview /> : <div>Preview not found</div>}
               </Section>
             ))}
           </Group>
