@@ -63,10 +63,11 @@ export const styleRouter = {
     .input(
       paginationSchema.extend({
         featured: z.boolean().optional(),
+        sortBy: z.enum(["newest", "oldest"]).default("newest"),
       }),
     )
     .query(async ({ ctx, input }) => {
-      const { featured, ...pagination } = input;
+      const { featured, sortBy, ...pagination } = input;
 
       // Build where condition
       const whereCondition =
@@ -76,7 +77,9 @@ export const styleRouter = {
 
       const styles = await ctx.db.query.style.findMany({
         where: whereCondition,
-        orderBy: (s, { desc }) => [desc(s.createdAt)],
+        orderBy: (s, { desc, asc }) => [
+          sortBy === "oldest" ? asc(s.createdAt) : desc(s.createdAt),
+        ],
         limit: pagination.limit,
         offset: pagination.offset,
         with: {
