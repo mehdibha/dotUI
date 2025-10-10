@@ -2,6 +2,7 @@
 
 import { Button } from "@dotui/registry-v2/ui/button";
 import { Form } from "@dotui/registry-v2/ui/form";
+import { NumberField } from "@dotui/registry-v2/ui/number-field";
 import { Switch } from "@dotui/registry-v2/ui/switch";
 import { TextField } from "@dotui/registry-v2/ui/text-field";
 
@@ -64,13 +65,7 @@ export function FormDemo() {
           type="url"
           placeholder="https://example.com"
         />
-        <TextField
-          label="Age"
-          name="age"
-          type="number"
-          minValue={18}
-          maxValue={120}
-        />
+        <NumberField label="Age" name="age" minValue={18} maxValue={120} />
         <Button type="submit">Submit</Button>
       </Form>
     </div>

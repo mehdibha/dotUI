@@ -60,9 +60,11 @@ const DatePicker = <T extends DateValue>({
         </Button>
       </InputRoot>
       <HelpText description={description} errorMessage={errorMessage} />
-      <Dialog type="popover" mobileType="drawer" className="flex">
-        <Calendar className="mx-auto" />
-      </Dialog>
+      <Dialog.Overlay type="popover" mobileType="drawer">
+        <Dialog.Content>
+          <Calendar className="mx-auto" />
+        </Dialog.Content>
+      </Dialog.Overlay>
     </DatePickerRoot>
   );
 };
