@@ -29,10 +29,7 @@ export type CreateContextReturn<T> = [
  * @param options create context options
  */
 export function createContext<ContextType>(options: CreateContextOptions = {}) {
-  const {
-    name,
-    strict = true,
-  } = options;
+  const { name, strict = true } = options;
 
   const Context = React.createContext<ContextType | undefined>(undefined);
 
@@ -42,7 +39,9 @@ export function createContext<ContextType>(options: CreateContextOptions = {}) {
     const context = React.useContext(Context);
 
     if (!context && strict) {
-      const error = new Error(`\`${consumerName}\` must be used within \`${name}\``);
+      const error = new Error(
+        `\`${consumerName}\` must be used within \`${name}\``,
+      );
 
       error.name = "ContextError";
       Error.captureStackTrace?.(error, useContext);

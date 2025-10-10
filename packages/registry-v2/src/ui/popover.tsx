@@ -11,7 +11,7 @@ import { tv } from "tailwind-variants";
 const popoverStyles = tv({
   slots: {
     popover: [
-      "popover min-w-(--trigger-width) border origin-(--trigger-anchor-point) rounded-md bg-popover shadow-md forced-color-adjust-none z-50 w-72",
+      "popover z-50 w-72 min-w-(--trigger-width) origin-(--trigger-anchor-point) rounded-md border bg-popover shadow-md forced-color-adjust-none",
 
       "transition-[transform,opacity,scale] duration-200 ease-out will-change-[transform,opacity,scale] [--slide-offset:calc(var(--spacing)*0.5)]",
 

@@ -6,7 +6,7 @@ export function ColorPickerDemo() {
   return (
     <div className="flex flex-wrap gap-4">
       <ColorPicker />
-      
+
       <ColorPicker.Root>
         <ColorPicker.Trigger>
           {(color) => (

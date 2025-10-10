@@ -61,7 +61,6 @@ export function TextFieldDemo() {
           label="Description"
           description="This is a description for the TextField"
         />
-       
       </div>
       <div className="space-y-4">
         <TextField
@@ -103,19 +102,35 @@ export function TextFieldDemo() {
         <div className="space-y-2">
           <TextField
             label="Button"
-            prefix={<Button variant="quiet" size="sm" className="h-6">Button</Button>}
+            prefix={
+              <Button variant="quiet" size="sm" className="h-6">
+                Button
+              </Button>
+            }
           />
           <TextField
             label="Button"
-            prefix={<Button variant="default" size="sm" className="h-6">Button</Button>}
+            prefix={
+              <Button variant="default" size="sm" className="h-6">
+                Button
+              </Button>
+            }
           />
           <TextField
             label="Button"
-            suffix={<Button variant="default" size="sm" className="h-6">Button</Button>}
+            suffix={
+              <Button variant="default" size="sm" className="h-6">
+                Button
+              </Button>
+            }
           />
           <TextField
             label="Button"
-            suffix={<Button variant="quiet" size="sm" className="h-6">Button</Button>}
+            suffix={
+              <Button variant="quiet" size="sm" className="h-6">
+                Button
+              </Button>
+            }
           />
         </div>
         <div className="grid grid-cols-2 items-start gap-4">

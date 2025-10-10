@@ -74,7 +74,7 @@ const SelectBase = <T extends object>({
 };
 
 const SelectButton = (props: ButtonProps) => {
-  return <Button {...props} suffix={props.suffix ?? <ChevronDownIcon />}  />;
+  return <Button {...props} suffix={props.suffix ?? <ChevronDownIcon />} />;
 };
 
 type SelectValueProps<T extends object> = AriaSelectValueProps<T>;

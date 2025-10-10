@@ -6,7 +6,7 @@ import { TextField } from "@dotui/registry-v2/ui/text-field";
 
 export function PopoverDemo() {
   return (
-    <div className="max-w-md flex flex-col flex-wrap items-center gap-10 py-10">
+    <div className="flex max-w-md flex-col flex-wrap items-center gap-10 py-10">
       <div className="flex flex-wrap items-center justify-center gap-2">
         {/* Basic popover */}
         <Dialog>

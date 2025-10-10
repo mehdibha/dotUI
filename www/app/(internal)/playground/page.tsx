@@ -266,21 +266,21 @@ const content: ContentSection[] = [
       //       title: "Accordion",
       //       preview: demos.AccordionDemo,
       //     },
-          {
-            id: "avatar",
-            title: "Avatar",
-            preview: demos.AvatarDemo,
-          },
-          {
-            id: "kbd",
-            title: "Kbd",
-            preview: demos.KbdDemo,
-          },
-          {
-            id: "badge",
-            title: "Badge",
-            preview: demos.BadgeDemo,
-          },
+      {
+        id: "avatar",
+        title: "Avatar",
+        preview: demos.AvatarDemo,
+      },
+      {
+        id: "kbd",
+        title: "Kbd",
+        preview: demos.KbdDemo,
+      },
+      {
+        id: "badge",
+        title: "Badge",
+        preview: demos.BadgeDemo,
+      },
       //     {
       //       id: "table",
       //       title: "Table",
@@ -313,21 +313,21 @@ const content: ContentSection[] = [
         title: "ColorArea",
         preview: demos.ColorAreaDemo,
       },
-    //   {
-    //     id: "color-field",
-    //     title: "ColorField",
-    //     preview: demos.ColorFieldDemo,
-    //   },
+      //   {
+      //     id: "color-field",
+      //     title: "ColorField",
+      //     preview: demos.ColorFieldDemo,
+      //   },
       {
         id: "color-picker",
         title: "ColorPicker",
         preview: demos.ColorPickerDemo,
       },
-    //   {
-    //     id: "color-slider",
-    //     title: "ColorSlider",
-    //     preview: demos.ColorSliderDemo,
-    //   },
+      //   {
+      //     id: "color-slider",
+      //     title: "ColorSlider",
+      //     preview: demos.ColorSliderDemo,
+      //   },
       {
         id: "color-swatch-picker",
         title: "ColorSwatchPicker",
