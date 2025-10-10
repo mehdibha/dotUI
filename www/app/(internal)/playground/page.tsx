@@ -386,7 +386,7 @@ const toc = content.flatMap((section) => [
 
 export default function InternalPage() {
   return (
-    <div className="container max-w-screen-2xl py-10 xl:grid xl:grid-cols-[150px_1fr_250px] xl:gap-12">
+    <div className="container max-w-screen-2xl py-20 xl:grid xl:grid-cols-[150px_1fr_250px] xl:gap-12">
       <div className="max-xl:hidden" />
       <div className="space-y-12">
         <div className="flex items-center justify-between">

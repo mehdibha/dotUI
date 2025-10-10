@@ -1,4 +1,5 @@
 "use client";
+"use ne memo";
 
 import React from "react";
 import Link from "next/link";
@@ -281,7 +282,7 @@ const SidebarRoot = ({
           "relative z-10 h-svh w-(--sidebar-width) bg-transparent transition-sidebar group-data-collapsed/sidebar:w-(--sidebar-width-collapsed)",
         )}
       />
-      <div className="fixed inset-y-0 left-0 z-10 flex h-svh w-(--sidebar-width) flex-col overflow-hidden border-r bg-muted/10 transition-sidebar group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) [&_svg]:text-fg-muted">
+      <div className="fixed inset-y-0 left-0 z-10 flex h-svh w-(--sidebar-width) flex-col overflow-hidden border-r transition-sidebar group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) [&_svg]:text-fg-muted">
         <div className="relative flex h-svh w-(--sidebar-width) flex-1 translate-x-[-0.5px] flex-col overflow-hidden">
           {children}
         </div>
