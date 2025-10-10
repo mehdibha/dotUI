@@ -6,7 +6,7 @@ import { ColorArea } from "@dotui/registry-v2/ui/color-area";
 
 export function ColorAreaDemo() {
   return (
-    <div className="flex flex-wrap gap-6">
+    <div className="grid grid-cols-3 gap-6 py-10">
       <ColorArea
         defaultValue={parseColor("hsl(0, 100%, 50%)")}
         xChannel="saturation"

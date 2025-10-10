@@ -37,9 +37,6 @@ export function DialogDemo() {
           </Dialog.Content>
         </Dialog.Overlay>
       </Dialog>
-      <p className="text-fg-muted text-sm">
-        The dialog is rendered as a modal in desktop and as a drawer on mobile.
-      </p>
     </div>
   );
 }

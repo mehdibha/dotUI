@@ -19,7 +19,7 @@ import type { OverlayProps } from "@dotui/registry-v2/ui/overlay";
 const dialogStyles = tv({
   slots: {
     content:
-      "relative flex h-full flex-col gap-4 p-6 outline-none in-popover:p-4",
+      "relative flex flex-col gap-4 p-6 outline-none in-popover:p-4",
     header: "flex flex-col gap-2 text-left",
     heading:
       "text-lg leading-none font-semibold in-popover:text-base in-popover:font-medium",

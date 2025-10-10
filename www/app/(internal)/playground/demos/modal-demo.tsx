@@ -11,7 +11,7 @@ import { TextField } from "@dotui/registry-v2/ui/text-field";
 
 export function ModalDemo() {
   return (
-    <div className="flex flex-col items-center flex-wrap gap-4">
+    <div className="flex flex-col flex-wrap items-center gap-4">
       <Dialog>
         <Button>Open modal</Button>
         <Dialog.Modal>
@@ -23,11 +23,7 @@ export function ModalDemo() {
               </Dialog.Description>
             </Dialog.Header>
             <Dialog.Body className="space-y-4">
-              <TextField
-                label="Name"
-                defaultValue="mehdi"
-                className="w-full"
-              />
+              <TextField label="Name" defaultValue="mehdi" className="w-full" />
               <TextField
                 label="Username"
                 defaultValue="mehdibha"

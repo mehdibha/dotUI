@@ -12,7 +12,10 @@ const colorAreaStyles = tv({
   base: "block size-48 min-w-20 rounded-md disabled:[background:var(--color-disabled)]!",
 });
 
+/* -----------------------------------------------------------------------------------------------*/
+
 type ColorAreaProps = Omit<ColorAreaRootProps, "children">;
+
 const ColorArea = (props: ColorAreaProps) => {
   return (
     <ColorAreaRoot {...props}>
@@ -21,8 +24,11 @@ const ColorArea = (props: ColorAreaProps) => {
   );
 };
 
+/* -----------------------------------------------------------------------------------------------*/
+
 interface ColorAreaRootProps
   extends React.ComponentProps<typeof AriaColorArea> {}
+
 const ColorAreaRoot = ({ className, ...props }: ColorAreaRootProps) => {
   return (
     <AriaColorArea
@@ -34,5 +40,13 @@ const ColorAreaRoot = ({ className, ...props }: ColorAreaRootProps) => {
   );
 };
 
+/* -----------------------------------------------------------------------------------------------*/
+
+const ComposedColorArea = Object.assign(ColorArea, {
+  Root: ColorAreaRoot,
+  Thumb: ColorThumb,
+});
+
+export { ComposedColorArea as ColorArea, ColorAreaRoot };
+
 export type { ColorAreaProps, ColorAreaRootProps };
-export { ColorArea, ColorAreaRoot };

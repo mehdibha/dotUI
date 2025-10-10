@@ -11,6 +11,54 @@ export type SlotsToClassNames<T extends (...args: any[]) => any> = Partial<
   Record<keyof ReturnType<T>, ClassValue>
 >;
 
+export interface CreateContextOptions {
+  strict?: boolean;
+  errorMessage?: string;
+  name?: string;
+}
+
+export type CreateContextReturn<T> = [
+  React.Provider<T>,
+  (consumerName: string) => T,
+  React.Context<T>,
+];
+
+/**
+ * Creates a named context, provider, and hook.
+ *
+ * @param options create context options
+ */
+export function createContext<ContextType>(options: CreateContextOptions = {}) {
+  const {
+    name,
+    strict = true,
+  } = options;
+
+  const Context = React.createContext<ContextType | undefined>(undefined);
+
+  Context.displayName = name;
+
+  function useContext(consumerName: string) {
+    const context = React.useContext(Context);
+
+    if (!context && strict) {
+      const error = new Error(`\`${consumerName}\` must be used within \`${name}\``);
+
+      error.name = "ContextError";
+      Error.captureStackTrace?.(error, useContext);
+      throw error;
+    }
+
+    return context;
+  }
+
+  return [
+    Context.Provider,
+    useContext,
+    Context,
+  ] as CreateContextReturn<ContextType>;
+}
+
 export function createScopedContext<ContextValueType extends object | null>(
   rootComponentName: string,
   defaultContext?: ContextValueType,

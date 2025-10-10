@@ -5,19 +5,38 @@ import { ColorPicker } from "@dotui/registry-v2/ui/color-picker";
 export function ColorPickerDemo() {
   return (
     <div className="flex flex-wrap gap-4">
-      <ColorPicker defaultValue="#ff0000" />
+      <ColorPicker />
+      
+      <ColorPicker.Root>
+        <ColorPicker.Trigger>
+          {(color) => (
+            <span className="flex items-center gap-2">
+              color:{" "}
+              <span
+                className="rounded-md p-1"
+                style={{ background: color.toString("hsl") }}
+              >
+                {color.toString("hsl")}
+              </span>
+            </span>
+          )}
+        </ColorPicker.Trigger>
+        <ColorPicker.Overlay>
+          <ColorPicker.Content>
+            <ColorPicker.Editor />
+          </ColorPicker.Content>
+        </ColorPicker.Overlay>
+      </ColorPicker.Root>
 
-      <ColorPicker defaultValue="#00ff00">Pick a color</ColorPicker>
+      <ColorPicker showAlphaChannel>Alpha channel</ColorPicker>
 
-      <ColorPicker defaultValue="#0000ff" showAlphaChannel />
-
-      <ColorPicker defaultValue="#ff00ff" colorFormat="rgb" />
-
-      <ColorPicker defaultValue="#00ffff" colorFormat="hsl" />
-
-      <ColorPicker defaultValue="#ffff00" showAlphaChannel showFormatSelector />
-
-      <ColorPicker defaultValue="#ff5500" variant="quiet" />
+      <ColorPicker
+        showAlphaChannel
+        showFormatSelector={false}
+        colorFormat="rgb"
+      >
+        Hide format selector
+      </ColorPicker>
     </div>
   );
 }

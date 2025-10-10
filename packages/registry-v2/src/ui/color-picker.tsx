@@ -7,7 +7,11 @@ import {
   composeRenderProps,
   getColorChannels,
 } from "react-aria-components";
-import type { ColorFormat } from "react-aria-components";
+import type {
+  ColorPickerProps as AriaColorPickerProps,
+  Color,
+  ColorFormat,
+} from "react-aria-components";
 
 import { cn } from "@dotui/registry-v2/lib/utils";
 import { Button } from "@dotui/registry-v2/ui/button";
@@ -15,61 +19,115 @@ import { ColorArea } from "@dotui/registry-v2/ui/color-area";
 import { ColorField } from "@dotui/registry-v2/ui/color-field";
 import { ColorSlider } from "@dotui/registry-v2/ui/color-slider";
 import { ColorSwatch } from "@dotui/registry-v2/ui/color-swatch";
-import { Dialog, DialogRoot } from "@dotui/registry-v2/ui/dialog";
+import { Dialog, DialogContent } from "@dotui/registry-v2/ui/dialog";
+import { Overlay } from "@dotui/registry-v2/ui/overlay";
 import { Select, SelectItem } from "@dotui/registry-v2/ui/select";
 import type { ButtonProps } from "@dotui/registry-v2/ui/button";
-import type { DialogProps } from "@dotui/registry-v2/ui/dialog";
+import type {
+  DialogProps,
+  DialogRootProps,
+} from "@dotui/registry-v2/ui/dialog";
+import type { OverlayProps } from "@dotui/registry-v2/ui/overlay";
 
 interface ColorPickerProps
-  extends ColorPickerRootProps,
-    Omit<ColorPickerButtonProps, "children" | "value">,
+  extends Omit<ColorPickerRootProps, "children">,
+    Omit<ColorPickerButtonProps, "value" | "type">,
     Pick<
       ColorPickerEditorProps,
       "showAlphaChannel" | "colorFormat" | "showFormatSelector"
     >,
-    Pick<DialogProps, "isOpen" | "onOpenChange"> {}
+    Pick<DialogProps, "defaultOpen" | "isOpen" | "onOpenChange">,
+    Pick<OverlayProps, "type" | "mobileType"> {}
 const ColorPicker = ({
   value,
   defaultValue,
   onChange,
-  children,
-  showAlphaChannel,
-  colorFormat,
-  showFormatSelector,
+  defaultOpen,
   isOpen,
   onOpenChange,
+  children,
+  colorFormat,
+  showAlphaChannel,
+  showFormatSelector,
+  type,
+  mobileType,
   ...props
 }: ColorPickerProps) => {
   return (
     <ColorPickerRoot
+      defaultOpen={defaultOpen}
+      isOpen={isOpen}
+      onOpenChange={onOpenChange}
       value={value}
       defaultValue={defaultValue}
       onChange={onChange}
-      {...props}
     >
-      {composeRenderProps(children, (children) => (
-        <>
-          <DialogRoot isOpen={isOpen} onOpenChange={onOpenChange}>
-            <ColorPickerButton {...props}>{children}</ColorPickerButton>
-            <Dialog type="popover" mobileType="drawer">
-              <ColorPickerEditor
-                showAlphaChannel={showAlphaChannel}
-                colorFormat={colorFormat}
-                showFormatSelector={showFormatSelector}
-              />
-            </Dialog>
-          </DialogRoot>
-        </>
-      ))}
+      <ColorPickerButton {...props}>{children}</ColorPickerButton>
+      <ColorPickerOverlay type={type} mobileType={mobileType}>
+        <DialogContent>
+          <ColorPickerEditor
+            showAlphaChannel={showAlphaChannel}
+            colorFormat={colorFormat}
+            showFormatSelector={showFormatSelector}
+          />
+        </DialogContent>
+      </ColorPickerOverlay>
     </ColorPickerRoot>
   );
 };
 
+/* -----------------------------------------------------------------------------------------------*/
+
 interface ColorPickerRootProps
-  extends React.ComponentProps<typeof AriaColorPicker> {}
-const ColorPickerRoot = (props: ColorPickerRootProps) => {
-  return <AriaColorPicker value="" onChange={() => {}} {...props} />;
+  extends AriaColorPickerProps,
+    Omit<DialogRootProps, "children"> {}
+
+const ColorPickerRoot = ({
+  defaultValue,
+  value,
+  onChange,
+  children,
+  ...props
+}: ColorPickerRootProps) => {
+  return (
+    <AriaColorPicker>
+      {composeRenderProps(children, (children) => (
+        <Dialog {...props}>{children}</Dialog>
+      ))}
+    </AriaColorPicker>
+  );
 };
+
+/* -----------------------------------------------------------------------------------------------*/
+
+interface ColorPickerTriggerProps extends Omit<ButtonProps, "children"> {
+  children?: React.ReactNode | ((color: Color) => React.ReactNode);
+}
+
+const ColorPickerTrigger = ({
+  children,
+  ...props
+}: ColorPickerTriggerProps) => {
+  const state = React.use(ColorPickerStateContext)!;
+  return (
+    <Button {...props}>
+      {children ? (
+        typeof children === "function" ? (
+          children(state.color)
+        ) : (
+          children
+        )
+      ) : (
+        <>
+          <ColorSwatch />
+          <span className="truncate text-left">{state.color.toString()}</span>
+        </>
+      )}
+    </Button>
+  );
+};
+
+/* -----------------------------------------------------------------------------------------------*/
 
 interface ColorPickerButtonProps extends Omit<ButtonProps, "children"> {
   children?: React.ReactNode;
@@ -99,21 +157,49 @@ const ColorPickerButton = ({
   );
 };
 
-type PickerColorFormat = "hex" | "rgb" | "hsl" | "hsb";
+/* -----------------------------------------------------------------------------------------------*/
+
+type ColorPickerOverlayProps = OverlayProps;
+
+const ColorPickerOverlay = ({
+  type = "popover",
+  popoverProps,
+  modalProps,
+  ...props
+}: ColorPickerOverlayProps) => {
+  return (
+    <Overlay
+      type={type}
+      popoverProps={{
+        ...popoverProps,
+        className: cn("w-[max-content]", popoverProps?.className),
+      }}
+      modalProps={{
+        ...modalProps,
+        className: cn("w-[max-content]", modalProps?.className),
+      }}
+      {...props}
+    />
+  );
+};
+
+/* -----------------------------------------------------------------------------------------------*/
+
+type ColorPickerColorFormat = "hex" | "rgb" | "hsl" | "hsb";
 interface ColorPickerEditorProps extends React.ComponentProps<"div"> {
+  colorFormat?: ColorPickerColorFormat;
   showAlphaChannel?: boolean;
-  colorFormat?: PickerColorFormat;
   showFormatSelector?: boolean;
 }
 const ColorPickerEditor = ({
-  showAlphaChannel = false,
   colorFormat: ColorFormatProp = "hex",
+  showAlphaChannel = false,
   showFormatSelector = true,
   className,
   ...props
 }: ColorPickerEditorProps) => {
   const [colorFormat, setColorFormat] =
-    React.useState<PickerColorFormat>(ColorFormatProp);
+    React.useState<ColorPickerColorFormat>(ColorFormatProp);
 
   return (
     <div className={cn("mx-auto flex flex-col gap-2", className)} {...props}>
@@ -147,10 +233,8 @@ const ColorPickerEditor = ({
         {showFormatSelector && (
           <Select
             aria-label="Color format"
-            selectedKey={colorFormat}
-            onSelectionChange={(key) =>
-              setColorFormat(key as PickerColorFormat)
-            }
+            value={colorFormat}
+            onChange={(key) => setColorFormat(key as ColorPickerColorFormat)}
             size="sm"
             className="w-auto"
           >
@@ -180,10 +264,26 @@ const ColorPickerEditor = ({
   );
 };
 
+/* -----------------------------------------------------------------------------------------------*/
+
+const CompoundColorPicker = Object.assign(ColorPicker, {
+  Root: ColorPickerRoot,
+  Trigger: ColorPickerTrigger,
+  Button: ColorPickerButton,
+  Overlay: ColorPickerOverlay,
+  Content: DialogContent,
+  Editor: ColorPickerEditor,
+});
+
 export type {
-  ColorPickerProps,
+  ColorPickerColorFormat,
   ColorPickerRootProps,
   ColorPickerButtonProps,
   ColorPickerEditorProps,
 };
-export { ColorPicker, ColorPickerRoot, ColorPickerButton, ColorPickerEditor };
+export {
+  CompoundColorPicker as ColorPicker,
+  ColorPickerRoot,
+  ColorPickerButton,
+  ColorPickerEditor,
+};
