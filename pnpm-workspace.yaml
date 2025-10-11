@@ -34,6 +34,7 @@ catalogs:
     tailwind-merge: ^3.0.2
     "@hookform/resolvers": ^5.1.1
     "@internationalized/date": ^3.10.0
+    "@react-aria/utils": ^3.31.0
     "@react-stately/utils": ^3.10.8
     "@remixicon/react": ^4.2.0
     "@tanstack/react-form": ^1.23.4

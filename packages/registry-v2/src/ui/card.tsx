@@ -17,23 +17,39 @@ const cardStyles = tv({
 const { root, header, title, description, action, content, footer } =
   cardStyles();
 
-function Card({ className, ...props }: React.ComponentProps<"div">) {
+/* -----------------------------------------------------------------------------------------------*/
+
+interface CardProps extends React.ComponentProps<"div"> {}
+
+function Card({ className, ...props }: CardProps) {
   return <div data-slot="card" className={root({ className })} {...props} />;
 }
 
-function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
+/* -----------------------------------------------------------------------------------------------*/
+
+interface CardHeaderProps extends React.ComponentProps<"div"> {}
+
+function CardHeader({ className, ...props }: CardHeaderProps) {
   return (
     <div data-slot="card-header" className={header({ className })} {...props} />
   );
 }
 
-function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
+/* -----------------------------------------------------------------------------------------------*/
+
+interface CardTitleProps extends React.ComponentProps<"div"> {}
+
+function CardTitle({ className, ...props }: CardTitleProps) {
   return (
     <div data-slot="card-title" className={title({ className })} {...props} />
   );
 }
 
-function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
+/* -----------------------------------------------------------------------------------------------*/
+
+interface CardDescriptionProps extends React.ComponentProps<"div"> {}
+
+function CardDescription({ className, ...props }: CardDescriptionProps) {
   return (
     <div
       data-slot="card-description"
@@ -43,13 +59,21 @@ function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
-function CardAction({ className, ...props }: React.ComponentProps<"div">) {
+/* -----------------------------------------------------------------------------------------------*/
+
+interface CardActionProps extends React.ComponentProps<"div"> {}
+
+function CardAction({ className, ...props }: CardActionProps) {
   return (
     <div data-slot="card-action" className={action({ className })} {...props} />
   );
 }
 
-function CardContent({ className, ...props }: React.ComponentProps<"div">) {
+/* -----------------------------------------------------------------------------------------------*/
+
+interface CardContentProps extends React.ComponentProps<"div"> {}
+
+function CardContent({ className, ...props }: CardContentProps) {
   return (
     <div
       data-slot="card-content"
@@ -59,18 +83,43 @@ function CardContent({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
-function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
+/* -----------------------------------------------------------------------------------------------*/
+
+interface CardFooterProps extends React.ComponentProps<"div"> {}
+
+function CardFooter({ className, ...props }: CardFooterProps) {
   return (
     <div data-slot="card-footer" className={footer({ className })} {...props} />
   );
 }
 
+/* -----------------------------------------------------------------------------------------------*/
+
+const CompoundCard = Object.assign(Card, {
+  Header: CardHeader,
+  Title: CardTitle,
+  Description: CardDescription,
+  Action: CardAction,
+  Content: CardContent,
+  Footer: CardFooter,
+});
+
 export {
-  Card,
+  CompoundCard as Card,
   CardHeader,
   CardFooter,
   CardTitle,
   CardAction,
   CardDescription,
   CardContent,
+};
+
+export type {
+  CardProps,
+  CardHeaderProps,
+  CardTitleProps,
+  CardDescriptionProps,
+  CardActionProps,
+  CardContentProps,
+  CardFooterProps,
 };

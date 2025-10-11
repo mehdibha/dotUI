@@ -261,11 +261,11 @@ const content: ContentSection[] = [
     id: "data-display",
     title: "Data display",
     items: [
-      //     {
-      //       id: "accordion",
-      //       title: "Accordion",
-      //       preview: demos.AccordionDemo,
-      //     },
+      {
+        id: "accordion",
+        title: "Accordion",
+        preview: demos.AccordionDemo,
+      },
       {
         id: "avatar",
         title: "Avatar",
@@ -281,27 +281,26 @@ const content: ContentSection[] = [
         title: "Badge",
         preview: demos.BadgeDemo,
       },
-      //     {
-      //       id: "table",
-      //       title: "Table",
-      //       preview: null,
-      //       // preview: demos.TableDemo,
-      //     },
-      //     {
-      //       id: "card",
-      //       title: "Card",
-      //       preview: demos.CardDemo,
-      //     },
-      //     {
-      //       id: "separator",
-      //       title: "Separator",
-      //       preview: demos.SeparatorDemo,
-      //     },
-      //     {
-      //       id: "empty",
-      //       title: "Empty",
-      //       preview: demos.EmptyDemo,
-      //     },
+      {
+        id: "table",
+        title: "Table",
+        preview: demos.TableDemo,
+      },
+      {
+        id: "card",
+        title: "Card",
+        preview: demos.CardDemo,
+      },
+      {
+        id: "separator",
+        title: "Separator",
+        preview: demos.SeparatorDemo,
+      },
+      {
+        id: "empty",
+        title: "Empty",
+        preview: demos.EmptyDemo,
+      },
     ],
   },
   {
@@ -386,8 +385,7 @@ const toc = content.flatMap((section) => [
 
 export default function InternalPage() {
   return (
-    <div className="container max-w-screen-2xl py-20 xl:grid xl:grid-cols-[150px_1fr_250px] xl:gap-12">
-      <div className="max-xl:hidden" />
+    <div className="container max-w-screen-xl py-20 xl:grid xl:grid-cols-[1fr_250px] xl:gap-12">
       <div className="space-y-12">
         <div className="flex items-center justify-between">
           <div className="space-y-2">

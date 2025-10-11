@@ -1,5 +1,6 @@
 "use client";
 
+import { useSlotId } from "@react-aria/utils";
 import { ChevronDownIcon, ChevronUpIcon, GripVerticalIcon } from "lucide-react";
 import {
   Button as AriaButton,
@@ -12,145 +13,157 @@ import {
   Table as AriaTable,
   TableBody as AriaTableBody,
   TableHeader as AriaTableHeader,
+  TableLoadMoreItem as AriaTableLoadMoreItem,
+  Text as AriaText,
   composeRenderProps,
+  Provider,
+  TableContext,
+  TextContext,
   useTableOptions,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import type {
-  ResizableTableContainerProps as AriaResiableTableContainerProps,
   RowProps as AriaRowProps,
   TableBodyProps as AriaTableBodyProps,
   TableHeaderProps as AriaTableHeaderProps,
 } from "react-aria-components";
-import type { VariantProps } from "tailwind-variants";
 
 import { focusRing } from "@dotui/registry-v2/lib/focus-styles";
 import { cn, createScopedContext } from "@dotui/registry-v2/lib/utils";
 import { Checkbox } from "@dotui/registry-v2/ui/checkbox";
+import { Loader } from "@dotui/registry-v2/ui/loader";
 
 const tableStyles = tv({
   slots: {
-    container: "w-auto overflow-auto",
-    root: [
-      "relative table min-h-24 w-full border-separate border-spacing-0 cursor-default text-sm",
-      "[&_.react-aria-DropIndicator]:translate-z-0 [&_.react-aria-DropIndicator]:outline [&_.react-aria-DropIndicator]:outline-accent",
+    root: "space-y-2",
+    container: "relative scroll-pt-[2.321rem] overflow-auto rounded-lg border",
+    table: "w-full text-sm",
+    header: "sticky top-0 z-10 bg-bg",
+    column: "h-10 px-2 text-left align-middle font-medium whitespace-nowrap",
+    resizer: "",
+    body: "",
+    row: "",
+    cell: "p-2 align-middle whitespace-nowrap",
+    loadMore: [
+      "relative h-7 [&_[data-slot=loader]]:absolute [&_[data-slot=loader]]:top-0 [&_[data-slot=loader]]:left-1/2 [&_[data-slot=loader]]:-translate-x-1/2",
+      "[&_[data-slot=loader]_svg]:size-4",
     ],
-    header: "sticky top-0 z-10",
-    column: [
-      focusRing(),
-      "relative px-3 py-2 text-left font-medium whitespace-nowrap text-fg-muted allows-sorting:cursor-pointer",
-    ],
-    resizer: [
-      focusRing(),
-      "absolute right-0 box-content h-5 w-px cursor-col-resize px-2 before:block before:h-5 before:w-px before:bg-border-field before:transition-colors before:content-[''] resizing:before:w-0.5 resizing:before:bg-accent",
-    ],
-    body: "empty:text-center empty:italic",
-    row: [
-      focusRing(),
-      "relative transition-colors disabled:text-fg-disabled data-action:cursor-pointer data-action:hover:bg-muted data-href:cursor-pointer data-href:hover:bg-muted data-[selection-mode=multiple]:cursor-pointer data-[selection-mode=multiple]:hover:not-selected:bg-muted data-[selection-mode=single]:cursor-pointer data-[selection-mode=single]:hover:not-selected:bg-muted selected:text-fg dragging:bg-bg",
-    ],
-    cell: [focusRing(), "px-3 py-2"],
-  },
-  variants: {
-    variant: {
-      bordered: {
-        container: "rounded-md border",
-        column: "border-b",
-        row: "group/row",
-        cell: "border-b group-last/row:border-b-0",
-      },
-      solid: {
-        container: "rounded-lg bg-inverse/5 p-2",
-        header: "border-y text-fg-muted",
-        body: "text-fg",
-        column: "bg-inverse/5 first:rounded-l-sm last:rounded-r-sm",
-      },
-      line: {
-        column: "border-b",
-        row: "group/row",
-        cell: "border-b group-last/row:border-b-0",
-      },
-      quiet: {},
-    },
-    selectionVariant: {
-      primary: {
-        row: "selected:bg-primary-muted",
-      },
-      accent: {
-        row: "selected:bg-accent-muted",
-      },
-    },
-  },
-  defaultVariants: {
-    variant: "line",
-    selectionVariant: "accent",
+    title: "text-sm font-medium",
+    description: "text-sm text-fg-muted",
   },
 });
 
-const { container, root, header, column, resizer, body, row, cell } =
-  tableStyles();
+const {
+  root,
+  container,
+  table,
+  header,
+  column,
+  resizer,
+  body,
+  row,
+  cell,
+  loadMore,
+  title,
+  description,
+} = tableStyles();
 
-const [TableProvider, useTableContext] = createScopedContext<
-  VariantProps<typeof tableStyles> & {
-    globalAction?: boolean;
-  }
->("TableRoot");
+/* -----------------------------------------------------------------------------------------------*/
 
-interface TableRootProps
-  extends Omit<React.ComponentProps<typeof AriaTable>, "className" | "style">,
-    Pick<AriaResiableTableContainerProps, "className" | "style">,
-    VariantProps<typeof tableStyles> {
-  resizable?: boolean;
-}
-const TableRoot = ({
-  resizable,
-  className,
-  style,
-  variant,
-  selectionVariant,
-  onRowAction,
-  ...props
-}: TableRootProps) => {
+interface TableRootProps extends React.ComponentProps<"div"> {}
+
+const TableRoot = ({ className, ...props }: TableRootProps) => {
+  const titleId = useSlotId();
+  const descriptionId = useSlotId();
+
   return (
-    <TableProvider
-      variant={variant}
-      selectionVariant={selectionVariant}
-      globalAction={!!onRowAction}
+    <Provider
+      values={[
+        [
+          TextContext,
+          {
+            slots: {
+              title: { id: titleId },
+              description: { id: descriptionId },
+            },
+          },
+        ],
+        [
+          TableContext,
+          {
+            "aria-labelledby": titleId,
+            "aria-describedby": descriptionId,
+          },
+        ],
+      ]}
     >
-      <TableContainer
-        variant={variant}
-        className={className}
-        style={style}
-        resizable={resizable}
-      >
-        {/* TODO: FIX THIS SHIT */}
-        <AriaTable
-          className={root({ variant })}
-          onRowAction={onRowAction}
-          {...props}
-        />
-      </TableContainer>
-    </TableProvider>
+      <div className={root({ className })} {...props} />
+    </Provider>
   );
 };
 
+/* -----------------------------------------------------------------------------------------------*/
+
+interface TableContainerProps
+  extends React.ComponentProps<typeof AriaResizableTableContainer> {
+  resizable?: boolean;
+}
+
+const TableContainer = ({
+  resizable,
+  className,
+  ...props
+}: TableContainerProps) => {
+  if (resizable) {
+    return (
+      <AriaResizableTableContainer
+        className={container({ className })}
+        {...props}
+      />
+    );
+  }
+  return <div className={container({ className })} {...props} />;
+};
+
+/* -----------------------------------------------------------------------------------------------*/
+
+interface TableProps extends React.ComponentProps<typeof AriaTable> {}
+
+const Table = ({ className, ...props }: TableProps) => {
+  return (
+    <AriaTable
+      className={composeRenderProps(className, (cn) =>
+        table({ className: cn }),
+      )}
+      {...props}
+    />
+  );
+};
+
+/* -----------------------------------------------------------------------------------------------*/
+
 interface TableHeaderProps<T extends object> extends AriaTableHeaderProps<T> {}
+
 const TableHeader = <T extends object>({
+  className,
   columns,
   children,
   ...props
 }: TableHeaderProps<T>) => {
-  const { variant, selectionVariant } = useTableContext("TableHeader");
   const { selectionBehavior, selectionMode, allowsDragging } =
     useTableOptions();
   return (
-    <AriaTableHeader className={header({ variant })} {...props}>
+    <AriaTableHeader
+      data-slot="table-header"
+      className={composeRenderProps(className, (cn) =>
+        header({ className: cn }),
+      )}
+      {...props}
+    >
       {allowsDragging && <TableColumn />}
       {selectionBehavior === "toggle" && (
         <TableColumn>
-          {selectionMode === "multiple" && (
-            <Checkbox slot="selection" variant={selectionVariant} />
-          )}
+          {selectionMode === "multiple" && <Checkbox slot="selection" />}
         </TableColumn>
       )}
       <AriaCollection items={columns}>{children}</AriaCollection>
@@ -158,28 +171,30 @@ const TableHeader = <T extends object>({
   );
 };
 
+/* -----------------------------------------------------------------------------------------------*/
+
 interface TableColumnProps extends React.ComponentProps<typeof AriaColumn> {
   allowsResizing?: boolean;
 }
-function TableColumn({
+
+const TableColumn = ({
   allowsResizing,
   children,
   className,
   ...props
-}: TableColumnProps) {
-  const { variant } = useTableContext("TableColumn");
+}: TableColumnProps) => {
   return (
     <AriaColumn
       data-slot="table-column"
-      className={composeRenderProps(className, (className) =>
-        column({ variant, className }),
+      className={composeRenderProps(className, (cn) =>
+        column({ className: cn }),
       )}
       {...props}
     >
       {composeRenderProps(
         children,
         (children, { allowsSorting, sortDirection }) => (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center">
             <span className="flex-1 truncate">{children}</span>
             {allowsSorting &&
               (sortDirection === "ascending" ? (
@@ -187,7 +202,7 @@ function TableColumn({
               ) : (
                 <ChevronDownIcon aria-hidden className="size-3 text-fg-muted" />
               ))}
-            {allowsResizing && !props.width && (
+            {!props.width && allowsResizing && (
               <AriaColumnResizer className={resizer()} />
             )}
           </div>
@@ -195,43 +210,53 @@ function TableColumn({
       )}
     </AriaColumn>
   );
-}
+};
+
+/* -----------------------------------------------------------------------------------------------*/
+
 interface TableBodyProps<T extends object> extends AriaTableBodyProps<T> {
-  ref?: React.RefObject<HTMLTableSectionElement>;
+  isLoading?: boolean;
+  onLoadMore?: () => void;
 }
+
 const TableBody = <T extends object>({
   renderEmptyState = () => "No results found.",
+  children,
   className,
+  items,
+  isLoading,
+  onLoadMore,
   ...props
 }: TableBodyProps<T>) => {
-  const { variant } = useTableContext("TableBody");
   return (
     <AriaTableBody
       renderEmptyState={renderEmptyState}
       className={composeRenderProps(className, (className) =>
-        body({ variant, className }),
+        body({ className }),
       )}
       {...props}
-    />
+    >
+      <AriaCollection items={items}>{children}</AriaCollection>
+      <TableLoadMore isLoading={isLoading} onLoadMore={onLoadMore} />
+    </AriaTableBody>
   );
 };
 
+/* -----------------------------------------------------------------------------------------------*/
+
 interface TableRowProps<T extends object> extends AriaRowProps<T> {}
+
 function TableRow<T extends object>({
   columns,
   children,
-  onAction,
+  className,
   ...props
 }: TableRowProps<T>) {
   const { selectionBehavior, allowsDragging } = useTableOptions();
-  const { variant, selectionVariant, globalAction } =
-    useTableContext("TableRow");
 
   return (
     <AriaRow
-      data-action={globalAction || !!onAction || undefined}
-      className={row({ variant, selectionVariant })}
-      onAction={onAction}
+      className={composeRenderProps(className, (cn) => row({ className: cn }))}
       {...props}
     >
       {allowsDragging && (
@@ -249,7 +274,7 @@ function TableRow<T extends object>({
       )}
       {selectionBehavior === "toggle" && (
         <TableCell>
-          <Checkbox slot="selection" variant={selectionVariant} />
+          <Checkbox slot="selection" />
         </TableCell>
       )}
       <AriaCollection items={columns}>{children}</AriaCollection>
@@ -257,65 +282,102 @@ function TableRow<T extends object>({
   );
 }
 
+/* -----------------------------------------------------------------------------------------------*/
+
 interface TableCellProps extends React.ComponentProps<typeof AriaCell> {}
+
 const TableCell = ({ className, ...props }: TableCellProps) => {
-  const { variant } = useTableContext("TableCell");
   return (
     <AriaCell
       data-slot="table-cell"
-      className={composeRenderProps(className, (className) =>
-        cell({ variant, className }),
-      )}
+      className={composeRenderProps(className, (cn) => cell({ className: cn }))}
       {...props}
     />
   );
 };
 
-interface TableContainerProps
-  extends React.ComponentProps<typeof AriaResizableTableContainer>,
-    VariantProps<typeof tableStyles> {
-  resizable?: boolean;
-}
-const TableContainer = ({
-  ref,
-  resizable = false,
-  variant,
-  children,
-  className,
-  style,
-  ...props
-}: TableContainerProps) => {
-  if (resizable)
-    return (
-      <AriaResizableTableContainer
-        className={container({ variant, className })}
-        {...props}
-      >
-        {children}
-      </AriaResizableTableContainer>
-    );
+/* -----------------------------------------------------------------------------------------------*/
+
+interface TableLoadMoreProps
+  extends React.ComponentProps<typeof AriaTableLoadMoreItem> {}
+
+const TableLoadMore = ({ className, ...props }: TableLoadMoreProps) => {
   return (
-    <div ref={ref} className={container({ variant, className })} style={style}>
-      {children}
-    </div>
+    <AriaTableLoadMoreItem className={loadMore({ className })} {...props}>
+      <Loader aria-label="Loading more..." />
+    </AriaTableLoadMoreItem>
   );
+};
+
+/* -----------------------------------------------------------------------------------------------*/
+
+interface TableTitleProps
+  extends Omit<React.ComponentProps<typeof AriaText>, "slot"> {}
+
+const TableTitle = ({ className, ...props }: TableTitleProps) => {
+  return (
+    <AriaText
+      slot="title"
+      elementType="h2"
+      className={title({ className })}
+      {...props}
+    />
+  );
+};
+
+/* -----------------------------------------------------------------------------------------------*/
+
+interface TableDescriptionProps
+  extends Omit<React.ComponentProps<typeof AriaText>, "slot"> {}
+
+const TableDescription = ({ className, ...props }: TableDescriptionProps) => {
+  return (
+    <AriaText
+      elementType="p"
+      slot="description"
+      className={description({ className })}
+      {...props}
+    />
+  );
+};
+
+/* -----------------------------------------------------------------------------------------------*/
+
+const CompoundTable = Object.assign(Table, {
+  Root: TableRoot,
+  Container: TableContainer,
+  Header: TableHeader,
+  Column: TableColumn,
+  Body: TableBody,
+  Row: TableRow,
+  Cell: TableCell,
+  LoadMore: TableLoadMore,
+  Title: TableTitle,
+  Description: TableDescription,
+});
+
+export {
+  TableContainer,
+  CompoundTable as Table,
+  TableHeader,
+  TableColumn,
+  TableBody,
+  TableLoadMore,
+  TableRow,
+  TableCell,
+  TableTitle,
+  TableDescription,
 };
 
 export type {
   TableContainerProps,
-  TableRootProps,
+  TableProps,
   TableHeaderProps,
-  TableBodyProps,
   TableColumnProps,
+  TableBodyProps,
   TableRowProps,
   TableCellProps,
-};
-export {
-  TableContainer,
-  TableRoot,
-  TableHeader,
-  TableBody,
-  TableColumn,
-  TableRow,
-  TableCell,
+  TableLoadMoreProps,
+  TableTitleProps,
+  TableDescriptionProps,
 };
