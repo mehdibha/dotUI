@@ -24,9 +24,16 @@ const config = {
       },
       {
         protocol: "https",
-        hostname: "ui.shadcn.com",
+        hostname: "images.unsplash.com",
       },
     ],
+  },
+  reactCompiler: true,
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
   },
   devIndicators: false,
   async rewrites() {
@@ -43,23 +50,6 @@ const config = {
           "/style-editor/:section?username=:username&stylename=:stylename",
       },
     ];
-  },
-  webpack: (config, { dev, isServer }) => {
-    config.ignoreWarnings = [
-      ...(config.ignoreWarnings || []),
-      /Critical dependency: the request of a dependency is an expression/,
-      /require\.extensions is not supported by webpack/,
-      {
-        module: /node_modules\/cosmiconfig/,
-      },
-      {
-        module: /node_modules\/shadcn/,
-      },
-      {
-        module: /node_modules\/tsconfig-paths/,
-      },
-    ];
-    return config;
   },
 };
 

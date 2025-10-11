@@ -26,6 +26,7 @@ export default async function HomePage() {
   const feturedStyles = await caller.style.getPublicStyles({
     featured: true,
     limit: 6,
+    sortBy: "oldest",
   });
 
   return (

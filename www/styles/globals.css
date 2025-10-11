@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @source "../../packages/registry/src//**/*.{ts,tsx}";
+@source "../../packages/registry-v2/src//**/*.{ts,tsx}";
 @source "../**/*.{ts,tsx}";
 
 @import "tw-animate-css";
@@ -12,6 +13,10 @@
 @import "@dotui/registry/lib/focus-styles.css";
 
 @variant dark (&:where(.dark, .dark *));
+
+@variant in-popover ([data-slot="popover"] &);
+@variant in-modal ([data-slot="modal"] &);
+@variant in-drawer ([data-slot="drawer"] &);
 
 /* Base Colors */
 :root {
@@ -91,7 +96,7 @@
 }
 
 .dark {
-  --neutral-50: hsl(240, 6%, 4%);
+  --neutral-50: hsl(240, 6%, 5%);
   --neutral-100: hsl(240, 6%, 7%);
   --neutral-200: hsl(240, 6%, 10%);
   --neutral-300: hsl(240, 6%, 17%);
@@ -172,6 +177,9 @@
 
   --font-heading: var(--font-geist-sans);
   --font-body: var(--font-geist-sans);
+
+  --color-tooltip: var(--neutral-950);
+  --color-fg-on-tooltip: var(--on-neutral-950);
 
   /* colors */
   --color-bg: var(--neutral-50);

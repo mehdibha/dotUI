@@ -55,7 +55,7 @@ const MOTION_VARIANTS: Variants = {
     transform: "scale(0.85)",
     opacity: 0,
     transition: {
-      type: "easeOut",
+      ease: "easeOut",
       duration: 0.15,
     },
   },

@@ -284,7 +284,7 @@ function RatiosEditor({ scaleId }: { scaleId: ScaleId }) {
                             {(subField) => (
                               <subField.NumberField
                                 aria-label={`${scaleId}-${step} contrast ratio`}
-                                step={0.05}
+                                step={0.01}
                                 minValue={1}
                                 maxValue={20}
                                 className="w-20"
