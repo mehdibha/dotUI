@@ -18,7 +18,7 @@ const items = [
 
 export function ListBoxDemo() {
   return (
-    <div className="flex flex-col gap-6">
+    <div className="grid grid-cols-4 gap-6">
       <ListBox aria-label="Fruits">
         <ListBoxItem>Apple</ListBoxItem>
         <ListBoxItem>Banana</ListBoxItem>

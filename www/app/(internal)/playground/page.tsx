@@ -202,11 +202,11 @@ const content: ContentSection[] = [
     id: "collections",
     title: "Collections",
     items: [
-      //     {
-      //       id: "list-box",
-      //       title: "ListBox",
-      //       preview: demos.ListBoxDemo,
-      //     },
+          {
+            id: "list-box",
+            title: "ListBox",
+            preview: demos.ListBoxDemo,
+          },
       //     {
       //       id: "grid-list",
       //       title: "GridList",
@@ -229,31 +229,31 @@ const content: ContentSection[] = [
     id: "navigation",
     title: "Navigation",
     items: [
-      //     {
-      //       id: "link",
-      //       title: "Link",
-      //       preview: demos.LinkDemo,
-      //     },
-      //     {
-      //       id: "tabs",
-      //       title: "Tabs",
-      //       preview: demos.TabsDemo,
-      //     },
-      //     {
-      //       id: "breadcrumb",
-      //       title: "Breadcrumb",
-      //       preview: demos.BreadcrumbDemo,
-      //     },
-      //     {
-      //       id: "pagination",
-      //       title: "Pagination",
-      //       preview: demos.PaginationDemo,
-      //     },
-      //     {
-      //       id: "command",
-      //       title: "Command",
-      //       preview: demos.CommandDemo,
-      //     },
+          {
+            id: "link",
+            title: "Link",
+            preview: demos.LinkDemo,
+          },
+          {
+            id: "tabs",
+            title: "Tabs",
+            preview: demos.TabsDemo,
+          },
+          {
+            id: "breadcrumb",
+            title: "Breadcrumb",
+            preview: demos.BreadcrumbDemo,
+          },
+          {
+            id: "pagination",
+            title: "Pagination",
+            preview: demos.PaginationDemo,
+          },
+          {
+            id: "command",
+            title: "Command",
+            preview: demos.CommandDemo,
+          },
     ],
   },
 

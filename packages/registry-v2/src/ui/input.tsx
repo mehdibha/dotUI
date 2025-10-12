@@ -157,6 +157,7 @@ const InputRoot = ({
   return (
     <AriaGroup
       role="presentation"
+      data-slot="input-group"
       className={composeRenderProps(className, (className) =>
         root({ size, multiline, className }),
       )}

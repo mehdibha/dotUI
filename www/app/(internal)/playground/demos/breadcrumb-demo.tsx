@@ -11,25 +11,6 @@ export function BreadcrumbDemo() {
         <Breadcrumb href="#">Electronics</Breadcrumb>
         <Breadcrumb>Laptop</Breadcrumb>
       </Breadcrumbs>
-
-      <Breadcrumbs>
-        <Breadcrumb href="#">Home</Breadcrumb>
-        <Breadcrumb href="#">Documentation</Breadcrumb>
-        <Breadcrumb>Components</Breadcrumb>
-      </Breadcrumbs>
-
-      <Breadcrumbs>
-        <Breadcrumb href="#">Home</Breadcrumb>
-        <Breadcrumb href="#">Settings</Breadcrumb>
-        <Breadcrumb href="#">Profile</Breadcrumb>
-        <Breadcrumb href="#">Account</Breadcrumb>
-        <Breadcrumb>Personal Information</Breadcrumb>
-      </Breadcrumbs>
-
-      <Breadcrumbs>
-        <Breadcrumb href="#">Home</Breadcrumb>
-        <Breadcrumb>Current Page</Breadcrumb>
-      </Breadcrumbs>
     </div>
   );
 }

@@ -22,6 +22,7 @@ const breadcrumbsStyles = tv({
     ],
   },
 });
+
 const { root, item, link } = breadcrumbsStyles();
 
 interface BreadcrumbsProps<T extends object> extends AriaBreadcrumbsProps<T> {

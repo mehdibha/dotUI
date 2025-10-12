@@ -62,8 +62,8 @@ const listBoxItemStyles = tv({
 
 const listboxSectionStyles = tv({
   slots: {
-    listboxSection: "space-y-px pt-2",
-    listboxHeading: "mb-4 pl-3 text-xs text-fg-muted",
+    listboxSection: "",
+    listboxHeading: "text-xs pl-3 my-1",
   },
 });
 
@@ -77,6 +77,7 @@ const ListBox = <T extends object>({
   children,
   isLoading,
   onLoadMore,
+  renderEmptyState = () => "No results found.",
   ...props
 }: ListBoxProps<T>) => {
   const state = React.useContext(ListStateContext);
@@ -84,6 +85,8 @@ const ListBox = <T extends object>({
   return (
     <AriaListBox
       {...props}
+      data-slot="list-box"
+      renderEmptyState={renderEmptyState}
       className={composeRenderProps(props.className, (className) =>
         listBoxStyles({ standalone, className }),
       )}
@@ -164,11 +167,22 @@ const ListBoxSection = <T extends object>({
 }: ListBoxSectionProps<T>) => {
   return (
     <AriaListBoxSection className={listboxSection({ className })} {...props}>
-      {title && <AriaHeader className={listboxHeading()}>{title}</AriaHeader>}
       <AriaCollection items={props.items}>{children}</AriaCollection>
     </AriaListBoxSection>
   );
 };
 
+const ListBoxSectionTitle = ({
+  children,
+  className,
+  ...props
+}: React.ComponentProps<typeof AriaHeader>) => {
+  return (
+    <AriaHeader className={listboxHeading({ className })} {...props}>
+      {children}
+    </AriaHeader>
+  );
+};
+
 export type { ListBoxProps, ListBoxItemProps, ListBoxSectionProps };
-export { ListBox, ListBoxItem, ListBoxSection };
+export { ListBox, ListBoxItem, ListBoxSection, ListBoxSectionTitle };

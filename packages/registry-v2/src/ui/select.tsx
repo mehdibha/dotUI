@@ -112,10 +112,11 @@ const SelectItem = ListBoxItem;
 
 const Select = Object.assign(SelectBase, {
   Root: SelectRoot,
+  Label: Label,
   Button: SelectButton,
   Value: SelectValue,
   Item: SelectItem,
-  ListBox: ListBox,
+  List: ListBox,
   Popover: Popover,
 });
 
