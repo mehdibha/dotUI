@@ -19,7 +19,11 @@ interface ColorThumbProps extends Omit<AriaColorThumbProps, "className"> {
 }
 const ColorThumb = ({ className, ...props }: ColorThumbProps) => {
   return (
-    <AriaColorThumb className={colorThumbStyles({ className })} {...props} />
+    <AriaColorThumb
+      data-slot="color-thumb"
+      className={colorThumbStyles({ className })}
+      {...props}
+    />
   );
 };
 

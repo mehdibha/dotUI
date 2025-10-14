@@ -1,8 +1,9 @@
 "use client";
 
-import * as React from "react";
+import React, { useCallback } from "react";
+import { mergeProps, mergeRefs, useLayoutEffect } from "@react-aria/utils";
 import { useControlledState } from "@react-stately/utils";
-import { chain, mergeProps } from "react-aria";
+import { chain } from "react-aria";
 import {
   Group as AriaGroup,
   Input as AriaInput,
@@ -18,118 +19,131 @@ import type { VariantProps } from "tailwind-variants";
 
 import { focusInput } from "@dotui/registry-v2/lib/focus-styles";
 
+import { createContext } from "../lib/utils";
+
 const inputStyles = tv({
   slots: {
-    root: [
-      focusInput(),
-      "inline-flex w-full cursor-text items-center justify-start gap-2 rounded-md border border-border-field bg-neutral px-2 text-base text-fg-muted shadow-xs transition-colors sm:text-sm [&_svg]:size-4",
+    group: [
+      "group/input-group transition-[border-color,box-shadow]",
+      "flex cursor-text items-center rounded-md border bg-neutral text-base shadow-xs sm:text-sm",
+
+      "gap-2 has-[>input]:px-3 has-[>input]:py-1 has-[>textarea]:py-2 has-[>textarea]:[&_[data-slot=input-addon]]:w-full has-[>textarea]:[&_[data-slot=input-addon]]:px-2",
+
+      "has-[>textarea]:min-h-16 has-[>textarea]:flex-col has-[>textarea]:[&:not([class*='h-'])]:h-auto",
+
+      // focus state
+      // "focus-reset has-[[data-slot=input][data-focused]]:focus-input has-[[data-slot=textarea][data-focused]]:focus-input",
+      "focus-reset focus-within:focus-input",
+
+      // disabled state
       "has-[input[data-disabled]]:cursor-default has-[input[data-disabled]]:border-border-disabled has-[input[data-disabled]]:bg-disabled has-[input[data-disabled]]:text-fg-disabled",
+
+      // invalid state
       "has-[input[data-invalid]]:border-border-danger focus-within:has-[input[data-invalid]]:border-border",
     ],
-    input: [
-      "min-w-0 bg-transparent text-fg outline-hidden placeholder:text-fg-muted disabled:cursor-default disabled:text-fg-disabled",
+    addon: [
+      "flex items-center gap-2 text-fg-muted",
+      
+      "[&>kbd]:rounded-xs [&>svg:not([class*='size-'])]:size-4 ",
+
+      "first:group-has-[>input]/input-group:has-[>_[data-slot=button]]:ml-[-0.45rem] last:group-has-[>input]/input-group:has-[>_[data-slot=button]]:mr-[-0.45rem]",
+      "first:group-has-[>input]/input-group:group-data-[size=sm]/input-group:has-[>_[data-slot=button]]:ml-[-0.55rem] last:group-has-[>input]/input-group:group-data-[size=sm]/input-group:has-[>_[data-slot=button]]:mr-[-0.55rem]",
+      "first:group-has-[>input]/input-group:group-data-[size=lg]/input-group:has-[>_[data-slot=button]]:ml-[-0.4rem] last:group-has-[>input]/input-group:group-data-[size=lg]/input-group:has-[>_[data-slot=button]]:mr-[-0.3rem]",
+
+      "[&_[data-slot=button]>svg:not([class*='size-'])]:size-3.5",
+
+
+      "group-data-[size=sm]/input-group:[&_[data-slot=button]]:h-6 group-data-[size=sm]/input-group:[&_[data-slot=button][data-icon-only]]:w-6",
+      "group-data-[size=lg]/input-group:[&_[data-slot=button]]:h-7 group-data-[size=lg]/input-group:[&_[data-slot=button][data-icon-only]]:w-7",
+      "[&_[data-slot=button]]:h-6 [&_[data-slot=button][data-icon-only]]:w-6",
+
+      "[&_[data-slot=button]]:rounded-sm [&_[data-slot=button]]:px-2 [&_[data-slot=button]]:text-sm [&_[data-slot=button]]:has-[>svg]:px-2 [&_[data-slot=button]]:[&>svg:not([class*='size-'])]:size-3.5",
+
+      "[&_[data-slot=button][data-icon-only]]:px-0"
     ],
+    input: "",
+    textArea: "",
   },
   variants: {
     size: {
-      sm: { root: "h-8" },
-      md: { root: "h-9" },
-      lg: { root: "h-10" },
+      sm: {
+        group: "has-[>input]:h-8",
+      },
+      md: {
+        group: "has-[>input]:h-9",
+      },
+      lg: {
+        group: "has-[>input]:h-10",
+      },
     },
-    multiline: {
+    inGroup: {
       true: {
-        root: "h-auto flex-col items-stretch p-2",
-        input: "min-h-14 resize-none overflow-auto",
+        input: "flex-1 bg-transparent outline-none min-w-0",
+        textArea:
+          "min-h-0 w-full resize-none rounded-none bg-transparent px-2 shadow-none outline-none",
       },
       false: {
-        input: "flex-1",
+        input: [
+          "w-48 rounded-md border border-border-field bg-neutral px-3 py-2 shadow-xs",
+          "text-base focus-reset transition-[border-color,box-shadow] focus:focus-input sm:text-sm",
+        ],
+        textArea: [
+          "flex min-h-16 w-48 resize-none rounded-md border border-border-field bg-neutral px-3 py-2 shadow-xs",
+          "text-base focus-reset transition-[border-color,box-shadow] focus:focus-input sm:text-sm",
+        ],
       },
     },
   },
+  compoundVariants: [
+    {
+      inGroup: false,
+      size: "sm",
+      className: {
+        input: "h-8",
+      },
+    },
+    {
+      inGroup: false,
+      size: "md",
+      className: {
+        input: "h-9",
+      },
+    },
+    {
+      inGroup: false,
+      size: "lg",
+      className: {
+        input: "h-10",
+      },
+    },
+  ],
   defaultVariants: {
     size: "md",
-    multiline: false,
+    inGroup: false,
   },
 });
 
-const { root, input } = inputStyles();
+const { group, input, textArea, addon } = inputStyles();
 
-interface InputProps extends React.ComponentProps<typeof AriaInput> {}
-const Input = ({ className, ...props }: InputProps) => {
-  return (
-    <AriaInput
-      className={composeRenderProps(className, (className) =>
-        input({ className }),
-      )}
-      {...props}
-    />
-  );
-};
+/* -----------------------------------------------------------------------------------------------*/
 
-interface TextAreaInputProps
-  extends React.ComponentProps<typeof AriaTextArea> {}
-const TextAreaInput = ({
-  ref,
+const [, useInputGroupContext, InputGroupContext] = createContext<boolean>({
+  name: "InputGroupContext",
+  strict: false,
+});
+
+/* -----------------------------------------------------------------------------------------------*/
+
+interface InputGroupProps
+  extends React.ComponentProps<typeof AriaGroup>,
+    Pick<VariantProps<typeof inputStyles>, "size"> {}
+
+const InputGroup = ({
   className,
-  onChange,
-  ...props
-}: TextAreaInputProps) => {
-  const [inputValue, setInputValue] = useControlledState(
-    props.value,
-    props.defaultValue ?? "",
-    () => {},
-  );
-  const inputRef = React.useRef<HTMLTextAreaElement>(null);
-
-  const onHeightChange = React.useCallback(() => {
-    if (!inputRef.current) return;
-    const input = inputRef.current;
-    const prevAlignment = input.style.alignSelf;
-    const prevOverflow = input.style.overflow;
-    const isFirefox = "MozAppearance" in input.style;
-    if (!isFirefox) {
-      input.style.overflow = "hidden";
-    }
-    input.style.alignSelf = "start";
-    input.style.height = "auto";
-    input.style.height = `${input.scrollHeight + (input.offsetHeight - input.clientHeight)}px`;
-    input.style.overflow = prevOverflow;
-    input.style.alignSelf = prevAlignment;
-  }, [inputRef]);
-
-  React.useLayoutEffect(() => {
-    if (inputRef.current) {
-      onHeightChange();
-    }
-  }, [onHeightChange, inputValue, inputRef]);
-
-  return (
-    <AriaTextArea
-      ref={mergeProps(inputRef, ref)}
-      className={composeRenderProps(className, (className) =>
-        input({ multiline: true, className }),
-      )}
-      onChange={chain(onChange, setInputValue)}
-      {...props}
-    />
-  );
-};
-
-interface InputRootProps
-  extends Omit<React.ComponentProps<typeof AriaGroup>, "prefix">,
-    VariantProps<typeof inputStyles> {
-  prefix?: React.ReactNode;
-  suffix?: React.ReactNode;
-}
-const InputRoot = ({
   children,
-  className,
-  prefix,
-  suffix,
-  size,
-  multiline,
+  size = "md",
   ...props
-}: InputRootProps) => {
+}: InputGroupProps) => {
   const inputRef = React.useRef<HTMLInputElement | HTMLTextAreaElement>(null);
   const [inputContextProps, mergedInputRef] = useContextProps(
     {},
@@ -157,9 +171,9 @@ const InputRoot = ({
   return (
     <AriaGroup
       role="presentation"
-      data-slot="input-group"
+      data-size={size}
       className={composeRenderProps(className, (className) =>
-        root({ size, multiline, className }),
+        group({ size, className }),
       )}
       {...mergeProps(props, { onPointerDown })}
     >
@@ -168,16 +182,120 @@ const InputRoot = ({
           values={[
             [AriaInputContext, inputProps],
             [AriaTextAreaContext, textAreaProps],
+            [InputGroupContext, true],
           ]}
         >
-          {prefix}
           {children}
-          {suffix}
         </Provider>
       ))}
     </AriaGroup>
   );
 };
 
-export type { InputProps, TextAreaInputProps, InputRootProps };
-export { Input, TextAreaInput, InputRoot, inputStyles };
+/* -----------------------------------------------------------------------------------------------*/
+
+interface InputProps
+  extends Omit<React.ComponentProps<typeof AriaInput>, "size">,
+    Pick<VariantProps<typeof inputStyles>, "size"> {}
+
+const Input = ({ size = "md", className, ...props }: InputProps) => {
+  const inGroup = useInputGroupContext("Input");
+  return (
+    <AriaInput
+      data-slot="input"
+      data-size={size}
+      className={composeRenderProps(className, (className) =>
+        input({ className, inGroup, size }),
+      )}
+      {...props}
+    />
+  );
+};
+
+/* -----------------------------------------------------------------------------------------------*/
+
+interface TextAreaProps
+  extends Omit<React.ComponentProps<typeof AriaTextArea>, "size">,
+    Pick<VariantProps<typeof inputStyles>, "size"> {}
+
+const TextArea = ({
+  ref,
+  className,
+  onChange,
+  size = "md",
+  ...props
+}: TextAreaProps) => {
+  const inGroup = useInputGroupContext("TextArea");
+  const [inputValue, setInputValue] = useControlledState(
+    props.value,
+    props.defaultValue ?? "",
+    () => {},
+  );
+  const inputRef = React.useRef<HTMLTextAreaElement>(null);
+
+  const onHeightChange = useCallback(() => {
+    if (inputRef.current) {
+      const input = inputRef.current;
+      const prevAlignment = input.style.alignSelf;
+      const prevOverflow = input.style.overflow;
+      const prevFlex = input.style.flex; // Store the flex value
+
+      const isFirefox = "MozAppearance" in input.style;
+      if (!isFirefox) {
+        input.style.overflow = "hidden";
+      }
+      input.style.flex = "none"; // Temporarily disable flex
+      input.style.alignSelf = "start";
+      input.style.height = "auto";
+      // offsetHeight - clientHeight accounts for the border/padding.
+      input.style.height = `${input.scrollHeight + (input.offsetHeight - input.clientHeight)}px`;
+      input.style.overflow = prevOverflow;
+      input.style.alignSelf = prevAlignment;
+      input.style.flex = prevFlex; // Restore the flex value
+    }
+  }, [inputRef]);
+
+  useLayoutEffect(() => {
+    if (inputRef.current) {
+      onHeightChange();
+    }
+  }, [onHeightChange, inputValue, inputRef]);
+
+  return (
+    <AriaTextArea
+      ref={mergeRefs(inputRef, ref)}
+      data-slot="textarea"
+      onChange={chain(onChange, setInputValue)}
+      className={composeRenderProps(className, (className) =>
+        textArea({ className, inGroup }),
+      )}
+      {...props}
+    />
+  );
+};
+
+/* -----------------------------------------------------------------------------------------------*/
+
+interface InputAddonProps extends React.ComponentProps<"div"> {}
+
+function InputAddon({ className, ...props }: InputAddonProps) {
+  return (
+    <div
+      role="group"
+      data-slot="input-addon"
+      className={addon({ className })}
+      {...props}
+    />
+  );
+}
+
+/* -----------------------------------------------------------------------------------------------*/
+
+const CompoundInput = Object.assign(Input, {
+  Group: InputGroup,
+  TextArea,
+});
+
+export { CompoundInput as Input, TextArea, InputGroup, InputAddon };
+
+export type { InputProps };

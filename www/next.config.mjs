@@ -28,7 +28,6 @@ const config = {
       },
     ],
   },
-  reactCompiler: true,
   eslint: {
     ignoreDuringBuilds: true,
   },

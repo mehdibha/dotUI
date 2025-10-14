@@ -35,7 +35,7 @@ export function createContext<ContextType>(options: CreateContextOptions = {}) {
 
   Context.displayName = name;
 
-  function useContext(consumerName: string) {
+  function useContext(consumerName?: string) {
     const context = React.useContext(Context);
 
     if (!context && strict) {

@@ -6,7 +6,8 @@ import { ThemeModeSwitch } from "@/components/ui/theme-mode-switch";
 import { TableOfContents } from "@/modules/docs/components/toc";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 import { ActiveStyleSelector } from "@/modules/styles/components/active-style-selector";
-import * as demos from "./demos";
+import { TextFieldDemo } from "./demos/text-field-demo";
+// import * as demos from "./demos";
 import { ThemeSwitcher } from "./theme-switcher";
 
 interface ContentItem {
@@ -23,47 +24,47 @@ interface ContentSection {
 }
 
 const content: ContentSection[] = [
-  {
-    id: "buttons",
-    title: "Buttons",
-    items: [
-      //     {
-      //       id: "button",
-      //       title: "Button",
-      //       preview: demos.ButtonDemo,
-      //     },
-      //     {
-      //       id: "toggle-button",
-      //       title: "ToggleButton",
-      //       preview: demos.ToggleButtonDemo,
-      //     },
-      //     {
-      //       id: "toggle-button-group",
-      //       title: "ToggleButtonGroup",
-      //       preview: demos.ToggleButtonGroupDemo,
-      //     },
-      //     {
-      //       id: "file-trigger",
-      //       title: "FileTrigger",
-      //       preview: demos.FileTriggerDemo,
-      //     },
-      //     {
-      //       id: "button-group",
-      //       title: "ButtonGroup",
-      //       preview: demos.ButtonGroupDemo,
-      //     },
-    ],
-  },
+  // {
+  //   id: "buttons",
+  //   title: "Buttons",
+  //   items: [
+  //     {
+  //       id: "button",
+  //       title: "Button",
+  //       preview: demos.ButtonDemo,
+  //     },
+  //     {
+  //       id: "toggle-button",
+  //       title: "ToggleButton",
+  //       preview: demos.ToggleButtonDemo,
+  //     },
+  //     {
+  //       id: "toggle-button-group",
+  //       title: "ToggleButtonGroup",
+  //       preview: demos.ToggleButtonGroupDemo,
+  //     },
+  //     {
+  //       id: "file-trigger",
+  //       title: "FileTrigger",
+  //       preview: demos.FileTriggerDemo,
+  //     },
+  //     {
+  //       id: "button-group",
+  //       title: "ButtonGroup",
+  //       preview: demos.ButtonGroupDemo,
+  //     },
+  //   ],
+  // },
 
   {
     id: "inputs-controls-form",
     title: "Inputs, controls and form",
     items: [
-      //     {
-      //       id: "text-field",
-      //       title: "TextField",
-      //       preview: demos.TextFieldDemo,
-      //     },
+      {
+        id: "text-field",
+        title: "TextField",
+        preview: TextFieldDemo,
+      },
       //     {
       //       id: "text-area",
       //       title: "TextArea",
@@ -112,261 +113,261 @@ const content: ContentSection[] = [
     ],
   },
 
-  {
-    id: "pickers and menus",
-    title: "Pickers",
-    items: [
-      //  {
-      //   id: "menu",
-      //   title: "Menu",
-      //   preview: demos.MenuDemo,
-      // },
-      //     {
-      //       id: "combobox",
-      //       title: "Combobox",
-      //       preview: demos.ComboboxDemo,
-      //     },
-      //     {
-      //       id: "select",
-      //       title: "Select",
-      //       preview: demos.SelectDemo,
-      //     },
-      //     {
-      //       id: "autocomplete",
-      //       title: "Autocomplete",
-      //       preview: demos.AutocompleteDemo,
-      //     },
-    ],
-  },
+  // {
+  //   id: "pickers and menus",
+  //   title: "Pickers",
+  //   items: [
+  //  {
+  //   id: "menu",
+  //   title: "Menu",
+  //   preview: demos.MenuDemo,
+  // },
+  // {
+  //   id: "combobox",
+  //   title: "Combobox",
+  //   preview: demos.ComboboxDemo,
+  // },
+  // {
+  //   id: "select",
+  //   title: "Select",
+  //   preview: demos.SelectDemo,
+  // },
+  //     {
+  //       id: "autocomplete",
+  //       title: "Autocomplete",
+  //       preview: demos.AutocompleteDemo,
+  //     },
+  //   ],
+  // },
 
-  {
-    id: "dates",
-    title: "Dates",
-    items: [
-      //     {
-      //       id: "calendar",
-      //       title: "Calendar",
-      //       preview: demos.CalendarDemo,
-      //     },
-      //     {
-      //       id: "date-field",
-      //       title: "DateField",
-      //       preview: demos.DateFieldDemo,
-      //     },
-      //     {
-      //       id: "date-picker",
-      //       title: "DatePicker",
-      //       preview: demos.DatePickerDemo,
-      //     },
-      //     {
-      //       id: "time-field",
-      //       title: "TimeField",
-      //       preview: demos.TimeFieldDemo,
-      //     },
-    ],
-  },
+  // {
+  //   id: "dates",
+  //   title: "Dates",
+  //   items: [
+  //     {
+  //       id: "calendar",
+  //       title: "Calendar",
+  //       preview: demos.CalendarDemo,
+  //     },
+  //     {
+  //       id: "date-field",
+  //       title: "DateField",
+  //       preview: demos.DateFieldDemo,
+  //     },
+  //     {
+  //       id: "date-picker",
+  //       title: "DatePicker",
+  //       preview: demos.DatePickerDemo,
+  //     },
+  //     {
+  //       id: "time-field",
+  //       title: "TimeField",
+  //       preview: demos.TimeFieldDemo,
+  //     },
+  //   ],
+  // },
 
-  {
-    id: "feedback",
-    title: "Feedback",
-    items: [
-      //     {
-      //       id: "alert",
-      //       title: "Alert",
-      //       preview: demos.AlertDemo,
-      //     },
-      //     {
-      //       id: "progress-bar",
-      //       title: "ProgressBar",
-      //       preview: demos.ProgressBarDemo,
-      //     },
-      //     {
-      //       id: "toast",
-      //       title: "Toast",
-      //       preview: demos.ToastDemo,
-      //     },
-      //     {
-      //       id: "loader",
-      //       title: "Loader",
-      //       preview: demos.LoaderDemo,
-      //     },
-      //     {
-      //       id: "skeleton",
-      //       title: "Skeleton",
-      //       preview: demos.SkeletonDemo,
-      //     },
-    ],
-  },
+  // {
+  //   id: "feedback",
+  //   title: "Feedback",
+  //   items: [
+  // {
+  //   id: "alert",
+  //   title: "Alert",
+  //   preview: demos.AlertDemo,
+  // },
+  // {
+  //   id: "progress-bar",
+  //   title: "ProgressBar",
+  //   preview: demos.ProgressBarDemo,
+  // },
+  //     {
+  //       id: "toast",
+  //       title: "Toast",
+  //       preview: demos.ToastDemo,
+  //     },
+  // {
+  //   id: "loader",
+  //   title: "Loader",
+  //   preview: demos.LoaderDemo,
+  // },
+  //     {
+  //       id: "skeleton",
+  //       title: "Skeleton",
+  //       preview: demos.SkeletonDemo,
+  //     },
+  //   ],
+  // },
 
-  {
-    id: "collections",
-    title: "Collections",
-    items: [
-          {
-            id: "list-box",
-            title: "ListBox",
-            preview: demos.ListBoxDemo,
-          },
-      //     {
-      //       id: "grid-list",
-      //       title: "GridList",
-      //       preview: demos.GridListDemo,
-      //     },
-      //     {
-      //       id: "tag-group",
-      //       title: "TagGroup",
-      //       preview: demos.TagGroupDemo,
-      //     },
-      //     {
-      //       id: "tree",
-      //       title: "Tree",
-      //       preview: demos.TreeDemo,
-      //     },
-    ],
-  },
+  // {
+  //   id: "collections",
+  //   title: "Collections",
+  //   items: [
+  //     {
+  //       id: "list-box",
+  //       title: "ListBox",
+  //       preview: demos.ListBoxDemo,
+  //     },
+  //     {
+  //       id: "grid-list",
+  //       title: "GridList",
+  //       preview: demos.GridListDemo,
+  //     },
+  // {
+  //   id: "tag-group",
+  //   title: "TagGroup",
+  //   preview: demos.TagGroupDemo,
+  // },
+  // {
+  //   id: "tree",
+  //   title: "Tree",
+  //   preview: demos.TreeDemo,
+  // },
+  //   ],
+  // },
 
-  {
-    id: "navigation",
-    title: "Navigation",
-    items: [
-          {
-            id: "link",
-            title: "Link",
-            preview: demos.LinkDemo,
-          },
-          {
-            id: "tabs",
-            title: "Tabs",
-            preview: demos.TabsDemo,
-          },
-          {
-            id: "breadcrumb",
-            title: "Breadcrumb",
-            preview: demos.BreadcrumbDemo,
-          },
-          {
-            id: "pagination",
-            title: "Pagination",
-            preview: demos.PaginationDemo,
-          },
-          {
-            id: "command",
-            title: "Command",
-            preview: demos.CommandDemo,
-          },
-    ],
-  },
+  // {
+  //   id: "navigation",
+  //   title: "Navigation",
+  //   items: [
+  //     {
+  //       id: "link",
+  //       title: "Link",
+  //       preview: demos.LinkDemo,
+  //     },
+  //     {
+  //       id: "tabs",
+  //       title: "Tabs",
+  //       preview: demos.TabsDemo,
+  //     },
+  //     {
+  //       id: "breadcrumb",
+  //       title: "Breadcrumb",
+  //       preview: demos.BreadcrumbDemo,
+  //     },
+  //     {
+  //       id: "pagination",
+  //       title: "Pagination",
+  //       preview: demos.PaginationDemo,
+  //     },
+  //     {
+  //       id: "command",
+  //       title: "Command",
+  //       preview: demos.CommandDemo,
+  //     },
+  //   ],
+  // },
 
-  {
-    id: "data-display",
-    title: "Data display",
-    items: [
-      {
-        id: "accordion",
-        title: "Accordion",
-        preview: demos.AccordionDemo,
-      },
-      {
-        id: "avatar",
-        title: "Avatar",
-        preview: demos.AvatarDemo,
-      },
-      {
-        id: "kbd",
-        title: "Kbd",
-        preview: demos.KbdDemo,
-      },
-      {
-        id: "badge",
-        title: "Badge",
-        preview: demos.BadgeDemo,
-      },
-      {
-        id: "table",
-        title: "Table",
-        preview: demos.TableDemo,
-      },
-      {
-        id: "card",
-        title: "Card",
-        preview: demos.CardDemo,
-      },
-      {
-        id: "separator",
-        title: "Separator",
-        preview: demos.SeparatorDemo,
-      },
-      {
-        id: "empty",
-        title: "Empty",
-        preview: demos.EmptyDemo,
-      },
-    ],
-  },
-  {
-    id: "colors",
-    title: "Colors",
-    items: [
-      {
-        id: "color-area",
-        title: "ColorArea",
-        preview: demos.ColorAreaDemo,
-      },
-      //   {
-      //     id: "color-field",
-      //     title: "ColorField",
-      //     preview: demos.ColorFieldDemo,
-      //   },
-      {
-        id: "color-picker",
-        title: "ColorPicker",
-        preview: demos.ColorPickerDemo,
-      },
-      //   {
-      //     id: "color-slider",
-      //     title: "ColorSlider",
-      //     preview: demos.ColorSliderDemo,
-      //   },
-      {
-        id: "color-swatch-picker",
-        title: "ColorSwatchPicker",
-        preview: demos.ColorSwatchPickerDemo,
-      },
-    ],
-  },
-  {
-    id: "overlays",
-    title: "Overlays",
-    items: [
-      {
-        id: "dialog",
-        title: "Dialog (with responsive overlay)",
-        description:
-          "The dialog is rendered as a modal in desktop and as a drawer on mobile.",
-        preview: demos.DialogDemo,
-      },
-      {
-        id: "modal",
-        title: "Modal",
-        preview: demos.ModalDemo,
-      },
-      {
-        id: "popover",
-        title: "Popover",
-        preview: demos.PopoverDemo,
-      },
-      {
-        id: "drawer",
-        title: "Drawer",
-        preview: demos.DrawerDemo,
-      },
-      {
-        id: "tooltip",
-        title: "Tooltip",
-        preview: demos.TooltipDemo,
-      },
-    ],
-  },
+  // {
+  //   id: "data-display",
+  //   title: "Data display",
+  //   items: [
+  //     {
+  //       id: "accordion",
+  //       title: "Accordion",
+  //       preview: demos.AccordionDemo,
+  //     },
+  //     {
+  //       id: "avatar",
+  //       title: "Avatar",
+  //       preview: demos.AvatarDemo,
+  //     },
+  //     {
+  //       id: "kbd",
+  //       title: "Kbd",
+  //       preview: demos.KbdDemo,
+  //     },
+  //     {
+  //       id: "badge",
+  //       title: "Badge",
+  //       preview: demos.BadgeDemo,
+  //     },
+  //     {
+  //       id: "table",
+  //       title: "Table",
+  //       preview: demos.TableDemo,
+  //     },
+  //     {
+  //       id: "card",
+  //       title: "Card",
+  //       preview: demos.CardDemo,
+  //     },
+  //     {
+  //       id: "separator",
+  //       title: "Separator",
+  //       preview: demos.SeparatorDemo,
+  //     },
+  //     {
+  //       id: "empty",
+  //       title: "Empty",
+  //       preview: demos.EmptyDemo,
+  //     },
+  //   ],
+  // },
+  // {
+  //   id: "colors",
+  //   title: "Colors",
+  //   items: [
+  //     {
+  //       id: "color-area",
+  //       title: "ColorArea",
+  //       preview: demos.ColorAreaDemo,
+  //     },
+  //     // {
+  //     //   id: "color-field",
+  //     //   title: "ColorField",
+  //     //   preview: demos.ColorFieldDemo,
+  //     // },
+  //     {
+  //       id: "color-picker",
+  //       title: "ColorPicker",
+  //       preview: demos.ColorPickerDemo,
+  //     },
+  //     {
+  //       id: "color-slider",
+  //       title: "ColorSlider",
+  //       preview: demos.ColorSliderDemo,
+  //     },
+  //     {
+  //       id: "color-swatch-picker",
+  //       title: "ColorSwatchPicker",
+  //       preview: demos.ColorSwatchPickerDemo,
+  //     },
+  //   ],
+  // },
+  // {
+  //   id: "overlays",
+  //   title: "Overlays",
+  //   items: [
+  //     {
+  //       id: "dialog",
+  //       title: "Dialog (with responsive overlay)",
+  //       description:
+  //         "The dialog is rendered as a modal in desktop and as a drawer on mobile.",
+  //       preview: demos.DialogDemo,
+  //     },
+  //     {
+  //       id: "modal",
+  //       title: "Modal",
+  //       preview: demos.ModalDemo,
+  //     },
+  //     {
+  //       id: "popover",
+  //       title: "Popover",
+  //       preview: demos.PopoverDemo,
+  //     },
+  //     {
+  //       id: "drawer",
+  //       title: "Drawer",
+  //       preview: demos.DrawerDemo,
+  //     },
+  //     {
+  //       id: "tooltip",
+  //       title: "Tooltip",
+  //       preview: demos.TooltipDemo,
+  //     },
+  //   ],
+  // },
 ];
 
 // Transform content to fumadocs TOC format

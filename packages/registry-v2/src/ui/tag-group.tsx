@@ -163,5 +163,10 @@ const useTagGroupContext = () => {
   return React.useContext(TagGroupContext);
 };
 
-export { TagGroup, Tag };
+const CompoundTagGroup = Object.assign(TagGroupRoot, {
+  List: TagList,
+  Tag: Tag,
+});
+
+export { CompoundTagGroup as TagGroup, TagList, Tag };
 export type { TagGroupProps, TagProps };

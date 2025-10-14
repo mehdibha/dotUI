@@ -53,7 +53,6 @@ import { SearchField } from "@dotui/registry-v2/ui/search-field";
 import {
   Select,
   SelectItem,
-  SelectRoot,
   SelectValue,
 } from "@dotui/registry-v2/ui/select";
 import { Separator } from "@dotui/registry-v2/ui/separator";
@@ -158,7 +157,7 @@ export function ButtonGroupDemo() {
         <div>
           <Label>Amount</Label>
           <ButtonGroup>
-            <SelectRoot
+            {/* <SelectRoot
               placeholder="Select currency"
               value={currency}
               onChange={(key) => setCurrency(key as string)}
@@ -173,7 +172,7 @@ export function ButtonGroupDemo() {
                   <SelectItem id="£">£</SelectItem>
                 </ListBox>
               </Popover>
-            </SelectRoot>
+            </SelectRoot> */}
             <TextField placeholder="Enter amount to send" />
             <Button variant="primary">
               <ArrowRightIcon />

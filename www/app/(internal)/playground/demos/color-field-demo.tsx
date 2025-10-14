@@ -5,7 +5,18 @@ import { ColorField } from "@dotui/registry-v2/ui/color-field";
 export function ColorFieldDemo() {
   return (
     <div className="flex flex-col gap-6">
-      {(["sm", "md", "lg"] as const).map((size) => (
+      {/* 
+        <ColorField>
+          <Label>Color</Label>
+        </ColorField>
+      
+      */}
+
+
+
+
+
+      {/* {(["sm", "md", "lg"] as const).map((size) => (
         <ColorField key={size} size={size} label={`Size: ${size}`} />
       ))}
 
@@ -19,7 +30,10 @@ export function ColorFieldDemo() {
 
       <ColorField label="Disabled" isDisabled />
 
-      <ColorField label="Theme color" placeholder="#000000" />
+      <ColorField label="Theme color" placeholder="#000000" /> */}
     </div>
   );
 }
+
+
+

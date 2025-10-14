@@ -26,7 +26,7 @@ catalogs:
     "@types/react": ^19.2.2
     "@types/react-dom": ^19.2.1
   next:
-    next: ^15.6.0-canary.52
+    next: ^15.5.4
   ui:
     react-aria-components: ^1.13.0
     tailwind-variants: ^3.1.1

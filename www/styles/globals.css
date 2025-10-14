@@ -412,6 +412,20 @@
   }
 }
 
+/* focus-ring */
+
+@utility focus-reset {
+  @apply ring-0 ring-border-focus-muted outline-none;
+}
+
+@utility focus-ring {
+  @apply ring-2 ring-offset-2 ring-offset-bg;
+}
+
+@utility focus-input {
+  @apply ring-2 border-border-focus 
+}
+
 @layer base {
   * {
     @apply border-border;

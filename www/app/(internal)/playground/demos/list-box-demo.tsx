@@ -1,12 +1,6 @@
 "use client";
 
-import { StarIcon } from "lucide-react";
-
-import {
-  ListBox,
-  ListBoxItem,
-  ListBoxSection,
-} from "@dotui/registry-v2/ui/list-box";
+import { ListBox } from "@dotui/registry-v2/ui/list-box";
 
 const items = [
   { id: 1, name: "Apple" },
@@ -14,65 +8,34 @@ const items = [
   { id: 3, name: "Orange" },
   { id: 4, name: "Mango" },
   { id: 5, name: "Pineapple" },
+  { id: 6, name: "Kiwi" },
+  { id: 7, name: "Strawberry" },
+  { id: 8, name: "Blueberry" },
+  { id: 9, name: "Raspberry" },
+  { id: 10, name: "Blackberry" },
+  { id: 11, name: "Cherry" },
+  { id: 12, name: "Pear" },
+  { id: 13, name: "Plum" },
+  { id: 14, name: "Peach" },
+  { id: 15, name: "Nectarine" },
 ];
 
 export function ListBoxDemo() {
   return (
     <div className="grid grid-cols-4 gap-6">
-      <ListBox aria-label="Fruits">
-        <ListBoxItem>Apple</ListBoxItem>
-        <ListBoxItem>Banana</ListBoxItem>
-        <ListBoxItem>Orange</ListBoxItem>
-        <ListBoxItem>Mango</ListBoxItem>
+      <ListBox aria-label="Fruits" items={items}>
+        {(item) => <ListBox.Item id={item.id}>{item.name}</ListBox.Item>}
       </ListBox>
 
-      <ListBox aria-label="Fruits with selection" selectionMode="single">
-        {items.map((item) => (
-          <ListBoxItem key={item.id} id={item.id}>
-            {item.name}
-          </ListBoxItem>
-        ))}
+      <ListBox aria-label="Fruits" items={items} selectionMode="single">
+        {(item) => <ListBox.Item id={item.id}>{item.name}</ListBox.Item>}
       </ListBox>
 
-      <ListBox aria-label="Multiple selection" selectionMode="multiple">
-        {items.map((item) => (
-          <ListBoxItem key={item.id} id={item.id}>
-            {item.name}
-          </ListBoxItem>
-        ))}
+      <ListBox aria-label="Fruits" items={items} selectionMode="multiple">
+        {(item) => <ListBox.Item id={item.id}>{item.name}</ListBox.Item>}
       </ListBox>
-
-      <ListBox aria-label="With icons">
-        <ListBoxItem prefix={<StarIcon />}>Favorites</ListBoxItem>
-        <ListBoxItem prefix={<StarIcon />}>Important</ListBoxItem>
-        <ListBoxItem prefix={<StarIcon />}>Archive</ListBoxItem>
-      </ListBox>
-
-      <ListBox aria-label="With descriptions">
-        <ListBoxItem label="Apple" description="A sweet and crunchy fruit" />
-        <ListBoxItem label="Banana" description="A tropical yellow fruit" />
-        <ListBoxItem
-          label="Orange"
-          description="A citrus fruit rich in vitamin C"
-        />
-      </ListBox>
-
-      <ListBox aria-label="With sections">
-        <ListBoxSection title="Fruits">
-          <ListBoxItem>Apple</ListBoxItem>
-          <ListBoxItem>Banana</ListBoxItem>
-        </ListBoxSection>
-        <ListBoxSection title="Vegetables">
-          <ListBoxItem>Carrot</ListBoxItem>
-          <ListBoxItem>Broccoli</ListBoxItem>
-        </ListBoxSection>
-      </ListBox>
-
-      <ListBox aria-label="With disabled items">
-        <ListBoxItem>Enabled item</ListBoxItem>
-        <ListBoxItem isDisabled>Disabled item</ListBoxItem>
-        <ListBoxItem>Another enabled item</ListBoxItem>
-      </ListBox>
+     
+     {/* with sections, description item, icon, suffix, prefix... */}
     </div>
   );
 }
