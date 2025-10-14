@@ -34,8 +34,8 @@ export function ListBoxDemo() {
       <ListBox aria-label="Fruits" items={items} selectionMode="multiple">
         {(item) => <ListBox.Item id={item.id}>{item.name}</ListBox.Item>}
       </ListBox>
-     
-     {/* with sections, description item, icon, suffix, prefix... */}
+
+      {/* with sections, description item, icon, suffix, prefix... */}
     </div>
   );
 }

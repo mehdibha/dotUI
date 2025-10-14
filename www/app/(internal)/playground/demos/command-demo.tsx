@@ -41,23 +41,17 @@ export function CommandDemo() {
 
         <Dialog>
           <Button>Modal</Button>
-          <Dialog.Modal>
-            {/* <CommandExample /> */}
-          </Dialog.Modal>
+          <Dialog.Modal>{/* <CommandExample /> */}</Dialog.Modal>
         </Dialog>
 
         <Dialog>
           <Button>Drawer</Button>
-          <Dialog.Drawer>
-            {/* <CommandExample /> */}
-          </Dialog.Drawer>
+          <Dialog.Drawer>{/* <CommandExample /> */}</Dialog.Drawer>
         </Dialog>
 
         <Dialog>
           <Button>Responsive</Button>
-          <Dialog.Overlay>
-            {/* <CommandExample /> */}
-          </Dialog.Overlay>
+          <Dialog.Overlay>{/* <CommandExample /> */}</Dialog.Overlay>
         </Dialog>
       </div>
 

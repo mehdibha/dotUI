@@ -36,12 +36,12 @@ const tabsStyles = tv({
       horizontal: {
         root: "flex-col",
         list: "flex-row border-b",
-        selectionIndicator: "h-0.5 w-full bottom-0 left-0",
+        selectionIndicator: "bottom-0 left-0 h-0.5 w-full",
       },
       vertical: {
         root: "flex-row",
         list: "flex-col border-r",
-        selectionIndicator: "h-full w-0.5 right-0 bottom-0",
+        selectionIndicator: "right-0 bottom-0 h-full w-0.5",
       },
     },
   },
@@ -98,15 +98,15 @@ const Tab = ({ className, ...props }: TabProps) => {
 
   return (
     <AriaTab
-      className={composeRenderProps(className, (cn) =>
-        tab({ className: cn }),
-      )}
+      className={composeRenderProps(className, (cn) => tab({ className: cn }))}
       {...props}
     >
       {composeRenderProps(props.children, (children) => (
         <>
           {children}
-          <AriaSelectionIndicator className={selectionIndicator({ orientation })} />
+          <AriaSelectionIndicator
+            className={selectionIndicator({ orientation })}
+          />
         </>
       ))}
     </AriaTab>

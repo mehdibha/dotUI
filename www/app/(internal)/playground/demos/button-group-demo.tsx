@@ -50,11 +50,7 @@ import { ListBox, ListBoxItem } from "@dotui/registry-v2/ui/list-box";
 import { Menu, MenuItem, MenuRoot } from "@dotui/registry-v2/ui/menu";
 import { Popover } from "@dotui/registry-v2/ui/popover";
 import { SearchField } from "@dotui/registry-v2/ui/search-field";
-import {
-  Select,
-  SelectItem,
-  SelectValue,
-} from "@dotui/registry-v2/ui/select";
+import { Select, SelectItem, SelectValue } from "@dotui/registry-v2/ui/select";
 import { Separator } from "@dotui/registry-v2/ui/separator";
 import { TextArea } from "@dotui/registry-v2/ui/text-area";
 import { TextField } from "@dotui/registry-v2/ui/text-field";

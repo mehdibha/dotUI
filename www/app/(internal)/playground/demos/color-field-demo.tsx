@@ -12,10 +12,6 @@ export function ColorFieldDemo() {
       
       */}
 
-
-
-
-
       {/* {(["sm", "md", "lg"] as const).map((size) => (
         <ColorField key={size} size={size} label={`Size: ${size}`} />
       ))}
@@ -34,6 +30,3 @@ export function ColorFieldDemo() {
     </div>
   );
 }
-
-
-

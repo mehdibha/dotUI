@@ -423,7 +423,7 @@
 }
 
 @utility focus-input {
-  @apply ring-2 border-border-focus 
+  @apply border-border-focus ring-2;
 }
 
 @layer base {
