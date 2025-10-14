@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { IconCheck, IconInfoCircle } from "@tabler/icons-react";
 import {
   ArrowUpIcon,
@@ -28,15 +29,11 @@ export function TextFieldDemo() {
   const isTrue = false;
   return (
     <div className="space-y-4 *:w-96">
-      {/* <TextField defaultValue="@mehdibha" className="w-full">
+      <TextField defaultValue="@mehdibha" className="w-full">
         <Input placeholder="Input" className="w-full" />
       </TextField>
 
-      <TextArea placeholder="TextArea" /> */}
-
-      <div>
-        <Button>{isTrue ? <span>X</span> : <XIcon />}</Button>
-      </div>
+      <TextArea placeholder="TextArea" />
 
       <InputGroup>
         <InputAddon>$</InputAddon>
@@ -80,7 +77,7 @@ export function TextFieldDemo() {
             <PlusIcon />
           </Button>
           <Select defaultValue="auto" className="w-fit">
-            <Select.Trigger />
+            <Select.Trigger aspect="default" />
             <Select.Popover>
               <Select.List>
                 <Select.Item id="auto">Auto</Select.Item>
@@ -92,8 +89,8 @@ export function TextFieldDemo() {
           <span className="ml-auto">52% used</span>
           <Button
             aria-label="Send"
-            variant="default"
-            isDisabled
+            variant="primary"
+            // isDisabled
             className="rounded-full"
           >
             <ArrowUpIcon />

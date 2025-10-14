@@ -1,27 +1,16 @@
 "use client";
 
 import * as React from "react";
-import { ReactNode } from "react";
+import { Slot } from "@radix-ui/react-slot";
 import {
   Button as AriaButton,
-  Link as AriaLink,
   composeRenderProps,
-  useContextProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import type {
-  ButtonProps as AriaButtonProps,
-  LinkProps as AriaLinkProps,
-  ContextValue,
-} from "react-aria-components";
+import type { ButtonRenderProps } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 
-import { useIconOnly } from "@dotui/registry-v2/hooks/use-icon-only";
 import { focusRing } from "@dotui/registry-v2/lib/focus-styles";
-import {
-  createContext,
-  createOptionalScopedContext,
-} from "@dotui/registry-v2/lib/utils";
 import { Loader } from "@dotui/registry-v2/ui/loader";
 
 const buttonStyles = tv({
@@ -60,6 +49,7 @@ interface ButtonProps
   extends React.ComponentProps<typeof AriaButton>,
     VariantProps<typeof buttonStyles> {
   aspect?: "default" | "square" | "auto";
+  asChild?: boolean;
 }
 
 const Button = ({
@@ -67,16 +57,44 @@ const Button = ({
   variant,
   size,
   className,
+  asChild,
+  slot,
+  style,
   ...props
 }: ButtonProps) => {
   const isIconOnly = useButtonAspect(props.children, aspect);
 
+  if (asChild) {
+    return (
+      <Slot
+        data-slot="button"
+        data-icon-only={isIconOnly || undefined}
+        className={buttonStyles({
+          variant,
+          size,
+          className: className as string,
+        })}
+        slot={slot!}
+        style={style as React.CSSProperties}
+        {...props}
+      >
+        {typeof props.children === "function"
+          ? props.children({} as any)
+          : props.children}
+      </Slot>
+    );
+  }
+
   return (
     <AriaButton
+      data-slot="button"
       data-icon-only={isIconOnly || undefined}
       className={composeRenderProps(className, (cn) =>
         buttonStyles({ variant, size, className: cn }),
       )}
+      slot={slot}
+      style={style}
+      {...props}
     >
       {composeRenderProps(props.children, (children, { isPending }) => (
         <>
@@ -104,7 +122,11 @@ export { Button, buttonStyles };
  */
 
 const useButtonAspect = (
-  children: React.ReactNode,
+  children:
+    | React.ReactNode
+    | ((
+        values: ButtonRenderProps & { defaultChildren: React.ReactNode },
+      ) => React.ReactNode),
   aspect: "default" | "square" | "auto",
 ): boolean => {
   if (aspect === "default" || aspect === "square") {
@@ -118,8 +140,8 @@ const useButtonAspect = (
           return text + child;
         }
         if (React.isValidElement(child)) {
-          if (child?.props?.children) {
-            return text + getTextContent(child.props.children as ReactNode);
+          if ((child.props as any).children) {
+            return text + getTextContent((child.props as any).children);
           }
           return text;
         }
@@ -129,7 +151,21 @@ const useButtonAspect = (
     );
   };
 
-  const textContent = getTextContent(children);
+  // If children is a function, evaluate it with default render props
+  const actualChildren =
+    typeof children === "function"
+      ? children({
+          isPending: false,
+          isPressed: false,
+          isHovered: false,
+          isFocused: false,
+          isFocusVisible: false,
+          isDisabled: false,
+          defaultChildren: null,
+        })
+      : children;
+
+  const textContent = getTextContent(actualChildren);
 
   return textContent.trim() === "";
 };

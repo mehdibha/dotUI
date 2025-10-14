@@ -43,8 +43,8 @@ const inputStyles = tv({
     ],
     addon: [
       "flex items-center gap-2 text-fg-muted",
-      
-      "[&>kbd]:rounded-xs [&>svg:not([class*='size-'])]:size-4 ",
+
+      "[&>kbd]:rounded-xs [&>svg:not([class*='size-'])]:size-4",
 
       "first:group-has-[>input]/input-group:has-[>_[data-slot=button]]:ml-[-0.45rem] last:group-has-[>input]/input-group:has-[>_[data-slot=button]]:mr-[-0.45rem]",
       "first:group-has-[>input]/input-group:group-data-[size=sm]/input-group:has-[>_[data-slot=button]]:ml-[-0.55rem] last:group-has-[>input]/input-group:group-data-[size=sm]/input-group:has-[>_[data-slot=button]]:mr-[-0.55rem]",
@@ -52,14 +52,13 @@ const inputStyles = tv({
 
       "[&_[data-slot=button]>svg:not([class*='size-'])]:size-3.5",
 
-
       "group-data-[size=sm]/input-group:[&_[data-slot=button]]:h-6 group-data-[size=sm]/input-group:[&_[data-slot=button][data-icon-only]]:w-6",
       "group-data-[size=lg]/input-group:[&_[data-slot=button]]:h-7 group-data-[size=lg]/input-group:[&_[data-slot=button][data-icon-only]]:w-7",
       "[&_[data-slot=button]]:h-6 [&_[data-slot=button][data-icon-only]]:w-6",
 
-      "[&_[data-slot=button]]:rounded-sm [&_[data-slot=button]]:px-2 [&_[data-slot=button]]:text-sm [&_[data-slot=button]]:has-[>svg]:px-2 [&_[data-slot=button]]:[&>svg:not([class*='size-'])]:size-3.5",
+      "[&_[data-slot=button]]:px-2 [&_[data-slot=button]]:text-sm [&_[data-slot=button]]:has-[>svg]:px-2 [&_[data-slot=button]:not([class*='rounded-full'])]:rounded-sm [&_[data-slot=button]]:[&>svg:not([class*='size-'])]:size-3.5",
 
-      "[&_[data-slot=button][data-icon-only]]:px-0"
+      "[&_[data-slot=button][data-icon-only]]:px-0",
     ],
     input: "",
     textArea: "",
@@ -78,7 +77,7 @@ const inputStyles = tv({
     },
     inGroup: {
       true: {
-        input: "flex-1 bg-transparent outline-none min-w-0",
+        input: "min-w-0 flex-1 bg-transparent outline-none",
         textArea:
           "min-h-0 w-full resize-none rounded-none bg-transparent px-2 shadow-none outline-none",
       },
