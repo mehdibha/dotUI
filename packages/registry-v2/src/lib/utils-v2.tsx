@@ -11,18 +11,19 @@ import * as React from "react";
  * @example
  * ```tsx
  * const [ToggleButtonProvider, useContextProps] =
- *   createVariantsContext<ToggleButtonVariants>(AriaToggleButtonContext);
+ *   createVariantsContext<ToggleButtonVariants, ToggleButtonProps>(AriaToggleButtonContext);
  * ```
  */
-export function createVariantsContext<TVariants extends Record<string, any>>(
-  ariaContext: React.Context<any>,
-) {
+export function createVariantsContext<
+  TVariants extends Record<string, any>,
+  TAriaProps extends Record<string, any> = Record<string, any>,
+>(ariaContext: React.Context<any>) {
   // Create a context for our custom variant props
   const VariantsContext = React.createContext<Partial<TVariants>>({});
 
   // Provider component that wraps both contexts
   type ProviderProps = Partial<TVariants> &
-    Omit<React.ComponentProps<typeof ariaContext.Provider>, "value"> & {
+    Partial<TAriaProps> & {
       children: React.ReactNode;
     };
 

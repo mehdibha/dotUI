@@ -4,6 +4,7 @@ import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import {
   Button as AriaButton,
+  ButtonContext as AriaButtonContext,
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
@@ -11,6 +12,8 @@ import type { VariantProps } from "tailwind-variants";
 
 import { useButtonAspect } from "@dotui/registry-v2/hooks/use-button-aspect";
 import { Loader } from "@dotui/registry-v2/ui/loader";
+
+import { createVariantsContext } from "../lib/utils-v2";
 
 const buttonStyles = tv({
   base: [
@@ -52,26 +55,38 @@ const buttonStyles = tv({
   },
 });
 
+type ButtonVariants = VariantProps<typeof buttonStyles>;
+
+/* -----------------------------------------------------------------------------------------------*/
+
+const [ButtonProvider, useContextProps] = createVariantsContext<
+  ButtonVariants,
+  React.ComponentProps<typeof AriaButton>
+>(AriaButtonContext);
+
 /* -----------------------------------------------------------------------------------------------*/
 
 interface ButtonProps
   extends React.ComponentProps<typeof AriaButton>,
-    VariantProps<typeof buttonStyles> {
+    ButtonVariants {
   aspect?: "default" | "square" | "auto";
   asChild?: boolean;
 }
 
-const Button = ({
-  aspect = "auto",
-  variant,
-  size,
-  className,
-  asChild,
-  slot,
-  style,
-  ...props
-}: ButtonProps) => {
-  const isIconOnly = useButtonAspect(props.children, aspect);
+const Button = (localProps: ButtonProps) => {
+  const {
+    variant,
+    size,
+    aspect = "auto",
+    className,
+    asChild,
+    slot,
+    style,
+    children,
+    ...props
+  } = useContextProps(localProps);
+
+  const isIconOnly = useButtonAspect(children, aspect);
 
   if (asChild) {
     return (
@@ -87,9 +102,7 @@ const Button = ({
         style={style as React.CSSProperties}
         {...props}
       >
-        {typeof props.children === "function"
-          ? props.children({} as any)
-          : props.children}
+        {typeof children === "function" ? children({} as any) : children}
       </Slot>
     );
   }
@@ -105,7 +118,7 @@ const Button = ({
       style={style}
       {...props}
     >
-      {composeRenderProps(props.children, (children, { isPending }) => (
+      {composeRenderProps(children, (children, { isPending }) => (
         <>
           {isPending && (
             <Loader
@@ -127,4 +140,4 @@ const Button = ({
 };
 
 export type { ButtonProps };
-export { Button, buttonStyles };
+export { Button, ButtonProvider, buttonStyles };

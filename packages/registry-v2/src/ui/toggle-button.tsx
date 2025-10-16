@@ -9,8 +9,8 @@ import {
 import { tv } from "tailwind-variants";
 import type { VariantProps } from "tailwind-variants";
 
-import { useButtonAspect } from "../hooks/use-button-aspect";
-import { createVariantsContext } from "../lib/utils-v2";
+import { useButtonAspect } from "@dotui/registry-v2/hooks/use-button-aspect";
+import { createVariantsContext } from "@dotui/registry-v2/lib/utils-v2";
 
 const toggleButtonStyles = tv({
   base: [
@@ -47,8 +47,10 @@ type ToggleButtonVariants = VariantProps<typeof toggleButtonStyles>;
 
 /* -----------------------------------------------------------------------------------------------*/
 
-const [ToggleButtonProvider, useContextProps] =
-  createVariantsContext<ToggleButtonVariants>(AriaToggleButtonContext);
+const [ToggleButtonProvider, useContextProps] = createVariantsContext<
+  ToggleButtonVariants,
+  React.ComponentProps<typeof AriaToggleButton>
+>(AriaToggleButtonContext);
 
 /* -----------------------------------------------------------------------------------------------*/
 
