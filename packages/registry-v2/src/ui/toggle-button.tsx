@@ -46,14 +46,18 @@ const ToggleButtonContext = React.createContext<
   VariantProps<typeof toggleButtonStyles>
 >({});
 
+interface ToggleButtonProviderProps
+  extends Omit<React.ComponentProps<typeof AriaToggleButton>, "children">,
+    VariantProps<typeof toggleButtonStyles> {
+  children: React.ReactNode;
+}
+
 const ToggleButtonProvider = ({
   children,
   variant,
   size,
   ...props
-}: {
-  children: React.ReactNode;
-} & VariantProps<typeof toggleButtonStyles>) => {
+}: ToggleButtonProviderProps) => {
   return (
     <ToggleButtonContext.Provider value={{ variant, size }}>
       <AriaToggleButtonContext.Provider value={props}>
@@ -112,6 +116,6 @@ const ToggleButton = ({
 
 /* -----------------------------------------------------------------------------------------------*/
 
-export { ToggleButton, toggleButtonStyles };
+export { ToggleButton, ToggleButtonProvider, toggleButtonStyles };
 
-export type { ToggleButtonProps };
+export type { ToggleButtonProps, ToggleButtonProviderProps };
