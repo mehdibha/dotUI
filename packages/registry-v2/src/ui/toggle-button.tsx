@@ -10,6 +10,7 @@ import { tv } from "tailwind-variants";
 import type { VariantProps } from "tailwind-variants";
 
 import { useButtonAspect } from "../hooks/use-button-aspect";
+import { createVariantsContext } from "../lib/utils-v2";
 
 const toggleButtonStyles = tv({
   base: [
@@ -42,51 +43,32 @@ const toggleButtonStyles = tv({
   },
 });
 
-const ToggleButtonContext = React.createContext<
-  VariantProps<typeof toggleButtonStyles>
->({});
+type ToggleButtonVariants = VariantProps<typeof toggleButtonStyles>;
 
-interface ToggleButtonProviderProps
-  extends Omit<React.ComponentProps<typeof AriaToggleButton>, "children">,
-    VariantProps<typeof toggleButtonStyles> {
-  children: React.ReactNode;
-}
+/* -----------------------------------------------------------------------------------------------*/
 
-const ToggleButtonProvider = ({
-  children,
-  variant,
-  size,
-  ...props
-}: ToggleButtonProviderProps) => {
-  return (
-    <ToggleButtonContext.Provider value={{ variant, size }}>
-      <AriaToggleButtonContext.Provider value={props}>
-        {children}
-      </AriaToggleButtonContext.Provider>
-    </ToggleButtonContext.Provider>
-  );
-};
+const [ToggleButtonProvider, useContextProps] =
+  createVariantsContext<ToggleButtonVariants>(AriaToggleButtonContext);
 
 /* -----------------------------------------------------------------------------------------------*/
 
 interface ToggleButtonProps
   extends React.ComponentProps<typeof AriaToggleButton>,
-    VariantProps<typeof toggleButtonStyles> {
+    ToggleButtonVariants {
   aspect?: "default" | "square" | "auto";
 }
 
-const ToggleButton = ({
-  aspect = "auto",
-  variant,
-  size,
-  className,
-  ...props
-}: ToggleButtonProps) => {
-  const isIconOnly = useButtonAspect(props.children, aspect);
-  const context = React.useContext(ToggleButtonContext);
+const ToggleButton = (localProps: ToggleButtonProps) => {
+  const {
+    variant,
+    size,
+    aspect = "auto",
+    className,
+    children,
+    ...props
+  } = useContextProps(localProps);
 
-  const resolvedVariant = context.variant || variant;
-  const resolvedSize = context.size || size;
+  const isIconOnly = useButtonAspect(children, aspect);
 
   return (
     <AriaToggleButton
@@ -94,14 +76,14 @@ const ToggleButton = ({
       data-icon-only={isIconOnly || undefined}
       className={composeRenderProps(className, (cn) =>
         toggleButtonStyles({
-          variant: resolvedVariant,
-          size: resolvedSize,
+          variant,
+          size,
           className: cn,
         }),
       )}
       {...props}
     >
-      {composeRenderProps(props.children, (children) => (
+      {composeRenderProps(children, (children) => (
         <>
           {typeof children === "string" ? (
             <span className="truncate">{children}</span>
@@ -118,4 +100,4 @@ const ToggleButton = ({
 
 export { ToggleButton, ToggleButtonProvider, toggleButtonStyles };
 
-export type { ToggleButtonProps, ToggleButtonProviderProps };
+export type { ToggleButtonProps };
