@@ -46,9 +46,9 @@ const inputStyles = tv({
 
       "[&>kbd]:rounded-xs [&>svg:not([class*='size-'])]:size-4",
 
-      "first:group-has-[>input]/input-group:has-[>_[data-slot=button]]:ml-[-0.45rem] last:group-has-[>input]/input-group:has-[>_[data-slot=button]]:mr-[-0.45rem]",
-      "first:group-has-[>input]/input-group:group-data-[size=sm]/input-group:has-[>_[data-slot=button]]:ml-[-0.55rem] last:group-has-[>input]/input-group:group-data-[size=sm]/input-group:has-[>_[data-slot=button]]:mr-[-0.55rem]",
-      "first:group-has-[>input]/input-group:group-data-[size=lg]/input-group:has-[>_[data-slot=button]]:ml-[-0.4rem] last:group-has-[>input]/input-group:group-data-[size=lg]/input-group:has-[>_[data-slot=button]]:mr-[-0.3rem]",
+      "first:group-has-[>input]/input-group:has-[>_[data-slot=button]]:ml-[-0.4375rem] last:group-has-[>input]/input-group:has-[>_[data-slot=button]]:mr-[-0.4375rem]",
+      "first:group-has-[>input]/input-group:group-data-[size=sm]/input-group:has-[>_[data-slot=button]]:ml-[-0.5625rem] last:group-has-[>input]/input-group:group-data-[size=sm]/input-group:has-[>_[data-slot=button]]:mr-[-0.5625rem]",
+      "first:group-has-[>input]/input-group:group-data-[size=lg]/input-group:has-[>_[data-slot=button]]:ml-[-0.4375rem] last:group-has-[>input]/input-group:group-data-[size=lg]/input-group:has-[>_[data-slot=button]]:mr-[-0.4375rem]",
 
       "[&_[data-slot=button]>svg:not([class*='size-'])]:size-3.5",
 

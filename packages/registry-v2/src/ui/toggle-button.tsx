@@ -6,108 +6,78 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import type { ToggleButtonProps as AriaToggleButtonProps } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 
-import { focusRing } from "@dotui/registry-v2/lib/focus-styles";
-import { createOptionalScopedContext } from "@dotui/registry-v2/lib/utils";
+import { useButtonAspect } from "../hooks/use-button-aspect";
 
 const toggleButtonStyles = tv({
-  extend: focusRing,
-  base: "inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-md text-sm leading-normal font-medium transition-colors disabled:cursor-default disabled:bg-disabled disabled:text-fg-disabled",
+  base: [
+    "inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-md text-sm leading-normal font-medium transition-[background-color,border-color,color,box-shadow]",
+
+    // focus state
+    "focus-reset focus-visible:focus-ring",
+
+    // disabled state
+    "disabled:cursor-default disabled:bg-disabled disabled:text-fg-disabled",
+  ],
   variants: {
     variant: {
       quiet:
         "bg-transparent text-fg hover:bg-inverse/10 pressed:bg-inverse/20 selected:bg-primary selected:text-fg-on-primary selected:hover:bg-primary-hover selected:pressed:bg-primary-active",
-      primary:
-        "border border-border-field bg-transparent text-fg hover:bg-inverse/10 pressed:border-transparent pressed:bg-inverse/20 selected:border-transparent selected:bg-primary selected:text-fg-on-primary selected:hover:bg-primary-hover selected:pressed:bg-primary-active",
-      accent:
-        "border border-border-field bg-transparent text-fg hover:bg-inverse/10 pressed:border-transparent pressed:bg-inverse/20 selected:border-transparent selected:bg-accent selected:text-fg-on-accent selected:hover:bg-accent-hover selected:pressed:bg-accent-active",
     },
     size: {
-      sm: "size-8 [&_svg]:size-4",
-      md: "size-9 [&_svg]:size-4",
-      lg: "size-10 [&_svg]:size-5",
-    },
-    shape: {
-      rectangle: "",
-      square: "",
-      circle: "rounded-full",
+      sm: "h-8 px-3 data-icon-only:w-8 [&_svg]:size-4",
+      md: "h-9 px-4 data-icon-only:w-9 [&_svg]:size-4",
+      lg: "h-10 px-5 data-icon-only:w-10 [&_svg]:size-5",
     },
   },
-  compoundVariants: [
-    {
-      size: "sm",
-      shape: "rectangle",
-      className: "w-auto px-3",
-    },
-    {
-      size: "md",
-      shape: "rectangle",
-      className: "w-auto px-4",
-    },
-    {
-      size: "lg",
-      shape: "rectangle",
-      className: "w-auto px-5",
-    },
-  ],
   defaultVariants: {
     variant: "quiet",
     size: "md",
-    shape: "square",
   },
 });
 
-const [ToggleButtonProvider, useToggleButtonContext] =
-  createOptionalScopedContext<VariantProps<typeof toggleButtonStyles>>(
-    "Button",
-  );
+/* -----------------------------------------------------------------------------------------------*/
 
 interface ToggleButtonProps
-  extends Omit<AriaToggleButtonProps, "className">,
+  extends React.ComponentProps<typeof AriaToggleButton>,
     VariantProps<typeof toggleButtonStyles> {
-  className?: string;
-  prefix?: React.ReactNode;
-  suffix?: React.ReactNode;
+  aspect?: "default" | "square" | "auto";
 }
 
-const ToggleButton = React.forwardRef(
-  (
-    localProps: ToggleButtonProps,
-    ref: React.ForwardedRef<HTMLButtonElement>,
-  ) => {
-    const contextProps = useToggleButtonContext();
-    const props = { ...contextProps, ...localProps };
-    const { className, variant, size, shape, prefix, suffix, ...restProps } =
-      props;
-    return (
-      <AriaToggleButton
-        ref={ref}
-        {...restProps}
-        className={toggleButtonStyles({
-          variant,
-          size,
-          shape,
-          className,
-        })}
-      >
-        {composeRenderProps(props.children, (children) => (
-          <>
-            {prefix}
-            {typeof children === "string" ? (
-              <span className="truncate">{children}</span>
-            ) : (
-              children
-            )}
-            {suffix}
-          </>
-        ))}
-      </AriaToggleButton>
-    );
-  },
-);
-ToggleButton.displayName = "ToggleButton";
+const ToggleButton = ({
+  aspect = "auto",
+  variant,
+  size,
+  className,
+  ...props
+}: ToggleButtonProps) => {
+  const isIconOnly = useButtonAspect(props.children, aspect);
+
+  return (
+    <AriaToggleButton
+      data-slot="button"
+      data-icon-only={isIconOnly || undefined}
+      className={composeRenderProps(className, (cn) =>
+        toggleButtonStyles({ variant, size, className: cn }),
+      )}
+      {...props}
+    >
+      {composeRenderProps(props.children, (children) => (
+        <>
+          {typeof children === "string" ? (
+            <span className="truncate">{children}</span>
+          ) : (
+            children
+          )}
+        </>
+      ))}
+    </AriaToggleButton>
+  );
+};
+
+/* -----------------------------------------------------------------------------------------------*/
+
+export { ToggleButton, toggleButtonStyles };
 
 export type { ToggleButtonProps };
-export { ToggleButton, toggleButtonStyles, ToggleButtonProvider };

@@ -6,7 +6,9 @@ import { ThemeModeSwitch } from "@/components/ui/theme-mode-switch";
 import { TableOfContents } from "@/modules/docs/components/toc";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 import { ActiveStyleSelector } from "@/modules/styles/components/active-style-selector";
+import { ButtonDemo } from "./demos/button-demo";
 import { TextFieldDemo } from "./demos/text-field-demo";
+import { ToggleButtonDemo } from "./demos/toggle-button-demo";
 // import * as demos from "./demos";
 import { ThemeSwitcher } from "./theme-switcher";
 
@@ -24,37 +26,37 @@ interface ContentSection {
 }
 
 const content: ContentSection[] = [
-  // {
-  //   id: "buttons",
-  //   title: "Buttons",
-  //   items: [
-  //     {
-  //       id: "button",
-  //       title: "Button",
-  //       preview: demos.ButtonDemo,
-  //     },
-  //     {
-  //       id: "toggle-button",
-  //       title: "ToggleButton",
-  //       preview: demos.ToggleButtonDemo,
-  //     },
-  //     {
-  //       id: "toggle-button-group",
-  //       title: "ToggleButtonGroup",
-  //       preview: demos.ToggleButtonGroupDemo,
-  //     },
-  //     {
-  //       id: "file-trigger",
-  //       title: "FileTrigger",
-  //       preview: demos.FileTriggerDemo,
-  //     },
-  //     {
-  //       id: "button-group",
-  //       title: "ButtonGroup",
-  //       preview: demos.ButtonGroupDemo,
-  //     },
-  //   ],
-  // },
+  {
+    id: "buttons",
+    title: "Buttons",
+    items: [
+      {
+        id: "button",
+        title: "Button",
+        preview: ButtonDemo,
+      },
+      {
+        id: "toggle-button",
+        title: "ToggleButton",
+        preview: ToggleButtonDemo,
+      },
+      // {
+      //   id: "toggle-button-group",
+      //   title: "ToggleButtonGroup",
+      //   preview: demos.ToggleButtonGroupDemo,
+      // },
+      // {
+      //   id: "file-trigger",
+      //   title: "FileTrigger",
+      //   preview: demos.FileTriggerDemo,
+      // },
+      // {
+      //   id: "button-group",
+      //   title: "ButtonGroup",
+      //   preview: demos.ButtonGroupDemo,
+      // },
+    ],
+  },
 
   {
     id: "inputs-controls-form",
@@ -450,12 +452,7 @@ const Section = ({
         {title}
       </h3>
       {description && <p className="text-sm text-fg-muted">{description}</p>}
-      <div
-        className={cn(
-          "flex flex-col items-center justify-center gap-4 rounded-lg border bg-bg p-6",
-          className,
-        )}
-      >
+      <div className={cn("rounded-lg border bg-bg p-6", className)}>
         {children}
       </div>
     </div>

@@ -7,21 +7,30 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import type { ButtonRenderProps } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 
-import { focusRing } from "@dotui/registry-v2/lib/focus-styles";
+import { useButtonAspect } from "@dotui/registry-v2/hooks/use-button-aspect";
 import { Loader } from "@dotui/registry-v2/ui/loader";
 
 const buttonStyles = tv({
-  extend: focusRing,
-  base: "relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-md text-sm leading-normal font-medium whitespace-nowrap transition-all disabled:cursor-default disabled:border disabled:border-border-disabled disabled:bg-disabled disabled:text-fg-disabled data-icon-only:px-0 pending:cursor-default pending:border pending:border-border-disabled pending:bg-disabled pending:text-fg-disabled pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0",
+  base: [
+    "relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-md text-sm leading-normal font-medium whitespace-nowrap transition-[background-color,border-color,color,box-shadow] data-icon-only:px-0",
+
+    // focus state
+    "focus-reset focus-visible:focus-ring",
+
+    // disabled state
+    "disabled:cursor-default disabled:border disabled:border-border-disabled disabled:bg-disabled disabled:text-fg-disabled",
+
+    // pending state
+    "pending:cursor-default pending:border pending:border-border-disabled pending:bg-disabled pending:text-transparent pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0 pending:**:data-[slot=spinner]:text-fg-muted",
+  ],
   variants: {
     variant: {
       default:
-        "border bg-neutral text-fg-on-neutral hover:border-border-hover hover:bg-neutral-hover active:bg-neutral-active",
+        "border bg-neutral text-fg-on-neutral hover:border-border-hover hover:bg-neutral-hover pressed:bg-neutral-active",
       primary:
-        "bg-primary text-fg-on-primary [--color-disabled:var(--neutral-500)] [--color-fg-disabled:var(--neutral-300)] hover:bg-primary-hover disabled:border-0 pending:border-0",
+        "bg-primary text-fg-on-primary [--color-disabled:var(--neutral-500)] [--color-fg-disabled:var(--neutral-300)] hover:bg-primary-hover disabled:border-0 pending:border-0 pressed:bg-primary-active",
       quiet: "bg-transparent text-fg hover:bg-inverse/10 pressed:bg-inverse/20",
       link: "text-fg underline-offset-4 hover:underline",
       success:
@@ -106,7 +115,11 @@ const Button = ({
               size={16}
             />
           )}
-          {children}
+          {typeof children === "string" ? (
+            <span className="truncate">{children}</span>
+          ) : (
+            children
+          )}
         </>
       ))}
     </AriaButton>
@@ -115,57 +128,3 @@ const Button = ({
 
 export type { ButtonProps };
 export { Button, buttonStyles };
-
-/**
- * Returns true if the button should be square, otherwise false.
- *
- */
-
-const useButtonAspect = (
-  children:
-    | React.ReactNode
-    | ((
-        values: ButtonRenderProps & { defaultChildren: React.ReactNode },
-      ) => React.ReactNode),
-  aspect: "default" | "square" | "auto",
-): boolean => {
-  if (aspect === "default" || aspect === "square") {
-    return aspect === "square";
-  }
-
-  const getTextContent = (children: React.ReactNode): string => {
-    return React.Children.toArray(children).reduce(
-      (text: string, child: React.ReactNode): string => {
-        if (typeof child === "string" || typeof child === "number") {
-          return text + child;
-        }
-        if (React.isValidElement(child)) {
-          if ((child.props as any).children) {
-            return text + getTextContent((child.props as any).children);
-          }
-          return text;
-        }
-        return text;
-      },
-      "",
-    );
-  };
-
-  // If children is a function, evaluate it with default render props
-  const actualChildren =
-    typeof children === "function"
-      ? children({
-          isPending: false,
-          isPressed: false,
-          isHovered: false,
-          isFocused: false,
-          isFocusVisible: false,
-          isDisabled: false,
-          defaultChildren: null,
-        })
-      : children;
-
-  const textContent = getTextContent(actualChildren);
-
-  return textContent.trim() === "";
-};
