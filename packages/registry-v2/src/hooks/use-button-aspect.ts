@@ -1,17 +1,14 @@
 import React from "react";
-import type { ButtonRenderProps } from "react-aria-components";
 
 /**
  * Returns true if the button should be square, otherwise false.
  *
  */
 
-export const useButtonAspect = (
+export const useButtonAspect = <T extends Record<string, any> = any>(
   children:
     | React.ReactNode
-    | ((
-        values: ButtonRenderProps & { defaultChildren: React.ReactNode },
-      ) => React.ReactNode),
+    | ((values: T & { defaultChildren: React.ReactNode }) => React.ReactNode),
   aspect: "default" | "square" | "auto",
 ): boolean => {
   if (aspect === "default" || aspect === "square") {
@@ -36,18 +33,10 @@ export const useButtonAspect = (
     );
   };
 
-  // If children is a function, evaluate it with default render props
+  // If children is a function, evaluate it with an empty object to get the rendered content
   const actualChildren =
     typeof children === "function"
-      ? children({
-          isPending: false,
-          isPressed: false,
-          isHovered: false,
-          isFocused: false,
-          isFocusVisible: false,
-          isDisabled: false,
-          defaultChildren: null,
-        })
+      ? children({} as T & { defaultChildren: React.ReactNode })
       : children;
 
   const textContent = getTextContent(actualChildren);

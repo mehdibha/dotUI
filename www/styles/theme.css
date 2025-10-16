@@ -26,8 +26,11 @@
   --color-muted: var(--neutral-200);
   --color-inverse: var(--neutral-950);
   --color-disabled: var(--neutral-200);
-  --color-selected: var(--accent-500);
-  --color-fg-on-selected: var(--on-accent-500);
+
+  --color-selected: var(--neutral-300);
+  --color-selected-hover: var(--neutral-400);
+  --color-selected-active: var(--neutral-500);
+  --color-fg-on-selected: var(--on-neutral-300);
 
   --color-neutral: var(--neutral-200);
   --color-neutral-hover: var(--neutral-300);
