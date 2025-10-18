@@ -9,7 +9,7 @@
 }
 
 /* -------------- Radius -------------- */
-@theme {
+@theme inline {
   --radius-xs: calc(0.125rem * var(--radius-factor));
   --radius-sm: calc(0.25rem * var(--radius-factor));
   --radius-md: calc(0.375rem * var(--radius-factor));
@@ -91,6 +91,7 @@
 
   --color-border: var(--neutral-300);
   --color-border-hover: var(--neutral-400);
+  --color-border-active: var(--neutral-500);
   --color-border-field: var(--neutral-400);
   --color-border-control: var(--neutral-700);
   --color-border-disabled: var(--neutral-300);

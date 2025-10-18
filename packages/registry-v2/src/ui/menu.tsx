@@ -22,8 +22,11 @@ import type {
 } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 
+import { Drawer } from "@dotui/registry-v2/ui/drawer";
 import { Kbd } from "@dotui/registry-v2/ui/kbd";
+import { Modal } from "@dotui/registry-v2/ui/modal";
 import { Overlay } from "@dotui/registry-v2/ui/overlay";
+import { Popover } from "@dotui/registry-v2/ui/popover";
 import { Text } from "@dotui/registry-v2/ui/text";
 import type { OverlayProps } from "@dotui/registry-v2/ui/overlay";
 
@@ -61,27 +64,9 @@ const menuSectionStyles = tv({
   base: "space-y-px pt-2",
 });
 
-type MenuRootProps = AriaMenuTriggerProps;
-const MenuRoot = (props: MenuRootProps) => {
+type MenuProps = AriaMenuTriggerProps;
+const MenuRoot = (props: MenuProps) => {
   return <AriaMenuTrigger {...props} />;
-};
-
-type MenuProps<T> = MenuContentProps<T> & {
-  type?: OverlayProps["type"];
-  mobileType?: OverlayProps["mobileType"];
-  overlayProps?: OverlayProps;
-};
-const Menu = <T extends object>({
-  type = "popover",
-  mobileType = "drawer",
-  overlayProps,
-  ...props
-}: MenuProps<T>) => {
-  return (
-    <Overlay type={type} mobileType={mobileType} {...overlayProps}>
-      <MenuContent {...props} />
-    </Overlay>
-  );
 };
 
 type MenuContentProps<T> = AriaMenuProps<T>;
@@ -181,12 +166,22 @@ const MenuSection = <T extends object>({
   );
 };
 
+const CompoundMenu = Object.assign(MenuRoot, {
+  Content: MenuContent,
+  Item: MenuItem,
+  Overlay,
+  Popover,
+  Modal,
+  Drawer,
+  Section: MenuSection,
+  Sub: MenuSub,
+});
+
 export type {
   MenuRootProps,
-  MenuProps,
   MenuContentProps,
   MenuItemProps,
   MenuSectionProps,
   MenuSubProps,
 };
-export { MenuRoot, Menu, MenuItem, MenuContent, MenuSub, MenuSection };
+export { CompoundMenu as Menu, MenuItem, MenuContent, MenuSub, MenuSection };

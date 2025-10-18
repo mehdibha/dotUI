@@ -5,15 +5,15 @@
 @variant in-drawer ([data-slot="drawer"] &);
 
 @utility focus-reset {
-  @apply ring-border-focus outline-none ring-0;
+  @apply ring-0 ring-transparent outline-none;
 }
 
 @utility focus-ring {
-  @apply ring-offset-bg ring-2 ring-offset-2;
+  @apply ring-2 ring-border-focus ring-offset-2 ring-offset-bg;
 }
 
 @utility focus-input {
-  @apply border-border-focus ring-2;
+  @apply border-border-focus ring-2 ring-border-focus-muted;
 }
 
 @layer base {

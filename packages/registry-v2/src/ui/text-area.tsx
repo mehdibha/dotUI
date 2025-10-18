@@ -8,9 +8,8 @@ import {
 import { tv } from "tailwind-variants";
 
 import { HelpText, Label } from "@dotui/registry-v2/ui/field";
-import { InputRoot, TextAreaInput } from "@dotui/registry-v2/ui/input";
+import { Input } from "@dotui/registry-v2/ui/input";
 import type { FieldProps } from "@dotui/registry-v2/ui/field";
-import type { InputRootProps } from "@dotui/registry-v2/ui/input";
 
 const textAreaStyles = tv({
   base: "flex w-48 flex-col items-start gap-2",
@@ -32,9 +31,11 @@ const TextArea = ({
   return (
     <TextAreaRoot {...props}>
       {label && <Label>{label}</Label>}
-      <InputRoot prefix={prefix} suffix={suffix} multiline>
-        <TextAreaInput />
-      </InputRoot>
+      <Input.Group>
+        {prefix && <Input.Addon>{prefix}</Input.Addon>}
+        <Input.TextArea />
+        {suffix && <Input.Addon>{suffix}</Input.Addon>}
+      </Input.Group>
       <HelpText description={description} errorMessage={errorMessage} />
     </TextAreaRoot>
   );

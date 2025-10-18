@@ -7,8 +7,20 @@ import { TableOfContents } from "@/modules/docs/components/toc";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 import { ActiveStyleSelector } from "@/modules/styles/components/active-style-selector";
 import { ButtonDemo } from "./demos/button-demo";
+import { ButtonGroupDemo } from "./demos/button-group-demo";
+import { CheckboxDemo } from "./demos/checkbox-demo";
+import { FileTriggerDemo } from "./demos/file-trigger-demo";
+import { InputDemo } from "./demos/input-demo";
+import { InputGroupDemo } from "./demos/input-group-demo";
+import { NumberFieldDemo } from "./demos/number-field-demo";
+import { SearchFieldDemo } from "./demos/search-field-demo";
+import { SliderDemo } from "./demos/slider-demo";
+import { SwitchDemo } from "./demos/switch-demo";
+import { TextAreaDemo } from "./demos/text-area-demo";
 import { TextFieldDemo } from "./demos/text-field-demo";
 import { ToggleButtonDemo } from "./demos/toggle-button-demo";
+import { ToggleButtonGroupDemo } from "./demos/toggle-button-group-demo";
+import { FieldDemo } from "./demos/field-demo";
 // import * as demos from "./demos";
 import { ThemeSwitcher } from "./theme-switcher";
 
@@ -30,30 +42,30 @@ const content: ContentSection[] = [
     id: "buttons",
     title: "Buttons",
     items: [
-      {
-        id: "button",
-        title: "Button",
-        preview: ButtonDemo,
-      },
-      {
-        id: "toggle-button",
-        title: "ToggleButton",
-        preview: ToggleButtonDemo,
-      },
+      // {
+      //   id: "button",
+      //   title: "Button",
+      //   preview: ButtonDemo,
+      // },
+      // {
+      //   id: "toggle-button",
+      //   title: "ToggleButton",
+      //   preview: ToggleButtonDemo,
+      // },
       // {
       //   id: "toggle-button-group",
       //   title: "ToggleButtonGroup",
-      //   preview: demos.ToggleButtonGroupDemo,
+      //   preview: ToggleButtonGroupDemo,
       // },
       // {
       //   id: "file-trigger",
       //   title: "FileTrigger",
-      //   preview: demos.FileTriggerDemo,
+      //   preview: FileTriggerDemo,
       // },
       // {
       //   id: "button-group",
       //   title: "ButtonGroup",
-      //   preview: demos.ButtonGroupDemo,
+      //   preview: ButtonGroupDemo,
       // },
     ],
   },
@@ -62,51 +74,64 @@ const content: ContentSection[] = [
     id: "inputs-controls-form",
     title: "Inputs, controls and form",
     items: [
-      {
-        id: "text-field",
-        title: "TextField",
-        preview: TextFieldDemo,
-      },
-      //     {
-      //       id: "text-area",
-      //       title: "TextArea",
-      //       preview: demos.TextAreaDemo,
-      //     },
-      //     {
-      //       id: "search-field",
-      //       title: "SearchField",
-      //       preview: demos.SearchFieldDemo,
-      //     },
-      //     {
-      //       id: "number-field",
-      //       title: "NumberField",
-      //       preview: demos.NumberFieldDemo,
-      //     },
-      //     {
-      //       id: "checkbox",
-      //       title: "Checkbox & CheckboxGroup",
-      //       preview: demos.CheckboxDemo,
-      //     },
+      // {
+      //   id: "input",
+      //   title: "Input",
+      //   preview: InputDemo,
+      // },
+      // {
+      //   id: "text-area",
+      //   title: "TextArea",
+      //   preview: TextAreaDemo,
+      // },
+      // {
+      //   id: "input-group",
+      //   title: "InputGroup",
+      //   preview: InputGroupDemo,
+      // },
+      // {
+      //   id: "text-field",
+      //   title: "TextField",
+      //   preview: TextFieldDemo,
+      // },
+      // {
+      //   id: "search-field",
+      //   title: "SearchField",
+      //   preview: SearchFieldDemo,
+      // },
+      // {
+      //   id: "number-field",
+      //   title: "NumberField",
+      //   preview: NumberFieldDemo,
+      // },
+      // TODO
+      // {
+      //   id: "checkbox",
+      //   title: "Checkbox & CheckboxGroup",
+      //   preview: CheckboxDemo,
+      // },
+      // TODO
       //     {
       //       id: "radio-group",
       //       title: "RadioGroup",
       //       preview: demos.RadioGroupDemo,
       //     },
-      //     {
-      //       id: "switch",
-      //       title: "Switch",
-      //       preview: demos.SwitchDemo,
-      //     },
-      //     {
-      //       id: "slider",
-      //       title: "Slider",
-      //       preview: demos.SliderDemo,
-      //     },
-      //     {
-      //       id: "field",
-      //       title: "Field",
-      //       preview: demos.FieldDemo,
-      //     },
+      // TODO
+      // {
+      //   id: "switch",
+      //   title: "Switch",
+      //   preview: SwitchDemo,
+      // },
+      // {
+      //   id: "slider",
+      //   title: "Slider",
+      //   preview: SliderDemo,
+      // },
+      {
+        id: "field",
+        title: "Field",
+        preview: FieldDemo,
+      },
       //     {
       //       id: "form",
       //       title: "Form",

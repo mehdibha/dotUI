@@ -1,17 +1,14 @@
 "use client";
 
 import { Description, FieldError, Label } from "@dotui/registry-v2/ui/field";
+import { Input } from "@dotui/registry-v2/ui/input";
 
 export function FieldDemo() {
   return (
     <div className="flex flex-col gap-6">
       <div className="space-y-2">
         <Label>Field Label</Label>
-        <input
-          type="text"
-          className="w-full rounded-md border px-3 py-2 text-sm"
-          placeholder="Enter text..."
-        />
+        <Input placeholder="Enter text..." />
         <Description>This is a helpful description for the field.</Description>
       </div>
 

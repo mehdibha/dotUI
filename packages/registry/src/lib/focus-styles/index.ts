@@ -1,13 +1,13 @@
 import { tv } from "tailwind-variants";
 
 export const focusRing = tv({
-  base: "focus-ring",
+  base: "",
 });
 
 export const focusRingGroup = tv({
-  base: "focus-ring-group",
+  base: "",
 });
 
 export const focusInput = tv({
-  base: "focus-ring-input",
+  base: "",
 });

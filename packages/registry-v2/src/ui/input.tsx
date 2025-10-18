@@ -60,8 +60,8 @@ const inputStyles = tv({
 
       "[&_[data-slot=button][data-icon-only]]:px-0",
     ],
-    input: "",
-    textArea: "",
+    input: "placeholder:text-fg-muted disabled:placeholder:text-fg-disabled",
+    textArea: "placeholder:text-fg-muted disabled:placeholder:text-fg-disabled",
   },
   variants: {
     size: {
@@ -77,7 +77,7 @@ const inputStyles = tv({
     },
     inGroup: {
       true: {
-        input: "min-w-0 flex-1 bg-transparent outline-none",
+        input: ["min-w-0 flex-1 bg-transparent outline-none"],
         textArea:
           "min-h-0 w-full resize-none rounded-none bg-transparent px-2 shadow-none outline-none",
       },
@@ -85,10 +85,14 @@ const inputStyles = tv({
         input: [
           "w-48 rounded-md border border-border-field bg-neutral px-3 py-2 shadow-xs",
           "text-base focus-reset transition-[border-color,box-shadow] focus:focus-input sm:text-sm",
+          "disabled:cursor-not-allowed disabled:border-border-disabled disabled:bg-disabled disabled:text-fg-disabled",
+          "invalid:border-border-danger focus-within:has-[input[data-invalid]]:border-border invalid:text-fg-danger",
         ],
         textArea: [
           "flex min-h-16 w-48 resize-none rounded-md border border-border-field bg-neutral px-3 py-2 shadow-xs",
           "text-base focus-reset transition-[border-color,box-shadow] focus:focus-input sm:text-sm",
+          "disabled:cursor-not-allowed disabled:border-border-disabled disabled:bg-disabled disabled:text-fg-disabled",
+          "invalid:border-border-danger focus-within:has-[input[data-invalid]]:border-border invalid:text-fg-danger",
         ],
       },
     },
@@ -292,6 +296,7 @@ function InputAddon({ className, ...props }: InputAddonProps) {
 
 const CompoundInput = Object.assign(Input, {
   Group: InputGroup,
+  Addon: InputAddon,
   TextArea,
 });
 

@@ -1,6 +1,8 @@
 "use client";
 
 import * as React from "react";
+import { mergeProps } from "react-aria";
+import { useSlottedContext } from "react-aria-components";
 
 /**
  * Creates a variant context system for react-aria components.
@@ -60,12 +62,11 @@ export function createVariantsContext<
     localProps: TProps,
   ): TProps {
     const contextVariants = React.useContext(VariantsContext);
+    const ariaProps = useSlottedContext(ariaContext, localProps.slot) || {};
+
 
     // Merge context with local props (local props win)
-    return {
-      ...contextVariants,
-      ...localProps,
-    } as TProps;
+    return mergeProps(contextVariants, ariaProps, localProps) as TProps;
   }
 
   return [Provider, useContextProps] as const;

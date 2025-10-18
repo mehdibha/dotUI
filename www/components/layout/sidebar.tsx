@@ -113,6 +113,7 @@ export const Sidebar = ({
         </StyledTooltip>
         <div className="flex w-[calc(var(--sidebar-width)-calc(var(--spacing)*6))] justify-end">
           <Button
+            variant="quiet"
             shape="square"
             size="sm"
             onPress={() => setCollapsed(!isCollapsed)}

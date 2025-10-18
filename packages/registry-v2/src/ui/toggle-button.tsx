@@ -14,7 +14,7 @@ import { createVariantsContext } from "@dotui/registry-v2/lib/utils-v2";
 
 const toggleButtonStyles = tv({
   base: [
-    "inline-flex shrink-0 cursor-default items-center justify-center gap-2 rounded-md text-sm leading-normal font-medium transition-[background-color,border-color,color,box-shadow] data-icon-only:px-0",
+    "inline-flex shrink-0 cursor-default items-center justify-center gap-2 rounded-md text-sm leading-normal font-medium whitespace-nowrap transition-[background-color,border-color,color,box-shadow] data-icon-only:px-0",
 
     // focus state
     "focus-reset focus-visible:focus-ring",
@@ -28,7 +28,7 @@ const toggleButtonStyles = tv({
   variants: {
     variant: {
       default:
-        "border bg-neutral text-fg-on-neutral hover:border-border-hover hover:bg-neutral-hover pressed:bg-neutral-active",
+        "border bg-neutral text-fg-on-neutral hover:border-border-hover hover:bg-neutral-hover pressed:border-border-active pressed:bg-neutral-active selected:border-border-active",
       quiet: "bg-transparent text-fg hover:bg-inverse/10 pressed:bg-inverse/20",
     },
     size: {
@@ -36,10 +36,6 @@ const toggleButtonStyles = tv({
       md: "h-9 px-4 data-icon-only:w-9 [&_svg]:size-4",
       lg: "h-10 px-5 data-icon-only:w-10 [&_svg]:size-5",
     },
-  },
-  defaultVariants: {
-    variant: "default",
-    size: "md",
   },
 });
 
@@ -62,8 +58,8 @@ interface ToggleButtonProps
 
 const ToggleButton = (localProps: ToggleButtonProps) => {
   const {
-    variant,
-    size,
+    variant = "default",
+    size = "md",
     aspect = "auto",
     className,
     children,
@@ -76,6 +72,8 @@ const ToggleButton = (localProps: ToggleButtonProps) => {
     <AriaToggleButton
       data-slot="button"
       data-icon-only={isIconOnly || undefined}
+      data-variant={variant}
+      data-size={size}
       className={composeRenderProps(className, (cn) =>
         toggleButtonStyles({
           variant,

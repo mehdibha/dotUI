@@ -1,113 +1,59 @@
 "use client";
 
-import Link from "next/link";
-import { IconCheck, IconInfoCircle } from "@tabler/icons-react";
-import {
-  ArrowUpIcon,
-  CheckIcon,
-  EditIcon,
-  PlusIcon,
-  SendIcon,
-  XIcon,
-} from "lucide-react";
-import { TextField } from "react-aria-components";
-
-import { cn } from "@dotui/registry-v2/lib/utils";
-import { Button } from "@dotui/registry-v2/ui/button";
-import {
-  Input,
-  InputAddon,
-  InputGroup,
-  TextArea,
-} from "@dotui/registry-v2/ui/input";
-import { SearchField } from "@dotui/registry-v2/ui/search-field";
-import { Select } from "@dotui/registry-v2/ui/select";
-import { Tooltip } from "@dotui/registry-v2/ui/tooltip";
-import { SearchIcon } from "@dotui/registry/icons";
+import { Label } from "@dotui/registry-v2/ui/field";
+import { Input, TextArea } from "@dotui/registry-v2/ui/input";
+import { TextField } from "@dotui/registry-v2/ui/text-field";
+import { Description } from "@dotui/registry/ui/field";
 
 export function TextFieldDemo() {
-  const isTrue = false;
   return (
-    <div className="space-y-4 *:w-96">
-      <TextField defaultValue="@mehdibha" className="w-full">
-        <Input placeholder="Input" className="w-full" />
-      </TextField>
+    <div className="grid grid-cols-2 gap-4 *:space-y-4">
+      <div className="**:w-full">
+        <TextField>
+          <TextField.Label>Email</TextField.Label>
+          <TextField.Input placeholder="hello@mehdibha.com" />
+          <TextField.Description>Enter your email.</TextField.Description>
+        </TextField>
 
-      <TextArea placeholder="TextArea" />
+        <TextField>
+          <TextField.Label>Comment</TextField.Label>
+          <TextField.TextArea placeholder="Type your comment here" />
+          <TextField.Description>Enter your comment.</TextField.Description>
+        </TextField>
 
-      <InputGroup>
-        <InputAddon>$</InputAddon>
-        <Input placeholder="InputGroup + Input" className="w-auto! flex-1!" />
-        <InputAddon>USD</InputAddon>
-      </InputGroup>
+        <TextField isInvalid>
+          <Label>Email</Label>
+          <Input placeholder="hello@mehdibha.com" className="w-full" />
+        </TextField>
 
-      <InputGroup>
-        <TextArea
-          placeholder="Type your message"
-          className="transition-[height]"
-        />
-        <InputAddon>120 characters left</InputAddon>
-      </InputGroup>
+        <TextField isInvalid>
+          <Label>Comment</Label>
+          <TextArea placeholder="Type your comment here" className="w-full" />
+        </TextField>
+      </div>
+      <div className="**:w-full">
+        <TextField isDisabled>
+          <Label>Disabled</Label>
+          <Input placeholder="hello@mehdibha.com" className="w-full" />
+          <Description>Enter your email.</Description>
+        </TextField>
 
-      <InputGroup>
-        <InputAddon>
-          <SearchIcon />
-        </InputAddon>
-        <Input placeholder="InputGroup + Input" />
-        <InputAddon>12 results</InputAddon>
-      </InputGroup>
+        <TextField isDisabled>
+          <Label>Disabled</Label>
+          <TextArea placeholder="Type your comment here" className="w-full" />
+          <Description>Enter your comment.</Description>
+        </TextField>
 
-      {(["sm", "md", "lg"] as const).map((size) => (
-        <InputGroup key={size} size={size}>
-          <Input placeholder="example.com" />
-          <InputAddon>
-            <Tooltip content="This is content in a tooltip.">
-              <Button variant="quiet">
-                <SendIcon />
-              </Button>
-            </Tooltip>
-          </InputAddon>
-        </InputGroup>
-      ))}
+        <TextField isRequired>
+          <Label>Email</Label>
+          <Input placeholder="hello@mehdibha.com" className="w-full" />
+        </TextField>
 
-      <InputGroup>
-        <TextArea placeholder="Ask, search or chat..." />
-        <InputAddon>
-          <Button>
-            <PlusIcon />
-          </Button>
-          <Select defaultValue="auto" className="w-fit">
-            <Select.Trigger aspect="default" />
-            <Select.Popover>
-              <Select.List>
-                <Select.Item id="auto">Auto</Select.Item>
-                <Select.Item id="agent">Agent</Select.Item>
-                <Select.Item id="manual">Manual</Select.Item>
-              </Select.List>
-            </Select.Popover>
-          </Select>
-          <span className="ml-auto">52% used</span>
-          <Button
-            aria-label="Send"
-            variant="primary"
-            // isDisabled
-            className="rounded-full"
-          >
-            <ArrowUpIcon />
-          </Button>
-        </InputAddon>
-      </InputGroup>
-
-      <TextField value="@mehdibha">
-        <InputGroup>
-          <Input />
-          <InputAddon>
-            <div className="flex size-4 items-center justify-center rounded-full bg-primary text-fg-on-primary">
-              <IconCheck className="size-3" />
-            </div>
-          </InputAddon>
-        </InputGroup>
-      </TextField>
+        <TextField isRequired>
+          <Label>Comment</Label>
+          <TextArea placeholder="Type your comment here" className="w-full" />
+        </TextField>
+      </div>
     </div>
   );
 }

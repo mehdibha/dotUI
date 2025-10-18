@@ -1,7 +1,11 @@
 "use client";
 
 import React from "react";
-import { Separator as AriaSeparator } from "react-aria-components";
+import {
+  Separator as AriaSeparator,
+  SeparatorContext as AriaSeparatorContext,
+  useSlottedContext,
+} from "react-aria-components";
 import { tv } from "tailwind-variants";
 
 const separatorStyles = tv({
@@ -18,10 +22,16 @@ const separatorStyles = tv({
 });
 
 interface SeparatorProps extends React.ComponentProps<typeof AriaSeparator> {}
+
 const Separator = ({ orientation, className, ...props }: SeparatorProps) => {
+  const ctx = useSlottedContext(AriaSeparatorContext);
+
   return (
     <AriaSeparator
-      className={separatorStyles({ orientation, className })}
+      className={separatorStyles({
+        orientation: ctx?.orientation || orientation,
+        className,
+      })}
       {...props}
     />
   );

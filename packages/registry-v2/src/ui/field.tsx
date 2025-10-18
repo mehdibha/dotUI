@@ -10,80 +10,89 @@ import {
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
-const labelStyles = tv({
-  base: "inline-flex items-center gap-px text-sm leading-none text-fg-muted peer-disabled:cursor-not-allowed peer-disabled:text-fg-disabled [&_svg]:size-3",
+const fieldStyles = tv({
+  slots: {
+    fieldset: "",
+    legend: [
+      "mb-3 font-medium",
+      "data-[variant=legend]:text-base",
+      "data-[variant=label]:text-sm",
+    ],
+    group:
+      "group/field-group @container/field-group flex w-full flex-col gap-7 data-[slot=checkbox-group]:gap-3 [&>[data-slot=field-group]]:gap-4",
+    label: [
+      "inline-flex items-center gap-px text-sm leading-none text-fg-muted peer-disabled:cursor-not-allowed peer-disabled:text-fg-disabled [&_svg]:size-3",
+      // Required state
+      "[[data-required]_&]:after:ml-0.5 [[data-required]_&]:after:text-fg-danger [[data-required]_&]:after:content-['*']",
+      // Disabled state
+      "[[data-disabled]_&]:cursor-not-allowed [[data-disabled]_&]:text-fg-disabled",
+      // Invalid state
+      "[[data-invalid]_&]:text-fg-danger",
+    ],
+    description: "text-xs text-fg-muted",
+    fieldError: "text-xs text-fg-danger",
+  },
 });
 
-interface LabelProps extends React.ComponentProps<typeof AriaLabel> {}
-const Label = ({ className, ...props }: LabelProps) => {
+const { fieldset, label, description, fieldError } = fieldStyles();
+
+/* -----------------------------------------------------------------------------------------------*/
+
+interface FieldsetProps extends React.ComponentProps<"fieldset"> {}
+
+function Fieldset({ className, ...props }: FieldsetProps) {
   return (
-    <AriaLabel
-      data-slot="label"
-      className={labelStyles({ className })}
+    <fieldset
+      data-slot="fieldset"
+      className={fieldset({ className })}
       {...props}
     />
   );
+}
+
+/* -----------------------------------------------------------------------------------------------*/
+
+interface LabelProps extends React.ComponentProps<typeof AriaLabel> {}
+
+const Label = ({ className, ...props }: LabelProps) => {
+  return (
+    <AriaLabel data-slot="label" className={label({ className })} {...props} />
+  );
 };
 
-const descriptionStyles = tv({
-  base: "text-xs text-fg-muted",
-});
+/* -----------------------------------------------------------------------------------------------*/
 
 interface DescriptionProps
   extends Omit<React.ComponentProps<typeof AriaText>, "slot"> {}
+
 const Description = ({ className, ...props }: DescriptionProps) => {
   return (
     <AriaText
       data-slot="description"
       slot="description"
-      className={descriptionStyles({ className })}
+      className={description({ className })}
       {...props}
     />
   );
 };
 
-const fieldErrorStyles = tv({
-  base: "text-xs text-fg-danger",
-});
+/* -----------------------------------------------------------------------------------------------*/
 
 interface FieldErrorProps extends React.ComponentProps<typeof AriaFieldError> {}
 const FieldError = ({ className, ...props }: FieldErrorProps) => {
   return (
     <AriaFieldError
+      data-slot="field-error"
       className={composeRenderProps(className, (className) =>
-        fieldErrorStyles({ className }),
+        fieldError({ className }),
       )}
       {...props}
     />
   );
 };
 
-interface HelpTextProps {
-  description?: DescriptionProps["children"];
-  errorMessage?: FieldErrorProps["children"];
-}
-const HelpText = ({ description, errorMessage }: HelpTextProps) => {
-  const validation = React.use(FieldErrorContext);
-  const isError =
-    validation?.isInvalid &&
-    (!!errorMessage || validation.validationErrors.length > 0);
+/* -----------------------------------------------------------------------------------------------*/
 
-  if (isError) return <FieldError>{errorMessage}</FieldError>;
+export { Fieldset, Label, Description, FieldError };
 
-  if (description) return <Description>{description}</Description>;
-
-  return null;
-};
-
-interface FieldProps extends HelpTextProps {
-  label?: LabelProps["children"];
-}
-
-export type {
-  LabelProps,
-  DescriptionProps,
-  FieldErrorProps,
-  HelpTextProps,
-  FieldProps,
-};
-export { Label, Description, FieldError, HelpText };
+export type { FieldsetProps, LabelProps, DescriptionProps, FieldErrorProps };
