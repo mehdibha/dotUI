@@ -17,7 +17,7 @@ import { createVariantsContext } from "../lib/utils-v2";
 
 const buttonStyles = tv({
   base: [
-    "relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-md text-sm leading-normal font-medium whitespace-nowrap transition-[background-color,border-color,color,box-shadow] data-icon-only:px-0",
+    "relative box-border inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-md text-sm leading-normal font-medium whitespace-nowrap transition-[background-color,border-color,color,box-shadow] data-icon-only:px-0",
 
     // focus state
     "focus-reset focus-visible:focus-ring",

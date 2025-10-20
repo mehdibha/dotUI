@@ -173,7 +173,7 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
   const isMobile = previewWidth < 480;
 
   return (
-    <div className="flex items-center justify-between gap-2 border-b border-t-[inherit] bg-card px-1 py-1">
+    <div className="flex items-center justify-between gap-2 absolute w-187 border-t-[inherit]  px-1 py-1">
       <div className="flex items-center gap-1">
         <Button
           aria-label="Collapse preview"

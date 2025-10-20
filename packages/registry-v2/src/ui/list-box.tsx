@@ -28,7 +28,7 @@ const listboxStyles = tv({
   slots: {
     root: [
       focusRing(),
-      "data-standalone:max-h-68 data-standalone:w-48 data-standalone:overflow-y-auto data-standalone:rounded-md data-standalone:border data-standalone:bg-card data-standalone:p-1 data-standalone:shadow-sm",
+      // "data-standalone:max-h-68 data-standalone:w-48 data-standalone:overflow-y-auto data-standalone:rounded-md data-standalone:border data-standalone:bg-card data-standalone:p-1 data-standalone:shadow-sm",
       "w-full p-1",
     ],
     item: [
@@ -65,7 +65,6 @@ const ListBox = <T extends object>({
   ...props
 }: ListBoxProps<T>) => {
   const standalone = !React.use(ListStateContext);
-  console.log(standalone);
   return (
     <AriaListBox
       data-standalone={standalone || undefined}

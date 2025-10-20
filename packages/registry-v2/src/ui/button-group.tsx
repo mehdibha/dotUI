@@ -64,6 +64,7 @@ const ButtonGroup = ({
       ]}
     >
       <AriaGroup
+        data-slot="button-group"
         className={composeRenderProps(className, (className) =>
           root({ className, orientation }),
         )}

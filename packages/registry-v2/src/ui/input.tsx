@@ -86,13 +86,13 @@ const inputStyles = tv({
           "w-48 rounded-md border border-border-field bg-neutral px-3 py-2 shadow-xs",
           "text-base focus-reset transition-[border-color,box-shadow] focus:focus-input sm:text-sm",
           "disabled:cursor-not-allowed disabled:border-border-disabled disabled:bg-disabled disabled:text-fg-disabled",
-          "invalid:border-border-danger focus-within:has-[input[data-invalid]]:border-border invalid:text-fg-danger",
+          "invalid:border-border-danger invalid:text-fg-danger focus-within:has-[input[data-invalid]]:border-border",
         ],
         textArea: [
           "flex min-h-16 w-48 resize-none rounded-md border border-border-field bg-neutral px-3 py-2 shadow-xs",
           "text-base focus-reset transition-[border-color,box-shadow] focus:focus-input sm:text-sm",
           "disabled:cursor-not-allowed disabled:border-border-disabled disabled:bg-disabled disabled:text-fg-disabled",
-          "invalid:border-border-danger focus-within:has-[input[data-invalid]]:border-border invalid:text-fg-danger",
+          "invalid:border-border-danger invalid:text-fg-danger focus-within:has-[input[data-invalid]]:border-border",
         ],
       },
     },
@@ -174,6 +174,7 @@ const InputGroup = ({
   return (
     <AriaGroup
       role="presentation"
+      data-slot="input-group"
       data-size={size}
       className={composeRenderProps(className, (className) =>
         group({ size, className }),
@@ -206,6 +207,7 @@ const Input = ({ size = "md", className, ...props }: InputProps) => {
   return (
     <AriaInput
       data-slot="input"
+      data-in-group={inGroup || undefined}
       data-size={size}
       className={composeRenderProps(className, (className) =>
         input({ className, inGroup, size }),
@@ -268,6 +270,7 @@ const TextArea = ({
     <AriaTextArea
       ref={mergeRefs(inputRef, ref)}
       data-slot="textarea"
+      data-in-group={inGroup || undefined}
       onChange={chain(onChange, setInputValue)}
       className={composeRenderProps(className, (className) =>
         textArea({ className, inGroup }),
@@ -302,4 +305,4 @@ const CompoundInput = Object.assign(Input, {
 
 export { CompoundInput as Input, TextArea, InputGroup, InputAddon };
 
-export type { InputProps };
+export type { InputGroupProps, InputProps, TextAreaProps };

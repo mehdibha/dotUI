@@ -5,122 +5,61 @@ import { CheckIcon, MinusIcon } from "lucide-react";
 import {
   Checkbox as AriaCheckbox,
   composeRenderProps,
+  useRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import type { VariantProps } from "tailwind-variants";
+import type { CheckboxRenderProps } from "react-aria-components";
 
-import { focusRing, focusRingGroup } from "@dotui/registry-v2/lib/focus-styles";
-import {
-  createOptionalScopedContext,
-  createScopedContext,
-} from "@dotui/registry-v2/lib/utils";
+import { createContext } from "../lib/utils";
 
 const checkboxStyles = tv({
   slots: {
-    root: "group/checkbox flex cursor-pointer flex-row items-center gap-2 invalid:text-fg-danger disabled:cursor-default disabled:text-fg-disabled",
+    root: ["flex items-start gap-2"],
     indicator: [
-      "flex size-4 shrink-0 cursor-pointer items-center justify-center rounded-sm border border-border-control",
-      "bg-transparent text-transparent transition-colors duration-75 group-indeterminate/checkbox:border-transparent group-selected/checkbox:border-transparent",
-      "group-read-only/checkbox:cursor-default",
-      "group-disabled/checkbox:cursor-default group-disabled/checkbox:border-border-disabled group-indeterminate/checkbox:group-disabled/checkbox:bg-disabled group-selected/checkbox:group-disabled/checkbox:bg-disabled group-selected/checkbox:group-disabled/checkbox:text-fg-disabled",
-      "group-invalid/checkbox:group-selected/checkbox:text-fg-onMutedDanger group-invalid/checkbox:border-border-danger group-invalid/checkbox:group-selected/checkbox:bg-danger-muted",
+      "flex size-4 shrink-0 items-center justify-center rounded-sm border border-border-control bg-transparent text-transparent transition-colors duration-75",
+      // selected state
+      "selected:border-transparent selected:bg-primary selected:text-fg-on-primary",
+      // read-only state
+      "read-only:cursor-default",
+      // disabled state
+      "disabled:cursor-default disabled:border-border-disabled indeterminate:disabled:bg-disabled selected:disabled:bg-disabled selected:disabled:text-fg-disabled",
+      // invalid state
+      "invalid:selected:text-fg-onMutedDanger invalid:border-border-danger invalid:selected:bg-danger-muted",
+      // indeterminate state
+      "indeterminate:border-transparent indeterminate:bg-primary indeterminate:text-fg-on-primary",
     ],
   },
-  variants: {
-    variant: {
-      primary: {
-        indicator:
-          "group-indeterminate/checkbox:bg-primary group-indeterminate/checkbox:text-fg-on-primary group-selected/checkbox:bg-primary group-selected/checkbox:text-fg-on-primary",
-      },
-      accent: {
-        indicator:
-          "group-indeterminate/checkbox:bg-accent group-indeterminate/checkbox:text-fg-on-accent group-selected/checkbox:bg-accent group-selected/checkbox:text-fg-on-accent",
-      },
-    },
-    appearance: {
-      default: {
-        indicator: focusRingGroup(),
-      },
-      card: {
-        root: [
-          focusRing(),
-          "flex-row-reverse justify-between gap-4 rounded-md border p-4 transition-colors disabled:border-border-disabled disabled:selected:bg-disabled",
-        ],
-      },
-    },
-  },
-  compoundVariants: [
-    {
-      appearance: "card",
-      variant: "primary",
-      className: {
-        root: "selected:bg-muted",
-      },
-    },
-    {
-      appearance: "card",
-      variant: "accent",
-      className: {
-        root: "selected:bg-accent-muted",
-      },
-    },
-  ],
 });
 
 const { root, indicator } = checkboxStyles();
 
-const [VariantsProvider, useVariantsContext] = createScopedContext<
-  VariantProps<typeof checkboxStyles> & { isIndeterminate: boolean }
->("CheckboxRoot");
+const [InternalCheckboxProvider, useInternalCheckbox] =
+  createContext<CheckboxRenderProps>({
+    strict: true,
+  });
 
-const [CheckboxProvider, useCheckboxContext] =
-  createOptionalScopedContext<VariantProps<typeof checkboxStyles>>("Checkbox");
+interface CheckboxProps extends React.ComponentProps<typeof AriaCheckbox> {}
 
-interface CheckboxProps extends CheckboxRootProps {}
-const Checkbox = ({ children, ...props }: CheckboxProps) => {
-  return (
-    <CheckboxRoot {...props}>
-      {composeRenderProps(children, (children) => (
-        <>
-          <CheckboxIndicator />
-          {children}
-        </>
-      ))}
-    </CheckboxRoot>
-  );
-};
-
-interface CheckboxRootProps
-  extends React.ComponentProps<typeof AriaCheckbox>,
-    VariantProps<typeof checkboxStyles> {}
-
-const CheckboxRoot = (localProps: CheckboxRootProps) => {
-  const contextProps = useCheckboxContext();
-  const {
-    variant = "primary",
-    appearance = "default",
-    className,
-    ...props
-  } = {
-    ...contextProps,
-    ...localProps,
-  };
+const Checkbox = ({ className, ...props }: CheckboxProps) => {
   return (
     <AriaCheckbox
-      className={composeRenderProps(className, (className) =>
-        root({ variant, appearance, className }),
+      className={composeRenderProps(className, (cn) =>
+        props.children ? root({ className: cn }) : indicator({ className: cn }),
       )}
       {...props}
     >
-      {composeRenderProps(props.children, (children, { isIndeterminate }) => (
-        <VariantsProvider
-          variant={variant}
-          appearance={appearance}
-          isIndeterminate={isIndeterminate}
-        >
-          {children}
-        </VariantsProvider>
-      ))}
+      {composeRenderProps(props.children, (children, renderProps) => {
+        return (
+          <InternalCheckboxProvider value={renderProps}>
+            {children ??
+              (renderProps.isIndeterminate ? (
+                <MinusIcon className="size-3" />
+              ) : (
+                <CheckIcon className="size-3" />
+              ))}
+          </InternalCheckboxProvider>
+        );
+      })}
     </AriaCheckbox>
   );
 };
@@ -128,11 +67,24 @@ const CheckboxRoot = (localProps: CheckboxRootProps) => {
 interface CheckboxIndicatorProps extends React.ComponentProps<"div"> {}
 
 const CheckboxIndicator = ({ className, ...props }: CheckboxIndicatorProps) => {
-  const { variant, appearance, isIndeterminate } =
-    useVariantsContext("CheckboxIndicator");
+  const ctx = useInternalCheckbox("CheckboxIndicator");
   return (
-    <div className={indicator({ variant, appearance, className })} {...props}>
-      {isIndeterminate ? (
+    <div
+      data-rac=""
+      data-selected={ctx.isSelected || undefined}
+      data-indeterminate={ctx.isIndeterminate || undefined}
+      data-pressed={ctx.isPressed || undefined}
+      data-hovered={ctx.isHovered || undefined}
+      data-focused={ctx.isFocused || undefined}
+      data-focus-visible={ctx.isFocusVisible || undefined}
+      data-disabled={ctx.isDisabled || undefined}
+      data-readonly={ctx.isReadOnly || undefined}
+      data-invalid={ctx.isInvalid || undefined}
+      data-required={ctx.isRequired || undefined}
+      className={indicator({ className })}
+      {...props}
+    >
+      {ctx.isIndeterminate ? (
         <MinusIcon className="size-2.5" />
       ) : (
         <CheckIcon className="size-3" />
@@ -141,8 +93,6 @@ const CheckboxIndicator = ({ className, ...props }: CheckboxIndicatorProps) => {
   );
 };
 
-export type { CheckboxProps, CheckboxRootProps, CheckboxIndicatorProps };
-export { Checkbox, CheckboxRoot, CheckboxIndicator };
+/* -----------------------------------------------------------------------------------------------*/
 
-export { CheckboxProvider };
-export { checkboxStyles };
+export { Checkbox, CheckboxIndicator };

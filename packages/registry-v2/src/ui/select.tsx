@@ -16,7 +16,6 @@ import type {
 } from "react-aria-components";
 
 import { Button } from "@dotui/registry-v2/ui/button";
-import { HelpText, Label } from "@dotui/registry-v2/ui/field";
 import {
   ListBox,
   ListBoxItem,
@@ -25,11 +24,6 @@ import {
 } from "@dotui/registry-v2/ui/list-box";
 import { Popover } from "@dotui/registry-v2/ui/popover";
 import type { ButtonProps } from "@dotui/registry-v2/ui/button";
-import type { FieldProps } from "@dotui/registry-v2/ui/field";
-import type {
-  ListBoxItemProps,
-  ListBoxProps,
-} from "@dotui/registry-v2/ui/list-box";
 
 const selectStyles = tv({
   slots: {
@@ -65,8 +59,13 @@ const SelectRoot = <T extends object>({
 
 const SelectTrigger = (props: ButtonProps) => {
   return (
-    <Button {...props} suffix={props.suffix ?? <ChevronDownIcon />}>
-      {props.children ?? <SelectValue />}
+    <Button {...props}>
+      {props.children ?? (
+        <>
+          <SelectValue />
+          <ChevronDownIcon />
+        </>
+      )}
     </Button>
   );
 };

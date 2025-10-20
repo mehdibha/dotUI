@@ -1,27 +1,34 @@
 "use client";
 
 import React from "react";
+import { useSlotId } from "@react-aria/utils";
 import {
   FieldError as AriaFieldError,
   Label as AriaLabel,
-  Text as AriaText,
+  CheckboxContext,
   composeRenderProps,
-  FieldErrorContext,
+  LabelContext,
+  Provider,
+  TextContext,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
+import { useSkeletonText } from "@dotui/registry-v2/ui/skeleton";
+import { Text } from "@dotui/registry-v2/ui/text";
+
 const fieldStyles = tv({
   slots: {
-    fieldset: "",
-    legend: [
-      "mb-3 font-medium",
-      "data-[variant=legend]:text-base",
-      "data-[variant=label]:text-sm",
+    fieldset: [
+      "flex flex-col gap-6",
+      "has-[>[data-slot=checkbox-group]]:gap-3 has-[>[data-slot=radio-group]]:gap-3",
     ],
-    group:
+    legend: ["mb-3 text-base font-medium"],
+    fieldGroup:
       "group/field-group @container/field-group flex w-full flex-col gap-7 data-[slot=checkbox-group]:gap-3 [&>[data-slot=field-group]]:gap-4",
+    field: "flex items-start gap-2",
+    fieldContent: "flex flex-col gap-1",
     label: [
-      "inline-flex items-center gap-px text-sm leading-none text-fg-muted peer-disabled:cursor-not-allowed peer-disabled:text-fg-disabled [&_svg]:size-3",
+      "inline-flex items-center gap-px text-sm leading-none text-fg peer-disabled:cursor-not-allowed peer-disabled:text-fg-disabled [&_svg]:size-3",
       // Required state
       "[[data-required]_&]:after:ml-0.5 [[data-required]_&]:after:text-fg-danger [[data-required]_&]:after:content-['*']",
       // Disabled state
@@ -34,7 +41,16 @@ const fieldStyles = tv({
   },
 });
 
-const { fieldset, label, description, fieldError } = fieldStyles();
+const {
+  fieldset,
+  legend,
+  fieldGroup,
+  field,
+  fieldContent,
+  label,
+  description,
+  fieldError,
+} = fieldStyles();
 
 /* -----------------------------------------------------------------------------------------------*/
 
@@ -52,22 +68,91 @@ function Fieldset({ className, ...props }: FieldsetProps) {
 
 /* -----------------------------------------------------------------------------------------------*/
 
+interface LegendProps extends React.ComponentProps<"legend"> {}
+
+function Legend({ className, ...props }: LegendProps) {
+  return (
+    <legend data-slot="legend" className={legend({ className })} {...props} />
+  );
+}
+
+/* -----------------------------------------------------------------------------------------------*/
+
+interface FieldGroupProps extends React.ComponentProps<"div"> {}
+
+function FieldGroup({ className, ...props }: FieldGroupProps) {
+  return (
+    <div
+      data-slot="field-group"
+      className={fieldGroup({ className })}
+      {...props}
+    />
+  );
+}
+
+/* -----------------------------------------------------------------------------------------------*/
+
+interface FieldProps extends React.ComponentProps<"div"> {}
+
+const Field = ({ children, className, ...props }: FieldProps) => {
+  const inputId = useSlotId();
+  const descriptionId = useSlotId();
+  return (
+    <div data-slot="field" className={field({ className })} {...props}>
+      <Provider
+        values={[
+          [
+            CheckboxContext,
+            {
+              id: inputId,
+              "aria-describedby": descriptionId,
+            },
+          ],
+          [LabelContext, { htmlFor: inputId }],
+          [TextContext, { slot: "description", id: descriptionId }],
+        ]}
+      >
+        {children}
+      </Provider>
+    </div>
+  );
+};
+
+/* -----------------------------------------------------------------------------------------------*/
+
+interface FieldContentProps extends React.ComponentProps<"div"> {}
+
+const FieldContent = ({ className, ...props }: FieldContentProps) => {
+  return (
+    <div
+      data-slot="field-content"
+      className={fieldContent({ className })}
+      {...props}
+    />
+  );
+};
+
+/* -----------------------------------------------------------------------------------------------*/
+
 interface LabelProps extends React.ComponentProps<typeof AriaLabel> {}
 
-const Label = ({ className, ...props }: LabelProps) => {
+const Label = ({ children, className, ...props }: LabelProps) => {
+  children = useSkeletonText(children);
   return (
-    <AriaLabel data-slot="label" className={label({ className })} {...props} />
+    <AriaLabel data-slot="label" className={label({ className })} {...props}>
+      {children}
+    </AriaLabel>
   );
 };
 
 /* -----------------------------------------------------------------------------------------------*/
 
 interface DescriptionProps
-  extends Omit<React.ComponentProps<typeof AriaText>, "slot"> {}
+  extends Omit<React.ComponentProps<typeof Text>, "slot"> {}
 
 const Description = ({ className, ...props }: DescriptionProps) => {
   return (
-    <AriaText
+    <Text
       data-slot="description"
       slot="description"
       className={description({ className })}
@@ -93,6 +178,22 @@ const FieldError = ({ className, ...props }: FieldErrorProps) => {
 
 /* -----------------------------------------------------------------------------------------------*/
 
-export { Fieldset, Label, Description, FieldError };
+export {
+  Fieldset,
+  Legend,
+  FieldGroup,
+  Field,
+  FieldContent,
+  Label,
+  Description,
+  FieldError,
+};
 
-export type { FieldsetProps, LabelProps, DescriptionProps, FieldErrorProps };
+export type {
+  FieldsetProps,
+  LegendProps,
+  LabelProps,
+  FieldContentProps,
+  DescriptionProps,
+  FieldErrorProps,
+};

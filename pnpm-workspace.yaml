@@ -38,7 +38,7 @@ catalogs:
     "@react-stately/utils": ^3.10.8
     "@remixicon/react": ^4.2.0
     "@tanstack/react-form": ^1.23.4
-    lucide-react: ^0.469.0
+    lucide-react: ^0.546.0
     motion: ^12.23.22
     react-aria: ^3.44.0
     react-hook-form: ^7.54.2

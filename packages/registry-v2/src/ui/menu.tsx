@@ -38,6 +38,41 @@ const menuStyles = tv({
   ],
 });
 
+/* -----------------------------------------------------------------------------------------------*/
+
+interface MenuProps extends AriaMenuTriggerProps {}
+
+const Menu = (props: MenuProps) => {
+  return <AriaMenuTrigger {...props} />;
+};
+
+/* -----------------------------------------------------------------------------------------------*/
+
+interface MenuContentProps<T> extends AriaMenuProps<T> {}
+const MenuContent = <T extends object>({
+  className,
+  ...props
+}: MenuContentProps<T>) => {
+  return (
+    <AriaMenu
+      className={composeRenderProps(className, (className) =>
+        menuStyles({ className }),
+      )}
+      {...props}
+    />
+  );
+};
+
+/* -----------------------------------------------------------------------------------------------*/
+
+interface MenuSubProps extends AriaSubmenuTriggerProps {}
+
+const MenuSub = (props: MenuSubProps) => {
+  return <AriaSubmenuTrigger {...props} />;
+};
+
+/* -----------------------------------------------------------------------------------------------*/
+
 const menuItemStyles = tv({
   base: [
     "flex cursor-pointer items-center gap-2 rounded-sm px-3 py-1.5 text-sm outline-hidden transition-colors focus:bg-inverse/10 disabled:pointer-events-none disabled:text-fg-disabled",
@@ -64,53 +99,21 @@ const menuSectionStyles = tv({
   base: "space-y-px pt-2",
 });
 
-type MenuProps = AriaMenuTriggerProps;
-const MenuRoot = (props: MenuProps) => {
-  return <AriaMenuTrigger {...props} />;
-};
-
-type MenuContentProps<T> = AriaMenuProps<T>;
-const MenuContent = <T extends object>({
-  className,
-  ...props
-}: MenuContentProps<T>) => {
-  return (
-    <AriaMenu
-      className={composeRenderProps(className, (className) =>
-        menuStyles({ className }),
-      )}
-      {...props}
-    />
-  );
-};
-
-type MenuSubProps = AriaSubmenuTriggerProps;
-const MenuSub = AriaSubmenuTrigger;
-
 interface MenuItemProps<T>
-  extends Omit<AriaMenuItemProps<T>, "className">,
-    VariantProps<typeof menuItemStyles> {
-  prefix?: React.ReactNode;
-  suffix?: React.ReactNode;
-  label?: string;
-  description?: string;
-  shortcut?: string;
-  className?: string;
-}
+  extends AriaMenuItemProps<T>,
+    VariantProps<typeof menuItemStyles> {}
+
 const MenuItem = <T extends object>({
   className,
-  label,
-  description,
-  prefix,
-  suffix,
-  shortcut,
   variant,
   ...props
 }: MenuItemProps<T>) => {
   return (
     <AriaMenuItem
-      className={menuItemStyles({ className, variant })}
       data-slot="menu-item"
+      className={composeRenderProps(className, (className) =>
+        menuItemStyles({ className, variant }),
+      )}
       {...props}
     >
       {composeRenderProps(
@@ -124,19 +127,8 @@ const MenuItem = <T extends object>({
                 )}
               </span>
             )}
-            {prefix}
-            <span className="flex flex-1 items-center gap-2">
-              <span className="flex flex-1 flex-col">
-                {label && <Text slot="label">{label}</Text>}
-                {description && <Text slot="description">{description}</Text>}
-                {children}
-              </span>
-              {suffix}
-              {shortcut && <Kbd>{shortcut}</Kbd>}
-              {hasSubmenu && (
-                <ChevronRightIcon aria-hidden className="size-4" />
-              )}
-            </span>
+            {children}
+            {hasSubmenu && <ChevronRightIcon aria-hidden className="size-4" />}
           </>
         ),
       )}
@@ -144,29 +136,24 @@ const MenuItem = <T extends object>({
   );
 };
 
-interface MenuSectionProps<T> extends AriaMenuSectionProps<T> {
-  ref?: React.Ref<HTMLElement>;
-  title?: React.ReactNode;
-}
+/* -----------------------------------------------------------------------------------------------*/
+
+interface MenuSectionProps<T> extends AriaMenuSectionProps<T> {}
 const MenuSection = <T extends object>({
-  title,
   children,
   className,
   ...props
 }: MenuSectionProps<T>) => {
   return (
     <AriaMenuSection className={menuSectionStyles({ className })} {...props}>
-      {title && (
-        <AriaHeader className="mb-1 pl-3 text-xs text-fg-muted">
-          {title}
-        </AriaHeader>
-      )}
-      <AriaCollection items={props.items}>{children}</AriaCollection>
+      {children}
     </AriaMenuSection>
   );
 };
 
-const CompoundMenu = Object.assign(MenuRoot, {
+/* -----------------------------------------------------------------------------------------------*/
+
+const CompoundMenu = Object.assign(Menu, {
   Content: MenuContent,
   Item: MenuItem,
   Overlay,
@@ -177,11 +164,5 @@ const CompoundMenu = Object.assign(MenuRoot, {
   Sub: MenuSub,
 });
 
-export type {
-  MenuRootProps,
-  MenuContentProps,
-  MenuItemProps,
-  MenuSectionProps,
-  MenuSubProps,
-};
+export type { MenuContentProps, MenuItemProps, MenuSectionProps, MenuSubProps };
 export { CompoundMenu as Menu, MenuItem, MenuContent, MenuSub, MenuSection };

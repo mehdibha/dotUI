@@ -7,12 +7,11 @@ import { tv } from "tailwind-variants";
 import type { ComboBoxProps as AriaComboboxProps } from "react-aria-components";
 
 import { Button } from "@dotui/registry-v2/ui/button";
-import { HelpText, Label } from "@dotui/registry-v2/ui/field";
-import { Input, InputRoot } from "@dotui/registry-v2/ui/input";
-import { ListBox, ListBoxItem } from "@dotui/registry-v2/ui/list-box";
-import { Overlay } from "@dotui/registry-v2/ui/overlay";
-import type { FieldProps } from "@dotui/registry-v2/ui/field";
-import type { ListBoxItemProps } from "@dotui/registry-v2/ui/list-box";
+import { Input } from "@dotui/registry-v2/ui/input";
+import type { InputGroupProps } from "@dotui/registry-v2/ui/input";
+
+import { ListBox, ListBoxItem } from "./list-box";
+import { Popover } from "./popover";
 
 const comboboxStyles = tv({
   slots: {
@@ -20,61 +19,47 @@ const comboboxStyles = tv({
   },
 });
 
+/* -----------------------------------------------------------------------------------------------*/
+
 interface ComboboxProps<T extends object>
-  extends Omit<ComboboxRootProps<T>, "children">,
-    Omit<FieldProps, "children"> {
-  isLoading?: boolean;
-  children: React.ReactNode | ((item: T) => React.ReactNode);
-  items?: Iterable<T>;
-}
-const Combobox = <T extends object>({
-  label,
-  description,
-  errorMessage,
-  children,
-  items,
-  isLoading,
-  ...props
-}: ComboboxProps<T>) => {
-  return (
-    <ComboboxRoot {...props}>
-      {label && <Label>{label}</Label>}
-      <ComboboxInput />
-      <HelpText description={description} errorMessage={errorMessage} />
-      <Overlay type="popover">
-        <ListBox items={items} isLoading={isLoading}>
-          {children}
-        </ListBox>
-      </Overlay>
-    </ComboboxRoot>
-  );
-};
-
-const ComboboxInput = () => {
-  return (
-    <InputRoot className="px-0">
-      <Input className="pl-2" />
-      <Button variant="default" shape="square" className="my-1 mr-1 size-7">
-        <ChevronDownIcon />
-      </Button>
-    </InputRoot>
-  );
-};
-
-interface ComboboxRootProps<T extends object>
   extends Omit<AriaComboboxProps<T>, "className"> {
   className?: string;
 }
-const ComboboxRoot = <T extends object>({
+const Combobox = <T extends object>({
   className,
   ...props
-}: ComboboxRootProps<T>) => {
+}: ComboboxProps<T>) => {
   const { root } = comboboxStyles();
   return <AriaCombobox className={root({ className })} {...props} />;
 };
 
-interface ComboboxItemProps<T> extends ListBoxItemProps<T> {}
-const ComboboxItem = ListBoxItem;
+/* -----------------------------------------------------------------------------------------------*/
 
-export type { ComboboxProps, ComboboxRootProps, ComboboxItemProps };
-export { Combobox, ComboboxRoot, ComboboxInput, ComboboxItem };
+const ComboboxInput = (props: InputGroupProps) => {
+  return (
+    <Input.Group {...props}>
+      <Input />
+      <Input.Addon>
+        <Button variant="quiet">
+          <ChevronDownIcon />
+        </Button>
+      </Input.Addon>
+    </Input.Group>
+  );
+};
+
+/* -----------------------------------------------------------------------------------------------*/
+
+const CompoundCombobox = Object.assign(Combobox, {
+  ComboboxInput,
+  InputGroup: Input.Group,
+  Input: Input,
+  Addon: Input.Addon,
+  Icon: ChevronDownIcon,
+  Popover: Popover,
+  List: ListBox,
+  Item: ListBoxItem,
+});
+
+export type { ComboboxProps };
+export { CompoundCombobox as Combobox, ComboboxInput };

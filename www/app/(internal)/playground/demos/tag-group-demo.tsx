@@ -12,60 +12,14 @@ const tags = [
 export function TagGroupDemo() {
   return (
     <div className="flex flex-col gap-6">
-      {(["sm", "md", "lg"] as const).map((size) => (
-        <TagGroup key={size} label={`Size: ${size}`} selectionMode="multiple">
-          {tags.map((tag) => (
-            <Tag key={tag.id} size={size} id={tag.id}>
-              {tag.name}
-            </Tag>
-          ))}
-        </TagGroup>
-      ))}
-
-      <TagGroup label="Default variant" selectionMode="single">
-        {tags.map((tag) => (
-          <Tag key={tag.id} id={tag.id}>
-            {tag.name}
-          </Tag>
-        ))}
-      </TagGroup>
-
-      <TagGroup label="Quiet variant" selectionMode="multiple">
-        {tags.map((tag) => (
-          <Tag key={tag.id} id={tag.id} variant="quiet">
-            {tag.name}
-          </Tag>
-        ))}
-      </TagGroup>
-
-      <TagGroup label="Outline variant" selectionMode="multiple">
-        {tags.map((tag) => (
-          <Tag key={tag.id} id={tag.id} variant="outline">
-            {tag.name}
-          </Tag>
-        ))}
-      </TagGroup>
-
-      <TagGroup label="Accent variant" selectionMode="multiple">
-        {tags.map((tag) => (
-          <Tag key={tag.id} id={tag.id} variant="accent">
-            {tag.name}
-          </Tag>
-        ))}
-      </TagGroup>
-
-      <TagGroup
-        label="Removable tags"
-        description="Click the × to remove tags"
-        selectionMode="multiple"
-        onRemove={(keys) => console.log("Removed:", keys)}
-      >
-        {tags.map((tag) => (
-          <Tag key={tag.id} id={tag.id}>
-            {tag.name}
-          </Tag>
-        ))}
-      </TagGroup>
+      <Tag.Group>
+        <Tag.List>
+          <Tag id="react">React</Tag>
+          <Tag id="typescript">TypeScript</Tag>
+          <Tag id="nextjs">Next.js</Tag>
+          <Tag id="tailwindcss">Tailwind CSS</Tag>
+        </Tag.List>
+      </Tag.Group>
     </div>
   );
 }
