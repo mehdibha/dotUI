@@ -6,7 +6,7 @@
 }
 
 @utility container {
-  @apply 3xl:max-w-screen-2xl mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10;
+  @apply mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10 3xl:max-w-screen-2xl;
 }
 
 @utility shiki {
@@ -33,8 +33,8 @@
   counter-increment: step;
 
   &:before {
-    @apply border-bg bg-muted text-fg-muted absolute inline-flex size-9 items-center justify-center rounded-xl border-4 text-center -indent-px font-mono text-sm font-medium;
-    @apply ml-[-50px] mt-[-4px];
+    @apply absolute inline-flex size-9 items-center justify-center rounded-xl border-4 border-bg bg-muted text-center -indent-px font-mono text-sm font-medium text-fg-muted;
+    @apply mt-[-4px] ml-[-50px];
     content: counter(step);
   }
 }
@@ -43,11 +43,11 @@
   @apply relative;
 
   &:before {
-    @apply bg-border absolute left-0 top-0 -ml-1 mt-2 h-2 w-2 rounded-full content-[''];
+    @apply absolute top-0 left-0 mt-2 -ml-1 h-2 w-2 rounded-full bg-border content-[''];
   }
 
   &:after {
-    @apply bg-border absolute left-0 top-3 h-3 w-px content-[''];
+    @apply absolute top-3 left-0 h-3 w-px bg-border content-[''];
   }
 }
 

@@ -44,7 +44,7 @@ export function CheckboxDemo() {
       </Field>
 
       {/* Card style */}
-      <Checkbox className="w-fit rounded-md border p-4 transition-colors bg-neutral selected:border-border-accent selected:bg-accent-muted">
+      <Checkbox className="w-fit rounded-md border bg-neutral p-4 transition-colors selected:border-border-accent selected:bg-accent-muted">
         <CheckboxIndicator />
         <FieldContent>
           <Label>I accept the terms and conditions</Label>

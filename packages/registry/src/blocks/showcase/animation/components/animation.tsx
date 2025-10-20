@@ -31,7 +31,7 @@ export function Animation({
 
   React.useEffect(() => {
     const interval = setInterval(() => {
-      setIsOpen(prev => !prev);
+      setIsOpen((prev) => !prev);
     }, 1000);
     return () => clearInterval(interval);
   }, []);

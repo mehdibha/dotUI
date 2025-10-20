@@ -11,8 +11,7 @@ const colorFieldStyles = tv({
   base: "flex w-48 flex-col items-start gap-2",
 });
 
-interface ColorFieldProps
-  extends React.ComponentProps<typeof AriaColorField> {
+interface ColorFieldProps extends React.ComponentProps<typeof AriaColorField> {
   placeholder?: string;
 }
 const ColorField = ({ className, ...props }: ColorFieldProps) => {

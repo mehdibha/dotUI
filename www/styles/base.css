@@ -5,15 +5,15 @@
 @variant in-drawer ([data-slot="drawer"] &);
 
 @utility focus-reset {
-  @apply outline-none ring-0 ring-transparent;
+  @apply ring-0 ring-transparent outline-none;
 }
 
 @utility focus-ring {
-  @apply ring-border-focus ring-offset-bg ring-2 ring-offset-2;
+  @apply ring-2 ring-border-focus ring-offset-2 ring-offset-bg;
 }
 
 @utility focus-input {
-  @apply border-border-focus ring-border-focus-muted ring-2;
+  @apply border-border-focus ring-2 ring-border-focus-muted;
 }
 
 @layer base {
@@ -29,7 +29,7 @@
   @apply text-transparent!;
 
   [data-slot="input-group"] {
-    @apply bg-muted animate-pulse border-0;
+    @apply animate-pulse border-0 bg-muted;
     * {
       @apply opacity-0;
     }
@@ -37,18 +37,18 @@
 
   [data-slot="input"]:not([data-in-group]),
   [data-slot="textarea"]:not([data-in-group]) {
-    @apply bg-muted animate-pulse border-0 text-transparent placeholder:text-transparent;
+    @apply animate-pulse border-0 bg-muted text-transparent placeholder:text-transparent;
   }
 
   [data-slot="button"] {
-    @apply bg-muted! text-transparent! animate-pulse border-transparent!;
+    @apply animate-pulse border-transparent! bg-muted! text-transparent!;
     * {
       @apply opacity-0;
     }
   }
 
   [data-slot="button-group"] {
-    @apply bg-muted! text-transparent! animate-pulse border-0 rounded-md;
+    @apply animate-pulse rounded-md border-0 bg-muted! text-transparent!;
     * {
       @apply opacity-0;
     }
@@ -62,6 +62,6 @@
   }
 
   [data-slot="skeleton-text"] {
-    @apply bg-muted inline animate-pulse text-transparent! rounded-sm;
+    @apply inline animate-pulse rounded-sm bg-muted text-transparent!;
   }
 }

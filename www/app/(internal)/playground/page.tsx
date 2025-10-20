@@ -487,7 +487,7 @@ const Section = ({
         <h3
           id={id}
           className="mt-8 scroll-m-20 font-heading text-xl font-semibold tracking-tight first:mt-0"
-        > 
+        >
           {title}
         </h3>
         <Switch isSelected={isLoading} onChange={setIsLoading}>

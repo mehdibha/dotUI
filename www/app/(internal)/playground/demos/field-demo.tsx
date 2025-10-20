@@ -73,10 +73,7 @@ export function FieldDemo() {
             Enable Touch ID to quickly unlock your device.
           </Checkbox>
           <RadioGroup>
-            <Radio>
-
-            </Radio>
-
+            <Radio></Radio>
           </RadioGroup>
         </FieldGroup>
       </Fieldset>

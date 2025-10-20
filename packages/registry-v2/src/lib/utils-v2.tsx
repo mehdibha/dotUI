@@ -64,7 +64,6 @@ export function createVariantsContext<
     const contextVariants = React.useContext(VariantsContext);
     const ariaProps = useSlottedContext(ariaContext, localProps.slot) || {};
 
-
     // Merge context with local props (local props win)
     return mergeProps(contextVariants, ariaProps, localProps) as TProps;
   }
