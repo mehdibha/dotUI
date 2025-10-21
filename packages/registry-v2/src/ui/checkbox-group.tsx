@@ -4,65 +4,22 @@ import {
   CheckboxGroup as AriaCheckboxGroup,
   composeRenderProps,
 } from "react-aria-components";
-import { tv } from "tailwind-variants";
-import type { ValidationResult } from "react-aria-components";
-import type { VariantProps } from "tailwind-variants";
+import type { CheckboxGroupProps } from "react-aria-components";
 
-import { CheckboxProvider } from "@dotui/registry-v2/ui/checkbox";
-import { HelpText, Label } from "@dotui/registry-v2/ui/field";
-import type { checkboxStyles } from "@dotui/registry-v2/ui/checkbox";
+import { fieldStyles } from "@dotui/registry-v2/ui/field";
 
-const checkboxGroupStyles = tv({
-  base: "flex flex-col gap-2",
-});
+const { field } = fieldStyles();
 
-interface CheckboxGroupProps extends CheckboxGroupRootProps {
-  label?: string;
-  description?: string;
-  errorMessage?: string | ((validation: ValidationResult) => string);
-}
-
-const CheckboxGroup = ({
-  label,
-  description,
-  errorMessage,
-  children,
-  ...props
-}: CheckboxGroupProps) => {
+const CheckboxGroup = ({ className, ...props }: CheckboxGroupProps) => {
   return (
-    <CheckboxGroupRoot {...props}>
-      {composeRenderProps(children, (children) => (
-        <>
-          {label && <Label>{label}</Label>}
-          {children}
-          <HelpText description={description} errorMessage={errorMessage} />
-        </>
-      ))}
-    </CheckboxGroupRoot>
+    <AriaCheckboxGroup
+      className={composeRenderProps(className, (className) =>
+        field({ className }),
+      )}
+      {...props}
+    />
   );
 };
 
-interface CheckboxGroupRootProps
-  extends React.ComponentProps<typeof AriaCheckboxGroup>,
-    VariantProps<typeof checkboxGroupStyles>,
-    VariantProps<typeof checkboxStyles> {}
-
-const CheckboxGroupRoot = ({
-  variant,
-  className,
-  ...props
-}: CheckboxGroupRootProps) => {
-  return (
-    <CheckboxProvider variant={variant}>
-      <AriaCheckboxGroup
-        className={composeRenderProps(className, (className) =>
-          checkboxGroupStyles({ className }),
-        )}
-        {...props}
-      />
-    </CheckboxProvider>
-  );
-};
-
-export type { CheckboxGroupProps, CheckboxGroupRootProps };
-export { CheckboxGroup, CheckboxGroupRoot };
+export type { CheckboxGroupProps };
+export { CheckboxGroup };

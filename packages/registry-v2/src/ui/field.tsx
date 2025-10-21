@@ -12,6 +12,7 @@ import {
   TextContext,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type { VariantProps } from "tailwind-variants";
 
 import { useSkeletonText } from "@dotui/registry-v2/ui/skeleton";
 import { Text } from "@dotui/registry-v2/ui/text";
@@ -36,8 +37,25 @@ const fieldStyles = tv({
       // Invalid state
       "[[data-invalid]_&]:text-fg-danger",
     ],
-    description: "text-xs text-fg-muted",
+    description: [
+      "text-xs text-fg-muted",
+      "[[data-disabled]_&]:text-fg-disabled",
+    ],
     fieldError: "text-xs text-fg-danger",
+  },
+  variants: {
+    orientation: {
+      horizontal: {
+        field:
+          "flex-row items-center gap-2 has-data-[slot=description]:items-start",
+      },
+      vertical: {
+        field: "flex-col gap-2",
+      },
+    },
+  },
+  defaultVariants: {
+    orientation: "vertical",
   },
 });
 
@@ -92,13 +110,19 @@ function FieldGroup({ className, ...props }: FieldGroupProps) {
 
 /* -----------------------------------------------------------------------------------------------*/
 
-interface FieldProps extends React.ComponentProps<"div"> {}
+interface FieldProps
+  extends React.ComponentProps<"div">,
+    VariantProps<typeof fieldStyles> {}
 
-const Field = ({ children, className, ...props }: FieldProps) => {
+const Field = ({ children, className, orientation, ...props }: FieldProps) => {
   const inputId = useSlotId();
   const descriptionId = useSlotId();
   return (
-    <div data-slot="field" className={field({ className })} {...props}>
+    <div
+      data-slot="field"
+      className={field({ className, orientation })}
+      {...props}
+    >
       <Provider
         values={[
           [
@@ -188,6 +212,8 @@ export {
   Description,
   FieldError,
 };
+
+export { fieldStyles };
 
 export type {
   FieldsetProps,

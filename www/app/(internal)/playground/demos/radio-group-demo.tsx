@@ -1,67 +1,62 @@
-import { Radio, RadioGroup } from "@dotui/registry-v2/ui/radio-group";
+import {
+  Description,
+  FieldContent,
+  FieldGroup,
+  Label,
+} from "@dotui/registry-v2/ui/field";
+import {
+  Radio,
+  RadioGroup,
+  RadioIndicator,
+} from "@dotui/registry-v2/ui/radio-group";
 
 export function RadioGroupDemo() {
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap gap-4">
-        <RadioGroup label="Default">
-          <Radio value="sm">Small</Radio>
-          <Radio value="md">Medium</Radio>
-          <Radio value="lg">Large</Radio>
-        </RadioGroup>
-        <RadioGroup label="Invalid" isInvalid>
-          <Radio value="sm">Small</Radio>
-          <Radio value="md">Medium</Radio>
-          <Radio value="lg">Large</Radio>
-        </RadioGroup>
-        <RadioGroup
-          label="Error message"
-          isInvalid
-          errorMessage="Please select a size"
-        >
-          <Radio value="sm">Small</Radio>
-          <Radio value="md">Medium</Radio>
-          <Radio value="lg">Large</Radio>
-        </RadioGroup>
-        <RadioGroup label="Disabled" isDisabled>
-          <Radio value="sm">Small</Radio>
-          <Radio value="md">Medium</Radio>
-          <Radio value="lg">Large</Radio>
-        </RadioGroup>
-        <RadioGroup label="Read only" isReadOnly>
-          <Radio value="sm">Small</Radio>
-          <Radio value="md">Medium</Radio>
-          <Radio value="lg">Large</Radio>
-        </RadioGroup>
-        <RadioGroup label="Description" description="Please select a size">
-          <Radio value="sm">Small</Radio>
-          <Radio value="md">Medium</Radio>
-          <Radio value="lg">Large</Radio>
-        </RadioGroup>
-      </div>
-      <RadioGroup
-        label="Plan"
-        description="Please select a plan"
-        variant="card"
-        orientation="vertical"
-        className="items-start"
-      >
-        <Radio value="Starter pack">
-          <div className="flex-1">
-            <div className="font-bold">Starter pack</div>
-            <div className="text-xs text-fg-muted">
-              Perfect for small businesses starting out.
-            </div>
-          </div>
-        </Radio>
-        <Radio value="Pro pack">
-          <div className="flex-1">
-            <div className="font-bold">Pro pack</div>
-            <div className="text-xs text-fg-muted">
-              Perfect for growing businesses.
-            </div>
-          </div>
-        </Radio>
+      <RadioGroup>
+        <Label>Size</Label>
+        <FieldGroup className="gap-1">
+          <Radio value="sm">
+            <RadioIndicator />
+            Small
+          </Radio>
+          <Radio value="md">
+            <RadioIndicator />
+            Medium
+          </Radio>
+          <Radio value="lg">
+            <RadioIndicator />
+            Large
+          </Radio>
+        </FieldGroup>
+      </RadioGroup>
+
+      
+      <RadioGroup>
+        <Label>Size</Label>
+        <FieldGroup className="gap-1">
+          <Radio value="sm">
+            <RadioIndicator />
+            <FieldContent>
+              <Label>Small</Label>
+              <Description>Dimension: 128 x 128</Description>
+            </FieldContent>
+          </Radio>
+          <Radio value="md">
+            <RadioIndicator />
+            <FieldContent>
+              <Label>Medium</Label>
+              <Description>Dimension: 256 x 256</Description>
+            </FieldContent>
+          </Radio>
+          <Radio value="lg">
+            <RadioIndicator />
+            <FieldContent>
+              <Label>Large</Label>
+              <Description>Dimension: 512 x 512</Description>
+            </FieldContent>
+          </Radio>
+        </FieldGroup>
       </RadioGroup>
     </div>
   );

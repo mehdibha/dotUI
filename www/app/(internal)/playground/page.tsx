@@ -473,12 +473,14 @@ const Section = ({
   description,
   children,
   className,
+  controls,
 }: {
   id?: string;
   title: string;
   description?: string;
   children: React.ReactNode;
   className?: string;
+  controls?: any[]
 }) => {
   const [isLoading, setIsLoading] = React.useState(false);
   return (
@@ -490,16 +492,38 @@ const Section = ({
         >
           {title}
         </h3>
-        <Switch isSelected={isLoading} onChange={setIsLoading}>
-          isLoading
-        </Switch>
       </div>
       {description && <p className="text-sm text-fg-muted">{description}</p>}
-      <SkeletonProvider isLoading={isLoading}>
-        <div className={cn("rounded-lg border bg-bg p-6", className)}>
-          {children}
+      <div className={cn("relative rounded-lg border bg-bg p-6", className)}>
+        <div className="absolute top-4 right-4 flex flex-col gap-2 text-sm text-fg-muted">
+          {controls?.map(context =>)}
+          <Switch
+            size="sm"
+            isSelected={isLoading}
+            onChange={setIsLoading}
+            className="flex-row-reverse"
+          >
+            isDisabled
+          </Switch>
+          <Switch
+            size="sm"
+            isSelected={isLoading}
+            onChange={setIsLoading}
+            className="flex-row-reverse"
+          >
+            isInvalid
+          </Switch>
+          <Switch
+            size="sm"
+            isSelected={isLoading}
+            onChange={setIsLoading}
+            className="flex-row-reverse"
+          >
+            Skeleton
+          </Switch>
         </div>
-      </SkeletonProvider>
+        <SkeletonProvider isLoading={isLoading}>{children}</SkeletonProvider>
+      </div>
     </div>
   );
 };
