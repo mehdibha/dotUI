@@ -25,7 +25,7 @@ const fieldStyles = tv({
     ],
     legend: ["mb-3 text-base font-medium"],
     fieldGroup:
-      "group/field-group @container/field-group flex w-full flex-col gap-7 data-[slot=checkbox-group]:gap-3 [&>[data-slot=field-group]]:gap-4",
+      "group/field-group @container/field-group flex w-full flex-col gap-7 has-data-[slot=checkbox]:gap-1.5 has-data-[slot=radio]:gap-1.5 data-[slot=checkbox-group]:gap-3 [&>[data-slot=field-group]]:gap-4",
     field: "flex items-start gap-2",
     fieldContent: "flex flex-col gap-1",
     label: [

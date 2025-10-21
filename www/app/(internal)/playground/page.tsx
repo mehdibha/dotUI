@@ -2,6 +2,12 @@
 
 import React from "react";
 import { AlignLeftIcon } from "lucide-react";
+import {
+  CheckboxContext,
+  CheckboxGroupContext,
+  Provider,
+  RadioGroupContext,
+} from "react-aria-components";
 
 import { cn } from "@dotui/registry-v2/lib/utils";
 import { SkeletonProvider } from "@dotui/registry-v2/ui/skeleton";
@@ -35,6 +41,7 @@ interface ContentItem {
   title: string;
   description?: string;
   preview: React.ComponentType | null;
+  controls?: [React.Context<any>, string[]][];
 }
 
 interface ContentSection {
@@ -115,12 +122,17 @@ const content: ContentSection[] = [
         id: "checkbox",
         title: "Checkbox & CheckboxGroup",
         preview: CheckboxDemo,
+        controls: [
+          [CheckboxGroupContext, ["isDisabled", "isInvalid"]],
+          [CheckboxContext, ["isDisabled", "isInvalid"]],
+        ],
       },
       // TODO
       {
         id: "radio-group",
         title: "RadioGroup",
         preview: demos.RadioGroupDemo,
+        controls: [[RadioGroupContext, ["isDisabled", "isInvalid"]]],
       },
       // TODO
       {
@@ -442,6 +454,7 @@ export default function InternalPage() {
                   id={item.id}
                   title={item.title}
                   description={item.description}
+                  controls={item.controls}
                 >
                   {item.preview ? (
                     <item.preview />
@@ -480,9 +493,41 @@ const Section = ({
   description?: string;
   children: React.ReactNode;
   className?: string;
-  controls?: any[]
+  controls?: [React.Context<any>, string[]][];
 }) => {
   const [isLoading, setIsLoading] = React.useState(false);
+
+  // Extract unique properties from all contexts
+  const uniqueProps = React.useMemo(() => {
+    if (!controls) return [];
+    const allProps = controls.flatMap(([_, props]) => props);
+    return Array.from(new Set(allProps));
+  }, [controls]);
+
+  // Create state for each unique property
+  const [controlStates, setControlStates] = React.useState<
+    Record<string, boolean>
+  >(() => uniqueProps.reduce((acc, prop) => ({ ...acc, [prop]: false }), {}));
+
+  // Build provider values
+  const providerValues = React.useMemo(() => {
+    if (!controls) return [];
+    return controls.map(([context, props]) => {
+      const contextValues = props.reduce(
+        (acc, prop) => ({
+          ...acc,
+          [prop]: controlStates[prop],
+        }),
+        {},
+      );
+      return [context, contextValues];
+    }) as any;
+  }, [controls, controlStates]);
+
+  const handlePropertyToggle = (prop: string, value: boolean) => {
+    setControlStates((prev) => ({ ...prev, [prop]: value }));
+  };
+
   return (
     <div className="flex flex-col gap-2 space-y-2">
       <div className="flex items-center justify-between gap-2">
@@ -496,23 +541,17 @@ const Section = ({
       {description && <p className="text-sm text-fg-muted">{description}</p>}
       <div className={cn("relative rounded-lg border bg-bg p-6", className)}>
         <div className="absolute top-4 right-4 flex flex-col gap-2 text-sm text-fg-muted">
-          {controls?.map(context =>)}
-          <Switch
-            size="sm"
-            isSelected={isLoading}
-            onChange={setIsLoading}
-            className="flex-row-reverse"
-          >
-            isDisabled
-          </Switch>
-          <Switch
-            size="sm"
-            isSelected={isLoading}
-            onChange={setIsLoading}
-            className="flex-row-reverse"
-          >
-            isInvalid
-          </Switch>
+          {uniqueProps.map((prop) => (
+            <Switch
+              key={prop}
+              size="sm"
+              isSelected={controlStates[prop]}
+              onChange={(value) => handlePropertyToggle(prop, value)}
+              className="flex-row-reverse"
+            >
+              {prop}
+            </Switch>
+          ))}
           <Switch
             size="sm"
             isSelected={isLoading}
@@ -522,7 +561,15 @@ const Section = ({
             Skeleton
           </Switch>
         </div>
-        <SkeletonProvider isLoading={isLoading}>{children}</SkeletonProvider>
+        {controls ? (
+          <Provider values={providerValues}>
+            <SkeletonProvider isLoading={isLoading}>
+              {children}
+            </SkeletonProvider>
+          </Provider>
+        ) : (
+          <SkeletonProvider isLoading={isLoading}>{children}</SkeletonProvider>
+        )}
       </div>
     </div>
   );

@@ -1,7 +1,5 @@
 "use client";
 
-import { CheckboxContext } from "react-aria-components";
-
 import { Checkbox, CheckboxIndicator } from "@dotui/registry-v2/ui/checkbox";
 import { CheckboxGroup } from "@dotui/registry-v2/ui/checkbox-group";
 import {
@@ -16,123 +14,147 @@ export function CheckboxDemo() {
   return (
     <div className="space-y-4">
       {/* Simple Checkbox */}
-      <CheckboxContext value={{ isDisabled: true }}>
-        <div className="flex items-center gap-2">
-          <Checkbox />
-          <Checkbox defaultSelected />
-          <Checkbox isIndeterminate />
-          <Checkbox isDisabled />
-          <Checkbox isDisabled defaultSelected />
-        </div>
+      <div className="flex items-center gap-2">
+        <Checkbox />
+        <Checkbox defaultSelected />
+        <Checkbox isIndeterminate />
+      </div>
 
-        {/* Checkbox with Label */}
-        <Checkbox>
-          <CheckboxIndicator />
+      {/* Checkbox with Label */}
+      <Checkbox>
+        <CheckboxIndicator />
+        <Label>I accept the terms and conditions</Label>
+      </Checkbox>
+
+      <Checkbox isDisabled>
+        <CheckboxIndicator />
+        <Label>I accept the terms and conditions</Label>
+      </Checkbox>
+
+      {/* Checkbox with Label and Description */}
+      <Checkbox>
+        <CheckboxIndicator />
+        <FieldContent>
           <Label>I accept the terms and conditions</Label>
-        </Checkbox>
+          <Description>
+            By clicking this checkbox, you agree to the terms and conditions.
+          </Description>
+        </FieldContent>
+      </Checkbox>
 
-        <Checkbox isDisabled>
-          <CheckboxIndicator />
+      {/* With Field */}
+      <Field orientation="horizontal">
+        <Checkbox isDisabled />
+        <FieldContent>
           <Label>I accept the terms and conditions</Label>
-        </Checkbox>
+          <Description>
+            By clicking this checkbox, you agree to the terms and conditions.
+          </Description>
+        </FieldContent>
+      </Field>
 
-        {/* Checkbox with Label and Description */}
-        <Checkbox>
-          <CheckboxIndicator />
-          <FieldContent>
-            <Label>I accept the terms and conditions</Label>
-            <Description>
-              By clicking this checkbox, you agree to the terms and conditions.
-            </Description>
-          </FieldContent>
-        </Checkbox>
+      {/* Card style */}
+      <Checkbox className="w-fit rounded-md border bg-card p-4 transition-colors selected:border-border-accent selected:bg-accent-muted">
+        <CheckboxIndicator />
+        <FieldContent>
+          <Label>I accept the terms and conditions</Label>
+          <Description>
+            By clicking this checkbox, you agree to the terms and conditions.
+          </Description>
+        </FieldContent>
+      </Checkbox>
 
-        {/* With Field */}
-        <Field orientation="horizontal">
-          <Checkbox isDisabled />
-          <FieldContent>
-            <Label>I accept the terms and conditions</Label>
-            <Description>
-              By clicking this checkbox, you agree to the terms and conditions.
-            </Description>
-          </FieldContent>
-        </Field>
+      {/* Checkbox Group */}
+      <CheckboxGroup>
+        <Label>React frameworks</Label>
+        <FieldGroup>
+          <Checkbox value="nextjs">
+            <CheckboxIndicator />
+            Next.js
+          </Checkbox>
+          <Checkbox value="remix">
+            <CheckboxIndicator />
+            Remix
+          </Checkbox>
+          <Checkbox value="gatsby">
+            <CheckboxIndicator />
+            Gatsby
+          </Checkbox>
+        </FieldGroup>
+        <Description>Please select your preferred frameworks.</Description>
+      </CheckboxGroup>
 
-        {/* Card style */}
-        <Checkbox className="w-fit rounded-md border bg-neutral p-4 transition-colors selected:border-border-accent selected:bg-accent-muted">
-          <CheckboxIndicator />
-          <FieldContent>
-            <Label>I accept the terms and conditions</Label>
-            <Description>
-              By clicking this checkbox, you agree to the terms and conditions.
-            </Description>
-          </FieldContent>
-        </Checkbox>
+      <CheckboxGroup>
+        <Label>React frameworks</Label>
+        <FieldGroup>
+          <Checkbox value="nextjs">
+            <CheckboxIndicator />
+            <Label>Tanstack Start</Label>
+          </Checkbox>
+          <Checkbox value="remix">
+            <CheckboxIndicator />
+            <Label>Next.js</Label>
+          </Checkbox>
+          <Checkbox value="gatsby">
+            <CheckboxIndicator />
+            <Label>Remix</Label>
+          </Checkbox>
+        </FieldGroup>
+      </CheckboxGroup>
 
-        {/* Checkbox Group */}
-        <CheckboxGroup>
-          <Label>React frameworks</Label>
-          <div className="space-y-1">
-            <Checkbox value="nextjs" className="items-center">
-              <CheckboxIndicator />
-              Next.js
-            </Checkbox>
-            <Checkbox value="remix" className="items-center">
-              <CheckboxIndicator />
-              Remix
-            </Checkbox>
-            <Checkbox value="gatsby" className="items-center">
-              <CheckboxIndicator />
-              Gatsby
-            </Checkbox>
-          </div>
-        </CheckboxGroup>
-
-        <CheckboxGroup>
-          <Label>React frameworks</Label>
-          <div className="space-y-2">
-            <Checkbox value="nextjs" className="items-center">
-              <CheckboxIndicator />
-              <Label>Tanstack Start</Label>
-            </Checkbox>
-            <Checkbox value="remix" className="items-center">
-              <CheckboxIndicator />
+      <CheckboxGroup>
+        <Label>React frameworks</Label>
+        <FieldGroup>
+          <Checkbox value="nextjs">
+            <CheckboxIndicator />
+            <FieldContent>
               <Label>Next.js</Label>
-            </Checkbox>
-            <Checkbox value="gatsby" className="items-center">
-              <CheckboxIndicator />
+              <Description>React framework for production</Description>
+            </FieldContent>
+          </Checkbox>
+          <Checkbox value="remix">
+            <CheckboxIndicator />
+            <FieldContent>
               <Label>Remix</Label>
-            </Checkbox>
-          </div>
-        </CheckboxGroup>
+              <Description>Full-stack web framework</Description>
+            </FieldContent>
+          </Checkbox>
+          <Checkbox value="gatsby">
+            <CheckboxIndicator />
+            <FieldContent>
+              <Label>Gatsby</Label>
+              <Description>Static site generator</Description>
+            </FieldContent>
+          </Checkbox>
+        </FieldGroup>
+      </CheckboxGroup>
 
-        <CheckboxGroup>
-          <Label>React frameworks</Label>
-          <div className="space-y-2">
-            <Checkbox value="nextjs" className="items-center">
-              <CheckboxIndicator />
-              <FieldContent>
-                <Label>Next.js</Label>
-                <Description>React framework for production</Description>
-              </FieldContent>
-            </Checkbox>
-            <Checkbox value="remix" className="items-center">
-              <CheckboxIndicator />
-              <FieldContent>
-                <Label>Remix</Label>
-                <Description>Full-stack web framework</Description>
-              </FieldContent>
-            </Checkbox>
-            <Checkbox value="gatsby" className="items-center">
-              <CheckboxIndicator />
-              <FieldContent>
-                <Label>Gatsby</Label>
-                <Description>Static site generator</Description>
-              </FieldContent>
-            </Checkbox>
-          </div>
-        </CheckboxGroup>
-      </CheckboxContext>
+      <CheckboxGroup>
+        <Label>React frameworks</Label>
+        <FieldGroup className="*:rounded-md *:border *:p-4 *:bg-card *:transition-colors *:selected:border-border-accent *:selected:bg-accent-muted">
+          <Checkbox value="nextjs">
+            <CheckboxIndicator />
+            <FieldContent>
+              <Label>Tanstack Start</Label>
+              <Description>React framework for production</Description>
+            </FieldContent>
+          </Checkbox>
+          <Checkbox value="remix">
+            <CheckboxIndicator />
+            <FieldContent>
+              <Label>Next.js</Label>
+              <Description>React framework for production</Description>
+            </FieldContent>
+          </Checkbox>
+          <Checkbox value="gatsby">
+            <CheckboxIndicator />
+            <FieldContent>
+              <Label>Remix</Label>
+              <Description>React framework for production</Description>
+            </FieldContent>
+          </Checkbox>
+        </FieldGroup>
+      </CheckboxGroup>
     </div>
   );
 }

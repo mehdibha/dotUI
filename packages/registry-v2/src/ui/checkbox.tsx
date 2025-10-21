@@ -15,7 +15,7 @@ const checkboxStyles = tv({
   slots: {
     root: [
       "focus-reset focus-visible:focus-ring",
-      "flex items-center gap-2 has-data-[slot=description]:items-start text-sm",
+      "flex items-center gap-2 text-sm leading-none has-data-[slot=description]:items-start",
       "disabled:cursor-not-allowed disabled:text-fg-disabled",
     ],
     indicator: [
@@ -49,6 +49,7 @@ interface CheckboxProps extends React.ComponentProps<typeof AriaCheckbox> {}
 const Checkbox = ({ className, ...props }: CheckboxProps) => {
   return (
     <AriaCheckbox
+      data-slot="checkbox"
       className={composeRenderProps(className, (className) =>
         props.children
           ? root({ className })

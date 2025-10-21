@@ -28,9 +28,7 @@ const RadioGroup = ({ className, ...props }: RadioGroupProps) => {
 
 const radioStyles = tv({
   slots: {
-    root: [
-      "flex items-center gap-2 has-data-[slot=description]:items-start",
-    ],
+    root: ["flex items-center gap-2 has-data-[slot=description]:items-start"],
     indicator: [
       "flex size-4 shrink-0 items-center justify-center rounded-full border border-border-control bg-transparent text-transparent",
       "transition-[background-color,border-color,box-shadow,color] duration-75",
@@ -61,6 +59,7 @@ interface RadioProps extends React.ComponentProps<typeof AriaRadio> {}
 const Radio = ({ className, ...props }: RadioProps) => {
   return (
     <AriaRadio
+      data-slot="radio"
       className={composeRenderProps(className, (className) =>
         props.children
           ? root({ className })

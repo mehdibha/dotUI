@@ -31,7 +31,6 @@ export function RadioGroupDemo() {
         </FieldGroup>
       </RadioGroup>
 
-      
       <RadioGroup>
         <Label>Size</Label>
         <FieldGroup className="gap-1">
@@ -57,6 +56,35 @@ export function RadioGroupDemo() {
             </FieldContent>
           </Radio>
         </FieldGroup>
+        <Description>Please select a size.</Description>
+      </RadioGroup>
+
+      <RadioGroup>
+        <Label>Size</Label>
+        <FieldGroup className="*:rounded-md *:border *:bg-card *:p-4 *:transition-colors *:selected:border-border-accent *:selected:bg-accent-muted">
+          <Radio value="sm">
+            <RadioIndicator />
+            <FieldContent>
+              <Label>Small</Label>
+              <Description>Dimension: 128 x 128</Description>
+            </FieldContent>
+          </Radio>
+          <Radio value="md">
+            <RadioIndicator />
+            <FieldContent>
+              <Label>Medium</Label>
+              <Description>Dimension: 256 x 256</Description>
+            </FieldContent>
+          </Radio>
+          <Radio value="lg">
+            <RadioIndicator />
+            <FieldContent>
+              <Label>Large</Label>
+              <Description>Dimension: 512 x 512</Description>
+            </FieldContent>
+          </Radio>
+        </FieldGroup>
+        <Description>Please select a size.</Description>
       </RadioGroup>
     </div>
   );
