@@ -1,22 +1,22 @@
 "use client";
 
-import { use } from "react";
+import { SearchIcon } from "lucide-react";
 import {
   Autocomplete as AriaAutocomplete,
-  DialogContext,
-  Provider,
-  SearchFieldContext,
   useFilter,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+
+import { Input, InputAddon, InputGroup } from "@dotui/registry-v2/ui/input";
+import { SearchField } from "@dotui/registry-v2/ui/search-field";
+import type { SearchFieldProps } from "@dotui/registry-v2/ui/search-field";
 
 import {
   ListBox,
   ListBoxItem,
   ListBoxSection,
-  ListBoxSectionTitle,
+  ListBoxSectionHeader,
 } from "./list-box";
-import { SearchField } from "./search-field";
 
 const commandStyles = tv({
   slots: {
@@ -36,30 +36,43 @@ const { base } = commandStyles();
 interface CommandProps extends React.ComponentProps<"div"> {}
 
 function Command({ className, ...props }: CommandProps) {
-  const { contains } = useFilter({ sensitivity: "base" });
-  const inDialog = !!use(DialogContext);
-  const searchFieldContext = use(SearchFieldContext);
+  const { contains } = useFilter({
+    sensitivity: "base",
+    ignorePunctuation: true,
+  });
+
   return (
     <AriaAutocomplete filter={contains}>
-      <Provider
-        values={[
-          [SearchFieldContext, { ...searchFieldContext, autoFocus: inDialog }],
-        ]}
-      >
-        <div {...props} className={base({ className })}></div>
-      </Provider>
+      <div {...props} className={base({ className })}></div>
     </AriaAutocomplete>
   );
 }
 
 /* -----------------------------------------------------------------------------------------------*/
 
-const CompoundCommand = Object.assign(Command, {
-  SearchField,
-  List: ListBox,
-  Item: ListBoxItem,
-  Section: ListBoxSection,
-  SectionTitle: ListBoxSectionTitle,
-});
+const CommandInput = ({
+  placeholder,
+  ...props
+}: SearchFieldProps & { placeholder?: string }) => {
+  return (
+    <SearchField {...props}>
+      <InputGroup>
+        <InputAddon>
+          <SearchIcon />
+        </InputAddon>
+        <Input placeholder={placeholder} />
+      </InputGroup>
+    </SearchField>
+  );
+};
 
-export { CompoundCommand as Command };
+/* -----------------------------------------------------------------------------------------------*/
+
+export {
+  Command,
+  CommandInput,
+  ListBox as CommandList,
+  ListBoxItem as CommandItem,
+  ListBoxSection as CommandSection,
+  ListBoxSectionHeader as CommandSectionHeader,
+};

@@ -1,42 +1,72 @@
 "use client";
 
-import { Switch } from "@dotui/registry-v2/ui/switch";
+import {
+  Description,
+  FieldContent,
+  FieldGroup,
+  Label,
+} from "@dotui/registry-v2/ui/field";
+import {
+  Switch,
+  SwitchIndicator,
+  SwitchThumb,
+} from "@dotui/registry-v2/ui/switch";
 
 export function SwitchDemo() {
   return (
-    <div className="flex flex-col gap-6">
+    <div className="space-y-4">
+      {/* Simple switches - different sizes */}
       {(["sm", "md", "lg"] as const).map((size) => (
-        <div key={size} className="flex flex-wrap items-center gap-4">
-          <Switch size={size}>Enable notifications</Switch>
-          <Switch size={size} defaultSelected>
-            Auto-save
-          </Switch>
-          <Switch size={size} isDisabled>
-            Disabled
-          </Switch>
-          <Switch size={size} defaultSelected isDisabled>
-            Disabled selected
-          </Switch>
+        <div key={size} className="">
+          <div className="flex items-center gap-2">
+            <Switch size={size} />
+            <Switch defaultSelected size={size} />
+            <Switch defaultSelected size={size}>
+              <SwitchIndicator>
+                <SwitchThumb />
+              </SwitchIndicator>
+              <Label>Enable notifications</Label>
+            </Switch>
+          </div>
         </div>
       ))}
-      <div className="space-y-2">
-        <Switch variant="card">
-          <div>
-            <div className="font-medium">Marketing emails</div>
-            <div className="text-sm text-fg-muted">
+
+      {/* Switch with Label and Description */}
+      <Switch className="w-full max-w-sm justify-between">
+        <FieldContent>
+          <Label>Marketing emails</Label>
+          <Description>
+            Receive emails about new products and features
+          </Description>
+        </FieldContent>
+        <SwitchIndicator>
+          <SwitchThumb />
+        </SwitchIndicator>
+      </Switch>
+
+      {/* Card variant */}
+      <FieldGroup>
+        <Switch>
+          <SwitchIndicator>
+            <SwitchThumb />
+          </SwitchIndicator>
+          <FieldContent>
+            <Label>Marketing emails</Label>
+            <Description>
               Receive emails about new products and features
-            </div>
-          </div>
+            </Description>
+          </FieldContent>
         </Switch>
-        <Switch variant="card">
-          <div>
-            <div className="font-medium">Security alerts</div>
-            <div className="text-sm text-fg-muted">
-              Get notified about account security
-            </div>
-          </div>
+        <Switch>
+          <SwitchIndicator>
+            <SwitchThumb />
+          </SwitchIndicator>
+          <FieldContent>
+            <Label>Security alerts</Label>
+            <Description>Get notified about account security</Description>
+          </FieldContent>
         </Switch>
-      </div>
+      </FieldGroup>
     </div>
   );
 }

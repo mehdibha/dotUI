@@ -30,9 +30,14 @@ import { ButtonGroup } from "@dotui/registry-v2/ui/button-group";
 import { ColorSwatchPicker } from "@dotui/registry-v2/ui/color-swatch-picker";
 import { Dialog } from "@dotui/registry-v2/ui/dialog";
 import { Label } from "@dotui/registry-v2/ui/field";
-import { Input, TextArea } from "@dotui/registry-v2/ui/input";
-import { Menu } from "@dotui/registry-v2/ui/menu";
-import { Select } from "@dotui/registry-v2/ui/select";
+import {
+  Input,
+  InputAddon,
+  InputGroup,
+  TextArea,
+} from "@dotui/registry-v2/ui/input";
+import { Menu, MenuContent, MenuItem } from "@dotui/registry-v2/ui/menu";
+import { Overlay } from "@dotui/registry-v2/ui/overlay";
 import { Separator } from "@dotui/registry-v2/ui/separator";
 import { Text } from "@dotui/registry-v2/ui/text";
 import { TextField } from "@dotui/registry-v2/ui/text-field";
@@ -91,12 +96,12 @@ export function ButtonGroupDemo() {
               <Button>
                 <ChevronDownIcon />
               </Button>
-              <Menu.Overlay type="popover">
-                <Menu.Content>
-                  <Menu.Item>Disable</Menu.Item>
-                  <Menu.Item variant="danger">Uninstall</Menu.Item>
-                </Menu.Content>
-              </Menu.Overlay>
+              <Overlay type="popover">
+                <MenuContent>
+                  <MenuItem>Disable</MenuItem>
+                  <MenuItem variant="danger">Uninstall</MenuItem>
+                </MenuContent>
+              </Overlay>
             </Menu>
           </ButtonGroup>
           <ButtonGroup className="[--radius-factor:999]">
@@ -105,17 +110,17 @@ export function ButtonGroupDemo() {
               <Button>
                 <ChevronDownIcon />
               </Button>
-              <Menu.Overlay type="popover">
-                <Menu.Content>
-                  <Menu.Item>Mute Conversation</Menu.Item>
-                  <Menu.Item>Mark as Read</Menu.Item>
-                  <Menu.Item>Report Conversation</Menu.Item>
-                  <Menu.Item>Block User</Menu.Item>
-                  <Menu.Item>Share Conversation</Menu.Item>
-                  <Menu.Item>Copy Conversation</Menu.Item>
-                  <Menu.Item variant="danger">Delete Conversation</Menu.Item>
-                </Menu.Content>
-              </Menu.Overlay>
+              <Overlay type="popover">
+                <MenuContent>
+                  <MenuItem>Mute Conversation</MenuItem>
+                  <MenuItem>Mark as Read</MenuItem>
+                  <MenuItem>Report Conversation</MenuItem>
+                  <MenuItem>Block User</MenuItem>
+                  <MenuItem>Share Conversation</MenuItem>
+                  <MenuItem>Copy Conversation</MenuItem>
+                  <MenuItem variant="danger">Delete Conversation</MenuItem>
+                </MenuContent>
+              </Overlay>
             </Menu>
           </ButtonGroup>
           <ButtonGroup className="[--radius-factor:0.9]">
@@ -125,22 +130,22 @@ export function ButtonGroupDemo() {
               <Button>
                 <MoreHorizontalIcon />
               </Button>
-              <Menu.Overlay type="popover">
-                <Menu.Content>
-                  <Menu.Item>Select Messages</Menu.Item>
-                  <Menu.Item>Edit Pins</Menu.Item>
-                  <Menu.Item>Set Up Name & Photo</Menu.Item>
-                  <Menu.Item>Delete Messages</Menu.Item>
-                  <Menu.Item variant="danger">Delete Pins</Menu.Item>
-                </Menu.Content>
-              </Menu.Overlay>
+              <Overlay type="popover">
+                <MenuContent>
+                  <MenuItem>Select Messages</MenuItem>
+                  <MenuItem>Edit Pins</MenuItem>
+                  <MenuItem>Set Up Name & Photo</MenuItem>
+                  <MenuItem>Delete Messages</MenuItem>
+                  <MenuItem variant="danger">Delete Pins</MenuItem>
+                </MenuContent>
+              </Overlay>
             </Menu>
           </ButtonGroup>
         </div>
         <TextField>
           <Label>Amount</Label>
           <ButtonGroup>
-            <Select
+            {/* <Select
               placeholder="Select currency"
               value={currency}
               onChange={(key) => setCurrency(key as string)}
@@ -157,7 +162,7 @@ export function ButtonGroupDemo() {
                   <Select.Item id="£">£</Select.Item>
                 </Select.List>
               </Select.Popover>
-            </Select>
+            </Select> */}
             <Input placeholder="Enter amount to send" />
             <Button>
               <ArrowRightIcon />
@@ -176,20 +181,20 @@ export function ButtonGroupDemo() {
           <Button>
             <RotateCwIcon />
           </Button>
-          <Input.Group>
-            <Input.Addon>
+          <InputGroup>
+            <InputAddon>
               <PercentIcon />
-            </Input.Addon>
+            </InputAddon>
             <Input placeholder="Enter percentage" />
-          </Input.Group>
+          </InputGroup>
         </ButtonGroup>
         <div className="flex gap-2 [--radius:0.95rem] [--ring:var(--color-blue-300)] [--spacing:0.22rem] **:[.shadow-xs]:shadow-none">
-          <Input.Group>
-            <Input.Addon>
+          <InputGroup>
+            <InputAddon>
               <SearchIcon />
-            </Input.Addon>
+            </InputAddon>
             <Input placeholder="Type to search..." />
-          </Input.Group>
+          </InputGroup>
           <ButtonGroup>
             <Button>
               <IconBrandGithubCopilot />
@@ -223,11 +228,11 @@ export function ButtonGroupDemo() {
         </div>
         <div className="grid grid-cols-2 gap-4 [--spacing:0.22rem]">
           <ButtonGroup>
-            <Input.Group>
-              <Input.Addon>W</Input.Addon>
+            <InputGroup>
+              <InputAddon>W</InputAddon>
               <Input id="width" className="w-16" />
-              <Input.Addon>px</Input.Addon>
-            </Input.Group>
+              <InputAddon>px</InputAddon>
+            </InputGroup>
             <Button>
               <IconMinus />
             </Button>
@@ -236,8 +241,8 @@ export function ButtonGroupDemo() {
             </Button>
           </ButtonGroup>
           <ButtonGroup className="w-full">
-            <Input.Group>
-              <Input.Addon>
+            <InputGroup>
+              <InputAddon>
                 <Dialog>
                   <Button variant="quiet">
                     <span className="size-4 rounded-xs bg-blue-600" />
@@ -265,10 +270,10 @@ export function ButtonGroupDemo() {
                     </Dialog.Content>
                   </Dialog.Popover>
                 </Dialog>
-              </Input.Addon>
+              </InputAddon>
               <Input className="w-16" />
-              <Input.Addon>%</Input.Addon>
-            </Input.Group>
+              <InputAddon>%</InputAddon>
+            </InputGroup>
           </ButtonGroup>
         </div>
         <ButtonGroup>
@@ -279,7 +284,7 @@ export function ButtonGroupDemo() {
         </ButtonGroup>
         <ButtonGroup>
           <Input aria-label="Select export type" />
-          <Select defaultValue="pdf" className="w-fit">
+          {/* <Select defaultValue="pdf" className="w-fit">
             <Select.Trigger aspect="default" className="rounded-l-none">
               <Select.Value />
               <ChevronDownIcon />
@@ -292,10 +297,10 @@ export function ButtonGroupDemo() {
                 <Select.Item id="json">json</Select.Item>
               </Select.List>
             </Select.Popover>
-          </Select>
+          </Select> */}
         </ButtonGroup>
         <ButtonGroup>
-          <Select defaultValue="hours" className="w-fit">
+          {/* <Select defaultValue="hours" className="w-fit">
             <Select.Trigger aspect="default" className="rounded-r-none">
               <Select.Value />
               <ChevronDownIcon />
@@ -307,7 +312,7 @@ export function ButtonGroupDemo() {
                 <Select.Item id="weeks">Weeks</Select.Item>
               </Select.List>
             </Select.Popover>
-          </Select>
+          </Select> */}
           <Input aria-label="Select duration" />
         </ButtonGroup>
         <ButtonGroup className="[--radius-factor:9999]">
@@ -317,16 +322,16 @@ export function ButtonGroupDemo() {
             </Button>
           </ButtonGroup>
           <ButtonGroup>
-            <Input.Group>
-              <Input.Addon>
+            <InputGroup>
+              <InputAddon>
                 <Tooltip content="Use Voice Mode">
                   <Button variant="quiet" size="sm" className="size-7">
                     <AudioLinesIcon />
                   </Button>
                 </Tooltip>
-              </Input.Addon>
+              </InputAddon>
               <Input placeholder="Send a message..." />
-            </Input.Group>
+            </InputGroup>
           </ButtonGroup>
         </ButtonGroup>
         <ButtonGroup>

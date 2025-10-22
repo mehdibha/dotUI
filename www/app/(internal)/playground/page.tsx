@@ -7,11 +7,17 @@ import {
   CheckboxGroupContext,
   Provider,
   RadioGroupContext,
+  SwitchContext,
 } from "react-aria-components";
 
 import { cn } from "@dotui/registry-v2/lib/utils";
+import { Label } from "@dotui/registry-v2/ui/field";
 import { SkeletonProvider } from "@dotui/registry-v2/ui/skeleton";
-import { Switch } from "@dotui/registry-v2/ui/switch";
+import {
+  Switch,
+  SwitchIndicator,
+  SwitchThumb,
+} from "@dotui/registry-v2/ui/switch";
 import { ToggleButton } from "@dotui/registry-v2/ui/toggle-button";
 
 import { ThemeModeSwitch } from "@/components/ui/theme-mode-switch";
@@ -134,11 +140,11 @@ const content: ContentSection[] = [
         preview: demos.RadioGroupDemo,
         controls: [[RadioGroupContext, ["isDisabled", "isInvalid"]]],
       },
-      // TODO
       {
         id: "switch",
         title: "Switch",
         preview: SwitchDemo,
+        controls: [[SwitchContext, ["isDisabled", "isReadOnly"]]],
       },
       {
         id: "slider",
@@ -431,7 +437,7 @@ const toc = content.flatMap((section) => [
 
 export default function InternalPage() {
   return (
-    <div className="container max-w-screen-xl py-20 pb-200 xl:grid xl:grid-cols-[1fr_250px] xl:gap-12">
+    <div className="container max-w-screen-xl py-20 xl:grid xl:grid-cols-[1fr_250px] xl:gap-12">
       <div className="space-y-12">
         <div className="flex items-center justify-between">
           <div className="space-y-2">
@@ -539,26 +545,32 @@ const Section = ({
         </h3>
       </div>
       {description && <p className="text-sm text-fg-muted">{description}</p>}
-      <div className={cn("relative rounded-lg border bg-bg p-6", className)}>
-        <div className="absolute top-4 right-4 flex flex-col gap-2 text-sm text-fg-muted">
+      <div className={cn("relative rounded-lg border bg-bg p-6 pt-12", className)}>
+        <div className="absolute top-4 right-4 flex gap-8 text-sm text-fg-muted">
           {uniqueProps.map((prop) => (
             <Switch
               key={prop}
               size="sm"
               isSelected={controlStates[prop]}
               onChange={(value) => handlePropertyToggle(prop, value)}
-              className="flex-row-reverse"
+              className="flex-row-reverse gap-1"
             >
-              {prop}
+              <SwitchIndicator>
+                <SwitchThumb />
+              </SwitchIndicator>
+              <Label>{prop}</Label>
             </Switch>
           ))}
           <Switch
             size="sm"
             isSelected={isLoading}
             onChange={setIsLoading}
-            className="flex-row-reverse"
+            className="flex-row-reverse gap-1"
           >
-            Skeleton
+            <SwitchIndicator>
+              <SwitchThumb />
+            </SwitchIndicator>
+            <Label>Skeleton</Label>
           </Switch>
         </div>
         {controls ? (

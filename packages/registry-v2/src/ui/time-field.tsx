@@ -9,9 +9,11 @@ import type {
   TimeFieldProps as AriaTimeFieldProps,
   TimeValue,
 } from "react-aria-components";
+import { fieldStyles } from "./field";
 
 const timeFieldStyles = tv({
-  base: "flex w-32 flex-col items-start gap-2",
+  extend: fieldStyles().field(),
+  base: "",
 });
 
 /* -----------------------------------------------------------------------------------------------*/

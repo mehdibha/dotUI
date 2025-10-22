@@ -35,7 +35,6 @@ function Popover({ className, showArrow = false, ...props }: PopoverProps) {
   return (
     <AriaPopover
       data-slot="popover"
-      data-popover=""
       className={composeRenderProps(className, (className) =>
         popover({ className }),
       )}

@@ -1,9 +1,9 @@
 "use client";
 
-import { Keyboard } from "react-aria-components";
+import { Keyboard as AriaKeyboard } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
-const newKbdStyles = tv({
+const KbdStyles = tv({
   slots: {
     group: "inline-flex items-center gap-1",
     kbd: [
@@ -13,26 +13,25 @@ const newKbdStyles = tv({
   },
 });
 
-const { group, kbd } = newKbdStyles();
+const { group, kbd } = KbdStyles();
 
 /* -----------------------------------------------------------------------------------------------*/
 
 interface KbdGroupProps extends React.HTMLAttributes<HTMLElement> {}
+
 const KbdGroup = ({ className, ...props }: KbdGroupProps) => {
   return <kbd className={group({ className })} {...props} />;
 };
 
 /* -----------------------------------------------------------------------------------------------*/
 
-type KbdProps = React.HTMLAttributes<HTMLElement>;
+interface KbdProps extends React.ComponentProps<typeof AriaKeyboard> {}
+
 const Kbd = ({ className, ...props }: KbdProps) => {
-  return <Keyboard className={kbd({ className })} {...props} />;
+  return <AriaKeyboard className={kbd({ className })} {...props} />;
 };
 
 /* -----------------------------------------------------------------------------------------------*/
 
-const CompoundKbd = Object.assign(Kbd, {
-  Group: KbdGroup,
-});
-export { CompoundKbd as Kbd, KbdGroup };
-export type { KbdProps };
+export { KbdGroup, Kbd };
+export type { KbdProps, KbdGroupProps };

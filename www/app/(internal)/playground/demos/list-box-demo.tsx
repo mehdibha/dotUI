@@ -1,6 +1,6 @@
 "use client";
 
-import { ListBox } from "@dotui/registry-v2/ui/list-box";
+import { ListBox, ListBoxItem } from "@dotui/registry-v2/ui/list-box";
 
 const items = [
   { id: 1, name: "Apple" },
@@ -24,15 +24,15 @@ export function ListBoxDemo() {
   return (
     <div className="grid grid-cols-4 gap-6">
       <ListBox aria-label="Fruits" items={items}>
-        {(item) => <ListBox.Item id={item.id}>{item.name}</ListBox.Item>}
+        {(item) => <ListBoxItem id={item.id}>{item.name}</ListBoxItem>}
       </ListBox>
 
       <ListBox aria-label="Fruits" items={items} selectionMode="single">
-        {(item) => <ListBox.Item id={item.id}>{item.name}</ListBox.Item>}
+        {(item) => <ListBoxItem id={item.id}>{item.name}</ListBoxItem>}
       </ListBox>
 
       <ListBox aria-label="Fruits" items={items} selectionMode="multiple">
-        {(item) => <ListBox.Item id={item.id}>{item.name}</ListBox.Item>}
+        {(item) => <ListBoxItem id={item.id}>{item.name}</ListBoxItem>}
       </ListBox>
 
       {/* with sections, description item, icon, suffix, prefix... */}

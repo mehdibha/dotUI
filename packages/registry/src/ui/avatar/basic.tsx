@@ -38,7 +38,7 @@ const [AvatarProvider, useAvatarContext] = createScopedContext<
     status: Status;
     setStatus: (status: Status) => void;
   }
->("AlertRoot");
+>("AvatarRoot");
 
 interface AvatarProps
   extends AvatarImageProps,

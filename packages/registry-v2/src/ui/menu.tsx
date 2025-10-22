@@ -30,6 +30,8 @@ import { Popover } from "@dotui/registry-v2/ui/popover";
 import { Text } from "@dotui/registry-v2/ui/text";
 import type { OverlayProps } from "@dotui/registry-v2/ui/overlay";
 
+import { cn } from "../lib/utils";
+
 const menuStyles = tv({
   base: [
     "max-h[inherit] rounded-[inherit] p-1 outline-hidden",
@@ -80,6 +82,7 @@ const menuItemStyles = tv({
     "group-data-[slot=drawer]/overlay:py-3 group-data-[slot=drawer]/overlay:text-base",
     "group-data-[slot=modal]/overlay:py-2 group-data-[slot=modal]/overlay:text-base",
     "[&_svg]:size-4",
+    "[&_kbd]:bg-transparent [&_kbd]:text-fg-muted",
   ],
   variants: {
     variant: {
@@ -93,10 +96,6 @@ const menuItemStyles = tv({
   defaultVariants: {
     variant: "default",
   },
-});
-
-const menuSectionStyles = tv({
-  base: "space-y-px pt-2",
 });
 
 interface MenuItemProps<T>
@@ -138,6 +137,10 @@ const MenuItem = <T extends object>({
 
 /* -----------------------------------------------------------------------------------------------*/
 
+const menuSectionStyles = tv({
+  base: "space-y-px pt-2",
+});
+
 interface MenuSectionProps<T> extends AriaMenuSectionProps<T> {}
 const MenuSection = <T extends object>({
   children,
@@ -153,16 +156,19 @@ const MenuSection = <T extends object>({
 
 /* -----------------------------------------------------------------------------------------------*/
 
-const CompoundMenu = Object.assign(Menu, {
-  Content: MenuContent,
-  Item: MenuItem,
-  Overlay,
-  Popover,
-  Modal,
-  Drawer,
-  Section: MenuSection,
-  Sub: MenuSub,
-});
+interface MenuHeaderProps extends React.ComponentProps<typeof AriaHeader> {}
+
+const MenuHeader = ({ className, ...props }: MenuHeaderProps) => {
+  return (
+    <AriaHeader
+      className={cn("text-sm font-medium text-fg-muted", className)}
+      {...props}
+    />
+  );
+};
+
+/* -----------------------------------------------------------------------------------------------*/
+
+export { Menu, MenuItem, MenuContent, MenuSub, MenuSection, MenuHeader };
 
 export type { MenuContentProps, MenuItemProps, MenuSectionProps, MenuSubProps };
-export { CompoundMenu as Menu, MenuItem, MenuContent, MenuSub, MenuSection };

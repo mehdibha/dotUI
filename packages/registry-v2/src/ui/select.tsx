@@ -5,9 +5,6 @@ import {
   Select as AriaSelect,
   SelectValue as AriaSelectValue,
   composeRenderProps,
-  ListBoxContext,
-  PopoverContext,
-  Provider,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import type {
@@ -20,38 +17,36 @@ import {
   ListBox,
   ListBoxItem,
   ListBoxSection,
-  ListBoxSectionTitle,
+  ListBoxSectionHeader,
+  ListBoxVirtualizer,
 } from "@dotui/registry-v2/ui/list-box";
 import { Popover } from "@dotui/registry-v2/ui/popover";
 import type { ButtonProps } from "@dotui/registry-v2/ui/button";
+import type { ListBoxProps } from "@dotui/registry-v2/ui/list-box";
+import type { PopoverProps } from "@dotui/registry-v2/ui/popover";
+
+import { fieldStyles } from "./field";
 
 const selectStyles = tv({
   slots: {
-    root: "flex w-48 flex-col items-start gap-2 [&_[data-slot='button']]:w-full",
-    selectValue: "flex-1 truncate text-left",
+    root: fieldStyles().field(),
+    selectValue: "flex-1 truncate text-left placeholder-shown:text-fg-muted",
   },
 });
 
+const { root, selectValue } = selectStyles();
+
 /* -----------------------------------------------------------------------------------------------*/
 
-const { root, selectValue } = selectStyles();
-interface SelectProps<T extends object>
-  extends Omit<AriaSelectProps<T>, "selectionMode"> {}
+interface SelectProps<T extends object> extends AriaSelectProps<T> {}
 
-const SelectRoot = <T extends object>({
-  className,
-  ...props
-}: SelectProps<T>) => {
+const Select = <T extends object>({ className, ...props }: SelectProps<T>) => {
   return (
-    <Provider values={[[PopoverContext, { className: "w-auto!" }]]}>
-      <AriaSelect
-        data-slot="select"
-        className={composeRenderProps(className, (cn) =>
-          root({ className: cn }),
-        )}
-        {...props}
-      />
-    </Provider>
+    <AriaSelect
+      data-slot="select"
+      className={composeRenderProps(className, (cn) => root({ className: cn }))}
+      {...props}
+    />
   );
 };
 
@@ -59,13 +54,15 @@ const SelectRoot = <T extends object>({
 
 const SelectTrigger = (props: ButtonProps) => {
   return (
-    <Button {...props}>
-      {props.children ?? (
-        <>
-          <SelectValue />
-          <ChevronDownIcon />
-        </>
-      )}
+    <Button aspect="default" {...props}>
+      {composeRenderProps(props.children, (children) => {
+        return (
+          <>
+            {children ?? <SelectValue />}
+            <ChevronDownIcon className="ml-auto" />
+          </>
+        );
+      })}
     </Button>
   );
 };
@@ -80,38 +77,58 @@ const SelectValue = <T extends object>({
 }: SelectValueProps<T>) => {
   return (
     <AriaSelectValue
+      data-slot="select-value"
       className={composeRenderProps(className, (className) =>
         selectValue({ className }),
       )}
       {...props}
     >
-      {composeRenderProps(props.children, (children, options) => {
-        return <>{options.selectedText ?? options.defaultChildren}</>;
-      })}
+      {composeRenderProps(
+        props.children,
+        (children, { selectedText, defaultChildren }) => {
+          return <>{children || selectedText || defaultChildren}</>;
+        },
+      )}
     </AriaSelectValue>
   );
 };
 
 /* -----------------------------------------------------------------------------------------------*/
 
-const CompoundSelect = Object.assign(SelectRoot, {
-  Trigger: SelectTrigger,
-  Value: SelectValue,
-  Popover: Popover,
-  List: ListBox,
-  Item: ListBoxItem,
-  Section: ListBoxSection,
-  Title: ListBoxSectionTitle,
-});
+const SelectContent = <T extends object>({
+  virtulized,
+  placement,
+  ...props
+}: ListBoxProps<T> & {
+  placement?: PopoverProps["placement"];
+  virtulized?: boolean;
+}) => {
+  if (virtulized) {
+    return (
+      <Popover placement={placement} className="p-0 w-auto overflow-hidden">
+        <ListBoxVirtualizer>
+          <ListBox {...props} className="h-80 w-48 p-0 overflow-y-auto" />
+        </ListBoxVirtualizer>
+      </Popover>
+    );
+  }
+
+  return (
+    <Popover placement={placement}>
+      <ListBox {...props} />
+    </Popover>
+  );
+};
 
 export {
-  CompoundSelect as Select,
+  Select,
   SelectTrigger,
   SelectValue,
-  ListBox as SelectList,
+  SelectContent,
   ListBoxItem as SelectItem,
   ListBoxSection as SelectSection,
-  ListBoxSectionTitle as SelectSectionTitle,
+  ListBoxSectionHeader as SelectSectionHeader,
+  ListBoxVirtualizer as SelectVirtualizer,
 };
 
 export type { SelectProps, SelectValueProps };

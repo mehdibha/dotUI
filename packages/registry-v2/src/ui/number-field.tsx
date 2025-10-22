@@ -8,15 +8,8 @@ import {
   composeRenderProps,
   Provider,
 } from "react-aria-components";
-import { tv } from "tailwind-variants";
 
-const numberFieldStyles = tv({
-  slots: {
-    root: "flex w-48 flex-col items-start gap-2",
-  },
-});
-
-const { root } = numberFieldStyles();
+import { fieldStyles } from "./field";
 
 interface NumberFieldProps
   extends React.ComponentProps<typeof AriaNumberField> {}
@@ -25,7 +18,7 @@ const NumberField = ({ className, ...props }: NumberFieldProps) => {
     <AriaNumberField
       data-slot="number-field"
       className={composeRenderProps(className, (className) =>
-        root({ className }),
+        fieldStyles().field({ className }),
       )}
       {...props}
     >

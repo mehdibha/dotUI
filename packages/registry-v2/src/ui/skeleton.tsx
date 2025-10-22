@@ -16,7 +16,7 @@ export const SkeletonProvider = ({
   }
   return (
     <SkeletonContext.Provider value={true}>
-      <div className="skeleton-provider">{children}</div>
+      <div inert className="skeleton-provider">{children}</div>
     </SkeletonContext.Provider>
   );
 };

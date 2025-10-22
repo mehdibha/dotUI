@@ -9,7 +9,9 @@ import {
   ListBoxItem as AriaListBoxItem,
   ListBoxLoadMoreItem as AriaListBoxLoadMoreItem,
   ListBoxSection as AriaListBoxSection,
+  Virtualizer as AriaVirtualizer,
   composeRenderProps,
+  ListLayout,
   ListStateContext,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
@@ -17,6 +19,7 @@ import type {
   ListBoxItemProps as AriaListBoxItemProps,
   ListBoxProps as AriaListBoxProps,
   ListBoxSectionProps as AriaListBoxSectionProps,
+  VirtualizerProps as AriaVirtualizerProps,
 } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 
@@ -123,34 +126,55 @@ const ListBoxSection = <T extends object>({
   className,
   ...props
 }: ListBoxSectionProps<T>) => {
-  return <AriaListBoxSection className={section({ className })} {...props} />;
+  return (
+    <AriaListBoxSection
+      data-slot="listbox-section"
+      className={section({ className })}
+      {...props}
+    />
+  );
 };
 
 /* -----------------------------------------------------------------------------------------------*/
 
-interface ListBoxSectionTitleProps
+interface ListBoxSectionHeaderProps
   extends React.ComponentProps<typeof AriaHeader> {}
 
-const ListBoxSectionTitle = ({
+const ListBoxSectionHeader = ({
   className,
   ...props
-}: ListBoxSectionTitleProps) => {
+}: ListBoxSectionHeaderProps) => {
   return <AriaHeader className={sectionTitle({ className })} {...props} />;
 };
 
 /* -----------------------------------------------------------------------------------------------*/
 
-const CompoundListBox = Object.assign(ListBox, {
-  Item: ListBoxItem,
-  Section: ListBoxSection,
-  Title: ListBoxSectionTitle,
-});
+interface ListBoxVirtualizerProps<T>
+  extends Omit<AriaVirtualizerProps<T>, "layout"> {}
+
+const ListBoxVirtualizer = <T extends object>({
+  ...props
+}: ListBoxVirtualizerProps<T>) => {
+  return (
+    <AriaVirtualizer
+      layout={ListLayout}
+      layoutOptions={{
+        rowHeight: 32,
+        padding: 4,
+        gap: 0,
+      }}
+      {...props}
+    />
+  );
+};
+/* -----------------------------------------------------------------------------------------------*/
 
 export {
-  CompoundListBox as ListBox,
+  ListBox,
   ListBoxItem,
   ListBoxSection,
-  ListBoxSectionTitle,
+  ListBoxSectionHeader,
+  ListBoxVirtualizer,
 };
 
 export type { ListBoxProps, ListBoxItemProps, ListBoxSectionProps };

@@ -5,6 +5,8 @@ import { mergeProps, mergeRefs, useLayoutEffect } from "@react-aria/utils";
 import { useControlledState } from "@react-stately/utils";
 import { chain } from "react-aria";
 import {
+  DateInput as AriaDateInput,
+  DateSegment as AriaDateSegment,
   Group as AriaGroup,
   Input as AriaInput,
   InputContext as AriaInputContext,
@@ -15,6 +17,7 @@ import {
   useContextProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type { DateInputProps as AriaDateInputProps } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 
 import { focusInput } from "@dotui/registry-v2/lib/focus-styles";
@@ -24,8 +27,8 @@ import { createContext } from "../lib/utils";
 const inputStyles = tv({
   slots: {
     group: [
-      "group/input-group transition-[border-color,box-shadow]",
-      "flex cursor-text items-center rounded-md border bg-neutral text-base shadow-xs sm:text-sm",
+      "group/input-group w-48 transition-[border-color,box-shadow]",
+      "flex cursor-text items-center rounded-md border border-border-field bg-neutral text-base shadow-xs sm:text-sm",
 
       "gap-2 has-[>input]:px-3 has-[>input]:py-1 has-[>textarea]:py-2 has-[>textarea]:[&_[data-slot=input-addon]]:w-full has-[>textarea]:[&_[data-slot=input-addon]]:px-2",
 
@@ -280,8 +283,6 @@ const TextArea = ({
   );
 };
 
-/* -----------------------------------------------------------------------------------------------*/
-
 interface InputAddonProps extends React.ComponentProps<"div"> {}
 
 function InputAddon({ className, ...props }: InputAddonProps) {
@@ -297,12 +298,57 @@ function InputAddon({ className, ...props }: InputAddonProps) {
 
 /* -----------------------------------------------------------------------------------------------*/
 
-const CompoundInput = Object.assign(Input, {
-  Group: InputGroup,
-  Addon: InputAddon,
-  TextArea,
+const dateInputStyles = tv({
+  slots: {
+    dateInput: [
+      "flex flex-1 items-center justify-start text-fg placeholder:text-fg-muted disabled:cursor-default disabled:text-fg-disabled",
+    ],
+    dateSegment:
+      "rounded px-0.5 outline-hidden select-none placeholder-shown:not-data-disabled:not-data-focused:text-fg-muted focus:bg-accent focus:text-fg-on-accent focus:caret-transparent disabled:text-fg-disabled type-literal:px-0",
+  },
 });
 
-export { CompoundInput as Input, TextArea, InputGroup, InputAddon };
+const { dateInput, dateSegment } = dateInputStyles();
+
+/* -----------------------------------------------------------------------------------------------*/
+
+interface DateInputProps extends Omit<AriaDateInputProps, "children"> {
+  children?: AriaDateInputProps["children"];
+}
+
+const DateInput = ({ className, ...props }: DateInputProps) => {
+  return (
+    <AriaDateInput
+      className={composeRenderProps(className, (className) =>
+        dateInput({ className }),
+      )}
+      {...props}
+    >
+      {props.children
+        ? props.children
+        : (segment) => <DateSegment segment={segment} />}
+    </AriaDateInput>
+  );
+};
+
+/* -----------------------------------------------------------------------------------------------*/
+
+interface DateSegmentProps
+  extends React.ComponentProps<typeof AriaDateSegment> {}
+
+const DateSegment = ({ className, ...props }: DateSegmentProps) => {
+  return (
+    <AriaDateSegment
+      className={composeRenderProps(className, (className) =>
+        dateSegment({ className }),
+      )}
+      {...props}
+    />
+  );
+};
+
+/* -----------------------------------------------------------------------------------------------*/
+
+export { Input, TextArea, InputGroup, InputAddon, DateInput, DateSegment };
 
 export type { InputGroupProps, InputProps, TextAreaProps };

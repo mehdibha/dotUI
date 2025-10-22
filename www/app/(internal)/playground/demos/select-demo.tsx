@@ -1,10 +1,30 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-
 "use client";
 
+import React from "react";
+import {
+  ChartBarIcon,
+  ChartLineIcon,
+  ChartPieIcon,
+  ChevronsUpDownIcon,
+} from "lucide-react";
+
+import { Button } from "@dotui/registry-v2/ui/button";
 import { Label } from "@dotui/registry-v2/ui/field";
-import { Select } from "@dotui/registry-v2/ui/select";
+import {
+  ListBox,
+  ListBoxItem,
+  ListBoxSection,
+} from "@dotui/registry-v2/ui/list-box";
+import { Popover } from "@dotui/registry-v2/ui/popover";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectSection,
+  SelectSectionHeader,
+  SelectTrigger,
+  SelectValue,
+} from "@dotui/registry-v2/ui/select";
 
 const items = [
   { id: 1, name: "Apple" },
@@ -15,9 +35,64 @@ const items = [
 ];
 
 export function SelectDemo() {
+  const items = React.useMemo(
+    () =>
+      Array.from({ length: 10000 }, (_, index) => ({
+        id: index,
+        name: `Item ${index}`,
+      })),
+    [],
+  );
   return (
-    <div className="flex flex-col gap-6">
-      <Select>
+    <div className="flex flex-wrap gap-6">
+      <Select placeholder="Select a fruit">
+        <SelectTrigger className="w-[180px]">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectSection>
+            <SelectSectionHeader>Fruits</SelectSectionHeader>
+            <SelectItem id="apple" textValue="apple">
+              Apple
+            </SelectItem>
+            <SelectItem id="banana">Banana</SelectItem>
+            <SelectItem id="blueberry">Blueberry</SelectItem>
+            <SelectItem id="grapes" isDisabled>
+              Grapes
+            </SelectItem>
+            <SelectItem id="pineapple">Pineapple</SelectItem>
+          </SelectSection>
+        </SelectContent>
+      </Select>
+
+      <Select placeholder="Virtualized List">
+        <Button aspect="default">
+          <SelectValue />
+          <ChevronsUpDownIcon />
+        </Button>
+        <SelectContent items={items} virtulized>
+          {(item) => <ListBoxItem key={item.id}>{item.name}</ListBoxItem>}
+        </SelectContent>
+      </Select>
+
+      <Select placeholder="With icon">
+        <SelectTrigger />
+        <SelectContent>
+          <SelectItem>
+            <ChartLineIcon /> Line
+          </SelectItem>
+          <SelectItem>
+            <ChartBarIcon />
+            Bar
+          </SelectItem>
+          <SelectItem>
+            <ChartPieIcon />
+            Pie
+          </SelectItem>
+        </SelectContent>
+      </Select>
+
+      {/* <Select>
         <Label>Single selection</Label>
         <Select.Trigger>
           <Select.Value />
@@ -47,7 +122,7 @@ export function SelectDemo() {
             )}
           </Select.List>
         </Select.Popover>
-      </Select>
+      </Select> */}
     </div>
   );
 }

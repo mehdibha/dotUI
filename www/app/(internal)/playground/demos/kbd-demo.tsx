@@ -1,6 +1,6 @@
 "use client";
 
-import { Kbd } from "@dotui/registry-v2/ui/kbd";
+import { Kbd, KbdGroup } from "@dotui/registry-v2/ui/kbd";
 
 export function KbdDemo() {
   return (
@@ -35,18 +35,18 @@ export function KbdDemo() {
       </div>
       <p className="text-sm">
         Press{" "}
-        <Kbd.Group>
+        <KbdGroup>
           <Kbd>⌘</Kbd>
           <Kbd>K</Kbd>
-        </Kbd.Group>{" "}
+        </KbdGroup>
         to open the command palette
       </p>
       <p className="text-sm">
         Use{" "}
-        <Kbd.Group>
+        <KbdGroup>
           <Kbd>Ctrl</Kbd>
           <Kbd>S</Kbd>
-        </Kbd.Group>
+        </KbdGroup>
         to save your work
       </p>
     </div>
