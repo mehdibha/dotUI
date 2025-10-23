@@ -20,8 +20,6 @@ import { tv } from "tailwind-variants";
 import type { DateInputProps as AriaDateInputProps } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 
-import { focusInput } from "@dotui/registry-v2/lib/focus-styles";
-
 import { createContext } from "../lib/utils";
 
 const inputStyles = tv({
@@ -87,9 +85,10 @@ const inputStyles = tv({
       false: {
         input: [
           "w-48 rounded-md border border-border-field bg-neutral px-3 py-2 shadow-xs",
-          "text-base focus-reset transition-[border-color,box-shadow] focus:focus-input sm:text-sm",
+          "text-base focus-reset transition-[border-color,box-shadow] data-[slot=date-input]:focus-within:focus-input data-[slot=input]:focus:focus-input sm:text-sm",
           "disabled:cursor-not-allowed disabled:border-border-disabled disabled:bg-disabled disabled:text-fg-disabled",
           "invalid:border-border-danger invalid:text-fg-danger focus-within:has-[input[data-invalid]]:border-border",
+          "data-[slot=date-input]:cursor-text"
         ],
         textArea: [
           "flex min-h-16 w-48 resize-none rounded-md border border-border-field bg-neutral px-3 py-2 shadow-xs",
@@ -300,27 +299,29 @@ function InputAddon({ className, ...props }: InputAddonProps) {
 
 const dateInputStyles = tv({
   slots: {
-    dateInput: [
-      "flex flex-1 items-center justify-start text-fg placeholder:text-fg-muted disabled:cursor-default disabled:text-fg-disabled",
-    ],
     dateSegment:
       "rounded px-0.5 outline-hidden select-none placeholder-shown:not-data-disabled:not-data-focused:text-fg-muted focus:bg-accent focus:text-fg-on-accent focus:caret-transparent disabled:text-fg-disabled type-literal:px-0",
   },
 });
 
-const { dateInput, dateSegment } = dateInputStyles();
+const { dateSegment } = dateInputStyles();
 
 /* -----------------------------------------------------------------------------------------------*/
 
-interface DateInputProps extends Omit<AriaDateInputProps, "children"> {
+interface DateInputProps
+  extends Omit<AriaDateInputProps, "children">,
+    Pick<VariantProps<typeof inputStyles>, "size"> {
   children?: AriaDateInputProps["children"];
 }
 
-const DateInput = ({ className, ...props }: DateInputProps) => {
+const DateInput = ({ className, size, ...props }: DateInputProps) => {
+  const inGroup = useInputGroupContext("DateInput");
   return (
     <AriaDateInput
+      data-slot="date-input"
+      data-in-group={inGroup || undefined}
       className={composeRenderProps(className, (className) =>
-        dateInput({ className }),
+        input({ className, inGroup, size }),
       )}
       {...props}
     >

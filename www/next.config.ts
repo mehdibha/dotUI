@@ -1,10 +1,7 @@
+import "./env";
+
 import { createMDX } from "fumadocs-mdx/next";
-import { createJiti } from "jiti";
 import type { NextConfig } from "next";
-
-const jiti = createJiti(import.meta.url);
-
-await jiti.import("./env");
 
 const config: NextConfig = {
   reactStrictMode: true,
@@ -59,5 +56,6 @@ const config: NextConfig = {
   },
 };
 
+const withMDX = createMDX();
 
-export default config
+export default withMDX(config);

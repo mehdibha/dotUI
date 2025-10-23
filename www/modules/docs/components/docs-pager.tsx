@@ -1,4 +1,4 @@
-import { findNeighbour } from "fumadocs-core/server";
+import { findNeighbour } from "fumadocs-core/page-tree";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import type { Route } from "next";
 
