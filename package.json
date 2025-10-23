@@ -27,7 +27,7 @@
     "clean:workspaces": "turbo run clean",
     "lint": "biome lint",
     "lint:fix": "biome lint --write",
-    "format": "biome format",
+    "format": "biome format ",
     "format:fix": "biome format --write",
     "lint:ws": "pnpm dlx sherif@latest",
     "postinstall": "pnpm lint:ws",

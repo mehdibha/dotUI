@@ -26,6 +26,7 @@ export const FeaturedStylesShowcase = ({
   const [touched, setTouched] = React.useState(false);
   const viewRef = React.useRef(null);
   const inView = useInView(viewRef, {
+    initial: true,
     once: false,
     amount: "all",
   });
@@ -45,7 +46,7 @@ export const FeaturedStylesShowcase = ({
 
   React.useEffect(() => {
     const interval = setInterval(() => {
-      if (touched || inView) return;
+      if (touched || !inView) return;
       setCurrentIndex((prev) => (prev + 1) % styles.length);
     }, 5000);
     return () => clearInterval(interval);

@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
+import type { Metadata, Route } from "next";
 import { AlignLeftIcon, ExternalLinkIcon } from "lucide-react";
 
 import { AdobeIcon } from "@dotui/registry/components/icons/adobe";
-import type { Metadata, Route } from "next";
 import { GitHubIcon } from "@dotui/registry/components/icons/github";
 import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";
