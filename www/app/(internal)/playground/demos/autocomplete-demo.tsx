@@ -39,7 +39,7 @@ export function AutocompleteDemo() {
             className: "border-0 bg-transparent shadow-none h-120",
           }}
         >
-          <DialogContent className="w-full max-w-2xl rounded-4xl bg-neutral p-0! gap-0">
+          <DialogContent className="w-full max-w-2xl gap-0 rounded-4xl bg-neutral p-0!">
             <Autocomplete
               filter={(textValue, inputValue) => {
                 if (inputValue === "") return false;

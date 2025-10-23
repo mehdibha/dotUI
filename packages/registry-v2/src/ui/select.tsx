@@ -105,9 +105,9 @@ const SelectContent = <T extends object>({
 }) => {
   if (virtulized) {
     return (
-      <Popover placement={placement} className="p-0 w-auto overflow-hidden">
+      <Popover placement={placement} className="w-auto overflow-hidden p-0">
         <ListBoxVirtualizer>
-          <ListBox {...props} className="h-80 w-48 p-0 overflow-y-auto" />
+          <ListBox {...props} className="h-80 w-48 overflow-y-auto p-0" />
         </ListBoxVirtualizer>
       </Popover>
     );

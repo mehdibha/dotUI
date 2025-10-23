@@ -131,7 +131,7 @@ export function CheckboxDemo() {
 
       <CheckboxGroup>
         <Label>React frameworks</Label>
-        <FieldGroup className="*:rounded-md *:border *:p-4 *:bg-card *:transition-colors *:selected:border-border-accent *:selected:bg-accent-muted">
+        <FieldGroup className="*:rounded-md *:border *:bg-card *:p-4 *:transition-colors *:selected:border-border-accent *:selected:bg-accent-muted">
           <Checkbox value="nextjs">
             <CheckboxIndicator />
             <FieldContent>

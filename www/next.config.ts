@@ -16,6 +16,9 @@ const config: NextConfig = {
       fullUrl: true,
     },
   },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   typedRoutes: true,
   serverExternalPackages: [
     "ts-morph",

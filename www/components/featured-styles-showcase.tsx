@@ -1,9 +1,7 @@
 "use client";
 
 import React from "react";
-import { motion, useInView } from "motion/react";
 import { useTheme } from "next-themes";
-import { UNSAFE_PortalProvider as PortalProvider } from "react-aria";
 
 import { StyleProvider } from "@dotui/registry";
 import { cn } from "@dotui/registry-v2/lib/utils";
@@ -24,37 +22,20 @@ export const FeaturedStylesShowcase = ({
   const containerRef = React.useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const ref = React.useRef(null);
-  const isInView = useInView(ref);
-  const [touched, setTouched] = React.useState<boolean>(false);
   const isMounted = useMounted();
 
   const currentStyle = React.useMemo(() => {
     return styles[currentIndex % styles.length];
   }, [currentIndex, styles]);
 
-  const visibleStylesData = React.useMemo(() => {
-    return Array.from({ length: visibleCards }, (_, i) => {
-      const index = (currentIndex + i) % styles.length;
-      const style = styles[index];
-      return style ? { style, position: i } : null;
-    }).filter(
-      (
-        item,
-      ): item is {
-        style: NonNullable<(typeof styles)[number]>;
-        position: number;
-      } => item !== null,
-    );
-  }, [currentIndex, styles, visibleCards]);
-
+  // Auto-advance cards every 3.5 seconds for infinite loop
   // React.useEffect(() => {
   //   const interval = setInterval(() => {
-  //     if (touched || !isInView) return;
   //     setCurrentIndex((prev) => (prev + 1) % styles.length);
-  //   }, 4000);
+  //   }, 3500);
 
   //   return () => clearInterval(interval);
-  // }, [touched, isInView, styles.length]);
+  // }, [styles.length]);
 
   return (
     <>
@@ -74,7 +55,7 @@ export const FeaturedStylesShowcase = ({
               const clickedIndex = styles.findIndex((s) => s.name === key);
               if (clickedIndex === -1) return;
               setCurrentIndex(clickedIndex);
-              setTouched(true);
+              // setTouched(true);
             }}
           >
             <TabList className="flex-wrap justify-center bg-transparent">
@@ -90,49 +71,52 @@ export const FeaturedStylesShowcase = ({
                 );
               })}
             </TabList>
-            <div className="relative mt-20">
-              {styles.map((style, index) => (
-                <TabPanel
-                  key={style.name}
-                  id={style.name}
-                  className={() =>
-                    cn(index === 0 ? "relative" : "absolute inset-0")
-                  }
-                  style={{
-                    transform: `translateY(${index * -30}px)`,
-                    scale: 1 - index * 0.1,
-                    transformOrigin: "top",
-                    zIndex: 0 - index,
-                  }}
-                  shouldForceMount
-                >
-                  <StyleProvider
-                    style={style}
-                    mode={resolvedTheme as "light" | "dark" | undefined}
-                    className="h-full rounded-xl bg-bg"
+            <div className="relative mt-30">
+              {[...styles, ...styles].map((style, index) => {
+                // Calculate position relative to current view
+                const position = index - currentIndex;
+                const isVisible = position >= 0 && position < visibleCards;
+                const isFront = position === 0;
+
+                return (
+                  <TabPanel
+                    key={`${style.name}-${index}`}
+                    id={style.name}
+                    className={() =>
+                      cn(
+                        isFront ? "relative" : "absolute inset-0",
+                        "min-h-screen w-full transition-[opacity,transform] duration-400 will-change-[transform,opacity]",
+                      )
+                    }
+                    style={{
+                      transform: `translateY(${position * ((position - 10) / 5) * 20}px) scale(${1 - position * 0.1})`,
+                      transformOrigin: "top center",
+                      opacity: isVisible ? 1 : 0,
+                      pointerEvents: isFront ? "auto" : "none",
+                      zIndex: visibleCards - position,
+                    }}
+                    shouldForceMount
                   >
-                    {index > 0 && (
-                      <div
-                        className="absolute inset-0 rounded-[inherit] bg-black"
-                        style={{
-                          opacity: index * 0.15,
-                        }}
-                      />
-                    )}
-                    <div className="h-full rounded-[inherit] border">
-                      {index === 0 ? (
-                        <Cards />
-                      ) : (
-                        isMounted && (
-                          <div className="animate-in duration-300 fade-in-0">
-                            <Cards />
-                          </div>
-                        )
+                    <StyleProvider
+                      style={style}
+                      mode={resolvedTheme as "light" | "dark" | undefined}
+                      className="h-full rounded-xl bg-bg"
+                    >
+                      {position > 0 && (
+                        <div
+                          className="absolute inset-0 rounded-[inherit] bg-black transition-opacity duration-600"
+                          style={{
+                            opacity: Math.min(position * 0.15, 0.6),
+                          }}
+                        />
                       )}
-                    </div>
-                  </StyleProvider>
-                </TabPanel>
-              ))}
+                      <div className="rounded-[inherit] border">
+                        {isMounted && <Cards />}
+                      </div>
+                    </StyleProvider>
+                  </TabPanel>
+                );
+              })}
             </div>
           </Tabs>
         </div>

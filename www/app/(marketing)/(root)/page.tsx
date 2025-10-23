@@ -39,7 +39,7 @@ export default async function HomePage() {
             Build your design system with a{" "}
             <span className="font-bold italic">unique</span> look.
           </h1>
-          <p className="mt-4 text-balance text-center text-lg text-fg-muted">
+          <p className="mt-4 text-center text-lg text-balance text-fg-muted">
             A set of beautifully designed components that you can customize,
             extend, and build on. Start here then make it your own. Open Source.
             Open Code.

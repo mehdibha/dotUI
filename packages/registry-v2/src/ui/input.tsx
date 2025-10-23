@@ -88,7 +88,7 @@ const inputStyles = tv({
           "text-base focus-reset transition-[border-color,box-shadow] data-[slot=date-input]:focus-within:focus-input data-[slot=input]:focus:focus-input sm:text-sm",
           "disabled:cursor-not-allowed disabled:border-border-disabled disabled:bg-disabled disabled:text-fg-disabled",
           "invalid:border-border-danger invalid:text-fg-danger focus-within:has-[input[data-invalid]]:border-border",
-          "data-[slot=date-input]:cursor-text"
+          "data-[slot=date-input]:cursor-text",
         ],
         textArea: [
           "flex min-h-16 w-48 resize-none rounded-md border border-border-field bg-neutral px-3 py-2 shadow-xs",

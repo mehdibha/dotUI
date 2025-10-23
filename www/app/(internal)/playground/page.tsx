@@ -545,7 +545,9 @@ const Section = ({
         </h3>
       </div>
       {description && <p className="text-sm text-fg-muted">{description}</p>}
-      <div className={cn("relative rounded-lg border bg-bg p-6 pt-12", className)}>
+      <div
+        className={cn("relative rounded-lg border bg-bg p-6 pt-12", className)}
+      >
         <div className="absolute top-4 right-4 flex gap-8 text-sm text-fg-muted">
           {uniqueProps.map((prop) => (
             <Switch

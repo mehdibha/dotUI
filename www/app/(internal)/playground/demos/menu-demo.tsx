@@ -12,6 +12,7 @@ import {
   SparklesIcon,
   User2Icon,
 } from "lucide-react";
+import { Pressable } from "react-aria-components";
 
 import {
   AvatarFallback,
@@ -31,7 +32,6 @@ import {
 import { Overlay } from "@dotui/registry-v2/ui/overlay";
 import { Separator } from "@dotui/registry-v2/ui/separator";
 import { Avatar, AvatarImage } from "@dotui/registry/ui/avatar";
-import { Pressable } from "react-aria-components"
 
 export function MenuDemo() {
   return (
@@ -178,9 +178,10 @@ export function MenuDemo() {
         </Overlay>
       </Menu>
 
-      
       <Menu>
-        <Button variant="quiet"><EllipsisIcon /></Button>
+        <Button variant="quiet">
+          <EllipsisIcon />
+        </Button>
         <Overlay type="popover">
           <MenuContent>
             <MenuItem>New File</MenuItem>
