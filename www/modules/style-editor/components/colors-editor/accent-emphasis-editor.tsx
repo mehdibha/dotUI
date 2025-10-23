@@ -75,7 +75,7 @@ export const AccentEmphasisEditor = () => {
           className={cn(
             "w-full",
             isPending &&
-              "[&_[data-slot='slider-filler']]:opacity-0 [&_[data-slot='slider-thumb']]:opacity-0 [&_[data-slot='slider-track']]:animate-pulse [&_[data-slot='slider-value-label']]:opacity-0",
+              "**:data-[slot='slider-filler']:opacity-0 **:data-[slot='slider-thumb']:opacity-0 [&_[data-slot='slider-track']]:animate-pulse [&_[data-slot='slider-value-label']]:opacity-0",
           )}
         />
       )}

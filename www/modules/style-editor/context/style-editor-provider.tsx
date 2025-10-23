@@ -154,7 +154,9 @@ export function GeneratedThemeProvider({
   }, [form, resolvedMode]);
 
   React.useEffect(() => {
-    syncTheme();
+    if (isSuccess) {
+      syncTheme();
+    }
   }, [isSuccess, syncTheme]);
 
   return (
