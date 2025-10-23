@@ -25,8 +25,10 @@
     "build:registry": "pnpm --filter=@dotui/registry build",
     "clean": "git clean -xdf node_modules",
     "clean:workspaces": "turbo run clean",
-    "check": "npx ultracite@latest check",
-    "fix": "npx ultracite@latest fix",
+    "lint": "biome lint",
+    "lint:fix": "biome lint --write",
+    "format": "biome format",
+    "format:fix": "biome format --write",
     "lint:ws": "pnpm dlx sherif@latest",
     "postinstall": "pnpm lint:ws",
     "typecheck": "turbo run typecheck",
@@ -36,14 +38,13 @@
     "pub:release": "pnpm --filter=tailwindcss-autocontrast pub:release"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.2.6",
+    "@biomejs/biome": "2.2.7",
     "@changesets/changelog-github": "^0.5.1",
     "@changesets/cli": "^2.27.3",
     "@vitest/coverage-v8": "^4.0.1",
     "puppeteer": "^24.26.0",
     "turbo": "^2.5.8",
     "typescript": "catalog:",
-    "ultracite": "5.6.4",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^4.0.1"
   }
