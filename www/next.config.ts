@@ -1,21 +1,33 @@
 import { createMDX } from "fumadocs-mdx/next";
 import { createJiti } from "jiti";
-
-const withMDX = createMDX();
+import type { NextConfig } from "next";
 
 const jiti = createJiti(import.meta.url);
 
 await jiti.import("./env");
 
-/** @type {import("next").NextConfig} */
-const config = {
+const config: NextConfig = {
+  reactStrictMode: true,
   transpilePackages: [
     "@dotui/api",
     "@dotui/auth",
     "@dotui/db",
     "@dotui/registry",
   ],
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
+  },
   typedRoutes: true,
+  serverExternalPackages: [
+    "ts-morph",
+    "typescript",
+    "oxc-transform",
+    "twoslash",
+    "shiki",
+    "@takumi-rs/core",
+  ],
   images: {
     remotePatterns: [
       {
@@ -28,12 +40,7 @@ const config = {
       },
     ],
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
+
   devIndicators: false,
   async rewrites() {
     return [
@@ -52,4 +59,5 @@ const config = {
   },
 };
 
-export default withMDX(config);
+
+export default config

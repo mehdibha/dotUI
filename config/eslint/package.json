@@ -1,12 +1,11 @@
 {
   "name": "@dotui/eslint-config",
   "private": true,
-  "version": "0.3.0",
   "type": "module",
   "exports": {
-    "./base": "./base.js",
-    "./nextjs": "./nextjs.js",
-    "./react": "./react.js"
+    "./base": "./base.ts",
+    "./nextjs": "./nextjs.ts",
+    "./react": "./react.ts"
   },
   "scripts": {
     "clean": "git clean -xdf .cache .turbo node_modules",
@@ -14,18 +13,20 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@eslint/compat": "^1.2.9",
-    "@next/eslint-plugin-next": "^15.3.3",
-    "eslint-plugin-import": "^2.31.0",
+    "@eslint/compat": "^1.4.0",
+    "@eslint/js": "catalog:",
+    "@next/eslint-plugin-next": "^15.5.4",
+    "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^6.0.0-rc.1",
-    "eslint-plugin-turbo": "^2.5.4",
-    "typescript-eslint": "^8.33.1"
+    "eslint-plugin-react-hooks": "^7.0.0",
+    "eslint-plugin-turbo": "^2.5.8",
+    "typescript-eslint": "^8.46.0"
   },
   "devDependencies": {
     "@dotui/prettier-config": "workspace:*",
     "@dotui/ts-config": "workspace:*",
+    "@types/node": "^22.18.10",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:"

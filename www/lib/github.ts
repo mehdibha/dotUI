@@ -1,6 +1,4 @@
-import { getGithubLastEdit as getGithubLastEdit_ } from "fumadocs-core/server";
-
-import { env } from "@/env";
+import { getGithubLastEdit as getGithubLastEdit_ } from "fumadocs-core/content/github";
 
 const OWNER = "mehdibha";
 const REPO = "dotUI";
