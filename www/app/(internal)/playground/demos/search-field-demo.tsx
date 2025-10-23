@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 
 import { Kbd } from "@dotui/registry-v2/ui/kbd";
 import { SearchField } from "@dotui/registry-v2/ui/search-field";

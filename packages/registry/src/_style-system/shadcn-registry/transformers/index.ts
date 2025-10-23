@@ -1,6 +1,6 @@
-import { promises as fs } from "fs";
-import { tmpdir } from "os";
-import path from "path";
+import { promises as fs } from "node:fs";
+import { tmpdir } from "node:os";
+import path from "node:path";
 import { Project, ScriptKind } from "ts-morph";
 import type { SourceFile } from "ts-morph";
 

@@ -100,7 +100,7 @@ const Toaster = () => {
 };
 
 interface ToastProps extends AriaToastProps<Toast>, Toast {}
-function Toast({
+function _Toast({
   title: t,
   description: d,
   className,

@@ -68,7 +68,7 @@ function StyleEditorHeaderActions() {
   const { data: session, isPending: isSessionPending } =
     authClient.useSession();
 
-  const isUserAuthenticated = session && session.user;
+  const isUserAuthenticated = session?.user;
   const isUserStyle = isUserAuthenticated && session.user.id === data?.userId;
 
   return (

@@ -2,7 +2,6 @@ import { Button } from "@dotui/registry/ui/button";
 import { Checkbox } from "@dotui/registry/ui/checkbox";
 import { TextField } from "@dotui/registry/ui/text-field";
 
-import { getComponentVariants } from "@/modules/style-editor/components/components-editor/demos/utils";
 import { Section } from "@/modules/style-editor/components/components-editor/section";
 
 export function FocusStyles() {

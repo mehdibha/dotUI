@@ -20,7 +20,6 @@ import type { ScaleId } from "@dotui/registry/style-system/types";
 import type { TableRootProps } from "@dotui/registry/ui/table";
 
 import { ContextualHelp } from "@/components/ui/contextual-help";
-import { EditableInput } from "@/components/ui/editable-input";
 import {
   useGeneratedTheme,
   useStyleEditorForm,
@@ -134,8 +133,7 @@ const TokenSelect = ({
     >
       {(field) => {
         return (
-          <>
-            <Skeleton show={isPending} className="w-40">
+          <Skeleton show={isPending} className="w-40">
               <field.Select
                 aria-label="Select variable value"
                 size="sm"
@@ -161,7 +159,6 @@ const TokenSelect = ({
                   })}
               </field.Select>
             </Skeleton>
-          </>
         );
       }}
     </form.AppField>

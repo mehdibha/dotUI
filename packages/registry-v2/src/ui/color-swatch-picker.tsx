@@ -9,7 +9,6 @@ import {
 import { tv } from "tailwind-variants";
 
 import { focusRing } from "@dotui/registry-v2/lib/focus-styles";
-import { cn } from "@dotui/registry-v2/lib/utils";
 import { ColorSwatch } from "@dotui/registry-v2/ui/color-swatch";
 
 const colorSwatchPickerStyles = tv({

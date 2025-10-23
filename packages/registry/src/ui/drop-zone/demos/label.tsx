@@ -1,4 +1,4 @@
-import React from "react";
+
 
 import { UploadIcon } from "@dotui/registry/icons";
 import { DropZone, DropZoneLabel } from "@dotui/registry/ui/drop-zone";

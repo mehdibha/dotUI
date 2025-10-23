@@ -24,7 +24,7 @@ const treeStyles = tv({
   },
 });
 
-const { root, item, itemContent } = treeStyles();
+const { root, item } = treeStyles();
 
 /* -----------------------------------------------------------------------------------------------*/
 
@@ -56,15 +56,10 @@ const TreeItem = ({ className, ...props }: TreeItemProps) => {
 
 interface TreeItemContentProps extends AriaTreeItemContentProps {}
 
-const TreeItemContent = (props: TreeItemContentProps) => {
+const TreeItemContent = (_props: TreeItemContentProps) => {
   return (
     <AriaTreeItemContent>
-      {({
-        hasChildItems,
-        selectionBehavior,
-        selectionMode,
-        allowsDragging,
-      }) => (
+      {({ selectionBehavior, selectionMode, allowsDragging }) => (
         <>
           {allowsDragging && (
             <Button slot="drag" variant="quiet" size="sm">
@@ -77,7 +72,6 @@ const TreeItemContent = (props: TreeItemContentProps) => {
           <Button slot="chevron" variant="quiet" size="sm">
             <ChevronRightIcon />
           </Button>
-          {props.children}
         </>
       )}
     </AriaTreeItemContent>

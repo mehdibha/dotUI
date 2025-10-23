@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 
 import { DateFieldInput, DateFieldRoot } from "@dotui/registry/ui/date-field";
 import { Description, Label } from "@dotui/registry/ui/field";

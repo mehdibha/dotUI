@@ -114,7 +114,7 @@ function TooltipContent({
 
 interface TooltipArrowProps extends React.ComponentProps<"svg"> {}
 
-function TooltipArrow({ className, ...props }: TooltipArrowProps) {
+function TooltipArrow({ className }: TooltipArrowProps) {
   return (
     <AriaOverlayArrow className={arrow({ className })}>
       <svg data-slot="tooltip-arrow" width={8} height={8} viewBox="0 0 8 8">

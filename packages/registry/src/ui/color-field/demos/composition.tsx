@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 
 import { ColorFieldRoot } from "@dotui/registry/ui/color-field";
 import { Description, FieldError, Label } from "@dotui/registry/ui/field";

@@ -10,7 +10,6 @@ import {
   Dialog,
   DialogBody,
   DialogFooter,
-  DialogHeading,
 } from "@dotui/registry/ui/dialog";
 
 import { env } from "@/env";
@@ -63,7 +62,7 @@ export function NavigationBlocker() {
       const target = e.target as HTMLElement;
       const link = target.closest("a");
 
-      if (link && link.href && !link.target) {
+      if (link?.href && !link.target) {
         const url = new URL(link.href);
         const currentUrl = new URL(window.location.href);
 

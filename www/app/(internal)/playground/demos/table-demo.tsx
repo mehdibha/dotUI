@@ -1,10 +1,9 @@
 "use client";
 
-import { parseDate } from "@internationalized/date";
 import { useDragAndDrop } from "react-aria-components";
 import { useAsyncList, useListData } from "react-stately";
 
-import { Table, TableColumn } from "@dotui/registry-v2/ui/table";
+import { Table, } from "@dotui/registry-v2/ui/table";
 
 const users = [
   { id: 1, name: "John Doe", email: "john@example.com", role: "Admin" },
@@ -218,8 +217,8 @@ function AsyncSortTable() {
           const first = a[sortDescriptor.column as keyof Character];
           const second = b[sortDescriptor.column as keyof Character];
           let cmp =
-            (parseInt(first as string) || first) <
-            (parseInt(second as string) || second)
+            (parseInt(first as string, 10) || first) <
+            (parseInt(second as string, 10) || second)
               ? -1
               : 1;
           if (sortDescriptor.direction === "descending") {
@@ -279,7 +278,7 @@ interface FileItem {
   type: string;
 }
 
-const ReordableTable = () => {
+const _ReordableTable = () => {
   const list = useListData({
     initialItems: [
       { id: 1, name: "Games", date: "6/7/2020", type: "File folder" },
@@ -290,7 +289,7 @@ const ReordableTable = () => {
   });
 
   const { dragAndDropHooks } = useDragAndDrop<FileItem>({
-    getItems: (keys, items) =>
+    getItems: (_keys, items) =>
       items.map((item) => ({
         "text/plain": item.name,
       })),

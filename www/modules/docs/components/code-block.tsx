@@ -1,8 +1,8 @@
 import { codeToHtml } from "shiki";
 import type { BundledLanguage } from "shiki";
 
-import { CodeBlockClient } from "./code-block-client";
 import type { CodeBlockRootProps } from "./code-block-client";
+import { CodeBlockClient } from "./code-block-client";
 
 interface CodeBlockProps extends CodeBlockRootProps {
   files: {
@@ -19,7 +19,7 @@ const CodeBlock = async ({
   preview: _preview,
   ...props
 }: CodeBlockProps) => {
-  let preview;
+  let preview: React.ReactNode | undefined;
   if (_preview) {
     const html = await codeToHtml(_preview, {
       lang: "tsx",
@@ -31,6 +31,7 @@ const CodeBlock = async ({
     preview = (
       <div
         className="[&_pre]:outline-hidden [&_span]:bg-transparent! dark:[&_span]:text-(--shiki-dark)!"
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: ignore
         dangerouslySetInnerHTML={{ __html: html }}
       />
     );
@@ -51,6 +52,7 @@ const CodeBlock = async ({
         code: (
           <div
             className="[&_pre]:outline-hidden [&_span]:bg-transparent! dark:[&_span]:text-(--shiki-dark)!"
+            // biome-ignore lint/security/noDangerouslySetInnerHtml: ignore
             dangerouslySetInnerHTML={{ __html: html }}
           />
         ),

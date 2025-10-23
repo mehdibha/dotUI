@@ -5,7 +5,7 @@ import type { iconLibraries } from "@dotui/registry/icons/registry";
 
 import { useCurrentStyle } from "./style-provider";
 
-interface CommonIconProps extends React.RefAttributes<any> {
+interface CommonIconProps extends React.RefAttributes<SVGSVGElement> {
   className?: string;
   width?: string | number;
   height?: string | number;
@@ -14,9 +14,9 @@ interface CommonIconProps extends React.RefAttributes<any> {
   fill?: string;
   stroke?: string;
   strokeWidth?: string | number;
-  onClick?: (event: React.MouseEvent<any>) => void;
-  onMouseEnter?: (event: React.MouseEvent<any>) => void;
-  onMouseLeave?: (event: React.MouseEvent<any>) => void;
+  onClick?: (event: React.MouseEvent<SVGSVGElement>) => void;
+  onMouseEnter?: (event: React.MouseEvent<SVGSVGElement>) => void;
+  onMouseLeave?: (event: React.MouseEvent<SVGSVGElement>) => void;
   "aria-label"?: string;
   "aria-hidden"?: React.AriaAttributes["aria-hidden"];
   role?: string;

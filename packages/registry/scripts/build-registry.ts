@@ -1,6 +1,6 @@
-import { promises as fs } from "fs";
+import { promises as fs } from "node:fs";
 import { existsSync } from "node:fs";
-import path from "path";
+import path from "node:path";
 import { rimraf } from "rimraf";
 
 import { registryBlocks } from "@dotui/registry/blocks/registry";

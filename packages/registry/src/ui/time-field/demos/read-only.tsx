@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { Time } from "@internationalized/date";
 
 import { TimeField } from "@dotui/registry/ui/time-field";

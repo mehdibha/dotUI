@@ -31,7 +31,6 @@ import {
   TableColumn,
   TableHeader,
   TableRoot,
-  TableRootProps,
   TableRow,
 } from "@dotui/registry/ui/table";
 

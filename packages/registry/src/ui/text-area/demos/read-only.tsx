@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 
 import { TextArea } from "@dotui/registry/ui/text-area";
 

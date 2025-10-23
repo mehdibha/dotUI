@@ -6,19 +6,10 @@ import {
   ChevronsUpDownIcon,
   CreditCardIcon,
   EllipsisIcon,
-  LogOut,
   LogOutIcon,
-  SettingsIcon,
   SparklesIcon,
-  User2Icon,
 } from "lucide-react";
-import { Pressable } from "react-aria-components";
 
-import {
-  AvatarFallback,
-  AvatarPlaceholder,
-  AvatarRoot,
-} from "@dotui/registry-v2/ui/avatar";
 import { Button } from "@dotui/registry-v2/ui/button";
 import { Kbd } from "@dotui/registry-v2/ui/kbd";
 import {
@@ -31,7 +22,7 @@ import {
 } from "@dotui/registry-v2/ui/menu";
 import { Overlay } from "@dotui/registry-v2/ui/overlay";
 import { Separator } from "@dotui/registry-v2/ui/separator";
-import { Avatar, AvatarImage } from "@dotui/registry/ui/avatar";
+import { Avatar, } from "@dotui/registry/ui/avatar";
 
 export function MenuDemo() {
   return (

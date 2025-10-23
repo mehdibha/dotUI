@@ -1,8 +1,7 @@
 "use client";
 
 import { cn } from "@dotui/registry/lib/utils";
-import { FormControl } from "@dotui/registry/ui/form";
-import { Select, SelectItem } from "@dotui/registry/ui/select";
+import { SelectItem } from "@dotui/registry/ui/select";
 import { Skeleton } from "@dotui/registry/ui/skeleton";
 import type { VariantsDefinition } from "@dotui/registry/style-system/types";
 

@@ -74,7 +74,7 @@ const TextAreaInput = ({
   onChange,
   ...props
 }: TextAreaInputProps) => {
-  const [inputValue, setInputValue] = useControlledState(
+  const [_inputValue, setInputValue] = useControlledState(
     props.value,
     props.defaultValue ?? "",
     () => {},
@@ -95,13 +95,13 @@ const TextAreaInput = ({
     input.style.height = `${input.scrollHeight + (input.offsetHeight - input.clientHeight)}px`;
     input.style.overflow = prevOverflow;
     input.style.alignSelf = prevAlignment;
-  }, [inputRef]);
+  }, []);
 
   React.useLayoutEffect(() => {
     if (inputRef.current) {
       onHeightChange();
     }
-  }, [onHeightChange, inputValue, inputRef]);
+  }, [onHeightChange]);
 
   return (
     <AriaTextArea

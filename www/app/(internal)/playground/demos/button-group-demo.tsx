@@ -45,7 +45,7 @@ import { Tooltip } from "@dotui/registry-v2/ui/tooltip";
 import { SearchIcon } from "@dotui/registry/icons";
 
 export function ButtonGroupDemo() {
-  const [currency, setCurrency] = useState("$");
+  const [_currency, _setCurrency] = useState("$");
   return (
     <div className="flex flex-wrap gap-8">
       <div className="flex max-w-md flex-col gap-6">

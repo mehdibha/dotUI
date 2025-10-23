@@ -9,7 +9,7 @@ import { tv } from "tailwind-variants";
 import type { SwitchRenderProps } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 
-import { focusRing, focusRingGroup } from "@dotui/registry-v2/lib/focus-styles";
+import { focusRingGroup } from "@dotui/registry-v2/lib/focus-styles";
 import { createContext } from "@dotui/registry-v2/lib/utils";
 
 const switchStyles = tv({

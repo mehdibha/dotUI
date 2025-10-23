@@ -2,7 +2,7 @@ import { registryBlocks } from "@dotui/registry/blocks/registry";
 
 import { BlockView } from "@/modules/blocks/block-view";
 
-export default async function BlocksPage(props: PageProps<"/blocks">) {
+export default async function BlocksPage(_props: PageProps<"/blocks">) {
   const blocks = registryBlocks.filter((block) =>
     block.categories?.includes("featured"),
   );

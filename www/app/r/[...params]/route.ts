@@ -1,13 +1,14 @@
-import path from "node:path";
-import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 
 import { createStyle } from "@dotui/registry/style-system/core";
 import { buildRegistryItem } from "@dotui/registry/style-system/shadcn-registry";
+import type { RouterOutputs } from "@dotui/api";
 import type { ColorFormat } from "@dotui/registry/style-system/types";
 
 import { env } from "@/env";
 import { caller } from "@/lib/trpc/server";
+import path from "node:path";
 
 const registryBasePath = path.resolve(
   process.cwd(),
@@ -46,9 +47,9 @@ export async function GET(
       );
     }
 
-    let style;
-    let styleSlug;
-    let registryItemName;
+    let style: RouterOutputs["style"]["getBySlug"];
+    let styleSlug: string | undefined;
+    let registryItemName: string | undefined;
 
     if (routeParams.length === 3) {
       const [username, styleName, name] = routeParams as [
@@ -95,7 +96,7 @@ export async function GET(
     const response = NextResponse.json(registryItem);
 
     return response;
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 },

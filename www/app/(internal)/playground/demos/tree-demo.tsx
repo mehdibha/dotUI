@@ -1,6 +1,5 @@
 "use client";
 
-import { Collection } from "react-aria-components";
 
 import { Tree } from "@dotui/registry-v2/ui/tree";
 

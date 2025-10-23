@@ -69,7 +69,7 @@ export const createDynamicComponent = <
       return (
         <ErrorBoundary
           fallback={
-            <Error
+            <ErrorFallback
               componentName={String(componentName)}
               slotName={slotName}
               variantName={variantName}
@@ -108,7 +108,7 @@ export const createDynamicComponent = <
     return (
       <ErrorBoundary
         fallback={
-          <Error
+          <ErrorFallback
             componentName={String(componentName)}
             slotName={slotName}
             variantName={variantName}
@@ -166,7 +166,7 @@ function Skeleton({ className, show = true, ...props }: SkeletonProps) {
   );
 }
 
-function Error({
+function ErrorFallback({
   componentName,
   slotName,
   variantName,

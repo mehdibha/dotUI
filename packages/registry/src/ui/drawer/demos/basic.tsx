@@ -1,4 +1,4 @@
-import React from "react";
+
 
 import { Button } from "@dotui/registry/ui/button";
 import { DialogContent, DialogRoot } from "@dotui/registry/ui/dialog";

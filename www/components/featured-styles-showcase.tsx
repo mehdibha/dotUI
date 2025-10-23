@@ -1,12 +1,13 @@
 "use client";
 
 import React from "react";
+import { useInView } from "motion/react";
 import { useTheme } from "next-themes";
 
 import { StyleProvider } from "@dotui/registry";
-import { cn } from "@dotui/registry-v2/lib/utils";
 import { Cards } from "@dotui/registry/blocks/showcase/cards/components/cards";
 import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs/motion";
+import { cn } from "@dotui/registry-v2/lib/utils";
 import type { RouterOutputs } from "@dotui/api";
 
 import { useMounted } from "@/hooks/use-mounted";
@@ -21,9 +22,14 @@ export const FeaturedStylesShowcase = ({
   const { resolvedTheme } = useTheme();
   const containerRef = React.useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = React.useState(0);
+  const [delayedIndex, setDelayedIndex] = React.useState(0);
   const [touched, setTouched] = React.useState(false);
+  const viewRef = React.useRef(null);
+  const inView = useInView(viewRef, {
+    once: false,
+    amount: "all",
+  });
 
-  const ref = React.useRef(null);
   const isMounted = useMounted();
 
   const currentStyle = React.useMemo(() => {
@@ -31,12 +37,19 @@ export const FeaturedStylesShowcase = ({
   }, [currentIndex, styles]);
 
   React.useEffect(() => {
+    const timeout = setTimeout(() => {
+      setDelayedIndex(currentIndex);
+    }, 600);
+    return () => clearTimeout(timeout);
+  }, [currentIndex]);
+
+  React.useEffect(() => {
     const interval = setInterval(() => {
-      if (touched) return;
+      if (touched || inView) return;
       setCurrentIndex((prev) => (prev + 1) % styles.length);
     }, 5000);
     return () => clearInterval(interval);
-  }, [styles.length, touched]);
+  }, [styles.length, touched, inView]);
 
   return (
     <>
@@ -46,10 +59,10 @@ export const FeaturedStylesShowcase = ({
         style={isMounted ? currentStyle : undefined}
         mode={resolvedTheme as "light" | "dark" | undefined}
       />
-      <div className="flex flex-col gap-30">
+      <div ref={viewRef} className="flex flex-col gap-30">
         <div className="flex justify-center gap-4">
           <Tabs
-            ref={ref}
+            ref={viewRef}
             variant="solid"
             selectedKey={styles[currentIndex % styles.length]?.name}
             onSelectionChange={(key) => {
@@ -59,7 +72,7 @@ export const FeaturedStylesShowcase = ({
               setTouched(true);
             }}
           >
-            <TabList className="flex-wrap justify-center bg-transparent">
+            <TabList className="flex-wrap justify-center bg-transparent z-10">
               {styles.map((style) => {
                 return (
                   <Tab
@@ -72,10 +85,11 @@ export const FeaturedStylesShowcase = ({
                 );
               })}
             </TabList>
-            <div className="relative mt-30">
+            <div className="relative mt-16">
               {[...styles, ...styles].map((style, index) => {
                 // Calculate position relative to current view
                 const position = index - currentIndex;
+                const delayedPosition = index - delayedIndex;
                 const isVisible = position >= 0 && position < visibleCards;
                 const isFront = position === 0;
 
@@ -83,16 +97,15 @@ export const FeaturedStylesShowcase = ({
                   <TabPanel
                     key={`${style.name}-${index}`}
                     id={style.name}
-                    className={() =>
-                      cn(
-                        isFront ? "relative" : "absolute inset-0",
-                        "min-h-screen w-full transition-[opacity,transform] duration-400 will-change-[transform,opacity]",
-                      )
-                    }
+                    className={cn(
+                      isFront ? "relative" : "absolute inset-0",
+                      "w-full transition-[opacity,transform,filter] duration-600 will-change-[transform,opacity,filter]",
+                    )}
                     style={{
-                      transform: `translateY(${position * ((position - 10) / 5) * 20}px) scale(${1 - position * 0.1})`,
+                      transform: `translateY(${position * ((position - 10) / 5) * 12}px) scale(${1 - position * 0.1})`,
                       transformOrigin: "top center",
                       opacity: isVisible ? 1 : 0,
+                      filter: isVisible ? "blur(0px)" : "blur(8px)",
                       pointerEvents: isFront ? "auto" : "none",
                       zIndex: visibleCards - position,
                     }}
@@ -112,7 +125,7 @@ export const FeaturedStylesShowcase = ({
                         />
                       )}
                       <div className="rounded-[inherit] border">
-                        {isMounted && <Cards />}
+                        {(delayedPosition === 0 || position === 0) && <Cards />}
                       </div>
                     </StyleProvider>
                   </TabPanel>

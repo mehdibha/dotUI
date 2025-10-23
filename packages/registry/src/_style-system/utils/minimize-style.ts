@@ -14,7 +14,7 @@ import type {
   VariantsDefinition,
 } from "../types";
 
-const minimizeColorScale = (scale: ColorScale): MinimizedColorScale => {
+const _minimizeColorScale = (scale: ColorScale): MinimizedColorScale => {
   return scale;
 };
 

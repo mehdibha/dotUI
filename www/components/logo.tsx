@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 import { cn } from "@dotui/registry/lib/utils";
-import { Badge } from "@dotui/registry/ui/badge";
 
 import { siteConfig } from "@/config";
 

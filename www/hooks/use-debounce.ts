@@ -4,7 +4,7 @@ export function useDebounce<T>(value: T, delay: number): T {
   const [debouncedValue, setDebouncedValue] = React.useState(value);
 
   // Create a stable key for deep-equality; effect runs only when content changes
-  const key = React.useMemo(() => {
+  const _key = React.useMemo(() => {
     try {
       return JSON.stringify(value);
     } catch {
@@ -26,7 +26,7 @@ export function useDebounce<T>(value: T, delay: number): T {
     return () => {
       clearTimeout(handler);
     };
-  }, [key, delay, value]);
+  }, [delay, value]);
 
   return debouncedValue;
 }

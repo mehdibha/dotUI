@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import type { Route } from "next";
 import {
   ChevronsRightIcon,
   ChevronsUpDownIcon,
@@ -13,7 +14,6 @@ import {
   TabletIcon,
 } from "lucide-react";
 import { motion } from "motion/react";
-import type { Route } from "next";
 
 import { registryBlocks } from "@dotui/registry/blocks/registry";
 import { cn, createScopedContext } from "@dotui/registry/lib/utils";
@@ -78,7 +78,7 @@ export const PreviewRoot = ({ children }: { children: React.ReactNode }) => {
 
   React.useEffect(() => {
     setOpen(true);
-  }, [setOpen]);
+  }, []);
 
   const previewWidth = Math.min(maxWidth, width ?? maxWidth);
   const containerWidth = isOpen ? previewWidth : 0;
@@ -114,7 +114,16 @@ export const PreviewRoot = ({ children }: { children: React.ReactNode }) => {
           </Button>
         </div>
       </motion.div>
-      <div
+      {/** biome-ignore lint/a11y/useSemanticElements: Resize handle */}
+      <button
+        type="button"
+        aria-label="Resize panel"
+        role="separator"
+        aria-orientation="horizontal"
+        aria-valuenow={previewWidth}
+        aria-valuemin={320}
+        aria-valuemax={maxWidth}
+        tabIndex={0}
         onMouseDown={handleMouseDown}
         className="absolute top-1/2 -left-3 z-20 h-15 w-2 -translate-y-1/2 cursor-col-resize rounded-full bg-neutral shadow-sm hover:bg-neutral-hover active:bg-neutral-active"
       />
@@ -290,7 +299,7 @@ export const PreviewFrame = ({
 
   React.useEffect(() => {
     setLoading(true);
-  }, [block]);
+  }, []);
 
   return (
     <div
@@ -301,6 +310,7 @@ export const PreviewFrame = ({
       )}
     >
       <iframe
+        title="Preview"
         src={`/view/${slug}/${block}?mode=true&live=true&view=true`}
         onLoad={() => setLoading(false)}
         className={cn("rounded-{inherit] size-full", isLoading && "opacity-0")}

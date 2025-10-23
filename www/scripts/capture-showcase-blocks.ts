@@ -1,6 +1,6 @@
-import { existsSync, mkdirSync } from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
+import { existsSync, mkdirSync } from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import puppeteer from "puppeteer";
 
 import { buildTimeCaller } from "../lib/trpc/build";

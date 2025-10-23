@@ -9,8 +9,6 @@ import {
   LogOutIcon,
   MailIcon,
   MoonIcon,
-  SearchIcon,
-  SettingsIcon,
   SunIcon,
   UserIcon,
   UsersIcon,
@@ -30,7 +28,6 @@ import { Label } from "@dotui/registry-v2/ui/field";
 import { Kbd } from "@dotui/registry-v2/ui/kbd";
 import { Popover } from "@dotui/registry-v2/ui/popover";
 import { Select, SelectTrigger } from "@dotui/registry-v2/ui/select";
-import { TagGroup } from "@dotui/registry-v2/ui/tag-group";
 
 export function CommandDemo() {
   return (
@@ -168,7 +165,7 @@ const CommandExample = ({ className }: { className?: string }) => {
   );
 };
 
-const countries = [
+const _countries = [
   { id: "tn", name: "Tunisia" },
   { id: "us", name: "United States" },
   { id: "uk", name: "United Kingdom" },

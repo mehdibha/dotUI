@@ -53,7 +53,7 @@ export const BlockViewLayout = ({
 
       // TODO: We should also update the body color
     }
-  }, [effectiveMode, style, resolvedTheme]);
+  }, [effectiveMode, style]);
 
   if (!style || !effectiveMode || !isMounted) return null;
 

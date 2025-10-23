@@ -3,8 +3,8 @@ import type { RegistryItem } from "shadcn/schema";
 import { registryBase } from "@dotui/registry/base/registry";
 import { iconLibraries } from "@dotui/registry/icons/registry";
 
-import { updateRegistryDependencies } from "../helpers/update-registry-deps";
 import type { Style } from "../../types";
+import { updateRegistryDependencies } from "../helpers/update-registry-deps";
 
 export function generateRegistryBase(options: {
   styleName: string;
@@ -15,7 +15,11 @@ export function generateRegistryBase(options: {
 
   const iconLibrary = iconLibraries.find(
     (lib) => lib.name === options.style.icons.library,
-  )!;
+  );
+
+  if (!iconLibrary) {
+    throw new Error(`Icon library ${options.style.icons.library} not found`);
+  }
 
   registryItem.dependencies = [
     ...(registryItem.dependencies ?? []),

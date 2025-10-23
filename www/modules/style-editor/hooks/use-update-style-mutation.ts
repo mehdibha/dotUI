@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import type { StyleFormData } from "@/modules/style-editor/context/style-editor-provider";
 
 import { useTRPC, useTRPCClient } from "@/lib/trpc/react";
+import type { StyleFormData } from "@/modules/style-editor/context/style-editor-provider";
 
 export const useUpdateStyleMutation = (
   { styleId, slug }: { styleId?: string; slug?: string },
@@ -52,7 +52,7 @@ export const useUpdateStyleMutation = (
       callbacks?.onError?.(error);
     },
     onSuccess: (updated) => {
-      const queryKey = trpc.style.getBySlug.queryKey({ slug: slug! });
+      const queryKey = trpc.style.getBySlug.queryKey({ slug: slug });
       // Merge with existing data to preserve user info
       queryClient.setQueryData(queryKey, (old: any) => {
         if (!old) return updated;

@@ -1,7 +1,7 @@
 const plugin = require("tailwindcss/plugin");
 const fg = require("fast-glob");
-const fs = require("fs");
-const path = require("path");
+const fs = require("node:fs");
+const path = require("node:path");
 const postcss = require("postcss");
 const { parse: parseColor, converter } = require("culori");
 
@@ -226,7 +226,7 @@ function parseColorToRgb(colorValue) {
         };
       }
     }
-  } catch (e) {
+  } catch (_e) {
     // Fall through to manual parsing
   }
 
@@ -251,18 +251,18 @@ function parseColorToRgb(colorValue) {
   );
   if (rgbMatch) {
     return {
-      r: parseInt(rgbMatch[1]),
-      g: parseInt(rgbMatch[2]),
-      b: parseInt(rgbMatch[3]),
+      r: parseInt(rgbMatch[1], 10),
+      g: parseInt(rgbMatch[2], 10),
+      b: parseInt(rgbMatch[3], 10),
     };
   }
   const hslMatch = trimmed.match(
     /^hsla?\(\s*(\d+)\s*,\s*(\d+)%\s*,\s*(\d+)%\s*(?:,\s*[\d.]+)?\s*\)$/i,
   );
   if (hslMatch) {
-    const h = parseInt(hslMatch[1]) / 360;
-    const s = parseInt(hslMatch[2]) / 100;
-    const l = parseInt(hslMatch[3]) / 100;
+    const h = parseInt(hslMatch[1], 10) / 360;
+    const s = parseInt(hslMatch[2], 10) / 100;
+    const l = parseInt(hslMatch[3], 10) / 100;
     const c = (1 - Math.abs(2 * l - 1)) * s;
     const x = c * (1 - Math.abs(((h * 6) % 2) - 1));
     const m = l - c / 2;
@@ -345,19 +345,19 @@ function readCssVars(rawCss) {
   try {
     const root = postcss.parse(rawCss);
     root.walkRules((rule) => {
-      const selector = rule.selector && rule.selector.trim();
+      const selector = rule.selector?.trim();
       let theme = null;
       if (selector === ":root") {
         theme = "light";
       } else if (selector === ".dark" || selector === ":root.dark") {
         theme = "dark";
-      } else if (selector && selector.startsWith(".")) {
+      } else if (selector?.startsWith(".")) {
         theme = selector.slice(1);
       }
       if (theme) {
         if (!result[theme]) result[theme] = {};
         rule.walkDecls((decl) => {
-          if (decl.prop && decl.prop.startsWith("--")) {
+          if (decl.prop?.startsWith("--")) {
             const varName = decl.prop.slice(2);
             result[theme][varName] = (decl.value || "").trim();
           }
@@ -367,19 +367,19 @@ function readCssVars(rawCss) {
     root.walkAtRules("layer", (atRule) => {
       if (atRule.params === "base") {
         atRule.walkRules((rule) => {
-          const selector = rule.selector && rule.selector.trim();
+          const selector = rule.selector?.trim();
           let theme = null;
           if (selector === ":root") {
             theme = "light";
           } else if (selector === ".dark" || selector === ":root.dark") {
             theme = "dark";
-          } else if (selector && selector.startsWith(".")) {
+          } else if (selector?.startsWith(".")) {
             theme = selector.slice(1);
           }
           if (theme) {
             if (!result[theme]) result[theme] = {};
             rule.walkDecls((decl) => {
-              if (decl.prop && decl.prop.startsWith("--")) {
+              if (decl.prop?.startsWith("--")) {
                 const varName = decl.prop.slice(2);
                 result[theme][varName] = (decl.value || "").trim();
               }
@@ -489,7 +489,7 @@ const autoContrast = plugin.withOptions((options = {}) => {
       log(
         "warn",
         "An unexpected error occurred while running tailwindcss-autocontrast. The plugin will continue silently.",
-        `\n- Error: ${e && e.message ? e.message : String(e)}`,
+        `\n- Error: ${e?.message ? e.message : String(e)}`,
       );
       return;
     }

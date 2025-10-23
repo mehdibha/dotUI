@@ -14,7 +14,7 @@ try {
     }
     const [major, minor, patch] = pkg.version.split(".").map(Number);
     pkg.version = `${major}.${minor}.${patch + 1}-beta.${stdout.trim()}`;
-    fs.writeFileSync(pkgJsonPath, JSON.stringify(pkg, null, "\t") + "\n");
+    fs.writeFileSync(pkgJsonPath, `${JSON.stringify(pkg, null, "\t")}\n`);
   });
 } catch (error) {
   console.error(error);

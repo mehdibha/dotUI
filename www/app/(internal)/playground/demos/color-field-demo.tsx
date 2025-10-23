@@ -1,6 +1,5 @@
 "use client";
 
-import { ColorField } from "@dotui/registry-v2/ui/color-field";
 
 export function ColorFieldDemo() {
   return (

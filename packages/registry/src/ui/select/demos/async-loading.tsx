@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { useAsyncList } from "react-stately";
 
 import { Select, SelectItem } from "@dotui/registry/ui/select";

@@ -34,9 +34,10 @@ export const ThemeProvider = ({
       return {};
     }
 
+    const effectiveMode = hasLightAndDark && mode ? mode : "light";
     const vars = {
       "radius-factor": theme.cssVars.light?.["radius-factor"],
-      ...(hasLightAndDark ? theme.cssVars[mode!] : theme.cssVars.light),
+      ...(hasLightAndDark ? theme.cssVars[effectiveMode] : theme.cssVars.light),
       ...theme.cssVars.theme,
     };
 

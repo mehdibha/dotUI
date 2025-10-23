@@ -48,8 +48,7 @@ export function CommunityStyles() {
       (entries) => {
         const first = entries[0];
         if (
-          first &&
-          first.isIntersecting &&
+          first?.isIntersecting &&
           hasNextPage &&
           !isFetchingNextPage
         ) {

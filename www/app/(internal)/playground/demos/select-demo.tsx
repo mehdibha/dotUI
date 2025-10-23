@@ -9,13 +9,9 @@ import {
 } from "lucide-react";
 
 import { Button } from "@dotui/registry-v2/ui/button";
-import { Label } from "@dotui/registry-v2/ui/field";
 import {
-  ListBox,
   ListBoxItem,
-  ListBoxSection,
 } from "@dotui/registry-v2/ui/list-box";
-import { Popover } from "@dotui/registry-v2/ui/popover";
 import {
   Select,
   SelectContent,
@@ -26,7 +22,7 @@ import {
   SelectValue,
 } from "@dotui/registry-v2/ui/select";
 
-const items = [
+const _items = [
   { id: 1, name: "Apple" },
   { id: 2, name: "Banana" },
   { id: 3, name: "Orange" },

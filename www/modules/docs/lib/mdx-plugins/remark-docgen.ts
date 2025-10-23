@@ -53,7 +53,7 @@ export function remarkDocGen({
           path: file.path,
           node: code,
         });
-        const index = parent.children.findIndex((c) => c === code);
+        const index = parent.children.indexOf(code);
 
         if (result && index !== -1) {
           const items = Array.isArray(result)

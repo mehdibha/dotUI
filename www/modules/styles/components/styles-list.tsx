@@ -1,13 +1,10 @@
 "use client";
 
 import React from "react";
-import { LayoutGridIcon, ListIcon } from "lucide-react";
 
 import { cn } from "@dotui/registry/lib/utils";
 import { SearchField } from "@dotui/registry/ui/search-field";
 import { Skeleton } from "@dotui/registry/ui/skeleton";
-import { ToggleButton } from "@dotui/registry/ui/toggle-button";
-import { ToggleButtonGroup } from "@dotui/registry/ui/toggle-button-group";
 import type { RouterOutputs } from "@dotui/api";
 
 import { StyleCard } from "./style-card";
@@ -65,8 +62,8 @@ export function StylesList({
             <p className="text-sm text-fg-muted">No styles found</p>
           )}
         {isLoading &&
-          Array.from({ length: 3 }).map((_, index) => (
-            <div key={index} className="space-y-3">
+          Array.from({ length: 3 }).map((_, key) => (
+            <div key={`skeleton-${key}`} className="space-y-3">
               <Skeleton className="h-62" />
               <div className="flex items-center justify-between gap-2 px-[2px]">
                 <Skeleton className="h-6 w-28" />

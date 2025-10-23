@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 
 import { CalendarIcon } from "@dotui/registry/icons";
 import { Button } from "@dotui/registry/ui/button";

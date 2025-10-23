@@ -144,10 +144,10 @@ export function CreateStyleModalContent({
                 {(field) => (
                   <field.Select
                     aria-label="Visibility"
-                    renderValue={({ selectedItem }: { selectedItem: any }) => (
+                    renderValue={({ selectedItems }) => (
                       <div className="flex items-center gap-2 [&>svg]:text-fg-muted">
-                        {selectedItem?.icon}
-                        {selectedItem?.label}
+                        {selectedItems[0]?.icon}
+                        {selectedItems[0]?.label}
                       </div>
                     )}
                     items={[
@@ -175,7 +175,7 @@ export function CreateStyleModalContent({
                     ]}
                     className="mt-[22px]"
                   >
-                    {(item: any) => (
+                    {(item) => (
                       <SelectItem
                         id={item.value}
                         prefix={item.icon}

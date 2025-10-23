@@ -1,8 +1,8 @@
 "use client";
 
-import { Tag, TagGroup } from "@dotui/registry-v2/ui/tag-group";
+import { Tag, } from "@dotui/registry-v2/ui/tag-group";
 
-const tags = [
+const _tags = [
   { id: 1, name: "React" },
   { id: 2, name: "TypeScript" },
   { id: 3, name: "Next.js" },

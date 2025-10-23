@@ -1,5 +1,5 @@
 import fs from "node:fs";
-import path from "path";
+import path from "node:path";
 
 export const getFileSource = (filePath: string) => {
   const fullPath = path.join(

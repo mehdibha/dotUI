@@ -5,14 +5,14 @@ import {
   metaSchema,
 } from "fumadocs-mdx/config";
 import { z } from "zod";
-import type { RemarkInstallOptions } from "@/modules/docs/lib/mdx-plugins/remark-install";
 
 import { fileGenerator } from "@/modules/docs/lib/mdx-plugins/file-generator";
 import {
-  remarkDocGen,
   type RemarkDocGenOptions,
+  remarkDocGen,
 } from "@/modules/docs/lib/mdx-plugins/remark-docgen";
 import remarkInlineCode from "@/modules/docs/lib/mdx-plugins/remark-inline-code";
+import type { RemarkInstallOptions } from "@/modules/docs/lib/mdx-plugins/remark-install";
 import { remarkInstall } from "@/modules/docs/lib/mdx-plugins/remark-install";
 
 export const docs = defineDocs({
@@ -81,7 +81,7 @@ export default defineConfig({
       },
       inline: "tailing-curly-colon",
       defaultLanguage: "ts",
-      tab: true as any,
+      tab: true,
     },
   },
 });

@@ -33,7 +33,7 @@ export function useActiveStyle() {
 
   return useQuery({
     ...trpc.style.getById.queryOptions({
-      id: activeStyleId!,
+      id: activeStyleId ?? "",
     }),
     enabled: !!activeStyleId,
     placeholderData: (prev) => prev,
@@ -45,9 +45,13 @@ export function useActiveStyleSuspense() {
 
   const activeStyleId = useActiveStyleId();
 
+  if (!activeStyleId) {
+    throw new Error("No active style ID found");
+  }
+
   return useSuspenseQuery({
     ...trpc.style.getById.queryOptions({
-      id: activeStyleId!,
+      id: activeStyleId,
     }),
   });
 }

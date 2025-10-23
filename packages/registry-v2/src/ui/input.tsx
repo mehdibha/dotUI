@@ -260,7 +260,7 @@ const TextArea = ({
       input.style.alignSelf = prevAlignment;
       input.style.flex = prevFlex; // Restore the flex value
     }
-  }, [inputRef]);
+  }, []);
 
   useLayoutEffect(() => {
     if (inputRef.current) {

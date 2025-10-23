@@ -44,7 +44,7 @@ interface DialogProps
   title?: string;
   description?: string;
 }
-const Dialog = ({
+const _Dialog = ({
   title,
   description,
   type = "modal",

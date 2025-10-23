@@ -9,8 +9,6 @@ import {
 } from "@adobe/leonardo-contrast-colors";
 import { useStore } from "@tanstack/react-form";
 import { PlusIcon, Trash2Icon } from "lucide-react";
-import type { CssColor } from "@adobe/leonardo-contrast-colors";
-import type { Color } from "react-aria-components";
 
 import { cn } from "@dotui/registry/lib/utils";
 import { SCALE_STEPS } from "@dotui/registry/style-system/constants";
@@ -37,7 +35,6 @@ import {
 import { Tooltip } from "@dotui/registry/ui/tooltip";
 import type { ScaleId } from "@dotui/registry/style-system/types";
 
-import { EditableInput } from "@/components/ui/editable-input";
 import { ON_CHANGE_DEBOUNCE_MS } from "@/modules/style-editor/constants";
 import {
   useStyleEditorForm,

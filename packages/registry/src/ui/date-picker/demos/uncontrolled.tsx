@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { parseDate } from "@internationalized/date";
 
 import { DatePicker } from "@dotui/registry/ui/date-picker";

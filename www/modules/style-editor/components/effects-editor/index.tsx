@@ -1,6 +1,5 @@
 "use client";
 
-import { registryBackgroundPatterns } from "@dotui/registry/background-patterns/registry";
 import { registryTextures } from "@dotui/registry/textures/registry";
 import { SelectItem } from "@dotui/registry/ui/select";
 import { Skeleton } from "@dotui/registry/ui/skeleton";

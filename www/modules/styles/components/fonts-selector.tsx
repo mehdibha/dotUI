@@ -18,10 +18,7 @@ import {
   sansSerifFonts,
   serifFonts,
 } from "@dotui/registry/fonts/registry";
-import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";
-import { CommandRoot } from "@dotui/registry/ui/command";
-import { Dialog, DialogRoot } from "@dotui/registry/ui/dialog";
 import { Label } from "@dotui/registry/ui/field";
 import {
   ListBox,
@@ -163,7 +160,7 @@ export const FontSelector = <T extends object>({
   // );
 };
 
-const FontLoaderInView = ({ font }: { font: string }) => {
+const _FontLoaderInView = ({ font }: { font: string }) => {
   const ref = React.useRef(null);
   const inView = useInView(ref);
 

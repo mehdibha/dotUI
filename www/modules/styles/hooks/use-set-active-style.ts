@@ -24,7 +24,7 @@ export function useSetActiveStyle() {
       );
       return { previousStyle, newStyle: variables.styleId };
     },
-    onError: (err, variables, context) => {
+    onError: (_err, _variables, context) => {
       if (context?.previousStyle !== undefined) {
         queryClient.setQueryData(
           trpc.style.getActive.queryKey(),

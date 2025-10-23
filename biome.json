@@ -9,12 +9,12 @@
     "ignoreUnknown": false,
     "includes": [
       "**",
-      "!node_modules",
-      "!.next",
-      "!dist",
-      "!build",
-      "!.turbo",
-      "!.source"
+      "!**/node_modules",
+      "!**/.next",
+      "!**/dist",
+      "!**/build",
+      "!**/.turbo",
+      "!**/.source"
     ]
   },
   "formatter": {
@@ -27,10 +27,34 @@
     "rules": {
       "recommended": true,
       "suspicious": {
-        "noUnknownAtRules": "off"
+        "noUnknownAtRules": "off",
+        "noExplicitAny": "off",
+        "noArrayIndexKey": "off",
+        "noShadowRestrictedNames": "warn",
+        "useIterableCallbackReturn": "warn"
       },
       "correctness": {
-        "noInvalidPositionAtImportRule": "off"
+        "noInvalidPositionAtImportRule": "off",
+        "useExhaustiveDependencies": "warn"
+      },
+      "complexity": {
+        "noBannedTypes": "warn"
+      },
+      "style": {
+        "noNonNullAssertion": "off"
+      },
+      "a11y": {
+        "noSvgWithoutTitle": "off",
+        "useValidAnchor": "warn",
+        "useIframeTitle": "warn",
+        "useSemanticElements": "warn",
+        "noStaticElementInteractions": "warn"
+      },
+      "performance": {
+        "noImgElement": "warn"
+      },
+      "security": {
+        "noDangerouslySetInnerHtml": "warn"
       }
     },
     "domains": {

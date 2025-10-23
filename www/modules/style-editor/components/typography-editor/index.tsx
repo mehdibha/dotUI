@@ -1,9 +1,7 @@
 "use client";
 
-import { Key } from "react-aria";
 
 import { cn } from "@dotui/registry/lib/utils";
-import { Skeleton } from "@dotui/registry/ui/skeleton";
 import { Slider } from "@dotui/registry/ui/slider";
 
 import { useDraftStyle } from "@/modules/style-editor/atoms/draft-style-atom";

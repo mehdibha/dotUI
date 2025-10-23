@@ -1,4 +1,4 @@
-import React from "react";
+
 
 import { User2Icon } from "@dotui/registry/icons";
 import {

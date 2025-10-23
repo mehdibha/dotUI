@@ -35,8 +35,8 @@ function Loader({
         "--loader-size": `${size}px`,
         "--loader-speed": `${speed}s`,
         "--loader-stroke": "2",
-        "--loader-dash": String(parseFloat(strokeLength + "") * 100),
-        "--loader-gap": String(100 - parseFloat(strokeLength + "") * 100),
+        "--loader-dash": String(parseFloat(`${strokeLength}`) * 100),
+        "--loader-gap": String(100 - parseFloat(`${strokeLength}`) * 100),
       }))}
       className={cn(
         "inline-flex size-[var(--loader-size)] shrink-0 items-center justify-center",

@@ -41,8 +41,7 @@ export default async function HomePage() {
           </h1>
           <p className="mt-4 text-center text-lg text-balance text-fg-muted">
             A set of beautifully designed components that you can customize,
-            extend, and build on. Start here then make it your own. Open Source.
-            Open Code.
+            extend, and build on.
           </p>
           <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
             <Button href="/docs" variant="primary" size="lg" className="h-10">
@@ -55,7 +54,7 @@ export default async function HomePage() {
         </div>
       </section>
       {/* Styles overview */}
-      <section className="container mt-10 max-w-screen-xl sm:mt-20">
+      <section className="container mt-10 max-w-screen-2xl sm:mt-20 overflow-hidden">
         {feturedStyles.length > 0 ? (
           <FeaturedStylesShowcase styles={feturedStyles} />
         ) : (

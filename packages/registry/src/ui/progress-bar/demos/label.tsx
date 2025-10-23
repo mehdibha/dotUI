@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 
 import { ProgressBar } from "@dotui/registry/ui/progress-bar";
 

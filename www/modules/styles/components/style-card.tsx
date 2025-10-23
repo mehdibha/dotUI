@@ -36,6 +36,7 @@ export function StyleCard({
           )}
         >
           <iframe
+            title="Style preview"
             onLoad={() => setLoading(false)}
             src={`/view/${style.user.username}/${style.name}/cards?view=true`}
             className={cn(

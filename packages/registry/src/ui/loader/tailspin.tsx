@@ -35,7 +35,7 @@ function Loader({
         ...style,
         "--loader-size": `${size}px`,
         "--loader-speed": `${speed}s`,
-        "--loader-stroke": stroke + "px",
+        "--loader-stroke": `${stroke}px`,
       }))}
       {...props}
       isIndeterminate

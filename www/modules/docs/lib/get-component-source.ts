@@ -1,5 +1,5 @@
 import fs from "node:fs";
-import path from "path";
+import path from "node:path";
 
 export const getComponentSource = (relativePath: string) => {
   const fullPath = path.join(process.cwd(), "src", "lib", relativePath);

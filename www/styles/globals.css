@@ -96,7 +96,7 @@
 }
 
 .dark {
-  --neutral-50: hsl(240, 6%, 5%);
+  --neutral-50: hsl(0, 0%, 6%);
   --neutral-100: hsl(240, 6%, 7%);
   --neutral-200: hsl(240, 6%, 10%);
   --neutral-300: hsl(240, 6%, 17%);

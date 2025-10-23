@@ -3,7 +3,6 @@
 import type * as React from "react";
 import { CheckIcon, ChevronRightIcon } from "lucide-react";
 import {
-  Collection as AriaCollection,
   Header as AriaHeader,
   Menu as AriaMenu,
   MenuItem as AriaMenuItem,
@@ -22,13 +21,6 @@ import type {
 } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 
-import { Drawer } from "@dotui/registry-v2/ui/drawer";
-import { Kbd } from "@dotui/registry-v2/ui/kbd";
-import { Modal } from "@dotui/registry-v2/ui/modal";
-import { Overlay } from "@dotui/registry-v2/ui/overlay";
-import { Popover } from "@dotui/registry-v2/ui/popover";
-import { Text } from "@dotui/registry-v2/ui/text";
-import type { OverlayProps } from "@dotui/registry-v2/ui/overlay";
 
 import { cn } from "../lib/utils";
 

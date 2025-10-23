@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { useDrag } from "react-aria";
 import type { TextDropItem } from "react-aria-components";
 

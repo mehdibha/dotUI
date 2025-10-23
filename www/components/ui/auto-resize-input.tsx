@@ -19,7 +19,7 @@ export const AutoResizeTextField = ({
 }: TextFieldProps & {
   inputRef?: React.RefObject<HTMLInputElement | null>;
 }) => {
-  const [inputValue, setInputValue] = useControlledState(
+  const [_inputValue, setInputValue] = useControlledState(
     props.value,
     props.defaultValue ?? "",
     () => {},
@@ -32,13 +32,13 @@ export const AutoResizeTextField = ({
       input.style.width = "0";
       input.style.width = `${input.scrollWidth}px`;
     }
-  }, [localInputRef]);
+  }, []);
 
   React.useLayoutEffect(() => {
     if (localInputRef.current) {
       onWidthChange();
     }
-  }, [onWidthChange, inputValue, localInputRef]);
+  }, [onWidthChange]);
 
   return (
     <UnstyledTextField onChange={chain(onChange, setInputValue)} {...props}>

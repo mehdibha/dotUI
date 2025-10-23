@@ -1,6 +1,6 @@
 "use client";
 
-import React, { use } from "react";
+import React from "react";
 import { useResizeObserver } from "@react-aria/utils";
 import { ChevronDownIcon } from "lucide-react";
 import { mergeProps } from "react-aria";
@@ -73,9 +73,9 @@ const ComboboxInner = ({ children }: { children: React.ReactNode }) => {
   const onResize = React.useCallback(() => {
     if (triggerRef.current) {
       const triggerWidth = triggerRef.current.getBoundingClientRect().width;
-      setMenuWidth(triggerWidth + "px");
+      setMenuWidth(`${triggerWidth}px`);
     }
-  }, [triggerRef, setMenuWidth]);
+  }, []);
 
   useResizeObserver({
     ref: triggerRef,

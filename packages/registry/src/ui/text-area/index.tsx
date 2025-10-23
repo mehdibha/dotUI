@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 

@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { Group } from "react-aria-components";
 
 import { MinusIcon, PlusIcon } from "@dotui/registry/icons";

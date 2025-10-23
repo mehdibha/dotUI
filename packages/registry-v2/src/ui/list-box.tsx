@@ -3,11 +3,9 @@
 import React from "react";
 import { CheckIcon } from "lucide-react";
 import {
-  Collection as AriaCollection,
   Header as AriaHeader,
   ListBox as AriaListBox,
   ListBoxItem as AriaListBoxItem,
-  ListBoxLoadMoreItem as AriaListBoxLoadMoreItem,
   ListBoxSection as AriaListBoxSection,
   Virtualizer as AriaVirtualizer,
   composeRenderProps,
@@ -24,8 +22,6 @@ import type {
 import type { VariantProps } from "tailwind-variants";
 
 import { focusRing } from "@dotui/registry-v2/lib/focus-styles";
-import { Loader } from "@dotui/registry-v2/ui/loader";
-import { Text } from "@dotui/registry-v2/ui/text";
 
 const listboxStyles = tv({
   slots: {

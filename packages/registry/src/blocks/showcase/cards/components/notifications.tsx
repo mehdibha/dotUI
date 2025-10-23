@@ -56,6 +56,7 @@ export function Notifications({
                     if (tab === "all") return true;
                     if (tab === "unread") return !notification.read;
                     if (tab === "read") return notification.read;
+                    return false;
                   })
                   .map((notification, index) => (
                     <React.Fragment key={index}>

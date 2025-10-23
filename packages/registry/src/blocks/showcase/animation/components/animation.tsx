@@ -1,31 +1,11 @@
 "use client";
 
 import React from "react";
-import {
-  BookIcon,
-  ChevronRightIcon,
-  ContrastIcon,
-  LanguagesIcon,
-  LogOutIcon,
-  SettingsIcon,
-  User2Icon,
-  Users2Icon,
-} from "lucide-react";
 
-import { cn } from "@dotui/registry/lib/utils";
-import { Avatar } from "@dotui/registry/ui/avatar";
-import { Card, CardContent, CardHeader } from "@dotui/registry/ui/card";
-import {
-  ListBox,
-  ListBoxItem,
-  ListBoxSection,
-} from "@dotui/registry/ui/list-box";
 import { Select, SelectItem } from "@dotui/registry/ui/select";
-import { Separator } from "@dotui/registry/ui/separator";
 
 export function Animation({
-  className,
-  ...props
+  className: _className,
 }: React.ComponentProps<"div">) {
   const [isOpen, setIsOpen] = React.useState(false);
 

@@ -156,7 +156,9 @@ export const styleRouter = {
     .query(async ({ ctx, input }) => {
       const parts = input.slug.split("/");
 
-      let styleRecord;
+      let styleRecord:
+        | Awaited<ReturnType<typeof ctx.db.query.style.findFirst>>
+        | undefined;
 
       if (parts.length === 2) {
         // Format: "username/stylename"

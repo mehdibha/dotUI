@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import { Label } from "react-aria-components";
 
 import {

@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { CalendarDate } from "@internationalized/date";
 
 import { DateField } from "@dotui/registry/ui/date-field";

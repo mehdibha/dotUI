@@ -1,4 +1,4 @@
-import React from "react";
+
 
 import { SearchField } from "@dotui/registry/ui/search-field";
 

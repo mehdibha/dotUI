@@ -8,17 +8,11 @@ import {
   TabPanel as AriaTabPanel,
   Tabs as AriaTabs,
   composeRenderProps,
-  TabsContext,
-  useSlottedContext,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import type { TabListProps as AriaTabListProps } from "react-aria-components";
-import type { VariantProps } from "tailwind-variants";
 
-import { focusRing } from "@dotui/registry-v2/lib/focus-styles";
 import {
   createContext,
-  createScopedContext,
 } from "@dotui/registry-v2/lib/utils";
 
 const tabsStyles = tv({

@@ -32,7 +32,7 @@ export function createScopedContext<ContextValueType extends object | null>(
     return <Context.Provider value={value}>{children}</Context.Provider>;
   };
 
-  Provider.displayName = rootComponentName + "Provider";
+  Provider.displayName = `${rootComponentName}Provider`;
 
   function useContext(consumerName: string) {
     const context = React.useContext(Context);
@@ -67,7 +67,7 @@ export function createOptionalScopedContext<
     return <Context.Provider value={value}>{children}</Context.Provider>;
   };
 
-  Provider.displayName = rootComponentName + "Provider";
+  Provider.displayName = `${rootComponentName}Provider`;
 
   function useContext() {
     const context = React.useContext(Context);
