@@ -19,7 +19,7 @@ const CodeBlock = async ({
   preview: _preview,
   ...props
 }: CodeBlockProps) => {
-  let preview = undefined;
+  let preview;
   if (_preview) {
     const html = await codeToHtml(_preview, {
       lang: "tsx",

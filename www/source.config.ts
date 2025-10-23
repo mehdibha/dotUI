@@ -10,7 +10,7 @@ import type { RemarkInstallOptions } from "@/modules/docs/lib/mdx-plugins/remark
 import { fileGenerator } from "@/modules/docs/lib/mdx-plugins/file-generator";
 import {
   remarkDocGen,
-  RemarkDocGenOptions,
+  type RemarkDocGenOptions,
 } from "@/modules/docs/lib/mdx-plugins/remark-docgen";
 import remarkInlineCode from "@/modules/docs/lib/mdx-plugins/remark-inline-code";
 import { remarkInstall } from "@/modules/docs/lib/mdx-plugins/remark-install";

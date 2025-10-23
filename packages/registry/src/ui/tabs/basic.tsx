@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import type * as React from "react";
 import {
   Tab as AriaTab,
   TabList as AriaTabList,

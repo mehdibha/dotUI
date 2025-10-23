@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import type * as React from "react";
 import { MinusIcon, PlusIcon } from "lucide-react";
 import {
   ButtonContext as AriaButtonContext,

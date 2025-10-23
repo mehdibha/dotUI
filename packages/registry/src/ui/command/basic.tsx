@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import type React from "react";
 import { Autocomplete as AriaAutocomplete } from "react-aria-components";
 import { tv } from "tailwind-variants";
 

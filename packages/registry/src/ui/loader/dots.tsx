@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import type React from "react";
 import { ProgressBar as AriaProgressBar } from "react-aria-components";
 import type { ProgressBarProps } from "react-aria-components";
 

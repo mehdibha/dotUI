@@ -23,8 +23,7 @@ export const transformIcons: Transformer = ({ sourceFile, style }) => {
 
   function findLucideNameFromAny(importedName: string): string {
     // If it's already a lucide name, it will exist as a key
-    if (Object.prototype.hasOwnProperty.call(registryIcons, importedName))
-      return importedName;
+    if (Object.hasOwn(registryIcons, importedName)) return importedName;
     // Otherwise, reverse-lookup from other libraries (e.g., remix)
     for (const [lucideName, mapping] of Object.entries(registryIcons)) {
       if (Object.values(mapping).includes(importedName)) return lucideName;

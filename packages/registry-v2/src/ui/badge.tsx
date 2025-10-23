@@ -1,4 +1,4 @@
-import * as React from "react";
+import type * as React from "react";
 import { tv } from "tailwind-variants";
 import type { VariantProps } from "tailwind-variants";
 

@@ -7,7 +7,15 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "includes": ["**", "!node_modules", "!.next", "!dist", "!build", "!.turbo", "!.source"]
+    "includes": [
+      "**",
+      "!node_modules",
+      "!.next",
+      "!dist",
+      "!build",
+      "!.turbo",
+      "!.source"
+    ]
   },
   "formatter": {
     "enabled": true,
@@ -20,6 +28,9 @@
       "recommended": true,
       "suspicious": {
         "noUnknownAtRules": "off"
+      },
+      "correctness": {
+        "noInvalidPositionAtImportRule": "off"
       }
     },
     "domains": {
@@ -31,7 +42,25 @@
     "enabled": true,
     "actions": {
       "source": {
-        "organizeImports": "on"
+        "organizeImports": {
+          "level": "on",
+          "options": {
+            "groups": [
+              ["react", "react/**", "react-native", "react-native/**"],
+              ["next", "next/**"],
+              { "type": false, "source": [":PACKAGE:", "!@dotui/**"] },
+              { "type": true, "source": [":PACKAGE:", "!@dotui/**"] },
+              ":BLANK_LINE:",
+              { "type": false, "source": ["@dotui/**"] },
+              { "type": true, "source": ["@dotui/**"] },
+              ":BLANK_LINE:",
+              ["@/**"],
+              ["../"],
+              ["./"],
+              { "type": true, "source": ["../", "./"] }
+            ]
+          }
+        }
       }
     }
   }

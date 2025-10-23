@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import type * as React from "react";
 import { CheckIcon, ChevronRightIcon } from "lucide-react";
 import {
   Collection as AriaCollection,

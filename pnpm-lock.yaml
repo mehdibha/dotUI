@@ -66,6 +66,9 @@ catalogs:
     '@internationalized/date':
       specifier: ^3.10.0
       version: 3.10.0
+    '@radix-ui/react-slot':
+      specifier: ^1.2.3
+      version: 1.2.3
     '@react-aria/utils':
       specifier: ^3.31.0
       version: 3.31.0
@@ -305,6 +308,12 @@ importers:
       '@types/culori':
         specifier: ^4.0.1
         version: 4.0.1
+      '@types/react':
+        specifier: catalog:react
+        version: 19.2.2
+      '@types/react-dom':
+        specifier: catalog:react
+        version: 19.2.1(@types/react@19.2.2)
       rimraf:
         specifier: ^6.0.1
         version: 6.0.1
@@ -326,6 +335,9 @@ importers:
       '@internationalized/date':
         specifier: catalog:ui
         version: 3.10.0
+      '@radix-ui/react-slot':
+        specifier: catalog:ui
+        version: 1.2.3(@types/react@19.2.2)(react@19.2.0)
       '@react-aria/utils':
         specifier: catalog:ui
         version: 3.31.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -381,6 +393,12 @@ importers:
       '@types/culori':
         specifier: ^4.0.1
         version: 4.0.1
+      '@types/react':
+        specifier: catalog:react
+        version: 19.2.2
+      '@types/react-dom':
+        specifier: catalog:react
+        version: 19.2.1(@types/react@19.2.2)
       rimraf:
         specifier: ^6.0.1
         version: 6.0.1

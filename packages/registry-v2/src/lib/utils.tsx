@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import type { ClassValue } from "clsx";
@@ -6,10 +6,6 @@ import type { ClassValue } from "clsx";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
-
-export type SlotsToClassNames<T extends (...args: any[]) => any> = Partial<
-  Record<keyof ReturnType<T>, ClassValue>
->;
 
 export interface CreateContextOptions {
   strict?: boolean;
@@ -44,7 +40,6 @@ export function createContext<ContextType>(options: CreateContextOptions = {}) {
       );
 
       error.name = "ContextError";
-      Error.captureStackTrace?.(error, useContext);
       throw error;
     }
 
@@ -73,13 +68,13 @@ export function createScopedContext<ContextValueType extends object | null>(
     // Only re-memoize when prop values change
     const value = React.useMemo(
       () => context,
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+      // biome-ignore lint/correctness/useExhaustiveDependencies: TODO: Fix this
       Object.values(context),
     ) as ContextValueType;
     return <Context.Provider value={value}>{children}</Context.Provider>;
   };
 
-  Provider.displayName = rootComponentName + "Provider";
+  Provider.displayName = `${rootComponentName}Provider`;
 
   function useContext(consumerName: string) {
     const context = React.useContext(Context);
@@ -108,13 +103,13 @@ export function createOptionalScopedContext<
     // Only re-memoize when prop values change
     const value = React.useMemo(
       () => context,
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+      // biome-ignore lint/correctness/useExhaustiveDependencies: TODO: Fix this
       Object.values(context),
     ) as ContextValueType;
     return <Context.Provider value={value}>{children}</Context.Provider>;
   };
 
-  Provider.displayName = rootComponentName + "Provider";
+  Provider.displayName = `${rootComponentName}Provider`;
 
   function useContext() {
     const context = React.useContext(Context);

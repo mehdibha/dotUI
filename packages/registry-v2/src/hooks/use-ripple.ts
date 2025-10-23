@@ -13,7 +13,7 @@ export interface RippleType {
   size: number;
 }
 
-export interface UseRippleProps {}
+export type UseRippleProps = {};
 
 export function useRipple(props: UseRippleProps = {}) {
   const [ripples, setRipples] = useState<RippleType[]>([]);

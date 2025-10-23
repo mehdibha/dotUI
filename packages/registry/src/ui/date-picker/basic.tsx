@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import type * as React from "react";
 import { DatePicker as AriaDatePicker } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import type {

@@ -306,11 +306,11 @@ function calculateLuminance(r, g, b) {
   const gsRGB = g / 255;
   const bsRGB = b / 255;
   const rLinear =
-    rsRGB <= 0.03928 ? rsRGB / 12.92 : Math.pow((rsRGB + 0.055) / 1.055, 2.4);
+    rsRGB <= 0.03928 ? rsRGB / 12.92 : ((rsRGB + 0.055) / 1.055) ** 2.4;
   const gLinear =
-    gsRGB <= 0.03928 ? gsRGB / 12.92 : Math.pow((gsRGB + 0.055) / 1.055, 2.4);
+    gsRGB <= 0.03928 ? gsRGB / 12.92 : ((gsRGB + 0.055) / 1.055) ** 2.4;
   const bLinear =
-    bsRGB <= 0.03928 ? bsRGB / 12.92 : Math.pow((bsRGB + 0.055) / 1.055, 2.4);
+    bsRGB <= 0.03928 ? bsRGB / 12.92 : ((bsRGB + 0.055) / 1.055) ** 2.4;
   return 0.2126 * rLinear + 0.7152 * gLinear + 0.0722 * bLinear;
 }
 
@@ -432,7 +432,7 @@ function generateContrastColors(colorShadeVars) {
 }
 
 const autoContrast = plugin.withOptions((options = {}) => {
-  return function ({ addBase }) {
+  return ({ addBase }) => {
     const logLevel = options.logLevel === "silent" ? "silent" : "warn";
     try {
       const cwd = typeof options.cwd === "string" ? options.cwd : process.cwd();

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import type React from "react";
 
 import { useCurrentStyle, VariantsProvider } from "@dotui/registry";
 import { DEFAULT_VARIANTS_DEFINITION } from "@dotui/registry/style-system/constants";

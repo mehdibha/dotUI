@@ -12,8 +12,8 @@
   --animate-dot-spinner: dot-spinner 0.8s linear infinite;
   /* progress-bar */
   --animate-progress-indeterminate:
-    progress-grow var(--progress-duration) 1 both normal,
-    progress-pulse 1s ease var(--progress-duration) infinite normal none running;
+    progress-grow var(--progress-duration) 1 both normal, progress-pulse 1s ease
+    var(--progress-duration) infinite normal none running;
   /* loader:ring-2 */
   --animate-loader-ring-stretch: loader-ring-stretch
     calc(var(--loader-speed) * 0.75) ease-in-out infinite;

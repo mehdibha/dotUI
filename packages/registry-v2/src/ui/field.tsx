@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import type React from "react";
 import { useSlotId } from "@react-aria/utils";
 import {
   FieldError as AriaFieldError,

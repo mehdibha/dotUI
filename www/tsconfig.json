@@ -19,7 +19,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "./scripts/**/*.ts",
-    "next.config.mjs"
-, "eslint.config.mjs"  ],
+    "next.config.mjs",
+    "eslint.config.mjs"
+  ],
   "exclude": ["node_modules"]
 }

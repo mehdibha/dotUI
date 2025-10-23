@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useCallback, useLayoutEffect, useMemo, useState } from "react";
+import type React from "react";
+import { useCallback, useLayoutEffect, useMemo, useState } from "react";
 
 import { cn } from "@dotui/registry/lib/utils";
 import * as TabsPrimitive from "@dotui/registry/ui/tabs";
