@@ -1,12 +1,9 @@
 "use client";
 
 import { Button } from "@dotui/registry-v2/ui/button";
-import {
-  Dialog,
-  DialogBody,
-  DialogFooter,
-  DialogRoot,
-} from "@dotui/registry-v2/ui/dialog";
+import { Dialog } from "@dotui/registry-v2/ui/dialog";
+import { Label } from "@dotui/registry-v2/ui/field";
+import { Input } from "@dotui/registry-v2/ui/input";
 import { TextField } from "@dotui/registry-v2/ui/text-field";
 
 export function DialogDemo() {
@@ -23,12 +20,14 @@ export function DialogDemo() {
               </Dialog.Description>
             </Dialog.Header>
             <Dialog.Body className="space-y-4">
-              <TextField label="Name" defaultValue="mehdi" className="w-full" />
-              <TextField
-                label="Username"
-                defaultValue="mehdibha"
-                className="w-full"
-              />
+              <TextField>
+                <Label>Name</Label>
+                <Input defaultValue="mehdi" />
+              </TextField>
+              <TextField>
+                <Label>Username</Label>
+                <Input defaultValue="mehdibha" />
+              </TextField>
             </Dialog.Body>
             <Dialog.Footer>
               <Button slot="close">Cancel</Button>

@@ -1,7 +1,9 @@
 "use client";
 
 import { Button } from "@dotui/registry-v2/ui/button";
+import { Description, Label } from "@dotui/registry-v2/ui/field";
 import { Form } from "@dotui/registry-v2/ui/form";
+import { Input } from "@dotui/registry-v2/ui/input";
 import { NumberField } from "@dotui/registry-v2/ui/number-field";
 import { Switch } from "@dotui/registry-v2/ui/switch";
 import { TextField } from "@dotui/registry-v2/ui/text-field";
@@ -16,26 +18,18 @@ export function FormDemo() {
         }}
         className="space-y-4"
       >
-        <TextField
-          label="Name"
-          name="name"
-          placeholder="Enter your name"
-          isRequired
-        />
-        <TextField
-          label="Email"
-          name="email"
-          type="email"
-          placeholder="email@example.com"
-          isRequired
-        />
-        <TextField
-          label="Password"
-          name="password"
-          type="password"
-          placeholder="••••••••"
-          isRequired
-        />
+        <TextField>
+          <Label>Name</Label>
+          <Input />
+        </TextField>
+        <TextField>
+          <Label>Email</Label>
+          <Input />
+        </TextField>
+        <TextField>
+          <Label>Password</Label>
+          <Input />
+        </TextField>
         <Switch name="newsletter">Subscribe to newsletter</Switch>
         <div className="flex gap-2">
           <Button type="submit">Submit</Button>
@@ -52,20 +46,19 @@ export function FormDemo() {
         }}
         className="space-y-4"
       >
-        <TextField
-          label="Username"
-          name="username"
-          minLength={3}
-          isRequired
-          description="At least 3 characters"
-        />
-        <TextField
-          label="Website"
-          name="website"
-          type="url"
-          placeholder="https://example.com"
-        />
-        <NumberField label="Age" name="age" minValue={18} maxValue={120} />
+        <TextField name="username" minLength={3} isRequired>
+          <Label>Username</Label>
+          <Input />
+          <Description>At least 3 characters</Description>
+        </TextField>
+        <TextField>
+          <Label>Website</Label>
+          <Input />
+        </TextField>
+        <NumberField>
+          <Label>Age</Label>
+          <Input />
+        </NumberField>
         <Button type="submit">Submit</Button>
       </Form>
     </div>

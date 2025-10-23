@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { useBreadcrumb } from "fumadocs-core/breadcrumb";
-import type { PageTree } from "fumadocs-core/server";
+import type * as PageTree from "fumadocs-core/page-tree";
 
 import {
   Breadcrumb,

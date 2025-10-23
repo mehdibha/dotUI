@@ -5,7 +5,7 @@ import * as TocPrimitive from "fumadocs-core/toc";
 import type {
   TOCItemType,
   TableOfContents as TocType,
-} from "fumadocs-core/server";
+} from "fumadocs-core/toc";
 
 import { cn } from "@dotui/registry/lib/utils";
 

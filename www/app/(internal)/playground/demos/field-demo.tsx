@@ -4,14 +4,11 @@ import { Badge } from "@dotui/registry-v2/ui/badge";
 import { Checkbox } from "@dotui/registry-v2/ui/checkbox";
 import {
   Description,
-  FieldError,
   FieldGroup,
   Fieldset,
   Label,
-  Legend,
 } from "@dotui/registry-v2/ui/field";
 import { Input, TextArea } from "@dotui/registry-v2/ui/input";
-import { Radio, RadioGroup } from "@dotui/registry-v2/ui/radio-group";
 import { Separator } from "@dotui/registry-v2/ui/separator";
 import { Switch } from "@dotui/registry-v2/ui/switch";
 import { TextField } from "@dotui/registry-v2/ui/text-field";
@@ -69,12 +66,7 @@ export function FieldDemo() {
           <Description className="ml-4">
             Enable Touch ID to quickly unlock your device.
           </Description>
-          <Checkbox appearance="card">
-            Enable Touch ID to quickly unlock your device.
-          </Checkbox>
-          <RadioGroup>
-            <Radio></Radio>
-          </RadioGroup>
+          <Checkbox>Enable Touch ID to quickly unlock your device.</Checkbox>
         </FieldGroup>
       </Fieldset>
 

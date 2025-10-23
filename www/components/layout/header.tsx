@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { MoonIcon, SearchIcon, SunIcon } from "lucide-react";
-import type { PageTree } from "fumadocs-core/server";
+import type * as PageTree from "fumadocs-core/page-tree";
 
 import { GitHubIcon } from "@dotui/registry/components/icons/github";
 import { cn } from "@dotui/registry/lib/utils";

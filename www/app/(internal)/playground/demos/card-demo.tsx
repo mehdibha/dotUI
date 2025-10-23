@@ -12,6 +12,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@dotui/registry-v2/ui/card";
+import { Label } from "@dotui/registry-v2/ui/field";
+import { Input } from "@dotui/registry-v2/ui/input";
 import { TextField } from "@dotui/registry-v2/ui/text-field";
 
 export function CardDemo() {
@@ -28,18 +30,20 @@ export function CardDemo() {
           <CardContent>
             <form>
               <div className="flex flex-col gap-6">
-                <TextField
-                  label="Email"
-                  placeholder="m@example.com"
-                  isRequired
-                />
+                <TextField isRequired>
+                  <Label>Email</Label>
+                  <Input placeholder="m@example.com" />
+                </TextField>
                 <a
                   href="#"
                   className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
                 >
                   Forgot your password?
                 </a>
-                <TextField label="Password" isRequired />
+                <TextField isRequired>
+                  <Label>Password</Label>
+                  <Input placeholder="••••••••" />
+                </TextField>
               </div>
             </form>
           </CardContent>

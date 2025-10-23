@@ -4,7 +4,6 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useOnChange } from "fumadocs-core/utils/use-on-change";
 import {
   BlocksIcon,
   BookIcon,
@@ -18,7 +17,7 @@ import {
   SunIcon,
 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import type { PageTree } from "fumadocs-core/server";
+import type * as PageTree from "fumadocs-core/page-tree";
 import type { Transition } from "motion/react";
 import type { Route } from "next";
 
@@ -40,7 +39,7 @@ import { useDebounce } from "@/hooks/use-debounce";
 import { useMounted } from "@/hooks/use-mounted";
 import { UserProfileMenu } from "@/modules/auth/components/user-profile-menu";
 import { authClient } from "@/modules/auth/lib/client";
-import { hasActive, isActive } from "@/modules/docs/utils";
+import { isActive } from "@/modules/docs/utils";
 
 export const Sidebar = ({
   className,
@@ -222,8 +221,8 @@ export const Sidebar = ({
                 <motion.div layout transition={transition}>
                   <Button variant="quiet" shape="square" size="sm">
                     <Avatar
-                      src={session?.user?.image ?? undefined}
-                      fallback={session?.user?.name?.charAt(0)}
+                      src={session.user.image ?? undefined}
+                      fallback={session.user.name.charAt(0)}
                       className="size-6"
                       shape="circle"
                     />
@@ -295,10 +294,7 @@ const SidebarRoot = ({
 const SidebarContext = React.createContext<{
   isCollapsed: boolean;
   setCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
-}>({
-  isCollapsed: false,
-  setCollapsed: () => {},
-});
+} | null>(null);
 
 export const SidebarProvider = ({
   children,
@@ -414,7 +410,7 @@ function PageNode({
   onSelect?: () => void;
 }): React.ReactElement {
   const pathname = usePathname();
-  const { isCollapsed } = React.useContext(SidebarContext);
+  const { isCollapsed } = useSidebarContext();
   const active = isActive(url, pathname, false);
 
   if (level === 1) {
@@ -456,23 +452,6 @@ function FolderNode({
   level: number;
   onSelect?: () => void;
 }): React.ReactElement {
-  const defaultOpenLevel = 0;
-  const pathname = usePathname();
-  const active =
-    item.index !== undefined && isActive(item.index.url, pathname, false);
-  const childActive = React.useMemo(
-    () => hasActive(item.children, pathname),
-    [item.children, pathname],
-  );
-
-  const shouldExtend =
-    active || childActive || (item.defaultOpen ?? defaultOpenLevel >= level);
-  const [open, setOpen] = React.useState(shouldExtend);
-
-  useOnChange(shouldExtend, (v) => {
-    if (v) setOpen(v);
-  });
-
   if (level === 1) {
     return (
       <div className="not-first:mt-8">

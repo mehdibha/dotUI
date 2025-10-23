@@ -1,4 +1,4 @@
-import { getGithubLastEdit as getGithubLastEdit_ } from "fumadocs-core/server";
+import { getGithubLastEdit as getGithubLastEdit_ } from "fumadocs-core/content/github";
 
 export const getGithubLastEdit = async (path: string) => {
   return await getGithubLastEdit_({

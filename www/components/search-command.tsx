@@ -10,7 +10,7 @@ import {
   SearchIcon,
 } from "lucide-react";
 import { composeRenderProps, useFilter } from "react-aria-components";
-import type { PageTree } from "fumadocs-core/server";
+import type * as PageTree from "fumadocs-core/page-tree";
 import type { Route } from "next";
 
 import { Button } from "@dotui/registry/ui/button";
@@ -91,7 +91,7 @@ export function SearchCommand({
               </MenuItem>
             ))}
           </MenuSection>
-          {items?.map((group, index) => {
+          {items.map((group, index) => {
             if (group.type === "folder") {
               return (
                 <MenuSection title={group.name} key={index}>

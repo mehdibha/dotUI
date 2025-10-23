@@ -17,7 +17,7 @@ export function TooltipDemo() {
           <Button>Long content</Button>
         </Tooltip>
         <Tooltip content="Edit name">
-          <Button shape="square">
+          <Button>
             <Edit2Icon />
           </Button>
         </Tooltip>

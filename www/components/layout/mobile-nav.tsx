@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import type { PageTree } from "fumadocs-core/server";
+import type * as PageTree from "fumadocs-core/page-tree";
 import type { Route } from "next";
 import type { LinkProps } from "next/link";
 

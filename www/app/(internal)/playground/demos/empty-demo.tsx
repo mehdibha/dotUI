@@ -6,6 +6,7 @@ import { ArrowUpRightIcon, PlusIcon, RefreshCcwIcon } from "lucide-react";
 import { Avatar } from "@dotui/registry-v2/ui/avatar";
 import { Button } from "@dotui/registry-v2/ui/button";
 import { Empty } from "@dotui/registry-v2/ui/empty";
+import { Link } from "@dotui/registry-v2/ui/link";
 
 export function EmptyDemo() {
   return (
@@ -27,8 +28,10 @@ export function EmptyDemo() {
             <Button>Import Project</Button>
           </div>
         </Empty.Content>
-        <Button href="#" variant="link" className="text-fg-muted" size="sm">
-          Learn More <ArrowUpRightIcon />
+        <Button asChild variant="link" className="text-fg-muted" size="sm">
+          <Link>
+            Learn More <ArrowUpRightIcon />
+          </Link>
         </Button>
       </Empty>
 

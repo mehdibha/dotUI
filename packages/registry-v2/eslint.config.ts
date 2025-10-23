@@ -1,4 +1,4 @@
-import { baseConfig, restrictEnvAccess } from "@acme/eslint-config/base";
+import { baseConfig, restrictEnvAccess } from "@dotui/eslint-config/base";
 import { defineConfig } from "eslint/config";
 
 export default defineConfig(

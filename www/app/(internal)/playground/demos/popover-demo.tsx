@@ -2,6 +2,8 @@
 
 import { Button } from "@dotui/registry-v2/ui/button";
 import { Dialog } from "@dotui/registry-v2/ui/dialog";
+import { Label } from "@dotui/registry-v2/ui/field";
+import { Input } from "@dotui/registry-v2/ui/input";
 import { TextField } from "@dotui/registry-v2/ui/text-field";
 
 export function PopoverDemo() {
@@ -20,16 +22,14 @@ export function PopoverDemo() {
                 </Dialog.Description>
               </Dialog.Header>
               <Dialog.Body>
-                <TextField
-                  label="Width"
-                  defaultValue="100%"
-                  className="w-full"
-                />
-                <TextField
-                  label="Height"
-                  defaultValue="200px"
-                  className="w-full"
-                />
+                <TextField defaultValue="100%" className="w-full">
+                  <Label>Width</Label>
+                  <Input />
+                </TextField>
+                <TextField>
+                  <Label>Height</Label>
+                  <Input />
+                </TextField>
               </Dialog.Body>
             </Dialog.Content>
           </Dialog.Popover>
@@ -47,16 +47,14 @@ export function PopoverDemo() {
                 </Dialog.Description>
               </Dialog.Header>
               <Dialog.Body>
-                <TextField
-                  label="Width"
-                  defaultValue="100%"
-                  className="w-full"
-                />
-                <TextField
-                  label="Height"
-                  defaultValue="200px"
-                  className="w-full"
-                />
+                <TextField>
+                  <Label>Width</Label>
+                  <Input />
+                </TextField>
+                <TextField>
+                  <Label>Height</Label>
+                  <Input />
+                </TextField>
               </Dialog.Body>
               <Dialog.Footer>
                 <Button slot="close" size="sm">
@@ -142,16 +140,14 @@ export function PopoverDemo() {
                 </Dialog.Description>
               </Dialog.Header>
               <Dialog.Body>
-                <TextField
-                  label="Width"
-                  defaultValue="100%"
-                  className="w-full"
-                />
-                <TextField
-                  label="Height"
-                  defaultValue="200px"
-                  className="w-full"
-                />
+                <TextField>
+                  <Label>Width</Label>
+                  <Input />
+                </TextField>
+                <TextField>
+                  <Label>Height</Label>
+                  <Input />
+                </TextField>
               </Dialog.Body>
               <Dialog.Footer>
                 <Button slot="close" size="sm">
@@ -212,16 +208,14 @@ export function PopoverDemo() {
                   </Dialog.Description>
                 </Dialog.Header>
                 <Dialog.Body>
-                  <TextField
-                    label="Width"
-                    defaultValue="100%"
-                    className="w-full"
-                  />
-                  <TextField
-                    label="Height"
-                    defaultValue="200px"
-                    className="w-full"
-                  />
+                  <TextField>
+                    <Label>Width</Label>
+                    <Input />
+                  </TextField>
+                  <TextField>
+                    <Label>Height</Label>
+                    <Input />
+                  </TextField>
                 </Dialog.Body>
               </Dialog.Content>
             </Dialog.Popover>
