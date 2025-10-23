@@ -6,7 +6,8 @@ export function Announcement() {
       href="/docs/changelog"
       className="h-7 rounded-full bg-neutral/50 text-xs text-fg-muted"
     >
-      Introducing a dynamic shadcn registry
+      <span className="size-1.5 rounded-full bg-accent" />
+      Introducing dotUI v1.0.0-beta.1
     </Button>
   );
 }

@@ -39,9 +39,14 @@ export default async function HomePage() {
             Build your design system with a{" "}
             <span className="font-bold italic">unique</span> look.
           </h1>
-          <p className="mt-4 text-center text-lg text-balance text-fg-muted">
-            A set of beautifully designed components that you can customize,
-            extend, and build on.
+          <p className="mt-4 text-center text-lg text-fg-muted">
+            Beautiful components, accessibility by default, composition, and
+            more, all powered
+            <br /> by <AdobeIcon className="size-4 inline-flex" />{" "}
+            <span className="font-medium">react-aria-components</span> and{" "}
+            <ShadcnIcon className="size-5 inline-flex " />{" "}
+            <span className="font-medium">shadcn CLI</span> - Ready to make your
+            product stand out.
           </p>
           <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
             <Button href="/docs" variant="primary" size="lg" className="h-10">

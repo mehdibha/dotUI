@@ -134,31 +134,29 @@ const TokenSelect = ({
       {(field) => {
         return (
           <Skeleton show={isPending} className="w-40">
-              <field.Select
-                aria-label="Select variable value"
-                size="sm"
-                renderValue={({ defaultChildren }) => defaultChildren}
-                suffix={<ChevronsUpDownIcon className="text-fg-muted" />}
-                className="w-40"
-              >
-                {colorScales
-                  .filter((scale) => scale !== "..")
-                  .flatMap((scale) => {
-                    const colors = generatedTheme.find((s) => s.name === scale);
-                    return SCALE_STEPS.map((step, i) => (
-                      <SelectItem
-                        key={`${scale}-${step}`}
-                        id={`var(--${scale}-${step})`}
-                        prefix={
-                          <ColorSwatch color={colors?.values[i]?.value} />
-                        }
-                      >
-                        {`${scale.charAt(0).toUpperCase() + scale.slice(1)} ${step}`}
-                      </SelectItem>
-                    ));
-                  })}
-              </field.Select>
-            </Skeleton>
+            <field.Select
+              aria-label="Select variable value"
+              size="sm"
+              renderValue={({ defaultChildren }) => defaultChildren}
+              suffix={<ChevronsUpDownIcon className="text-fg-muted" />}
+              className="w-40"
+            >
+              {colorScales
+                .filter((scale) => scale !== "..")
+                .flatMap((scale) => {
+                  const colors = generatedTheme.find((s) => s.name === scale);
+                  return SCALE_STEPS.map((step, i) => (
+                    <SelectItem
+                      key={`${scale}-${step}`}
+                      id={`var(--${scale}-${step})`}
+                      prefix={<ColorSwatch color={colors?.values[i]?.value} />}
+                    >
+                      {`${scale.charAt(0).toUpperCase() + scale.slice(1)} ${step}`}
+                    </SelectItem>
+                  ));
+                })}
+            </field.Select>
+          </Skeleton>
         );
       }}
     </form.AppField>

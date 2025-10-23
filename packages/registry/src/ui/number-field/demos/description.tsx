@@ -1,5 +1,3 @@
-
-
 import { NumberField } from "@dotui/registry/ui/number-field";
 
 export default function Demo() {

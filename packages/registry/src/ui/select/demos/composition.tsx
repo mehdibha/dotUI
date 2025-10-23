@@ -1,5 +1,3 @@
-
-
 import { ChevronsUpDownIcon } from "@dotui/registry/icons";
 import { Button } from "@dotui/registry/ui/button";
 import { ListBox, ListBoxItem } from "@dotui/registry/ui/list-box";

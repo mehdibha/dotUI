@@ -1,6 +1,5 @@
 "use client";
 
-
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
 import { TextArea as _TextArea, TextAreaRoot as _TextAreaRoot } from "./basic";

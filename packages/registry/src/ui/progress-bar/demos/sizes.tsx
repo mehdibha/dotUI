@@ -1,6 +1,5 @@
 "use client";
 
-
 import { ProgressBar } from "@dotui/registry/ui/progress-bar";
 
 const sizes = ["sm", "md", "lg"] as const;

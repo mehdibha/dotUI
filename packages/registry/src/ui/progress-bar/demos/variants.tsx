@@ -1,5 +1,3 @@
-
-
 import { ProgressBar } from "@dotui/registry/ui/progress-bar";
 
 const variants = ["primary", "success", "accent", "danger", "warning"] as const;

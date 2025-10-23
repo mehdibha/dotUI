@@ -47,11 +47,7 @@ export function CommunityStyles() {
     const observer = new IntersectionObserver(
       (entries) => {
         const first = entries[0];
-        if (
-          first?.isIntersecting &&
-          hasNextPage &&
-          !isFetchingNextPage
-        ) {
+        if (first?.isIntersecting && hasNextPage && !isFetchingNextPage) {
           void fetchNextPage();
         }
       },

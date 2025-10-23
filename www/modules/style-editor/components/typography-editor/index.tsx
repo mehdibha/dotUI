@@ -1,6 +1,5 @@
 "use client";
 
-
 import { cn } from "@dotui/registry/lib/utils";
 import { Slider } from "@dotui/registry/ui/slider";
 

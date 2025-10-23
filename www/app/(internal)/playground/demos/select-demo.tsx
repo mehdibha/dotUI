@@ -9,9 +9,7 @@ import {
 } from "lucide-react";
 
 import { Button } from "@dotui/registry-v2/ui/button";
-import {
-  ListBoxItem,
-} from "@dotui/registry-v2/ui/list-box";
+import { ListBoxItem } from "@dotui/registry-v2/ui/list-box";
 import {
   Select,
   SelectContent,

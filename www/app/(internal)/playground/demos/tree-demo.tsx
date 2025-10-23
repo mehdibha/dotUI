@@ -1,6 +1,5 @@
 "use client";
 
-
 import { Tree } from "@dotui/registry-v2/ui/tree";
 
 export function TreeDemo() {

@@ -29,7 +29,7 @@ import type {
 } from "react-aria-components";
 
 import { focusRing } from "@dotui/registry-v2/lib/focus-styles";
-import { cn, } from "@dotui/registry-v2/lib/utils";
+import { cn } from "@dotui/registry-v2/lib/utils";
 import { Checkbox } from "@dotui/registry-v2/ui/checkbox";
 import { Loader } from "@dotui/registry-v2/ui/loader";
 

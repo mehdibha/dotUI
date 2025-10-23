@@ -1,5 +1,3 @@
-
-
 import { SearchIcon } from "@dotui/registry/icons";
 import { Description, Label } from "@dotui/registry/ui/field";
 import { Input, InputRoot } from "@dotui/registry/ui/input";

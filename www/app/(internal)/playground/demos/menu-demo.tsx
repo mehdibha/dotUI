@@ -22,7 +22,7 @@ import {
 } from "@dotui/registry-v2/ui/menu";
 import { Overlay } from "@dotui/registry-v2/ui/overlay";
 import { Separator } from "@dotui/registry-v2/ui/separator";
-import { Avatar, } from "@dotui/registry/ui/avatar";
+import { Avatar } from "@dotui/registry/ui/avatar";
 
 export function MenuDemo() {
   return (

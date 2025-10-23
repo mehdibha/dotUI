@@ -1,6 +1,5 @@
 "use client";
 
-
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
 import { DateInput as _DateInput, DateSegment as _DateSegment } from "./basic";

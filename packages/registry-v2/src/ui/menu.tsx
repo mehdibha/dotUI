@@ -21,7 +21,6 @@ import type {
 } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 
-
 import { cn } from "../lib/utils";
 
 const menuStyles = tv({

@@ -1,5 +1,3 @@
-
-
 import { Select, SelectItem } from "@dotui/registry/ui/select";
 
 export default function Demo() {

@@ -1,4 +1,3 @@
-
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 
 import { cn } from "@dotui/registry/lib/utils";

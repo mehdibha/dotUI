@@ -1,5 +1,3 @@
-
-
 import { Alert } from "@dotui/registry/ui/alert";
 
 export default function Demo() {

@@ -118,13 +118,13 @@ export const FeaturedStylesShowcase = ({
                     >
                       {position > 0 && (
                         <div
-                          className="absolute inset-0 rounded-[inherit] bg-black transition-opacity duration-600"
+                          className="dark:hidden absolute inset-0 rounded-[inherit] bg-black transition-opacity duration-600"
                           style={{
                             opacity: Math.min(position * 0.15, 0.6),
                           }}
                         />
                       )}
-                      <div className="rounded-[inherit] border">
+                      <div className="rounded-[inherit] border h-full">
                         {(delayedPosition === 0 || position === 0) && <Cards />}
                       </div>
                     </StyleProvider>

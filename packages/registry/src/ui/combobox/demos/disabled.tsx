@@ -1,5 +1,3 @@
-
-
 import { Combobox, ComboboxItem } from "@dotui/registry/ui/combobox";
 
 export default function Demo() {

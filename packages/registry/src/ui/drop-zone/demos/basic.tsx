@@ -1,5 +1,3 @@
-
-
 import { UploadIcon } from "@dotui/registry/icons";
 import { DropZone } from "@dotui/registry/ui/drop-zone";
 

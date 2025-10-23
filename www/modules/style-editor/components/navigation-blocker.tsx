@@ -6,11 +6,7 @@ import { useStore } from "@tanstack/react-form";
 import type { Route } from "next";
 
 import { Button } from "@dotui/registry/ui/button";
-import {
-  Dialog,
-  DialogBody,
-  DialogFooter,
-} from "@dotui/registry/ui/dialog";
+import { Dialog, DialogBody, DialogFooter } from "@dotui/registry/ui/dialog";
 
 import { env } from "@/env";
 import { useDraftStyle } from "../atoms/draft-style-atom";

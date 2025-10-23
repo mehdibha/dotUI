@@ -1,6 +1,5 @@
 "use client";
 
-
 import { Kbd } from "@dotui/registry-v2/ui/kbd";
 import { SearchField } from "@dotui/registry-v2/ui/search-field";
 import { SearchIcon } from "@dotui/registry/icons";

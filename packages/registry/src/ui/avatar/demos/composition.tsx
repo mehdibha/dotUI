@@ -1,5 +1,3 @@
-
-
 import { User2Icon } from "@dotui/registry/icons";
 import {
   AvatarFallback,

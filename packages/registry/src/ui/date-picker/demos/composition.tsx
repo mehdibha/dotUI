@@ -1,6 +1,5 @@
 "use client";
 
-
 import { CalendarIcon } from "@dotui/registry/icons";
 import { Button } from "@dotui/registry/ui/button";
 import { Calendar } from "@dotui/registry/ui/calendar";

@@ -1,6 +1,5 @@
 "use client";
 
-
 import { ColorFieldRoot } from "@dotui/registry/ui/color-field";
 import { Description, FieldError, Label } from "@dotui/registry/ui/field";
 import { Input, InputRoot } from "@dotui/registry/ui/input";

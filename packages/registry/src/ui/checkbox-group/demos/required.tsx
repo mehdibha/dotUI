@@ -1,5 +1,3 @@
-
-
 import { Checkbox } from "@dotui/registry/ui/checkbox";
 import { CheckboxGroup } from "@dotui/registry/ui/checkbox-group";
 

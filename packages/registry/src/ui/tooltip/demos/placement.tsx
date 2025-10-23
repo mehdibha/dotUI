@@ -1,5 +1,3 @@
-
-
 import { Button } from "@dotui/registry/ui/button";
 import { Tooltip } from "@dotui/registry/ui/tooltip";
 

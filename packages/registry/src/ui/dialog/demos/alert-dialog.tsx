@@ -1,6 +1,5 @@
 "use client";
 
-
 import { Button } from "@dotui/registry/ui/button";
 import { Dialog, DialogFooter, DialogRoot } from "@dotui/registry/ui/dialog";
 

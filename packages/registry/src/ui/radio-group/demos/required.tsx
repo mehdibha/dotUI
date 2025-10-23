@@ -1,5 +1,3 @@
-
-
 import { Radio, RadioGroup } from "@dotui/registry/ui/radio-group";
 
 export default function Demo() {
