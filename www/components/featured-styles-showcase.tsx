@@ -21,6 +21,8 @@ export const FeaturedStylesShowcase = ({
   const { resolvedTheme } = useTheme();
   const containerRef = React.useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = React.useState(0);
+  const [touched, setTouched] = React.useState(false);
+
   const ref = React.useRef(null);
   const isMounted = useMounted();
 
@@ -28,14 +30,13 @@ export const FeaturedStylesShowcase = ({
     return styles[currentIndex % styles.length];
   }, [currentIndex, styles]);
 
-  // Auto-advance cards every 3.5 seconds for infinite loop
-  // React.useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setCurrentIndex((prev) => (prev + 1) % styles.length);
-  //   }, 3500);
-
-  //   return () => clearInterval(interval);
-  // }, [styles.length]);
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      if (touched) return;
+      setCurrentIndex((prev) => (prev + 1) % styles.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [styles.length, touched]);
 
   return (
     <>
@@ -55,7 +56,7 @@ export const FeaturedStylesShowcase = ({
               const clickedIndex = styles.findIndex((s) => s.name === key);
               if (clickedIndex === -1) return;
               setCurrentIndex(clickedIndex);
-              // setTouched(true);
+              setTouched(true);
             }}
           >
             <TabList className="flex-wrap justify-center bg-transparent">
