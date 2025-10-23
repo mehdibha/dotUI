@@ -18,6 +18,7 @@ import {
   SwitchIndicator,
   SwitchThumb,
 } from "@dotui/registry-v2/ui/switch";
+
 import { TableOfContents } from "@/modules/docs/components/toc";
 import * as demos from "./demos";
 
@@ -514,51 +515,46 @@ const Section = ({
         </h3>
       </div>
       {description && <p className="text-sm text-fg-muted">{description}</p>}
-        <div
-          className={cn(
-            "relative rounded-lg border bg-bg p-6 pt-12",
-            className,
-          )}
-        >
-          <div className="absolute top-4 right-4 flex gap-8 text-sm text-fg-muted">
-            {uniqueProps.map((prop) => (
-              <Switch
-                key={prop}
-                size="sm"
-                isSelected={controlStates[prop]}
-                onChange={(value) => handlePropertyToggle(prop, value)}
-                className="flex-row-reverse gap-1"
-              >
-                <SwitchIndicator>
-                  <SwitchThumb />
-                </SwitchIndicator>
-                <Label>{prop}</Label>
-              </Switch>
-            ))}
+      <div
+        className={cn("relative rounded-lg border bg-bg p-6 pt-12", className)}
+      >
+        <div className="absolute top-4 right-4 flex gap-8 text-sm text-fg-muted">
+          {uniqueProps.map((prop) => (
             <Switch
+              key={prop}
               size="sm"
-              isSelected={isLoading}
-              onChange={setIsLoading}
+              isSelected={controlStates[prop]}
+              onChange={(value) => handlePropertyToggle(prop, value)}
               className="flex-row-reverse gap-1"
             >
               <SwitchIndicator>
                 <SwitchThumb />
               </SwitchIndicator>
-              <Label>Skeleton</Label>
+              <Label>{prop}</Label>
             </Switch>
-          </div>
-          {controls ? (
-            <Provider values={providerValues}>
-              <SkeletonProvider isLoading={isLoading}>
-                {children}
-              </SkeletonProvider>
-            </Provider>
-          ) : (
+          ))}
+          <Switch
+            size="sm"
+            isSelected={isLoading}
+            onChange={setIsLoading}
+            className="flex-row-reverse gap-1"
+          >
+            <SwitchIndicator>
+              <SwitchThumb />
+            </SwitchIndicator>
+            <Label>Skeleton</Label>
+          </Switch>
+        </div>
+        {controls ? (
+          <Provider values={providerValues}>
             <SkeletonProvider isLoading={isLoading}>
               {children}
             </SkeletonProvider>
-          )}
-        </div>
+          </Provider>
+        ) : (
+          <SkeletonProvider isLoading={isLoading}>{children}</SkeletonProvider>
+        )}
+      </div>
     </div>
   );
 };
