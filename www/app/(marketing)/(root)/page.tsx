@@ -1,4 +1,4 @@
-import type { Metadata, Route } from "next";
+import type { Route } from "next";
 
 import { AdobeIcon } from "@dotui/registry/components/icons/adobe";
 import { GitHubIcon } from "@dotui/registry/components/icons/github";
@@ -32,16 +32,17 @@ export default async function HomePage() {
   return (
     <div>
       {/* Hero section */}
-      <div className="container">
-        <section className="mt-10 max-w-3xl sm:mt-14">
+      <section className="container flex flex-col items-center pt-18">
+        <div className="flex max-w-5xl flex-col items-center">
           <Announcement />
-          <h1 className="text-2xl tracking-tighter text-balance max-lg:font-medium xs:text-3xl md:text-4xl lg:text-5xl">
-            Quickly build your design system with a{" "}
+          <h1 className="mt-4 text-center text-2xl tracking-tighter max-lg:font-medium xs:text-3xl md:text-4xl lg:text-5xl">
+            Build your design system with a{" "}
             <span className="font-bold italic">unique</span> look.
           </h1>
-          <p className="text-balace mt-2 text-lg text-fg-muted">
-            Over 40 components available in differents styles ready to match
-            your brand identity.
+          <p className="mt-4 text-balance text-center text-lg text-fg-muted">
+            A set of beautifully designed components that you can customize,
+            extend, and build on. Start here then make it your own. Open Source.
+            Open Code.
           </p>
           <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
             <Button href="/docs" variant="primary" size="lg" className="h-10">
@@ -51,10 +52,10 @@ export default async function HomePage() {
               Explore styles
             </Button>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
       {/* Styles overview */}
-      <section className="container mt-10 sm:mt-20">
+      <section className="container mt-10 max-w-screen-xl sm:mt-20">
         {feturedStyles.length > 0 ? (
           <FeaturedStylesShowcase styles={feturedStyles} />
         ) : (

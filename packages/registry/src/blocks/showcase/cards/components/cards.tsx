@@ -7,10 +7,14 @@ import { InviteMembers } from "@dotui/registry/blocks/showcase/cards/components/
 import { LoginForm } from "@dotui/registry/blocks/showcase/cards/components/login-form";
 import { Notifications } from "@dotui/registry/blocks/showcase/cards/components/notifications";
 import { TeamName } from "@dotui/registry/blocks/showcase/cards/components/team-name";
+import { cn } from "@dotui/registry/lib/utils";
 
-export function Cards() {
+export function Cards(props: React.ComponentProps<"div">) {
   return (
-    <div className="grid grid-cols-11 gap-4 p-4 md:p-6">
+    <div
+      {...props}
+      className={cn("grid grid-cols-11 gap-4 p-4 md:p-6", props.className)}
+    >
       <div className="col-span-11 flex gap-4 max-md:flex-col xl:col-span-8">
         <Booking className="w-full max-md:col-span-1 md:w-80" />
         <Filters className="flex-1 max-md:col-span-1" />
