@@ -20,12 +20,12 @@
     "@dotui/auth": "workspace:*",
     "@dotui/db": "workspace:*",
     "@dotui/registry": "workspace:*",
-    "@trpc/server": "catalog:",
+    "@trpc/server": "^11.2.0",
     "superjson": "2.2.3",
-    "zod": "catalog:"
+    "zod": "^4.0.5"
   },
   "devDependencies": {
     "@dotui/ts-config": "workspace:*",
-    "typescript": "catalog:"
+    "typescript": "^5.8.3"
   }
 }

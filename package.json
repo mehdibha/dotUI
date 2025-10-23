@@ -44,7 +44,7 @@
     "@vitest/coverage-v8": "^4.0.1",
     "puppeteer": "^24.26.0",
     "turbo": "^2.5.8",
-    "typescript": "catalog:",
+    "typescript": "^5.8.3",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^4.0.1"
   }

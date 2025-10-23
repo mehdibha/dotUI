@@ -42,34 +42,41 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "peerDependencies": {
-    "@hookform/resolvers": "catalog:ui",
-    "@internationalized/date": "catalog:ui",
-    "@react-stately/utils": "catalog:ui",
-    "@remixicon/react": "catalog:ui",
-    "@tanstack/react-form": "catalog:ui",
-    "clsx": "catalog:ui",
-    "lucide-react": "catalog:ui",
-    "motion": "catalog:ui",
-    "react": "catalog:react",
-    "react-aria": "catalog:ui",
-    "react-aria-components": "catalog:ui",
-    "react-dom": "catalog:react",
-    "react-hook-form": "catalog:ui",
-    "react-stately": "catalog:ui",
-    "tailwind-merge": "catalog:ui",
-    "tailwind-variants": "catalog:ui"
+    "@hookform/resolvers": "^5.1.1",
+    "@internationalized/date": "^3.10.0",
+    "@react-stately/utils": "^3.10.8",
+    "@remixicon/react": "^4.2.0",
+    "@tanstack/react-form": "^1.23.4",
+    "clsx": "^2.1.0",
+    "lucide-react": "^0.546.0",
+    "motion": "^12.23.22",
+    "react": "^19.2.0",
+    "react-aria": "^3.44.0",
+    "react-aria-components": "^1.13.0",
+    "react-dom": "^19.2.0",
+    "react-hook-form": "^7.54.2",
+    "react-stately": "^3.42.0",
+    "tailwind-merge": "^3.0.2",
+    "tailwind-variants": "^3.1.1"
   },
   "devDependencies": {
     "@dotui/ts-config": "workspace:*",
     "@types/culori": "^4.0.1",
-    "@types/react": "catalog:react",
-    "@types/react-dom": "catalog:react",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.1",
+    "next": "^15.3.0",
     "rimraf": "^6.0.1",
-    "shadcn": "catalog:",
-    "tsx": "catalog:",
-    "typescript": "catalog:"
+    "shadcn": "^3.2.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.8.3"
   },
   "dependencies": {
-    "culori": "^4.0.2"
+    "@adobe/leonardo-contrast-colors": "^1.0.0",
+    "@react-types/shared": "^3.26.0",
+    "culori": "^4.0.2",
+    "deepmerge": "^4.3.1",
+    "react-error-boundary": "^5.0.2",
+    "ts-morph": "^25.0.0",
+    "zod": "^4.0.5"
   }
 }

@@ -19,14 +19,14 @@
     "@dotui/db": "workspace:*",
     "@t3-oss/env-nextjs": "^0.13.6",
     "better-auth": "1.3.4",
-    "next": "catalog:next",
-    "react": "catalog:react",
-    "react-dom": "catalog:react",
-    "zod": "catalog:"
+    "next": "^16.0.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "zod": "^4.0.5"
   },
   "devDependencies": {
     "@dotui/ts-config": "workspace:*",
-    "@types/react": "catalog:react",
-    "typescript": "catalog:"
+    "@types/react": "^19.2.2",
+    "typescript": "^5.8.3"
   }
 }
