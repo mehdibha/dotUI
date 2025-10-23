@@ -1,9 +1,12 @@
-import "./env";
-
 import { createMDX } from "fumadocs-mdx/next";
-import type { NextConfig } from "next";
+import { createJiti } from "jiti";
 
-const config: NextConfig = {
+const jiti = createJiti(import.meta.url);
+
+await jiti.import("./env");
+
+/** @type {import('next').NextConfig} */
+const config = {
   reactStrictMode: true,
   transpilePackages: [
     "@dotui/api",
