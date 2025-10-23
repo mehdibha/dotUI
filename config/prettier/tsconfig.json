@@ -1,5 +1,0 @@
-{
-  "extends": "@dotui/ts-config/base.json",
-  "include": ["."],
-  "exclude": ["node_modules"]
-}

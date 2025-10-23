@@ -22,8 +22,6 @@
     "build": "tsc",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
     "dev": "tsc --watch",
-    "format": "prettier --check . --ignore-path ../../.gitignore",
-    "lint": "eslint",
     "push": "pnpm with-env drizzle-kit push",
     "generate": "pnpm with-env drizzle-kit generate",
     "migrate": "pnpm with-env drizzle-kit migrate",
@@ -41,17 +39,12 @@
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@dotui/eslint-config": "workspace:*",
-    "@dotui/prettier-config": "workspace:*",
     "@dotui/ts-config": "workspace:*",
     "@types/pg": "^8.15.4",
     "dotenv-cli": "^8.0.0",
     "drizzle-kit": "^0.31.1",
-    "eslint": "catalog:",
     "pg": "^8.16.0",
-    "prettier": "catalog:",
     "tsx": "catalog:",
     "typescript": "catalog:"
-  },
-  "prettier": "@dotui/prettier-config"
+  }
 }

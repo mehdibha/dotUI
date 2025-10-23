@@ -8,9 +8,6 @@
     "clean": "git clean -xdf .cache .next .turbo .source node_modules",
     "dev": "pnpm with-env next dev --turbopack --port 4444",
     "typegen": "pnpm with-env next typegen",
-    "format": "prettier --check . --ignore-path ../.gitignore",
-    "format:fix": "prettier --write . --ignore-path ../.gitignore",
-    "lint": "eslint",
     "preview": "next build && next start",
     "start": "pnpm with-env next start --port 4444",
     "typecheck": "pnpm with-env next typegen && tsc --noEmit",
@@ -76,8 +73,6 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
-    "@dotui/eslint-config": "workspace:*",
-    "@dotui/prettier-config": "workspace:*",
     "@dotui/ts-config": "workspace:*",
     "@hookform/devtools": "^4.4.0",
     "@tailwindcss/postcss": "catalog:",
@@ -91,10 +86,8 @@
     "autoprefixer": "^10.4.14",
     "babel-plugin-react-compiler": "19.1.0-rc.2",
     "dotenv-cli": "^8.0.0",
-    "eslint": "catalog:",
     "jiti": "^2.4.2",
     "postcss": "catalog:",
-    "prettier": "catalog:",
     "rimraf": "^6.0.1",
     "tailwindcss": "catalog:",
     "tailwindcss-animate": "^1.0.7",
@@ -103,6 +96,5 @@
     "tw-animate-css": "^1.3.5",
     "typescript": "catalog:",
     "vfile": "^6.0.3"
-  },
-  "prettier": "@dotui/prettier-config"
+  }
 }

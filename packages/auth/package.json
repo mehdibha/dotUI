@@ -12,8 +12,6 @@
   "license": "MIT",
   "scripts": {
     "clean": "git clean -xdf .cache .turbo dist node_modules",
-    "format": "prettier --check . --ignore-path ../../.gitignore",
-    "lint": "eslint",
     "generate": "dotenv -e ../../.env -- pnpx @better-auth/cli generate --config ./src/index.ts --output ../db/src/auth-schema.ts",
     "typecheck": "tsc --noEmit"
   },
@@ -27,13 +25,8 @@
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@dotui/eslint-config": "workspace:*",
-    "@dotui/prettier-config": "workspace:*",
     "@dotui/ts-config": "workspace:*",
     "@types/react": "catalog:react",
-    "eslint": "catalog:",
-    "prettier": "catalog:",
     "typescript": "catalog:"
-  },
-  "prettier": "@dotui/prettier-config"
+  }
 }

@@ -10,14 +10,6 @@
       "cache": false,
       "persistent": false
     },
-    "format": {
-      "outputs": [".cache/.prettiercache"],
-      "outputLogs": "new-only"
-    },
-    "lint": {
-      "dependsOn": ["^build"],
-      "outputs": [".cache/.eslintcache"]
-    },
     "typecheck": {
       "dependsOn": ["^build"],
       "outputs": [".cache/tsbuildinfo.json"]

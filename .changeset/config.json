@@ -9,8 +9,6 @@
   "updateInternalDependencies": "patch",
   "ignore": [
     "www",
-    "@dotui/eslint-config",
-    "@dotui/prettier-config",
     "@dotui/ts-config",
     "@dotui/api",
     "@dotui/auth",
