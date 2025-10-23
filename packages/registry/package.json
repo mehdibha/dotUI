@@ -28,6 +28,8 @@
     "./ui/registry": "./src/ui/registry.ts",
     "./ui/demos": "./src/ui/__demos__.tsx",
     "./ui/*": "./src/ui/*/index.tsx",
+    "./ui/*/meta": "./src/ui/*/meta.ts",
+    "./lib/*/meta": "./src/lib/*/meta.ts",
     "./style-system/core": "./src/_style-system/core/index.ts",
     "./style-system/shadcn-registry": "./src/_style-system/shadcn-registry/index.ts",
     "./style-system/constants": "./src/_style-system/constants.ts",

@@ -1,8 +1,22 @@
 import { relations, sql } from "drizzle-orm";
-import { pgTable, uniqueIndex } from "drizzle-orm/pg-core";
+import {
+  boolean,
+  index,
+  jsonb,
+  pgTable,
+  text,
+  timestamp,
+  unique,
+  uuid,
+} from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
+import {
+  iconsDefinitionSchema,
+  themeDefinitionSchema,
+  variantsDefinitionSchema,
+} from "@dotui/registry/style-system/schemas";
 import type {
   IconsDefinition,
   ThemeDefinition,
@@ -14,33 +28,32 @@ import { user } from "./auth";
 /** Tables **/
 export const style = pgTable(
   "style",
-  (t) => ({
-    id: t.uuid().notNull().primaryKey().defaultRandom(),
-    name: t.text("name").notNull(),
-    description: t.text(),
-    visibility: t
-      .text("visibility", { enum: ["public", "unlisted", "private"] })
+  {
+    id: uuid("id").notNull().primaryKey().defaultRandom(),
+    name: text("name").notNull(),
+    description: text("description"),
+    visibility: text("visibility", { enum: ["public", "unlisted", "private"] })
       .notNull()
       .default("unlisted"),
-    isFeatured: t.boolean("is_featured").notNull().default(false),
-    theme: t.jsonb("theme").$type<ThemeDefinition>().notNull(),
-    icons: t.jsonb("icons").$type<IconsDefinition>().notNull(),
-    variants: t.jsonb("variants").$type<VariantsDefinition>().notNull(),
-    userId: t
-      .text("user_id")
+    isFeatured: boolean("is_featured").notNull().default(false),
+    theme: jsonb("theme").$type<ThemeDefinition>().notNull(),
+    icons: jsonb("icons").$type<IconsDefinition>().notNull(),
+    variants: jsonb("variants").$type<VariantsDefinition>().notNull(),
+    userId: text("user_id")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
-    createdAt: t.timestamp().defaultNow().notNull(),
-    updatedAt: t
-      .timestamp({ mode: "date", withTimezone: true })
-      .$onUpdateFn(() => sql`now()`),
-  }),
-  (t) => ({
-    uniqueNamePerUser: uniqueIndex("unique_name_per_user").on(t.userId, t.name),
-    uniquePublic: uniqueIndex("unique_public_name")
-      .on(t.name)
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", {
+      mode: "date",
+      withTimezone: true,
+    }).$onUpdateFn(() => sql`now()`),
+  },
+  (table) => [
+    unique("unique_name_per_user").on(table.userId, table.name),
+    index("unique_public_name")
+      .on(table.name)
       .where(sql.raw(`visibility = 'public'`)),
-  }),
+  ],
 );
 
 export const styleRelations = relations(style, ({ one }) => ({
@@ -67,4 +80,7 @@ export const createStyleSchema = createInsertSchema(style)
         /^[a-z0-9._-]+$/,
         "Style name must be lowercase and can only contain letters, digits, '.', '_', and '-'",
       ),
+    theme: themeDefinitionSchema,
+    icons: iconsDefinitionSchema,
+    variants: variantsDefinitionSchema,
   });

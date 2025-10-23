@@ -18,7 +18,6 @@ import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
 import { useResolvedModeState } from "@/modules/style-editor/hooks/use-resolved-mode";
 import { useStyleEditorParams } from "@/modules/style-editor/hooks/use-style-editor-params";
 import { useUpdateStyleMutation } from "@/modules/style-editor/hooks/use-update-style-mutation";
-import { useDraftStyle } from "../atoms/draft-style-atom";
 import { convertThemeColorObjects } from "../lib/convert-theme-color-objects";
 
 const styleEditorFormSchema = createStyleSchema.extend({});
@@ -40,7 +39,6 @@ const useForm = () => {
       slug,
     },
     {
-      onSuccess: (updated) => {},
       onError: () => {
         toast.add({
           title: "Failed to update style",
