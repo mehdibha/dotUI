@@ -2,10 +2,9 @@
 
 import React from "react";
 import Image from "next/image";
-import { AnimatePresence, motion, useInView } from "motion/react";
+import { motion, useInView } from "motion/react";
 import { useTheme } from "next-themes";
 import { UNSAFE_PortalProvider as PortalProvider } from "react-aria";
-import type { Variants } from "motion/react";
 
 import { StyleProvider } from "@dotui/registry";
 import { Cards } from "@dotui/registry/blocks/showcase/cards/components/cards";
@@ -21,33 +20,24 @@ export const FeaturedStylesShowcase = ({
 }) => {
   const { resolvedTheme } = useTheme();
   const containerRef = React.useRef<HTMLDivElement>(null);
-  const [currentStyleName, setCurrentStyleName] = React.useState<string>(
-    styles[0]!.name,
-  );
+  const [styleQueue, setStyleQueue] = React.useState(styles);
   const ref = React.useRef(null);
   const isInView = useInView(ref);
   const [touched, setTouched] = React.useState<boolean>(false);
   const isMounted = useMounted();
 
   const currentStyle = React.useMemo(() => {
-    return styles.find((style) => style.name === currentStyleName)!;
-  }, [currentStyleName, styles]);
+    return styleQueue[0]!;
+  }, [styleQueue]);
 
   React.useEffect(() => {
     const interval = setInterval(() => {
       if (touched || !isInView) return;
-      const currentIndex = styles.findIndex(
-        (style) => style.name === currentStyleName,
-      );
-      const nextIndex = (currentIndex + 1) % styles.length;
-      const nextStyle = styles[nextIndex];
-      if (nextStyle) {
-        setCurrentStyleName(nextStyle.name);
-      }
-    }, 5000);
+      setStyleQueue((prev) => [...prev.slice(1), prev[0]!]);
+    }, 4000);
 
     return () => clearInterval(interval);
-  }, [currentStyleName, touched, isInView, styles]);
+  }, [touched, isInView]);
 
   return (
     <>
@@ -62,9 +52,12 @@ export const FeaturedStylesShowcase = ({
           <Tabs
             ref={ref}
             variant="solid"
-            selectedKey={currentStyleName}
+            selectedKey={styleQueue[0]?.name}
             onSelectionChange={(key) => {
-              setCurrentStyleName(key as string);
+              const clickedStyle = styles.find((s) => s.name === key);
+              if (!clickedStyle) return;
+              const remaining = styleQueue.filter((s) => s.name !== key);
+              setStyleQueue([clickedStyle, ...remaining]);
               setTouched(true);
             }}
           >
@@ -83,70 +76,74 @@ export const FeaturedStylesShowcase = ({
             </TabList>
           </Tabs>
         </div>
-        <StyleProvider
-          style={isMounted ? currentStyle : undefined}
-          mode={resolvedTheme as "light" | "dark" | undefined}
-          className="relative min-h-96 w-full overflow-hidden rounded-xl border bg-bg shadow-md"
-        >
-          <PortalProvider getContainer={() => containerRef.current}>
-            <AnimatePresence mode="popLayout">
-              <motion.div
-                key={currentStyleName}
-                variants={variants}
-                initial="hidden"
-                animate="show"
-                exit="hidden"
-                className="max-lg:hidden"
-              >
-                <Cards />
-              </motion.div>
-            </AnimatePresence>
-          </PortalProvider>
-          <Image
-            src={`/images/showcase/${currentStyleName}-light.png`}
-            alt={currentStyleName}
-            width={1200}
-            height={900}
-            className="block max-sm:hidden lg:hidden! dark:hidden"
-          />
-          <Image
-            src={`/images/showcase/${currentStyleName}-dark.png`}
-            alt={currentStyleName}
-            width={1200}
-            height={900}
-            className="hidden lg:hidden! dark:sm:block"
-          />
-          <Image
-            src={`/images/showcase/${currentStyleName}-light-mobile.png`}
-            alt={currentStyleName}
-            width={1200}
-            height={900}
-            className="block sm:hidden lg:hidden! dark:hidden"
-          />
-          <Image
-            src={`/images/showcase/${currentStyleName}-dark-mobile.png`}
-            alt={currentStyleName}
-            width={1200}
-            height={900}
-            className="hidden lg:hidden! max-sm:dark:block"
-          />
-        </StyleProvider>
+        <div className="relative pr-24 pb-24">
+          <div className="relative w-full rounded-xl shadow-md">
+            <PortalProvider getContainer={() => containerRef.current}>
+              {styleQueue.map((style, index) => (
+                <motion.div
+                  key={style.name}
+                  initial={{ 
+                    x: index * 24,
+                    y: index * 24,
+                   }}
+                  animate={{
+                    x: index * 24,
+                    y: index * 24,
+                    zIndex: styleQueue.length - index,
+                  }}
+                  exit={{ scale: 0.95 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 200,
+                    damping: 25,
+                  }}
+                  className={
+                    index === 0
+                      ? "relative max-lg:hidden"
+                      : "absolute inset-0 max-lg:hidden"
+                  }
+                >
+                  <StyleProvider
+                    style={isMounted ? style : undefined}
+                    mode={resolvedTheme as "light" | "dark" | undefined}
+                    className="h-full w-full overflow-hidden rounded-xl border bg-bg shadow-md"
+                  >
+                    <Cards />
+                  </StyleProvider>
+                </motion.div>
+              ))}
+            </PortalProvider>
+            {/* <Image
+              src={`/images/showcase/${styleQueue[0]!.name}-light.png`}
+              alt={styleQueue[0]!.name}
+              width={1200}
+              height={900}
+              className="block max-sm:hidden lg:hidden! dark:hidden"
+            />
+            <Image
+              src={`/images/showcase/${styleQueue[0]!.name}-dark.png`}
+              alt={styleQueue[0]!.name}
+              width={1200}
+              height={900}
+              className="hidden lg:hidden! dark:sm:block"
+            />
+            <Image
+              src={`/images/showcase/${styleQueue[0]!.name}-light-mobile.png`}
+              alt={styleQueue[0]!.name}
+              width={1200}
+              height={900}
+              className="block sm:hidden lg:hidden! dark:hidden"
+            />
+            <Image
+              src={`/images/showcase/${styleQueue[0]!.name}-dark-mobile.png`}
+              alt={styleQueue[0]!.name}
+              width={1200}
+              height={900}
+              className="hidden lg:hidden! max-sm:dark:block"
+            /> */}
+          </div>
+        </div>
       </div>
     </>
   );
-};
-
-const variants: Variants = {
-  hidden: {
-    opacity: 0,
-  },
-  show: {
-    opacity: 1,
-    transition: {
-      type: "spring",
-      stiffness: 150,
-      damping: 19,
-      mass: 1.2,
-    },
-  },
 };
