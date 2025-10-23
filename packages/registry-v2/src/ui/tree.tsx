@@ -67,14 +67,14 @@ const TreeItemContent = (props: TreeItemContentProps) => {
       }) => (
         <>
           {allowsDragging && (
-            <Button slot="drag" variant="quiet" shape="square" size="sm">
+            <Button slot="drag" variant="quiet" size="sm">
               <GripVertical size={18} />
             </Button>
           )}
           {selectionBehavior === "toggle" && selectionMode !== "none" && (
             <Checkbox slot="selection" />
           )}
-          <Button slot="chevron" variant="quiet" shape="square" size="sm">
+          <Button slot="chevron" variant="quiet" size="sm">
             <ChevronRightIcon />
           </Button>
           {props.children}

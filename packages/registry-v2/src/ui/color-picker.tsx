@@ -21,13 +21,20 @@ import { ColorSlider } from "@dotui/registry-v2/ui/color-slider";
 import { ColorSwatch } from "@dotui/registry-v2/ui/color-swatch";
 import { Dialog, DialogContent } from "@dotui/registry-v2/ui/dialog";
 import { Overlay } from "@dotui/registry-v2/ui/overlay";
-import { Select, SelectItem } from "@dotui/registry-v2/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "@dotui/registry-v2/ui/select";
 import type { ButtonProps } from "@dotui/registry-v2/ui/button";
 import type {
   DialogProps,
   DialogRootProps,
 } from "@dotui/registry-v2/ui/dialog";
 import type { OverlayProps } from "@dotui/registry-v2/ui/overlay";
+
+import { Input } from "./input";
 
 interface ColorPickerProps
   extends Omit<ColorPickerRootProps, "children">,
@@ -235,27 +242,31 @@ const ColorPickerEditor = ({
             aria-label="Color format"
             value={colorFormat}
             onChange={(key) => setColorFormat(key as ColorPickerColorFormat)}
-            size="sm"
             className="w-auto"
           >
-            <SelectItem id="hex">Hex</SelectItem>
-            <SelectItem id="rgb">RGB</SelectItem>
-            <SelectItem id="hsl">HSL</SelectItem>
-            <SelectItem id="hsb">HSB</SelectItem>
+            <SelectTrigger size="sm" />
+            <SelectContent>
+              <SelectItem id="hex">Hex</SelectItem>
+              <SelectItem id="rgb">RGB</SelectItem>
+              <SelectItem id="hsl">HSL</SelectItem>
+              <SelectItem id="hsb">HSB</SelectItem>
+            </SelectContent>
           </Select>
         )}
         <div className="flex flex-1 items-center gap-2">
           {colorFormat === "hex" ? (
-            <ColorField aria-label="Hex" className="w-10 flex-1" size="sm" />
+            <ColorField aria-label="Hex">
+              <Input size="sm" className="w-10 flex-1" />
+            </ColorField>
           ) : (
             getColorChannels(colorFormat).map((channel) => (
               <ColorField
                 key={channel}
                 colorSpace={colorFormat}
                 channel={channel}
-                className="w-10 flex-1"
-                size="sm"
-              />
+              >
+                <Input size="sm" className="w-10 flex-1" />
+              </ColorField>
             ))
           )}
         </div>

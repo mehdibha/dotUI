@@ -18,29 +18,8 @@ import {
   SwitchIndicator,
   SwitchThumb,
 } from "@dotui/registry-v2/ui/switch";
-import { ToggleButton } from "@dotui/registry-v2/ui/toggle-button";
-
-import { ThemeModeSwitch } from "@/components/ui/theme-mode-switch";
 import { TableOfContents } from "@/modules/docs/components/toc";
-import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
-import { ActiveStyleSelector } from "@/modules/styles/components/active-style-selector";
 import * as demos from "./demos";
-import { ButtonDemo } from "./demos/button-demo";
-import { ButtonGroupDemo } from "./demos/button-group-demo";
-import { CheckboxDemo } from "./demos/checkbox-demo";
-import { FieldDemo } from "./demos/field-demo";
-import { FileTriggerDemo } from "./demos/file-trigger-demo";
-import { InputDemo } from "./demos/input-demo";
-import { InputGroupDemo } from "./demos/input-group-demo";
-import { NumberFieldDemo } from "./demos/number-field-demo";
-import { SearchFieldDemo } from "./demos/search-field-demo";
-import { SliderDemo } from "./demos/slider-demo";
-import { SwitchDemo } from "./demos/switch-demo";
-import { TextAreaDemo } from "./demos/text-area-demo";
-import { TextFieldDemo } from "./demos/text-field-demo";
-import { ToggleButtonDemo } from "./demos/toggle-button-demo";
-import { ToggleButtonGroupDemo } from "./demos/toggle-button-group-demo";
-import { ThemeSwitcher } from "./theme-switcher";
 
 interface ContentItem {
   id: string;
@@ -64,27 +43,27 @@ const content: ContentSection[] = [
       {
         id: "button",
         title: "Button",
-        preview: ButtonDemo,
+        preview: demos.ButtonDemo,
       },
       {
         id: "toggle-button",
         title: "ToggleButton",
-        preview: ToggleButtonDemo,
+        preview: demos.ToggleButtonDemo,
       },
       {
         id: "toggle-button-group",
         title: "ToggleButtonGroup",
-        preview: ToggleButtonGroupDemo,
+        preview: demos.ToggleButtonGroupDemo,
       },
       {
         id: "file-trigger",
         title: "FileTrigger",
-        preview: FileTriggerDemo,
+        preview: demos.FileTriggerDemo,
       },
       {
         id: "button-group",
         title: "ButtonGroup",
-        preview: ButtonGroupDemo,
+        preview: demos.ButtonGroupDemo,
       },
     ],
   },
@@ -96,38 +75,38 @@ const content: ContentSection[] = [
       {
         id: "input",
         title: "Input",
-        preview: InputDemo,
+        preview: demos.InputDemo,
       },
       {
         id: "text-area",
         title: "TextArea",
-        preview: TextAreaDemo,
+        preview: demos.TextAreaDemo,
       },
       {
         id: "input-group",
         title: "InputGroup",
-        preview: InputGroupDemo,
+        preview: demos.InputGroupDemo,
       },
       {
         id: "text-field",
         title: "TextField",
-        preview: TextFieldDemo,
+        preview: demos.TextFieldDemo,
       },
       {
         id: "search-field",
         title: "SearchField",
-        preview: SearchFieldDemo,
+        preview: demos.SearchFieldDemo,
       },
       {
         id: "number-field",
         title: "NumberField",
-        preview: NumberFieldDemo,
+        preview: demos.NumberFieldDemo,
       },
       // TODO
       {
         id: "checkbox",
         title: "Checkbox & CheckboxGroup",
-        preview: CheckboxDemo,
+        preview: demos.CheckboxDemo,
         controls: [
           [CheckboxGroupContext, ["isDisabled", "isInvalid"]],
           [CheckboxContext, ["isDisabled", "isInvalid"]],
@@ -143,18 +122,18 @@ const content: ContentSection[] = [
       {
         id: "switch",
         title: "Switch",
-        preview: SwitchDemo,
+        preview: demos.SwitchDemo,
         controls: [[SwitchContext, ["isDisabled", "isReadOnly"]]],
       },
       {
         id: "slider",
         title: "Slider",
-        preview: SliderDemo,
+        preview: demos.SliderDemo,
       },
       {
         id: "field",
         title: "Field",
-        preview: FieldDemo,
+        preview: demos.FieldDemo,
       },
       {
         id: "form",
@@ -260,20 +239,10 @@ const content: ContentSection[] = [
         preview: demos.ListBoxDemo,
       },
       {
-        id: "grid-list",
-        title: "GridList",
-        preview: demos.GridListDemo,
-      },
-      {
         id: "tag-group",
         title: "TagGroup",
         preview: demos.TagGroupDemo,
       },
-      // {
-      //   id: "tree",
-      //   title: "Tree",
-      //   preview: demos.TreeDemo,
-      // },
     ],
   },
 
@@ -545,46 +514,51 @@ const Section = ({
         </h3>
       </div>
       {description && <p className="text-sm text-fg-muted">{description}</p>}
-      <div
-        className={cn("relative rounded-lg border bg-bg p-6 pt-12", className)}
-      >
-        <div className="absolute top-4 right-4 flex gap-8 text-sm text-fg-muted">
-          {uniqueProps.map((prop) => (
+        <div
+          className={cn(
+            "relative rounded-lg border bg-bg p-6 pt-12",
+            className,
+          )}
+        >
+          <div className="absolute top-4 right-4 flex gap-8 text-sm text-fg-muted">
+            {uniqueProps.map((prop) => (
+              <Switch
+                key={prop}
+                size="sm"
+                isSelected={controlStates[prop]}
+                onChange={(value) => handlePropertyToggle(prop, value)}
+                className="flex-row-reverse gap-1"
+              >
+                <SwitchIndicator>
+                  <SwitchThumb />
+                </SwitchIndicator>
+                <Label>{prop}</Label>
+              </Switch>
+            ))}
             <Switch
-              key={prop}
               size="sm"
-              isSelected={controlStates[prop]}
-              onChange={(value) => handlePropertyToggle(prop, value)}
+              isSelected={isLoading}
+              onChange={setIsLoading}
               className="flex-row-reverse gap-1"
             >
               <SwitchIndicator>
                 <SwitchThumb />
               </SwitchIndicator>
-              <Label>{prop}</Label>
+              <Label>Skeleton</Label>
             </Switch>
-          ))}
-          <Switch
-            size="sm"
-            isSelected={isLoading}
-            onChange={setIsLoading}
-            className="flex-row-reverse gap-1"
-          >
-            <SwitchIndicator>
-              <SwitchThumb />
-            </SwitchIndicator>
-            <Label>Skeleton</Label>
-          </Switch>
-        </div>
-        {controls ? (
-          <Provider values={providerValues}>
+          </div>
+          {controls ? (
+            <Provider values={providerValues}>
+              <SkeletonProvider isLoading={isLoading}>
+                {children}
+              </SkeletonProvider>
+            </Provider>
+          ) : (
             <SkeletonProvider isLoading={isLoading}>
               {children}
             </SkeletonProvider>
-          </Provider>
-        ) : (
-          <SkeletonProvider isLoading={isLoading}>{children}</SkeletonProvider>
-        )}
-      </div>
+          )}
+        </div>
     </div>
   );
 };

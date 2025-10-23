@@ -80,7 +80,6 @@ interface PaginationLinkProps
 function PaginationLink({
   className,
   isActive,
-  shape = "square",
   size = "md",
   ...props
 }: PaginationLinkProps) {
@@ -88,11 +87,11 @@ function PaginationLink({
     <AriaLink
       aria-current={isActive ? "page" : undefined}
       data-slot="pagination-link"
+      data-icon-only
       className={composeRenderProps(className, (cn) =>
         buttonStyles({
           variant: isActive ? "default" : "quiet",
           size,
-          shape,
           className: link({ className: cn }),
         }),
       )}
@@ -107,10 +106,10 @@ function PaginationPrevious({ className, ...props }: PaginationLinkProps) {
   return (
     <PaginationLink
       aria-label="Go to previous page"
-      shape="rectangle"
       className={composeRenderProps(className, (cn) =>
         previous({ className: cn }),
       )}
+      data-icon-only={undefined}
       {...props}
     >
       <ChevronLeftIcon />
@@ -125,8 +124,8 @@ function PaginationNext({ className, ...props }: PaginationLinkProps) {
   return (
     <PaginationLink
       aria-label="Go to next page"
-      shape="rectangle"
       className={composeRenderProps(className, (cn) => next({ className: cn }))}
+      data-icon-only={undefined}
       {...props}
     >
       <span className="hidden sm:block">Next</span>

@@ -130,11 +130,11 @@ const Calendar = <T extends DateValue>({
       {({ isInvalid }) => (
         <>
           <CalendarHeader>
-            <Button slot="previous" variant="default" shape="square" size="sm">
+            <Button slot="previous" variant="default" size="sm">
               <ChevronLeftIcon />
             </Button>
             <AriaHeading className="text-sm font-medium" />
-            <Button slot="next" variant="default" shape="square" size="sm">
+            <Button slot="next" variant="default" size="sm">
               <ChevronRightIcon />
             </Button>
           </CalendarHeader>
@@ -180,11 +180,11 @@ const RangeCalendar = <T extends DateValue>({
       {({ isInvalid }) => (
         <>
           <CalendarHeader>
-            <Button slot="previous" variant="default" shape="square" size="sm">
+            <Button slot="previous" variant="default" size="sm">
               <ChevronLeftIcon />
             </Button>
             <AriaHeading className="text-sm font-medium" />
-            <Button slot="next" variant="default" shape="square" size="sm">
+            <Button slot="next" variant="default" size="sm">
               <ChevronRightIcon />
             </Button>
           </CalendarHeader>

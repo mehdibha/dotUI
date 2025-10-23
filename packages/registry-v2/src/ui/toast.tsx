@@ -86,7 +86,7 @@ const Toaster = () => {
           <Button
             slot="close"
             variant="quiet"
-            shape="square"
+            aspect="square"
             size="sm"
             aria-label="Close"
             className={close()}

@@ -25,7 +25,7 @@ import { createContext } from "../lib/utils";
 const inputStyles = tv({
   slots: {
     group: [
-      "group/input-group w-48 transition-[border-color,box-shadow]",
+      "group/input-group transition-[border-color,box-shadow]",
       "flex cursor-text items-center rounded-md border border-border-field bg-neutral text-base shadow-xs sm:text-sm",
 
       "gap-2 has-[>input]:px-3 has-[>input]:py-1 has-[>textarea]:py-2 has-[>textarea]:[&_[data-slot=input-addon]]:w-full has-[>textarea]:[&_[data-slot=input-addon]]:px-2",
