@@ -1,5 +1,5 @@
 {
   "extends": "@dotui/ts-config/base.json",
-  "include": ["src", "*.ts"],
+  "include": ["src", "*.ts", "eslint.config.js"],
   "exclude": ["node_modules"]
 }

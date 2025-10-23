@@ -10,7 +10,7 @@
     "typegen": "pnpm with-env next typegen",
     "format": "prettier --check . --ignore-path ../.gitignore",
     "format:fix": "prettier --write . --ignore-path ../.gitignore",
-    "lint": "eslint --flag unstable_native_nodejs_ts_config",
+    "lint": "eslint",
     "preview": "next build && next start",
     "start": "pnpm with-env next start --port 4444",
     "typecheck": "pnpm with-env next typegen && tsc --noEmit",
