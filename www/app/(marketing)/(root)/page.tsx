@@ -32,23 +32,22 @@ export default async function HomePage() {
   return (
     <div>
       {/* Hero section */}
-      <section className="container flex flex-col items-center pt-18">
-        <div className="flex max-w-5xl flex-col items-center">
+      <section className="container flex flex-col items-center pt-10 sm:pt-18">
+        <div className="flex max-w-5xl flex-col items-center gap-3 sm:gap-4">
           <Announcement />
-          <h1 className="mt-4 text-center text-2xl tracking-tighter max-lg:font-medium xs:text-3xl md:text-4xl lg:text-5xl">
+          <h1 className="text-center text-3xl tracking-tighter max-lg:font-medium md:text-4xl lg:text-5xl text-balance">
             Build your design system with a{" "}
             <span className="font-bold italic">unique</span> look.
           </h1>
-          <p className="mt-4 text-center text-lg text-fg-muted">
-            Beautiful components, accessibility by default, composition, and
-            more, all powered
-            <br /> by <AdobeIcon className="size-4 inline-flex" />{" "}
+          <p className="text-center text-base sm:text-lg text-fg-muted text-balance">
+            Beautiful components in any style you want, accessibility by
+            default, composition, and more, all powered by{" "}
+            <AdobeIcon className="size-4 inline-flex" />{" "}
             <span className="font-medium">react-aria-components</span> and{" "}
             <ShadcnIcon className="size-5 inline-flex " />{" "}
-            <span className="font-medium">shadcn CLI</span> - Ready to make your
-            product stand out.
+            <span className="font-medium">shadcn CLI</span>.
           </p>
-          <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
+          <div className="flex flex-col w-full sm:w-auto gap-2 sm:flex-row sm:items-center sm:gap-4">
             <Button href="/docs" variant="primary" size="lg" className="h-10">
               Get started
             </Button>

@@ -105,8 +105,12 @@ export const FeaturedStylesShowcase = ({
                     style={{
                       transform: `translateY(${position * ((position - 10) / 5) * 12}px) scale(${1 - position * 0.1})`,
                       transformOrigin: "top center",
-                      opacity: isVisible ? 1 : 0,
-                      filter: isVisible ? "blur(0px)" : "blur(8px)",
+                      opacity: isMounted ? (isVisible ? 1 : 0) : 0,
+                      filter: isMounted
+                        ? isVisible
+                          ? "blur(0px)"
+                          : "blur(8px)"
+                        : "blur(8px)",
                       pointerEvents: isFront ? "auto" : "none",
                       zIndex: visibleCards - position,
                     }}
