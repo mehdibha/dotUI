@@ -36,6 +36,7 @@ export const FeaturedStylesShowcase = ({
   }, [currentIndex, styles]);
 
   const [isMounted, setIsMounted] = React.useState(false);
+  const [hasInitiallyAnimated, setHasInitiallyAnimated] = React.useState(false);
 
   React.useEffect(() => {
     // First rAF: ensures initial render is painted
@@ -43,9 +44,17 @@ export const FeaturedStylesShowcase = ({
       // Second rAF: ensures we're in the next frame
       requestAnimationFrame(() => {
         setIsMounted(true);
+        // Mark that initial animation has started
+        // After the animation completes (600ms duration + max delay)
+        setTimeout(
+          () => {
+            setHasInitiallyAnimated(true);
+          },
+          600 + visibleCards * 50,
+        ); // duration + max delay
       });
     });
-  }, []);
+  }, [visibleCards]);
 
   React.useEffect(() => {
     const interval = setInterval(() => {
@@ -109,9 +118,11 @@ export const FeaturedStylesShowcase = ({
                       transform: isMounted
                         ? `translateY(${position * ((position - 10) / 5) * 12}px) scale(${1 - position * 0.1})`
                         : `translateY(${position * ((position - 10) / 5) * 12}px) scale(${1 - 0.05 - position * 0.1})`,
-                      transitionDelay: `${position * 50}ms`,
+                      transitionDelay: hasInitiallyAnimated
+                        ? "0ms"
+                        : `${position * 50}ms`,
                       transformOrigin: "top center",
-                      opacity: isMounted ? (isVisible ? 1 : 0) : 1,
+                      opacity: isVisible ? 1 : 0,
                       filter: isVisible ? "blur(0px)" : "blur(8px)",
                       pointerEvents: isFront ? "auto" : "none",
                       zIndex: visibleCards - position,
