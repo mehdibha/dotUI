@@ -44,7 +44,7 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "peerDependencies": {
-    "@hookform/resolvers": "^5.1.1",
+    "@hookform/resolvers": "^5.2.2",
     "@internationalized/date": "^3.10.0",
     "@react-stately/utils": "^3.10.8",
     "@remixicon/react": "^4.2.0",

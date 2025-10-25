@@ -23,7 +23,7 @@
     "@dotui/registry": "workspace:*",
     "@dotui/registry-v2": "workspace:*",
     "@fumadocs/mdx-remote": "^1.4.0",
-    "@hookform/resolvers": "^5.1.1",
+    "@hookform/resolvers": "^5.2.2",
     "@internationalized/date": "^3.10.0",
     "@radix-ui/react-collapsible": "^1.0.3",
     "@radix-ui/react-scroll-area": "^1.0.5",
