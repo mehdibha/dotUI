@@ -17,6 +17,12 @@
       "!**/.source"
     ]
   },
+  "css": {
+    "enabled": false,
+    "parser": {
+      "tailwindDirectives": false
+    }
+  },
   "formatter": {
     "enabled": true,
     "indentStyle": "space",
@@ -34,7 +40,6 @@
         "useIterableCallbackReturn": "warn"
       },
       "correctness": {
-        "noInvalidPositionAtImportRule": "off",
         "useExhaustiveDependencies": "warn"
       },
       "complexity": {

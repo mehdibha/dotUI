@@ -31,18 +31,21 @@ export const FeaturedStylesShowcase = ({
     amount: "all",
   });
 
-  const isMounted = useMounted();
-
   const currentStyle = React.useMemo(() => {
     return styles[currentIndex % styles.length];
   }, [currentIndex, styles]);
 
+  const [isMounted, setIsMounted] = React.useState(false);
+
   React.useEffect(() => {
-    const timeout = setTimeout(() => {
-      setDelayedIndex(currentIndex);
-    }, 600);
-    return () => clearTimeout(timeout);
-  }, [currentIndex]);
+    // First rAF: ensures initial render is painted
+    requestAnimationFrame(() => {
+      // Second rAF: ensures we're in the next frame
+      requestAnimationFrame(() => {
+        setIsMounted(true);
+      });
+    });
+  }, []);
 
   React.useEffect(() => {
     const interval = setInterval(() => {
@@ -103,14 +106,13 @@ export const FeaturedStylesShowcase = ({
                       "w-full transition-[opacity,transform,filter] duration-600 will-change-[transform,opacity,filter]",
                     )}
                     style={{
-                      transform: `translateY(${position * ((position - 10) / 5) * 12}px) scale(${1 - position * 0.1})`,
+                      transform: isMounted
+                        ? `translateY(${position * ((position - 10) / 5) * 12}px) scale(${1 - position * 0.1})`
+                        : `translateY(${position * ((position - 10) / 5) * 12}px) scale(${1 - 0.05 - position * 0.1})`,
+                      transitionDelay: `${position * 50}ms`,
                       transformOrigin: "top center",
-                      opacity: isMounted ? (isVisible ? 1 : 0) : 0,
-                      filter: isMounted
-                        ? isVisible
-                          ? "blur(0px)"
-                          : "blur(8px)"
-                        : "blur(8px)",
+                      opacity: isMounted ? (isVisible ? 1 : 0) : 1,
+                      filter: isVisible ? "blur(0px)" : "blur(8px)",
                       pointerEvents: isFront ? "auto" : "none",
                       zIndex: visibleCards - position,
                     }}

@@ -1,19 +1,16 @@
 @import "tailwindcss";
-@source "../../packages/registry/src//**/*.{ts,tsx}";
-@source "../../packages/registry-v2/src//**/*.{ts,tsx}";
-@source "../**/*.{ts,tsx}";
-
 @import "tw-animate-css";
-
 @plugin "tailwindcss-react-aria-components";
 @plugin "tailwindcss-autocontrast";
 @plugin "@tailwindcss/typography";
-
+@import "@dotui/registry/lib/focus-styles.css";
 @import "./base.css";
 @import "./theme.css";
 @import "./animations.css";
 @import "./docs.css";
-@import "@dotui/registry/lib/focus-styles.css";
+@source "../../packages/registry/src//**/*.{ts,tsx}";
+@source "../../packages/registry-v2/src//**/*.{ts,tsx}";
+@source "../**/*.{ts,tsx}";
 
 /* Radius */
 :root {
