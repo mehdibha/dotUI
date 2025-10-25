@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useInView } from "motion/react";
+import { motion, useInView } from "motion/react";
 import { useTheme } from "next-themes";
 
 import { StyleProvider } from "@dotui/registry";
@@ -10,7 +10,26 @@ import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs/motion";
 import { cn } from "@dotui/registry-v2/lib/utils";
 import type { RouterOutputs } from "@dotui/api";
 
-import { useMounted } from "@/hooks/use-mounted";
+// Create motion-enabled TabPanel
+const MotionTabPanel = motion.create(TabPanel);
+
+// Animation variants for card stack
+const cardVariants = {
+  initial: (position: number) => ({
+    y: position * ((position - 10) / 5) * 12,
+    scale: 1 - 0.05 - position * 0.1,
+  }),
+  animate: (position: number) => ({
+    y: position * ((position - 10) / 5) * 12,
+    scale: 1 - position * 0.1,
+    opacity: 1,
+    filter: "blur(0px)",
+  }),
+  exit: {
+    opacity: 0,
+    filter: "blur(8px)",
+  },
+};
 
 export const FeaturedStylesShowcase = ({
   styles,
@@ -22,8 +41,8 @@ export const FeaturedStylesShowcase = ({
   const { resolvedTheme } = useTheme();
   const containerRef = React.useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = React.useState(0);
-  const [delayedIndex, setDelayedIndex] = React.useState(0);
   const [touched, setTouched] = React.useState(false);
+  const hasAnimated = React.useRef(false);
   const viewRef = React.useRef(null);
   const inView = useInView(viewRef, {
     initial: true,
@@ -35,25 +54,17 @@ export const FeaturedStylesShowcase = ({
     return styles[currentIndex % styles.length];
   }, [currentIndex, styles]);
 
-  const [isMounted, setIsMounted] = React.useState(false);
-  const [hasInitiallyAnimated, setHasInitiallyAnimated] = React.useState(false);
-
+  // Mark as animated after initial render
   React.useEffect(() => {
-    // First rAF: ensures initial render is painted
-    requestAnimationFrame(() => {
-      // Second rAF: ensures we're in the next frame
-      requestAnimationFrame(() => {
-        setIsMounted(true);
-        // Mark that initial animation has started
-        // After the animation completes (600ms duration + max delay)
-        setTimeout(
-          () => {
-            setHasInitiallyAnimated(true);
-          },
-          600 + visibleCards * 50,
-        ); // duration + max delay
-      });
-    });
+    if (!hasAnimated.current) {
+      const timer = setTimeout(
+        () => {
+          hasAnimated.current = true;
+        },
+        600 + visibleCards * 50,
+      ); // duration + max stagger delay
+      return () => clearTimeout(timer);
+    }
   }, [visibleCards]);
 
   React.useEffect(() => {
@@ -69,7 +80,7 @@ export const FeaturedStylesShowcase = ({
       <StyleProvider
         ref={containerRef}
         unstyled
-        style={isMounted ? currentStyle : undefined}
+        style={currentStyle}
         mode={resolvedTheme as "light" | "dark" | undefined}
       />
       <div ref={viewRef} className="flex flex-col gap-30">
@@ -102,28 +113,28 @@ export const FeaturedStylesShowcase = ({
               {[...styles, ...styles].map((style, index) => {
                 // Calculate position relative to current view
                 const position = index - currentIndex;
-                const delayedPosition = index - delayedIndex;
                 const isVisible = position >= 0 && position < visibleCards;
                 const isFront = position === 0;
 
                 return (
-                  <TabPanel
+                  <MotionTabPanel
                     key={`${style.name}-${index}`}
                     id={style.name}
                     className={cn(
                       isFront ? "relative" : "absolute inset-0",
-                      "w-full transition-[opacity,transform,filter] duration-600 will-change-[transform,opacity,filter]",
+                      "w-full",
                     )}
+                    variants={cardVariants}
+                    initial="initial"
+                    animate={isVisible ? "animate" : "exit"}
+                    custom={position}
+                    transition={{
+                      duration: 0.6,
+                      delay: hasAnimated.current ? 0 : position * 0.05,
+                      ease: [0.4, 0, 0.2, 1],
+                    }}
                     style={{
-                      transform: isMounted
-                        ? `translateY(${position * ((position - 10) / 5) * 12}px) scale(${1 - position * 0.1})`
-                        : `translateY(${position * ((position - 10) / 5) * 12}px) scale(${1 - 0.05 - position * 0.1})`,
-                      transitionDelay: hasInitiallyAnimated
-                        ? "0ms"
-                        : `${position * 50}ms`,
                       transformOrigin: "top center",
-                      opacity: isVisible ? 1 : 0,
-                      filter: isVisible ? "blur(0px)" : "blur(8px)",
                       pointerEvents: isFront ? "auto" : "none",
                       zIndex: visibleCards - position,
                     }}
@@ -143,10 +154,10 @@ export const FeaturedStylesShowcase = ({
                         />
                       )}
                       <div className="rounded-[inherit] border h-full">
-                        {(delayedPosition === 0 || position === 0) && <Cards />}
+                        {position === 0 && <Cards />}
                       </div>
                     </StyleProvider>
-                  </TabPanel>
+                  </MotionTabPanel>
                 );
               })}
             </div>
