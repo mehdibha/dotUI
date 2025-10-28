@@ -1,7 +1,16 @@
 "use client";
 
 import { Button } from "@dotui/registry-v2/ui/button";
-import { Dialog } from "@dotui/registry-v2/ui/dialog";
+import {
+  Dialog,
+  DialogBody,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogHeading,
+} from "@dotui/registry-v2/ui/dialog";
+import { Drawer } from "@dotui/registry-v2/ui/drawer";
 import { Label } from "@dotui/registry-v2/ui/field";
 import { Input } from "@dotui/registry-v2/ui/input";
 import { TextField } from "@dotui/registry-v2/ui/text-field";
@@ -18,15 +27,15 @@ export function DrawerDemo() {
             >
               {placement}
             </Button>
-            <Dialog.Drawer placement={placement}>
-              <Dialog.Content>
-                <Dialog.Header>
-                  <Dialog.Heading>Dimensions</Dialog.Heading>
-                  <Dialog.Description>
+            <Drawer placement={placement}>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogHeading>Dimensions</DialogHeading>
+                  <DialogDescription>
                     Set the dimensions for the layer.
-                  </Dialog.Description>
-                </Dialog.Header>
-                <Dialog.Body>
+                  </DialogDescription>
+                </DialogHeader>
+                <DialogBody>
                   <TextField>
                     <Label>Width</Label>
                     <Input />
@@ -35,13 +44,13 @@ export function DrawerDemo() {
                     <Label>Height</Label>
                     <Input />
                   </TextField>
-                </Dialog.Body>
-                <Dialog.Footer>
+                </DialogBody>
+                <DialogFooter>
                   <Button slot="close">Cancel</Button>
                   <Button variant="primary">Apply</Button>
-                </Dialog.Footer>
-              </Dialog.Content>
-            </Dialog.Drawer>
+                </DialogFooter>
+              </DialogContent>
+            </Drawer>
           </Dialog>
         ))}
       </div>

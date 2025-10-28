@@ -1,9 +1,19 @@
 "use client";
 
 import { Button } from "@dotui/registry-v2/ui/button";
-import { Dialog } from "@dotui/registry-v2/ui/dialog";
+import {
+  Dialog,
+  DialogBody,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogHeading,
+  DialogInset,
+} from "@dotui/registry-v2/ui/dialog";
 import { Label } from "@dotui/registry-v2/ui/field";
 import { Input } from "@dotui/registry-v2/ui/input";
+import { Popover } from "@dotui/registry-v2/ui/popover";
 import { TextField } from "@dotui/registry-v2/ui/text-field";
 
 export function PopoverDemo() {
@@ -13,15 +23,15 @@ export function PopoverDemo() {
         {/* Basic popover */}
         <Dialog>
           <Button>Open popover</Button>
-          <Dialog.Popover>
-            <Dialog.Content>
-              <Dialog.Header>
-                <Dialog.Heading>Dimensions</Dialog.Heading>
-                <Dialog.Description>
+          <Popover>
+            <DialogContent>
+              <DialogHeader>
+                <DialogHeading>Dimensions</DialogHeading>
+                <DialogDescription>
                   Set the dimensions for the layer.
-                </Dialog.Description>
-              </Dialog.Header>
-              <Dialog.Body>
+                </DialogDescription>
+              </DialogHeader>
+              <DialogBody>
                 <TextField defaultValue="100%" className="w-full">
                   <Label>Width</Label>
                   <Input />
@@ -30,23 +40,23 @@ export function PopoverDemo() {
                   <Label>Height</Label>
                   <Input />
                 </TextField>
-              </Dialog.Body>
-            </Dialog.Content>
-          </Dialog.Popover>
+              </DialogBody>
+            </DialogContent>
+          </Popover>
         </Dialog>
 
         {/* Popover with actions */}
         <Dialog>
           <Button>Actions</Button>
-          <Dialog.Popover>
-            <Dialog.Content>
-              <Dialog.Header>
-                <Dialog.Heading>Dimensions</Dialog.Heading>
-                <Dialog.Description>
+          <Popover>
+            <DialogContent>
+              <DialogHeader>
+                <DialogHeading>Dimensions</DialogHeading>
+                <DialogDescription>
                   Set the dimensions for the layer.
-                </Dialog.Description>
-              </Dialog.Header>
-              <Dialog.Body>
+                </DialogDescription>
+              </DialogHeader>
+              <DialogBody>
                 <TextField>
                   <Label>Width</Label>
                   <Input />
@@ -55,49 +65,49 @@ export function PopoverDemo() {
                   <Label>Height</Label>
                   <Input />
                 </TextField>
-              </Dialog.Body>
-              <Dialog.Footer>
+              </DialogBody>
+              <DialogFooter>
                 <Button slot="close" size="sm">
                   Cancel
                 </Button>
                 <Button variant="primary" size="sm">
                   Apply
                 </Button>
-              </Dialog.Footer>
-            </Dialog.Content>
-          </Dialog.Popover>
+              </DialogFooter>
+            </DialogContent>
+          </Popover>
         </Dialog>
 
         {/* Popover with inset content */}
         <Dialog>
           <Button>Inset</Button>
-          <Dialog.Popover>
-            <Dialog.Content>
-              <Dialog.Header>
-                <Dialog.Heading>Dimensions</Dialog.Heading>
-                <Dialog.Description>
+          <Popover>
+            <DialogContent>
+              <DialogHeader>
+                <DialogHeading>Dimensions</DialogHeading>
+                <DialogDescription>
                   Set the dimensions for the layer.
-                </Dialog.Description>
-              </Dialog.Header>
-              <Dialog.Body>
-                <Dialog.Inset>hello world</Dialog.Inset>
-              </Dialog.Body>
-            </Dialog.Content>
-          </Dialog.Popover>
+                </DialogDescription>
+              </DialogHeader>
+              <DialogBody>
+                <DialogInset>hello world</DialogInset>
+              </DialogBody>
+            </DialogContent>
+          </Popover>
         </Dialog>
 
         {/* Popover with large content */}
         <Dialog>
           <Button>Large content</Button>
-          <Dialog.Popover>
-            <Dialog.Content>
-              <Dialog.Header>
-                <Dialog.Heading>Dimensions</Dialog.Heading>
-                <Dialog.Description>
+          <Popover>
+            <DialogContent>
+              <DialogHeader>
+                <DialogHeading>Dimensions</DialogHeading>
+                <DialogDescription>
                   Set the dimensions for the layer.
-                </Dialog.Description>
-              </Dialog.Header>
-              <Dialog.Body className="space-y-4">
+                </DialogDescription>
+              </DialogHeader>
+              <DialogBody className="space-y-4">
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -123,23 +133,23 @@ export function PopoverDemo() {
                   qui dolorem ipsum quia dolor sit amet, consectetur, adipisci
                   velit.
                 </p>
-              </Dialog.Body>
-            </Dialog.Content>
-          </Dialog.Popover>
+              </DialogBody>
+            </DialogContent>
+          </Popover>
         </Dialog>
 
         {/* Popover with fixed height */}
         <Dialog>
           <Button>Fixed height</Button>
-          <Dialog.Popover className="h-96">
-            <Dialog.Content>
-              <Dialog.Header>
-                <Dialog.Heading>Dimensions</Dialog.Heading>
-                <Dialog.Description>
+          <Popover className="h-96">
+            <DialogContent>
+              <DialogHeader>
+                <DialogHeading>Dimensions</DialogHeading>
+                <DialogDescription>
                   Set the dimensions for the layer.
-                </Dialog.Description>
-              </Dialog.Header>
-              <Dialog.Body>
+                </DialogDescription>
+              </DialogHeader>
+              <DialogBody>
                 <TextField>
                   <Label>Width</Label>
                   <Input />
@@ -148,32 +158,32 @@ export function PopoverDemo() {
                   <Label>Height</Label>
                   <Input />
                 </TextField>
-              </Dialog.Body>
-              <Dialog.Footer>
+              </DialogBody>
+              <DialogFooter>
                 <Button slot="close" size="sm">
                   Cancel
                 </Button>
                 <Button variant="primary" size="sm">
                   Apply
                 </Button>
-              </Dialog.Footer>
-            </Dialog.Content>
-          </Dialog.Popover>
+              </DialogFooter>
+            </DialogContent>
+          </Popover>
         </Dialog>
 
         {/* Nested popover */}
         <Dialog>
           <Button>Nested popover</Button>
-          <Dialog.Popover>
-            <Dialog.Content>
+          <Popover>
+            <DialogContent>
               <Dialog>
                 <Button>Open Nested Popover</Button>
-                <Dialog.Popover placement="right">
-                  <Dialog.Content>Nested popover content</Dialog.Content>
-                </Dialog.Popover>
+                <Popover placement="right">
+                  <DialogContent>Nested popover content</DialogContent>
+                </Popover>
               </Dialog>
-            </Dialog.Content>
-          </Dialog.Popover>
+            </DialogContent>
+          </Popover>
         </Dialog>
       </div>
 
@@ -199,15 +209,15 @@ export function PopoverDemo() {
             <Button style={{ gridArea: placement.replace(" ", "-") }}>
               {placement}
             </Button>
-            <Dialog.Popover placement={placement} className="w-auto">
-              <Dialog.Content>
-                <Dialog.Header>
-                  <Dialog.Heading>Dimensions</Dialog.Heading>
-                  <Dialog.Description>
+            <Popover placement={placement} className="w-auto">
+              <DialogContent>
+                <DialogHeader>
+                  <DialogHeading>Dimensions</DialogHeading>
+                  <DialogDescription>
                     Set the dimensions for the layer.
-                  </Dialog.Description>
-                </Dialog.Header>
-                <Dialog.Body>
+                  </DialogDescription>
+                </DialogHeader>
+                <DialogBody>
                   <TextField>
                     <Label>Width</Label>
                     <Input />
@@ -216,9 +226,9 @@ export function PopoverDemo() {
                     <Label>Height</Label>
                     <Input />
                   </TextField>
-                </Dialog.Body>
-              </Dialog.Content>
-            </Dialog.Popover>
+                </DialogBody>
+              </DialogContent>
+            </Popover>
           </Dialog>
         ))}
       </div>

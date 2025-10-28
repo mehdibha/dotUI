@@ -25,22 +25,20 @@ const fieldStyles = tv({
     ],
     legend: ["mb-3 text-base font-medium"],
     fieldGroup:
-      "group/field-group @container/field-group flex w-full flex-col gap-7 has-data-[slot=checkbox]:gap-1.5 has-data-[slot=radio]:gap-1.5 data-[slot=checkbox-group]:gap-3 [&>[data-slot=field-group]]:gap-4",
-    field: "flex items-start gap-2",
+      "group/field-group @container/field-group flex w-full flex-col gap-7 has-data-[slot=checkbox]:gap-1.5 has-data-[slot=radio]:gap-1.5 data-[slot=checkbox-group]:gap-3 *:data-[slot=field-group]:gap-4",
+    field:
+      "flex items-start gap-2 invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden",
     fieldContent: "flex flex-col gap-1",
     label: [
       "inline-flex items-center gap-px text-sm leading-none text-fg peer-disabled:cursor-not-allowed peer-disabled:text-fg-disabled [&_svg]:size-3",
       // Required state
-      "[[data-required]_&]:after:ml-0.5 [[data-required]_&]:after:text-fg-danger [[data-required]_&]:after:content-['*']",
+      "in-data-required:after:ml-0.5 in-data-required:after:text-fg-danger in-data-required:after:content-['*']",
       // Disabled state
-      "[[data-disabled]_&]:cursor-not-allowed [[data-disabled]_&]:text-fg-disabled",
+      "in-disabled:cursor-not-allowed in-disabled:text-fg-disabled",
       // Invalid state
-      "[[data-invalid]_&]:text-fg-danger",
+      "in-data-invalid:text-fg-danger",
     ],
-    description: [
-      "text-xs text-fg-muted",
-      "[[data-disabled]_&]:text-fg-disabled",
-    ],
+    description: ["text-xs text-fg-muted", "in-data-disabled:text-fg-disabled"],
     fieldError: "text-xs text-fg-danger",
   },
   variants: {

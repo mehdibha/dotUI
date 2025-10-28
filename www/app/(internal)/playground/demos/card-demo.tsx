@@ -60,6 +60,7 @@ export function CardDemo() {
             </div>
           </CardFooter>
         </Card>
+
         <Card>
           <CardHeader>
             <CardTitle>Meeting Notes</CardTitle>
@@ -88,6 +89,7 @@ export function CardDemo() {
             </div>
           </CardFooter>
         </Card>
+
         <Card>
           <CardHeader>
             <CardTitle>Is this an image?</CardTitle>
@@ -120,6 +122,7 @@ export function CardDemo() {
         <Card>
           <CardContent className="text-sm">Content Only</CardContent>
         </Card>
+
         <Card>
           <CardHeader>
             <CardTitle>Header Only</CardTitle>
@@ -128,6 +131,7 @@ export function CardDemo() {
             </CardDescription>
           </CardHeader>
         </Card>
+
         <Card>
           <CardHeader>
             <CardTitle>Header and Content</CardTitle>
@@ -137,9 +141,11 @@ export function CardDemo() {
           </CardHeader>
           <CardContent className="text-sm">Content</CardContent>
         </Card>
+
         <Card>
           <CardFooter className="text-sm">Footer Only</CardFooter>
         </Card>
+
         <Card>
           <CardHeader>
             <CardTitle>Header + Footer</CardTitle>
@@ -149,10 +155,12 @@ export function CardDemo() {
           </CardHeader>
           <CardFooter className="text-sm">Footer</CardFooter>
         </Card>
+
         <Card>
           <CardContent className="text-sm">Content</CardContent>
           <CardFooter className="text-sm">Footer</CardFooter>
         </Card>
+
         <Card>
           <CardHeader>
             <CardTitle>Header + Footer</CardTitle>

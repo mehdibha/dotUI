@@ -57,7 +57,9 @@ const ColorSlider = ({ className, ...props }: ColorSliderProps) => {
         )}
         aria-describedby={descriptionId}
         {...props}
-      />
+      >
+        {props.children ?? <ColorSliderControl />}
+      </AriaColorSlider>
     </Provider>
   );
 };

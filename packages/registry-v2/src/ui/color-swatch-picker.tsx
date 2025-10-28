@@ -18,7 +18,7 @@ const colorSwatchPickerStyles = tv({
       focusRing(),
       "relative size-8 rounded-md transition-shadow focus:z-10 *:data-[slot=color-swatch]:size-full *:data-[slot=color-swatch]:rounded-[inherit]",
       // disabled state
-      "disabled:cursor-not-allowed disabled:*:data-[slot=color-swatch]:![background:color-mix(in_oklab,var(--color-disabled)_90%,var(--color))]",
+      "disabled:cursor-not-allowed disabled:*:data-[slot=color-swatch]:[background:color-mix(in_oklab,var(--color-disabled)_90%,var(--color))]!",
       // selected state
       "before:absolute before:inset-0 before:scale-90 before:rounded-[inherit] before:bg-bg before:opacity-0 before:outline-2 before:outline-inverse before:transition-[opacity,scale] before:duration-100 before:content-[''] selected:before:scale-100 selected:before:opacity-100",
     ],

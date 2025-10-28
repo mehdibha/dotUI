@@ -85,38 +85,6 @@ export function SelectDemo() {
           </SelectItem>
         </SelectContent>
       </Select>
-
-      {/* <Select>
-        <Label>Single selection</Label>
-        <Select.Trigger>
-          <Select.Value />
-        </Select.Trigger>
-        <Select.Popover>
-          <Select.List items={items}>
-            {(item) => (
-              <Select.Item id={item.id} textValue={item.name}>
-                {item.name}
-              </Select.Item>
-            )}
-          </Select.List>
-        </Select.Popover>
-      </Select>
-
-      <Select selectionMode="multiple">
-        <Label>Multiple selection</Label>
-        <Select.Trigger>
-          <Select.Value />
-        </Select.Trigger>
-        <Select.Popover>
-          <Select.List items={items}>
-            {(item) => (
-              <Select.Item id={item.id} textValue={item.name}>
-                {item.name}
-              </Select.Item>
-            )}
-          </Select.List>
-        </Select.Popover>
-      </Select> */}
     </div>
   );
 }

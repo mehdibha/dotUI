@@ -122,10 +122,5 @@ const TabPanel = ({ className, ...props }: TabPanelProps) => {
 
 /* -----------------------------------------------------------------------------------------------*/
 
-const CompoundTabs = Object.assign(Tabs, {
-  List: TabList,
-  Tab: Tab,
-  Panel: TabPanel,
-});
-
-export { CompoundTabs as Tabs, TabList, Tab, TabPanel };
+export { Tabs, TabList, Tab, TabPanel };
+export type { TabsProps, TabListProps, TabProps, TabPanelProps };

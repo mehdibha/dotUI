@@ -4,12 +4,17 @@ import {
   DateField as AriaDateField,
   composeRenderProps,
 } from "react-aria-components";
+import { tv } from "tailwind-variants";
 import type {
   DateFieldProps as AriaDateFieldProps,
   DateValue,
 } from "react-aria-components";
 
 import { fieldStyles } from "@dotui/registry-v2/ui/field";
+
+const dateFieldStyles = tv({
+  base: [fieldStyles().field({ orientation: "vertical" })],
+});
 
 /* -----------------------------------------------------------------------------------------------*/
 
@@ -22,7 +27,7 @@ const DateField = <T extends DateValue>({
   return (
     <AriaDateField
       className={composeRenderProps(className, (className) =>
-        fieldStyles().field({ className }),
+        dateFieldStyles({ className }),
       )}
       {...props}
     />

@@ -6,15 +6,8 @@ import {
   DialogTrigger as AriaDialogTrigger,
   Heading as AriaHeading,
   Text as AriaText,
-  composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-
-import { Drawer } from "@dotui/registry-v2/ui/drawer";
-import { Modal } from "@dotui/registry-v2/ui/modal";
-import { Overlay } from "@dotui/registry-v2/ui/overlay";
-import { Popover } from "@dotui/registry-v2/ui/popover";
-import type { OverlayProps } from "@dotui/registry-v2/ui/overlay";
 
 const dialogStyles = tv({
   slots: {
@@ -32,67 +25,12 @@ const dialogStyles = tv({
 const { content, header, heading, description, body, footer, inset } =
   dialogStyles();
 
-interface DialogRootProps
-  extends React.ComponentProps<typeof AriaDialogTrigger> {}
-const DialogRoot = (props: DialogRootProps) => {
-  return <AriaDialogTrigger {...props} />;
-};
+/* -----------------------------------------------------------------------------------------------*/
 
-interface DialogProps
-  extends DialogContentProps,
-    Omit<OverlayProps, "children"> {
-  title?: string;
-  description?: string;
-}
-const _Dialog = ({
-  title,
-  description,
-  type = "modal",
-  mobileType = "drawer",
-  modalProps,
-  popoverProps,
-  drawerProps,
-  isDismissable: isDismissableProp,
-  role,
-  isOpen,
-  defaultOpen,
-  onOpenChange,
-  isKeyboardDismissDisabled,
-  shouldCloseOnInteractOutside,
-  ...props
-}: DialogProps) => {
-  const isDismissable = isDismissableProp ?? role !== "alertdialog";
-  return (
-    <Overlay
-      type={type}
-      mobileType={mobileType}
-      isOpen={isOpen}
-      defaultOpen={defaultOpen}
-      onOpenChange={onOpenChange}
-      isDismissable={isDismissable}
-      isKeyboardDismissDisabled={isKeyboardDismissDisabled}
-      shouldCloseOnInteractOutside={shouldCloseOnInteractOutside}
-      modalProps={modalProps}
-      popoverProps={popoverProps}
-      drawerProps={drawerProps}
-    >
-      <DialogContent role={role} {...props}>
-        {composeRenderProps(props.children, (children) => (
-          <>
-            {(title || description) && (
-              <DialogHeader>
-                {title && <DialogHeading>{title}</DialogHeading>}
-                {description && (
-                  <DialogDescription>{description}</DialogDescription>
-                )}
-              </DialogHeader>
-            )}
-            {children}
-          </>
-        ))}
-      </DialogContent>
-    </Overlay>
-  );
+interface DialogProps extends React.ComponentProps<typeof AriaDialogTrigger> {}
+
+const Dialog = (props: DialogProps) => {
+  return <AriaDialogTrigger {...props} />;
 };
 
 /* -----------------------------------------------------------------------------------------------*/
@@ -166,23 +104,8 @@ const DialogInset = ({ className, ...props }: DialogInsetProps) => {
 
 /* -----------------------------------------------------------------------------------------------*/
 
-const CompoundDialog = Object.assign(DialogRoot, {
-  Header: DialogHeader,
-  Heading: DialogHeading,
-  Description: DialogDescription,
-  Content: DialogContent,
-  Body: DialogBody,
-  Footer: DialogFooter,
-  Inset: DialogInset,
-  Popover,
-  Modal,
-  Drawer,
-  Overlay,
-});
-
 export {
-  DialogRoot,
-  CompoundDialog as Dialog,
+  Dialog,
   DialogHeader,
   DialogHeading,
   DialogDescription,
@@ -193,7 +116,6 @@ export {
 };
 
 export type {
-  DialogRootProps,
   DialogProps,
   DialogBodyProps,
   DialogHeaderProps,

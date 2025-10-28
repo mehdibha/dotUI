@@ -39,11 +39,7 @@ const Combobox = <T extends object>({
     <AriaCombobox
       menuTrigger={menuTrigger}
       className={fieldStyles().field({
-        className: cn(
-          className,
-          // temporary fix for react-aria-components, data-focused is missing in input when menuTrigger = 'focus' and a selected item is present
-          // 'focus:[&_[data-slot="input"]:not([data-in-group])]:focus-input focus:[&_[data-slot="input-group"]]:focus-input',
-        ),
+        className: cn(className),
       })}
       {...props}
     >

@@ -23,9 +23,12 @@ import {
   CommandSection,
   CommandSectionHeader,
 } from "@dotui/registry-v2/ui/command";
-import { Dialog } from "@dotui/registry-v2/ui/dialog";
+import { Dialog, DialogContent } from "@dotui/registry-v2/ui/dialog";
+import { Drawer } from "@dotui/registry-v2/ui/drawer";
 import { Label } from "@dotui/registry-v2/ui/field";
 import { Kbd } from "@dotui/registry-v2/ui/kbd";
+import { Modal } from "@dotui/registry-v2/ui/modal";
+import { Overlay } from "@dotui/registry-v2/ui/overlay";
 import { Popover } from "@dotui/registry-v2/ui/popover";
 import { Select, SelectTrigger } from "@dotui/registry-v2/ui/select";
 
@@ -37,32 +40,32 @@ export function CommandDemo() {
       <div className="flex items-center gap-2">
         <Dialog>
           <Button>Popover</Button>
-          <Dialog.Popover placement="bottom left">
-            <Dialog.Content className="!p-0">
+          <Popover placement="bottom left">
+            <DialogContent className="p-0!">
               <CommandExample />
-            </Dialog.Content>
-          </Dialog.Popover>
+            </DialogContent>
+          </Popover>
         </Dialog>
 
         <Dialog>
           <Button>Modal</Button>
-          <Dialog.Modal>
+          <Modal>
             <CommandExample />
-          </Dialog.Modal>
+          </Modal>
         </Dialog>
 
         <Dialog>
           <Button>Drawer</Button>
-          <Dialog.Drawer>
+          <Drawer>
             <CommandExample />
-          </Dialog.Drawer>
+          </Drawer>
         </Dialog>
 
         <Dialog>
           <Button>Responsive</Button>
-          <Dialog.Overlay>
+          <Overlay>
             <CommandExample />
-          </Dialog.Overlay>
+          </Overlay>
         </Dialog>
       </div>
 

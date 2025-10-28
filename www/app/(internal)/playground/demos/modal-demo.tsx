@@ -1,9 +1,18 @@
 "use client";
 
 import { Button } from "@dotui/registry-v2/ui/button";
-import { Dialog } from "@dotui/registry-v2/ui/dialog";
+import {
+  Dialog,
+  DialogBody,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogHeading,
+} from "@dotui/registry-v2/ui/dialog";
 import { Label } from "@dotui/registry-v2/ui/field";
 import { Input } from "@dotui/registry-v2/ui/input";
+import { Modal } from "@dotui/registry-v2/ui/modal";
 import { TextField } from "@dotui/registry-v2/ui/text-field";
 
 export function ModalDemo() {
@@ -11,15 +20,15 @@ export function ModalDemo() {
     <div className="flex flex-col flex-wrap items-center gap-4">
       <Dialog>
         <Button>Open modal</Button>
-        <Dialog.Modal>
-          <Dialog.Content>
-            <Dialog.Header>
-              <Dialog.Heading>Edit profile</Dialog.Heading>
-              <Dialog.Description>
+        <Modal>
+          <DialogContent>
+            <DialogHeader>
+              <DialogHeading>Edit profile</DialogHeading>
+              <DialogDescription>
                 Set the dimensions for the layer.
-              </Dialog.Description>
-            </Dialog.Header>
-            <Dialog.Body className="space-y-4">
+              </DialogDescription>
+            </DialogHeader>
+            <DialogBody className="space-y-4">
               <TextField>
                 <Label>Name</Label>
                 <Input />
@@ -28,13 +37,13 @@ export function ModalDemo() {
                 <Label>Username</Label>
                 <Input />
               </TextField>
-            </Dialog.Body>
-            <Dialog.Footer>
+            </DialogBody>
+            <DialogFooter>
               <Button slot="close">Cancel</Button>
               <Button variant="primary">Apply</Button>
-            </Dialog.Footer>
-          </Dialog.Content>
-        </Dialog.Modal>
+            </DialogFooter>
+          </DialogContent>
+        </Modal>
       </Dialog>
     </div>
   );

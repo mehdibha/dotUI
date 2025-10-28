@@ -42,10 +42,8 @@ export default async function HomePage() {
           <p className="text-center text-base sm:text-lg text-fg-muted text-balance">
             Beautiful components in any style you want, accessibility by
             default, composition, and more, all powered by{" "}
-            <AdobeIcon className="size-4 inline-flex" />{" "}
-            <span className="font-medium">react-aria-components</span> and{" "}
-            <ShadcnIcon className="size-5 inline-flex " />{" "}
-            <span className="font-medium">shadcn CLI</span>.
+            <AdobeIcon className="size-4 inline-flex" />&nbsp;<span className="font-medium">react-aria-components</span> and{" "}
+            <ShadcnIcon className="size-5 inline-flex" />&nbsp;<span className="font-medium">shadcn&nbsp;CLI</span>.
           </p>
           <div className="flex flex-col w-full sm:w-auto gap-2 sm:flex-row sm:items-center sm:gap-4">
             <Button href="/docs" variant="primary" size="lg" className="h-10">

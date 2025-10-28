@@ -1,9 +1,18 @@
 "use client";
 
 import { Button } from "@dotui/registry-v2/ui/button";
-import { Dialog } from "@dotui/registry-v2/ui/dialog";
+import {
+  Dialog,
+  DialogBody,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogHeading,
+} from "@dotui/registry-v2/ui/dialog";
 import { Label } from "@dotui/registry-v2/ui/field";
 import { Input } from "@dotui/registry-v2/ui/input";
+import { Overlay } from "@dotui/registry-v2/ui/overlay";
 import { TextField } from "@dotui/registry-v2/ui/text-field";
 
 export function DialogDemo() {
@@ -11,15 +20,15 @@ export function DialogDemo() {
     <div className="flex flex-col flex-wrap items-center gap-4">
       <Dialog>
         <Button>Open dialog</Button>
-        <Dialog.Overlay>
-          <Dialog.Content>
-            <Dialog.Header>
-              <Dialog.Heading>Edit profile</Dialog.Heading>
-              <Dialog.Description>
+        <Overlay>
+          <DialogContent>
+            <DialogHeader>
+              <DialogHeading>Edit profile</DialogHeading>
+              <DialogDescription>
                 Set the dimensions for the layer.
-              </Dialog.Description>
-            </Dialog.Header>
-            <Dialog.Body className="space-y-4">
+              </DialogDescription>
+            </DialogHeader>
+            <DialogBody className="space-y-4">
               <TextField>
                 <Label>Name</Label>
                 <Input defaultValue="mehdi" />
@@ -28,13 +37,13 @@ export function DialogDemo() {
                 <Label>Username</Label>
                 <Input defaultValue="mehdibha" />
               </TextField>
-            </Dialog.Body>
-            <Dialog.Footer>
+            </DialogBody>
+            <DialogFooter>
               <Button slot="close">Cancel</Button>
               <Button variant="primary">Apply</Button>
-            </Dialog.Footer>
-          </Dialog.Content>
-        </Dialog.Overlay>
+            </DialogFooter>
+          </DialogContent>
+        </Overlay>
       </Dialog>
     </div>
   );

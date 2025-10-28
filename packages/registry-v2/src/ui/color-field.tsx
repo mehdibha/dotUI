@@ -5,22 +5,26 @@ import {
   ColorField as AriaColorField,
   composeRenderProps,
 } from "react-aria-components";
+import { tv } from "tailwind-variants";
 
 import { fieldStyles } from "./field";
 
-interface ColorFieldProps extends React.ComponentProps<typeof AriaColorField> {
-  placeholder?: string;
-}
+const colorFieldStyles = tv({
+  base: [fieldStyles().field({ orientation: "vertical" }), ""],
+});
+
+interface ColorFieldProps extends React.ComponentProps<typeof AriaColorField> {}
+
 const ColorField = ({ className, ...props }: ColorFieldProps) => {
   return (
     <AriaColorField
       className={composeRenderProps(className, (className) =>
-        fieldStyles().field({ className }),
+        colorFieldStyles({ className }),
       )}
       {...props}
     />
   );
 };
 
-export type { ColorFieldProps };
 export { ColorField };
+export type { ColorFieldProps };

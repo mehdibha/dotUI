@@ -50,7 +50,7 @@
       },
       "a11y": {
         "noSvgWithoutTitle": "off",
-        "useValidAnchor": "warn",
+        "useValidAnchor": "off",
         "useIframeTitle": "warn",
         "useSemanticElements": "warn",
         "noStaticElementInteractions": "warn"

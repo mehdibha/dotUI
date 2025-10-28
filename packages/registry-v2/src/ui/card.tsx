@@ -95,17 +95,8 @@ function CardFooter({ className, ...props }: CardFooterProps) {
 
 /* -----------------------------------------------------------------------------------------------*/
 
-const CompoundCard = Object.assign(Card, {
-  Header: CardHeader,
-  Title: CardTitle,
-  Description: CardDescription,
-  Action: CardAction,
-  Content: CardContent,
-  Footer: CardFooter,
-});
-
 export {
-  CompoundCard as Card,
+  Card,
   CardHeader,
   CardFooter,
   CardTitle,

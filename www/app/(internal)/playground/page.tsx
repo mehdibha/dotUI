@@ -336,11 +336,11 @@ const content: ContentSection[] = [
         title: "ColorArea",
         preview: demos.ColorAreaDemo,
       },
-      // {
-      //   id: "color-field",
-      //   title: "ColorField",
-      //   preview: demos.ColorFieldDemo,
-      // },
+      {
+        id: "color-field",
+        title: "ColorField",
+        preview: demos.ColorFieldDemo,
+      },
       {
         id: "color-picker",
         title: "ColorPicker",

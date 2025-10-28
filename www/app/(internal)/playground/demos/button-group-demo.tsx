@@ -25,6 +25,7 @@ import {
   TrashIcon,
 } from "lucide-react";
 
+import { SearchIcon } from "@dotui/registry/icons";
 import { Button } from "@dotui/registry-v2/ui/button";
 import { ButtonGroup } from "@dotui/registry-v2/ui/button-group";
 import { ColorSwatchPicker } from "@dotui/registry-v2/ui/color-swatch-picker";
@@ -41,8 +42,7 @@ import { Overlay } from "@dotui/registry-v2/ui/overlay";
 import { Separator } from "@dotui/registry-v2/ui/separator";
 import { Text } from "@dotui/registry-v2/ui/text";
 import { TextField } from "@dotui/registry-v2/ui/text-field";
-import { Tooltip } from "@dotui/registry-v2/ui/tooltip";
-import { SearchIcon } from "@dotui/registry/icons";
+import { Tooltip, TooltipContent } from "@dotui/registry-v2/ui/tooltip";
 
 export function ButtonGroupDemo() {
   const [_currency, _setCurrency] = useState("$");
@@ -199,7 +199,7 @@ export function ButtonGroupDemo() {
             <Button>
               <IconBrandGithubCopilot />
             </Button>
-            <Dialog>
+            {/* <Dialog>
               <Button aspect="default">
                 <IconCloudCode />
                 <IconChevronDown />
@@ -223,7 +223,7 @@ export function ButtonGroupDemo() {
                   </Dialog.Body>
                 </Dialog.Content>
               </Dialog.Popover>
-            </Dialog>
+            </Dialog> */}
           </ButtonGroup>
         </div>
         <div className="grid grid-cols-2 gap-4 [--spacing:0.22rem]">
@@ -243,7 +243,7 @@ export function ButtonGroupDemo() {
           <ButtonGroup className="w-full">
             <InputGroup>
               <InputAddon>
-                <Dialog>
+                {/* <Dialog>
                   <Button variant="quiet">
                     <span className="size-4 rounded-xs bg-blue-600" />
                   </Button>
@@ -269,7 +269,7 @@ export function ButtonGroupDemo() {
                       </ColorSwatchPicker>
                     </Dialog.Content>
                   </Dialog.Popover>
-                </Dialog>
+                </Dialog> */}
               </InputAddon>
               <Input className="w-16" />
               <InputAddon>%</InputAddon>
@@ -324,10 +324,11 @@ export function ButtonGroupDemo() {
           <ButtonGroup>
             <InputGroup>
               <InputAddon>
-                <Tooltip content="Use Voice Mode">
+                <Tooltip>
                   <Button variant="quiet" size="sm" className="size-7">
                     <AudioLinesIcon />
                   </Button>
+                  <TooltipContent>Use Voice Mode</TooltipContent>
                 </Tooltip>
               </InputAddon>
               <Input placeholder="Send a message..." />
