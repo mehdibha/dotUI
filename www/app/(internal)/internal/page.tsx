@@ -4,7 +4,7 @@ import { useMounted } from "@/hooks/use-mounted";
 import React from "react";
 
 export default function InternalPage() {
-   const [isMounted, setIsMounted] = React.useState(false);
+  const [isMounted, setIsMounted] = React.useState(false);
 
   React.useEffect(() => {
     // Wait for the next animation frame to ensure initial paint

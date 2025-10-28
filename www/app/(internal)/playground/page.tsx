@@ -3,6 +3,7 @@
 import React from "react";
 import { AlignLeftIcon } from "lucide-react";
 import {
+  ButtonContext,
   CheckboxContext,
   CheckboxGroupContext,
   Provider,
@@ -45,6 +46,7 @@ const content: ContentSection[] = [
         id: "button",
         title: "Button",
         preview: demos.ButtonDemo,
+        controls: [[ButtonContext, ["isDisabled", "isPending"]]],
       },
       {
         id: "toggle-button",

@@ -55,8 +55,6 @@ const buttonStyles = tv({
 
 type ButtonVariants = VariantProps<typeof buttonStyles>;
 
-/* -----------------------------------------------------------------------------------------------*/
-
 const [ButtonProvider, useContextProps] = createVariantsContext<
   ButtonVariants,
   React.ComponentProps<typeof AriaButton>
@@ -137,5 +135,8 @@ const Button = (localProps: ButtonProps) => {
   );
 };
 
+/* -----------------------------------------------------------------------------------------------*/
+
 export type { ButtonProps };
+
 export { Button, ButtonProvider, buttonStyles };

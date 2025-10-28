@@ -18,9 +18,7 @@ const tooltipStyles = tv({
   slots: {
     content: [
       "w-fit max-w-xs origin-(--trigger-anchor-point) rounded-sm bg-tooltip px-3 py-1.5 text-center text-xs text-fg-on-tooltip forced-color-adjust-none outline-none",
-
       "transition-[transform,opacity,scale] duration-200 ease-out will-change-[transform,opacity,scale] [--slide-offset:calc(var(--spacing)*0.5)]",
-
       "entering:scale-95 entering:transform-(--origin) entering:opacity-0",
       "exiting:scale-95 exiting:transform-(--origin) exiting:opacity-0 exiting:duration-150",
       "placement-left:[--origin:translateX(var(--slide-offset))] placement-right:[--origin:translateX(calc(var(--slide-offset)*-1))] placement-top:[--origin:translateY(var(--slide-offset))] placement-bottom:[--origin:translateY(calc(var(--slide-offset)*-1))]",
@@ -36,54 +34,10 @@ const tooltipStyles = tv({
 const { content, arrow, trigger } = tooltipStyles();
 
 /* -----------------------------------------------------------------------------------------------*/
-
 interface TooltipProps
-  extends TooltipRootProps,
-    Omit<TooltipContentProps, "children"> {
-  content?: React.ReactNode;
-  showArrow?: boolean;
-}
-const Tooltip = ({
-  delay,
-  closeDelay,
-  trigger,
-  defaultOpen,
-  isOpen,
-  onOpenChange,
-  isDisabled,
-  content,
-  showArrow = true,
-  children,
-  ...tooltipContentProps
-}: TooltipProps) => {
-  return (
-    <TooltipRoot
-      delay={delay}
-      closeDelay={closeDelay}
-      trigger={trigger}
-      defaultOpen={defaultOpen}
-      onOpenChange={onOpenChange}
-      isOpen={isOpen}
-      isDisabled={isDisabled}
-    >
-      {children}
-      <TooltipContent {...tooltipContentProps}>
-        {showArrow && <TooltipArrow />}
-        {content}
-      </TooltipContent>
-    </TooltipRoot>
-  );
-};
-
-/* -----------------------------------------------------------------------------------------------*/
-interface TooltipRootProps
   extends React.ComponentProps<typeof AriaTooltipTrigger> {}
 
-const TooltipRoot = ({
-  delay = 700,
-  closeDelay = 0,
-  ...props
-}: TooltipRootProps) => (
+const Tooltip = ({ delay = 700, closeDelay = 0, ...props }: TooltipProps) => (
   <AriaTooltipTrigger delay={delay} closeDelay={closeDelay} {...props} />
 );
 
@@ -106,7 +60,14 @@ function TooltipContent({
         content({ className }),
       )}
       {...props}
-    />
+    >
+      {composeRenderProps(props.children, (children) => (
+        <>
+          {children}
+          <TooltipArrow />
+        </>
+      ))}
+    </AriaTooltip>
   );
 }
 
@@ -153,24 +114,10 @@ const TooltipTrigger = ({
 
 /* -----------------------------------------------------------------------------------------------*/
 
-const CompoundTooltip = Object.assign(Tooltip, {
-  Root: TooltipRoot,
-  Trigger: TooltipTrigger,
-  Content: TooltipContent,
-  Arrow: TooltipArrow,
-});
-
-export {
-  CompoundTooltip as Tooltip,
-  TooltipRoot,
-  TooltipContent,
-  TooltipArrow,
-  TooltipTrigger,
-};
+export { Tooltip, TooltipContent, TooltipArrow, TooltipTrigger };
 
 export type {
   TooltipProps,
-  TooltipRootProps,
   TooltipContentProps,
   TooltipArrowProps,
   TooltipTriggerProps,

@@ -35,7 +35,7 @@ const alertVariants = tv({
 
 const { base, title, description } = alertVariants();
 
-function AlertBase({
+function Alert({
   className,
   variant,
   ...props
@@ -49,11 +49,13 @@ function AlertBase({
     />
   );
 }
+
 function AlertTitle({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div data-slot="alert-title" className={title({ className })} {...props} />
   );
 }
+
 function AlertDescription({
   className,
   ...props
@@ -66,10 +68,5 @@ function AlertDescription({
     />
   );
 }
-
-const Alert = Object.assign(AlertBase, {
-  Title: AlertTitle,
-  Description: AlertDescription,
-});
 
 export { Alert, AlertTitle, AlertDescription };

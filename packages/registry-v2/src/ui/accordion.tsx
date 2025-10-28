@@ -13,15 +13,13 @@ import {
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
-import { focusRing } from "../lib/focus-styles";
-
 const disclosureVariants = tv({
   slots: {
     group: "space-y-2",
     item: "data-in-group:not-first:border-t",
     heading: "flex",
     button: [
-      focusRing(),
+      "focus-reset focus-visible:focus-ring",
       "flex flex-1 items-start justify-between gap-4 rounded-md py-4 text-left text-sm font-medium transition-all outline-none hover:underline focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&[data-state=open]>svg]:rotate-180",
     ],
     panel:
@@ -31,9 +29,9 @@ const disclosureVariants = tv({
 
 const { group, item, panel, heading, button } = disclosureVariants();
 
-interface AccordionRootProps
+interface AccordionProps
   extends React.ComponentProps<typeof AriaDisclosureGroup> {}
-function AccordionRoot({ className, ...props }: AccordionRootProps) {
+function Accordion({ className, ...props }: AccordionProps) {
   return (
     <AriaDisclosureGroup
       data-slot="disclosure-group"
@@ -90,17 +88,4 @@ function AccordionHeading({
   );
 }
 
-const Accordion = {
-  Root: AccordionRoot,
-  Item: AccordionItem,
-  Panel: AccordionPanel,
-  Heading: AccordionHeading,
-};
-
-export {
-  Accordion,
-  AccordionRoot,
-  AccordionItem,
-  AccordionPanel,
-  AccordionHeading,
-};
+export { Accordion, AccordionItem, AccordionPanel, AccordionHeading };

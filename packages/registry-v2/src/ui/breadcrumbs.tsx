@@ -71,11 +71,13 @@ const BreadcrumbLink = ({ className, ...props }: BreadcrumbLinkProps) => (
   />
 );
 
+
+
+export { Breadcrumbs, Breadcrumb, BreadcrumbItem, BreadcrumbLink };
+
 export type {
   BreadcrumbsProps,
   BreadcrumbProps,
   BreadcrumbItemProps,
   BreadcrumbLinkProps,
 };
-
-export { Breadcrumbs, Breadcrumb, BreadcrumbItem, BreadcrumbLink };

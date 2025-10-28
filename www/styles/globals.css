@@ -1,13 +1,15 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@plugin "tailwindcss-react-aria-components";
-@plugin "tailwindcss-autocontrast";
-@plugin "@tailwindcss/typography";
 @import "@dotui/registry/lib/focus-styles.css";
 @import "./base.css";
 @import "./theme.css";
 @import "./animations.css";
 @import "./docs.css";
+
+@plugin "tailwindcss-react-aria-components";
+@plugin "tailwindcss-autocontrast";
+@plugin "@tailwindcss/typography";
+
 @source "../../packages/registry/src//**/*.{ts,tsx}";
 @source "../../packages/registry-v2/src//**/*.{ts,tsx}";
 @source "../**/*.{ts,tsx}";
