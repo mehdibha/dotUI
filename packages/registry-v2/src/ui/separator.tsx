@@ -28,8 +28,9 @@ const Separator = ({ orientation, className, ...props }: SeparatorProps) => {
 
   return (
     <AriaSeparator
+      orientation={orientation}
       className={separatorStyles({
-        orientation: ctx?.orientation || orientation,
+        orientation: orientation ?? ctx?.orientation,
         className,
       })}
       {...props}

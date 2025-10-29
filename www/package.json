@@ -93,7 +93,7 @@
     "tailwindcss": "^4.1.14",
     "tailwindcss-animate": "^1.0.7",
     "tailwindcss-autocontrast": "workspace:*",
-    "tailwindcss-react-aria-components": "^2.0.0",
+    "tailwindcss-react-aria-components": "^2.0.1",
     "tw-animate-css": "^1.3.5",
     "typescript": "^5.8.3",
     "vfile": "^6.0.3"

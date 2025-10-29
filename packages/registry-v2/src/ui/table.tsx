@@ -28,7 +28,6 @@ import type {
   TableHeaderProps as AriaTableHeaderProps,
 } from "react-aria-components";
 
-import { focusRing } from "@dotui/registry-v2/lib/focus-styles";
 import { cn } from "@dotui/registry-v2/lib/utils";
 import { Checkbox } from "@dotui/registry-v2/ui/checkbox";
 import { Loader } from "@dotui/registry-v2/ui/loader";
@@ -45,7 +44,7 @@ const tableStyles = tv({
     row: "",
     cell: "p-2 align-middle whitespace-nowrap",
     loadMore: [
-      "relative h-7 [&_[data-slot=loader]]:absolute [&_[data-slot=loader]]:top-0 [&_[data-slot=loader]]:left-1/2 [&_[data-slot=loader]]:-translate-x-1/2",
+      "relative h-7 **:data-[slot=loader]:absolute **:data-[slot=loader]:top-0 **:data-[slot=loader]:left-1/2 **:data-[slot=loader]:-translate-x-1/2",
       "[&_[data-slot=loader]_svg]:size-4",
     ],
     title: "text-sm font-medium",
@@ -264,7 +263,7 @@ function TableRow<T extends object>({
           <AriaButton
             slot="drag"
             className={cn(
-              focusRing(),
+              "focus-reset focus-visible:focus-ring",
               "inline-flex items-center justify-center rounded-xs text-fg-muted [&_svg]:size-4",
             )}
           >

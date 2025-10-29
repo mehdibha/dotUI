@@ -21,12 +21,10 @@ import type {
 } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 
-import { focusRing } from "@dotui/registry-v2/lib/focus-styles";
-
 const listboxStyles = tv({
   slots: {
     root: [
-      focusRing(),
+      "focus-reset focus-visible:focus-ring",
       "data-standalone:max-h-68 data-standalone:w-48 data-standalone:overflow-y-auto data-standalone:rounded-md data-standalone:border data-standalone:bg-card data-standalone:p-1 data-standalone:shadow-sm",
       "w-full p-1",
     ],

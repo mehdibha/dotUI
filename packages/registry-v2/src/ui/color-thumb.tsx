@@ -4,11 +4,9 @@ import { ColorThumb as AriaColorThumb } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import type { ColorThumbProps as AriaColorThumbProps } from "react-aria-components";
 
-import { focusRing } from "@dotui/registry-v2/lib/focus-styles";
-
 const colorThumbStyles = tv({
-  extend: focusRing,
   base: [
+    "focus-reset focus-visible:focus-ring",
     "z-30 size-6 rounded-full border-2 border-white ring-1 ring-black/40 disabled:border-border-disabled disabled:bg-disabled!",
     "group-orientation-horizontal/color-slider:top-1/2 group-orientation-vertical/color-slider:left-1/2",
   ],

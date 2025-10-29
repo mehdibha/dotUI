@@ -9,15 +9,15 @@ export function TextFieldDemo() {
     <div className="grid grid-cols-2 gap-4 *:space-y-4">
       <div className="**:w-full">
         <TextField>
-          <TextField.Label>Email</TextField.Label>
-          <TextField.Input placeholder="hello@mehdibha.com" />
-          <TextField.Description>Enter your email.</TextField.Description>
+          <Label>Email</Label>
+          <Input placeholder="hello@mehdibha.com" />
+          <Description>Enter your email.</Description>
         </TextField>
 
         <TextField>
-          <TextField.Label>Comment</TextField.Label>
-          <TextField.TextArea placeholder="Type your comment here" />
-          <TextField.Description>Enter your comment.</TextField.Description>
+          <Label>Comment</Label>
+          <TextArea placeholder="Type your comment here" />
+          <Description>Enter your comment.</Description>
         </TextField>
 
         <TextField isInvalid>

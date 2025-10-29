@@ -8,15 +8,15 @@ import {
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
-import { focusRing } from "@dotui/registry-v2/lib/focus-styles";
 import { ColorSwatch } from "@dotui/registry-v2/ui/color-swatch";
 
 const colorSwatchPickerStyles = tv({
   slots: {
     root: "flex flex-wrap gap-1",
     item: [
-      focusRing(),
       "relative size-8 rounded-md transition-shadow focus:z-10 *:data-[slot=color-swatch]:size-full *:data-[slot=color-swatch]:rounded-[inherit]",
+      // focus state
+      "focus-reset focus-visible:focus-ring",
       // disabled state
       "disabled:cursor-not-allowed disabled:*:data-[slot=color-swatch]:[background:color-mix(in_oklab,var(--color-disabled)_90%,var(--color))]!",
       // selected state

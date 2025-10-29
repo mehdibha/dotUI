@@ -575,7 +575,7 @@ importers:
         specifier: workspace:*
         version: link:../packages/tailwindcss-autocontrast
       tailwindcss-react-aria-components:
-        specifier: ^2.0.0
+        specifier: ^2.0.1
         version: 2.0.1(tailwindcss@4.1.15)
       tw-animate-css:
         specifier: ^1.3.5

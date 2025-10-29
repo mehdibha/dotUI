@@ -22,14 +22,14 @@ const buttonStyles = tv({
     // focus state
     "focus-reset focus-visible:focus-ring",
     // disabled state
-    "disabled:cursor-default disabled:border disabled:border-border-disabled disabled:bg-disabled disabled:text-fg-disabled",
+    "disabled:cursor-default disabled:border-border-disabled disabled:bg-disabled disabled:text-fg-disabled",
     // pending state
-    "pending:cursor-default pending:border pending:border-border-disabled pending:bg-disabled pending:text-transparent pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0 pending:**:data-[slot=spinner]:text-fg-muted",
+    "pending:cursor-default pending:border-border-disabled pending:bg-disabled pending:text-transparent pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0 pending:**:data-[slot=spinner]:text-fg-muted",
   ],
   variants: {
     variant: {
       default:
-        "border bg-neutral text-fg-on-neutral hover:border-border-hover hover:bg-neutral-hover pressed:bg-neutral-active",
+        "border bg-neutral text-fg-on-neutral hover:border-border-hover hover:bg-neutral-hover pressed:bg-neutral-active pressed:border-border-active",
       primary:
         "bg-primary text-fg-on-primary [--color-disabled:var(--neutral-500)] [--color-fg-disabled:var(--neutral-300)] hover:bg-primary-hover disabled:border-0 pending:border-0 pressed:bg-primary-active",
       quiet: "bg-transparent text-fg hover:bg-inverse/10 pressed:bg-inverse/20",

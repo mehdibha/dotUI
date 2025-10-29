@@ -25,9 +25,7 @@ import type {
 } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 
-import { focusRing } from "@dotui/registry-v2/lib/focus-styles";
 import { Button } from "@dotui/registry-v2/ui/button";
-import { Text } from "@dotui/registry-v2/ui/text";
 
 const calendarStyles = tv({
   slots: {
@@ -52,7 +50,7 @@ const calendarCellStyles = tv({
     cellRoot:
       "flex items-center justify-center outline-none outside-month:hidden selection-start:rounded-l-md selection-end:rounded-r-md",
     cell: [
-      focusRing(),
+      "focus-reset focus-visible:focus-ring",
       "my-1 flex size-8 cursor-pointer items-center justify-center rounded-md text-sm transition-colors read-only:cursor-default hover:bg-inverse/10 hover:read-only:bg-transparent disabled:cursor-default disabled:bg-transparent disabled:text-fg-disabled unavailable:cursor-default unavailable:text-fg-disabled unavailable:not-data-disabled:line-through hover:unavailable:bg-transparent pressed:bg-inverse/20",
     ],
   },

@@ -15,7 +15,6 @@ import type {
 } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 
-import { focusRing } from "@dotui/registry-v2/lib/focus-styles";
 import { Button } from "@dotui/registry-v2/ui/button";
 
 const tagGroupStyles = tv({
@@ -28,10 +27,10 @@ const tagGroupStyles = tv({
 const { root, list } = tagGroupStyles();
 
 const tagStyles = tv({
-  extend: focusRing,
   base: [
     // focus state
     "focus-reset focus-visible:focus-ring",
+
     "ring-offset-background inline-flex cursor-pointer items-center justify-center gap-2 rounded-md text-sm leading-normal font-medium transition-colors disabled:cursor-default disabled:bg-disabled disabled:text-fg-disabled",
   ],
 });

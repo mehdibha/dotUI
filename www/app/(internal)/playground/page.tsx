@@ -64,9 +64,9 @@ const content: ContentSection[] = [
         preview: demos.FileTriggerDemo,
       },
       {
-        id: "button-group",
-        title: "ButtonGroup",
-        preview: demos.ButtonGroupDemo,
+        id: "group",
+        title: "Group",
+        preview: demos.GroupDemo,
       },
     ],
   },

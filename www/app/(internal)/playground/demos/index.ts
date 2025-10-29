@@ -5,7 +5,7 @@ export * from "./avatar-demo";
 export * from "./badge-demo";
 export * from "./breadcrumb-demo";
 export * from "./button-demo";
-export * from "./button-group-demo";
+export * from "./group-demo";
 export * from "./calendar-demo";
 export * from "./card-demo";
 export * from "./checkbox-demo";

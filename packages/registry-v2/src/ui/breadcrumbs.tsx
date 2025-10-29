@@ -10,15 +10,13 @@ import {
 import { tv } from "tailwind-variants";
 import type { BreadcrumbsProps as AriaBreadcrumbsProps } from "react-aria-components";
 
-import { focusRing } from "@dotui/registry-v2/lib/focus-styles";
-
 const breadcrumbsStyles = tv({
   slots: {
-    root: "flex flex-wrap items-center gap-1.5 text-sm break-words text-fg-muted [&_svg]:size-4",
+    root: "flex flex-wrap items-center gap-1.5 text-sm wrap-break-word text-fg-muted [&_svg]:size-4",
     item: "inline-flex items-center gap-1",
     link: [
-      focusRing(),
-      "inline-flex items-center gap-1 rounded px-0.5 leading-none transition-colors disabled:cursor-default disabled:not-current:text-fg-disabled current:text-fg hover:[&:is(a)]:text-fg",
+      "focus-reset focus-visible:focus-ring",
+      "inline-flex items-center gap-1 rounded px-0.5 leading-none transition-colors disabled:cursor-default disabled:not-current:text-fg-disabled current:text-fg hover:[a]:text-fg",
     ],
   },
 });
@@ -70,8 +68,6 @@ const BreadcrumbLink = ({ className, ...props }: BreadcrumbLinkProps) => (
     {...props}
   />
 );
-
-
 
 export { Breadcrumbs, Breadcrumb, BreadcrumbItem, BreadcrumbLink };
 

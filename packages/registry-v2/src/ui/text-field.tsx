@@ -7,11 +7,10 @@ import {
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
-import { Description, FieldError, Label } from "./field";
-import { Input, InputAddon, InputGroup, TextArea } from "./input";
+import { fieldStyles } from "./field";
 
 const textFieldStyles = tv({
-  base: "flex w-48 flex-col items-start gap-2",
+  base: [fieldStyles().field({ orientation: "vertical" })],
 });
 
 /* -----------------------------------------------------------------------------------------------*/
@@ -32,16 +31,6 @@ const TextField = ({ className, ...props }: TextFieldProps) => {
 
 /* -----------------------------------------------------------------------------------------------*/
 
-const CompoundTextField = Object.assign(TextField, {
-  Input,
-  TextArea,
-  InputGroup,
-  InputAddon,
-  Label,
-  Description,
-  FieldError,
-});
-
-export { CompoundTextField as TextField };
+export { TextField };
 
 export type { TextFieldProps };

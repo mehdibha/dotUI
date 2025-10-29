@@ -12,7 +12,6 @@ import {
 import { tv } from "tailwind-variants";
 import type { VariantProps } from "tailwind-variants";
 
-import { focusRing } from "../lib/focus-styles";
 
 const tooltipStyles = tv({
   slots: {
@@ -27,7 +26,7 @@ const tooltipStyles = tv({
       "block [&>svg]:size-2.5 [&>svg]:fill-tooltip",
       "placement-left:[&>svg]:-rotate-90 placement-right:[&>svg]:rotate-90 placement-bottom:[&>svg]:rotate-180",
     ],
-    trigger: focusRing(),
+    trigger: "focus-reset focus-visible:focus-ring",
   },
 });
 

@@ -7,6 +7,7 @@ import {
   NumberField as AriaNumberField,
   composeRenderProps,
   Provider,
+  useSlottedContext,
 } from "react-aria-components";
 
 import { fieldStyles } from "./field";
@@ -23,23 +24,31 @@ const NumberField = ({ className, ...props }: NumberFieldProps) => {
       {...props}
     >
       {composeRenderProps(props.children, (children) => (
-        <Provider
-          values={[
-            [
-              AriaButtonContext,
-              {
-                slots: {
-                  increment: { children: <PlusIcon /> },
-                  decrement: { children: <MinusIcon /> },
-                },
-              },
-            ],
-          ]}
-        >
-          {children}
-        </Provider>
+        <NumberFieldInner>{children}</NumberFieldInner>
       ))}
     </AriaNumberField>
+  );
+};
+
+const NumberFieldInner = ({ children }: { children: React.ReactNode }) => {
+  const incrementBtnCtx = useSlottedContext(AriaButtonContext, "increment");
+  const decrementBtnCtx = useSlottedContext(AriaButtonContext, "decrement");
+  return (
+    <Provider
+      values={[
+        [
+          AriaButtonContext,
+          {
+            slots: {
+              increment: { ...incrementBtnCtx, children: <PlusIcon /> },
+              decrement: { ...decrementBtnCtx, children: <MinusIcon /> },
+            },
+          },
+        ],
+      ]}
+    >
+      {children}
+    </Provider>
   );
 };
 

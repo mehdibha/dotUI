@@ -12,13 +12,12 @@ import {
 import { tv } from "tailwind-variants";
 import type { ToastProps as AriaToastProps } from "react-aria-components";
 
-import { focusRing } from "@dotui/registry-v2/lib/focus-styles";
 import { Button } from "@dotui/registry-v2/ui/button";
 
 const toastStyles = tv({
   slots: {
     region: [
-      focusRing(),
+      "focus-reset focus-visible:focus-ring",
       "fixed right-4 bottom-4 z-50 flex max-h-[calc(100vh-2rem)] flex-col gap-2 overflow-hidden outline-none",
     ],
     toast: "relative w-[min(380px,90vw)] rounded-lg border bg-bg p-4 shadow-lg",

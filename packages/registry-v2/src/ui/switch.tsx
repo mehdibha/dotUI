@@ -9,12 +9,11 @@ import { tv } from "tailwind-variants";
 import type { SwitchRenderProps } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 
-import { focusRingGroup } from "@dotui/registry-v2/lib/focus-styles";
 import { createContext } from "@dotui/registry-v2/lib/utils";
 
 const switchStyles = tv({
   slots: {
-    root: "group flex items-center justify-start gap-3 disabled:text-fg-disabled has-data-[slot=description]:items-start",
+    root: "group/switch flex items-center justify-start gap-3 disabled:text-fg-disabled has-data-[slot=description]:items-start",
     indicator: [
       "inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent bg-neutral transition-colors group-disabled:cursor-not-allowed group-disabled:border group-disabled:border-border-disabled group-disabled:bg-transparent group-selected:bg-border-focus group-selected:group-disabled:border-none group-selected:group-disabled:bg-disabled",
     ],
@@ -23,23 +22,23 @@ const switchStyles = tv({
   },
   variants: {
     variant: {
-      default: { indicator: focusRingGroup() },
+      default: { indicator: "focus-reset group-focus-visible/switch:focus-ring" },
     },
     size: {
       sm: {
         indicator: "h-5 w-9",
         thumb:
-          "size-4 group-pressed:w-5 group-selected:ml-4 group-selected:group-pressed:ml-3",
+          "size-4 group-pressed/switch:w-5 group-selected/switch:ml-4 group-selected/switch:group-pressed/switch:ml-3",
       },
       md: {
         indicator: "h-6 w-11",
         thumb:
-          "size-5 group-pressed:w-6 group-selected:ml-5 group-selected:group-pressed:ml-4",
+          "size-5 group-pressed/switch:w-6 group-selected/switch:ml-5 group-selected/switch:group-pressed/switch:ml-4",
       },
       lg: {
         indicator: "h-7 w-13",
         thumb:
-          "size-6 group-pressed:w-7 group-selected:ml-6 group-selected:group-pressed:ml-5",
+          "size-6 group-pressed/switch:w-7 group-selected/switch:ml-6 group-selected/switch:group-pressed/switch:ml-5",
       },
     },
   },

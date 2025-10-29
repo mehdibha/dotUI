@@ -25,6 +25,11 @@
   }
 }
 
+::selection {
+  background-color: var(--accent-800);
+  color: var(--on-accent-800);
+}
+
 @utility skeleton-provider {
   @apply text-transparent!;
 

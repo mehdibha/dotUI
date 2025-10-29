@@ -23,12 +23,12 @@ const toggleButtonStyles = tv({
     "not-selected:text-fg-muted selected:bg-selected selected:text-fg-on-selected selected:hover:bg-selected-hover selected:pressed:bg-selected-active",
 
     // disabled state
-    "disabled:cursor-not-allowed disabled:bg-disabled disabled:text-fg-disabled disabled:selected:bg-disabled disabled:selected:text-fg-disabled",
+    "disabled:cursor-not-allowed disabled:border-border-disabled disabled:bg-disabled disabled:text-fg-disabled disabled:selected:bg-disabled disabled:selected:text-fg-disabled",
   ],
   variants: {
     variant: {
       default:
-        "border bg-neutral text-fg-on-neutral hover:border-border-hover hover:bg-neutral-hover pressed:border-border-active pressed:bg-neutral-active selected:border-border-active",
+        "border bg-neutral text-fg-on-neutral hover:border-border-hover hover:bg-neutral-hover pressed:border-border-active pressed:bg-neutral-active selected:not-data-disabled:border-border-active",
       quiet: "bg-transparent text-fg hover:bg-inverse/10 pressed:bg-inverse/20",
     },
     size: {

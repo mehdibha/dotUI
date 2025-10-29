@@ -80,12 +80,6 @@ const TreeItemContent = (_props: TreeItemContentProps) => {
 
 /* -----------------------------------------------------------------------------------------------*/
 
-const ComponentTree = Object.assign(Tree, {
-  Item: TreeItem,
-  ItemContent: TreeItemContent,
-  Collection: AriaCollection,
-});
-
-export { ComponentTree as Tree, TreeItem, TreeItemContent };
+export { Tree, TreeItem, TreeItemContent };
 
 export type { TreeProps, TreeItemProps, TreeItemContentProps };
