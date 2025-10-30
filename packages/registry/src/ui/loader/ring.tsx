@@ -39,7 +39,7 @@ function Loader({
         "--loader-gap": String(100 - parseFloat(`${strokeLength}`) * 100),
       }))}
       className={cn(
-        "inline-flex size-[var(--loader-size)] shrink-0 items-center justify-center",
+        "inline-flex size-(--loader-size) shrink-0 items-center justify-center",
         className,
       )}
       aria-label="loading..."
@@ -47,7 +47,7 @@ function Loader({
       isIndeterminate
     >
       <svg
-        className="size-[var(--loader-size)] origin-center animate-[spin_var(--loader-speed)_linear_infinite] overflow-visible will-change-transform"
+        className="size-(--loader-size) origin-center animate-[spin_var(--loader-speed)_linear_infinite] overflow-visible will-change-transform"
         viewBox={`${centerPoint} ${centerPoint} ${size} ${size}`}
         height={size}
         width={size}

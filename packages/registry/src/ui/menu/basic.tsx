@@ -21,7 +21,7 @@ import type {
 } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 
-import { cn } from "../lib/utils";
+import { cn } from "@dotui/registry/lib/utils";
 
 const menuStyles = tv({
   base: [
@@ -147,9 +147,9 @@ const MenuSection = <T extends object>({
 
 /* -----------------------------------------------------------------------------------------------*/
 
-interface MenuHeaderProps extends React.ComponentProps<typeof AriaHeader> {}
+interface MenuSectionHeaderProps extends React.ComponentProps<typeof AriaHeader> {}
 
-const MenuHeader = ({ className, ...props }: MenuHeaderProps) => {
+const MenuSectionHeader = ({ className, ...props }: MenuSectionHeaderProps) => {
   return (
     <AriaHeader
       className={cn("text-sm font-medium text-fg-muted", className)}
@@ -160,6 +160,20 @@ const MenuHeader = ({ className, ...props }: MenuHeaderProps) => {
 
 /* -----------------------------------------------------------------------------------------------*/
 
-export { Menu, MenuItem, MenuContent, MenuSub, MenuSection, MenuHeader };
+export {
+  Menu,
+  MenuItem,
+  MenuContent,
+  MenuSection,
+  MenuSectionHeader,
+  MenuSub,
+};
 
-export type { MenuContentProps, MenuItemProps, MenuSectionProps, MenuSubProps };
+export type {
+  MenuProps,
+  MenuContentProps,
+  MenuItemProps,
+  MenuSectionProps,
+  MenuSectionHeaderProps,
+  MenuSubProps,
+};

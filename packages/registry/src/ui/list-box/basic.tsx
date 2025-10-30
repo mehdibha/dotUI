@@ -18,10 +18,12 @@ import {
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import type {
+  LabelProps as AriaLabelProps,
   ListBoxItemProps as AriaListBoxItemProps,
   ListBoxProps as AriaListBoxProps,
   ListBoxSectionProps as AriaListBoxSectionProps,
   VirtualizerProps as AriaVirtualizerProps,
+  ContextValue,
 } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 
@@ -120,17 +122,15 @@ const ListBoxItem = <T extends object>({
 };
 
 const ListBoxItemInner = ({ children }: { children: React.ReactNode }) => {
-  const { ref, ...labelProps } = useSlottedContext(AriaTextContext, "label")!;
+  const labelProps = useSlottedContext(AriaTextContext, "label")!;
   return (
     <Provider
       values={[
         [
-          LabelContext,
-          {
-            ref: ref as React.ForwardedRef<HTMLLabelElement>,
-            ...labelProps,
-            elementType: "span",
-          },
+          LabelContext as React.Context<
+            ContextValue<AriaLabelProps, HTMLElement>
+          >,
+          labelProps,
         ],
       ]}
     >

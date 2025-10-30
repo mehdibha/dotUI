@@ -12,7 +12,7 @@ export const Loader = createDynamicComponent<LoaderProps>(
   "Loader",
   _Loader,
   {
-    // Future variants will be added here
+    ring: React.lazy(() => import("./ring").then((mod) => ({ default: mod.Loader }))),
   },
 );
 

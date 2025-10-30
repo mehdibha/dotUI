@@ -1,20 +1,24 @@
 import { MenuIcon, PlusSquareIcon } from "@dotui/registry/icons";
 import { Button } from "@dotui/registry/ui/button";
-import { Menu, MenuItem, MenuRoot } from "@dotui/registry/ui/menu";
+import { Menu, MenuContent, MenuItem } from "@dotui/registry/ui/menu";
+import { Popover } from "@dotui/registry/ui/popover";
 
 export default function Demo() {
   return (
-    <MenuRoot>
-      <Button variant="default" shape="square">
+    <Menu>
+      <Button>
         <MenuIcon />
       </Button>
-      <Menu>
-        <MenuItem>Account settings</MenuItem>
-        <MenuItem prefix={<PlusSquareIcon />} isDisabled>
-          Create team
-        </MenuItem>
-        <MenuItem>Log out</MenuItem>
-      </Menu>
-    </MenuRoot>
+      <Popover>
+        <MenuContent>
+          <MenuItem>Account settings</MenuItem>
+          <MenuItem isDisabled>
+            <PlusSquareIcon />
+            Create team
+          </MenuItem>
+          <MenuItem>Log out</MenuItem>
+        </MenuContent>
+      </Popover>
+    </Menu>
   );
 }
