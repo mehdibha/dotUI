@@ -5,7 +5,9 @@ import { FileTrigger } from "@dotui/registry/ui/file-trigger";
 export default function FileTriggerDemo() {
   return (
     <FileTrigger acceptedFileTypes={["image/*"]}>
-      <Button prefix={<UploadIcon />}>Upload image</Button>
+      <Button>
+        <UploadIcon /> Upload image
+      </Button>
     </FileTrigger>
   );
 }

@@ -25,12 +25,11 @@ import { colorThumbVariants } from "@dotui/registry/ui/color-thumb/meta";
 import { comboboxVariants } from "@dotui/registry/ui/combobox/meta";
 import { commandVariants } from "@dotui/registry/ui/command/meta";
 import { dateFieldVariants } from "@dotui/registry/ui/date-field/meta";
-import { dateInputVariants } from "@dotui/registry/ui/date-input/meta";
 import { datePickerVariants } from "@dotui/registry/ui/date-picker/meta";
-import { dateRangePickerVariants } from "@dotui/registry/ui/date-range-picker/meta";
 import { dialogVariants } from "@dotui/registry/ui/dialog/meta";
 import { drawerVariants } from "@dotui/registry/ui/drawer/meta";
 import { dropZoneVariants } from "@dotui/registry/ui/drop-zone/meta";
+import { emptyVariants } from "@dotui/registry/ui/empty/meta";
 import { fieldVariants } from "@dotui/registry/ui/field/meta";
 import { fileTriggerVariants } from "@dotui/registry/ui/file-trigger/meta";
 import { formVariants } from "@dotui/registry/ui/form/meta";
@@ -307,12 +306,11 @@ export const variantsSchema = z.object({
   combobox: z.enum(comboboxVariants),
   command: z.enum(commandVariants),
   "date-field": z.enum(dateFieldVariants),
-  "date-input": z.enum(dateInputVariants),
   "date-picker": z.enum(datePickerVariants),
-  "date-range-picker": z.enum(dateRangePickerVariants),
   dialog: z.enum(dialogVariants),
   drawer: z.enum(drawerVariants),
   "drop-zone": z.enum(dropZoneVariants),
+  empty: z.enum(emptyVariants),
   field: z.enum(fieldVariants),
   "file-trigger": z.enum(fileTriggerVariants),
   "focus-styles": z.enum(focusStylesVariants),

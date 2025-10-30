@@ -5,8 +5,15 @@ import type { Key } from "react-aria-components";
 
 import { InfoIcon } from "@dotui/registry/icons";
 import { Button } from "@dotui/registry/ui/button";
-import { Dialog, DialogRoot } from "@dotui/registry/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogHeading,
+} from "@dotui/registry/ui/dialog";
 import { NumberField } from "@dotui/registry/ui/number-field";
+import { Overlay } from "@dotui/registry/ui/overlay";
 import { Select, SelectItem } from "@dotui/registry/ui/select";
 import { Switch } from "@dotui/registry/ui/switch";
 
@@ -19,16 +26,21 @@ export default function Demo() {
   return (
     <div className="flex w-full items-center">
       <div className="flex flex-1 items-center justify-center">
-        <DialogRoot>
+        <Dialog>
           <Button variant="default" shape="square">
             <InfoIcon />
           </Button>
-          <Dialog
-            type="popover"
-            title="Help"
-            description="For help accessing your account, please contact support."
-          />
-        </DialogRoot>
+          <Overlay type="popover">
+            <DialogContent>
+              <DialogHeader>
+                <DialogHeading>Help</DialogHeading>
+                <DialogDescription>
+                  For help accessing your account, please contact support.
+                </DialogDescription>
+              </DialogHeader>
+            </DialogContent>
+          </Overlay>
+        </Dialog>
       </div>
       <div className="space-y-4 rounded-md border p-4">
         <Select

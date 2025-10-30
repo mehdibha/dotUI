@@ -7,10 +7,14 @@ import {
   ListBox as AriaListBox,
   ListBoxItem as AriaListBoxItem,
   ListBoxSection as AriaListBoxSection,
+  TextContext as AriaTextContext,
   Virtualizer as AriaVirtualizer,
   composeRenderProps,
+  LabelContext,
   ListLayout,
   ListStateContext,
+  Provider,
+  useSlottedContext,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import type {
@@ -101,17 +105,37 @@ const ListBoxItem = <T extends object>({
       {composeRenderProps(
         props.children,
         (children, { selectionMode, isSelected }) => (
-          <>
+          <ListBoxItemInner>
             {children}
             {selectionMode !== "none" && (
               <span className="pointer-events-none absolute right-2 flex size-3.5 items-center justify-center">
                 {isSelected && <CheckIcon className="size-4" />}
               </span>
             )}
-          </>
+          </ListBoxItemInner>
         ),
       )}
     </AriaListBoxItem>
+  );
+};
+
+const ListBoxItemInner = ({ children }: { children: React.ReactNode }) => {
+  const { ref, ...labelProps } = useSlottedContext(AriaTextContext, "label")!;
+  return (
+    <Provider
+      values={[
+        [
+          LabelContext,
+          {
+            ref: ref as React.ForwardedRef<HTMLLabelElement>,
+            ...labelProps,
+            elementType: "span",
+          },
+        ],
+      ]}
+    >
+      {children}
+    </Provider>
   );
 };
 

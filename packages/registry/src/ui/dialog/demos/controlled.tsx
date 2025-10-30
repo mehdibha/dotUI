@@ -3,16 +3,29 @@
 import React from "react";
 
 import { Button } from "@dotui/registry/ui/button";
-import { Dialog, DialogRoot } from "@dotui/registry/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogHeading,
+} from "@dotui/registry/ui/dialog";
+import { Overlay } from "@dotui/registry/ui/overlay";
 
 export default function Demo() {
   const [isOpen, setOpen] = React.useState(false);
   return (
-    <DialogRoot isOpen={isOpen} onOpenChange={setOpen}>
+    <Dialog isOpen={isOpen} onOpenChange={setOpen}>
       <Button>Open dialog</Button>
-      <Dialog title="This is a heading" description="this is a description">
-        content here
-      </Dialog>
-    </DialogRoot>
+      <Overlay>
+        <DialogContent>
+          <DialogHeader>
+            <DialogHeading>This is a heading</DialogHeading>
+            <DialogDescription>this is a description</DialogDescription>
+          </DialogHeader>
+          content here
+        </DialogContent>
+      </Overlay>
+    </Dialog>
   );
 }

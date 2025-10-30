@@ -20,7 +20,9 @@ export default function FileTriggerDemo() {
           }
         }}
       >
-        <Button prefix={<UploadIcon />}>Upload a directory</Button>
+        <Button>
+          <UploadIcon /> Upload a directory
+        </Button>
       </FileTrigger>
       {files && (
         <ul>
