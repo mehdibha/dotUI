@@ -5,7 +5,13 @@ import { getLocalTimeZone, parseDate } from "@internationalized/date";
 import { useDateFormatter } from "react-aria";
 import type { DateRange } from "react-aria-components";
 
-import { DateRangePicker } from "@dotui/registry/ui/date-range-picker";
+import { Calendar } from "@dotui/registry/ui/calendar";
+import {
+  DatePicker,
+  DatePickerContent,
+  DatePickerInput,
+} from "@dotui/registry/ui/date-picker";
+import { Label } from "@dotui/registry/ui/field";
 
 export default function Demo() {
   const [value, setValue] = React.useState<DateRange | null>({
@@ -16,9 +22,15 @@ export default function Demo() {
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <DateRangePicker label="Controlled" value={value} onChange={setValue} />
+      <DatePicker mode="range" value={value} onChange={setValue}>
+        <Label>Meeting date</Label>
+        <DatePickerInput />
+        <DatePickerContent>
+          <Calendar />
+        </DatePickerContent>
+      </DatePicker>
       <p className="text-sm text-fg-muted">
-        Selected date:{" "}
+        selected range:{" "}
         {value
           ? formatter.formatRange(
               value.start.toDate(getLocalTimeZone()),

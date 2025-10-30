@@ -1,17 +1,28 @@
 "use client";
 
-import { parseZonedDateTime } from "@internationalized/date";
+import { parseAbsoluteToLocal } from "@internationalized/date";
 
-import { DateRangePicker } from "@dotui/registry/ui/date-range-picker";
+import { Calendar } from "@dotui/registry/ui/calendar";
+import {
+  DatePicker,
+  DatePickerContent,
+  DatePickerInput,
+} from "@dotui/registry/ui/date-picker";
 
 export default function Demo() {
   return (
-    <DateRangePicker
-      aria-label="Date range picker with time zones"
+    <DatePicker
+      mode="range"
+      aria-label="Date picker with time zones"
       defaultValue={{
-        start: parseZonedDateTime("2022-11-07T00:45[America/Los_Angeles]"),
-        end: parseZonedDateTime("2022-11-08T11:15[America/Los_Angeles]"),
+        start: parseAbsoluteToLocal("2021-04-07T18:45:22Z"),
+        end: parseAbsoluteToLocal("2021-04-08T20:00:00Z"),
       }}
-    />
+    >
+      <DatePickerInput />
+      <DatePickerContent>
+        <Calendar />
+      </DatePickerContent>
+    </DatePicker>
   );
 }

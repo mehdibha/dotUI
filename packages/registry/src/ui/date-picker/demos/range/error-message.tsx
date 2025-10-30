@@ -1,13 +1,20 @@
-"use client";
-
-import { DateRangePicker } from "@dotui/registry/ui/date-range-picker";
+import { Calendar } from "@dotui/registry/ui/calendar";
+import {
+  DatePicker,
+  DatePickerContent,
+  DatePickerInput,
+} from "@dotui/registry/ui/date-picker";
+import { FieldError, Label } from "@dotui/registry/ui/field";
 
 export default function Demo() {
   return (
-    <DateRangePicker
-      label="Trip dates"
-      isInvalid
-      errorMessage="Trip dates can't be scheduled in the past."
-    />
+    <DatePicker mode="range" aria-label="Meeting date" isInvalid>
+      <Label>Meeting date</Label>
+      <DatePickerInput />
+      <FieldError>Meetings can't be scheduled in the past.</FieldError>
+      <DatePickerContent>
+        <Calendar />
+      </DatePickerContent>
+    </DatePicker>
   );
 }

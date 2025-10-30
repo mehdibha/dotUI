@@ -121,14 +121,14 @@ type CalendarProps<T extends DateValue> =
     } & AriaRangeCalendarProps<T>);
 
 const Calendar = <T extends DateValue>({
-  mode = "single",
+  mode,
   className,
   ...props
 }: CalendarProps<T>) => {
   const rangeCalendarContext = useSlottedContext(AriaRangeCalendarContext);
   const calendarContext = useSlottedContext(AriaCalendarContext);
 
-  if (mode === "range") {
+  if (mode === "range" || rangeCalendarContext) {
     const standalone = Object.keys(rangeCalendarContext ?? {}).length === 0;
     return (
       <AriaRangeCalendar

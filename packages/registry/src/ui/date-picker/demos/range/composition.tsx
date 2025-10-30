@@ -2,41 +2,34 @@
 
 import { CalendarIcon } from "@dotui/registry/icons";
 import { Button } from "@dotui/registry/ui/button";
-import { RangeCalendar } from "@dotui/registry/ui/calendar";
-import { DateInput, DateSegment } from "@dotui/registry/ui/date-input";
-import { DatePickerRoot } from "@dotui/registry/ui/date-picker";
+import { Calendar } from "@dotui/registry/ui/calendar";
+import { DatePicker } from "@dotui/registry/ui/date-picker";
 import { DialogContent } from "@dotui/registry/ui/dialog";
 import { Description, FieldError, Label } from "@dotui/registry/ui/field";
-import { InputRoot } from "@dotui/registry/ui/input";
+import { DateInput, InputAddon, InputGroup } from "@dotui/registry/ui/input";
 import { Overlay } from "@dotui/registry/ui/overlay";
 
 export default function Demo() {
   return (
-    <DatePickerRoot>
+    <DatePicker mode="range">
       <Label>Meeting date</Label>
-      <InputRoot
-        suffix={
-          <Button variant="default" size="sm" shape="square" className="size-7">
+      <InputGroup>
+        <DateInput slot="start" />
+        <span>–</span>
+        <DateInput slot="end" />
+        <InputAddon>
+          <Button variant="default" size="sm">
             <CalendarIcon />
           </Button>
-        }
-        className="pr-1"
-      >
-        <DateInput slot="start">
-          {(segment) => <DateSegment segment={segment} />}
-        </DateInput>
-        <span aria-hidden="true">–</span>
-        <DateInput slot="end" className="flex-1">
-          {(segment) => <DateSegment segment={segment} />}
-        </DateInput>
-      </InputRoot>
+        </InputAddon>
+      </InputGroup>
       <Description>Please select a date.</Description>
       <FieldError />
       <Overlay type="popover" mobileType="drawer">
         <DialogContent>
-          <RangeCalendar />
+          <Calendar />
         </DialogContent>
       </Overlay>
-    </DatePickerRoot>
+    </DatePicker>
   );
 }

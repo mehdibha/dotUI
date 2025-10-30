@@ -1,5 +1,20 @@
-import { DateRangePicker } from "@dotui/registry/ui/date-range-picker";
+import { Calendar } from "@dotui/registry/ui/calendar";
+import {
+  DatePicker,
+  DatePickerContent,
+  DatePickerInput,
+} from "@dotui/registry/ui/date-picker";
 
 export default function Demo() {
-  return <DateRangePicker aria-label="Meeting date" />;
+  return (
+    <DatePicker
+      aria-label="Meeting date"
+      mode="range"
+    >
+      <DatePickerInput />
+      <DatePickerContent>
+        <Calendar />
+      </DatePickerContent>
+    </DatePicker>
+  );
 }

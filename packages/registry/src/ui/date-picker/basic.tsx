@@ -1,9 +1,11 @@
 "use client";
 
+import { useContext } from "react";
 import { CalendarIcon } from "lucide-react";
 import {
   DateRangePicker as AriaDataRangePicker,
   DatePicker as AriaDatePicker,
+  RangeCalendarContext as AriaRangeCalendarContext,
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
@@ -14,7 +16,6 @@ import type {
 } from "react-aria-components";
 
 import { Button } from "@dotui/registry/ui/button";
-import { Calendar } from "@dotui/registry/ui/calendar";
 import {
   DialogContent,
   type DialogContentProps,
@@ -68,9 +69,20 @@ const DatePicker = <T extends DateValue>({
 interface DatePickerInputProps extends InputGroupProps {}
 
 const DatePickerInput = (props: DatePickerInputProps) => {
+  const rangeCalendarContext = useContext(AriaRangeCalendarContext);
+  const mode = rangeCalendarContext ? "range" : "single";
+
   return (
     <InputGroup {...props}>
-      <DateInput />
+      {mode === "single" ? (
+        <DateInput />
+      ) : (
+        <>
+          <DateInput slot="start" />
+          <span>–</span>
+          <DateInput slot="end" />
+        </>
+      )}
       <InputAddon>
         <Button>
           <CalendarIcon />
@@ -84,10 +96,7 @@ const DatePickerInput = (props: DatePickerInputProps) => {
 
 interface DatePickerContentProps extends DialogContentProps {}
 
-const DatePickerContent = ({
-  children,
-  ...props
-}: DatePickerContentProps) => {
+const DatePickerContent = ({ children, ...props }: DatePickerContentProps) => {
   return (
     <Overlay type="popover">
       <DialogContent {...props}>{children}</DialogContent>
