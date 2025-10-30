@@ -1,8 +1,8 @@
 "use client";
 
 import type * as React from "react";
+import { CheckIcon, ChevronRightIcon } from "lucide-react";
 import {
-  Collection as AriaCollection,
   Header as AriaHeader,
   Menu as AriaMenu,
   MenuItem as AriaMenuItem,
@@ -21,11 +21,7 @@ import type {
 } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 
-import { CheckIcon, ChevronRightIcon } from "@dotui/registry/icons";
-import { Kbd } from "@dotui/registry/ui/kbd";
-import { Overlay } from "@dotui/registry/ui/overlay";
-import { Text } from "@dotui/registry/ui/text";
-import type { OverlayProps } from "@dotui/registry/ui/overlay";
+import { cn } from "../lib/utils";
 
 const menuStyles = tv({
   base: [
@@ -35,6 +31,41 @@ const menuStyles = tv({
   ],
 });
 
+/* -----------------------------------------------------------------------------------------------*/
+
+interface MenuProps extends AriaMenuTriggerProps {}
+
+const Menu = (props: MenuProps) => {
+  return <AriaMenuTrigger {...props} />;
+};
+
+/* -----------------------------------------------------------------------------------------------*/
+
+interface MenuContentProps<T> extends AriaMenuProps<T> {}
+const MenuContent = <T extends object>({
+  className,
+  ...props
+}: MenuContentProps<T>) => {
+  return (
+    <AriaMenu
+      className={composeRenderProps(className, (className) =>
+        menuStyles({ className }),
+      )}
+      {...props}
+    />
+  );
+};
+
+/* -----------------------------------------------------------------------------------------------*/
+
+interface MenuSubProps extends AriaSubmenuTriggerProps {}
+
+const MenuSub = (props: MenuSubProps) => {
+  return <AriaSubmenuTrigger {...props} />;
+};
+
+/* -----------------------------------------------------------------------------------------------*/
+
 const menuItemStyles = tv({
   base: [
     "flex cursor-pointer items-center gap-2 rounded-sm px-3 py-1.5 text-sm outline-hidden transition-colors focus:bg-inverse/10 disabled:pointer-events-none disabled:text-fg-disabled",
@@ -42,6 +73,7 @@ const menuItemStyles = tv({
     "group-data-[slot=drawer]/overlay:py-3 group-data-[slot=drawer]/overlay:text-base",
     "group-data-[slot=modal]/overlay:py-2 group-data-[slot=modal]/overlay:text-base",
     "[&_svg]:size-4",
+    "[&_kbd]:bg-transparent [&_kbd]:text-fg-muted",
   ],
   variants: {
     variant: {
@@ -57,75 +89,21 @@ const menuItemStyles = tv({
   },
 });
 
-const menuSectionStyles = tv({
-  base: "space-y-px pt-2",
-});
-
-type MenuRootProps = AriaMenuTriggerProps;
-const MenuRoot = (props: MenuRootProps) => {
-  return <AriaMenuTrigger {...props} />;
-};
-
-type MenuProps<T> = MenuContentProps<T> & {
-  type?: OverlayProps["type"];
-  mobileType?: OverlayProps["mobileType"];
-  overlayProps?: OverlayProps;
-};
-const Menu = <T extends object>({
-  type = "popover",
-  mobileType = "drawer",
-  overlayProps,
-  ...props
-}: MenuProps<T>) => {
-  return (
-    <Overlay type={type} mobileType={mobileType} {...overlayProps}>
-      <MenuContent {...props} />
-    </Overlay>
-  );
-};
-
-type MenuContentProps<T> = AriaMenuProps<T>;
-const MenuContent = <T extends object>({
-  className,
-  ...props
-}: MenuContentProps<T>) => {
-  return (
-    <AriaMenu
-      className={composeRenderProps(className, (className) =>
-        menuStyles({ className }),
-      )}
-      {...props}
-    />
-  );
-};
-
-type MenuSubProps = AriaSubmenuTriggerProps;
-const MenuSub = AriaSubmenuTrigger;
-
 interface MenuItemProps<T>
-  extends Omit<AriaMenuItemProps<T>, "className">,
-    VariantProps<typeof menuItemStyles> {
-  prefix?: React.ReactNode;
-  suffix?: React.ReactNode;
-  label?: string;
-  description?: string;
-  shortcut?: string;
-  className?: string;
-}
+  extends AriaMenuItemProps<T>,
+    VariantProps<typeof menuItemStyles> {}
+
 const MenuItem = <T extends object>({
   className,
-  label,
-  description,
-  prefix,
-  suffix,
-  shortcut,
   variant,
   ...props
 }: MenuItemProps<T>) => {
   return (
     <AriaMenuItem
-      className={menuItemStyles({ className, variant })}
       data-slot="menu-item"
+      className={composeRenderProps(className, (className) =>
+        menuItemStyles({ className, variant }),
+      )}
       {...props}
     >
       {composeRenderProps(
@@ -139,19 +117,8 @@ const MenuItem = <T extends object>({
                 )}
               </span>
             )}
-            {prefix}
-            <span className="flex flex-1 items-center gap-2">
-              <span className="flex flex-1 flex-col">
-                {label && <Text slot="label">{label}</Text>}
-                {description && <Text slot="description">{description}</Text>}
-                {children}
-              </span>
-              {suffix}
-              {shortcut && <Kbd>{shortcut}</Kbd>}
-              {hasSubmenu && (
-                <ChevronRightIcon aria-hidden className="size-4" />
-              )}
-            </span>
+            {children}
+            {hasSubmenu && <ChevronRightIcon aria-hidden className="size-4" />}
           </>
         ),
       )}
@@ -159,34 +126,40 @@ const MenuItem = <T extends object>({
   );
 };
 
-interface MenuSectionProps<T> extends AriaMenuSectionProps<T> {
-  ref?: React.Ref<HTMLElement>;
-  title?: React.ReactNode;
-}
+/* -----------------------------------------------------------------------------------------------*/
+
+const menuSectionStyles = tv({
+  base: "space-y-px pt-2",
+});
+
+interface MenuSectionProps<T> extends AriaMenuSectionProps<T> {}
 const MenuSection = <T extends object>({
-  title,
   children,
   className,
   ...props
 }: MenuSectionProps<T>) => {
   return (
     <AriaMenuSection className={menuSectionStyles({ className })} {...props}>
-      {title && (
-        <AriaHeader className="mb-1 pl-3 text-xs text-fg-muted">
-          {title}
-        </AriaHeader>
-      )}
-      <AriaCollection items={props.items}>{children}</AriaCollection>
+      {children}
     </AriaMenuSection>
   );
 };
 
-export type {
-  MenuRootProps,
-  MenuProps,
-  MenuContentProps,
-  MenuItemProps,
-  MenuSectionProps,
-  MenuSubProps,
+/* -----------------------------------------------------------------------------------------------*/
+
+interface MenuHeaderProps extends React.ComponentProps<typeof AriaHeader> {}
+
+const MenuHeader = ({ className, ...props }: MenuHeaderProps) => {
+  return (
+    <AriaHeader
+      className={cn("text-sm font-medium text-fg-muted", className)}
+      {...props}
+    />
+  );
 };
-export { MenuRoot, Menu, MenuItem, MenuContent, MenuSub, MenuSection };
+
+/* -----------------------------------------------------------------------------------------------*/
+
+export { Menu, MenuItem, MenuContent, MenuSub, MenuSection, MenuHeader };
+
+export type { MenuContentProps, MenuItemProps, MenuSectionProps, MenuSubProps };

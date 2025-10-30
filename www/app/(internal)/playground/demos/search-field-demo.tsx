@@ -1,9 +1,9 @@
 "use client";
 
 import { SearchIcon } from "@dotui/registry/icons";
-import { Input, InputAddon, InputGroup } from "@dotui/registry-v2/ui/input";
-import { Kbd } from "@dotui/registry-v2/ui/kbd";
-import { SearchField } from "@dotui/registry-v2/ui/search-field";
+import { Input, InputAddon, InputGroup } from "@dotui/registry/ui/input";
+import { Kbd } from "@dotui/registry/ui/kbd";
+import { SearchField } from "@dotui/registry/ui/search-field";
 
 export function SearchFieldDemo() {
   return (

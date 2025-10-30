@@ -3,14 +3,18 @@
 import React from "react";
 import { CalendarIcon } from "lucide-react";
 
-import { cn } from "@dotui/registry-v2/lib/utils";
-import { Button } from "@dotui/registry-v2/ui/button";
-import { Calendar } from "@dotui/registry-v2/ui/calendar";
-import { DatePicker } from "@dotui/registry-v2/ui/date-picker";
-import { DialogContent } from "@dotui/registry-v2/ui/dialog";
-import { Label } from "@dotui/registry-v2/ui/field";
-import { DateInput, InputAddon, InputGroup } from "@dotui/registry-v2/ui/input";
-import { Overlay } from "@dotui/registry-v2/ui/overlay";
+import { cn } from "@dotui/registry/lib/utils";
+import { Button } from "@dotui/registry/ui/button";
+import { Calendar } from "@dotui/registry/ui/calendar";
+import { DatePicker } from "@dotui/registry/ui/date-picker";
+import {
+  DatePickerContent,
+  DatePickerInput,
+} from "@dotui/registry/ui/date-picker/basic";
+import { DialogContent } from "@dotui/registry/ui/dialog";
+import { Label } from "@dotui/registry/ui/field";
+import { DateInput, InputAddon, InputGroup } from "@dotui/registry/ui/input";
+import { Overlay } from "@dotui/registry/ui/overlay";
 
 export function DatePickerDemo() {
   const triggerRef = React.useRef<HTMLButtonElement>(null);
@@ -24,19 +28,10 @@ export function DatePickerDemo() {
       <div className="space-y-6">
         <DatePicker>
           <Label>Meeting date</Label>
-          <InputGroup>
-            <DateInput />
-            <InputAddon>
-              <Button>
-                <CalendarIcon />
-              </Button>
-            </InputAddon>
-          </InputGroup>
-          <Overlay type="popover">
-            <DialogContent>
-              <Calendar />
-            </DialogContent>
-          </Overlay>
+          <DatePickerInput />
+          <DatePickerContent>
+            <Calendar aria-label="Pick a date" />
+          </DatePickerContent>
         </DatePicker>
 
         <DatePicker>
@@ -125,7 +120,10 @@ export function DatePickerDemo() {
                   ? `${state.value.start.toString()} – ${state.value.end.toString()}`
                   : "Pick your trip dates"}
               </Button>
-              <Overlay type="popover" popoverProps={{ triggerRef: triggerRef3 }}>
+              <Overlay
+                type="popover"
+                popoverProps={{ triggerRef: triggerRef3 }}
+              >
                 <DialogContent>
                   <Calendar mode="range" aria-label="Pick your trip dates" />
                 </DialogContent>

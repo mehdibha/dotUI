@@ -1,6 +1,6 @@
 "use client";
 
-import { Tag } from "@dotui/registry-v2/ui/tag-group";
+import { Tag } from "@dotui/registry/ui/tag-group";
 
 const _tags = [
   { id: 1, name: "React" },

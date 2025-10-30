@@ -7,26 +7,26 @@ import {
   useFilter,
 } from "react-aria-components";
 
-import { cn } from "@dotui/registry-v2/lib/utils";
-import { Button } from "@dotui/registry-v2/ui/button";
-import { Dialog, DialogContent } from "@dotui/registry-v2/ui/dialog";
-import { Input, InputAddon, InputGroup } from "@dotui/registry-v2/ui/input";
-import { ListBox, ListBoxItem } from "@dotui/registry-v2/ui/list-box";
+import { cn } from "@dotui/registry/lib/utils";
+import { Button } from "@dotui/registry/ui/button";
+import { Dialog, DialogContent } from "@dotui/registry/ui/dialog";
+import { Input, InputAddon, InputGroup } from "@dotui/registry/ui/input";
+import { ListBox, ListBoxItem } from "@dotui/registry/ui/list-box";
 import {
   Menu,
   MenuContent,
   MenuItem,
   MenuSub,
-} from "@dotui/registry-v2/ui/menu";
-import { Overlay } from "@dotui/registry-v2/ui/overlay";
+} from "@dotui/registry/ui/menu";
+import { Overlay } from "@dotui/registry/ui/overlay";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-} from "@dotui/registry-v2/ui/select";
-import { TextField } from "@dotui/registry-v2/ui/text-field";
-import { Tooltip } from "@dotui/registry-v2/ui/tooltip";
+} from "@dotui/registry/ui/select";
+import { TextField } from "@dotui/registry/ui/text-field";
+import { Tooltip } from "@dotui/registry/ui/tooltip";
 
 export function AutocompleteDemo() {
   const { contains } = useFilter({ sensitivity: "base" });

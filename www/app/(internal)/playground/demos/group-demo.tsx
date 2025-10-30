@@ -32,46 +32,46 @@ import {
 } from "lucide-react";
 
 import { SearchIcon } from "@dotui/registry/icons";
-import { Button } from "@dotui/registry-v2/ui/button";
-import { ColorField } from "@dotui/registry-v2/ui/color-field";
-import { ColorPicker } from "@dotui/registry-v2/ui/color-picker";
-import { ColorSwatch } from "@dotui/registry-v2/ui/color-swatch";
-import { ColorSwatchPicker } from "@dotui/registry-v2/ui/color-swatch-picker";
+import { Button } from "@dotui/registry/ui/button";
+import { ColorField } from "@dotui/registry/ui/color-field";
+import { ColorPicker } from "@dotui/registry/ui/color-picker";
+import { ColorSwatch } from "@dotui/registry/ui/color-swatch";
+import { ColorSwatchPicker } from "@dotui/registry/ui/color-swatch-picker";
 import {
   Dialog,
   DialogBody,
   DialogContent,
   DialogHeader,
   DialogHeading,
-} from "@dotui/registry-v2/ui/dialog";
-import { Label } from "@dotui/registry-v2/ui/field";
-import { Group } from "@dotui/registry-v2/ui/group";
+} from "@dotui/registry/ui/dialog";
+import { Label } from "@dotui/registry/ui/field";
+import { Group } from "@dotui/registry/ui/group";
 import {
   Input,
   InputAddon,
   InputGroup,
   TextArea,
-} from "@dotui/registry-v2/ui/input";
+} from "@dotui/registry/ui/input";
 import {
   Menu,
   MenuContent,
   MenuItem,
   MenuSection,
   MenuSub,
-} from "@dotui/registry-v2/ui/menu";
-import { NumberField } from "@dotui/registry-v2/ui/number-field";
-import { Popover } from "@dotui/registry-v2/ui/popover";
-import { SearchField } from "@dotui/registry-v2/ui/search-field";
+} from "@dotui/registry/ui/menu";
+import { NumberField } from "@dotui/registry/ui/number-field";
+import { Popover } from "@dotui/registry/ui/popover";
+import { SearchField } from "@dotui/registry/ui/search-field";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-} from "@dotui/registry-v2/ui/select";
-import { Separator } from "@dotui/registry-v2/ui/separator";
-import { Text } from "@dotui/registry-v2/ui/text";
-import { TextField } from "@dotui/registry-v2/ui/text-field";
-import { Tooltip, TooltipContent } from "@dotui/registry-v2/ui/tooltip";
+} from "@dotui/registry/ui/select";
+import { Separator } from "@dotui/registry/ui/separator";
+import { Text } from "@dotui/registry/ui/text";
+import { TextField } from "@dotui/registry/ui/text-field";
+import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
 
 export function GroupDemo() {
   const [currency, setCurrency] = useState("$");

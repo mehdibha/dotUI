@@ -1,6 +1,6 @@
 "use client";
 
-import { ListBox, ListBoxItem } from "@dotui/registry-v2/ui/list-box";
+import { ListBox, ListBoxItem } from "@dotui/registry/ui/list-box";
 
 const items = [
   { id: 1, name: "Apple" },

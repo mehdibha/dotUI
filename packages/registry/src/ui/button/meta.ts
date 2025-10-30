@@ -14,52 +14,6 @@ const buttonMeta = {
       ],
       registryDependencies: ["loader", "focus-styles"],
     },
-    outline: {
-      files: [
-        {
-          type: "registry:ui",
-          path: "ui/button/outline.tsx",
-          target: "ui/button.tsx",
-        },
-      ],
-      registryDependencies: ["loader", "focus-styles"],
-    },
-    shine: {
-      files: [
-        {
-          type: "registry:ui",
-          path: "ui/button/shine.tsx",
-          target: "ui/button.tsx",
-        },
-      ],
-      registryDependencies: ["loader", "focus-styles"],
-      cssVars: {
-        theme: {
-          "shadow-shine":
-            "inset 0px 0px 0px 1px color-mix(in srgb, var(--color-shine) 15%, transparent), inset 0px 1px 0px color-mix(in srgb, var(--color-shine) 30%, transparent)",
-        },
-      },
-    },
-    ripple: {
-      files: [
-        {
-          type: "registry:ui",
-          path: "ui/button/ripple.tsx",
-          target: "ui/button.tsx",
-        },
-        {
-          type: "registry:ui",
-          path: "ui/ripple.tsx",
-          target: "ui/ripple.tsx",
-        },
-        {
-          type: "registry:hook",
-          path: "hooks/use-ripple.ts",
-          target: "hooks/use-ripple.ts",
-        },
-      ],
-      registryDependencies: ["loader", "focus-styles"],
-    },
   },
 } satisfies RegistryItem;
 

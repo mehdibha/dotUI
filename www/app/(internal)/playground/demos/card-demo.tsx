@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { BathIcon, BedIcon, LandPlotIcon } from "lucide-react";
 
-import { Avatar } from "@dotui/registry-v2/ui/avatar";
-import { Badge } from "@dotui/registry-v2/ui/badge";
-import { Button } from "@dotui/registry-v2/ui/button";
+import { Avatar } from "@dotui/registry/ui/avatar";
+import { Badge } from "@dotui/registry/ui/badge";
+import { Button } from "@dotui/registry/ui/button";
 import {
   Card,
   CardContent,
@@ -11,10 +11,10 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@dotui/registry-v2/ui/card";
-import { Label } from "@dotui/registry-v2/ui/field";
-import { Input } from "@dotui/registry-v2/ui/input";
-import { TextField } from "@dotui/registry-v2/ui/text-field";
+} from "@dotui/registry/ui/card";
+import { Label } from "@dotui/registry/ui/field";
+import { Input } from "@dotui/registry/ui/input";
+import { TextField } from "@dotui/registry/ui/text-field";
 
 export function CardDemo() {
   return (

@@ -999,109 +999,109 @@ export const Index: Record<
   "date-range-picker/demos/composition": {
     files: ["ui/date-range-picker/demos/composition.tsx"],
     component: React.lazy(
-      () => import("@dotui/registry/ui/date-range-picker/demos/composition"),
+      () => import("@dotui/registry/ui/date-picker/demos/range/composition"),
     ),
   },
   "date-range-picker/demos/controlled": {
     files: ["ui/date-range-picker/demos/controlled.tsx"],
     component: React.lazy(
-      () => import("@dotui/registry/ui/date-range-picker/demos/controlled"),
+      () => import("@dotui/registry/ui/date-picker/demos/range/controlled"),
     ),
   },
   "date-range-picker/demos/default": {
     files: ["ui/date-range-picker/demos/default.tsx"],
     component: React.lazy(
-      () => import("@dotui/registry/ui/date-range-picker/demos/default"),
+      () => import("@dotui/registry/ui/date-picker/demos/range/default"),
     ),
   },
   "date-range-picker/demos/description": {
     files: ["ui/date-range-picker/demos/description.tsx"],
     component: React.lazy(
-      () => import("@dotui/registry/ui/date-range-picker/demos/description"),
+      () => import("@dotui/registry/ui/date-picker/demos/range/description"),
     ),
   },
   "date-range-picker/demos/disabled": {
     files: ["ui/date-range-picker/demos/disabled.tsx"],
     component: React.lazy(
-      () => import("@dotui/registry/ui/date-range-picker/demos/disabled"),
+      () => import("@dotui/registry/ui/date-picker/demos/range/disabled"),
     ),
   },
   "date-range-picker/demos/error-message": {
     files: ["ui/date-range-picker/demos/error-message.tsx"],
     component: React.lazy(
-      () => import("@dotui/registry/ui/date-range-picker/demos/error-message"),
+      () => import("@dotui/registry/ui/date-picker/demos/range/error-message"),
     ),
   },
   "date-range-picker/demos/granularity": {
     files: ["ui/date-range-picker/demos/granularity.tsx"],
     component: React.lazy(
-      () => import("@dotui/registry/ui/date-range-picker/demos/granularity"),
+      () => import("@dotui/registry/ui/date-picker/demos/range/granularity"),
     ),
   },
   "date-range-picker/demos/hide-time-zone": {
     files: ["ui/date-range-picker/demos/hide-time-zone.tsx"],
     component: React.lazy(
-      () => import("@dotui/registry/ui/date-range-picker/demos/hide-time-zone"),
+      () => import("@dotui/registry/ui/date-picker/demos/range/hide-time-zone"),
     ),
   },
   "date-range-picker/demos/hour-cycle": {
     files: ["ui/date-range-picker/demos/hour-cycle.tsx"],
     component: React.lazy(
-      () => import("@dotui/registry/ui/date-range-picker/demos/hour-cycle"),
+      () => import("@dotui/registry/ui/date-picker/demos/range/hour-cycle"),
     ),
   },
   "date-range-picker/demos/label": {
     files: ["ui/date-range-picker/demos/label.tsx"],
     component: React.lazy(
-      () => import("@dotui/registry/ui/date-range-picker/demos/label"),
+      () => import("@dotui/registry/ui/date-picker/demos/range/label"),
     ),
   },
   "date-range-picker/demos/loading": {
     files: ["ui/date-range-picker/demos/loading.tsx"],
     component: React.lazy(
-      () => import("@dotui/registry/ui/date-range-picker/demos/loading"),
+      () => import("@dotui/registry/ui/date-picker/demos/range/loading"),
     ),
   },
   "date-range-picker/demos/placeholder": {
     files: ["ui/date-range-picker/demos/placeholder.tsx"],
     component: React.lazy(
-      () => import("@dotui/registry/ui/date-range-picker/demos/placeholder"),
+      () => import("@dotui/registry/ui/date-picker/demos/range/placeholder"),
     ),
   },
   "date-range-picker/demos/prefix": {
     files: ["ui/date-range-picker/demos/prefix.tsx"],
     component: React.lazy(
-      () => import("@dotui/registry/ui/date-range-picker/demos/prefix"),
+      () => import("@dotui/registry/ui/date-picker/demos/range/prefix"),
     ),
   },
   "date-range-picker/demos/read-only": {
     files: ["ui/date-range-picker/demos/read-only.tsx"],
     component: React.lazy(
-      () => import("@dotui/registry/ui/date-range-picker/demos/read-only"),
+      () => import("@dotui/registry/ui/date-picker/demos/range/read-only"),
     ),
   },
   "date-range-picker/demos/required": {
     files: ["ui/date-range-picker/demos/required.tsx"],
     component: React.lazy(
-      () => import("@dotui/registry/ui/date-range-picker/demos/required"),
+      () => import("@dotui/registry/ui/date-range-picker/range/required"),
     ),
   },
   "date-range-picker/demos/sizes": {
     files: ["ui/date-range-picker/demos/sizes.tsx"],
     component: React.lazy(
-      () => import("@dotui/registry/ui/date-range-picker/demos/sizes"),
+      () => import("@dotui/registry/ui/date-range-picker/range/sizes"),
     ),
   },
   "date-range-picker/demos/time-zones": {
     files: ["ui/date-range-picker/demos/time-zones.tsx"],
     component: React.lazy(
-      () => import("@dotui/registry/ui/date-range-picker/demos/time-zones"),
+      () => import("@dotui/registry/ui/date-range-picker/range/time-zones"),
     ),
   },
   "date-range-picker/demos/uncontrolled": {
     files: ["ui/date-range-picker/demos/uncontrolled.tsx"],
     component: React.lazy(
-      () => import("@dotui/registry/ui/date-range-picker/demos/uncontrolled"),
+      () => import("@dotui/registry/ui/date-picker/demos/range/uncontrolled"),
     ),
   },
   "dialog/demos/alert-dialog": {

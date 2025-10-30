@@ -1,5 +1,6 @@
 "use client";
 
+import { XIcon } from "lucide-react";
 import {
   UNSTABLE_Toast as AriaToast,
   UNSTABLE_ToastContent as AriaToastContent,
@@ -11,14 +12,12 @@ import {
 import { tv } from "tailwind-variants";
 import type { ToastProps as AriaToastProps } from "react-aria-components";
 
-import { XIcon } from "@dotui/registry/icons";
-import { focusRing } from "@dotui/registry/lib/focus-styles";
 import { Button } from "@dotui/registry/ui/button";
 
 const toastStyles = tv({
   slots: {
     region: [
-      focusRing(),
+      "focus-reset focus-visible:focus-ring",
       "fixed right-4 bottom-4 z-50 flex max-h-[calc(100vh-2rem)] flex-col gap-2 overflow-hidden outline-none",
     ],
     toast: "relative w-[min(380px,90vw)] rounded-lg border bg-bg p-4 shadow-lg",
@@ -86,7 +85,7 @@ const Toaster = () => {
           <Button
             slot="close"
             variant="quiet"
-            shape="square"
+            aspect="square"
             size="sm"
             aria-label="Close"
             className={close()}

@@ -1,6 +1,6 @@
 "use client";
 
-import { Link } from "@dotui/registry-v2/ui/link";
+import { Link } from "@dotui/registry/ui/link";
 
 export function LinkDemo() {
   return (

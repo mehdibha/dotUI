@@ -1,4 +1,4 @@
-import { TextArea } from "@dotui/registry-v2/ui/input";
+import { TextArea } from "@dotui/registry/ui/input";
 
 export function TextAreaDemo() {
   return (

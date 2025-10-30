@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@dotui/registry-v2/ui/button";
+import { Button } from "@dotui/registry/ui/button";
 import {
   Dialog,
   DialogBody,
@@ -10,11 +10,11 @@ import {
   DialogHeader,
   DialogHeading,
   DialogInset,
-} from "@dotui/registry-v2/ui/dialog";
-import { Label } from "@dotui/registry-v2/ui/field";
-import { Input } from "@dotui/registry-v2/ui/input";
-import { Popover } from "@dotui/registry-v2/ui/popover";
-import { TextField } from "@dotui/registry-v2/ui/text-field";
+} from "@dotui/registry/ui/dialog";
+import { Label } from "@dotui/registry/ui/field";
+import { Input } from "@dotui/registry/ui/input";
+import { Popover } from "@dotui/registry/ui/popover";
+import { TextField } from "@dotui/registry/ui/text-field";
 
 export function PopoverDemo() {
   return (

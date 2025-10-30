@@ -2,11 +2,8 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import {
-  ColorArea as _ColorArea,
-  ColorAreaRoot as _ColorAreaRoot,
-} from "./basic";
-import type { ColorAreaProps, ColorAreaRootProps } from "./basic";
+import type { ColorAreaProps } from "./basic";
+import { ColorArea as _ColorArea } from "./basic";
 
 export const ColorArea = createDynamicComponent<ColorAreaProps>(
   "color-area",
@@ -15,11 +12,4 @@ export const ColorArea = createDynamicComponent<ColorAreaProps>(
   {},
 );
 
-export const ColorAreaRoot = createDynamicComponent<ColorAreaRootProps>(
-  "color-area",
-  "ColorAreaRoot",
-  _ColorAreaRoot,
-  {},
-);
-
-export type { ColorAreaProps, ColorAreaRootProps };
+export type { ColorAreaProps };

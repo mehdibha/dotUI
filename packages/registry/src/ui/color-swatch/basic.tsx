@@ -15,6 +15,7 @@ interface ColorSwatchProps
 const ColorSwatch = ({ className, style, ...props }: ColorSwatchProps) => {
   return (
     <AriaColorSwatch
+      data-slot="color-swatch"
       className={composeRenderProps(className, (className) =>
         colorSwatchStyles({ className }),
       )}

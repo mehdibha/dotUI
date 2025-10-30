@@ -1,84 +1,99 @@
 "use client";
 
-import type * as React from "react";
-import { DatePicker as AriaDatePicker } from "react-aria-components";
+import { CalendarIcon } from "lucide-react";
+import {
+  DateRangePicker as AriaDataRangePicker,
+  DatePicker as AriaDatePicker,
+  composeRenderProps,
+} from "react-aria-components";
 import { tv } from "tailwind-variants";
 import type {
+  DateRangePickerProps as AriaDataRangePickerProps,
   DatePickerProps as AriaDatePickerProps,
   DateValue,
 } from "react-aria-components";
-import type { VariantProps } from "tailwind-variants";
 
-import { CalendarIcon } from "@dotui/registry/icons";
 import { Button } from "@dotui/registry/ui/button";
 import { Calendar } from "@dotui/registry/ui/calendar";
-import { DateInput, DateSegment } from "@dotui/registry/ui/date-input";
-import { Dialog } from "@dotui/registry/ui/dialog";
-import { HelpText, Label } from "@dotui/registry/ui/field";
-import { InputRoot } from "@dotui/registry/ui/input";
-import type { FieldProps } from "@dotui/registry/ui/field";
-import type { inputStyles } from "@dotui/registry/ui/input";
+import {
+  DialogContent,
+  type DialogContentProps,
+} from "@dotui/registry/ui/dialog";
+import { DateInput, InputAddon, InputGroup } from "@dotui/registry/ui/input";
+import { Overlay } from "@dotui/registry/ui/overlay";
+import type { InputGroupProps } from "@dotui/registry/ui/input";
 
 const datePickerStyles = tv({
   base: "flex w-48 flex-col items-start gap-2",
 });
 
-interface DatePickerProps<T extends DateValue>
-  extends DatePickerRootProps<T>,
-    Omit<FieldProps, "children">,
-    VariantProps<typeof inputStyles> {
-  prefix?: React.ReactNode;
-}
+type DatePickerProps<T extends DateValue> =
+  | ({
+      mode?: "single";
+    } & AriaDatePickerProps<T>)
+  | ({
+      mode: "range";
+    } & AriaDataRangePickerProps<T>);
 
 const DatePicker = <T extends DateValue>({
-  size,
-  label,
-  description,
-  errorMessage,
-  prefix,
-  ...props
-}: DatePickerProps<T>) => {
-  return (
-    <DatePickerRoot {...props}>
-      {label && <Label>{label}</Label>}
-      <InputRoot
-        size={size}
-        prefix={prefix}
-        // isInvalid={isInvalid}
-        className="pr-1"
-      >
-        <DateInput className="flex-1">
-          {(segment) => <DateSegment segment={segment} />}
-        </DateInput>
-        <Button
-          variant="default"
-          size="sm"
-          shape="square"
-          className="my-1 size-7 rounded-sm"
-        >
-          <CalendarIcon />
-        </Button>
-      </InputRoot>
-      <HelpText description={description} errorMessage={errorMessage} />
-      <Dialog type="popover" mobileType="drawer" className="flex">
-        <Calendar className="mx-auto" />
-      </Dialog>
-    </DatePickerRoot>
-  );
-};
-
-interface DatePickerRootProps<T extends DateValue>
-  extends Omit<AriaDatePickerProps<T>, "className"> {
-  className?: string;
-}
-const DatePickerRoot = <T extends DateValue>({
+  mode = "single",
   className,
   ...props
-}: DatePickerRootProps<T>) => {
+}: DatePickerProps<T>) => {
+  if (mode === "range") {
+    return (
+      <AriaDataRangePicker
+        className={composeRenderProps(
+          className as AriaDataRangePickerProps<T>["className"],
+          (className) => datePickerStyles({ className }),
+        )}
+        {...(props as AriaDataRangePickerProps<T>)}
+      />
+    );
+  }
+
   return (
-    <AriaDatePicker className={datePickerStyles({ className })} {...props} />
+    <AriaDatePicker
+      className={composeRenderProps(
+        className as AriaDatePickerProps<T>["className"],
+        (className) => datePickerStyles({ className }),
+      )}
+      {...(props as AriaDatePickerProps<T>)}
+    />
   );
 };
 
-export type { DatePickerProps, DatePickerRootProps };
-export { DatePicker, DatePickerRoot };
+/* -----------------------------------------------------------------------------------------------*/
+
+interface DatePickerInputProps extends InputGroupProps {}
+
+const DatePickerInput = (props: DatePickerInputProps) => {
+  return (
+    <InputGroup {...props}>
+      <DateInput />
+      <InputAddon>
+        <Button>
+          <CalendarIcon />
+        </Button>
+      </InputAddon>
+    </InputGroup>
+  );
+};
+
+/* -----------------------------------------------------------------------------------------------*/
+
+interface DatePickerContentProps extends DialogContentProps {}
+
+const DatePickerContent = ({
+  children,
+  ...props
+}: DatePickerContentProps) => {
+  return (
+    <Overlay type="popover">
+      <DialogContent {...props}>{children}</DialogContent>
+    </Overlay>
+  );
+};
+
+export type { DatePickerProps, DatePickerContentProps, DatePickerInputProps };
+export { DatePicker, DatePickerContent, DatePickerInput };

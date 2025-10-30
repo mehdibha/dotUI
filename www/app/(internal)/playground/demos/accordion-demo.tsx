@@ -5,7 +5,7 @@ import {
   AccordionItem,
   AccordionPanel,
   AccordionHeading,
-} from "@dotui/registry-v2/ui/accordion";
+} from "@dotui/registry/ui/accordion";
 
 export function AccordionDemo() {
   return (

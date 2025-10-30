@@ -18,6 +18,7 @@ const colorSwatchPickerMeta = {
 } satisfies RegistryItem;
 
 export default colorSwatchPickerMeta;
+
 export const colorSwatchPickerVariants = Object.keys(
   colorSwatchPickerMeta.variants,
 ) as (keyof typeof colorSwatchPickerMeta.variants)[];

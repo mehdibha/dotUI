@@ -1,6 +1,6 @@
 "use client";
 
-import { Avatar } from "@dotui/registry-v2/ui/avatar";
+import { Avatar } from "@dotui/registry/ui/avatar";
 
 export function AvatarDemo() {
   return (

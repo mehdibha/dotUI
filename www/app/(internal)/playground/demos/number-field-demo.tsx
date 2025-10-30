@@ -1,10 +1,10 @@
 "use client";
 
-import { Button } from "@dotui/registry-v2/ui/button";
-import { Label } from "@dotui/registry-v2/ui/field";
-import { Group } from "@dotui/registry-v2/ui/group";
-import { Input } from "@dotui/registry-v2/ui/input";
-import { NumberField } from "@dotui/registry-v2/ui/number-field";
+import { Button } from "@dotui/registry/ui/button";
+import { Label } from "@dotui/registry/ui/field";
+import { Group } from "@dotui/registry/ui/group";
+import { Input } from "@dotui/registry/ui/input";
+import { NumberField } from "@dotui/registry/ui/number-field";
 
 export function NumberFieldDemo() {
   return (

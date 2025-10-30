@@ -1,17 +1,17 @@
 "use client";
 
-import { Badge } from "@dotui/registry-v2/ui/badge";
-import { Checkbox } from "@dotui/registry-v2/ui/checkbox";
+import { Badge } from "@dotui/registry/ui/badge";
+import { Checkbox } from "@dotui/registry/ui/checkbox";
 import {
   Description,
   FieldGroup,
   Fieldset,
   Label,
-} from "@dotui/registry-v2/ui/field";
-import { Input, TextArea } from "@dotui/registry-v2/ui/input";
-import { Separator } from "@dotui/registry-v2/ui/separator";
-import { Switch } from "@dotui/registry-v2/ui/switch";
-import { TextField } from "@dotui/registry-v2/ui/text-field";
+} from "@dotui/registry/ui/field";
+import { Input, TextArea } from "@dotui/registry/ui/input";
+import { Separator } from "@dotui/registry/ui/separator";
+import { Switch } from "@dotui/registry/ui/switch";
+import { TextField } from "@dotui/registry/ui/text-field";
 
 export function FieldDemo() {
   return (

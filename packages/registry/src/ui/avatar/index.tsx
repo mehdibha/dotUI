@@ -2,19 +2,19 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import {
-  Avatar as _Avatar,
-  AvatarFallback as _AvatarFallback,
-  AvatarImage as _AvatarImage,
-  AvatarPlaceholder as _AvatarPlaceholder,
-  AvatarRoot as _AvatarRoot,
-} from "./basic";
 import type {
   AvatarFallbackProps,
   AvatarImageProps,
   AvatarPlaceholderProps,
   AvatarProps,
   AvatarRootProps,
+} from "./basic";
+import {
+  Avatar as _Avatar,
+  AvatarFallback as _AvatarFallback,
+  AvatarImage as _AvatarImage,
+  AvatarPlaceholder as _AvatarPlaceholder,
+  AvatarRoot as _AvatarRoot,
 } from "./basic";
 
 export const Avatar = createDynamicComponent<AvatarProps>(

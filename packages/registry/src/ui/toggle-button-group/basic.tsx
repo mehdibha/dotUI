@@ -11,14 +11,29 @@ import { ToggleButtonProvider } from "@dotui/registry/ui/toggle-button";
 import type { toggleButtonStyles } from "@dotui/registry/ui/toggle-button";
 
 const toggleGroupStyles = tv({
-  base: "isolate inline-flex items-center [&_button]:rounded-none [&_button]:first:rounded-s-md [&_button]:last:rounded-e-md",
+  slots: {
+    root: "flex w-fit items-center",
+    item: [
+      "min-w-0 shrink-0 rounded-none shadow-none hover:z-10 focus:z-10 focus-visible:z-12 selected:z-11 selected:focus-visible:z-12",
+    ],
+  },
   variants: {
     orientation: {
-      horizontal: "flex-row",
-      vertical: "flex-col",
+      horizontal: {
+        root: "flex-row has-data-[variant=default]:-space-x-px",
+        item: "first:rounded-l-md last:rounded-r-md",
+      },
+      vertical: {
+        root: "flex-col has-data-[variant=default]:-space-y-px",
+        item: "first:rounded-t-md last:rounded-b-md",
+      },
     },
   },
 });
+
+const { root, item } = toggleGroupStyles();
+
+/* -----------------------------------------------------------------------------------------------*/
 
 interface ToggleButtonGroupProps
   extends React.ComponentProps<typeof AriaToggleButtonGroup>,
@@ -27,18 +42,20 @@ interface ToggleButtonGroupProps
 const ToggleButtonGroup = ({
   variant,
   size,
-  shape,
   orientation = "horizontal",
   className,
   ...props
 }: ToggleButtonGroupProps) => {
   return (
-    <ToggleButtonProvider variant={variant} size={size} shape={shape}>
+    <ToggleButtonProvider
+      variant={variant}
+      size={size}
+      className={item({ orientation })}
+    >
       <AriaToggleButtonGroup
         orientation={orientation}
-        className={composeRenderProps(className, (className, renderProps) =>
-          toggleGroupStyles({
-            ...renderProps,
+        className={composeRenderProps(className, (className) =>
+          root({
             orientation,
             className,
           }),

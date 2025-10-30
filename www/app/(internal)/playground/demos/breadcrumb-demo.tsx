@@ -1,6 +1,6 @@
 "use client";
 
-import { Breadcrumb, Breadcrumbs } from "@dotui/registry-v2/ui/breadcrumbs";
+import { Breadcrumb, Breadcrumbs } from "@dotui/registry/ui/breadcrumbs";
 
 export function BreadcrumbDemo() {
   return (

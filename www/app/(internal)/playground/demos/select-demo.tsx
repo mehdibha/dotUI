@@ -8,8 +8,8 @@ import {
   ChevronsUpDownIcon,
 } from "lucide-react";
 
-import { Button } from "@dotui/registry-v2/ui/button";
-import { ListBoxItem } from "@dotui/registry-v2/ui/list-box";
+import { Button } from "@dotui/registry/ui/button";
+import { ListBoxItem } from "@dotui/registry/ui/list-box";
 import {
   Select,
   SelectContent,
@@ -18,7 +18,7 @@ import {
   SelectSectionHeader,
   SelectTrigger,
   SelectValue,
-} from "@dotui/registry-v2/ui/select";
+} from "@dotui/registry/ui/select";
 
 const _items = [
   { id: 1, name: "Apple" },

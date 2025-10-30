@@ -5,24 +5,24 @@ import { Heading } from "react-aria-components";
 import { ChevronLeftIcon, ChevronRightIcon } from "@dotui/registry/icons";
 import { Button } from "@dotui/registry/ui/button";
 import {
+  Calendar,
   CalendarCell,
   CalendarGrid,
   CalendarGridBody,
   CalendarGridHeader,
   CalendarHeader,
   CalendarHeaderCell,
-  CalendarRoot,
 } from "@dotui/registry/ui/calendar";
 
 export default function Demo() {
   return (
-    <CalendarRoot aria-label="Event date">
+    <Calendar aria-label="Event date">
       <CalendarHeader>
-        <Button slot="previous" variant="default" shape="circle" size="sm">
+        <Button slot="previous" className="rounded-full" size="sm">
           <ChevronLeftIcon />
         </Button>
         <Heading className="text-sm text-fg-muted" />
-        <Button slot="next" variant="default" shape="circle" size="sm">
+        <Button slot="next" className="rounded-full" size="sm">
           <ChevronRightIcon />
         </Button>
       </CalendarHeader>
@@ -34,6 +34,6 @@ export default function Demo() {
           {(date) => <CalendarCell date={date} />}
         </CalendarGridBody>
       </CalendarGrid>
-    </CalendarRoot>
+    </Calendar>
   );
 }

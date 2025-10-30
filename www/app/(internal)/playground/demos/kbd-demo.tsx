@@ -1,6 +1,6 @@
 "use client";
 
-import { Kbd, KbdGroup } from "@dotui/registry-v2/ui/kbd";
+import { Kbd, KbdGroup } from "@dotui/registry/ui/kbd";
 
 export function KbdDemo() {
   return (

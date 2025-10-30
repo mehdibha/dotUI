@@ -3,7 +3,7 @@ import { HeartIcon, LightbulbIcon, PinIcon } from "lucide-react";
 import {
   ToggleButton,
   ToggleButtonProvider,
-} from "@dotui/registry-v2/ui/toggle-button";
+} from "@dotui/registry/ui/toggle-button";
 
 export function ToggleButtonDemo() {
   return (

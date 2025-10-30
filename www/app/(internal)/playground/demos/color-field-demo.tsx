@@ -2,9 +2,9 @@
 
 import { parseColor } from "react-stately";
 
-import { ColorField } from "@dotui/registry-v2/ui/color-field";
-import { Description, FieldError, Label } from "@dotui/registry-v2/ui/field";
-import { Input } from "@dotui/registry-v2/ui/input";
+import { ColorField } from "@dotui/registry/ui/color-field";
+import { Description, FieldError, Label } from "@dotui/registry/ui/field";
+import { Input } from "@dotui/registry/ui/input";
 
 export function ColorFieldDemo() {
   return (

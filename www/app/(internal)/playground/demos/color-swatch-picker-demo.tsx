@@ -3,7 +3,7 @@
 import {
   ColorSwatchPicker,
   ColorSwatchPickerItem,
-} from "@dotui/registry-v2/ui/color-swatch-picker";
+} from "@dotui/registry/ui/color-swatch-picker";
 
 const colors = [
   "#ef4444",

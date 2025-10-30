@@ -2,7 +2,13 @@
 
 import { useAsyncList } from "react-stately";
 
-import { Combobox, ComboboxItem } from "@dotui/registry/ui/combobox";
+import {
+  Combobox,
+  ComboboxContent,
+  ComboboxInput,
+  ComboboxItem,
+} from "@dotui/registry/ui/combobox";
+import { Label } from "@dotui/registry/ui/field";
 
 interface Character {
   name: string;
@@ -20,8 +26,12 @@ export default function Demo() {
   });
 
   return (
-    <Combobox label="Pokemon" items={list.items} isLoading={list.isLoading}>
-      {(item) => <ComboboxItem id={item.name}>{item.name}</ComboboxItem>}
+    <Combobox>
+      <Label>Pokemon</Label>
+      <ComboboxInput />
+      <ComboboxContent items={list.items} isLoading={list.isLoading}>
+        {(item) => <ComboboxItem id={item.name}>{item.name}</ComboboxItem>}
+      </ComboboxContent>
     </Combobox>
   );
 }

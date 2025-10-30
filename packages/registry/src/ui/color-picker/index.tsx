@@ -2,17 +2,15 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
+import type {
+  ColorPickerContentProps,
+  ColorPickerProps,
+  ColorPickerTriggerProps,
+} from "./basic";
 import {
   ColorPicker as _ColorPicker,
-  ColorPickerButton as _ColorPickerButton,
-  ColorPickerEditor as _ColorPickerEditor,
-  ColorPickerRoot as _ColorPickerRoot,
-} from "./basic";
-import type {
-  ColorPickerButtonProps,
-  ColorPickerEditorProps,
-  ColorPickerProps,
-  ColorPickerRootProps,
+  ColorPickerContent as _ColorPickerContent,
+  ColorPickerTrigger as _ColorPickerTrigger,
 } from "./basic";
 
 export const ColorPicker = createDynamicComponent<ColorPickerProps>(
@@ -22,30 +20,20 @@ export const ColorPicker = createDynamicComponent<ColorPickerProps>(
   {},
 );
 
-export const ColorPickerRoot = createDynamicComponent<ColorPickerRootProps>(
-  "color-picker",
-  "ColorPickerRoot",
-  _ColorPickerRoot,
-  {},
-);
+export const ColorPickerTrigger =
+  createDynamicComponent<ColorPickerTriggerProps>(
+    "color-picker",
+    "ColorPickerTrigger",
+    _ColorPickerTrigger,
+    {},
+  );
 
-export const ColorPickerButton = createDynamicComponent<ColorPickerButtonProps>(
-  "color-picker",
-  "ColorPickerButton",
-  _ColorPickerButton,
-  {},
-);
+export const ColorPickerContent =
+  createDynamicComponent<ColorPickerContentProps>(
+    "color-picker",
+    "ColorPickerContent",
+    _ColorPickerContent,
+    {},
+  );
 
-export const ColorPickerEditor = createDynamicComponent<ColorPickerEditorProps>(
-  "color-picker",
-  "ColorPickerEditor",
-  _ColorPickerEditor,
-  {},
-);
-
-export type {
-  ColorPickerProps,
-  ColorPickerRootProps,
-  ColorPickerButtonProps,
-  ColorPickerEditorProps,
-};
+export type { ColorPickerProps };

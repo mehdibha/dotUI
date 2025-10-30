@@ -66,33 +66,6 @@ Use the `value` and `onChange` props to control the color picker value.
  <ColorPicker value={value} onChange={setValue} />;`}
 />
 
-## Button options
-
-`ColorPicker` accepts all [button options](/docs/components/buttons/button#options).
-
-<ComponentPreview
-  name="color-picker/demos/options"
-  preview={`<ColorPicker size="sm" shape="rectangle">
-    Fill color
-  </ColorPicker>`}
-/>
-
-## Composition
-
-If you need to customize things further, you can drop down to the composition level.
-
-<ComponentPreview
-  name="color-picker/demos/composition"
-  preview={`<ColorPickerRoot defaultValue="#5100FF">
-    <DialogRoot>
-      <ColorPickerButton />
-      <Dialog type="popover" mobileType="drawer">
-        <ColorPickerEditor />
-      </Dialog>
-    </DialogRoot>
-  </ColorPickerRoot>`}
-/>
-
 ## Examples
 
 ### Channel sliders

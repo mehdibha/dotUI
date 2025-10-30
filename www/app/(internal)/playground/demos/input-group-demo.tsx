@@ -3,22 +3,22 @@
 import { IconCheck } from "@tabler/icons-react";
 import { ArrowUpIcon, PlusIcon, SendIcon } from "lucide-react";
 
-import { cn } from "@dotui/registry-v2/lib/utils";
-import { Button } from "@dotui/registry-v2/ui/button";
+import { cn } from "@dotui/registry/lib/utils";
+import { Button } from "@dotui/registry/ui/button";
 import {
   Input,
   InputAddon,
   InputGroup,
   TextArea,
-} from "@dotui/registry-v2/ui/input";
+} from "@dotui/registry/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@dotui/registry-v2/ui/select";
-import { Tooltip } from "@dotui/registry-v2/ui/tooltip";
+} from "@dotui/registry/ui/select";
+import { Tooltip } from "@dotui/registry/ui/tooltip";
 import { SearchIcon } from "@dotui/registry/icons";
 
 export function InputGroupDemo() {

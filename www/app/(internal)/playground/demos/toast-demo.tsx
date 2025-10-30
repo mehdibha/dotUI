@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@dotui/registry-v2/ui/button";
-import { toast } from "@dotui/registry-v2/ui/toast";
+import { Button } from "@dotui/registry/ui/button";
+import { toast } from "@dotui/registry/ui/toast";
 
 export function ToastDemo() {
   return (

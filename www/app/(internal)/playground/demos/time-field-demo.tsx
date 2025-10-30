@@ -2,9 +2,9 @@
 
 import { ClockIcon } from "lucide-react";
 
-import { Label } from "@dotui/registry-v2/ui/field";
-import { DateInput, InputAddon, InputGroup } from "@dotui/registry-v2/ui/input";
-import { TimeField } from "@dotui/registry-v2/ui/time-field";
+import { Label } from "@dotui/registry/ui/field";
+import { DateInput, InputAddon, InputGroup } from "@dotui/registry/ui/input";
+import { TimeField } from "@dotui/registry/ui/time-field";
 import { Description } from "@dotui/registry/ui/field";
 
 export function TimeFieldDemo() {

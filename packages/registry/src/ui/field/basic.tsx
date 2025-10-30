@@ -1,88 +1,225 @@
 "use client";
 
-import React from "react";
+import type React from "react";
+import { useSlotId } from "@react-aria/utils";
 import {
   FieldError as AriaFieldError,
   Label as AriaLabel,
-  Text as AriaText,
+  CheckboxContext,
   composeRenderProps,
-  FieldErrorContext,
+  LabelContext,
+  Provider,
+  TextContext,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type { VariantProps } from "tailwind-variants";
 
-const labelStyles = tv({
-  base: "inline-flex items-center gap-px text-sm leading-none text-fg-muted peer-disabled:cursor-not-allowed peer-disabled:text-fg-disabled [&_svg]:size-3",
+import { useSkeletonText } from "@dotui/registry/ui/skeleton";
+import { Text } from "@dotui/registry/ui/text";
+
+const fieldStyles = tv({
+  slots: {
+    fieldset: [
+      "flex flex-col gap-6",
+      "has-[>[data-slot=checkbox-group]]:gap-3 has-[>[data-slot=radio-group]]:gap-3",
+    ],
+    legend: ["mb-3 text-base font-medium"],
+    fieldGroup:
+      "group/field-group @container/field-group flex w-full flex-col gap-7 has-data-[slot=checkbox]:gap-1.5 has-data-[slot=radio]:gap-1.5 data-[slot=checkbox-group]:gap-3 *:data-[slot=field-group]:gap-4",
+    field:
+      "flex items-start gap-2 invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden",
+    fieldContent: "flex flex-col gap-1",
+    label: [
+      "inline-flex items-center gap-px text-sm leading-none text-fg peer-disabled:cursor-not-allowed peer-disabled:text-fg-disabled [&_svg]:size-3",
+      // Required state
+      "in-data-required:after:ml-0.5 in-data-required:after:text-fg-danger in-data-required:after:content-['*']",
+      // Disabled state
+      "in-disabled:cursor-not-allowed in-disabled:text-fg-disabled",
+      // Invalid state
+      "in-data-invalid:text-fg-danger",
+    ],
+    description: ["text-xs text-fg-muted", "in-data-disabled:text-fg-disabled"],
+    fieldError: "text-xs text-fg-danger",
+  },
+  variants: {
+    orientation: {
+      horizontal: {
+        field:
+          "flex-row items-center gap-2 has-data-[slot=description]:items-start",
+      },
+      vertical: {
+        field: "flex-col gap-2",
+      },
+    },
+  },
+  defaultVariants: {
+    orientation: "vertical",
+  },
 });
+
+const {
+  fieldset,
+  legend,
+  fieldGroup,
+  field,
+  fieldContent,
+  label,
+  description,
+  fieldError,
+} = fieldStyles();
+
+/* -----------------------------------------------------------------------------------------------*/
+
+interface FieldsetProps extends React.ComponentProps<"fieldset"> {}
+
+function Fieldset({ className, ...props }: FieldsetProps) {
+  return (
+    <fieldset
+      data-slot="fieldset"
+      className={fieldset({ className })}
+      {...props}
+    />
+  );
+}
+
+/* -----------------------------------------------------------------------------------------------*/
+
+interface LegendProps extends React.ComponentProps<"legend"> {}
+
+function Legend({ className, ...props }: LegendProps) {
+  return (
+    <legend data-slot="legend" className={legend({ className })} {...props} />
+  );
+}
+
+/* -----------------------------------------------------------------------------------------------*/
+
+interface FieldGroupProps extends React.ComponentProps<"div"> {}
+
+function FieldGroup({ className, ...props }: FieldGroupProps) {
+  return (
+    <div
+      data-slot="field-group"
+      className={fieldGroup({ className })}
+      {...props}
+    />
+  );
+}
+
+/* -----------------------------------------------------------------------------------------------*/
+
+interface FieldProps
+  extends React.ComponentProps<"div">,
+    VariantProps<typeof fieldStyles> {}
+
+const Field = ({ children, className, orientation, ...props }: FieldProps) => {
+  const inputId = useSlotId();
+  const descriptionId = useSlotId();
+  return (
+    <div
+      data-slot="field"
+      className={field({ className, orientation })}
+      {...props}
+    >
+      <Provider
+        values={[
+          [
+            CheckboxContext,
+            {
+              id: inputId,
+              "aria-describedby": descriptionId,
+            },
+          ],
+          [LabelContext, { htmlFor: inputId }],
+          [TextContext, { slot: "description", id: descriptionId }],
+        ]}
+      >
+        {children}
+      </Provider>
+    </div>
+  );
+};
+
+/* -----------------------------------------------------------------------------------------------*/
+
+interface FieldContentProps extends React.ComponentProps<"div"> {}
+
+const FieldContent = ({ className, ...props }: FieldContentProps) => {
+  return (
+    <div
+      data-slot="field-content"
+      className={fieldContent({ className })}
+      {...props}
+    />
+  );
+};
+
+/* -----------------------------------------------------------------------------------------------*/
 
 interface LabelProps extends React.ComponentProps<typeof AriaLabel> {}
-const Label = ({ className, ...props }: LabelProps) => {
+
+const Label = ({ children, className, ...props }: LabelProps) => {
+  children = useSkeletonText(children);
   return (
-    <AriaLabel
-      data-slot="label"
-      className={labelStyles({ className })}
-      {...props}
-    />
+    <AriaLabel data-slot="label" className={label({ className })} {...props}>
+      {children}
+    </AriaLabel>
   );
 };
 
-const descriptionStyles = tv({
-  base: "text-xs text-fg-muted",
-});
+/* -----------------------------------------------------------------------------------------------*/
 
 interface DescriptionProps
-  extends Omit<React.ComponentProps<typeof AriaText>, "slot"> {}
+  extends Omit<React.ComponentProps<typeof Text>, "slot"> {}
+
 const Description = ({ className, ...props }: DescriptionProps) => {
   return (
-    <AriaText
+    <Text
+      data-slot="description"
       slot="description"
-      className={descriptionStyles({ className })}
+      className={description({ className })}
       {...props}
     />
   );
 };
 
-const fieldErrorStyles = tv({
-  base: "text-xs text-fg-danger",
-});
+/* -----------------------------------------------------------------------------------------------*/
 
 interface FieldErrorProps extends React.ComponentProps<typeof AriaFieldError> {}
 const FieldError = ({ className, ...props }: FieldErrorProps) => {
   return (
     <AriaFieldError
+      data-slot="field-error"
       className={composeRenderProps(className, (className) =>
-        fieldErrorStyles({ className }),
+        fieldError({ className }),
       )}
       {...props}
     />
   );
 };
 
-interface HelpTextProps {
-  description?: DescriptionProps["children"];
-  errorMessage?: FieldErrorProps["children"];
-}
-const HelpText = ({ description, errorMessage }: HelpTextProps) => {
-  const validation = React.use(FieldErrorContext);
-  const isError =
-    validation?.isInvalid &&
-    (!!errorMessage || validation.validationErrors.length > 0);
+/* -----------------------------------------------------------------------------------------------*/
 
-  if (isError) return <FieldError>{errorMessage}</FieldError>;
-
-  if (description) return <Description>{description}</Description>;
-
-  return null;
+export {
+  Fieldset,
+  Legend,
+  FieldGroup,
+  Field,
+  FieldContent,
+  Label,
+  Description,
+  FieldError,
 };
 
-interface FieldProps extends HelpTextProps {
-  label?: LabelProps["children"];
-}
+export { fieldStyles };
 
 export type {
+  FieldsetProps,
+  LegendProps,
+  FieldContentProps,
   LabelProps,
   DescriptionProps,
   FieldErrorProps,
-  HelpTextProps,
+  FieldGroupProps,
   FieldProps,
 };
-export { Label, Description, FieldError, HelpText };

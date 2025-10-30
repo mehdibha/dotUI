@@ -1,6 +1,6 @@
 "use client";
 
-import { Loader } from "@dotui/registry-v2/ui/loader";
+import { Loader } from "@dotui/registry/ui/loader";
 
 export function LoaderDemo() {
   return (

@@ -10,9 +10,9 @@ import {
 import { useLocale } from "react-aria";
 import type { CalendarDate, DateValue } from "@internationalized/date";
 
-import { Button } from "@dotui/registry-v2/ui/button";
-import { Calendar } from "@dotui/registry-v2/ui/calendar";
-import { Card, CardContent, CardFooter } from "@dotui/registry-v2/ui/card";
+import { Button } from "@dotui/registry/ui/button";
+import { Calendar } from "@dotui/registry/ui/calendar";
+import { Card, CardContent, CardFooter } from "@dotui/registry/ui/card";
 
 export function CalendarDemo() {
   return (

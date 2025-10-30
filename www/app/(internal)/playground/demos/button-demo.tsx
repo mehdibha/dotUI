@@ -3,7 +3,7 @@
 import React from "react";
 import { ArrowRightIcon, SendIcon } from "lucide-react";
 
-import { Button } from "@dotui/registry-v2/ui/button";
+import { Button } from "@dotui/registry/ui/button";
 
 export const ButtonDemo = () => {
   return (

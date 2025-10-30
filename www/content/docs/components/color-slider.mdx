@@ -94,21 +94,6 @@ Use the `isDisabled` prop to disable the color slider.
   preview={`<ColorSlider label="Opacity" defaultValue="#f00" channel="alpha" isDisabled />`}
 />
 
-## Composition
-
-If you need to customize things further, you can drop down to the composition level.
-
-<ComponentPreview
-  name="color-slider/demos/composition"
-  preview={`<ColorSliderRoot channel="hue" defaultValue="hsl(0, 100%, 50%)">
-    <div className="flex items-center justify-between">
-      <Label>Hue</Label>
-      <ColorSliderOutput />
-    </div>
-    <ColorSliderControl />
-  </ColorSliderRoot>`}
-/>
-
 ## API Reference
 
 | Prop           | Type                                                                                                     | Default        | Description                                                                                                                                                                 |

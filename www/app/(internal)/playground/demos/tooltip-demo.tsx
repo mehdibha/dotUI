@@ -2,13 +2,13 @@
 
 import { Edit2Icon } from "lucide-react";
 
-import { Avatar } from "@dotui/registry-v2/ui/avatar";
-import { Button } from "@dotui/registry-v2/ui/button";
+import { Avatar } from "@dotui/registry/ui/avatar";
+import { Button } from "@dotui/registry/ui/button";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@dotui/registry-v2/ui/tooltip";
+} from "@dotui/registry/ui/tooltip";
 
 export function TooltipDemo() {
   return (

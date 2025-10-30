@@ -3,12 +3,12 @@ import {
   FieldContent,
   FieldGroup,
   Label,
-} from "@dotui/registry-v2/ui/field";
+} from "@dotui/registry/ui/field";
 import {
   Radio,
   RadioGroup,
   RadioIndicator,
-} from "@dotui/registry-v2/ui/radio-group";
+} from "@dotui/registry/ui/radio-group";
 
 export function RadioGroupDemo() {
   return (

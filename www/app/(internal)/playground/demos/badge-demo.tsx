@@ -1,6 +1,6 @@
 import { BadgeCheckIcon } from "lucide-react";
 
-import { Badge } from "@dotui/registry-v2/ui/badge";
+import { Badge } from "@dotui/registry/ui/badge";
 
 export function BadgeDemo() {
   return (

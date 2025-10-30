@@ -1,6 +1,5 @@
 "use client";
 
-import type * as React from "react";
 import {
   DateField as AriaDateField,
   composeRenderProps,
@@ -11,47 +10,20 @@ import type {
   DateValue,
 } from "react-aria-components";
 
-import { DateInput, DateSegment } from "@dotui/registry/ui/date-input";
-import { HelpText, Label } from "@dotui/registry/ui/field";
-import { InputRoot } from "@dotui/registry/ui/input";
-import type { FieldProps } from "@dotui/registry/ui/field";
-import type { InputRootProps } from "@dotui/registry/ui/input";
+import { fieldStyles } from "@dotui/registry/ui/field";
 
 const dateFieldStyles = tv({
-  base: "flex w-32 flex-col items-start gap-2",
+  base: [fieldStyles().field({ orientation: "vertical" })],
 });
 
-interface DateFieldProps<T extends DateValue>
-  extends DateFieldRootProps<T>,
-    Pick<InputRootProps, "size" | "prefix" | "suffix">,
-    FieldProps {}
+/* -----------------------------------------------------------------------------------------------*/
+
+interface DateFieldProps<T extends DateValue> extends AriaDateFieldProps<T> {}
 
 const DateField = <T extends DateValue>({
-  label,
-  description,
-  errorMessage,
-  prefix,
-  suffix,
-  size,
-  ...props
-}: DateFieldProps<T>) => {
-  return (
-    <DateFieldRoot {...props}>
-      {label && <Label>{label}</Label>}
-      <DateFieldInput prefix={prefix} suffix={suffix} size={size} />
-      <HelpText description={description} errorMessage={errorMessage} />
-    </DateFieldRoot>
-  );
-};
-
-interface DateFieldRootProps<T extends DateValue>
-  extends AriaDateFieldProps<T> {
-  ref?: React.RefObject<HTMLDivElement>;
-}
-const DateFieldRoot = <T extends DateValue>({
   className,
   ...props
-}: DateFieldRootProps<T>) => {
+}: DateFieldProps<T>) => {
   return (
     <AriaDateField
       className={composeRenderProps(className, (className) =>
@@ -62,14 +34,5 @@ const DateFieldRoot = <T extends DateValue>({
   );
 };
 
-interface DateFieldInputProps extends InputRootProps {}
-const DateFieldInput = (props: DateFieldInputProps) => {
-  return (
-    <InputRoot {...props}>
-      <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
-    </InputRoot>
-  );
-};
-
-export type { DateFieldProps, DateFieldRootProps, DateFieldInputProps };
-export { DateField, DateFieldRoot, DateFieldInput };
+export type { DateFieldProps };
+export { DateField };

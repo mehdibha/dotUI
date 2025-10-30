@@ -14,16 +14,6 @@ const calendarMeta = {
       ],
       registryDependencies: ["button", "text", "focus-styles"],
     },
-    cal: {
-      files: [
-        {
-          type: "registry:ui",
-          path: "ui/calendar/cal.tsx",
-          target: "ui/calendar.tsx",
-        },
-      ],
-      registryDependencies: ["button", "text", "focus-styles"],
-    },
   },
 } satisfies RegistryItem;
 

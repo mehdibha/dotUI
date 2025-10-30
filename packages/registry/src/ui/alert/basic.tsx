@@ -1,37 +1,30 @@
-"use client";
-
 import type * as React from "react";
 import { tv } from "tailwind-variants";
 import type { VariantProps } from "tailwind-variants";
 
-import {
-  AlertCircleIcon,
-  AlertTriangleIcon,
-  CheckCircle2Icon,
-  InfoIcon,
-} from "@dotui/registry/icons";
-import { createScopedContext } from "@dotui/registry/lib/utils";
-
-const alertStyles = tv({
+const alertVariants = tv({
   slots: {
-    root: "@container flex w-full items-center gap-4 rounded-lg border p-4 text-sm [&_svg]:size-4",
-    title: "text-base leading-normal font-medium tracking-tight",
-    content: "text-fg-muted",
+    base: "relative grid w-full grid-cols-[0_1fr] items-start gap-y-0.5 rounded-lg border bg-card px-4 py-3 text-sm has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] has-[>svg]:gap-x-3 [&>svg]:size-4 [&>svg]:translate-y-0.5 [&>svg]:text-current",
+    title: "col-start-2 line-clamp-1 min-h-4 font-medium tracking-tight",
+    description:
+      "text-muted-foreground col-start-2 grid justify-items-start gap-1 text-sm [&_p]:leading-relaxed",
   },
   variants: {
     variant: {
-      neutral: { root: "border bg-muted text-fg" },
-      success: {
-        root: "border border-border-success bg-success-muted text-fg-success",
-      },
-      warning: {
-        root: "border border-border-warning bg-warning-muted text-fg-warning",
+      neutral: {
+        base: "text-fg",
       },
       danger: {
-        root: "border border-border-danger bg-danger-muted text-fg-danger",
+        base: "bg-danger-muted text-fg-danger *:data-[slot=alert-description]:text-fg-danger/90 [&>svg]:text-current",
+      },
+      warning: {
+        base: "text-fg-warning *:data-[slot=alert-description]:text-fg-warning/90 [&>svg]:text-current",
       },
       info: {
-        root: "border border-border-info bg-info-muted text-fg-info",
+        base: "text-fg-info *:data-[slot=alert-description]:text-fg-info/90 [&>svg]:text-current",
+      },
+      success: {
+        base: "text-fg-success *:data-[slot=alert-description]:text-fg-success/90 [&>svg]:text-current",
       },
     },
   },
@@ -40,73 +33,59 @@ const alertStyles = tv({
   },
 });
 
-const { root, title, content } = alertStyles();
+const { base, title, description } = alertVariants();
 
-const [AlertProvider, useAlertContext] =
-  createScopedContext<VariantProps<typeof alertStyles>>("AlertRoot");
+/* -----------------------------------------------------------------------------------------------*/
 
-const defaultIcons = {
-  neutral: <InfoIcon />,
-  danger: <AlertCircleIcon />,
-  success: <CheckCircle2Icon />,
-  warning: <AlertTriangleIcon />,
-  info: <InfoIcon />,
-};
-
-interface AlertProps extends AlertRootProps {
-  title?: string;
-  action?: React.ReactNode;
-  icon?: React.ReactNode | null;
-}
-
-function Alert({
-  variant = "neutral",
-  title,
-  action,
-  icon,
-  children,
-  ...props
-}: AlertProps) {
-  const resolvedIcon = icon === undefined ? defaultIcons[variant] : icon;
-  return (
-    <AlertRoot variant={variant} {...props}>
-      {resolvedIcon}
-      <div className="flex flex-1 flex-col items-start gap-4 @sm:flex-row @sm:items-center">
-        <div className="flex-1 space-y-0.5">
-          {title && <AlertTitle>{title}</AlertTitle>}
-          {children && <AlertContent>{children}</AlertContent>}
-        </div>
-        {action}
-      </div>
-    </AlertRoot>
-  );
-}
-
-interface AlertRootProps
+interface AlertProps
   extends React.ComponentProps<"div">,
-    VariantProps<typeof alertStyles> {}
+    VariantProps<typeof alertVariants> {}
 
-function AlertRoot({ className, variant, ...props }: AlertRootProps) {
+function Alert({ className, variant, ...props }: AlertProps) {
   return (
-    <AlertProvider variant={variant}>
-      <div role="alert" className={root({ variant, className })} {...props} />
-    </AlertProvider>
+    <div
+      data-slot="alert"
+      role="alert"
+      className={base({ variant, className })}
+      {...props}
+    />
   );
 }
 
-interface AlertTitleProps extends React.ComponentProps<"h5"> {}
+/* -----------------------------------------------------------------------------------------------*/
+
+interface AlertTitleProps extends React.ComponentProps<"div"> {}
 
 function AlertTitle({ className, ...props }: AlertTitleProps) {
-  const { variant } = useAlertContext("AlertTitle");
-  return <h5 className={title({ variant, className })} {...props} />;
+  return (
+    <div data-slot="alert-title" className={title({ className })} {...props} />
+  );
 }
 
-interface AlertContentProps extends React.ComponentProps<"p"> {}
+/* -----------------------------------------------------------------------------------------------*/
 
-function AlertContent({ className, ...props }: AlertContentProps) {
-  const { variant } = useAlertContext("AlertTitle");
-  return <div className={content({ variant, className })} {...props} />;
+interface AlertDescriptionProps extends React.ComponentProps<"div"> {}
+
+function AlertDescription({ className, ...props }: AlertDescriptionProps) {
+  return (
+    <div
+      data-slot="alert-description"
+      className={description({ className })}
+      {...props}
+    />
+  );
 }
 
-export type { AlertProps, AlertRootProps, AlertTitleProps, AlertContentProps };
-export { Alert, AlertRoot, AlertTitle, AlertContent };
+/* -----------------------------------------------------------------------------------------------*/
+
+interface AlertActionProps extends React.ComponentProps<"div"> {}
+
+function AlertAction({ className, ...props }: AlertActionProps) {
+  return <div data-slot="alert-action" {...props} />;
+}
+
+/* -----------------------------------------------------------------------------------------------*/
+
+export { Alert, AlertTitle, AlertDescription, AlertAction };
+
+export type { AlertProps, AlertTitleProps, AlertDescriptionProps, AlertActionProps };

@@ -4,22 +4,23 @@ import { registryBackgroundPatterns } from "@dotui/registry/background-patterns/
 import { iconLibraries } from "@dotui/registry/icons/registry";
 import { focusStylesVariants } from "@dotui/registry/lib/focus-styles/meta";
 import { registryTextures } from "@dotui/registry/textures/registry";
+import { accordionVariants } from "@dotui/registry/ui/accordion/meta";
 import { alertVariants } from "@dotui/registry/ui/alert/meta";
 import { avatarVariants } from "@dotui/registry/ui/avatar/meta";
 import { badgeVariants } from "@dotui/registry/ui/badge/meta";
 import { breadcrumbsVariants } from "@dotui/registry/ui/breadcrumbs/meta";
-import { buttonGroupVariants } from "@dotui/registry/ui/button-group/meta";
 import { buttonVariants } from "@dotui/registry/ui/button/meta";
 import { calendarVariants } from "@dotui/registry/ui/calendar/meta";
 import { cardVariants } from "@dotui/registry/ui/card/meta";
-import { checkboxGroupVariants } from "@dotui/registry/ui/checkbox-group/meta";
 import { checkboxVariants } from "@dotui/registry/ui/checkbox/meta";
+import { checkboxGroupVariants } from "@dotui/registry/ui/checkbox-group/meta";
 import { colorAreaVariants } from "@dotui/registry/ui/color-area/meta";
+import { colorEditorVariants } from "@dotui/registry/ui/color-editor/meta";
 import { colorFieldVariants } from "@dotui/registry/ui/color-field/meta";
 import { colorPickerVariants } from "@dotui/registry/ui/color-picker/meta";
 import { colorSliderVariants } from "@dotui/registry/ui/color-slider/meta";
-import { colorSwatchPickerVariants } from "@dotui/registry/ui/color-swatch-picker/meta";
 import { colorSwatchVariants } from "@dotui/registry/ui/color-swatch/meta";
+import { colorSwatchPickerVariants } from "@dotui/registry/ui/color-swatch-picker/meta";
 import { colorThumbVariants } from "@dotui/registry/ui/color-thumb/meta";
 import { comboboxVariants } from "@dotui/registry/ui/combobox/meta";
 import { commandVariants } from "@dotui/registry/ui/command/meta";
@@ -33,6 +34,7 @@ import { dropZoneVariants } from "@dotui/registry/ui/drop-zone/meta";
 import { fieldVariants } from "@dotui/registry/ui/field/meta";
 import { fileTriggerVariants } from "@dotui/registry/ui/file-trigger/meta";
 import { formVariants } from "@dotui/registry/ui/form/meta";
+import { groupVariants } from "@dotui/registry/ui/group/meta";
 import { inputVariants } from "@dotui/registry/ui/input/meta";
 import { kbdVariants } from "@dotui/registry/ui/kbd/meta";
 import { linkVariants } from "@dotui/registry/ui/link/meta";
@@ -54,13 +56,13 @@ import { switchVariants } from "@dotui/registry/ui/switch/meta";
 import { tableVariants } from "@dotui/registry/ui/table/meta";
 import { tabsVariants } from "@dotui/registry/ui/tabs/meta";
 import { tagGroupVariants } from "@dotui/registry/ui/tag-group/meta";
+import { textVariants } from "@dotui/registry/ui/text/meta";
 import { textAreaVariants } from "@dotui/registry/ui/text-area/meta";
 import { textFieldVariants } from "@dotui/registry/ui/text-field/meta";
-import { textVariants } from "@dotui/registry/ui/text/meta";
 import { timeFieldVariants } from "@dotui/registry/ui/time-field/meta";
 import { toastVariants } from "@dotui/registry/ui/toast/meta";
-import { toggleButtonGroupVariants } from "@dotui/registry/ui/toggle-button-group/meta";
 import { toggleButtonVariants } from "@dotui/registry/ui/toggle-button/meta";
+import { toggleButtonGroupVariants } from "@dotui/registry/ui/toggle-button-group/meta";
 import { tooltipVariants } from "@dotui/registry/ui/tooltip/meta";
 
 // ---------------------------------  Definitions  ----------------------------------- //
@@ -284,17 +286,18 @@ export const themeSchema = z.object({
  * proper autocomplete and type safety for all variants
  */
 export const variantsSchema = z.object({
+  accordion: z.enum(accordionVariants),
   alert: z.enum(alertVariants),
   avatar: z.enum(avatarVariants),
   badge: z.enum(badgeVariants),
   breadcrumbs: z.enum(breadcrumbsVariants),
   button: z.enum(buttonVariants),
-  "button-group": z.enum(buttonGroupVariants),
   calendar: z.enum(calendarVariants),
   card: z.enum(cardVariants),
   checkbox: z.enum(checkboxVariants),
   "checkbox-group": z.enum(checkboxGroupVariants),
   "color-area": z.enum(colorAreaVariants),
+  "color-editor": z.enum(colorEditorVariants),
   "color-field": z.enum(colorFieldVariants),
   "color-picker": z.enum(colorPickerVariants),
   "color-slider": z.enum(colorSliderVariants),
@@ -314,6 +317,7 @@ export const variantsSchema = z.object({
   "file-trigger": z.enum(fileTriggerVariants),
   "focus-styles": z.enum(focusStylesVariants),
   form: z.enum(formVariants),
+  group: z.enum(groupVariants),
   input: z.enum(inputVariants),
   kbd: z.enum(kbdVariants),
   link: z.enum(linkVariants),

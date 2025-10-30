@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { Pagination } from "@dotui/registry-v2/ui/pagination";
+import { Pagination } from "@dotui/registry/ui/pagination";
 
 export function PaginationDemo() {
   return (

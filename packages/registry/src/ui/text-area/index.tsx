@@ -2,8 +2,8 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import { TextArea as _TextArea, TextAreaRoot as _TextAreaRoot } from "./basic";
-import type { TextAreaProps, TextAreaRootProps } from "./basic";
+import type { TextAreaProps } from "../input/basic";
+import { TextArea as _TextArea } from "../input/basic";
 
 export const TextArea = createDynamicComponent<TextAreaProps>(
   "text-area",
@@ -12,11 +12,4 @@ export const TextArea = createDynamicComponent<TextAreaProps>(
   {},
 );
 
-export const TextAreaRoot = createDynamicComponent<TextAreaRootProps>(
-  "text-area",
-  "TextAreaRoot",
-  _TextAreaRoot,
-  {},
-);
-
-export type { TextAreaProps, TextAreaRootProps };
+export type { TextAreaProps };

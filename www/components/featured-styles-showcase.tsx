@@ -6,8 +6,8 @@ import { useTheme } from "next-themes";
 
 import { StyleProvider } from "@dotui/registry";
 import { Cards } from "@dotui/registry/blocks/showcase/cards/components/cards";
+import { cn } from "@dotui/registry/lib/utils";
 import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs/motion";
-import { cn } from "@dotui/registry-v2/lib/utils";
 import type { RouterOutputs } from "@dotui/api";
 
 // Create motion-enabled TabPanel

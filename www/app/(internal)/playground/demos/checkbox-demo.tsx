@@ -1,14 +1,14 @@
 "use client";
 
-import { Checkbox, CheckboxIndicator } from "@dotui/registry-v2/ui/checkbox";
-import { CheckboxGroup } from "@dotui/registry-v2/ui/checkbox-group";
+import { Checkbox, CheckboxIndicator } from "@dotui/registry/ui/checkbox";
+import { CheckboxGroup } from "@dotui/registry/ui/checkbox-group";
 import {
   Description,
   Field,
   FieldContent,
   FieldGroup,
   Label,
-} from "@dotui/registry-v2/ui/field";
+} from "@dotui/registry/ui/field";
 
 export function CheckboxDemo() {
   return (

@@ -1,49 +1,46 @@
 "use client";
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
-import { Button } from "@dotui/registry/ui/button";
-import { ListBox } from "@dotui/registry/ui/list-box";
-import { Overlay } from "@dotui/registry/ui/overlay";
-
-import {
-  Select as _Select,
-  SelectItem as _SelectItem,
-  SelectRoot as _SelectRoot,
-  SelectValue as _SelectValue,
-} from "./basic";
+import type { ButtonProps } from "@dotui/registry/ui/button";
 import type {
-  SelectItemProps,
+  ListBoxItemProps,
+  ListBoxSectionHeaderProps,
+  ListBoxSectionProps,
+} from "@dotui/registry/ui/list-box";
+
+import type {
+  SelectContentProps,
   SelectProps,
-  SelectRootProps,
   SelectValueProps,
 } from "./basic";
+import {
+  Select as _Select,
+  SelectContent as _SelectContent,
+  SelectItem as _SelectItem,
+  SelectSection as _SelectSection,
+  SelectSectionHeader as _SelectSectionHeader,
+  SelectTrigger as _SelectTrigger,
+  SelectValue as _SelectValue,
+} from "./basic";
 
-export const SelectRoot = <T extends object = object>(
-  props: SelectRootProps<T>,
-) => {
-  const Component = createDynamicComponent<SelectRootProps<T>>(
-    "select",
-    "SelectRoot",
-    _SelectRoot,
-    {},
-  );
-
-  return <Component {...props} />;
-};
-
-export const SelectBase = <T extends object = object>(
-  props: SelectProps<T>,
-) => {
+export const Select = <T extends object = object>(props: SelectProps<T>) => {
   const Component = createDynamicComponent<SelectProps<T>>(
     "select",
     "Select",
     _Select,
     {},
-    true,
   );
 
   return <Component {...props} />;
 };
+
+export const SelectTrigger = createDynamicComponent<ButtonProps>(
+  "select",
+  "SelectTrigger",
+  _SelectTrigger,
+  {},
+  true,
+);
 
 export const SelectValue = <T extends object = object>(
   props: SelectValueProps<T>,
@@ -58,10 +55,22 @@ export const SelectValue = <T extends object = object>(
   return <Component {...props} />;
 };
 
-export const SelectItem = <T extends object = object>(
-  props: SelectItemProps<T>,
+export const SelectContent = <T extends object = object>(
+  props: SelectContentProps<T>,
 ) => {
-  const Component = createDynamicComponent<SelectItemProps<T>>(
+  const Component = createDynamicComponent<SelectContentProps<T>>(
+    "select",
+    "SelectContent",
+    _SelectContent,
+    {},
+  );
+  return <Component {...props} />;
+};
+
+export const SelectItem = <T extends object = object>(
+  props: ListBoxItemProps<T>,
+) => {
+  const Component = createDynamicComponent<ListBoxItemProps<T>>(
     "select",
     "SelectItem",
     _SelectItem,
@@ -71,13 +80,24 @@ export const SelectItem = <T extends object = object>(
   return <Component {...props} />;
 };
 
-export const Select = Object.assign(SelectBase, {
-  Root: SelectRoot,
-  Value: SelectValue,
-  Item: SelectItem,
-  ListBox,
-  Overlay,
-  Button,
-});
+export const SelectSection = <T extends object = object>(
+  props: ListBoxSectionProps<T>,
+) => {
+  const Component = createDynamicComponent<ListBoxSectionProps<T>>(
+    "select",
+    "SelectSection",
+    _SelectSection,
+    {},
+  );
+  return <Component {...props} />;
+};
 
-export type { SelectProps, SelectRootProps, SelectValueProps, SelectItemProps };
+export const SelectSectionHeader =
+  createDynamicComponent<ListBoxSectionHeaderProps>(
+    "select",
+    "SelectSectionHeader",
+    _SelectSectionHeader,
+    {},
+  );
+
+export type { SelectProps, SelectContentProps, SelectValueProps };

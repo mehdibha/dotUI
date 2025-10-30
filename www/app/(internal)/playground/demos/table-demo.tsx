@@ -3,7 +3,7 @@
 import { useDragAndDrop } from "react-aria-components";
 import { useAsyncList, useListData } from "react-stately";
 
-import { Table } from "@dotui/registry-v2/ui/table";
+import { Table } from "@dotui/registry/ui/table";
 
 const users = [
   { id: 1, name: "John Doe", email: "john@example.com", role: "Admin" },

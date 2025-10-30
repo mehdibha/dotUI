@@ -1,7 +1,7 @@
 "use client";
 
-import { Description, Label } from "@dotui/registry-v2/ui/field";
-import { Slider } from "@dotui/registry-v2/ui/slider";
+import { Description, Label } from "@dotui/registry/ui/field";
+import { Slider } from "@dotui/registry/ui/slider";
 
 export function SliderDemo() {
   return (

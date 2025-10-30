@@ -3,7 +3,7 @@
 import {
   ProgressBar,
   ProgressBarControl,
-} from "@dotui/registry-v2/ui/progress-bar";
+} from "@dotui/registry/ui/progress-bar";
 
 export function ProgressBarDemo() {
   return (

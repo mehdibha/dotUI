@@ -1,6 +1,12 @@
 import { GlobeIcon } from "@dotui/registry/icons";
-import { Alert } from "@dotui/registry/ui/alert";
+import { Alert, AlertDescription, AlertTitle } from "@dotui/registry/ui/alert";
 
 export default function AlertDemo() {
-  return <Alert icon={<GlobeIcon />} title="Hello world" />;
+  return (
+    <Alert>
+      <GlobeIcon />
+      <AlertTitle>Hello world</AlertTitle>
+      <AlertDescription>This is a custom icon alert.</AlertDescription>
+    </Alert>
+  );
 }

@@ -27,6 +27,7 @@
     "@internationalized/date": "^3.10.0",
     "@radix-ui/react-collapsible": "^1.0.3",
     "@radix-ui/react-scroll-area": "^1.0.5",
+    "@radix-ui/react-slot": "^1.2.3",
     "@react-aria/overlays": "^3.27.1",
     "@react-stately/utils": "^3.10.8",
     "@remixicon/react": "^4.2.0",

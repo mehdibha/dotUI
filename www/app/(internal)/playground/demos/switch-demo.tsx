@@ -5,12 +5,12 @@ import {
   FieldContent,
   FieldGroup,
   Label,
-} from "@dotui/registry-v2/ui/field";
+} from "@dotui/registry/ui/field";
 import {
   Switch,
   SwitchIndicator,
   SwitchThumb,
-} from "@dotui/registry-v2/ui/switch";
+} from "@dotui/registry/ui/switch";
 
 export function SwitchDemo() {
   return (

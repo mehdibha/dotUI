@@ -2,7 +2,7 @@
 
 import { parseColor } from "react-aria-components";
 
-import { ColorArea } from "@dotui/registry-v2/ui/color-area";
+import { ColorArea } from "@dotui/registry/ui/color-area";
 
 export function ColorAreaDemo() {
   return (

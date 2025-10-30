@@ -8,11 +8,11 @@ import type { ProgressBarProps } from "react-aria-components";
 
 import { cn } from "@dotui/registry/lib/utils";
 
-interface LoaderProps extends Omit<ProgressBarProps, "isIndeterminate"> {
-  color?: string;
+interface LoaderProps extends ProgressBarProps {
   size?: number;
   stroke?: number;
   speed?: number;
+  strokeLength?: number;
 }
 
 function Loader({
@@ -20,7 +20,8 @@ function Loader({
   style,
   size = 20,
   stroke = 2,
-  speed = 2,
+  strokeLength = 0.25,
+  speed = 0.8,
   ...props
 }: LoaderProps) {
   const centerPoint = size / 2;
@@ -33,9 +34,12 @@ function Loader({
         ...style,
         "--loader-size": `${size}px`,
         "--loader-speed": `${speed}s`,
+        "--loader-stroke": "2",
+        "--loader-dash": String(parseFloat(`${strokeLength}`) * 100),
+        "--loader-gap": String(100 - parseFloat(`${strokeLength}`) * 100),
       }))}
       className={cn(
-        "inline-flex size-[var(--loader-size)] shrink-0 items-center justify-center",
+        "inline-flex size-(--loader-size) shrink-0 items-center justify-center",
         className,
       )}
       aria-label="loading..."
@@ -43,24 +47,24 @@ function Loader({
       isIndeterminate
     >
       <svg
-        className="size-[var(--loader-size)] origin-center animate-[spin_var(--loader-speed)_linear_infinite] overflow-visible will-change-transform"
-        viewBox={`0 0 ${size} ${size}`}
+        className="size-(--loader-size) origin-center animate-[spin_var(--loader-speed)_linear_infinite] overflow-visible will-change-transform"
+        viewBox={`${centerPoint} ${centerPoint} ${size} ${size}`}
         height={size}
         width={size}
       >
         <circle
-          className="stroke-fg-muted opacity-25 transition-[stroke] duration-500 ease-out"
-          cx={centerPoint}
-          cy={centerPoint}
+          className="stroke-[color-mix(in_oklab,currentColor_20%,transparent)] transition-[stroke] duration-500 ease-out"
+          cx={size}
+          cy={size}
           r={radius}
           pathLength="100"
           strokeWidth={`${stroke}px`}
           fill="none"
         />
         <circle
-          className="animate-loader-ring-stretch fill-none stroke-fg-muted transition-[stroke] duration-500 ease-out will-change-[stroke-dasharray,_stroke-dashoffset] [stroke-dasharray:1_200] [stroke-dashoffset:0] [stroke-linecap:round]"
-          cx={centerPoint}
-          cy={centerPoint}
+          className="fill-none stroke-current transition-[stroke] duration-500 ease-out [stroke-dasharray:var(--loader-dash),var(--loader-gap)] [stroke-dashoffset:0] [stroke-linecap:round]"
+          cx={size}
+          cy={size}
           r={radius}
           pathLength="100"
           strokeWidth={`${stroke}px`}

@@ -2,9 +2,9 @@
 
 import { CalendarIcon } from "lucide-react";
 
-import { DateField } from "@dotui/registry-v2/ui/date-field";
-import { Description, FieldError, Label } from "@dotui/registry-v2/ui/field";
-import { DateInput, InputAddon, InputGroup } from "@dotui/registry-v2/ui/input";
+import { DateField } from "@dotui/registry/ui/date-field";
+import { Description, FieldError, Label } from "@dotui/registry/ui/field";
+import { DateInput, InputAddon, InputGroup } from "@dotui/registry/ui/input";
 
 export function DateFieldDemo() {
   return (

@@ -11,7 +11,6 @@ import {
   DialogHeader as _DialogHeader,
   DialogHeading as _DialogHeading,
   DialogInset as _DialogInset,
-  DialogRoot as _DialogRoot,
 } from "./basic";
 import type {
   DialogBodyProps,
@@ -22,15 +21,7 @@ import type {
   DialogHeadingProps,
   DialogInsetProps,
   DialogProps,
-  DialogRootProps,
 } from "./basic";
-
-export const DialogRoot = createDynamicComponent<DialogRootProps>(
-  "dialog",
-  "DialogRoot",
-  _DialogRoot,
-  {},
-);
 
 export const Dialog = createDynamicComponent<DialogProps>(
   "dialog",
@@ -89,7 +80,6 @@ export const DialogInset = createDynamicComponent<DialogInsetProps>(
 );
 
 export type {
-  DialogRootProps,
   DialogProps,
   DialogHeaderProps,
   DialogHeadingProps,

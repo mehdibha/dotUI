@@ -1,8 +1,8 @@
 "use client";
 
-import { Description, Label } from "@dotui/registry-v2/ui/field";
-import { Input, TextArea } from "@dotui/registry-v2/ui/input";
-import { TextField } from "@dotui/registry-v2/ui/text-field";
+import { Description, Label } from "@dotui/registry/ui/field";
+import { Input, TextArea } from "@dotui/registry/ui/input";
+import { TextField } from "@dotui/registry/ui/text-field";
 
 export function TextFieldDemo() {
   return (

@@ -3,10 +3,10 @@
 import { IconBell, IconCloud, IconFolderCode } from "@tabler/icons-react";
 import { ArrowUpRightIcon, PlusIcon, RefreshCcwIcon } from "lucide-react";
 
-import { Avatar } from "@dotui/registry-v2/ui/avatar";
-import { Button } from "@dotui/registry-v2/ui/button";
-import { Empty } from "@dotui/registry-v2/ui/empty";
-import { Link } from "@dotui/registry-v2/ui/link";
+import { Avatar } from "@dotui/registry/ui/avatar";
+import { Button } from "@dotui/registry/ui/button";
+import { Empty } from "@dotui/registry/ui/empty";
+import { Link } from "@dotui/registry/ui/link";
 
 export function EmptyDemo() {
   return (

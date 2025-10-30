@@ -1,7 +1,7 @@
 "use client";
 
-import { ColorSlider } from "@dotui/registry-v2/ui/color-slider";
-import { Description, Label } from "@dotui/registry-v2/ui/field";
+import { ColorSlider } from "@dotui/registry/ui/color-slider";
+import { Description, Label } from "@dotui/registry/ui/field";
 
 export function ColorSliderDemo() {
   return (

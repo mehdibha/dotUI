@@ -1,6 +1,6 @@
 "use client";
 
-import { Separator } from "@dotui/registry-v2/ui/separator";
+import { Separator } from "@dotui/registry/ui/separator";
 
 export function SeparatorDemo() {
   return (

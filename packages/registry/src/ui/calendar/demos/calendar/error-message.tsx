@@ -5,7 +5,12 @@ import { getLocalTimeZone, isWeekend, today } from "@internationalized/date";
 import { useLocale } from "react-aria-components";
 import type { DateValue } from "react-aria-components";
 
-import { Calendar } from "@dotui/registry/ui/calendar";
+import {
+  Calendar,
+  CalendarGrid,
+  CalendarHeader,
+} from "@dotui/registry/ui/calendar";
+import { FieldError } from "@dotui/registry/ui/field";
 
 export default function Demo() {
   const [date, setDate] = React.useState<DateValue>(today(getLocalTimeZone()));
@@ -17,7 +22,10 @@ export default function Demo() {
       value={date}
       onChange={setDate}
       isInvalid={isInvalid}
-      errorMessage={"We are closed on weekends"}
-    />
+    >
+      <CalendarHeader />
+      <CalendarGrid />
+      <FieldError>We are closed on weekends</FieldError>
+    </Calendar>
   );
 }

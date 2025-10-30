@@ -1,12 +1,12 @@
 "use client";
 
-import { Button } from "@dotui/registry-v2/ui/button";
-import { Description, Label } from "@dotui/registry-v2/ui/field";
-import { Form } from "@dotui/registry-v2/ui/form";
-import { Input } from "@dotui/registry-v2/ui/input";
-import { NumberField } from "@dotui/registry-v2/ui/number-field";
-import { Switch } from "@dotui/registry-v2/ui/switch";
-import { TextField } from "@dotui/registry-v2/ui/text-field";
+import { Button } from "@dotui/registry/ui/button";
+import { Description, Label } from "@dotui/registry/ui/field";
+import { Form } from "@dotui/registry/ui/form";
+import { Input } from "@dotui/registry/ui/input";
+import { NumberField } from "@dotui/registry/ui/number-field";
+import { Switch } from "@dotui/registry/ui/switch";
+import { TextField } from "@dotui/registry/ui/text-field";
 
 export function FormDemo() {
   return (

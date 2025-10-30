@@ -1,7 +1,7 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import type { Route } from "next";
+import { usePathname } from "next/navigation";
 
 import { Breadcrumb, Breadcrumbs } from "@dotui/registry/ui/breadcrumbs";
 

@@ -12,8 +12,8 @@ import {
   Alert,
   AlertDescription,
   AlertTitle,
-} from "@dotui/registry-v2/ui/alert";
-import { Button } from "@dotui/registry-v2/ui/button";
+} from "@dotui/registry/ui/alert";
+import { Button } from "@dotui/registry/ui/button";
 
 export function AlertDemo() {
   return (

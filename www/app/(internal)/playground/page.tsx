@@ -11,14 +11,14 @@ import {
   SwitchContext,
 } from "react-aria-components";
 
-import { cn } from "@dotui/registry-v2/lib/utils";
-import { Label } from "@dotui/registry-v2/ui/field";
-import { SkeletonProvider } from "@dotui/registry-v2/ui/skeleton";
+import { cn } from "@dotui/registry/lib/utils";
+import { Label } from "@dotui/registry/ui/field";
+import { SkeletonProvider } from "@dotui/registry/ui/skeleton";
 import {
   Switch,
   SwitchIndicator,
   SwitchThumb,
-} from "@dotui/registry-v2/ui/switch";
+} from "@dotui/registry/ui/switch";
 
 import { TableOfContents } from "@/modules/docs/components/toc";
 import * as demos from "./demos";

@@ -4,22 +4,22 @@ import { Button } from "@dotui/registry/ui/button";
 export default function Demo() {
   return (
     <div className="flex items-center justify-center gap-4">
-      <Button size="sm" shape="square" aria-label="upload">
+      <Button size="sm" aria-label="upload">
         <UploadIcon />
       </Button>
-      <Button size="md" shape="square" aria-label="upload">
+      <Button size="md" aria-label="upload">
         <UploadIcon />
       </Button>
-      <Button size="lg" shape="square" aria-label="upload">
+      <Button size="lg" aria-label="upload">
         <UploadIcon />
       </Button>
-      <Button size="sm" shape="circle" aria-label="upload">
+      <Button size="sm" aria-label="upload" className="rounded-full">
         <UploadIcon />
       </Button>
-      <Button size="md" shape="circle" aria-label="upload">
+      <Button size="md" aria-label="upload" className="rounded-full">
         <UploadIcon />
       </Button>
-      <Button size="lg" shape="circle" aria-label="upload">
+      <Button size="lg" aria-label="upload" className="rounded-full">
         <UploadIcon />
       </Button>
     </div>

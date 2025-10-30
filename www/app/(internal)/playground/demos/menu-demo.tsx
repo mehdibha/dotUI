@@ -10,8 +10,8 @@ import {
   SparklesIcon,
 } from "lucide-react";
 
-import { Button } from "@dotui/registry-v2/ui/button";
-import { Kbd } from "@dotui/registry-v2/ui/kbd";
+import { Button } from "@dotui/registry/ui/button";
+import { Kbd } from "@dotui/registry/ui/kbd";
 import {
   Menu,
   MenuContent,
@@ -19,9 +19,9 @@ import {
   MenuItem,
   MenuSection,
   MenuSub,
-} from "@dotui/registry-v2/ui/menu";
-import { Overlay } from "@dotui/registry-v2/ui/overlay";
-import { Separator } from "@dotui/registry-v2/ui/separator";
+} from "@dotui/registry/ui/menu";
+import { Overlay } from "@dotui/registry/ui/overlay";
+import { Separator } from "@dotui/registry/ui/separator";
 import { Avatar } from "@dotui/registry/ui/avatar";
 
 export function MenuDemo() {

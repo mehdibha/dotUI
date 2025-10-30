@@ -1,6 +1,6 @@
 "use client";
 
-import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry-v2/ui/tabs";
+import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs";
 
 export function TabsDemo() {
   return (

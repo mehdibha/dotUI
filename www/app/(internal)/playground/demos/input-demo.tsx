@@ -1,6 +1,6 @@
 "use client";
 
-import { Input } from "@dotui/registry-v2/ui/input";
+import { Input } from "@dotui/registry/ui/input";
 
 export function InputDemo() {
   return (

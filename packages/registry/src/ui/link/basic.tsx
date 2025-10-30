@@ -5,11 +5,11 @@ import { tv } from "tailwind-variants";
 import type { LinkProps as AriaLinkProps } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 
-import { focusRing } from "@dotui/registry/lib/focus-styles";
-
 const linkVariants = tv({
-  extend: focusRing,
-  base: "inline-flex items-center gap-1 transition-colors disabled:text-fg-disabled",
+  base: [
+    "focus-reset focus-visible:focus-ring",
+    "inline-flex items-center gap-1 transition-colors disabled:text-fg-disabled",
+  ],
   variants: {
     variant: {
       accent: "text-fg-accent hover:text-[#5e9fe0]",

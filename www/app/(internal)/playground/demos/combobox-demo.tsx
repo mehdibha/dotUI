@@ -3,19 +3,19 @@
 import { ChevronsUpDownIcon, PlusCircleIcon, User2Icon } from "lucide-react";
 import { Collection } from "react-aria-components";
 
-import { Avatar } from "@dotui/registry-v2/ui/avatar";
-import { Button } from "@dotui/registry-v2/ui/button";
-import { Combobox } from "@dotui/registry-v2/ui/combobox";
-import { Label } from "@dotui/registry-v2/ui/field";
-import { Input, InputAddon, InputGroup } from "@dotui/registry-v2/ui/input";
+import { Avatar } from "@dotui/registry/ui/avatar";
+import { Button } from "@dotui/registry/ui/button";
+import { Combobox } from "@dotui/registry/ui/combobox";
+import { Label } from "@dotui/registry/ui/field";
+import { Input, InputAddon, InputGroup } from "@dotui/registry/ui/input";
 import {
   ListBox,
   ListBoxItem,
   ListBoxSection,
   ListBoxSectionHeader,
-} from "@dotui/registry-v2/ui/list-box";
-import { Popover } from "@dotui/registry-v2/ui/popover";
-import { Separator } from "@dotui/registry-v2/ui/separator";
+} from "@dotui/registry/ui/list-box";
+import { Popover } from "@dotui/registry/ui/popover";
+import { Separator } from "@dotui/registry/ui/separator";
 
 export function ComboboxDemo() {
   return (

@@ -1,16 +1,17 @@
-import { Alert } from "@dotui/registry/ui/alert";
+import { Alert, AlertAction, AlertTitle } from "@dotui/registry/ui/alert";
 import { Button } from "@dotui/registry/ui/button";
 
 export default function AlertDemo() {
   return (
-    <Alert
-      action={
+    <Alert>
+      <AlertTitle>
+        You are currently on the free plan. Upgrade to unlock more features.
+      </AlertTitle>
+      <AlertAction>
         <Button variant="primary" size="sm">
           Upgrade
         </Button>
-      }
-    >
-      You are currently on the free plan. Upgrade to unlock more features.
+      </AlertAction>
     </Alert>
   );
 }

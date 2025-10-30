@@ -1,42 +1,46 @@
 "use client";
 
-import { useFilter } from "react-aria-components";
-
 import { Button } from "@dotui/registry/ui/button";
-import { Command } from "@dotui/registry/ui/command";
-import { Dialog, DialogRoot } from "@dotui/registry/ui/dialog";
-import { MenuContent, MenuItem } from "@dotui/registry/ui/menu";
-import { SearchField } from "@dotui/registry/ui/search-field";
+import {
+  Command,
+  CommandContent,
+  CommandInput,
+  CommandItem,
+} from "@dotui/registry/ui/command";
+import { Dialog, DialogContent } from "@dotui/registry/ui/dialog";
+import { Overlay } from "@dotui/registry/ui/overlay";
 
 export default function Demo() {
-  const { contains } = useFilter({ sensitivity: "base" });
   return (
-    <DialogRoot>
+    <Dialog>
       <Button>Open Dialog</Button>
-      <Dialog className="p-0">
-        <Command filter={contains} className="h-72 w-full">
-          <div className="p-2">
-            <SearchField
-              placeholder="Search commands..."
-              size="lg"
-              autoFocus
-              className="w-full"
-            />
-          </div>
-          <MenuContent className="overflow-y-scroll">
-            <MenuItem textValue="Create new file">Create new file...</MenuItem>
-            <MenuItem textValue="Create new folder">
-              Create new folder...
-            </MenuItem>
-            <MenuItem textValue="Assign to">Assign to...</MenuItem>
-            <MenuItem textValue="Assign to me">Assign to me</MenuItem>
-            <MenuItem textValue="Change status">Change status...</MenuItem>
-            <MenuItem textValue="Change priority">Change priority...</MenuItem>
-            <MenuItem textValue="Add label">Add label...</MenuItem>
-            <MenuItem textValue="Remove label">Remove label...</MenuItem>
-          </MenuContent>
-        </Command>
-      </Dialog>
-    </DialogRoot>
+      <Overlay type="popover">
+        <DialogContent>
+          <Command>
+            <CommandInput />
+            <CommandContent>
+              <CommandItem textValue="Create new file">
+                Create new file...
+              </CommandItem>
+              <CommandItem textValue="Create new folder">
+                Create new folder...
+              </CommandItem>
+              <CommandItem textValue="Assign to">Assign to...</CommandItem>
+              <CommandItem textValue="Assign to me">Assign to me</CommandItem>
+              <CommandItem textValue="Change status">
+                Change status...
+              </CommandItem>
+              <CommandItem textValue="Change priority">
+                Change priority...
+              </CommandItem>
+              <CommandItem textValue="Add label">Add label...</CommandItem>
+              <CommandItem textValue="Remove label">
+                Remove label...
+              </CommandItem>
+            </CommandContent>
+          </Command>
+        </DialogContent>
+      </Overlay>
+    </Dialog>
   );
 }

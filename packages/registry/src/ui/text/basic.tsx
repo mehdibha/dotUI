@@ -1,33 +1,16 @@
 "use client";
 
 import { Text as AriaText } from "react-aria-components";
-import { tv } from "tailwind-variants";
 import type { TextProps as AriaTextProps } from "react-aria-components";
-import type { VariantProps } from "tailwind-variants";
 
-const textStyles = tv({
-  base: "text-sm",
-  variants: {
-    slot: {
-      label: "font-bold",
-      description:
-        "text-fg-muted group-data-[disabled]/list-box-item:text-fg-disabled",
-      errorMessage: "text-fg-danger",
-    },
-  },
-});
+import { useSkeletonText } from "@dotui/registry/ui/skeleton";
 
-interface TextProps
-  extends Omit<AriaTextProps, "slot">,
-    VariantProps<typeof textStyles> {}
-const Text = ({ slot, className, ...props }: TextProps) => {
-  return (
-    <AriaText
-      slot={slot}
-      className={textStyles({ slot, className })}
-      {...props}
-    />
-  );
+interface TextProps extends AriaTextProps {}
+
+const Text = ({ children, ...props }: TextProps) => {
+  children = useSkeletonText(children);
+
+  return <AriaText {...props}>{children}</AriaText>;
 };
 
 export type { TextProps };

@@ -14,7 +14,7 @@ import {
   UsersIcon,
 } from "lucide-react";
 
-import { Button } from "@dotui/registry-v2/ui/button";
+import { Button } from "@dotui/registry/ui/button";
 import {
   Command,
   CommandInput,
@@ -22,15 +22,15 @@ import {
   CommandList,
   CommandSection,
   CommandSectionHeader,
-} from "@dotui/registry-v2/ui/command";
-import { Dialog, DialogContent } from "@dotui/registry-v2/ui/dialog";
-import { Drawer } from "@dotui/registry-v2/ui/drawer";
-import { Label } from "@dotui/registry-v2/ui/field";
-import { Kbd } from "@dotui/registry-v2/ui/kbd";
-import { Modal } from "@dotui/registry-v2/ui/modal";
-import { Overlay } from "@dotui/registry-v2/ui/overlay";
-import { Popover } from "@dotui/registry-v2/ui/popover";
-import { Select, SelectTrigger } from "@dotui/registry-v2/ui/select";
+} from "@dotui/registry/ui/command";
+import { Dialog, DialogContent } from "@dotui/registry/ui/dialog";
+import { Drawer } from "@dotui/registry/ui/drawer";
+import { Label } from "@dotui/registry/ui/field";
+import { Kbd } from "@dotui/registry/ui/kbd";
+import { Modal } from "@dotui/registry/ui/modal";
+import { Overlay } from "@dotui/registry/ui/overlay";
+import { Popover } from "@dotui/registry/ui/popover";
+import { Select, SelectTrigger } from "@dotui/registry/ui/select";
 
 export function CommandDemo() {
   return (
