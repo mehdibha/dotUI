@@ -26,7 +26,7 @@ import {
   SelectTrigger,
 } from "@dotui/registry/ui/select";
 import { TextField } from "@dotui/registry/ui/text-field";
-import { Tooltip } from "@dotui/registry/ui/tooltip";
+import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
 
 export function AutocompleteDemo() {
   const { contains } = useFilter({ sensitivity: "base" });
@@ -53,10 +53,11 @@ export function AutocompleteDemo() {
                 <InputAddon>
                   <SelectableCollectionContext value={null}>
                     <Menu>
-                      <Tooltip content="Attach">
+                      <Tooltip>
                         <Button aria-label="Attach" variant="quiet">
                           <PaperclipIcon className="-rotate-45" />
                         </Button>
+                        <TooltipContent>Attach</TooltipContent>
                       </Tooltip>
                       <Overlay type="popover">
                         <MenuContent className="outline-hidden">

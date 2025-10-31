@@ -3,31 +3,31 @@
 import { IconBell, IconCloud, IconFolderCode } from "@tabler/icons-react";
 import { ArrowUpRightIcon, PlusIcon, RefreshCcwIcon } from "lucide-react";
 
-import { Avatar } from "@dotui/registry/ui/avatar";
+import { Avatar, AvatarGroup } from "@dotui/registry/ui/avatar";
 import { Button } from "@dotui/registry/ui/button";
-import { Empty } from "@dotui/registry/ui/empty";
+import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@dotui/registry/ui/empty";
 import { Link } from "@dotui/registry/ui/link";
 
 export function EmptyDemo() {
   return (
     <div className="grid grid-cols-2 items-center gap-4 p-10">
       <Empty>
-        <Empty.Header>
-          <Empty.Media variant="icon">
+        <EmptyHeader>
+          <EmptyMedia variant="icon">
             <IconFolderCode />
-          </Empty.Media>
-          <Empty.Title>No Projects Yet</Empty.Title>
-          <Empty.Description>
+          </EmptyMedia>
+          <EmptyTitle>No Projects Yet</EmptyTitle>
+          <EmptyDescription>
             You haven&apos;t created any projects yet. Get started by creating
             your first project.
-          </Empty.Description>
-        </Empty.Header>
-        <Empty.Content>
+          </EmptyDescription>
+        </EmptyHeader>
+        <EmptyContent>
           <div className="flex gap-2">
             <Button>Create Project</Button>
             <Button>Import Project</Button>
           </div>
-        </Empty.Content>
+        </EmptyContent>
         <Button asChild variant="link" className="text-fg-muted" size="sm">
           <Link>
             Learn More <ArrowUpRightIcon />
@@ -36,9 +36,9 @@ export function EmptyDemo() {
       </Empty>
 
       <Empty>
-        <Empty.Header>
-          <Empty.Media>
-            <Avatar.Group className="*:data-[slot=avatar]:grayscale">
+        <EmptyHeader>
+          <EmptyMedia>
+            <AvatarGroup className="*:data-[slot=avatar]:grayscale">
               <Avatar
                 src="https://github.com/shadcn.png"
                 alt="@shadcn"
@@ -54,52 +54,52 @@ export function EmptyDemo() {
                 alt="@evilrabbit"
                 fallback="ER"
               />
-            </Avatar.Group>
-          </Empty.Media>
-          <Empty.Title>No Team Members</Empty.Title>
-          <Empty.Description>
+            </AvatarGroup>
+          </EmptyMedia>
+          <EmptyTitle>No Team Members</EmptyTitle>
+          <EmptyDescription>
             Invite your team to collaborate on this project.
-          </Empty.Description>
-        </Empty.Header>
-        <Empty.Content>
+          </EmptyDescription>
+        </EmptyHeader>
+        <EmptyContent>
           <Button size="sm">
             <PlusIcon />
             Invite Members
           </Button>
-        </Empty.Content>
+        </EmptyContent>
       </Empty>
 
       <Empty className="border border-dashed">
-        <Empty.Header>
-          <Empty.Media variant="icon">
+        <EmptyHeader>
+          <EmptyMedia variant="icon">
             <IconCloud />
-          </Empty.Media>
-          <Empty.Title>Cloud Storage Empty.</Empty.Title>
-          <Empty.Description>
+          </EmptyMedia>
+          <EmptyTitle>Cloud Storage Empty.</EmptyTitle>
+          <EmptyDescription>
             Upload files to your cloud storage to access them anywhere.
-          </Empty.Description>
-        </Empty.Header>
-        <Empty.Content>
+          </EmptyDescription>
+        </EmptyHeader>
+        <EmptyContent>
           <Button size="sm">Upload Files</Button>
-        </Empty.Content>
+        </EmptyContent>
       </Empty>
 
       <Empty className="to-background h-full bg-gradient-to-b from-muted/50 from-30%">
-        <Empty.Header>
-          <Empty.Media variant="icon">
+        <EmptyHeader>
+          <EmptyMedia variant="icon">
             <IconBell />
-          </Empty.Media>
-          <Empty.Title>No Notifications</Empty.Title>
-          <Empty.Description>
+          </EmptyMedia>
+          <EmptyTitle>No Notifications</EmptyTitle>
+          <EmptyDescription>
             You&apos;re all caught up. New notifications will appear here.
-          </Empty.Description>
-        </Empty.Header>
-        <Empty.Content>
+          </EmptyDescription>
+        </EmptyHeader>
+        <EmptyContent>
           <Button size="sm">
             <RefreshCcwIcon />
             Refresh
           </Button>
-        </Empty.Content>
+        </EmptyContent>
       </Empty>
     </div>
   );

@@ -4,11 +4,11 @@ import { ChevronDownIcon } from "lucide-react";
 
 import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";
-import { ListBox, ListBoxSection } from "@dotui/registry/ui/list-box";
+import { ListBox, ListBoxSection, ListBoxSectionHeader } from "@dotui/registry/ui/list-box";
 import { Popover } from "@dotui/registry/ui/popover";
-import { SelectItem, SelectRoot, SelectValue } from "@dotui/registry/ui/select";
+import { Select, SelectItem, SelectTrigger, SelectValue } from "@dotui/registry/ui/select";
 import type { ButtonProps } from "@dotui/registry/ui/button";
-import type { SelectRootProps } from "@dotui/registry/ui/select";
+import type { SelectProps } from "@dotui/registry/ui/select";
 
 import { useActiveStyle } from "@/modules/styles/hooks/use-active-style";
 import { useFeaturedStyles } from "@/modules/styles/hooks/use-featured-styles";
@@ -16,7 +16,7 @@ import { useSetActiveStyle } from "@/modules/styles/hooks/use-set-active-style";
 import { useUserStyles } from "@/modules/styles/hooks/use-user-styles";
 
 export function ActiveStyleSelector(
-  props: SelectRootProps<any> & {
+  props: SelectProps<any> & {
     buttonProps?: ButtonProps;
   },
 ) {
@@ -27,7 +27,7 @@ export function ActiveStyleSelector(
   const userStylesQuery = useUserStyles();
 
   return (
-    <SelectRoot
+    <Select
       aria-label="Active Style"
       selectedKey={activeStyleQuery.data?.id}
       onSelectionChange={(key) => {
@@ -37,25 +37,28 @@ export function ActiveStyleSelector(
       }}
       {...props}
     >
-      <Button
-        variant="default"
-        suffix={<ChevronDownIcon />}
-        {...props.buttonProps}
-        className={cn(props.buttonProps?.className, "justify-start")}
-      >
-        <span className="text-fg-muted">Style:</span>{" "}
-        {activeStyleQuery.isPending ? (
-          <span className="flex-1 truncate text-left">loading...</span>
-        ) : (
-          <span className="flex-1 truncate text-left">
-            <SelectValue />
-          </span>
-        )}
-      </Button>
+      <SelectTrigger asChild>
+        <Button
+          variant="default"
+          {...props.buttonProps}
+          className={cn(props.buttonProps?.className, "justify-start")}
+        >
+          <span className="text-fg-muted">Style:</span>{" "}
+          {activeStyleQuery.isPending ? (
+            <span className="flex-1 truncate text-left">loading...</span>
+          ) : (
+            <span className="flex-1 truncate text-left">
+              <SelectValue />
+            </span>
+          )}
+          <ChevronDownIcon />
+        </Button>
+      </SelectTrigger>
       <Popover>
         <ListBox isLoading={featuredStylesQuery.isPending}>
           {userStylesQuery.isSuccess && userStylesQuery.data?.length > 0 && (
-            <ListBoxSection title="My styles">
+            <ListBoxSection>
+              <ListBoxSectionHeader>My styles</ListBoxSectionHeader>
               {userStylesQuery.data
                 ?.filter((style) => !style.isFeatured)
                 .map((style) => (
@@ -67,7 +70,8 @@ export function ActiveStyleSelector(
           )}
           {featuredStylesQuery.isSuccess &&
             featuredStylesQuery.data?.length > 0 && (
-              <ListBoxSection title="Featured">
+              <ListBoxSection>
+                <ListBoxSectionHeader>Featured</ListBoxSectionHeader>
                 {featuredStylesQuery.data?.map((style) => (
                   <SelectItem key={style.id} id={style.id}>
                     {style.name}
@@ -77,6 +81,6 @@ export function ActiveStyleSelector(
             )}
         </ListBox>
       </Popover>
-    </SelectRoot>
+    </Select>
   );
 }

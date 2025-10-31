@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import type { Route } from "next";
 import {
   ChevronsRightIcon,
@@ -16,16 +17,18 @@ import {
 import { motion } from "motion/react";
 
 import { registryBlocks } from "@dotui/registry/blocks/registry";
-import { cn, createScopedContext } from "@dotui/registry/lib/utils";
+import { cn } from "@dotui/registry/lib/utils";
+import { createScopedContext } from "@dotui/registry/lib/context";
 import { Button } from "@dotui/registry/ui/button";
-import { Dialog } from "@dotui/registry/ui/dialog";
+import { Dialog, DialogContent } from "@dotui/registry/ui/dialog";
+import { Modal } from "@dotui/registry/ui/modal";
 import { ListBox, ListBoxItem } from "@dotui/registry/ui/list-box";
 import { Popover } from "@dotui/registry/ui/popover";
-import { SelectRoot, SelectValue } from "@dotui/registry/ui/select";
+import { Select, SelectTrigger, SelectValue } from "@dotui/registry/ui/select";
 import { Separator } from "@dotui/registry/ui/separator";
 import { Skeleton } from "@dotui/registry/ui/skeleton";
 import { ToggleButton } from "@dotui/registry/ui/toggle-button";
-import { Tooltip } from "@dotui/registry/ui/tooltip";
+import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
 
 import { useSidebarContext } from "@/components/layout/sidebar";
 import { useHorizontalResize } from "@/hooks/use-horizontal-resize";
@@ -175,6 +178,7 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
     setOpen,
     block,
     setBlock,
+    isFullscreen,
     setFullscreen,
   } = usePreviewContext("PreviewToolbar");
   const { slug } = useStyleEditorParams();
@@ -187,7 +191,6 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
         <Button
           aria-label="Collapse preview"
           variant="quiet"
-          shape="square"
           size="sm"
           className="size-7"
           onPress={() => setOpen(false)}
@@ -195,20 +198,22 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
           <ChevronsRightIcon />
         </Button>
         <Separator orientation="vertical" className="h-4" />
-        <SelectRoot
+        <Select
           aria-label="Select block"
           onSelectionChange={(key) => setBlock(key as string)}
           selectedKey={block}
           className="w-auto"
         >
-          <Button
-            variant="link"
-            size="sm"
-            suffix={<ChevronsUpDownIcon className="size-3.5!" />}
-            className="h-7 justify-center gap-1 rounded-sm px-2 text-fg-muted"
-          >
-            <SelectValue className="flex-0" />
-          </Button>
+          <SelectTrigger asChild>
+            <Button
+              variant="link"
+              size="sm"
+              className="h-7 justify-center gap-1 rounded-sm px-2 text-fg-muted"
+            >
+              <SelectValue className="flex-0" />
+              <ChevronsUpDownIcon className="size-3.5!" />
+            </Button>
+          </SelectTrigger>
           <Popover className="min-w-36">
             <ListBox
               items={registryBlocks.filter((block) =>
@@ -218,7 +223,7 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
               {(item) => <ListBoxItem id={item.name}>{item.name}</ListBoxItem>}
             </ListBox>
           </Popover>
-        </SelectRoot>
+        </Select>
       </div>
       <div className="flex gap-0.5">
         {supportsLightDark && (
@@ -229,7 +234,6 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
                 setActiveMode(isSelected ? "light" : "dark");
               }}
               size="sm"
-              shape="square"
               className="size-7 selected:bg-transparent selected:text-fg selected:hover:bg-inverse/10 selected:pressed:bg-inverse/20"
             >
               {({ isSelected }) => (
@@ -238,44 +242,46 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
             </ToggleButton>
           </Skeleton>
         )}
-        <Tooltip content={isMobile ? "Mobile" : "Tablet"}>
+        <Tooltip>
           <Button
             aria-label="Select view"
             variant="quiet"
-            shape="square"
             size="sm"
             className="size-7"
             onPress={() => setPreviewWidth(isMobile ? 768 : 430)}
           >
             {isMobile ? <SmartphoneIcon /> : <TabletIcon />}
           </Button>
+          <TooltipContent>{isMobile ? "Mobile" : "Tablet"}</TooltipContent>
         </Tooltip>
-        <Tooltip content="Open in new tab">
+        <Tooltip>
           <Button
             aria-label="Open in new tab"
-            target="_blank"
+            asChild
             variant="quiet"
-            shape="square"
             size="sm"
             className="size-7"
-            href={
-              `/view/${slug}/${block}?mode=true&live=true&view=true` as Route
-            }
           >
-            <ExternalLinkIcon />
+            <Link
+              href={`/view/${slug}/${block}?mode=true&live=true&view=true` as Route}
+              target="_blank"
+            >
+              <ExternalLinkIcon />
+            </Link>
           </Button>
+          <TooltipContent>Open in new tab</TooltipContent>
         </Tooltip>
-        <Tooltip content="Fullscreen">
+        <Tooltip>
           <Button
             aria-label="Enter fullscreen"
             variant="quiet"
-            shape="square"
             size="sm"
             className="size-7"
-            onPress={() => setFullscreen(!fullScreen)}
+            onPress={() => setFullscreen(!isFullscreen)}
           >
-            {fullScreen ? <MinimizeIcon /> : <MaximizeIcon />}
+            {(fullScreen ?? isFullscreen) ? <MinimizeIcon /> : <MaximizeIcon />}
           </Button>
+          <TooltipContent>Fullscreen</TooltipContent>
         </Tooltip>
       </div>
     </div>
@@ -320,21 +326,18 @@ export const PreviewFrame = ({
 };
 
 const PreviewModal = ({ children }: { children: React.ReactNode }) => {
-  const { isFullscreen } = usePreviewContext("PreviewModal");
+  const { isFullscreen, setFullscreen } = usePreviewContext("PreviewModal");
   return (
     <Dialog
-      aria-label="Preview"
-      type="modal"
-      mobileType="modal"
-      modalProps={{
-        className:
-          "w-screen h-(--visual-viewport-height) max-w-none rounded-none border-0",
-      }}
-      className="h-full overflow-hidden rounded-none p-0!"
-      isDismissable
       isOpen={isFullscreen}
+      onOpenChange={setFullscreen}
     >
       {children}
+      <Modal>
+        <DialogContent className="w-screen h-(--visual-viewport-height) max-w-none rounded-none border-0 h-full overflow-hidden rounded-none p-0!">
+          {children}
+        </DialogContent>
+      </Modal>
     </Dialog>
   );
 };

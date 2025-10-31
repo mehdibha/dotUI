@@ -36,7 +36,7 @@ import { Button } from "@dotui/registry/ui/button";
 import { ColorField } from "@dotui/registry/ui/color-field";
 import { ColorPicker } from "@dotui/registry/ui/color-picker";
 import { ColorSwatch } from "@dotui/registry/ui/color-swatch";
-import { ColorSwatchPicker } from "@dotui/registry/ui/color-swatch-picker";
+import { ColorSwatchPicker, ColorSwatchPickerItem } from "@dotui/registry/ui/color-swatch-picker";
 import {
   Dialog,
   DialogBody,
@@ -283,7 +283,7 @@ export function GroupDemo() {
                       "#8B5CF6", // Violet
                       "#F59E0B", // Amber
                     ].map((color) => (
-                      <ColorSwatchPicker.Item key={color} color={color} />
+                      <ColorSwatchPickerItem key={color} color={color} />
                     ))}
                   </ColorSwatchPicker>
                 </DialogContent>
@@ -643,7 +643,7 @@ export function GroupDemo() {
                             "#8B5CF6", // Violet
                             "#F59E0B", // Amber
                           ].map((color) => (
-                            <ColorSwatchPicker.Item key={color} color={color} />
+                            <ColorSwatchPickerItem key={color} color={color} />
                           ))}
                         </ColorSwatchPicker>
                       </DialogContent>

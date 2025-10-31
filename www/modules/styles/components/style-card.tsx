@@ -54,7 +54,6 @@ export function StyleCard({
           <Avatar
             src={style.user.image ?? ""}
             fallback={style.user.username.slice(0, 2)}
-            shape="square"
             className="mt-1 size-5"
           />
           <p>{style.user.username}</p>

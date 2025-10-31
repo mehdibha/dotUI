@@ -18,7 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@dotui/registry/ui/select";
-import { Tooltip } from "@dotui/registry/ui/tooltip";
+import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
 import { SearchIcon } from "@dotui/registry/icons";
 
 export function InputGroupDemo() {
@@ -62,10 +62,11 @@ export function InputGroupDemo() {
           <InputGroup key={size} size={size}>
             <Input placeholder="example.com" />
             <InputAddon>
-              <Tooltip content="This is content in a tooltip.">
+              <Tooltip>
                 <Button variant="quiet">
                   <SendIcon />
                 </Button>
+                <TooltipContent>This is content in a tooltip.</TooltipContent>
               </Tooltip>
             </InputAddon>
           </InputGroup>

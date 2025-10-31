@@ -1,7 +1,8 @@
 import { EyeOffIcon } from "lucide-react";
 
+import { Description, FieldError, Label } from "@dotui/registry/ui/field";
+import { Input, InputGroup, InputAddon, TextArea } from "@dotui/registry/ui/input";
 import { SearchField } from "@dotui/registry/ui/search-field";
-import { TextArea } from "@dotui/registry/ui/text-area";
 import { TextField } from "@dotui/registry/ui/text-field";
 
 import { getComponentVariants } from "@/modules/style-editor/components/components-editor/demos/utils";
@@ -15,58 +16,46 @@ export function Inputs() {
       variants={getComponentVariants("input")}
       previewClassName="grid grid-cols-2 gap-3 *:w-auto"
     >
-      <TextField
-        form="none"
-        aria-label="Email"
-        placeholder="hello@mehdibha.com"
-        className="col-span-2"
-      />
-      <TextField
-        form="none"
-        aria-label="Password"
-        type="password"
-        defaultValue="123456"
-        suffix={<EyeOffIcon />}
-        className="col-span-2"
-      />
-      <TextField
-        form="none"
-        label="Email"
-        description="Enter your email"
-        className="col-span-2"
-      />
-      <TextField
-        form="none"
-        aria-label="https://"
-        prefix={<span>https://</span>}
-        className="col-span-2"
-      />
-      <TextField
-        form="none"
-        aria-label="@dotui.org"
-        suffix={<span>@dotui.org</span>}
-        className="col-span-2"
-      />
-      <TextField
-        form="none"
-        aria-label="Email"
-        placeholder="Email"
-        isInvalid
-        errorMessage="This email is already taken."
-        className="col-span-2"
-      />
-      <SearchField
-        form="none"
-        aria-label="Search..."
-        placeholder="Search..."
-        className="col-span-2"
-      />
-      <TextArea
-        form="none"
-        label="Description"
-        description="Type your description"
-        className="col-span-2"
-      />
+      <TextField form="none" aria-label="Email" className="col-span-2">
+        <Input placeholder="hello@mehdibha.com" />
+      </TextField>
+      <TextField form="none" aria-label="Password" className="col-span-2">
+        <InputGroup>
+          <Input type="password" defaultValue="123456" />
+          <InputAddon>
+            <EyeOffIcon />
+          </InputAddon>
+        </InputGroup>
+      </TextField>
+      <TextField form="none" className="col-span-2">
+        <Label>Email</Label>
+        <Input />
+        <Description>Enter your email</Description>
+      </TextField>
+      <TextField form="none" aria-label="https://" className="col-span-2">
+        <InputGroup>
+          <InputAddon>https://</InputAddon>
+          <Input />
+        </InputGroup>
+      </TextField>
+      <TextField form="none" aria-label="@dotui.org" className="col-span-2">
+        <InputGroup>
+          <Input />
+          <InputAddon>@dotui.org</InputAddon>
+        </InputGroup>
+      </TextField>
+      <TextField form="none" aria-label="Email" isInvalid className="col-span-2">
+        <Input placeholder="Email" />
+        <FieldError>This email is already taken.</FieldError>
+      </TextField>
+      <SearchField form="none" aria-label="Search..." className="col-span-2">
+        <Input placeholder="Search..." />
+      </SearchField>
+      <TextField form="none" className="col-span-2">
+        <Label>Description</Label>
+        <TextArea />
+        <Description>Type your description</Description>
+      </TextField>
     </Section>
   );
 }

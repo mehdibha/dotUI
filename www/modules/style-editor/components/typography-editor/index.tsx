@@ -27,7 +27,6 @@ export function TypographyEditor() {
         >
           {(field) => (
             <FontSelector
-              label="Heading font"
               value={field.state.value}
               onChange={(font) => field.handleChange(font as string)}
               className={cn(
@@ -48,7 +47,6 @@ export function TypographyEditor() {
         >
           {(field) => (
             <FontSelector
-              label="Body font"
               value={field.state.value}
               onChange={(font) => field.handleChange(font as string)}
               className={cn(
@@ -63,7 +61,7 @@ export function TypographyEditor() {
 
       <StyleEditorSection title="Font size">
         <Slider
-          label="Font size"
+          aria-label="Font size"
           defaultValue={16}
           minValue={12}
           maxValue={24}

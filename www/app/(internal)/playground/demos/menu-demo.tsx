@@ -15,9 +15,9 @@ import { Kbd } from "@dotui/registry/ui/kbd";
 import {
   Menu,
   MenuContent,
-  MenuHeader,
   MenuItem,
   MenuSection,
+  MenuSectionHeader,
   MenuSub,
 } from "@dotui/registry/ui/menu";
 import { Overlay } from "@dotui/registry/ui/overlay";
@@ -32,7 +32,7 @@ export function MenuDemo() {
         <Overlay type="popover">
           <MenuContent>
             <MenuSection>
-              <MenuHeader>Account</MenuHeader>
+              <MenuSectionHeader>Account</MenuSectionHeader>
               <MenuItem>
                 Profile
                 <Kbd>⇧⌘P</Kbd>
@@ -85,7 +85,7 @@ export function MenuDemo() {
         <Overlay type="popover">
           <MenuContent selectionMode="multiple">
             <MenuSection>
-              <MenuHeader>Appearance</MenuHeader>
+              <MenuSectionHeader>Appearance</MenuSectionHeader>
               <MenuItem>Status Bar</MenuItem>
               <MenuItem isDisabled>Activity Bar</MenuItem>
               <MenuItem>Panel</MenuItem>
@@ -99,7 +99,7 @@ export function MenuDemo() {
         <Overlay type="popover">
           <MenuContent selectionMode="single">
             <MenuSection>
-              <MenuHeader>Appearance</MenuHeader>
+              <MenuSectionHeader>Appearance</MenuSectionHeader>
               <MenuItem>Status Bar</MenuItem>
               <MenuItem isDisabled>Activity Bar</MenuItem>
               <MenuItem>Panel</MenuItem>

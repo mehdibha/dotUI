@@ -4,57 +4,68 @@ import { Button } from "@dotui/registry/ui/button";
 import {
   Dialog,
   DialogBody,
+  DialogContent,
+  DialogDescription,
   DialogFooter,
-  DialogRoot,
+  DialogHeader,
+  DialogHeading,
 } from "@dotui/registry/ui/dialog";
+import { Modal } from "@dotui/registry/ui/modal";
+import { Input, TextArea } from "@dotui/registry/ui/input";
+import { Label } from "@dotui/registry/ui/field";
 import { Select, SelectItem } from "@dotui/registry/ui/select";
-import { TextArea } from "@dotui/registry/ui/text-area";
 import { TextField } from "@dotui/registry/ui/text-field";
 
 export function PublishStyleModal({ children }: { children: React.ReactNode }) {
   return (
-    <DialogRoot>
+    <Dialog>
       {children}
-      <Dialog
-        title="Publish your style"
-        description="Follow these steps to correctly publish your style."
-        modalProps={{ className: "max-w-lg" }}
-      >
-        <DialogBody className="-mx-6 space-y-2 px-6 pt-1 [&_[data-slot='label']]:text-sm">
-          <TextField
-            label="Name"
-            defaultValue="Minimalist"
-            className="w-full"
-          />
-          <TextField
-            label="slug"
-            defaultValue="minimalist"
-            className="w-full"
-          />
-          <Select
-            aria-label="Visibility"
-            defaultSelectedKey="public"
-            className="w-full"
-          >
-            <SelectItem id="public" prefix={<Globe2Icon />}>
-              Public
-            </SelectItem>
-            <SelectItem id="unlisted" prefix={<ExternalLinkIcon />}>
-              Unlisted
-            </SelectItem>
-            <SelectItem id="private" isDisabled prefix={<LockIcon />}>
-              Private
-            </SelectItem>
-          </Select>
-          <TextArea label="Description (optional)" className="w-full" />
-        </DialogBody>
-        <DialogFooter>
-          <Button slot="close">Cancel</Button>
-          <Button variant="primary" slot="close">
-            Publish
-          </Button>
-        </DialogFooter>
-      </Dialog>
-    </DialogRoot>
+      <Modal>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogHeading>Publish your style</DialogHeading>
+            <DialogDescription>Follow these steps to correctly publish your style.</DialogDescription>
+          </DialogHeader>
+          <DialogBody className="-mx-6 space-y-2 px-6 pt-1 [&_[data-slot='label']]:text-sm">
+            <TextField defaultValue="Minimalist" className="w-full">
+              <Label>Name</Label>
+              <Input />
+            </TextField>
+            <TextField defaultValue="minimalist" className="w-full">
+              <Label>slug</Label>
+              <Input />
+            </TextField>
+            <Select
+              aria-label="Visibility"
+              defaultSelectedKey="public"
+              className="w-full"
+            >
+              <SelectItem id="public">
+                <Globe2Icon />
+                Public
+              </SelectItem>
+              <SelectItem id="unlisted">
+                <ExternalLinkIcon />
+                Unlisted
+              </SelectItem>
+              <SelectItem id="private" isDisabled>
+                <LockIcon />
+                Private
+              </SelectItem>
+            </Select>
+            <TextField className="w-full">
+              <Label>Description (optional)</Label>
+              <TextArea />
+            </TextField>
+          </DialogBody>
+          <DialogFooter>
+            <Button slot="close">Cancel</Button>
+            <Button variant="primary" slot="close">
+              Publish
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Modal>
+    </Dialog>
   );
 }

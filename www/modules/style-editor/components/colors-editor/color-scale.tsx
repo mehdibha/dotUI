@@ -3,7 +3,7 @@
 import { Button as AriaButton } from "react-aria-components";
 
 import { Skeleton } from "@dotui/registry/ui/skeleton";
-import { Tooltip } from "@dotui/registry/ui/tooltip";
+import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
 import type { ScaleId } from "@dotui/registry/style-system/types";
 
 import {
@@ -41,13 +41,14 @@ export function ColorScale({ scaleId }: { scaleId: ScaleId }) {
       </p>
       <div className="flex flex-1 items-center gap-1">
         {scale.values.map((color, index) => (
-          <Tooltip key={index} content={color.name}>
+          <Tooltip key={index}>
             <Skeleton show={!isSuccess} className="h-8 flex-1">
               <AriaButton
                 className="h-8 flex-1 rounded-sm border"
                 style={{ backgroundColor: color.value }}
               />
             </Skeleton>
+            <TooltipContent>{color.name}</TooltipContent>
           </Tooltip>
         ))}
       </div>

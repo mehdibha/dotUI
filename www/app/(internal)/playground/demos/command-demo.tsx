@@ -17,9 +17,9 @@ import {
 import { Button } from "@dotui/registry/ui/button";
 import {
   Command,
+  CommandContent,
   CommandInput,
   CommandItem,
-  CommandList,
   CommandSection,
   CommandSectionHeader,
 } from "@dotui/registry/ui/command";
@@ -75,7 +75,7 @@ export function CommandDemo() {
         <Popover>
           <Command>
             <CommandInput placeholder="Search country..." />
-            <CommandList className="max-h-72 overflow-y-auto">
+            <CommandContent className="max-h-72 overflow-y-auto">
               <CommandItem id="tn">Tunisia</CommandItem>
               <CommandItem id="us">United States</CommandItem>
               <CommandItem id="uk">United Kingdom</CommandItem>
@@ -96,7 +96,7 @@ export function CommandDemo() {
               <CommandItem id="tr">Turkey</CommandItem>
               <CommandItem id="ua">Ukraine</CommandItem>
               <CommandItem id="vn">Vietnam</CommandItem>
-            </CommandList>
+            </CommandContent>
           </Command>
         </Popover>
       </Select>
@@ -108,7 +108,7 @@ const CommandExample = ({ className }: { className?: string }) => {
   return (
     <Command className={className}>
       <CommandInput placeholder="Type a command or search..." />
-      <CommandList>
+      <CommandContent>
         <CommandSection>
           <CommandSectionHeader>Navigation</CommandSectionHeader>
           <CommandItem>
@@ -163,7 +163,7 @@ const CommandExample = ({ className }: { className?: string }) => {
             <LogOutIcon /> Log Out
           </CommandItem>
         </CommandSection>
-      </CommandList>
+      </CommandContent>
     </Command>
   );
 };

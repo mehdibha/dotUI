@@ -1,5 +1,6 @@
 import { Button } from "@dotui/registry/ui/button";
 import { Checkbox } from "@dotui/registry/ui/checkbox";
+import { Input } from "@dotui/registry/ui/input";
 import { TextField } from "@dotui/registry/ui/text-field";
 
 import { Section } from "@/modules/style-editor/components/components-editor/section";
@@ -18,11 +19,9 @@ export function FocusStyles() {
     >
       <div className="flex items-center gap-4">
         <Button>Button</Button>
-        <TextField
-          aria-label="Email"
-          placeholder="hello@mehdibha.com"
-          form="none"
-        />
+        <TextField aria-label="Email" form="none">
+          <Input placeholder="hello@mehdibha.com" />
+        </TextField>
         <Checkbox aria-label="Checkbox example" form="none" />
       </div>
     </Section>

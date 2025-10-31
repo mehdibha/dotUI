@@ -1,6 +1,10 @@
 import { ContrastIcon, MoonIcon, SunIcon } from "lucide-react";
 
-import { SelectItem } from "@dotui/registry/ui/select";
+import {
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "@dotui/registry/ui/select";
 import { Skeleton } from "@dotui/registry/ui/skeleton";
 
 import { ThemeModeSwitch } from "@/components/ui/theme-mode-switch";
@@ -37,18 +41,23 @@ export const ModeConfig = () => {
                 key?.toString().split("-") as ("light" | "dark")[],
               )
             }
-            renderValue={({ defaultChildren }) => defaultChildren}
             className="w-auto"
           >
-            <SelectItem id="light" prefix={<SunIcon />}>
-              Light only
-            </SelectItem>
-            <SelectItem id="dark" prefix={<MoonIcon />}>
-              Dark only
-            </SelectItem>
-            <SelectItem id="light-dark" prefix={<ContrastIcon />}>
-              Light/Dark
-            </SelectItem>
+            <SelectTrigger />
+            <SelectContent>
+              <SelectItem id="light">
+                <SunIcon />
+                Light only
+              </SelectItem>
+              <SelectItem id="dark">
+                <MoonIcon />
+                Dark only
+              </SelectItem>
+              <SelectItem id="light-dark">
+                <ContrastIcon />
+                Light/Dark
+              </SelectItem>
+            </SelectContent>
           </field.Select>
         </Skeleton>
       )}

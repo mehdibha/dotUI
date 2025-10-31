@@ -1,5 +1,6 @@
-import { notFound } from "next/navigation";
 import type { Metadata, Route } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
 import { AlignLeftIcon, ExternalLinkIcon } from "lucide-react";
 
 import { AdobeIcon } from "@dotui/registry/components/icons/adobe";
@@ -35,24 +36,28 @@ export default async function Page({ params }: PageProps<"/docs/[[...slug]]">) {
       <div className="flex min-h-[calc(100svh-(var(--spacing)*14))] flex-col py-6 md:py-10 lg:min-h-screen lg:py-20">
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-bold lg:text-4xl">{page.data.title}</h1>
-          <DocsPager variant="tooltip" currentPathname={page.url} />
+          <DocsPager currentPathname={page.url} />
         </div>
         <p className="mt-2 text-fg-muted">{page.data.description}</p>
         {page.data.links && page.data.links.length > 0 && (
           <div className="mt-4 flex flex-wrap gap-2">
-            {page.data.links.map((link, index) => (
-              <Button
-                key={index}
-                href={link.href as Route}
-                prefix={getIcon(link.href)}
-                suffix={<ExternalLinkIcon />}
-                size="sm"
-                className="h-6 text-xs font-semibold [&_svg]:size-3"
-                target="_blank"
-              >
-                {link.label}
-              </Button>
-            ))}
+            {page.data.links.map((link, index) => {
+              const icon = getIcon(link.href);
+              return (
+                <Button
+                  key={index}
+                  asChild
+                  size="sm"
+                  className="h-6 text-xs font-semibold [&_svg]:size-3"
+                >
+                  <Link href={link.href as Route} target="_blank">
+                    {icon}
+                    {link.label}
+                    <ExternalLinkIcon />
+                  </Link>
+                </Button>
+              );
+            })}
           </div>
         )}
         <div className="mt-10 flex-1 text-sm md:text-base">

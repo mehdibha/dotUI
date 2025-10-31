@@ -43,7 +43,7 @@ export function ColorSwatchPickerDemo() {
         <p className="mb-2 text-sm font-medium">Primary Colors</p>
         <ColorSwatchPicker>
           {colors.map((color) => (
-            <ColorSwatchPicker.Item key={color} color={color} />
+            <ColorSwatchPickerItem key={color} color={color} />
           ))}
         </ColorSwatchPicker>
       </div>

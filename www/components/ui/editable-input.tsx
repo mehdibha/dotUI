@@ -94,7 +94,6 @@ export function EditableInput({
           data-slot="button"
           aria-label="Save"
           size="sm"
-          shape="square"
           variant="quiet"
           className="size-6"
           onPress={handleSubmit}
@@ -105,7 +104,6 @@ export function EditableInput({
           data-slot="button"
           aria-label="Cancel"
           size="sm"
-          shape="square"
           variant="quiet"
           className="size-6"
           onPress={handleCancel}
@@ -123,7 +121,6 @@ export function EditableInput({
         data-slot="button"
         aria-label="Edit scale name"
         size="sm"
-        shape="square"
         variant="quiet"
         className="size-6 [&_svg]:size-3"
         onPress={handleEditStart}

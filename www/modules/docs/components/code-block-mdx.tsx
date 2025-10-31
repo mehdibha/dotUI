@@ -122,7 +122,6 @@ function CopyButton({
     <Button
       variant="quiet"
       size="sm"
-      shape="square"
       className={cn(
         "transition-all group-hover:opacity-100 [&_svg]:size-3.5",
         !checked && "opacity-0",

@@ -16,8 +16,11 @@ export default async function Page() {
   return (
     <div className="relative flex min-h-svh w-full">
       <div className="absolute top-4 left-4">
-        <Button variant="quiet" prefix={<ArrowLeftIcon />} size="sm" href="/">
-          Back to home
+        <Button variant="quiet" size="sm" asChild>
+          <a href="/">
+            <ArrowLeftIcon />
+            Back to home
+          </a>
         </Button>
       </div>
       <LoginForm />

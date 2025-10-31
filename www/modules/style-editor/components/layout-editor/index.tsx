@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@dotui/registry/lib/utils";
+import { SliderControl } from "@dotui/registry/ui/slider";
 
 import { useDraftStyle } from "@/modules/style-editor/atoms/draft-style-atom";
 import { StyleEditorSection } from "@/modules/style-editor/components/section";
@@ -31,12 +32,14 @@ export function LayoutEditor() {
         >
           {(field) => (
             <field.Slider
-              label="Radius factor"
+              aria-label="Radius factor"
               minValue={0}
               maxValue={2}
               step={0.1}
               className="mt-2 w-full"
-            />
+            >
+              <SliderControl />
+            </field.Slider>
           )}
         </form.AppField>
       </StyleEditorSection>
@@ -51,12 +54,14 @@ export function LayoutEditor() {
         >
           {(field) => (
             <field.Slider
-              label="Spacing"
+              aria-label="Spacing"
               minValue={0.2}
               maxValue={0.35}
               step={0.01}
               className="w-full"
-            />
+            >
+              <SliderControl />
+            </field.Slider>
           )}
         </form.AppField>
       </StyleEditorSection>

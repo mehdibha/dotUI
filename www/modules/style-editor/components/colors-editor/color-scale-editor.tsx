@@ -17,22 +17,30 @@ import { Badge } from "@dotui/registry/ui/badge";
 import { Button } from "@dotui/registry/ui/button";
 import { ColorSwatch } from "@dotui/registry/ui/color-swatch";
 import {
+  ColorPicker,
+  ColorPickerContent,
+  ColorPickerTrigger,
+} from "@dotui/registry/ui/color-picker";
+import { ColorEditor } from "@dotui/registry/ui/color-editor";
+import { SliderControl } from "@dotui/registry/ui/slider";
+import {
   Dialog,
   DialogBody,
+  DialogContent,
   DialogHeader,
   DialogHeading,
-  DialogRoot,
 } from "@dotui/registry/ui/dialog";
+import { Drawer } from "@dotui/registry/ui/drawer";
 import { Skeleton } from "@dotui/registry/ui/skeleton";
 import {
+  Table,
   TableBody,
   TableCell,
   TableColumn,
   TableHeader,
-  TableRoot,
   TableRow,
 } from "@dotui/registry/ui/table";
-import { Tooltip } from "@dotui/registry/ui/tooltip";
+import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
 import type { ScaleId } from "@dotui/registry/style-system/types";
 
 import { ON_CHANGE_DEBOUNCE_MS } from "@/modules/style-editor/constants";
@@ -50,7 +58,7 @@ export function ColorScaleEditor({ scaleId }: { scaleId: ScaleId }) {
   const { isPending } = useEditorStyle();
 
   return (
-    <DialogRoot>
+    <Dialog>
       <Skeleton show={isPending}>
         <Button>
           <form.Subscribe
@@ -74,11 +82,8 @@ export function ColorScaleEditor({ scaleId }: { scaleId: ScaleId }) {
           </form.Subscribe>
         </Button>
       </Skeleton>
-      <Dialog
-        type="drawer"
-        drawerProps={{ placement: "left", className: "min-w-72" }}
-        className="!pb-0"
-      >
+      <Drawer placement="left">
+        <DialogContent className="min-w-72 !pb-0">
         <DialogHeader className="mb-1">
           <ScaleNameEditor scaleId={scaleId} />
         </DialogHeader>
@@ -86,8 +91,9 @@ export function ColorScaleEditor({ scaleId }: { scaleId: ScaleId }) {
           <ColorKeysEditor scaleId={scaleId} />
           <RatiosEditor scaleId={scaleId} />
         </DialogBody>
-      </Dialog>
-    </DialogRoot>
+        </DialogContent>
+      </Drawer>
+    </Dialog>
   );
 }
 
@@ -153,15 +159,16 @@ function ColorKeysEditor({ scaleId }: { scaleId: ScaleId }) {
                     >
                       {(subField) => (
                         <div className="flex items-center">
-                          <subField.ColorPicker
-                            shape="square"
-                            showValue={false}
-                            colorFormat="hsl"
-                            className={cn(i > 0 && "rounded-r-none")}
-                          />
+                          <subField.ColorPicker>
+                            <ColorPickerTrigger className={cn(i > 0 && "rounded-r-none")}>
+                              <ColorSwatch />
+                            </ColorPickerTrigger>
+                            <ColorPickerContent>
+                              <ColorEditor />
+                            </ColorPickerContent>
+                          </subField.ColorPicker>
                           {i > 0 && (
                             <Button
-                              shape="square"
                               className="rounded-l-none border-l-0"
                               onPress={() => {
                                 field.removeValue(i);
@@ -175,15 +182,15 @@ function ColorKeysEditor({ scaleId }: { scaleId: ScaleId }) {
                     </form.AppField>
                   );
                 })}
-                <Tooltip content="Add color">
+                <Tooltip>
                   <Button
-                    shape="square"
                     onPress={() => {
                       field.pushValue("#000000");
                     }}
                   >
                     <PlusIcon />
                   </Button>
+                  <TooltipContent>Add color</TooltipContent>
                 </Tooltip>
               </div>
             );
@@ -230,14 +237,15 @@ function RatiosEditor({ scaleId }: { scaleId: ScaleId }) {
               minValue={1}
               maxValue={16}
               step={0.05}
-              showValueLabel={false}
               className="h-auto [&_[data-slot='slider-filler']]:hidden [&_[data-slot='slider-thumb']]:size-3 [&_[data-slot='slider-thumb']]:dragging:size-4 [&_[data-slot='slider-track']]:w-40 [&_[data-slot='slider-track']]:rounded-sm [&_[data-slot='slider-track']]:[background:var(--dynamic-gradient)]"
               style={
                 {
                   "--dynamic-gradient": dynamicGradient,
                 } as React.CSSProperties
               }
-            />
+            >
+              <SliderControl />
+            </field.Slider>
           )}
         </form.AppField>
         {/* Contrast ratios table */}
@@ -247,7 +255,7 @@ function RatiosEditor({ scaleId }: { scaleId: ScaleId }) {
         >
           {(field) => {
             return (
-              <TableRoot aria-label="Color ratios" variant="line">
+              <Table aria-label="Color ratios">
                 <TableHeader>
                   <TableColumn id="token" isRowHeader>
                     Token
@@ -319,7 +327,7 @@ function RatiosEditor({ scaleId }: { scaleId: ScaleId }) {
                     );
                   })}
                 </TableBody>
-              </TableRoot>
+              </Table>
             );
           }}
         </form.AppField>

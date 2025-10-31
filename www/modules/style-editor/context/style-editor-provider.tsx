@@ -10,7 +10,7 @@ import {
   DEFAULT_STYLE,
 } from "@dotui/registry/style-system/constants";
 import { createColorScales } from "@dotui/registry/style-system/core";
-import { useAppForm } from "@dotui/registry/ui/form";
+import { useAppForm } from "@dotui/registry/ui/tanstack-form";
 import { toast } from "@dotui/registry/ui/toast";
 
 import { NavigationBlocker } from "@/modules/style-editor/components/navigation-blocker";

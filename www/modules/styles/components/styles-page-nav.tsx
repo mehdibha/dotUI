@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 
 import { cn } from "@dotui/registry/lib/utils";
-import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs/motion";
+import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs";
 
 import { useMounted } from "@/hooks/use-mounted";
 import { authClient } from "@/modules/auth/lib/client";
@@ -36,7 +36,6 @@ export function StylesPageNav({
 
   return (
     <Tabs
-      variant="underline"
       selectedKey={pathname}
       className={cn("", className)}
     >

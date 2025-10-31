@@ -1,4 +1,4 @@
-import { Slider } from "@dotui/registry/ui/slider";
+import { Slider, SliderControl } from "@dotui/registry/ui/slider";
 
 import { getComponentVariants } from "@/modules/style-editor/components/components-editor/demos/utils";
 import { Section } from "@/modules/style-editor/components/components-editor/section";
@@ -11,7 +11,9 @@ export function Sliders() {
       variants={getComponentVariants("slider")}
       previewClassName="flex-col gap-4"
     >
-      <Slider defaultValue={50} aria-label="Basic slider" />
+      <Slider defaultValue={50} aria-label="Basic slider">
+        <SliderControl />
+      </Slider>
     </Section>
   );
 }

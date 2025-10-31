@@ -13,9 +13,10 @@ import {
 
 import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";
-import { Dialog, DialogRoot } from "@dotui/registry/ui/dialog";
+import { Dialog, DialogContent } from "@dotui/registry/ui/dialog";
+import { Drawer } from "@dotui/registry/ui/drawer";
 import { Skeleton } from "@dotui/registry/ui/skeleton";
-import { Tooltip } from "@dotui/registry/ui/tooltip";
+import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
 
 import { LoginModal } from "@/modules/auth/components/login-modal";
 import { authClient } from "@/modules/auth/lib/client";
@@ -76,43 +77,43 @@ function StyleEditorHeaderActions() {
       <CodeModal>
         <Button
           size="sm"
-          prefix={<CodeIcon />}
           className="@max-md:size-8 @max-md:w-8 @max-md:px-0"
         >
+          <CodeIcon />
           <span className="@max-md:hidden">Code</span>
         </Button>
       </CodeModal>
-      <DialogRoot>
+      <Dialog>
         <Button
           size="sm"
-          shape="square"
           aria-label="Preview"
           className="xl:hidden"
         >
           <EyeIcon />
         </Button>
-        <Dialog type="drawer" className="overflow-hidden p-0!">
-          <div className="h-[80vh]">
-            <PreviewFrame block="login" className="h-full" />
-          </div>
-          <div
-            className={cn(
-              "absolute top-1 right-1 size-7 rounded-lg",
-              resolvedMode === "dark" ? "dark" : "light",
-            )}
-          >
-            <Button slot="close" variant="quiet" size="sm" shape="square">
-              <XIcon />
-            </Button>
-          </div>
-        </Dialog>
-      </DialogRoot>
+        <Drawer>
+          <DialogContent className="overflow-hidden p-0!">
+            <div className="h-[80vh]">
+              <PreviewFrame block="login" className="h-full" />
+            </div>
+            <div
+              className={cn(
+                "absolute top-1 right-1 size-7 rounded-lg",
+                resolvedMode === "dark" ? "dark" : "light",
+              )}
+            >
+              <Button slot="close" variant="quiet" size="sm">
+                <XIcon />
+              </Button>
+            </div>
+          </DialogContent>
+        </Drawer>
+      </Dialog>
       <form.AppForm>
-        <Tooltip content="Reset">
+        <Tooltip>
           <form.ResetButton
             aria-label="Reset form"
             size="sm"
-            shape="square"
             onPress={() => {
               form.reset();
               clearDraft();
@@ -120,6 +121,7 @@ function StyleEditorHeaderActions() {
           >
             <RotateCcwIcon />
           </form.ResetButton>
+          <TooltipContent>Reset</TooltipContent>
         </Tooltip>
       </form.AppForm>
       <Skeleton
@@ -129,7 +131,8 @@ function StyleEditorHeaderActions() {
         <form.AppForm>
           {isUserAuthenticated ? (
             isUserStyle ? (
-              <form.SubmitButton size="sm" prefix={<SaveIcon />}>
+              <form.SubmitButton size="sm">
+                <SaveIcon />
                 Save
               </form.SubmitButton>
             ) : (
@@ -147,8 +150,8 @@ function StyleEditorHeaderActions() {
                       variant="primary"
                       isDisabled={!isDirty}
                       className="border border-primary hover:border-primary-hover"
-                      prefix={<RocketIcon />}
                     >
+                      <RocketIcon />
                       Publish
                     </Button>
                   )}

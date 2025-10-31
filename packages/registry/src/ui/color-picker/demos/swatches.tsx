@@ -1,8 +1,8 @@
-import { Button } from "@dotui/registry/ui/button";
 import { ColorEditor } from "@dotui/registry/ui/color-editor";
 import {
   ColorPicker,
   ColorPickerContent,
+  ColorPickerTrigger,
 } from "@dotui/registry/ui/color-picker";
 import { ColorSwatch } from "@dotui/registry/ui/color-swatch";
 import {
@@ -13,9 +13,9 @@ import {
 export default function Demo() {
   return (
     <ColorPicker defaultValue="#5100FF">
-      <Button>
+      <ColorPickerTrigger>
         <ColorSwatch />
-      </Button>
+      </ColorPickerTrigger>
       <ColorPickerContent>
         <ColorEditor />
         <ColorSwatchPicker className="mt-2 justify-between">

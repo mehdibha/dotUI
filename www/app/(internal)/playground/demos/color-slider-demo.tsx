@@ -1,6 +1,6 @@
 "use client";
 
-import { ColorSlider } from "@dotui/registry/ui/color-slider";
+import { ColorSlider, ColorSliderControl, ColorSliderOutput } from "@dotui/registry/ui/color-slider";
 import { Description, Label } from "@dotui/registry/ui/field";
 
 export function ColorSliderDemo() {
@@ -9,9 +9,9 @@ export function ColorSliderDemo() {
       <ColorSlider channel="hue" defaultValue="hsl(200, 100%, 50%)">
         <div className="flex items-center justify-between">
           <Label>Hue</Label>
-          <ColorSlider.Output />
+          <ColorSliderOutput />
         </div>
-        <ColorSlider.Control />
+        <ColorSliderControl />
         <Description>Adjust the hue of the color.</Description>
       </ColorSlider>
     </div>

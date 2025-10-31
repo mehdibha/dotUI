@@ -1,4 +1,5 @@
 import { cn } from "@dotui/registry/lib/utils";
+import { SliderControl } from "@dotui/registry/ui/slider";
 
 import { useDraftStyle } from "@/modules/style-editor/atoms/draft-style-atom";
 import { ON_CHANGE_DEBOUNCE_MS } from "@/modules/style-editor/constants";
@@ -68,7 +69,7 @@ export const AccentEmphasisEditor = () => {
     >
       {(field) => (
         <field.Slider
-          label="Accent emphasis"
+          aria-label="Accent emphasis"
           minValue={0}
           maxValue={3}
           step={1}
@@ -77,7 +78,9 @@ export const AccentEmphasisEditor = () => {
             isPending &&
               "**:data-[slot='slider-filler']:opacity-0 **:data-[slot='slider-thumb']:opacity-0 [&_[data-slot='slider-track']]:animate-pulse [&_[data-slot='slider-value-label']]:opacity-0",
           )}
-        />
+        >
+          <SliderControl />
+        </field.Slider>
       )}
     </form.AppField>
   );

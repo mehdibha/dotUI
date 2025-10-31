@@ -43,17 +43,24 @@ export function Buttons() {
         <Button variant="warning">Warning</Button>
       </div>
       <div className="flex items-center gap-2">
-        <Button prefix={<SendIcon />}>Send</Button>
-        <Button suffix={<ArrowRightIcon />}>Learn more</Button>
+        <Button>
+          <SendIcon />
+          Send
+        </Button>
+        <Button>
+          Learn more
+          <ArrowRightIcon />
+        </Button>
       </div>
       <div className="flex items-center gap-2">
-        <ToggleButton variant="primary" aria-label="Toggle pin" shape="square">
+        <ToggleButton variant="default" aria-label="Toggle pin">
           <PinIcon />
         </ToggleButton>
-        <ToggleButton variant="accent" aria-label="Toggle bold">
+        <ToggleButton variant="default" aria-label="Toggle bold">
           <BoldIcon />
         </ToggleButton>
-        <ToggleButton prefix={<Edit2Icon />} shape="rectangle">
+        <ToggleButton>
+          <Edit2Icon />
           Edit mode
         </ToggleButton>
         <ToggleButton aria-label="Toggle " isDisabled>
@@ -61,15 +68,14 @@ export function Buttons() {
         </ToggleButton>
         <ToggleButton
           aria-label="Toggle italic"
-          shape="rectangle"
-          prefix={<ItalicIcon />}
           defaultSelected
         >
+          <ItalicIcon />
           Italic
         </ToggleButton>
         <ToggleButton
           aria-label="Toggle book"
-          variant="primary"
+          variant="default"
           className="selected:[&_svg]:fill-fg-on-primary"
         >
           <BookmarkIcon />

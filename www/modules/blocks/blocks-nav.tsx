@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import type { Route } from "next";
 
 import { blocksCategories } from "@dotui/registry/blocks/registry";
-import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs/motion";
+import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs";
 import type { TabsProps } from "@dotui/registry/ui/tabs";
 
 export function BlocksNav({
@@ -15,7 +15,7 @@ export function BlocksNav({
   const pathname = usePathname();
 
   return (
-    <Tabs variant="underline" selectedKey={pathname} {...props}>
+    <Tabs selectedKey={pathname} {...props}>
       <div className="sticky top-0 z-40 border-b bg-bg">
         <TabList className="container border-b-0">
           {[

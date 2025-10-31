@@ -24,25 +24,28 @@ import {
   ListBox,
   ListBoxItem,
   ListBoxSection,
+  ListBoxSectionHeader,
 } from "@dotui/registry/ui/list-box";
 import { Popover } from "@dotui/registry/ui/popover";
 import { SearchField } from "@dotui/registry/ui/search-field";
-import { SelectRoot, SelectValue } from "@dotui/registry/ui/select";
+import { Select, SelectTrigger, SelectValue } from "@dotui/registry/ui/select";
 import type { SelectProps } from "@dotui/registry/ui/select";
 
 export const FontSelector = <T extends object>({
   label,
   ...props
-}: SelectProps<T>) => {
+}: SelectProps<T> & { label?: string }) => {
   const { contains } = useFilter({ sensitivity: "base" });
 
   return (
-    <SelectRoot {...props}>
+    <Select {...props}>
       {label && <Label>{label}</Label>}
-      <Button className="w-full">
-        <SelectValue />
-        <ChevronDownIcon />
-      </Button>
+      <SelectTrigger asChild>
+        <Button className="w-full">
+          <SelectValue />
+          <ChevronDownIcon />
+        </Button>
+      </SelectTrigger>
       <Popover className="flex h-72 flex-col overflow-hidden">
         <Autocomplete filter={contains}>
           {/* <div></div> */}
@@ -71,23 +74,20 @@ export const FontSelector = <T extends object>({
               {(section) => (
                 <ListBoxSection
                   id={section.title}
-                  title={section.title}
-                  items={section.items.map((item) => ({
-                    name: item,
-                  }))}
                 >
-                  {(item) => (
-                    <ListBoxItem key={item.name} id={item.name} className="h-8">
-                      {item.name}
+                  <ListBoxSectionHeader>{section.title}</ListBoxSectionHeader>
+                  {section.items.map((item) => (
+                    <ListBoxItem key={item} id={item} className="h-8">
+                      {item}
                     </ListBoxItem>
-                  )}
+                  ))}
                 </ListBoxSection>
               )}
             </ListBox>
           </Virtualizer>
         </Autocomplete>
       </Popover>
-    </SelectRoot>
+    </Select>
   );
 
   // return (

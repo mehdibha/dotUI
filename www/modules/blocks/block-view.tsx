@@ -1,6 +1,8 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
+import type { Route } from "next";
 import { CheckIcon, ExternalLinkIcon, TerminalIcon } from "lucide-react";
 import type { RegistryItem } from "shadcn/schema";
 
@@ -59,34 +61,34 @@ const BlockViewToolbar = ({ name, title }: BlockViewToolbarProps) => {
         />
         <Button
           className="font-mono max-lg:hidden [&_svg]:size-4 [&_svg]:text-fg-muted"
-          prefix={
-            isCopied ? (
-              <CheckIcon className="animate-in fade-in" />
-            ) : (
-              <TerminalIcon className="animate-in fade-in" />
-            )
-          }
           onPress={handleCopy}
           size="sm"
         >
+          {isCopied ? (
+            <CheckIcon className="animate-in fade-in" />
+          ) : (
+            <TerminalIcon className="animate-in fade-in" />
+          )}
           <span className="truncate text-xs">
             npx shadcn@latest add @dotui/{name}
           </span>
         </Button>
-        <Button
-          variant="primary"
-          size="sm"
-          target={activeStyle ? "_blank" : undefined}
-          href={
-            activeStyle
-              ? `/view/${activeStyle.user.username}/${activeStyle.name}/${name}`
-              : undefined
-          }
-          prefix={<ExternalLinkIcon />}
-          className="max-lg:hidden"
-        >
-          Open in new tab
-        </Button>
+        {activeStyle ? (
+          <Button
+            variant="primary"
+            size="sm"
+            asChild
+            className="max-lg:hidden"
+          >
+            <Link
+              href={`/view/${activeStyle.user.username}/${activeStyle.name}/${name}` as Route}
+              target="_blank"
+            >
+              <ExternalLinkIcon />
+              Open in new tab
+            </Link>
+          </Button>
+        ) : null}
       </div>
     </div>
   );

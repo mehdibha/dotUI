@@ -50,7 +50,6 @@ const CodeClient = ({
       </ScrollArea>
       <Button
         variant="quiet"
-        shape="square"
         size="sm"
         className="absolute top-2 right-2 [&_svg]:size-3"
         onPress={handleCopy}

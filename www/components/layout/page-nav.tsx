@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import type { Route } from "next";
 
 import { cn } from "@dotui/registry/lib/utils";
-import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs/motion";
+import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs";
 
 export function PageNav({
   items,
@@ -18,7 +18,7 @@ export function PageNav({
   const pathname = usePathname();
 
   return (
-    <Tabs variant="solid" selectedKey={pathname} className="mt-10">
+    <Tabs selectedKey={pathname} className="mt-10">
       <TabList className="flex-wrap bg-transparent p-0">
         {items.map((tab) => (
           <Tab

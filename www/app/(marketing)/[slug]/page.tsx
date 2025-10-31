@@ -39,13 +39,14 @@ export default async function Page({ params }: PageProps<"/[slug]">) {
             {page.data.links.map((link, index) => (
               <Button
                 key={index}
-                href={link.href as Route}
-                suffix={<ExternalLinkIcon />}
+                asChild
                 size="sm"
                 className="h-6 text-xs font-semibold [&_svg]:size-3"
-                target="_blank"
               >
-                {link.label}
+                <a href={link.href as string} target="_blank">
+                  {link.label}
+                  <ExternalLinkIcon />
+                </a>
               </Button>
             ))}
           </div>

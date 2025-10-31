@@ -13,16 +13,16 @@ export function BadgeAndTagGroup() {
     >
       <div className="flex items-center gap-4">
         <Badge>Default</Badge>
-        <Badge variant="accent">Accent</Badge>
+        <Badge variant="default">Accent</Badge>
         <Badge variant="success">Success</Badge>
         <Badge variant="warning">Warning</Badge>
         <Badge variant="danger">Danger</Badge>
         <Badge variant="info">Info</Badge>
       </div>
       <div className="flex items-center gap-4">
-        <Badge size="sm">Small</Badge>
-        <Badge size="md">Medium</Badge>
-        <Badge size="lg">Large</Badge>
+        <Badge>Small</Badge>
+        <Badge>Medium</Badge>
+        <Badge>Large</Badge>
       </div>
     </Section>
   );

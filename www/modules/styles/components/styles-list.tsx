@@ -3,6 +3,7 @@
 import React from "react";
 
 import { cn } from "@dotui/registry/lib/utils";
+import { Input } from "@dotui/registry/ui/input";
 import { SearchField } from "@dotui/registry/ui/search-field";
 import { Skeleton } from "@dotui/registry/ui/skeleton";
 import type { RouterOutputs } from "@dotui/api";
@@ -43,11 +44,12 @@ export function StylesList({
         {search && (
           <SearchField
             aria-label="Search styles"
-            placeholder="Search styles..."
             className="flex-1"
             onChange={(value) => setQuery(value?.toString() ?? "")}
             value={query}
-          />
+          >
+            <Input placeholder="Search styles..." />
+          </SearchField>
         )}
       </div>
       <div

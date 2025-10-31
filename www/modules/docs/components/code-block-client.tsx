@@ -147,7 +147,6 @@ const CodeBlockCopyButton = ({ code, ...props }: CodeBlockCopyButtonProps) => {
   return (
     <Button
       size="sm"
-      shape="square"
       variant="default"
       onPress={handleCopy}
       className="size-7 bg-inverse/5 [&_svg]:size-3"

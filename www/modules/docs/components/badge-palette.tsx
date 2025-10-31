@@ -9,7 +9,7 @@ export function BadgePalette({
 }: BadgeProps & { color: string }) {
   return (
     <Badge
-      variant="neutral"
+      variant="default"
       className={cn("gap-2 rounded-full border pr-1", className)}
       {...props}
     >

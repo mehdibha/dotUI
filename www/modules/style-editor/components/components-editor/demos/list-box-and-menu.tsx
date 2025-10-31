@@ -1,7 +1,8 @@
 import { Button } from "@dotui/registry/ui/button";
 import { Combobox, ComboboxItem } from "@dotui/registry/ui/combobox";
 import { ListBox, ListBoxItem } from "@dotui/registry/ui/list-box";
-import { Menu, MenuItem, MenuRoot } from "@dotui/registry/ui/menu";
+import { Menu, MenuContent, MenuItem } from "@dotui/registry/ui/menu";
+import { Popover } from "@dotui/registry/ui/popover";
 import { Select, SelectItem } from "@dotui/registry/ui/select";
 
 import { getComponentVariants } from "@/modules/style-editor/components/components-editor/demos/utils";
@@ -37,15 +38,17 @@ export function ListBoxAndMenu() {
           <ComboboxItem>United Kingdom</ComboboxItem>
         </Combobox>
       </div>
-      <MenuRoot aria-label="Basic menu">
+      <Menu aria-label="Basic menu">
         <Button>Menu</Button>
-        <Menu>
-          <MenuItem>Account settings</MenuItem>
-          <MenuItem>Create team</MenuItem>
-          <MenuItem>Command menu</MenuItem>
-          <MenuItem>Log out</MenuItem>
-        </Menu>
-      </MenuRoot>
+        <Popover>
+          <MenuContent>
+            <MenuItem>Account settings</MenuItem>
+            <MenuItem>Create team</MenuItem>
+            <MenuItem>Command menu</MenuItem>
+            <MenuItem>Log out</MenuItem>
+          </MenuContent>
+        </Popover>
+      </Menu>
     </Section>
   );
 }

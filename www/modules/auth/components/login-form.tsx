@@ -29,7 +29,6 @@ export function LoginForm() {
       </div>
       <Button
         variant="primary"
-        prefix={<GitHubIcon />}
         size="lg"
         className="mt-8 w-full sm:max-w-sm"
         isPending={isPending}
@@ -54,6 +53,7 @@ export function LoginForm() {
           }
         }}
       >
+        <GitHubIcon />
         Continue with GitHub
       </Button>
       <p className="mt-4 text-sm text-fg-muted">

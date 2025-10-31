@@ -14,7 +14,7 @@ export function Switches() {
       <div className="flex items-center gap-4">
         <Switch aria-label="Basic switch" form="none" />
         <Switch defaultSelected>Notifications</Switch>
-        <Switch variant="card" defaultSelected form="none">
+        <Switch variant="default" defaultSelected form="none">
           Dark mode
         </Switch>
       </div>

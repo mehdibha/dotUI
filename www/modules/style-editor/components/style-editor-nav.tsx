@@ -14,8 +14,9 @@ import {
 
 import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";
-import { Menu, MenuItem, MenuRoot } from "@dotui/registry/ui/menu";
-import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs/motion";
+import { Menu, MenuContent, MenuItem } from "@dotui/registry/ui/menu";
+import { Popover } from "@dotui/registry/ui/popover";
+import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs";
 import type { TabsProps } from "@dotui/registry/ui/tabs";
 
 import { useStyleEditorParams } from "@/modules/style-editor/hooks/use-style-editor-params";
@@ -38,27 +39,29 @@ export function StyleEditorNav({
   return (
     <>
       <div className="mt-4 @lg:hidden">
-        <MenuRoot>
+        <Menu>
           <Button
             variant="quiet"
-            prefix={selectedTab?.icon}
-            suffix={<ChevronDownIcon />}
             className="flex w-full rounded-none border-y text-left sm:px-6 lg:px-10"
           >
+            {selectedTab?.icon}
             <span className="flex-1">{selectedTab?.label}</span>
+            <ChevronDownIcon />
           </Button>
-          <Menu items={menuItems}>
-            {({ href, label, icon }) => (
-              <MenuItem href={href} id={href} prefix={icon}>
-                {label}
-              </MenuItem>
-            )}
-          </Menu>
-        </MenuRoot>
+          <Popover>
+            <MenuContent items={menuItems}>
+              {(item) => (
+                <MenuItem href={item.href} id={item.href}>
+                  {item.icon}
+                  {item.label}
+                </MenuItem>
+              )}
+            </MenuContent>
+          </Popover>
+        </Menu>
         <div className="container mt-6 max-w-4xl">{children}</div>
       </div>
       <Tabs
-        variant="underline"
         selectedKey={pathname}
         className={cn("@max-lg:hidden", className)}
         {...props}

@@ -21,7 +21,6 @@ export function Radios() {
         <Radio value="option-3">Option 3</Radio>
       </RadioGroup>
       <RadioGroup
-        variant="card"
         orientation="horizontal"
         aria-label="Card radio group"
         defaultValue="option-1"

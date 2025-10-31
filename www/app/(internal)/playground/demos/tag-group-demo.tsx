@@ -1,6 +1,6 @@
 "use client";
 
-import { Tag } from "@dotui/registry/ui/tag-group";
+import { Tag, TagGroup, TagList } from "@dotui/registry/ui/tag-group";
 
 const _tags = [
   { id: 1, name: "React" },
@@ -12,14 +12,14 @@ const _tags = [
 export function TagGroupDemo() {
   return (
     <div className="flex flex-col gap-6">
-      <Tag.Group>
-        <Tag.List>
+      <TagGroup>
+        <TagList>
           <Tag id="react">React</Tag>
           <Tag id="typescript">TypeScript</Tag>
           <Tag id="nextjs">Next.js</Tag>
           <Tag id="tailwindcss">Tailwind CSS</Tag>
-        </Tag.List>
-      </Tag.Group>
+        </TagList>
+      </TagGroup>
     </div>
   );
 }

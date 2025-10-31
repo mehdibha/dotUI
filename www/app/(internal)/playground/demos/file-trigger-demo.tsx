@@ -20,7 +20,10 @@ export function FileTriggerDemo() {
         }}
         allowsMultiple
       >
-        <Button prefix={<UploadIcon />}>Upload</Button>
+        <Button>
+          <UploadIcon />
+          Upload
+        </Button>
       </FileTrigger>
       {file && (
         <p>

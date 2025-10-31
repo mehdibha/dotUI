@@ -6,18 +6,22 @@ import { cn } from "@dotui/registry/lib/utils";
 import { SCALE_STEPS } from "@dotui/registry/style-system/constants";
 import { COLOR_TOKENS } from "@dotui/registry/tokens/registry";
 import { ColorSwatch } from "@dotui/registry/ui/color-swatch";
-import { SelectItem } from "@dotui/registry/ui/select";
+import {
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "@dotui/registry/ui/select";
 import { Skeleton } from "@dotui/registry/ui/skeleton";
 import {
+  Table,
   TableBody,
   TableCell,
   TableColumn,
   TableHeader,
-  TableRoot,
   TableRow,
 } from "@dotui/registry/ui/table";
 import type { ScaleId } from "@dotui/registry/style-system/types";
-import type { TableRootProps } from "@dotui/registry/ui/table";
+import type { TableProps } from "@dotui/registry/ui/table";
 
 import { ContextualHelp } from "@/components/ui/contextual-help";
 import {
@@ -28,19 +32,17 @@ import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
 import { useDraftStyle } from "../../atoms/draft-style-atom";
 
 export const ColorTokens = ({
-  variant = "line",
   hideHeader = false,
   className,
   tokenIds,
   ...props
-}: TableRootProps & {
+}: TableProps & {
   tokenIds: string[];
   hideHeader?: boolean;
 }) => {
   return (
-    <TableRoot
+    <Table
       aria-label="Tokens"
-      variant={variant}
       className={cn("", className)}
       {...props}
     >
@@ -63,9 +65,7 @@ export const ColorTokens = ({
                   <TokenName tokenId={tokenId} />
                   {tokenDefinition.description && (
                     <ContextualHelp
-                      dialogProps={{
-                        className: "text-sm",
-                      }}
+                      className="text-sm"
                     >
                       {tokenDefinition.description}
                     </ContextualHelp>
@@ -82,7 +82,7 @@ export const ColorTokens = ({
           );
         })}
       </TableBody>
-    </TableRoot>
+    </Table>
   );
 };
 
@@ -136,25 +136,25 @@ const TokenSelect = ({
           <Skeleton show={isPending} className="w-40">
             <field.Select
               aria-label="Select variable value"
-              size="sm"
-              renderValue={({ defaultChildren }) => defaultChildren}
-              suffix={<ChevronsUpDownIcon className="text-fg-muted" />}
               className="w-40"
             >
-              {colorScales
-                .filter((scale) => scale !== "..")
-                .flatMap((scale) => {
-                  const colors = generatedTheme.find((s) => s.name === scale);
-                  return SCALE_STEPS.map((step, i) => (
-                    <SelectItem
-                      key={`${scale}-${step}`}
-                      id={`var(--${scale}-${step})`}
-                      prefix={<ColorSwatch color={colors?.values[i]?.value} />}
-                    >
-                      {`${scale.charAt(0).toUpperCase() + scale.slice(1)} ${step}`}
-                    </SelectItem>
-                  ));
-                })}
+              <SelectTrigger />
+              <SelectContent>
+                {colorScales
+                  .filter((scale) => scale !== "..")
+                  .flatMap((scale) => {
+                    const colors = generatedTheme.find((s) => s.name === scale);
+                    return SCALE_STEPS.map((step, i) => (
+                      <SelectItem
+                        key={`${scale}-${step}`}
+                        id={`var(--${scale}-${step})`}
+                      >
+                        <ColorSwatch color={colors?.values[i]?.value} />
+                        {`${scale.charAt(0).toUpperCase() + scale.slice(1)} ${step}`}
+                      </SelectItem>
+                    ));
+                  })}
+              </SelectContent>
             </field.Select>
           </Skeleton>
         );

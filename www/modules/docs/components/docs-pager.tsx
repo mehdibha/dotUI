@@ -1,19 +1,14 @@
+import type { Route } from "next";
+import Link from "next/link";
 import { findNeighbour } from "fumadocs-core/page-tree";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import type { Route } from "next";
 
 import { Button } from "@dotui/registry/ui/button";
-import { Tooltip } from "@dotui/registry/ui/tooltip";
+import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
 
 import { docsSource } from "@/modules/docs/lib/source";
 
-export const DocsPager = ({
-  variant = "label",
-  currentPathname,
-}: {
-  variant?: "tooltip" | "label";
-  currentPathname: string;
-}) => {
+export const DocsPager = ({ currentPathname }: { currentPathname: string }) => {
   const { previous, next } = findNeighbour(
     docsSource.pageTree,
     currentPathname,
@@ -22,35 +17,27 @@ export const DocsPager = ({
   return (
     <div className="flex items-center justify-between gap-2">
       {previous ? (
-        <Tooltip content={previous.name} isDisabled={variant === "label"}>
-          <Button
-            href={previous.url as Route}
-            aria-label={
-              variant === "tooltip" ? `Go to previous page` : undefined
-            }
-            prefix={variant === "label" ? <ChevronLeftIcon /> : undefined}
-            shape={variant === "tooltip" ? "square" : undefined}
-            variant={variant === "tooltip" ? "default" : "quiet"}
-            size="sm"
-          >
-            {variant === "label" ? previous.name : <ChevronLeftIcon />}
+        <Tooltip>
+          <Button asChild aria-label="Go to previous page" size="sm">
+            <Link href={previous.url as Route}>
+              <ChevronLeftIcon />
+              {/* {previous.name} */}
+            </Link>
           </Button>
+          <TooltipContent>{previous.name}</TooltipContent>
         </Tooltip>
       ) : (
         <div />
       )}
       {next ? (
-        <Tooltip content={next.name} isDisabled={variant === "label"}>
-          <Button
-            href={next.url as Route}
-            aria-label={variant === "tooltip" ? `Go to next page` : undefined}
-            suffix={variant === "label" ? <ChevronRightIcon /> : undefined}
-            shape={variant === "tooltip" ? "square" : undefined}
-            variant={variant === "tooltip" ? "default" : "quiet"}
-            size="sm"
-          >
-            {variant === "label" ? next.name : <ChevronRightIcon />}
+        <Tooltip>
+          <Button asChild aria-label="Go to next page" size="sm">
+            <Link href={next.url as Route}>
+              {/* {next.name} */}
+              <ChevronRightIcon />
+            </Link>
           </Button>
+          <TooltipContent>{next.name}</TooltipContent>
         </Tooltip>
       ) : (
         <div />

@@ -6,7 +6,15 @@ import { useStore } from "@tanstack/react-form";
 import type { Route } from "next";
 
 import { Button } from "@dotui/registry/ui/button";
-import { Dialog, DialogBody, DialogFooter } from "@dotui/registry/ui/dialog";
+import {
+  Dialog,
+  DialogBody,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogHeading,
+} from "@dotui/registry/ui/dialog";
+import { Modal } from "@dotui/registry/ui/modal";
 
 import { env } from "@/env";
 import { useDraftStyle } from "../atoms/draft-style-atom";
@@ -102,27 +110,30 @@ export function NavigationBlocker() {
 
   return (
     <Dialog
-      aria-label="Unsaved changes"
-      role="alertdialog"
-      isDismissable
-      title="Unsaved changes"
       isOpen={isOpen}
       onOpenChange={setOpen}
     >
-      <DialogBody>
-        <p className="text-sm text-fg-muted">
-          You have unsaved changes. Are you sure you want to leave? Your changes
-          will be lost.
-        </p>
-      </DialogBody>
-      <DialogFooter>
-        <Button variant="default" onPress={handleDiscardChanges}>
-          Discard changes
-        </Button>
-        <Button variant="primary" onPress={handleSaveChanges}>
-          Save changes
-        </Button>
-      </DialogFooter>
+      <Modal>
+        <DialogContent role="alertdialog">
+          <DialogHeader>
+            <DialogHeading>Unsaved changes</DialogHeading>
+          </DialogHeader>
+          <DialogBody>
+            <p className="text-sm text-fg-muted">
+              You have unsaved changes. Are you sure you want to leave? Your changes
+              will be lost.
+            </p>
+          </DialogBody>
+          <DialogFooter>
+            <Button slot="close" variant="quiet" onPress={handleDiscardChanges}>
+              Discard changes
+            </Button>
+            <Button slot="close" variant="primary" onPress={handleSaveChanges}>
+              Save changes
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Modal>
     </Dialog>
   );
 }

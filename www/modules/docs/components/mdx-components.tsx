@@ -160,7 +160,7 @@ export const mdxComponents: MDXComponents = {
     <Palette className={cn("mt-4", className)} {...props} />
   ),
   Badge: (props: BadgeProps) => (
-    <Badge variant="neutral" size="sm" {...props} />
+    <Badge variant="default" {...props} />
   ),
   BadgePalette: BadgePalette,
   Link,

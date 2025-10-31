@@ -1,7 +1,7 @@
 "use client";
 
 import { Description, Label } from "@dotui/registry/ui/field";
-import { Slider } from "@dotui/registry/ui/slider";
+import { Slider, SliderControl, SliderFiller, SliderOutput, SliderThumb } from "@dotui/registry/ui/slider";
 
 export function SliderDemo() {
   return (
@@ -14,22 +14,22 @@ export function SliderDemo() {
           // className="flex items-start"
         >
           <Slider aria-label="simple slider" defaultValue={50}>
-            <Slider.Control />
+            <SliderControl />
           </Slider>
 
           <Slider aria-label="range slider" defaultValue={[25, 75]}>
-            <Slider.Control />
+            <SliderControl />
           </Slider>
 
           <Slider
             aria-label="multiple values slider"
             defaultValue={[15, 40, 60]}
           >
-            <Slider.Control />
+            <SliderControl />
           </Slider>
 
           <Slider aria-label="disabled" defaultValue={50} isDisabled>
-            <Slider.Control />
+            <SliderControl />
           </Slider>
         </div>
 
@@ -40,7 +40,7 @@ export function SliderDemo() {
             orientation="vertical"
             defaultValue={50}
           >
-            <Slider.Control />
+            <SliderControl />
           </Slider>
 
           <Slider
@@ -48,7 +48,7 @@ export function SliderDemo() {
             orientation="vertical"
             defaultValue={[25, 75]}
           >
-            <Slider.Control />
+            <SliderControl />
           </Slider>
 
           <Slider
@@ -56,7 +56,7 @@ export function SliderDemo() {
             orientation="vertical"
             defaultValue={[15, 40, 60]}
           >
-            <Slider.Control />
+            <SliderControl />
           </Slider>
 
           <Slider
@@ -65,7 +65,7 @@ export function SliderDemo() {
             defaultValue={50}
             isDisabled
           >
-            <Slider.Control />
+            <SliderControl />
           </Slider>
         </div>
       </div>
@@ -74,12 +74,12 @@ export function SliderDemo() {
         <Slider defaultValue={30}>
           <div className="flex items-center justify-between">
             <Label>Volume</Label>
-            <Slider.Output />
+            <SliderOutput />
           </div>
-          <Slider.Control>
-            <Slider.Filler />
-            <Slider.Thumb />
-          </Slider.Control>
+          <SliderControl>
+            <SliderFiller />
+            <SliderThumb />
+          </SliderControl>
           <Description>Adjust the volume of the audio</Description>
         </Slider>
 
@@ -89,18 +89,18 @@ export function SliderDemo() {
         >
           <div className="flex items-center justify-between">
             <Label>Price range</Label>
-            <Slider.Output />
+            <SliderOutput />
           </div>
-          <Slider.Control />
+          <SliderControl />
           <Description>Adjust the price range</Description>
         </Slider>
 
         <Slider defaultValue={[25, 75]} isDisabled>
           <div className="flex items-center justify-between">
             <Label>Price range</Label>
-            <Slider.Output />
+            <SliderOutput />
           </div>
-          <Slider.Control />
+          <SliderControl />
           <Description>Adjust the price range</Description>
         </Slider>
       </div>

@@ -1,5 +1,5 @@
 import { Button } from "@dotui/registry/ui/button";
-import { Tooltip } from "@dotui/registry/ui/tooltip";
+import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
 
 import { getComponentVariants } from "@/modules/style-editor/components/components-editor/demos/utils";
 import { Section } from "@/modules/style-editor/components/components-editor/section";
@@ -12,8 +12,9 @@ export function Tooltips() {
       variants={getComponentVariants("tooltip")}
       previewClassName="gap-4"
     >
-      <Tooltip content="This is a tooltip">
+      <Tooltip>
         <Button>Hover me</Button>
+        <TooltipContent>This is a tooltip</TooltipContent>
       </Tooltip>
     </Section>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@dotui/registry/lib/utils";
+import { SliderControl } from "@dotui/registry/ui/slider";
 
 import { useDraftStyle } from "@/modules/style-editor/atoms/draft-style-atom";
 import { ON_CHANGE_DEBOUNCE_MS } from "@/modules/style-editor/constants";
@@ -44,7 +45,7 @@ export const ColorAdjustments = () => {
       >
         {(field) => (
           <field.Slider
-            label="Lightness"
+            aria-label="Lightness"
             onChange={(value) => {
               field.handleChange(
                 clampLightnessByMode(value as number, resolvedMode),
@@ -53,7 +54,9 @@ export const ColorAdjustments = () => {
             minValue={0}
             maxValue={100}
             className="col-span-2 w-auto"
-          />
+          >
+            <SliderControl />
+          </field.Slider>
         )}
       </form.AppField>
       <form.AppField
@@ -68,11 +71,13 @@ export const ColorAdjustments = () => {
       >
         {(field) => (
           <field.Slider
-            label="Saturation"
+            aria-label="Saturation"
             minValue={0}
             maxValue={100}
             className="col-span-1 w-auto"
-          />
+          >
+            <SliderControl />
+          </field.Slider>
         )}
       </form.AppField>
       <form.AppField
@@ -87,11 +92,13 @@ export const ColorAdjustments = () => {
       >
         {(field) => (
           <field.Slider
-            label="Contrast"
+            aria-label="Contrast"
             minValue={0}
             maxValue={500}
             className="col-span-1 w-auto"
-          />
+          >
+            <SliderControl />
+          </field.Slider>
         )}
       </form.AppField>
     </div>

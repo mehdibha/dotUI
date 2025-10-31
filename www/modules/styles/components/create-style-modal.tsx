@@ -11,13 +11,17 @@ import { Button } from "@dotui/registry/ui/button";
 import {
   Dialog,
   DialogBody,
+  DialogContent,
   DialogFooter,
   DialogHeader,
   DialogHeading,
-  DialogRoot,
 } from "@dotui/registry/ui/dialog";
-import { useAppForm } from "@dotui/registry/ui/form";
-import { SelectItem } from "@dotui/registry/ui/select";
+import { Input } from "@dotui/registry/ui/input";
+import { Label } from "@dotui/registry/ui/field";
+import { Modal } from "@dotui/registry/ui/modal";
+import { Popover } from "@dotui/registry/ui/popover";
+import { useAppForm } from "@dotui/registry/ui/tanstack-form";
+import { SelectContent, SelectItem, SelectTrigger, SelectValue } from "@dotui/registry/ui/select";
 import type { StyleDefinition } from "@dotui/registry/style-system/types";
 
 import { LoginModal } from "@/modules/auth/components/login-modal";
@@ -111,9 +115,10 @@ export function CreateStyleModalContent({
   }, [rawName]);
 
   return (
-    <DialogRoot isOpen={isOpen} onOpenChange={setOpen}>
+    <Dialog isOpen={isOpen} onOpenChange={setOpen}>
       {children}
-      <Dialog modalProps={{ className: "max-w-lg" }}>
+      <Modal>
+        <DialogContent className="max-w-lg">
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -137,55 +142,70 @@ export function CreateStyleModalContent({
             <div className="flex items-start gap-2">
               <form.AppField name="name">
                 {(field) => (
-                  <field.TextField label="Name" autoFocus className="w-full" />
+                  <field.TextField autoFocus className="w-full">
+                    <Label>Name</Label>
+                    <Input />
+                  </field.TextField>
                 )}
               </form.AppField>
               <form.AppField name="visibility">
                 {(field) => (
                   <field.Select
                     aria-label="Visibility"
-                    renderValue={({ selectedItems }) => (
-                      <div className="flex items-center gap-2 [&>svg]:text-fg-muted">
-                        {selectedItems[0]?.icon}
-                        {selectedItems[0]?.label}
-                      </div>
-                    )}
-                    items={[
-                      {
-                        value: "private",
-                        label: "Private",
-                        icon: <LockIcon />,
-                        description: "Only you can view and access this style.",
-                        disabled: true,
-                      },
-                      {
-                        value: "unlisted",
-                        label: "Unlisted",
-                        icon: <ExternalLinkIcon />,
-                        description:
-                          "Anyone with the link can access this style.",
-                      },
-                      {
-                        value: "public",
-                        label: "Public",
-                        icon: <GlobeIcon />,
-                        description:
-                          "Anyone can view this style (listed in community styles).",
-                      },
-                    ]}
                     className="mt-[22px]"
                   >
-                    {(item) => (
-                      <SelectItem
-                        id={item.value}
-                        prefix={item.icon}
-                        label={item.label}
-                        textValue={item.value}
-                        description={item.description}
-                        isDisabled={item.disabled}
-                        className="max-w-88 [&>svg]:text-fg-muted!"
-                      />
-                    )}
+                    <SelectTrigger>
+                      <SelectValue>
+                        {({ selectedText, selectedItem }) => {
+                          const items = [
+                            {
+                              value: "private",
+                              label: "Private",
+                              icon: <LockIcon />,
+                              description: "Only you can view and access this style.",
+                              disabled: true,
+                            },
+                            {
+                              value: "unlisted",
+                              label: "Unlisted",
+                              icon: <ExternalLinkIcon />,
+                              description:
+                                "Anyone with the link can access this style.",
+                            },
+                            {
+                              value: "public",
+                              label: "Public",
+                              icon: <GlobeIcon />,
+                              description:
+                                "Anyone can view this style (listed in community styles).",
+                            },
+                          ];
+                          const item = items.find(i => i.value === (selectedItem as { key?: string })?.key);
+                          return item ? (
+                            <div className="flex items-center gap-2 [&>svg]:text-fg-muted">
+                              {item.icon}
+                              {item.label}
+                            </div>
+                          ) : selectedText;
+                        }}
+                      </SelectValue>
+                    </SelectTrigger>
+                    <Popover>
+                      <SelectContent>
+                        <SelectItem id="private" textValue="private" isDisabled className="max-w-88 [&>svg]:text-fg-muted!">
+                          <LockIcon />
+                          Private
+                        </SelectItem>
+                        <SelectItem id="unlisted" textValue="unlisted" className="max-w-88 [&>svg]:text-fg-muted!">
+                          <ExternalLinkIcon />
+                          Unlisted
+                        </SelectItem>
+                        <SelectItem id="public" textValue="public" className="max-w-88 [&>svg]:text-fg-muted!">
+                          <GlobeIcon />
+                          Public
+                        </SelectItem>
+                      </SelectContent>
+                    </Popover>
                   </field.Select>
                 )}
               </form.AppField>
@@ -203,7 +223,8 @@ export function CreateStyleModalContent({
             </form.AppForm>
           </DialogFooter>
         </form>
-      </Dialog>
-    </DialogRoot>
+        </DialogContent>
+      </Modal>
+    </Dialog>
   );
 }

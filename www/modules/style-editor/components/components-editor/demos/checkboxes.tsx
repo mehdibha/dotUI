@@ -15,7 +15,7 @@ export function Checkboxes() {
       <Checkbox defaultSelected form="none">
         Hello world
       </Checkbox>
-      <Checkbox appearance="card" defaultSelected form="none">
+      <Checkbox defaultSelected form="none">
         Hello world
       </Checkbox>
     </Section>

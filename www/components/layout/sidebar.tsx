@@ -26,7 +26,7 @@ import { cn } from "@dotui/registry/lib/utils";
 import { Avatar } from "@dotui/registry/ui/avatar";
 import { Button } from "@dotui/registry/ui/button";
 import { Kbd } from "@dotui/registry/ui/kbd";
-import { Tooltip } from "@dotui/registry/ui/tooltip";
+import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
 import type { ButtonProps } from "@dotui/registry/ui/button";
 import type { TooltipProps } from "@dotui/registry/ui/tooltip";
 
@@ -102,7 +102,6 @@ export const Sidebar = ({
         >
           <Button
             variant="quiet"
-            shape="square"
             size="sm"
             onPress={() => setCollapsed(!isCollapsed)}
             className="pointer-events-none absolute left-2 opacity-0 group-data-collapsed/sidebar:group-hover/sidebar:pointer-events-auto group-data-collapsed/sidebar:group-hover/sidebar:opacity-100"
@@ -113,7 +112,6 @@ export const Sidebar = ({
         <div className="flex w-[calc(var(--sidebar-width)-calc(var(--spacing)*6))] justify-end">
           <Button
             variant="quiet"
-            shape="square"
             size="sm"
             onPress={() => setCollapsed(!isCollapsed)}
           >
@@ -165,7 +163,6 @@ export const Sidebar = ({
             >
               <SidebarButton
                 href={item.url}
-                shape="square"
                 variant="quiet"
                 size="sm"
               >
@@ -191,14 +188,14 @@ export const Sidebar = ({
           <div className="flex items-center gap-1 group-data-collapsed/sidebar:flex-col">
             <motion.div layout transition={transition}>
               <Button
-                href={siteConfig.links.github}
-                target="_blank"
+                asChild
                 size="sm"
-                shape="square"
                 variant="quiet"
                 aria-label="github"
               >
-                <GitHubIcon />
+                <Link href={siteConfig.links.github} target="_blank">
+                  <GitHubIcon />
+                </Link>
               </Button>
             </motion.div>
           </div>
@@ -208,7 +205,6 @@ export const Sidebar = ({
                 <Button
                   size="sm"
                   variant="quiet"
-                  shape="square"
                   className="[&_svg]:size-[18px]"
                 >
                   <SunIcon className="block dark:hidden" />
@@ -219,12 +215,11 @@ export const Sidebar = ({
             {isMounted && !isPending && session?.user && (
               <UserProfileMenu placement="top">
                 <motion.div layout transition={transition}>
-                  <Button variant="quiet" shape="square" size="sm">
+                  <Button variant="quiet" size="sm">
                     <Avatar
                       src={session.user.image ?? undefined}
                       fallback={session.user.name.charAt(0)}
                       className="size-6"
-                      shape="circle"
                     />
                   </Button>
                 </motion.div>
@@ -474,11 +469,32 @@ function FolderNode({
 const SidebarButton = ({
   className,
   children,
+  href,
   ...props
-}: Omit<ButtonProps, "children"> & { children: React.ReactNode }) => {
+}: Omit<ButtonProps, "children"> & { children: React.ReactNode; href?: string | Route }) => {
+  if (href) {
+    return (
+      <Button
+        asChild
+        variant="quiet"
+        size="sm"
+        className={cn(
+          "relative w-full overflow-hidden text-[0.8rem] font-medium transition-sidebar group-data-collapsed/sidebar:w-8",
+          className,
+        )}
+        {...props}
+      >
+        <Link href={href as Route}>
+          <span className="absolute inset-2 flex w-[calc(var(--sidebar-width)-calc(var(--spacing)*8))] items-center justify-center gap-2 whitespace-nowrap transition-sidebar group-data-collapsed/sidebar:left-2 [&>svg]:size-4">
+            {children}
+          </span>
+        </Link>
+      </Button>
+    );
+  }
+  
   return (
     <Button
-      shape="square"
       variant="quiet"
       size="sm"
       className={cn(
@@ -494,9 +510,12 @@ const SidebarButton = ({
   );
 };
 
-const StyledTooltip = (props: TooltipProps) => {
+const StyledTooltip = ({ children, content, className, ...props }: TooltipProps & { children: React.ReactNode; content?: React.ReactNode; className?: string }) => {
   return (
-    <Tooltip className="px-4 py-1" placement="right" showArrow {...props} />
+    <Tooltip {...props}>
+      {children}
+      {content && <TooltipContent className={className || "px-4 py-1"}>{content}</TooltipContent>}
+    </Tooltip>
   );
 };
 

@@ -1,6 +1,6 @@
 import { Combobox, ComboboxItem } from "@dotui/registry/ui/combobox";
 import { DatePicker } from "@dotui/registry/ui/date-picker";
-import { DateRangePicker } from "@dotui/registry/ui/date-range-picker";
+// DateRangePicker not available in registry
 
 import { getComponentVariants } from "@/modules/style-editor/components/components-editor/demos/utils";
 import { Section } from "@/modules/style-editor/components/components-editor/section";
@@ -23,7 +23,7 @@ export function Pickers() {
         <ComboboxItem>United Kingdom</ComboboxItem>
       </Combobox>
       <DatePicker aria-label="Basic date picker" form="none" />
-      <DateRangePicker aria-label="Basic date range picker" form="none" />
+      {/* DateRangePicker not available */}
     </Section>
   );
 }

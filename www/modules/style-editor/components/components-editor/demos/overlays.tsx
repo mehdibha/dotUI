@@ -2,9 +2,15 @@ import { Button } from "@dotui/registry/ui/button";
 import {
   Dialog,
   DialogBody,
+  DialogContent,
+  DialogDescription,
   DialogFooter,
-  DialogRoot,
+  DialogHeader,
+  DialogHeading,
 } from "@dotui/registry/ui/dialog";
+import { Drawer } from "@dotui/registry/ui/drawer";
+import { Modal } from "@dotui/registry/ui/modal";
+import { Popover } from "@dotui/registry/ui/popover";
 
 import { getComponentVariants } from "@/modules/style-editor/components/components-editor/demos/utils";
 import { Section } from "@/modules/style-editor/components/components-editor/section";
@@ -17,42 +23,57 @@ export function Overlays() {
       variants={getComponentVariants("popover")}
       previewClassName="gap-4"
     >
-      <DialogRoot>
+      <Dialog>
         <Button>Popover</Button>
-        <Dialog title="Popover" type="popover">
-          <DialogBody>some content</DialogBody>
-          <DialogFooter>
-            <Button slot="close">Cancel</Button>
-            <Button variant="primary" slot="close">
-              Save changes
-            </Button>
-          </DialogFooter>
-        </Dialog>
-      </DialogRoot>
-      <DialogRoot>
+        <Popover>
+          <DialogContent>
+            <DialogHeader>
+              <DialogHeading>Popover</DialogHeading>
+            </DialogHeader>
+            <DialogBody>some content</DialogBody>
+            <DialogFooter>
+              <Button slot="close">Cancel</Button>
+              <Button variant="primary" slot="close">
+                Save changes
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Popover>
+      </Dialog>
+      <Dialog>
         <Button>Modal</Button>
-        <Dialog title="Modal" type="modal">
-          <DialogBody>some content</DialogBody>
-          <DialogFooter>
-            <Button slot="close">Cancel</Button>
-            <Button variant="primary" slot="close">
-              Save changes
-            </Button>
-          </DialogFooter>
-        </Dialog>
-      </DialogRoot>
-      <DialogRoot>
+        <Modal>
+          <DialogContent>
+            <DialogHeader>
+              <DialogHeading>Modal</DialogHeading>
+            </DialogHeader>
+            <DialogBody>some content</DialogBody>
+            <DialogFooter>
+              <Button slot="close">Cancel</Button>
+              <Button variant="primary" slot="close">
+                Save changes
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Modal>
+      </Dialog>
+      <Dialog>
         <Button>Drawer</Button>
-        <Dialog title="Drawer" type="drawer">
-          <DialogBody>some content</DialogBody>
-          <DialogFooter>
-            <Button slot="close">Cancel</Button>
-            <Button variant="primary" slot="close">
-              Save changes
-            </Button>
-          </DialogFooter>
-        </Dialog>
-      </DialogRoot>
+        <Drawer>
+          <DialogContent>
+            <DialogHeader>
+              <DialogHeading>Drawer</DialogHeading>
+            </DialogHeader>
+            <DialogBody>some content</DialogBody>
+            <DialogFooter>
+              <Button slot="close">Cancel</Button>
+              <Button variant="primary" slot="close">
+                Save changes
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Drawer>
+      </Dialog>
     </Section>
   );
 }

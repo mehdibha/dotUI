@@ -1,7 +1,11 @@
 "use client";
 
 import { registryTextures } from "@dotui/registry/textures/registry";
-import { SelectItem } from "@dotui/registry/ui/select";
+import {
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "@dotui/registry/ui/select";
 import { Skeleton } from "@dotui/registry/ui/skeleton";
 
 import { useDraftStyle } from "@/modules/style-editor/atoms/draft-style-atom";
@@ -46,13 +50,16 @@ export function EffectsEditor() {
       >
         {(field) => (
           <Skeleton show={isPending} className="mt-2">
-            <field.Select label="Texture" className="mt-2 w-full">
-              <SelectItem id="none">None</SelectItem>
-              {registryTextures.map((texture) => (
-                <SelectItem key={texture.slug} id={texture.slug}>
-                  {texture.name}
-                </SelectItem>
-              ))}
+            <field.Select aria-label="Texture" className="mt-2 w-full">
+              <SelectTrigger />
+              <SelectContent>
+                <SelectItem id="none">None</SelectItem>
+                {registryTextures.map((texture) => (
+                  <SelectItem key={texture.slug} id={texture.slug}>
+                    {texture.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
             </field.Select>
           </Skeleton>
         )}

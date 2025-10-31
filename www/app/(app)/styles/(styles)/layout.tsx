@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 import { Button } from "@dotui/registry/ui/button";
 
@@ -48,8 +49,8 @@ export default function StylesLayout({ children }: LayoutProps<"/styles">) {
           <CreateStyleModal>
             <Button variant="primary">Create your style</Button>
           </CreateStyleModal>
-          <Button variant="default" href="/docs">
-            Documentation
+          <Button variant="default" asChild>
+            <Link href="/docs">Documentation</Link>
           </Button>
         </PageActions>
       </PageHeader>

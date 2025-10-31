@@ -1,7 +1,11 @@
 "use client";
 
 import { cn } from "@dotui/registry/lib/utils";
-import { SelectItem } from "@dotui/registry/ui/select";
+import {
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "@dotui/registry/ui/select";
 import { Skeleton } from "@dotui/registry/ui/skeleton";
 import type { VariantsDefinition } from "@dotui/registry/style-system/types";
 
@@ -46,11 +50,14 @@ export const Section = ({
               aria-label="Select component variant"
               className="mt-2 w-full"
             >
-              {variants.map((variant) => (
-                <SelectItem key={variant.name} id={variant.name}>
-                  {variant.label}
-                </SelectItem>
-              ))}
+              <SelectTrigger />
+              <SelectContent>
+                {variants.map((variant) => (
+                  <SelectItem key={variant.name} id={variant.name}>
+                    {variant.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
             </field.Select>
           </Skeleton>
         )}
