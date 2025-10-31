@@ -249,91 +249,6 @@ importers:
         specifier: ^5.8.3
         version: 5.9.3
 
-  packages/registry-v2:
-    dependencies:
-      '@hookform/resolvers':
-        specifier: ^5.1.1
-        version: 5.2.2(react-hook-form@7.63.0(react@19.2.0))
-      '@internationalized/date':
-        specifier: ^3.10.0
-        version: 3.10.0
-      '@radix-ui/react-slot':
-        specifier: ^1.2.3
-        version: 1.2.3(@types/react@19.2.2)(react@19.2.0)
-      '@react-aria/utils':
-        specifier: ^3.31.0
-        version: 3.31.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
-      '@react-stately/utils':
-        specifier: ^3.10.8
-        version: 3.10.8(react@19.2.0)
-      '@remixicon/react':
-        specifier: ^4.2.0
-        version: 4.6.0(react@19.2.0)
-      '@tanstack/react-form':
-        specifier: ^1.23.4
-        version: 1.23.5(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
-      clsx:
-        specifier: ^2.1.0
-        version: 2.1.1
-      culori:
-        specifier: ^4.0.2
-        version: 4.0.2
-      lucide-react:
-        specifier: ^0.546.0
-        version: 0.546.0(react@19.2.0)
-      motion:
-        specifier: ^12.23.22
-        version: 12.23.22(@emotion/is-prop-valid@1.4.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
-      react:
-        specifier: ^19.2.0
-        version: 19.2.0
-      react-aria:
-        specifier: ^3.44.0
-        version: 3.44.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
-      react-aria-components:
-        specifier: ^1.13.0
-        version: 1.13.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
-      react-dom:
-        specifier: ^19.2.0
-        version: 19.2.0(react@19.2.0)
-      react-hook-form:
-        specifier: ^7.54.2
-        version: 7.63.0(react@19.2.0)
-      react-stately:
-        specifier: ^3.42.0
-        version: 3.42.0(react@19.2.0)
-      tailwind-merge:
-        specifier: ^3.0.2
-        version: 3.3.1
-      tailwind-variants:
-        specifier: ^3.1.1
-        version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.15)
-    devDependencies:
-      '@dotui/ts-config':
-        specifier: workspace:*
-        version: link:../../config/ts-config
-      '@types/culori':
-        specifier: ^4.0.1
-        version: 4.0.1
-      '@types/react':
-        specifier: ^19.2.2
-        version: 19.2.2
-      '@types/react-dom':
-        specifier: ^19.2.1
-        version: 19.2.1(@types/react@19.2.2)
-      rimraf:
-        specifier: ^6.0.1
-        version: 6.0.1
-      shadcn:
-        specifier: ^3.2.1
-        version: 3.3.1(@types/node@24.9.1)(babel-plugin-macros@3.1.0)(typescript@5.9.3)
-      tsx:
-        specifier: ^4.19.2
-        version: 4.20.6
-      typescript:
-        specifier: ^5.8.3
-        version: 5.9.3
-
   packages/tailwindcss-autocontrast:
     dependencies:
       '@tailwindcss/postcss':
@@ -369,9 +284,6 @@ importers:
       '@dotui/registry':
         specifier: workspace:*
         version: link:../packages/registry
-      '@dotui/registry-v2':
-        specifier: workspace:*
-        version: link:../packages/registry-v2
       '@fumadocs/mdx-remote':
         specifier: ^1.4.0
         version: 1.4.3(@types/react@19.2.2)(fumadocs-core@16.0.1(@types/react@19.2.2)(lucide-react@0.546.0(react@19.2.0))(next@16.0.0(@babel/core@7.28.4)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@19.1.0-rc.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0)
