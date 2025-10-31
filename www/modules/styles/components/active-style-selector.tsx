@@ -4,9 +4,18 @@ import { ChevronDownIcon } from "lucide-react";
 
 import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";
-import { ListBox, ListBoxSection, ListBoxSectionHeader } from "@dotui/registry/ui/list-box";
+import {
+  ListBox,
+  ListBoxSection,
+  ListBoxSectionHeader,
+} from "@dotui/registry/ui/list-box";
 import { Popover } from "@dotui/registry/ui/popover";
-import { Select, SelectItem, SelectTrigger, SelectValue } from "@dotui/registry/ui/select";
+import {
+  Select,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@dotui/registry/ui/select";
 import type { ButtonProps } from "@dotui/registry/ui/button";
 import type { SelectProps } from "@dotui/registry/ui/select";
 

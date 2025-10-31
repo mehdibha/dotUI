@@ -1,6 +1,6 @@
+import type { Metadata, Route } from "next";
 import { notFound } from "next/navigation";
 import { ExternalLinkIcon } from "lucide-react";
-import type { Metadata, Route } from "next";
 
 import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";

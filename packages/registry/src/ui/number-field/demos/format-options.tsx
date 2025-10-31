@@ -53,7 +53,7 @@ export default function Demo() {
           <Button slot="increment" />
         </Group>
       </NumberField>
-      
+
       <NumberField
         defaultValue={4}
         formatOptions={{

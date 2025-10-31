@@ -12,16 +12,16 @@ import type { BadgeProps } from "@dotui/registry/ui/badge";
 import type { LinkProps } from "@dotui/registry/ui/link";
 
 import { BadgePalette } from "./badge-palette";
+import type { ChoicesProps } from "./choices";
 import { Choice, Choices } from "./choices";
 import { Pre } from "./code-block-mdx";
+import type { ComponentPreviewProps } from "./component-preview";
 import { ComponentPreview } from "./component-preview";
 import { ComponentsList } from "./components-list";
 import { InstallTab, InstallTabs } from "./install-tabs";
+import type { PaletteProps } from "./palette";
 import { Palette } from "./palette";
 import { Tab, Tabs } from "./tabs";
-import type { ChoicesProps } from "./choices";
-import type { ComponentPreviewProps } from "./component-preview";
-import type { PaletteProps } from "./palette";
 
 export const mdxComponents: MDXComponents = {
   ...defaultMdxComponents,
@@ -159,9 +159,7 @@ export const mdxComponents: MDXComponents = {
   Palette: ({ className, ...props }: PaletteProps) => (
     <Palette className={cn("mt-4", className)} {...props} />
   ),
-  Badge: (props: BadgeProps) => (
-    <Badge variant="default" {...props} />
-  ),
+  Badge: (props: BadgeProps) => <Badge variant="default" {...props} />,
   BadgePalette: BadgePalette,
   Link,
   ComponentsList,

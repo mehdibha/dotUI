@@ -2,7 +2,10 @@
 
 import * as React from "react";
 
-import { ProgressBar, ProgressBarControl } from "@dotui/registry/ui/progress-bar";
+import {
+  ProgressBar,
+  ProgressBarControl,
+} from "@dotui/registry/ui/progress-bar";
 
 export default function Demo() {
   const [progress, setProgress] = React.useState(13);

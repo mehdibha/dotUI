@@ -10,6 +10,7 @@ import {
   SparklesIcon,
 } from "lucide-react";
 
+import { Avatar } from "@dotui/registry/ui/avatar";
 import { Button } from "@dotui/registry/ui/button";
 import { Kbd } from "@dotui/registry/ui/kbd";
 import {
@@ -22,7 +23,6 @@ import {
 } from "@dotui/registry/ui/menu";
 import { Overlay } from "@dotui/registry/ui/overlay";
 import { Separator } from "@dotui/registry/ui/separator";
-import { Avatar } from "@dotui/registry/ui/avatar";
 
 export function MenuDemo() {
   return (

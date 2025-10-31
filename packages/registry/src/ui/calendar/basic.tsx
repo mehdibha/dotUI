@@ -331,7 +331,6 @@ const CalendarCell = ({
   );
 };
 
-
 export {
   Calendar,
   CalendarHeader,

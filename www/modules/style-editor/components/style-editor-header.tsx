@@ -75,20 +75,13 @@ function StyleEditorHeaderActions() {
   return (
     <div className="flex items-center gap-1">
       <CodeModal>
-        <Button
-          size="sm"
-          className="@max-md:size-8 @max-md:w-8 @max-md:px-0"
-        >
+        <Button size="sm" className="@max-md:size-8 @max-md:w-8 @max-md:px-0">
           <CodeIcon />
           <span className="@max-md:hidden">Code</span>
         </Button>
       </CodeModal>
       <Dialog>
-        <Button
-          size="sm"
-          aria-label="Preview"
-          className="xl:hidden"
-        >
+        <Button size="sm" aria-label="Preview" className="xl:hidden">
           <EyeIcon />
         </Button>
         <Drawer>

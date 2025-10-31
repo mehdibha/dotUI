@@ -34,7 +34,9 @@ export const ButtonDemo = () => {
               <ArrowRightIcon />
               Learn more
             </Button>
-            <Button isPending size={size}>button</Button>
+            <Button isPending size={size}>
+              button
+            </Button>
           </div>
         </React.Fragment>
       ))}

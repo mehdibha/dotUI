@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
 import type { Route } from "next";
+import Link from "next/link";
 import {
   ChevronsRightIcon,
   ChevronsUpDownIcon,
@@ -17,12 +17,12 @@ import {
 import { motion } from "motion/react";
 
 import { registryBlocks } from "@dotui/registry/blocks/registry";
-import { cn } from "@dotui/registry/lib/utils";
 import { createScopedContext } from "@dotui/registry/lib/context";
+import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";
 import { Dialog, DialogContent } from "@dotui/registry/ui/dialog";
-import { Modal } from "@dotui/registry/ui/modal";
 import { ListBox, ListBoxItem } from "@dotui/registry/ui/list-box";
+import { Modal } from "@dotui/registry/ui/modal";
 import { Popover } from "@dotui/registry/ui/popover";
 import { Select, SelectTrigger, SelectValue } from "@dotui/registry/ui/select";
 import { Separator } from "@dotui/registry/ui/separator";
@@ -263,7 +263,9 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
             className="size-7"
           >
             <Link
-              href={`/view/${slug}/${block}?mode=true&live=true&view=true` as Route}
+              href={
+                `/view/${slug}/${block}?mode=true&live=true&view=true` as Route
+              }
               target="_blank"
             >
               <ExternalLinkIcon />
@@ -328,10 +330,7 @@ export const PreviewFrame = ({
 const PreviewModal = ({ children }: { children: React.ReactNode }) => {
   const { isFullscreen, setFullscreen } = usePreviewContext("PreviewModal");
   return (
-    <Dialog
-      isOpen={isFullscreen}
-      onOpenChange={setFullscreen}
-    >
+    <Dialog isOpen={isFullscreen} onOpenChange={setFullscreen}>
       {children}
       <Modal>
         <DialogContent className="w-screen h-(--visual-viewport-height) max-w-none rounded-none border-0 h-full overflow-hidden rounded-none p-0!">

@@ -1,8 +1,8 @@
 "use client";
 
+import type { HTMLAttributes, ReactNode } from "react";
 import { forwardRef, useCallback, useRef } from "react";
 import { Check, Copy } from "lucide-react";
-import type { HTMLAttributes, ReactNode } from "react";
 
 import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";

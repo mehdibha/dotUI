@@ -147,7 +147,8 @@ const MenuSection = <T extends object>({
 
 /* -----------------------------------------------------------------------------------------------*/
 
-interface MenuSectionHeaderProps extends React.ComponentProps<typeof AriaHeader> {}
+interface MenuSectionHeaderProps
+  extends React.ComponentProps<typeof AriaHeader> {}
 
 const MenuSectionHeader = ({ className, ...props }: MenuSectionHeaderProps) => {
   return (
@@ -160,14 +161,7 @@ const MenuSectionHeader = ({ className, ...props }: MenuSectionHeaderProps) => {
 
 /* -----------------------------------------------------------------------------------------------*/
 
-export {
-  Menu,
-  MenuItem,
-  MenuContent,
-  MenuSection,
-  MenuSectionHeader,
-  MenuSub,
-};
+export { Menu, MenuItem, MenuContent, MenuSection, MenuSectionHeader, MenuSub };
 
 export type {
   MenuProps,

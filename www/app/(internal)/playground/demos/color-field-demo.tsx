@@ -35,7 +35,6 @@ export function ColorFieldDemo() {
         <Input />
         <Description>Please enter a color</Description>
       </ColorField>
-
     </div>
   );
 }

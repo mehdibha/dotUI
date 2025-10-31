@@ -41,11 +41,7 @@ export const ColorTokens = ({
   hideHeader?: boolean;
 }) => {
   return (
-    <Table
-      aria-label="Tokens"
-      className={cn("", className)}
-      {...props}
-    >
+    <Table aria-label="Tokens" className={cn("", className)} {...props}>
       <TableHeader className={cn(hideHeader && "sr-only")}>
         <TableColumn id="name" isRowHeader className="pl-0">
           Variable name
@@ -64,9 +60,7 @@ export const ColorTokens = ({
                 <div className="flex items-center gap-2">
                   <TokenName tokenId={tokenId} />
                   {tokenDefinition.description && (
-                    <ContextualHelp
-                      className="text-sm"
-                    >
+                    <ContextualHelp className="text-sm">
                       {tokenDefinition.description}
                     </ContextualHelp>
                   )}
@@ -134,10 +128,7 @@ const TokenSelect = ({
       {(field) => {
         return (
           <Skeleton show={isPending} className="w-40">
-            <field.Select
-              aria-label="Select variable value"
-              className="w-40"
-            >
+            <field.Select aria-label="Select variable value" className="w-40">
               <SelectTrigger />
               <SelectContent>
                 {colorScales

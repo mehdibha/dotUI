@@ -90,4 +90,9 @@ function AccordionHeading({
 
 export { Accordion, AccordionItem, AccordionPanel, AccordionHeading };
 
-export type { AccordionProps, AccordionItemProps, AccordionPanelProps, AccordionHeadingProps };
+export type {
+  AccordionProps,
+  AccordionItemProps,
+  AccordionPanelProps,
+  AccordionHeadingProps,
+};

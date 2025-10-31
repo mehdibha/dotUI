@@ -3,7 +3,6 @@
 import React from "react";
 import { CheckIcon, CopyIcon } from "lucide-react";
 import { tv } from "tailwind-variants";
-import type { ScrollAreaProps } from "@/components/ui/scroll-area";
 import type { Key } from "react-aria-components";
 
 import { cn } from "@dotui/registry/lib/utils";
@@ -12,6 +11,7 @@ import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs";
 import type { ButtonProps } from "@dotui/registry/ui/button";
 import type { TabsProps } from "@dotui/registry/ui/tabs";
 
+import type { ScrollAreaProps } from "@/components/ui/scroll-area";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 const codeBlockStyles = tv({

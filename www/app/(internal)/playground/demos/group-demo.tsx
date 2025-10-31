@@ -36,7 +36,10 @@ import { Button } from "@dotui/registry/ui/button";
 import { ColorField } from "@dotui/registry/ui/color-field";
 import { ColorPicker } from "@dotui/registry/ui/color-picker";
 import { ColorSwatch } from "@dotui/registry/ui/color-swatch";
-import { ColorSwatchPicker, ColorSwatchPickerItem } from "@dotui/registry/ui/color-swatch-picker";
+import {
+  ColorSwatchPicker,
+  ColorSwatchPickerItem,
+} from "@dotui/registry/ui/color-swatch-picker";
 import {
   Dialog,
   DialogBody,

@@ -22,7 +22,7 @@ export function Cards(props: React.ComponentProps<"div">) {
       {/* <Notifications className="col-span-11 max-md:h-100 md:col-span-5 md:contain-[size] xl:col-span-3" />*/}
       <InviteMembers className="col-span-11 md:col-span-6 lg:col-span-6 xl:col-span-4" />
       <Backlog className="col-span-11 lg:col-span-8 xl:col-span-7" />
-      <AccountMenu className="max-lg:hidden lg:col-span-3 lg:block xl:hidden" /> 
+      <AccountMenu className="max-lg:hidden lg:col-span-3 lg:block xl:hidden" />
       <div className="col-span-11 grid grid-cols-11 gap-4 lg:items-start">
         <AccountMenu className="col-span-11 min-w-0 sm:col-span-5 lg:hidden xl:col-span-2 xl:block" />
         <LoginForm className="col-span-11 max-w-none sm:col-span-6 lg:hidden" />

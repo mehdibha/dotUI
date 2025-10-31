@@ -25,7 +25,7 @@ export default function Demo() {
           </Radio>
         </FieldGroup>
       </RadioGroup>
-      
+
       <RadioGroup defaultValue="sm">
         <Label>Size</Label>
         <FieldGroup>

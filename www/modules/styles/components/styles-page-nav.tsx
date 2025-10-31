@@ -35,10 +35,7 @@ export function StylesPageNav({
       ] as const);
 
   return (
-    <Tabs
-      selectedKey={pathname}
-      className={cn("", className)}
-    >
+    <Tabs selectedKey={pathname} className={cn("", className)}>
       <div className="sticky top-0 z-40 border-b bg-bg">
         <TabList className={cn("container w-full overflow-x-auto border-b-0")}>
           {items.map((tab) => (

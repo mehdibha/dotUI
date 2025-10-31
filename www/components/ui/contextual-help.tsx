@@ -26,7 +26,10 @@ export function ContextualHelp({
         <InfoIcon />
       </Button>
       <Popover placement="top">
-        <DialogContent className={cn("max-w-64", dialogProps?.className)} {...dialogProps}>
+        <DialogContent
+          className={cn("max-w-64", dialogProps?.className)}
+          {...dialogProps}
+        >
           {children}
         </DialogContent>
       </Popover>

@@ -88,4 +88,9 @@ function AlertAction({ className, ...props }: AlertActionProps) {
 
 export { Alert, AlertTitle, AlertDescription, AlertAction };
 
-export type { AlertProps, AlertTitleProps, AlertDescriptionProps, AlertActionProps };
+export type {
+  AlertProps,
+  AlertTitleProps,
+  AlertDescriptionProps,
+  AlertActionProps,
+};

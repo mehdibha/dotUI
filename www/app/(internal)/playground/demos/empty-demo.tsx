@@ -5,7 +5,14 @@ import { ArrowUpRightIcon, PlusIcon, RefreshCcwIcon } from "lucide-react";
 
 import { Avatar, AvatarGroup } from "@dotui/registry/ui/avatar";
 import { Button } from "@dotui/registry/ui/button";
-import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@dotui/registry/ui/empty";
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@dotui/registry/ui/empty";
 import { Link } from "@dotui/registry/ui/link";
 
 export function EmptyDemo() {

@@ -10,9 +10,9 @@ import {
   DialogHeader,
   DialogHeading,
 } from "@dotui/registry/ui/dialog";
-import { Modal } from "@dotui/registry/ui/modal";
-import { Input, TextArea } from "@dotui/registry/ui/input";
 import { Label } from "@dotui/registry/ui/field";
+import { Input, TextArea } from "@dotui/registry/ui/input";
+import { Modal } from "@dotui/registry/ui/modal";
 import { Select, SelectItem } from "@dotui/registry/ui/select";
 import { TextField } from "@dotui/registry/ui/text-field";
 
@@ -24,7 +24,9 @@ export function PublishStyleModal({ children }: { children: React.ReactNode }) {
         <DialogContent className="max-w-lg">
           <DialogHeader>
             <DialogHeading>Publish your style</DialogHeading>
-            <DialogDescription>Follow these steps to correctly publish your style.</DialogDescription>
+            <DialogDescription>
+              Follow these steps to correctly publish your style.
+            </DialogDescription>
           </DialogHeader>
           <DialogBody className="-mx-6 space-y-2 px-6 pt-1 [&_[data-slot='label']]:text-sm">
             <TextField defaultValue="Minimalist" className="w-full">

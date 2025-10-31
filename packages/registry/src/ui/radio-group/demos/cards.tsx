@@ -4,7 +4,11 @@ import {
   FieldGroup,
   Label,
 } from "@dotui/registry/ui/field";
-import { Radio, RadioGroup, RadioIndicator } from "@dotui/registry/ui/radio-group";
+import {
+  Radio,
+  RadioGroup,
+  RadioIndicator,
+} from "@dotui/registry/ui/radio-group";
 
 export default function Demo() {
   return (

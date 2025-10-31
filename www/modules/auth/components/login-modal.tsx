@@ -13,8 +13,8 @@ import {
   DialogHeader,
   DialogHeading,
 } from "@dotui/registry/ui/dialog";
-import { Modal } from "@dotui/registry/ui/modal";
 import { Link } from "@dotui/registry/ui/link";
+import { Modal } from "@dotui/registry/ui/modal";
 import { toast } from "@dotui/registry/ui/toast";
 
 import { authClient } from "../lib/client";

@@ -8,11 +8,7 @@ import {
   ShieldAlertIcon,
 } from "lucide-react";
 
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "@dotui/registry/ui/alert";
+import { Alert, AlertDescription, AlertTitle } from "@dotui/registry/ui/alert";
 import { Button } from "@dotui/registry/ui/button";
 
 export function AlertDemo() {

@@ -1,7 +1,12 @@
 import { EyeOffIcon } from "lucide-react";
 
 import { Description, FieldError, Label } from "@dotui/registry/ui/field";
-import { Input, InputGroup, InputAddon, TextArea } from "@dotui/registry/ui/input";
+import {
+  Input,
+  InputAddon,
+  InputGroup,
+  TextArea,
+} from "@dotui/registry/ui/input";
 import { SearchField } from "@dotui/registry/ui/search-field";
 import { TextField } from "@dotui/registry/ui/text-field";
 
@@ -44,7 +49,12 @@ export function Inputs() {
           <InputAddon>@dotui.org</InputAddon>
         </InputGroup>
       </TextField>
-      <TextField form="none" aria-label="Email" isInvalid className="col-span-2">
+      <TextField
+        form="none"
+        aria-label="Email"
+        isInvalid
+        className="col-span-2"
+      >
         <Input placeholder="Email" />
         <FieldError>This email is already taken.</FieldError>
       </TextField>

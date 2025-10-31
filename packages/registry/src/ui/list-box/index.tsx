@@ -75,4 +75,10 @@ export const ListBoxVirtualizer = <T extends object = object>(
   return <Component {...props} />;
 };
 
-export type { ListBoxProps, ListBoxItemProps, ListBoxSectionProps, ListBoxSectionHeaderProps, ListBoxVirtualizerProps };
+export type {
+  ListBoxProps,
+  ListBoxItemProps,
+  ListBoxSectionProps,
+  ListBoxSectionHeaderProps,
+  ListBoxVirtualizerProps,
+};

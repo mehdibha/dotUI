@@ -66,10 +66,7 @@ export function Buttons() {
         <ToggleButton aria-label="Toggle " isDisabled>
           <BoldIcon />
         </ToggleButton>
-        <ToggleButton
-          aria-label="Toggle italic"
-          defaultSelected
-        >
+        <ToggleButton aria-label="Toggle italic" defaultSelected>
           <ItalicIcon />
           Italic
         </ToggleButton>

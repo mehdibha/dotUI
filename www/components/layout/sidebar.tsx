@@ -1,7 +1,8 @@
 "use client";
-"use ne memo";
+"use no memo";
 
 import React from "react";
+import type { Route } from "next";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -19,7 +20,6 @@ import {
 import { AnimatePresence, motion } from "motion/react";
 import type * as PageTree from "fumadocs-core/page-tree";
 import type { Transition } from "motion/react";
-import type { Route } from "next";
 
 import { GitHubIcon } from "@dotui/registry/components/icons/github";
 import { cn } from "@dotui/registry/lib/utils";
@@ -161,11 +161,7 @@ export const Sidebar = ({
               content={item.name}
               isDisabled={!isCollapsed}
             >
-              <SidebarButton
-                href={item.url}
-                variant="quiet"
-                size="sm"
-              >
+              <SidebarButton href={item.url} variant="quiet" size="sm">
                 {item.icon}
                 <span className="flex flex-1 flex-row items-center justify-between">
                   <span>{item.name}</span>
@@ -187,12 +183,7 @@ export const Sidebar = ({
         <div className="flex flex-row items-start justify-between gap-1 group-data-collapsed/sidebar:flex-col group-data-collapsed/sidebar:justify-end">
           <div className="flex items-center gap-1 group-data-collapsed/sidebar:flex-col">
             <motion.div layout transition={transition}>
-              <Button
-                asChild
-                size="sm"
-                variant="quiet"
-                aria-label="github"
-              >
+              <Button asChild size="sm" variant="quiet" aria-label="github">
                 <Link href={siteConfig.links.github} target="_blank">
                   <GitHubIcon />
                 </Link>
@@ -471,7 +462,10 @@ const SidebarButton = ({
   children,
   href,
   ...props
-}: Omit<ButtonProps, "children"> & { children: React.ReactNode; href?: string | Route }) => {
+}: Omit<ButtonProps, "children"> & {
+  children: React.ReactNode;
+  href?: string | Route;
+}) => {
   if (href) {
     return (
       <Button
@@ -492,7 +486,7 @@ const SidebarButton = ({
       </Button>
     );
   }
-  
+
   return (
     <Button
       variant="quiet"
@@ -510,11 +504,24 @@ const SidebarButton = ({
   );
 };
 
-const StyledTooltip = ({ children, content, className, ...props }: TooltipProps & { children: React.ReactNode; content?: React.ReactNode; className?: string }) => {
+const StyledTooltip = ({
+  children,
+  content,
+  className,
+  ...props
+}: TooltipProps & {
+  children: React.ReactNode;
+  content?: React.ReactNode;
+  className?: string;
+}) => {
   return (
     <Tooltip {...props}>
       {children}
-      {content && <TooltipContent className={className || "px-4 py-1"}>{content}</TooltipContent>}
+      {content && (
+        <TooltipContent className={className || "px-4 py-1"}>
+          {content}
+        </TooltipContent>
+      )}
     </Tooltip>
   );
 };

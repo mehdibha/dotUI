@@ -12,12 +12,7 @@ import { Button } from "@dotui/registry/ui/button";
 import { Dialog, DialogContent } from "@dotui/registry/ui/dialog";
 import { Input, InputAddon, InputGroup } from "@dotui/registry/ui/input";
 import { ListBox, ListBoxItem } from "@dotui/registry/ui/list-box";
-import {
-  Menu,
-  MenuContent,
-  MenuItem,
-  MenuSub,
-} from "@dotui/registry/ui/menu";
+import { Menu, MenuContent, MenuItem, MenuSub } from "@dotui/registry/ui/menu";
 import { Overlay } from "@dotui/registry/ui/overlay";
 import {
   Select,

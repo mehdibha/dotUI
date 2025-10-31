@@ -74,14 +74,11 @@ const BlockViewToolbar = ({ name, title }: BlockViewToolbarProps) => {
           </span>
         </Button>
         {activeStyle ? (
-          <Button
-            variant="primary"
-            size="sm"
-            asChild
-            className="max-lg:hidden"
-          >
+          <Button variant="primary" size="sm" asChild className="max-lg:hidden">
             <Link
-              href={`/view/${activeStyle.user.username}/${activeStyle.name}/${name}` as Route}
+              href={
+                `/view/${activeStyle.user.username}/${activeStyle.name}/${name}` as Route
+              }
               target="_blank"
             >
               <ExternalLinkIcon />

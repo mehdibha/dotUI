@@ -1,6 +1,13 @@
 "use client";
 
-import { Dialog, DialogBody, DialogContent, DialogDescription, DialogHeader, DialogHeading } from "@dotui/registry/ui/dialog";
+import {
+  Dialog,
+  DialogBody,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogHeading,
+} from "@dotui/registry/ui/dialog";
 import { Modal } from "@dotui/registry/ui/modal";
 import type { DialogProps } from "@dotui/registry/ui/dialog";
 
@@ -16,30 +23,32 @@ export function CodeModal({ children, ...props }: DialogProps) {
         <DialogContent className="max-h-[530px] max-w-xl p-0 pb-0">
           <DialogHeader>
             <DialogHeading>Install your style with shadcn CLI</DialogHeading>
-            <DialogDescription>Follow these steps to correctly install your style.</DialogDescription>
+            <DialogDescription>
+              Follow these steps to correctly install your style.
+            </DialogDescription>
           </DialogHeader>
           <DialogBody className="-mx-6 px-9 pt-0 pb-8">
-          <div className="relative border-l pl-8 [counter-reset:step] [&>h3]:step [&>h3]:mt-4 [&>h3]:text-fg-muted">
-            <h3>Update your components.json</h3>
-            <div className="">
-              <pre className="mt-4 rounded-md border bg-card p-4 text-xs">
-                <code>
-                  {`"style": "${slug}",
+            <div className="relative border-l pl-8 [counter-reset:step] [&>h3]:step [&>h3]:mt-4 [&>h3]:text-fg-muted">
+              <h3>Update your components.json</h3>
+              <div className="">
+                <pre className="mt-4 rounded-md border bg-card p-4 text-xs">
+                  <code>
+                    {`"style": "${slug}",
 "registries": {
   "@dotui": "https://dotui.org/r/{style}/{name}"
 }`}
-                </code>
-              </pre>
+                  </code>
+                </pre>
+              </div>
+              <h3>Init your style</h3>
+              <div>
+                <pre className="mt-4 rounded-md border bg-card p-4 text-xs">
+                  <code>pnpm dlx shadcn@latest add @dotui/base</code>
+                </pre>
+              </div>
+              <h3>You're done!</h3>
             </div>
-            <h3>Init your style</h3>
-            <div>
-              <pre className="mt-4 rounded-md border bg-card p-4 text-xs">
-                <code>pnpm dlx shadcn@latest add @dotui/base</code>
-              </pre>
-            </div>
-            <h3>You're done!</h3>
-          </div>
-        </DialogBody>
+          </DialogBody>
         </DialogContent>
       </Modal>
     </Dialog>

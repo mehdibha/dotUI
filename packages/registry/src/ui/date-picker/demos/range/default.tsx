@@ -7,10 +7,7 @@ import {
 
 export default function Demo() {
   return (
-    <DatePicker
-      aria-label="Meeting date"
-      mode="range"
-    >
+    <DatePicker aria-label="Meeting date" mode="range">
       <DatePickerInput />
       <DatePickerContent>
         <Calendar />

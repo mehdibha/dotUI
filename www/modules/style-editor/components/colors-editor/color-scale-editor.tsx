@@ -84,13 +84,13 @@ export function ColorScaleEditor({ scaleId }: { scaleId: ScaleId }) {
       </Skeleton>
       <Drawer placement="left">
         <DialogContent className="min-w-72 !pb-0">
-        <DialogHeader className="mb-1">
-          <ScaleNameEditor scaleId={scaleId} />
-        </DialogHeader>
-        <DialogBody className="flex flex-col pb-4">
-          <ColorKeysEditor scaleId={scaleId} />
-          <RatiosEditor scaleId={scaleId} />
-        </DialogBody>
+          <DialogHeader className="mb-1">
+            <ScaleNameEditor scaleId={scaleId} />
+          </DialogHeader>
+          <DialogBody className="flex flex-col pb-4">
+            <ColorKeysEditor scaleId={scaleId} />
+            <RatiosEditor scaleId={scaleId} />
+          </DialogBody>
         </DialogContent>
       </Drawer>
     </Dialog>
@@ -160,7 +160,9 @@ function ColorKeysEditor({ scaleId }: { scaleId: ScaleId }) {
                       {(subField) => (
                         <div className="flex items-center">
                           <subField.ColorPicker>
-                            <ColorPickerTrigger className={cn(i > 0 && "rounded-r-none")}>
+                            <ColorPickerTrigger
+                              className={cn(i > 0 && "rounded-r-none")}
+                            >
                               <ColorSwatch />
                             </ColorPickerTrigger>
                             <ColorPickerContent>

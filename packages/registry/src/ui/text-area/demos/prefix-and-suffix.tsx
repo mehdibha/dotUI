@@ -51,9 +51,7 @@ export default function Demo() {
                 <ItalicIcon />
               </ToggleButton>
             </ToggleButtonGroup>
-            <Button variant="primary">
-              Comment
-            </Button>
+            <Button variant="primary">Comment</Button>
           </Group>
         </InputAddon>
       </InputGroup>

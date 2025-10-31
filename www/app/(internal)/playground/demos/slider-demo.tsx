@@ -1,7 +1,13 @@
 "use client";
 
 import { Description, Label } from "@dotui/registry/ui/field";
-import { Slider, SliderControl, SliderFiller, SliderOutput, SliderThumb } from "@dotui/registry/ui/slider";
+import {
+  Slider,
+  SliderControl,
+  SliderFiller,
+  SliderOutput,
+  SliderThumb,
+} from "@dotui/registry/ui/slider";
 
 export function SliderDemo() {
   return (

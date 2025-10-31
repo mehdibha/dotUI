@@ -3,6 +3,7 @@
 import { IconCheck } from "@tabler/icons-react";
 import { ArrowUpIcon, PlusIcon, SendIcon } from "lucide-react";
 
+import { SearchIcon } from "@dotui/registry/icons";
 import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";
 import {
@@ -19,7 +20,6 @@ import {
   SelectValue,
 } from "@dotui/registry/ui/select";
 import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
-import { SearchIcon } from "@dotui/registry/icons";
 
 export function InputGroupDemo() {
   return (

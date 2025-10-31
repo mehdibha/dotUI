@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
+import type { Route } from "next";
 import { useRouter } from "next/navigation";
 import { useStore } from "@tanstack/react-form";
-import type { Route } from "next";
 
 import { Button } from "@dotui/registry/ui/button";
 import {
@@ -109,10 +109,7 @@ export function NavigationBlocker() {
   };
 
   return (
-    <Dialog
-      isOpen={isOpen}
-      onOpenChange={setOpen}
-    >
+    <Dialog isOpen={isOpen} onOpenChange={setOpen}>
       <Modal>
         <DialogContent role="alertdialog">
           <DialogHeader>
@@ -120,8 +117,8 @@ export function NavigationBlocker() {
           </DialogHeader>
           <DialogBody>
             <p className="text-sm text-fg-muted">
-              You have unsaved changes. Are you sure you want to leave? Your changes
-              will be lost.
+              You have unsaved changes. Are you sure you want to leave? Your
+              changes will be lost.
             </p>
           </DialogBody>
           <DialogFooter>

@@ -72,9 +72,7 @@ export const FontSelector = <T extends object>({
               className="w-[calc(var(--trigger-width)-2px)] flex-1 p-0"
             >
               {(section) => (
-                <ListBoxSection
-                  id={section.title}
-                >
+                <ListBoxSection id={section.title}>
                   <ListBoxSectionHeader>{section.title}</ListBoxSectionHeader>
                   {section.items.map((item) => (
                     <ListBoxItem key={item} id={item} className="h-8">

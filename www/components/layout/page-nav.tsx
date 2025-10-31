@@ -1,7 +1,7 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import type { Route } from "next";
+import { usePathname } from "next/navigation";
 
 import { cn } from "@dotui/registry/lib/utils";
 import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs";

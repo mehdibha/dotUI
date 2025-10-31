@@ -4,7 +4,12 @@ import type React from "react";
 import { MonitorIcon, MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 
-import { Select, SelectContent, SelectItem, SelectTrigger } from "@dotui/registry/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "@dotui/registry/ui/select";
 
 export const ThemeSwitcher = ({ children }: { children?: React.ReactNode }) => {
   const { theme, setTheme } = useTheme();
@@ -17,7 +22,11 @@ export const ThemeSwitcher = ({ children }: { children?: React.ReactNode }) => {
       className="w-auto"
     >
       {children ?? (
-        <SelectTrigger size="sm" variant="quiet" className="[&_svg]:size-[18px]">
+        <SelectTrigger
+          size="sm"
+          variant="quiet"
+          className="[&_svg]:size-[18px]"
+        >
           <SunIcon className="block dark:hidden" />
           <MoonIcon className="hidden dark:block" />
         </SelectTrigger>
