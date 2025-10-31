@@ -70,12 +70,6 @@ export function Header({
             <SearchCommand keyboardShortcut items={items}>
               <Button
                 variant="default"
-                suffix={
-                  <div className="flex items-center gap-px text-[0.7rem] max-md:hidden">
-                    <Kbd>⌘</Kbd>
-                    <Kbd>K</Kbd>
-                  </div>
-                }
                 size="sm"
                 className="gap-2 pr-1 pl-3 max-md:size-8 max-md:px-0 md:text-fg-muted"
               >
@@ -83,28 +77,29 @@ export function Header({
                 <span className="mr-6 flex-1 max-md:hidden">
                   Search docs...
                 </span>
+                <div className="flex items-center gap-px text-[0.7rem] max-md:hidden">
+                  <Kbd>⌘</Kbd>
+                  <Kbd>K</Kbd>
+                </div>
               </Button>
             </SearchCommand>
-            <Button
-              href={siteConfig.links.github}
-              target="_blank"
-              size="sm"
-              shape="square"
-            >
-              <GitHubIcon />
+            <Button asChild size="sm">
+              <Link href={siteConfig.links.github} target="_blank">
+                <GitHubIcon />
+              </Link>
             </Button>
             {session ? (
               <UserProfileMenu />
             ) : (
               <>
                 <ThemeSwitcher>
-                  <Button size="sm" shape="square">
+                  <Button size="sm">
                     <SunIcon className="block dark:hidden" />
                     <MoonIcon className="hidden dark:block" />
                   </Button>
                 </ThemeSwitcher>
-                <Button variant="primary" href="/login" size="sm">
-                  Sign in
+                <Button variant="primary" asChild size="sm">
+                  <Link href="/login">Sign in</Link>
                 </Button>
               </>
             )}

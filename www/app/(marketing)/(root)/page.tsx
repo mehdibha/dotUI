@@ -10,7 +10,7 @@ import { Alert } from "@dotui/registry/ui/alert";
 import { Avatar } from "@dotui/registry/ui/avatar";
 import { Button } from "@dotui/registry/ui/button";
 import { Link } from "@dotui/registry/ui/link";
-import { Tooltip } from "@dotui/registry/ui/tooltip";
+import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
 
 import { FeaturedStylesShowcase } from "@/components/featured-styles-showcase";
 import { Announcement } from "@/components/marketing/announcement";
@@ -42,15 +42,17 @@ export default async function HomePage() {
           <p className="text-center text-base sm:text-lg text-fg-muted text-balance">
             Beautiful components in any style you want, accessibility by
             default, composition, and more, all powered by{" "}
-            <AdobeIcon className="size-4 inline-flex" />&nbsp;<span className="font-medium">react-aria-components</span> and{" "}
-            <ShadcnIcon className="size-5 inline-flex" />&nbsp;<span className="font-medium">shadcn&nbsp;CLI</span>.
+            <AdobeIcon className="size-4 inline-flex" />
+            &nbsp;<span className="font-medium">react-aria-components</span> and{" "}
+            <ShadcnIcon className="size-5 inline-flex" />
+            &nbsp;<span className="font-medium">shadcn&nbsp;CLI</span>.
           </p>
           <div className="flex flex-col w-full sm:w-auto gap-2 sm:flex-row sm:items-center sm:gap-4">
-            <Button href="/docs" variant="primary" size="lg" className="h-10">
-              Get started
+            <Button asChild variant="primary" size="lg" className="h-10">
+              <Link href="/docs">Get started</Link>
             </Button>
-            <Button href="/styles" variant="default" size="lg" className="h-10">
-              Explore styles
+            <Button asChild variant="default" size="lg" className="h-10">
+              <Link href="/styles">Explore styles</Link>
             </Button>
           </div>
         </div>
@@ -96,7 +98,7 @@ export default async function HomePage() {
                 href: "https://tailwindcss.com",
               },
             ].map(({ icon, label, href }, index) => (
-              <Tooltip key={index} content={label} offset={10} placement="top">
+              <Tooltip key={index}>
                 <Link
                   target="_blank"
                   className="flex items-center justify-center opacity-60 grayscale-80 transition-opacity hover:opacity-100 hover:grayscale-0"
@@ -104,6 +106,7 @@ export default async function HomePage() {
                 >
                   {icon}
                 </Link>
+                <TooltipContent placement="top">{label}</TooltipContent>
               </Tooltip>
             ))}
           </div>
@@ -136,11 +139,7 @@ export default async function HomePage() {
             </svg>
             <div className="flex items-center gap-1">
               {contributors.map((contributor) => (
-                <Tooltip
-                  key={contributor.login}
-                  variant="inverse"
-                  content={contributor.login}
-                >
+                <Tooltip key={contributor.login}>
                   <Link
                     href={contributor.html_url as Route}
                     target="_blank"
@@ -148,18 +147,16 @@ export default async function HomePage() {
                   >
                     <Avatar src={contributor.avatar_url} />
                   </Link>
+                  <TooltipContent>{contributor.login}</TooltipContent>
                 </Tooltip>
               ))}
             </div>
           </div>
-          <Button
-            href={siteConfig.links.github}
-            target="_blank"
-            prefix={<GitHubIcon />}
-            size="lg"
-            className="h-12"
-          >
-            Star on GitHub
+          <Button asChild size="lg" className="h-12">
+            <Link href={siteConfig.links.github} target="_blank">
+              <GitHubIcon />
+              Star on GitHub
+            </Link>
           </Button>
         </div>
       </section>

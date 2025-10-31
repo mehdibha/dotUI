@@ -8,7 +8,8 @@ import {
 import { tv } from "tailwind-variants";
 import type { RadioGroupProps, RadioRenderProps } from "react-aria-components";
 
-import { cn, createContext } from "@dotui/registry/lib/utils";
+import { createContext } from "@dotui/registry/lib/context";
+import { cn } from "@dotui/registry/lib/utils";
 import { fieldStyles } from "@dotui/registry/ui/field";
 
 const { field } = fieldStyles();

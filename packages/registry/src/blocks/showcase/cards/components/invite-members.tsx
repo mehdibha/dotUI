@@ -98,10 +98,13 @@ export function InviteMembers(props: React.ComponentProps<"div">) {
                       <p className="text-fg-muted">{member.role}</p>
                     </div>
                   </div>
-                  <Select aria-label="Role" defaultSelectedKey={member.role}>
-                    <SelectItem id="owner">Owner</SelectItem>
-                    <SelectItem id="member">Member</SelectItem>
-                    <SelectItem id="admin">Billing</SelectItem>
+                  <Select aria-label="Role" defaultValue={member.role}>
+                    <SelectTrigger />
+                    <SelectContent>
+                      <SelectItem id="owner">Owner</SelectItem>
+                      <SelectItem id="member">Member</SelectItem>
+                      <SelectItem id="admin">Billing</SelectItem>
+                    </SelectContent>
                   </Select>
                 </div>
               ))}

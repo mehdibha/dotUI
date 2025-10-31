@@ -11,7 +11,7 @@ import {
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
-import { createContext } from "@dotui/registry/lib/utils";
+import { createContext } from "@dotui/registry/lib/context";
 
 const tabsStyles = tv({
   slots: {

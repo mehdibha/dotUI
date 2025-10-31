@@ -9,7 +9,7 @@ import { tv } from "tailwind-variants";
 import type { SwitchRenderProps } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 
-import { createContext } from "@dotui/registry/lib/utils";
+import { createContext } from "@dotui/registry/lib/context";
 
 const switchStyles = tv({
   slots: {
@@ -22,7 +22,9 @@ const switchStyles = tv({
   },
   variants: {
     variant: {
-      default: { indicator: "focus-reset group-focus-visible/switch:focus-ring" },
+      default: {
+        indicator: "focus-reset group-focus-visible/switch:focus-ring",
+      },
     },
     size: {
       sm: {

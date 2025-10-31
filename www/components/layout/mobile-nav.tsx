@@ -1,24 +1,24 @@
 "use client";
 
 import React from "react";
+import type { Route } from "next";
+import type { LinkProps } from "next/link";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type * as PageTree from "fumadocs-core/page-tree";
-import type { Route } from "next";
-import type { LinkProps } from "next/link";
 
 import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";
-import { Dialog, DialogRoot } from "@dotui/registry/ui/dialog";
+import { Dialog, DialogContent } from "@dotui/registry/ui/dialog";
+import { Overlay } from "@dotui/registry/ui/overlay";
 
 export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
   return (
-    <DialogRoot isOpen={isOpen} onOpenChange={setIsOpen}>
+    <Dialog isOpen={isOpen} onOpenChange={setIsOpen}>
       <Button
         size="sm"
-        shape="square"
         className={cn("md:hidden", "relative flex items-center justify-center")}
         aria-label="Toggle Menu"
       >
@@ -38,73 +38,72 @@ export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
           />
         </div>
       </Button>
-      <Dialog
-        type="popover"
-        mobileType="popover"
+      <Overlay
         popoverProps={{
           containerPadding: 0,
           offset: 12,
           className:
             "size-full border-0 rounded-none bg-bg/95 backdrop-blur-md",
         }}
-        className="overflow-y-auto pt-4"
       >
-        {({ close }) => (
-          <div className="flex flex-col gap-12">
-            <div className="space-y-2">
-              <div className="text-lg font-medium text-fg-muted">Menu</div>
-              <div className="flex flex-col gap-3">
-                {(
-                  [
-                    { href: "/", label: "Home" },
-                    { href: "/docs", label: "Docs" },
-                    { href: "/docs/components/button", label: "Components" },
-                    { href: "/blocks", label: "Blocks" },
-                    { href: "/styles", label: "Styles" },
-                  ] as const
-                ).map((item) => (
-                  <MobileLink
-                    key={item.href}
-                    href={item.href}
-                    onOpenChange={close}
-                  >
-                    {item.label}
-                  </MobileLink>
-                ))}
+        <DialogContent className="overflow-y-auto pt-4">
+          {({ close }) => (
+            <div className="flex flex-col gap-12">
+              <div className="space-y-2">
+                <div className="text-lg font-medium text-fg-muted">Menu</div>
+                <div className="flex flex-col gap-3">
+                  {(
+                    [
+                      { href: "/", label: "Home" },
+                      { href: "/docs", label: "Docs" },
+                      { href: "/docs/components/button", label: "Components" },
+                      { href: "/blocks", label: "Blocks" },
+                      { href: "/styles", label: "Styles" },
+                    ] as const
+                  ).map((item) => (
+                    <MobileLink
+                      key={item.href}
+                      href={item.href}
+                      onOpenChange={close}
+                    >
+                      {item.label}
+                    </MobileLink>
+                  ))}
+                </div>
               </div>
+              {items?.map((group, index) => {
+                if (group.type === "folder") {
+                  return (
+                    <div key={index} className="flex flex-col gap-3">
+                      <div className="text-lg font-medium text-fg-muted">
+                        {group.name}
+                      </div>
+                      <div className="flex flex-col gap-3">
+                        {group.children.map((item, itemIndex) => {
+                          if (item.type === "page") {
+                            return (
+                              <MobileLink
+                                key={itemIndex}
+                                href={item.url as Route}
+                                onOpenChange={close}
+                              >
+                                {item.name}
+                              </MobileLink>
+                            );
+                          }
+                          return null;
+                        })}
+                      </div>
+                    </div>
+                  );
+                }
+                return null;
+              })}
             </div>
-            {items?.map((group, index) => {
-              if (group.type === "folder") {
-                return (
-                  <div key={index} className="flex flex-col gap-3">
-                    <div className="text-lg font-medium text-fg-muted">
-                      {group.name}
-                    </div>
-                    <div className="flex flex-col gap-3">
-                      {group.children.map((item, itemIndex) => {
-                        if (item.type === "page") {
-                          return (
-                            <MobileLink
-                              key={itemIndex}
-                              href={item.url as Route}
-                              onOpenChange={close}
-                            >
-                              {item.name}
-                            </MobileLink>
-                          );
-                        }
-                        return null;
-                      })}
-                    </div>
-                  </div>
-                );
-              }
-              return null;
-            })}
-          </div>
-        )}
-      </Dialog>
-    </DialogRoot>
+          )}
+        </DialogContent>
+      </Overlay>
+    </Dialog>
   );
 };
 

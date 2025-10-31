@@ -9,7 +9,8 @@ import {
 import { tv } from "tailwind-variants";
 import type { CheckboxRenderProps } from "react-aria-components";
 
-import { cn, createContext } from "@dotui/registry/lib/utils";
+import { createContext } from "@dotui/registry/lib/context";
+import { cn } from "@dotui/registry/lib/utils";
 
 const checkboxStyles = tv({
   slots: {

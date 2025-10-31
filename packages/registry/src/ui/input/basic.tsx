@@ -20,7 +20,7 @@ import { tv } from "tailwind-variants";
 import type { DateInputProps as AriaDateInputProps } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 
-import { createContext } from "@dotui/registry/lib/utils";
+import { createContext } from "@dotui/registry/lib/context";
 
 const inputStyles = tv({
   slots: {
@@ -353,4 +353,11 @@ const DateSegment = ({ className, ...props }: DateSegmentProps) => {
 
 export { Input, TextArea, InputGroup, InputAddon, DateInput, DateSegment };
 
-export type { InputGroupProps, InputProps, TextAreaProps, InputAddonProps, DateInputProps, DateSegmentProps };
+export type {
+  InputGroupProps,
+  InputProps,
+  TextAreaProps,
+  InputAddonProps,
+  DateInputProps,
+  DateSegmentProps,
+};

@@ -5,7 +5,7 @@ import { tv } from "tailwind-variants";
 import type { VariantProps } from "tailwind-variants";
 
 import { useImageLoadingStatus } from "@dotui/registry/hooks/use-image-loading-status";
-import { createContext } from "@dotui/registry/lib/utils";
+import { createContext } from "@dotui/registry/lib/context";
 import type { ImageLoadingStatus } from "@dotui/registry/hooks/use-image-loading-status";
 
 const avatarStyles = tv({

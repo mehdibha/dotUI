@@ -11,7 +11,7 @@ import { tv } from "tailwind-variants";
 import type { VariantProps } from "tailwind-variants";
 
 import { useButtonAspect } from "@dotui/registry/hooks/use-button-aspect";
-import { createVariantsContext } from "@dotui/registry/lib/utils";
+import { createVariantsContext } from "@dotui/registry/lib/context";
 import { Loader } from "@dotui/registry/ui/loader";
 
 const buttonStyles = tv({

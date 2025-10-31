@@ -8,7 +8,7 @@ import {
 import { tv } from "tailwind-variants";
 import type { VariantProps } from "tailwind-variants";
 
-import { createScopedContext } from "@dotui/registry/lib/utils";
+import { createScopedContext } from "@dotui/registry/lib/context";
 
 const progressStyles = tv({
   slots: {
