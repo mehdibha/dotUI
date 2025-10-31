@@ -4,6 +4,7 @@ import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-
 
 import type {
   AvatarFallbackProps,
+  AvatarGroupProps,
   AvatarImageProps,
   AvatarPlaceholderProps,
   AvatarProps,
@@ -12,10 +13,18 @@ import type {
 import {
   Avatar as _Avatar,
   AvatarFallback as _AvatarFallback,
+  AvatarGroup as _AvatarGroup,
   AvatarImage as _AvatarImage,
   AvatarPlaceholder as _AvatarPlaceholder,
   AvatarRoot as _AvatarRoot,
 } from "./basic";
+
+export const AvatarGroup = createDynamicComponent<AvatarGroupProps>(
+  "avatar",
+  "AvatarGroup",
+  _AvatarGroup,
+  {},
+);
 
 export const Avatar = createDynamicComponent<AvatarProps>(
   "avatar",
@@ -57,5 +66,6 @@ export type {
   AvatarRootProps,
   AvatarImageProps,
   AvatarFallbackProps,
+  AvatarGroupProps,
   AvatarPlaceholderProps,
 };

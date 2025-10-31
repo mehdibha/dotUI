@@ -1,6 +1,13 @@
 "use client";
 
-import { Avatar } from "@dotui/registry/ui/avatar";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarGroup,
+  AvatarImage,
+  AvatarPlaceholder,
+  AvatarRoot,
+} from "@dotui/registry/ui/avatar";
 
 export function AvatarDemo() {
   return (
@@ -15,13 +22,13 @@ export function AvatarDemo() {
 
           <Avatar fallback="M" size={size} />
 
-          <Avatar.Root size={size}>
-            <Avatar.Image src="https://github.com/shadcn.png" alt="@shadcn" />
-            <Avatar.Fallback>S</Avatar.Fallback>
-            <Avatar.Placeholder />
-          </Avatar.Root>
+          <AvatarRoot size={size}>
+            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+            <AvatarFallback>S</AvatarFallback>
+            <AvatarPlaceholder />
+          </AvatarRoot>
 
-          <Avatar.Group size={size}>
+          <AvatarGroup size={size}>
             <Avatar
               src="https://github.com/mehdibha.png"
               alt="@mehdibha"
@@ -37,7 +44,7 @@ export function AvatarDemo() {
               alt="@devongovett"
               fallback="DG"
             />
-          </Avatar.Group>
+          </AvatarGroup>
         </div>
       ))}
     </div>
