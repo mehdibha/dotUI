@@ -5,8 +5,14 @@ import {
   createFormHookContexts,
   useStore,
 } from "@tanstack/react-form";
+import {
+  type Color,
+  composeRenderProps,
+  type DateValue,
+  type Key,
+  type TimeValue,
+} from "react-aria-components";
 import type { RangeValue } from "@react-types/shared";
-import type { Color, DateValue, Key, TimeValue } from "react-aria-components";
 
 import { Button } from "@dotui/registry/ui/button";
 import { Checkbox } from "@dotui/registry/ui/checkbox";
@@ -15,13 +21,14 @@ import { ColorPicker } from "@dotui/registry/ui/color-picker";
 import { Combobox } from "@dotui/registry/ui/combobox";
 import { DateField } from "@dotui/registry/ui/date-field";
 import { DatePicker } from "@dotui/registry/ui/date-picker";
+import { FieldError } from "@dotui/registry/ui/field";
+import { TextArea } from "@dotui/registry/ui/input";
 import { NumberField } from "@dotui/registry/ui/number-field";
 import { RadioGroup } from "@dotui/registry/ui/radio-group";
 import { SearchField } from "@dotui/registry/ui/search-field";
 import { Select } from "@dotui/registry/ui/select";
 import { Slider } from "@dotui/registry/ui/slider";
 import { Switch } from "@dotui/registry/ui/switch";
-import { TextArea } from "@dotui/registry/ui/text-area";
 import { TextField } from "@dotui/registry/ui/text-field";
 import { TimeField } from "@dotui/registry/ui/time-field";
 import type { ButtonProps } from "@dotui/registry/ui/button";
@@ -31,13 +38,13 @@ import type { ColorPickerProps } from "@dotui/registry/ui/color-picker";
 import type { ComboboxProps } from "@dotui/registry/ui/combobox";
 import type { DateFieldProps } from "@dotui/registry/ui/date-field";
 import type { DatePickerProps } from "@dotui/registry/ui/date-picker";
+import type { TextAreaProps } from "@dotui/registry/ui/input";
 import type { NumberFieldProps } from "@dotui/registry/ui/number-field";
 import type { RadioGroupProps } from "@dotui/registry/ui/radio-group";
 import type { SearchFieldProps } from "@dotui/registry/ui/search-field";
 import type { SelectProps } from "@dotui/registry/ui/select";
 import type { SliderProps } from "@dotui/registry/ui/slider";
 import type { SwitchProps } from "@dotui/registry/ui/switch";
-import type { TextAreaProps } from "@dotui/registry/ui/text-area";
 import type { TextFieldProps } from "@dotui/registry/ui/text-field";
 import type { TimeFieldProps } from "@dotui/registry/ui/time-field";
 
@@ -82,23 +89,16 @@ export const { useAppForm } = createFormHook({
           value={field.state.value}
           onChange={(value) => field.handleChange(value)}
           onBlur={field.handleBlur}
-          errorMessage={field.state.meta.errors?.[0]?.message}
           isInvalid={field.state.meta.errors?.[0] !== undefined}
           {...props}
-        />
-      );
-    },
-    TextArea: (props: TextAreaProps) => {
-      const field = useFieldContext<string>();
-      return (
-        <TextArea
-          value={field.state.value}
-          onChange={(value) => field.handleChange(value)}
-          onBlur={field.handleBlur}
-          errorMessage={field.state.meta.errors?.[0]?.message}
-          isInvalid={field.state.meta.errors?.[0] !== undefined}
-          {...props}
-        />
+        >
+          {composeRenderProps(props.children, (children) => (
+            <>
+              {children}
+              <FieldError>{field.state.meta.errors?.[0]?.message}</FieldError>
+            </>
+          ))}
+        </TextField>
       );
     },
     NumberField: (props: NumberFieldProps) => {
@@ -108,10 +108,16 @@ export const { useAppForm } = createFormHook({
           value={field.state.value}
           onChange={(value) => field.handleChange(value)}
           onBlur={field.handleBlur}
-          errorMessage={field.state.meta.errors?.[0]?.message}
           isInvalid={field.state.meta.errors?.[0] !== undefined}
           {...props}
-        />
+        >
+          {composeRenderProps(props.children, (children) => (
+            <>
+              {children}
+              <FieldError>{field.state.meta.errors?.[0]?.message}</FieldError>
+            </>
+          ))}
+        </NumberField>
       );
     },
     Checkbox: (props: CheckboxProps) => {
@@ -144,10 +150,16 @@ export const { useAppForm } = createFormHook({
           value={field.state.value}
           onChange={(value) => field.handleChange(value)}
           onBlur={field.handleBlur}
-          errorMessage={field.state.meta.errors?.[0]?.message}
           isInvalid={field.state.meta.errors?.[0] !== undefined}
           {...props}
-        />
+        >
+          {composeRenderProps(props.children, (children) => (
+            <>
+              {children}
+              <FieldError>{field.state.meta.errors?.[0]?.message}</FieldError>
+            </>
+          ))}
+        </RadioGroup>
       );
     },
     Slider: (props: SliderProps) => {
@@ -165,13 +177,19 @@ export const { useAppForm } = createFormHook({
       const field = useFieldContext<Key | null>();
       return (
         <Select
-          selectedKey={field.state.value}
-          onSelectionChange={(key) => field.handleChange(key)}
+          value={field.state.value}
+          onChange={(key) => field.handleChange(key)}
           onBlur={field.handleBlur}
-          errorMessage={field.state.meta.errors?.[0]?.message}
           isInvalid={field.state.meta.errors?.[0] !== undefined}
           {...props}
-        />
+        >
+          {composeRenderProps(props.children, (children) => (
+            <>
+              {children}
+              <FieldError>{field.state.meta.errors?.[0]?.message}</FieldError>
+            </>
+          ))}
+        </Select>
       );
     },
     Combobox: <T extends object>(props: ComboboxProps<T>) => {
@@ -181,10 +199,16 @@ export const { useAppForm } = createFormHook({
           selectedKey={field.state.value}
           onSelectionChange={(key) => field.handleChange(key)}
           onBlur={field.handleBlur}
-          errorMessage={field.state.meta.errors?.[0]?.message}
           isInvalid={field.state.meta.errors?.[0] !== undefined}
           {...props}
-        />
+        >
+          {composeRenderProps(props.children, (children) => (
+            <>
+              {children}
+              <FieldError>{field.state.meta.errors?.[0]?.message}</FieldError>
+            </>
+          ))}
+        </Combobox>
       );
     },
     SearchField: (props: SearchFieldProps) => {
@@ -194,10 +218,16 @@ export const { useAppForm } = createFormHook({
           value={field.state.value}
           onChange={(value) => field.handleChange(value)}
           onBlur={field.handleBlur}
-          errorMessage={field.state.meta.errors?.[0]?.message}
           isInvalid={field.state.meta.errors?.[0] !== undefined}
           {...props}
-        />
+        >
+          {composeRenderProps(props.children, (children) => (
+            <>
+              {children}
+              <FieldError>{field.state.meta.errors?.[0]?.message}</FieldError>
+            </>
+          ))}
+        </SearchField>
       );
     },
     DateField: (props: DateFieldProps<DateValue>) => {
@@ -207,33 +237,27 @@ export const { useAppForm } = createFormHook({
           value={field.state.value}
           onChange={(value) => field.handleChange(value)}
           onBlur={field.handleBlur}
-          errorMessage={field.state.meta.errors?.[0]?.message}
           isInvalid={field.state.meta.errors?.[0] !== undefined}
           {...props}
-        />
+        >
+          {composeRenderProps(props.children, (children) => (
+            <>
+              {children}
+              <FieldError>{field.state.meta.errors?.[0]?.message}</FieldError>
+            </>
+          ))}
+        </DateField>
       );
     },
     DatePicker: (props: DatePickerProps<DateValue>) => {
       const field = useFieldContext<DateValue | null>();
       return (
+        // @ts-expect-error - TODO: fix this
         <DatePicker
-          value={field.state.value}
+          mode="single"
+          value={undefined}
           onChange={(value) => field.handleChange(value)}
           onBlur={field.handleBlur}
-          errorMessage={field.state.meta.errors?.[0]?.message}
-          isInvalid={field.state.meta.errors?.[0] !== undefined}
-          {...props}
-        />
-      );
-    },
-    DateRangePicker: (props: DateRangePickerProps<any>) => {
-      const field = useFieldContext<RangeValue<DateValue> | null>();
-      return (
-        <DateRangePicker
-          value={field.state.value as any}
-          onChange={(value) => field.handleChange(value)}
-          onBlur={field.handleBlur}
-          errorMessage={field.state.meta.errors?.[0]?.message}
           isInvalid={field.state.meta.errors?.[0] !== undefined}
           {...props}
         />
@@ -246,10 +270,16 @@ export const { useAppForm } = createFormHook({
           value={field.state.value}
           onChange={(value) => field.handleChange(value)}
           onBlur={field.handleBlur}
-          errorMessage={field.state.meta.errors?.[0]?.message}
           isInvalid={field.state.meta.errors?.[0] !== undefined}
           {...props}
-        />
+        >
+          {composeRenderProps(props.children, (children) => (
+            <>
+              {children}
+              <FieldError>{field.state.meta.errors?.[0]?.message}</FieldError>
+            </>
+          ))}
+        </TimeField>
       );
     },
     ColorField: (props: ColorFieldProps) => {
@@ -259,10 +289,16 @@ export const { useAppForm } = createFormHook({
           value={field.state.value}
           onChange={(value) => field.handleChange(value)}
           onBlur={field.handleBlur}
-          errorMessage={field.state.meta.errors?.[0]?.message}
           isInvalid={field.state.meta.errors?.[0] !== undefined}
           {...props}
-        />
+        >
+          {composeRenderProps(props.children, (children) => (
+            <>
+              {children}
+              <FieldError>{field.state.meta.errors?.[0]?.message}</FieldError>
+            </>
+          ))}
+        </ColorField>
       );
     },
     ColorPicker: (props: ColorPickerProps) => {
@@ -271,7 +307,6 @@ export const { useAppForm } = createFormHook({
         <ColorPicker
           value={field.state.value}
           onChange={(value) => field.handleChange(value)}
-          onBlur={field.handleBlur}
           {...props}
         />
       );

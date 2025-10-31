@@ -56,7 +56,6 @@ import { tableVariants } from "@dotui/registry/ui/table/meta";
 import { tabsVariants } from "@dotui/registry/ui/tabs/meta";
 import { tagGroupVariants } from "@dotui/registry/ui/tag-group/meta";
 import { textVariants } from "@dotui/registry/ui/text/meta";
-import { textAreaVariants } from "@dotui/registry/ui/text-area/meta";
 import { textFieldVariants } from "@dotui/registry/ui/text-field/meta";
 import { timeFieldVariants } from "@dotui/registry/ui/time-field/meta";
 import { toastVariants } from "@dotui/registry/ui/toast/meta";
@@ -338,7 +337,6 @@ export const variantsSchema = z.object({
   tabs: z.enum(tabsVariants),
   "tag-group": z.enum(tagGroupVariants),
   text: z.enum(textVariants),
-  "text-area": z.enum(textAreaVariants),
   "text-field": z.enum(textFieldVariants),
   "time-field": z.enum(timeFieldVariants),
   toast: z.enum(toastVariants),

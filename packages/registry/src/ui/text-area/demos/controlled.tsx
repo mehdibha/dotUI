@@ -2,7 +2,9 @@
 
 import React from "react";
 
-import { TextArea } from "@dotui/registry/ui/text-area";
+import { Label } from "@dotui/registry/ui/field";
+import { TextArea } from "@dotui/registry/ui/input";
+import { TextField } from "@dotui/registry/ui/text-field";
 
 export default function Demo() {
   const [inputValue, setInputValue] = React.useState(
@@ -10,13 +12,15 @@ export default function Demo() {
   );
   return (
     <div className="flex flex-col items-center gap-4">
-      <TextArea
-        label="Essay"
+      <TextField
         value={inputValue}
         onChange={(text) => {
           setInputValue(text);
         }}
-      />
+      >
+        <Label>Essay</Label>
+        <TextArea />
+      </TextField>
       <p className="text-sm text-fg-muted">mirrored text: {inputValue}</p>
     </div>
   );

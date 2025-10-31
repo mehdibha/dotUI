@@ -2,36 +2,29 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import {
-  TableBody as _TableBody,
-  TableCell as _TableCell,
-  TableColumn as _TableColumn,
-  TableContainer as _TableContainer,
-  TableHeader as _TableHeader,
-  TableRoot as _TableRoot,
-  TableRow as _TableRow,
-} from "./basic";
 import type {
   TableBodyProps,
   TableCellProps,
   TableColumnProps,
-  TableContainerProps,
   TableHeaderProps,
-  TableRootProps,
+  TableLoadMoreProps,
+  TableProps,
   TableRowProps,
 } from "./basic";
+import {
+  Table as _Table,
+  TableBody as _TableBody,
+  TableCell as _TableCell,
+  TableColumn as _TableColumn,
+  TableHeader as _TableHeader,
+  TableLoadMore as _TableLoadMore,
+  TableRow as _TableRow,
+} from "./basic";
 
-export const TableContainer = createDynamicComponent<TableContainerProps>(
+export const Table = createDynamicComponent<TableProps>(
   "table",
-  "TableContainer",
-  _TableContainer,
-  {},
-);
-
-export const TableRoot = createDynamicComponent<TableRootProps>(
-  "table",
-  "TableRoot",
-  _TableRoot,
+  "Table",
+  _Table,
   {},
 );
 
@@ -48,6 +41,13 @@ export const TableHeader = <T extends object = object>(
   return <Component {...props} />;
 };
 
+export const TableColumn = createDynamicComponent<TableColumnProps>(
+  "table",
+  "TableColumn",
+  _TableColumn,
+  {},
+);
+
 export const TableBody = <T extends object = object>(
   props: TableBodyProps<T>,
 ) => {
@@ -60,13 +60,6 @@ export const TableBody = <T extends object = object>(
 
   return <Component {...props} />;
 };
-
-export const TableColumn = createDynamicComponent<TableColumnProps>(
-  "table",
-  "TableColumn",
-  _TableColumn,
-  {},
-);
 
 export const TableRow = <T extends object = object>(
   props: TableRowProps<T>,
@@ -88,12 +81,19 @@ export const TableCell = createDynamicComponent<TableCellProps>(
   {},
 );
 
+export const TableLoadMore = createDynamicComponent<TableLoadMoreProps>(
+  "table",
+  "TableLoadMore",
+  _TableLoadMore,
+  {},
+);
+
 export type {
-  TableContainerProps,
-  TableRootProps,
+  TableProps,
   TableHeaderProps,
   TableBodyProps,
   TableColumnProps,
   TableRowProps,
   TableCellProps,
+  TableLoadMoreProps,
 };

@@ -3,7 +3,8 @@
 import React from "react";
 
 import { Button } from "@dotui/registry/ui/button";
-import { DialogContent, DialogRoot } from "@dotui/registry/ui/dialog";
+import { Dialog, DialogContent } from "@dotui/registry/ui/dialog";
+import { FieldGroup, Label } from "@dotui/registry/ui/field";
 import { Overlay } from "@dotui/registry/ui/overlay";
 import { Radio, RadioGroup } from "@dotui/registry/ui/radio-group";
 
@@ -14,29 +15,32 @@ export default function Demo() {
   const [mobileType, setMobileType] = React.useState<Type>("drawer");
   return (
     <div className="flex w-full items-center gap-8">
-      <DialogRoot>
+      <Dialog>
         <Button>Open</Button>
         <Overlay type={type} mobileType={mobileType}>
           <DialogContent>some content</DialogContent>
         </Overlay>
-      </DialogRoot>
-      <RadioGroup
-        label="Type"
-        value={type}
-        onChange={(value) => setType(value as Type)}
-      >
-        <Radio value="modal">Modal</Radio>
-        <Radio value="drawer">Drawer</Radio>
-        <Radio value="popover">Popover</Radio>
+      </Dialog>
+
+      <RadioGroup value={type} onChange={(value) => setType(value as Type)}>
+        <Label>Type</Label>
+        <FieldGroup>
+          <Radio value="modal">Modal</Radio>
+          <Radio value="drawer">Drawer</Radio>
+          <Radio value="popover">Popover</Radio>
+        </FieldGroup>
       </RadioGroup>
+
       <RadioGroup
-        label="Mobile type"
         value={mobileType}
         onChange={(value) => setMobileType(value as Type)}
       >
-        <Radio value="modal">Modal</Radio>
-        <Radio value="drawer">Drawer</Radio>
-        <Radio value="popover">Popover</Radio>
+        <Label>Mobile type</Label>
+        <FieldGroup>
+          <Radio value="modal">Modal</Radio>
+          <Radio value="drawer">Drawer</Radio>
+          <Radio value="popover">Popover</Radio>
+        </FieldGroup>
       </RadioGroup>
     </div>
   );

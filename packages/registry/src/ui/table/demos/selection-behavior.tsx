@@ -2,13 +2,14 @@
 
 import React from "react";
 
+import { FieldGroup, Label } from "@dotui/registry/ui/field";
 import { Radio, RadioGroup } from "@dotui/registry/ui/radio-group";
 import {
+  Table,
   TableBody,
   TableCell,
   TableColumn,
   TableHeader,
-  TableRoot,
   TableRow,
 } from "@dotui/registry/ui/table";
 
@@ -32,7 +33,7 @@ export default function Demo() {
     React.useState<SelectionBehavior>("toggle");
   return (
     <div className="flex gap-12">
-      <TableRoot
+      <Table
         aria-label="Files"
         selectionMode="multiple"
         selectionBehavior={selectionBehavior}
@@ -52,15 +53,17 @@ export default function Demo() {
             </TableRow>
           )}
         </TableBody>
-      </TableRoot>
+      </Table>
       <RadioGroup
-        label="Behavior"
         value={selectionBehavior}
         onChange={(value) => setSelectionBehavior(value as SelectionBehavior)}
         className="text-sm"
       >
-        <Radio value="toggle">Toggle</Radio>
-        <Radio value="accent">Replace</Radio>
+        <Label>Behavior</Label>
+        <FieldGroup>
+          <Radio value="toggle">Toggle</Radio>
+          <Radio value="accent">Replace</Radio>
+        </FieldGroup>
       </RadioGroup>
     </div>
   );

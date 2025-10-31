@@ -67,67 +67,40 @@ const queue = new AriaToastQueue<Toast>();
 const Toaster = () => {
   return (
     <AriaToastRegion queue={queue} className={region()}>
-      {({ toast: t }) => (
-        <AriaToast toast={t} className={toast({ variant: t.content.variant })}>
-          <AriaToastContent className={content()}>
-            <Text
-              slot="title"
-              className={title({ variant: t.content.variant })}
-            >
-              {t.content.title}
-            </Text>
-            {t.content.description && (
-              <Text slot="description" className={description()}>
-                {t.content.description}
-              </Text>
-            )}
-          </AriaToastContent>
-          <Button
-            slot="close"
-            variant="quiet"
-            aspect="square"
-            size="sm"
-            aria-label="Close"
-            className={close()}
-          >
-            <XIcon />
-          </Button>
-        </AriaToast>
-      )}
+      {({ toast }) => <Toast toast={toast} />}
     </AriaToastRegion>
   );
 };
 
-interface ToastProps extends AriaToastProps<Toast>, Toast {}
-function _Toast({
-  title: t,
-  description: d,
-  className,
-  variant,
-  ...props
-}: ToastProps) {
+interface ToastProps extends AriaToastProps<Toast> {}
+
+function Toast({ className, ...props }: ToastProps) {
   return (
     <AriaToast
       className={composeRenderProps(className, (className) =>
-        toast({ className, variant: variant ?? "neutral" }),
+        toast({ className, variant: props.toast.content.variant }),
       )}
       {...props}
     >
-      <AriaToastContent className={content()}>
-        <Text slot="title" className={title()}>
-          {t}
-        </Text>
-        {d ? (
-          <Text slot="description" className={description()}>
-            {d}
-          </Text>
-        ) : null}
-      </AriaToastContent>
-      <div className={actions()}>
-        <Button slot="close" className={close()} aria-label="Close">
-          ×
-        </Button>
-      </div>
+      {({ toast }) => (
+        <>
+          <AriaToastContent className={content()}>
+            <Text slot="title" className={title()}>
+              {toast.content.title}
+            </Text>
+            {toast.content.description ? (
+              <Text slot="description" className={description()}>
+                {toast.content.description}
+              </Text>
+            ) : null}
+          </AriaToastContent>
+          <div className={actions()}>
+            <Button slot="close" className={close()} aria-label="Close">
+              ×
+            </Button>
+          </div>
+        </>
+      )}
     </AriaToast>
   );
 }

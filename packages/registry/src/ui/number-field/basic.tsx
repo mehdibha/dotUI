@@ -10,7 +10,7 @@ import {
   useSlottedContext,
 } from "react-aria-components";
 
-import { fieldStyles } from "./field";
+import { fieldStyles } from "@dotui/registry/ui/field";
 
 interface NumberFieldProps
   extends React.ComponentProps<typeof AriaNumberField> {}

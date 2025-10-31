@@ -3,16 +3,15 @@ import { getColorChannels } from "react-aria-components";
 
 import { cn } from "@dotui/registry/lib/utils";
 import { ColorArea } from "@dotui/registry/ui/color-area";
+import { ColorField } from "@dotui/registry/ui/color-field";
 import { ColorSlider } from "@dotui/registry/ui/color-slider";
+import { Input } from "@dotui/registry/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
 } from "@dotui/registry/ui/select";
-
-import { ColorField } from "./color-field";
-import { Input } from "./input";
 
 type ColorFormat = "hex" | "rgb" | "hsl" | "hsb";
 
@@ -45,7 +44,7 @@ const ColorEditor = ({
           orientation="vertical"
           colorSpace="hsb"
           channel="hue"
-        /> 
+        />
         {showAlphaChannel && (
           <ColorSlider
             defaultValue="#000000"

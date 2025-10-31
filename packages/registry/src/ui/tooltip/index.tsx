@@ -3,14 +3,14 @@
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
 import type {
-  TooltipArrowProps,
   TooltipContentProps,
   TooltipProps,
+  TooltipTriggerProps,
 } from "./basic";
 import {
   Tooltip as _Tooltip,
-  TooltipArrow as _TooltipArrow,
   TooltipContent as _TooltipContent,
+  TooltipTrigger as _TooltipTrigger,
 } from "./basic";
 
 export const Tooltip = createDynamicComponent<TooltipProps>(
@@ -27,11 +27,11 @@ export const TooltipContent = createDynamicComponent<TooltipContentProps>(
   {},
 );
 
-export const TooltipArrow = createDynamicComponent<TooltipArrowProps>(
+export const TooltipTrigger = createDynamicComponent<TooltipTriggerProps>(
   "tooltip",
-  "TooltipArrow",
-  _TooltipArrow,
+  "TooltipTrigger",
+  _TooltipTrigger,
   {},
 );
 
-export type { TooltipProps, TooltipContentProps, TooltipArrowProps };
+export type { TooltipProps, TooltipContentProps };

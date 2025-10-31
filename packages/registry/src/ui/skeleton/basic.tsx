@@ -2,6 +2,8 @@
 
 import { createContext, useContext } from "react";
 
+import { cn } from "@dotui/registry/lib/utils";
+
 const SkeletonContext = createContext<boolean>(false);
 
 interface SkeletonProviderProps {
@@ -32,3 +34,20 @@ export const useSkeletonText = (children: React.ReactNode) => {
   }
   return children;
 };
+
+export type SkeletonProps = React.HTMLAttributes<HTMLDivElement> & {
+  show?: boolean;
+};
+export function Skeleton({ className, show = true, ...props }: SkeletonProps) {
+  if (!show) return props.children;
+  return (
+    <div
+      className={cn(
+        "relative block h-6 animate-pulse rounded-md bg-muted",
+        props.children && "h-auto text-transparent *:invisible",
+        className,
+      )}
+      {...props}
+    />
+  );
+}

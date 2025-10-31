@@ -10,10 +10,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@dotui/registry/ui/card";
-import { Label } from "@dotui/registry/ui/field";
-import { Slider } from "@dotui/registry/ui/slider";
+import { Description, Label } from "@dotui/registry/ui/field";
+import { Slider, SliderControl, SliderOutput } from "@dotui/registry/ui/slider";
 import { Switch } from "@dotui/registry/ui/switch";
-import { Tag, TagGroup } from "@dotui/registry/ui/tag-group";
+import { Tag, TagGroup, TagList } from "@dotui/registry/ui/tag-group";
 import { ToggleButton } from "@dotui/registry/ui/toggle-button";
 import { ToggleButtonGroup } from "@dotui/registry/ui/toggle-button-group";
 
@@ -29,8 +29,6 @@ export function Filters({ className, ...props }: React.ComponentProps<"div">) {
           <ToggleButtonGroup
             aria-labelledby="type-of-place"
             selectionMode="single"
-            variant="accent"
-            shape="rectangle"
             defaultSelectedKeys={["any-type"]}
             className="grid w-full grid-cols-3"
           >
@@ -40,29 +38,40 @@ export function Filters({ className, ...props }: React.ComponentProps<"div">) {
           </ToggleButtonGroup>
         </div>
         <Slider
-          label="Price Range"
-          description="Trip price, includes all fees"
-          showValueLabel
           defaultValue={[200, 800]}
           minValue={0}
           maxValue={2000}
           className="w-full"
-        />
-        <TagGroup label="Amenities">
-          <Tag>Wifi</Tag>
-          <Tag>TV</Tag>
-          <Tag>Kitchen</Tag>
-          <Tag>Pool</Tag>
-          <Tag>Washer</Tag>
-          <Tag>Dryer</Tag>
-          <Tag>Heating</Tag>
-          <Tag>Hair dryer</Tag>
-          <Tag>EV charger</Tag>
-          <Tag>Gym</Tag>
-          <Tag>BBQ grill</Tag>
-          <Tag>Breakfast</Tag>
+        >
+          <div className="flex justify-between gap-2">
+            <Label>Price Range</Label>
+            <SliderOutput />
+          </div>
+          <SliderControl />
+          <Description>Trip price, includes all fees</Description>
+        </Slider>
+        <TagGroup>
+          <Label>Amenities</Label>
+          <TagList>
+            <Tag>Wifi</Tag>
+            <Tag>TV</Tag>
+            <Tag>Kitchen</Tag>
+            <Tag>Pool</Tag>
+            <Tag>Washer</Tag>
+            <Tag>Dryer</Tag>
+            <Tag>Heating</Tag>
+            <Tag>Hair dryer</Tag>
+            <Tag>EV charger</Tag>
+            <Tag>Gym</Tag>
+            <Tag>BBQ grill</Tag>
+            <Tag>Breakfast</Tag>
+          </TagList>
         </TagGroup>
-        <Switch variant="card" className="text-sm" defaultSelected>
+        <Switch
+          //  variant="card"
+          className="text-sm"
+          defaultSelected
+        >
           <span className="flex items-center gap-2">
             {/* <ZapIcon className="size-4" /> */}
             Instant booking

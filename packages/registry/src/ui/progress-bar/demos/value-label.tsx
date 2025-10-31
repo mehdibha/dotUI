@@ -1,7 +1,20 @@
 "use client";
 
-import { ProgressBar } from "@dotui/registry/ui/progress-bar";
+import { Label } from "@dotui/registry/ui/field";
+import {
+  ProgressBar,
+  ProgressBarControl,
+  ProgressBarValueLabel,
+} from "@dotui/registry/ui/progress-bar";
 
 export default function Demo() {
-  return <ProgressBar label="Loading" showValueLabel value={75} />;
+  return (
+    <ProgressBar aria-label="Loading" value={75}>
+      <div className="flex justify-between gap-2">
+        <Label>Loading</Label>
+        <ProgressBarValueLabel />
+      </div>
+      <ProgressBarControl />
+    </ProgressBar>
+  );
 }

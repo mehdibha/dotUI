@@ -56,6 +56,7 @@ export const DEFAULT_VARIANTS_DEFINITION: VariantsDefinition = {
 };
 
 export const DEFAULT_VARIANTS: Variants = {
+  accordion: "basic",
   alert: "basic",
 
   avatar: "basic",
@@ -67,13 +68,12 @@ export const DEFAULT_VARIANTS: Variants = {
   tabs: "basic",
   link: "basic",
 
-  button: "outline",
-  "button-group": "basic",
+  button: "basic",
   "toggle-button": "basic",
   "toggle-button-group": "basic",
+  group: "basic",
 
   input: "basic",
-  "text-area": "basic",
   "text-field": "basic",
   "number-field": "basic",
   "search-field": "basic",
@@ -87,15 +87,14 @@ export const DEFAULT_VARIANTS: Variants = {
 
   calendar: "basic",
   "date-field": "basic",
-  "date-input": "basic",
   "date-picker": "basic",
-  "date-range-picker": "basic",
   "time-field": "basic",
 
   "color-area": "basic",
   "color-field": "basic",
   "color-picker": "basic",
   "color-slider": "basic",
+  "color-editor": "basic",
   "color-swatch": "basic",
   "color-swatch-picker": "basic",
   "color-thumb": "basic",
@@ -127,6 +126,7 @@ export const DEFAULT_VARIANTS: Variants = {
   "tag-group": "basic",
   kbd: "basic",
   toast: "basic",
+  empty: "basic",
 
   card: "basic",
 

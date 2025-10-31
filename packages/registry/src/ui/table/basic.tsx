@@ -1,6 +1,5 @@
 "use client";
 
-import { useSlotId } from "@react-aria/utils";
 import { ChevronDownIcon, ChevronUpIcon, GripVerticalIcon } from "lucide-react";
 import {
   Button as AriaButton,
@@ -14,11 +13,7 @@ import {
   TableBody as AriaTableBody,
   TableHeader as AriaTableHeader,
   TableLoadMoreItem as AriaTableLoadMoreItem,
-  Text as AriaText,
   composeRenderProps,
-  Provider,
-  TableContext,
-  TextContext,
   useTableOptions,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
@@ -34,7 +29,6 @@ import { Loader } from "@dotui/registry/ui/loader";
 
 const tableStyles = tv({
   slots: {
-    root: "space-y-2",
     container: "relative scroll-pt-[2.321rem] overflow-auto rounded-lg border",
     table: "w-full text-sm",
     header: "sticky top-0 z-10 bg-bg",
@@ -47,59 +41,11 @@ const tableStyles = tv({
       "relative h-7 **:data-[slot=loader]:absolute **:data-[slot=loader]:top-0 **:data-[slot=loader]:left-1/2 **:data-[slot=loader]:-translate-x-1/2",
       "[&_[data-slot=loader]_svg]:size-4",
     ],
-    title: "text-sm font-medium",
-    description: "text-sm text-fg-muted",
   },
 });
 
-const {
-  root,
-  container,
-  table,
-  header,
-  column,
-  resizer,
-  body,
-  row,
-  cell,
-  loadMore,
-  title,
-  description,
-} = tableStyles();
-
-/* -----------------------------------------------------------------------------------------------*/
-
-interface TableRootProps extends React.ComponentProps<"div"> {}
-
-const TableRoot = ({ className, ...props }: TableRootProps) => {
-  const titleId = useSlotId();
-  const descriptionId = useSlotId();
-
-  return (
-    <Provider
-      values={[
-        [
-          TextContext,
-          {
-            slots: {
-              title: { id: titleId },
-              description: { id: descriptionId },
-            },
-          },
-        ],
-        [
-          TableContext,
-          {
-            "aria-labelledby": titleId,
-            "aria-describedby": descriptionId,
-          },
-        ],
-      ]}
-    >
-      <div className={root({ className })} {...props} />
-    </Provider>
-  );
-};
+const { container, table, header, column, resizer, body, row, cell, loadMore } =
+  tableStyles();
 
 /* -----------------------------------------------------------------------------------------------*/
 
@@ -126,16 +72,20 @@ const TableContainer = ({
 
 /* -----------------------------------------------------------------------------------------------*/
 
-interface TableProps extends React.ComponentProps<typeof AriaTable> {}
+interface TableProps extends React.ComponentProps<typeof AriaTable> {
+  resizable?: boolean;
+}
 
-const Table = ({ className, ...props }: TableProps) => {
+const Table = ({ className, resizable, ...props }: TableProps) => {
   return (
-    <AriaTable
-      className={composeRenderProps(className, (cn) =>
-        table({ className: cn }),
-      )}
-      {...props}
-    />
+    <TableContainer resizable={resizable}>
+      <AriaTable
+        className={composeRenderProps(className, (cn) =>
+          table({ className: cn }),
+        )}
+        {...props}
+      />
+    </TableContainer>
   );
 };
 
@@ -310,66 +260,17 @@ const TableLoadMore = ({ className, ...props }: TableLoadMoreProps) => {
 
 /* -----------------------------------------------------------------------------------------------*/
 
-interface TableTitleProps
-  extends Omit<React.ComponentProps<typeof AriaText>, "slot"> {}
-
-const TableTitle = ({ className, ...props }: TableTitleProps) => {
-  return (
-    <AriaText
-      slot="title"
-      elementType="h2"
-      className={title({ className })}
-      {...props}
-    />
-  );
-};
-
-/* -----------------------------------------------------------------------------------------------*/
-
-interface TableDescriptionProps
-  extends Omit<React.ComponentProps<typeof AriaText>, "slot"> {}
-
-const TableDescription = ({ className, ...props }: TableDescriptionProps) => {
-  return (
-    <AriaText
-      elementType="p"
-      slot="description"
-      className={description({ className })}
-      {...props}
-    />
-  );
-};
-
-/* -----------------------------------------------------------------------------------------------*/
-
-const CompoundTable = Object.assign(Table, {
-  Root: TableRoot,
-  Container: TableContainer,
-  Header: TableHeader,
-  Column: TableColumn,
-  Body: TableBody,
-  Row: TableRow,
-  Cell: TableCell,
-  LoadMore: TableLoadMore,
-  Title: TableTitle,
-  Description: TableDescription,
-});
-
 export {
-  TableContainer,
-  CompoundTable as Table,
+  Table,
   TableHeader,
   TableColumn,
   TableBody,
   TableLoadMore,
   TableRow,
   TableCell,
-  TableTitle,
-  TableDescription,
 };
 
 export type {
-  TableContainerProps,
   TableProps,
   TableHeaderProps,
   TableColumnProps,
@@ -377,6 +278,4 @@ export type {
   TableRowProps,
   TableCellProps,
   TableLoadMoreProps,
-  TableTitleProps,
-  TableDescriptionProps,
 };

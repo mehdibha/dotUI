@@ -1,16 +1,16 @@
 import { InfoIcon } from "@dotui/registry/icons";
 import { Button } from "@dotui/registry/ui/button";
 import {
+  Dialog,
   DialogContent,
   DialogHeading,
-  DialogRoot,
 } from "@dotui/registry/ui/dialog";
 import { Popover } from "@dotui/registry/ui/popover";
 
 export default function Demo() {
   return (
-    <DialogRoot>
-      <Button shape="square">
+    <Dialog>
+      <Button aria-label="Help">
         <InfoIcon />
       </Button>
       <Popover>
@@ -22,6 +22,6 @@ export default function Demo() {
           </p>
         </DialogContent>
       </Popover>
-    </DialogRoot>
+    </Dialog>
   );
 }

@@ -163,28 +163,6 @@ Use the `value` and `onChange` props to control the value of the input.
 return <NumberField value={value} onChange={setValue} />;`}
 />
 
-## Composition
-
-If you need to customize things further, you can drop down to the composition level.
-
-<ComponentPreview
-  name="number-field/demos/composition"
-  preview={`<NumberFieldRoot>
-    <Label>Quantity</Label>
-    <Group className="flex items-center gap-2">
-      <Button slot="decrement">
-        <MinusIcon />
-      </Button>
-      <InputRoot>
-        <Input />
-      </InputRoot>
-      <Button slot="increment">
-        <PlusIcon />
-      </Button>
-    </Group>
-    <Description>Enter the disired quantity.</Description>
-  </NumberFieldRoot>`}
-/>
 
 ## API Reference
 

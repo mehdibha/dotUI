@@ -1,5 +1,11 @@
-import { Slider } from "@dotui/registry/ui/slider";
+import { Label } from "@dotui/registry/ui/field";
+import { Slider, SliderControl } from "@dotui/registry/ui/slider";
 
 export default function Demo() {
-  return <Slider label="Opacity" defaultValue={50} isDisabled />;
+  return (
+    <Slider defaultValue={50} isDisabled>
+      <Label>Opacity</Label>
+      <SliderControl />
+    </Slider>
+  );
 }

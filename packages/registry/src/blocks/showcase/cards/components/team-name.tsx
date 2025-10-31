@@ -10,6 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@dotui/registry/ui/card";
+import { Input } from "@dotui/registry/ui/input";
 import { TextField } from "@dotui/registry/ui/text-field";
 
 export function TeamName({ className, ...props }: React.ComponentProps<"div">) {
@@ -23,7 +24,9 @@ export function TeamName({ className, ...props }: React.ComponentProps<"div">) {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <TextField aria-label="Team Name" defaultValue="My Team" />
+        <TextField aria-label="Team Name" defaultValue="My Team">
+          <Input />
+        </TextField>
       </CardContent>
       <CardFooter className="flex items-center justify-between gap-4">
         <p className="text-sm text-fg-muted">

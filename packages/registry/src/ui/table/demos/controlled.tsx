@@ -4,11 +4,11 @@ import React from "react";
 import type { Selection } from "react-aria-components";
 
 import {
+  Table,
   TableBody,
   TableCell,
   TableColumn,
   TableHeader,
-  TableRoot,
   TableRow,
 } from "@dotui/registry/ui/table";
 
@@ -30,7 +30,7 @@ export default function Demo() {
     new Set([2, 3]),
   );
   return (
-    <TableRoot
+    <Table
       aria-label="Files"
       selectionMode="multiple"
       selectedKeys={selectedKeys}
@@ -50,7 +50,7 @@ export default function Demo() {
           </TableRow>
         )}
       </TableBody>
-    </TableRoot>
+    </Table>
   );
 }
 

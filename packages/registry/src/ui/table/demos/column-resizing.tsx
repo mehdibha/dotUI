@@ -1,12 +1,11 @@
 "use client";
 
 import {
+  Table,
   TableBody,
   TableCell,
   TableColumn,
-  TableContainer,
   TableHeader,
-  TableRoot,
   TableRow,
 } from "@dotui/registry/ui/table";
 
@@ -25,26 +24,24 @@ const items: Item[] = [
 
 export default function Demo() {
   return (
-    <TableContainer resizable>
-      <TableRoot aria-label="Files">
-        <TableHeader columns={columns}>
-          <TableColumn id="name" isRowHeader allowsResizing>
-            Name
-          </TableColumn>
-          <TableColumn id="type" allowsResizing>
-            Type
-          </TableColumn>
-          <TableColumn id="date">Date Modified</TableColumn>
-        </TableHeader>
-        <TableBody items={items}>
-          {(item) => (
-            <TableRow columns={columns}>
-              {(column) => <TableCell>{item[column.id]}</TableCell>}
-            </TableRow>
-          )}
-        </TableBody>
-      </TableRoot>
-    </TableContainer>
+    <Table aria-label="Files" resizable>
+      <TableHeader columns={columns}>
+        <TableColumn id="name" isRowHeader allowsResizing>
+          Name
+        </TableColumn>
+        <TableColumn id="type" allowsResizing>
+          Type
+        </TableColumn>
+        <TableColumn id="date">Date Modified</TableColumn>
+      </TableHeader>
+      <TableBody items={items}>
+        {(item) => (
+          <TableRow columns={columns}>
+            {(column) => <TableCell>{item[column.id]}</TableCell>}
+          </TableRow>
+        )}
+      </TableBody>
+    </Table>
   );
 }
 

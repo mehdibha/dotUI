@@ -1,12 +1,15 @@
-import { Slider } from "@dotui/registry/ui/slider";
+import { Label } from "@dotui/registry/ui/field";
+import { Slider, SliderControl, SliderOutput } from "@dotui/registry/ui/slider";
 
 export default function Demo() {
   return (
     <Slider
-      label="Price"
       formatOptions={{ style: "currency", currency: "JPY" }}
       defaultValue={60}
-      showValueLabel
-    />
+    >
+      <Label>Price</Label>
+      <SliderControl />
+      <SliderOutput />
+    </Slider>
   );
 }

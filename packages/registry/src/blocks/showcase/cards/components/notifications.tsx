@@ -24,9 +24,7 @@ export function Notifications({
       <CardHeader className="flex min-w-0 items-center justify-between has-data-[slot=card-action]:grid-cols-[1fr_minmax(0,auto)]">
         <CardTitle className="flex items-center gap-2">
           Notifications
-          <Badge size="sm" className="px-1.5">
-            12
-          </Badge>
+          <Badge className="px-1.5">12</Badge>
         </CardTitle>
         <CardAction>
           <Button size="sm">
@@ -49,7 +47,7 @@ export function Notifications({
             >
               <ListBox
                 aria-label="Notifications"
-                className="max-h-none w-full rounded-none border-0 bg-transparent p-0 [&_.separator]:my-0 [&_[data-slot=list-box-item]]:rounded-none"
+                className="max-h-none w-full rounded-none border-0 bg-transparent p-0 [&_.separator]:my-0 **:data-[slot=list-box-item]:rounded-none"
               >
                 {notifications
                   .filter((notification) => {

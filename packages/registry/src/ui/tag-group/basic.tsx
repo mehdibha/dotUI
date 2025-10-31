@@ -19,33 +19,29 @@ import { Button } from "@dotui/registry/ui/button";
 
 const tagGroupStyles = tv({
   slots: {
-    root: "flex flex-col items-start gap-2",
+    group: "flex flex-col items-start gap-2",
     list: "flex w-full flex-wrap gap-1",
+    tag: [
+      "focus-reset focus-visible:focus-ring",
+      "focus-reset focus-visible:focus-ring ring-offset-background inline-flex cursor-pointer items-center justify-center gap-2 rounded-md text-sm leading-normal font-medium transition-colors disabled:cursor-default disabled:bg-disabled disabled:text-fg-disabled",
+    ],
   },
 });
 
-const { root, list } = tagGroupStyles();
-
-const tagStyles = tv({
-  base: [
-    // focus state
-    "focus-reset focus-visible:focus-ring",
-
-    "ring-offset-background inline-flex cursor-pointer items-center justify-center gap-2 rounded-md text-sm leading-normal font-medium transition-colors disabled:cursor-default disabled:bg-disabled disabled:text-fg-disabled",
-  ],
-});
+const { group, list, tag } = tagGroupStyles();
 
 /* -----------------------------------------------------------------------------------------------*/
 
-interface TagGroupRootProps extends AriaTagGroupProps {}
+interface TagGroupProps extends AriaTagGroupProps {}
 
-function TagGroup({ className, ...props }: TagGroupRootProps) {
-  return <AriaTagGroup {...props} className={root({ className })} />;
+function TagGroup({ className, ...props }: TagGroupProps) {
+  return <AriaTagGroup {...props} className={group({ className })} />;
 }
 
 /* -----------------------------------------------------------------------------------------------*/
 
 interface TagListProps<T> extends AriaTagListProps<T> {}
+
 function TagList<T extends object>(props: TagListProps<T>) {
   return (
     <AriaTagList
@@ -59,7 +55,8 @@ function TagList<T extends object>(props: TagListProps<T>) {
 
 /* -----------------------------------------------------------------------------------------------*/
 
-interface TagProps extends AriaTagProps, VariantProps<typeof tagStyles> {}
+interface TagProps extends AriaTagProps {}
+
 function Tag({ className, ...props }: TagProps) {
   const textValue =
     typeof props.children === "string" ? props.children : undefined;
@@ -68,7 +65,7 @@ function Tag({ className, ...props }: TagProps) {
     <AriaTag
       textValue={textValue}
       className={composeRenderProps(className, (className) =>
-        tagStyles({ className }),
+        tag({ className }),
       )}
       {...props}
     >
@@ -76,7 +73,7 @@ function Tag({ className, ...props }: TagProps) {
         <>
           {children}
           {allowsRemoving && (
-            <Button slot="remove">
+            <Button variant="quiet" slot="remove">
               <XIcon />
             </Button>
           )}
@@ -88,11 +85,6 @@ function Tag({ className, ...props }: TagProps) {
 
 /* -----------------------------------------------------------------------------------------------*/
 
-const CompoundTag = Object.assign(Tag, {
-  Group: TagGroup,
-  List: TagList,
-});
+export { TagGroup, TagList, Tag };
 
-export { TagGroup, TagList, CompoundTag as Tag };
-
-export type { TagProps };
+export type { TagProps, TagGroupProps, TagListProps };

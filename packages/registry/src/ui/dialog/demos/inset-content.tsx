@@ -27,7 +27,7 @@ export default function Demo() {
             </DialogDescription>
           </DialogHeader>
           <DialogBody>
-            <DialogInset className="!my-4 bg-muted">
+            <DialogInset className="my-4! bg-muted">
               Content within the inset.
             </DialogInset>
             <p className="mt-4">Content outside the inset.</p>

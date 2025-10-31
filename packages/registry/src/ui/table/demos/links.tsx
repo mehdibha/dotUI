@@ -1,11 +1,11 @@
 "use client";
 
 import {
+  Table,
   TableBody,
   TableCell,
   TableColumn,
   TableHeader,
-  TableRoot,
   TableRow,
 } from "@dotui/registry/ui/table";
 
@@ -24,7 +24,7 @@ const data: Item[] = [
 
 export default function Demo() {
   return (
-    <TableRoot aria-label="Files">
+    <Table aria-label="Files">
       <TableHeader columns={columns}>
         <TableColumn isRowHeader>Name</TableColumn>
         <TableColumn>URL</TableColumn>
@@ -47,7 +47,7 @@ export default function Demo() {
           <TableCell>July 12, 2023</TableCell>
         </TableRow>
       </TableBody>
-    </TableRoot>
+    </Table>
   );
 }
 

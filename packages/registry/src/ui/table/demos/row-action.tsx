@@ -5,7 +5,7 @@ import {
   TableCell,
   TableColumn,
   TableHeader,
-  TableRoot,
+  Table,
   TableRow,
 } from "@dotui/registry/ui/table";
 
@@ -24,7 +24,7 @@ const data: Item[] = [
 
 export default function Demo() {
   return (
-    <TableRoot
+    <Table
       aria-label="Files"
       onRowAction={(key) => alert(`Opening item ${key}...`)}
     >
@@ -42,7 +42,7 @@ export default function Demo() {
           </TableRow>
         )}
       </TableBody>
-    </TableRoot>
+    </Table>
   );
 }
 

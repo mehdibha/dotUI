@@ -2,6 +2,7 @@
 
 import React from "react";
 
+import { Input } from "@dotui/registry/ui/input";
 import { TextField } from "@dotui/registry/ui/text-field";
 
 export default function Demo() {
@@ -14,7 +15,9 @@ export default function Demo() {
         onChange={(text) => {
           setInputValue(text);
         }}
-      />
+      >
+        <Input />
+      </TextField>
       <p className="text-sm text-fg-muted">mirrored text: {inputValue}</p>
     </div>
   );

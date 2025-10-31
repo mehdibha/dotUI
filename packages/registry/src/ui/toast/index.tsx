@@ -4,7 +4,7 @@ import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-
 
 import { Toaster as _Toaster } from "./basic";
 
-export const Toaster = createDynamicComponent<{}>(
+export const Toaster = createDynamicComponent(
   "toast",
   "ToastProvider",
   _Toaster,

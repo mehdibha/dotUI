@@ -1,17 +1,17 @@
 "use client";
 
 import {
+  Table,
   TableBody,
   TableCell,
   TableColumn,
   TableHeader,
-  TableRoot,
   TableRow,
 } from "@dotui/registry/ui/table";
 
 export default function Demo() {
   return (
-    <TableRoot aria-label="Files">
+    <Table aria-label="Files">
       <TableHeader>
         <TableColumn isRowHeader>Name</TableColumn>
         <TableColumn>Type</TableColumn>
@@ -34,6 +34,6 @@ export default function Demo() {
           <TableCell>11/20/2010</TableCell>
         </TableRow>
       </TableBody>
-    </TableRoot>
+    </Table>
   );
 }

@@ -6,12 +6,33 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Button } from "@dotui/registry/ui/button";
-import { Checkbox } from "@dotui/registry/ui/checkbox";
-import { Combobox } from "@dotui/registry/ui/combobox";
-import { DatePicker } from "@dotui/registry/ui/date-picker";
-import { FormControl } from "@dotui/registry/ui/form";
-import { Radio, RadioGroup } from "@dotui/registry/ui/radio-group";
-import { Select, SelectItem } from "@dotui/registry/ui/select";
+import { Calendar } from "@dotui/registry/ui/calendar";
+import { Checkbox, CheckboxIndicator } from "@dotui/registry/ui/checkbox";
+import {
+  Combobox,
+  ComboboxContent,
+  ComboboxInput,
+  ComboboxItem,
+} from "@dotui/registry/ui/combobox";
+import {
+  DatePicker,
+  DatePickerContent,
+  DatePickerInput,
+} from "@dotui/registry/ui/date-picker";
+import { FieldGroup, Label } from "@dotui/registry/ui/field";
+import { Input } from "@dotui/registry/ui/input";
+import {
+  Radio,
+  RadioGroup,
+  RadioIndicator,
+} from "@dotui/registry/ui/radio-group";
+import { FormControl } from "@dotui/registry/ui/react-hook-form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "@dotui/registry/ui/select";
 import { TextField } from "@dotui/registry/ui/text-field";
 
 const FormSchema = z.object({
@@ -48,24 +69,42 @@ export default function Demo() {
           name="name"
           control={control}
           render={(props) => (
-            <TextField label="Name" className="w-full" {...props} />
+            <TextField {...props}>
+              <Label>Name</Label>
+              <Input placeholder="Name" />
+            </TextField>
           )}
         />
         <FormControl
           name="email"
           control={control}
           render={(props) => (
-            <TextField label="Email" className="w-full" {...props} />
+            <TextField {...props}>
+              <Label>Email</Label>
+              <Input placeholder="Email" />
+            </TextField>
           )}
         />
         <FormControl
           name="gender"
           control={control}
           render={(props) => (
-            <RadioGroup label="Gender" orientation="horizontal" {...props}>
-              <Radio value="male">Male</Radio>
-              <Radio value="female">female</Radio>
-              <Radio value="other">Other</Radio>
+            <RadioGroup orientation="horizontal" {...props}>
+              <Label>Gender</Label>
+              <FieldGroup>
+                <Radio value="male">
+                  <RadioIndicator />
+                  <Label>Male</Label>
+                </Radio>
+                <Radio value="female">
+                  <RadioIndicator />
+                  <Label>Female</Label>
+                </Radio>
+                <Radio value="other">
+                  <RadioIndicator />
+                  <Label>Other</Label>
+                </Radio>
+              </FieldGroup>
             </RadioGroup>
           )}
         />
@@ -74,12 +113,17 @@ export default function Demo() {
           control={control}
           render={({ value, onChange, ...props }) => (
             <DatePicker
-              label="Birth Date"
               value={value ? parseDate(value) : undefined}
               onChange={(val) => onChange(val?.toString())}
               className="w-full"
               {...props}
-            />
+            >
+              <Label>Birth Date</Label>
+              <DatePickerInput />
+              <DatePickerContent>
+                <Calendar aria-label="Pick a date" />
+              </DatePickerContent>
+            </DatePicker>
           )}
         />
         <FormControl
@@ -87,34 +131,34 @@ export default function Demo() {
           control={control}
           render={({ value, onChange, ...props }) => (
             <Combobox
-              label="Preferred language"
-              items={languages}
               inputValue={value}
               onSelectionChange={onChange}
               className="w-full"
               {...props}
             >
-              {(item) => (
-                <SelectItem key={item.value} id={item.value}>
-                  {item.label}
-                </SelectItem>
-              )}
+              <Label>Preferred language</Label>
+              <ComboboxInput />
+              <ComboboxContent items={languages}>
+                {(item) => (
+                  <ComboboxItem key={item.value} id={item.value}>
+                    {item.label}
+                  </ComboboxItem>
+                )}
+              </ComboboxContent>
             </Combobox>
           )}
         />
         <FormControl
           name="referral"
           control={control}
-          render={({ value, ...props }) => (
-            <Select
-              label="How did you hear about us?"
-              selectedKey={value}
-              variant="default"
-              className="w-full"
-              {...props}
-            >
-              <SelectItem id="linkedin">LinkedIn</SelectItem>
-              <SelectItem id="x">X</SelectItem>
+          render={(props) => (
+            <Select className="w-full" {...props}>
+              <Label>How did you hear about us?</Label>
+              <SelectTrigger variant="default" className="w-full" />
+              <SelectContent>
+                <SelectItem id="linkedin">LinkedIn</SelectItem>
+                <SelectItem id="x">X</SelectItem>
+              </SelectContent>
             </Select>
           )}
         />
@@ -123,7 +167,8 @@ export default function Demo() {
           control={control}
           render={({ value, ...props }) => (
             <Checkbox isSelected={value} {...props}>
-              I agree to the terms and conditions
+              <CheckboxIndicator />
+              <Label>I agree to the terms and conditions</Label>
             </Checkbox>
           )}
         />

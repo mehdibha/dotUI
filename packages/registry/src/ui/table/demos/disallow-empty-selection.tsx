@@ -1,11 +1,11 @@
 "use client";
 
 import {
+  Table,
   TableBody,
   TableCell,
   TableColumn,
   TableHeader,
-  TableRoot,
   TableRow,
 } from "@dotui/registry/ui/table";
 
@@ -24,7 +24,7 @@ const data: Item[] = [
 
 export default function Demo() {
   return (
-    <TableRoot
+    <Table
       aria-label="Files"
       selectionMode="single"
       defaultSelectedKeys={[2]}
@@ -44,7 +44,7 @@ export default function Demo() {
           </TableRow>
         )}
       </TableBody>
-    </TableRoot>
+    </Table>
   );
 }
 

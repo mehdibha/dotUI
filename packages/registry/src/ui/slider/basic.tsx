@@ -193,17 +193,12 @@ const SliderOutput = ({ children, className, ...props }: SliderOutputProps) => {
 
 /* -----------------------------------------------------------------------------------------------*/
 
-const CompoundSlider = Object.assign(Slider, {
-  Control: SliderControl,
-  Filler: SliderFiller,
-  Thumb: SliderThumb,
-  Output: SliderOutput,
-});
+export { Slider, SliderControl, SliderFiller, SliderThumb, SliderOutput };
 
-export {
-  CompoundSlider as Slider,
-  SliderControl,
-  SliderFiller,
-  SliderThumb,
-  SliderOutput,
+export type {
+  SliderProps,
+  SliderControlProps,
+  SliderFillerProps,
+  SliderThumbProps,
+  SliderOutputProps,
 };

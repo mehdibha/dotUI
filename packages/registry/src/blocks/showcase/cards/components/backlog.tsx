@@ -23,14 +23,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@dotui/registry/ui/card";
-import { Menu, MenuItem, MenuRoot } from "@dotui/registry/ui/menu";
+import { Input } from "@dotui/registry/ui/input";
+import { Menu, MenuContent, MenuItem } from "@dotui/registry/ui/menu";
+import { Overlay } from "@dotui/registry/ui/overlay";
 import { SearchField } from "@dotui/registry/ui/search-field";
 import {
+  Table,
   TableBody,
   TableCell,
   TableColumn,
   TableHeader,
-  TableRoot,
   TableRow,
 } from "@dotui/registry/ui/table";
 
@@ -38,7 +40,7 @@ export const statuses = [
   {
     value: "draft",
     label: "Draft",
-    variant: "neutral",
+    variant: "default",
     icon: CircleDashedIcon,
   },
   {
@@ -56,7 +58,7 @@ export const statuses = [
   {
     value: "done",
     label: "Done",
-    variant: "success-muted",
+    variant: "success",
     icon: RiCheckboxCircleFill,
   },
 ] as const;
@@ -83,7 +85,7 @@ export const priorities = [
   {
     value: "P3",
     label: "P3",
-    variant: "neutral",
+    variant: "default",
     icon: Circle,
   },
 ] as const;
@@ -254,14 +256,13 @@ export function Backlog(props: React.ComponentProps<"div">) {
       <CardContent>
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <SearchField
-              size="sm"
-              aria-label="Filter tasks"
-              placeholder="Filter tasks"
-            />
+            <SearchField aria-label="Filter tasks">
+              <Input size="sm" placeholder="Filter tasks" />
+            </SearchField>
           </div>
           <div className="flex items-center gap-2">
-            <Button size="sm" prefix={<Settings2Icon />}>
+            <Button size="sm">
+              <Settings2Icon />
               View
             </Button>
             <Button variant="primary" size="sm">
@@ -269,9 +270,8 @@ export function Backlog(props: React.ComponentProps<"div">) {
             </Button>
           </div>
         </div>
-        <TableRoot
+        <Table
           aria-label="Development Team Backlog"
-          variant="bordered"
           selectionMode="multiple"
           className="mt-4"
         >
@@ -291,7 +291,7 @@ export function Backlog(props: React.ComponentProps<"div">) {
                     if (!type) return null;
                     return (
                       <div className="flex items-center gap-2">
-                        <Badge variant="neutral" size="sm" className="border">
+                        <Badge variant="default">
                           {type?.label || item.type}
                         </Badge>
                         <span className="truncate">{item.title}</span>
@@ -306,9 +306,7 @@ export function Backlog(props: React.ComponentProps<"div">) {
                     );
                     if (!priority) return null;
                     return (
-                      <Badge variant={priority.variant} size="sm">
-                        {priority.label}
-                      </Badge>
+                      <Badge variant={priority.variant}>{priority.label}</Badge>
                     );
                   })()}
                 </TableCell>
@@ -320,7 +318,7 @@ export function Backlog(props: React.ComponentProps<"div">) {
                     if (!status) return null;
                     const StatusIcon = status.icon || Circle;
                     return (
-                      <Badge variant={status.variant} size="sm">
+                      <Badge variant={status.variant}>
                         <StatusIcon />
                         <span>{status?.label || item.status}</span>
                       </Badge>
@@ -346,30 +344,29 @@ export function Backlog(props: React.ComponentProps<"div">) {
                   })()}
                 </TableCell>
                 <TableCell>
-                  <Badge
-                    size="sm"
-                    className="bg-accent-muted px-1 text-fg-accent"
-                  >
+                  <Badge className="bg-accent-muted px-1 text-fg-accent">
                     {item.storyPoints}
                   </Badge>
                 </TableCell>
                 <TableCell>
-                  <MenuRoot>
-                    <Button variant="quiet" size="sm" shape="square">
+                  <Menu>
+                    <Button variant="quiet" size="sm">
                       <MoreHorizontal className="h-4 w-4" />
                     </Button>
-                    <Menu>
-                      <MenuItem>Edit</MenuItem>
-                      <MenuItem>Duplicate</MenuItem>
-                      <MenuItem>Archive</MenuItem>
-                      <MenuItem variant="danger">Delete</MenuItem>
-                    </Menu>
-                  </MenuRoot>
+                    <Overlay type="popover">
+                      <MenuContent>
+                        <MenuItem>Edit</MenuItem>
+                        <MenuItem>Duplicate</MenuItem>
+                        <MenuItem>Archive</MenuItem>
+                        <MenuItem variant="danger">Delete</MenuItem>
+                      </MenuContent>
+                    </Overlay>
+                  </Menu>
                 </TableCell>
               </TableRow>
             )}
           </TableBody>
-        </TableRoot>
+        </Table>
       </CardContent>
     </Card>
   );

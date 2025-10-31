@@ -1,11 +1,17 @@
-import { Switch } from "@dotui/registry/ui/switch";
+import { Switch, SwitchIndicator } from "@dotui/registry/ui/switch";
 
 export default function Demo() {
   return (
     <div className="flex items-center gap-4">
-      <Switch size="sm" defaultSelected />
-      <Switch size="md" defaultSelected />
-      <Switch size="lg" defaultSelected />
+      <Switch size="sm" defaultSelected>
+        <SwitchIndicator />
+      </Switch>
+      <Switch size="md" defaultSelected>
+        <SwitchIndicator />
+      </Switch>
+      <Switch size="lg" defaultSelected>
+        <SwitchIndicator />
+      </Switch>
     </div>
   );
 }

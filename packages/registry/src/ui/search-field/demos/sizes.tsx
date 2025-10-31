@@ -1,15 +1,18 @@
+import { Input } from "@dotui/registry/ui/input";
 import { SearchField } from "@dotui/registry/ui/search-field";
 
 export default function Demo() {
   return (
     <div className="flex items-center gap-4">
-      <SearchField aria-label="small (sm)" placeholder="small (sm)" size="sm" />
-      <SearchField
-        aria-label="medium (md)"
-        placeholder="medium (md)"
-        size="md"
-      />
-      <SearchField aria-label="large (lg)" placeholder="large (lg)" size="lg" />
+      <SearchField aria-label="sm">
+        <Input placeholder="sm" size="sm" />
+      </SearchField>
+      <SearchField aria-label="md">
+        <Input placeholder="md" size="md" />
+      </SearchField>
+      <SearchField aria-label="lg">
+        <Input placeholder="lg" size="lg" />
+      </SearchField>
     </div>
   );
 }

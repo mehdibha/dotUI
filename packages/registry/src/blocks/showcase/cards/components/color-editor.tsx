@@ -8,9 +8,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@dotui/registry/ui/card";
-import { ColorPickerEditor } from "@dotui/registry/ui/color-picker";
+import { ColorEditor } from "@dotui/registry/ui/color-editor";
 
-export function ColorEditor({
+export function ColorEditorCard({
   className,
   ...props
 }: React.ComponentProps<"div">) {
@@ -21,7 +21,7 @@ export function ColorEditor({
         <CardDescription>Edit the accent color of the app.</CardDescription>
       </CardHeader>
       <CardContent>
-        <ColorPickerEditor />
+        <ColorEditor />
       </CardContent>
     </Card>
   );

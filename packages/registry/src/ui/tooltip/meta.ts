@@ -13,16 +13,6 @@ const tooltipMeta = {
         },
       ],
     },
-    motion: {
-      files: [
-        {
-          type: "registry:ui",
-          path: "ui/tooltip/motion.tsx",
-          target: "ui/tooltip.tsx",
-        },
-      ],
-      dependencies: ["motion"],
-    },
   },
 } satisfies RegistryItem;
 

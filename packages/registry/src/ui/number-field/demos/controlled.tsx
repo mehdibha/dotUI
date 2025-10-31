@@ -2,6 +2,9 @@
 
 import React from "react";
 
+import { Button } from "@dotui/registry/ui/button";
+import { Group } from "@dotui/registry/ui/group";
+import { Input } from "@dotui/registry/ui/input";
 import { NumberField } from "@dotui/registry/ui/number-field";
 
 export default function Demo() {
@@ -14,7 +17,13 @@ export default function Demo() {
         onChange={(value) => {
           setInputValue(value);
         }}
-      />
+      >
+        <Group>
+          <Button slot="decrement" />
+          <Input />
+          <Button slot="increment" />
+        </Group>
+      </NumberField>
       <p className="text-sm text-fg-muted">mirrored number: {inputValue}</p>
     </div>
   );

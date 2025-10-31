@@ -2,11 +2,8 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import {
-  NumberField as _NumberField,
-  NumberFieldRoot as _NumberFieldRoot,
-} from "./basic";
-import type { NumberFieldProps, NumberFieldRootProps } from "./basic";
+import type { NumberFieldProps } from "./basic";
+import { NumberField as _NumberField } from "./basic";
 
 export const NumberField = createDynamicComponent<NumberFieldProps>(
   "number-field",
@@ -15,11 +12,4 @@ export const NumberField = createDynamicComponent<NumberFieldProps>(
   {},
 );
 
-export const NumberFieldRoot = createDynamicComponent<NumberFieldRootProps>(
-  "number-field",
-  "NumberFieldRoot",
-  _NumberFieldRoot,
-  {},
-);
-
-export type { NumberFieldProps, NumberFieldRootProps };
+export type { NumberFieldProps };

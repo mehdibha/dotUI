@@ -10,7 +10,7 @@ import type {
   TimeValue,
 } from "react-aria-components";
 
-import { fieldStyles } from "./field";
+import { fieldStyles } from "@dotui/registry/ui/field";
 
 const timeFieldStyles = tv({
   extend: fieldStyles().field(),

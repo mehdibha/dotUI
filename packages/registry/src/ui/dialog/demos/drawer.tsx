@@ -11,8 +11,9 @@ import {
   DialogHeader,
   DialogHeading,
 } from "@dotui/registry/ui/dialog";
+import { Label } from "@dotui/registry/ui/field";
 import { Overlay } from "@dotui/registry/ui/overlay";
-import { Select, SelectItem } from "@dotui/registry/ui/select";
+import { Select, SelectContent, SelectItem } from "@dotui/registry/ui/select";
 import { Switch } from "@dotui/registry/ui/switch";
 
 export default function Demo() {
@@ -36,13 +37,12 @@ export default function Demo() {
         </Dialog>
       </div>
       <div className="space-y-4 rounded-md border p-4">
-        <Select
-          label="Placement"
-          selectedKey={placement}
-          onSelectionChange={setPlacement}
-        >
-          <SelectItem id="top">Top</SelectItem>
-          <SelectItem id="bottom">Bottom</SelectItem>
+        <Select value={placement} onChange={setPlacement}>
+          <Label>Placement</Label>
+          <SelectContent>
+            <SelectItem id="top">Top</SelectItem>
+            <SelectItem id="bottom">Bottom</SelectItem>
+          </SelectContent>
         </Select>
         <Switch isSelected={swipeable} onChange={setSwipeable}>
           Swipeable

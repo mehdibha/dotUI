@@ -1,6 +1,5 @@
 import { ChevronRightIcon, GripVertical } from "lucide-react";
 import {
-  Collection as AriaCollection,
   Tree as AriaTree,
   TreeItem as AriaTreeItem,
   TreeItemContent as AriaTreeItemContent,

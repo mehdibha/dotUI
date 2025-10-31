@@ -3,7 +3,14 @@
 import { useDragAndDrop } from "react-aria-components";
 import { useAsyncList, useListData } from "react-stately";
 
-import { Table } from "@dotui/registry/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
+} from "@dotui/registry/ui/table";
 
 const users = [
   { id: 1, name: "John Doe", email: "john@example.com", role: "Admin" },
@@ -17,127 +24,91 @@ export function TableDemo() {
   return (
     <div className="grid w-full grid-cols-2 gap-6">
       {/* Basic table */}
-      <Table.Root className="col-span-2">
-        <Table.Container>
-          <Table>
-            <Table.Header>
-              <Table.Column isRowHeader>Name</Table.Column>
-              <Table.Column>Email</Table.Column>
-              <Table.Column>Role</Table.Column>
-            </Table.Header>
-            <Table.Body items={users}>
-              {(user) => (
-                <Table.Row key={user.id}>
-                  <Table.Cell>{user.name}</Table.Cell>
-                  <Table.Cell>{user.email}</Table.Cell>
-                  <Table.Cell>{user.role}</Table.Cell>
-                </Table.Row>
-              )}
-            </Table.Body>
-          </Table>
-        </Table.Container>
-        <Table.Description className="text-center">
-          Basic table
-        </Table.Description>
-      </Table.Root>
+      <div className="col-span-2">
+        <Table>
+          <TableHeader>
+            <TableColumn isRowHeader>Name</TableColumn>
+            <TableColumn>Email</TableColumn>
+            <TableColumn>Role</TableColumn>
+          </TableHeader>
+          <TableBody items={users}>
+            {(user) => (
+              <TableRow key={user.id}>
+                <TableCell>{user.name}</TableCell>
+                <TableCell>{user.email}</TableCell>
+                <TableCell>{user.role}</TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
 
       {/* Table with selection */}
-      <Table.Root>
-        <Table.Container>
-          <Table aria-label="Users" selectionMode="single">
-            <Table.Header>
-              <Table.Column isRowHeader>Name</Table.Column>
-              <Table.Column>Email</Table.Column>
-              <Table.Column>Role</Table.Column>
-            </Table.Header>
-            <Table.Body items={users}>
-              {(user) => (
-                <Table.Row key={user.id}>
-                  <Table.Cell>{user.name}</Table.Cell>
-                  <Table.Cell>{user.email}</Table.Cell>
-                  <Table.Cell>{user.role}</Table.Cell>
-                </Table.Row>
-              )}
-            </Table.Body>
-          </Table>
-        </Table.Container>
-        <Table.Description className="text-center">
-          With single selection
-        </Table.Description>
-      </Table.Root>
+      <Table aria-label="Users" selectionMode="single">
+        <TableHeader>
+          <TableColumn isRowHeader>Name</TableColumn>
+          <TableColumn>Email</TableColumn>
+          <TableColumn>Role</TableColumn>
+        </TableHeader>
+        <TableBody items={users}>
+          {(user) => (
+            <TableRow key={user.id}>
+              <TableCell>{user.name}</TableCell>
+              <TableCell>{user.email}</TableCell>
+              <TableCell>{user.role}</TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
 
-      <Table.Root>
-        <Table.Container>
-          <Table aria-label="Users" selectionMode="single">
-            <Table.Header>
-              <Table.Column isRowHeader>Name</Table.Column>
-              <Table.Column>Email</Table.Column>
-              <Table.Column>Role</Table.Column>
-            </Table.Header>
-            <Table.Body items={users}>
-              {(user) => (
-                <Table.Row
-                  key={user.id}
-                  isDisabled={user.id === 2 || user.id === 4}
-                >
-                  <Table.Cell>{user.name}</Table.Cell>
-                  <Table.Cell>{user.email}</Table.Cell>
-                  <Table.Cell>{user.role}</Table.Cell>
-                </Table.Row>
-              )}
-            </Table.Body>
-          </Table>
-        </Table.Container>
-        <Table.Description className="text-center">
-          With disabled rows
-        </Table.Description>
-      </Table.Root>
+      <Table aria-label="Users" selectionMode="single">
+        <TableHeader>
+          <TableColumn isRowHeader>Name</TableColumn>
+          <TableColumn>Email</TableColumn>
+          <TableColumn>Role</TableColumn>
+        </TableHeader>
+        <TableBody items={users}>
+          {(user) => (
+            <TableRow key={user.id} isDisabled={user.id === 2 || user.id === 4}>
+              <TableCell>{user.name}</TableCell>
+              <TableCell>{user.email}</TableCell>
+              <TableCell>{user.role}</TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
 
       <AsyncTable />
 
-      <Table.Root>
-        <Table.Container className="h-[223px]">
-          <Table aria-label="Users" selectionMode="single">
-            <Table.Header>
-              <Table.Column isRowHeader>Name</Table.Column>
-              <Table.Column>Email</Table.Column>
-              <Table.Column>Role</Table.Column>
-            </Table.Header>
-            <Table.Body items={[]}></Table.Body>
-          </Table>
-        </Table.Container>
-        <Table.Description className="text-center">
-          Empty state
-        </Table.Description>
-      </Table.Root>
+      <Table aria-label="Users" selectionMode="single">
+        <TableHeader>
+          <TableColumn isRowHeader>Name</TableColumn>
+          <TableColumn>Email</TableColumn>
+          <TableColumn>Role</TableColumn>
+        </TableHeader>
+        <TableBody items={[]}></TableBody>
+      </Table>
 
       <AsyncSortTable />
 
-      <Table.Root>
-        <Table.Container resizable>
-          <Table>
-            <Table.Header>
-              <Table.Column isRowHeader allowsResizing>
-                Name
-              </Table.Column>
-              <Table.Column allowsResizing>Email</Table.Column>
-              <Table.Column allowsResizing>Role</Table.Column>
-            </Table.Header>
-            <Table.Body items={users}>
-              {(user) => (
-                <Table.Row key={user.id}>
-                  <Table.Cell>{user.name}</Table.Cell>
-                  <Table.Cell>{user.email}</Table.Cell>
-                  <Table.Cell>{user.role}</Table.Cell>
-                </Table.Row>
-              )}
-            </Table.Body>
-          </Table>
-        </Table.Container>
-        <Table.Description className="text-center">
-          With resizable columns
-        </Table.Description>
-      </Table.Root>
+      <Table resizable>
+        <TableHeader>
+          <TableColumn isRowHeader allowsResizing>
+            Name
+          </TableColumn>
+          <TableColumn allowsResizing>Email</TableColumn>
+          <TableColumn allowsResizing>Role</TableColumn>
+        </TableHeader>
+        <TableBody items={users}>
+          {(user) => (
+            <TableRow key={user.id}>
+              <TableCell>{user.name}</TableCell>
+              <TableCell>{user.email}</TableCell>
+              <TableCell>{user.role}</TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
     </div>
   );
 }
@@ -168,35 +139,28 @@ const AsyncTable = () => {
   });
 
   return (
-    <Table.Root>
-      <Table.Container className="h-[223px]">
-        <Table aria-label="Users" selectionMode="single">
-          <Table.Header>
-            <Table.Column isRowHeader>Name</Table.Column>
-            <Table.Column>Birth Year</Table.Column>
-            <Table.Column>Height</Table.Column>
-            <Table.Column>Mass</Table.Column>
-          </Table.Header>
-          <Table.Body
-            items={list.items}
-            isLoading={list.isLoading}
-            onLoadMore={list.loadMore}
-          >
-            {(c) => (
-              <Table.Row id={c.name}>
-                <Table.Cell>{c.name}</Table.Cell>
-                <Table.Cell>{c.birth_year}</Table.Cell>
-                <Table.Cell>{c.height}</Table.Cell>
-                <Table.Cell>{c.mass}</Table.Cell>
-              </Table.Row>
-            )}
-          </Table.Body>
-        </Table>
-      </Table.Container>
-      <Table.Description className="text-center">
-        With async loading
-      </Table.Description>
-    </Table.Root>
+    <Table aria-label="Users" selectionMode="single" className="h-[223px]">
+      <TableHeader>
+        <TableColumn isRowHeader>Name</TableColumn>
+        <TableColumn>Birth Year</TableColumn>
+        <TableColumn>Height</TableColumn>
+        <TableColumn>Mass</TableColumn>
+      </TableHeader>
+      <TableBody
+        items={list.items}
+        isLoading={list.isLoading}
+        onLoadMore={list.loadMore}
+      >
+        {(c) => (
+          <TableRow id={c.name}>
+            <TableCell>{c.name}</TableCell>
+            <TableCell>{c.birth_year}</TableCell>
+            <TableCell>{c.height}</TableCell>
+            <TableCell>{c.mass}</TableCell>
+          </TableRow>
+        )}
+      </TableBody>
+    </Table>
   );
 };
 
@@ -231,43 +195,37 @@ function AsyncSortTable() {
   });
 
   return (
-    <Table.Root>
-      <Table.Container className="h-[223px]">
-        <Table
-          aria-label="Example table with client side sorting"
-          sortDescriptor={list.sortDescriptor}
-          onSortChange={list.sort}
-        >
-          <Table.Header>
-            <Table.Column id="name" isRowHeader allowsSorting>
-              Name
-            </Table.Column>
-            <Table.Column id="height" allowsSorting>
-              Height
-            </Table.Column>
-            <Table.Column id="mass" allowsSorting>
-              Mass
-            </Table.Column>
-            <Table.Column id="birth_year" allowsSorting>
-              Birth Year
-            </Table.Column>
-          </Table.Header>
-          <Table.Body items={list.items}>
-            {(item) => (
-              <Table.Row id={item.name}>
-                <Table.Cell>{item.name}</Table.Cell>
-                <Table.Cell>{item.height}</Table.Cell>
-                <Table.Cell>{item.mass}</Table.Cell>
-                <Table.Cell>{item.birth_year}</Table.Cell>
-              </Table.Row>
-            )}
-          </Table.Body>
-        </Table>
-      </Table.Container>
-      <Table.Description className="text-center">
-        With async sorting
-      </Table.Description>
-    </Table.Root>
+    <Table
+      aria-label="Example table with client side sorting"
+      sortDescriptor={list.sortDescriptor}
+      onSortChange={list.sort}
+      className="h-[223px]"
+    >
+      <TableHeader>
+        <TableColumn id="name" isRowHeader allowsSorting>
+          Name
+        </TableColumn>
+        <TableColumn id="height" allowsSorting>
+          Height
+        </TableColumn>
+        <TableColumn id="mass" allowsSorting>
+          Mass
+        </TableColumn>
+        <TableColumn id="birth_year" allowsSorting>
+          Birth Year
+        </TableColumn>
+      </TableHeader>
+      <TableBody items={list.items}>
+        {(item) => (
+          <TableRow id={item.name}>
+            <TableCell>{item.name}</TableCell>
+            <TableCell>{item.height}</TableCell>
+            <TableCell>{item.mass}</TableCell>
+            <TableCell>{item.birth_year}</TableCell>
+          </TableRow>
+        )}
+      </TableBody>
+    </Table>
   );
 }
 
@@ -303,28 +261,21 @@ const _ReordableTable = () => {
   });
 
   return (
-    <Table.Root>
-      <Table.Container>
-        <Table dragAndDropHooks={dragAndDropHooks}>
-          <Table.Header>
-            <Table.Column isRowHeader>Name</Table.Column>
-            <Table.Column>Date</Table.Column>
-            <Table.Column>Type</Table.Column>
-          </Table.Header>
-          <Table.Body items={list.items}>
-            {(item) => (
-              <Table.Row key={item.id}>
-                <Table.Cell>{item.name}</Table.Cell>
-                <Table.Cell>{item.date}</Table.Cell>
-                <Table.Cell>{item.type}</Table.Cell>
-              </Table.Row>
-            )}
-          </Table.Body>
-        </Table>
-      </Table.Container>
-      <Table.Description className="text-center">
-        Reordable table (drag and drop)
-      </Table.Description>
-    </Table.Root>
+    <Table dragAndDropHooks={dragAndDropHooks}>
+      <TableHeader>
+        <TableColumn isRowHeader>Name</TableColumn>
+        <TableColumn>Date</TableColumn>
+        <TableColumn>Type</TableColumn>
+      </TableHeader>
+      <TableBody items={list.items}>
+        {(item) => (
+          <TableRow key={item.id}>
+            <TableCell>{item.name}</TableCell>
+            <TableCell>{item.date}</TableCell>
+            <TableCell>{item.type}</TableCell>
+          </TableRow>
+        )}
+      </TableBody>
+    </Table>
   );
 };

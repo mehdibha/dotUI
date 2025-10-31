@@ -7,7 +7,7 @@ import {
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
-import { fieldStyles } from "./field";
+import { fieldStyles } from "@dotui/registry/ui/field";
 
 const textFieldStyles = tv({
   base: [fieldStyles().field({ orientation: "vertical" })],

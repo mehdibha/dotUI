@@ -4,11 +4,11 @@ import React from "react";
 import type { SortDescriptor } from "react-aria-components";
 
 import {
+  Table,
   TableBody,
   TableCell,
   TableColumn,
   TableHeader,
-  TableRoot,
   TableRow,
 } from "@dotui/registry/ui/table";
 
@@ -44,7 +44,7 @@ export default function Demo() {
   }, [sortDescriptor]);
 
   return (
-    <TableRoot
+    <Table
       aria-label="Files"
       sortDescriptor={sortDescriptor}
       onSortChange={setSortDescriptor}
@@ -65,7 +65,7 @@ export default function Demo() {
           </TableRow>
         )}
       </TableBody>
-    </TableRoot>
+    </Table>
   );
 }
 

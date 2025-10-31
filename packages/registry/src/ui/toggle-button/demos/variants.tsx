@@ -1,7 +1,7 @@
 import { PinIcon } from "@dotui/registry/icons";
 import { ToggleButton } from "@dotui/registry/ui/toggle-button";
 
-const variants = ["quiet", "primary", "accent"] as const;
+const variants = ["quiet", "default"] as const;
 
 export default function Demo() {
   return (
@@ -10,8 +10,8 @@ export default function Demo() {
         <ToggleButton
           key={variant}
           variant={variant}
-          defaultSelected={variant === "accent"}
           aria-label="Toggle pin"
+          defaultSelected
         >
           <PinIcon className="rotate-45" />
         </ToggleButton>

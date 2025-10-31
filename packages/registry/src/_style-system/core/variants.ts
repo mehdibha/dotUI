@@ -34,7 +34,6 @@ export const createVariants = (
     modal: overlays,
     drawer: overlays,
     "date-picker": pickers,
-    "date-range-picker": pickers,
     combobox: pickers,
     select: selection,
   };

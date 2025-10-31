@@ -56,7 +56,7 @@
         "noStaticElementInteractions": "warn"
       },
       "performance": {
-        "noImgElement": "warn"
+        "noImgElement": "off"
       },
       "security": {
         "noDangerouslySetInnerHtml": "warn"

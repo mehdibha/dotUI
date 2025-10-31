@@ -1,7 +1,7 @@
 import { AccountMenu } from "@dotui/registry/blocks/showcase/cards/components/account-menu";
 import { Backlog } from "@dotui/registry/blocks/showcase/cards/components/backlog";
 import { Booking } from "@dotui/registry/blocks/showcase/cards/components/booking";
-import { ColorEditor } from "@dotui/registry/blocks/showcase/cards/components/color-editor";
+import { ColorEditorCard } from "@dotui/registry/blocks/showcase/cards/components/color-editor";
 import { Filters } from "@dotui/registry/blocks/showcase/cards/components/filters";
 import { InviteMembers } from "@dotui/registry/blocks/showcase/cards/components/invite-members";
 import { LoginForm } from "@dotui/registry/blocks/showcase/cards/components/login-form";
@@ -19,7 +19,7 @@ export function Cards(props: React.ComponentProps<"div">) {
         <Booking className="w-full max-md:col-span-1 md:w-80" />
         <Filters className="flex-1 max-md:col-span-1" />
       </div>
-      <Notifications className="col-span-11 max-md:h-100 md:col-span-5 md:[contain:size] xl:col-span-3" />
+      <Notifications className="col-span-11 max-md:h-100 md:col-span-5 md:contain-[size] xl:col-span-3" />
       <InviteMembers className="col-span-11 md:col-span-6 lg:col-span-6 xl:col-span-4" />
       <Backlog className="col-span-11 lg:col-span-8 xl:col-span-7" />
       <AccountMenu className="max-lg:hidden lg:col-span-3 lg:block xl:hidden" />
@@ -27,7 +27,7 @@ export function Cards(props: React.ComponentProps<"div">) {
         <AccountMenu className="col-span-11 min-w-0 sm:col-span-5 lg:hidden xl:col-span-2 xl:block" />
         <LoginForm className="col-span-11 max-w-none sm:col-span-6 lg:hidden" />
         <div className="col-span-11 flex items-start gap-4 max-sm:flex-col max-sm:items-stretch lg:col-span-7 xl:col-span-6">
-          <ColorEditor className="max-sm:hidden" />
+          <ColorEditorCard className="max-sm:hidden" />
           <TeamName className="flex-1" />
         </div>
         <LoginForm className="hidden w-full max-w-none lg:col-span-4 lg:block xl:col-span-3" />

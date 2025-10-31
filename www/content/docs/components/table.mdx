@@ -58,12 +58,6 @@ import {
 </TableRoot>;
 ```
 
-## Variants
-
-Use the `variant` prop to change the appearance of the Table.
-
-<ComponentPreview name="table/demos/variants" />
-
 ## Dynamic collections
 
 The first example have shown static collections, where the data is hard coded. Dynamic collections, as shown below, can be used when the table data comes from an external data source such as an API, or updates over time. In the example below, both the columns and the rows are provided to the table via a render function. You can also make the columns static and only the rows dynamic.
@@ -89,12 +83,6 @@ Use `defaultSelectedKeys` to provide a default set of selected rows. Note that t
 To programmatically control row selection, use the `selectedKeys` prop paired with the onSelectionChange callback. The `id` prop from the selected rows will be passed into the callback when the row is pressed, allowing you to update state accordingly.
 
 <ComponentPreview name="table/demos/controlled" />
-
-### Selection variant
-
-Use the `selectionVariant` prop to change the appearance of the selected rows.
-
-<ComponentPreview name="table/demos/selection-variant" />
 
 ### Disallow empty selection
 

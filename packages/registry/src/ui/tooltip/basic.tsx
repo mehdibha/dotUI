@@ -12,7 +12,6 @@ import {
 import { tv } from "tailwind-variants";
 import type { VariantProps } from "tailwind-variants";
 
-
 const tooltipStyles = tv({
   slots: {
     content: [
@@ -44,10 +43,13 @@ const Tooltip = ({ delay = 700, closeDelay = 0, ...props }: TooltipProps) => (
 
 interface TooltipContentProps
   extends React.ComponentProps<typeof AriaTooltip>,
-    VariantProps<typeof tooltipStyles> {}
+    VariantProps<typeof tooltipStyles> {
+  hideArrow?: boolean;
+}
 
 function TooltipContent({
   offset = 10,
+  hideArrow = false,
   className,
   ...props
 }: TooltipContentProps) {
@@ -63,7 +65,7 @@ function TooltipContent({
       {composeRenderProps(props.children, (children) => (
         <>
           {children}
-          <TooltipArrow />
+          {!hideArrow && <TooltipArrow />}
         </>
       ))}
     </AriaTooltip>
@@ -113,11 +115,6 @@ const TooltipTrigger = ({
 
 /* -----------------------------------------------------------------------------------------------*/
 
-export { Tooltip, TooltipContent, TooltipArrow, TooltipTrigger };
+export { Tooltip, TooltipContent, TooltipTrigger };
 
-export type {
-  TooltipProps,
-  TooltipContentProps,
-  TooltipArrowProps,
-  TooltipTriggerProps,
-};
+export type { TooltipProps, TooltipContentProps, TooltipTriggerProps };

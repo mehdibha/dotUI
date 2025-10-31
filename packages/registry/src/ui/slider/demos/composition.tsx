@@ -1,29 +1,29 @@
 import { Volume1Icon, Volume2Icon } from "@dotui/registry/icons";
 import { Description, Label } from "@dotui/registry/ui/field";
 import {
+  Slider,
+  SliderControl,
   SliderFiller,
-  SliderRoot,
+  SliderOutput,
   SliderThumb,
-  SliderTrack,
-  SliderValueLabel,
 } from "@dotui/registry/ui/slider";
 
 export default function Demo() {
   return (
-    <SliderRoot defaultValue={50} className="flex flex-col gap-2">
+    <Slider defaultValue={50} className="flex flex-col gap-2">
       <div className="flex items-center justify-between gap-2">
         <Label>Volume</Label>
-        <SliderValueLabel />
+        <SliderOutput />
       </div>
       <div className="flex items-center gap-2">
         <Volume1Icon />
-        <SliderTrack>
+        <SliderControl>
           <SliderFiller />
           <SliderThumb />
-        </SliderTrack>
+        </SliderControl>
         <Volume2Icon />
       </div>
       <Description>Adjust the volume.</Description>
-    </SliderRoot>
+    </Slider>
   );
 }

@@ -5,7 +5,7 @@ import {
   TableCell,
   TableColumn,
   TableHeader,
-  TableRoot,
+  Table,
   TableRow,
 } from "@dotui/registry/ui/table";
 
@@ -24,7 +24,7 @@ const data: Item[] = [
 
 export default function Demo() {
   return (
-    <TableRoot aria-label="Files">
+    <Table aria-label="Files">
       <TableHeader columns={columns}>
         {(column) => (
           <TableColumn isRowHeader={column.isRowHeader}>
@@ -39,7 +39,7 @@ export default function Demo() {
           </TableRow>
         )}
       </TableBody>
-    </TableRoot>
+    </Table>
   );
 }
 
