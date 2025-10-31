@@ -1,0 +1,1154 @@
+# DotUI Component Usage Guide
+
+This document provides comprehensive usage examples for all DotUI components. Components are built on React Aria Components and use Tailwind Variants for styling.
+
+## Import Pattern
+
+All components are imported from `@dotui/registry/ui/{component-name}`:
+
+```tsx
+import { ComponentName } from "@dotui/registry/ui/component-name";
+```
+
+---
+
+## Form Components
+
+### TextField
+
+A wrapper component for text input fields that provides proper form structure.
+
+```tsx
+import { Label } from "@dotui/registry/ui/field";
+import { Input } from "@dotui/registry/ui/input";
+import { TextField } from "@dotui/registry/ui/text-field";
+
+<TextField>
+  <Label>Email</Label>
+  <Input placeholder="hello@mehdibha.com" />
+</TextField>;
+```
+
+### Input
+
+Basic text input component. Can be used standalone or within InputGroup.
+
+```tsx
+import { Input, InputGroup, InputAddon } from "@dotui/registry/ui/input";
+
+// Standalone
+<Input placeholder="Enter text" />
+
+// With InputGroup (for addons/icons)
+<InputGroup>
+  <InputAddon>@</InputAddon>
+  <Input placeholder="username" />
+</InputGroup>
+
+// With TextArea
+<InputGroup>
+  <TextArea placeholder="Enter description" />
+</InputGroup>
+```
+
+### Checkbox
+
+Checkbox input with indicator component.
+
+```tsx
+import { Checkbox, CheckboxIndicator } from "@dotui/registry/ui/checkbox";
+import { Label } from "@dotui/registry/ui/field";
+
+<Checkbox>
+  <CheckboxIndicator />
+  <Label>I accept the terms and conditions</Label>
+</Checkbox>;
+```
+
+### Switch
+
+Toggle switch component.
+
+```tsx
+import { Label } from "@dotui/registry/ui/field";
+import { Switch, SwitchIndicator } from "@dotui/registry/ui/switch";
+
+<Switch>
+  <SwitchIndicator />
+  <Label>Focus mode</Label>
+</Switch>;
+```
+
+### RadioGroup
+
+Radio button group with multiple options.
+
+```tsx
+import { FieldGroup, Label } from "@dotui/registry/ui/field";
+import {
+  Radio,
+  RadioGroup,
+  RadioIndicator,
+} from "@dotui/registry/ui/radio-group";
+
+<RadioGroup defaultValue="sm">
+  <Label>Size</Label>
+  <FieldGroup>
+    <Radio value="sm">
+      <RadioIndicator />
+      <Label>Small</Label>
+    </Radio>
+    <Radio value="md">
+      <RadioIndicator />
+      <Label>Medium</Label>
+    </Radio>
+    <Radio value="lg">
+      <RadioIndicator />
+      <Label>Large</Label>
+    </Radio>
+  </FieldGroup>
+</RadioGroup>;
+```
+
+### Select
+
+Dropdown select component with trigger and content.
+
+```tsx
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "@dotui/registry/ui/select";
+
+<Select aria-label="Provider">
+  <SelectTrigger />
+  <SelectContent>
+    <SelectItem>Perplexity</SelectItem>
+    <SelectItem>Replicate</SelectItem>
+    <SelectItem>Together AI</SelectItem>
+    <SelectItem>ElevenLabs</SelectItem>
+  </SelectContent>
+</Select>;
+```
+
+### Combobox
+
+Autocomplete input with dropdown list.
+
+```tsx
+import {
+  Combobox,
+  ComboboxContent,
+  ComboboxInput,
+  ComboboxItem,
+} from "@dotui/registry/ui/combobox";
+
+<Combobox aria-label="country">
+  <ComboboxInput />
+  <ComboboxContent>
+    <ComboboxItem>Canada</ComboboxItem>
+    <ComboboxItem>France</ComboboxItem>
+    <ComboboxItem>Germany</ComboboxItem>
+  </ComboboxContent>
+</Combobox>;
+```
+
+### Slider
+
+Range slider component.
+
+```tsx
+import { Slider, SliderControl } from "@dotui/registry/ui/slider";
+
+<Slider aria-label="Opacity" defaultValue={50}>
+  <SliderControl />
+</Slider>;
+```
+
+### ProgressBar
+
+Progress indicator component.
+
+```tsx
+import {
+  ProgressBar,
+  ProgressBarControl,
+} from "@dotui/registry/ui/progress-bar";
+
+<ProgressBar aria-label="loading" value={66}>
+  <ProgressBarControl />
+</ProgressBar>;
+```
+
+---
+
+## Button Components
+
+### Button
+
+Standard button with multiple variants and sizes.
+
+```tsx
+import { Button } from "@dotui/registry/ui/button";
+
+// Basic usage
+<Button>Button</Button>
+
+// With variant
+<Button variant="primary">Primary</Button>
+<Button variant="danger">Delete</Button>
+<Button variant="quiet">Quiet</Button>
+<Button variant="link">Link</Button>
+
+// With size
+<Button size="sm">Small</Button>
+<Button size="md">Medium</Button>
+<Button size="lg">Large</Button>
+
+// With icon
+<Button>
+  <PenSquareIcon /> Create issue
+</Button>
+
+// Pending state (shows loader automatically)
+<Button isPending>Loading...</Button>
+
+// As child (compose with other components)
+<Button asChild>
+  <a href="/">Link</a>
+</Button>
+```
+
+### ToggleButton
+
+Button that can be toggled on/off.
+
+```tsx
+import { ToggleButton } from "@dotui/registry/ui/toggle-button";
+
+<ToggleButton aria-label="Toggle pin">
+  <PinIcon className="rotate-45" />
+</ToggleButton>;
+```
+
+---
+
+## Layout Components
+
+### Card
+
+Card container with header, content, and footer sections.
+
+```tsx
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+  CardAction,
+} from "@dotui/registry/ui/card";
+
+<Card>
+  <CardHeader>
+    <CardTitle>Card Title</CardTitle>
+    <CardDescription>Card description</CardDescription>
+    <CardAction>
+      <Button>Action</Button>
+    </CardAction>
+  </CardHeader>
+  <CardContent>Card content goes here</CardContent>
+  <CardFooter>Footer content</CardFooter>
+</Card>;
+```
+
+### Tabs
+
+Tabbed interface component.
+
+```tsx
+import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs";
+
+<Tabs>
+  <TabList>
+    <Tab id="overview">Overview</Tab>
+    <Tab id="usage">Usage</Tab>
+    <Tab id="settings">Settings</Tab>
+  </TabList>
+  <TabPanel id="overview">Overview content</TabPanel>
+  <TabPanel id="usage">Usage content</TabPanel>
+  <TabPanel id="settings">Settings content</TabPanel>
+</Tabs>;
+```
+
+### Accordion
+
+Collapsible accordion component.
+
+```tsx
+import {
+  Accordion,
+  AccordionHeading,
+  AccordionItem,
+  AccordionPanel,
+} from "@dotui/registry/ui/accordion";
+
+<Accordion>
+  <AccordionItem>
+    <AccordionHeading>Accordion Heading</AccordionHeading>
+    <AccordionPanel>Accordion Panel</AccordionPanel>
+  </AccordionItem>
+  <AccordionItem>
+    <AccordionHeading>Accordion Heading</AccordionHeading>
+    <AccordionPanel>Accordion Panel</AccordionPanel>
+  </AccordionItem>
+</Accordion>;
+```
+
+---
+
+## Overlay Components
+
+### Dialog
+
+Dialog component that works with Overlay for modals.
+
+```tsx
+import { Button } from "@dotui/registry/ui/button";
+import {
+  Dialog,
+  DialogBody,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogHeading,
+} from "@dotui/registry/ui/dialog";
+import { Overlay } from "@dotui/registry/ui/overlay";
+import { Input, TextArea } from "@dotui/registry/ui/input";
+import { TextField } from "@dotui/registry/ui/text-field";
+
+<Dialog>
+  <Button>Open dialog</Button>
+  <Overlay>
+    <DialogContent>
+      <DialogHeader>
+        <DialogHeading>Create a new issue</DialogHeading>
+        <DialogDescription>
+          Report an issue or create a feature request.
+        </DialogDescription>
+      </DialogHeader>
+      <DialogBody>
+        <TextField aria-label="Title" autoFocus>
+          <Input placeholder="Title" className="w-full" />
+        </TextField>
+        <TextField aria-label="Description">
+          <TextArea
+            aria-label="Description"
+            placeholder="description"
+            className="w-full"
+          />
+        </TextField>
+      </DialogBody>
+      <DialogFooter>
+        <Button slot="close">Cancel</Button>
+        <Button slot="close" variant="primary">
+          Save changes
+        </Button>
+      </DialogFooter>
+    </DialogContent>
+  </Overlay>
+</Dialog>;
+```
+
+### Modal
+
+Modal overlay component (uses Dialog inside).
+
+```tsx
+import { Button } from "@dotui/registry/ui/button";
+import { Dialog, DialogContent } from "@dotui/registry/ui/dialog";
+import { Modal } from "@dotui/registry/ui/modal";
+
+<Dialog>
+  <Button>Open modal</Button>
+  <Modal>
+    <DialogContent>modal content</DialogContent>
+  </Modal>
+</Dialog>;
+```
+
+### Drawer
+
+Bottom/top/side drawer component.
+
+```tsx
+import { Button } from "@dotui/registry/ui/button";
+import { Dialog, DialogContent } from "@dotui/registry/ui/dialog";
+import { Drawer } from "@dotui/registry/ui/drawer";
+
+<Dialog>
+  <Button>Open drawer</Button>
+  <Drawer placement="bottom">
+    <DialogContent>Drawer content</DialogContent>
+  </Drawer>
+</Dialog>;
+```
+
+### Popover
+
+Popover component for dropdowns and floating content.
+
+```tsx
+import { Button } from "@dotui/registry/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeading,
+} from "@dotui/registry/ui/dialog";
+import { Popover } from "@dotui/registry/ui/popover";
+
+<Dialog>
+  <Button aria-label="Help">
+    <InfoIcon />
+  </Button>
+  <Popover>
+    <DialogContent className="w-56 space-y-4">
+      <DialogHeading>Need help?</DialogHeading>
+      <p>
+        If you're having issues accessing your account, contact our customer
+        support team for help.
+      </p>
+    </DialogContent>
+  </Popover>
+</Dialog>;
+```
+
+### Tooltip
+
+Tooltip component for contextual help.
+
+```tsx
+import { Button } from "@dotui/registry/ui/button";
+import { Kbd } from "@dotui/registry/ui/kbd";
+import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
+
+<Tooltip>
+  <Button>
+    <SquarePenIcon />
+  </Button>
+  <TooltipContent>
+    Create new issue <Kbd>C</Kbd>
+  </TooltipContent>
+</Tooltip>;
+```
+
+---
+
+## Menu Components
+
+### Menu
+
+Dropdown menu component.
+
+```tsx
+import { Button } from "@dotui/registry/ui/button";
+import { Menu, MenuContent, MenuItem } from "@dotui/registry/ui/menu";
+import { Popover } from "@dotui/registry/ui/popover";
+
+<Menu>
+  <Button>
+    <MenuIcon />
+  </Button>
+  <Popover>
+    <MenuContent>
+      <MenuItem>Account settings</MenuItem>
+      <MenuItem>Create team</MenuItem>
+      <MenuItem>Command menu</MenuItem>
+      <MenuItem>Log out</MenuItem>
+    </MenuContent>
+  </Popover>
+</Menu>;
+```
+
+### ListBox
+
+List box component (often used with Select/Combobox).
+
+```tsx
+import { ListBox, ListBoxItem } from "@dotui/registry/ui/list-box";
+
+<ListBox aria-label="Framework">
+  <ListBoxItem>Next.js</ListBoxItem>
+  <ListBoxItem>Remix</ListBoxItem>
+  <ListBoxItem>Astro</ListBoxItem>
+  <ListBoxItem>Gatsby</ListBoxItem>
+</ListBox>;
+```
+
+---
+
+## Display Components
+
+### Avatar
+
+Avatar component with image and fallback.
+
+```tsx
+import { Avatar, AvatarGroup } from "@dotui/registry/ui/avatar";
+
+// Simple usage
+<Avatar
+  src="https://github.com/mehdibha.png"
+  alt="@mehdibha"
+  fallback="M"
+/>
+
+// With AvatarGroup (compound pattern)
+<AvatarGroup>
+  <Avatar src="..." alt="..." />
+  <Avatar src="..." alt="..." />
+</AvatarGroup>
+
+// Note: Avatar.Group compound pattern also available, but AvatarGroup as separate export is preferred
+```
+
+### Badge
+
+Badge component for labels and tags.
+
+```tsx
+import { Badge } from "@dotui/registry/ui/badge";
+
+<Badge>Badge</Badge>
+<Badge variant="danger">Error</Badge>
+<Badge variant="success">Success</Badge>
+<Badge variant="warning">Warning</Badge>
+<Badge variant="info">Info</Badge>
+```
+
+### Alert
+
+Alert component for notifications.
+
+```tsx
+import { Alert, AlertDescription, AlertTitle } from "@dotui/registry/ui/alert";
+
+<Alert>
+  <AlertTitle>Payment information</AlertTitle>
+  <AlertDescription>
+    You are currently on the free plan. Upgrade to unlock more features.
+  </AlertDescription>
+</Alert>
+
+// With variants
+<Alert variant="danger">...</Alert>
+<Alert variant="warning">...</Alert>
+<Alert variant="success">...</Alert>
+<Alert variant="info">...</Alert>
+```
+
+---
+
+## Field Components
+
+### Field
+
+Base field component for form structure.
+
+```tsx
+import {
+  Field,
+  FieldGroup,
+  Fieldset,
+  Legend,
+  Label,
+  Description,
+  FieldError,
+} from "@dotui/registry/ui/field";
+
+<Fieldset>
+  <Legend>Form Section</Legend>
+  <FieldGroup>
+    <Field>
+      <Label>Email</Label>
+      <Input />
+      <Description>Enter your email address</Description>
+      <FieldError>Email is required</FieldError>
+    </Field>
+  </FieldGroup>
+</Fieldset>;
+```
+
+---
+
+## Component Patterns
+
+### Compound Components
+
+Many components use compound component patterns:
+
+```tsx
+// Avatar - compound pattern (AvatarGroup as separate export)
+<AvatarGroup>
+  <Avatar src="..." alt="..." />
+  <Avatar src="..." alt="..." />
+</AvatarGroup>
+
+// Avatar - advanced usage with sub-components
+<AvatarRoot>
+  <AvatarImage src="..." alt="..." />
+  <AvatarFallback>AB</AvatarFallback>
+</AvatarRoot>
+
+// Card - separate components
+<Card>
+  <CardHeader>
+    <CardTitle />
+    <CardDescription />
+  </CardHeader>
+  <CardContent />
+  <CardFooter />
+</Card>
+```
+
+### React Aria Patterns
+
+Components follow React Aria Components patterns:
+
+- Use `composeRenderProps` for className composition
+- Support render props and render props context
+- Follow accessibility patterns from React Aria
+- Use `slot` prop for composition
+
+### Styling
+
+- Components use Tailwind Variants (`tv`) for styling
+- Variants can be passed as props (e.g., `variant`, `size`)
+- Default variants are applied automatically
+- Custom className can be merged with component styles
+
+### Context Providers
+
+Some components use context for variants:
+
+```tsx
+// Button with context
+<ButtonProvider variant="primary" size="lg">
+  <Button>Uses provider props</Button>
+</ButtonProvider>
+```
+
+---
+
+## Common Props
+
+### Size Variants
+
+Most components support size variants:
+
+- `size="sm"` - Small
+- `size="md"` - Medium (default)
+- `size="lg"` - Large
+
+### Variant Props
+
+Common variant options:
+
+- `variant="default"` - Default style
+- `variant="primary"` - Primary color
+- `variant="danger"` - Danger/error color
+- `variant="success"` - Success color
+- `variant="warning"` - Warning color
+- `variant="quiet"` - Subtle/minimal style
+
+### State Props
+
+React Aria state props:
+
+- `isDisabled` - Disabled state
+- `isReadOnly` - Read-only state
+- `isRequired` - Required field
+- `isInvalid` - Invalid/error state
+- `isSelected` - Selected state (for toggles)
+- `isPending` - Loading/pending state
+
+---
+
+## Utility Components
+
+### Breadcrumbs
+
+Navigation breadcrumb component.
+
+```tsx
+import { Breadcrumb, Breadcrumbs } from "@dotui/registry/ui/breadcrumbs";
+
+<Breadcrumbs>
+  <Breadcrumb href="#">Home</Breadcrumb>
+  <Breadcrumb href="#">Components</Breadcrumb>
+  <Breadcrumb href="#">Breadcrumbs</Breadcrumb>
+</Breadcrumbs>;
+```
+
+### Kbd
+
+Keyboard key indicator component.
+
+```tsx
+import { Kbd, KbdGroup } from "@dotui/registry/ui/kbd";
+
+<KbdGroup>
+  <Kbd>⌘</Kbd>
+  <Kbd>K</Kbd>
+</KbdGroup>;
+```
+
+### Link
+
+Link component with variants.
+
+```tsx
+import { Link } from "@dotui/registry/ui/link";
+
+<Link href="/about">About</Link>
+<Link href="/docs" variant="accent">Documentation</Link>
+<Link href="/contact" variant="quiet">Contact</Link>
+```
+
+### Separator
+
+Visual separator component.
+
+```tsx
+import { Separator } from "@dotui/registry/ui/separator";
+
+<Separator orientation="horizontal" />
+<Separator orientation="vertical" />
+```
+
+### Loader
+
+Loading spinner component.
+
+```tsx
+import { Loader } from "@dotui/registry/ui/loader";
+
+<Loader />
+<Loader size={24} stroke={3} />
+```
+
+### Text
+
+Text component with skeleton support.
+
+```tsx
+import { Text } from "@dotui/registry/ui/text";
+
+<Text>Simple text content</Text>;
+```
+
+### Skeleton
+
+Skeleton loading placeholder.
+
+```tsx
+import { Skeleton, SkeletonProvider } from "@dotui/registry/ui/skeleton";
+
+<SkeletonProvider isLoading={true}>
+  <Skeleton>Content to show skeleton for</Skeleton>
+</SkeletonProvider>;
+```
+
+---
+
+## Form Field Components
+
+### SearchField
+
+Search input field wrapper.
+
+```tsx
+import { Input } from "@dotui/registry/ui/input";
+import { SearchField } from "@dotui/registry/ui/search-field";
+
+<SearchField aria-label="Search">
+  <Input />
+</SearchField>;
+```
+
+### NumberField
+
+Number input field with increment/decrement buttons.
+
+```tsx
+import { Input } from "@dotui/registry/ui/input";
+import { NumberField } from "@dotui/registry/ui/number-field";
+import { Label } from "@dotui/registry/ui/field";
+
+<NumberField>
+  <Label>Quantity</Label>
+  <Input />
+</NumberField>;
+```
+
+### ToggleButtonGroup
+
+Group of toggle buttons.
+
+```tsx
+import { ToggleButton } from "@dotui/registry/ui/toggle-button";
+import { ToggleButtonGroup } from "@dotui/registry/ui/toggle-button-group";
+
+<ToggleButtonGroup orientation="horizontal">
+  <ToggleButton value="left">Left</ToggleButton>
+  <ToggleButton value="center">Center</ToggleButton>
+  <ToggleButton value="right">Right</ToggleButton>
+</ToggleButtonGroup>;
+```
+
+### Group
+
+Group component for organizing related form elements.
+
+```tsx
+import { Group } from "@dotui/registry/ui/group";
+import { Button } from "@dotui/registry/ui/button";
+
+<Group orientation="horizontal">
+  <Button>First</Button>
+  <Button>Second</Button>
+  <Button>Third</Button>
+</Group>;
+```
+
+### Overlay
+
+Responsive overlay component that switches between Modal, Popover, and Drawer based on screen size.
+
+```tsx
+import { Dialog, DialogContent } from "@dotui/registry/ui/dialog";
+import { Overlay } from "@dotui/registry/ui/overlay";
+
+<Dialog>
+  <Button>Open overlay</Button>
+  <Overlay type="modal" mobileType="drawer">
+    <DialogContent>Content</DialogContent>
+  </Overlay>
+</Dialog>;
+```
+
+---
+
+## Date & Time Components
+
+### Calendar
+
+Calendar component for date selection.
+
+```tsx
+import { Calendar } from "@dotui/registry/ui/calendar";
+
+<Calendar aria-label="Appointment date" />
+
+// With custom header and grid
+<Calendar>
+  <CalendarHeader />
+  <CalendarGrid>
+    <CalendarGridHeader>
+      {(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}
+    </CalendarGridHeader>
+    <CalendarGridBody>
+      {(date) => <CalendarCell date={date} />}
+    </CalendarGridBody>
+  </CalendarGrid>
+</Calendar>
+```
+
+### DateField
+
+Date input field wrapper.
+
+```tsx
+import { DateField } from "@dotui/registry/ui/date-field";
+import { DateInput } from "@dotui/registry/ui/input";
+
+<DateField aria-label="Meeting date">
+  <DateInput />
+</DateField>;
+```
+
+### DatePicker
+
+Date picker with calendar popover.
+
+```tsx
+import { Calendar } from "@dotui/registry/ui/calendar";
+import {
+  DatePicker,
+  DatePickerContent,
+  DatePickerInput,
+} from "@dotui/registry/ui/date-picker";
+
+<DatePicker aria-label="Meeting date">
+  <DatePickerInput />
+  <DatePickerContent>
+    <Calendar />
+  </DatePickerContent>
+</DatePicker>
+
+// Range mode
+<DatePicker mode="range" aria-label="Date range">
+  <DatePickerInput />
+  <DatePickerContent>
+    <Calendar mode="range" />
+  </DatePickerContent>
+</DatePicker>
+```
+
+### TimeField
+
+Time input field wrapper.
+
+```tsx
+import { DateInput } from "@dotui/registry/ui/input";
+import { TimeField } from "@dotui/registry/ui/time-field";
+
+<TimeField aria-label="Event time">
+  <DateInput />
+</TimeField>;
+```
+
+---
+
+## Color Components
+
+### ColorPicker
+
+Color picker with popover.
+
+```tsx
+import { ColorEditor } from "@dotui/registry/ui/color-editor";
+import {
+  ColorPicker,
+  ColorPickerContent,
+  ColorPickerTrigger,
+} from "@dotui/registry/ui/color-picker";
+
+<ColorPicker>
+  <ColorPickerTrigger />
+  <ColorPickerContent>
+    <ColorEditor />
+  </ColorPickerContent>
+</ColorPicker>;
+```
+
+### ColorField
+
+Color input field wrapper.
+
+```tsx
+import { ColorField } from "@dotui/registry/ui/color-field";
+import { Label } from "@dotui/registry/ui/field";
+import { Input } from "@dotui/registry/ui/input";
+
+<ColorField>
+  <Label>Color</Label>
+  <Input />
+</ColorField>;
+```
+
+Note: Other color components (ColorArea, ColorSlider, ColorSwatch, ColorSwatchPicker, ColorThumb) are typically used within ColorEditor or ColorPicker implementations.
+
+---
+
+## Form Components
+
+### CheckboxGroup
+
+Group of checkboxes.
+
+```tsx
+import { Checkbox, CheckboxIndicator } from "@dotui/registry/ui/checkbox";
+import { CheckboxGroup } from "@dotui/registry/ui/checkbox-group";
+import { FieldGroup, Label } from "@dotui/registry/ui/field";
+
+<CheckboxGroup defaultValue={["nextjs"]}>
+  <Label>React frameworks</Label>
+  <FieldGroup>
+    <Checkbox value="nextjs">
+      <CheckboxIndicator />
+      <Label>Next.js</Label>
+    </Checkbox>
+    <Checkbox value="remix">
+      <CheckboxIndicator />
+      <Label>Remix</Label>
+    </Checkbox>
+  </FieldGroup>
+</CheckboxGroup>;
+```
+
+### Form
+
+Form wrapper component.
+
+```tsx
+import { Form } from "@dotui/registry/ui/form";
+import { Button } from "@dotui/registry/ui/button";
+import { Description, Label } from "@dotui/registry/ui/field";
+import { Input } from "@dotui/registry/ui/input";
+import { TextField } from "@dotui/registry/ui/text-field";
+
+<Form onSubmit={handleSubmit} className="space-y-4">
+  <TextField name="name" isRequired>
+    <Label>Name</Label>
+    <Input placeholder="Name" />
+    <Description>Please enter your full name.</Description>
+  </TextField>
+  <Button variant="primary" type="submit">
+    Submit
+  </Button>
+</Form>;
+```
+
+### FileTrigger
+
+File upload trigger wrapper.
+
+```tsx
+import { Button } from "@dotui/registry/ui/button";
+import { FileTrigger } from "@dotui/registry/ui/file-trigger";
+
+<FileTrigger
+  onSelect={(e) => {
+    if (e) {
+      const files = Array.from(e);
+      // Handle files
+    }
+  }}
+  allowsMultiple
+>
+  <Button>Upload</Button>
+</FileTrigger>;
+```
+
+### DropZone
+
+File drop zone component.
+
+```tsx
+import { DropZone, DropZoneLabel } from "@dotui/registry/ui/drop-zone";
+
+<DropZone>
+  <DropZoneLabel>Drop files here</DropZoneLabel>
+</DropZone>;
+```
+
+---
+
+## Advanced Components
+
+### Command
+
+Command palette/menu component.
+
+```tsx
+import {
+  Command,
+  CommandContent,
+  CommandInput,
+  CommandItem,
+} from "@dotui/registry/ui/command";
+
+<Command>
+  <CommandInput placeholder="Type a command..." />
+  <CommandContent>
+    <CommandItem textValue="Create new file">Create new file...</CommandItem>
+    <CommandItem textValue="Create new folder">
+      Create new folder...
+    </CommandItem>
+  </CommandContent>
+</Command>;
+```
+
+### Table
+
+Table component with columns and rows.
+
+```tsx
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
+} from "@dotui/registry/ui/table";
+
+<Table aria-label="Files">
+  <TableHeader>
+    <TableColumn isRowHeader>Name</TableColumn>
+    <TableColumn>Type</TableColumn>
+    <TableColumn>Date Modified</TableColumn>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>Games</TableCell>
+      <TableCell>File folder</TableCell>
+      <TableCell>6/7/2020</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>;
+```
+
+### TagGroup
+
+Tag group component for managing tags.
+
+```tsx
+import { Label } from "@dotui/registry/ui/field";
+import { Tag, TagGroup, TagList } from "@dotui/registry/ui/tag-group";
+
+<TagGroup>
+  <Label>Tags</Label>
+  <TagList>
+    <Tag>Tag 1</Tag>
+    <Tag>Tag 2</Tag>
+    <Tag allowsRemoving>Removable Tag</Tag>
+  </TagList>
+</TagGroup>;
+```
+
+### Toast
+
+Toast notification component (requires Toaster setup).
+
+```tsx
+import { Toaster, toast } from "@dotui/registry/ui/toast";
+
+// Setup Toaster once in your app
+<Toaster />;
+
+// Use toast to show notifications
+toast.add({
+  title: "Success",
+  description: "Operation completed successfully",
+  variant: "success",
+});
+
+// Variants: success, error, warning, info, neutral, danger
+```
+
+---
+
+## Notes
+
+1. All components are client components (use "use client" directive)
+2. Components export both default and named exports
+3. TypeScript types are exported for all component props
+4. Components follow React Aria accessibility patterns
+5. Icons are typically imported from `@dotui/registry/icons`
+6. Utility functions are imported from `@dotui/registry/lib/utils`
