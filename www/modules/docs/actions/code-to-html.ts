@@ -13,7 +13,7 @@ export const codeToHtml = async (
     lang: options?.lang,
     themes: {
       light: "github-light",
-      dark: "github-dark-dimmed",
+      dark: "github-dark",
     },
     structure: options?.structure,
   });

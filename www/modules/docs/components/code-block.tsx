@@ -25,7 +25,7 @@ const CodeBlock = async ({
       lang: "tsx",
       themes: {
         light: "github-light",
-        dark: "github-dark-dimmed",
+        dark: "github-dark",
       },
     });
     preview = (
@@ -42,7 +42,7 @@ const CodeBlock = async ({
         lang: lang,
         themes: {
           light: "light-plus",
-          dark: "github-dark-dimmed",
+          dark: "github-dark",
         },
       });
 

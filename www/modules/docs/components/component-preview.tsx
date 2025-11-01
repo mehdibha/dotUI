@@ -1,5 +1,3 @@
-import { ScrollArea } from "@radix-ui/react-scroll-area";
-
 import { cn } from "@dotui/registry/lib/utils";
 import { Alert } from "@dotui/registry/ui/alert";
 import { Index } from "@dotui/registry/ui/demos";
@@ -58,20 +56,15 @@ export const ComponentPreview = async ({
   );
 
   return (
-    <div
-      className={cn(
-        "relative overflow-hidden rounded-md border",
-        containerClassName,
-      )}
-    >
-      <div className="bg-muted">
-        <ResizableContainer resizable={resizable}>
-          <ActiveStyleProvider>
+    <div className={cn("space-y-2", containerClassName)}>
+      <div className="relative rounded-md border">
+        <div className="bg-[radial-gradient(circle_at_2px_2px,var(--neutral-300)_1px,transparent_0)] bg-size-[15px_15px] rounded-t-md">
+          <ActiveStyleProvider unstyled>
             <ComponentPreviewHeader />
-            <ScrollArea className="bg-bg text-fg">
+            <ResizableContainer resizable={resizable}>
               <div
                 className={cn(
-                  "flex pt-14 pb-10",
+                  "flex pt-20 pb-14 bg-bg rounded-t-md",
                   primary && "min-h-48 pt-24 pb-20",
                   fullWidth
                     ? "px-8 lg:px-12"
@@ -86,20 +79,20 @@ export const ComponentPreview = async ({
                   <Component />
                 </div>
               </div>
-            </ScrollArea>
+            </ResizableContainer>
           </ActiveStyleProvider>
-        </ResizableContainer>
+        </div>
+        <CodeBlock
+          files={code.map((file) => ({
+            fileName: file.fileName,
+            code: file.code,
+            lang: "tsx",
+          }))}
+          preview={preview}
+          className={"w-full rounded-t-none border-x-0 border-b-0"}
+          expandable={expandable}
+        />
       </div>
-      <CodeBlock
-        files={code.map((file) => ({
-          fileName: file.fileName,
-          code: file.code,
-          lang: "tsx",
-        }))}
-        preview={preview}
-        className={"w-full rounded-t-none border-x-0 border-b-0"}
-        expandable={expandable}
-      />
     </div>
   );
 };

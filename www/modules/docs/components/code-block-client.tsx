@@ -16,11 +16,10 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 const codeBlockStyles = tv({
   slots: {
-    root: "block w-fit max-w-full rounded-md border",
+    root: "block w-fit max-w-full rounded-md",
     header:
-      "flex h-10 items-center justify-between rounded-t-[inherit] border-b bg-muted pr-2",
-    body: "bg-muted/30 p-4 text-xs",
-    code: "text-xs",
+      "flex h-10 abosolute top-0 left-0 right-0 items-center justify-between rounded-t-[inherit] border-y bg-muted pr-2",
+    body: "p-4 text-sm bg-card border-t rounded-b-md relative",
   },
 });
 
@@ -59,31 +58,18 @@ const CodeBlockClient = ({
       onSelectionChange={setActiveTab}
       {...props}
     >
-      <CodeBlockHeader>
-        <div className="flex h-full w-[100px] flex-1 shrink-1 basis-0 items-end gap-2">
-          {files.length > 0 && (
-            <TabList>
-              {files
-                .slice(0, preview && !isExpanded ? 1 : files.length)
-                .map(({ fileName }, index) => (
-                  <Tab key={index} id={fileName}>
-                    {fileName}
-                  </Tab>
-                ))}
-            </TabList>
-          )}
-        </div>
-        <div className="flex items-center gap-2">
-          {(preview || expandable) && (
+      <CodeBlockBody>
+        <div className="absolute top-0 left-0 right-0 gap-1 flex items-center justify-end p-2">
+          {/* {(preview || expandable) && (
             <Button
               variant="default"
               size="sm"
-              className="h-7 bg-inverse/5 text-xs"
+              className="text-xs h-7"
               onPress={handleExpand}
             >
               {isExpanded ? "Collapse" : "Expand"} code
             </Button>
-          )}
+          )} */}
           <CodeBlockCopyButton
             code={
               (previewStr && !isExpanded
@@ -93,10 +79,6 @@ const CodeBlockClient = ({
             }
           />
         </div>
-      </CodeBlockHeader>
-      <CodeBlockBody
-        className={cn(isExpanded ? "max-h-[400px]" : "max-h-[200px]")}
-      >
         {preview && !isExpanded ? (
           // @ts-expect-error fix later
           <TabPanel id={files[0].fileName} className="mt-0!">
@@ -148,15 +130,16 @@ const CodeBlockCopyButton = ({ code, ...props }: CodeBlockCopyButtonProps) => {
     <Button
       size="sm"
       variant="default"
+      aspect="square"
+      className="size-7 [&_svg]:size-3"
       onPress={handleCopy}
-      className="size-7 bg-inverse/5 [&_svg]:size-3"
       {...props}
     >
-      {copied ? (
+      {/* {copied ? (
         <CheckIcon className="animate-in fade-in" />
       ) : (
         <CopyIcon className="animate-in fade-in" />
-      )}
+      )} */}
     </Button>
   );
 };

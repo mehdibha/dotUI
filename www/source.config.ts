@@ -77,7 +77,7 @@ export default defineConfig({
     rehypeCodeOptions: {
       themes: {
         light: "github-light",
-        dark: "github-dark-dimmed",
+        dark: "github-dark",
       },
       inline: "tailing-curly-colon",
       defaultLanguage: "ts",

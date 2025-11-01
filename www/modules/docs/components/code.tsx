@@ -24,7 +24,7 @@ const Code = async ({
     lang: lang,
     themes: {
       light: "github-light",
-      dark: "github-dark-dimmed",
+      dark: "github-dark",
     },
     colorReplacements,
     structure: inline ? "inline" : "classic",

@@ -10,9 +10,10 @@ import { Skeleton } from "@dotui/registry/ui/skeleton";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 import { useActiveStyle } from "@/modules/styles/hooks/use-active-style";
 
-export function ActiveStyleProvider(
-  props: Omit<React.ComponentProps<"div">, "style">,
-) {
+export function ActiveStyleProvider({
+  unstyled,
+  ...props
+}: Omit<React.ComponentProps<"div">, "style"> & { unstyled?: boolean }) {
   const container = useActiveStylePortalContext();
   const { activeMode } = usePreferences();
   const { data: activeStyle, isPending, isError } = useActiveStyle();
@@ -33,7 +34,12 @@ export function ActiveStyleProvider(
   }
 
   return (
-    <StyleProvider mode={activeMode} style={activeStyle} {...props}>
+    <StyleProvider
+      mode={activeMode}
+      style={activeStyle}
+      unstyled={unstyled}
+      {...props}
+    >
       <PortalProvider getContainer={() => container.current}>
         {props.children}
       </PortalProvider>

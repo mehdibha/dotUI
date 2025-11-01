@@ -11,6 +11,8 @@ import { cn } from "@dotui/registry/lib/utils";
 import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs";
 import type { RouterOutputs } from "@dotui/api";
 
+import { useDebounce } from "@/hooks/use-debounce";
+
 const MotionTabPanel = motion.create(TabPanel);
 
 const cardVariants = {
@@ -40,6 +42,7 @@ export const FeaturedStylesShowcase = ({
   const { resolvedTheme } = useTheme();
   const containerRef = React.useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = React.useState(0);
+  const delayedIndex = useDebounce(currentIndex, 700);
   const [touched, setTouched] = React.useState(false);
   const hasAnimated = React.useRef(false);
   const viewRef = React.useRef(null);
@@ -106,6 +109,7 @@ export const FeaturedStylesShowcase = ({
           <div className="relative">
             {[...styles, ...styles].map((style, index) => {
               const position = index - currentIndex;
+              const delayedPosition = index - delayedIndex;
               const isVisible = position >= 0 && position < visibleCards;
               const isFront = position === 0;
 
@@ -148,7 +152,7 @@ export const FeaturedStylesShowcase = ({
                         />
                       )}
                       <div className="rounded-[inherit] border h-full">
-                        {position === 0 && <Cards />}
+                        {(position === 0 || delayedPosition === 0) && <Cards />}
                       </div>
                     </PortalProvider>
                   </StyleProvider>

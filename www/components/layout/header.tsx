@@ -77,10 +77,7 @@ export function Header({
                 <span className="mr-6 flex-1 max-md:hidden">
                   Search docs...
                 </span>
-                <div className="flex items-center gap-px text-[0.7rem] max-md:hidden">
-                  <Kbd>⌘</Kbd>
-                  <Kbd>K</Kbd>
-                </div>
+                  <Kbd>⌘ K</Kbd>
               </Button>
             </SearchCommand>
             <Button asChild size="sm">

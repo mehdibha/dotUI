@@ -73,6 +73,6 @@ export const createSpacingThemeVars = (
   spacing: Spacing,
 ): Record<string, string> => {
   return {
-    spacing: `${spacing}em`,
+    spacing: `${spacing}rem`,
   };
 };

@@ -93,10 +93,7 @@ export const Sidebar = ({
           content={
             <div className="flex items-center gap-2">
               Toggle Sidebar
-              <div className="flex items-center gap-px text-[0.7rem] max-md:hidden">
-                <Kbd>⌘</Kbd>
-                <Kbd>B</Kbd>
-              </div>
+              <Kbd>⌘ B</Kbd>
             </div>
           }
         >
@@ -269,7 +266,7 @@ const SidebarRoot = ({
         )}
       />
       <div className="fixed inset-y-0 left-0 z-10 flex h-svh w-(--sidebar-width)  flex-col overflow-hidden border-r transition-sidebar group-data-collapsed/sidebar:w-(--sidebar-width-collapsed) [&_svg]:text-fg-muted">
-        <div className="relative flex h-svh w-(--sidebar-width) flex-1 translate-x-[-0.5px] bg-card flex-col overflow-hidden">
+        <div className="relative flex h-svh w-(--sidebar-width) flex-1 translate-x-[-0.5px] bg-card/50 flex-col overflow-hidden">
           {children}
         </div>
       </div>
@@ -329,11 +326,8 @@ const SidebarSearchButton = ({
         <SidebarButton variant="default" className="group/searchbtn">
           <SearchIcon />
           <div className="flex flex-1 flex-row items-center justify-between">
-            <span>Search </span>
-            <div className="flex items-center gap-0.5 [&_kbd]:text-xs">
-              <Kbd>⌘</Kbd>
-              <Kbd>K</Kbd>
-            </div>
+            <span>Search</span>
+            <Kbd>⌘ K</Kbd>
           </div>
         </SidebarButton>
       </StyledTooltip>

@@ -12,6 +12,7 @@ import {
 import { Popover } from "@dotui/registry/ui/popover";
 import {
   Select,
+  SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
@@ -24,11 +25,12 @@ import { useFeaturedStyles } from "@/modules/styles/hooks/use-featured-styles";
 import { useSetActiveStyle } from "@/modules/styles/hooks/use-set-active-style";
 import { useUserStyles } from "@/modules/styles/hooks/use-user-styles";
 
-export function ActiveStyleSelector(
-  props: SelectProps<any> & {
-    buttonProps?: ButtonProps;
-  },
-) {
+export function ActiveStyleSelector({
+  buttonProps,
+  ...props
+}: SelectProps<any> & {
+  buttonProps?: ButtonProps;
+}) {
   const activeStyleQuery = useActiveStyle();
   const updateStyleMutation = useSetActiveStyle();
 
@@ -46,50 +48,41 @@ export function ActiveStyleSelector(
       }}
       {...props}
     >
-      <SelectTrigger asChild>
-        <Button
-          variant="default"
-          {...props.buttonProps}
-          className={cn(props.buttonProps?.className, "justify-start")}
-        >
-          <span className="text-fg-muted">Style:</span>{" "}
-          {activeStyleQuery.isPending ? (
-            <span className="flex-1 truncate text-left">loading...</span>
-          ) : (
-            <span className="flex-1 truncate text-left">
-              <SelectValue />
-            </span>
-          )}
-          <ChevronDownIcon />
-        </Button>
+      <SelectTrigger {...buttonProps}>
+        <span className="text-fg-muted">Style:</span>{" "}
+        {activeStyleQuery.isPending ? (
+          <span className="flex-1 truncate text-left">loading...</span>
+        ) : (
+          <span className="flex-1 truncate text-left">
+            <SelectValue />
+          </span>
+        )}
       </SelectTrigger>
-      <Popover>
-        <ListBox isLoading={featuredStylesQuery.isPending}>
-          {userStylesQuery.isSuccess && userStylesQuery.data?.length > 0 && (
+      <SelectContent isLoading={featuredStylesQuery.isPending}>
+        {userStylesQuery.isSuccess && userStylesQuery.data?.length > 0 && (
+          <ListBoxSection>
+            <ListBoxSectionHeader>My styles</ListBoxSectionHeader>
+            {userStylesQuery.data
+              ?.filter((style) => !style.isFeatured)
+              .map((style) => (
+                <SelectItem key={style.id} id={style.id}>
+                  {style.name}
+                </SelectItem>
+              ))}
+          </ListBoxSection>
+        )}
+        {featuredStylesQuery.isSuccess &&
+          featuredStylesQuery.data?.length > 0 && (
             <ListBoxSection>
-              <ListBoxSectionHeader>My styles</ListBoxSectionHeader>
-              {userStylesQuery.data
-                ?.filter((style) => !style.isFeatured)
-                .map((style) => (
-                  <SelectItem key={style.id} id={style.id}>
-                    {style.name}
-                  </SelectItem>
-                ))}
+              <ListBoxSectionHeader>Featured</ListBoxSectionHeader>
+              {featuredStylesQuery.data?.map((style) => (
+                <SelectItem key={style.id} id={style.id}>
+                  {style.name}
+                </SelectItem>
+              ))}
             </ListBoxSection>
           )}
-          {featuredStylesQuery.isSuccess &&
-            featuredStylesQuery.data?.length > 0 && (
-              <ListBoxSection>
-                <ListBoxSectionHeader>Featured</ListBoxSectionHeader>
-                {featuredStylesQuery.data?.map((style) => (
-                  <SelectItem key={style.id} id={style.id}>
-                    {style.name}
-                  </SelectItem>
-                ))}
-              </ListBoxSection>
-            )}
-        </ListBox>
-      </Popover>
+      </SelectContent>
     </Select>
   );
 }
