@@ -5,7 +5,12 @@ description: Displays a callout for user attention.
 
 <ComponentPreview
   name="alert/demos/default"
-  preview={`<Alert>You can add components to your app using the cli.</Alert>`}
+  preview={`<Alert>
+    <AlertTitle>Payment information</AlertTitle>
+    <AlertDescription>
+      You are currently on the free plan. Upgrade to unlock more features.
+    </AlertDescription>
+  </Alert>`}
   fullWidth
   resizable
 />

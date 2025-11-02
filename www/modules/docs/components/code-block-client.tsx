@@ -5,9 +5,8 @@ import { CheckIcon, CopyIcon } from "lucide-react";
 import { tv } from "tailwind-variants";
 import type { Key } from "react-aria-components";
 
-import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";
-import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs";
+import { TabPanel, Tabs } from "@dotui/registry/ui/tabs";
 import type { ButtonProps } from "@dotui/registry/ui/button";
 import type { TabsProps } from "@dotui/registry/ui/tabs";
 
@@ -18,8 +17,8 @@ const codeBlockStyles = tv({
   slots: {
     root: "block w-fit max-w-full rounded-md",
     header:
-      "flex h-10 abosolute top-0 left-0 right-0 items-center justify-between rounded-t-[inherit] border-y bg-muted pr-2",
-    body: "p-4 text-sm bg-card border-t rounded-b-md relative",
+      "flex items-center justify-end gap-2 rounded-t-[inherit] border-y bg-card p-2",
+    body: "p-4 text-sm bg-card/50 rounded-b-md relative",
   },
 });
 
@@ -58,27 +57,26 @@ const CodeBlockClient = ({
       onSelectionChange={setActiveTab}
       {...props}
     >
+      <CodeBlockHeader>
+        {(preview || expandable) && (
+          <Button
+            variant="default"
+            size="sm"
+            className="text-xs h-7"
+            onPress={handleExpand}
+          >
+            {isExpanded ? "Collapse" : "Expand"} code
+          </Button>
+        )}
+        <CodeBlockCopyButton
+          code={
+            (previewStr && !isExpanded
+              ? previewStr
+              : files.find(({ fileName }) => fileName === activeTab)?.codeStr)!
+          }
+        />
+      </CodeBlockHeader>
       <CodeBlockBody>
-        <div className="absolute top-0 left-0 right-0 gap-1 flex items-center justify-end p-2">
-          {/* {(preview || expandable) && (
-            <Button
-              variant="default"
-              size="sm"
-              className="text-xs h-7"
-              onPress={handleExpand}
-            >
-              {isExpanded ? "Collapse" : "Expand"} code
-            </Button>
-          )} */}
-          <CodeBlockCopyButton
-            code={
-              (previewStr && !isExpanded
-                ? previewStr
-                : files.find(({ fileName }) => fileName === activeTab)
-                    ?.codeStr)!
-            }
-          />
-        </div>
         {preview && !isExpanded ? (
           // @ts-expect-error fix later
           <TabPanel id={files[0].fileName} className="mt-0!">
@@ -131,15 +129,15 @@ const CodeBlockCopyButton = ({ code, ...props }: CodeBlockCopyButtonProps) => {
       size="sm"
       variant="default"
       aspect="square"
-      className="size-7 [&_svg]:size-3"
+      className="size-7! [&_svg]:size-3"
       onPress={handleCopy}
       {...props}
     >
-      {/* {copied ? (
+      {copied ? (
         <CheckIcon className="animate-in fade-in" />
       ) : (
         <CopyIcon className="animate-in fade-in" />
-      )} */}
+      )}
     </Button>
   );
 };
