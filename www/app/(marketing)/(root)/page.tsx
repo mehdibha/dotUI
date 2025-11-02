@@ -33,13 +33,13 @@ export default async function HomePage() {
     <div>
       {/* Hero section */}
       <section className="container flex flex-col items-center pt-10 sm:pt-18">
-        <div className="flex max-w-5xl flex-col items-center gap-3 sm:gap-4">
+        <div className="flex max-w-5xl flex-col items-center gap-2 sm:gap-3">
           <Announcement />
           <h1 className="text-center text-3xl tracking-tighter max-lg:font-medium md:text-4xl lg:text-5xl text-balance">
             Build your design system with a{" "}
             <span className="font-bold italic">unique</span> look.
           </h1>
-          <p className="text-center text-base sm:text-lg text-fg-muted text-balance">
+          <p className="text-center text-base sm:text-lg text-fg-muted text-balance max-sm:px-2">
             Beautiful components, accessibility out of the
             box, composition, and more, all powered by{" "}
             <AdobeIcon className="size-4 inline-flex" />
@@ -47,7 +47,7 @@ export default async function HomePage() {
             <ShadcnIcon className="size-5 inline-flex" />
             &nbsp;<span className="font-medium">shadcn&nbsp;CLI</span>.
           </p>
-          <div className="flex flex-col w-full sm:w-auto gap-2 sm:flex-row sm:items-center sm:gap-4">
+          <div className="flex flex-col w-full sm:w-auto gap-2 sm:flex-row sm:items-center sm:gap-4 pt-2">
             <Button asChild variant="primary" size="lg" className="h-10">
               <Link href="/docs">Get started</Link>
             </Button>
@@ -58,7 +58,7 @@ export default async function HomePage() {
         </div>
       </section>
       {/* Styles overview */}
-      <section className="container mt-10 max-w-screen-2xl sm:mt-20 overflow-hidden">
+      <section className="container mt-10 sm:mt-20 overflow-hidden">
         {feturedStyles.length > 0 ? (
           <FeaturedStylesShowcase styles={feturedStyles} />
         ) : (

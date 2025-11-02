@@ -79,7 +79,7 @@ export function Header({
                 <span className="mr-6 flex-1 max-md:hidden">
                   Search docs...
                 </span>
-                <Kbd>⌘ K</Kbd>
+                <Kbd className="max-md:hidden">⌘ K</Kbd>
               </Button>
             </SearchCommand>
             <Button asChild size="sm">

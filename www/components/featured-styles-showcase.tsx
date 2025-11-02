@@ -9,6 +9,7 @@ import { StyleProvider } from "@dotui/registry";
 import { Cards } from "@dotui/registry/blocks/showcase/cards/components/cards";
 import { cn } from "@dotui/registry/lib/utils";
 import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs";
+import { TabIndicator } from "@dotui/registry/ui/tabs/basic";
 import type { RouterOutputs } from "@dotui/api";
 
 import { useDebounce } from "@/hooks/use-debounce";
@@ -97,10 +98,14 @@ export const FeaturedStylesShowcase = ({
           }}
           className="gap-20"
         >
-          <TabList className="flex-wrap justify-center border-b-0">
+          <TabList className="flex-wrap justify-center border-b-0 gap-1">
             {styles.map((style) => {
               return (
-                <Tab key={style.name} id={style.name}>
+                <Tab
+                  key={style.name}
+                  id={style.name}
+                  className="py-1 px-3 *:data-tab-indicator:h-full *:data-tab-indicator:-z-1 *:data-tab-indicator:rounded-xl *:data-tab-indicator:bg-selected"
+                >
                   {style.name}
                 </Tab>
               );

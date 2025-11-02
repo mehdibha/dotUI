@@ -17,7 +17,7 @@ const tabsStyles = tv({
   slots: {
     root: "flex flex-col gap-2",
     list: "flex",
-    tab: "relative cursor-default p-2 text-sm",
+    tab: "relative cursor-default p-2 text-sm [&:has([data-tab-indicator])_>_[data-tab-default-indicator]]:hidden",
     selectionIndicator: [
       "absolute rounded-full bg-accent duration-150 ease-out motion-safe:transition-[translate,width,height]",
     ],
@@ -86,8 +86,6 @@ const TabList = ({ className, ...props }: TabListProps) => {
 interface TabProps extends React.ComponentProps<typeof AriaTab> {}
 
 const Tab = ({ className, ...props }: TabProps) => {
-  const orientation = useTabsContext("Tab");
-
   return (
     <AriaTab
       className={composeRenderProps(className, (cn) => tab({ className: cn }))}
@@ -96,12 +94,28 @@ const Tab = ({ className, ...props }: TabProps) => {
       {composeRenderProps(props.children, (children) => (
         <>
           {children}
-          <AriaSelectionIndicator
-            className={selectionIndicator({ orientation })}
-          />
+          <TabIndicator />
         </>
       ))}
     </AriaTab>
+  );
+};
+
+/* -----------------------------------------------------------------------------------------------*/
+
+interface TabIndicatorProps
+  extends React.ComponentProps<typeof AriaSelectionIndicator> {}
+
+const TabIndicator = ({ className, ...props }: TabIndicatorProps) => {
+  const orientation = useTabsContext("TabIndicator");
+  return (
+    <AriaSelectionIndicator
+      data-tab-indicator
+      className={composeRenderProps(className, (cn) =>
+        selectionIndicator({ orientation, className: cn }),
+      )}
+      {...props}
+    />
   );
 };
 
@@ -122,5 +136,5 @@ const TabPanel = ({ className, ...props }: TabPanelProps) => {
 
 /* -----------------------------------------------------------------------------------------------*/
 
-export { Tabs, TabList, Tab, TabPanel };
-export type { TabsProps, TabListProps, TabProps, TabPanelProps };
+export { Tabs, TabList, Tab, TabPanel, TabIndicator };
+export type { TabsProps, TabListProps, TabProps, TabPanelProps, TabIndicatorProps };
