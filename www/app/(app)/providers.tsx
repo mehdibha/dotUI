@@ -7,8 +7,6 @@ import { ActiveStylePortalProvider } from "@/modules/styles/components/active-st
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <SidebarProvider>
       <ActiveStylePortalProvider>{children}</ActiveStylePortalProvider>
-    </SidebarProvider>
   );
 }

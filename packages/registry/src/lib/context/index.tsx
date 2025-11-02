@@ -9,9 +9,8 @@ export interface CreateContextOptions {
 }
 
 export type CreateContextReturn<T> = [
-  React.Provider<T>,
-  (consumerName: string) => T,
   React.Context<T>,
+  (consumerName: string) => T,
 ];
 
 /**
@@ -42,9 +41,8 @@ export function createContext<ContextType>(options: CreateContextOptions = {}) {
   }
 
   return [
-    Context.Provider,
-    useContext,
     Context,
+    useContext,
   ] as CreateContextReturn<ContextType>;
 }
 
@@ -78,39 +76,6 @@ export function createScopedContext<ContextValueType extends object | null>(
     throw new Error(
       `\`${consumerName}\` must be used within \`${rootComponentName}\``,
     );
-  }
-
-  return [Provider, useContext] as const;
-}
-
-export function createOptionalScopedContext<
-  ContextValueType extends object | null,
->(rootComponentName: string, defaultContext?: ContextValueType) {
-  const Context = React.createContext<ContextValueType | undefined>(
-    defaultContext,
-  );
-
-  const Provider: React.FC<ContextValueType & { children: React.ReactNode }> = (
-    props,
-  ) => {
-    const { children, ...context } = props;
-    // Only re-memoize when prop values change
-    const value = React.useMemo(
-      () => context,
-      // biome-ignore lint/correctness/useExhaustiveDependencies: we only want to memoize when the context values change
-      Object.values(context),
-    ) as ContextValueType;
-    return <Context.Provider value={value}>{children}</Context.Provider>;
-  };
-
-  Provider.displayName = `${rootComponentName}Provider`;
-
-  function useContext() {
-    const context = React.useContext(Context);
-    if (context) return context;
-    if (defaultContext !== undefined) return defaultContext;
-    // if a defaultContext wasn't specified, it's a required context.
-    return {};
   }
 
   return [Provider, useContext] as const;

@@ -1,6 +1,6 @@
 "use client";
 
-import { useIsMobile } from "@dotui/registry/hooks/use-is-mobile";
+import { useIsMobile } from "@dotui/registry/hooks/use-mobile";
 import { Drawer } from "@dotui/registry/ui/drawer";
 import { Modal } from "@dotui/registry/ui/modal";
 import { Popover } from "@dotui/registry/ui/popover";

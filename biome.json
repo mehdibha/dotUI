@@ -37,7 +37,8 @@
         "noExplicitAny": "off",
         "noArrayIndexKey": "off",
         "noShadowRestrictedNames": "warn",
-        "useIterableCallbackReturn": "warn"
+        "useIterableCallbackReturn": "warn",
+        "noDocumentCookie": "off"
       },
       "correctness": {
         "useExhaustiveDependencies": "warn"
