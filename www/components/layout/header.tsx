@@ -22,10 +22,12 @@ export function Header({
   className,
   items,
   containerClassName,
+  hideLogo = false,
 }: {
   className?: string;
   containerClassName?: string;
   items: PageTree.Node[];
+  hideLogo?: boolean;
 }) {
   const { data: session, isPending } = authClient.useSession();
   const isMounted = useMounted();
@@ -45,7 +47,7 @@ export function Header({
       >
         <div className="flex items-center gap-3 md:gap-6">
           <MobileNav items={items} />
-          <Logo className="max-md:hidden" />
+          {!hideLogo && <Logo className="max-md:hidden" />}
           <div className="flex items-center gap-3 text-sm max-md:hidden">
             {(
               [

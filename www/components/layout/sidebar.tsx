@@ -82,41 +82,43 @@ export const Sidebar = ({
 
   return (
     <SidebarRoot className={className}>
-      <div className="relative flex items-center p-2 pl-3.5">
-        <Logo
-          className={cn(
-            debouncedIsCollapsed &&
-              "group-data-collapsed/sidebar:group-hover/sidebar:opacity-0",
-          )}
-        />
-        <StyledTooltip
-          content={
-            <div className="flex items-center gap-2">
-              Toggle Sidebar
-              <Kbd>⌘ B</Kbd>
-            </div>
-          }
-        >
-          <Button
-            variant="quiet"
-            size="sm"
-            onPress={() => setCollapsed(!isCollapsed)}
-            className="pointer-events-none absolute left-2 opacity-0 group-data-collapsed/sidebar:group-hover/sidebar:pointer-events-auto group-data-collapsed/sidebar:group-hover/sidebar:opacity-100"
+      <div className="border-b h-[66px] group-data-collapsed/sidebar:h-[74px]">
+        <div className="relative flex items-center p-2 pl-3.5 pt-2.5">
+          <Logo
+            className={cn(
+              debouncedIsCollapsed &&
+                "group-data-collapsed/sidebar:group-hover/sidebar:opacity-0",
+            )}
+          />
+          <StyledTooltip
+            content={
+              <div className="flex items-center gap-2">
+                Toggle Sidebar
+                <Kbd>⌘ B</Kbd>
+              </div>
+            }
           >
-            {isCollapsed ? <PanelLeftOpenIcon /> : <PanelLeftCloseIcon />}
-          </Button>
-        </StyledTooltip>
-        <div className="flex w-[calc(var(--sidebar-width)-calc(var(--spacing)*6))] justify-end">
-          <Button
-            variant="quiet"
-            size="sm"
-            onPress={() => setCollapsed(!isCollapsed)}
-          >
-            {isCollapsed ? <PanelLeftOpenIcon /> : <PanelLeftCloseIcon />}
-          </Button>
+            <Button
+              variant="quiet"
+              size="sm"
+              onPress={() => setCollapsed(!isCollapsed)}
+              className="pointer-events-none absolute left-2 opacity-0 group-data-collapsed/sidebar:group-hover/sidebar:pointer-events-auto group-data-collapsed/sidebar:group-hover/sidebar:opacity-100"
+            >
+              {isCollapsed ? <PanelLeftOpenIcon /> : <PanelLeftCloseIcon />}
+            </Button>
+          </StyledTooltip>
+          <div className="flex w-[calc(var(--sidebar-width)-calc(var(--spacing)*6))] justify-end">
+            <Button
+              variant="quiet"
+              size="sm"
+              onPress={() => setCollapsed(!isCollapsed)}
+            >
+              {isCollapsed ? <PanelLeftOpenIcon /> : <PanelLeftCloseIcon />}
+            </Button>
+          </div>
         </div>
       </div>
-      <div className="-mb-1 px-2 pt-0">
+      <div className="-mb-1 px-2 pt-2">
         <SidebarSearchButton items={items} isCollapsed={isCollapsed} />
       </div>
       <ScrollArea
