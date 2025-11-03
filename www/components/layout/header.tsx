@@ -33,15 +33,10 @@ export function Header({
   const isMounted = useMounted();
 
   return (
-    <header
-      className={cn(
-        "sticky top-0 z-30 w-full border-b bg-bg lg:px-8",
-        className,
-      )}
-    >
+    <header className={cn("sticky top-0 z-30 w-full bg-bg h-14 border-b", className)}>
       <div
         className={cn(
-          "relative container flex h-14 items-center justify-between",
+          "relative container flex h-full items-center justify-between",
           containerClassName,
         )}
       >

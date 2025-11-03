@@ -8,8 +8,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <Header
         items={docsSource.pageTree.children}
         hideLogo
-        className="max-lg:hidden"
-        containerClassName="h-13"
+        className="max-lg:hidden h-13"
       />
       <main>{children}</main>
       <Footer />
