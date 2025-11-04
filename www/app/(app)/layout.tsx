@@ -1,10 +1,10 @@
 import { SidebarProvider } from "@dotui/registry/ui/sidebar";
 
 import { DocsSidebar } from "@/components/layout/docs-sidebar";
+import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { docsSource } from "@/modules/docs/lib/source";
 import { ActiveStylePortalProvider } from "@/modules/styles/components/active-style-provider";
-import { Footer } from "@/components/layout/footer";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

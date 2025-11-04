@@ -30,7 +30,7 @@ import { Skeleton } from "@dotui/registry/ui/skeleton";
 import { ToggleButton } from "@dotui/registry/ui/toggle-button";
 import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
 
-import { useSidebarContext } from "@/components/layout/sidebar";
+import { useSidebarContext } from "@dotui/registry/ui/sidebar";
 import { useHorizontalResize } from "@/hooks/use-horizontal-resize";
 import { useMounted } from "@/hooks/use-mounted";
 import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
@@ -68,7 +68,7 @@ export const PreviewRoot = ({ children }: { children: React.ReactNode }) => {
   const [isOpen, setOpen] = React.useState(false);
   const [isFullscreen, setFullscreen] = React.useState(false);
   const [block, setBlock] = React.useState<string>("login");
-  const { isCollapsed } = useSidebarContext();
+  const { isOpen: isSidebarOpen } = useSidebarContext("Preview");
   const { containerRef, width, setWidth, handleMouseDown, isDragging } =
     useHorizontalResize({
       minWidth: 320,
@@ -76,7 +76,7 @@ export const PreviewRoot = ({ children }: { children: React.ReactNode }) => {
       initialWidth: 768,
       edge: "left",
     });
-  const maxWidth = isCollapsed ? 768 : 600;
+  const maxWidth = isSidebarOpen ? 600 : 768;
   const isMounted = useMounted();
 
   React.useEffect(() => {
