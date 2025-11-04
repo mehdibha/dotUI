@@ -1,6 +1,7 @@
 "use client";
 
 import type React from "react";
+import { useEffect } from "react";
 import type { Route } from "next";
 import { usePathname } from "next/navigation";
 
@@ -14,9 +15,22 @@ export function BlocksNav({
 }: { children: React.ReactNode } & TabsProps) {
   const pathname = usePathname();
 
+  // Make header non-sticky on blocks pages
+  useEffect(() => {
+    const header = document.querySelector("header");
+    if (header) {
+      header.style.position = "relative";
+    }
+    return () => {
+      if (header) {
+        header.style.position = "sticky";
+      }
+    };
+  }, []);
+
   return (
     <Tabs selectedKey={pathname} {...props}>
-      <div className="sticky top-13 bg-bg pt-1 border-b flex items-end">
+      <div className="sticky top-0 z-40 h-12 bg-bg pt-1 border-b flex items-end">
         <TabList className="container border-b-0 translate-y-px">
           {[
             {
@@ -34,7 +48,7 @@ export function BlocksNav({
               key={tab.href}
               id={tab.href}
               href={tab.href as Route}
-              className="flex items-center gap-2 rounded-full py-2 px-4 text-sm"
+              className="flex items-center gap-2 rounded-full py-3 px-4 text-sm"
             >
               {tab.label}
             </Tab>
