@@ -9,4 +9,3 @@ export default async function FeaturedStylesPage() {
 
   return <StylesList styles={styles} search />;
 }
-

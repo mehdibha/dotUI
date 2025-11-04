@@ -31,4 +31,3 @@ export const metadata: Metadata = {
 export default function StylesLayout({ children }: LayoutProps<"/styles">) {
   return <StylesPageNav>{children}</StylesPageNav>;
 }
-

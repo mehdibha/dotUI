@@ -15,4 +15,3 @@ export default async function BlocksPage(_props: PageProps<"/blocks">) {
     </div>
   );
 }
-

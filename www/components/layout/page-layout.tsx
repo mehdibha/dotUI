@@ -4,9 +4,7 @@ export function PageLayout({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  return (
-    <div className={cn("", className)} {...props} />
-  );
+  return <div className={cn("", className)} {...props} />;
 }
 
 export function PageHeader({

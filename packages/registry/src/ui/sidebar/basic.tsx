@@ -255,7 +255,10 @@ function SidebarItem({
   className,
   asChild,
   ...props
-}: React.ComponentProps<"li"> & { tooltip?: React.ReactNode; asChild?: boolean }) {
+}: React.ComponentProps<"li"> & {
+  tooltip?: React.ReactNode;
+  asChild?: boolean;
+}) {
   const { isOpen } = useSidebarContext("SidebarItem");
 
   const Comp = asChild ? Slot : "li";
@@ -293,7 +296,9 @@ function SidebarTooltip({
   return (
     <Tooltip isDisabled={isOpen} delay={0}>
       {children}
-      <TooltipContent hideArrow placement="right">{content}</TooltipContent>
+      <TooltipContent hideArrow placement="right">
+        {content}
+      </TooltipContent>
     </Tooltip>
   );
 }

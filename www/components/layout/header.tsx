@@ -101,7 +101,11 @@ export function Header({
           )}
           {isVisible("github") && (
             <Button asChild size="sm">
-              <Link aria-label="GitHub" href={siteConfig.links.github} target="_blank">
+              <Link
+                aria-label="GitHub"
+                href={siteConfig.links.github}
+                target="_blank"
+              >
                 <GitHubIcon />
               </Link>
             </Button>
