@@ -1,8 +1,26 @@
-@variant dark (&:where(.dark, .dark *));
+@custom-variant dark {
+  &:where(.dark, .dark *) {
+    @slot;
+  }
+}
 
-@variant in-popover ([data-slot="popover"] &);
-@variant in-modal ([data-slot="modal"] &);
-@variant in-drawer ([data-slot="drawer"] &);
+@custom-variant in-popover {
+  [data-slot="popover"] & {
+    @slot;
+  }
+}
+
+@custom-variant in-modal {
+  [data-slot="modal"] & {
+    @slot;
+  }
+}
+
+@custom-variant in-drawer {
+  [data-slot="drawer"] & {
+    @slot;
+  }
+}
 
 @utility focus-reset {
   @apply ring-0 ring-transparent outline-none;

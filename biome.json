@@ -14,8 +14,7 @@
       "!**/dist",
       "!**/build",
       "!**/.turbo",
-      "!**/.source",
-      "!www/styles/base.css"
+      "!**/.source"
     ]
   },
   "css": {
