@@ -117,8 +117,8 @@
   --color-card: var(--neutral-100);
   --color-popover: var(--neutral-100);
 
-  --color-sidebar-bg: var(--neutral-100);
-  --color-sidebar-accent: var(--neutral-300);
+  --color-sidebar: var(--neutral-100);
+  --color-border-sidebar: var(--neutral-300);
 }
 
 /* -------------- Variant specific colors -------------- */

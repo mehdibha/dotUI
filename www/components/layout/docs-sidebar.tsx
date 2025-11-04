@@ -22,17 +22,13 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarSeparator,
-  SidebarTrigger,
+  SidebarItem,
+  SidebarList,
+  SidebarSection,
+  SidebarSectionHeading,
+  useSidebarContext,
 } from "@dotui/registry/ui/sidebar";
-import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
 
 import { Logo } from "@/components/logo";
 import { ThemeSwitcher } from "@/components/site-theme-selector";
@@ -43,136 +39,113 @@ import { authClient } from "@/modules/auth/lib/client";
 
 export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
   const { data: session, isPending } = authClient.useSession();
+
+  // we call the hook here to force rerender for motion/react to work
+  useSidebarContext("Sidebar");
+
   const isMounted = useMounted();
   const pathname = usePathname();
 
   return (
-    <Sidebar collapsible="icon" className="border-r">
-      <SidebarHeader className="flex-row items-center border-b h-13">
-        <SidebarMenu className="flex-row items-center gap-2 justify-between">
-          <SidebarMenuItem className="pl-2">
-            <Logo />
-          </SidebarMenuItem>
-          <SidebarMenuItem>
-            <SidebarTrigger size="sm" />
-          </SidebarMenuItem>
-          <SidebarMenuItem className="absolute left-2">
-            <SidebarTrigger size="sm" />
-          </SidebarMenuItem>
-        </SidebarMenu>
+    <Sidebar className="[--color-sidebar:var(--color-bg)]">
+      <SidebarHeader className="relative flex flex-row items-center border-b pl-3.5 h-13 overflow-hidden">
+        <Logo />
+        <div className="absolute right-0 top-0 bg-sidebar transition-opacity duration-150 h-full w-[calc(var(--sidebar-width-icon)-1px)] group-data-expanded:w-auto px-2 flex items-center justify-center group-hover:opacity-100 not-group-data-expanded:opacity-0 ease-drawer">
+          <Button slot="sidebar-trigger" variant="quiet" size="sm" />
+        </div>
       </SidebarHeader>
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarMenu>
-            {(
-              [
-                {
-                  icon: <BookIcon className="w-4 h-4" />,
-                  name: "Docs",
-                  url: "/docs/installation",
-                },
-                {
-                  icon: <BoxIcon className="w-4 h-4" />,
-                  name: "Components",
-                  url: "/docs/components",
-                },
-                {
-                  icon: <BlocksIcon className="w-4 h-4" />,
-                  name: "Blocks",
-                  url: "/blocks",
-                },
-                {
-                  icon: <PaletteIcon className="w-4 h-4" />,
-                  name: "Styles",
-                  url: "/styles",
-                },
-              ] as const
-            ).map((item) => (
-              <SidebarMenuItem key={item.url}>
-                <SidebarMenuButton asChild tooltip={item.name}>
+
+      <SidebarContent
+        style={{
+          maskImage:
+            "linear-gradient(transparent 2px, white 8px, white calc(100% - 8px), transparent calc(100% - 2px))",
+        }}
+      >
+        <SidebarSection>
+          <SidebarList>
+            {navItems.map((item) => (
+              <SidebarItem key={item.url}>
+                <Button asChild size="sm" variant="quiet">
                   <Link href={item.url}>
                     {item.icon}
                     <span>{item.name}</span>
                   </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
+                </Button>
+              </SidebarItem>
             ))}
-          </SidebarMenu>
-        </SidebarGroup>
+          </SidebarList>
+        </SidebarSection>
 
         {items.map((item) => {
           return (
-            <SidebarGroup key={item.$id}>
-              <SidebarGroupLabel className="text-muted-foreground font-medium">
+            <SidebarSection
+              key={item.$id}
+              className="opacity-0 group-data-expanded:opacity-100 transition-opacity duration-150"
+            >
+              <SidebarSectionHeading className="text-fg">
                 {item.name}
-              </SidebarGroupLabel>
-              <SidebarGroupContent className="pl-2">
-                {item.type === "folder" && (
-                  <SidebarMenu className="gap-0">
-                    {item.children.map((item) => {
-                      return (
-                        item.type === "page" && (
-                          <SidebarMenuItem key={item.url}>
-                            <SidebarMenuButton
-                              isActive={item.url === pathname}
-                              asChild
-                              className="rounded-l-none text-[0.8rem] pl-3 border-l data-active:border-fg data-active:text-fg text-fg-muted data-active:bg-transparent! hover:bg-transparent hover:text-fg transition-colors"
-                              size="sm"
-                            >
-                              <Link
-                                href={item.url as Route}
-                                // className="pl-2 py-2 text-fg-muted"
-                              >
-                                {item.name}
-                              </Link>
-                            </SidebarMenuButton>
-                          </SidebarMenuItem>
-                        )
-                      );
-                    })}
-                  </SidebarMenu>
-                )}
-              </SidebarGroupContent>
-            </SidebarGroup>
+              </SidebarSectionHeading>
+              {item.type === "folder" && (
+                <SidebarList className="gap-0 pl-2">
+                  {item.children.map((item) => {
+                    return (
+                      item.type === "page" && (
+                        <SidebarItem key={item.url}>
+                          <Link
+                            href={item.url as Route}
+                            data-active={item.url === pathname || undefined}
+                            className="text-[0.8rem] w-full flex pl-3 py-1 border-l text-fg-muted hover:text-fg transition-colors data-active:text-fg data-active:border-fg"
+                          >
+                            {item.name}
+                          </Link>
+                        </SidebarItem>
+                      )
+                    );
+                  })}
+                </SidebarList>
+              )}
+            </SidebarSection>
           );
         })}
       </SidebarContent>
 
       <SidebarFooter>
-        <motion.div
-          layout
-          transition={transition}
-          className="flex justify-between items-center gap-2"
-        >
-          <Button asChild size="sm" variant="quiet" aria-label="github">
-            <Link href={siteConfig.links.github} target="_blank">
-              <GitHubIcon />
-            </Link>
-          </Button>
-          <motion.div
-            layout
-            transition={transition}
-            className="flex items-center"
-          >
-            <ThemeSwitcher>
-              <Button size="sm" variant="quiet" className="[&_svg]:size-[18px]">
-                <SunIcon className="block dark:hidden" />
-                <MoonIcon className="hidden dark:block" />
-              </Button>
-            </ThemeSwitcher>
-            {isMounted && !isPending && session?.user && (
-              <UserProfileMenu placement="right">
-                <Button variant="quiet" size="sm">
-                  <Avatar
-                    src={session.user.image ?? undefined}
-                    fallback={session.user.name.charAt(0)}
-                    className="size-6"
-                  />
-                </Button>
-              </UserProfileMenu>
-            )}
+        <div className="flex group-data-expanded:flex-row flex-col justify-between group-data-exapnded:items-center items-start gap-1">
+          <motion.div layout transition={transition}>
+            <Button asChild size="sm" variant="quiet" aria-label="github">
+              <Link href={siteConfig.links.github} target="_blank">
+                <GitHubIcon />
+              </Link>
+            </Button>
           </motion.div>
-        </motion.div>
+          <div className="flex items-center group-data-expanded:flex-row flex-col justify-between group-data-exapnded:items-center gap-1">
+            <motion.div layout transition={transition}>
+              <ThemeSwitcher>
+                <Button
+                  size="sm"
+                  variant="quiet"
+                  className="[&_svg]:size-[18px]"
+                >
+                  <SunIcon className="block dark:hidden" />
+                  <MoonIcon className="hidden dark:block" />
+                </Button>
+              </ThemeSwitcher>
+            </motion.div>
+            {isMounted && !isPending && session?.user && (
+              <motion.div layout transition={transition} className="flex">
+                <UserProfileMenu placement="right">
+                  <Button variant="quiet" size="sm">
+                    <Avatar
+                      src={session.user.image ?? undefined}
+                      fallback={session.user.name.charAt(0)}
+                      className="size-6"
+                    />
+                  </Button>
+                </UserProfileMenu>
+              </motion.div>
+            )}
+          </div>
+        </div>
         <AnimatePresence>
           {isMounted && !isPending && !session?.user && (
             <motion.div
@@ -181,14 +154,19 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
               exit={{ opacity: 0, y: 20 }}
               transition={transition}
             >
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild className="bg-primary text-fg-on-primary justify-center">
+              <SidebarItem>
+                <Button
+                  asChild
+                  variant="primary"
+                  size="sm"
+                  className="group-data-expanded:justify-center!"
+                >
                   <Link href="/login">
                     <LogInIcon />
                     <span>Login</span>
                   </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
+                </Button>
+              </SidebarItem>
             </motion.div>
           )}
         </AnimatePresence>
@@ -196,6 +174,29 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
     </Sidebar>
   );
 }
+
+const navItems = [
+  {
+    icon: <BookIcon />,
+    name: "Docs",
+    url: "/docs/installation",
+  },
+  {
+    icon: <BoxIcon />,
+    name: "Components",
+    url: "/docs/components",
+  },
+  {
+    icon: <BlocksIcon />,
+    name: "Blocks",
+    url: "/blocks",
+  },
+  {
+    icon: <PaletteIcon />,
+    name: "Styles",
+    url: "/styles",
+  },
+] as { icon: React.ReactNode; name: string; url: Route }[];
 
 const transition: Transition = {
   type: "spring",

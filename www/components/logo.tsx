@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { cn } from "@dotui/registry/lib/utils";
+import { Heading } from "@dotui/registry/ui/heading";
 
 import { siteConfig } from "@/config";
 
@@ -33,13 +34,16 @@ export const Logo = ({
           cx="75"
           cy="75"
           r="11"
-          className="fill-[#fff] dark:fill-[#381e1e]"
+          className="fill-white dark:fill-[#381e1e]"
         />
       </svg>
       {extanded && (
-        <div className="mt-1.5 font-josefin text-base leading-normal font-bold tracking-tighter transition-colors duration-150 group-data-collapsed/sidebar:opacity-0">
+        <Heading
+          level={2}
+          className="mt-1.5 font-josefin text-base leading-normal font-bold tracking-tighter transition-colors duration-150 group-not-data-expanded:opacity-0"
+        >
           {siteConfig.name}
-        </div>
+        </Heading>
       )}
     </>
   );

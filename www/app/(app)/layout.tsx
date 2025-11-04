@@ -7,7 +7,7 @@ import { ActiveStylePortalProvider } from "@/modules/styles/components/active-st
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <ActiveStylePortalProvider>
-      <SidebarProvider>
+      <SidebarProvider defaultOpen>
         <DocsSidebar items={docsSource.pageTree.children} />
         <div className="size-full">{children}</div>
       </SidebarProvider>
