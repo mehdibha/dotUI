@@ -30,7 +30,7 @@ export function BlocksNav({
 
   return (
     <Tabs selectedKey={pathname} {...props}>
-      <div className="sticky top-0 z-40 h-12 bg-bg pt-1 border-b flex items-end">
+      <div className="sticky top-0 z-10 h-12 bg-bg pt-1 border-b flex items-end">
         <TabList className="container border-b-0 translate-y-px">
           {[
             {

@@ -6,18 +6,14 @@ import {
   BlocksIcon,
   BookIcon,
   BoxIcon,
-  LogInIcon,
-  MoonIcon,
   PaletteIcon,
   SearchIcon,
-  SunIcon,
   UserIcon,
 } from "lucide-react";
 import { AnimatePresence, motion, type Transition } from "motion/react";
 import { Link } from "react-aria-components";
 import type * as PageTree from "fumadocs-core/page-tree";
 
-import { GitHubIcon } from "@dotui/registry/components/icons/github";
 import { Button } from "@dotui/registry/ui/button";
 import { Kbd } from "@dotui/registry/ui/kbd";
 import {
@@ -35,8 +31,6 @@ import {
 
 import { Logo } from "@/components/logo";
 import { SearchCommand } from "@/components/search-command";
-import { ThemeSwitcher } from "@/components/site-theme-selector";
-import { siteConfig } from "@/config";
 import { useMounted } from "@/hooks/use-mounted";
 import { UserProfileMenu } from "@/modules/auth/components/user-profile-menu";
 import { authClient } from "@/modules/auth/lib/client";
@@ -52,7 +46,7 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
 
   return (
     <Sidebar className="[--color-sidebar:var(--color-bg)]">
-      <SidebarHeader className="relative flex flex-row items-center border-b pl-3.5 h-13 overflow-hidden">
+      <SidebarHeader className="relative flex flex-row items-center border-b pl-3.5 h-12 overflow-hidden">
         <Logo />
         <div className="absolute right-0 top-0 bg-sidebar h-full w-[calc(var(--sidebar-width-icon)-1px)] group-data-expanded:w-auto px-2 flex items-center justify-center group-hover:opacity-100 not-group-data-expanded:opacity-0">
           <Button slot="sidebar-trigger" variant="quiet" size="sm" />
@@ -158,7 +152,11 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
                       className="group-data-expanded:justify-center!"
                     >
                       <Link href="/login">
-                        <motion.span layout transition={transition} className="flex items-center gap-2">
+                        <motion.span
+                          layout
+                          transition={transition}
+                          className="flex items-center gap-2"
+                        >
                           <UserIcon />
                           <span>Sign in</span>
                         </motion.span>
