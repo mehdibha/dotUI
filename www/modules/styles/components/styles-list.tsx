@@ -40,18 +40,16 @@ export function StylesList({
 
   return (
     <div className={cn("@container/styles-list", props.className)}>
-      <div className="flex items-center justify-end gap-4">
-        {search && (
-          <SearchField
-            aria-label="Search styles"
-            className="flex-1"
-            onChange={(value) => setQuery(value?.toString() ?? "")}
-            value={query}
-          >
-            <Input placeholder="Search styles..." />
-          </SearchField>
-        )}
-      </div>
+      {search && (
+        <SearchField
+          aria-label="Search styles"
+          className="w-full"
+          onChange={(value) => setQuery(value?.toString() ?? "")}
+          value={query}
+        >
+          <Input placeholder="Search styles..." />
+        </SearchField>
+      )}
       <div
         className={cn(
           "grid grid-cols-1 gap-4 @3xl/styles-list:grid-cols-2 @5xl/styles-list:grid-cols-3",

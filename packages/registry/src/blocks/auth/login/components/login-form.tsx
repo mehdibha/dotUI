@@ -61,7 +61,7 @@ export function LoginForm(props: React.ComponentProps<"div">) {
             <span className="bg-card px-2 text-fg-muted">Or</span>
           </div>
         </div>
-        <TextField>
+        <TextField className="w-full">
           <Label>Email address</Label>
           <Input />
         </TextField>
@@ -69,7 +69,6 @@ export function LoginForm(props: React.ComponentProps<"div">) {
           Continue with email
         </Button>
         <p className="mt-4 text-sm text-fg-muted">
-          {/* TODO */}
           Don&apos;t have an account?{" "}
           <Link href="#" variant="quiet">
             register

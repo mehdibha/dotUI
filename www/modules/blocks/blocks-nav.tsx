@@ -16,31 +16,29 @@ export function BlocksNav({
 
   return (
     <Tabs selectedKey={pathname} {...props}>
-      <div className="sticky top-0 z-40 border-b bg-bg">
-        <TabList className="container border-b-0">
-          {[
-            {
-              href: "/blocks",
-              label: "Featured",
-            },
-            ...blocksCategories
-              .filter((category) => category.slug !== "featured")
-              .map((category) => ({
-                href: `/blocks/${category.slug}`,
-                label: category.name,
-              })),
-          ].map((tab) => (
-            <Tab
-              key={tab.href}
-              id={tab.href}
-              href={tab.href as Route}
-              className="flex h-7 items-center gap-2 rounded-full px-4 pt-6 pb-5 text-sm"
-            >
-              {tab.label}
-            </Tab>
-          ))}
-        </TabList>
-      </div>
+      <TabList className="container sticky top-0 z-40 bg-bg h-13">
+        {[
+          {
+            href: "/blocks",
+            label: "Featured",
+          },
+          ...blocksCategories
+            .filter((category) => category.slug !== "featured")
+            .map((category) => ({
+              href: `/blocks/${category.slug}`,
+              label: category.name,
+            })),
+        ].map((tab) => (
+          <Tab
+            key={tab.href}
+            id={tab.href}
+            href={tab.href as Route}
+            className="flex items-center gap-2 rounded-full py-2 px-4 text-sm"
+          >
+            {tab.label}
+          </Tab>
+        ))}
+      </TabList>
       <TabPanel id={pathname} className="container mt-6">
         {children}
       </TabPanel>

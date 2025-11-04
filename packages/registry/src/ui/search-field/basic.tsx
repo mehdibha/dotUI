@@ -10,7 +10,10 @@ import { tv } from "tailwind-variants";
 import { fieldStyles } from "@dotui/registry/ui/field";
 
 const searchFieldStyles = tv({
-  base: [fieldStyles().field()],
+  base: [
+    "[&.w-full]:*:data-[slot=input]:w-full [&.flex-1]:*:data-[slot=input]:w-full",
+    fieldStyles().field(),
+  ],
 });
 
 /* -----------------------------------------------------------------------------------------------*/
@@ -21,7 +24,7 @@ interface SearchFieldProps
 const SearchField = ({ className, ...props }: SearchFieldProps) => {
   return (
     <AriaSearchField
-      data-slot="text-field"
+      data-slot="search-field"
       className={composeRenderProps(className, (className) =>
         searchFieldStyles({ className }),
       )}

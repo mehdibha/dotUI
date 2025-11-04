@@ -46,7 +46,7 @@ export default function BlocksLayout({ children }: LayoutProps<"/blocks">) {
           <ActiveStyleSelector buttonProps={{ className: "px-4" }} />
         </PageActions>
       </PageHeader>
-      <BlocksNav className="mt-6">{children}</BlocksNav>
+      <BlocksNav>{children}</BlocksNav>
     </PageLayout>
   );
 }

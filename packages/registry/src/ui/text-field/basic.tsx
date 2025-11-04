@@ -10,7 +10,10 @@ import { tv } from "tailwind-variants";
 import { fieldStyles } from "@dotui/registry/ui/field";
 
 const textFieldStyles = tv({
-  base: [fieldStyles().field({ orientation: "vertical" })],
+  base: [
+    "[&.w-full]:*:data-[slot=input]:w-full [&.flex-1]:*:data-[slot=input]:w-full",
+    fieldStyles().field({ orientation: "vertical" }),
+  ],
 });
 
 /* -----------------------------------------------------------------------------------------------*/

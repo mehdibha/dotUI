@@ -158,8 +158,10 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
                       className="group-data-expanded:justify-center!"
                     >
                       <Link href="/login">
-                        <UserIcon />
-                        <span>Sign in</span>
+                        <motion.span layout transition={transition} className="flex items-center gap-2">
+                          <UserIcon />
+                          <span>Sign in</span>
+                        </motion.span>
                       </Link>
                     </Button>
                   </SidebarTooltip>

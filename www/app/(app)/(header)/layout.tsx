@@ -12,7 +12,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           "search",
           "github",
         ]}
-        className="max-lg:hidden h-13"
+        className="max-md:hidden h-13"
       />
       <main>{children}</main>
       <Footer />

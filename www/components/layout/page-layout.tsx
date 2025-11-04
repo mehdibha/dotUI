@@ -5,7 +5,7 @@ export function PageLayout({
   ...props
 }: React.ComponentProps<"div">) {
   return (
-    <div className={cn("pt-6 pb-14 md:pt-10 lg:pt-14", className)} {...props} />
+    <div className={cn("", className)} {...props} />
   );
 }
 
@@ -15,7 +15,7 @@ export function PageHeader({
   ...props
 }: React.ComponentProps<"section">) {
   return (
-    <section className={cn("container", className)} {...props}>
+    <section className={cn("container lg:py-14", className)} {...props}>
       {children}
     </section>
   );
