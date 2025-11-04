@@ -40,9 +40,8 @@ export default async function HomePage() {
             <span className="font-bold italic">unique</span> look.
           </h1>
           <p className="text-center text-base sm:text-lg text-fg-muted text-balance max-sm:px-2">
-            Beautiful components, accessibility out of the
-            box, composition, and more, all powered by{" "}
-            <AdobeIcon className="size-4 inline-flex" />
+            Beautiful components, accessibility out of the box, composition, and
+            more, all powered by <AdobeIcon className="size-4 inline-flex" />
             &nbsp;<span className="font-medium">react-aria-components</span> and{" "}
             <ShadcnIcon className="size-5 inline-flex" />
             &nbsp;<span className="font-medium">shadcn&nbsp;CLI</span>.

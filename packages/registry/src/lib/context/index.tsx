@@ -40,10 +40,7 @@ export function createContext<ContextType>(options: CreateContextOptions = {}) {
     return context;
   }
 
-  return [
-    Context,
-    useContext,
-  ] as CreateContextReturn<ContextType>;
+  return [Context, useContext] as CreateContextReturn<ContextType>;
 }
 
 export function createScopedContext<ContextValueType extends object | null>(
