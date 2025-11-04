@@ -7,7 +7,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <div>
       <Header
         items={docsSource.pageTree.children}
-        hideLogo
+        visibleItems={[
+          "menu",
+          "search",
+          "github",
+        ]}
         className="max-lg:hidden h-13"
       />
       <main>{children}</main>

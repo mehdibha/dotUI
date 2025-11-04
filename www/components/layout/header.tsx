@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { MoonIcon, SearchIcon, SunIcon } from "lucide-react";
+import { SearchIcon } from "lucide-react";
 import type * as PageTree from "fumadocs-core/page-tree";
 
 import { GitHubIcon } from "@dotui/registry/components/icons/github";
@@ -12,25 +12,42 @@ import { Kbd } from "@dotui/registry/ui/kbd";
 import { MobileNav } from "@/components/layout/mobile-nav";
 import { Logo } from "@/components/logo";
 import { SearchCommand } from "@/components/search-command";
-import { ThemeSwitcher } from "@/components/site-theme-selector";
 import { siteConfig } from "@/config";
-import { useMounted } from "@/hooks/use-mounted";
-import { UserProfileMenu } from "@/modules/auth/components/user-profile-menu";
-import { authClient } from "@/modules/auth/lib/client";
+
+type HeaderItem =
+  | "logo"
+  | "menu"
+  | "mobileNav"
+  | "search"
+  | "github"
+  | "themeSwitcher"
+  | "signIn"
+  | "userProfile";
 
 export function Header({
   className,
   items,
   containerClassName,
-  hideLogo = false,
+  visibleItems = [
+    "logo",
+    "menu",
+    "mobileNav",
+    "search",
+    "github",
+    "themeSwitcher",
+    "signIn",
+    "userProfile",
+  ],
 }: {
   className?: string;
   containerClassName?: string;
   items: PageTree.Node[];
-  hideLogo?: boolean;
+  visibleItems?: HeaderItem[];
 }) {
-  const { data: session, isPending } = authClient.useSession();
-  const isMounted = useMounted();
+  const isVisible = (item: HeaderItem) => {
+    if (!visibleItems) return true;
+    return visibleItems.includes(item);
+  };
 
   return (
     <header
@@ -43,29 +60,31 @@ export function Header({
         )}
       >
         <div className="flex items-center gap-3 md:gap-6">
-          <MobileNav items={items} />
-          {!hideLogo && <Logo className="max-md:hidden" />}
-          <div className="flex items-center gap-3 text-sm max-md:hidden">
-            {(
-              [
-                { label: "Docs", href: "/docs" },
-                { label: "Components", href: "/docs/components" },
-                { label: "Blocks", href: "/blocks" },
-                { label: "Styles", href: "/styles" },
-              ] as const
-            ).map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="px-0.5 text-fg-muted transition-colors hover:text-fg"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </div>
+          {isVisible("mobileNav") && <MobileNav items={items} />}
+          {isVisible("logo") && <Logo className="max-md:hidden" />}
+          {isVisible("menu") && (
+            <div className="flex items-center gap-3 text-sm max-md:hidden">
+              {(
+                [
+                  { label: "Docs", href: "/docs" },
+                  { label: "Components", href: "/docs/components" },
+                  { label: "Blocks", href: "/blocks" },
+                  { label: "Styles", href: "/styles" },
+                ] as const
+              ).map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="px-0.5 text-fg-muted transition-colors hover:text-fg"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
-        {isMounted && !isPending && (
-          <div className="flex animate-in items-center gap-2 fade-in">
+        <div className="flex items-center gap-2">
+          {isVisible("search") && (
             <SearchCommand keyboardShortcut items={items}>
               <Button
                 variant="default"
@@ -79,28 +98,15 @@ export function Header({
                 <Kbd className="max-md:hidden">⌘ K</Kbd>
               </Button>
             </SearchCommand>
+          )}
+          {isVisible("github") && (
             <Button asChild size="sm">
-              <Link href={siteConfig.links.github} target="_blank">
+              <Link aria-label="GitHub" href={siteConfig.links.github} target="_blank">
                 <GitHubIcon />
               </Link>
             </Button>
-            {session ? (
-              <UserProfileMenu />
-            ) : (
-              <>
-                <ThemeSwitcher>
-                  <Button size="sm">
-                    <SunIcon className="block dark:hidden" />
-                    <MoonIcon className="hidden dark:block" />
-                  </Button>
-                </ThemeSwitcher>
-                <Button variant="primary" asChild size="sm">
-                  <Link href="/login">Sign in</Link>
-                </Button>
-              </>
-            )}
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </header>
   );

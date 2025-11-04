@@ -9,36 +9,38 @@ import { cn } from "@dotui/registry/lib/utils";
 import { Avatar } from "@dotui/registry/ui/avatar";
 import { Menu, MenuContent, MenuItem, MenuSub } from "@dotui/registry/ui/menu";
 import { Overlay } from "@dotui/registry/ui/overlay";
+import type { ButtonProps } from "@dotui/registry/ui/button";
 import type { PopoverProps } from "@dotui/registry/ui/popover";
 
 import { authClient } from "@/modules/auth/lib/client";
 
 export function UserProfileMenu({
   placement = "bottom end",
-  children,
+  ...props
 }: {
   placement?: PopoverProps["placement"];
-  children?: React.ReactNode;
-}) {
+} & ButtonProps) {
   const { data: session } = authClient.useSession();
   const { theme, setTheme } = useTheme();
 
   return (
     <Menu>
-      {children ?? (
-        <Button
-          className={cn(
-            focusRing(),
-            "flex size-7.5 cursor-pointer items-center justify-center rounded-full outline-hidden",
-          )}
-        >
-          <Avatar
-            src={session?.user?.image ?? undefined}
-            fallback={session?.user?.name?.charAt(0)}
-            className="size-full rounded-full"
-          />
-        </Button>
-      )}
+      <Button
+        aria-label="User Profile"
+        {...props}
+        className={cn(
+          focusRing(),
+          "flex size-7.5 cursor-pointer items-center justify-center rounded-full outline-hidden",
+          props.className,
+        )}
+      >
+        <Avatar
+          src={session?.user?.image ?? undefined}
+          fallback={session?.user?.name?.charAt(0)}
+          alt={session?.user?.name ?? undefined}
+          className="size-full rounded-full"
+        />
+      </Button>
       <Overlay
         type="popover"
         mobileType="drawer"
@@ -53,37 +55,7 @@ export function UserProfileMenu({
           <p className="text-fg-muted">{session?.user?.email}</p>
         </div>
         <MenuContent className="**:data-[slot=menu-item]:text-fg-muted [&_svg]:text-fg">
-          <MenuSub>
-            <MenuItem>Theme mode</MenuItem>
-            <Overlay
-              type="popover"
-              popoverProps={{
-                className: "w-32",
-              }}
-            >
-              <MenuContent
-                selectionMode="single"
-                selectedKeys={theme ? [theme] : undefined}
-                onSelectionChange={(key) => {
-                  setTheme([...key][0] as string);
-                }}
-                className="**:data-[slot=menu-item]:text-fg-muted"
-              >
-                <MenuItem id="system">
-                  <MonitorIcon className="text-fg" />
-                  System
-                </MenuItem>
-                <MenuItem id="light">
-                  <SunIcon className="text-fg" />
-                  Light
-                </MenuItem>
-                <MenuItem id="dark">
-                  <MoonIcon className="text-fg" />
-                  Dark
-                </MenuItem>
-              </MenuContent>
-            </Overlay>
-          </MenuSub>
+          <MenuItem href="/styles/my-styles">My styles</MenuItem>
           <MenuItem
             onAction={() => {
               authClient.signOut();

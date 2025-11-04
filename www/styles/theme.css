@@ -75,11 +75,11 @@
   --color-fg-inverse: var(--neutral-50);
   --color-fg-disabled: var(--neutral-500);
   --color-fg-primary-disabled: var(--neutral-300);
-  --color-fg-danger: var(--danger-700);
-  --color-fg-warning: var(--warning-700);
-  --color-fg-success: var(--success-700);
-  --color-fg-info: var(--info-700);
-  --color-fg-accent: var(--accent-700);
+  --color-fg-danger: var(--danger-800);
+  --color-fg-warning: var(--warning-800);
+  --color-fg-success: var(--success-800);
+  --color-fg-info: var(--info-800);
+  --color-fg-accent: var(--accent-800);
 
   --color-fg-on-neutral: var(--on-neutral-200);
   --color-fg-on-primary: var(--on-neutral-950);

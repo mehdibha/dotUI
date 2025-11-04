@@ -133,7 +133,7 @@ const { group, input, textArea, addon } = inputStyles();
 
 /* -----------------------------------------------------------------------------------------------*/
 
-const [, useInputGroupContext, InputGroupContext] = createContext<boolean>({
+const [InputGroupContext, useInputGroupContext] = createContext<boolean>({
   name: "InputGroupContext",
   strict: false,
 });

@@ -18,6 +18,7 @@ import { useKeyboardShortcut } from "@dotui/registry/hooks/use-keyboard-shortcut
 import { createContext } from "@dotui/registry/lib/context";
 import { cn } from "@dotui/registry/lib/utils";
 import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
+import { Slot } from "@radix-ui/react-slot";
 
 const SIDEBAR_WIDTH = "15rem";
 const SIDEBAR_WIDTH_ICON = "3rem";
@@ -252,12 +253,15 @@ function SidebarList({ className, ...props }: React.ComponentProps<"ul">) {
 function SidebarItem({
   tooltip,
   className,
+  asChild,
   ...props
-}: React.ComponentProps<"li"> & { tooltip?: React.ReactNode }) {
+}: React.ComponentProps<"li"> & { tooltip?: React.ReactNode; asChild?: boolean }) {
   const { isOpen } = useSidebarContext("SidebarItem");
 
+  const Comp = asChild ? Slot : "li";
+
   const comp = (
-    <li
+    <Comp
       data-slot="sidebar-menu-item"
       data-sidebar="menu-item"
       className={item({ className })}
@@ -289,7 +293,7 @@ function SidebarTooltip({
   return (
     <Tooltip isDisabled={isOpen} delay={0}>
       {children}
-      <TooltipContent hideArrow>{content}</TooltipContent>
+      <TooltipContent hideArrow placement="right">{content}</TooltipContent>
     </Tooltip>
   );
 }

@@ -1,4 +1,5 @@
 import type { Route } from "next";
+import Link from "next/link";
 
 import { AdobeIcon } from "@dotui/registry/components/icons/adobe";
 import { GitHubIcon } from "@dotui/registry/components/icons/github";
@@ -6,10 +7,9 @@ import { ReactJsIcon } from "@dotui/registry/components/icons/react-js";
 import { ShadcnIcon } from "@dotui/registry/components/icons/shadcn";
 import { TailwindWordmark } from "@dotui/registry/components/icons/tailwind-wordmark";
 import { TypeScriptIcon } from "@dotui/registry/components/icons/typescript";
-import { Alert } from "@dotui/registry/ui/alert";
+import { Alert, AlertTitle } from "@dotui/registry/ui/alert";
 import { Avatar } from "@dotui/registry/ui/avatar";
 import { Button } from "@dotui/registry/ui/button";
-import { Link } from "@dotui/registry/ui/link";
 import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
 
 import { FeaturedStylesShowcase } from "@/components/featured-styles-showcase";
@@ -61,7 +61,9 @@ export default async function HomePage() {
         {feturedStyles.length > 0 ? (
           <FeaturedStylesShowcase styles={feturedStyles} />
         ) : (
-          <Alert>No styles found.</Alert>
+          <Alert>
+            <AlertTitle>No styles found.</AlertTitle>
+          </Alert>
         )}
       </section>
       <section className="mt-10 border-y py-12 shadow-xs">
@@ -100,6 +102,7 @@ export default async function HomePage() {
               <Tooltip key={index}>
                 <Link
                   target="_blank"
+                  aria-label={label}
                   className="flex items-center justify-center opacity-60 grayscale-80 transition-opacity hover:opacity-100 hover:grayscale-0"
                   href={href as Route}
                 >
@@ -139,12 +142,11 @@ export default async function HomePage() {
             <div className="flex items-center gap-1">
               {contributors.map((contributor) => (
                 <Tooltip key={contributor.login}>
-                  <Link
-                    href={contributor.html_url as Route}
-                    target="_blank"
-                    variant="unstyled"
-                  >
-                    <Avatar src={contributor.avatar_url} />
+                  <Link href={contributor.html_url as Route} target="_blank">
+                    <Avatar
+                      src={contributor.avatar_url}
+                      alt={contributor.login}
+                    />
                   </Link>
                   <TooltipContent>{contributor.login}</TooltipContent>
                 </Tooltip>

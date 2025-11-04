@@ -12,8 +12,8 @@ const linkVariants = tv({
   ],
   variants: {
     variant: {
-      accent: "text-fg-accent hover:text-[#5e9fe0]",
-      quiet: "text-fg underline underline-offset-2",
+      accent: "text-fg-accent underline underline-offset-4",
+      quiet: "text-fg font-medium underline underline-offset-2",
       unstyled: "",
     },
   },

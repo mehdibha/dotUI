@@ -9,15 +9,17 @@ import {
   LogInIcon,
   MoonIcon,
   PaletteIcon,
+  SearchIcon,
   SunIcon,
+  UserIcon,
 } from "lucide-react";
 import { AnimatePresence, motion, type Transition } from "motion/react";
 import { Link } from "react-aria-components";
 import type * as PageTree from "fumadocs-core/page-tree";
 
 import { GitHubIcon } from "@dotui/registry/components/icons/github";
-import { Avatar } from "@dotui/registry/ui/avatar";
 import { Button } from "@dotui/registry/ui/button";
+import { Kbd } from "@dotui/registry/ui/kbd";
 import {
   Sidebar,
   SidebarContent,
@@ -27,10 +29,12 @@ import {
   SidebarList,
   SidebarSection,
   SidebarSectionHeading,
+  SidebarTooltip,
   useSidebarContext,
 } from "@dotui/registry/ui/sidebar";
 
 import { Logo } from "@/components/logo";
+import { SearchCommand } from "@/components/search-command";
 import { ThemeSwitcher } from "@/components/site-theme-selector";
 import { siteConfig } from "@/config";
 import { useMounted } from "@/hooks/use-mounted";
@@ -50,7 +54,7 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
     <Sidebar className="[--color-sidebar:var(--color-bg)]">
       <SidebarHeader className="relative flex flex-row items-center border-b pl-3.5 h-13 overflow-hidden">
         <Logo />
-        <div className="absolute right-0 top-0 bg-sidebar transition-opacity duration-150 h-full w-[calc(var(--sidebar-width-icon)-1px)] group-data-expanded:w-auto px-2 flex items-center justify-center group-hover:opacity-100 not-group-data-expanded:opacity-0 ease-drawer">
+        <div className="absolute right-0 top-0 bg-sidebar h-full w-[calc(var(--sidebar-width-icon)-1px)] group-data-expanded:w-auto px-2 flex items-center justify-center group-hover:opacity-100 not-group-data-expanded:opacity-0">
           <Button slot="sidebar-trigger" variant="quiet" size="sm" />
         </div>
       </SidebarHeader>
@@ -62,15 +66,33 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
         }}
       >
         <SidebarSection>
-          <SidebarList>
+          <SidebarList className="**:[svg]:text-fg-muted/70 **:data-[slot=button]:text-fg/85">
+            <SearchCommand items={items} keyboardShortcut>
+              <SidebarItem>
+                <SidebarTooltip content="Search">
+                  <Button
+                    aria-label="Search"
+                    variant="default"
+                    size="sm"
+                    className="text-fg-muted"
+                  >
+                    <SearchIcon />
+                    <span className="flex-1 text-left">Search...</span>
+                    <Kbd>⌘K</Kbd>
+                  </Button>
+                </SidebarTooltip>
+              </SidebarItem>
+            </SearchCommand>
             {navItems.map((item) => (
               <SidebarItem key={item.url}>
-                <Button asChild size="sm" variant="quiet">
-                  <Link href={item.url}>
-                    {item.icon}
-                    <span>{item.name}</span>
-                  </Link>
-                </Button>
+                <SidebarTooltip content={item.name}>
+                  <Button asChild size="sm" variant="quiet">
+                    <Link href={item.url}>
+                      {item.icon}
+                      <span>{item.name}</span>
+                    </Link>
+                  </Button>
+                </SidebarTooltip>
               </SidebarItem>
             ))}
           </SidebarList>
@@ -110,43 +132,16 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
       </SidebarContent>
 
       <SidebarFooter>
-        <div className="flex group-data-expanded:flex-row flex-col justify-between group-data-exapnded:items-center items-start gap-1">
-          <motion.div layout transition={transition}>
-            <Button asChild size="sm" variant="quiet" aria-label="github">
-              <Link href={siteConfig.links.github} target="_blank">
-                <GitHubIcon />
-              </Link>
-            </Button>
-          </motion.div>
-          <div className="flex items-center group-data-expanded:flex-row flex-col justify-between group-data-exapnded:items-center gap-1">
-            <motion.div layout transition={transition}>
-              <ThemeSwitcher>
-                <Button
-                  size="sm"
-                  variant="quiet"
-                  className="[&_svg]:size-[18px]"
-                >
-                  <SunIcon className="block dark:hidden" />
-                  <MoonIcon className="hidden dark:block" />
-                </Button>
-              </ThemeSwitcher>
-            </motion.div>
-            {isMounted && !isPending && session?.user && (
-              <motion.div layout transition={transition} className="flex">
-                <UserProfileMenu placement="right">
-                  <Button variant="quiet" size="sm">
-                    <Avatar
-                      src={session.user.image ?? undefined}
-                      fallback={session.user.name.charAt(0)}
-                      className="size-6"
-                    />
-                  </Button>
-                </UserProfileMenu>
-              </motion.div>
-            )}
-          </div>
-        </div>
         <AnimatePresence>
+          {isMounted && !isPending && session?.user && (
+            <motion.div layout transition={transition} className="flex">
+              <UserProfileMenu
+                placement="right"
+                size="sm"
+                className="*:data-[slot=avatar]:size-6"
+              />
+            </motion.div>
+          )}
           {isMounted && !isPending && !session?.user && (
             <motion.div
               initial={{ opacity: 0.5, y: 20 }}
@@ -154,18 +149,21 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
               exit={{ opacity: 0, y: 20 }}
               transition={transition}
             >
-              <SidebarItem>
-                <Button
-                  asChild
-                  variant="primary"
-                  size="sm"
-                  className="group-data-expanded:justify-center!"
-                >
-                  <Link href="/login">
-                    <LogInIcon />
-                    <span>Login</span>
-                  </Link>
-                </Button>
+              <SidebarItem asChild>
+                <div>
+                  <SidebarTooltip content="Sign in">
+                    <Button
+                      asChild
+                      size="sm"
+                      className="group-data-expanded:justify-center!"
+                    >
+                      <Link href="/login">
+                        <UserIcon />
+                        <span>Sign in</span>
+                      </Link>
+                    </Button>
+                  </SidebarTooltip>
+                </div>
               </SidebarItem>
             </motion.div>
           )}
