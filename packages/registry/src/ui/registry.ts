@@ -1,5 +1,6 @@
 import type { RegistryItem } from "@dotui/registry/types";
 
+import Accordion from "./accordion/meta";
 import Alert from "./alert/meta";
 import Avatar from "./avatar/meta";
 import Badge from "./badge/meta";
@@ -10,6 +11,7 @@ import Card from "./card/meta";
 import Checkbox from "./checkbox/meta";
 import CheckboxGroup from "./checkbox-group/meta";
 import ColorArea from "./color-area/meta";
+import ColorEditor from "./color-editor/meta";
 import ColorField from "./color-field/meta";
 import ColorPicker from "./color-picker/meta";
 import ColorSlider from "./color-slider/meta";
@@ -23,6 +25,7 @@ import DatePicker from "./date-picker/meta";
 import Dialog from "./dialog/meta";
 import Drawer from "./drawer/meta";
 import DropZone from "./drop-zone/meta";
+import Empty from "./empty/meta";
 import Field from "./field/meta";
 import FileTrigger from "./file-trigger/meta";
 import Form from "./form/meta";
@@ -57,6 +60,7 @@ import ToggleButtonGroup from "./toggle-button-group/meta";
 import Tooltip from "./tooltip/meta";
 
 export const registryUi: RegistryItem[] = [
+  Accordion,
   Alert,
   Avatar,
   Badge,
@@ -67,6 +71,7 @@ export const registryUi: RegistryItem[] = [
   CheckboxGroup,
   Checkbox,
   ColorArea,
+  ColorEditor,
   ColorField,
   ColorPicker,
   ColorSlider,
@@ -80,6 +85,7 @@ export const registryUi: RegistryItem[] = [
   Dialog,
   Drawer,
   DropZone,
+  Empty,
   Field,
   FileTrigger,
   Form,
