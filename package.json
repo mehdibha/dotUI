@@ -32,7 +32,7 @@
     "lint:ws": "pnpm dlx sherif@latest",
     "postinstall": "pnpm lint:ws",
     "typecheck": "turbo run typecheck",
-    "test": "turbo run test",
+    "test": "vitest run",
     "release": "changeset version",
     "pub:beta": "pnpm --filter=tailwindcss-autocontrast pub:beta",
     "pub:release": "pnpm --filter=tailwindcss-autocontrast pub:release"

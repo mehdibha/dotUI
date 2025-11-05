@@ -215,7 +215,7 @@ importers:
         specifier: ^3.1.1
         version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.15)
       ts-morph:
-        specifier: ^25.0.0
+        specifier: ^25.0.1
         version: 25.0.1
       zod:
         specifier: ^4.0.5
@@ -422,6 +422,9 @@ importers:
       tailwind-variants:
         specifier: ^3.1.1
         version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.15)
+      ts-morph:
+        specifier: ^25.0.1
+        version: 25.0.1
       unified:
         specifier: ^11.0.5
         version: 11.0.5

@@ -157,7 +157,7 @@ export const styleRouter = {
       const parts = input.slug.split("/");
 
       // biome-ignore lint/suspicious/noImplicitAnyLet: styleRecord is conditionally assigned based on slug format
-      let styleRecord
+      let styleRecord;
 
       if (parts.length === 2) {
         // Format: "username/stylename"
