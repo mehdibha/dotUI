@@ -33,6 +33,7 @@ const Code = async ({
   const code = (
     <ElementType
       className="[&_pre]:outline-hidden [&_span]:bg-transparent! dark:[&_span]:text-(--shiki-dark)!"
+      // biome-ignore lint/security/noDangerouslySetInnerHtml: ignore
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );

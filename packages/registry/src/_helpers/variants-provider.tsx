@@ -15,7 +15,7 @@ export const VariantsProvider = ({
   children: React.ReactNode;
   variants: VariantsDefinition;
 }) => {
-  // biome-ignore lint/correctness/useExhaustiveDependencies: l
+  // biome-ignore lint/correctness/useExhaustiveDependencies: TODO: fix later
   const variants = React.useMemo(
     () => createVariants(variantsDefinition),
     [JSON.stringify(variantsDefinition)],

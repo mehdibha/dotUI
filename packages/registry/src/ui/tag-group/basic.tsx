@@ -13,7 +13,6 @@ import type {
   TagListProps as AriaTagListProps,
   TagProps as AriaTagProps,
 } from "react-aria-components";
-import type { VariantProps } from "tailwind-variants";
 
 import { Button } from "@dotui/registry/ui/button";
 

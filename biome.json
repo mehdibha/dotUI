@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.3.1/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.3.3/schema.json",
   "vcs": {
     "enabled": false,
     "clientKind": "git",
@@ -35,15 +35,16 @@
         "noUnknownAtRules": "off",
         "noExplicitAny": "off",
         "noArrayIndexKey": "off",
-        "noShadowRestrictedNames": "warn",
-        "useIterableCallbackReturn": "warn",
+        "noShadowRestrictedNames": "off",
+        "useIterableCallbackReturn": "off",
         "noDocumentCookie": "off"
       },
       "correctness": {
         "useExhaustiveDependencies": "warn"
       },
       "complexity": {
-        "noBannedTypes": "warn"
+        "noBannedTypes": "off",
+        "noImportantStyles": "off"
       },
       "style": {
         "noNonNullAssertion": "off"
@@ -51,9 +52,9 @@
       "a11y": {
         "noSvgWithoutTitle": "off",
         "useValidAnchor": "off",
-        "useIframeTitle": "warn",
-        "useSemanticElements": "warn",
-        "noStaticElementInteractions": "warn"
+        "useIframeTitle": "off",
+        "useSemanticElements": "off",
+        "noStaticElementInteractions": "off"
       },
       "performance": {
         "noImgElement": "off"

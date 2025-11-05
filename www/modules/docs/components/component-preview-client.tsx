@@ -2,10 +2,6 @@
 
 import type React from "react";
 
-import { VariantsProvider } from "@dotui/registry";
-import { DEFAULT_VARIANTS_DEFINITION } from "@dotui/registry/style-system/constants";
-import { Button } from "@dotui/registry/ui/button";
-
 import { ThemeModeSwitch } from "@/components/ui/theme-mode-switch";
 import { useHorizontalResize } from "@/hooks/use-horizontal-resize";
 import { useMounted } from "@/hooks/use-mounted";

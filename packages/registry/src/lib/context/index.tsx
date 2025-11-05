@@ -57,7 +57,7 @@ export function createScopedContext<ContextValueType extends object | null>(
     const { children, ...context } = props;
     const value = React.useMemo(
       () => context,
-      // biome-ignore lint/correctness/useExhaustiveDependencies: we only want to memoize when the context values change
+      // biome-ignore lint/correctness/useExhaustiveDependencies: TODO: fix later
       Object.values(context),
     ) as ContextValueType;
     return <Context.Provider value={value}>{children}</Context.Provider>;

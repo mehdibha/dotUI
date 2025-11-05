@@ -1,13 +1,12 @@
 "use client";
 
-import { LogOutIcon, MonitorIcon, MoonIcon, SunIcon } from "lucide-react";
-import { useTheme } from "next-themes";
+import { LogOutIcon } from "lucide-react";
 import { Button } from "react-aria-components";
 
 import { focusRing } from "@dotui/registry/lib/focus-styles";
 import { cn } from "@dotui/registry/lib/utils";
 import { Avatar } from "@dotui/registry/ui/avatar";
-import { Menu, MenuContent, MenuItem, MenuSub } from "@dotui/registry/ui/menu";
+import { Menu, MenuContent, MenuItem } from "@dotui/registry/ui/menu";
 import { Overlay } from "@dotui/registry/ui/overlay";
 import type { ButtonProps } from "@dotui/registry/ui/button";
 import type { PopoverProps } from "@dotui/registry/ui/popover";
@@ -21,7 +20,6 @@ export function UserProfileMenu({
   placement?: PopoverProps["placement"];
 } & ButtonProps) {
   const { data: session } = authClient.useSession();
-  const { theme, setTheme } = useTheme();
 
   return (
     <Menu>

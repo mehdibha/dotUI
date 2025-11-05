@@ -269,11 +269,6 @@ const content: ContentSection[] = [
         preview: demos.BreadcrumbDemo,
       },
       {
-        id: "pagination",
-        title: "Pagination",
-        preview: demos.PaginationDemo,
-      },
-      {
         id: "command",
         title: "Command",
         preview: demos.CommandDemo,
@@ -409,7 +404,7 @@ const toc = content.flatMap((section) => [
 
 export default function InternalPage() {
   return (
-    <div className="container max-w-screen-xl py-20 xl:grid xl:grid-cols-[1fr_250px] xl:gap-12">
+    <div className="container max-w-7xl py-20 xl:grid xl:grid-cols-[1fr_250px] xl:gap-12">
       <div className="space-y-12">
         <div className="flex items-center justify-between">
           <div className="space-y-2">
@@ -485,18 +480,26 @@ const Section = ({
   // Create state for each unique property
   const [controlStates, setControlStates] = React.useState<
     Record<string, boolean>
-  >(() => uniqueProps.reduce((acc, prop) => ({ ...acc, [prop]: false }), {}));
+  >(() =>
+    uniqueProps.reduce(
+      (acc, prop) => {
+        acc[prop] = false;
+        return acc;
+      },
+      {} as Record<string, boolean>,
+    ),
+  );
 
   // Build provider values
   const providerValues = React.useMemo(() => {
     if (!controls) return [];
     return controls.map(([context, props]) => {
       const contextValues = props.reduce(
-        (acc, prop) => ({
-          ...acc,
-          [prop]: controlStates[prop],
-        }),
-        {},
+        (acc, prop) => {
+          acc[prop] = controlStates[prop]!;
+          return acc;
+        },
+        {} as Record<string, boolean>,
       );
       return [context, contextValues];
     }) as any;

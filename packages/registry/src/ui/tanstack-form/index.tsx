@@ -12,7 +12,6 @@ import {
   type Key,
   type TimeValue,
 } from "react-aria-components";
-import type { RangeValue } from "@react-types/shared";
 
 import { Button } from "@dotui/registry/ui/button";
 import { Checkbox } from "@dotui/registry/ui/checkbox";
@@ -22,7 +21,6 @@ import { Combobox } from "@dotui/registry/ui/combobox";
 import { DateField } from "@dotui/registry/ui/date-field";
 import { DatePicker } from "@dotui/registry/ui/date-picker";
 import { FieldError } from "@dotui/registry/ui/field";
-import { TextArea } from "@dotui/registry/ui/input";
 import { NumberField } from "@dotui/registry/ui/number-field";
 import { RadioGroup } from "@dotui/registry/ui/radio-group";
 import { SearchField } from "@dotui/registry/ui/search-field";
@@ -38,7 +36,6 @@ import type { ColorPickerProps } from "@dotui/registry/ui/color-picker";
 import type { ComboboxProps } from "@dotui/registry/ui/combobox";
 import type { DateFieldProps } from "@dotui/registry/ui/date-field";
 import type { DatePickerProps } from "@dotui/registry/ui/date-picker";
-import type { TextAreaProps } from "@dotui/registry/ui/input";
 import type { NumberFieldProps } from "@dotui/registry/ui/number-field";
 import type { RadioGroupProps } from "@dotui/registry/ui/radio-group";
 import type { SearchFieldProps } from "@dotui/registry/ui/search-field";

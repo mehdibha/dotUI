@@ -9,7 +9,6 @@ import { StyleProvider } from "@dotui/registry";
 import { Cards } from "@dotui/registry/blocks/showcase/cards/components/cards";
 import { cn } from "@dotui/registry/lib/utils";
 import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs";
-import { TabIndicator } from "@dotui/registry/ui/tabs/basic";
 import type { RouterOutputs } from "@dotui/api";
 
 import { useDebounce } from "@/hooks/use-debounce";

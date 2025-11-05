@@ -89,6 +89,7 @@ export function InstallTabs({
       selectedKey={value}
       onSelectionChange={(v) => onValueChange(v as string)}
       className="install-tabs mt-4 rounded-md border"
+      {...props}
     >
       <TabsPrimitive.TabList className="rounded-t-[inherit] bg-muted">
         {values.map((v, i) => (

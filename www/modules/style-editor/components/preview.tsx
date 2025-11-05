@@ -5,7 +5,6 @@ import type { Route } from "next";
 import Link from "next/link";
 import {
   ChevronsRightIcon,
-  ChevronsUpDownIcon,
   ExternalLinkIcon,
   MaximizeIcon,
   MinimizeIcon,
@@ -20,16 +19,13 @@ import { registryBlocks } from "@dotui/registry/blocks/registry";
 import { createScopedContext } from "@dotui/registry/lib/context";
 import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";
-import { Dialog, DialogContent } from "@dotui/registry/ui/dialog";
-import { ListBox, ListBoxItem } from "@dotui/registry/ui/list-box";
+import { DialogContent } from "@dotui/registry/ui/dialog";
 import { Modal } from "@dotui/registry/ui/modal";
-import { Popover } from "@dotui/registry/ui/popover";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
 } from "@dotui/registry/ui/select";
 import { Separator } from "@dotui/registry/ui/separator";
 import { useSidebarContext } from "@dotui/registry/ui/sidebar";
@@ -123,7 +119,6 @@ export const PreviewRoot = ({ children }: { children: React.ReactNode }) => {
           </Button>
         </div>
       </motion.div>
-      {/** biome-ignore lint/a11y/useSemanticElements: Resize handle */}
       <button
         type="button"
         aria-label="Resize panel"

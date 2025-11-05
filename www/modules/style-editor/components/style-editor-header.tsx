@@ -1,8 +1,6 @@
 "use client";
 
-import Link from "next/link";
 import {
-  ArrowLeftIcon,
   ChevronsUpDownIcon,
   CodeIcon,
   EyeIcon,
@@ -17,7 +15,6 @@ import { Avatar } from "@dotui/registry/ui/avatar";
 import { Button } from "@dotui/registry/ui/button";
 import { Dialog, DialogContent } from "@dotui/registry/ui/dialog";
 import { Drawer } from "@dotui/registry/ui/drawer";
-import { Select } from "@dotui/registry/ui/select";
 import { Skeleton } from "@dotui/registry/ui/skeleton";
 import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
 
@@ -41,7 +38,6 @@ export function StyleEditorHeader() {
 }
 
 function StyleSelector() {
-  const form = useStyleEditorForm();
   const { isPending, data } = useEditorStyle();
   return (
     <Skeleton show={isPending}>

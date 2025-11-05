@@ -34,7 +34,6 @@ export * from "./loader-demo";
 export * from "./menu-demo";
 export * from "./modal-demo";
 export * from "./number-field-demo";
-export * from "./pagination-demo";
 export * from "./popover-demo";
 export * from "./progress-bar-demo";
 export * from "./radio-group-demo";

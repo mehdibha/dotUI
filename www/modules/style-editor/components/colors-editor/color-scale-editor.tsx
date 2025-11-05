@@ -15,14 +15,12 @@ import { SCALE_STEPS } from "@dotui/registry/style-system/constants";
 import { toColorString } from "@dotui/registry/style-system/core";
 import { Badge } from "@dotui/registry/ui/badge";
 import { Button } from "@dotui/registry/ui/button";
-import { ColorSwatch } from "@dotui/registry/ui/color-swatch";
+import { ColorEditor } from "@dotui/registry/ui/color-editor";
 import {
-  ColorPicker,
   ColorPickerContent,
   ColorPickerTrigger,
 } from "@dotui/registry/ui/color-picker";
-import { ColorEditor } from "@dotui/registry/ui/color-editor";
-import { SliderControl } from "@dotui/registry/ui/slider";
+import { ColorSwatch } from "@dotui/registry/ui/color-swatch";
 import {
   Dialog,
   DialogBody,
@@ -32,6 +30,7 @@ import {
 } from "@dotui/registry/ui/dialog";
 import { Drawer } from "@dotui/registry/ui/drawer";
 import { Skeleton } from "@dotui/registry/ui/skeleton";
+import { SliderControl } from "@dotui/registry/ui/slider";
 import {
   Table,
   TableBody,

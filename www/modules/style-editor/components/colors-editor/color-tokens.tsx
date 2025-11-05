@@ -1,7 +1,5 @@
 "use client";
 
-import { ChevronsUpDownIcon } from "lucide-react";
-
 import { cn } from "@dotui/registry/lib/utils";
 import { SCALE_STEPS } from "@dotui/registry/style-system/constants";
 import { COLOR_TOKENS } from "@dotui/registry/tokens/registry";

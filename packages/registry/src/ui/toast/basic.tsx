@@ -1,6 +1,5 @@
 "use client";
 
-import { XIcon } from "lucide-react";
 import {
   UNSTABLE_Toast as AriaToast,
   UNSTABLE_ToastContent as AriaToastContent,
