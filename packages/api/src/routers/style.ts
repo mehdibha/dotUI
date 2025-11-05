@@ -156,9 +156,8 @@ export const styleRouter = {
     .query(async ({ ctx, input }) => {
       const parts = input.slug.split("/");
 
-      let styleRecord:
-        | Awaited<ReturnType<typeof ctx.db.query.style.findFirst>>
-        | undefined;
+      // biome-ignore lint/suspicious/noImplicitAnyLet: styleRecord is conditionally assigned based on slug format
+      let styleRecord
 
       if (parts.length === 2) {
         // Format: "username/stylename"

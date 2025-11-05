@@ -23,14 +23,6 @@ const config = {
     ignoreBuildErrors: true,
   },
   typedRoutes: true,
-  serverExternalPackages: [
-    "ts-morph",
-    "typescript",
-    "oxc-transform",
-    "twoslash",
-    "shiki",
-    "@takumi-rs/core",
-  ],
   images: {
     remotePatterns: [
       {

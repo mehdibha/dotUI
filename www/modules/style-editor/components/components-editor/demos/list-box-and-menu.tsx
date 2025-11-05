@@ -1,9 +1,19 @@
 import { Button } from "@dotui/registry/ui/button";
-import { Combobox, ComboboxItem } from "@dotui/registry/ui/combobox";
+import {
+  Combobox,
+  ComboboxContent,
+  ComboboxInput,
+  ComboboxItem,
+} from "@dotui/registry/ui/combobox";
 import { ListBox, ListBoxItem } from "@dotui/registry/ui/list-box";
 import { Menu, MenuContent, MenuItem } from "@dotui/registry/ui/menu";
 import { Popover } from "@dotui/registry/ui/popover";
-import { Select, SelectItem } from "@dotui/registry/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "@dotui/registry/ui/select";
 
 import { getComponentVariants } from "@/modules/style-editor/components/components-editor/demos/utils";
 import { Section } from "@/modules/style-editor/components/components-editor/section";
@@ -24,18 +34,24 @@ export function ListBoxAndMenu() {
       </ListBox>
       <div className="flex flex-col gap-2">
         <Select className="w-48" aria-label="Basic select" form="none">
-          <SelectItem id="option-1">Option 1</SelectItem>
-          <SelectItem id="option-2">Option 2</SelectItem>
-          <SelectItem id="option-3">Option 3</SelectItem>
+          <SelectTrigger />
+          <SelectContent>
+            <SelectItem id="option-1">Option 1</SelectItem>
+            <SelectItem id="option-2">Option 2</SelectItem>
+            <SelectItem id="option-3">Option 3</SelectItem>
+          </SelectContent>
         </Select>
         <Combobox aria-label="Country" form="none">
-          <ComboboxItem>Canada</ComboboxItem>
-          <ComboboxItem>France</ComboboxItem>
-          <ComboboxItem>Germany</ComboboxItem>
-          <ComboboxItem>Spain</ComboboxItem>
-          <ComboboxItem>Tunisia</ComboboxItem>
-          <ComboboxItem>United states</ComboboxItem>
-          <ComboboxItem>United Kingdom</ComboboxItem>
+          <ComboboxInput />
+          <ComboboxContent>
+            <ComboboxItem>Canada</ComboboxItem>
+            <ComboboxItem>France</ComboboxItem>
+            <ComboboxItem>Germany</ComboboxItem>
+            <ComboboxItem>Spain</ComboboxItem>
+            <ComboboxItem>Tunisia</ComboboxItem>
+            <ComboboxItem>United states</ComboboxItem>
+            <ComboboxItem>United Kingdom</ComboboxItem>
+          </ComboboxContent>
         </Combobox>
       </div>
       <Menu aria-label="Basic menu">

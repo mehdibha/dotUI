@@ -3,6 +3,7 @@
 import Link from "next/link";
 import {
   ArrowLeftIcon,
+  ChevronsUpDownIcon,
   CodeIcon,
   EyeIcon,
   RocketIcon,
@@ -12,9 +13,11 @@ import {
 } from "lucide-react";
 
 import { cn } from "@dotui/registry/lib/utils";
+import { Avatar } from "@dotui/registry/ui/avatar";
 import { Button } from "@dotui/registry/ui/button";
 import { Dialog, DialogContent } from "@dotui/registry/ui/dialog";
 import { Drawer } from "@dotui/registry/ui/drawer";
+import { Select } from "@dotui/registry/ui/select";
 import { Skeleton } from "@dotui/registry/ui/skeleton";
 import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
 
@@ -30,33 +33,40 @@ import { CreateStyleModal } from "@/modules/styles/components/create-style-modal
 
 export function StyleEditorHeader() {
   return (
-    <div className="container max-w-4xl">
-      <div className="flex">
-        <Link
-          href="/styles"
-          className="inline-flex items-end gap-1 text-sm text-fg-muted hover:text-fg max-sm:hidden"
-        >
-          <ArrowLeftIcon className="size-4" /> styles
-        </Link>
-      </div>
-      <div className="flex items-center justify-between gap-4">
-        <StyleEditorHeaderName />
-        <StyleEditorHeaderActions />
-      </div>
+    <div className="container max-w-4xl flex justify-between">
+      <StyleSelector />
+      <StyleEditorHeaderActions />
     </div>
   );
 }
 
-function StyleEditorHeaderName() {
+function StyleSelector() {
   const form = useStyleEditorForm();
-  const { isPending } = useEditorStyle();
+  const { isPending, data } = useEditorStyle();
   return (
     <Skeleton show={isPending}>
-      <h1 className="truncate text-lg leading-none font-bold lg:text-2xl">
+      <div className="flex items-center gap-2">
+        <span className="text-fg-muted flex items-center gap-2 text-sm">
+          <Avatar
+            src={data?.user.image ?? undefined}
+            fallback={data?.user.username.slice(0, 2)}
+            alt={data?.user.username ?? undefined}
+            className="size-5"
+          />
+          {/* {data?.user.username} */}
+        </span>
+        <span className="text-fg-disabled">/</span>
+        <Button variant="default" className="border-0" size="sm">
+          {data?.name}
+          <ChevronsUpDownIcon />
+        </Button>
+      </div>
+      {/* <h1 className="truncate text-lg leading-none font-bold lg:text-2xl">
         <form.Subscribe selector={(state) => state.values.name}>
           {(name) => name}
         </form.Subscribe>
-      </h1>
+      </h1> */}
+      {/* <Select></Select> */}
     </Skeleton>
   );
 }

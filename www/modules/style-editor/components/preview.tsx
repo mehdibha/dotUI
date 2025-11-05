@@ -24,13 +24,19 @@ import { Dialog, DialogContent } from "@dotui/registry/ui/dialog";
 import { ListBox, ListBoxItem } from "@dotui/registry/ui/list-box";
 import { Modal } from "@dotui/registry/ui/modal";
 import { Popover } from "@dotui/registry/ui/popover";
-import { Select, SelectTrigger, SelectValue } from "@dotui/registry/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@dotui/registry/ui/select";
 import { Separator } from "@dotui/registry/ui/separator";
+import { useSidebarContext } from "@dotui/registry/ui/sidebar";
 import { Skeleton } from "@dotui/registry/ui/skeleton";
 import { ToggleButton } from "@dotui/registry/ui/toggle-button";
 import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
 
-import { useSidebarContext } from "@dotui/registry/ui/sidebar";
 import { useHorizontalResize } from "@/hooks/use-horizontal-resize";
 import { useMounted } from "@/hooks/use-mounted";
 import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
@@ -178,7 +184,6 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
     setOpen,
     block,
     setBlock,
-    isFullscreen,
     setFullscreen,
   } = usePreviewContext("PreviewToolbar");
   const { slug } = useStyleEditorParams();
@@ -186,7 +191,7 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
   const isMobile = previewWidth < 480;
 
   return (
-    <div className="absolute flex w-187 items-center justify-between gap-2 border-t-[inherit] px-1 py-1">
+    <div className="flex items-center justify-between gap-2 border-b border-t-inherit bg-card p-1">
       <div className="flex items-center gap-1">
         <Button
           aria-label="Collapse preview"
@@ -198,31 +203,15 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
           <ChevronsRightIcon />
         </Button>
         <Separator orientation="vertical" className="h-4" />
-        <Select
-          aria-label="Select block"
-          onSelectionChange={(key) => setBlock(key as string)}
-          selectedKey={block}
-          className="w-auto"
-        >
-          <SelectTrigger asChild>
-            <Button
-              variant="link"
-              size="sm"
-              className="h-7 justify-center gap-1 rounded-sm px-2 text-fg-muted"
-            >
-              <SelectValue className="flex-0" />
-              <ChevronsUpDownIcon className="size-3.5!" />
-            </Button>
-          </SelectTrigger>
-          <Popover className="min-w-36">
-            <ListBox
-              items={registryBlocks.filter((block) =>
-                block?.categories?.includes("featured"),
-              )}
-            >
-              {(item) => <ListBoxItem id={item.name}>{item.name}</ListBoxItem>}
-            </ListBox>
-          </Popover>
+        <Select value={block} onChange={(key) => setBlock(key as string)}>
+          <SelectTrigger variant="link" size="sm" className="h-7" />
+          <SelectContent
+            items={registryBlocks.filter((block) =>
+              block?.categories?.includes("featured"),
+            )}
+          >
+            {(item) => <SelectItem id={item.name}>{item.name}</SelectItem>}
+          </SelectContent>
         </Select>
       </div>
       <div className="flex gap-0.5">
@@ -236,9 +225,7 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
               size="sm"
               className="size-7 selected:bg-transparent selected:text-fg selected:hover:bg-inverse/10 selected:pressed:bg-inverse/20"
             >
-              {({ isSelected }) => (
-                <>{isSelected ? <SunIcon /> : <MoonIcon />}</>
-              )}
+              {({ isSelected }) => (isSelected ? <SunIcon /> : <MoonIcon />)}
             </ToggleButton>
           </Skeleton>
         )}
@@ -256,17 +243,17 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
         </Tooltip>
         <Tooltip>
           <Button
-            aria-label="Open in new tab"
             asChild
+            aria-label="Open in new tab"
             variant="quiet"
             size="sm"
             className="size-7"
           >
             <Link
+              target="_blank"
               href={
                 `/view/${slug}/${block}?mode=true&live=true&view=true` as Route
               }
-              target="_blank"
             >
               <ExternalLinkIcon />
             </Link>
@@ -279,9 +266,9 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
             variant="quiet"
             size="sm"
             className="size-7"
-            onPress={() => setFullscreen(!isFullscreen)}
+            onPress={() => setFullscreen(!fullScreen)}
           >
-            {(fullScreen ?? isFullscreen) ? <MinimizeIcon /> : <MaximizeIcon />}
+            {fullScreen ? <MinimizeIcon /> : <MaximizeIcon />}
           </Button>
           <TooltipContent>Fullscreen</TooltipContent>
         </Tooltip>
@@ -290,9 +277,9 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
   );
 }
 
-function PreviewContent() {
+function PreviewContent({ className }: { className?: string }) {
   const { block } = usePreviewContext("PreviewFrame");
-  return <PreviewFrame block={block} />;
+  return <PreviewFrame block={block} className={className} />;
 }
 
 export const PreviewFrame = ({
@@ -319,7 +306,7 @@ export const PreviewFrame = ({
     >
       <iframe
         title="Preview"
-        src={`/view/${slug}/${block}?mode=true&live=true&view=true`}
+        src={`/view/${slug}/${block}?mode=true&live=true`}
         onLoad={() => setLoading(false)}
         className={cn("rounded-{inherit] size-full", isLoading && "opacity-0")}
       />
@@ -330,13 +317,12 @@ export const PreviewFrame = ({
 const PreviewModal = ({ children }: { children: React.ReactNode }) => {
   const { isFullscreen, setFullscreen } = usePreviewContext("PreviewModal");
   return (
-    <Dialog isOpen={isFullscreen} onOpenChange={setFullscreen}>
-      {children}
-      <Modal>
-        <DialogContent className="w-screen h-(--visual-viewport-height) max-w-none rounded-none border-0 h-full overflow-hidden rounded-none p-0!">
-          {children}
-        </DialogContent>
-      </Modal>
-    </Dialog>
+    <Modal
+      isOpen={isFullscreen}
+      onOpenChange={setFullscreen}
+      className="w-screen h-(--visual-viewport-height) max-w-none! rounded-none border-0"
+    >
+      <DialogContent className="p-0! h-full gap-0">{children}</DialogContent>
+    </Modal>
   );
 };

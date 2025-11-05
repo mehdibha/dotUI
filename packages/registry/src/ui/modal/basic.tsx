@@ -77,15 +77,7 @@ const ModalBackdrop = ({ className, ...props }: ModalBackdropProps) => (
   <div className={backdrop({ className })} {...props} />
 );
 
-/* -----------------------------------------------------------------------------------------------*/
-
-const ComposedModal = Object.assign(Modal, {
-  Overlay: ModalOverlay,
-  Content: ModalContent,
-  Backdrop: ModalBackdrop,
-});
-
-export { ComposedModal as Modal, ModalOverlay, ModalContent, ModalBackdrop };
+export { Modal, ModalOverlay, ModalContent, ModalBackdrop };
 
 export type {
   ModalProps,

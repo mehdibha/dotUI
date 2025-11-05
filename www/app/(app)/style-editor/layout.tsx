@@ -9,14 +9,14 @@ import {
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <StyleEditorProvider>
-      <div className="relative grid grid-cols-[1fr_auto] max-xl:grid-cols-1 [&_[data-slot='label']]:text-sm [&_[data-slot='label']]:font-medium [&_[data-slot='label']]:text-fg-muted">
-        <div className="@container min-w-0 py-4 lg:py-10">
+      <div className="relative grid grid-cols-[1fr_auto] max-xl:grid-cols-1 **:data-[slot='label']:text-sm **:data-[slot='label']:font-medium **:data-[slot='label']:text-fg-muted">
+        <div className="@container min-w-0 py-8">
           <StyleEditorForm>
             <StyleEditorHeader />
             <StyleEditorNav className="mt-2">{children}</StyleEditorNav>
           </StyleEditorForm>
         </div>
-        <div className="sticky top-0 z-20 flex h-[100svh] items-start max-xl:hidden">
+        <div className="sticky top-0 z-20 flex h-svh items-start max-xl:hidden">
           <Preview />
         </div>
       </div>

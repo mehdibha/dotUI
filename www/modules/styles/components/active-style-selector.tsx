@@ -40,8 +40,8 @@ export function ActiveStyleSelector({
   return (
     <Select
       aria-label="Active Style"
-      selectedKey={activeStyleQuery.data?.id}
-      onSelectionChange={(key) => {
+      defaultValue={activeStyleQuery.data?.id}
+      onChange={(key) => {
         updateStyleMutation.mutate({
           styleId: key as string,
         });

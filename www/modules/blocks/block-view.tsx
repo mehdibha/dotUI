@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
 import type { Route } from "next";
+import Link from "next/link";
 import { CheckIcon, ExternalLinkIcon, TerminalIcon } from "lucide-react";
 import type { RegistryItem } from "shadcn/schema";
 

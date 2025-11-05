@@ -24,9 +24,14 @@ export function Inputs() {
       <TextField form="none" aria-label="Email" className="col-span-2">
         <Input placeholder="hello@mehdibha.com" />
       </TextField>
-      <TextField form="none" aria-label="Password" className="col-span-2">
+      <TextField
+        form="none"
+        aria-label="Password"
+        defaultValue="123456"
+        className="col-span-2"
+      >
         <InputGroup>
-          <Input type="password" defaultValue="123456" />
+          <Input type="password" />
           <InputAddon>
             <EyeOffIcon />
           </InputAddon>
