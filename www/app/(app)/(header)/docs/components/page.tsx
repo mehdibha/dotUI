@@ -9,25 +9,20 @@ export default function Page() {
         {data.map((category) => (
           <div key={category.title}>
             <h2 className="text-2xl font-medium">{category.title}</h2>
-            <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {category.components.map((component) => {
-                const scale = component.scale ?? 0.8;
-                const needsScale = scale !== 1;
+                const scale = 0.8;
                 return (
                   <div key={component.name} className="">
-                    <div className="h-48 border rounded-t-lg overflow-hidden flex items-center justify-center">
+                    <div className="h-48 border rounded-t-lg overflow-hidden">
                       <iframe
                         src={component.preview}
-                        className="size-full origin-center"
-                        style={
-                          needsScale
-                            ? {
-                                transform: `scale(${scale})`,
-                                width: `${100 / scale}%`,
-                                height: `${100 / scale}%`,
-                              }
-                            : undefined
-                        }
+                        className="origin-top-left"
+                        style={{
+                          transform: `scale(${scale})`,
+                          width: `${100 / scale}%`,
+                          height: `${100 / scale}%`,
+                        }}
                       />
                     </div>
                     <div className="px-4 py-2 border border-t-0 rounded-b-sm">
@@ -347,26 +342,25 @@ const data = [
   {
     title: "Overlays",
     components: [
-      // {
-      //   name: "Dialog",
-      //   href: "/docs/components/dialog",
-      //   preview: "/demos/dialog",
-      // },
-      // {
-      //   name: "Modal",
-      //   href: "/docs/components/modal",
-      //   preview: "/demos/modal",
-      // },
-      // {
-      //   name: "Popover",
-      //   href: "/docs/components/popover",
-      //   preview: "/demos/popover",
-      // },
+      {
+        name: "Dialog",
+        href: "/docs/components/dialog",
+        preview: "/demos/dialog",
+      },
+      {
+        name: "Modal",
+        href: "/docs/components/modal",
+        preview: "/demos/modal",
+      },
+      {
+        name: "Popover",
+        href: "/docs/components/popover",
+        preview: "/demos/popover",
+      },
       {
         name: "Drawer",
         href: "/docs/components/drawer",
         preview: "/demos/drawer",
-        scale: 0.8, // Scale down to 80%
       },
       {
         name: "Tooltip",
