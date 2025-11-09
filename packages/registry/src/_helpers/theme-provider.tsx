@@ -70,8 +70,8 @@ export const ThemeProvider = ({
 
   return (
     <>
-      <FontLoader font={themeDefinition.fonts.heading} />
-      <FontLoader font={themeDefinition.fonts.body} />
+      {/* <FontLoader font={themeDefinition.fonts.heading} />
+      <FontLoader font={themeDefinition.fonts.body} /> */}
       <div
         style={styleProp}
         {...props}
