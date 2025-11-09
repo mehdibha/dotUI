@@ -16,7 +16,7 @@ const dialogStyles = tv({
     heading:
       "text-lg leading-none font-semibold in-popover:text-base in-popover:font-medium",
     description: "text-sm text-fg-muted",
-    body: "flex flex-1 flex-col gap-2 overflow-y-auto",
+    body: "flex flex-1 flex-col gap-2",
     inset: "-mx-6 border bg-muted px-6 py-4 in-popover:-mx-4 in-popover:px-4",
     footer: "flex flex-col-reverse gap-2 sm:flex-row sm:justify-end",
   },

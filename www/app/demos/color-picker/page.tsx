@@ -7,8 +7,8 @@ import {
 
 export default function Page() {
   return (
-    <ColorPicker>
-      <ColorPickerTrigger />
+    <ColorPicker defaultValue="#EBEBEB">
+      <ColorPickerTrigger size="lg" />
       <ColorPickerContent>
         <ColorEditor />
       </ColorPickerContent>

@@ -4,10 +4,9 @@ import { Input } from "@dotui/registry/ui/input";
 
 export default function Page() {
   return (
-    <ColorField>
+    <ColorField defaultValue="#7f007f">
       <Label>Color</Label>
       <Input />
     </ColorField>
   );
 }
-

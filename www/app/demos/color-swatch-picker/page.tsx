@@ -5,14 +5,13 @@ import {
 
 export default function Page() {
   return (
-    <ColorSwatchPicker>
-      <ColorSwatchPickerItem color="#f00" />
-      <ColorSwatchPickerItem color="#0f0" />
-      <ColorSwatchPickerItem color="#00f" />
-      <ColorSwatchPickerItem color="#ff0" />
-      <ColorSwatchPickerItem color="#f0f" />
-      <ColorSwatchPickerItem color="#0ff" />
+    <ColorSwatchPicker defaultValue="#FF6B6B">
+      <ColorSwatchPickerItem color="#FF6B6B" />
+      <ColorSwatchPickerItem color="#FFA07A" />
+      <ColorSwatchPickerItem color="#FFD93D" />
+      <ColorSwatchPickerItem color="#6BCB77" />
+      <ColorSwatchPickerItem color="#4D96FF" />
+      <ColorSwatchPickerItem color="#A29BFE" />
     </ColorSwatchPicker>
   );
 }
-

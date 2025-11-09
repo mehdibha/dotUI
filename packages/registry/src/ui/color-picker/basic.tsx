@@ -68,7 +68,7 @@ const ColorPickerTrigger = ({
       ) : (
         <>
           <ColorSwatch />
-          <span className="truncate">{state.color.toString()}</span>
+          <span className="truncate">{state.color.toString("hex")}</span>
         </>
       )}
     </Button>

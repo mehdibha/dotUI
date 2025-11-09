@@ -11,18 +11,20 @@ export default function Page() {
             <h2 className="text-2xl font-medium">{category.title}</h2>
             <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {category.components.map((component) => {
-                const scale = 0.8;
+                const scale = component.scale ?? 0.8;
                 return (
                   <div key={component.name} className="">
-                    <div className="h-48 border rounded-t-lg overflow-hidden">
+                    <div className="h-60 border rounded-t-lg overflow-hidden">
                       <iframe
                         src={component.preview}
                         className="origin-top-left"
+                        sandbox="allow-scripts allow-same-origin"
                         style={{
                           transform: `scale(${scale})`,
                           width: `${100 / scale}%`,
                           height: `${100 / scale}%`,
                         }}
+                        tabIndex={-1}
                       />
                     </div>
                     <div className="px-4 py-2 border border-t-0 rounded-b-sm">
@@ -271,6 +273,7 @@ const data = [
   //       name: "Accordion",
   //       href: "/docs/components/accordion",
   //       preview: "/demos/accordion",
+  //       scale: 0.7,
   //     },
   //     {
   //       name: "Avatar",
@@ -326,6 +329,7 @@ const data = [
   //       name: "ColorPicker",
   //       href: "/docs/components/color-picker",
   //       preview: "/demos/color-picker",
+  //       scale: 0.7,
   //     },
   //     {
   //       name: "ColorSlider",
@@ -351,6 +355,7 @@ const data = [
         name: "Modal",
         href: "/docs/components/modal",
         preview: "/demos/modal",
+        scale: 0.6,
       },
       {
         name: "Popover",
