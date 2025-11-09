@@ -9,7 +9,7 @@ import { ActiveStylePortalProvider } from "@/modules/styles/components/active-st
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <ActiveStylePortalProvider>
-      <SidebarProvider defaultOpen>
+      <SidebarProvider defaultOpen={false}>
         <DocsSidebar items={docsSource.pageTree.children} />
         <div className="size-full">
           <Header items={docsSource.pageTree.children} className="md:hidden" />

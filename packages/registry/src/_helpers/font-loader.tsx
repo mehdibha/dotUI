@@ -6,6 +6,5 @@ export function FontLoader({ font }: { font: string | null | undefined }) {
 
 function generateGoogleFontUrl(font: string) {
   const familyName = font.replace(/\s+/g, "+");
-
-  return `https://fonts.googleapis.com/css?family=${familyName}`;
+  return `https://fonts.googleapis.com/css?family=${familyName}&display=swap`;
 }

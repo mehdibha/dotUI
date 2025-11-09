@@ -13,35 +13,10 @@ export default function Page() {
         {data.map((category) => (
           <div key={category.title}>
             <h2 className="text-2xl font-medium">{category.title}</h2>
-            <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-              {category.components.map((component) => {
-                const scale = component.scale ?? 0.8;
-                return (
-                  <div key={component.name} className="">
-                    <div className="h-60 border rounded-t-lg overflow-hidden">
-                      <iframe
-                        src={component.preview}
-                        className="origin-top-left"
-                        sandbox="allow-scripts allow-same-origin"
-                        style={{
-                          transform: `scale(${scale})`,
-                          width: `${100 / scale}%`,
-                          height: `${100 / scale}%`,
-                        }}
-                        tabIndex={-1}
-                      />
-                    </div>
-                    <div className="p-2 pl-4 border border-t-0 rounded-b-sm flex items-center justify-between gap-2">
-                      <h3 className="truncate">{component.name}</h3>
-                      <Button asChild size="sm">
-                        <Link href={component.href as Route}>
-                          View docs <ArrowRightIcon />
-                        </Link>
-                      </Button>
-                    </div>
-                  </div>
-                );
-              })}
+            <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+              {category.components.map((component) => (
+                <ComponentCard key={component.name} {...component} />
+              ))}
             </div>
           </div>
         ))}
@@ -59,6 +34,41 @@ export default function Page() {
   );
 }
 
+interface ComponentCardProps {
+  name: string;
+  href: string;
+  preview: string;
+  scale?: number;
+}
+
+function ComponentCard({
+  name,
+  href,
+  preview,
+  scale = 0.8,
+}: ComponentCardProps) {
+  return (
+    <div className="flex flex-col items-center">
+      <div className="h-32 border rounded-lg overflow-hidden bg-muted">
+        <iframe
+          src={preview}
+          className="origin-top-left"
+          sandbox="allow-scripts allow-same-origin"
+          style={{
+            transform: `scale(${scale})`,
+            width: `${100 / scale}%`,
+            height: `${100 / scale}%`,
+          }}
+          tabIndex={-1}
+        />
+      </div>
+      <Button asChild size="lg" variant="link">
+        <Link href={href as Route}>{name}</Link>
+      </Button>
+    </div>
+  );
+}
+
 const data = [
   {
     title: "Buttons",
@@ -67,26 +77,31 @@ const data = [
         name: "Button",
         href: "/docs/components/button",
         preview: "/demos/button",
+        scale: 1,
       },
       {
         name: "ToggleButton",
         href: "/docs/components/toggle-button",
         preview: "/demos/toggle-button",
+        scale: 1,
       },
       {
         name: "ToggleButtonGroup",
         href: "/docs/components/toggle-button-group",
         preview: "/demos/toggle-button-group",
+        scale: 1,
       },
       {
         name: "FileTrigger",
         href: "/docs/components/file-trigger",
         preview: "/demos/file-trigger",
+        scale: 1,
       },
       {
         name: "Group",
         href: "/docs/components/group",
         preview: "/demos/group",
+        scale: 1,
       },
     ],
   },
