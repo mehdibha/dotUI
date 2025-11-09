@@ -2,7 +2,16 @@
 
 import { Button as AriaButton } from "react-aria-components";
 
-import { Skeleton } from "@dotui/registry/ui/skeleton";
+import { Button } from "@dotui/registry/ui/button";
+import { ColorSwatch } from "@dotui/registry/ui/color-swatch";
+import {
+  Dialog,
+  DialogBody,
+  DialogContent,
+  DialogHeader,
+  DialogHeading,
+} from "@dotui/registry/ui/dialog";
+import { Overlay } from "@dotui/registry/ui/overlay";
 import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
 import type { ScaleId } from "@dotui/registry/style-system/types";
 
@@ -10,12 +19,10 @@ import {
   useGeneratedTheme,
   useStyleEditorForm,
 } from "@/modules/style-editor/context/style-editor-provider";
-import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
 import { useResolvedModeState } from "@/modules/style-editor/hooks/use-resolved-mode";
 
 export function ColorScale({ scaleId }: { scaleId: ScaleId }) {
   const form = useStyleEditorForm();
-  const { isSuccess } = useEditorStyle();
   const { resolvedMode } = useResolvedModeState();
 
   const generatedTheme = useGeneratedTheme();
@@ -41,15 +48,29 @@ export function ColorScale({ scaleId }: { scaleId: ScaleId }) {
       </p>
       <div className="flex flex-1 items-center gap-1">
         {scale.values.map((color, index) => (
-          <Tooltip key={index}>
-            <Skeleton show={!isSuccess} className="h-8 flex-1">
-              <AriaButton
+          <Dialog key={index}>
+            <Tooltip>
+              <Button
+                aria-label={color.name}
                 className="h-8 flex-1 rounded-sm border"
                 style={{ backgroundColor: color.value }}
               />
-            </Skeleton>
-            <TooltipContent>{color.name}</TooltipContent>
-          </Tooltip>
+              <TooltipContent>{color.name}</TooltipContent>
+            </Tooltip>
+            <Overlay type="popover" modalProps={{ className: "w-fit" }}>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogHeading>{color.name}</DialogHeading>
+                </DialogHeader>
+                <DialogBody>
+                  <div className="flex items-center gap-2">
+                    <ColorSwatch color={color.value} />
+                    <p>{color.value}</p>
+                  </div>
+                </DialogBody>
+              </DialogContent>
+            </Overlay>
+          </Dialog>
         ))}
       </div>
     </div>

@@ -1,0 +1,384 @@
+import { AlignLeftIcon } from "lucide-react";
+
+import { TableOfContents } from "@/modules/docs/components/toc";
+
+export default function Page() {
+  return (
+    <div className="relative container xl:grid xl:grid-cols-[1fr_250px] xl:gap-12">
+      <div className="space-y-12">
+        {data.map((category) => (
+          <div key={category.title}>
+            <h2 className="text-2xl font-medium">{category.title}</h2>
+            <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+              {category.components.map((component) => {
+                const scale = component.scale ?? 0.8;
+                const needsScale = scale !== 1;
+                return (
+                  <div key={component.name} className="">
+                    <div className="h-48 border rounded-t-lg overflow-hidden flex items-center justify-center">
+                      <iframe
+                        src={component.preview}
+                        className="size-full origin-center"
+                        style={
+                          needsScale
+                            ? {
+                                transform: `scale(${scale})`,
+                                width: `${100 / scale}%`,
+                                height: `${100 / scale}%`,
+                              }
+                            : undefined
+                        }
+                      />
+                    </div>
+                    <div className="px-4 py-2 border border-t-0 rounded-b-sm">
+                      <h3>{component.name}</h3>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="max-xl:hidden">
+        <div className="sticky top-20 h-[calc(100svh-calc(var(--spacing)*20))]">
+          <div className="mb-3 -ml-1.5 flex items-center gap-2">
+            <AlignLeftIcon className="size-4 text-fg-muted" />
+            <p className="text-sm text-fg-muted">On this page</p>
+          </div>
+          <TableOfContents toc={toc} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const data = [
+  // {
+  //   title: "Buttons",
+  //   components: [
+  //     {
+  //       name: "Button",
+  //       href: "/docs/components/button",
+  //       preview: "/demos/button",
+  //     },
+  //     {
+  //       name: "ToggleButton",
+  //       href: "/docs/components/toggle-button",
+  //       preview: "/demos/toggle-button",
+  //     },
+  //     {
+  //       name: "ToggleButtonGroup",
+  //       href: "/docs/components/toggle-button-group",
+  //       preview: "/demos/toggle-button-group",
+  //     },
+  //     {
+  //       name: "FileTrigger",
+  //       href: "/docs/components/file-trigger",
+  //       preview: "/demos/file-trigger",
+  //     },
+  //     {
+  //       name: "Group",
+  //       href: "/docs/components/group",
+  //       preview: "/demos/group",
+  //     },
+  //   ],
+  // },
+  // {
+  //   title: "Inputs, controls and form",
+  //   components: [
+  //     {
+  //       name: "Input",
+  //       href: "/docs/components/input",
+  //       preview: "/demos/input",
+  //     },
+  //     {
+  //       name: "TextArea",
+  //       href: "/docs/components/text-area",
+  //       preview: "/demos/text-area",
+  //     },
+  //     {
+  //       name: "InputGroup",
+  //       href: "/docs/components/input-group",
+  //       preview: "/demos/input-group",
+  //     },
+  //     {
+  //       name: "TextField",
+  //       href: "/docs/components/text-field",
+  //       preview: "/demos/text-field",
+  //     },
+  //     {
+  //       name: "SearchField",
+  //       href: "/docs/components/search-field",
+  //       preview: "/demos/search-field",
+  //     },
+  //     {
+  //       name: "NumberField",
+  //       href: "/docs/components/number-field",
+  //       preview: "/demos/number-field",
+  //     },
+  //     {
+  //       name: "Checkbox",
+  //       href: "/docs/components/checkbox",
+  //       preview: "/demos/checkbox",
+  //     },
+  //     {
+  //       name: "RadioGroup",
+  //       href: "/docs/components/radio-group",
+  //       preview: "/demos/radio-group",
+  //     },
+  //     {
+  //       name: "Switch",
+  //       href: "/docs/components/switch",
+  //       preview: "/demos/switch",
+  //     },
+  //     {
+  //       name: "Slider",
+  //       href: "/docs/components/slider",
+  //       preview: "/demos/slider",
+  //     },
+  //     {
+  //       name: "Field",
+  //       href: "/docs/components/field",
+  //       preview: "/demos/field",
+  //     },
+  //     {
+  //       name: "Form",
+  //       href: "/docs/components/form",
+  //       preview: "/demos/form",
+  //     },
+  //   ],
+  // },
+  // {
+  //   title: "Pickers",
+  //   components: [
+  //     {
+  //       name: "Menu",
+  //       href: "/docs/components/menu",
+  //       preview: "/demos/menu",
+  //     },
+  //     {
+  //       name: "Combobox",
+  //       href: "/docs/components/combobox",
+  //       preview: "/demos/combobox",
+  //     },
+  //     {
+  //       name: "Select",
+  //       href: "/docs/components/select",
+  //       preview: "/demos/select",
+  //     },
+  //     {
+  //       name: "Autocomplete",
+  //       href: "/docs/components/autocomplete",
+  //       preview: "/demos/autocomplete",
+  //     },
+  //   ],
+  // },
+  // {
+  //   title: "Dates",
+  //   components: [
+  //     {
+  //       name: "Calendar",
+  //       href: "/docs/components/calendar",
+  //       preview: "/demos/calendar",
+  //     },
+  //     {
+  //       name: "DateField",
+  //       href: "/docs/components/date-field",
+  //       preview: "/demos/date-field",
+  //     },
+  //     {
+  //       name: "DatePicker",
+  //       href: "/docs/components/date-picker",
+  //       preview: "/demos/date-picker",
+  //     },
+  //     {
+  //       name: "TimeField",
+  //       href: "/docs/components/time-field",
+  //       preview: "/demos/time-field",
+  //     },
+  //   ],
+  // },
+  // {
+  //   title: "Feedback",
+  //   components: [
+  //     {
+  //       name: "Alert",
+  //       href: "/docs/components/alert",
+  //       preview: "/demos/alert",
+  //     },
+  //     {
+  //       name: "ProgressBar",
+  //       href: "/docs/components/progress-bar",
+  //       preview: "/demos/progress-bar",
+  //     },
+  //     {
+  //       name: "Toast",
+  //       href: "/docs/components/toast",
+  //       preview: "/demos/toast",
+  //     },
+  //     {
+  //       name: "Loader",
+  //       href: "/docs/components/loader",
+  //       preview: "/demos/loader",
+  //     },
+  //     {
+  //       name: "Skeleton",
+  //       href: "/docs/components/skeleton",
+  //       preview: "/demos/skeleton",
+  //     },
+  //   ],
+  // },
+  // {
+  //   title: "Collections",
+  //   components: [
+  //     {
+  //       name: "ListBox",
+  //       href: "/docs/components/list-box",
+  //       preview: "/demos/list-box",
+  //     },
+  //     {
+  //       name: "TagGroup",
+  //       href: "/docs/components/tag-group",
+  //       preview: "/demos/tag-group",
+  //     },
+  //   ],
+  // },
+  // {
+  //   title: "Navigation",
+  //   components: [
+  //     {
+  //       name: "Link",
+  //       href: "/docs/components/link",
+  //       preview: "/demos/link",
+  //     },
+  //     {
+  //       name: "Tabs",
+  //       href: "/docs/components/tabs",
+  //       preview: "/demos/tabs",
+  //     },
+  //     {
+  //       name: "Breadcrumbs",
+  //       href: "/docs/components/breadcrumbs",
+  //       preview: "/demos/breadcrumbs",
+  //     },
+  //     {
+  //       name: "Command",
+  //       href: "/docs/components/command",
+  //       preview: "/demos/command",
+  //     },
+  //   ],
+  // },
+  // {
+  //   title: "Data display",
+  //   components: [
+  //     {
+  //       name: "Accordion",
+  //       href: "/docs/components/accordion",
+  //       preview: "/demos/accordion",
+  //     },
+  //     {
+  //       name: "Avatar",
+  //       href: "/docs/components/avatar",
+  //       preview: "/demos/avatar",
+  //     },
+  //     {
+  //       name: "Kbd",
+  //       href: "/docs/components/kbd",
+  //       preview: "/demos/kbd",
+  //     },
+  //     {
+  //       name: "Badge",
+  //       href: "/docs/components/badge",
+  //       preview: "/demos/badge",
+  //     },
+  //     {
+  //       name: "Table",
+  //       href: "/docs/components/table",
+  //       preview: "/demos/table",
+  //     },
+  //     {
+  //       name: "Card",
+  //       href: "/docs/components/card",
+  //       preview: "/demos/card",
+  //     },
+  //     {
+  //       name: "Separator",
+  //       href: "/docs/components/separator",
+  //       preview: "/demos/separator",
+  //     },
+  //     {
+  //       name: "Empty",
+  //       href: "/docs/components/empty",
+  //       preview: "/demos/empty",
+  //     },
+  //   ],
+  // },
+  // {
+  //   title: "Colors",
+  //   components: [
+  //     {
+  //       name: "ColorArea",
+  //       href: "/docs/components/color-area",
+  //       preview: "/demos/color-area",
+  //     },
+  //     {
+  //       name: "ColorField",
+  //       href: "/docs/components/color-field",
+  //       preview: "/demos/color-field",
+  //     },
+  //     {
+  //       name: "ColorPicker",
+  //       href: "/docs/components/color-picker",
+  //       preview: "/demos/color-picker",
+  //     },
+  //     {
+  //       name: "ColorSlider",
+  //       href: "/docs/components/color-slider",
+  //       preview: "/demos/color-slider",
+  //     },
+  //     {
+  //       name: "ColorSwatchPicker",
+  //       href: "/docs/components/color-swatch-picker",
+  //       preview: "/demos/color-swatch-picker",
+  //     },
+  //   ],
+  // },
+  {
+    title: "Overlays",
+    components: [
+      // {
+      //   name: "Dialog",
+      //   href: "/docs/components/dialog",
+      //   preview: "/demos/dialog",
+      // },
+      // {
+      //   name: "Modal",
+      //   href: "/docs/components/modal",
+      //   preview: "/demos/modal",
+      // },
+      // {
+      //   name: "Popover",
+      //   href: "/docs/components/popover",
+      //   preview: "/demos/popover",
+      // },
+      {
+        name: "Drawer",
+        href: "/docs/components/drawer",
+        preview: "/demos/drawer",
+        scale: 0.8, // Scale down to 80%
+      },
+      {
+        name: "Tooltip",
+        href: "/docs/components/tooltip",
+        preview: "/demos/tooltip",
+      },
+    ],
+  },
+];
+
+const toc = data.map((category) => ({
+  title: category.title,
+  url: `#${category.title}`,
+  depth: 2,
+}));

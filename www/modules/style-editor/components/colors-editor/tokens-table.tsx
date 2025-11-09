@@ -29,7 +29,7 @@ import {
 import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
 import { useDraftStyle } from "../../atoms/draft-style-atom";
 
-export const ColorTokens = ({
+export const TokensTable = ({
   hideHeader = false,
   className,
   tokenIds,
@@ -39,7 +39,7 @@ export const ColorTokens = ({
   hideHeader?: boolean;
 }) => {
   return (
-    <Table aria-label="Tokens" className={cn("", className)} {...props}>
+    <Table {...props}>
       <TableHeader className={cn(hideHeader && "sr-only")}>
         <TableColumn id="name" isRowHeader className="pl-0">
           Variable name
@@ -58,7 +58,10 @@ export const ColorTokens = ({
                 <div className="flex items-center gap-2">
                   <TokenName tokenId={tokenId} />
                   {tokenDefinition.description && (
-                    <ContextualHelp className="text-sm">
+                    <ContextualHelp
+                      aria-label="description"
+                      className="text-sm"
+                    >
                       {tokenDefinition.description}
                     </ContextualHelp>
                   )}
@@ -90,11 +93,6 @@ const TokenName = ({ tokenId }: { tokenId: string }) => {
         <Skeleton show={isPending} className="rounded-full">
           <div className="rounded-full bg-muted p-1 px-3 font-medium">
             {name}
-            {/* <EditableInput
-              value={field.state.value}
-              onSubmit={(newVal) => field.handleChange(newVal as any)}
-              className="text-fg-muted !text-sm font-normal [&_[data-slot='button']]:rounded-full"
-            /> */}
           </div>
         </Skeleton>
       )}

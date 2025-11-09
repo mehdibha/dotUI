@@ -13,7 +13,7 @@ export default function WithHeaderLayout({
 }) {
   return (
     <PageLayout>
-      <div className="relative">
+      <div className="has-[.full-page-sticky]:contents">
         <Header
           items={docsSource.pageTree.children}
           visibleItems={["menu", "search", "github"]}

@@ -14,9 +14,11 @@ import {
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
+import { fieldStyles } from "@dotui/registry/ui/field";
+
 const sliderStyles = tv({
   slots: {
-    root: "flex flex-col gap-2",
+    root: fieldStyles().field(),
     track:
       "relative my-1 grow cursor-pointer rounded-full bg-neutral disabled:cursor-not-allowed disabled:bg-disabled",
     filler:
@@ -33,13 +35,12 @@ const sliderStyles = tv({
   variants: {
     orientation: {
       horizontal: {
-        root: "w-48",
-        track: "h-1.5 w-full",
+        track: "w-48 h-1.5",
         filler: "top-0 h-full",
       },
       vertical: {
-        root: "h-48 items-center",
-        track: "w-2 flex-1",
+        root: "items-center",
+        track: "w-2 h-48",
         filler: "bottom-0 w-full",
       },
     },

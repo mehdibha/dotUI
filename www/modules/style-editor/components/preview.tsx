@@ -213,6 +213,8 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
         {supportsLightDark && (
           <Skeleton show={!isSuccess}>
             <ToggleButton
+              aria-label="Toggle theme"
+              variant="quiet"
               isSelected={activeMode === "light"}
               onChange={(isSelected) => {
                 setActiveMode(isSelected ? "light" : "dark");

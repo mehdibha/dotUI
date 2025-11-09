@@ -72,7 +72,7 @@ export const ThemeModeSwitch = ({
   const layoutId = React.useId();
 
   return (
-    <AriaSwitch className={root()} {...props}>
+    <AriaSwitch aria-label="active mode" className={root()} {...props}>
       {({ isSelected }) => (
         <LayoutGroup id={layoutId}>
           <span className={cn(container(), className)}>

@@ -29,7 +29,6 @@ import {
   DialogHeading,
 } from "@dotui/registry/ui/dialog";
 import { Drawer } from "@dotui/registry/ui/drawer";
-import { Skeleton } from "@dotui/registry/ui/skeleton";
 import { SliderControl } from "@dotui/registry/ui/slider";
 import {
   Table,
@@ -47,44 +46,42 @@ import {
   useStyleEditorForm,
   useSyncTheme,
 } from "@/modules/style-editor/context/style-editor-provider";
-import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
 import { useResolvedModeState } from "@/modules/style-editor/hooks/use-resolved-mode";
 import { useDraftStyle } from "../../atoms/draft-style-atom";
 
 export function ColorScaleEditor({ scaleId }: { scaleId: ScaleId }) {
   const form = useStyleEditorForm();
   const { resolvedMode } = useResolvedModeState();
-  const { isPending } = useEditorStyle();
 
   return (
     <Dialog>
-      <Skeleton show={isPending}>
-        <Button>
-          <form.Subscribe
-            selector={(state) =>
-              state.values.theme.colors.modes[resolvedMode].scales[scaleId]
-                .colorKeys
-            }
-          >
-            {(colorKeys) =>
-              colorKeys.map((color, index) => (
-                <ColorSwatch key={index} color={color} />
-              ))
-            }
-          </form.Subscribe>
-          <form.Subscribe
-            selector={(state) =>
-              state.values.theme.colors.modes[resolvedMode].scales[scaleId].name
-            }
-          >
-            {(name) => name.charAt(0).toUpperCase() + name.slice(1)}
-          </form.Subscribe>
-        </Button>
-      </Skeleton>
+      <Button aspect="default">
+        <form.Subscribe
+          selector={(state) =>
+            state.values.theme.colors.modes[resolvedMode].scales[scaleId]
+              .colorKeys
+          }
+        >
+          {(colorKeys) =>
+            colorKeys.map((color, index) => (
+              <ColorSwatch key={index} color={color} />
+            ))
+          }
+        </form.Subscribe>
+        <form.Subscribe
+          selector={(state) =>
+            state.values.theme.colors.modes[resolvedMode].scales[scaleId].name
+          }
+        >
+          {(name) => name.charAt(0).toUpperCase() + name.slice(1)}
+        </form.Subscribe>
+      </Button>
       <Drawer placement="left">
-        <DialogContent className="min-w-72 !pb-0">
-          <DialogHeader className="mb-1">
-            <ScaleNameEditor scaleId={scaleId} />
+        <DialogContent>
+          <DialogHeader>
+            <DialogHeading>
+              <ScaleName scaleId={scaleId} />
+            </DialogHeading>
           </DialogHeader>
           <DialogBody className="flex flex-col pb-4">
             <ColorKeysEditor scaleId={scaleId} />
@@ -96,35 +93,19 @@ export function ColorScaleEditor({ scaleId }: { scaleId: ScaleId }) {
   );
 }
 
-function ScaleNameEditor({ scaleId }: { scaleId: ScaleId }) {
+function ScaleName({ scaleId }: { scaleId: ScaleId }) {
   const form = useStyleEditorForm();
   const { resolvedMode } = useResolvedModeState();
 
   return (
-    <DialogHeading>
-      <form.Subscribe
-        selector={(state) =>
-          state.values.theme.colors.modes[resolvedMode].scales[scaleId].name
-        }
-      >
-        {(name) => `${name} scale`}
-      </form.Subscribe>
-    </DialogHeading>
+    <form.Subscribe
+      selector={(state) =>
+        state.values.theme.colors.modes[resolvedMode].scales[scaleId].name
+      }
+    >
+      {(name) => `${name} scale`}
+    </form.Subscribe>
   );
-
-  // return (
-  //   <form.AppField
-  //     name={`theme.colors.modes.${resolvedMode}.scales.${scaleId}.name`}
-  //   >
-  //     {(field) => (
-  //       <EditableInput
-  //         as={DialogHeading}
-  //         value={field.state.value}
-  //         onSubmit={(newVal) => field.handleChange(newVal as any)}
-  //       />
-  //     )}
-  //   </form.AppField>
-  // );
 }
 
 function ColorKeysEditor({ scaleId }: { scaleId: ScaleId }) {

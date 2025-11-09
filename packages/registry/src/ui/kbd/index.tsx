@@ -2,9 +2,16 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import type { KbdProps } from "./basic";
-import { Kbd as _Kbd } from "./basic";
+import type { KbdGroupProps, KbdProps } from "./basic";
+import { Kbd as _Kbd, KbdGroup as _KbdGroup } from "./basic";
 
 export const Kbd = createDynamicComponent<KbdProps>("kbd", "Kbd", _Kbd, {});
 
-export type { KbdProps };
+export const KbdGroup = createDynamicComponent<KbdGroupProps>(
+  "kbd",
+  "KbdGroup",
+  _KbdGroup,
+  {},
+);
+
+export type { KbdProps, KbdGroupProps };

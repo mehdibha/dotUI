@@ -9,7 +9,7 @@ import {
 import { Skeleton } from "@dotui/registry/ui/skeleton";
 import type { VariantsDefinition } from "@dotui/registry/style-system/types";
 
-import { ColorTokens } from "@/modules/style-editor/components/colors-editor/color-tokens";
+import { TokensTable } from "@/modules/style-editor/components/colors-editor/tokens-table";
 import { DraftStyleProvider } from "@/modules/style-editor/components/draft-style-provider";
 import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
 import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
@@ -63,7 +63,7 @@ export const Section = ({
         )}
       </form.AppField>
 
-      {tokens && <ColorTokens hideHeader tokenIds={tokens} className="mt-2" />}
+      {tokens && <TokensTable hideHeader tokenIds={tokens} className="mt-2" />}
 
       <Skeleton show={isPending}>
         <DraftStyleProvider

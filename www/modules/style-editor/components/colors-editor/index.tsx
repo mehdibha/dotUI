@@ -1,6 +1,7 @@
 "use client";
 
 import { COLOR_TOKENS } from "@dotui/registry/tokens/registry";
+import { FieldGroup, Fieldset, Label, Legend } from "@dotui/registry/ui/field";
 
 import { ColorAdjustments } from "@/modules/style-editor/components/colors-editor/color-adjustments";
 import { ColorScale } from "@/modules/style-editor/components/colors-editor/color-scale";
@@ -9,10 +10,8 @@ import {
   ModeConfig,
   ModeSwitch,
 } from "@/modules/style-editor/components/colors-editor/mode-config";
-import { StyleEditorSection } from "@/modules/style-editor/components/section";
-import { useResolvedModeState } from "@/modules/style-editor/hooks/use-resolved-mode";
 import { AccentEmphasisEditor } from "./accent-emphasis-editor";
-import { ColorTokens } from "./color-tokens";
+import { TokensTable } from "./tokens-table";
 
 const baseColors = [
   { name: "neutral", label: "Neutral" },
@@ -27,74 +26,89 @@ const semanticColors = [
 ] as const;
 
 export function ColorsEditor() {
-  const { resolvedMode } = useResolvedModeState();
-
   return (
-    <div className="space-y-4">
-      <StyleEditorSection
-        title="Mode"
-        className="flex items-start justify-between"
-      >
-        <ModeConfig />
-        <ModeSwitch />
-      </StyleEditorSection>
+    <FieldGroup>
+      <Fieldset>
+        <Legend>Mode</Legend>
+        <FieldGroup className="flex-row justify-between">
+          <ModeConfig />
+          <ModeSwitch />
+        </FieldGroup>
+      </Fieldset>
 
-      <StyleEditorSection title="Color adjustments">
-        <ColorAdjustments />
-      </StyleEditorSection>
+      <Fieldset>
+        <Legend>Color adjustments</Legend>
+        <FieldGroup className="grid grid-cols-2 gap-3">
+          <ColorAdjustments />
+        </FieldGroup>
+      </Fieldset>
 
-      <StyleEditorSection title="Base colors">
-        <div className="mt-2 flex items-center gap-2 @max-lg:grid @max-lg:grid-cols-2">
-          {(["neutral", "accent"] as const).map((color) => {
-            return <ColorScaleEditor key={color} scaleId={color} />;
-          })}
-        </div>
-        <div className="mt-3 space-y-2">
-          {baseColors.map((color) => {
-            return <ColorScale key={color.name} scaleId={color.name} />;
-          })}
-        </div>
-      </StyleEditorSection>
+      <Fieldset>
+        <Legend>Base colors</Legend>
+        <FieldGroup>
+          <div className="flex items-center gap-2 @max-lg:grid @max-lg:grid-cols-2">
+            {(["neutral", "accent"] as const).map((color) => {
+              return <ColorScaleEditor key={color} scaleId={color} />;
+            })}
+          </div>
+          <div className="space-y-4">
+            {baseColors.map((color) => {
+              return <ColorScale key={color.name} scaleId={color.name} />;
+            })}
+          </div>
+        </FieldGroup>
+      </Fieldset>
 
-      <StyleEditorSection
-        key={`${resolvedMode}-semantic-colors`}
-        title="Semantic colors"
-      >
-        <div className="mt-2 flex items-center gap-2 @max-lg:grid @max-lg:grid-cols-2">
-          {(["success", "danger", "warning", "info"] as const).map((color) => {
-            return <ColorScaleEditor key={color} scaleId={color} />;
-          })}
-        </div>
-        <div className="mt-3 space-y-2">
-          {semanticColors.map((color) => {
-            return <ColorScale key={color.name} scaleId={color.name} />;
-          })}
-        </div>
-      </StyleEditorSection>
+      <Fieldset>
+        <Legend>Semantic colors</Legend>
+        <FieldGroup>
+          <div className="flex items-center gap-2 @max-lg:grid @max-lg:grid-cols-2">
+            {(["success", "danger", "warning", "info"] as const).map(
+              (color) => {
+                return <ColorScaleEditor key={color} scaleId={color} />;
+              },
+            )}
+          </div>
+          <div className="space-y-4">
+            {semanticColors.map((color) => {
+              return <ColorScale key={color.name} scaleId={color.name} />;
+            })}
+          </div>
+        </FieldGroup>
+      </Fieldset>
 
-      <StyleEditorSection title="Accent emphasis">
-        <AccentEmphasisEditor />
-      </StyleEditorSection>
+      <Fieldset>
+        <Legend>Accent emphasis</Legend>
+        <FieldGroup>
+          <AccentEmphasisEditor />
+        </FieldGroup>
+      </Fieldset>
 
-      <StyleEditorSection key={`${resolvedMode}-tokens`} title="Tokens">
-        <div className="mt-3 space-y-4">
-          {[
-            {
-              name: "Backgrounds",
-              category: "background" as const,
-            },
-            {
-              name: "Foregrounds",
-              category: "foreground" as const,
-            },
-            {
-              name: "Borders",
-              category: "border" as const,
-            },
-          ].map(({ name, category }) => (
+      <Fieldset>
+        <Legend>Tokens</Legend>
+        <FieldGroup>
+          {(
+            [
+              {
+                name: "Backgrounds",
+                category: "background",
+              },
+              {
+                name: "Foregrounds",
+                category: "foreground",
+              },
+              {
+                name: "Borders",
+                category: "border",
+              },
+            ] as const
+          ).map(({ name, category }) => (
             <div key={name}>
-              <h3 className="text-sm font-medium">{name}</h3>
-              <ColorTokens
+              <Label id={`${name}-label`} className="text-sm font-medium">
+                {name}
+              </Label>
+              <TokensTable
+                aria-labelledby={`${name}-label`}
                 tokenIds={Object.entries(COLOR_TOKENS)
                   .filter(([, token]) => token.categories?.includes(category))
                   .filter(([tokenId]) => !tokenId.startsWith("color-fg-on"))
@@ -102,8 +116,8 @@ export function ColorsEditor() {
               />
             </div>
           ))}
-        </div>
-      </StyleEditorSection>
-    </div>
+        </FieldGroup>
+      </Fieldset>
+    </FieldGroup>
   );
 }

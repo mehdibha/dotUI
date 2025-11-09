@@ -16,9 +16,7 @@ import { useResolvedModeState } from "@/modules/style-editor/hooks/use-resolved-
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 
 export const ModeConfig = () => {
-  const { isPending } = useEditorStyle();
   const form = useStyleEditorForm();
-
   const { saveDraft } = useDraftStyle();
 
   return (
@@ -32,41 +30,38 @@ export const ModeConfig = () => {
       }}
     >
       {(field) => (
-        <Skeleton show={isPending}>
-          <field.Select
-            aria-label="Active modes"
-            selectedKey={field.state.value.join("-")}
-            onSelectionChange={(key) =>
-              field.handleChange(
-                key?.toString().split("-") as ("light" | "dark")[],
-              )
-            }
-            className="w-auto"
-          >
-            <SelectTrigger />
-            <SelectContent>
-              <SelectItem id="light">
-                <SunIcon />
-                Light only
-              </SelectItem>
-              <SelectItem id="dark">
-                <MoonIcon />
-                Dark only
-              </SelectItem>
-              <SelectItem id="light-dark">
-                <ContrastIcon />
-                Light/Dark
-              </SelectItem>
-            </SelectContent>
-          </field.Select>
-        </Skeleton>
+        <field.Select
+          aria-label="Supported modes"
+          value={field.state.value.join("-")}
+          onChange={(key) =>
+            field.handleChange(
+              key?.toString().split("-") as ("light" | "dark")[],
+            )
+          }
+          className="w-auto"
+        >
+          <SelectTrigger />
+          <SelectContent>
+            <SelectItem id="light">
+              <SunIcon />
+              Light only
+            </SelectItem>
+            <SelectItem id="dark">
+              <MoonIcon />
+              Dark only
+            </SelectItem>
+            <SelectItem id="light-dark">
+              <ContrastIcon />
+              Light/Dark
+            </SelectItem>
+          </SelectContent>
+        </field.Select>
       )}
     </form.AppField>
   );
 };
 
 export const ModeSwitch = () => {
-  const { isPending } = useEditorStyle();
   const { activeMode, setActiveMode } = usePreferences();
   const { supportsLightDark } = useResolvedModeState();
 
@@ -75,13 +70,11 @@ export const ModeSwitch = () => {
   }
 
   return (
-    <Skeleton show={isPending}>
-      <ThemeModeSwitch
-        isSelected={activeMode === "light"}
-        onChange={(isSelected) => {
-          setActiveMode(isSelected ? "light" : "dark");
-        }}
-      />
-    </Skeleton>
+    <ThemeModeSwitch
+      isSelected={activeMode === "light"}
+      onChange={(isSelected) => {
+        setActiveMode(isSelected ? "light" : "dark");
+      }}
+    />
   );
 };

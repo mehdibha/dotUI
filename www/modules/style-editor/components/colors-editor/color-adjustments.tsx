@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@dotui/registry/lib/utils";
+import { Label } from "@dotui/registry/ui/field";
 import { SliderControl } from "@dotui/registry/ui/slider";
 
 import { useDraftStyle } from "@/modules/style-editor/atoms/draft-style-atom";
@@ -9,7 +9,6 @@ import {
   useStyleEditorForm,
   useSyncTheme,
 } from "@/modules/style-editor/context/style-editor-provider";
-import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
 import { useResolvedModeState } from "@/modules/style-editor/hooks/use-resolved-mode";
 
 const clampLightnessByMode = (value: number, mode: "light" | "dark") => {
@@ -18,20 +17,13 @@ const clampLightnessByMode = (value: number, mode: "light" | "dark") => {
 
 export const ColorAdjustments = () => {
   const form = useStyleEditorForm();
-  const { isPending } = useEditorStyle();
   const { resolvedMode } = useResolvedModeState();
 
   const syncTheme = useSyncTheme();
   const { saveDraft } = useDraftStyle();
 
   return (
-    <div
-      className={cn(
-        "grid grid-cols-2 gap-3",
-        isPending &&
-          "[&_[data-slot='slider-filler']]:opacity-0 [&_[data-slot='slider-thumb']]:opacity-0 [&_[data-slot='slider-track']]:animate-pulse [&_[data-slot='slider-value-label']]:opacity-0",
-      )}
-    >
+    <>
       <form.AppField
         key={`${resolvedMode}-lightness`}
         name={`theme.colors.modes.${resolvedMode}.lightness`}
@@ -53,9 +45,10 @@ export const ColorAdjustments = () => {
             }}
             minValue={0}
             maxValue={100}
-            className="col-span-2 w-auto"
+            className="col-span-2"
           >
-            <SliderControl />
+            <Label>Lightness</Label>
+            <SliderControl  className="w-full"/>
           </field.Slider>
         )}
       </form.AppField>
@@ -70,12 +63,8 @@ export const ColorAdjustments = () => {
         }}
       >
         {(field) => (
-          <field.Slider
-            aria-label="Saturation"
-            minValue={0}
-            maxValue={100}
-            className="col-span-1 w-auto"
-          >
+          <field.Slider aria-label="Saturation" minValue={0} maxValue={100}>
+            <Label>Saturation</Label>
             <SliderControl />
           </field.Slider>
         )}
@@ -91,16 +80,12 @@ export const ColorAdjustments = () => {
         }}
       >
         {(field) => (
-          <field.Slider
-            aria-label="Contrast"
-            minValue={0}
-            maxValue={500}
-            className="col-span-1 w-auto"
-          >
+          <field.Slider aria-label="Contrast" minValue={0} maxValue={500}>
+            <Label>Contrast</Label>
             <SliderControl />
           </field.Slider>
         )}
       </form.AppField>
-    </div>
+    </>
   );
 };
