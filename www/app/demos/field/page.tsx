@@ -1,4 +1,4 @@
-import { Field, Label, Description, FieldError } from "@dotui/registry/ui/field";
+import { Description, Field, Label } from "@dotui/registry/ui/field";
 import { Input } from "@dotui/registry/ui/input";
 
 export default function Page() {
@@ -10,4 +10,3 @@ export default function Page() {
     </Field>
   );
 }
-

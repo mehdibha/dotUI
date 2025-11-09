@@ -1,7 +1,5 @@
 "use client";
 
-import { Button as AriaButton } from "react-aria-components";
-
 import { Button } from "@dotui/registry/ui/button";
 import { ColorSwatch } from "@dotui/registry/ui/color-swatch";
 import {

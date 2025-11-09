@@ -7,12 +7,13 @@ import {
 
 export default function Page() {
   return (
-    <DatePicker>
-      <DatePickerInput />
-      <DatePickerContent>
-        <Calendar />
-      </DatePickerContent>
-    </DatePicker>
+    <div className="h-100 flex items-start">
+      <DatePicker defaultOpen>
+        <DatePickerInput />
+        <DatePickerContent>
+          <Calendar className="mx-auto" />
+        </DatePickerContent>
+      </DatePicker>
+    </div>
   );
 }
-

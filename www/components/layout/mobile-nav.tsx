@@ -10,7 +10,7 @@ import type * as PageTree from "fumadocs-core/page-tree";
 import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";
 import { Dialog, DialogContent } from "@dotui/registry/ui/dialog";
-import { Overlay } from "@dotui/registry/ui/overlay";
+import { Popover } from "@dotui/registry/ui/popover";
 
 export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -38,13 +38,10 @@ export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
           />
         </div>
       </Button>
-      <Overlay
-        popoverProps={{
-          containerPadding: 0,
-          offset: 12,
-          className:
-            "size-full border-0 rounded-none bg-bg/95 backdrop-blur-md",
-        }}
+      <Popover
+        offset={12}
+        containerPadding={0}
+        className="size-full max-w-none border-0 rounded-none bg-bg/95 backdrop-blur-md"
       >
         <DialogContent className="overflow-y-auto pt-4">
           {({ close }) => (
@@ -102,7 +99,7 @@ export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
             </div>
           )}
         </DialogContent>
-      </Overlay>
+      </Popover>
     </Dialog>
   );
 };

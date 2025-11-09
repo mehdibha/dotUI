@@ -94,7 +94,12 @@ const SelectValue = <T extends object>({
 
 /* -----------------------------------------------------------------------------------------------*/
 
-interface SelectContentProps<T extends object> extends ListBoxProps<T> {
+interface SelectContentProps<T extends object>
+  extends ListBoxProps<T>,
+    Pick<
+      PopoverProps,
+      "placement" | "defaultOpen" | "isOpen" | "onOpenChange"
+    > {
   placement?: PopoverProps["placement"];
   virtulized?: boolean;
 }
@@ -102,11 +107,20 @@ interface SelectContentProps<T extends object> extends ListBoxProps<T> {
 const SelectContent = <T extends object>({
   virtulized,
   placement,
+  defaultOpen,
+  isOpen,
+  onOpenChange,
   ...props
 }: SelectContentProps<T>) => {
   if (virtulized) {
     return (
-      <Popover placement={placement} className="w-auto overflow-hidden p-0">
+      <Popover
+        placement={placement}
+        defaultOpen={defaultOpen}
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        className="w-auto overflow-hidden p-0"
+      >
         <ListBoxVirtualizer>
           <ListBox {...props} className="h-80 w-48 overflow-y-auto p-0" />
         </ListBoxVirtualizer>

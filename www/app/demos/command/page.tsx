@@ -10,7 +10,9 @@ export default function Page() {
     <Command className="w-80">
       <CommandInput placeholder="Type a command..." />
       <CommandContent>
-        <CommandItem textValue="Create new file">Create new file...</CommandItem>
+        <CommandItem textValue="Create new file">
+          Create new file...
+        </CommandItem>
         <CommandItem textValue="Create new folder">
           Create new folder...
         </CommandItem>
@@ -19,4 +21,3 @@ export default function Page() {
     </Command>
   );
 }
-

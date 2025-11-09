@@ -5,13 +5,11 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@dotui/registry/ui/select";
-import { Skeleton } from "@dotui/registry/ui/skeleton";
 
 import { ThemeModeSwitch } from "@/components/ui/theme-mode-switch";
 import { useDraftStyle } from "@/modules/style-editor/atoms/draft-style-atom";
 import { ON_CHANGE_DEBOUNCE_MS } from "@/modules/style-editor/constants";
 import { useStyleEditorForm } from "@/modules/style-editor/context/style-editor-provider";
-import { useEditorStyle } from "@/modules/style-editor/hooks/use-editor-style";
 import { useResolvedModeState } from "@/modules/style-editor/hooks/use-resolved-mode";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 

@@ -109,12 +109,14 @@ const ComboboxInner = ({ children }: { children: React.ReactNode }) => {
 
 /* -----------------------------------------------------------------------------------------------*/
 
-interface ComboboxInputProps extends InputGroupProps {}
+interface ComboboxInputProps extends InputGroupProps {
+  placeholder?: string;
+}
 
-const ComboboxInput = (props: ComboboxInputProps) => {
+const ComboboxInput = ({ placeholder, ...props }: ComboboxInputProps) => {
   return (
     <InputGroup {...props}>
-      <Input />
+      <Input placeholder={placeholder} />
       <InputAddon>
         <Button variant="quiet">
           <ChevronDownIcon />
@@ -126,19 +128,32 @@ const ComboboxInput = (props: ComboboxInputProps) => {
 
 /* -----------------------------------------------------------------------------------------------*/
 
-interface ComboboxContentProps<T extends object> extends ListBoxProps<T> {
-  placement?: PopoverProps["placement"];
+interface ComboboxContentProps<T extends object>
+  extends ListBoxProps<T>,
+    Pick<
+      PopoverProps,
+      "placement" | "defaultOpen" | "isOpen" | "onOpenChange"
+    > {
   virtulized?: boolean;
 }
 
 const ComboboxContent = <T extends object>({
   virtulized,
   placement,
+  defaultOpen,
+  isOpen,
+  onOpenChange,
   ...props
 }: ComboboxContentProps<T>) => {
   if (virtulized) {
     return (
-      <Popover placement={placement} className="w-auto overflow-hidden p-0">
+      <Popover
+        placement={placement}
+        defaultOpen={defaultOpen}
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        className="w-auto overflow-hidden p-0"
+      >
         <ListBoxVirtualizer>
           <ListBox {...props} className="h-80 w-48 overflow-y-auto p-0" />
         </ListBoxVirtualizer>

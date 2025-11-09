@@ -7,15 +7,16 @@ import {
 
 export default function Page() {
   return (
-    <Select aria-label="Provider">
-      <SelectTrigger />
-      <SelectContent>
-        <SelectItem>Perplexity</SelectItem>
-        <SelectItem>Replicate</SelectItem>
-        <SelectItem>Together AI</SelectItem>
-        <SelectItem>ElevenLabs</SelectItem>
-      </SelectContent>
-    </Select>
+    <div className="h-40 flex items-start">
+      <Select aria-label="Provider" defaultOpen>
+        <SelectTrigger />
+        <SelectContent>
+          <SelectItem>Perplexity</SelectItem>
+          <SelectItem>Replicate</SelectItem>
+          <SelectItem>Together AI</SelectItem>
+          <SelectItem>ElevenLabs</SelectItem>
+        </SelectContent>
+      </Select>
+    </div>
   );
 }
-

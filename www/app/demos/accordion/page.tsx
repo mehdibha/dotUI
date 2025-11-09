@@ -8,7 +8,7 @@ import {
 export default function Page() {
   return (
     <Accordion className="w-80">
-      <AccordionItem>
+      <AccordionItem defaultExpanded>
         <AccordionHeading>What is React?</AccordionHeading>
         <AccordionPanel>
           React is a JavaScript library for building user interfaces.
@@ -23,4 +23,3 @@ export default function Page() {
     </Accordion>
   );
 }
-

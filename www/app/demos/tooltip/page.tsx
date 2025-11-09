@@ -1,3 +1,5 @@
+"use client";
+
 import { SquarePenIcon } from "lucide-react";
 
 import { Button } from "@dotui/registry/ui/button";
@@ -7,7 +9,7 @@ import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
 export default function Page() {
   return (
     <div className="flex items-end justify-center h-20 w-40 pb-2">
-      <Tooltip>
+      <Tooltip defaultOpen>
         <Button>
           <SquarePenIcon />
         </Button>

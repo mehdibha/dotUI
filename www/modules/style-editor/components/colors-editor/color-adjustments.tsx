@@ -48,7 +48,7 @@ export const ColorAdjustments = () => {
             className="col-span-2"
           >
             <Label>Lightness</Label>
-            <SliderControl  className="w-full"/>
+            <SliderControl className="w-full" />
           </field.Slider>
         )}
       </form.AppField>

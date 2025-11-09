@@ -7,10 +7,7 @@ export interface UseAutoCycleOptions {
   initialIndex?: number;
 }
 
-export function useAutoCycle<T>(
-  items: T[],
-  options: UseAutoCycleOptions = {}
-) {
+export function useAutoCycle<T>(items: T[], options: UseAutoCycleOptions = {}) {
   const { interval = 3000, initialIndex = 0 } = options;
   const [index, setIndex] = useState(initialIndex);
   const [isPaused, setIsPaused] = useState(false);
@@ -36,4 +33,3 @@ export function useAutoCycle<T>(
     },
   };
 }
-

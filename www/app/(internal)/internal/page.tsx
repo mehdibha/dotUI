@@ -1,12 +1,9 @@
 export default function InternalPage() {
-
   return (
     <div className="flex h-screen justify-center items-center flex-col gap-8">
-
       <iframe src="/demos/tooltip" className="size-40 border" />
-
     </div>
-  )
+  );
   // return (
   //   <div className="flex h-screen justify-center items-center flex-col gap-8">
   //     <div className="w-200 flex border *:data-[slot=input]:flex-1"> {/* InputGroup  */}
@@ -14,7 +11,7 @@ export default function InternalPage() {
   //     </div>
 
   //     <div className="w-200 flex border *:data-[slot=input]:flex-1"> {/* InputGroup  */}
-  //       <div   
+  //       <div
   //         data-slot="text-field"
   //         className="contents"
   //       >   {/* TextField  */}

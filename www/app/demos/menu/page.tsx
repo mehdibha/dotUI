@@ -6,18 +6,20 @@ import { Popover } from "@dotui/registry/ui/popover";
 
 export default function Page() {
   return (
-    <Menu>
-      <Button>
-        <MenuIcon />
-      </Button>
-      <Popover>
-        <MenuContent>
-          <MenuItem>Account settings</MenuItem>
-          <MenuItem>Create team</MenuItem>
-          <MenuItem>Command menu</MenuItem>
-          <MenuItem>Log out</MenuItem>
-        </MenuContent>
-      </Popover>
-    </Menu>
+    <div className="size-40 flex items-start justify-end">
+      <Menu defaultOpen>
+        <Button>
+          <MenuIcon />
+        </Button>
+        <Popover placement="bottom end">
+          <MenuContent>
+            <MenuItem>Account settings</MenuItem>
+            <MenuItem>Create team</MenuItem>
+            <MenuItem>Command menu</MenuItem>
+            <MenuItem>Log out</MenuItem>
+          </MenuContent>
+        </Popover>
+      </Menu>
+    </div>
   );
 }

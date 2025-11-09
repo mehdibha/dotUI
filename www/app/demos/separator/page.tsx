@@ -2,11 +2,19 @@ import { Separator } from "@dotui/registry/ui/separator";
 
 export default function Page() {
   return (
-    <div className="w-64">
-      <div>Section 1</div>
-      <Separator orientation="horizontal" className="my-4" />
-      <div>Section 2</div>
+    <div className="space-y-2 p-4">
+      <div>
+        <h3 className="font-bold">dotUI</h3>
+        <p className="text-sm text-fg-muted">Accessible UI components.</p>
+      </div>
+      <Separator className="my-4" />
+      <div className="flex h-5 items-center space-x-4 text-sm">
+        <div>Docs</div>
+        <Separator orientation="vertical" />
+        <div>Components</div>
+        <Separator orientation="vertical" />
+        <div>Styles</div>
+      </div>
     </div>
   );
 }
-

@@ -12,7 +12,7 @@ import { Popover } from "@dotui/registry/ui/popover";
 export default function Page() {
   return (
     <div className="flex items-end justify-center h-40">
-      <Dialog>
+      <Dialog defaultOpen>
         <Button aria-label="Help">
           <InfoIcon />
         </Button>

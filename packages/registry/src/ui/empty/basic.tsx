@@ -108,16 +108,8 @@ const EmptyMedia = ({ variant, className, ...props }: EmptyMediaProps) => {
 
 /* -----------------------------------------------------------------------------------------------*/
 
-const CompoundEmpty = Object.assign(Empty, {
-  Header: EmptyHeader,
-  Title: EmptyTitle,
-  Description: EmptyDescription,
-  Content: EmptyContent,
-  Media: EmptyMedia,
-});
-
 export {
-  CompoundEmpty as Empty,
+  Empty,
   EmptyHeader,
   EmptyTitle,
   EmptyDescription,

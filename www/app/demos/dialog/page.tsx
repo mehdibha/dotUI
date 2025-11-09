@@ -18,9 +18,7 @@ export default function Page() {
         <DialogContent>
           <DialogHeader>
             <DialogHeading>Dialog Title</DialogHeading>
-            <DialogDescription>
-              This is a dialog description.
-            </DialogDescription>
+            <DialogDescription>This is a dialog description.</DialogDescription>
           </DialogHeader>
           <DialogBody>
             <p>Dialog content goes here.</p>
@@ -36,4 +34,3 @@ export default function Page() {
     </Dialog>
   );
 }
-

@@ -25,7 +25,7 @@ import { Overlay } from "@dotui/registry/ui/overlay";
 import type { InputGroupProps } from "@dotui/registry/ui/input";
 
 const datePickerStyles = tv({
-  base: "flex w-48 flex-col items-start gap-2",
+  base: "flex flex-col items-start gap-2",
 });
 
 type DatePickerProps<T extends DateValue> =

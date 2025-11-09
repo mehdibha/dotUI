@@ -1,15 +1,19 @@
-import { AlignLeftIcon } from "lucide-react";
+import type { Route } from "next";
+import Link from "next/link";
+import { AlignLeftIcon, ArrowRightIcon } from "lucide-react";
+
+import { Button } from "@dotui/registry/ui/button";
 
 import { TableOfContents } from "@/modules/docs/components/toc";
 
 export default function Page() {
   return (
-    <div className="relative container xl:grid xl:grid-cols-[1fr_250px] xl:gap-12">
+    <div className="relative container xl:grid xl:grid-cols-[1fr_150px] xl:gap-12">
       <div className="space-y-12">
         {data.map((category) => (
           <div key={category.title}>
             <h2 className="text-2xl font-medium">{category.title}</h2>
-            <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
               {category.components.map((component) => {
                 const scale = component.scale ?? 0.8;
                 return (
@@ -27,8 +31,13 @@ export default function Page() {
                         tabIndex={-1}
                       />
                     </div>
-                    <div className="px-4 py-2 border border-t-0 rounded-b-sm">
-                      <h3>{component.name}</h3>
+                    <div className="p-2 pl-4 border border-t-0 rounded-b-sm flex items-center justify-between gap-2">
+                      <h3 className="truncate">{component.name}</h3>
+                      <Button asChild size="sm">
+                        <Link href={component.href as Route}>
+                          View docs <ArrowRightIcon />
+                        </Link>
+                      </Button>
                     </div>
                   </div>
                 );
@@ -51,298 +60,302 @@ export default function Page() {
 }
 
 const data = [
-  // {
-  //   title: "Buttons",
-  //   components: [
-  //     {
-  //       name: "Button",
-  //       href: "/docs/components/button",
-  //       preview: "/demos/button",
-  //     },
-  //     {
-  //       name: "ToggleButton",
-  //       href: "/docs/components/toggle-button",
-  //       preview: "/demos/toggle-button",
-  //     },
-  //     {
-  //       name: "ToggleButtonGroup",
-  //       href: "/docs/components/toggle-button-group",
-  //       preview: "/demos/toggle-button-group",
-  //     },
-  //     {
-  //       name: "FileTrigger",
-  //       href: "/docs/components/file-trigger",
-  //       preview: "/demos/file-trigger",
-  //     },
-  //     {
-  //       name: "Group",
-  //       href: "/docs/components/group",
-  //       preview: "/demos/group",
-  //     },
-  //   ],
-  // },
-  // {
-  //   title: "Inputs, controls and form",
-  //   components: [
-  //     {
-  //       name: "Input",
-  //       href: "/docs/components/input",
-  //       preview: "/demos/input",
-  //     },
-  //     {
-  //       name: "TextArea",
-  //       href: "/docs/components/text-area",
-  //       preview: "/demos/text-area",
-  //     },
-  //     {
-  //       name: "InputGroup",
-  //       href: "/docs/components/input-group",
-  //       preview: "/demos/input-group",
-  //     },
-  //     {
-  //       name: "TextField",
-  //       href: "/docs/components/text-field",
-  //       preview: "/demos/text-field",
-  //     },
-  //     {
-  //       name: "SearchField",
-  //       href: "/docs/components/search-field",
-  //       preview: "/demos/search-field",
-  //     },
-  //     {
-  //       name: "NumberField",
-  //       href: "/docs/components/number-field",
-  //       preview: "/demos/number-field",
-  //     },
-  //     {
-  //       name: "Checkbox",
-  //       href: "/docs/components/checkbox",
-  //       preview: "/demos/checkbox",
-  //     },
-  //     {
-  //       name: "RadioGroup",
-  //       href: "/docs/components/radio-group",
-  //       preview: "/demos/radio-group",
-  //     },
-  //     {
-  //       name: "Switch",
-  //       href: "/docs/components/switch",
-  //       preview: "/demos/switch",
-  //     },
-  //     {
-  //       name: "Slider",
-  //       href: "/docs/components/slider",
-  //       preview: "/demos/slider",
-  //     },
-  //     {
-  //       name: "Field",
-  //       href: "/docs/components/field",
-  //       preview: "/demos/field",
-  //     },
-  //     {
-  //       name: "Form",
-  //       href: "/docs/components/form",
-  //       preview: "/demos/form",
-  //     },
-  //   ],
-  // },
-  // {
-  //   title: "Pickers",
-  //   components: [
-  //     {
-  //       name: "Menu",
-  //       href: "/docs/components/menu",
-  //       preview: "/demos/menu",
-  //     },
-  //     {
-  //       name: "Combobox",
-  //       href: "/docs/components/combobox",
-  //       preview: "/demos/combobox",
-  //     },
-  //     {
-  //       name: "Select",
-  //       href: "/docs/components/select",
-  //       preview: "/demos/select",
-  //     },
-  //     {
-  //       name: "Autocomplete",
-  //       href: "/docs/components/autocomplete",
-  //       preview: "/demos/autocomplete",
-  //     },
-  //   ],
-  // },
-  // {
-  //   title: "Dates",
-  //   components: [
-  //     {
-  //       name: "Calendar",
-  //       href: "/docs/components/calendar",
-  //       preview: "/demos/calendar",
-  //     },
-  //     {
-  //       name: "DateField",
-  //       href: "/docs/components/date-field",
-  //       preview: "/demos/date-field",
-  //     },
-  //     {
-  //       name: "DatePicker",
-  //       href: "/docs/components/date-picker",
-  //       preview: "/demos/date-picker",
-  //     },
-  //     {
-  //       name: "TimeField",
-  //       href: "/docs/components/time-field",
-  //       preview: "/demos/time-field",
-  //     },
-  //   ],
-  // },
-  // {
-  //   title: "Feedback",
-  //   components: [
-  //     {
-  //       name: "Alert",
-  //       href: "/docs/components/alert",
-  //       preview: "/demos/alert",
-  //     },
-  //     {
-  //       name: "ProgressBar",
-  //       href: "/docs/components/progress-bar",
-  //       preview: "/demos/progress-bar",
-  //     },
-  //     {
-  //       name: "Toast",
-  //       href: "/docs/components/toast",
-  //       preview: "/demos/toast",
-  //     },
-  //     {
-  //       name: "Loader",
-  //       href: "/docs/components/loader",
-  //       preview: "/demos/loader",
-  //     },
-  //     {
-  //       name: "Skeleton",
-  //       href: "/docs/components/skeleton",
-  //       preview: "/demos/skeleton",
-  //     },
-  //   ],
-  // },
-  // {
-  //   title: "Collections",
-  //   components: [
-  //     {
-  //       name: "ListBox",
-  //       href: "/docs/components/list-box",
-  //       preview: "/demos/list-box",
-  //     },
-  //     {
-  //       name: "TagGroup",
-  //       href: "/docs/components/tag-group",
-  //       preview: "/demos/tag-group",
-  //     },
-  //   ],
-  // },
-  // {
-  //   title: "Navigation",
-  //   components: [
-  //     {
-  //       name: "Link",
-  //       href: "/docs/components/link",
-  //       preview: "/demos/link",
-  //     },
-  //     {
-  //       name: "Tabs",
-  //       href: "/docs/components/tabs",
-  //       preview: "/demos/tabs",
-  //     },
-  //     {
-  //       name: "Breadcrumbs",
-  //       href: "/docs/components/breadcrumbs",
-  //       preview: "/demos/breadcrumbs",
-  //     },
-  //     {
-  //       name: "Command",
-  //       href: "/docs/components/command",
-  //       preview: "/demos/command",
-  //     },
-  //   ],
-  // },
-  // {
-  //   title: "Data display",
-  //   components: [
-  //     {
-  //       name: "Accordion",
-  //       href: "/docs/components/accordion",
-  //       preview: "/demos/accordion",
-  //       scale: 0.7,
-  //     },
-  //     {
-  //       name: "Avatar",
-  //       href: "/docs/components/avatar",
-  //       preview: "/demos/avatar",
-  //     },
-  //     {
-  //       name: "Kbd",
-  //       href: "/docs/components/kbd",
-  //       preview: "/demos/kbd",
-  //     },
-  //     {
-  //       name: "Badge",
-  //       href: "/docs/components/badge",
-  //       preview: "/demos/badge",
-  //     },
-  //     {
-  //       name: "Table",
-  //       href: "/docs/components/table",
-  //       preview: "/demos/table",
-  //     },
-  //     {
-  //       name: "Card",
-  //       href: "/docs/components/card",
-  //       preview: "/demos/card",
-  //     },
-  //     {
-  //       name: "Separator",
-  //       href: "/docs/components/separator",
-  //       preview: "/demos/separator",
-  //     },
-  //     {
-  //       name: "Empty",
-  //       href: "/docs/components/empty",
-  //       preview: "/demos/empty",
-  //     },
-  //   ],
-  // },
-  // {
-  //   title: "Colors",
-  //   components: [
-  //     {
-  //       name: "ColorArea",
-  //       href: "/docs/components/color-area",
-  //       preview: "/demos/color-area",
-  //     },
-  //     {
-  //       name: "ColorField",
-  //       href: "/docs/components/color-field",
-  //       preview: "/demos/color-field",
-  //     },
-  //     {
-  //       name: "ColorPicker",
-  //       href: "/docs/components/color-picker",
-  //       preview: "/demos/color-picker",
-  //       scale: 0.7,
-  //     },
-  //     {
-  //       name: "ColorSlider",
-  //       href: "/docs/components/color-slider",
-  //       preview: "/demos/color-slider",
-  //     },
-  //     {
-  //       name: "ColorSwatchPicker",
-  //       href: "/docs/components/color-swatch-picker",
-  //       preview: "/demos/color-swatch-picker",
-  //     },
-  //   ],
-  // },
+  {
+    title: "Buttons",
+    components: [
+      {
+        name: "Button",
+        href: "/docs/components/button",
+        preview: "/demos/button",
+      },
+      {
+        name: "ToggleButton",
+        href: "/docs/components/toggle-button",
+        preview: "/demos/toggle-button",
+      },
+      {
+        name: "ToggleButtonGroup",
+        href: "/docs/components/toggle-button-group",
+        preview: "/demos/toggle-button-group",
+      },
+      {
+        name: "FileTrigger",
+        href: "/docs/components/file-trigger",
+        preview: "/demos/file-trigger",
+      },
+      {
+        name: "Group",
+        href: "/docs/components/group",
+        preview: "/demos/group",
+      },
+    ],
+  },
+  {
+    title: "Inputs, controls and form",
+    components: [
+      {
+        name: "Input",
+        href: "/docs/components/input",
+        preview: "/demos/input",
+      },
+      {
+        name: "TextArea",
+        href: "/docs/components/text-area",
+        preview: "/demos/text-area",
+      },
+      {
+        name: "InputGroup",
+        href: "/docs/components/input-group",
+        preview: "/demos/input-group",
+      },
+      {
+        name: "TextField",
+        href: "/docs/components/text-field",
+        preview: "/demos/text-field",
+      },
+      {
+        name: "SearchField",
+        href: "/docs/components/search-field",
+        preview: "/demos/search-field",
+      },
+      // {
+      //   name: "NumberField",
+      //   href: "/docs/components/number-field",
+      //   preview: "/demos/number-field",
+      // },
+      // {
+      //   name: "Checkbox",
+      //   href: "/docs/components/checkbox",
+      //   preview: "/demos/checkbox",
+      // },
+      // {
+      //   name: "RadioGroup",
+      //   href: "/docs/components/radio-group",
+      //   preview: "/demos/radio-group",
+      // },
+      // {
+      //   name: "Switch",
+      //   href: "/docs/components/switch",
+      //   preview: "/demos/switch",
+      // },
+      // {
+      //   name: "Slider",
+      //   href: "/docs/components/slider",
+      //   preview: "/demos/slider",
+      // },
+      // {
+      //   name: "Field",
+      //   href: "/docs/components/field",
+      //   preview: "/demos/field",
+      // },
+      // {
+      //   name: "Form",
+      //   href: "/docs/components/form",
+      //   preview: "/demos/form",
+      // },
+    ],
+  },
+  {
+    title: "Pickers",
+    components: [
+      {
+        name: "Menu",
+        href: "/docs/components/menu",
+        preview: "/demos/menu",
+      },
+      {
+        name: "Combobox",
+        href: "/docs/components/combobox",
+        preview: "/demos/combobox",
+        scale: 0.7,
+      },
+      {
+        name: "Select",
+        href: "/docs/components/select",
+        preview: "/demos/select",
+      },
+    ],
+  },
+  {
+    title: "Dates",
+    components: [
+      {
+        name: "Calendar",
+        href: "/docs/components/calendar",
+        preview: "/demos/calendar",
+        scale: 0.6,
+      },
+      {
+        name: "DateField",
+        href: "/docs/components/date-field",
+        preview: "/demos/date-field",
+      },
+      {
+        name: "DatePicker",
+        href: "/docs/components/date-picker",
+        preview: "/demos/date-picker",
+        scale: 0.5,
+      },
+      {
+        name: "TimeField",
+        href: "/docs/components/time-field",
+        preview: "/demos/time-field",
+      },
+    ],
+  },
+  {
+    title: "Feedback",
+    components: [
+      {
+        name: "Alert",
+        href: "/docs/components/alert",
+        preview: "/demos/alert",
+      },
+      {
+        name: "ProgressBar",
+        href: "/docs/components/progress-bar",
+        preview: "/demos/progress-bar",
+      },
+      {
+        name: "Toast",
+        href: "/docs/components/toast",
+        preview: "/demos/toast",
+        scale: 0.6,
+      },
+      {
+        name: "Loader",
+        href: "/docs/components/loader",
+        preview: "/demos/loader",
+        scale: 1,
+      },
+      {
+        name: "Skeleton",
+        href: "/docs/components/skeleton",
+        preview: "/demos/skeleton",
+      },
+    ],
+  },
+  {
+    title: "Collections",
+    components: [
+      {
+        name: "ListBox",
+        href: "/docs/components/list-box",
+        preview: "/demos/list-box",
+      },
+      {
+        name: "TagGroup",
+        href: "/docs/components/tag-group",
+        preview: "/demos/tag-group",
+      },
+    ],
+  },
+  {
+    title: "Navigation",
+    components: [
+      {
+        name: "Link",
+        href: "/docs/components/link",
+        preview: "/demos/link",
+        scale: 1,
+      },
+      {
+        name: "Tabs",
+        href: "/docs/components/tabs",
+        preview: "/demos/tabs",
+      },
+      {
+        name: "Breadcrumbs",
+        href: "/docs/components/breadcrumbs",
+        preview: "/demos/breadcrumbs",
+      },
+      {
+        name: "Command",
+        href: "/docs/components/command",
+        preview: "/demos/command",
+      },
+    ],
+  },
+  {
+    title: "Data display",
+    components: [
+      {
+        name: "Accordion",
+        href: "/docs/components/accordion",
+        preview: "/demos/accordion",
+        scale: 0.7,
+      },
+      {
+        name: "Avatar",
+        href: "/docs/components/avatar",
+        preview: "/demos/avatar",
+      },
+      {
+        name: "Kbd",
+        href: "/docs/components/kbd",
+        preview: "/demos/kbd",
+        scale: 1,
+      },
+      {
+        name: "Badge",
+        href: "/docs/components/badge",
+        preview: "/demos/badge",
+      },
+      {
+        name: "Table",
+        href: "/docs/components/table",
+        preview: "/demos/table",
+      },
+      {
+        name: "Card",
+        href: "/docs/components/card",
+        preview: "/demos/card",
+        scale: 0.5,
+      },
+      {
+        name: "Separator",
+        href: "/docs/components/separator",
+        preview: "/demos/separator",
+      },
+      {
+        name: "Empty",
+        href: "/docs/components/empty",
+        preview: "/demos/empty",
+        scale: 0.7,
+      },
+    ],
+  },
+  {
+    title: "Colors",
+    components: [
+      {
+        name: "ColorArea",
+        href: "/docs/components/color-area",
+        preview: "/demos/color-area",
+      },
+      {
+        name: "ColorField",
+        href: "/docs/components/color-field",
+        preview: "/demos/color-field",
+      },
+      {
+        name: "ColorPicker",
+        href: "/docs/components/color-picker",
+        preview: "/demos/color-picker",
+        scale: 0.7,
+      },
+      {
+        name: "ColorSlider",
+        href: "/docs/components/color-slider",
+        preview: "/demos/color-slider",
+      },
+      {
+        name: "ColorSwatchPicker",
+        href: "/docs/components/color-swatch-picker",
+        preview: "/demos/color-swatch-picker",
+      },
+    ],
+  },
   {
     title: "Overlays",
     components: [
