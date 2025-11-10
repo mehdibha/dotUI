@@ -11,8 +11,6 @@ import {
 import { tv } from "tailwind-variants";
 import type { ToastProps as AriaToastProps } from "react-aria-components";
 
-import { Button } from "@dotui/registry/ui/button";
-
 const toastStyles = tv({
   slots: {
     region: [
@@ -24,7 +22,7 @@ const toastStyles = tv({
     title: "text-base",
     description: "text-sm text-fg-muted",
     actions: "",
-    close: "absolute top-3 right-3 size-7",
+    close: "absolute top-3.5 right-3 size-7",
   },
   variants: {
     variant: {
@@ -52,8 +50,7 @@ const toastStyles = tv({
   },
 });
 
-const { region, toast, content, actions, close, title, description } =
-  toastStyles();
+const { region, toast, content, actions, title, description } = toastStyles();
 
 interface Toast {
   title: string;
@@ -94,9 +91,15 @@ function Toast({ className, ...props }: ToastProps) {
             ) : null}
           </AriaToastContent>
           <div className={actions()}>
-            <Button slot="close" className={close()} aria-label="Close">
-              ×
-            </Button>
+            {/* <Button
+              variant="quiet"
+              size="sm"
+              slot="close"
+              className={close()}
+              aria-label="Close"
+            >
+              <XIcon className="size-4" />
+            </Button> */}
           </div>
         </>
       )}

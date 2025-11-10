@@ -21,7 +21,7 @@ import {
   type DialogContentProps,
 } from "@dotui/registry/ui/dialog";
 import { DateInput, InputAddon, InputGroup } from "@dotui/registry/ui/input";
-import { Overlay } from "@dotui/registry/ui/overlay";
+import { Overlay, type OverlayProps } from "@dotui/registry/ui/overlay";
 import type { InputGroupProps } from "@dotui/registry/ui/input";
 
 const datePickerStyles = tv({
@@ -94,11 +94,19 @@ const DatePickerInput = (props: DatePickerInputProps) => {
 
 /* -----------------------------------------------------------------------------------------------*/
 
-interface DatePickerContentProps extends DialogContentProps {}
+interface DatePickerContentProps
+  extends DialogContentProps,
+    Pick<OverlayProps, "type" | "mobileType" | "popoverProps"> {}
 
-const DatePickerContent = ({ children, ...props }: DatePickerContentProps) => {
+const DatePickerContent = ({
+  children,
+  type = "popover",
+  mobileType,
+  popoverProps,
+  ...props
+}: DatePickerContentProps) => {
   return (
-    <Overlay type="popover">
+    <Overlay type={type} mobileType={mobileType} popoverProps={popoverProps}>
       <DialogContent {...props}>{children}</DialogContent>
     </Overlay>
   );

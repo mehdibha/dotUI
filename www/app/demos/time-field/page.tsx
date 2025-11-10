@@ -6,7 +6,7 @@ export default function Page() {
   return (
     <TimeField>
       <Label>Event time</Label>
-      <DateInput />
+      <DateInput className="w-40" />
     </TimeField>
   );
 }

@@ -8,23 +8,21 @@ import { toast } from "@dotui/registry/ui/toast";
 export default function Page() {
   React.useEffect(() => {
     toast.add({
-      title: "Success",
-      description: "Operation completed successfully",
-      variant: "success",
+      title: "Event has been created",
     });
   }, []);
 
   return (
-    <Button
-      onPress={() =>
-        toast.add({
-          title: "Success",
-          description: "Operation completed successfully",
-          variant: "success",
-        })
-      }
-    >
-      Show Toast
-    </Button>
+    <div className="flex flex-col items-start h-40">
+      <Button
+        onPress={() =>
+          toast.add({
+            title: "Event has been created",
+          })
+        }
+      >
+        Show Toast
+      </Button>
+    </div>
   );
 }

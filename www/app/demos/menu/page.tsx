@@ -6,7 +6,7 @@ import { Popover } from "@dotui/registry/ui/popover";
 
 export default function Page() {
   return (
-    <div className="size-40 flex items-start justify-end">
+    <div className="h-46 w-36 flex items-start justify-end">
       <Menu defaultOpen>
         <Button>
           <MenuIcon />

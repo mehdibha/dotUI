@@ -7,14 +7,14 @@ import {
 
 export default function Page() {
   return (
-    <Accordion className="w-80">
-      <AccordionItem defaultExpanded>
+    <Accordion className="w-72" defaultExpandedKeys={["react"]}>
+      <AccordionItem id="react">
         <AccordionHeading>What is React?</AccordionHeading>
         <AccordionPanel>
           React is a JavaScript library for building user interfaces.
         </AccordionPanel>
       </AccordionItem>
-      <AccordionItem>
+      <AccordionItem id="nextjs">
         <AccordionHeading>What is Next.js?</AccordionHeading>
         <AccordionPanel>
           Next.js is a React framework for production applications.

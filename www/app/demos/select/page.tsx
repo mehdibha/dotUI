@@ -10,7 +10,7 @@ export default function Page() {
     <div className="h-40 flex items-start">
       <Select aria-label="Provider" defaultOpen>
         <SelectTrigger />
-        <SelectContent>
+        <SelectContent className="h-30">
           <SelectItem>Perplexity</SelectItem>
           <SelectItem>Replicate</SelectItem>
           <SelectItem>Together AI</SelectItem>

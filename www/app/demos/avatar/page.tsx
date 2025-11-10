@@ -2,7 +2,7 @@ import { Avatar, AvatarGroup } from "@dotui/registry/ui/avatar";
 
 export default function Page() {
   return (
-    <div className="flex items-center gap-6">
+    <div className="flex items-center gap-4">
       <Avatar fallback="M" />
       <Avatar src="https://github.com/mehdibha.png" alt="User 1" fallback="M" />
       <AvatarGroup>

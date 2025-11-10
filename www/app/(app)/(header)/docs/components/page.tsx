@@ -2,6 +2,7 @@ import type { Route } from "next";
 import Link from "next/link";
 import { AlignLeftIcon } from "lucide-react";
 
+import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";
 
 import { TableOfContents } from "@/modules/docs/components/toc";
@@ -13,9 +14,24 @@ export default function Page() {
         {data.map((category) => (
           <div key={category.title}>
             <h2 className="text-2xl font-medium">{category.title}</h2>
-            <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+            <div
+              className={cn(
+                "mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5",
+                // category.title === "Data display" && "lg:grid-cols-4",
+              )}
+            >
               {category.components.map((component) => (
-                <ComponentCard key={component.name} {...component} />
+                <ComponentCard
+                  key={component.name}
+                  {...component}
+                  previewClassName={cn(
+                    category.title === "Pickers" && "h-38",
+                    category.title === "Dates" && "h-48",
+                    category.title === "Collections" && "h-40",
+                    category.title === "Navigation" && "h-40",
+                    category.title === "Data display" && "h-40",
+                  )}
+                />
               ))}
             </div>
           </div>
@@ -39,6 +55,8 @@ interface ComponentCardProps {
   href: string;
   preview: string;
   scale?: number;
+  className?: string;
+  previewClassName?: string;
 }
 
 function ComponentCard({
@@ -46,10 +64,17 @@ function ComponentCard({
   href,
   preview,
   scale = 0.8,
+  className,
+  previewClassName,
 }: ComponentCardProps) {
   return (
-    <div className="flex flex-col items-center">
-      <div className="h-32 border rounded-lg overflow-hidden bg-muted">
+    <div className={cn("flex flex-col items-center", className)}>
+      <div
+        className={cn(
+          "h-32 border rounded-lg overflow-hidden bg-muted",
+          previewClassName,
+        )}
+      >
         <iframe
           src={preview}
           className="origin-top-left"
@@ -101,7 +126,7 @@ const data = [
         name: "Group",
         href: "/docs/components/group",
         preview: "/demos/group",
-        scale: 1,
+        scale: 0.9,
       },
     ],
   },
@@ -133,41 +158,41 @@ const data = [
         href: "/docs/components/search-field",
         preview: "/demos/search-field",
       },
-      // {
-      //   name: "NumberField",
-      //   href: "/docs/components/number-field",
-      //   preview: "/demos/number-field",
-      // },
-      // {
-      //   name: "Checkbox",
-      //   href: "/docs/components/checkbox",
-      //   preview: "/demos/checkbox",
-      // },
-      // {
-      //   name: "RadioGroup",
-      //   href: "/docs/components/radio-group",
-      //   preview: "/demos/radio-group",
-      // },
-      // {
-      //   name: "Switch",
-      //   href: "/docs/components/switch",
-      //   preview: "/demos/switch",
-      // },
-      // {
-      //   name: "Slider",
-      //   href: "/docs/components/slider",
-      //   preview: "/demos/slider",
-      // },
-      // {
-      //   name: "Field",
-      //   href: "/docs/components/field",
-      //   preview: "/demos/field",
-      // },
-      // {
-      //   name: "Form",
-      //   href: "/docs/components/form",
-      //   preview: "/demos/form",
-      // },
+      {
+        name: "NumberField",
+        href: "/docs/components/number-field",
+        preview: "/demos/number-field",
+      },
+      {
+        name: "Checkbox",
+        href: "/docs/components/checkbox",
+        preview: "/demos/checkbox",
+      },
+      {
+        name: "RadioGroup",
+        href: "/docs/components/radio-group",
+        preview: "/demos/radio-group",
+      },
+      {
+        name: "Switch",
+        href: "/docs/components/switch",
+        preview: "/demos/switch",
+      },
+      {
+        name: "Slider",
+        href: "/docs/components/slider",
+        preview: "/demos/slider",
+      },
+      {
+        name: "Field",
+        href: "/docs/components/field",
+        preview: "/demos/field",
+      },
+      {
+        name: "Form",
+        href: "/docs/components/form",
+        preview: "/demos/form",
+      },
     ],
   },
   {
@@ -177,6 +202,7 @@ const data = [
         name: "Menu",
         href: "/docs/components/menu",
         preview: "/demos/menu",
+        scale: 0.65,
       },
       {
         name: "Combobox",
@@ -188,6 +214,7 @@ const data = [
         name: "Select",
         href: "/docs/components/select",
         preview: "/demos/select",
+        scale: 0.7,
       },
     ],
   },
@@ -198,23 +225,25 @@ const data = [
         name: "Calendar",
         href: "/docs/components/calendar",
         preview: "/demos/calendar",
-        scale: 0.6,
+        scale: 0.5,
       },
       {
         name: "DateField",
         href: "/docs/components/date-field",
         preview: "/demos/date-field",
+        scale: 0.7,
       },
       {
         name: "DatePicker",
         href: "/docs/components/date-picker",
         preview: "/demos/date-picker",
-        scale: 0.5,
+        scale: 0.4,
       },
       {
         name: "TimeField",
         href: "/docs/components/time-field",
         preview: "/demos/time-field",
+        scale: 0.7,
       },
     ],
   },
@@ -225,11 +254,13 @@ const data = [
         name: "Alert",
         href: "/docs/components/alert",
         preview: "/demos/alert",
+        scale: 0.5,
       },
       {
         name: "ProgressBar",
         href: "/docs/components/progress-bar",
         preview: "/demos/progress-bar",
+        scale: 0.7,
       },
       {
         name: "Toast",
@@ -247,6 +278,7 @@ const data = [
         name: "Skeleton",
         href: "/docs/components/skeleton",
         preview: "/demos/skeleton",
+        scale: 0.4,
       },
     ],
   },
@@ -283,11 +315,13 @@ const data = [
         name: "Breadcrumbs",
         href: "/docs/components/breadcrumbs",
         preview: "/demos/breadcrumbs",
+        scale: 0.6,
       },
       {
         name: "Command",
         href: "/docs/components/command",
         preview: "/demos/command",
+        scale: 0.7,
       },
     ],
   },
@@ -298,12 +332,13 @@ const data = [
         name: "Accordion",
         href: "/docs/components/accordion",
         preview: "/demos/accordion",
-        scale: 0.7,
+        scale: 0.6,
       },
       {
         name: "Avatar",
         href: "/docs/components/avatar",
         preview: "/demos/avatar",
+        scale: 0.7,
       },
       {
         name: "Kbd",
@@ -320,12 +355,13 @@ const data = [
         name: "Table",
         href: "/docs/components/table",
         preview: "/demos/table",
+        scale: 0.25,
       },
       {
         name: "Card",
         href: "/docs/components/card",
         preview: "/demos/card",
-        scale: 0.5,
+        scale: 0.3,
       },
       {
         name: "Separator",
@@ -336,7 +372,7 @@ const data = [
         name: "Empty",
         href: "/docs/components/empty",
         preview: "/demos/empty",
-        scale: 0.7,
+        scale: 0.5,
       },
     ],
   },
@@ -347,6 +383,7 @@ const data = [
         name: "ColorArea",
         href: "/docs/components/color-area",
         preview: "/demos/color-area",
+        scale: 0.5,
       },
       {
         name: "ColorField",

@@ -15,9 +15,9 @@ import {
   ListBoxSectionHeader,
   ListBoxVirtualizer,
 } from "@dotui/registry/ui/list-box";
-import { Popover, type PopoverProps } from "@dotui/registry/ui/popover";
 import { SearchField } from "@dotui/registry/ui/search-field";
 import type { ListBoxProps } from "@dotui/registry/ui/list-box";
+import type { PopoverProps } from "@dotui/registry/ui/popover";
 import type { SearchFieldProps } from "@dotui/registry/ui/search-field";
 
 const commandStyles = tv({
@@ -59,7 +59,8 @@ interface CommandInputProps extends SearchFieldProps {
 const CommandInput = ({ placeholder, ...props }: CommandInputProps) => {
   return (
     <SearchField {...props}>
-      <InputGroup>
+      {/* TODO: Remove this */}
+      <InputGroup className="w-full">
         <InputAddon>
           <SearchIcon />
         </InputAddon>
@@ -83,19 +84,13 @@ const CommandContent = <T extends object>({
 }: CommandContentProps<T>) => {
   if (virtulized) {
     return (
-      <Popover placement={placement} className="w-auto overflow-hidden p-0">
-        <ListBoxVirtualizer>
-          <ListBox {...props} className="h-80 w-48 overflow-y-auto p-0" />
-        </ListBoxVirtualizer>
-      </Popover>
+      <ListBoxVirtualizer>
+        <ListBox {...props} className="h-80 w-48 overflow-y-auto p-0" />
+      </ListBoxVirtualizer>
     );
   }
 
-  return (
-    <Popover placement={placement}>
-      <ListBox {...props} />
-    </Popover>
-  );
+  return <ListBox {...props} />;
 };
 
 /* -----------------------------------------------------------------------------------------------*/

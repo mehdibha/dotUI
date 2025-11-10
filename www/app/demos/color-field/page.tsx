@@ -6,7 +6,7 @@ export default function Page() {
   return (
     <ColorField defaultValue="#7f007f">
       <Label>Color</Label>
-      <Input />
+      <Input className="w-36" />
     </ColorField>
   );
 }
