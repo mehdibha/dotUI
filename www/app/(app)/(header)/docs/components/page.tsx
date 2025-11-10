@@ -16,8 +16,7 @@ export default function Page() {
             <h2 className="text-2xl font-medium">{category.title}</h2>
             <div
               className={cn(
-                "mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5",
-                // category.title === "Data display" && "lg:grid-cols-4",
+                "mt-4 grid grid-cols-1 xs:grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5",
               )}
             >
               {category.components.map((component) => (
