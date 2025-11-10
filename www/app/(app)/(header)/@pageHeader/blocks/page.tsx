@@ -11,7 +11,7 @@ const description = "Modern UI blocks available in infinite styles.";
 
 export default function BlocksPageHeader() {
   return (
-    <PageHeader className="apply-parent-relative">
+    <PageHeader>
       <PageHeaderHeading>{title}</PageHeaderHeading>
       <PageHeaderDescription>{description}</PageHeaderDescription>
       <PageActions>

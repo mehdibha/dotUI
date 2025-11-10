@@ -1,0 +1,75 @@
+## Variant
+
+Use the `variant` prop to control the visual style of the button.<br/>
+The default variant is `"default"`.
+
+<ComponentPreview
+  name="button/demos/variants"
+  preview={`<Button variant="default">default</Button>
+<Button variant="primary">primary</Button>
+<Button variant="quiet">quiet</Button>
+<Button variant="success">success</Button>
+<Button variant="warning">warning</Button>
+<Button variant="danger">danger</Button>
+<Button variant="accent">accent</Button>`}
+/>
+
+## Size
+
+Use the `size` prop to control the size of the button.<br/>
+The default size is `"md"`.
+
+<ComponentPreview
+  name="button/demos/sizes"
+  preview={`<Button size="sm">Button</Button>
+<Button size="md">Button</Button>
+<Button size="lg">Button</Button>`}
+/>
+
+## Shape
+
+Use the `shape` prop to control the shape of the button. The default variant is `"rectangle"`.<br/>
+Icon-only buttons should include an `aria-label`.
+
+<ComponentPreview
+  name="button/demos/shapes"
+  preview={`<Button shape="square"><UplaodIcon /></UplaodIcon>
+<Button shape="circular"><UplaodIcon /></Button>`}
+/>
+
+## Prefix and suffix
+
+To add additional context for a button label, such as a search icon next to the label for a search field submit, use the `prefix` and `suffix` props. Leading visuals always appear locked to the button label, even if the button is full width.
+
+<ComponentPreview
+  name="button/demos/prefix-and-suffix"
+  preview={`<Button prefix={<UplaodIcon />}>Upload</Button>
+<Button suffix={<UplaodIcon />}>Upload</Button>`}
+/>
+
+## Pending
+
+Use the `isPending` prop to control the loading state of the button, if you need to wait for a button's action to be completed.
+
+<ComponentPreview
+  name="button/demos/loading"
+  preview={`<Button isPending>Button</Button>`}
+/>
+
+## Disabled
+
+Use the `isDisabled` prop to disable the button.
+
+<ComponentPreview
+  name="button/demos/disabled"
+  preview={`<Button isDisabled>Button</Button>`}
+/>
+
+## Link button
+
+To use a button as a link, use the `href` prop the button will automatically render a link that visually looks like a button.
+
+<ComponentPreview
+  name="button/demos/link-button"
+  preview={`<Button href="/login">Login</Button>`}
+/>

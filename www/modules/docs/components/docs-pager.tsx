@@ -4,6 +4,7 @@ import { findNeighbour } from "fumadocs-core/page-tree";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 
 import { Button } from "@dotui/registry/ui/button";
+import { Group } from "@dotui/registry/ui/group";
 import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
 
 import { docsSource } from "@/modules/docs/lib/source";
@@ -15,7 +16,7 @@ export const DocsPager = ({ currentPathname }: { currentPathname: string }) => {
   );
 
   return (
-    <div className="flex items-center justify-between gap-2">
+    <Group>
       {previous ? (
         <Tooltip>
           <Button asChild aria-label="Go to previous page" size="sm">
@@ -42,6 +43,6 @@ export const DocsPager = ({ currentPathname }: { currentPathname: string }) => {
       ) : (
         <div />
       )}
-    </div>
+    </Group>
   );
 };
