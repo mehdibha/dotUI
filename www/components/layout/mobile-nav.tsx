@@ -53,7 +53,7 @@ export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
                     [
                       { href: "/", label: "Home" },
                       { href: "/docs", label: "Docs" },
-                      { href: "/docs/components/button", label: "Components" },
+                      { href: "/docs/components", label: "Components" },
                       { href: "/blocks", label: "Blocks" },
                       { href: "/styles", label: "Styles" },
                     ] as const
