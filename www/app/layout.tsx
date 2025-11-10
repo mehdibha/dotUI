@@ -4,7 +4,19 @@ import { Analytics } from "@vercel/analytics/react";
 
 import { cn } from "@dotui/registry/lib/utils";
 
-import { fontMono, fontSans, josefinSans } from "@/lib/fonts";
+import {
+  dmSans,
+  fontMono,
+  fontSans,
+  inter,
+  josefinSans,
+  montserrat,
+  nunito,
+  openSans,
+  raleway,
+  roboto,
+  workSans,
+} from "@/lib/fonts";
 import { truncateOnWord } from "@/lib/string";
 
 import "@/styles/globals.css";
@@ -70,19 +82,38 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      {/* <head>
-        <script
+    <html
+      lang="en"
+      className={cn(
+        inter.className,
+        roboto.className,
+        openSans.className,
+        montserrat.className,
+        raleway.className,
+        workSans.className,
+        dmSans.className,
+        nunito.className,
+      )}
+      suppressHydrationWarning
+    >
+      <head>
+        {/* <script
           crossOrigin="anonymous"
           src="//unpkg.com/react-scan/dist/auto.global.js"
+        /> */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
         />
-      </head> */}
+      </head>
       <body
         className={cn(
           "font-sans antialiased",
-          josefinSans.variable,
           fontSans.variable,
           fontMono.variable,
+          josefinSans.variable,
         )}
         suppressHydrationWarning
       >

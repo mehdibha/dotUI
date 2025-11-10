@@ -6,6 +6,8 @@ import { cn } from "@dotui/registry/lib/utils";
 import { registryTextures } from "@dotui/registry/textures/registry";
 import type { ThemeDefinition } from "@dotui/registry/_style-system/types";
 
+import { FontLoader } from "./font-loader";
+
 type Mode = "light" | "dark";
 
 export const ThemeProvider = ({
@@ -70,8 +72,8 @@ export const ThemeProvider = ({
 
   return (
     <>
-      {/* <FontLoader font={themeDefinition.fonts.heading} />
-      <FontLoader font={themeDefinition.fonts.body} /> */}
+      <FontLoader font={themeDefinition.fonts.heading} />
+      <FontLoader font={themeDefinition.fonts.body} />
       <div
         style={styleProp}
         {...props}
@@ -111,15 +113,3 @@ const transformCssToJSXStyle = (css: Record<string, string>) => {
     ]),
   );
 };
-
-export function FontLoader({ font }: { font: string | null | undefined }) {
-  if (!font) return null;
-  const googleFontUrl = generateGoogleFontUrl(font);
-  return <link href={googleFontUrl} rel="stylesheet" />;
-}
-
-function generateGoogleFontUrl(font: string) {
-  const familyName = font.replace(/\s+/g, "+");
-
-  return `https://fonts.googleapis.com/css?family=${familyName}`;
-}
