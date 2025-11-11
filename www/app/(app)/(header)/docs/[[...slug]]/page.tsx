@@ -107,7 +107,12 @@ export default async function Page({ params }: PageProps<"/docs/[[...slug]]">) {
           </div>
         )}
       </div>
-      {lastModified && <PageLastUpdate date={lastModified} />}
+
+      {lastModified && (
+        <div className="container max-w-3xl xl:max-w-5xl">
+          <PageLastUpdate date={lastModified} />
+        </div>
+      )}
     </div>
   );
 }
